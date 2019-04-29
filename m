@@ -2,94 +2,288 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EB731E8B9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Apr 2019 19:23:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 797BCE937
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Apr 2019 19:35:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728807AbfD2RXk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Apr 2019 13:23:40 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:45242 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728798AbfD2RXk (ORCPT
+        id S1728898AbfD2Rfd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Apr 2019 13:35:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45756 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728839AbfD2Rfd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Apr 2019 13:23:40 -0400
-Received: by mail-oi1-f195.google.com with SMTP id t189so5923652oih.12;
-        Mon, 29 Apr 2019 10:23:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A0I+WeeWwMxjNXSYH+7ynj45eY9o+5Gg1/EFwuWtM7U=;
-        b=MOyXQMkheITZ/VUqShgL3Yf6Cdvd2eT5MZeBNBBFljmqvS+MSQcDoOEhvRdiaNO9mw
-         SFiQsUBCa6slWso83FbkHHuRyd8xwt1VvIfSx5OGacGExg8ru1dO0+Gx992q8rLgh9De
-         1RW7MwJfWKlQkeRCM6isIlQYunZibwoTy6Qvlr5g/hoDNNSkzhtzTyX80t3fXRq4a9KW
-         URhLn3MyhTy2rrJDbmfBmYef5d+7AzWM7UQP4Q8dwImEf1fQemXhi33E0qLOb0mFnzkD
-         8I5/Ep/jMpymU7sBv/0TD2mapf65Pizg4Jm4gUxfnlY7f9OEYsKMYHGn/bsbgENSH9kR
-         Sv4g==
-X-Gm-Message-State: APjAAAWz416ukYBor4+pOwz7cY+MGiq7Nbu8VcqISmZ72VQH8FswxPAk
-        n4daLGvYKshuzmb4tMValYUriJQ=
-X-Google-Smtp-Source: APXvYqwJbkFnAP9SY9gK21fN7QNbYRGokvHTqwXkjjG2EwAueI58HKRICiwEd5IDm2D8dlODxUiijw==
-X-Received: by 2002:aca:cdc9:: with SMTP id d192mr124199oig.134.1556558619041;
-        Mon, 29 Apr 2019 10:23:39 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q26sm672522ota.35.2019.04.29.10.23.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Apr 2019 10:23:38 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 12:23:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     krzk@kernel.org, kgene@kernel.org, mark.rutland@arm.com,
-        cw00.choi@samsung.com, myungjoo.ham@samsung.com,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        pankaj.dubey@samsung.com, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH RFC 3/8] dt-bindings: exynos: Add ASV tables binding
- documentation
-Message-ID: <20190429172337.GA30032@bogus>
-References: <20190404171735.12815-1-s.nawrocki@samsung.com>
- <CGME20190404172234epcas1p37667ec0996000aff9297f13639908dfc@epcas1p3.samsung.com>
- <20190404171735.12815-4-s.nawrocki@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190404171735.12815-4-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Mon, 29 Apr 2019 13:35:33 -0400
+Received: from localhost.localdomain (unknown [194.230.155.114])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 59E182087B;
+        Mon, 29 Apr 2019 17:35:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1556559332;
+        bh=W/GoX7yGvh8bG51wr9bb4gUdm7k34g84QPI9aUcc8+Q=;
+        h=From:To:Subject:Date:From;
+        b=azmhrkYJy7BbsRwpc1miEtNVhrmHJzqfJtmD2TrJwXpla9dQTAtMBYppjuaRHMUaG
+         02T75tJ6yk1HU6h+7TsXKcLMykYIqBxLCeKq57A+H4t6yAWdID/JPJlHboJ+zu54Oj
+         Gl+E34Y5hQRQdC+5f7Qa/H8Li6UBs3UAzvuo/owA=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: exynos: Move CPU OPP tables out of SoC node on Exynos5420
+Date:   Mon, 29 Apr 2019 19:35:24 +0200
+Message-Id: <20190429173524.4870-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Apr 04, 2019 at 07:17:30PM +0200, Sylwester Nawrocki wrote:
-> This patch adds documentation of the Exynos ASV (Adaptive Voltage Supply)
-> tables DT binding.
-> 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
->  .../devicetree/bindings/arm/samsung/asv.txt   | 76 +++++++++++++++++++
->  1 file changed, 76 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/samsung/asv.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/samsung/asv.txt b/Documentation/devicetree/bindings/arm/samsung/asv.txt
-> new file mode 100644
-> index 000000000000..0db907263a91
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/samsung/asv.txt
-> @@ -0,0 +1,76 @@
-> +Exynos Adaptive Supply Voltage (ASV) tables
-> +-------------------------------------------
-> +
-> +The Adaptive Supply Voltage (ASV) on Exynos SoCs is a technique of adjusting
-> +operating points, i.e. the power supply voltage for given clock frequency,
-> +in order to better match actual capabilities of the hardware and optimize power
-> +consumption.  This applies to subsystem of the SoC like: CPU clusters, GPU,
-> +the memory controller or camera ISP.  During production process the SoC chip
-> +is assigned to one of several bins (ASV groups) and the group information
-> +is encoded in the SoC CHIPID block registers and/or OTP memory. This information
-> +is then used by the OS to select more finely matching operating points for
-> +devices.
+The cpus node is a top-level node, not inside the soc.  Therefore its
+OPP tables should be there as well.
 
-We already have OPP tables defined for QCom CPUs to do speed bining, and 
-I just reviewed something from Allwinner for similar purposes. We can't 
-have each vendor doing their own thing here.
+This also fixes the DTC warnings like:
 
-Rob
+    arch/arm/boot/dts/exynos5420.dtsi:46.37-109.5:
+        Warning simple_bus_reg): /soc/opp_table0: missing or empty reg/ranges property
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm/boot/dts/exynos5420.dtsi | 216 +++++++++++++++---------------
+ 1 file changed, 109 insertions(+), 107 deletions(-)
+
+diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
+index 5fb2326875dc..16088186a33a 100644
+--- a/arch/arm/boot/dts/exynos5420.dtsi
++++ b/arch/arm/boot/dts/exynos5420.dtsi
+@@ -42,117 +42,119 @@
+ 	 * by exynos5420-cpus.dtsi or exynos5422-cpus.dtsi.
+ 	 */
+ 
+-	soc: soc {
+-		cluster_a15_opp_table: opp_table0 {
+-			compatible = "operating-points-v2";
+-			opp-shared;
+-			opp-1800000000 {
+-				opp-hz = /bits/ 64 <1800000000>;
+-				opp-microvolt = <1250000>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1700000000 {
+-				opp-hz = /bits/ 64 <1700000000>;
+-				opp-microvolt = <1212500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1600000000 {
+-				opp-hz = /bits/ 64 <1600000000>;
+-				opp-microvolt = <1175000>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1500000000 {
+-				opp-hz = /bits/ 64 <1500000000>;
+-				opp-microvolt = <1137500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1400000000 {
+-				opp-hz = /bits/ 64 <1400000000>;
+-				opp-microvolt = <1112500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1300000000 {
+-				opp-hz = /bits/ 64 <1300000000>;
+-				opp-microvolt = <1062500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1200000000 {
+-				opp-hz = /bits/ 64 <1200000000>;
+-				opp-microvolt = <1037500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1100000000 {
+-				opp-hz = /bits/ 64 <1100000000>;
+-				opp-microvolt = <1012500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1000000000 {
+-				opp-hz = /bits/ 64 <1000000000>;
+-				opp-microvolt = < 987500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-900000000 {
+-				opp-hz = /bits/ 64 <900000000>;
+-				opp-microvolt = < 962500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-800000000 {
+-				opp-hz = /bits/ 64 <800000000>;
+-				opp-microvolt = < 937500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-700000000 {
+-				opp-hz = /bits/ 64 <700000000>;
+-				opp-microvolt = < 912500>;
+-				clock-latency-ns = <140000>;
+-			};
++	cluster_a15_opp_table: opp_table0 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp-1800000000 {
++			opp-hz = /bits/ 64 <1800000000>;
++			opp-microvolt = <1250000>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1700000000 {
++			opp-hz = /bits/ 64 <1700000000>;
++			opp-microvolt = <1212500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1600000000 {
++			opp-hz = /bits/ 64 <1600000000>;
++			opp-microvolt = <1175000>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1500000000 {
++			opp-hz = /bits/ 64 <1500000000>;
++			opp-microvolt = <1137500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1400000000 {
++			opp-hz = /bits/ 64 <1400000000>;
++			opp-microvolt = <1112500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1300000000 {
++			opp-hz = /bits/ 64 <1300000000>;
++			opp-microvolt = <1062500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1200000000 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <1037500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1100000000 {
++			opp-hz = /bits/ 64 <1100000000>;
++			opp-microvolt = <1012500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1000000000 {
++			opp-hz = /bits/ 64 <1000000000>;
++			opp-microvolt = < 987500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-900000000 {
++			opp-hz = /bits/ 64 <900000000>;
++			opp-microvolt = < 962500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-800000000 {
++			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = < 937500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-700000000 {
++			opp-hz = /bits/ 64 <700000000>;
++			opp-microvolt = < 912500>;
++			clock-latency-ns = <140000>;
+ 		};
++	};
+ 
+-		cluster_a7_opp_table: opp_table1 {
+-			compatible = "operating-points-v2";
+-			opp-shared;
+-			opp-1300000000 {
+-				opp-hz = /bits/ 64 <1300000000>;
+-				opp-microvolt = <1275000>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1200000000 {
+-				opp-hz = /bits/ 64 <1200000000>;
+-				opp-microvolt = <1212500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1100000000 {
+-				opp-hz = /bits/ 64 <1100000000>;
+-				opp-microvolt = <1162500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-1000000000 {
+-				opp-hz = /bits/ 64 <1000000000>;
+-				opp-microvolt = <1112500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-900000000 {
+-				opp-hz = /bits/ 64 <900000000>;
+-				opp-microvolt = <1062500>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-800000000 {
+-				opp-hz = /bits/ 64 <800000000>;
+-				opp-microvolt = <1025000>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-700000000 {
+-				opp-hz = /bits/ 64 <700000000>;
+-				opp-microvolt = <975000>;
+-				clock-latency-ns = <140000>;
+-			};
+-			opp-600000000 {
+-				opp-hz = /bits/ 64 <600000000>;
+-				opp-microvolt = <937500>;
+-				clock-latency-ns = <140000>;
+-			};
++	cluster_a7_opp_table: opp_table1 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp-1300000000 {
++			opp-hz = /bits/ 64 <1300000000>;
++			opp-microvolt = <1275000>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1200000000 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <1212500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1100000000 {
++			opp-hz = /bits/ 64 <1100000000>;
++			opp-microvolt = <1162500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-1000000000 {
++			opp-hz = /bits/ 64 <1000000000>;
++			opp-microvolt = <1112500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-900000000 {
++			opp-hz = /bits/ 64 <900000000>;
++			opp-microvolt = <1062500>;
++			clock-latency-ns = <140000>;
++		};
++		opp-800000000 {
++			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = <1025000>;
++			clock-latency-ns = <140000>;
++		};
++		opp-700000000 {
++			opp-hz = /bits/ 64 <700000000>;
++			opp-microvolt = <975000>;
++			clock-latency-ns = <140000>;
++		};
++		opp-600000000 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <937500>;
++			clock-latency-ns = <140000>;
+ 		};
++	};
+ 
++	soc: soc {
+ 		cci: cci@10d20000 {
+ 			compatible = "arm,cci-400";
+ 			#address-cells = <1>;
+-- 
+2.17.1
+
