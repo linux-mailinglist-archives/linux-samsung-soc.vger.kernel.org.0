@@ -2,194 +2,121 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4B14E944
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Apr 2019 19:36:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56385EDD1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Apr 2019 02:31:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728908AbfD2Rge (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Apr 2019 13:36:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46202 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728839AbfD2Rgd (ORCPT
+        id S1729391AbfD3Aao (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Apr 2019 20:30:44 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:43190 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729328AbfD3Aah (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Apr 2019 13:36:33 -0400
-Received: from localhost.localdomain (unknown [194.230.155.114])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8F9982147A;
-        Mon, 29 Apr 2019 17:36:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556559393;
-        bh=yE24FEyTF2C8cN5/dSKPH6GLAs85kDRq9wj5o8UEXBI=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=j4i0gt9jn8tJ3JWTAicxu5Qx6vmTQgpn3WwObdKy5zZTLBF03TbJsL65Kh0Ve9gbG
-         hSyzUvvnQiECaIjvcnWljXcT7jhUBamIw3trkLL9zVTL6iAkizi2wgyU91dyAQC8mN
-         0tLsf7+hxgpWcTcc2+G3BlMdDgw0cz33AEYLUW6c=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Mon, 29 Apr 2019 20:30:37 -0400
+Received: by mail-ed1-f66.google.com with SMTP id j20so10732685edq.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Apr 2019 17:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arista.com; s=googlenew;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tmHyoZA3s8+eH8irHXDQwuHohJUycE2ziw5RpU+dlOU=;
+        b=MOPfSeYvgFTPgmXOyqu5vdYm5hkSdQbjS+ZqEcO2RU+mAi+5MAMZoFxX3IpBDPLPQS
+         +6cxB/pSPBzbPChynLlIkPp4j946qOnm4Ye/TMQhOEbAMuMfpeVVBcoKcz4+RJW8yx6/
+         Ved8pdw06sn2gpyLII0BLDY6t7Sg8N2naFdo6CAqbtTC39FR3o1Tc1kBC5kIorVz+Ak4
+         ako09dGNcEJDViNxWaT8wPfz1pEdUxqyVHmDsDi6DvZ163SxxHJc0/irfHhaluAhRXut
+         fRdoOWoA4QNK2yK1oJ5SHB/z+IS3njGTe+Ft9ivlpb8yi+AAVdDoaUQ0ZqtYNO7vRck8
+         qUcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tmHyoZA3s8+eH8irHXDQwuHohJUycE2ziw5RpU+dlOU=;
+        b=V5tn1Gwws00xcMCkYjpFev29pfpjR6MM5fVXO3dnrULyc/OXZmZfkAxGPBYqi6hw5o
+         kfDiAPzwbRg54Sx/45og5NVUjoGwuOTcLtkcnHneouHN0e27DjbADVsNFBntMD+rI8p9
+         xJjF/TSYjfe2ysNwlkkWPST/PPB7yN4nhD4RHA9CpNrKo34wiWyZhm8RCNwCWKXVcqya
+         SYo/1B2eg53w0GlVTEZVmMVZSOqOsLSQzbYL9JFsSJCZekRYVygh+RtwVvZd+GSEuYae
+         zczFIKDQ2S31geQUWf+GfMvSbM/+LGa5e0RlvnQnOL4qMA49lUmDC1fOOTdVib+ekkqF
+         jJrw==
+X-Gm-Message-State: APjAAAXEtqV0ytQoSTGdR5sKZqccpEUm0A+C4tBRxsI41X0/nW0HheEt
+        HbcL46i0PJAqg38NPM11KV0R6Q==
+X-Google-Smtp-Source: APXvYqxnysyX/Gy2Mv+d0SzufhcdmkrISFZgci8tZfFs0rMtqN5Lk2YDEgY4FPz5PnrMa8o5ipagUg==
+X-Received: by 2002:aa7:c88a:: with SMTP id p10mr41403077eds.145.1556584235673;
+        Mon, 29 Apr 2019 17:30:35 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:8084:a0:bc00:7d76:7b66:68:3b5f])
+        by smtp.gmail.com with ESMTPSA id a9sm9424163edt.93.2019.04.29.17.30.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 17:30:35 -0700 (PDT)
+From:   Tom Murphy <tmurphy@arista.com>
+To:     iommu@lists.linux-foundation.org
+Cc:     murphyt7@tcd.ie, Tom Murphy <tmurphy@arista.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: exynos_defconfig: Trim and reorganize with savedefconfig
-Date:   Mon, 29 Apr 2019 19:36:20 +0200
-Message-Id: <20190429173620.5078-2-krzk@kernel.org>
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: [PATCH v2 0/4] iommu/amd: Convert the AMD iommu driver to the dma-iommu api
+Date:   Tue, 30 Apr 2019 01:29:47 +0100
+Message-Id: <20190430002952.18909-1-tmurphy@arista.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190429173620.5078-1-krzk@kernel.org>
-References: <20190429173620.5078-1-krzk@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Trim and reorganize the defconfig with savedefconfig on latest
-linux-next.  The ARCH_EXYNOS3 is removed because it become the default.
+Convert the AMD iommu driver to the dma-iommu api. Remove the iova
+handling and reserve region code from the AMD iommu driver.
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm/configs/exynos_defconfig | 62 ++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 35 deletions(-)
+Change-log:
+v2:
+-Rebase on top of this series:
+ http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/dma-iommu-ops.3
+-Add a gfp_t parameter to the iommu_ops::map function.
+-Made use of the reserve region code inside the dma-iommu api
 
-diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
-index c95c54284da2..8d08eed99aa1 100644
---- a/arch/arm/configs/exynos_defconfig
-+++ b/arch/arm/configs/exynos_defconfig
-@@ -1,21 +1,15 @@
- CONFIG_SYSVIPC=y
- CONFIG_NO_HZ=y
- CONFIG_HIGH_RES_TIMERS=y
-+CONFIG_PREEMPT=y
- CONFIG_CGROUPS=y
- CONFIG_BLK_DEV_INITRD=y
- CONFIG_PERF_EVENTS=y
--CONFIG_MODULES=y
--CONFIG_MODULE_UNLOAD=y
--CONFIG_PARTITION_ADVANCED=y
- CONFIG_ARCH_EXYNOS=y
--CONFIG_ARCH_EXYNOS3=y
- CONFIG_SMP=y
- CONFIG_BIG_LITTLE=y
- CONFIG_NR_CPUS=8
--CONFIG_PREEMPT=y
--CONFIG_AEABI=y
- CONFIG_HIGHMEM=y
--CONFIG_CMA=y
- CONFIG_SECCOMP=y
- CONFIG_ZBOOT_ROM_TEXT=0x0
- CONFIG_ZBOOT_ROM_BSS=0x0
-@@ -37,6 +31,16 @@ CONFIG_NEON=y
- CONFIG_KERNEL_MODE_NEON=y
- CONFIG_PM_DEBUG=y
- CONFIG_PM_ADVANCED_DEBUG=y
-+CONFIG_ARM_CRYPTO=y
-+CONFIG_CRYPTO_SHA1_ARM_NEON=m
-+CONFIG_CRYPTO_SHA256_ARM=m
-+CONFIG_CRYPTO_SHA512_ARM=m
-+CONFIG_CRYPTO_AES_ARM_BS=m
-+CONFIG_CRYPTO_CHACHA20_NEON=m
-+CONFIG_MODULES=y
-+CONFIG_MODULE_UNLOAD=y
-+CONFIG_PARTITION_ADVANCED=y
-+CONFIG_CMA=y
- CONFIG_NET=y
- CONFIG_PACKET=y
- CONFIG_UNIX=y
-@@ -60,10 +64,7 @@ CONFIG_BT_HCIBTSDIO=m
- CONFIG_BT_HCIUART=m
- CONFIG_BT_HCIUART_BCSP=y
- CONFIG_BT_HCIUART_ATH3K=y
--CONFIG_BT_HCIUART_3WIRE=y
- CONFIG_BT_HCIUART_INTEL=y
--CONFIG_BT_HCIUART_BCM=y
--CONFIG_BT_HCIUART_QCA=y
- CONFIG_BT_HCIUART_AG6XX=y
- CONFIG_BT_HCIUART_MRVL=y
- CONFIG_BT_HCIBCM203X=m
-@@ -86,8 +87,6 @@ CONFIG_NFC_SHDLC=y
- CONFIG_NFC_S3FWRN5_I2C=y
- CONFIG_DEVTMPFS=y
- CONFIG_DEVTMPFS_MOUNT=y
--CONFIG_DMA_CMA=y
--CONFIG_CMA_SIZE_MBYTES=96
- CONFIG_BLK_DEV_LOOP=y
- CONFIG_BLK_DEV_CRYPTOLOOP=y
- CONFIG_BLK_DEV_RAM=y
-@@ -155,8 +154,6 @@ CONFIG_THERMAL_EMULATION=y
- CONFIG_WATCHDOG=y
- CONFIG_S3C2410_WATCHDOG=y
- CONFIG_MFD_CROS_EC=y
--CONFIG_CROS_EC_I2C=y
--CONFIG_CROS_EC_SPI=y
- CONFIG_MFD_MAX14577=y
- CONFIG_MFD_MAX77686=y
- CONFIG_MFD_MAX77693=y
-@@ -282,16 +279,17 @@ CONFIG_RTC_DRV_S5M=y
- CONFIG_RTC_DRV_S3C=y
- CONFIG_DMADEVICES=y
- CONFIG_PL330_DMA=y
--CONFIG_CROS_EC_CHARDEV=y
-+CONFIG_CROS_EC_I2C=y
-+CONFIG_CROS_EC_SPI=y
- CONFIG_COMMON_CLK_MAX77686=y
- CONFIG_COMMON_CLK_S2MPS11=y
-+CONFIG_EXYNOS_IOMMU=y
- CONFIG_PM_DEVFREQ=y
- CONFIG_DEVFREQ_GOV_PERFORMANCE=y
- CONFIG_DEVFREQ_GOV_POWERSAVE=y
- CONFIG_DEVFREQ_GOV_USERSPACE=y
- CONFIG_ARM_EXYNOS_BUS_DEVFREQ=y
- CONFIG_DEVFREQ_EVENT_EXYNOS_NOCP=y
--CONFIG_EXYNOS_IOMMU=y
- CONFIG_EXTCON=y
- CONFIG_EXTCON_MAX14577=y
- CONFIG_EXTCON_MAX77693=y
-@@ -319,21 +317,9 @@ CONFIG_NLS_CODEPAGE_437=y
- CONFIG_NLS_ASCII=y
- CONFIG_NLS_ISO8859_1=y
- CONFIG_NLS_UTF8=y
--CONFIG_PRINTK_TIME=y
--CONFIG_DYNAMIC_DEBUG=y
--CONFIG_DEBUG_INFO=y
--CONFIG_DEBUG_FS=y
--CONFIG_MAGIC_SYSRQ=y
--CONFIG_DEBUG_KERNEL=y
--CONFIG_SOFTLOCKUP_DETECTOR=y
--# CONFIG_DETECT_HUNG_TASK is not set
--CONFIG_PROVE_LOCKING=y
--CONFIG_DEBUG_ATOMIC_SLEEP=y
--CONFIG_DEBUG_USER=y
--CONFIG_CRYPTO_RSA=m
--CONFIG_CRYPTO_DH=m
- CONFIG_CRYPTO_USER=m
- CONFIG_CRYPTO_TEST=m
-+CONFIG_CRYPTO_DH=m
- CONFIG_CRYPTO_LRW=m
- CONFIG_CRYPTO_XTS=m
- CONFIG_CRYPTO_MD5=m
-@@ -348,12 +334,18 @@ CONFIG_CRYPTO_USER_API_RNG=m
- CONFIG_CRYPTO_USER_API_AEAD=m
- CONFIG_CRYPTO_DEV_EXYNOS_RNG=y
- CONFIG_CRYPTO_DEV_S5P=y
--CONFIG_ARM_CRYPTO=y
--CONFIG_CRYPTO_SHA1_ARM_NEON=m
--CONFIG_CRYPTO_SHA256_ARM=m
--CONFIG_CRYPTO_SHA512_ARM=m
--CONFIG_CRYPTO_AES_ARM_BS=m
--CONFIG_CRYPTO_CHACHA20_NEON=m
- CONFIG_CRC_CCITT=y
-+CONFIG_DMA_CMA=y
-+CONFIG_CMA_SIZE_MBYTES=96
- CONFIG_FONTS=y
- CONFIG_FONT_7x14=y
-+CONFIG_PRINTK_TIME=y
-+CONFIG_DYNAMIC_DEBUG=y
-+CONFIG_DEBUG_INFO=y
-+CONFIG_MAGIC_SYSRQ=y
-+CONFIG_DEBUG_KERNEL=y
-+CONFIG_SOFTLOCKUP_DETECTOR=y
-+# CONFIG_DETECT_HUNG_TASK is not set
-+CONFIG_PROVE_LOCKING=y
-+CONFIG_DEBUG_ATOMIC_SLEEP=y
-+CONFIG_DEBUG_USER=y
+Tom Murphy (4):
+  iommu: Add gfp parameter to iommu_ops::map
+  iommu/dma-iommu: Handle deferred devices
+  iommu/dma-iommu: Use the dev->coherent_dma_mask
+  iommu/amd: Convert the AMD iommu driver to the dma-iommu api
+
+ drivers/iommu/Kconfig          |   1 +
+ drivers/iommu/amd_iommu.c      | 694 ++++-----------------------------
+ drivers/iommu/arm-smmu-v3.c    |   2 +-
+ drivers/iommu/arm-smmu.c       |   2 +-
+ drivers/iommu/dma-iommu.c      |  52 ++-
+ drivers/iommu/exynos-iommu.c   |   2 +-
+ drivers/iommu/intel-iommu.c    |   2 +-
+ drivers/iommu/iommu.c          |  43 +-
+ drivers/iommu/ipmmu-vmsa.c     |   2 +-
+ drivers/iommu/msm_iommu.c      |   2 +-
+ drivers/iommu/mtk_iommu.c      |   2 +-
+ drivers/iommu/mtk_iommu_v1.c   |   2 +-
+ drivers/iommu/omap-iommu.c     |   2 +-
+ drivers/iommu/qcom_iommu.c     |   2 +-
+ drivers/iommu/rockchip-iommu.c |   2 +-
+ drivers/iommu/s390-iommu.c     |   2 +-
+ drivers/iommu/tegra-gart.c     |   2 +-
+ drivers/iommu/tegra-smmu.c     |   2 +-
+ include/linux/iommu.h          |  21 +-
+ 19 files changed, 187 insertions(+), 652 deletions(-)
+
 -- 
 2.17.1
 
