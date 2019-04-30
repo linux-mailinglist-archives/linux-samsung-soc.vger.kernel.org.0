@@ -2,262 +2,223 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 862EFFAFB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Apr 2019 16:05:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BD641008B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Apr 2019 22:04:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727106AbfD3OFK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 30 Apr 2019 10:05:10 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45581 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727610AbfD3OFJ (ORCPT
+        id S1726049AbfD3UEn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 30 Apr 2019 16:04:43 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:43760 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbfD3UEj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 30 Apr 2019 10:05:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s15so21139579wra.12
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 30 Apr 2019 07:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arista.com; s=googlenew;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k/9wOkFYEcdfe2lDE3RgJ9XrcROImtihW8mQBU1smko=;
-        b=OA3m6lvCcq8/juhLoSHA7zp4SBEq74FDRp+bt82WW/O1qduxhlEYloq+dn0azMWtnA
-         n3FZy37ln/zhGjGYyzx4onZAxbedE4a+MxlD6pitCmdT7Qh5ChbdLOjK2Bn9FP4P5VXQ
-         dJhFXGVFYLTssM/QMhCQE1/HM/y+K1REM05WF4TLZCbLuuWebi+Rja1ORa7yawLDbgJU
-         koESfJzTV4QtR5aNCXd9h+a+gQITKLTutgfRGuuZmyf4GInAAfsh1u4xKWmHrPT3gX86
-         xnxk0DqFSjm4Xc2yxxXOlvMd78yWIrqoGSZE85ey4WzTI9UAm1clSklJF/uA3/XrN3eX
-         ePkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k/9wOkFYEcdfe2lDE3RgJ9XrcROImtihW8mQBU1smko=;
-        b=B+VKabUHd8vJWdChRkgD4uIipcbsocJFk80U95zXKv3Ya6FTp0iboirvPJESyV0pFp
-         Z3EnTN5WSeQEiKRVGtVhdOl+WRNZ0KmaDf9lbSpOV5OGl5ZBU/EcqHpeHUPSAuEZBezD
-         6vR0Pt1k0yfGWZjTVCA5NjzF+rnSeksem4QlorJRau3eyshH9yjKqYs2b1uLV1Vq09MU
-         sIFU9YnKhH2VcDahUaKt54BsYqELuSf7x/GT2F1OIb215kUFnKrmskZMFy6f3NUK/1B2
-         Pur/D2g+qzfBuYSzdbUxBX6CqWy8+am3Hkrcxsm6P6C4BIDm2ZaFvkT2CpIy1K4dZeGj
-         dyYw==
-X-Gm-Message-State: APjAAAV4jMX6jHebNG+xKFcc0rUKgTfy3tmsNDsKq2akVL8cWTClD9Oe
-        jhrGfT4Xs1S9zJyZ6Me1q1RI8I50W5VQjFOPOAJEGg==
-X-Google-Smtp-Source: APXvYqzzIdbUrD0qcyluPgpdlTsVev3ygvx2lD9BOg8bHhMuXmms+vYEjLzdr+qc3EOfM4jIlT0RLX6uxvBgRC84Zvg=
-X-Received: by 2002:adf:b68d:: with SMTP id j13mr48305854wre.50.1556633106943;
- Tue, 30 Apr 2019 07:05:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190430002952.18909-1-tmurphy@arista.com> <20190430002952.18909-3-tmurphy@arista.com>
- <2750fa37-a59c-3074-6545-b19046ce3699@arm.com>
-In-Reply-To: <2750fa37-a59c-3074-6545-b19046ce3699@arm.com>
-From:   Tom Murphy <tmurphy@arista.com>
-Date:   Tue, 30 Apr 2019 15:04:55 +0100
-Message-ID: <CAPL0++4UeWczgmSa+X0L2_27Xr5tsXTU4k_B1JB33Tm=vQAa8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] iommu/dma-iommu: Handle deferred devices
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
-        Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will.deacon@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
+        Tue, 30 Apr 2019 16:04:39 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190430200437euoutp02c2142d3d016183a63878ea4809c4e34e~aWS5svzVr2006620066euoutp029
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 30 Apr 2019 20:04:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190430200437euoutp02c2142d3d016183a63878ea4809c4e34e~aWS5svzVr2006620066euoutp029
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1556654677;
+        bh=Gpy8BLya4g2MHxARJxwy2Jm4W95tw290iv7EKrZLDV8=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=KISzi5OKkCl1BAoQPlogjigM3qKs+Rx1iQDG5cfcRiFtcP1TrWSIWrwyDhSb9WAox
+         6082RJpmA6YFkvXfAMDdRHct3+4arjl2zfFfVukkPddjKFmSLy5piT/wCKxoMJiIo7
+         D9BGx5TLRBdkvtnLzh+phnjjvvumIwV39cK7ON1w=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190430200435eucas1p15920c8ae72064a01a4a7225d354561c4~aWS4TUu_Q3239632396eucas1p1V;
+        Tue, 30 Apr 2019 20:04:35 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id AC.B4.04325.35AA8CC5; Tue, 30
+        Apr 2019 21:04:35 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190430200434eucas1p2efc6bb09f7af8ec07a7fdb55d0cb8f96~aWS22uWm12356923569eucas1p2_;
+        Tue, 30 Apr 2019 20:04:34 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190430200433eusmtrp1cad2d4fcd586e20f5eb8655faab30509~aWS2nE0Dj1284412844eusmtrp1Z;
+        Tue, 30 Apr 2019 20:04:33 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-3c-5cc8aa5331f7
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id AC.93.04146.15AA8CC5; Tue, 30
+        Apr 2019 21:04:33 +0100 (BST)
+Received: from [106.120.51.20] (unknown [106.120.51.20]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190430200432eusmtip14784aaba9aafcbbd8a66b7df6e497250~aWS1mADMd0208402084eusmtip1r;
+        Tue, 30 Apr 2019 20:04:32 +0000 (GMT)
+Subject: Re: [PATCH v6 04/10] Documentation: dt: device tree bindings for
+ LPDDR3 memories
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Kukjin Kim <kgene@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Joerg Roedel <jroedel@suse.de>,
+        Thierry Reding <treding@nvidia.com>,
+        Dmitry Osipenko <digetx@gmail.com>, willy.mh.wolff.ml@gmail.com
+From:   Lukasz Luba <l.luba@partner.samsung.com>
+Message-ID: <cb929f1d-409c-ad06-e9b2-83ce104664fd@partner.samsung.com>
+Date:   Tue, 30 Apr 2019 22:04:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <CAL_JsqJUNw_aDKjWf4TkJWQFhhLCrGYWbTtWpz5jkyeONRcpQw@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf0yMcRzHfe95nrun49rTVfqsWrjNpE1YxteyZDMemY1hMxqOnlXTVe5R
+        5MeUFEVlleiUq82PXIgkJ4ST7tJv+bXox2Rl6Th1FRVx92T67/V9f97fz+fz/u5LE/JvlDsd
+        HrmPU0cqIxRiKVle/bNx3kadKXjByFNnfPt8CYXfWnsorK1qoHDx9y6Es17ki3DdKRXO6PpC
+        4MbGWxJcf6xPglsq8sR4IK0K4fONlSJ8o6pNgt8nFInx+EO9BD/rO0Hhx6+C8PtRRzxk+ogC
+        ndmhwUySvRDfTLL3NW0StlSXImbTEr+K2fQyHWLv1B5iB0q91tNbpctCuIjwWE49P2CnNOzz
+        cD8Vfd/9QFLfEyIe6V1TkQMNzCJIuJZI2FjOFCHIMwalIulftiKwpNSIhcMAgg+dN6lURNtv
+        jFuWCvpVBMbmSxMmM4JU0whpa+XMbIPe9FeUjV2YWTCanEPZTAQzSEHy9Wxk6yRmfEGv22vz
+        yJhVYBnIta9BMrOhX9tu7+PKbIGO6luU4HGCmtxPdt2B2QDawkRkY4Jxg9ZPWpHAM+CeOY+w
+        zQLmMg3tD5IIIedKONtqRgI7Q6+xTCKwJ9RmnSYF5iE+rXDCcxi6MvInPP7wzNhsT08wc6Gk
+        Yr4gr4DW6iKx8CiO8M7sJKzgCJnl5whBlsHJZLng9oay000igafD1es5kjNIoZkUTDMpjGZS
+        GM3/uQWI1CE3LoZXhXK8XyS335dXqviYyFDf3VGqUvT3G9b+Ng7qUeXYLgNiaKSYJvNeYwqW
+        U8pYPk5lQEATChcZa3weLJeFKOMOcuqoHeqYCI43IA+aVLjJDk3p3CZnQpX7uD0cF82p/1VF
+        tIN7PPKO2O55JHv0wVdLce4c/6xYq2HBYa3qrL47p7c2M8Cn33p3+ErIY+vikqPH52xucdNX
+        eUnbwhreLLm5f8zv8ryxd931HzZ51K19WfCdf3RpXQCnbgpsMwSuKumo7M71nhk7WPG7MLDP
+        tKXHvPpX71Qf/a+O0pRlU73GXl+0/Fje86aoXEHyYcqFPoSaV/4BouTD24IDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42I5/e/4Xd3AVSdiDC71ylpsnLGe1eL6l+es
+        FvOPnGO1WP3xMaPF5FNzmSzOdOda9D9+zWxx/vwGdouzTW/YLS7vmsNm8bn3CKPFjPP7mCzW
+        HrnLbnG7cQWbxf89O9gtDr9pZ7XYf8XL4vZvPotvJx4xOgh7fPs6icVjdsNFFo+ds+6ye2xa
+        1cnm0dv8js2jb8sqRo/Np6s9Pm+SC+CI0rMpyi8tSVXIyC8usVWKNrQw0jO0tNAzMrHUMzQ2
+        j7UyMlXSt7NJSc3JLEst0rdL0Mt48f0Ta8FOqYrWNweYGxh3iHYxcnBICJhI/P9g2cXIxSEk
+        sJRRYuaHTyxdjJxAcTGJSfu2s0PYwhJ/rnWxgdhCAq8ZJf7f4wOxhQWiJV71XWEFsUUEFCV+
+        t01jBRnELPCTVeLMoSZGiKktzBIn9r1mAdnGJqAnsWNVIUgDr4CbxIfPM5lBbBYBVYlP8++B
+        LRYViJA4834FC0SNoMTJmU/AbE6BQIn5C5sZQWxmATOJeZsfMkPY4hK3nsxngrDlJba/ncM8
+        gVFoFpL2WUhaZiFpmYWkZQEjyypGkdTS4tz03GJDveLE3OLSvHS95PzcTYzABLDt2M/NOxgv
+        bQw+xCjAwajEw3vB7USMEGtiWXFl7iFGCQ5mJRFej+NHY4R4UxIrq1KL8uOLSnNSiw8xmgI9
+        N5FZSjQ5H5ic8kriDU0NzS0sDc2NzY3NLJTEeTsEDsYICaQnlqRmp6YWpBbB9DFxcEo1MCqK
+        2M7d9uL+kf8/Fin9OPFcT47hq5Ho3PWZHz9pv5lgUxzVpnre/aXLMs4tj74+OKKpeC/dTFX/
+        HtdXyTrmSTwn86Y7nusO2Cz/TkL/HefRJLuyJbJBzqfVTX/uDJzz+HGq9Y6Dlg29z/mSJsye
+        0nVLPqxe7KKkxFr5ua7+vgUfYqfNdXjnLKzEUpyRaKjFXFScCACy877cFgMAAA==
+X-CMS-MailID: 20190430200434eucas1p2efc6bb09f7af8ec07a7fdb55d0cb8f96
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190419141945eucas1p1c95d65f261f82da5c856c0f2fcf1ce87
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190419141945eucas1p1c95d65f261f82da5c856c0f2fcf1ce87
+References: <1555683568-20882-1-git-send-email-l.luba@partner.samsung.com>
+        <CGME20190419141945eucas1p1c95d65f261f82da5c856c0f2fcf1ce87@eucas1p1.samsung.com>
+        <1555683568-20882-5-git-send-email-l.luba@partner.samsung.com>
+        <20190425195156.GA31128@bogus>
+        <86715dda-c1b0-5354-17d2-419f8137cb91@partner.samsung.com>
+        <CAL_JsqJUNw_aDKjWf4TkJWQFhhLCrGYWbTtWpz5jkyeONRcpQw@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Apr 30, 2019 at 2:42 PM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 30/04/2019 01:29, Tom Murphy wrote:
-> > Handle devices which defer their attach to the iommu in the dma-iommu api
->
-> I've just spent a while trying to understand what this is about...
->
-> AFAICS it's a kdump thing where the regular default domain attachment
-> may lead to ongoing DMA traffic from the crashed kernel raising a fault
-> storm, so we put off the "real" attach of a given device until we know
-> it's been reset and brought into a sane state, but the only way to
-> reliably detect that is to wait until the kdump kernel driver starts
-> making new DMA mappings. Is that about right?
+Hi Rob,
 
-That's the impression I got too. The many iterations of the patch
-series which contributed this code makes it hard to figure out exactly
-why it's doing what it's doing but AFAIK it works how you described
-it.
+On 4/29/19 6:36 PM, Rob Herring wrote:
+> On Mon, Apr 29, 2019 at 7:05 AM Lukasz Luba <l.luba@partner.samsung.com> wrote:
+>>
+>> Hi Rob,
+>>
+>> On 4/25/19 9:51 PM, Rob Herring wrote:
+>>> On Fri, Apr 19, 2019 at 04:19:22PM +0200, Lukasz Luba wrote:
+>>>> The device tree bindings for LPDDR3 SDRAM memories.
+>>>>
+>>>> For specifying the AC timing parameters of the memory device
+>>>> the 'lpddr3' binding uses binding 'lpddr2-timings'.
+>>>>
+>>>> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+>>>> ---
+>>>>    .../devicetree/bindings/lpddr3/lpddr3-timings.txt  | 57 +++++++++++++
+>>>>    .../devicetree/bindings/lpddr3/lpddr3.txt          | 93 ++++++++++++++++++++++
+>>>
+>>> Please rename the lpddr2 directory to 'ddr' and add these to it.
+>> OK, I will rename it in the nex patch set.
+>>>
+>>> Maybe whatever properties are common should be put in a common doc.
+>> There are maybe a few common properties, but I would not dare to merge
+>> lpddr2 and lpddr3 before consulting it with TI engineers who made
+>> LPDDR2 support.
+> 
+> Why not. You aren't changing anything. Just rearranging.
+True.
+> 
+>> Could we work on a common file after the patch set got merged?
+> 
+> Yes, but please still move everything to a common directory.
+OK, I am currently working on it and moving these lpddr* files into
+Documentation/devicetree/bindings/ddr/
+Then after acceptance I will find the common stuff and do the merge.
+> 
+>>>
+>>>>    2 files changed, 150 insertions(+)
+>>>>    create mode 100644 Documentation/devicetree/bindings/lpddr3/lpddr3-timings.txt
+>>>>    create mode 100644 Documentation/devicetree/bindings/lpddr3/lpddr3.txt
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/lpddr3/lpddr3-timings.txt b/Documentation/devicetree/bindings/lpddr3/lpddr3-timings.txt
+>>>> new file mode 100644
+>>>> index 0000000..ebf3e00
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/lpddr3/lpddr3-timings.txt
+>>>> @@ -0,0 +1,57 @@
+>>>> +* AC timing parameters of LPDDR3 memories for a given speed-bin.
+>>>> +* The structures are based on LPDDR2 and extended where needed.
+>>>> +
+>>>> +Required properties:
+>>>> +- compatible : Should be "jedec,lpddr3-timings"
+>>>> +- min-freq : minimum DDR clock frequency for the speed-bin. Type is <u32>
+>>>> +- max-freq : maximum DDR clock frequency for the speed-bin. Type is <u32>
+>>>> +
+>>>> +Optional properties:
+>>>> +
+>>>> +The following properties represent AC timing parameters from the memory
+>>>> +data-sheet of the device for a given speed-bin. All these properties are
+>>>> +of type <u32> and the default unit is ps (pico seconds).
+>>>> +- tRFC
+>>>> +- tRRD
+>>>> +- tRPab
+>>>> +- tRPpb
+>>>> +- tRCD
+>>>> +- tRC
+>>>> +- tRAS
+>>>> +- tWTR
+>>>> +- tWR
+>>>> +- tRTP
+>>>> +- tW2W-C2C
+>>>> +- tR2R-C2C
+>>>> +- tFAW
+>>>> +- tXSR
+>>>> +- tXP
+>>>> +- tCKE
+>>>> +- tCKESR
+>>>> +- tMRD
+>>>> +
+>>>> +Example:
+>>>> +
+>>>> +timings_samsung_K3QF2F20DB_800mhz: lpddr3-timings@0 {
+>>>
+>>> Since the lpddr2 version was written, we've gotten stricter about
+>>> allowing unit-address without reg property. Perhaps 'reg' should be the
+>>> max-freq instead.
+>> OK, so I will rename 'max-freq' to 'reg' and add a comment with:
+>> '/* workaround: it shows max-freq */
+>> Does it make sense?
+> 
+> Sure.
+OK. Thank you.
 
->
-> (I note that for SMMUv3 we now handle that situation with the slightly
-> more heavy-handed approach of just turning off reporting and letting the
-> 'rogue' devices fault silently, but I appreciate that not all IOMMUs may
-> have that option)
->
-> > Signed-off-by: Tom Murphy <tmurphy@arista.com>
-> > ---
-> >   drivers/iommu/dma-iommu.c | 30 ++++++++++++++++++++++++++++++
-> >   1 file changed, 30 insertions(+)
-> >
-> > diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> > index 7a96c2c8f56b..c18f74ad1e8b 100644
-> > --- a/drivers/iommu/dma-iommu.c
-> > +++ b/drivers/iommu/dma-iommu.c
-> > @@ -322,6 +322,17 @@ static int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
-> >       return iova_reserve_iommu_regions(dev, domain);
-> >   }
-> >
-> > +static int handle_deferred_device(struct device *dev)
-> > +{
-> > +     struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
->
-> We don't want iommu_get_domain_for_dev() in fast-paths, as the
-> contention on the group refcount has proven to have a surprisingly high
-> overhead on some large systems. That's what iommu_get_dma_domain()
-> solves, but ideally, can this be wrapped in is_kdump_kernel() such as to
-> have no impact at all on the general case?
-
-will do.
-
->
-> > +     const struct iommu_ops *ops = domain->ops;
-> > +
-> > +     if (ops->is_attach_deferred && ops->is_attach_deferred(domain, dev))
-> > +             return iommu_attach_device(domain, dev);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >   /**
-> >    * dma_info_to_prot - Translate DMA API directions and attributes to IOMMU API
-> >    *                    page flags.
-> > @@ -835,6 +846,8 @@ static dma_addr_t iommu_dma_map_page(struct device *dev, struct page *page,
-> >       bool coherent = dev_is_dma_coherent(dev);
-> >       dma_addr_t dma_handle;
-> >
-> > +     handle_deferred_device(dev);
-> > +
-> >       dma_handle =__iommu_dma_map(dev, phys, size,
-> >                       dma_info_to_prot(dir, coherent, attrs),
-> >                       iommu_get_dma_domain(dev));
-> > @@ -849,6 +862,8 @@ static void iommu_dma_unmap_page(struct device *dev, dma_addr_t dma_handle,
-> >   {
-> >       struct iommu_domain *domain = iommu_get_dma_domain(dev);
-> >
-> > +     handle_deferred_device(dev);
->
-> You don't need this - it's completely bogus to make an unmap call
-> without having already called the corresponding map function, so we can
-> assume it's already been dealt with.
->
-> > +
-> >       if (!dev_is_dma_coherent(dev) && !(attrs & DMA_ATTR_SKIP_CPU_SYNC)) {
-> >               phys_addr_t phys = iommu_iova_to_phys(domain, dma_handle);
-> >
-> > @@ -873,6 +888,8 @@ static int __finalise_sg(struct device *dev, struct scatterlist *sg, int nents,
-> >       unsigned int cur_len = 0, max_len = dma_get_max_seg_size(dev);
-> >       int i, count = 0;
-> >
-> > +     handle_deferred_device(dev);
->
-> Hmm, this should be in iommu_dma_map_sg() - that's the guy that needs a
-> valid domain, and it's impossible to get to __finalise_sg() without
-> having been through there anyway.
->
-> > +
-> >       for_each_sg(sg, s, nents, i) {
-> >               /* Restore this segment's original unaligned fields first */
-> >               unsigned int s_iova_off = sg_dma_address(s);
-> > @@ -1022,6 +1039,8 @@ static void iommu_dma_unmap_sg(struct device *dev, struct scatterlist *sg,
-> >       struct scatterlist *tmp;
-> >       int i;
-> >
-> > +     handle_deferred_device(dev);
->
-> Again, not necessary.
->
-> > +
-> >       if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC) == 0)
-> >               iommu_dma_sync_sg_for_cpu(dev, sg, nents, dir);
-> >
-> > @@ -1042,6 +1061,8 @@ static void iommu_dma_unmap_sg(struct device *dev, struct scatterlist *sg,
-> >   static dma_addr_t iommu_dma_map_resource(struct device *dev, phys_addr_t phys,
-> >               size_t size, enum dma_data_direction dir, unsigned long attrs)
-> >   {
-> > +     handle_deferred_device(dev);
->
-> Ditto.
->
-> > +
-> >       return __iommu_dma_map(dev, phys, size,
-> >                       dma_info_to_prot(dir, false, attrs) | IOMMU_MMIO,
-> >                       iommu_get_dma_domain(dev));
-> > @@ -1050,12 +1071,15 @@ static dma_addr_t iommu_dma_map_resource(struct device *dev, phys_addr_t phys,
-> >   static void iommu_dma_unmap_resource(struct device *dev, dma_addr_t handle,
-> >               size_t size, enum dma_data_direction dir, unsigned long attrs)
-> >   {
-> > +     handle_deferred_device(dev);
->
-> Ditto.
->
-> > +
-> >       __iommu_dma_unmap(iommu_get_dma_domain(dev), handle, size);
-> >   }
-> >
-> >   static void *iommu_dma_alloc(struct device *dev, size_t size,
-> >               dma_addr_t *dma_handle, gfp_t gfp, unsigned long attrs)
-> >   {
-> > +     handle_deferred_device(dev);
-> >       gfp |= __GFP_ZERO;
-> >
-> >   #ifdef CONFIG_DMA_DIRECT_REMAP
-> > @@ -1076,6 +1100,8 @@ static void iommu_dma_free(struct device *dev, size_t size, void *cpu_addr,
-> >   {
-> >       struct page *page;
-> >
-> > +     handle_deferred_device(dev);
->
-> Similarly, you can't free anything that hasn't already come from a
-> successful call to iommu_dma_alloc()...
->
-> > +
-> >       /*
-> >        * cpu_addr can be one of 4 things depending on how it was allocated:
-> >        *
-> > @@ -1115,6 +1141,8 @@ static int iommu_dma_mmap(struct device *dev, struct vm_area_struct *vma,
-> >       unsigned long pfn;
-> >       int ret;
-> >
-> > +     handle_deferred_device(dev);
->
-> ...nor can you mmap() it...
->
-> > +
-> >       vma->vm_page_prot = arch_dma_mmap_pgprot(dev, vma->vm_page_prot, attrs);
-> >
-> >       if (dma_mmap_from_dev_coherent(dev, vma, cpu_addr, size, &ret))
-> > @@ -1143,6 +1171,8 @@ static int iommu_dma_get_sgtable(struct device *dev, struct sg_table *sgt,
-> >       struct page *page;
-> >       int ret;
-> >
-> > +     handle_deferred_device(dev);
->
-> ...nor attempt to export it.
-
-That all makes sense. Will fix.
-
->
-> Robin.
->
-> > +
-> >   #ifdef CONFIG_DMA_DIRECT_REMAP
-> >       if (is_vmalloc_addr(cpu_addr)) {
-> >               if (!(attrs & DMA_ATTR_FORCE_CONTIGUOUS))
-> >
+Regards,
+Lukasz
+> 
+> Rob
+> 
+> 
