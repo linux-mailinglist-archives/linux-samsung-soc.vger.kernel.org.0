@@ -2,90 +2,91 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E92CC1232B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 May 2019 22:24:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB8F11347F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2019 22:50:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbfEBUYd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 2 May 2019 16:24:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49776 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725962AbfEBUYd (ORCPT
+        id S1726901AbfECUuE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 3 May 2019 16:50:04 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:55202 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726022AbfECUuD (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 2 May 2019 16:24:33 -0400
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 027E620C01;
-        Thu,  2 May 2019 20:24:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1556828672;
-        bh=fPysuS9QGjjgbk9tLRamHIsNsWi799oVziR6RsQ3XTc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=B5FzbdvYNHyOzaACD9WnyFZMcLJAtiwUAT7VXwkycVlj1ywQdTL8YZQmE38MoGiZS
-         eJl9nziJNk5N7ip2vO/yzjxNUdRPQz4y0Mii5QzP4X0RhwXQVDrY9oxBMciQcU9kKp
-         w/z33u8QovQFpjrHmcUgbqjbLfH4vs1hkIiA4Cz4=
-Received: by mail-qt1-f177.google.com with SMTP id p20so4205810qtc.9;
-        Thu, 02 May 2019 13:24:31 -0700 (PDT)
-X-Gm-Message-State: APjAAAVyNpqnmf8M/COWusVcDQJ9AHa/OCZ1CW0mAMwLMbr+K3FjjJSa
-        KHdbRLyV8v1MFVcWO1g8TMq6Wo44q3cjFgn/0w==
-X-Google-Smtp-Source: APXvYqx6C25RjdbTQS+SWLt4/8jx2DcPpy0kcWoZHeaatbwZmHH6mbkpB3Fk9JShMpb/mxi8G6d9PZk2zE2bZTukxKg=
-X-Received: by 2002:a0c:9066:: with SMTP id o93mr4888171qvo.246.1556828671176;
- Thu, 02 May 2019 13:24:31 -0700 (PDT)
+        Fri, 3 May 2019 16:50:03 -0400
+Received: by mail-wm1-f51.google.com with SMTP id b10so8580198wmj.4;
+        Fri, 03 May 2019 13:50:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=3WRefylpHoq+bmA7wobTBIMipAzUtIxZ32oIEUbNhnE=;
+        b=TPIpMq3HbAOhfdMbRJU+GqbLr16pSHc22BKzSqjJah8dneY3X41Ms3cST5caLh70Ij
+         k/BCu3CnOADUd/FPMt4kc9bkAqm0o1L8XPAJeQwHqImpWar0wKVPeds3TlsGAXDYyuFd
+         JV1Hqo+cPsWlYmXCvLqZGpdoF1iuT71nghZFYektRxsR2WD4GihJcgLcPQF8wh4Fy7Tp
+         GWs7pK8qiZ/15z6j+G97Ae7UaMo1YIxZ5t1HGS3pz9JdwEjefwg5MoJ3IHUMUetm4J4C
+         5tbG6zfApvPPe83pXCiETYVdLrYRB60Nzgz0JmF77SksAUhHhvh2Iu9QsK93h/602y1t
+         MtKQ==
+X-Gm-Message-State: APjAAAWXa7H5R0aMZX1p39xSvcef+TPyQYko97KC4ecpNwulhiIgVDSP
+        CEhphmJi6AzfUA5Dz+P4kfQ=
+X-Google-Smtp-Source: APXvYqxklGno0XFB4B8cXBfafnXg63KYZCefaROZACKbwwyBii0hsOJbnj4lXJGrDnQZPPJlsVlyag==
+X-Received: by 2002:a7b:c00e:: with SMTP id c14mr7539524wmb.110.1556916601167;
+        Fri, 03 May 2019 13:50:01 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.114])
+        by smtp.googlemail.com with ESMTPSA id q2sm2204786wrd.48.2019.05.03.13.49.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 May 2019 13:50:00 -0700 (PDT)
+Date:   Fri, 3 May 2019 22:49:58 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Jules Maselbas <jmaselbas@kalray.eu>
+Cc:     Minas Harutyunyan <hminas@synopsys.com>,
+        Felipe Balbi <felipe.balbi@linux.intel.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [BUG BISECT] USB on Exynos4412 fails after usb: dwc2: gadget:
+ Replace phyif with phy_utmi_width
+Message-ID: <20190503204958.GA12532@kozik-lap>
 MIME-Version: 1.0
-References: <1555681688-19643-1-git-send-email-l.luba@partner.samsung.com>
- <CGME20190419134822eucas1p29c6eff0f500311749b33c4f556123cf0@eucas1p2.samsung.com>
- <1555681688-19643-4-git-send-email-l.luba@partner.samsung.com>
- <20190430223629.GA22317@bogus> <1fd44623-4a59-f014-1ae9-a7cc605ad30f@partner.samsung.com>
-In-Reply-To: <1fd44623-4a59-f014-1ae9-a7cc605ad30f@partner.samsung.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 2 May 2019 15:24:20 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJcm9Z6vYFHGyAZ+h3-kmSv6e=3NtO-fjJn3-QT0JoX+w@mail.gmail.com>
-Message-ID: <CAL_JsqJcm9Z6vYFHGyAZ+h3-kmSv6e=3NtO-fjJn3-QT0JoX+w@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] Documentation: devicetree: add PPMU events description
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>, willy.mh.wolff.ml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, May 2, 2019 at 3:52 AM Lukasz Luba <l.luba@partner.samsung.com> wrote:
->
-> Hi Rob,
->
-> On 5/1/19 12:36 AM, Rob Herring wrote:
-> > On Fri, Apr 19, 2019 at 03:48:07PM +0200, Lukasz Luba wrote:
-> >> Extend the documenation by events description with new 'event-data-type'
-> >> field. Add example how the event might be defined in DT.
-> >
-> > Why do we need event types in DT? We don't do this for other h/w such as
-> > ARM PMU.
-> In ARM PMU all the events are hard-coded into the driver code i.e. in v7
-> arch/arm/kernel/perf_event_v7.c
-> and are seen from perf. They are different type and for different
-> purpose. The Ecynos PPMU events are not seen in perf, they are
-> for internal monitoring and must not be reset by other actors like perf.
-> They are used by the 'bus drivers' to made some heuristics and tune the
-> internal settings, like frequency.
->
-> Chanwoo has written PPMU driver which relies on DT definition.
-> The DT events are used by other DT devices by phandle.
+Hi,
 
-How is that done? I don't see anything in the binding for that.
+Bisect pointed commit 707d80f0a3c5 ("usb: dwc2: gadget: Replace phyif
+with phy_utmi_width") as reason for failures of USB on Exynos4412,
+Odroid U3 board (ARMv7, exynos_defconfig, TFTP boot with nfsroot from
+NFSv4):
 
-Rob
+[    4.333996] usb 1-2: new high-speed USB device number 3 using exynos-ehci
+[    4.503942] usb 1-2: device descriptor read/64, error -71
+[    4.793970] usb 1-2: device descriptor read/64, error -71
+[    4.914748] usb usb1-port2: attempt power cycle
+[    6.224267] usb 1-3: new high-speed USB device number 5 using exynos-ehci
+[    6.393983] usb 1-3: device descriptor read/64, error -71
+[    6.684243] usb 1-3: device descriptor read/64, error -71
+[    6.954259] usb 1-3: new high-speed USB device number 6 using exynos-ehci
+[    7.123980] usb 1-3: device descriptor read/64, error -71
+[    7.413969] usb 1-3: device descriptor read/64, error -71
+[    7.534778] usb usb1-port3: attempt power cycle
+
+The boot failure is effect of lack of network adapter (USB, smsc95xx).
+Expected:
+[    4.285831] usb 1-3: New USB device found, idVendor=0424, idProduct=3503, bcdDevice=a1.a0
+[    4.288986] usb 1-3: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    4.299596] hub 1-3:1.0: USB hub found
+[    4.300027] hub 1-3:1.0: 3 ports detected
+[    5.895541] smsc95xx 1-2:1.0 eth0: link up, 100Mbps, full-duplex, lpa 0xCDE1
+
+Full kernel log is here:
+https://krzk.eu/#/builders/25/builds/1330/steps/14/logs/serial0
+https://krzk.eu/#/builders/25/builds/1330
+
+Let me know if you need any more details.
+
+Best regards,
+Krzysztof
+
