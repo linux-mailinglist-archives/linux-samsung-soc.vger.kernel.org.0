@@ -2,91 +2,123 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DB8F11347F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2019 22:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECAB913A0C
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  4 May 2019 15:24:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbfECUuE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 3 May 2019 16:50:04 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:55202 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726022AbfECUuD (ORCPT
+        id S1726693AbfEDNYQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 4 May 2019 09:24:16 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43546 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726631AbfEDNYQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 3 May 2019 16:50:03 -0400
-Received: by mail-wm1-f51.google.com with SMTP id b10so8580198wmj.4;
-        Fri, 03 May 2019 13:50:02 -0700 (PDT)
+        Sat, 4 May 2019 09:24:16 -0400
+Received: by mail-ed1-f65.google.com with SMTP id w33so7118100edb.10
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 04 May 2019 06:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arista.com; s=googlenew;
+        h=from:to:cc:subject:date:message-id;
+        bh=iyAAdc/hWRW2hoexYmZRWuZhkprGVEqqGQbkYpxS37k=;
+        b=G3KCFm0fbzzI5F1zvOaRO7d1l4ziZIc3CASA+uBY+RtDmidxSUQwWdeXFWtJOGLvYw
+         a8yXmR1xI+Y2k53XMjmr8di4aBIt0In+/ytHYBL5TqUrHglv98FG0Eh0Vd6bmRsYYwYU
+         mgxtUdE4nyACk972b901w9YsVjxBsYQseAlIOI3Cy43lAcovNGZEFC8Ba71/Oj//FiL5
+         awp0y5M0274CBiGPuUoOAsJisrUXDjTUNJ9Xc3jnQTtRfUxSI/JI+U/AQGIARS0k91zP
+         0kA1mk/UoQLSxxaLwLNPvd2A9TNRXxzX7bCEEg5Nrb8THmWNUI1ZqCSYcwSs94pbbFFl
+         Zptg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=3WRefylpHoq+bmA7wobTBIMipAzUtIxZ32oIEUbNhnE=;
-        b=TPIpMq3HbAOhfdMbRJU+GqbLr16pSHc22BKzSqjJah8dneY3X41Ms3cST5caLh70Ij
-         k/BCu3CnOADUd/FPMt4kc9bkAqm0o1L8XPAJeQwHqImpWar0wKVPeds3TlsGAXDYyuFd
-         JV1Hqo+cPsWlYmXCvLqZGpdoF1iuT71nghZFYektRxsR2WD4GihJcgLcPQF8wh4Fy7Tp
-         GWs7pK8qiZ/15z6j+G97Ae7UaMo1YIxZ5t1HGS3pz9JdwEjefwg5MoJ3IHUMUetm4J4C
-         5tbG6zfApvPPe83pXCiETYVdLrYRB60Nzgz0JmF77SksAUhHhvh2Iu9QsK93h/602y1t
-         MtKQ==
-X-Gm-Message-State: APjAAAWXa7H5R0aMZX1p39xSvcef+TPyQYko97KC4ecpNwulhiIgVDSP
-        CEhphmJi6AzfUA5Dz+P4kfQ=
-X-Google-Smtp-Source: APXvYqxklGno0XFB4B8cXBfafnXg63KYZCefaROZACKbwwyBii0hsOJbnj4lXJGrDnQZPPJlsVlyag==
-X-Received: by 2002:a7b:c00e:: with SMTP id c14mr7539524wmb.110.1556916601167;
-        Fri, 03 May 2019 13:50:01 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.114])
-        by smtp.googlemail.com with ESMTPSA id q2sm2204786wrd.48.2019.05.03.13.49.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 May 2019 13:50:00 -0700 (PDT)
-Date:   Fri, 3 May 2019 22:49:58 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Jules Maselbas <jmaselbas@kalray.eu>
-Cc:     Minas Harutyunyan <hminas@synopsys.com>,
-        Felipe Balbi <felipe.balbi@linux.intel.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [BUG BISECT] USB on Exynos4412 fails after usb: dwc2: gadget:
- Replace phyif with phy_utmi_width
-Message-ID: <20190503204958.GA12532@kozik-lap>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=iyAAdc/hWRW2hoexYmZRWuZhkprGVEqqGQbkYpxS37k=;
+        b=p8537kCIH8MGlggd71XeUC88jGROFIBLydy6gg7/p15NfV1jUuqqi7mXutSw147d0i
+         cguSjSjIxXt55VGeOBTZlKdCAudEI7uKlJo4AY8fH3dGk+KLfTmo5xTgH6C2htvjrIqv
+         yfLArgYTfVOVdOrICxuVPl6q4v1ZeWxKcHeriIpRfpblh/ehpcER8WVD2Be5tmT1dY2P
+         BEPWr+ATgWA9eRTN5xxz7mdVml9yHtk9X/d1MBofpBvQbvvde32zp12NCh0iN9M577lb
+         R5nO2WGflS2QMFcgapLNf8eLD0n+wt84hRpKUbUngXQZRHoI38pniaq/2uuaLK2NjMJH
+         CByA==
+X-Gm-Message-State: APjAAAXY1Kk0g2EprYtEJrZvDoz6S68ZiRZfP1RIW+iPY+zenXOFhQ+H
+        7rJhlFFMaOCgd78IkhiSoh9kyw==
+X-Google-Smtp-Source: APXvYqz4LGJhruC7j3NhOPSVnefUenYnUMxbvpiMSoAHKZ2baaSBXg9l+vRLGrvk4q5MJKcE05cUbQ==
+X-Received: by 2002:a50:b68b:: with SMTP id d11mr13947835ede.42.1556976254830;
+        Sat, 04 May 2019 06:24:14 -0700 (PDT)
+Received: from localhost.localdomain ([79.97.203.116])
+        by smtp.gmail.com with ESMTPSA id s53sm1391106edb.20.2019.05.04.06.24.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 04 May 2019 06:24:14 -0700 (PDT)
+From:   Tom Murphy <tmurphy@arista.com>
+To:     iommu@lists.linux-foundation.org
+Cc:     murphyt7@tcd.ie, Tom Murphy <tmurphy@arista.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
+Subject: [RFC 0/7] Convert the Intel iommu driver to the dma-ops api
+Date:   Sat,  4 May 2019 14:23:16 +0100
+Message-Id: <20190504132327.27041-1-tmurphy@arista.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+Convert the intel iommu driver to the dma-ops api so that we can remove a bunch of repeated code.
 
-Bisect pointed commit 707d80f0a3c5 ("usb: dwc2: gadget: Replace phyif
-with phy_utmi_width") as reason for failures of USB on Exynos4412,
-Odroid U3 board (ARMv7, exynos_defconfig, TFTP boot with nfsroot from
-NFSv4):
+This patchset depends on the "iommu/vt-d: Delegate DMA domain to generic iommu" and
+"iommu/amd: Convert the AMD iommu driver to the dma-iommu api" patch sets which haven't
+yet merged so this is just a RFC to get some feedback before I do more testing.
 
-[    4.333996] usb 1-2: new high-speed USB device number 3 using exynos-ehci
-[    4.503942] usb 1-2: device descriptor read/64, error -71
-[    4.793970] usb 1-2: device descriptor read/64, error -71
-[    4.914748] usb usb1-port2: attempt power cycle
-[    6.224267] usb 1-3: new high-speed USB device number 5 using exynos-ehci
-[    6.393983] usb 1-3: device descriptor read/64, error -71
-[    6.684243] usb 1-3: device descriptor read/64, error -71
-[    6.954259] usb 1-3: new high-speed USB device number 6 using exynos-ehci
-[    7.123980] usb 1-3: device descriptor read/64, error -71
-[    7.413969] usb 1-3: device descriptor read/64, error -71
-[    7.534778] usb usb1-port3: attempt power cycle
+Tom Murphy (7):
+  iommu/vt-d: Set the dma_ops per device so we can remove the
+    iommu_no_mapping code
+  iommu/vt-d: Remove iova handling code from non-dma ops path
+  iommu: improve iommu iotlb flushing
+  iommu/dma-iommu: Handle freelists in the dma-iommu api path
+  iommu/dma-iommu: add wrapper for iommu_dma_free_cpu_cached_iovas
+  iommu/vt-d: convert the intel iommu driver to the dma-iommu ops api
+  iommu/vt-d: Always set DMA_PTE_READ if the iommu doens't support zero
+    length reads
 
-The boot failure is effect of lack of network adapter (USB, smsc95xx).
-Expected:
-[    4.285831] usb 1-3: New USB device found, idVendor=0424, idProduct=3503, bcdDevice=a1.a0
-[    4.288986] usb 1-3: New USB device strings: Mfr=0, Product=0, SerialNumber=0
-[    4.299596] hub 1-3:1.0: USB hub found
-[    4.300027] hub 1-3:1.0: 3 ports detected
-[    5.895541] smsc95xx 1-2:1.0 eth0: link up, 100Mbps, full-duplex, lpa 0xCDE1
+ drivers/iommu/Kconfig           |   1 +
+ drivers/iommu/amd_iommu.c       |  14 +-
+ drivers/iommu/arm-smmu-v3.c     |   3 +-
+ drivers/iommu/arm-smmu.c        |   2 +-
+ drivers/iommu/dma-iommu.c       |  48 ++-
+ drivers/iommu/exynos-iommu.c    |   3 +-
+ drivers/iommu/intel-iommu.c     | 605 +++++---------------------------
+ drivers/iommu/iommu.c           |  21 +-
+ drivers/iommu/ipmmu-vmsa.c      |   2 +-
+ drivers/iommu/msm_iommu.c       |   2 +-
+ drivers/iommu/mtk_iommu.c       |   3 +-
+ drivers/iommu/mtk_iommu_v1.c    |   3 +-
+ drivers/iommu/omap-iommu.c      |   2 +-
+ drivers/iommu/qcom_iommu.c      |   2 +-
+ drivers/iommu/rockchip-iommu.c  |   2 +-
+ drivers/iommu/s390-iommu.c      |   3 +-
+ drivers/iommu/tegra-gart.c      |   2 +-
+ drivers/iommu/tegra-smmu.c      |   2 +-
+ drivers/vfio/vfio_iommu_type1.c |   3 +-
+ include/linux/dma-iommu.h       |   3 +
+ include/linux/intel-iommu.h     |   1 -
+ include/linux/iommu.h           |  24 +-
+ 22 files changed, 175 insertions(+), 576 deletions(-)
 
-Full kernel log is here:
-https://krzk.eu/#/builders/25/builds/1330/steps/14/logs/serial0
-https://krzk.eu/#/builders/25/builds/1330
-
-Let me know if you need any more details.
-
-Best regards,
-Krzysztof
+-- 
+2.17.1
 
