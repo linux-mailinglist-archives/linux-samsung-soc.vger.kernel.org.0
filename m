@@ -2,91 +2,175 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B08914084
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  5 May 2019 17:11:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDCCC14141
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  5 May 2019 19:03:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbfEEPLT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 5 May 2019 11:11:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34388 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727343AbfEEPLT (ORCPT
+        id S1727861AbfEERDQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 5 May 2019 13:03:16 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39107 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727539AbfEERDQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 5 May 2019 11:11:19 -0400
-Received: from localhost.localdomain (unknown [194.230.155.114])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F039B208C0;
-        Sun,  5 May 2019 15:11:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557069078;
-        bh=29Ns3mM74Ky+ju6uxOaSJ/6kMwlQ1AH4JKwc3yBAeyc=;
-        h=From:To:Subject:Date:From;
-        b=Nok77GAegvIzsoGdmcUM0seHVHAUwvH7B4J3o7SzHN9sUReol23cgELFgTcbzaO+M
-         A8XRYai5Gn5ExqXsfz8GeCmb3DiGZ2poH+qpAdU4TI9RDKPGOvF+ADdqlN6aUTaOwU
-         EZGNXtfB7pQLXTKXPdGUIWvEcfw3P1MKxiDyil60=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Sun, 5 May 2019 13:03:16 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v10so1942897wrt.6
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 05 May 2019 10:03:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arista.com; s=googlenew;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S14+Saw50db8S99Z7u2shrBLJtQSP1RkJXIAVw5pLBQ=;
+        b=jugLcBXRtPNuiKygehBn3dRh5gv2O3n+6CZdR9c0ZkktI0CvjyoksEeeH2FfA1Q8xH
+         SqTElONPKWQBKsU0uJQu8/4wptVHk0j3GxZWG+CA0HjhrepIVFXHP29zNbjhuDeaonnN
+         97d3CBboz5W+phNi8nRbOR+m5GoULw/MmeCEZ5EltfZbRHRsDTLjuCw4WWTkYy3yUqZI
+         EIDwHmihhNOllL5cqFRBllZpxOUcacxfDAaI+HPZMWZaZhGbjI2/tay2jJLP/i4RqR4o
+         vlUd0iNLLI5u8lL4HvT+QCdV2M59SHV6zxPaQcTE1z1/Kw5EFI5DZr9zemt+AgWD44KI
+         OF3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S14+Saw50db8S99Z7u2shrBLJtQSP1RkJXIAVw5pLBQ=;
+        b=We5LS6y+JfYdDtZ2eG0lXINFP7E1oho4bHWhLJTSrWd8weZWUvyS1XYGXPegxtYPSp
+         ByzH89IvvsuY1f3p3U49xswgvBjwnC2fGdYXtWrc5wi5KLiZHe9RKjvsvOZNJhDAFEOP
+         fO6VvGi+iebz3LzYemoOAcG6qCh8TJFfPFgARyqKj6Ndkf0EstKwmKkit0kgIA2LWdTh
+         kVFth+HEEwAa8oEp1uDaAw4kCKNhpDvkVx4xoQf5UZo8EHiIp24dV06hny1c8Ao8MXrL
+         wKtv3TzV0chJ/bkwAwJ8G4qJGonjnrgNK24nauypxbFa0O8PXx+j8rKgkunloWEH2Muc
+         5hVw==
+X-Gm-Message-State: APjAAAUR//XSQ8qoO7VzaRSF0UYxSJ8loCQyK404E2483DDFojaK101q
+        g5FV1sFHHqH4dBx6sUQ4eQGC1x9hwkCR71gYvqxnHw==
+X-Google-Smtp-Source: APXvYqwrz/neemWb9vnz/FkpTRyXsq1RpflAc1+fcvk/jy/wtfTvsXtCkcfhMT+x+U7qMUUGE6g6BzjVgXI0vnlcixI=
+X-Received: by 2002:a5d:4942:: with SMTP id r2mr14362363wrs.159.1557075793556;
+ Sun, 05 May 2019 10:03:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190504132327.27041-1-tmurphy@arista.com> <20190504132327.27041-7-tmurphy@arista.com>
+ <602b77a2-9c68-ad14-b64f-904a7ff27a15@linux.intel.com>
+In-Reply-To: <602b77a2-9c68-ad14-b64f-904a7ff27a15@linux.intel.com>
+From:   Tom Murphy <tmurphy@arista.com>
+Date:   Sun, 5 May 2019 18:03:02 +0100
+Message-ID: <CAPL0++57nyLYP1fq=-6zvNS0z_iCqjWLbQ1MsG5F60ODkmRCQQ@mail.gmail.com>
+Subject: Re: [RFC 6/7] iommu/vt-d: convert the intel iommu driver to the
+ dma-iommu ops api
+To:     Lu Baolu <baolu.lu@linux.intel.com>
+Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] [media] exynos4-is: Add missing of_node_put to fix reference leaks
-Date:   Sun,  5 May 2019 17:11:09 +0200
-Message-Id: <20190505151109.4361-1-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Drop the reference to "parallel-ports" and remote endpoint's parent
-nodes obtained previously with of_get_child_by_name() and
-of_get_parent() respectively.
+On Sun, May 5, 2019 at 3:44 AM Lu Baolu <baolu.lu@linux.intel.com> wrote:
+>
+> Hi,
+>
+> On 5/4/19 9:23 PM, Tom Murphy wrote:
+> > static int intel_iommu_add_device(struct device *dev)
+> >   {
+> > +     struct dmar_domain *dmar_domain;
+> > +     struct iommu_domain *domain;
+> >       struct intel_iommu *iommu;
+> >       struct iommu_group *group;
+> > -     struct iommu_domain *domain;
+> > +     dma_addr_t base;
+> >       u8 bus, devfn;
+> >
+> >       iommu = device_to_iommu(dev, &bus, &devfn);
+> > @@ -4871,9 +4514,12 @@ static int intel_iommu_add_device(struct device *dev)
+> >       if (IS_ERR(group))
+> >               return PTR_ERR(group);
+> >
+> > +     base = IOVA_START_PFN << VTD_PAGE_SHIFT;
+> >       domain = iommu_get_domain_for_dev(dev);
+> > +     dmar_domain = to_dmar_domain(domain);
+> >       if (domain->type == IOMMU_DOMAIN_DMA)
+> > -             dev->dma_ops = &intel_dma_ops;
+> > +             iommu_setup_dma_ops(dev, base,
+> > +                             __DOMAIN_MAX_ADDR(dmar_domain->gaw) - base);
+>
+> I didn't find the implementation of iommu_setup_dma_ops() in this
+> series. Will the iova resource be initialized in this function?
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- drivers/media/platform/exynos4-is/media-dev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Ah sorry, I should've mentioned this is based on the
+http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/dma-iommu-ops.3
+branch with the "iommu/vt-d: Delegate DMA domain to generic iommu" and
+"iommu/amd: Convert the AMD iommu driver to the dma-iommu api" patch
+sets applied.
 
-diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
-index 463f2d84553e..d1d5041cdae5 100644
---- a/drivers/media/platform/exynos4-is/media-dev.c
-+++ b/drivers/media/platform/exynos4-is/media-dev.c
-@@ -449,6 +449,7 @@ static int fimc_md_parse_port_node(struct fimc_md *fmd,
- 		pd->fimc_bus_type = FIMC_BUS_TYPE_ISP_WRITEBACK;
- 	else
- 		pd->fimc_bus_type = pd->sensor_bus_type;
-+	of_node_put(np);
- 
- 	if (WARN_ON(index >= ARRAY_SIZE(fmd->sensor))) {
- 		of_node_put(rem);
-@@ -474,7 +475,8 @@ static int fimc_md_parse_port_node(struct fimc_md *fmd,
- static int fimc_md_register_sensor_entities(struct fimc_md *fmd)
- {
- 	struct device_node *parent = fmd->pdev->dev.of_node;
--	struct device_node *node, *ports;
-+	struct device_node *ports = NULL;
-+	struct device_node *node;
- 	int index = 0;
- 	int ret;
- 
-@@ -523,12 +525,14 @@ static int fimc_md_register_sensor_entities(struct fimc_md *fmd)
- 		}
- 		index++;
- 	}
-+	of_node_put(ports);
- 
- rpm_put:
- 	pm_runtime_put(fmd->pmf);
- 	return 0;
- 
- cleanup:
-+	of_node_put(ports);
- 	v4l2_async_notifier_cleanup(&fmd->subdev_notifier);
- 	pm_runtime_put(fmd->pmf);
- 	return ret;
--- 
-2.17.1
+>
+> If so, will this block iommu_group_create_direct_mappings() which
+> reserves and maps the reserved iova ranges.
 
+The reserved regions will be reserved by the
+iova_reserve_iommu_regions function instead:
+( https://github.com/torvalds/linux/blob/6203838dec05352bc357625b1e9ba0a10d3bca35/drivers/iommu/dma-iommu.c#L238
+)
+iommu_setup_dma_ops calls iommu_dma_init_domain which calls
+iova_reserve_iommu_regions.
+iommu_group_create_direct_mappings will still execute normally but it
+won't be able to call the intel_iommu_apply_resv_region function
+because it's been removed in this patchset.
+This shouldn't change any behavior and the same regions should be reserved.
+
+>
+> >
+> >       iommu_group_put(group);
+> >       return 0;
+> > @@ -5002,19 +4648,6 @@ int intel_iommu_enable_pasid(struct intel_iommu *iommu, struct intel_svm_dev *sd
+> >       return ret;
+> >   }
+> >
+> > -static void intel_iommu_apply_resv_region(struct device *dev,
+> > -                                       struct iommu_domain *domain,
+> > -                                       struct iommu_resv_region *region)
+> > -{
+> > -     struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+> > -     unsigned long start, end;
+> > -
+> > -     start = IOVA_PFN(region->start);
+> > -     end   = IOVA_PFN(region->start + region->length - 1);
+> > -
+> > -     WARN_ON_ONCE(!reserve_iova(&dmar_domain->iovad, start, end));
+> > -}
+> > -
+> >   struct intel_iommu *intel_svm_device_to_iommu(struct device *dev)
+> >   {
+> >       struct intel_iommu *iommu;
+> > @@ -5050,13 +4683,13 @@ const struct iommu_ops intel_iommu_ops = {
+> >       .detach_dev             = intel_iommu_detach_device,
+> >       .map                    = intel_iommu_map,
+> >       .unmap                  = intel_iommu_unmap,
+> > +     .flush_iotlb_all        = iommu_flush_iova,
+> >       .flush_iotlb_range      = intel_iommu_flush_iotlb_range,
+> >       .iova_to_phys           = intel_iommu_iova_to_phys,
+> >       .add_device             = intel_iommu_add_device,
+> >       .remove_device          = intel_iommu_remove_device,
+> >       .get_resv_regions       = intel_iommu_get_resv_regions,
+> >       .put_resv_regions       = intel_iommu_put_resv_regions,
+> > -     .apply_resv_region      = intel_iommu_apply_resv_region,
+>
+> With this removed, how will iommu_group_create_direct_mappings() work?
+>
+> Best regards,
+> Lu Baolu
