@@ -2,141 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 635991436C
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 May 2019 03:48:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62926146D2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 May 2019 10:52:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726149AbfEFBsp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 5 May 2019 21:48:45 -0400
-Received: from mga17.intel.com ([192.55.52.151]:49033 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725786AbfEFBsp (ORCPT
+        id S1725855AbfEFIwP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 May 2019 04:52:15 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:34774 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725830AbfEFIwP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 5 May 2019 21:48:45 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 05 May 2019 18:48:43 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.60,435,1549958400"; 
-   d="scan'208";a="146640656"
-Received: from allen-box.sh.intel.com (HELO [10.239.159.136]) ([10.239.159.136])
-  by fmsmga008.fm.intel.com with ESMTP; 05 May 2019 18:48:39 -0700
-Cc:     baolu.lu@linux.intel.com, murphyt7@tcd.ie,
-        Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will.deacon@arm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <marc.zyngier@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org, kvm@vger.kernel.org
-Subject: Re: [RFC 1/7] iommu/vt-d: Set the dma_ops per device so we can remove
- the iommu_no_mapping code
-To:     Tom Murphy <tmurphy@arista.com>, iommu@lists.linux-foundation.org
-References: <20190504132327.27041-1-tmurphy@arista.com>
- <20190504132327.27041-2-tmurphy@arista.com>
-From:   Lu Baolu <baolu.lu@linux.intel.com>
-Message-ID: <8fef18f5-773c-e1c9-2537-c9dff5bfd35e@linux.intel.com>
-Date:   Mon, 6 May 2019 09:42:15 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Mon, 6 May 2019 04:52:15 -0400
+Received: by mail-lj1-f193.google.com with SMTP id s7so4939710ljh.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 May 2019 01:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=T8LcSiq6zoFSXOcyH9yEHhYaUYdYHbr8k7+lpitMmRg=;
+        b=XkW5RTXoaZd6kQybDB9NtmdPgsaM6TDOGeBgXl36ppMQRQyorzWs1QMozH18aGoq5e
+         nq1XsrztSQWEGqqHqPlYmKZHY7BmxxCUd/lDpmSylTWkPsWcZiOxLoGzAue95OTf8K6Q
+         kBrcYrv0xn12yfTs24qQGIq0ywBxP+NnY7ExR3avWRqMTQGXzwjL7SuHKS7a6QSmoDDh
+         WVHsfte0StmPlfGeFDbP/mJZhN9nZWGsmlKZQFjboEvtTga4u/CipqMQp+oppMT1Wdz4
+         coIowfMQyNbVdtsqiaSrGs2WsVwqBrXRx6mSEL6BUOYboSeN/lxo9m1qGByqALAuMwOK
+         S7Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=T8LcSiq6zoFSXOcyH9yEHhYaUYdYHbr8k7+lpitMmRg=;
+        b=fdU77WJhVRW4ZJtbk7WQB2G7rP1NwuNiRQ+C8oJFm0eyUhky8mlcbTt6pf8e6RybgZ
+         NA0FqFQD74DXfeH22yLScumzr7cib+a45HELszRdd5ULt7pa+OgSQ0MzKYuKmbcratmT
+         72+DwLf33j6LZzTFbRkdRYruXtCbj7/QQgk9ecC4aNI+7yoCUmrHgs/e4OcozobVzyyp
+         8E4Zy5Spq7B+hNn9XGhzNWs57IrCFJdOOXil7Q3qSUErEj+bevnh2RtEmrvqK+Sh7Sea
+         lQ+MHMm6aZOXwQwwtc8Iv8oVMBuLCBTDUMXc/qSKr3mDzocY9ffYeZ5z4QoD6Fm42+uM
+         82Kg==
+X-Gm-Message-State: APjAAAVtzX+/Il1ni1cvXMWfmNVYNkX4mAwSiX41bL36NhF38y9BvgXe
+        wk2k+xsLdgSJvYRxllYMCRPHg/JGlaJDtD1lAD4=
+X-Google-Smtp-Source: APXvYqwKZoinVNOXOMmbIwhyH63WnpdwIFZA/GmSaAgvRTCYIMusYsty2txHe0MNFqjRJwQlNk7xZL3elJTKCh6R5TQ=
+X-Received: by 2002:a2e:9898:: with SMTP id b24mr6915813ljj.70.1557132733679;
+ Mon, 06 May 2019 01:52:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190504132327.27041-2-tmurphy@arista.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a19:7dc1:0:0:0:0:0 with HTTP; Mon, 6 May 2019 01:52:12 -0700 (PDT)
+Reply-To: samiramohamedo045@gmail.com
+From:   Mrs samira mohamed <samiramohamed5061@gmail.com>
+Date:   Mon, 6 May 2019 08:52:12 +0000
+Message-ID: <CADFTzLjL9=UWgEdSbauCqcHg2A3oxrytwxZ3Qm8mVvZQxg9Fig@mail.gmail.com>
+Subject: hello
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
-
-On 5/4/19 9:23 PM, Tom Murphy wrote:
-> Set the dma_ops per device so we can remove the iommu_no_mapping code.
-> 
-> Signed-off-by: Tom Murphy<tmurphy@arista.com>
-> ---
->   drivers/iommu/intel-iommu.c | 85 +++----------------------------------
->   1 file changed, 6 insertions(+), 79 deletions(-)
-> 
-> diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-> index eace915602f0..2db1dc47e7e4 100644
-> --- a/drivers/iommu/intel-iommu.c
-> +++ b/drivers/iommu/intel-iommu.c
-> @@ -2622,17 +2622,6 @@ static int __init si_domain_init(int hw)
->   	return 0;
->   }
->   
-> -static int identity_mapping(struct device *dev)
-> -{
-> -	struct device_domain_info *info;
-> -
-> -	info = dev->archdata.iommu;
-> -	if (info && info != DUMMY_DEVICE_DOMAIN_INFO)
-> -		return (info->domain == si_domain);
-> -
-> -	return 0;
-> -}
-> -
->   static int domain_add_dev_info(struct dmar_domain *domain, struct device *dev)
->   {
->   	struct dmar_domain *ndomain;
-> @@ -3270,43 +3259,6 @@ static unsigned long intel_alloc_iova(struct device *dev,
->   	return iova_pfn;
->   }
->   
-> -/* Check if the dev needs to go through non-identity map and unmap process.*/
-> -static int iommu_no_mapping(struct device *dev)
-> -{
-> -	int found;
-> -
-> -	if (iommu_dummy(dev))
-> -		return 1;
-> -
-> -	found = identity_mapping(dev);
-> -	if (found) {
-> -		/*
-> -		 * If the device's dma_mask is less than the system's memory
-> -		 * size then this is not a candidate for identity mapping.
-> -		 */
-> -		u64 dma_mask = *dev->dma_mask;
-> -
-> -		if (dev->coherent_dma_mask &&
-> -		    dev->coherent_dma_mask < dma_mask)
-> -			dma_mask = dev->coherent_dma_mask;
-> -
-> -		if (dma_mask < dma_get_required_mask(dev)) {
-> -			/*
-> -			 * 32 bit DMA is removed from si_domain and fall back
-> -			 * to non-identity mapping.
-> -			 */
-> -			dmar_remove_one_dev_info(dev);
-> -			dev_warn(dev, "32bit DMA uses non-identity mapping\n");
-> -
-> -			return 0;
-> -		}
-
-The iommu_no_mapping() also checks whether any 32bit DMA device uses
-identity mapping. The device might not work if the system memory space
-is bigger than 4G.
-
-Will you add this to other place, or it's unnecessary?
-
-Best regards,
-Lu Baolu
+-- 
+Hi Friend I am a bank director of the International Finance Bank Plc
+bf .I want to transfer an abandoned sum of 10.5 millions USD  to your
+account.50% will be for you. No risk involved. Contact me for more
+details. Kindly reply me back to my alternative email address
+(samiramohamedo045@gmail.com ) mrs samira mohamed
