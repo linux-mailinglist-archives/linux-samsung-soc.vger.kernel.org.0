@@ -2,146 +2,241 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08E1C16097
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 May 2019 11:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3341816061
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 May 2019 11:16:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbfEGJRi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 May 2019 05:17:38 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:33785 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726349AbfEGJRh (ORCPT
+        id S1726878AbfEGJQ0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 May 2019 05:16:26 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:50173 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726812AbfEGJQ0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 May 2019 05:17:37 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190507091735euoutp015d3133761c9a185b6b3d4916860f848d~cW__LBzkK1987819878euoutp01-
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 May 2019 09:17:35 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190507091735euoutp015d3133761c9a185b6b3d4916860f848d~cW__LBzkK1987819878euoutp01-
+        Tue, 7 May 2019 05:16:26 -0400
+Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190507091622epoutp048cb7ff5ba19159d34dcc559134b14942~cW96M4hjG1476414764epoutp04n
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 May 2019 09:16:22 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190507091622epoutp048cb7ff5ba19159d34dcc559134b14942~cW96M4hjG1476414764epoutp04n
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557220655;
-        bh=eC9RKKUhFBEdPO3sH6QeAj7KbWtJ/CGboccWZibZgX8=;
+        s=mail20170921; t=1557220582;
+        bh=v2HrOoEod9+1sIMFA49m+eruBUyQZpx8ALLIXJFlWDc=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=vd+mQzVNEUXzScrjvvZm4pnl6yphua3RRpQ0rNUFT5DZQhQSVmjA/ma6U1JG1TBHV
-         94BM9r+ojyoIPuKNYgFI78X8Nxyf6eSj7h7nc2N1GbyLck4DcHaxNp1q34t8OMpemg
-         c3rW9PM94c9oe75axl6/lmmoEu8JLFH2gxA86LXA=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190507091734eucas1p22e5ac264e405a085172e7e99cf7e69e3~cW_9YScXm1524515245eucas1p2S;
-        Tue,  7 May 2019 09:17:34 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 0D.82.04325.E2D41DC5; Tue,  7
-        May 2019 10:17:34 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190507091733eucas1p22eb2b950569e82bc947d628292c2e0e4~cW_8ZVmns1522515225eucas1p2P;
-        Tue,  7 May 2019 09:17:33 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190507091733eusmtrp274614b2df408d26303169fd1a9db22a3~cW_8LTpdq1581815818eusmtrp2d;
-        Tue,  7 May 2019 09:17:33 +0000 (GMT)
-X-AuditID: cbfec7f5-b8fff700000010e5-c2-5cd14d2e2169
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id E0.39.04146.D2D41DC5; Tue,  7
-        May 2019 10:17:33 +0100 (BST)
-Received: from [106.120.50.25] (unknown [106.120.50.25]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190507091732eusmtip177e46be4523d9745c5be7c7caeb63838~cW_7wRE993014030140eusmtip1j;
-        Tue,  7 May 2019 09:17:32 +0000 (GMT)
-Subject: Re: [PATCH] usb: dwc2: Force 8bit UTMI width for Samsung Exynos
- SoCs
-To:     Markus Reichl <m.reichl@fivetechno.de>, linux-usb@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Minas Harutyunyan <hminas@synopsys.com>,
-        Felipe Balbi <felipe.balbi@linux.intel.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Jules Maselbas <jmaselbas@kalray.eu>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <eefff244-f311-e59e-d914-9a18b5a21620@samsung.com>
-Date:   Tue, 7 May 2019 11:17:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        b=qPp0kUOUIDD73vFNtsxJelHEthpiXqilZRX/eDP7hbuePfdy3cR7406srnQDu7rie
+         r4VUBvPYJJr6S9rfVLqVFQqWi+u1n9BbZPJC4J7XiGV06VbiBVP+a1oNgkhSwOu6fH
+         cQ4AE+GJ/QcoUXdSPiFk6BbgwDCEO0OA8xWUYeNk=
+Received: from epsmges1p5.samsung.com (unknown [182.195.40.156]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20190507091619epcas1p430ace8bd55fd3b48261adaa72f1f9670~cW93pJDNI2091320913epcas1p4l;
+        Tue,  7 May 2019 09:16:19 +0000 (GMT)
+Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
+        epsmges1p5.samsung.com (Symantec Messaging Gateway) with SMTP id
+        E1.7F.04108.3EC41DC5; Tue,  7 May 2019 18:16:19 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190507091619epcas1p2ccd2c8b1cfb8db153f9f89a3f834b9bd~cW93BKKCv0374703747epcas1p2h;
+        Tue,  7 May 2019 09:16:19 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190507091619epsmtrp10b7e336dba20f4d4823bd309b6b8f23e~cW93AKsKM0223502235epsmtrp1R;
+        Tue,  7 May 2019 09:16:19 +0000 (GMT)
+X-AuditID: b6c32a39-89fff7000000100c-63-5cd14ce3fc45
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        DF.8D.03662.2EC41DC5; Tue,  7 May 2019 18:16:19 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190507091618epsmtip1f9124ad45acf46b61d05b006162e4f4b~cW92uMKuU2965029650epsmtip1A;
+        Tue,  7 May 2019 09:16:18 +0000 (GMT)
+Subject: Re: [PATCH v7 01/13] clk: samsung: add needed IDs for DMC clocks in
+ Exynos5420
+To:     Lukasz Luba <l.luba@partner.samsung.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     b.zolnierkie@samsung.com, krzk@kernel.org, kgene@kernel.org,
+        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
+        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
+        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
+        treding@nvidia.com, digetx@gmail.com, willy.mh.wolff.ml@gmail.com
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <e808eb3a-9fbe-897d-ce25-cab732581391@samsung.com>
+Date:   Tue, 7 May 2019 18:17:45 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <39c7b687-449e-5e89-4c70-527d4e779fd9@fivetechno.de>
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <55e89fc7-6f22-b384-adbf-40c68618bdac@partner.samsung.com>
 Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsWy7djP87p6vhdjDKa8ErfYOGM9q8X8m0kW
-        jb/2slvMmnGa1eL8+Q3sFpd3zWGzmHF+H5PFomWtzBYvj/xgdOD0uHWn3uP0+puMHptWdbJ5
-        zDsZ6NG3ZRWjx5b9nxk9Pm+SC2CP4rJJSc3JLEst0rdL4MroWPOSreAsb8X1w5NZGhi/c3Ux
-        cnJICJhIHNqyiaWLkYtDSGAFo8Sn9r3sEM4XRolpi+4yglQJCXxmlNgz3Ram4/apFqii5YwS
-        l7v/M0M4bxkl3nx4ywRSJSzgL3Fsxw6whIhAB6PExvc7wJYwCzxklPja18QCUsUmYCjR9baL
-        DcTmFbCTWP8RZC4nB4uAisSF6Y+Bujk4RAViJBZ9hioRlDg58wlYK6eAo8Tdp39YQWxmAXmJ
-        7W/nMEPY4hK3nsxnAtklIXCJXWLiqSWsIHMkBFwkPn7MgnhBWOLV8S3sELaMxP+dMPXNjBIP
-        z61lh3B6gH5rmsEIUWUtcfj4RbBBzAKaEut36UOEHSWWLexlhJjPJ3HjrSDEDXwSk7ZNZ4YI
-        80p0tAlBVKtJzDq+Dm7twQuXmCcwKs1C8tksJN/MQvLNLIS9CxhZVjGKp5YW56anFhvnpZbr
-        FSfmFpfmpesl5+duYgSmqdP/jn/dwbjvT9IhRgEORiUe3glOF2KEWBPLiitzDzFKcDArifAm
-        PjsXI8SbklhZlVqUH19UmpNafIhRmoNFSZy3muFBtJBAemJJanZqakFqEUyWiYNTqoHxXJ2S
-        u4ZldcukzvpFp95+vZTVdqnC9tlC8242pQlXGyTFum/2dddzLuvsTN18f5PYHKcr2/dvEvAL
-        P69V88hyy9O3j+bU+vRU7fx/SyfkmMqGE686ucuv3LrXp3KjSC9IuCPu3U2R4PeH2l32sK58
-        qpjPmJSoo/LOcn6X6fHPQWU3J69M/z5NiaU4I9FQi7moOBEASH/kU08DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsVy+t/xu7q6vhdjDE6/FrfYOGM9q8X8m0kW
-        jb/2slvMmnGa1eL8+Q3sFpd3zWGzmHF+H5PFomWtzBYvj/xgdOD0uHWn3uP0+puMHptWdbJ5
-        zDsZ6NG3ZRWjx5b9nxk9Pm+SC2CP0rMpyi8tSVXIyC8usVWKNrQw0jO0tNAzMrHUMzQ2j7Uy
-        MlXSt7NJSc3JLEst0rdL0MvoWPOSreAsb8X1w5NZGhi/c3UxcnJICJhI3D7Vwt7FyMUhJLCU
-        UeLlvklsEAkZiZPTGlghbGGJP9e62CCKXjNKnH7/gAUkISzgK7G85z0LSEJEoINR4syao8wg
-        DrPAQ0aJC00/oOa+ZZRomryEHaSFTcBQouttF9gOXgE7ifUfW8DiLAIqEhemP2YGsUUFYiRO
-        TN3CDlEjKHFy5hOwdZwCjhJ3n/4Bu4lZwExi3uaHzBC2vMT2t3OgbHGJW0/mM01gFJqFpH0W
-        kpZZSFpmIWlZwMiyilEktbQ4Nz232FCvODG3uDQvXS85P3cTIzA6tx37uXkH46WNwYcYBTgY
-        lXh4H9heiBFiTSwrrsw9xCjBwawkwpv47FyMEG9KYmVValF+fFFpTmrxIUZToOcmMkuJJucD
-        E0deSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQZGledn5KOljm0r
-        860S3nvs0ZO1U3nqpRf/iP42dfKRqad4JD7PWW6uPCF7klGzqM3lpy3++rc2775sYPeSt0j+
-        4b5VHT3vLhz9fWjaRpHbb1/2M/X8eiq9q4KtW1ClZFbL4/jvDi8clu7v2ia978lSkxm+oitX
-        n52qnToz9JfQz0txk1+db3nj/UKJpTgj0VCLuag4EQBk1dOw5AIAAA==
-X-CMS-MailID: 20190507091733eucas1p22eb2b950569e82bc947d628292c2e0e4
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNJsWRmVeSWpSXmKPExsWy7bCmvu5jn4sxBtuO61lsnLGe1WL+kXOs
+        Fqs/Pma0mHxqLpPFme5ci/7Hr5ktzp/fwG5xtukNu8WtBhmLy7vmsFl87j3CaDHj/D4mi7VH
+        7rJb3G5cwWZx+E07q8X+K14Wt3/zWXw78YjRQcjj29dJLB6zGy6yeOycdZfdY9OqTjaP3uZ3
+        bB4H3+1h8ujbsorRY/Ppao/Pm+QCOKOybTJSE1NSixRS85LzUzLz0m2VvIPjneNNzQwMdQ0t
+        LcyVFPISc1NtlVx8AnTdMnOAnlFSKEvMKQUKBSQWFyvp29kU5ZeWpCpk5BeX2CqlFqTkFFgW
+        6BUn5haX5qXrJefnWhkaGBiZAhUmZGeseONVcFW+4sSCHvYGxlOSXYycHBICJhJ/1q9j7WLk
+        4hAS2MEose3YJ2aQhJDAJ0aJ0yu9IBLfGCWeXLzO1sXIAdZx8ywLRHwvo8SFDx/ZIZz3jBI9
+        K9ezgHQLC0RKrJr7ixEkISKwnFFi39S7YA6zwGomiT9f17KCVLEJaEnsf3GDDcTmF1CUuPrj
+        MSOIzStgJ/Hn1i0wm0VARWLuzHNMILaoQITE/WMbWCFqBCVOznwCto1TwF1i8ofnYPXMAuIS
+        t57MZ4Kw5SWat85mBlksIXCLXaKj5yQjxNcuEhcfL4eyhSVeHd/CDmFLSbzsb4OyqyVWnjzC
+        BtHcwSixZf8FVoiEscT+pZOZQIHBLKApsX6XPsQyPol3X3tYIWHEK9HRJgRRrSxx+cFdJghb
+        UmJxeycbhO0hsXrCCZYJjIqzkLwzC8kLs5C8MAth2QJGllWMYqkFxbnpqcWGBabIsb2JEZzQ
+        tSx3MB4753OIUYCDUYmH94HthRgh1sSy4srcQ4wSHMxKIryJz87FCPGmJFZWpRblxxeV5qQW
+        H2I0BYb2RGYp0eR8YLbJK4k3NDUyNja2MDE0MzU0VBLnXe/gHCMkkJ5YkpqdmlqQWgTTx8TB
+        KdXAqHLvmInmjZ+xfP8uyfoG1M9ma/8q9KW5ab/15eIf5eteCO+JuqRyUS747ZPjL66sLPqg
+        O4M31GTp4+a461nfvry++Ppb7IpVPqddNxuxRu053+7WLXN16XPl1Zd91oVzzM3ta7M680dt
+        gszjvZtbzwn61ukU31ylv+Pemo83RLUv7HqtERGUKK/EUpyRaKjFXFScCADCGHHd/gMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGIsWRmVeSWpSXmKPExsWy7bCSnO5jn4sxBismMFlsnLGe1WL+kXOs
+        Fqs/Pma0mHxqLpPFme5ci/7Hr5ktzp/fwG5xtukNu8WtBhmLy7vmsFl87j3CaDHj/D4mi7VH
+        7rJb3G5cwWZx+E07q8X+K14Wt3/zWXw78YjRQcjj29dJLB6zGy6yeOycdZfdY9OqTjaP3uZ3
+        bB4H3+1h8ujbsorRY/Ppao/Pm+QCOKO4bFJSczLLUov07RK4Mla88Sq4Kl9xYkEPewPjKcku
+        Rg4OCQETiZtnWboYuTiEBHYzSpyc+Zq1i5ETKC4pMe3iUWaIGmGJw4eLIWreMkrM+/SLDaRG
+        WCBSYtXcX4wgCRGB5YwSc/8uBZvELLCaSWLSxy1sEC0XmSSW9WxgB2lhE9CS2P/iBlg7v4Ci
+        xNUfjxlBbF4BO4k/t26B2SwCKhJzZ55jArFFBSIkzrxfwQJRIwh03hMwm1PAXWLyh+dg9cwC
+        6hJ/5l1ihrDFJW49mc8EYctLNG+dzTyBUXgWkvZZSFpmIWmZhaRlASPLKkbJ1ILi3PTcYsMC
+        o7zUcr3ixNzi0rx0veT83E2M4NjW0trBeOJE/CFGAQ5GJR7eDusLMUKsiWXFlbmHGCU4mJVE
+        eBOfnYsR4k1JrKxKLcqPLyrNSS0+xCjNwaIkziuffyxSSCA9sSQ1OzW1ILUIJsvEwSnVwFj/
+        fnHNLsUPNw7Gc/JfzD7RLfDh0sypMSum1NkFrRPq4DnJ2JD1cC2/MrPm1gNqQS0Tn/7Xsvp7
+        Uf2l85sjCgLnfeceDFxt/Mcz+Mqvc1OPM88Mn5cVsGCJp+9ZqYK3pcmxq6455L2IXxDlWKkw
+        i/07k8D6+sgzDqy3LB4nKMRsWLiY7WHSskdKLMUZiYZazEXFiQB8k3Pi6QIAAA==
+X-CMS-MailID: 20190507091619epcas1p2ccd2c8b1cfb8db153f9f89a3f834b9bd
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea
-References: <20190503204958.GA12532@kozik-lap>
-        <CGME20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea@eucas1p2.samsung.com>
-        <20190506130046.20898-1-m.szyprowski@samsung.com>
-        <39c7b687-449e-5e89-4c70-527d4e779fd9@fivetechno.de>
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20190506151210eucas1p13c2a4b86a6f987ff34fbe1e2d705fbbf
+References: <1557155521-30949-1-git-send-email-l.luba@partner.samsung.com>
+        <CGME20190506151210eucas1p13c2a4b86a6f987ff34fbe1e2d705fbbf@eucas1p1.samsung.com>
+        <1557155521-30949-2-git-send-email-l.luba@partner.samsung.com>
+        <8b063f30-1a4d-3292-2e57-6e33e94d57ae@samsung.com>
+        <55e89fc7-6f22-b384-adbf-40c68618bdac@partner.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Markus,
+On 19. 5. 7. 오후 5:51, Lukasz Luba wrote:
+> Hi Chanwoo,
+> 
+> On 5/7/19 9:33 AM, Chanwoo Choi wrote:
+>> Hi Lukasz,
+>>
+>> On 19. 5. 7. 오전 12:11, Lukasz Luba wrote:
+>>> Define new IDs for clocks used by Dynamic Memory Controller in
+>>> Exynos5422 SoC.
+>>>
+>>> Acked-by: Rob Herring <robh@kernel.org>
+>>> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+>>> ---
+>>>   include/dt-bindings/clock/exynos5420.h | 28 ++++++++++++++++++++++------
+>>>   1 file changed, 22 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/include/dt-bindings/clock/exynos5420.h b/include/dt-bindings/clock/exynos5420.h
+>>> index 355f469..bf50d8a 100644
+>>> --- a/include/dt-bindings/clock/exynos5420.h
+>>> +++ b/include/dt-bindings/clock/exynos5420.h
+>>> @@ -60,6 +60,7 @@
+>>>   #define CLK_MAU_EPLL		159
+>>>   #define CLK_SCLK_HSIC_12M	160
+>>>   #define CLK_SCLK_MPHY_IXTAL24	161
+>>> +#define CLK_SCLK_BPLL		162
+>>>   
+>>>   /* gate clocks */
+>>>   #define CLK_UART0		257
+>>> @@ -195,6 +196,16 @@
+>>>   #define CLK_ACLK432_CAM		518
+>>>   #define CLK_ACLK_FL1550_CAM	519
+>>>   #define CLK_ACLK550_CAM		520
+>>> +#define CLK_CLKM_PHY0		521
+>>> +#define CLK_CLKM_PHY1		522
+>>> +#define CLK_ACLK_PPMU_DREX0_0	523
+>>> +#define CLK_ACLK_PPMU_DREX0_1	524
+>>> +#define CLK_ACLK_PPMU_DREX1_0	525
+>>> +#define CLK_ACLK_PPMU_DREX1_1	526
+>>> +#define CLK_PCLK_PPMU_DREX0_0	527
+>>> +#define CLK_PCLK_PPMU_DREX0_1	528
+>>> +#define CLK_PCLK_PPMU_DREX1_0	529
+>>> +#define CLK_PCLK_PPMU_DREX1_1	530
+>>>   
+>>>   /* mux clocks */
+>>>   #define CLK_MOUT_HDMI		640
+>>> @@ -217,6 +228,8 @@
+>>>   #define CLK_MOUT_EPLL		657
+>>>   #define CLK_MOUT_MAU_EPLL	658
+>>>   #define CLK_MOUT_USER_MAU_EPLL	659
+>>> +#define CLK_MOUT_SCLK_SPLL	660
+>>> +#define CLK_MOUT_MX_MSPLL_CCORE_PHY	661
+>>>   
+>>>   /* divider clocks */
+>>>   #define CLK_DOUT_PIXEL		768
+>>> @@ -243,13 +256,16 @@
+>>>   #define CLK_DOUT_ACLK300_GSCL	789
+>>>   #define CLK_DOUT_ACLK400_DISP1	790
+>>>   #define CLK_DOUT_PCLK_CDREX	791
+>>> -#define CLK_DOUT_SCLK_CDREX	792
+>>> -#define CLK_DOUT_ACLK_CDREX1	793
+>>> -#define CLK_DOUT_CCLK_DREX0	794
+>>> -#define CLK_DOUT_CLK2X_PHY0	795
+>>> -#define CLK_DOUT_PCLK_CORE_MEM	796
+>>
+>> The your previous patch didn't change the id number
+>> of already exiting clocks. It cause the fault.
+>> In order to keep the compatibility, you keep
+>> the original id number without modification.
+> True, the previous patch didn't change these IDs.
+> I have not seen any faults during builds and stress tests, though.
 
-On 2019-05-07 10:12, Markus Reichl wrote:
-> Hi Marek,
->
-> your patch did not help on stable v5.1
->
-> [    3.255963] samsung-usb2-phy 125b0000.exynos-usbphy: 125b0000.exynos-usbphy supply vbus not found, using dummy regulator
-> [    4.044547] usbcore: registered new interface driver smsc95xx
-> [    4.112261] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.01
-> [    4.120363] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
-> [    4.127560] usb usb1: Product: EHCI Host Controller
-> [    4.132415] usb usb1: Manufacturer: Linux 5.1.0-00005-geb4efae48eb5 ehci_hcd
-> [    4.139446] usb usb1: SerialNumber: 12580000.ehci
-> [    4.183056] usb3503 0-0008: switched to HUB mode
-> [    4.183121] usb3503 0-0008: usb3503_probe: probed in hub mode
-> [    4.488344] usb 1-2: new high-speed USB device number 2 using exynos-ehci
-> [    4.675605] usb 1-2: New USB device found, idVendor=0424, idProduct=3503, bcdDevice=a1.a0
-> [    4.678166] usb 1-2: New USB device strings: Mfr=0, Product=0, SerialNumber=0
-> [    4.686140] usb 1-2: skipping disabled interface 0
->
-> root@odroid-x2:~# lsusb
-> Bus 001 Device 002: ID 0424:3503 Standard Microsystems Corp.
-> Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+If you use the built dtb file before modification, it cause the fault.
+It is advantage of device-tree style to split out
+the dependency between kernel image and dtb.
 
-This patch fixes the issue introduced by "usb: dwc2: gadget: Replace 
-phyif with phy_utmi_width" commit, which is queued only to linux-next so 
-far. Stable v5.1 doesn't include it, so the fix doesn't change anything 
-on v5.1.
+>>
+>> Please don't change the id number of the existing clocks
+>> and then just add the new clocks.
+> OK, I will add CLK_DOUT_PCLK_DREX0	and CLK_DOUT_PCLK_DREX1
+> at the end:
+> ------------------>8--------------------------
+> @@ -248,8 +261,11 @@
+>   #define CLK_DOUT_CCLK_DREX0    794
+>   #define CLK_DOUT_CLK2X_PHY0    795
+>   #define CLK_DOUT_PCLK_CORE_MEM 796
+> +#define CLK_FF_DOUT_SPLL2      797
+> +#define CLK_DOUT_PCLK_DREX0    798
+> +#define CLK_DOUT_PCLK_DREX1    799
+> 
+>   /* must be greater than maximal clock id */
+> -#define CLK_NR_CLKS            797
+> +#define CLK_NR_CLKS            800
+> -----------------8<---------------------------
+> 
+> Can I add your ack in the modified version?
 
-I've checked and OdroidU3 works fine with v5.1 release, but X2 fails to 
-detect USB devices. I will investigate this in a few minutes...
+I agree.
 
-Best regards
+> 
+> Regards,
+> Lukasz
+>>
+>>
+>>> +#define CLK_DOUT_PCLK_DREX0	792
+>>> +#define CLK_DOUT_PCLK_DREX1	793
+>>> +#define CLK_DOUT_SCLK_CDREX	794
+>>> +#define CLK_DOUT_ACLK_CDREX1	795
+>>> +#define CLK_DOUT_CCLK_DREX0	796
+>>> +#define CLK_DOUT_CLK2X_PHY0	797
+>>> +#define CLK_DOUT_PCLK_CORE_MEM	798
+>>> +#define CLK_FF_DOUT_SPLL2	799
+>>>   
+>>>   /* must be greater than maximal clock id */
+>>> -#define CLK_NR_CLKS		797
+>>> +#define CLK_NR_CLKS		800
+>>>   
+>>>   #endif /* _DT_BINDINGS_CLOCK_EXYNOS_5420_H */
+>>>
+>>
+> 
+> 
+
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
