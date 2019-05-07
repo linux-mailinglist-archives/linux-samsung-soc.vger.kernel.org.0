@@ -2,177 +2,146 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9343016019
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 May 2019 11:05:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08E1C16097
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 May 2019 11:17:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbfEGJFj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 May 2019 05:05:39 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:44291 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726369AbfEGJFi (ORCPT
+        id S1726723AbfEGJRi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 May 2019 05:17:38 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:33785 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726349AbfEGJRh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 May 2019 05:05:38 -0400
+        Tue, 7 May 2019 05:17:37 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190507090536euoutp02e27ac7c031a3deb73f47dcd7d159ad6b~cW0gQmaiY2512225122euoutp02R
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 May 2019 09:05:36 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190507090536euoutp02e27ac7c031a3deb73f47dcd7d159ad6b~cW0gQmaiY2512225122euoutp02R
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190507091735euoutp015d3133761c9a185b6b3d4916860f848d~cW__LBzkK1987819878euoutp01-
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 May 2019 09:17:35 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190507091735euoutp015d3133761c9a185b6b3d4916860f848d~cW__LBzkK1987819878euoutp01-
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557219936;
-        bh=Ukf+FLcqAF3cEVXKTbQFGjd2gzyerf+1cQvBi47rjTU=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=oESQ57Q+uc54HIJ91fJzUQOwmfe0jjkbA2i3J5cuHk6Vp8QkhbcY+ti7BUCe6fZ8J
-         VGd4XJUBYHe9vEaGGMPfqd8BHEET9uH1uyOxPztvC+DHLJM1n/t+ZVkjNBjoux3xt/
-         QyifCw8f1I4nDILwUonTV5/osasGLhNQbQuXFGyE=
+        s=mail20170921; t=1557220655;
+        bh=eC9RKKUhFBEdPO3sH6QeAj7KbWtJ/CGboccWZibZgX8=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=vd+mQzVNEUXzScrjvvZm4pnl6yphua3RRpQ0rNUFT5DZQhQSVmjA/ma6U1JG1TBHV
+         94BM9r+ojyoIPuKNYgFI78X8Nxyf6eSj7h7nc2N1GbyLck4DcHaxNp1q34t8OMpemg
+         c3rW9PM94c9oe75axl6/lmmoEu8JLFH2gxA86LXA=
 Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190507090535eucas1p1eeff1030a0df912b00643c9273cc6d72~cW0fM8Bm23257032570eucas1p1p;
-        Tue,  7 May 2019 09:05:35 +0000 (GMT)
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190507091734eucas1p22e5ac264e405a085172e7e99cf7e69e3~cW_9YScXm1524515245eucas1p2S;
+        Tue,  7 May 2019 09:17:34 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id EA.90.04325.E5A41DC5; Tue,  7
-        May 2019 10:05:34 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 0D.82.04325.E2D41DC5; Tue,  7
+        May 2019 10:17:34 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190507090534eucas1p2f6624c19f0c2d2b084bddcc72d544a60~cW0eVsZMY2656426564eucas1p2P;
-        Tue,  7 May 2019 09:05:34 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190507090533eusmtrp1aefae86a1bd5f3855c85ddf8ff2df8ff~cW0eHdzcR3169331693eusmtrp14;
-        Tue,  7 May 2019 09:05:33 +0000 (GMT)
-X-AuditID: cbfec7f5-b75ff700000010e5-5e-5cd14a5ed4c8
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id E9.35.04140.D5A41DC5; Tue,  7
-        May 2019 10:05:33 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190507090533eusmtip20d4a7dacfddd5212fbd5671d0e54bc67~cW0ddmHD72340623406eusmtip2D;
-        Tue,  7 May 2019 09:05:33 +0000 (GMT)
-Subject: Re: [PATCH v3 3/4] Documentation: devicetree: add PPMU events
- description
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
+        20190507091733eucas1p22eb2b950569e82bc947d628292c2e0e4~cW_8ZVmns1522515225eucas1p2P;
+        Tue,  7 May 2019 09:17:33 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190507091733eusmtrp274614b2df408d26303169fd1a9db22a3~cW_8LTpdq1581815818eusmtrp2d;
+        Tue,  7 May 2019 09:17:33 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-c2-5cd14d2e2169
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id E0.39.04146.D2D41DC5; Tue,  7
+        May 2019 10:17:33 +0100 (BST)
+Received: from [106.120.50.25] (unknown [106.120.50.25]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190507091732eusmtip177e46be4523d9745c5be7c7caeb63838~cW_7wRE993014030140eusmtip1j;
+        Tue,  7 May 2019 09:17:32 +0000 (GMT)
+Subject: Re: [PATCH] usb: dwc2: Force 8bit UTMI width for Samsung Exynos
+ SoCs
+To:     Markus Reichl <m.reichl@fivetechno.de>, linux-usb@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Minas Harutyunyan <hminas@synopsys.com>,
+        Felipe Balbi <felipe.balbi@linux.intel.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>, willy.mh.wolff.ml@gmail.com
-Message-ID: <3d221027-292b-7d0d-2510-f230a81f4b52@partner.samsung.com>
-Date:   Tue, 7 May 2019 11:05:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Jules Maselbas <jmaselbas@kalray.eu>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <eefff244-f311-e59e-d914-9a18b5a21620@samsung.com>
+Date:   Tue, 7 May 2019 11:17:31 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
         Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <97277857-666d-7720-9d85-19120c977682@partner.samsung.com>
-Content-Language: en-US
+In-Reply-To: <39c7b687-449e-5e89-4c70-527d4e779fd9@fivetechno.de>
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUhTURjGPbu7u9fV5DgrXyqKRmIJzbKIS99F1IqooJA+pFp50dG2bFdd
-        X5AWZJpLUzAbliWZ08yPKWqSS1S0stqWYJFf6VZWumJsBaFWzrvI/573eX7nnPeBQxPSHnIu
-        rdImsjqtUi0TiYV17b+sy47stMcsH2lcxlTnV5LMW+8wyRS2vSaZLMcIwVitVRTz6tIoxZgd
-        3STT1VggYjyGNsTkWy0C5lFbH8UUv7ULmJ5Uk4j586SBYlpH00jm57MhtAkryu+UI8VjYx+l
-        MJelixQ19y8qrteWIYXHvGCv6JB4XSyrViWzusgNx8TxTUX5goSxoDPXClJRCkqfmYECacCr
-        oP5BFpGBxLQUmxB8cT0R8YMXwf1BD8UPHgTO/HT070ha3m9/UIKgdcAj5AcXgvHv7ZSPCsH7
-        oaK/e1LTtAjLoaHstM+ehRfB2JU80scT+CUJNmOa0BdI8DZorpggfFqIF4PD3jt1z2x8AAba
-        q0ieCYbnt5xTfCDeDiOFT6d8AofCe2ehgNcLod5VMFUIcCoNX8xu/9pboa46Q8jrEPjaUUvx
-        ej505mb6fQ5SDPf8/AVwZN32M2uhtcNO+soQeClUNkby9maoMU0gnw04CN65gvkVgiCn7ibB
-        2xK4ekXK00ugNtMm4PUcKCnPo7KRzDitmHFaGeO0Msb/795FwjIUyiZxmjiWW6ll9XJOqeGS
-        tHHyE6c0ZjT55Tp/d/xoQJbx4y0I00g2U5K9xRYjJZXJ3FlNCwKakM2SKD+9jpFKYpVnz7G6
-        U0d1SWqWa0HzaKEsVHI+4MNhKY5TJrInWTaB1f1LBXTg3BQkn3jzKj7cud5iOHc5LG+PXmMa
-        V2/sstT1OZszPpbaTEWbdxU1kdFa447iBS92dw6FR98QlO5T1AREub0zAvSfB6PWxOb2rgg2
-        eHM25Ri8G+5t7VGpqiv6V9vFB+9+u+y+sCvC9DBs2F3q0RQG7NzdL9N/bdVE3Mp0rLUFk39q
-        5TIhF69cEUHoOOVf0QlhiG4DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsVy+t/xe7qxXhdjDI6eNrXYOGM9q8X1L89Z
-        LeYfOcdq0f/4NbPF+fMb2C3ONr1ht9j0+BqrxeVdc9gsPvceYbSYcX4fk8XaI3fZLZZev8hk
-        cbtxBZvF/z072C0Ov2lntfh24hGjg4DHmnlrGD12zrrL7rFpVSebx+Yl9R59W1YxenzeJBfA
-        FqVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRvl6CXsXfR
-        DKaC33wV3XMaGRsYO3m6GDk5JARMJNqn/WPvYuTiEBJYyihx5+N9ZoiEmMSkfdvZIWxhiT/X
-        uthAbCGB14wSi6akgNjCAiES6+5dA6rh4GAT0JPYsaoQJCwioCjxu20aK8hMZoFLrBJbtzWx
-        Qiw4yCyxb/9aVpAqXgE3iQPr/oItYxFQkXh88Q7YMlGBCIkz71ewQNQISpyc+QTM5hRwl3g9
-        fz9YL7OAmcS8zQ+ZIWxxiVtP5jNB2PIS29/OYZ7AKDQLSfssJC2zkLTMQtKygJFlFaNIamlx
-        bnpusZFecWJucWleul5yfu4mRmBcbzv2c8sOxq53wYcYBTgYlXh4H9heiBFiTSwrrsw9xCjB
-        wawkwpv47FyMEG9KYmVValF+fFFpTmrxIUZToOcmMkuJJucDU05eSbyhqaG5haWhubG5sZmF
-        kjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQZGrnPM25azl7jyGalVRxxusHEs1BFiak3u031c
-        +qz3kMjpuTVdx3rlf+lE7GWbv03nqkrgrMytLSpfuvNPfPl8339x6svtIhV52xkXrmqwvWUt
-        vudVvM6ysimVt/6eEsqqq3Xi/Pv47fyo1Uo/fM4tKXYo7OHWKxYw2vzEw3VbhOWL6OWXVzEo
-        sRRnJBpqMRcVJwIAomVimwEDAAA=
-X-CMS-MailID: 20190507090534eucas1p2f6624c19f0c2d2b084bddcc72d544a60
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsWy7djP87p6vhdjDKa8ErfYOGM9q8X8m0kW
+        jb/2slvMmnGa1eL8+Q3sFpd3zWGzmHF+H5PFomWtzBYvj/xgdOD0uHWn3uP0+puMHptWdbJ5
+        zDsZ6NG3ZRWjx5b9nxk9Pm+SC2CP4rJJSc3JLEst0rdL4MroWPOSreAsb8X1w5NZGhi/c3Ux
+        cnJICJhIHNqyiaWLkYtDSGAFo8Sn9r3sEM4XRolpi+4yglQJCXxmlNgz3Ram4/apFqii5YwS
+        l7v/M0M4bxkl3nx4ywRSJSzgL3Fsxw6whIhAB6PExvc7wJYwCzxklPja18QCUsUmYCjR9baL
+        DcTmFbCTWP8RZC4nB4uAisSF6Y+Bujk4RAViJBZ9hioRlDg58wlYK6eAo8Tdp39YQWxmAXmJ
+        7W/nMEPY4hK3nsxnAtklIXCJXWLiqSWsIHMkBFwkPn7MgnhBWOLV8S3sELaMxP+dMPXNjBIP
+        z61lh3B6gH5rmsEIUWUtcfj4RbBBzAKaEut36UOEHSWWLexlhJjPJ3HjrSDEDXwSk7ZNZ4YI
+        80p0tAlBVKtJzDq+Dm7twQuXmCcwKs1C8tksJN/MQvLNLIS9CxhZVjGKp5YW56anFhvnpZbr
+        FSfmFpfmpesl5+duYgSmqdP/jn/dwbjvT9IhRgEORiUe3glOF2KEWBPLiitzDzFKcDArifAm
+        PjsXI8SbklhZlVqUH19UmpNafIhRmoNFSZy3muFBtJBAemJJanZqakFqEUyWiYNTqoHxXJ2S
+        u4ZldcukzvpFp95+vZTVdqnC9tlC8242pQlXGyTFum/2dddzLuvsTN18f5PYHKcr2/dvEvAL
+        P69V88hyy9O3j+bU+vRU7fx/SyfkmMqGE686ucuv3LrXp3KjSC9IuCPu3U2R4PeH2l32sK58
+        qpjPmJSoo/LOcn6X6fHPQWU3J69M/z5NiaU4I9FQi7moOBEASH/kU08DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsVy+t/xu7q6vhdjDE6/FrfYOGM9q8X8m0kW
+        jb/2slvMmnGa1eL8+Q3sFpd3zWGzmHF+H5PFomWtzBYvj/xgdOD0uHWn3uP0+puMHptWdbJ5
+        zDsZ6NG3ZRWjx5b9nxk9Pm+SC2CP0rMpyi8tSVXIyC8usVWKNrQw0jO0tNAzMrHUMzQ2j7Uy
+        MlXSt7NJSc3JLEst0rdL0MvoWPOSreAsb8X1w5NZGhi/c3UxcnJICJhI3D7Vwt7FyMUhJLCU
+        UeLlvklsEAkZiZPTGlghbGGJP9e62CCKXjNKnH7/gAUkISzgK7G85z0LSEJEoINR4syao8wg
+        DrPAQ0aJC00/oOa+ZZRomryEHaSFTcBQouttF9gOXgE7ifUfW8DiLAIqEhemP2YGsUUFYiRO
+        TN3CDlEjKHFy5hOwdZwCjhJ3n/4Bu4lZwExi3uaHzBC2vMT2t3OgbHGJW0/mM01gFJqFpH0W
+        kpZZSFpmIWlZwMiyilEktbQ4Nz232FCvODG3uDQvXS85P3cTIzA6tx37uXkH46WNwYcYBTgY
+        lXh4H9heiBFiTSwrrsw9xCjBwawkwpv47FyMEG9KYmVValF+fFFpTmrxIUZToOcmMkuJJucD
+        E0deSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQZGledn5KOljm0r
+        860S3nvs0ZO1U3nqpRf/iP42dfKRqad4JD7PWW6uPCF7klGzqM3lpy3++rc2775sYPeSt0j+
+        4b5VHT3vLhz9fWjaRpHbb1/2M/X8eiq9q4KtW1ClZFbL4/jvDi8clu7v2ia978lSkxm+oitX
+        n52qnToz9JfQz0txk1+db3nj/UKJpTgj0VCLuag4EQBk1dOw5AIAAA==
+X-CMS-MailID: 20190507091733eucas1p22eb2b950569e82bc947d628292c2e0e4
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190419134822eucas1p29c6eff0f500311749b33c4f556123cf0
+X-RootMTR: 20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190419134822eucas1p29c6eff0f500311749b33c4f556123cf0
-References: <1555681688-19643-1-git-send-email-l.luba@partner.samsung.com>
-        <CGME20190419134822eucas1p29c6eff0f500311749b33c4f556123cf0@eucas1p2.samsung.com>
-        <1555681688-19643-4-git-send-email-l.luba@partner.samsung.com>
-        <20190430223629.GA22317@bogus>
-        <1fd44623-4a59-f014-1ae9-a7cc605ad30f@partner.samsung.com>
-        <CAL_JsqJcm9Z6vYFHGyAZ+h3-kmSv6e=3NtO-fjJn3-QT0JoX+w@mail.gmail.com>
-        <97277857-666d-7720-9d85-19120c977682@partner.samsung.com>
+X-CMS-RootMailID: 20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea
+References: <20190503204958.GA12532@kozik-lap>
+        <CGME20190506130052eucas1p25afd4e15648e9efc6fd011e46081fbea@eucas1p2.samsung.com>
+        <20190506130046.20898-1-m.szyprowski@samsung.com>
+        <39c7b687-449e-5e89-4c70-527d4e779fd9@fivetechno.de>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Rob,
+Hi Markus,
 
-On 5/6/19 12:29 PM, Lukasz Luba wrote:
-> Hi Rob,
-> 
-> On 5/2/19 10:24 PM, Rob Herring wrote:
->> On Thu, May 2, 2019 at 3:52 AM Lukasz Luba 
->> <l.luba@partner.samsung.com> wrote:
->>>
->>> Hi Rob,
->>>
->>> On 5/1/19 12:36 AM, Rob Herring wrote:
->>>> On Fri, Apr 19, 2019 at 03:48:07PM +0200, Lukasz Luba wrote:
->>>>> Extend the documenation by events description with new 
->>>>> 'event-data-type'
->>>>> field. Add example how the event might be defined in DT.
->>>>
->>>> Why do we need event types in DT? We don't do this for other h/w 
->>>> such as
->>>> ARM PMU.
->>> In ARM PMU all the events are hard-coded into the driver code i.e. in v7
->>> arch/arm/kernel/perf_event_v7.c
->>> and are seen from perf. They are different type and for different
->>> purpose. The Ecynos PPMU events are not seen in perf, they are
->>> for internal monitoring and must not be reset by other actors like perf.
->>> They are used by the 'bus drivers' to made some heuristics and tune the
->>> internal settings, like frequency.
->>>
->>> Chanwoo has written PPMU driver which relies on DT definition.
->>> The DT events are used by other DT devices by phandle.
->>
->> How is that done? I don't see anything in the binding for that.
-> Here are the DT devices and how they are pinned together:
-> - declared devfreq events:
-> https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/exynos4412-ppmu-common.dtsi 
-> 
-> - devfreq events pinned to the bus device:
-> https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/exynos4412-odroid-common.dtsi#L107 
-> 
-> - the bus device itself:
-> https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/exynos4412.dtsi#L457 
-> 
-> 
-> Regards,
-> Lukasz
-> 
->>
->> Rob
->>
->>
-Can I send the next version of the patch set, which has Chanwoo's
-suggestions, or do you have some objections to this PPMU entries?
+On 2019-05-07 10:12, Markus Reichl wrote:
+> Hi Marek,
+>
+> your patch did not help on stable v5.1
+>
+> [    3.255963] samsung-usb2-phy 125b0000.exynos-usbphy: 125b0000.exynos-usbphy supply vbus not found, using dummy regulator
+> [    4.044547] usbcore: registered new interface driver smsc95xx
+> [    4.112261] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.01
+> [    4.120363] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+> [    4.127560] usb usb1: Product: EHCI Host Controller
+> [    4.132415] usb usb1: Manufacturer: Linux 5.1.0-00005-geb4efae48eb5 ehci_hcd
+> [    4.139446] usb usb1: SerialNumber: 12580000.ehci
+> [    4.183056] usb3503 0-0008: switched to HUB mode
+> [    4.183121] usb3503 0-0008: usb3503_probe: probed in hub mode
+> [    4.488344] usb 1-2: new high-speed USB device number 2 using exynos-ehci
+> [    4.675605] usb 1-2: New USB device found, idVendor=0424, idProduct=3503, bcdDevice=a1.a0
+> [    4.678166] usb 1-2: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+> [    4.686140] usb 1-2: skipping disabled interface 0
+>
+> root@odroid-x2:~# lsusb
+> Bus 001 Device 002: ID 0424:3503 Standard Microsystems Corp.
+> Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
-Regards,
-Lukasz
+This patch fixes the issue introduced by "usb: dwc2: gadget: Replace 
+phyif with phy_utmi_width" commit, which is queued only to linux-next so 
+far. Stable v5.1 doesn't include it, so the fix doesn't change anything 
+on v5.1.
+
+I've checked and OdroidU3 works fine with v5.1 release, but X2 fails to 
+detect USB devices. I will investigate this in a few minutes...
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
