@@ -2,116 +2,107 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D62E17D4A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 17:28:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C02751811F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 22:35:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726634AbfEHP1j convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 8 May 2019 11:27:39 -0400
-Received: from unicorn.mansr.com ([81.2.72.234]:36280 "EHLO unicorn.mansr.com"
+        id S1728028AbfEHUf2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 May 2019 16:35:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39340 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726522AbfEHP1j (ORCPT
+        id S1726526AbfEHUf2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 8 May 2019 11:27:39 -0400
-Received: by unicorn.mansr.com (Postfix, from userid 51770)
-        id CDBEB149B7; Wed,  8 May 2019 16:27:37 +0100 (BST)
-From:   =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Markus Reichl <m.reichl@fivetechno.de>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v2] usb: core: verify devicetree nodes for disabled interfaces
-References: <106fc58c-1a4f-6605-41d7-b6031c5751a3@samsung.com>
-        <CGME20190508104442eucas1p2ebdffa348465f2c28177601014614853@eucas1p2.samsung.com>
-        <20190508104434.3409-1-m.szyprowski@samsung.com>
-        <yw1xtve5uq1y.fsf@mansr.com>
-        <e7f32280-57ec-6298-1a5d-8d2d4dc26667@samsung.com>
-Date:   Wed, 08 May 2019 16:27:37 +0100
-In-Reply-To: <e7f32280-57ec-6298-1a5d-8d2d4dc26667@samsung.com> (Marek
-        Szyprowski's message of "Wed, 8 May 2019 15:49:22 +0200")
-Message-ID: <yw1xpnotufti.fsf@mansr.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+        Wed, 8 May 2019 16:35:28 -0400
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 679042173E;
+        Wed,  8 May 2019 20:35:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1557347727;
+        bh=5aJG1c6vlheNdOqjrdl3fJiyQzUboYjwPsleuLlW+7s=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=NVRkrMZZAMA55Yn9gLTgQc1JSqU32PF1aw5Z7lEUXbLaF1VOaCTYr9NN7g3zR6eek
+         Yjjc6KY51ZTFSq1SER63IvktW0DkDb8dxTcniSKWMv4PnFFKTZ1AfopaDuHQbcukfc
+         +Spl7TjXmM0Qt8o/7LLIhRQbcixnrtiLiBoKdZ+I=
+Received: by mail-qt1-f172.google.com with SMTP id a17so27733qth.3;
+        Wed, 08 May 2019 13:35:27 -0700 (PDT)
+X-Gm-Message-State: APjAAAUw7oLSJEXNcU+ry8adEGCxx0LqQVuUNwcXjFX1rYqUlYRFcXq0
+        yQ2bPkcHTAryVEEhsa2NV3VGxpnwAjM3clcbxg==
+X-Google-Smtp-Source: APXvYqzhynLu+eXujmCNyMI9GKUO6g2F1Q4xurKMelb8wXbTG2ZjDze7NlPsYU0W4Z2FLpF7y9/rCsLlKkgEOI2kSY4=
+X-Received: by 2002:a0c:f68e:: with SMTP id p14mr182544qvn.77.1557347726619;
+ Wed, 08 May 2019 13:35:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+References: <1557155521-30949-1-git-send-email-l.luba@partner.samsung.com>
+ <CGME20190506151215eucas1p2c57147edac5671c5ec9a223efb6b4adc@eucas1p2.samsung.com>
+ <1557155521-30949-8-git-send-email-l.luba@partner.samsung.com>
+ <20190507170422.GA25179@bogus> <CAJKOXPdacKBrKeCyCaE7VS8-NOR4Oo27XY7rx20P2ORY2vBBSg@mail.gmail.com>
+ <ab489925-040c-815c-2aef-50ed0ee6cd6c@partner.samsung.com>
+In-Reply-To: <ab489925-040c-815c-2aef-50ed0ee6cd6c@partner.samsung.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 8 May 2019 15:35:15 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJSbi5jNZSRhiE-h74DdbsgM7O+tqP9HOf037pyN7TbFA@mail.gmail.com>
+Message-ID: <CAL_JsqJSbi5jNZSRhiE-h74DdbsgM7O+tqP9HOf037pyN7TbFA@mail.gmail.com>
+Subject: Re: [PATCH v7 07/13] dt-bindings: memory-controllers: add Exynos5422
+ DMC device description
+To:     Lukasz Luba <l.luba@partner.samsung.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
+        <b.zolnierkie@samsung.com>, Kukjin Kim <kgene@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Joerg Roedel <jroedel@suse.de>,
+        Thierry Reding <treding@nvidia.com>,
+        Dmitry Osipenko <digetx@gmail.com>, willy.mh.wolff.ml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Marek Szyprowski <m.szyprowski@samsung.com> writes:
-
-> Hi
+On Wed, May 8, 2019 at 4:45 AM Lukasz Luba <l.luba@partner.samsung.com> wrote:
 >
-> On 2019-05-08 13:46, Måns Rullgård wrote:
->> Marek Szyprowski <m.szyprowski@samsung.com> writes:
->>> Commit 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
->>> add support for disabling given USB device interface by adding nodes to
->>> the USB host controller device. The mentioned commit however identifies
->>> the given USB interface node only by the 'reg' property in the host
->>> controller children nodes and then checks for their the 'status'. The USB
->>> device interface nodes however also has to have a 'compatible' property as
->>> described in Documentation/devicetree/bindings/usb/usb-device.txt. This is
->>> important, because USB host controller might have child-nodes for other
->>> purposes. For example, Exynos EHCI and OHCI drivers already define
->>> child-nodes for each physical root hub port and assigns respective PHY
->>> controller and parameters for them. This conflicts with the proposed
->>> approach and verifying for the presence of the compatible property fixes
->>> this issue without changing the bindings and the way the PHY controllers
->>> are handled by Exynos EHCI/OHCI drivers.
->>>
->>> Reported-by: Markus Reichl <m.reichl@fivetechno.de>
->>> Fixes: 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
->>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
->>> ---
->>>   drivers/usb/core/message.c | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
->>> index e844bb7b5676..6f7d047392bd 100644
->>> --- a/drivers/usb/core/message.c
->>> +++ b/drivers/usb/core/message.c
->>> @@ -2009,6 +2009,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
->>>   		struct usb_interface *intf = cp->interface[i];
->>>
->>>   		if (intf->dev.of_node &&
->>> +		    of_find_property(intf->dev.of_node, "compatible", NULL) &&
->>>   		    !of_device_is_available(intf->dev.of_node)) {
->>>   			dev_info(&dev->dev, "skipping disabled interface %d\n",
->>>   				 intf->cur_altsetting->desc.bInterfaceNumber);
->>> -- 
->> I don't think this is the right approach.  We don't want to be adding
->> such checks everywhere the of_node is used.  A better way might be to
->> not set of_node at all in the absence of a proper "compatible" string.
 >
-> Right, this will be a better approach. I've just checked the code and a 
-> simple check for 'compatible' property presence can be easily added in 
-> drivers/usb/core/of.c in usb_of_get_device_node() and 
-> usb_of_get_interface_node() functions.
+> On 5/8/19 9:19 AM, Krzysztof Kozlowski wrote:
+> > On Tue, 7 May 2019 at 19:04, Rob Herring <robh@kernel.org> wrote:
+> >>> +- devfreq-events : phandles of the PPMU events used by the controller.
+> >>> +- samsung,syscon-chipid : phandle of the ChipID used by the controller.
+> >>> +- samsung,syscon-clk : phandle of the clock register set used by the controller.
+> >>
+> >> Looks like a hack. Can't you get this from the clocks property? What is
+> >> this for?
+> >
+> > Hi Rob,
+> >
+> > Lukasz uses these two syscon regmaps to read certain registers. For
+> > chipid he reads it to check the size of attached memory (only 2 GB
+> > version is supported). This indeed looks like a hack. However the
+> > second regmap (clk) is needed to get the timing data from registers
+> > from DMC clock driver address space. These are registers with memory
+> > timing so their data is not exposed anyway in common clk framework.
+
+Okay, please just explain what your accessing. Consider adding the
+offset as a cell in case stuff moves around on another chip.
+
+> >
+> > Best regards,
+> > Krzysztof
 >
-> The second check could be added in drivers/usb/core/hub.c in 
-> usb_new_device() - to ensure that the device's vid/pid matches of_node 
-> compatible string.
->
-> Is this okay? Or just add a latter one?
+> Thank you Krzysztof for a fast response. I have also responded to Rob.
+> I wouldn't call accessing chipid registers as a hack, though. The DMC
+> registers do not contain information about the memory chip since it is
+> in phase of production the board not the chip. Thus, chipid regs (which
+> loads from e-fuses) are best place to put information about memory
+> type/size.
 
-I'm not sure where the best place to check is.  Someone else will have
-to weigh in on that.
+For efuses, we have a binding (nvmem). Maybe you should use it.
 
->> Then there's the problem of how to resolve the incompatibility between
->> the generic USB and Exynos bindings.  One possible fix could be to use
->> a child node of the controller node to represent the root hub.  Since
->> the driver currently doesn't work at all if a devicetree has nodes for
->> USB devices, there should be no compatibility concerns.
->
-> So far we don't have any use case for adding devicetree nodes for usb 
-> devices under Exynos EHCI/OHCI hcd, so this shouldn't be a problem for now.
-
-None that you know of, that is.  Regardless, the bindings are
-inconsistent, and that needs to be fixed.
-
--- 
-Måns Rullgård
+Rob
