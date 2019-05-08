@@ -2,195 +2,176 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E794317A1D
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 15:13:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9469017B05
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 15:49:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727520AbfEHNNH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 8 May 2019 09:13:07 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:45224 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbfEHNNG (ORCPT
+        id S1726527AbfEHNt2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 May 2019 09:49:28 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:44130 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726999AbfEHNt2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 8 May 2019 09:13:06 -0400
+        Wed, 8 May 2019 09:49:28 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190508131305euoutp014fbe5959f09672dc4a8280a2d3d9e196~ct137bsqx1906519065euoutp014
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 May 2019 13:13:05 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190508131305euoutp014fbe5959f09672dc4a8280a2d3d9e196~ct137bsqx1906519065euoutp014
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190508134926euoutp025410091c755d91f326542575ea6c40db~cuVnC6lzQ1885818858euoutp02W
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 May 2019 13:49:26 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190508134926euoutp025410091c755d91f326542575ea6c40db~cuVnC6lzQ1885818858euoutp02W
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557321185;
-        bh=eXhCUDgM0oIHnRivX2ZhfLzQLHq/huckSvDHj9jbwrY=;
+        s=mail20170921; t=1557323366;
+        bh=q+nK4iPzFi5yb1QN5xDIbg4tVHfLGHmSjPZiJvo6CYs=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=NQNam05B7uPudHnTdG5BxMpqH5SkCKOLcazEjlvqq0r3z8WZxBlt4g0QvcKWjeuO4
-         EbuIVTROArxPAR7E1mvf/WFA6dpvZzP8UhXFVoXAODMcZsCoM1nMe+cY3mtTWTozUU
-         qYOtuVBlkq4/+yIEC5rdKVwJ7g7CU8MTNS+ztZOA=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        b=VzquYJvMzGKvmdn0vmFFNEpyCtIQe+trQ053DttbpS1+4dJ3ooGpM13LS6eUgkfk8
+         cWRgXcpqamVi2gMjUTsfsoCkzae6hWbd+DAAxp0jZZg4vm+ycsyxp4UxIT59P4+kGO
+         Xyui70Xa4HSa42w3r/IPtxSVuTrDaard4YJC3jzk=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190508131304eucas1p1c5466948d6a2dad412a52db9e4ef6d6c~ct13DMXrs2066020660eucas1p1O;
-        Wed,  8 May 2019 13:13:04 +0000 (GMT)
+        20190508134925eucas1p16b1c30b44a8ffc746b81d4edb6feb966~cuVmX7ebV2880828808eucas1p1J;
+        Wed,  8 May 2019 13:49:25 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 87.25.04298.0E5D2DC5; Wed,  8
-        May 2019 14:13:04 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190508131303eucas1p15db96735e01d8bd535861b91aa7298b8~ct12NBAx-0289202892eucas1p1R;
-        Wed,  8 May 2019 13:13:03 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190508131303eusmtrp24dd788c179063640d11b24074a8c30ad~ct11_14KZ0688306883eusmtrp2K;
-        Wed,  8 May 2019 13:13:03 +0000 (GMT)
-X-AuditID: cbfec7f2-f2dff700000010ca-85-5cd2d5e065ed
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 61.AA.04325.56ED2DC5; Wed,  8
+        May 2019 14:49:25 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190508134924eucas1p2a2d309e35f15ff66eefa56849b5c9171~cuVlrg-Xa0640406404eucas1p21;
+        Wed,  8 May 2019 13:49:24 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190508134924eusmtrp1eec54a4b59c653d1bc69b5dbf2eb62f7~cuVldYR4_2980329803eusmtrp1Z;
+        Wed,  8 May 2019 13:49:24 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-90-5cd2de657b5d
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id E3.C0.04140.FD5D2DC5; Wed,  8
-        May 2019 14:13:03 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 84.E7.04146.46ED2DC5; Wed,  8
+        May 2019 14:49:24 +0100 (BST)
+Received: from [106.120.50.25] (unknown [106.120.50.25]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190508131302eusmtip2160fd4fca1c240b849c598e039e50fbd~ct11KeAkx0788807888eusmtip2z;
-        Wed,  8 May 2019 13:13:02 +0000 (GMT)
-Subject: Re: [PATCH v7 11/13] ARM: dts: exynos: add syscon to clock
- compatible
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
-        treding@nvidia.com, digetx@gmail.com, willy.mh.wolff.ml@gmail.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <f60314f9-61bc-a9e1-7ddd-f068c241e860@partner.samsung.com>
-Date:   Wed, 8 May 2019 15:13:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        20190508134924eusmtip2162b8c5f14913ae4dbfea5a4ae796dbd~cuVk6ofOR0200002000eusmtip24;
+        Wed,  8 May 2019 13:49:24 +0000 (GMT)
+Subject: Re: [PATCH v2] usb: core: verify devicetree nodes for disabled
+ interfaces
+To:     =?UTF-8?B?TcOlbnMgUnVsbGfDpXJk?= <mans@mansr.com>
+Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Markus Reichl <m.reichl@fivetechno.de>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <e7f32280-57ec-6298-1a5d-8d2d4dc26667@samsung.com>
+Date:   Wed, 8 May 2019 15:49:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
         Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPf3tZGp-UQagGKNs0xFBGz2NwBdA2R=Y25C5jTK_ZcMXg@mail.gmail.com>
+In-Reply-To: <yw1xtve5uq1y.fsf@mansr.com>
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0gUURjFuzszO+PibuNq+WVStBVUlCYEXirCoGQoCIMCM6O2nDR1zHZ8
-        m7RWWq2ZpVS6alZQmibqJmoWBj7zlWmJoliigpFamo8o0XKcjfzv3PP9Lt85l8sQ2q+UE3Mu
-        JIw3hOiDdUoVWVb/q21bf2eH73ZLmQaXpBdRuGtqmMI5te8oXDAxiHBaU7YCtyQJOGVwhMBt
-        bcU0br08SuMPlVlKPJlci3B6W5UCF9b20bg3Pk+Ja0avUfjNxwO4d1aDZ94OIA8tNzOdSnKZ
-        xnaSe2nuozlL/g0ll3zlm5K7VZqPuBfNsdykZY0X46Pa7ccHn4vgDa57TqkC7iYkk6HjK6Ky
-        ujMJI5pnTYhhgN0BuaZDJmTDaNk8BPXl+0xItaCnEDzOalHIh0kED2qGFRIlXSice0XIg1wE
-        VR1JVmoMwUDBtUXKnvWC8t9ppKQd2M3QNfeTkiCCLSGhvKKSlnYrWReoyL8gMWrWE8bSTIs8
-        yW6A7JIiWtIrWG/4XF9MyYwdNGYMLTI27GG48m1cKWmCdYSeoRyFrNdC+VjWYjpgMxiYzUtA
-        cux9MPFpzqrt4WtDKS1rZ/jzMsdaTQRj8iMrcxEGU7KtzC6oaWinpMzEQpmiSlfZ3guvc4sp
-        +Rk10D1mJ0fQQGrZfUK21XA9USvTm6D05nvropWQ+/wefRvpzEuKmZeUMS8pY/6/9yEi85Ej
-        Hy4K/rzoFsJHuoh6QQwP8Xc5c16woIUf2Dzf8KMCTXecrkYsg3S26oDqDl8tpY8Qo4VqBAyh
-        c1B33Vmw1H766BjecP6kITyYF6vRaobUOapjl/Uf17L++jA+iOdDecO/qYKxcTIijd8TLlqY
-        D/L1znzscWTYFlLNV50SY7SJG9LfC6FB7qODnhvPCpeSwm+3Buytuzo0crTEUXPQeaST/KBa
-        f9k93rndZ2Kmafn17zF469qnRQNDqjOBPTfvx8Q1r1vlGmmMsnuWJLR4Irqx8YCDJfBE3fjU
-        /sMpx77E3Wj32umqetOjI8UAvdsWwiDq/wJGjqJpfQMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42I5/e/4Pd37Vy/FGNz8LWCxccZ6VovrX56z
-        Wsw/co7VYvXHx4wWk0/NZbI4051r0f/4NbPF+fMb2C3ONr1ht7i8aw6bxefeI4wWM87vY7JY
-        e+Quu8XtxhVsFofftLNa7L/iZXH7N5/FtxOPGB2EPL59ncTiMbvhIovHzll32T02repk8+ht
-        fsfm0bdlFaPH5tPVHp83yQVwROnZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq
-        6dvZpKTmZJalFunbJehlTG3tZSn4IFox58Zs5gbGfwJdjJwcEgImEmv/7mbuYuTiEBJYyihx
-        7sRrJoiEmMSkfdvZIWxhiT/Xutggil4zSmw7uAOsSFjAT+LU7M2sILaIgKbE9b/fWUGKmAU2
-        skhcfNXLBNGxmlli9fPvQKM4ONgE9CR2rCoEaeAVcJN4O7mLBcRmEVCRmLtxPdg2UYEIiTPv
-        V7BA1AhKnJz5BMzmFAiUaH73gQ3EZhYwk5i3+SEzhC0ucevJfCYIW15i+9s5zBMYhWYhaZ+F
-        pGUWkpZZSFoWMLKsYhRJLS3OTc8tNtIrTswtLs1L10vOz93ECIz9bcd+btnB2PUu+BCjAAej
-        Eg9vxqFLMUKsiWXFlbmHGCU4mJVEeK9PBArxpiRWVqUW5ccXleakFh9iNAV6biKzlGhyPjAt
-        5ZXEG5oamltYGpobmxubWSiJ83YIHIwREkhPLEnNTk0tSC2C6WPi4JRqYOwqX7rz1hmnMxe/
-        W81/lpnv7ZrrWl05WX9X10HuPi0lg733Dy8RTv33ce1X5X015W81Z/yffuf+n+vc+b9/M5/b
-        lLCqjLP5WcgFnl67ORPf3I7WS5/4vca9Is9TwXHq3AO7J5xUOZJiUyfK+aWF6Y/H10Tnx9ou
-        Z3Vq92eFKzmmd95meG3zuUCJpTgj0VCLuag4EQCliK9xEwMAAA==
-X-CMS-MailID: 20190508131303eucas1p15db96735e01d8bd535861b91aa7298b8
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTcRjG/Z+znZ1Js+NUfL0ljYgKvGXBohILP+xDYEhfMtFmnjbJqWzO
+        W5GXaday6ILN1rKcZTKaS7ElCstMHU1pXjLLIqboB01FWIHWuux4tPz2+z/v8/C8L/xJXNjG
+        DSWzcwtoZa40R0T4cqwDq84o+stoWux7j1DcVm/hijVNFkLsdD7jice6DIS43mnDxMbmalw8
+        17eCxCtTOiyRlEx+LpO0m64Qkpf3n/IkC4MOnuR6hwlJ3O3bjhOpvoey6JzsQloZk3DaV16n
+        TcpfDil+NOThlqOmIC3ik0Dtgx9tlYQW+ZJCqgVBTeNjghkIqW8I5qxKlt0IbI6IjUD3qms9
+        8ATBkMPJZR+LCDqG5nHGFUCdgNZqHcZwILUfOvUjawmcMmCw+KKOxwwIKg60i9q1OgGVABXW
+        ca9OkhxqBxgmTjIYRKWB0b3u8Ic3d2c4DPOp3aDtWUIM41QkaJ7fw1kOhsmZBxhTBZSNB4aq
+        EYzdOgkWjKs4ywEwb+/gsRwOg7drOWxAg2DqrZnHPmoRjFXWI9Z1EF7bR7jMRri32tIVw8pH
+        YLrBQzAyUH7wYdGfXcIPbll1OCsL4PIlIeveCXp767/aV8Oj+A0k0m86Tb/pHP2mc/T/ex8i
+        jgkF02qVQkar4nPpomiVVKFS58qiz+Qp2pH3Iw3+tn/vRDZPZi+iSCTaIpD3jqYJudJCVYmi
+        FwGJiwIFEze9kiBLWlJKK/MylOocWtWLwkiOKFhw3sd1SkjJpAX0OZrOp5UbU4zkh5YjzCr8
+        c2xv92B4QooxPHa6eXnSMpxekVjaEzZgdnxSR6zwfaLUB4b7oPhXsm50NgqLza5JGVj5mpzk
+        PlsVGaK15ScJ+hu3Xi3Wu/ybM80+F8rstGvcdLQ0qGj7tYyLVrm8peaOrSHeYMGX0o26yI+H
+        fxr7YXZXaKompvSdzCziqOTSuD24UiX9CwVdUSxEAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsVy+t/xe7op9y7FGHx/qGqxccZ6VovmxevZ
+        LM6f38BucXnXHDaLGef3MVksWtbKbPHyyA9Gix8PpzM5cHjculPvsWlVJ5vH/rlr2D3enD7F
+        7tG3ZRWjx+dNcgFsUXo2RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5
+        mWWpRfp2CXoZU7tcCj5IViw584e1gXGxaBcjJ4eEgInE7p8P2LoYuTiEBJYyShy6MIcNIiEj
+        cXJaAyuELSzx51oXVNFrRomdW+aAJYQFQiTWtU5nArFFBEwldsy6CFbELDCHSeJH80t2kISQ
+        wCNGie/Xq0BsNgFDia63XWAbeAXsJBq3XQWq4eBgEVCRmHM9EiQsKhAjcWLqFnaIEkGJkzOf
+        sIDYnAKaEl0H3jGC2MwCZhLzNj9khrDlJZq3zoayxSVuPZnPNIFRaBaS9llIWmYhaZmFpGUB
+        I8sqRpHU0uLc9NxiQ73ixNzi0rx0veT83E2MwCjcduzn5h2MlzYGH2IU4GBU4uHNOHQpRog1
+        say4MvcQowQHs5II7/WJQCHelMTKqtSi/Pii0pzU4kOMpkC/TWSWEk3OByaIvJJ4Q1NDcwtL
+        Q3Njc2MzCyVx3g6BgzFCAumJJanZqakFqUUwfUwcnFINjJ6G1U/LH0pd0/3v6Hx+Tbha6JHp
+        cWt8vSuLsvLS/jdOnhueZcBQtX1X3c3ZhSHu8xaskjE0U6zbfuwBt9Edh4p5p/s+O6zRZAjK
+        1YxwOhkkED+9hkng8f7y2LgXuT6rI9zN9tTo7jMT6T9nIVP29cXH7dbyH24Hywe8Xn7WabHh
+        Aw6rnCdcSizFGYmGWsxFxYkAS7B3ttgCAAA=
+X-CMS-MailID: 20190508134924eucas1p2a2d309e35f15ff66eefa56849b5c9171
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190506151219eucas1p2feab00f7b7c1c5fdd5614423fb38eae2
+X-RootMTR: 20190508104442eucas1p2ebdffa348465f2c28177601014614853
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190506151219eucas1p2feab00f7b7c1c5fdd5614423fb38eae2
-References: <CGME20190506151219eucas1p2feab00f7b7c1c5fdd5614423fb38eae2@eucas1p2.samsung.com>
-        <1557155521-30949-1-git-send-email-l.luba@partner.samsung.com>
-        <1557155521-30949-12-git-send-email-l.luba@partner.samsung.com>
-        <CAJKOXPd6GKVPixMiG37SoHiswaih-3S+o7QJn=WbuqdZzu-s_w@mail.gmail.com>
-        <8d02ef2c-c5dd-6a72-9638-d858df3ea16d@partner.samsung.com>
-        <CAJKOXPf3tZGp-UQagGKNs0xFBGz2NwBdA2R=Y25C5jTK_ZcMXg@mail.gmail.com>
+X-CMS-RootMailID: 20190508104442eucas1p2ebdffa348465f2c28177601014614853
+References: <106fc58c-1a4f-6605-41d7-b6031c5751a3@samsung.com>
+        <CGME20190508104442eucas1p2ebdffa348465f2c28177601014614853@eucas1p2.samsung.com>
+        <20190508104434.3409-1-m.szyprowski@samsung.com>
+        <yw1xtve5uq1y.fsf@mansr.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Hi
 
-On 5/8/19 12:17 PM, Krzysztof Kozlowski wrote:
-> On Wed, 8 May 2019 at 11:50, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+On 2019-05-08 13:46, Måns Rullgård wrote:
+> Marek Szyprowski <m.szyprowski@samsung.com> writes:
+>> Commit 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
+>> add support for disabling given USB device interface by adding nodes to
+>> the USB host controller device. The mentioned commit however identifies
+>> the given USB interface node only by the 'reg' property in the host
+>> controller children nodes and then checks for their the 'status'. The USB
+>> device interface nodes however also has to have a 'compatible' property as
+>> described in Documentation/devicetree/bindings/usb/usb-device.txt. This is
+>> important, because USB host controller might have child-nodes for other
+>> purposes. For example, Exynos EHCI and OHCI drivers already define
+>> child-nodes for each physical root hub port and assigns respective PHY
+>> controller and parameters for them. This conflicts with the proposed
+>> approach and verifying for the presence of the compatible property fixes
+>> this issue without changing the bindings and the way the PHY controllers
+>> are handled by Exynos EHCI/OHCI drivers.
 >>
+>> Reported-by: Markus Reichl <m.reichl@fivetechno.de>
+>> Fixes: 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
+>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+>> ---
+>>   drivers/usb/core/message.c | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> On 5/8/19 9:22 AM, Krzysztof Kozlowski wrote:
->>> On Mon, 6 May 2019 at 17:12, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>>>
->>>> In order get the clock by phandle and use it with regmap it needs to be
->>>> compatible with syscon. The DMC driver uses two registers from clock
->>>> register set and needs the regmap of them.
->>>>
->>>> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
->>>> ---
->>>>    arch/arm/boot/dts/exynos5800.dtsi | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/arm/boot/dts/exynos5800.dtsi b/arch/arm/boot/dts/exynos5800.dtsi
->>>> index 57d3b31..0a2b328 100644
->>>> --- a/arch/arm/boot/dts/exynos5800.dtsi
->>>> +++ b/arch/arm/boot/dts/exynos5800.dtsi
->>>> @@ -17,7 +17,7 @@
->>>>    };
->>>>
->>>>    &clock {
->>>> -       compatible = "samsung,exynos5800-clock";
->>>> +       compatible = "samsung,exynos5800-clock", "syscon";
->>>
->>> What about Exynos5420 DTSI?
->> OK, I will also add it to 5420 dtsi.
->> --------------------------8<------------------------------------------
->> diff --git a/arch/arm/boot/dts/exynos5420.dtsi
->> b/arch/arm/boot/dts/exynos5420.dtsi
->> index aaff158..d9203f0 100644
->> --- a/arch/arm/boot/dts/exynos5420.dtsi
->> +++ b/arch/arm/boot/dts/exynos5420.dtsi
->> @@ -173,7 +173,7 @@
->>                   };
+>> diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+>> index e844bb7b5676..6f7d047392bd 100644
+>> --- a/drivers/usb/core/message.c
+>> +++ b/drivers/usb/core/message.c
+>> @@ -2009,6 +2009,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+>>   		struct usb_interface *intf = cp->interface[i];
 >>
->>                   clock: clock-controller@10010000 {
->> -                       compatible = "samsung,exynos5420-clock";
->> +                       compatible = "samsung,exynos5420-clock", "syscon";
->>                           reg = <0x10010000 0x30000>;
->>                           #clock-cells = <1>;
->>                   };
->> diff --git a/arch/arm/boot/dts/exynos5800.dtsi
->> b/arch/arm/boot/dts/exynos5800.dtsi
->> index 57d3b31..0a2b328 100644
->> --- a/arch/arm/boot/dts/exynos5800.dtsi
->> +++ b/arch/arm/boot/dts/exynos5800.dtsi
->> @@ -17,7 +17,7 @@
->>    };
->>
->>    &clock {
->> -       compatible = "samsung,exynos5800-clock";
->> +       compatible = "samsung,exynos5800-clock", "syscon";
->>    };
->> ----------------------------->8-----------------------------------
->>
->> Can I add your ack after that?
-> 
-> No need for ack. The DTS have to go through arm-soc so I will pick it
-> up when dependencies get in and bindings are accepted (acked or
-> applied). We have now merge window so I guess this will go to v5.4-rc1
-> at earliest.
-> 
-> If you want to speed up things in future, be sure that dependencies
-> (headers) are applied as early as possible.
-Thank you Krzysztof for the explanation, good to know that.
+>>   		if (intf->dev.of_node &&
+>> +		    of_find_property(intf->dev.of_node, "compatible", NULL) &&
+>>   		    !of_device_is_available(intf->dev.of_node)) {
+>>   			dev_info(&dev->dev, "skipping disabled interface %d\n",
+>>   				 intf->cur_altsetting->desc.bInterfaceNumber);
+>> -- 
+> I don't think this is the right approach.  We don't want to be adding
+> such checks everywhere the of_node is used.  A better way might be to
+> not set of_node at all in the absence of a proper "compatible" string.
 
-Regards,
-Lukasz
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
+Right, this will be a better approach. I've just checked the code and a 
+simple check for 'compatible' property presence can be easily added in 
+drivers/usb/core/of.c in usb_of_get_device_node() and 
+usb_of_get_interface_node() functions.
+
+The second check could be added in drivers/usb/core/hub.c in 
+usb_new_device() - to ensure that the device's vid/pid matches of_node 
+compatible string.
+
+Is this okay? Or just add a latter one?
+
+> Then there's the problem of how to resolve the incompatibility between
+> the generic USB and Exynos bindings.  One possible fix could be to use
+> a child node of the controller node to represent the root hub.  Since
+> the driver currently doesn't work at all if a devicetree has nodes for
+> USB devices, there should be no compatibility concerns.
+
+So far we don't have any use case for adding devicetree nodes for usb 
+devices under Exynos EHCI/OHCI hcd, so this shouldn't be a problem for now.
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
