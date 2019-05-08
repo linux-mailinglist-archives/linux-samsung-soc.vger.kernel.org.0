@@ -2,101 +2,129 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2F1175D7
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 12:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 713D31762F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 May 2019 12:44:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbfEHKTT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 8 May 2019 06:19:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39088 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725778AbfEHKTT (ORCPT
+        id S1727082AbfEHKoq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 May 2019 06:44:46 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:38781 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbfEHKop (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 8 May 2019 06:19:19 -0400
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B8F2D216C4;
-        Wed,  8 May 2019 10:19:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1557310758;
-        bh=KgiLwHa8c628XCTksNuq14BZQuGqDsnA4pu3qRgYcxQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=2wft5YmM3CM2rKVQmpR6hOXN83mEVRAGkfTMAnH44HifrmzxdXs+02+K45kkV3yXn
-         SvHDi2skTrO4pZqoo9fwE+uG5WIJDdk33/r0LrAJsE606iivCAE2HAmf2kBc4cwQEU
-         7Zu6tEOESBQf/upZesMJd6wJb1Pb3iqzL6f13vfE=
-Received: by mail-lj1-f176.google.com with SMTP id y10so10458062lji.9;
-        Wed, 08 May 2019 03:19:17 -0700 (PDT)
-X-Gm-Message-State: APjAAAXgi3EkamGkdwSyIYhaXl/j71xt21dN/Bnzc6qsQ/4L/R2NwiJv
-        GtiYwcES88ib3iU1KwpsJYoqxB/mJ+aFwv1b45I=
-X-Google-Smtp-Source: APXvYqwYkt5J0rET0wyrGnqJH8poPsUWaDooXeIeenTxmEqd6U1lzC8GOwJ2ZxmNmgblZZPq0m1QyUUqoG45zpuRE0s=
-X-Received: by 2002:a2e:82cb:: with SMTP id n11mr20509505ljh.183.1557310756058;
- Wed, 08 May 2019 03:19:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <1557155521-30949-1-git-send-email-l.luba@partner.samsung.com>
- <CGME20190506151215eucas1p2c57147edac5671c5ec9a223efb6b4adc@eucas1p2.samsung.com>
- <1557155521-30949-8-git-send-email-l.luba@partner.samsung.com>
- <20190507170422.GA25179@bogus> <CAJKOXPdacKBrKeCyCaE7VS8-NOR4Oo27XY7rx20P2ORY2vBBSg@mail.gmail.com>
- <ab489925-040c-815c-2aef-50ed0ee6cd6c@partner.samsung.com>
-In-Reply-To: <ab489925-040c-815c-2aef-50ed0ee6cd6c@partner.samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 8 May 2019 12:19:04 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPc2Swoi+xc_=QTMdY8p2DTtf5SprpfMFC6B9QCNUtxm-w@mail.gmail.com>
-Message-ID: <CAJKOXPc2Swoi+xc_=QTMdY8p2DTtf5SprpfMFC6B9QCNUtxm-w@mail.gmail.com>
-Subject: Re: [PATCH v7 07/13] dt-bindings: memory-controllers: add Exynos5422
- DMC device description
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
+        Wed, 8 May 2019 06:44:45 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190508104443euoutp02f6a8cfe642d54062fdacb785e8ed7051~cr0VfeNqE1605816058euoutp02Y;
+        Wed,  8 May 2019 10:44:43 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190508104443euoutp02f6a8cfe642d54062fdacb785e8ed7051~cr0VfeNqE1605816058euoutp02Y
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1557312283;
+        bh=dgpyXP29E0frg5Fb1yn3nfCEe+lXMK1zNnGILlOg4wE=;
+        h=From:To:Cc:Subject:Date:In-reply-to:References:From;
+        b=LsbnxUg12a3jsWUhy7ktPsHEqRK5IKOfeM9BQmfeAxHVuvlEP7nsFLJsj/3EQgJLB
+         9uLR6RZyr6pPNPL6NjVur2GIhcceJFLISHRfH9TLZ7dLaHqxNn2ASmzq9RwW5mBoT5
+         TORTCdH8Dst2+AoJjgvFwrDueIos3W37rAvKRnTs=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190508104443eucas1p2cb672c979c05cf0208787536c9c60eeb~cr0VH7jsW3139531395eucas1p2W;
+        Wed,  8 May 2019 10:44:43 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 37.32.04325.A13B2DC5; Wed,  8
+        May 2019 11:44:42 +0100 (BST)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190508104442eucas1p2ebdffa348465f2c28177601014614853~cr0UfcbQI3139631396eucas1p2U;
+        Wed,  8 May 2019 10:44:42 +0000 (GMT)
+X-AuditID: cbfec7f5-fbbf09c0000010e5-90-5cd2b31a8b7a
+Received: from eusync4.samsung.com ( [203.254.199.214]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id E2.E0.04146.A13B2DC5; Wed,  8
+        May 2019 11:44:42 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
+        eusync4.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
+        (built May  5 2014)) with ESMTPA id <0PR600EL2LUETP60@eusync4.samsung.com>;
+        Wed, 08 May 2019 11:44:42 +0100 (BST)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mans Rullgard <mans@mansr.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
-        treding@nvidia.com, digetx@gmail.com, willy.mh.wolff.ml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Markus Reichl <m.reichl@fivetechno.de>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2] usb: core: verify devicetree nodes for disabled
+ interfaces
+Date:   Wed, 08 May 2019 12:44:34 +0200
+Message-id: <20190508104434.3409-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-reply-to: <106fc58c-1a4f-6605-41d7-b6031c5751a3@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDIsWRmVeSWpSXmKPExsWy7djP87pSmy/FGJzvtrHYOGM9q0Xz4vVs
+        FufPb2C3uLxrDpvFjPP7mCwWLWtltnh55Aejxdojd9ktfjyczuTA6XHrTr3HplWdbB77565h
+        93hz+hS7R9+WVYwenzfJBbBFcdmkpOZklqUW6dslcGXMWL+KseAwX0XPpc8sDYxLeLoYOTkk
+        BEwkFmy+zdjFyMUhJLCCUeJs438WCOczo8TN6XNZYKpar52HqlrGKPHh50Goqv+MEvunLmUG
+        qWITMJToetvFBmKLCCRIHNn8HizOLNDNJPFlmQCILSwQIHHkXTMjiM0ioCpx/Md/sBpeARuJ
+        ibvuM0Nsk5dYveEAmM0pYC/xYfcsVoj4AjaJa0fjIGwXiQWLlrFB2DISnR0HmUAOkhBoZpR4
+        eG4tO4TTwyhxuWkGI0SVtcTh4xdZIS7ik5i0bTrQBg6gOK9ER5sQRImHxLmrv1khPpvEKHH+
+        5y22CYwSCxgZVjGKp5YW56anFhvnpZbrFSfmFpfmpesl5+duYgTG4el/x7/uYNz3J+kQowAH
+        oxIP74uCizFCrIllxZW5hxglOJiVRHivT7wUI8SbklhZlVqUH19UmpNafIhRmoNFSZy3muFB
+        tJBAemJJanZqakFqEUyWiYNTqoFxptpe/fXP0u9rnd34IO3WpeQ8/orVR50/GXwzC3K+WOt7
+        7mHL3+TTlydLvLlSk+B9KSvujfR1wbLr7rPvvpyYb18cwRX8Y6WAAY/K5Oa5qmuOs0ZLxM6P
+        P7ro7Ash3um/RMtyNrrELd/Z2MKuc/zOr3bWtIb8Y8duRJesyn/Tv81I5Yo2w+ZzSizFGYmG
+        WsxFxYkAAQGh178CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKLMWRmVeSWpSXmKPExsVy+t/xa7pSmy/FGLQtErLYOGM9q0Xz4vVs
+        FufPb2C3uLxrDpvFjPP7mCwWLWtltnh55Aejxdojd9ktfjyczuTA6XHrTr3HplWdbB77565h
+        93hz+hS7R9+WVYwenzfJBbBFcdmkpOZklqUW6dslcGXMWL+KseAwX0XPpc8sDYxLeLoYOTkk
+        BEwkWq+dZ+xi5OIQEljCKDH3/RcmCKeRSaLj8zE2kCo2AUOJrrddYLaIQILEkreb2UGKmAW6
+        mSSam36zdjFycAgL+EkcmSMNUsMioCpx/Md/ZhCbV8BGYuKu+8wQ2+QlVm84AGZzCthLfNg9
+        ixXEFhKwk9h38iLrBEaeBYwMqxhFUkuLc9Nziw31ihNzi0vz0vWS83M3MQIDa9uxn5t3MF7a
+        GHyIUYCDUYmHd8KsSzFCrIllxZW5hxglOJiVRHivTwQK8aYkVlalFuXHF5XmpBYfYpTmYFES
+        5+0QOBgjJJCeWJKanZpakFoEk2Xi4JRqYOy/rba+8LNe1+Quo582XCn/98dOKHmeyuE8/5mT
+        sZ/nl+f+3RbZjMmmlt2VkSdU+e4JzdTeEsibsijslMbBmc7mj1wX2dn66S/Zznlr4jaD42u7
+        LyQeyRJfO//l3QMVnE8FrGTCWxRDV3EvSGFZOMXCRHnmHImKvZPXqh2dznvj6tN7awuPuyix
+        FGckGmoxFxUnAgB3PLddKAIAAA==
+X-CMS-MailID: 20190508104442eucas1p2ebdffa348465f2c28177601014614853
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190508104442eucas1p2ebdffa348465f2c28177601014614853
+References: <106fc58c-1a4f-6605-41d7-b6031c5751a3@samsung.com>
+        <CGME20190508104442eucas1p2ebdffa348465f2c28177601014614853@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, 8 May 2019 at 11:45, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->
->
-> On 5/8/19 9:19 AM, Krzysztof Kozlowski wrote:
-> > On Tue, 7 May 2019 at 19:04, Rob Herring <robh@kernel.org> wrote:
-> >>> +- devfreq-events : phandles of the PPMU events used by the controller.
-> >>> +- samsung,syscon-chipid : phandle of the ChipID used by the controller.
-> >>> +- samsung,syscon-clk : phandle of the clock register set used by the controller.
-> >>
-> >> Looks like a hack. Can't you get this from the clocks property? What is
-> >> this for?
-> >
-> > Hi Rob,
-> >
-> > Lukasz uses these two syscon regmaps to read certain registers. For
-> > chipid he reads it to check the size of attached memory (only 2 GB
-> > version is supported). This indeed looks like a hack. However the
-> > second regmap (clk) is needed to get the timing data from registers
-> > from DMC clock driver address space. These are registers with memory
-> > timing so their data is not exposed anyway in common clk framework.
-> >
-> > Best regards,
-> > Krzysztof
->
-> Thank you Krzysztof for a fast response. I have also responded to Rob.
-> I wouldn't call accessing chipid registers as a hack, though. The DMC
-> registers do not contain information about the memory chip since it is
-> in phase of production the board not the chip. Thus, chipid regs (which
-> loads from e-fuses) are best place to put information about memory
-> type/size.
+Commit 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
+add support for disabling given USB device interface by adding nodes to
+the USB host controller device. The mentioned commit however identifies
+the given USB interface node only by the 'reg' property in the host
+controller children nodes and then checks for their the 'status'. The USB
+device interface nodes however also has to have a 'compatible' property as
+described in Documentation/devicetree/bindings/usb/usb-device.txt. This is
+important, because USB host controller might have child-nodes for other
+purposes. For example, Exynos EHCI and OHCI drivers already define
+child-nodes for each physical root hub port and assigns respective PHY
+controller and parameters for them. This conflicts with the proposed
+approach and verifying for the presence of the compatible property fixes
+this issue without changing the bindings and the way the PHY controllers
+are handled by Exynos EHCI/OHCI drivers.
 
-By hack I meant that you have to read chipid instead of DTS... but as
-you pointed, the DTS could not match the real fused values so actually
-it makes sense to read them.
+Reported-by: Markus Reichl <m.reichl@fivetechno.de>
+Fixes: 01fdf179f4b0 ("usb: core: skip interfaces disabled in devicetree")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ drivers/usb/core/message.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+index e844bb7b5676..6f7d047392bd 100644
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -2009,6 +2009,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
+ 		struct usb_interface *intf = cp->interface[i];
+ 
+ 		if (intf->dev.of_node &&
++		    of_find_property(intf->dev.of_node, "compatible", NULL) &&
+ 		    !of_device_is_available(intf->dev.of_node)) {
+ 			dev_info(&dev->dev, "skipping disabled interface %d\n",
+ 				 intf->cur_altsetting->desc.bInterfaceNumber);
+-- 
+2.17.1
+
