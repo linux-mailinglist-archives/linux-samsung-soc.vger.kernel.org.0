@@ -2,221 +2,406 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 81D7B18705
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 May 2019 10:48:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B24E18863
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 May 2019 12:32:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725991AbfEIIsc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 9 May 2019 04:48:32 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:34277 "EHLO
+        id S1726281AbfEIKcY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 9 May 2019 06:32:24 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:45841 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725961AbfEIIsb (ORCPT
+        with ESMTP id S1725892AbfEIKcX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 9 May 2019 04:48:31 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190509084828euoutp017c533f2430b2e0149a919da8ad3ec556~c94Hn7bq03062930629euoutp019;
-        Thu,  9 May 2019 08:48:28 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190509084828euoutp017c533f2430b2e0149a919da8ad3ec556~c94Hn7bq03062930629euoutp019
+        Thu, 9 May 2019 06:32:23 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190509103221euoutp0153c887e6ce5712708a60bef43f9f1fc8~c-S0ntPcf2405724057euoutp010
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  9 May 2019 10:32:21 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190509103221euoutp0153c887e6ce5712708a60bef43f9f1fc8~c-S0ntPcf2405724057euoutp010
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557391708;
-        bh=8Iob6mvtL1S8ewGxreFizsraS0/+JCLQ9ltwPWqTkio=;
-        h=From:To:Cc:Subject:Date:In-reply-to:References:From;
-        b=IeJbQg0dIMCBRixV1f5rIcJeBP0Jx+ollJvo1wf/qI9gcMm8hTU6Kz81BjGV3p628
-         DOgkGviWdKe/d42s0kTkgb+qxaq0rRaQwPhIimw++JwtXn0WLUWMSs14I0z3AW08Ts
-         tPhxeVzAsBLw6YT7ratKMB38ga3jHCZdwQ/Mnf14=
+        s=mail20170921; t=1557397941;
+        bh=46XYfxodhaRXNh8OQsIohdDHtip5LkSaGl00vt5h5cQ=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=bcI42N6PHnZbKA2LtO4Oa9FpomTGIOTNYBfsyg0Iy31KDAe+6HPK7XmIDot38wCrq
+         hOePhauHPbWnn6kr7io38MxjsP5gwc0cyqvKx9pDwbgWILgcXbInVNGAclvrvAIpYM
+         CiGZb+oQmdWDaHGdPcrIluTh2O+opRowhzbmq6qs=
 Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190509084828eucas1p1dcdce5a1e42908a116f6c830f9292f62~c94HQpen11689816898eucas1p1x;
-        Thu,  9 May 2019 08:48:28 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 0F.2C.04298.B59E3DC5; Thu,  9
-        May 2019 09:48:27 +0100 (BST)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190509084827eucas1p294962744fe70745c50b69a5349b5de68~c94GcpBMs0394203942eucas1p2X;
-        Thu,  9 May 2019 08:48:27 +0000 (GMT)
-X-AuditID: cbfec7f2-f2dff700000010ca-d7-5cd3e95b2e7d
-Received: from eusync3.samsung.com ( [203.254.199.213]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6E.12.04140.B59E3DC5; Thu,  9
-        May 2019 09:48:27 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
-        eusync3.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
-        (built May  5 2014)) with ESMTPA id <0PR800GPLB4IMG00@eusync3.samsung.com>;
-        Thu, 09 May 2019 09:48:27 +0100 (BST)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mans Rullgard <mans@mansr.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Markus Reichl <m.reichl@fivetechno.de>,
+        20190509103221eucas1p1d593aabfbea5986211171bc11af7f6cf~c-S0T6WFI2709327093eucas1p1b;
+        Thu,  9 May 2019 10:32:21 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 94.DB.04298.4B104DC5; Thu,  9
+        May 2019 11:32:20 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190509103220eucas1p1330f2827916b55e05b1b791504963630~c-SzoTnva2724327243eucas1p1r;
+        Thu,  9 May 2019 10:32:20 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190509103220eusmtrp272fbb207bb635ac54bec67dc55531113~c-SzaTSq_2898928989eusmtrp25;
+        Thu,  9 May 2019 10:32:20 +0000 (GMT)
+X-AuditID: cbfec7f2-f2dff700000010ca-b9-5cd401b403dc
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 9F.B3.04146.4B104DC5; Thu,  9
+        May 2019 11:32:20 +0100 (BST)
+Received: from [106.120.50.25] (unknown [106.120.50.25]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190509103219eusmtip191bab8a9cccc272ff9f89fa910bd018d~c-SydQirB2812928129eusmtip1L;
+        Thu,  9 May 2019 10:32:19 +0000 (GMT)
+Subject: Re: [PATCH 1/4] usb: xhci: add Immediate Data Transfer support
+To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
+        gregkh@linuxfoundation.org
+Cc:     linux-usb@vger.kernel.org,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Peter Chen <peter.chen@nxp.com>
-Subject: [PATCH v3] usb: core: verify devicetree nodes for USB devices
-Date:   Thu, 09 May 2019 10:47:26 +0200
-Message-id: <20190509084726.5405-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-reply-to: <yw1xpnotufti.fsf@mansr.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsWy7djPc7rRLy/HGPQv07fYOGM9q0Xz4vVs
-        FufPb2C3uLxrDpvFjPP7mCwWLWtltnh55Aejxdojd9ktfjyczmTx594dVgcuj1t36j02repk
-        89g/dw27x5vTp9g9Nr7bweTRt2UVo8fnTXIB7FFcNimpOZllqUX6dglcGXPXzWQuOKNaseHo
-        F5YGxn3yXYycHBICJhLzelazdTFycQgJrGCUOPZqJROE85lRYtOuLiaYqtX3PrNCJJYxSpx9
-        0gPV8p9R4v+MC+wgVWwChhJdb7vYQGwRgQSJI5vfM4MUMQusY5J4d6AJqIiDQ1jATWLfHSWQ
-        GhYBVYmezRPBNvAK2EgsWfmYHWKbvMTqDQeYQWxOAU2J70e3g22WENjAJnGwt4kVoshF4vCj
-        mSwQtozE5cndLBBFzYwSD8+tZYdwehglLjfNYISospY4fPwiWDezAJ/EpG3TmUEukhDgleho
-        E4Io8ZB48qMHbLOQQI3EhqU7GScwSixgZFjFKJ5aWpybnlpsmJdarlecmFtcmpeul5yfu4kR
-        GJun/x3/tIPx66WkQ4wCHIxKPLwZhy7FCLEmlhVX5h5ilOBgVhLhvT4RKMSbklhZlVqUH19U
-        mpNafIhRmoNFSZy3muFBtJBAemJJanZqakFqEUyWiYNTqoFxqoGNgqj3ro/yfmdfzp7Aa/Zb
-        K+gE33RGk9YV/n9Up88+c/nZtcK1/pu+161eULfYS2i30+IVzx/MW3jBQN3oe4z41PpXK9R2
-        SB04v3dOUZlN4BV3tp/rvh9rD1Dljn76puH0krnqC8SWefrZe837IJDD1RxZvfDLirXXP/jH
-        bX9p2xj54YXmBiWW4oxEQy3mouJEACA0lNXJAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPLMWRmVeSWpSXmKPExsVy+t/xq7rRLy/HGGx6ym6xccZ6VovmxevZ
-        LM6f38BucXnXHDaLGef3MVksWtbKbPHyyA9Gi7VH7rJb/Hg4ncniz707rA5cHrfu1HtsWtXJ
-        5rF/7hp2jzenT7F7bHy3g8mjb8sqRo/Pm+QC2KO4bFJSczLLUov07RK4Muaum8lccEa1YsPR
-        LywNjPvkuxg5OSQETCRW3/vM2sXIxSEksIRRouHZFBYIp5FJYsb2WewgVWwChhJdb7vYQGwR
-        gQSJJW83s4MUMQusY5KYdXk/YxcjB4ewgJvEvjtKIDUsAqoSPZsnMoHYvAI2EktWPmaH2CYv
-        sXrDAWYQm1NAU+L70e2sILaQgIbEz5a9TBMYeRYwMqxiFEktLc5Nzy020itOzC0uzUvXS87P
-        3cQIDLZtx35u2cHY9S74EKMAB6MSD2/GoUsxQqyJZcWVuYcYJTiYlUR4r08ECvGmJFZWpRbl
-        xxeV5qQWH2KU5mBREuftEDgYIySQnliSmp2aWpBaBJNl4uCUamDkj1s9Y9vdimiPy5P+an9v
-        lDpx3vZEa6nbe64w2UUn7ztExwXvZfPXe/Rx89tv1/8qv7I9xyh4OfZOjfDZsA19krMWrOjZ
-        uVTgRL7Ol59Lbt3NY1xd2qp5fPXKKfv9om/Z3Sn7c0M0vHX+3WlXLf+Ws9p/CA4svS92apJY
-        oEjceiPFFndJhdDtSizFGYmGWsxFxYkArqiYUzICAAA=
-X-CMS-MailID: 20190509084827eucas1p294962744fe70745c50b69a5349b5de68
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <bc747768-7457-0df6-f57e-4aeac9c8bf0c@samsung.com>
+Date:   Thu, 9 May 2019 12:32:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <1556285012-28186-2-git-send-email-mathias.nyman@linux.intel.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsWy7djP87pbGK/EGBy5YGnRvHg9m8X58xvY
+        LWac38dksWhZK7PF6w9NLBbbZi1nc2Dz2LSqk81j3slAj/1z17B7bD5d7fF5k1wAaxSXTUpq
+        TmZZapG+XQJXxrSVGxgLjuRUnD7dztbA+Cuyi5GTQ0LAROLWzGmMXYxcHEICKxgl/t97zgSS
+        EBL4wijRczkIIvGZUaL/z39WmI4Dl2dAdSxnlLjd9BfKecsoMXPbfWaQKmEBd4k1096C2SIC
+        /hJNH3awghQxC2xilNj7cjoLSIJNwFCi620XG4jNK2An8eLnRnYQm0VARWLHrHtAzRwcogIx
+        Eos+Q5UISpyc+QSslVPAT+LZ9UdgNrOAvETz1tnMELa4xK0n85lAdkkIrGKXWPrnKxvIHAkB
+        F4lpP5QhPhCWeHV8CzuELSPxfydMfTOjxMNza9khnB5GictNIH+CVFlLHD5+kRVkELOApsT6
+        XfoQYUeJ9ZPuM0PM55O48VYQ4gY+iUnbpkOFeSU62oQgqtUkZh1fB7f24IVLzBMYlWYh+WwW
+        km9mIflmFsLeBYwsqxjFU0uLc9NTiw3zUsv1ihNzi0vz0vWS83M3MQKTzul/xz/tYPx6KekQ
+        owAHoxIPb8ahSzFCrIllxZW5hxglOJiVRHivTwQK8aYkVlalFuXHF5XmpBYfYpTmYFES561m
+        eBAtJJCeWJKanZpakFoEk2Xi4JRqYIy9ePngqQPdf09J9gi29ni57mrOtppr+zZc7YuTuibX
+        5ckab7cHHNHZEX7gTNr21FVZ5ald8d5M3dcqW1LrGyXzZ175XjDD8shc+xcfZ4WdWr8qPO+N
+        isRDHo/8A2mVr6a1p/SaTsrLvJIwT3e6cvyyLP5Zsa/nTthduvT0+ezO3CVLU8M99ymxFGck
+        GmoxFxUnAgCUA/fNNgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBIsWRmVeSWpSXmKPExsVy+t/xu7pbGK/EGLyayGvRvHg9m8X58xvY
+        LWac38dksWhZK7PF6w9NLBbbZi1nc2Dz2LSqk81j3slAj/1z17B7bD5d7fF5k1wAa5SeTVF+
+        aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexrSVGxgLjuRU
+        nD7dztbA+Cuyi5GTQ0LAROLA5RmMXYxcHEICSxkltlz/xAyRkJE4Oa2BFcIWlvhzrYsNoug1
+        o8Syr81MIAlhAXeJNdPegjWICPhKXJj3hQmkiFlgE6NE05v1UGMnMkp8XPUNrIpNwFCi6y3I
+        KE4OXgE7iRc/N7KD2CwCKhI7Zt0DqxEViJE4MXULO0SNoMTJmU9YQGxOAT+JZ9cfgdnMAmYS
+        8zY/ZIaw5SWat86GssUlbj2ZzzSBUWgWkvZZSFpmIWmZhaRlASPLKkaR1NLi3PTcYkO94sTc
+        4tK8dL3k/NxNjMBY23bs5+YdjJc2Bh9iFOBgVOLhzTh0KUaINbGsuDL3EKMEB7OSCO/1iUAh
+        3pTEyqrUovz4otKc1OJDjKZAz01klhJNzgemgbySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLp
+        iSWp2ampBalFMH1MHJxSDYwTL+T5c2dqqLv3F1ukzH2X78vOlWjh/S1c9UWSY+iE386z/Vc6
+        x/LzLnz9REJXUJpDUVBoqUFnIPt/40+HAnver//fZbQwSvBn21ze+EbN3c/6r8/5/spS91H7
+        hYZ3Hpuiri060GyXblhy9uOyWWHvWFdKKj+dr9X6eW7aVvlrjV2nl2t9W6nEUpyRaKjFXFSc
+        CAC4YMEUywIAAA==
+X-CMS-MailID: 20190509103220eucas1p1330f2827916b55e05b1b791504963630
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190509103220eucas1p1330f2827916b55e05b1b791504963630
+X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190509084827eucas1p294962744fe70745c50b69a5349b5de68
-References: <yw1xpnotufti.fsf@mansr.com>
-        <CGME20190509084827eucas1p294962744fe70745c50b69a5349b5de68@eucas1p2.samsung.com>
+X-CMS-RootMailID: 20190509103220eucas1p1330f2827916b55e05b1b791504963630
+References: <1556285012-28186-1-git-send-email-mathias.nyman@linux.intel.com>
+        <1556285012-28186-2-git-send-email-mathias.nyman@linux.intel.com>
+        <CGME20190509103220eucas1p1330f2827916b55e05b1b791504963630@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Commit 69bec7259853 ("USB: core: let USB device know device node")
-added support for attaching devicetree node for USB devices. The mentioned
-commit however identifies the given USB device node only by the 'reg'
-property in the host controller children nodes. The USB device node
-however also has to have a 'compatible' property as described in
-Documentation/devicetree/bindings/usb/usb-device.txt. Lack for the
-'compatible' property check might result in assigning a devicetree node,
-which is not intended to be the proper node for the given USB device.
+Dear All,
 
-This is important especially when USB host controller has child-nodes for
-other purposes. For example, Exynos EHCI and OHCI drivers already define
-child-nodes for each physical root hub port and assigns respective PHY
-controller and parameters for them. Those binding predates support for
-USB devicetree nodes.
+On 2019-04-26 15:23, Mathias Nyman wrote:
+> From: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+>
+> Immediate data transfers (IDT) allow the HCD to copy small chunks of
+> data (up to 8bytes) directly into its output transfer TRBs. This avoids
+> the somewhat expensive DMA mappings that are performed by default on
+> most URBs submissions.
+>
+> In the case an URB was suitable for IDT. The data is directly copied
+> into the "Data Buffer Pointer" region of the TRB and the IDT flag is
+> set. Instead of triggering memory accesses the HC will use the data
+> directly.
+>
+> The implementation could cover all kind of output endpoints. Yet
+> Isochronous endpoints are bypassed as I was unable to find one that
+> matched IDT's constraints. As we try to bypass the default DMA mappings
+> on URB buffers we'd need to find a Isochronous device with an
+> urb->transfer_buffer_length <= 8 bytes.
+>
+> The implementation takes into account that the 8 byte buffers provided
+> by the URB will never cross a 64KB boundary.
+>
+> Signed-off-by: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+> Reviewed-by: Felipe Balbi <felipe.balbi@linux.intel.com>
+> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-Checking for the proper compatibility string allows to mitigate the
-conflict between USB device devicetree nodes and the bindings for USB
-controllers with child nodes. It also fixes the side-effect of the other
-commits, like 01fdf179f4b0 ("usb: core: skip interfaces disabled in
-devicetree"), which incorrectly disables some devices on Exynos based
-boards.
+I've noticed that this patch causes regression on various Samsung Exynos 
+5420/5422/5800 boards, which have USB3.0 host ports provided by 
+DWC3/XHCI hardware module. The regression can be observed with ASIX USB 
+2.0 ethernet dongle, which stops working after applying this patch (eth0 
+interface is registered, but no packets are transmitted/received). I can 
+provide more debugging information or do some tests, just let me know 
+what do you need. Reverting this commit makes ASIX USB ethernet dongle 
+operational again.
 
-Reported-by: Markus Reichl <m.reichl@fivetechno.de>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
-v3:
-- replaced ad hoc checks by proper test for proper value of the
-  compatible string in drivers/usb/core/of.c
-v2: https://lkml.org/lkml/2019/5/8/321
-v1: https://lkml.org/lkml/2019/5/7/715
----
- drivers/usb/core/hub.c |  3 +++
- drivers/usb/core/of.c  | 31 +++++++++++++++++++++++++++++++
- include/linux/usb/of.h |  2 ++
- 3 files changed, 36 insertions(+)
+Here are some more information from one of my test systems:
 
-diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index 2f94568ba385..6f2438522d09 100644
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -22,6 +22,7 @@
- #include <linux/usb.h>
- #include <linux/usbdevice_fs.h>
- #include <linux/usb/hcd.h>
-+#include <linux/usb/of.h>
- #include <linux/usb/otg.h>
- #include <linux/usb/quirks.h>
- #include <linux/workqueue.h>
-@@ -5023,6 +5024,8 @@ static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
- 		if (status < 0)
- 			goto loop;
- 
-+		usb_of_validate_device_node(udev);
-+
- 		if (udev->quirks & USB_QUIRK_DELAY_INIT)
- 			msleep(2000);
- 
-diff --git a/drivers/usb/core/of.c b/drivers/usb/core/of.c
-index 651708d8c908..2b6f16753edc 100644
---- a/drivers/usb/core/of.c
-+++ b/drivers/usb/core/of.c
-@@ -30,6 +30,12 @@ struct device_node *usb_of_get_device_node(struct usb_device *hub, int port1)
- 	for_each_child_of_node(hub->dev.of_node, node) {
- 		if (of_property_read_u32(node, "reg", &reg))
- 			continue;
-+		/*
-+		 * idVendor and idProduct are not yet known, so check only
-+		 * a presence of the compatible property.
-+		 */
-+		if (!of_find_property(node, "compatible", NULL))
-+			continue;
- 
- 		if (reg == port1)
- 			return node;
-@@ -39,6 +45,31 @@ struct device_node *usb_of_get_device_node(struct usb_device *hub, int port1)
- }
- EXPORT_SYMBOL_GPL(usb_of_get_device_node);
- 
-+/**
-+ * usb_of_validate_device_node() - validate dt node of the probed USB device
-+ * @udev: USB device
-+ *
-+ * Validate devicetree node for the USB device. Compatible string must match
-+ * device's idVendor and idProduct, otherwise the of_node will be put and set
-+ * to NULL.
-+ */
-+void usb_of_validate_device_node(struct usb_device *udev)
-+{
-+	char compatible[13];
-+
-+	if (!udev->dev.of_node)
-+		return;
-+
-+	snprintf(compatible, sizeof(compatible), "usb%x,%x",
-+		 le16_to_cpu(udev->descriptor.idVendor),
-+		 le16_to_cpu(udev->descriptor.idProduct));
-+
-+	if (of_device_is_compatible(udev->dev.of_node, compatible) == 0) {
-+		of_node_put(udev->dev.of_node);
-+		udev->dev.of_node = NULL;
-+	}
-+}
-+
- /**
-  * usb_of_has_combined_node() - determine whether a device has a combined node
-  * @udev: USB device
-diff --git a/include/linux/usb/of.h b/include/linux/usb/of.h
-index dba55ccb9b53..9969efda03ad 100644
---- a/include/linux/usb/of.h
-+++ b/include/linux/usb/of.h
-@@ -24,6 +24,7 @@ bool usb_of_has_combined_node(struct usb_device *udev);
- struct device_node *usb_of_get_interface_node(struct usb_device *udev,
- 		u8 config, u8 ifnum);
- struct device *usb_of_get_companion_dev(struct device *dev);
-+void usb_of_validate_device_node(struct usb_device *udev);
- #else
- static inline enum usb_dr_mode
- of_usb_get_dr_mode_by_phy(struct device_node *np, int arg0)
-@@ -57,6 +58,7 @@ static inline struct device *usb_of_get_companion_dev(struct device *dev)
- {
- 	return NULL;
- }
-+static inline void usb_of_validate_device_node(struct usb_device *udev) { }
- #endif
- 
- #if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_USB_SUPPORT)
+# lsusb
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 002: ID 0b95:772b ASIX Electronics Corp. AX88772B
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 001 Device 002: ID 2232:1056 Silicon Motion
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+# lsusb -t
+/:  Bus 06.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 05.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/1p, 480M
+     |__ Port 1: Dev 2, If 0, Class=Vendor Specific Class, Driver=asix, 480M
+/:  Bus 04.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 03.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/1p, 480M
+/:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=exynos-ohci/3p, 12M
+/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=exynos-ehci/3p, 480M
+     |__ Port 1: Dev 2, If 0, Class=Video, Driver=, 480M
+     |__ Port 1: Dev 2, If 1, Class=Video, Driver=, 480M
+
+# dmesg | grep usb
+[    1.484210] reg-fixed-voltage regulator-usb300: GPIO lookup for 
+consumer (null)
+[    1.484219] reg-fixed-voltage regulator-usb300: using device tree for 
+GPIO lookup
+[    1.484241] of_get_named_gpiod_flags: can't parse 'gpios' property of 
+node '/regulator-usb300[0]'
+[    1.484276] of_get_named_gpiod_flags: parsed 'gpio' property of node 
+'/regulator-usb300[0]' - status (0)
+[    1.484749] reg-fixed-voltage regulator-usb301: GPIO lookup for 
+consumer (null)
+[    1.484758] reg-fixed-voltage regulator-usb301: using device tree for 
+GPIO lookup
+[    1.484777] of_get_named_gpiod_flags: can't parse 'gpios' property of 
+node '/regulator-usb301[0]'
+[    1.484807] of_get_named_gpiod_flags: parsed 'gpio' property of node 
+'/regulator-usb301[0]' - status (0)
+[    1.490275] usbcore: registered new interface driver usbfs
+[    1.495521] usbcore: registered new interface driver hub
+[    1.500897] usbcore: registered new device driver usb
+[    2.014966] samsung-usb2-phy 12130000.phy: 12130000.phy supply vbus 
+not found, using dummy regulator
+[    2.024093] exynos5_usb3drd_phy 12100000.phy: 12100000.phy supply 
+vbus-boost not found, using dummy regulator
+[    2.033232] exynos5_usb3drd_phy 12500000.phy: 12500000.phy supply 
+vbus-boost not found, using dummy regulator
+[    2.347306] usbcore: registered new interface driver r8152
+[    2.352427] usbcore: registered new interface driver asix
+[    2.357877] usbcore: registered new interface driver ax88179_178a
+[    2.363860] usbcore: registered new interface driver cdc_ether
+[    2.369730] usbcore: registered new interface driver smsc75xx
+[    2.375421] usbcore: registered new interface driver smsc95xx
+[    2.381198] usbcore: registered new interface driver net1080
+[    2.386760] usbcore: registered new interface driver cdc_subset
+[    2.392699] usbcore: registered new interface driver zaurus
+[    2.398280] usbcore: registered new interface driver cdc_ncm
+[    2.404280] exynos-dwc3 soc:usb3-0: soc:usb3-0 supply vdd33 not 
+found, using dummy regulator
+[    2.412485] exynos-dwc3 soc:usb3-0: soc:usb3-0 supply vdd10 not 
+found, using dummy regulator
+[    2.427570] exynos-dwc3 soc:usb3-1: soc:usb3-1 supply vdd33 not 
+found, using dummy regulator
+[    2.434748] exynos-dwc3 soc:usb3-1: soc:usb3-1 supply vdd10 not 
+found, using dummy regulator
+[    2.459866] of_get_named_gpiod_flags: can't parse 'samsung,vbus-gpio' 
+property of node '/soc/usb@12110000[0]'
+[    2.460177] exynos-ehci 12110000.usb: EHCI Host Controller
+[    2.465329] exynos-ehci 12110000.usb: new USB bus registered, 
+assigned bus number 1
+[    2.473161] exynos-ehci 12110000.usb: irq 90, io mem 0x12110000
+[    2.507027] exynos-ehci 12110000.usb: USB 2.0 started, EHCI 1.00
+[    2.512197] usb usb1: New USB device found, idVendor=1d6b, 
+idProduct=0002, bcdDevice= 5.01
+[    2.519880] usb usb1: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.527075] usb usb1: Product: EHCI Host Controller
+[    2.531875] usb usb1: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 ehci_hcd
+[    2.539298] usb usb1: SerialNumber: 12110000.usb
+[    2.562423] exynos-ohci 12120000.usb: USB Host Controller
+[    2.567689] exynos-ohci 12120000.usb: new USB bus registered, 
+assigned bus number 2
+[    2.575502] exynos-ohci 12120000.usb: irq 90, io mem 0x12120000
+[    2.651364] usb usb2: New USB device found, idVendor=1d6b, 
+idProduct=0001, bcdDevice= 5.01
+[    2.658219] usb usb2: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.665376] usb usb2: Product: USB Host Controller
+[    2.670180] usb usb2: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 ohci_hcd
+[    2.677560] usb usb2: SerialNumber: 12120000.usb
+[    2.719349] usb usb3: New USB device found, idVendor=1d6b, 
+idProduct=0002, bcdDevice= 5.01
+[    2.726870] usb usb3: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.734107] usb usb3: Product: xHCI Host Controller
+[    2.738947] usb usb3: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 xhci-hcd
+[    2.746297] usb usb3: SerialNumber: xhci-hcd.3.auto
+[    2.778642] usb usb4: We don't know the algorithms for LPM for this 
+host, disabling LPM.
+[    2.786800] usb usb4: New USB device found, idVendor=1d6b, 
+idProduct=0003, bcdDevice= 5.01
+[    2.794836] usb usb4: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.802022] usb usb4: Product: xHCI Host Controller
+[    2.806837] usb usb4: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 xhci-hcd
+[    2.814258] usb usb4: SerialNumber: xhci-hcd.3.auto
+[    2.855879] usb usb5: New USB device found, idVendor=1d6b, 
+idProduct=0002, bcdDevice= 5.01
+[    2.863456] usb usb5: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.870894] usb usb5: Product: xHCI Host Controller
+[    2.875457] usb usb5: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 xhci-hcd
+[    2.882884] usb usb5: SerialNumber: xhci-hcd.4.auto
+[    2.915149] usb usb6: We don't know the algorithms for LPM for this 
+host, disabling LPM.
+[    2.917137] usb 1-1: new high-speed USB device number 2 using exynos-ehci
+[    2.923623] usb usb6: New USB device found, idVendor=1d6b, 
+idProduct=0003, bcdDevice= 5.01
+[    2.938433] usb usb6: New USB device strings: Mfr=3, Product=2, 
+SerialNumber=1
+[    2.945302] usb usb6: Product: xHCI Host Controller
+[    2.950196] usb usb6: Manufacturer: Linux 
+5.1.0-rc3-00114-g95e060e68bd9 xhci-hcd
+[    2.957579] usb usb6: SerialNumber: xhci-hcd.4.auto
+[    2.970795] usbcore: registered new interface driver uas
+[    2.975423] usbcore: registered new interface driver usb-storage
+[    3.208523] usb 1-1: New USB device found, idVendor=2232, 
+idProduct=1056, bcdDevice= 0.35
+[    3.219999] usb 1-1: New USB device strings: Mfr=3, Product=1, 
+SerialNumber=2
+[    3.227034] usb 1-1: Product: WebCam SC-10HDM13631N
+[    3.227041] usb 1-1: Manufacturer: Generic
+[    3.235923] usb 1-1: SerialNumber: 200901010001
+[    3.257013] usb 5-1: new high-speed USB device number 2 using xhci-hcd
+[    3.459744] usb 5-1: New USB device found, idVendor=0b95, 
+idProduct=772b, bcdDevice= 0.01
+[    3.460560] usbcore: registered new interface driver usbhid
+[    3.460572] usbhid: USB HID core driver
+[    3.474443] usb 5-1: New USB device strings: Mfr=1, Product=2, 
+SerialNumber=3
+[    3.491163] usb 5-1: Product: AX88772B
+[    3.500613] usb 5-1: Manufacturer: ASIX Elec. Corp.
+[    3.509275] usb 5-1: SerialNumber: 1892F2
+[    4.133358] asix 5-1:1.0 eth0: register 'asix' at 
+usb-xhci-hcd.4.auto-1, ASIX AX88772B USB 2.0 Ethernet, 00:50:b6:18:92:f2
+
+> ---
+>   drivers/usb/host/xhci-ring.c | 12 ++++++++++++
+>   drivers/usb/host/xhci.c      | 16 ++++++++++++++++
+>   drivers/usb/host/xhci.h      | 17 +++++++++++++++++
+>   3 files changed, 45 insertions(+)
+>
+> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+> index 9215a28..2825031 100644
+> --- a/drivers/usb/host/xhci-ring.c
+> +++ b/drivers/usb/host/xhci-ring.c
+> @@ -3275,6 +3275,12 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+>   			field |= TRB_IOC;
+>   			more_trbs_coming = false;
+>   			td->last_trb = ring->enqueue;
+> +
+> +			if (xhci_urb_suitable_for_idt(urb)) {
+> +				memcpy(&send_addr, urb->transfer_buffer,
+> +				       trb_buff_len);
+> +				field |= TRB_IDT;
+> +			}
+>   		}
+>   
+>   		/* Only set interrupt on short packet for IN endpoints */
+> @@ -3414,6 +3420,12 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+>   	if (urb->transfer_buffer_length > 0) {
+>   		u32 length_field, remainder;
+>   
+> +		if (xhci_urb_suitable_for_idt(urb)) {
+> +			memcpy(&urb->transfer_dma, urb->transfer_buffer,
+> +			       urb->transfer_buffer_length);
+> +			field |= TRB_IDT;
+> +		}
+> +
+>   		remainder = xhci_td_remainder(xhci, 0,
+>   				urb->transfer_buffer_length,
+>   				urb->transfer_buffer_length,
+> diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+> index 7fa58c9..255f93f 100644
+> --- a/drivers/usb/host/xhci.c
+> +++ b/drivers/usb/host/xhci.c
+> @@ -1238,6 +1238,21 @@ EXPORT_SYMBOL_GPL(xhci_resume);
+>   
+>   /*-------------------------------------------------------------------------*/
+>   
+> +/*
+> + * Bypass the DMA mapping if URB is suitable for Immediate Transfer (IDT),
+> + * we'll copy the actual data into the TRB address register. This is limited to
+> + * transfers up to 8 bytes on output endpoints of any kind with wMaxPacketSize
+> + * >= 8 bytes. If suitable for IDT only one Transfer TRB per TD is allowed.
+> + */
+> +static int xhci_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+> +				gfp_t mem_flags)
+> +{
+> +	if (xhci_urb_suitable_for_idt(urb))
+> +		return 0;
+> +
+> +	return usb_hcd_map_urb_for_dma(hcd, urb, mem_flags);
+> +}
+> +
+>   /**
+>    * xhci_get_endpoint_index - Used for passing endpoint bitmasks between the core and
+>    * HCDs.  Find the index for an endpoint given its descriptor.  Use the return
+> @@ -5154,6 +5169,7 @@ static const struct hc_driver xhci_hc_driver = {
+>   	/*
+>   	 * managing i/o requests and associated device resources
+>   	 */
+> +	.map_urb_for_dma =      xhci_map_urb_for_dma,
+>   	.urb_enqueue =		xhci_urb_enqueue,
+>   	.urb_dequeue =		xhci_urb_dequeue,
+>   	.alloc_dev =		xhci_alloc_dev,
+> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+> index 9334cde..abbd481 100644
+> --- a/drivers/usb/host/xhci.h
+> +++ b/drivers/usb/host/xhci.h
+> @@ -1303,6 +1303,8 @@ enum xhci_setup_dev {
+>   #define TRB_IOC			(1<<5)
+>   /* The buffer pointer contains immediate data */
+>   #define TRB_IDT			(1<<6)
+> +/* TDs smaller than this might use IDT */
+> +#define TRB_IDT_MAX_SIZE	8
+>   
+>   /* Block Event Interrupt */
+>   #define	TRB_BEI			(1<<9)
+> @@ -2149,6 +2151,21 @@ static inline struct xhci_ring *xhci_urb_to_transfer_ring(struct xhci_hcd *xhci,
+>   					urb->stream_id);
+>   }
+>   
+> +/*
+> + * TODO: As per spec Isochronous IDT transmissions are supported. We bypass
+> + * them anyways as we where unable to find a device that matches the
+> + * constraints.
+> + */
+> +static inline bool xhci_urb_suitable_for_idt(struct urb *urb)
+> +{
+> +	if (!usb_endpoint_xfer_isoc(&urb->ep->desc) && usb_urb_dir_out(urb) &&
+> +	    usb_endpoint_maxp(&urb->ep->desc) >= TRB_IDT_MAX_SIZE &&
+> +	    urb->transfer_buffer_length <= TRB_IDT_MAX_SIZE)
+> +		return true;
+> +
+> +	return false;
+> +}
+> +
+>   static inline char *xhci_slot_state_string(u32 state)
+>   {
+>   	switch (state) {
+
+Best regards
 -- 
-2.17.1
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
