@@ -2,292 +2,160 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CDABA198FE
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 May 2019 09:27:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ADE119AE0
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 May 2019 11:43:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727099AbfEJH1t (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 May 2019 03:27:49 -0400
-Received: from mga05.intel.com ([192.55.52.43]:22730 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726976AbfEJH1s (ORCPT
+        id S1727186AbfEJJnq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 May 2019 05:43:46 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:48039 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727164AbfEJJnq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 May 2019 03:27:48 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 May 2019 00:27:48 -0700
-X-ExtLoop1: 1
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.164]) ([10.237.72.164])
-  by FMSMGA003.fm.intel.com with ESMTP; 10 May 2019 00:27:45 -0700
-Subject: Re: [PATCH 1/4] usb: xhci: add Immediate Data Transfer support
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        gregkh@linuxfoundation.org
-Cc:     linux-usb@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
-References: <1556285012-28186-1-git-send-email-mathias.nyman@linux.intel.com>
- <1556285012-28186-2-git-send-email-mathias.nyman@linux.intel.com>
- <CGME20190509103220eucas1p1330f2827916b55e05b1b791504963630@eucas1p1.samsung.com>
- <bc747768-7457-0df6-f57e-4aeac9c8bf0c@samsung.com>
- <3fe85fcc-a202-f746-6cd6-d3f5523348f8@linux.intel.com>
- <a369ba3931e3df113101ce9e52634e5c2ef0b957.camel@suse.de>
- <b4e49d68-a94e-f6fb-6439-78ef0ff898ef@linux.intel.com>
- <d5076a1a-b20e-8779-c38e-6bee0007b743@samsung.com>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <51cf2371-baf3-1788-a77c-bca84ec11c9f@linux.intel.com>
-Date:   Fri, 10 May 2019 10:30:21 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        Fri, 10 May 2019 05:43:46 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190510094344euoutp012d0b9a241c0985407b7c4af6d7c3b7c5~dSRqP4SeI1972519725euoutp01T
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 May 2019 09:43:44 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190510094344euoutp012d0b9a241c0985407b7c4af6d7c3b7c5~dSRqP4SeI1972519725euoutp01T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1557481424;
+        bh=bHCPYmsbOMRDm07/+P+9nfNSK+fdU9Y72lYDY30HA6Y=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Oqv2ZY/lH3tL4XYcFliVktKMTModE1WFtnNQpjXkrl50pivUC7wgDR4VL3X2iy8k+
+         7xhtXqDHD/ZFghlCbkgeWTFXv0/r05k6HBu6A9/IjJw61w+O0HA7mF407a8e95vKKy
+         2u9iIQiv2bs37wRbXabFfRjiqo+IS9GnhudJAPUg=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190510094343eucas1p2ca568971e1990e14e0c3f3f1029b4537~dSRpkemWd1868218682eucas1p2e;
+        Fri, 10 May 2019 09:43:43 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 82.CF.04325.FC745DC5; Fri, 10
+        May 2019 10:43:43 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190510094342eucas1p15535afc4fd20f3813653678e46259177~dSRopN6QB1889518895eucas1p1d;
+        Fri, 10 May 2019 09:43:42 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190510094342eusmtrp15f3a8d0accb060ed3beae50935dacc2d~dSRoavnDy2266422664eusmtrp17;
+        Fri, 10 May 2019 09:43:42 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-35-5cd547cfc7cd
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id F0.DE.04140.EC745DC5; Fri, 10
+        May 2019 10:43:42 +0100 (BST)
+Received: from [106.120.50.25] (unknown [106.120.50.25]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190510094342eusmtip170d44ce943714f616bb8fe06bce77e22~dSRn7lEJA0773207732eusmtip1Y;
+        Fri, 10 May 2019 09:43:42 +0000 (GMT)
+Subject: Re: [PATCH v3] usb: core: verify devicetree nodes for USB devices
+To:     Peter Chen <peter.chen@nxp.com>,
+        =?UTF-8?B?TcOlbnMgUnVsbGfDpXJk?= <mans@mansr.com>
+Cc:     "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Markus Reichl <m.reichl@fivetechno.de>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <7c5579d2-634a-d705-a451-563939957d57@samsung.com>
+Date:   Fri, 10 May 2019 11:43:41 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <d5076a1a-b20e-8779-c38e-6bee0007b743@samsung.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <VI1PR04MB5327AD56CA772284DFE663D08B0C0@VI1PR04MB5327.eurprd04.prod.outlook.com>
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTcRTG++/e3Xsdzf6bhQeLkkVCUmoWccGUtMCRBn2KMKNm3nx/aVPz
+        JSyUfFlmZcHmMCoDi6VOzdS0jGa5ynL5Ei4pSVBLm2KZTFEsr1fLb7/znOdwngOHIeTPxW5M
+        TGIKp05UxSsoCdnQPtu50xr8Mdyn5qc7W6s3idnceyaKtVpraLanuYxi9dZWEVtecYlgR1/O
+        IHZmUCdi5wc+i/c7Kfs/X1DWGQsp5fNblbTS3vGWVtZONImUxfVGpJyq23yEDpPsi+TiY9I4
+        tXfAKUl0YVMdneyQpT9+lUNfRDZnLXJiAO+Bykc2WoskjBw/QFCgfyIWit8IJvNNSCimELR0
+        68UrIzWWekpo3EfQ9W1ieX4cwc2ZdyLe5YIPQUVnH8XzenwMdAsdJG8icC4Bjb0vCL5B4V2g
+        HdcumaQ4AOyzY0tM4m0wc123yAyzAYdD+dSyRQZvSodInp3wCZgb0yKeCbwFGsfLCIFdoX/o
+        tojfBbiThrtDrZQQ+yA4RotJgV1gzFJPC7wJOm4UkcJALoLBzipaKIoQ9OTokeDygzZLl5hP
+        RODtYGr2FuRAsH95KuJlwM5gG5cJIZyhpEFHCLIUCvLkgtsDDJbqf2tffOgmriGFYdVphlXn
+        GFadY/i/9w4ijciVS9UkRHGa3YncOS+NKkGTmhjldTopoQ4tvlXHgmW6CbXOR5gRZpBirZRd
+        1xsuF6vSNBkJZgQMoVgvVe9YlKSRqoxMTp10Up0az2nMaCNDKlylWWu+HpfjKFUKF8dxyZx6
+        pStinNwuom72zFy0JP1hVYnsaP3ZybZq//Yi31Dk5hgO8TDGluRH+ATl9X9/Jgnusv3+NJvi
+        l/2+ryCk5UClPeyZv3taoO+F16xjhHqf3PbrR773SFBoY1a7y7DssKFsMO6KLmJvgT1Gd37g
+        6nR27J+3W1GLK/Z86WKFTLqUMnt5JmmLLitITbRqlyeh1qj+Agu2Ld1SAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsVy+t/xu7rn3K/GGMzfrmSxccZ6VovmxevZ
+        LM6f38BucXnXHDaLGef3MVksWtbKbPHyyA9Gix8PpzNZ/Ll3h9WB0+PWnXqPTas62Tz2z13D
+        7vHm9Cl2j43vdjB59G1ZxejxeZNcAHuUnk1RfmlJqkJGfnGJrVK0oYWRnqGlhZ6RiaWeobF5
+        rJWRqZK+nU1Kak5mWWqRvl2CXkbnjk3sBd8FK7YebWJvYLzB18XIySEhYCKx4fgWti5GLg4h
+        gaWMEkcnbGCBSMhInJzWwAphC0v8udYFVfSaUeJSwwVmkISwgJfEsnPXgRIcHCICERJ7LuWB
+        1DALNDNL3GxoY4domM8k8edxPxtIA5uAoUTX2y4wm1fATuLNz1dgNouAqsSPidPBbFGBGIkT
+        U7ewQ9QISpyc+QTsIk6BWInfr7oYQWxmATOJeZsfMkPY8hLb386BssUlbj2ZzzSBUWgWkvZZ
+        SFpmIWmZhaRlASPLKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxNjMDo3Hbs55YdjF3vgg8xCnAw
+        KvHwWvBfiRFiTSwrrsw9xCjBwawkwlukAxTiTUmsrEotyo8vKs1JLT7EaAr03ERmKdHkfGDi
+        yCuJNzQ1NLewNDQ3Njc2s1AS5+0QOBgjJJCeWJKanZpakFoE08fEwSnVwMj/Y+d2MzNZ7Rk/
+        j/TMEZb8KCcjeTNlzcGif/P87MW+9vZa6dx67fAn5WPzJG+OpWJZhc+ZxN+FmKbOvuB7KsVJ
+        8rNWmZLprpuf572c2R0w20K9W9BqZ7CODUNXFF+/kMDN7on3e3f9PdB3b8Xs9zxKX3Q3B5/8
+        Frbz8//5QcHZXpUVxvX/LiixFGckGmoxFxUnAgD0Y0HX5AIAAA==
+X-CMS-MailID: 20190510094342eucas1p15535afc4fd20f3813653678e46259177
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190509084827eucas1p294962744fe70745c50b69a5349b5de68
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190509084827eucas1p294962744fe70745c50b69a5349b5de68
+References: <yw1xpnotufti.fsf@mansr.com>
+        <CGME20190509084827eucas1p294962744fe70745c50b69a5349b5de68@eucas1p2.samsung.com>
+        <20190509084726.5405-1-m.szyprowski@samsung.com>
+        <yw1xlfzfv4ol.fsf@mansr.com>
+        <VI1PR04MB5327AD56CA772284DFE663D08B0C0@VI1PR04MB5327.eurprd04.prod.outlook.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 10.5.2019 9.28, Marek Szyprowski wrote:
-> Hi Mathias,
-> 
-> On 2019-05-09 17:10, Mathias Nyman wrote:
->> On 9.5.2019 14.51, Nicolas Saenz Julienne wrote:
->>> On Thu, 2019-05-09 at 14:40 +0300, Mathias Nyman wrote:
->>>> On 9.5.2019 13.32, Marek Szyprowski wrote:
->>>>> Dear All,
->>>>>
->>>>> On 2019-04-26 15:23, Mathias Nyman wrote:
->>>>>> From: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
->>>>>>
->>>>>> Immediate data transfers (IDT) allow the HCD to copy small chunks of
->>>>>> data (up to 8bytes) directly into its output transfer TRBs. This
->>>>>> avoids
->>>>>> the somewhat expensive DMA mappings that are performed by default on
->>>>>> most URBs submissions.
->>>>>>
->>>>>> In the case an URB was suitable for IDT. The data is directly copied
->>>>>> into the "Data Buffer Pointer" region of the TRB and the IDT flag is
->>>>>> set. Instead of triggering memory accesses the HC will use the data
->>>>>> directly.
->>>>>>
->>>>>> The implementation could cover all kind of output endpoints. Yet
->>>>>> Isochronous endpoints are bypassed as I was unable to find one that
->>>>>> matched IDT's constraints. As we try to bypass the default DMA
->>>>>> mappings
->>>>>> on URB buffers we'd need to find a Isochronous device with an
->>>>>> urb->transfer_buffer_length <= 8 bytes.
->>>>>>
->>>>>> The implementation takes into account that the 8 byte buffers
->>>>>> provided
->>>>>> by the URB will never cross a 64KB boundary.
->>>>>>
->>>>>> Signed-off-by: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
->>>>>> Reviewed-by: Felipe Balbi <felipe.balbi@linux.intel.com>
->>>>>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->>>>>
->>>>> I've noticed that this patch causes regression on various Samsung
->>>>> Exynos
->>>>> 5420/5422/5800 boards, which have USB3.0 host ports provided by
->>>>> DWC3/XHCI hardware module. The regression can be observed with ASIX
->>>>> USB
->>>>> 2.0 ethernet dongle, which stops working after applying this patch
->>>>> (eth0
->>>>> interface is registered, but no packets are transmitted/received).
->>>>> I can
->>>>> provide more debugging information or do some tests, just let me know
->>>>> what do you need. Reverting this commit makes ASIX USB ethernet dongle
->>>>> operational again.
->>>>>
->>>>
->>>> Thanks for reporting.
->>>>
->>>> Would it be possible to check if your ASIX ethernet dongle works on
->>>> some
->>>> desktop/laptop setup with this same IDT patch?
->>>>
->>>> Also Exynos xhci traces could help, they would show the content of
->>>> the TRBs
->>>> using IDT.
->>>> Maybe byte order gets messed up?
->>>>
->>>> Take traces with:
->>>>
->>>> mount -t debugfs none /sys/kernel/debug
->>>> echo 81920 > /sys/kernel/debug/tracing/buffer_size_kb
->>>> echo 1 > /sys/kernel/debug/tracing/events/xhci-hcd/enable
->>>>
->>>> <connect ASIX eth dongle, try to use it>
->>>>
->>>> send /sys/kernel/debug/tracing/trace content to me
->>>>
->>>> If we can't get this fixed I'll revert the IDT patch
->>>
->>> Hi Matthias, thanks for your help.
->>>
->>> I'll also be looking into it, so please send me the logs too.
->>>
->>
->> Got the logs off list, thanks
->>
->> The "Buffer" data in Control transfer Data stage look suspicious.
->>
->> grep "flags I:" trace_fail  | grep Data
->> kworker/0:2-124   [000] d..1    63.092399: xhci_queue_trb: CTRL:
->> Buffer 0000000018b65000 length 6 TD size 0 intr 0 type 'Data Stage'
->> flags I:i:c:s:i:e:C
->> ifconfig-1429  [005] d..1    93.181231: xhci_queue_trb: CTRL: Buffer
->> 0000000018b65000 length 6 TD size 0 intr 0 type 'Data Stage' flags
->> I:i:c:s:i:e:C
->> ifconfig-1429  [007] dn.2    93.182050: xhci_queue_trb: CTRL: Buffer
->> 0000000000000000 length 8 TD size 0 intr 0 type 'Data Stage' flags
->> I:i:c:s:i:e:C
->> ifconfig-1429  [007] d..2    93.182499: xhci_queue_trb: CTRL: Buffer
->> 0000000080000000 length 8 TD size 0 intr 0 type 'Data Stage' flags
->> I:i:c:s:i:e:C
->> ifconfig-1429  [007] d..2    93.182736: xhci_queue_trb: CTRL: Buffer
->> 0000000080000000 length 8 TD size 0 intr 0 type 'Data Stage' flags
->> I:i:c:s:i:e:C
->> kworker/0:3-1409  [000] d..3    93.382630: xhci_queue_trb: CTRL:
->> Buffer 0000000080000000 length 8 TD size 0 intr 0 type 'Data Stage'
->> flags I:i:c:s:i:e:C
->>
->> First guess would be that in case URB has URB_NO_TRANSFER_DMA_MAP set
->> then data
->> will be mapped and urb->transfer_dma is already set.
->> The IDT patch uses urb->trabfer_dma as a temporary buffer, and copies the
->> urb->transfer_buffer there.
->> if transfer buffer is already dma mapped the urb->transfer_buffer can
->> be garbage,
->> (shouldn't, but it can be)
->>
->> Below code avoids IDT if URB_NO_TRANSFER_DMA_MAP is set, and doesn't
->> touch
->> urb->transfer_dma (patch attached)
->> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
->> index fed3385..f080054 100644
->> --- a/drivers/usb/host/xhci-ring.c
->> +++ b/drivers/usb/host/xhci-ring.c
->> @@ -3423,11 +3423,14 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *xhci,
->> gfp_t mem_flags,
->>
->>          if (urb->transfer_buffer_length > 0) {
->>                  u32 length_field, remainder;
->> +               u64 addr;
->>
->>                  if (xhci_urb_suitable_for_idt(urb)) {
->> -                       memcpy(&urb->transfer_dma, urb->transfer_buffer,
->> +                       memcpy(&addr, urb->transfer_buffer,
->>                                 urb->transfer_buffer_length);
->>                          field |= TRB_IDT;
->> +               } else {
->> +                       addr = (u64) urb->transfer_dma;
->>                  }
->>
->>                  remainder = xhci_td_remainder(xhci, 0,
->> @@ -3440,8 +3443,8 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *xhci,
->> gfp_t mem_flags,
->>                  if (setup->bRequestType & USB_DIR_IN)
->>                          field |= TRB_DIR_IN;
->>                  queue_trb(xhci, ep_ring, true,
->> - lower_32_bits(urb->transfer_dma),
->> - upper_32_bits(urb->transfer_dma),
->> +                               lower_32_bits(addr),
->> +                               upper_32_bits(addr),
->>                                  length_field,
->>                                  field | ep_ring->cycle_state);
->>          }
->> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
->> index a450a99..7f8b950 100644
->> --- a/drivers/usb/host/xhci.h
->> +++ b/drivers/usb/host/xhci.h
->> @@ -2160,7 +2160,8 @@ static inline bool
->> xhci_urb_suitable_for_idt(struct urb *urb)
->>   {
->>          if (!usb_endpoint_xfer_isoc(&urb->ep->desc) &&
->> usb_urb_dir_out(urb) &&
->>              usb_endpoint_maxp(&urb->ep->desc) >= TRB_IDT_MAX_SIZE &&
->> -           urb->transfer_buffer_length <= TRB_IDT_MAX_SIZE)
->> +           urb->transfer_buffer_length <= TRB_IDT_MAX_SIZE &&
->> +           !(urb->transfer_flags & URB_NO_TRANSFER_DMA_MAP))
->>                  return true;
->>
->>          return false;
->>
->   > If that doesn't help, then it's possible DATA trbs in control
-> transfer can't
->> use IDT at all. IDT is supported for Normal TRBs, which have a
->> different trb
->> type than DATA trbs in control transfers.
->>
->> Also xhci specs 4.11.7 limit IDT usage:
->>
->> "If the IDT flag is set in one TRB of a TD, then it shall be the only
->> Transfer
->>   TRB of the TD"
->>
->> A whole control transfer is one TD, and it already contains a SETUP
->> transfer TRB
->> which is using the IDT flag.
->>
->> Following disables IDT for control transfers (testpatch attached as well)
->>
->> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
->> index fed3385..4c1c9ad 100644
->> --- a/drivers/usb/host/xhci-ring.c
->> +++ b/drivers/usb/host/xhci-ring.c
->> @@ -3424,12 +3424,6 @@ int xhci_queue_ctrl_tx(struct xhci_hcd *xhci,
->> gfp_t mem_flags,
->>          if (urb->transfer_buffer_length > 0) {
->>                  u32 length_field, remainder;
->>
->> -               if (xhci_urb_suitable_for_idt(urb)) {
->> -                       memcpy(&urb->transfer_dma, urb->transfer_buffer,
->> -                              urb->transfer_buffer_length);
->> -                       field |= TRB_IDT;
->> -               }
->> -
->>                  remainder = xhci_td_remainder(xhci, 0,
->>                                  urb->transfer_buffer_length,
->>                                  urb->transfer_buffer_length,
->> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
->> index a450a99..2e16ff7 100644
->> --- a/drivers/usb/host/xhci.h
->> +++ b/drivers/usb/host/xhci.h
->> @@ -2158,9 +2158,11 @@ static inline struct xhci_ring
->> *xhci_urb_to_transfer_ring(struct xhci_hcd *xhci,
->>    */
->>   static inline bool xhci_urb_suitable_for_idt(struct urb *urb)
->>   {
->> -       if (!usb_endpoint_xfer_isoc(&urb->ep->desc) &&
->> usb_urb_dir_out(urb) &&
->> +       if (!usb_endpoint_xfer_control(&urb->ep->desc) &&
->> +           !usb_endpoint_xfer_isoc(&urb->ep->desc) &&
->> usb_urb_dir_out(urb) &&
->>              usb_endpoint_maxp(&urb->ep->desc) >= TRB_IDT_MAX_SIZE &&
->> -           urb->transfer_buffer_length <= TRB_IDT_MAX_SIZE)
->> +           urb->transfer_buffer_length <= TRB_IDT_MAX_SIZE &&
->> +           !(urb->transfer_flags & URB_NO_TRANSFER_DMA_MAP))
->>                  return true;
->>
->>          return false;
->>
->> -Mathias
-> 
-> 
-> Thanks for the patches to test! Both patches applied separately (without
-> the other one) fixes the issue with ASIX USB dongle, but from the
-> discussion I assume that the first one
-> (0001-xhci-don-t-use-IDT-transfer-buffer-is-already-dma-ma.patch) really
-> fixes the issue, while the second one is just a workaround.
-> 
-> You can add:
-> 
-> Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> 
-> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> 
+Hi Peter,
 
-Great, thanks, I'll send the first patch forward after the merge window
+On 2019-05-10 05:10, Peter Chen wrote:
+>
+>> Marek Szyprowski <m.szyprowski@samsung.com> writes:
+>>> Commit 69bec7259853 ("USB: core: let USB device know device node")
+>>> added support for attaching devicetree node for USB devices. The
+>>> mentioned commit however identifies the given USB device node only by the 'reg'
+>>> property in the host controller children nodes. The USB device node
+>>> however also has to have a 'compatible' property as described in
+>>> Documentation/devicetree/bindings/usb/usb-device.txt. Lack for the
+>>> 'compatible' property check might result in assigning a devicetree
+>>> node, which is not intended to be the proper node for the given USB device.
+>>>
+>>> This is important especially when USB host controller has child-nodes
+>>> for other purposes. For example, Exynos EHCI and OHCI drivers already
+>>> define child-nodes for each physical root hub port and assigns
+>>> respective PHY controller and parameters for them. Those binding
+>>> predates support for USB devicetree nodes.
+>>>
+>>> Checking for the proper compatibility string allows to mitigate the
+>>> conflict between USB device devicetree nodes and the bindings for USB
+>>> controllers with child nodes. It also fixes the side-effect of the
+>>> other commits, like 01fdf179f4b0 ("usb: core: skip interfaces disabled
+>>> in devicetree"), which incorrectly disables some devices on Exynos
+>>> based boards.
+> Hi Marek,
+>
+> The purpose of your patch is do not set of_node for device under USB controller, right?
 
-Mathias
+Right.
+
+> I do not understand how 01fdf179f4b0 affect your boards, some nodes under
+> the USB controller with status is not "okay", but still want to be enumerated?
+
+Please look at the ehci node in arch/arm/boot/dts/exynos4.dtsi and then 
+at the changes to that node in arch/arm/boot/dts/exynos4412-odroidx.dts. 
+Exynos EHCI controller has 3 subnodes, which matches to the physical 
+ports of it and allows the driver to enable given PHY ports depending on 
+which physical port is used on the particular board. All ports cannot 
+not be enabled by default, because PHY controller has limited resources 
+and shares them between USB host and USB device ports.
+
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
