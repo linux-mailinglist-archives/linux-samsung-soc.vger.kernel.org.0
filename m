@@ -2,175 +2,114 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CAAE19DEA
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 May 2019 15:13:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91D9F1B22F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 May 2019 11:00:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727493AbfEJNM7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 May 2019 09:12:59 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:56201 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727488AbfEJNM6 (ORCPT
+        id S1728099AbfEMJAq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 13 May 2019 05:00:46 -0400
+Received: from mail-eopbgr50040.outbound.protection.outlook.com ([40.107.5.40]:16838
+        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727401AbfEMJAq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 May 2019 09:12:58 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190510131256euoutp01be912d5f9ad4a3a9fb6d8bd0537fb2c7~dVIUJ7KCN0119301193euoutp01B
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 May 2019 13:12:56 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190510131256euoutp01be912d5f9ad4a3a9fb6d8bd0537fb2c7~dVIUJ7KCN0119301193euoutp01B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557493976;
-        bh=j5HYaAoYE8H3ysc4iIL7WLxLaS/SspmuDmBrz/8NW1o=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=OIZo/VXwF121fsfuAWfDygFwj/mr9SkTn30FQH+oYy/sPESqQ3g5z/zCulxeIRPBQ
-         EuB03HmxYY/hYFR8KRSApF+H86l1ysmk01cwNeUbl0xkp1ot5rb7uahloYgObjrR45
-         c3UO7YimfqbCsf1RsAVk3EF9JtYTnWSLHZGUS16Q=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190510131255eucas1p1b1e2d76f60bc4dbde6a9b6f495e37cfe~dVITWlwPZ3127531275eucas1p1m;
-        Fri, 10 May 2019 13:12:55 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 94.8B.04377.7D875DC5; Fri, 10
-        May 2019 14:12:55 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190510131254eucas1p1fcf8dbeffa10d59a44108c3820efb01a~dVISjTEZP0116601166eucas1p1j;
-        Fri, 10 May 2019 13:12:54 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190510131254eusmtrp113c2899e2188b15d97970140148781ed~dVISVEKyk1895118951eusmtrp1H;
-        Fri, 10 May 2019 13:12:54 +0000 (GMT)
-X-AuditID: cbfec7f4-12dff70000001119-0b-5cd578d74831
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 81.47.04140.6D875DC5; Fri, 10
-        May 2019 14:12:54 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190510131253eusmtip25866cbb1e621a84176e0e205134e59ea~dVIReyyHG3162231622eusmtip2v;
-        Fri, 10 May 2019 13:12:53 +0000 (GMT)
-Subject: Re: [PATCH v7 07/13] dt-bindings: memory-controllers: add
- Exynos5422 DMC device description
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        Mon, 13 May 2019 05:00:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lTAn3h14jAxrKV99xndIN2xmKqLBxc8x6Qckk787510=;
+ b=lwqAiIhh61MbAED9YZkaJfOw5DXw4zkW22a/RQ9zUjoUtpVdH3Xuwl9T/M0iSEoAjqXJpvahHUoI7N9B24ys9VdreKsG/wmHFXzNtu7IxHqfUL8UVfkzbLpViHUgLyrw39yaVds7hyq4rqb+NqG/vEBD/mLcdxMqwPU2xtQbOjg=
+Received: from VI1PR04MB5327.eurprd04.prod.outlook.com (20.177.52.16) by
+ VI1PR04MB6238.eurprd04.prod.outlook.com (20.179.24.75) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1878.22; Mon, 13 May 2019 09:00:42 +0000
+Received: from VI1PR04MB5327.eurprd04.prod.outlook.com
+ ([fe80::4923:8ad8:62c1:3e61]) by VI1PR04MB5327.eurprd04.prod.outlook.com
+ ([fe80::4923:8ad8:62c1:3e61%5]) with mapi id 15.20.1878.024; Mon, 13 May 2019
+ 09:00:42 +0000
+From:   Peter Chen <peter.chen@nxp.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?utf-8?B?TcOlbnMgUnVsbGfDpXJk?= <mans@mansr.com>
+CC:     "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
         "linux-samsung-soc@vger.kernel.org" 
         <linux-samsung-soc@vger.kernel.org>,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, Kukjin Kim <kgene@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Joerg Roedel <jroedel@suse.de>,
-        Thierry Reding <treding@nvidia.com>,
-        Dmitry Osipenko <digetx@gmail.com>, willy.mh.wolff.ml@gmail.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <c9b4759e-e15b-9c5d-63d0-9db06a4c361a@partner.samsung.com>
-Date:   Fri, 10 May 2019 15:12:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAL_JsqJSbi5jNZSRhiE-h74DdbsgM7O+tqP9HOf037pyN7TbFA@mail.gmail.com>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Markus Reichl <m.reichl@fivetechno.de>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: RE: [PATCH v3] usb: core: verify devicetree nodes for USB devices
+Thread-Topic: [PATCH v3] usb: core: verify devicetree nodes for USB devices
+Thread-Index: AQHVBkP6yfsjDnSxCk69+l82SkgDJqZjJOxsgACHhqCAAHC5gIAEqmrw
+Date:   Mon, 13 May 2019 09:00:41 +0000
+Message-ID: <VI1PR04MB5327B425756FA394C51525208B0F0@VI1PR04MB5327.eurprd04.prod.outlook.com>
+References: <yw1xpnotufti.fsf@mansr.com>
+        <CGME20190509084827eucas1p294962744fe70745c50b69a5349b5de68@eucas1p2.samsung.com>
+        <20190509084726.5405-1-m.szyprowski@samsung.com>        <yw1xlfzfv4ol.fsf@mansr.com>
+        <VI1PR04MB5327AD56CA772284DFE663D08B0C0@VI1PR04MB5327.eurprd04.prod.outlook.com>
+ <7c5579d2-634a-d705-a451-563939957d57@samsung.com>
+In-Reply-To: <7c5579d2-634a-d705-a451-563939957d57@samsung.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se1BMURzHO3vv3XtrbE4b+k0axmK88xyd8X5bjfEYj/FosHT10G7ZK0rN
-        WPQSiRCt3oyaPKJCmoZRS/TYakiNrBpbI7QNSoY8r1uj/z7n/L7f8/t+Zw5HKTsYV85Pt4/X
-        6zQBKrkDfefxN/Ok+pA6rymZDc7k1oVchtR3vWVImsnMkKufrIicKU+RkcrjWhJv/UCR6uqb
-        LKk60s6SZ0XJctIZZ0LkQvV9GblusrCk8XC2nPwuLmRJaXs0Qx489ySNPY6k+8kbtMBZ3f0l
-        gVZfNNTS6ntGC6vOyzkmV8cd7ZCrTxbkIHV+RZi6M2/YGm6LwxxvPsBvP6+fPG+Hg68lNQYF
-        vRgYcv/sJdaAigbEInsO8Ax4WPlULrISZyP4aZoaixz+cheCms9mJB06ESS3NFN9jk9Neaw0
-        yEJgaYxEkt2GwPxxvsjOeDeUXH7JijwIj4CeqERGNFA4Uw6thnxZLOI4OXaHwpy9okaBl8EV
-        q40Rmcaj4bXFJBN5MN4ETY9vMpLGCZ4mtdAi2+O18DUh9Z+Gwi7wsiWtl4fDXVsyJe4CnMHB
-        6fpTjJR6CbwuvNTbwBnelxWwErtBxZkTtMQCGOIykMThYI1P6dXMhtKyWkbMTOFxkFs0WUTA
-        CyHXvF5CR2iwOUkJHCHhznlKulZATJRSemMsFJyokUk8BLKuJbKnkMrYr5exXxdjvy7G/2vT
-        EZ2DXPhgQevDC9N0/AF3QaMVgnU+7rsCtXno7y+s+FXWVYiKfuwsQZhDqgEKvKvOS8lo9guh
-        2hIEHKUapNBPfO6lVHhrQg/y+sDt+uAAXihBQzla5aIIs2veqsQ+mn38Hp4P4vV9Uxln72pA
-        o7q/Ky+Hq26Xr5ob066aELkzfSlvazD6D1y3yKP4qktbboTv8oji2ujW2c0b7HxnbZqVHZm6
-        +NXIpStqNmy78dHjblNAfkOHdXVQ2O7UIc18nVv4ykeHNg+98uhQe1LPBNe2tvdupZrppoet
-        Vefi/D5kPjif5DRzTLR//ned1XPYxndZ3ipa8NVMHU/pBc0fTHEJ74EDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42I5/e/4Pd1rFVdjDM5Ml7XYOGM9q8X1L89Z
-        LeYfOcdqsfrjY0aLyafmMlmc6c616H/8mtni/PkN7BZnm96wW1zeNYfN4nPvEUaLGef3MVms
-        PXKX3eJ24wo2i/97drBbHH7Tzmqx/4qXxe3ffBbfTjxidBD2+PZ1EovH7IaLLB47Z91l99i0
-        qpPNo7f5HZtH35ZVjB6bT1d7fN4kF8ARpWdTlF9akqqQkV9cYqsUbWhhpGdoaaFnZGKpZ2hs
-        HmtlZKqkb2eTkpqTWZZapG+XoJdxd14HY8E1/op9UxazNzDu4uli5OSQEDCR+Hh/E3sXIxeH
-        kMBSRomfSzexQCTEJCbt284OYQtL/LnWxQZR9JpRonHZe0aQhLBAmsSNJVPZQGwRAUWJ323T
-        WEFsZoFlbBJzb+eA2EICp5klLk3x7WLk4GAT0JPYsaoQJMwr4Cax7PFbsHIWAVWJe3ePMIHY
-        ogIREmfer2CBqBGUODnzCZjNKRAo8X3SPCaI8WYS8zY/ZIawxSVuPZkPFZeX2P52DvMERqFZ
-        SNpnIWmZhaRlFpKWBYwsqxhFUkuLc9Nzi430ihNzi0vz0vWS83M3MQITwLZjP7fsYOx6F3yI
-        UYCDUYmHVyD5aowQa2JZcWXuIUYJDmYlEd4inSsxQrwpiZVVqUX58UWlOanFhxhNgZ6byCwl
-        mpwPTE55JfGGpobmFpaG5sbmxmYWSuK8HQIHY4QE0hNLUrNTUwtSi2D6mDg4pRoY1XR1Fh10
-        fHj2UJeTJet79sInxZPk/XXWfZRn0bFZ8H/yBacP33j8eTevjQp4fKjl7nXvD0sOvxe4f/f6
-        U75zAp/mpV2+bRRblGHw0qn9jrPE0mshm0/b3At5JrZ+2S73czP63L0i/m/tfasZtFAt9uLb
-        ZzUPDzelq0pv/nP+oOyTeefuPZvj7KTEUpyRaKjFXFScCAAe9Pq2FgMAAA==
-X-CMS-MailID: 20190510131254eucas1p1fcf8dbeffa10d59a44108c3820efb01a
-X-Msg-Generator: CA
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=peter.chen@nxp.com; 
+x-originating-ip: [119.31.174.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9a816662-2e8b-4bb2-e2fb-08d6d7817a2c
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(4618075)(2017052603328)(7193020);SRVR:VI1PR04MB6238;
+x-ms-traffictypediagnostic: VI1PR04MB6238:
+x-microsoft-antispam-prvs: <VI1PR04MB623862B23000A22DFA2FD83A8B0F0@VI1PR04MB6238.eurprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:2512;
+x-forefront-prvs: 0036736630
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(376002)(39860400002)(396003)(346002)(366004)(199004)(189003)(256004)(110136005)(14444005)(54906003)(76176011)(52536014)(5024004)(5660300002)(7696005)(81166006)(81156014)(99286004)(86362001)(8676002)(71200400001)(71190400001)(102836004)(53546011)(6506007)(26005)(11346002)(446003)(486006)(44832011)(476003)(14454004)(186003)(8936002)(9686003)(305945005)(66066001)(74316002)(68736007)(316002)(7736002)(3846002)(2906002)(53936002)(6246003)(55016002)(6116002)(33656002)(229853002)(66946007)(76116006)(4326008)(73956011)(6436002)(478600001)(64756008)(25786009)(66446008)(66556008)(66476007);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR04MB6238;H:VI1PR04MB5327.eurprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: nxp.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: Rm3NpDO1oNCiWMbLAJ8Yf7EYiIpP6Oq/yJ/2OTA99NzwNvqGAVBPUg+iY9lGwR56Lu9+3q60XWV9OGcuxu6UXVPM06+Fvx719pFpV9WDCxrmwfSvlokQoR29DvouhJWuMY8VNJCDLmIHHY2VA9YEj7EW5z7Ztu4DNiTe2dDbFTgIF+ZtPdLjgjLHMjUcSVtSmXL0wYbHxGOXKq+0suajfCtqe/hd3AV+/9Botxv6Vi0JkmSVFYm15aC4teHET/0zqXm+aK9mraWCQYMqcyQUEUAWlF/Xf5eXFd2sjjtCqrMrfy1wQSvJFTPL2WlwEnQMPkkNr8asIl8a1c1pBN+1y0yNyoBkHKMxqwb2cpHNV3W4W3LkpXHnaXck01JO+mZTkRREYT1WBpFKat/t5IJwvGNeYRCiQNKTfsUJAucVRVk=
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190506151215eucas1p2c57147edac5671c5ec9a223efb6b4adc
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190506151215eucas1p2c57147edac5671c5ec9a223efb6b4adc
-References: <1557155521-30949-1-git-send-email-l.luba@partner.samsung.com>
-        <CGME20190506151215eucas1p2c57147edac5671c5ec9a223efb6b4adc@eucas1p2.samsung.com>
-        <1557155521-30949-8-git-send-email-l.luba@partner.samsung.com>
-        <20190507170422.GA25179@bogus>
-        <CAJKOXPdacKBrKeCyCaE7VS8-NOR4Oo27XY7rx20P2ORY2vBBSg@mail.gmail.com>
-        <ab489925-040c-815c-2aef-50ed0ee6cd6c@partner.samsung.com>
-        <CAL_JsqJSbi5jNZSRhiE-h74DdbsgM7O+tqP9HOf037pyN7TbFA@mail.gmail.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a816662-2e8b-4bb2-e2fb-08d6d7817a2c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2019 09:00:41.8667
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6238
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Rob,
-
-On 5/8/19 10:35 PM, Rob Herring wrote:
-> On Wed, May 8, 2019 at 4:45 AM Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>
->>
->> On 5/8/19 9:19 AM, Krzysztof Kozlowski wrote:
->>> On Tue, 7 May 2019 at 19:04, Rob Herring <robh@kernel.org> wrote:
->>>>> +- devfreq-events : phandles of the PPMU events used by the controller.
->>>>> +- samsung,syscon-chipid : phandle of the ChipID used by the controller.
->>>>> +- samsung,syscon-clk : phandle of the clock register set used by the controller.
->>>>
->>>> Looks like a hack. Can't you get this from the clocks property? What is
->>>> this for?
->>>
->>> Hi Rob,
->>>
->>> Lukasz uses these two syscon regmaps to read certain registers. For
->>> chipid he reads it to check the size of attached memory (only 2 GB
->>> version is supported). This indeed looks like a hack. However the
->>> second regmap (clk) is needed to get the timing data from registers
->>> from DMC clock driver address space. These are registers with memory
->>> timing so their data is not exposed anyway in common clk framework.
-> 
-> Okay, please just explain what your accessing. Consider adding the
-> offset as a cell in case stuff moves around on another chip.
-Good point. I will also have to regmap the registers and not take from
-'clock' device.
-> 
->>>
->>> Best regards,
->>> Krzysztof
->>
->> Thank you Krzysztof for a fast response. I have also responded to Rob.
->> I wouldn't call accessing chipid registers as a hack, though. The DMC
->> registers do not contain information about the memory chip since it is
->> in phase of production the board not the chip. Thus, chipid regs (which
->> loads from e-fuses) are best place to put information about memory
->> type/size.
-> 
-> For efuses, we have a binding (nvmem). Maybe you should use it.
-I don't know about the design of a planned 'chipid' driver, which going
-to be sent to LKML in near future. Thank you for this information,
-I will talk with Bartek.
-
-Regards,
-Lukasz
-> 
-> Rob
-> 
-> 
+IA0KPiANCj4gT24gMjAxOS0wNS0xMCAwNToxMCwgUGV0ZXIgQ2hlbiB3cm90ZToNCj4gPg0KPiA+
+PiBNYXJlayBTenlwcm93c2tpIDxtLnN6eXByb3dza2lAc2Ftc3VuZy5jb20+IHdyaXRlczoNCj4g
+Pj4+IENvbW1pdCA2OWJlYzcyNTk4NTMgKCJVU0I6IGNvcmU6IGxldCBVU0IgZGV2aWNlIGtub3cg
+ZGV2aWNlIG5vZGUiKQ0KPiA+Pj4gYWRkZWQgc3VwcG9ydCBmb3IgYXR0YWNoaW5nIGRldmljZXRy
+ZWUgbm9kZSBmb3IgVVNCIGRldmljZXMuIFRoZQ0KPiA+Pj4gbWVudGlvbmVkIGNvbW1pdCBob3dl
+dmVyIGlkZW50aWZpZXMgdGhlIGdpdmVuIFVTQiBkZXZpY2Ugbm9kZSBvbmx5IGJ5IHRoZQ0KPiAn
+cmVnJw0KPiA+Pj4gcHJvcGVydHkgaW4gdGhlIGhvc3QgY29udHJvbGxlciBjaGlsZHJlbiBub2Rl
+cy4gVGhlIFVTQiBkZXZpY2Ugbm9kZQ0KPiA+Pj4gaG93ZXZlciBhbHNvIGhhcyB0byBoYXZlIGEg
+J2NvbXBhdGlibGUnIHByb3BlcnR5IGFzIGRlc2NyaWJlZCBpbg0KPiA+Pj4gRG9jdW1lbnRhdGlv
+bi9kZXZpY2V0cmVlL2JpbmRpbmdzL3VzYi91c2ItZGV2aWNlLnR4dC4gTGFjayBmb3IgdGhlDQo+
+ID4+PiAnY29tcGF0aWJsZScgcHJvcGVydHkgY2hlY2sgbWlnaHQgcmVzdWx0IGluIGFzc2lnbmlu
+ZyBhIGRldmljZXRyZWUNCj4gPj4+IG5vZGUsIHdoaWNoIGlzIG5vdCBpbnRlbmRlZCB0byBiZSB0
+aGUgcHJvcGVyIG5vZGUgZm9yIHRoZSBnaXZlbiBVU0IgZGV2aWNlLg0KPiA+Pj4NCj4gPj4+IFRo
+aXMgaXMgaW1wb3J0YW50IGVzcGVjaWFsbHkgd2hlbiBVU0IgaG9zdCBjb250cm9sbGVyIGhhcw0K
+PiA+Pj4gY2hpbGQtbm9kZXMgZm9yIG90aGVyIHB1cnBvc2VzLiBGb3IgZXhhbXBsZSwgRXh5bm9z
+IEVIQ0kgYW5kIE9IQ0kNCj4gPj4+IGRyaXZlcnMgYWxyZWFkeSBkZWZpbmUgY2hpbGQtbm9kZXMg
+Zm9yIGVhY2ggcGh5c2ljYWwgcm9vdCBodWIgcG9ydA0KPiA+Pj4gYW5kIGFzc2lnbnMgcmVzcGVj
+dGl2ZSBQSFkgY29udHJvbGxlciBhbmQgcGFyYW1ldGVycyBmb3IgdGhlbS4gVGhvc2UNCj4gPj4+
+IGJpbmRpbmcgcHJlZGF0ZXMgc3VwcG9ydCBmb3IgVVNCIGRldmljZXRyZWUgbm9kZXMuDQo+ID4+
+Pg0KPiA+Pj4gQ2hlY2tpbmcgZm9yIHRoZSBwcm9wZXIgY29tcGF0aWJpbGl0eSBzdHJpbmcgYWxs
+b3dzIHRvIG1pdGlnYXRlIHRoZQ0KPiA+Pj4gY29uZmxpY3QgYmV0d2VlbiBVU0IgZGV2aWNlIGRl
+dmljZXRyZWUgbm9kZXMgYW5kIHRoZSBiaW5kaW5ncyBmb3INCj4gPj4+IFVTQiBjb250cm9sbGVy
+cyB3aXRoIGNoaWxkIG5vZGVzLiBJdCBhbHNvIGZpeGVzIHRoZSBzaWRlLWVmZmVjdCBvZg0KPiA+
+Pj4gdGhlIG90aGVyIGNvbW1pdHMsIGxpa2UgMDFmZGYxNzlmNGIwICgidXNiOiBjb3JlOiBza2lw
+IGludGVyZmFjZXMNCj4gPj4+IGRpc2FibGVkIGluIGRldmljZXRyZWUiKSwgd2hpY2ggaW5jb3Jy
+ZWN0bHkgZGlzYWJsZXMgc29tZSBkZXZpY2VzIG9uDQo+ID4+PiBFeHlub3MgYmFzZWQgYm9hcmRz
+Lg0KPiA+IEhpIE1hcmVrLA0KPiA+DQo+ID4gVGhlIHB1cnBvc2Ugb2YgeW91ciBwYXRjaCBpcyBk
+byBub3Qgc2V0IG9mX25vZGUgZm9yIGRldmljZSB1bmRlciBVU0IgY29udHJvbGxlciwNCj4gcmln
+aHQ/DQo+IA0KPiBSaWdodC4NCj4gDQoNCkRvIHlvdSBtaW5kIGRvaW5nIGl0IGF0IGZ1bmN0aW9u
+IGV4eW5vc19laGNpX2dldF9waHkgb2YgZWhjaS1leHlub3MuYz8NCg0KUGV0ZXINCg==
