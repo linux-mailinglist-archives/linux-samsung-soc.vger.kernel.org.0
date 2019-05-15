@@ -2,251 +2,200 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F501F47C
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 May 2019 14:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 747D91F4C1
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 May 2019 14:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726381AbfEOMe6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 15 May 2019 08:34:58 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:49167 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbfEOMe6 (ORCPT
+        id S1726911AbfEOMq4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 15 May 2019 08:46:56 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:33802 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726920AbfEOMq4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 15 May 2019 08:34:58 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190515123456euoutp013c6a3845879dd66b2c0ea73f8b0ab283~e21kJPPpK2210422104euoutp01P;
-        Wed, 15 May 2019 12:34:56 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190515123456euoutp013c6a3845879dd66b2c0ea73f8b0ab283~e21kJPPpK2210422104euoutp01P
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1557923696;
-        bh=Qnc23u7sMOYVD9w4XZQHqBtnLf6RMaImcgtoqnr+UJE=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=Ca4D5IFNANt47KOQ7kKOlfWK5NeYRBNYSN+sh99L7hyBHgJfcQvGfzLNM30mIWdYA
-         gPyHS9cGAv58iPYrFqjBxqkwy+4Gd3SUYd1fOkfVinaPulRWZ8FrNy4MeO3TWpZbXh
-         lDN4/b0WhJleknnL6QqqP6zm8yoXwY9uMc4C4tN4=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190515123455eucas1p1bd676b6aaf2b86d4acf79b15e442086e~e21jfJXjr1125211252eucas1p1c;
-        Wed, 15 May 2019 12:34:55 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 61.9D.04377.F670CDC5; Wed, 15
-        May 2019 13:34:55 +0100 (BST)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190515123455eucas1p2901074694b5835e16ca0b2916d2e4139~e21i44Gdb3078930789eucas1p2F;
-        Wed, 15 May 2019 12:34:55 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-09-5cdc076f558b
-Received: from eusync4.samsung.com ( [203.254.199.214]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id E6.09.04140.E670CDC5; Wed, 15
-        May 2019 13:34:54 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
-        eusync4.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
-        (built May  5 2014)) with ESMTPA id <0PRJ00AQZPLAG360@eusync4.samsung.com>;
-        Wed, 15 May 2019 13:34:54 +0100 (BST)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Russell King <rmk+kernel@armlinux.org.uk>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andre Przywara <andre.przywara@arm.com>,
+        Wed, 15 May 2019 08:46:56 -0400
+Received: by mail-pl1-f195.google.com with SMTP id w7so1310644plz.1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 May 2019 05:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arista.com; s=googlenew;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b3HyjACi/MsUUs/bdvxi48Ab6BnFJ6ZhEKEib98a4qc=;
+        b=Xql7xL76UlYG2HgQrNw2rS48dkmsc4mtYUzCNuPcx9exYI1ZmEu7lZqz2wZCRpSq5N
+         P/62eA1WGojofeojjMEVVfykGFGMoC0h24yl2IGMP+MMD6n/+9xLNayyFAwmk67CqnR1
+         m8FLpulEhu3q1K43A5KpMSgYNY/9ZQFxlv1sLLC+Y4jO+Ip0fUJakXQ0r3SGBP8eKC6y
+         8c8qARg+kB1bO3KBeiRnMVlAPDwWif2wtpKXbjbo5qVDDAOu6rngr7KYzRQuR7hO5Gmh
+         lcl5CLLB06Ib9xN7L7Nu/HtKO3R428g2WTFCp36Qq7GME8YG4fu4z4pF+aWoLIZ6h2KQ
+         NZMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b3HyjACi/MsUUs/bdvxi48Ab6BnFJ6ZhEKEib98a4qc=;
+        b=PzXpZKu86rCdThiEp1YH5wGfdpF5t1of7GlBonRXNh9MKA9ntZTeaEH5kaPnnuII0u
+         38E/04eWNVgsk+5OVhF93BqQTifNe69JLbFkPGOc34TKVMVu+RSNWYUoKQyRmjH3sqUU
+         LKnRJ44K2VxaS5NM0m7jyRXmF27CcgJNmxWcBwXIt9Oq1okeK/EXmMKRRZ/5ygmQak0L
+         +qnYZ8sHNn7GTxGqVNxpxew0DadZGlp0LaLy36VWnyw6F0liH0fPP2UtoumnddnoT8zF
+         h3DUolndJ468i/w5SArvDP5znM+2q9Z4U8JYTzDBqkLamAen0AalXLA6P+/XM58O5W/d
+         PTmQ==
+X-Gm-Message-State: APjAAAW2dfLGiFVsGDzHsxAbuz7NTx8ANh3gXMhMj83PjRAch1xbTM1P
+        K0YGUtzNY3XKBpDFrUXIYLPaKHmgiJnREgN2LmmPaw==
+X-Google-Smtp-Source: APXvYqwTSlq+glzh8dvBA9RnhTgkzA0FJBG+kmyFPUzc3vgEhgrnY6HSdtm+CvmJk20OFdPWunOILeeGu3jijFHRxb0=
+X-Received: by 2002:a17:902:4181:: with SMTP id f1mr22625568pld.22.1557924414679;
+ Wed, 15 May 2019 05:46:54 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190506185207.31069-1-tmurphy@arista.com> <20190506185207.31069-3-tmurphy@arista.com>
+ <20190507064000.GB5173@infradead.org>
+In-Reply-To: <20190507064000.GB5173@infradead.org>
+From:   Tom Murphy <tmurphy@arista.com>
+Date:   Wed, 15 May 2019 13:46:43 +0100
+Message-ID: <CAPL0++5AUyVHexpsE86PfXxmQgDHfxjSSoAAGXM5c7Mdix=OZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] iommu/dma-iommu: Handle deferred devices
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     iommu@lists.linux-foundation.org, Tom Murphy <murphyt7@tcd.ie>,
+        Joerg Roedel <joro@8bytes.org>,
         Will Deacon <will.deacon@arm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-samsung-soc@vger.kernel.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>
-Subject: [PATCH/RFC] ARM: Add workaround for I-Cache line size mismatch
- between CPU cores
-Date:   Wed, 15 May 2019 14:33:56 +0200
-Message-id: <20190515123356.31924-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsWy7djPc7r57HdiDL6sV7VYMe8no8XfScfY
-        LTbOWM9q8X5ZD6PF+fMb2C02Pb7GanF51xw2ixnn9zFZrD1yl91i6fWLTBaX+icyWcyY/JLN
-        4uXHEywOvB5r5q1h9Lh87SKzx+9fkxg9Nq3qZPPYvKTeo2/LKkaPz5vkAtijuGxSUnMyy1KL
-        9O0SuDIm7zjEUrBfveJF027WBsa1Cl2MnBwSAiYSW1YvYO9i5OIQEljBKHF381w2COczo8TU
-        uRdYYKrm/P3NDJFYxijx+uAtqJb/jBIrL2xkAqliEzCU6HrbxQZiiwi4SfxbdwhsFLPASWaJ
-        NzuawEYJC0RLTPw9nxnEZhFQlXjx4ShYM6+ArcSbn8/ZIdbJS6zecABsnYTACjaJL01roe5w
-        kTh37TczhC0jcXlyNwtEUTOjxMNza9khnB5GictNMxghqqwlDh+/yApiMwvwSUzaNh2omwMo
-        zivR0SYEUeIhMe/1fUaQsJBArMTUG/kTGMUXMDKsYhRPLS3OTU8tNspLLdcrTswtLs1L10vO
-        z93ECIzQ0/+Of9nBuOtP0iFGAQ5GJR5eix+3Y4RYE8uKK3MPMUpwMCuJ8G54DxTiTUmsrEot
-        yo8vKs1JLT7EKM3BoiTOW83wIFpIID2xJDU7NbUgtQgmy8TBKdXAaLO/QLXu8K8T/hkTHp1c
-        bhAQ0sjmynRrSdOMuU91ujIVzzmenj5HQWj13l75Ekmth+crms+UmbvEc/m8sLnyZRrrJIGZ
-        gZmfs/+vzFZccHPfjU0/1NZvYc67ciL2WeicR4JVG1b/Tvfel5LqUJAt+fmRxDXVKe9MurfH
-        dvywjt0hvcrTYsJTFSWW4oxEQy3mouJEAJMccMjMAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOLMWRmVeSWpSXmKPExsVy+t/xa7p57HdiDCbctrJYMe8no8XfScfY
-        LTbOWM9q8X5ZD6PF+fMb2C02Pb7GanF51xw2ixnn9zFZrD1yl91i6fWLTBaX+icyWcyY/JLN
-        4uXHEywOvB5r5q1h9Lh87SKzx+9fkxg9Nq3qZPPYvKTeo2/LKkaPz5vkAtijuGxSUnMyy1KL
-        9O0SuDIm7zjEUrBfveJF027WBsa1Cl2MnBwSAiYSc/7+Zu5i5OIQEljCKPFo7SwWCKeRSeLC
-        g2nMIFVsAoYSXW+72EBsEQE3iX/rDrGBFDELnGSW+NDTywiSEBaIlnjX+oYdxGYRUJV48eEo
-        E4jNK2Ar8ebnc3aIdfISqzccYJ7AyLWAkWEVo0hqaXFuem6xkV5xYm5xaV66XnJ+7iZGYHBt
-        O/Zzyw7GrnfBhxgFOBiVeHgn/LodI8SaWFZcmXuIUYKDWUmEd8N7oBBvSmJlVWpRfnxRaU5q
-        8SFGaQ4WJXHeDoGDMUIC6YklqdmpqQWpRTBZJg5OqQbGaZlXNgoHbjBQfMcjfPGThQDTG2EG
-        kefB0ge2dz6K1s36IWo7dVXJF77OZMY3oZ+XLdRIklVfqndQ+n2pi+VpwZkSa2LeL4g7UGG0
-        7+7ZS9Lzd9dcZLa/phleP7/O9W5m/DkhKed9l+wvLbuxjcd81u+t/wuVo3uZ722KyRN1tvn0
-        O+nsPt8mJZbijERDLeai4kQAVxS/yCoCAAA=
-X-CMS-MailID: 20190515123455eucas1p2901074694b5835e16ca0b2916d2e4139
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190515123455eucas1p2901074694b5835e16ca0b2916d2e4139
-References: <CGME20190515123455eucas1p2901074694b5835e16ca0b2916d2e4139@eucas1p2.samsung.com>
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Some big.LITTLE systems have mismatch of I-Cache line size between
-LITTLE and big cores. This patch adds workaround for proper I-Cache
-support on such systems. Without it, some kind of userspace code
-(typically self-modifying) might suffer from random SIGILL failures.
+like this?
 
-Similar workaround exists for ARM64 architecture, added by commit
-116c81f427ff ("arm64: Work around systems with mismatched cache line
-sizes").
+In that case we need to add a call to iommu_dma_alloc_remap.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+From 862aeebb601008cf863e3aff4ff8ed7cefebeefa Mon Sep 17 00:00:00 2001
+From: Tom Murphy <tmurphy@tmurphy-419tom-0.sjc.aristanetworks.com>
+Date: Wed, 15 May 2019 05:43:25 -0700
+Subject: [PATCH] iommu/dma-iommu: Handle deferred devices
+
+Handle devices which defer their attach to the iommu in the dma-iommu api
+
+Signed-off-by: Tom Murphy <tmurphy@arista.com>
 ---
-This workaround is needed on all supported Exynos big.LITTLE SoCs: 5420,
-5422 and 5800.
----
- arch/arm/configs/exynos_defconfig |  1 +
- arch/arm/include/asm/cacheflush.h |  7 +++++++
- arch/arm/kernel/smp.c             |  1 +
- arch/arm/mm/Kconfig               |  8 ++++++++
- arch/arm/mm/cache-v7.S            | 13 +++++++++++++
- arch/arm/mm/init.c                | 16 ++++++++++++++++
- arch/arm/mm/mm.h                  |  2 ++
- 7 files changed, 48 insertions(+)
+ drivers/iommu/dma-iommu.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
-index c95c54284da2..9b959afaaa12 100644
---- a/arch/arm/configs/exynos_defconfig
-+++ b/arch/arm/configs/exynos_defconfig
-@@ -9,6 +9,7 @@ CONFIG_MODULE_UNLOAD=y
- CONFIG_PARTITION_ADVANCED=y
- CONFIG_ARCH_EXYNOS=y
- CONFIG_ARCH_EXYNOS3=y
-+CONFIG_CPU_ICACHE_MISMATCH_WORKAROUND=y
- CONFIG_SMP=y
- CONFIG_BIG_LITTLE=y
- CONFIG_NR_CPUS=8
-diff --git a/arch/arm/include/asm/cacheflush.h b/arch/arm/include/asm/cacheflush.h
-index ec1a5fd0d294..ec4fd2e2dd60 100644
---- a/arch/arm/include/asm/cacheflush.h
-+++ b/arch/arm/include/asm/cacheflush.h
-@@ -479,4 +479,11 @@ static inline void __sync_cache_range_r(volatile void *p, size_t size)
- void flush_uprobe_xol_access(struct page *page, unsigned long uaddr,
- 			     void *kaddr, unsigned long len);
- 
-+
-+#ifdef CONFIG_CPU_ICACHE_MISMATCH_WORKAROUND
-+void check_cpu_icache_size(int cpuid);
-+#else
-+static inline void check_cpu_icache_size(int cpuid) { }
-+#endif
-+
- #endif
-diff --git a/arch/arm/kernel/smp.c b/arch/arm/kernel/smp.c
-index 8687d619260f..261be0e5bc03 100644
---- a/arch/arm/kernel/smp.c
-+++ b/arch/arm/kernel/smp.c
-@@ -373,6 +373,7 @@ static void smp_store_cpu_info(unsigned int cpuid)
- 	cpu_info->cpuid = read_cpuid_id();
- 
- 	store_cpu_topology(cpuid);
-+	check_cpu_icache_size(cpuid);
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 7f313cfa9..a48ae906d 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -22,6 +22,7 @@
+ #include <linux/pci.h>
+ #include <linux/scatterlist.h>
+ #include <linux/vmalloc.h>
++#include <linux/crash_dump.h>
+
+ struct iommu_dma_msi_page {
+     struct list_head    list;
+@@ -323,6 +324,21 @@ static int iommu_dma_init_domain(struct
+iommu_domain *domain, dma_addr_t base,
+     return iova_reserve_iommu_regions(dev, domain);
  }
- 
- /*
-diff --git a/arch/arm/mm/Kconfig b/arch/arm/mm/Kconfig
-index b169e580bf82..d4733e086f2b 100644
---- a/arch/arm/mm/Kconfig
-+++ b/arch/arm/mm/Kconfig
-@@ -780,6 +780,14 @@ config CPU_ICACHE_DISABLE
- 	  Say Y here to disable the processor instruction cache. Unless
- 	  you have a reason not to or are unsure, say N.
- 
-+config CPU_ICACHE_MISMATCH_WORKAROUND
-+	bool "Workaround for I-Cache line size mismatch between CPU cores"
-+	depends on SMP && CPU_V7
-+	help
-+	  Some big.LITTLE systems have mismatch of I-Cache line size between
-+	  LITTLE and big cores.  Say Y here to enable workaround for proper
-+	  I-Cache support on such systems.  If unsure, say N.
-+
- config CPU_DCACHE_DISABLE
- 	bool "Disable D-Cache (C-bit)"
- 	depends on (CPU_CP15 && !SMP) || CPU_V7M
-diff --git a/arch/arm/mm/cache-v7.S b/arch/arm/mm/cache-v7.S
-index 2149b47a0c5a..db3986708c8a 100644
---- a/arch/arm/mm/cache-v7.S
-+++ b/arch/arm/mm/cache-v7.S
-@@ -19,6 +19,14 @@
- 
- #include "proc-macros.S"
- 
-+#ifdef CONFIG_CPU_ICACHE_MISMATCH_WORKAROUND
-+.globl icache_size
-+	.data
-+	.align	2
-+icache_size:
-+	.long	64
-+	.text
-+#endif
- /*
-  * The secondary kernel init calls v7_flush_dcache_all before it enables
-  * the L1; however, the L1 comes out of reset in an undefined state, so
-@@ -284,7 +292,12 @@ ENTRY(v7_coherent_user_range)
- 	cmp	r12, r1
- 	blo	1b
- 	dsb	ishst
-+#ifdef CONFIG_CPU_ICACHE_MISMATCH_WORKAROUND
-+	ldr	r3, =icache_size
-+	ldr	r2, [r3, #0]
-+#else
- 	icache_line_size r2, r3
-+#endif
- 	sub	r3, r2, #1
- 	bic	r12, r0, r3
- 2:
-diff --git a/arch/arm/mm/init.c b/arch/arm/mm/init.c
-index be0b42937888..1a66af5bd259 100644
---- a/arch/arm/mm/init.c
-+++ b/arch/arm/mm/init.c
-@@ -242,6 +242,22 @@ static void __init arm_initrd_init(void)
- #endif
- }
- 
-+#ifdef CONFIG_CPU_ICACHE_MISMATCH_WORKAROUND
-+void check_cpu_icache_size(int cpuid)
+
++static int handle_deferred_device(struct device *dev,
++        struct iommu_domain *domain)
 +{
-+	u32 size, ctr;
++    const struct iommu_ops *ops = domain->ops;
 +
-+	asm("mrc p15, 0, %0, c0, c0, 1" : "=r" (ctr));
++    if (!is_kdump_kernel())
++        return 0;
 +
-+	size = 1 << ((ctr & 0xf) + 2);
-+	if (cpuid != 0 && icache_size != size)
-+		pr_info("CPU%u: detected I-Cache line size mismatch, workaround enabled\n",
-+			cpuid);
-+	if (icache_size > size)
-+		icache_size = size;
++    if (unlikely(ops->is_attach_deferred &&
++            ops->is_attach_deferred(domain, dev)))
++        return iommu_attach_device(domain, dev);
++
++    return 0;
 +}
-+#endif
 +
- void __init arm_memblock_init(const struct machine_desc *mdesc)
- {
- 	/* Register the kernel text, kernel data and initrd with memblock. */
-diff --git a/arch/arm/mm/mm.h b/arch/arm/mm/mm.h
-index 6b045c6653ea..941356d95a67 100644
---- a/arch/arm/mm/mm.h
-+++ b/arch/arm/mm/mm.h
-@@ -8,6 +8,8 @@
- /* the upper-most page table pointer */
- extern pmd_t *top_pmd;
- 
-+extern int icache_size;
-+
- /*
-  * 0xffff8000 to 0xffffffff is reserved for any ARM architecture
-  * specific hacks for copying pages efficiently, while 0xffff4000
--- 
-2.17.1
+ /**
+  * dma_info_to_prot - Translate DMA API directions and attributes to IOMMU API
+  *                    page flags.
+@@ -432,6 +448,9 @@ static dma_addr_t __iommu_dma_map(struct device
+*dev, phys_addr_t phys,
+     size_t iova_off = 0;
+     dma_addr_t iova;
 
++    if (unlikely(handle_deferred_device(dev, domain)))
++        return DMA_MAPPING_ERROR;
++
+     if (cookie->type == IOMMU_DMA_IOVA_COOKIE) {
+         iova_off = iova_offset(&cookie->iovad, phys);
+         size = iova_align(&cookie->iovad, size + iova_off);
+@@ -609,6 +628,9 @@ static void *iommu_dma_alloc_remap(struct device
+*dev, size_t size,
+     dma_addr_t iova;
+     void *vaddr;
+
++    if (unlikely(handle_deferred_device(dev, domain)))
++        return DMA_MAPPING_ERROR;
++
+     *dma_handle = DMA_MAPPING_ERROR;
+
+     min_size = alloc_sizes & -alloc_sizes;
+@@ -836,7 +858,7 @@ static dma_addr_t iommu_dma_map_page(struct device
+*dev, struct page *page,
+     bool coherent = dev_is_dma_coherent(dev);
+     dma_addr_t dma_handle;
+
+-    dma_handle =__iommu_dma_map(dev, phys, size,
++    dma_handle = __iommu_dma_map(dev, phys, size,
+             dma_info_to_prot(dir, coherent, attrs),
+             iommu_get_dma_domain(dev));
+     if (!coherent && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
+@@ -954,6 +976,9 @@ static int iommu_dma_map_sg(struct device *dev,
+struct scatterlist *sg,
+     unsigned long mask = dma_get_seg_boundary(dev);
+     int i;
+
++    if (unlikely(handle_deferred_device(dev, domain)))
++        return 0;
++
+     if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
+         iommu_dma_sync_sg_for_device(dev, sg, nents, dir);
+
+-- 
+2.20.0
+
+On Tue, May 7, 2019 at 7:40 AM Christoph Hellwig <hch@infradead.org> wrote:
+>
+> On Mon, May 06, 2019 at 07:52:04PM +0100, Tom Murphy wrote:
+> > +static int handle_deferred_device(struct device *dev)
+> > +{
+> > +     struct iommu_domain *domain;
+> > +     const struct iommu_ops *ops;
+> > +
+> > +     if (!is_kdump_kernel())
+> > +             return 0;
+> > +
+> > +     domain = iommu_get_domain_for_dev(dev);
+>
+> > -     dma_handle =__iommu_dma_map(dev, phys, size,
+> > +     if (unlikely(handle_deferred_device(dev)))
+> > +             return DMA_MAPPING_ERROR;
+> > +
+> > +     dma_handle = __iommu_dma_map(dev, phys, size,
+>
+> __iommu_dma_map already looks up the domain, and as far as I can
+> tell all callers need the handle_deferred_device call.  Should we
+> just move it to there and pass the domain from the caller?
+>
+> Also shouldn't the iommu_attach_device call inside
+> handle_deferred_device also get an unlikely marker?
