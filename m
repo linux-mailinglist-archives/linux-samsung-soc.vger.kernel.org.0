@@ -2,53 +2,21 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B082625DD6
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 08:01:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8D8E26286
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 12:55:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbfEVGBd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 May 2019 02:01:33 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:49903 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbfEVGBd (ORCPT
+        id S1728929AbfEVKyk convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 May 2019 06:54:40 -0400
+Received: from unicorn.mansr.com ([81.2.72.234]:44464 "EHLO unicorn.mansr.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728925AbfEVKyk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 May 2019 02:01:33 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190522060131euoutp024a0ede0bb21ba097f457a1be42759311~g6-D_SD3Z1949319493euoutp02e
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 May 2019 06:01:31 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190522060131euoutp024a0ede0bb21ba097f457a1be42759311~g6-D_SD3Z1949319493euoutp02e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1558504891;
-        bh=hmwRKXWvlgkgh8dejcjaXPbm/GM8juT5jTcoQ62euho=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=V7TZzVL1G/TZQ1y7Mhe52fGvxePl0auNYxF3BjcyTLvwm652w944KGd/1QohdWWgb
-         YZoj56WUU8WSKAQN8gTUjIzGSUCWv0kZ7nikuwLOyGsKHpYVWSL7tEsZwjZgYPa6wK
-         bejOvma4VQbYWL7MAkypKnzJZd/DVALMlpcoapJc=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190522060130eucas1p136182bb0d66dbb3cb5c3c262d122af94~g6-DPeukM1139911399eucas1p1y;
-        Wed, 22 May 2019 06:01:30 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id B9.B2.04325.AB5E4EC5; Wed, 22
-        May 2019 07:01:30 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190522060129eucas1p29e860190f3cc31bcce5f9ca13bb40e65~g6-CgDXCm0710707107eucas1p22;
-        Wed, 22 May 2019 06:01:29 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190522060129eusmtrp1fa4f77324f9269280acf0e8dfd852386~g6-CRtGjb2522625226eusmtrp1v;
-        Wed, 22 May 2019 06:01:29 +0000 (GMT)
-X-AuditID: cbfec7f5-b8fff700000010e5-62-5ce4e5ba1a8c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 41.3F.04146.9B5E4EC5; Wed, 22
-        May 2019 07:01:29 +0100 (BST)
-Received: from [106.120.50.25] (unknown [106.120.50.25]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190522060128eusmtip17b88b8fd6c31b7b19289862b868724e9~g6-Bnpiex3178331783eusmtip1L;
-        Wed, 22 May 2019 06:01:28 +0000 (GMT)
-Subject: Re: [PATCH 0/5] Exynos EHCI/OHCI: resolve conflict with the generic
- USB device bindings
-To:     =?UTF-8?B?TcOlbnMgUnVsbGfDpXJk?= <mans@mansr.com>
+        Wed, 22 May 2019 06:54:40 -0400
+Received: by unicorn.mansr.com (Postfix, from userid 51770)
+        id 4946C17102; Wed, 22 May 2019 11:54:38 +0100 (BST)
+From:   =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
 Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -58,124 +26,98 @@ Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         Peter Chen <peter.chen@nxp.com>,
         Alan Stern <stern@rowland.harvard.edu>,
         Rob Herring <robh+dt@kernel.org>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <ff3f4b25-cbc0-4195-79b2-c00633f0c79c@samsung.com>
-Date:   Wed, 22 May 2019 08:01:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
-        Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <yw1xk1ekszo9.fsf@mansr.com>
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0hTYRju2zln52hOjpuXF42ERYVpXgsOKJIQuR8SQhCSo5p5UPHKjlrq
-        j6yh1hLTIi+bYmpestS0abZwXrKWrrxkUYiaMwuS5h+VZprkPFr+e57nfb7veV54KUw8TrhT
-        CSnprDJFkSQV2uNdr1dHj+q/zcv9SwocmfbyNoKpHhwhGFVdm5AZHX1CMhP6SiFTPmoQMLUN
-        eRjzY9CKGKu5TMCsz0wRTF7PIMkUr40JTzjIJqeuyjqabwplvVWPSdlP0zApa1/sFsi001Yk
-        K9I1I9lSx/5I6px9SCyblJDJKv1CL9rHv9XNYmn9cEVbYSBz0bREjewooI9BT0kNoUb2lJhu
-        QqAz1wh5soygoq93mywh+LVhInaePG34LeAHjQgeGp6RPLEg0FsLcJtLQsfAi6I8ZMPO9HHo
-        1oxvfYXR9RjcvtYitA2EdACoLeotLKJD4UFn4VYETh+EOY1+E1OUCy2H2qVtixMMVczjNtmO
-        9gKVOcQmY7QnqDq1GI/dYHK+WsAXtZCQV+nO45PwSfcI47EEFow6ksf7wHS3ELdVA1qFwDzS
-        QvKkEMHE9XLEu4LhpXF8qw+2Gdym9+PlMGhSDwpsMtCO8NnixHdwhDtdZRgvi+BGvph3HwKN
-        sfVfbP/Ye6wYSTW7FtPs2kazaxvN/9z7CG9GbmwGlxzHckEp7GVfTpHMZaTE+V5KTe5Am4dm
-        2jCudCPDeswAoikkdRAx5q9yMaHI5LKSBxBQmNRZZBqek4tFsYqsbFaZekGZkcRyA8iDwqVu
-        opw9s9FiOk6RziaybBqr3JkKKDv3XPQuYs1puDokJjzsTLBjvy5swaz9GOnOyQPP+r6aDq3X
-        +S5mzOaXZjcyE+ddT0UeVnqr7uEukqhSa8TM1JDHnyjP55bvAQ7RhFdabu2q/0bdusZ6tuZN
-        K77XY61uKcdz5bTRVVpljspa9gk6EJjoTIWM1Pg0z5X03frwRUuE095SnItXBBzBlJziL+1W
-        GAtkAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsVy+t/xu7o7nz6JMXi1Uspi44z1rBbzj5xj
-        tWhevJ7N4vz5DewWl3fNYbOYcX4fk8WiZa3MFi+P/GC0+PFwOpPFn3t3WC1a9x5ht5jw+wKb
-        A4/HrTv1HptWdbJ57J+7ht3jzelT7B4b3+1g8ph99wejR9+WVYwenzfJBXBE6dkU5ZeWpCpk
-        5BeX2CpFG1oY6RlaWugZmVjqGRqbx1oZmSrp29mkpOZklqUW6dsl6GWc2fKAueCgRMXsmfvY
-        GxjvCncxcnJICJhIbF72i6mLkYtDSGApo8Sv5zcYIRIyEienNbBC2MISf651sUEUvWaUOLbz
-        NliRsECSxO6+VjBbRMBUYsesi2BFzALLmSXaN6xjgehYyyjR+mwx2Cg2AUOJrrcgozg5eAXs
-        JJZs7QGLswioSjyatQvMFhWIkTgxdQs7RI2gxMmZT4AGcXBwCmhKND+0AQkzC5hJzNv8kBnC
-        lpdo3jobyhaXuPVkPtMERqFZSLpnIWmZhaRlFpKWBYwsqxhFUkuLc9Nziw31ihNzi0vz0vWS
-        83M3MQKjeNuxn5t3MF7aGHyIUYCDUYmH98G9xzFCrIllxZW5hxglOJiVRHhPn3oUI8SbklhZ
-        lVqUH19UmpNafIjRFOi3icxSosn5wASTVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7
-        NbUgtQimj4mDU6qBceqZrLly3ToCocdn9C8sDt4Rv8tXsMebbcZ++/5kFsHipVW/tZJPTZVW
-        YLrvnfv0xZ9cq1hvn1O6Hd2KbK0vZT5v++bi32r+3HnDb/7PDCVprL/n/D7wSutnLVNlTPLz
-        7//X6zz0f3lGSYb/dn/VouNiaSdDe1Zl/ZdI/5GoLKdxYr5v0LYUJZbijERDLeai4kQA3fqq
-        CfgCAAA=
-X-CMS-MailID: 20190522060129eucas1p29e860190f3cc31bcce5f9ca13bb40e65
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190521120015eucas1p1da2f3f32d6b8af8cb550463686fd4e12
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190521120015eucas1p1da2f3f32d6b8af8cb550463686fd4e12
+Subject: Re: [PATCH 0/5] Exynos EHCI/OHCI: resolve conflict with the generic USB device bindings
 References: <CGME20190521120015eucas1p1da2f3f32d6b8af8cb550463686fd4e12@eucas1p1.samsung.com>
         <20190521115849.9882-1-m.szyprowski@samsung.com>
         <yw1xk1ekszo9.fsf@mansr.com>
+        <ff3f4b25-cbc0-4195-79b2-c00633f0c79c@samsung.com>
+Date:   Wed, 22 May 2019 11:54:38 +0100
+In-Reply-To: <ff3f4b25-cbc0-4195-79b2-c00633f0c79c@samsung.com> (Marek
+        Szyprowski's message of "Wed, 22 May 2019 08:01:28 +0200")
+Message-ID: <yw1x7eaiu5ch.fsf@mansr.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi MÃ¥ns
+Marek Szyprowski <m.szyprowski@samsung.com> writes:
 
-On 2019-05-21 15:30, MÃ¥ns RullgÃ¥rd wrote:
-> Marek Szyprowski <m.szyprowski@samsung.com> writes:
->> Dear All,
->>
->> Commit 69bec7259853 ("USB: core: let USB device know device node") added
->> support for attaching devicetree node for USB devices. Those nodes are
->> children of their USB host controller. However Exynos EHCI and OHCI
->> driver bindings already define child-nodes for each physical root hub
->> port and assigns respective PHY controller and parameters to them. This
->> leads to the conflict. A workaround for it has been merged as commit
->> 01d4071486fe ("usb: exynos: add workaround for the USB device bindings
->> conflict"), but it disabled support for USB device binding for Exynos
->> EHCI/OHCI controllers.
->>
->> This patchset tries to resolve this binding conflict by changing Exynos
->> EHCI/OHCI bindings: PHYs are moved from the sub-nodes to a standard array
->> under the 'phys' property. Such solution has been suggested by MÃ¥ns
->> RullgÃ¥rd in the following thread: https://lkml.org/lkml/2019/5/13/228
->>
->> To keep everything working during the transitional time, the changes has
->> been split into 2 steps. First step (patches 1-3) need to be merged before
->> the second one (patches 4-5). Patches from each step can be merged to
->> respective trees without any dependencies - the only requirement is that
->> second step has to be merged after merging all patches from the first one.
->>
->> This patchset has been tested on various Exynos4 boards with different
->> USB host controller configurations (Odroids family: X2, U3, XU3).
->>
->> Best regards
->> Marek Szyprowski
->> Samsung R&D Institute Poland
->>
->> Marek Szyprowski (5):
->>    dt-bindings: switch Exynos EHCI/OHCI bindings to use array of generic
->>      PHYs
->>    ARM: dts: exynos: Add array of generic PHYs to EHCI/OHCI devices
->>    usb: exynos: add support for getting PHYs from the standard dt array
->>    ARM: dts: exynos: Remove obsolete port sub-nodes from EHCI/OHCI
->>      devices
->>    usb: exynos: Remove support for legacy PHY bindings
-> You could retain compatibility with old devicetrees (which may be
-> useful) by using the "phys" property if it exists and falling back
-> on the old method if it doesn't.  Then you would get this sequence
-> of changes:
+> Hi Måns
 >
-> 1. Update binding definition.
-> 2. Support new binding in driver, with fallback to old.
-> 3. Switch dts files to new binding.
+> On 2019-05-21 15:30, Måns Rullgård wrote:
+>> Marek Szyprowski <m.szyprowski@samsung.com> writes:
+>>> Dear All,
+>>>
+>>> Commit 69bec7259853 ("USB: core: let USB device know device node") added
+>>> support for attaching devicetree node for USB devices. Those nodes are
+>>> children of their USB host controller. However Exynos EHCI and OHCI
+>>> driver bindings already define child-nodes for each physical root hub
+>>> port and assigns respective PHY controller and parameters to them. This
+>>> leads to the conflict. A workaround for it has been merged as commit
+>>> 01d4071486fe ("usb: exynos: add workaround for the USB device bindings
+>>> conflict"), but it disabled support for USB device binding for Exynos
+>>> EHCI/OHCI controllers.
+>>>
+>>> This patchset tries to resolve this binding conflict by changing Exynos
+>>> EHCI/OHCI bindings: PHYs are moved from the sub-nodes to a standard array
+>>> under the 'phys' property. Such solution has been suggested by Måns
+>>> Rullgård in the following thread: https://lkml.org/lkml/2019/5/13/228
+>>>
+>>> To keep everything working during the transitional time, the changes has
+>>> been split into 2 steps. First step (patches 1-3) need to be merged before
+>>> the second one (patches 4-5). Patches from each step can be merged to
+>>> respective trees without any dependencies - the only requirement is that
+>>> second step has to be merged after merging all patches from the first one.
+>>>
+>>> This patchset has been tested on various Exynos4 boards with different
+>>> USB host controller configurations (Odroids family: X2, U3, XU3).
+>>>
+>>> Best regards
+>>> Marek Szyprowski
+>>> Samsung R&D Institute Poland
+>>>
+>>> Marek Szyprowski (5):
+>>>    dt-bindings: switch Exynos EHCI/OHCI bindings to use array of generic
+>>>      PHYs
+>>>    ARM: dts: exynos: Add array of generic PHYs to EHCI/OHCI devices
+>>>    usb: exynos: add support for getting PHYs from the standard dt array
+>>>    ARM: dts: exynos: Remove obsolete port sub-nodes from EHCI/OHCI
+>>>      devices
+>>>    usb: exynos: Remove support for legacy PHY bindings
+>> You could retain compatibility with old devicetrees (which may be
+>> useful) by using the "phys" property if it exists and falling back
+>> on the old method if it doesn't.  Then you would get this sequence
+>> of changes:
+>>
+>> 1. Update binding definition.
+>> 2. Support new binding in driver, with fallback to old.
+>> 3. Switch dts files to new binding.
+>
+> This is exactly what I did in this patchset. Until Patch #5 is applied, 
+> Exynos EHCI/OHCI drivers supports both ways of getting PHYs and is fully 
+> compatible with existing DTBs. This last patch should be applied at 
+> least one release later that the first 3 patches to keep everything 
+> working during the -rcX time.
 
-This is exactly what I did in this patchset. Until Patch #5 is applied, 
-Exynos EHCI/OHCI drivers supports both ways of getting PHYs and is fully 
-compatible with existing DTBs. This last patch should be applied at 
-least one release later that the first 3 patches to keep everything 
-working during the -rcX time.
+I'm suggesting you keep the fallback in the driver.  It does no harm,
+and it's contained in one place.
 
-Compatibility with so called old DTBs is not so important, because there 
-are no boards with Exynos4 and Exynos5 SoCs, which would not update DTB 
-together with the kernel zImage. There have been already some 
-significant compatibility breaks related to those SoCs during last years.
+On the dts side, you're adding the new phys property without removing
+the old-style nodes at first.  If you put the driver change first, the
+dts could be switched to the new style in one patch without a confusing
+hybrid ever existing.
 
+> Compatibility with so called old DTBs is not so important, because there 
+> are no boards with Exynos4 and Exynos5 SoCs, which would not update DTB 
+> together with the kernel zImage. There have been already some 
+> significant compatibility breaks related to those SoCs during last years.
 
-Best regards
+You can't possibly know what's out there.  Besides, isn't the general
+policy to not break compatibility without a very good reason?
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Måns Rullgård
