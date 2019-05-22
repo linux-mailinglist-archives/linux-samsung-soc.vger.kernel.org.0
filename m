@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 54AB326E95
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 21:51:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F34026D87
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 21:42:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731385AbfEVTup (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 May 2019 15:50:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47964 "EHLO mail.kernel.org"
+        id S1730791AbfEVTme (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 May 2019 15:42:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51386 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731981AbfEVT01 (ORCPT
+        id S1731818AbfEVT2k (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 May 2019 15:26:27 -0400
+        Wed, 22 May 2019 15:28:40 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 01E6A217D9;
-        Wed, 22 May 2019 19:26:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BA617204FD;
+        Wed, 22 May 2019 19:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558553187;
+        s=default; t=1558553319;
         bh=vSmiZq5dxqYPiG2qfKNaV+N43JayFslu7smwEAuFZVM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bVyDPt7FeZMknPh0OF0YUrRDoz7rwcimWamdCz3AYYnqj6syuwymzT6KxCSd6+UOA
-         SdL/3UgIX7Py4YJcasvipC7/MiPMG/6FRlwehooolV+CmdbVEBBQ0VNClIV/5n2EPY
-         r0ek8GTG/0Tv90Z5DHdskptb8DEz/pIvbUj2PTj4=
+        b=Xz9D5GHenteio9KQfmkqOm3x3NOSTkP9ydiRiaAqVGFKeBM9mo44Xnr3SJmyWYGxi
+         yw1kWMMuYN9k7Gd6sBPKP+0QYHkxdGGE7kiFnogRF4G16zIJBMCbdwhESLJcUWYfPo
+         /4JM9PfclAHHiSBw8TvvYODzYkzHHMTtlAIqBvbE=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Wen Yang <wen.yang99@zte.com.cn>,
@@ -34,12 +34,12 @@ Cc:     Wen Yang <wen.yang99@zte.com.cn>,
         linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.0 102/317] pinctrl: samsung: fix leaked of_node references
-Date:   Wed, 22 May 2019 15:20:03 -0400
-Message-Id: <20190522192338.23715-102-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 082/244] pinctrl: samsung: fix leaked of_node references
+Date:   Wed, 22 May 2019 15:23:48 -0400
+Message-Id: <20190522192630.24917-82-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190522192338.23715-1-sashal@kernel.org>
-References: <20190522192338.23715-1-sashal@kernel.org>
+In-Reply-To: <20190522192630.24917-1-sashal@kernel.org>
+References: <20190522192630.24917-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
