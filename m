@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F34026D87
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 21:42:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D64126CDA
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 May 2019 21:38:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730791AbfEVTme (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 May 2019 15:42:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51386 "EHLO mail.kernel.org"
+        id S1733150AbfEVThv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 May 2019 15:37:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53488 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731818AbfEVT2k (ORCPT
+        id S1730376AbfEVTaI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 May 2019 15:28:40 -0400
+        Wed, 22 May 2019 15:30:08 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BA617204FD;
-        Wed, 22 May 2019 19:28:38 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8B4C320675;
+        Wed, 22 May 2019 19:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1558553319;
-        bh=vSmiZq5dxqYPiG2qfKNaV+N43JayFslu7smwEAuFZVM=;
+        s=default; t=1558553407;
+        bh=9wYURvB6rQQAvedFZUg0/FddW7av8XxRmg8oVjOrHgM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Xz9D5GHenteio9KQfmkqOm3x3NOSTkP9ydiRiaAqVGFKeBM9mo44Xnr3SJmyWYGxi
-         yw1kWMMuYN9k7Gd6sBPKP+0QYHkxdGGE7kiFnogRF4G16zIJBMCbdwhESLJcUWYfPo
-         /4JM9PfclAHHiSBw8TvvYODzYkzHHMTtlAIqBvbE=
+        b=VRNVWE4aimxwTmG/MNm0BQEIL2kscYBpgNJUIeopQtUH6B0jFpBh1RLpWqwWvyuw7
+         ofRiFT6KSMWro0IZxDiIRNHAJ0pFqshEFW4+p4uao+gWkpH7793wMWAKBLwkiKZIm3
+         jHC262d4bEZXMr/x8dUPh2AD80rGRLcKZteucAPQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Wen Yang <wen.yang99@zte.com.cn>,
@@ -34,12 +34,12 @@ Cc:     Wen Yang <wen.yang99@zte.com.cn>,
         linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 4.19 082/244] pinctrl: samsung: fix leaked of_node references
-Date:   Wed, 22 May 2019 15:23:48 -0400
-Message-Id: <20190522192630.24917-82-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 056/167] pinctrl: samsung: fix leaked of_node references
+Date:   Wed, 22 May 2019 15:26:51 -0400
+Message-Id: <20190522192842.25858-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190522192630.24917-1-sashal@kernel.org>
-References: <20190522192630.24917-1-sashal@kernel.org>
+In-Reply-To: <20190522192842.25858-1-sashal@kernel.org>
+References: <20190522192842.25858-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -77,10 +77,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
-index 44c6b753f692a..85ddf49a51885 100644
+index afeb4876ffb2c..07eb4f071fa87 100644
 --- a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
 +++ b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
-@@ -71,6 +71,7 @@ s5pv210_retention_init(struct samsung_pinctrl_drv_data *drvdata,
+@@ -76,6 +76,7 @@ s5pv210_retention_init(struct samsung_pinctrl_drv_data *drvdata,
  	}
  
  	clk_base = of_iomap(np, 0);
