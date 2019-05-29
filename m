@@ -2,212 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E64252C92E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 May 2019 16:48:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C2A12D515
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 May 2019 07:31:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbfE1OsS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 28 May 2019 10:48:18 -0400
-Received: from [198.50.183.10] ([198.50.183.10]:59686 "EHLO mahatta.net"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726633AbfE1OsS (ORCPT
+        id S1725874AbfE2Fa7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 May 2019 01:30:59 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:63992 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbfE2Fa7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 28 May 2019 10:48:18 -0400
-From:   aishatu@mahatta.net
-To:     linux-samsung-soc@vger.kernel.org
-Subject: Purchase_rfq
-Date:   28 May 2019 16:48:12 +0200
-Message-ID: <20190528164812.EA0FDDB09BA64439@mahatta.net>
+        Wed, 29 May 2019 01:30:59 -0400
+Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190529053056epoutp043a372ab280527010d7e56bb81385ad79~jEFXaNDPf1742217422epoutp04c
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 29 May 2019 05:30:56 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190529053056epoutp043a372ab280527010d7e56bb81385ad79~jEFXaNDPf1742217422epoutp04c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1559107856;
+        bh=lhXRTVWS6DWGaq4uP/utrGfqkFZLh3nlIdqmxmiwbKI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Vu39N45Ojv1FEg8PBF5E/d50agi2r7pIQric2q1tbcSonqOHYyaNZJtHjYmiOVF9V
+         dWnR/n+jmhDS5rggknGcxoqTVtoX/WtWWnja1ydpzESH4WNY6ziqCxKZiNNKj5SiiT
+         8cAPHFSkKKyNehvkNwnkNrpTfsYaR5d8FYK6QsEM=
+Received: from epsmges1p1.samsung.com (unknown [182.195.40.157]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190529053053epcas1p22496fa0618ec2905e4dbc6dc546410bd~jEFUhVD-S3111431114epcas1p2a;
+        Wed, 29 May 2019 05:30:53 +0000 (GMT)
+Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
+        epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+        7A.AB.04139.A091EEC5; Wed, 29 May 2019 14:30:50 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTPA id
+        20190529053049epcas1p4a6f751b8c1411cd4190f712b3415d433~jEFQzQM0_2274122741epcas1p4B;
+        Wed, 29 May 2019 05:30:49 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190529053049epsmtrp21c1dc2b7c31f797dbba5e0c006ed1f9b~jEFQyfBGY1033110331epsmtrp2a;
+        Wed, 29 May 2019 05:30:49 +0000 (GMT)
+X-AuditID: b6c32a35-973ff7000000102b-f6-5cee190a7426
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        92.28.03662.9091EEC5; Wed, 29 May 2019 14:30:49 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190529053049epsmtip2ee1ffbf70803ebb405a308146a8684bc~jEFQr2_Tc2672926729epsmtip2Y;
+        Wed, 29 May 2019 05:30:49 +0000 (GMT)
+Subject: Re: [PATCH] clk: samsung: exynos5433: Use of_clk_get_parent_count()
+To:     Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <2a68376b-32a4-a016-124f-c7fa3b8579bd@samsung.com>
+Date:   Wed, 29 May 2019 14:32:46 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="----=_NextPart_000_0012_7EB777C8.C1CC3A67"
+In-Reply-To: <20190525115542.107929-1-wangkefeng.wang@huawei.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0hTcRTmt7tdr4/VbWkeR9m8EZTh4zZXMzSsRIQkpAgkBvOilynuxe4m
+        +YBGYeUMzFRYk0q0oITSloZFpagp9jLRHo60fBRmPkpJxNLadhf533e+853fOd/5HQKTlOFS
+        IldvZk16RkvhAcL7nTtjogLCZlWxtrrNyvLxb5iyr6/JT+kcfytS2vueCJKEqc6GUjz13vVT
+        qQvO8HTsRF5CDstksyYZq88yZOfqNYnU4WPqQ2rFnlg6io5X7qVkekbHJlLJaelRKbladzNK
+        ls9oLW4qneE4KmZ/gslgMbOyHANnTqRYY7bWGG+M5hgdZ9FrorMMun10bOxuhVuYmZez3P5V
+        aOzyP/nDtoSsaNHPhvwJIOOgt/wnZkMBhIRsRWAvGxfywTyChsE5ER8sIphccgn/lbRP3/Op
+        HiMYsz7zqeYQ1FbWiTyqjWQatDybxjw4mEyFsfl3yIMx8jA8cjm9GCcjoW3yPe7B68kIeLM0
+        7uXF5H54OfhQYEMEISS3w8yCykOHkBnwsbtJxEs2QO/lCe9A/uQB6H7fj/HPh4Jr4pqAx1vh
+        TEuN1xuQL3B4ap/BeAfJ8Ge13+dmI0z1NPuWIYWF2cc4j4vgVm8XzhefR9Dc9lrEJ+TQdqPS
+        OxxG7oTGhzE8HQEPfl3xeVwHsz8viDwSIMVw/qyEl2yDgU/DAh6HQf25Uvwiohxr7DjWWHCs
+        seD436wWCRvQJtbI6TQsRxvptb/tRN5DjFS0oqpXaR2IJBAVJM4Mm1FJREw+V6DrQEBgVLA4
+        sWpaJRFnMwWFrMmgNlm0LNeBFO5lV2DSkCyD+6z1ZjWt2C2Xy5Vx9B4FTVOhYnXgkEpCahgz
+        m8eyRtb0r05A+EutqKg68vvxT3duTz1KyBhYKXaUOFK6vkQcsDpijk6tL+nRLTVYDmoKj7ha
+        BZNDPbLw58Vm7dRyTdWb37LV+oqB3qRd9lsjJrW181JgZnH1rh1a6QuH8+uI6/ToytCifTTj
+        XBDTGKps/3B1x+LdpPzlQgF2c/PoiaPT5VuGq0c/ynWfKSGXw9CRmIlj/gKdt4KLngMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCLMWRmVeSWpSXmKPExsWy7bCSvC6n5LsYg2/39C36H79mtjh/fgO7
+        xabH11gtZpzfx+TA4rFpVSebx+Yl9R6fN8kFMEdx2aSk5mSWpRbp2yVwZfw68JKl4Ahnxceu
+        H4wNjN/Yuxg5OSQETCQOvNnM0sXIxSEksJtRom3eBCaIhKTEtItHmbsYOYBsYYnDh4tBwkIC
+        bxklzp4MBLGFBXwktp56wwxiiwh4SDz6dJ0RxGYW8JbYc2sTI8TMKYwSu69fZwFJsAloSex/
+        cYMNxOYXUJS4+uMxWAOvgJ3E2Su7mEB2sQioSrz9HAMSFhWIkDjzfgULRImgxMmZT8BsTgFH
+        iWM3LjJD7FKX+DPvEpQtLnHryXwmCFteonnrbOYJjMKzkLTPQtIyC0nLLCQtCxhZVjFKphYU
+        56bnFhsWGOWllusVJ+YWl+al6yXn525iBMeFltYOxhMn4g8xCnAwKvHwJki+jRFiTSwrrsw9
+        xCjBwawkwms75U2MEG9KYmVValF+fFFpTmrxIUZpDhYlcV75/GORQgLpiSWp2ampBalFMFkm
+        Dk6pBsa1mosCF91V2/6jfal/BOfVZ1bn/Pb8domY+ZLzS4m49oLzm0rcn8cvtnybKC95vjPi
+        i9vqW7s2mS9/fojltEzUS323yxuks/7PWzh/5r69NmJR0mZvflp1antdcb32ReCYgRPLErut
+        e+LvHTKXObD0tVOZbdCt2De7BZfdfh7pVh5sOfW45TsGJZbijERDLeai4kQA22Br4IcCAAA=
+X-CMS-MailID: 20190529053049epcas1p4a6f751b8c1411cd4190f712b3415d433
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20190525114732epcas5p3f9d8aec51fb32c7e2ca80f0a45afe8a8
+References: <CGME20190525114732epcas5p3f9d8aec51fb32c7e2ca80f0a45afe8a8@epcas5p3.samsung.com>
+        <20190525115542.107929-1-wangkefeng.wang@huawei.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is a multi-part message in MIME format.
+Hi,
 
-------=_NextPart_000_0012_7EB777C8.C1CC3A67
+On 19. 5. 25. 오후 8:55, Kefeng Wang wrote:
+> Use of_clk_get_parent_count() instead of open coding.
+> 
+> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+> ---
+>  drivers/clk/samsung/clk-exynos5433.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
+> index dae1c96de933..14e253915ca4 100644
+> --- a/drivers/clk/samsung/clk-exynos5433.c
+> +++ b/drivers/clk/samsung/clk-exynos5433.c
+> @@ -5590,8 +5590,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
+>  	data->nr_clk_save = info->nr_clk_regs;
+>  	data->clk_suspend = info->suspend_regs;
+>  	data->nr_clk_suspend = info->nr_suspend_regs;
+> -	data->nr_pclks = of_count_phandle_with_args(dev->of_node, "clocks",
+> -						    "#clock-cells");
+> +	data->nr_pclks = of_clk_get_parent_count(dev->of_node);
+> +
+>  	if (data->nr_pclks > 0) {
+>  		data->pclks = devm_kcalloc(dev, sizeof(struct clk *),
+>  					   data->nr_pclks, GFP_KERNEL);
+> 
 
-------=_NextPart_000_0012_7EB777C8.C1CC3A67
-Content-Type: application/octet-stream; name="INQUIRY_4178916..xlsx"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="INQUIRY_4178916..xlsx"
+It uses the helper function from CCF. Looks good to me.
 
-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
-AAB6IAAAAAA=
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
 
-------=_NextPart_000_0012_7EB777C8.C1CC3A67--
+-- 
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
