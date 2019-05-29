@@ -2,70 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B5742D743
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 May 2019 10:06:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D1DA2D7F6
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 May 2019 10:42:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfE2IGS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 May 2019 04:06:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42330 "EHLO mail.kernel.org"
+        id S1726256AbfE2ImN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 May 2019 04:42:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57766 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725895AbfE2IGS (ORCPT
+        id S1725917AbfE2ImN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 May 2019 04:06:18 -0400
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+        Wed, 29 May 2019 04:42:13 -0400
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EA9B216FD;
-        Wed, 29 May 2019 08:06:17 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8DC632081C;
+        Wed, 29 May 2019 08:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559117177;
-        bh=zvkST1rrqAg/0EOMioHca7dyZZQf08kifXr9Tqwv1TY=;
+        s=default; t=1559119332;
+        bh=kLcWkuMUD1c9UKeh1Icn/by3J3KUqRiWwfXRFd6P5x8=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=vUNz/6qp6rgUk8CZ+2U7gSM5z5XeE+KIKg/XYq1Pc5+kVlDHCfRFV1RLa8xzUeCsK
-         MR6znKBAa6DT2x6mrdgVdyb42sTfTGyJwEbRVyaa9KtmE14E2qtbshiO5c5/qLxbC8
-         9lDQge5BCqUrdC/ctmqhyTVLrD+qtZFjXRFOvODw=
-Received: by mail-lj1-f174.google.com with SMTP id h11so1508443ljb.2;
-        Wed, 29 May 2019 01:06:17 -0700 (PDT)
-X-Gm-Message-State: APjAAAVUCj/lMAuoFFGrnuzmQGx9jTGTgOr7tedFc6wgOHfgkIBLTd39
-        V1JlyM70Pu5vn8+ElVFnSAZlMm8kImgxPjuyWnw=
-X-Google-Smtp-Source: APXvYqyCNE8aywzruJ1YPsXvoW7Bi8221F62kZ3/oAeiwe1WKZBh2+oYFfOng8NxegoBNooj4esz6WKDqWb0C1gMxKU=
-X-Received: by 2002:a2e:9601:: with SMTP id v1mr21039204ljh.60.1559117175876;
- Wed, 29 May 2019 01:06:15 -0700 (PDT)
+        b=TpzDSS2RYXCTm80dxTw9lE8EUlXiI94NlWx9ro3r8TnxPR1QYZFdHgBvQgtL3AGoO
+         8epxsYy9MpT3LjEr3evqQesj4oMRKkK/VIuSDK9u6y3OLQEtScwMDfNa/GnwXzM5F5
+         +G9B5pr36kY5XqsaRKjnZBikURUEDj2GfLK6MAik=
+Received: by mail-lj1-f181.google.com with SMTP id e13so1553655ljl.11;
+        Wed, 29 May 2019 01:42:12 -0700 (PDT)
+X-Gm-Message-State: APjAAAUFtWprd4rks9Qn/r6JVxomoxzzB9dSlwI7nwhVlRYQ1RVMwnaz
+        rMSVFzLBzLhxKCXx150ydP68jnwahhQ/0s/oEQo=
+X-Google-Smtp-Source: APXvYqzUzMIm/yFZwUkBnd9PJV+6XSRK74Of5UYSuWnDEXSI3A+Id6tCaQkHsfE2heRDgEkW5hmncH1hvrpO/lvVcHY=
+X-Received: by 2002:a2e:9a9a:: with SMTP id p26mr3098090lji.64.1559119330847;
+ Wed, 29 May 2019 01:42:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190528134305.10184-1-yuehaibing@huawei.com>
-In-Reply-To: <20190528134305.10184-1-yuehaibing@huawei.com>
+References: <CGME20190528082903eucas1p1ef54fa6aee420bffa11be61d5efb4c46@eucas1p1.samsung.com>
+ <20190528082846.21625-1-m.szyprowski@samsung.com>
+In-Reply-To: <20190528082846.21625-1-m.szyprowski@samsung.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 29 May 2019 10:06:04 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfdhZ1WZZQrqMn69mwJ1aAVVOAD4TJqOc7FMws0+-MG9A@mail.gmail.com>
-Message-ID: <CAJKOXPfdhZ1WZZQrqMn69mwJ1aAVVOAD4TJqOc7FMws0+-MG9A@mail.gmail.com>
-Subject: Re: [PATCH -next] usb: ohci-s3c2410: Remove set but not used variable 'hcd'
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     stern@rowland.harvard.edu, kgene@kernel.org,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+Date:   Wed, 29 May 2019 10:41:59 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPcgbSHDAnRc+9dtiuLOQ2Ah9mVrYvEdd33M_AAuC5Z5xg@mail.gmail.com>
+Message-ID: <CAJKOXPcgbSHDAnRc+9dtiuLOQ2Ah9mVrYvEdd33M_AAuC5Z5xg@mail.gmail.com>
+Subject: Re: [PATCH] ARM: Add workaround for I-Cache line size mismatch
+ between CPU cores
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Russell King <rmk+kernel@armlinux.org.uk>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>
+        <linux-samsung-soc@vger.kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 28 May 2019 at 15:43, YueHaibing <yuehaibing@huawei.com> wrote:
+On Tue, 28 May 2019 at 10:29, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
 >
-> Fixes gcc '-Wunused-but-set-variable' warning:
+> Some big.LITTLE systems have I-Cache line size mismatch between
+> LITTLE and big cores. This patch adds a workaround for proper I-Cache
+> support on such systems. Without it, some class of the userspace code
+> (typically self-modifying) might suffer from random SIGILL failures.
 >
-> drivers/usb/host/ohci-s3c2410.c: In function s3c2410_hcd_oc:
-> drivers/usb/host/ohci-s3c2410.c:296:18: warning: variable hcd set but not used [-Wunused-but-set-variable]
+> Similar workaround already exists for ARM64 architecture. I has been
+> added by commit 116c81f427ff ("arm64: Work around systems with mismatched
+> cache line sizes").
 >
-> It is never used, so can be removed.
->
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 > ---
->  drivers/usb/host/ohci-s3c2410.c | 2 --
->  1 file changed, 2 deletions(-)
+> This workaround is needed on all supported Exynos big.LITTLE SoCs: 5420,
+> 5422 and 5800.
+>
+> Resend reason: removed RFC tag as there are no comments, I will upload
+> this patch to the patch tracking system
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
