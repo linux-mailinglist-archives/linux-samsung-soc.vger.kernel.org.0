@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D0F2F372
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 06:29:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C1C82F116
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 06:10:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728642AbfE3DOE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 May 2019 23:14:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:32924 "EHLO mail.kernel.org"
+        id S1729766AbfE3DRF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 May 2019 23:17:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44490 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728760AbfE3DOD (ORCPT
+        id S1730906AbfE3DRE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 May 2019 23:14:03 -0400
+        Wed, 29 May 2019 23:17:04 -0400
 Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 21AB124557;
-        Thu, 30 May 2019 03:14:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6BABB245D7;
+        Thu, 30 May 2019 03:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559186043;
+        s=default; t=1559186223;
         bh=pVWxZxbNvKqIRiN5qwRTrLrmotdfRvBhYgFWEWGfkok=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VmwfPrhgLGujd47vAC2h9li5bz++ZPEm+sOVseiDUyC640ZltbTSugdywWSWL0FaN
-         s3PHL5MPUFnvpJd5qbWI8J6nRQlS2fHab9uqYJA7YpWwWH3ucjeVD0/7YtYtivbIVg
-         iVyFwzGC5AnQs6mSq7C2Ypv0G1Uc/q3JhiaTj0yE=
+        b=MmOs5rLSsjLoqMYNF7fphZsxFs8tUeJu0PIOmX6OtiRqdTboMLw8o7GeiKioR5DaT
+         X4NW4kSIz/umMlRT8uhlOH6WL9P/Yg540cQTWikqyOKrpnJ8nssTaVPXMM1jKsAgG9
+         Ofr7EaH+YmcBge7Zb1cfV0QIbWrotkV6FYl+MzaI=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,12 +35,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.0 134/346] pinctrl: samsung: fix leaked of_node references
-Date:   Wed, 29 May 2019 20:03:27 -0700
-Message-Id: <20190530030547.903130825@linuxfoundation.org>
+Subject: [PATCH 4.19 117/276] pinctrl: samsung: fix leaked of_node references
+Date:   Wed, 29 May 2019 20:04:35 -0700
+Message-Id: <20190530030533.228413356@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190530030540.363386121@linuxfoundation.org>
-References: <20190530030540.363386121@linuxfoundation.org>
+In-Reply-To: <20190530030523.133519668@linuxfoundation.org>
+References: <20190530030523.133519668@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
