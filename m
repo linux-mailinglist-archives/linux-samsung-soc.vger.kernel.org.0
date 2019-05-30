@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C1C82F116
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 06:10:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 368502EF71
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 05:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729766AbfE3DRF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 May 2019 23:17:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44490 "EHLO mail.kernel.org"
+        id S1731813AbfE3DTK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 May 2019 23:19:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53996 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730906AbfE3DRE (ORCPT
+        id S1731810AbfE3DTJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 May 2019 23:17:04 -0400
+        Wed, 29 May 2019 23:19:09 -0400
 Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6BABB245D7;
-        Thu, 30 May 2019 03:17:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9BFA92483C;
+        Thu, 30 May 2019 03:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559186223;
-        bh=pVWxZxbNvKqIRiN5qwRTrLrmotdfRvBhYgFWEWGfkok=;
+        s=default; t=1559186348;
+        bh=Tl5/7jqDJfLV6WJFej4cv+HQKoDaH2ceYmadyWG+yuw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MmOs5rLSsjLoqMYNF7fphZsxFs8tUeJu0PIOmX6OtiRqdTboMLw8o7GeiKioR5DaT
-         X4NW4kSIz/umMlRT8uhlOH6WL9P/Yg540cQTWikqyOKrpnJ8nssTaVPXMM1jKsAgG9
-         Ofr7EaH+YmcBge7Zb1cfV0QIbWrotkV6FYl+MzaI=
+        b=c9FWP9focdmaFDztFzptxDm3O7EhKBGLmMJqONzdNZjpCEtfOHLsX/WzB5hq61Ht/
+         ICi1O2mAsYbkNkDwwh44YB4zi3mE4jVyhR6OrMziJY9rZp7xDqSZlnL/KX4p/tkXp8
+         y4L97hLiubGyA0rOOlb3Y8i4Y4jJ4z3IOUqYQE1c=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,12 +35,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 117/276] pinctrl: samsung: fix leaked of_node references
-Date:   Wed, 29 May 2019 20:04:35 -0700
-Message-Id: <20190530030533.228413356@linuxfoundation.org>
+Subject: [PATCH 4.14 085/193] pinctrl: samsung: fix leaked of_node references
+Date:   Wed, 29 May 2019 20:05:39 -0700
+Message-Id: <20190530030500.804526252@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190530030523.133519668@linuxfoundation.org>
-References: <20190530030523.133519668@linuxfoundation.org>
+In-Reply-To: <20190530030446.953835040@linuxfoundation.org>
+References: <20190530030446.953835040@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -76,10 +76,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
-index 44c6b753f692a..85ddf49a51885 100644
+index afeb4876ffb2c..07eb4f071fa87 100644
 --- a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
 +++ b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
-@@ -71,6 +71,7 @@ s5pv210_retention_init(struct samsung_pinctrl_drv_data *drvdata,
+@@ -76,6 +76,7 @@ s5pv210_retention_init(struct samsung_pinctrl_drv_data *drvdata,
  	}
  
  	clk_base = of_iomap(np, 0);
