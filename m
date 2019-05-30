@@ -2,83 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C98A42FB8E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 14:27:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5E72304CC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 00:30:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbfE3M1f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 May 2019 08:27:35 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:18054 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725961AbfE3M1e (ORCPT
+        id S1726106AbfE3Wa7 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 30 May 2019 18:30:59 -0400
+Received: from smtp.tjto.jus.br ([189.10.44.215]:57708 "EHLO smtp.tjto.jus.br"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726045AbfE3Wa7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 May 2019 08:27:34 -0400
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id E5931AD4E0FB6A5B3EBE;
-        Thu, 30 May 2019 20:27:32 +0800 (CST)
-Received: from [127.0.0.1] (10.177.19.180) by DGGEMS409-HUB.china.huawei.com
- (10.3.19.209) with Microsoft SMTP Server id 14.3.439.0; Thu, 30 May 2019
- 20:27:29 +0800
-Subject: Re: [PATCH] clk: samsung: exynos5433: Use of_clk_get_parent_count()
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-CC:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-References: <CGME20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29@epcas3p1.samsung.com>
- <20190525115542.107929-1-wangkefeng.wang@huawei.com>
- <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
-From:   Kefeng Wang <wangkefeng.wang@huawei.com>
-Message-ID: <3673777a-60dc-3eec-ccb8-9ffa1a3e5cf4@huawei.com>
-Date:   Thu, 30 May 2019 20:24:46 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.1
-MIME-Version: 1.0
-In-Reply-To: <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
+        Thu, 30 May 2019 18:30:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by smtp.tjto.jus.br (Postfix) with ESMTP id 995A83E51BF;
+        Thu, 30 May 2019 18:36:53 -0300 (BRT)
+Received: from smtp.tjto.jus.br ([127.0.0.1])
+        by localhost (mta-in.tjto.jus.br [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id sPc7Q-epn6Gh; Thu, 30 May 2019 18:36:53 -0300 (BRT)
+Received: from localhost (localhost [127.0.0.1])
+        by smtp.tjto.jus.br (Postfix) with ESMTP id 3BDBC3E51F0;
+        Thu, 30 May 2019 18:36:53 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at mta-in.tjto.jus.br
+Received: from smtp.tjto.jus.br ([127.0.0.1])
+        by localhost (mta-in.tjto.jus.br [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id mx47zT20upGl; Thu, 30 May 2019 18:36:53 -0300 (BRT)
+Received: from [192.99.135.118] (ip118.ip-192-99-135.net [192.99.135.118])
+        (Authenticated sender: nelsonsena@tjto.jus.br)
+        by smtp.tjto.jus.br (Postfix) with ESMTPSA id E558D3E51C6;
+        Thu, 30 May 2019 18:36:46 -0300 (BRT)
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.177.19.180]
-X-CFilter-Loop: Reflected
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: =?utf-8?b?UmU6IOKCrCAyLDAwMCwwMDAuMDAgRXVybw==?=
+To:     Recipients <nelsonsena@tjto.jus.br>
+From:   nelsonsena@tjto.jus.br
+Date:   Thu, 30 May 2019 14:36:43 -0700
+Reply-To: myburghhugohendrik@gmail.com
+Message-Id: <20190530213646.E558D3E51C6@smtp.tjto.jus.br>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Lieber Freund,
 
-On 2019/5/30 19:13, Sylwester Nawrocki wrote:
-> On 5/25/19 13:55, Kefeng Wang wrote:
->> Use of_clk_get_parent_count() instead of open coding.
->>
->> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-> Patch applied, thank you.
->
-> In future please make sure to also Cc linux-clk@vger.kernel.org mailing list 
-> and the clk maintainers (Stephen, Michael) when sending clk patches.
+Ich bin Herr Richard Wahl der Mega-Gewinner von $ 533M In Mega Millions Jackpot spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt. Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt. Ich habe mich freiwillig dazu entschieden, Ihnen den Betrag von € 2.000.000,00 zu spenden eine der ausgewählten 5, um meine Gewinne zu überprüfen, finden Sie auf meiner You Tube Seite unten.
 
-OK, thanks for the tip.
+UHR MICH HIER: https://www.youtube.com/watch?v=tne02ExNDrw
 
->
->> ---
->>  drivers/clk/samsung/clk-exynos5433.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
->> index dae1c96de933..14e253915ca4 100644
->> --- a/drivers/clk/samsung/clk-exynos5433.c
->> +++ b/drivers/clk/samsung/clk-exynos5433.c
->> @@ -5590,8 +5590,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
->>  	data->nr_clk_save = info->nr_clk_regs;
->>  	data->clk_suspend = info->suspend_regs;
->>  	data->nr_clk_suspend = info->nr_suspend_regs;
->> -	data->nr_pclks = of_count_phandle_with_args(dev->of_node, "clocks",
->> -						    "#clock-cells");
->> +	data->nr_pclks = of_clk_get_parent_count(dev->of_node);
->> +
->>  	if (data->nr_pclks > 0) {
->>  		data->pclks = devm_kcalloc(dev, sizeof(struct clk *),
->>  					   data->nr_pclks, GFP_KERNEL);
->>
+Das ist dein Spendencode: [DF00430342018]
 
+Antworten Sie mit dem Spendencode auf diese E-Mail: wahlfoundationorg@gmail.com
+
+Ich hoffe, Sie und Ihre Familie glücklich zu machen.
+
+Grüße
+
+Herr Richard Wahl
