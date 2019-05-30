@@ -2,139 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 371D22FABA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 13:13:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C98A42FB8E
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 14:27:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbfE3LNZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 May 2019 07:13:25 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:32815 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725440AbfE3LNZ (ORCPT
+        id S1726694AbfE3M1f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 30 May 2019 08:27:35 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190]:18054 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725961AbfE3M1e (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 May 2019 07:13:25 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190530111323euoutp024177b8c1112639db69551f1f3a4bdc67~jcZpKMKtQ0812308123euoutp02N
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 30 May 2019 11:13:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190530111323euoutp024177b8c1112639db69551f1f3a4bdc67~jcZpKMKtQ0812308123euoutp02N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1559214803;
-        bh=BfhHNZxrJQwUOEFilSzsVER/q8DLDg227clvMkyf9Tg=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=NVnYPMtZpHys+hY7tos7EOUEsqa5rrG06HXeW2intLiATrXn6RfqTckqnkiIqnVXJ
-         hPUZlvO5DpWGqDZij6g/3qa5cRJKAhcYAo05sXdF+5GmFpw/ipF+hCeeWEL98YbfGX
-         +Xtktjtw1mUKzTFzzGUW3ZHnBw0sgm2hnhvakLwk=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190530111322eucas1p2bb9a94497bcc26d656899441dda8cb86~jcZoaGmly1273212732eucas1p2J;
-        Thu, 30 May 2019 11:13:22 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id FA.A8.04377.2DABFEC5; Thu, 30
-        May 2019 12:13:22 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190530111321eucas1p2941943c0bbd01e9bd2ad078fd2734d36~jcZnYzOqe1058510585eucas1p2b;
-        Thu, 30 May 2019 11:13:21 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190530111321eusmtrp253cac4dbe7583aad1fedbee86fea1595~jcZnJR4da0638806388eusmtrp2E;
-        Thu, 30 May 2019 11:13:21 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-ee-5cefbad2465d
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id A8.DD.04140.1DABFEC5; Thu, 30
-        May 2019 12:13:21 +0100 (BST)
-Received: from [106.120.51.75] (unknown [106.120.51.75]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190530111320eusmtip2df9bcccdb1e84c7ac6d8bba3fd7858d7~jcZmzO9-Y0782107821eusmtip2a;
-        Thu, 30 May 2019 11:13:20 +0000 (GMT)
+        Thu, 30 May 2019 08:27:34 -0400
+Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id E5931AD4E0FB6A5B3EBE;
+        Thu, 30 May 2019 20:27:32 +0800 (CST)
+Received: from [127.0.0.1] (10.177.19.180) by DGGEMS409-HUB.china.huawei.com
+ (10.3.19.209) with Microsoft SMTP Server id 14.3.439.0; Thu, 30 May 2019
+ 20:27:29 +0800
 Subject: Re: [PATCH] clk: samsung: exynos5433: Use of_clk_get_parent_count()
-To:     Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc:     Kukjin Kim <kgene@kernel.org>,
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+CC:     Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
         linux-clk <linux-clk@vger.kernel.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
-Date:   Thu, 30 May 2019 13:13:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <20190525115542.107929-1-wangkefeng.wang@huawei.com>
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsWy7djPc7qXdr2PMbj7Sdii//FrZovz5zew
-        W2x6fI3V4mPPPVaLGef3MVlcPOVq8e/aRhaLxs/3GR04PN7faGX3aDnyltVj06pONo/NS+o9
-        Pm+SC2CN4rJJSc3JLEst0rdL4Mp42fSXreAOZ8WS2SvYGxj7OboYOTkkBEwknsycygpiCwms
-        YJTYtEmii5ELyP7CKPGo+yYrhPOZUWL77mmsMB2PZ+xmgkgsZ5T4/m8OM4TzllGi7e1aNpAq
-        YQEfia2n3gAlODhEBHQkFh4uBalhFuhhkph3/SsLSA2bgKFE79E+RhCbV8BOonXuVrBeFgFV
-        iVmda8C2iQpESHzZuQmqRlDi5MwnYL2cAo4Sx25cZAaxmQXEJZq+rGSFsOUltr+dwwxx6S52
-        id6XCRC2i8Stq4/YIWxhiVfHt0DZMhL/d84H+0ZCoJlRomf3bXYIZwKjxP3jCxghqqwlDh+/
-        yAryDbOApsT6XfoQYUeJC6dB6jmAbD6JG28FIW7gk5i0bTozRJhXoqNNCKJaReL3qulMELaU
-        RPeT/ywTGJVmIflsFpJvZiH5ZhbC3gWMLKsYxVNLi3PTU4uN8lLL9YoTc4tL89L1kvNzNzEC
-        E9Hpf8e/7GDc9SfpEKMAB6MSD++E/HcxQqyJZcWVuYcYJTiYlUR4fy4HCvGmJFZWpRblxxeV
-        5qQWH2KU5mBREuetZngQLSSQnliSmp2aWpBaBJNl4uCUamCUt7Vo1X+pn2xif6GhcY356YJ3
-        1bu5FmnyZnOWXAm7dTbg5A43lstm9w8p3U9a6ivIdrU4+H2/g7W7SEiVaN7Ri1pxa4rn301V
-        OKJrwKf6el5fs5vJrrp9u+K/vzsyJ+7tDK/qhgzPNQrPxHvPqqx9/7vksMM9J/aHH64Jaet8
-        rxaeY6hZWKzEUpyRaKjFXFScCACieAJmQAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAIsWRmVeSWpSXmKPExsVy+t/xe7oXd72PMXj/SMii//FrZovz5zew
-        W2x6fI3V4mPPPVaLGef3MVlcPOVq8e/aRhaLxs/3GR04PN7faGX3aDnyltVj06pONo/NS+o9
-        Pm+SC2CN0rMpyi8tSVXIyC8usVWKNrQw0jO0tNAzMrHUMzQ2j7UyMlXSt7NJSc3JLEst0rdL
-        0Mt42fSXreAOZ8WS2SvYGxj7OboYOTkkBEwkHs/YzdTFyMUhJLCUUWL9+5OMXYwcQAkpifkt
-        ShA1whJ/rnWxQdS8ZpQ4dLyRESQhLOAjsfXUG2aQehEBHYmFh0tBapgFepgkth3/wQ7RMIVR
-        YuubH2ANbAKGEr1H+8BsXgE7ida5W9lAbBYBVYlZnWtYQWxRgQiJ2bsaWCBqBCVOznwCZnMK
-        OEocu3GRGcRmFlCX+DPvEpQtLtH0ZSUrhC0vsf3tHOYJjEKzkLTPQtIyC0nLLCQtCxhZVjGK
-        pJYW56bnFhvpFSfmFpfmpesl5+duYgTG3rZjP7fsYOx6F3yIUYCDUYmHd0L+uxgh1sSy4src
-        Q4wSHMxKIrw/lwOFeFMSK6tSi/Lji0pzUosPMZoCPTeRWUo0OR+YFvJK4g1NDc0tLA3Njc2N
-        zSyUxHk7BA7GCAmkJ5akZqemFqQWwfQxcXBKNTDuji5tvzRR3+GjYQaHwS7u3XOM1262WH9I
-        K+2ynItyCufsK87GKpOEwyOKp9t995GI+KFyYFmlZdBO2zvPHMUXvUs+Kd+0ccmKh9smpHG6
-        BuU76r16nLb719r2tcm+33t2K0XVie88ZVz4fsP5zIYd+ZMezHCcdrOMP/S+ZVPRPcmUGUn3
-        M2OUWIozEg21mIuKEwFt29Rf0wIAAA==
-X-CMS-MailID: 20190530111321eucas1p2941943c0bbd01e9bd2ad078fd2734d36
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29
 References: <CGME20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29@epcas3p1.samsung.com>
-        <20190525115542.107929-1-wangkefeng.wang@huawei.com>
+ <20190525115542.107929-1-wangkefeng.wang@huawei.com>
+ <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
+From:   Kefeng Wang <wangkefeng.wang@huawei.com>
+Message-ID: <3673777a-60dc-3eec-ccb8-9ffa1a3e5cf4@huawei.com>
+Date:   Thu, 30 May 2019 20:24:46 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.1
+MIME-Version: 1.0
+In-Reply-To: <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.177.19.180]
+X-CFilter-Loop: Reflected
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 5/25/19 13:55, Kefeng Wang wrote:
-> Use of_clk_get_parent_count() instead of open coding.
-> 
-> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-Patch applied, thank you.
-
-In future please make sure to also Cc linux-clk@vger.kernel.org mailing list 
-and the clk maintainers (Stephen, Michael) when sending clk patches.
-
-> ---
->  drivers/clk/samsung/clk-exynos5433.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
-> index dae1c96de933..14e253915ca4 100644
-> --- a/drivers/clk/samsung/clk-exynos5433.c
-> +++ b/drivers/clk/samsung/clk-exynos5433.c
-> @@ -5590,8 +5590,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
->  	data->nr_clk_save = info->nr_clk_regs;
->  	data->clk_suspend = info->suspend_regs;
->  	data->nr_clk_suspend = info->nr_suspend_regs;
-> -	data->nr_pclks = of_count_phandle_with_args(dev->of_node, "clocks",
-> -						    "#clock-cells");
-> +	data->nr_pclks = of_clk_get_parent_count(dev->of_node);
-> +
->  	if (data->nr_pclks > 0) {
->  		data->pclks = devm_kcalloc(dev, sizeof(struct clk *),
->  					   data->nr_pclks, GFP_KERNEL);
+On 2019/5/30 19:13, Sylwester Nawrocki wrote:
+> On 5/25/19 13:55, Kefeng Wang wrote:
+>> Use of_clk_get_parent_count() instead of open coding.
+>>
+>> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+> Patch applied, thank you.
 >
--- 
-Thanks,
-Sylwester
+> In future please make sure to also Cc linux-clk@vger.kernel.org mailing list 
+> and the clk maintainers (Stephen, Michael) when sending clk patches.
+
+OK, thanks for the tip.
+
+>
+>> ---
+>>  drivers/clk/samsung/clk-exynos5433.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
+>> index dae1c96de933..14e253915ca4 100644
+>> --- a/drivers/clk/samsung/clk-exynos5433.c
+>> +++ b/drivers/clk/samsung/clk-exynos5433.c
+>> @@ -5590,8 +5590,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
+>>  	data->nr_clk_save = info->nr_clk_regs;
+>>  	data->clk_suspend = info->suspend_regs;
+>>  	data->nr_clk_suspend = info->nr_suspend_regs;
+>> -	data->nr_pclks = of_count_phandle_with_args(dev->of_node, "clocks",
+>> -						    "#clock-cells");
+>> +	data->nr_pclks = of_clk_get_parent_count(dev->of_node);
+>> +
+>>  	if (data->nr_pclks > 0) {
+>>  		data->pclks = devm_kcalloc(dev, sizeof(struct clk *),
+>>  					   data->nr_pclks, GFP_KERNEL);
+>>
+
