@@ -2,61 +2,178 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5E72304CC
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 00:30:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6D130453
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 23:56:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726106AbfE3Wa7 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 May 2019 18:30:59 -0400
-Received: from smtp.tjto.jus.br ([189.10.44.215]:57708 "EHLO smtp.tjto.jus.br"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726045AbfE3Wa7 (ORCPT
+        id S1726487AbfE3V4f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 30 May 2019 17:56:35 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45711 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726100AbfE3V4f (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 May 2019 18:30:59 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by smtp.tjto.jus.br (Postfix) with ESMTP id 995A83E51BF;
-        Thu, 30 May 2019 18:36:53 -0300 (BRT)
-Received: from smtp.tjto.jus.br ([127.0.0.1])
-        by localhost (mta-in.tjto.jus.br [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id sPc7Q-epn6Gh; Thu, 30 May 2019 18:36:53 -0300 (BRT)
-Received: from localhost (localhost [127.0.0.1])
-        by smtp.tjto.jus.br (Postfix) with ESMTP id 3BDBC3E51F0;
-        Thu, 30 May 2019 18:36:53 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at mta-in.tjto.jus.br
-Received: from smtp.tjto.jus.br ([127.0.0.1])
-        by localhost (mta-in.tjto.jus.br [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id mx47zT20upGl; Thu, 30 May 2019 18:36:53 -0300 (BRT)
-Received: from [192.99.135.118] (ip118.ip-192-99-135.net [192.99.135.118])
-        (Authenticated sender: nelsonsena@tjto.jus.br)
-        by smtp.tjto.jus.br (Postfix) with ESMTPSA id E558D3E51C6;
-        Thu, 30 May 2019 18:36:46 -0300 (BRT)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 30 May 2019 17:56:35 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b18so5124175wrq.12
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 30 May 2019 14:56:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N+D77JZYl7L4JwlmlkCR53sQehR/+WCFO9RDYDI3XJU=;
+        b=lxCilLefv1Tz7C7/PLb8Dl781WsaCZvG7vjg/DEkO53gLw7zbreJkjb6fdJsbHw07S
+         A/OHPUi+3eD7Ss5MPpwYDhrJJP8xvWDt1E030/EL6974jVZ+z4DY2fQa0P/4Ef5CUBTC
+         2FdGoWb/mcjC9mMiK75Hnt9bGYE5UpRnHwdnXasnRNv4OZwjqqB7Lkkl+1YY9meG00R9
+         bOcZPSwy9TsG+RdIHQkkyhFEirXj7D3RtNPK4yNhgftYX/jjLzg9Hy/C7qb0HA+dq/Vj
+         4QeYoCIeHrB69RhQQCYtrHSG/gM1iskiGapShXfYAc9sWJkbP0UGXMTsPD/MXiS4rwy7
+         q1Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N+D77JZYl7L4JwlmlkCR53sQehR/+WCFO9RDYDI3XJU=;
+        b=SBkfWg+0hIiXPG/wy2lPIBgrvxPpOdp0cOSAaAMAHE4FSpsGDLDIouV99BYV5DOQ2p
+         7Aye6HJqcQ4rw81tD1s5SxPk+Mo4NE2m0rws2DvyPNA/lpoh1BjDqYck13QXrzO7pOCg
+         CN58KzmFeR12ss/hl6YVffvsvIqCTkOu72yyQccUq2z96M3fOjIuHiFzRXK/KXO7E4XJ
+         0Pd7STBVNaqXuYGGpRM2nEkkdwsYCdEdJVWddcEmuiB9K/lnLAD/0jYkO3WSBumYJVzJ
+         U4YjEftFYiNsqOPSA3Cs6OQ4gtuU5nU97V3d2LXpzlElSviGj2IfONi1031OSmVOfQ7w
+         Z+Eg==
+X-Gm-Message-State: APjAAAUpmcZpJHxD26553i4xiOwreHKt/u2bryRRloomrfMwGWUtU+Ax
+        BGckvHf/r0MyxYT/tt5DRe2rsQ==
+X-Google-Smtp-Source: APXvYqzde0Rlxae4HnLSuPu+CpWIe/UaguJuiNQSoH/SNGqD/hzlwkvRpg2H5v3Zwl0PndNFgMypqA==
+X-Received: by 2002:adf:dd52:: with SMTP id u18mr3917442wrm.193.1559253016797;
+        Thu, 30 May 2019 14:50:16 -0700 (PDT)
+Received: from localhost.localdomain (catv-89-135-96-219.catv.broadband.hu. [89.135.96.219])
+        by smtp.gmail.com with ESMTPSA id a139sm6177079wmd.18.2019.05.30.14.50.14
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 30 May 2019 14:50:15 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     Wolfram Sang <wsa@the-dreams.de>, linux-i2c@vger.kernel.org
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH] i2c: s3c2410: Convert to use GPIO descriptors
+Date:   Thu, 30 May 2019 23:50:13 +0200
+Message-Id: <20190530215013.17806-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?b?UmU6IOKCrCAyLDAwMCwwMDAuMDAgRXVybw==?=
-To:     Recipients <nelsonsena@tjto.jus.br>
-From:   nelsonsena@tjto.jus.br
-Date:   Thu, 30 May 2019 14:36:43 -0700
-Reply-To: myburghhugohendrik@gmail.com
-Message-Id: <20190530213646.E558D3E51C6@smtp.tjto.jus.br>
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Lieber Freund,
+The S3C2410 does some funny dance around its pins:
+- First try to call back to the platform to get and control
+  some GPIO pins
+- If this doesn't work, it tries to get a pin control handle
+- If this doesn't work, it retrieves two GPIOs from the device
+  tree node and does nothing with them
 
-Ich bin Herr Richard Wahl der Mega-Gewinner von $ 533M In Mega Millions Jackpot spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt. Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt. Ich habe mich freiwillig dazu entschieden, Ihnen den Betrag von € 2.000.000,00 zu spenden eine der ausgewählten 5, um meine Gewinne zu überprüfen, finden Sie auf meiner You Tube Seite unten.
+If we're gonna retrieve two GPIOs and do nothing with them, we
+might as well do it using the GPIO descriptor API. When we use
+the resource management API, the code gets smaller.
 
-UHR MICH HIER: https://www.youtube.com/watch?v=tne02ExNDrw
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-samsung-soc@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ drivers/i2c/busses/i2c-s3c2410.c | 47 ++++++--------------------------
+ 1 file changed, 9 insertions(+), 38 deletions(-)
 
-Das ist dein Spendencode: [DF00430342018]
+diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
+index 53bc021f4a5a..ed06a8535d63 100644
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -33,7 +33,7 @@
+ #include <linux/slab.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
+-#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/regmap.h>
+@@ -122,7 +122,7 @@ struct s3c24xx_i2c {
+ 	struct i2c_adapter	adap;
+ 
+ 	struct s3c2410_platform_i2c	*pdata;
+-	int			gpios[2];
++	struct gpio_desc	*gpios[2];
+ 	struct pinctrl          *pctrl;
+ #if defined(CONFIG_ARM_S3C24XX_CPUFREQ)
+ 	struct notifier_block	freq_transition;
+@@ -956,53 +956,27 @@ static inline void s3c24xx_i2c_deregister_cpufreq(struct s3c24xx_i2c *i2c)
+ #ifdef CONFIG_OF
+ static int s3c24xx_i2c_parse_dt_gpio(struct s3c24xx_i2c *i2c)
+ {
+-	int idx, gpio, ret;
++	int i;
+ 
+ 	if (i2c->quirks & QUIRK_NO_GPIO)
+ 		return 0;
+ 
+-	for (idx = 0; idx < 2; idx++) {
+-		gpio = of_get_gpio(i2c->dev->of_node, idx);
+-		if (!gpio_is_valid(gpio)) {
+-			dev_err(i2c->dev, "invalid gpio[%d]: %d\n", idx, gpio);
+-			goto free_gpio;
+-		}
+-		i2c->gpios[idx] = gpio;
+-
+-		ret = gpio_request(gpio, "i2c-bus");
+-		if (ret) {
+-			dev_err(i2c->dev, "gpio [%d] request failed (%d)\n",
+-				gpio, ret);
+-			goto free_gpio;
++	for (i = 0; i < 2; i++) {
++		i2c->gpios[i] = devm_gpiod_get_index(i2c->dev, NULL,
++						     i, GPIOD_ASIS);
++		if (IS_ERR(i2c->gpios[i])) {
++			dev_err(i2c->dev, "i2c gpio invalid at index %d\n", i);
++			return -EINVAL;
+ 		}
+ 	}
+ 	return 0;
+-
+-free_gpio:
+-	while (--idx >= 0)
+-		gpio_free(i2c->gpios[idx]);
+-	return -EINVAL;
+ }
+ 
+-static void s3c24xx_i2c_dt_gpio_free(struct s3c24xx_i2c *i2c)
+-{
+-	unsigned int idx;
+-
+-	if (i2c->quirks & QUIRK_NO_GPIO)
+-		return;
+-
+-	for (idx = 0; idx < 2; idx++)
+-		gpio_free(i2c->gpios[idx]);
+-}
+ #else
+ static int s3c24xx_i2c_parse_dt_gpio(struct s3c24xx_i2c *i2c)
+ {
+ 	return 0;
+ }
+-
+-static void s3c24xx_i2c_dt_gpio_free(struct s3c24xx_i2c *i2c)
+-{
+-}
+ #endif
+ 
+ /*
+@@ -1231,9 +1205,6 @@ static int s3c24xx_i2c_remove(struct platform_device *pdev)
+ 
+ 	i2c_del_adapter(&i2c->adap);
+ 
+-	if (pdev->dev.of_node && IS_ERR(i2c->pctrl))
+-		s3c24xx_i2c_dt_gpio_free(i2c);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.20.1
 
-Antworten Sie mit dem Spendencode auf diese E-Mail: wahlfoundationorg@gmail.com
-
-Ich hoffe, Sie und Ihre Familie glücklich zu machen.
-
-Grüße
-
-Herr Richard Wahl
