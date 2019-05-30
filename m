@@ -2,164 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ADDE72FA86
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 12:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 371D22FABA
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 13:13:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbfE3KvC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 May 2019 06:51:02 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:36621 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726450AbfE3KvC (ORCPT
+        id S1726583AbfE3LNZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 30 May 2019 07:13:25 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:32815 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725440AbfE3LNZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 May 2019 06:51:02 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190530105101euoutp01152a186ff0f07f0f827e03aa2215454a~jcGG_jWBo2895628956euoutp01t
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 30 May 2019 10:51:01 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190530105101euoutp01152a186ff0f07f0f827e03aa2215454a~jcGG_jWBo2895628956euoutp01t
+        Thu, 30 May 2019 07:13:25 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190530111323euoutp024177b8c1112639db69551f1f3a4bdc67~jcZpKMKtQ0812308123euoutp02N
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 30 May 2019 11:13:23 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190530111323euoutp024177b8c1112639db69551f1f3a4bdc67~jcZpKMKtQ0812308123euoutp02N
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1559213461;
-        bh=vdaZS4yfBCb1935LeDCfNjU3VfSTXBG/EFyAbIYcM8o=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=sR8JAT8j4jGlA7z4t5T8seigTmjsmep8orzJEY/j7tyoRByhBt1nDGGzCW+ZbooIY
-         lLChk6MaeMJZQG0FSPH8BQOAC8NHeSreVKuxybGNzSH9H/1oRfpfkRq8zpGz55wNKN
-         u37uKtFOUjhRQkRcNZVq/jz4RzKakkoL4rO8kYCs=
+        s=mail20170921; t=1559214803;
+        bh=BfhHNZxrJQwUOEFilSzsVER/q8DLDg227clvMkyf9Tg=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=NVnYPMtZpHys+hY7tos7EOUEsqa5rrG06HXeW2intLiATrXn6RfqTckqnkiIqnVXJ
+         hPUZlvO5DpWGqDZij6g/3qa5cRJKAhcYAo05sXdF+5GmFpw/ipF+hCeeWEL98YbfGX
+         +Xtktjtw1mUKzTFzzGUW3ZHnBw0sgm2hnhvakLwk=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190530105100eucas1p113f0aa31e8140ba1803e60ee56578bea~jcGGNiEyi1817318173eucas1p1r;
-        Thu, 30 May 2019 10:51:00 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id B0.E5.04377.395BFEC5; Thu, 30
-        May 2019 11:50:59 +0100 (BST)
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190530111322eucas1p2bb9a94497bcc26d656899441dda8cb86~jcZoaGmly1273212732eucas1p2J;
+        Thu, 30 May 2019 11:13:22 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id FA.A8.04377.2DABFEC5; Thu, 30
+        May 2019 12:13:22 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190530111321eucas1p2941943c0bbd01e9bd2ad078fd2734d36~jcZnYzOqe1058510585eucas1p2b;
+        Thu, 30 May 2019 11:13:21 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190530105059eucas1p1d9c911a5ba2ae412166cd8866deb725e~jcGFcTsbr1065610656eucas1p1y;
-        Thu, 30 May 2019 10:50:59 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-39-5cefb5934d0e
-Received: from eusync3.samsung.com ( [203.254.199.213]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id AF.3B.04140.395BFEC5; Thu, 30
-        May 2019 11:50:59 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
-        eusync3.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
-        (built May  5 2014)) with ESMTPA id <0PSB003AECSQ2880@eusync3.samsung.com>;
-        Thu, 30 May 2019 11:50:59 +0100 (BST)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190530111321eusmtrp253cac4dbe7583aad1fedbee86fea1595~jcZnJR4da0638806388eusmtrp2E;
+        Thu, 30 May 2019 11:13:21 +0000 (GMT)
+X-AuditID: cbfec7f4-113ff70000001119-ee-5cefbad2465d
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id A8.DD.04140.1DABFEC5; Thu, 30
+        May 2019 12:13:21 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190530111320eusmtip2df9bcccdb1e84c7ac6d8bba3fd7858d7~jcZmzO9-Y0782107821eusmtip2a;
+        Thu, 30 May 2019 11:13:20 +0000 (GMT)
+Subject: Re: [PATCH] clk: samsung: exynos5433: Use of_clk_get_parent_count()
+To:     Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc:     Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH v3] clocksource: exynos_mct: Increase priority over ARM arch
- timer
-Date:   Thu, 30 May 2019 12:50:43 +0200
-Message-id: <20190530105043.29965-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHIsWRmVeSWpSXmKPExsWy7djP87qTt76PMdgzwcxi44z1rBbXvzxn
-        tZj3Wdbi/PkN7BabHl9jtbi8aw6bxYzz+5gs1h65y26xedNUZgdOj02rOtk87lzbw+bx7tw5
-        do/NS+o9+rasYvT4vEkugC2KyyYlNSezLLVI3y6BK+PD08PsBUvFK553/GJuYLwj3MXIySEh
-        YCLx/8M9xi5GLg4hgRWMEqduf2eHcD4zSszetJ8Vpmr//xtsEIlljBLbb6xjhnD+M0o8uLGa
-        HaSKTcBQouttFxuILSKQLfHs+00mkCJmgS4midsLD4AVCQuESOw6dY0FxGYRUJXYseY0I4jN
-        K2Ar8f3bIxaIdfISqzccANsgIfCXVaL9/jWgSRxAjovEvS/BEDUyEpcnd7NA1DQzSjw8t5Yd
-        wulhlLjcNIMRospa4vDxi2BPMAvwSUzaNp0ZYhCvREebEESJh8TmS5/BwkICsRKXD8VOYBRf
-        wMiwilE8tbQ4Nz212CgvtVyvODG3uDQvXS85P3cTIzDWTv87/mUH464/SYcYBTgYlXh4J+S/
-        ixFiTSwrrsw9xCjBwawkwvtzOVCINyWxsiq1KD++qDQntfgQozQHi5I4bzXDg2ghgfTEktTs
-        1NSC1CKYLBMHp1QDI3tNJLcRw7aFt35PWPM3VPH21BdHb52vn/I0T0qp827KrP+HQnQPfA5U
-        nrz/+G67VTKPuB52sNT+K4o+zG4f/j//a/Shz7PWv1j733epqbXdQo4gl8lKR/4IifXH2lSl
-        Nfxg13L68X6dBKO+unW8o+/rTlvF+0dKTuxnOJDTtmOHp/X2TRMuFyqxFGckGmoxFxUnAgC9
-        6d8OsQIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLJMWRmVeSWpSXmKPExsVy+t/xq7qTt76PMXj1kdti44z1rBbXvzxn
-        tZj3Wdbi/PkN7BabHl9jtbi8aw6bxYzz+5gs1h65y26xedNUZgdOj02rOtk87lzbw+bx7tw5
-        do/NS+o9+rasYvT4vEkugC2KyyYlNSezLLVI3y6BK+PD08PsBUvFK553/GJuYLwj3MXIySEh
-        YCKx//8Nti5GLg4hgSWMEl+3zmKBcBqZJFa/WckCUsUmYCjR9baLDcQWEciWmLz2EVgRs0AP
-        k0T71d/sIAlhgRCJXaeugTWwCKhK7FhzmhHE5hWwlfj+7RELxDp5idUbDjBPYORawMiwilEk
-        tbQ4Nz232EivODG3uDQvXS85P3cTIzBQth37uWUHY9e74EOMAhyMSjy8E/LfxQixJpYVV+Ye
-        YpTgYFYS4f25HCjEm5JYWZValB9fVJqTWnyIUZqDRUmct0PgYIyQQHpiSWp2ampBahFMlomD
-        U6qBcX/u07sturUvxT8f0GRSXWJ9++eNbu39ep+Loi709v46fSJHfL3LjfwnTGGKAeZtIZHL
-        ewRvuaY+S6rjct3XVqVsIV8o52i+atfa+Tfv1S1pX6JpztRbuPvjcuMYnmcb9s7dIZvQ7L2n
-        MWb6kf97kw29s0NVLll2rVy88I7AM2vXyfH7JoktVGIpzkg01GIuKk4EAGaE5QsQAgAA
-X-CMS-MailID: 20190530105059eucas1p1d9c911a5ba2ae412166cd8866deb725e
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <b57d66da-9b18-7b1d-ffa6-3b4600f9dc5a@samsung.com>
+Date:   Thu, 30 May 2019 13:13:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <20190525115542.107929-1-wangkefeng.wang@huawei.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsWy7djPc7qXdr2PMbj7Sdii//FrZovz5zew
+        W2x6fI3V4mPPPVaLGef3MVlcPOVq8e/aRhaLxs/3GR04PN7faGX3aDnyltVj06pONo/NS+o9
+        Pm+SC2CN4rJJSc3JLEst0rdL4Mp42fSXreAOZ8WS2SvYGxj7OboYOTkkBEwknsycygpiCwms
+        YJTYtEmii5ELyP7CKPGo+yYrhPOZUWL77mmsMB2PZ+xmgkgsZ5T4/m8OM4TzllGi7e1aNpAq
+        YQEfia2n3gAlODhEBHQkFh4uBalhFuhhkph3/SsLSA2bgKFE79E+RhCbV8BOonXuVrBeFgFV
+        iVmda8C2iQpESHzZuQmqRlDi5MwnYL2cAo4Sx25cZAaxmQXEJZq+rGSFsOUltr+dwwxx6S52
+        id6XCRC2i8Stq4/YIWxhiVfHt0DZMhL/d84H+0ZCoJlRomf3bXYIZwKjxP3jCxghqqwlDh+/
+        yAryDbOApsT6XfoQYUeJC6dB6jmAbD6JG28FIW7gk5i0bTozRJhXoqNNCKJaReL3qulMELaU
+        RPeT/ywTGJVmIflsFpJvZiH5ZhbC3gWMLKsYxVNLi3PTU4uN8lLL9YoTc4tL89L1kvNzNzEC
+        E9Hpf8e/7GDc9SfpEKMAB6MSD++E/HcxQqyJZcWVuYcYJTiYlUR4fy4HCvGmJFZWpRblxxeV
+        5qQWH2KU5mBREuetZngQLSSQnliSmp2aWpBaBJNl4uCUamCUt7Vo1X+pn2xif6GhcY356YJ3
+        1bu5FmnyZnOWXAm7dTbg5A43lstm9w8p3U9a6ivIdrU4+H2/g7W7SEiVaN7Ri1pxa4rn301V
+        OKJrwKf6el5fs5vJrrp9u+K/vzsyJ+7tDK/qhgzPNQrPxHvPqqx9/7vksMM9J/aHH64Jaet8
+        rxaeY6hZWKzEUpyRaKjFXFScCACieAJmQAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAIsWRmVeSWpSXmKPExsVy+t/xe7oXd72PMXj/SMii//FrZovz5zew
+        W2x6fI3V4mPPPVaLGef3MVlcPOVq8e/aRhaLxs/3GR04PN7faGX3aDnyltVj06pONo/NS+o9
+        Pm+SC2CN0rMpyi8tSVXIyC8usVWKNrQw0jO0tNAzMrHUMzQ2j7UyMlXSt7NJSc3JLEst0rdL
+        0Mt42fSXreAOZ8WS2SvYGxj7OboYOTkkBEwkHs/YzdTFyMUhJLCUUWL9+5OMXYwcQAkpifkt
+        ShA1whJ/rnWxQdS8ZpQ4dLyRESQhLOAjsfXUG2aQehEBHYmFh0tBapgFepgkth3/wQ7RMIVR
+        YuubH2ANbAKGEr1H+8BsXgE7ida5W9lAbBYBVYlZnWtYQWxRgQiJ2bsaWCBqBCVOznwCZnMK
+        OEocu3GRGcRmFlCX+DPvEpQtLtH0ZSUrhC0vsf3tHOYJjEKzkLTPQtIyC0nLLCQtCxhZVjGK
+        pJYW56bnFhvpFSfmFpfmpesl5+duYgTG3rZjP7fsYOx6F3yIUYCDUYmHd0L+uxgh1sSy4src
+        Q4wSHMxKIrw/lwOFeFMSK6tSi/Lji0pzUosPMZoCPTeRWUo0OR+YFvJK4g1NDc0tLA3Njc2N
+        zSyUxHk7BA7GCAmkJ5akZqemFqQWwfQxcXBKNTDuji5tvzRR3+GjYQaHwS7u3XOM1262WH9I
+        K+2ynItyCufsK87GKpOEwyOKp9t995GI+KFyYFmlZdBO2zvPHMUXvUs+Kd+0ccmKh9smpHG6
+        BuU76r16nLb719r2tcm+33t2K0XVie88ZVz4fsP5zIYd+ZMezHCcdrOMP/S+ZVPRPcmUGUn3
+        M2OUWIozEg21mIuKEwFt29Rf0wIAAA==
+X-CMS-MailID: 20190530111321eucas1p2941943c0bbd01e9bd2ad078fd2734d36
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29
+X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190530105059eucas1p1d9c911a5ba2ae412166cd8866deb725e
-References: <CGME20190530105059eucas1p1d9c911a5ba2ae412166cd8866deb725e@eucas1p1.samsung.com>
+X-CMS-RootMailID: 20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29
+References: <CGME20190525114732epcas3p1fdc42650975c9f7b1a39a87561e65a29@epcas3p1.samsung.com>
+        <20190525115542.107929-1-wangkefeng.wang@huawei.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Exynos SoCs based on CA7/CA15 have 2 timer interfaces: custom Exynos MCT
-(Multi Core Timer) and standard ARM Architected Timers.
+On 5/25/19 13:55, Kefeng Wang wrote:
+> Use of_clk_get_parent_count() instead of open coding.
+> 
+> Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-There are use cases, where both timer interfaces are used simultanously.
-One of such examples is using Exynos MCT for the main system timer and
-ARM Architected Timers for the KVM and virtualized guests (KVM requires
-arch timers).
+Patch applied, thank you.
 
-Exynos Multi-Core Timer driver (exynos_mct) must be however started
-before ARM Architected Timers (arch_timer), because they both share some
-common hardware blocks (global system counter) and turning on MCT is
-needed to get ARM Architected Timer working properly.
+In future please make sure to also Cc linux-clk@vger.kernel.org mailing list 
+and the clk maintainers (Stephen, Michael) when sending clk patches.
 
-To ensure selecting Exynos MCT as the main system timer, increase MCT
-timer rating. To ensure proper starting order of both timers during
-suspend/resume cycle, increase MCT hotplug priority over ARM Archictected
-Timers.
-
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
----
-v3: rephrased commit message, rebased onto v5.2-rc1
-
-v2: https://patchwork.kernel.org/patch/10863101/
-   added comments about the relation to ARM architected timer
-    rebased onto v5.1-rc1
-
-v1: https://patchwork.kernel.org/patch/10814921/
----
- drivers/clocksource/exynos_mct.c | 4 ++--
- include/linux/cpuhotplug.h       | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
-index 34bd250d46c6..6aa10cbc1d59 100644
---- a/drivers/clocksource/exynos_mct.c
-+++ b/drivers/clocksource/exynos_mct.c
-@@ -209,7 +209,7 @@ static void exynos4_frc_resume(struct clocksource *cs)
- 
- static struct clocksource mct_frc = {
- 	.name		= "mct-frc",
--	.rating		= 400,
-+	.rating		= 450,	/* use value higher than ARM arch timer */
- 	.read		= exynos4_frc_read,
- 	.mask		= CLOCKSOURCE_MASK(32),
- 	.flags		= CLOCK_SOURCE_IS_CONTINUOUS,
-@@ -464,7 +464,7 @@ static int exynos4_mct_starting_cpu(unsigned int cpu)
- 	evt->set_state_oneshot_stopped = set_state_shutdown;
- 	evt->tick_resume = set_state_shutdown;
- 	evt->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT;
--	evt->rating = 450;
-+	evt->rating = 500;	/* use value higher than ARM arch timer */
- 
- 	exynos4_mct_write(TICK_BASE_CNT, mevt->base + MCT_L_TCNTB_OFFSET);
- 
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index e78281d07b70..53fb48de9589 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -115,10 +115,10 @@ enum cpuhp_state {
- 	CPUHP_AP_PERF_ARM_ACPI_STARTING,
- 	CPUHP_AP_PERF_ARM_STARTING,
- 	CPUHP_AP_ARM_L2X0_STARTING,
-+	CPUHP_AP_EXYNOS4_MCT_TIMER_STARTING,
- 	CPUHP_AP_ARM_ARCH_TIMER_STARTING,
- 	CPUHP_AP_ARM_GLOBAL_TIMER_STARTING,
- 	CPUHP_AP_JCORE_TIMER_STARTING,
--	CPUHP_AP_EXYNOS4_MCT_TIMER_STARTING,
- 	CPUHP_AP_ARM_TWD_STARTING,
- 	CPUHP_AP_QCOM_TIMER_STARTING,
- 	CPUHP_AP_TEGRA_TIMER_STARTING,
+> ---
+>  drivers/clk/samsung/clk-exynos5433.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
+> index dae1c96de933..14e253915ca4 100644
+> --- a/drivers/clk/samsung/clk-exynos5433.c
+> +++ b/drivers/clk/samsung/clk-exynos5433.c
+> @@ -5590,8 +5590,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
+>  	data->nr_clk_save = info->nr_clk_regs;
+>  	data->clk_suspend = info->suspend_regs;
+>  	data->nr_clk_suspend = info->nr_suspend_regs;
+> -	data->nr_pclks = of_count_phandle_with_args(dev->of_node, "clocks",
+> -						    "#clock-cells");
+> +	data->nr_pclks = of_clk_get_parent_count(dev->of_node);
+> +
+>  	if (data->nr_pclks > 0) {
+>  		data->pclks = devm_kcalloc(dev, sizeof(struct clk *),
+>  					   data->nr_pclks, GFP_KERNEL);
+>
 -- 
-2.17.1
-
+Thanks,
+Sylwester
