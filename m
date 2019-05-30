@@ -2,99 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B04D32E47F
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 May 2019 20:32:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35BDD2EB2F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 05:11:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbfE2ScG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 May 2019 14:32:06 -0400
-Received: from casper.infradead.org ([85.118.1.10]:47480 "EHLO
-        casper.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbfE2ScF (ORCPT
+        id S1728169AbfE3DKi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 May 2019 23:10:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47936 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728155AbfE3DKh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 May 2019 14:32:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=v4RhH8XlbbmVbvvjKrE9rteDA6GrHG3MQnP6nZEJG7c=; b=hm9Rs7L6F78tgJeDvEnFsGyDKf
-        jmyKa3n42YaQgh81tnNc+yFG5z4UbGVdGAvxOCzsFPxi83/yso7sf7WLbrLRBHBdEenSu/yDikMdI
-        0mp2Ftlv1xWrUrjf1nSTSI02+9NVkDeYwOwcL/PofpNWaxV8VnVU2LWsABVnxcU5yogY5kXY2sXj8
-        khOPW9AnD7wT8VLKm55lj9jguiOCrGiphJXc76tsQtYRBC3J+JVfDs+PHYoRc5hNX+CZ+Lmvk5mUa
-        rJsmKDN0+mHsEG/mYHdz1/cHHjcEWS28xkWWTiUdsJn1jxupHm50x0q9fR0he5v1s3NxjdmE2yT+j
-        07/TGYhg==;
-Received: from 177.132.232.81.dynamic.adsl.gvt.net.br ([177.132.232.81] helo=coco.lan)
-        by casper.infradead.org with esmtpsa (Exim 4.90_1 #2 (Red Hat Linux))
-        id 1hW3Ml-0003LU-V4; Wed, 29 May 2019 18:32:00 +0000
-Date:   Wed, 29 May 2019 15:31:53 -0300
-From:   Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     Hans Verkuil <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Marian Mihailescu <mihailescu2m@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        JaeChul Lee <jcsing.lee@samsung.com>,
+        Wed, 29 May 2019 23:10:37 -0400
+Received: from localhost (ip67-88-213-2.z213-88-67.customer.algx.net [67.88.213.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A8E49244D2;
+        Thu, 30 May 2019 03:10:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559185836;
+        bh=pVWxZxbNvKqIRiN5qwRTrLrmotdfRvBhYgFWEWGfkok=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=wni6xMvg4wVCLshHAmgIEDjYjwqIZBOdN3p4r1YEXCDBe/qMEeLyveQ9QTggqzsFa
+         7O9DWM6GvUJk68gpupw5OTaYb72axxtHbic4rSgpR/4xSlmyALW/BowKthSwkkQTWc
+         sOU7jDvxcVQwGfOZuY0VkGcwlfFzEa23GfnBuTsE=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Wen Yang <wen.yang99@zte.com.cn>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>
-Subject: Re: [PATCH v2] media: s5p-mfc: Add support for V4L2_MEMORY_DMABUF
- type
-Message-ID: <20190529153153.13b1e939@coco.lan>
-In-Reply-To: <c894f9b6-5381-b7eb-ba77-35e71958bf45@samsung.com>
-References: <CGME20171103081132eucas1p2212e32d26e7921340336d78d0d92cb1b@eucas1p2.samsung.com>
-        <20171103081124.30119-1-m.szyprowski@samsung.com>
-        <1509716721.3607.6.camel@ndufresne.ca>
-        <decd38f5-d3c0-6a60-cdbb-20bb804be3a5@samsung.com>
-        <1509996082.30233.51.camel@ndufresne.ca>
-        <e360971a-cb3b-0546-e621-ab56f8ed8f36@samsung.com>
-        <e71e9a74-736a-5185-a544-845fff4ff63c@xs4all.nl>
-        <c894f9b6-5381-b7eb-ba77-35e71958bf45@samsung.com>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.1 149/405] pinctrl: samsung: fix leaked of_node references
+Date:   Wed, 29 May 2019 20:02:27 -0700
+Message-Id: <20190530030548.677494978@linuxfoundation.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190530030540.291644921@linuxfoundation.org>
+References: <20190530030540.291644921@linuxfoundation.org>
+User-Agent: quilt/0.66
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Em Mon, 18 Dec 2017 09:19:11 +0100
-Marek Szyprowski <m.szyprowski@samsung.com> escreveu:
+[ Upstream commit 44b9f86cd41db6c522effa5aec251d664a52fbc0 ]
 
-> Hi Hans,
-> 
-> On 2017-12-15 16:57, Hans Verkuil wrote:
-> > On 14/12/17 15:11, Marek Szyprowski wrote:  
-> >> I would like to get your opinion on this patch. Do you think it makes sense to:
-> >>
-> >> 1. add limited support for USERPTR and DMA-buf import? (limited means driver will accept setting buffer pointer/fd only once after reqbufs for each buffer index)  
-> > I don't like this. It's unexpected almost-but-not-quite behavior that will make
-> > life very difficult for userspace.
-> >  
-> >> 2. add a V4L2 device flag to let userspace to discover if device support queue buffer reconfiguration on-fly or not?  
-> > This seems to me a better approach. It should be possible to implement most/all of this
-> > in vb2, but we need to find a way to signal this to the user.  
-> 
-> Okay, I will prepare a patch with such flag soon.
-> 
-> > Is this an MFC limitation for the decoder, encoder or both? And is it a limitation
-> > of the capture or output side or both?  
-> 
-> Both and both. DMA addresses of all buffers must be known while 
-> initializing decoder
-> and encoder.
-> 
->  > ...  
-> 
-> Best regards
+The call to of_find_compatible_node returns a node pointer with refcount
+incremented thus it must be explicitly decremented after the last
+usage.
 
-Marek/Sylwester,
+Detected by coccinelle with the following warnings:
+./drivers/pinctrl/samsung/pinctrl-exynos-arm.c:76:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 66, but without a corresponding object release within this function.
+./drivers/pinctrl/samsung/pinctrl-exynos-arm.c:82:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 66, but without a corresponding object release within this function.
 
-What's the status of this one? The patch still applies (with a minor
-conflict).
+Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Tomasz Figa <tomasz.figa@gmail.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pinctrl/samsung/pinctrl-exynos-arm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Mauro
+diff --git a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
+index 44c6b753f692a..85ddf49a51885 100644
+--- a/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
++++ b/drivers/pinctrl/samsung/pinctrl-exynos-arm.c
+@@ -71,6 +71,7 @@ s5pv210_retention_init(struct samsung_pinctrl_drv_data *drvdata,
+ 	}
+ 
+ 	clk_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!clk_base) {
+ 		pr_err("%s: failed to map clock registers\n", __func__);
+ 		return ERR_PTR(-EINVAL);
+-- 
+2.20.1
+
+
+
