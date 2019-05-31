@@ -2,178 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6D130453
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 May 2019 23:56:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ECE930B78
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 11:27:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726487AbfE3V4f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 May 2019 17:56:35 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45711 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726100AbfE3V4f (ORCPT
+        id S1726683AbfEaJ14 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 31 May 2019 05:27:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35148 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726240AbfEaJ14 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 May 2019 17:56:35 -0400
-Received: by mail-wr1-f66.google.com with SMTP id b18so5124175wrq.12
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 30 May 2019 14:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N+D77JZYl7L4JwlmlkCR53sQehR/+WCFO9RDYDI3XJU=;
-        b=lxCilLefv1Tz7C7/PLb8Dl781WsaCZvG7vjg/DEkO53gLw7zbreJkjb6fdJsbHw07S
-         A/OHPUi+3eD7Ss5MPpwYDhrJJP8xvWDt1E030/EL6974jVZ+z4DY2fQa0P/4Ef5CUBTC
-         2FdGoWb/mcjC9mMiK75Hnt9bGYE5UpRnHwdnXasnRNv4OZwjqqB7Lkkl+1YY9meG00R9
-         bOcZPSwy9TsG+RdIHQkkyhFEirXj7D3RtNPK4yNhgftYX/jjLzg9Hy/C7qb0HA+dq/Vj
-         4QeYoCIeHrB69RhQQCYtrHSG/gM1iskiGapShXfYAc9sWJkbP0UGXMTsPD/MXiS4rwy7
-         q1Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N+D77JZYl7L4JwlmlkCR53sQehR/+WCFO9RDYDI3XJU=;
-        b=SBkfWg+0hIiXPG/wy2lPIBgrvxPpOdp0cOSAaAMAHE4FSpsGDLDIouV99BYV5DOQ2p
-         7Aye6HJqcQ4rw81tD1s5SxPk+Mo4NE2m0rws2DvyPNA/lpoh1BjDqYck13QXrzO7pOCg
-         CN58KzmFeR12ss/hl6YVffvsvIqCTkOu72yyQccUq2z96M3fOjIuHiFzRXK/KXO7E4XJ
-         0Pd7STBVNaqXuYGGpRM2nEkkdwsYCdEdJVWddcEmuiB9K/lnLAD/0jYkO3WSBumYJVzJ
-         U4YjEftFYiNsqOPSA3Cs6OQ4gtuU5nU97V3d2LXpzlElSviGj2IfONi1031OSmVOfQ7w
-         Z+Eg==
-X-Gm-Message-State: APjAAAUpmcZpJHxD26553i4xiOwreHKt/u2bryRRloomrfMwGWUtU+Ax
-        BGckvHf/r0MyxYT/tt5DRe2rsQ==
-X-Google-Smtp-Source: APXvYqzde0Rlxae4HnLSuPu+CpWIe/UaguJuiNQSoH/SNGqD/hzlwkvRpg2H5v3Zwl0PndNFgMypqA==
-X-Received: by 2002:adf:dd52:: with SMTP id u18mr3917442wrm.193.1559253016797;
-        Thu, 30 May 2019 14:50:16 -0700 (PDT)
-Received: from localhost.localdomain (catv-89-135-96-219.catv.broadband.hu. [89.135.96.219])
-        by smtp.gmail.com with ESMTPSA id a139sm6177079wmd.18.2019.05.30.14.50.14
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 30 May 2019 14:50:15 -0700 (PDT)
-From:   Linus Walleij <linus.walleij@linaro.org>
-To:     Wolfram Sang <wsa@the-dreams.de>, linux-i2c@vger.kernel.org
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH] i2c: s3c2410: Convert to use GPIO descriptors
-Date:   Thu, 30 May 2019 23:50:13 +0200
-Message-Id: <20190530215013.17806-1-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.20.1
+        Fri, 31 May 2019 05:27:56 -0400
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 487E6266D4;
+        Fri, 31 May 2019 09:27:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559294875;
+        bh=8ioYcrS5zNqXZCoF0MDDoNs+KB/u0y2k7wiOQtbqdwU=;
+        h=From:Date:Subject:To:Cc:From;
+        b=rRXvqsqSkMv+5uNcjorixP9OQ/A9sXvcIolEmFXXDeJ0CIPy1MWNSPlgFkijG/xDd
+         JLwudD1WDqmIng8QTmERVwdvFX1+RZboJZoyqYg26krjFNoXZCPXrLfUr9vJmOeYBH
+         jSzTqQJwf6ZuGH1Uu7nuHnO6o35ipNSPEYWqjxow=
+Received: by mail-lf1-f51.google.com with SMTP id y13so7330007lfh.9;
+        Fri, 31 May 2019 02:27:55 -0700 (PDT)
+X-Gm-Message-State: APjAAAUPKOt7Prp5M9llPrgw6JEfVNjMsnrX4cqY+ocuXmECW1F/toHx
+        3gz+u+RniTMCBVlxB74hWWGgi11W6xgaG42E77Q=
+X-Google-Smtp-Source: APXvYqzVa4BrT5sCgmPbiMdySvHjx9aAPSDvSfLEhbdMMAjEp6CKvWokGkyQ8IL4e6xxsMN20X6ZVSeWNFb5fs7EwqM=
+X-Received: by 2002:a19:4f50:: with SMTP id a16mr4880904lfk.24.1559294873357;
+ Fri, 31 May 2019 02:27:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Fri, 31 May 2019 11:27:42 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
+Message-ID: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
+Subject: [BISECT] No audio after "ASoC: core: use component driver name as
+ component name"
+To:     Mark Brown <broonie@kernel.org>, Tzung-Bi Shih <tzungbi@google.com>
+Cc:     Takashi Iwai <tiwai@suse.com>, Jaroslav Kysela <perex@perex.cz>,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The S3C2410 does some funny dance around its pins:
-- First try to call back to the platform to get and control
-  some GPIO pins
-- If this doesn't work, it tries to get a pin control handle
-- If this doesn't work, it retrieves two GPIOs from the device
-  tree node and does nothing with them
+Hi,
 
-If we're gonna retrieve two GPIOs and do nothing with them, we
-might as well do it using the GPIO descriptor API. When we use
-the resource management API, the code gets smaller.
+Bisect points to commit b19671d6caf1ac393681864d5d85dda9fa99a448
+Author: Tzung-Bi Shih <tzungbi@google.com>
+Date:   Wed May 29 14:22:14 2019 +0800
+    ASoC: core: use component driver name as component name
 
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
----
- drivers/i2c/busses/i2c-s3c2410.c | 47 ++++++--------------------------
- 1 file changed, 9 insertions(+), 38 deletions(-)
+as a reason of failure of missing Audio card on Odroid XU3 board
+(ARMv7, Exynos5422,
+max98090 codec). Full kernel log:
+https://krzk.eu/#/builders/1/builds/3349/steps/14/logs/serial0
 
-diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-index 53bc021f4a5a..ed06a8535d63 100644
---- a/drivers/i2c/busses/i2c-s3c2410.c
-+++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -33,7 +33,7 @@
- #include <linux/slab.h>
- #include <linux/io.h>
- #include <linux/of.h>
--#include <linux/of_gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/mfd/syscon.h>
- #include <linux/regmap.h>
-@@ -122,7 +122,7 @@ struct s3c24xx_i2c {
- 	struct i2c_adapter	adap;
- 
- 	struct s3c2410_platform_i2c	*pdata;
--	int			gpios[2];
-+	struct gpio_desc	*gpios[2];
- 	struct pinctrl          *pctrl;
- #if defined(CONFIG_ARM_S3C24XX_CPUFREQ)
- 	struct notifier_block	freq_transition;
-@@ -956,53 +956,27 @@ static inline void s3c24xx_i2c_deregister_cpufreq(struct s3c24xx_i2c *i2c)
- #ifdef CONFIG_OF
- static int s3c24xx_i2c_parse_dt_gpio(struct s3c24xx_i2c *i2c)
- {
--	int idx, gpio, ret;
-+	int i;
- 
- 	if (i2c->quirks & QUIRK_NO_GPIO)
- 		return 0;
- 
--	for (idx = 0; idx < 2; idx++) {
--		gpio = of_get_gpio(i2c->dev->of_node, idx);
--		if (!gpio_is_valid(gpio)) {
--			dev_err(i2c->dev, "invalid gpio[%d]: %d\n", idx, gpio);
--			goto free_gpio;
--		}
--		i2c->gpios[idx] = gpio;
--
--		ret = gpio_request(gpio, "i2c-bus");
--		if (ret) {
--			dev_err(i2c->dev, "gpio [%d] request failed (%d)\n",
--				gpio, ret);
--			goto free_gpio;
-+	for (i = 0; i < 2; i++) {
-+		i2c->gpios[i] = devm_gpiod_get_index(i2c->dev, NULL,
-+						     i, GPIOD_ASIS);
-+		if (IS_ERR(i2c->gpios[i])) {
-+			dev_err(i2c->dev, "i2c gpio invalid at index %d\n", i);
-+			return -EINVAL;
- 		}
- 	}
- 	return 0;
--
--free_gpio:
--	while (--idx >= 0)
--		gpio_free(i2c->gpios[idx]);
--	return -EINVAL;
- }
- 
--static void s3c24xx_i2c_dt_gpio_free(struct s3c24xx_i2c *i2c)
--{
--	unsigned int idx;
--
--	if (i2c->quirks & QUIRK_NO_GPIO)
--		return;
--
--	for (idx = 0; idx < 2; idx++)
--		gpio_free(i2c->gpios[idx]);
--}
- #else
- static int s3c24xx_i2c_parse_dt_gpio(struct s3c24xx_i2c *i2c)
- {
- 	return 0;
- }
--
--static void s3c24xx_i2c_dt_gpio_free(struct s3c24xx_i2c *i2c)
--{
--}
- #endif
- 
- /*
-@@ -1231,9 +1205,6 @@ static int s3c24xx_i2c_remove(struct platform_device *pdev)
- 
- 	i2c_del_adapter(&i2c->adap);
- 
--	if (pdev->dev.of_node && IS_ERR(i2c->pctrl))
--		s3c24xx_i2c_dt_gpio_free(i2c);
--
- 	return 0;
- }
- 
--- 
-2.20.1
+The problem might be in component name. The driver->name and
+fmt_single_name(dev, &component->id) are:
+snd_dmaengine_pcm != 3830000.i2s
+snd_dmaengine_pcm != 3830000.i2s-sec
+samsung-i2s != 3830000.i2s
 
+This commit should not go in without fixing the users of old
+behavior... I could adjust the platform names for primary and
+secondary links... but now it looks like two components will have the
+same name.
+
+Best regards,
+Krzysztof
