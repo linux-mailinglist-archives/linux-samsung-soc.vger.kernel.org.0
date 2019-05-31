@@ -2,79 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCC4630C78
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 12:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C776C30F29
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 15:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726330AbfEaKUP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 31 May 2019 06:20:15 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:38509 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbfEaKUP (ORCPT
+        id S1726512AbfEaNoR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 31 May 2019 09:44:17 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:43018 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726386AbfEaNoR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 31 May 2019 06:20:15 -0400
-Received: by mail-oi1-f181.google.com with SMTP id 18so6524463oij.5
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 May 2019 03:20:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iy+b2XmhA0ntKME0CnMJCgRk0OfnARxxHVb5nAyoOQI=;
-        b=NsM6Ojtr9vYMDTe1/mfRqJupLufihu+ZNUA0u/SNXUiXRqSs5vzhrg6EJCVVp47vua
-         csDeujruhQ52gKRcsDzg+TNOyATTyYrEUPZRQ8CgvxuRfHVTHBESoi3M3caz1MktLeeQ
-         gcOjC16+wZ4tOKU/esGTXt7IbhtV7MP+3F1fWGcWV1+EIoEGDKhrYgu/QmFjCFPPAYJx
-         fM5KFxta5mP1FY4t9E8EFGCQC1DGAtEaRVK2khkPqqm7xE+4dZ8N/K6EOVG5xlUlyHUg
-         Iretlr5BJIcYk+L+LCNn4iNJwpmrX9suAxk4syrbuBbPMFc+6dDd+Hy/FiI8feCuByOK
-         7M+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iy+b2XmhA0ntKME0CnMJCgRk0OfnARxxHVb5nAyoOQI=;
-        b=VEhWT5mvnIGhM1S/WI+LkoG5daR4NoE4lwtatWgB+QSnJtE9C6b4mcWlWY6JPyqGl3
-         PwRj9wuu6NOnwh7GQGy4byfDKQKx6J+UJPpkkxWO5msxXf+EWeLqVdIYJgIAPJFD1PqA
-         HSLpWO5SRAyN6I+u149VR/TFI+ONsRcYutnlbQuWrtKiRT/kmLLJrNtglNll4KlciWiQ
-         8raJEBkoyMDW0KqOz6xL4xN5/kwQhCxD4z4qAsDnxf/6IjbA+3O5HmnJZJAxPqbuatkj
-         wZxG4GRxZ2A5XiDG/lGQAu5UPhlfZxeEv65jGTOaOohbM9Lp2avoamEg2Bn5ny2jvQhs
-         Hrdw==
-X-Gm-Message-State: APjAAAXq8ClT9sllielMlX3MCPUhh8XQhUaaOPlQbHUIcF1VPy43s06p
-        HERerWpG3heGf2IAFMhZfxsJ0p1YfsuoMxjxO4MMkg==
-X-Google-Smtp-Source: APXvYqyXFvGVgoiZdcOxGr/H1SlhMtGXL6Lz7te6iFo0TuR9613uWJrlqnQVhGO1bcWpGSXyPQR0yNsMKuEton5QgRg=
-X-Received: by 2002:aca:80e:: with SMTP id 14mr5832960oii.2.1559298014153;
- Fri, 31 May 2019 03:20:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
-In-Reply-To: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
-From:   Tzung-Bi Shih <tzungbi@google.com>
-Date:   Fri, 31 May 2019 18:20:03 +0800
-Message-ID: <CA+Px+wXs1u9VjkzDerb-BVPQRLZNMnw8Rh5prkb+0mHAggwWgg@mail.gmail.com>
-Subject: Re: [BISECT] No audio after "ASoC: core: use component driver name as
- component name"
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+        Fri, 31 May 2019 09:44:17 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190531134415euoutp014827b9b9cd5bb9223ed24663a56a2696~jyGpUAkU20668906689euoutp01D
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 May 2019 13:44:15 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190531134415euoutp014827b9b9cd5bb9223ed24663a56a2696~jyGpUAkU20668906689euoutp01D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1559310255;
+        bh=d/ofE7C+qb8FXizk062nYULRDGW//8GcqaiVTR+gKZw=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=C0LFClLdGSPjKtya1SQwG8Vo5S2PJL+EBjOxkpsZ3NmK+cMBLjWmghPfr7y3M0AME
+         RqJrTxhrHEmgpYZJXTjKKVt60J1as6vCThH/ZSIXB+IIfoLvkabmlSUrLDRdOZUzpl
+         r5/lQxQGQrdy2XtrHMEIxaA/81kj+mPRpCtEJ+x0=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190531134414eucas1p28d9b8f040c87e1027ba8c5968784dd36~jyGoplmZM0356303563eucas1p2d;
+        Fri, 31 May 2019 13:44:14 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 45.1D.04377.DAF21FC5; Fri, 31
+        May 2019 14:44:14 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190531134413eucas1p2266b217f5177645a9db3edc7c699f7f2~jyGn8sr8o0456304563eucas1p2V;
+        Fri, 31 May 2019 13:44:13 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190531134413eusmtrp14330820d7eac5b6af688fc8ce893b16c~jyGntG3ml1543915439eusmtrp18;
+        Fri, 31 May 2019 13:44:13 +0000 (GMT)
+X-AuditID: cbfec7f4-113ff70000001119-bf-5cf12fad4869
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 23.77.04140.DAF21FC5; Fri, 31
+        May 2019 14:44:13 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190531134412eusmtip16ad00df3fc610e1c7d48d56e6e278333~jyGnSoau91082410824eusmtip1H;
+        Fri, 31 May 2019 13:44:12 +0000 (GMT)
+Subject: Re: [BISECT] No audio after
+ "ASoC: core: use component driver name as component name"
+To:     Tzung-Bi Shih <tzungbi@google.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>,
         Jaroslav Kysela <perex@perex.cz>, alsa-devel@alsa-project.org,
         linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+        <linux-samsung-soc@vger.kernel.org>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <f0e6753d-6eb4-b56e-d4f4-0d483a685b41@samsung.com>
+Date:   Fri, 31 May 2019 15:44:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <CA+Px+wXs1u9VjkzDerb-BVPQRLZNMnw8Rh5prkb+0mHAggwWgg@mail.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHfXcuOxtOXo+VD1MKRhEVaYofDhRaVLC+WEJQlKFHPak4zTY1
+        bV9ETea1oXQbyyZpl5UpS7zMMp3kJSkvaQQpViiKa5FsGmJazlPkt9//ef7P+zx/eBmCfUkp
+        mdSMLEGbwWtUtJxs6V1+t/9Z6ELsgUIj4sZGHBLuxpdpmhsaapJyS2MGCffebqa520OdEq7E
+        fp3imn42IO7FyLz0sEzd5C6g1e2mSanaYstW26wltLrT9YBWNzaPk2q3bfsp6Tn5oSRBk5oj
+        aEMj4+Upb+1zROYT39wV51tJPjLJS5GMARwBq19nqFIkZ1j8CEFbj1UiCg+CnoFiUhRuBHNV
+        NdJ/I/WLXYSXWfwQwfx9jWhyIZj2TKxPMEwAjofW4VNezxZ8Enqbawmvh8DVEii7OU95GzQO
+        g4rXlcjLChwJdWXdpJdJvAvurjg36lvxWfC02/56/GHgzvSGR4ZjwDlVtFEncCAUeB5TIu+A
+        Vpd5YxngUSmYJm7S4tXHwDJZQYocAPN9zX/TBMNgdTkpDhQiKO/4JBWFEcFUnwWJroPQ0zdC
+        eaMReA802kO9CPgI9I9Gi+gHH13+4g1+UNVyixDLCjAUs+IbO2HFeksishLKpn+TRqQybUpm
+        2pTGtCmN6f9aCyKtKFDI1qUnC7rwDOFKiI5P12VnJIckXkq3ofVPNbjW52lD9l8JDoQZpPJV
+        GNmFWJbic3R56Q4EDKHaolid+xHLKpL4vKuC9lKcNlsj6BwoiCFVgQq9z+fzLE7ms4Q0QcgU
+        tP+6EkamzEdse9Sr5XG+Q4P0ZmGpttj84cLpiOdG55sAul95OfrY7vprcx2z75xCpUEZVJZf
+        5Je3787PAw0xNZl11jNai6LJp7myc99xLqTrizWqeDVHH7xtIW7QQUWsffNEULPu7pDvphOL
+        4Yn3Lsbr7faDT10zw7kX02rMR2sSDCu8plVF6lL4sL2EVsf/Aced1NlQAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsVy+t/xu7pr9T/GGMx8wGdx5eIhJoupD5+w
+        WZw/v4Hd4tuVDiaLy7vmsFnMOL+PyaJzVz+rxYbvaxkt9lx8xe7A6bHhcxObx85Zd9k9Fmwq
+        9di0qpPNY9/bZWwe67dcZfH4vEkugD1Kz6Yov7QkVSEjv7jEVina0MJIz9DSQs/IxFLP0Ng8
+        1srIVEnfziYlNSezLLVI3y5BL+PsrhfMBat5Kn6/PsvUwDiLq4uRk0NCwERi6dcDzF2MXBxC
+        AksZJQ6eW8rWxcgBlJCSmN+iBFEjLPHnWhcbRM1rRonOa79ZQRLCAgkSL3ueM4PYIgK+EvMf
+        rgcrYhaYzCRxcv8VZriOTf/esINUsQkYSvQe7WMEsXkF7CSWdB9kAbFZBFQl5v5+DRYXFYiQ
+        mL2rgQWiRlDi5MwnYDanQKDE6/stYDXMAuoSf+ZdYoawxSWavqxkhbDlJba/ncM8gVFoFpL2
+        WUhaZiFpmYWkZQEjyypGkdTS4tz03GIjveLE3OLSvHS95PzcTYzA6Nx27OeWHYxd74IPMQpw
+        MCrx8E4Q+hgjxJpYVlyZe4hRgoNZSYT374sPMUK8KYmVValF+fFFpTmpxYcYTYGem8gsJZqc
+        D0wceSXxhqaG5haWhubG5sZmFkrivB0CB2OEBNITS1KzU1MLUotg+pg4OKUaGO23ezeZHeOs
+        O7vd4UZm8BLeFKMy7rsPt04/Zbt81/z/7QF75NUuZv77tkZr1c6wXUoHrUV7xNY83c7y50ha
+        9eXbSXM+nilN4qwWEw9do/zx+XMmv4l7eQzk1r6TjikX1Uxhnnqd5edHNvlg81WRug4zq6df
+        WGL4TrLM793z8x9PKT016np/21GJpTgj0VCLuag4EQB5L3YL5AIAAA==
+X-CMS-MailID: 20190531134413eucas1p2266b217f5177645a9db3edc7c699f7f2
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190531102017epcas1p3b5522b9a133bf50659d9d306ed9d6d52
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190531102017epcas1p3b5522b9a133bf50659d9d306ed9d6d52
+References: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
+        <CGME20190531102017epcas1p3b5522b9a133bf50659d9d306ed9d6d52@epcas1p3.samsung.com>
+        <CA+Px+wXs1u9VjkzDerb-BVPQRLZNMnw8Rh5prkb+0mHAggwWgg@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, May 31, 2019 at 5:27 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> The problem might be in component name. The driver->name and
-> fmt_single_name(dev, &component->id) are:
-> snd_dmaengine_pcm != 3830000.i2s
-> snd_dmaengine_pcm != 3830000.i2s-sec
-> samsung-i2s != 3830000.i2s
+On 5/31/19 12:20, Tzung-Bi Shih wrote:
+> On Fri, May 31, 2019 at 5:27 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>> The problem might be in component name. The driver->name and
+>> fmt_single_name(dev, &component->id) are:
+>> snd_dmaengine_pcm != 3830000.i2s
+>> snd_dmaengine_pcm != 3830000.i2s-sec
+>> samsung-i2s != 3830000.i2s
+>>
+>> This commit should not go in without fixing the users of old
+>> behavior... I could adjust the platform names for primary and
+>> secondary links... but now it looks like two components will have the
+>> same name.
 >
-> This commit should not go in without fixing the users of old
-> behavior... I could adjust the platform names for primary and
-> secondary links... but now it looks like two components will have the
-> same name.
-That is because the two component drivers used the same name in
-somehow.  But yes, we should not have the commit without fixing
-potential errors for users depend on old behavior.
+> That is because the two component drivers used the same name in
+> somehow.  But yes, we should not have the commit without fixing
+> potential errors for users depend on old behavior.
 
-Could you send a patch to revert the commit b19671d6caf1?
+There are 2 platform devices (3830000.i2s, 3830000.i2s-sec), for each
+a platform/DMA component is created. For 3830000.i2s there is also
+a component with 2 CPU DAIs registered. 
+
+If we derive the platform/DMA component name from the component's driver
+name then we end up with non unique Platform component names 
+(snd_dmaengine_pcm) and subsequently we fail to assign Platform component 
+to DAI links.
+
+Here is list of components before the patch:
+
+# cat /sys/kernel/debug/asoc/components 
+3830000.i2s
+3830000.i2s-sec
+3830000.i2s
+hdmi-audio-codec.3.auto
+max98090.5-0010
+snd-soc-dummy
+snd-soc-dummy
+
+And after the patch:
+
+root@target:~# cat /sys/kernel/debug/asoc/components 
+samsung-i2s
+snd_dmaengine_pcm
+snd_dmaengine_pcm
+hdmi-audio-codec.3.auto
+max98090.5-0010
+snd-soc-dummy
+snd-soc-dummy
