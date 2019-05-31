@@ -2,46 +2,57 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ECE930B78
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 11:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCC4630C78
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 May 2019 12:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbfEaJ14 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 31 May 2019 05:27:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35148 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726240AbfEaJ14 (ORCPT
+        id S1726330AbfEaKUP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 31 May 2019 06:20:15 -0400
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:38509 "EHLO
+        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfEaKUP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 31 May 2019 05:27:56 -0400
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 487E6266D4;
-        Fri, 31 May 2019 09:27:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559294875;
-        bh=8ioYcrS5zNqXZCoF0MDDoNs+KB/u0y2k7wiOQtbqdwU=;
-        h=From:Date:Subject:To:Cc:From;
-        b=rRXvqsqSkMv+5uNcjorixP9OQ/A9sXvcIolEmFXXDeJ0CIPy1MWNSPlgFkijG/xDd
-         JLwudD1WDqmIng8QTmERVwdvFX1+RZboJZoyqYg26krjFNoXZCPXrLfUr9vJmOeYBH
-         jSzTqQJwf6ZuGH1Uu7nuHnO6o35ipNSPEYWqjxow=
-Received: by mail-lf1-f51.google.com with SMTP id y13so7330007lfh.9;
-        Fri, 31 May 2019 02:27:55 -0700 (PDT)
-X-Gm-Message-State: APjAAAUPKOt7Prp5M9llPrgw6JEfVNjMsnrX4cqY+ocuXmECW1F/toHx
-        3gz+u+RniTMCBVlxB74hWWGgi11W6xgaG42E77Q=
-X-Google-Smtp-Source: APXvYqzVa4BrT5sCgmPbiMdySvHjx9aAPSDvSfLEhbdMMAjEp6CKvWokGkyQ8IL4e6xxsMN20X6ZVSeWNFb5fs7EwqM=
-X-Received: by 2002:a19:4f50:: with SMTP id a16mr4880904lfk.24.1559294873357;
- Fri, 31 May 2019 02:27:53 -0700 (PDT)
+        Fri, 31 May 2019 06:20:15 -0400
+Received: by mail-oi1-f181.google.com with SMTP id 18so6524463oij.5
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 May 2019 03:20:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iy+b2XmhA0ntKME0CnMJCgRk0OfnARxxHVb5nAyoOQI=;
+        b=NsM6Ojtr9vYMDTe1/mfRqJupLufihu+ZNUA0u/SNXUiXRqSs5vzhrg6EJCVVp47vua
+         csDeujruhQ52gKRcsDzg+TNOyATTyYrEUPZRQ8CgvxuRfHVTHBESoi3M3caz1MktLeeQ
+         gcOjC16+wZ4tOKU/esGTXt7IbhtV7MP+3F1fWGcWV1+EIoEGDKhrYgu/QmFjCFPPAYJx
+         fM5KFxta5mP1FY4t9E8EFGCQC1DGAtEaRVK2khkPqqm7xE+4dZ8N/K6EOVG5xlUlyHUg
+         Iretlr5BJIcYk+L+LCNn4iNJwpmrX9suAxk4syrbuBbPMFc+6dDd+Hy/FiI8feCuByOK
+         7M+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iy+b2XmhA0ntKME0CnMJCgRk0OfnARxxHVb5nAyoOQI=;
+        b=VEhWT5mvnIGhM1S/WI+LkoG5daR4NoE4lwtatWgB+QSnJtE9C6b4mcWlWY6JPyqGl3
+         PwRj9wuu6NOnwh7GQGy4byfDKQKx6J+UJPpkkxWO5msxXf+EWeLqVdIYJgIAPJFD1PqA
+         HSLpWO5SRAyN6I+u149VR/TFI+ONsRcYutnlbQuWrtKiRT/kmLLJrNtglNll4KlciWiQ
+         8raJEBkoyMDW0KqOz6xL4xN5/kwQhCxD4z4qAsDnxf/6IjbA+3O5HmnJZJAxPqbuatkj
+         wZxG4GRxZ2A5XiDG/lGQAu5UPhlfZxeEv65jGTOaOohbM9Lp2avoamEg2Bn5ny2jvQhs
+         Hrdw==
+X-Gm-Message-State: APjAAAXq8ClT9sllielMlX3MCPUhh8XQhUaaOPlQbHUIcF1VPy43s06p
+        HERerWpG3heGf2IAFMhZfxsJ0p1YfsuoMxjxO4MMkg==
+X-Google-Smtp-Source: APXvYqyXFvGVgoiZdcOxGr/H1SlhMtGXL6Lz7te6iFo0TuR9613uWJrlqnQVhGO1bcWpGSXyPQR0yNsMKuEton5QgRg=
+X-Received: by 2002:aca:80e:: with SMTP id 14mr5832960oii.2.1559298014153;
+ Fri, 31 May 2019 03:20:14 -0700 (PDT)
 MIME-Version: 1.0
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 31 May 2019 11:27:42 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
-Message-ID: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
-Subject: [BISECT] No audio after "ASoC: core: use component driver name as
+References: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
+In-Reply-To: <CAJKOXPfREyt3P2H8bL9=6+EQ1S3Ja7Urkhy1x7sCHaaubMqV1Q@mail.gmail.com>
+From:   Tzung-Bi Shih <tzungbi@google.com>
+Date:   Fri, 31 May 2019 18:20:03 +0800
+Message-ID: <CA+Px+wXs1u9VjkzDerb-BVPQRLZNMnw8Rh5prkb+0mHAggwWgg@mail.gmail.com>
+Subject: Re: [BISECT] No audio after "ASoC: core: use component driver name as
  component name"
-To:     Mark Brown <broonie@kernel.org>, Tzung-Bi Shih <tzungbi@google.com>
-Cc:     Takashi Iwai <tiwai@suse.com>, Jaroslav Kysela <perex@perex.cz>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        Liam Girdwood <lgirdwood@gmail.com>,
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Mark Brown <broonie@kernel.org>, Takashi Iwai <tiwai@suse.com>,
+        Jaroslav Kysela <perex@perex.cz>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
         "linux-samsung-soc@vger.kernel.org" 
         <linux-samsung-soc@vger.kernel.org>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>
@@ -51,28 +62,19 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+On Fri, May 31, 2019 at 5:27 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> The problem might be in component name. The driver->name and
+> fmt_single_name(dev, &component->id) are:
+> snd_dmaengine_pcm != 3830000.i2s
+> snd_dmaengine_pcm != 3830000.i2s-sec
+> samsung-i2s != 3830000.i2s
+>
+> This commit should not go in without fixing the users of old
+> behavior... I could adjust the platform names for primary and
+> secondary links... but now it looks like two components will have the
+> same name.
+That is because the two component drivers used the same name in
+somehow.  But yes, we should not have the commit without fixing
+potential errors for users depend on old behavior.
 
-Bisect points to commit b19671d6caf1ac393681864d5d85dda9fa99a448
-Author: Tzung-Bi Shih <tzungbi@google.com>
-Date:   Wed May 29 14:22:14 2019 +0800
-    ASoC: core: use component driver name as component name
-
-as a reason of failure of missing Audio card on Odroid XU3 board
-(ARMv7, Exynos5422,
-max98090 codec). Full kernel log:
-https://krzk.eu/#/builders/1/builds/3349/steps/14/logs/serial0
-
-The problem might be in component name. The driver->name and
-fmt_single_name(dev, &component->id) are:
-snd_dmaengine_pcm != 3830000.i2s
-snd_dmaengine_pcm != 3830000.i2s-sec
-samsung-i2s != 3830000.i2s
-
-This commit should not go in without fixing the users of old
-behavior... I could adjust the platform names for primary and
-secondary links... but now it looks like two components will have the
-same name.
-
-Best regards,
-Krzysztof
+Could you send a patch to revert the commit b19671d6caf1?
