@@ -2,52 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7361031B92
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  1 Jun 2019 13:39:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AAA531A74
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  1 Jun 2019 10:02:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726180AbfFALjp convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 1 Jun 2019 07:39:45 -0400
-Received: from server1.skillnet.com.co ([192.175.105.61]:41301 "EHLO
-        mail.projectbpo.co" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1726109AbfFALjp (ORCPT
+        id S1726142AbfFAICs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 1 Jun 2019 04:02:48 -0400
+Received: from sauhun.de ([88.99.104.3]:47962 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726013AbfFAICs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 1 Jun 2019 07:39:45 -0400
-X-Greylist: delayed 5358 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Jun 2019 07:39:44 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.projectbpo.co (Postfix) with ESMTP id D5A476B861CF3;
-        Sat,  1 Jun 2019 02:49:03 -0500 (-05)
-Received: from mail.projectbpo.co ([127.0.0.1])
-        by localhost (mail.projectbpo.co [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 1_smdieH98Z3; Sat,  1 Jun 2019 02:49:03 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.projectbpo.co (Postfix) with ESMTP id 18A1E6ACDF1D0;
-        Sat,  1 Jun 2019 02:40:59 -0500 (-05)
-X-Virus-Scanned: amavisd-new at projectbpo.co
-Received: from mail.projectbpo.co ([127.0.0.1])
-        by localhost (mail.projectbpo.co [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id pZHUXqWXpz7A; Sat,  1 Jun 2019 02:40:58 -0500 (-05)
-Received: from [192.168.43.155] (unknown [41.203.72.232])
-        by mail.projectbpo.co (Postfix) with ESMTPSA id 155C5664E28FE;
-        Sat,  1 Jun 2019 02:32:54 -0500 (-05)
-Content-Type: text/plain; charset="iso-8859-1"
+        Sat, 1 Jun 2019 04:02:48 -0400
+Received: from localhost (ip5b40b67c.dynamic.kabel-deutschland.de [91.64.182.124])
+        by pokefinder.org (Postfix) with ESMTPSA id 5F0452C54BC;
+        Sat,  1 Jun 2019 10:02:46 +0200 (CEST)
+Date:   Sat, 1 Jun 2019 10:02:46 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <k.kozlowski@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-i2c@vger.kernel.org,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [PATCH] i2c: mux: arb-gpio: Rewrite to use GPIO descriptors
+Message-ID: <20190601080245.GA1012@kunai>
+References: <20190530210421.24941-1-linus.walleij@linaro.org>
+ <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: DEAL
-To:     Recipients <avargasm.andina@gempresarial.co>
-From:   "Johann Reimann" <avargasm.andina@gempresarial.co>
-Date:   Sat, 01 Jun 2019 08:26:14 +0100
-Reply-To: johannreimann44@gmail.com
-Message-Id: <20190601073255.155C5664E28FE@mail.projectbpo.co>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Good day,
 
-My Name is Johann Reimann and i have something important to discuss with you but only with your permission i will proceed.
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Regards
-J. Reimann
+
+> NOTE: any chance I can convince you to CC LKML on patches like this?
+> There's no patchwork for i2c so I can't easily grab this from
+> patchwork unless you CC LKML.
+
+See MAINTAINERS, there is a patchwork instance on ozlabs.
+
+
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAlzyMSEACgkQFA3kzBSg
+KbYAmA/+LVWVa2NEvqFUkRQFWo1EWZlvg34v6BBBzJJJ6DLXapPcEfGenOOnghos
+aToYlKs7gOfXfWf+iN2oQpPsq6K6PrJECvk/TG6kXpZs2EDz7TtoIG0bHFiRnSVB
+jbEAbL83T8I8v4IXkjuX81o7ggYA4GMCpSsmkf2YkBYgQzMNYbY17CJOp3lkGRP4
+JbskO7LSrK8kMWv5z8nTZA6gPXRnKpfAmEAsf8IiDoAMcZYIoPCOLRkBrrWxOJeD
+NRnGkgNQ8uTulUowLsY+sIseGIBzLgRUCxF67/1IOAyJOcuRg/xeBAQxsx5SfFae
+8rPk0s0YPK8n3YzyFAXIoSiJfEP7X46DaKRNvPhZlhoqt/lFDn0pnWWPGlwhSKxX
+ngS69uGTmTFUqCq5kkrgcTWh6qhO5XXEnBXwEuZpZOVXHIdDUOiglFEYtAk1ZQSh
+1s5rCPlWXujLxuajz5sD4ipM/HRmlB7j5godj8f+nM+im5794avUlhkmshLm+oDO
+FsfcHaddxlYHjVF6Fw1jquEvQdaqpE5O8U7mpIsagWmAjtW4QRdM5Xg0ZLJPiygU
+xs0sIO0LL88orD3BqXvl+PA85GPEUPrwnZwiuSY6nK5cXmvOK3fMM9bDDjaeM1iq
+ViVR02yNg/FIHptQPiTcaJxqHMQtEzZmJwIipJ4ZaVIvRl+PN8I=
+=S5Qg
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
