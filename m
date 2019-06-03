@@ -2,171 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD52F3332B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 17:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 990B4333C9
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 17:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729038AbfFCPLc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 11:11:32 -0400
-Received: from ozlabs.org ([203.11.71.1]:50211 "EHLO ozlabs.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729004AbfFCPLc (ORCPT
+        id S1726922AbfFCPm6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 11:42:58 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:37630 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726889AbfFCPm5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 11:11:32 -0400
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.ozlabs.org (Postfix) with ESMTPSA id 45Hdmv545Hz9s4Y;
-        Tue,  4 Jun 2019 01:11:27 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=canb.auug.org.au;
-        s=201702; t=1559574688;
-        bh=eDuRZMdVYYQROCCGmu+HKfLRFO7Y6eokeOO3l7DvWCo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ZoKRYuqvpdEn7yiFycsiV4IDbycT0IPTFEnpBIksDlOrF1XldtLiq+2iloNCVu7Ey
-         42EgecTyjdqed8SbCbEbfYMj/p0/65mIlJngX8IOIyKbJd4Qd0jh4EKeVX5Fi7KWn8
-         vboNbS+dur7m6TyeZmY7wvdxsUsume249CrlxODn9R31tYvBiUdYlJrNZHDoqZeLBK
-         zDL9zRUKTqZWCuwO3RoiyergKGDPZm8AIA5NEz7RP1GqBPWLgMdupEiif1PA3OiE64
-         pJ8Yn3y0KXTDy9VgJjYl9XQsJkt6m7vf0GMQC49wUnE/pcKNFbj00bQYHfzfhHoFhG
-         mz3dWxEa2/9xw==
-Date:   Tue, 4 Jun 2019 01:11:25 +1000
-From:   Stephen Rothwell <sfr@canb.auug.org.au>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Uladzislau Rezki <urezki@gmail.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
-        Hillf Danton <hdanton@sina.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>
-Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
- single unlink_va() when merge)
-Message-ID: <20190604011125.266222a8@canb.auug.org.au>
-In-Reply-To: <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
-References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
-        <20190603135939.e2mb7vkxp64qairr@pc636>
-        <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
-        <20190604003153.76f33dd2@canb.auug.org.au>
-        <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
+        Mon, 3 Jun 2019 11:42:57 -0400
+Received: by mail-vs1-f67.google.com with SMTP id o5so11541981vsq.4
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Jun 2019 08:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eFvvhaRusrBbL8rIah/3Coy1NP3U36B2fSZ3lMYlx8A=;
+        b=nJh4XTxlZGurnl314LSdBmPwJLXwd8myttzFrQdqdfrUth4sB1WqCsVZtVpqczdZ9h
+         hg+JKBWSdwKErXnEImgVEx7+P1zPnxw1i/LpwCBbs93V21N48nbs7HW/WD97yfad1hqv
+         fREGryt58ccOsnJ1E60ail1mZ0nb/Dv0h8TsU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eFvvhaRusrBbL8rIah/3Coy1NP3U36B2fSZ3lMYlx8A=;
+        b=XQunjigaupOqmfLbNDtngrih7UNEy5zjjjneLzYIhCEzHQlm9mx//1Yl+CEczweAF9
+         xZqXbR9CWj6nfwNOSwLCW9WesOPArEZUkKpomKsiYmMv4oDKzqlMjcLdM1iWsxWc/BT2
+         kxZI6CU07jGjd4aoSsWuaFNXr3GsrNOfhxOithAN6u0CNn2qVZkiGfd+RsFBJAYN9q4i
+         1Q+ghK6GBRZzkSPkK6kdmX4tmtawzKsGISRI8p75RlOCgS9UA3MoFIzj8sBDUgceK/8u
+         9H3ECIg+e+j5Njj380BrkrSVp3VYCzuHM64N3d6Irm0y3vp4ZBKs5k8+0Km4c2kQ/z9H
+         PuwQ==
+X-Gm-Message-State: APjAAAXpoN4pALl9ckNGKav4JYHeiUad4i8Pa5bBjlBSYU2Cx1Q8Z4wg
+        WW9FgA6+ssM2LSDLejPdnySMI0l78Jo=
+X-Google-Smtp-Source: APXvYqx7ZT6gelfG52pLl1DyHWJZqEsaswG6d4F2Jmir/BhG4OZTHWuKajloYtv/QghXqJPzdyj+hg==
+X-Received: by 2002:a67:69d6:: with SMTP id e205mr3931692vsc.98.1559576576608;
+        Mon, 03 Jun 2019 08:42:56 -0700 (PDT)
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
+        by smtp.gmail.com with ESMTPSA id j13sm1503668vke.52.2019.06.03.08.42.55
+        for <linux-samsung-soc@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Jun 2019 08:42:55 -0700 (PDT)
+Received: by mail-vs1-f50.google.com with SMTP id v129so2271818vsb.11
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Jun 2019 08:42:55 -0700 (PDT)
+X-Received: by 2002:a67:ca0a:: with SMTP id z10mr13299139vsk.94.1559576574955;
+ Mon, 03 Jun 2019 08:42:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/ydAB_847pdF8mWcT_YXzIYL"; protocol="application/pgp-signature"
+References: <20190530210421.24941-1-linus.walleij@linaro.org>
+ <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com> <20190601080245.GA1012@kunai>
+In-Reply-To: <20190601080245.GA1012@kunai>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 3 Jun 2019 08:42:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
+Message-ID: <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
+Subject: Re: [PATCH] i2c: mux: arb-gpio: Rewrite to use GPIO descriptors
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-i2c@vger.kernel.org,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---Sig_/ydAB_847pdF8mWcT_YXzIYL
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hi Krzysztof,
-
-On Mon, 3 Jun 2019 16:35:22 +0200 Krzysztof Kozlowski <krzk@kernel.org> wro=
-te:
+On Sat, Jun 1, 2019 at 1:02 AM Wolfram Sang <wsa@the-dreams.de> wrote:
 >
-> On Mon, 3 Jun 2019 at 16:32, Stephen Rothwell <sfr@canb.auug.org.au> wrot=
-e:
-> >
-> > On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org>=
- wrote: =20
-> > >
-> > > Indeed it looks like effect of merge conflict resolution or applying.
-> > > When I look at MMOTS, it is the same as yours:
-> > > http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=3Db77b8cce=
-67f246109f9d87417a32cd38f0398f2f
-> > >
-> > > However in linux-next it is different.
-> > >
-> > > Stephen, any thoughts? =20
-> >
-> > Have you had a look at today's linux-next?  It looks correct in
-> > there.  Andrew updated his patch series over the weekend. =20
->=20
-> Yes, I am looking at today's next. Both the source code and the commit
-> 728e0fbf263e3ed359c10cb13623390564102881 have wrong "if (merged)" (put
-> in wrong hunk).
+>
+> > NOTE: any chance I can convince you to CC LKML on patches like this?
+> > There's no patchwork for i2c so I can't easily grab this from
+> > patchwork unless you CC LKML.
+>
+> See MAINTAINERS, there is a patchwork instance on ozlabs.
 
-OK, I have replaced that commit with this:
+Ah, right!  Even so, CCing LKML can be a helpful thing to do for
+patches.  If nothing else the archiving on lore.kernel.org is
+valuable.
 
-From: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Subject: mm/vmalloc.c: get rid of one single unlink_va() when merge
-
-It does not make sense to try to "unlink" the node that is definitely not
-linked with a list nor tree.  On the first merge step VA just points to
-the previously disconnected busy area.
-
-On the second step, check if the node has been merged and do "unlink" if
-so, because now it points to an object that must be linked.
-
-Link: http://lkml.kernel.org/r/20190527151843.27416-4-urezki@gmail.com
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Acked-by: Hillf Danton <hdanton@sina.com>
-Cc: Ingo Molnar <mingo@elte.hu>
-Cc: Joel Fernandes <joelaf@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Oleksiy Avramchenko <oleksiy.avramchenko@sonymobile.com>
-Cc: Roman Gushchin <guro@fb.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Thomas Garnier <thgarnie@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
-
- mm/vmalloc.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
---- a/mm/vmalloc.c~mm-vmap-get-rid-of-one-single-unlink_va-when-merge
-+++ a/mm/vmalloc.c
-@@ -719,9 +719,6 @@ merge_or_add_vmap_area(struct vmap_area
- 			/* Check and update the tree if needed. */
- 			augment_tree_propagate_from(sibling);
-=20
--			/* Remove this VA, it has been merged. */
--			unlink_va(va, root);
--
- 			/* Free vmap_area object. */
- 			kmem_cache_free(vmap_area_cachep, va);
-=20
-@@ -746,12 +743,11 @@ merge_or_add_vmap_area(struct vmap_area
- 			/* Check and update the tree if needed. */
- 			augment_tree_propagate_from(sibling);
-=20
--			/* Remove this VA, it has been merged. */
--			unlink_va(va, root);
-+			if (merged)
-+				unlink_va(va, root);
-=20
- 			/* Free vmap_area object. */
- 			kmem_cache_free(vmap_area_cachep, va);
--
- 			return;
- 		}
- 	}
-_
-
-Which is the patch from mmots but with different line numbers.
---=20
-Cheers,
-Stephen Rothwell
-
---Sig_/ydAB_847pdF8mWcT_YXzIYL
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAlz1OJ0ACgkQAVBC80lX
-0Gy1Awf8CHdwemQ/KgeILWHLGe2zYZfMlga1K+adEnhVDxrxEryZFGJiRTFghndD
-y2UPZLjUfSTmwmZwmUydCCNYHem0/M89nP6f6o2GYHtg3wQJKSVzDE7JXssQ0+p/
-DMtYxHL8VCKIzTU250tEC2kzxU+9IXwflrLHuLLEaWYmbtgudEpUdFr0xWGbGPh7
-17rGAfC7A+rJY3DoomLyJfsGYID6dbHewlghDzEPvNLziVfsAZH35bmzAnwEs3vv
-hZhB8TZb8Lj5U4e3JT6SqVBON96IAkOj2Ti5QaeEyjXrmrQuyZ57xy+yaZmTpmLj
-yFnHYZX/pQ2pSj41p4nS1joBmTaVOQ==
-=XHt+
------END PGP SIGNATURE-----
-
---Sig_/ydAB_847pdF8mWcT_YXzIYL--
+-Doug
