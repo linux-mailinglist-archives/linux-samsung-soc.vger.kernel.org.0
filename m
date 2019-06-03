@@ -2,91 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C513B337DB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 20:31:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE468338FA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 21:19:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfFCSbZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 14:31:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56634 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726136AbfFCSbY (ORCPT
+        id S1726541AbfFCTTi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 15:19:38 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41908 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726049AbfFCTTh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 14:31:24 -0400
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E5A7E26DF3;
-        Mon,  3 Jun 2019 18:31:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559586684;
-        bh=tKu+9YnqIJM7WkSdcJxKhcrVSljhwHnaTXwK03T/uwU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=LMV4WcMUZELWXQQR0e73PHu/2quC/Tw33p3nhKKIX9SDsD264VVlQXxMFnBVoxqD5
-         Fmsb20qeZkPxCHDqyXzNe4TG7g6aRe+xd15pqHD41tTsQTAGYhiNUOcnG0lXioNcMs
-         LVc9VItMI6RFTLHtF4Aqe5+2Xt7KX0Q02bRVJ4uk=
-Received: by mail-lj1-f181.google.com with SMTP id a10so13962807ljf.6;
-        Mon, 03 Jun 2019 11:31:23 -0700 (PDT)
-X-Gm-Message-State: APjAAAWycHsDQbLoXt4SfC7oC7/ZRRGUsTpsmbjA59u7529a0h00FX+B
-        ci9vFnaSYWnDtRS6nZjEiH1Sr2SMwW33cZFsukw=
-X-Google-Smtp-Source: APXvYqztKMTjaCNLajYG7cSZz9qvxdLn+E1v/4LiZh5vlmfrNayaC9kf2W0/Ic+i1ixVwYQjuUcOqMbLrwS6Jx67Gmo=
-X-Received: by 2002:a2e:568d:: with SMTP id k13mr14358606lje.194.1559586682175;
- Mon, 03 Jun 2019 11:31:22 -0700 (PDT)
+        Mon, 3 Jun 2019 15:19:37 -0400
+Received: by mail-pg1-f193.google.com with SMTP id 83so2009687pgg.8;
+        Mon, 03 Jun 2019 12:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y1POYuY5yv6TKMl+TVizfTG3p/FI2fRpGzaKg8qUjGU=;
+        b=B6Luh7lFrEGKMS0YaCVBv8YPdG1mQ6kipZMlOOIWg7PtGkDH5BzB5dbwoj+XazEPrQ
+         gW4udVF7MtZdA8ZcHF04cxCgpkQ1Bq+DjrhRoEue0Qwkffa0UKyhVn5PZvC7IVcn+W0q
+         jqKBgtw0etiOYNrWWIaxWusHOxiXee9ERSe2jvi8PwAE8XbNewSlVh9Po8LFTzZu1W4g
+         URBPlLPp80M14E+DSIZklLmwiFd9NcKnayxknqEJMYSwethFJ+YjK+IXhoO/vhD5bTaY
+         MiuHszmiwHy9XAa3KIJdZDvcPAXfPUzPE7AqYAr8j2favgR6jg2YNM4ih6TJ08VXIxUL
+         fEMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y1POYuY5yv6TKMl+TVizfTG3p/FI2fRpGzaKg8qUjGU=;
+        b=Ee+QsZ7ks/J7M3BDK+749+UKFpzdR8aloGRM3LsshzqiF9TUMwSel2PEftz/f+iJSi
+         jfIiljzmfH7KyTZBtNHpxTLinjDp6cYjACQGVja7Y0bO1WJqgTinISgblIEAZZb2fe3C
+         pFAO5DoKgxpEqRZWBrfy0JtHb9wn4JYIQmHKwYCUfukTM3e+4smWUcGMRBfoVZ91RHDn
+         KPpsnP8QoY6BLd/8XlojxkA0QPpU7ZJmvtu3OiT9hZqgJ58RbFKplQMDMeVJu8YycIMD
+         R01HLeoyDfCR+OO8Ie4LipMdLYqW2vgwDmG7YDrGrSVSvjffVBYBATlrMad80FcB0oUF
+         vDAw==
+X-Gm-Message-State: APjAAAVNGmWKu4VG5QQIA4WQ6jp7UPxcywyrAiq2ob0caIvk0zdlg5CZ
+        j9Oq6ROuhJw8Aby/qU21lhJ/axBnBqAeWrGp6S4=
+X-Google-Smtp-Source: APXvYqyxiiO0bsYaQbImkXitEOhDYoQvgmXhCfueX9MbGIWAyuoj8TggJ5ZITYx8TlJOta8cZTfOSJeb38kdARJg9LI=
+X-Received: by 2002:a63:81c6:: with SMTP id t189mr14722226pgd.293.1559589576950;
+ Mon, 03 Jun 2019 12:19:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
  <20190603135939.e2mb7vkxp64qairr@pc636> <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
  <20190604003153.76f33dd2@canb.auug.org.au> <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
- <20190604011125.266222a8@canb.auug.org.au>
-In-Reply-To: <20190604011125.266222a8@canb.auug.org.au>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 3 Jun 2019 20:31:10 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPf3LZuQ5o5sERL_b6+4SfERWyQR0jUaVUJs12m7WdD3gQ@mail.gmail.com>
-Message-ID: <CAJKOXPf3LZuQ5o5sERL_b6+4SfERWyQR0jUaVUJs12m7WdD3gQ@mail.gmail.com>
+In-Reply-To: <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
+From:   Dexuan-Linux Cui <dexuan.linux@gmail.com>
+Date:   Mon, 3 Jun 2019 12:19:25 -0700
+Message-ID: <CAA42JLZa4OgiEYk7d+gM9pu-gvVbOfQj3-VfEb8kvx538-atew@mail.gmail.com>
 Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
  single unlink_va() when merge)
-To:     Stephen Rothwell <sfr@canb.auug.org.au>
-Cc:     Uladzislau Rezki <urezki@gmail.com>,
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
+        Uladzislau Rezki <urezki@gmail.com>,
         Andrew Morton <akpm@linux-foundation.org>,
         Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        <linux-samsung-soc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Hillf Danton <hdanton@sina.com>,
         Thomas Gleixner <tglx@linutronix.de>,
-        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>
+        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>,
+        Dexuan Cui <decui@microsoft.com>, v-lide@microsoft.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 3 Jun 2019 at 17:11, Stephen Rothwell <sfr@canb.auug.org.au> wrote:
+On Mon, Jun 3, 2019 at 7:37 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >
-> Hi Krzysztof,
->
-> On Mon, 3 Jun 2019 16:35:22 +0200 Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> On Mon, 3 Jun 2019 at 16:32, Stephen Rothwell <sfr@canb.auug.org.au> wrote:
 > >
-> > On Mon, 3 Jun 2019 at 16:32, Stephen Rothwell <sfr@canb.auug.org.au> wrote:
-> > >
-> > > On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > > >
-> > > > Indeed it looks like effect of merge conflict resolution or applying.
-> > > > When I look at MMOTS, it is the same as yours:
-> > > > http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=b77b8cce67f246109f9d87417a32cd38f0398f2f
-> > > >
-> > > > However in linux-next it is different.
-> > > >
-> > > > Stephen, any thoughts?
-> > >
-> > > Have you had a look at today's linux-next?  It looks correct in
-> > > there.  Andrew updated his patch series over the weekend.
+> > Hi Krzysztof,
 > >
-> > Yes, I am looking at today's next. Both the source code and the commit
-> > 728e0fbf263e3ed359c10cb13623390564102881 have wrong "if (merged)" (put
-> > in wrong hunk).
+> > On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > >
+> > > Indeed it looks like effect of merge conflict resolution or applying.
+> > > When I look at MMOTS, it is the same as yours:
+> > > http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=b77b8cce67f246109f9d87417a32cd38f0398f2f
+> > >
+> > > However in linux-next it is different.
+> > >
+> > > Stephen, any thoughts?
+> >
+> > Have you had a look at today's linux-next?  It looks correct in
+> > there.  Andrew updated his patch series over the weekend.
 >
-> OK, I have replaced that commit with this:
+> Yes, I am looking at today's next. Both the source code and the commit
+> 728e0fbf263e3ed359c10cb13623390564102881 have wrong "if (merged)" (put
+> in wrong hunk).
+>
+> Best regards,
+> Krzysztof
 
-Thank you!
+FYI, we also see the issue in our x86 VM running on Hyper-V.
 
-Best regards,
-Krzysztof
+Thanks,
+Dexuan
