@@ -2,76 +2,100 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F50032927
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 09:12:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F007932B7E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 11:08:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbfFCHME (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 03:12:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57862 "EHLO mail.kernel.org"
+        id S1726609AbfFCJIB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 05:08:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53042 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726383AbfFCHME (ORCPT
+        id S1726561AbfFCJIA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 03:12:04 -0400
+        Mon, 3 Jun 2019 05:08:00 -0400
 Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 68C2E27C91;
-        Mon,  3 Jun 2019 07:12:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D586F2713A;
+        Mon,  3 Jun 2019 09:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559545923;
-        bh=c8WvhZLOCRa982aWA11WnNSUWAV0NBTazHnlnPgRRJc=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=EhzwjuDRJKq5thLsOFmLd+rmK7MR6WgEWJlSm1jFBBLv0HNnOg0nGyhFj9Tw8Wqjf
-         jQolmdrMUUXak+dpNAlvFG+zIwsOFQkJaJMPrO5QDLKH5nLgcsZdcvYblrj9F9QDUY
-         e3uLeo3/gCOf4kI9a9489EzANPo5d6GssUXOaQZU=
-Received: by mail-lj1-f181.google.com with SMTP id a10so11877917ljf.6;
-        Mon, 03 Jun 2019 00:12:03 -0700 (PDT)
-X-Gm-Message-State: APjAAAVGMQZJBo7WCay/iMmfmv4qOIiBmwzBZ66MdaAu4/aSDJU7xomN
-        0i+iSMvirJ6Ml3wQZJmRswpsUsbvoVY6bYVZ4Qo=
-X-Google-Smtp-Source: APXvYqzyq6xQlubn/0Q0SU/hL+PbbTEAKqFxtluwxG4OSVlm/Yy7fvtaRD7+POIAxvZgtcgpUshpuxibY26Dq8fBejI=
-X-Received: by 2002:a2e:568d:: with SMTP id k13mr12680250lje.194.1559545921672;
- Mon, 03 Jun 2019 00:12:01 -0700 (PDT)
+        s=default; t=1559552880;
+        bh=Rzr6gfXjAXNtZ72i1f03ZP5xQADxqoyjKQjlDsDgnOU=;
+        h=From:Date:Subject:To:From;
+        b=OFyk4NY4DclC0oTHFd+eXw4x0tlpPhoixH2tmw3kBXKOXH5TYz61qqu8iPuV6Oxov
+         pUaAnT2yl/SpS/pTBkp8RfXYzmGPLR5VVU8Rq3Bsvowc2B50/wekJgJPg8z8tp5OC0
+         3dySqY9w+R7b6avLDJk8xQJPQ038nr55Pc74dKLs=
+Received: by mail-lj1-f181.google.com with SMTP id r76so15397974lja.12;
+        Mon, 03 Jun 2019 02:07:59 -0700 (PDT)
+X-Gm-Message-State: APjAAAUN/U+s+/4kff/ksnLsTx92XpgCoKoTq/3GmFh1N1n/oBVm8KQJ
+        xbkABQ2gvTbsTXw4122o0OqgW/6EFFzyyEy066s=
+X-Google-Smtp-Source: APXvYqw8WHJT+fvLmcEcp0Lo0YX/2W6ao7L44cq/RA1vj/2N8oEiiJnTLU0U+PgTYKDOUB7tqpELGDErPLLk8DYOMYs=
+X-Received: by 2002:a2e:980e:: with SMTP id a14mr2097047ljj.60.1559552878019;
+ Mon, 03 Jun 2019 02:07:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190530215013.17806-1-linus.walleij@linaro.org>
-In-Reply-To: <20190530215013.17806-1-linus.walleij@linaro.org>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 3 Jun 2019 09:11:50 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfO=t1VCjOcrcgWHM_d-iCVwRF_iSeckV6mO7Th-S3UvQ@mail.gmail.com>
-Message-ID: <CAJKOXPfO=t1VCjOcrcgWHM_d-iCVwRF_iSeckV6mO7Th-S3UvQ@mail.gmail.com>
-Subject: Re: [PATCH] i2c: s3c2410: Convert to use GPIO descriptors
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Wolfram Sang <wsa@the-dreams.de>, linux-i2c@vger.kernel.org,
-        Kukjin Kim <kgene@kernel.org>,
+Date:   Mon, 3 Jun 2019 11:07:46 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
+Message-ID: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
+Subject: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
+ single unlink_va() when merge)
+To:     Andrew Morton <akpm@linux-foundation.org>,
+        "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+        Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>
+        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Hillf Danton <hdanton@sina.com>,
+        Thomas Gleixner <tglx@linutronix.de>, Tejun Heo <tj@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 30 May 2019 at 23:50, Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> The S3C2410 does some funny dance around its pins:
-> - First try to call back to the platform to get and control
->   some GPIO pins
-> - If this doesn't work, it tries to get a pin control handle
-> - If this doesn't work, it retrieves two GPIOs from the device
->   tree node and does nothing with them
->
-> If we're gonna retrieve two GPIOs and do nothing with them, we
-> might as well do it using the GPIO descriptor API. When we use
-> the resource management API, the code gets smaller.
->
-> Cc: Kukjin Kim <kgene@kernel.org>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: linux-samsung-soc@vger.kernel.org
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-> ---
->  drivers/i2c/busses/i2c-s3c2410.c | 47 ++++++--------------------------
->  1 file changed, 9 insertions(+), 38 deletions(-)
+Hi,
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+On recent next I see bugs during boot (after bringing up user-space or
+during reboot):
+kernel BUG at ../mm/vmalloc.c:470!
+On all my boards. On QEMU I see something similar, although the
+message is "Internal error: Oops - undefined instruction: 0 [#1] ARM",
+
+The calltrace is:
+[   34.565126] [<c0275c9c>] (__free_vmap_area) from [<c0276044>]
+(__purge_vmap_area_lazy+0xd0/0x170)
+[   34.573963] [<c0276044>] (__purge_vmap_area_lazy) from [<c0276d50>]
+(_vm_unmap_aliases+0x1fc/0x244)
+[   34.582974] [<c0276d50>] (_vm_unmap_aliases) from [<c0279500>]
+(__vunmap+0x170/0x200)
+[   34.590770] [<c0279500>] (__vunmap) from [<c01d5a70>]
+(do_free_init+0x40/0x5c)
+[   34.597955] [<c01d5a70>] (do_free_init) from [<c01478f4>]
+(process_one_work+0x228/0x810)
+[   34.606018] [<c01478f4>] (process_one_work) from [<c0147f0c>]
+(worker_thread+0x30/0x570)
+[   34.614077] [<c0147f0c>] (worker_thread) from [<c014e8b4>]
+(kthread+0x134/0x164)
+[   34.621438] [<c014e8b4>] (kthread) from [<c01010b4>]
+(ret_from_fork+0x14/0x20)
+
+Full log here:
+https://krzk.eu/#/builders/1/builds/3356/steps/14/logs/serial0
+https://krzk.eu/#/builders/22/builds/1118/steps/35/logs/serial0
+
+Bisect pointed to:
+728e0fbf263e3ed359c10cb13623390564102881 is the first bad commit
+commit 728e0fbf263e3ed359c10cb13623390564102881
+Author: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Date:   Sat Jun 1 12:20:19 2019 +1000
+    mm/vmalloc.c: get rid of one single unlink_va() when merge
+
+Boards:
+1. Arch ARM Linux
+2. exynos_defconfig
+3. Exynos boards (Odroid XU3, etc), ARMv7, octa-core (Cortex-A7+A15),
+Exynos5422 SoC
+4. Systemd: v239, static IP set in kernel command line
 
 Best regards,
 Krzysztof
