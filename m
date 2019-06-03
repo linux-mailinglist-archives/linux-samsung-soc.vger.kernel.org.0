@@ -2,122 +2,98 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ECCA7331CE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:13:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A26533231
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728062AbfFCONK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 10:13:10 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33563 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727429AbfFCONJ (ORCPT
+        id S1729009AbfFCOcA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 10:32:00 -0400
+Received: from ozlabs.org ([203.11.71.1]:49757 "EHLO ozlabs.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728975AbfFCOcA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 10:13:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id d9so12301534wrx.0;
-        Mon, 03 Jun 2019 07:13:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M2DuwGRXCzN1db5gv+o4JjQrckmHVPeHDhxTCJpaz8A=;
-        b=slnWtIzOLzetY2YSYSkDTXcQq/0vDclrroenZ2+Ub32bJnhMud0BdePZ4juHVaiR46
-         6nb3rNDaEL+lsDjtL91BThlz5sudGoYmb8kyfo/GgV8ywDIsVxOYRUxQXjZC6Y1Pc35h
-         Ec6OxBNy5dARePNXpbR/BQe8/Tkkgz2WfisowptFayoJazNRQTS5YXY/n8IgPeR+GpgS
-         21zmVPQStbMYM+Z7W8dn1UjSjW94bOJ+M4D727yzafXRSq0DsyHgDMsziwnQ0qhkUhZF
-         39Ptun2FQfKNzsEk3IY+FtkIX86wx5iu4IpK0XyRgGVS18l1eLTqMxhYlZlOohOT7ovF
-         UF4A==
-X-Gm-Message-State: APjAAAVmSn4B5RynxGNzw+u13uIH4I55DDlIE2gWqHrztqB7HBfOowKM
-        I8o9HS1CEAduPf6Jbu88dW3bkDdCVEA640Ltrug=
-X-Google-Smtp-Source: APXvYqwSiyj9I4TnvWT5Kk/YYC8ZZsvfzpe4pBWbLs2uh4221Wy+kvVBqdEEPMlCNuHKUYB1/KqrHRsoTcDqqS6+yKA=
-X-Received: by 2002:adf:e691:: with SMTP id r17mr2873207wrm.67.1559571187782;
- Mon, 03 Jun 2019 07:13:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
- <20190603135939.e2mb7vkxp64qairr@pc636>
-In-Reply-To: <20190603135939.e2mb7vkxp64qairr@pc636>
-From:   Sudeep Holla <sudeep.holla@arm.com>
-Date:   Mon, 3 Jun 2019 15:12:55 +0100
-Message-ID: <CAPKp9uauCeYi-ArurSHytpBR4_XXJX6jfG2RqoMo0dpNGyTb5w@mail.gmail.com>
-Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
- single unlink_va() when merge)
-To:     Uladzislau Rezki <urezki@gmail.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Mon, 3 Jun 2019 10:32:00 -0400
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.ozlabs.org (Postfix) with ESMTPSA id 45HcvH3K3cz9s7h;
+        Tue,  4 Jun 2019 00:31:55 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=canb.auug.org.au;
+        s=201702; t=1559572317;
+        bh=9CSpMug+i5yMEa9Kh1285Mi9cdGyu1MghkPju4EXwHk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=aSIFYxHneOS8/EOrgnuN6HYuL+Kq/SKfwpd5sfHzNxUD5wqS8A5eOJoxCpfkxShsR
+         DIa0BgZF8/jrwFdkNwpuVCqzy/jlmM0/MPUuciMfNvNzwRL8M4rJyiSoXig+eU97Uq
+         /LVxMKvQXiTLuXlhxJrQjkKSlsYQ8QOGqdyarRMTtHm9jtMmdi5J0nm/bpEU9XUtGD
+         cIbztJ3tOY3MOEIzcQ+nznEwe0b9CM6xH42VrTnrHUIoLilVyChzQOcCMZXirU2/m9
+         HU9BONazvVQqhNZ+ggH6uR9xc3GbQh6ZKB6B+J33UQHRaVjeDD5tWbmyDvqmc5uHRl
+         Svamyc6afxd1Q==
+Date:   Tue, 4 Jun 2019 00:31:53 +1000
+From:   Stephen Rothwell <sfr@canb.auug.org.au>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Uladzislau Rezki <urezki@gmail.com>,
         Andrew Morton <akpm@linux-foundation.org>,
         Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
+        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
         Hillf Danton <hdanton@sina.com>,
         Thomas Gleixner <tglx@linutronix.de>,
-        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>
+Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
+ single unlink_va() when merge)
+Message-ID: <20190604003153.76f33dd2@canb.auug.org.au>
+In-Reply-To: <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
+References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
+        <20190603135939.e2mb7vkxp64qairr@pc636>
+        <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/T8JB7vmA6.0wdOso2xn.yrp"; protocol="application/pgp-signature"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+--Sig_/T8JB7vmA6.0wdOso2xn.yrp
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 3, 2019 at 3:02 PM Uladzislau Rezki <urezki@gmail.com> wrote:
->
-> Hello, Krzysztof.
->
-> On Mon, Jun 03, 2019 at 11:07:46AM +0200, Krzysztof Kozlowski wrote:
-> > Hi,
-> >
-> > On recent next I see bugs during boot (after bringing up user-space or
-> > during reboot):
-> > kernel BUG at ../mm/vmalloc.c:470!
+Hi Krzysztof,
 
-I was about to report the same and saw this thread.
-
-> > On all my boards. On QEMU I see something similar, although the
-> > message is "Internal error: Oops - undefined instruction: 0 [#1] ARM",
-> >
-> > The calltrace is:
-> > [   34.565126] [<c0275c9c>] (__free_vmap_area) from [<c0276044>]
-> > (__purge_vmap_area_lazy+0xd0/0x170)
-> > [   34.573963] [<c0276044>] (__purge_vmap_area_lazy) from [<c0276d50>]
-> > (_vm_unmap_aliases+0x1fc/0x244)
-> > [   34.582974] [<c0276d50>] (_vm_unmap_aliases) from [<c0279500>]
-> > (__vunmap+0x170/0x200)
-> > [   34.590770] [<c0279500>] (__vunmap) from [<c01d5a70>]
-> > (do_free_init+0x40/0x5c)
-> > [   34.597955] [<c01d5a70>] (do_free_init) from [<c01478f4>]
-> > (process_one_work+0x228/0x810)
-> > [   34.606018] [<c01478f4>] (process_one_work) from [<c0147f0c>]
-> > (worker_thread+0x30/0x570)
-> > [   34.614077] [<c0147f0c>] (worker_thread) from [<c014e8b4>]
-> > (kthread+0x134/0x164)
-> > [   34.621438] [<c014e8b4>] (kthread) from [<c01010b4>]
-> > (ret_from_fork+0x14/0x20)
-> >
-> > Full log here:
-> > https://krzk.eu/#/builders/1/builds/3356/steps/14/logs/serial0
-> > https://krzk.eu/#/builders/22/builds/1118/steps/35/logs/serial0
-> >
-> > Bisect pointed to:
-> > 728e0fbf263e3ed359c10cb13623390564102881 is the first bad commit
-> > commit 728e0fbf263e3ed359c10cb13623390564102881
-> > Author: Uladzislau Rezki (Sony) <urezki@gmail.com>
-> > Date:   Sat Jun 1 12:20:19 2019 +1000
-> >     mm/vmalloc.c: get rid of one single unlink_va() when merge
-> >
-> I have checked the linux-next. I can confirm it happens because of:
->  mm/vmalloc.c: get rid of one single unlink_va() when merge
+On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org> wro=
+te:
 >
-> The problem is that, it has been applied wrongly into linux-next tree
-> for some reason, i do not why. Probably due to the fact that i based
-> my work on 5.1/2-rcX, whereas linux-next is a bit ahead of it. If so,
-> sorry for that.
->
-> See below the clean patch for remotes/linux-next/master:
->
+> Indeed it looks like effect of merge conflict resolution or applying.
+> When I look at MMOTS, it is the same as yours:
+> http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=3Db77b8cce67f2=
+46109f9d87417a32cd38f0398f2f
+>=20
+> However in linux-next it is different.
+>=20
+> Stephen, any thoughts?
 
-This patch fixes the issue and resumes booting on my platform.
+Have you had a look at today's linux-next?  It looks correct in
+there.  Andrew updated his patch series over the weekend.
 
---
-Regards,
-Sudeep
+--=20
+Cheers,
+Stephen Rothwell
+
+--Sig_/T8JB7vmA6.0wdOso2xn.yrp
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAlz1L1kACgkQAVBC80lX
+0Gy6Nwf/eOmUW6/H8C+yiT3y7MfpDwgD9FP9IuOOQsC1eGfyZ//CGE7jojPjuwCp
+827J8ZM8CaEvBsV9iELlKg+w1zy+RrNVDoNQE+l2z8O7MJYW9Tm9u95cdAsLqWwA
+oZfzmqKp+5GJ/rYEXm/zRzT9rkR/NnKdUr5WumOp7gUlVhzjQ9KgFQPnhjrIB94Z
+Ib+WdHZ9IgaisVD1pA8rWju5wTAq2SyKLKfAL35h18Lj6T0+QZiEx23Je8GiiWtR
+30VF4LCZvtL95TjMz8vNDOIEU57lDRSXEGQcM17KHLVLpM3a1VmN6IKYyVTKd21m
+0FAZGs8EWDEh4iitzOEbJD0KE6N0jA==
+=59/d
+-----END PGP SIGNATURE-----
+
+--Sig_/T8JB7vmA6.0wdOso2xn.yrp--
