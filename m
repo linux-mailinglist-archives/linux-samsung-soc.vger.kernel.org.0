@@ -2,35 +2,47 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A26533231
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94C0533244
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:35:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729009AbfFCOcA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 10:32:00 -0400
-Received: from ozlabs.org ([203.11.71.1]:49757 "EHLO ozlabs.org"
+        id S1729019AbfFCOfg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 10:35:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41508 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728975AbfFCOcA (ORCPT
+        id S1728988AbfFCOfg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 10:32:00 -0400
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Mon, 3 Jun 2019 10:35:36 -0400
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.ozlabs.org (Postfix) with ESMTPSA id 45HcvH3K3cz9s7h;
-        Tue,  4 Jun 2019 00:31:55 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=canb.auug.org.au;
-        s=201702; t=1559572317;
-        bh=9CSpMug+i5yMEa9Kh1285Mi9cdGyu1MghkPju4EXwHk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=aSIFYxHneOS8/EOrgnuN6HYuL+Kq/SKfwpd5sfHzNxUD5wqS8A5eOJoxCpfkxShsR
-         DIa0BgZF8/jrwFdkNwpuVCqzy/jlmM0/MPUuciMfNvNzwRL8M4rJyiSoXig+eU97Uq
-         /LVxMKvQXiTLuXlhxJrQjkKSlsYQ8QOGqdyarRMTtHm9jtMmdi5J0nm/bpEU9XUtGD
-         cIbztJ3tOY3MOEIzcQ+nznEwe0b9CM6xH42VrTnrHUIoLilVyChzQOcCMZXirU2/m9
-         HU9BONazvVQqhNZ+ggH6uR9xc3GbQh6ZKB6B+J33UQHRaVjeDD5tWbmyDvqmc5uHRl
-         Svamyc6afxd1Q==
-Date:   Tue, 4 Jun 2019 00:31:53 +1000
-From:   Stephen Rothwell <sfr@canb.auug.org.au>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 8423227AF4;
+        Mon,  3 Jun 2019 14:35:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559572535;
+        bh=hk/xMLxFXk4kJBGBwlcG++wGkbLPTKk2rGWiw3Ye9mQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=xRY+ChZwcxFTR01zBWEpCDzqDawzaXX8BoxQ0hmqSrh2c+43cmgeskejeZ2bdG25X
+         vRPjSFEyjtGBkNKFUbEn3pOB1Ubc6IkL+wNksi7gfju4OwJjpwhSuOFaCRWfP5229N
+         ZPfaGKPgvA6q8jvaV/hupBv4lNEgmua37PINB+R0=
+Received: by mail-lf1-f46.google.com with SMTP id y13so13771879lfh.9;
+        Mon, 03 Jun 2019 07:35:35 -0700 (PDT)
+X-Gm-Message-State: APjAAAU8lvTy+JzUyncGZ/BV6VOyE6XJtIgUvo8obSn6bJFnxRF7dcIY
+        Rupsv9K+pZEDORPnwFrzi6nLUFhrKmw3UYwkRSk=
+X-Google-Smtp-Source: APXvYqweQ+vKT3uUCXOStqdayFxBRi48G3kwhXvoDIjzC25dmMqP23a+ZySiUA8IqV9rXywdcuG6d+pcD6+MWJ+InEE=
+X-Received: by 2002:ac2:4891:: with SMTP id x17mr2053137lfc.60.1559572533667;
+ Mon, 03 Jun 2019 07:35:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
+ <20190603135939.e2mb7vkxp64qairr@pc636> <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
+ <20190604003153.76f33dd2@canb.auug.org.au>
+In-Reply-To: <20190604003153.76f33dd2@canb.auug.org.au>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 3 Jun 2019 16:35:22 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
+Message-ID: <CAJKOXPed=npnfk0H2WUDityHg5cPLH_zwShyRd+B2RS8h6C7SQ@mail.gmail.com>
+Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
+ single unlink_va() when merge)
+To:     Stephen Rothwell <sfr@canb.auug.org.au>
 Cc:     Uladzislau Rezki <urezki@gmail.com>,
         Andrew Morton <akpm@linux-foundation.org>,
         Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
@@ -40,60 +52,32 @@ Cc:     Uladzislau Rezki <urezki@gmail.com>,
         Hillf Danton <hdanton@sina.com>,
         Thomas Gleixner <tglx@linutronix.de>,
         Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>
-Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
- single unlink_va() when merge)
-Message-ID: <20190604003153.76f33dd2@canb.auug.org.au>
-In-Reply-To: <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
-References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
-        <20190603135939.e2mb7vkxp64qairr@pc636>
-        <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/T8JB7vmA6.0wdOso2xn.yrp"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---Sig_/T8JB7vmA6.0wdOso2xn.yrp
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-Hi Krzysztof,
-
-On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org> wro=
-te:
+On Mon, 3 Jun 2019 at 16:32, Stephen Rothwell <sfr@canb.auug.org.au> wrote:
 >
-> Indeed it looks like effect of merge conflict resolution or applying.
-> When I look at MMOTS, it is the same as yours:
-> http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=3Db77b8cce67f2=
-46109f9d87417a32cd38f0398f2f
->=20
-> However in linux-next it is different.
->=20
-> Stephen, any thoughts?
+> Hi Krzysztof,
+>
+> On Mon, 3 Jun 2019 16:10:40 +0200 Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> >
+> > Indeed it looks like effect of merge conflict resolution or applying.
+> > When I look at MMOTS, it is the same as yours:
+> > http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=b77b8cce67f246109f9d87417a32cd38f0398f2f
+> >
+> > However in linux-next it is different.
+> >
+> > Stephen, any thoughts?
+>
+> Have you had a look at today's linux-next?  It looks correct in
+> there.  Andrew updated his patch series over the weekend.
 
-Have you had a look at today's linux-next?  It looks correct in
-there.  Andrew updated his patch series over the weekend.
+Yes, I am looking at today's next. Both the source code and the commit
+728e0fbf263e3ed359c10cb13623390564102881 have wrong "if (merged)" (put
+in wrong hunk).
 
---=20
-Cheers,
-Stephen Rothwell
-
---Sig_/T8JB7vmA6.0wdOso2xn.yrp
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAlz1L1kACgkQAVBC80lX
-0Gy6Nwf/eOmUW6/H8C+yiT3y7MfpDwgD9FP9IuOOQsC1eGfyZ//CGE7jojPjuwCp
-827J8ZM8CaEvBsV9iELlKg+w1zy+RrNVDoNQE+l2z8O7MJYW9Tm9u95cdAsLqWwA
-oZfzmqKp+5GJ/rYEXm/zRzT9rkR/NnKdUr5WumOp7gUlVhzjQ9KgFQPnhjrIB94Z
-Ib+WdHZ9IgaisVD1pA8rWju5wTAq2SyKLKfAL35h18Lj6T0+QZiEx23Je8GiiWtR
-30VF4LCZvtL95TjMz8vNDOIEU57lDRSXEGQcM17KHLVLpM3a1VmN6IKYyVTKd21m
-0FAZGs8EWDEh4iitzOEbJD0KE6N0jA==
-=59/d
------END PGP SIGNATURE-----
-
---Sig_/T8JB7vmA6.0wdOso2xn.yrp--
+Best regards,
+Krzysztof
