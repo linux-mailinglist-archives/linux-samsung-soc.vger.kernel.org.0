@@ -2,100 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F007932B7E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 11:08:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 076F032E08
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 12:52:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726609AbfFCJIB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 05:08:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53042 "EHLO mail.kernel.org"
+        id S1727528AbfFCKwB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 06:52:01 -0400
+Received: from 8bytes.org ([81.169.241.247]:41064 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726561AbfFCJIA (ORCPT
+        id S1727255AbfFCKwB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 05:08:00 -0400
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D586F2713A;
-        Mon,  3 Jun 2019 09:07:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559552880;
-        bh=Rzr6gfXjAXNtZ72i1f03ZP5xQADxqoyjKQjlDsDgnOU=;
-        h=From:Date:Subject:To:From;
-        b=OFyk4NY4DclC0oTHFd+eXw4x0tlpPhoixH2tmw3kBXKOXH5TYz61qqu8iPuV6Oxov
-         pUaAnT2yl/SpS/pTBkp8RfXYzmGPLR5VVU8Rq3Bsvowc2B50/wekJgJPg8z8tp5OC0
-         3dySqY9w+R7b6avLDJk8xQJPQ038nr55Pc74dKLs=
-Received: by mail-lj1-f181.google.com with SMTP id r76so15397974lja.12;
-        Mon, 03 Jun 2019 02:07:59 -0700 (PDT)
-X-Gm-Message-State: APjAAAUN/U+s+/4kff/ksnLsTx92XpgCoKoTq/3GmFh1N1n/oBVm8KQJ
-        xbkABQ2gvTbsTXw4122o0OqgW/6EFFzyyEy066s=
-X-Google-Smtp-Source: APXvYqw8WHJT+fvLmcEcp0Lo0YX/2W6ao7L44cq/RA1vj/2N8oEiiJnTLU0U+PgTYKDOUB7tqpELGDErPLLk8DYOMYs=
-X-Received: by 2002:a2e:980e:: with SMTP id a14mr2097047ljj.60.1559552878019;
- Mon, 03 Jun 2019 02:07:58 -0700 (PDT)
-MIME-Version: 1.0
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 3 Jun 2019 11:07:46 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
-Message-ID: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
-Subject: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
- single unlink_va() when merge)
-To:     Andrew Morton <akpm@linux-foundation.org>,
-        "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-        Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
+        Mon, 3 Jun 2019 06:52:01 -0400
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id C6EF836B; Mon,  3 Jun 2019 12:51:59 +0200 (CEST)
+Date:   Mon, 3 Jun 2019 12:51:58 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Tom Murphy <tmurphy@arista.com>
+Cc:     iommu@lists.linux-foundation.org, murphyt7@tcd.ie,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Hillf Danton <hdanton@sina.com>,
-        Thomas Gleixner <tglx@linutronix.de>, Tejun Heo <tj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <andy.gross@linaro.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] iommu/amd: Convert the AMD iommu driver to the
+ dma-iommu api
+Message-ID: <20190603105158.GL12745@8bytes.org>
+References: <20190506185207.31069-1-tmurphy@arista.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190506185207.31069-1-tmurphy@arista.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+Hi Tom,
 
-On recent next I see bugs during boot (after bringing up user-space or
-during reboot):
-kernel BUG at ../mm/vmalloc.c:470!
-On all my boards. On QEMU I see something similar, although the
-message is "Internal error: Oops - undefined instruction: 0 [#1] ARM",
+On Mon, May 06, 2019 at 07:52:02PM +0100, Tom Murphy wrote:
+> Convert the AMD iommu driver to the dma-iommu api. Remove the iova
+> handling and reserve region code from the AMD iommu driver.
 
-The calltrace is:
-[   34.565126] [<c0275c9c>] (__free_vmap_area) from [<c0276044>]
-(__purge_vmap_area_lazy+0xd0/0x170)
-[   34.573963] [<c0276044>] (__purge_vmap_area_lazy) from [<c0276d50>]
-(_vm_unmap_aliases+0x1fc/0x244)
-[   34.582974] [<c0276d50>] (_vm_unmap_aliases) from [<c0279500>]
-(__vunmap+0x170/0x200)
-[   34.590770] [<c0279500>] (__vunmap) from [<c01d5a70>]
-(do_free_init+0x40/0x5c)
-[   34.597955] [<c01d5a70>] (do_free_init) from [<c01478f4>]
-(process_one_work+0x228/0x810)
-[   34.606018] [<c01478f4>] (process_one_work) from [<c0147f0c>]
-(worker_thread+0x30/0x570)
-[   34.614077] [<c0147f0c>] (worker_thread) from [<c014e8b4>]
-(kthread+0x134/0x164)
-[   34.621438] [<c014e8b4>] (kthread) from [<c01010b4>]
-(ret_from_fork+0x14/0x20)
+Thank you for your work on this! I appreciate that much, but I am not
+sure we are ready to make that move for the AMD and Intel IOMMU drivers
+yet.
 
-Full log here:
-https://krzk.eu/#/builders/1/builds/3356/steps/14/logs/serial0
-https://krzk.eu/#/builders/22/builds/1118/steps/35/logs/serial0
+My main concern right now is that these changes will add a per-page
+table lock into the fast-path for dma-mapping operations. There has been
+much work in the past to remove all locking from these code-paths and
+make it scalable on x86.
 
-Bisect pointed to:
-728e0fbf263e3ed359c10cb13623390564102881 is the first bad commit
-commit 728e0fbf263e3ed359c10cb13623390564102881
-Author: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Date:   Sat Jun 1 12:20:19 2019 +1000
-    mm/vmalloc.c: get rid of one single unlink_va() when merge
+The dma-ops implementations in the x86 IOMMU drivers have the benefit
+that they can call their page-table manipulation functions directly and
+without locks, because they can make the necessary assumptions. The
+IOMMU-API mapping/unmapping path can't make these assumptions because it
+is also used for non-DMA-API use-cases.
 
-Boards:
-1. Arch ARM Linux
-2. exynos_defconfig
-3. Exynos boards (Odroid XU3, etc), ARMv7, octa-core (Cortex-A7+A15),
-Exynos5422 SoC
-4. Systemd: v239, static IP set in kernel command line
+So before we can move the AMD and Intel drivers to the generic DMA-API
+implementation we need to solve this problem to not introduce new
+scalability regressions.
 
-Best regards,
-Krzysztof
+Regards,
+
+	Joerg
+
