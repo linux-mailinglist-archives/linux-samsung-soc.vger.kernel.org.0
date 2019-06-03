@@ -2,84 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 990B4333C9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 17:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC50933487
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 18:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726922AbfFCPm6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 11:42:58 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:37630 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbfFCPm5 (ORCPT
+        id S1728287AbfFCQGl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 12:06:41 -0400
+Received: from sauhun.de ([88.99.104.3]:38874 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727501AbfFCQGl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 11:42:57 -0400
-Received: by mail-vs1-f67.google.com with SMTP id o5so11541981vsq.4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Jun 2019 08:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eFvvhaRusrBbL8rIah/3Coy1NP3U36B2fSZ3lMYlx8A=;
-        b=nJh4XTxlZGurnl314LSdBmPwJLXwd8myttzFrQdqdfrUth4sB1WqCsVZtVpqczdZ9h
-         hg+JKBWSdwKErXnEImgVEx7+P1zPnxw1i/LpwCBbs93V21N48nbs7HW/WD97yfad1hqv
-         fREGryt58ccOsnJ1E60ail1mZ0nb/Dv0h8TsU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eFvvhaRusrBbL8rIah/3Coy1NP3U36B2fSZ3lMYlx8A=;
-        b=XQunjigaupOqmfLbNDtngrih7UNEy5zjjjneLzYIhCEzHQlm9mx//1Yl+CEczweAF9
-         xZqXbR9CWj6nfwNOSwLCW9WesOPArEZUkKpomKsiYmMv4oDKzqlMjcLdM1iWsxWc/BT2
-         kxZI6CU07jGjd4aoSsWuaFNXr3GsrNOfhxOithAN6u0CNn2qVZkiGfd+RsFBJAYN9q4i
-         1Q+ghK6GBRZzkSPkK6kdmX4tmtawzKsGISRI8p75RlOCgS9UA3MoFIzj8sBDUgceK/8u
-         9H3ECIg+e+j5Njj380BrkrSVp3VYCzuHM64N3d6Irm0y3vp4ZBKs5k8+0Km4c2kQ/z9H
-         PuwQ==
-X-Gm-Message-State: APjAAAXpoN4pALl9ckNGKav4JYHeiUad4i8Pa5bBjlBSYU2Cx1Q8Z4wg
-        WW9FgA6+ssM2LSDLejPdnySMI0l78Jo=
-X-Google-Smtp-Source: APXvYqx7ZT6gelfG52pLl1DyHWJZqEsaswG6d4F2Jmir/BhG4OZTHWuKajloYtv/QghXqJPzdyj+hg==
-X-Received: by 2002:a67:69d6:: with SMTP id e205mr3931692vsc.98.1559576576608;
-        Mon, 03 Jun 2019 08:42:56 -0700 (PDT)
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
-        by smtp.gmail.com with ESMTPSA id j13sm1503668vke.52.2019.06.03.08.42.55
-        for <linux-samsung-soc@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 08:42:55 -0700 (PDT)
-Received: by mail-vs1-f50.google.com with SMTP id v129so2271818vsb.11
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Jun 2019 08:42:55 -0700 (PDT)
-X-Received: by 2002:a67:ca0a:: with SMTP id z10mr13299139vsk.94.1559576574955;
- Mon, 03 Jun 2019 08:42:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190530210421.24941-1-linus.walleij@linaro.org>
- <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com> <20190601080245.GA1012@kunai>
-In-Reply-To: <20190601080245.GA1012@kunai>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 3 Jun 2019 08:42:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
-Message-ID: <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
-Subject: Re: [PATCH] i2c: mux: arb-gpio: Rewrite to use GPIO descriptors
-To:     Wolfram Sang <wsa@the-dreams.de>
+        Mon, 3 Jun 2019 12:06:41 -0400
+Received: from localhost (p5486CC42.dip0.t-ipconnect.de [84.134.204.66])
+        by pokefinder.org (Postfix) with ESMTPSA id 766722CF690;
+        Mon,  3 Jun 2019 18:06:40 +0200 (CEST)
+Date:   Mon, 3 Jun 2019 18:06:40 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         linux-i2c@vger.kernel.org,
         linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] i2c: mux: arb-gpio: Rewrite to use GPIO descriptors
+Message-ID: <20190603160639.GA2749@kunai>
+References: <20190530210421.24941-1-linus.walleij@linaro.org>
+ <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com>
+ <20190601080245.GA1012@kunai>
+ <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=XuA+ZEWFk9Wi0ZPMxdhuoqA7JUM6imYVZB3J41XM2tVw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
 
-On Sat, Jun 1, 2019 at 1:02 AM Wolfram Sang <wsa@the-dreams.de> wrote:
->
->
-> > NOTE: any chance I can convince you to CC LKML on patches like this?
-> > There's no patchwork for i2c so I can't easily grab this from
-> > patchwork unless you CC LKML.
->
-> See MAINTAINERS, there is a patchwork instance on ozlabs.
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Ah, right!  Even so, CCing LKML can be a helpful thing to do for
-patches.  If nothing else the archiving on lore.kernel.org is
-valuable.
 
--Doug
+> Ah, right!  Even so, CCing LKML can be a helpful thing to do for
+> patches.  If nothing else the archiving on lore.kernel.org is
+> valuable.
+
+OK, can do, no problem. Still, wanted to point you to the ozlabs
+instance to make your life easier :)
+
+
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAlz1RYsACgkQFA3kzBSg
+KbZT0A/9HkZ/QTn9myLRWEph3uaLZTjJ30AL1l6Q7BNwXahEQoAws/sge+wEvLqM
+JXfr3kQSnPIpZjjWiTz+bt6EuXC3w4AZDqMDnzmemCjDyVqyAAp1P923msJ2xqjW
+QaqMaMm3YErNOtiXmz7Nsu6C2kxv8BgKor4nShqvVImaGgLwiYHtiLUzjsej6qpc
+Zu5IbbeLmvO2bzZiiWewQKWI2dJLnXAmnyvz2LJmxVEXEoF7SaelnB64d2re54uP
+ZPsAfRdnSLWD3tTAl9b7nF1iBMd4y7nk2+qpH/wBFCIe8mcyw8rIdNg4FzHbAvdJ
+Yoj554s8rjUTQeQugll2xZfYnlhCwc4JY/4KksPLkCyIPNyMml5mOHf411xU02vo
+0UwSijYmqte/KeG0wFfQTjH2Y67QavMW3yzJcX7JuzgnMWBW/pF2CKDiBV2X2PhN
+R21WadPgf0GxNzUBmQfNFcN8cMSstaE9cZwGk9NthSCJqI7knJMVK3YuXdr39k9t
+FV0Riei3XiAZHwCbXX74pS8tLedl8l/ntCTRRGBaq88qJ8K32MVhfK/9ywPlwkp1
+CqndPyUhgxnII+qIzsOs0aXJXi+9NpQwdQo7MDh78mowqPw/nNiLyo8m6A7zLQin
+y/283zrlEZneHxLU2AmPH6ruJDtoiXVorDjvLBtC5GaH/9y2o8I=
+=RrWi
+-----END PGP SIGNATURE-----
+
+--liOOAslEiF7prFVr--
