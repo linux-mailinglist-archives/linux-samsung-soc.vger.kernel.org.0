@@ -2,73 +2,76 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AAA531A74
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  1 Jun 2019 10:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F50032927
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 09:12:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726142AbfFAICs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 1 Jun 2019 04:02:48 -0400
-Received: from sauhun.de ([88.99.104.3]:47962 "EHLO pokefinder.org"
+        id S1726819AbfFCHME (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 03:12:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57862 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726013AbfFAICs (ORCPT
+        id S1726383AbfFCHME (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 1 Jun 2019 04:02:48 -0400
-Received: from localhost (ip5b40b67c.dynamic.kabel-deutschland.de [91.64.182.124])
-        by pokefinder.org (Postfix) with ESMTPSA id 5F0452C54BC;
-        Sat,  1 Jun 2019 10:02:46 +0200 (CEST)
-Date:   Sat, 1 Jun 2019 10:02:46 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <k.kozlowski@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-i2c@vger.kernel.org,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-Subject: Re: [PATCH] i2c: mux: arb-gpio: Rewrite to use GPIO descriptors
-Message-ID: <20190601080245.GA1012@kunai>
-References: <20190530210421.24941-1-linus.walleij@linaro.org>
- <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com>
+        Mon, 3 Jun 2019 03:12:04 -0400
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 68C2E27C91;
+        Mon,  3 Jun 2019 07:12:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1559545923;
+        bh=c8WvhZLOCRa982aWA11WnNSUWAV0NBTazHnlnPgRRJc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=EhzwjuDRJKq5thLsOFmLd+rmK7MR6WgEWJlSm1jFBBLv0HNnOg0nGyhFj9Tw8Wqjf
+         jQolmdrMUUXak+dpNAlvFG+zIwsOFQkJaJMPrO5QDLKH5nLgcsZdcvYblrj9F9QDUY
+         e3uLeo3/gCOf4kI9a9489EzANPo5d6GssUXOaQZU=
+Received: by mail-lj1-f181.google.com with SMTP id a10so11877917ljf.6;
+        Mon, 03 Jun 2019 00:12:03 -0700 (PDT)
+X-Gm-Message-State: APjAAAVGMQZJBo7WCay/iMmfmv4qOIiBmwzBZ66MdaAu4/aSDJU7xomN
+        0i+iSMvirJ6Ml3wQZJmRswpsUsbvoVY6bYVZ4Qo=
+X-Google-Smtp-Source: APXvYqzyq6xQlubn/0Q0SU/hL+PbbTEAKqFxtluwxG4OSVlm/Yy7fvtaRD7+POIAxvZgtcgpUshpuxibY26Dq8fBejI=
+X-Received: by 2002:a2e:568d:: with SMTP id k13mr12680250lje.194.1559545921672;
+ Mon, 03 Jun 2019 00:12:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=UWNbMoUrs3ZucRuNEKP27sMD0nt6ew2=fH7pxmFiTeYw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190530215013.17806-1-linus.walleij@linaro.org>
+In-Reply-To: <20190530215013.17806-1-linus.walleij@linaro.org>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 3 Jun 2019 09:11:50 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfO=t1VCjOcrcgWHM_d-iCVwRF_iSeckV6mO7Th-S3UvQ@mail.gmail.com>
+Message-ID: <CAJKOXPfO=t1VCjOcrcgWHM_d-iCVwRF_iSeckV6mO7Th-S3UvQ@mail.gmail.com>
+Subject: Re: [PATCH] i2c: s3c2410: Convert to use GPIO descriptors
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Wolfram Sang <wsa@the-dreams.de>, linux-i2c@vger.kernel.org,
+        Kukjin Kim <kgene@kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Thu, 30 May 2019 at 23:50, Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> The S3C2410 does some funny dance around its pins:
+> - First try to call back to the platform to get and control
+>   some GPIO pins
+> - If this doesn't work, it tries to get a pin control handle
+> - If this doesn't work, it retrieves two GPIOs from the device
+>   tree node and does nothing with them
+>
+> If we're gonna retrieve two GPIOs and do nothing with them, we
+> might as well do it using the GPIO descriptor API. When we use
+> the resource management API, the code gets smaller.
+>
+> Cc: Kukjin Kim <kgene@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+>  drivers/i2c/busses/i2c-s3c2410.c | 47 ++++++--------------------------
+>  1 file changed, 9 insertions(+), 38 deletions(-)
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-
-> NOTE: any chance I can convince you to CC LKML on patches like this?
-> There's no patchwork for i2c so I can't easily grab this from
-> patchwork unless you CC LKML.
-
-See MAINTAINERS, there is a patchwork instance on ozlabs.
-
-
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAlzyMSEACgkQFA3kzBSg
-KbYAmA/+LVWVa2NEvqFUkRQFWo1EWZlvg34v6BBBzJJJ6DLXapPcEfGenOOnghos
-aToYlKs7gOfXfWf+iN2oQpPsq6K6PrJECvk/TG6kXpZs2EDz7TtoIG0bHFiRnSVB
-jbEAbL83T8I8v4IXkjuX81o7ggYA4GMCpSsmkf2YkBYgQzMNYbY17CJOp3lkGRP4
-JbskO7LSrK8kMWv5z8nTZA6gPXRnKpfAmEAsf8IiDoAMcZYIoPCOLRkBrrWxOJeD
-NRnGkgNQ8uTulUowLsY+sIseGIBzLgRUCxF67/1IOAyJOcuRg/xeBAQxsx5SfFae
-8rPk0s0YPK8n3YzyFAXIoSiJfEP7X46DaKRNvPhZlhoqt/lFDn0pnWWPGlwhSKxX
-ngS69uGTmTFUqCq5kkrgcTWh6qhO5XXEnBXwEuZpZOVXHIdDUOiglFEYtAk1ZQSh
-1s5rCPlWXujLxuajz5sD4ipM/HRmlB7j5godj8f+nM+im5794avUlhkmshLm+oDO
-FsfcHaddxlYHjVF6Fw1jquEvQdaqpE5O8U7mpIsagWmAjtW4QRdM5Xg0ZLJPiygU
-xs0sIO0LL88orD3BqXvl+PA85GPEUPrwnZwiuSY6nK5cXmvOK3fMM9bDDjaeM1iq
-ViVR02yNg/FIHptQPiTcaJxqHMQtEzZmJwIipJ4ZaVIvRl+PN8I=
-=S5Qg
------END PGP SIGNATURE-----
-
---YZ5djTAD1cGYuMQK--
+Best regards,
+Krzysztof
