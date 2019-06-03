@@ -2,62 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 27F99331C4
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:10:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECCA7331CE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Jun 2019 16:13:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728686AbfFCOKz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Jun 2019 10:10:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47056 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728400AbfFCOKz (ORCPT
+        id S1728062AbfFCONK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Jun 2019 10:13:10 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33563 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727429AbfFCONJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Jun 2019 10:10:55 -0400
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1EB9A27AD0;
-        Mon,  3 Jun 2019 14:10:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1559571054;
-        bh=DTEl1S9/WHP6uuMXaF6ALTUCnTGHtBY7UQFPnpvsYUM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=mcwoSVCkk7LtwsFLg6jdfNP+o4HaywLn6eCcix9yDN0dSmR/7tEsIarkiW7pZ3EtG
-         FgpyxaGwqfUdBNUpJUdxWsv9KDAevfo4zaG88QMmWowjI1rIiCYHwcaTJfouNezkfc
-         LbkUhEViJ2XDHhnKldyJwDgVc1TpHb/G8Wl6nu5g=
-Received: by mail-lf1-f47.google.com with SMTP id r15so13705329lfm.11;
-        Mon, 03 Jun 2019 07:10:54 -0700 (PDT)
-X-Gm-Message-State: APjAAAX0pivBcRIJ0RDDdrUYVibma8saAH3HGWsHpYmasUcYBGuZo7mf
-        /dXfbgcGU5oWUSk89oAEnvqsTdiNCObaROonT/o=
-X-Google-Smtp-Source: APXvYqzDTAIPHQwCDgcHqsQgXUf8eTz8GkbmKWgiefKcGVYdpIg/raWNYk5RozstG08ewNfS7RtaIsqCR7AWbFYaETw=
-X-Received: by 2002:ac2:43c2:: with SMTP id u2mr781039lfl.159.1559571052305;
- Mon, 03 Jun 2019 07:10:52 -0700 (PDT)
+        Mon, 3 Jun 2019 10:13:09 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d9so12301534wrx.0;
+        Mon, 03 Jun 2019 07:13:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M2DuwGRXCzN1db5gv+o4JjQrckmHVPeHDhxTCJpaz8A=;
+        b=slnWtIzOLzetY2YSYSkDTXcQq/0vDclrroenZ2+Ub32bJnhMud0BdePZ4juHVaiR46
+         6nb3rNDaEL+lsDjtL91BThlz5sudGoYmb8kyfo/GgV8ywDIsVxOYRUxQXjZC6Y1Pc35h
+         Ec6OxBNy5dARePNXpbR/BQe8/Tkkgz2WfisowptFayoJazNRQTS5YXY/n8IgPeR+GpgS
+         21zmVPQStbMYM+Z7W8dn1UjSjW94bOJ+M4D727yzafXRSq0DsyHgDMsziwnQ0qhkUhZF
+         39Ptun2FQfKNzsEk3IY+FtkIX86wx5iu4IpK0XyRgGVS18l1eLTqMxhYlZlOohOT7ovF
+         UF4A==
+X-Gm-Message-State: APjAAAVmSn4B5RynxGNzw+u13uIH4I55DDlIE2gWqHrztqB7HBfOowKM
+        I8o9HS1CEAduPf6Jbu88dW3bkDdCVEA640Ltrug=
+X-Google-Smtp-Source: APXvYqwSiyj9I4TnvWT5Kk/YYC8ZZsvfzpe4pBWbLs2uh4221Wy+kvVBqdEEPMlCNuHKUYB1/KqrHRsoTcDqqS6+yKA=
+X-Received: by 2002:adf:e691:: with SMTP id r17mr2873207wrm.67.1559571187782;
+ Mon, 03 Jun 2019 07:13:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAJKOXPcTVpLtSSs=Q0G3fQgXYoVa=kHxWcWXyvS13ie73ByZBw@mail.gmail.com>
  <20190603135939.e2mb7vkxp64qairr@pc636>
 In-Reply-To: <20190603135939.e2mb7vkxp64qairr@pc636>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 3 Jun 2019 16:10:40 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
-Message-ID: <CAJKOXPdczUnsaBeXTuutZXCQ70ejDT68xnVm-e+SSdLZi-vyCA@mail.gmail.com>
+From:   Sudeep Holla <sudeep.holla@arm.com>
+Date:   Mon, 3 Jun 2019 15:12:55 +0100
+Message-ID: <CAPKp9uauCeYi-ArurSHytpBR4_XXJX6jfG2RqoMo0dpNGyTb5w@mail.gmail.com>
 Subject: Re: [BUG BISECT] bug mm/vmalloc.c:470 (mm/vmalloc.c: get rid of one
  single unlink_va() when merge)
-To:     Uladzislau Rezki <urezki@gmail.com>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Cc:     Andrew Morton <akpm@linux-foundation.org>,
+To:     Uladzislau Rezki <urezki@gmail.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
         Michal Hocko <mhocko@suse.com>, linux-mm@kvack.org,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        <linux-samsung-soc@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
         Hillf Danton <hdanton@sina.com>,
         Thomas Gleixner <tglx@linutronix.de>,
-        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>
+        Tejun Heo <tj@kernel.org>, Andrei Vagin <avagin@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 3 Jun 2019 at 15:59, Uladzislau Rezki <urezki@gmail.com> wrote:
+Hi,
+
+On Mon, Jun 3, 2019 at 3:02 PM Uladzislau Rezki <urezki@gmail.com> wrote:
 >
 > Hello, Krzysztof.
 >
@@ -67,20 +70,11 @@ On Mon, 3 Jun 2019 at 15:59, Uladzislau Rezki <urezki@gmail.com> wrote:
 > > On recent next I see bugs during boot (after bringing up user-space or
 > > during reboot):
 > > kernel BUG at ../mm/vmalloc.c:470!
+
+I was about to report the same and saw this thread.
+
 > > On all my boards. On QEMU I see something similar, although the
 > > message is "Internal error: Oops - undefined instruction: 0 [#1] ARM",
-
-Indeed it looks like effect of merge conflict resolution or applying.
-When I look at MMOTS, it is the same as yours:
-http://git.cmpxchg.org/cgit.cgi/linux-mmots.git/commit/?id=b77b8cce67f246109f9d87417a32cd38f0398f2f
-
-However in linux-next it is different.
-
-Stephen, any thoughts?
-
-Best regards,
-Krzysztof
-
 > >
 > > The calltrace is:
 > > [   34.565126] [<c0275c9c>] (__free_vmap_area) from [<c0276044>]
@@ -121,44 +115,9 @@ Krzysztof
 >
 > See below the clean patch for remotes/linux-next/master:
 >
-> <snip>
-> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-> index 650c89f38c1e..0ed95b864e31 100644
-> --- a/mm/vmalloc.c
-> +++ b/mm/vmalloc.c
-> @@ -719,9 +719,6 @@ merge_or_add_vmap_area(struct vmap_area *va,
->                         /* Check and update the tree if needed. */
->                         augment_tree_propagate_from(sibling);
->
-> -                       /* Remove this VA, it has been merged. */
-> -                       unlink_va(va, root);
-> -
->                         /* Free vmap_area object. */
->                         kmem_cache_free(vmap_area_cachep, va);
->
-> @@ -746,12 +743,11 @@ merge_or_add_vmap_area(struct vmap_area *va,
->                         /* Check and update the tree if needed. */
->                         augment_tree_propagate_from(sibling);
->
-> -                       /* Remove this VA, it has been merged. */
-> -                       unlink_va(va, root);
-> +                       if (merged)
-> +                               unlink_va(va, root);
->
->                         /* Free vmap_area object. */
->                         kmem_cache_free(vmap_area_cachep, va);
-> -
->                         return;
->                 }
->         }
-> --
-> 2.11.0
-> <snip>
->
-> Andrew, i am not sure how to proceed with that. Should i send an updated series
-> based on linux-next tip or you can fix directly that patch?
->
-> Thank you!
->
-> --
-> Vlad Rezki
+
+This patch fixes the issue and resumes booting on my platform.
+
+--
+Regards,
+Sudeep
