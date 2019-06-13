@@ -2,49 +2,133 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC1F244BC4
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 13 Jun 2019 21:10:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA60644F33
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 00:39:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726575AbfFMTJz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 13 Jun 2019 15:09:55 -0400
-Received: from gloria.sntech.de ([185.11.138.130]:58362 "EHLO gloria.sntech.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725842AbfFMTJz (ORCPT
+        id S1726906AbfFMWjW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 13 Jun 2019 18:39:22 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:39695 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725906AbfFMWjS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 13 Jun 2019 15:09:55 -0400
-Received: from ip5f5a6320.dynamic.kabel-deutschland.de ([95.90.99.32] helo=diego.localnet)
-        by gloria.sntech.de with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <heiko@sntech.de>)
-        id 1hbV6T-0000Sd-2L; Thu, 13 Jun 2019 21:09:41 +0200
-From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     joro@8bytes.org, m.szyprowski@samsung.com, kgene@kernel.org,
-        krzk@kernel.org, will.deacon@arm.com, robin.murphy@arm.com,
-        agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        Thu, 13 Jun 2019 18:39:18 -0400
+Received: by mail-ed1-f67.google.com with SMTP id m10so503319edv.6
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jun 2019 15:39:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EcPKIz/cx9BuSCY4h5Jds9dddvg3WP5b4PjiRQaCMNk=;
+        b=Q7YqbkWKog9myMLVKuEgSGV/QhFlPY8pqvqD3ElQJa5O+VupGahQ/2KWdmD42UChZU
+         wPmlxSspSryqNb5xCB8JLtGZX6vRCzXM8xY7AmfA6QICBXISxNprKepOzIgPRJ0PmKvq
+         lwOf3L9Aeaw9au+GkaXXU5HxIJQ1vxFfownqyJtqMjhF5SRbY4FdMVVh7ZLQ7hbQYj3Q
+         iidXZkXXf0qlsVYk9WxwAFcMHH4IP3leZkOYhpAmRlGBv4K+6lmx2ZeQRojQOmlcq9FK
+         mitiCFQNPcpZ74hbmAblxvrrqQFu7g6p6HGZuZiNBMXyyAAw52tc7SZA4bY0a5yZBSlR
+         Rxmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EcPKIz/cx9BuSCY4h5Jds9dddvg3WP5b4PjiRQaCMNk=;
+        b=dywdBIiALpyu0pdYNjLQb1TDPTSTCkCs/Cjw2eppLCoKdIKcV+E+/IWqaTdh+qYPM5
+         a6EhcmvDFvJPjaUKX60MOjWvIYxhoCZ/769GRjSPEyvXobYbMZTdHbi/5WWhOad63GLu
+         In+uHnf4Gw/jDScxSBU40EGIZ7Z3rJcXN2k6h0Vg4Du0iud+3wbyAHYogG0L+ABjpcNV
+         pCBC1laYSL/n5HqXfgz9FkY/ek4NdJI8tz9qQNvj3IweLTw7U1ZwJiziQIGDJhZTkc3r
+         NbV4btDPKzdNexzDcqB4phxC/vplMB98VCpZbQQc2hPk8FGWdI6lcylHFIZjgmOIBlee
+         m7LQ==
+X-Gm-Message-State: APjAAAV2InlV1Mig/cxsGmGxMY9CBdN3BUuojQdGfBG3o2iaetqN8N4u
+        6BAu+A94E0SqUdugZg1Ew0DELQ==
+X-Google-Smtp-Source: APXvYqznp1hHyw5PYwIoh2oTLD6q+OMGquaY21fb63SmdivVnsFdvFIZnOzRxPqoidZqkL4RdKrnQw==
+X-Received: by 2002:a50:bdc2:: with SMTP id z2mr97240407edh.245.1560465555952;
+        Thu, 13 Jun 2019 15:39:15 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:8084:a0:bc00:8042:d435:a754:1f22])
+        by smtp.googlemail.com with ESMTPSA id s16sm216522eji.27.2019.06.13.15.39.13
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 13 Jun 2019 15:39:14 -0700 (PDT)
+From:   Tom Murphy <murphyt7@tcd.ie>
+To:     iommu@lists.linux-foundation.org
+Cc:     Tom Murphy <murphyt7@tcd.ie>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 09/10] iommu/rockchip: convert to SPDX license tags
-Date:   Thu, 13 Jun 2019 21:09:39 +0200
-Message-ID: <1921640.M456AIj05J@diego>
-In-Reply-To: <20190613162703.986-9-tiny.windzz@gmail.com>
-References: <20190613162703.986-1-tiny.windzz@gmail.com> <20190613162703.986-9-tiny.windzz@gmail.com>
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: [PATCH v4 0/5] iommu/amd: Convert the AMD iommu driver to the dma-iommu api
+Date:   Thu, 13 Jun 2019 23:38:55 +0100
+Message-Id: <20190613223901.9523-1-murphyt7@tcd.ie>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Am Donnerstag, 13. Juni 2019, 18:27:02 CEST schrieb Yangtao Li:
-> Updates license to use SPDX-License-Identifier.
-> 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+Convert the AMD iommu driver to the dma-iommu api. Remove the iova
+handling and reserve region code from the AMD iommu driver.
 
-Acked-by: Heiko Stuebner <heiko@sntech.de>
+Change-log:
+V4:
+-Rebase on top of linux-next
+-Split the removing of the unnecessary locking in the amd iommu driver into a seperate patch
+-refactor the "iommu/dma-iommu: Handle deferred devices" patch and address comments
+v3:
+-rename dma_limit to dma_mask
+-exit handle_deferred_device early if (!is_kdump_kernel())
+-remove pointless calls to handle_deferred_device
+v2:
+-Rebase on top of this series:
+ http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/dma-iommu-ops.3
+-Add a gfp_t parameter to the iommu_ops::map function.
+-Made use of the reserve region code inside the dma-iommu api
 
+Tom Murphy (5):
+  iommu/amd: Remove unnecessary locking from AMD iommu driver
+  iommu: Add gfp parameter to iommu_ops::map
+  iommu/dma-iommu: Handle deferred devices
+  iommu/dma-iommu: Use the dev->coherent_dma_mask
+  iommu/amd: Convert AMD iommu driver to the dma-iommu api
+
+ drivers/iommu/Kconfig           |   1 +
+ drivers/iommu/amd_iommu.c       | 690 ++++----------------------------
+ drivers/iommu/amd_iommu_types.h |   1 -
+ drivers/iommu/arm-smmu-v3.c     |   2 +-
+ drivers/iommu/arm-smmu.c        |   2 +-
+ drivers/iommu/dma-iommu.c       |  45 ++-
+ drivers/iommu/exynos-iommu.c    |   2 +-
+ drivers/iommu/intel-iommu.c     |   2 +-
+ drivers/iommu/iommu.c           |  43 +-
+ drivers/iommu/ipmmu-vmsa.c      |   2 +-
+ drivers/iommu/msm_iommu.c       |   2 +-
+ drivers/iommu/mtk_iommu.c       |   2 +-
+ drivers/iommu/mtk_iommu_v1.c    |   2 +-
+ drivers/iommu/omap-iommu.c      |   2 +-
+ drivers/iommu/qcom_iommu.c      |   2 +-
+ drivers/iommu/rockchip-iommu.c  |   2 +-
+ drivers/iommu/s390-iommu.c      |   2 +-
+ drivers/iommu/tegra-gart.c      |   2 +-
+ drivers/iommu/tegra-smmu.c      |   2 +-
+ drivers/iommu/virtio-iommu.c    |   2 +-
+ include/linux/iommu.h           |  21 +-
+ 21 files changed, 179 insertions(+), 652 deletions(-)
+
+-- 
+2.20.1
 
