@@ -2,73 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E7960465DD
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 19:39:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E99746954
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 22:33:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbfFNRjx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 13:39:53 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:39782 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726184AbfFNRjx (ORCPT
+        id S1727206AbfFNUbx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 16:31:53 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:45003 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726953AbfFNUbw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 13:39:53 -0400
-Received: by mail-io1-f68.google.com with SMTP id r185so1583185iod.6;
-        Fri, 14 Jun 2019 10:39:52 -0700 (PDT)
+        Fri, 14 Jun 2019 16:31:52 -0400
+Received: by mail-pl1-f194.google.com with SMTP id t7so1442477plr.11;
+        Fri, 14 Jun 2019 13:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pyNZh3/ZiJGCHGyK6bSxYhhEMHeQph+kYYlr649t5fI=;
-        b=fnFmAH1S+PAJamnF3NqeGjNJKLKabKSrwIeQ4EWJOLeaxDi+l9iEip4OJmJBE4s4L5
-         t9EWMjkoX75msS90FvzStnVp/1AD3CIo70/WhRleVWjKXaqS3APRMAJECm+XcYadU/ix
-         NoYetrWGQsDpipp5CJSmFksF4KKmbPS+G5fi+ZUtKbo2GXH7BN59YlDslJywgc2SS+gy
-         7nSTV2khtyZxk64W+L6RLIHRhrh19JY6SbxYGhrM4ZCTDfu5g2mtLUyNnQtuaUcGndFD
-         fG4rYx3xyR8Rc02ZTzSUJSrO3nLpuK/4ZfzmIZPbx6Ud+dlFALl7B/IX0ZD07hvzgrFQ
-         PnCA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8o+2bmk3JHw3bcscvg5i4csgQd4Cy57o3YZ91vrIQhk=;
+        b=fmawliYbYe9RXgjYQw83JcEt3qnDc3a9Nr/dyRNlHVBsgPGykJOXH3w4C6Eu8DUyrl
+         CrVaRFJv6oVjd8TD6dc/eUa7oEIvf83UPAFA5Q4p1A3H4Wds8oD+aKkPZAZ4GAloWSXF
+         lkcOfoeKV9tkQsnV6TZGx4twjlJ657SfhMJThGkxwoqTmSl42l3+NQmlYoAwVd6LQCPI
+         H310JzrVEUHkQYzmyWSIsaIQQrQdSBYWq3oxxJz4A54WeHv/5W2NdVQQByL9alDO0mVr
+         DOsXQMJrpoV352/sQafvE8ReOUVpCrOQxC7VUWjKJbQC9TYzmOxWI8JDfDcweI/Lbyqq
+         1p1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pyNZh3/ZiJGCHGyK6bSxYhhEMHeQph+kYYlr649t5fI=;
-        b=SttPqDvXao+Cd1GUZVy+vSg5gDTLY2Q9Otpe/yV70Fb+zOHaHaJx3Wh8xQF1TjMOIF
-         5QHdQmJ/Ha0Zn8uBhhA14w/FEYM26cvLKlK+9z9TlaiBhXlYV8qavsw5BwSAwqxLHuUX
-         uF8InqHc50SU1oitdoURr2ZdrPt3oev36tv/GQ1XldHxVoN43NTdUOnAFW+9xOL2OKMc
-         mA3dpY0EcS8yOPWysqrGMR07haTDus5lFQDx9BZZPpXPiQRtcodliTmvcXx/UvCZ5N4w
-         tpy/8punK88JAJUxt96r+vaXj+N53i6BimIiEAVv9zNqCwuwZSyb/qxM9FXbfOGuttfw
-         Z84g==
-X-Gm-Message-State: APjAAAVnnlWrQz+T6WTQ8JU3+RnJG+M/ZDFP2EC9ft37csziXFskjuLy
-        7pMt2JHyF4X+jBmA5mj3T4d8fdAb9lR/VLGfA80=
-X-Google-Smtp-Source: APXvYqwNZ0eXs3p92pVUhwtqOL0humBUMj2IEaTDc3AAW0U+hb04I4VnHxh86HS27ouhORHP6iTBY8v4nEVPMWiA21c=
-X-Received: by 2002:a02:9567:: with SMTP id y94mr69763782jah.28.1560533991898;
- Fri, 14 Jun 2019 10:39:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8o+2bmk3JHw3bcscvg5i4csgQd4Cy57o3YZ91vrIQhk=;
+        b=TgFPplICSayyVyBtpX45iBAsznDnvse8xixRe5ULP4DAnC9tyXbg0THEkblXVqouh8
+         ZLkEy0W0Zd88wFsfZMLgWl5iT9Vub0pi6KbYNLXi30sKe3NJt1mGjTBW5Dbkb/+Lhj/L
+         DpcqPEgeNqfQC5/6k4Bg6AosVtWtX9VVvq5R4FnBfpFIQ5JLJ0tIeg6pkhHNiQOrB128
+         UJyYySMhjjRppKVcRF+/e7U06lS0/3T2VGEBXFflbaDz/VZzrMFsD3Ggy+DARXImoy6D
+         d5HBlK4G/nr81h+nPJu4CeJhZLKlQem6C7gpmqmYg+pSIywRYI0JJ+e3zIFJZ4rB46zo
+         R+Iw==
+X-Gm-Message-State: APjAAAVFYyx3lG5xaEpo4AhQ38cg0Anf/fwI+2ygPK996E7RI5X0bNkU
+        hokPzStd4cKbF8J4DLVww/k=
+X-Google-Smtp-Source: APXvYqz8fXZMHh678m38GXZ7cOMf9Jew7ASJ24aKHKsv3zkzKPKgQG0N0NmX7eCgd61B1rxu1Qc+Kg==
+X-Received: by 2002:a17:902:8203:: with SMTP id x3mr11439487pln.304.1560544311481;
+        Fri, 14 Jun 2019 13:31:51 -0700 (PDT)
+Received: from localhost.localdomain ([162.251.69.147])
+        by smtp.gmail.com with ESMTPSA id 188sm5189016pfe.30.2019.06.14.13.31.50
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 14 Jun 2019 13:31:50 -0700 (PDT)
+From:   Joseph Kogut <joseph.kogut@gmail.com>
+To:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
+        krzk@kernel.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Joseph Kogut <joseph.kogut@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: gpu: add Exynos Mali vendor specifics
+Date:   Fri, 14 Jun 2019 13:31:43 -0700
+Message-Id: <20190614203144.3850-1-joseph.kogut@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <20190613162703.986-1-tiny.windzz@gmail.com> <20190614071245.GA2950@infradead.org>
-In-Reply-To: <20190614071245.GA2950@infradead.org>
-From:   Frank Lee <tiny.windzz@gmail.com>
-Date:   Sat, 15 Jun 2019 01:39:40 +0800
-Message-ID: <CAEExFWupzjErW1E0z3tcR2xyGgpWXwgLZOTqvru4=hk98EfGhQ@mail.gmail.com>
-Subject: Re: [PATCH 01/10] iommu/exynos: convert to SPDX license tags
-To:     tglx@linutronix.de
-Cc:     joro@8bytes.org, m.szyprowski@samsung.com, kgene@kernel.org,
-        krzk@kernel.org, will.deacon@arm.com, robin.murphy@arm.com,
-        agross@kernel.org, David Brown <david.brown@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        jonathanh@nvidia.com, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-rockchip@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-tegra@vger.kernel.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Christoph Hellwig <hch@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Need me to make them a patch?
+Document vendor specific compatible string for Mali gpus on Exynos SoCs.
 
-MBR,
-Yangtao
+Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
+---
+ Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
+index 1b1a74129141..a9704c736d07 100644
+--- a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
++++ b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
+@@ -18,6 +18,7 @@ Required properties:
+     + "amlogic,meson-gxm-mali"
+     + "rockchip,rk3288-mali"
+     + "rockchip,rk3399-mali"
++    + "samsung,exynos-mali"
+ 
+ - reg : Physical base address of the device and length of the register area.
+ 
+-- 
+2.22.0
+
