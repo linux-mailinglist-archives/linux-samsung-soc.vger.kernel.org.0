@@ -2,100 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 925F9460AC
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 16:26:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C42C4638F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 18:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728488AbfFNO0q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 10:26:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60520 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728240AbfFNO0q (ORCPT
+        id S1725827AbfFNQBG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 12:01:06 -0400
+Received: from cyberdimension.org ([80.67.179.20]:44498 "EHLO
+        gnutoo.cyberdimension.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725775AbfFNQBG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 10:26:46 -0400
-Received: from PC-kkoz.proceq.com (unknown [213.160.61.66])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4538520866;
-        Fri, 14 Jun 2019 14:26:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560522405;
-        bh=gLPYiKNlVZyeJBqzSMBS8jUdMgiD9fjJjnKZnvHHlSY=;
-        h=From:To:Cc:Subject:Date:From;
-        b=WxzwwUJ1i+vWCIZdcZ/gu57471NyDP1ca6EcHwkZl8/HurL+wOodywTy8m55QIPRV
-         CaGZX7vye3cjmdPiW5xgeQNcW1aJmbZi8hNhIyzbMm3N5KPD327TCAEr2jB23WQ0xO
-         8DkWqrIUw1MUR2cFJc8R1ss18CbkAsyW7Buw2bJA=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
+        Fri, 14 Jun 2019 12:01:06 -0400
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Jun 2019 12:01:06 EDT
+Received: from gnutoo.cyberdimension.org (localhost [127.0.0.1])
+        by cyberdimension.org (OpenSMTPD) with ESMTP id 935a8d3d;
+        Fri, 14 Jun 2019 15:52:12 +0000 (UTC)
+Received: from primarylaptop.localdomain (localhost.localdomain [IPv6:::1])
+        by gnutoo.cyberdimension.org (OpenSMTPD) with ESMTP id fe701c55;
+        Fri, 14 Jun 2019 15:52:12 +0000 (UTC)
+From:   Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>
 To:     Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, notify@kernel.org
-Subject: [PATCH] ARM: dts: exynos: Add PMU interrupt affinity to Exynos4 boards
-Date:   Fri, 14 Jun 2019 16:26:40 +0200
-Message-Id: <1560522400-31086-1-git-send-email-krzk@kernel.org>
-X-Mailer: git-send-email 2.7.4
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Simon Shields <simon@lineageos.org>,
+        Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>
+Subject: [PATCH] ARM: dts: exynos: add flash support to galaxy-s3 boards
+Date:   Fri, 14 Jun 2019 17:54:19 +0200
+Message-Id: <20190614155419.14260-1-GNUtoo@cyberdimension.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Move SoC-specific PMU properties from exynos4.dtsi to respective SoC
-(4210 or 4412) so common DTSI would have only common properties.
+From: Simon Shields <simon@lineageos.org>
 
-Define there also interrupt affinity to remove the boot warning message:
+The galaxy s3 boards use an aat1290 to control the flash LED.
+This patch adds the relevant device tree configuration to use it.
 
-    hw perfevents: no interrupt-affinity property for /pmu, guessing.
-
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Simon Shields <simon@lineageos.org>
+Signed-off-by: Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org> [rebase]
 ---
- arch/arm/boot/dts/exynos4.dtsi    | 2 +-
- arch/arm/boot/dts/exynos4210.dtsi | 6 ++++++
- arch/arm/boot/dts/exynos4412.dtsi | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 32 +++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
-index 36ccf227434d..dde27451faa8 100644
---- a/arch/arm/boot/dts/exynos4.dtsi
-+++ b/arch/arm/boot/dts/exynos4.dtsi
-@@ -54,7 +54,7 @@
- 	pmu: pmu {
- 		compatible = "arm,cortex-a9-pmu";
- 		interrupt-parent = <&combiner>;
--		interrupts = <2 2>, <3 2>;
-+		status = "disabled";
+diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
+index 30eee5942eff..375aeca09882 100644
+--- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
++++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
+@@ -15,6 +15,24 @@
+ 		i2c10 = &i2c_cm36651;
  	};
  
- 	soc: soc {
-diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index b491c345b2e8..ce29e026e226 100644
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -461,6 +461,12 @@
- 		 <&clock CLK_MOUT_MIXER>, <&clock CLK_SCLK_MIXER>;
++	aat1290 {
++		compatible = "skyworks,aat1290";
++		flen-gpios = <&gpj1 1 GPIO_ACTIVE_HIGH>;
++		enset-gpios = <&gpj1 2 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-names = "default", "host", "isp";
++		pinctrl-0 = <&camera_flash_host>;
++		pinctrl-1 = <&camera_flash_host>;
++		pinctrl-2 = <&camera_flash_isp>;
++
++		flash-led {
++			label = "flash";
++			led-max-microamp = <520833>;
++			flash-max-microamp = <1012500>;
++			flash-max-timeout-us = <1940000>;
++		};
++	};
++
+ 	lcd_vdd3_reg: voltage-regulator-6 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "LCD_VDD_2.2V";
+@@ -131,6 +149,20 @@
+ 	regulator-max-microvolt = <2800000>;
  };
  
-+&pmu {
-+	interrupts = <2 2>, <3 2>;
-+	interrupt-affinity = <&cpu0>, <&cpu1>;
-+	status = "okay";
++&pinctrl_0 {
++	camera_flash_host: camera-flash-host {
++		samsung,pins = "gpj1-0";
++		samsung,pin-function = <1>;
++		samsung,pin-val = <0>;
++	};
++
++	camera_flash_isp: camera-flash-isp {
++		samsung,pins = "gpj1-0";
++		samsung,pin-function = <1>;
++		samsung,pin-val = <1>;
++	};
 +};
 +
- &pmu_system_controller {
- 	clock-names = "clkout0", "clkout1", "clkout2", "clkout3",
- 			"clkout4", "clkout8", "clkout9";
-diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-index e5c041ec0756..4a58b70df125 100644
---- a/arch/arm/boot/dts/exynos4412.dtsi
-+++ b/arch/arm/boot/dts/exynos4412.dtsi
-@@ -737,6 +737,8 @@
- 
- &pmu {
- 	interrupts = <2 2>, <3 2>, <18 2>, <19 2>;
-+	interrupt-affinity = <&cpu0>, <&cpu1>, <&cpu2>, <&cpu3>;
-+	status = "okay";
- };
- 
- &pmu_system_controller {
+ &s5c73m3 {
+ 	standby-gpios = <&gpm0 1 GPIO_ACTIVE_LOW>;   /* ISP_STANDBY */
+ 	vdda-supply = <&ldo17_reg>;
 -- 
-2.7.4
+2.21.0
 
