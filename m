@@ -2,130 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 754D845968
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 11:53:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 221EE45C10
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 14:04:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727352AbfFNJxg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 05:53:36 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:35959 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727231AbfFNJxg (ORCPT
+        id S1727593AbfFNMEl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 08:04:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42934 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727488AbfFNMEl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 05:53:36 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190614095334euoutp01b6ec696a8997f94c328d36bd6bbc4802~oB-Pd9bqO0866608666euoutp01j
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 14 Jun 2019 09:53:34 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190614095334euoutp01b6ec696a8997f94c328d36bd6bbc4802~oB-Pd9bqO0866608666euoutp01j
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1560506014;
-        bh=Rv+G7xRM5W0qIJMO/1XEZpXdtXED3pTULKiTBpTxK9M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aqCvA7AnOuF0NzeOFqalIpglXNfHQQ3WWwIG6iZ6msiSJ6i/AKOqwqmiSNWAkZNvn
-         fgGRZfQL9S+kL8iG7/M4FunHo2w2WzMsmNtZw7ytaia3iy/5WHK5xiFAEDh5lOlJgG
-         U2euMpzcoydhqmZwBIEOLYug0iSbZNAU/RelzHLw=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190614095333eucas1p177d0ae9f420ce5d8cecf1e16e482e29a~oB-OTXveF1133711337eucas1p1g;
-        Fri, 14 Jun 2019 09:53:33 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id C0.B5.04298.D9E630D5; Fri, 14
-        Jun 2019 10:53:33 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190614095332eucas1p10e0a690604c6210d5f61c55175532785~oB-NeZsE11136511365eucas1p1W;
-        Fri, 14 Jun 2019 09:53:32 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190614095332eusmtrp2350e5e78017c06082698342f7a82df4f~oB-NOsSKg2148621486eusmtrp2N;
-        Fri, 14 Jun 2019 09:53:32 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-48-5d036e9dbe90
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 45.40.04146.C9E630D5; Fri, 14
-        Jun 2019 10:53:32 +0100 (BST)
-Received: from AMDC3778.DIGITAL.local (unknown [106.120.51.20]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190614095331eusmtip287a1b11711375a82978c084705a1a5ad~oB-MTglbl2261522615eusmtip2z;
-        Fri, 14 Jun 2019 09:53:31 +0000 (GMT)
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-To:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Cc:     mturquette@baylibre.com, sboyd@kernel.org,
-        b.zolnierkie@samsung.com, krzk@kernel.org, kgene@kernel.org,
-        cw00.choi@samsung.com, kyungmin.park@samsung.com,
-        m.szyprowski@samsung.com, s.nawrocki@samsung.com,
+        Fri, 14 Jun 2019 08:04:41 -0400
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7DCC52133D;
+        Fri, 14 Jun 2019 12:04:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560513880;
+        bh=kGiv727/oSO2xcvvP5CUDpg/Ry7P4YoUM9FlJGN0arI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=pTpBBLV0MqxSpEyI9bzDDW8Zqjd6oothO2n0qrb6/E8VlRaIalUuyeuUZM01L/3z0
+         7eExfwj1sMwzt+XccavUioo0XBT8AJ0hKMzo8UAig8BRYPtnD8Bc4UjYgtS2tbdmI/
+         +XyoEVnqR9Q/ZYwGhl5X2kb3jNYxSxTTV3Uyj+n8=
+Received: by mail-lj1-f171.google.com with SMTP id p17so2160916ljg.1;
+        Fri, 14 Jun 2019 05:04:40 -0700 (PDT)
+X-Gm-Message-State: APjAAAXyD5gihRCAole+pn+LWUDnCTkXbmnBXsL7TCg+kAzb5F2sz0qJ
+        5SjCRuq7QGXGmzzrTjuF534lGdw5hjlnFhm9vtc=
+X-Google-Smtp-Source: APXvYqyRrG8KU2Nodtv4PV8elpWy8ybJND0YDPhJ4V+FfX6qkFAt8W4A+VZMXPQ3fDrV2pshGC4N9PtVAltpOyJFO3o=
+X-Received: by 2002:a2e:3008:: with SMTP id w8mr14024186ljw.13.1560513878828;
+ Fri, 14 Jun 2019 05:04:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <CGME20190614095320eucas1p2919a6169c997bb81c80416e8a0ede538@eucas1p2.samsung.com>
+ <20190614095309.24100-1-l.luba@partner.samsung.com> <20190614095309.24100-2-l.luba@partner.samsung.com>
+In-Reply-To: <20190614095309.24100-2-l.luba@partner.samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Fri, 14 Jun 2019 14:04:27 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPeeVhHS62jiUgwySf5EYzW2Rkvu=HxyA7NjpGZFp=fWYQ@mail.gmail.com>
+Message-ID: <CAJKOXPeeVhHS62jiUgwySf5EYzW2Rkvu=HxyA7NjpGZFp=fWYQ@mail.gmail.com>
+Subject: Re: [PATCH v10 01/13] clk: samsung: add needed IDs for DMC clocks in Exynos5420
+To:     Lukasz Luba <l.luba@partner.samsung.com>,
+        linux-clk@vger.kernel.org, s.nawrocki@samsung.com
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, mturquette@baylibre.com,
+        sboyd@kernel.org,
+        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
+        <b.zolnierkie@samsung.com>, kgene@kernel.org,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        kyungmin.park@samsung.com,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         myungjoo.ham@samsung.com, keescook@chromium.org, tony@atomide.com,
         jroedel@suse.de, treding@nvidia.com, digetx@gmail.com,
-        gregkh@linuxfoundation.org, willy.mh.wolff.ml@gmail.com,
-        Lukasz Luba <l.luba@partner.samsung.com>
-Subject: [PATCH v10 13/13] ARM: exynos_defconfig: enable DMC driver
-Date:   Fri, 14 Jun 2019 11:53:09 +0200
-Message-Id: <20190614095309.24100-14-l.luba@partner.samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190614095309.24100-1-l.luba@partner.samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA0VSe0hTURzu7D7VJrct8lCRNAgqSTOCTilRlHAzKDGhqMxW3VRy0+71kWmw
-        FT18TEvJTF0rIrJZqHMsLdPlI9d6mD3MNEtcDzU1bSrM6OHcrP++3/f4fT8Oh8YkNmI+HatM
-        5HilPE5GeuKmR47nK7RKLHLlRYcUVRaWE+jt2FcC6ZqeE6hs1AbQqevlJMq3akXoaZYC5dq+
-        Yai1tYJCz04OUqhTtRCNZn8g0Kt7JSSya5oAKmytE6E7Td0UarOGoC51KYkaB88S6Hd7JY7q
-        X4eirp/eaMLSCzb4sBPjeTj7veM0xRar2nC2pqibYg36DJKt196mWM2pYZJ9OFwrYnOMesBW
-        PUlj7YZFYV67PYMPcXGxyRwfsH6/Z4zJWksmjBDHxi+/w1WggMgEHjRkVsPezEZRJvCkJUwp
-        gB9z9bhrGAPws8ZOugY7gFX5J/GZSP/9SbdwE8AHLSbqX8T4Szu1jKZJxh9W6486A3OZQgCL
-        +3Y4PRhzF4NDXe+BU5Aym2DFhdfTW3FmCTR+KRA5sZjZADs/2YGrzReWVZgxJ/aY4pt1g9PN
-        kMmgYY3FIXKZNsO+yRJ3QAoHWoyUCy+Ef2p0bo8AVZprbk86tOVq3Z4g2NjSRjiPxphlsPxe
-        gIveCF92OignDRlv2DE0x0ljUzDPdAlz0WJ47ozE5V4Kjdkv3EXz4M3bBe7lLJwYGXa/VT6A
-        6tp+cB74Fv0vuwqAHvhwSYIimhMClVyKvyBXCEnKaP+D8QoDmPp6T363/KgG4y8PNACGBrLZ
-        YvM6UaSEkCcLqYoGAGlMNld8JQiLlIgPyVOPc3x8FJ8UxwkNYAGNy3zEabN69kiYaHkid4Tj
-        Ejh+RhXRHvNVwLdntF+Xslu9/Y6l1LxmLbPoSqApY9W6cHNtRcezhL7QG5uLNSHqiI07w17c
-        qiuGhzOpAdtQ2/Gf5n220Tf8Yq/H9r4TW6r94o9Kf/Ee6eut0oCY4J5Q69alEWFk+wSD7c1d
-        4hduWOaw+ORE7YrwHTPwlmadwyaO35bYnjWZ+kaGCzHywOUYL8j/Av5WhQV2AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsVy+t/xe7pz8phjDWbekbTYOGM9q8X1L89Z
-        LeYfOcdqsfrjY0aL5sXr2Swmn5rLZHGmO9ei//FrZovz5zewW5xtesNucatBxuJjzz1Wi8u7
-        5rBZfO49wmgx4/w+Jou1R+6yW1w85Wpxu3EFm8XhN+2sFv+ubWSx2H/Fy+L2bz6LbyceMTqI
-        e3z7OonF4/2NVnaP2Q0XWTx2zrrL7rFpVSebx/65a9g9epvfsXkcfLeHyaNvyypGj82nqz0+
-        b5IL4I7SsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3St0vQ
-        y9h2ag9bwQfWiq8zb7I0ME5j7WLk5JAQMJF4ufsXWxcjF4eQwFJGiVXndzFDJMQkJu3bzg5h
-        C0v8udYFVfSJUeLu2p1ADgcHm4CexI5VhSBxEYE5jBI/u7YxgjjMAmeZJXaveMME0i0s4Cyx
-        YeIVFhCbRUBVYsuzaWBxXgEHiVtPPjNCbJCXWL3hANhmTqD40flvwBYICdhLfJ/BP4GRbwEj
-        wypGkdTS4tz03GJDveLE3OLSvHS95PzcTYzAKNx27OfmHYyXNgYfYhTgYFTi4T1gxRQrxJpY
-        VlyZe4hRgoNZSYR3njVzrBBvSmJlVWpRfnxRaU5q8SFGU6CbJjJLiSbnAxNEXkm8oamhuYWl
-        obmxubGZhZI4b4fAwRghgfTEktTs1NSC1CKYPiYOTqkGxr5GP5VA3VUZDA/1NDL7/sYEfdJt
-        8iq3E0tW6l7a4X6kT7HJe/dWVxN2U8fzVeICU90lOCzsGO779oXe32nlOcVhYeHv7Zw3nz0W
-        vf5XpevLimvuQv08iwLmF4g+nOpds9w4QVRhhdOneLUTN6Wvekzr859ScDXXh79Lz9xEwYNj
-        0vOHLy8osRRnJBpqMRcVJwIALtZL0NgCAAA=
-X-CMS-MailID: 20190614095332eucas1p10e0a690604c6210d5f61c55175532785
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190614095332eucas1p10e0a690604c6210d5f61c55175532785
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190614095332eucas1p10e0a690604c6210d5f61c55175532785
-References: <20190614095309.24100-1-l.luba@partner.samsung.com>
-        <CGME20190614095332eucas1p10e0a690604c6210d5f61c55175532785@eucas1p1.samsung.com>
+        gregkh@linuxfoundation.org, willy.mh.wolff.ml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enable driver for Exynos5422 Dynamic Memory Controller supporting
-dynamic frequency and voltage scaling in Exynos5422 SoCs.
+On Fri, 14 Jun 2019 at 11:53, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+>
+> Define new IDs for clocks used by Dynamic Memory Controller in
+> Exynos5422 SoC.
+>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> ---
+>  include/dt-bindings/clock/exynos5420.h | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
 
-Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
----
- arch/arm/configs/exynos_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+I do not quite understand why this patch is still being resent instead
+of have been applied some time ago. Are there any issues here? Or are
+there any issues with the entire patchset (except some review comments
+to be resolved)? If not, then this is a dependency which should go
+regardless of other patches. There is no point to keep it pending...
+All other changes, e.g. DTS will have to wait for more cycles till
+this gets in.
 
-diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
-index c95c54284da2..0cd16c924941 100644
---- a/arch/arm/configs/exynos_defconfig
-+++ b/arch/arm/configs/exynos_defconfig
-@@ -290,6 +290,7 @@ CONFIG_DEVFREQ_GOV_PERFORMANCE=y
- CONFIG_DEVFREQ_GOV_POWERSAVE=y
- CONFIG_DEVFREQ_GOV_USERSPACE=y
- CONFIG_ARM_EXYNOS_BUS_DEVFREQ=y
-+CONFIG_ARM_EXYNOS5422_DMC=y
- CONFIG_DEVFREQ_EVENT_EXYNOS_NOCP=y
- CONFIG_EXYNOS_IOMMU=y
- CONFIG_EXTCON=y
--- 
-2.17.1
+Therefore either please apply this or please comment what is stopping
+dependencies from being applied.
 
+Best regards,
+Krzysztof
