@@ -2,104 +2,106 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C06746A07
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 22:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F32646A49
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 22:37:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbfFNUgl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 16:36:41 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40292 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728454AbfFNUgl (ORCPT
+        id S1727344AbfFNUg6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 16:36:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36758 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727131AbfFNUg6 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 16:36:41 -0400
-Received: by mail-ed1-f65.google.com with SMTP id k8so5227244eds.7
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 14 Jun 2019 13:36:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RUJkrBHPGMD0Jak0hv15UuXYYOT/ay4M5iA7uP6K2TM=;
-        b=irhEijl3uz1ccHxtPEy4kMwnVw1beSjXcXiHBVt/guTgdFhCDeaSwRU3YaR3aKXJiW
-         Jzw8hwyS8SHMCIg/hyvS/d3wjueJ9Xh/vjsOCJWDYo9nOYIWcSD2B/3veRSqrrxBv4WM
-         O+FhIWINHJAKp/VJXK60dm32VnYow4ogo0D6Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RUJkrBHPGMD0Jak0hv15UuXYYOT/ay4M5iA7uP6K2TM=;
-        b=ABacapfziT4TMSskxP5ZKCK8aa32rqWIl0RXc0+ctXTcVHN8Mx3mLrpJj2+/BzYF2i
-         FQs6kaxC6gOSmVfS7pmqpau8JLDmHh3PtS8Hoa5KNgVQ6LO76XYJJ0bihiKmH5enKXqH
-         D11rj2imaEFDHSuIH406lW2Q1Uqc4ZeidW3f6PBXejVnfr/Nasd2QQGUCO/LCQH7fCJb
-         J72kjD/G1EqXfk0BkrOsgbPymJ7ngob9pveSdNuol3MOd6QkJLQg0lm7XO4mv9Sb000p
-         DWAX5wOlhgfMuy5n4amz1s/hKHrOKTzQ/DYmpF1ocdw3IpytZAqp9pjiM3htfEnxjEdo
-         zJ5w==
-X-Gm-Message-State: APjAAAVMnuMcWrhwNtWayL6Up6sSJTxC37z6Li5KU3Ky0U/fYgyMZXe4
-        XyNaqOXre/6PtCWff0SOXO6qMQ==
-X-Google-Smtp-Source: APXvYqyBmbA9fgjT93k8eJavmdSLhiYk/y6FVvZuoiG7XOai8lro1qS6KycJASXiRs5PrvmL91wkSg==
-X-Received: by 2002:a50:8825:: with SMTP id b34mr25674476edb.22.1560544599178;
-        Fri, 14 Jun 2019 13:36:39 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
-        by smtp.gmail.com with ESMTPSA id n15sm1166672edd.49.2019.06.14.13.36.37
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 14 Jun 2019 13:36:37 -0700 (PDT)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 14/59] drm/exynos: Drop drm_gem_prime_export
-Date:   Fri, 14 Jun 2019 22:35:30 +0200
-Message-Id: <20190614203615.12639-15-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
-References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
+        Fri, 14 Jun 2019 16:36:58 -0400
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A6B0E21881;
+        Fri, 14 Jun 2019 20:36:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560544617;
+        bh=BMo9z7ktz9HuAZSsZMrvij5s/QTJTao6137g4UhlIgs=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=vWedKb+jbEbTSmw49dIs6fTCJMj1eNLfzV8lZhNRiHHoNikTzq2f3wdnIMZkVCQyL
+         knYe1cDPqn1d10QezlNcqa/UafNrHuBUfY7wb2TBsdKdscj2QcfL0si88DVa5eR8xe
+         an96ZnAgozIFPA2aIN/tmAjrRvruXjj6fWhglrLM=
+Received: by mail-qt1-f175.google.com with SMTP id y57so4049194qtk.4;
+        Fri, 14 Jun 2019 13:36:57 -0700 (PDT)
+X-Gm-Message-State: APjAAAVsG14ub8MW2Ej7ZVWH/jtE+G8uSJfvW54jTvn3g8kfHopL4ewN
+        BD8k7alFN/himm5udj/Ni9NnxSfhGpOAEnIIBw==
+X-Google-Smtp-Source: APXvYqyWRzWEZ0HIsQNXaYvRLs4N5ZiA6PSR36infTnI62eYz0wn0LN3U9LzbcQ569w7rU4GDgO6FBTD8OY61VcRQO8=
+X-Received: by 2002:a0c:b627:: with SMTP id f39mr10202928qve.72.1560544616863;
+ Fri, 14 Jun 2019 13:36:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190614203144.3850-1-joseph.kogut@gmail.com> <20190614203144.3850-2-joseph.kogut@gmail.com>
+In-Reply-To: <20190614203144.3850-2-joseph.kogut@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 14 Jun 2019 14:36:45 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJjqCRU2a9sfMimTJoMQnR6CjqAqjHRAxyaebWAad299g@mail.gmail.com>
+Message-ID: <CAL_JsqJjqCRU2a9sfMimTJoMQnR6CjqAqjHRAxyaebWAad299g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm: dts: add ARM Mali GPU node for Odroid XU3
+To:     Joseph Kogut <joseph.kogut@gmail.com>
+Cc:     Mark Rutland <mark.rutland@arm.com>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-They're the default. We can't do the same on the import side, due to
-the exynos_drm->dma_dev not necessarily matching the overall drm
-device.
+On Fri, Jun 14, 2019 at 2:31 PM Joseph Kogut <joseph.kogut@gmail.com> wrote:
+>
+> Add device tree node for mali gpu on Odroid XU3 SoCs.
+>
+> Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
+> ---
+>  .../boot/dts/exynos5422-odroidxu3-common.dtsi  | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> index 93a48f2dda49..1f2ae19d01af 100644
+> --- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> +++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> @@ -48,6 +48,24 @@
+>                 cooling-levels = <0 130 170 230>;
+>         };
+>
+> +       gpu: gpu@11800000 {
+> +               compatible = "samsung,exynos-mali", "arm,mali-t628";
+> +               reg = <0x11800000 0x5000>;
+> +               interrupts = <0 117 0>,
+> +                            <0 219 0>,
+> +                            <0 74  0>;
+> +               interrupt-names = "gpu", "job", "mmu";
 
-Aside: Would be really nice to switch the others over to
-drm_gem_object_funcs.
+Please use the order defined in the binding doc.
 
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Joonyoung Shim <jy0922.shim@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
----
- drivers/gpu/drm/exynos/exynos_drm_drv.c | 1 -
- 1 file changed, 1 deletion(-)
+> +               clocks = <&clock CLK_G3D>,
+> +                        <&clock CLK_DOUT_ACLK_G3D>,
+> +                        <&clock CLK_FOUT_VPLL>;
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-index e43640fc42d3..4d270390eba2 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-@@ -124,7 +124,6 @@ static struct drm_driver exynos_drm_driver = {
- 	.dumb_create		= exynos_drm_gem_dumb_create,
- 	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
- 	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
--	.gem_prime_export	= drm_gem_prime_export,
- 	.gem_prime_import	= exynos_drm_gem_prime_import,
- 	.gem_prime_get_sg_table	= exynos_drm_gem_prime_get_sg_table,
- 	.gem_prime_import_sg_table	= exynos_drm_gem_prime_import_sg_table,
--- 
-2.20.1
+The binding doc says a single clock.
 
+> +               mali-supply = <&buck4_reg>;
+> +               operating-points = <
+
+The binding doc says operating-points-v2.
+
+> +                       /* KHz  uV   */
+> +                       600000  1150000
+> +                       177000  812500
+> +               >;
+> +       };
+> +
+>         thermal-zones {
+>                 cpu0_thermal: cpu0-thermal {
+>                         thermal-sensors = <&tmu_cpu0 0>;
+> --
+> 2.22.0
+>
