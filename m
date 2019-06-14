@@ -2,91 +2,151 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E4846420
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 18:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D3A84645B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 18:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725972AbfFNQam (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 12:30:42 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:39636 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbfFNQam (ORCPT
+        id S1725808AbfFNQhH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 12:37:07 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:34934 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726519AbfFNQhG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 12:30:42 -0400
-Received: by mail-qt1-f193.google.com with SMTP id i34so3145702qta.6;
-        Fri, 14 Jun 2019 09:30:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=jMjniYLe1gr6/AMUsfiLEF+RmBgBhFISx6JTCsfFayw=;
-        b=dylpHzVutdtvz80h4E1MALMrkF9zOCisPlXnDYM9KgCx7i+2LHdHkYBzgFgEJ8dGXF
-         UAprhzVtH+tEIJKKWjuQUBEPBLWbjubMFjuWEnVEGzSfZcy5ywQol5zb/0PT/FA3/8nO
-         BARpeRjPtzZYf6+9scil6YIUZDHH+ESX2MZSu6HCIWUMbn+fIPglWbXbRdMf+S2oDptM
-         h18CtxctbbD74q7yImTnOpvHWJrDAWaJdgpcjHZy2ubt1TdU98VB7tnWCfrXj4/L/fF5
-         cJztCXgvrqa8CfeMCzTTmKWlzSEaKllFz22lJmLIWRYnOX+wNPXqlHuf1LpByJSujK68
-         n1Pw==
-X-Gm-Message-State: APjAAAVyEsBKlw6ZuY9CTXrRtZsfo62mJSEbkVWMuPMSnOvd2TiripqO
-        +j8rftSpTyBB9tz2Rfzjqhn5yt4jzg==
-X-Google-Smtp-Source: APXvYqyq8hzzFgEGvYC87jNq+3O710Dm+93YPe7JOG/z4/1WC3Xyz09BCnowTVLy+F+fmhIrcXUSQg==
-X-Received: by 2002:ac8:2ae8:: with SMTP id c37mr27905229qta.267.1560529840914;
-        Fri, 14 Jun 2019 09:30:40 -0700 (PDT)
-Received: from localhost ([64.188.179.243])
-        by smtp.gmail.com with ESMTPSA id s23sm2624864qtj.56.2019.06.14.09.30.39
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 14 Jun 2019 09:30:40 -0700 (PDT)
-Date:   Fri, 14 Jun 2019 10:30:39 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Markus Reichl <m.reichl@fivetechno.de>,
-        =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>,
+        Fri, 14 Jun 2019 12:37:06 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: eballetbo)
+        with ESMTPSA id 141C928617E
+From:   Enric Balletbo i Serra <enric.balletbo@collabora.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     gwendal@chromium.org, Guenter Roeck <groeck@chromium.org>,
+        Benson Leung <bleung@chromium.org>,
+        Lee Jones <lee.jones@linaro.org>, kernel@collabora.com,
+        dtor@chromium.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        linux-samsung-soc@vger.kernel.org, Olof Johansson <olof@lixom.net>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Peter Chen <peter.chen@nxp.com>,
-        Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH 1/5] dt-bindings: switch Exynos EHCI/OHCI bindings to use
- array of generic PHYs
-Message-ID: <20190614163039.GA24384@bogus>
-References: <20190521115849.9882-1-m.szyprowski@samsung.com>
- <CGME20190521120107eucas1p1a56efaa0e7f2117063e70683276edc10@eucas1p1.samsung.com>
- <20190521115849.9882-2-m.szyprowski@samsung.com>
+        Will Deacon <will.deacon@arm.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Daniel Mack <daniel@zonque.org>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        Simon Horman <horms+renesas@verge.net.au>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?q?Yannick=20Fertr=C3=A9?= <yannick.fertre@st.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Tony Lindgren <tony@atomide.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>
+Subject: [PATCH v2 10/10] arm/arm64: defconfig: Update configs to use the new CROS_EC options
+Date:   Fri, 14 Jun 2019 18:36:35 +0200
+Message-Id: <20190614163635.22413-11-enric.balletbo@collabora.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190614163635.22413-1-enric.balletbo@collabora.com>
+References: <20190614163635.22413-1-enric.balletbo@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190521115849.9882-2-m.szyprowski@samsung.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, May 21, 2019 at 01:58:45PM +0200, Marek Szyprowski wrote:
-> Commit 69bec7259853 ("USB: core: let USB device know device node") added
-> support for attaching devicetree node for USB devices. Those nodes are
-> children of their USB host controller. However Exynos EHCI and OHCI
-> driver bindings already define child-nodes for each physical root hub
-> port and assigns respective PHY controller and parameters to them. This
-> leads to the conflict. A workaround for it has been merged as commit
-> 01d4071486fe ("usb: exynos: add workaround for the USB device bindings
-> conflict"), but it disabled support for USB device binding for Exynos
-> EHCI/OHCI controllers.
-> 
-> To resolve it properly, lets move PHYs from the sub-nodes to a standard
-> array under the 'phys' property.
-> 
-> Suggested-by: Måns Rullgård <mans@mansr.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  .../devicetree/bindings/usb/exynos-usb.txt    | 41 +++++++------------
->  1 file changed, 14 insertions(+), 27 deletions(-)
+Recently we refactored the CrOS EC drivers moving part of the code from
+the MFD subsystem to the platform chrome subsystem. During this change
+we needed to rename some config options, so, update the defconfigs
+accordingly.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+---
 
-The old way would also conflict with the usb-connector binding as that 
-uses the graph binding.
+Changes in v2: None
 
-Rob
+ arch/arm/configs/exynos_defconfig   | 4 +++-
+ arch/arm/configs/multi_v7_defconfig | 6 ++++--
+ arch/arm/configs/pxa_defconfig      | 4 +++-
+ arch/arm64/configs/defconfig        | 6 ++++--
+ 4 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
+index c95c54284da2..03448fba569f 100644
+--- a/arch/arm/configs/exynos_defconfig
++++ b/arch/arm/configs/exynos_defconfig
+@@ -154,7 +154,9 @@ CONFIG_CPU_THERMAL=y
+ CONFIG_THERMAL_EMULATION=y
+ CONFIG_WATCHDOG=y
+ CONFIG_S3C2410_WATCHDOG=y
+-CONFIG_MFD_CROS_EC=y
++CONFIG_MFD_CROS_EC_DEV=y
++CONFIG_CHROME_PLATFORMS=y
++CONFIG_CROS_EC=y
+ CONFIG_CROS_EC_I2C=y
+ CONFIG_CROS_EC_SPI=y
+ CONFIG_MFD_MAX14577=y
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index 6b748f214eae..9fe783abf3c5 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -510,10 +510,12 @@ CONFIG_MFD_BCM590XX=y
+ CONFIG_MFD_AC100=y
+ CONFIG_MFD_AXP20X_I2C=y
+ CONFIG_MFD_AXP20X_RSB=y
+-CONFIG_MFD_CROS_EC=m
++CONFIG_MFD_CROS_EC_DEV=m
++CONFIG_CHROME_PLATFORMS=y
++CONFIG_CROS_EC=m
+ CONFIG_CROS_EC_I2C=m
+ CONFIG_CROS_EC_SPI=m
+-CONFIG_MFD_CROS_EC_CHARDEV=m
++CONFIG_CROS_EC_CHARDEV=m
+ CONFIG_MFD_DA9063=m
+ CONFIG_MFD_MAX14577=y
+ CONFIG_MFD_MAX77686=y
+diff --git a/arch/arm/configs/pxa_defconfig b/arch/arm/configs/pxa_defconfig
+index 07ebbdce3645..e335b986cf70 100644
+--- a/arch/arm/configs/pxa_defconfig
++++ b/arch/arm/configs/pxa_defconfig
+@@ -394,7 +394,9 @@ CONFIG_SA1100_WATCHDOG=m
+ CONFIG_MFD_AS3711=y
+ CONFIG_MFD_BCM590XX=m
+ CONFIG_MFD_AXP20X=y
+-CONFIG_MFD_CROS_EC=m
++CONFIG_MFD_CROS_EC_DEV=m
++CONFIG_CHROME_PLATFORMS=y
++CONFIG_CROS_EC=m
+ CONFIG_CROS_EC_I2C=m
+ CONFIG_CROS_EC_SPI=m
+ CONFIG_MFD_ASIC3=y
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 4d583514258c..b5bba5f04082 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -430,8 +430,7 @@ CONFIG_MFD_ALTERA_SYSMGR=y
+ CONFIG_MFD_BD9571MWV=y
+ CONFIG_MFD_AXP20X_I2C=y
+ CONFIG_MFD_AXP20X_RSB=y
+-CONFIG_MFD_CROS_EC=y
+-CONFIG_MFD_CROS_EC_CHARDEV=m
++CONFIG_MFD_CROS_EC_DEV=y
+ CONFIG_MFD_EXYNOS_LPASS=m
+ CONFIG_MFD_HI6421_PMIC=y
+ CONFIG_MFD_HI655X_PMIC=y
+@@ -631,8 +630,11 @@ CONFIG_VIRTIO_BALLOON=y
+ CONFIG_VIRTIO_MMIO=y
+ CONFIG_XEN_GNTDEV=y
+ CONFIG_XEN_GRANT_DEV_ALLOC=y
++CONFIG_CHROME_PLATFORMS=y
++CONFIG_CROS_EC=y
+ CONFIG_CROS_EC_I2C=y
+ CONFIG_CROS_EC_SPI=y
++CONFIG_CROS_EC_CHARDEV=m
+ CONFIG_COMMON_CLK_RK808=y
+ CONFIG_COMMON_CLK_SCPI=y
+ CONFIG_COMMON_CLK_CS2000_CP=y
+-- 
+2.20.1
+
