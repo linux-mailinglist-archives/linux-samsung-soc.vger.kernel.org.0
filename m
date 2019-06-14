@@ -2,70 +2,118 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A84A454AE
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 08:28:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 568784550D
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jun 2019 08:53:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725802AbfFNG24 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jun 2019 02:28:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59156 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725774AbfFNG24 (ORCPT
+        id S1725886AbfFNGxI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jun 2019 02:53:08 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:49834 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbfFNGxH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jun 2019 02:28:56 -0400
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 075B92175B;
-        Fri, 14 Jun 2019 06:28:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560493735;
-        bh=o6p9lVc+DYilRKtF9pajKsHYMRF8rkewSFkOlAnBRH8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JozXoOb8Ksc6M/jxRWxNQoCuZPK/5IvFkxh+M4O9zoywYnsSjvXltT2rFIopAZGVa
-         8ZxAp9Gd4x/1rIddNzEm4o7sHNxGxeZPGt16LcX6QGhYmPS2av/K81y5kESJTLL6Kb
-         6WEfM0zrV0/lz+O9Drbq/GrlfjzYye/Smlmr/ypM=
-Received: by mail-lf1-f54.google.com with SMTP id y198so924707lfa.1;
-        Thu, 13 Jun 2019 23:28:54 -0700 (PDT)
-X-Gm-Message-State: APjAAAX6Yrp84LuT9kLmqzhtN3u/4nFnU50FfnIjBnRDMMEIYkA60JHO
-        mqBNCxVFAAf6Thr/irUyoz4BGF3XQt0rbuCa8Zk=
-X-Google-Smtp-Source: APXvYqzRXJBwqzBDJLXSnR6wciv/RpnSmt3qlpvlkhRIjxzRerMzGffvz309DswL+/k+vyTpR7UVS0Do0UtSVtBB5qM=
-X-Received: by 2002:ac2:4d1c:: with SMTP id r28mr8998948lfi.159.1560493733233;
- Thu, 13 Jun 2019 23:28:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190613162703.986-1-tiny.windzz@gmail.com>
-In-Reply-To: <20190613162703.986-1-tiny.windzz@gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 14 Jun 2019 08:28:42 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfU+nB-_K3ZP9XBFp5bfk-ZvbfSEW96LD4MbtkyWfQZHg@mail.gmail.com>
-Message-ID: <CAJKOXPfU+nB-_K3ZP9XBFp5bfk-ZvbfSEW96LD4MbtkyWfQZHg@mail.gmail.com>
-Subject: Re: [PATCH 01/10] iommu/exynos: convert to SPDX license tags
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     joro@8bytes.org, Marek Szyprowski <m.szyprowski@samsung.com>,
-        kgene@kernel.org, will.deacon@arm.com, robin.murphy@arm.com,
-        agross@kernel.org, david.brown@linaro.org, robdclark@gmail.com,
-        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 14 Jun 2019 02:53:07 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190614065305euoutp02c73808c461fe90a8b29e6ef35ea5b750~n-hptJzfh1797717977euoutp02F;
+        Fri, 14 Jun 2019 06:53:05 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190614065305euoutp02c73808c461fe90a8b29e6ef35ea5b750~n-hptJzfh1797717977euoutp02F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1560495185;
+        bh=T/897ffO/UeNImnMGoYZqvW9BMN4qL2AJzoKTbQUbMk=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=FIzE/crp6pNNvCFAFH5syzqWDWs8tSMRNEh5XVPAPklq+C0Ku+no8HjFwpH6vJL7V
+         AbjzyM8sRdetPtCdJtAnN82blaL6uPDFLZLSr+dOsfVmVtEhkEbSQ83/eE6r1wDco3
+         efiYRjiSYQU/fKhtKMoQYkd55S1YmCLQpXdPzH5I=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190614065304eucas1p17bdedd73d25a018f3a33a205866274dd~n-hpQTzhD1340313403eucas1p1y;
+        Fri, 14 Jun 2019 06:53:04 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 83.77.04377.054430D5; Fri, 14
+        Jun 2019 07:53:04 +0100 (BST)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190614065304eucas1p1ad98abc5c0f5e5e94fa43bed7e7d0e4f~n-hoklhSx0061500615eucas1p1y;
+        Fri, 14 Jun 2019 06:53:04 +0000 (GMT)
+X-AuditID: cbfec7f4-12dff70000001119-50-5d034450069d
+Received: from eusync1.samsung.com ( [203.254.199.211]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 4E.C6.04146.054430D5; Fri, 14
+        Jun 2019 07:53:04 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
+        eusync1.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
+        (built May  5 2014)) with ESMTPA id <0PT200GBBTSBAO70@eusync1.samsung.com>;
+        Fri, 14 Jun 2019 07:53:04 +0100 (BST)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Minas Harutyunyan <hminas@synopsys.com>,
+        Felipe Balbi <felipe.balbi@linux.intel.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Jules Maselbas <jmaselbas@kalray.eu>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2] usb: dwc2: Force 8bit UTMI width for Samsung Exynos SoCs
+Date:   Fri, 14 Jun 2019 08:52:53 +0200
+Message-id: <20190614065253.9622-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDIsWRmVeSWpSXmKPExsWy7djPc7oBLsyxBod7lCw2zljPajH/ZpJF
+        46+97BazZpxmtTh/fgO7xeVdc9gsZpzfx2SxaFkrs8XaI3fZHTg9Tq+/yeixaVUnm8e8k4Ee
+        fVtWMXps2f+Z0ePzJrkAtigum5TUnMyy1CJ9uwSujCenD7MUvGOvaP3+i7WB8SpbFyMnh4SA
+        icS+HT1ANheHkMAKRonNP29COZ8ZJS43dzJ2MXKAVf3/7w0RX8YoceXhRSYI5z+jxPP5x5lA
+        RrEJGEp0ve0CGysikCBxZPN7ZhCbWaCPSeJ+uyaILSzgI3F0014mkKEsAqoSi8+XgYR5BWwk
+        Pr1dwgRxkbzE6g0HmEHmSwg0skmcWf8Q6ggXiSUNfhA1MhKdHQeZIGqaGSUenlvLDuH0AF3d
+        NIMRospa4vDxi6wQR/BJTNo2nRliEK9ER5sQRImHxIHOl+wgtpBArMRSoPsnMIovYGRYxSie
+        Wlqcm55abJSXWq5XnJhbXJqXrpecn7uJERhnp/8d/7KDcdefpEOMAhyMSjy8B6yYYoVYE8uK
+        K3MPMUpwMCuJ8M6zZo4V4k1JrKxKLcqPLyrNSS0+xCjNwaIkzlvN8CBaSCA9sSQ1OzW1ILUI
+        JsvEwSnVwBiwKPAAz0GGBb6/pBI/FTJtZpvF4G7Coivm4124qOFJQfbFsxe2bli/9eXifVX3
+        Sww7TD++CbzxvzFFSfx9jsiOV/HfOTdx3lbaEHrqCtf5i9Vae6tuFFpLz9q4X6zeFqjIz/vK
+        84pNMmpGpWzpc49e/iWzwXRn5VwBmQkbkmy8XL6WHe0+r8RSnJFoqMVcVJwIALDKyFyvAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFJMWRmVeSWpSXmKPExsVy+t/xy7oBLsyxBhcOsFpsnLGe1WL+zSSL
+        xl972S1mzTjNanH+/AZ2i8u75rBZzDi/j8li0bJWZou1R+6yO3B6nF5/k9Fj06pONo95JwM9
+        +rasYvTYsv8zo8fnTXIBbFFcNimpOZllqUX6dglcGU9OH2YpeMde0fr9F2sD41W2LkYODgkB
+        E4n//727GLk4hASWMEqsWdfA3sXICeQ0Mkk82OYEYrMJGEp0ve1iA7FFBBIklrzdzA7SwCww
+        gUliz5nHYAlhAR+Jo5v2MoEMZRFQlVh8vgwkzCtgI/Hp7RImEFtCQF5i9YYDzBMYuRYwMqxi
+        FEktLc5Nzy021CtOzC0uzUvXS87P3cQIDJFtx35u3sF4aWPwIUYBDkYlHt4DVkyxQqyJZcWV
+        uYcYJTiYlUR451kzxwrxpiRWVqUW5ccXleakFh9ilOZgURLn7RA4GCMkkJ5YkpqdmlqQWgST
+        ZeLglGpgtH0Qf8/h0Fe+xw15vpuc84Xsg8qzylcx/GqaotM6/0Kaiv//MM6Sdfkz9nMvP8Ky
+        eLWcRVnSDfm435/6D1TfiXumdfSHxxHtU2IyUclbKxbvSc2QFeI+7S32zecy/46Si3O6zys3
+        fBSLnvBwjY+CYI3m4pJn+lzxes55KRo/vx+YvKSY/66wEktxRqKhFnNRcSIAsj0Jpw0CAAA=
+X-CMS-MailID: 20190614065304eucas1p1ad98abc5c0f5e5e94fa43bed7e7d0e4f
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190614065304eucas1p1ad98abc5c0f5e5e94fa43bed7e7d0e4f
+References: <CGME20190614065304eucas1p1ad98abc5c0f5e5e94fa43bed7e7d0e4f@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 13 Jun 2019 at 18:27, Yangtao Li <tiny.windzz@gmail.com> wrote:
->
-> Updates license to use SPDX-License-Identifier.
->
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> ---
->  drivers/iommu/exynos-iommu.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+Samsung Exynos SoCs require to force UTMI width to 8bit, otherwise the
+host side of the shared USB2 PHY doesn't work.
 
-Splitting this per driver is too much... it is not necessary. Such
-changes should be done in one patch per subsystem.
+Reported-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 707d80f0a3c5 ("usb: dwc2: gadget: Replace phyif with phy_utmi_width")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Tested-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+v2:
+- added collected tags
+---
+ drivers/usb/dwc2/params.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/usb/dwc2/params.c b/drivers/usb/dwc2/params.c
+index 6900eea57526..9ece4affb9d4 100644
+--- a/drivers/usb/dwc2/params.c
++++ b/drivers/usb/dwc2/params.c
+@@ -76,6 +76,7 @@ static void dwc2_set_s3c6400_params(struct dwc2_hsotg *hsotg)
+ 	struct dwc2_core_params *p = &hsotg->params;
+ 
+ 	p->power_down = 0;
++	p->phy_utmi_width = 8;
+ }
+ 
+ static void dwc2_set_rk_params(struct dwc2_hsotg *hsotg)
+-- 
+2.17.1
+
