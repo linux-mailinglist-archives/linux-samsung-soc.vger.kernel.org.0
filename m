@@ -2,74 +2,184 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1513647ACD
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 09:28:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AC7C47A75
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 09:12:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbfFQH2c (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jun 2019 03:28:32 -0400
-Received: from slot0.nejknio.cf ([89.32.41.233]:40086 "EHLO slot0.nejknio.cf"
+        id S1725837AbfFQHMS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jun 2019 03:12:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51576 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725826AbfFQH2c (ORCPT
+        id S1725826AbfFQHMS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jun 2019 03:28:32 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=nejknio.cf;
- h=Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To:Message-ID; i=trade1@nejknio.cf;
- bh=73Xs4LxjK+lP+h5mKCyFyWTpkoQ=;
- b=Ryn9tPbzAbeow+3u1weSwbB4Ol8D3IKP+4jWxSSFhjLmbYiDsjBZa09IDyoclK5WhB8z40kWE1+p
-   52/HaevTH6Ph1MkX0LiizFikqSoUvn9UqsHoVHABOk9Oq3J+XEALPSTwnZqFsA7AL61S0Xw1CiE0
-   ni0VlLlSjW9Wxcf31UfT8juFjyp6euNKg9Ylc8lJhCaXGXkREBmHNcFog0SXJB9ut5lmZpq33aTX
-   XRDIpbPMaePK3pc/p1t320Yk4+Fwj109IAlY1tOZl3VEZuX6zQogx1G3bu1Rt9jVECYrou/VJDax
-   eNd6fZDdMHWcZHleRU75JQZfvGtGxTn3f5jpDw==
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=nejknio.cf;
- b=QXE63PL9BVI3+VEvVIId5bhuJn76ONfGlX9GMgpyuMSbBNAs5xSiqjJkNN/9QEx+lTU9YD9HHiSt
-   RdeVSGsx51TqoUYzQBkRlXpU4vPTJGIss52ppQp+Djt22hgj0YbtbuDE94t8n4+B7qewaBkPhd+3
-   iCov6YNY+ndB3ML1eRQvfP3rivnozZ5cb2nwdcUxUGcqhPcyQUw55ia7AJFwzIHijnm6ZjzV+jOu
-   b9CZx10spyfpHCcnl5WW2D+pT1ebigWKFlUUs+/5vUuaY8/iHOdlO8m+vCxl/S4sR8KrymC9WBbJ
-   usBsVAW+zWwqKIddNORYnTLRyyyYQ7J6JH5zBg==;
-Content-Type: text/plain; charset="iso-8859-1"
+        Mon, 17 Jun 2019 03:12:18 -0400
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 15848218EA;
+        Mon, 17 Jun 2019 07:12:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560755536;
+        bh=auAmcgDb9/BI7xXD6SFrnCeWwfBK8vq66znDTU/qxiE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Qs2uqqAu8v+vqQAIjksCHS2nPH9Zl4cZ+Ai0T1xtiD9snX6vO+jyYNN1d0e0gSq92
+         ILe9zqcpQL1wTn5pqSUWgIdYvGceHH+DhjfAkg9ezLxnrQyw9ZIEsEHnQmO1vj6Mfv
+         YYur0sZUvJzSPFlG2FUf9dKL3kAPlBNbkQaa7PDc=
+Received: by mail-lj1-f173.google.com with SMTP id t28so8182108lje.9;
+        Mon, 17 Jun 2019 00:12:16 -0700 (PDT)
+X-Gm-Message-State: APjAAAXgsGofpJQvsq6vKf0/ODYJGNYSx8274opu8W4fXfu/G0cIS4Q1
+        MHWzS4iZj2CYrfdeJaWFVb8pdbsB7qDyOI7JjjI=
+X-Google-Smtp-Source: APXvYqxYdWi6u8+Af9xm4Ixw0NW9S2cn6fHEduei34f452pIJ4bgKmwQXZSGCJoSV5lYo97OVcCtb7ZtQ5e1o/emiPw=
+X-Received: by 2002:a2e:94c9:: with SMTP id r9mr12365447ljh.210.1560755534293;
+ Mon, 17 Jun 2019 00:12:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: PRODUCT INQUIRY FOR EXPORT SHIPMENT
-To:     Recipients <trade1@nejknio.cf>
-From:   "Mark Maths" <trade1@nejknio.cf>
-Date:   Mon, 17 Jun 2019 10:08:39 +0300
-Reply-To: purchase_m.maths@aol.com
-Message-ID: <0.0.1.D63.1D524DB7223FA7A.0@slot0.nejknio.cf>
+References: <20190614163635.22413-1-enric.balletbo@collabora.com> <20190614163635.22413-11-enric.balletbo@collabora.com>
+In-Reply-To: <20190614163635.22413-11-enric.balletbo@collabora.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 17 Jun 2019 09:12:03 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPetaMmeQyZWVWRUSzbe1pKMweCpUx=phy8QowVQHTrdLA@mail.gmail.com>
+Message-ID: <CAJKOXPetaMmeQyZWVWRUSzbe1pKMweCpUx=phy8QowVQHTrdLA@mail.gmail.com>
+Subject: Re: [PATCH v2 10/10] arm/arm64: defconfig: Update configs to use the
+ new CROS_EC options
+To:     Enric Balletbo i Serra <enric.balletbo@collabora.com>
+Cc:     linux-kernel@vger.kernel.org, gwendal@chromium.org,
+        Guenter Roeck <groeck@chromium.org>,
+        Benson Leung <bleung@chromium.org>,
+        Lee Jones <lee.jones@linaro.org>, kernel@collabora.com,
+        dtor@chromium.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Will Deacon <will.deacon@arm.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Daniel Mack <daniel@zonque.org>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        Simon Horman <horms+renesas@verge.net.au>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?Q?Yannick_Fertr=C3=A9?= <yannick.fertre@st.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Tony Lindgren <tony@atomide.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dear Sales team,
- =
+On Fri, 14 Jun 2019 at 18:37, Enric Balletbo i Serra
+<enric.balletbo@collabora.com> wrote:
+>
+> Recently we refactored the CrOS EC drivers moving part of the code from
+> the MFD subsystem to the platform chrome subsystem. During this change
+> we needed to rename some config options, so, update the defconfigs
+> accordingly.
+>
+> Signed-off-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
+> ---
+>
+> Changes in v2: None
+>
+>  arch/arm/configs/exynos_defconfig   | 4 +++-
+>  arch/arm/configs/multi_v7_defconfig | 6 ++++--
+>  arch/arm/configs/pxa_defconfig      | 4 +++-
+>  arch/arm64/configs/defconfig        | 6 ++++--
+>  4 files changed, 14 insertions(+), 6 deletions(-)
+>
+> diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
+> index c95c54284da2..03448fba569f 100644
+> --- a/arch/arm/configs/exynos_defconfig
+> +++ b/arch/arm/configs/exynos_defconfig
+> @@ -154,7 +154,9 @@ CONFIG_CPU_THERMAL=y
+>  CONFIG_THERMAL_EMULATION=y
+>  CONFIG_WATCHDOG=y
+>  CONFIG_S3C2410_WATCHDOG=y
+> -CONFIG_MFD_CROS_EC=y
+> +CONFIG_MFD_CROS_EC_DEV=y
+> +CONFIG_CHROME_PLATFORMS=y
+> +CONFIG_CROS_EC=y
+>  CONFIG_CROS_EC_I2C=y
+>  CONFIG_CROS_EC_SPI=y
+>  CONFIG_MFD_MAX14577=y
 
-In furtherance to our market research, we have reviewed all your products t=
-ypes and we have finally interested in your product for our market here in =
+If you want to take it through mfd, arm-soc or other tree:
+For Exynos:
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+
+Otherwise I could take exynos/multi_v7/arm64 changes but split per arm v7/v8.
+
+Best regards,
+Krzysztof
 
 
-United State for your production. We introduce ourselves as Emilxa Tram SRL=
-, A general group of company located in the United State. =
-
-
-We are sourcing for new suppliers from your location =
-
-
-Kindly advice us if you accept new purchase orders, I will forward our PO f=
-or urgent order.
-
-Waiting for your response to send order. Reply to ( purchase_m.maths@aol.co=
-m)
-
-Best regards.
-Mark Maths
-Company Address:
-Emilxa Tram SRL Company Limited
-P.O. Box 978
-Road Town
-Tortola
-British Virgin Islands
-Contact information:
-Tel: +1 (284) 493 7235
-Email: purchase_m.maths@aol.com
-https://meridianbvi.com/contact-us/
+> diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+> index 6b748f214eae..9fe783abf3c5 100644
+> --- a/arch/arm/configs/multi_v7_defconfig
+> +++ b/arch/arm/configs/multi_v7_defconfig
+> @@ -510,10 +510,12 @@ CONFIG_MFD_BCM590XX=y
+>  CONFIG_MFD_AC100=y
+>  CONFIG_MFD_AXP20X_I2C=y
+>  CONFIG_MFD_AXP20X_RSB=y
+> -CONFIG_MFD_CROS_EC=m
+> +CONFIG_MFD_CROS_EC_DEV=m
+> +CONFIG_CHROME_PLATFORMS=y
+> +CONFIG_CROS_EC=m
+>  CONFIG_CROS_EC_I2C=m
+>  CONFIG_CROS_EC_SPI=m
+> -CONFIG_MFD_CROS_EC_CHARDEV=m
+> +CONFIG_CROS_EC_CHARDEV=m
+>  CONFIG_MFD_DA9063=m
+>  CONFIG_MFD_MAX14577=y
+>  CONFIG_MFD_MAX77686=y
+> diff --git a/arch/arm/configs/pxa_defconfig b/arch/arm/configs/pxa_defconfig
+> index 07ebbdce3645..e335b986cf70 100644
+> --- a/arch/arm/configs/pxa_defconfig
+> +++ b/arch/arm/configs/pxa_defconfig
+> @@ -394,7 +394,9 @@ CONFIG_SA1100_WATCHDOG=m
+>  CONFIG_MFD_AS3711=y
+>  CONFIG_MFD_BCM590XX=m
+>  CONFIG_MFD_AXP20X=y
+> -CONFIG_MFD_CROS_EC=m
+> +CONFIG_MFD_CROS_EC_DEV=m
+> +CONFIG_CHROME_PLATFORMS=y
+> +CONFIG_CROS_EC=m
+>  CONFIG_CROS_EC_I2C=m
+>  CONFIG_CROS_EC_SPI=m
+>  CONFIG_MFD_ASIC3=y
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 4d583514258c..b5bba5f04082 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -430,8 +430,7 @@ CONFIG_MFD_ALTERA_SYSMGR=y
+>  CONFIG_MFD_BD9571MWV=y
+>  CONFIG_MFD_AXP20X_I2C=y
+>  CONFIG_MFD_AXP20X_RSB=y
+> -CONFIG_MFD_CROS_EC=y
+> -CONFIG_MFD_CROS_EC_CHARDEV=m
+> +CONFIG_MFD_CROS_EC_DEV=y
+>  CONFIG_MFD_EXYNOS_LPASS=m
+>  CONFIG_MFD_HI6421_PMIC=y
+>  CONFIG_MFD_HI655X_PMIC=y
+> @@ -631,8 +630,11 @@ CONFIG_VIRTIO_BALLOON=y
+>  CONFIG_VIRTIO_MMIO=y
+>  CONFIG_XEN_GNTDEV=y
+>  CONFIG_XEN_GRANT_DEV_ALLOC=y
+> +CONFIG_CHROME_PLATFORMS=y
+> +CONFIG_CROS_EC=y
+>  CONFIG_CROS_EC_I2C=y
+>  CONFIG_CROS_EC_SPI=y
+> +CONFIG_CROS_EC_CHARDEV=m
+>  CONFIG_COMMON_CLK_RK808=y
+>  CONFIG_COMMON_CLK_SCPI=y
+>  CONFIG_COMMON_CLK_CS2000_CP=y
+> --
+> 2.20.1
+>
