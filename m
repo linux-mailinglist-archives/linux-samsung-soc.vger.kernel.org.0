@@ -2,47 +2,47 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 93CF748DBE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 21:16:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EF04494BB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jun 2019 00:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726424AbfFQTQp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jun 2019 15:16:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35184 "EHLO mail.kernel.org"
+        id S1727145AbfFQWGq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jun 2019 18:06:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49714 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725829AbfFQTQp (ORCPT
+        id S1726776AbfFQWGp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jun 2019 15:16:45 -0400
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+        Mon, 17 Jun 2019 18:06:45 -0400
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A46FA20B1F;
-        Mon, 17 Jun 2019 19:16:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D01E72063F;
+        Mon, 17 Jun 2019 22:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1560799004;
-        bh=Gt19uq+qmreWDS4gPNgKL+i/1lZeWJVrbTndQXm88hA=;
+        s=default; t=1560809204;
+        bh=1JsNZwhNkO0kTZcSPtRFxPGFWoSJ54GPBuKfdAJwxrc=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ygI4mXZ4FK/DIAC0x67TCpM/GLGF7iIf6vOaeEfsnPSMNoQfK28rgck+5RB2qRpEO
-         CMsaZVg4ehzf/O4mj+wCZIvyxGeQNNkRPycGzlVa9w80eY/UyXxP7tixjhKDXtQyHL
-         YyRUpu5ryCwzuA+MoSUQrA/vBH4C2sSnqAWyYbSw=
-Received: by mail-qt1-f181.google.com with SMTP id d17so7213538qtj.8;
-        Mon, 17 Jun 2019 12:16:44 -0700 (PDT)
-X-Gm-Message-State: APjAAAVPXSIBBYhHq+yZ/0IOHNrkufAqR0Jlb7EdhPldrrbeHIX2l8mP
-        NWwCmfRrPhMgQ9dMCkT0ju4zQmE51eOuV+qHEw==
-X-Google-Smtp-Source: APXvYqyVZbh0PlMogbVhE0NULb2YNLy3fCj6PKe8704XokjeEqmm6eZIegjHmk/tzMvMCwl9xNlf5j9cXMv6fjsBPAU=
-X-Received: by 2002:ac8:368a:: with SMTP id a10mr13618835qtc.143.1560799003868;
- Mon, 17 Jun 2019 12:16:43 -0700 (PDT)
+        b=ZUTmevJ6tL/g+/RFMAphBIpHgG6pPxCOpnpryx2BmPwfKsHAg1w9C6Tk3vzcR/WBv
+         bqAy4XjRX56vANJcuGABufyQKSV96dYyqEF7UUVIrD2jdeN7W2xyRzvvX200DQgTfu
+         k2gkUOC9Z/cBVpsS2USRh/GFplpOK6VggtryOFN0=
+Received: by mail-qt1-f175.google.com with SMTP id x47so12767251qtk.11;
+        Mon, 17 Jun 2019 15:06:44 -0700 (PDT)
+X-Gm-Message-State: APjAAAXI4UXKaUqdd2CrtYOuk3+bm0/7iz+Xef4hm58DR30yOK3uH+kp
+        AWsvo4Z5nAKv6MQhb8yUd6le6O/tDLa4YPZmXw==
+X-Google-Smtp-Source: APXvYqxlH9tPhbZNNJkrT85aR9svIHlNTL+sG99zdJoKOt8Ty1YrE3qm/ShFbczH/rR++XU8qWfC4jV3flp5vTydqXs=
+X-Received: by 2002:a05:6214:248:: with SMTP id k8mr23820532qvt.200.1560809204093;
+ Mon, 17 Jun 2019 15:06:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190614203144.3850-2-joseph.kogut@gmail.com> <20190614235719.8134-1-joseph.kogut@gmail.com>
-In-Reply-To: <20190614235719.8134-1-joseph.kogut@gmail.com>
+References: <20190614203144.3850-1-joseph.kogut@gmail.com> <20190616081557.GA3826@kozik-lap>
+In-Reply-To: <20190616081557.GA3826@kozik-lap>
 From:   Rob Herring <robh+dt@kernel.org>
-Date:   Mon, 17 Jun 2019 13:16:31 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKasi4m7xU2AF1YQk-Tp0Z6=qh51LgTpb=xiZ9g6A3HvA@mail.gmail.com>
-Message-ID: <CAL_JsqKasi4m7xU2AF1YQk-Tp0Z6=qh51LgTpb=xiZ9g6A3HvA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] arm: dts: add ARM Mali GPU node for Odroid XU3
-To:     Joseph Kogut <joseph.kogut@gmail.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>, Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Airlie <airlied@linux.ie>,
+Date:   Mon, 17 Jun 2019 16:06:31 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+bq2PXA5LSjCmsy=hJq=+S4XK2JrvHct+xM+1HT+=-SQ@mail.gmail.com>
+Message-ID: <CAL_Jsq+bq2PXA5LSjCmsy=hJq=+S4XK2JrvHct+xM+1HT+=-SQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: gpu: add Exynos Mali vendor specifics
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Joseph Kogut <joseph.kogut@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         devicetree@vger.kernel.org,
@@ -55,66 +55,33 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Jun 14, 2019 at 5:57 PM Joseph Kogut <joseph.kogut@gmail.com> wrote:
+On Sun, Jun 16, 2019 at 2:16 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >
-> Add device tree node for mali gpu on Odroid XU3 SoCs.
+> On Fri, Jun 14, 2019 at 01:31:43PM -0700, Joseph Kogut wrote:
+> > Document vendor specific compatible string for Mali gpus on Exynos SoCs.
+> >
+> > Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
+> > ---
+> >  Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
+> > index 1b1a74129141..a9704c736d07 100644
+> > --- a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
+> > +++ b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.txt
+> > @@ -18,6 +18,7 @@ Required properties:
+> >      + "amlogic,meson-gxm-mali"
+> >      + "rockchip,rk3288-mali"
+> >      + "rockchip,rk3399-mali"
+> > +    + "samsung,exynos-mali"
 >
-> Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
-> ---
->
-> Changes v1 -> v2:
-> - Use interrupt name ordering from binding doc
-> - Specify a single clock for GPU node
-> - Add gpu opp table
-> - Fix warnings from IRQ_TYPE_NONE
->
->  .../boot/dts/exynos5422-odroidxu3-common.dtsi | 26 +++++++++++++++++++
->  1 file changed, 26 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> index 93a48f2dda49..b8a4246e3b37 100644
-> --- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> +++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> @@ -48,6 +48,32 @@
->                 cooling-levels = <0 130 170 230>;
->         };
->
-> +       gpu: gpu@11800000 {
-> +               compatible = "samsung,exynos-mali", "arm,mali-t628";
-> +               reg = <0x11800000 0x5000>;
-> +               interrupts = <GIC_SPI 219 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 74  IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
-> +               interrupt-names = "job", "mmu", "gpu";
-> +               clocks = <&clock CLK_G3D>;
-> +               mali-supply = <&buck4_reg>;
-> +               operating-points-v2 = <&gpu_opp_table>;
-> +       };
-> +
-> +       gpu_opp_table: gpu-opp-table {
+> Are there any driver differences for Exynos? If not then why adding
+> another compatible?
 
-Not really a new problem in this file, but you are mixing nodes with
-and without an address and really the gpu node should be under a
-simple-bus node.
+Wrong question. Are there any hardware differences? (Trick question
+because difference compared to what?)
 
-If the OPP is only for the GPU, I'd make it a child of the gpu node instead.
+Really, this shouldn't be 'exynos', but per SoC. But I'll leave it to
+the Samsung folks to decide how specific it should be.
 
-> +               compatible = "operating-points-v2";
-> +
-> +               opp-177000000 {
-> +                       opp-hz = /bits/ 64 <117000000>;
-> +                       opp-microvolt = <812500>;
-> +               };
-> +
-> +               opp-600000000 {
-> +                       opp-hz = /bits/ 64 <600000000>;
-> +                       opp-microvolt = <1150000>;
-> +               };
-> +       };
-> +
->         thermal-zones {
->                 cpu0_thermal: cpu0-thermal {
->                         thermal-sensors = <&tmu_cpu0 0>;
-> --
-> 2.22.0
->
+Rob
