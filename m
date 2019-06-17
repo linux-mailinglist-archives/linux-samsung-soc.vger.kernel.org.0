@@ -2,163 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E813A48916
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 18:36:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ED7E48AF3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 19:58:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfFQQgk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jun 2019 12:36:40 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42092 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbfFQQgj (ORCPT
+        id S1728655AbfFQR6Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jun 2019 13:58:24 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34935 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728564AbfFQR6V (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jun 2019 12:36:39 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x17so10694125wrl.9;
-        Mon, 17 Jun 2019 09:36:38 -0700 (PDT)
+        Mon, 17 Jun 2019 13:58:21 -0400
+Received: by mail-wm1-f68.google.com with SMTP id c6so351588wml.0;
+        Mon, 17 Jun 2019 10:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RA99XH++ZeHo9lFJDfpQ1th6xBYVyCVIO6aT2ccvLfQ=;
+        b=iir/cwro3Uo0pydX2p6MssHcUcKCWLi3F0aRNfT9oiuPoCu3KzQi3D++TfCMCA5kbq
+         UhdVsSno+MyWwqU7UMla2YRrjl3vooBFlx0nKtYTh44mvlxTjTeU/ZMsoTFT3Na0Nbo8
+         zbXVWPc9pfLCEz8akgJpe2z9seqCP2z2haWgAfsi9/bgn50zH7bOZc5jW9vXW8SMk4Rt
+         tx2lTCVIciiKlEe6uGemUYOgLdxEayja9E1N+noF29tOg7VjKlKwytO7pxFuV7oS4QEN
+         rJlpCllgKrwVj7eJfedrwSjRfOJSjzakYsBlPrwpP8+Cypssx+Hl6JwcIa7W9QWRzmBt
+         BA8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8Oy70J7E+pU3L/OYvURWRN5oF2aMwufMYC8uJSROz60=;
-        b=TqlIQb7Hadv0say64Ko+LlDAQzMYglr6LpSy720xyDi3qpNOPIrhgmib3pag75S/iX
-         40LKrqS/q6L7DdEci2yQPw1eYa3wJjvnKXeIdedU2CJOUOCxssxZHfcxGcXuTNWDGSMG
-         8hxg9hQj3lWLOSomwZr1z1lMaQFfcDzPt4gBiIwz6sVV1CJHB/BYAga+O1BB+CA3pA/d
-         sJp5Xmnu0iMH5sC8drRxpHhNwNSI0+s2uEGPbWfvrpMfASCNmmqedIL6VD6fd6Yg5PEO
-         NfC+9H2hMJjvRbz0ZDnjrBNCMpLQmkSB8eEpVk4/kVgORzHut4RtWICZgdu13nStfQLV
-         BTgQ==
-X-Gm-Message-State: APjAAAV4WlcPfb4RC1ToYBI3nm38OsUdg8B6ODh8WFR1HZNSQnUk8YDB
-        dCYWdI5QQxKyG1ZJ6zWf1ZY=
-X-Google-Smtp-Source: APXvYqydGfrS7r/3YJw8wv4J3mDqQdGECHHJ0dsY/h1rw5+NOYNtFdSPKiuX989ub5GjygD6pPlUhg==
-X-Received: by 2002:adf:e3cc:: with SMTP id k12mr20423649wrm.159.1560789397834;
-        Mon, 17 Jun 2019 09:36:37 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.186])
-        by smtp.googlemail.com with ESMTPSA id e11sm12061602wrc.9.2019.06.17.09.36.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Jun 2019 09:36:37 -0700 (PDT)
-Date:   Mon, 17 Jun 2019 18:36:34 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Joseph Kogut <joseph.kogut@gmail.com>
-Cc:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
-        airlied@linux.ie, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        bh=RA99XH++ZeHo9lFJDfpQ1th6xBYVyCVIO6aT2ccvLfQ=;
+        b=DCGnKi4bh/i7N18dukr0h5GrOPxayUkr5Eaa/GezQM3lXq6m926Ous4Y2+Zc8TNW1C
+         bDftOe0KuqoauxRY8v0izGsPtoZoY2NOwjjah0DpzURbmgmbMqmi1PPBnXLykO0WywCF
+         k4CHJ4KAptYMqawclTTklG06/dEsjQzmSxVclzkDtauMFTKl+1d+AAMzjfssBg71nZdU
+         ejwM3BJZXarygvyYm7vKpI2P2gN09hERsJOD8ZM0IcDKOeujk0/LOLO7aJiKb32+RbgV
+         zg01Cm5IqmNdAGYUEK0g1tWBKhCyOa1gqQcdKJFDh17q7Uw9QtHqwLcOlKFM0okJyhiz
+         Y0uA==
+X-Gm-Message-State: APjAAAV/II8C/5PTvRr4LJSTuCrIlEzV8B/k/38nhqf1XLTlV1OQrXUy
+        nN78oGbx2NYcOQG+U/M4OBA=
+X-Google-Smtp-Source: APXvYqxzwMRI3pC9nLxx+cmi8fX06IrtlUhdDEcmz2BcTfXpaVk8v0SGvmPS+vZF06+nGUJcsaBAYg==
+X-Received: by 2002:a1c:343:: with SMTP id 64mr21050453wmd.116.1560794289646;
+        Mon, 17 Jun 2019 10:58:09 -0700 (PDT)
+Received: from arch-x1c3 ([2a00:5f00:102:0:9665:9cff:feee:aa4d])
+        by smtp.gmail.com with ESMTPSA id s188sm13333537wmf.40.2019.06.17.10.58.07
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 17 Jun 2019 10:58:08 -0700 (PDT)
+Date:   Mon, 17 Jun 2019 18:56:06 +0100
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        spice-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        etnaviv@lists.freedesktop.org, xen-devel@lists.xenproject.org,
+        linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm: dts: add ARM Mali GPU node for Odroid XU3
-Message-ID: <20190617163634.GA16941@kozik-lap>
-References: <20190614203144.3850-2-joseph.kogut@gmail.com>
- <20190614235719.8134-1-joseph.kogut@gmail.com>
- <20190616085928.GB3826@kozik-lap>
- <CAMWSM7j8dtsS4d-hOc3Sk6OJHs+SiGC9tEaZBEmO0VKmtJguKw@mail.gmail.com>
+        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 06/59] drm/prime: Actually remove DRIVER_PRIME everywhere
+Message-ID: <20190617175606.GE26766@arch-x1c3>
+References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
+ <20190614203615.12639-7-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMWSM7j8dtsS4d-hOc3Sk6OJHs+SiGC9tEaZBEmO0VKmtJguKw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20190614203615.12639-7-daniel.vetter@ffwll.ch>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jun 17, 2019 at 09:15:23AM -0700, Joseph Kogut wrote:
-> Hi Krzysztof,
+On 2019/06/14, Daniel Vetter wrote:
+> Split out to make the functional changes stick out more.
 > 
-> Thanks for the review.
-> 
-> On Sun, Jun 16, 2019 at 1:59 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >
-> > On Fri, Jun 14, 2019 at 04:57:19PM -0700, Joseph Kogut wrote:
-> > > Add device tree node for mali gpu on Odroid XU3 SoCs.
-> > >
-> > > Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
-> > > ---
-> > >
-> > > Changes v1 -> v2:
-> > > - Use interrupt name ordering from binding doc
-> > > - Specify a single clock for GPU node
-> > > - Add gpu opp table
-> > > - Fix warnings from IRQ_TYPE_NONE
-> > >
-> > >  .../boot/dts/exynos5422-odroidxu3-common.dtsi | 26 +++++++++++++++++++
-> >
-> > This should go to exynos5422-odroid-core.dtsi instead, because it is
-> > common to entire Odroid Exynos5422 family (not only XU3 family).
-> >
-> > >  1 file changed, 26 insertions(+)
-> > >
-> > > diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> > > index 93a48f2dda49..b8a4246e3b37 100644
-> > > --- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> > > +++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-> > > @@ -48,6 +48,32 @@
-> > >               cooling-levels = <0 130 170 230>;
-> > >       };
-> > >
-> > > +     gpu: gpu@11800000 {
-> > > +             compatible = "samsung,exynos-mali", "arm,mali-t628";
-> >
-> > This is common to all Exynos542x chips so it should go to
-> > exynos5420.dtsi. Here you would need to only enable it and provide
-> > regulator.
-> >
-> 
-> To clarify, which pieces are specific to the Odroid Exynos 5422
-> family, and which are common to the entire Exynos 542x family? I'm
-> thinking the gpu node is common to the 542x family, including the
-> interrupts and clock, and the regulator and opp table are specific to
-> the Odroid 5422?
+Since this patch flew-by, as standalone one (intentionally or not) I'd
+add, anything vaguely like:
 
-Opp table depends - it might common to Exynos542x (as all use the same
-Mali) or specific to boards (because there is Odroid XU3 Lite with
-Exynos5422 working on lower frequencies).
+"Core users of DRIVER_PRIME were removed from core with prior patches."
 
-So far the CPU and all bus OPP tables were put in exynos5420.dtsi so I
-guess this can go there as well.
-
-For the rest of properties you were correct.
-
-> 
-> > Probably this should be also associated with tmu_gpu as a cooling device
-> > (if Mali registers a cooling device...). Otherwise the tmu_gpu is not
-> > really used for it.
-> >
-> 
-> We have two operating performance points for the GPU, but I'm not sure
-> at what temperature we should trip the lower opp. Looking at the trip
-> temperatures for the CPU, we have four alerts, and one critical trip.
-> The highest alert is 85 C, would it be reasonable to trigger the lower
-> GPU opp at this temperature? Should it trigger sooner?
-
-The highest trip point is 120 C and it is critical. In general I would
-follow the CPU trip points (so fan should start working at 50 degrees).
-Unless you have some other data about recommended trip points. Useful is
-vendor kernel (from Samsung, from Hard Kernel).
-
-> 
-> > > +             reg = <0x11800000 0x5000>;
-> > > +             interrupts = <GIC_SPI 219 IRQ_TYPE_LEVEL_HIGH>,
-> > > +                          <GIC_SPI 74  IRQ_TYPE_LEVEL_HIGH>,
-> > > +                          <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
-> > > +             interrupt-names = "job", "mmu", "gpu";
-> > > +             clocks = <&clock CLK_G3D>;
-> > > +             mali-supply = <&buck4_reg>;
-> >
-> > Please check if always-on property could be removed from buck4.
-> 
-> I've checked, and this property can be removed safely.
-> 
-> > Also, what about LDO27? It should be used as well (maybe through
-> > vendor-specific properties which would justify the need of new vendor
-> > compatible).
-> >
-> 
-> I'm unsure how LDO27 is used, can you elaborate?
-
-It is supplying the VDD_G3DS (with a note "SRAM power"). I do not have
-any more data on it. However I did not check in vendor kernel for it.
-
-Best regards,
-Krzysztof
-
-
-> 
-> Best,
-> Joseph
+HTH
+Emil
