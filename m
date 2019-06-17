@@ -2,88 +2,119 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ED7E48AF3
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 19:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93CF748DBE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jun 2019 21:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728655AbfFQR6Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jun 2019 13:58:24 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34935 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728564AbfFQR6V (ORCPT
+        id S1726424AbfFQTQp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jun 2019 15:16:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35184 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725829AbfFQTQp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jun 2019 13:58:21 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c6so351588wml.0;
-        Mon, 17 Jun 2019 10:58:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RA99XH++ZeHo9lFJDfpQ1th6xBYVyCVIO6aT2ccvLfQ=;
-        b=iir/cwro3Uo0pydX2p6MssHcUcKCWLi3F0aRNfT9oiuPoCu3KzQi3D++TfCMCA5kbq
-         UhdVsSno+MyWwqU7UMla2YRrjl3vooBFlx0nKtYTh44mvlxTjTeU/ZMsoTFT3Na0Nbo8
-         zbXVWPc9pfLCEz8akgJpe2z9seqCP2z2haWgAfsi9/bgn50zH7bOZc5jW9vXW8SMk4Rt
-         tx2lTCVIciiKlEe6uGemUYOgLdxEayja9E1N+noF29tOg7VjKlKwytO7pxFuV7oS4QEN
-         rJlpCllgKrwVj7eJfedrwSjRfOJSjzakYsBlPrwpP8+Cypssx+Hl6JwcIa7W9QWRzmBt
-         BA8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RA99XH++ZeHo9lFJDfpQ1th6xBYVyCVIO6aT2ccvLfQ=;
-        b=DCGnKi4bh/i7N18dukr0h5GrOPxayUkr5Eaa/GezQM3lXq6m926Ous4Y2+Zc8TNW1C
-         bDftOe0KuqoauxRY8v0izGsPtoZoY2NOwjjah0DpzURbmgmbMqmi1PPBnXLykO0WywCF
-         k4CHJ4KAptYMqawclTTklG06/dEsjQzmSxVclzkDtauMFTKl+1d+AAMzjfssBg71nZdU
-         ejwM3BJZXarygvyYm7vKpI2P2gN09hERsJOD8ZM0IcDKOeujk0/LOLO7aJiKb32+RbgV
-         zg01Cm5IqmNdAGYUEK0g1tWBKhCyOa1gqQcdKJFDh17q7Uw9QtHqwLcOlKFM0okJyhiz
-         Y0uA==
-X-Gm-Message-State: APjAAAV/II8C/5PTvRr4LJSTuCrIlEzV8B/k/38nhqf1XLTlV1OQrXUy
-        nN78oGbx2NYcOQG+U/M4OBA=
-X-Google-Smtp-Source: APXvYqxzwMRI3pC9nLxx+cmi8fX06IrtlUhdDEcmz2BcTfXpaVk8v0SGvmPS+vZF06+nGUJcsaBAYg==
-X-Received: by 2002:a1c:343:: with SMTP id 64mr21050453wmd.116.1560794289646;
-        Mon, 17 Jun 2019 10:58:09 -0700 (PDT)
-Received: from arch-x1c3 ([2a00:5f00:102:0:9665:9cff:feee:aa4d])
-        by smtp.gmail.com with ESMTPSA id s188sm13333537wmf.40.2019.06.17.10.58.07
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 17 Jun 2019 10:58:08 -0700 (PDT)
-Date:   Mon, 17 Jun 2019 18:56:06 +0100
-From:   Emil Velikov <emil.l.velikov@gmail.com>
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        spice-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        etnaviv@lists.freedesktop.org, xen-devel@lists.xenproject.org,
-        linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 06/59] drm/prime: Actually remove DRIVER_PRIME everywhere
-Message-ID: <20190617175606.GE26766@arch-x1c3>
-References: <20190614203615.12639-1-daniel.vetter@ffwll.ch>
- <20190614203615.12639-7-daniel.vetter@ffwll.ch>
+        Mon, 17 Jun 2019 15:16:45 -0400
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A46FA20B1F;
+        Mon, 17 Jun 2019 19:16:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1560799004;
+        bh=Gt19uq+qmreWDS4gPNgKL+i/1lZeWJVrbTndQXm88hA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ygI4mXZ4FK/DIAC0x67TCpM/GLGF7iIf6vOaeEfsnPSMNoQfK28rgck+5RB2qRpEO
+         CMsaZVg4ehzf/O4mj+wCZIvyxGeQNNkRPycGzlVa9w80eY/UyXxP7tixjhKDXtQyHL
+         YyRUpu5ryCwzuA+MoSUQrA/vBH4C2sSnqAWyYbSw=
+Received: by mail-qt1-f181.google.com with SMTP id d17so7213538qtj.8;
+        Mon, 17 Jun 2019 12:16:44 -0700 (PDT)
+X-Gm-Message-State: APjAAAVPXSIBBYhHq+yZ/0IOHNrkufAqR0Jlb7EdhPldrrbeHIX2l8mP
+        NWwCmfRrPhMgQ9dMCkT0ju4zQmE51eOuV+qHEw==
+X-Google-Smtp-Source: APXvYqyVZbh0PlMogbVhE0NULb2YNLy3fCj6PKe8704XokjeEqmm6eZIegjHmk/tzMvMCwl9xNlf5j9cXMv6fjsBPAU=
+X-Received: by 2002:ac8:368a:: with SMTP id a10mr13618835qtc.143.1560799003868;
+ Mon, 17 Jun 2019 12:16:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190614203615.12639-7-daniel.vetter@ffwll.ch>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <20190614203144.3850-2-joseph.kogut@gmail.com> <20190614235719.8134-1-joseph.kogut@gmail.com>
+In-Reply-To: <20190614235719.8134-1-joseph.kogut@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 17 Jun 2019 13:16:31 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKasi4m7xU2AF1YQk-Tp0Z6=qh51LgTpb=xiZ9g6A3HvA@mail.gmail.com>
+Message-ID: <CAL_JsqKasi4m7xU2AF1YQk-Tp0Z6=qh51LgTpb=xiZ9g6A3HvA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] arm: dts: add ARM Mali GPU node for Odroid XU3
+To:     Joseph Kogut <joseph.kogut@gmail.com>
+Cc:     Mark Rutland <mark.rutland@arm.com>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2019/06/14, Daniel Vetter wrote:
-> Split out to make the functional changes stick out more.
-> 
-Since this patch flew-by, as standalone one (intentionally or not) I'd
-add, anything vaguely like:
+On Fri, Jun 14, 2019 at 5:57 PM Joseph Kogut <joseph.kogut@gmail.com> wrote:
+>
+> Add device tree node for mali gpu on Odroid XU3 SoCs.
+>
+> Signed-off-by: Joseph Kogut <joseph.kogut@gmail.com>
+> ---
+>
+> Changes v1 -> v2:
+> - Use interrupt name ordering from binding doc
+> - Specify a single clock for GPU node
+> - Add gpu opp table
+> - Fix warnings from IRQ_TYPE_NONE
+>
+>  .../boot/dts/exynos5422-odroidxu3-common.dtsi | 26 +++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> index 93a48f2dda49..b8a4246e3b37 100644
+> --- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> +++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
+> @@ -48,6 +48,32 @@
+>                 cooling-levels = <0 130 170 230>;
+>         };
+>
+> +       gpu: gpu@11800000 {
+> +               compatible = "samsung,exynos-mali", "arm,mali-t628";
+> +               reg = <0x11800000 0x5000>;
+> +               interrupts = <GIC_SPI 219 IRQ_TYPE_LEVEL_HIGH>,
+> +                            <GIC_SPI 74  IRQ_TYPE_LEVEL_HIGH>,
+> +                            <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+> +               interrupt-names = "job", "mmu", "gpu";
+> +               clocks = <&clock CLK_G3D>;
+> +               mali-supply = <&buck4_reg>;
+> +               operating-points-v2 = <&gpu_opp_table>;
+> +       };
+> +
+> +       gpu_opp_table: gpu-opp-table {
 
-"Core users of DRIVER_PRIME were removed from core with prior patches."
+Not really a new problem in this file, but you are mixing nodes with
+and without an address and really the gpu node should be under a
+simple-bus node.
 
-HTH
-Emil
+If the OPP is only for the GPU, I'd make it a child of the gpu node instead.
+
+> +               compatible = "operating-points-v2";
+> +
+> +               opp-177000000 {
+> +                       opp-hz = /bits/ 64 <117000000>;
+> +                       opp-microvolt = <812500>;
+> +               };
+> +
+> +               opp-600000000 {
+> +                       opp-hz = /bits/ 64 <600000000>;
+> +                       opp-microvolt = <1150000>;
+> +               };
+> +       };
+> +
+>         thermal-zones {
+>                 cpu0_thermal: cpu0-thermal {
+>                         thermal-sensors = <&tmu_cpu0 0>;
+> --
+> 2.22.0
+>
