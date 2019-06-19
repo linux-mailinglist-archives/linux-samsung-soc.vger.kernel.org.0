@@ -2,142 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A45D4B935
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2019 14:56:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5D4D4BA32
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2019 15:39:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727076AbfFSM4F (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 19 Jun 2019 08:56:05 -0400
-Received: from mout.kundenserver.de ([212.227.17.13]:38119 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727002AbfFSM4E (ORCPT
+        id S1727002AbfFSNjd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 19 Jun 2019 09:39:33 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:35963 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730891AbfFSNjZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 19 Jun 2019 08:56:04 -0400
-Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.145]) with ESMTPA (Nemesis) id
- 1Mna0x-1iN3th1WTd-00jb2X; Wed, 19 Jun 2019 14:55:48 +0200
-From:   Arnd Bergmann <arnd@arndb.de>
-To:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
+        Wed, 19 Jun 2019 09:39:25 -0400
+Received: by mail-lf1-f66.google.com with SMTP id q26so12177474lfc.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2019 06:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=poQTjuhtDsupGdVClN0ALov7TDRSULG2jSa2vmjVCU4=;
+        b=l0/gF9/OzFgtGmzu7Ddh94ZXY54MyG2jXNCKTSFXAdsBC/fnoN5fG8IjW/eOgNukxP
+         Ge373wE/T0YzSFbHLkXp6XkrtHU9mUmwjk7EHw+f2TeVxkgML3d9iDSEvjNajpa+6746
+         yQdmuYz36CveVabg5LDbdCLwdMklqodT2SjIvIpGoP+x6PzsZNlG8/lox1bj7i/NL2Ki
+         N0gSC8rBoz7T5YInhwaB6YKHfeP5/SMeNjw1NWhrKZXNSem0XOZ/OOLbEFF1/+nnrBFQ
+         n3mN0QBoDJo4oGA+e2ID+94wEft9iVNHGoVAxH/PiA6Y39yWM+Mc57ZyDDFsez8ElW+R
+         QzuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=poQTjuhtDsupGdVClN0ALov7TDRSULG2jSa2vmjVCU4=;
+        b=WUN9nwJhtZBq+/k4BW/Q3Gmh4cKk3sSJO9hGYwVEC1N8VCdKIEF5KYKmpzAd34L84o
+         BHOjPa2J58em1MBblLww+e+4hKwEDRw+5UWH7xXjC7HXjPa+drDm5pWeCEYRE7dJK92Z
+         uajH/mc4nnqKujQHUQvanWegZe/Pk0LaYRTfL1Kzk+Ew7ix/RSwdgKA3j5cDUTznXk7G
+         TIMf3x0YKSpPoYZia+xAw/y5zEdlgr2aZt2q08vnh2G1G2/9yXd7ZEYGqVq0yokEP0z+
+         epkV01hZX1ZEe72ocLw5ijovdEKZomHa+Ny7yYjiwZU7+c5u0ZyPYJRaWMxNQl7io5t7
+         7slQ==
+X-Gm-Message-State: APjAAAVlj+NhtgSJ6lyBD7WcM4YkIkv8Nno+v+MXrCS+AipAdmgJj04i
+        EsLQT8Uq7pffVIbteAYyhXx4v1H9czHRBg==
+X-Google-Smtp-Source: APXvYqxKjnVwguoOB08XOnRxBMmddtcMtOfbSZXzkSUZWCk4zT6Htfabazmn5u6TTmwmpHl9zyBoRA==
+X-Received: by 2002:a19:491d:: with SMTP id w29mr45756307lfa.149.1560951563329;
+        Wed, 19 Jun 2019 06:39:23 -0700 (PDT)
+Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
+        by smtp.gmail.com with ESMTPSA id n1sm2648220lfl.77.2019.06.19.06.39.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Jun 2019 06:39:22 -0700 (PDT)
+Date:   Wed, 19 Jun 2019 06:27:50 -0700
+From:   Olof Johansson <olof@lixom.net>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, arm@kernel.org,
+        Kukjin Kim <kgene@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: exynos: only build mcpm support if used
-Date:   Wed, 19 Jun 2019 14:55:29 +0200
-Message-Id: <20190619125545.1087023-1-arnd@arndb.de>
-X-Mailer: git-send-email 2.20.0
+Subject: Re: [GIT PULL] ARM: dts: exynos: Pull for v5.3
+Message-ID: <20190619132750.crkv5cvdt2w5jt3h@localhost>
+References: <20190616175513.3681-1-krzk@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:8lSv7z+Az3irPtD3mBB1X3CyVNiokLNe5prcDUQOA+DJCgdNyTg
- 5HSfU0ojjXGl3H8v+ZOW1BF3QjWfGmLd45HQYerFQo1hF6TOJzjmg6CkfWrDRye+Rzi8qBH
- /T/44D9/lYapFuhEwutzgfKwYjiA+hdiwTmPO8CETObOh3B+m5z9ouWT/F2LMF72K5FF4RV
- 3C2EoYdsB4fpZ7kUqHWHg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rtxPUz4OOkQ=:fDfYCbeOzs7Zzr9OmJxvjt
- yyB51ipVi9MfHI95lXT3mMbcckRT44/OfhgO/r8f/AiyrzQyXzaQn44vC3PeuNqLnrz+zKklE
- 2mp4HStkOI0sZZ3PZqkzHIkRDMvKaR+RW7SRv/CrzoPRnh9R8I5MFA8G7ZV8cuXegPXp+z3i4
- 80rK0Q1MT1RGT2oFiP7i7JB0ntt4u9x7hO55iWlSChLooK3AbPpbX52fngBz7xBELYhz11Dox
- tZFYgHdvr/YIR92bEYwobWpOGYoFjjXnJyRyC++Wmz3qhbmAaxoSnxhDVbA83VxrlWbwplf80
- tC0EFzKa/8MWTQqI6YwZEDwPB15n32VZtxHyfLPfG9nKKpMRaTDM032HVXWjgYB0fpkeoVBc5
- 7BGwvvwsNNhKDCwzLmW5gg8hlsxqpwsKE09Ayv8jpixGgyKx9PWTu4KLMs8QdiCi4CzCtbKjw
- xOtIJjw8LelXoTVhPJUW77gWUsB3DV1pDXnbRjPSew3jxOmvaYqNS/ZEkG2dYGVwFDPWg9QEP
- T67FlDy2N9tapg8l7NA2nKo5VX4JydvE94f9TwFTVl36Yij/JggC3q6Qy2c7Zil139XbUI6gT
- 0NZNubaTFeDdIqeji6In7y/qj/j+kpCpvKqrQKvjwpDITPUmuuxjnTA7Q2ExUu6jwyc8wsR6o
- do/Cl7vDEhdSHQU5IXkcA+/wqOofmQLi+6H28GTyxykr1XNboFaj/MZIGBXWbUo95zs82n0+O
- 5z1/97vGrraG7S9A6ibHFYEdxNQmrzy5K4aFnw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190616175513.3681-1-krzk@kernel.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-We get a link error for configurations that enable an exynos
-SoC that does not require mcpm, but then manually enable
-mcpm anyway wihtout also turning on the arm-cci:
+On Sun, Jun 16, 2019 at 07:55:13PM +0200, Krzysztof Kozlowski wrote:
+> The following changes since commit a188339ca5a396acc588e5851ed7e19f66b0ebd9:
+> 
+>   Linux 5.2-rc1 (2019-05-19 15:47:09 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-dt-5.3
+> 
+> for you to fetch changes up to d2cac68e0d9b038da7207c0b63e1399c4f9f60c4:
+> 
+>   ARM: dts: exynos: Add ADC node to Exynos5410 and Odroid XU (2019-06-11 20:37:21 +0200)
+> 
+> ----------------------------------------------------------------
+> Samsung DTS ARM changes for v5.3
+> 
+> 1. Fixes for minor warnings.
+> 2. Enable ADC on Exynos5410 Odroid XU board.
+> 
+> ----------------------------------------------------------------
+> Krzysztof Kozlowski (3):
+>       ARM: dts: exynos: Move CPU OPP tables out of SoC node on Exynos5420
+>       ARM: dts: exynos: Raise maximum buck regulator voltages on Arndale Octa
+>       ARM: dts: exynos: Add ADC node to Exynos5410 and Odroid XU
 
-arch/arm/mach-exynos/mcpm-exynos.o: In function `exynos_pm_power_up_setup':
-mcpm-exynos.c:(.text+0x8): undefined reference to `cci_enable_port_for_self'
+Merged, thanks!
 
-Change it back to only build the code we actually need, by
-introducing a CONFIG_EXYNOS_MCPM that serves the same purpose
-as the older CONFIG_EXYNOS5420_MCPM.
 
-Fixes: 2997520c2d4e ("ARM: exynos: Set MCPM as mandatory for Exynos542x/5800 SoCs")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- arch/arm/mach-exynos/Kconfig   | 6 +++++-
- arch/arm/mach-exynos/Makefile  | 2 +-
- arch/arm/mach-exynos/suspend.c | 6 +++---
- 3 files changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm/mach-exynos/Kconfig b/arch/arm/mach-exynos/Kconfig
-index 21ad78d79d8d..d7422233a130 100644
---- a/arch/arm/mach-exynos/Kconfig
-+++ b/arch/arm/mach-exynos/Kconfig
-@@ -107,7 +107,7 @@ config SOC_EXYNOS5420
- 	bool "SAMSUNG EXYNOS5420"
- 	default y
- 	depends on ARCH_EXYNOS5
--	select MCPM if SMP
-+	select EXYNOS_MCPM if SMP
- 	select ARM_CCI400_PORT_CTRL
- 	select ARM_CPU_SUSPEND
- 
-@@ -116,6 +116,10 @@ config SOC_EXYNOS5800
- 	default y
- 	depends on SOC_EXYNOS5420
- 
-+config EXYNOS_MCPM
-+	bool
-+	select MCPM
-+
- config EXYNOS_CPU_SUSPEND
- 	bool
- 	select ARM_CPU_SUSPEND
-diff --git a/arch/arm/mach-exynos/Makefile b/arch/arm/mach-exynos/Makefile
-index 264dbaa89c3d..5abf3db23912 100644
---- a/arch/arm/mach-exynos/Makefile
-+++ b/arch/arm/mach-exynos/Makefile
-@@ -18,5 +18,5 @@ plus_sec := $(call as-instr,.arch_extension sec,+sec)
- AFLAGS_exynos-smc.o		:=-Wa,-march=armv7-a$(plus_sec)
- AFLAGS_sleep.o			:=-Wa,-march=armv7-a$(plus_sec)
- 
--obj-$(CONFIG_MCPM)		+= mcpm-exynos.o
-+obj-$(CONFIG_EXYNOS_MCPM)	+= mcpm-exynos.o
- CFLAGS_mcpm-exynos.o		+= -march=armv7-a
-diff --git a/arch/arm/mach-exynos/suspend.c b/arch/arm/mach-exynos/suspend.c
-index be122af0de8f..8b1e6ab8504f 100644
---- a/arch/arm/mach-exynos/suspend.c
-+++ b/arch/arm/mach-exynos/suspend.c
-@@ -268,7 +268,7 @@ static int exynos5420_cpu_suspend(unsigned long arg)
- 	unsigned int cluster = MPIDR_AFFINITY_LEVEL(mpidr, 1);
- 	unsigned int cpu = MPIDR_AFFINITY_LEVEL(mpidr, 0);
- 
--	if (IS_ENABLED(CONFIG_MCPM)) {
-+	if (IS_ENABLED(CONFIG_EXYNOS_MCPM)) {
- 		mcpm_set_entry_vector(cpu, cluster, exynos_cpu_resume);
- 		mcpm_cpu_suspend();
- 	}
-@@ -351,7 +351,7 @@ static void exynos5420_pm_prepare(void)
- 	exynos_pm_enter_sleep_mode();
- 
- 	/* ensure at least INFORM0 has the resume address */
--	if (IS_ENABLED(CONFIG_MCPM))
-+	if (IS_ENABLED(CONFIG_EXYNOS_MCPM))
- 		pmu_raw_writel(__pa_symbol(mcpm_entry_point), S5P_INFORM0);
- 
- 	tmp = pmu_raw_readl(EXYNOS_L2_OPTION(0));
-@@ -455,7 +455,7 @@ static void exynos5420_prepare_pm_resume(void)
- 	mpidr = read_cpuid_mpidr();
- 	cluster = MPIDR_AFFINITY_LEVEL(mpidr, 1);
- 
--	if (IS_ENABLED(CONFIG_MCPM))
-+	if (IS_ENABLED(CONFIG_EXYNOS_MCPM))
- 		WARN_ON(mcpm_cpu_powered_up());
- 
- 	if (IS_ENABLED(CONFIG_HW_PERF_EVENTS) && cluster != 0) {
--- 
-2.20.0
-
+-Olof
