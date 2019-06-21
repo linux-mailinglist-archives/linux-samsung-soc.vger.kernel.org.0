@@ -2,77 +2,113 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 49EC24EE74
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Jun 2019 20:12:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DCD14EFEB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Jun 2019 22:15:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726080AbfFUSMr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 21 Jun 2019 14:12:47 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50750 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726063AbfFUSMr (ORCPT
+        id S1726018AbfFUUPv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 21 Jun 2019 16:15:51 -0400
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:46243 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfFUUPv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 21 Jun 2019 14:12:47 -0400
-Received: by mail-wm1-f65.google.com with SMTP id c66so7148008wmf.0;
-        Fri, 21 Jun 2019 11:12:46 -0700 (PDT)
+        Fri, 21 Jun 2019 16:15:51 -0400
+Received: by mail-ot1-f66.google.com with SMTP id z23so7458337ote.13;
+        Fri, 21 Jun 2019 13:15:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Mzt2KqaKRns439nf1E0NkuZmvKiRIAINQSETZ97d2PM=;
+        b=ImlsjQ/rYDPh01yLV/h4IoJNfeNXruc4vXFeH+bJvYhHCuw3SKYEgWl4abUTP2QvxN
+         MfJrHQdgcmbD3KfXnQIjyt1wZ9sm8L9FaXP+wsXlc/YQuy8Utz4XVap35YA5b7d1c4K2
+         OG+EiVNBoswmXAheOG9KDVkROd8tlscncA8Kri59jZpz/MoodvfLn7qn5e31GgjK+Jdi
+         1ohMEzsUA+Snmy9b5lCtBkOLAp/a4HuD74VFksj6ASBEXwdeEz1B26tthpC7Dq8dLm4c
+         upJD0HbKhjEu+zmZ0IxXeqlk1Zkz/n+kFxgq0jMitXgAIOkCkgHo1NNnOfAX+0BlJYWg
+         8BXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K8ZqNlSRzlw+iByGaPZNdN2szcR/O2ehXG6DihUgi5k=;
-        b=drmGJzhuScrC+d+ESdKGFkTiWyPI+iYoi3r8jzPdAp1kp67l5PNG5LvWNIBaa0Oa0b
-         SFxv6Rj81jbfZy2Vr1MlW35NMfac8g3a0H5/YyPl4FIVQgA4Uo6v4kUGvx1On//+oVVN
-         TeEj9dUfCyepxs1U2aqBy88CI5KIsRV5z0b49U9r3ezYjMS9oU3PqLbamo1GooqIdAII
-         orzSSxXBRoHjUCcsQCcW23W+VpnKBSn1gdMGJEGkoZfkYEuJObey5gWlZXNQ9iVFiSJM
-         HJgr06ZO/CeF5iJme9o2O/nrEMqXv6LWkL+75Uk1U/XIG6pd9V4AiWAmb1m4CBWI7yqK
-         k2ZA==
-X-Gm-Message-State: APjAAAWjadfnwrw4p8EEbjh2W7GAPLWJsJF5wLmyUjqiqCIMjw5v8gjg
-        xVtCeVWfvcf0mJJbE+9wwIuNov+5
-X-Google-Smtp-Source: APXvYqxxO+HkCjrMZC9y5KfK+BU2nNihU5fwC/SA7zEcs/MVwbeu/GDip2tz7utkxVE97ewJTt8utg==
-X-Received: by 2002:a1c:1947:: with SMTP id 68mr4932544wmz.171.1561140765354;
-        Fri, 21 Jun 2019 11:12:45 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.186])
-        by smtp.googlemail.com with ESMTPSA id h90sm4746092wrh.15.2019.06.21.11.12.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Jun 2019 11:12:44 -0700 (PDT)
-Date:   Fri, 21 Jun 2019 20:12:42 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Kukjin Kim <kgene@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: exynos: only build mcpm support if used
-Message-ID: <20190621181242.GA18341@kozik-lap>
-References: <20190619125545.1087023-1-arnd@arndb.de>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mzt2KqaKRns439nf1E0NkuZmvKiRIAINQSETZ97d2PM=;
+        b=jOJNyTkLpwP/+E8CK1f0nUBCsBmHzMHdcp32nTNSB+Cc0zs2Lh9rVXwsYwTEYSm4cl
+         wOL1F9NTwBB9cWB+CJ60TqhXhpoHZN5J9qjN6PqCLZiQrn4TPhlC92JVz/g69LkwNfK+
+         k770Kg1YiYRGwKm0XNRQvxagSBOmozkQueRubTK/sl+K98faj6QevWquJdyKoEXyqL7Q
+         ZVHXpvVXvT9aW0rLKpGyNEH5TGJUyrhhD5C+l0MRny28OMk3Pwd65oTD0rrZQpKToEDh
+         64lZn/ZyZ79hADGkCKYwNYXEuUdBsl2W7PvnOcyoOF6BpcnQBkQ+xkFfDizZONXoBoAh
+         GMWg==
+X-Gm-Message-State: APjAAAXTRFYLV/EoPUDecXwk36f8Ak65QoELWEw/7AoK30TJhO89nsva
+        HqYsfSMfW/pGljjoH1NhukYzysfZPR1CvmcN+v0=
+X-Google-Smtp-Source: APXvYqzBDkZojNKB/k/9/UKU9XV3h8B9Iu/jGst1/MhqDi2Rm9U75jItEMKKU9mKHMTcTPQHa6+GWsisq10Bm12yFno=
+X-Received: by 2002:a9d:d87:: with SMTP id 7mr76241164ots.263.1561148150749;
+ Fri, 21 Jun 2019 13:15:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190619125545.1087023-1-arnd@arndb.de>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20190621180208.25361-1-krzk@kernel.org> <20190621180208.25361-7-krzk@kernel.org>
+In-Reply-To: <20190621180208.25361-7-krzk@kernel.org>
+From:   Vasily Khoruzhick <anarsoul@gmail.com>
+Date:   Fri, 21 Jun 2019 13:15:35 -0700
+Message-ID: <CA+E=qVe45NVCfpSHRF6=0aYRpURZA4DVz8W-XkSaNDB=1mX2kA@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] arm64: defconfig: Enable Panfrost driver
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
+        devicetree <devicetree@vger.kernel.org>,
+        arm-linux <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Joseph Kogut <joseph.kogut@gmail.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Jun 19, 2019 at 02:55:29PM +0200, Arnd Bergmann wrote:
-> We get a link error for configurations that enable an exynos
-> SoC that does not require mcpm, but then manually enable
-> mcpm anyway wihtout also turning on the arm-cci:
-> 
-> arch/arm/mach-exynos/mcpm-exynos.o: In function `exynos_pm_power_up_setup':
-> mcpm-exynos.c:(.text+0x8): undefined reference to `cci_enable_port_for_self'
-> 
-> Change it back to only build the code we actually need, by
-> introducing a CONFIG_EXYNOS_MCPM that serves the same purpose
-> as the older CONFIG_EXYNOS5420_MCPM.
-> 
-> Fixes: 2997520c2d4e ("ARM: exynos: Set MCPM as mandatory for Exynos542x/5800 SoCs")
+On Fri, Jun 21, 2019 at 11:04 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> Enable support for Mali GPU with Panfrost driver, e.g. for Exynos5433
+> and Exynos7 (having Mali T760).
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  arch/arm64/configs/defconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 6b4f5cf23324..972b17239f13 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -517,6 +517,7 @@ CONFIG_DRM_HISI_HIBMC=m
+>  CONFIG_DRM_HISI_KIRIN=m
+>  CONFIG_DRM_MESON=m
+>  CONFIG_DRM_PL111=m
+> +CONFIG_DRM_PANFROST=m
 
-Thanks, applied.
+It makes sense to enable lima for arm64 defconfig as well since it's
+used on number of 64-bit Allwinner SoCs.
 
-Best regards,
-Krzysztof
-
+>  CONFIG_FB=y
+>  CONFIG_FB_MODE_HELPERS=y
+>  CONFIG_BACKLIGHT_GENERIC=m
+> @@ -717,7 +718,6 @@ CONFIG_ARCH_TEGRA_194_SOC=y
+>  CONFIG_ARCH_K3_AM6_SOC=y
+>  CONFIG_SOC_TI=y
+>  CONFIG_TI_SCI_PM_DOMAINS=y
+> -CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND=y
+>  CONFIG_EXTCON_USB_GPIO=y
+>  CONFIG_EXTCON_USBC_CROS_EC=y
+>  CONFIG_MEMORY=y
+> --
+> 2.17.1
+>
+>
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
