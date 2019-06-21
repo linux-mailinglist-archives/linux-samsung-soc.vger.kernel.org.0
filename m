@@ -2,82 +2,164 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C2D2C4ECB8
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Jun 2019 17:59:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC5C54EE52
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Jun 2019 20:02:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbfFUP7G (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 21 Jun 2019 11:59:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43342 "EHLO mail.kernel.org"
+        id S1726097AbfFUSC0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 21 Jun 2019 14:02:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44912 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725985AbfFUP7F (ORCPT
+        id S1725992AbfFUSC0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 21 Jun 2019 11:59:05 -0400
+        Fri, 21 Jun 2019 14:02:26 -0400
 Received: from localhost.localdomain (unknown [194.230.155.186])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1C6B521530;
-        Fri, 21 Jun 2019 15:59:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E74762070B;
+        Fri, 21 Jun 2019 18:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561132744;
-        bh=PF+Llwd8yY31nGr5OjUO/cfVQ/SG2UO4HozBGeHxZGg=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=hyuAxBtTWarQtz3irOoFgTFHCK2RoT+/OddNkhYJe5jY/Ad+A5UKWqfWW9Un+I/qN
-         kij5k3Qx5D6NOUQw19gwyr3+ulnmLl/2yJ/Z22h84fMswspgqdrKDN36bzQBu6a6fw
-         AuIURjCZ/2qYOf2+2efQgoEFEQET9G34H8zrZPaM=
+        s=default; t=1561140145;
+        bh=kOXrOATchPDjqjaXCZf5RTt6UsgtNnQOmhinsiIP4As=;
+        h=From:To:Cc:Subject:Date:From;
+        b=U2ZF4cs6LAR1BHvpT4BE4VkqFlx0BF7npjfh4eOOMKHbMwUNLAvnuvvU8lujqfe/d
+         ttVViCvoYT+6LKe3YKk5SJ77aWbwV6pylRhJRASBonj3AnGu7L6R9tDd3EeJPTMzuv
+         qIEJIff9HTbuw/w4zdLFNO3qtbY4hXka1UnsKzxg=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kukjin Kim <kgene@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Anand Moon <linux.amoon@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will.deacon@arm.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] ARM: dts: exynos: Use proper regulator for eMMC memory on Arndale Octa
-Date:   Fri, 21 Jun 2019 17:58:45 +0200
-Message-Id: <20190621155845.7079-4-krzk@kernel.org>
+Cc:     Joseph Kogut <joseph.kogut@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH v2 1/7] ARM: dts: exynos: Add GPU/Mali 400 node to Exynos3250
+Date:   Fri, 21 Jun 2019 20:02:02 +0200
+Message-Id: <20190621180208.25361-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190621155845.7079-1-krzk@kernel.org>
-References: <20190621155845.7079-1-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The eMMC memory is supplied by LDO18 (PVDD_EMMC_1V8) and buck10
-(PVDD_EMMCF_2V8), not by LDO10. The LDO10 (PVDD_PRE_1V8) supplies
-instead VDDP_MMC pin of eMMC host interface and it is already marked as
-always on.
-
-This change only properly models the hardware and reflects in usage of
-regulators.  There is no functional change because:
-1. LDO18 cannot be turned off (e.g. by lack of consumers) because in
-   off mode it is controlled by LDO18EN pin, which is pulled up by
-   always-on regulator LDO2 (PVDD_APIO_1V8).
-2. LDO10 is marked as always on so removing its consumer will not have
-   effect.
+Add nodes for GPU (Mali 400) to Exynos3250.  This is still limited and
+not tested:
+1. No dynamic voltage and frequency scaling,
+2. Not sure what to do with CLK_G3D clock responsible for gating entire
+   IP block (it is now being disabled as unused).
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 ---
 
 Changes since v1:
-1. New patch.
+1. Use samsung,exynos4210-mali compatible
+2. Use CLK_G3D as bus clock (clock for entire IP block)
 ---
- arch/arm/boot/dts/exynos5420-arndale-octa.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos3250-artik5.dtsi |  5 ++++
+ arch/arm/boot/dts/exynos3250-monk.dts    |  5 ++++
+ arch/arm/boot/dts/exynos3250-rinato.dts  |  5 ++++
+ arch/arm/boot/dts/exynos3250.dtsi        | 33 ++++++++++++++++++++++++
+ 4 files changed, 48 insertions(+)
 
-diff --git a/arch/arm/boot/dts/exynos5420-arndale-octa.dts b/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-index 3126a6c3f842..ac7f2fa0ba22 100644
---- a/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-+++ b/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-@@ -780,7 +780,7 @@
- 	samsung,dw-mshc-ddr-timing = <0 2>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sd0_clk &sd0_cmd &sd0_bus1 &sd0_bus4 &sd0_bus8>;
--	vmmc-supply = <&ldo10_reg>;
-+	vmmc-supply = <&ldo18_reg>;
- 	vqmmc-supply = <&ldo3_reg>;
- 	bus-width = <8>;
- 	cap-mmc-highspeed;
+diff --git a/arch/arm/boot/dts/exynos3250-artik5.dtsi b/arch/arm/boot/dts/exynos3250-artik5.dtsi
+index ace50e194a45..dee35e3a5c4b 100644
+--- a/arch/arm/boot/dts/exynos3250-artik5.dtsi
++++ b/arch/arm/boot/dts/exynos3250-artik5.dtsi
+@@ -59,6 +59,11 @@
+ 	cpu0-supply = <&buck2_reg>;
+ };
+ 
++&gpu {
++	mali-supply = <&buck3_reg>;
++	status = "okay";
++};
++
+ &i2c_0 {
+ 	#address-cells = <1>;
+ 	#size-cells = <0>;
+diff --git a/arch/arm/boot/dts/exynos3250-monk.dts b/arch/arm/boot/dts/exynos3250-monk.dts
+index e25765500e99..248bd372fe70 100644
+--- a/arch/arm/boot/dts/exynos3250-monk.dts
++++ b/arch/arm/boot/dts/exynos3250-monk.dts
+@@ -172,6 +172,11 @@
+ 	status = "okay";
+ };
+ 
++&gpu {
++	mali-supply = <&buck3_reg>;
++	status = "okay";
++};
++
+ &hsotg {
+ 	vusb_d-supply = <&ldo15_reg>;
+ 	vusb_a-supply = <&ldo12_reg>;
+diff --git a/arch/arm/boot/dts/exynos3250-rinato.dts b/arch/arm/boot/dts/exynos3250-rinato.dts
+index 7479993755da..86c26a4edfd7 100644
+--- a/arch/arm/boot/dts/exynos3250-rinato.dts
++++ b/arch/arm/boot/dts/exynos3250-rinato.dts
+@@ -244,6 +244,11 @@
+ 	};
+ };
+ 
++&gpu {
++	mali-supply = <&buck3_reg>;
++	status = "okay";
++};
++
+ &i2c_0 {
+ 	#address-cells = <1>;
+ 	#size-cells = <0>;
+diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
+index 8ce3a7786b19..c17870a54acf 100644
+--- a/arch/arm/boot/dts/exynos3250.dtsi
++++ b/arch/arm/boot/dts/exynos3250.dtsi
+@@ -126,6 +126,39 @@
+ 		};
+ 	};
+ 
++	gpu: gpu@13000000 {
++		compatible = "samsung,exynos4210-mali", "arm,mali-400";
++		reg = <0x13000000 0x10000>;
++		interrupts = <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 179 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 177 IRQ_TYPE_LEVEL_HIGH>;
++		interrupt-names = "gp",
++				  "gpmmu",
++				  "pp0",
++				  "ppmmu0",
++				  "pp1",
++				  "ppmmu1",
++				  "pp2",
++				  "ppmmu2",
++				  "pp3",
++				  "ppmmu3",
++				  "pmu";
++		clocks = <&cmu CLK_G3D>,
++			 <&cmu CLK_SCLK_G3D>;
++		clock-names = "bus", "core";
++		power-domains = <&pd_g3d>;
++		status = "disabled";
++		/* TODO: operating points for DVFS, assigned clock as 134 MHz */
++	};
++
+ 	pmu {
+ 		compatible = "arm,cortex-a7-pmu";
+ 		interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.17.1
 
