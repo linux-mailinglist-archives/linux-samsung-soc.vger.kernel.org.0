@@ -2,94 +2,120 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 637104F462
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Jun 2019 10:39:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86A2A4F5D7
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Jun 2019 15:10:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726301AbfFVIjW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 22 Jun 2019 04:39:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58242 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726278AbfFVIjV (ORCPT
+        id S1726293AbfFVNKs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 22 Jun 2019 09:10:48 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44396 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726286AbfFVNKr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 22 Jun 2019 04:39:21 -0400
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A77EC215EA;
-        Sat, 22 Jun 2019 08:39:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561192761;
-        bh=qAXXbtnQBFmUgmRyzc4VkIcs13YQ55kQtiIfHKdMQAM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=nAiN3KHHuh3GDHGSYzoKQ0szWAcLEKSJR8fj6S3Puih9WsIT+QnfcZDq5/yl+I0Zb
-         TvVPIQYXNyxtSLhya0XjYCjcjb611p7Sc97ZU7oZtE2AkYFQH0TZ1gFUub9Eqic/Ty
-         BfdpaFciV4AdK/dyKmpoAR24cWyCdvkq9q16UJu0=
-Received: by mail-lj1-f175.google.com with SMTP id m23so7983634lje.12;
-        Sat, 22 Jun 2019 01:39:20 -0700 (PDT)
-X-Gm-Message-State: APjAAAVW/d4nQC74I5efjL4wWnGxn44Qrcriu4na50vcSOzKOB4PBVQ7
-        A9Re5FdfNgAcxbWiFZASiRxUWF7F2n/57Oy1eGc=
-X-Google-Smtp-Source: APXvYqxyRGkjOqMwnY3GOZOxtp7YuotqZNdcuHXzNI9tdgx7yO5ll/x9xEcbo852e3cgrZMCREphrlRE46xebyBF2zI=
-X-Received: by 2002:a2e:50e:: with SMTP id 14mr56971315ljf.5.1561192759012;
- Sat, 22 Jun 2019 01:39:19 -0700 (PDT)
+        Sat, 22 Jun 2019 09:10:47 -0400
+Received: by mail-lj1-f196.google.com with SMTP id k18so8390894ljc.11;
+        Sat, 22 Jun 2019 06:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=JKJ7NdLuEooMFWo6LA3qa+n1zarZyBvo2gr/w64oEhU=;
+        b=cqTqJkmkzCJZgmZraBOEPTF4KFzVDxCz/wKOmehscUGO3xmmVvpoNvDfAFfDtJgdhd
+         6afLLU5VEDA0WzPYHeGc4SvNbWt3fkZewR/vK/epUG5aLa2FgLUtBnVfgEVhS/NTRHxI
+         UEoOyERmH5DWxyHzaKLt3jEMin17d7R3511BrX9Eqn0nmV5iwOQF9H05uRovkUpYp+iq
+         A3bmmp9lvnD3+eLNnWbGwR2/OHfhFpTGaaLu1yqWgZWJDaiGzIwpoQFs6x+itvhLI5hd
+         dR3x0ahsaq2djScI0cbXG0kavaXkRXWyd0AwH6eeQ5plXpsjrdy0lzTyF9Li3tVTTXOh
+         42/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=JKJ7NdLuEooMFWo6LA3qa+n1zarZyBvo2gr/w64oEhU=;
+        b=kSCJJ1YzA70yUS4pE2YIgn7JA0GVaXE52yLcDjDapqT/Kf4TacENQm551egLUqnT6W
+         Li1CDuTwY73jorFbQ1qpND5HazITD7ici9ZfZ6eizzXie1FSwkxP0wPzJaMPxx7z3ekR
+         vFgxyco9PPz+pWHnuxrfU5/bWx1vB/u/X8p5dUmlOLCEnOQqPKC9jDCypWLS5FbqHCL7
+         dKPFBCQI6BYwMsSxe9Q7v2qGSX96e89KVQ92uqwHGM2N6spsTAzv1qSVCxZZMDtV4QpI
+         rw9SjNM18i/3PWoTxruREbyVpKfTDrlqKbAso+tx22GaAnJkV0mIgeW4Anu4s0ts58wu
+         OOPA==
+X-Gm-Message-State: APjAAAUVeshEkWuR29o6XVQ7pfKBIp84k9hy7hyr9qhyJXO5JJ9bEb/F
+        6jvi7dOBuf71Iit7CWNjqyv32n6wCtnmQi5wFgk=
+X-Google-Smtp-Source: APXvYqynjFLmTvY2JnFGiymi/s20MlB0RGAJBCuFJ20xD8lz5r0YsMLTewzKzTDqvog/w8S1ySij9keN4DPpz60sff4=
+X-Received: by 2002:a2e:8945:: with SMTP id b5mr35153457ljk.93.1561209044837;
+ Sat, 22 Jun 2019 06:10:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190621180208.25361-1-krzk@kernel.org> <20190621180208.25361-7-krzk@kernel.org>
- <CA+E=qVe45NVCfpSHRF6=0aYRpURZA4DVz8W-XkSaNDB=1mX2kA@mail.gmail.com>
-In-Reply-To: <CA+E=qVe45NVCfpSHRF6=0aYRpURZA4DVz8W-XkSaNDB=1mX2kA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Sat, 22 Jun 2019 10:39:07 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdk2MmBHjiDU4M6PA6O4ifVe_sDifejUPJiGPCQ7MR1sQ@mail.gmail.com>
-Message-ID: <CAJKOXPdk2MmBHjiDU4M6PA6O4ifVe_sDifejUPJiGPCQ7MR1sQ@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] arm64: defconfig: Enable Panfrost driver
-To:     Vasily Khoruzhick <anarsoul@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will.deacon@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
-        devicetree <devicetree@vger.kernel.org>,
-        arm-linux <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+References: <CGME20190614095328eucas1p24009b3a07322fd12e49eabb7a08baf50@eucas1p2.samsung.com>
+ <20190614095309.24100-1-l.luba@partner.samsung.com> <20190614095309.24100-10-l.luba@partner.samsung.com>
+In-Reply-To: <20190614095309.24100-10-l.luba@partner.samsung.com>
+Reply-To: cwchoi00@gmail.com
+From:   Chanwoo Choi <cwchoi00@gmail.com>
+Date:   Sat, 22 Jun 2019 22:10:08 +0900
+Message-ID: <CAGTfZH35X0zE2LhGWJJp2xZNNk1ew7zNMoMqL+eZ5rcBFcPvew@mail.gmail.com>
+Subject: Re: [PATCH v10 09/13] drivers: devfreq: events: add Exynos PPMU new events
+To:     Lukasz Luba <l.luba@partner.samsung.com>
+Cc:     devicetree <devicetree@vger.kernel.org>,
         linux-kernel <linux-kernel@vger.kernel.org>,
-        Joseph Kogut <joseph.kogut@gmail.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>, keescook@chromium.org,
+        Tony Lindgren <tony@atomide.com>, jroedel@suse.de,
+        treding@nvidia.com, digetx@gmail.com,
+        Greg KH <gregkh@linuxfoundation.org>,
+        willy.mh.wolff.ml@gmail.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 21 Jun 2019 at 22:15, Vasily Khoruzhick <anarsoul@gmail.com> wrote:
+Hi,
+
+2019=EB=85=84 6=EC=9B=94 14=EC=9D=BC (=EA=B8=88) =EC=98=A4=ED=9B=84 6:54, L=
+ukasz Luba <l.luba@partner.samsung.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=
+=B1:
 >
-> On Fri, Jun 21, 2019 at 11:04 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >
-> > Enable support for Mali GPU with Panfrost driver, e.g. for Exynos5433
-> > and Exynos7 (having Mali T760).
-> >
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> > ---
-> >  arch/arm64/configs/defconfig | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index 6b4f5cf23324..972b17239f13 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -517,6 +517,7 @@ CONFIG_DRM_HISI_HIBMC=m
-> >  CONFIG_DRM_HISI_KIRIN=m
-> >  CONFIG_DRM_MESON=m
-> >  CONFIG_DRM_PL111=m
-> > +CONFIG_DRM_PANFROST=m
+> Define new performance events supported by Exynos5422 SoC counters.
+> The counters are built-in in Dynamic Memory Controller and provide
+> information regarding memory utilization.
 >
-> It makes sense to enable lima for arm64 defconfig as well since it's
-> used on number of 64-bit Allwinner SoCs.
+> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> ---
+>  drivers/devfreq/event/exynos-ppmu.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/drivers/devfreq/event/exynos-ppmu.c b/drivers/devfreq/event/=
+exynos-ppmu.c
+> index c2ea94957501..ce658c262c27 100644
+> --- a/drivers/devfreq/event/exynos-ppmu.c
+> +++ b/drivers/devfreq/event/exynos-ppmu.c
+> @@ -89,6 +89,12 @@ static struct __exynos_ppmu_events {
+>         PPMU_EVENT(d1-cpu),
+>         PPMU_EVENT(d1-general),
+>         PPMU_EVENT(d1-rt),
+> +
+> +       /* For Exynos5422 SoC */
+> +       PPMU_EVENT(dmc0_0),
+> +       PPMU_EVENT(dmc0_1),
+> +       PPMU_EVENT(dmc1_0),
+> +       PPMU_EVENT(dmc1_1),
+>  };
+>
+>  static int exynos_ppmu_find_ppmu_id(struct devfreq_event_dev *edev)
+> --
+> 2.17.1
+>
 
-I wasn't aware that some of ARMv8 SoCs still use Utgard. In such case
-it makes sense indeed, I will send a follow up.
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
 
-Thanks for feedback!
-
-Krzysztof
+--=20
+Best Regards,
+Chanwoo Choi
