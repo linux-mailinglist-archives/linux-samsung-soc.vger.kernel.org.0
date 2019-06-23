@@ -2,271 +2,298 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B79A44FC70
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Jun 2019 17:24:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0AA4FC92
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Jun 2019 18:02:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbfFWPYF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 23 Jun 2019 11:24:05 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:47081 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726399AbfFWPYE (ORCPT
+        id S1726785AbfFWQCY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 23 Jun 2019 12:02:24 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:42625 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726483AbfFWQCY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 23 Jun 2019 11:24:04 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n4so11138034wrw.13;
-        Sun, 23 Jun 2019 08:24:01 -0700 (PDT)
+        Sun, 23 Jun 2019 12:02:24 -0400
+Received: by mail-io1-f66.google.com with SMTP id u19so74090ior.9;
+        Sun, 23 Jun 2019 09:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kXpzzTpgNGft0UtfBMVNHGTvx0/kvEZCh2FL5sIA+N0=;
-        b=ksnEayEbtaMurCmAbcGYsrSwIMbvTja+3GpRoWu1OdBg3zJfuORCM7RxyX1LiqUQxT
-         kNEHt82xJsjPn08oAWX3wDR7V+kRSic21zSTUdd/fxk+pVOIZzr6SZU47n7JFDB1UHH+
-         s90MqAVomu0rhhodydX2HgeXmgSZwSAM0aGZ/Ohf/CXhnLrAaNyLSeUFxhPEjgdod96P
-         5UZP5JsbOM+/MWsos5dPMnhM4qcohK7YWJr8tfBmC0FBKjv4N9z9PSg+aElWR82z8L5P
-         8OTlhyNp0KdzOCYZ/nqte72I4dXM4VRQOi3W1z+bJbx1R3M6KOdVhG8zOMHjlV9TH/YX
-         ML2w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AvaA51LFDqJ/BsA+QIbHtisWcd0fFGaWRLk4vG1gkYM=;
+        b=BcZ1e1buAbTeWrrALnrrodoB3g4PZd0r/Jd1Yv9eUOxAfLIw91z2T4TxgPA1s7ecMk
+         G+k1dyTZAVqH0Y7ZXDJRJzLfv1zU6LhYPSYugcLpqrYwBVZ+ld2WrZlVIN2dfaFPGy2I
+         deUZ4FcAzUtUQ8V6UNt5FbkgTMm+qtk1Y7zwulFyg052MyWd1xh7siZjYglK+ryP6rWs
+         KNYZ5JvSfOfN/99JZaDCMC42r3i7lHv+14IPgs+yE69LG1r1qKis7EhfxNfK3AxNjFA2
+         0IjgfOwwL3mKmBZSgebYb1EISJhbuFmYf8vRbn3MuFlCmPWpZhMhntO9rNfJcsKAcvBD
+         cLyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kXpzzTpgNGft0UtfBMVNHGTvx0/kvEZCh2FL5sIA+N0=;
-        b=H8L6se98yx7Tq9IVSx0/i9THZcJYkiAxV5ISF19pXuRJq0A+MtXQEIL4oAmhttb3SG
-         dFZunln6rHkXogh7AliVScF2u5PjgRUDm5F/aSRADby8Ps7ILVuigN850SBIPTFcTEMF
-         F1UdBVpZ2SOquER4084LoXRWBDqwGYX6XfpoTdo62um4vLhZ2SfZBabBaASSH6+p4p2w
-         /evCD+w0LAqfV7GAAG0VYB07yqMcpun/Yid6WujDkEYEM3/L5lfNzJ5yOQii9KSKKibw
-         I88H3ZFohdyEww89mGEORp7TBgYhmS2yfyW90QrTesJeHMROalPdDHIr0s+SfQ3Wlnmr
-         ohDQ==
-X-Gm-Message-State: APjAAAUR18TopT4exu4xC8xHGR3E0u7cQCFOFyrgL0JkGBtw19AgNqbY
-        RG7eCDeskrC6pMoMAAyfF7Y=
-X-Google-Smtp-Source: APXvYqziMvaiMSlmEQEOdFumTtdV1BfrOR+BZzc09aXIo1cGMQuYDvyXFY2XyRtTUFez4y3uuMxqiw==
-X-Received: by 2002:adf:e446:: with SMTP id t6mr94122939wrm.115.1561303440389;
-        Sun, 23 Jun 2019 08:24:00 -0700 (PDT)
-Received: from giga-mm ([195.245.55.52])
-        by smtp.gmail.com with ESMTPSA id 32sm17358245wra.35.2019.06.23.08.23.57
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 23 Jun 2019 08:23:59 -0700 (PDT)
-Date:   Sun, 23 Jun 2019 17:23:55 +0200
-From:   Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To:     Phong Tran <tranmanphong@gmail.com>
-Cc:     mark.rutland@arm.com, kstewart@linuxfoundation.org,
-        songliubraving@fb.com, andrew@lunn.ch, peterz@infradead.org,
-        nsekhar@ti.com, ast@kernel.org, jolsa@redhat.com,
-        netdev@vger.kernel.org, gerg@uclinux.org,
-        lorenzo.pieralisi@arm.com, will@kernel.org,
-        linux-samsung-soc@vger.kernel.org, daniel@iogearbox.net,
-        festevam@gmail.com, gregory.clement@bootlin.com,
-        allison@lohutok.net, linux@armlinux.org.uk, krzk@kernel.org,
-        haojian.zhuang@gmail.com, bgolaszewski@baylibre.com,
-        tony@atomide.com, mingo@redhat.com, linux-imx@nxp.com, yhs@fb.com,
-        sebastian.hesselbarth@gmail.com, illusionist.neo@gmail.com,
-        jason@lakedaemon.net, liviu.dudau@arm.com, s.hauer@pengutronix.de,
-        acme@kernel.org, lkundrak@v3.sk, robert.jarzmik@free.fr,
-        dmg@turingmachine.org, swinslow@gmail.com, namhyung@kernel.org,
-        tglx@linutronix.de, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, info@metux.net,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        alexander.shishkin@linux.intel.com, hsweeten@visionengravers.com,
-        kgene@kernel.org, kernel@pengutronix.de, sudeep.holla@arm.com,
-        bpf@vger.kernel.org, shawnguo@kernel.org, kafai@fb.com,
-        daniel@zonque.org
-Subject: Re: [PATCH 03/15] ARM: ep93xx: cleanup cppcheck shifting errors
-Message-Id: <20190623172355.3b29752d8131800750f846fa@gmail.com>
-In-Reply-To: <20190623151313.970-4-tranmanphong@gmail.com>
-References: <20190623151313.970-1-tranmanphong@gmail.com>
-        <20190623151313.970-4-tranmanphong@gmail.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AvaA51LFDqJ/BsA+QIbHtisWcd0fFGaWRLk4vG1gkYM=;
+        b=EM+u5F4FZ40/I2FvAvATcWDxcjgd55rkkzTpb5RqtHdv0bOk9sku9icPWBRe2Kc38J
+         Ctwh3ufqbttIQiubSeeCrwee5GiJMajIBUnYVix8kTPCcc9EXzDzSDVBECd9LzgbztIv
+         jP6fvxdmhMpYwGqKn7oYtwYtXUG4T3cT3GL25ntU5PFdquijN5rw3jdtfXUE7nd2N12n
+         9x7psfryIuXijohzsqpw7VhA1yJ5S8YXDn+0RrKdztAexc4LHMJLTTMxSdmb/Ytnu+ih
+         Fd7bBDSQo8IpLuMC+S/kOVGzL1agQYWG5Xu4XVvk4V6U+FYYzP7TL8+qvcNtJmXCW66w
+         K1WQ==
+X-Gm-Message-State: APjAAAVKDTMZF7UT3smC8roWiPW8XAHF600vgP1ADVLDlCBxuOYnsxAq
+        3AO46RuxVU/HYSe9XsiKrlUurFspZ4I2Fpb4Gu5G9wAp
+X-Google-Smtp-Source: APXvYqwprrFl8pUjTubPwZKavfbzt+bfSDhjUB0E1U/3E8qLvX8PiBLYAnsljaRvvvZnKW0FMw7K6zOtYIxzMMpx4Bo=
+X-Received: by 2002:a5d:94d7:: with SMTP id y23mr23358045ior.296.1561305742936;
+ Sun, 23 Jun 2019 09:02:22 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190621155845.7079-1-krzk@kernel.org> <20190621155845.7079-3-krzk@kernel.org>
+In-Reply-To: <20190621155845.7079-3-krzk@kernel.org>
+From:   Anand Moon <linux.amoon@gmail.com>
+Date:   Sun, 23 Jun 2019 21:32:12 +0530
+Message-ID: <CANAwSgTFQo8wL5s-djwPXFFOLtTHvRQif6234kFC=23PwMhuEQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] ARM: dts: exynos: Add regulator suspend
+ configuration to Odroid XU3/XU4/HC1 family
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Kukjin Kim <kgene@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="0000000000003247d6058bffd2d2"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi!
+--0000000000003247d6058bffd2d2
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 23 Jun 2019 22:13:01 +0700
-Phong Tran <tranmanphong@gmail.com> wrote:
+Hi Krzysztof,
 
-> [arch/arm/mach-ep93xx/clock.c:102]: (error) Shifting signed 32-bit value
-> by 31 bits is undefined behaviour
-> [arch/arm/mach-ep93xx/clock.c:132]: (error) Shifting signed 32-bit value
-> by 31 bits is undefined behaviour
-> [arch/arm/mach-ep93xx/clock.c:140]: (error) Shifting signed 32-bit value
-> by 31 bits is undefined behaviour
-> [arch/arm/mach-ep93xx/core.c:1001]: (error) Shifting signed 32-bit value
-> by 31 bits is undefined behaviour
-> [arch/arm/mach-ep93xx/core.c:1002]: (error) Shifting signed 32-bit value
-> by 31 bits is undefined behaviour
-> 
-> Signed-off-by: Phong Tran <tranmanphong@gmail.com>
-> ---
->  arch/arm/mach-ep93xx/soc.h | 132 ++++++++++++++++++++++-----------------------
->  1 file changed, 66 insertions(+), 66 deletions(-)
-> 
-> diff --git a/arch/arm/mach-ep93xx/soc.h b/arch/arm/mach-ep93xx/soc.h
-> index f2dace1c9154..831ea5266281 100644
-> --- a/arch/arm/mach-ep93xx/soc.h
-> +++ b/arch/arm/mach-ep93xx/soc.h
-> @@ -109,89 +109,89 @@
->  #define EP93XX_SYSCON_REG(x)		(EP93XX_SYSCON_BASE + (x))
->  #define EP93XX_SYSCON_POWER_STATE	EP93XX_SYSCON_REG(0x00)
->  #define EP93XX_SYSCON_PWRCNT		EP93XX_SYSCON_REG(0x04)
-> -#define EP93XX_SYSCON_PWRCNT_FIR_EN	(1<<31)
-> -#define EP93XX_SYSCON_PWRCNT_UARTBAUD	(1<<29)
-> -#define EP93XX_SYSCON_PWRCNT_USH_EN	(1<<28)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2M1	(1<<27)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2M0	(1<<26)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P8	(1<<25)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P9	(1<<24)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P6	(1<<23)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P7	(1<<22)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P4	(1<<21)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P5	(1<<20)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P2	(1<<19)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P3	(1<<18)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P0	(1<<17)
-> -#define EP93XX_SYSCON_PWRCNT_DMA_M2P1	(1<<16)
-> +#define EP93XX_SYSCON_PWRCNT_FIR_EN	(1U<<31)
+Thanks for this patch. Please add my
 
-Could you please use BIT() for this?
+Tested-by: Anand Moon <linux.amoon@gmail.com>
 
-> +#define EP93XX_SYSCON_PWRCNT_UARTBAUD	(1U<<29)
-> +#define EP93XX_SYSCON_PWRCNT_USH_EN	(1U<<28)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2M1	(1U<<27)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2M0	(1U<<26)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P8	(1U<<25)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P9	(1U<<24)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P6	(1U<<23)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P7	(1U<<22)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P4	(1U<<21)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P5	(1U<<20)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P2	(1U<<19)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P3	(1U<<18)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P0	(1U<<17)
-> +#define EP93XX_SYSCON_PWRCNT_DMA_M2P1	(1U<<16)
->  #define EP93XX_SYSCON_HALT		EP93XX_SYSCON_REG(0x08)
->  #define EP93XX_SYSCON_STANDBY		EP93XX_SYSCON_REG(0x0c)
->  #define EP93XX_SYSCON_CLKSET1		EP93XX_SYSCON_REG(0x20)
-> -#define EP93XX_SYSCON_CLKSET1_NBYP1	(1<<23)
-> +#define EP93XX_SYSCON_CLKSET1_NBYP1	(1U<<23)
->  #define EP93XX_SYSCON_CLKSET2		EP93XX_SYSCON_REG(0x24)
-> -#define EP93XX_SYSCON_CLKSET2_NBYP2	(1<<19)
-> -#define EP93XX_SYSCON_CLKSET2_PLL2_EN	(1<<18)
-> +#define EP93XX_SYSCON_CLKSET2_NBYP2	(1U<<19)
-> +#define EP93XX_SYSCON_CLKSET2_PLL2_EN	(1U<<18)
->  #define EP93XX_SYSCON_DEVCFG		EP93XX_SYSCON_REG(0x80)
-> -#define EP93XX_SYSCON_DEVCFG_SWRST	(1<<31)
-> -#define EP93XX_SYSCON_DEVCFG_D1ONG	(1<<30)
-> -#define EP93XX_SYSCON_DEVCFG_D0ONG	(1<<29)
-> -#define EP93XX_SYSCON_DEVCFG_IONU2	(1<<28)
-> -#define EP93XX_SYSCON_DEVCFG_GONK	(1<<27)
-> -#define EP93XX_SYSCON_DEVCFG_TONG	(1<<26)
-> -#define EP93XX_SYSCON_DEVCFG_MONG	(1<<25)
-> -#define EP93XX_SYSCON_DEVCFG_U3EN	(1<<24)
-> -#define EP93XX_SYSCON_DEVCFG_CPENA	(1<<23)
-> -#define EP93XX_SYSCON_DEVCFG_A2ONG	(1<<22)
-> -#define EP93XX_SYSCON_DEVCFG_A1ONG	(1<<21)
-> -#define EP93XX_SYSCON_DEVCFG_U2EN	(1<<20)
-> -#define EP93XX_SYSCON_DEVCFG_EXVC	(1<<19)
-> -#define EP93XX_SYSCON_DEVCFG_U1EN	(1<<18)
-> -#define EP93XX_SYSCON_DEVCFG_TIN	(1<<17)
-> -#define EP93XX_SYSCON_DEVCFG_HC3IN	(1<<15)
-> -#define EP93XX_SYSCON_DEVCFG_HC3EN	(1<<14)
-> -#define EP93XX_SYSCON_DEVCFG_HC1IN	(1<<13)
-> -#define EP93XX_SYSCON_DEVCFG_HC1EN	(1<<12)
-> -#define EP93XX_SYSCON_DEVCFG_HONIDE	(1<<11)
-> -#define EP93XX_SYSCON_DEVCFG_GONIDE	(1<<10)
-> -#define EP93XX_SYSCON_DEVCFG_PONG	(1<<9)
-> -#define EP93XX_SYSCON_DEVCFG_EONIDE	(1<<8)
-> -#define EP93XX_SYSCON_DEVCFG_I2SONSSP	(1<<7)
-> -#define EP93XX_SYSCON_DEVCFG_I2SONAC97	(1<<6)
-> -#define EP93XX_SYSCON_DEVCFG_RASONP3	(1<<4)
-> -#define EP93XX_SYSCON_DEVCFG_RAS	(1<<3)
-> -#define EP93XX_SYSCON_DEVCFG_ADCPD	(1<<2)
-> -#define EP93XX_SYSCON_DEVCFG_KEYS	(1<<1)
-> -#define EP93XX_SYSCON_DEVCFG_SHENA	(1<<0)
-> +#define EP93XX_SYSCON_DEVCFG_SWRST	(1U<<31)
-> +#define EP93XX_SYSCON_DEVCFG_D1ONG	(1U<<30)
-> +#define EP93XX_SYSCON_DEVCFG_D0ONG	(1U<<29)
-> +#define EP93XX_SYSCON_DEVCFG_IONU2	(1U<<28)
-> +#define EP93XX_SYSCON_DEVCFG_GONK	(1U<<27)
-> +#define EP93XX_SYSCON_DEVCFG_TONG	(1U<<26)
-> +#define EP93XX_SYSCON_DEVCFG_MONG	(1U<<25)
-> +#define EP93XX_SYSCON_DEVCFG_U3EN	(1U<<24)
-> +#define EP93XX_SYSCON_DEVCFG_CPENA	(1U<<23)
-> +#define EP93XX_SYSCON_DEVCFG_A2ONG	(1U<<22)
-> +#define EP93XX_SYSCON_DEVCFG_A1ONG	(1U<<21)
-> +#define EP93XX_SYSCON_DEVCFG_U2EN	(1U<<20)
-> +#define EP93XX_SYSCON_DEVCFG_EXVC	(1U<<19)
-> +#define EP93XX_SYSCON_DEVCFG_U1EN	(1U<<18)
-> +#define EP93XX_SYSCON_DEVCFG_TIN	(1U<<17)
-> +#define EP93XX_SYSCON_DEVCFG_HC3IN	(1U<<15)
-> +#define EP93XX_SYSCON_DEVCFG_HC3EN	(1U<<14)
-> +#define EP93XX_SYSCON_DEVCFG_HC1IN	(1U<<13)
-> +#define EP93XX_SYSCON_DEVCFG_HC1EN	(1U<<12)
-> +#define EP93XX_SYSCON_DEVCFG_HONIDE	(1U<<11)
-> +#define EP93XX_SYSCON_DEVCFG_GONIDE	(1U<<10)
-> +#define EP93XX_SYSCON_DEVCFG_PONG	(1U<<9)
-> +#define EP93XX_SYSCON_DEVCFG_EONIDE	(1U<<8)
-> +#define EP93XX_SYSCON_DEVCFG_I2SONSSP	(1U<<7)
-> +#define EP93XX_SYSCON_DEVCFG_I2SONAC97	(1U<<6)
-> +#define EP93XX_SYSCON_DEVCFG_RASONP3	(1U<<4)
-> +#define EP93XX_SYSCON_DEVCFG_RAS	(1U<<3)
-> +#define EP93XX_SYSCON_DEVCFG_ADCPD	(1U<<2)
-> +#define EP93XX_SYSCON_DEVCFG_KEYS	(1U<<1)
-> +#define EP93XX_SYSCON_DEVCFG_SHENA	(1U<<0)
->  #define EP93XX_SYSCON_VIDCLKDIV		EP93XX_SYSCON_REG(0x84)
-> -#define EP93XX_SYSCON_CLKDIV_ENABLE	(1<<15)
-> -#define EP93XX_SYSCON_CLKDIV_ESEL	(1<<14)
-> -#define EP93XX_SYSCON_CLKDIV_PSEL	(1<<13)
-> +#define EP93XX_SYSCON_CLKDIV_ENABLE	(1U<<15)
-> +#define EP93XX_SYSCON_CLKDIV_ESEL	(1U<<14)
-> +#define EP93XX_SYSCON_CLKDIV_PSEL	(1U<<13)
->  #define EP93XX_SYSCON_CLKDIV_PDIV_SHIFT	8
->  #define EP93XX_SYSCON_I2SCLKDIV		EP93XX_SYSCON_REG(0x8c)
-> -#define EP93XX_SYSCON_I2SCLKDIV_SENA	(1<<31)
-> -#define EP93XX_SYSCON_I2SCLKDIV_ORIDE   (1<<29)
-> -#define EP93XX_SYSCON_I2SCLKDIV_SPOL	(1<<19)
-> +#define EP93XX_SYSCON_I2SCLKDIV_SENA	(1U<<31)
-> +#define EP93XX_SYSCON_I2SCLKDIV_ORIDE   (1U<<29)
-> +#define EP93XX_SYSCON_I2SCLKDIV_SPOL	(1U<<19)
->  #define EP93XX_I2SCLKDIV_SDIV		(1 << 16)
->  #define EP93XX_I2SCLKDIV_LRDIV32	(0 << 17)
->  #define EP93XX_I2SCLKDIV_LRDIV64	(1 << 17)
->  #define EP93XX_I2SCLKDIV_LRDIV128	(2 << 17)
->  #define EP93XX_I2SCLKDIV_LRDIV_MASK	(3 << 17)
->  #define EP93XX_SYSCON_KEYTCHCLKDIV	EP93XX_SYSCON_REG(0x90)
-> -#define EP93XX_SYSCON_KEYTCHCLKDIV_TSEN	(1<<31)
-> -#define EP93XX_SYSCON_KEYTCHCLKDIV_ADIV	(1<<16)
-> -#define EP93XX_SYSCON_KEYTCHCLKDIV_KEN	(1<<15)
-> -#define EP93XX_SYSCON_KEYTCHCLKDIV_KDIV	(1<<0)
-> +#define EP93XX_SYSCON_KEYTCHCLKDIV_TSEN	(1U<<31)
-> +#define EP93XX_SYSCON_KEYTCHCLKDIV_ADIV	(1U<<16)
-> +#define EP93XX_SYSCON_KEYTCHCLKDIV_KEN	(1U<<15)
-> +#define EP93XX_SYSCON_KEYTCHCLKDIV_KDIV	(1U<<0)
->  #define EP93XX_SYSCON_SYSCFG		EP93XX_SYSCON_REG(0x9c)
->  #define EP93XX_SYSCON_SYSCFG_REV_MASK	(0xf0000000)
->  #define EP93XX_SYSCON_SYSCFG_REV_SHIFT	(28)
-> -#define EP93XX_SYSCON_SYSCFG_SBOOT	(1<<8)
-> -#define EP93XX_SYSCON_SYSCFG_LCSN7	(1<<7)
-> -#define EP93XX_SYSCON_SYSCFG_LCSN6	(1<<6)
-> -#define EP93XX_SYSCON_SYSCFG_LASDO	(1<<5)
-> -#define EP93XX_SYSCON_SYSCFG_LEEDA	(1<<4)
-> -#define EP93XX_SYSCON_SYSCFG_LEECLK	(1<<3)
-> -#define EP93XX_SYSCON_SYSCFG_LCSN2	(1<<1)
-> -#define EP93XX_SYSCON_SYSCFG_LCSN1	(1<<0)
-> +#define EP93XX_SYSCON_SYSCFG_SBOOT	(1U<<8)
-> +#define EP93XX_SYSCON_SYSCFG_LCSN7	(1U<<7)
-> +#define EP93XX_SYSCON_SYSCFG_LCSN6	(1U<<6)
-> +#define EP93XX_SYSCON_SYSCFG_LASDO	(1U<<5)
-> +#define EP93XX_SYSCON_SYSCFG_LEEDA	(1U<<4)
-> +#define EP93XX_SYSCON_SYSCFG_LEECLK	(1U<<3)
-> +#define EP93XX_SYSCON_SYSCFG_LCSN2	(1U<<1)
-> +#define EP93XX_SYSCON_SYSCFG_LCSN1	(1U<<0)
->  #define EP93XX_SYSCON_SWLOCK		EP93XX_SYSCON_REG(0xc0)
->  
->  /* EP93xx System Controller software locked register write */
+[snip]
 
--- 
-Alexander Sverdlin.
+Could you integrate below small changes into this patch.
+with these below changes suspend and resume work correctly at my end.
+
+[1] XU4_suspendresume.patch
+
+As per S2MPS11B PMIC 1.2.1 Regulator (Features)
+Fix the min max value for *Buck7* and *Buck8*
+
+-- Buck7 (VDD_1.0V_LDO) 1.5 A (1.2 V to 1.5 V, 12.5 mV step, default on 1.35 V)
+-- Buck8 (VDD_1.8V_LDO) 2.5 A (1.8 V to 2.1 V, 12.5 mV step, default on 2.0 V)
+
+Also add suspend-off for *Buck9*
+Buck9 internally controls the power of USB hub.
+Adding suspend the this node help proper reset of USB hub on Odroid
+XU4 / HC1/ XU3
+during suspend and resume. Below it the logs from my testing.
+
+[2] https://pastebin.com/pRJJmWL6
+
+Best Regards
+-Anand
+
+--0000000000003247d6058bffd2d2
+Content-Type: text/plain; charset="US-ASCII"; name="xu4_suspend_resume.txt"
+Content-Disposition: attachment; filename="xu4_suspend_resume.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jx94u7rv1>
+X-Attachment-Id: f_jx94u7rv1
+
+W3Jvb3RAYXJjaGwteHU0ZSB+XSMgIHJ0Y3dha2UgLWQgL2Rldi9ydGMwIC1tIG1lbSAtcyAxMA0K
+cnRjd2FrZTogYXNzdW1pbmcgUlRDIHVzZXMgVVRDIC4uLg0KcnRjd2FrZTogd2FrZXVwIGZyb20g
+Im1lbSIgdXNpbmcgL2Rldi9ydGMwIGF0IFN1biBKdW4gMjMgMTQ6Mjk6NTYgMjAxOQ0KWyAgIDcy
+LjcwNzg1Ml0gUE06IHN1c3BlbmQgZW50cnkgKGRlZXApDQpbICAgNzIuNzEyNzI3XSBGaWxlc3lz
+dGVtcyBzeW5jOiAwLjAwMiBzZWNvbmRzDQpbICAgNzIuNzIyMTA4XSBGcmVlemluZyB1c2VyIHNw
+YWNlIHByb2Nlc3NlcyAuLi4gKGVsYXBzZWQgMC4wMDIgc2Vjb25kcykgZG9uZS4NClsgICA3Mi43
+MzA1NTBdIE9PTSBraWxsZXIgZGlzYWJsZWQuDQpbICAgNzIuNzMzNDYyXSBGcmVlemluZyByZW1h
+aW5pbmcgZnJlZXphYmxlIHRhc2tzIC4uLiAoZWxhcHNlZCAwLjAwMiBzZWNvbmRzKSBkb25lLg0K
+WyAgIDcyLjgxNTg0N10gc2QgMDowOjA6MDogW3NkYV0gU3luY2hyb25pemluZyBTQ1NJIGNhY2hl
+DQpbICAgNzIuOTcxNTUyXSB3YWtlIGVuYWJsZWQgZm9yIGlycSAxNTENClsgICA3My4wMDc5NDJd
+IHdha2UgZW5hYmxlZCBmb3IgaXJxIDE1NQ0KWyAgIDczLjEyODA4MV0gc2Ftc3VuZy1waW5jdHJs
+IDEzNDAwMDAwLnBpbmN0cmw6IFNldHRpbmcgZXh0ZXJuYWwgd2FrZXVwIGludGVycnVwdCBtYXNr
+OiAweGZmZmZmZmU3DQpbICAgNzMuMTQ2NTM1XSBEaXNhYmxpbmcgbm9uLWJvb3QgQ1BVcyAuLi4N
+ClsgICA3My4yMjUzNzRdIHMzYzI0MTAtd2R0IDEwMWQwMDAwLndhdGNoZG9nOiB3YXRjaGRvZyBk
+aXNhYmxlZA0KWyAgIDczLjIyOTkzMF0gdXNiIHVzYjE6IHJvb3QgaHViIGxvc3QgcG93ZXIgb3Ig
+d2FzIHJlc2V0DQpbICAgNzMuMjk5NzI1XSB1c2IgdXNiMjogcm9vdCBodWIgbG9zdCBwb3dlciBv
+ciB3YXMgcmVzZXQNClsgICA3My4zMDQ0NzRdIHdha2UgZGlzYWJsZWQgZm9yIGlycSAxNTUNClsg
+ICA3My4zMTQwNjRdIHdha2UgZGlzYWJsZWQgZm9yIGlycSAxNTENClsgICA3My4zMzExMTddIGV4
+eW5vcy10bXUgMTAwNjAwMDAudG11OiBNb3JlIHRyaXAgcG9pbnRzIHRoYW4gc3VwcG9ydGVkIGJ5
+IHRoaXMgVE1VLg0KWyAgIDczLjMzNzI5N10gZXh5bm9zLXRtdSAxMDA2MDAwMC50bXU6IDIgdHJp
+cCBwb2ludHMgc2hvdWxkIGJlIGNvbmZpZ3VyZWQgaW4gcG9sbGluZyBtb2RlLg0KWyAgIDczLjM0
+NTM0M10gZXh5bm9zLXRtdSAxMDA2NDAwMC50bXU6IE1vcmUgdHJpcCBwb2ludHMgdGhhbiBzdXBw
+b3J0ZWQgYnkgdGhpcyBUTVUuDQpbICAgNzMuMzUyODA3XSBleHlub3MtdG11IDEwMDY0MDAwLnRt
+dTogMiB0cmlwIHBvaW50cyBzaG91bGQgYmUgY29uZmlndXJlZCBpbiBwb2xsaW5nIG1vZGUuDQpb
+ICAgNzMuMzYwOTE2XSBleHlub3MtdG11IDEwMDY4MDAwLnRtdTogTW9yZSB0cmlwIHBvaW50cyB0
+aGFuIHN1cHBvcnRlZCBieSB0aGlzIFRNVS4NClsgICA3My4zNjgyOTVdIGV4eW5vcy10bXUgMTAw
+NjgwMDAudG11OiAyIHRyaXAgcG9pbnRzIHNob3VsZCBiZSBjb25maWd1cmVkIGluIHBvbGxpbmcg
+bW9kZS4NClsgICA3My4zNzY0MjldIGV4eW5vcy10bXUgMTAwNmMwMDAudG11OiBNb3JlIHRyaXAg
+cG9pbnRzIHRoYW4gc3VwcG9ydGVkIGJ5IHRoaXMgVE1VLg0KWyAgIDczLjM4Mzc0Ml0gZXh5bm9z
+LXRtdSAxMDA2YzAwMC50bXU6IDIgdHJpcCBwb2ludHMgc2hvdWxkIGJlIGNvbmZpZ3VyZWQgaW4g
+cG9sbGluZyBtb2RlLg0KWyAgIDczLjM5NDM0NV0gdXNiIHVzYjM6IHJvb3QgaHViIGxvc3QgcG93
+ZXIgb3Igd2FzIHJlc2V0DQpbICAgNzMuMzk0NzA0XSBzM2MtcnRjIDEwMWUwMDAwLnJ0YzogcnRj
+IGRpc2FibGVkLCByZS1lbmFibGluZw0KWyAgIDczLjM5NDg0MF0gdXNiIHVzYjU6IHJvb3QgaHVi
+IGxvc3QgcG93ZXIgb3Igd2FzIHJlc2V0DQpbICAgNzMuMzk0ODY0XSB1c2IgdXNiNjogcm9vdCBo
+dWIgbG9zdCBwb3dlciBvciB3YXMgcmVzZXQNClsgICA3My4zOTgwNjNdIHVzYiB1c2I0OiByb290
+IGh1YiBsb3N0IHBvd2VyIG9yIHdhcyByZXNldA0KWyAgIDczLjgwNjg3Nl0gdXNiIDQtMTogcmVz
+ZXQgU3VwZXJTcGVlZCBHZW4gMSBVU0IgZGV2aWNlIG51bWJlciAyIHVzaW5nIHhoY2ktaGNkDQpb
+ICAgNzMuOTg2NTA0XSB1c2IgMy0xOiByZXNldCBoaWdoLXNwZWVkIFVTQiBkZXZpY2UgbnVtYmVy
+IDIgdXNpbmcgeGhjaS1oY2QNClsgICA3NC4wMjY4MTRdIHVzYiA1LTE6IHJlc2V0IGhpZ2gtc3Bl
+ZWQgVVNCIGRldmljZSBudW1iZXIgMiB1c2luZyB4aGNpLWhjZA0KWyAgIDc0LjI2NjM2NF0gdXNi
+IDQtMS4xOiByZXNldCBTdXBlclNwZWVkIEdlbiAxIFVTQiBkZXZpY2UgbnVtYmVyIDMgdXNpbmcg
+eGhjaS1oY2QNClsgICA3NC45ODg2ODldIE9PTSBraWxsZXIgZW5hYmxlZC4NClsgICA3NC45OTAz
+NzJdIFJlc3RhcnRpbmcgdGFza3MgLi4uIGRvbmUuDQpbICAgNzQuOTk3NTI5XSBQTTogc3VzcGVu
+ZCBleGl0DQpbICAgNzUuMDE0MDA5XSBtbWNfaG9zdCBtbWMwOiBCdXMgc3BlZWQgKHNsb3QgMCkg
+PSA1MDAwMDAwMEh6IChzbG90IHJlcSA0MDAwMDBIeiwgYWN0dWFsIDM5NjgyNUhaIGRpdiA9IDYz
+KQ0KW3Jvb3RAYXJjaGwteHU0ZSB+XSMgWyAgIDc1LjI0MzAxOV0gbW1jX2hvc3QgbW1jMDogQnVz
+IHNwZWVkIChzbG90IDApID0gMjAwMDAwMDAwSHogKHNsb3QgcmVxIDIwMDAwMDAwMEh6LCBhY3R1
+YWwgMjAwMDAwMDAwSFogZGl2ID0gMCkNClsgICA3NS4yNTU5MjldIG1tY19ob3N0IG1tYzA6IEJ1
+cyBzcGVlZCAoc2xvdCAwKSA9IDUwMDAwMDAwSHogKHNsb3QgcmVxIDUyMDAwMDAwSHosIGFjdHVh
+bCA1MDAwMDAwMEhaIGRpdiA9IDApDQpbICAgNzUuMjkwMDk2XSBtbWNfaG9zdCBtbWMwOiBCdXMg
+c3BlZWQgKHNsb3QgMCkgPSA0MDAwMDAwMDBIeiAoc2xvdCByZXEgMjAwMDAwMDAwSHosIGFjdHVh
+bCAyMDAwMDAwMDBIWiBkaXYgPSAxKQ0KDQpbcm9vdEBhcmNobC14dTRlIH5dIyAgcnRjd2FrZSAt
+ZCAvZGV2L3J0YzAgLW0gbWVtIC1zIDEwDQpydGN3YWtlOiBhc3N1bWluZyBSVEMgdXNlcyBVVEMg
+Li4uDQpydGN3YWtlOiB3YWtldXAgZnJvbSAibWVtIiB1c2luZyAvZGV2L3J0YzAgYXQgU3VuIEp1
+biAyMyAxNDozMDoyMCAyMDE5DQpbICAgODYuMzA4NTAwXSBQTTogc3VzcGVuZCBlbnRyeSAoZGVl
+cCkNClsgICA4Ni4zMTE5NjJdIEZpbGVzeXN0ZW1zIHN5bmM6IDAuMDAxIHNlY29uZHMNClsgICA4
+Ni4zMjA3ODFdIEZyZWV6aW5nIHVzZXIgc3BhY2UgcHJvY2Vzc2VzIC4uLiAoZWxhcHNlZCAwLjAw
+MiBzZWNvbmRzKSBkb25lLg0KWyAgIDg2LjMyODU0Ml0gT09NIGtpbGxlciBkaXNhYmxlZC4NClsg
+ICA4Ni4zMzE2NDRdIEZyZWV6aW5nIHJlbWFpbmluZyBmcmVlemFibGUgdGFza3MgLi4uIChlbGFw
+c2VkIDAuMDAyIHNlY29uZHMpIGRvbmUuDQpbICAgODYuNDM1NzAwXSBzZCAwOjA6MDowOiBbc2Rh
+XSBTeW5jaHJvbml6aW5nIFNDU0kgY2FjaGUNClsgICA4Ni41OTEyOTNdIHdha2UgZW5hYmxlZCBm
+b3IgaXJxIDE1MQ0KWyAgIDg2LjYyNjk4OV0gd2FrZSBlbmFibGVkIGZvciBpcnEgMTU1DQpbICAg
+ODYuNzQ3MTQwXSBzYW1zdW5nLXBpbmN0cmwgMTM0MDAwMDAucGluY3RybDogU2V0dGluZyBleHRl
+cm5hbCB3YWtldXAgaW50ZXJydXB0IG1hc2s6IDB4ZmZmZmZmZTcNClsgICA4Ni43NjU2MDVdIERp
+c2FibGluZyBub24tYm9vdCBDUFVzIC4uLg0KWyAgIDg2Ljg0MTA3M10gczNjMjQxMC13ZHQgMTAx
+ZDAwMDAud2F0Y2hkb2c6IHdhdGNoZG9nIGRpc2FibGVkDQpbICAgODYuODQ1NjQ4XSB1c2IgdXNi
+MTogcm9vdCBodWIgbG9zdCBwb3dlciBvciB3YXMgcmVzZXQNClsgICA4Ni45MTk1NjRdIHVzYiB1
+c2IyOiByb290IGh1YiBsb3N0IHBvd2VyIG9yIHdhcyByZXNldA0KWyAgIDg2LjkyNDMxNF0gd2Fr
+ZSBkaXNhYmxlZCBmb3IgaXJxIDE1NQ0KWyAgIDg2LjkzMzg1Ml0gd2FrZSBkaXNhYmxlZCBmb3Ig
+aXJxIDE1MQ0KWyAgIDg2Ljk1MDgyN10gZXh5bm9zLXRtdSAxMDA2MDAwMC50bXU6IE1vcmUgdHJp
+cCBwb2ludHMgdGhhbiBzdXBwb3J0ZWQgYnkgdGhpcyBUTVUuDQpbICAgODYuOTU3MDAzXSBleHlu
+b3MtdG11IDEwMDYwMDAwLnRtdTogMiB0cmlwIHBvaW50cyBzaG91bGQgYmUgY29uZmlndXJlZCBp
+biBwb2xsaW5nIG1vZGUuDQpbICAgODYuOTY1MDU1XSBleHlub3MtdG11IDEwMDY0MDAwLnRtdTog
+TW9yZSB0cmlwIHBvaW50cyB0aGFuIHN1cHBvcnRlZCBieSB0aGlzIFRNVS4NClsgICA4Ni45NzI0
+OTZdIGV4eW5vcy10bXUgMTAwNjQwMDAudG11OiAyIHRyaXAgcG9pbnRzIHNob3VsZCBiZSBjb25m
+aWd1cmVkIGluIHBvbGxpbmcgbW9kZS4NClsgICA4Ni45ODA2MzJdIGV4eW5vcy10bXUgMTAwNjgw
+MDAudG11OiBNb3JlIHRyaXAgcG9pbnRzIHRoYW4gc3VwcG9ydGVkIGJ5IHRoaXMgVE1VLg0KWyAg
+IDg2Ljk4ODAxNF0gZXh5bm9zLXRtdSAxMDA2ODAwMC50bXU6IDIgdHJpcCBwb2ludHMgc2hvdWxk
+IGJlIGNvbmZpZ3VyZWQgaW4gcG9sbGluZyBtb2RlLg0KWyAgIDg2Ljk5NjE0OF0gZXh5bm9zLXRt
+dSAxMDA2YzAwMC50bXU6IE1vcmUgdHJpcCBwb2ludHMgdGhhbiBzdXBwb3J0ZWQgYnkgdGhpcyBU
+TVUuDQpbICAgODcuMDAzNDUyXSBleHlub3MtdG11IDEwMDZjMDAwLnRtdTogMiB0cmlwIHBvaW50
+cyBzaG91bGQgYmUgY29uZmlndXJlZCBpbiBwb2xsaW5nIG1vZGUuDQpbICAgODcuMDEzOTI2XSB1
+c2IgdXNiMzogcm9vdCBodWIgbG9zdCBwb3dlciBvciB3YXMgcmVzZXQNClsgICA4Ny4wMTQyOTVd
+IHMzYy1ydGMgMTAxZTAwMDAucnRjOiBydGMgZGlzYWJsZWQsIHJlLWVuYWJsaW5nDQpbICAgODcu
+MDE0NDczXSB1c2IgdXNiNTogcm9vdCBodWIgbG9zdCBwb3dlciBvciB3YXMgcmVzZXQNClsgICA4
+Ny4wMTQ0OThdIHVzYiB1c2I2OiByb290IGh1YiBsb3N0IHBvd2VyIG9yIHdhcyByZXNldA0KWyAg
+IDg3LjAxNzY0NF0gdXNiIHVzYjQ6IHJvb3QgaHViIGxvc3QgcG93ZXIgb3Igd2FzIHJlc2V0DQpb
+ICAgODcuNDI3MDc1XSB1c2IgNC0xOiByZXNldCBTdXBlclNwZWVkIEdlbiAxIFVTQiBkZXZpY2Ug
+bnVtYmVyIDIgdXNpbmcgeGhjaS1oY2QNClsgICA4Ny42MDYzODZdIHVzYiAzLTE6IHJlc2V0IGhp
+Z2gtc3BlZWQgVVNCIGRldmljZSBudW1iZXIgMiB1c2luZyB4aGNpLWhjZA0KWyAgIDg3LjY0NjQ2
+MV0gdXNiIDUtMTogcmVzZXQgaGlnaC1zcGVlZCBVU0IgZGV2aWNlIG51bWJlciAyIHVzaW5nIHho
+Y2ktaGNkDQpbICAgODcuODg2MjQyXSB1c2IgNC0xLjE6IHJlc2V0IFN1cGVyU3BlZWQgR2VuIDEg
+VVNCIGRldmljZSBudW1iZXIgMyB1c2luZyB4aGNpLWhjZA0KWyAgIDg4LjYwNzg4MV0gT09NIGtp
+bGxlciBlbmFibGVkLg0KWyAgIDg4LjYwOTU2Ml0gUmVzdGFydGluZyB0YXNrcyAuLi4gZG9uZS4N
+ClsgICA4OC42MTQzNDBdIFBNOiBzdXNwZW5kIGV4aXQNClsgICA4OC42MzI5NTNdIG1tY19ob3N0
+IG1tYzA6IEJ1cyBzcGVlZCAoc2xvdCAwKSA9IDUwMDAwMDAwSHogKHNsb3QgcmVxIDQwMDAwMEh6
+LCBhY3R1YWwgMzk2ODI1SFogZGl2ID0gNjMpDQpbcm9vdEBhcmNobC14dTRlIH5dIyBbICAgODgu
+ODk2OTAwXSBtbWNfaG9zdCBtbWMwOiBCdXMgc3BlZWQgKHNsb3QgMCkgPSAyMDAwMDAwMDBIeiAo
+c2xvdCByZXEgMjAwMDAwMDAwSHosIGFjdHVhbCAyMDAwMDAwMDBIWiBkaXYgPSAwKQ0KWyAgIDg4
+LjkxMjk3MF0gbW1jX2hvc3QgbW1jMDogQnVzIHNwZWVkIChzbG90IDApID0gNTAwMDAwMDBIeiAo
+c2xvdCByZXEgNTIwMDAwMDBIeiwgYWN0dWFsIDUwMDAwMDAwSFogZGl2ID0gMCkNClsgICA4OC45
+Mjk4MTBdIG1tY19ob3N0IG1tYzA6IEJ1cyBzcGVlZCAoc2xvdCAwKSA9IDQwMDAwMDAwMEh6IChz
+bG90IHJlcSAyMDAwMDAwMDBIeiwgYWN0dWFsIDIwMDAwMDAwMEhaIGRpdiA9IDEpDQoNCltyb290
+QGFyY2hsLXh1NGUgfl0jICBydGN3YWtlIC1kIC9kZXYvcnRjMCAtbSBtZW0gLXMgMTANCnJ0Y3dh
+a2U6IGFzc3VtaW5nIFJUQyB1c2VzIFVUQyAuLi4NCnJ0Y3dha2U6IHdha2V1cCBmcm9tICJtZW0i
+IHVzaW5nIC9kZXYvcnRjMCBhdCBTdW4gSnVuIDIzIDE0OjMwOjQxIDIwMTkNClsgICA5Ny4wMjQ0
+MzNdIFBNOiBzdXNwZW5kIGVudHJ5IChkZWVwKQ0KWyAgIDk3LjAzMDM5NV0gRmlsZXN5c3RlbXMg
+c3luYzogMC4wMDMgc2Vjb25kcw0KWyAgIDk3LjAzNjcxNV0gRnJlZXppbmcgdXNlciBzcGFjZSBw
+cm9jZXNzZXMgLi4uIChlbGFwc2VkIDAuMDAyIHNlY29uZHMpIGRvbmUuDQpbICAgOTcuMDQ0NTA3
+XSBPT00ga2lsbGVyIGRpc2FibGVkLg0KWyAgIDk3LjA0Nzc1M10gRnJlZXppbmcgcmVtYWluaW5n
+IGZyZWV6YWJsZSB0YXNrcyAuLi4gKGVsYXBzZWQgMC4wMDIgc2Vjb25kcykgZG9uZS4NClsgICA5
+Ny4xMDU1NTJdIHNkIDA6MDowOjA6IFtzZGFdIFN5bmNocm9uaXppbmcgU0NTSSBjYWNoZQ0KWyAg
+IDk3LjI2MTYwOF0gd2FrZSBlbmFibGVkIGZvciBpcnEgMTUxDQpbICAgOTcuMjk5NDI0XSB3YWtl
+IGVuYWJsZWQgZm9yIGlycSAxNTUNClsgICA5Ny40MTU4ODVdIHNhbXN1bmctcGluY3RybCAxMzQw
+MDAwMC5waW5jdHJsOiBTZXR0aW5nIGV4dGVybmFsIHdha2V1cCBpbnRlcnJ1cHQgbWFzazogMHhm
+ZmZmZmZlNw0KWyAgIDk3LjQzMzE1MF0gRGlzYWJsaW5nIG5vbi1ib290IENQVXMgLi4uDQpbICAg
+OTcuNTI2ODgwXSBzM2MyNDEwLXdkdCAxMDFkMDAwMC53YXRjaGRvZzogd2F0Y2hkb2cgZGlzYWJs
+ZWQNClsgICA5Ny41MzEzNDNdIHVzYiB1c2IxOiByb290IGh1YiBsb3N0IHBvd2VyIG9yIHdhcyBy
+ZXNldA0KWyAgIDk3LjYwOTQyNl0gdXNiIHVzYjI6IHJvb3QgaHViIGxvc3QgcG93ZXIgb3Igd2Fz
+IHJlc2V0DQpbICAgOTcuNjE0MTY5XSB3YWtlIGRpc2FibGVkIGZvciBpcnEgMTU1DQpbICAgOTcu
+NjIzNjc2XSB3YWtlIGRpc2FibGVkIGZvciBpcnEgMTUxDQpbICAgOTcuNjQwMjEyXSBleHlub3Mt
+dG11IDEwMDYwMDAwLnRtdTogTW9yZSB0cmlwIHBvaW50cyB0aGFuIHN1cHBvcnRlZCBieSB0aGlz
+IFRNVS4NClsgICA5Ny42NDY0MDNdIGV4eW5vcy10bXUgMTAwNjAwMDAudG11OiAyIHRyaXAgcG9p
+bnRzIHNob3VsZCBiZSBjb25maWd1cmVkIGluIHBvbGxpbmcgbW9kZS4NClsgICA5Ny42NTQ0MzZd
+IGV4eW5vcy10bXUgMTAwNjQwMDAudG11OiBNb3JlIHRyaXAgcG9pbnRzIHRoYW4gc3VwcG9ydGVk
+IGJ5IHRoaXMgVE1VLg0KWyAgIDk3LjY2MTg4M10gZXh5bm9zLXRtdSAxMDA2NDAwMC50bXU6IDIg
+dHJpcCBwb2ludHMgc2hvdWxkIGJlIGNvbmZpZ3VyZWQgaW4gcG9sbGluZyBtb2RlLg0KWyAgIDk3
+LjY3MDAwNV0gZXh5bm9zLXRtdSAxMDA2ODAwMC50bXU6IE1vcmUgdHJpcCBwb2ludHMgdGhhbiBz
+dXBwb3J0ZWQgYnkgdGhpcyBUTVUuDQpbICAgOTcuNjc3Mzk1XSBleHlub3MtdG11IDEwMDY4MDAw
+LnRtdTogMiB0cmlwIHBvaW50cyBzaG91bGQgYmUgY29uZmlndXJlZCBpbiBwb2xsaW5nIG1vZGUu
+DQpbICAgOTcuNjg1NTIyXSBleHlub3MtdG11IDEwMDZjMDAwLnRtdTogTW9yZSB0cmlwIHBvaW50
+cyB0aGFuIHN1cHBvcnRlZCBieSB0aGlzIFRNVS4NClsgICA5Ny42OTI4MzRdIGV4eW5vcy10bXUg
+MTAwNmMwMDAudG11OiAyIHRyaXAgcG9pbnRzIHNob3VsZCBiZSBjb25maWd1cmVkIGluIHBvbGxp
+bmcgbW9kZS4NClsgICA5Ny43MDM0MzhdIHVzYiB1c2IzOiByb290IGh1YiBsb3N0IHBvd2VyIG9y
+IHdhcyByZXNldA0KWyAgIDk3LjcwMzc5MF0gczNjLXJ0YyAxMDFlMDAwMC5ydGM6IHJ0YyBkaXNh
+YmxlZCwgcmUtZW5hYmxpbmcNClsgICA5Ny43MDcxNTZdIHVzYiB1c2I0OiByb290IGh1YiBsb3N0
+IHBvd2VyIG9yIHdhcyByZXNldA0KWyAgIDk3LjcxOTA4NF0gdXNiIHVzYjU6IHJvb3QgaHViIGxv
+c3QgcG93ZXIgb3Igd2FzIHJlc2V0DQpbICAgOTcuNzIyOTMxXSB1c2IgdXNiNjogcm9vdCBodWIg
+bG9zdCBwb3dlciBvciB3YXMgcmVzZXQNClsgICA5OC4xMTY1NThdIHVzYiA0LTE6IHJlc2V0IFN1
+cGVyU3BlZWQgR2VuIDEgVVNCIGRldmljZSBudW1iZXIgMiB1c2luZyB4aGNpLWhjZA0KWyAgIDk4
+LjI5NjI0MF0gdXNiIDMtMTogcmVzZXQgaGlnaC1zcGVlZCBVU0IgZGV2aWNlIG51bWJlciAyIHVz
+aW5nIHhoY2ktaGNkDQpbICAgOTguMzM2MzE4XSB1c2IgNS0xOiByZXNldCBoaWdoLXNwZWVkIFVT
+QiBkZXZpY2UgbnVtYmVyIDIgdXNpbmcgeGhjaS1oY2QNClsgICA5OC41NzYwOTddIHVzYiA0LTEu
+MTogcmVzZXQgU3VwZXJTcGVlZCBHZW4gMSBVU0IgZGV2aWNlIG51bWJlciAzIHVzaW5nIHhoY2kt
+aGNkDQpbICAgOTkuMzAwMjgxXSBPT00ga2lsbGVyIGVuYWJsZWQuDQpbICAgOTkuMzAxOTk1XSBS
+ZXN0YXJ0aW5nIHRhc2tzIC4uLiBkb25lLg0KWyAgIDk5LjMwOTMxMV0gUE06IHN1c3BlbmQgZXhp
+dA0KW3Jvb3RAYXJjaGwteHU0ZSB+XSMgWyAgIDk5LjMyNjcyOV0gbW1jX2hvc3QgbW1jMDogQnVz
+IHNwZWVkIChzbG90IDApID0gNTAwMDAwMDBIeiAoc2xvdCByZXEgNDAwMDAwSHosIGFjdHVhbCAz
+OTY4MjVIWiBkaXYgPSA2MykNClsgICA5OS41NjM2MjJdIG1tY19ob3N0IG1tYzA6IEJ1cyBzcGVl
+ZCAoc2xvdCAwKSA9IDIwMDAwMDAwMEh6IChzbG90IHJlcSAyMDAwMDAwMDBIeiwgYWN0dWFsIDIw
+MDAwMDAwMEhaIGRpdiA9IDApDQpbICAgOTkuNTc3Nzc4XSBtbWNfaG9zdCBtbWMwOiBCdXMgc3Bl
+ZWQgKHNsb3QgMCkgPSA1MDAwMDAwMEh6IChzbG90IHJlcSA1MjAwMDAwMEh6LCBhY3R1YWwgNTAw
+MDAwMDBIWiBkaXYgPSAwKQ0KWyAgIDk5LjU4NzgxOF0gbW1jX2hvc3QgbW1jMDogQnVzIHNwZWVk
+IChzbG90IDApID0gNDAwMDAwMDAwSHogKHNsb3QgcmVxIDIwMDAwMDAwMEh6LCBhY3R1YWwgMjAw
+MDAwMDAwSFogZGl2ID0gMSkNCg0KW3Jvb3RAYXJjaGwteHU0ZSB+XSMgbHN1c2IgLXQNCi86ICBC
+dXMgMDYuUG9ydCAxOiBEZXYgMSwgQ2xhc3M9cm9vdF9odWIsIERyaXZlcj14aGNpLWhjZC8xcCwg
+NTAwME0NCi86ICBCdXMgMDUuUG9ydCAxOiBEZXYgMSwgQ2xhc3M9cm9vdF9odWIsIERyaXZlcj14
+aGNpLWhjZC8xcCwgNDgwTQ0KICAgIHxfXyBQb3J0IDE6IERldiAyLCBJZiAwLCBDbGFzcz1WZW5k
+b3IgU3BlY2lmaWMgQ2xhc3MsIERyaXZlcj1yODE1MiwgNDgwTQ0KLzogIEJ1cyAwNC5Qb3J0IDE6
+IERldiAxLCBDbGFzcz1yb290X2h1YiwgRHJpdmVyPXhoY2ktaGNkLzFwLCA1MDAwTQ0KICAgIHxf
+XyBQb3J0IDE6IERldiAyLCBJZiAwLCBDbGFzcz1IdWIsIERyaXZlcj1odWIvMnAsIDUwMDBNDQog
+ICAgICAgIHxfXyBQb3J0IDE6IERldiAzLCBJZiAwLCBDbGFzcz1NYXNzIFN0b3JhZ2UsIERyaXZl
+cj11YXMsIDUwMDBNDQovOiAgQnVzIDAzLlBvcnQgMTogRGV2IDEsIENsYXNzPXJvb3RfaHViLCBE
+cml2ZXI9eGhjaS1oY2QvMXAsIDQ4ME0NCiAgICB8X18gUG9ydCAxOiBEZXYgMiwgSWYgMCwgQ2xh
+c3M9SHViLCBEcml2ZXI9aHViLzJwLCA0ODBNDQovOiAgQnVzIDAyLlBvcnQgMTogRGV2IDEsIENs
+YXNzPXJvb3RfaHViLCBEcml2ZXI9ZXh5bm9zLW9oY2kvM3AsIDEyTQ0KLzogIEJ1cyAwMS5Qb3J0
+IDE6IERldiAxLCBDbGFzcz1yb290X2h1YiwgRHJpdmVyPWV4eW5vcy1laGNpLzNwLCA0ODBNDQoN
+Cg0KDQo=
+--0000000000003247d6058bffd2d2
+Content-Type: application/octet-stream; name="XU4_suspendresume.patch"
+Content-Disposition: attachment; filename="XU4_suspendresume.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jx94tp2i0>
+X-Attachment-Id: f_jx94tp2i0
+
+ZGlmZiAtLWdpdCBhL2FyY2gvYXJtL2Jvb3QvZHRzL2V4eW5vczU0MjItb2Ryb2lkLWNvcmUuZHRz
+aSBiL2FyY2gvYXJtL2Jvb3QvZHRzL2V4eW5vczU0MjItb2Ryb2lkLWNvcmUuZHRzaQppbmRleCA1
+YTRmN2RkMjU2OGIuLmFlMGRmNzMyNWMzNyAxMDA2NDQKLS0tIGEvYXJjaC9hcm0vYm9vdC9kdHMv
+ZXh5bm9zNTQyMi1vZHJvaWQtY29yZS5kdHNpCisrKyBiL2FyY2gvYXJtL2Jvb3QvZHRzL2V4eW5v
+czU0MjItb2Ryb2lkLWNvcmUuZHRzaQpAQCAtNTUyLDcgKzU1Miw3IEBACiAKIAkJCWJ1Y2s3X3Jl
+ZzogQlVDSzcgewogCQkJCXJlZ3VsYXRvci1uYW1lID0gInZkZF8xLjB2X2xkbyI7Ci0JCQkJcmVn
+dWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8ODAwMDAwPjsKKwkJCQlyZWd1bGF0b3ItbWluLW1pY3Jv
+dm9sdCA9IDwxMjAwMDAwPjsKIAkJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwxNTAwMDAw
+PjsKIAkJCQlyZWd1bGF0b3ItYWx3YXlzLW9uOwogCQkJCXJlZ3VsYXRvci1ib290LW9uOwpAQCAt
+NTYwLDggKzU2MCw4IEBACiAKIAkJCWJ1Y2s4X3JlZzogQlVDSzggewogCQkJCXJlZ3VsYXRvci1u
+YW1lID0gInZkZF8xLjh2X2xkbyI7Ci0JCQkJcmVndWxhdG9yLW1pbi1taWNyb3ZvbHQgPSA8ODAw
+MDAwPjsKLQkJCQlyZWd1bGF0b3ItbWF4LW1pY3Jvdm9sdCA9IDwyMDAwMDAwPjsKKwkJCQlyZWd1
+bGF0b3ItbWluLW1pY3Jvdm9sdCA9IDwxODAwMDAwPjsKKwkJCQlyZWd1bGF0b3ItbWF4LW1pY3Jv
+dm9sdCA9IDwyMTAwMDAwPjsKIAkJCQlyZWd1bGF0b3ItYWx3YXlzLW9uOwogCQkJCXJlZ3VsYXRv
+ci1ib290LW9uOwogCQkJfTsKQEAgLTU3Miw2ICs1NzIsMTAgQEAKIAkJCQlyZWd1bGF0b3ItbWF4
+LW1pY3Jvdm9sdCA9IDwzNzUwMDAwPjsKIAkJCQlyZWd1bGF0b3ItYWx3YXlzLW9uOwogCQkJCXJl
+Z3VsYXRvci1ib290LW9uOworCisJCQkJcmVndWxhdG9yLXN0YXRlLW1lbSB7CisJCQkJCXJlZ3Vs
+YXRvci1vZmYtaW4tc3VzcGVuZDsKKwkJCQl9OwogCQkJfTsKIAogCQkJYnVjazEwX3JlZzogQlVD
+SzEwIHsK
+--0000000000003247d6058bffd2d2--
