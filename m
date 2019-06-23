@@ -2,45 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F18E84FDD1
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Jun 2019 21:16:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD4DD4FF0A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Jun 2019 04:06:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726285AbfFWTQz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 23 Jun 2019 15:16:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59974 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726119AbfFWTQz (ORCPT
+        id S1726328AbfFXCGF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 23 Jun 2019 22:06:05 -0400
+Received: from mailout2.samsung.com ([203.254.224.25]:11361 "EHLO
+        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbfFXCGD (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 23 Jun 2019 15:16:55 -0400
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 97C1420656;
-        Sun, 23 Jun 2019 19:16:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561317413;
-        bh=6JDucSZw1YglZ+Kvn1XvG/d7XRm8rtQU0pYzpt6juPQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=CgPUq7sAB/XO8qNar6PVGibgQKQdya1cBTNQIzBoYgFB2qjMHS9QfbpRzqC3/m5kG
-         OyWlgC3LDdCBlN053kcq+D1tj4UrG6j4U59OKjyr98+U5nfZOMojlQLAXv4nBo04+r
-         H9cm5qcsA6Ct10se9Ln3/pBQK07y8eU/9hU+49eU=
-Received: by mail-lf1-f51.google.com with SMTP id d11so8439863lfb.4;
-        Sun, 23 Jun 2019 12:16:53 -0700 (PDT)
-X-Gm-Message-State: APjAAAXCozIVeGdHOLUGfcA1aoaPtJ5J28y5hjvo/qvKUTJgFFAjBmR5
-        MBVuIMcoiGJ6hccUt3p/J04obKjeEm0fHWuIXJM=
-X-Google-Smtp-Source: APXvYqxXWDrgM4m579DLxJ1WTUgWjKF7XpNZeubHja/pXAlMQf3hxn+h9Y9vADetzdK8SIjDbU+EfRUwHC82D+/8Bxw=
-X-Received: by 2002:ac2:5601:: with SMTP id v1mr7937600lfd.106.1561317411913;
- Sun, 23 Jun 2019 12:16:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190621180208.25361-7-krzk@kernel.org> <20190622191838.29850-1-krzk@kernel.org>
- <CAGTfZH2g6E2pCEtqjfCd+PjEzjwc2AB75LXJfCeO+PcYLiLTUw@mail.gmail.com>
-In-Reply-To: <CAGTfZH2g6E2pCEtqjfCd+PjEzjwc2AB75LXJfCeO+PcYLiLTUw@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Sun, 23 Jun 2019 21:16:40 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcFFY08R1H-DrrzX2BC3L8x4NPJTP7nDn9yixAvmaiF9Q@mail.gmail.com>
-Message-ID: <CAJKOXPcFFY08R1H-DrrzX2BC3L8x4NPJTP7nDn9yixAvmaiF9Q@mail.gmail.com>
+        Sun, 23 Jun 2019 22:06:03 -0400
+Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
+        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20190623233638epoutp029805c5ede7d91ddf98f3d92229ac5d26~q_Bb_KLi_2274522745epoutp02m
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 23 Jun 2019 23:36:38 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20190623233638epoutp029805c5ede7d91ddf98f3d92229ac5d26~q_Bb_KLi_2274522745epoutp02m
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1561332998;
+        bh=gVdC7W3ldmM3ohxP3IShUQy55UMe0oYxTPCOE/6tAp4=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=a79KMVYmCPbz5nwheKxRjHWOh5KSF712suwcwku5/tdnPGdRG8Etpic6jwCY0+Y3a
+         vdKcEh6t/Fy3IPtGd3BgrIekJUt2n9YdKEqqFsXsK+7eiVomW5Kv0Ymfzo78Iuw8Uy
+         s0o9s9OEQ2kQ2ZmwEuanvc7PgHLhnAKd4L4og3Pk=
+Received: from epsmges1p5.samsung.com (unknown [182.195.40.154]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20190623233634epcas1p4fe5ea4b0f69ce7ab48e9fb322831f662~q_BYg_Xme3169831698epcas1p4D;
+        Sun, 23 Jun 2019 23:36:34 +0000 (GMT)
+Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
+        epsmges1p5.samsung.com (Symantec Messaging Gateway) with SMTP id
+        D1.9E.04108.20D001D5; Mon, 24 Jun 2019 08:36:34 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190623233633epcas1p16ab9635c74bd01f3a7b0828eedf1f9d2~q_BXxNr2T1082210822epcas1p1f;
+        Sun, 23 Jun 2019 23:36:33 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190623233633epsmtrp192a9eade0fcbece0e6e69272d2ecd321~q_BXtjTUt1920219202epsmtrp1c;
+        Sun, 23 Jun 2019 23:36:33 +0000 (GMT)
+X-AuditID: b6c32a39-8b7ff7000000100c-4a-5d100d02d9e1
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C9.12.03692.10D001D5; Mon, 24 Jun 2019 08:36:33 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190623233633epsmtip1364fbdd2bc629b95785e2adfcd77b4c0~q_BXdmHmE3204032040epsmtip1G;
+        Sun, 23 Jun 2019 23:36:33 +0000 (GMT)
 Subject: Re: [PATCH v3] arm64: defconfig: Enable Panfrost and Lima drivers
-To:     cwchoi00@gmail.com
+To:     Krzysztof Kozlowski <krzk@kernel.org>, cwchoi00@gmail.com
 Cc:     Catalin Marinas <catalin.marinas@arm.com>,
         Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
         Maxime Ripard <maxime.ripard@bootlin.com>,
@@ -55,65 +62,123 @@ Cc:     Catalin Marinas <catalin.marinas@arm.com>,
         linux-kernel <linux-kernel@vger.kernel.org>,
         Vasily Khoruzhick <anarsoul@gmail.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
         linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <6edbe882-314c-85e1-4109-7c3b324dc7ab@samsung.com>
+Date:   Mon, 24 Jun 2019 08:39:09 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.1
+MIME-Version: 1.0
+In-Reply-To: <CAJKOXPcFFY08R1H-DrrzX2BC3L8x4NPJTP7nDn9yixAvmaiF9Q@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02TbUxbVRjHc3p7b8tG3bFs8kiisKszAVPWO9ZxMLA5ZdsN8gGmH4yR1Ru4
+        FkLf7G0X50yEbSLtlonxJdIN0FhRGASonTLY6ESGssUVQRHZqpgNsoEDkUkcM8S2t4t8+z/n
+        +T3nn/95UVPaalWKusLqFB1Wwcwya5RffpOu1yk0uETf0ptB3hycRuRScE5J5puPITJ94XFy
+        IdSrIG1X+hEZvvUnQ2776xgSCnWqyOfhBZr4r43RZLTnJEM+DPUpSPtAWEUmbwYRufjzIkNu
+        BJLJkauGJ7V8+8JvNN/W2Ib4xraDfHfYh/gz3rCK97e6Gf7q2FmG/8L3Bv/jd4dovmuuW8Ef
+        D7Qi/uSdJSW/6H+4SPNCZW65KJSJjjTRWmorq7Ca8thnnjU+bTRs03M6Lodks2lWwSLmsfmF
+        RbrdFeZIQDZtv2B2RZaKBEliN2/PddhcTjGt3CY581jRXma259gzJcEiuaymzFKb5QlOr99i
+        iIAvVZb7GkLIXodfXa7uRFXorMaDEtSAt8L4H26VB61Ra3E3gunmESQXfyHwnJ6l5WIJQftX
+        /1L3Rj5evhSnziG4OOJj5GIeQcP344oolYQLYPn9KSaq1+M86D3RqIxCFB6kofXwmDLaYHAG
+        BG+Mx6B1eCP89M81FNUavB1aPvOpolqJN8FSkye26Qb8PIwGeuLM/TBUfz22TwIuht/7FmMM
+        hZNh4npTXKfC4dMnqKgx4Dsq+KC+FskZ8qH66IJC1kkw821AJesUuPl2TVwfhJahAUYerkUQ
+        CA7TciMLgp++GxlWRxzSoaNns7y8Ec7cbUCy8X0w9/cxOooA1kBtjVZGHoHRyXDc9kH45C03
+        U4dY76o43lURvKsieP83+wgpW9EDol2ymESJsxtW37cfxZ5/Rk43Grxc2I+wGrGJGty5rkRL
+        C/ulA5Z+BGqKXa9JNCeWaDVlwoHXRIfN6HCZRakfGSKn/Q6VsqHUFvlMVqeRM2zJysoiW7lt
+        Bo5jkzXGtb+8qMUmwSlWiqJddNybU6gTUqpQrnsomLqjq/7ro9N7dAXS5K1z54+YX96Vfmp0
+        5+DePZP8SFfSTElOqklZUDz8Q3Yfcewr3l115W6+53Ldpp0Dex+1HXdXFSa80gtrm1+fWJk4
+        RS3tqk3NdjVRs3O07teVYE3hQ8Nsl9QxFZ6lZh7LPH8bdwzsmD9k27fy1HNTzve0rFIqF7gM
+        yiEJ/wHiKQPWFAQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRiA+3bOzo7D4de09qmhtajQyLISvx8pkVaHMrILUYLYyINa21w7
+        almQlhZ4QUZR1rSptXLKBrYsLEVxNjWFllka5iqvqKl5S8oScluB/x7e93l4/7w0If5G+tBJ
+        yhRWrZTJpZSQfN4k9dsCRDB225hhO77ePAxwe8Mkib8/zgd42LoZW221PGz8ZAH47cQUhefM
+        GgrbbFUCbLBP87F5oIuPO18WU/iurZ6HTa/sAvx1tAHgtu5ZCo9US3B2b8huMWOa/sJnjDoj
+        YHTGy0yNXQ+YF1q7gDFX5lBMb1cdxTzVZzDvW6/xmSeTNTymoLoSMMW/5klm1uwXLYoR7opn
+        5UlprHpr+Glhov6+Dag08OLC1SqQCepEucCNRnAnKltoB7lASIthLUDdDxsJ18Ib3emwLjG9
+        xJ6oqYlzORMAGUp+kw7HEx5AC7eHKAd7wTBUW6QjHRIB2/joVv4o31U08tAjw5zTomAgahj5
+        6GQPuA59+DkAHCyC4aiiXC9wMAk3oPmSXJ6DV8GTqOBGEeVyVqLX9wadl93gEdRXP+t0CLgJ
+        /dG9I1wsQT2DJf/m/ijrWRGhAZ7aZbl2WaJdlmiXJaWArATerIpTJCi4YFWwkr0QxMkUXKoy
+        IehMssIMnC8QGFADOvVxFgBpIHUXwSqPWDFflsalKywA0YTUS+Qud48Vi+Jl6ZdYdXKcOlXO
+        chbgS5NSiWhI2XxKDBNkKew5llWx6v9bHu3mkwmM0rIx94iOEwcbVudFxB9uLRULKvyz+7P8
+        80x7i49Hro2Ybpf0makoqiN6pu7KvjeqkLXjkVzhoYD9R8+P14RK1vRkLg57caRYgAsXo2YG
+        IltI8+fsmJtEVFHYnpH6dF9NeYvQOrk+9IfEdKz/waQ9Y8eU/GzOvKRyY1j/CkGmlOQSZcGB
+        hJqT/QXGKxu3/gIAAA==
+X-CMS-MailID: 20190623233633epcas1p16ab9635c74bd01f3a7b0828eedf1f9d2
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20190623192007epcas4p2a3995bb00091b436562828fceb6ff790
+References: <20190621180208.25361-7-krzk@kernel.org>
+        <20190622191838.29850-1-krzk@kernel.org>
+        <CAGTfZH2g6E2pCEtqjfCd+PjEzjwc2AB75LXJfCeO+PcYLiLTUw@mail.gmail.com>
+        <CGME20190623192007epcas4p2a3995bb00091b436562828fceb6ff790@epcas4p2.samsung.com>
+        <CAJKOXPcFFY08R1H-DrrzX2BC3L8x4NPJTP7nDn9yixAvmaiF9Q@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 23 Jun 2019 at 06:31, Chanwoo Choi <cwchoi00@gmail.com> wrote:
->
-> Hi Krzysztof,
->
-> 2019=EB=85=84 6=EC=9B=94 23=EC=9D=BC (=EC=9D=BC) =EC=98=A4=EC=A0=84 4:20,=
- Krzysztof Kozlowski <krzk@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1=
-:
-> >
-> > Enable support for Mali GPU with Panfrost and Lima drivers for:
-> > 1. Samsung Exynos5433 and Exynos7 (having Mali T760),
-> > 2. Allwiner A64 and H5 (Mali 400/450).
-> >
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> >
-> > ---
-> >
-> > Changes since v1:
-> > 1. Enable Lima driver
-> > ---
-> >  arch/arm64/configs/defconfig | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfi=
-g
-> > index fbbc065415d4..3d31611368af 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -518,6 +518,8 @@ CONFIG_DRM_HISI_HIBMC=3Dm
-> >  CONFIG_DRM_HISI_KIRIN=3Dm
-> >  CONFIG_DRM_MESON=3Dm
-> >  CONFIG_DRM_PL111=3Dm
-> > +CONFIG_DRM_LIMA=3Dm
-> > +CONFIG_DRM_PANFROST=3Dm
-> >  CONFIG_FB=3Dy
-> >  CONFIG_FB_MODE_HELPERS=3Dy
-> >  CONFIG_BACKLIGHT_GENERIC=3Dm
-> > @@ -718,7 +720,6 @@ CONFIG_ARCH_TEGRA_194_SOC=3Dy
-> >  CONFIG_ARCH_K3_AM6_SOC=3Dy
-> >  CONFIG_SOC_TI=3Dy
-> >  CONFIG_TI_SCI_PM_DOMAINS=3Dy
-> > -CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND=3Dy
->
-> Exynos5433-tm2 board support the exynos-bus device which
-> used the simple_ondmenad governor of devfreq.
-> Why do you remove this configuration from the defconfig?
+On 19. 6. 24. 오전 4:16, Krzysztof Kozlowski wrote:
+> On Sun, 23 Jun 2019 at 06:31, Chanwoo Choi <cwchoi00@gmail.com> wrote:
+>>
+>> Hi Krzysztof,
+>>
+>> 2019년 6월 23일 (일) 오전 4:20, Krzysztof Kozlowski <krzk@kernel.org>님이 작성:
+>>>
+>>> Enable support for Mali GPU with Panfrost and Lima drivers for:
+>>> 1. Samsung Exynos5433 and Exynos7 (having Mali T760),
+>>> 2. Allwiner A64 and H5 (Mali 400/450).
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>>>
+>>> ---
+>>>
+>>> Changes since v1:
+>>> 1. Enable Lima driver
+>>> ---
+>>>  arch/arm64/configs/defconfig | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>>> index fbbc065415d4..3d31611368af 100644
+>>> --- a/arch/arm64/configs/defconfig
+>>> +++ b/arch/arm64/configs/defconfig
+>>> @@ -518,6 +518,8 @@ CONFIG_DRM_HISI_HIBMC=m
+>>>  CONFIG_DRM_HISI_KIRIN=m
+>>>  CONFIG_DRM_MESON=m
+>>>  CONFIG_DRM_PL111=m
+>>> +CONFIG_DRM_LIMA=m
+>>> +CONFIG_DRM_PANFROST=m
+>>>  CONFIG_FB=y
+>>>  CONFIG_FB_MODE_HELPERS=y
+>>>  CONFIG_BACKLIGHT_GENERIC=m
+>>> @@ -718,7 +720,6 @@ CONFIG_ARCH_TEGRA_194_SOC=y
+>>>  CONFIG_ARCH_K3_AM6_SOC=y
+>>>  CONFIG_SOC_TI=y
+>>>  CONFIG_TI_SCI_PM_DOMAINS=y
+>>> -CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND=y
+>>
+>> Exynos5433-tm2 board support the exynos-bus device which
+>> used the simple_ondmenad governor of devfreq.
+>> Why do you remove this configuration from the defconfig?
+> 
+> It is selected by default by DRM_PANFROST. The difference is that
+> PANFROST selects it as module. The 'y' is chosen because of:
+>   SCSI_UFSHCD [=y] && SCSI_LOWLEVEL [=y] && SCSI [=y] && SCSI_DMA [=y]
 
-It is selected by default by DRM_PANFROST. The difference is that
-PANFROST selects it as module. The 'y' is chosen because of:
-  SCSI_UFSHCD [=3Dy] && SCSI_LOWLEVEL [=3Dy] && SCSI [=3Dy] && SCSI_DMA [=
-=3Dy]
+When I tried to find the history of CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND 
+for defconfig, the following patch[1] added this configuration.
+[1] b972ff75f2938c39e2205c23ea0e531d36b27f86
+- "arm64: defconfig: Enable UFS on msm8996"
 
-Best regards,
-Krzysztof
+I think that this patch will affect the opration of 'USF on msm8998'.
+
+-- 
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
