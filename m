@@ -2,80 +2,145 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 017E2502C9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Jun 2019 09:12:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8DAD502FF
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Jun 2019 09:21:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727629AbfFXHLz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Jun 2019 03:11:55 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:51544 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbfFXHLz (ORCPT
+        id S1727784AbfFXHUo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Jun 2019 03:20:44 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:58756 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727620AbfFXHUn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Jun 2019 03:11:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=RQ35CdI7OgSCvNIJDvf1p+BfUv8hYylGCi0q85yv+Yw=; b=baaTIpENIFYajuYTAHyVtoJWM
-        a1DUikSr096fgOD3KX66qiitLLwEMKxstZe8F41v2bSIUYioz/6i/Vb3pW05jvnSnC5RPE6dMcTgk
-        FedZTCJIKdzczm2PnKEbJfSoyTfz35zM5fMJsM0iTkOxlNBkJIIR1i0sUUDu1qFJyoqUqf5O1fwMa
-        l74AR53sr2mYYr4dztHj0eXb6WjQaYg+uj0apZv4X+6qDpy7TCzvXnv803NPjM0irg441yMX68Br0
-        7M3ZzB6dbVUOAGX2i68AXvhyavS/LvKi+Yk7Gl2BqJiPyfGlLda1wsZU/Dj3y2X8MalupSjMainTx
-        eExFIV/+A==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=hirez.programming.kicks-ass.net)
-        by bombadil.infradead.org with esmtpsa (Exim 4.92 #3 (Red Hat Linux))
-        id 1hfJ8O-0002ZO-91; Mon, 24 Jun 2019 07:11:24 +0000
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-        id D17A920A021ED; Mon, 24 Jun 2019 09:11:21 +0200 (CEST)
-Date:   Mon, 24 Jun 2019 09:11:21 +0200
-From:   Peter Zijlstra <peterz@infradead.org>
-To:     Phong Tran <tranmanphong@gmail.com>
-Cc:     mark.rutland@arm.com, kstewart@linuxfoundation.org,
-        songliubraving@fb.com, andrew@lunn.ch, nsekhar@ti.com,
-        ast@kernel.org, jolsa@redhat.com, netdev@vger.kernel.org,
-        gerg@uclinux.org, lorenzo.pieralisi@arm.com, will@kernel.org,
-        linux-samsung-soc@vger.kernel.org, daniel@iogearbox.net,
-        festevam@gmail.com, gregory.clement@bootlin.com,
-        allison@lohutok.net, linux@armlinux.org.uk, krzk@kernel.org,
-        haojian.zhuang@gmail.com, bgolaszewski@baylibre.com,
-        tony@atomide.com, mingo@redhat.com, linux-imx@nxp.com, yhs@fb.com,
-        sebastian.hesselbarth@gmail.com, illusionist.neo@gmail.com,
-        jason@lakedaemon.net, liviu.dudau@arm.com, s.hauer@pengutronix.de,
-        acme@kernel.org, lkundrak@v3.sk, robert.jarzmik@free.fr,
-        dmg@turingmachine.org, swinslow@gmail.com, namhyung@kernel.org,
-        tglx@linutronix.de, linux-omap@vger.kernel.org,
-        alexander.sverdlin@gmail.com, linux-arm-kernel@lists.infradead.org,
-        info@metux.net, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, alexander.shishkin@linux.intel.com,
-        hsweeten@visionengravers.com, kgene@kernel.org,
-        kernel@pengutronix.de, sudeep.holla@arm.com, bpf@vger.kernel.org,
-        shawnguo@kernel.org, kafai@fb.com, daniel@zonque.org
-Subject: Re: [PATCH 01/15] arm: perf: cleanup cppcheck shifting error
-Message-ID: <20190624071121.GN3436@hirez.programming.kicks-ass.net>
-References: <20190623151313.970-1-tranmanphong@gmail.com>
- <20190623151313.970-2-tranmanphong@gmail.com>
+        Mon, 24 Jun 2019 03:20:43 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190624072041euoutp01c3f8760f83e0c68a6ac8eb8d2d05ac42~rEWnDJCP_0697106971euoutp01k
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Jun 2019 07:20:41 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190624072041euoutp01c3f8760f83e0c68a6ac8eb8d2d05ac42~rEWnDJCP_0697106971euoutp01k
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1561360841;
+        bh=AkkGYU4UEYgfsh3s+7fzHB6aVXnYZdkOfuooy+x870g=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=WkgAnjsW05sUl8X6Dlqlm58Q2AcbroHkjtjUeWf/nTaafa1+3WNjnyPWBt+6Hp27Y
+         vAtgxL4uz+cujhJXZwoFIIwRylPCvpk/gDbM1oSAThGEBJDbjfiw62NCBHcdXK1k+p
+         XVRgnXYj1nwF3q+OyCB4vO62LUnO8Zh7Y1U0CEzI=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190624072041eucas1p2aea54a574b3873ce169927d1c4fa95d5~rEWmo1As_3236132361eucas1p2d;
+        Mon, 24 Jun 2019 07:20:41 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 89.6C.04325.8C9701D5; Mon, 24
+        Jun 2019 08:20:41 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190624072040eucas1p2d484086328b7c097693c2b45f18076db~rEWl7OxCh3225832258eucas1p2c;
+        Mon, 24 Jun 2019 07:20:40 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190624072040eusmtrp2509024819a46be13d0f5a21e69749747~rEWltEwkM1889218892eusmtrp2t;
+        Mon, 24 Jun 2019 07:20:40 +0000 (GMT)
+X-AuditID: cbfec7f5-fbbf09c0000010e5-88-5d1079c83e4a
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 24.39.04140.8C9701D5; Mon, 24
+        Jun 2019 08:20:40 +0100 (BST)
+Received: from [106.120.50.25] (unknown [106.120.50.25]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190624072039eusmtip14a1638925c7d4e53713e27369151dee7~rEWlW37Px0343903439eusmtip1S;
+        Mon, 24 Jun 2019 07:20:39 +0000 (GMT)
+Subject: Re: [PATCH v2 3/4] ARM: dts: exynos: Add regulator suspend
+ configuration to Odroid XU3/XU4/HC1 family
+To:     Anand Moon <linux.amoon@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Kukjin Kim <kgene@kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Linux Kernel <linux-kernel@vger.kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <d94a2f99-fb99-c238-7011-9bbb4c0cd90f@samsung.com>
+Date:   Mon, 24 Jun 2019 09:20:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190623151313.970-2-tranmanphong@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CANAwSgTFQo8wL5s-djwPXFFOLtTHvRQif6234kFC=23PwMhuEQ@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsWy7djP87onKwViDdZ+ZbSYf+Qcq0X/49fM
+        FufPb2C32PT4GqvF5V1z2CxmnN/HZLFu4y12B3aPnbPusntsWtXJ5rF5Sb3H501yASxRXDYp
+        qTmZZalF+nYJXBkfLhxjKVjOWTHh8QH2BsYV7F2MnBwSAiYSm/f/YOli5OIQEljBKNG9/QCU
+        84VR4uuMe0wQzmdGiabjS4AcDrCWPTtdIOLLGSX6ev+yQThvGSWuXFrFBDJXWKBAovPoWzYQ
+        W0TAX6Jn4z5WkCJmgZuMEt+3rmUESbAJGEp0ve0CK+IVsJP4ceo1O8gGFgFViffr+UDCogIx
+        Eg/n34EqEZQ4OfMJC4jNKRAoceHvPrAfmAXkJba/ncMMYYtL3HoyH+xqCYFl7BIrJ25jh7ja
+        ReL7NjGIn4UlXh3fAvW/jMT/nTD1zYwSD8+tZYdwehglLjfNYISospY4fPwiK8ggZgFNifW7
+        9CFmOkq8uZYKYfJJ3HgrCHECn8SkbdOZIcK8Eh1tQhAz1CRmHV8Ht/XghUvMExiVZiF5bBaS
+        Z2YheWYWwtoFjCyrGMVTS4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxApPO6X/Hv+5g3Pcn6RCj
+        AAejEg+vwAb+WCHWxLLiytxDjBIczEoivEsTBWKFeFMSK6tSi/Lji0pzUosPMUpzsCiJ81Yz
+        PIgWEkhPLEnNTk0tSC2CyTJxcEo1MAauSX783k1KQVzbX+n423dPXdfvLozyV0y4KXlgHcPO
+        tZcX+b1W77t24aP//v69JwR4Jrsp9p7U38mZ+nWudnuv3q1nwX5+z1l1vyw0ufHnEGvr36/3
+        inWW/lV8tWxCUjeHeBTz6l0X4364uMotir60ce67OYcj1AVNjlkknrxUIOjcza3jq6XEUpyR
+        aKjFXFScCAA6JuHXNgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKIsWRmVeSWpSXmKPExsVy+t/xu7onKgViDY4cFrCYf+Qcq0X/49fM
+        FufPb2C32PT4GqvF5V1z2CxmnN/HZLFu4y12B3aPnbPusntsWtXJ5rF5Sb3H501yASxRejZF
+        +aUlqQoZ+cUltkrRhhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehkfLhxjKVjO
+        WTHh8QH2BsYV7F2MHBwSAiYSe3a6dDFycQgJLGWUaD8KEucEistInJzWwAphC0v8udbFBmIL
+        CbxmlPg6pQjEFhYokOg8+hYsLiLgK/G/4RYziM0scJNRouuODcTQH4wS87YsYwRJsAkYSnS9
+        hRjEK2An8ePUa7AjWARUJd6v5wMJiwrESHRN/ckCUSIocXLmEzCbUyBQ4sLffewQ880k5m1+
+        CLVLXmL72zlQtrjErSfzmSYwCs1C0j4LScssJC2zkLQsYGRZxSiSWlqcm55bbKRXnJhbXJqX
+        rpecn7uJERhl24793LKDsetd8CFGAQ5GJR5egQ38sUKsiWXFlbmHGCU4mJVEeJcmCsQK8aYk
+        VlalFuXHF5XmpBYfYjQF+m0is5Rocj4wAeSVxBuaGppbWBqaG5sbm1koifN2CByMERJITyxJ
+        zU5NLUgtgulj4uCUamA8taH+p2rW/JWexWdda3281B6+mL3SWW630gXT3R42uaZt0/OeliQ8
+        mCex0H7FhodFnRXySvetV5/zPrbfQnVH84QEngWvSvK1NkQZ7jI+r2PlNs/Yq2p39Peftyo/
+        5i7f5vrlxrmPztVndM0UJkww0lBeOWGv3J/Mm1sjVMUU2dZZXDZ5f/2wEktxRqKhFnNRcSIA
+        XxGznMgCAAA=
+X-CMS-MailID: 20190624072040eucas1p2d484086328b7c097693c2b45f18076db
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190623160226epcas2p3449814deb1faf7bf939481e6d4da2b86
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190623160226epcas2p3449814deb1faf7bf939481e6d4da2b86
+References: <20190621155845.7079-1-krzk@kernel.org>
+        <20190621155845.7079-3-krzk@kernel.org>
+        <CGME20190623160226epcas2p3449814deb1faf7bf939481e6d4da2b86@epcas2p3.samsung.com>
+        <CANAwSgTFQo8wL5s-djwPXFFOLtTHvRQif6234kFC=23PwMhuEQ@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Jun 23, 2019 at 10:12:59PM +0700, Phong Tran wrote:
-> fix "Shifting signed 32-bit value by 31 bits is undefined behaviour
-> errors"
-> 
-> [arch/arm/kernel/perf_event_v7.c:1080]: (error) Shifting signed 32-bit
-> value by 31 bits is undefined behaviour
-> [arch/arm/kernel/perf_event_v7.c:1436]: (error) Shifting signed 32-bit
-> value by 31 bits is undefined behaviour
-> [arch/arm/kernel/perf_event_v7.c:1783]: (error) Shifting signed 32-bit
-> value by 31 bits is undefined behaviour
+Hi Anand,
 
-I don't think that is true; the kernel uses -fno-strict-overflow (which
-implies -fwrapv) and that takes away all the signed UB.
+On 2019-06-23 18:02, Anand Moon wrote:
+> Thanks for this patch. Please add my
+>
+> Tested-by: Anand Moon <linux.amoon@gmail.com>
+>
+> [snip]
+>
+> Could you integrate below small changes into this patch.
+> with these below changes suspend and resume work correctly at my end.
+>
+> [1] XU4_suspendresume.patch
+>
+> As per S2MPS11B PMIC 1.2.1 Regulator (Features)
+> Fix the min max value for *Buck7* and *Buck8*
+>
+> -- Buck7 (VDD_1.0V_LDO) 1.5 A (1.2 V to 1.5 V, 12.5 mV step, default on 1.35 V)
+> -- Buck8 (VDD_1.8V_LDO) 2.5 A (1.8 V to 2.1 V, 12.5 mV step, default on 2.0 V)
+
+Could you elaborate why such change for Buck7 and Buck8 is needed?
+
+> Also add suspend-off for *Buck9*
+> Buck9 internally controls the power of USB hub.
+> Adding suspend the this node help proper reset of USB hub on Odroid
+> XU4 / HC1/ XU3
+> during suspend and resume. Below it the logs from my testing.
+
+Disabling Buck9 in suspend indeed reduces the power consumed by the 
+board during suspend-to-ram from about 80mA to as little as 7-10mA, what 
+matches the results of OdroidXU3. Thanks for the hint!
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
