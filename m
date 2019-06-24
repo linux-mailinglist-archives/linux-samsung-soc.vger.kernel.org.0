@@ -2,146 +2,124 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80BCB50C2C
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Jun 2019 15:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B873550C70
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Jun 2019 15:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731253AbfFXNnA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Jun 2019 09:43:00 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:39732 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728933AbfFXNnA (ORCPT
+        id S1731325AbfFXNv0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Jun 2019 09:51:26 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35213 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729897AbfFXNvZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Jun 2019 09:43:00 -0400
-Received: by mail-io1-f67.google.com with SMTP id r185so823616iod.6;
-        Mon, 24 Jun 2019 06:43:00 -0700 (PDT)
+        Mon, 24 Jun 2019 09:51:25 -0400
+Received: by mail-pg1-f195.google.com with SMTP id s27so7173432pgl.2;
+        Mon, 24 Jun 2019 06:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JAY+HO+se6M27BJLGy2WaRXVtQjt3tup0p+M/AykcYU=;
-        b=WqahhA0vGT09ygQXdubtYD5Lz8cEW9fjhcYm97RgfF6N2/isRXcUjN3KMzuLlAScL2
-         uB1+yrJlpzeAGIVXLqeyKk4Vv85+P8jeJFXi+iruawOOdanDNRNg8aoHp1CPiDmlYVSC
-         6U6VpETeSl0kXNREKCfsI8At3rHRNCu0EpJHK/dETrHs2ALcqFSRc3oLzsWKipgN8xM/
-         T1+lJaRW9mkfN/FM8N2bu1xaMckb8WFtWM0ymwCaaUbnCX6j5Wl3/3Fcu7P6cZBagDZm
-         qF6gd2YkmuYRFi1rjW+ke9AcQTdaKKhb/17oQHB4k5i+20d0/O1EfWR42JOMSVp5noas
-         SpKg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bS9CCVyWEuckL8u69D81nqeXtcKIqj0WvuL/deztfxA=;
+        b=STUm1cxNJnae+2FI43yRQ5HEaTHSxK+bvkN9usO4qrn43dFIhPBq6Zu+2c7psdHdX1
+         KZoN7g46UrRZAXePlZuPqYLitdh2jKse2p2UqTO1y8j7GCrRi5wdvmI8fFwG7uMZD0gj
+         k2jfWnUdZ3MViAPx3kbunnPoRSFiS98WDozGItYv4pDJzAP+9clJwLibluvCzHX8eWrq
+         0aHtW71fHq5Amft72c7T8rxO4bZyngVRf0RoeGBOxpylMM5H/+nvS/xwX3gE9DYpI2im
+         nE9ZqTB4Hp47etlWvriLWtVGUK+tuMxQdhEFVrDZjdwn26GNylio3yIv6pY6kmxC9C28
+         HsvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JAY+HO+se6M27BJLGy2WaRXVtQjt3tup0p+M/AykcYU=;
-        b=VYo1nZniLZ+uc3YiobzkbQh2s3ZTLPFBt9y5Dd+pRZ0E4zObzc8QOYpvN+6awrkbTd
-         7zBWcvLCT68O0PjaIQtL5R+M6Fm5SD8H6fNo8FLURY9aFHUuWvjSKVwSz+ifBmgooqAB
-         KcIRCnek2XJxx1BNJd+YXHMikXD+kowGv86o/u74GUsRd8KfqitLG79zxV1U5wN89Lye
-         07JsTtLcmT7nfUd/1bXrmnGTKJpgt7oITsXU7eQwJRc0YKU+wKNLJBcnJzy0RTJQ+4ps
-         uLAa4oQxeTfEtQMb5dPoUSRcbmjRkKnHhEY1iFoPywQOLNrrJwiZamLHhzo8g13l3/Kh
-         VE0w==
-X-Gm-Message-State: APjAAAWXdA8aNWkpIRWnXzW+wpqLlvOcsWIdVY7cWG98RPblV/XWFzE0
-        3xmQsHtGT0qNzjZDEHgYDaIVQ1NhR+KBz/XM9qI=
-X-Google-Smtp-Source: APXvYqypl0IrSyDO/f7SI42d4NpFHa/7OZX0jXNbFpUASMxwh2fx0mJgfs/qVOYaLSUhLwF6DwSrz304TPAq9G/BjWs=
-X-Received: by 2002:a5e:c30f:: with SMTP id a15mr8320747iok.246.1561383779652;
- Mon, 24 Jun 2019 06:42:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190621155845.7079-1-krzk@kernel.org> <20190621155845.7079-3-krzk@kernel.org>
- <CGME20190623160226epcas2p3449814deb1faf7bf939481e6d4da2b86@epcas2p3.samsung.com>
- <CANAwSgTFQo8wL5s-djwPXFFOLtTHvRQif6234kFC=23PwMhuEQ@mail.gmail.com>
- <d94a2f99-fb99-c238-7011-9bbb4c0cd90f@samsung.com> <CAJKOXPeXELUjsuW9eyGuRj56067qnL-J2Lt4U42mYiyx=X+F_Q@mail.gmail.com>
- <2f58b63e-adf1-7935-8849-f311dc991b84@samsung.com>
-In-Reply-To: <2f58b63e-adf1-7935-8849-f311dc991b84@samsung.com>
-From:   Anand Moon <linux.amoon@gmail.com>
-Date:   Mon, 24 Jun 2019 19:12:46 +0530
-Message-ID: <CANAwSgTymg=u8oJy4bOoREpY1DvVqav=FfdizumeUJMYhntKaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] ARM: dts: exynos: Add regulator suspend
- configuration to Odroid XU3/XU4/HC1 family
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=bS9CCVyWEuckL8u69D81nqeXtcKIqj0WvuL/deztfxA=;
+        b=ZQFW4xGrG6W6Y9VrZRzYDolpF/QDzn0fCdTFFzAznPHaXmWhcY2xZbd5IWODAk59yz
+         y0wEPyGLDerx7oqDQgTBI7gPtrC96P55OZNwtfTe8aCD+gr0+GvpSf8OuTgjZiFQVBa2
+         LGndZdWRZCNf6P3itdRrojsaZMxEnrncCTbufG4xrKntKjOXszylk0k5LkJJ3eN7D+6Q
+         APbbx6niZ+pYvM03tYBi9FbbILhkigIvf/BbqcO0RUG8PKRny4K4oC6khvGY805/THgT
+         1RNQ1sgAdrkGH0/sg0uPGPTwqi3wkXugNnhLClCyq+czdZiNfNxVeoUFPNRanhSgdKw+
+         3yMg==
+X-Gm-Message-State: APjAAAUXW6vXqQ+eQ6YAb8mgQQOGOupL14IXMG4f3303xOMdbC0RAYiM
+        gBNDW5fPMOFrBN+feSGgCi8=
+X-Google-Smtp-Source: APXvYqzQSmWH/uIVE4LHageyRy8Q7FGokXruF6yqV6OtmrovRUHuiXdxjTCPC1+a9TDKriLZ/1SghA==
+X-Received: by 2002:a17:90a:af8e:: with SMTP id w14mr25480941pjq.89.1561384284784;
+        Mon, 24 Jun 2019 06:51:24 -0700 (PDT)
+Received: from debian.net.fpt ([58.187.168.105])
+        by smtp.gmail.com with ESMTPSA id 85sm11187901pgb.52.2019.06.24.06.51.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Jun 2019 06:51:23 -0700 (PDT)
+From:   Phong Tran <tranmanphong@gmail.com>
+To:     tranmanphong@gmail.com
+Cc:     acme@kernel.org, alexander.shishkin@linux.intel.com,
+        alexander.sverdlin@gmail.com, allison@lohutok.net, andrew@lunn.ch,
+        ast@kernel.org, bgolaszewski@baylibre.com, bpf@vger.kernel.org,
+        daniel@iogearbox.net, daniel@zonque.org, dmg@turingmachine.org,
+        festevam@gmail.com, gerg@uclinux.org, gregkh@linuxfoundation.org,
+        gregory.clement@bootlin.com, haojian.zhuang@gmail.com,
+        hsweeten@visionengravers.com, illusionist.neo@gmail.com,
+        info@metux.net, jason@lakedaemon.net, jolsa@redhat.com,
+        kafai@fb.com, kernel@pengutronix.de, kgene@kernel.org,
+        krzk@kernel.org, kstewart@linuxfoundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-imx@nxp.com,
+        linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux@armlinux.org.uk,
+        liviu.dudau@arm.com, lkundrak@v3.sk, lorenzo.pieralisi@arm.com,
+        mark.rutland@arm.com, mingo@redhat.com, namhyung@kernel.org,
+        netdev@vger.kernel.org, nsekhar@ti.com, peterz@infradead.org,
+        robert.jarzmik@free.fr, s.hauer@pengutronix.de,
+        sebastian.hesselbarth@gmail.com, shawnguo@kernel.org,
+        songliubraving@fb.com, sudeep.holla@arm.com, swinslow@gmail.com,
+        tglx@linutronix.de, tony@atomide.com, will@kernel.org, yhs@fb.com
+Subject: [PATCH V2 00/15] cleanup cppcheck signed shifting errors
+Date:   Mon, 24 Jun 2019 20:50:50 +0700
+Message-Id: <20190624135105.15579-1-tranmanphong@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20190623151313.970-1-tranmanphong@gmail.com>
+References: <20190623151313.970-1-tranmanphong@gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek / Krzysztof,
+There are errors with cppcheck 
 
-On Mon, 24 Jun 2019 at 14:31, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
->
-> Hi Krzysztof,
->
-> On 2019-06-24 09:41, Krzysztof Kozlowski wrote:
-> > On Mon, 24 Jun 2019 at 09:20, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
-> >> On 2019-06-23 18:02, Anand Moon wrote:
-> >>> Thanks for this patch. Please add my
-> >>>
-> >>> Tested-by: Anand Moon <linux.amoon@gmail.com>
-> >>>
-> >>> [snip]
-> >>>
-> >>> Could you integrate below small changes into this patch.
-> >>> with these below changes suspend and resume work correctly at my end.
-> >>>
-> >>> [1] XU4_suspendresume.patch
-> >>>
-> >>> As per S2MPS11B PMIC 1.2.1 Regulator (Features)
-> >>> Fix the min max value for *Buck7* and *Buck8*
-> >>>
-> >>> -- Buck7 (VDD_1.0V_LDO) 1.5 A (1.2 V to 1.5 V, 12.5 mV step, default on 1.35 V)
-> >>> -- Buck8 (VDD_1.8V_LDO) 2.5 A (1.8 V to 2.1 V, 12.5 mV step, default on 2.0 V)
-> >> Could you elaborate why such change for Buck7 and Buck8 is needed?
-> > Anand has here valid point - the constraints in DTS do not match
-> > hardware manual. This leads to question whether voltage table in
-> > driver is proper... Another point is the voltage itself. The
-> > schematics describes them as at specific voltage (1.35 V and 2.0 V)
-> > but after boot they are 1.2 V and 1.85 V. Maybe this shift comes from
-> > the problem above.
-> >
-> >>> Also add suspend-off for *Buck9*
-> >>> Buck9 internally controls the power of USB hub.
-> >>> Adding suspend the this node help proper reset of USB hub on Odroid
-> >>> XU4 / HC1/ XU3
-> >>> during suspend and resume. Below it the logs from my testing.
-> >> Disabling Buck9 in suspend indeed reduces the power consumed by the
-> >> board during suspend-to-ram from about 80mA to as little as 7-10mA, what
-> >> matches the results of OdroidXU3. Thanks for the hint!
-> > Although I did not get what is the difference in the logs (Anand
-> > pasted two logs but they look the same) but the power consumption is
-> > reason is good enough. I would be happy to put in the changelog entire
-> > consumption  difference. I can measure it on XU3-Lite but can you give
-> > me the XU4 (before and after)?\
->
->
-> HC1:
->
-> next-20190620: 120mA (@5V)
-> this patchset: 72mA (@5V)
-> this patchset + fixup from Anand: 7-10mA (@5V)
->
-> XU4 (SDcard):
->
-> next-20190620: 88mA (@5V)
-> this patchset: 74mA (@5V), sometimes 42mA (@5V)
-> this patchset + fixup from Anand: 6-9mA (@5V)
->
->
-> XU4 (eMMC):
->
-> next-20190620: 100mA (@5V)
-> this patchset: 72mA (@5V), sometimes 41mA (@5V)
-> this patchset + fixup from Anand: 6-9mA (@5V)
->
->
-> Best regards
-> --
-> Marek Szyprowski, PhD
-> Samsung R&D Institute Poland
->
+"Shifting signed 32-bit value by 31 bits is undefined behaviour errors"
 
-Thanks for this results.
+This is just a mirror changing. 
 
-Best Regards
--Anand
+V2: Using BIT() macro instead of (1UL << nr) 
+
+Phong Tran (15):
+  arm: perf: cleanup cppcheck shifting error
+  ARM: davinci: cleanup cppcheck shifting errors
+  ARM: ep93xx: cleanup cppcheck shifting errors
+  ARM: exynos: cleanup cppcheck shifting error
+  ARM: footbridge: cleanup cppcheck shifting error
+  ARM: imx: cleanup cppcheck shifting errors
+  ARM: ks8695: cleanup cppcheck shifting error
+  ARM: mmp: cleanup cppcheck shifting errors
+  ARM: omap2: cleanup cppcheck shifting error
+  ARM: orion5x: cleanup cppcheck shifting errors
+  ARM: pxa: cleanup cppcheck shifting errors
+  ARM: vexpress: cleanup cppcheck shifting error
+  ARM: mm: cleanup cppcheck shifting errors
+  ARM: bpf: cleanup cppcheck shifting error
+  ARM: vfp: cleanup cppcheck shifting errors
+
+ arch/arm/kernel/perf_event_v7.c    |   6 +-
+ arch/arm/mach-davinci/ddr2.h       |   6 +-
+ arch/arm/mach-ep93xx/soc.h         | 132 ++++++++++++++++++-------------------
+ arch/arm/mach-exynos/suspend.c     |   2 +-
+ arch/arm/mach-footbridge/dc21285.c |   2 +-
+ arch/arm/mach-imx/iomux-mx3.h      |  64 +++++++++---------
+ arch/arm/mach-ks8695/regs-pci.h    |   4 +-
+ arch/arm/mach-mmp/pm-mmp2.h        |  40 +++++------
+ arch/arm/mach-mmp/pm-pxa910.h      |  76 ++++++++++-----------
+ arch/arm/mach-omap2/powerdomain.c  |   2 +-
+ arch/arm/mach-orion5x/pci.c        |   8 +--
+ arch/arm/mach-pxa/irq.c            |   4 +-
+ arch/arm/mach-vexpress/spc.c       |  12 ++--
+ arch/arm/mm/fault.h                |   6 +-
+ arch/arm/net/bpf_jit_32.c          |   2 +-
+ arch/arm/vfp/vfpinstr.h            |   8 +--
+ 16 files changed, 187 insertions(+), 187 deletions(-)
+
+-- 
+2.11.0
+
