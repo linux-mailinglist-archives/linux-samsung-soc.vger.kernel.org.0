@@ -2,165 +2,168 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31698522DD
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 07:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 985B9524D3
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 09:31:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727528AbfFYFgl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jun 2019 01:36:41 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:59100 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfFYFgl (ORCPT
+        id S1728401AbfFYHbx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jun 2019 03:31:53 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:56461 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728380AbfFYHbw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jun 2019 01:36:41 -0400
+        Tue, 25 Jun 2019 03:31:52 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190625053639euoutp01c408677511937eb8d08bd40dc941dc3e~rWlDzRS9o1980519805euoutp011
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jun 2019 05:36:39 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190625053639euoutp01c408677511937eb8d08bd40dc941dc3e~rWlDzRS9o1980519805euoutp011
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190625073151euoutp025df7e51b74bc3bef95edb8ddb066e395~rYJo7SjxN1148411484euoutp02e
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jun 2019 07:31:51 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190625073151euoutp025df7e51b74bc3bef95edb8ddb066e395~rYJo7SjxN1148411484euoutp02e
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1561440999;
-        bh=uScNoZesmYLMa3NIs+nFiJ45ln9qRAf3qeTJ8h9cAa4=;
+        s=mail20170921; t=1561447911;
+        bh=5sQ/QgoEhcfzsA95yFN4M7LlrW1v1YWERTGiizKMusA=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=TMtAzmaCR5qSnPT7RAxIpyNod0Zy95wNqFNOytBSV10du48MiWIxpOP8OGvC3Ne1i
-         4gPHkq9lGoeYHEa/CN9hm/rNX4Ae2UQZfvSl8hZtejYnfqzvEcuMUnRPDU11ovoIUU
-         y/4Iygv8Wxc7XUv+OmAFI1YGRvsggkaNPppmEv+4=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190625053639eucas1p26f858a1e1a05a9ac8b0271146ac106b2~rWlDW5XLV2882428824eucas1p2M;
-        Tue, 25 Jun 2019 05:36:39 +0000 (GMT)
+        b=ig1a/J/kiQ+Cl+AZzq0jsAtt9rOZ7Tp+0ehwE/Axpi9XwW99aFEjjBLTJ2/kFQKHY
+         DLv4Ft/8ZuY9zSCV18Slx6vFl7Y3eIq6UK9/oaMnXeE+AeZbNWkseudyQlB/AfZa/N
+         +Ehu5DLeCLy6IfNjIUxWMzNhrjyT8mj8SosOzU/g=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190625073150eucas1p1804a7b12c5740935757ccbaa71dee43e~rYJn4KCUr1172011720eucas1p1F;
+        Tue, 25 Jun 2019 07:31:50 +0000 (GMT)
 Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id A9.51.04298.6E2B11D5; Tue, 25
-        Jun 2019 06:36:38 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 1A.FB.04325.5EDC11D5; Tue, 25
+        Jun 2019 08:31:49 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190625053638eucas1p1e4bcdf8a627054556921f5929f5b0b58~rWlCkYCO62894228942eucas1p1R;
-        Tue, 25 Jun 2019 05:36:38 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190625053637eusmtrp26c1c1037468d691a0f92a7fda318adab~rWlCWTOAU2961529615eusmtrp2L;
-        Tue, 25 Jun 2019 05:36:37 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-96-5d11b2e6e16c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 9F.92.04140.5E2B11D5; Tue, 25
-        Jun 2019 06:36:37 +0100 (BST)
-Received: from [106.120.50.25] (unknown [106.120.50.25]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190625053637eusmtip1da623b534cee562b5f28d902611293d1~rWlCBtXbJ0323303233eusmtip1b;
-        Tue, 25 Jun 2019 05:36:37 +0000 (GMT)
-Subject: Re: [alsa-devel] [PATCH resend 25/47] ASoC: samsung: snow: don't
- select unnecessary Platform
-To:     Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Linux-ALSA <alsa-devel@alsa-project.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        20190625073149eucas1p102dafce3c10e357cba18b64de8058ef9~rYJnDIWly0556905569eucas1p12;
+        Tue, 25 Jun 2019 07:31:49 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190625073149eusmtrp1c21b2f6b29117d29964abef090d964a7~rYJm0oKWL0495604956eusmtrp1M;
+        Tue, 25 Jun 2019 07:31:49 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-15-5d11cde5c6c0
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 98.B4.04146.4EDC11D5; Tue, 25
+        Jun 2019 08:31:48 +0100 (BST)
+Received: from [106.120.51.20] (unknown [106.120.51.20]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190625073148eusmtip2a4fa4a3d5df3009c558e893be5645d45~rYJl48Fxw0621806218eusmtip2O;
+        Tue, 25 Jun 2019 07:31:48 +0000 (GMT)
+Subject: Re: [PATCH v10 09/13] drivers: devfreq: events: add Exynos PPMU new
+ events
+To:     cwchoi00@gmail.com
+Cc:     devicetree <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-clk@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <80c5c575-6f28-c6a6-91b2-d701bb9fbce8@samsung.com>
-Date:   Tue, 25 Jun 2019 07:36:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.2
+        Kukjin Kim <kgene@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>, keescook@chromium.org,
+        Tony Lindgren <tony@atomide.com>, jroedel@suse.de,
+        treding@nvidia.com, digetx@gmail.com,
+        Greg KH <gregkh@linuxfoundation.org>,
+        willy.mh.wolff.ml@gmail.com
+From:   Lukasz Luba <l.luba@partner.samsung.com>
+Message-ID: <2e1be1d3-b6ae-e40d-48cd-6b6adb26860d@partner.samsung.com>
+Date:   Tue, 25 Jun 2019 09:31:46 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <87d0j232wg.wl-kuninori.morimoto.gx@renesas.com>
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGTfZH35X0zE2LhGWJJp2xZNNk1ew7zNMoMqL+eZ5rcBFcPvew@mail.gmail.com>
 Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBKsWRmVeSWpSXmKPExsWy7djPc7rPNgnGGsw6om1x5eIhJoupD5+w
-        WZw/v4Hd4tXhXYwWM87vY7I4/Kad1YHNY8PnJjaPTas62Ty+nZnI4tG3ZRWjx+dNcgGsUVw2
-        Kak5mWWpRfp2CVwZH57MYC9Yzl+xbsELpgbGAzxdjJwcEgImEmcOLGHsYuTiEBJYwSjRvXsl
-        K4TzhVHi2s6DUM5nRonVX/exwrQ8fHsZqmU5o8TambvYIZy3jBLfOx6AVQkLpEt0dH5kAbFF
-        BCwkWj5sZgEpYhZ4wCixb9JzsCI2AUOJrrddbCA2r4CdxL+525hBbBYBVYkdH1+yg9iiAjES
-        D+ffgaoRlDg58wnYUE4BW4kXRzrAbGYBeYnmrbOZIWxxiVtP5jOBLJMQWMUusXr9RXaIu10k
-        lrx8wAhhC0u8Or4FKi4j8X8nTEMzo8TDc2vZIZweRonLTTOgOqwlDh+/CHQ2B9AKTYn1u/Qh
-        wo4S7+7vZQMJSwjwSdx4KwhxBJ/EpG3TmSHCvBIdbUIQ1WoSs46vg1t78MIl5gmMSrOQvDYL
-        yTuzkLwzC2HvAkaWVYziqaXFuempxYZ5qeV6xYm5xaV56XrJ+bmbGIHp5/S/4592MH69lHSI
-        UYCDUYmHd8ERgVgh1sSy4srcQ4wSHMxKIrxLE4FCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeasZ
-        HkQLCaQnlqRmp6YWpBbBZJk4OKUaGI3qNL4HqIuW7sgw9LH/kXYq9cbjozN3zWi7ePWl29rV
-        D2Xv9ZzUcuiMrPE21fBQ+5Z06d79L1NWNrKIb3gfcvSt6af49TY2DKcN7v9qyBFkvFFS980n
-        zL5tUu6RrTcV/+emXXjbevp6MTvjw1i2ul2ZD2z2/puyWp2pV+F7ck+C3dp3HDnXNiixFGck
-        GmoxFxUnAgAxnvDXOwMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsVy+t/xu7pPNwnGGtz8ZWVx5eIhJoupD5+w
-        WZw/v4Hd4tXhXYwWM87vY7I4/Kad1YHNY8PnJjaPTas62Ty+nZnI4tG3ZRWjx+dNcgGsUXo2
-        RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZH57MYC9Y
-        zl+xbsELpgbGAzxdjJwcEgImEg/fXmbsYuTiEBJYyihxrf0LI0RCRuLktAZWCFtY4s+1LjaI
-        oteMEs1rr4MlhAXSJTo6P7KA2CICFhItHzazgBQxCzwAmvT2JRtIQkhgNZPExWuiIDabgKFE
-        19susDivgJ3Ev7nbmEFsFgFViR0fX7KD2KICMRJdU3+yQNQISpyc+QTM5hSwlXhxpAPMZhYw
-        k5i3+SEzhC0v0bx1NpQtLnHryXymCYxCs5C0z0LSMgtJyywkLQsYWVYxiqSWFuem5xYb6RUn
-        5haX5qXrJefnbmIERtu2Yz+37GDsehd8iFGAg1GJh3fBEYFYIdbEsuLK3EOMEhzMSiK8SxOB
-        QrwpiZVVqUX58UWlOanFhxhNgZ6byCwlmpwPTAR5JfGGpobmFpaG5sbmxmYWSuK8HQIHY4QE
-        0hNLUrNTUwtSi2D6mDg4pRoYKyuEP3JFs118tkeqpN6ZPezktQ0FT3TPmj/yvDyfn9H/Q3fU
-        jk2z6h++3PM6s5Z/KveTwxUut1/ce9Ect+r7k+RFWVPcpsvx3D/8pmDt8g1+hzZrrai5J7h9
-        dnirD5N1OLPgmpU3JmV/uRXOx6U7iVWco2lZS73j+dyN5dwuF65YLhOYe/fxfCWW4oxEQy3m
-        ouJEAJL46NrMAgAA
-X-CMS-MailID: 20190625053638eucas1p1e4bcdf8a627054556921f5929f5b0b58
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se1BMYRjGfXuuu2xOi/YdDDOLGZdRGQ3fDGOYCWcYl5oxYxCOnCm0K3sq
+        l/yxRJEtJre1STW5zbosaUOZsC2ldHNt0tLYdatIU5hcwnbW6L/f+7zP973v883HEhozPZzd
+        YEgQjQYhTkeryOL7PbWT39QERoU6vGH4qsVO4efd7yj89t4knOuqpfCFTg/CKQV2Gh+uylHg
+        hwf0+KCnjcB1dVcYXLO7ncGd5pcUflxyksZdGS6ELXVlCnzJ5WZwQ9Vc/GLXeRqXt6dRuPfZ
+        VRLffrIAv/gRgL9WvkaztfzXL1kk39G4l+GzTQ0kf9PqZvhC236av51zkeEzUj7RfGaRDfHX
+        qpP5rsJRS1UrVDPXi3EbkkRjyKy1qlh3ayaK/6HcVvDoO2lCP5l0pGSBC4N8z10qHalYDXce
+        gTunk5GLbgRnP5ciuehCUF92AP078r7F4XedQ3DS2kzKxUcEvU437XMN4ZZBk6Ogj4dyQXD9
+        mLfvKoIrpWF3x2kiHbEszQXDDdsWn0fNzYPO2qa+CSQ3DlpMTYSPh3HLoftmIZI9gfDghJf0
+        sZKLgAv5HsrHBKeFJm+uQubRkOLIJuRNXSy8fErLHA6ZHos/wRBorSjyP8BIqD5sJmWWwJSR
+        7/fsBM/BHL9nBpRXNFC+lQluAthLQmR5Dpy6803hk4ELgMaPgfIGAZBVfJyQZTXsS9XI7vFQ
+        ZK5XyBwE5y4eYw4hnbVfLmu/LNZ+Waz/5+Yh0oa0YqKkjxGlqQZxa7Ak6KVEQ0xw9GZ9Ifr7
+        R6t7K77cQGU/1zkRxyLdIHWei4vSUEKStF3vRMASuqHqM8JfSb1e2L5DNG5eY0yMEyUnGsGS
+        Oq06eUDLSg0XIySIm0QxXjT+6ypY5XATWnw86W34He0S5cbysOXFySVp0WXueYN7zHuDw5cI
+        zwfOjnO3La6Gcc6ey4siRrR5Ndq7C8eEP4gOaTUYR+alpmZ/ykr4EDtr66tBGysDY22WeLK0
+        +deeW2Pnd1fpGh2EZfqZ0G/tJV2RV/bYpl2rP2KO+m2MvBymsR8dsyo+crWYZteRUqwwZSJh
+        lIQ/mlQ/0p8DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHe3cuO4qLs6n54ocuAz90Wx2v78xEPxQn6YoU4YVceryQc7oz
+        RYtgJalpahfpMjMNkWKrvGV5SSWdmne0MNlSTEeGWmFqVJq0uQK//Xie/w+eB/4UJnlIuFMJ
+        SRpOnaRIlJKOeO9q1/huS784cm9T8z5UfbeSQO8Xpwn0qWMnKjUOEMgwPwVQZnkliW71lAhQ
+        X54SFU7NYmhwsEqI+i/PCdH8tXECvW28T6KFfCNAdwdbBOipcUyIhnoOIPOlxyRqn8sm0OpI
+        NY5a34Ug8/JG9OPNJAhyY38s3cTZb6NXhGyxdghnG3RjQrZGf5VkW0ueCNn8zK8kW/BcD9ja
+        3gvsQs3m445hsgC1KlXDbY1X8Zr90nAGecoYOZJ5estljJdfpL+nj3RPYEAMl5iQxqn3BEbJ
+        4sdmCkDyskN6+fBvXAtWhLnAgYK0N/w8UWdlR0pCVwBo/jBD2Beb4M2Wl/9CznBlJJe0h2YB
+        vD06QtoWzvRJaKorX2MXq/DytgXYQhjdTkLdsyKB3bghgK8+rWK5gKJIWgbr9Sk2QUQfhPMD
+        JmBjnPaAE1oTZmNX+jQsbtTi9owYdt+zrLEDfQIaHk6tXYfRvvBB7UfMzm7QZCkV2HkLzKwr
+        xq4DiW6drlun6NYpunVKGcD1wIVL5ZVxSp6R8Qoln5oUJ4tWKWuAtR4vOn/V1oPh6tA2QFNA
+        6iQqM9KREkKRxmco2wCkMKmLqEJhHYliFBnnObXqjDo1kePbgI/1uRuYu2u0ylq2JM0Zxofx
+        Q3LGz8vPyxdJ3UQ59OsICR2n0HDnOC6ZU//3BJSDuxYE1q82RFQsjWcevdgsNxzuiqKrzdPs
+        qGXkjhP+KzHWBFLkfzo624zb3ILCartemMOg06OfppzkKnFlXn2+KGI2xOOYMPfIk130zuCr
+        viC9x3/R8UC2wb37VJbH2YamyaLvG3zv6UPrRIV92tBwZpzYHjyd98WY1X+oPFYc7GmQ4ny8
+        gtmBqXnFX1VUj/40AwAA
+X-CMS-MailID: 20190625073149eucas1p102dafce3c10e357cba18b64de8058ef9
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190624131905eucas1p2cf4335b4d1483b7e62d0c9e7b5223a3c
+X-RootMTR: 20190614095328eucas1p24009b3a07322fd12e49eabb7a08baf50
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190624131905eucas1p2cf4335b4d1483b7e62d0c9e7b5223a3c
-References: <877e9iwf9f.wl-kuninori.morimoto.gx@renesas.com>
-        <874l4mv0h8.wl-kuninori.morimoto.gx@renesas.com>
-        <CGME20190624131905eucas1p2cf4335b4d1483b7e62d0c9e7b5223a3c@eucas1p2.samsung.com>
-        <9cfc8505-2903-033f-f68b-8ccc1c70132b@samsung.com>
-        <87d0j232wg.wl-kuninori.morimoto.gx@renesas.com>
+X-CMS-RootMailID: 20190614095328eucas1p24009b3a07322fd12e49eabb7a08baf50
+References: <CGME20190614095328eucas1p24009b3a07322fd12e49eabb7a08baf50@eucas1p2.samsung.com>
+        <20190614095309.24100-1-l.luba@partner.samsung.com>
+        <20190614095309.24100-10-l.luba@partner.samsung.com>
+        <CAGTfZH35X0zE2LhGWJJp2xZNNk1ew7zNMoMqL+eZ5rcBFcPvew@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Kuninor
 
-On 2019-06-25 02:51, Kuninori Morimoto wrote:
-> Hi Marek
->
-> Thank you for your report.
->
->>> ALSA SoC is now supporting "no Platform". Sound card doesn't need to
->>> select "CPU component" as "Platform" anymore if it doesn't need
->>> special Platform.
->>> This patch removes such settings.
->>>
->>> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
->> This patch causes regression on Samsung Exynos-based boards: Snow,
->> Peach-Pi and Peach-Pit (all that use snow machine driver) since linux
->> next-20190620. ASoC device is properly registered, but it is not usable:
+
+On 6/22/19 3:10 PM, Chanwoo Choi wrote:
+> Hi,
+> 
+> 2019년 6월 14일 (금) 오후 6:54, Lukasz Luba <l.luba@partner.samsung.com>님이 작성:
 >>
->> [    3.203006] samsung-i2s 3830000.i2s-sec: DMA channels sourced from
->> device 3830000.i2s
->> [    3.213440] snow-audio sound: Failed parsing codec node
->> [    3.423241] snow-audio sound: multicodec <-> samsung-i2s mapping ok
->> [    3.429776] max98095 7-0011: ASoC: mux External MIC has no paths
->> [    3.434513] max98095 7-0011: ASoC: mux Linein Mux has no paths
->> [    4.043488] ALSA device list:
->> [    4.047171]   #0: Snow-I2S-MAX98095
+>> Define new performance events supported by Exynos5422 SoC counters.
+>> The counters are built-in in Dynamic Memory Controller and provide
+>> information regarding memory utilization.
 >>
->> # speaker-test -l1
+>> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+>> ---
+>>   drivers/devfreq/event/exynos-ppmu.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
 >>
->> speaker-test 1.1.3
+>> diff --git a/drivers/devfreq/event/exynos-ppmu.c b/drivers/devfreq/event/exynos-ppmu.c
+>> index c2ea94957501..ce658c262c27 100644
+>> --- a/drivers/devfreq/event/exynos-ppmu.c
+>> +++ b/drivers/devfreq/event/exynos-ppmu.c
+>> @@ -89,6 +89,12 @@ static struct __exynos_ppmu_events {
+>>          PPMU_EVENT(d1-cpu),
+>>          PPMU_EVENT(d1-general),
+>>          PPMU_EVENT(d1-rt),
+>> +
+>> +       /* For Exynos5422 SoC */
+>> +       PPMU_EVENT(dmc0_0),
+>> +       PPMU_EVENT(dmc0_1),
+>> +       PPMU_EVENT(dmc1_0),
+>> +       PPMU_EVENT(dmc1_1),
+>>   };
 >>
->> Playback device is default
->> Stream parameters are 48000Hz, S16_LE, 1 channels
->> Using 16 octaves of pink noise
->> Playback open error: -22,Invalid argument
-> Hmm.. strange...
-> Can you test normal aplay here ? I'm not familiar with speaker-test.
+>>   static int exynos_ppmu_find_ppmu_id(struct devfreq_event_dev *edev)
+>> --
+>> 2.17.1
+>>
+> 
+> Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+> 
+Thank you Chanwoo.
 
-The same issue:
-
-# aplay /usr/share/sounds/alsa/Front_Center.wav
-aplay: main:788: audio open error: Invalid argument
-#
-
-
-> I have no idea so far, but one capability is that if your system
-> used / based dummy platform, and if your CPU driver didn't use/have
-> snd_soc_set_runtime_hwparams() / snd_pcm_lib_ioctl,
-> it might be happen, but this patch seems not related to it...
-
-Reverting this patch fixes the issue, so it is definitely related somehow.
-
-
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Regards,
+Lukasz
