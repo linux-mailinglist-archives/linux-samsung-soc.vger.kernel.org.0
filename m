@@ -2,107 +2,150 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D185550B1
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 15:47:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2B5355116
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 16:08:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbfFYNr6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jun 2019 09:47:58 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:33852 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfFYNr6 (ORCPT
+        id S1728247AbfFYOIB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jun 2019 10:08:01 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38885 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfFYOIA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jun 2019 09:47:58 -0400
-Received: by mail-lj1-f193.google.com with SMTP id p17so16378774ljg.1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jun 2019 06:47:57 -0700 (PDT)
+        Tue, 25 Jun 2019 10:08:00 -0400
+Received: by mail-ed1-f66.google.com with SMTP id r12so27397900edo.5
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jun 2019 07:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vqj9RJTLU6a7u47c/a2XupnA9jHEjvrlPTNwz8/pAYI=;
-        b=e4iqcuL7UrUFxNJnOOaBzdgx3YrvjL/tcddqVNmyBvq77sJiTTcqtICftMEIq6Xz50
-         dXwomMLX65/Vcbqhe+UrqDl1OYzzMfRzHrK/9BGOuPWRfhesBx7TwiuvaRiL1jPsswCT
-         pZqJKU3UDGIuh44/ThJik0yQIp+yEn+CvGEnXci1tOkWH0x5QUktV+j73tF9g6CetwYi
-         eNeGjmOp4S3GlttW7lbz/+sE5QsyOTFPZkrPWe7h8bSOyc9c7m/jclIe3UI+33lc5a8p
-         nyRlgT4zSZUYc8IlfMvS+IMXIBLVBJ3D1ZnAJqMTgLr28tG/uS2yfKvqximd2wbSaYth
-         jumw==
+        d=ffwll.ch; s=google;
+        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CAtg3PLJ+XKSV8dAF2QLAFWrkpUis1quRM8X3SddO/c=;
+        b=DlsNVgfRWTP8NpGGrX9t3Nbz1zo7ltZhwtKOk/Es+ZdbHwht+lr3TCIe70hcYOlrBR
+         ABPEEparLAqoeRRvZ5Pzq1cEVMTiKJ3tiqSO4M7ZzKp6aqKBOmxw686MYovwaEFXhy8l
+         NK+f1Jf6pSuG3cXFg7wdY+FYcdimxOYB8sVXQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vqj9RJTLU6a7u47c/a2XupnA9jHEjvrlPTNwz8/pAYI=;
-        b=HsFpxJWZIFFGWaslt9FwOnsU1ZkEFIgKo7mkZfrHfksqyibALQM9e4Q1X52ypCbCig
-         52omolkQisa7rz5msyaw0y5WW/ebDQ6POLE0lIKeekOJv91apua3E+FNz+EtZiJCR/+w
-         kuIEgOjXBeG6SdAhstummlg82cb2563B9dgEruAWJHzWlHx292sLfR9FLQnGcBiy8b58
-         F9SQ9Hb37NX4qllMxOi7WZDLRBfTWzivpUNcvI5UGKwXLt/pGF+DBu8NQsAmo9Eubsza
-         Fd9V6058QXjeztHCemqZqZLaUEU0OY3KNsjooc71uY5PDQZ5DeCwffhcAL3p1V6SZqwO
-         izFA==
-X-Gm-Message-State: APjAAAUzW6iZojjCyh5THjRQcP1oiXnqgfgcyqOfMgtJ1PLjs0YKe9yv
-        9iqMYVTdstfvzxxcHc4KU89bwVtdkHeLqH+XCoIIpQ==
-X-Google-Smtp-Source: APXvYqxcWfEyG7sNk/JkRaYtPGwrWAkli7OwDCO7bqYoL3jX7uJ8UgDBQAE4GreAMx83t0VEuJIiv4peaDl4sX/yZ64=
-X-Received: by 2002:a2e:a0d5:: with SMTP id f21mr52570827ljm.69.1561470476420;
- Tue, 25 Jun 2019 06:47:56 -0700 (PDT)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CAtg3PLJ+XKSV8dAF2QLAFWrkpUis1quRM8X3SddO/c=;
+        b=b6aY2O34OopLbGhgo9jH4HTfovaIT1YeeSD5TbFbw8VNPPjyRSMt3sYkofKg1MhQcE
+         FvtclaKXtJBntU4U5Qmz6Vn/marjL0MvsCfTfnadW0rk+teHYY7H5qvNtmsTjUtkH1QM
+         M5OH688+MDL7RpDnR6FOkKm1uCD7ZAr4HKlp902rLmkv7n33ajdpoYcfEJBKB8782GPY
+         87Al7/eZ94LTSmwqHX7jc3o4Rsb40ksqsTIf6Ki0WjkkH8Yxjn1ZRSvkfhGNv1K9QqIN
+         DZM6i8Fr9HkllnLP9EjItMFYE3mDnFYBCU1zCLMoDYzakmkbc6Z2vzOZ02OT8xJqH2Qq
+         73pQ==
+X-Gm-Message-State: APjAAAXrzCad+F0DNL6FXIBKD4ir0MKwFWh5aybu4Ib0tanNilkmMp7G
+        AruvI3XBrlgefyo1IBuGCK/T+g==
+X-Google-Smtp-Source: APXvYqwnUNvO8RCgD+CoeE0AtlUeuwzv5wVl2MiDkEcmAY2cVmivLFNLtUKUMk2lZa5wxlyqXHk8gw==
+X-Received: by 2002:a50:92e1:: with SMTP id l30mr77999218eda.141.1561471678547;
+        Tue, 25 Jun 2019 07:07:58 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:569e:0:3106:d637:d723:e855])
+        by smtp.gmail.com with ESMTPSA id w17sm4594091edi.15.2019.06.25.07.07.56
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 25 Jun 2019 07:07:57 -0700 (PDT)
+Date:   Tue, 25 Jun 2019 16:07:55 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Emil Velikov <emil.velikov@collabora.com>
+Cc:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        linux-samsung-soc@vger.kernel.org,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Inki Dae <inki.dae@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>, dri-devel@lists.freedesktop.org,
+        Daniel Vetter <daniel@ffwll.ch>, kernel@collabora.com,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com
+Subject: Re: [PATCH 0/2] Associate ddc adapters with connectors
+Message-ID: <20190625140755.GT12905@phenom.ffwll.local>
+Mail-Followup-To: Emil Velikov <emil.velikov@collabora.com>,
+        Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        linux-samsung-soc@vger.kernel.org,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        Inki Dae <inki.dae@samsung.com>, David Airlie <airlied@linux.ie>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>, dri-devel@lists.freedesktop.org,
+        kernel@collabora.com, Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com
+References: <cover.1561452052.git.andrzej.p@collabora.com>
+ <20190625100351.52ddptvb2gizaepi@shell.armlinux.org.uk>
+ <817ccfba-754c-6a28-8d75-63f70605fd43@collabora.com>
+ <20190625133639.GA16031@arch-x1c3>
 MIME-Version: 1.0
-References: <1560938081892.33415@sensor-technik.de> <CAJKOXPej57MJKe6ShinG+VJdG+XM4qhpeD3rQ2ZHzRTmO43+GA@mail.gmail.com>
- <1561066629320.13520@sensor-technik.de>
-In-Reply-To: <1561066629320.13520@sensor-technik.de>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 25 Jun 2019 15:47:44 +0200
-Message-ID: <CACRpkdbPxHgyTAnE12PrMRu9XQqdoXmS+SWXYrSKXgL_SWOzcw@mail.gmail.com>
-Subject: Re: [PATCH V2] gpio: Fix return value mismatch of function gpiod_get_from_of_node()
-To:     Waibel Georg <Georg.Waibel@sensor-technik.de>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Sangbeom Kim <sbkim73@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190625133639.GA16031@arch-x1c3>
+X-Operating-System: Linux phenom 4.19.0-5-amd64 
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Georg,
+On Tue, Jun 25, 2019 at 02:36:39PM +0100, Emil Velikov wrote:
+> On 2019/06/25, Andrzej Pietrasiewicz wrote:
+> > Hi Russell,
+> > 
+> > W dniu 25.06.2019 o 12:03, Russell King - ARM Linux admin pisze:
+> > > On Tue, Jun 25, 2019 at 11:46:34AM +0200, Andrzej Pietrasiewicz wrote:
+> > > > It is difficult for a user to know which of the i2c adapters is for which
+> > > > drm connector. This series addresses this problem.
+> > > > 
+> > > > The idea is to have a symbolic link in connector's sysfs directory, e.g.:
+> > > > 
+> > > > ls -l /sys/class/drm/card0-HDMI-A-1/i2c-2
+> > > > lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/i2c-2 \
+> > > > 	-> ../../../../soc/13880000.i2c/i2c-2
+> > > 
+> > > Don't you want the symlink name to be "i2c" or something fixed, rather
+> > > than the name of the i2c adapter?  Otherwise, you seem to be encumbering
+> > > userspace with searching the directory to try and find the symlink.
+> > > 
+> > 
+> > Thank you for your comment. So you imagine something on the lines of:
+> > 
+> > lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/ddc \
+> >  	-> ../../../../soc/13880000.i2c/i2c-2
+> > 
+> > ?
+> > 
+> Fwiw my Intel machine lists a number of i2c devices:
+> /sys/class/drm/card0-DP-1/i2c-6
+> /sys/class/drm/card0-DP-2/i2c-7
+> /sys/class/drm/card0-eDP-1/i2c-5
+> 
+> Note: I haven't looked _if_ they relate to ones you're proposing here.
+> 
+> One thing worth mentioning is, the ones I've seen are not symlinks to
+> another sysfs entries. And there aren't any i2c nodes in /dev ...
+> 
+> Just a random food for thought :-)
 
-first: good catch! Sorry for breaking this, and kudos for fixing it!
+Those are the i2c-over-dp-aux controllers. I think we want to list these
+too.
 
-On Thu, Jun 20, 2019 at 11:37 PM Waibel Georg
-<Georg.Waibel@sensor-technik.de> wrote:
+Btw to make this more useful maybe some default implementations for
+get_modes which automatically dtrt, as a helper? Probably could use that
+to squash quite a bit of boilerplate.
 
-> In case the requested gpio property is not found in the device tree, some
-> callers of gpiod_get_from_of_node() expect a return value of NULL, others
-> expect -ENOENT.
-> In particular devm_fwnode_get_index_gpiod_from_child() expects -ENOENT.
-> Currently it gets a NULL, which breaks the loop that tries all
-> gpio_suffixes. The result is that a gpio property is not found, even
-> though it is there.
->
-> This patch changes gpiod_get_from_of_node() to return -ENOENT instead
-> of NULL when the requested gpio property is not found in the device
-> tree. Additionally it modifies all calling functions to properly
-> evaluate the return value.
->
-> Another approach would be to leave the return value of
-> gpiod_get_from_of_node() as is and fix the bug in
-> devm_fwnode_get_index_gpiod_from_child(). Other callers would still need
-> to be reworked. The effort would be the same as with the chosen solution.
->
-> Signed-off-by: Georg Waibel <georg.waibel@sensor-technik.de>
-> ---
->
-> V2: Rebased on top of [PATCH] regulator: s2mps11: Fix ERR_PTR dereference on GPIO lookup failure
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Mark: as most of the changed lines are in the regulator tree,
-would you please pick this patch up?
-
-(Else tell me and I will take care of it.)
-
-Yours,
-Linus Walleij
+Otherwise I like this. Biggest problem I'm seeing here is rolling this out
+everywhere, this is a lot of work. And without widespread adoptions it's
+not terribly useful for userspace.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
