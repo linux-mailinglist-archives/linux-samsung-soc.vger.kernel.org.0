@@ -2,107 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CBF6F52885
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 11:46:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 996F5528EC
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jun 2019 12:04:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728272AbfFYJqx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jun 2019 05:46:53 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:55868 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727729AbfFYJqt (ORCPT
+        id S1731818AbfFYKED (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jun 2019 06:04:03 -0400
+Received: from pandora.armlinux.org.uk ([78.32.30.218]:49824 "EHLO
+        pandora.armlinux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726421AbfFYKEC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jun 2019 05:46:49 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: andrzej.p)
-        with ESMTPSA id 81C05263A26
-From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Cc:     kernel@collabora.com, m.szyprowski@samsung.com,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Inki Dae <inki.dae@samsung.com>,
+        Tue, 25 Jun 2019 06:04:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=4yfZs4/ThCrYgiLeGh1TAYd7N0nWcLtcO65UGF7jKL8=; b=oq9m6q3Kox2FooWO0Am5oLHJe
+        PMDVQvjbOGmV6+EYXqlzy8VtHHsxUohQbJxIq+DHgSBclpN7gExON5bgBKujZ0sI7rvjDkU3UY887
+        OZDcLMu3WE6t4afKI08sesNCKe0LUFC6/t47IwTf/2iuKdIKA9jsDU3wcomZnjvha2ol8p+haHlU7
+        /dT8CmadCWsevk94t4cKTN5Zr1GANzIWDzJ97URuA3SdVn8l4nBr+SNmDzMByaxdVJ4dFbxrwOyek
+        WojKMosB8ZZmGVBTZPB9jxzmH0f4OtSpeFO44AohUYXHvUsxQC5adtmJbSPGXnZ2eKLbzdwb0Vflr
+        Oo6B1aEiA==;
+Received: from shell.armlinux.org.uk ([2001:4d48:ad52:3201:5054:ff:fe00:4ec]:58978)
+        by pandora.armlinux.org.uk with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <linux@armlinux.org.uk>)
+        id 1hfiIw-0005g7-K5; Tue, 25 Jun 2019 11:03:58 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.89)
+        (envelope-from <linux@shell.armlinux.org.uk>)
+        id 1hfiIq-00077V-3W; Tue, 25 Jun 2019 11:03:52 +0100
+Date:   Tue, 25 Jun 2019 11:03:52 +0100
+From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
         Joonyoung Shim <jy0922.shim@samsung.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
         Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 2/2] drm/exynos: Provide ddc symlink in connector's sysfs
-Date:   Tue, 25 Jun 2019 11:46:36 +0200
-Message-Id: <2bc41fb24348c7c3c89e9f653e694f8ae9b36e20.1561452052.git.andrzej.p@collabora.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1561452052.git.andrzej.p@collabora.com>
+        Inki Dae <inki.dae@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>, dri-devel@lists.freedesktop.org,
+        Daniel Vetter <daniel@ffwll.ch>, kernel@collabora.com,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com
+Subject: Re: [PATCH 0/2] Associate ddc adapters with connectors
+Message-ID: <20190625100351.52ddptvb2gizaepi@shell.armlinux.org.uk>
 References: <cover.1561452052.git.andrzej.p@collabora.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <cover.1561452052.git.andrzej.p@collabora.com>
-References: <cover.1561452052.git.andrzej.p@collabora.com>
-To:     unlisted-recipients:; (no To-header on input)
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Switch to using the ddc provided by the generic connector.
+On Tue, Jun 25, 2019 at 11:46:34AM +0200, Andrzej Pietrasiewicz wrote:
+> It is difficult for a user to know which of the i2c adapters is for which
+> drm connector. This series addresses this problem.
+> 
+> The idea is to have a symbolic link in connector's sysfs directory, e.g.:
+> 
+> ls -l /sys/class/drm/card0-HDMI-A-1/i2c-2
+> lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/i2c-2 \
+> 	-> ../../../../soc/13880000.i2c/i2c-2
 
-Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
----
- drivers/gpu/drm/exynos/exynos_hdmi.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+Don't you want the symlink name to be "i2c" or something fixed, rather
+than the name of the i2c adapter?  Otherwise, you seem to be encumbering
+userspace with searching the directory to try and find the symlink.
 
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index 894a99793633..6816e37861b7 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -126,7 +126,6 @@ struct hdmi_context {
- 	void __iomem			*regs;
- 	void __iomem			*regs_hdmiphy;
- 	struct i2c_client		*hdmiphy_port;
--	struct i2c_adapter		*ddc_adpt;
- 	struct gpio_desc		*hpd_gpio;
- 	int				irq;
- 	struct regmap			*pmureg;
-@@ -872,10 +871,10 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	struct edid *edid;
- 	int ret;
- 
--	if (!hdata->ddc_adpt)
-+	if (!connector->ddc)
- 		return -ENODEV;
- 
--	edid = drm_get_edid(connector, hdata->ddc_adpt);
-+	edid = drm_get_edid(connector, connector->ddc);
- 	if (!edid)
- 		return -ENODEV;
- 
-@@ -1893,7 +1892,7 @@ static int hdmi_get_ddc_adapter(struct hdmi_context *hdata)
- 		return -EPROBE_DEFER;
- 	}
- 
--	hdata->ddc_adpt = adpt;
-+	hdata->connector.ddc = adpt;
- 
- 	return 0;
- }
-@@ -2045,7 +2044,7 @@ static int hdmi_probe(struct platform_device *pdev)
- 	if (hdata->regs_hdmiphy)
- 		iounmap(hdata->regs_hdmiphy);
- err_ddc:
--	put_device(&hdata->ddc_adpt->dev);
-+	put_device(&hdata->connector.ddc->dev);
- 
- 	return ret;
- }
-@@ -2072,7 +2071,7 @@ static int hdmi_remove(struct platform_device *pdev)
- 	if (hdata->regs_hdmiphy)
- 		iounmap(hdata->regs_hdmiphy);
- 
--	put_device(&hdata->ddc_adpt->dev);
-+	put_device(&hdata->connector.ddc->dev);
- 
- 	mutex_destroy(&hdata->mutex);
- 
 -- 
-2.17.1
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTC broadband for 0.8mile line in suburbia: sync at 12.1Mbps down 622kbps up
+According to speedtest.net: 11.9Mbps down 500kbps up
