@@ -2,164 +2,147 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 51E8756BB3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Jun 2019 16:17:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E84156CCB
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Jun 2019 16:49:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726468AbfFZOR2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 26 Jun 2019 10:17:28 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:50429 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726628AbfFZOR1 (ORCPT
+        id S1727543AbfFZOtM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 26 Jun 2019 10:49:12 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33906 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728219AbfFZOrU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 26 Jun 2019 10:17:27 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190626141725euoutp01ea171361b495749afe5d9f813e01d6dc~rxVCUFU9J0420404204euoutp011
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 26 Jun 2019 14:17:25 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190626141725euoutp01ea171361b495749afe5d9f813e01d6dc~rxVCUFU9J0420404204euoutp011
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1561558645;
-        bh=Lb5vMIMA4+2oGP1PTQxIWYQ2bA+QyEgleS8n+1L6J3M=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=WxVQz+BomuWZLShZRQdbbK7fjmkd6TOfzAa394ssdp3aSqd04s85A6AtMx8+d0HDX
-         i0FJRpGreSI9ySXFELtQ/gKImlRGwyq7hoMoMjv/VwnXOk7JUnTIzRg4lZ5YfB8A7U
-         WCHCwtOvx0a08zN14EfqD/nBQeTrjk9kDOM+ceLg=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190626141724eucas1p1ae2024c243dd959b702afd7cb1a15023~rxVBk9Omm1371213712eucas1p1w;
-        Wed, 26 Jun 2019 14:17:24 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 1F.C8.04298.47E731D5; Wed, 26
-        Jun 2019 15:17:24 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190626141723eucas1p2a3cd561e822e6caaeffcc6d004b37a69~rxVAupGD00710607106eucas1p2b;
-        Wed, 26 Jun 2019 14:17:23 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190626141723eusmtrp16dbe68df7311179a8bfa2398b05bf084~rxVAgZ4NY1521615216eusmtrp1d;
-        Wed, 26 Jun 2019 14:17:23 +0000 (GMT)
-X-AuditID: cbfec7f2-3615e9c0000010ca-f4-5d137e748db2
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 56.B3.04140.37E731D5; Wed, 26
-        Jun 2019 15:17:23 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190626141722eusmtip1cfd37b7173ad3b0c2168b9ff59529ebe~rxU-gYMh_2787727877eusmtip1I;
-        Wed, 26 Jun 2019 14:17:22 +0000 (GMT)
-Subject: Re: [PATCH v4 4/5] Documentation: devicetree: add PPMU events
- description
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     cwchoi00@gmail.com, devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, robh+dt@kernel.org,
-        mark.rutland@arm.com, Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
+        Wed, 26 Jun 2019 10:47:20 -0400
+Received: by mail-wr1-f65.google.com with SMTP id k11so3096304wrl.1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 26 Jun 2019 07:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GnURz9uBDl/JIVDRIJyHSxWewLcsuwU4f5F+HbyZmEk=;
+        b=KQ5btisTZtuBgX3s5dqhAy9z1WRj8n9/5MKEJo4MF5cUOEuJVWT59lzvSJli34Ae21
+         iV7BM1IiLxpZjlXc4U/PSvZ0uTGm9C1OZag5uvgAmapx1x4Z+V0pcz3mdcWVQiyefhE/
+         pJOaSeG9yj1LRqoqtf/oUXu4I8DMt8P9IC8Ti3lz+/yJeUME9lJAGcMBF/L2i2WF5yWm
+         NTQeR3ueMzafid23YxD4WI0WnHBygKBjhcibBdd836MnpUbCNQ6ELTN7KeiQW6f42nTX
+         7qXi5g5P7fzqqBl2oX8lGke2ZK1QriMJLHGxHDpiwjEB6jG6B/W6SfU/gQWUU1T8wCTD
+         B7ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GnURz9uBDl/JIVDRIJyHSxWewLcsuwU4f5F+HbyZmEk=;
+        b=iYccIyxUYXoMpjRVqQaK5RP1E0cSbiN8uo4veoBEmVmSzM1uRXa3KCtOsfzgW4aslG
+         Q+06Cd4Um86E8N4FXveQOjRwESHjexl+KqdGPLMwbO9/iupjoAPh1SrzS2iAWhZIEU1/
+         k9s1eLaVLgzyVp1TdAczTXOBgjfNkOcUVvfCDCVAsAN2Ofr2QH9Z2E8gwGh/rtQ6jGJc
+         kP0mT8CpZNovn3zKtwlX1O4lnm8Om6JGm0m5PzoiG0eY325sc1UxLbbGVfx16hx2W0YG
+         8X9o7dh9VFcfxn/Zny8RXsxOXVwRQmlv3e1SPFjxV5Gj5uf9MoqUF55sYwbFtdQb2fQF
+         iXcA==
+X-Gm-Message-State: APjAAAU8UreeM5vtOMriMX54VzjKaVgLR+IauiReDbSK6VP7HM6cd4xd
+        ShG7aFAfNAV9yRHf6CTN+PwPIg==
+X-Google-Smtp-Source: APXvYqwwouIsWhDWc6BkFntC79BsmzDpRrHtrTK+mkPNbfBFrxQaW7YY2H0Ua1xIsJZ/0Bwx0wvhpA==
+X-Received: by 2002:adf:ce88:: with SMTP id r8mr4325093wrn.42.1561560438445;
+        Wed, 26 Jun 2019 07:47:18 -0700 (PDT)
+Received: from mai.imgcgcw.net (26.92.130.77.rev.sfr.net. [77.130.92.26])
+        by smtp.gmail.com with ESMTPSA id h84sm2718557wmf.43.2019.06.26.07.47.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Jun 2019 07:47:17 -0700 (PDT)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     tglx@linutronix.de
+Cc:     linux-kernel@vger.kernel.org,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com, kgene@kernel.org,
-        willy.mh.wolff.ml@gmail.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <776f58c2-a05c-8fa8-c7f5-458dc17926f6@partner.samsung.com>
-Date:   Wed, 26 Jun 2019 16:17:21 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAJKOXPc6304D=HNQnrvhBH6qKxhkf=VQ2Gg6Q2FMP2hYOTYSDQ@mail.gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+3YuOw5nx6O2FwuFQXQjyy70dSGSLizxjy5SUUgtO6ily3bU
-        tCSnppl5w7BsdjMSLyy0NaUJmcypqdm0IkuxTE2lnJSuQui6HSP/+73v+7zf+zzwMQT3lvJl
-        ojRxvFajjlbSMrKuZdq2PO6cV9jKyZyF+H5xNYV7HKMUHmlehm9Zn1E4f+gTgW22GinuTBuX
-        YuPQKwq/qL9O46lcK8LFtgYJvmftl+Kynm4J7kutoHHGI6sUN41foPC3J4Noi6fKcNOAVGZ9
-        v1RlrLpIqx7cTVHlmaqQasrot4s+KNt0jI+OSuC1KzYfkUXW9Jup2BFZ4kfLG1qHmphs5MYA
-        uwbqDdMoG8kYjq1AcMHQIRELB4IWw/uZyRSCklfd9L+V5vNWShyUI3g8OUCIhR1B9Y965FR5
-        saHwy2iRONmbXQI9P7+7NgjWRsKXWgeZjRiGZgPgYdUpp0bO7oAaXaNLT7ILofbziNTJPuwB
-        cJiNSNR4Qtu1YdLJbuxuyBp74GKCVUDv8C2JyP6QXlviMgRsKgM/MzMI0fY2sJsaSZG94GOr
-        SSryAui4nDPTF0CXW4pEToah/Bszmo3Q1NpNOT0Tf8NU169wIrBB0HZnroge8NruKTrwgMK6
-        q4TYlkNWJie+sRhMOV0SkedBueGKtAAp9bNy6Wdl0c/Kov9/9jYiq5CCjxdiInghUMOfDhDU
-        MUK8JiIg/GSMEf39dR2/Wicfoq/Pj1oQyyClu1znz4VxlDpBSIqxIGAIpbe8TM2GcfJj6qQz
-        vPbkYW18NC9Y0HyGVCrkZ+cMHOLYCHUcf4LnY3ntv6mEcfPVIWXD2KbgecnBhS+7So+r9oyb
-        x4JMvsWZqZubxvuKGg+tG+U0u+p+r1X4mRN7d9pWL98fv6/PRoeG7B22by/pbAtoX5V06ar7
-        1slFA4MbwhQTlaUtqTfblO2JBWlF97ZVXLyenB7Chad8rUybfpT1xr7+6R5yw5pIhzZi4l3s
-        qbwPPkVKUohUBy4ltIL6DzamK/lxAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsVy+t/xu7rFdcKxBr8naVlsnLGe1eL6l+es
-        Fs+OalvMP3KO1aL/8Wtmi/PnN7BbnG16w26x6fE1VovLu+awWXzuPcJoMeP8PiaLtUfuslss
-        vX6RyeJ24wo2i9a9R9gtDr9pZ7X4duIRo4Ogx5p5axg9ds66y+6xaVUnm8fmJfUefVtWMXp8
-        3iQXwBalZ1OUX1qSqpCRX1xiqxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OSmpNZllqkb5eg
-        l7Hh7k7WgmdcFa8O3WRrYDzM0cXIySEhYCJxtOUIaxcjF4eQwFJGiSsne9khEmISk/Zth7KF
-        Jf5c62KDKHrNKNF/aT0zSEJYIETi36ZDTCC2iICmxPW/38EmMQucZ5FYdPY+O0THFGaJSxu3
-        MHYxcnCwCehJ7FhVCNLAK+AmsaHhAFgzi4CqxNYPz8C2iQpESMze1cACUSMocXLmEzCbUyBQ
-        ouPFZjCbWcBMYt7mh8wQtrjErSfzmSBseYnmrbOZJzAKzULSPgtJyywkLbOQtCxgZFnFKJJa
-        WpybnltspFecmFtcmpeul5yfu4kRGOHbjv3csoOx613wIUYBDkYlHt4GeaFYIdbEsuLK3EOM
-        EhzMSiK8SxMFYoV4UxIrq1KL8uOLSnNSiw8xmgI9N5FZSjQ5H5h88kriDU0NzS0sDc2NzY3N
-        LJTEeTsEDsYICaQnlqRmp6YWpBbB9DFxcEo1MJbGffUSmT21j0Mozf0rW76msZP171/Lizxn
-        7Lg22eCkhX/8xX37Tq8XOx5XVybyMbE8TfryrgqvjjM/CuYyCa3Plj0U7bvsgvsksa4wkffd
-        hyfuzDuksq5ubZd6DwvDowtFL1m7G1i5jr7nbjJ7eHhz5667vMUlv26b7G/4vSX9jFLBp22V
-        u5RYijMSDbWYi4oTAdJz0PoGAwAA
-X-CMS-MailID: 20190626141723eucas1p2a3cd561e822e6caaeffcc6d004b37a69
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5
-References: <CGME20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5@eucas1p2.samsung.com>
-        <20190605091236.24263-1-l.luba@partner.samsung.com>
-        <20190605091236.24263-5-l.luba@partner.samsung.com>
-        <CAGTfZH2kTNWtx=Jp1UJaLN50Qxbq+Q9ThV4vhQ240QbOy1TRMQ@mail.gmail.com>
-        <7498059d-95f7-e154-cf49-bcbc8ee6fdb9@partner.samsung.com>
-        <CAJKOXPc6304D=HNQnrvhBH6qKxhkf=VQ2Gg6Q2FMP2hYOTYSDQ@mail.gmail.com>
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Will Deacon <will.deacon@arm.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Borislav Petkov <bp@suse.de>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        "Kulkarni, Ganapatrao" <Ganapatrao.Kulkarni@cavium.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Guo Ren <ren_guo@c-sky.com>, Joseph Lo <josephl@nvidia.com>,
+        Anju T Sudhakar <anju@linux.vnet.ibm.com>,
+        Hoan Tran <Hoan@os.amperecomputing.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/SAMSUNG EXYNOS
+        ARM ARCHITECTURES),
+        linux-samsung-soc@vger.kernel.org (moderated list:ARM/SAMSUNG EXYNOS
+        ARM ARCHITECTURES)
+Subject: [PATCH 04/25] clocksource/drivers/exynos_mct: Increase priority over ARM arch timer
+Date:   Wed, 26 Jun 2019 16:46:30 +0200
+Message-Id: <20190626144651.16742-4-daniel.lezcano@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190626144651.16742-1-daniel.lezcano@linaro.org>
+References: <adba7d03-e9bd-9542-60bc-0f2d4874a40e@linaro.org>
+ <20190626144651.16742-1-daniel.lezcano@linaro.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-On 6/26/19 4:03 PM, Krzysztof Kozlowski wrote:
-> On Wed, 26 Jun 2019 at 15:58, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>
->> Hi Chanwoo,
->>
->> On 6/26/19 10:23 AM, Chanwoo Choi wrote:
->>> Hi Lukasz,
->>>
->>> 2019년 6월 5일 (수) 18:14, Lukasz Luba <l.luba@partner.samsung.com
->>> <mailto:l.luba@partner.samsung.com>>님이 작성:
->>>
->>>      Extend the documenation by events description with new 'event-data-type'
->>>      field. Add example how the event might be defined in DT.
->>>
->>>      Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com
->>>      <mailto:l.luba@partner.samsung.com>>
->>>      Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com
->>>      <mailto:cw00.choi@samsung.com>>
->>>      ---
->>>        .../bindings/devfreq/event/exynos-ppmu.txt    | 26 +++++++++++++++++--
->>>        1 file changed, 24 insertions(+), 2 deletions(-)
->>>
->>>
->>>
->>> Acked-by: Chanwoo Choi <cw00.choi@samsung.com
->>
->> Thank you for the ACKs for this a 2/5 patch.
->> Do you think the v4 could be merged now?
-> 
-> I think you have all necessary acks. I can take the DTS patch (5/5)
-> although probably for next merge window as I just sent one.
-There was one patch 3/5
-https://lkml.org/lkml/2019/6/5/215
-which was waiting ACK or I missed the email somehow.
+Exynos SoCs based on CA7/CA15 have 2 timer interfaces: custom Exynos MCT
+(Multi Core Timer) and standard ARM Architected Timers.
 
-Regards,
-Lukasz
+There are use cases, where both timer interfaces are used simultanously.
+One of such examples is using Exynos MCT for the main system timer and
+ARM Architected Timers for the KVM and virtualized guests (KVM requires
+arch timers).
 
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
+Exynos Multi-Core Timer driver (exynos_mct) must be however started
+before ARM Architected Timers (arch_timer), because they both share some
+common hardware blocks (global system counter) and turning on MCT is
+needed to get ARM Architected Timer working properly.
+
+To ensure selecting Exynos MCT as the main system timer, increase MCT
+timer rating. To ensure proper starting order of both timers during
+suspend/resume cycle, increase MCT hotplug priority over ARM Archictected
+Timers.
+
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+---
+ drivers/clocksource/exynos_mct.c | 4 ++--
+ include/linux/cpuhotplug.h       | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+index 34bd250d46c6..6aa10cbc1d59 100644
+--- a/drivers/clocksource/exynos_mct.c
++++ b/drivers/clocksource/exynos_mct.c
+@@ -209,7 +209,7 @@ static void exynos4_frc_resume(struct clocksource *cs)
+ 
+ static struct clocksource mct_frc = {
+ 	.name		= "mct-frc",
+-	.rating		= 400,
++	.rating		= 450,	/* use value higher than ARM arch timer */
+ 	.read		= exynos4_frc_read,
+ 	.mask		= CLOCKSOURCE_MASK(32),
+ 	.flags		= CLOCK_SOURCE_IS_CONTINUOUS,
+@@ -464,7 +464,7 @@ static int exynos4_mct_starting_cpu(unsigned int cpu)
+ 	evt->set_state_oneshot_stopped = set_state_shutdown;
+ 	evt->tick_resume = set_state_shutdown;
+ 	evt->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT;
+-	evt->rating = 450;
++	evt->rating = 500;	/* use value higher than ARM arch timer */
+ 
+ 	exynos4_mct_write(TICK_BASE_CNT, mevt->base + MCT_L_TCNTB_OFFSET);
+ 
+diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
+index 5c6062206760..87c211adf49e 100644
+--- a/include/linux/cpuhotplug.h
++++ b/include/linux/cpuhotplug.h
+@@ -116,10 +116,10 @@ enum cpuhp_state {
+ 	CPUHP_AP_PERF_ARM_ACPI_STARTING,
+ 	CPUHP_AP_PERF_ARM_STARTING,
+ 	CPUHP_AP_ARM_L2X0_STARTING,
++	CPUHP_AP_EXYNOS4_MCT_TIMER_STARTING,
+ 	CPUHP_AP_ARM_ARCH_TIMER_STARTING,
+ 	CPUHP_AP_ARM_GLOBAL_TIMER_STARTING,
+ 	CPUHP_AP_JCORE_TIMER_STARTING,
+-	CPUHP_AP_EXYNOS4_MCT_TIMER_STARTING,
+ 	CPUHP_AP_ARM_TWD_STARTING,
+ 	CPUHP_AP_QCOM_TIMER_STARTING,
+ 	CPUHP_AP_TEGRA_TIMER_STARTING,
+-- 
+2.17.1
+
