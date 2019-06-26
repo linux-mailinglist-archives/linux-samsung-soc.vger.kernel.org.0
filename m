@@ -2,81 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4143D5629A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Jun 2019 08:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B6CD5631A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Jun 2019 09:20:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726006AbfFZGuw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 26 Jun 2019 02:50:52 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:34672 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725954AbfFZGuw (ORCPT
+        id S1726873AbfFZHUy convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 26 Jun 2019 03:20:54 -0400
+Received: from relmlor2.renesas.com ([210.160.252.172]:11617 "EHLO
+        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726889AbfFZHUy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 26 Jun 2019 02:50:52 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: andrzej.p)
-        with ESMTPSA id 2DC2D285638
-Subject: Re: [PATCH 0/2] Associate ddc adapters with connectors
-To:     Russell King - ARM Linux admin <linux@armlinux.org.uk>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Wed, 26 Jun 2019 03:20:54 -0400
+Date:   26 Jun 2019 16:20:51 +0900
+X-IronPort-AV: E=Sophos;i="5.62,418,1554735600"; 
+   d="scan'208";a="19524726"
+Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
+  by relmlie6.idc.renesas.com with ESMTP; 26 Jun 2019 16:20:51 +0900
+Received: from morimoto-PC.renesas.com (unknown [10.166.18.140])
+        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 79ED641F8BFB;
+        Wed, 26 Jun 2019 16:20:51 +0900 (JST)
+Message-ID: <874l4czuez.wl-kuninori.morimoto.gx@renesas.com>
+From:   Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Linux-ALSA <alsa-devel@alsa-project.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Inki Dae <inki.dae@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>, dri-devel@lists.freedesktop.org,
-        kernel@collabora.com, Sean Paul <sean@poorly.run>,
-        linux-kernel@vger.kernel.org, m.szyprowski@samsung.com
-References: <cover.1561452052.git.andrzej.p@collabora.com>
- <20190625100351.52ddptvb2gizaepi@shell.armlinux.org.uk>
- <817ccfba-754c-6a28-8d75-63f70605fd43@collabora.com>
- <20190625133639.GA16031@arch-x1c3>
- <20190625140755.GT12905@phenom.ffwll.local>
- <20190625141032.5jiy2oekb3olaejd@shell.armlinux.org.uk>
- <20190625142031.GV12905@phenom.ffwll.local>
-From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Message-ID: <3fb19371-db7d-f9dc-31a7-1ccd126f6784@collabora.com>
-Date:   Wed, 26 Jun 2019 08:50:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
-MIME-Version: 1.0
-In-Reply-To: <20190625142031.GV12905@phenom.ffwll.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [alsa-devel] [PATCH resend 25/47] ASoC: samsung: snow: don't select unnecessary Platform
+In-Reply-To: <df7a5c52-177c-a15f-ac64-3af88d97b65f@samsung.com>
+References: <877e9iwf9f.wl-kuninori.morimoto.gx@renesas.com>
+        <874l4mv0h8.wl-kuninori.morimoto.gx@renesas.com>
+        <CGME20190624131905eucas1p2cf4335b4d1483b7e62d0c9e7b5223a3c@eucas1p2.samsung.com>
+        <9cfc8505-2903-033f-f68b-8ccc1c70132b@samsung.com>
+        <87d0j232wg.wl-kuninori.morimoto.gx@renesas.com>
+        <80c5c575-6f28-c6a6-91b2-d701bb9fbce8@samsung.com>
+        <877e9a2hvn.wl-kuninori.morimoto.gx@renesas.com>
+        <c4bb4599-e5d5-926b-75d5-d5c349ed8076@samsung.com>
+        <87ef3hz0yn.wl-kuninori.morimoto.gx@renesas.com>
+        <87a7e5ywqs.wl-kuninori.morimoto.gx@renesas.com>
+        <7a96b050-4ad7-0a9f-41a1-adf27704bf61@samsung.com>
+        <df7a5c52-177c-a15f-ac64-3af88d97b65f@samsung.com>
+User-Agent: Wanderlust/2.15.9 Emacs/24.5 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-W dniu 25.06.2019 oÂ 16:20, Daniel Vetter pisze:
-> On Tue, Jun 25, 2019 at 03:10:32PM +0100, Russell King - ARM Linux admin wrote:
->> On Tue, Jun 25, 2019 at 04:07:55PM +0200, Daniel Vetter wrote:
->>> Otherwise I like this. Biggest problem I'm seeing here is rolling this out
->>> everywhere, this is a lot of work. And without widespread adoptions it's
->>> not terribly useful for userspace.
->>
->> There will be cases where it's not possible, because the I2C bus is
->> hidden behind a chip that doesn't give you direct access to the DDC
->> bus.
-> 
-> Oh sure, plus lots of connectors where there's just not ddc bus at all.
-> But if we only roll this out for a handful of drivers it's also not great,
-> that's what I meant. Looking at
-> 
-> $ git grep drm_do_get_edid
-> 
-> there's only very few drivers where the ddc bus is hidden. There's a lot
-> more where it's not, and I think a big series to tackle those would serve
-> extremely well to make a case for this sysfs link.
-> -Daniel
-> 
 
-I will respond with a v3 then, including as many drivers as possible.
-Those will be compile-tested only, though.
+Hi Marek
 
-Andrzej
+Thank you for your report
+
+> [    2.970127] -----3830000.i2s : samsung-i2s
+> [    2.973029] -----snd-soc-dummy : (null)
+> [    2.976851] -----hdmi-audio-codec.0.auto : (null)
+> [    2.981476] -----3830000.i2s-sec : snd_dmaengine_pcm
+> [    2.986459] -----3830000.i2s : snd_dmaengine_pcm
+> [    2.991022] -----max98090.1-0010 : (null)
+> [    2.995065] -----snd-soc-dummy : (null)
+> [    2.998866] -----hdmi-audio-codec.0.auto : (null)
+> [    3.003523] -----max98090.1-0010 : (null)
+
+Ahh, OK...
+Unfortunately, alternative idea will add extra component to
+rtd in your case.
+This means, my patches were totally buggy.
+I need to negotiate Mark revert/remove all buggy patches.
+
+Thank you for your help !!
+Best regards
+---
+Kuninori Morimoto
