@@ -2,161 +2,120 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D5A4581F0
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 13:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5E31581F5
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 13:57:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726431AbfF0L4O (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jun 2019 07:56:14 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:46728 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726429AbfF0L4O (ORCPT
+        id S1726635AbfF0L5n (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jun 2019 07:57:43 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:40878 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbfF0L5n (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jun 2019 07:56:14 -0400
+        Thu, 27 Jun 2019 07:57:43 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190627115611euoutp01b83f38d601f78e6e4474765620a2627f~sDDAI8Bjg1395813958euoutp01z;
-        Thu, 27 Jun 2019 11:56:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190627115611euoutp01b83f38d601f78e6e4474765620a2627f~sDDAI8Bjg1395813958euoutp01z
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190627115742euoutp02360c5fa081d140b2278925e78f00a645~sDEUyh_Pi1462914629euoutp02I;
+        Thu, 27 Jun 2019 11:57:42 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190627115742euoutp02360c5fa081d140b2278925e78f00a645~sDEUyh_Pi1462914629euoutp02I
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1561636571;
-        bh=bE/VlrZLAxBMgBl05LgJ8tALX1n4la4rZt1pZKOt6vY=;
+        s=mail20170921; t=1561636662;
+        bh=hto40vsNehMa0OIT4TeT4+M7PyFgh8WgqzLrY9L7ymI=;
         h=From:To:Cc:Subject:Date:References:From;
-        b=PM53scPuvQnnZHnBZlvIvh9DYQ3SOOWGygNaxCLJ3mYhknE/aiSWLHe3HEFkzdoAN
-         mJjEKvT6tYdL0zhI16EZGonFlFae3G7b6AZjyoV7vYh0EYX2tJJ/f/1JFj8LGyYZLr
-         zWhUVn36sK7EIR0LdqE5T0nTZxUgo8VbVKduHQtw=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190627115610eucas1p1c17318ef9b7cf89f79839ad7b0476d3b~sDC-pYGTE0487204872eucas1p1Z;
-        Thu, 27 Jun 2019 11:56:10 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 43.C1.04377.ADEA41D5; Thu, 27
-        Jun 2019 12:56:10 +0100 (BST)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        b=mRazVsNvMyXmqGazO8gqmSFXF87gi3dbJY/91Tj9AM2C6TmNg3ba/CFkKkvF0ioaU
+         oYV7skonm58+YN1esnIhUSjv3HRdJOwqyCuiNBtkifz657AJRMvIASnrEH4R00NoNg
+         FYGfuoLTpM+fNdIx8drq3CJ+De6lbVKwESxKxw2w=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc~sDC-BVekw0574705747eucas1p2c;
-        Thu, 27 Jun 2019 11:56:10 +0000 (GMT)
-X-AuditID: cbfec7f4-5632c9c000001119-3e-5d14aeda348e
+        20190627115741eucas1p287521ce7d41c47328e19234fb2ca1c65~sDEUXSkki1575615756eucas1p2r;
+        Thu, 27 Jun 2019 11:57:41 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 11.9A.04325.53FA41D5; Thu, 27
+        Jun 2019 12:57:41 +0100 (BST)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190627115740eucas1p124ef4db737adadbe2a4fb8e4f10fd5e8~sDETtgFpf2812028120eucas1p1j;
+        Thu, 27 Jun 2019 11:57:40 +0000 (GMT)
+X-AuditID: cbfec7f5-b75ff700000010e5-00-5d14af35a215
 Received: from eusync1.samsung.com ( [203.254.199.211]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id C2.0B.04140.9DEA41D5; Thu, 27
-        Jun 2019 12:56:09 +0100 (BST)
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 81.3B.04140.43FA41D5; Thu, 27
+        Jun 2019 12:57:40 +0100 (BST)
 Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
         eusync1.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
-        (built May  5 2014)) with ESMTPA id <0PTR008XZAHGTW00@eusync1.samsung.com>;
-        Thu, 27 Jun 2019 12:56:09 +0100 (BST)
+        (built May  5 2014)) with ESMTPA id <0PTR008YQAK1TW00@eusync1.samsung.com>;
+        Thu, 27 Jun 2019 12:57:40 +0100 (BST)
 From:   Marek Szyprowski <m.szyprowski@samsung.com>
 To:     linux-samsung-soc@vger.kernel.org
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH] ARM: dts: exynos: Remove PMU interrupt from MALI400 GPU on
- Exynos4210
-Date:   Thu, 27 Jun 2019 13:55:53 +0200
-Message-id: <20190627115553.32426-1-m.szyprowski@samsung.com>
+Subject: [PATCH] ARM: dts: exynos: Move MALI400 GPU node to "/soc"
+Date:   Thu, 27 Jun 2019 13:57:25 +0200
+Message-id: <20190627115725.32594-1-m.szyprowski@samsung.com>
 X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBLMWRmVeSWpSXmKPExsWy7djPc7q31onEGpyYImWxccZ6Vovz5zew
-        W8w4v4/JYu2Ru+wOLB6bVnWyefRtWcXo8XmTXABzFJdNSmpOZllqkb5dAlfG48OrWAvO6Fes
-        W7+ZqYFxuloXIyeHhICJxN7+bUwgtpDACkaJLVd9IOzPjBIdX3JhajZPPsTYxcgFFF/GKHFm
-        62YmCOc/o8T82cdZQKrYBAwlut52sYHYIgKqEp/bFrCDFDEL9DFKXN87lxkkISwQIfH74yR2
-        EJsFqOhryyywBl4BW4mrF3YxQqyTl1i94QAzSLOEwElWiY0Pm5kgEi4S67fuhrJlJC5P7maB
-        KGpmlHh4bi07hNPDKHG5aQbUKGuJw8cvsoLYzAJ8EpO2TQcaywEU55XoaBOCKPGQWPdnKTPE
-        07ESO1/uYZrAKL6AkWEVo3hqaXFuemqxUV5quV5xYm5xaV66XnJ+7iZGYHyc/nf8yw7GXX+S
-        DjEKcDAq8fAy7BGOFWJNLCuuzD3EKMHBrCTCmx8mEivEm5JYWZValB9fVJqTWnyIUZqDRUmc
-        t5rhQbSQQHpiSWp2ampBahFMlomDU6qBUelepOnBdbzPbMXKA9s3Xv0+oTKeRyqROSzviszv
-        xf9lV294GjfpR8e2P+ej+Yv575o+KHHJk1RWOPpp9tTeZ0e/2R20COPtr3026afH4QdbXgbe
-        1tGLWbLgvMDKo29m5TqzuOSUff6e6rBAZO6DfvWIyHc8mcFTWv13XNGec5f35HSN2cy5x5RY
-        ijMSDbWYi4oTAeaBeDqLAgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOJMWRmVeSWpSXmKPExsVy+t/xy7o314nEGmzq07XYOGM9q8X58xvY
-        LWac38dksfbIXXYHFo9NqzrZPPq2rGL0+LxJLoA5issmJTUnsyy1SN8ugSvj8eFVrAVn9CvW
-        rd/M1MA4Xa2LkZNDQsBEYvPkQ4xdjFwcQgJLGCW6D31kgXAamSSuzFrIAlLFJmAo0fW2iw3E
-        FhFQlfjctoAdpIhZYAKjxOqFs1hBEsICERK/P05iB7FZgIq+tswCa+AVsJW4emEXI8Q6eYnV
-        Gw4wT2DkWsDIsIpRJLW0ODc9t9hIrzgxt7g0L10vOT93EyPQu9uO/dyyg7HrXfAhRgEORiUe
-        3hU7hWOFWBPLiitzDzFKcDArifDmh4nECvGmJFZWpRblxxeV5qQWH2KU5mBREuftEDgYIySQ
-        nliSmp2aWpBaBJNl4uCUamDcdc9I4+bXAoZ1ytUMn5LX2N2bbHmoTk8sPjlIzlsz7s3kE5ki
-        Sb8r6v2NWa+5dz/94RvE9kJ6y6MFPK6pZy3fH2dYHLX3y02Vm14tjA6Xv61cpam3WqnJR9+e
-        8admaMIfjx8v+E8nrToSfE9GI0b4rsHpNucfAQlBZfwfwuo/xXnOWWYX6azEUpyRaKjFXFSc
-        CADKtaOD6gEAAA==
-X-CMS-MailID: 20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOLMWRmVeSWpSXmKPExsWy7djPc7qm60ViDZo+illsnLGe1eL8+Q3s
+        FjPO72OyWHvkLrsDi8emVZ1sHn1bVjF6fN4kF8AcxWWTkpqTWZZapG+XwJXx4p1RwTelilkt
+        K5gbGNdIdTFyckgImEi8332YrYuRi0NIYAWjxImp/cwQzmdGiTU797F3MXKAVb19rwcRX8Yo
+        8eMSTMd/Rok320E6ODnYBAwlut52sYHYIgKqEp/bFrCDFDEL9DFKXN87F6xIWMBJ4sXXE2A2
+        C1DRgnO7WUFsXgFbiebOZhaIm+QlVm84AHaGhMBJVolVf/4zQiRcJF6eXMMOYctIXJ7czQJR
+        1Mwo8fDcWnYIp4dR4nLTDKgOa4nDxy+CrWAW4JOYtG06M8RDvBIdbUIQJR4Scxp3sIKEhQRi
+        Jfb8SJjAKL6AkWEVo3hqaXFuemqxcV5quV5xYm5xaV66XnJ+7iZGYHSc/nf86w7GfX+SDjEK
+        cDAq8fCu2CkcK8SaWFZcmXuIUYKDWUmENz9MJFaINyWxsiq1KD++qDQntfgQozQHi5I4bzXD
+        g2ghgfTEktTs1NSC1CKYLBMHp1QD41SG0m32DbP575m3Xzp07+bFFWubVBPPq5bLqy3Yd2D3
+        rd2B30M1Ov7z2/5iP8BvdLuWtf6cZd03l2U6BrMXJk3VXZe7pEr4W9/NYCm9+s0yM3lLo5Z2
+        sBhPEmP4OYdfXGbCqylX7kXcf7Ypz7Tq07twtfSwTQx2PKZfsyQzqs7sCQ6cvrImW4mlOCPR
+        UIu5qDgRALSYeliKAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKJMWRmVeSWpSXmKPExsVy+t/xy7om60ViDb6917bYOGM9q8X58xvY
+        LWac38dksfbIXXYHFo9NqzrZPPq2rGL0+LxJLoA5issmJTUnsyy1SN8ugSvjxTujgm9KFbNa
+        VjA3MK6R6mLk4JAQMJF4+16vi5GLQ0hgCaPExqvv2SCcRiaJPa8/sXcxcnKwCRhKdL3tYgOx
+        RQRUJT63LWAHKWIWmMAosXrhLFaQhLCAk8SLryeYQWwWoKIF53aDxXkFbCWaO5tZQGwJAXmJ
+        1RsOME9g5FrAyLCKUSS1tDg3PbfYSK84Mbe4NC9dLzk/dxMj0LPbjv3csoOx613wIUYBDkYl
+        Ht4VO4VjhVgTy4orcw8xSnAwK4nw5oeJxArxpiRWVqUW5ccXleakFh9ilOZgURLn7RA4GCMk
+        kJ5YkpqdmlqQWgSTZeLglGpgnFX9amHBCSGvD+qxnIcP+y3NE3m5IfRS2f2XRfsLl1/NvzPj
+        e09nufqCZ/P7J39QURYW5Wn687hl+cOpS+J4rc41Gty2lTm5pOLaz1oBX2bOV4t07z+oWh06
+        WSJmwc5Ds44282gaOb+0n8NmqpF0KMyuL8mD80owm5vyzMzLa4Pe3NbaNbPuixJLcUaioRZz
+        UXEiAJAjMi/oAQAA
+X-CMS-MailID: 20190627115740eucas1p124ef4db737adadbe2a4fb8e4f10fd5e8
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc
-References: <CGME20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc@eucas1p2.samsung.com>
+X-CMS-RootMailID: 20190627115740eucas1p124ef4db737adadbe2a4fb8e4f10fd5e8
+References: <CGME20190627115740eucas1p124ef4db737adadbe2a4fb8e4f10fd5e8@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The PMU module of MALI400 GPU is optional and it looks that it is not
-present on Exynos4210, because any access to its registers causes external
-abort. This patch removes "pmu" interrupt for Exynos4210 SoCs, so the
-driver will skip the PMU module. This fixes following fault during kernel
-boot:
+MALI400 GPU hardware module is a standard hardware module integrated to
+Exynos3210/4210/4412 SoCs, so it should reside under the "/soc" node.
+The only SoC components which are placed in the DT root, are those, which
+are a part of CPUs: like ARM architected timers and ARM performance
+measurement units.
 
- 8<--- cut here ---
- Unhandled fault: imprecise external abort (0x1406) at 0x00000000
- pgd = (ptrval)
- [00000000] *pgd=00000000
- Internal error: : 1406 [#1] PREEMPT SMP ARM
- Modules linked in:
- CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.2.0-rc6-next-20190625-00005-g6fc2b61c64ab #6241
- Hardware name: SAMSUNG EXYNOS (Flattened Device Tree)
- PC is at lima_pmu_init+0x38/0x108
- LR is at arm_heavy_mb+0x1c/0x38
- pc : [<c059eb78>]    lr : [<c011aa6c>]    psr: 60000013
- sp : d94c9da0  ip : d9000200  fp : d94bd070
- r10: 00000001  r9 : 00000000  r8 : c1065aec
- r7 : 00000000  r6 : 00000000  r5 : 00000000  r4 : d94bd070
- r3 : e0932000  r2 : 0000ffff  r1 : 00000000  r0 : d94bd070
- Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
- Control: 10c5387d  Table: 4000404a  DAC: 00000051
- Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
- ...
- [<c059eb78>] (lima_pmu_init) from [<c059e6f8>] (lima_device_init+0x244/0x5a0)
- [<c059e6f8>] (lima_device_init) from [<c059e40c>] (lima_pdev_probe+0x7c/0xd8)
- [<c059e40c>] (lima_pdev_probe) from [<c05afcb8>] (platform_drv_probe+0x48/0x9c)
- [<c05afcb8>] (platform_drv_probe) from [<c05ad594>] (really_probe+0x1c4/0x400)
- [<c05ad594>] (really_probe) from [<c05ad988>] (driver_probe_device+0x78/0x1b8)
- [<c05ad988>] (driver_probe_device) from [<c05add30>] (device_driver_attach+0x58/0x60)
- [<c05add30>] (device_driver_attach) from [<c05ade34>] (__driver_attach+0xfc/0x160)
- [<c05ade34>] (__driver_attach) from [<c05ab650>] (bus_for_each_dev+0x68/0xb4)
- [<c05ab650>] (bus_for_each_dev) from [<c05ac734>] (bus_add_driver+0x104/0x20c)
- [<c05ac734>] (bus_add_driver) from [<c05aece0>] (driver_register+0x78/0x10c)
- [<c05aece0>] (driver_register) from [<c0103214>] (do_one_initcall+0x8c/0x430)
- [<c0103214>] (do_one_initcall) from [<c0f01328>] (kernel_init_freeable+0x3c8/0x4d0)
- [<c0f01328>] (kernel_init_freeable) from [<c0ac3aa0>] (kernel_init+0x8/0x10c)
- [<c0ac3aa0>] (kernel_init) from [<c01010b4>] (ret_from_fork+0x14/0x20)
- Exception stack(0xd94c9fb0 to 0xd94c9ff8)
- ...
- ---[ end trace 96ddc2a2879732ab ]---
-
-The PMU module seems to work fine on Exynos4412 SoCs, so the patch also
-moves the interrupt definitions to exynos4210.dtsi and exynos4412.dtsi
-respectively, to keep only the common part in exynos4.dtsi.
-
-Fixes: 13efd80acaa4 ("ARM: dts: exynos: Add GPU/Mali 400 node to Exynos4")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
- arch/arm/boot/dts/exynos4.dtsi    | 22 ----------------------
- arch/arm/boot/dts/exynos4210.dtsi | 20 ++++++++++++++++++++
- arch/arm/boot/dts/exynos4412.dtsi | 22 ++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 22 deletions(-)
+ arch/arm/boot/dts/exynos3250.dtsi | 66 +++++++++++++++----------------
+ arch/arm/boot/dts/exynos4.dtsi    | 28 ++++++-------
+ 2 files changed, 47 insertions(+), 47 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
-index 6005cfbbed89..7863a21a7a64 100644
---- a/arch/arm/boot/dts/exynos4.dtsi
-+++ b/arch/arm/boot/dts/exynos4.dtsi
-@@ -54,28 +54,6 @@
- 	gpu: gpu@13000000 {
- 		compatible = "samsung,exynos4210-mali", "arm,mali-400";
- 		reg = <0x13000000 0x10000>;
--		interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
+index c17870a54acf..5659c4a10729 100644
+--- a/arch/arm/boot/dts/exynos3250.dtsi
++++ b/arch/arm/boot/dts/exynos3250.dtsi
+@@ -126,39 +126,6 @@
+ 		};
+ 	};
+ 
+-	gpu: gpu@13000000 {
+-		compatible = "samsung,exynos4210-mali", "arm,mali-400";
+-		reg = <0x13000000 0x10000>;
+-		interrupts = <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 179 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 177 IRQ_TYPE_LEVEL_HIGH>;
 -		interrupt-names = "gp",
 -				  "gpmmu",
 -				  "pp0",
@@ -168,73 +127,103 @@ index 6005cfbbed89..7863a21a7a64 100644
 -				  "pp3",
 -				  "ppmmu3",
 -				  "pmu";
- 		/*
- 		 * CLK_G3D is not actually bus clock but a IP-level clock.
- 		 * The bus clock is not described in hardware manual.
-diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index 6122da368092..f220716239db 100644
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -450,6 +450,26 @@
- };
+-		clocks = <&cmu CLK_G3D>,
+-			 <&cmu CLK_SCLK_G3D>;
+-		clock-names = "bus", "core";
+-		power-domains = <&pd_g3d>;
+-		status = "disabled";
+-		/* TODO: operating points for DVFS, assigned clock as 134 MHz */
+-	};
+-
+ 	pmu {
+ 		compatible = "arm,cortex-a7-pmu";
+ 		interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>,
+@@ -495,6 +462,39 @@
+ 			status = "disabled";
+ 		};
  
- &gpu {
-+	interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
-+	interrupt-names = "gp",
-+			  "gpmmu",
-+			  "pp0",
-+			  "ppmmu0",
-+			  "pp1",
-+			  "ppmmu1",
-+			  "pp2",
-+			  "ppmmu2",
-+			  "pp3",
-+			  "ppmmu3";
- 	operating-points-v2 = <&gpu_opp_table>;
++		gpu: gpu@13000000 {
++			compatible = "samsung,exynos4210-mali", "arm,mali-400";
++			reg = <0x13000000 0x10000>;
++			interrupts = <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 179 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 177 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "gp",
++					  "gpmmu",
++					  "pp0",
++					  "ppmmu0",
++					  "pp1",
++					  "ppmmu1",
++					  "pp2",
++					  "ppmmu2",
++					  "pp3",
++					  "ppmmu3",
++					  "pmu";
++			clocks = <&cmu CLK_G3D>,
++				 <&cmu CLK_SCLK_G3D>;
++			clock-names = "bus", "core";
++			power-domains = <&pd_g3d>;
++			status = "disabled";
++			/* TODO: operating points for DVFS, assigned clock as 134 MHz */
++		};
++
+ 		mfc: codec@13400000 {
+ 			compatible = "samsung,mfc-v7";
+ 			reg = <0x13400000 0x10000>;
+diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
+index 7863a21a7a64..1264cc431ff6 100644
+--- a/arch/arm/boot/dts/exynos4.dtsi
++++ b/arch/arm/boot/dts/exynos4.dtsi
+@@ -51,20 +51,6 @@
+ 		serial3 = &serial_3;
+ 	};
  
- 	gpu_opp_table: opp_table {
-diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-index 7bed6842575a..d20db2dfe8e2 100644
---- a/arch/arm/boot/dts/exynos4412.dtsi
-+++ b/arch/arm/boot/dts/exynos4412.dtsi
-@@ -717,6 +717,28 @@
- };
+-	gpu: gpu@13000000 {
+-		compatible = "samsung,exynos4210-mali", "arm,mali-400";
+-		reg = <0x13000000 0x10000>;
+-		/*
+-		 * CLK_G3D is not actually bus clock but a IP-level clock.
+-		 * The bus clock is not described in hardware manual.
+-		 */
+-		clocks = <&clock CLK_G3D>,
+-			 <&clock CLK_SCLK_G3D>;
+-		clock-names = "bus", "core";
+-		power-domains = <&pd_g3d>;
+-		status = "disabled";
+-	};
+-
+ 	pmu: pmu {
+ 		compatible = "arm,cortex-a9-pmu";
+ 		interrupt-parent = <&combiner>;
+@@ -429,6 +415,20 @@
+ 			};
+ 		};
  
- &gpu {
-+	interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
-+		     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
-+	interrupt-names = "gp",
-+			  "gpmmu",
-+			  "pp0",
-+			  "ppmmu0",
-+			  "pp1",
-+			  "ppmmu1",
-+			  "pp2",
-+			  "ppmmu2",
-+			  "pp3",
-+			  "ppmmu3",
-+			  "pmu";
- 	operating-points-v2 = <&gpu_opp_table>;
- 
- 	gpu_opp_table: opp_table {
++		gpu: gpu@13000000 {
++			compatible = "samsung,exynos4210-mali", "arm,mali-400";
++			reg = <0x13000000 0x10000>;
++			/*
++			 * CLK_G3D is not actually bus clock but a IP-level clock.
++			 * The bus clock is not described in hardware manual.
++			 */
++			clocks = <&clock CLK_G3D>,
++				 <&clock CLK_SCLK_G3D>;
++			clock-names = "bus", "core";
++			power-domains = <&pd_g3d>;
++			status = "disabled";
++		};
++
+ 		i2s1: i2s@13960000 {
+ 			compatible = "samsung,s3c6410-i2s";
+ 			reg = <0x13960000 0x100>;
 -- 
 2.17.1
 
