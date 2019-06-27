@@ -2,175 +2,239 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CDB658069
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 12:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D5A4581F0
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 13:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbfF0KbP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jun 2019 06:31:15 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:38246 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbfF0KbO (ORCPT
+        id S1726431AbfF0L4O (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jun 2019 07:56:14 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:46728 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726429AbfF0L4O (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jun 2019 06:31:14 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190627103113euoutp029442f57e5121b8cbb47a0243f78bdf03~sB40RP-E03093630936euoutp02X
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jun 2019 10:31:13 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190627103113euoutp029442f57e5121b8cbb47a0243f78bdf03~sB40RP-E03093630936euoutp02X
+        Thu, 27 Jun 2019 07:56:14 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190627115611euoutp01b83f38d601f78e6e4474765620a2627f~sDDAI8Bjg1395813958euoutp01z;
+        Thu, 27 Jun 2019 11:56:11 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190627115611euoutp01b83f38d601f78e6e4474765620a2627f~sDDAI8Bjg1395813958euoutp01z
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1561631473;
-        bh=9qMksaSn2o1RzY5tC5OZ+NxmFvebkX7TJu1+xGfBCiw=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=ccL1ZDEHKxyJ2Fn81kIcR92zG9FOs3MjLjrzdmi8mKJrr0zbqMsPS7DztwbH5+1j4
-         AqAJok66BCDtV2v74jPvbCC/Ax5zDl2AO9m6QL6UFE0QKKyuwQ9iobhBTUnJ+DG+vs
-         O2hGtr5ZbiRd7QpBkP8fnaA/qNaArNu+2nFGrUpQ=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        s=mail20170921; t=1561636571;
+        bh=bE/VlrZLAxBMgBl05LgJ8tALX1n4la4rZt1pZKOt6vY=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=PM53scPuvQnnZHnBZlvIvh9DYQ3SOOWGygNaxCLJ3mYhknE/aiSWLHe3HEFkzdoAN
+         mJjEKvT6tYdL0zhI16EZGonFlFae3G7b6AZjyoV7vYh0EYX2tJJ/f/1JFj8LGyYZLr
+         zWhUVn36sK7EIR0LdqE5T0nTZxUgo8VbVKduHQtw=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190627103112eucas1p1ae22251d569889712181490145817bea~sB4zUOgNn3171631716eucas1p1V;
-        Thu, 27 Jun 2019 10:31:12 +0000 (GMT)
+        20190627115610eucas1p1c17318ef9b7cf89f79839ad7b0476d3b~sDC-pYGTE0487204872eucas1p1Z;
+        Thu, 27 Jun 2019 11:56:10 +0000 (GMT)
 Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 91.F0.04298.FEA941D5; Thu, 27
-        Jun 2019 11:31:11 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190627103111eucas1p204450a032db835ba18a70d12939384e9~sB4yiP0K41122111221eucas1p2Y;
-        Thu, 27 Jun 2019 10:31:11 +0000 (GMT)
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 43.C1.04377.ADEA41D5; Thu, 27
+        Jun 2019 12:56:10 +0100 (BST)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190627103111eusmtrp25aa2911c568498975452e64c9e863a35~sB4yUDhim0413004130eusmtrp2H;
-        Thu, 27 Jun 2019 10:31:11 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-71-5d149aef4419
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 04.30.04140.FEA941D5; Thu, 27
-        Jun 2019 11:31:11 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190627103110eusmtip2f3f2e980cd4c4b326eada11fb687fe3e~sB4xhqKXS1415414154eusmtip2e;
-        Thu, 27 Jun 2019 10:31:10 +0000 (GMT)
-Subject: Re: [PATCH v4 4/5] Documentation: devicetree: add PPMU events
- description
-To:     Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>, cwchoi00@gmail.com
-Cc:     devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, robh+dt@kernel.org,
-        mark.rutland@arm.com, kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com, kgene@kernel.org,
-        willy.mh.wolff.ml@gmail.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <3fdba210-2ca1-9fe3-c886-25d1d13bb133@partner.samsung.com>
-Date:   Thu, 27 Jun 2019 12:31:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <99a47066-3713-77fa-4afb-6f2f17a2721a@samsung.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0zNYRjHe3/3mpO306HHZdhpuTWFyd4wl2ntZGwNWZOWQ79VqhPnJ1Qu
-        uSvdpFyOJJHSaumoVijdFItSTbXMZsplKaxTDBN+/TL9932e5/Ncvu9egVZ3s1OFEMNe0WjQ
-        h2k5G6as4Xvzgs8mjf/C0kZ3UnypiCWdQ+9Z8u6RM7lW38yS5J6PNGlpucOTZ8f6eWLu6WBJ
-        +70MjlgS6xG51FJFkcL6VzzJ6WylyMujeRw5WVnPk7r+0yz5+vgNWm2nK8gsQLoK0yteZ86P
-        43R3bx7RJZXkI53FPMOb22qzIlAMC9knGl1XbrcJTmlOYnefwAeGf3rHor4J8chaALwE0s7W
-        0PHIRlDjPATF2Sc5JRhC0FDdwMuUGlsQpOfOiEfCaEfVF43C5CLoGMyglGAAwdMPPxi5wR5v
-        hhFzLSVrDRbhx/AvJEM0Tmfga00cJ0/isAuU5++RGRX2hG+WaiSnGewEZ/I85PQk7AtDFWak
-        IHbw5HLv6HhrvAqy497SsqaxA3T3XqMUPROOl14ZdQP4Fw9l7amMYtMDylpfIEXbQ19jCa/o
-        6fC7QmkGLEFs4vUx5iD0JF8dY5ZDXWMrK99G43lQdM9VeYc18CR7oiJtoWvATrnAFlLLLtJK
-        WgVnTqmVGXOhJOH52J7JkFtwgU9BWtM4X6ZxXkzjvJj+r81CTD5yECOl8CBRWmQQ97tI+nAp
-        0hDksjMi3Iz+/rimkcbBcjTctqMWYQFpJ6isHtj7q1n9PikqvBaBQGs1qogtGn+1KlAfFS0a
-        IwKMkWGiVIumCYzWQRVj9dpPjYP0e8VQUdwtGv9VKcF6aixau76yz+H2yI1grzSnUEc358z7
-        mRvfuW2bXpzsXHm46UBdT5vVtHVHfZ3Wfeo4Ty0+F+2YonKNNjSs9EuetTZpChMWumzX5g32
-        I8W9Pjnpltm3LqZbLvRTQ68PPTvi+bkz4fQXn/KIwj0xXnPWdMUeX2r0oPyXBVgy0jic8DCV
-        cXPP2qRlpGD9ovm0UdL/AQkFqAttAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsVy+t/xe7rvZ4nEGmx5w2yxccZ6VovrX56z
-        Wjw7qm0x/8g5Vov+x6+ZLc6f38BucbbpDbvFpsfXWC0u75rDZvG59wijxYzz+5gs1h65y26x
-        9PpFJovbjSvYLFr3HmG3OPymndXi24lHjA6CHmvmrWH02DnrLrvHplWdbB6bl9R79G1Zxejx
-        eZNcAFuUnk1RfmlJqkJGfnGJrVK0oYWRnqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2C
-        XsaEc32sBS0CFV9/BzQwvuLpYuTgkBAwkdj3QaSLkYtDSGApo8S/ntXMXYycQHExiUn7trND
-        2MISf651sUEUvWaUuHDwK1hCWCBE4t+mQ0wgtohAqsSTZWvBmpkFprJILPlfCNHQxiLxYdtx
-        ZpBtbAJ6EjtWFYLU8Aq4SXz/fIARJMwioCrRscIFJCwqECExe1cDC0SJoMTJmU/AbE4Be4lF
-        nU+hxptJzNv8EMoWl7j1ZD4ThC0v0bx1NvMERqFZSNpnIWmZhaRlFpKWBYwsqxhFUkuLc9Nz
-        i430ihNzi0vz0vWS83M3MQIje9uxn1t2MHa9Cz7EKMDBqMTDu2KncKwQa2JZcWXuIUYJDmYl
-        Ed78MJFYId6UxMqq1KL8+KLSnNTiQ4ymQL9NZJYSTc4HJp28knhDU0NzC0tDc2NzYzMLJXHe
-        DoGDMUIC6YklqdmpqQWpRTB9TBycUg2MW1M1iutcAo8XndyssdDzg0fPg6iYdR08q7Tj+TNO
-        GejtiPuzpv1uwXrPeXvPrmPkiDTL+bV9EfO6XXddJ7P0Wz+rerdr29srV6dO27e4VDY7eceE
-        hwsresrLkv9I3Tc21f5w5Aev1Kl2nbOZax5c6P+9aL4AW7itjRJjXGftdPNf6kuYGX1ylFiK
-        MxINtZiLihMB4iU3qQIDAAA=
-X-CMS-MailID: 20190627103111eucas1p204450a032db835ba18a70d12939384e9
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5
-X-EPHeader: CA
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc~sDC-BVekw0574705747eucas1p2c;
+        Thu, 27 Jun 2019 11:56:10 +0000 (GMT)
+X-AuditID: cbfec7f4-5632c9c000001119-3e-5d14aeda348e
+Received: from eusync1.samsung.com ( [203.254.199.211]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id C2.0B.04140.9DEA41D5; Thu, 27
+        Jun 2019 12:56:09 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local ([106.120.51.73]) by
+        eusync1.samsung.com (Oracle Communications Messaging Server 7.0.5.31.0 64bit
+        (built May  5 2014)) with ESMTPA id <0PTR008XZAHGTW00@eusync1.samsung.com>;
+        Thu, 27 Jun 2019 12:56:09 +0100 (BST)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Subject: [PATCH] ARM: dts: exynos: Remove PMU interrupt from MALI400 GPU on
+ Exynos4210
+Date:   Thu, 27 Jun 2019 13:55:53 +0200
+Message-id: <20190627115553.32426-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBLMWRmVeSWpSXmKPExsWy7djPc7q31onEGpyYImWxccZ6Vovz5zew
+        W8w4v4/JYu2Ru+wOLB6bVnWyefRtWcXo8XmTXABzFJdNSmpOZllqkb5dAlfG48OrWAvO6Fes
+        W7+ZqYFxuloXIyeHhICJxN7+bUwgtpDACkaJLVd9IOzPjBIdX3JhajZPPsTYxcgFFF/GKHFm
+        62YmCOc/o8T82cdZQKrYBAwlut52sYHYIgKqEp/bFrCDFDEL9DFKXN87lxkkISwQIfH74yR2
+        EJsFqOhryyywBl4BW4mrF3YxQqyTl1i94QAzSLOEwElWiY0Pm5kgEi4S67fuhrJlJC5P7maB
+        KGpmlHh4bi07hNPDKHG5aQbUKGuJw8cvsoLYzAJ8EpO2TQcaywEU55XoaBOCKPGQWPdnKTPE
+        07ESO1/uYZrAKL6AkWEVo3hqaXFuemqxUV5quV5xYm5xaV66XnJ+7iZGYHyc/nf8yw7GXX+S
+        DjEKcDAq8fAy7BGOFWJNLCuuzD3EKMHBrCTCmx8mEivEm5JYWZValB9fVJqTWnyIUZqDRUmc
+        t5rhQbSQQHpiSWp2ampBahFMlomDU6qBUelepOnBdbzPbMXKA9s3Xv0+oTKeRyqROSzviszv
+        xf9lV294GjfpR8e2P+ej+Yv575o+KHHJk1RWOPpp9tTeZ0e/2R20COPtr3026afH4QdbXgbe
+        1tGLWbLgvMDKo29m5TqzuOSUff6e6rBAZO6DfvWIyHc8mcFTWv13XNGec5f35HSN2cy5x5RY
+        ijMSDbWYi4oTAeaBeDqLAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOJMWRmVeSWpSXmKPExsVy+t/xy7o314nEGmzq07XYOGM9q8X58xvY
+        LWac38dksfbIXXYHFo9NqzrZPPq2rGL0+LxJLoA5issmJTUnsyy1SN8ugSvj8eFVrAVn9CvW
+        rd/M1MA4Xa2LkZNDQsBEYvPkQ4xdjFwcQgJLGCW6D31kgXAamSSuzFrIAlLFJmAo0fW2iw3E
+        FhFQlfjctoAdpIhZYAKjxOqFs1hBEsICERK/P05iB7FZgIq+tswCa+AVsJW4emEXI8Q6eYnV
+        Gw4wT2DkWsDIsIpRJLW0ODc9t9hIrzgxt7g0L10vOT93EyPQu9uO/dyyg7HrXfAhRgEORiUe
+        3hU7hWOFWBPLiitzDzFKcDArifDmh4nECvGmJFZWpRblxxeV5qQWH2KU5mBREuftEDgYIySQ
+        nliSmp2aWpBaBJNl4uCUamDcdc9I4+bXAoZ1ytUMn5LX2N2bbHmoTk8sPjlIzlsz7s3kE5ki
+        Sb8r6v2NWa+5dz/94RvE9kJ6y6MFPK6pZy3fH2dYHLX3y02Vm14tjA6Xv61cpam3WqnJR9+e
+        8admaMIfjx8v+E8nrToSfE9GI0b4rsHpNucfAQlBZfwfwuo/xXnOWWYX6azEUpyRaKjFXFSc
+        CADKtaOD6gEAAA==
+X-CMS-MailID: 20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5
-References: <CGME20190605091304eucas1p21e0717cafa17a14de569f1773cc7abe5@eucas1p2.samsung.com>
-        <20190605091236.24263-1-l.luba@partner.samsung.com>
-        <20190605091236.24263-5-l.luba@partner.samsung.com>
-        <CAGTfZH2kTNWtx=Jp1UJaLN50Qxbq+Q9ThV4vhQ240QbOy1TRMQ@mail.gmail.com>
-        <7498059d-95f7-e154-cf49-bcbc8ee6fdb9@partner.samsung.com>
-        <CAJKOXPc6304D=HNQnrvhBH6qKxhkf=VQ2Gg6Q2FMP2hYOTYSDQ@mail.gmail.com>
-        <776f58c2-a05c-8fa8-c7f5-458dc17926f6@partner.samsung.com>
-        <99a47066-3713-77fa-4afb-6f2f17a2721a@samsung.com>
+X-CMS-RootMailID: 20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc
+References: <CGME20190627115610eucas1p2973086ecaa3b2c3b7c802c7c8ac5e6bc@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Chanwoo,
+The PMU module of MALI400 GPU is optional and it looks that it is not
+present on Exynos4210, because any access to its registers causes external
+abort. This patch removes "pmu" interrupt for Exynos4210 SoCs, so the
+driver will skip the PMU module. This fixes following fault during kernel
+boot:
 
-On 6/27/19 3:11 AM, Chanwoo Choi wrote:
-> Hi Lukasz,
-> 
-> On 19. 6. 26. 오후 11:17, Lukasz Luba wrote:
->> Hi Krzysztof,
->>
->> On 6/26/19 4:03 PM, Krzysztof Kozlowski wrote:
->>> On Wed, 26 Jun 2019 at 15:58, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>>>
->>>> Hi Chanwoo,
->>>>
->>>> On 6/26/19 10:23 AM, Chanwoo Choi wrote:
->>>>> Hi Lukasz,
->>>>>
->>>>> 2019년 6월 5일 (수) 18:14, Lukasz Luba <l.luba@partner.samsung.com
->>>>> <mailto:l.luba@partner.samsung.com>>님이 작성:
->>>>>
->>>>>       Extend the documenation by events description with new 'event-data-type'
->>>>>       field. Add example how the event might be defined in DT.
->>>>>
->>>>>       Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com
->>>>>       <mailto:l.luba@partner.samsung.com>>
->>>>>       Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com
->>>>>       <mailto:cw00.choi@samsung.com>>
->>>>>       ---
->>>>>         .../bindings/devfreq/event/exynos-ppmu.txt    | 26 +++++++++++++++++--
->>>>>         1 file changed, 24 insertions(+), 2 deletions(-)
->>>>>
->>>>>
->>>>>
->>>>> Acked-by: Chanwoo Choi <cw00.choi@samsung.com
->>>>
->>>> Thank you for the ACKs for this a 2/5 patch.
->>>> Do you think the v4 could be merged now?
->>>
->>> I think you have all necessary acks. I can take the DTS patch (5/5)
->>> although probably for next merge window as I just sent one.
->> There was one patch 3/5
->> https://protect2.fireeye.com/url?k=82dd0d0cbe2abd04.82dc8643-d13ecd7e5f989b8d&u=https://lkml.org/lkml/2019/6/5/215
->> which was waiting ACK or I missed the email somehow.
-> 
-> When I was in vacation, your patches are removed on my email account
-> because of the email expiration. So, I replied with my Ack through
-> gmail account on mobile phone. But, there are some problem. My reply
-> didn't arrive the mailing list.
-> 
-> I have no any way to reply about this at company. After leaving one's
-> office, I'll reply with Ack again at home.
-> 
-OK, no worries, it is not an emergency issue.
-Regards,
-Lukasz
+ 8<--- cut here ---
+ Unhandled fault: imprecise external abort (0x1406) at 0x00000000
+ pgd = (ptrval)
+ [00000000] *pgd=00000000
+ Internal error: : 1406 [#1] PREEMPT SMP ARM
+ Modules linked in:
+ CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.2.0-rc6-next-20190625-00005-g6fc2b61c64ab #6241
+ Hardware name: SAMSUNG EXYNOS (Flattened Device Tree)
+ PC is at lima_pmu_init+0x38/0x108
+ LR is at arm_heavy_mb+0x1c/0x38
+ pc : [<c059eb78>]    lr : [<c011aa6c>]    psr: 60000013
+ sp : d94c9da0  ip : d9000200  fp : d94bd070
+ r10: 00000001  r9 : 00000000  r8 : c1065aec
+ r7 : 00000000  r6 : 00000000  r5 : 00000000  r4 : d94bd070
+ r3 : e0932000  r2 : 0000ffff  r1 : 00000000  r0 : d94bd070
+ Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+ Control: 10c5387d  Table: 4000404a  DAC: 00000051
+ Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
+ ...
+ [<c059eb78>] (lima_pmu_init) from [<c059e6f8>] (lima_device_init+0x244/0x5a0)
+ [<c059e6f8>] (lima_device_init) from [<c059e40c>] (lima_pdev_probe+0x7c/0xd8)
+ [<c059e40c>] (lima_pdev_probe) from [<c05afcb8>] (platform_drv_probe+0x48/0x9c)
+ [<c05afcb8>] (platform_drv_probe) from [<c05ad594>] (really_probe+0x1c4/0x400)
+ [<c05ad594>] (really_probe) from [<c05ad988>] (driver_probe_device+0x78/0x1b8)
+ [<c05ad988>] (driver_probe_device) from [<c05add30>] (device_driver_attach+0x58/0x60)
+ [<c05add30>] (device_driver_attach) from [<c05ade34>] (__driver_attach+0xfc/0x160)
+ [<c05ade34>] (__driver_attach) from [<c05ab650>] (bus_for_each_dev+0x68/0xb4)
+ [<c05ab650>] (bus_for_each_dev) from [<c05ac734>] (bus_add_driver+0x104/0x20c)
+ [<c05ac734>] (bus_add_driver) from [<c05aece0>] (driver_register+0x78/0x10c)
+ [<c05aece0>] (driver_register) from [<c0103214>] (do_one_initcall+0x8c/0x430)
+ [<c0103214>] (do_one_initcall) from [<c0f01328>] (kernel_init_freeable+0x3c8/0x4d0)
+ [<c0f01328>] (kernel_init_freeable) from [<c0ac3aa0>] (kernel_init+0x8/0x10c)
+ [<c0ac3aa0>] (kernel_init) from [<c01010b4>] (ret_from_fork+0x14/0x20)
+ Exception stack(0xd94c9fb0 to 0xd94c9ff8)
+ ...
+ ---[ end trace 96ddc2a2879732ab ]---
+
+The PMU module seems to work fine on Exynos4412 SoCs, so the patch also
+moves the interrupt definitions to exynos4210.dtsi and exynos4412.dtsi
+respectively, to keep only the common part in exynos4.dtsi.
+
+Fixes: 13efd80acaa4 ("ARM: dts: exynos: Add GPU/Mali 400 node to Exynos4")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ arch/arm/boot/dts/exynos4.dtsi    | 22 ----------------------
+ arch/arm/boot/dts/exynos4210.dtsi | 20 ++++++++++++++++++++
+ arch/arm/boot/dts/exynos4412.dtsi | 22 ++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 22 deletions(-)
+
+diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
+index 6005cfbbed89..7863a21a7a64 100644
+--- a/arch/arm/boot/dts/exynos4.dtsi
++++ b/arch/arm/boot/dts/exynos4.dtsi
+@@ -54,28 +54,6 @@
+ 	gpu: gpu@13000000 {
+ 		compatible = "samsung,exynos4210-mali", "arm,mali-400";
+ 		reg = <0x13000000 0x10000>;
+-		interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "gp",
+-				  "gpmmu",
+-				  "pp0",
+-				  "ppmmu0",
+-				  "pp1",
+-				  "ppmmu1",
+-				  "pp2",
+-				  "ppmmu2",
+-				  "pp3",
+-				  "ppmmu3",
+-				  "pmu";
+ 		/*
+ 		 * CLK_G3D is not actually bus clock but a IP-level clock.
+ 		 * The bus clock is not described in hardware manual.
+diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
+index 6122da368092..f220716239db 100644
+--- a/arch/arm/boot/dts/exynos4210.dtsi
++++ b/arch/arm/boot/dts/exynos4210.dtsi
+@@ -450,6 +450,26 @@
+ };
+ 
+ &gpu {
++	interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
++	interrupt-names = "gp",
++			  "gpmmu",
++			  "pp0",
++			  "ppmmu0",
++			  "pp1",
++			  "ppmmu1",
++			  "pp2",
++			  "ppmmu2",
++			  "pp3",
++			  "ppmmu3";
+ 	operating-points-v2 = <&gpu_opp_table>;
+ 
+ 	gpu_opp_table: opp_table {
+diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
+index 7bed6842575a..d20db2dfe8e2 100644
+--- a/arch/arm/boot/dts/exynos4412.dtsi
++++ b/arch/arm/boot/dts/exynos4412.dtsi
+@@ -717,6 +717,28 @@
+ };
+ 
+ &gpu {
++	interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
++		     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
++	interrupt-names = "gp",
++			  "gpmmu",
++			  "pp0",
++			  "ppmmu0",
++			  "pp1",
++			  "ppmmu1",
++			  "pp2",
++			  "ppmmu2",
++			  "pp3",
++			  "ppmmu3",
++			  "pmu";
+ 	operating-points-v2 = <&gpu_opp_table>;
+ 
+ 	gpu_opp_table: opp_table {
+-- 
+2.17.1
+
