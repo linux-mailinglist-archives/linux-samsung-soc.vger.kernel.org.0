@@ -2,110 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 62F1A5846E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 16:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54AB9588B6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jun 2019 19:38:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726431AbfF0O2s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jun 2019 10:28:48 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:36887 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbfF0O2s (ORCPT
+        id S1726897AbfF0Rik (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jun 2019 13:38:40 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34753 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726885AbfF0Rii (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jun 2019 10:28:48 -0400
-Received: by mail-ot1-f66.google.com with SMTP id s20so2485969otp.4
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jun 2019 07:28:48 -0700 (PDT)
+        Thu, 27 Jun 2019 13:38:38 -0400
+Received: by mail-pg1-f196.google.com with SMTP id p10so1350093pgn.1;
+        Thu, 27 Jun 2019 10:38:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=UrGOOwqXYdU4HnZf32fo0+WGpE9hhRvUmIwwr7eD1yc=;
+        b=QEx5bAe2IDGhdbb/pyuhCrfIBoyhL7FlODV1yOG8ZjnWT5sOrxCVj6SlR7vbTnZanl
+         aCxzh78YfzmbgbPeI6m/h9nOFRCwmq0MRjYUoUiD4mXBAD+Pc2MIo9BfGBeqEeomf8XO
+         Ven/aiofV8Jdq6iDjAfb/FSDLeGbDzczd7KrVHpQ+qnNzzj2Kz7PF2DTf/7eFHDLkwBd
+         BbSG5rpSLk6vbzMFxO0hynJB6/lRkL7GsU7nkvTOS/3HCurORBqObRy9rR0vO2hlgLnw
+         zynlKIG8bwRCtNd3nplq+10N0wZ1Zb09Fj7/9SXFBWPA4+YJvPUkBwVh3DXA5PQJuHwd
+         kVKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=GiyIGq67JTc5+DUdTknNYEojZgMQWAxjL9dXZ+msxU8=;
-        b=Tkj0vYxUiVB8nL6HdWhzNIWi5RQqPkAFBHlNdJRD85cBv2evrXMRFb25XKjj/fep+Y
-         WOQrEwbfzw3qCJrgZXCpgVLbFmnB6hgQFDcijCPWwjvEkCKuDQ7LT4yTKFtDGWoMT56o
-         24y4HXItJuoXAFm90WGxfTraR9EUK4FbhGI/5Wo7+eXPYDZMAQ8FPVggiGWWJlTrV3WO
-         Q6vCOpPGtrbUIIfJhyMvqDmNPciTanLBCOr/dwtM8sfIPNq0goClxpRHSErj02f86+PM
-         ud1TwOWG8ns6EMTqwbLmH5NUmlu2E9E5MsEnUcSsB0SH8uS8eN8D7XOxBOINbzu6mWOe
-         /Uxw==
-X-Gm-Message-State: APjAAAXb/zd2NMz7tw1L+6qY2ejuBUrbH4CclxV+gL3KUTttyZIL4W9j
-        xdV8LX3tKaD4vm/LDyI+T0qejkS5iaMGDhd14QU=
-X-Google-Smtp-Source: APXvYqz6Pu3O7LTBddy/VnhjJPjq4a0DMGVKe8qLWg88EII4dc9RSakNvMdyFFgPvcjaqwuQHedlknzR3n5tjxJKd1Y=
-X-Received: by 2002:a9d:66c8:: with SMTP id t8mr3694400otm.94.1561645727487;
- Thu, 27 Jun 2019 07:28:47 -0700 (PDT)
-MIME-Version: 1.0
-From:   Inki Dae <inki.dae@samsung.com>
-Date:   Thu, 27 Jun 2019 23:28:11 +0900
-Message-ID: <CAAQKjZMdBdD8oEa0cNv78FjrpOqu20ozTTvuPEm_XnVo2gRhCQ@mail.gmail.com>
-Subject: [GIT PULL] exynos-drm-next
-To:     Dave Airlie <airlied@linux.ie>
-Cc:     DRI mailing list <dri-devel@lists.freedesktop.org>,
-        linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UrGOOwqXYdU4HnZf32fo0+WGpE9hhRvUmIwwr7eD1yc=;
+        b=GgBrwWt4A+vrpTUmenkV0QGaANMdCIGi13Qlldv+WBChLDlxip1oHFiwRF69RiiVOP
+         T7xocikU29cJMLnMqZmyt2w7ka2WiBtDk0MdGHDd4JmXLctvmj5yQRcrxaGzBhuF07N4
+         IPTX6/SYUWQoPFuLQwzSra3INIPWIM9XIg78ONx8J/T9kdpFnjzSi+4xJylAMX0hJKAg
+         tZAxV9nTRAlikW3v95XMXvl2T7/mqtDOuOjhwIPjkMiPfHU5XxrdxjNYdpUWLB/3HLfg
+         wcUnGEq0kQ8esaM/DgqgSv1CgP1R9QSx7RvD1XG9WBoxN4jw6N/M4R5eFaTmlgk5pqN4
+         J5QQ==
+X-Gm-Message-State: APjAAAVStpRRKNZ+RGXmws+QEd5PDOTdE61Rcg91YA7phnl8S+jV1/Xq
+        +5jfdOLeTB13Vom1MIFhWzM=
+X-Google-Smtp-Source: APXvYqysqhAusiUIFovXzQaY6v+uFPfSxgWZZNDiy+cXjWnBE7dy2ehmnGJY16jdPRVGrhp5EMnuyQ==
+X-Received: by 2002:a63:d755:: with SMTP id w21mr4919171pgi.311.1561657118048;
+        Thu, 27 Jun 2019 10:38:38 -0700 (PDT)
+Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.googlemail.com with ESMTPSA id k22sm4057212pfk.157.2019.06.27.10.38.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Jun 2019 10:38:37 -0700 (PDT)
+From:   Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Fuqian Huang <huangfq.daxian@gmail.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 31/87] media: exynos4-is: remove memset after dma_alloc_coherent in fimc-is.c
+Date:   Fri, 28 Jun 2019 01:38:31 +0800
+Message-Id: <20190627173831.3467-1-huangfq.daxian@gmail.com>
+X-Mailer: git-send-email 2.11.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Dave,
+In commit af7ddd8a627c
+("Merge tag 'dma-mapping-4.21' of git://git.infradead.org/users/hch/dma-mapping"),
+dma_alloc_coherent has already zeroed the memory.
+So memset is not needed.
 
-   Just two cleanups - one is to drop drmP.h header, and other is to add
-   COMPILE_TEST flag for increasing build test coverage.
+Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+---
+ drivers/media/platform/exynos4-is/fimc-is.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-   Please kindly let me know if there is any problem.
+diff --git a/drivers/media/platform/exynos4-is/fimc-is.c b/drivers/media/platform/exynos4-is/fimc-is.c
+index e043d55133a3..77633e356305 100644
+--- a/drivers/media/platform/exynos4-is/fimc-is.c
++++ b/drivers/media/platform/exynos4-is/fimc-is.c
+@@ -341,7 +341,6 @@ static int fimc_is_alloc_cpu_memory(struct fimc_is *is)
+ 		return -ENOMEM;
+ 
+ 	is->memory.size = FIMC_IS_CPU_MEM_SIZE;
+-	memset(is->memory.vaddr, 0, is->memory.size);
+ 
+ 	dev_info(dev, "FIMC-IS CPU memory base: %#x\n", (u32)is->memory.paddr);
+ 
+-- 
+2.11.0
 
-Thanks,
-Inki Dae
-
-The following changes since commit 14808a12bdbdc21143eba70ea07830197b3a04ff:
-
-  Merge tag 'drm-next-5.3-2019-06-25' of
-git://people.freedesktop.org/~agd5f/linux into drm-next (2019-06-27
-12:33:57 +1000)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos
-tags/exynos-drm-next-for-v5.3
-
-for you to fetch changes up to 156bdac99061b4013c8e47799c6e574f7f84e9f4:
-
-  drm/exynos: trigger build of all modules (2019-06-27 22:30:56 +0900)
-
-----------------------------------------------------------------
-- Drop the use of drmP.h header file
-   drmP.h header file has been deprecated so this patch drops the use of
-   this header, and instead includes appropriate header files required.
- - Add COMPILE_TEST flag
-   This patch adds COMPILE_TEST dependency to exynos drm driver to
-   increase build test coverage. And also, it includes vmalloc.h
-   header file to fix one build warning which is introduced when
-   building the Linux kernel using sh.
-
-----------------------------------------------------------------
-Sam Ravnborg (2):
-      drm/exynos: drop drmP.h usage
-      drm/exynos: trigger build of all modules
-
- drivers/gpu/drm/exynos/Kconfig                |  6 ++--
- drivers/gpu/drm/exynos/exynos5433_drm_decon.c |  7 +++--
- drivers/gpu/drm/exynos/exynos7_drm_decon.c    |  8 ++++--
- drivers/gpu/drm/exynos/exynos_dp.c            | 13 ++++-----
- drivers/gpu/drm/exynos/exynos_drm_crtc.c      |  2 +-
- drivers/gpu/drm/exynos/exynos_drm_dma.c       |  6 ++--
- drivers/gpu/drm/exynos/exynos_drm_dpi.c       |  8 +++---
- drivers/gpu/drm/exynos/exynos_drm_drv.c       | 12 ++++----
- drivers/gpu/drm/exynos/exynos_drm_drv.h       |  8 +++++-
- drivers/gpu/drm/exynos/exynos_drm_dsi.c       | 21 +++++++-------
- drivers/gpu/drm/exynos/exynos_drm_fb.c        |  6 ++--
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c     |  8 ++++--
- drivers/gpu/drm/exynos/exynos_drm_fimc.c      | 15 +++++-----
- drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 14 +++++----
- drivers/gpu/drm/exynos/exynos_drm_g2d.c       | 11 ++++---
- drivers/gpu/drm/exynos/exynos_drm_gem.c       |  7 +++--
- drivers/gpu/drm/exynos/exynos_drm_gsc.c       | 13 +++++----
- drivers/gpu/drm/exynos/exynos_drm_ipp.c       |  3 +-
- drivers/gpu/drm/exynos/exynos_drm_mic.c       | 22 +++++++-------
- drivers/gpu/drm/exynos/exynos_drm_plane.c     |  4 +--
- drivers/gpu/drm/exynos/exynos_drm_rotator.c   | 10 +++----
- drivers/gpu/drm/exynos/exynos_drm_scaler.c    | 12 ++++----
- drivers/gpu/drm/exynos/exynos_drm_vidi.c      |  9 +++---
- drivers/gpu/drm/exynos/exynos_hdmi.c          | 41 +++++++++++++--------------
- drivers/gpu/drm/exynos/exynos_mixer.c         | 31 ++++++++++----------
- 25 files changed, 158 insertions(+), 139 deletions(-)
