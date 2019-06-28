@@ -2,116 +2,113 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C841259194
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Jun 2019 04:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFB02591D2
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Jun 2019 05:03:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbfF1Cr4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jun 2019 22:47:56 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34319 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726852AbfF1Crz (ORCPT
+        id S1726686AbfF1DDk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jun 2019 23:03:40 -0400
+Received: from mx7.zte.com.cn ([202.103.147.169]:54190 "EHLO mxct.zte.com.cn"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726542AbfF1DDj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jun 2019 22:47:55 -0400
-Received: by mail-pf1-f194.google.com with SMTP id c85so2202746pfc.1;
-        Thu, 27 Jun 2019 19:47:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=6aVVFTG6J+mdEsYXUboxldScMRbRZCxioRYOiLEnKqo=;
-        b=jkXS095oU0EJo69ErmIu2wtcYOP1wRsvlgLdQCfZ5Pv2Zh/7gShFRVIXqJcELmd9Qr
-         1BTNahLebCv7Yp99CNXI3P0SNaADHCbW7EZBdeOYXI4hwsdlzEpp+QeEq9CEQ+0buno7
-         Ewr3L3245KLVjBcBvkYSf9mxVdzetjaByD9iCF0rYL0qAwwNQFy3lASxtoMeC2QyrSUA
-         zgDP4trJVupB4rSAy1wimgi6dvK0RW3lk8FmZeGCjhkPpEV6uVv6amT6NQkMX9Sv4z5f
-         oCX0WCKLCsXkCR10WY55sfGOxFeUIUjx3e9IkITJ3vHuIlvwsFCiR9m3AUfzf0hSf+cT
-         9lTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6aVVFTG6J+mdEsYXUboxldScMRbRZCxioRYOiLEnKqo=;
-        b=NAsNGvkLf2GDdOYqR0dVVfikXxkquKQ6IPgqKso68qdbCbtuTXHXSxjc1pr8KVfxQX
-         nh8+l6Z6VXm+T1IL4vGTZCI5hoAn3/CpcoSMpDgXzK+x6wbOtdGARzp8BeBjiDtWJEAr
-         s24xG6+rvIC3ZHB8P2vBWIAU5V5CsgsNKU1nh/UV52N6AxyswvH2U5MYKk6YPDwPItoW
-         JVBiatNcKcYLVa2Pth+LxrBTe7kdWQZtisr8Z/8eux7/VbU+SFVjX7L/Ba2oEZcY9cA6
-         3eHWZXy+FbkPkCbE6Eqw9QsUe7+vkSjKA4BTZ6KMk/9h/Zf9Nk48hNImaAsR21TUXi+u
-         iSKw==
-X-Gm-Message-State: APjAAAUYanl2JvFUIUgjtqnrqUmb0ZSyDetsZyBMCCHkMWEAm6o0o1fw
-        QqS2D/Z2eIYodzIqbMf0lqE=
-X-Google-Smtp-Source: APXvYqztbcHxq0I2L5B3UFUCS5LeG8dAI4heG4E4Zv6OJyvw7TJjS519CqekfItIYensQjICjYysWA==
-X-Received: by 2002:a63:a48:: with SMTP id z8mr6935646pgk.91.1561690075033;
-        Thu, 27 Jun 2019 19:47:55 -0700 (PDT)
-Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
-        by smtp.googlemail.com with ESMTPSA id c130sm450104pfc.184.2019.06.27.19.47.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Jun 2019 19:47:54 -0700 (PDT)
-From:   Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Fuqian Huang <huangfq.daxian@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Thu, 27 Jun 2019 23:03:39 -0400
+Received: from mse-fl1.zte.com.cn (unknown [10.30.14.238])
+        by Forcepoint Email with ESMTPS id BBF1EA339E319CD62CE4;
+        Fri, 28 Jun 2019 11:03:37 +0800 (CST)
+Received: from notes_smtp.zte.com.cn ([10.30.1.239])
+        by mse-fl1.zte.com.cn with ESMTP id x5S32eB1063726;
+        Fri, 28 Jun 2019 11:02:40 +0800 (GMT-8)
+        (envelope-from wen.yang99@zte.com.cn)
+Received: from fox-host8.localdomain ([10.74.120.8])
+          by szsmtp06.zte.com.cn (Lotus Domino Release 8.5.3FP6)
+          with ESMTP id 2019062811031122-1800719 ;
+          Fri, 28 Jun 2019 11:03:11 +0800 
+From:   Wen Yang <wen.yang99@zte.com.cn>
+To:     linux-kernel@vger.kernel.org
+Cc:     wang.yi59@zte.com.cn, Wen Yang <wen.yang99@zte.com.cn>,
         Kyungmin Park <kyungmin.park@samsung.com>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v2 11/27] media: remove memset after dma_alloc_coherent/pci_alloc_consistent
-Date:   Fri, 28 Jun 2019 10:47:43 +0800
-Message-Id: <20190628024744.15367-1-huangfq.daxian@gmail.com>
-X-Mailer: git-send-email 2.11.0
-To:     unlisted-recipients:; (no To-header on input)
+Subject: [PATCH 2/3] media: exynos4-is: fix leaked of_node references
+Date:   Fri, 28 Jun 2019 11:01:15 +0800
+Message-Id: <1561690876-20977-3-git-send-email-wen.yang99@zte.com.cn>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1561690876-20977-1-git-send-email-wen.yang99@zte.com.cn>
+References: <1561690876-20977-1-git-send-email-wen.yang99@zte.com.cn>
+X-MIMETrack: Itemize by SMTP Server on SZSMTP06/server/zte_ltd(Release 8.5.3FP6|November
+ 21, 2013) at 2019-06-28 11:03:11,
+        Serialize by Router on notes_smtp/zte_ltd(Release 9.0.1FP7|August  17, 2016) at
+ 2019-06-28 11:02:45,
+        Serialize complete at 2019-06-28 11:02:45
+X-MAIL: mse-fl1.zte.com.cn x5S32eB1063726
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-pci_alloc_consistent calls dma_alloc_coherent directly.
-In commit af7ddd8a627c
-("Merge tag 'dma-mapping-4.21' of git://git.infradead.org/users/hch/dma-mapping"),
-dma_alloc_coherent has already zeroed the memory.
-So memset after these 2 functions is not needed.
+The call to of_get_child_by_name returns a node pointer with refcount
+incremented thus it must be explicitly decremented after the last
+usage.
 
-Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+Detected by coccinelle with the following warnings:
+drivers/media/platform/exynos4-is/fimc-is.c:813:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
+drivers/media/platform/exynos4-is/fimc-is.c:870:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
+drivers/media/platform/exynos4-is/fimc-is.c:885:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
+drivers/media/platform/exynos4-is/media-dev.c:545:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 541, but without a corresponding object release within this function.
+drivers/media/platform/exynos4-is/media-dev.c:528:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 499, but without a corresponding object release within this function.
+drivers/media/platform/exynos4-is/media-dev.c:534:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 499, but without a corresponding object release within this function.
+
+Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-media@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 ---
- drivers/media/pci/ngene/ngene-core.c        | 4 ----
- drivers/media/platform/exynos4-is/fimc-is.c | 1 -
- 2 files changed, 5 deletions(-)
+ drivers/media/platform/exynos4-is/fimc-is.c   | 1 +
+ drivers/media/platform/exynos4-is/media-dev.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/media/pci/ngene/ngene-core.c b/drivers/media/pci/ngene/ngene-core.c
-index b75ab7d29226..af15ca1c501b 100644
---- a/drivers/media/pci/ngene/ngene-core.c
-+++ b/drivers/media/pci/ngene/ngene-core.c
-@@ -854,8 +854,6 @@ static int create_ring_buffer(struct pci_dev *pci_dev,
- 	if (!Head)
- 		return -ENOMEM;
- 
--	memset(Head, 0, MemSize);
--
- 	PARingBufferCur = PARingBufferHead;
- 	Cur = Head;
- 
-@@ -907,8 +905,6 @@ static int AllocateRingBuffers(struct pci_dev *pci_dev,
- 	if (SCListMem == NULL)
- 		return -ENOMEM;
- 
--	memset(SCListMem, 0, SCListMemSize);
--
- 	pRingBuffer->SCListMem = SCListMem;
- 	pRingBuffer->PASCListMem = PASCListMem;
- 	pRingBuffer->SCListMemSize = SCListMemSize;
 diff --git a/drivers/media/platform/exynos4-is/fimc-is.c b/drivers/media/platform/exynos4-is/fimc-is.c
-index e043d55133a3..77633e356305 100644
+index e043d55..b7cc8e6 100644
 --- a/drivers/media/platform/exynos4-is/fimc-is.c
 +++ b/drivers/media/platform/exynos4-is/fimc-is.c
-@@ -341,7 +341,6 @@ static int fimc_is_alloc_cpu_memory(struct fimc_is *is)
+@@ -806,6 +806,7 @@ static int fimc_is_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 
+ 	is->pmu_regs = of_iomap(node, 0);
++	of_node_put(node);
+ 	if (!is->pmu_regs)
  		return -ENOMEM;
  
- 	is->memory.size = FIMC_IS_CPU_MEM_SIZE;
--	memset(is->memory.vaddr, 0, is->memory.size);
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index d53427a..a838189 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -501,6 +501,7 @@ static int fimc_md_register_sensor_entities(struct fimc_md *fmd)
+ 			continue;
  
- 	dev_info(dev, "FIMC-IS CPU memory base: %#x\n", (u32)is->memory.paddr);
+ 		ret = fimc_md_parse_port_node(fmd, port, index);
++		of_node_put(port);
+ 		if (ret < 0) {
+ 			of_node_put(node);
+ 			goto cleanup;
+@@ -542,6 +543,7 @@ static int __of_get_csis_id(struct device_node *np)
+ 	if (!np)
+ 		return -EINVAL;
+ 	of_property_read_u32(np, "reg", &reg);
++	of_node_put(np);
+ 	return reg - FIMC_INPUT_MIPI_CSI2_0;
+ }
  
 -- 
-2.11.0
+2.9.5
 
