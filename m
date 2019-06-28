@@ -2,113 +2,146 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DFB02591D2
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Jun 2019 05:03:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F6025922A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Jun 2019 05:46:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfF1DDk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jun 2019 23:03:40 -0400
-Received: from mx7.zte.com.cn ([202.103.147.169]:54190 "EHLO mxct.zte.com.cn"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726542AbfF1DDj (ORCPT
+        id S1727078AbfF1Dqz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jun 2019 23:46:55 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:40848 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbfF1Dqz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jun 2019 23:03:39 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.30.14.238])
-        by Forcepoint Email with ESMTPS id BBF1EA339E319CD62CE4;
-        Fri, 28 Jun 2019 11:03:37 +0800 (CST)
-Received: from notes_smtp.zte.com.cn ([10.30.1.239])
-        by mse-fl1.zte.com.cn with ESMTP id x5S32eB1063726;
-        Fri, 28 Jun 2019 11:02:40 +0800 (GMT-8)
-        (envelope-from wen.yang99@zte.com.cn)
-Received: from fox-host8.localdomain ([10.74.120.8])
-          by szsmtp06.zte.com.cn (Lotus Domino Release 8.5.3FP6)
-          with ESMTP id 2019062811031122-1800719 ;
-          Fri, 28 Jun 2019 11:03:11 +0800 
-From:   Wen Yang <wen.yang99@zte.com.cn>
-To:     linux-kernel@vger.kernel.org
-Cc:     wang.yi59@zte.com.cn, Wen Yang <wen.yang99@zte.com.cn>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 2/3] media: exynos4-is: fix leaked of_node references
-Date:   Fri, 28 Jun 2019 11:01:15 +0800
-Message-Id: <1561690876-20977-3-git-send-email-wen.yang99@zte.com.cn>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1561690876-20977-1-git-send-email-wen.yang99@zte.com.cn>
-References: <1561690876-20977-1-git-send-email-wen.yang99@zte.com.cn>
-X-MIMETrack: Itemize by SMTP Server on SZSMTP06/server/zte_ltd(Release 8.5.3FP6|November
- 21, 2013) at 2019-06-28 11:03:11,
-        Serialize by Router on notes_smtp/zte_ltd(Release 9.0.1FP7|August  17, 2016) at
- 2019-06-28 11:02:45,
-        Serialize complete at 2019-06-28 11:02:45
-X-MAIL: mse-fl1.zte.com.cn x5S32eB1063726
+        Thu, 27 Jun 2019 23:46:55 -0400
+Received: by mail-qt1-f196.google.com with SMTP id a15so4845726qtn.7
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jun 2019 20:46:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=4XNnJ7AzBfIxoku+wu6RTIb2FfJLQtPw7vIFoaLt4IQ=;
+        b=q30i0Qo3kQnWs6dxGG4z+COA0eyVsniFhwW49w5nnQDdP4yhbPGPExuz5LKa+JrWlX
+         kdtcOQfIQgHyCpxbV8bOIc2VZTU0pBqb/uKI2AzAsOIEe8fy+1PvJbK3DSloiKXjNoMG
+         0ipJ5fETUIDTwdguq2pSEECBdW7mU61jDmHy+cQNvEuQ68PAWNyuLVg1JAkwMrxZ1SXL
+         7K72n6tma6JugYuHtIHCd8V7Rejn2YJ2A34FQx3jGBuOLskPE1eMUw1AqaZmzjyM6X31
+         1p3vr4nGKXCM65WiM03ndNP4/FMRfTV1n20LKAjeE/kqdVR2bK0auCbpp0x9nPfueBMu
+         iezQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=4XNnJ7AzBfIxoku+wu6RTIb2FfJLQtPw7vIFoaLt4IQ=;
+        b=D+ZySexDdFBfx4cU5W101fF+WYL5eiBqH30kA4byqn8cNotwnSAMR59Pey0M/RETMb
+         YmsNY42hEu1/bGNRAGw6XJbirW/u/MWk2+1sVdTFnP6AN4dZa/cimtmirOz+CI7UMsuX
+         p6H4sFYrS3fwXWFiadjkCVoBr/bfvPrY0GwmVxTSJ8C7p7nL1ywlXbqnidcnZmTR0MhB
+         jEQI2/GyKKSDSLVS/Hol/ZPPbxd3Y2qhCBHESSHWntM7tr8nFeeu517s0wUJax+cpZE8
+         Q4qqHMJNYhRQIcLFPWoW1x8J69OoWIqUf1rGrCWGtUa8MXNQpzF7jTIYMKjFoXu+4Aq6
+         qYLg==
+X-Gm-Message-State: APjAAAUnfun8k4U1CB02ivZEEfgZX0Sl8raRsNxzr1OMpjJUn8rZbSlf
+        Ty2/qDgUviYYMHyrur9T2xM5F2isi2PMx6kv1QE=
+X-Google-Smtp-Source: APXvYqyBMzTYptISv0npkx2UMJO/Q0v2tAeBhAQKfIfyelMua2hkwn6QzWyGjV4vrx/illc0e/EMyaGZ1dZIqzw0zBo=
+X-Received: by 2002:ac8:244f:: with SMTP id d15mr6021045qtd.32.1561693614304;
+ Thu, 27 Jun 2019 20:46:54 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ac8:2711:0:0:0:0:0 with HTTP; Thu, 27 Jun 2019 20:46:53
+ -0700 (PDT)
+Reply-To: vicktoria.abdulmagidbreish@yandex.com
+From:   Michael Waddington <michaelwadd061@gmail.com>
+Date:   Fri, 28 Jun 2019 03:46:53 +0000
+Message-ID: <CA+m9+ZjWzC3nZuV5E=NbdouzKBzhPiNeAmZYmwbS0nZv=tjOjA@mail.gmail.com>
+Subject: Hello
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The call to of_get_child_by_name returns a node pointer with refcount
-incremented thus it must be explicitly decremented after the last
-usage.
+Pozdrowienia i jak twoja rodzina? Przepraszam za spos=C3=B3b, w jaki do
+ciebie podchodz=C4=99, ale to dlatego, =C5=BCe nie mam innego wyboru. Natkn=
+=C4=85=C5=82em
+si=C4=99 na Tw=C3=B3j e-mail podczas przegl=C4=85dania izby handlowej DTC i
+postanowi=C5=82em si=C4=99 z tob=C4=85 skontaktowa=C4=87. Nazywam si=C4=99 =
+Miss Victoria
+AbdulMagid Breish, Libijczyk po narodowo=C5=9Bci i c=C3=B3rka p=C3=B3=C5=BA=
+nego pana
+AbdulMagida AbdulSalam Breish z LIBYA. M=C3=B3j zmar=C5=82y ojciec by=C5=82=
+ by=C5=82ym
+przewodnicz=C4=85cym i dyrektorem generalnym Libyan Investment Authority,
+zanim zosta=C5=82 zabity przez si=C5=82y NATO podczas libijskiej wojny domo=
+wej.
 
-Detected by coccinelle with the following warnings:
-drivers/media/platform/exynos4-is/fimc-is.c:813:2-8: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
-drivers/media/platform/exynos4-is/fimc-is.c:870:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
-drivers/media/platform/exynos4-is/fimc-is.c:885:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 807, but without a corresponding object release within this function.
-drivers/media/platform/exynos4-is/media-dev.c:545:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 541, but without a corresponding object release within this function.
-drivers/media/platform/exynos4-is/media-dev.c:528:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 499, but without a corresponding object release within this function.
-drivers/media/platform/exynos4-is/media-dev.c:534:1-7: ERROR: missing of_node_put; acquired a node pointer with refcount incremented on line 499, but without a corresponding object release within this function.
+Kontaktuj=C4=99 si=C4=99 z tob=C4=85 w celu uzyskania pomocy i asystenta pr=
+zy
+projekcie inwestycyjnym wartym dwadzie=C5=9Bcia siedem milion=C3=B3w pi=C4=
+=99=C4=87set
+tysi=C4=99cy dolar=C3=B3w ameryka=C5=84skich (27, 500, 000, 00) pod twoim
+kierownictwem w twoim kraju. Jestem got=C3=B3w wynegocjowa=C4=87 z Tob=C4=
+=85 stosunek
+zysk=C3=B3w do inwestycji i zysk=C3=B3w w oparciu o przysz=C5=82e zyski z i=
+nwestycji.
 
-Signed-off-by: Wen Yang <wen.yang99@zte.com.cn>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-media@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
----
- drivers/media/platform/exynos4-is/fimc-is.c   | 1 +
- drivers/media/platform/exynos4-is/media-dev.c | 2 ++
- 2 files changed, 3 insertions(+)
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Mo=C5=BCesz =
+dowiedzie=C4=87 si=C4=99 wi=C4=99cej o kryzysie:
+https://www.ndtv.com/world-news/un-unveils-proplays-to-end-libya-crisis-749=
+348
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-is.c b/drivers/media/platform/exynos4-is/fimc-is.c
-index e043d55..b7cc8e6 100644
---- a/drivers/media/platform/exynos4-is/fimc-is.c
-+++ b/drivers/media/platform/exynos4-is/fimc-is.c
-@@ -806,6 +806,7 @@ static int fimc_is_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 
- 	is->pmu_regs = of_iomap(node, 0);
-+	of_node_put(node);
- 	if (!is->pmu_regs)
- 		return -ENOMEM;
- 
-diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
-index d53427a..a838189 100644
---- a/drivers/media/platform/exynos4-is/media-dev.c
-+++ b/drivers/media/platform/exynos4-is/media-dev.c
-@@ -501,6 +501,7 @@ static int fimc_md_register_sensor_entities(struct fimc_md *fmd)
- 			continue;
- 
- 		ret = fimc_md_parse_port_node(fmd, port, index);
-+		of_node_put(port);
- 		if (ret < 0) {
- 			of_node_put(node);
- 			goto cleanup;
-@@ -542,6 +543,7 @@ static int __of_get_csis_id(struct device_node *np)
- 	if (!np)
- 		return -EINVAL;
- 	of_property_read_u32(np, "reg", &reg);
-+	of_node_put(np);
- 	return reg - FIMC_INPUT_MIPI_CSI2_0;
- }
- 
--- 
-2.9.5
+M=C3=B3j zmar=C5=82y ojciec z=C5=82o=C5=BCy=C5=82 ten fundusz w jednym z ba=
+nk=C3=B3w w Burkina Faso,
+a ja mia=C5=82em na imi=C4=99 najbli=C5=BCszy krewny. Uda=C5=82o mi si=C4=
+=99 przedosta=C4=87 do
+Burkina Faso, gdzie teraz mieszkam jako uchod=C5=BAca pod rz=C4=85dow=C4=85=
+ opiek=C4=85
+bez matki. Po przyje=C5=BAdzie skontaktowa=C5=82em si=C4=99 z bankiem, aby =
+wyczy=C5=9Bci=C4=87
+zdeponowany fundusz, ale dyrektor banku powiedzia=C5=82 mi, =C5=BCe m=C3=B3=
+j
+nie=C5=BCyj=C4=85cy ojciec sk=C5=82ada instrukcj=C4=99 na temat wp=C5=82aco=
+ny fundusz, kt=C3=B3ry
+musz=C4=99 przedstawi=C4=87 zagranicznemu powiernikowi, kt=C3=B3ry pomo=C5=
+=BCe mi w
+inwestowaniu funduszu w dobry interes. Dyrektor banku doradzi=C5=82 mi, aby
+przekaza=C4=87 powiernikowi, kt=C3=B3ry stanie w moim imieniu za przekazani=
+e
+funduszu. i dlatego kontaktuj=C4=99 si=C4=99 z tob=C4=85 w tej chwili. ZE W=
+ZGL=C4=98DU NA
+KRYZYS WYJ=C5=9ACIOWY W LIBII uwa=C5=BCam, =C5=BCe konieczne jest zr=C3=B3=
+=C5=BCnicowanie
+mojego planu inwestycyjnego poza granice zamorskie, aby zabezpieczy=C4=87
+si=C4=99 przed moj=C4=85 przysz=C5=82o=C5=9Bci=C4=85.
 
+MAM NAST=C4=98PUJ=C4=84CY PLAN INWESTYCJI NA TWOJE ROZWA=C5=BBANIE:
+
+A) Zarz=C4=85dzanie nieruchomo=C5=9Bciami
+
+B) Restauracja i hotel
+
+C) Zarz=C4=85dzanie szpitalem
+
+D) Produkcja =C5=BCywno=C5=9Bci
+
+Je=C5=9Bli masz inny op=C5=82acalny biznesplan, kt=C3=B3ry mo=C5=BCe by=C4=
+=87 zainteresowany
+zainwestowaniem w twoim kraju, uprzejmie odpowiedz na pilne informacje
+o tym, w jaki spos=C3=B3b fundusz inwestycyjny zostanie przekazany pod
+Twoj=C4=85 opiek=C4=99 w celu dalszego inwestowania.
+
+Jednak=C5=BCe, gdy wyrazisz zainteresowanie pomoc=C4=85, przeka=C5=BC=C4=99=
+ ci z niezb=C4=99dn=C4=85
+informacj=C4=85 o depozycie potwierdzenie Twojej zgody, aby pom=C3=B3c mi w
+przekazaniu i inwestycji funduszu w twoim kraju. B=C4=99d=C4=99 bardzo
+szcz=C4=99=C5=9Bliwy, je=C5=9Bli odpiszesz mi w celu =C5=82atwej komunikacj=
+i, aby=C5=9Bmy mogli
+si=C4=99 pozna=C4=87. Kiedy odpiszesz, podam ci moje zdj=C4=99cia i m=C3=B3=
+j osobisty
+numer telefonu oraz wi=C4=99cej szczeg=C3=B3=C5=82=C3=B3w o sobie w mojej n=
+ast=C4=99pnej
+wiadomo=C5=9Bci.
+
+Prosz=C4=99 o bezpiecze=C5=84stwo i poufny pow=C3=B3d, odpowiedz mi przez m=
+=C3=B3j
+osobisty adres e-mail: vicktoria.abdulmagidbreish@yandex.com
+
+Twoja pilna odpowied=C5=BA zostanie doceniona.
+Z powa=C5=BCaniem,
