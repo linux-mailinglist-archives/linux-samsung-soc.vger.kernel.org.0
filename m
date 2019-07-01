@@ -2,86 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 688165AA9C
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 29 Jun 2019 13:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D8055BB56
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Jul 2019 14:19:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbfF2Lru (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 29 Jun 2019 07:47:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52270 "EHLO mail.kernel.org"
+        id S1727801AbfGAMTR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 1 Jul 2019 08:19:17 -0400
+Received: from 8bytes.org ([81.169.241.247]:33632 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726905AbfF2Lrt (ORCPT
+        id S1727243AbfGAMTR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 29 Jun 2019 07:47:49 -0400
-Received: from localhost.localdomain (unknown [194.230.155.151])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DED40216FD;
-        Sat, 29 Jun 2019 11:47:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1561808868;
-        bh=QqIK/wq6CAql+1yE4dVAaHOMSzbguVlkuNzXU6IwT04=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=ibEz1k48uMtAiph2Ifwow6bIPoOdD3jtTVIAv4F1J3UbzO2reCAVFZWWSnVXXkT16
-         KvXjFDAXtVeItjYQde/3pLUG60sGiLigN9MC0qEestV6iwBu9s9n/9e7lX/4YKHt+f
-         t657is9fPiPtorrqfT3mfvRlgv/RyHFEbMWc+a+w=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kukjin Kim <kgene@kernel.org>,
+        Mon, 1 Jul 2019 08:19:17 -0400
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id B9E84229; Mon,  1 Jul 2019 14:19:15 +0200 (CEST)
+Date:   Mon, 1 Jul 2019 14:19:14 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org,
+        Heiko Stuebner <heiko@sntech.de>,
+        Will Deacon <will.deacon@arm.com>,
+        virtualization@lists.linux-foundation.org,
+        David Brown <david.brown@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Anand Moon <linux.amoon@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: exynos: Adjust buck[78] regulators to supported values on Arndale Octa
-Date:   Sat, 29 Jun 2019 13:47:39 +0200
-Message-Id: <20190629114739.11702-2-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190629114739.11702-1-krzk@kernel.org>
-References: <20190629114739.11702-1-krzk@kernel.org>
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH v4 0/5] iommu/amd: Convert the AMD iommu driver to the
+ dma-iommu api
+Message-ID: <20190701121914.GD8166@8bytes.org>
+References: <20190613223901.9523-1-murphyt7@tcd.ie>
+ <20190624061945.GA4912@infradead.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190624061945.GA4912@infradead.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The datasheet of S2MPS11 PMIC is slightly non-consistent in buck[78]
-voltage regulators values.
+Hi,
+	
+On Sun, Jun 23, 2019 at 11:19:45PM -0700, Christoph Hellwig wrote:
+> Joerg, any chance you could review this?  Toms patches to convert the
+> AMD and Intel IOMMU drivers to the dma-iommu code are going to make my
+> life in DMA land significantly easier, so I have a vested interest
+> in this series moving forward :)
 
-1. The voltage tables for configuring their registers mention range of
-   voltages: 0.750 V to 3.55 V,
-2. The constrains in electrical specifications say output voltage range
-   to be different (buck7: 1.2 V to 1.5 V, buck8: 1.8 V to 2.1 V).
+I really appreciate Toms work on this. Tom, please rebase and resubmit
+this series after the next merge window and I will do more performance
+testing on it. If all goes well I and no other issues show up I can
+apply it for v5.4.
 
-Adjust the ranges to match the electrical specifications to stay on the
-safe side.  Anyway these regulators stay at default value so this should
-not have effect.
+Regards,
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm/boot/dts/exynos5420-arndale-octa.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/exynos5420-arndale-octa.dts b/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-index ac7f2fa0ba22..592d7b45ecc8 100644
---- a/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-+++ b/arch/arm/boot/dts/exynos5420-arndale-octa.dts
-@@ -723,15 +723,15 @@
- 
- 			buck7_reg: BUCK7 {
- 				regulator-name = "VIN_LLDO_1V4";
--				regulator-min-microvolt = <800000>;
-+				regulator-min-microvolt = <1200000>;
- 				regulator-max-microvolt = <1500000>;
- 				regulator-always-on;
- 			};
- 
- 			buck8_reg: BUCK8 {
- 				regulator-name = "VIN_MLDO_2V0";
--				regulator-min-microvolt = <800000>;
--				regulator-max-microvolt = <2000000>;
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <2100000>;
- 				regulator-always-on;
- 			};
- 
--- 
-2.17.1
+	Joerg
 
