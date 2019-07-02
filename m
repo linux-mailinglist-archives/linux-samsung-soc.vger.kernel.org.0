@@ -2,84 +2,200 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 973DA5CF19
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Jul 2019 14:06:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82E3B5D01A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Jul 2019 15:05:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbfGBMGa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 2 Jul 2019 08:06:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34794 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725922AbfGBMGa (ORCPT
+        id S1727109AbfGBNFS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 2 Jul 2019 09:05:18 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:40304 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbfGBNEz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 2 Jul 2019 08:06:30 -0400
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9660F21851;
-        Tue,  2 Jul 2019 12:06:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1562069188;
-        bh=JMUvbK/LfOJhb6Ete6QNsOakQUnGfCiPzMOmNQ6+NCg=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=HwC20ALa2Bz/YOW4FKBF/0iy/VmbQeOGBkAAkPTbw4EE8VmR2fSspfXMqIqwBdVc/
-         zFjLG4As/+XHC/UKUp9UeDb1GP5DlrEAxFpWnUT/UA0QODaoSD5VDW5BRnZQkzNU7U
-         H+wq0YOGmgvMgbg3tmtNjBKsB7mFNNQ1FiH5MGuI=
-Received: by mail-lj1-f175.google.com with SMTP id p17so16648026ljg.1;
-        Tue, 02 Jul 2019 05:06:28 -0700 (PDT)
-X-Gm-Message-State: APjAAAUr1uZ4khOmwGJGEWjlGlNrEcklBi3a+VGqK2KhyTPKYszaSXmj
-        C89t7oVNmtl3OeBRKrhrPO0hMOEeXpNxT1jeg3Q=
-X-Google-Smtp-Source: APXvYqzUYFM/EIyZphFmV/SpQwmAz/C+DNi3kHPWXR6+ebp2/C/4bHX7aVTINZ72IbXpXBNvNjj3Ls2f2eDhzgGnXR8=
-X-Received: by 2002:a2e:8155:: with SMTP id t21mr16985058ljg.80.1562069186791;
- Tue, 02 Jul 2019 05:06:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <CGME20190701131152eucas1p2c5ac5f1611fd07e3b7a4ad289abe3e81@eucas1p2.samsung.com>
- <20190701131138.22666-1-l.luba@partner.samsung.com> <20190701131138.22666-4-l.luba@partner.samsung.com>
-In-Reply-To: <20190701131138.22666-4-l.luba@partner.samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Tue, 2 Jul 2019 14:06:15 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcc3q4_GLg21TL=xNO5U1Kp9ZHqpSERHFVCi8OLasgm3Q@mail.gmail.com>
-Message-ID: <CAJKOXPcc3q4_GLg21TL=xNO5U1Kp9ZHqpSERHFVCi8OLasgm3Q@mail.gmail.com>
-Subject: Re: [PATCH v11 3/9] drivers: memory: extend of_memory by LPDDR3 support
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-clk@vger.kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
-        treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
-        willy.mh.wolff.ml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 2 Jul 2019 09:04:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=J6di5hKSvm2U7x0iTDHc1tDKkTElop7GVRgvSTGDsGY=; b=X0Dz1xWmCu7M
+        icmPZahvfRBHoQss9hogkiOZ51LLsy/GGpcOfkGTHDIiBWOl0lmSZx96E8XUAKiUfNVhAwE0ZkVhN
+        Vh9bHqIoB0jtNmUoQ6WxouzbOBThgV7KcdzormDc8LEV6EPjqD952mmmry3TmNkAvC5FSjXQVwi14
+        M2w4o=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=finisterre.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1hiISm-0002O3-Si; Tue, 02 Jul 2019 13:04:48 +0000
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+        id 51BF944004A; Tue,  2 Jul 2019 14:04:48 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Sangbeom Kim <sbkim73@samsung.com>
+Subject: Applied "regulator: s2mps11: Adjust supported buck voltages to real values" to the regulator tree
+In-Reply-To: <20190629114446.11381-2-krzk@kernel.org>
+X-Patchwork-Hint: ignore
+Message-Id: <20190702130448.51BF944004A@finisterre.sirena.org.uk>
+Date:   Tue,  2 Jul 2019 14:04:48 +0100 (BST)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 1 Jul 2019 at 15:11, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->
-> The patch adds AC timings information needed to support LPDDR3 and memory
-> controllers. The structure is used in of_memory and currently in Exynos
-> 5422 DMC. Add parsing data needed for LPDDR3 support.
-> It is currently used in Exynos5422 Dynamic Memory Controller.
->
-> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
-> ---
->  drivers/memory/of_memory.c | 149 +++++++++++++++++++++++++++++++++++++
->  drivers/memory/of_memory.h |  18 +++++
->  include/memory/jedec_ddr.h |  61 +++++++++++++++
->  3 files changed, 228 insertions(+)
+The patch
 
-Hi,
+   regulator: s2mps11: Adjust supported buck voltages to real values
 
-As I mentioned before in v10, I can take entire patchset through
-samsung-soc but this one patch requires ack or at least reviews.
+has been applied to the regulator tree at
 
-Best regards,
-Krzysztof
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.2
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From 9d83dcb3e4553f34ee1c4f09d65173159f9eb7a7 Mon Sep 17 00:00:00 2001
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Date: Sat, 29 Jun 2019 13:44:46 +0200
+Subject: [PATCH] regulator: s2mps11: Adjust supported buck voltages to real
+ values
+
+The driver was registering buck regulators with unsupported range of
+voltages for S2MPS11 devices.  Basically it assumed that all 256 values
+are possible for a single 8-bit I2C register controlling buck's voltage.
+This is not true, as datasheet describes subset of these which can be
+used.
+
+For example for buck[12346] the minimum voltage is 650 mV which
+corresponds to register value of 0x8.  The driver was however
+registering regulator starting at 600 mV, so for a step of 6.25 mV this
+gave the same result.  However this allowed to try to configure
+regulators to unsupported values.
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ drivers/regulator/s2mps11.c         | 27 +++++++++++++++++----------
+ include/linux/mfd/samsung/core.h    |  1 +
+ include/linux/mfd/samsung/s2mps11.h |  4 +++-
+ 3 files changed, 21 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
+index 7a89030187a4..5b7ba7c6c4f6 100644
+--- a/drivers/regulator/s2mps11.c
++++ b/drivers/regulator/s2mps11.c
+@@ -269,9 +269,10 @@ static const struct regulator_ops s2mps11_buck_ops = {
+ 	.ops		= &s2mps11_buck_ops,			\
+ 	.type		= REGULATOR_VOLTAGE,			\
+ 	.owner		= THIS_MODULE,				\
+-	.min_uV		= MIN_600_MV,				\
++	.min_uV		= MIN_650_MV,				\
+ 	.uV_step	= STEP_6_25_MV,				\
+-	.n_voltages	= S2MPS11_BUCK_N_VOLTAGES,		\
++	.linear_min_sel	= 8,					\
++	.n_voltages	= S2MPS11_BUCK12346_N_VOLTAGES,		\
+ 	.ramp_delay	= S2MPS11_RAMP_DELAY,			\
+ 	.vsel_reg	= S2MPS11_REG_B1CTRL2 + (num - 1) * 2,	\
+ 	.vsel_mask	= S2MPS11_BUCK_VSEL_MASK,		\
+@@ -285,9 +286,10 @@ static const struct regulator_ops s2mps11_buck_ops = {
+ 	.ops		= &s2mps11_buck_ops,			\
+ 	.type		= REGULATOR_VOLTAGE,			\
+ 	.owner		= THIS_MODULE,				\
+-	.min_uV		= MIN_600_MV,				\
++	.min_uV		= MIN_650_MV,				\
+ 	.uV_step	= STEP_6_25_MV,				\
+-	.n_voltages	= S2MPS11_BUCK_N_VOLTAGES,		\
++	.linear_min_sel	= 8,					\
++	.n_voltages	= S2MPS11_BUCK5_N_VOLTAGES,		\
+ 	.ramp_delay	= S2MPS11_RAMP_DELAY,			\
+ 	.vsel_reg	= S2MPS11_REG_B5CTRL2,			\
+ 	.vsel_mask	= S2MPS11_BUCK_VSEL_MASK,		\
+@@ -295,7 +297,7 @@ static const struct regulator_ops s2mps11_buck_ops = {
+ 	.enable_mask	= S2MPS11_ENABLE_MASK			\
+ }
+ 
+-#define regulator_desc_s2mps11_buck67810(num, min, step) {	\
++#define regulator_desc_s2mps11_buck67810(num, min, step, min_sel, voltages) {	\
+ 	.name		= "BUCK"#num,				\
+ 	.id		= S2MPS11_BUCK##num,			\
+ 	.ops		= &s2mps11_buck_ops,			\
+@@ -303,7 +305,8 @@ static const struct regulator_ops s2mps11_buck_ops = {
+ 	.owner		= THIS_MODULE,				\
+ 	.min_uV		= min,					\
+ 	.uV_step	= step,					\
+-	.n_voltages	= S2MPS11_BUCK_N_VOLTAGES,		\
++	.linear_min_sel	= min_sel,				\
++	.n_voltages	= voltages,				\
+ 	.ramp_delay	= S2MPS11_RAMP_DELAY,			\
+ 	.vsel_reg	= S2MPS11_REG_B6CTRL2 + (num - 6) * 2,	\
+ 	.vsel_mask	= S2MPS11_BUCK_VSEL_MASK,		\
+@@ -371,11 +374,15 @@ static const struct regulator_desc s2mps11_regulators[] = {
+ 	regulator_desc_s2mps11_buck1_4(3),
+ 	regulator_desc_s2mps11_buck1_4(4),
+ 	regulator_desc_s2mps11_buck5,
+-	regulator_desc_s2mps11_buck67810(6, MIN_600_MV, STEP_6_25_MV),
+-	regulator_desc_s2mps11_buck67810(7, MIN_750_MV, STEP_12_5_MV),
+-	regulator_desc_s2mps11_buck67810(8, MIN_750_MV, STEP_12_5_MV),
++	regulator_desc_s2mps11_buck67810(6, MIN_650_MV, STEP_6_25_MV, 8,
++					 S2MPS11_BUCK12346_N_VOLTAGES),
++	regulator_desc_s2mps11_buck67810(7, MIN_750_MV, STEP_12_5_MV, 0,
++					 S2MPS11_BUCK7810_N_VOLTAGES),
++	regulator_desc_s2mps11_buck67810(8, MIN_750_MV, STEP_12_5_MV, 0,
++					 S2MPS11_BUCK7810_N_VOLTAGES),
+ 	regulator_desc_s2mps11_buck9,
+-	regulator_desc_s2mps11_buck67810(10, MIN_750_MV, STEP_12_5_MV),
++	regulator_desc_s2mps11_buck67810(10, MIN_750_MV, STEP_12_5_MV, 0,
++					 S2MPS11_BUCK7810_N_VOLTAGES),
+ };
+ 
+ static const struct regulator_ops s2mps14_reg_ops;
+diff --git a/include/linux/mfd/samsung/core.h b/include/linux/mfd/samsung/core.h
+index 3ca17eb89aa2..f1631a39acfc 100644
+--- a/include/linux/mfd/samsung/core.h
++++ b/include/linux/mfd/samsung/core.h
+@@ -20,6 +20,7 @@
+ #define MIN_850_MV		850000
+ #define MIN_800_MV		800000
+ #define MIN_750_MV		750000
++#define MIN_650_MV		650000
+ #define MIN_600_MV		600000
+ #define MIN_500_MV		500000
+ 
+diff --git a/include/linux/mfd/samsung/s2mps11.h b/include/linux/mfd/samsung/s2mps11.h
+index 6e7668a389a1..fc67c9e75bba 100644
+--- a/include/linux/mfd/samsung/s2mps11.h
++++ b/include/linux/mfd/samsung/s2mps11.h
+@@ -170,7 +170,9 @@ enum s2mps11_regulators {
+ #define S2MPS11_ENABLE_MASK	(0x03 << S2MPS11_ENABLE_SHIFT)
+ #define S2MPS11_ENABLE_SHIFT	0x06
+ #define S2MPS11_LDO_N_VOLTAGES	(S2MPS11_LDO_VSEL_MASK + 1)
+-#define S2MPS11_BUCK_N_VOLTAGES (S2MPS11_BUCK_VSEL_MASK + 1)
++#define S2MPS11_BUCK12346_N_VOLTAGES	153
++#define S2MPS11_BUCK5_N_VOLTAGES	216
++#define S2MPS11_BUCK7810_N_VOLTAGES	225
+ #define S2MPS11_BUCK9_N_VOLTAGES (S2MPS11_BUCK9_VSEL_MASK + 1)
+ #define S2MPS11_RAMP_DELAY	25000		/* uV/us */
+ 
+-- 
+2.20.1
+
