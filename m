@@ -2,117 +2,109 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BC085D001
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Jul 2019 15:04:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12D8F5F16D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Jul 2019 04:35:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727069AbfGBNEy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 2 Jul 2019 09:04:54 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:40302 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbfGBNEy (ORCPT
+        id S1726696AbfGDCfq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 3 Jul 2019 22:35:46 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38906 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726652AbfGDCfq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 2 Jul 2019 09:04:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=VrK8RqyESLo3WlpxCq2cSsDNMbC4+p4MWk5KU0cJU3I=; b=EFokFO1nfOpY
-        fIPeXvkxo9ueAg1wwWdUeSqMydAEiBJW4BFfTklU0Cj/EXyrw6c+ZtqrCkNyZRClA+SaPzEfB2kvj
-        LvCgjxz1vj7acGPsO6CIIjsT9hFCJDJzg+kEPPzkhMw/nk7kcP7P9At15JE+eX3YAAcHuUvUZj0b8
-        uAOg8=;
-Received: from [2001:470:1f1d:6b5:7e7a:91ff:fede:4a45] (helo=finisterre.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1hiISn-0002O4-3p; Tue, 02 Jul 2019 13:04:49 +0000
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-        id 6E65A44004B; Tue,  2 Jul 2019 14:04:48 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
-        Sangbeom Kim <sbkim73@samsung.com>, <stable@vger.kernel.org>,
-        stable@vger.kernel.org
-Subject: Applied "regulator: s2mps11: Fix buck7 and buck8 wrong voltages" to the regulator tree
-In-Reply-To: <20190629114446.11381-1-krzk@kernel.org>
-X-Patchwork-Hint: ignore
-Message-Id: <20190702130448.6E65A44004B@finisterre.sirena.org.uk>
-Date:   Tue,  2 Jul 2019 14:04:48 +0100 (BST)
+        Wed, 3 Jul 2019 22:35:46 -0400
+Received: by mail-pg1-f196.google.com with SMTP id z75so2154931pgz.5;
+        Wed, 03 Jul 2019 19:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=nXTmk+pxDZGbrpmbWYwCZvMXWZKHwPkgM46QtmxM/i8=;
+        b=WnIDVSNyFN+GFsu8DtLMgP1OsUuRcgcaIdWOIZtK3QToQE396D3VbYxv2O9LJU8wrx
+         wsa95FllqQ0c4hUs2NKqBQob5D+7UbsUtGWtxeizU8MaQAT5cSJHwbyeQ5tIS5RKljXH
+         O4v1+nazHVba494UkGKurdi5JV1XV/scsmsw3C+Jim0B5gfAvFXtRn6wJuIKP+w+7+iq
+         XsA02FqL7QfjMtgWch+KcYCakNjHnX6wdIj30NGyhh9/zl6WAmVBu4funKKKMeDDrGXF
+         KJHPV9X+tbBKUb/1EoXCWK292IEU41XbsDiTjH8TUIWIrNxz1VZI7G8N0WP/GIsK/r6Z
+         T31A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nXTmk+pxDZGbrpmbWYwCZvMXWZKHwPkgM46QtmxM/i8=;
+        b=HMYIacpELpWSXRiw1IvLUnOBU+jVglCQn62cHFrUum218otMmRPEbuOMz4/rdmwhpy
+         sJn62pAjR2KPWFihgzvrXin6rbz/jBAidmNYu2GhaTUXZiMuiMlbIgMTHvGWwDbbQFN0
+         au8HQXZtgLKPhNjCBVYi3l32GZH+G1G3MYSLQDEVTzSncmJLZAuEMVHN9OgQSZcsMKXN
+         2/EbUYZcnZjhqV9OTmPEK/RbqXE6m0AfmGwIBLZm/svkwALkg+DZgoJAmkgIZuxN2/xf
+         eu/F8de+3WPjiWc0MheYLMbGZyq/oVBicHx1raIM1bprDJmif8l1LZ5Jh2ubD7LdHoZX
+         sJUA==
+X-Gm-Message-State: APjAAAV6y5VQiIvuWmrVcV214tBKaiZdmJ4Dtd/nrYXjilzTf64DHc2A
+        am8OfIDYa+/ZAtNuSIhBON8=
+X-Google-Smtp-Source: APXvYqwhSeJvwMwPkanmGKWfOj1GnT7T88Rpk3rP16X1l5uBpm5SOtUz1DniCqkcur/49sEn0+h7Tw==
+X-Received: by 2002:a17:90a:a09:: with SMTP id o9mr16504796pjo.95.1562207745651;
+        Wed, 03 Jul 2019 19:35:45 -0700 (PDT)
+Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
+        by smtp.googlemail.com with ESMTPSA id y68sm3715500pfy.164.2019.07.03.19.35.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jul 2019 19:35:45 -0700 (PDT)
+From:   Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Fuqian Huang <huangfq.daxian@gmail.com>
+Subject: [Patch v2 01/10] drm/exynos: using dev_get_drvdata directly
+Date:   Thu,  4 Jul 2019 10:34:36 +0800
+Message-Id: <20190704023436.4456-1-huangfq.daxian@gmail.com>
+X-Mailer: git-send-email 2.11.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The patch
+Several drivers cast a struct device pointer to a struct
+platform_device pointer only to then call platform_get_drvdata().
+To improve readability, these constructs can be simplified
+by using dev_get_drvdata() directly.
 
-   regulator: s2mps11: Fix buck7 and buck8 wrong voltages
-
-has been applied to the regulator tree at
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.2
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From 16da0eb5ab6ef2dd1d33431199126e63db9997cc Mon Sep 17 00:00:00 2001
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Date: Sat, 29 Jun 2019 13:44:45 +0200
-Subject: [PATCH] regulator: s2mps11: Fix buck7 and buck8 wrong voltages
-
-On S2MPS11 device, the buck7 and buck8 regulator voltages start at 750
-mV, not 600 mV.  Using wrong minimal value caused shifting of these
-regulator values by 150 mV (e.g. buck7 usually configured to v1.35 V was
-reported as 1.2 V).
-
-On most of the boards these regulators are left in default state so this
-was only affecting reported voltage.  However if any driver wanted to
-change them, then effectively it would set voltage 150 mV higher than
-intended.
-
-Cc: <stable@vger.kernel.org>
-Fixes: cb74685ecb39 ("regulator: s2mps11: Add samsung s2mps11 regulator driver")
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
 ---
- drivers/regulator/s2mps11.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes in v2:
+  - Make the commit message more clearly.
 
-diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
-index af9bf10b4c33..7a89030187a4 100644
---- a/drivers/regulator/s2mps11.c
-+++ b/drivers/regulator/s2mps11.c
-@@ -372,8 +372,8 @@ static const struct regulator_desc s2mps11_regulators[] = {
- 	regulator_desc_s2mps11_buck1_4(4),
- 	regulator_desc_s2mps11_buck5,
- 	regulator_desc_s2mps11_buck67810(6, MIN_600_MV, STEP_6_25_MV),
--	regulator_desc_s2mps11_buck67810(7, MIN_600_MV, STEP_12_5_MV),
--	regulator_desc_s2mps11_buck67810(8, MIN_600_MV, STEP_12_5_MV),
-+	regulator_desc_s2mps11_buck67810(7, MIN_750_MV, STEP_12_5_MV),
-+	regulator_desc_s2mps11_buck67810(8, MIN_750_MV, STEP_12_5_MV),
- 	regulator_desc_s2mps11_buck9,
- 	regulator_desc_s2mps11_buck67810(10, MIN_750_MV, STEP_12_5_MV),
- };
+ drivers/gpu/drm/exynos/exynos_drm_fimc.c | 2 +-
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+index 0db29690ede3..c79eafc9457e 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+@@ -43,7 +43,7 @@ static unsigned int fimc_mask = 0xc;
+ module_param_named(fimc_devs, fimc_mask, uint, 0644);
+ MODULE_PARM_DESC(fimc_devs, "Alias mask for assigning FIMC devices to Exynos DRM");
+ 
+-#define get_fimc_context(dev)	platform_get_drvdata(to_platform_device(dev))
++#define get_fimc_context(dev)	dev_get_drvdata(dev)
+ 
+ enum {
+ 	FIMC_CLK_LCLK,
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+index 05b0fe21b81e..6399d89c3f9f 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+@@ -57,7 +57,7 @@
+ #define GSC_COEF_DEPTH	3
+ #define GSC_AUTOSUSPEND_DELAY		2000
+ 
+-#define get_gsc_context(dev)	platform_get_drvdata(to_platform_device(dev))
++#define get_gsc_context(dev)	dev_get_drvdata(dev)
+ #define gsc_read(offset)		readl(ctx->regs + (offset))
+ #define gsc_write(cfg, offset)	writel(cfg, ctx->regs + (offset))
+ 
 -- 
-2.20.1
+2.11.0
 
