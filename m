@@ -2,109 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 12D8F5F16D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Jul 2019 04:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9D945F9C3
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Jul 2019 16:09:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726696AbfGDCfq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 3 Jul 2019 22:35:46 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38906 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbfGDCfq (ORCPT
+        id S1727239AbfGDOJv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 4 Jul 2019 10:09:51 -0400
+Received: from mail-ua1-f45.google.com ([209.85.222.45]:37131 "EHLO
+        mail-ua1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727229AbfGDOJv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 3 Jul 2019 22:35:46 -0400
-Received: by mail-pg1-f196.google.com with SMTP id z75so2154931pgz.5;
-        Wed, 03 Jul 2019 19:35:46 -0700 (PDT)
+        Thu, 4 Jul 2019 10:09:51 -0400
+Received: by mail-ua1-f45.google.com with SMTP id z13so1181026uaa.4;
+        Thu, 04 Jul 2019 07:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=nXTmk+pxDZGbrpmbWYwCZvMXWZKHwPkgM46QtmxM/i8=;
-        b=WnIDVSNyFN+GFsu8DtLMgP1OsUuRcgcaIdWOIZtK3QToQE396D3VbYxv2O9LJU8wrx
-         wsa95FllqQ0c4hUs2NKqBQob5D+7UbsUtGWtxeizU8MaQAT5cSJHwbyeQ5tIS5RKljXH
-         O4v1+nazHVba494UkGKurdi5JV1XV/scsmsw3C+Jim0B5gfAvFXtRn6wJuIKP+w+7+iq
-         XsA02FqL7QfjMtgWch+KcYCakNjHnX6wdIj30NGyhh9/zl6WAmVBu4funKKKMeDDrGXF
-         KJHPV9X+tbBKUb/1EoXCWK292IEU41XbsDiTjH8TUIWIrNxz1VZI7G8N0WP/GIsK/r6Z
-         T31A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mQ5m8rYbT8Z2US94ZaqcngLhWVtKzNxmo7qmupLUZ7w=;
+        b=oIqiaWuC6upmXjZw83Sk7A7AN228dkex7qLAmW3GCy+0EdImPA38Kk1jNfvfdrZi3V
+         bhdR7xb6+PRPFieFo6k5xXWKmR1zWZO2TNP+7r3I4FGpkkwc588AR5j7TJ2l9+07uWmG
+         mptGkWYKyHhVPxQUywF6hQOLXeX4k+q4AzscwADbbBwmytmPpN1YtLs1e6RLR/uOVoJO
+         e7Lqkp7Ol5BKEYqrzorBo+PvwCgZJrMN6FLWd5OgJgmMDIjmSC/Dtrvj0F6QbItWmz8Q
+         GEnvd5zoUJsbxd7atboADB4j8JGLKNWGEET4JkCvbgvTP8bv1aeCrtb10TIA3tScAfw/
+         lQ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=nXTmk+pxDZGbrpmbWYwCZvMXWZKHwPkgM46QtmxM/i8=;
-        b=HMYIacpELpWSXRiw1IvLUnOBU+jVglCQn62cHFrUum218otMmRPEbuOMz4/rdmwhpy
-         sJn62pAjR2KPWFihgzvrXin6rbz/jBAidmNYu2GhaTUXZiMuiMlbIgMTHvGWwDbbQFN0
-         au8HQXZtgLKPhNjCBVYi3l32GZH+G1G3MYSLQDEVTzSncmJLZAuEMVHN9OgQSZcsMKXN
-         2/EbUYZcnZjhqV9OTmPEK/RbqXE6m0AfmGwIBLZm/svkwALkg+DZgoJAmkgIZuxN2/xf
-         eu/F8de+3WPjiWc0MheYLMbGZyq/oVBicHx1raIM1bprDJmif8l1LZ5Jh2ubD7LdHoZX
-         sJUA==
-X-Gm-Message-State: APjAAAV6y5VQiIvuWmrVcV214tBKaiZdmJ4Dtd/nrYXjilzTf64DHc2A
-        am8OfIDYa+/ZAtNuSIhBON8=
-X-Google-Smtp-Source: APXvYqwhSeJvwMwPkanmGKWfOj1GnT7T88Rpk3rP16X1l5uBpm5SOtUz1DniCqkcur/49sEn0+h7Tw==
-X-Received: by 2002:a17:90a:a09:: with SMTP id o9mr16504796pjo.95.1562207745651;
-        Wed, 03 Jul 2019 19:35:45 -0700 (PDT)
-Received: from hfq-skylake.ipads-lab.se.sjtu.edu.cn ([202.120.40.82])
-        by smtp.googlemail.com with ESMTPSA id y68sm3715500pfy.164.2019.07.03.19.35.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jul 2019 19:35:45 -0700 (PDT)
-From:   Fuqian Huang <huangfq.daxian@gmail.com>
-Cc:     Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mQ5m8rYbT8Z2US94ZaqcngLhWVtKzNxmo7qmupLUZ7w=;
+        b=gr7gBeXUgzdM2gdkXeUVZsdvK9AAPNfQyrVbefbLO8jJLkZe3htlIHbWoan5Tx4X4I
+         adN2RYWIWSED+iqVJ5ytmpN6Jme/3nxh8y8R9h382Y9GWkwjhxHNXNhNb+U36aaS4wKb
+         EDUlEPxI1UKH3C8m5mbrXGMidjd1ysExXruqispVpta0m/lllt9Y9Fnm+ZtLwkk/N7xm
+         3IaQ457Q6E2OrLpoz7+9nfDSMb6VAOki8XjDWPJK9ZwH8dw4qmTZUE4NWNFwr5VLhcO7
+         0Pea+XHToos9XlZsH7gCaQhPsdyRg50Wq6466DIqeep6XxiRtfQuake6S60t0ppNM6NR
+         1Zng==
+X-Gm-Message-State: APjAAAV2gFnHqVihvaC76HDFWRlnKHn/I/rOlyx8KFJhW9+/UyN4bjt9
+        xRU5ECS3w+mU8lQCMEfpQki8Mf2v2yXqqeKRjmf73Q==
+X-Google-Smtp-Source: APXvYqw2dNxxbf+8Wi66NiMCCn2WzNJSfu4KOQyo4/Q4ZNqttIe/PSYYLn2ptK9W58HniHDZdcr9VegpbZ4mY00GnBg=
+X-Received: by 2002:ab0:2556:: with SMTP id l22mr16501064uan.46.1562249390682;
+ Thu, 04 Jul 2019 07:09:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190704023436.4456-1-huangfq.daxian@gmail.com>
+In-Reply-To: <20190704023436.4456-1-huangfq.daxian@gmail.com>
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+Date:   Thu, 4 Jul 2019 15:09:59 +0100
+Message-ID: <CACvgo50s0oh3tRjpUxeTkpFGJXahwB72hW=cc-de=2MG587m3Q@mail.gmail.com>
+Subject: Re: [Patch v2 01/10] drm/exynos: using dev_get_drvdata directly
+To:     Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     "moderated list:ARM/S5P EXYNOS AR..." 
+        <linux-samsung-soc@vger.kernel.org>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Fuqian Huang <huangfq.daxian@gmail.com>
-Subject: [Patch v2 01/10] drm/exynos: using dev_get_drvdata directly
-Date:   Thu,  4 Jul 2019 10:34:36 +0800
-Message-Id: <20190704023436.4456-1-huangfq.daxian@gmail.com>
-X-Mailer: git-send-email 2.11.0
-To:     unlisted-recipients:; (no To-header on input)
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        ML dri-devel <dri-devel@lists.freedesktop.org>,
+        LAKML <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Several drivers cast a struct device pointer to a struct
-platform_device pointer only to then call platform_get_drvdata().
-To improve readability, these constructs can be simplified
-by using dev_get_drvdata() directly.
+On Thu, 4 Jul 2019 at 08:26, Fuqian Huang <huangfq.daxian@gmail.com> wrote:
+>
+> Several drivers cast a struct device pointer to a struct
+> platform_device pointer only to then call platform_get_drvdata().
+> To improve readability, these constructs can be simplified
+> by using dev_get_drvdata() directly.
+>
+> Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
+Thanks for the update. This patch is:
+Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
 
-Signed-off-by: Fuqian Huang <huangfq.daxian@gmail.com>
----
-Changes in v2:
-  - Make the commit message more clearly.
-
- drivers/gpu/drm/exynos/exynos_drm_fimc.c | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_gsc.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-index 0db29690ede3..c79eafc9457e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-@@ -43,7 +43,7 @@ static unsigned int fimc_mask = 0xc;
- module_param_named(fimc_devs, fimc_mask, uint, 0644);
- MODULE_PARM_DESC(fimc_devs, "Alias mask for assigning FIMC devices to Exynos DRM");
- 
--#define get_fimc_context(dev)	platform_get_drvdata(to_platform_device(dev))
-+#define get_fimc_context(dev)	dev_get_drvdata(dev)
- 
- enum {
- 	FIMC_CLK_LCLK,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 05b0fe21b81e..6399d89c3f9f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -57,7 +57,7 @@
- #define GSC_COEF_DEPTH	3
- #define GSC_AUTOSUSPEND_DELAY		2000
- 
--#define get_gsc_context(dev)	platform_get_drvdata(to_platform_device(dev))
-+#define get_gsc_context(dev)	dev_get_drvdata(dev)
- #define gsc_read(offset)		readl(ctx->regs + (offset))
- #define gsc_write(cfg, offset)	writel(cfg, ctx->regs + (offset))
- 
--- 
-2.11.0
-
+-Emil
