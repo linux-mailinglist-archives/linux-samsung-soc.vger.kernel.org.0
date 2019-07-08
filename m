@@ -2,34 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CF3762004
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Jul 2019 16:03:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7504E6201A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Jul 2019 16:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731570AbfGHOD4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 8 Jul 2019 10:03:56 -0400
-Received: from [185.130.227.4] ([185.130.227.4]:39184 "EHLO 36981.example.com"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731569AbfGHODz (ORCPT
+        id S1729989AbfGHOJN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 8 Jul 2019 10:09:13 -0400
+Received: from foss.arm.com ([217.140.110.172]:48846 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727401AbfGHOJN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 8 Jul 2019 10:03:55 -0400
-Received: from localhost (localhost [IPv6:::1])
-        by 36981.example.com (Postfix) with SMTP id 400BB41D7515
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  8 Jul 2019 21:49:43 +0800 (+08)
-From:   linux-samsung-soc@vger.kernel.org
-Reply-To: prodawez@armyspy.com
-To:     Qb9poVdXiGOIlinux-samsung-soc@vger.kernel.org
-Subject: =?utf-8?B?0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1ISDQktCw0YEg?=
-        =?utf-8?B?0LjQvdGC0LXRgNC10YHRg9GO0YIg0LrQu9C40LXQvdGC?=
-        =?utf-8?B?0YHQutC40LUg0LHQsNC30Ysg0LTQsNC90L3Ri9GFPw==?=
+        Mon, 8 Jul 2019 10:09:13 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8CA772B;
+        Mon,  8 Jul 2019 07:09:12 -0700 (PDT)
+Received: from [33.8.37.10] (unknown [10.37.8.33])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 08B6B3F59C;
+        Mon,  8 Jul 2019 07:09:08 -0700 (PDT)
+Subject: Re: [PATCH] drm/exynos: add CONFIG_MMU dependency
+To:     Arnd Bergmann <arnd@arndb.de>, Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        Jingoo Han <jingoohan1@gmail.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <20190708134707.538501-1-arnd@arndb.de>
+From:   Vladimir Murzin <vladimir.murzin@arm.com>
+Message-ID: <ea185bd7-3ac7-dc38-1c0e-78cb1cffa6a0@arm.com>
+Date:   Mon, 8 Jul 2019 15:09:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8";
-Content-Transfer-Encoding: base64
-Message-Id: <20190708134943.400BB41D7515@36981.example.com>
-Date:   Mon,  8 Jul 2019 21:49:43 +0800 (+08)
+In-Reply-To: <20190708134707.538501-1-arnd@arndb.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-0JfQtNGA0LDQstGB0YLQstGD0LnRgtC1ISDQktCw0YEg0LjQvdGC0LXRgNC10YHRg9GO0YIg0LrQ
-u9C40LXQvdGC0YHQutC40LUg0LHQsNC30Ysg0LTQsNC90L3Ri9GFPw0K
+On 7/8/19 2:46 PM, Arnd Bergmann wrote:
+> Compile-testing this driver on a NOMMU configuration shows a link failure:
+> 
+> drivers/gpu/drm/exynos/exynos_drm_gem.o: In function `exynos_drm_gem_fault':
+> exynos_drm_gem.c:(.text+0x484): undefined reference to `vmf_insert_mixed'
+> 
+> Add a CONFIG_MMU dependency to ensure we only enable this in configurations
+> that build correctly.
+> 
+> Many other drm drivers have the same dependency. It would be nice to
+> make this work in MMU-less configurations, but evidently nobody has
+> ever needed this so far.
+> 
+> Fixes: 156bdac99061 ("drm/exynos: trigger build of all modules")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  drivers/gpu/drm/exynos/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/exynos/Kconfig b/drivers/gpu/drm/exynos/Kconfig
+> index 60ce4a8ad9e1..6f7d3b3b3628 100644
+> --- a/drivers/gpu/drm/exynos/Kconfig
+> +++ b/drivers/gpu/drm/exynos/Kconfig
+> @@ -2,6 +2,7 @@
+>  config DRM_EXYNOS
+>  	tristate "DRM Support for Samsung SoC EXYNOS Series"
+>  	depends on OF && DRM && (ARCH_S3C64XX || ARCH_S5PV210 || ARCH_EXYNOS || ARCH_MULTIPLATFORM || COMPILE_TEST)
+> +	depends on MMU
+>  	select DRM_KMS_HELPER
+>  	select VIDEOMODE_HELPERS
+>  	select SND_SOC_HDMI_CODEC if SND_SOC
+> 
+
+I seen
+
+ERROR: "vmf_insert_mixed" [drivers/gpu/drm/exynos/exynosdrm.ko] undefined!
+
+with older kernels when driver was build as a module, so FWIW
+
+Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
+
+Cheers
+Vladimir
