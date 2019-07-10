@@ -2,164 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BCF7D63DAF
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Jul 2019 00:02:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 391906440A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Jul 2019 11:01:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbfGIWC2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 9 Jul 2019 18:02:28 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39944 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbfGIWC2 (ORCPT
+        id S1727691AbfGJJBI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 10 Jul 2019 05:01:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46238 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727663AbfGJJBH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 9 Jul 2019 18:02:28 -0400
-Received: by mail-io1-f66.google.com with SMTP id h6so303097iom.7
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 09 Jul 2019 15:02:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sE4NKAsAUCBrOoJJlQGFGONnI25LZ8VJyW5bZdMAldA=;
-        b=csEtg0QR+7h5Gms4ZYWjqF1SrCZe0wKysQfyLsB5y2lFOJxjevCLZfeRa9DK5bpmpD
-         siDpAUzlzE7pPEuUM9r1j2bufy9VDkW5gxslxUPS4Rr+7buWtm59AWt9VzJD4SA6ehz3
-         ZcNR1AM/nPga438L7EN2nlmhgUyNIts8v+NYk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sE4NKAsAUCBrOoJJlQGFGONnI25LZ8VJyW5bZdMAldA=;
-        b=WBBusN8NsBLR7ao1TmQNNnXbJZ46BQneHPWSWPieuOmtzSh9sAaL3AlOsGLx3rIMkS
-         Y4uz57rhP8fRk6pKn0UIZU9FRht72tJ/0Eew0KisFhHiGVG5X0CZPIsCTMuIuFJaxGw6
-         mt6NuqvNWv6Cy5mmrybptL6UAhnqBZK6O2IRIDnY32nqz4HRVn8YfiAdgTwL6EI51uYX
-         EbqDaaUr0MdxsXa+Lrr84OWbLhkn57yKZJjwFt8NTDEBEyMzc6dH4ji7Al/xBkV+0W2V
-         dDPQFyOf1ojT/eBwNYFYwZp/CNlp5WkuIPL2bZX9A/vJiZ5cufoDrUkwwZBXdHjQWO2w
-         IhPg==
-X-Gm-Message-State: APjAAAVaEKp2sdeW15Bs7eiyFtEVqT6TZgEBHNIdGIBjEkTZBY0IYP+o
-        T3ZCEY+KH/ufX1geSa7OuUdtJTj9S5A=
-X-Google-Smtp-Source: APXvYqxW2gi4mbJoNzFRfkWisxtRWXmJHlmr1fL1CQkB7WfuNwNd9UgQ7Ur/EnIEacswpXhY7Qpe2Q==
-X-Received: by 2002:a6b:ed01:: with SMTP id n1mr7462609iog.255.1562709746051;
-        Tue, 09 Jul 2019 15:02:26 -0700 (PDT)
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com. [209.85.166.42])
-        by smtp.gmail.com with ESMTPSA id m20sm66231ioh.4.2019.07.09.15.02.24
-        for <linux-samsung-soc@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jul 2019 15:02:25 -0700 (PDT)
-Received: by mail-io1-f42.google.com with SMTP id o9so352484iom.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 09 Jul 2019 15:02:24 -0700 (PDT)
-X-Received: by 2002:a5e:8f08:: with SMTP id c8mr2673410iok.52.1562709744643;
- Tue, 09 Jul 2019 15:02:24 -0700 (PDT)
+        Wed, 10 Jul 2019 05:01:07 -0400
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 29592208C4;
+        Wed, 10 Jul 2019 09:01:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1562749266;
+        bh=wJ4UybqhWF4GHysL0HzNpEbCXWrP9PdCHa4n5QXVa+k=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=iw+A8s5irXEma3Z1l7JBvR7lj9Z4gfTmGjpyXPgCDIRUztCLU1SSaxwjc7MFjyLDV
+         pdcoYxskBQ0VQ1hd6Ttl0HP5tscMckWqQuwCSUfwE5YNKCV+tTCvP5Rr0lqPHSQnb7
+         LAH9dCfPgkFRLpqC5Ja379xIVqunhX3veJB1GPvQ=
+Received: by mail-lj1-f175.google.com with SMTP id k18so1262342ljc.11;
+        Wed, 10 Jul 2019 02:01:06 -0700 (PDT)
+X-Gm-Message-State: APjAAAWhTp/gfefqiYVGeV6LDljaYA9GjVOns7+DvZ94QEr4hFropKqQ
+        Mwfb0hteC4qIIc1zMeSjcV4vZlJ3Zo/K/QM453w=
+X-Google-Smtp-Source: APXvYqySTqN+a0Pd632KuRg+HHS06nuFlFkBnJ+6eD7MYISsnc9zgvNILpGXeTB3FUo87vj9BNr4HWlVIikw8EUIrzQ=
+X-Received: by 2002:a2e:980a:: with SMTP id a10mr14216019ljj.40.1562749264412;
+ Wed, 10 Jul 2019 02:01:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190708195613.205729-1-dianders@chromium.org>
- <CAJKOXPf9OTPaheUdiZtaDGU0sE2vsdRiLx5nptMt_EVKU7GObA@mail.gmail.com> <CAD=FV=WquwqKjUKh5=M6tbTrD3svVTGWLU3iSTzD-uXBX73YWA@mail.gmail.com>
-In-Reply-To: <CAD=FV=WquwqKjUKh5=M6tbTrD3svVTGWLU3iSTzD-uXBX73YWA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 9 Jul 2019 15:02:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X=RALazfX+vjQ7E-JmVu6xqDWCad5hPF+gNtHCuvZMTA@mail.gmail.com>
-Message-ID: <CAD=FV=X=RALazfX+vjQ7E-JmVu6xqDWCad5hPF+gNtHCuvZMTA@mail.gmail.com>
-Subject: Re: [PATCH] mmc: dw_mmc: Fix occasional hang after tuning on eMMC
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Jaehoon Chung <jh80.chung@samsung.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Brian Norris <briannorris@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Sonny Rao <sonnyrao@chromium.org>,
+References: <CGME20190708141158eucas1p17d4b50978dbe1e5c876ce6d8f433cc95@eucas1p1.samsung.com>
+ <20190708141140.24379-1-k.konieczny@partner.samsung.com>
+In-Reply-To: <20190708141140.24379-1-k.konieczny@partner.samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 10 Jul 2019 11:00:53 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPd+UZ2MdrTVfBv5UYzK5LgKNQHUFzRbRNeq271EaDSchg@mail.gmail.com>
+Message-ID: <CAJKOXPd+UZ2MdrTVfBv5UYzK5LgKNQHUFzRbRNeq271EaDSchg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] add coupled regulators for Exynos5422/5800
+To:     k.konieczny@partner.samsung.com
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Alim Akhtar <alim.akhtar@gmail.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
-
-On Tue, Jul 9, 2019 at 9:38 AM Doug Anderson <dianders@chromium.org> wrote:
+On Mon, 8 Jul 2019 at 16:12, <k.konieczny@partner.samsung.com> wrote:
+>
+> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
 >
 > Hi,
 >
-> On Tue, Jul 9, 2019 at 2:07 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >
-> > On Tue, 9 Jul 2019 at 00:48, Douglas Anderson <dianders@chromium.org> wrote:
-> > >
-> > > In commit 46d179525a1f ("mmc: dw_mmc: Wait for data transfer after
-> > > response errors.") we fixed a tuning-induced hang that I saw when
-> > > stress testing tuning on certain SD cards.  I won't re-hash that whole
-> > > commit, but the summary is that as a normal part of tuning you need to
-> > > deal with transfer errors and there were cases where these transfer
-> > > errors was putting my system into a bad state causing all future
-> > > transfers to fail.  That commit fixed handling of the transfer errors
-> > > for me.
-> > >
-> > > In downstream Chrome OS my fix landed and had the same behavior for
-> > > all SD/MMC commands.  However, it looks like when the commit landed
-> > > upstream we limited it to only SD tuning commands.  Presumably this
-> > > was to try to get around problems that Alim Akhtar reported on exynos
-> > > [1].
-> > >
-> > > Unfortunately while stress testing reboots (and suspend/resume) on
-> > > some rk3288-based Chromebooks I found the same problem on the eMMC on
-> > > some of my Chromebooks (the ones with Hynix eMMC).  Since the eMMC
-> > > tuning command is different (MMC_SEND_TUNING_BLOCK_HS200
-> > > vs. MMC_SEND_TUNING_BLOCK) we were basically getting back into the
-> > > same situation.
-> > >
-> > > I'm hoping that whatever problems exynos was having in the past are
-> > > somehow magically fixed now and we can make the behavior the same for
-> > > all commands.
-> > >
-> > > [1] https://lkml.kernel.org/r/CAGOxZ53WfNbaMe0_AM0qBqU47kAfgmPBVZC8K8Y-_J3mDMqW4A@mail.gmail.com
-> > >
-> > > Fixes: 46d179525a1f ("mmc: dw_mmc: Wait for data transfer after response errors.")
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> > > Cc: Alim Akhtar <alim.akhtar@gmail.com>
-> > > Cc: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-> > > ---
-> > > Marek (or anyone else using exynos): is it easy for you to test this
-> > > and check if things are still broken when we land this patch?  If so,
-> > > I guess we could have a quirk to have different behavior for just
-> > > Rockchip SoCs but I'd rather avoid that if possible.
-> > >
-> > > NOTE: I'm not hoping totally in vain here.  It is possible that some
-> > > of the CTO/DTO timers that landed could be the magic that would get
-> > > exynos unstuck.
-> >
-> > I have eMMC module attached to Odroid U3 (Exynos4412,
-> > samsung,exynos4412-dw-mshc). What is the testing procedure? With your
-> > patch it boots fine:
-> > [    3.698637] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot
-> > req 52000000Hz, actual 50000000HZ div = 0)
-> > [    3.703900] mmc1: new DDR MMC card at address 0001
-> > [    3.728458] mmcblk1: mmc1:0001 008G92 7.28 GiB
+> The main purpose of this patch series is to add coupled regulators for
+> Exynos5422/5800 to keep constrain on voltage difference between vdd_arm
+> and vdd_int to be at most 300mV. In exynos-bus instead of using
+> regulator_set_voltage_tol() with default voltage tolerance it should be
+> used regulator_set_voltage_triplet() with volatege range, and this is
+> already present in opp/core.c code, so it can be reused. While at this,
+> move setting regulators into opp/core.
 >
-> To really test it, it'd be nice to see some HS200 eMMC cards enumerate
-> OK.  Specifically the patch adjusts the error handling and the place
-> where that happens mostly is during tuning.
+> This patchset was tested on Odroid XU3.
 >
-> I'll also try to find some time today to check a peach_pit or a
-> peach_pi.  I think I saw one in the pile near my desk so if it isn't
-> in too bad of a shape I can give mainline a shot on it.
+> The last patch depends on two previous.
 
-OK, I managed to get an exynos5800-peach-pi up and running.  I put my
-patch in place and am currently at 45 reboots and counting w/ no
-problems.
+So you break the ABI... I assume that patchset maintains
+bisectability. However there is no explanation why ABI break is needed
+so this does not look good...
 
-NOTE: in my case I actually had to disable "hs400" mode on my peach-pi
-but that's because the board I dug up was an early version of the
-board that didn't have the strobe line connected.  However, Alim's
-earlier reports of problems were with hs200 anyway and hs200 still
-executes the tuning plenty of times.  His reports of problems also
-said that he had problems after just a few boots.
+Best regards,
+Krzysztof
 
-So I'll assert that whatever problems were present 4 years ago have
-indeed gone away.  I'll leave rebooting happening overnight just in
-case, but otherwise I'll assert that this is fine.
-
-
--Doug
+>
+> Regards,
+> Kamil
+>
+> Kamil Konieczny (2):
+>   opp: core: add regulators enable and disable
+>   devfreq: exynos-bus: convert to use dev_pm_opp_set_rate()
+>
+> Marek Szyprowski (1):
+>   ARM: dts: exynos: add initial data for coupled regulators for
+>     Exynos5422/5800
+>
+>  arch/arm/boot/dts/exynos5420.dtsi             |  34 ++--
+>  arch/arm/boot/dts/exynos5422-odroid-core.dtsi |   4 +
+>  arch/arm/boot/dts/exynos5800-peach-pi.dts     |   4 +
+>  arch/arm/boot/dts/exynos5800.dtsi             |  32 ++--
+>  drivers/devfreq/exynos-bus.c                  | 172 +++++++-----------
+>  drivers/opp/core.c                            |  13 ++
+>  6 files changed, 120 insertions(+), 139 deletions(-)
+>
+> --
+> 2.22.0
+>
