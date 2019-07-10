@@ -2,52 +2,46 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 339F5644DA
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Jul 2019 12:03:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A50664508
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Jul 2019 12:15:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727523AbfGJKDb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 10 Jul 2019 06:03:31 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:45490 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfGJKDb (ORCPT
+        id S1727058AbfGJKPG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 10 Jul 2019 06:15:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56028 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726281AbfGJKPG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 10 Jul 2019 06:03:31 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190710100329euoutp02c04eefb66e8a623917ed040af94338af~wA5UUONF61891918919euoutp02B
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 10 Jul 2019 10:03:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190710100329euoutp02c04eefb66e8a623917ed040af94338af~wA5UUONF61891918919euoutp02B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1562753009;
-        bh=05OMm3VSTi/89wp1oOwXoIF+99YdS1ZF43mBPBMGA4E=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=G1TmNNUZiXJgpwqPPyPQOjrIjoyTc5So/kWh6AXZOVc50jGcQhd2qDNJ94p7PAj7s
-         bJn3XsT3CVfGiG2Oin9/OZHFGR3r7RCI+nK3pR0Xt8IW4DX9pOxKV+1TneChCucxNa
-         sVMhxEBkkmx9+fioWFPUt8UaXHHy9bK/dWurELzw=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190710100328eucas1p23ede1aa2c1baed33bde4a075181f9f9f~wA5TUiX3f1797817978eucas1p26;
-        Wed, 10 Jul 2019 10:03:28 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 35.6E.04377.0F7B52D5; Wed, 10
-        Jul 2019 11:03:28 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190710100327eucas1p22155293a32da90454bf2559080a8e013~wA5SXvlfw1796417964eucas1p25;
-        Wed, 10 Jul 2019 10:03:27 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190710100327eusmtrp14a2d7009dca3152c14d70669f797b532~wA5SJdnQf2175421754eusmtrp1b;
-        Wed, 10 Jul 2019 10:03:27 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-ca-5d25b7f002d5
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 06.56.04140.FE7B52D5; Wed, 10
-        Jul 2019 11:03:27 +0100 (BST)
-Received: from [106.120.51.18] (unknown [106.120.51.18]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190710100326eusmtip16170632a9ff55b074bfe324aae6c82e6~wA5Rd6hGh0440304403eusmtip1M;
-        Wed, 10 Jul 2019 10:03:26 +0000 (GMT)
+        Wed, 10 Jul 2019 06:15:06 -0400
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AAADD20861;
+        Wed, 10 Jul 2019 10:15:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1562753705;
+        bh=FKpiA/emhKXUOAPvuAJ5oh3C3NX2rCFMH+btriqrd4E=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=xWsc9WLv9uXi+kTm/sQBJC6Gcxs5SxUhmTBPZGMtgW6lJzrVfAdyorhbft7xaFAbL
+         AgdDhUNdVXew3QRvl0mZO1y3DthJZ0L/AoSun2BGegLwZrrGgnFcZE4XKtjQvSZ5+r
+         T6LfnYa6wKz0ZydjRFYLeFVNiPuGW48f18Uj8N0Q=
+Received: by mail-lj1-f181.google.com with SMTP id h10so1520713ljg.0;
+        Wed, 10 Jul 2019 03:15:04 -0700 (PDT)
+X-Gm-Message-State: APjAAAVQxdRoZYVnURzSBtDbJZqcuArvSrrEXadiK6eckkQPUAKeF7YV
+        3Ie/qN/2qe4CeMaty2bfG9Ybju3IP5N0zvxBeOE=
+X-Google-Smtp-Source: APXvYqzFBP1tdwwgtZ/3RtfqPPV8drCmzRWKuK+JH6Dw5x+7dbZyN+IaqrSobdz3ZdFMyRjarSxqkEs4HDySwe+JxPc=
+X-Received: by 2002:a2e:7818:: with SMTP id t24mr13443634ljc.210.1562753702877;
+ Wed, 10 Jul 2019 03:15:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <CGME20190708141158eucas1p17d4b50978dbe1e5c876ce6d8f433cc95@eucas1p1.samsung.com>
+ <20190708141140.24379-1-k.konieczny@partner.samsung.com> <CAJKOXPd+UZ2MdrTVfBv5UYzK5LgKNQHUFzRbRNeq271EaDSchg@mail.gmail.com>
+ <91f65527-3440-90fd-4096-5824fba1df78@partner.samsung.com>
+In-Reply-To: <91f65527-3440-90fd-4096-5824fba1df78@partner.samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 10 Jul 2019 12:14:51 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPc1rOyFujyWk4HwmQb6YEXd=CEHKwN8AH_pKxk-6CA08w@mail.gmail.com>
+Message-ID: <CAJKOXPc1rOyFujyWk4HwmQb6YEXd=CEHKwN8AH_pKxk-6CA08w@mail.gmail.com>
 Subject: Re: [PATCH 0/3] add coupled regulators for Exynos5422/5800
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+To:     Kamil Konieczny <k.konieczny@partner.samsung.com>
 Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
@@ -62,115 +56,45 @@ Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         linux-pm@vger.kernel.org,
         "linux-samsung-soc@vger.kernel.org" 
         <linux-samsung-soc@vger.kernel.org>
-From:   Kamil Konieczny <k.konieczny@partner.samsung.com>
-Message-ID: <91f65527-3440-90fd-4096-5824fba1df78@partner.samsung.com>
-Date:   Wed, 10 Jul 2019 12:03:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.2
-MIME-Version: 1.0
-In-Reply-To: <CAJKOXPd+UZ2MdrTVfBv5UYzK5LgKNQHUFzRbRNeq271EaDSchg@mail.gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTURzHO/exe11Or8vyRy9lJWHlowd0ohCj16iIwn/EsFp2U2lO2XRW
-        Eq3IJ64ki2zJzNlTLHOK2kSDNVr5tkBFqUxnD2tgbJCVrZzXyP8+v+/v9zvnfOCwpPQ9vZhN
-        UWXwapVCKROJqYbnP7rCJxpDE6Jyqn1xbWkNjfvdH2lcbuui8eXRLyTu7n7M4M4LXxlsHu2j
-        8WtLmQi79DaES7tbCfzQ9obBd/p7CTx0/r4If53sJHBOi43Bnr5aCtcNPxfFBMirjdVIbq4q
-        EMnrbp+TX6qvQnL7QCMhd5mXHxDFi7ce55UpWl4dGX1UnDyZbyLS2/xPTbT0MDpU5FuIfFjg
-        NsLVy3aiEIlZKXcfgbnLQAqFG8FPTx4lFC4Ew7Wt1L8VY6WBERr3EDjyxmcLJ4KSD99EhYhl
-        F3DbYaolzLsQyIVB/+/vtHeG5CYp0I0/mTlJxG2CkcYOwssSbhf06IZoL1NcKEyNlCIvL+Ti
-        oM1mpISZAHh5wzHDPtxBsOudjJdJLggGHeWEwMHQ6CybcQCugIXasUpCePYOcJvfzSosgHF7
-        PSPwUmgvKZrNs2Cs4hIjLF+cds77NtvYAs/svbTXjJzWqbFECvE2cHh+I28MnB8MOAOEN/jB
-        lYbrpBBLID9XKkyHg/FPBy3wEij884guRjLDHDPDHBvDHBvD/3tvIaoKBfGZmtQkXrNexWdF
-        aBSpmkxVUkRiWqoZTX+8do/d3YQsU8esiGORzFcCF1cmSGmFVnM61YqAJWWBktbdKxKkkuOK
-        02d4ddoRdaaS11jREpaSBUmy5w0fknJJigz+JM+n8+p/XYL1WaxDd8/nphfvm3hwRjv6Kfhm
-        dJQ/tWupbdX8/Y/apiw72GLHBlNdPclYtYnRn2OzBo8qQ562Ny0/XBdVUxJS8natJGika9nO
-        2D2uF85svXT344jsJ8rmE36MPGaR6UWEO+dHfHCFniw+aI7rzRDrf40F+5oq955tfuVYcy23
-        Y3OsOtshozTJinWrSbVG8RdWaxm4dAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsVy+t/xu7rvt6vGGkw9yWmxccZ6VovrX56z
-        Wsw/co7Vov/xa2aL8+c3sFucbXrDbrHp8TVWi8u75rBZfO49wmgx4/w+Jou1R+6yWyy9fpHJ
-        4nbjCjaLNz/OMlm07j3CbvHv2kYWi80PjrE5CHqsmbeG0WPTqk42j81L6j36tqxi9Dh+YzuT
-        x+dNcgFsUXo2RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2
-        CXoZPzoWMRWc4q/4sPcCewNjD08XIyeHhICJxLzFs9i7GLk4hASWMkq8P/yWHSIhLdF4ejUT
-        hC0s8edaFxtE0WtGid67a1i6GDk4hAWcJf7s1QSpERHQlLj+9zsrSA2zwB8Wia7GGYwQDfcZ
-        JT4sWg82lU3AXOLR9jNgU3kF3CQuNNxmBbFZBFQl/jwCaeDkEBWIkJh0bScLRI2gxMmZT8Bs
-        ToFAieO9ENcxC6hL/Jl3iRnCFpe49WQ+E4QtL7H97RzmCYxCs5C0z0LSMgtJyywkLQsYWVYx
-        iqSWFuem5xYb6RUn5haX5qXrJefnbmIExvi2Yz+37GDsehd8iFGAg1GJh1eiRSVWiDWxrLgy
-        9xCjBAezkgjvPnflWCHelMTKqtSi/Pii0pzU4kOMpkDPTWSWEk3OB6afvJJ4Q1NDcwtLQ3Nj
-        c2MzCyVx3g6BgzFCAumJJanZqakFqUUwfUwcnFINjJPWrEi7+kF4f6BoutaKF8HT0jcszV/d
-        PHW6yr1DG0yM11xUit7bvuzl21w9Yc3/S3JOHAh9G/3s8dPlezU6xH88s6+OeZ512KH6Sc+v
-        w0o1ziZ9ovq2Asaf8x8sy5/5eSL/p2I95f6YF4lHvqTks8pGb4qdui90y7yVzzRyblrH8O3i
-        OKX8Zb8SS3FGoqEWc1FxIgDKvMj4BwMAAA==
-X-CMS-MailID: 20190710100327eucas1p22155293a32da90454bf2559080a8e013
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190708141158eucas1p17d4b50978dbe1e5c876ce6d8f433cc95
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190708141158eucas1p17d4b50978dbe1e5c876ce6d8f433cc95
-References: <CGME20190708141158eucas1p17d4b50978dbe1e5c876ce6d8f433cc95@eucas1p1.samsung.com>
-        <20190708141140.24379-1-k.konieczny@partner.samsung.com>
-        <CAJKOXPd+UZ2MdrTVfBv5UYzK5LgKNQHUFzRbRNeq271EaDSchg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 10.07.2019 11:00, Krzysztof Kozlowski wrote:
-> On Mon, 8 Jul 2019 at 16:12, <k.konieczny@partner.samsung.com> wrote:
->>
->> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
->>
->> Hi,
->>
->> The main purpose of this patch series is to add coupled regulators for
->> Exynos5422/5800 to keep constrain on voltage difference between vdd_arm
->> and vdd_int to be at most 300mV. In exynos-bus instead of using
->> regulator_set_voltage_tol() with default voltage tolerance it should be
->> used regulator_set_voltage_triplet() with volatege range, and this is
->> already present in opp/core.c code, so it can be reused. While at this,
->> move setting regulators into opp/core.
->>
->> This patchset was tested on Odroid XU3.
->>
->> The last patch depends on two previous.
-> 
-> So you break the ABI... I assume that patchset maintains
-> bisectability. However there is no explanation why ABI break is needed
-> so this does not look good...
+On Wed, 10 Jul 2019 at 12:03, Kamil Konieczny
+<k.konieczny@partner.samsung.com> wrote:
+>
+> On 10.07.2019 11:00, Krzysztof Kozlowski wrote:
+> > On Mon, 8 Jul 2019 at 16:12, <k.konieczny@partner.samsung.com> wrote:
+> >>
+> >> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
+> >>
+> >> Hi,
+> >>
+> >> The main purpose of this patch series is to add coupled regulators for
+> >> Exynos5422/5800 to keep constrain on voltage difference between vdd_arm
+> >> and vdd_int to be at most 300mV. In exynos-bus instead of using
+> >> regulator_set_voltage_tol() with default voltage tolerance it should be
+> >> used regulator_set_voltage_triplet() with volatege range, and this is
+> >> already present in opp/core.c code, so it can be reused. While at this,
+> >> move setting regulators into opp/core.
+> >>
+> >> This patchset was tested on Odroid XU3.
+> >>
+> >> The last patch depends on two previous.
+> >
+> > So you break the ABI... I assume that patchset maintains
+> > bisectability. However there is no explanation why ABI break is needed
+> > so this does not look good...
+>
+> Patchset is bisectable, first one is simple and do not depends on others,
+> second depends on first, last depends on first and second.
+>
+> What do you mean by breaking ABI ?
 
-Patchset is bisectable, first one is simple and do not depends on others,
-second depends on first, last depends on first and second.
+I mean, that Linux kernel stops working with existing DTBs... or am I
+mistaken and there is no problem? Maybe I confused the order...
 
-What do you mean by breaking ABI ?
-
-> Best regards,
-> Krzysztof
-> 
->>
->> Regards,
->> Kamil
->>
->> Kamil Konieczny (2):
->>   opp: core: add regulators enable and disable
->>   devfreq: exynos-bus: convert to use dev_pm_opp_set_rate()
->>
->> Marek Szyprowski (1):
->>   ARM: dts: exynos: add initial data for coupled regulators for
->>     Exynos5422/5800
->>
->>  arch/arm/boot/dts/exynos5420.dtsi             |  34 ++--
->>  arch/arm/boot/dts/exynos5422-odroid-core.dtsi |   4 +
->>  arch/arm/boot/dts/exynos5800-peach-pi.dts     |   4 +
->>  arch/arm/boot/dts/exynos5800.dtsi             |  32 ++--
->>  drivers/devfreq/exynos-bus.c                  | 172 +++++++-----------
->>  drivers/opp/core.c                            |  13 ++
->>  6 files changed, 120 insertions(+), 139 deletions(-)
->>
->> --
->> 2.22.0
-
--- 
 Best regards,
-Kamil Konieczny
-Samsung R&D Institute Poland
-
+Krzysztof
