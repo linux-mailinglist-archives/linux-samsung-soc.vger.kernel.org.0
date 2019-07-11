@@ -2,56 +2,56 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BDA065770
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Jul 2019 14:58:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D27E1657EF
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Jul 2019 15:36:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728421AbfGKM6C (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 11 Jul 2019 08:58:02 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:57378 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbfGKM6C (ORCPT
+        id S1726833AbfGKNgw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 11 Jul 2019 09:36:52 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:53908 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728330AbfGKNgu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 11 Jul 2019 08:58:02 -0400
+        Thu, 11 Jul 2019 09:36:50 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190711125800euoutp029bb7f436e243d3cbb8ea933ef0bf39ae~wW6_oartD2624526245euoutp02I
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Jul 2019 12:58:00 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190711125800euoutp029bb7f436e243d3cbb8ea933ef0bf39ae~wW6_oartD2624526245euoutp02I
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190711133648euoutp011c5643256063e8899fef54f4077425c3~wXc2GSkq31246212462euoutp01i
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Jul 2019 13:36:47 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190711133648euoutp011c5643256063e8899fef54f4077425c3~wXc2GSkq31246212462euoutp01i
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1562849880;
-        bh=vU9qDdY1dDbJlzQ9n1GbwihwW2hQxnIb8uEXqej1M0w=;
+        s=mail20170921; t=1562852208;
+        bh=hapnjd460596E34R5EF9h7HtShY2YdFfJ/cJBJjjuB8=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=OgaSn6McuxgFj/ZbUKd5QfPd0NJAUGPGKUO+WkU/7vqTu0zOPxxQ4s2hEm1x0Nag3
-         nL+I8x0ztc68T7AhePCqkNhKwTe/ajJzsTQsyptLVPevNtG3jclZdAHdvXEHURzDHS
-         mi3zRs0Hta5ya2n7H1lplC54MUMK8DrYiXWBYr34=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        b=a6sSMETdviIDhrWlA/cN3THO5YD/K8ol53OpmCB0ezjXTle1BI1qsMeH9ZjasWxnd
+         JYoBPsFOTqGqXLZbDI43JJPAkVVbJhiWz0TThQTCLhLAgp4usbqH9EGVSLNxPYlWD5
+         8EA3a64DFJ0oa4sSfSUYYs3T//V604ed0CrZBxnc=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190711125759eucas1p1eb80c893d814e311caf62e05af60d236~wW693jgVi2653926539eucas1p1W;
-        Thu, 11 Jul 2019 12:57:59 +0000 (GMT)
+        20190711133647eucas1p10e90994cb5ce5a56b1b9f13c3f6937f3~wXc1PY2YM1292912929eucas1p14;
+        Thu, 11 Jul 2019 13:36:47 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 37.05.04298.752372D5; Thu, 11
-        Jul 2019 13:57:59 +0100 (BST)
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 21.D6.04377.E6B372D5; Thu, 11
+        Jul 2019 14:36:46 +0100 (BST)
 Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190711125758eucas1p2726d34fa165f6645a51acd9f5b74ee68~wW69CUW4d2688026880eucas1p2j;
-        Thu, 11 Jul 2019 12:57:58 +0000 (GMT)
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190711133646eucas1p17268f944b0a1f3ab0a023b0379481326~wXc0fRNOx0579005790eucas1p1g;
+        Thu, 11 Jul 2019 13:36:46 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190711125758eusmtrp11e5293de3383f2e2615ebddb8ffe54ec~wW680Bw2Z2705327053eusmtrp1A;
-        Thu, 11 Jul 2019 12:57:58 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-d6-5d2732576105
+        20190711133646eusmtrp14a1606e8fd467e4612fa8ac535f42643~wXc0Q58Mf1914719147eusmtrp1x;
+        Thu, 11 Jul 2019 13:36:46 +0000 (GMT)
+X-AuditID: cbfec7f4-12dff70000001119-b5-5d273b6ed68f
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6B.04.04140.652372D5; Thu, 11
-        Jul 2019 13:57:58 +0100 (BST)
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 06.69.04140.D6B372D5; Thu, 11
+        Jul 2019 14:36:45 +0100 (BST)
 Received: from [106.120.51.18] (unknown [106.120.51.18]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190711125757eusmtip2f5b45b481281385eea833ffcf9a8fdf9~wW68Aeypy2342723427eusmtip2T;
-        Thu, 11 Jul 2019 12:57:57 +0000 (GMT)
-Subject: Re: [PATCH 1/3] opp: core: add regulators enable and disable
-To:     Viresh Kumar <viresh.kumar@linaro.org>
+        20190711133645eusmtip2fdfcf3a65fdaf9568af38b0b88a7aefc~wXczjIZwg1545915459eusmtip2Q;
+        Thu, 11 Jul 2019 13:36:45 +0000 (GMT)
+Subject: Re: [PATCH 2/3] devfreq: exynos-bus: convert to use
+ dev_pm_opp_set_rate()
+To:     Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
         Kukjin Kim <kgene@kernel.org>,
         Kyungmin Park <kyungmin.park@samsung.com>,
         Mark Rutland <mark.rutland@arm.com>,
@@ -60,127 +60,82 @@ Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+        linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
 From:   Kamil Konieczny <k.konieczny@partner.samsung.com>
-Message-ID: <fc404004-510e-5e76-df5f-ea78fdf51bf7@partner.samsung.com>
-Date:   Thu, 11 Jul 2019 14:58:02 +0200
+Message-ID: <a5da4135-0471-3628-c78a-c4fffc75723b@partner.samsung.com>
+Date:   Thu, 11 Jul 2019 15:36:50 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <20190711062226.4i4bvbsyczshdlyr@vireshk-i7>
+In-Reply-To: <CAJKOXPfWr-2t_e3f6oi7E6KLLRAbskzgEKz26XyK5n_9C8wV1w@mail.gmail.com>
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUzMcRzHfe/3WHP27efUZxjb0YxNYTbfloXNwzF/mM3DWOXST6Gr3K8o
-        bPIYt0rY6E4qG2qhuuvJGsfqdLjU0iPC9WBE56mHFRZ+/Zj+e33fn/d7n/dn+/KU8JaZyu+O
-        TRCNsfoYLetNV9SONMzfsmhO6ILXdf7EmlXMkLaBdwzJddQz5Gz3R4o0NJRw5OmxPo7YulsZ
-        0lSVzZL+dAciWQ12FbnteMWR622NKvLyaAFL+oafqsjJew6OjLZaaWId1JFSdy27XNDdyrmF
-        dLbCM6yuo/Uuqyu9dkSXUVaIdM72SpWu3zZjA7fNe2mkGLN7v2gMDNnhHf3Aszbe7JPU1OKb
-        gobUJuTFA14MtzvKOBPy5gVcgKDl03VWHgh4AEF282qF+xEcL4J/gRFTClIC+Qgyb9hVysOD
-        wPXwPpJdk/EqaMnNp0yI5zV4HvQ+F2UPhUdoKGmycrKHxUugq7JOJbMar4YvXb1I9tPYH8o8
-        YbI8BW+FJ44cWrH4wGNzzxh74SCoyCoYi1LYD1705P7lmVDpyabkXYDTeRgaymCV1iuhvNRD
-        KTwZPjjLOIWng+tCGq3wAXh7NYNTwicQuFO//h0EQ42zkZHLUXguFFcFKvIK6D5To5JlwJOg
-        3eOjdJgE5ysuUYqshtOnBMU9H3J+1TEKTwPTryImE2kt4y6zjLvGMu4ay/+9eYguRH5iomSI
-        EqWFseKBAElvkBJjowJ2xhls6M/nc406v91Bg88iqhHmkXaimvf4hwqMfr+UbKhGwFNajdq+
-        ZlaooI7UJx8UjXHhxsQYUapG03ha66c+NMG9XcBR+gRxryjGi8Z/UxXvNTUF3ezZsy7O3aE5
-        Ohi5wV4SnGq8bzcXHhqocS1rbB22cFxvUcm7+jftV8JLL9vPueMNkd+HyzX7gka9PvSJq9LD
-        ijoTmfi560Vzp7PWsDTJfHhT9LB0sTwkc3ZAXpz1s+vSz10Rm+lq31TwT3v/6lGuxm9jV0T+
-        4I8MW5jRuldoTtLSUrR+4TzKKOl/A4oj3pV4AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsVy+t/xe7phRuqxBtOOaFhsnLGe1eL6l+es
-        FvOPnGO16H/8mtni/PkN7BZnm96wW2x6fI3V4vKuOWwWn3uPMFrMOL+PyWLtkbvsFkuvX2Sy
-        uN24gs3izY+zTBate4+wW/y7tpHFYuNXD4vND46xOQh5rJm3htFj06pONo871/aweWxeUu/R
-        t2UVo8fxG9uZPD5vkgtgj9KzKcovLUlVyMgvLrFVija0MNIztLTQMzKx1DM0No+1MjJV0rez
-        SUnNySxLLdK3S9DLOPDWs2CmYMXlq2INjN94uxg5OSQETCR+djUwgthCAksZJTbeK4CIS0s0
-        nl7NBGELS/y51sXWxcgFVPOaUWLW9j9gDcICrhJX5y9n7mLk4BAR0JJ4eTMVpIZZ4DeLxP6F
-        56EampgkZj1dAtbAJmAu8Wj7GbCpvAJuEh8evWQEaWYRUJXY8jYOJCwqECEx6dpOFogSQYmT
-        M5+A2ZwClhLbZqwAa2UWUJf4M+8SM4QtLnHryXyouLzE9rdzmCcwCs1C0j4LScssJC2zkLQs
-        YGRZxSiSWlqcm55bbKRXnJhbXJqXrpecn7uJERjt24793LKDsetd8CFGAQ5GJR7egIeqsUKs
-        iWXFlbmHGCU4mJVEePe5K8cK8aYkVlalFuXHF5XmpBYfYjQF+m0is5Rocj4wEeWVxBuaGppb
-        WBqaG5sbm1koifN2CByMERJITyxJzU5NLUgtgulj4uCUamBM5jykK5VVkS2+NzU0cFbOogyP
-        tRfvPz9fVHWnOkbgZGGn0QIz3xmFNbyRNq9zzhmF5tv9+sr+TO/Yf6/A9Tc3+NRzufz1KbDk
-        z1D+NU2C/3fygk1F8/JZes3L7m6fwyxtbR6hrnt91We59JfT+hz/ipU/47y7uT42x0vw5fkf
-        l7Me+hyWuKvEUpyRaKjFXFScCADk5HCkDAMAAA==
-X-CMS-MailID: 20190711125758eucas1p2726d34fa165f6645a51acd9f5b74ee68
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SeUhUURTGu/NWB0eeY+FJo2BEwkCtKLqVmUHLCEUWBW1SYz1M0qlmcssk
+        l1wzDSvSUcaETJnMnSaXBtFBK7VnlnulaCmZQqGhgUvOPCX/+53vfIdzvstlCfkA5cQGqW/w
+        GrUqWEFLyZdNfwV39e6N/psHRjxxeVYphbunRimcZ35P4YzhnwQWhDIGt8WNM7hiuIvCH2ty
+        aTx5z4xwlmCS4BfmLwwu6P4gwf2xRTQen2mT4ITXZgbPd5WTuHKwifaxVxbri5GywpBCKyuf
+        3lamVxmQsrnHKFFOVqz3o89IvS7xwUFhvMbT+4L0stDmdy2HidB3PGNi0AKVimxY4LbBUJuR
+        SEVSVs4VITA8qUdiMYUgY7ZTIhaTCPJKO8jlkbS3JsLCcq4QQUnOddE0gaCz6Y/V5MCdgMa7
+        gnXHas4NuuemKYuJ4GZIiBmrtppobgcMGVslFpZxB6Gu/4tVJzlX6BvopS28hjsF78x6UvTY
+        w9vsb4vMsjbcMXhTFmSRCc4R+r7lSUTeAMaJXGse4BJYGCl/SIhX71+MM0SL7ABjzVWMyOug
+        5UHaUrJw+J6fzojDdxAMJv1eauyGxuYPlGUxsZimtMZTlPdBaVy99R7g7KBnwl68wQ4yXz4m
+        RFkGyYly0e0O+oXWpWd3htSFEuo+UuhWBNOtSKNbkUb3f+8TRBqQIx+qDQnktVvVfLiHVhWi
+        DVUHely8GlKBFr9dy3zz1CtUMxvQgDgWKWxlPTs3+sspVZg2MqQBAUsoVstMh1z85bJLqsib
+        vObqeU1oMK9tQM4sqXCURa0aPCvnAlU3+Cs8f43XLHclrI1TDPIiyxnvN8m+0eOZrSRvl8bn
+        j0pjt5+zHTlZ/YNJr3MTUl4UChOfEg/hj0ecWB+Xr2f1h48bvNqjPFzT4jtNvaZP26a7yKSR
+        PTbScGMtjq4jkgt8s0vC1nbW7nKPGV3wihiL/ywcSD6a9Gtt6um7c8ytpOr2vdm+z1+NPTIG
+        dMcrSO1l1ZZNhEar+gesG9MScgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsVy+t/xe7p51uqxBluFLDbOWM9qcf3Lc1aL
+        +UfOsVr0P37NbHH+/AZ2i7NNb9gtNj2+xmpxedccNovPvUcYLWac38dksfbIXXaLpdcvMlnc
+        blzBZvHmx1kmi9a9R9gt/l3byGKx+cExNgdBjzXz1jB6bFrVyeaxeUm9R9+WVYwex29sZ/L4
+        vEkugC1Kz6Yov7QkVSEjv7jEVina0MJIz9DSQs/IxFLP0Ng81srIVEnfziYlNSezLLVI3y5B
+        L+P82YCC2ewV8y4tY29g/M/axcjJISFgItFzch9zFyMXh5DAUkaJjXNmM0IkpCUaT69mgrCF
+        Jf5c62KDKHrNKPHj6mxmkISwQIjE4e7zYJNEBDQlrv/9zgpSxCzwh0Wiq3EGI0THLCaJs5vf
+        gVWxCZhLPNp+Bmwsr4CbxJ7bd1lAbBYBVYlb92+ygdiiAhESk67tZIGoEZQ4OfMJkM3BwSkQ
+        KHFiQyZImFlAXeLPvEvMELa4xK0n85kgbHmJ7W/nME9gFJqFpHsWkpZZSFpmIWlZwMiyilEk
+        tbQ4Nz232EivODG3uDQvXS85P3cTIzC+tx37uWUHY9e74EOMAhyMSjy8NyzVY4VYE8uKK3MP
+        MUpwMCuJ8O5zV44V4k1JrKxKLcqPLyrNSS0+xGgK9NtEZinR5Hxg6skriTc0NTS3sDQ0NzY3
+        NrNQEuftEDgYIySQnliSmp2aWpBaBNPHxMEp1cDo/FlD3l5zWX/3uzCfuCt1WyrXfQoImTTl
+        5mfNn9Mm6jpedt67++uX5NPRJ8suBM254Mv94VuIX8nmkMpozyNz5KfoGlWFf5kd+Els7jdH
+        iR/rHor75fiwFTAfqnNeOVnk1L4/xXWzrzrlPD+t6HlikvDO5sdnDRbbz0ifY3Co5Y6u9MPD
+        H2uXKbEUZyQaajEXFScCAGLPHXUFAwAA
+X-CMS-MailID: 20190711133646eucas1p17268f944b0a1f3ab0a023b0379481326
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190708141159eucas1p1751506975ff96a436e14940916623722
+X-RootMTR: 20190708141200eucas1p144ca3b2a5b4019aaa5773d23c0236f31
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190708141159eucas1p1751506975ff96a436e14940916623722
-References: <20190708141140.24379-1-k.konieczny@partner.samsung.com>
-        <CGME20190708141159eucas1p1751506975ff96a436e14940916623722@eucas1p1.samsung.com>
-        <20190708141140.24379-2-k.konieczny@partner.samsung.com>
-        <20190711062226.4i4bvbsyczshdlyr@vireshk-i7>
+X-CMS-RootMailID: 20190708141200eucas1p144ca3b2a5b4019aaa5773d23c0236f31
+References: <CGME20190708141200eucas1p144ca3b2a5b4019aaa5773d23c0236f31@eucas1p1.samsung.com>
+        <20190708141140.24379-1-k.konieczny@partner.samsung.com>
+        <20190708141140.24379-3-k.konieczny@partner.samsung.com>
+        <CAJKOXPfWr-2t_e3f6oi7E6KLLRAbskzgEKz26XyK5n_9C8wV1w@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 11.07.2019 08:22, Viresh Kumar wrote:
-> On 08-07-19, 16:11, k.konieczny@partner.samsung.com wrote:
+
+
+On 10.07.2019 19:04, Krzysztof Kozlowski wrote:
+> On Mon, 8 Jul 2019 at 16:12, <k.konieczny@partner.samsung.com> wrote:
+>>
 >> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
 >>
->> Add enable regulators to dev_pm_opp_set_regulators() and disable
->> regulators to dev_pm_opp_put_regulators(). This prepares for
->> converting exynos-bus devfreq driver to use dev_pm_opp_set_rate().
->>
->> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
->> ---
->>  drivers/opp/core.c | 13 +++++++++++++
->>  1 file changed, 13 insertions(+)
->>
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index 0e7703fe733f..947cac452854 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -1580,8 +1580,19 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
->>  	if (ret)
->>  		goto free_regulators;
->>  
->> +	for (i = 0; i < opp_table->regulator_count; i++) {
->> +		ret = regulator_enable(opp_table->regulators[i]);
->> +		if (ret < 0)
->> +			goto disable;
->> +	}
+>> Reuse opp core code for setting bus clock and voltage. As a side
+>> effect this allow useage of coupled regulators feature (required
+>> for boards using Exynos5422/5800 SoCs) because dev_pm_opp_set_rate()
+>> uses regulator_set_voltage_triplet() for setting regulator voltage
+>> while the old code used regulator_set_voltage_tol() with fixed
+>> tolerance. This patch also removes no longer needed parsing of DT
+>> property "exynos,voltage-tolerance" (no Exynos devfreq DT node uses
 > 
-> What about doing this in the same loop of regulator_get_optional() ?
+> Please also update the bindings in such case. Both with removal of
+> unused property and with example/recommended regulator couplings.
 
-yes, this is good, it will simplify code
-
->> +
->>  	return opp_table;
->>  
->> +disable:
->> +	while (i != 0)
->> +		regulator_disable(opp_table->regulators[--i]);
->> +
->> +	i = opp_table->regulator_count;
-> 
-> You also need to call _free_set_opp_data() here.
-
-good catch
-if I move enable in loop above, then this will not be needed
-
->>  free_regulators:
->>  	while (i != 0)
->>  		regulator_put(opp_table->regulators[--i]);
->> @@ -1609,6 +1620,8 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
->>  
->>  	/* Make sure there are no concurrent readers while updating opp_table */
->>  	WARN_ON(!list_empty(&opp_table->opp_list));
-> 
-> Preserve the blank line here.
-> 
->> +	for (i = opp_table->regulator_count - 1; i >= 0; i--)
->> +		regulator_disable(opp_table->regulators[i]);
->>  
->>  	for (i = opp_table->regulator_count - 1; i >= 0; i--)
->>  		regulator_put(opp_table->regulators[i]);
-> 
-> Only single loop should be sufficient for this.
-
-you are right, I will do this in single loop
-
-I will send v2
+Right, I will remove it.
 
 -- 
 Best regards,
