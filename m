@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DDC651D2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Jul 2019 08:22:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BDA065770
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Jul 2019 14:58:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728014AbfGKGWa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 11 Jul 2019 02:22:30 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34303 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727973AbfGKGWa (ORCPT
+        id S1728421AbfGKM6C (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 11 Jul 2019 08:58:02 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:57378 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726016AbfGKM6C (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 11 Jul 2019 02:22:30 -0400
-Received: by mail-pl1-f193.google.com with SMTP id i2so2478989plt.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 10 Jul 2019 23:22:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2/izmyLx3zgLly59CRyGw1zLBbtbQty91ZENtAWD4Vk=;
-        b=bCJUZdgFXSL1JPheXWrE2SvDktcgz7ZRvLp8UkZ09vb/Prg3mHtmdw0CdPu+kNUcGI
-         a+TMxXx6wNfmwQtEtIXMhXKR2VzbJQGJVBT4Jcr78m07BpKzdxphTgR8GXJ75FNnpqAB
-         FNgXp0c4Bq/bsz0u8wFe6FU1NqqZn1sx5kV5TnReJTFWuqsfXI0nlrO3bGvOpcXDoF9E
-         kH2fUTOxrcxqE6WyOVzMskdFpKOYyKgmdeY68u0Bz7QfklwW+Yz9KVGimSXOF4E3tW+I
-         Ndk3OY2HRkZ2wOYaljBN7Ygo+45k9VGREMHudaTh1IrRGsaLJbxdRM0v/ZdSiMQ7S5FG
-         78xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2/izmyLx3zgLly59CRyGw1zLBbtbQty91ZENtAWD4Vk=;
-        b=ZVXx9w4s7q9pJ6jKY+KQqi+BE4LjObMBfboa5OSHQWF0WTeeiLqlRdJfD0UcnviiC9
-         j8KiEdWriXAoxEDHpRvDAg3z3UDnLRE1ioizulP63qU7nQMk1+rJAhCBcJE/Nl+JoWfw
-         vvey665rp/2NXw6pc9DPM2PMBznSgDuq/MTLQB+OQcTNNz/m2BcKKPqe2KpJrKg9imau
-         Ll699s0vOGD7AHygyZSPeNXnN4JtOg3GYM+psqVBP61GaiXSaMweKt1ureWnNo0VvAXj
-         8lyy7uWw386KtqETQW0jNlETZENqPf4LmSV1YLqCAspk12mq3AJt4jIt2azyf6XS+WTB
-         365Q==
-X-Gm-Message-State: APjAAAUT7xss3IlvULTU1Nx2fHApi9THbDogC9qTDxLj2T5It/a2hBQX
-        h4MqD64RFWeerEo/Ba4H9SLnRQ==
-X-Google-Smtp-Source: APXvYqzBa57SST8CdNhPOntlhzTG7OeoEa6rXNRY1hYntSU2vCbtVOJveAMlqx/1mMk4cJDBYNLgNw==
-X-Received: by 2002:a17:902:da4:: with SMTP id 33mr2477954plv.209.1562826149501;
-        Wed, 10 Jul 2019 23:22:29 -0700 (PDT)
-Received: from localhost ([122.172.28.117])
-        by smtp.gmail.com with ESMTPSA id j19sm1516594pgn.19.2019.07.10.23.22.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Jul 2019 23:22:28 -0700 (PDT)
-Date:   Thu, 11 Jul 2019 11:52:26 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     k.konieczny@partner.samsung.com
+        Thu, 11 Jul 2019 08:58:02 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190711125800euoutp029bb7f436e243d3cbb8ea933ef0bf39ae~wW6_oartD2624526245euoutp02I
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Jul 2019 12:58:00 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190711125800euoutp029bb7f436e243d3cbb8ea933ef0bf39ae~wW6_oartD2624526245euoutp02I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1562849880;
+        bh=vU9qDdY1dDbJlzQ9n1GbwihwW2hQxnIb8uEXqej1M0w=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=OgaSn6McuxgFj/ZbUKd5QfPd0NJAUGPGKUO+WkU/7vqTu0zOPxxQ4s2hEm1x0Nag3
+         nL+I8x0ztc68T7AhePCqkNhKwTe/ajJzsTQsyptLVPevNtG3jclZdAHdvXEHURzDHS
+         mi3zRs0Hta5ya2n7H1lplC54MUMK8DrYiXWBYr34=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190711125759eucas1p1eb80c893d814e311caf62e05af60d236~wW693jgVi2653926539eucas1p1W;
+        Thu, 11 Jul 2019 12:57:59 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 37.05.04298.752372D5; Thu, 11
+        Jul 2019 13:57:59 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190711125758eucas1p2726d34fa165f6645a51acd9f5b74ee68~wW69CUW4d2688026880eucas1p2j;
+        Thu, 11 Jul 2019 12:57:58 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190711125758eusmtrp11e5293de3383f2e2615ebddb8ffe54ec~wW680Bw2Z2705327053eusmtrp1A;
+        Thu, 11 Jul 2019 12:57:58 +0000 (GMT)
+X-AuditID: cbfec7f2-f13ff700000010ca-d6-5d2732576105
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6B.04.04140.652372D5; Thu, 11
+        Jul 2019 13:57:58 +0100 (BST)
+Received: from [106.120.51.18] (unknown [106.120.51.18]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190711125757eusmtip2f5b45b481281385eea833ffcf9a8fdf9~wW68Aeypy2342723427eusmtip2T;
+        Thu, 11 Jul 2019 12:57:57 +0000 (GMT)
+Subject: Re: [PATCH 1/3] opp: core: add regulators enable and disable
+To:     Viresh Kumar <viresh.kumar@linaro.org>
 Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
@@ -61,80 +61,129 @@ Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 1/3] opp: core: add regulators enable and disable
-Message-ID: <20190711062226.4i4bvbsyczshdlyr@vireshk-i7>
-References: <20190708141140.24379-1-k.konieczny@partner.samsung.com>
- <CGME20190708141159eucas1p1751506975ff96a436e14940916623722@eucas1p1.samsung.com>
- <20190708141140.24379-2-k.konieczny@partner.samsung.com>
+From:   Kamil Konieczny <k.konieczny@partner.samsung.com>
+Message-ID: <fc404004-510e-5e76-df5f-ea78fdf51bf7@partner.samsung.com>
+Date:   Thu, 11 Jul 2019 14:58:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190708141140.24379-2-k.konieczny@partner.samsung.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20190711062226.4i4bvbsyczshdlyr@vireshk-i7>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUzMcRzHfe/3WHP27efUZxjb0YxNYTbfloXNwzF/mM3DWOXST6Gr3K8o
+        bPIYt0rY6E4qG2qhuuvJGsfqdLjU0iPC9WBE56mHFRZ+/Zj+e33fn/d7n/dn+/KU8JaZyu+O
+        TRCNsfoYLetNV9SONMzfsmhO6ILXdf7EmlXMkLaBdwzJddQz5Gz3R4o0NJRw5OmxPo7YulsZ
+        0lSVzZL+dAciWQ12FbnteMWR622NKvLyaAFL+oafqsjJew6OjLZaaWId1JFSdy27XNDdyrmF
+        dLbCM6yuo/Uuqyu9dkSXUVaIdM72SpWu3zZjA7fNe2mkGLN7v2gMDNnhHf3Aszbe7JPU1OKb
+        gobUJuTFA14MtzvKOBPy5gVcgKDl03VWHgh4AEF282qF+xEcL4J/gRFTClIC+Qgyb9hVysOD
+        wPXwPpJdk/EqaMnNp0yI5zV4HvQ+F2UPhUdoKGmycrKHxUugq7JOJbMar4YvXb1I9tPYH8o8
+        YbI8BW+FJ44cWrH4wGNzzxh74SCoyCoYi1LYD1705P7lmVDpyabkXYDTeRgaymCV1iuhvNRD
+        KTwZPjjLOIWng+tCGq3wAXh7NYNTwicQuFO//h0EQ42zkZHLUXguFFcFKvIK6D5To5JlwJOg
+        3eOjdJgE5ysuUYqshtOnBMU9H3J+1TEKTwPTryImE2kt4y6zjLvGMu4ay/+9eYguRH5iomSI
+        EqWFseKBAElvkBJjowJ2xhls6M/nc406v91Bg88iqhHmkXaimvf4hwqMfr+UbKhGwFNajdq+
+        ZlaooI7UJx8UjXHhxsQYUapG03ha66c+NMG9XcBR+gRxryjGi8Z/UxXvNTUF3ezZsy7O3aE5
+        Ohi5wV4SnGq8bzcXHhqocS1rbB22cFxvUcm7+jftV8JLL9vPueMNkd+HyzX7gka9PvSJq9LD
+        ijoTmfi560Vzp7PWsDTJfHhT9LB0sTwkc3ZAXpz1s+vSz10Rm+lq31TwT3v/6lGuxm9jV0T+
+        4I8MW5jRuldoTtLSUrR+4TzKKOl/A4oj3pV4AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsVy+t/xe7phRuqxBtOOaFhsnLGe1eL6l+es
+        FvOPnGO16H/8mtni/PkN7BZnm96wW2x6fI3V4vKuOWwWn3uPMFrMOL+PyWLtkbvsFkuvX2Sy
+        uN24gs3izY+zTBate4+wW/y7tpHFYuNXD4vND46xOQh5rJm3htFj06pONo871/aweWxeUu/R
+        t2UVo8fxG9uZPD5vkgtgj9KzKcovLUlVyMgvLrFVija0MNIztLTQMzKx1DM0No+1MjJV0rez
+        SUnNySxLLdK3S9DLOPDWs2CmYMXlq2INjN94uxg5OSQETCR+djUwgthCAksZJTbeK4CIS0s0
+        nl7NBGELS/y51sXWxcgFVPOaUWLW9j9gDcICrhJX5y9n7mLk4BAR0JJ4eTMVpIZZ4DeLxP6F
+        56EampgkZj1dAtbAJmAu8Wj7GbCpvAJuEh8evWQEaWYRUJXY8jYOJCwqECEx6dpOFogSQYmT
+        M5+A2ZwClhLbZqwAa2UWUJf4M+8SM4QtLnHryXyouLzE9rdzmCcwCs1C0j4LScssJC2zkLQs
+        YGRZxSiSWlqcm55bbKRXnJhbXJqXrpecn7uJERjt24793LKDsetd8CFGAQ5GJR7egIeqsUKs
+        iWXFlbmHGCU4mJVEePe5K8cK8aYkVlalFuXHF5XmpBYfYjQF+m0is5Rocj4wEeWVxBuaGppb
+        WBqaG5sbm1koifN2CByMERJITyxJzU5NLUgtgulj4uCUamBM5jykK5VVkS2+NzU0cFbOogyP
+        tRfvPz9fVHWnOkbgZGGn0QIz3xmFNbyRNq9zzhmF5tv9+sr+TO/Yf6/A9Tc3+NRzufz1KbDk
+        z1D+NU2C/3fygk1F8/JZes3L7m6fwyxtbR6hrnt91We59JfT+hz/ipU/47y7uT42x0vw5fkf
+        l7Me+hyWuKvEUpyRaKjFXFScCADk5HCkDAMAAA==
+X-CMS-MailID: 20190711125758eucas1p2726d34fa165f6645a51acd9f5b74ee68
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190708141159eucas1p1751506975ff96a436e14940916623722
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190708141159eucas1p1751506975ff96a436e14940916623722
+References: <20190708141140.24379-1-k.konieczny@partner.samsung.com>
+        <CGME20190708141159eucas1p1751506975ff96a436e14940916623722@eucas1p1.samsung.com>
+        <20190708141140.24379-2-k.konieczny@partner.samsung.com>
+        <20190711062226.4i4bvbsyczshdlyr@vireshk-i7>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 08-07-19, 16:11, k.konieczny@partner.samsung.com wrote:
-> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
+On 11.07.2019 08:22, Viresh Kumar wrote:
+> On 08-07-19, 16:11, k.konieczny@partner.samsung.com wrote:
+>> From: Kamil Konieczny <k.konieczny@partner.samsung.com>
+>>
+>> Add enable regulators to dev_pm_opp_set_regulators() and disable
+>> regulators to dev_pm_opp_put_regulators(). This prepares for
+>> converting exynos-bus devfreq driver to use dev_pm_opp_set_rate().
+>>
+>> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
+>> ---
+>>  drivers/opp/core.c | 13 +++++++++++++
+>>  1 file changed, 13 insertions(+)
+>>
+>> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+>> index 0e7703fe733f..947cac452854 100644
+>> --- a/drivers/opp/core.c
+>> +++ b/drivers/opp/core.c
+>> @@ -1580,8 +1580,19 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
+>>  	if (ret)
+>>  		goto free_regulators;
+>>  
+>> +	for (i = 0; i < opp_table->regulator_count; i++) {
+>> +		ret = regulator_enable(opp_table->regulators[i]);
+>> +		if (ret < 0)
+>> +			goto disable;
+>> +	}
 > 
-> Add enable regulators to dev_pm_opp_set_regulators() and disable
-> regulators to dev_pm_opp_put_regulators(). This prepares for
-> converting exynos-bus devfreq driver to use dev_pm_opp_set_rate().
+> What about doing this in the same loop of regulator_get_optional() ?
+
+yes, this is good, it will simplify code
+
+>> +
+>>  	return opp_table;
+>>  
+>> +disable:
+>> +	while (i != 0)
+>> +		regulator_disable(opp_table->regulators[--i]);
+>> +
+>> +	i = opp_table->regulator_count;
 > 
-> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
-> ---
->  drivers/opp/core.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+> You also need to call _free_set_opp_data() here.
+
+good catch
+if I move enable in loop above, then this will not be needed
+
+>>  free_regulators:
+>>  	while (i != 0)
+>>  		regulator_put(opp_table->regulators[--i]);
+>> @@ -1609,6 +1620,8 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
+>>  
+>>  	/* Make sure there are no concurrent readers while updating opp_table */
+>>  	WARN_ON(!list_empty(&opp_table->opp_list));
 > 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 0e7703fe733f..947cac452854 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -1580,8 +1580,19 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
->  	if (ret)
->  		goto free_regulators;
->  
-> +	for (i = 0; i < opp_table->regulator_count; i++) {
-> +		ret = regulator_enable(opp_table->regulators[i]);
-> +		if (ret < 0)
-> +			goto disable;
-> +	}
+> Preserve the blank line here.
+> 
+>> +	for (i = opp_table->regulator_count - 1; i >= 0; i--)
+>> +		regulator_disable(opp_table->regulators[i]);
+>>  
+>>  	for (i = opp_table->regulator_count - 1; i >= 0; i--)
+>>  		regulator_put(opp_table->regulators[i]);
+> 
+> Only single loop should be sufficient for this.
 
-What about doing this in the same loop of regulator_get_optional() ?
+you are right, I will do this in single loop
 
-> +
->  	return opp_table;
->  
-> +disable:
-> +	while (i != 0)
-> +		regulator_disable(opp_table->regulators[--i]);
-> +
-> +	i = opp_table->regulator_count;
-
-You also need to call _free_set_opp_data() here.
-
->  free_regulators:
->  	while (i != 0)
->  		regulator_put(opp_table->regulators[--i]);
-> @@ -1609,6 +1620,8 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
->  
->  	/* Make sure there are no concurrent readers while updating opp_table */
->  	WARN_ON(!list_empty(&opp_table->opp_list));
-
-Preserve the blank line here.
-
-> +	for (i = opp_table->regulator_count - 1; i >= 0; i--)
-> +		regulator_disable(opp_table->regulators[i]);
->  
->  	for (i = opp_table->regulator_count - 1; i >= 0; i--)
->  		regulator_put(opp_table->regulators[i]);
-
-Only single loop should be sufficient for this.
-
-> -- 
-> 2.22.0
+I will send v2
 
 -- 
-viresh
+Best regards,
+Kamil Konieczny
+Samsung R&D Institute Poland
+
