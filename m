@@ -2,60 +2,82 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A443067B7F
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 13 Jul 2019 19:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03DAA67FC1
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 14 Jul 2019 17:21:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727874AbfGMRWx convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 13 Jul 2019 13:22:53 -0400
-Received: from mail.iara.government.bg ([95.43.208.99]:38348 "EHLO
-        iara.government.bg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727853AbfGMRWx (ORCPT
+        id S1728347AbfGNPVJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 14 Jul 2019 11:21:09 -0400
+Received: from out4437.biz.mail.alibaba.com ([47.88.44.37]:40350 "EHLO
+        out4437.biz.mail.alibaba.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726403AbfGNPVJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 13 Jul 2019 13:22:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by iara.government.bg (Postfix) with ESMTP id B8E28289EA7;
-        Sat, 13 Jul 2019 10:44:26 +0300 (EEST)
-Received: from iara.government.bg ([127.0.0.1])
-        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id h6pwNLupIcvw; Sat, 13 Jul 2019 10:44:26 +0300 (EEST)
-Received: from localhost (localhost [127.0.0.1])
-        by iara.government.bg (Postfix) with ESMTP id 347332CA4E7;
-        Sat, 13 Jul 2019 05:36:34 +0300 (EEST)
-X-Virus-Scanned: amavisd-new at iara.government.bg
-Received: from iara.government.bg ([127.0.0.1])
-        by localhost (iara.government.bg [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id K3CRzaUxXoEb; Sat, 13 Jul 2019 05:36:34 +0300 (EEST)
-Received: from [10.108.11.57] (unknown [105.12.6.226])
-        by iara.government.bg (Postfix) with ESMTPSA id 2BCF92896FA;
-        Sat, 13 Jul 2019 03:33:08 +0300 (EEST)
-Content-Type: text/plain; charset="utf-8"
+        Sun, 14 Jul 2019 11:21:09 -0400
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R101e4;CH=green;DM=||false|;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e04423;MF=alex.shi@linux.alibaba.com;NM=1;PH=DS;RN=17;SR=0;TI=SMTPD_---0TWrpoRa_1563117663;
+Received: from IT-FVFX43SYHV2H.lan(mailfrom:alex.shi@linux.alibaba.com fp:SMTPD_---0TWrpoRa_1563117663)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Sun, 14 Jul 2019 23:21:03 +0800
+Subject: Re: [PATCH 01/12] Documentation: move architectures together
+To:     Jonathan Corbet <corbet@lwn.net>
+Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-ia64@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-s390@vger.kernel.org,
+        kvm@vger.kernel.org, linux-sh@vger.kernel.org
+References: <20190712022018.27989-1-alex.shi@linux.alibaba.com>
+ <20190712113427.62fa7ffc@lwn.net>
+From:   Alex Shi <alex.shi@linux.alibaba.com>
+Message-ID: <36c522c5-975e-e38e-daad-0f3d9f93b186@linux.alibaba.com>
+Date:   Sun, 14 Jul 2019 23:21:03 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?b?RndkOiBSZTog4oKsIDIsMDAwLDAwMC4wMCBFdXJv?=
-To:     Recipients <silistra@iara.government.bg>
-From:   silistra@iara.government.bg
-Date:   Fri, 12 Jul 2019 17:32:53 -0700
-Reply-To: carfleon@gmail.com
-Message-Id: <20190713003310.2BCF92896FA@iara.government.bg>
+In-Reply-To: <20190712113427.62fa7ffc@lwn.net>
+Content-Type: text/plain; charset=gbk
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Lieber Freund,
+Hi Jon,
 
-Ich bin Herr Richard Wahl der Mega-Gewinner von $ 533M In Mega Millions Jackpot spende ich an 5 zufÃ¤llige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewÃ¤hlt. Ich habe den grÃ¶ÃŸten Teil meines VermÃ¶gens auf eine Reihe von WohltÃ¤tigkeitsorganisationen und Organisationen verteilt. Ich habe mich freiwillig dazu entschieden, Ihnen den Betrag von â‚¬ 2.000.000,00 zu spenden eine der ausgewÃ¤hlten 5, um meine Gewinne zu Ã¼berprÃ¼fen, finden Sie auf meiner You Tube Seite unten.
+Thanks for quick response!
 
-UHR MICH HIER: https://www.youtube.com/watch?v=tne02ExNDrw
+ÔÚ 2019/7/13 ÉÏÎç1:34, Jonathan Corbet Ð´µÀ:
+> On Fri, 12 Jul 2019 10:20:07 +0800
+> Alex Shi <alex.shi@linux.alibaba.com> wrote:
+> 
+>> There are many different archs in Documentation/ dir, it's better to
+>> move them together in 'Documentation/arch' which follows from kernel source.
+> 
+> So this seems certain to collide badly with Mauro's RST-conversion monster
+> patch set.
 
-Das ist dein Spendencode: [DF00430342018]
+I don't mean that, sorry, and we can figure out if both of them are worthy to be picked up.
 
-Antworten Sie mit dem Spendencode auf diese E-Mail: liezlnatashavanessa@gmail.com
+> 
+> More to the point, though...if we are going to thrash up things this
+> badly, we want to be sure that we're doing it right so we don't end up
+> renaming everything again.  Grouping stuff into a new arch/ subdirectory
+> adds a bit of order, but it doesn't do much toward trying to organize our
+> documentation for its readers, and it doesn't help us to modernize the
+> docs and get rid of the old, useless stuff.  A quick check shows that many
+> of these files have seen no changes other than typo fixes since the
+> beginning of the Git era.
 
-Ich hoffe, Sie und Ihre Familie glÃ¼cklich zu machen.
+Right, there is some docs which need to be update or even drop, and a reorder would be a timing to push each of arch maintainer to do something, isn't it? Anyway, reordering  documents like kernel source dir could be one of choices. :)
 
-GrÃ¼ÃŸe
+> 
+> So, in my mind, this needs some thought.  Maybe we want a
+> Documentation/arch in the end, but I'm not convinced that we should just
+> create it and fill it with a snow shovel.  This might be a good thing to
+> discuss at the kernel summit in September.
 
-Herr Richard Wahl
+Thanks for considering, anyway, it could be a good start to get hands dirty whether the arch dir is needed. 
+
+Thanks
+Alex
