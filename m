@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EC4D68D54
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Jul 2019 15:59:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFEE769605
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Jul 2019 17:02:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732998AbfGON5r (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 15 Jul 2019 09:57:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35962 "EHLO mail.kernel.org"
+        id S2388783AbfGOONa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 15 Jul 2019 10:13:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54124 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732440AbfGON5q (ORCPT
+        id S2388771AbfGOON3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 15 Jul 2019 09:57:46 -0400
+        Mon, 15 Jul 2019 10:13:29 -0400
 Received: from sasha-vm.mshome.net (unknown [73.61.17.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E4D882083D;
-        Mon, 15 Jul 2019 13:57:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EDE4E2083D;
+        Mon, 15 Jul 2019 14:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563199064;
-        bh=G7aGn6DucveXZ8qnmb2lyviYXuQ7/EBkZMCOMc+a20k=;
+        s=default; t=1563200008;
+        bh=hmiW3UkNL87MzxfzpVhbPNhWNuSCqEVc9R8JSmPMPpQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lswRGC644Odi7coq6hKSmEuSgZc0o5w0EpgBR6OgNuTTmMQt3CpowPwfv7OWYr+wX
-         4kFShHt0moYakimgi4JPEupfHCUT9ldSRXtBwIAWC+3bBsOiVIKPLoY1cqPGr1m7x/
-         2T6a05+DzpJ2zafdxiNv7PXqC/mnYzWlGz+wcEYw=
+        b=1wAu4Ma0az9fRgtM5aCKQulScX3As7frA/09MteARlSCkoSbxZm7p/KJgRTmQv2QB
+         3o6dzP5NpVnYeWfC8M9G8LFIPWAPLngwOyW2sOZ+7rFqs9tUgXdvSgmEsIjl1G0Q0H
+         isNVRNyDjycipfpr9B97yCFtfzgpBhPMlwJ5STOA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Waibel Georg <Georg.Waibel@sensor-technik.de>,
@@ -33,12 +33,12 @@ Cc:     Waibel Georg <Georg.Waibel@sensor-technik.de>,
         Mark Brown <broonie@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-gpio@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 179/249] gpio: Fix return value mismatch of function gpiod_get_from_of_node()
-Date:   Mon, 15 Jul 2019 09:45:44 -0400
-Message-Id: <20190715134655.4076-179-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.1 158/219] gpio: Fix return value mismatch of function gpiod_get_from_of_node()
+Date:   Mon, 15 Jul 2019 10:02:39 -0400
+Message-Id: <20190715140341.6443-158-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190715134655.4076-1-sashal@kernel.org>
-References: <20190715134655.4076-1-sashal@kernel.org>
+In-Reply-To: <20190715140341.6443-1-sashal@kernel.org>
+References: <20190715140341.6443-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -84,10 +84,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  5 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index e013d417a936..be1d1d2f8aaa 100644
+index bca3e7740ef6..fd1344056e1d 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -4244,8 +4244,7 @@ EXPORT_SYMBOL_GPL(gpiod_get_index);
+@@ -4232,8 +4232,7 @@ EXPORT_SYMBOL_GPL(gpiod_get_index);
   *
   * Returns:
   * On successful request the GPIO pin is configured in accordance with
@@ -97,7 +97,7 @@ index e013d417a936..be1d1d2f8aaa 100644
   *
   * In case of error an ERR_PTR() is returned.
   */
-@@ -4267,9 +4266,6 @@ struct gpio_desc *gpiod_get_from_of_node(struct device_node *node,
+@@ -4255,9 +4254,6 @@ struct gpio_desc *gpiod_get_from_of_node(struct device_node *node,
  					index, &flags);
  
  	if (!desc || IS_ERR(desc)) {
@@ -108,10 +108,10 @@ index e013d417a936..be1d1d2f8aaa 100644
  	}
  
 diff --git a/drivers/regulator/da9211-regulator.c b/drivers/regulator/da9211-regulator.c
-index da37b4ccd834..0309823d2c72 100644
+index 4d7fe4819c1c..4e95e3d0fcd5 100644
 --- a/drivers/regulator/da9211-regulator.c
 +++ b/drivers/regulator/da9211-regulator.c
-@@ -289,6 +289,8 @@ static struct da9211_pdata *da9211_parse_regulators_dt(
+@@ -299,6 +299,8 @@ static struct da9211_pdata *da9211_parse_regulators_dt(
  				  0,
  				  GPIOD_OUT_HIGH | GPIOD_FLAGS_BIT_NONEXCLUSIVE,
  				  "da9211-enable");
@@ -151,10 +151,10 @@ index bb9d1a083299..6ca27e9d5ef7 100644
  
  		rdata->id = i;
 diff --git a/drivers/regulator/tps65090-regulator.c b/drivers/regulator/tps65090-regulator.c
-index ca39b3d55123..10ea4b5a0f55 100644
+index 0614551796a1..f6466db57900 100644
 --- a/drivers/regulator/tps65090-regulator.c
 +++ b/drivers/regulator/tps65090-regulator.c
-@@ -371,11 +371,12 @@ static struct tps65090_platform_data *tps65090_parse_dt_reg_data(
+@@ -381,11 +381,12 @@ static struct tps65090_platform_data *tps65090_parse_dt_reg_data(
  								    "dcdc-ext-control-gpios", 0,
  								    gflags,
  								    "tps65090");
