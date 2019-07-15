@@ -2,67 +2,121 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A31F1687C6
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Jul 2019 13:04:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 497EF6884E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Jul 2019 13:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729917AbfGOLEV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 15 Jul 2019 07:04:21 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:36085 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729954AbfGOLET (ORCPT
+        id S1729912AbfGOLoX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 15 Jul 2019 07:44:23 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:38356 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729803AbfGOLoX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 15 Jul 2019 07:04:19 -0400
-Received: by mail-oi1-f195.google.com with SMTP id w7so12285338oic.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Jul 2019 04:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=at1U0zLzNGQlxAxn9clrRSHSPpGB2zlKGmciYViXmzQ=;
-        b=Iux65787KeJtZlk/UWQ8a71sdq3L+JuOBHwZwxVHUOu0Hal0brUmaUtWDT+1EakAhq
-         MtJF/vbEQagCDLqdjzXV0tE8x5YNwPsclB57z/jA+URpkAaidKGibNAiJ897B2Q2rv9p
-         uYOBtZylJRmtRio8wDP4GwRiBknU84/FmWsMFw620mFEJwR9vSM1QlmEIUdghWeLiQPg
-         3/o6A/ASY/U2XQTJeOVMsZoeyZcCfYvLw2Rbw2pE/fk67uX5NyEzWB6tv7TG5MeHZvc/
-         X3yp2nduS0Os162TiWKhkMGOmC5wMIt1cVEoe4V7hwUEXyYLehvgYaVidvFk20QbqjFn
-         kL9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=at1U0zLzNGQlxAxn9clrRSHSPpGB2zlKGmciYViXmzQ=;
-        b=Nr1N+OGyD1JmCS1YR91R14SOi0q+j/YHIZXK2W/fC3rHbOX/NtC4/y6HJhlaGEEZF8
-         VvTuKumOolKSCOqpqJYk4skN5vZTVL6a5Qo+4eFwzIp5qcSMZIpZJ1HQ84Z+RJ/a6qbS
-         KLyK301idZnWrNOHF4nfrIzmgHaYXGTtts21/41RO1uYcZs49Ic39GlPWAmZYS55shZZ
-         t8hbxK6I9FTXWwtQ9jPSFdByPfh0VgV+jcrPvQ+ca08cV398OXxxPD4TBK+AtJWPKPnq
-         EPNDYkbry/z7A2K5y5Ueta3UKL0vGlVXdXL9aGfPlAYWWJRsYeO4tze/EvqZzjAXgIep
-         x51w==
-X-Gm-Message-State: APjAAAW0TALwDM8TVE4l9i5sBoe6W0EK7ULwIpvXgIZ3IVL+MdC+WUvt
-        ZFxib+dtTRqEqIUPQt1himubrPT8W2WM5P6+vycs+6FZeNs=
-X-Google-Smtp-Source: APXvYqwI9SCHvCHLnvHckfwL+oW1shcNAvZVS/wk3iQ3LTmyEMELfYQBoBiEv/cUvggIHp2fQao9ul2L5mSBnKj2EDA=
-X-Received: by 2002:a63:ad07:: with SMTP id g7mr24480194pgf.405.1563188657092;
- Mon, 15 Jul 2019 04:04:17 -0700 (PDT)
+        Mon, 15 Jul 2019 07:44:23 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190715114421euoutp01e196171b13471c90f83ee661ef62963c~xkf0S-4bT0510705107euoutp01Q
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Jul 2019 11:44:21 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190715114421euoutp01e196171b13471c90f83ee661ef62963c~xkf0S-4bT0510705107euoutp01Q
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1563191061;
+        bh=AwKQQepnCnmb88Wi6ptLbfbyKlASrHTT4QV8bbPXfpI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=O0Vb5zf5wLDPDGFSBrUSu+KdIp6EYTOjjt2Q/s3PeP/nrfvHY59mr7dciwoht0go/
+         Xyn8UH+40eP/jGFy/orUeg57TWaeFB4JStlZa/Sp8eiM0c4fItB7bguEidxewCmiwb
+         vBFBO7pLrn+eCvrwilI9UpggCQ5Ahp70kkprEr8Q=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190715114421eucas1p213669de44f9e9b06b2c2b8f811ec8f91~xkfzqES9Y0781407814eucas1p2P;
+        Mon, 15 Jul 2019 11:44:21 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 19.0D.04298.4176C2D5; Mon, 15
+        Jul 2019 12:44:20 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190715114420eucas1p28a118f4655551e1030df35799f911ba9~xkfy6Cy9X1570915709eucas1p2x;
+        Mon, 15 Jul 2019 11:44:20 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190715114420eusmtrp2ddfbc3b00f16264a6859da595d45c4f1~xkfyr9GIZ2170321703eusmtrp2d;
+        Mon, 15 Jul 2019 11:44:20 +0000 (GMT)
+X-AuditID: cbfec7f2-f2dff700000010ca-5e-5d2c67149f4e
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id A0.88.04146.3176C2D5; Mon, 15
+        Jul 2019 12:44:20 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190715114419eusmtip1f0fbf70115617422cab814a310162408~xkfySZ4Hw0464504645eusmtip15;
+        Mon, 15 Jul 2019 11:44:19 +0000 (GMT)
+Subject: Re: [PATCH v3 15/24] media: exynos4-is: Remove call to memset after
+ dma_alloc_coherent
+To:     Fuqian Huang <huangfq.daxian@gmail.com>
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-media@vger.kernel.org,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <189ad2a0-c8ba-54f5-af34-5a0e8efee8fe@samsung.com>
+Date:   Mon, 15 Jul 2019 13:44:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.2
 MIME-Version: 1.0
-Received: by 2002:a17:90a:b78d:0:0:0:0 with HTTP; Mon, 15 Jul 2019 04:04:16
- -0700 (PDT)
-From:   Donald Douglas <ddouglasng@gmail.com>
-Date:   Mon, 15 Jul 2019 04:04:16 -0700
-Message-ID: <CALVR28EP4VMYZDqzau6uFTJmxHs6we+nYre3JstaZ5qSsvppFQ@mail.gmail.com>
-Subject: Kindly Respond
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CABXRUiQ_N=N=weMnRea4d6PXjfghta=U1xhdv-tZpSvaGBnXGg@mail.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsWy7djP87oi6TqxBkvWGFssO3WS1aL/8Wtm
+        i/PnN7BbnG16w26x6fE1VovLu+awWfRs2MpqMeP8PiaLZZv+MDlweuycdZfdY9OqTjaPzUvq
+        Pfq2rGL0+LxJLoA1issmJTUnsyy1SN8ugStj+fZzrAXtzBVN96axNjDuYupi5OCQEDCRuPbW
+        rYuRi0NIYAWjRPP2/8wQzhdGiclzt7F3MXICOZ8ZJe5/FYdpOLfMG6JmOaPE8c2f2CGct4wS
+        Z9oOMYM0CAskSvRM+8IEYosIaEt8PN0CNpVZ4AGTxIwPx9hAEmwChhK9R/sYQWxeATuJ6xv2
+        gNksAqoSL86vA7NFBSIkTh2ZxwJRIyhxcuYTMJtTIFDiX+dzsOuYBcQlmr6sZIWw5SW2v50D
+        doSEwCF2ick3eSBsF4lTz34yQdjCEq+Ob2GHsGUk/u+czwRynIRAM6NEz+7b7BDOBKCXjy9g
+        hKiyljh8/CIryP/MApoS63fpQ4LCUeLKLRMIk0/ixltBiBP4JCZtm84MEeaV6GgTgpihIvF7
+        1XSoC6Qkup/8Z5nAqDQLyWOzkDwzC8kzsxDWLmBkWcUonlpanJueWmyYl1quV5yYW1yal66X
+        nJ+7iRGYkE7/O/5pB+PXS0mHGAU4GJV4eB1StGOFWBPLiitzDzFKcDArifDafgUK8aYkVlal
+        FuXHF5XmpBYfYpTmYFES561meBAtJJCeWJKanZpakFoEk2Xi4JRqYFwetnhH8oqT5c8fqO9e
+        OV2e+bKq3LFVEY7cerLT5hQdvxdxlk+qV/VD/Qn5jLVTJ/kHvY9Lr0pov1hoejjtWnDjt7Xe
+        Easv7p35+1tpvsh0nhOTtY953udMSVPd3MjiuJJfaKnDdRm74Cv5HWEr3jvYqIfcqpiZeP3/
+        Do4HYuePaao3TrsVn67EUpyRaKjFXFScCABuwyNCRAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsVy+t/xu7oi6TqxBk9OMlksO3WS1aL/8Wtm
+        i/PnN7BbnG16w26x6fE1VovLu+awWfRs2MpqMeP8PqC6TX+YHDg9ds66y+6xaVUnm8fmJfUe
+        fVtWMXp83iQXwBqlZ1OUX1qSqpCRX1xiqxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OSmpNZ
+        llqkb5egl7F8+znWgnbmiqZ701gbGHcxdTFycEgImEicW+bdxcjFISSwlFFiz+FOdoi4lMT8
+        FqUuRk4gU1jiz7UuNoia14wSq06/YwdJCAskSvRM+8IEYosIaEt8PN3CDFLELPCISeJfz3d2
+        iI4eJom7F54zg1SxCRhK9B7tYwSxeQXsJK5v2ANmswioSrw4vw7MFhWIkJh0bScLRI2gxMmZ
+        T8BsToFAiX+dz8E2MwuoS/yZd4kZwhaXaPqykhXClpfY/nYO8wRGoVlI2mchaZmFpGUWkpYF
+        jCyrGEVSS4tz03OLDfWKE3OLS/PS9ZLzczcxAuNw27Gfm3cwXtoYfIhRgINRiYfXIUU7Vog1
+        say4MvcQowQHs5IIr+1XoBBvSmJlVWpRfnxRaU5q8SFGU6DnJjJLiSbnA1NEXkm8oamhuYWl
+        obmxubGZhZI4b4fAwRghgfTEktTs1NSC1CKYPiYOTqkGxhmXq1g439pfk2dV2FtdNOnFr+9e
+        IomnZn87uXDWiolzvn4+f3bNyyuTzlpvsnz2R/zRrlUfNybumKm4c/rbo0oBrh6akVrfshoc
+        b7V6T1kiocb/tSRi0wrJaU/lmaUP1pRFaa1M9njotu8/96/OffGbv26TyTqoEhx3eQ+bVQWj
+        mnt4TMN+zu1KLMUZiYZazEXFiQAo7uLT2QIAAA==
+X-CMS-MailID: 20190715114420eucas1p28a118f4655551e1030df35799f911ba9
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190715090023eucas1p2ab541c5d4b4debe766295d3c6efbd1cd
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190715090023eucas1p2ab541c5d4b4debe766295d3c6efbd1cd
+References: <CGME20190715090023eucas1p2ab541c5d4b4debe766295d3c6efbd1cd@eucas1p2.samsung.com>
+        <20190715031851.6890-1-huangfq.daxian@gmail.com>
+        <37046e7b-fdde-c10f-4850-0b3efd4a00cd@samsung.com>
+        <CABXRUiQ_N=N=weMnRea4d6PXjfghta=U1xhdv-tZpSvaGBnXGg@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello,
-I am Barr Fredrick Mbogo a business consultant i have a lucrative
-business to discuss with you from the Eastern part of Africa Uganda to
-be precise aimed at agreed percentage upon your acceptance of my hand
-in business and friendship. Kindly respond to me if you are interested
-to partner with me for an update. Very important.
+On 7/15/19 11:43, Fuqian Huang wrote:
+> Should I rewrite the commit log? Just mention that dma_alloc_coherent
+> has already zeroed the memory and not to reference the commit?
 
-Yours Sincerely,
-Donald Douglas,
-For,
-Barr Frederick Mbogo
-Legal Consultant.
-Reply to: barrfredmbogo@consultant.com
+I don't think it is really needed, since at hash 518a2f1925c3 dma_alloc_coherent() 
+already zeroes the memory, so in fact all statements in your current commit 
+message are true. 
+
+-- 
+Regards,
+Sylwester
