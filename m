@@ -2,205 +2,158 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 44CDA6A607
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Jul 2019 11:58:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD8D66A61B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Jul 2019 12:06:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732492AbfGPJ6O (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 16 Jul 2019 05:58:14 -0400
-Received: from mailout3.samsung.com ([203.254.224.33]:44276 "EHLO
-        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732036AbfGPJ6O (ORCPT
+        id S1728137AbfGPKFn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 16 Jul 2019 06:05:43 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40654 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728015AbfGPKFn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 16 Jul 2019 05:58:14 -0400
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20190716095811epoutp03be4995e79ae6b5407cc5d366adcf093b~x2sZTsJTo1395013950epoutp03R
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Jul 2019 09:58:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20190716095811epoutp03be4995e79ae6b5407cc5d366adcf093b~x2sZTsJTo1395013950epoutp03R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563271091;
-        bh=8m7yojX5VERnehuP4IDCcAS+gpljyXXgYtBRJsLnIn4=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=QeHZ0RorpZs9FWRbh0uLjGMBwI4qf2R3KXRXbY9vmxM2Q6iCdWhC7dkT6OFIK5/De
-         +C+VUO7xBk8WLWMxdkBM9C6WIxtf2LspvccjsMkTsp0dEvxqptwGQvzoBKaWxwnAXp
-         wSrggjymoBRc3qyxmIHDNX8WC0MQLHqIBj6y2a8Q=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190716095810epcas1p29f5c6e495f69535a9e87b54ccf181655~x2sYhhVuz1876318763epcas1p2E;
-        Tue, 16 Jul 2019 09:58:10 +0000 (GMT)
-Received: from epsmges1p3.samsung.com (unknown [182.195.40.154]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 45nwnX0GP1zMqYkd; Tue, 16 Jul
-        2019 09:58:08 +0000 (GMT)
-Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
-        epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        0F.60.04066.FAF9D2D5; Tue, 16 Jul 2019 18:58:07 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
-        20190716095807epcas1p36f57bd2bd104c0c05c53db052ce8b210~x2sWKvmlN3194731947epcas1p30;
-        Tue, 16 Jul 2019 09:58:07 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190716095807epsmtrp18101c7cdaf68d6f1cd11d6ebf43d71f2~x2sWJSu9X1917719177epsmtrp1L;
-        Tue, 16 Jul 2019 09:58:07 +0000 (GMT)
-X-AuditID: b6c32a37-e3fff70000000fe2-c9-5d2d9faff48f
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        89.37.03638.FAF9D2D5; Tue, 16 Jul 2019 18:58:07 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190716095807epsmtip126140c206ac4fd539b9fc01f07544665~x2sV32aHp2724927249epsmtip1Q;
-        Tue, 16 Jul 2019 09:58:07 +0000 (GMT)
-Subject: Re: [PATCH v1 10/50] clk: samsung: change ACLK100_NOC clocks
- definitions Exynos5x
-To:     Lukasz Luba <l.luba@partner.samsung.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     mturquette@baylibre.com, sboyd@kernel.org,
-        b.zolnierkie@samsung.com, krzk@kernel.org, kgene@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        kyungmin.park@samsung.com, a.hajda@samsung.com,
-        m.szyprowski@samsung.com, s.nawrocki@samsung.com,
-        myungjoo.ham@samsung.com
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <63cb24f8-5666-3fb4-0c98-ecc54cd4266f@samsung.com>
-Date:   Tue, 16 Jul 2019 19:01:13 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.2
+        Tue, 16 Jul 2019 06:05:43 -0400
+Received: by mail-pl1-f193.google.com with SMTP id a93so9846820pla.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Jul 2019 03:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eOw4mJCwxsos04l+iE4dhcTh1ydYMzdors+pgowvvxM=;
+        b=tMocE6swchBVuMnt58lGP9P628g1yOafJT46XmsoPTPU6cu+QH3WHGgsc/TzqTykTJ
+         rdGZzvn6Mr6/PJqwPcSatTt4KCjIUHOWmaND9V8869f0KdmOna8tDoC4N31GVxqzyEuP
+         EuNPIbAPdLAlOZZ4YTGbeCRtM8Qt76g0ldmmzrdR8bhfhTUk8KDNxnBisgvO+StyihUL
+         hUdt9bMl/8WwQFG2nJBH9y99Wp6WaJ5G64VHqBZaakuCUgHohQgp4dbB8Omi6hF7rJ3c
+         EvZCoX+goncN8mcgg/ODeGn69779oS06XcVejTPoaDJQg1DvPHhgrQ8c03ZGbvjjNjQS
+         F7Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eOw4mJCwxsos04l+iE4dhcTh1ydYMzdors+pgowvvxM=;
+        b=RAese/dQObMlsPl4bDXG6B3DOtURWO8XAoMVib76VEyUES7x7zZAE0stjY+AUoae1V
+         k9Fajinqno8KCb0WgxH3qDF9qqJSOYCyXaSEltcgT7yJCGGHickFTCyYGwlpbRb5UOtw
+         TySSFHsb+0O69+EcMCGtpKvq4b78/FIKa9xMQWkCLC4S3uap12nH0pgYJOFBP8NoauWK
+         jktJC6pUrBsFOG5Q7AP7QM5J3wVUHc1UtsKfh9tF63OgJ2eRdUU33b/eVAM6kAXSTmz+
+         54v5bQ2Y2W5I7Ev14OxAwzeh2KFGeHkFTiayiUs/fJ19Zmalnk67V2p5MJvRoIAI7vpB
+         r/RA==
+X-Gm-Message-State: APjAAAVtFZ6T9oAk/fj87HFPHdFh9e4eLoB/CyieNgnGwTWLgITCmPwL
+        AqPelQfvfehJuyL3Ff9HrFJ2+A==
+X-Google-Smtp-Source: APXvYqxwTXMWEmk/VEda4x6ElrsGyejRqXGCt8fhdrVypQtnG9VBy8x7GNe4fxfIxk0bDln28cUC3w==
+X-Received: by 2002:a17:902:6b02:: with SMTP id o2mr31420099plk.99.1563271542213;
+        Tue, 16 Jul 2019 03:05:42 -0700 (PDT)
+Received: from localhost ([122.172.28.117])
+        by smtp.gmail.com with ESMTPSA id f6sm21071066pga.50.2019.07.16.03.05.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jul 2019 03:05:41 -0700 (PDT)
+Date:   Tue, 16 Jul 2019 15:35:39 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Kamil Konieczny <k.konieczny@partner.samsung.com>
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] opp: core: add regulators enable and disable
+Message-ID: <20190716100539.4uqelbxqz7bmtmea@vireshk-i7>
+References: <20190715120416.3561-1-k.konieczny@partner.samsung.com>
+ <CGME20190715120430eucas1p19dddcc93756e6a110d3476229f9428b3@eucas1p1.samsung.com>
+ <20190715120416.3561-2-k.konieczny@partner.samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <20190715124417.4787-11-l.luba@partner.samsung.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCJsWRmVeSWpSXmKPExsWy7bCmge76+bqxBhuOWVvcWneO1WLjjPWs
-        FvOPAFn9j18zW5w/v4Hd4mzTG3aLWw0yFpseX2O1+Nhzj9Xi8q45bBYzzu9jslh75C67xdLr
-        F5ksLp5ytbjduILNonXvEXaLw2/aWS3+XdvI4iDksWbeGkaP9zda2T02repk89i8pN7j4Ls9
-        TB59W1YxenzeJBfAHpVtk5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6kkJeYm2qr
-        5OIToOuWmQP0hJJCWWJOKVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwLJArzgxt7g0L10v
-        OT/XytDAwMgUqDAhO2PqxjOMBWflKrYs3sjSwHhAsouRk0NCwERi95tGxi5GLg4hgR2MEl+n
-        HWWGcD4xSvzvX8oC4XxjlNhz+SQ7TMvdeVugWvYySvRt/A3V8p5R4tnqNcwgVcICMRKnJnQz
-        gtgiAucYJTqeSoPYzALTmCRmzRMFsdkEtCT2v7jBBmLzCyhKXP3xGKyeV8BO4s+tXWBzWARU
-        JY7OagKLiwpESJw6Mo8FokZQ4uTMJ2A2p4CDxKdZXYwQ88Ulbj2ZzwRhy0s0b50NdpyEwCl2
-        iUdfm5ggXnCR2D3vCNQ7whKvjm+BsqUkXva3QdnVEitPHmGDaO5glNiy/wIrRMJYYv/SyUCD
-        OIA2aEqs36UPEVaU2Pl7LtQRfBLvvvawgpRICPBKdLQJQZQoS1x+cBfqBEmJxe2dbBMYlWYh
-        eWcWkhdmIXlhFsKyBYwsqxjFUguKc9NTiw0LjJGjexMjOIVrme9g3HDO5xCjAAejEg/viT06
-        sUKsiWXFlbmHGCU4mJVEeG2/ascK8aYkVlalFuXHF5XmpBYfYjQFhvZEZinR5HxgfskriTc0
-        NTI2NrYwMTQzNTRUEued90czVkggPbEkNTs1tSC1CKaPiYNTqoGxSFndZJ47e+HzQ8XLr60y
-        vuW96EjWwX1MEwuDyqaxNFycV5BypTJy813XKSL1fa9drFjamnxCiv1vvhYr+MPpvXS7yeUW
-        Vq3OpIYVEadsLVf6y+f1+tSs6PJj4TCU265v4s0YWsAVNSHs21XhB8z7A/62GU6Zx7XxTDTD
-        gVMbsnwXnjwnwKvEUpyRaKjFXFScCABuWLF89wMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHIsWRmVeSWpSXmKPExsWy7bCSnO76+bqxBgcWKFjcWneO1WLjjPWs
-        FvOPAFn9j18zW5w/v4Hd4mzTG3aLWw0yFpseX2O1+Nhzj9Xi8q45bBYzzu9jslh75C67xdLr
-        F5ksLp5ytbjduILNonXvEXaLw2/aWS3+XdvI4iDksWbeGkaP9zda2T02repk89i8pN7j4Ls9
-        TB59W1YxenzeJBfAHsVlk5Kak1mWWqRvl8CVMXXjGcaCs3IVWxZvZGlgPCDZxcjJISFgInF3
-        3hbGLkYuDiGB3YwSp1e+ZYFISEpMu3iUuYuRA8gWljh8uBii5i2jxNyri5hBaoQFYiROTegG
-        axYROMco0ff3LDtIgllgGpPEifVgRUICJxgl9m8qBbHZBLQk9r+4wQZi8wsoSlz98ZgRxOYV
-        sJP4c2sXWD2LgKrE0VlNYHFRgQiJSdd2skDUCEqcnPkEzOYUcJD4NKuLEWKXusSfeZeYIWxx
-        iVtP5jNB2PISzVtnM09gFJ6FpH0WkpZZSFpmIWlZwMiyilEytaA4Nz232LDAKC+1XK84Mbe4
-        NC9dLzk/dxMjOJa1tHYwnjgRf4hRgINRiYf3xB6dWCHWxLLiytxDjBIczEoivLZftWOFeFMS
-        K6tSi/Lji0pzUosPMUpzsCiJ88rnH4sUEkhPLEnNTk0tSC2CyTJxcEo1MFpkyOdeXqd5VbPF
-        icvlaUyJW6L4i5Xen1J6A88Icp98vlS74PjcD7vzr2lsa5poMStRdX7rUbtgF5MNUlLHXf9V
-        LUqK5k4yb30TWXwkRDzW7Jz7k9eZt/RcQ4RPmJ5fonv7zd5bn5d3i1oktLZ8PyV7PFr0t79s
-        IUfFm3o31U0zH8/LmmW+VomlOCPRUIu5qDgRAEAwu8XhAgAA
-X-CMS-MailID: 20190716095807epcas1p36f57bd2bd104c0c05c53db052ce8b210
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20190715124441eucas1p29f1205c20e9bea5b33f8f0b5747b1102
-References: <20190715124417.4787-1-l.luba@partner.samsung.com>
-        <CGME20190715124441eucas1p29f1205c20e9bea5b33f8f0b5747b1102@eucas1p2.samsung.com>
-        <20190715124417.4787-11-l.luba@partner.samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190715120416.3561-2-k.konieczny@partner.samsung.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
-
-I checked the range of ratio as following: Looks good to me.
-But, you better to make it to fix the ratio range without adding ID.
-Please merge the code related to adding IDs into one patch.
-- Exynos5422 TRM ACLK_100_NOC_RATIO [23:20]
-- Exynos5420 TRM ACLK_100_NOC_RATIO [22:20]
-
-On 19. 7. 15. 오후 9:43, Lukasz Luba wrote:
-> The ACLK100_NOC has different topology in Exynos5420 and 5422/5800.  In
-> Exynos5420 this clock divider has 3 bits while in 5422/5800 has 4 bits.
-> The patch adds needed dividers in the exynos5800_div_clks, updates
-> exynos5x_div_clks and exynos5420_div_clks properly. It also adds IDs to
-> manage clocks from DT.
+On 15-07-19, 14:04, Kamil Konieczny wrote:
+> Add enable regulators to dev_pm_opp_set_regulators() and disable
+> regulators to dev_pm_opp_put_regulators(). This prepares for
+> converting exynos-bus devfreq driver to use dev_pm_opp_set_rate().
 > 
-> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
+> --
+> Changes in v2:
+> 
+> - move regulator enable and disable into loop
+> 
 > ---
->  drivers/clk/samsung/clk-exynos5420.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
+>  drivers/opp/core.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
-> index 6164d0ca75e0..c13f34d3d9a1 100644
-> --- a/drivers/clk/samsung/clk-exynos5420.c
-> +++ b/drivers/clk/samsung/clk-exynos5420.c
-> @@ -471,7 +471,8 @@ static const struct samsung_mux_clock exynos5800_mux_clks[] __initconst = {
->  			SRC_TOP0, 4, 3),
->  	MUX(CLK_MOUT_ACLK400_WCORE, "mout_aclk400_wcore", mout_group2_5800_p,
->  			SRC_TOP0, 16, 3),
-> -	MUX(0, "mout_aclk100_noc", mout_group1_5800_p, SRC_TOP0, 20, 2),
-> +	MUX(CLK_MOUT_ACLK100_NOC, "mout_aclk100_noc", mout_group1_5800_p,
-> +			SRC_TOP0, 20, 2),
-
-Please squash this code to the patch which add the IDs.
-Actually, it is not related to fix the rate range of clock.
-
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> index 0e7703fe733f..069c5cf8827e 100644
+> --- a/drivers/opp/core.c
+> +++ b/drivers/opp/core.c
+> @@ -1570,6 +1570,10 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
+>  			goto free_regulators;
+>  		}
 >  
->  	MUX(0, "mout_aclk333_432_gscl", mout_group6_5800_p, SRC_TOP1, 0, 2),
->  	MUX(0, "mout_aclk333_432_isp", mout_group6_5800_p, SRC_TOP1, 4, 2),
-> @@ -534,6 +535,8 @@ static const struct samsung_mux_clock exynos5800_mux_clks[] __initconst = {
->  static const struct samsung_div_clock exynos5800_div_clks[] __initconst = {
->  	DIV(CLK_DOUT_ACLK400_WCORE, "dout_aclk400_wcore",
->  			"mout_aclk400_wcore", DIV_TOP0, 16, 3),
-> +	DIV(CLK_DOUT_ACLK100_NOC, "dout_aclk100_noc", "mout_aclk100_noc",
-> +				DIV_TOP0, 20, 4),
+> +		ret = regulator_enable(reg);
+> +		if (ret < 0)
+> +			goto disable;
 
->  	DIV(CLK_DOUT_ACLK266_ISP, "dout_aclk266_isp", "mout_aclk266_isp",
->  				DIV_TOP8, 12, 3),
->  	DIV(0, "dout_aclk550_cam", "mout_aclk550_cam",
-> @@ -569,7 +572,8 @@ static const struct samsung_mux_clock exynos5420_mux_clks[] __initconst = {
->  			SRC_TOP0, 4, 2),
->  	MUX(CLK_MOUT_ACLK400_WCORE, "mout_aclk400_wcore", mout_group1_p,
->  			SRC_TOP0, 16, 2),
-> -	MUX(0, "mout_aclk100_noc", mout_group1_p, SRC_TOP0, 20, 2),
-> +	MUX(CLK_MOUT_ACLK100_NOC, "mout_aclk100_noc", mout_group1_p,
-> +			SRC_TOP0, 20, 2),
+The name of this label is logically incorrect because we won't disable
+the regulator from there but put it. Over that, I would rather prefer
+to remove the label and add regulator_put() here itself.
 
-ditto.
-Please squash this code to the patch which add the IDs.
-Actually, it is not related to fix the rate range of clock.
-
+> +
+>  		opp_table->regulators[i] = reg;
+>  	}
 >  
->  	MUX(0, "mout_aclk333_432_gscl", mout_group4_p, SRC_TOP1, 0, 2),
->  	MUX(0, "mout_aclk333_432_isp", mout_group4_p,
-> @@ -600,6 +604,8 @@ static const struct samsung_mux_clock exynos5420_mux_clks[] __initconst = {
->  static const struct samsung_div_clock exynos5420_div_clks[] __initconst = {
->  	DIV(CLK_DOUT_ACLK400_WCORE, "dout_aclk400_wcore",
->  			"mout_aclk400_wcore", DIV_TOP0, 16, 3),
-> +	DIV(CLK_DOUT_ACLK100_NOC, "dout_aclk100_noc", "mout_aclk100_noc",
-> +			DIV_TOP0, 20, 3),
->  };
+> @@ -1582,9 +1586,15 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
 >  
->  static const struct samsung_gate_clock exynos5420_gate_clks[] __initconst = {
-> @@ -798,8 +804,6 @@ static const struct samsung_div_clock exynos5x_div_clks[] __initconst = {
->  			DIV_TOP0, 8, 3),
->  	DIV(CLK_DOUT_ACLK200_FSYS2, "dout_aclk200_fsys2", "mout_aclk200_fsys2",
->  			DIV_TOP0, 12, 3),
-> -	DIV(CLK_DOUT_ACLK100_NOC, "dout_aclk100_noc", "mout_aclk100_noc",
-> -			DIV_TOP0, 20, 3),
->  	DIV(CLK_DOUT_PCLK200_FSYS, "dout_pclk200_fsys", "mout_pclk200_fsys",
->  			DIV_TOP0, 24, 3),
->  	DIV(CLK_DOUT_ACLK200_FSYS, "dout_aclk200_fsys", "mout_aclk200_fsys",
-> 
+>  	return opp_table;
+>  
+> +disable:
+> +	regulator_put(reg);
+> +	--i;
+> +
+>  free_regulators:
+> -	while (i != 0)
+> -		regulator_put(opp_table->regulators[--i]);
+> +	for (; i >= 0; --i) {
+> +		regulator_disable(opp_table->regulators[i]);
+> +		regulator_put(opp_table->regulators[i]);
+
+This is incorrect as this will now try to put/disable the regulator
+which we failed to acquire. As --i happens only after the loop has run
+once. You can rather do:
+
+	while (i--) {
+		regulator_disable(opp_table->regulators[i]);
+		regulator_put(opp_table->regulators[i]);
+        }
+
+
+> +	}
+>  
+>  	kfree(opp_table->regulators);
+>  	opp_table->regulators = NULL;
+> @@ -1610,8 +1620,10 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
+>  	/* Make sure there are no concurrent readers while updating opp_table */
+>  	WARN_ON(!list_empty(&opp_table->opp_list));
+>  
+> -	for (i = opp_table->regulator_count - 1; i >= 0; i--)
+> +	for (i = opp_table->regulator_count - 1; i >= 0; i--) {
+> +		regulator_disable(opp_table->regulators[i]);
+>  		regulator_put(opp_table->regulators[i]);
+> +	}
+>  
+>  	_free_set_opp_data(opp_table);
+>  
+> -- 
+> 2.22.0
 
 -- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+viresh
