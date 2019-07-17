@@ -2,45 +2,44 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 87B5A6BA34
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 17 Jul 2019 12:31:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 468186BA4A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 17 Jul 2019 12:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbfGQKbM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 17 Jul 2019 06:31:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43368 "EHLO mail.kernel.org"
+        id S1729604AbfGQKdl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 17 Jul 2019 06:33:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45988 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726085AbfGQKbM (ORCPT
+        id S1726309AbfGQKdl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 17 Jul 2019 06:31:12 -0400
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+        Wed, 17 Jul 2019 06:33:41 -0400
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 377922184B;
-        Wed, 17 Jul 2019 10:31:11 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D56E821848;
+        Wed, 17 Jul 2019 10:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563359471;
-        bh=w1TbVMvUz2tK6FJesNjUIqjiZRhlXxyRUlrQtX3Zs/A=;
+        s=default; t=1563359621;
+        bh=jSaDID9hgYfnliGptlwXumcvM/zIQPwcjviS3KOK0iM=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=1aRaZgzMNwMc/cSnLPza1zZd8YLsXbjs8yBoKnyqbgvVFefJs7HEgdAk9k2xSEOvr
-         XUWnVRi6oroq7hDBml2YU8Es7DBdc4b3baiyr7cVFWvcTgsDL2WGXNEL92hwRVKOsv
-         t5FZ7capFlHWNOZBKFPhMEfomGeykqsK4zlnreJ8=
-Received: by mail-lj1-f172.google.com with SMTP id h10so23106754ljg.0;
-        Wed, 17 Jul 2019 03:31:11 -0700 (PDT)
-X-Gm-Message-State: APjAAAUEUhQwl0msMt2C1QDsxHEGdcVaTt5XvaujeBdhd61yOz9nFk0e
-        HPAvI7bb0btZyVMBxSFw1P0n0fIV4VSls96czCk=
-X-Google-Smtp-Source: APXvYqwzoJ1Cxx4+M2lANaxvQqdCL3041mmaU3c52UP1ABWgSTNdykCbwT/nVHS71aYau/97TYX1+5b60Eo6CrIfc68=
-X-Received: by 2002:a2e:50e:: with SMTP id 14mr20713536ljf.5.1563359469475;
- Wed, 17 Jul 2019 03:31:09 -0700 (PDT)
+        b=EeA60zFQcj611TQd7C6MujlhxW6JLU1lGaIiFIcdmkRVWf+gZjyhg2nDEGKnNXenN
+         ym2YnxH4ohgCWo5ZO52McWzudtbRePzKY6mDN30ZEvgHneZ+VCs0p26Cu7I7Js2OyA
+         Nr24bdmBAm6J8u+tsgoe2kWlvRuvFSmKhGry5fH8=
+Received: by mail-lf1-f51.google.com with SMTP id q26so16069247lfc.3;
+        Wed, 17 Jul 2019 03:33:40 -0700 (PDT)
+X-Gm-Message-State: APjAAAUiE9/p0HIyhTUwW8AkzEe3FFtbTAr7P/dOEX1D9QAMjzGZPM9X
+        pjrF7x/If0CRdWvgEVGqOp8SdWnvNZX8a8XLDJk=
+X-Google-Smtp-Source: APXvYqzfd8qQfJ47ARKH7ZjU+7AbaDNvBG2A0KFFMMr0HRO82EOOxLdt1QfT4GOhtDlngwx+wXKbAfJRQeeskhxBGWA=
+X-Received: by 2002:ac2:514b:: with SMTP id q11mr17797614lfd.33.1563359619184;
+ Wed, 17 Jul 2019 03:33:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <CGME20190715124459eucas1p2a1d8795e57a82704ff221567a8810485@eucas1p2.samsung.com>
- <20190715124417.4787-1-l.luba@partner.samsung.com> <20190715124417.4787-32-l.luba@partner.samsung.com>
-In-Reply-To: <20190715124417.4787-32-l.luba@partner.samsung.com>
+References: <CGME20190715124458eucas1p2df56f2e0c7a1a0a9144a4d5fbdb471a9@eucas1p2.samsung.com>
+ <20190715124417.4787-1-l.luba@partner.samsung.com> <20190715124417.4787-31-l.luba@partner.samsung.com>
+In-Reply-To: <20190715124417.4787-31-l.luba@partner.samsung.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 17 Jul 2019 12:30:58 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPf1tZMLPT9pJrM5wM5wUEMdw1iEPVjaz6K3iq17KdbAxw@mail.gmail.com>
-Message-ID: <CAJKOXPf1tZMLPT9pJrM5wM5wUEMdw1iEPVjaz6K3iq17KdbAxw@mail.gmail.com>
-Subject: Re: [PATCH v1 31/50] ARM: dts: exynos: align lowest OPP in bus_jpeg
- in Exynos5420
+Date:   Wed, 17 Jul 2019 12:33:27 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdD-g1A+LKp1Nmmho2MVRxERfXb+Q3WsBrN=7YbnVufMQ@mail.gmail.com>
+Message-ID: <CAJKOXPdD-g1A+LKp1Nmmho2MVRxERfXb+Q3WsBrN=7YbnVufMQ@mail.gmail.com>
+Subject: Re: [PATCH v1 30/50] ARM: dts: exynos: add bus_isp266 into Exynos5800
 To:     Lukasz Luba <l.luba@partner.samsung.com>
 Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
@@ -61,36 +60,40 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 On Mon, 15 Jul 2019 at 14:45, Lukasz Luba <l.luba@partner.samsung.com> wrote:
 >
-> Make the lowest OPP frequency possible to set using a clock divider keeping
-> in mind the master clock rate.
+> The Exynos5420 SoC had one clock for two lines while Exynos5422/5800 have
+> dedicated clock tree for the ACLK266_ISP. The max frequency is 300MHz so
+> it shares the OPP table with bus_gen. The bus is added here and is enabled
+> in .dts file for proper board.
 
-As in previous patch - lowest->slowest. I think OPPs are not
-associated with the height or altitude but speed (slow/fast). You
-could also add "frequency" which would make it also correct and
-specific but slightly longer in title.
+Squash it with 48 please.
 
-Best regards,
+BR,
 Krzysztof
 
 >
 > Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
 > ---
->  arch/arm/boot/dts/exynos5420.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm/boot/dts/exynos5800.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
-> diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
-> index f2e2e77a86d6..0be799f843dc 100644
-> --- a/arch/arm/boot/dts/exynos5420.dtsi
-> +++ b/arch/arm/boot/dts/exynos5420.dtsi
-> @@ -1250,7 +1250,7 @@
->                         compatible = "operating-points-v2";
->
->                         opp00 {
-> -                               opp-hz = /bits/ 64 <75000000>;
-> +                               opp-hz = /bits/ 64 <100000000>;
->                         };
->                         opp01 {
->                                 opp-hz = /bits/ 64 <150000000>;
+> diff --git a/arch/arm/boot/dts/exynos5800.dtsi b/arch/arm/boot/dts/exynos5800.dtsi
+> index 57d3b319fd65..3b9200db43b6 100644
+> --- a/arch/arm/boot/dts/exynos5800.dtsi
+> +++ b/arch/arm/boot/dts/exynos5800.dtsi
+> @@ -131,3 +131,13 @@
+>  &mfc {
+>         compatible = "samsung,mfc-v8";
+>  };
+> +
+> +&soc {
+> +               bus_isp266: bus_isp266 {
+> +                       compatible = "samsung,exynos-bus";
+> +                       clocks = <&clock CLK_DOUT_ACLK266_ISP>;
+> +                       clock-names = "bus";
+> +                       operating-points-v2 = <&bus_gen_opp_table>;
+> +                       status = "disabled";
+> +               };
+> +};
 > --
 > 2.17.1
 >
