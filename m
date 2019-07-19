@@ -2,137 +2,132 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D9F5F6E7AA
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 17:06:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69D0F6ECB6
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 20 Jul 2019 01:26:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729922AbfGSPGA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 19 Jul 2019 11:06:00 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:40881 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729977AbfGSPF7 (ORCPT
+        id S1732701AbfGSX0a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 19 Jul 2019 19:26:30 -0400
+Received: from mx1.riseup.net ([198.252.153.129]:44860 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728909AbfGSX0a (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 19 Jul 2019 11:05:59 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190719150558euoutp02609ae3e1e96d467f13fa07aa8491e5d6~y10-Lp84B1346813468euoutp02Q
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Jul 2019 15:05:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190719150558euoutp02609ae3e1e96d467f13fa07aa8491e5d6~y10-Lp84B1346813468euoutp02Q
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563548758;
-        bh=uK2H2CY5YVkbPXh3EKmhTQmAPpi5mTFt1H3u7NFbf9M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Dv4tnf/AnT0cnBAVTYhsnwdjULtrEcwhihAwb6cftM4K/SYNaSUOK9FRLT4cX3XNE
-         SuOZHyUCI4RJdmQbZxnZy+yes3F3iV3EzNLnkGl1FnfRH+UA6KjEaSG5yXidmVtyI9
-         buYpQC1MciosWsMQ5MVkumLT8zHK6/dg2CgHKZgo=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190719150557eucas1p2266c376b4f71c2df9f0d45e273004c64~y10_f-qVu2491724917eucas1p2I;
-        Fri, 19 Jul 2019 15:05:57 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id A3.19.04377.55CD13D5; Fri, 19
-        Jul 2019 16:05:57 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190719150556eucas1p2bc6f133c48ec1be9b36119a414887969~y1092WE_s1668816688eucas1p2D;
-        Fri, 19 Jul 2019 15:05:56 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190719150556eusmtrp2e4660feafb9c13e5be61d014a8ff74d1~y109oQf353114831148eusmtrp2C;
-        Fri, 19 Jul 2019 15:05:56 +0000 (GMT)
-X-AuditID: cbfec7f4-113ff70000001119-7b-5d31dc553c0b
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 74.9F.04146.45CD13D5; Fri, 19
-        Jul 2019 16:05:56 +0100 (BST)
-Received: from AMDC3218.DIGITAL.local (unknown [106.120.51.18]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190719150555eusmtip1ce8f0fdb626b0b71e4a3c68029e11ac2~y108yjwBz2871128711eusmtip10;
-        Fri, 19 Jul 2019 15:05:55 +0000 (GMT)
-From:   k.konieczny@partner.samsung.com
-To:     k.konieczny@partner.samsung.com
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v3 5/5] dt-bindings: devfreq: exynos-bus: remove unused
- property
-Date:   Fri, 19 Jul 2019 17:05:35 +0200
-Message-Id: <20190719150535.15501-6-k.konieczny@partner.samsung.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190719150535.15501-1-k.konieczny@partner.samsung.com>
+        Fri, 19 Jul 2019 19:26:30 -0400
+Received: from capuchin.riseup.net (capuchin-pn.riseup.net [10.0.1.176])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
+        by mx1.riseup.net (Postfix) with ESMTPS id 7F5E71A0E0A;
+        Fri, 19 Jul 2019 16:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1563578789; bh=aDG2VGd0jkmU/0W2jMHMu3CovOrpL0bcc6Kn+rrO28E=;
+        h=To:From:Subject:Cc:Date:From;
+        b=LwJyLa8ck2KRhrAL+qDINbktN4Whjeg/KdTFDzEfWDcV4dHE+J+QnNr94Eun3Vn6S
+         t2uFX0nm/7SYfIN3S738BuezFxeSgsOBPAbRCU8X1FFOzmjf9rORgWAIPykiVgVF1p
+         ZS3ctO6Q8fhYIUFSlnxJDZ3lLXesfSJl3qIvCZqA=
+X-Riseup-User-ID: C5FF39F5AF09B19B6B005E179456672F6E938DDBADDD907208415063E494166D
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by capuchin.riseup.net (Postfix) with ESMTPSA id 72D751203CB;
+        Fri, 19 Jul 2019 16:26:28 -0700 (PDT)
+To:     linux-samsung-soc@vger.kernel.org
+From:   dllud <dllud@riseup.net>
+Subject: [RFC] devfreq: drm overlay planes glitch on Exynos 4412 with devfreq
+ enabled
+Openpgp: preference=signencrypt
+Autocrypt: addr=dllud@riseup.net; prefer-encrypt=mutual; keydata=
+ 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
+ ZQ8HKQs4RmPOBIk=
+Cc:     =?UTF-8?Q?Joonas_Kylm=c3=a4l=c3=a4?= <joonas.kylmala@iki.fi>,
+        Grim Kriegor <grimkriegor@krutt.org>, m.szyprowski@samsung.com
+Message-ID: <bb455b1e-9e3f-f1b1-4164-fa1dfca5717c@riseup.net>
+Date:   Sat, 20 Jul 2019 00:26:26 +0100
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0hTYRz1u4/d62pynYYfKoaLpILyQcEXRlQYLQgqe0APyZUXlZzKbvNV
-        kT00N2iZVtoKNdIU89HmMh8pvtp6+Egis3QiuShNLdtIjXK5Xa3+O7/zO+c7vwMfjYuHSG86
-        Nv4Uq4iXxUkEQqLWONu99sBgcETQz4teSJdfTaK3tk8kKuzoJpGm2Q7Q1ZEvOOrpeUihrgvj
-        FNKP9JHodcMdAbJe6QAov6cZQ5UdZgqVvO3F0MD5MgEan+nCUEZTB4Xm+nQEqhk2CraIpRUF
-        FUCqL1cJpDXF56Stk08wqcZQDqSm/seY1Kr320MdFm6KYuNik1hF4OZIYUxV/a5EM51ys6mQ
-        TAftlBq40pBZDzV53QI1ENJipgzAG9ctFD/YAFQNTBL8YAXQ1DBGLFpaB9UYvygFsKqij/hr
-        sVt7cYdKwKyEhvxRZ4gnswLmDuXhDhHOzBLw4Wudc+HBhEOtxQgcmJg3vMmsdZpFTBj88evR
-        woXLoaqu0RntymyHttavFK9xh89vWZw8Pq+5+Og2zusnKJj7zpPHYdCWVYjx2AOOmQwLb/pC
-        e/0inww/3tU4S0PmEoDDl6cWeobCdlMvqQb0fMBqWN0QyNNb4efvc4SDhowb7J9w509wgzm1
-        jo4OWgSzMsW8ei0ssHeSPPaBanvVApbCqQktyAb+2v/KaP8ro/2XWwTwcuDFKjl5NMuFxLPJ
-        6ziZnFPGR687kSDXg/lf93LOZKsDDb+OtwGGBpKlom/vgyPEpCyJS5W3AUjjEk/RwGhghFgU
-        JUtNYxUJxxTKOJZrAz40IfESnXYZPiJmomWn2JMsm8gqFrcY7eqdDiJXcTOV7O8XAeZlFuWZ
-        a/5+yGSrMUeGgfqxtJYdatWd4o1n65ZseHrvS+Y5TO2mS6qbdTl09GzOtmfGEItQHbCv12d/
-        0VB2askDfaPZPTzZ6LL3YP80JZ4yHP8Qm2caVmrcU0Jf7XaxGqdLN7QZwu936nxb5Bk9zGR/
-        0PROVbiE4GJkwWtwBSf7A16+BApxAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLIsWRmVeSWpSXmKPExsVy+t/xu7ohdwxjDZZ9VbbYOGM9q8X1L89Z
-        LeYfOcdq0bfvP6NF/+PXzBbnz29gtzjb9IbdYtPja6wWl3fNYbP43HuE0WLG+X1MFmuP3GW3
-        WHr9IpPF7cYVbBZvfpxlsmjde4Td4t+1jSwWmx8cY3MQ8lgzbw2jx6ZVnWwem5fUexx8t4fJ
-        o2/LKkaP4ze2M3l83iQXwB6lZ1OUX1qSqpCRX1xiqxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRv
-        Z5OSmpNZllqkb5egl7Fup0/BXY6KaXvnszYwHmbvYuTkkBAwkTh4p4upi5GLQ0hgKaPEqr+r
-        2CAS0hKNp1czQdjCEn+udbFBFH1ilLj5expYgk1AVWLLjJdgk0QElCUm35vODFLELNDJKrHi
-        yRGwScICARL/L/5kBbFZgBqutm1jBrF5BVwkvv3ZCnWGvETnjt0sIDangKvEl4PvweJCQDU7
-        Vs6DqheUODnzCVgNM1B989bZzBMYBWYhSc1CklrAyLSKUSS1tDg3PbfYUK84Mbe4NC9dLzk/
-        dxMjMCq3Hfu5eQfjpY3BhxgFOBiVeHg/3DKMFWJNLCuuzD3EKMHBrCTCe/ulfqwQb0piZVVq
-        UX58UWlOavEhRlOgJyYyS4km5wMTRl5JvKGpobmFpaG5sbmxmYWSOG+HwMEYIYH0xJLU7NTU
-        gtQimD4mDk6pBkbbbu/i7r5Vzu7Ob8+U790f9rBE/s/ShhvV7sXu//fm9emkBG5hf31zasVf
-        r0kOetdOOnHtuntpmpzI4ZRrpg/3rTjmX73yqsHe1WrP/L9dPXauWCA/v4Ypzfd1sxaLNuPM
-        J27vI7ZJTvzTr23Cd+DY7LNFIXe/ZU79YR8prH6J23jNGe1XK6SUWIozEg21mIuKEwGyGisE
-        4AIAAA==
-X-CMS-MailID: 20190719150556eucas1p2bc6f133c48ec1be9b36119a414887969
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190719150556eucas1p2bc6f133c48ec1be9b36119a414887969
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190719150556eucas1p2bc6f133c48ec1be9b36119a414887969
-References: <20190719150535.15501-1-k.konieczny@partner.samsung.com>
-        <CGME20190719150556eucas1p2bc6f133c48ec1be9b36119a414887969@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Remove unused DT property "exynos,voltage-tolerance".
+Hi,
 
-Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
-Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
----
- Documentation/devicetree/bindings/devfreq/exynos-bus.txt | 2 --
- 1 file changed, 2 deletions(-)
+As advised by mszyprow on IRC, I am coming here to report a graphics
+corruption issue that happens on the Exynos 4412 SoC whenever we use
+devfreq in conjunction with drm overlay planes (DRM_PLANE_TYPE_OVERLAY).
 
-diff --git a/Documentation/devicetree/bindings/devfreq/exynos-bus.txt b/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-index f8e946471a58..e71f752cc18f 100644
---- a/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-+++ b/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-@@ -50,8 +50,6 @@ Required properties only for passive bus device:
- Optional properties only for parent bus device:
- - exynos,saturation-ratio: the percentage value which is used to calibrate
- 			the performance count against total cycle count.
--- exynos,voltage-tolerance: the percentage value for bus voltage tolerance
--			which is used to calculate the max voltage.
- 
- Detailed correlation between sub-blocks and power line according to Exynos SoC:
- - In case of Exynos3250, there are two power line as following:
--- 
-2.22.0
+We are working on a fork of LineageOS 16 (based on AOSP 9) that uses
+drm_hwcomposer attached to an exynos card0 node. Whenever we enabled
+overlay planes we would get the graphics corruptions that can be seen at
+https://gitlab.freedesktop.org/drm-hwcomposer/drm-hwcomposer/issues/24
 
+With the help of ahajda on #linux-exynos the root cause of this issue
+was traced into devfreq. devfreq was enabled on our 5.2 kernel branch as
+follows:
+CONFIG_PM_DEVFREQ=y
+CONFIG_DEVFREQ_GOV_PERFORMANCE=y
+CONFIG_DEVFREQ_GOV_POWERSAVE=y
+CONFIG_DEVFREQ_GOV_USERSPACE=y
+CONFIG_ARM_EXYNOS_BUS_DEVFREQ=y
+CONFIG_DEVFREQ_EVENT_EXYNOS_NOCP=y
+
+Removing these configs (i.e. disabling devfreq) got rid of all
+corruption issues.
+
+ahajda provided a tentative explanation for this:
+> There are multiple issues with devfreq and clocks, devfreq too
+> aggresively lowers display clock frequencies, as a result DMA
+> transfers of overlays are too slow and result in screen corruption
+
+We are reporting here in case someone can take this task, as we lack the
+skill and knowledge to fix it ourselves. We were informed on IRC that
+the fix could take the form of a patch similar to what mszyprow did for
+the mixer/hdmi path ( https://patchwork.kernel.org/patch/10861757/ ) but
+this time targeting the fimd/lcd panel path.
+
+If needed we can gather more information and provide all assistance you
+need for testing. Some logs are already available at
+https://gitlab.freedesktop.org/drm-hwcomposer/drm-hwcomposer/issues/24
+The relevant IRC discussion is archived at
+https://freenode.irclog.whitequark.org/linux-exynos/2019-07-18
+
+Regards,
+David
