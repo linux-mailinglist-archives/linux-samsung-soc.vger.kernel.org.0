@@ -2,110 +2,153 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B4876E465
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 12:33:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D8C76E58B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 14:21:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbfGSKco (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 19 Jul 2019 06:32:44 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43095 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725853AbfGSKco (ORCPT
+        id S1726076AbfGSMVG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 19 Jul 2019 08:21:06 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:45820 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727603AbfGSMVF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 19 Jul 2019 06:32:44 -0400
-Received: by mail-pl1-f196.google.com with SMTP id 4so8454141pld.10;
-        Fri, 19 Jul 2019 03:32:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=h8qhnRgEZihilSgw7kKeGvUMgkb5ifMf+Eyiz0heXJs=;
-        b=EsYFYhi5YLM2CYVaQbmamBSUnTVMml8zoraowbCu2noJpLEblOs1149Bnhj/0mSj8y
-         w09uJ6DNfzL0wFZSLSVFs0iSvBiWKDNu2eEXXkduSOl06NoD/3q1AdVYp4BkidNYjLq+
-         wlD7597+u9ukQKpU5FNxD2x5ZjMjABkfcvza2gDWFf7k7jfvjfg0AZerDQttBrGw7oZp
-         o9clkP9OtbBSx6igyic2vp3vDwqcF9uipciVX+pe6ORBE61JAgU4KuPkeLOVhsivLCsn
-         l4HaF+Us1nVeL2l2kMMkox7OE965ZfqEpk2sSaSLH4iWMzFwKPRe11oU9eR+zrLywQLa
-         OFzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=h8qhnRgEZihilSgw7kKeGvUMgkb5ifMf+Eyiz0heXJs=;
-        b=DMd2JixK2z1Zqqja2rSfJZvK4FcOQiBznJE3miV0yQE/HKzWcmsNwm/tH7zYi2I/pa
-         W/mQgLhSuEQmU1BF75rYJrarYVR2T0+qbLdZjI1O3B+oY8y4cb+Hx0IpA8lwJOG4QRa6
-         QHwpmz30zdPWR39OGKUyTuavltJxeUa9NY76TeDFm9lwVoKF5KN/7yqiloH7aDqJ++86
-         qVqhccX1bvgj36J1d6dTErZzyoFQPCoqcACFlJwLgE6X09mgHsjCUIkHIs4yckHnRa9B
-         JtmhCyWw5/i3h7amzQS6XGnPx2aCGQZYqcIqtEv+KHs5MLPYtmPIdQP5N7ABIHVelH0O
-         wDAw==
-X-Gm-Message-State: APjAAAXLMnmlH7saggPyv5xCr4fOIOFh6l5ylMWajkj2z8/iKdfLgpv+
-        cU/2UmQMb31iB+tWgu5noEY=
-X-Google-Smtp-Source: APXvYqwM5uX2Z3lxpUb1PgpPaYg4UrhdWy602Z/sInoOWoP2qM3MQBWuz62fdEs69wpXsM/tmvWoqQ==
-X-Received: by 2002:a17:902:20c8:: with SMTP id v8mr56385548plg.284.1563532363495;
-        Fri, 19 Jul 2019 03:32:43 -0700 (PDT)
-Received: from suzukaze.ipads-lab.se.sjtu.edu.cn ([89.31.126.54])
-        by smtp.gmail.com with ESMTPSA id i15sm34029444pfd.160.2019.07.19.03.32.39
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 19 Jul 2019 03:32:42 -0700 (PDT)
-From:   Chuhong Yuan <hslester96@gmail.com>
-Cc:     Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Chuhong Yuan <hslester96@gmail.com>
-Subject: [PATCH] drm/exynos: Use dev_get_drv_data
-Date:   Fri, 19 Jul 2019 18:31:09 +0800
-Message-Id: <20190719103108.19998-1-hslester96@gmail.com>
-X-Mailer: git-send-email 2.20.1
+        Fri, 19 Jul 2019 08:21:05 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190719122103euoutp02ecad596718cccb836c0a94a034c6c778~yzlAMNLWr2317023170euoutp02m
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Jul 2019 12:21:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190719122103euoutp02ecad596718cccb836c0a94a034c6c778~yzlAMNLWr2317023170euoutp02m
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1563538863;
+        bh=AkuwhZsflWxMXUSYgKx6guf5e1rL6IupidnXfiBZd8s=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=ssvriqIpsLeB+ToRpRalsCZAaR75IjkgxeynIhQvAen7qw8Fu7QJ7vJnUfCF4YWRl
+         hc0enUQzsMff5XgMGYhHW/d23EmtlYNJAkEIZ2gq5i8jlBw2ZpsoXPl/PbYRAR8gQG
+         fakjfJ1UBZYob9Z6wiAm4pGL5Ue2rJ7MGCITwhW8=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190719122103eucas1p14d41939bf6a118ab6e0eea9afef0323c~yzk-1OhZI2099320993eucas1p1e;
+        Fri, 19 Jul 2019 12:21:03 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 4D.30.04325.FA5B13D5; Fri, 19
+        Jul 2019 13:21:03 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190719122102eucas1p1a23e35476bd6203cc11bc503b6cd30ee~yzk-GNFF02097120971eucas1p1P;
+        Fri, 19 Jul 2019 12:21:02 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190719122102eusmtrp2d36b25121083461a91d10adf3e5f1ac3~yzk_3CbsC2520025200eusmtrp23;
+        Fri, 19 Jul 2019 12:21:02 +0000 (GMT)
+X-AuditID: cbfec7f5-b75ff700000010e5-84-5d31b5af1b68
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id E0.C4.04140.DA5B13D5; Fri, 19
+        Jul 2019 13:21:01 +0100 (BST)
+Received: from [106.120.50.63] (unknown [106.120.50.63]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190719122101eusmtip1f1aca9fb75903b6d1bf116560b8e4579~yzk_JRCQV2514225142eusmtip1K;
+        Fri, 19 Jul 2019 12:21:01 +0000 (GMT)
+Subject: Re: [PATCH] phy: core: document calibrate() method
+To:     Kishon Vijay Abraham I <kishon@ti.com>, linux-usb@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <1865da50-000f-e235-4090-1058d2aa217b@samsung.com>
+Date:   Fri, 19 Jul 2019 14:21:00 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <085b8093-d7bc-d960-f0d8-8776818ebab0@ti.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsWy7djP87rrtxrGGnxq4LHYOGM9q8WFpz1s
+        Fpd3zWGzmHF+H5PFomWtzA6sHn1bVjF6HL+xncnj8ya5AOYoLpuU1JzMstQifbsEroxbzbEF
+        V3krnu+ezNLA+J6ri5GTQ0LARGLG3z9sILaQwApGibuziroYuYDsL4wSjTf+skA4nxklmnec
+        YIfpeLvhDCNEYjmjxLb1u5ggnLeMEpte/mEFqRIWsJbYdeAx2FwRgSyJW9e+M4LYzAIREt1t
+        e5hAbDYBQ4mut11gNbwCdhLNP5exgNgsAqoSX9/fAqsXFYiR2PmmhxmiRlDi5MwnYDWcAlYS
+        01dMYoKYKS+x/e0cZghbXOLWk/lgB0kI9LNL7HxwmRnibBeJJVeuskDYwhKvjm+BekdG4v9O
+        mIZmRomH59ayQzg9jBKXm2YwQlRZSxw+fhHoNQ6gFZoS63fpQ4QdJbZPbGMBCUsI8EnceCsI
+        cQSfxKRt05khwrwSHW1CENVqErOOr4Nbe/DCJeYJjEqzkLw2C8k7s5C8Mwth7wJGllWM4qml
+        xbnpqcXGeanlesWJucWleel6yfm5mxiBqeX0v+NfdzDu+5N0iFGAg1GJhzcg1yBWiDWxrLgy
+        9xCjBAezkgjv7Zf6sUK8KYmVValF+fFFpTmpxYcYpTlYlMR5qxkeRAsJpCeWpGanphakFsFk
+        mTg4pRoYLTQ73R9/udsdtV5nzgUd7amRRklMj9796bH4pBnEv88pS1ptrrIQ79RXqUeWJc0z
+        aFjY4Lys/RWTr86nTQV7t1w3rEwWMJuQNTdjy5RXNU/WytbxmrX/2SyxzuncTEHfd37+1zge
+        mB+1+7BxS7Pk6ZoT19Nea50p453yM3DLnJqSThnpOKnTSizFGYmGWsxFxYkAYN8XLSkDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJIsWRmVeSWpSXmKPExsVy+t/xu7rrthrGGmyYLWGxccZ6VosLT3vY
+        LC7vmsNmMeP8PiaLRctamR1YPfq2rGL0OH5jO5PH501yAcxRejZF+aUlqQoZ+cUltkrRhhZG
+        eoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehm3mmMLrvJWPN89maWB8T1XFyMnh4SA
+        icTbDWcYuxi5OIQEljJKXDp7lhkiISNxcloDK4QtLPHnWhcbRNFrRonH8/YzgSSEBawldh14
+        zAZiiwhkSfy/8ROsmVkgQqJz+g9miIaDjBJnzraCTWITMJToetsF1sArYCfR/HMZC4jNIqAq
+        8fX9LUYQW1QgRmLfme3sEDWCEidnPgGr4RSwkpi+YhITxAIziXmbH0Itk5fY/nYOlC0ucevJ
+        fKYJjEKzkLTPQtIyC0nLLCQtCxhZVjGKpJYW56bnFhvpFSfmFpfmpesl5+duYgRG07ZjP7fs
+        YOx6F3yIUYCDUYmHNyDXIFaINbGsuDL3EKMEB7OSCO/tl/qxQrwpiZVVqUX58UWlOanFhxhN
+        gZ6byCwlmpwPjPS8knhDU0NzC0tDc2NzYzMLJXHeDoGDMUIC6YklqdmpqQWpRTB9TBycUg2M
+        iZtNRDZIt855smtvj+784p5c6fKTyWXlHurTFQ85yWx7auWsdS0ruuLk+hPlRf4u65/Esz8w
+        PX4p5LnldPulizyUXRtMrymyxPvcmK+5e27OxiQ1A5PvbxdPe5MeJv/hTtZvhzmHFU6dW9VZ
+        cI6tJ1vC6dZp27KsluCdxQuD758VqwzJPHxKiaU4I9FQi7moOBEALP9t17wCAAA=
+X-CMS-MailID: 20190719122102eucas1p1a23e35476bd6203cc11bc503b6cd30ee
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190719095254eucas1p29c9e6c7aac20cf89b589fd2f2036c485
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190719095254eucas1p29c9e6c7aac20cf89b589fd2f2036c485
+References: <CGME20190719095254eucas1p29c9e6c7aac20cf89b589fd2f2036c485@eucas1p2.samsung.com>
+        <20190719095245.17401-1-m.szyprowski@samsung.com>
+        <085b8093-d7bc-d960-f0d8-8776818ebab0@ti.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-dev_get_drvdata is a simpler implementation comparing
-to to_platform_device + platform_get_drvdata.
-This makes the code simpler.
+Hi Kishon,
+
+On 2019-07-19 12:04, Kishon Vijay Abraham I wrote:
+> Hi Marek,
+>
+> On 19/07/19 3:22 PM, Marek Szyprowski wrote:
+>> Commit 36914111e682 ("drivers: phy: add calibrate method") added support
+>> for generic phy_calibrate() method, but it didn't explain in detail when
+>> such method is supposed to be called. Add some more documentation directly
+>> to the phy.h to make it clean that it is intended to be called after every
+>> host controller reset.
+>>
+>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+>> ---
+>>   include/linux/phy/phy.h | 12 ++++++++++++
+>>   1 file changed, 12 insertions(+)
+>>
+>> diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
+>> index 15032f145063..46775e8b0ed9 100644
+>> --- a/include/linux/phy/phy.h
+>> +++ b/include/linux/phy/phy.h
+>> @@ -101,6 +101,18 @@ struct phy_ops {
+>>   	int	(*validate)(struct phy *phy, enum phy_mode mode, int submode,
+>>   			    union phy_configure_opts *opts);
+>>   	int	(*reset)(struct phy *phy);
+>> +
+>> +	/**
+>> +	 * @calibrate:
+>> +	 *
+>> +	 * Optional.
+>> +	 *
+>> +	 * Used to calibrate phy, typically by adjusting some parameters
+>> +	 * in runtime, which are otherwise lost after host controller
+>> +	 * reset and cannot be set in phy_init() and phy_power_on().
+>> +	 *
+>> +	 * Returns: 0 if successful, an negative error code otherwise
+>> +	 */
+>>   	int	(*calibrate)(struct phy *phy);
+> This should be added in drivers/phy/phy-core.c before phy_calibrate()?
+
+Okay. Do you want to keep it also in phy.h (like for validate and 
+configure)?
 
 
-Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
----
- drivers/gpu/drm/exynos/exynos_drm_fimc.c | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_gsc.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> We could
+> add a separate section in Documentation/phy.txt to document these phy_ops.
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-index a594ab7be2c0..164d914cbe9a 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-@@ -44,7 +44,7 @@ static unsigned int fimc_mask = 0xc;
- module_param_named(fimc_devs, fimc_mask, uint, 0644);
- MODULE_PARM_DESC(fimc_devs, "Alias mask for assigning FIMC devices to Exynos DRM");
- 
--#define get_fimc_context(dev)	platform_get_drvdata(to_platform_device(dev))
-+#define get_fimc_context(dev)	dev_get_drvdata(dev)
- 
- enum {
- 	FIMC_CLK_LCLK,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 1e4b21c49a06..1c524db9570f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -58,7 +58,7 @@
- #define GSC_COEF_DEPTH	3
- #define GSC_AUTOSUSPEND_DELAY		2000
- 
--#define get_gsc_context(dev)	platform_get_drvdata(to_platform_device(dev))
-+#define get_gsc_context(dev)	dev_get_drvdata(dev)
- #define gsc_read(offset)		readl(ctx->regs + (offset))
- #define gsc_write(cfg, offset)	writel(cfg, ctx->regs + (offset))
- 
+Best regards
 -- 
-2.20.1
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
