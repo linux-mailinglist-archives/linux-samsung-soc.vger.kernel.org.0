@@ -2,139 +2,123 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4A2F6E255
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 10:14:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F24A6E36A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 11:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbfGSINh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 19 Jul 2019 04:13:37 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:34738 "EHLO
+        id S1726788AbfGSJ1r (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 19 Jul 2019 05:27:47 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:60226 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbfGSINh (ORCPT
+        with ESMTP id S1726075AbfGSJ1r (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 19 Jul 2019 04:13:37 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190719081336euoutp01b5b65469e6025685cf6643d2c424393b~ywM8ajb8s1022110221euoutp01i
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Jul 2019 08:13:36 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190719081336euoutp01b5b65469e6025685cf6643d2c424393b~ywM8ajb8s1022110221euoutp01i
+        Fri, 19 Jul 2019 05:27:47 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190719092746euoutp014b53b880a98f203c09d94a897cd76e2b~yxNsgFZba0045500455euoutp01B
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Jul 2019 09:27:46 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190719092746euoutp014b53b880a98f203c09d94a897cd76e2b~yxNsgFZba0045500455euoutp01B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563524016;
-        bh=drg5AOx0OUTEFNPddGl8KS3mvIQGIebASAgTyhQFOYY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=b2PGbYAbRFFvpouRZpOauHV+NF7L+jEx7ktGC68JZq6rY6coYbGma7nAnSzEWm7DQ
-         IuTczRrD+KuWE4p+8h1CkUVG2RivaILppSXASMH7PiWZmFAMdvPGrOg6SOFeNVHJlj
-         lt0rd28GCQw7vgxJTy+2U9H4sspIxL4tyrtD3bhc=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190719081335eucas1p1870db09343e0104a6690a0a246c78e2e~ywM7qcup42868428684eucas1p1X;
-        Fri, 19 Jul 2019 08:13:35 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id C6.D8.04298.FAB713D5; Fri, 19
-        Jul 2019 09:13:35 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190719081334eucas1p1fd614e56c1ec0dfa654d0bb77f17ba5d~ywM6tFXO82473624736eucas1p1u;
-        Fri, 19 Jul 2019 08:13:34 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190719081334eusmtrp2e4ca084ef0679af6a6f0c14cec324c81~ywM6jDSiK3201232012eusmtrp2H;
-        Fri, 19 Jul 2019 08:13:34 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-25-5d317baff1c7
+        s=mail20170921; t=1563528466;
+        bh=Spljwi04NPz7tPwQDU3ylhpMAcBmPOyA+LcLqOe48yU=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=fC9BomUpsql2COyJ6gc4WDI6fHvJC+/hdyejnXPtXym/Mf8NBhFzk95rsRaQRuSdc
+         KWcWgDc/xOQnP4nkP1j5stZ8RYhe8oHkP8LQNIKM2s8Rx84qNcBpV9GA3fkf/EQJTr
+         EOMjJ2L131jySWjtf0lxGx8bKyFDI3ZqYYTGaaL4=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190719092745eucas1p2d63ead0ad0ba74f60f0fefac910e87ea~yxNsEYFit0571605716eucas1p2M;
+        Fri, 19 Jul 2019 09:27:45 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 7D.1D.04325.11D813D5; Fri, 19
+        Jul 2019 10:27:45 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190719092744eucas1p24f1b497e46cf66ac3ae8c717b626a5d4~yxNrQ3dVU0485504855eucas1p2a;
+        Fri, 19 Jul 2019 09:27:44 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190719092744eusmtrp1d31cf3cd69253e47b48dfc82134eb1af~yxNrC0zDS1975419754eusmtrp1S;
+        Fri, 19 Jul 2019 09:27:44 +0000 (GMT)
+X-AuditID: cbfec7f5-b75ff700000010e5-9f-5d318d1196c9
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id EE.EE.04146.EAB713D5; Fri, 19
-        Jul 2019 09:13:34 +0100 (BST)
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6C.01.04140.01D813D5; Fri, 19
+        Jul 2019 10:27:44 +0100 (BST)
 Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190719081333eusmtip2e227f34779f0b92d208bf023e8e626ce~ywM6DCQNQ3189331893eusmtip20;
-        Fri, 19 Jul 2019 08:13:33 +0000 (GMT)
+        20190719092744eusmtip243b0f5902555ec37e058b710f169bcc7~yxNqp7hk01330413304eusmtip2b;
+        Fri, 19 Jul 2019 09:27:44 +0000 (GMT)
 From:   Marek Szyprowski <m.szyprowski@samsung.com>
 To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jochen Sprickerhof <jochen@sprickerhof.de>,
-        Anand Moon <linux.amoon@gmail.com>
-Subject: [PATCH v2 2/2] usb: dwc3: remove generic PHY calibrate() calls
-Date:   Fri, 19 Jul 2019 10:13:26 +0200
-Message-Id: <20190719081326.9347-1-m.szyprowski@samsung.com>
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH] phy: exynos5-usbdrd: Calibrating makes sense only for
+ USB2.0 PHY
+Date:   Fri, 19 Jul 2019 11:27:34 +0200
+Message-Id: <20190719092734.12501-1-m.szyprowski@samsung.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190719081212.9249-1-m.szyprowski@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA0WSe0hTYRjG/Xa2c85Wk+O0/LBIWFYUeYOIQy0xCjrhPxIklUquPKnkpuyo
-        af4jSlJmoeJlLdPhrZy56Royl2VauNJ0XnHOCxZlaJmULopM2/Es++/3Pe/zfC88vDgi0Qj8
-        8CRlGq1SypOlqIjf1vNrINCQHRobUmjeRraqDQKyJ/8DRubVGlCy/s8MIG22FowcsVSipNr2
-        nEfWNNxASH2rAyObX027fMZSQfgWql0zjVG1HfM8yqi7hVKdDx5j1F2TDlAtpjU+tWzcFYld
-        EMni6eSkDFoVHBYnSrxXd0eQqhVl/qjJRXNAL14AcBwSh+CnRhcKcQnxCMD3o7sLgMjFKwCW
-        fJ4G3GMZQOfSbYx1sYFxfZWAGzwEcEZt4m1GptrZiRBHiVBYsFiAsuxDhMO6+imUNSHEOg9W
-        2F9vmLyJU9BR3rXBfGIP7Bwq57EsJmRwtanWvc4fNrW8QFgWEsdgUY4DYz+CRBUGtf1at+kk
-        1I/aUI694YLV5NZ3wvX2ah4XyAPw3UCzO10I4EiuGnCuo/CldUjA1oEQ+6HBEszJx+GTLh3g
-        WvKE9kUvVkZcWNJWgXCyGN7Ml3DuvVBj1W+u7RocRjimoN4y5W6oyNWjpg8rAv6a/8u0AOiA
-        L53OKBJoJlRJXwti5AomXZkQdDlFYQSui+lbs343A+fwpW5A4EC6VRypCImVCOQZTJaiG0Ac
-        kfqIJ+eDYyXieHnWdVqVclGVnkwz3WAHzpf6irM9ZqMlRII8jb5K06m06t+Uhwv9csCJr5bA
-        5Mr+rrPfAibnYyoPSqMqmn7zTWM8Kj6iQjY3UGz2Or8cEz3rNbbq3zF4uNi5nf8xLpgfwUhz
-        GpHqZ+nm8SXBlfCwCQQmlSpRjwDnwpEz5gZVFGLXLKjLnCfQn44vvvv6EU9dmj1ztSx1buV+
-        79OJt3jkudOyxiHTGymfSZSHHkBUjPwvmYcCGS0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDLMWRmVeSWpSXmKPExsVy+t/xe7rrqg1jDbZfELHYOGM9q8Wxtifs
-        Fs2L17NZLP17j9Hi/PkN7BaXd81hs5hxfh+TxaJlrcwW6zbeYrdYe+QuUN2mKawO3B47Z91l
-        91i85yWTx6ZVnWwe++euYffo27KK0WPDln8sHp83yQWwR+nZFOWXlqQqZOQXl9gqRRtaGOkZ
-        WlroGZlY6hkam8daGZkq6dvZpKTmZJalFunbJehlzFzSy1qwgKvi26ImtgbGUxxdjJwcEgIm
-        EtfXzWPtYuTiEBJYyihxaN9hFoiEjMTJaQ2sELawxJ9rXWwQRZ8YJbpudDCCJNgEDCW63oIk
-        ODlEBJwkOteeBitiFmhllujecYMZJCEs4C5xa9pBsEksAqoS+y9OYwKxeQVsJP6sXswOsUFe
-        YvWGA2D1nAK2EhMaboHFhYBq1j46xziBkW8BI8MqRpHU0uLc9NxiQ73ixNzi0rx0veT83E2M
-        wJDfduzn5h2MlzYGH2IU4GBU4uENyDWIFWJNLCuuzD3EKMHBrCTCe/ulfqwQb0piZVVqUX58
-        UWlOavEhRlOgoyYyS4km5wPjMa8k3tDU0NzC0tDc2NzYzEJJnLdD4GCMkEB6YklqdmpqQWoR
-        TB8TB6dUA2P/Oz0ZnbWNF76+OeYW8eGCmeLeQBuhezwh/txHxZ//e2N9VT3JLa/8wX1O7s0h
-        J9PfBk9oW1l5ImtVt+W5v+ybbz++xa6z/rT8IhfhJzzy3gdmfBDSvjhRp6VxDldZnOMTkb0S
-        Fn3eku8VDU+Hq9l69HBkf+Pdb78jP7v75SbnuHuLLVd91lJiKc5INNRiLipOBAA7sX+QjwIA
-        AA==
-X-CMS-MailID: 20190719081334eucas1p1fd614e56c1ec0dfa654d0bb77f17ba5d
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsWy7djP87qCvYaxBlP+ilhsnLGe1eLC0x42
+        i/PnN7BbXN41h81ixvl9TBaLlrUyW6w9cpfdgd1j06pONo++LasYPY7f2M7k8XmTXABLFJdN
+        SmpOZllqkb5dAlfGpfO/GQt2clQ8u/mdrYFxBXsXIyeHhICJxOJdPaxdjFwcQgIrGCXmfjnN
+        COF8YZToW30fyvnMKPF+52W4lrXdm9kgEssZJW6unMsM1/Jm6gZGkCo2AUOJrrddbCC2iICD
+        xJKld8A6mAWuMUo8b3zFBJIQFgiWuP/zJFgRi4CqRFPvL6AVHBy8ArYSW7r8IbbJS6zecABs
+        gYTAGTaJ3r+noc5wkbh2cBcbhC0s8er4Fqi4jMTpyT0sEA3NjBIPz61lh3B6GCUuN81ghKiy
+        ljh8/CIryDZmAU2J9bv0IcKOEq1tN8HCEgJ8EjfeCoKEmYHMSdumM0OEeSU62oQgqtUkZh1f
+        B7f24IVLzBC2h8SPlmlgLwoJxEoc3b6KfQKj3CyEXQsYGVcxiqeWFuempxYb56WW6xUn5haX
+        5qXrJefnbmIEJoHT/45/3cG470/SIUYBDkYlHt6AXINYIdbEsuLK3EOMEhzMSiK8t1/qxwrx
+        piRWVqUW5ccXleakFh9ilOZgURLnrWZ4EC0kkJ5YkpqdmlqQWgSTZeLglGpgvCOuuavS+tLj
+        NP/mSK2Ti474X3d8rfjo0udMkYe9U2oZWMw1vwmsW/FD4W9j21YZN5Yb9x+0lqYUn/nFfOTF
+        AcXK+duqxOMlD1yz5rj4qnv9hq6ZK0U4Vr7QmH7mc+/ztsr2K1YHrl16ZpAtrbH7n5Xp6Y12
+        kfwqU290eYSbBy+7ec9278q4ZiWW4oxEQy3mouJEAKPKhdj+AgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrALMWRmVeSWpSXmKPExsVy+t/xe7oCvYaxBk9/yFhsnLGe1eLC0x42
+        i/PnN7BbXN41h81ixvl9TBaLlrUyW6w9cpfdgd1j06pONo++LasYPY7f2M7k8XmTXABLlJ5N
+        UX5pSapCRn5xia1StKGFkZ6hpYWekYmlnqGxeayVkamSvp1NSmpOZllqkb5dgl7GpfO/GQt2
+        clQ8u/mdrYFxBXsXIyeHhICJxNruzWxdjFwcQgJLGSW27D3FCJGQkTg5rYEVwhaW+HOtC6ro
+        E6PE9hXfwRJsAoYSXW9BEpwcIgJOEp1rT4MVMQvcYpT4PP8cM0hCWCBQ4uqXuywgNouAqkRT
+        7y+g1RwcvAK2Elu6/CEWyEus3nCAeQIjzwJGhlWMIqmlxbnpucVGesWJucWleel6yfm5mxiB
+        obft2M8tOxi73gUfYhTgYFTi4Q3INYgVYk0sK67MPcQowcGsJMJ7+6V+rBBvSmJlVWpRfnxR
+        aU5q8SFGU6DdE5mlRJPzgXGRVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7NbUgtQim
+        j4mDU6qBcVakvUfebN0Dckcdl77b9/qk4xLLKLH79kmpXMaVGm7x3RV3dhbnpXV9OG2j/Cfc
+        Ittge0hs0ByRTwv8PFhL/XVWPTSfFXSTS/+5+yq1lBdF99VsmH6kXXQJvH/tw/z/LUbhR//4
+        TdP+K1nfG9OVeP1faVXnq0XzJgnyb93ie1HJrcVQzTNXiaU4I9FQi7moOBEAdHBeY1MCAAA=
+X-CMS-MailID: 20190719092744eucas1p24f1b497e46cf66ac3ae8c717b626a5d4
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190719081334eucas1p1fd614e56c1ec0dfa654d0bb77f17ba5d
+X-RootMTR: 20190719092744eucas1p24f1b497e46cf66ac3ae8c717b626a5d4
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190719081334eucas1p1fd614e56c1ec0dfa654d0bb77f17ba5d
-References: <20190719081212.9249-1-m.szyprowski@samsung.com>
-        <CGME20190719081334eucas1p1fd614e56c1ec0dfa654d0bb77f17ba5d@eucas1p1.samsung.com>
+X-CMS-RootMailID: 20190719092744eucas1p24f1b497e46cf66ac3ae8c717b626a5d4
+References: <CGME20190719092744eucas1p24f1b497e46cf66ac3ae8c717b626a5d4@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Calls to USB2 generic PHY calibrate() method has been moved to HCD core,
-which now successfully handles generic PHYs and their calibration after
-every HCD reset. This fixes all the timing issues related to PHY
-calibration done directly from DWC3 driver: incorrect operation after
-system suspend/resume or USB3.0 detection failure when XHCI-plat driver
-compiled as separate module.
+PHY calibration is needed only for USB2.0 (UTMI) PHY, so skip calling
+calibration code when phy_calibrate() is called for USB3.0 (PIPE3) PHY.
 
+Fixes: d8c80bb3b55b ("phy: exynos5-usbdrd: Calibrate LOS levels for exynos5420/5800")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
- drivers/usb/dwc3/core.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/phy/samsung/phy-exynos5-usbdrd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index c9bb93a2c81e..7dd6d419254d 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -168,7 +168,6 @@ static void __dwc3_set_mode(struct work_struct *work)
- 				otg_set_vbus(dwc->usb2_phy->otg, true);
- 			phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_HOST);
- 			phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_HOST);
--			phy_calibrate(dwc->usb2_generic_phy);
- 		}
- 		break;
- 	case DWC3_GCTL_PRTCAP_DEVICE:
-@@ -1166,7 +1165,6 @@ static int dwc3_core_init_mode(struct dwc3 *dwc)
- 				dev_err(dev, "failed to initialize host\n");
- 			return ret;
- 		}
--		phy_calibrate(dwc->usb2_generic_phy);
- 		break;
- 	case USB_DR_MODE_OTG:
- 		INIT_WORK(&dwc->drd_work, __dwc3_set_mode);
+diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+index 646259bee909..f07edd80d2f3 100644
+--- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
++++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+@@ -714,7 +714,9 @@ static int exynos5_usbdrd_phy_calibrate(struct phy *phy)
+ 	struct phy_usb_instance *inst = phy_get_drvdata(phy);
+ 	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
+ 
+-	return exynos5420_usbdrd_phy_calibrate(phy_drd);
++	if (inst->phy_cfg->id == EXYNOS5_DRDPHY_UTMI)
++		return exynos5420_usbdrd_phy_calibrate(phy_drd);
++	return 0;
+ }
+ 
+ static const struct phy_ops exynos5_usbdrd_phy_ops = {
 -- 
 2.17.1
 
