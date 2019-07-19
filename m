@@ -2,102 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC0766E3E7
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 12:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B4876E465
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Jul 2019 12:33:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbfGSKGA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 19 Jul 2019 06:06:00 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:39890 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfGSKGA (ORCPT
+        id S1726076AbfGSKco (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 19 Jul 2019 06:32:44 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:43095 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725853AbfGSKco (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 19 Jul 2019 06:06:00 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id x6JA5ubt031335;
-        Fri, 19 Jul 2019 05:05:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1563530756;
-        bh=kEvJafuT1mgVbVr5vHN42Lk/YX5x6Xiii0b77v5ee/M=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=h2ZRrvKub8w1lRclaH1XGeYI9et46t8uhXdTmcqPzYSwd6/I3wcpVc0YY1YNCYDmL
-         NBS5iKvrV9p0iuw/30ExYNkaY/SxlfIiceAeUG1utTmQHJcP3PwYgMfNnrkjfF74C/
-         YUikXxhCOljROFaSjLWqyolVLMJlZA+w1Kicecbw=
-Received: from DFLE115.ent.ti.com (dfle115.ent.ti.com [10.64.6.36])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id x6JA5uou020375
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 19 Jul 2019 05:05:56 -0500
-Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE115.ent.ti.com
- (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5; Fri, 19
- Jul 2019 05:05:56 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE108.ent.ti.com
- (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1713.5 via
- Frontend Transport; Fri, 19 Jul 2019 05:05:56 -0500
-Received: from [172.24.190.233] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id x6JA5sIR062705;
-        Fri, 19 Jul 2019 05:05:54 -0500
-Subject: Re: [PATCH] phy: core: document calibrate() method
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        <linux-usb@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>
-CC:     <linux-kernel@vger.kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-References: <CGME20190719095254eucas1p29c9e6c7aac20cf89b589fd2f2036c485@eucas1p2.samsung.com>
- <20190719095245.17401-1-m.szyprowski@samsung.com>
-From:   Kishon Vijay Abraham I <kishon@ti.com>
-Message-ID: <085b8093-d7bc-d960-f0d8-8776818ebab0@ti.com>
-Date:   Fri, 19 Jul 2019 15:34:14 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        Fri, 19 Jul 2019 06:32:44 -0400
+Received: by mail-pl1-f196.google.com with SMTP id 4so8454141pld.10;
+        Fri, 19 Jul 2019 03:32:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=h8qhnRgEZihilSgw7kKeGvUMgkb5ifMf+Eyiz0heXJs=;
+        b=EsYFYhi5YLM2CYVaQbmamBSUnTVMml8zoraowbCu2noJpLEblOs1149Bnhj/0mSj8y
+         w09uJ6DNfzL0wFZSLSVFs0iSvBiWKDNu2eEXXkduSOl06NoD/3q1AdVYp4BkidNYjLq+
+         wlD7597+u9ukQKpU5FNxD2x5ZjMjABkfcvza2gDWFf7k7jfvjfg0AZerDQttBrGw7oZp
+         o9clkP9OtbBSx6igyic2vp3vDwqcF9uipciVX+pe6ORBE61JAgU4KuPkeLOVhsivLCsn
+         l4HaF+Us1nVeL2l2kMMkox7OE965ZfqEpk2sSaSLH4iWMzFwKPRe11oU9eR+zrLywQLa
+         OFzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=h8qhnRgEZihilSgw7kKeGvUMgkb5ifMf+Eyiz0heXJs=;
+        b=DMd2JixK2z1Zqqja2rSfJZvK4FcOQiBznJE3miV0yQE/HKzWcmsNwm/tH7zYi2I/pa
+         W/mQgLhSuEQmU1BF75rYJrarYVR2T0+qbLdZjI1O3B+oY8y4cb+Hx0IpA8lwJOG4QRa6
+         QHwpmz30zdPWR39OGKUyTuavltJxeUa9NY76TeDFm9lwVoKF5KN/7yqiloH7aDqJ++86
+         qVqhccX1bvgj36J1d6dTErZzyoFQPCoqcACFlJwLgE6X09mgHsjCUIkHIs4yckHnRa9B
+         JtmhCyWw5/i3h7amzQS6XGnPx2aCGQZYqcIqtEv+KHs5MLPYtmPIdQP5N7ABIHVelH0O
+         wDAw==
+X-Gm-Message-State: APjAAAXLMnmlH7saggPyv5xCr4fOIOFh6l5ylMWajkj2z8/iKdfLgpv+
+        cU/2UmQMb31iB+tWgu5noEY=
+X-Google-Smtp-Source: APXvYqwM5uX2Z3lxpUb1PgpPaYg4UrhdWy602Z/sInoOWoP2qM3MQBWuz62fdEs69wpXsM/tmvWoqQ==
+X-Received: by 2002:a17:902:20c8:: with SMTP id v8mr56385548plg.284.1563532363495;
+        Fri, 19 Jul 2019 03:32:43 -0700 (PDT)
+Received: from suzukaze.ipads-lab.se.sjtu.edu.cn ([89.31.126.54])
+        by smtp.gmail.com with ESMTPSA id i15sm34029444pfd.160.2019.07.19.03.32.39
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 19 Jul 2019 03:32:42 -0700 (PDT)
+From:   Chuhong Yuan <hslester96@gmail.com>
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Chuhong Yuan <hslester96@gmail.com>
+Subject: [PATCH] drm/exynos: Use dev_get_drv_data
+Date:   Fri, 19 Jul 2019 18:31:09 +0800
+Message-Id: <20190719103108.19998-1-hslester96@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20190719095245.17401-1-m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek,
+dev_get_drvdata is a simpler implementation comparing
+to to_platform_device + platform_get_drvdata.
+This makes the code simpler.
 
-On 19/07/19 3:22 PM, Marek Szyprowski wrote:
-> Commit 36914111e682 ("drivers: phy: add calibrate method") added support
-> for generic phy_calibrate() method, but it didn't explain in detail when
-> such method is supposed to be called. Add some more documentation directly
-> to the phy.h to make it clean that it is intended to be called after every
-> host controller reset.
-> 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  include/linux/phy/phy.h | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-> index 15032f145063..46775e8b0ed9 100644
-> --- a/include/linux/phy/phy.h
-> +++ b/include/linux/phy/phy.h
-> @@ -101,6 +101,18 @@ struct phy_ops {
->  	int	(*validate)(struct phy *phy, enum phy_mode mode, int submode,
->  			    union phy_configure_opts *opts);
->  	int	(*reset)(struct phy *phy);
-> +
-> +	/**
-> +	 * @calibrate:
-> +	 *
-> +	 * Optional.
-> +	 *
-> +	 * Used to calibrate phy, typically by adjusting some parameters
-> +	 * in runtime, which are otherwise lost after host controller
-> +	 * reset and cannot be set in phy_init() and phy_power_on().
-> +	 *
-> +	 * Returns: 0 if successful, an negative error code otherwise
-> +	 */
->  	int	(*calibrate)(struct phy *phy);
 
-This should be added in drivers/phy/phy-core.c before phy_calibrate()? We could
-add a separate section in Documentation/phy.txt to document these phy_ops.
+Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
+---
+ drivers/gpu/drm/exynos/exynos_drm_fimc.c | 2 +-
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks
-Kishon
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+index a594ab7be2c0..164d914cbe9a 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+@@ -44,7 +44,7 @@ static unsigned int fimc_mask = 0xc;
+ module_param_named(fimc_devs, fimc_mask, uint, 0644);
+ MODULE_PARM_DESC(fimc_devs, "Alias mask for assigning FIMC devices to Exynos DRM");
+ 
+-#define get_fimc_context(dev)	platform_get_drvdata(to_platform_device(dev))
++#define get_fimc_context(dev)	dev_get_drvdata(dev)
+ 
+ enum {
+ 	FIMC_CLK_LCLK,
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+index 1e4b21c49a06..1c524db9570f 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+@@ -58,7 +58,7 @@
+ #define GSC_COEF_DEPTH	3
+ #define GSC_AUTOSUSPEND_DELAY		2000
+ 
+-#define get_gsc_context(dev)	platform_get_drvdata(to_platform_device(dev))
++#define get_gsc_context(dev)	dev_get_drvdata(dev)
+ #define gsc_read(offset)		readl(ctx->regs + (offset))
+ #define gsc_write(cfg, offset)	writel(cfg, ctx->regs + (offset))
+ 
+-- 
+2.20.1
+
