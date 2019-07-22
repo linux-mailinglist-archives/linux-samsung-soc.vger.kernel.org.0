@@ -2,143 +2,140 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A44F6FE0D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Jul 2019 12:47:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2711C70156
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Jul 2019 15:43:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728562AbfGVKrH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 Jul 2019 06:47:07 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:36397 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728424AbfGVKrG (ORCPT
+        id S1730031AbfGVNm3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 Jul 2019 09:42:29 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:35629 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730028AbfGVNm2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 Jul 2019 06:47:06 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190722104704euoutp028b7ce0c9c5fc0d9e695c8c442759e798~ztOzVMXz32936129361euoutp023
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 10:47:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190722104704euoutp028b7ce0c9c5fc0d9e695c8c442759e798~ztOzVMXz32936129361euoutp023
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563792424;
-        bh=SU/b9A0zsnNhPkaLQo5sGUXkfyHQlTM+GWVxLlhikNU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=R3LqS7NN1841cneVf+Eeq+NokM14T+0kmmzgTnw7z8DurcfRcGDWKcIeN1BLR7Znu
-         kF0aYIhxz+zV52YNv8lh373BBDhR3z91B1hJBe6zypoFaRefG5ZiRysJqsW2sXfS2N
-         mmfZZ+lCRze3dl1M6FqLb9F18iwGyxmA8w222uMc=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190722104703eucas1p1ca3ad44bf079e57560ed4abd64f1a90f~ztOyeqIGz1733317333eucas1p1C;
-        Mon, 22 Jul 2019 10:47:03 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 2E.38.04325.724953D5; Mon, 22
-        Jul 2019 11:47:03 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190722104703eucas1p2c5bdf87985b37b8e0ffdb3ffb5aae4de~ztOxtRcAh3223832238eucas1p2s;
-        Mon, 22 Jul 2019 10:47:03 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190722104702eusmtrp20dfdf63b5472e0e4ca7c4ca6353dafc3~ztOxe-CuS2917129171eusmtrp2Y;
-        Mon, 22 Jul 2019 10:47:02 +0000 (GMT)
-X-AuditID: cbfec7f5-b75ff700000010e5-48-5d3594273b62
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 61.D9.04146.624953D5; Mon, 22
-        Jul 2019 11:47:02 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190722104702eusmtip1609c60234108be50719c9071fe202060~ztOwxnrdM1710317103eusmtip1Q;
-        Mon, 22 Jul 2019 10:47:02 +0000 (GMT)
-Subject: Re: [PATCH v1 21/50] ARM: dts: exynos: add OPP into FSYS APB bus in
- Exynos5420
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-clk@vger.kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com, Andrzej Hajda <a.hajda@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <7b662b86-f442-3de8-e357-88bf9eaffd5a@partner.samsung.com>
-Date:   Mon, 22 Jul 2019 12:47:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.1
+        Mon, 22 Jul 2019 09:42:28 -0400
+Received: by mail-vs1-f66.google.com with SMTP id u124so26117597vsu.2
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 06:42:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qoQdDffqX8NBzaTkQfhvAHhztASiaANiufyf578HpGA=;
+        b=hlf36gHZhD/tS5G06dvQKalHNMkuU0cPoYxvqMowCMiM9+5PuvZs+04mLOqMz2VeuW
+         U8dAGoQv9k54c85MyxcwsDF2A+inBvqw62id8DJVpiPw7bvZbXA/njP/C0RrYsZMy3tG
+         wpjnT74c3n53mUIeMtdr+TaEKIMxUwRK6caFdudW0oLatFOWjv7hKp5H2M2hUTQi+BwB
+         ESp1bk+Fpi1F+8T/ue3qVOEWi4Oyjp7xADz8+qOfUpHdXJNxyfNoDoE/2S/6G4j2pOZ4
+         idBpfMzjfaoP3PkIyenxLmYvTqcyTF1J3Pool3TykdtIKk1c0OWr8xEPfoWWYVvviyqa
+         NPJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qoQdDffqX8NBzaTkQfhvAHhztASiaANiufyf578HpGA=;
+        b=mdGuG7PVSu8ukLByClf/NpQHPOwkvZSPZkhDPWrTtIK3xr7s9lET+XsewuVdlXeEBf
+         dEdhhG3u6lskj8nBUYGPUYMfBYr8nt487GhWcqpaicR55oaPkxzwKCYkSCnobLQklinB
+         oH7X/ixi5o3qlZBy6qEHYnDIwDRLWP8/+UjzOMOiCiQ3x0lxYUh3uS8Lcc9yxFnR4VgT
+         9hwydvDUbo2rjO2Wko2UEFbjEg2dar0epikrRMEaWwtbGde3qt2ngTW6AeWwrtyW4TkE
+         t6unVJlGxyD5sphAdvaknWpk7svyrKjQvVbce8IOf1fbuIU3z6rTRkBd3FM/+ZLxY3YD
+         OKQA==
+X-Gm-Message-State: APjAAAXT7zYFf5xL3fRvN/0ujeWMs/P8qII2Qz8k7Mxs28P/dQZZoKg/
+        p5+Fdyf8Lo6Tvp+hbvqlBWbq10hOKKW8N1yyEfXO9Q==
+X-Google-Smtp-Source: APXvYqxbn8CFIXmBHNgvuCDDcp2KcviU5e69X/Dns7ukIv9wF0j92U/Jl2H0QImdSFYkQRQTfAnh2+VcAVwgZp1J98Y=
+X-Received: by 2002:a67:7a90:: with SMTP id v138mr41898336vsc.200.1563802947659;
+ Mon, 22 Jul 2019 06:42:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPd0kzwZ9_eCK9r04Qj0Rf5SSSnMmwDj11cZozmu0gqsgw@mail.gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0hTYRzt233s+ljdLdMfFQWDHhY+IoNPiqioGARRUKHJqKUXXc1pu85H
-        VpqQqVmaWpnY00yxZbnUTNBiSpJhpuIjc1pNKM1V4soEtbzeSf53zu93ft85Bz6GUAxSSxmt
-        PoYz6DU6Je1KVr+aeOuzJm+T2r/o5XrcW/6WwhX5jync7fhC4duNMzTL9o3Ara1PpLglZUSK
-        zbYuCo9m9lO4o7aQxvmt9RL8qNEqxcXdbRLc1rwLfzhXSuPzdY1S3DBygcLTXRXkNoXKdMuE
-        VD96zktV5rJ0WvX0fpLqcmUZUo2ZV+yjD7tuCeN02ljO4Lf1qGuEKbdZEj0hje+7+pBORsV0
-        BnJhgA2AovQWlIFcGQVbiuDFz3JaJA4EKeUlTjKGYKKlk5w7qSp3SMRFCYLpN8NOYkdgdTRL
-        BNViNhiyL1qRgD1Yb+ieGqcEEcF2kvBnYHzmKYahWV+oKTspaGTsbjC3WykBk+wqsPfZZ/ES
-        Ngg6KmuRqJHD6xuDsylc2P1QPfSZEDDBekHv4G2JiFfCM3shIXgBm85AxdBHJMbeCV8nzc4K
-        i2G4qVIq4uXw97l4DCwPyZfuOvWnwZZ106nZDA1NbZSQmZgp87jWTxxvh56Bh7QwBnYh9Njl
-        YoSFkFN9nRDHMkhLVYjqtVCZ+c5p5AklpmvSbKQsmFesYF6ZgnllCv773kFkGfLijHxkOMdv
-        1HNxvrwmkjfqw31DoyLNaObvvZlu+lWD6iePWRDLIKW7zL86QK2gNLF8QqQFAUMoPWR6/01q
-        hSxMk3CKM0QdMRh1HG9ByxhS6SVLXPAxRMGGa2K4ExwXzRnmthLGZWky4ke/f+otytqs2xPs
-        OOEdWLiaTv+9IyS+zjQ28mB94klLtA99MHVt62vtWWJRilxttOpIz+fFB0KvRE+3ZCV1B9kc
-        yfdj1d+D+q/ZpmT5U0ZLoPu9vXmJ8jP5uavupg1PjYT6nfEI/UGWwCE3v6M9cadyJqveo3a3
-        iODj9/bGyLVKko/QbFhHGHjNP53fZkJ3AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsVy+t/xu7pqU0xjDT7ONre4te4cq8XGGetZ
-        La5/ec5qMf8IkNv/+DWzxfnzG9gtzja9YbfY9Pgaq8XHnnusFpd3zWGzmHF+H5PF2iN32S2W
-        Xr/IZHHxlKvF7cYVbBate4+wWxx+085q8e/aRhYHIY8189Ywery/0crusWlVJ5vH5iX1Hn1b
-        VjF6fN4kF8AWpWdTlF9akqqQkV9cYqsUbWhhpGdoaaFnZGKpZ2hsHmtlZKqkb2eTkpqTWZZa
-        pG+XoJexZvIppoKf7BV3pq5ma2BcytbFyMkhIWAisXXdF6YuRi4OIYGljBKL51xkhEiISUza
-        t50dwhaW+HOtiw2i6DWjxNm2J2AJYYFIiQndd8EaRAQ0Ja7//c4KUsQscJVFYsqrjewQHf1M
-        Er2L3gC1c3CwCehJ7FhVCNLAK+AmsenSXVYQm0VAVeLtnbdgtqhAhERf22w2iBpBiZMzn7CA
-        2JwCgRLbXj5iBrGZBcwk5m1+CGWLS9x6Mp8JwpaX2P52DvMERqFZSNpnIWmZhaRlFpKWBYws
-        qxhFUkuLc9Nziw31ihNzi0vz0vWS83M3MQJjfduxn5t3MF7aGHyIUYCDUYmH12CbSawQa2JZ
-        cWXuIUYJDmYlEd48A9NYId6UxMqq1KL8+KLSnNTiQ4ymQM9NZJYSTc4HpqG8knhDU0NzC0tD
-        c2NzYzMLJXHeDoGDMUIC6YklqdmpqQWpRTB9TBycUg2MotJz7a903I+4yl495wTTKcmiyfUP
-        lsxszbxmKRRu/NveKuub/7k1ul/WbFo6p2dx25rDDe713ge987hb5d/oJrNW7/+iZ1Z14EHX
-        u32nU456txXdsjHXfFsxyVIm3lTnlG9blIZVse5Gqbr5Iaqcuz/Jit+etoz10qW7u8NOnz/I
-        9+DXgc3aSizFGYmGWsxFxYkAD4ZHwgsDAAA=
-X-CMS-MailID: 20190722104703eucas1p2c5bdf87985b37b8e0ffdb3ffb5aae4de
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190715124451eucas1p2904b49f59cca0cbbc22381f168affbb5
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190715124451eucas1p2904b49f59cca0cbbc22381f168affbb5
-References: <CGME20190715124451eucas1p2904b49f59cca0cbbc22381f168affbb5@eucas1p2.samsung.com>
-        <20190715124417.4787-1-l.luba@partner.samsung.com>
-        <20190715124417.4787-22-l.luba@partner.samsung.com>
-        <CAJKOXPd0kzwZ9_eCK9r04Qj0Rf5SSSnMmwDj11cZozmu0gqsgw@mail.gmail.com>
+References: <20190708195613.205729-1-dianders@chromium.org>
+In-Reply-To: <20190708195613.205729-1-dianders@chromium.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 22 Jul 2019 15:41:51 +0200
+Message-ID: <CAPDyKFqcbFZWiMc3zLFP7cvkNG0hMB91rfy6T=dbrFks9EWMsQ@mail.gmail.com>
+Subject: Re: [PATCH] mmc: dw_mmc: Fix occasional hang after tuning on eMMC
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Jaehoon Chung <jh80.chung@samsung.com>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
+        Brian Norris <briannorris@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Alim Akhtar <alim.akhtar@gmail.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+On Mon, 8 Jul 2019 at 21:56, Douglas Anderson <dianders@chromium.org> wrote:
+>
+> In commit 46d179525a1f ("mmc: dw_mmc: Wait for data transfer after
+> response errors.") we fixed a tuning-induced hang that I saw when
+> stress testing tuning on certain SD cards.  I won't re-hash that whole
+> commit, but the summary is that as a normal part of tuning you need to
+> deal with transfer errors and there were cases where these transfer
+> errors was putting my system into a bad state causing all future
+> transfers to fail.  That commit fixed handling of the transfer errors
+> for me.
+>
+> In downstream Chrome OS my fix landed and had the same behavior for
+> all SD/MMC commands.  However, it looks like when the commit landed
+> upstream we limited it to only SD tuning commands.  Presumably this
+> was to try to get around problems that Alim Akhtar reported on exynos
+> [1].
+>
+> Unfortunately while stress testing reboots (and suspend/resume) on
+> some rk3288-based Chromebooks I found the same problem on the eMMC on
+> some of my Chromebooks (the ones with Hynix eMMC).  Since the eMMC
+> tuning command is different (MMC_SEND_TUNING_BLOCK_HS200
+> vs. MMC_SEND_TUNING_BLOCK) we were basically getting back into the
+> same situation.
+>
+> I'm hoping that whatever problems exynos was having in the past are
+> somehow magically fixed now and we can make the behavior the same for
+> all commands.
+>
+> [1] https://lkml.kernel.org/r/CAGOxZ53WfNbaMe0_AM0qBqU47kAfgmPBVZC8K8Y-_J3mDMqW4A@mail.gmail.com
+>
+> Fixes: 46d179525a1f ("mmc: dw_mmc: Wait for data transfer after response errors.")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> Cc: Alim Akhtar <alim.akhtar@gmail.com>
+> Cc: Enric Balletbo i Serra <enric.balletbo@collabora.com>
 
-On 7/17/19 10:48 AM, Krzysztof Kozlowski wrote:
-> On Mon, 15 Jul 2019 at 14:44, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>
->> Add an OPP for FSYS APB which reflects the real possible frequency.
->> The bus will have a new parent clock which speed has 600MHz, thus
->> a new possible frequency provided by the clock divider is 150MHz.
->> According to the documentation max possible frequency for this bus is
->> 200MHz.
-> 
-> Commit msg is good but title could be improved. Focus in the title
-> what problem/issue you are solving - add intermediate step in scaling
-> of FSYS APB?
-The devfreq governor for this bus device follows the set OPP of the
-master device - WCORE bus and sets the OPP with corresponding ID.
-Thus, jumping to max frequency 200MHz when the WCORE bus and other
-devices are operating in the middle of their min-max speed is not
-needed for FSYS APB and this patch adds the intermediate speed step.
+Applied for fixes and by adding a stable tag, thanks!
 
-Regards,
-Lukasz
+Kind regards
+Uffe
 
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
+
+> ---
+> Marek (or anyone else using exynos): is it easy for you to test this
+> and check if things are still broken when we land this patch?  If so,
+> I guess we could have a quirk to have different behavior for just
+> Rockchip SoCs but I'd rather avoid that if possible.
+>
+> NOTE: I'm not hoping totally in vain here.  It is possible that some
+> of the CTO/DTO timers that landed could be the magic that would get
+> exynos unstuck.
+>
+>  drivers/mmc/host/dw_mmc.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+> index b53b6b7d4dd4..60c3a06e3469 100644
+> --- a/drivers/mmc/host/dw_mmc.c
+> +++ b/drivers/mmc/host/dw_mmc.c
+> @@ -2034,8 +2034,7 @@ static void dw_mci_tasklet_func(unsigned long priv)
+>                                  * delayed. Allowing the transfer to take place
+>                                  * avoids races and keeps things simple.
+>                                  */
+> -                               if ((err != -ETIMEDOUT) &&
+> -                                   (cmd->opcode == MMC_SEND_TUNING_BLOCK)) {
+> +                               if (err != -ETIMEDOUT) {
+>                                         state = STATE_SENDING_DATA;
+>                                         continue;
+>                                 }
+> --
+> 2.22.0.410.gd8fdbe21b5-goog
+>
