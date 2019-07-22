@@ -2,129 +2,89 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C28E170756
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Jul 2019 19:32:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A9A7091B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Jul 2019 21:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726888AbfGVRck (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 Jul 2019 13:32:40 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:49821 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726553AbfGVRck (ORCPT
+        id S1725907AbfGVS7r (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 Jul 2019 14:59:47 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41975 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbfGVS7r (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 Jul 2019 13:32:40 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190722173237euoutp02e35c82038255cad81ed021a68c2bb027~zyw5OopqN1895518955euoutp02V
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 17:32:37 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190722173237euoutp02e35c82038255cad81ed021a68c2bb027~zyw5OopqN1895518955euoutp02V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1563816757;
-        bh=85hIYZIUSz2sajlTBWW2bBjChuGeN2EeF//kqgRb2D0=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=q+g/GyIiCSk+dVn1nzJwAjrNZSpMtXOg1/tllmmhS+Sl5i/AI++KYFiXiYyibiv53
-         luWvZA4BcDUY9WYWRQNXBTHEtk4I7BgIuv8ZYVZ3DOItfhounaTih+HQ7jhVHCpsQH
-         htkEQ5CuzsBAJXSbtre8VCiCrk+9cKxD3SZkFt0M=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190722173237eucas1p16e96da4835c4f0ac84c47c31cefda747~zyw4Z8IC11305913059eucas1p1v;
-        Mon, 22 Jul 2019 17:32:37 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id C8.DC.04298.433F53D5; Mon, 22
-        Jul 2019 18:32:36 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190722173236eucas1p171299dfaa34f3124622df488bfe57a89~zyw3m9yeP0714007140eucas1p1l;
-        Mon, 22 Jul 2019 17:32:36 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190722173235eusmtrp1a484cb96a4f7d585c54b0134f26c21d9~zyw3Y7q9v0411704117eusmtrp1g;
-        Mon, 22 Jul 2019 17:32:35 +0000 (GMT)
-X-AuditID: cbfec7f2-f13ff700000010ca-73-5d35f334eb5c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 54.47.04146.333F53D5; Mon, 22
-        Jul 2019 18:32:35 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190722173235eusmtip1e2c9e2516c30587a1479aaf27bb423bc~zyw3DIbIi0484004840eusmtip15;
-        Mon, 22 Jul 2019 17:32:35 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mon, 22 Jul 2019 14:59:47 -0400
+Received: by mail-pg1-f193.google.com with SMTP id x15so7757371pgg.8;
+        Mon, 22 Jul 2019 11:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kOXSDSa34NzMUxWJhg5oh1DkMb64LBwauGFB40L3Ik0=;
+        b=WKdHoRuMoCZHlpdYo2hUSZmoejAPrpJT0y8zzvWqPA+gpst0zE8k6yZNXUrH6MUzj6
+         i9zXgicSjUUanQv6XgDXPhw71laxjPPQplL7oE6sYEg5VG8ffq4hx1gzp5Uz7zOyol3p
+         YaLJAIjaid/ZosCv+52St2290e0Zy0h1zHKzQ6m7LeqKZo5lErc85hugZaWC9aKN7zja
+         3W8NIsmdruFY3g6V+snVUm8gjqONU4JxU1j1dm1ERa7znW7boX3gflaUbM7NH9qXZCjp
+         cL1tRpcOHyEG/4EKSXBMxtgyHD5Yk8Xb/zaJW1GYpcdVYIdMtn0Ii8uhqJ9fjzhUWSLs
+         v5MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kOXSDSa34NzMUxWJhg5oh1DkMb64LBwauGFB40L3Ik0=;
+        b=WjV3VQfVQKLsdGDv7iEi9F8UMiUxkKNxuCRqFdLLmpAEFYm22uw/VeuhYFdrOK3iym
+         pAajKKcpEs3wpTyPhAsOu3S5gywoNHLOrs0LjhP0XSK/2lIZCgnC22YhpESBmUXskPV5
+         Xh0N9SnXydU7OOFZ7La5FrWqKVmEwmYWIP3yeaN4662nbv6I6dU9iThnMQ+wHQ6n9C5m
+         0ZPIlMrmPwmsCHoy/HSlcNQTeoYwOiTaUCmKTt6Orm1yJ88CztyAKebWf4Gug6T0abzm
+         O/fMg6USCSIWFKDEu3OJB9Oeaf0V2S4lWcT7z6VyLJI9zImEihw2Xpo3xXKn+5vEEZWH
+         89mw==
+X-Gm-Message-State: APjAAAWE3vZFm06oqeX2GsfUbDaiFxchwTe8/ZUHJpjBamnzy7y0vcXY
+        F5RI33k30APCvRP3JnG9EykUhcNY/zI=
+X-Google-Smtp-Source: APXvYqyhJmepX+Lgi3nmnuyfE7HPnX9Li95Ydpzq8d36xy2ABvZZpaIW4EMvgC41Uk59xg7pnqfydg==
+X-Received: by 2002:a17:90a:c588:: with SMTP id l8mr77270706pjt.16.1563821986436;
+        Mon, 22 Jul 2019 11:59:46 -0700 (PDT)
+Received: from localhost.localdomain ([103.51.73.174])
+        by smtp.gmail.com with ESMTPSA id h1sm30777675pgv.93.2019.07.22.11.59.43
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 22 Jul 2019 11:59:45 -0700 (PDT)
+From:   Anand Moon <linux.amoon@gmail.com>
+To:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Anand Moon <linux.amoon@gmail.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH v2] phy: core: document phy_calibrate()
-Date:   Mon, 22 Jul 2019 19:32:23 +0200
-Message-Id: <20190722173223.19518-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsWy7djPc7omn01jDQ4tNbDYOGM9q8WFpz1s
-        Fpd3zWGzmHF+H5PFomWtzBZrj9xld2Dz6NuyitHj+I3tTB6fN8kFMEdx2aSk5mSWpRbp2yVw
-        ZUy7OYelYBNnxZy7s1gbGG+xdzFyckgImEhM3nmRtYuRi0NIYAWjxK65z1kgnC+MEp8X3oPK
-        fGaUWPhxGStMy/nOzUwQieWMEhMbTyO0bNiwlwmkik3AUKLrbRcbiC0i4CCxZOkdNpAiZoH1
-        jBIrF38H2y4sYC4x4e9RMJtFQFWi988LRhCbV8BWYuW7WUwQ6+QlVm84wAzSLCGwh03i28of
-        UHe4SExo+gVVJCzx6vgWqJdkJE5P7mGBaGhmlHh4bi07hNPDKHG5aQYjRJW1xOHjII9zAN2k
-        KbF+lz5E2FFiTdt+dpCwhACfxI23giBhZiBz0rbpzBBhXomONiGIajWJWcfXwa09eOESVImH
-        RPNcdZCwkECsRM+T5ywTGOVmIaxawMi4ilE8tbQ4Nz212DAvtVyvODG3uDQvXS85P3cTIzDi
-        T/87/mkH49dLSYcYBTgYlXh4N+wxjRViTSwrrsw9xCjBwawkwptnABTiTUmsrEotyo8vKs1J
-        LT7EKM3BoiTOW83wIFpIID2xJDU7NbUgtQgmy8TBKdXAmNtpXhiw2+D63eMyIXE5zhFOpYx/
-        Q5UUxW2i3N9GdbPPcPoWvu/r7gQ1o0tnH88/VfDX5vhGPgV11W9P8316WPwlmy+dkp8uH29w
-        OyN9daS5pAz/qbhprz0FpzwNrv8c/OaLQKFfM0PaIXmjhRLnrpff90ncdksvj3lRiopol+Xs
-        a0Elc/SVWIozEg21mIuKEwEGbCqh9AIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOLMWRmVeSWpSXmKPExsVy+t/xu7rGn01jDXY/NLfYOGM9q8WFpz1s
-        Fpd3zWGzmHF+H5PFomWtzBZrj9xld2Dz6NuyitHj+I3tTB6fN8kFMEfp2RTll5akKmTkF5fY
-        KkUbWhjpGVpa6BmZWOoZGpvHWhmZKunb2aSk5mSWpRbp2yXoZUy7OYelYBNnxZy7s1gbGG+x
-        dzFyckgImEic79zM1MXIxSEksJRRYvKZs2wQCRmJk9MaWCFsYYk/17rYIIo+MUrM3/YOLMEm
-        YCjR9bYLrEFEwEmic+1psCJmgY2MEk93XmUESQgLmEtM+HsUbB2LgKpE758XYHFeAVuJle9m
-        MUFskJdYveEA8wRGngWMDKsYRVJLi3PTc4sN9YoTc4tL89L1kvNzNzECA23bsZ+bdzBe2hh8
-        iFGAg1GJh3fDHtNYIdbEsuLK3EOMEhzMSiK8eQZAId6UxMqq1KL8+KLSnNTiQ4ymQMsnMkuJ
-        JucDoyCvJN7Q1NDcwtLQ3Njc2MxCSZy3Q+BgjJBAemJJanZqakFqEUwfEwenVAMj08RpOdnM
-        ht8Vs7mXrcucurDo/P0cbiFzr6kMs94stvv22k3t3KJdR+bum3HlbM6cvKJ1QcY8P840f4rI
-        X1t06p707F1SjqfrZZWVH71LfpqxNyPQsmzOEWcbWZNvsam9yrqvq1b3L9vY5BaRLiQ8bS67
-        8pQV/e8+Rr7Z8zb4MYOdgm2PvMIlJZbijERDLeai4kQA5ftaukoCAAA=
-X-CMS-MailID: 20190722173236eucas1p171299dfaa34f3124622df488bfe57a89
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190722173236eucas1p171299dfaa34f3124622df488bfe57a89
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190722173236eucas1p171299dfaa34f3124622df488bfe57a89
-References: <CGME20190722173236eucas1p171299dfaa34f3124622df488bfe57a89@eucas1p1.samsung.com>
+Subject: [RFC/RFT 0/5] Exynos USB 3.0 PHY tune setting
+Date:   Tue, 23 Jul 2019 00:29:33 +0530
+Message-Id: <20190722185938.9043-1-linux.amoon@gmail.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Commit 36914111e682 ("drivers: phy: add calibrate method") added support
-for generic phy_calibrate() method, but it didn't explain in detail when
-such method is supposed to be called. Add some more documentation directly
-to the phy.h to make it clean that it is intended to be called after every
-host controller reset.
+Dear All,
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- drivers/phy/phy-core.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Here are some patches which help tune USB 3.0 phy.
+changes have been testing on Odroid XU3 / XU4 / HC1.
+with suspend and resume working with usb hdd device connected.
 
-diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-index e3880c4a15f2..b04f4fe85ac2 100644
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -394,6 +394,16 @@ int phy_reset(struct phy *phy)
- }
- EXPORT_SYMBOL_GPL(phy_reset);
- 
-+/**
-+ * phy_calibrate() - Tunes the phy hw parameters for current configuration
-+ * @phy: the phy returned by phy_get()
-+ *
-+ * Used to calibrate phy hardware, typically by adjusting some parameters in
-+ * runtime, which are otherwise lost after host controller reset and cannot
-+ * be applied in phy_init() or phy_power_on().
-+ *
-+ * Returns: 0 if successful, an negative error code otherwise
-+ */
- int phy_calibrate(struct phy *phy)
- {
- 	int ret;
+These patches have been build on top on Marek Szyprowski
+Fix USB3.0 DRD PHY calibration issues.
+
+[0] https://patchwork.kernel.org/cover/11049823/
+
+Anand Moon (5):
+  phy: exynos5-usbdrd: read from correct offset of xhci linksystem
+  phy: exynos5-usbdrd: add missing tuning of the phyutmi signal
+  phy: exynos5-usbdrd: UTMI tune signal
+  phy: exynos5-usbdrd: PIPE3 tune signal
+  phy: exynos5-usbdrd: drop duplicate setting PIPE3 tune signal
+
+ drivers/phy/samsung/phy-exynos5-usbdrd.c | 101 ++++++++++++++++++-----
+ 1 file changed, 82 insertions(+), 19 deletions(-)
+
 -- 
-2.17.1
+2.22.0
 
