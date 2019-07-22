@@ -2,71 +2,76 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C0D70ADB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Jul 2019 22:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1520570C98
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 00:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729731AbfGVUu6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 Jul 2019 16:50:58 -0400
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:44667 "EHLO
-        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727164AbfGVUu6 (ORCPT
+        id S1733162AbfGVWah (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 Jul 2019 18:30:37 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:59625 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727391AbfGVWah (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 Jul 2019 16:50:58 -0400
-X-Originating-IP: 90.65.161.137
-Received: from localhost (lfbn-1-1545-137.w90-65.abo.wanadoo.fr [90.65.161.137])
-        (Authenticated sender: alexandre.belloni@bootlin.com)
-        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 2D5EA1BF20A;
-        Mon, 22 Jul 2019 20:50:56 +0000 (UTC)
-Date:   Mon, 22 Jul 2019 22:50:55 +0200
-From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
-To:     Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc:     linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 0/4] rtc: convert subsystem to i2c_new_dummy_device()
-Message-ID: <20190722205055.GE24911@piout.net>
-References: <20190722172618.4061-1-wsa+renesas@sang-engineering.com>
+        Mon, 22 Jul 2019 18:30:37 -0400
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+        (Exim 4.76)
+        (envelope-from <colin.king@canonical.com>)
+        id 1hpgkR-00024f-KX; Mon, 22 Jul 2019 22:25:35 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/exynos: fix missing decrement of retry counter
+Date:   Mon, 22 Jul 2019 23:25:35 +0100
+Message-Id: <20190722222535.19114-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190722172618.4061-1-wsa+renesas@sang-engineering.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 22/07/2019 19:26:14+0200, Wolfram Sang wrote:
-> This series is part of a tree-wide movement to replace the I2C API call
-> 'i2c_new_dummy' which returns NULL with its new counterpart returning an
-> ERRPTR.
-> 
-> The series was generated with coccinelle (audited afterwards, of course) and
-> build tested by me and by buildbot. No tests on HW have been performed.
-> 
-> The branch is based on v5.3-rc1. A branch (with some more stuff included) can
-> be found here:
-> 
-> git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git renesas/i2c/new_dummy
-> 
-> Some drivers still need to be manually converted. Patches for those will be
-> sent out individually.
-> 
-> 
-> Wolfram Sang (4):
->   rtc: isl12026: convert to i2c_new_dummy_device
->   rtc: max77686: convert to i2c_new_dummy_device
->   rtc: s35390a: convert to i2c_new_dummy_device
->   rtc: s5m: convert to i2c_new_dummy_device
-> 
->  drivers/rtc/rtc-isl12026.c | 6 +++---
->  drivers/rtc/rtc-max77686.c | 6 +++---
->  drivers/rtc/rtc-s35390a.c  | 6 +++---
->  drivers/rtc/rtc-s5m.c      | 6 +++---
->  4 files changed, 12 insertions(+), 12 deletions(-)
-> 
-All applied, thanks!
+From: Colin Ian King <colin.king@canonical.com>
 
+Currently the retry counter is not being decremented, leading to a
+potential infinite spin if the scalar_reads don't change state.
+
+Addresses-Coverity: ("Infinite loop")
+Fixes: 280e54c9f614 ("drm/exynos: scaler: Reset hardware before starting the operation")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/gpu/drm/exynos/exynos_drm_scaler.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_scaler.c b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
+index 9af096479e1c..b24ba948b725 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_scaler.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
+@@ -94,12 +94,12 @@ static inline int scaler_reset(struct scaler_context *scaler)
+ 	scaler_write(SCALER_CFG_SOFT_RESET, SCALER_CFG);
+ 	do {
+ 		cpu_relax();
+-	} while (retry > 1 &&
++	} while (--retry > 1 &&
+ 		 scaler_read(SCALER_CFG) & SCALER_CFG_SOFT_RESET);
+ 	do {
+ 		cpu_relax();
+ 		scaler_write(1, SCALER_INT_EN);
+-	} while (retry > 0 && scaler_read(SCALER_INT_EN) != 1);
++	} while (--retry > 0 && scaler_read(SCALER_INT_EN) != 1);
+ 
+ 	return retry ? 0 : -EIO;
+ }
 -- 
-Alexandre Belloni, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+2.20.1
+
