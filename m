@@ -2,109 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F6D87149E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 11:08:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D3CF717B4
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 14:06:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbfGWJH7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Jul 2019 05:07:59 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:33993 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbfGWJH7 (ORCPT
+        id S1729239AbfGWMGr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Jul 2019 08:06:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39472 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727789AbfGWMGr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Jul 2019 05:07:59 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 23 Jul 2019 08:06:47 -0400
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 89772200AE;
-        Tue, 23 Jul 2019 11:07:53 +0200 (CEST)
-Date:   Tue, 23 Jul 2019 11:07:52 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm@vger.kernel.org,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        linux-arm-kernel@lists.infradead.org,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH v4 16/23] drm/mgag200: Provide ddc symlink in connector
- sysfs directory
-Message-ID: <20190723090752.GB787@ravnborg.org>
-References: <cover.1562843413.git.andrzej.p@collabora.com>
- <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
+        by mail.kernel.org (Postfix) with ESMTPSA id 9D7942238E;
+        Tue, 23 Jul 2019 12:06:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563883606;
+        bh=DKrbsHStPDRY+4kxJ4/+/qAdj1UDVR+qwitPFb6G9XQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ts2zKnryAHCcWuV+jQCtZ1fXUaMYtk/rse8t/JdjssvTDla0eLrQ7l7Fy7A91meAb
+         4dq5/+DeF78UIQcOHR3q6qljcYC+4rwJc2IGbOzlxegYgRIX8xVXiAozEtcohEjzSQ
+         NgbJODdAIYTnBIHU6w/0RraMEYcpUUjG5MLfKfAY=
+Received: by mail-lf1-f51.google.com with SMTP id u10so29137682lfm.12;
+        Tue, 23 Jul 2019 05:06:45 -0700 (PDT)
+X-Gm-Message-State: APjAAAVbVfIZ0hJpoM11wp+xUFDO6jte7b6wvxP//so07W6yI3b3LePa
+        W7ZgxVpX8sLzxA1KJppeia6ej+kioGvRjjEoxWQ=
+X-Google-Smtp-Source: APXvYqw0eaw2TRxK/9H3Y8sqHS2pEMb0cITDxk01/sRGaTfe105d+yhQepbEgz1kqWQFScY4g8NDo+cJjofy04prss4=
+X-Received: by 2002:a19:f007:: with SMTP id p7mr34881578lfc.24.1563883603819;
+ Tue, 23 Jul 2019 05:06:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=QX4gbG5DAAAA:8
-        a=akpas9ZDeQi6sww-pK0A:9 a=CjuIK1q_8ugA:10 a=AbAUZ8qAyYyZVLSsDulk:22
+References: <CGME20190715124504eucas1p1afe0da2c6ac3a8b45d85017a77ba9edf@eucas1p1.samsung.com>
+ <20190715124417.4787-1-l.luba@partner.samsung.com> <20190715124417.4787-38-l.luba@partner.samsung.com>
+ <CAJKOXPfrGgAczQ-=1aE453RpJ9BN10ZDmFcrEMPkNyF6GcGtNA@mail.gmail.com>
+ <2fe2e840-f4b2-773b-7d92-4ffb8502d4e6@partner.samsung.com>
+ <CAJKOXPd3gm7no-0TnPmgFg+X3FgdiM6ov5rtzFSM6hKEdEzRCg@mail.gmail.com>
+ <518c26ca-4254-056c-d6d0-ae1b4b63709c@partner.samsung.com>
+ <CAJKOXPfDX06s7eMctbnPabxho2EaWcTM4xAGKCd_+O6jCCDcRQ@mail.gmail.com> <7ad899c5-347d-546e-a2e9-d96f0203210c@partner.samsung.com>
+In-Reply-To: <7ad899c5-347d-546e-a2e9-d96f0203210c@partner.samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 23 Jul 2019 14:06:32 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdC7U64dqFJzJNJJXPQ8_K_SXUOVrNGjOQqcDyNsmskwA@mail.gmail.com>
+Message-ID: <CAJKOXPdC7U64dqFJzJNJJXPQ8_K_SXUOVrNGjOQqcDyNsmskwA@mail.gmail.com>
+Subject: Re: [PATCH v1 37/50] ARM: dts: exynos: change parent and rate of
+ bus_fsys in Exynos5422
+To:     Lukasz Luba <l.luba@partner.samsung.com>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, linux-clk@vger.kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
+        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
+        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
+        kyungmin.park@samsung.com, Andrzej Hajda <a.hajda@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        s.nawrocki@samsung.com, myungjoo.ham@samsung.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Andrzej.
+On Wed, 17 Jul 2019 at 14:56, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+>
+>
+> On 7/17/19 1:11 PM, Krzysztof Kozlowski wrote:
+> > On Wed, 17 Jul 2019 at 13:06, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+> >>
+> >>
+> >>
+> >> On 7/17/19 12:45 PM, Krzysztof Kozlowski wrote:
+> >>> On Wed, 17 Jul 2019 at 12:39, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+> >>>>>>
+> >>>>>>     &bus_fsys {
+> >>>>>>            devfreq = <&bus_wcore>;
+> >>>>>> +       assigned-clocks = <&clock CLK_MOUT_ACLK200_FSYS>,
+> >>>>>> +                         <&clock CLK_DOUT_ACLK200_FSYS>,
+> >>>>>> +                         <&clock CLK_FOUT_DPLL>;
+> >>>>>> +       assigned-clock-parents = <&clock CLK_MOUT_SCLK_DPLL>;
+> >>>>>> +       assigned-clock-rates = <0>, <240000000>,<1200000000>;
+> >>>>>
+> >>>>> Here and in all other patches:
+> >>>>> I am not entirely sure that this should be here. It looks like
+> >>>>> property of the SoC. Do we expect that buses will be configured to
+> >>>>> different clock rates between different boards?
+> This is the board file for Exynos5420/5422/5800 which enables buses.
+> Thus, I have change them here. Patch 49/50 adds these buses to
+> Exynos5800 (Peach Pi). In Exynos5420 there is no clock tree for
+> bus_isp266. The parents for different devices could be also different.
+> It is because i.e. in 5420 there is 2 bit in the WCORE 1st mux while in
+> 5422 there is 3 bits (6 parents possible).
+> That's why I have picked exynos5422-odroid-core.dtsi to reference
+> the bus devices and pinned them into proper parent and changed rate.
+> When you check patch 49/50 for 5800 not all the parents are the same.
+>
+> (1) I could create a dedicated files like: exynos5422-bus.dtsi,
+> exynos5420-bus.dtsi, exynos5800-bus.dtsi which would include some
+> base file with the basic &bus_X and set the right parent, rate.
+> Then these files would be included into proper board file like:
+> exynos5800-peach-pi.dts.
+> Is this something that you would like to see?
 
-On Thu, Jul 11, 2019 at 01:26:43PM +0200, Andrzej Pietrasiewicz wrote:
-> Use the ddc pointer provided by the generic connector.
-> 
-> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-> ---
->  drivers/gpu/drm/mgag200/mgag200_mode.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/mgag200/mgag200_mode.c b/drivers/gpu/drm/mgag200/mgag200_mode.c
-> index a25054015e8c..8fb9444b2142 100644
-> --- a/drivers/gpu/drm/mgag200/mgag200_mode.c
-> +++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
-> @@ -1703,6 +1703,11 @@ static struct drm_connector *mga_vga_init(struct drm_device *dev)
->  		return NULL;
->  
->  	connector = &mga_connector->base;
-> +	mga_connector->i2c = mgag200_i2c_create(dev);
-> +	if (!mga_connector->i2c)
-> +		DRM_ERROR("failed to add ddc bus\n");
-> +
-> +	connector->ddc = &mga_connector->i2c->adapter;
->  
->  	drm_connector_init(dev, connector,
->  			   &mga_vga_connector_funcs, DRM_MODE_CONNECTOR_VGA);
-Like on other patch, assigning connector->ddc before
-drm_connector_init() looks wrong.
+I see now. Are there any differences in all these properties between
+Peach Pi and Odroids? Both of them are using exynos5800.dtsi so that
+could be a place for all clock assignments.
 
-	Sam
+Best regards,
+Krzysztof
