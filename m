@@ -2,140 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08ABB70EC7
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 03:48:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8657270EF0
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 04:04:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730839AbfGWBss (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 Jul 2019 21:48:48 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:34443 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730026AbfGWBsr (ORCPT
+        id S1729586AbfGWCEy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 Jul 2019 22:04:54 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36967 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727251AbfGWCEy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 Jul 2019 21:48:47 -0400
-Received: by mail-pf1-f193.google.com with SMTP id b13so18262316pfo.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 18:48:47 -0700 (PDT)
+        Mon, 22 Jul 2019 22:04:54 -0400
+Received: by mail-pl1-f194.google.com with SMTP id b3so19942170plr.4
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 19:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=tSmnjYLr4XnnXcZ+h5qygzO/vu9yBr7SlvfWk0oPsHs=;
-        b=bqWosns6ku3Fc2lvihluziKAZVN5g9VBJGwdBeEg0niOa9coayRBgsZDKeNrrOGuRM
-         1ys7oqabOhX396o7/uZgRtvsq+RrHfJPAzz4LMmYFniinIFq6DcopcyIKUruknf/iuXw
-         mXVOugoYmvLSn3rg8nZ9e7Yj39W2wS8wj1q5swlqeZuKRIWIOafWcCH7jhheay8dMc/O
-         sLsA9O5eIoQMDMKOlnvPy2nB5b1UhFtNUInIvlZ/jVC4uK3jESSTdRQPSKJQIIMYkZQI
-         pSUgqeWC5dONoRzZSzfBpAWTj36R4kWNXVFiTrcaGQH2EoCrlQS09pjY0RAtlZScIcl6
-         lVHQ==
+        bh=c+fYefKdegWfzNVcvBNCZFAqK5d+WzXI5vtjxfFF6J8=;
+        b=zRFzuYvWEWhGryAT6Q8/QwGY+31z0WJLeKBR9uQowX7cZbFobNq11qUpTg8+BZ9xdX
+         geyyg7Y+iGQzwrwj3w8cE1UZojdY1o3jWGaU9cpggpJHJO1wmLY1aPQwKWhPKX7GxOIm
+         /NvsPv7aR2tvFuB2l39aNzgFqRfkVWHNr/zBjK6BcrfdIBv5z6Ljx1/ZPwVyrbRfH+fn
+         WC0xIll82mi599BW7YbJ6tFjpvgPx0Lgi5B03JE0YEPlBUchR3PWyTjQSVOMMOY5KJ2F
+         be5nLPczyeJJU4UOXcnq4KKqAfKifvC4IYRjLWX3B2c/N80/HngqF6zuF/cKP6wBQfJd
+         yM2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tSmnjYLr4XnnXcZ+h5qygzO/vu9yBr7SlvfWk0oPsHs=;
-        b=njdJwVAs6yp+JIqkeZJPILqFCRKtuzQnDUzZT8coV5R/aIwp5jdBVHUB6wpUTU5tej
-         nWDoj0sB1IDxxtkmrVz6+7Fpng+/Ed2CdKBuLjBVcmDwyttTZwqFypzSj/NEnNMSkVHz
-         366NckuE7exmAnEwWjh9Qa/g4cqs9JEJrsbVx8xjQP9QGVCVFNFwKQDwHykrBDKU+OBz
-         xgzWXfMuCiEwv/Q1u809+EjuwsBPMujHJpXdV7wPu3j+m8yUUVBuDQU6TuQSFv2KvIqQ
-         ZalmLO2NkSs19fXMGE8dlV6wiEkrAb+EGAS+tdIAYctnsNOPH70cIFnxVBw/dJq7DfJb
-         hV4A==
-X-Gm-Message-State: APjAAAXa15nss04x7DP4FTV8cqDaNkvMbj7Hz8WGE2XjloTAHrVBrSvW
-        3QBJQ7fCp+mVR9bfJ7iC6LUCqw==
-X-Google-Smtp-Source: APXvYqyxp0cHGLs8U/L2DtyISYxwUziJvpXuvUsf8zTcnWojfKIhYVspEl2HKfU7BL6HG2uLn/m/1g==
-X-Received: by 2002:a62:d45d:: with SMTP id u29mr3161818pfl.135.1563846527114;
-        Mon, 22 Jul 2019 18:48:47 -0700 (PDT)
+        bh=c+fYefKdegWfzNVcvBNCZFAqK5d+WzXI5vtjxfFF6J8=;
+        b=ucvAQOOwVxlFvrBOAd3XocvgnB+L9HtVNjzzqiAYKSL5oarJo1TYjJaN4OisfTYCyD
+         jn6NHj/JxK7DCyRuZ1OvjWSsJtvMfEnbg//4xDo/gU/xxbbHwYZinvg12tRu9ek+Lpz2
+         eA82/32SeCH+0AR/4GocM/pUh7ZUuthfu/Na7t9tHrl+qd3+j5nVttu9WnCMQZ8QZBC4
+         XG3c2ahoj37w+2caq4SZLegs5zcnamhwsf2CIJZLWAa8GW16OigbOuJYtayJbgRPps36
+         YfNrSJdTLA1QEDYzEYBB4DbEkoW6jDOA6AnVQFcbHXyTOV4EkB7upOekT/u0iFcF2sUV
+         92zw==
+X-Gm-Message-State: APjAAAW5Gaaggco0ufllrnw4iYfLr49SCBwcNl+T8Olf8ImIVvPYM5+I
+        9vvuSBad4LIkUlXL2GvnX1hj+g==
+X-Google-Smtp-Source: APXvYqz1TZYMRg8AYFQKtJluS92AI/3l+SomVKMpEHPQggv0G3T/KfU0bla677YewN8LIbRxc6gdVw==
+X-Received: by 2002:a17:902:4623:: with SMTP id o32mr76901784pld.112.1563847493573;
+        Mon, 22 Jul 2019 19:04:53 -0700 (PDT)
 Received: from localhost ([122.172.28.117])
-        by smtp.gmail.com with ESMTPSA id o14sm33661343pjp.19.2019.07.22.18.48.44
+        by smtp.gmail.com with ESMTPSA id z63sm6349546pfb.98.2019.07.22.19.04.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jul 2019 18:48:45 -0700 (PDT)
-Date:   Tue, 23 Jul 2019 07:18:41 +0530
+        Mon, 22 Jul 2019 19:04:52 -0700 (PDT)
+Date:   Tue, 23 Jul 2019 07:34:50 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     k.konieczny@partner.samsung.com
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     krzk@kernel.org, robh+dt@kernel.org, vireshk@kernel.org,
+        devicetree@vger.kernel.org, kgene@kernel.org,
+        pankaj.dubey@samsung.com, linux-samsung-soc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] opp: core: add regulators enable and disable
-Message-ID: <20190723014841.yyttacgagktbkwg2@vireshk-i7>
-References: <20190719150535.15501-1-k.konieczny@partner.samsung.com>
- <CGME20190719150554eucas1p2f4c9e4d2767ab740d419c42d4aeed6d5@eucas1p2.samsung.com>
- <20190719150535.15501-3-k.konieczny@partner.samsung.com>
+        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+Message-ID: <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
+ <20190718143044.25066-1-s.nawrocki@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190719150535.15501-3-k.konieczny@partner.samsung.com>
+In-Reply-To: <20190718143044.25066-1-s.nawrocki@samsung.com>
 User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 19-07-19, 17:05, k.konieczny@partner.samsung.com wrote:
-> Add enable regulators to dev_pm_opp_set_regulators() and disable
-> regulators to dev_pm_opp_put_regulators(). Even if bootloader
-> leaves regulators enabled, they should be enabled in kernel in
-> order to increase the reference count.
+On 18-07-19, 16:30, Sylwester Nawrocki wrote:
+> This is second iteration of patch series adding ASV (Adaptive Supply 
+> Voltage) support for Exynos SoCs. The first one can be found at:
+> https://lore.kernel.org/lkml/20190404171735.12815-1-s.nawrocki@samsung.com
 > 
-> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
-> ---
-> Changes in v3:
-> - corrected error path in enable
-> - improved commit message
-> Changes in v2:
-> - move regulator enable and disable into loop
-> ---
->  drivers/opp/core.c | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
+> The main changes comparing to the first (RFC) version are:
+>  - moving ASV data tables from DT to the driver,
+>  - converting the chipid and the ASV drivers to use regmap,
+>  - converting the ASV driver to proper platform driver.
 > 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 0e7703fe733f..a8a480cdabab 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -1570,6 +1570,12 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
->  			goto free_regulators;
->  		}
->  
-> +		ret = regulator_enable(reg);
-> +		if (ret < 0) {
-> +			regulator_put(reg);
-> +			goto free_regulators;
-> +		}
-> +
->  		opp_table->regulators[i] = reg;
->  	}
->  
-> @@ -1583,8 +1589,10 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
->  	return opp_table;
->  
->  free_regulators:
-> -	while (i != 0)
-> -		regulator_put(opp_table->regulators[--i]);
-> +	while (i--) {
-> +		regulator_disable(opp_table->regulators[i]);
-> +		regulator_put(opp_table->regulators[i]);
-> +	}
->  
->  	kfree(opp_table->regulators);
->  	opp_table->regulators = NULL;
-> @@ -1610,8 +1618,10 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
->  	/* Make sure there are no concurrent readers while updating opp_table */
->  	WARN_ON(!list_empty(&opp_table->opp_list));
->  
-> -	for (i = opp_table->regulator_count - 1; i >= 0; i--)
-> +	for (i = opp_table->regulator_count - 1; i >= 0; i--) {
-> +		regulator_disable(opp_table->regulators[i]);
->  		regulator_put(opp_table->regulators[i]);
-> +	}
->  
->  	_free_set_opp_data(opp_table);
+> I tried the opp-supported-hw bitmask approach as in the Qualcomm CPUFreq
+> DT bindings but it resulted in too many OPPs and DT nodes, around 200
+> per CPU cluster. So the ASV OPP tables are now in the ASV driver, as in
+> downstream kernels.
 
-Applied. Thanks.
+Hmm. Can you explain why do you have so many OPPs? How many
+frequencies do you actually support per cluster and what all varies
+per frequency based on hw ? How many hw version do u have ?
+
+I am asking as the OPP core can be improved to support your case if
+possible. But I need to understand the problem first.
 
 -- 
 viresh
