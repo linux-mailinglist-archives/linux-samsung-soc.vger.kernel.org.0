@@ -2,93 +2,109 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8657270EF0
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 04:04:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F6D87149E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 11:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729586AbfGWCEy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 Jul 2019 22:04:54 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:36967 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727251AbfGWCEy (ORCPT
+        id S1726535AbfGWJH7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Jul 2019 05:07:59 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:33993 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726352AbfGWJH7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 Jul 2019 22:04:54 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b3so19942170plr.4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 22 Jul 2019 19:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c+fYefKdegWfzNVcvBNCZFAqK5d+WzXI5vtjxfFF6J8=;
-        b=zRFzuYvWEWhGryAT6Q8/QwGY+31z0WJLeKBR9uQowX7cZbFobNq11qUpTg8+BZ9xdX
-         geyyg7Y+iGQzwrwj3w8cE1UZojdY1o3jWGaU9cpggpJHJO1wmLY1aPQwKWhPKX7GxOIm
-         /NvsPv7aR2tvFuB2l39aNzgFqRfkVWHNr/zBjK6BcrfdIBv5z6Ljx1/ZPwVyrbRfH+fn
-         WC0xIll82mi599BW7YbJ6tFjpvgPx0Lgi5B03JE0YEPlBUchR3PWyTjQSVOMMOY5KJ2F
-         be5nLPczyeJJU4UOXcnq4KKqAfKifvC4IYRjLWX3B2c/N80/HngqF6zuF/cKP6wBQfJd
-         yM2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c+fYefKdegWfzNVcvBNCZFAqK5d+WzXI5vtjxfFF6J8=;
-        b=ucvAQOOwVxlFvrBOAd3XocvgnB+L9HtVNjzzqiAYKSL5oarJo1TYjJaN4OisfTYCyD
-         jn6NHj/JxK7DCyRuZ1OvjWSsJtvMfEnbg//4xDo/gU/xxbbHwYZinvg12tRu9ek+Lpz2
-         eA82/32SeCH+0AR/4GocM/pUh7ZUuthfu/Na7t9tHrl+qd3+j5nVttu9WnCMQZ8QZBC4
-         XG3c2ahoj37w+2caq4SZLegs5zcnamhwsf2CIJZLWAa8GW16OigbOuJYtayJbgRPps36
-         YfNrSJdTLA1QEDYzEYBB4DbEkoW6jDOA6AnVQFcbHXyTOV4EkB7upOekT/u0iFcF2sUV
-         92zw==
-X-Gm-Message-State: APjAAAW5Gaaggco0ufllrnw4iYfLr49SCBwcNl+T8Olf8ImIVvPYM5+I
-        9vvuSBad4LIkUlXL2GvnX1hj+g==
-X-Google-Smtp-Source: APXvYqz1TZYMRg8AYFQKtJluS92AI/3l+SomVKMpEHPQggv0G3T/KfU0bla677YewN8LIbRxc6gdVw==
-X-Received: by 2002:a17:902:4623:: with SMTP id o32mr76901784pld.112.1563847493573;
-        Mon, 22 Jul 2019 19:04:53 -0700 (PDT)
-Received: from localhost ([122.172.28.117])
-        by smtp.gmail.com with ESMTPSA id z63sm6349546pfb.98.2019.07.22.19.04.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jul 2019 19:04:52 -0700 (PDT)
-Date:   Tue, 23 Jul 2019 07:34:50 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     krzk@kernel.org, robh+dt@kernel.org, vireshk@kernel.org,
-        devicetree@vger.kernel.org, kgene@kernel.org,
-        pankaj.dubey@samsung.com, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
-Message-ID: <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
-References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
- <20190718143044.25066-1-s.nawrocki@samsung.com>
+        Tue, 23 Jul 2019 05:07:59 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 89772200AE;
+        Tue, 23 Jul 2019 11:07:53 +0200 (CEST)
+Date:   Tue, 23 Jul 2019 11:07:52 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm@vger.kernel.org,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-kernel@lists.infradead.org,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v4 16/23] drm/mgag200: Provide ddc symlink in connector
+ sysfs directory
+Message-ID: <20190723090752.GB787@ravnborg.org>
+References: <cover.1562843413.git.andrzej.p@collabora.com>
+ <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190718143044.25066-1-s.nawrocki@samsung.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <d32a6b1f0a3b79f1fbc8d0894080908526f6e61e.1562843413.git.andrzej.p@collabora.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=QX4gbG5DAAAA:8
+        a=akpas9ZDeQi6sww-pK0A:9 a=CjuIK1q_8ugA:10 a=AbAUZ8qAyYyZVLSsDulk:22
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 18-07-19, 16:30, Sylwester Nawrocki wrote:
-> This is second iteration of patch series adding ASV (Adaptive Supply 
-> Voltage) support for Exynos SoCs. The first one can be found at:
-> https://lore.kernel.org/lkml/20190404171735.12815-1-s.nawrocki@samsung.com
+Hi Andrzej.
+
+On Thu, Jul 11, 2019 at 01:26:43PM +0200, Andrzej Pietrasiewicz wrote:
+> Use the ddc pointer provided by the generic connector.
 > 
-> The main changes comparing to the first (RFC) version are:
->  - moving ASV data tables from DT to the driver,
->  - converting the chipid and the ASV drivers to use regmap,
->  - converting the ASV driver to proper platform driver.
+> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> ---
+>  drivers/gpu/drm/mgag200/mgag200_mode.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> I tried the opp-supported-hw bitmask approach as in the Qualcomm CPUFreq
-> DT bindings but it resulted in too many OPPs and DT nodes, around 200
-> per CPU cluster. So the ASV OPP tables are now in the ASV driver, as in
-> downstream kernels.
+> diff --git a/drivers/gpu/drm/mgag200/mgag200_mode.c b/drivers/gpu/drm/mgag200/mgag200_mode.c
+> index a25054015e8c..8fb9444b2142 100644
+> --- a/drivers/gpu/drm/mgag200/mgag200_mode.c
+> +++ b/drivers/gpu/drm/mgag200/mgag200_mode.c
+> @@ -1703,6 +1703,11 @@ static struct drm_connector *mga_vga_init(struct drm_device *dev)
+>  		return NULL;
+>  
+>  	connector = &mga_connector->base;
+> +	mga_connector->i2c = mgag200_i2c_create(dev);
+> +	if (!mga_connector->i2c)
+> +		DRM_ERROR("failed to add ddc bus\n");
+> +
+> +	connector->ddc = &mga_connector->i2c->adapter;
+>  
+>  	drm_connector_init(dev, connector,
+>  			   &mga_vga_connector_funcs, DRM_MODE_CONNECTOR_VGA);
+Like on other patch, assigning connector->ddc before
+drm_connector_init() looks wrong.
 
-Hmm. Can you explain why do you have so many OPPs? How many
-frequencies do you actually support per cluster and what all varies
-per frequency based on hw ? How many hw version do u have ?
-
-I am asking as the OPP core can be improved to support your case if
-possible. But I need to understand the problem first.
-
--- 
-viresh
+	Sam
