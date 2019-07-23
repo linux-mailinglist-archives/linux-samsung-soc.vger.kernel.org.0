@@ -2,125 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2015C71B73
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 17:19:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E8E971BA7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jul 2019 17:32:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729728AbfGWPTu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Jul 2019 11:19:50 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:51539 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728591AbfGWPTu (ORCPT
+        id S1729601AbfGWPcd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Jul 2019 11:32:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42004 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726276AbfGWPcd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Jul 2019 11:19:50 -0400
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 23 Jul 2019 11:32:33 -0400
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 54655200D5;
-        Tue, 23 Jul 2019 17:19:41 +0200 (CEST)
-Date:   Tue, 23 Jul 2019 17:19:39 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Shawn Guo <shawnguo@kernel.org>, kernel@collabora.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, Sean Paul <sean@poorly.run>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, Jyri Sarha <jsarha@ti.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH v4 14/23] drm/tilcdc: Provide ddc symlink in connector
- sysfs directory
-Message-ID: <20190723151939.GA13718@ravnborg.org>
-References: <cover.1562843413.git.andrzej.p@collabora.com>
- <d1d415022c598fb7acd033f0f322dd67250adaa9.1562843413.git.andrzej.p@collabora.com>
- <20190723090532.GA787@ravnborg.org>
- <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
+        by mail.kernel.org (Postfix) with ESMTPSA id 30EC9227B7;
+        Tue, 23 Jul 2019 15:32:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1563895952;
+        bh=8JOyeEC1zTRyIsqC/PXugWUjwr/APz7sEZnATu2YyJs=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=sP3APy8eG7NLNOJcAtjsat+n0U+A76FGD91WwUGrbOXE0DyWCcMbzHxuOD0x1oVJW
+         av3EmEpwzod0evwuCQ8DrqENnAYDiHSCpuX9H9pbX6yfwORvSyPgn5MzpfhNhJHdF3
+         4DXkrdG50Caz25rF0/F7d4WzuOhz6hJ5YqOC2Z/g=
+Received: by mail-lf1-f54.google.com with SMTP id 62so24790659lfa.8;
+        Tue, 23 Jul 2019 08:32:32 -0700 (PDT)
+X-Gm-Message-State: APjAAAVp1p1IB+JebWyBCzu2YwGgLl3wTLicg1hHixY6EjfJ/O62lAgZ
+        6gBir5KCihZFG7h36gv8FH+zPFNK8yRbcTNze0s=
+X-Google-Smtp-Source: APXvYqzOqlEdW228CqT7EvzrEoHFXs6Y3HU32V4M67K48CS0QmPYAt/PYW9cZBGXd1rWIk3F5U1PvLTxOdi0akEiPYo=
+X-Received: by 2002:a19:48c5:: with SMTP id v188mr34818692lfa.69.1563895950429;
+ Tue, 23 Jul 2019 08:32:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3ad60be5-49cf-4017-4b74-53a2d6272deb@collabora.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=8nJEP1OIZ-IA:10 a=QX4gbG5DAAAA:8
-        a=6mu-9OIm9KcVJ4iDVDwA:9 a=wPNLvfGTeEIA:10 a=AbAUZ8qAyYyZVLSsDulk:22
+References: <20190722172618.4061-1-wsa+renesas@sang-engineering.com> <20190722172618.4061-5-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20190722172618.4061-5-wsa+renesas@sang-engineering.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 23 Jul 2019 17:32:19 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPctuy6j34gZ53xdUqVUwcVLWtm1pxUGSbUXQBoTkEKRUA@mail.gmail.com>
+Message-ID: <CAJKOXPctuy6j34gZ53xdUqVUwcVLWtm1pxUGSbUXQBoTkEKRUA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] rtc: s5m: convert to i2c_new_dummy_device
+To:     Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc:     linux-i2c@vger.kernel.org, Sangbeom Kim <sbkim73@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-kernel@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, linux-rtc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Andrej.
+On Mon, 22 Jul 2019 at 19:26, Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+>
+> Move from i2c_new_dummy() to i2c_new_dummy_device(), so we now get an
+> ERRPTR which we use in error handling.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> ---
+>
+> Generated with coccinelle. Build tested by me and buildbot. Not tested on HW.
+>
+>  drivers/rtc/rtc-s5m.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-On Tue, Jul 23, 2019 at 02:44:50PM +0200, Andrzej Pietrasiewicz wrote:
-> Hi Sam,
-> 
-> W dniu 23.07.2019 o 11:05, Sam Ravnborg pisze:
-> > Hi Andrzej
-> > 
-> > On Thu, Jul 11, 2019 at 01:26:41PM +0200, Andrzej Pietrasiewicz wrote:
-> > > Use the ddc pointer provided by the generic connector.
-> > > 
-> > > Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-> > > ---
-> > >   drivers/gpu/drm/tilcdc/tilcdc_tfp410.c | 1 +
-> > >   1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
-> > > index 62d014c20988..c373edb95666 100644
-> > > --- a/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
-> > > +++ b/drivers/gpu/drm/tilcdc/tilcdc_tfp410.c
-> > > @@ -219,6 +219,7 @@ static struct drm_connector *tfp410_connector_create(struct drm_device *dev,
-> > >   	tfp410_connector->mod = mod;
-> > >   	connector = &tfp410_connector->base;
-> > > +	connector->ddc = mod->i2c;
-> > >   	drm_connector_init(dev, connector, &tfp410_connector_funcs,
-> > >   			DRM_MODE_CONNECTOR_DVID);
-> > 
-> > When reading this code, it looks strange that we set connector->ddc
-> > *before* the call to init the connector.
-> > One could risk that drm_connector_init() used memset(..) to clear all
-> > fields or so, and it would break this order.
-> 
-> I verified the code of drm_connector_init() and cannot find any memset()
-> invocations there. What is your actual concern?
-My concern is that drm_connector_init() maybe sometime in the future
-will init all fileds in drm_connector, so we loose any assingments
-done to drm_connector from *before* we called the init function.
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Tested-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Moving the assignment to after drm_connector_init() would not
-let us depend on the actual implmentation of drm_connector_init().
-
-	Sam
+Best regards,
+Krzysztof
