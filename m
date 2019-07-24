@@ -2,44 +2,44 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A975B72CB9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 12:59:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4397A72CDA
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 13:08:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbfGXK7o (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Jul 2019 06:59:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60622 "EHLO mail.kernel.org"
+        id S1726622AbfGXLIA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Jul 2019 07:08:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35676 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726622AbfGXK7o (ORCPT
+        id S1726070AbfGXLIA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Jul 2019 06:59:44 -0400
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+        Wed, 24 Jul 2019 07:08:00 -0400
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2274B22ADA;
-        Wed, 24 Jul 2019 10:59:43 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EC5092190F;
+        Wed, 24 Jul 2019 11:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563965983;
-        bh=+SLeYzBrFqrvQlKq8tfptWG7tfjTeB0dYCaKxtC/F1U=;
+        s=default; t=1563966479;
+        bh=NMg0QCsJC3/2f/uN8qBfJZP1rBSoVJP+rvK+9apy9F8=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=HAv7AF0ukKxL6GYXk1xun6fguFyzJ7NapvsVooizJX9ii0nisFl4Rz0JDEw9Ab3b2
-         gjhffA7s31ujpM4iPuY1BfjQqGmT7Si1Mt7OOeRQKdz6lfzkth32MAzg0mglg73Xf/
-         Eg1AX/SsYMKjTrWI+PEW4oeXPwa7OZ0/SydEoASs=
-Received: by mail-lj1-f178.google.com with SMTP id i21so44091342ljj.3;
-        Wed, 24 Jul 2019 03:59:43 -0700 (PDT)
-X-Gm-Message-State: APjAAAX/Wjj51n2DoamswMECmf3ZxItO2kkPNKeMg2uNkA9FIjjHnDeU
-        nNw6i4Br02m4FHWGmnFnhBjQftgj9EX0NxNCzl4=
-X-Google-Smtp-Source: APXvYqwezSx0YMy1Onv2nAziBZ5h3uvoLRSWEZ6B72J6vovOVKzX95DIdnPlSg9aaez+CQYQ18XozsjqXWS11kg092g=
-X-Received: by 2002:a2e:124b:: with SMTP id t72mr43113386lje.143.1563965981368;
- Wed, 24 Jul 2019 03:59:41 -0700 (PDT)
+        b=kuv7CzoWZ2PUkv0kq5ib89n+yneoQtuEPd9KcNzeSJDPuA8SbBOrCpp/FySGOiRGy
+         BWgqJo61ANj5vZtRa70lEASikhL2l2mStCYG3hchr7Hxm4dd0GA1gvthYuuAhmP3rW
+         9eCoYKqkYo9bK5HD7XiQZiYxHH6tjsKuJPu7Myl4=
+Received: by mail-lj1-f170.google.com with SMTP id x25so44146216ljh.2;
+        Wed, 24 Jul 2019 04:07:58 -0700 (PDT)
+X-Gm-Message-State: APjAAAVIqZWUKg+nn6Ono7TahWk9MWfxrG4aJtR0cedVkc5Em3p+eMee
+        SH9qJR7lCTGq9VSYAAmRDFv7p0BRC7343LdyN34=
+X-Google-Smtp-Source: APXvYqzUq7GrisNxdgqufanV1x9vUxFnKwDNQX0DwX6U6exWVoC39l63jdg66SzoGOFToYFLWYrTDGvoVo150eCwKr8=
+X-Received: by 2002:a2e:124b:: with SMTP id t72mr43134559lje.143.1563966477162;
+ Wed, 24 Jul 2019 04:07:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190722185938.9043-1-linux.amoon@gmail.com> <20190722185938.9043-2-linux.amoon@gmail.com>
-In-Reply-To: <20190722185938.9043-2-linux.amoon@gmail.com>
+References: <20190722185938.9043-1-linux.amoon@gmail.com> <20190722185938.9043-3-linux.amoon@gmail.com>
+In-Reply-To: <20190722185938.9043-3-linux.amoon@gmail.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 24 Jul 2019 12:59:30 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPch9i0GBLLTQFNF=jPSJ++ZUJeE+Y5MCA7zFLFYO79R4Q@mail.gmail.com>
-Message-ID: <CAJKOXPch9i0GBLLTQFNF=jPSJ++ZUJeE+Y5MCA7zFLFYO79R4Q@mail.gmail.com>
-Subject: Re: [RFC/RFT 1/5] phy: exynos5-usbdrd: read from correct offset of
- xhci linksystem
+Date:   Wed, 24 Jul 2019 13:07:46 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPc_3ZPB5F9gvnLTZOkry=acyo9_TBq62D6rjk=gYDZaNw@mail.gmail.com>
+Message-ID: <CAJKOXPc_3ZPB5F9gvnLTZOkry=acyo9_TBq62D6rjk=gYDZaNw@mail.gmail.com>
+Subject: Re: [RFC/RFT 2/5] phy: exynos5-usbdrd: add missing tuning of the
+ phyutmi signal
 To:     Anand Moon <linux.amoon@gmail.com>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         "linux-samsung-soc@vger.kernel.org" 
@@ -55,34 +55,106 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 On Mon, 22 Jul 2019 at 20:59, Anand Moon <linux.amoon@gmail.com> wrote:
 >
-> Read from linksystem offset to update the xhci version.
+> Add missing tuning of phyutmi controls to enter suspend and
+> resume state.
+>
+> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> ---
+>  drivers/phy/samsung/phy-exynos5-usbdrd.c | 32 ++++++++++++++++++++++--
+>  1 file changed, 30 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> index 3c14bf7718c1..135114d51bc1 100644
+> --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> @@ -42,7 +42,13 @@
+>
+>  #define EXYNOS5_DRD_PHYUTMI                    0x08
+>
+> +#define PHYUTMI_TXBITSTUFFENH                  BIT(8)
+> +#define PHYUTMI_TXBITSTUFFEN                   BIT(7)
+>  #define PHYUTMI_OTGDISABLE                     BIT(6)
+> +#define PHYUTMI_IDPULLUP                       BIT(5)
+> +#define PHYUTMI_DRVVBUS                                BIT(4)
+> +#define PHYUTMI_DPPULLDOWN                      BIT(3)
+> +#define PHYUTMI_DMPULLDOWN                      BIT(2)
+>  #define PHYUTMI_FORCESUSPEND                   BIT(1)
+>  #define PHYUTMI_FORCESLEEP                     BIT(0)
+>
+> @@ -402,6 +408,23 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
+>                 LINKSYSTEM_FLADJ(0x20);
+>         writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_LINKSYSTEM);
+>
+> +       reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMI);
+> +       /* High-Byte Transmit Bit-Stuffing Enable */
+> +       reg |= PHYUTMI_TXBITSTUFFENH;
 
-But why? As many times before, you do not specify why you are doing
-things. What problem are you solving? What feature are you adding?
+How this is related with suspend and resume?
+
+> +       /* Low-Byte Transmit Bit-Stuffing Enable */
+> +       reg |= PHYUTMI_TXBITSTUFFEN;
+
+The same.
+
+> +       /* release force_sleep & force_suspend */
+> +       reg &= ~(PHYUTMI_FORCESLEEP | PHYUTMI_FORCESUSPEND);
+
+Really, why?
+
+> +       /* DP/DM Pull Down Disable */
+> +       reg &= ~(PHYUTMI_DMPULLDOWN | PHYUTMI_DPPULLDOWN);
+
+Care to explain why?
+
+> +       /* drvvbus controller signal controls the VBUS valid comparator */
+> +       reg &= ~PHYUTMI_OTGDISABLE;
+
+Makes sense, but how is it connected with suspend and resume? It's the
+default, BTW...
+
+> +       /* controller signal controls the VBUS Valid comparator */
+> +       reg |= PHYUTMI_DRVVBUS;
+
+Again, you are setting the defaults...
+
+> +       /* Enable ID Sampling */
+> +       reg |= PHYUTMI_IDPULLUP;
+
+The same...
+
+> +       writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMI);
+
+Does not look good. For UTMI Phy, this will be overwritten few lines
+later with exynos5_usbdrd_utmi_init().
+
+> +
+>         reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYPARAM0);
+>         /* Select PHY CLK source */
+>         reg &= ~PHYPARAM0_REF_USE_PAD;
+> @@ -452,9 +475,14 @@ static int exynos5_usbdrd_phy_exit(struct phy *phy)
+>         if (ret)
+>                 return ret;
+>
+> -       reg =   PHYUTMI_OTGDISABLE |
+> +       reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMI);
+> +       reg |=  PHYUTMI_OTGDISABLE |
+>                 PHYUTMI_FORCESUSPEND |
+> -               PHYUTMI_FORCESLEEP;
+> +               PHYUTMI_FORCESLEEP |
+> +               PHYUTMI_DMPULLDOWN |
+> +               PHYUTMI_DPPULLDOWN;
+> +       reg &= ~(PHYUTMI_DRVVBUS | PHYUTMI_IDPULLUP |
+> +               PHYUTMI_TXBITSTUFFENH | PHYUTMI_TXBITSTUFFEN);
+
+No, it looks like random code... why you want to update the register
+instead of overwrite it?
 
 Best regards,
 Krzysztof
 
+>         writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMI);
 >
-> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> ---
->  drivers/phy/samsung/phy-exynos5-usbdrd.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> index 646259bee909..3c14bf7718c1 100644
-> --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> @@ -397,7 +397,8 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
->          * Setting the Frame length Adj value[6:1] to default 0x20
->          * See xHCI 1.0 spec, 5.2.4
->          */
-> -       reg =   LINKSYSTEM_XHCI_VERSION_CONTROL |
-> +       reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_LINKSYSTEM);
-> +       reg |=  LINKSYSTEM_XHCI_VERSION_CONTROL |
->                 LINKSYSTEM_FLADJ(0x20);
->         writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_LINKSYSTEM);
->
+>         /* Resetting the PHYCLKRST enable bits to reduce leakage current */
 > --
 > 2.22.0
 >
