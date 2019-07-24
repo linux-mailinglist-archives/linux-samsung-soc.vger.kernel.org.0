@@ -2,175 +2,142 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AE0BD72DD1
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 13:40:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B330872FA0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 15:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfGXLkD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Jul 2019 07:40:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54228 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727409AbfGXLkD (ORCPT
+        id S1728413AbfGXNKt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Jul 2019 09:10:49 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:38166 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726300AbfGXNKt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Jul 2019 07:40:03 -0400
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A257022BEA;
-        Wed, 24 Jul 2019 11:40:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1563968402;
-        bh=Waz30FvbM2bDuciG00WYPrNVQxeN8XFol+6MLZngaDU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=UbDgSp5MCNlE5sgwQ9+EIE7o8SHwMpf+XN4VT6PiWNo6t5C+chmfrADPAC81mnyzB
-         lLmezBMZBzexYyBBLromTjhqtQTKq0OCsnLq13HYRjL1N0PQazge1y0S3uzvb70j/g
-         CY2l7sN0Vh3XA6XhCjKmPSJf9D1Fd+bQNC9WtNO4=
-Received: by mail-lf1-f41.google.com with SMTP id b29so24483102lfq.1;
-        Wed, 24 Jul 2019 04:40:01 -0700 (PDT)
-X-Gm-Message-State: APjAAAW5d3OgsVcSacdRv7N3+Olybz6wP/sAvCRKKHpbCnTNLhnIKX2Q
-        8ES034jbw5iDUVMz9nu1/rz0DlS01SOhbCK7S7o=
-X-Google-Smtp-Source: APXvYqx3+A563bA8Nc3lxEu2U+a/qw7GJbEPteETDwnhna9Ox1cYxk6dVWTYQpIDqElHtzAZl4iPfU/mdKjG6U8RDME=
-X-Received: by 2002:ac2:4891:: with SMTP id x17mr39260124lfc.60.1563968399768;
- Wed, 24 Jul 2019 04:39:59 -0700 (PDT)
+        Wed, 24 Jul 2019 09:10:49 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190724131046euoutp0153084289bba1976d137ca61d32956a01~0We1y-mXg2879328793euoutp018
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Jul 2019 13:10:46 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190724131046euoutp0153084289bba1976d137ca61d32956a01~0We1y-mXg2879328793euoutp018
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1563973847;
+        bh=PEOtSSoRhkQX8OsDsJURuU47w80rGtTf9ArwdLYI4tU=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=o56GXd55wfxDL4xD0jeVqb82HviKy2O2dxMO3tCDxuaYTlM9kJhV9iE3VK30MfF+f
+         r3oVJlOmkU56cIzeSgWzJPBLzV9h8fQhNzvHNPtaH+zFaJQhGOYUebSfAnX1WI0nL/
+         el6vdQAp9naWwoSgcQBTLgio9P95vQQWbH8lDFkI=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190724131046eucas1p1e5135c654b515f7044eeb7597e0ae41a~0We1ECbTY2976329763eucas1p1L;
+        Wed, 24 Jul 2019 13:10:46 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 37.D8.04325.5D8583D5; Wed, 24
+        Jul 2019 14:10:45 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190724131045eucas1p162379c36506e8b94147baa865f0409f7~0We0SfRBJ2476524765eucas1p1m;
+        Wed, 24 Jul 2019 13:10:45 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190724131045eusmtrp2d7e8381dfed5e5e61bd40cf0f0003339~0We0EUqBM0076200762eusmtrp2Q;
+        Wed, 24 Jul 2019 13:10:45 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-31-5d3858d53e1b
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 31.45.04140.4D8583D5; Wed, 24
+        Jul 2019 14:10:45 +0100 (BST)
+Received: from [106.120.50.63] (unknown [106.120.50.63]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190724131040eusmtip1c8fbf50afad8f6dde8c1ad38a074adcf~0WewOCuXU1901719017eusmtip1c;
+        Wed, 24 Jul 2019 13:10:40 +0000 (GMT)
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     krzk@kernel.org, robh+dt@kernel.org, vireshk@kernel.org,
+        devicetree@vger.kernel.org, kgene@kernel.org,
+        pankaj.dubey@samsung.com, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
+Date:   Wed, 24 Jul 2019 15:10:39 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CGME20190722094727eucas1p10041ba25819e6e62d639423a97435f2d@eucas1p1.samsung.com>
- <20190722094646.13342-1-l.luba@partner.samsung.com> <20190722094646.13342-4-l.luba@partner.samsung.com>
-In-Reply-To: <20190722094646.13342-4-l.luba@partner.samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 24 Jul 2019 13:39:48 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdue75yF=v5vsawOdfvcCMBDP6HGVXdwngBWE264kGJwg@mail.gmail.com>
-Message-ID: <CAJKOXPdue75yF=v5vsawOdfvcCMBDP6HGVXdwngBWE264kGJwg@mail.gmail.com>
-Subject: Re: [PATCH v12 3/9] drivers: memory: extend of_memory by LPDDR3 support
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-clk@vger.kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
-        treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
-        willy.mh.wolff.ml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOKsWRmVeSWpSXmKPExsWy7djP87pXIyxiDZ59MLPYOGM9q8X8I+dY
+        Lfofv2a2OH9+A7vFpsfXWC0u75rDZvG59wijxYzz+5gsFm39wm7RuvcIu8XhN+2sFhu/elhs
+        fnCMzYHXY9OqTjaPO9f2sHlsXlLv0bdlFaPH501yAaxRXDYpqTmZZalF+nYJXBmta6IKJvBU
+        TDuzgLGB8RJnFyMnh4SAicTv2d9Zuxi5OIQEVjBKHL+4kQnC+cIocalxNjOE85lRovfQYzaY
+        lu87T0ElljNKrG88DdX/llHi64e/YFXCAk4Se35/BbNFBCIlnk6AmMsssIxJ4vaEjWAJNgFD
+        ia63XWA2r4CdxKpH/WA2i4CqxNKJc1lBbFGBGImdb3qYIWoEJU7OfMICYnMKWEosfX2dEcRm
+        FpCX2P52DjOELS5x68l8sGUSArfYJTZc+gKU4AByXCTu77KCeEFY4tXxLewQtozE/50w9c2M
+        Eg/PrWWHcHoYJS43zWCEqLKWOHz8IivIIGYBTYn1u/Qhwo4SfVeOMEHM55O48VYQ4gY+iUnb
+        pkOt5ZXoaBOCqFaTmHV8HdzagxcuMU9gVJqF5LNZSL6ZheSbWQh7FzCyrGIUTy0tzk1PLTbO
+        Sy3XK07MLS7NS9dLzs/dxAhMXqf/Hf+6g3Hfn6RDjAIcjEo8vBVM5rFCrIllxZW5hxglOJiV
+        RHgDG8xihXhTEiurUovy44tKc1KLDzFKc7AoifNWMzyIFhJITyxJzU5NLUgtgskycXBKNTCa
+        By7ezWPl6j4vS1tC/J9EY5Pg4exN934q6+kKqLj3/ExZI7zEMdTm2tqfyts3tdinSF37fqri
+        v0zp1/VH7rZ8W87w7kq0Q2qwsu/LJj7TSD/jWTdNVx/U9xW1kuDXFtIv2ji1v+tx5Fw1XRMR
+        niXPU2zY3ub+Patd9DmEq4hz1rawHuvYu0osxRmJhlrMRcWJAOcDRbxaAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBIsWRmVeSWpSXmKPExsVy+t/xu7pXIyxiDV4uYrTYOGM9q8X8I+dY
+        Lfofv2a2OH9+A7vFpsfXWC0u75rDZvG59wijxYzz+5gsFm39wm7RuvcIu8XhN+2sFhu/elhs
+        fnCMzYHXY9OqTjaPO9f2sHlsXlLv0bdlFaPH501yAaxRejZF+aUlqQoZ+cUltkrRhhZGeoaW
+        FnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehmta6IKJvBUTDuzgLGB8RJnFyMnh4SAicT3
+        naeYQWwhgaWMEodPZUDEZSROTmtghbCFJf5c62LrYuQCqnnNKDHtz3QmkISwgJPEnt9f2UBs
+        EYFIiYmtC5lBipgFljFJNLSfZoGYuo9R4tjyNBCbTcBQouttF1gDr4CdxKpH/WA2i4CqxNKJ
+        c8G2iQrESOw7s50dokZQ4uTMJ2BzOAUsJZa+vs4IYjMLmEnM2/yQGcKWl9j+dg6ULS5x68l8
+        pgmMQrOQtM9C0jILScssJC0LGFlWMYqklhbnpucWG+kVJ+YWl+al6yXn525iBMbqtmM/t+xg
+        7HoXfIhRgINRiYe3gsk8Vog1say4MvcQowQHs5IIb2CDWawQb0piZVVqUX58UWlOavEhRlOg
+        5yYyS4km5wPTSF5JvKGpobmFpaG5sbmxmYWSOG+HwMEYIYH0xJLU7NTUgtQimD4mDk6pBsat
+        BpObGdb8eNJ9TFIk3e1X9luVtLSYO/Hfn5gHz1o2dy5nQTbHA//GV8xaq/eGsF/doTVFYGnZ
+        mrkmtsem1kxsWnAyoFfmec/a849zGFfPPiD1rXt9PtPkvjtX/36u+/tVL/iq0pLH38+8Wni8
+        M9/SKmjeubJ5tu4MD+YvEnyR6Zil1rSUbfNMJZbijERDLeai4kQA1LqK2+sCAAA=
+X-CMS-MailID: 20190724131045eucas1p162379c36506e8b94147baa865f0409f7
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1
+References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
+        <20190718143044.25066-1-s.nawrocki@samsung.com>
+        <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 22 Jul 2019 at 11:47, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->
-> The patch adds AC timings information needed to support LPDDR3 and memory
-> controllers. The structure is used in of_memory and currently in Exynos
-> 5422 DMC. Add parsing data needed for LPDDR3 support.
-> It is currently used in Exynos5422 Dynamic Memory Controller.
->
-> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
-> ---
->  drivers/memory/jedec_ddr.h |  61 +++++++++++++++
->  drivers/memory/of_memory.c | 154 +++++++++++++++++++++++++++++++++++++
->  drivers/memory/of_memory.h |  18 +++++
->  3 files changed, 233 insertions(+)
->
-> diff --git a/drivers/memory/jedec_ddr.h b/drivers/memory/jedec_ddr.h
-> index 4a21b5044ff8..38e26d461bdb 100644
-> --- a/drivers/memory/jedec_ddr.h
-> +++ b/drivers/memory/jedec_ddr.h
-> @@ -29,6 +29,7 @@
->  #define DDR_TYPE_LPDDR2_S4     3
->  #define DDR_TYPE_LPDDR2_S2     4
->  #define DDR_TYPE_LPDDR2_NVM    5
-> +#define DDR_TYPE_LPDDR3                6
->
->  /* DDR IO width */
->  #define DDR_IO_WIDTH_4         1
-> @@ -169,4 +170,64 @@ extern const struct lpddr2_timings
->         lpddr2_jedec_timings[NUM_DDR_TIMING_TABLE_ENTRIES];
->  extern const struct lpddr2_min_tck lpddr2_jedec_min_tck;
->
-> +/*
-> + * Structure for timings for LPDDR3 based on LPDDR2 plus additional fields.
-> + * All parameters are in pico seconds(ps) unless explicitly indicated
-> + * with a suffix like tRAS_max_ns below
-> + */
-> +struct lpddr3_timings {
-> +       u32 max_freq;
-> +       u32 min_freq;
-> +       u32 tRFC;
-> +       u32 tRRD;
-> +       u32 tRPab;
-> +       u32 tRPpb;
-> +       u32 tRCD;
-> +       u32 tRC;
-> +       u32 tRAS;
-> +       u32 tWTR;
-> +       u32 tWR;
-> +       u32 tRTP;
-> +       u32 tW2W_C2C;
-> +       u32 tR2R_C2C;
-> +       u32 tWL;
-> +       u32 tDQSCK;
-> +       u32 tRL;
-> +       u32 tFAW;
-> +       u32 tXSR;
-> +       u32 tXP;
-> +       u32 tCKE;
-> +       u32 tCKESR;
-> +       u32 tMRD;
-> +};
-> +
-> +/*
-> + * Min value for some parameters in terms of number of tCK cycles(nCK)
-> + * Please set to zero parameters that are not valid for a given memory
-> + * type
-> + */
-> +struct lpddr3_min_tck {
-> +       u32 tRFC;
-> +       u32 tRRD;
-> +       u32 tRPab;
-> +       u32 tRPpb;
-> +       u32 tRCD;
-> +       u32 tRC;
-> +       u32 tRAS;
-> +       u32 tWTR;
-> +       u32 tWR;
-> +       u32 tRTP;
-> +       u32 tW2W_C2C;
-> +       u32 tR2R_C2C;
-> +       u32 tWL;
-> +       u32 tDQSCK;
-> +       u32 tRL;
-> +       u32 tFAW;
-> +       u32 tXSR;
-> +       u32 tXP;
-> +       u32 tCKE;
-> +       u32 tCKESR;
-> +       u32 tMRD;
-> +};
-> +
->  #endif /* __JEDEC_DDR_H */
-> diff --git a/drivers/memory/of_memory.c b/drivers/memory/of_memory.c
-> index 46539b27a3fb..4f5b8c81669f 100644
-> --- a/drivers/memory/of_memory.c
-> +++ b/drivers/memory/of_memory.c
-> @@ -3,6 +3,12 @@
->   * OpenFirmware helpers for memory drivers
->   *
->   * Copyright (C) 2012 Texas Instruments, Inc.
-> + * Copyright (C) 2019 Samsung Electronics Co., Ltd.
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License as published by
-> + * the Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
+Hi Viresh,
 
-What's this?
+On 2019-07-23 04:04, Viresh Kumar wrote:
+> On 18-07-19, 16:30, Sylwester Nawrocki wrote:
+>> This is second iteration of patch series adding ASV (Adaptive Supply
+>> Voltage) support for Exynos SoCs. The first one can be found at:
+>> https://lore.kernel.org/lkml/20190404171735.12815-1-s.nawrocki@samsung.com
+>>
+>> The main changes comparing to the first (RFC) version are:
+>>   - moving ASV data tables from DT to the driver,
+>>   - converting the chipid and the ASV drivers to use regmap,
+>>   - converting the ASV driver to proper platform driver.
+>>
+>> I tried the opp-supported-hw bitmask approach as in the Qualcomm CPUFreq
+>> DT bindings but it resulted in too many OPPs and DT nodes, around 200
+>> per CPU cluster. So the ASV OPP tables are now in the ASV driver, as in
+>> downstream kernels.
+> Hmm. Can you explain why do you have so many OPPs? How many
+> frequencies do you actually support per cluster and what all varies
+> per frequency based on hw ? How many hw version do u have ?
 
-Please, get a independent review or ack for this patch.
+For big cores there are 20 frequencies (2100MHz .. 200MHz). Each SoC 
+might belong to one of the 3 production 'sets' and each set contains 14 
+so called 'asv groups', which assign the certain voltage values for each 
+of those 20 frequencies (the lower asv group means lower voltage needed 
+for given frequency).
 
-Best regards,
-Krzysztof
+> I am asking as the OPP core can be improved to support your case if
+> possible. But I need to understand the problem first.
+
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
