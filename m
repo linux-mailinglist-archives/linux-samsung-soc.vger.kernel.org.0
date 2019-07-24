@@ -2,229 +2,244 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6D6D73597
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 19:33:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C201736AD
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 20:36:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbfGXRdq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Jul 2019 13:33:46 -0400
-Received: from mx2.suse.de ([195.135.220.15]:55890 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726158AbfGXRdp (ORCPT
+        id S1728538AbfGXSgq convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Jul 2019 14:36:46 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33084 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727716AbfGXSgq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Jul 2019 13:33:45 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id BDE9BAC18;
-        Wed, 24 Jul 2019 17:17:35 +0000 (UTC)
-Subject: Re: [PATCH v5 18/24] drm/ast: Provide ddc symlink in connector sysfs
- directory
-To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     Sam Ravnborg <sam@ravnborg.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Douglas Anderson <dianders@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>, Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Dave Airlie <airlied@redhat.com>,
-        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm@vger.kernel.org,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Allison Randal <allison@lohutok.net>,
-        linux-arm-kernel@lists.infradead.org,
-        Enrico Weigelt <info@metux.net>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Huang Rui <ray.huang@amd.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Gerd Hoffmann <kraxel@redhat.com>
-References: <cover.1563960855.git.andrzej.p@collabora.com>
- <0afab6e2f61907409ba13a0ba91b8ee701eb7d74.1563960855.git.andrzej.p@collabora.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Openpgp: preference=signencrypt
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNKFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmNvbT7CwJQEEwEIAD4W
- IQRyF/usjOnPY0ShaOVoDcEdUwt6IwUCWznTtgIbAwUJA8JnAAULCQgHAgYVCgkICwIEFgID
- AQIeAQIXgAAKCRBoDcEdUwt6I7D7CACBK42XW+7mCiK8ioXMEy1NzGbXC51RzGea8N83oEJS
- 1KVUtQxrkDxgrW/WLSl/TfqHFsJpdEFOv1XubWbleun3uKPy0e5vZCd5UjZPkeNjnqfCYTDy
- hVVsdOuFbtWDppJyJrThLqr9AgSFmoCNNUt1SVpYEEOLNE6C32BhlnSq21VLC+YXTgO/ZHTa
- YXkq54hHj63jwrcjkBSCkXLh37kHeqnl++GHpN+3R+o3w2OpwHAlvVjdKPT27v1tVkiydsFG
- 65Vd0n3m/ft+IOrGgxQM1C20uqKvsZGB4r3OGR50ekAybO7sjEJJ1Obl4ge/6RRqcvKz4LMb
- tGs85D6tPIeFzsBNBFs50uABCADGJj+DP1fk+UWOWrf4O61HTbC4Vr9QD2K4fUUHnzg2B6zU
- R1BPXqLGG0+lzK8kfYU/F5RjmEcClsIkAaFkg4kzKP14tvY1J5+AV3yNqcdg018HNtiyrSwI
- E0Yz/qm1Ot2NMZ0DdvVBg22IMsiudQ1tx9CH9mtyTbIXgACvl3PW2o9CxiHPE/bohFhwZwh/
- kXYYAE51lhinQ3oFEeQZA3w4OTvxSEspiQR8dg8qJJb+YOAc5IKk6sJmmM7JfFMWSr22satM
- 23oQ3WvJb4RV6HTRTAIEyyZS7g2DhiytgMG60t0qdABG5KXSQW+OKlZRpuWwKWaLh3if/p/u
- 69dvpanbABEBAAHCwHwEGAEIACYWIQRyF/usjOnPY0ShaOVoDcEdUwt6IwUCWznS4AIbDAUJ
- A8JnAAAKCRBoDcEdUwt6I6X3CACJ8D+TpXBCqJE5xwog08+Dp8uBpx0T9n1wE0GQisZruACW
- NofYn8PTX9k4wmegDLwt7YQDdKxQ4+eTfZeLNQqWg6OCftH5Kx7sjWnJ09tOgniVdROzWJ7c
- VJ/i0okazncsJ+nq48UYvRGE1Swh3A4QRIyphWX4OADOBmTFl9ZYNPnh23eaC9WrNvFr7yP7
- iGjMlfEW8l6Lda//EC5VpXVNza0xeae0zFNst2R9pn+bLkihwDLWxOIyifGRxTqNxoS4I1aw
- VhxPSVztPMSpIA/sOr/N/p6JrBLn+gui2K6mP7bGb8hF+szfArYqz3T1rv1VzUWAJf5Wre5U
- iNx9uqqx
-Message-ID: <f4c0432e-9223-54bc-c995-e0704555fc6e@suse.de>
-Date:   Wed, 24 Jul 2019 19:17:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 24 Jul 2019 14:36:46 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n9so48131756wru.0;
+        Wed, 24 Jul 2019 11:36:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Xzl/fiLKGCPpOVGcck93S7ZblEbRn80OrLwMSsnTC7Q=;
+        b=s2WBRcER3bW+bLnXvva2d0XhYmFUTF3Y4Jz9GAz//pJpF2GNAF8k/DTwff7fea8GQp
+         mwI3LyTb7bDjPNkuDP3+tYQtKr1Qi+hWVzjYA01hDqjNiu6U3M7z9FylD1rpf4izGzGe
+         Ibv3M5bPhvT6x5DtQrVxfrpxP7oBt7wC0q/eL1zUjXLsfb/1lGx5kJPuwtW8FYNg0KgD
+         ZO1Fma2Bog1HxqxHsRsu7bZcB/05xvK/08G0yVv5heDOauOFPl/2IkWvxw+3BlaCZgwu
+         VWs5vYMLlyShNJ1qgtnytIcODHdH73w6Hqknhg+dSEHmxJxBsddf6Cj8kY8fmmnBFS+N
+         Z5Ng==
+X-Gm-Message-State: APjAAAXIpfK5GGejrmtlkx92d82ZlJyNqzXHQHIXOG7lSMdPYQJlNAoH
+        q0y4yeRl36HIoUlNmvNzzn8=
+X-Google-Smtp-Source: APXvYqxYRMQS1TmGXcymc3W7ToVdMWgVBoEQhDPGcYVwmX41aL1Qhj0AF02NdM3bX24C9cVeLuh4lg==
+X-Received: by 2002:adf:b195:: with SMTP id q21mr85664720wra.2.1563993402757;
+        Wed, 24 Jul 2019 11:36:42 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.239])
+        by smtp.googlemail.com with ESMTPSA id c7sm40775879wro.70.2019.07.24.11.36.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Jul 2019 11:36:41 -0700 (PDT)
+Date:   Wed, 24 Jul 2019 20:36:39 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        cw00.choi@samsung.com, myungjoo.ham@samsung.com,
+        inki.dae@samsung.com, sw0312.kim@samsung.com,
+        georgi.djakov@linaro.org, m.szyprowski@samsung.com
+Subject: Re: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
+ functionality to exynos-bus
+Message-ID: <20190724183639.GA14346@kozik-lap>
+References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
+ <CGME20190723122028eucas1p2eb75f35b810e71d6c590370aaff0997b@eucas1p2.samsung.com>
+ <20190723122016.30279-10-a.swigon@partner.samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <0afab6e2f61907409ba13a0ba91b8ee701eb7d74.1563960855.git.andrzej.p@collabora.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="rQW7V0pPHkAw2NNiWp7qw2pJTEuWVVZkI"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20190723122016.30279-10-a.swigon@partner.samsung.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---rQW7V0pPHkAw2NNiWp7qw2pJTEuWVVZkI
-Content-Type: multipart/mixed; boundary="1nTmnYcXxxfxqvFKU3qpyJbp2Ylpbb6UI";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
- dri-devel@lists.freedesktop.org
-Cc: Sam Ravnborg <sam@ravnborg.org>, Neil Armstrong
- <narmstrong@baylibre.com>, David Airlie <airlied@linux.ie>,
- Douglas Anderson <dianders@chromium.org>,
- Thierry Reding <thierry.reding@gmail.com>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, kernel@collabora.com,
- linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- Vincent Abriou <vincent.abriou@st.com>, Krzysztof Kozlowski
- <krzk@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>,
- Maxime Ripard <maxime.ripard@bootlin.com>, Chen-Yu Tsai <wens@csie.org>,
- Kukjin Kim <kgene@kernel.org>, NXP Linux Team <linux-imx@nxp.com>,
- Dave Airlie <airlied@redhat.com>, intel-gfx@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
- Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
- Mamta Shukla <mamtashukla555@gmail.com>, linux-mediatek@lists.infradead.org,
- Jyri Sarha <jsarha@ti.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Thomas Gleixner <tglx@linutronix.de>, Sean Paul <sean@poorly.run>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Allison Randal <allison@lohutok.net>, linux-arm-kernel@lists.infradead.org,
- Enrico Weigelt <info@metux.net>, Jernej Skrabec <jernej.skrabec@siol.net>,
- amd-gfx@lists.freedesktop.org, Tomi Valkeinen <tomi.valkeinen@ti.com>,
- Seung-Woo Kim <sw0312.kim@samsung.com>, linux-kernel@vger.kernel.org,
- Todor Tomov <todor.tomov@linaro.org>,
- Kyungmin Park <kyungmin.park@samsung.com>, Huang Rui <ray.huang@amd.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Alex Deucher <alexander.deucher@amd.com>, Shawn Guo <shawnguo@kernel.org>,
- =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <f4c0432e-9223-54bc-c995-e0704555fc6e@suse.de>
-Subject: Re: [PATCH v5 18/24] drm/ast: Provide ddc symlink in connector sysfs
- directory
-References: <cover.1563960855.git.andrzej.p@collabora.com>
- <0afab6e2f61907409ba13a0ba91b8ee701eb7d74.1563960855.git.andrzej.p@collabora.com>
-In-Reply-To: <0afab6e2f61907409ba13a0ba91b8ee701eb7d74.1563960855.git.andrzej.p@collabora.com>
+On Tue, Jul 23, 2019 at 02:20:14PM +0200, Artur Świgoń wrote:
+> This patch adds interconnect functionality to the exynos-bus devfreq
+> driver.
+> 
+> The SoC topology is a graph (or, more specifically, a tree) and most of its
+> edges are taken from the devfreq parent-child hierarchy (cf.
+> Documentation/devicetree/bindings/devfreq/exynos-bus.txt). The previous
+> patch adds missing edges to the DT (under the name 'parent'). Due to
 
---1nTmnYcXxxfxqvFKU3qpyJbp2Ylpbb6UI
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Do not refer to DT patches. They will come through different tree so
+"previous" will not be correct anymore. You mentioned dependencies in
+cover letter so it is sufficient.
 
-
-
-Am 24.07.19 um 15:59 schrieb Andrzej Pietrasiewicz:
-> Use the ddc pointer provided by the generic connector.
->=20
-> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> unspecified relative probing order, -EPROBE_DEFER may be propagated to
+> guarantee that a child is probed before its parent.
+> 
+> Each bus is now an interconnect provider and an interconnect node as well
+> (cf. Documentation/interconnect/interconnect.rst), i.e. every bus registers
+> itself as a node. Node IDs are not hardcoded but rather assigned at
+> runtime, in probing order (subject to the above-mentioned exception
+> regarding relative order). This approach allows for using this driver with
+> various Exynos SoCs.
+> 
+> The devfreq target() callback provided by exynos-bus now selects either the
+> frequency calculated by the devfreq governor or the frequency requested via
+> the interconnect API for the given node, whichever is higher.
+> 
+> Please note that it is not an error when CONFIG_INTERCONNECT is 'n', in
+> which case all interconnect API functions are no-op.
+> 
+> Signed-off-by: Artur Świgoń <a.swigon@partner.samsung.com>
 > ---
->  drivers/gpu/drm/ast/ast_mode.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_m=
-ode.c
-> index c792362024a5..1c899a6e87b7 100644
-> --- a/drivers/gpu/drm/ast/ast_mode.c
-> +++ b/drivers/gpu/drm/ast/ast_mode.c
-> @@ -867,7 +867,14 @@ static int ast_connector_init(struct drm_device *d=
-ev)
->  		return -ENOMEM;
-> =20
->  	connector =3D &ast_connector->base;
-> -	drm_connector_init(dev, connector, &ast_connector_funcs, DRM_MODE_CON=
-NECTOR_VGA);
-> +	ast_connector->i2c =3D ast_i2c_create(dev);
-> +	if (!ast_connector->i2c)
-> +		DRM_ERROR("failed to add ddc bus for connector\n");
+>  drivers/devfreq/exynos-bus.c | 145 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 145 insertions(+)
+> 
+> diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
+> index 412511ca7703..12fb7c84ae50 100644
+> --- a/drivers/devfreq/exynos-bus.c
+> +++ b/drivers/devfreq/exynos-bus.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/devfreq-event.h>
+>  #include <linux/device.h>
+>  #include <linux/export.h>
+> +#include <linux/interconnect-provider.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/pm_opp.h>
+> @@ -23,6 +24,8 @@
+>  #define DEFAULT_SATURATION_RATIO	40
+>  #define DEFAULT_VOLTAGE_TOLERANCE	2
+>  
+> +#define icc_units_to_hz(x) ((x) * 1000UL / 8)
 > +
-> +	drm_connector_init_with_ddc(dev, connector,
-> +				    &ast_connector_funcs,
-> +				    DRM_MODE_CONNECTOR_VGA,
-> +				    &ast_connector->i2c->adapter);
-> =20
->  	drm_connector_helper_add(connector, &ast_connector_helper_funcs);
-> =20
-> @@ -881,10 +888,6 @@ static int ast_connector_init(struct drm_device *d=
-ev)
->  	encoder =3D list_first_entry(&dev->mode_config.encoder_list, struct d=
-rm_encoder, head);
->  	drm_connector_attach_encoder(connector, encoder);
-> =20
-> -	ast_connector->i2c =3D ast_i2c_create(dev);
-> -	if (!ast_connector->i2c)
-> -		DRM_ERROR("failed to add ddc bus for connector\n");
-> -
->  	return 0;
+>  struct exynos_bus {
+>  	struct device *dev;
+>  
+> @@ -31,12 +34,17 @@ struct exynos_bus {
+>  	unsigned int edev_count;
+>  	struct mutex lock;
+>  
+> +	unsigned long min_freq;
+>  	unsigned long curr_freq;
+>  
+>  	struct regulator *regulator;
+>  	struct clk *clk;
+>  	unsigned int voltage_tolerance;
+>  	unsigned int ratio;
+> +
+> +	/* One provider per bus, one node per provider */
+> +	struct icc_provider provider;
+> +	struct icc_node *node;
+>  };
+>  
+>  /*
+> @@ -61,6 +69,13 @@ exynos_bus_ops_edev(enable_edev);
+>  exynos_bus_ops_edev(disable_edev);
+>  exynos_bus_ops_edev(set_event);
+>  
+> +static int exynos_bus_next_id(void)
+> +{
+> +	static int exynos_bus_node_id;
+> +
+> +	return exynos_bus_node_id++;
+
+This does not look robust. Use IDR for IDs. 
+
+> +}
+> +
+>  static int exynos_bus_get_event(struct exynos_bus *bus,
+>  				struct devfreq_event_data *edata)
+>  {
+> @@ -98,6 +113,8 @@ static int exynos_bus_target(struct device *dev, unsigned long *freq, u32 flags)
+>  	unsigned long old_freq, new_freq, new_volt, tol;
+>  	int ret = 0;
+>  
+> +	*freq = max(*freq, bus->min_freq);
+> +
+>  	/* Get new opp-bus instance according to new bus clock */
+>  	new_opp = devfreq_recommended_opp(dev, freq, flags);
+>  	if (IS_ERR(new_opp)) {
+> @@ -208,6 +225,8 @@ static int exynos_bus_passive_target(struct device *dev, unsigned long *freq,
+>  	unsigned long old_freq, new_freq;
+>  	int ret = 0;
+>  
+> +	*freq = max(*freq, bus->min_freq);
+> +
+>  	/* Get new opp-bus instance according to new bus clock */
+>  	new_opp = devfreq_recommended_opp(dev, freq, flags);
+>  	if (IS_ERR(new_opp)) {
+> @@ -251,6 +270,35 @@ static void exynos_bus_passive_exit(struct device *dev)
+>  	clk_disable_unprepare(bus->clk);
 >  }
-> =20
->=20
+>  
+> +static int exynos_bus_icc_set(struct icc_node *src, struct icc_node *dst)
+> +{
+> +	struct exynos_bus *src_bus = src->data, *dst_bus = dst->data;
+> +
+> +	src_bus->min_freq = icc_units_to_hz(src->peak_bw);
+> +	dst_bus->min_freq = icc_units_to_hz(dst->peak_bw);
+> +
+> +	return 0;
+> +}
+> +
+> +static int exynos_bus_icc_aggregate(struct icc_node *node, u32 avg_bw,
+> +				    u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+> +{
+> +	*agg_peak = *agg_avg = peak_bw;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct icc_node *exynos_bus_icc_xlate(struct of_phandle_args *spec,
+> +					     void *data)
+> +{
+> +	struct exynos_bus *bus = data;
+> +
+> +	if (spec->np != bus->dev->of_node)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	return bus->node;
+> +}
+> +
+>  static int exynos_bus_parent_parse_of(struct device_node *np,
+>  					struct exynos_bus *bus)
+>  {
+> @@ -469,6 +517,95 @@ static int exynos_bus_profile_init_passive(struct exynos_bus *bus,
+>  	return ret;
+>  }
+>  
+> +static int exynos_bus_icc_connect(struct exynos_bus *bus)
+> +{
+> +	struct device_node *np = bus->dev->of_node;
+> +	struct devfreq *parent_devfreq;
+> +	struct icc_node *parent_node = NULL;
+> +	struct of_phandle_args args;
+> +	int ret = 0;
+> +
+> +	parent_devfreq = devfreq_get_devfreq_by_phandle(bus->dev, 0);
+> +	if (!IS_ERR(parent_devfreq)) {
+> +		struct exynos_bus *parent_bus;
 
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+What if someone unbinds this parent devfreq? I guess everything in
+devfreq starts exploding... however it's not the problem of this patch.
 
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Linux GmbH, Maxfeldstrasse 5, 90409 Nuernberg, Germany
-GF: Felix Imend=C3=B6rffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG N=C3=BCrnberg)
+Do you also need suspend/resume order (device links)? I guess the other
+side, e.g.  mixer, should resume before the bus?
 
+> +
+> +		parent_bus = dev_get_drvdata(parent_devfreq->dev.parent);
+> +		parent_node = parent_bus->node;
+> +	} else {
+> +		/* Look for parent in DT */
+> +		int num = of_count_phandle_with_args(np, "parent",
+> +						     "#interconnect-cells");
+> +		if (num != 1)
 
---1nTmnYcXxxfxqvFKU3qpyJbp2Ylpbb6UI--
+You will return here 0 but isn't it an error?
 
---rQW7V0pPHkAw2NNiWp7qw2pJTEuWVVZkI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Best regards,
+Krzysztof
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl04kq0ACgkQaA3BHVML
-eiOVlgf9G4jOeCy2mr53PWbrCulWova4UboUrbdUc7gRFOmPd+B+OzGYuSRcUnlg
-kOVXCeSAueui+sQ0IbNuz/aH/ObT+dZzXd5gkLN9J6jj1WoLQ8Wyn4apJy13rnsE
-mHtW7wjvJ8kq5Yool9NZApYN9aD6ZTxZQwt4YokeS7Kfryf+vQN3pweb8XGBW3d4
-FuLKHRSrgcqTY1XUMAbXlEC5A0DfBo4wfar1q7u045ggLL84yMQcw3SJ9WyiPbpf
-k2v9fkgpwy60HTlNaTBxlzm4KBoRVXfYqIynlK3QMf7GF2sz0RiBF2RmzgG96f0I
-UqpER9GagpcIV5uY52PywoarGEUWuA==
-=lXB9
------END PGP SIGNATURE-----
-
---rQW7V0pPHkAw2NNiWp7qw2pJTEuWVVZkI--
