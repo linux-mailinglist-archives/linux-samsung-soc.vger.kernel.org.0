@@ -2,99 +2,248 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 86D7A734A7
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 19:10:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33EA77354A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 19:24:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726722AbfGXRKy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Jul 2019 13:10:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35967 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726031AbfGXRKy (ORCPT
+        id S1727572AbfGXRQq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Jul 2019 13:16:46 -0400
+Received: from mx2.suse.de ([195.135.220.15]:52164 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727469AbfGXRQp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Jul 2019 13:10:54 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n4so47882748wrs.3;
-        Wed, 24 Jul 2019 10:10:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WXZ1g7GkxFmyDSWuDgpIVN7PNvx6qdlx90diYuseAHM=;
-        b=OxcpcrsB+Nh2xELyiA1Yv99FUMYEvIzlG+yG6yit/9f+ygFbVXl643sfdbjfTELuxq
-         idsz3sFggjLg/Gg6NF+dJf2rjjIRxeqPZ5MDsKX1ZrRlC4uObhXX86heyKh95Wkodj1v
-         U4WUJ7pn/cEGUy5B5uC2ApCHw4MAEq+lXuXA+rMOTNcVtDEAwKk6NUb1f1FN3r/AIsc8
-         ydWZ8mnHClDLJXGMtD/8V6agsp4T0+iwtYvMAjPnf2irlIjEZitUM59y9ZDzfCsL2+Qn
-         OPFMhSkgXvUBr7kctdng2R97yfAlcf3Qmp7mL9KGMN6Xx8w/c8vAMK5xFNQHkZNZVGJh
-         eLWw==
-X-Gm-Message-State: APjAAAVD+MFvB6sQcMX6EAM6DmggUnFOkh3csKTByiHJ7qYFVClzvfqa
-        1NesBTuV8WdHIkf0Yv4Ae+k=
-X-Google-Smtp-Source: APXvYqw3AXAnk2BJ//1eeyPDtP4kO0/8LrlqA6LpAN1k2ctyqioKAHYzmf7hgtsMo7drCGHj11qc2Q==
-X-Received: by 2002:adf:da4d:: with SMTP id r13mr57744544wrl.281.1563988252192;
-        Wed, 24 Jul 2019 10:10:52 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.239])
-        by smtp.googlemail.com with ESMTPSA id n9sm88609422wrp.54.2019.07.24.10.10.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Jul 2019 10:10:51 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 19:10:49 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, b.zolnierkie@samsung.com, kgene@kernel.org,
-        mark.rutland@arm.com, robh+dt@kernel.org, cw00.choi@samsung.com,
-        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
-        treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
-        willy.mh.wolff.ml@gmail.com
-Subject: Re: [PATCH v12 6/9] ARM: dts: exynos: add chipid label and syscon
- compatible
-Message-ID: <20190724171049.GA11333@kozik-lap>
-References: <20190722094646.13342-1-l.luba@partner.samsung.com>
- <CGME20190722094730eucas1p2f3f8298c43c8bf0d96135bca9a9e753b@eucas1p2.samsung.com>
- <20190722094646.13342-7-l.luba@partner.samsung.com>
+        Wed, 24 Jul 2019 13:16:45 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id C2476AC18;
+        Wed, 24 Jul 2019 17:16:42 +0000 (UTC)
+Subject: Re: [PATCH v5 02/24] drm: Add drm_connector_init() variant with ddc
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     Sam Ravnborg <sam@ravnborg.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>, Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm@vger.kernel.org,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        linux-arm-kernel@lists.infradead.org,
+        Enrico Weigelt <info@metux.net>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+References: <cover.1563960855.git.andrzej.p@collabora.com>
+ <53f5ded2971235e5b63c9a3ed4ed8bccf10c78f2.1563960855.git.andrzej.p@collabora.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Openpgp: preference=signencrypt
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNKFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmNvbT7CwJQEEwEIAD4W
+ IQRyF/usjOnPY0ShaOVoDcEdUwt6IwUCWznTtgIbAwUJA8JnAAULCQgHAgYVCgkICwIEFgID
+ AQIeAQIXgAAKCRBoDcEdUwt6I7D7CACBK42XW+7mCiK8ioXMEy1NzGbXC51RzGea8N83oEJS
+ 1KVUtQxrkDxgrW/WLSl/TfqHFsJpdEFOv1XubWbleun3uKPy0e5vZCd5UjZPkeNjnqfCYTDy
+ hVVsdOuFbtWDppJyJrThLqr9AgSFmoCNNUt1SVpYEEOLNE6C32BhlnSq21VLC+YXTgO/ZHTa
+ YXkq54hHj63jwrcjkBSCkXLh37kHeqnl++GHpN+3R+o3w2OpwHAlvVjdKPT27v1tVkiydsFG
+ 65Vd0n3m/ft+IOrGgxQM1C20uqKvsZGB4r3OGR50ekAybO7sjEJJ1Obl4ge/6RRqcvKz4LMb
+ tGs85D6tPIeFzsBNBFs50uABCADGJj+DP1fk+UWOWrf4O61HTbC4Vr9QD2K4fUUHnzg2B6zU
+ R1BPXqLGG0+lzK8kfYU/F5RjmEcClsIkAaFkg4kzKP14tvY1J5+AV3yNqcdg018HNtiyrSwI
+ E0Yz/qm1Ot2NMZ0DdvVBg22IMsiudQ1tx9CH9mtyTbIXgACvl3PW2o9CxiHPE/bohFhwZwh/
+ kXYYAE51lhinQ3oFEeQZA3w4OTvxSEspiQR8dg8qJJb+YOAc5IKk6sJmmM7JfFMWSr22satM
+ 23oQ3WvJb4RV6HTRTAIEyyZS7g2DhiytgMG60t0qdABG5KXSQW+OKlZRpuWwKWaLh3if/p/u
+ 69dvpanbABEBAAHCwHwEGAEIACYWIQRyF/usjOnPY0ShaOVoDcEdUwt6IwUCWznS4AIbDAUJ
+ A8JnAAAKCRBoDcEdUwt6I6X3CACJ8D+TpXBCqJE5xwog08+Dp8uBpx0T9n1wE0GQisZruACW
+ NofYn8PTX9k4wmegDLwt7YQDdKxQ4+eTfZeLNQqWg6OCftH5Kx7sjWnJ09tOgniVdROzWJ7c
+ VJ/i0okazncsJ+nq48UYvRGE1Swh3A4QRIyphWX4OADOBmTFl9ZYNPnh23eaC9WrNvFr7yP7
+ iGjMlfEW8l6Lda//EC5VpXVNza0xeae0zFNst2R9pn+bLkihwDLWxOIyifGRxTqNxoS4I1aw
+ VhxPSVztPMSpIA/sOr/N/p6JrBLn+gui2K6mP7bGb8hF+szfArYqz3T1rv1VzUWAJf5Wre5U
+ iNx9uqqx
+Message-ID: <ea96186f-8d38-a698-f29e-049987ae0163@suse.de>
+Date:   Wed, 24 Jul 2019 19:16:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190722094646.13342-7-l.luba@partner.samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <53f5ded2971235e5b63c9a3ed4ed8bccf10c78f2.1563960855.git.andrzej.p@collabora.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="LtNJJAmlPBJFSmTCjBWxZTnrO1jKlugWK"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jul 22, 2019 at 11:46:43AM +0200, Lukasz Luba wrote:
-> Add the chipid label which allows to use it in phandle from other device.
-> Use syscon in compatible to get the regmap of the device register set.
-> The chipid is used in DMC during initialization to compare compatibility.
-> 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--LtNJJAmlPBJFSmTCjBWxZTnrO1jKlugWK
+Content-Type: multipart/mixed; boundary="vnsNtGTawS7eHAvH285t7LPE1bVWovlWW";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+ dri-devel@lists.freedesktop.org
+Cc: Sam Ravnborg <sam@ravnborg.org>, Neil Armstrong
+ <narmstrong@baylibre.com>, David Airlie <airlied@linux.ie>,
+ Douglas Anderson <dianders@chromium.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, kernel@collabora.com,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ Vincent Abriou <vincent.abriou@st.com>, Krzysztof Kozlowski
+ <krzk@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Maxime Ripard <maxime.ripard@bootlin.com>, Chen-Yu Tsai <wens@csie.org>,
+ Kukjin Kim <kgene@kernel.org>, NXP Linux Team <linux-imx@nxp.com>,
+ Dave Airlie <airlied@redhat.com>, intel-gfx@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+ Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+ Mamta Shukla <mamtashukla555@gmail.com>, linux-mediatek@lists.infradead.org,
+ Jyri Sarha <jsarha@ti.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Sean Paul <sean@poorly.run>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Allison Randal <allison@lohutok.net>, linux-arm-kernel@lists.infradead.org,
+ Enrico Weigelt <info@metux.net>, Jernej Skrabec <jernej.skrabec@siol.net>,
+ amd-gfx@lists.freedesktop.org, Tomi Valkeinen <tomi.valkeinen@ti.com>,
+ Seung-Woo Kim <sw0312.kim@samsung.com>, linux-kernel@vger.kernel.org,
+ Todor Tomov <todor.tomov@linaro.org>,
+ Kyungmin Park <kyungmin.park@samsung.com>, Huang Rui <ray.huang@amd.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Alex Deucher <alexander.deucher@amd.com>, Shawn Guo <shawnguo@kernel.org>,
+ =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <ea96186f-8d38-a698-f29e-049987ae0163@suse.de>
+Subject: Re: [PATCH v5 02/24] drm: Add drm_connector_init() variant with ddc
+References: <cover.1563960855.git.andrzej.p@collabora.com>
+ <53f5ded2971235e5b63c9a3ed4ed8bccf10c78f2.1563960855.git.andrzej.p@collabora.com>
+In-Reply-To: <53f5ded2971235e5b63c9a3ed4ed8bccf10c78f2.1563960855.git.andrzej.p@collabora.com>
 
-I cannot find its usage in DMC driver.
+--vnsNtGTawS7eHAvH285t7LPE1bVWovlWW
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+Hi
 
+Am 24.07.19 um 15:59 schrieb Andrzej Pietrasiewicz:
+> Allow passing ddc adapter pointer to the init function. Even if
+> drm_connector_init() sometime in the future decides to e.g. memset() al=
+l
+> connector fields to zeros, the newly added function ensures that at its=
 
-> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> completion the ddc member of connector is correctly set.
+>=20
+> Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 > ---
->  arch/arm/boot/dts/exynos5.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/exynos5.dtsi b/arch/arm/boot/dts/exynos5.dtsi
-> index 67f9b4504a42..4801ca759feb 100644
-> --- a/arch/arm/boot/dts/exynos5.dtsi
-> +++ b/arch/arm/boot/dts/exynos5.dtsi
-> @@ -35,8 +35,8 @@
->  		#size-cells = <1>;
->  		ranges;
->  
-> -		chipid@10000000 {
-> -			compatible = "samsung,exynos4210-chipid";
-> +		chipid: chipid@10000000 {
-> +			compatible = "samsung,exynos4210-chipid", "syscon";
->  			reg = <0x10000000 0x100>;
->  		};
->  
-> -- 
-> 2.17.1
-> 
+>  drivers/gpu/drm/drm_connector.c | 19 +++++++++++++++++++
+>  include/drm/drm_connector.h     |  5 +++++
+>  2 files changed, 24 insertions(+)
+>=20
+> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_conn=
+ector.c
+> index 068d4b05f1be..06fbfc44fb48 100644
+> --- a/drivers/gpu/drm/drm_connector.c
+> +++ b/drivers/gpu/drm/drm_connector.c
+> @@ -296,6 +296,25 @@ int drm_connector_init(struct drm_device *dev,
+>  }
+>  EXPORT_SYMBOL(drm_connector_init);
+> =20
+> +int drm_connector_init_with_ddc(struct drm_device *dev,
+> +				struct drm_connector *connector,
+> +				const struct drm_connector_funcs *funcs,
+> +				int connector_type,
+> +				struct i2c_adapter *ddc)
+> +{
+> +	int ret;
+> +
+> +	ret =3D drm_connector_init(dev, connector, funcs, connector_type);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* provide ddc symlink in sysfs */
+> +	connector->ddc =3D ddc;
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(drm_connector_init_with_ddc);
+> +
+
+Thanks for including such a function.
+
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+
+>  /**
+>   * drm_connector_attach_edid_property - attach edid property.
+>   * @connector: the connector
+> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+> index 33a6fff85fdb..937fda9c1374 100644
+> --- a/include/drm/drm_connector.h
+> +++ b/include/drm/drm_connector.h
+> @@ -1410,6 +1410,11 @@ int drm_connector_init(struct drm_device *dev,
+>  		       struct drm_connector *connector,
+>  		       const struct drm_connector_funcs *funcs,
+>  		       int connector_type);
+> +int drm_connector_init_with_ddc(struct drm_device *dev,
+> +				struct drm_connector *connector,
+> +				const struct drm_connector_funcs *funcs,
+> +				int connector_type,
+> +				struct i2c_adapter *ddc);
+>  void drm_connector_attach_edid_property(struct drm_connector *connecto=
+r);
+>  int drm_connector_register(struct drm_connector *connector);
+>  void drm_connector_unregister(struct drm_connector *connector);
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Linux GmbH, Maxfeldstrasse 5, 90409 Nuernberg, Germany
+GF: Felix Imend=C3=B6rffer, Mary Higgins, Sri Rasiah
+HRB 21284 (AG N=C3=BCrnberg)
+
+
+--vnsNtGTawS7eHAvH285t7LPE1bVWovlWW--
+
+--LtNJJAmlPBJFSmTCjBWxZTnrO1jKlugWK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl04knMACgkQaA3BHVML
+eiPIEAf/SbE8+UterlzTVb4DSKX4d7+6Qm6csshf2sBPxiw6ecOqETPDYsQXsZYK
+lwqXKV0mCZ7emWWXINgeIGb27bYeXxlv/s7BpdMC/H88bZK2MqnHQdbwlXD5W+PF
+9QPMXdbn55pDDyjE/Onjmip5Ce+gkXQb2EyafrqkEuDxhCx9QCUnSwrXpV6kTmxS
+/ZCuKYDKVU89AoRunyM8VS2Uqwm9e0GZTaUHcr+3rxGUxwi99/LJu7vGLwLih7Nl
+BEJUyOIzVT9mg7dGE70z8XG/0X0bDQEQiNjKHIUdMOCKbMBZerZjPuGH2a84AS4h
+j71GFMojM8wuds7/IkMG76b5vfNGNA==
+=Nt+n
+-----END PGP SIGNATURE-----
+
+--LtNJJAmlPBJFSmTCjBWxZTnrO1jKlugWK--
