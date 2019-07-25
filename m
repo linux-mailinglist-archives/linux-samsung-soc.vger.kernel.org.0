@@ -2,180 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C17B374000
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Jul 2019 22:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D365D74338
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jul 2019 04:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387945AbfGXTYc convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Jul 2019 15:24:32 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33749 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726810AbfGXTYb (ORCPT
+        id S2389044AbfGYCXt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Jul 2019 22:23:49 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43608 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388139AbfGYCXs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Jul 2019 15:24:31 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n9so48256611wru.0;
-        Wed, 24 Jul 2019 12:24:30 -0700 (PDT)
+        Wed, 24 Jul 2019 22:23:48 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i189so21887990pfg.10
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Jul 2019 19:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=f2gYhr2xF9eqfzuK1I6ByZW/6E+IIFIf49moUqSig44=;
+        b=UWpYFZCqApaDNfrjdA5KtekES5UJ5GTU1kmcTFDFb2FLfRCDcNFDgvronSImr9dgD9
+         0mFTlZI7X35xO1vEdd3Gki5LIf98gKG5QhKxb/Y4+VDIDhfB1gwWeVXBqiLEyWL2EkgW
+         NT11Oz6vHpCvPOjC1YKTKmUoFKun/2NxPqpp1JkpL65nRxlStWUN4lRLXspUzJnsSUs7
+         f0W+td0YgaR8ANRf2sKNe+yfU85x4p815cUUDhoDA7GMXy2XLaBS0z1jQB9wcs/VHaCv
+         7pV5B+RTx3CuZ/R9xi/w3tBHDvXglw6aX/anI5anp/fOKcEQncy2ECQwLBNYPNc9rUd9
+         Z5QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=lfXxMsdfj3/069jvw/iy7OsZv8+UN7ABTGl62C7QKYA=;
-        b=KLLLaPbbO8eBii32cX5LOLTw947XYtHea0krdZtddLVAbCJq3zgEvX7KZSrvFeFiOn
-         REt/zdFIOh9DOTYmmIClMDgVilFbTKEXSL/L+W7X+QJFQZHN3C8Qax/2lZgRAnnpCUBS
-         Ao8WrJ7/5BebbGC+jobo7W5z9cRz7nPWtvcgF3lY4e2q1388+BQf/y3u0HywZHa3JzEZ
-         Ik7k1prk7lnTrMdtp6EafMdwaaw2wAR8iMTcZLDEKctSAk19vGTDcjnkm5/sHLUorBdP
-         GIW2mSo3ZLDspEQK3ORYLHyotRCrUgXLmulfoC69xJ0vs9lpLMmdeL6bYs4nLJofaCeL
-         p2nA==
-X-Gm-Message-State: APjAAAU/RoLqKcXiSeqKQ3hwto3eCPPZ+KurFnauN7NUGGqGij+Tnc+M
-        1eoISvJ5U+izgM0EZxRwER8=
-X-Google-Smtp-Source: APXvYqxsoh43HV2OpAyo0WN3mesXUKeJis1EeqQpdnzoRNCOZlfiNYz32Xds+Ra9u+/5tu5G/kpe4w==
-X-Received: by 2002:adf:80e6:: with SMTP id 93mr51827758wrl.298.1563996269437;
-        Wed, 24 Jul 2019 12:24:29 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.239])
-        by smtp.googlemail.com with ESMTPSA id o6sm91244088wra.27.2019.07.24.12.24.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Jul 2019 12:24:28 -0700 (PDT)
-Date:   Wed, 24 Jul 2019 21:24:26 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        cw00.choi@samsung.com, myungjoo.ham@samsung.com,
-        inki.dae@samsung.com, sw0312.kim@samsung.com,
-        georgi.djakov@linaro.org, m.szyprowski@samsung.com
-Subject: Re: [RFC PATCH 08/11] arm: dts: exynos: Add parents and
- #interconnect-cells to Exynos4412
-Message-ID: <20190724192426.GJ14346@kozik-lap>
-References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
- <CGME20190723122027eucas1p24b1d76e3139f7cc52614d7613ff9ba98@eucas1p2.samsung.com>
- <20190723122016.30279-9-a.swigon@partner.samsung.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=f2gYhr2xF9eqfzuK1I6ByZW/6E+IIFIf49moUqSig44=;
+        b=KSi8eCK+HSLGIenHcgKHrArG6H9KGHZUGg6VjjVAiw10tVKqYOwVPu7qJksTGHEP5S
+         prkEy/mx19DXJ0gw84nG57KNAE/VArn05rs2R/xMpMKtNe17FY7dmj7P2ICD0N29tWoa
+         W+dnWhFIXk+HnJSD200u5MgnnCEpftTebc5b+B6K0m3AmVr9RxXr/T4iGCjWRn1Ybgi7
+         5EGV4aGa9PHgPcjn6O9rA5L73RDpgLJL1yk3Pi04TsB9Duy065IXCQGqApxgS+3585oD
+         sOXlY7sMt+rDyb0xHJkB5O8F8lHw8mrwG4OYrm+497qooUynIzpZw20R0SXem/mNEaSs
+         zetA==
+X-Gm-Message-State: APjAAAXnzizre6kI61eKdmgJ6fCAQcNslLhMMsw3I2YwdKFWhpyf3fjQ
+        +A6ecTxzBFchMwf4lIPwcTgYVA==
+X-Google-Smtp-Source: APXvYqzXNlrdXx1C+X0/1qZx+FxwGsBmRDCWeiwCURuT22GPdQ5YuJbOB5TOiPQUDU7gUhGBG6bBRQ==
+X-Received: by 2002:a62:750c:: with SMTP id q12mr14690753pfc.59.1564021427936;
+        Wed, 24 Jul 2019 19:23:47 -0700 (PDT)
+Received: from localhost ([122.172.28.117])
+        by smtp.gmail.com with ESMTPSA id k25sm37963077pgt.53.2019.07.24.19.23.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Jul 2019 19:23:46 -0700 (PDT)
+Date:   Thu, 25 Jul 2019 07:53:43 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>, krzk@kernel.org,
+        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
+        kgene@kernel.org, pankaj.dubey@samsung.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+Message-ID: <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
+References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
+ <20190718143044.25066-1-s.nawrocki@samsung.com>
+ <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+ <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <20190723122016.30279-9-a.swigon@partner.samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Jul 23, 2019 at 02:20:13PM +0200, Artur Świgoń wrote:
-> This patch adds two fields tp the Exynos4412 DTS:
-
-tp->to
-
->   - parent: to declare connections between nodes that are not in a
->     parent-child relation in devfreq;
-
-Is it a standard property?
-The explanation needs some improvement... why are you adding parent to a
-devices which are not child-parent?
-
-Best regards,
-Krzysztof
-
->   - #interconnect-cells: required by the interconnect framework.
+On 24-07-19, 15:10, Marek Szyprowski wrote:
+> Hi Viresh,
 > 
-> Please note that #interconnect-cells is always zero and node IDs are not
-> hardcoded anywhere.
+> On 2019-07-23 04:04, Viresh Kumar wrote:
+> > On 18-07-19, 16:30, Sylwester Nawrocki wrote:
+> >> This is second iteration of patch series adding ASV (Adaptive Supply
+> >> Voltage) support for Exynos SoCs. The first one can be found at:
+> >> https://lore.kernel.org/lkml/20190404171735.12815-1-s.nawrocki@samsung.com
+> >>
+> >> The main changes comparing to the first (RFC) version are:
+> >>   - moving ASV data tables from DT to the driver,
+> >>   - converting the chipid and the ASV drivers to use regmap,
+> >>   - converting the ASV driver to proper platform driver.
+> >>
+> >> I tried the opp-supported-hw bitmask approach as in the Qualcomm CPUFreq
+> >> DT bindings but it resulted in too many OPPs and DT nodes, around 200
+> >> per CPU cluster. So the ASV OPP tables are now in the ASV driver, as in
+> >> downstream kernels.
+> > Hmm. Can you explain why do you have so many OPPs? How many
+> > frequencies do you actually support per cluster and what all varies
+> > per frequency based on hw ? How many hw version do u have ?
 > 
-> Signed-off-by: Artur Świgoń <a.swigon@partner.samsung.com>
-> ---
->  arch/arm/boot/dts/exynos4412-odroid-common.dtsi | 1 +
->  arch/arm/boot/dts/exynos4412.dtsi               | 9 +++++++++
->  2 files changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/exynos4412-odroid-common.dtsi b/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
-> index ea55f377d17c..bdd61ae86103 100644
-> --- a/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
-> +++ b/arch/arm/boot/dts/exynos4412-odroid-common.dtsi
-> @@ -106,6 +106,7 @@
->  &bus_leftbus {
->  	devfreq-events = <&ppmu_leftbus_3>, <&ppmu_rightbus_3>;
->  	vdd-supply = <&buck3_reg>;
-> +	parent = <&bus_dmc>;
->  	status = "okay";
->  };
->  
-> diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-> index d20db2dfe8e2..a70a671acacd 100644
-> --- a/arch/arm/boot/dts/exynos4412.dtsi
-> +++ b/arch/arm/boot/dts/exynos4412.dtsi
-> @@ -390,6 +390,7 @@
->  			clocks = <&clock CLK_DIV_DMC>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_dmc_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -398,6 +399,7 @@
->  			clocks = <&clock CLK_DIV_ACP>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_acp_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -406,6 +408,7 @@
->  			clocks = <&clock CLK_DIV_C2C>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_dmc_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -459,6 +462,7 @@
->  			clocks = <&clock CLK_DIV_GDL>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_leftbus_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -467,6 +471,7 @@
->  			clocks = <&clock CLK_DIV_GDR>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_leftbus_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -475,6 +480,7 @@
->  			clocks = <&clock CLK_ACLK160>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_display_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -483,6 +489,7 @@
->  			clocks = <&clock CLK_ACLK133>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_fsys_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -491,6 +498,7 @@
->  			clocks = <&clock CLK_ACLK100>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_peri_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> @@ -499,6 +507,7 @@
->  			clocks = <&clock CLK_SCLK_MFC>;
->  			clock-names = "bus";
->  			operating-points-v2 = <&bus_leftbus_opp_table>;
-> +			#interconnect-cells = <0>;
->  			status = "disabled";
->  		};
->  
-> -- 
-> 2.17.1
-> 
+> For big cores there are 20 frequencies (2100MHz .. 200MHz). Each SoC 
+> might belong to one of the 3 production 'sets' and each set contains 14 
+> so called 'asv groups', which assign the certain voltage values for each 
+> of those 20 frequencies (the lower asv group means lower voltage needed 
+> for given frequency).
+
+There is another property which might be useful in this case:
+"opp-microvolt-<name>" and then you can use API
+dev_pm_opp_set_prop_name() to choose which voltage value to apply to
+all OPPs.
+
+opp-supported-hw property is more useful for the cases where only a
+subset of frequencies will be supported for different versions of the
+SoC. And what you need is a different voltage value for all
+frequencies based on some h/w version.
+
+-- 
+viresh
