@@ -2,182 +2,144 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33B4F76B4F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 16:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D6AF771B5
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 20:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728287AbfGZORY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 26 Jul 2019 10:17:24 -0400
-Received: from iolanthe.rowland.org ([192.131.102.54]:34020 "HELO
-        iolanthe.rowland.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with SMTP id S1727679AbfGZORY (ORCPT
+        id S2387854AbfGZSzr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 26 Jul 2019 14:55:47 -0400
+Received: from asavdk3.altibox.net ([109.247.116.14]:44222 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387743AbfGZSzr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 26 Jul 2019 10:17:24 -0400
-Received: (qmail 1779 invoked by uid 2102); 26 Jul 2019 10:17:23 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Jul 2019 10:17:23 -0400
-Date:   Fri, 26 Jul 2019 10:17:23 -0400 (EDT)
-From:   Alan Stern <stern@rowland.harvard.edu>
-X-X-Sender: stern@iolanthe.rowland.org
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-cc:     linux-usb@vger.kernel.org, <linux-samsung-soc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Markus Reichl <m.reichl@fivetechno.de>,
-        =?UTF-8?q?M=C3=A5ns=20Rullg=C3=A5rd?= <mans@mansr.com>,
+        Fri, 26 Jul 2019 14:55:47 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id CB69020127;
+        Fri, 26 Jul 2019 20:55:39 +0200 (CEST)
+Date:   Fri, 26 Jul 2019 20:55:38 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Cc:     Neil Armstrong <narmstrong@baylibre.com>,
+        David Airlie <airlied@linux.ie>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        kernel@collabora.com, linux-samsung-soc@vger.kernel.org,
+        Jyri Sarha <jsarha@ti.com>,
+        Vincent Abriou <vincent.abriou@st.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Peter Chen <peter.chen@nxp.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2 2/3] usb: exynos: add support for getting PHYs from
- the standard dt array
-In-Reply-To: <20190726081453.9456-3-m.szyprowski@samsung.com>
-Message-ID: <Pine.LNX.4.44L0.1907261016440.1569-100000@iolanthe.rowland.org>
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Chen-Yu Tsai <wens@csie.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Dave Airlie <airlied@redhat.com>,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-kernel@lists.infradead.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        amd-gfx@lists.freedesktop.org,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org, Todor Tomov <todor.tomov@linaro.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Gerd Hoffmann <kraxel@redhat.com>
+Subject: Review required [Was: Associate ddc adapters with connectors]
+Message-ID: <20190726185538.GD14981@ravnborg.org>
+References: <cover.1564161140.git.andrzej.p@collabora.com>
+ <20190726183520.GA22572@ravnborg.org>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190726183520.GA22572@ravnborg.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=dqr19Wo4 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8
+        a=e5mUnYsNAAAA:8 a=nTBMXhx45H-Va90dJ2EA:9 a=CjuIK1q_8ugA:10
+        a=E9Po1WZjFZOl8hwRPBS3:22 a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 26 Jul 2019, Marek Szyprowski wrote:
+Hi all.
 
-> Add the code for getting generic PHYs from standard device tree array
-> from the main controller device node. This is a first step in resolving
-> the conflict between Exynos EHCI/OHCI sub-nodes and generic USB device
-> bindings. Later the sub-nodes currently used for assigning PHYs to root
-> ports of the controller will be removed making a place for the generic
-> USB device bindings nodes.
+Andrzej have done a good job following up on feedback and this series is
+now ready.
+
+We need ack on the patches touching the individual drivers before we can
+proceed.
+Please check your drivers and get back.
+
+	Sam
+
+> Hi Andezej.
 > 
-> Suggested-by: Måns Rullgård <mans@mansr.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
-
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-
->  drivers/usb/host/ehci-exynos.c | 23 +++++++++++++++++++----
->  drivers/usb/host/ohci-exynos.c | 23 +++++++++++++++++++----
->  2 files changed, 38 insertions(+), 8 deletions(-)
+> On Fri, Jul 26, 2019 at 07:22:54PM +0200, Andrzej Pietrasiewicz wrote:
+> > It is difficult for a user to know which of the i2c adapters is for which
+> > drm connector. This series addresses this problem.
+> > 
+> > The idea is to have a symbolic link in connector's sysfs directory, e.g.:
+> > 
+> > ls -l /sys/class/drm/card0-HDMI-A-1/ddc
+> > lrwxrwxrwx 1 root root 0 Jun 24 10:42 /sys/class/drm/card0-HDMI-A-1/ddc \
+> > 	-> ../../../../soc/13880000.i2c/i2c-2
+> > 
+> > The user then knows that their card0-HDMI-A-1 uses i2c-2 and can e.g. run
+> > ddcutil:
+> > 
+> > ddcutil -b 2 getvcp 0x10
+> > VCP code 0x10 (Brightness): current value =    90, max value =   100
+> > 
+> > The first patch in the series adds struct i2c_adapter pointer to struct
+> > drm_connector. If the field is used by a particular driver, then an
+> > appropriate symbolic link is created by the generic code, which is also added
+> > by this patch.
+> > 
+> > Patch 2 adds a new variant of drm_connector_init(), see the changelog
+> > below.
+> > 
+> > Patches 3..24 are examples of how to convert a driver to this new scheme.
+> > 
+> ...
+> > 
+> > v5..v6:
+> > 
+> > - improved subject line of patch 1
+> > - added kernel-doc for drm_connector_init_with_ddc()
+> > - improved kernel-doc for the ddc field of struct drm_connector
+> > - added Reviewed-by in patches 17 and 18
+> > - added Acked-by in patch 2
+> > - made the ownership of ddc i2c_adapter explicit in all patches,
+> > this made the affected patches much simpler
 > 
-> diff --git a/drivers/usb/host/ehci-exynos.c b/drivers/usb/host/ehci-exynos.c
-> index 3a29a1a8519c..01debfd03d4a 100644
-> --- a/drivers/usb/host/ehci-exynos.c
-> +++ b/drivers/usb/host/ehci-exynos.c
-> @@ -41,6 +41,7 @@ struct exynos_ehci_hcd {
->  	struct clk *clk;
->  	struct device_node *of_node;
->  	struct phy *phy[PHY_NUMBER];
-> +	bool legacy_phy;
->  };
->  
->  #define to_exynos_ehci(hcd) (struct exynos_ehci_hcd *)(hcd_to_ehci(hcd)->priv)
-> @@ -50,10 +51,22 @@ static int exynos_ehci_get_phy(struct device *dev,
->  {
->  	struct device_node *child;
->  	struct phy *phy;
-> -	int phy_number;
-> +	int phy_number, num_phys;
->  	int ret;
->  
->  	/* Get PHYs for the controller */
-> +	num_phys = of_count_phandle_with_args(dev->of_node, "phys",
-> +					      "#phy-cells");
-> +	for (phy_number = 0; phy_number < num_phys; phy_number++) {
-> +		phy = devm_of_phy_get_by_index(dev, dev->of_node, phy_number);
-> +		if (IS_ERR(phy))
-> +			return PTR_ERR(phy);
-> +		exynos_ehci->phy[phy_number] = phy;
-> +	}
-> +	if (num_phys > 0)
-> +		return 0;
-> +
-> +	/* Get PHYs using legacy bindings */
->  	for_each_available_child_of_node(dev->of_node, child) {
->  		ret = of_property_read_u32(child, "reg", &phy_number);
->  		if (ret) {
-> @@ -84,6 +97,7 @@ static int exynos_ehci_get_phy(struct device *dev,
->  		}
->  	}
->  
-> +	exynos_ehci->legacy_phy = true;
->  	return 0;
->  }
->  
-> @@ -205,11 +219,12 @@ static int exynos_ehci_probe(struct platform_device *pdev)
->  	ehci->caps = hcd->regs;
->  
->  	/*
-> -	 * Workaround: reset of_node pointer to avoid conflict between Exynos
-> -	 * EHCI port subnodes and generic USB device bindings
-> +	 * Workaround: reset of_node pointer to avoid conflict between legacy
-> +	 * Exynos EHCI port subnodes and generic USB device bindings
->  	 */
->  	exynos_ehci->of_node = pdev->dev.of_node;
-> -	pdev->dev.of_node = NULL;
-> +	if (exynos_ehci->legacy_phy)
-> +		pdev->dev.of_node = NULL;
->  
->  	/* DMA burst Enable */
->  	writel(EHCI_INSNREG00_ENABLE_DMA_BURST, EHCI_INSNREG00(hcd->regs));
-> diff --git a/drivers/usb/host/ohci-exynos.c b/drivers/usb/host/ohci-exynos.c
-> index 905c6317e0c3..d5ce98e205c7 100644
-> --- a/drivers/usb/host/ohci-exynos.c
-> +++ b/drivers/usb/host/ohci-exynos.c
-> @@ -32,6 +32,7 @@ struct exynos_ohci_hcd {
->  	struct clk *clk;
->  	struct device_node *of_node;
->  	struct phy *phy[PHY_NUMBER];
-> +	bool legacy_phy;
->  };
->  
->  static int exynos_ohci_get_phy(struct device *dev,
-> @@ -39,10 +40,22 @@ static int exynos_ohci_get_phy(struct device *dev,
->  {
->  	struct device_node *child;
->  	struct phy *phy;
-> -	int phy_number;
-> +	int phy_number, num_phys;
->  	int ret;
->  
->  	/* Get PHYs for the controller */
-> +	num_phys = of_count_phandle_with_args(dev->of_node, "phys",
-> +					      "#phy-cells");
-> +	for (phy_number = 0; phy_number < num_phys; phy_number++) {
-> +		phy = devm_of_phy_get_by_index(dev, dev->of_node, phy_number);
-> +		if (IS_ERR(phy))
-> +			return PTR_ERR(phy);
-> +		exynos_ohci->phy[phy_number] = phy;
-> +	}
-> +	if (num_phys > 0)
-> +		return 0;
-> +
-> +	/* Get PHYs using legacy bindings */
->  	for_each_available_child_of_node(dev->of_node, child) {
->  		ret = of_property_read_u32(child, "reg", &phy_number);
->  		if (ret) {
-> @@ -73,6 +86,7 @@ static int exynos_ohci_get_phy(struct device *dev,
->  		}
->  	}
->  
-> +	exynos_ohci->legacy_phy = true;
->  	return 0;
->  }
->  
-> @@ -172,11 +186,12 @@ static int exynos_ohci_probe(struct platform_device *pdev)
->  	}
->  
->  	/*
-> -	 * Workaround: reset of_node pointer to avoid conflict between Exynos
-> -	 * OHCI port subnodes and generic USB device bindings
-> +	 * Workaround: reset of_node pointer to avoid conflict between legacy
-> +	 * Exynos OHCI port subnodes and generic USB device bindings
->  	 */
->  	exynos_ohci->of_node = pdev->dev.of_node;
-> -	pdev->dev.of_node = NULL;
-> +	if (exynos_ohci->legacy_phy)
-> +		pdev->dev.of_node = NULL;
->  
->  	err = usb_add_hcd(hcd, irq, IRQF_SHARED);
->  	if (err) {
+> Looks good now.
+> Patch 1 and 2 are:
+> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
 > 
-
+> The remaining patches are:
+> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+> 
+> 	Sam
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
