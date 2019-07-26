@@ -2,151 +2,171 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C9D5976054
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 10:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E217B7608B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 10:15:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725945AbfGZIF0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 26 Jul 2019 04:05:26 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:35910 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbfGZIF0 (ORCPT
+        id S1726404AbfGZIPI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 26 Jul 2019 04:15:08 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:50618 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726195AbfGZIPI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 26 Jul 2019 04:05:26 -0400
-Received: by mail-lj1-f194.google.com with SMTP id i21so50617874ljj.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jul 2019 01:05:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gmIWHPU81qKM4NmobEtN8vwuP0TkPt9eT4OsJzhaUjk=;
-        b=y5xEgzE5jtlcpATZyzdxzyFTpGnrCxRIL7uzSmvkqqaSjqn773+lPi7JptM/oC82B2
-         ERbV/Kkph8WF/vpS0iK1HE0VExJSalljlox2f3+vos5IQ68Ky88FaraUeLkAT6RUDfUQ
-         WflUBgR2r9hdpzovWsdhbDIC+11PpgdKGFgOf09LxXdcO0t94ubgDe/S5ge0F0ghX/bB
-         wcPqo+munS6NtHkwWgIbjGJxSqOMfifD5YvAY5y981NrOtWmuFn3qI/ni14t4DFzksHZ
-         p83f77Ch5gFRkm9/lPngDbBvSVlhEkKxoSs2aNdOgnRO4Am3tgc/9SeKJq0PjwoQxzPJ
-         d5zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gmIWHPU81qKM4NmobEtN8vwuP0TkPt9eT4OsJzhaUjk=;
-        b=oATmAy8fCne2lZs0JSUVsq+ifuK1/+zY93kJ8Xx0ZEhM/1XtQE5u/Q5HWilQ3nMrHR
-         XVHXHNt5aCrIFaYLcETwhJfb1o2NVW3gVbdkYSV6hNjiQn5JajL20w1hmEndoHlV78Y+
-         wmi1NmmHTHvEJucuNDaQxNKT9Oq7c9Y3oFR7nqSe10cVsdC20ZwUQlJZM+lUb2dEYvvj
-         KbqlUzf4Yr4HgfNBukkAg14ovZvgP/7ATWuiTJeGUZIUtb4GkQVUMcziy2xC4btsKHNB
-         CXHD6kMhwdndg8s7z64SSGcjz7AcxFnUcr7sEq/6/rUisoSuAJ7wkXOy/IK7nzuIU/Xi
-         ZoqA==
-X-Gm-Message-State: APjAAAWOgNCuXq8aNrqJwYkjBqiHxmW4e0YG8DPjBOgV3M7+upEHhR7x
-        qOxmir+th/qI1lredKkCSGIC5g==
-X-Google-Smtp-Source: APXvYqzCVMfgKRMsARKSPF+KtDsxiocfdKwq11AIhpxQkPycGioijfy6CGbrfH0vqHwXLn2vGixe4Q==
-X-Received: by 2002:a2e:9a10:: with SMTP id o16mr48004571lji.95.1564128323508;
-        Fri, 26 Jul 2019 01:05:23 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id u9sm8233986lfk.64.2019.07.26.01.05.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Jul 2019 01:05:22 -0700 (PDT)
-Subject: Re: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
- functionality to exynos-bus
-To:     =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc:     krzk@kernel.org, cw00.choi@samsung.com, myungjoo.ham@samsung.com,
-        inki.dae@samsung.com, sw0312.kim@samsung.com,
-        m.szyprowski@samsung.com
-References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
- <CGME20190723122028eucas1p2eb75f35b810e71d6c590370aaff0997b@eucas1p2.samsung.com>
- <20190723122016.30279-10-a.swigon@partner.samsung.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <6e8b2081-2fb3-9ab8-37d1-8b5fe5fd8e11@linaro.org>
-Date:   Fri, 26 Jul 2019 11:05:18 +0300
+        Fri, 26 Jul 2019 04:15:08 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190726081506euoutp0160cae2e0bf7d4b2ce9e10dd50b98fa66~05vQGmMaH2562125621euoutp01X
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jul 2019 08:15:06 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190726081506euoutp0160cae2e0bf7d4b2ce9e10dd50b98fa66~05vQGmMaH2562125621euoutp01X
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1564128906;
+        bh=3R+Wre3FOCx6/iSnf7C3qlkiBEqiGVoT3ado/K8D+IQ=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=Rm9n3DMMhVDkTbb3Mj59G+Qb0wOfWC4uyPv3OFvkI1xaxZ74UVXXUILSo53u6eF3k
+         4BVheh0vfakq9fxwm4af+hiXhkWcST8K/fCEl3T23DcSw87j3RBW2BP3AIgQSxw2AW
+         4s0wxtSybAlDDcc9ifTUkF5AmoJd4KoQKE6rw+34=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190726081505eucas1p1b960891bdc4f4c788ae2937176c128ef~05vPXCdcM2134621346eucas1p1-;
+        Fri, 26 Jul 2019 08:15:05 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 88.C1.04325.986BA3D5; Fri, 26
+        Jul 2019 09:15:05 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190726081504eucas1p1aea5376ff300f6baca21c5e1cb6e4b43~05vOpc28s2124521245eucas1p1h;
+        Fri, 26 Jul 2019 08:15:04 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190726081504eusmtrp2f940047ea3b349df00ef1f066915c868~05vObRsaQ3187231872eusmtrp2p;
+        Fri, 26 Jul 2019 08:15:04 +0000 (GMT)
+X-AuditID: cbfec7f5-b8fff700000010e5-3b-5d3ab6893376
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id EB.7C.04146.886BA3D5; Fri, 26
+        Jul 2019 09:15:04 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190726081503eusmtip2cfd9407539630e3f2d0c0c6b0569c336~05vN2YGXV3050330503eusmtip2s;
+        Fri, 26 Jul 2019 08:15:03 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Markus Reichl <m.reichl@fivetechno.de>,
+        =?UTF-8?q?M=C3=A5ns=20Rullg=C3=A5rd?= <mans@mansr.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Peter Chen <peter.chen@nxp.com>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: [PATCH v2 0/3] Exynos EHCI/OHCI: resolve conflict with the generic
+ USB device bindings
+Date:   Fri, 26 Jul 2019 10:14:50 +0200
+Message-Id: <20190726081453.9456-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <20190723122016.30279-10-a.swigon@partner.samsung.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFKsWRmVeSWpSXmKPExsWy7djPc7qd26xiDfoahS02zljPajH/yDlW
+        i+bF69kszp/fwG5xedccNosZ5/cxWSxa1sps8fLID0aLtUfuslv8eDidyeLPvTusFq17j7Bb
+        TPh9gc2B1+PWnXqPTas62Tz2z13D7vHm9Cl2j43vdjB5zL77g9Gjb8sqRo/Pm+QCOKK4bFJS
+        czLLUov07RK4Mm5eP81YsEOk4uG9+4wNjCsFuhg5OSQETCTmtH1h7WLk4hASWMEosezXOxYI
+        5wujRNPhSWwQzmdGiTUPvzPBtDQdfs8IkVjOKPFl7zl2kARYS9dNKRCbTcBQouttFxuILSLg
+        ILFk6R2wScwC55glFv/sAJskLJAo8XF1A1gRi4CqxNzlt1hAbF4BG4lFOx4xQ2yTl1i94QAz
+        RFxQ4uTMJ2A1zEDx5q2zmUGGSggcY5do77nOCtHgIrHmxUGoZmGJV8e3sEPYMhL/d85ngmho
+        ZpR4eG4tO4TTwyhxuWkGI0SVtcTh4xeBJnEArdCUWL9LH8SUEHCUaNktDmHySdx4KwhxA5/E
+        pG3TmSHCvBIdbUIQM9QkZh1fB7f14IVLUCUeEp0d5ZCgipVYeu8T+wRGhVlIHpuF5LFZCBcs
+        YGRexSieWlqcm55abJyXWq5XnJhbXJqXrpecn7uJEZjCTv87/nUH474/SYcYBTgYlXh4NVZZ
+        xgqxJpYVV+YeYpTgYFYS4d26AyjEm5JYWZValB9fVJqTWnyIUZqDRUmct5rhQbSQQHpiSWp2
+        ampBahFMlomDU6qB8foPj3n2v6Ptg2t3F3c+N7M2CLHLt4qoby4rYr107HUQ59lb2YxusWtn
+        HhQUubtDpPOiUQH3oqt/julVG/uGWEex9XFcvWHOppG5qHG51/6KKWmHnf0Pbvy28Gboid/m
+        sl/2ZLO5aLzjnLVCt//S43We/Bqbo1L3lP+SfxSxWf7BU4mHm1IqlFiKMxINtZiLihMBTjxv
+        sl0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBIsWRmVeSWpSXmKPExsVy+t/xe7od26xiDR49lLPYOGM9q8X8I+dY
+        LZoXr2ezOH9+A7vF5V1z2CxmnN/HZLFoWSuzxcsjPxgt1h65y27x4+F0Jos/9+6wWrTuPcJu
+        MeH3BTYHXo9bd+o9Nq3qZPPYP3cNu8eb06fYPTa+28HkMfvuD0aPvi2rGD0+b5IL4IjSsynK
+        Ly1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3St0vQy7h5/TRjwQ6R
+        iof37jM2MK4U6GLk5JAQMJFoOvyesYuRi0NIYCmjxK/5r9kgEjISJ6c1sELYwhJ/rnWxQRR9
+        YpR4tvASI0iCTcBQouttF1iDiICTROfa02BFzALXmCV2XOwESwgLxEt8mb8AzGYRUJWYu/wW
+        C4jNK2AjsWjHI2aIDfISqzccYIaIC0qcnPkEqIYDaJC6xPp5QiBhZqCS5q2zmScw8s9CUjUL
+        oWoWkqoFjMyrGEVSS4tz03OLDfWKE3OLS/PS9ZLzczcxAmNt27Gfm3cwXtoYfIhRgINRiYf3
+        wnLLWCHWxLLiytxDjBIczEoivFt3AIV4UxIrq1KL8uOLSnNSiw8xmgK9MJFZSjQ5H5gG8kri
+        DU0NzS0sDc2NzY3NLJTEeTsEDsYICaQnlqRmp6YWpBbB9DFxcEo1MOq37Diz/Pleng2NC5zn
+        Rrw58+ZJzY2aYx+vf79TpOYtLlLeYJDTxhXry3Y7ZIKFxdvMlUXsXKwhRYYe7bc/ffd9PKNZ
+        e3Yjf/6aoH+WS++eDo7qye0zmHlB/qm4Z9ubjsvGvC8UfzDf8WP6dTzHc35qbD/znvJJ2Xo3
+        A3eWbP8THFKy8s13TyWW4oxEQy3mouJEADR98rvLAgAA
+X-CMS-MailID: 20190726081504eucas1p1aea5376ff300f6baca21c5e1cb6e4b43
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190726081504eucas1p1aea5376ff300f6baca21c5e1cb6e4b43
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190726081504eucas1p1aea5376ff300f6baca21c5e1cb6e4b43
+References: <CGME20190726081504eucas1p1aea5376ff300f6baca21c5e1cb6e4b43@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Artur,
+Dear All,
 
-On 7/23/19 15:20, Artur Świgoń wrote:
-> This patch adds interconnect functionality to the exynos-bus devfreq
-> driver.
-> 
-> The SoC topology is a graph (or, more specifically, a tree) and most of its
-> edges are taken from the devfreq parent-child hierarchy (cf.
-> Documentation/devicetree/bindings/devfreq/exynos-bus.txt). The previous
-> patch adds missing edges to the DT (under the name 'parent'). Due to
-> unspecified relative probing order, -EPROBE_DEFER may be propagated to
-> guarantee that a child is probed before its parent.
-> 
-> Each bus is now an interconnect provider and an interconnect node as well
-> (cf. Documentation/interconnect/interconnect.rst), i.e. every bus registers
-> itself as a node. Node IDs are not hardcoded but rather assigned at
-> runtime, in probing order (subject to the above-mentioned exception
-> regarding relative order). This approach allows for using this driver with
-> various Exynos SoCs.
+Commit 69bec7259853 ("USB: core: let USB device know device node") added
+support for attaching devicetree node for USB devices. Those nodes are
+children of their USB host controller. However Exynos EHCI and OHCI
+driver bindings already define child-nodes for each physical root hub
+port and assigns respective PHY controller and parameters to them. This
+leads to the conflict. A workaround for it has been merged as commit
+01d4071486fe ("usb: exynos: add workaround for the USB device bindings
+conflict"), but it disabled support for USB device binding for Exynos
+EHCI/OHCI controllers.
 
-I am not familiar with the Exynos bus topology, but it seems to me that it's not
-represented correctly. An interconnect provider with just a single node (port)
-is odd. I would expect that each provider consists of multiple master and slave
-nodes. This data would be used by a framework to understand what are the links
-and how the traffic flows between the IP blocks and through which buses.
+This patchset tries to resolve this binding conflict by changing Exynos
+EHCI/OHCI bindings: PHYs are moved from the sub-nodes to a standard array
+under the 'phys' property. Such solution has been suggested by Måns
+Rullgård in the following thread: https://lkml.org/lkml/2019/5/13/228
 
-> The devfreq target() callback provided by exynos-bus now selects either the
-> frequency calculated by the devfreq governor or the frequency requested via
-> the interconnect API for the given node, whichever is higher.
+To keep everything working during the transitional time, the changes has
+been split into 2 steps. First the changes to Exynos OHCI and EHCI
+drivers have to be merged, then in the next kernel release the DTS can be
+finally updated to the new bindings.
 
-This completely makes sense. We just need to be sure that the interconnect
-framework is used correctly.
+This patchset has been tested on various Exynos boards with different
+USB host controller configurations (Odroids family: X2, U3, XU3).
 
-Thanks,
-Georgi
+Best regards
+Marek Szyprowski
+Samsung R&D Institute Poland
+
+
+Changelog:
+v2:
+- rearranged the code as suggested by Måns Rullgård, kept support for
+  legacy bindings the Exynos EHCI/OHCI drivers
+
+v1: https://patchwork.kernel.org/cover/10953495/
+- initial version
+
+
+Patch summary:
+
+Marek Szyprowski (3):
+  dt-bindings: switch Exynos EHCI/OHCI bindings to use array of generic
+    PHYs
+  usb: exynos: add support for getting PHYs from the standard dt array
+  ARM: dts: exynos: Use standard arrays of generic PHYs for EHCI/OHCI
+    devices
+
+ .../devicetree/bindings/usb/exynos-usb.txt    | 41 +++++++------------
+ arch/arm/boot/dts/exynos4.dtsi                | 28 ++-----------
+ .../boot/dts/exynos4210-universal_c210.dts    |  8 +---
+ arch/arm/boot/dts/exynos4412-itop-elite.dts   |  9 +---
+ arch/arm/boot/dts/exynos4412-odroidu3.dts     |  8 +---
+ arch/arm/boot/dts/exynos4412-odroidx.dts      |  5 +--
+ arch/arm/boot/dts/exynos4412-origen.dts       |  9 +---
+ arch/arm/boot/dts/exynos5250.dtsi             | 16 ++------
+ arch/arm/boot/dts/exynos54xx.dtsi             | 18 ++------
+ drivers/usb/host/ehci-exynos.c                | 23 +++++++++--
+ drivers/usb/host/ohci-exynos.c                | 23 +++++++++--
+ 11 files changed, 74 insertions(+), 114 deletions(-)
+
+-- 
+2.17.1
+
