@@ -2,495 +2,151 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6EB075C5B
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 02:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9D5976054
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jul 2019 10:05:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbfGZA7D (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 25 Jul 2019 20:59:03 -0400
-Received: from mailout3.samsung.com ([203.254.224.33]:27835 "EHLO
-        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbfGZA7C (ORCPT
+        id S1725945AbfGZIF0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 26 Jul 2019 04:05:26 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:35910 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbfGZIF0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 25 Jul 2019 20:59:02 -0400
-Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20190726005858epoutp03386ec95e4780c1dcf7e247e74f563f81~0zydeykC81722317223epoutp03c
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jul 2019 00:58:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20190726005858epoutp03386ec95e4780c1dcf7e247e74f563f81~0zydeykC81722317223epoutp03c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1564102738;
-        bh=xy+qO0Ne2KMLwzaQJVPFqzSei7gTjsn/OjgcYFbr+wo=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=losr1A4UDs+rvDGGNqc/WteYvROZvSzswrAJ7yjmzZQ00iluwz4L3ENP/jTWOTu6t
-         TTYymBr9VYlq+T9xyD4VCtXqO+DmPayWtQYPYCbapNMGR1UbA5J19MWfVVzMcIQ25j
-         fdSACtY1ikZVUfyjUX3fyY37MUjRKRCOV/72f9cw=
-Received: from epsnrtp5.localdomain (unknown [182.195.42.166]) by
-        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
-        20190726005857epcas1p36f36dcae8d642fa703d13a0e94b45904~0zyc1qWPS2573825738epcas1p3K;
-        Fri, 26 Jul 2019 00:58:57 +0000 (GMT)
-Received: from epsmges1p3.samsung.com (unknown [182.195.40.157]) by
-        epsnrtp5.localdomain (Postfix) with ESMTP id 45vrLl307kzMqYkj; Fri, 26 Jul
-        2019 00:58:55 +0000 (GMT)
-Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
-        epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        E3.E9.04066.F405A3D5; Fri, 26 Jul 2019 09:58:55 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190726005854epcas1p115956b9a20f1aaeeb2e7deeed5ef4a7a~0zyaBNDjt0308703087epcas1p1B;
-        Fri, 26 Jul 2019 00:58:54 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190726005854epsmtrp1f2e211a2538df8228d22afdd386f1778~0zyaAEMQx0740907409epsmtrp1i;
-        Fri, 26 Jul 2019 00:58:54 +0000 (GMT)
-X-AuditID: b6c32a37-e3fff70000000fe2-5a-5d3a504f81cc
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        36.51.03706.E405A3D5; Fri, 26 Jul 2019 09:58:54 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190726005854epsmtip2ca33772f79931990a6fc4d51f3b3a78c~0zyZr0vtj1793417934epsmtip2M;
-        Fri, 26 Jul 2019 00:58:54 +0000 (GMT)
-Subject: Re: [PATCH v3 3/5] devfreq: exynos-bus: convert to use
- dev_pm_opp_set_rate()
-To:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
-        cwchoi00@gmail.com
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <605a07ce-1b2c-c19c-87ae-23a576951263@samsung.com>
-Date:   Fri, 26 Jul 2019 10:02:14 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
+        Fri, 26 Jul 2019 04:05:26 -0400
+Received: by mail-lj1-f194.google.com with SMTP id i21so50617874ljj.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jul 2019 01:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gmIWHPU81qKM4NmobEtN8vwuP0TkPt9eT4OsJzhaUjk=;
+        b=y5xEgzE5jtlcpATZyzdxzyFTpGnrCxRIL7uzSmvkqqaSjqn773+lPi7JptM/oC82B2
+         ERbV/Kkph8WF/vpS0iK1HE0VExJSalljlox2f3+vos5IQ68Ky88FaraUeLkAT6RUDfUQ
+         WflUBgR2r9hdpzovWsdhbDIC+11PpgdKGFgOf09LxXdcO0t94ubgDe/S5ge0F0ghX/bB
+         wcPqo+munS6NtHkwWgIbjGJxSqOMfifD5YvAY5y981NrOtWmuFn3qI/ni14t4DFzksHZ
+         p83f77Ch5gFRkm9/lPngDbBvSVlhEkKxoSs2aNdOgnRO4Am3tgc/9SeKJq0PjwoQxzPJ
+         d5zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gmIWHPU81qKM4NmobEtN8vwuP0TkPt9eT4OsJzhaUjk=;
+        b=oATmAy8fCne2lZs0JSUVsq+ifuK1/+zY93kJ8Xx0ZEhM/1XtQE5u/Q5HWilQ3nMrHR
+         XVHXHNt5aCrIFaYLcETwhJfb1o2NVW3gVbdkYSV6hNjiQn5JajL20w1hmEndoHlV78Y+
+         wmi1NmmHTHvEJucuNDaQxNKT9Oq7c9Y3oFR7nqSe10cVsdC20ZwUQlJZM+lUb2dEYvvj
+         KbqlUzf4Yr4HgfNBukkAg14ovZvgP/7ATWuiTJeGUZIUtb4GkQVUMcziy2xC4btsKHNB
+         CXHD6kMhwdndg8s7z64SSGcjz7AcxFnUcr7sEq/6/rUisoSuAJ7wkXOy/IK7nzuIU/Xi
+         ZoqA==
+X-Gm-Message-State: APjAAAWOgNCuXq8aNrqJwYkjBqiHxmW4e0YG8DPjBOgV3M7+upEHhR7x
+        qOxmir+th/qI1lredKkCSGIC5g==
+X-Google-Smtp-Source: APXvYqzCVMfgKRMsARKSPF+KtDsxiocfdKwq11AIhpxQkPycGioijfy6CGbrfH0vqHwXLn2vGixe4Q==
+X-Received: by 2002:a2e:9a10:: with SMTP id o16mr48004571lji.95.1564128323508;
+        Fri, 26 Jul 2019 01:05:23 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id u9sm8233986lfk.64.2019.07.26.01.05.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jul 2019 01:05:22 -0700 (PDT)
+Subject: Re: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
+ functionality to exynos-bus
+To:     =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Cc:     krzk@kernel.org, cw00.choi@samsung.com, myungjoo.ham@samsung.com,
+        inki.dae@samsung.com, sw0312.kim@samsung.com,
+        m.szyprowski@samsung.com
+References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
+ <CGME20190723122028eucas1p2eb75f35b810e71d6c590370aaff0997b@eucas1p2.samsung.com>
+ <20190723122016.30279-10-a.swigon@partner.samsung.com>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <6e8b2081-2fb3-9ab8-37d1-8b5fe5fd8e11@linaro.org>
+Date:   Fri, 26 Jul 2019 11:05:18 +0300
 MIME-Version: 1.0
-In-Reply-To: <4f62d397-0f62-f81d-8b76-b73c6fbee93d@partner.samsung.com>
+In-Reply-To: <20190723122016.30279-10-a.swigon@partner.samsung.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJJsWRmVeSWpSXmKPExsWy7bCmvq5/gFWswectIhYbZ6xntXh2VNti
-        /pFzrBZ9+/4zWvQ/fs1scf78BnaLs01v2C02Pb7GanF51xw2i8+9RxgtZpzfx2Sx9shddoul
-        1y8yWdxuXMFm8ebHWSaL1r1H2C3+XdvIYrH5wTE2ByGPNfPWMHrsnHWX3WPTqk42j81L6j0O
-        vtvD5NG3ZRWjx/Eb25k8Pm+SC+CIyrbJSE1MSS1SSM1Lzk/JzEu3VfIOjneONzUzMNQ1tLQw
-        V1LIS8xNtVVy8QnQdcvMAXpFSaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgWaBX
-        nJhbXJqXrpecn2tlaGBgZApUmJCdcfbpOeaC12kVqx/fZW5gPOPTxcjJISFgIvH8QC9zFyMX
-        h5DADkaJ5mvbGSGcT4wSjWfXsoBUCQl8Y5S4sZEXpmPSyQdMEEV7GSVOzX7CBuG8Z5SY+v8U
-        M0iVsEC4RPviTlYQW0TAU+LZs9fsIEXMAitYJS58+cgIkmAT0JLY/+IGG4jNL6AocfXHY6A4
-        BwevgJ3E7UNlIGEWAVWJ65v62UFsUYEIiU8PDoPN5BUQlDg58wnYdZwC7hJzrk4AizMLiEvc
-        ejKfCcKWl2jeOhvsNwmBW+wS9w+1MkK84CJx6/UqFghbWOLV8S3sELaUxMv+Nii7WmLlySNs
-        EM0djBJb9l9ghUgYS+xfOpkJ5FBmAU2J9bv0IcKKEjt/z2WEWMwn8e5rDytIiYQAr0RHmxBE
-        ibLE5Qd3mSBsSYnF7Z1sExiVZiF5ZxaSF2YheWEWwrIFjCyrGMVSC4pz01OLDQuMkWN7EyM4
-        mWuZ72DccM7nEKMAB6MSD++F5ZaxQqyJZcWVuYcYJTiYlUR4t+4ACvGmJFZWpRblxxeV5qQW
-        H2I0BYb2RGYp0eR8YKbJK4k3NDUyNja2MDE0MzU0VBLnXfjDIlZIID2xJDU7NbUgtQimj4mD
-        U6qBMXOLeP5ll4BNUmZHLx3mv6N4Nur0+h/3HJ/NOiSesfXf7P95NfedHV20TRhNZxeKxH99
-        KfBt7urLLw/+71z9/pRU0/zAm3EFSo843DxaJztH+kv6n2XgX3W4c93ErLarPezOF4xM1s9V
-        6r58p/f/KeU9Mx5Gvp4m//2umhRv4ocFbx4I13zJmKjEUpyRaKjFXFScCAATXqME/AMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsWy7bCSvK5fgFWswd1ruhYbZ6xntXh2VNti
-        /pFzrBZ9+/4zWvQ/fs1scf78BnaLs01v2C02Pb7GanF51xw2i8+9RxgtZpzfx2Sx9shddoul
-        1y8yWdxuXMFm8ebHWSaL1r1H2C3+XdvIYrH5wTE2ByGPNfPWMHrsnHWX3WPTqk42j81L6j0O
-        vtvD5NG3ZRWjx/Eb25k8Pm+SC+CI4rJJSc3JLEst0rdL4Mo4+/Qcc8HrtIrVj+8yNzCe8eli
-        5OSQEDCRmHTyAVMXIxeHkMBuRomzl2+zQCQkJaZdPMrcxcgBZAtLHD5cDFHzllHi994zzCA1
-        wgLhEu2LO1lBbBEBT4lnz16zgxQxC6xhlWjacIENouMks0TfqZeMIFVsAloS+1/cYAOx+QUU
-        Ja7+eMwIsoFXwE7i9qEykDCLgKrE9U397CC2qECExOEds8BaeQUEJU7OfAJ2HKeAu8ScqxPA
-        FjMLqEv8mXeJGcIWl7j1ZD4ThC0v0bx1NvMERuFZSNpnIWmZhaRlFpKWBYwsqxglUwuKc9Nz
-        iw0LDPNSy/WKE3OLS/PS9ZLzczcxguNaS3MH4+Ul8YcYBTgYlXh4NVZZxgqxJpYVV+YeYpTg
-        YFYS4d26AyjEm5JYWZValB9fVJqTWnyIUZqDRUmc92nesUghgfTEktTs1NSC1CKYLBMHp1QD
-        4yQNk8ted6UEI7W+fk0612w7vUvYT3O5xvKDVarr9kR1dplwld7ebeX18ldmtOK+2t8N6hyH
-        XVOvbjsSkzx3gr7iNNHpB/fn9kvcWPyH2UB4f02yeW7aHOmo8pjsDx2vTmsXry6OeZjEvT/l
-        SUrbNqPtjm/XGFzgc7Lq0T4RuIDpW33gN3ZnJZbijERDLeai4kQAQD+EMecCAAA=
-X-CMS-MailID: 20190726005854epcas1p115956b9a20f1aaeeb2e7deeed5ef4a7a
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20190719150555eucas1p197adc3c58e45c53137fd70cadbfae60e
-References: <20190719150535.15501-1-k.konieczny@partner.samsung.com>
-        <CGME20190719150555eucas1p197adc3c58e45c53137fd70cadbfae60e@eucas1p1.samsung.com>
-        <20190719150535.15501-4-k.konieczny@partner.samsung.com>
-        <beb2455b-7f9e-35df-d524-01f4f51a1c62@samsung.com>
-        <ed80b6e3-5b40-18ce-ca1e-65520edf516e@partner.samsung.com>
-        <CAGTfZH1OaYpTheQxWQs7Fs4qcJEGtXQHESLg0CJSsL=dmROpQw@mail.gmail.com>
-        <4f62d397-0f62-f81d-8b76-b73c6fbee93d@partner.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+Hi Artur,
 
-On 19. 7. 26. 오전 12:15, Kamil Konieczny wrote:
-> Hi,
+On 7/23/19 15:20, Artur Świgoń wrote:
+> This patch adds interconnect functionality to the exynos-bus devfreq
+> driver.
 > 
-> On 25.07.2019 16:53, Chanwoo Choi wrote:
->> 2019년 7월 25일 (목) 오후 11:19, Kamil Konieczny
->> <k.konieczny@partner.samsung.com>님이 작성:
->>>
->>> Hi Chanwoo,
->>>
->>> On 25.07.2019 12:17, Chanwoo Choi wrote:
->>>> Hi Kamil,
->>>>
->>>> Looks good to me. But, I have some comment. Please check them.
->>>
->>> Thank you for review, please see answers below.
->>>
->>>> After this patch, exynos_bus_target is perfectly same with
->>>> exynos_bus_passive_target. The exynos_bus_passive_target() could be removed.
->>>
->>> Ok, I will make it in separate patch to simplify review process.
->>
->> I think you can just modify this patch without any separate patch.
+> The SoC topology is a graph (or, more specifically, a tree) and most of its
+> edges are taken from the devfreq parent-child hierarchy (cf.
+> Documentation/devicetree/bindings/devfreq/exynos-bus.txt). The previous
+> patch adds missing edges to the DT (under the name 'parent'). Due to
+> unspecified relative probing order, -EPROBE_DEFER may be propagated to
+> guarantee that a child is probed before its parent.
 > 
-> Do you want me to send v5 with patch 5 squashed in patch 3 ?
+> Each bus is now an interconnect provider and an interconnect node as well
+> (cf. Documentation/interconnect/interconnect.rst), i.e. every bus registers
+> itself as a node. Node IDs are not hardcoded but rather assigned at
+> runtime, in probing order (subject to the above-mentioned exception
+> regarding relative order). This approach allows for using this driver with
+> various Exynos SoCs.
 
-Yes. In result, it made two functions same by this patch
-So, I think that can combine them without separate patch.
+I am not familiar with the Exynos bus topology, but it seems to me that it's not
+represented correctly. An interconnect provider with just a single node (port)
+is odd. I would expect that each provider consists of multiple master and slave
+nodes. This data would be used by a framework to understand what are the links
+and how the traffic flows between the IP blocks and through which buses.
 
->  
->>>> On 19. 7. 20. 오전 12:05, k.konieczny@partner.samsung.com wrote:
->>>>> Reuse opp core code for setting bus clock and voltage. As a side
->>>>> effect this allow useage of coupled regulators feature (required
->>>>
->>>> s/useage/usage ?
->>>
->>> Good catch, I will change it.
->>>
->>>>> for boards using Exynos5422/5800 SoCs) because dev_pm_opp_set_rate()
->>>>> uses regulator_set_voltage_triplet() for setting regulator voltage
->>>>> while the old code used regulator_set_voltage_tol() with fixed
->>>>> tolerance. This patch also removes no longer needed parsing of DT
->>>>> property "exynos,voltage-tolerance" (no Exynos devfreq DT node uses
->>>>> it).
->>>>>
->>>>> Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
->>>>> ---
->>>>>  drivers/devfreq/exynos-bus.c | 143 +++++++++--------------------------
->>>>>  1 file changed, 37 insertions(+), 106 deletions(-)
->>>>>
->>>>> diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
->>>>> index f391044aa39d..c2147b0912a0 100644
->>>>> --- a/drivers/devfreq/exynos-bus.c
->>>>> +++ b/drivers/devfreq/exynos-bus.c
->>>>> @@ -25,7 +25,6 @@
->>>>>  #include <linux/slab.h>
->>>>>
->>>>>  #define DEFAULT_SATURATION_RATIO    40
->>>>> -#define DEFAULT_VOLTAGE_TOLERANCE   2
->>>>>
->>>>>  struct exynos_bus {
->>>>>      struct device *dev;
->>>>> @@ -37,9 +36,9 @@ struct exynos_bus {
->>>>>
->>>>>      unsigned long curr_freq;
->>>>>
->>>>> -    struct regulator *regulator;
->>>>> +    struct opp_table *opp_table;
->>>>> +
->>>>>      struct clk *clk;
->>>>> -    unsigned int voltage_tolerance;
->>>>>      unsigned int ratio;
->>>>>  };
->>>>>
->>>>> @@ -99,56 +98,23 @@ static int exynos_bus_target(struct device *dev, unsigned long *freq, u32 flags)
->>>>>  {
->>>>>      struct exynos_bus *bus = dev_get_drvdata(dev);
->>>>>      struct dev_pm_opp *new_opp;
->>>>> -    unsigned long old_freq, new_freq, new_volt, tol;
->>>>>      int ret = 0;
->>>>>
->>>>> -    /* Get new opp-bus instance according to new bus clock */
->>>>> +    /* Get correct frequency for bus. */
->>>>>      new_opp = devfreq_recommended_opp(dev, freq, flags);
->>>>>      if (IS_ERR(new_opp)) {
->>>>>              dev_err(dev, "failed to get recommended opp instance\n");
->>>>>              return PTR_ERR(new_opp);
->>>>>      }
->>>>>
->>>>> -    new_freq = dev_pm_opp_get_freq(new_opp);
->>>>> -    new_volt = dev_pm_opp_get_voltage(new_opp);
->>>>>      dev_pm_opp_put(new_opp);
->>>>>
->>>>> -    old_freq = bus->curr_freq;
->>>>> -
->>>>> -    if (old_freq == new_freq)
->>>>> -            return 0;
->>>>> -    tol = new_volt * bus->voltage_tolerance / 100;
->>>>> -
->>>>>      /* Change voltage and frequency according to new OPP level */
->>>>>      mutex_lock(&bus->lock);
->>>>> +    ret = dev_pm_opp_set_rate(dev, *freq);
->>>>> +    if (!ret)
->>>>> +            bus->curr_freq = *freq;
->>>>>
->>>>> -    if (old_freq < new_freq) {
->>>>> -            ret = regulator_set_voltage_tol(bus->regulator, new_volt, tol);
->>>>> -            if (ret < 0) {
->>>>> -                    dev_err(bus->dev, "failed to set voltage\n");
->>>>> -                    goto out;
->>>>> -            }
->>>>> -    }
->>>>> -
->>>>> -    ret = clk_set_rate(bus->clk, new_freq);
->>>>> -    if (ret < 0) {
->>>>> -            dev_err(dev, "failed to change clock of bus\n");
->>>>> -            clk_set_rate(bus->clk, old_freq);
->>>>> -            goto out;
->>>>> -    }
->>>>> -
->>>>> -    if (old_freq > new_freq) {
->>>>> -            ret = regulator_set_voltage_tol(bus->regulator, new_volt, tol);
->>>>> -            if (ret < 0) {
->>>>> -                    dev_err(bus->dev, "failed to set voltage\n");
->>>>> -                    goto out;
->>>>> -            }
->>>>> -    }
->>>>> -    bus->curr_freq = new_freq;
->>>>> -
->>>>> -    dev_dbg(dev, "Set the frequency of bus (%luHz -> %luHz, %luHz)\n",
->>>>> -                    old_freq, new_freq, clk_get_rate(bus->clk));
->>>>> -out:
->>>>>      mutex_unlock(&bus->lock);
->>>>>
->>>>>      return ret;
->>>>> @@ -195,8 +161,8 @@ static void exynos_bus_exit(struct device *dev)
->>>>>              dev_warn(dev, "failed to disable the devfreq-event devices\n");
->>>>>
->>>>>      clk_disable_unprepare(bus->clk);
->>>>> -    if (bus->regulator)
->>>>> -            regulator_disable(bus->regulator);
->>>>> +    if (bus->opp_table)
->>>>> +            dev_pm_opp_put_regulators(bus->opp_table);
->>>>>
->>>>>      dev_pm_opp_of_remove_table(dev);
->>>>>  }
->>>>> @@ -209,39 +175,23 @@ static int exynos_bus_passive_target(struct device *dev, unsigned long *freq,
->>>>>  {
->>>>>      struct exynos_bus *bus = dev_get_drvdata(dev);
->>>>>      struct dev_pm_opp *new_opp;
->>>>> -    unsigned long old_freq, new_freq;
->>>>> -    int ret = 0;
->>>>> +    int ret;
->>>>>
->>>>> -    /* Get new opp-bus instance according to new bus clock */
->>>>> +    /* Get correct frequency for bus. */
->>>>>      new_opp = devfreq_recommended_opp(dev, freq, flags);
->>>>>      if (IS_ERR(new_opp)) {
->>>>>              dev_err(dev, "failed to get recommended opp instance\n");
->>>>>              return PTR_ERR(new_opp);
->>>>>      }
->>>>>
->>>>> -    new_freq = dev_pm_opp_get_freq(new_opp);
->>>>>      dev_pm_opp_put(new_opp);
->>>>>
->>>>> -    old_freq = bus->curr_freq;
->>>>> -
->>>>> -    if (old_freq == new_freq)
->>>>> -            return 0;
->>>>> -
->>>>>      /* Change the frequency according to new OPP level */
->>>>>      mutex_lock(&bus->lock);
->>>>> +    ret = dev_pm_opp_set_rate(dev, *freq);
->>>>> +    if (!ret)
->>>>> +            bus->curr_freq = *freq;
->>>>>
->>>>> -    ret = clk_set_rate(bus->clk, new_freq);
->>>>> -    if (ret < 0) {
->>>>> -            dev_err(dev, "failed to set the clock of bus\n");
->>>>> -            goto out;
->>>>> -    }
->>>>> -
->>>>> -    *freq = new_freq;
->>>>> -    bus->curr_freq = new_freq;
->>>>> -
->>>>> -    dev_dbg(dev, "Set the frequency of bus (%luHz -> %luHz, %luHz)\n",
->>>>> -                    old_freq, new_freq, clk_get_rate(bus->clk));
->>>>> -out:
->>>>>      mutex_unlock(&bus->lock);
->>>>>
->>>>>      return ret;
->>>>> @@ -259,20 +209,9 @@ static int exynos_bus_parent_parse_of(struct device_node *np,
->>>>>                                      struct exynos_bus *bus)
->>>>>  {
->>>>>      struct device *dev = bus->dev;
->>>>> -    int i, ret, count, size;
->>>>> -
->>>>> -    /* Get the regulator to provide each bus with the power */
->>>>> -    bus->regulator = devm_regulator_get(dev, "vdd");
->>>>> -    if (IS_ERR(bus->regulator)) {
->>>>> -            dev_err(dev, "failed to get VDD regulator\n");
->>>>> -            return PTR_ERR(bus->regulator);
->>>>> -    }
->>>>> -
->>>>> -    ret = regulator_enable(bus->regulator);
->>>>> -    if (ret < 0) {
->>>>> -            dev_err(dev, "failed to enable VDD regulator\n");
->>>>> -            return ret;
->>>>> -    }
->>>>> +    struct opp_table *opp_table;
->>>>> +    const char *vdd = "vdd";
->>>>> +    int i, count, size;
->>>>>
->>>>>      /*
->>>>>       * Get the devfreq-event devices to get the current utilization of
->>>>> @@ -281,26 +220,29 @@ static int exynos_bus_parent_parse_of(struct device_node *np,
->>>>>      count = devfreq_event_get_edev_count(dev);
->>>>>      if (count < 0) {
->>>>>              dev_err(dev, "failed to get the count of devfreq-event dev\n");
->>>>> -            ret = count;
->>>>> -            goto err_regulator;
->>>>> +            return count;
->>>>>      }
->>>>> -    bus->edev_count = count;
->>>>>
->>>>> +    bus->edev_count = count;
->>>>>      size = sizeof(*bus->edev) * count;
->>>>>      bus->edev = devm_kzalloc(dev, size, GFP_KERNEL);
->>>>> -    if (!bus->edev) {
->>>>> -            ret = -ENOMEM;
->>>>> -            goto err_regulator;
->>>>> -    }
->>>>> +    if (!bus->edev)
->>>>> +            return -ENOMEM;
->>>>>
->>>>>      for (i = 0; i < count; i++) {
->>>>>              bus->edev[i] = devfreq_event_get_edev_by_phandle(dev, i);
->>>>> -            if (IS_ERR(bus->edev[i])) {
->>>>> -                    ret = -EPROBE_DEFER;
->>>>> -                    goto err_regulator;
->>>>> -            }
->>>>> +            if (IS_ERR(bus->edev[i]))
->>>>> +                    return -EPROBE_DEFER;
->>>>> +    }
->>>>> +
->>>>> +    opp_table = dev_pm_opp_set_regulators(dev, &vdd, 1);
->>>>> +    if (IS_ERR(opp_table)) {
->>>>> +            i = PTR_ERR(opp_table);
->>>>> +            dev_err(dev, "failed to set regulators %d\n", i);
->>>>> +            return i;
->>>>
->>>> Maybe, you just used the 'i' defined variable instead of adding
->>>> new variable. But, I think that you better to add new variable
->>>> like 'err' for the readability. Or, jut use the 'PTR_ERR(opp_table)'
->>>> directly without any additional variable.
->>>
->>> I will remove not related changes, so here I will reuse 'ret' variable.
->>>
->>>>>      }
->>>>>
->>>>> +    bus->opp_table = opp_table;
->>>>
->>>> Add blank line.
->>>
->>> OK
->>>
->>>>>      /*
->>>>>       * Optionally, Get the saturation ratio according to Exynos SoC
->>>>>       * When measuring the utilization of each AXI bus with devfreq-event
->>>>> @@ -314,16 +256,7 @@ static int exynos_bus_parent_parse_of(struct device_node *np,
->>>>>      if (of_property_read_u32(np, "exynos,saturation-ratio", &bus->ratio))
->>>>>              bus->ratio = DEFAULT_SATURATION_RATIO;
->>>>>
->>>>> -    if (of_property_read_u32(np, "exynos,voltage-tolerance",
->>>>> -                                    &bus->voltage_tolerance))
->>>>> -            bus->voltage_tolerance = DEFAULT_VOLTAGE_TOLERANCE;
->>>>> -
->>>>>      return 0;
->>>>> -
->>>>> -err_regulator:
->>>>> -    regulator_disable(bus->regulator);
->>>>> -
->>>>> -    return ret;
->>>>>  }
->>>>>
->>>>>  static int exynos_bus_parse_of(struct exynos_bus *bus)
->>>>> @@ -414,12 +347,8 @@ static int exynos_bus_probe(struct platform_device *pdev)
->>>>>
->>>>>      /* Parse the device-tree to get the resource information */
->>>>>      ret = exynos_bus_parse_of(bus);
->>>>> -    if (ret < 0) {
->>>>> -            if (!passive)
->>>>> -                    regulator_disable(bus->regulator);
->>>>> -
->>>>> -            return ret;
->>>>> -    }
->>>>> +    if (ret < 0)
->>>>> +            goto err_reg;
->>>>>
->>>>>      if (passive)
->>>>>              goto passive;
->>>>> @@ -512,10 +441,12 @@ static int exynos_bus_probe(struct platform_device *pdev)
->>>>>
->>>>>  err:
->>>>>      clk_disable_unprepare(bus->clk);
->>>>> -    if (!passive)
->>>>> -            regulator_disable(bus->regulator);
->>>>> -
->>>>>      dev_pm_opp_of_remove_table(dev);
->>>>
->>>> This function removes the 'opp_table'. But, the below code
->>>> uses the 'opp_table' variable by dev_pm_opp_put_regulators().
->>>>
->>>> To disable the regulator, you have to call dev_pm_opp_of_remove_table(dev)
->>>> after dev_pm_opp_put_regulators(bus->opp_table).
->>>
->>> Regulators should be set before dev_pm_opp_add_table(), so exit sequence
->>> should be in reverse order,
->>>
->>> init order:
->>>
->>> exynos_bus_parent_parse_of()
->>>         dev_pm_opp_set_regulators()
->>> exynos_bus_parse_of()
->>>         clk_prepare_enable()
->>>         dev_pm_opp_of_add_table()
->>>
->>> exit or error order:
->>>
->>> dev_pm_opp_of_remove_table()
->>> clk_disable_unprepare()
->>> if (bus->opp_table)
->>>         dev_pm_opp_put_regulators(bus->opp_table);
->>
->> dev_pm_opp_of_remove_table() have to be called at the end of exit sequence
->> after disabling clock and put regulators. Because dev_pm_opp_of_remove_table()
->> frees the 'opp_table' pointer of device.
->>
->> clk_disable_unprepare()
->> if (bus->opp_table)
->>           dev_pm_opp_put_regulators(bus->opp_table);
->> dev_pm_opp_of_remove_table()
-> 
-> The table is reference counted so it will be freed after count go to zero.
+> The devfreq target() callback provided by exynos-bus now selects either the
+> frequency calculated by the devfreq governor or the frequency requested via
+> the interconnect API for the given node, whichever is higher.
 
-You're right. I checked it with OPP code.
+This completely makes sense. We just need to be sure that the interconnect
+framework is used correctly.
 
-> 
->>> I will send v4 soon.
->>>
->>>>> +err_reg:
->>>>> +    if (bus->opp_table) {
->>>>> +            dev_pm_opp_put_regulators(bus->opp_table);
->>>>> +            bus->opp_table = NULL;
->>>>> +    }
->>>>>
->>>>>      return ret;
->>>>>  }
-> 
-
-
--- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+Thanks,
+Georgi
