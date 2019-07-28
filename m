@@ -2,75 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D299D7828E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jul 2019 01:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 199D3782DE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jul 2019 02:39:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbfG1X7d (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 28 Jul 2019 19:59:33 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:38568 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726366AbfG1X7d (ORCPT
+        id S1726271AbfG2AjN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 28 Jul 2019 20:39:13 -0400
+Received: from gateway24.websitewelcome.com ([192.185.51.172]:34503 "EHLO
+        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726270AbfG2AjN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 28 Jul 2019 19:59:33 -0400
-Received: by mail-ot1-f68.google.com with SMTP id d17so60829398oth.5
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 28 Jul 2019 16:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=8HerNJ+KPshsmAFkEGOs3SrN9ygWfkRsx5jp23KpQmk=;
-        b=ClvSw5i6Gxdg2SnCiMkKnuTDkj2xyVtCB7FMI/qaNsOClr1/7vT6g26bNpoFoS1TEt
-         ezuJNXJkNUs/w7OxL993CmXHAlm8MthO0pNMeWTiY8AVhMlWZUmoPtqiyBCZD8mM9L3u
-         WYAIyUOjiuXePvOILVzlUDPr25mXY2F8ZH90MMsx6CoJBMmVOxXum5xtLPmGl7CwSF98
-         Q8KbHiuHCV0HfQU/5e31plnIoJlIDFMQNTJW8P4VSsUac5+/HgXUTUoieGrCsOWUWekL
-         otKGLKEVPoebgDJKFvyQUODqIkjdAMRZmXpDBIGq6nbZV4Efsx55+LqOxVHSkVAtsSe7
-         OY1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=8HerNJ+KPshsmAFkEGOs3SrN9ygWfkRsx5jp23KpQmk=;
-        b=PajF2m+CDW7AJWykASPVG9ulvtqV3qjTGDP7QIGBJy8KPxoolKrceyVozKhodPv/Kk
-         xSYFM5bbK60iBU8scNJS1ScZdKR3jY24q2krCL950hS4xOkSPb98S1lMK/jT8tHjTU3b
-         sVuf5PyxRX57/30LTrBTIZS7oulvaCKbzAaFHIpWuzc1QGlh1SXYVn3Kl/SfW+eoMceS
-         L4H/a4KNQjldD+eNaZziWX0Qnjx7y3lCESZmpjD5IHMGkC3YdVQAFH4yC2l3kVhP3X0l
-         DGyKYz+tGIXOx4ePLbFV49JHcB6ES78Y83qA+vSzhNXaJZ0U3BH4pXCulG796745mXGS
-         Bf1A==
-X-Gm-Message-State: APjAAAWt3//zEfjzoriqJkSATVVYdkrt/k7OX+v7DLTXWezo27mY3Hqv
-        YNKaR9ePlfHfApq0tT+VthMcQTT1svAzkD6C/nc=
-X-Google-Smtp-Source: APXvYqy0SEbg3Q922DqQYc3ryazpWhuGHyCmbgkwKcM/N/RLO1KZ1txk7ET1AE/lCzNZIJBd7IrmCDx2tXDjIk0R6Lg=
-X-Received: by 2002:a9d:7ccd:: with SMTP id r13mr12561194otn.196.1564358372768;
- Sun, 28 Jul 2019 16:59:32 -0700 (PDT)
+        Sun, 28 Jul 2019 20:39:13 -0400
+X-Greylist: delayed 1500 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Jul 2019 20:39:12 EDT
+Received: from cm11.websitewelcome.com (cm11.websitewelcome.com [100.42.49.5])
+        by gateway24.websitewelcome.com (Postfix) with ESMTP id 395141BCF
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 28 Jul 2019 18:51:41 -0500 (CDT)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id rsx3h1kdwdnCersx3hVGBU; Sun, 28 Jul 2019 18:51:41 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=nqhItU/yVLc8ci7xr995svAr83BiyHeRNAak3CCkDaQ=; b=tA1lzwPRRIq/zQqLhnBGjmnwf2
+        kX3TNopWA2sq8OYd9i3WfvHpsZvj05B4dL2UpBW+RKBahP4Rflh3ES1PVue9zXWLpjqqvQ8WZ+JTi
+        s5B09R+JS2rrz4yqX/df503Lm/xGSaXhaaANynDagVrHQ6HzlNv/AWe0KbX4wgiYVtmTCPpUJGZXO
+        McPrY96pCJoI0uqqQFQsDkRK0bi0OsTSLdla6oBvC2ivAJyZuwj/uo+Jy8T65Q8WraaEkQNGGhilS
+        1UzNMitF1IC0A9ROofnNUzAsHCq/cbL9e1k7tmPb8gvCcq+vtZdXbQ+AEUE/jKMlUDPjm1sKVl+Yf
+        82f3gFxg==;
+Received: from [187.192.11.120] (port=39574 helo=embeddedor)
+        by gator4166.hostgator.com with esmtpa (Exim 4.92)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1hrsx1-003jvw-Tn; Sun, 28 Jul 2019 18:51:40 -0500
+Date:   Sun, 28 Jul 2019 18:51:38 -0500
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+To:     Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Kees Cook <keescook@chromium.org>
+Subject: [PATCH] i2c: s3c2410: Mark expected switch fall-through
+Message-ID: <20190728235138.GA23429@embeddedor>
 MIME-Version: 1.0
-Received: by 2002:a9d:7614:0:0:0:0:0 with HTTP; Sun, 28 Jul 2019 16:59:32
- -0700 (PDT)
-Reply-To: williamrobert416@gmail.com
-From:   "Mr. Robert William" <omarmariam373@gmail.com>
-Date:   Mon, 29 Jul 2019 00:59:32 +0100
-Message-ID: <CA+FSRKCvoY50VasAKiuKEnp8p=SCYqdnBVG4ZzeROzmBGxZGJQ@mail.gmail.com>
-Subject: Its Urgent
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 187.192.11.120
+X-Source-L: No
+X-Exim-ID: 1hrsx1-003jvw-Tn
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (embeddedor) [187.192.11.120]:39574
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 44
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Mark switch cases where we are expecting to fall through.
+
+This patch fixes the following warning:
+
+drivers/i2c/busses/i2c-s3c2410.c: In function 'i2c_s3c_irq_nextbyte':
+drivers/i2c/busses/i2c-s3c2410.c:431:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   if (i2c->state == STATE_READ)
+      ^
+drivers/i2c/busses/i2c-s3c2410.c:439:2: note: here
+  case STATE_WRITE:
+  ^~~~
+
+Notice that, in this particular case, the code comment is
+modified in accordance with what GCC is expecting to find.
+
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+---
+ drivers/i2c/busses/i2c-s3c2410.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
+index d97fb857b0ea..c98ef4c4a0c9 100644
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -435,6 +435,7 @@ static int i2c_s3c_irq_nextbyte(struct s3c24xx_i2c *i2c, unsigned long iicstat)
+ 		 * fall through to the write state, as we will need to
+ 		 * send a byte as well
+ 		 */
++		/* Fall through */
+ 
+ 	case STATE_WRITE:
+ 		/*
 -- 
-Hello,
+2.22.0
 
-I am Eng. Robert William, a retired Marine Engineer residing in
-Trinidad & Tobago.
-Unfortunately i am admitted to the hospital for a cancer (Sickness)
-over a year now,my doctor reported that i have only few months to pass
-away. Please i need your consent to invest my money (USD$1.8 Million)
-in any business of your
-
-choice in your country before i die, i have no other relatives not
-even children because i lost my family in a fire disaster in 2005.
-Please i need your urgent and
-
-kind response to enable me send you more information on how to contact
-my bank as my next of kin to process the fund into your bank account.
-
-
-Mr Robert William
