@@ -2,109 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 51E2D79105
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jul 2019 18:35:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EFD37978E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jul 2019 22:01:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729195AbfG2QfC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Jul 2019 12:35:02 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44193 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729194AbfG2Qe6 (ORCPT
+        id S2391122AbfG2UA7 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Jul 2019 16:00:59 -0400
+Received: from mbkd0216.ocn.ad.jp ([153.149.233.17]:55929 "EHLO
+        mbkd0216.ocn.ad.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403884AbfG2Tvs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Jul 2019 12:34:58 -0400
-Received: by mail-pf1-f193.google.com with SMTP id t16so28276003pfe.11
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Jul 2019 09:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sDSCepMkR2bL5Wr/nR20Z2uWmhbnLcrsn71Gn90luLw=;
-        b=XbJNhEas82gAqvT7+0uKPnBQXmY1bdSWMvlhGYnRuK2Tz53TPDGRi+sZihvQRqBA9E
-         eH7iEjvJVAtqr4SwQkBV7kLJd9vGJP8LDI4g6xbbGLgfkVlamu0amAGZa06ft0WabEhb
-         dW/YDi4mgPWPnbznja2Au4bxUF8sISHe/hfaI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sDSCepMkR2bL5Wr/nR20Z2uWmhbnLcrsn71Gn90luLw=;
-        b=PRDpIbDwT6TDL2CO47wuCGFLaE51+lCfFD7/UtzSpGH4g0mS78ouhhNHeF766gDkt/
-         sYURqOBsi1Yuc3vm4S0efOwcP35v9Nxk0+kUwpvZNOoEfkhu74FipgEe3V/UuSbc0Wc3
-         wPxrdnPsieeMuu+6cHK5DdSt/VbIpZ/d1HdG3NFcAvCrksfzosmGLzsFo6nsEXyJmJok
-         L6mC/q5jV9RRWhpc7XAnN0Ep5xrR0oOvupYMaWZYS1GgyGEAfgmfsKRGOEeg8KGDDTF2
-         NbgvJ3nptpSo01OKWY6M+Xl2RVk4fE2BgIIdmCPeQvdatZ6F84vy4rONjy7H58DgTpsA
-         PiwA==
-X-Gm-Message-State: APjAAAWoL+9HHn45djIviZMGkunPi8kmBOYv/Mrl1QN9DW8x4aGll2Wy
-        RxZFEMVEV3YCFaFGfxVu6VllHA==
-X-Google-Smtp-Source: APXvYqxaKTxKSNNjt8UOl7wNOOomuHl6ngrDpmPTgBkq84LNTpXKwVVinqdCXykfOa5exwsXSmvowQ==
-X-Received: by 2002:a17:90a:b104:: with SMTP id z4mr112755496pjq.102.1564418097415;
-        Mon, 29 Jul 2019 09:34:57 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id 2sm110616451pgm.39.2019.07.29.09.34.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Jul 2019 09:34:56 -0700 (PDT)
-Date:   Mon, 29 Jul 2019 09:34:55 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Cc:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] i2c: s3c2410: Mark expected switch fall-through
-Message-ID: <201907290934.959721D@keescook>
-References: <20190728235138.GA23429@embeddedor>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190728235138.GA23429@embeddedor>
+        Mon, 29 Jul 2019 15:51:48 -0400
+X-Greylist: delayed 10910 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Jul 2019 15:51:47 EDT
+Received: from mf-smf-ucb019c1 (mf-smf-ucb019c1.ocn.ad.jp [153.153.66.130])
+        by mbkd0216.ocn.ad.jp (Postfix) with ESMTP id 785AB11008EC;
+        Tue, 30 Jul 2019 01:49:55 +0900 (JST)
+Received: from ocn-vc-mts-106c1.ocn.ad.jp ([153.138.237.145])
+        by mf-smf-ucb019c1 with ESMTP
+        id s8j7hf7Kimg4ks8qRhKYD9; Tue, 30 Jul 2019 01:49:55 +0900
+Received: from smtp.ocn.ne.jp ([153.149.227.165])
+        by ocn-vc-mts-106c1.ocn.ad.jp with ESMTP
+        id s8qDhx1WGKQMts8qDhGAQs; Tue, 30 Jul 2019 01:49:55 +0900
+Received: from smtp.ocn.ne.jp (unknown [37.237.117.18])
+        by smtp.ocn.ne.jp (Postfix) with ESMTPA;
+        Tue, 30 Jul 2019 01:49:41 +0900 (JST)
+From:   Raymond Jender <mami-k@fine.ocn.ne.jp>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (1.0)
+Subject: RE
+Message-Id: <A6375335-0F74-4D5D-B101-B6662A1513E3@fine.ocn.ne.jp>
+Date:   Mon, 29 Jul 2019 09:52:59 -0700
+To:     "k debski" <k.debski@samsung.com>,
+        "Kameron Senemar" <ksenemar@fgmc.com>,
+        "Kathie Lea" <kathie@kathieleahomes.com>,
+        "Kelly Acevedo" <kelly.acevedo@brightway.com>,
+        "Kelly Klein" <Kelly@KellyKleinSoldMine.com>,
+        "Kelly Lewis" <Kelly@aimloan.com>,
+        "Ken haben" <Ken.haben@alcatel-lucent.com>,
+        "ksiers" <ksiers@charlotteobserver.com>,
+        "kyungmin park" <kyungmin.park@samsung.com>,
+        "landerson" <landerson@intrinsec.ca>,
+        "LAURA MCGEARY" <laura.mcgeary@floridamoves.com>,
+        "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>,
+        "lcesare" <lcesare@trinitytitle.net>, "Mark" <mark@lilas.net>,
+        "linux media" <linux-media@vger.kernel.org>,
+        "linux samsung soc" <linux-samsung-soc@vger.kernel.org>,
+        "linux sh" <linux-sh@vger.kernel.org>
+X-Mailer: iPhone Mail (14B100)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Jul 28, 2019 at 06:51:38PM -0500, Gustavo A. R. Silva wrote:
-> Mark switch cases where we are expecting to fall through.
-> 
-> This patch fixes the following warning:
-> 
-> drivers/i2c/busses/i2c-s3c2410.c: In function 'i2c_s3c_irq_nextbyte':
-> drivers/i2c/busses/i2c-s3c2410.c:431:6: warning: this statement may fall through [-Wimplicit-fallthrough=]
->    if (i2c->state == STATE_READ)
->       ^
-> drivers/i2c/busses/i2c-s3c2410.c:439:2: note: here
->   case STATE_WRITE:
->   ^~~~
-> 
-> Notice that, in this particular case, the code comment is
-> modified in accordance with what GCC is expecting to find.
-> 
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Good morning k
 
--Kees
+http://coea.org.kh/production.php?kkis=QPSGAC20301
 
-> ---
->  drivers/i2c/busses/i2c-s3c2410.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-> index d97fb857b0ea..c98ef4c4a0c9 100644
-> --- a/drivers/i2c/busses/i2c-s3c2410.c
-> +++ b/drivers/i2c/busses/i2c-s3c2410.c
-> @@ -435,6 +435,7 @@ static int i2c_s3c_irq_nextbyte(struct s3c24xx_i2c *i2c, unsigned long iicstat)
->  		 * fall through to the write state, as we will need to
->  		 * send a byte as well
->  		 */
-> +		/* Fall through */
->  
->  	case STATE_WRITE:
->  		/*
-> -- 
-> 2.22.0
-> 
 
--- 
-Kees Cook
+
+Raymond
