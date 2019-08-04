@@ -2,59 +2,94 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 001D980B93
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2019 18:02:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEC3F80C4A
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2019 22:17:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726474AbfHDQCQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 4 Aug 2019 12:02:16 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43476 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfHDQCQ (ORCPT
+        id S1726392AbfHDURA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 4 Aug 2019 16:17:00 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:42876 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbfHDUQ7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 4 Aug 2019 12:02:16 -0400
-Received: by mail-pf1-f194.google.com with SMTP id i189so38352822pfg.10;
-        Sun, 04 Aug 2019 09:02:16 -0700 (PDT)
+        Sun, 4 Aug 2019 16:16:59 -0400
+Received: by mail-lj1-f193.google.com with SMTP id t28so77424519lje.9;
+        Sun, 04 Aug 2019 13:16:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
+        h=sender:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=LeGjYEzEnNd+LP7E7X1hGpTj7PNVozz8mf2RHENRFPs=;
-        b=LQytGn6C2tlkbNTMXkKZ2UyVakSPWDuBvnr2zYpndh4VptsQvTykzeffX86XeALTgk
-         u8V7q4xuIO4nY1eainybsqRRCkUU9UZlaffx/Mex4LR1mcNDxNllViZbEwkZoTaK522W
-         wNmbSEB1xFONhovQ+m5fvb60LMQaLRZo0Rr3nclUoBwKBFLotbBQx8P+D4Hk6VSSomcf
-         uAFJYT+MpMD/OhRYnG2IH5A9GbIq8Y8dH6GuknoM6u4uPRzsp2pZ8WQGQtUqzKdk/t6M
-         QjVvRlovZa8Le8dedeV0qILbbCFLc6E1OaiO2i3+6DMhS2WVshgPVhzxMovkkd/M6ZvF
-         JLRQ==
+        bh=3JqNJR/tbllInqzUqAgcIBZy8c2/hdUEosVg+96WWSo=;
+        b=OFo5m7UYW1t09ibVa24pGV8LSs92/jiLMbnmIRIrUAONwdrp/xVYrUT41t4kq7FAXt
+         XWCk8JrCjhMvDYV4roa7yWoSu242TuRiw9Ov/1WsXSkKId0Yt+d1PIlxD5OImGaol8Z7
+         zrglP6rxfB9ty7sP5J7PDoED29Z7fxR6dK+xKEnLZvKfQkRVYJ5lnlgucCLlkbag3ZJq
+         tIl9ttBBlOUipT0Kt8rzjyQ7gvYGhWrir+mA820NfHzaPdOc2cSw2MG4ECkDp/MYAARi
+         WksCS7ziA1MMweO/fYeDo7M870dhtafgJdCrLF5JbbsXWYnV9Z6Eydf5FTn//cJ6tYZ+
+         AbMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LeGjYEzEnNd+LP7E7X1hGpTj7PNVozz8mf2RHENRFPs=;
-        b=PD5ynfU3IeMCj/tcRyvhTb9wGKy0ykxbNom1SsdQFKS2pz0xQ/9GUnC1OssuKIy8AO
-         TAqOgOneBGyjqbG1rdO3xfBqODftMx7+z2AU8XlDuF1GtJWzX1SaPOq/P6rbur2NEyMl
-         LZJ95bK/e0H1QnnIqzeQKRaB+5wjAghpKSva2CxWe7CprM6RBhC6tBwHt2uU3fnklnG2
-         ae202rmIoFISV59CiUJuLhHh6Nn7fhlsj7Lt67L2XDNBX4dy7PzRTnHOgAZyIHik/ZqI
-         OUBlHmRtJ5nb7ObNT4+zhYvAICTUqmrgxPRiZS1L0N21aQmctyFqrBjlVGArMLEHvPej
-         RG6g==
-X-Gm-Message-State: APjAAAU/+YMUgkq4aat4D+01ctaT63gYI5eBtiZGpUjC+3lSrpn5gKwX
-        FTznCG53W10qI1chrJ/o4fg=
-X-Google-Smtp-Source: APXvYqyW3HshrRKiqWhhL7Xm0gBHnBObsgshWMul17uZfpv0UekHsFJKsZHv4yQsC3HGKCgiksvnzA==
-X-Received: by 2002:a63:89c2:: with SMTP id v185mr27001405pgd.241.1564934535868;
-        Sun, 04 Aug 2019 09:02:15 -0700 (PDT)
-Received: from localhost.localdomain ([122.163.105.8])
-        by smtp.gmail.com with ESMTPSA id v22sm80865042pgk.69.2019.08.04.09.02.12
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=3JqNJR/tbllInqzUqAgcIBZy8c2/hdUEosVg+96WWSo=;
+        b=Ropc5IcZXTIDRAjbfRiIeaq3JnXTN71gVjhQdXtPnlkvBKA0YrtXbGTxv8oAo3s1g7
+         lYYojct2Sw0SgOVVfMWzuVMmM/evgEg7/tJh/vQ8p+hK0+kDva7Sxnsxa2Byqz3xCyvs
+         L8+pV2axW8vKuXwP6+q+HHtHiSy2bXjvaGZrvH+21V+D41lqnl1HueC7vZnG/0QhJi0J
+         6hQhTANx1YuAKg1kSkse79qcPBkKkQHFByXoR9AvmxF0EH5W5hrXX89qi6J3DTPsS6x8
+         H8H55W7wkTZQsLcmZ+mZ2wj9vOYt29i7PKRjz/KynLxSlEbgpK2RrIkSGYAn376PYzIz
+         vaAg==
+X-Gm-Message-State: APjAAAVjrT6kJxfvZjAuMlp1o6DL/LEzmizXOIGoGlyLwpq24eLaBYOk
+        +JU72vcsXjX3BnbDqWpi1Uk=
+X-Google-Smtp-Source: APXvYqxubNgp0cYLhN8wuC7+2LA2WOAC50nfeiKvF5Oq3p74Zf9n27xnchcBuEjvjjCBlvoc6/29TQ==
+X-Received: by 2002:a2e:8559:: with SMTP id u25mr13365606ljj.224.1564949816865;
+        Sun, 04 Aug 2019 13:16:56 -0700 (PDT)
+Received: from saturn.lan (18.158-248-194.customer.lyse.net. [158.248.194.18])
+        by smtp.gmail.com with ESMTPSA id p87sm16540794ljp.50.2019.08.04.13.16.54
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 04 Aug 2019 09:02:15 -0700 (PDT)
-From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
-To:     linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-gpio@vger.kernel.org, tomasz.figa@gmail.com, krzk@kernel.org,
-        s.nawrocki@samsung.com, kgene@kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
-Subject: [PATCH] pinctrl: samsung: exynos: Add of_node_put() before return
-Date:   Sun,  4 Aug 2019 21:32:00 +0530
-Message-Id: <20190804160200.5139-1-nishkadg.linux@gmail.com>
-X-Mailer: git-send-email 2.19.1
+        Sun, 04 Aug 2019 13:16:56 -0700 (PDT)
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>
+Subject: [PATCH v1 0/16] drm: panel related updates
+Date:   Sun,  4 Aug 2019 22:16:21 +0200
+Message-Id: <20190804201637.1240-1-sam@ravnborg.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
@@ -62,32 +97,107 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Each iteration of for_each_child_of_node puts the previous node, but in
-the case of a return from the middle of the loop, there is no put, thus
-causing a memory leak. Hence add an of_node_put before the return.
-Issue found with Coccinelle.
+The first 9 patches replaces direct use of the drm_panel
+function pointers with their drm_panel_* counterparts.
+The function pointers are only supposed to be used by
+the drm_panel infrastructure and direct use are discouraged.
 
-Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
----
- drivers/pinctrl/samsung/pinctrl-exynos.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ili9322 is updated to handle bus_flags in get_modes like everyone else.
+This is in preparation for a later patch series where controller
+becomes an arugument to get_modes() and not like today where drm_panel
+is attached to a controller.
 
-diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
-index ebc27b06718c..e7f4cbad2c92 100644
---- a/drivers/pinctrl/samsung/pinctrl-exynos.c
-+++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
-@@ -486,8 +486,10 @@ int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
- 		if (match) {
- 			irq_chip = kmemdup(match->data,
- 				sizeof(*irq_chip), GFP_KERNEL);
--			if (!irq_chip)
-+			if (!irq_chip) {
-+				of_node_put(np);
- 				return -ENOMEM;
-+			}
- 			wkup_np = np;
- 			break;
- 		}
--- 
-2.19.1
+The remaining patches move functionality to the drm_panel core that
+today are repeated in many drivers.
+As preparation for this the inline functions are moved to drm_panel.c
+and kernel-doc is made inline.
+panel-simple is updated to benefit from the additional infrastructure
+and is an example for the simplifications that can be done.
+
+The patchset has been tested on my embedded target,
+and build tested.
+
+Feedback welcome!
+
+The "fix opencoded" patches are all independent and can be applied
+out of order. They were kept here to keep panel related patches in one series.
+
+	Sam
+
+Cc: Alexios Zavras <alexios.zavras@intel.com>
+Cc: Alison Wang <alison.wang@nxp.com>
+Cc: Allison Randal <allison@lohutok.net>
+Cc: Andrzej Hajda <a.hajda@samsung.com>
+Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Enrico Weigelt <info@metux.net>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Jernej Skrabec <jernej.skrabec@siol.net>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-tegra@vger.kernel.org
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Marek Vasut <marex@denx.de>
+Cc: Maxime Ripard <maxime.ripard@bootlin.com>
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Stefan Agner <stefan@agner.ch>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vincent Abriou <vincent.abriou@st.com>
+
+Sam Ravnborg (16):
+      drm/bridge: tc358767: fix opencoded use of drm_panel_*
+      drm/exynos: fix opencoded use of drm_panel_*
+      drm/exynos: fix opencoded use of drm_panel_*
+      drm/imx: fix opencoded use of drm_panel_*
+      drm/fsl-dcu: fix opencoded use of drm_panel_*
+      drm/msm: fix opencoded use of drm_panel_*
+      drm/mxsfb: fix opencoded use of drm_panel_*
+      drm/sti: fix opencoded use of drm_panel_*
+      drm/tegra: fix opencoded use of drm_panel_*
+      drm/panel: ili9322: move bus_flags to get_modes()
+      drm/panel: move drm_panel functions to .c file
+      drm/panel: use inline comments in drm_panel.h
+      drm/panel: drop return code from drm_panel_detach()
+      drm/panel: call prepare/enable only once
+      drm/panel: add backlight support
+      drm/panel: simple: use drm_panel infrastructure
+
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c |   3 +-
+ drivers/gpu/drm/bridge/tc358767.c                  |  10 +-
+ drivers/gpu/drm/drm_panel.c                        | 185 ++++++++++++++++-
+ drivers/gpu/drm/exynos/exynos_drm_dpi.c            |   4 +-
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c            |   2 +-
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c          |  10 +-
+ drivers/gpu/drm/imx/imx-ldb.c                      |  11 +-
+ drivers/gpu/drm/imx/parallel-display.c             |  11 +-
+ .../gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c    |   2 +-
+ drivers/gpu/drm/mxsfb/mxsfb_out.c                  |   2 +-
+ drivers/gpu/drm/panel/panel-ilitek-ili9322.c       |  34 ++-
+ drivers/gpu/drm/panel/panel-simple.c               |  73 +------
+ drivers/gpu/drm/sti/sti_dvo.c                      |   8 +-
+ drivers/gpu/drm/tegra/output.c                     |   2 +-
+ include/drm/drm_panel.h                            | 227 +++++++++++----------
+ 15 files changed, 349 insertions(+), 235 deletions(-)
+
 
