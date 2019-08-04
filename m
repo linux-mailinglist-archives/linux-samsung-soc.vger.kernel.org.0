@@ -2,118 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CBF2B8068B
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2019 16:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 001D980B93
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2019 18:02:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388957AbfHCONE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 3 Aug 2019 10:13:04 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33314 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388886AbfHCOND (ORCPT
+        id S1726474AbfHDQCQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 4 Aug 2019 12:02:16 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43476 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726181AbfHDQCQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 3 Aug 2019 10:13:03 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n9so80168250wru.0
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 03 Aug 2019 07:13:02 -0700 (PDT)
+        Sun, 4 Aug 2019 12:02:16 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i189so38352822pfg.10;
+        Sun, 04 Aug 2019 09:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jamieiles-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NH76ZaePsP0z4l5OXFKg/g6flaC7aHRV+c6EeQ9kS6o=;
-        b=yve9gbrhv6FJmbJUZg2guU8pzriDoGRPtUNSqiUWlqQ4TkPhE7DfhQZ1Lvl6wlYKgn
-         CUij4lT37fx3UBTzDkqS1of8xRypgfYdRJr/ZTXH9n4ogxbAsHcYxCGIrI95URXflv1g
-         FJP9gYfinhrvwugGqlcrYzi3n2ruWV0GhOFk8DMONyy7mf8VlBaevDWMWbiu3MutmmwQ
-         QmpvFm+ZUvNuHH0b4aYZwIypRKx4k7GEt4Eb0TgahitiT6Dp+zPrFxSJt1f2evofobtU
-         wg0yc6oNTEOJez1sFjYfahVNfvSfG3X1JEqTzitL04k5N+LcsbHTEjXGJOyHEMLK2GEh
-         3LLQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LeGjYEzEnNd+LP7E7X1hGpTj7PNVozz8mf2RHENRFPs=;
+        b=LQytGn6C2tlkbNTMXkKZ2UyVakSPWDuBvnr2zYpndh4VptsQvTykzeffX86XeALTgk
+         u8V7q4xuIO4nY1eainybsqRRCkUU9UZlaffx/Mex4LR1mcNDxNllViZbEwkZoTaK522W
+         wNmbSEB1xFONhovQ+m5fvb60LMQaLRZo0Rr3nclUoBwKBFLotbBQx8P+D4Hk6VSSomcf
+         uAFJYT+MpMD/OhRYnG2IH5A9GbIq8Y8dH6GuknoM6u4uPRzsp2pZ8WQGQtUqzKdk/t6M
+         QjVvRlovZa8Le8dedeV0qILbbCFLc6E1OaiO2i3+6DMhS2WVshgPVhzxMovkkd/M6ZvF
+         JLRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NH76ZaePsP0z4l5OXFKg/g6flaC7aHRV+c6EeQ9kS6o=;
-        b=YwXjXI9L/lUIC6dfe1MMFhqcaeV1uxcx4H03CK30YW1B/jqz7QfM32cXzmV3k83PnW
-         oegpKt93y5aoXSWNElK5K6S1Pdd+gEsPIWoKa4dBZ48CsSsN4YOyf482DxdAui2Tvyor
-         hcGYELb5oYEpmaVFmencm9EfgX05RgZnQLJWVvayeKDCls7FHhw++1N9kx+/nyL8aRhg
-         oqMPgnKPN+UrP525SQSZ7x4Iw4WOKlA1VyHG0b6ryHqUO8WpnSqF1NMQj6M8x6+K41T4
-         3tAvCrhSKwxH/FTmgAHtPrRi8s4sTywzqCl7oKvpS9JisFmdfEXoalZLxklgnJ6Iu/It
-         FlJQ==
-X-Gm-Message-State: APjAAAVFdR2oW4woFjVzczXIv+Xs3M6MwLHEbwbHQzLCroeM5dPC9RvW
-        LJWu5EkEdjMhqgxYGrkyG7s=
-X-Google-Smtp-Source: APXvYqwdvvXxz41HQ2tdGIQL/JsFnK1YhppKjv+IAl3mDZiell5PlMgO40s/vhGd/eO9sYQEnXx8mQ==
-X-Received: by 2002:a5d:4b50:: with SMTP id w16mr143525518wrs.132.1564841581912;
-        Sat, 03 Aug 2019 07:13:01 -0700 (PDT)
-Received: from localhost (cpc128704-hawk17-2-0-cust94.know.cable.virginm.net. [82.38.213.95])
-        by smtp.gmail.com with ESMTPSA id c65sm80532453wma.44.2019.08.03.07.13.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LeGjYEzEnNd+LP7E7X1hGpTj7PNVozz8mf2RHENRFPs=;
+        b=PD5ynfU3IeMCj/tcRyvhTb9wGKy0ykxbNom1SsdQFKS2pz0xQ/9GUnC1OssuKIy8AO
+         TAqOgOneBGyjqbG1rdO3xfBqODftMx7+z2AU8XlDuF1GtJWzX1SaPOq/P6rbur2NEyMl
+         LZJ95bK/e0H1QnnIqzeQKRaB+5wjAghpKSva2CxWe7CprM6RBhC6tBwHt2uU3fnklnG2
+         ae202rmIoFISV59CiUJuLhHh6Nn7fhlsj7Lt67L2XDNBX4dy7PzRTnHOgAZyIHik/ZqI
+         OUBlHmRtJ5nb7ObNT4+zhYvAICTUqmrgxPRiZS1L0N21aQmctyFqrBjlVGArMLEHvPej
+         RG6g==
+X-Gm-Message-State: APjAAAU/+YMUgkq4aat4D+01ctaT63gYI5eBtiZGpUjC+3lSrpn5gKwX
+        FTznCG53W10qI1chrJ/o4fg=
+X-Google-Smtp-Source: APXvYqyW3HshrRKiqWhhL7Xm0gBHnBObsgshWMul17uZfpv0UekHsFJKsZHv4yQsC3HGKCgiksvnzA==
+X-Received: by 2002:a63:89c2:: with SMTP id v185mr27001405pgd.241.1564934535868;
+        Sun, 04 Aug 2019 09:02:15 -0700 (PDT)
+Received: from localhost.localdomain ([122.163.105.8])
+        by smtp.gmail.com with ESMTPSA id v22sm80865042pgk.69.2019.08.04.09.02.12
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 03 Aug 2019 07:13:00 -0700 (PDT)
-Date:   Sat, 3 Aug 2019 15:13:00 +0100
-From:   Jamie Iles <jamie@jamieiles.com>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     herbert@gondor.apana.org.au, lars.persson@axis.com,
-        jesper.nilsson@axis.com, davem@davemloft.net,
-        thomas.lendacky@amd.com, gary.hook@amd.com, krzk@kernel.org,
-        kgene@kernel.org, antoine.tenart@bootlin.com,
-        matthias.bgg@gmail.com, jamie@jamieiles.com, agross@kernel.org,
-        heiko@sntech.de, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, clabbe.montjoie@gmail.com,
-        mripard@kernel.org, wens@csie.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-arm-kernel@axis.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH -next 07/12] crypto: picoxcell - use
- devm_platform_ioremap_resource() to simplify code
-Message-ID: <20190803141300.GA26817@willow>
-References: <20190802132809.8116-1-yuehaibing@huawei.com>
- <20190802132809.8116-8-yuehaibing@huawei.com>
+        Sun, 04 Aug 2019 09:02:15 -0700 (PDT)
+From:   Nishka Dasgupta <nishkadg.linux@gmail.com>
+To:     linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-gpio@vger.kernel.org, tomasz.figa@gmail.com, krzk@kernel.org,
+        s.nawrocki@samsung.com, kgene@kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Subject: [PATCH] pinctrl: samsung: exynos: Add of_node_put() before return
+Date:   Sun,  4 Aug 2019 21:32:00 +0530
+Message-Id: <20190804160200.5139-1-nishkadg.linux@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190802132809.8116-8-yuehaibing@huawei.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Aug 02, 2019 at 09:28:04PM +0800, YueHaibing wrote:
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Each iteration of for_each_child_of_node puts the previous node, but in
+the case of a return from the middle of the loop, there is no put, thus
+causing a memory leak. Hence add an of_node_put before the return.
+Issue found with Coccinelle.
 
-Acked-by: Jamie Iles <jamie@jamieiles.com>
+Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+---
+ drivers/pinctrl/samsung/pinctrl-exynos.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> ---
->  drivers/crypto/picoxcell_crypto.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/crypto/picoxcell_crypto.c b/drivers/crypto/picoxcell_crypto.c
-> index b985cb85..9a939b4 100644
-> --- a/drivers/crypto/picoxcell_crypto.c
-> +++ b/drivers/crypto/picoxcell_crypto.c
-> @@ -1624,7 +1624,7 @@ MODULE_DEVICE_TABLE(of, spacc_of_id_table);
->  static int spacc_probe(struct platform_device *pdev)
->  {
->  	int i, err, ret;
-> -	struct resource *mem, *irq;
-> +	struct resource *irq;
->  	struct device_node *np = pdev->dev.of_node;
->  	struct spacc_engine *engine = devm_kzalloc(&pdev->dev, sizeof(*engine),
->  						   GFP_KERNEL);
-> @@ -1653,8 +1653,7 @@ static int spacc_probe(struct platform_device *pdev)
->  
->  	engine->name = dev_name(&pdev->dev);
->  
-> -	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	engine->regs = devm_ioremap_resource(&pdev->dev, mem);
-> +	engine->regs = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(engine->regs))
->  		return PTR_ERR(engine->regs);
->  
-> -- 
-> 2.7.4
-> 
-> 
+diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
+index ebc27b06718c..e7f4cbad2c92 100644
+--- a/drivers/pinctrl/samsung/pinctrl-exynos.c
++++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
+@@ -486,8 +486,10 @@ int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
+ 		if (match) {
+ 			irq_chip = kmemdup(match->data,
+ 				sizeof(*irq_chip), GFP_KERNEL);
+-			if (!irq_chip)
++			if (!irq_chip) {
++				of_node_put(np);
+ 				return -ENOMEM;
++			}
+ 			wkup_np = np;
+ 			break;
+ 		}
+-- 
+2.19.1
+
