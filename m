@@ -2,126 +2,340 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52D7281606
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 443458174A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 12:45:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbfHEJ40 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 05:56:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43686 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727158AbfHEJ40 (ORCPT
+        id S1727328AbfHEKpW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 06:45:22 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:51192 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727739AbfHEKpW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 05:56:26 -0400
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5469C217D9;
-        Mon,  5 Aug 2019 09:56:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564998985;
-        bh=c/eJMd7h8iMY7g3oBcO09Ax6tNi/85j/LkvMdm+2LJ0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=kCUfwhYAxdatWJQsoVRP5kF25HVcRa1aMqKUgUJMss9brgbECYUQmepSWt2tGm/RQ
-         umRuOgvoPUKkt+A7Papljrijh6QQVCW0gkYfOsbJ6bM3ez1Rp3W8VOVzCufeKWykP2
-         SI9yu/NkrsRLYzfI5dB6G+qzLhW/6hIfeGIf620k=
-Received: by mail-lj1-f171.google.com with SMTP id h10so7308819ljg.0;
-        Mon, 05 Aug 2019 02:56:25 -0700 (PDT)
-X-Gm-Message-State: APjAAAXzFIpCWS5XBf77VnlywWzZUbrTNQNiwyN3HVuC4+prFDF7C8xX
-        DaepV4NDFhOVqOD6QA0HpqV/hsw07nnrY/d3cd0=
-X-Google-Smtp-Source: APXvYqxzVKAd5TMLzlif6yoBQ/7YS/sKvvkA9uKhcxY/lMn1ISB5YMDZXNJeRxIeHY+6zPufLi4WkrEALvt2npvWd0M=
-X-Received: by 2002:a2e:8155:: with SMTP id t21mr21170060ljg.80.1564998983563;
- Mon, 05 Aug 2019 02:56:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
- <CGME20190723122022eucas1p1266d90873d564894bd852c20140f8474@eucas1p1.samsung.com>
- <20190723122016.30279-2-a.swigon@partner.samsung.com> <20190724190741.GD14346@kozik-lap>
- <bda10bcc66aae96355e74c4739229d72bcc95b0d.camel@partner.samsung.com>
-In-Reply-To: <bda10bcc66aae96355e74c4739229d72bcc95b0d.camel@partner.samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 5 Aug 2019 11:56:12 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdAhyAE96LmzV7TB1YTyNcN7Eh65Xb9caanXA-52Gskvg@mail.gmail.com>
-Message-ID: <CAJKOXPdAhyAE96LmzV7TB1YTyNcN7Eh65Xb9caanXA-52Gskvg@mail.gmail.com>
-Subject: Re: [RFC PATCH 01/11] devfreq: exynos-bus: Extract exynos_bus_profile_init()
-To:     =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Chanwoo Choi <cw00.choi@samsung.com>, myungjoo.ham@samsung.com,
+        Mon, 5 Aug 2019 06:45:22 -0400
+Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 78CCA2F9;
+        Mon,  5 Aug 2019 12:45:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1565001917;
+        bh=g7Pp29Mgg/gZ2YsNt1ThUlqv1p+7aPpCapxhy4OXn+w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nBxG6lfmjq8e2op+WOyy21pYLWM+0AUNucYtwffECcWzYEZUa11K2zfn7wlxuia2W
+         Lgzn3KjgPSzMabMcxeBYz8juvhZfEQOeWUFfF1Epq83f0jUtL8WyGslw/+3Sy7Pp8/
+         dZD+0OAwIrFaKPWXpABtCoHloEh9j7+KGiN0ez3Y=
+Date:   Mon, 5 Aug 2019 13:45:15 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
         Inki Dae <inki.dae@samsung.com>,
-        Seung Woo Kim <sw0312.kim@samsung.com>,
-        georgi.djakov@linaro.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>
+Subject: Re: [PATCH v1 11/16] drm/panel: move drm_panel functions to .c file
+Message-ID: <20190805104515.GF29747@pendragon.ideasonboard.com>
+References: <20190804201637.1240-1-sam@ravnborg.org>
+ <20190804201637.1240-12-sam@ravnborg.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190804201637.1240-12-sam@ravnborg.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, 31 Jul 2019 at 15:00, Artur =C5=9Awigo=C5=84 <a.swigon@partner.sams=
-ung.com> wrote:
->
-> Hi,
->
-> On Wed, 2019-07-24 at 21:07 +0200, Krzysztof Kozlowski wrote:
-> > On Tue, Jul 23, 2019 at 02:20:06PM +0200, Artur =C5=9Awigo=C5=84 wrote:
-> > > This patch adds a new static function, exynos_bus_profile_init(), ext=
-racted
-> > > from exynos_bus_probe().
-> > >
-> > > Signed-off-by: Artur =C5=9Awigo=C5=84 <a.swigon@partner.samsung.com>
-> > > ---
-> > >  drivers/devfreq/exynos-bus.c | 106 ++++++++++++++++++++-------------=
---
-> > >  1 file changed, 60 insertions(+), 46 deletions(-)
-> > >
-> > > diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bu=
-s.c
-> > > index d9f377912c10..d8f1efaf2d49 100644
-> > > --- a/drivers/devfreq/exynos-bus.c
-> > > +++ b/drivers/devfreq/exynos-bus.c
-> > > @@ -372,12 +372,69 @@ static int exynos_bus_parse_of(struct device_no=
-de *np,
-> > >     return ret;
-> > >  }
-> > >
-> > > +static int exynos_bus_profile_init(struct exynos_bus *bus,
-> > > +                              struct devfreq_dev_profile *profile)
-> > > +{
-> > > +   struct device *dev =3D bus->dev;
-> > > +   struct devfreq_simple_ondemand_data *ondemand_data;
-> > > +   int ret;
-> > > +
-> > > +   /* Initialize the struct profile and governor data for parent dev=
-ice */
-> > > +   profile->polling_ms =3D 50;
-> > > +   profile->target =3D exynos_bus_target;
-> > > +   profile->get_dev_status =3D exynos_bus_get_dev_status;
-> > > +   profile->exit =3D exynos_bus_exit;
-> > > +
-> > > +   ondemand_data =3D devm_kzalloc(dev, sizeof(*ondemand_data), GFP_K=
-ERNEL);
-> > > +   if (!ondemand_data) {
-> > > +           ret =3D -ENOMEM;
-> > > +           goto err;
-> >
-> > Just return proper error code. Less lines, obvious code since you do no=
-t
-> > have any cleanup in error path.
->
-> I was advised to avoid modifying code being moved (in one patch). I do ma=
-ke
-> changes in these places in patch 04/11, i.e. change the original label 'e=
-rr' to
-> 'out'. What's your opinion on making the proposed changes to patches 01 a=
-nd 02
-> (s/goto err/return ret/) in patch 04 instead?
+Hi Sam,
 
-Yes, you're right. I also prefer not to touch moved code.
+Thank you for the patch.
 
-Best regards,
-Krzysztof
+On Sun, Aug 04, 2019 at 10:16:32PM +0200, Sam Ravnborg wrote:
+> Move inline functions from include/drm/drm_panel.h to drm_panel.c.
+> This is in preparation for follow-up patches that will add extra
+> logic to the functions.
+> As they are no longer static inline, EXPORT them.
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Thierry Reding <thierry.reding@gmail.com>
+> Cc: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> Cc: Maxime Ripard <maxime.ripard@bootlin.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: David Airlie <airlied@linux.ie>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> ---
+>  drivers/gpu/drm/drm_panel.c | 96 +++++++++++++++++++++++++++++++++++
+>  include/drm/drm_panel.h     | 99 +++----------------------------------
+>  2 files changed, 104 insertions(+), 91 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+> index dbd5b873e8f2..9946b8d9bacc 100644
+> --- a/drivers/gpu/drm/drm_panel.c
+> +++ b/drivers/gpu/drm/drm_panel.c
+> @@ -54,6 +54,102 @@ void drm_panel_init(struct drm_panel *panel)
+>  }
+>  EXPORT_SYMBOL(drm_panel_init);
+>  
+> +/**
+> + * drm_panel_prepare - power on a panel
+> + * @panel: DRM panel
+> + *
+> + * Calling this function will enable power and deassert any reset signals to
+> + * the panel. After this has completed it is possible to communicate with any
+> + * integrated circuitry via a command bus.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_prepare(struct drm_panel *panel)
+> +{
+> +	if (panel && panel->funcs && panel->funcs->prepare)
+> +		return panel->funcs->prepare(panel);
+> +
+> +	return panel ? -ENOSYS : -EINVAL;
+> +}
+> +EXPORT_SYMBOL(drm_panel_prepare);
+> +
+> +/**
+> + * drm_panel_enable - enable a panel
+> + * @panel: DRM panel
+> + *
+> + * Calling this function will cause the panel display drivers to be turned on
+> + * and the backlight to be enabled. Content will be visible on screen after
+> + * this call completes.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_enable(struct drm_panel *panel)
+> +{
+> +	if (panel && panel->funcs && panel->funcs->enable)
+> +		return panel->funcs->enable(panel);
+> +
+> +	return panel ? -ENOSYS : -EINVAL;
+> +}
+> +EXPORT_SYMBOL(drm_panel_enable);
+> +
+> +/**
+> + * drm_panel_disable - disable a panel
+> + * @panel: DRM panel
+> + *
+> + * This will typically turn off the panel's backlight or disable the display
+> + * drivers. For smart panels it should still be possible to communicate with
+> + * the integrated circuitry via any command bus after this call.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_disable(struct drm_panel *panel)
+> +{
+> +	if (panel && panel->funcs && panel->funcs->disable)
+> +		return panel->funcs->disable(panel);
+> +
+> +	return panel ? -ENOSYS : -EINVAL;
+> +}
+> +EXPORT_SYMBOL(drm_panel_disable);
+> +
+> +/**
+> + * drm_panel_unprepare - power off a panel
+> + * @panel: DRM panel
+> + *
+> + * Calling this function will completely power off a panel (assert the panel's
+> + * reset, turn off power supplies, ...). After this function has completed, it
+> + * is usually no longer possible to communicate with the panel until another
+> + * call to drm_panel_prepare().
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_unprepare(struct drm_panel *panel)
+> +{
+> +	if (panel && panel->funcs && panel->funcs->unprepare)
+> +		return panel->funcs->unprepare(panel);
+> +
+> +	return panel ? -ENOSYS : -EINVAL;
+> +}
+> +EXPORT_SYMBOL(drm_panel_unprepare);
+> +
+> +/**
+> + * drm_panel_get_modes - probe the available display modes of a panel
+> + * @panel: DRM panel
+> + *
+> + * The modes probed from the panel are automatically added to the connector
+> + * that the panel is attached to.
+> + *
+> + * Return: The number of modes available from the panel on success or a
+> + * negative error code on failure.
+> + */
+> +int drm_panel_get_modes(struct drm_panel *panel)
+> +{
+> +	if (panel && panel->funcs && panel->funcs->get_modes)
+> +		return panel->funcs->get_modes(panel);
+> +
+> +	return panel ? -ENOSYS : -EINVAL;
+> +}
+> +EXPORT_SYMBOL(drm_panel_get_modes);
+> +
+>  /**
+>   * drm_panel_add - add a panel to the global registry
+>   * @panel: panel to add
+> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
+> index 26377836141c..053d611656b9 100644
+> --- a/include/drm/drm_panel.h
+> +++ b/include/drm/drm_panel.h
+> @@ -97,97 +97,6 @@ struct drm_panel {
+>  	struct list_head list;
+>  };
+>  
+> -/**
+> - * drm_disable_unprepare - power off a panel
+> - * @panel: DRM panel
+> - *
+> - * Calling this function will completely power off a panel (assert the panel's
+> - * reset, turn off power supplies, ...). After this function has completed, it
+> - * is usually no longer possible to communicate with the panel until another
+> - * call to drm_panel_prepare().
+> - *
+> - * Return: 0 on success or a negative error code on failure.
+> - */
+> -static inline int drm_panel_unprepare(struct drm_panel *panel)
+> -{
+> -	if (panel && panel->funcs && panel->funcs->unprepare)
+> -		return panel->funcs->unprepare(panel);
+> -
+> -	return panel ? -ENOSYS : -EINVAL;
+> -}
+> -
+> -/**
+> - * drm_panel_disable - disable a panel
+> - * @panel: DRM panel
+> - *
+> - * This will typically turn off the panel's backlight or disable the display
+> - * drivers. For smart panels it should still be possible to communicate with
+> - * the integrated circuitry via any command bus after this call.
+> - *
+> - * Return: 0 on success or a negative error code on failure.
+> - */
+> -static inline int drm_panel_disable(struct drm_panel *panel)
+> -{
+> -	if (panel && panel->funcs && panel->funcs->disable)
+> -		return panel->funcs->disable(panel);
+> -
+> -	return panel ? -ENOSYS : -EINVAL;
+> -}
+> -
+> -/**
+> - * drm_panel_prepare - power on a panel
+> - * @panel: DRM panel
+> - *
+> - * Calling this function will enable power and deassert any reset signals to
+> - * the panel. After this has completed it is possible to communicate with any
+> - * integrated circuitry via a command bus.
+> - *
+> - * Return: 0 on success or a negative error code on failure.
+> - */
+> -static inline int drm_panel_prepare(struct drm_panel *panel)
+> -{
+> -	if (panel && panel->funcs && panel->funcs->prepare)
+> -		return panel->funcs->prepare(panel);
+> -
+> -	return panel ? -ENOSYS : -EINVAL;
+> -}
+> -
+> -/**
+> - * drm_panel_enable - enable a panel
+> - * @panel: DRM panel
+> - *
+> - * Calling this function will cause the panel display drivers to be turned on
+> - * and the backlight to be enabled. Content will be visible on screen after
+> - * this call completes.
+> - *
+> - * Return: 0 on success or a negative error code on failure.
+> - */
+> -static inline int drm_panel_enable(struct drm_panel *panel)
+> -{
+> -	if (panel && panel->funcs && panel->funcs->enable)
+> -		return panel->funcs->enable(panel);
+> -
+> -	return panel ? -ENOSYS : -EINVAL;
+> -}
+> -
+> -/**
+> - * drm_panel_get_modes - probe the available display modes of a panel
+> - * @panel: DRM panel
+> - *
+> - * The modes probed from the panel are automatically added to the connector
+> - * that the panel is attached to.
+> - *
+> - * Return: The number of modes available from the panel on success or a
+> - * negative error code on failure.
+> - */
+> -static inline int drm_panel_get_modes(struct drm_panel *panel)
+> -{
+> -	if (panel && panel->funcs && panel->funcs->get_modes)
+> -		return panel->funcs->get_modes(panel);
+> -
+> -	return panel ? -ENOSYS : -EINVAL;
+> -}
+> -
+>  void drm_panel_init(struct drm_panel *panel);
+>  
+>  int drm_panel_add(struct drm_panel *panel);
+> @@ -196,6 +105,14 @@ void drm_panel_remove(struct drm_panel *panel);
+>  int drm_panel_attach(struct drm_panel *panel, struct drm_connector *connector);
+>  int drm_panel_detach(struct drm_panel *panel);
+>  
+> +int drm_panel_prepare(struct drm_panel *panel);
+> +int drm_panel_unprepare(struct drm_panel *panel);
+> +
+> +int drm_panel_enable(struct drm_panel *panel);
+> +int drm_panel_disable(struct drm_panel *panel);
+
+Nitpicking, I would keep the order of the declarations aligned with the
+definitions. prepare - enable - disable - unprepare and prepare -
+unprepare - enable - disable are both fine with me, as long as they're
+consistent.
+
+Apart from that,
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+> +
+> +int drm_panel_get_modes(struct drm_panel *panel);
+> +
+>  #if defined(CONFIG_OF) && defined(CONFIG_DRM_PANEL)
+>  struct drm_panel *of_drm_find_panel(const struct device_node *np);
+>  #else
+
+-- 
+Regards,
+
+Laurent Pinchart
