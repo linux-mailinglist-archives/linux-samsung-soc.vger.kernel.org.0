@@ -2,124 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D4881C03
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 15:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84F9B81D61
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 15:39:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729408AbfHENTc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 09:19:32 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36520 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729572AbfHENTb (ORCPT
+        id S1728904AbfHENjX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 09:39:23 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:40267 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726834AbfHENjW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 09:19:31 -0400
-Received: by mail-wm1-f65.google.com with SMTP id g67so68876851wme.1;
-        Mon, 05 Aug 2019 06:19:29 -0700 (PDT)
+        Mon, 5 Aug 2019 09:39:22 -0400
+Received: by mail-io1-f66.google.com with SMTP id h6so42136471iom.7;
+        Mon, 05 Aug 2019 06:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wZEl8RSr4zALt6HddkMAzZ6K0ziDRyO7RsNxOehkOiE=;
-        b=V8q6yIyItLRstyanR2xSd1hs5HNdY6xTpt01gxfk74f35YvVIYsURM8Sf4v0pRqCS0
-         FtjGfKUlwJhtZrhIcLxxL8lQA5s2eG85dXDzb+lShA+GBozmrSw6NCpqBCyNaO4LTA/t
-         MWleThgwXCDjqV1w8rYSqMlVpIm4jLzZAOSCD3H+EDt3mUaez+JXfQp734Y9F2sAvKwe
-         lZzebNEk3ENrf33vty7LYwLhwu2pJhCVHwfhBdYd7btGPRVNVTbchr4M26Mir3MndSpr
-         fqVAkor4XbugBI8g9vzZBe1KCojrYtJu2nKbLrP4A/vcqvUir0yzbfiwv+x8CwAvm8k8
-         17YA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FLq+GsK2RBOu2svVdDO4l5xiwRawI+I647gJYjWfm7E=;
+        b=KJq/JtygoaDwC4qXHEUx4uHJ4LiIZ4He9ZLfwnVLvyQCmvt3bZA3SRsfLRftxqtvFr
+         Yaw3JR4KkjPN5XmhhxeBc1CRfruClo0iotX9pEvMv5BpMDAVTE32u4d4kOf2gB1i1d9Y
+         zlNITSPcQ1klGLtWtThpr52wA4Sr5aqp3dbSIu+jCjEhQyajVLLuc+BdKgCGIT6SOaZf
+         XupKZypE1HcJjOKbTvUsokOy2LX62Ge2DrSzF7DA3ttmlqvwmIYeMk9If9jQyvCmEPle
+         4Ytk9zrn7CA9KzJBY6lM+6e2lPKOQuG63MZqU2MiD5VORTnNaC4tQ2vxE87jOv0Qbjwm
+         Xyrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wZEl8RSr4zALt6HddkMAzZ6K0ziDRyO7RsNxOehkOiE=;
-        b=p2Cjf8tnYgMVwTD/JcaCoD5+rgW8NtzDDE4UBQv+w4Xz5JAvTYfGOjtnLZTX0b6vFI
-         9YoPkxCiCcMrmg7fpQ4cttr+WIZqnx9SbAIMB3+GILv5sq8HGqe+vmTyDXVINSnvxSoY
-         f+O0xgvLV4P4sHhcjUlvBBypuR+yUoLvi+MXvtSxdd+taA+D/OjXrViIYEQ1hSLS4rpK
-         Kbb4avFGBbjel0wb7RvcIEm9dctADAIM1E3kSXaSVVXFmAG3u40y/ejLivvdPxq201bc
-         lCALRelGEd8m3ODgkt2iZvSORsGz1QyC7aGRcMnZAku59KATPlOIQhmMHBmApulGq0th
-         nY2w==
-X-Gm-Message-State: APjAAAUDjuPU9WoLwunJLsc/t52QdjLbYr8Ee7BvEK+gp0+Jjx1yZps1
-        eNu4iRACayB5bmwc+MmdPxw=
-X-Google-Smtp-Source: APXvYqz0P/wJNV1ZR/CdjYZA1JlXDnZhL8I26T1UonnCxIy55h0flNA3Au+YawBd5h4PH/RoOAm9rg==
-X-Received: by 2002:a1c:c14b:: with SMTP id r72mr18774070wmf.166.1565011169278;
-        Mon, 05 Aug 2019 06:19:29 -0700 (PDT)
-Received: from arch-x1c3 ([2a00:5f00:102:0:9665:9cff:feee:aa4d])
-        by smtp.gmail.com with ESMTPSA id f12sm92043233wrg.5.2019.08.05.06.19.28
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 05 Aug 2019 06:19:28 -0700 (PDT)
-Date:   Mon, 5 Aug 2019 14:18:50 +0100
-From:   Emil Velikov <emil.l.velikov@gmail.com>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Marek Vasut <marex@denx.de>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Allison Randal <allison@lohutok.net>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Alison Wang <alison.wang@nxp.com>,
-        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Enrico Weigelt <info@metux.net>
-Subject: Re: [PATCH v1 0/16] drm: panel related updates
-Message-ID: <20190805131850.GB5005@arch-x1c3>
-References: <20190804201637.1240-1-sam@ravnborg.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FLq+GsK2RBOu2svVdDO4l5xiwRawI+I647gJYjWfm7E=;
+        b=VaVzB0xj64872TAKVUGcSsJArwOygf87LnQcT4r1K1yD8PYlqHZViYWrdEEZoMwVIi
+         6YleXIS6C0YrCShI8zV5Sr54FvHbvMCvLZTN5p16D3Ev04aVN+wDb5eCzm7lVPYV7yl5
+         Szy5RnErnmoPXnKFx6c6NoG89aIwNE7luuoXzRO9W5shIByrDVXRixFJ+KcpbciDeogm
+         pgY3c1nz7TACZn/vJjq2g3qSCfvpKXxhYaiqlnf9dyr9k2rbt4uv2FB1Hge6i63Tf17h
+         yl2kaUgiO5Kxc/Zp12+lFcwtblVX8Sqh3S4NO0Tc0LX07CCpd65m8nulKQnMyY/RRxY4
+         CXyQ==
+X-Gm-Message-State: APjAAAXb/bfk20/V/cHublf3UeB7E+3rSxEblZdkmWfadG1alm3qBh94
+        RAGrTZC+6mWpY8ZPSBDezC6QT3gVNL0akvd4itl3CwWLCg0=
+X-Google-Smtp-Source: APXvYqwUB0JliaEvraelaWIKOhLmG6tm/hH6p5K7VUkG0ux1iC8pWz5nAVPBujCAZpeSSCdA02a33d85QL7ElUmyspg=
+X-Received: by 2002:a5d:8e16:: with SMTP id e22mr13411396iod.171.1565012361842;
+ Mon, 05 Aug 2019 06:39:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190804201637.1240-1-sam@ravnborg.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+From:   Jaafar Ali <jaafarkhalaf@gmail.com>
+Date:   Mon, 5 Aug 2019 16:34:19 +0300
+Message-ID: <CAF-0O_6zDyWTFenFX49DVeSyB=p59BFVCc71oPVarOtDPh2LFg@mail.gmail.com>
+Subject: Odroid-XU$ sound issue after suspend-resume
+To:     linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2019/08/04, Sam Ravnborg wrote:
-> The first 9 patches replaces direct use of the drm_panel
-> function pointers with their drm_panel_* counterparts.
-> The function pointers are only supposed to be used by
-> the drm_panel infrastructure and direct use are discouraged.
-> 
-> ili9322 is updated to handle bus_flags in get_modes like everyone else.
-> This is in preparation for a later patch series where controller
-> becomes an arugument to get_modes() and not like today where drm_panel
-> is attached to a controller.
-> 
-> The remaining patches move functionality to the drm_panel core that
-> today are repeated in many drivers.
-> As preparation for this the inline functions are moved to drm_panel.c
-> and kernel-doc is made inline.
-> panel-simple is updated to benefit from the additional infrastructure
-> and is an example for the simplifications that can be done.
-> 
-> The patchset has been tested on my embedded target,
-> and build tested.
-> 
-> Feedback welcome!
-> 
-> The "fix opencoded" patches are all independent and can be applied
-> out of order. They were kept here to keep panel related patches in one series.
-> 
-> 	Sam
-> 
-Thanks for working on this Sam.
+Dear All,
+Kernel 5.3-rc1
+OS: ubuntu 18.04
+Hardware: Odroid-XU4
+The sound of Odroid-XU4 after suspend/resume cycle is choppy and slow.
+I have found a workaround, the I2SMOD register value should be set to
+zero after resume to force using internal codec clock (cdclkcon bit =
+0),  also the rclk_srcrate which is obtained from the function
+clk_get_rate(rclksrc) inside hw_params function is not correct and
+must be divided by 2 to obtain proper value, i2s_resume function is
+modified to:
 
-Patches 1-13 are:
-Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
+static int i2s_resume(struct snd_soc_dai *dai)
+{
+        struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
+        priv->suspend_i2smod = 0;//workaround-1 ,
+        return pm_runtime_force_resume(dai->dev);
 
--Emil
+}
+
+ inside hw_params function, the rclk_srcrate must be halved to solve
+unknown problem of clock shift, so before return from hw_params we
+must insert:
+if(mod == 0){
+priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2,
+}
+return 0;
+
+With these two workaround sound issue was solved, but I hope we can
+get concrete fix.
+
+Best Regards
+
+
+Jaafar
