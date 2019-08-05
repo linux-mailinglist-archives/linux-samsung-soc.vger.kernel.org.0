@@ -2,27 +2,27 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A3A8817B6
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 12:59:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C89B817CC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 13:04:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727349AbfHEK7d (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 06:59:33 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:51492 "EHLO
+        id S1727259AbfHELEh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 07:04:37 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:51586 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727158AbfHEK7d (ORCPT
+        with ESMTP id S1727158AbfHELEh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 06:59:33 -0400
+        Mon, 5 Aug 2019 07:04:37 -0400
 Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id A5EF02F9;
-        Mon,  5 Aug 2019 12:59:29 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 87C3C2F9;
+        Mon,  5 Aug 2019 13:04:34 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1565002769;
-        bh=ARbvDmu/mBI7c7RZcT5zH3TBI3qsqJ0Vjc6Kj8MQeEc=;
+        s=mail; t=1565003074;
+        bh=8VWmeKAi+VQmMmX5OgERLSe/ebFgda0ImZi18qt+/lw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bzG0gADiIV8BDeHLoa9Kj9zUWn2mS5xhEnGk8ww5Zw5YmaTPgbxnpI/mRbrnCerJI
-         QvPFax2dQhbSESR8dqmTYt0v0EA3QS3neJcCJF3XQ1ha+Ozf4yS3hCmqCCdlL/C1Og
-         XQQIK/ulpNLVSMxGTf5Eu5gPH4tD47qshkiq8R9g=
-Date:   Mon, 5 Aug 2019 13:59:28 +0300
+        b=I4bCAk7E3hHQYAAekZt6asjHI5GYpU3skG/lyEpBDPe2MY7uV9zFqHd/ryYs08+ax
+         3FHMb6fQ73A8yNLXKxmvlR1VuNjv+/3fzD7gAGFyUc2mHZPcxaKcLzp6uRPUvbaEPV
+         1l2EYMpteaUJO4KcBixbmm0n3//c0ZIQ2VW5MXE0=
+Date:   Mon, 5 Aug 2019 14:04:32 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Sam Ravnborg <sam@ravnborg.org>
 Cc:     dri-devel@lists.freedesktop.org,
@@ -63,14 +63,14 @@ Cc:     dri-devel@lists.freedesktop.org,
         Stefan Agner <stefan@agner.ch>,
         Thomas Gleixner <tglx@linutronix.de>,
         Vincent Abriou <vincent.abriou@st.com>
-Subject: Re: [PATCH v1 14/16] drm/panel: call prepare/enable only once
-Message-ID: <20190805105928.GI29747@pendragon.ideasonboard.com>
+Subject: Re: [PATCH v1 15/16] drm/panel: add backlight support
+Message-ID: <20190805110432.GJ29747@pendragon.ideasonboard.com>
 References: <20190804201637.1240-1-sam@ravnborg.org>
- <20190804201637.1240-15-sam@ravnborg.org>
+ <20190804201637.1240-16-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190804201637.1240-15-sam@ravnborg.org>
+In-Reply-To: <20190804201637.1240-16-sam@ravnborg.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
@@ -81,28 +81,25 @@ Hi Sam,
 
 Thank you for the patch.
 
-On Sun, Aug 04, 2019 at 10:16:35PM +0200, Sam Ravnborg wrote:
-> Many panel drivers duplicate logic to prevent prepare to be called
-> for a panel that is already prepared.
-> Likewise for enable.
+On Sun, Aug 04, 2019 at 10:16:36PM +0200, Sam Ravnborg wrote:
+> Panels often supports backlight as specified in a device tree.
+> Update the drm_panel infrastructure to support this to
+> simplify the drivers.
 > 
-> Implement this logic in drm_panel so the individual drivers
-> no longer needs this.
-> A panel is considered prepared/enabled only if the prepare/enable call
-> succeeds.
-> For disable/unprepare it is unconditionally considered
-> disabled/unprepared.
+> With this the panel driver just needs to add the following to the
+> probe() function:
 > 
-> This allows calls to prepare/enable again, even if there were
-> some issue disabling a regulator or similar during disable/unprepare.
+>     err = drm_panel_of_backlight(panel);
+>     if (err)
+>             return err;
+> 
+> Then drm_panel will handle all the rest.
 
-Is this the right place to handle this ? Shouldn't the upper layers
-ensure than enable/disable and prepare/unprepare are correcty balanced,
-and not called multiple times ? Adding enabled and prepared state to
-drm_panel not only doesn't align well with atomic state handling, but
-also would hide issues in upper layers that should really be fixed
-there.
+Do you have an example on how this will simplify drivers ? How many
+existing panel drivers would benefit from this, and do you plan to
+convert them ?
 
+> 
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
 > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 > Cc: Maxime Ripard <maxime.ripard@bootlin.com>
@@ -112,172 +109,143 @@ there.
 > Cc: David Airlie <airlied@linux.ie>
 > Cc: Daniel Vetter <daniel@ffwll.ch>
 > ---
->  drivers/gpu/drm/drm_panel.c | 66 ++++++++++++++++++++++++++++++-------
->  include/drm/drm_panel.h     | 21 ++++++++++++
->  2 files changed, 75 insertions(+), 12 deletions(-)
+>  drivers/gpu/drm/drm_panel.c | 41 +++++++++++++++++++++++++++++++++++++
+>  include/drm/drm_panel.h     | 23 +++++++++++++++++++++
+>  2 files changed, 64 insertions(+)
 > 
 > diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-> index da19d5b4a2f4..0853764040de 100644
+> index 0853764040de..d8139674b883 100644
 > --- a/drivers/gpu/drm/drm_panel.c
 > +++ b/drivers/gpu/drm/drm_panel.c
-> @@ -66,10 +66,21 @@ EXPORT_SYMBOL(drm_panel_init);
+> @@ -21,6 +21,7 @@
+>   * DEALINGS IN THE SOFTWARE.
 >   */
->  int drm_panel_prepare(struct drm_panel *panel)
->  {
-> -	if (panel && panel->funcs && panel->funcs->prepare)
-> -		return panel->funcs->prepare(panel);
-> +	int ret = -ENOSYS;
 >  
-> -	return panel ? -ENOSYS : -EINVAL;
-> +	if (!panel)
-> +		return -EINVAL;
-> +
-> +	if (panel->prepared)
-> +		return 0;
-> +
-> +	if (panel->funcs && panel->funcs->prepare)
-> +		ret = panel->funcs->prepare(panel);
-> +
-> +	if (ret >= 0)
-> +		panel->prepared = true;
-> +
-> +	return ret;
->  }
->  EXPORT_SYMBOL(drm_panel_prepare);
+> +#include <linux/backlight.h>
+>  #include <linux/err.h>
+>  #include <linux/module.h>
 >  
-> @@ -85,10 +96,21 @@ EXPORT_SYMBOL(drm_panel_prepare);
->   */
->  int drm_panel_enable(struct drm_panel *panel)
->  {
-> -	if (panel && panel->funcs && panel->funcs->enable)
-> -		return panel->funcs->enable(panel);
-> +	int ret = -ENOSYS;
+> @@ -110,6 +111,7 @@ int drm_panel_enable(struct drm_panel *panel)
+>  	if (ret >= 0)
+>  		panel->enabled = true;
 >  
-> -	return panel ? -ENOSYS : -EINVAL;
-> +	if (!panel)
-> +		return -EINVAL;
-> +
-> +	if (panel->enabled)
-> +		return 0;
-> +
-> +	if (panel->funcs && panel->funcs->enable)
-> +		ret = panel->funcs->enable(panel);
-> +
-> +	if (ret >= 0)
-> +		panel->enabled = true;
-> +
-> +	return ret;
+> +	backlight_enable(panel->backlight);
+>  	return ret;
 >  }
 >  EXPORT_SYMBOL(drm_panel_enable);
+> @@ -134,6 +136,8 @@ int drm_panel_disable(struct drm_panel *panel)
+>  	if (!panel->enabled)
+>  		return 0;
 >  
-> @@ -104,10 +126,20 @@ EXPORT_SYMBOL(drm_panel_enable);
->   */
->  int drm_panel_disable(struct drm_panel *panel)
->  {
-> -	if (panel && panel->funcs && panel->funcs->disable)
-> -		return panel->funcs->disable(panel);
-> +	int ret = -ENOSYS;
+> +	backlight_disable(panel->backlight);
+> +
+>  	if (panel->funcs && panel->funcs->disable)
+>  		ret = panel->funcs->disable(panel);
 >  
-> -	return panel ? -ENOSYS : -EINVAL;
-> +	if (!panel)
+> @@ -308,6 +312,43 @@ struct drm_panel *of_drm_find_panel(const struct device_node *np)
+>  EXPORT_SYMBOL(of_drm_find_panel);
+>  #endif
+>  
+> +#ifdef CONFIG_BACKLIGHT_CLASS_DEVICE
+> +/**
+> + * drm_panel_of_backlight - use backlight device node for backlight
+> + * @panel: DRM panel
+> + *
+> + * Use this function to enable backlight handling if your panel
+> + * uses device tree and has a backlight handle.
+> + *
+> + * When panel is enabled backlight will be enabled after a
+> + * successfull call to &drm_panel_funcs.enable()
+> + *
+> + * When panel is disabled backlight will be disabled before the
+> + * call to &drm_panel_funcs.disable().
+> + *
+> + * A typical implementation for a panel driver supporting device tree
+> + * will call this function and then backlight just works.
+> + *
+> + * Return: 0 on success or a negative error code on failure.
+> + */
+> +int drm_panel_of_backlight(struct drm_panel *panel)
+> +{
+> +	struct backlight_device *backlight;
+> +
+> +	if (!panel || !panel->dev)
 > +		return -EINVAL;
 > +
-> +	if (!panel->enabled)
-> +		return 0;
+> +	backlight = devm_of_find_backlight(panel->dev);
 > +
-> +	if (panel->funcs && panel->funcs->disable)
-> +		ret = panel->funcs->disable(panel);
+> +	if (IS_ERR(backlight))
+> +                return PTR_ERR(backlight);
 > +
-> +	panel->enabled = false;
+> +	panel->backlight = backlight;
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(drm_panel_of_backlight);
+> +#endif
 > +
-> +	return ret;
->  }
->  EXPORT_SYMBOL(drm_panel_disable);
->  
-> @@ -124,10 +156,20 @@ EXPORT_SYMBOL(drm_panel_disable);
->   */
->  int drm_panel_unprepare(struct drm_panel *panel)
->  {
-> -	if (panel && panel->funcs && panel->funcs->unprepare)
-> -		return panel->funcs->unprepare(panel);
-> +	int ret = -ENOSYS;
->  
-> -	return panel ? -ENOSYS : -EINVAL;
-> +	if (!panel)
-> +		return -EINVAL;
-> +
-> +	if (!panel->prepared)
-> +		return 0;
-> +
-> +	if (panel->funcs && panel->funcs->unprepare)
-> +		ret = panel->funcs->unprepare(panel);
-> +
-> +	panel->prepared = false;
-> +
-> +	return ret;
->  }
->  EXPORT_SYMBOL(drm_panel_unprepare);
->  
+>  MODULE_AUTHOR("Thierry Reding <treding@nvidia.com>");
+>  MODULE_DESCRIPTION("DRM panel infrastructure");
+>  MODULE_LICENSE("GPL and additional rights");
 > diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-> index 624bd15ecfab..7493500fc9bd 100644
+> index 7493500fc9bd..31349c2393b7 100644
 > --- a/include/drm/drm_panel.h
 > +++ b/include/drm/drm_panel.h
-> @@ -65,6 +65,9 @@ struct drm_panel_funcs {
->  	 * @prepare:
->  	 *
->  	 * Turn on panel and perform set up.
-> +	 * When the panel is successfully prepared the prepare() function
-> +	 * will not be called again until the panel has been unprepared.
-> +	 *
->  	 */
->  	int (*prepare)(struct drm_panel *panel);
+> @@ -28,6 +28,7 @@
+>  #include <linux/errno.h>
+>  #include <linux/list.h>
 >  
-> @@ -72,6 +75,8 @@ struct drm_panel_funcs {
->  	 * @enable:
->  	 *
->  	 * Enable panel (turn on back light, etc.).
-> +	 * When the panel is successfully enabled the enable() function
-> +	 * will not be called again until the panel has been disabled.
+> +struct backlight_device;
+>  struct device_node;
+>  struct drm_connector;
+>  struct drm_device;
+> @@ -59,6 +60,10 @@ struct display_timing;
+>   *
+>   * To save power when no video data is transmitted, a driver can power down
+>   * the panel. This is the job of the .unprepare() function.
+> + *
+> + * Backlight can be handled automatically if configured using
+> + * drm_panel_of_backlight(). Then the driver do not need to implement the
+> + * functionality to enable/disable backlight.
+>   */
+>  struct drm_panel_funcs {
+>  	/**
+> @@ -139,6 +144,15 @@ struct drm_panel {
 >  	 */
->  	int (*enable)(struct drm_panel *panel);
+>  	struct device *dev;
 >  
-> @@ -79,6 +84,7 @@ struct drm_panel_funcs {
->  	 * @disable:
->  	 *
->  	 * Disable panel (turn off back light, etc.).
-> +	 * If the panel is already disabled the disable() function is not called.
->  	 */
->  	int (*disable)(struct drm_panel *panel);
->  
-> @@ -86,6 +92,7 @@ struct drm_panel_funcs {
->  	 * @unprepare:
->  	 *
->  	 * Turn off panel.
-> +	 * If the panel is already unprepared the unprepare() function is not called.
->  	 */
->  	int (*unprepare)(struct drm_panel *panel);
->  
-> @@ -145,6 +152,20 @@ struct drm_panel {
->  	 * Panel entry in registry.
->  	 */
->  	struct list_head list;
-> +
 > +	/**
-> +	 * @prepared:
+> +	 * @backlight:
 > +	 *
-> +	 * Set to true when the panel is successfully prepared.
+> +	 * Backlight device, used to turn on backlight after
+> +	 * the call to enable(), and to turn off
+> +	 * backlight before call to disable().
 > +	 */
-> +	bool prepared;
+> +	struct backlight_device *backlight;
 > +
-> +	/**
-> +	 * @enabled:
-> +	 *
-> +	 * Set to true when the panel is successfully enabled.
-> +	 */
-> +	bool enabled;
->  };
+>  	/**
+>  	 * @funcs:
+>  	 *
+> @@ -193,4 +207,13 @@ static inline struct drm_panel *of_drm_find_panel(const struct device_node *np)
+>  }
+>  #endif
 >  
->  void drm_panel_init(struct drm_panel *panel);
+> +#if defined(CONFIG_BACKLIGHT_CLASS_DEVICE) && defined(CONFIG_DRM_PANEL)
+> +int drm_panel_of_backlight(struct drm_panel *panel);
+
+I would expect callers of this function to depend on (or select)
+CONFIG_DRM_PANEL, so I would drop it from here.
+
+> +#else
+> +static inline int drm_panel_of_backlight(struct drm_panel *panel)
+> +{
+> +	return -EINVAL;
+
+Maybe -ENOSYS ?
+
+> +}
+> +#endif
+> +
+>  #endif
 
 -- 
 Regards,
