@@ -2,27 +2,27 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 443458174A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 12:45:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 173C28179A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 12:54:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727328AbfHEKpW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 06:45:22 -0400
-Received: from perceval.ideasonboard.com ([213.167.242.64]:51192 "EHLO
+        id S1728147AbfHEKyb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 06:54:31 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:51346 "EHLO
         perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727739AbfHEKpW (ORCPT
+        with ESMTP id S1727158AbfHEKyb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 06:45:22 -0400
+        Mon, 5 Aug 2019 06:54:31 -0400
 Received: from pendragon.ideasonboard.com (dfj612yhrgyx302h3jwwy-3.rev.dnainternet.fi [IPv6:2001:14ba:21f5:5b00:ce28:277f:58d7:3ca4])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 78CCA2F9;
-        Mon,  5 Aug 2019 12:45:17 +0200 (CEST)
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id C82CF2F9;
+        Mon,  5 Aug 2019 12:54:26 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1565001917;
-        bh=g7Pp29Mgg/gZ2YsNt1ThUlqv1p+7aPpCapxhy4OXn+w=;
+        s=mail; t=1565002467;
+        bh=RwQ5mnU7RUBzTgtf9QVDKC/TD/uPXzpxPEkwiDIp9go=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nBxG6lfmjq8e2op+WOyy21pYLWM+0AUNucYtwffECcWzYEZUa11K2zfn7wlxuia2W
-         Lgzn3KjgPSzMabMcxeBYz8juvhZfEQOeWUFfF1Epq83f0jUtL8WyGslw/+3Sy7Pp8/
-         dZD+0OAwIrFaKPWXpABtCoHloEh9j7+KGiN0ez3Y=
-Date:   Mon, 5 Aug 2019 13:45:15 +0300
+        b=o1GVXvYZTbKujwlbSWjhyKHPW4owM5I0zlEmcs35W5UJBLn/uX9Y1tgQEVNlHfCbu
+         /nMXTotTJmqYaQ8CHoaAUSMqptXHOSOgKzy2jlzBudupzdlL+rtr7/MD3KkjGOYseq
+         vW5cLPFJmFIz7+5Iycxf8kVVcCzLg1Lzyt0SrqHE=
+Date:   Mon, 5 Aug 2019 13:54:25 +0300
 From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 To:     Sam Ravnborg <sam@ravnborg.org>
 Cc:     dri-devel@lists.freedesktop.org,
@@ -63,14 +63,14 @@ Cc:     dri-devel@lists.freedesktop.org,
         Stefan Agner <stefan@agner.ch>,
         Thomas Gleixner <tglx@linutronix.de>,
         Vincent Abriou <vincent.abriou@st.com>
-Subject: Re: [PATCH v1 11/16] drm/panel: move drm_panel functions to .c file
-Message-ID: <20190805104515.GF29747@pendragon.ideasonboard.com>
+Subject: Re: [PATCH v1 12/16] drm/panel: use inline comments in drm_panel.h
+Message-ID: <20190805105425.GG29747@pendragon.ideasonboard.com>
 References: <20190804201637.1240-1-sam@ravnborg.org>
- <20190804201637.1240-12-sam@ravnborg.org>
+ <20190804201637.1240-13-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190804201637.1240-12-sam@ravnborg.org>
+In-Reply-To: <20190804201637.1240-13-sam@ravnborg.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
@@ -81,259 +81,145 @@ Hi Sam,
 
 Thank you for the patch.
 
-On Sun, Aug 04, 2019 at 10:16:32PM +0200, Sam Ravnborg wrote:
-> Move inline functions from include/drm/drm_panel.h to drm_panel.c.
-> This is in preparation for follow-up patches that will add extra
-> logic to the functions.
-> As they are no longer static inline, EXPORT them.
+On Sun, Aug 04, 2019 at 10:16:33PM +0200, Sam Ravnborg wrote:
+> Inline comments provide better space for additional comments.
+> Comments was slightly edited to follow the normal style,
+> but no change to actual content.
+> Used the opportuniy to change the order in drm_panel_funcs
+> to follow the order they will be used by a panel.
 > 
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Sam Ravnborg <sam@ravnborg.org>
 > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 > Cc: Maxime Ripard <maxime.ripard@bootlin.com>
 > Cc: Sean Paul <sean@poorly.run>
+> Cc: Thierry Reding <thierry.reding@gmail.com>
+> Cc: Sam Ravnborg <sam@ravnborg.org>
 > Cc: David Airlie <airlied@linux.ie>
 > Cc: Daniel Vetter <daniel@ffwll.ch>
-> ---
->  drivers/gpu/drm/drm_panel.c | 96 +++++++++++++++++++++++++++++++++++
->  include/drm/drm_panel.h     | 99 +++----------------------------------
->  2 files changed, 104 insertions(+), 91 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-> index dbd5b873e8f2..9946b8d9bacc 100644
-> --- a/drivers/gpu/drm/drm_panel.c
-> +++ b/drivers/gpu/drm/drm_panel.c
-> @@ -54,6 +54,102 @@ void drm_panel_init(struct drm_panel *panel)
->  }
->  EXPORT_SYMBOL(drm_panel_init);
->  
-> +/**
-> + * drm_panel_prepare - power on a panel
-> + * @panel: DRM panel
-> + *
-> + * Calling this function will enable power and deassert any reset signals to
-> + * the panel. After this has completed it is possible to communicate with any
-> + * integrated circuitry via a command bus.
-> + *
-> + * Return: 0 on success or a negative error code on failure.
-> + */
-> +int drm_panel_prepare(struct drm_panel *panel)
-> +{
-> +	if (panel && panel->funcs && panel->funcs->prepare)
-> +		return panel->funcs->prepare(panel);
-> +
-> +	return panel ? -ENOSYS : -EINVAL;
-> +}
-> +EXPORT_SYMBOL(drm_panel_prepare);
-> +
-> +/**
-> + * drm_panel_enable - enable a panel
-> + * @panel: DRM panel
-> + *
-> + * Calling this function will cause the panel display drivers to be turned on
-> + * and the backlight to be enabled. Content will be visible on screen after
-> + * this call completes.
-> + *
-> + * Return: 0 on success or a negative error code on failure.
-> + */
-> +int drm_panel_enable(struct drm_panel *panel)
-> +{
-> +	if (panel && panel->funcs && panel->funcs->enable)
-> +		return panel->funcs->enable(panel);
-> +
-> +	return panel ? -ENOSYS : -EINVAL;
-> +}
-> +EXPORT_SYMBOL(drm_panel_enable);
-> +
-> +/**
-> + * drm_panel_disable - disable a panel
-> + * @panel: DRM panel
-> + *
-> + * This will typically turn off the panel's backlight or disable the display
-> + * drivers. For smart panels it should still be possible to communicate with
-> + * the integrated circuitry via any command bus after this call.
-> + *
-> + * Return: 0 on success or a negative error code on failure.
-> + */
-> +int drm_panel_disable(struct drm_panel *panel)
-> +{
-> +	if (panel && panel->funcs && panel->funcs->disable)
-> +		return panel->funcs->disable(panel);
-> +
-> +	return panel ? -ENOSYS : -EINVAL;
-> +}
-> +EXPORT_SYMBOL(drm_panel_disable);
-> +
-> +/**
-> + * drm_panel_unprepare - power off a panel
-> + * @panel: DRM panel
-> + *
-> + * Calling this function will completely power off a panel (assert the panel's
-> + * reset, turn off power supplies, ...). After this function has completed, it
-> + * is usually no longer possible to communicate with the panel until another
-> + * call to drm_panel_prepare().
-> + *
-> + * Return: 0 on success or a negative error code on failure.
-> + */
-> +int drm_panel_unprepare(struct drm_panel *panel)
-> +{
-> +	if (panel && panel->funcs && panel->funcs->unprepare)
-> +		return panel->funcs->unprepare(panel);
-> +
-> +	return panel ? -ENOSYS : -EINVAL;
-> +}
-> +EXPORT_SYMBOL(drm_panel_unprepare);
-> +
-> +/**
-> + * drm_panel_get_modes - probe the available display modes of a panel
-> + * @panel: DRM panel
-> + *
-> + * The modes probed from the panel are automatically added to the connector
-> + * that the panel is attached to.
-> + *
-> + * Return: The number of modes available from the panel on success or a
-> + * negative error code on failure.
-> + */
-> +int drm_panel_get_modes(struct drm_panel *panel)
-> +{
-> +	if (panel && panel->funcs && panel->funcs->get_modes)
-> +		return panel->funcs->get_modes(panel);
-> +
-> +	return panel ? -ENOSYS : -EINVAL;
-> +}
-> +EXPORT_SYMBOL(drm_panel_get_modes);
-> +
->  /**
->   * drm_panel_add - add a panel to the global registry
->   * @panel: panel to add
-> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-> index 26377836141c..053d611656b9 100644
-> --- a/include/drm/drm_panel.h
-> +++ b/include/drm/drm_panel.h
-> @@ -97,97 +97,6 @@ struct drm_panel {
->  	struct list_head list;
->  };
->  
-> -/**
-> - * drm_disable_unprepare - power off a panel
-> - * @panel: DRM panel
-> - *
-> - * Calling this function will completely power off a panel (assert the panel's
-> - * reset, turn off power supplies, ...). After this function has completed, it
-> - * is usually no longer possible to communicate with the panel until another
-> - * call to drm_panel_prepare().
-> - *
-> - * Return: 0 on success or a negative error code on failure.
-> - */
-> -static inline int drm_panel_unprepare(struct drm_panel *panel)
-> -{
-> -	if (panel && panel->funcs && panel->funcs->unprepare)
-> -		return panel->funcs->unprepare(panel);
-> -
-> -	return panel ? -ENOSYS : -EINVAL;
-> -}
-> -
-> -/**
-> - * drm_panel_disable - disable a panel
-> - * @panel: DRM panel
-> - *
-> - * This will typically turn off the panel's backlight or disable the display
-> - * drivers. For smart panels it should still be possible to communicate with
-> - * the integrated circuitry via any command bus after this call.
-> - *
-> - * Return: 0 on success or a negative error code on failure.
-> - */
-> -static inline int drm_panel_disable(struct drm_panel *panel)
-> -{
-> -	if (panel && panel->funcs && panel->funcs->disable)
-> -		return panel->funcs->disable(panel);
-> -
-> -	return panel ? -ENOSYS : -EINVAL;
-> -}
-> -
-> -/**
-> - * drm_panel_prepare - power on a panel
-> - * @panel: DRM panel
-> - *
-> - * Calling this function will enable power and deassert any reset signals to
-> - * the panel. After this has completed it is possible to communicate with any
-> - * integrated circuitry via a command bus.
-> - *
-> - * Return: 0 on success or a negative error code on failure.
-> - */
-> -static inline int drm_panel_prepare(struct drm_panel *panel)
-> -{
-> -	if (panel && panel->funcs && panel->funcs->prepare)
-> -		return panel->funcs->prepare(panel);
-> -
-> -	return panel ? -ENOSYS : -EINVAL;
-> -}
-> -
-> -/**
-> - * drm_panel_enable - enable a panel
-> - * @panel: DRM panel
-> - *
-> - * Calling this function will cause the panel display drivers to be turned on
-> - * and the backlight to be enabled. Content will be visible on screen after
-> - * this call completes.
-> - *
-> - * Return: 0 on success or a negative error code on failure.
-> - */
-> -static inline int drm_panel_enable(struct drm_panel *panel)
-> -{
-> -	if (panel && panel->funcs && panel->funcs->enable)
-> -		return panel->funcs->enable(panel);
-> -
-> -	return panel ? -ENOSYS : -EINVAL;
-> -}
-> -
-> -/**
-> - * drm_panel_get_modes - probe the available display modes of a panel
-> - * @panel: DRM panel
-> - *
-> - * The modes probed from the panel are automatically added to the connector
-> - * that the panel is attached to.
-> - *
-> - * Return: The number of modes available from the panel on success or a
-> - * negative error code on failure.
-> - */
-> -static inline int drm_panel_get_modes(struct drm_panel *panel)
-> -{
-> -	if (panel && panel->funcs && panel->funcs->get_modes)
-> -		return panel->funcs->get_modes(panel);
-> -
-> -	return panel ? -ENOSYS : -EINVAL;
-> -}
-> -
->  void drm_panel_init(struct drm_panel *panel);
->  
->  int drm_panel_add(struct drm_panel *panel);
-> @@ -196,6 +105,14 @@ void drm_panel_remove(struct drm_panel *panel);
->  int drm_panel_attach(struct drm_panel *panel, struct drm_connector *connector);
->  int drm_panel_detach(struct drm_panel *panel);
->  
-> +int drm_panel_prepare(struct drm_panel *panel);
-> +int drm_panel_unprepare(struct drm_panel *panel);
-> +
-> +int drm_panel_enable(struct drm_panel *panel);
-> +int drm_panel_disable(struct drm_panel *panel);
-
-Nitpicking, I would keep the order of the declarations aligned with the
-definitions. prepare - enable - disable - unprepare and prepare -
-unprepare - enable - disable are both fine with me, as long as they're
-consistent.
-
-Apart from that,
 
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
+> ---
+>  include/drm/drm_panel.h | 82 +++++++++++++++++++++++++++++++++--------
+>  1 file changed, 66 insertions(+), 16 deletions(-)
+> 
+> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
+> index 053d611656b9..5e62deea49ba 100644
+> --- a/include/drm/drm_panel.h
+> +++ b/include/drm/drm_panel.h
+> @@ -36,14 +36,6 @@ struct display_timing;
+>  
+>  /**
+>   * struct drm_panel_funcs - perform operations on a given panel
+> - * @disable: disable panel (turn off back light, etc.)
+> - * @unprepare: turn off panel
+> - * @prepare: turn on panel and perform set up
+> - * @enable: enable panel (turn on back light, etc.)
+> - * @get_modes: add modes to the connector that the panel is attached to and
+> - * return the number of modes added
+> - * @get_timings: copy display timings into the provided array and return
+> - * the number of display timings available
+>   *
+>   * The .prepare() function is typically called before the display controller
+>   * starts to transmit video data. Panel drivers can use this to turn the panel
+> @@ -69,31 +61,89 @@ struct display_timing;
+>   * the panel. This is the job of the .unprepare() function.
+>   */
+>  struct drm_panel_funcs {
+> -	int (*disable)(struct drm_panel *panel);
+> -	int (*unprepare)(struct drm_panel *panel);
+> +	/**
+> +	 * @prepare:
+> +	 *
+> +	 * Turn on panel and perform set up.
+> +	 */
+>  	int (*prepare)(struct drm_panel *panel);
 > +
-> +int drm_panel_get_modes(struct drm_panel *panel);
+> +	/**
+> +	 * @enable:
+> +	 *
+> +	 * Enable panel (turn on back light, etc.).
+> +	 */
+>  	int (*enable)(struct drm_panel *panel);
 > +
->  #if defined(CONFIG_OF) && defined(CONFIG_DRM_PANEL)
->  struct drm_panel *of_drm_find_panel(const struct device_node *np);
->  #else
+> +	/**
+> +	 * @disable:
+> +	 *
+> +	 * Disable panel (turn off back light, etc.).
+> +	 */
+> +	int (*disable)(struct drm_panel *panel);
+> +
+> +	/**
+> +	 * @unprepare:
+> +	 *
+> +	 * Turn off panel.
+> +	 */
+> +	int (*unprepare)(struct drm_panel *panel);
+> +
+> +	/**
+> +	 * @get_modes:
+> +	 *
+> +	 * Add modes to the connector that the panel is attached to and
+> +	 * return the number of modes added.
+> +	 */
+>  	int (*get_modes)(struct drm_panel *panel);
+> +
+> +	/**
+> +	 * @get_timings:
+> +	 *
+> +	 * Copy display timings into the provided array and return
+> +	 * the number of display timings available.
+> +	 */
+>  	int (*get_timings)(struct drm_panel *panel, unsigned int num_timings,
+>  			   struct display_timing *timings);
+>  };
+>  
+>  /**
+>   * struct drm_panel - DRM panel object
+> - * @drm: DRM device owning the panel
+> - * @connector: DRM connector that the panel is attached to
+> - * @dev: parent device of the panel
+> - * @link: link from panel device (supplier) to DRM device (consumer)
+> - * @funcs: operations that can be performed on the panel
+> - * @list: panel entry in registry
+>   */
+>  struct drm_panel {
+> +	/**
+> +	 * @drm:
+> +	 *
+> +	 * DRM device owning the panel.
+> +	 */
+>  	struct drm_device *drm;
+> +
+> +	/**
+> +	 * @connector:
+> +	 *
+> +	 * DRM connector that the panel is attached to.
+> +	 */
+>  	struct drm_connector *connector;
+> +
+> +	/**
+> +	 * @dev:
+> +	 *
+> +	 * Parent device of the panel.
+> +	 */
+>  	struct device *dev;
+>  
+> +	/**
+> +	 * @funcs:
+> +	 *
+> +	 * Operations that can be performed on the panel.
+> +	 */
+>  	const struct drm_panel_funcs *funcs;
+>  
+> +	/**
+> +	 * @list:
+> +	 *
+> +	 * Panel entry in registry.
+> +	 */
+>  	struct list_head list;
+>  };
+>  
 
 -- 
 Regards,
