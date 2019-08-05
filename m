@@ -2,79 +2,122 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE86081539
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE7F881545
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:20:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727926AbfHEJSb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 05:18:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33056 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726454AbfHEJSa (ORCPT
+        id S1727158AbfHEJUp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 05:20:45 -0400
+Received: from mail.kmu-office.ch ([178.209.48.109]:39750 "EHLO
+        mail.kmu-office.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726454AbfHEJUo (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 05:18:30 -0400
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0953E21852;
-        Mon,  5 Aug 2019 09:18:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564996710;
-        bh=3y/xyKQqQxOI/5O7S65myq1HgXxKlZai9ugc4r5PFAs=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ZVGEXyWfKHiNU9ykvQl6iP/vhiDaIIbECZVQoz2dbKXg0o9tNCy9OFZbp1ZbwMw5u
-         vtFxzrASGVSEXmSa62HUtsG05ILylao9uKfI2n+4eJuhzYlYWjorLeb1C2fe8A23w6
-         pGRPWmqT9BT+nmjsc6bnzwIbMDRuMZZZ05gPQ21o=
-Received: by mail-lj1-f177.google.com with SMTP id m8so45075826lji.7;
-        Mon, 05 Aug 2019 02:18:29 -0700 (PDT)
-X-Gm-Message-State: APjAAAVK+cI9wv6keK6YQrY4Oc3DNdk7kVDdURDfIhS26VMtI5qL25Mh
-        hylr8P2uIYTSiBr9ll0a1aozz1Z5/GWYgaebzUU=
-X-Google-Smtp-Source: APXvYqzggkPHLZ3va+adONzA3B+P4PCDn3noO8lcrGqBRgo8WuH7Fq5Bq7XwbmzdzXRtDWDsIpDJCC30bufng4pCbXM=
-X-Received: by 2002:a2e:124b:: with SMTP id t72mr78893429lje.143.1564996708108;
- Mon, 05 Aug 2019 02:18:28 -0700 (PDT)
+        Mon, 5 Aug 2019 05:20:44 -0400
+Received: from webmail.kmu-office.ch (unknown [IPv6:2a02:418:6a02::a3])
+        by mail.kmu-office.ch (Postfix) with ESMTPSA id 82F595C0169;
+        Mon,  5 Aug 2019 11:20:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=agner.ch; s=dkim;
+        t=1564996841;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=eDYDScTuSCYF0FjQcbcrJzxIQ0/kmURL7uAqHm2hNns=;
+        b=Rxq2u4nFlSE5hZ1FNYyZNJOOGXI2LUdn8tyMLyaKzfEYo+rwaFHmxVUnWg61t+arxfbptS
+        EfHfSmB+RD8tMiMKiqGE/OBJaN1BzwJbv9b61JtDIRYnkw9x2i1R/BwMxV+VGBa+zD1d1Q
+        qce/WUzXxVIHeQivwwCACaXiPAyrhfI=
 MIME-Version: 1.0
-References: <20190802132809.8116-1-yuehaibing@huawei.com> <20190802132809.8116-4-yuehaibing@huawei.com>
-In-Reply-To: <20190802132809.8116-4-yuehaibing@huawei.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 5 Aug 2019 11:18:17 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfvMLehLn+iNOGDEFvsWc93eShUx0=8fn9JWiBOc7wpFw@mail.gmail.com>
-Message-ID: <CAJKOXPfvMLehLn+iNOGDEFvsWc93eShUx0=8fn9JWiBOc7wpFw@mail.gmail.com>
-Subject: Re: [PATCH -next 03/12] crypto: exynos - use devm_platform_ioremap_resource()
- to simplify code
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     herbert@gondor.apana.org.au, lars.persson@axis.com,
-        jesper.nilsson@axis.com, davem@davemloft.net,
-        thomas.lendacky@amd.com, gary.hook@amd.com, kgene@kernel.org,
-        antoine.tenart@bootlin.com, matthias.bgg@gmail.com,
-        jamie@jamieiles.com, agross@kernel.org, heiko@sntech.de,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
-        clabbe.montjoie@gmail.com, mripard@kernel.org, wens@csie.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-crypto@vger.kernel.org, linux-arm-kernel@axis.com,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 05 Aug 2019 11:20:41 +0200
+From:   Stefan Agner <stefan@agner.ch>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
         linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Sam Ravnborg <sam.ravnborg@gmail.com>
+Subject: Re: [PATCH v1 07/16] drm/mxsfb: fix opencoded use of drm_panel_*
+In-Reply-To: <20190804201637.1240-8-sam@ravnborg.org>
+References: <20190804201637.1240-1-sam@ravnborg.org>
+ <20190804201637.1240-8-sam@ravnborg.org>
+Message-ID: <a6833b84301dfb5f73a2f4caaf7d482d@agner.ch>
+X-Sender: stefan@agner.ch
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 2 Aug 2019 at 15:31, YueHaibing <yuehaibing@huawei.com> wrote:
->
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+On 2019-08-04 22:16, Sam Ravnborg wrote:
+> Use the drm_panel_get_modes() function.
+
+Looks good to me,
+
+Acked-by: Stefan Agner <stefan@agner.ch>
+
+--
+Stefan
+
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Marek Vasut <marex@denx.de>
+> Cc: Stefan Agner <stefan@agner.ch>
+> Cc: Shawn Guo <shawnguo@kernel.org>
+> Cc: Sascha Hauer <s.hauer@pengutronix.de>
+> Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+> Cc: Fabio Estevam <festevam@gmail.com>
+> Cc: NXP Linux Team <linux-imx@nxp.com>
+> Cc: linux-arm-kernel@lists.infradead.org
 > ---
->  drivers/crypto/exynos-rng.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Best regards,
-Krzysztof
+>  drivers/gpu/drm/mxsfb/mxsfb_out.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/mxsfb/mxsfb_out.c
+> b/drivers/gpu/drm/mxsfb/mxsfb_out.c
+> index 231d016c6f47..be36f4d6cc96 100644
+> --- a/drivers/gpu/drm/mxsfb/mxsfb_out.c
+> +++ b/drivers/gpu/drm/mxsfb/mxsfb_out.c
+> @@ -30,7 +30,7 @@ static int mxsfb_panel_get_modes(struct
+> drm_connector *connector)
+>  			drm_connector_to_mxsfb_drm_private(connector);
+>  
+>  	if (mxsfb->panel)
+> -		return mxsfb->panel->funcs->get_modes(mxsfb->panel);
+> +		return drm_panel_get_modes(mxsfb->panel);
+>  
+>  	return 0;
+>  }
