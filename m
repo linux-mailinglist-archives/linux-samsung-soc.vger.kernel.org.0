@@ -2,87 +2,130 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E3AD8143B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 10:31:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8896E8152E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726656AbfHEIbl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 04:31:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46654 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726423AbfHEIbl (ORCPT
+        id S1727161AbfHEJQ3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 05:16:29 -0400
+Received: from mail.kmu-office.ch ([178.209.48.109]:39630 "EHLO
+        mail.kmu-office.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727259AbfHEJQ3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 04:31:41 -0400
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BF0BB20B1F;
-        Mon,  5 Aug 2019 08:31:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1564993901;
-        bh=6GDlY6Oj/pMsxqqXmrShaQDXNdC8M9mTC8Uh+0WR7cw=;
-        h=References:In-Reply-To:From:Date:Subject:To:From;
-        b=peHYXbmKGBkRGDkgiCG5T0LLnNYHuvThB7B3ZZZnfMAD4dBao3elfqPZWeYSLgv5m
-         mgxeKfu8ZWuAS8b6dcFyko593cTA9bWGo6IGV9Jxp5cXtOJQEFvdOepvRLByQEsPcN
-         MS8Q7SLbllXv+ymRvocxkzEptTK+NEInF7m/Q3Xw=
-Received: by mail-lf1-f47.google.com with SMTP id s19so57243330lfb.9;
-        Mon, 05 Aug 2019 01:31:40 -0700 (PDT)
-X-Gm-Message-State: APjAAAVYiTCYAq9OL/6CBRwFW6vf4xC20YDCYhPaNOqkgrb4xMT5wO8P
-        MsyQmBM1p7m1SYIthcKOv7a0XuJJIHGME1YZm1A=
-X-Google-Smtp-Source: APXvYqyWaflWWQ8wwvaO1d9cbgBslefLEtgX0rPNgijTABssXm+H4yZIkYKO5j/21nYMMWJoveT1E8Ew7gsDV7eLoD4=
-X-Received: by 2002:ac2:4d1c:: with SMTP id r28mr68291107lfi.159.1564993898942;
- Mon, 05 Aug 2019 01:31:38 -0700 (PDT)
+        Mon, 5 Aug 2019 05:16:29 -0400
+Received: from webmail.kmu-office.ch (unknown [IPv6:2a02:418:6a02::a3])
+        by mail.kmu-office.ch (Postfix) with ESMTPSA id 07B255C05E2;
+        Mon,  5 Aug 2019 11:16:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=agner.ch; s=dkim;
+        t=1564996587;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=HPQtnZFrmV2z2ZY4AUfwVhL1KZOhKYp78pnR/I9Q3gU=;
+        b=dDz17VqIE1JQlYngbbljhYiHAlll72f3XT1TPeuh9u7wN5YpW3p2+imJ+iWmB7Hm6vizk6
+        BimPIm5U7TgfWtGCwCzvNwsmbj3kDU9O3OCtzuQfVbVr1ZuIFBIcNhPDSLRS2O79bmIOTJ
+        yQA/FaXqhxhjIC6jiFXV63Z5IRaa6Gc=
 MIME-Version: 1.0
-References: <CAF-0O_47bLysYD9qn2ekNC7PmNj0LguB6ab_9mdw6NaoGPj4rw@mail.gmail.com>
-In-Reply-To: <CAF-0O_47bLysYD9qn2ekNC7PmNj0LguB6ab_9mdw6NaoGPj4rw@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Mon, 5 Aug 2019 10:31:27 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPe9nY4wV+Dj4BHMO6=WmtxjMnSe+z6ZywaokUNPyyvOuA@mail.gmail.com>
-Message-ID: <CAJKOXPe9nY4wV+Dj4BHMO6=WmtxjMnSe+z6ZywaokUNPyyvOuA@mail.gmail.com>
-Subject: Re: suspend/Resume Sound issue workaround
-To:     Jaafar Ali <jaafarkhalaf@gmail.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 05 Aug 2019 11:16:26 +0200
+From:   Stefan Agner <stefan@agner.ch>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Sam Ravnborg <sam.ravnborg@gmail.com>
+Subject: Re: [PATCH v1 05/16] drm/fsl-dcu: fix opencoded use of drm_panel_*
+In-Reply-To: <20190804201637.1240-6-sam@ravnborg.org>
+References: <20190804201637.1240-1-sam@ravnborg.org>
+ <20190804201637.1240-6-sam@ravnborg.org>
+Message-ID: <8567eb4c916a0b1d134bd62112a11903@agner.ch>
+X-Sender: stefan@agner.ch
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 4 Aug 2019 at 14:36, Jaafar Ali <jaafarkhalaf@gmail.com> wrote:
-> Dear Krzysztof,
-> The sound of Odroid-XU4 after suspend/resume cycle has an issue. As a workaround, the I2SMOD register value should be set to zero after resume, the i2s_resume function would be:
->
-> static int i2s_resume(struct snd_soc_dai *dai)
-> {
-> struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
-> printk(KERN_EMERG "i2s resume of dai !\n");
-> priv->suspend_i2smod = 0;//workaround-1 , to force using internal codec clock source (CDCLKCON bit = 0)
-> //see another workaround inside hw_param
->
->         return pm_runtime_force_resume(dai->dev);
->
-> }
->
-> Also, inside hw_params function, the rclk_srcrate must be halved to solve unknown problem of clock shift, so before return from hw_params we must insert:
-> if(mod == 0){
-> priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2, clock is being halved due to unknwon bug
-> printk(KERN_EMERG "i2s hw_param rclk_srcrate after %lu !\n", priv->rclk_srcrate);
-> }
-> return 0;
->
-> With these two workaround sound issue was solved, but I hope we can get concrete fix.
+On 2019-08-04 22:16, Sam Ravnborg wrote:
+> Use drm_panel_get_modes() to access modes.
+> This has a nice side effect to simplify the code.
+> 
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Stefan Agner <stefan@agner.ch>
+> Cc: Alison Wang <alison.wang@nxp.com>
+> ---
+>  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 10 +---------
+>  1 file changed, 1 insertion(+), 9 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> index 279d83eaffc0..a92fd6c70b09 100644
+> --- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> +++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> @@ -65,17 +65,9 @@ static const struct drm_connector_funcs
+> fsl_dcu_drm_connector_funcs = {
+>  static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+>  {
+>  	struct fsl_dcu_drm_connector *fsl_connector;
+> -	int (*get_modes)(struct drm_panel *panel);
+> -	int num_modes = 0;
+>  
+>  	fsl_connector = to_fsl_dcu_connector(connector);
+> -	if (fsl_connector->panel && fsl_connector->panel->funcs &&
+> -	    fsl_connector->panel->funcs->get_modes) {
+> -		get_modes = fsl_connector->panel->funcs->get_modes;
+> -		num_modes = get_modes(fsl_connector->panel);
+> -	}
+> -
+> -	return num_modes;
+> +	return drm_panel_get_modes(fsl_connector->panel);
 
-Hi Jaafar,
+Oh, that old code looks rather messy. Thanks for the simplification!
 
-Thanks for the report. Preferred way to send bug reports is to use the
-public channels by sending to Linux kernel mailing lists:
-linux-samsung-soc@vger.kernel.org and linux-kernel@vger.kernel.org,
-with the Cc of other interested people. The best is to use the
-scripts/get_maintainer.pl tool (with -f for example) to get the list
-of addresses to Cc.
+This behaves slightly different since it now returns -EINVAL or -ENOSYS,
+but that is what we want.
 
-Best regards,
-Krzysztof
+Acked-by: Stefan Agner <stefan@agner.ch>
+
+--
+Stefan
+
+>  }
+>  
+>  static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
