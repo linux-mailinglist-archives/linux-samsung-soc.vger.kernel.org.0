@@ -2,87 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 84F9B81D61
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 15:39:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3AAB82192
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 18:21:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728904AbfHENjX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 09:39:23 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:40267 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726834AbfHENjW (ORCPT
+        id S1728974AbfHEQV7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 12:21:59 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43057 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726691AbfHEQV7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 09:39:22 -0400
-Received: by mail-io1-f66.google.com with SMTP id h6so42136471iom.7;
-        Mon, 05 Aug 2019 06:39:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FLq+GsK2RBOu2svVdDO4l5xiwRawI+I647gJYjWfm7E=;
-        b=KJq/JtygoaDwC4qXHEUx4uHJ4LiIZ4He9ZLfwnVLvyQCmvt3bZA3SRsfLRftxqtvFr
-         Yaw3JR4KkjPN5XmhhxeBc1CRfruClo0iotX9pEvMv5BpMDAVTE32u4d4kOf2gB1i1d9Y
-         zlNITSPcQ1klGLtWtThpr52wA4Sr5aqp3dbSIu+jCjEhQyajVLLuc+BdKgCGIT6SOaZf
-         XupKZypE1HcJjOKbTvUsokOy2LX62Ge2DrSzF7DA3ttmlqvwmIYeMk9If9jQyvCmEPle
-         4Ytk9zrn7CA9KzJBY6lM+6e2lPKOQuG63MZqU2MiD5VORTnNaC4tQ2vxE87jOv0Qbjwm
-         Xyrg==
+        Mon, 5 Aug 2019 12:21:59 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p13so10452468wru.10;
+        Mon, 05 Aug 2019 09:21:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FLq+GsK2RBOu2svVdDO4l5xiwRawI+I647gJYjWfm7E=;
-        b=VaVzB0xj64872TAKVUGcSsJArwOygf87LnQcT4r1K1yD8PYlqHZViYWrdEEZoMwVIi
-         6YleXIS6C0YrCShI8zV5Sr54FvHbvMCvLZTN5p16D3Ev04aVN+wDb5eCzm7lVPYV7yl5
-         Szy5RnErnmoPXnKFx6c6NoG89aIwNE7luuoXzRO9W5shIByrDVXRixFJ+KcpbciDeogm
-         pgY3c1nz7TACZn/vJjq2g3qSCfvpKXxhYaiqlnf9dyr9k2rbt4uv2FB1Hge6i63Tf17h
-         yl2kaUgiO5Kxc/Zp12+lFcwtblVX8Sqh3S4NO0Tc0LX07CCpd65m8nulKQnMyY/RRxY4
-         CXyQ==
-X-Gm-Message-State: APjAAAXb/bfk20/V/cHublf3UeB7E+3rSxEblZdkmWfadG1alm3qBh94
-        RAGrTZC+6mWpY8ZPSBDezC6QT3gVNL0akvd4itl3CwWLCg0=
-X-Google-Smtp-Source: APXvYqwUB0JliaEvraelaWIKOhLmG6tm/hH6p5K7VUkG0ux1iC8pWz5nAVPBujCAZpeSSCdA02a33d85QL7ElUmyspg=
-X-Received: by 2002:a5d:8e16:: with SMTP id e22mr13411396iod.171.1565012361842;
- Mon, 05 Aug 2019 06:39:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jal0TcotIi9KxsqXfi98IU+PYGjY1Ea3c2mtMMhhCOg=;
+        b=ElRaPKDXDFa36Cx0EcT3JOKQ6v/xrivxKJoiRY0OIqQfBBFXuhOupnVRZN+9tjWAvU
+         pPvEaPchxbV9nuROEAFFoMJv/zLYzTmYIup7xXWAuHppDpmQntPlMZprQQ6nJEEAj/z/
+         IxNbj4E3IYyYx5ghpK77lFCGHWQg0P3LHH2y26EPwwGDg+rzN+nU27m/+d062+/iUA4W
+         tF/Mx78LNiq7YdmAQJdWgoiW6LXY3cDlMVANOY6/9yLt6uh6iNUYub9q4jhDrX+5C7eH
+         O++wEut9W8HQMEe9qIrka7fO3yYELV1n8kVmuURRcx3QJJpdj4aVjV2OrvOY1wzw3gVf
+         EPfw==
+X-Gm-Message-State: APjAAAWIrkw/vQlyG+o+dX5e1x/JpDsr+Ue3wugzbKZhZ6xbPhUoQoZW
+        jlHK8LDppgCwF4E7Ajs3tik3HZVz
+X-Google-Smtp-Source: APXvYqzqjlVLiKS5Ec3RFHkLS+GK0gh7fzmAOkFLgVA3+iIqRJre8uMWYuogV4JcxYwj/gUHU8fNrQ==
+X-Received: by 2002:a5d:4f01:: with SMTP id c1mr81969945wru.43.1565022117327;
+        Mon, 05 Aug 2019 09:21:57 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.124])
+        by smtp.googlemail.com with ESMTPSA id f192sm86229595wmg.30.2019.08.05.09.21.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Aug 2019 09:21:56 -0700 (PDT)
+Date:   Mon, 5 Aug 2019 18:21:54 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Nishka Dasgupta <nishkadg.linux@gmail.com>
+Cc:     linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-gpio@vger.kernel.org, tomasz.figa@gmail.com,
+        s.nawrocki@samsung.com, kgene@kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: samsung: exynos: Add of_node_put() before return
+Message-ID: <20190805162154.GA24769@kozik-lap>
+References: <20190804160200.5139-1-nishkadg.linux@gmail.com>
 MIME-Version: 1.0
-From:   Jaafar Ali <jaafarkhalaf@gmail.com>
-Date:   Mon, 5 Aug 2019 16:34:19 +0300
-Message-ID: <CAF-0O_6zDyWTFenFX49DVeSyB=p59BFVCc71oPVarOtDPh2LFg@mail.gmail.com>
-Subject: Odroid-XU$ sound issue after suspend-resume
-To:     linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190804160200.5139-1-nishkadg.linux@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dear All,
-Kernel 5.3-rc1
-OS: ubuntu 18.04
-Hardware: Odroid-XU4
-The sound of Odroid-XU4 after suspend/resume cycle is choppy and slow.
-I have found a workaround, the I2SMOD register value should be set to
-zero after resume to force using internal codec clock (cdclkcon bit =
-0),  also the rclk_srcrate which is obtained from the function
-clk_get_rate(rclksrc) inside hw_params function is not correct and
-must be divided by 2 to obtain proper value, i2s_resume function is
-modified to:
+On Sun, Aug 04, 2019 at 09:32:00PM +0530, Nishka Dasgupta wrote:
+> Each iteration of for_each_child_of_node puts the previous node, but in
+> the case of a return from the middle of the loop, there is no put, thus
+> causing a memory leak. Hence add an of_node_put before the return.
+> Issue found with Coccinelle.
+> 
+> Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
+> ---
+>  drivers/pinctrl/samsung/pinctrl-exynos.c | 4 +++-
 
-static int i2s_resume(struct snd_soc_dai *dai)
-{
-        struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
-        priv->suspend_i2smod = 0;//workaround-1 ,
-        return pm_runtime_force_resume(dai->dev);
+Thanks, applied.
 
-}
+Best regards,
+Krzysztof
 
- inside hw_params function, the rclk_srcrate must be halved to solve
-unknown problem of clock shift, so before return from hw_params we
-must insert:
-if(mod == 0){
-priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2,
-}
-return 0;
-
-With these two workaround sound issue was solved, but I hope we can
-get concrete fix.
-
-Best Regards
-
-
-Jaafar
