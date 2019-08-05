@@ -2,38 +2,26 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE7F881545
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:20:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8C578158B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 11:34:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727158AbfHEJUp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Aug 2019 05:20:45 -0400
-Received: from mail.kmu-office.ch ([178.209.48.109]:39750 "EHLO
-        mail.kmu-office.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726454AbfHEJUo (ORCPT
+        id S1726880AbfHEJe4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 05:34:56 -0400
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:56539 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727225AbfHEJe4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Aug 2019 05:20:44 -0400
-Received: from webmail.kmu-office.ch (unknown [IPv6:2a02:418:6a02::a3])
-        by mail.kmu-office.ch (Postfix) with ESMTPSA id 82F595C0169;
-        Mon,  5 Aug 2019 11:20:41 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=agner.ch; s=dkim;
-        t=1564996841;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=eDYDScTuSCYF0FjQcbcrJzxIQ0/kmURL7uAqHm2hNns=;
-        b=Rxq2u4nFlSE5hZ1FNYyZNJOOGXI2LUdn8tyMLyaKzfEYo+rwaFHmxVUnWg61t+arxfbptS
-        EfHfSmB+RD8tMiMKiqGE/OBJaN1BzwJbv9b61JtDIRYnkw9x2i1R/BwMxV+VGBa+zD1d1Q
-        qce/WUzXxVIHeQivwwCACaXiPAyrhfI=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 05 Aug 2019 11:20:41 +0200
-From:   Stefan Agner <stefan@agner.ch>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
+        Mon, 5 Aug 2019 05:34:56 -0400
+Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1huZNt-0006zK-Ts; Mon, 05 Aug 2019 11:34:29 +0200
+Message-ID: <1564997664.3056.11.camel@pengutronix.de>
+Subject: Re: [PATCH v1 04/16] drm/imx: fix opencoded use of drm_panel_*
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     Sam Ravnborg <sam@ravnborg.org>, dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     Alexios Zavras <alexios.zavras@intel.com>,
         Alison Wang <alison.wang@nxp.com>,
         Allison Randal <allison@lohutok.net>,
         Andrzej Hajda <a.hajda@samsung.com>,
@@ -62,62 +50,47 @@ Cc:     dri-devel@lists.freedesktop.org,
         Neil Armstrong <narmstrong@baylibre.com>,
         NXP Linux Team <linux-imx@nxp.com>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
         Sascha Hauer <s.hauer@pengutronix.de>,
         Sean Paul <sean@poorly.run>,
         Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>,
-        Sam Ravnborg <sam.ravnborg@gmail.com>
-Subject: Re: [PATCH v1 07/16] drm/mxsfb: fix opencoded use of drm_panel_*
-In-Reply-To: <20190804201637.1240-8-sam@ravnborg.org>
+        Shawn Guo <shawnguo@kernel.org>
+Date:   Mon, 05 Aug 2019 11:34:24 +0200
+In-Reply-To: <20190804201637.1240-5-sam@ravnborg.org>
 References: <20190804201637.1240-1-sam@ravnborg.org>
- <20190804201637.1240-8-sam@ravnborg.org>
-Message-ID: <a6833b84301dfb5f73a2f4caaf7d482d@agner.ch>
-X-Sender: stefan@agner.ch
-User-Agent: Roundcube Webmail/1.3.9
+         <20190804201637.1240-5-sam@ravnborg.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2019-08-04 22:16, Sam Ravnborg wrote:
-> Use the drm_panel_get_modes() function.
-
-Looks good to me,
-
-Acked-by: Stefan Agner <stefan@agner.ch>
-
---
-Stefan
-
+On Sun, 2019-08-04 at 22:16 +0200, Sam Ravnborg wrote:
+> Use the drm_panel_get_modes() function to get the modes.
 > 
+> This patch leave one test for the function pointer:
+>     panel->funcs->get_modes
+> 
+> This is used to check if the panel may have any modes.
+> There is no direct replacement.
+> We may be able to just check that drm_panel_get_modes() return > 0,
+> but as this is not the same functionality it is left for later.
+>
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Marek Vasut <marex@denx.de>
-> Cc: Stefan Agner <stefan@agner.ch>
-> Cc: Shawn Guo <shawnguo@kernel.org>
+> Cc: Philipp Zabel <p.zabel@pengutronix.de>
 > Cc: Sascha Hauer <s.hauer@pengutronix.de>
 > Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
 > Cc: Fabio Estevam <festevam@gmail.com>
 > Cc: NXP Linux Team <linux-imx@nxp.com>
 > Cc: linux-arm-kernel@lists.infradead.org
-> ---
->  drivers/gpu/drm/mxsfb/mxsfb_out.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/mxsfb/mxsfb_out.c
-> b/drivers/gpu/drm/mxsfb/mxsfb_out.c
-> index 231d016c6f47..be36f4d6cc96 100644
-> --- a/drivers/gpu/drm/mxsfb/mxsfb_out.c
-> +++ b/drivers/gpu/drm/mxsfb/mxsfb_out.c
-> @@ -30,7 +30,7 @@ static int mxsfb_panel_get_modes(struct
-> drm_connector *connector)
->  			drm_connector_to_mxsfb_drm_private(connector);
->  
->  	if (mxsfb->panel)
-> -		return mxsfb->panel->funcs->get_modes(mxsfb->panel);
-> +		return drm_panel_get_modes(mxsfb->panel);
->  
->  	return 0;
->  }
+
+Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+
+regards
+Philipp
