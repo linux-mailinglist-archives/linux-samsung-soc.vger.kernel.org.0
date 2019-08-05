@@ -2,318 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 16FE280C81
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2019 22:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E3AD8143B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Aug 2019 10:31:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726656AbfHDURt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 4 Aug 2019 16:17:49 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:44597 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbfHDURt (ORCPT
+        id S1726656AbfHEIbl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Aug 2019 04:31:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46654 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726423AbfHEIbl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 4 Aug 2019 16:17:49 -0400
-Received: by mail-lj1-f193.google.com with SMTP id k18so77400066ljc.11;
-        Sun, 04 Aug 2019 13:17:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=58L2c6AoPRdtw97mukFPxD0pdo2vv2X7JQRJbq8/vUE=;
-        b=iWaSTn6msFtanMS3ltawVoyI/akm3SIk334RyboYedy/nyCR1hjYvRVV5qxkjjz0/H
-         HqXXvHotINKZ0MV5HIpyWLnyZtxGL/1hGgmFIEEI7UdhvUfg75bpnhgOJWt5N8zKgrdm
-         iOXfl/+wIB5SpvjXO1jqzazjXb4JocnXkPI+PCSJkpOFvrS+MIjtXrKGdq9eXuHzZGgb
-         +cj5IV6oh60Itbyl7Tn5K5BhmHxd4/gcjJnW0V2KehXKtOWe4oIYhKGzrUlEdTmqAkt/
-         88lPYDyYgqhmfZxkZeRgCPjyUrPVFHA+tyGQMdVbBGoApF+gML1pHYItNM5NHOyvti76
-         MsBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=58L2c6AoPRdtw97mukFPxD0pdo2vv2X7JQRJbq8/vUE=;
-        b=XkL1oyTDVR6Z5oXGE04FMqYI0KXKoXVhToQKmem8qvWIqWQQXOUleqtx+Pz0m3KZk5
-         waVIsA7vN7f996l0FgB6s/JGfp1Z80BVmNlQC9NaBDz3bLajLhjcPVPeVvVxaW5S177S
-         hBftMWnpcsGAh4PSTkVYfH+HNHHiLeNQCMR1eZSjcosgKGNiU5F7uo3hiQGSAo6IB3QV
-         0mvv6GjZEP81S1mat1oPLMBqFIIolHBNOzzjl0Xb0prFZc+97NlxK4kOlGImi9+LML4t
-         uf+9BlmBgLKzTFqafjRurUGZWu4qnNjSmRu32F5ZIf3NxXqqbf6YuMFR4NpeKNxMcUlp
-         XnOA==
-X-Gm-Message-State: APjAAAWgJN/jckTlWyaV0HCMCX5pmPQznuCKtnxd3piVS6ArL6Y/Vgiq
-        5tZSPTQtTW7pzC9QINholJ4=
-X-Google-Smtp-Source: APXvYqwd3qng5VMg9Mb2Vmyn/6Orka9Dj+RSr/HOVzJm2eC00ZYEFloJNhEpBCBt7pNnr0htBnzZ8A==
-X-Received: by 2002:a2e:834e:: with SMTP id l14mr30558098ljh.158.1564949866148;
-        Sun, 04 Aug 2019 13:17:46 -0700 (PDT)
-Received: from saturn.lan (18.158-248-194.customer.lyse.net. [158.248.194.18])
-        by smtp.gmail.com with ESMTPSA id p87sm16540794ljp.50.2019.08.04.13.17.44
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 04 Aug 2019 13:17:45 -0700 (PDT)
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org,
-        Thierry Reding <thierry.reding@gmail.com>
-Cc:     Alexios Zavras <alexios.zavras@intel.com>,
-        Alison Wang <alison.wang@nxp.com>,
-        Allison Randal <allison@lohutok.net>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Enrico Weigelt <info@metux.net>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Marek Vasut <marex@denx.de>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>
-Subject: [PATCH v1 16/16] drm/panel: simple: use drm_panel infrastructure
-Date:   Sun,  4 Aug 2019 22:16:37 +0200
-Message-Id: <20190804201637.1240-17-sam@ravnborg.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190804201637.1240-1-sam@ravnborg.org>
-References: <20190804201637.1240-1-sam@ravnborg.org>
+        Mon, 5 Aug 2019 04:31:41 -0400
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id BF0BB20B1F;
+        Mon,  5 Aug 2019 08:31:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1564993901;
+        bh=6GDlY6Oj/pMsxqqXmrShaQDXNdC8M9mTC8Uh+0WR7cw=;
+        h=References:In-Reply-To:From:Date:Subject:To:From;
+        b=peHYXbmKGBkRGDkgiCG5T0LLnNYHuvThB7B3ZZZnfMAD4dBao3elfqPZWeYSLgv5m
+         mgxeKfu8ZWuAS8b6dcFyko593cTA9bWGo6IGV9Jxp5cXtOJQEFvdOepvRLByQEsPcN
+         MS8Q7SLbllXv+ymRvocxkzEptTK+NEInF7m/Q3Xw=
+Received: by mail-lf1-f47.google.com with SMTP id s19so57243330lfb.9;
+        Mon, 05 Aug 2019 01:31:40 -0700 (PDT)
+X-Gm-Message-State: APjAAAVYiTCYAq9OL/6CBRwFW6vf4xC20YDCYhPaNOqkgrb4xMT5wO8P
+        MsyQmBM1p7m1SYIthcKOv7a0XuJJIHGME1YZm1A=
+X-Google-Smtp-Source: APXvYqyWaflWWQ8wwvaO1d9cbgBslefLEtgX0rPNgijTABssXm+H4yZIkYKO5j/21nYMMWJoveT1E8Ew7gsDV7eLoD4=
+X-Received: by 2002:ac2:4d1c:: with SMTP id r28mr68291107lfi.159.1564993898942;
+ Mon, 05 Aug 2019 01:31:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAF-0O_47bLysYD9qn2ekNC7PmNj0LguB6ab_9mdw6NaoGPj4rw@mail.gmail.com>
+In-Reply-To: <CAF-0O_47bLysYD9qn2ekNC7PmNj0LguB6ab_9mdw6NaoGPj4rw@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 5 Aug 2019 10:31:27 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPe9nY4wV+Dj4BHMO6=WmtxjMnSe+z6ZywaokUNPyyvOuA@mail.gmail.com>
+Message-ID: <CAJKOXPe9nY4wV+Dj4BHMO6=WmtxjMnSe+z6ZywaokUNPyyvOuA@mail.gmail.com>
+Subject: Re: suspend/Resume Sound issue workaround
+To:     Jaafar Ali <jaafarkhalaf@gmail.com>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Use drm_panel infrastrucute:
-- drm_panel has guards for calling disable/enable twice
-- drm_panel has backlight support
+On Sun, 4 Aug 2019 at 14:36, Jaafar Ali <jaafarkhalaf@gmail.com> wrote:
+> Dear Krzysztof,
+> The sound of Odroid-XU4 after suspend/resume cycle has an issue. As a workaround, the I2SMOD register value should be set to zero after resume, the i2s_resume function would be:
+>
+> static int i2s_resume(struct snd_soc_dai *dai)
+> {
+> struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
+> printk(KERN_EMERG "i2s resume of dai !\n");
+> priv->suspend_i2smod = 0;//workaround-1 , to force using internal codec clock source (CDCLKCON bit = 0)
+> //see another workaround inside hw_param
+>
+>         return pm_runtime_force_resume(dai->dev);
+>
+> }
+>
+> Also, inside hw_params function, the rclk_srcrate must be halved to solve unknown problem of clock shift, so before return from hw_params we must insert:
+> if(mod == 0){
+> priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2, clock is being halved due to unknwon bug
+> printk(KERN_EMERG "i2s hw_param rclk_srcrate after %lu !\n", priv->rclk_srcrate);
+> }
+> return 0;
+>
+> With these two workaround sound issue was solved, but I hope we can get concrete fix.
 
-To use the drm_panel infrastructure use the drm_panel_*
-variants for prepare/enable/disable/unprepare.
+Hi Jaafar,
 
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
----
- drivers/gpu/drm/panel/panel-simple.c | 73 +++++-----------------------
- 1 file changed, 11 insertions(+), 62 deletions(-)
+Thanks for the report. Preferred way to send bug reports is to use the
+public channels by sending to Linux kernel mailing lists:
+linux-samsung-soc@vger.kernel.org and linux-kernel@vger.kernel.org,
+with the Cc of other interested people. The best is to use the
+scripts/get_maintainer.pl tool (with -f for example) to get the list
+of addresses to Cc.
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index bff7578f84dd..c7eed34f2c9c 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -21,7 +21,6 @@
-  * DEALINGS IN THE SOFTWARE.
-  */
- 
--#include <linux/backlight.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/module.h>
-@@ -98,13 +97,10 @@ struct panel_desc {
- 
- struct panel_simple {
- 	struct drm_panel base;
--	bool prepared;
--	bool enabled;
- 	bool no_hpd;
- 
- 	const struct panel_desc *desc;
- 
--	struct backlight_device *backlight;
- 	struct regulator *supply;
- 	struct i2c_adapter *ddc;
- 
-@@ -232,20 +228,9 @@ static int panel_simple_disable(struct drm_panel *panel)
- {
- 	struct panel_simple *p = to_panel_simple(panel);
- 
--	if (!p->enabled)
--		return 0;
--
--	if (p->backlight) {
--		p->backlight->props.power = FB_BLANK_POWERDOWN;
--		p->backlight->props.state |= BL_CORE_FBBLANK;
--		backlight_update_status(p->backlight);
--	}
--
- 	if (p->desc->delay.disable)
- 		msleep(p->desc->delay.disable);
- 
--	p->enabled = false;
--
- 	return 0;
- }
- 
-@@ -253,9 +238,6 @@ static int panel_simple_unprepare(struct drm_panel *panel)
- {
- 	struct panel_simple *p = to_panel_simple(panel);
- 
--	if (!p->prepared)
--		return 0;
--
- 	gpiod_set_value_cansleep(p->enable_gpio, 0);
- 
- 	regulator_disable(p->supply);
-@@ -263,8 +245,6 @@ static int panel_simple_unprepare(struct drm_panel *panel)
- 	if (p->desc->delay.unprepare)
- 		msleep(p->desc->delay.unprepare);
- 
--	p->prepared = false;
--
- 	return 0;
- }
- 
-@@ -274,9 +254,6 @@ static int panel_simple_prepare(struct drm_panel *panel)
- 	unsigned int delay;
- 	int err;
- 
--	if (p->prepared)
--		return 0;
--
- 	err = regulator_enable(p->supply);
- 	if (err < 0) {
- 		dev_err(panel->dev, "failed to enable supply: %d\n", err);
-@@ -291,8 +268,6 @@ static int panel_simple_prepare(struct drm_panel *panel)
- 	if (delay)
- 		msleep(delay);
- 
--	p->prepared = true;
--
- 	return 0;
- }
- 
-@@ -300,20 +275,9 @@ static int panel_simple_enable(struct drm_panel *panel)
- {
- 	struct panel_simple *p = to_panel_simple(panel);
- 
--	if (p->enabled)
--		return 0;
--
- 	if (p->desc->delay.enable)
- 		msleep(p->desc->delay.enable);
- 
--	if (p->backlight) {
--		p->backlight->props.state &= ~BL_CORE_FBBLANK;
--		p->backlight->props.power = FB_BLANK_UNBLANK;
--		backlight_update_status(p->backlight);
--	}
--
--	p->enabled = true;
--
- 	return 0;
- }
- 
-@@ -413,7 +377,7 @@ static void panel_simple_parse_panel_timing_node(struct device *dev,
- 
- static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- {
--	struct device_node *backlight, *ddc;
-+	struct device_node *ddc;
- 	struct panel_simple *panel;
- 	struct display_timing dt;
- 	int err;
-@@ -422,8 +386,6 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 	if (!panel)
- 		return -ENOMEM;
- 
--	panel->enabled = false;
--	panel->prepared = false;
- 	panel->desc = desc;
- 
- 	panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
-@@ -441,24 +403,13 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 		return err;
- 	}
- 
--	backlight = of_parse_phandle(dev->of_node, "backlight", 0);
--	if (backlight) {
--		panel->backlight = of_find_backlight_by_node(backlight);
--		of_node_put(backlight);
--
--		if (!panel->backlight)
--			return -EPROBE_DEFER;
--	}
--
- 	ddc = of_parse_phandle(dev->of_node, "ddc-i2c-bus", 0);
- 	if (ddc) {
- 		panel->ddc = of_find_i2c_adapter_by_node(ddc);
- 		of_node_put(ddc);
- 
--		if (!panel->ddc) {
--			err = -EPROBE_DEFER;
--			goto free_backlight;
--		}
-+		if (!panel->ddc)
-+			return -EPROBE_DEFER;
- 	}
- 
- 	if (!of_get_display_timing(dev->of_node, "panel-timing", &dt))
-@@ -468,6 +419,10 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- 	panel->base.dev = dev;
- 	panel->base.funcs = &panel_simple_funcs;
- 
-+	err = drm_panel_of_backlight(&panel->base);
-+	if (err)
-+		goto free_ddc;
-+
- 	err = drm_panel_add(&panel->base);
- 	if (err < 0)
- 		goto free_ddc;
-@@ -479,9 +434,6 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
- free_ddc:
- 	if (panel->ddc)
- 		put_device(&panel->ddc->dev);
--free_backlight:
--	if (panel->backlight)
--		put_device(&panel->backlight->dev);
- 
- 	return err;
- }
-@@ -492,15 +444,12 @@ static int panel_simple_remove(struct device *dev)
- 
- 	drm_panel_remove(&panel->base);
- 
--	panel_simple_disable(&panel->base);
--	panel_simple_unprepare(&panel->base);
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
- 
- 	if (panel->ddc)
- 		put_device(&panel->ddc->dev);
- 
--	if (panel->backlight)
--		put_device(&panel->backlight->dev);
--
- 	return 0;
- }
- 
-@@ -508,8 +457,8 @@ static void panel_simple_shutdown(struct device *dev)
- {
- 	struct panel_simple *panel = dev_get_drvdata(dev);
- 
--	panel_simple_disable(&panel->base);
--	panel_simple_unprepare(&panel->base);
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
- }
- 
- static const struct drm_display_mode ampire_am_480272h3tmqw_t01h_mode = {
--- 
-2.20.1
-
+Best regards,
+Krzysztof
