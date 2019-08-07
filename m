@@ -2,154 +2,169 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19DBD84B17
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 13:55:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 340D184D97
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 15:39:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729681AbfHGLzp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 7 Aug 2019 07:55:45 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:34858 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729673AbfHGLzp (ORCPT
+        id S2388463AbfHGNjA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Aug 2019 09:39:00 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:58125 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388445AbfHGNi7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 7 Aug 2019 07:55:45 -0400
-Received: by mail-qk1-f194.google.com with SMTP id r21so65587339qke.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Aug 2019 04:55:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SYVsSHsvSWXRztrf3IuVhfzf5yR2eq8e4OeojMpGXV4=;
-        b=MvVp0PhouLDFbAzPC6BlPhwnjMq6wj4aKW+xqnyO4EpFpbnlmYNShTSj2QvZyC2cwo
-         id+9iDAv2VuLz4ZkOVmpWD1iFCrwBLFEzgrsVH7lrHNpz3794rZO51JvOwAAtLZKxLag
-         KuferNUkbVm+v83TZ3zD0XXQ2ZXvook4I1m8N86QUeZ/JH7AT1mPxoVIhYstrgX7Du+a
-         Us50AGkRmA3jrnvewEbut09BEHBAtTdwhhwW7cWPiC8wTo7iwH/9xwmZYsG0GKzbXmOA
-         JfRO1GBWleE+OiE3Rry//QTfz0UyU5RMxzecKNz68fhKbBiH6J+Gnrl4QNF+hwmmjLYk
-         BZhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SYVsSHsvSWXRztrf3IuVhfzf5yR2eq8e4OeojMpGXV4=;
-        b=DOGIMDtijHhgPI+KdZvErPjl2Br6l4G0QydYus8oZfhqXdt3lXBhijG6cqugtN9SAX
-         c8ZWZZ1KKoqi3hBNv21pftTobFCFyd3LEm9zEdUWL+ZyIlCjK4NUJ+Bzdy1cb25a0tnm
-         mjNnhqlu+5kRcj3Id8Hu3Rab6pA6YBwqAdZms1izeQJJaH8q+SsWtIp/LMYL2hT4eS8q
-         DfGO2UzeY+Pz4eQvJ2Cpqf/FPW4MsjRV770pKzub/TIwOJ/pQ2MTkqkALxVsAblirvnp
-         QyXHRz8zHplRzTzN2sQomgc5xmBvfe2I4rkDk868USl46EWTspm9rKQNJkORAbF3/yPL
-         sw7w==
-X-Gm-Message-State: APjAAAUoo+9vOHhnBQGha9vCeCoHkUe5myNglzUj8xv7LAaoqZlDpKYL
-        mZJYwUu8bmaGdhMdlyNAhlMm3YhplHq3MWEGCTKjhA==
-X-Google-Smtp-Source: APXvYqwEsXcr4FpH9gDfLIkM8xlP9ZUuM0nR3mM2uKxsKf/UACxOWHfAXNmHuJ/ZKRMRUNo55y8wJzZDblUivvVNr2A=
-X-Received: by 2002:a37:4d16:: with SMTP id a22mr8030512qkb.103.1565178944593;
- Wed, 07 Aug 2019 04:55:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190804201637.1240-1-sam@ravnborg.org> <20190804201637.1240-9-sam@ravnborg.org>
-In-Reply-To: <20190804201637.1240-9-sam@ravnborg.org>
-From:   Benjamin Gaignard <benjamin.gaignard@linaro.org>
-Date:   Wed, 7 Aug 2019 13:55:33 +0200
-Message-ID: <CA+M3ks4weUp8wtZktTj9TwLis=x4EyyRjOYh6eavvw_CxuKkuA@mail.gmail.com>
-Subject: Re: [PATCH v1 08/16] drm/sti: fix opencoded use of drm_panel_*
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Alison Wang <alison.wang@nxp.com>,
-        Allison Randal <allison@lohutok.net>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Enrico Weigelt <info@metux.net>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Wed, 7 Aug 2019 09:38:59 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190807133857euoutp019dd2aa25df99833770e70e107c7018f3~4p5ccWIEE2418324183euoutp01f
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Aug 2019 13:38:57 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190807133857euoutp019dd2aa25df99833770e70e107c7018f3~4p5ccWIEE2418324183euoutp01f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1565185138;
+        bh=EmslgonStTRrL/u4P7UDkmcHxhjWmImBf/o0FvYqLms=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=WQ2DUC/32VSo1KwDGi1q+kQuFkP+bYlB5kgPDRFUjpBbjF3GOaHbd3Y8M3hnKffoS
+         hITqhtIq1lSh3ewezziW+aL1rB7g0vM6VE240GvDTd7V5ytK4mbl8k1J00PkvI/qCF
+         mVlF75+rkMX0DAEyMHqJzW3dvJF2Q1Wxz4C+ITsU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190807133857eucas1p2f55ef233cdb6008e414af50a35ceaee4~4p5bktSz61100111001eucas1p2M;
+        Wed,  7 Aug 2019 13:38:57 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 1A.F6.04374.074DA4D5; Wed,  7
+        Aug 2019 14:38:56 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190807133855eucas1p1cab425b791262e8dee1b17cbe8b1b3da~4p5amdPUC1968119681eucas1p1J;
+        Wed,  7 Aug 2019 13:38:55 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190807133855eusmtrp144ac7bade6c0fb9ef41271cd4c3a5394~4p5aXxtZl3034030340eusmtrp1x;
+        Wed,  7 Aug 2019 13:38:55 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-04-5d4ad470f051
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 76.AE.04166.F64DA4D5; Wed,  7
+        Aug 2019 14:38:55 +0100 (BST)
+Received: from AMDC3218.DIGITAL.local (unknown [106.120.51.18]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190807133854eusmtip239525b74c72cfe59383812ea79a8ef1a~4p5ZqloQ71919719197eusmtip2b;
+        Wed,  7 Aug 2019 13:38:54 +0000 (GMT)
+From:   k.konieczny@partner.samsung.com
+To:     k.konieczny@partner.samsung.com
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Kukjin Kim <kgene@kernel.org>,
         Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/S5P EXYNOS AR..." 
-        <linux-samsung-soc@vger.kernel.org>, linux-tegra@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Marek Vasut <marex@denx.de>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Mark Rutland <mark.rutland@arm.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: [PATCH v5 0/4] add coupled regulators for Exynos5422/5800
+Date:   Wed,  7 Aug 2019 15:38:34 +0200
+Message-Id: <20190807133838.14678-1-k.konieczny@partner.samsung.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHKsWRmVeSWpSXmKPExsWy7djPc7oFV7xiDS6c1rLYOGM9q8X1L89Z
+        LeYfOcdq0bfvP6NF/+PXzBbnz29gtzjb9IbdYtPja6wWl3fNYbP43HuE0WLG+X1MFmuP3GW3
+        WHr9IpPF7cYVbBZvfpxlsmjde4Td4t+1jSwWmx8cY3MQ8lgzbw2jx6ZVnWwem5fUexx8t4fJ
+        o2/LKkaP4ze2M3l83iQXwB7FZZOSmpNZllqkb5fAlfHgwTWWgqXCFVdbVrE2MB7h72Lk5JAQ
+        MJFYtuIpYxcjF4eQwApGiUObTjCCJIQEvjBKtPwOg0h8ZpR40DoHKMEB1rHkEBdEfDmjxPfN
+        i9ghHKCG2y/OsYJ0swmoSmyZ8ZIdxBYRUJaYfG86M0gRs8BPFokNlzeCJYQFnCTW7HzGBmKz
+        ADVMWHMcbDWvgIvE9C/LWCDuk5fo3LGbBSIuKHFy5hMwmxko3rx1NthQCYFr7BK3Zq1mg2hw
+        kdj+4iJUs7DEq+Nb2CFsGYnTk3ug4uUSTxf2sUM0twD91v4RKmEtcfj4RVaQP5kFNCXW79KH
+        CDtK7Dm2hBXifT6JG28FIW7gk5i0DeQxkDCvREebEES1rsS8/2dYIWxpia7/66BsD4nPvWeh
+        oRsrce9bB8sERoVZSD6bheSzWQg3LGBkXsUonlpanJueWmycl1quV5yYW1yal66XnJ+7iRGY
+        6k7/O/51B+O+P0mHGAU4GJV4eBkueMUKsSaWFVfmHmKU4GBWEuG9V+YZK8SbklhZlVqUH19U
+        mpNafIhRmoNFSZy3muFBtJBAemJJanZqakFqEUyWiYNTqoFxo+Omk8+e8PcvbnB5pXjZqO35
+        r9WzXzYZlX+LlL677dSi/1kH3k9fkLLX8Gfz0s/7/H6VaVqzvDTcWZURv2zr9dnmLR3fb7wS
+        F47ysI30vfT8l9xTPaXiGpmayTorerYtTVILZC2z01dU2/LJfWJa8q2aBZG6np86au0/qp00
+        Xi55fb3oGu+pSizFGYmGWsxFxYkA7/csynEDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKIsWRmVeSWpSXmKPExsVy+t/xe7r5V7xiDR436lhsnLGe1eL6l+es
+        FvOPnGO16Nv3n9Gi//FrZovz5zewW5xtesNusenxNVaLy7vmsFl87j3CaDHj/D4mi7VH7rJb
+        LL1+kcniduMKNos3P84yWbTuPcJu8e/aRhaLzQ+OsTkIeayZt4bRY9OqTjaPzUvqPQ6+28Pk
+        0bdlFaPH8RvbmTw+b5ILYI/SsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3
+        s0lJzcksSy3St0vQy3jw4BpLwVLhiqstq1gbGI/wdzFycEgImEgsOcTVxcjFISSwlFFixduH
+        zF2MnEBxaYnG06uZIGxhiT/Xutggij4xSlxcuQGsiE1AVWLLjJfsILaIgLLE5HvTmUGKmAU6
+        WSVWPDnCBpIQFnCSWLPzGZjNAtQwYc1xRhCbV8BFYvqXZSwQG+QlOnfsZoGIC0qcnPkEzGYG
+        ijdvnc08gZFvFpLULCSpBYxMqxhFUkuLc9Nziw31ihNzi0vz0vWS83M3MQKjbNuxn5t3MF7a
+        GHyIUYCDUYmHl+GCV6wQa2JZcWXuIUYJDmYlEd57ZZ6xQrwpiZVVqUX58UWlOanFhxhNgY6d
+        yCwlmpwPTAB5JfGGpobmFpaG5sbmxmYWSuK8HQIHY4QE0hNLUrNTUwtSi2D6mDg4pRoY2SZm
+        /ODl8XX57H+SoUyEN7Sk12DpcrEsvls+J9mSHSqmT/rtsz3Au3CX55oplYrCvLvnOu1ztrOa
+        cdyD9f3ElaxV51LuLQo73rhkgjZf2oKcaxJ+GprlwXF5t/M+i85r5lg54ePlNb8vJMz7H/hj
+        nsKF6ax3vzg8nWa0uGjZ+sliEfuWvjobosRSnJFoqMVcVJwIADSoXbPIAgAA
+X-CMS-MailID: 20190807133855eucas1p1cab425b791262e8dee1b17cbe8b1b3da
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190807133855eucas1p1cab425b791262e8dee1b17cbe8b1b3da
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190807133855eucas1p1cab425b791262e8dee1b17cbe8b1b3da
+References: <CGME20190807133855eucas1p1cab425b791262e8dee1b17cbe8b1b3da@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Le dim. 4 ao=C3=BBt 2019 =C3=A0 22:17, Sam Ravnborg <sam@ravnborg.org> a =
-=C3=A9crit :
->
-> Use the drm_panel_(enable|disable|get_modes) functions.
+Hi,
 
-Applied on drm-misc-next,
-Thanks.
+The main purpose of this patch series is to add coupled regulators for
+Exynos5422/5800 to keep constrain on voltage difference between vdd_arm
+and vdd_int to be at most 300mV. In exynos-bus instead of using
+regulator_set_voltage_tol() with default voltage tolerance it should be
+used regulator_set_voltage_triplet() with volatege range, and this is
+already present in opp/core.c code, so it can be reused. While at this,
+move setting regulators into opp/core.
 
-Benjamin
+This patchset was tested on Odroid XU3.
 
->
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
-> Cc: Vincent Abriou <vincent.abriou@st.com>
-> ---
->  drivers/gpu/drm/sti/sti_dvo.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.=
-c
-> index 9e6d5d8b7030..e55870190bf5 100644
-> --- a/drivers/gpu/drm/sti/sti_dvo.c
-> +++ b/drivers/gpu/drm/sti/sti_dvo.c
-> @@ -221,8 +221,7 @@ static void sti_dvo_disable(struct drm_bridge *bridge=
-)
->
->         writel(0x00000000, dvo->regs + DVO_DOF_CFG);
->
-> -       if (dvo->panel)
-> -               dvo->panel->funcs->disable(dvo->panel);
-> +       drm_panel_disable(dvo->panel);
->
->         /* Disable/unprepare dvo clock */
->         clk_disable_unprepare(dvo->clk_pix);
-> @@ -262,8 +261,7 @@ static void sti_dvo_pre_enable(struct drm_bridge *bri=
-dge)
->         if (clk_prepare_enable(dvo->clk))
->                 DRM_ERROR("Failed to prepare/enable dvo clk\n");
->
-> -       if (dvo->panel)
-> -               dvo->panel->funcs->enable(dvo->panel);
-> +       drm_panel_enable(dvo->panel);
->
->         /* Set LUT */
->         writel(config->lowbyte,  dvo->regs + DVO_LUT_PROG_LOW);
-> @@ -340,7 +338,7 @@ static int sti_dvo_connector_get_modes(struct drm_con=
-nector *connector)
->         struct sti_dvo *dvo =3D dvo_connector->dvo;
->
->         if (dvo->panel)
-> -               return dvo->panel->funcs->get_modes(dvo->panel);
-> +               return drm_panel_get_modes(dvo->panel);
->
->         return 0;
->  }
-> --
-> 2.20.1
->
+The DTS coupled regulators patch depends on previous patches.
+
+Changes:
+v5:
+- squashed last patch "remove exynos_bus_passive_target()" into second
+- added Acked-by to patch "correct clock enable sequence"
+v4:
+- removed "opp: core: add regulators enable and disable" from patchset
+  as it was applied by Viresh Kumar and changed cover letter
+- fix patch "devfreq: exynos-bus: correct clock enable sequence" to
+  correct order of enable/disable
+- removed unrelated changes in "devfreq: exynos-bus: convert to use
+  dev_pm_opp_set_rate()"
+- added new patch "devfreq: exynos-bus: remove exynos_bus_passive_target()"
+  as suggested by Chanwoo Choi
+v3:
+- added new exynos-bus patch to correct clock and regulator enabling
+  and disabling sequence as suggested by Chanwoo Choi
+- corrected error path in enable and improved commit message in opp/core
+- improve comment in devfreq/exynos-bus.c before devfreq_recommended_opp()
+- change cover letter as there is new patch
+- added note before Signed-off-by in 4th patch
+v2:
+- improve regulators enable/disable code in opp/core as suggested by
+  Viresh Kumar
+- add new patch for remove unused dt-bindings as suggested by Krzysztof
+  Kozlowski
+
+Kamil Konieczny (3):
+  devfreq: exynos-bus: correct clock enable sequence
+  devfreq: exynos-bus: convert to use dev_pm_opp_set_rate()
+  dt-bindings: devfreq: exynos-bus: remove unused property
+
+Marek Szyprowski (1):
+  ARM: dts: exynos: add initial data for coupled regulators for
+    Exynos5422/5800
+
+ .../bindings/devfreq/exynos-bus.txt           |   2 -
+ arch/arm/boot/dts/exynos5420.dtsi             |  34 ++--
+ arch/arm/boot/dts/exynos5422-odroid-core.dtsi |   4 +
+ arch/arm/boot/dts/exynos5800-peach-pi.dts     |   4 +
+ arch/arm/boot/dts/exynos5800.dtsi             |  32 ++--
+ drivers/devfreq/exynos-bus.c                  | 153 +++++-------------
+ 6 files changed, 78 insertions(+), 151 deletions(-)
+
+-- 
+2.22.0
+
