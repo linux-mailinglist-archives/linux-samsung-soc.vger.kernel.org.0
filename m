@@ -2,75 +2,144 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24DF3833E9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  6 Aug 2019 16:26:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 996C484708
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 10:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729802AbfHFOZ5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 6 Aug 2019 10:25:57 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38058 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728756AbfHFOZ5 (ORCPT
+        id S2387539AbfHGIWV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Aug 2019 04:22:21 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:56876 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387507AbfHGIWU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 6 Aug 2019 10:25:57 -0400
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 54D9E2173C;
-        Tue,  6 Aug 2019 14:25:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565101556;
-        bh=hxvRGDEpNBm3mZPFFZ9scjz7nw9+tfcB69glm76Zj6k=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=LAR1NOD9DK3tAJ2JkBf7vEicPIWD0xoAsrAY+BabPQk//OwFZlnFZkvh+TTlIzRPg
-         sVdl6HCU5R05RZzEZkshV9i0qJEpuvmd08ej8da/jvRo9VAnwsc7rae8PedWVNvVQ8
-         PA3itgfOxe8MmtT80ZJR5MRIVKAk5q7wWB93BvqU=
-Received: by mail-lj1-f169.google.com with SMTP id i21so3162341ljj.3;
-        Tue, 06 Aug 2019 07:25:56 -0700 (PDT)
-X-Gm-Message-State: APjAAAX5guONvCSvKxuwBFXVaiPsCMxQrQJHqsPjrXX+v2kU6PXaYk9L
-        qxX3KInHa8VdeMCnLnPb97pb25C+1rGw2cT3U7Y=
-X-Google-Smtp-Source: APXvYqyR8xEsJE+MjEuvjOfu2HXgOcDbLzDQyXavm7a5+iFv4M54shHtw9bwzRKTalHYnjKzVT1tmRDtUKw9aVqqweQ=
-X-Received: by 2002:a2e:3008:: with SMTP id w8mr1964469ljw.13.1565101554494;
- Tue, 06 Aug 2019 07:25:54 -0700 (PDT)
+        Wed, 7 Aug 2019 04:22:20 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190807082218euoutp0266d825d48b0adc9f9075afb453ebd16c~4lk_RYid33083330833euoutp02N
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Aug 2019 08:22:18 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190807082218euoutp0266d825d48b0adc9f9075afb453ebd16c~4lk_RYid33083330833euoutp02N
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1565166139;
+        bh=TUOJee1KmaVqHr7sp1XDmCcAg4SfEnN4KsZm2vPUxeU=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=oj4RFKJj6zYexdRMKkDPwRVVzJZjXUghoxAQKcrpIqnPSsfjmMBRz3RP9o8ByWwPA
+         ADijWFXnVBQnabpEpEmaHL7oMiAS6eA5VXVOuMPBlg0M36SzF71osAmrIAEp8cm+sW
+         yijDFQF+kdMY4fs2bR4y64LiX6SUrV2Af/rV/5Xs=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190807082218eucas1p2101e26b7b20195803ee174dea6d6a957~4lk9nU0Cf2777127771eucas1p2y;
+        Wed,  7 Aug 2019 08:22:18 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 3C.E9.04374.93A8A4D5; Wed,  7
+        Aug 2019 09:22:18 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190807082217eucas1p1902bf3e6dbdc180efb15dcffd2c569f9~4lk80b8Zj1455014550eucas1p1L;
+        Wed,  7 Aug 2019 08:22:17 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190807082217eusmtrp11a1f46affb6a93550c7ff2bb842e8c37~4lk8mAQtD1982319823eusmtrp1J;
+        Wed,  7 Aug 2019 08:22:17 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-85-5d4a8a393be9
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 9E.44.04166.93A8A4D5; Wed,  7
+        Aug 2019 09:22:17 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190807082216eusmtip2ddaf1592eedc20faa8a53d54b471ffc7~4lk8B9sv31759417594eusmtip2X;
+        Wed,  7 Aug 2019 08:22:16 +0000 (GMT)
+Subject: Re: Odroid-XU4 sound issue after suspend-resume
+To:     Jaafar Ali <jaafarkhalaf@gmail.com>
+Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kgene@kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        sam@ravnborg.org, linux-clk@vger.kernel.org
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <24165241-1f65-fafa-0c59-b85cf89bc5bb@samsung.com>
+Date:   Wed, 7 Aug 2019 10:22:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.7.2
 MIME-Version: 1.0
-References: <20190805162710.7789-1-krzk@kernel.org> <CACRpkda8P522pkxctZbf2Ut13V6Rzx=mSYsRuHv0BvPyF6q1gA@mail.gmail.com>
-In-Reply-To: <CACRpkda8P522pkxctZbf2Ut13V6Rzx=mSYsRuHv0BvPyF6q1gA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Tue, 6 Aug 2019 16:25:43 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfuu1bgLL9oOf=7hrz-QvXBcJjJVMwqN2oRUv7hnB5Jyg@mail.gmail.com>
-Message-ID: <CAJKOXPfuu1bgLL9oOf=7hrz-QvXBcJjJVMwqN2oRUv7hnB5Jyg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] pinctrl: samsung: Fix device node refcount leaks in
- Exynos wakeup controller init
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>, notify@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAF-0O_4xOQNkX5ZyyVz7zZDAP9XBeUKv65T0cd+oAAV1ahLQ9Q@mail.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTYRiGez1nO2fD2evUfDBRGEIoNZOMTiaiEDT7EUoIYUgtd5iWm7L5
+        kfZHFKzM8qs0p6SEpNvIwtLUTGym0wTNb8VSUUvLTPMjHIXl8Sj573ru+7m53wdempA+EbjR
+        sdpEVqdVxsmEYrK+w9ZzJCD7bNTRt8eZ1i8DBJM7s0Awvb3PKeZnzoSAGWgqEzIPe1vsmGpb
+        HQqmFI2GT5Si1nRbqKgsGhIqVms9wshIcaCKjYtNZnW+QZfFMW8yfhAJU/bXlzs6iXRUJs5G
+        IhqwPzyYXxFkIzEtxdUICquzKH5YQ2CzlewMqwjMX9eFu5HcvlYhb1QhKOkupDhDihcRmO6H
+        cOyEGRheGd8OOOND8Llx1I4LEPgpgrGaFyRnCLEf3G2/hziW4CDoLzcLOCaxF7waWdnWXfAF
+        eP/uEcnvOEJXyew2i3A4lC/d3C4msCtkrBkFPHtCZl0pwZUBrqGgdKGB5J99GpbaflE8O8E3
+        68sddofuwhySD2QiyHk9TvFDHoJJawXit05Bm7Vvq4LeqvCGZ02+vBwCy+uDiJMBO8DooiP/
+        CAcoqC8meFkCt7Kk/LYX/DYV2/HsBndm/5J5SGbYc5phzzmGPecY/vdWINKEXNkkvUbN6o9p
+        2RS5XqnRJ2nV8uh4TS3a+j3dm9b1BtTy54oFYRrJ7CVMdmiUVKBM1qdqLAhoQuYsmUjekiQq
+        ZWoaq4u/pEuKY/UWdJAmZa6SG/umLkqxWpnIXmPZBFa369rRIrd01CYa83RWB5CZ6Lt7szFM
+        Kx1NMc6sDp4Pc/dK66qMnAj2Lxpppn02p6sM5v6IiBNncszR8vzp8I+qcz0iX6x6fKBgSjA/
+        edi7S95uqT05XD0n2iBcNqq8ehPCiheo/KFEVWdUVUtobKh3xtUZ84dOb0XQiG2gb44KXJLv
+        N3rISH2M0s+H0OmV/wB8zpNVOQMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsVy+t/xe7qWXV6xBmdecVkceHaZ2aL/8Wtm
+        i/PnN7BbfOy5x2pxedccNosZ5/cxWaz4uZXRgd1j56y77B6bVnWyeSyZdpXN4/MmuQCWKD2b
+        ovzSklSFjPziElulaEMLIz1DSws9IxNLPUNj81grI1MlfTublNSczLLUIn27BL2MvU3vmAse
+        8FR8OHaCuYFxDlcXIyeHhICJRP/FA2xdjFwcQgJLGSU+Nc5j6WLkAEpIScxvUYKoEZb4c60L
+        quY1o8Tff3uYQBLCAhYS1z7dZgOxRQTUJZ7uvMEEUsQssJZR4nTPXCaIjiWMEjOXn2cBqWIT
+        MJToPdrHCGLzCthJXJq/mhXEZhFQkdh+/RNYXFQgQmLStZ0sEDWCEidnPgGzOQUCJea/b2cH
+        sZmBtv2Zd4kZwhaXaPqykhXClpdo3jqbeQKj0Cwk7bOQtMxC0jILScsCRpZVjCKppcW56bnF
+        hnrFibnFpXnpesn5uZsYgdG27djPzTsYL20MPsQowMGoxMM7occzVog1say4MvcQowQHs5II
+        770yoBBvSmJlVWpRfnxRaU5q8SFGU6DnJjJLiSbnAxNBXkm8oamhuYWlobmxubGZhZI4b4fA
+        wRghgfTEktTs1NSC1CKYPiYOTqkGRqul3D5u/X4vJ194Wrgko1BxwY7unwyP/uvGTWaUvRyg
+        OTc3J2ni/+xj7QkL/69ekfhO8KzGIpkFRdx7JM0YGk+7B9tErWhIZT8xY0PiZ7mvVZVOuw+K
+        T2dJ7va6efv/00rtqtvZjluK+vf9FPNLEdG9NTe6RVJhxWLr42WM7HL5W59w2qUGKrEUZyQa
+        ajEXFScCAL5kDh/MAgAA
+X-CMS-MailID: 20190807082217eucas1p1902bf3e6dbdc180efb15dcffd2c569f9
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5
+References: <CGME20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5@epcas2p3.samsung.com>
+        <CAF-0O_4xOQNkX5ZyyVz7zZDAP9XBeUKv65T0cd+oAAV1ahLQ9Q@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 6 Aug 2019 at 16:15, Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> On Mon, Aug 5, 2019 at 6:27 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> > In exynos_eint_wkup_init() the for_each_child_of_node() loop is used
-> > with a break to find a matching child node.  Although each iteration of
-> > for_each_child_of_node puts the previous node, but early exit from loop
-> > misses it.  This leads to leak of device node.
-> >
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
->
-> I assume you're collecting these for a pull request to me
-> at some later point, all look good to me.
+Hi Jaafar, 
 
-Yes, I'll take these and one more patch from lists and send them to you.
+On 8/5/19 15:27, Jaafar Ali wrote:
+> Dear All,
+> Kernel 5.3-rc1
+> OS: ubuntu 18.04
+> Hardware: Odroid-XU4
+> The sound of Odroid-XU4 after suspend/resume cycle is choppy and slow. 
+> I have found a workaround, the I2SMOD register value should be set to 
+> zero after resume to force using internal codec clock (cdclkcon bit = 0),
+> also the rclk_srcrate which is obtained from the function 
+> *clk_get_rate(rclksrc) *inside *hw_params* function is not correct and 
+> must be divided by 2 to obtain proper value, i2s_resume function 
+> is modified to:
+> 
+> static int i2s_resume(struct snd_soc_dai *dai)
+> {
+>         struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
+>         priv->suspend_i2smod = 0;//workaround-1 ,
+>         return pm_runtime_force_resume(dai->dev);
+> 
+> }
+> 
+> inside hw_params function, the rclk_srcrate must be halved to solve 
+> unknown problem of clock shift, so before return from hw_params we 
+> must insert:
+> if(mod == 0){
+> 	priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2, 
+> }
+> 
+> With these two workaround sound issue was solved, but I hope we can 
+> get concrete fix.
+Thank you for the bug report. I spent some time on debugging this and
+it turned out that there is a clock mux between EPLL and the audio 
+subsystem which looses its configuration during suspend/resume cycle.
+So we end up with the I2S controller clocked from the main oscillator
+clock (24 MHz) rather than the EPLL (196.608 MHz) after system suspend/
+resume. I will post a patch for clk-exynos5420 driver shortly.
 
-Best regards,
-Krzysztof
+-- 
+Regards,
+Sylwester
