@@ -2,211 +2,269 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D279584E95
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 16:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B474E850FF
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 18:25:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729968AbfHGOVX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 7 Aug 2019 10:21:23 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:38294 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730010AbfHGOVX (ORCPT
+        id S1729745AbfHGQZQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Aug 2019 12:25:16 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:58548 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729602AbfHGQZP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 7 Aug 2019 10:21:23 -0400
-Received: by mail-lj1-f195.google.com with SMTP id r9so85649424ljg.5
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Aug 2019 07:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ym3TWnNJEGFgpteRuO2hxD/LdHQA3MDsH07HbJofTfQ=;
-        b=INI+HycjT3+g4qBx9Ko5IoZjmKKYITZXt33h42PGL4N4OFmj4XRfzycycphtJLGrEr
-         hvhZ40Ag3dRe6Zqw6qglZV/I0D1HMs6W3oiJtQbJunhuUcivoYQpQRF7Io1n2yFLn4er
-         VDv+j3c2O6IruavHGhCEIEfI48WfWSLFarEAh3qELg1H3kYJVBE0O37FORW3scp+WAkx
-         gg0qVrUYF56BxCuDfSZgHcS6n0K/yUvYiSnTs8NfqRTxo3d+JOevUhhq4DH7ecvcHzzq
-         W1OLejawnQSEzC2/hozP0ETdmb+t3rCSzwOpHHXkdVO5KDQ4LTcWwzTNbhROzi8PjiGN
-         VY5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ym3TWnNJEGFgpteRuO2hxD/LdHQA3MDsH07HbJofTfQ=;
-        b=dzXAihd4/PnpuBPJKeueiRV8GDiidYFahxqsZW85ddlESr4dNbwLrrQqnVkCvwW5sN
-         r1RnA76cKBDwn2eB4fYljWSDQp7QGdNmSE/MaaJJhjQ1gIdXZ6DrjHXYyeK8S1Q0cmUf
-         0wsP9x/TCNdqEE97OQuSp8Tt39YRhQcPNZx1R0FKMI6AXPxuyP7eB/p+pLaE2hkEUW8u
-         xgu8YADXimIWmnhekq+6YcRR6ouiB1KFb95FIIFuqcWF6pxg9NFGSuGmMqYRRJbTFAMB
-         2mq8nCwyZKqH0jJQct+Ke82KvnT1NUjvDDhG/IbBYAld+rx5obAZzGTUwiPh3xgNjRkp
-         py2Q==
-X-Gm-Message-State: APjAAAXFOQIWqehJ9U5wJe5o77p6inFcNCSPmFPA2hfwZnIIa78CkTmZ
-        9yAYMrrqa1pcbAPx8b55cfwBPA==
-X-Google-Smtp-Source: APXvYqxcQ5lxNvBv2pxpv7dxod4WchOzutIsq7iwKp5scxXoeS4ecQlLYFiSdRaDVQjZg8kQ68gzuA==
-X-Received: by 2002:a2e:65ca:: with SMTP id e71mr5113463ljf.61.1565187679266;
-        Wed, 07 Aug 2019 07:21:19 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id q17sm3417148lfa.82.2019.08.07.07.21.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Aug 2019 07:21:18 -0700 (PDT)
-Subject: Re: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
- functionality to exynos-bus
-To:     =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Cc:     krzk@kernel.org, cw00.choi@samsung.com, myungjoo.ham@samsung.com,
-        inki.dae@samsung.com, sw0312.kim@samsung.com,
-        m.szyprowski@samsung.com,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>
-References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
- <CGME20190723122028eucas1p2eb75f35b810e71d6c590370aaff0997b@eucas1p2.samsung.com>
- <20190723122016.30279-10-a.swigon@partner.samsung.com>
- <6e8b2081-2fb3-9ab8-37d1-8b5fe5fd8e11@linaro.org>
- <62557522be4924a01d3822d4734c30f2965c608b.camel@partner.samsung.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <4155482f-8f8f-a659-63ba-25701540b2c5@linaro.org>
-Date:   Wed, 7 Aug 2019 17:21:15 +0300
-MIME-Version: 1.0
-In-Reply-To: <62557522be4924a01d3822d4734c30f2965c608b.camel@partner.samsung.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        Wed, 7 Aug 2019 12:25:15 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190807162513euoutp025d787cbeceeec86d1327748b6a585b60~4sKmrQI6H0952909529euoutp02v
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Aug 2019 16:25:13 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190807162513euoutp025d787cbeceeec86d1327748b6a585b60~4sKmrQI6H0952909529euoutp02v
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1565195113;
+        bh=2K7KEcP+kimYVvJP3walI9f/kxGTVXYr6YYRG716M1A=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=jlEgzIuSpHuTs/+yStffEcFSrzS+hkzuzVwkesdTdSVxTznh3X+3kGV2E3v/NSV2D
+         7AvZyrGg550fdSr8VXRG4zlFp3PAcftgBhtC47t4jlBN00s8R5SpluESiOLrOl0I6O
+         epbzNPlKISdxSOGeplnPyI2TZu1ieeJkIeR4kHAY=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190807162512eucas1p2b0f5f5698a045f4bc8317114f44a0f15~4sKl9B1i00663006630eucas1p2_;
+        Wed,  7 Aug 2019 16:25:12 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 77.0B.04309.86BFA4D5; Wed,  7
+        Aug 2019 17:25:12 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190807162511eucas1p2eedb33bdee87f80528b59bb4e869daf1~4sKlIXS1e0663006630eucas1p29;
+        Wed,  7 Aug 2019 16:25:11 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190807162511eusmtrp21f68436d743c6f41a60d889f5db8ebca~4sKk6PsKH2110421104eusmtrp2Q;
+        Wed,  7 Aug 2019 16:25:11 +0000 (GMT)
+X-AuditID: cbfec7f4-afbff700000010d5-e1-5d4afb68897f
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 0E.EF.04117.76BFA4D5; Wed,  7
+        Aug 2019 17:25:11 +0100 (BST)
+Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190807162510eusmtip2c2a6b10c105bf9cf2ef7571ce74776be~4sKkKCIs_0680706807eusmtip2h;
+        Wed,  7 Aug 2019 16:25:10 +0000 (GMT)
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+To:     sboyd@kernel.org, mturquette@baylibre.com
+Cc:     linux@armlinux.org.uk, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        krzk@kernel.org, cw00.choi@samsung.com, m.szyprowski@samsung.com,
+        b.zolnierkie@samsung.com,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: [PATCH 1/2] clk: samsung: Change signature of
+ exynos5_subcmus_init() function
+Date:   Wed,  7 Aug 2019 18:24:55 +0200
+Message-Id: <20190807162456.28694-1-s.nawrocki@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSfSzUcRzHfe93vwenaz8/Nh+S6pY2laey+ZUerdbxRw9/ZdlNJ785xdH9
+        UMqW9UTC1DQ0K7HINfOQJGJ26DaNIyVc4Q/FPNdda7mQ8zv13/vh9d7n+8eXwpjruBsVo07k
+        NGplrIyQiOvf/jZ4qyyhCr/Zlw5sTUEVzn4yj+OswVBNst+zhnG2r7GIYAsMLSJW96AZsZXt
+        X0i2t/Mo2zadjrNL/TXiQw7yvv5eTD43cIuU12rvEPKcOi2Sm2o9TuJnJPuiuNiYZE7je+Cs
+        RFVoNJIJHbsvd33F09D0jkxkTwEdAMVZFeJMJKEY+hkCXeWizZgRDFb1EIIxIaj4/BRfm3wY
+        LbFR5Qja5rqJf5Pa1sFViqD9IbsjB1m1M+0N6WUtqxBG3xTBR3MJZi2c6DCo6ZoSZSKKEtOe
+        8Kgr0hpL6SCwZAsI0JvgeXUrZt0C/YsA43idSCiOwNLUBCloJ5jU19m0Oyy/fiwSBjcQZDUZ
+        ScHkIhjRFyOBCoI2fS9uvYzRXlDV6CvEh2Fo0UBYY6DXw8CMozXGVuT9+nxMiKWQcZsR6K1g
+        0ebbnuMGd8eWxYKWw2jnt1XN0ApYaJgQ5SKPh/9vFSOkRS5cEh8XzfG71NwlH14Zxyepo33O
+        xcfVopWf8W5Jb25AjX8idYimkGyd1K4nVMHgymQ+JU6HgMJkztLh5BAFI41SplzhNPERmqRY
+        jtehDZRY5iK9ajcaztDRykTuAsclcJq1VkTZu6UhV6aUActGPSpKSgjIk2O4M0lPBlZiDuGZ
+        O/uxsu4np8Z+DtyL8PEd8fa6Jjn/Y78MQhrny4NfnZDP20e4huryLvYEn9YHppKOQzOmaUnq
+        VJq5+SCxd/Z9iLublmuK9NxyrDTj+B6Jd3vom22by1UtCzEVYQYRIXthLDT5mWViXqX0345p
+        eOVfPV+QkhUDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGLMWRmVeSWpSXmKPExsVy+t/xe7rpv71iDbr3s1hsnLGe1eL6l+es
+        FufPb2C3+Nhzj9Xi8q45bBYzzu9jsjg0dS+jxdojd9ktLp5ytTj8pp3V4t+1jSwO3B6Xr11k
+        9nh/o5XdY9OqTjaPvi2rGD0+b5ILYI3SsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaP
+        tTIyVdK3s0lJzcksSy3St0vQy5h5+zZ7wVHjirNPWRsY32h3MXJySAiYSFx5sIili5GLQ0hg
+        KaPEzFmrmLoYOYASUhLzW5QgaoQl/lzrYoOo+cQo8fP4dVaQBJuAoUTv0T5GEFtEQF9ictsG
+        sEHMAn1MEnduXQErEhYIk3h7YRkLyFAWAVWJeWeTQMK8AtYSv3sXMUMskJdYveEA8wRGngWM
+        DKsYRVJLi3PTc4uN9IoTc4tL89L1kvNzNzECw3TbsZ9bdjB2vQs+xCjAwajEw8twwStWiDWx
+        rLgy9xCjBAezkgjvvTLPWCHelMTKqtSi/Pii0pzU4kOMpkC7JzJLiSbnA2MoryTe0NTQ3MLS
+        0NzY3NjMQkmct0PgYIyQQHpiSWp2ampBahFMHxMHp1QD4/lZP1TnHvYtnfnKavEPQb8bt2Yc
+        3XZtvoDIypsmk/grEnNfm02NP8exJjyHT3uvcFtwiSRn8r/wF5XvztW9esF59trBY30qi+z/
+        7ufRDr9zh6dbkf/dMW5+ldnl167YLgjWuWr9aWns6R8epodnMhTPaxW643SakTnu0QvlY+fj
+        X11craqzab0SS3FGoqEWc1FxIgCQFVLFaQIAAA==
+X-CMS-MailID: 20190807162511eucas1p2eedb33bdee87f80528b59bb4e869daf1
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190807162511eucas1p2eedb33bdee87f80528b59bb4e869daf1
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190807162511eucas1p2eedb33bdee87f80528b59bb4e869daf1
+References: <CGME20190807162511eucas1p2eedb33bdee87f80528b59bb4e869daf1@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Artur,
+In order to make it easier in subsequent patch to create different subcmu
+lists for exynos5420 and exynos5800 SoCs the code is rewritten so we pass
+an array of pointers to the subcmus initialization function.
 
-On 8/1/19 10:59, Artur Świgoń wrote:
-> Hi Georgi,
-> 
-> On Fri, 2019-07-26 at 11:05 +0300, Georgi Djakov wrote:
->> Hi Artur,
->>
->> On 7/23/19 15:20, Artur Świgoń wrote:
->>> This patch adds interconnect functionality to the exynos-bus devfreq
->>> driver.
->>>
->>> The SoC topology is a graph (or, more specifically, a tree) and most of its
->>> edges are taken from the devfreq parent-child hierarchy (cf.
->>> Documentation/devicetree/bindings/devfreq/exynos-bus.txt). The previous
->>> patch adds missing edges to the DT (under the name 'parent'). Due to
->>> unspecified relative probing order, -EPROBE_DEFER may be propagated to
->>> guarantee that a child is probed before its parent.
->>>
->>> Each bus is now an interconnect provider and an interconnect node as well
->>> (cf. Documentation/interconnect/interconnect.rst), i.e. every bus registers
->>> itself as a node. Node IDs are not hardcoded but rather assigned at
->>> runtime, in probing order (subject to the above-mentioned exception
->>> regarding relative order). This approach allows for using this driver with
->>> various Exynos SoCs.
->>
->> I am not familiar with the Exynos bus topology, but it seems to me that it's not
->> represented correctly. An interconnect provider with just a single node (port)
->> is odd. I would expect that each provider consists of multiple master and slave
->> nodes. This data would be used by a framework to understand what are the links
->> and how the traffic flows between the IP blocks and through which buses.
-> 
-> To summarize the exynos-bus topology[1] used by the devfreq driver: There are
-> many data buses for data transfer in Samsung Exynos SoC. Every bus has its own
-> clock. Buses often share power lines, in which case one of the buses on the
-> power line is referred to as 'parent' (or as 'devfreq' in the DT). In the
-> particular case of Exynos4412[1][2], the topology can be expressed as follows:
-> 
-> bus_dmc
-> -- bus_acp
-> -- bus_c2c
-> 
-> bus_leftbus
-> -- bus_rightbus
-> -- bus_display
-> -- bus_fsys
-> -- bus_peri
-> -- bus_mfc
-> 
-> Where bus_dmc and bus_leftbus probably could be referred to as masters, and the
-> following indented nodes as slaves. Patch 08/11 of this RFC additionally adds
-> the following to the DT:
-> 
-> bus_dmc
-> -- bus_leftbus
-> 
-> Which makes the topology a valid tree.
-> 
-> The exynos-bus concept in devfreq[3] is designed in such a way that every bus is
-> probed separately as a platform device, and is a largely independent entity.
->
-> This RFC proposes an extension to the existing devfreq driver that basically
-> provides a simple QoS to ensure minimum clock frequency for selected buses
-> (possibly overriding devfreq governor calculations) using the interconnect
-> framework.
-> 
-> The hierarchy is modelled in such a way that every bus is an interconnect node.
-> On the other hand, what is considered an interconnect provider here is quite
-> arbitrary, but for the reasons mentioned in the above paragraph, this RFC
-> assumes that every bus is a provider of itself as a node. Using an alternative
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+---
+ drivers/clk/samsung/clk-exynos5-subcmu.c | 16 +++----
+ drivers/clk/samsung/clk-exynos5-subcmu.h |  2 +-
+ drivers/clk/samsung/clk-exynos5250.c     |  7 ++-
+ drivers/clk/samsung/clk-exynos5420.c     | 60 ++++++++++++++----------
+ 4 files changed, 49 insertions(+), 36 deletions(-)
 
-IIUC, in case we want to transfer data between the display and the memory
-controller, the path would look like this:
+diff --git a/drivers/clk/samsung/clk-exynos5-subcmu.c b/drivers/clk/samsung/clk-exynos5-subcmu.c
+index 91db7894125d..65c82d922b05 100644
+--- a/drivers/clk/samsung/clk-exynos5-subcmu.c
++++ b/drivers/clk/samsung/clk-exynos5-subcmu.c
+@@ -14,7 +14,7 @@
+ #include "clk-exynos5-subcmu.h"
+ 
+ static struct samsung_clk_provider *ctx;
+-static const struct exynos5_subcmu_info *cmu;
++static const struct exynos5_subcmu_info **cmu;
+ static int nr_cmus;
+ 
+ static void exynos5_subcmu_clk_save(void __iomem *base,
+@@ -56,17 +56,17 @@ static void exynos5_subcmu_defer_gate(struct samsung_clk_provider *ctx,
+  * when OF-core populates all device-tree nodes.
+  */
+ void exynos5_subcmus_init(struct samsung_clk_provider *_ctx, int _nr_cmus,
+-			  const struct exynos5_subcmu_info *_cmu)
++			  const struct exynos5_subcmu_info **_cmu)
+ {
+ 	ctx = _ctx;
+ 	cmu = _cmu;
+ 	nr_cmus = _nr_cmus;
+ 
+ 	for (; _nr_cmus--; _cmu++) {
+-		exynos5_subcmu_defer_gate(ctx, _cmu->gate_clks,
+-					  _cmu->nr_gate_clks);
+-		exynos5_subcmu_clk_save(ctx->reg_base, _cmu->suspend_regs,
+-					_cmu->nr_suspend_regs);
++		exynos5_subcmu_defer_gate(ctx, (*_cmu)->gate_clks,
++					  (*_cmu)->nr_gate_clks);
++		exynos5_subcmu_clk_save(ctx->reg_base, (*_cmu)->suspend_regs,
++					(*_cmu)->nr_suspend_regs);
+ 	}
+ }
+ 
+@@ -163,9 +163,9 @@ static int __init exynos5_clk_probe(struct platform_device *pdev)
+ 		if (of_property_read_string(np, "label", &name) < 0)
+ 			continue;
+ 		for (i = 0; i < nr_cmus; i++)
+-			if (strcmp(cmu[i].pd_name, name) == 0)
++			if (strcmp(cmu[i]->pd_name, name) == 0)
+ 				exynos5_clk_register_subcmu(&pdev->dev,
+-							    &cmu[i], np);
++							    cmu[i], np);
+ 	}
+ 	return 0;
+ }
+diff --git a/drivers/clk/samsung/clk-exynos5-subcmu.h b/drivers/clk/samsung/clk-exynos5-subcmu.h
+index 755ee8aaa3de..9ae5356f25aa 100644
+--- a/drivers/clk/samsung/clk-exynos5-subcmu.h
++++ b/drivers/clk/samsung/clk-exynos5-subcmu.h
+@@ -21,6 +21,6 @@ struct exynos5_subcmu_info {
+ };
+ 
+ void exynos5_subcmus_init(struct samsung_clk_provider *ctx, int nr_cmus,
+-			  const struct exynos5_subcmu_info *cmu);
++			  const struct exynos5_subcmu_info **cmu);
+ 
+ #endif
+diff --git a/drivers/clk/samsung/clk-exynos5250.c b/drivers/clk/samsung/clk-exynos5250.c
+index f2b896881768..931c70a4da19 100644
+--- a/drivers/clk/samsung/clk-exynos5250.c
++++ b/drivers/clk/samsung/clk-exynos5250.c
+@@ -681,6 +681,10 @@ static const struct exynos5_subcmu_info exynos5250_disp_subcmu = {
+ 	.pd_name	= "DISP1",
+ };
+ 
++static const struct exynos5_subcmu_info *exynos5250_subcmus[] = {
++	&exynos5250_disp_subcmu,
++};
++
+ static const struct samsung_pll_rate_table vpll_24mhz_tbl[] __initconst = {
+ 	/* sorted in descending order */
+ 	/* PLL_36XX_RATE(rate, m, p, s, k) */
+@@ -843,7 +847,8 @@ static void __init exynos5250_clk_init(struct device_node *np)
+ 
+ 	samsung_clk_sleep_init(reg_base, exynos5250_clk_regs,
+ 			       ARRAY_SIZE(exynos5250_clk_regs));
+-	exynos5_subcmus_init(ctx, 1, &exynos5250_disp_subcmu);
++	exynos5_subcmus_init(ctx, ARRAY_SIZE(exynos5250_subcmus),
++			     exynos5250_subcmus);
+ 
+ 	samsung_clk_of_add_provider(np, ctx);
+ 
+diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
+index 01bca5a498b2..fdb17c799aa5 100644
+--- a/drivers/clk/samsung/clk-exynos5420.c
++++ b/drivers/clk/samsung/clk-exynos5420.c
+@@ -1281,32 +1281,40 @@ static struct exynos5_subcmu_reg_dump exynos5x_mfc_suspend_regs[] = {
+ 	{ DIV4_RATIO, 0, 0x3 },			/* DIV dout_mfc_blk */
+ };
+ 
+-static const struct exynos5_subcmu_info exynos5x_subcmus[] = {
+-	{
+-		.div_clks	= exynos5x_disp_div_clks,
+-		.nr_div_clks	= ARRAY_SIZE(exynos5x_disp_div_clks),
+-		.gate_clks	= exynos5x_disp_gate_clks,
+-		.nr_gate_clks	= ARRAY_SIZE(exynos5x_disp_gate_clks),
+-		.suspend_regs	= exynos5x_disp_suspend_regs,
+-		.nr_suspend_regs = ARRAY_SIZE(exynos5x_disp_suspend_regs),
+-		.pd_name	= "DISP",
+-	}, {
+-		.div_clks	= exynos5x_gsc_div_clks,
+-		.nr_div_clks	= ARRAY_SIZE(exynos5x_gsc_div_clks),
+-		.gate_clks	= exynos5x_gsc_gate_clks,
+-		.nr_gate_clks	= ARRAY_SIZE(exynos5x_gsc_gate_clks),
+-		.suspend_regs	= exynos5x_gsc_suspend_regs,
+-		.nr_suspend_regs = ARRAY_SIZE(exynos5x_gsc_suspend_regs),
+-		.pd_name	= "GSC",
+-	}, {
+-		.div_clks	= exynos5x_mfc_div_clks,
+-		.nr_div_clks	= ARRAY_SIZE(exynos5x_mfc_div_clks),
+-		.gate_clks	= exynos5x_mfc_gate_clks,
+-		.nr_gate_clks	= ARRAY_SIZE(exynos5x_mfc_gate_clks),
+-		.suspend_regs	= exynos5x_mfc_suspend_regs,
+-		.nr_suspend_regs = ARRAY_SIZE(exynos5x_mfc_suspend_regs),
+-		.pd_name	= "MFC",
+-	},
++static const struct exynos5_subcmu_info exynos5x_disp_subcmu = {
++	.div_clks	= exynos5x_disp_div_clks,
++	.nr_div_clks	= ARRAY_SIZE(exynos5x_disp_div_clks),
++	.gate_clks	= exynos5x_disp_gate_clks,
++	.nr_gate_clks	= ARRAY_SIZE(exynos5x_disp_gate_clks),
++	.suspend_regs	= exynos5x_disp_suspend_regs,
++	.nr_suspend_regs = ARRAY_SIZE(exynos5x_disp_suspend_regs),
++	.pd_name	= "DISP",
++};
++
++static const struct exynos5_subcmu_info exynos5x_gsc_subcmu = {
++	.div_clks	= exynos5x_gsc_div_clks,
++	.nr_div_clks	= ARRAY_SIZE(exynos5x_gsc_div_clks),
++	.gate_clks	= exynos5x_gsc_gate_clks,
++	.nr_gate_clks	= ARRAY_SIZE(exynos5x_gsc_gate_clks),
++	.suspend_regs	= exynos5x_gsc_suspend_regs,
++	.nr_suspend_regs = ARRAY_SIZE(exynos5x_gsc_suspend_regs),
++	.pd_name	= "GSC",
++};
++
++static const struct exynos5_subcmu_info exynos5x_mfc_subcmu = {
++	.div_clks	= exynos5x_mfc_div_clks,
++	.nr_div_clks	= ARRAY_SIZE(exynos5x_mfc_div_clks),
++	.gate_clks	= exynos5x_mfc_gate_clks,
++	.nr_gate_clks	= ARRAY_SIZE(exynos5x_mfc_gate_clks),
++	.suspend_regs	= exynos5x_mfc_suspend_regs,
++	.nr_suspend_regs = ARRAY_SIZE(exynos5x_mfc_suspend_regs),
++	.pd_name	= "MFC",
++};
++
++static const struct exynos5_subcmu_info *exynos5x_subcmus[] = {
++	&exynos5x_disp_subcmu,
++	&exynos5x_gsc_subcmu,
++	&exynos5x_mfc_subcmu,
+ };
+ 
+ static const struct samsung_pll_rate_table exynos5420_pll2550x_24mhz_tbl[] __initconst = {
+-- 
+2.17.1
 
-display --> bus_display --> bus_leftbus --> bus_dmc --> memory
-
-But the bus_display for example would have not one, but two nodes (ports),
-right?  One representing the link to the display controller and another one
-representing the link to bus_leftbus? So i think that all the buses should
-have at least two nodes, to represent each end of the wire.
-
-> singleton provider approach was deemed more complicated since the 'dev' field in
-> 'struct icc_provider' has to be set to something meaningful and we are tied to
-> the 'samsung,exynos-bus' compatible string in the driver (and multiple instances
-> of exynos-bus probed in indeterminate relative order).
-> 
-
-Sure, the rest makes sense to me.
-
-Thanks,
-Georgi
