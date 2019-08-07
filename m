@@ -2,144 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 996C484708
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 10:22:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19DBD84B17
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Aug 2019 13:55:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387539AbfHGIWV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 7 Aug 2019 04:22:21 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:56876 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387507AbfHGIWU (ORCPT
+        id S1729681AbfHGLzp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Aug 2019 07:55:45 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:34858 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729673AbfHGLzp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 7 Aug 2019 04:22:20 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190807082218euoutp0266d825d48b0adc9f9075afb453ebd16c~4lk_RYid33083330833euoutp02N
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Aug 2019 08:22:18 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190807082218euoutp0266d825d48b0adc9f9075afb453ebd16c~4lk_RYid33083330833euoutp02N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1565166139;
-        bh=TUOJee1KmaVqHr7sp1XDmCcAg4SfEnN4KsZm2vPUxeU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=oj4RFKJj6zYexdRMKkDPwRVVzJZjXUghoxAQKcrpIqnPSsfjmMBRz3RP9o8ByWwPA
-         ADijWFXnVBQnabpEpEmaHL7oMiAS6eA5VXVOuMPBlg0M36SzF71osAmrIAEp8cm+sW
-         yijDFQF+kdMY4fs2bR4y64LiX6SUrV2Af/rV/5Xs=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190807082218eucas1p2101e26b7b20195803ee174dea6d6a957~4lk9nU0Cf2777127771eucas1p2y;
-        Wed,  7 Aug 2019 08:22:18 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 3C.E9.04374.93A8A4D5; Wed,  7
-        Aug 2019 09:22:18 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190807082217eucas1p1902bf3e6dbdc180efb15dcffd2c569f9~4lk80b8Zj1455014550eucas1p1L;
-        Wed,  7 Aug 2019 08:22:17 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190807082217eusmtrp11a1f46affb6a93550c7ff2bb842e8c37~4lk8mAQtD1982319823eusmtrp1J;
-        Wed,  7 Aug 2019 08:22:17 +0000 (GMT)
-X-AuditID: cbfec7f5-4f7ff70000001116-85-5d4a8a393be9
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 9E.44.04166.93A8A4D5; Wed,  7
-        Aug 2019 09:22:17 +0100 (BST)
-Received: from [106.120.51.75] (unknown [106.120.51.75]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190807082216eusmtip2ddaf1592eedc20faa8a53d54b471ffc7~4lk8B9sv31759417594eusmtip2X;
-        Wed,  7 Aug 2019 08:22:16 +0000 (GMT)
-Subject: Re: Odroid-XU4 sound issue after suspend-resume
-To:     Jaafar Ali <jaafarkhalaf@gmail.com>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kgene@kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        sam@ravnborg.org, linux-clk@vger.kernel.org
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <24165241-1f65-fafa-0c59-b85cf89bc5bb@samsung.com>
-Date:   Wed, 7 Aug 2019 10:22:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.7.2
+        Wed, 7 Aug 2019 07:55:45 -0400
+Received: by mail-qk1-f194.google.com with SMTP id r21so65587339qke.2
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Aug 2019 04:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SYVsSHsvSWXRztrf3IuVhfzf5yR2eq8e4OeojMpGXV4=;
+        b=MvVp0PhouLDFbAzPC6BlPhwnjMq6wj4aKW+xqnyO4EpFpbnlmYNShTSj2QvZyC2cwo
+         id+9iDAv2VuLz4ZkOVmpWD1iFCrwBLFEzgrsVH7lrHNpz3794rZO51JvOwAAtLZKxLag
+         KuferNUkbVm+v83TZ3zD0XXQ2ZXvook4I1m8N86QUeZ/JH7AT1mPxoVIhYstrgX7Du+a
+         Us50AGkRmA3jrnvewEbut09BEHBAtTdwhhwW7cWPiC8wTo7iwH/9xwmZYsG0GKzbXmOA
+         JfRO1GBWleE+OiE3Rry//QTfz0UyU5RMxzecKNz68fhKbBiH6J+Gnrl4QNF+hwmmjLYk
+         BZhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SYVsSHsvSWXRztrf3IuVhfzf5yR2eq8e4OeojMpGXV4=;
+        b=DOGIMDtijHhgPI+KdZvErPjl2Br6l4G0QydYus8oZfhqXdt3lXBhijG6cqugtN9SAX
+         c8ZWZZ1KKoqi3hBNv21pftTobFCFyd3LEm9zEdUWL+ZyIlCjK4NUJ+Bzdy1cb25a0tnm
+         mjNnhqlu+5kRcj3Id8Hu3Rab6pA6YBwqAdZms1izeQJJaH8q+SsWtIp/LMYL2hT4eS8q
+         DfGO2UzeY+Pz4eQvJ2Cpqf/FPW4MsjRV770pKzub/TIwOJ/pQ2MTkqkALxVsAblirvnp
+         QyXHRz8zHplRzTzN2sQomgc5xmBvfe2I4rkDk868USl46EWTspm9rKQNJkORAbF3/yPL
+         sw7w==
+X-Gm-Message-State: APjAAAUoo+9vOHhnBQGha9vCeCoHkUe5myNglzUj8xv7LAaoqZlDpKYL
+        mZJYwUu8bmaGdhMdlyNAhlMm3YhplHq3MWEGCTKjhA==
+X-Google-Smtp-Source: APXvYqwEsXcr4FpH9gDfLIkM8xlP9ZUuM0nR3mM2uKxsKf/UACxOWHfAXNmHuJ/ZKRMRUNo55y8wJzZDblUivvVNr2A=
+X-Received: by 2002:a37:4d16:: with SMTP id a22mr8030512qkb.103.1565178944593;
+ Wed, 07 Aug 2019 04:55:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAF-0O_4xOQNkX5ZyyVz7zZDAP9XBeUKv65T0cd+oAAV1ahLQ9Q@mail.gmail.com>
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTYRiGez1nO2fD2evUfDBRGEIoNZOMTiaiEDT7EUoIYUgtd5iWm7L5
-        kfZHFKzM8qs0p6SEpNvIwtLUTGym0wTNb8VSUUvLTPMjHIXl8Sj573ru+7m53wdempA+EbjR
-        sdpEVqdVxsmEYrK+w9ZzJCD7bNTRt8eZ1i8DBJM7s0Awvb3PKeZnzoSAGWgqEzIPe1vsmGpb
-        HQqmFI2GT5Si1nRbqKgsGhIqVms9wshIcaCKjYtNZnW+QZfFMW8yfhAJU/bXlzs6iXRUJs5G
-        IhqwPzyYXxFkIzEtxdUICquzKH5YQ2CzlewMqwjMX9eFu5HcvlYhb1QhKOkupDhDihcRmO6H
-        cOyEGRheGd8OOOND8Llx1I4LEPgpgrGaFyRnCLEf3G2/hziW4CDoLzcLOCaxF7waWdnWXfAF
-        eP/uEcnvOEJXyew2i3A4lC/d3C4msCtkrBkFPHtCZl0pwZUBrqGgdKGB5J99GpbaflE8O8E3
-        68sddofuwhySD2QiyHk9TvFDHoJJawXit05Bm7Vvq4LeqvCGZ02+vBwCy+uDiJMBO8DooiP/
-        CAcoqC8meFkCt7Kk/LYX/DYV2/HsBndm/5J5SGbYc5phzzmGPecY/vdWINKEXNkkvUbN6o9p
-        2RS5XqnRJ2nV8uh4TS3a+j3dm9b1BtTy54oFYRrJ7CVMdmiUVKBM1qdqLAhoQuYsmUjekiQq
-        ZWoaq4u/pEuKY/UWdJAmZa6SG/umLkqxWpnIXmPZBFa369rRIrd01CYa83RWB5CZ6Lt7szFM
-        Kx1NMc6sDp4Pc/dK66qMnAj2Lxpppn02p6sM5v6IiBNncszR8vzp8I+qcz0iX6x6fKBgSjA/
-        edi7S95uqT05XD0n2iBcNqq8ehPCiheo/KFEVWdUVUtobKh3xtUZ84dOb0XQiG2gb44KXJLv
-        N3rISH2M0s+H0OmV/wB8zpNVOQMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsVy+t/xe7qWXV6xBmdecVkceHaZ2aL/8Wtm
-        i/PnN7BbfOy5x2pxedccNosZ5/cxWaz4uZXRgd1j56y77B6bVnWyeSyZdpXN4/MmuQCWKD2b
-        ovzSklSFjPziElulaEMLIz1DSws9IxNLPUNj81grI1MlfTublNSczLLUIn27BL2MvU3vmAse
-        8FR8OHaCuYFxDlcXIyeHhICJRP/FA2xdjFwcQgJLGSU+Nc5j6WLkAEpIScxvUYKoEZb4c60L
-        quY1o8Tff3uYQBLCAhYS1z7dZgOxRQTUJZ7uvMEEUsQssJZR4nTPXCaIjiWMEjOXn2cBqWIT
-        MJToPdrHCGLzCthJXJq/mhXEZhFQkdh+/RNYXFQgQmLStZ0sEDWCEidnPgGzOQUCJea/b2cH
-        sZmBtv2Zd4kZwhaXaPqykhXClpdo3jqbeQKj0Cwk7bOQtMxC0jILScsCRpZVjCKppcW56bnF
-        hnrFibnFpXnpesn5uZsYgdG27djPzTsYL20MPsQowMGoxMM7occzVog1say4MvcQowQHs5II
-        770yoBBvSmJlVWpRfnxRaU5q8SFGU6DnJjJLiSbnAxNBXkm8oamhuYWlobmxubGZhZI4b4fA
-        wRghgfTEktTs1NSC1CKYPiYOTqkGRqul3D5u/X4vJ194Wrgko1BxwY7unwyP/uvGTWaUvRyg
-        OTc3J2ni/+xj7QkL/69ekfhO8KzGIpkFRdx7JM0YGk+7B9tErWhIZT8xY0PiZ7mvVZVOuw+K
-        T2dJ7va6efv/00rtqtvZjluK+vf9FPNLEdG9NTe6RVJhxWLr42WM7HL5W59w2qUGKrEUZyQa
-        ajEXFScCAL5kDh/MAgAA
-X-CMS-MailID: 20190807082217eucas1p1902bf3e6dbdc180efb15dcffd2c569f9
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5
-References: <CGME20190805133249epcas2p3aea30967f18f03f7fc1ed9dc7cbcb1d5@epcas2p3.samsung.com>
-        <CAF-0O_4xOQNkX5ZyyVz7zZDAP9XBeUKv65T0cd+oAAV1ahLQ9Q@mail.gmail.com>
+References: <20190804201637.1240-1-sam@ravnborg.org> <20190804201637.1240-9-sam@ravnborg.org>
+In-Reply-To: <20190804201637.1240-9-sam@ravnborg.org>
+From:   Benjamin Gaignard <benjamin.gaignard@linaro.org>
+Date:   Wed, 7 Aug 2019 13:55:33 +0200
+Message-ID: <CA+M3ks4weUp8wtZktTj9TwLis=x4EyyRjOYh6eavvw_CxuKkuA@mail.gmail.com>
+Subject: Re: [PATCH v1 08/16] drm/sti: fix opencoded use of drm_panel_*
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/S5P EXYNOS AR..." 
+        <linux-samsung-soc@vger.kernel.org>, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Jaafar, 
+Le dim. 4 ao=C3=BBt 2019 =C3=A0 22:17, Sam Ravnborg <sam@ravnborg.org> a =
+=C3=A9crit :
+>
+> Use the drm_panel_(enable|disable|get_modes) functions.
 
-On 8/5/19 15:27, Jaafar Ali wrote:
-> Dear All,
-> Kernel 5.3-rc1
-> OS: ubuntu 18.04
-> Hardware: Odroid-XU4
-> The sound of Odroid-XU4 after suspend/resume cycle is choppy and slow. 
-> I have found a workaround, the I2SMOD register value should be set to 
-> zero after resume to force using internal codec clock (cdclkcon bit = 0),
-> also the rclk_srcrate which is obtained from the function 
-> *clk_get_rate(rclksrc) *inside *hw_params* function is not correct and 
-> must be divided by 2 to obtain proper value, i2s_resume function 
-> is modified to:
-> 
-> static int i2s_resume(struct snd_soc_dai *dai)
-> {
->         struct samsung_i2s_priv *priv = dev_get_drvdata(dai->dev);
->         priv->suspend_i2smod = 0;//workaround-1 ,
->         return pm_runtime_force_resume(dai->dev);
-> 
-> }
-> 
-> inside hw_params function, the rclk_srcrate must be halved to solve 
-> unknown problem of clock shift, so before return from hw_params we 
-> must insert:
-> if(mod == 0){
-> 	priv->rclk_srcrate = priv->rclk_srcrate / 2; //workaround-2, 
-> }
-> 
-> With these two workaround sound issue was solved, but I hope we can 
-> get concrete fix.
-Thank you for the bug report. I spent some time on debugging this and
-it turned out that there is a clock mux between EPLL and the audio 
-subsystem which looses its configuration during suspend/resume cycle.
-So we end up with the I2S controller clocked from the main oscillator
-clock (24 MHz) rather than the EPLL (196.608 MHz) after system suspend/
-resume. I will post a patch for clk-exynos5420 driver shortly.
+Applied on drm-misc-next,
+Thanks.
 
--- 
-Regards,
-Sylwester
+Benjamin
+
+>
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
+> Cc: Vincent Abriou <vincent.abriou@st.com>
+> ---
+>  drivers/gpu/drm/sti/sti_dvo.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.=
+c
+> index 9e6d5d8b7030..e55870190bf5 100644
+> --- a/drivers/gpu/drm/sti/sti_dvo.c
+> +++ b/drivers/gpu/drm/sti/sti_dvo.c
+> @@ -221,8 +221,7 @@ static void sti_dvo_disable(struct drm_bridge *bridge=
+)
+>
+>         writel(0x00000000, dvo->regs + DVO_DOF_CFG);
+>
+> -       if (dvo->panel)
+> -               dvo->panel->funcs->disable(dvo->panel);
+> +       drm_panel_disable(dvo->panel);
+>
+>         /* Disable/unprepare dvo clock */
+>         clk_disable_unprepare(dvo->clk_pix);
+> @@ -262,8 +261,7 @@ static void sti_dvo_pre_enable(struct drm_bridge *bri=
+dge)
+>         if (clk_prepare_enable(dvo->clk))
+>                 DRM_ERROR("Failed to prepare/enable dvo clk\n");
+>
+> -       if (dvo->panel)
+> -               dvo->panel->funcs->enable(dvo->panel);
+> +       drm_panel_enable(dvo->panel);
+>
+>         /* Set LUT */
+>         writel(config->lowbyte,  dvo->regs + DVO_LUT_PROG_LOW);
+> @@ -340,7 +338,7 @@ static int sti_dvo_connector_get_modes(struct drm_con=
+nector *connector)
+>         struct sti_dvo *dvo =3D dvo_connector->dvo;
+>
+>         if (dvo->panel)
+> -               return dvo->panel->funcs->get_modes(dvo->panel);
+> +               return drm_panel_get_modes(dvo->panel);
+>
+>         return 0;
+>  }
+> --
+> 2.20.1
+>
