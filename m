@@ -2,279 +2,120 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ACF68615D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Aug 2019 14:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3882B86171
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Aug 2019 14:14:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732288AbfHHMHl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 8 Aug 2019 08:07:41 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:48400 "EHLO
+        id S1726156AbfHHMOm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 8 Aug 2019 08:14:42 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:50703 "EHLO
         mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732279AbfHHMHl (ORCPT
+        with ESMTP id S1727242AbfHHMOl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 8 Aug 2019 08:07:41 -0400
+        Thu, 8 Aug 2019 08:14:41 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190808120740euoutp0294cab7933daa0b2521be30e40340f432~48TBNIW-A2666526665euoutp02i
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  8 Aug 2019 12:07:40 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190808120740euoutp0294cab7933daa0b2521be30e40340f432~48TBNIW-A2666526665euoutp02i
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190808121439euoutp025f61e4328899d402623f880d0dae0ff5~48ZH1ZTrK3085230852euoutp02K
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  8 Aug 2019 12:14:39 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190808121439euoutp025f61e4328899d402623f880d0dae0ff5~48ZH1ZTrK3085230852euoutp02K
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1565266060;
-        bh=b2vM6seEQvY8S5rSFZHWUw+a7+osTcPyJ8Dks58KBzI=;
+        s=mail20170921; t=1565266479;
+        bh=Kfg3TIFWVX/aMRLF2Z40ddqnbp+FhuwEieRXHM+KmiI=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=lenQ1325XqvtzsBfREUPcCFWOt21kXMw5LuKdaFNpNylAaZKHBq/628+qDWNG+kcF
-         o7KThRZ2yLsF2PxXHzY3LQ8ZLiT+KLTwJ5R901Qw2+ukAG5vuoJ+bF3BLSXtj1+nzz
-         BByXrxt0BVrluIMnafIKoXje3NNPogG8VPTKA+Io=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190808120739eucas1p2cf76b9016d2821a4c7c31e63f99190c7~48TAe-6q72248222482eucas1p2D;
-        Thu,  8 Aug 2019 12:07:39 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 77.36.04469.B801C4D5; Thu,  8
-        Aug 2019 13:07:39 +0100 (BST)
+        b=lqejq1QnJoGDwgGvFSV9Nd8L4GWqQFnkrPHjQPsuiSLJyvBPLbP9RTUaBAODnwc90
+         tG/cPx240QkaV1cjHhDVrsIT2EO8tmrhUzhx10kFpPiGLhh2ozFRsCqVIz9jXoYeJA
+         kEssBF0ywYZGI6OfGHnNaRFrwxr76YaDzIv9vHuU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190808121438eucas1p12f5deb7d85acd79173b30a83858fea93~48ZHKZllV0058700587eucas1p1s;
+        Thu,  8 Aug 2019 12:14:38 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 05.97.04374.E221C4D5; Thu,  8
+        Aug 2019 13:14:38 +0100 (BST)
 Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190808120738eucas1p2bf9a90f4eedc8149cf364295e695b13f~48S-vcoz33079630796eucas1p2r;
-        Thu,  8 Aug 2019 12:07:38 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190808121438eucas1p12c089f64953e2d9f8c7c2dcceae69942~48ZGRckvF1125411254eucas1p19;
+        Thu,  8 Aug 2019 12:14:38 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190808120738eusmtrp141dd8b0525f51915707da2d57e02e420~48S-g9Psy2071120711eusmtrp1u;
-        Thu,  8 Aug 2019 12:07:38 +0000 (GMT)
-X-AuditID: cbfec7f2-54fff70000001175-84-5d4c108b6fd8
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 21.47.04166.A801C4D5; Thu,  8
-        Aug 2019 13:07:38 +0100 (BST)
+        20190808121437eusmtrp1bca8d024f9c7602bef217c9a2ccd2495~48ZGDG5Bu2440524405eusmtrp1V;
+        Thu,  8 Aug 2019 12:14:37 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-da-5d4c122e958c
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id B3.39.04117.D221C4D5; Thu,  8
+        Aug 2019 13:14:37 +0100 (BST)
 Received: from [106.120.51.75] (unknown [106.120.51.75]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190808120737eusmtip12097f57c0dafc532bbc2b7b5f7a83d28~48S__1HZ50236302363eusmtip1e;
-        Thu,  8 Aug 2019 12:07:37 +0000 (GMT)
-Subject: Re: [PATCH v2 3/9] soc: samsung: Add Exynos Adaptive Supply Voltage
- driver
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190808121437eusmtip2ef64e3e8618fe528509c92148a2e8bbd~48ZFlNImP0045500455eusmtip2q;
+        Thu,  8 Aug 2019 12:14:37 +0000 (GMT)
+Subject: Re: [PATCH 2/2] clk: samsung: exynos5800: Move MAU subsystem clocks
+ to MAU sub-CMU
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     sboyd@kernel.org, mturquette@baylibre.com, linux@armlinux.org.uk,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, krzk@kernel.org,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com
 From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <a56fe2d8-1f26-b462-1564-f23902f7dbb5@samsung.com>
-Date:   Thu, 8 Aug 2019 14:07:36 +0200
+Message-ID: <fb033201-b798-e3f9-fbdc-0332b422e987@samsung.com>
+Date:   Thu, 8 Aug 2019 14:14:36 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPeOfDHjqSotxVwVuy+6r9X3Q8ZXLit1_=gGd7bOwkHupA@mail.gmail.com>
+In-Reply-To: <eeba8348-4c41-32c5-39f2-c693aafe6c4f@samsung.com>
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLKsWRmVeSWpSXmKPExsWy7djP87rdAj6xBjfu8FhsnLGe1WL+kXOs
-        Fv2PXzNbnD+/gd1i0+NrrBaXd81hs/jce4TRYsb5fUwWa4/cZbdYtPULu0Xr3iPsFpsfHGNz
-        4PHYtKqTzWPzknqPvi2rGD0+b5ILYInisklJzcksSy3St0vgyvj29wtTwQedilufKhoYXyl1
-        MXJySAiYSLy+NYWxi5GLQ0hgBaPEhwnvmSCcL4wSS270sYBUCQl8ZpSYcJcFpmPR8w3MEEXL
-        GSX6ph5gg3DeMkq8v/maCaRKWCBUYs20TYwgtoiApsT1v99ZQWxmgcXMEp/mmoLYbAKGEr1H
-        +8BqeAXsJG4dvMwOYrMIqEicfrIHLC4qECHx6cFhVogaQYmTM5+AXcEpECjxcnkbC8RMcYmm
-        Lyuh5stLbH87B+w6CYFL7BKHf25mgjjbReLK0gdQtrDEq+Nb2CFsGYnTk3tYIBqaGSV6dt9m
-        h3AmMErcP76AEaLKWuLw8YtAKziAVmhKrN+lDxF2lDjW/o8JJCwhwCdx460gxBF8EpO2TWeG
-        CPNKdLQJQVSrSPxeNR3qBCmJ7if/WSYwKs1C8tosJO/MQvLOLIS9CxhZVjGKp5YW56anFhvm
-        pZbrFSfmFpfmpesl5+duYgQmqtP/jn/awfj1UtIhRgEORiUe3oIT3rFCrIllxZW5hxglOJiV
-        RHjvlXnGCvGmJFZWpRblxxeV5qQWH2KU5mBREuetZngQLSSQnliSmp2aWpBaBJNl4uCUamBk
-        qTyT7G6noNm+ZKEuT+OGqI5FsRwnXTlM97+0fi+Vk3A9y0nmwMzoMwFx2jsMl0YfmVH5JFLp
-        s7F0DFeF1vTz7lq/27gKb5kt+s8xXfN/9Z7I59WX2ExX3vRPv7hfacvvNd/VchaW75t4UD1b
-        a6XckxMPvY8fl85nvC9n1My/7E5/spBHxh8lluKMREMt5qLiRAArMxR/UAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPIsWRmVeSWpSXmKPExsVy+t/xu7pdAj6xBnMXi1tsnLGe1WL+kXOs
-        Fv2PXzNbnD+/gd1i0+NrrBaXd81hs/jce4TRYsb5fUwWa4/cZbdYtPULu0Xr3iPsFpsfHGNz
-        4PHYtKqTzWPzknqPvi2rGD0+b5ILYInSsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaP
-        tTIyVdK3s0lJzcksSy3St0vQy/j29wtTwQedilufKhoYXyl1MXJySAiYSCx6voG5i5GLQ0hg
-        KaPE0lkfmboYOYASUhLzW6BqhCX+XOtiA7GFBF4zSmzcUQdiCwuESqyZtokRxBYR0JS4/vc7
-        K8gcZoHFzBIX1s9nhxjawSTx+M1jVpAqNgFDid6jfWAdvAJ2ErcOXmYHsVkEVCROP9kDFhcV
-        iJA4vGMWVI2gxMmZT1hAbE6BQImXy9vAbGYBdYk/8y4xQ9jiEk1fVrJC2PIS29/OYZ7AKDQL
-        SfssJC2zkLTMQtKygJFlFaNIamlxbnpusaFecWJucWleul5yfu4mRmBkbjv2c/MOxksbgw8x
-        CnAwKvHwFpzwjhViTSwrrsw9xCjBwawkwnuvzDNWiDclsbIqtSg/vqg0J7X4EKMp0HMTmaVE
-        k/OBSSOvJN7Q1NDcwtLQ3Njc2MxCSZy3Q+BgjJBAemJJanZqakFqEUwfEwenVAOj8duyeWdK
-        +2MEZvbOKN2+uMxxxTbdqzuDd+f7WGV5dCkZpX2YssjhXuZ7ESGdZds6FolMvu0uOWO32hVP
-        RvNuBvOU7Zwb+v2UblckTV5ZdnxRoLTvLaOIiJhLt+6u5xVc0NPHO//Q1m8i5YwP8rYv+ih4
-        aceO3b2NkfIh7y2ivKWTGVd+miWhxFKckWioxVxUnAgANsiWAuICAAA=
-X-CMS-MailID: 20190808120738eucas1p2bf9a90f4eedc8149cf364295e695b13f
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsWy7djPc7p6Qj6xBmeeqVtsnLGe1eL6l+es
+        FufPb2C3+Nhzj9Xi8q45bBYzzu9jsjg0dS+jxdojd9ktLp5ytfh3bSOLA5fH5WsXmT3e32hl
+        99i0qpPNo2/LKkaPz5vkAlijuGxSUnMyy1KL9O0SuDKWXl7CVDCPuWLCpvfsDYxHmboYOTgk
+        BEwkFj6Q7GLk4hASWMEo8XjvLDYI5wujxKx7n9khnM+MEvt/3WfuYuQE67j06xwrRGI5o0TL
+        xGtQzltGidN/l7OBzBUWiJVY+7gCpEFEQF+iu+0KI0gNs8ALRomee6/YQRJsAoYSvUf7GEFs
+        XgE7icfbToPFWQRUJG6+PAoWFxWIkPj04DArRI2gxMmZT1hAbE4Be4lLHd/B6pkFxCWavqxk
+        hbDlJba/ncMMskxC4BS7xLMrfewQZ7tI3N7fxQJhC0u8Or4FKi4jcXpyDwtEQzPQdbtvs0M4
+        Exgl7h9fwAhRZS1x+PhFVpDXmAU0Jdbv0ocIO0o87wIpAYUkn8SNt4IQR/BJTNo2nRkizCvR
+        0SYEUa0i8XvVdCYIW0qi+8l/lgmMSrOQvDYLyTuzkLwzC2HvAkaWVYziqaXFuempxcZ5qeV6
+        xYm5xaV56XrJ+bmbGIEJ6vS/4193MO77k3SIUYCDUYmH98Qp71gh1sSy4srcQ4wSHMxKIrz3
+        yjxjhXhTEiurUovy44tKc1KLDzFKc7AoifNWMzyIFhJITyxJzU5NLUgtgskycXBKNTCK6J3R
+        yDQskSmJuht+6quaSN2nxHImaUtv7YWClxtfZp5qeZ5q+EfC4svN9Qd3LQpOPf5oXt1m3Y+a
+        Acmu34z1VXRF1ZQc5qzcGVm0ZsdfdbNXbp9a/Be/Krx5ezon0zSDstAlalseeAldKFS60u17
+        Q1a7XOz+SpWzRo8t7BaKhSbUnlqacUqJpTgj0VCLuag4EQCsAgc7TAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNIsWRmVeSWpSXmKPExsVy+t/xe7q6Qj6xBh93a1tsnLGe1eL6l+es
+        FufPb2C3+Nhzj9Xi8q45bBYzzu9jsjg0dS+jxdojd9ktLp5ytfh3bSOLA5fH5WsXmT3e32hl
+        99i0qpPNo2/LKkaPz5vkAlij9GyK8ktLUhUy8otLbJWiDS2M9AwtLfSMTCz1DI3NY62MTJX0
+        7WxSUnMyy1KL9O0S9DKWXl7CVDCPuWLCpvfsDYxHmboYOTkkBEwkLv06x9rFyMUhJLCUUeLd
+        u9VADgdQQkpifosSRI2wxJ9rXWwQNa8ZJWZevQhWIywQK7H2cQVIjYiAvkR32xVGkBpmgReM
+        Ejc+bmOCaPjGKLHh52xWkCo2AUOJ3qN9jCA2r4CdxONtp9lBbBYBFYmbL4+CxUUFIiQO75gF
+        VSMocXLmExYQm1PAXuJSx3ewemYBdYk/8y4xQ9jiEk1fVrJC2PIS29/OYZ7AKDQLSfssJC2z
+        kLTMQtKygJFlFaNIamlxbnpusZFecWJucWleul5yfu4mRmBEbjv2c8sOxq53wYcYBTgYlXh4
+        C054xwqxJpYVV+YeYpTgYFYS4b1X5hkrxJuSWFmVWpQfX1Sak1p8iNEU6LmJzFKiyfnAZJFX
+        Em9oamhuYWlobmxubGahJM7bIXAwRkggPbEkNTs1tSC1CKaPiYNTChhJwQZftf473/eYa1zf
+        wnRvzzTfG7b2xke8MzrTuiLq09LlasP6rpYba/2x++7psjL0TnP2hWv/pO8LfmM4cu1PtOC1
+        mYo6myZbfFa9eHWHxEYvb749ptMtG6IDn/yszyiUk7RmWGG5L/ZVsmXObQOJpzvW/9V6MH/J
+        GSML6R0tp5hEHbVO+ymxFGckGmoxFxUnAgCW3FMF3gIAAA==
+X-CMS-MailID: 20190808121438eucas1p12c089f64953e2d9f8c7c2dcceae69942
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190718143130eucas1p26f2058f47eb2f4020e1ddbf1619d1ac8
+X-RootMTR: 20190807162519eucas1p2b9dd9f31cc6e60e0bc935e9a6ceef908
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190718143130eucas1p26f2058f47eb2f4020e1ddbf1619d1ac8
-References: <CGME20190718143130eucas1p26f2058f47eb2f4020e1ddbf1619d1ac8@eucas1p2.samsung.com>
-        <20190718143044.25066-1-s.nawrocki@samsung.com>
-        <20190718143044.25066-4-s.nawrocki@samsung.com>
-        <CAJKOXPeOfDHjqSotxVwVuy+6r9X3Q8ZXLit1_=gGd7bOwkHupA@mail.gmail.com>
+X-CMS-RootMailID: 20190807162519eucas1p2b9dd9f31cc6e60e0bc935e9a6ceef908
+References: <20190807162456.28694-1-s.nawrocki@samsung.com>
+        <CGME20190807162519eucas1p2b9dd9f31cc6e60e0bc935e9a6ceef908@eucas1p2.samsung.com>
+        <20190807162456.28694-2-s.nawrocki@samsung.com>
+        <eeba8348-4c41-32c5-39f2-c693aafe6c4f@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 7/23/19 15:38, Krzysztof Kozlowski wrote:
-> On Thu, 18 Jul 2019 at 16:31, Sylwester Nawrocki <s.nawrocki@samsung.com> wrote:
->>
->> The Adaptive Supply Voltage (ASV) driver adjusts CPU cluster operating
->> points depending on exact revision of an SoC retrieved from the CHIPID
->> block or the OTP memory.  This allows for some power saving as for some
->> CPU clock frequencies we can lower CPU cluster supply voltage comparing
->> to safe values common to the all chip revisions.
->>
->> This patch adds support for Exynos5422/5800 SoC, it is partially based
->> on code from https://github.com/hardkernel/linux repository,
->> branch odroidxu4-4.14.y, files: arch/arm/mach-exynos/exynos5422-asv.[ch].
->>
->> Tested on Odroid XU3, XU4, XU3 Lite.
->>
->> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
->> ---
->> Changes since v1 (RFC):
->>  - removed code for parsing the ASV OPP tables from DT, the ASV OPP tables
->>    moved to the driver;
->>  - converted to use the regmap API;
->>  - converted to normal platform driver.
->> ---
->>  drivers/soc/samsung/Kconfig          |  11 +
->>  drivers/soc/samsung/Makefile         |   3 +
->>  drivers/soc/samsung/exynos-asv.c     | 185 ++++++++++
->>  drivers/soc/samsung/exynos-asv.h     |  82 +++++
->>  drivers/soc/samsung/exynos5422-asv.c | 499 +++++++++++++++++++++++++++
->>  drivers/soc/samsung/exynos5422-asv.h |  25 ++
->>  6 files changed, 805 insertions(+)
->>  create mode 100644 drivers/soc/samsung/exynos-asv.c
->>  create mode 100644 drivers/soc/samsung/exynos-asv.h
->>  create mode 100644 drivers/soc/samsung/exynos5422-asv.c
->>  create mode 100644 drivers/soc/samsung/exynos5422-asv.h
->>
->> diff --git a/drivers/soc/samsung/Kconfig b/drivers/soc/samsung/Kconfig
->> index 2905f5262197..539cd95dd176 100644
->> --- a/drivers/soc/samsung/Kconfig
->> +++ b/drivers/soc/samsung/Kconfig
->> @@ -7,6 +7,17 @@ menuconfig SOC_SAMSUNG
->>
->>  if SOC_SAMSUNG
->>
->> +config EXYNOS_ASV
->> +       bool "Exynos Adaptive Supply Voltage support" if COMPILE_TEST
->> +       depends on ARCH_EXYNOS || COMPILE_TEST
->> +       depends on EXYNOS_CHIPID
+On 8/8/19 13:48, Marek Szyprowski wrote:
+>> +static struct exynos5_subcmu_reg_dump exynos5800_mau_suspend_regs[] = {
+>> +	{ SRC_TOP9, 0, BIT(8) },
+> I would like to add a following comment:
 > 
-> (ARCH_EXYNOS && EXYNOS_CHIPID) || COMPILE_TEST
-
-OK
->> +       select EXYNOS_ASV_ARM if ARM && ARCH_EXYNOS
->> +
->> +# There is no need to enable these drivers for ARMv8
->> +config EXYNOS_ASV_ARM
->> +       bool "Exynos ASV ARMv7-specific driver extensions" if COMPILE_TEST
->> +       depends on EXYNOS_ASV
-
->> diff --git a/drivers/soc/samsung/exynos-asv.c b/drivers/soc/samsung/exynos-asv.c
->> new file mode 100644
->> index 000000000000..b1a7e0ba8870
->> --- /dev/null
->> +++ b/drivers/soc/samsung/exynos-asv.c
->> @@ -0,0 +1,185 @@
-
->> +static int exynos_asv_probe(struct platform_device *pdev)
->> +{
->> +       int (*probe_func)(struct exynos_asv *asv);
->> +       struct exynos_asv *asv;
->> +       struct device *cpu_dev;
->> +       u32 product_id = 0;
->> +       int ret, i;
->> +
->> +       cpu_dev = get_cpu_device(0);
->> +       ret = dev_pm_opp_get_opp_count(cpu_dev);
->> +       if (ret < 0)
->> +               return -EPROBE_DEFER;
->> +
->> +       asv = kcalloc(1, sizeof(*asv), GFP_KERNEL);
->> +       if (!asv)
->> +               return -ENOMEM;
->> +
->> +       asv->chipid_regmap = syscon_node_to_regmap(pdev->dev.of_node);
->> +       if (IS_ERR(asv->chipid_regmap)) {
->> +               dev_err(&pdev->dev, "Could not find syscon regmap\n");
+> /* MUX mout_user_mau_epll */
 > 
-> Here and in following error-paths - kfree().
-
-Thanks, I will fix that.
-
->> +               return PTR_ERR(asv->chipid_regmap);
->> +       }
->> +
->> +       regmap_read(asv->chipid_regmap, EXYNOS_CHIPID_REG_PRO_ID, &product_id);
-
->> +module_platform_driver(exynos_asv_driver);
->> diff --git a/drivers/soc/samsung/exynos-asv.h b/drivers/soc/samsung/exynos-asv.h
->> new file mode 100644
->> index 000000000000..d0a5d603093d
->> --- /dev/null
->> +++ b/drivers/soc/samsung/exynos-asv.h
->> @@ -0,0 +1,82 @@
-
->> +#ifndef _EXYNOS_ASV_H
->> +#define _EXYNOS_ASV_H
-> 
-> Here and in other header use prefix:
-> __LINUX_SOC_
-> (just like the existing exynos-pmu.h)
-
-OK, I will change that.
-
->> +struct exynos_asv_subsys {
->> +       struct exynos_asv *asv;
->> +       char *cpu_dt_compat;
-> 
-> const char *
-
-OK
->> +       int id;
-
->> +#endif /* _EXYNOS_ASV_H */
->> diff --git a/drivers/soc/samsung/exynos5422-asv.c b/drivers/soc/samsung/exynos5422-asv.c
->> new file mode 100644
->> index 000000000000..5fd673a6a733
->> --- /dev/null
->> +++ b/drivers/soc/samsung/exynos5422-asv.c
->> @@ -0,0 +1,499 @@
-
->> +#include <linux/bitrev.h>
->> +#include <linux/device.h>
->> +#include <linux/errno.h>
->> +#include <linux/init.h>
-> 
-> Looks unused.
-
-Indeed, I will drop it.
-
->> +static unsigned int exynos5422_asv_parse_table(struct exynos_asv *asv,
->> +                                     unsigned int pkg_id)
->> +{
->> +       return (pkg_id >> EXYNOS5422_TABLE_OFFSET) & EXYNOS5422_TABLE_MASK;
->> +}
->> +
->> +static bool exynos5422_asv_parse_bin2(struct exynos_asv *asv,
->> +                                    unsigned int pkg_id)
->> +{
->> +       return (pkg_id >> EXYNOS5422_BIN2_OFFSET) & EXYNOS5422_BIN2_MASK;
-> 
-> return !!() for converting to boolean.
-
-I'm not convinced it is needed, the return type of the function is bool
-and value of the expression will be implicitly converted to that type.
-Is there any compiler warning related to that?
-
->> +}
->> +
->> +static bool exynos5422_asv_parse_sg(struct exynos_asv *asv,
->> +                                       unsigned int pkg_id)
->> +{
->> +       return ((pkg_id >> EXYNOS5422_USESG_OFFSET) & EXYNOS5422_USESG_MASK);
-> 
-> Unneeded () over entire statement.
-
-Will drop it.
+> to the above line to indicate which clock it refers (like it is done for 
+> other sub-cmus).
+ 
+Good point, I will resend with that comment added.
 
 -- 
 Regards,
