@@ -2,159 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B58486504
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Aug 2019 17:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9958486544
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Aug 2019 17:11:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732572AbfHHPBC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 8 Aug 2019 11:01:02 -0400
-Received: from mail-eopbgr70043.outbound.protection.outlook.com ([40.107.7.43]:49248
-        "EHLO EUR04-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728327AbfHHPBC (ORCPT
+        id S1730678AbfHHPLu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 8 Aug 2019 11:11:50 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:58344 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732533AbfHHPLu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 8 Aug 2019 11:01:02 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=K9VPKnjcyDASvbmGwu6mf1dVA32Kf3G6F1WXq1cGLKPv1+ioxrTv/U4CKYrixTRqT9Mi4jI6AwpXvkNZZIiusqbRud3GYcyGaH0FigreemXP0gJfSmz6gobB7ZTRKIMcojwNoVam2jmVPXRog0ogIPqTdXojW4ChaW8sz2XTib1bZsxml8wYqm42BXw8oDWWAjRufdjLdIR4u8gYrXPebF2+o0MShQvZ3ysIy0an6VUGiOXva7Nm1ytOJfMhJu083nhvH6vY9Hanwwlia97equfcSM9rY4UrtLwyrK1wQn3UFDXi+VXdMnmcrW6e8R7IDrp86Xqep2hUDpPaOwzqLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yPemLk6G4WA4+sRMOsJnGNz4AxD1T8nt6mFvOmS3lsE=;
- b=lDS+Rrllfa8P/gSzJiKTnroUBhUkLpYMe+gWj15xLzTRZSYyjkQbr6hYKm4XRaN5yqxjQDYSQBpQfGjbHMk+37H6xRekz3y58Dh5k87wgqVUTd3fuhghpLBvRoJjEGwC4VGKL+3vyWEoLNIhr1AQmEIkLhgu7qLh+VMK6SXN5BXRi81Ewm/sjWeiBt/NFQ9qZmM6xf5WoFNDtpOZBfgez3a98fEgh3Xh9EyKnM22EHG3iYbI2SdFH51ZFVGnA+5SPCdYvQNpMuo/nx0XYatuAyMQR/VI+W+JozgxtPdtVpU9j9xqHOQ42TqYjkVjWjP2YGBLHzaR4JqWE208pjontQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yPemLk6G4WA4+sRMOsJnGNz4AxD1T8nt6mFvOmS3lsE=;
- b=MRB9boU985k+wXEjQvqEmoWZqJ6O67NMOKnT47bPZihttMmvsthTkf/p/mWeJ+uwcFJwnQN90fLD4WLIhYDypY8lmIEoveoVxpn+G4McYcNrPKietnhQSdNOcJo7ZaaUP7kK+CLhRXqCLz7kwUmxUmX5mnm3GckQ/gznooqoLIQ=
-Received: from VI1PR04MB7023.eurprd04.prod.outlook.com (10.186.159.144) by
- VI1SPR01MB0363.eurprd04.prod.outlook.com (20.178.120.74) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.13; Thu, 8 Aug 2019 15:00:57 +0000
-Received: from VI1PR04MB7023.eurprd04.prod.outlook.com
- ([fe80::e53d:e6a9:79bd:f970]) by VI1PR04MB7023.eurprd04.prod.outlook.com
- ([fe80::e53d:e6a9:79bd:f970%2]) with mapi id 15.20.2157.015; Thu, 8 Aug 2019
- 15:00:57 +0000
-From:   Leonard Crestez <leonard.crestez@nxp.com>
-To:     Chanwoo Choi <cw00.choi@samsung.com>,
-        =?utf-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@partner.samsung.com>,
-        "georgi.djakov@linaro.org" <georgi.djakov@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-CC:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "krzk@kernel.org" <krzk@kernel.org>,
-        "myungjoo.ham@samsung.com" <myungjoo.ham@samsung.com>,
-        "inki.dae@samsung.com" <inki.dae@samsung.com>,
-        "sw0312.kim@samsung.com" <sw0312.kim@samsung.com>,
-        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Lukasz Luba <l.luba@partner.samsung.com>
-Subject: Re: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
- functionality to exynos-bus
-Thread-Topic: [RFC PATCH 09/11] devfreq: exynos-bus: Add interconnect
- functionality to exynos-bus
-Thread-Index: AQHVQVEYOnL6Nj5GnEmKqTrzyDUrnA==
-Date:   Thu, 8 Aug 2019 15:00:57 +0000
-Message-ID: <VI1PR04MB7023B5095F706635354C4C50EED70@VI1PR04MB7023.eurprd04.prod.outlook.com>
-References: <20190723122016.30279-1-a.swigon@partner.samsung.com>
- <CGME20190723122028eucas1p2eb75f35b810e71d6c590370aaff0997b@eucas1p2.samsung.com>
- <20190723122016.30279-10-a.swigon@partner.samsung.com>
- <5a82bf8a-d925-ba54-a26f-98b64bedc6e1@samsung.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=leonard.crestez@nxp.com; 
-x-originating-ip: [212.146.100.6]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: a2093a85-bc01-442c-02f4-08d71c1137e5
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:VI1SPR01MB0363;
-x-ms-traffictypediagnostic: VI1SPR01MB0363:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <VI1SPR01MB03631456A4B450C8B5D2A5FCEED70@VI1SPR01MB0363.eurprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 012349AD1C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(346002)(376002)(366004)(396003)(136003)(39860400002)(51444003)(189003)(199004)(66446008)(26005)(52536014)(54906003)(110136005)(86362001)(66066001)(256004)(5660300002)(2906002)(99286004)(6436002)(102836004)(8676002)(966005)(316002)(229853002)(7696005)(14444005)(478600001)(66574012)(6246003)(6306002)(76176011)(91956017)(66946007)(4326008)(66476007)(64756008)(25786009)(53546011)(6506007)(76116006)(66556008)(44832011)(186003)(7416002)(3846002)(53936002)(81156014)(33656002)(305945005)(81166006)(74316002)(446003)(55016002)(6116002)(71190400001)(9686003)(476003)(14454004)(486006)(2501003)(7736002)(8936002)(71200400001);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1SPR01MB0363;H:VI1PR04MB7023.eurprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: nxp.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 6/TfyK8og+c2m1FBabhfrI2fT7BQ6O/bqAQOtHxYW8oaGg3JG+ZApa+fsh8tCvhkSdZfo38oZ+IRMlz6ddAolif7FcAF+CoDj72G/CVYznYHNg1bo/mKCctmFur3J9qQilMelImwXJf7IlBrkAzhOBttFa8yPSkmU8dCyizRZwFFSC7bm6aBUu5ubdoN3X8e8s4+1wbKkLmIgmOmOiKyj/9zrvuDKfh5h+3hL3blUyoQhT4RtEyFOZvPAoX9vqr9oomnrfx40YveICtW5ylXZouqBGl13MjnSTSCp7Lok0sd/troC8tRJux+9vYImLtjr74JdZQpfyOJZsZ7ERGg3YE82UCkWM786nd8DjhCJjfxK8IrSgZWP6f7GI66/acfiQ6WfgnJT4I5mKVStZmJQdrenqEdfhHed0EBfrujkAk=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        Thu, 8 Aug 2019 11:11:50 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190808151148euoutp02ed76ef074dbc7f4f504f98b208de4d1c~4_zzCvlkx0228602286euoutp02L
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  8 Aug 2019 15:11:48 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190808151148euoutp02ed76ef074dbc7f4f504f98b208de4d1c~4_zzCvlkx0228602286euoutp02L
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1565277108;
+        bh=o6ZKkqNmsI5oZAlpCdjYIuKkKjEehwZ62ztXViPzKDs=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=UmNgttNtIVspOLjtFBr/rg6u0KqNmxBgGQAhFkuVNfaTdjCikUL+3BQVDyjnbcavn
+         Eur+mOTdr9bWXf+p8aGccPJfI8HxgmoXsgGh709cfO+by92Qk+CiKtGQitEh1kLEwD
+         3T1KK1Dw7zmUzizjcRliuY2+4lmx+AK+akNDSpyM=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190808151147eucas1p1f921314427d6f9e19c6c7ed504cd425a~4_zx_2p460265402654eucas1p1a;
+        Thu,  8 Aug 2019 15:11:47 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 6C.FF.04374.3BB3C4D5; Thu,  8
+        Aug 2019 16:11:47 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190808151147eucas1p1c70e28263f41d0199de59e377d066fab~4_zxT4Ar60268102681eucas1p1b;
+        Thu,  8 Aug 2019 15:11:47 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190808151146eusmtrp26f9f3655fffd375484aed7a0e680ca57~4_zxFvEbV0186101861eusmtrp26;
+        Thu,  8 Aug 2019 15:11:46 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-ef-5d4c3bb3d99d
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 75.1E.04166.2BB3C4D5; Thu,  8
+        Aug 2019 16:11:46 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190808151146eusmtip15cd49cea167e56158c848419fa45afdd~4_zwsnP_N3242532425eusmtip12;
+        Thu,  8 Aug 2019 15:11:46 +0000 (GMT)
+Subject: Re: [PATCH] clk: samsung: exynos542x: Move MSCL subsystem clocks to
+ its sub-CMU
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-clk@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <cc516c44-862c-ab83-84ad-67e90e088067@samsung.com>
+Date:   Thu, 8 Aug 2019 17:11:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2093a85-bc01-442c-02f4-08d71c1137e5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Aug 2019 15:00:57.3501
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: D+XB0I5M52xAcps6CHYMOCWvOGlpT+qZ3+44CcYG4wn4+syJiBsUN1vJlYGlaIpbEdAimBibXq3sb0iTHOKCLA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1SPR01MB0363
+In-Reply-To: <20190808121839.23892-1-m.szyprowski@samsung.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIKsWRmVeSWpSXmKPExsWy7djPc7qbrX1iDc6tk7PYOGM9q8X1L89Z
+        Lc6f38Bu8bHnHqvFjPP7mCzWHrnLbnHxlKvFv2sbWSzan75kduD0eH+jld1j06pONo++LasY
+        PT5vkgtgieKySUnNySxLLdK3S+DKaPsyh73gIFfF9ZUd7A2MJzm6GDk5JARMJI7sesLexcjF
+        ISSwglFif9cjFgjnC6PE8SPfGCGcz4wSb9eeYYNpuddyihkisZxRYvqcj1Atbxkl1t3+wwRS
+        JSwQJbHy5kMWEFtEoF5ix6V3bCBFzCBzp084AZZgEzCU6D3axwhi8wrYSVz5eZoVxGYRUJFY
+        2HAVrEZUIELi04PDrBA1ghInZz4Bi3MC1e95eQCsl1lAXKLpy0pWCFteYvvbOWDnSQjsYpd4
+        u/IQI8TdLhJ7r0xhgrCFJV4d38IOYctI/N85nwmioZlRomf3bXYIZwKjxP3jC6C6rSUOH78I
+        tIIDaIWmxPpd+hBhR4nL31exgYQlBPgkbrwVhDiCT2LStunMEGFeiY42IYhqFYnfq6ZDnSAl
+        0f3kP8sERqVZSF6bheSdWUjemYWwdwEjyypG8dTS4tz01GLjvNRyveLE3OLSvHS95PzcTYzA
+        hHT63/GvOxj3/Uk6xCjAwajEw9ug6BMrxJpYVlyZe4hRgoNZSYT3XplnrBBvSmJlVWpRfnxR
+        aU5q8SFGaQ4WJXHeaoYH0UIC6YklqdmpqQWpRTBZJg5OqQbG5pIKrThHroQp95j51JafWrtr
+        SWexx4m659ozWtXyzzG2O9794h2Q5avMfFP8uZl0V3Pg732M1xpk2E5N02zr+CZ+bukurQ2r
+        ZtyJy9aXTjCaFz/36tEPQZpuYczigq31qwNjrxb3Puh8ftm3xIj1W/n1Uw6aYjyXjyoWvxPw
+        /Kt+snPlO3klluKMREMt5qLiRADH6GKPRAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEIsWRmVeSWpSXmKPExsVy+t/xu7qbrH1iDRqn6VtsnLGe1eL6l+es
+        FufPb2C3+Nhzj9Vixvl9TBZrj9xlt7h4ytXi37WNLBbtT18yO3B6vL/Ryu6xaVUnm0ffllWM
+        Hp83yQWwROnZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunb
+        JehltH2Zw15wkKvi+soO9gbGkxxdjJwcEgImEvdaTjF3MXJxCAksZZT4s/QxkMMBlJCSmN+i
+        BFEjLPHnWhcbRM1rRokXHcvYQRLCAlESK28+ZAGxRQTqJb5MucgEUsQs8IVR4ue3x4wQHRMZ
+        JQ5ffQHWwSZgKNF7tI8RxOYVsJO48vM0K4jNIqAisbDhKtgkUYEIicM7ZkHVCEqcnPkELM4J
+        VL/n5QGwOLOAusSfeZeYIWxxiaYvK1khbHmJ7W/nME9gFJqFpH0WkpZZSFpmIWlZwMiyilEk
+        tbQ4Nz232FCvODG3uDQvXS85P3cTIzD+th37uXkH46WNwYcYBTgYlXh4GxR9YoVYE8uKK3MP
+        MUpwMCuJ8N4r84wV4k1JrKxKLcqPLyrNSS0+xGgK9NxEZinR5HxgasgriTc0NTS3sDQ0NzY3
+        NrNQEuftEDgYIySQnliSmp2aWpBaBNPHxMEp1cDov/3qj9K9WYJvgvet3S+wJLStY+6kGRMP
+        pDMXsaw4/H5+8Xr+5fazHqUcFf9k5PI5f6VojIDSvllVJ1NuWxxc0qhZfuSrfu6tqvkd6nlf
+        HnWaaSz9+cjV+33JsVfG/5O3c/zfOe0R15tP5X4b/uk/CC++n72OS+/ahdXeSjqzWz68f1kh
+        3BLRpMRSnJFoqMVcVJwIAMfxw/TVAgAA
+X-CMS-MailID: 20190808151147eucas1p1c70e28263f41d0199de59e377d066fab
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190808121846eucas1p12022cc4a5c23af44e46c459a0c3c5746
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190808121846eucas1p12022cc4a5c23af44e46c459a0c3c5746
+References: <CGME20190808121846eucas1p12022cc4a5c23af44e46c459a0c3c5746@eucas1p1.samsung.com>
+        <20190808121839.23892-1-m.szyprowski@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-T24gMjkuMDcuMjAxOSAwNDo0OSwgQ2hhbndvbyBDaG9pIHdyb3RlOgo+IE9uIDE5LiA3LiAyMy4g
-7Jik7ZuEIDk6MjAsIEFydHVyIMWad2lnb8WEIHdyb3RlOgo+PiBUaGlzIHBhdGNoIGFkZHMgaW50
-ZXJjb25uZWN0IGZ1bmN0aW9uYWxpdHkgdG8gdGhlIGV4eW5vcy1idXMgZGV2ZnJlcQo+PiBkcml2
-ZXIuCj4+Cj4+IFRoZSBkZXZmcmVxIHRhcmdldCgpIGNhbGxiYWNrIHByb3ZpZGVkIGJ5IGV4eW5v
-cy1idXMgbm93IHNlbGVjdHMgZWl0aGVyIHRoZQo+PiBmcmVxdWVuY3kgY2FsY3VsYXRlZCBieSB0
-aGUgZGV2ZnJlcSBnb3Zlcm5vciBvciB0aGUgZnJlcXVlbmN5IHJlcXVlc3RlZCB2aWEKPj4gdGhl
-IGludGVyY29ubmVjdCBBUEkgZm9yIHRoZSBnaXZlbiBub2RlLCB3aGljaGV2ZXIgaXMgaGlnaGVy
-Lgo+IAo+IEJhc2ljYWxseSwgSSBhZ3JlZSB0byBzdXBwb3J0IHRoZSBRb1MgcmVxdWlyZW1lbnQg
-YmV0d2VlbiBkZXZpY2VzLgo+IEJ1dCwgSSB0aGluayB0aGF0IG5lZWQgdG8gY29uc2lkZXIgdGhl
-IG11bHRpcGxlIGNhc2VzLgo+IAo+IDEuIFdoZW4gY2hhbmdpbmcgdGhlIGRldmZyZXEgZ292ZXJu
-b3IgYnkgdXNlciwKPiBGb3IgZXhhbXBsZSBvZiB0aGUgY29ubmVjdGlvbiBiZXR3ZWVuIGJ1c19k
-bWMvbGVmdGJ1cy9kaXNwbGF5IG9uIHBhdGNoOCwKPiB0aGVyZSBhcmUgcG9zc2libGUgbXVsdGlw
-bGUgY2FzZXMgd2l0aCB2YXJpb3VzIGRldmZyZXEgZ292ZXJub3IKPiB3aGljaCBpcyBjaGFuZ2Vk
-IG9uIHRoZSBydW50aW1lIGJ5IHVzZXIgdGhyb3VnaCBzeXNmcyBpbnRlcmZhY2UuCj4gCj4gSWYg
-dXNlcnMgY2hhbmdlcyB0aGUgZGV2ZnJlcSBnb3Zlcm5vciBhcyBmb2xsb3dpbmc6Cj4gQmVmb3Jl
-LAo+IC0gYnVzX2RtYyAoc2ltcGxlX29uZGVtYW5kLCBhdmFpbGFibGUgZnJlcXVlbmN5IDEwMC8y
-MDAvMzAwLzQwMCBNSHopCj4gLS0+IGJ1c19sZWZ0YnVzKHNpbXBsZV9vbmRlbWFuZCwgYXZhaWxh
-YmxlIGZyZXF1ZW5jeSAxMDAvMjAwLzMwMC80MDAgTUh6KQo+IC0tLS0+IGJ1c19kaXNwbGF5KHBh
-c3NpdmUpCj4gCj4gQWZ0ZXIgY2hhbmdlZCBnb3Zlcm5vciBvZiBidXNfZG1jLAo+IGlmIHRoZSBt
-aW5fZnJlcSBieSBpbnRlcmNvbm5lY3QgcmVxdWlyZW1lbnQgaXMgNDAwTWh6LAo+IC0gYnVzX2Rt
-YyAocG93ZXJzYXZlKSA6IG1pbl9mcmVxIGFuZCBtYXhfZnJlcSBhbmQgY3VyX2ZyZXEgaXMgMTAw
-TUh6Cj4gLS0+IGJ1c19sZWZ0YnVzKHNpbXBsZV9vbmRlbWFuZCkgOiBjdXJfZnJlcSBpcyA0MDBN
-aHoKPiAtLS0tPiBidXNfZGlzcGxheShwYXNzaXZlKQo+IAo+IFRoZSBmaW5hbCBmcmVxdWVuY3kg
-aXMgNDAwTUh6IG9mIGJ1c19kbWMKPiBldmVuIGlmIHRoZSBtaW5fZnJlcS9tYXhfZnJlcS9jdXJf
-ZnJlcSBpcyAxMDBNSHouCj4gSXQgY2Fubm90IHNob3cgdGhlIGNvcnJlY3QgbWluX2ZyZXEvbWF4
-X2ZyZXEgdGhyb3VnaAo+IGRldmZyZXEgc3lzZnMgaW50ZXJmYWNlLgo+IAo+IAo+IDIuIFdoZW4g
-ZGlzYWJsaW5nIHRoZSBzb21lIGZyZXF1ZW5jeSBieSBkZXZmcmVxLXRoZXJtYWwgdGhyb3R0bGlu
-ZywKPiBUaGlzIHBhdGNoIGNoZWNrcyB0aGUgbWluX2ZyZXEgb2YgaW50ZXJjb25uZWN0IHJlcXVp
-cmVtZW50Cj4gaW4gdGhlIGV4eW5vc19idXNfdGFyZ2V0KCkgYW5kIGV4eW5vc19idXNfcGFzc2l2
-ZV90YXJnZXQoKS4KPiBBbHNvLCBpdCBjYW5ub3Qgc2hvdyB0aGUgY29ycmVjdCBtaW5fZnJlcS9t
-YXhfZnJlcSB0aHJvdWdoCj4gZGV2ZnJlcSBzeXNmcyBpbnRlcmZhY2UuCj4gCj4gRm9yIGV4YW1w
-bGUgb2YgYnVzX2RtYyBidXMsCj4gLSBUaGUgYXZhaWxhYmxlIGZyZXF1ZW5jaWVzIGFyZSAxMDBN
-SHosIDIwME1IeiwgMzAwTUh6LCA0MDBNSHoKPiAtIERpc2FibGUgNDAwTUh6IGJ5IGRldmZyZXEt
-dGhlcm1hbCB0aHJvdHRsaW5nCj4gLSBtaW5fZnJlcSBpcyAxMDBNSHoKPiAtIG1heF9mcmVxIGlz
-IDMwME1Iego+IC0gbWluX2ZyZXEgb2YgaW50ZXJjb25uZWN0IGlzIDQwME1Iego+IAo+IEluIHJl
-c3VsdCwgdGhlIGZpbmFsIGZyZXF1ZW5jeSBpcyA0MDBNSHogYnkgZXh5bm9zX2J1c190YXJnZXQo
-KQo+IFRoZXJlIGFyZSBubyBwcm9ibGVtIGZvciB3b3JraW5nLiBCdXQsIHRoZSB1c2VyIGNhbm5v
-dCBrbm93Cj4gcmVhc29uIHdoeSBjdXJfZnJlcSBpcyA0MDBNSHogZXZlbiBpZiBtYXhfZnJlcSBp
-cyAzMDBNSHouCj4gCj4gQmFzaWNhbGx5LCB1cGRhdGVfZGV2ZnJlcSgpIGNvbnNpZGVycyB0aGUg
-YWxsIGNvbnN0cmFpbnRzCj4gb2YgbWluX2ZyZXEvbWF4X2ZyZXEgdG8gZGVjaWRlIHRoZSBwcm9w
-ZXIgdGFyZ2V0IGZyZXF1ZW5jeS4KCkkgdGhpbmsgdGhhdCBhcHBseWluZyB0aGUgaW50ZXJjb25u
-ZWN0IG1pbl9mcmVxIHZpYSBkZXZfcG1fcW9zIGNhbiBoZWxwIAp3aXRoIG1hbnkgb2YgdGhlc2Ug
-Y29uY2VybnM6IHVwZGF0ZV9kZXZmcmVxIGNvbnRyb2xzIGFsbCB0aGUgbWluL21heCAKaGFuZGxp
-bmcsIHN5c2ZzIGlzIGFjY3VyYXRlIGFuZCBiZXR0ZXIgZGVjaXNpb25zIGNhbiBiZSBtYWRlIHJl
-Z2FyZGluZyAKdGhlcm1hbC4gRW5mb3JjaW5nIGNvbnN0cmFpbnRzIGluIHRoZSBjb3JlIGlzIGRl
-ZmluaXRlbHkgYmV0dGVyLgoKVGhpcyB3b3VsZG4ndCBldmVuIGJlIGEgdmVyeSBiaWcgY2hhbmdl
-LCB5b3UgZG9uJ3QgbmVlZCB0byBhY3R1YWxseSBtb3ZlIAp0aGUgaW50ZXJjb25uZWN0IGNvZGUg
-b3V0c2lkZSBvZiBkZXZmcmVxLiBKdXN0IG1ha2UgZXZlcnkgZGV2ZnJlcS9pY2MgCm5vZGUgcmVn
-aXN0ZXIgYSBkZXZfcG1fcW9zX3JlcXVlc3QgZm9yIGl0c2VsZiBkdXJpbmcgcmVnaXN0cmF0aW9u
-IGFuZCAKY2FsbCBkZXZfcG1fcW9zX3VwZGF0ZV9yZXF1ZXN0IGluc2lkZSBleHlub3NfYnVzX2lj
-Y19zZXQuCgpTZWU6IGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcGF0Y2gvMTEwODQyNzkv
-CgotLQpSZWdhcmRzLApMZW9uYXJkCg==
+On 8/8/19 14:18, Marek Szyprowski wrote:
+> M2M scaler clocks require special handling of their parent bus clock during
+> power domain on/off sequences. MSCL clocks were not initially added to the
+> sub-CMU handler, because that time there was no driver for the M2M scaler
+> device and it was not possible to test it.
+> 
+> This patch fixes this issue. Parent clock for M2M scaler devices is now
+> properly preserved during MSC power domain on/off sequence. This gives M2M
+> scaler devices proper performance: fullHD XRGB32 image 1000 rotations test
+> takes 3.17s instead of 45.08s.
+> 
+> Fixes: b06a532bf1fa ("clk: samsung: Add Exynos5 sub-CMU clock driver")
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+
+Stephen, could you apply this patch directly to clk-fixes, on top of
+my patches:
+
+[v2,2/2] clk: samsung: exynos5800: Move MAU subsystem clocks to MAU sub-CMU
+[v2,1/2] clk: samsung: Change signature of exynos5_subcmus_init() function 
+
+? Regression that these 3 patches are fixing is not new, it has been
+introduced much earlier than 5.3-rc1, however it's quite serious and it
+would be good to have the fixes already in 5.3 release.  
+If that's your preference I will just queue these patches for coming
+merge window.
+
+-- 
+Thanks,
+Sylwester
