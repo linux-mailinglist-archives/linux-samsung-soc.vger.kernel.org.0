@@ -2,79 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 602D68B7A8
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2019 13:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF9E68B985
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2019 15:07:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726600AbfHML4K (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 13 Aug 2019 07:56:10 -0400
-Received: from Galois.linutronix.de ([193.142.43.55]:34408 "EHLO
-        Galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727342AbfHML4K (ORCPT
+        id S1728933AbfHMNHX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 13 Aug 2019 09:07:23 -0400
+Received: from bombadil.infradead.org ([198.137.202.133]:60956 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728486AbfHMNHX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 13 Aug 2019 07:56:10 -0400
-Received: from localhost ([127.0.0.1] helo=flow.W.breakpoint.cc)
-        by Galois.linutronix.de with esmtp (Exim 4.80)
-        (envelope-from <bigeasy@linutronix.de>)
-        id 1hxVPK-0004hy-5w; Tue, 13 Aug 2019 13:56:06 +0200
-From:   Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To:     linux-i2c@vger.kernel.org
-Cc:     Wolfram Sang <wsa@the-dreams.de>, tglx@linutronix.de,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        Benjamin Rouxel <benjamin.rouxel@uva.nl>,
-        Kukjin Kim <kgene@kernel.org>,
+        Tue, 13 Aug 2019 09:07:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=TsShzSbt4bhSjgobAYTU3+tEcGq+xbDvcHgE2PR7JFE=; b=KmK5lYfXHKPZIOmbtg/9TeMAU
+        jR94qd1Da/h0kWRTW7hGeEUlH1c4KOrfkC2dSXptMHhtZWircaTyetQorlqnfzWKzV9C6Cg+ft2Fo
+        OQuLSVQp9GHA79JrrHXsck2yRrzH6LkOOjR8Kqik8b5ubb2W0h6Ae2NNfAV8YqCNajfiomtWGipvp
+        WxW7vXm0ChbaigStFbDzEJAT/TzVxS9UKwU6vPkS/4Frrx+8+Me3QvNyyf7JX6x2ZvnHvebD7Xr4G
+        bR/wTN8GvtoDBRStGqvkfPy3jZX2zb50jyZE+l6CnSEppunxtiEfoeuzHRhptk7SE1ztKeERzvXXz
+        dwfHkwDNQ==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.92 #3 (Red Hat Linux))
+        id 1hxWW7-0002GY-Ir; Tue, 13 Aug 2019 13:07:11 +0000
+Date:   Tue, 13 Aug 2019 06:07:11 -0700
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Tom Murphy <murphyt7@tcd.ie>
+Cc:     Christoph Hellwig <hch@infradead.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Will Deacon <will.deacon@arm.com>,
+        virtualization@lists.linux-foundation.org,
+        David Brown <david.brown@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
-Date:   Tue, 13 Aug 2019 13:55:54 +0200
-Message-Id: <20190813115555.10542-2-bigeasy@linutronix.de>
-X-Mailer: git-send-email 2.23.0.rc1
-In-Reply-To: <20190813115555.10542-1-bigeasy@linutronix.de>
-References: <20190813115555.10542-1-bigeasy@linutronix.de>
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        David Woodhouse <dwmw2@infradead.org>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH v4 0/5] iommu/amd: Convert the AMD iommu driver to the
+ dma-iommu api
+Message-ID: <20190813130711.GA30468@infradead.org>
+References: <20190613223901.9523-1-murphyt7@tcd.ie>
+ <20190624061945.GA4912@infradead.org>
+ <20190810071952.GA25550@infradead.org>
+ <CALQxJuvxBc3MH3_B_fZ3FvURHOM3F3dvvZ6x=GtALUAvyu7Qxw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALQxJuvxBc3MH3_B_fZ3FvURHOM3F3dvvZ6x=GtALUAvyu7Qxw@mail.gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
-is masked while the primary is handler is invoked independently of
-IRQF_ONESHOT.
-With IRQF_ONESHOT the core code will not force-thread the interrupt and
-this is probably not intended. I *assume* that the original author copied
-the IRQ registration from another driver which passed a primary and
-secondary handler and removed the secondary handler but keeping the
-ONESHOT flag.
+On Tue, Aug 13, 2019 at 08:09:26PM +0800, Tom Murphy wrote:
+> Hi Christoph,
+> 
+> I quit my job and am having a great time traveling South East Asia.
 
-Remove IRQF_ONESHOT.
+Enjoy!  I just returned from my vacation.
 
-Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
----
- drivers/i2c/busses/i2c-exynos5.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+> I definitely don't want this work to go to waste and I hope to repost it
+> later this week but I can't guarantee it.
+> 
+> Let me know if you need this urgently.
 
-diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-exyn=
-os5.c
-index e4e7932f78000..e7514c16b756c 100644
---- a/drivers/i2c/busses/i2c-exynos5.c
-+++ b/drivers/i2c/busses/i2c-exynos5.c
-@@ -791,9 +791,7 @@ static int exynos5_i2c_probe(struct platform_device *pd=
-ev)
- 	}
-=20
- 	ret =3D devm_request_irq(&pdev->dev, i2c->irq, exynos5_i2c_irq,
--				IRQF_NO_SUSPEND | IRQF_ONESHOT,
--				dev_name(&pdev->dev), i2c);
--
-+			       IRQF_NO_SUSPEND, dev_name(&pdev->dev), i2c);
- 	if (ret !=3D 0) {
- 		dev_err(&pdev->dev, "cannot request HS-I2C IRQ %d\n", i2c->irq);
- 		goto err_clk;
---=20
-2.23.0.rc1
-
+It isn't in any strict sense urgent.  I just have various DMA API plans
+that I'd rather just implement in dma-direct and dma-iommu rather than
+also in two additional commonly used iommu drivers.  So on the one had
+the sooner the better, on the other hand no real urgency.
