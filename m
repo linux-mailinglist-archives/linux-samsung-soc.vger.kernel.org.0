@@ -2,47 +2,151 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D954F8CED3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Aug 2019 10:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6148D114
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Aug 2019 12:45:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725861AbfHNIvy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 14 Aug 2019 04:51:54 -0400
-Received: from 8bytes.org ([81.169.241.247]:49208 "EHLO theia.8bytes.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725863AbfHNIvy (ORCPT
+        id S1727649AbfHNKpc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 14 Aug 2019 06:45:32 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:57104 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbfHNKpb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 14 Aug 2019 04:51:54 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 1D2C42E2; Wed, 14 Aug 2019 10:51:52 +0200 (CEST)
-Date:   Wed, 14 Aug 2019 10:51:49 +0200
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: Re: [PATCH] iommu: exynos: Remove __init annotation from
- exynos_sysmmu_probe()
-Message-ID: <20190814085148.GA24321@8bytes.org>
-References: <CGME20190812103255eucas1p1cdab368b5fb06e4e3df62dfdc679f3af@eucas1p1.samsung.com>
- <20190812103246.18049-1-m.szyprowski@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190812103246.18049-1-m.szyprowski@samsung.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Wed, 14 Aug 2019 06:45:31 -0400
+Received: by mail-qk1-f202.google.com with SMTP id j81so98825461qke.23
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 14 Aug 2019 03:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=GWyXBGwmHFcGXlg8sYWmi9ISwiX/TjDTxXNJrsxIlo0=;
+        b=SO9w2qWfA9s7es8tmXD3wqbpTBgbgE1DHH1ERM7v7ptLx8iAJ95y8N4Tw+xRfTgVDo
+         13xnwEMU6xzG5TpnrwEkbvb8IB4VVAMk6MolT2ZOkf2TYbkpgela2WK1udMqSYuSSak5
+         Q8LdwxwSdNmbsCfPqW/1A50L/ApA7o7dCxHQL6Y2ilUQe/pD/9Nn91c3LpVJIKbuVG3f
+         htMPgcJTD+HpBw3QVSvs7B1iIa/DvtlWekME6zM0+MAhwABxQrewkKFJVJq3adx9qDVe
+         C1f+Ddir0Bz1vfsh4GwublcxERGy6vsW5i3k2OyP6w/YcY/Yuy9icYHfcvFqq2wGVRrR
+         +BXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=GWyXBGwmHFcGXlg8sYWmi9ISwiX/TjDTxXNJrsxIlo0=;
+        b=mrETZiAPh7gGLo/3nJZvBI2M07oONzdUxc5dX21IDeKY1C+5wwO2k6I+QdRlKk96c8
+         Sb21ueUJqclRNsDepAYXPotx+bu8k8WcmXUq3fxJMGKXE98RGnoz8QYmcsRzHhj+otJ2
+         go4ifm6iCDiFcDK5ps6jpFBmd13mQbpR4H88NZ5+SIIn1k17J66kTQTrasQt4CAKCiHh
+         Cck+AbCK1R2fx1wwYu9kvT4pGw81nU3LMq8RtqrJzDQkRmowS3DzWtuqgjGzuyxk7Xun
+         08Ioh6On2vye3I6zN3fydG8TiB6Rh/MBlvexS6egpgezFLKDEw3KL+HEBaetMLR33GXU
+         pbRw==
+X-Gm-Message-State: APjAAAX5aTkpzRrt/uwwR2oCvIyr5Z4Ln5za2SE9SRtVceGDu4yUyJyq
+        jL9OQOCcA31ZcQcAS3w256koc1z5Rxs=
+X-Google-Smtp-Source: APXvYqwhM4JMovHg2xzCJqqYJ3hsrqpakcRk8IC6SFMlsdE9qbu+1Sj05yHDBXOw9hQhCX71VwS62n5KfcM=
+X-Received: by 2002:ac8:748a:: with SMTP id v10mr16346695qtq.386.1565779530315;
+ Wed, 14 Aug 2019 03:45:30 -0700 (PDT)
+Date:   Wed, 14 Aug 2019 12:44:58 +0200
+Message-Id: <20190814104520.6001-1-darekm@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.23.0.rc1.153.gdeed80330f-goog
+Subject: [PATCH v7 0/9] drm: cec: convert DRM drivers to the new notifier API
+From:   Dariusz Marcinkiewicz <darekm@google.com>
+To:     dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl
+Cc:     Dariusz Marcinkiewicz <darekm@google.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Allison Randal <allison@lohutok.net>,
+        amd-gfx@lists.freedesktop.org, Andrzej Hajda <a.hajda@samsung.com>,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        Colin Ian King <colin.king@canonical.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Francis <David.Francis@amd.com>,
+        Dhinakaran Pandiyan <dhinakaran.pandiyan@intel.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Enrico Weigelt <info@metux.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Imre Deak <imre.deak@intel.com>,
+        intel-gfx@lists.freedesktop.org,
+        Jani Nikula <jani.nikula@intel.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        "Jerry (Fangzhi) Zuo" <Jerry.Zuo@amd.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Lyude Paul <lyude@redhat.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Manasi Navare <manasi.d.navare@intel.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        nouveau@lists.freedesktop.org,
+        Ramalingam C <ramalingam.c@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Russell King <rmk+kernel@armlinux.org.uk>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Shashank Sharma <shashank.sharma@intel.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Thomas Lim <Thomas.Lim@amd.com>,
+        "=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?=" 
+        <ville.syrjala@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Aug 12, 2019 at 12:32:46PM +0200, Marek Szyprowski wrote:
-> Exynos SYSMMU driver supports deferred probe. It happens when clocks
-> needed for this driver are not yet available. Typically next calls to
-> driver ->probe() happen before init section is free, but this is not
-> really guaranteed. To make if safe, remove __init annotation from
-> exynos_sysmmu_probe() function.
-> 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+This series updates DRM drivers to use new CEC notifier API.
 
-Applied, thanks.
+Changes since v6:
+	Made CEC notifiers' registration and de-registration symmetric
+	in tda998x and dw-hdmi drivers. Also, accidentally dropped one
+	patch in v6 (change to drm_dp_cec), brought it back now.
+Changes since v5:
+        Fixed a warning about a missing comment for a new member of
+	drm_dp_aux_cec struct. Sending to a wider audience,
+	including maintainers of respective drivers.
+Changes since v4:
+	Addressing review comments.
+Changes since v3:
+        Updated adapter flags in dw-hdmi-cec.
+Changes since v2:
+	Include all DRM patches from "cec: improve notifier support,
+	add connector info connector info" series.
+Changes since v1:
+	Those patches delay creation of notifiers until respective
+	connectors are constructed. It seems that those patches, for a
+	couple of drivers, by adding the delay, introduce a race between
+	notifiers' creation and the IRQs handling threads - at least I
+	don't see anything obvious in there that would explicitly forbid
+	such races to occur. v2 adds a write barrier to make sure IRQ
+	threads see the notifier once it is created (replacing the
+	WRITE_ONCE I put in v1). The best thing to do here, I believe,
+	would be not to have any synchronization and make sure that an IRQ
+	only gets enabled after the notifier is created.
+Dariusz Marcinkiewicz (9):
+  drm_dp_cec: add connector info support.
+  drm/i915/intel_hdmi: use cec_notifier_conn_(un)register
+  dw-hdmi-cec: use cec_notifier_cec_adap_(un)register
+  tda9950: use cec_notifier_cec_adap_(un)register
+  drm: tda998x: use cec_notifier_conn_(un)register
+  drm: sti: use cec_notifier_conn_(un)register
+  drm: tegra: use cec_notifier_conn_(un)register
+  drm: dw-hdmi: use cec_notifier_conn_(un)register
+  drm: exynos: exynos_hdmi: use cec_notifier_conn_(un)register
+
+ .../display/amdgpu_dm/amdgpu_dm_mst_types.c   |  2 +-
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c | 13 +++---
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c     | 46 +++++++++++++------
+ drivers/gpu/drm/drm_dp_cec.c                  | 25 ++++++----
+ drivers/gpu/drm/exynos/exynos_hdmi.c          | 31 +++++++------
+ drivers/gpu/drm/i2c/tda9950.c                 | 12 ++---
+ drivers/gpu/drm/i2c/tda998x_drv.c             | 36 ++++++++++-----
+ drivers/gpu/drm/i915/display/intel_dp.c       |  4 +-
+ drivers/gpu/drm/i915/display/intel_hdmi.c     | 13 ++++--
+ drivers/gpu/drm/nouveau/nouveau_connector.c   |  3 +-
+ drivers/gpu/drm/sti/sti_hdmi.c                | 19 +++++---
+ drivers/gpu/drm/tegra/output.c                | 28 ++++++++---
+ include/drm/drm_dp_helper.h                   | 17 ++++---
+ 13 files changed, 155 insertions(+), 94 deletions(-)
+
+-- 
+2.23.0.rc1.153.gdeed80330f-goog
+
