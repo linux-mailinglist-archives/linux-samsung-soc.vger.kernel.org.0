@@ -2,103 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E198D8D422
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Aug 2019 15:03:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D58578E07D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Aug 2019 00:14:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbfHNNDX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 14 Aug 2019 09:03:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41774 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726865AbfHNNDX (ORCPT
+        id S1727929AbfHNWO1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 14 Aug 2019 18:14:27 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:42832 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729092AbfHNWOV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 14 Aug 2019 09:03:23 -0400
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 70CFC206C2;
-        Wed, 14 Aug 2019 13:03:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1565787801;
-        bh=3OUlSHJn0lTrnJ5fKTpkrRdkhD4r845rbCuZ5nFCWHQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=EDCnd1iWrMYY5eTCyl2C4OcbbG7hwyR/yBNNl1DEgM7rxl2JhllcRp+qc1n1e3wQn
-         5m9Cif0BRl33bPWPSpZjlT1ETGRv6XhqJe/99+FqhpGmSNPd3P9/Fkl2Pv/6NY/aJ+
-         36HbweNwXt3W5499mCcC2xN0FGArisPikhNobVWE=
-Received: by mail-lf1-f44.google.com with SMTP id b29so72023750lfq.1;
-        Wed, 14 Aug 2019 06:03:21 -0700 (PDT)
-X-Gm-Message-State: APjAAAU84prkwE67YXO9KMSNCfUEUL5OEuW2YWcNB+6G54CcRK09v+pN
-        5hZNHDBJJADedFmKc4qS1fbNOJ54BovJan1OSkc=
-X-Google-Smtp-Source: APXvYqz10vuC20rP+LQQhwdjZM0MrWzEZ/evwZm1M1ZsrA4lt+zFV303rcMeni4yzkxrQ0voupVR/up/rPG64KZGaEE=
-X-Received: by 2002:a19:f512:: with SMTP id j18mr21053059lfb.159.1565787799622;
- Wed, 14 Aug 2019 06:03:19 -0700 (PDT)
+        Wed, 14 Aug 2019 18:14:21 -0400
+Received: by mail-qt1-f193.google.com with SMTP id t12so346632qtp.9
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 14 Aug 2019 15:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=p6m83mGjllDiHyeRTSS1oVMHX5M/xE6ILn6PPhzsgs4=;
+        b=l5PC+4msT+R1VOq1FIInu61dIh2STHPN9aSBt/Y5M3n644FfA169IT6wzP+sfbruwG
+         5vHd8QNfmmF7FOlV1OW4+1ls9+argQAW0MZ9696kjqRFjMtNiRxkPVvom8CpuMz6+P3J
+         lvnykAE+N5ClLjt8+21Oenlj55mmWn47h6bOufTUj3iAyACG+cL0ImoQgj5m6u3w1/lr
+         fVPm9fs++0X3Li7mpOQ13No26+jYpH9OobXYps5GGnrfpp0Xq6qTsPtsJRMHzlRsuSi2
+         Q5RuPSHMeFGhG1MzboDTj+tp2IBpQDy9TN5wUYjWC528WeGARQxpLHz2F9meUvIkEvkQ
+         sSPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=p6m83mGjllDiHyeRTSS1oVMHX5M/xE6ILn6PPhzsgs4=;
+        b=sMvsQ3BdYlo7lOtAHldQnTCFCJqnZ8YK1kFfEcUFsCo66g2mr9zSWz4tFaPXFzgdAg
+         +8NAXYTeL8hlvx2K4Gp58wAhnoYf24yg6C9WVED+gJ7n18i6zOu0hYLLQYJAsK5uUHuP
+         566NIelvJmw5tnMG8yj1PPsS2mwWb/PXTTXuG/c4V7XF3HQHfniWkA5Fiqby+5cFGE0Z
+         l2ExJIo1n6YZFf22ItiGleWiuOR0kKk4BW+GVtMFF8lBSL+nFH0BK6A5ELwC/Xx2va46
+         +m4PDRo13JoWIgtAetmpQd/zl45X9oGi2XDYE9tIxSBOR4X3Lfl7U8WdolN9C2pDJp1B
+         /OZg==
+X-Gm-Message-State: APjAAAUx/Smutz33Q0O6ZXzdOWKwUq9KBCY8SMZAPy9QoiQfODrEy5GN
+        ezLDGRiF7fw5iGvZitj8zOhZCZgSLbbbmboze58=
+X-Google-Smtp-Source: APXvYqwvEwq36YC/YcFdGthiFQqEswOUmu8y33AXL4ty34gsygcaTEjmhvj04/dFUfa1vFoE719aJcDSjuFoUwkSVes=
+X-Received: by 2002:aed:3826:: with SMTP id j35mr1333309qte.54.1565820860049;
+ Wed, 14 Aug 2019 15:14:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <CGME20190813150842eucas1p2c248537d9cd593073e12abeac2cacab5@eucas1p2.samsung.com>
- <20190813150827.31972-1-s.nawrocki@samsung.com>
-In-Reply-To: <20190813150827.31972-1-s.nawrocki@samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 14 Aug 2019 15:03:08 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdm2qj_GDR4NQriuOjPFyAxf_CdH_hXEsQNDp4qGHaUZA@mail.gmail.com>
-Message-ID: <CAJKOXPdm2qj_GDR4NQriuOjPFyAxf_CdH_hXEsQNDp4qGHaUZA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] Exynos Adaptive Supply Voltage support
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
+Received: by 2002:aed:3544:0:0:0:0:0 with HTTP; Wed, 14 Aug 2019 15:14:19
+ -0700 (PDT)
+Reply-To: Katerinejones19@gmail.com
+From:   "MS. MARYANNA B. THOMASON" <westernunion.benin982@gmail.com>
+Date:   Wed, 14 Aug 2019 23:14:19 +0100
+Message-ID: <CAP=nHB+U+By16HzeUHiDfPT5KNtemGam6gniZhL2s7_itZ3F8w@mail.gmail.com>
+Subject: TODAY, Wed, Aug 14, 2019 I AM READY FOR COMING TO YOUR ADDRESS WITH
+ THIS ATM CARD
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 13 Aug 2019 at 17:08, Sylwester Nawrocki <s.nawrocki@samsung.com> w=
-rote:
->
-> This is third iteration of my patch series adding ASV (Adaptive Supply
-> Voltage) support for Exynos SoCs. The previous one can be found at:
-> https://lore.kernel.org/lkml/20190718143044.25066-1-s.nawrocki@samsung.co=
-m
->
-> There is no major changes in this series comparing to v2, only minor
-> corrections addressing review comments.
->
-> I was not sure it was a good idea to try to extend the OPP binding
-> so as to include the ASV data tables in DT, so the tables are left
-> in the driver.
->
-> This patch set includes Exynos CHIPID driver posted by Pankaj Dubey and
-> futher improved by Bart=C5=82omiej =C5=BBo=C5=82nierkiewicz [1].
->
-> Tested on Odroid XU3, XU3 Lite, XU4.
->
-> One of the things on TODO list is support for the Adaptive Body Bias.
-> This will require modifications on the cpufreq driver side in order to
-> support multiple voltage regulators and changes in the OPP framework
-> to support adding OPPs with multiple voltages.
->
-> [1] https://lkml.org/lkml/2018/11/15/908
->
-> Pankaj Dubey (3):
->   soc: samsung: Add exynos chipid driver support
->   ARM: EXYNOS: enable exynos_chipid for ARCH_EXYNOS
->   ARM64: EXYNOS: enable exynos_chipid for ARCH_EXYNOS
->
-> Sylwester Nawrocki (6):
->   soc: samsung: Convert exynos-chipid driver to use the regmap API
->   soc: samsung: Add Exynos Adaptive Supply Voltage driver
->   ARM: EXYNOS: Enable exynos-asv driver for ARCH_EXYNOS
->   soc: samsung: Update the CHIP ID DT binding documentation
->   ARM: dts: Add "syscon" compatible string to chipid node
->   ARM: dts: Add samsung,asv-bin property for odroidxu3-lite
+ATTN DEAR PARCEL BENEFICIARY.
 
-All look good to me but I need acks for bindings before applying.
+I AM CATHY JONES,DIPLOMATIC AGENT ASIGNED ON THE DELIVERY OF YOUR ATM
+CARD THROUGH MS. MARYANNA B. THOMASON, DHL MANAGEMENT DIRECTOR NEW
+YORK.
+TODAY, Wed, Aug 14, 2019 I AM READY FOR COMING TO YOUR ADDRESS WITH
+THIS ATM CARD, So before i deliver I want you to send me.
+official diplomatic agent delivery fee sum of $150.00 us
+ only. I am here at JFK Airport,Florida. USA
 
-Best regards,
-Krzysztof
+SEND THIS FEE BY WESTERN UNION OR MONEY WITH RECEIVER'S NAME AND ADDRESS BELOW.
+
+RECEIVER'S NAME-----------------ERROL PRINGLE
+ADDRESS----------------3500 OLD DENTON RD APT 208; CARROLLTON, TEXAS 75007
+COUNTRY----------------USA
+AMOUNT--------------------$150.00 ONLY
+TEST QUESTION----------------WHO IS THE CREATOR
+ANSWER------------------GOD
+ meanwhile this $150.00 is required by the Custom Service,USA Homeland
+Security,for protection of your delivery, it will make the ATM CARD
+and funds worth $15.8MILLION US DOLLARS secure, Beleiev me, this is my
+word, remark my word,you will receive your delivery from me, Mrs.
+Cathy Jones once you send this only $150.00 today.
+I WAIT ON YOUR PAYMENT CONFIRMATION, ONCE I GOT YOUR PAYMENT, I WILL
+FINALLY ARRIVE TO YOUR NEAREST ADDRESS. today
+THANKS AND MAY GOD BLESS  YOU
+CATHY JONES,DIPLOMATIC AGENT
+EMAIL; katerinejones19@gmail.com
+CALL OR TEXT ME, DIPLOMATIC AGENT MS. CATHY JONES
+Phone Number; (408) 650-6103,
