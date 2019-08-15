@@ -2,103 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B09778E9E6
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Aug 2019 13:13:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 130C58F304
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Aug 2019 20:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730922AbfHOLN6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 15 Aug 2019 07:13:58 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:46265 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730775AbfHOLN5 (ORCPT
+        id S1732665AbfHOSQQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 15 Aug 2019 14:16:16 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40116 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726001AbfHOSQQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 15 Aug 2019 07:13:57 -0400
-Received: by mail-ot1-f68.google.com with SMTP id z17so4935938otk.13
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 15 Aug 2019 04:13:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IuWtIDr90zkI+XfebKnko5l+I/4xHf39ovWKoeqGaCw=;
-        b=nNQ/UtAXFhxaaxM9xQ9O8IFhMDMFvXunujEOMrSPWYCvTGD+YxkdrSxxRuus/GVUBp
-         GQoOAQizlE7KESwvt/hZDxMbEejumbr3zlWb4gT62uRTJXHWvWtJR7eaSmt+P/Feob0G
-         3FUQTPCC4U1ru+VC9jVwEnwjC7mL9mTGXdSrv0YV/tjgkZ9zqojYrqsx+I/zHyMAQt8f
-         8tY1ausOgFce7Ab8S1UDh3376evaQbzs8AquCZCJWaLZvUFdMNaMr4YLxIusv5ITVmeU
-         i1/FqeHC8FIMWswYm99EVT/8f/U+y5anena34TtOtJsjHhUYQi17LOqEs6UTPxD4ON1T
-         NLOQ==
+        Thu, 15 Aug 2019 14:16:16 -0400
+Received: by mail-wm1-f65.google.com with SMTP id v19so2009640wmj.5;
+        Thu, 15 Aug 2019 11:16:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IuWtIDr90zkI+XfebKnko5l+I/4xHf39ovWKoeqGaCw=;
-        b=YFah00jxF3Ixhz7zI3U0UhKVYnKRVhq8ntEnAdvZRqIsNOCpNB8tGeAVxlwI7nnO+G
-         hhYGgDQkOa5ZkWn0OXSgJySNpoQ7f4cQ9dNqxGWSBL7IZUKupefhBNapPT9iMXQ3+4ny
-         9M6MdC3gFc0883V73iDaCWUKgmxLqWBX6pDHccm71bHlkU++jrkuL1ybwtK/rlLyrPhL
-         yUHapeddRqFLJbrai4MUPqLdr9QWNKrkEF46axSAsT1GBiyZFwtpsktOyoHu4Fx13btK
-         dyU+Lrz4Ed2pAz5Wg9VmXGcceiS1ykt+dAKnvMi9BUU8Cuy25HXazHLL7ikxiRA4K31r
-         A+LA==
-X-Gm-Message-State: APjAAAUGdNMdXrK2OEoitVelgCamCBOBXg0D6ls9OFSXDSbdo+eSHkhr
-        SLyS7e0GmY4WaV1JEc/3Ua0RRLkhMurVAU9hYtLegw==
-X-Google-Smtp-Source: APXvYqyLPDKvvPTRbvGbWfWW/U8q2MBMOdJm/HCo2dFUBkYNWHxXuaIDP3Rx+nIt9imUtzeQRmZpWsoqqA6dgyl5YCA=
-X-Received: by 2002:a5e:9314:: with SMTP id k20mr5014873iom.235.1565867636592;
- Thu, 15 Aug 2019 04:13:56 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=j/uimJg+O6SijUYzhLFT7/gbnIejb3KfXF48Pa4SOJ4=;
+        b=bizN/MZr5+4uebhfhfXVJkOcaGxnSdNb8i0kOyOLUOlam4vX9xRxHY0khlepr/oSv1
+         6koYsVK+LuY2ZSyXmkVEYH8AmxX2SFUZFdnBJdjLvOA8BlERrTFmzLWj89wP9Wlb5hjn
+         2IG5R6uqA53ZI6gE64Reo7yEfUzKQ0aQQ426Ge154oO1GyuX8xAdzUqZgahBKu79aSyj
+         rc9fvAzgSPgPZpiO+NXwPRMpbftISxwfSDM700x86D16NDeMLDGvC/8nlVCDJPfXET88
+         Il/VKbF51Wj3qbDL/AHMeL3JyEkajGZeeMktrj7hmS4avIMgswn2HXmHpTvlVPixfeys
+         0SdA==
+X-Gm-Message-State: APjAAAWz4UTfM0bpO74mxIjbCXVlh8lE5+GQoUDF7FZL1y+TajmUOcLJ
+        cUbESPSdsmArkJeR+p1h8P4=
+X-Google-Smtp-Source: APXvYqyNO1pzYsJNJHBIxyOo0AgrtnpByKQS31ntMRjNZSVwifIZNdbtMHJJwiSMW+wbjQfY1Mtrmw==
+X-Received: by 2002:a1c:f101:: with SMTP id p1mr3876277wmh.62.1565892974825;
+        Thu, 15 Aug 2019 11:16:14 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.124])
+        by smtp.googlemail.com with ESMTPSA id n12sm1688814wmc.24.2019.08.15.11.16.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 15 Aug 2019 11:16:14 -0700 (PDT)
+Date:   Thu, 15 Aug 2019 20:16:12 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] ARM: plat-samsung: Include GPIO driver header
+Message-ID: <20190815181612.GA14360@kozik-lap>
+References: <20190814075244.8726-1-linus.walleij@linaro.org>
 MIME-Version: 1.0
-References: <20190613223901.9523-1-murphyt7@tcd.ie> <20190624061945.GA4912@infradead.org>
- <20190810071952.GA25550@infradead.org> <CALQxJuvxBc3MH3_B_fZ3FvURHOM3F3dvvZ6x=GtALUAvyu7Qxw@mail.gmail.com>
- <20190813130711.GA30468@infradead.org>
-In-Reply-To: <20190813130711.GA30468@infradead.org>
-From:   Tom Murphy <murphyt7@tcd.ie>
-Date:   Thu, 15 Aug 2019 12:13:45 +0100
-Message-ID: <CALQxJusdvvnL-7WuCy9qobB6heG2oj7XS4Bs3Z1dMyLXSeZOzg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] iommu/amd: Convert the AMD iommu driver to the
- dma-iommu api
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     Joerg Roedel <joro@8bytes.org>, Heiko Stuebner <heiko@sntech.de>,
-        Will Deacon <will.deacon@arm.com>,
-        virtualization@lists.linux-foundation.org,
-        David Brown <david.brown@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Jean-Philippe Brucker <jean-philippe.brucker@arm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        David Woodhouse <dwmw2@infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190814075244.8726-1-linus.walleij@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Done, I just sent it there. I don't have any AMD hardware to test on
-while I'm traveling. However the rebase was very straightforward and
-the code was tested a month ago on the old linux-next.
+On Wed, Aug 14, 2019 at 09:52:44AM +0200, Linus Walleij wrote:
+> This file is using struct gpio_chip and needs to include
+> <linux/gpio/driver.h> to get that.
+> 
+> Cc: Kukjin Kim <kgene@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
 
-I only have the AMD conversion done. I will work on rebasing the intel
-one when I get a chance.
+Thanks, applied.
 
-On Tue, 13 Aug 2019 at 14:07, Christoph Hellwig <hch@infradead.org> wrote:
->
-> On Tue, Aug 13, 2019 at 08:09:26PM +0800, Tom Murphy wrote:
-> > Hi Christoph,
-> >
-> > I quit my job and am having a great time traveling South East Asia.
->
-> Enjoy!  I just returned from my vacation.
->
-> > I definitely don't want this work to go to waste and I hope to repost it
-> > later this week but I can't guarantee it.
-> >
-> > Let me know if you need this urgently.
->
-> It isn't in any strict sense urgent.  I just have various DMA API plans
-> that I'd rather just implement in dma-direct and dma-iommu rather than
-> also in two additional commonly used iommu drivers.  So on the one had
-> the sooner the better, on the other hand no real urgency.
+Best regards,
+Krzysztof
+
