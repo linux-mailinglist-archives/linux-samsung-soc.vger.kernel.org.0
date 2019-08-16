@@ -2,80 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 77F6B8F364
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Aug 2019 20:29:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A5A6905D5
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 Aug 2019 18:33:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731228AbfHOS3q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 15 Aug 2019 14:29:46 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39562 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728828AbfHOS3q (ORCPT
+        id S1726522AbfHPQav (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 16 Aug 2019 12:30:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52018 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726469AbfHPQav (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 15 Aug 2019 14:29:46 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t16so3051127wra.6;
-        Thu, 15 Aug 2019 11:29:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=G+ti5MoYAXo5Gey/THUpmV9/n/MyYAX4cVlRNM3ewyk=;
-        b=kenpdG4zz+zDKowXgcmj7UlWEl408gEFB2M50TpE/sSbfSmUZqxDRMEC9M3mzW4c1b
-         yhC3B+U3rqwfd8xhx/TexIe0Hfv1H8KKzTydU0Bg4UJtk3IRnSputNkKrBF0dH/YIh58
-         LdvhJdLdOZ2N4xKgwdWxuMEgmkBdLPKPHnPxqL3lgu7uFaDbnoeaPMowo6/NZNbCmKhD
-         48lJfG7oaF3UDeqjr0LvFP299t2fAyocWazXuNakUGYRAt+LUQowsTbPXO6JbvUrrlK9
-         +5kqU4Lkta6k3vPgEECYJrrl9+/5+h7j69ogkGx63gawb0bM6ENYxufrHjcE98oTn3BU
-         aKbA==
-X-Gm-Message-State: APjAAAVGNfVPrRd8D6wV23+8kJNoUlM33F+YicIXaoeDbgOchmNd2Nsi
-        HzkoM8NXfqDdzmzhAWXngu4=
-X-Google-Smtp-Source: APXvYqzcm8U/A1Qgplcw2RiLILIE0EgMkCH1v2MhQN4StF7iqTRUm9rJjXSeZuEZ0RWP8wo36QOmyw==
-X-Received: by 2002:adf:fd8b:: with SMTP id d11mr6497885wrr.300.1565893783407;
-        Thu, 15 Aug 2019 11:29:43 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.124])
-        by smtp.googlemail.com with ESMTPSA id h97sm9341511wrh.74.2019.08.15.11.29.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Aug 2019 11:29:42 -0700 (PDT)
-Date:   Thu, 15 Aug 2019 20:29:40 +0200
+        Fri, 16 Aug 2019 12:30:51 -0400
+Received: from localhost.localdomain (unknown [194.230.155.124])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id BB00720665;
+        Fri, 16 Aug 2019 16:30:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1565973050;
+        bh=bDKLgHOhZqF4s7OBfQaY2Jv5cHcLwf9e2NERN0UJfBM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LREVkLwtWXZAjtv4NdF17RfjRlBesDm5DZclZlPCJ2gxyISS1Gz2vXsnf10ahbLUX
+         bxdXGX/0J50FMiHOG/d/DCRgxF4sCfcXqG4PkdpNDf5m9B7mhgZVOMXep7NZitwu5A
+         0+lTov/NbUaXVUBZMaDhR1vym7IWNwtjHtyaP6sA=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH v3 5/9] ARM64: EXYNOS: enable exynos_chipid for
- ARCH_EXYNOS
-Message-ID: <20190815182940.GF14360@kozik-lap>
-References: <20190813150827.31972-1-s.nawrocki@samsung.com>
- <CGME20190813150856eucas1p1a8957cfe50e3b421ccbc3084404de43b@eucas1p1.samsung.com>
- <20190813150827.31972-6-s.nawrocki@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190813150827.31972-6-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
+        arm@kernel.org, soc@kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [GIT PULL 1/3] soc: samsung: Exynos for v5.4
+Date:   Fri, 16 Aug 2019 18:30:40 +0200
+Message-Id: <20190816163042.6604-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Aug 13, 2019 at 05:08:23PM +0200, Sylwester Nawrocki wrote:
-> From: Pankaj Dubey <pankaj.dubey@samsung.com>
-> 
-> This patch enables exynos_chipid driver for ARCH_EXYNOS
-> based SoC.
-> 
-> Signed-off-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-> Signed-off-by: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
-> Changes since v1 (RFC):
->  - none
-> ---
->  arch/arm64/Kconfig.platforms | 1 +
+The following changes since commit 5f9e832c137075045d15cd6899ab0505cfb2ca4b:
 
-Thanks, applied.
+  Linus 5.3-rc1 (2019-07-21 14:05:38 -0700)
 
-Best regards,
-Krzysztof
+are available in the Git repository at:
 
+  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-drivers-5.4
+
+for you to fetch changes up to 40d8aff614f71ab3cab20785b4f213e3802d4e87:
+
+  soc: samsung: chipid: Convert exynos-chipid driver to use the regmap API (2019-08-15 20:25:25 +0200)
+
+----------------------------------------------------------------
+Samsung soc drivers changes for v5.4
+
+Add Exynos Chipid driver for identification of product IDs and SoC
+revisions.  The driver also exposes chipid regmap, later to be used by
+Exynos Adaptive Supply Voltage driver (adjusting voltages to different
+revisions of same SoC).
+
+----------------------------------------------------------------
+Pankaj Dubey (1):
+      soc: samsung: Add exynos chipid driver support
+
+Sylwester Nawrocki (1):
+      soc: samsung: chipid: Convert exynos-chipid driver to use the regmap API
+
+ drivers/soc/samsung/Kconfig               |   5 ++
+ drivers/soc/samsung/Makefile              |   2 +
+ drivers/soc/samsung/exynos-chipid.c       | 101 ++++++++++++++++++++++++++++++
+ include/linux/soc/samsung/exynos-chipid.h |  52 +++++++++++++++
+ 4 files changed, 160 insertions(+)
+ create mode 100644 drivers/soc/samsung/exynos-chipid.c
+ create mode 100644 include/linux/soc/samsung/exynos-chipid.h
