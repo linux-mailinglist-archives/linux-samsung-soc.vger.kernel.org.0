@@ -2,128 +2,76 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EAEB94993
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 18:15:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19DF594B4F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 19:09:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbfHSQPR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 19 Aug 2019 12:15:17 -0400
-Received: from condef-06.nifty.com ([202.248.20.71]:56536 "EHLO
-        condef-06.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726661AbfHSQPR (ORCPT
+        id S1726987AbfHSRJL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 13:09:11 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:33932 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726627AbfHSRJL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 19 Aug 2019 12:15:17 -0400
-X-Greylist: delayed 521 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Aug 2019 12:15:15 EDT
-Received: from conuserg-08.nifty.com ([10.126.8.71])by condef-06.nifty.com with ESMTP id x7JFvQpK008728
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Aug 2019 00:57:26 +0900
-Received: from grover.flets-west.jp (softbank126125143222.bbtec.net [126.125.143.222]) (authenticated)
-        by conuserg-08.nifty.com with ESMTP id x7JFu5LM008800;
-        Tue, 20 Aug 2019 00:56:05 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conuserg-08.nifty.com x7JFu5LM008800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1566230165;
-        bh=4GK43BeKnZv5WyQmgfpb1RfuIr9VmwksRI1v6Lo8THA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Xh0II7dN9ng2FE6abhAYGvXbe2CwYqlCE054fL0AeQ2SLcgkjj+zDnPUC3ID4Nuv/
-         cpCjIQUzgImo547Tj9TxCySIaXDAUIcoaWA12Zu8Yg2/tFIP+SkoYD74KhRz3MTf8d
-         +XkA4f1QHfPHnbP6cH6IE09aYXLsP/xyLSRpnFgJulQ0agIPz043z+Jy3afwB/j46M
-         xZcL4JZ1Dby9JysSD1xo9yoZvb80EQ4F7GQtJs5sj5ytrKr2K5lHD29mZv3DT3PBNN
-         zGLeb0iB5kZC1i/fyzihUCu9R7JOr79qK53Me8uxIOlaKnSWhAJysY7RjB0NExavs7
-         gAxVJmWBXP1Qg==
-X-Nifty-SrcIP: [126.125.143.222]
-From:   Masahiro Yamada <yamada.masahiro@socionext.com>
-To:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Mon, 19 Aug 2019 13:09:11 -0400
+Received: by mail-wm1-f50.google.com with SMTP id e8so476155wme.1;
+        Mon, 19 Aug 2019 10:09:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g1MHFcAEeER5KLs/4Du+ela2X0EQKeCWPmFOo3YeKyo=;
+        b=WVKQYTJkbyfcm8gV4j5TusRgBncMzQAFmlZrIw4HX2yz5LKoxylHKXGpO5loffeGZg
+         PI0LQYEuz7D9oGzfN9+Khd52dmJaPOvaQ0FXg4jPDSO9q7y88AI3iYG2mEWRBsT81ItN
+         pQ3AsKm2QV/rncKpGoS6tj+zZd9l8dygcuh4woj5W64q0iI4aPqsQSunD5u2Vbr3DzqK
+         zkPjNIEie0CwdJIgmxvTw8PHanFXZAcdJvnqVYbGQDd5k5fRvgUVGDWWaFaG112EfeQA
+         Nsb7l7GYdJVR4skuZ6bBxPTFgJgQmY3LfeGW9tWfNLDuE0B458mS2+PTPdVzyVmgC1SM
+         hqWw==
+X-Gm-Message-State: APjAAAVsUZi5PvzG7UW8PDZnP5Pad5YvyfMo8qd5KG68wWzoGAwPnmfl
+        FVMdh50nSBtw1wrWd3eXe1s=
+X-Google-Smtp-Source: APXvYqwjx7lb30hV3qt+dISr8DlDOdPErhTY7P/d1MD9Xm70SbdSRskPqJKpsDwrGHHDM+nWra5RzQ==
+X-Received: by 2002:a1c:b6d4:: with SMTP id g203mr21503482wmf.100.1566234548932;
+        Mon, 19 Aug 2019 10:09:08 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.124])
+        by smtp.googlemail.com with ESMTPSA id b3sm28668292wrm.72.2019.08.19.10.09.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Aug 2019 10:09:08 -0700 (PDT)
+Date:   Mon, 19 Aug 2019 19:09:05 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Colin King <colin.king@canonical.com>
+Cc:     Pankaj Dubey <pankaj.dubey@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: [PATCH] ARM: s3c64xx: squash samsung_usb_phy.h into setup-usb-phy.c
-Date:   Tue, 20 Aug 2019 00:56:02 +0900
-Message-Id: <20190819155602.20843-1-yamada.masahiro@socionext.com>
-X-Mailer: git-send-email 2.17.1
+        linux-samsung-soc@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH][next] soc: samsung: exynos-chipid: fix memory leak
+Message-ID: <20190819170905.GA14115@kozik-lap>
+References: <20190816222151.11098-1-colin.king@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190816222151.11098-1-colin.king@canonical.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is only used by arch/arm/mach-s3c64xx/setup-usb-phy.c
+On Fri, Aug 16, 2019 at 11:21:51PM +0100, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
+> 
+> Currently when the call to product_id_to_soc_id fails there
+> is a memory leak of soc_dev_attr->revision and soc_dev_attr
+> on the error return path.  Fix this by adding a common error
+> return path that frees there obects and use this for two
+> error return paths.
+> 
+> Addresses-Coverity: ("Resource leak")
+> Fixes: 3253b7b7cd44 ("soc: samsung: Add exynos chipid driver support")
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+> ---
+>  drivers/soc/samsung/exynos-chipid.c | 14 ++++++++++----
 
-$ git grep samsung_usb_phy_type
-include/linux/usb/samsung_usb_phy.h:enum samsung_usb_phy_type {
-$ git grep USB_PHY_TYPE_DEVICE
-arch/arm/mach-s3c64xx/setup-usb-phy.c:  if (type == USB_PHY_TYPE_DEVICE)
-arch/arm/mach-s3c64xx/setup-usb-phy.c:  if (type == USB_PHY_TYPE_DEVICE)
-include/linux/usb/samsung_usb_phy.h:    USB_PHY_TYPE_DEVICE,
-$ git grep USB_PHY_TYPE_HOST
-include/linux/usb/samsung_usb_phy.h:    USB_PHY_TYPE_HOST,
+Thanks, applied.
 
-Actually, 'enum samsung_usb_phy_type' is unused; the 'type' parameter
-has 'int' type. Anyway, there is no need to declare this enum in the
-globally visible header. Squash the header.
-
-Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
----
-
- arch/arm/mach-s3c64xx/setup-usb-phy.c        |  5 +++++
- arch/arm/plat-samsung/include/plat/usb-phy.h |  2 --
- include/linux/usb/samsung_usb_phy.h          | 17 -----------------
- 3 files changed, 5 insertions(+), 19 deletions(-)
- delete mode 100644 include/linux/usb/samsung_usb_phy.h
-
-diff --git a/arch/arm/mach-s3c64xx/setup-usb-phy.c b/arch/arm/mach-s3c64xx/setup-usb-phy.c
-index 46a9e955607f..6aaaa1d8e8b9 100644
---- a/arch/arm/mach-s3c64xx/setup-usb-phy.c
-+++ b/arch/arm/mach-s3c64xx/setup-usb-phy.c
-@@ -15,6 +15,11 @@
- #include "regs-sys.h"
- #include "regs-usb-hsotg-phy.h"
- 
-+enum samsung_usb_phy_type {
-+	USB_PHY_TYPE_DEVICE,
-+	USB_PHY_TYPE_HOST,
-+};
-+
- static int s3c_usb_otgphy_init(struct platform_device *pdev)
- {
- 	struct clk *xusbxti;
-diff --git a/arch/arm/plat-samsung/include/plat/usb-phy.h b/arch/arm/plat-samsung/include/plat/usb-phy.h
-index 6d0c788beb9d..94da89ecbd3b 100644
---- a/arch/arm/plat-samsung/include/plat/usb-phy.h
-+++ b/arch/arm/plat-samsung/include/plat/usb-phy.h
-@@ -7,8 +7,6 @@
- #ifndef __PLAT_SAMSUNG_USB_PHY_H
- #define __PLAT_SAMSUNG_USB_PHY_H __FILE__
- 
--#include <linux/usb/samsung_usb_phy.h>
--
- extern int s5p_usb_phy_init(struct platform_device *pdev, int type);
- extern int s5p_usb_phy_exit(struct platform_device *pdev, int type);
- 
-diff --git a/include/linux/usb/samsung_usb_phy.h b/include/linux/usb/samsung_usb_phy.h
-deleted file mode 100644
-index dc0071741695..000000000000
---- a/include/linux/usb/samsung_usb_phy.h
-+++ /dev/null
-@@ -1,17 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0+
--/*
-- * Copyright (C) 2012 Samsung Electronics Co.Ltd
-- *		http://www.samsung.com/
-- *
-- * Defines phy types for samsung usb phy controllers - HOST or DEIVCE.
-- *
-- * This program is free software; you can redistribute  it and/or modify it
-- * under  the terms of  the GNU General  Public License as published by the
-- * Free Software Foundation;  either version 2 of the  License, or (at your
-- * option) any later version.
-- */
--
--enum samsung_usb_phy_type {
--	USB_PHY_TYPE_DEVICE,
--	USB_PHY_TYPE_HOST,
--};
--- 
-2.17.1
+Best regards,
+Krzysztof
 
