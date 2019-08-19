@@ -2,111 +2,133 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9155191855
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 18 Aug 2019 19:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A41291FB2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 11:09:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbfHRR2B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 18 Aug 2019 13:28:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39704 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725786AbfHRR2A (ORCPT
+        id S1727356AbfHSJJd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 05:09:33 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38391 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727352AbfHSJJc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 18 Aug 2019 13:28:00 -0400
-Received: from localhost.localdomain (unknown [194.230.155.124])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A67302146E;
-        Sun, 18 Aug 2019 17:27:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1566149279;
-        bh=iig6Re8PWJsFt/crrOvV4t6QJEhoY/povqVGZtQWCL8=;
-        h=From:To:Subject:Date:From;
-        b=xkCa3hC33h5bg5KUuIkrzhe1uCPvM7Tl/5rmvlydeZZ5K8asuzIByBwRVGSLc0I75
-         XFDFI6xzc/4Dptm6HwBTdxhmviFC7R0LryBCOuDNdp/qnZTJfCiaGTPBC4GA/NYgZ7
-         G+btALSxtO5dpm8uO0FF9jEZnumSpanY166oLTG0=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Kamil Konieczny <k.konieczny@partner.samsung.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: Extend patterns for Samsung SoC, Security Subsystem and clock drivers
-Date:   Sun, 18 Aug 2019 19:27:50 +0200
-Message-Id: <20190818172750.20921-1-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
+        Mon, 19 Aug 2019 05:09:32 -0400
+Received: by mail-pl1-f196.google.com with SMTP id m12so672994plt.5
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 02:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NbQHubvtE7M8Mm9C2LyqFuVWNwA8k3gi8WsBVYz2BKg=;
+        b=pc8kLgoVhNLslClp12JPBSjxR0z3JujowkefS6jDPR1UHNdaucastVWa59gQ8D8lbt
+         0MGRCHg9mrrnVUEfo2wUi3Iuo4Wu/u4lTKjXKpkr+Tlfx/BRr9ewsDbvTa439fOCKAWy
+         gTNy7KwC7wgAB85feFTYk/OxyRVTcFs813go5F4A5aBrEQw9RGPiNr2rZIGcrlgWyz5N
+         6pgP0WkpVzuKxOY1AQNKLZxQAzOGxLLYsNoE6uTn4EPuyi7iNjn+PiZk2iz7xo/9yaMa
+         nFp2BO9hS20XmNof1YVo4GXNSbggWhClhVXVv57TZFoKGOoMpANkEOqkT11+rV6L9FFv
+         LnKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NbQHubvtE7M8Mm9C2LyqFuVWNwA8k3gi8WsBVYz2BKg=;
+        b=JOkVXHLAEelW0/ipMcU4eKX5dUlm8RAfYCTv1TYKwwHTM7Lew+S4Y3ivfh41NJPaJW
+         gT4IXRB5ToBCQogJcvMRWHf1q/FF6DfoM/PSWpabGGPcZBS6bzxPHF216RrBXUFIpr0V
+         Lwv5DDAi9BHGqHXGIRPIUrufSGDRfdCwLBZZXRqxSidp1LhdVooUrv5A4IyV6gRYggZw
+         CxLYiichnDQ4iPFH2SH0o2JK95oC0NJtZYQaGdhXNT3rczrpsjR8APr3F08PKZ319Bon
+         BE2WzUCFuOVttuDtvjNiU0k39uZMj4dY++84rL5OefjN/M+JgGF439aNUaGcQAPRS7Ks
+         BYIQ==
+X-Gm-Message-State: APjAAAWbFdP/ceEZBsv1yCRUP61SjAENnycjx+x6VGk9PSRJAVLcLHSJ
+        Zf46RGT00LTeUk21oHm1CNVBKA==
+X-Google-Smtp-Source: APXvYqwkWKQ15NL5sU2NfelXo3wfOTdqz6Icamd3E43Zqn+osblR5WcJ5sPyUi8DObCUnMzd+CCJow==
+X-Received: by 2002:a17:902:a8:: with SMTP id a37mr6159528pla.316.1566205772237;
+        Mon, 19 Aug 2019 02:09:32 -0700 (PDT)
+Received: from localhost ([122.172.76.219])
+        by smtp.gmail.com with ESMTPSA id z19sm13413609pgv.35.2019.08.19.02.09.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 02:09:31 -0700 (PDT)
+Date:   Mon, 19 Aug 2019 14:39:28 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, krzk@kernel.org,
+        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
+        kgene@kernel.org, pankaj.dubey@samsung.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+Message-ID: <20190819090928.pke6cov52n4exlbp@vireshk-i7>
+References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
+ <20190718143044.25066-1-s.nawrocki@samsung.com>
+ <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+ <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
+ <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
+ <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Extend the patterns to cover all related files in respective
-categories:
-1. Samsung Exynos ARM architecture: add soc drivers headers and make
-   directory matches consistent,
-2. Samsung Security SubSystem driver (crypto): add bindings,
-3. Samsung SoC clock drivers: add S3C24xx, S3C64xx and S5Pv210 bindings.
+On 09-08-19, 17:58, Sylwester Nawrocki wrote:
+> Thank you for your suggestions.
+> 
+> For some Exynos SoC variants the algorithm of selecting CPU voltage supply
+> is a bit more complex than just selecting a column in the frequency/voltage 
+> matrix, i.e. selecting a set of voltage values for whole frequency range.
+> 
+> Frequency range could be divided into sub-ranges and to each such a sub-range 
+> part of different column could be assigned, depending on data fused in 
+> the CHIPID block registers.
+> 
+> We could create OPP node for each frequency and specify all needed voltages 
+> as a list of "opp-microvolt-<name>" properties but apart from the fact that 
+> it would have been quite many properties, e.g. 42 (3 tables * 14 columns), 
+> only for some SoC types the dev_pm_opp_set_prop_name() approach could be 
+> used. We would need to be able to set opp-microvolt-* property name 
+> separately for each frequency (OPP).
+> 
+> Probably most future proof would be a DT binding where we could still 
+> re-create those Exynos-specific ASV tables from DT. For example add named 
+> opp-microvolt-* properties or something similar to hold rows of each ASV 
+> table. But that conflicts with "operating-points-v2" binding, where 
+> multiple OPP voltage values are described by just named properties and 
+> multiple entries correspond to min/target/max.
+> 
+> opp_table0 {
+> 	compatible = "...", "operating-points-v2";
+> 	opp-shared;
+> 	opp-2100000000 {
+> 		opp-hz = /bits/ 64 <1800000000>;
+> 		opp-microvolt = <...>;
+> 		opp-microvolt-t1 = <1362500>, <1350000>, ....;
+> 		opp-microvolt-t2 = <1362500>, <1360000>, ....;
+> 		opp-microvolt-t3 = <1362500>, <1340000>, ....;
+> 	};
+> 	...
+> 	opp-200000000 {
+> 		opp-hz = /bits/ 64 <200000000>;
+> 		opp-microvolt = <...>;
+> 		opp-microvolt-t1 = <900000>, <900000>, ....;
+> 		opp-microvolt-t2 = <900000>, <900000>, ....;
+> 		opp-microvolt-t3 = <900000>, <900000>, ....;
+> 	};
+> };
+> 
+> I might be missing some information now on how those Exynos ASV tables 
+> are used on other SoCs that would need to be supported.
+> 
+> There will be even more data to include when adding support for the Body
+> Bias voltage, for each CPU supply voltage we could possibly have 
+> corresponding Body Bias voltage.
 
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: Kamil Konieczny <k.konieczny@partner.samsung.com>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: Tomasz Figa <tomasz.figa@gmail.com>
-Cc: Chanwoo Choi <cw00.choi@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Will something like this help ?
 
----
+https://lore.kernel.org/lkml/1442623929-4507-3-git-send-email-sboyd@codeaurora.org/
 
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: linux-crypto@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
----
- MAINTAINERS | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+This never got merged but the idea was AVS only.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 420567d1519a..35a4002ac58b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2199,8 +2199,9 @@ F:	drivers/*/*s3c24*
- F:	drivers/*/*/*s3c24*
- F:	drivers/*/*s3c64xx*
- F:	drivers/*/*s5pv210*
--F:	drivers/memory/samsung/*
--F:	drivers/soc/samsung/*
-+F:	drivers/memory/samsung/
-+F:	drivers/soc/samsung/
-+F:	include/linux/soc/samsung/
- F:	Documentation/arm/samsung/
- F:	Documentation/devicetree/bindings/arm/samsung/
- F:	Documentation/devicetree/bindings/sram/samsung-sram.txt
-@@ -14174,6 +14175,8 @@ M:	Kamil Konieczny <k.konieczny@partner.samsung.com>
- L:	linux-crypto@vger.kernel.org
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
-+F:	Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
-+F:	Documentation/devicetree/bindings/crypto/samsung-sss.txt
- F:	drivers/crypto/s5p-sss.c
- 
- SAMSUNG S5P/EXYNOS4 SOC SERIES CAMERA SUBSYSTEM DRIVERS
-@@ -14194,6 +14197,8 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/snawrocki/clk.git
- F:	drivers/clk/samsung/
- F:	include/dt-bindings/clock/exynos*.h
- F:	Documentation/devicetree/bindings/clock/exynos*.txt
-+F:	Documentation/devicetree/bindings/clock/samsung,s3c*
-+F:	Documentation/devicetree/bindings/clock/samsung,s5p*
- 
- SAMSUNG SPI DRIVERS
- M:	Kukjin Kim <kgene@kernel.org>
 -- 
-2.17.1
-
+viresh
