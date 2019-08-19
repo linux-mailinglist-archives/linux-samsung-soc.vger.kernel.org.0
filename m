@@ -2,132 +2,108 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A5FBA921F2
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 13:17:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 674389223D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 13:25:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727385AbfHSLQZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 19 Aug 2019 07:16:25 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:36899 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726717AbfHSLQZ (ORCPT
+        id S1727403AbfHSLZh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 07:25:37 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42025 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727259AbfHSLZh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 19 Aug 2019 07:16:25 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190819111623euoutp02edbfa7141cec56973cd3c3fc39449169~8TsYrFm5n0255102551euoutp02F
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 11:16:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190819111623euoutp02edbfa7141cec56973cd3c3fc39449169~8TsYrFm5n0255102551euoutp02F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566213383;
-        bh=mHohkKnMT8xmCVz946S2fj/VooESKL2x2tfzA/bLGQM=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=U1c/AyGSOon12WTp1/ca/JxxkZdGezvL7jktcoYNefWjGNSwwFhOlMQnj6HaRUTDz
-         2TvPzcFepYBcXRgG8/xKlAwWxhOR87MlnvwiTXONDx3AL8ySAGBMNs3kD12KAN1pHE
-         0eevu23Kh9DyjgDZ0TlkSw+aOINIYxbQs8FQzEl0=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190819111622eucas1p2eb5126314a1c1630ca616a5b40279764~8TsX2Yyqt3179931799eucas1p2l;
-        Mon, 19 Aug 2019 11:16:22 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 7D.DD.04469.6058A5D5; Mon, 19
-        Aug 2019 12:16:22 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190819111621eucas1p228cea8b1ed16b8a065983af9ea28c3db~8TsW-QSK_3187131871eucas1p2r;
-        Mon, 19 Aug 2019 11:16:21 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190819111621eusmtrp29c9e075d164c5e486878d581bd782150~8TsW_nkFW1063410634eusmtrp2u;
-        Mon, 19 Aug 2019 11:16:21 +0000 (GMT)
-X-AuditID: cbfec7f2-569ff70000001175-74-5d5a8506bee6
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 98.9D.04117.5058A5D5; Mon, 19
-        Aug 2019 12:16:21 +0100 (BST)
-Received: from [106.120.51.75] (unknown [106.120.51.75]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190819111621eusmtip1f1c967c1212ba46b9976063d06632464~8TsWZtvTM1525215252eusmtip1N;
-        Mon, 19 Aug 2019 11:16:20 +0000 (GMT)
-Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
-To:     Viresh Kumar <viresh.kumar@linaro.org>
+        Mon, 19 Aug 2019 07:25:37 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i30so1002986pfk.9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 04:25:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SRz2qLg3b+5ryCMRr2awnBnODV1H2CKHh3/qqtN+h2g=;
+        b=lD+FTcFa1U9Of+5ZNZJ4YzlGWcZ8HOoCw+P7Jzn4XSaWCEbXSy/g2lO+F2ffBaBafe
+         292sSYMHHbv0QCQB7XFFf8fwAaH0ALND8k/JZkSr/H3gLdiFUVqwRTFfvtVdHfQZc7Lm
+         G/idNOcBUhb+WqQrmkWp2fwQ21qbAwXofZB1HOBJCIcuj1jYmCYHV/Qtt3Fdyypzblpc
+         TX9ffHnGRwEMO7hL9oMp/6BMI2dHpkk5UcPBQIqfBAsD4re9WiGlQ8JNtCjoO4kdBUv/
+         dLpWghx1aCOIscxqykPKATABc9EUpyLTFXlRqHB81XgqNGSWQIboH8b5OfXK7BElzCDh
+         lbVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SRz2qLg3b+5ryCMRr2awnBnODV1H2CKHh3/qqtN+h2g=;
+        b=sv0+99dMVXPZx9jsZ+LA/J6sy5A2QEQDcV4mKDPGV/5rj/jN2VITV9msW6I4UPuxlZ
+         YOj1twAe5UinXv7vKv8lb7L5PnE5TVl0YRptDUhIuIVPjzLxv0a7mSxqGujG1uzPedJo
+         DI3EOga1Pwknm4lLG1Wh0aPgiH/11TUHdT47PoZroReANO8MVXc2MSBp2oBVRXjujm34
+         0sdY58cmSM2VcPG7VmMnzv5NmL6CSLGP5ZtLTPNGgh8MZGHbaX/2KT0LaktGKek/6HY+
+         btWFeGEfdqN2f0fnXZ3VHCNVGZdF6sYeq/NY5Tto15OEnvt8eyj0uZ4XP+ceDTDlxosy
+         mpqA==
+X-Gm-Message-State: APjAAAWOa9B5ex0Z0vppURGVEgwtTXaWb1LIYbR6Kd9NmwPNifBx0HsI
+        zlRqUlHjpl+KibffPXS2kNSJQA==
+X-Google-Smtp-Source: APXvYqyAkY+QkAa+fLhBUiqT2uTFDrLHRUyWTSqggEurMHSU6YVq9XlEShl2Oc8P09iG+AuUVAQXtw==
+X-Received: by 2002:aa7:9dcd:: with SMTP id g13mr24046044pfq.204.1566213936145;
+        Mon, 19 Aug 2019 04:25:36 -0700 (PDT)
+Received: from localhost ([122.172.76.219])
+        by smtp.gmail.com with ESMTPSA id q8sm11992733pjq.20.2019.08.19.04.25.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 04:25:35 -0700 (PDT)
+Date:   Mon, 19 Aug 2019 16:55:33 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, krzk@kernel.org,
         robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
         kgene@kernel.org, pankaj.dubey@samsung.com,
         linux-samsung-soc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <b831d7c5-c830-fd65-20cf-02e209889c28@samsung.com>
-Date:   Mon, 19 Aug 2019 13:16:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20190819090928.pke6cov52n4exlbp@vireshk-i7>
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0iTYRjt3XfVmrxOzSeLkpFBA28Q8YUhmSULCbIbYljN/FqSNzYvaZSW
-        GKV5KUhtKooXUjHMVWZLy3TOwswyCyXvrkxtEblRJmjOT8l/55znPM97DrwsIWmnXNiI6Dhe
-        Fa2IlNK2ZINh9q07nR4S6tVcbcfVF9RRXIn+LcXljE8TXHf3A4bTjn+iuA+6IpqbydIjrqD7
-        uYi7rx9kuLLHZoZLb9YzXL1Fzj0cMdB7xHJtzQ1aPvCpiZY/rEiRZz+qQfIZ7eZDVIjt7nA+
-        MiKBV3n6nrY99+JnHx3bQl8YyptGqUhDZSAbFvAO+Dbwg8xAtqwEVyGYK69cJmYEPzrHCIHM
-        IHhjqKBXVsy6+yJhcA9B8YMuRiAmBF+Mf5YOO+C90DRnWdxgWUcsg8l+3ioT+KMIdJYlTGNv
-        yGrPRlaLGPvC74ltVkhiN7jTrbQ6nHAw/BppWzooxvbw+q6RtGIbvAua5gcI4aIzXDVXUwLe
-        Ak9MRUuZAQ8x8LXKsJx5H7y89Xe5sgNMdTxiBLwJFp6WiISFNAQ3n31mBJKLYLijFAkuH2jr
-        eE9Z0xF4O9TpPAXZD7J79SKrDNgO+kz2Qgg7uN2QTwiyGK5fkwjurTBXky8SsAtkGhfIXCTV
-        rKqmWVVHs6qO5v+7pYisQc58vDpKyau9o/lED7UiSh0frfQ4ExOlRYufq3O+41cjsvSEtSLM
-        Iuk68Su3kFAJpUhQJ0W1ImAJqaM42ys4VCIOVyQl86qYU6r4SF7dijaypNRZfHHNyAkJViri
-        +PM8H8urVqYi1sYlFSX/Tsks75k8WygLDEhsfpWl9fTRX9ZsbZzaMezWWxrj5KUzetQp1x48
-        2lKYMH7Z1ZAS3C/FoyangLDUA+4bXEVBvU2zfe+OZ/juLGsJlNV/DIo3FI8x5Wy/9J5/FZlu
-        Drx0eH1O7feEK/vTeg8fq81rnPDzz7TP7Rk9crKyb3CqS0qqzym8ZYRKrfgHenLCP1gDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsVy+t/xu7qsrVGxBhsWK1lsnLGe1WL+kXOs
-        Fv2PXzNbnD+/gd1i0+NrrBaXd81hs/jce4TRYsb5fUwWa4/cZbdYtPULu0Xr3iPsFhu/elhs
-        fnCMzYHXY9OqTjaPO9f2sHlsXlLv0bdlFaPH501yAaxRejZF+aUlqQoZ+cUltkrRhhZGeoaW
-        FnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehn7P9xgKzjAVnFv2mvGBsZZrF2MnBwSAiYS
-        X3atZepi5OIQEljKKPH49EOgBAdQQkpifosSRI2wxJ9rXWwQNa8ZJRq3fGIESQgLOEns+f2V
-        DaReREBL4uXNVJAaZoGrTBKL91xigWhoY5Y48boDrIFNwFCi92gfI0gDr4CdxPfnaiAmi4Cq
-        xNTz6SAVogIREod3zAKr5hUQlDg58wkLiM0pYCmx598dZhCbWUBd4s+8S1C2uETTl5WsELa8
-        xPa3c5gnMArNQtI+C0nLLCQts5C0LGBkWcUoklpanJueW2ykV5yYW1yal66XnJ+7iREYqduO
-        /dyyg7HrXfAhRgEORiUe3hOqUbFCrIllxZW5hxglOJiVRHj7DCJihXhTEiurUovy44tKc1KL
-        DzGaAv02kVlKNDkfmETySuINTQ3NLSwNzY3Njc0slMR5OwQOxggJpCeWpGanphakFsH0MXFw
-        SjUwXj6qMvmZ8e8Dmzwd76Ul8/W90n3Kmb5W9pWaUPZ5UzsxcXHLH8snqj0pVee+aHfyeIn4
-        /9+Hez+xesz3rPT0sl/08Qrny2PbrzDcltfUW7hH46mpn+9NK7PMN0I+Xj9lDNq+X5Vo5qsS
-        n2jJZtAhy/iL/833XJVtiafP3P7S3XXlGmvZW3s2JZbijERDLeai4kQAgtWqOeoCAAA=
-X-CMS-MailID: 20190819111621eucas1p228cea8b1ed16b8a065983af9ea28c3db
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+Message-ID: <20190819112533.bvfyinw7fsebkufr@vireshk-i7>
 References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
-        <20190718143044.25066-1-s.nawrocki@samsung.com>
-        <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
-        <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
-        <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
-        <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
-        <20190819090928.pke6cov52n4exlbp@vireshk-i7>
+ <20190718143044.25066-1-s.nawrocki@samsung.com>
+ <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+ <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
+ <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
+ <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
+ <20190819090928.pke6cov52n4exlbp@vireshk-i7>
+ <b831d7c5-c830-fd65-20cf-02e209889c28@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b831d7c5-c830-fd65-20cf-02e209889c28@samsung.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 8/19/19 11:09, Viresh Kumar wrote:
-> Will something like this help ?
+On 19-08-19, 13:16, Sylwester Nawrocki wrote:
+> On 8/19/19 11:09, Viresh Kumar wrote:
+> > Will something like this help ?
+> > 
+> > https://lore.kernel.org/lkml/1442623929-4507-3-git-send-email-sboyd@codeaurora.org/
+> > 
+> > This never got merged but the idea was AVS only.
 > 
-> https://lore.kernel.org/lkml/1442623929-4507-3-git-send-email-sboyd@codeaurora.org/
+> It's quite interesting work, it seems to be for a more advanced use case 
+> where OPP voltage is being adjusted at runtime.
 > 
-> This never got merged but the idea was AVS only.
+> We could use it instead of removing an OPP and then adding with updated 
+> voltage. On Exynos there is there is just a need to update OPPs once at boot 
+> time, so it is more "static". However the requirements could presumably 
+> change in future.
 
-It's quite interesting work, it seems to be for a more advanced use case 
-where OPP voltage is being adjusted at runtime.
+The API is about changing the values after they are parsed once from DT. You can
+change it once or multiple times depending on the use case.
 
-We could use it instead of removing an OPP and then adding with updated 
-voltage. On Exynos there is there is just a need to update OPPs once at boot 
-time, so it is more "static". However the requirements could presumably 
-change in future.
+> If that's your preference I could switch to that notifier approach.
 
-If that's your preference I could switch to that notifier approach.
-AFAICS the API would still need to be extended to support multiple voltages,
-when in future we add support for the Body Bias regulator. 
+You shouldn't be required to use the notifier. Just add the OPP table and update
+the values right after that. So no one would be using the values at that time.
+
+> AFAICS the API would still need to be extended to support multiple voltages,
+> when in future we add support for the Body Bias regulator. 
+
+Right.
+
+Will this patchset solve the problems for you and make your DT light weight ?
 
 -- 
-Thanks,
-Sylwester
+viresh
