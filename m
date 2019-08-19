@@ -2,133 +2,170 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A41291FB2
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 11:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5FAA92063
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 11:32:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfHSJJd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 19 Aug 2019 05:09:33 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38391 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727352AbfHSJJc (ORCPT
+        id S1726550AbfHSJc5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 05:32:57 -0400
+Received: from lb3-smtp-cloud8.xs4all.net ([194.109.24.29]:42373 "EHLO
+        lb3-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726491AbfHSJc5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 19 Aug 2019 05:09:32 -0400
-Received: by mail-pl1-f196.google.com with SMTP id m12so672994plt.5
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 02:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NbQHubvtE7M8Mm9C2LyqFuVWNwA8k3gi8WsBVYz2BKg=;
-        b=pc8kLgoVhNLslClp12JPBSjxR0z3JujowkefS6jDPR1UHNdaucastVWa59gQ8D8lbt
-         0MGRCHg9mrrnVUEfo2wUi3Iuo4Wu/u4lTKjXKpkr+Tlfx/BRr9ewsDbvTa439fOCKAWy
-         gTNy7KwC7wgAB85feFTYk/OxyRVTcFs813go5F4A5aBrEQw9RGPiNr2rZIGcrlgWyz5N
-         6pgP0WkpVzuKxOY1AQNKLZxQAzOGxLLYsNoE6uTn4EPuyi7iNjn+PiZk2iz7xo/9yaMa
-         nFp2BO9hS20XmNof1YVo4GXNSbggWhClhVXVv57TZFoKGOoMpANkEOqkT11+rV6L9FFv
-         LnKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NbQHubvtE7M8Mm9C2LyqFuVWNwA8k3gi8WsBVYz2BKg=;
-        b=JOkVXHLAEelW0/ipMcU4eKX5dUlm8RAfYCTv1TYKwwHTM7Lew+S4Y3ivfh41NJPaJW
-         gT4IXRB5ToBCQogJcvMRWHf1q/FF6DfoM/PSWpabGGPcZBS6bzxPHF216RrBXUFIpr0V
-         Lwv5DDAi9BHGqHXGIRPIUrufSGDRfdCwLBZZXRqxSidp1LhdVooUrv5A4IyV6gRYggZw
-         CxLYiichnDQ4iPFH2SH0o2JK95oC0NJtZYQaGdhXNT3rczrpsjR8APr3F08PKZ319Bon
-         BE2WzUCFuOVttuDtvjNiU0k39uZMj4dY++84rL5OefjN/M+JgGF439aNUaGcQAPRS7Ks
-         BYIQ==
-X-Gm-Message-State: APjAAAWbFdP/ceEZBsv1yCRUP61SjAENnycjx+x6VGk9PSRJAVLcLHSJ
-        Zf46RGT00LTeUk21oHm1CNVBKA==
-X-Google-Smtp-Source: APXvYqwkWKQ15NL5sU2NfelXo3wfOTdqz6Icamd3E43Zqn+osblR5WcJ5sPyUi8DObCUnMzd+CCJow==
-X-Received: by 2002:a17:902:a8:: with SMTP id a37mr6159528pla.316.1566205772237;
-        Mon, 19 Aug 2019 02:09:32 -0700 (PDT)
-Received: from localhost ([122.172.76.219])
-        by smtp.gmail.com with ESMTPSA id z19sm13413609pgv.35.2019.08.19.02.09.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Aug 2019 02:09:31 -0700 (PDT)
-Date:   Mon, 19 Aug 2019 14:39:28 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, krzk@kernel.org,
-        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
-Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
-Message-ID: <20190819090928.pke6cov52n4exlbp@vireshk-i7>
-References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
- <20190718143044.25066-1-s.nawrocki@samsung.com>
- <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
- <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
- <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
- <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
+        Mon, 19 Aug 2019 05:32:57 -0400
+Received: from [192.168.2.10] ([46.9.232.237])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id ze1yhLrdkDqPeze22hnetb; Mon, 19 Aug 2019 11:32:54 +0200
+Subject: Re: [PATCH v7 9/9] drm: exynos: exynos_hdmi: use
+ cec_notifier_conn_(un)register
+To:     Dariusz Marcinkiewicz <darekm@google.com>,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org
+Cc:     linux-samsung-soc@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+References: <20190814104520.6001-1-darekm@google.com>
+ <20190814104520.6001-10-darekm@google.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <afb078a4-fcc0-348f-a44a-1bc42f9d0562@xs4all.nl>
+Date:   Mon, 19 Aug 2019 11:32:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20190814104520.6001-10-darekm@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfItaiA0s3txtT7+Va9qL4LzgEwfX8209zJbEtkbvihu0JellZ/bJoZ/HB32Dlkr2WEvSXgzBuzF8uT/ko+i5zbYZuBLrh4eApyeCA9SUsHMmKOK+sj5t
+ o/ylrZosAqvdbnWdyCDJaDVhCK18cDpDsONdjHSoGslycM+uxNLKg5kwf5/ehSo2NLwCXUujr4DndTyjHvf71ZHU/X2bkziAebZFaXuw9UQgC3CRrX8IycgD
+ gPVqS6STsO6EWZ5nUHkRNetYvyNQ2rGP/p+76Zonx1OH6GgkxEjNMSjrcbf+8WoPDkoUmsBWd2ZoLHFzGkyo9JXPPP259zpe77JyOP0FV5WQjaLtKOmRJ9dd
+ oZuIo07AWohuu42HaHxj8Yn8OKClgbOS5GcIOabeZxynwyU9b5ZQdygkZ2nB8wtOHtPwkmpSCNxDjzABsMw1q5lJ/2oiAbEk+En6lO9xASJYY4mkl3/qQALX
+ haIpS2JI9fhgZDDM6Zxb267dhmt3wE+xQsjRmjfzDrJD3MhALXP9I8rvVDhFkYx9CMOuZdTQPU4mQ5DDGLR7GXqtwds6DlgmQIaoyg==
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 09-08-19, 17:58, Sylwester Nawrocki wrote:
-> Thank you for your suggestions.
+On 8/14/19 12:45 PM, Dariusz Marcinkiewicz wrote:
+> Use the new cec_notifier_conn_(un)register() functions to
+> (un)register the notifier for the HDMI connector, and fill in
+> the cec_connector_info.
 > 
-> For some Exynos SoC variants the algorithm of selecting CPU voltage supply
-> is a bit more complex than just selecting a column in the frequency/voltage 
-> matrix, i.e. selecting a set of voltage values for whole frequency range.
+> Changes since v2:
+> 	- removed unnecessary call to invalidate phys address before
+> 	deregistering the notifier,
+> 	- use cec_notifier_phys_addr_invalidate instead of setting
+> 	invalid address on a notifier.
 > 
-> Frequency range could be divided into sub-ranges and to each such a sub-range 
-> part of different column could be assigned, depending on data fused in 
-> the CHIPID block registers.
-> 
-> We could create OPP node for each frequency and specify all needed voltages 
-> as a list of "opp-microvolt-<name>" properties but apart from the fact that 
-> it would have been quite many properties, e.g. 42 (3 tables * 14 columns), 
-> only for some SoC types the dev_pm_opp_set_prop_name() approach could be 
-> used. We would need to be able to set opp-microvolt-* property name 
-> separately for each frequency (OPP).
-> 
-> Probably most future proof would be a DT binding where we could still 
-> re-create those Exynos-specific ASV tables from DT. For example add named 
-> opp-microvolt-* properties or something similar to hold rows of each ASV 
-> table. But that conflicts with "operating-points-v2" binding, where 
-> multiple OPP voltage values are described by just named properties and 
-> multiple entries correspond to min/target/max.
-> 
-> opp_table0 {
-> 	compatible = "...", "operating-points-v2";
-> 	opp-shared;
-> 	opp-2100000000 {
-> 		opp-hz = /bits/ 64 <1800000000>;
-> 		opp-microvolt = <...>;
-> 		opp-microvolt-t1 = <1362500>, <1350000>, ....;
-> 		opp-microvolt-t2 = <1362500>, <1360000>, ....;
-> 		opp-microvolt-t3 = <1362500>, <1340000>, ....;
-> 	};
-> 	...
-> 	opp-200000000 {
-> 		opp-hz = /bits/ 64 <200000000>;
-> 		opp-microvolt = <...>;
-> 		opp-microvolt-t1 = <900000>, <900000>, ....;
-> 		opp-microvolt-t2 = <900000>, <900000>, ....;
-> 		opp-microvolt-t3 = <900000>, <900000>, ....;
-> 	};
-> };
-> 
-> I might be missing some information now on how those Exynos ASV tables 
-> are used on other SoCs that would need to be supported.
-> 
-> There will be even more data to include when adding support for the Body
-> Bias voltage, for each CPU supply voltage we could possibly have 
-> corresponding Body Bias voltage.
+> Signed-off-by: Dariusz Marcinkiewicz <darekm@google.com>
+> Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-Will something like this help ?
+Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-https://lore.kernel.org/lkml/1442623929-4507-3-git-send-email-sboyd@codeaurora.org/
+Regards,
 
-This never got merged but the idea was AVS only.
+	Hans
 
--- 
-viresh
+> ---
+>  drivers/gpu/drm/exynos/exynos_hdmi.c | 31 ++++++++++++++++------------
+>  1 file changed, 18 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+> index bc1565f1822ab..d532b468d9af5 100644
+> --- a/drivers/gpu/drm/exynos/exynos_hdmi.c
+> +++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+> @@ -852,6 +852,10 @@ static enum drm_connector_status hdmi_detect(struct drm_connector *connector,
+>  
+>  static void hdmi_connector_destroy(struct drm_connector *connector)
+>  {
+> +	struct hdmi_context *hdata = connector_to_hdmi(connector);
+> +
+> +	cec_notifier_conn_unregister(hdata->notifier);
+> +
+>  	drm_connector_unregister(connector);
+>  	drm_connector_cleanup(connector);
+>  }
+> @@ -935,6 +939,7 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
+>  {
+>  	struct hdmi_context *hdata = encoder_to_hdmi(encoder);
+>  	struct drm_connector *connector = &hdata->connector;
+> +	struct cec_connector_info conn_info;
+>  	int ret;
+>  
+>  	connector->interlace_allowed = true;
+> @@ -957,6 +962,15 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
+>  			DRM_DEV_ERROR(hdata->dev, "Failed to attach bridge\n");
+>  	}
+>  
+> +	cec_fill_conn_info_from_drm(&conn_info, connector);
+> +
+> +	hdata->notifier = cec_notifier_conn_register(hdata->dev, NULL,
+> +						     &conn_info);
+> +	if (hdata->notifier == NULL) {
+> +		ret = -ENOMEM;
+> +		DRM_DEV_ERROR(hdata->dev, "Failed to allocate CEC notifier\n");
+> +	}
+> +
+>  	return ret;
+>  }
+>  
+> @@ -1528,8 +1542,8 @@ static void hdmi_disable(struct drm_encoder *encoder)
+>  		 */
+>  		mutex_unlock(&hdata->mutex);
+>  		cancel_delayed_work(&hdata->hotplug_work);
+> -		cec_notifier_set_phys_addr(hdata->notifier,
+> -					   CEC_PHYS_ADDR_INVALID);
+> +		if (hdata->notifier)
+> +			cec_notifier_phys_addr_invalidate(hdata->notifier);
+>  		return;
+>  	}
+>  
+> @@ -2006,12 +2020,6 @@ static int hdmi_probe(struct platform_device *pdev)
+>  		}
+>  	}
+>  
+> -	hdata->notifier = cec_notifier_get(&pdev->dev);
+> -	if (hdata->notifier == NULL) {
+> -		ret = -ENOMEM;
+> -		goto err_hdmiphy;
+> -	}
+> -
+>  	pm_runtime_enable(dev);
+>  
+>  	audio_infoframe = &hdata->audio.infoframe;
+> @@ -2023,7 +2031,7 @@ static int hdmi_probe(struct platform_device *pdev)
+>  
+>  	ret = hdmi_register_audio_device(hdata);
+>  	if (ret)
+> -		goto err_notifier_put;
+> +		goto err_runtime_disable;
+>  
+>  	ret = component_add(&pdev->dev, &hdmi_component_ops);
+>  	if (ret)
+> @@ -2034,8 +2042,7 @@ static int hdmi_probe(struct platform_device *pdev)
+>  err_unregister_audio:
+>  	platform_device_unregister(hdata->audio.pdev);
+>  
+> -err_notifier_put:
+> -	cec_notifier_put(hdata->notifier);
+> +err_runtime_disable:
+>  	pm_runtime_disable(dev);
+>  
+>  err_hdmiphy:
+> @@ -2054,12 +2061,10 @@ static int hdmi_remove(struct platform_device *pdev)
+>  	struct hdmi_context *hdata = platform_get_drvdata(pdev);
+>  
+>  	cancel_delayed_work_sync(&hdata->hotplug_work);
+> -	cec_notifier_set_phys_addr(hdata->notifier, CEC_PHYS_ADDR_INVALID);
+>  
+>  	component_del(&pdev->dev, &hdmi_component_ops);
+>  	platform_device_unregister(hdata->audio.pdev);
+>  
+> -	cec_notifier_put(hdata->notifier);
+>  	pm_runtime_disable(&pdev->dev);
+>  
+>  	if (!IS_ERR(hdata->reg_hdmi_en))
+> 
+
