@@ -2,170 +2,151 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A5FAA92063
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 11:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FF0892086
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Aug 2019 11:38:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726550AbfHSJc5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 19 Aug 2019 05:32:57 -0400
-Received: from lb3-smtp-cloud8.xs4all.net ([194.109.24.29]:42373 "EHLO
-        lb3-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726491AbfHSJc5 (ORCPT
+        id S1726842AbfHSJix (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 05:38:53 -0400
+Received: from lb1-smtp-cloud8.xs4all.net ([194.109.24.21]:48805 "EHLO
+        lb1-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726477AbfHSJix (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 19 Aug 2019 05:32:57 -0400
+        Mon, 19 Aug 2019 05:38:53 -0400
 Received: from [192.168.2.10] ([46.9.232.237])
         by smtp-cloud8.xs4all.net with ESMTPA
-        id ze1yhLrdkDqPeze22hnetb; Mon, 19 Aug 2019 11:32:54 +0200
-Subject: Re: [PATCH v7 9/9] drm: exynos: exynos_hdmi: use
- cec_notifier_conn_(un)register
+        id ze7ghLtkkDqPeze7khngI6; Mon, 19 Aug 2019 11:38:50 +0200
+Subject: Re: [PATCH v7 0/9] drm: cec: convert DRM drivers to the new notifier
+ API
 To:     Dariusz Marcinkiewicz <darekm@google.com>,
         dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org
-Cc:     linux-samsung-soc@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
+Cc:     Kate Stewart <kstewart@linuxfoundation.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Dhinakaran Pandiyan <dhinakaran.pandiyan@intel.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        linux-samsung-soc@vger.kernel.org,
+        David Francis <David.Francis@amd.com>,
+        amd-gfx@lists.freedesktop.org, Leo Li <sunpeng.li@amd.com>,
+        "Jerry (Fangzhi) Zuo" <Jerry.Zuo@amd.com>,
+        linux-arm-kernel@lists.infradead.org,
+        nouveau@lists.freedesktop.org, Jonas Karlman <jonas@kwiboo.se>,
+        Jani Nikula <jani.nikula@intel.com>,
+        intel-gfx@lists.freedesktop.org,
+        Russell King <rmk+kernel@armlinux.org.uk>,
+        Sean Paul <seanpaul@chromium.org>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Thomas Lim <Thomas.Lim@amd.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
         linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
+        Manasi Navare <manasi.d.navare@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Enrico Weigelt <info@metux.net>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
 References: <20190814104520.6001-1-darekm@google.com>
- <20190814104520.6001-10-darekm@google.com>
 From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <afb078a4-fcc0-348f-a44a-1bc42f9d0562@xs4all.nl>
-Date:   Mon, 19 Aug 2019 11:32:50 +0200
+Message-ID: <42c7ef3c-b7e5-8c63-c7c2-bfc6c56100c6@xs4all.nl>
+Date:   Mon, 19 Aug 2019 11:38:44 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190814104520.6001-10-darekm@google.com>
+In-Reply-To: <20190814104520.6001-1-darekm@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfItaiA0s3txtT7+Va9qL4LzgEwfX8209zJbEtkbvihu0JellZ/bJoZ/HB32Dlkr2WEvSXgzBuzF8uT/ko+i5zbYZuBLrh4eApyeCA9SUsHMmKOK+sj5t
- o/ylrZosAqvdbnWdyCDJaDVhCK18cDpDsONdjHSoGslycM+uxNLKg5kwf5/ehSo2NLwCXUujr4DndTyjHvf71ZHU/X2bkziAebZFaXuw9UQgC3CRrX8IycgD
- gPVqS6STsO6EWZ5nUHkRNetYvyNQ2rGP/p+76Zonx1OH6GgkxEjNMSjrcbf+8WoPDkoUmsBWd2ZoLHFzGkyo9JXPPP259zpe77JyOP0FV5WQjaLtKOmRJ9dd
- oZuIo07AWohuu42HaHxj8Yn8OKClgbOS5GcIOabeZxynwyU9b5ZQdygkZ2nB8wtOHtPwkmpSCNxDjzABsMw1q5lJ/2oiAbEk+En6lO9xASJYY4mkl3/qQALX
- haIpS2JI9fhgZDDM6Zxb267dhmt3wE+xQsjRmjfzDrJD3MhALXP9I8rvVDhFkYx9CMOuZdTQPU4mQ5DDGLR7GXqtwds6DlgmQIaoyg==
+X-CMAE-Envelope: MS4wfPDgGfS7c9tn4rafxcc15L+sdU94YNd12NYSgxtW27RjNdWt8soWf0p7zwZtSmj5HF9HsGpidCpnUpt5hDO/L/H68USjBoTVY6y1GnWXCIZIGReaUbCR
+ r4vAQe5xN1v/w07oNHcOJEsALfrneb1NuHIyy7V6sy8SIyaqln5q6vgESUB5xmUmpjy4J2O7D6fMHK+OU+bRJ9fYkvsP+Uc1l3/bG66OSNAQMIGJgtsV4V9i
+ ILw/etbBTDN7if1Tx31wHjdGiAqAi2pNFQmMYTY5myx6Zdx9FohbrBpgZlTicKwY1GlNJ9Iyh3AoVqqW1A8DqPYjFzp9Ll5zCNL3o5E2o11NlByJtcaZxbdb
+ ZzMqPs6UKce370BAWUuRPehhbW6Di1dnt0WRsX2wZQ/VdQu7h4ZauWcS91g3bhRrgqS9bzdyGIpOjL87l2z8V9uBXaKe2ZzI9v+iYftgLh7dRwbvkIsodc3L
+ WSoB8f180Sr1hqSugtvbyhNsAz0YjYmzNY3N9pdgBp+SXQvKyt4hoILiopomIs4P/sy1Z5DxYk6FugifGpJIu1+7L6C+KppnIjS8pNy6VK+oGq4FEr3vh8yB
+ GxK95UWqdQSIhX5OpbXpMoJ1xZmtr0G+RKLUKZDTYJSdjAUPeR/nzCbyJnokpxsiyNJnK4uM/ViGRSjjxIDEsrh+rESV2nH1GrdKW7cijdSormeE7cD32w/Y
+ SX3ShlplIcVz0YZ5B8TsYacwnzQTsn4VUfa/28rKuR6IqQuOAgHZnAlsMMhXgsG1r2OSGeLsTxxaMWxH0amG69rQr+TNjlWMj/cr+E6orZcfJlTMcRWxYl9s
+ pStvJvOg2MVG68BZKEV+zg/qwvrlhBBPPX0ZnnNTfJ+iQv5pjalUb9V4NR+zO6Qg54qpGx0riTn+U77CD6GTAk6QtjbbB+nCdXM33ABE2eN2Hgh4tc1ruyeg
+ 9mcen89SqOMwc8sv/qhbPgWy3HH+8lVyhyOBp+hmdZ8rG/D+z2mq2ChOL+dcZZR8AkwGQjqwvAaRWg5JHa+Y5KTiYFP83SDWVbrNyxGr3zRZffKLNhowaDJn
+ zHowYOOzbcQVlLA1ur0m5DgUw5xYQ0UkqTnJ6Tlsb9DeEI2CKn9KGZYNj30AuDa9UxqQpbm3MDZAcA8RHy4gocSZFLl1QNgdacx/7qqpgtPzScG6Ys3q3Xxw
+ I0yKiDHFPgtI7wAeA2FVAF1U0T+zL+XSN+JFmJ8tInpbkc2DGoFlTHOifew7zb3whYgFm8yo1XlmgYVMOodmQN27MgKXEZSu8e+48bmOZMThMe4c0hB7HIQ1
+ isOyI2fWFj4vcXK+iyPqg6WPTlG2knIJKBvRjbCUXfG+BlthwJNCaWT9hIW2+EkaB7acj4Mz4wiysngKHyZeWWVtQP7lT/zOY8Un7oWmFWfQttd+y+/nHxEg
+ nsVrYV+6yi3BHXec
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 8/14/19 12:45 PM, Dariusz Marcinkiewicz wrote:
-> Use the new cec_notifier_conn_(un)register() functions to
-> (un)register the notifier for the HDMI connector, and fill in
-> the cec_connector_info.
-> 
-> Changes since v2:
-> 	- removed unnecessary call to invalidate phys address before
-> 	deregistering the notifier,
-> 	- use cec_notifier_phys_addr_invalidate instead of setting
-> 	invalid address on a notifier.
-> 
-> Signed-off-by: Dariusz Marcinkiewicz <darekm@google.com>
-> Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Hi all,
 
-Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The patches in this series can be applied independently from each other.
 
-Regards,
+If you maintain one of these drivers and you want to merge it for v5.4
+yourself, then please do so and let me know. If you prefer I commit it
+to drm-misc, then please review and (hopefully) Ack the patch.
+
+I would really like to get this in for v5.4 so I can get the userspace
+bits in for v5.4 as well through the media subsystem.
+
+Dariusz, can you post a v7.1 for patch 5/9 fixing the typo?
+
+Thanks!
 
 	Hans
 
-> ---
->  drivers/gpu/drm/exynos/exynos_hdmi.c | 31 ++++++++++++++++------------
->  1 file changed, 18 insertions(+), 13 deletions(-)
+On 8/14/19 12:44 PM, Dariusz Marcinkiewicz wrote:
+> This series updates DRM drivers to use new CEC notifier API.
 > 
-> diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-> index bc1565f1822ab..d532b468d9af5 100644
-> --- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-> +++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-> @@ -852,6 +852,10 @@ static enum drm_connector_status hdmi_detect(struct drm_connector *connector,
->  
->  static void hdmi_connector_destroy(struct drm_connector *connector)
->  {
-> +	struct hdmi_context *hdata = connector_to_hdmi(connector);
-> +
-> +	cec_notifier_conn_unregister(hdata->notifier);
-> +
->  	drm_connector_unregister(connector);
->  	drm_connector_cleanup(connector);
->  }
-> @@ -935,6 +939,7 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
->  {
->  	struct hdmi_context *hdata = encoder_to_hdmi(encoder);
->  	struct drm_connector *connector = &hdata->connector;
-> +	struct cec_connector_info conn_info;
->  	int ret;
->  
->  	connector->interlace_allowed = true;
-> @@ -957,6 +962,15 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
->  			DRM_DEV_ERROR(hdata->dev, "Failed to attach bridge\n");
->  	}
->  
-> +	cec_fill_conn_info_from_drm(&conn_info, connector);
-> +
-> +	hdata->notifier = cec_notifier_conn_register(hdata->dev, NULL,
-> +						     &conn_info);
-> +	if (hdata->notifier == NULL) {
-> +		ret = -ENOMEM;
-> +		DRM_DEV_ERROR(hdata->dev, "Failed to allocate CEC notifier\n");
-> +	}
-> +
->  	return ret;
->  }
->  
-> @@ -1528,8 +1542,8 @@ static void hdmi_disable(struct drm_encoder *encoder)
->  		 */
->  		mutex_unlock(&hdata->mutex);
->  		cancel_delayed_work(&hdata->hotplug_work);
-> -		cec_notifier_set_phys_addr(hdata->notifier,
-> -					   CEC_PHYS_ADDR_INVALID);
-> +		if (hdata->notifier)
-> +			cec_notifier_phys_addr_invalidate(hdata->notifier);
->  		return;
->  	}
->  
-> @@ -2006,12 +2020,6 @@ static int hdmi_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> -	hdata->notifier = cec_notifier_get(&pdev->dev);
-> -	if (hdata->notifier == NULL) {
-> -		ret = -ENOMEM;
-> -		goto err_hdmiphy;
-> -	}
-> -
->  	pm_runtime_enable(dev);
->  
->  	audio_infoframe = &hdata->audio.infoframe;
-> @@ -2023,7 +2031,7 @@ static int hdmi_probe(struct platform_device *pdev)
->  
->  	ret = hdmi_register_audio_device(hdata);
->  	if (ret)
-> -		goto err_notifier_put;
-> +		goto err_runtime_disable;
->  
->  	ret = component_add(&pdev->dev, &hdmi_component_ops);
->  	if (ret)
-> @@ -2034,8 +2042,7 @@ static int hdmi_probe(struct platform_device *pdev)
->  err_unregister_audio:
->  	platform_device_unregister(hdata->audio.pdev);
->  
-> -err_notifier_put:
-> -	cec_notifier_put(hdata->notifier);
-> +err_runtime_disable:
->  	pm_runtime_disable(dev);
->  
->  err_hdmiphy:
-> @@ -2054,12 +2061,10 @@ static int hdmi_remove(struct platform_device *pdev)
->  	struct hdmi_context *hdata = platform_get_drvdata(pdev);
->  
->  	cancel_delayed_work_sync(&hdata->hotplug_work);
-> -	cec_notifier_set_phys_addr(hdata->notifier, CEC_PHYS_ADDR_INVALID);
->  
->  	component_del(&pdev->dev, &hdmi_component_ops);
->  	platform_device_unregister(hdata->audio.pdev);
->  
-> -	cec_notifier_put(hdata->notifier);
->  	pm_runtime_disable(&pdev->dev);
->  
->  	if (!IS_ERR(hdata->reg_hdmi_en))
+> Changes since v6:
+> 	Made CEC notifiers' registration and de-registration symmetric
+> 	in tda998x and dw-hdmi drivers. Also, accidentally dropped one
+> 	patch in v6 (change to drm_dp_cec), brought it back now.
+> Changes since v5:
+>         Fixed a warning about a missing comment for a new member of
+> 	drm_dp_aux_cec struct. Sending to a wider audience,
+> 	including maintainers of respective drivers.
+> Changes since v4:
+> 	Addressing review comments.
+> Changes since v3:
+>         Updated adapter flags in dw-hdmi-cec.
+> Changes since v2:
+> 	Include all DRM patches from "cec: improve notifier support,
+> 	add connector info connector info" series.
+> Changes since v1:
+> 	Those patches delay creation of notifiers until respective
+> 	connectors are constructed. It seems that those patches, for a
+> 	couple of drivers, by adding the delay, introduce a race between
+> 	notifiers' creation and the IRQs handling threads - at least I
+> 	don't see anything obvious in there that would explicitly forbid
+> 	such races to occur. v2 adds a write barrier to make sure IRQ
+> 	threads see the notifier once it is created (replacing the
+> 	WRITE_ONCE I put in v1). The best thing to do here, I believe,
+> 	would be not to have any synchronization and make sure that an IRQ
+> 	only gets enabled after the notifier is created.
+> Dariusz Marcinkiewicz (9):
+>   drm_dp_cec: add connector info support.
+>   drm/i915/intel_hdmi: use cec_notifier_conn_(un)register
+>   dw-hdmi-cec: use cec_notifier_cec_adap_(un)register
+>   tda9950: use cec_notifier_cec_adap_(un)register
+>   drm: tda998x: use cec_notifier_conn_(un)register
+>   drm: sti: use cec_notifier_conn_(un)register
+>   drm: tegra: use cec_notifier_conn_(un)register
+>   drm: dw-hdmi: use cec_notifier_conn_(un)register
+>   drm: exynos: exynos_hdmi: use cec_notifier_conn_(un)register
+> 
+>  .../display/amdgpu_dm/amdgpu_dm_mst_types.c   |  2 +-
+>  drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c | 13 +++---
+>  drivers/gpu/drm/bridge/synopsys/dw-hdmi.c     | 46 +++++++++++++------
+>  drivers/gpu/drm/drm_dp_cec.c                  | 25 ++++++----
+>  drivers/gpu/drm/exynos/exynos_hdmi.c          | 31 +++++++------
+>  drivers/gpu/drm/i2c/tda9950.c                 | 12 ++---
+>  drivers/gpu/drm/i2c/tda998x_drv.c             | 36 ++++++++++-----
+>  drivers/gpu/drm/i915/display/intel_dp.c       |  4 +-
+>  drivers/gpu/drm/i915/display/intel_hdmi.c     | 13 ++++--
+>  drivers/gpu/drm/nouveau/nouveau_connector.c   |  3 +-
+>  drivers/gpu/drm/sti/sti_hdmi.c                | 19 +++++---
+>  drivers/gpu/drm/tegra/output.c                | 28 ++++++++---
+>  include/drm/drm_dp_helper.h                   | 17 ++++---
+>  13 files changed, 155 insertions(+), 94 deletions(-)
 > 
 
