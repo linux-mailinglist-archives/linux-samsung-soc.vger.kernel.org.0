@@ -2,194 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F056951D1
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Aug 2019 01:44:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 262EC954B7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Aug 2019 05:01:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728603AbfHSXoT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 19 Aug 2019 19:44:19 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:54049 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728351AbfHSXoT (ORCPT
+        id S1728975AbfHTDBU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 19 Aug 2019 23:01:20 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:38595 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728773AbfHTDBU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 19 Aug 2019 19:44:19 -0400
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20190819234417epoutp01bc33a041adf9f89637688012bdedea66~8d5YqYTM90864008640epoutp01G
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 23:44:17 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20190819234417epoutp01bc33a041adf9f89637688012bdedea66~8d5YqYTM90864008640epoutp01G
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566258257;
-        bh=vmQQpSvhO+NOIFRR33czksndsdtC6ZWE3vrlipr9SU0=;
-        h=Subject:To:From:Date:In-Reply-To:References:From;
-        b=K/sy7g3sqhM5o09aJf2zg2WLLjCgcs0fqBl/q2EfBLQisuIDhGHKQrMqgwXZuQ+DD
-         N3YQu4nb6oatCniNUuMak9wQZJhDm6QkEQwmezy/E7nMrUEngwDrgIrrcDtAsEmqrZ
-         zGxE6feVtqnVVUDoM9xeMJ0hHHPH/ki4BcHO4/Xo=
-Received: from epsnrtp5.localdomain (unknown [182.195.42.166]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
-        20190819234416epcas1p47ce8684570146aa0344c59cabf337814~8d5YR6nyQ1517015170epcas1p4M;
-        Mon, 19 Aug 2019 23:44:16 +0000 (GMT)
-Received: from epsmges1p3.samsung.com (unknown [182.195.40.157]) by
-        epsnrtp5.localdomain (Postfix) with ESMTP id 46C9W23v0FzMqYkf; Mon, 19 Aug
-        2019 23:44:14 +0000 (GMT)
-Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
-        epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        FC.91.04066.E443B5D5; Tue, 20 Aug 2019 08:44:14 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
-        20190819234413epcas1p39f66a61fda4a86b7913d6f9bd7ba8c55~8d5U9KjTh0081300813epcas1p3-;
-        Mon, 19 Aug 2019 23:44:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190819234413epsmtrp2e632f52582d069a8cc20b205d1a4a5b2~8d5U8NuEm2043620436epsmtrp2Q;
-        Mon, 19 Aug 2019 23:44:13 +0000 (GMT)
-X-AuditID: b6c32a37-e27ff70000000fe2-c5-5d5b344e3b33
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        91.42.03706.D443B5D5; Tue, 20 Aug 2019 08:44:13 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190819234412epsmtip12cb3f8d7a40f36bb54864a1ce6b17f1e~8d5UpZc081355113551epsmtip19;
-        Mon, 19 Aug 2019 23:44:12 +0000 (GMT)
-Subject: Re: [PATCH] MAINTAINERS: Extend patterns for Samsung SoC, Security
- Subsystem and clock drivers
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Kamil Konieczny <k.konieczny@partner.samsung.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-clk@vger.kernel.org,
-        "cpgs (cpgs@samsung.com)" <cpgs@samsung.com>
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <0bc1c3a5-cdf2-eeab-e547-97598ca1fbd1@samsung.com>
-Date:   Tue, 20 Aug 2019 08:48:07 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
+        Mon, 19 Aug 2019 23:01:20 -0400
+Received: by mail-pl1-f194.google.com with SMTP id m12so1960566plt.5
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Aug 2019 20:01:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HcHMT4PO4aRPYDjhgvvcGFKWPsyZ2i/AKZp147gpb5c=;
+        b=viL6XfoedAqOcc/HJQnJMBOYsdVq2vOZFFWALl/6A16nYkuuAVsJHbhTaeECSJc5Zz
+         hzWGJA4gfwyZsEad9v+PIB1172n7T7M2E400hAOkUFPq7Aj0uLS9A2YAxUNLe+T4PG1P
+         ABkkGE50E/dJxcxRzf+07PFLDwK6NkNCEYKsqdIgZ5vS36/b+subF11lyZJMf65sycaw
+         u3kl8jnMdCK9+9ljUmJMs3whQ1VMAS9LC5FYZ6M88g/URRNO9ehEkCjJ8gb+Tb+aCwUz
+         uKKtx390D8iHg3JeksxQPB1bBKqsL/UtWOkxjT6NZSJBiGilrKbGyRK5uYO6GABTo56l
+         VZqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HcHMT4PO4aRPYDjhgvvcGFKWPsyZ2i/AKZp147gpb5c=;
+        b=QAseDBBmgY8EiR07/WIaWLJI1KOsMQRf5ncirVXSYQ/GDH6/jOwvmj3da/trI3Te1X
+         nexdyASjuVCF2K+b7jcHQ4eFA9U28+N3y9zfu0Ra90cWJZB6/03l0mWb5VKmeiVrexW8
+         fx5UPRrZZ4uVYKkzvY0Z3Ii7hi/JlccxWfQ60AUBhbMjpxhd1dAfcZsZMqKDWPM327bh
+         Ar3UAnUKtT7BnkT/G16o2rPMn5HxvqbXwg3A7HPR2m9MTr2v2DPVg56wzbQPdDQSJ4qY
+         ILDnd7BGax7B8C+nr+6YkubVDq103IBS6Tjf+KXzvSDpSCu7uHWWFsHZZq41bhPv8QEq
+         m8/w==
+X-Gm-Message-State: APjAAAVVeMNFTmUcwon628ervS86WY6QOLPX5fdvXq3fQIUkCKHIyCTx
+        qyEcLWGcb+AeYCdSSORAVKEANA==
+X-Google-Smtp-Source: APXvYqxt17woC6XIhk4kgcxthGKuzkZCAMPDaISXnF4cF6l1VR+/21W6CcuyWj97AkLWty58n/BIoA==
+X-Received: by 2002:a17:902:54d:: with SMTP id 71mr25255114plf.140.1566270079363;
+        Mon, 19 Aug 2019 20:01:19 -0700 (PDT)
+Received: from localhost ([122.172.76.219])
+        by smtp.gmail.com with ESMTPSA id n7sm17609938pff.59.2019.08.19.20.01.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Aug 2019 20:01:18 -0700 (PDT)
+Date:   Tue, 20 Aug 2019 08:31:14 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, krzk@kernel.org,
+        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
+        kgene@kernel.org, pankaj.dubey@samsung.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
+Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
+Message-ID: <20190820030114.6flnn2omeys3lih3@vireshk-i7>
+References: <CGME20190718143117eucas1p1e534b9075d10fbbbe427c66192205eb1@eucas1p1.samsung.com>
+ <20190718143044.25066-1-s.nawrocki@samsung.com>
+ <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
+ <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
+ <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
+ <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
+ <20190819090928.pke6cov52n4exlbp@vireshk-i7>
+ <b831d7c5-c830-fd65-20cf-02e209889c28@samsung.com>
+ <20190819112533.bvfyinw7fsebkufr@vireshk-i7>
+ <b7093aaf-ea56-c390-781f-6f9d0780bd8e@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <20190818172750.20921-1-krzk@kernel.org>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOJsWRmVeSWpSXmKPExsWy7bCmga6fSXSswdn10hYvD2lazDnfwmLR
-        /UrGom/ff0aL/sevmS3On9/AbrHp8TVWi48991gt7t/7yWRxedccNosZ5/cxWVw85Wpx+E07
-        q8W/axtZLFbt+sNo8f9XM7ODgMf7G63sHltW3mTy2DnrLrvHtgOqHptWdbJ5bF5S7/Fv4RQW
-        j4Pv9jB59G1ZxejxeZNcAFdUtk1GamJKapFCal5yfkpmXrqtkndwvHO8qZmBoa6hpYW5kkJe
-        Ym6qrZKLT4CuW2YO0B9KCmWJOaVAoYDE4mIlfTubovzSklSFjPziElul1IKUnALLAr3ixNzi
-        0rx0veT8XCtDAwMjU6DChOyMv525BUeFK17/ucvYwHhOoIuRk0NCwERiweL9LF2MXBxCAjsY
-        JT4vvM0I4XxilNg2aw2U841R4sej3cwwLQ3zX7JBJPYySlxcfpgJwnnPKPHn9lwWkCphgUyJ
-        /et/gbWLCLxnkVixeDY7SIJNQEti/4sbbCA2v4CixNUfjxlBbF4BO4ntPc/BbBYBVYkv358y
-        gdiiAhESnx4cZoWoEZQ4OfMJ2AJOAVOJmzv+gp3ELCAucevJfCYIW16ieetsZpDFEgKH2CXe
-        Nr5ng7jbReLy+WusELawxKvjW9ghbCmJz+/2QtVUS6w8eYQNormDUWLL/gtQDcYS+5dOBtrA
-        AbRBU2L9Ln2IsKLEzt9zGSFsXomGjb/ZIY7gk3j3tYcVpBwk3tEmBFGiLHH5wV0mCFtSYnF7
-        J9sERqVZSF6bheSdWUjemYWweAEjyypGsdSC4tz01GLDAmPk6N7ECE7kWuY7GDec8znEKMDB
-        qMTD6zEtKlaINbGsuDL3EKMEB7OSCG/FHKAQb0piZVVqUX58UWlOavEhRlNgyE9klhJNzgdm
-        mbySeENTI2NjYwsTQzNTQ0Mlcd6FPyxihQTSE0tSs1NTC1KLYPqYODilGhgFTl/iu3ZLcmn8
-        kc2Gn2LfbzqnKqL78JLhnsR54m/O6wUUORzdp8I0Mf+/0RqlIy+27tZNeirwrulcStPG5bJS
-        UZO2vp50tub6D6OypX89zR3M2oXuv529vc7JqNV2q88e5ytOHLM9r7jZ7N7VJynXdKJVs8j4
-        2yUznRdL1u9ll83T9GJWfjBZiaU4I9FQi7moOBEAmBA7/PoDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKIsWRmVeSWpSXmKPExsWy7bCSnK6vSXSswcF+NouXhzQt5pxvYbHo
-        fiVj0bfvP6NF/+PXzBbnz29gt9j0+Bqrxceee6wW9+/9ZLK4vGsOm8WM8/uYLC6ecrU4/Kad
-        1eLftY0sFqt2/WG0+P+rmdlBwOP9jVZ2jy0rbzJ57Jx1l91j2wFVj02rOtk8Ni+p9/i3cAqL
-        x8F3e5g8+rasYvT4vEkugCuKyyYlNSezLLVI3y6BK+NvZ27BUeGK13/uMjYwnhPoYuTkkBAw
-        kWiY/5Kti5GLQ0hgN6PEnblrWSESkhLTLh5l7mLkALKFJQ4fLoaoecsosX3hTjaQGmGBTIn9
-        638xgiREBL6ySDy/vI8FoqqDUeLMhVZ2kCo2AS2J/S9ugHXwCyhKXP3xmBHE5hWwk9je8xzM
-        ZhFQlfjy/SkTiC0qECFxeMcsqBpBiZMzn7CA2JwCphI3d/xlBrGZBdQl/sy7BGWLS9x6Mp8J
-        wpaXaN46m3kCo9AsJO2zkLTMQtIyC0nLAkaWVYySqQXFuem5xYYFhnmp5XrFibnFpXnpesn5
-        uZsYwZGrpbmD8fKS+EOMAhyMSjy8HtOiYoVYE8uKK3MPMUpwMCuJ8FbMAQrxpiRWVqUW5ccX
-        leakFh9ilOZgURLnfZp3LFJIID2xJDU7NbUgtQgmy8TBKdXAuE5MkVdHNyGI8+gTps332Lo7
-        Sr49qVO8oLLr1NbleT8qDeWv+77JPtuvmr/y7+RHTcb/Hiu5pynFzJgVoJacnpN2IEZsft/S
-        4yVOL+I1Awzazv5jXCCyT8+Zf8GZ5X98yysPrtnKE9f76pZ+jq/KpHulW6fc8Jz+SjPt0Z8F
-        F7fJR5w3dfBWV2Ipzkg01GIuKk4EAOjbrsTYAgAA
-X-CMS-MailID: 20190819234413epcas1p39f66a61fda4a86b7913d6f9bd7ba8c55
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-X-CPGSPASS: Y
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20190818172803epcas1p32db0707cb391c5ca1795ba2690284a56
-References: <CGME20190818172803epcas1p32db0707cb391c5ca1795ba2690284a56@epcas1p3.samsung.com>
-        <20190818172750.20921-1-krzk@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7093aaf-ea56-c390-781f-6f9d0780bd8e@samsung.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+On 19-08-19, 15:39, Sylwester Nawrocki wrote:
+> Unfortunately not, the patch set as I see it is another way of updating 
+> an OPP after it was parsed from DT.  OPP remove/add could work equally 
+> well in our use case.
 
-On 19. 8. 19. 오전 2:27, Krzysztof Kozlowski wrote:
-> Extend the patterns to cover all related files in respective
-> categories:
-> 1. Samsung Exynos ARM architecture: add soc drivers headers and make
->    directory matches consistent,
-> 2. Samsung Security SubSystem driver (crypto): add bindings,
-> 3. Samsung SoC clock drivers: add S3C24xx, S3C64xx and S5Pv210 bindings.
-> 
-> Cc: Kukjin Kim <kgene@kernel.org>
-> Cc: Vladimir Zapolskiy <vz@mleia.com>
-> Cc: Kamil Konieczny <k.konieczny@partner.samsung.com>
-> Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> Cc: Tomasz Figa <tomasz.figa@gmail.com>
-> Cc: Chanwoo Choi <cw00.choi@samsung.com>
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> 
-> ---
-> 
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-samsung-soc@vger.kernel.org
-> Cc: linux-crypto@vger.kernel.org
-> Cc: linux-clk@vger.kernel.org
-> ---
->  MAINTAINERS | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 420567d1519a..35a4002ac58b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2199,8 +2199,9 @@ F:	drivers/*/*s3c24*
->  F:	drivers/*/*/*s3c24*
->  F:	drivers/*/*s3c64xx*
->  F:	drivers/*/*s5pv210*
-> -F:	drivers/memory/samsung/*
-> -F:	drivers/soc/samsung/*
-> +F:	drivers/memory/samsung/
-> +F:	drivers/soc/samsung/
-> +F:	include/linux/soc/samsung/
->  F:	Documentation/arm/samsung/
->  F:	Documentation/devicetree/bindings/arm/samsung/
->  F:	Documentation/devicetree/bindings/sram/samsung-sram.txt
-> @@ -14174,6 +14175,8 @@ M:	Kamil Konieczny <k.konieczny@partner.samsung.com>
->  L:	linux-crypto@vger.kernel.org
->  L:	linux-samsung-soc@vger.kernel.org
->  S:	Maintained
-> +F:	Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
-> +F:	Documentation/devicetree/bindings/crypto/samsung-sss.txt
->  F:	drivers/crypto/s5p-sss.c
->  
->  SAMSUNG S5P/EXYNOS4 SOC SERIES CAMERA SUBSYSTEM DRIVERS
-> @@ -14194,6 +14197,8 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/snawrocki/clk.git
->  F:	drivers/clk/samsung/
->  F:	include/dt-bindings/clock/exynos*.h
->  F:	Documentation/devicetree/bindings/clock/exynos*.txt
-> +F:	Documentation/devicetree/bindings/clock/samsung,s3c*
-> +F:	Documentation/devicetree/bindings/clock/samsung,s5p*
->  
->  SAMSUNG SPI DRIVERS
->  M:	Kukjin Kim <kgene@kernel.org>
-> 
+Adding OPPs dynamically has limitations, you can't set many values which are
+otherwise possible with DT. And removing/adding is not the right thing to do
+technically.
 
-For clock part,
-Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+> The problem is that we have the information on how to translate the 
+> common OPP voltage to a voltage specific to given silicon encoded jointly 
+> in the ASV tables and the CHIPID registers (efuse/OTP memory). 
+> Additionally, algorithm of selecting ASV data (OPP voltage) based on 
+> the "key" data from registers is not generic, it is usually different 
+> per each SoC type.
+> 
+> I tried to identify some patterns in those tables in order to simplify 
+> possible DT binding, but that was not really successful. I ended up just 
+> keeping whole tables.
 
+Sorry but I am unable to understand the difficulty you are facing now. So what I
+suggest is something like this.
+
+- Use DT to get a frequency and voltage for each frequency.
+- At runtime, based on SoC, registers, efuses, etc, update the voltage of the
+  OPPs.
+- This algo can be different for each SoC, no one is stopping you from doing
+  that.
+
+Am I missing something ?
 
 -- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+viresh
