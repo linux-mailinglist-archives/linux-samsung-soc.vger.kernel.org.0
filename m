@@ -2,165 +2,122 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6938C95E78
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Aug 2019 14:28:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CE6696029
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Aug 2019 15:34:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728657AbfHTM2I (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 20 Aug 2019 08:28:08 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:42947 "EHLO
+        id S1729926AbfHTNeP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 20 Aug 2019 09:34:15 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:41740 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728731AbfHTM2I (ORCPT
+        with ESMTP id S1729937AbfHTNeP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 20 Aug 2019 08:28:08 -0400
+        Tue, 20 Aug 2019 09:34:15 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190820122806euoutp01588381d59f47707ffc23d34d1fdb3019~8oUSjJS5t1288212882euoutp014
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Aug 2019 12:28:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190820122806euoutp01588381d59f47707ffc23d34d1fdb3019~8oUSjJS5t1288212882euoutp014
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190820133413euoutp019e7d716437e03fbebb6b2437fb9834e8~8pOBB_1rc3237832378euoutp01L
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Aug 2019 13:34:13 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190820133413euoutp019e7d716437e03fbebb6b2437fb9834e8~8pOBB_1rc3237832378euoutp01L
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566304086;
-        bh=jI7d1mBEIuGFt/vrXYXtHNRuvzqsbpDIe8skBRbjdpU=;
+        s=mail20170921; t=1566308053;
+        bh=y5+m4oh3f5HZ9GaPBhzEmkmmjPQmnF4NtajzvtKbr18=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=Yz9BRSEaTRLEvV/gdl33uTSgcDOdEsJ1O8s9neeRsRNwSVIH+Rq4OOuu9elfbPQxa
-         Q0+u4uEtTrDv56vt0+ngkA3btlbe8Oq/38g8TgVf84myh7kVOw4m2OQZZGDMH2DwYk
-         /RhidM62xsGkqKSMmURJrnnua2PF/Gy1gfJ1aPEM=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        b=n5ciGKL9vwsCN5Oy5LCLmlyh75DdU7gQpyuqVEallfgUS5vxlaRDs8n981kAfwYDr
+         eHHmqLjEp6QFmuHGAzDR1QxaqE7h/MWscRV1NgCPP39qL5Wit5tWcBymbHS+N6cwhF
+         ZkuNCOSYhgEl4xzKvIhmm3jSj6vAqHn0tP5oJigQ=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190820122805eucas1p2679e27eb3a2fd94159758e941fb2d75e~8oUR6ehZF1331213312eucas1p2o;
-        Tue, 20 Aug 2019 12:28:05 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 2B.BA.04309.557EB5D5; Tue, 20
-        Aug 2019 13:28:05 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        20190820133412eucas1p2abe6fdaea89cd7caacb8ed0681e64479~8pOAPM6QD2748027480eucas1p2J;
+        Tue, 20 Aug 2019 13:34:12 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 85.61.04469.4D6FB5D5; Tue, 20
+        Aug 2019 14:34:12 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190820122804eucas1p2c65ce7b97d168329118c0a61a0651407~8oUQ9zHKS2607826078eucas1p2N;
-        Tue, 20 Aug 2019 12:28:04 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190820122804eusmtrp1f8525afcac35468b77ddec6340683ee1~8oUQvgYfk1557015570eusmtrp1O;
-        Tue, 20 Aug 2019 12:28:04 +0000 (GMT)
-X-AuditID: cbfec7f4-afbff700000010d5-54-5d5be755ed73
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id D4.FD.04117.457EB5D5; Tue, 20
-        Aug 2019 13:28:04 +0100 (BST)
-Received: from [106.120.51.18] (unknown [106.120.51.18]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190820122804eusmtip1d90ecc5c515a5c111d53ba9a6c55191c~8oUQcg_NQ1835218352eusmtip1H;
-        Tue, 20 Aug 2019 12:28:04 +0000 (GMT)
-Subject: Re: [PATCH 2/2] crypto: s5p - use correct block size of 1 for
- ctr(aes)
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-        linux-crypto@vger.kernel.org, herbert@gondor.apana.org.au,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>
-From:   Kamil Konieczny <k.konieczny@partner.samsung.com>
-Message-ID: <f7f1babd-5c74-5561-4771-49809398da5f@partner.samsung.com>
-Date:   Tue, 20 Aug 2019 14:28:03 +0200
+        20190820133411eucas1p25741893d0f33d3b7603b3ccce81532c7~8pN-STqtL2646926469eucas1p2F;
+        Tue, 20 Aug 2019 13:34:11 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190820133411eusmtrp2ee3c3cd7ae983a4c99fdc918737663e8~8pN-EE3nw0087000870eusmtrp2j;
+        Tue, 20 Aug 2019 13:34:11 +0000 (GMT)
+X-AuditID: cbfec7f2-569ff70000001175-ff-5d5bf6d49254
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id C8.16.04166.3D6FB5D5; Tue, 20
+        Aug 2019 14:34:11 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190820133410eusmtip2e34747c4bdc0b17fec87fddf04b9e97d~8pN_C699I1271112711eusmtip21;
+        Tue, 20 Aug 2019 13:34:10 +0000 (GMT)
+Subject: Re: [PATCH] MAINTAINERS: Extend patterns for Samsung SoC, Security
+ Subsystem and clock drivers
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     Kukjin Kim <kgene@kernel.org>, Vladimir Zapolskiy <vz@mleia.com>,
+        Kamil Konieczny <k.konieczny@partner.samsung.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <83e1be95-1fb5-ab23-0517-aef220ebdd9e@samsung.com>
+Date:   Tue, 20 Aug 2019 15:34:08 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPfR_L4z=sE8ETUB3_6sVV=ab=vntqh-_KvNmsKacEa4qQ@mail.gmail.com>
-Content-Language: en-US
+In-Reply-To: <20190818172750.20921-1-krzk@kernel.org>
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsWy7djPc7qhz6NjDVbPV7H4/2E3o0X3KxmL
-        8+c3sFvcv/eTyWLG+X1MFv9/NTM7sHlsO6DqsWlVJ5vHnWt72Dz+LZzC4vF5k1wAaxSXTUpq
-        TmZZapG+XQJXxuHXT9gLOoUqJrx+wdbA+JG3i5GTQ0LAROLhoidsXYxcHEICKxgl3k+czgzh
-        fGGUaLrSzQThfGaUuPn8AztMy7OX16GqljNK/PrazwrhvGWUmDepnQWkSlggUKJj1mJWEFtE
-        QFPi+t/vYEXMArcZJc7dbGADSbAJmEs82n6GCcTmFXCTOHu0E2wFi4CqxLQ57WA1ogIREp8e
-        HGaFqBGUODnzCdACDg5OoAXHp9mAhJkFxCVuPZnPBGHLS2x/OwfsOgmBdewSX+acY4U420Wi
-        ZcZhJghbWOLV8S1Q78hInJ7cwwJhl0s8XdjHDtHcwijxoP0jVMJa4vDxi6wgi5mBvlm/Sx8i
-        7Cjx8eUpsHskBPgkbrwVhLiBT2LSNlA4goR5JTrahCCqVSWen+qBukBaouv/OtYJjEqzkDw2
-        C8k3s5B8Mwth7wJGllWM4qmlxbnpqcVGeanlesWJucWleel6yfm5mxiBaef0v+NfdjDu+pN0
-        iFGAg1GJh3fHzehYIdbEsuLK3EOMEhzMSiK8FXOiYoV4UxIrq1KL8uOLSnNSiw8xSnOwKInz
-        VjM8iBYSSE8sSc1OTS1ILYLJMnFwSjUw5k2avmFC1Imc+Fv+3/bYvy/4VfZlxXMdq60uqcsf
-        Tf25/6axTyYH3785nZ9Pf7NZ29Vsqqjs9uvuLq/+Ys1OubuPGTM5JuRpvE35HDpd85iIzvwH
-        Z5VbK+u/Mhh++PSuoSw44mpHa3yWhfuyCZtf/3qy78beT5NM9tx+F8kc8sSj2XG9lc6zVUos
-        xRmJhlrMRcWJAFHOam03AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsVy+t/xu7ohz6NjDSavUbX4/2E3o0X3KxmL
-        8+c3sFvcv/eTyWLG+X1MFv9/NTM7sHlsO6DqsWlVJ5vHnWt72Dz+LZzC4vF5k1wAa5SeTVF+
-        aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexuHXT9gLOoUq
-        Jrx+wdbA+JG3i5GTQ0LAROLZy+vMXYxcHEICSxklVs9qZoFISEs0nl7NBGELS/y51sUGYgsJ
-        vGaUWPjYF8QWFgiU6Ji1mBXEFhHQlLj+9zsryCBmgZuMEkfOzYeaOoFZ4t3eDewgVWwC5hKP
-        tp8Bm8or4CZx9mgnWJxFQFVi2px2sA2iAhESh3fMYoSoEZQ4OfMJ0EUcHJxA245PswEJMwuo
-        S/yZd4kZwhaXuPVkPhOELS+x/e0c5gmMQrOQdM9C0jILScssJC0LGFlWMYqklhbnpucWG+kV
-        J+YWl+al6yXn525iBMbZtmM/t+xg7HoXfIhRgINRiYd3x83oWCHWxLLiytxDjBIczEoivBVz
-        omKFeFMSK6tSi/Lji0pzUosPMZoC/TaRWUo0OR+YAvJK4g1NDc0tLA3Njc2NzSyUxHk7BA7G
-        CAmkJ5akZqemFqQWwfQxcXBKNTDuP5vKn5VnWNvn5rhxeZnN7C797PuuJTVVYcx+ryxenNM0
-        dYr2DTvBdG/XvTeTmHO+C6aJXVze5DQ1+Bpn9pXSY09fzv3ULuH4anKZNNuDq5wsrT2fea9o
-        qCbeznt1zU9B6INrkOGVXbfVOzxyZLNT7+n8tTvDkDPpwZsoEwamBYt023/FMyixFGckGmox
-        FxUnAgDKjX16yQIAAA==
-X-CMS-MailID: 20190820122804eucas1p2c65ce7b97d168329118c0a61a0651407
+X-Brightmail-Tracker: H4sIAAAAAAAAA01SbUhTYRjtvR/bdTS7rYWPS/oYCSmWCQU3ij4g69avfpZiecuLWm7K7lxa
+        UaYVactMTW0MtAiWs1KnmS7T0tSyH0MLnYm1yJKMWeqytNLcrpL/zjnPed7nHHgpXPGFVFGJ
+        Wj2v03JJaomMqGufdKx/MxEds7GodTnT6xkiGbPjAsFcGQ5icptmEHPt41eccTiqpIztYw/J
+        jBrfkcz7d5MY89puljAljiaM6eqMZKZ7qgnGav+DmJmpLHznEvab86KUrS3vw9gG04CUrXsa
+        zNqs2RK25s45dvpWIcE+G2nE2NxaK2LHbSsPyKJk2+L4pEQDrwvfHitLqK5ySVMe4GmWC+1k
+        BvqE5SA/CuhN0DNYIclBMkpB30WQY/6LicSDYKCrExfJOIJHJrN0fqXKOU2KAwuC0oJ2qUjc
+        sysVJsLrWkYnQnPlFPJi5SwutWf6TDjdhUOJxe27LqEj4Gpbrs8kp7dDhTt/9lmKIuhgGKpc
+        4pWX0wdhzNVKipal8PLmoO99P3oz9NX/xb0YpwMg01NOingVPHKbfbGBvk5Br6durulusGeM
+        zuFlMNxRO1cnCGYaSjFxIQuB8XG/VCR5CN53lCHRtRVaO7p86XA6BCrt4aK8CyraX2JeGWh/
+        cLqXiiH8Ib+uGBdlOVy+pBDda+G3tXguggquDM4QeUhtWlDNtKCOaUEd0/+7ZYiwogA+VdDE
+        80KElj+5QeA0Qqo2fsOxZI0NzX7AV9MdY/XoR/fRFkRTSL1YXt8XHaMgOYOQrmlBQOFqpTzN
+        HBWjkMdx6ad4XfIRXWoSL7SgFRShDpCfXuSKVtDxnJ4/wfMpvG5+ilF+qgwUlX9272TcuoKQ
+        kNiRtn0vSsIOK8nP96Mjjfs1/R8eN/96wxWw5QePH+pNP94clp3tXG+0DiuLIy3BeRMDKzhX
+        9fdjL3b8tOzBn1za1HZRjxq0Sd2F5y0jKmNojKXQUPTwwW1bZGDK6i2NN9IMu0PSbqavCXzu
+        DnjbVKM/fOZeWaVSTQgJXEQorhO4fxibm+R8AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFIsWRmVeSWpSXmKPExsVy+t/xe7qXv0XHGqw9LGpx/ctzVos551tY
+        LLpfyVj07fvPaNH/+DWzxfnzG9gtNj2+xmrxseceq8X9ez+ZLC7vmsNmMeP8PiaLi6dcLf5d
+        28hisWrXH0aL/7+amR34Pd7faGX32LLyJpPHzll32T22HVD12LSqk81j85J6j38Lp7B4HHy3
+        h8mjb8sqRo/Pm+QCuKL0bIryS0tSFTLyi0tslaINLYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJS
+        czLLUov07RL0MjZueMBesI65YnnLMdYGxqdMXYycHBICJhIbbvxj7WLk4hASWMoo0da9m7GL
+        kQMoISUxv0UJokZY4s+1LjaImteMEi9nT2IBSQgLZErsX/+LEcQWAbJvvV3LAlHUwSjRc/gm
+        M4jDLHCZWeLJzjZ2kCo2AUOJ3qN9YB28AnYSq99OYgXZxiKgKvF8PT9IWFQgQuLwjllQJYIS
+        J2c+AVvGKWAqcXPHX2YQm1lAXeLPvEtQtrhE05eVrBC2vMT2t3OYJzAKzULSPgtJyywkLbOQ
+        tCxgZFnFKJJaWpybnltsqFecmFtcmpeul5yfu4kRGO/bjv3cvIPx0sbgQ4wCHIxKPLw7bkbH
+        CrEmlhVX5h5ilOBgVhLhrZgTFSvEm5JYWZValB9fVJqTWnyI0RTot4nMUqLJ+cBUlFcSb2hq
+        aG5haWhubG5sZqEkztshcDBGSCA9sSQ1OzW1ILUIpo+Jg1OqgVH8/UmtpWfmPbt/IPKFz/ad
+        K9f8cp2SuFhmJU/6Cefzjg6FItP1b784MEdXdfcBhgb/s2cezrxxRvD8mRerVbyesG+4aJ5U
+        17rZ/atQ9O6i0w4cTbeDI6tuln7d8PiNhf0vttz6OTVZdgU7ehsab0UbqpvGL+t303ZaZ3b2
+        nuiWU3u8kivDFssosRRnJBpqMRcVJwIAwa6cxg0DAAA=
+X-CMS-MailID: 20190820133411eucas1p25741893d0f33d3b7603b3ccce81532c7
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190820102425epcas2p219b7cac45290fbc87bb62bf446fec345
+X-RootMTR: 20190818172803epcas2p42fa4c0219beb7de452d276cb06bfa73a
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190820102425epcas2p219b7cac45290fbc87bb62bf446fec345
-References: <20190819142226.1703-1-ard.biesheuvel@linaro.org>
-        <20190819142226.1703-3-ard.biesheuvel@linaro.org>
-        <CGME20190820102425epcas2p219b7cac45290fbc87bb62bf446fec345@epcas2p2.samsung.com>
-        <CAJKOXPevJjBuRJjUX=6BfuMZSLUyqP3fpi7_eWDF170RfPvL+g@mail.gmail.com>
-        <1f932022-0335-1d00-b651-83c82d77fa7a@partner.samsung.com>
-        <CAJKOXPfR_L4z=sE8ETUB3_6sVV=ab=vntqh-_KvNmsKacEa4qQ@mail.gmail.com>
+X-CMS-RootMailID: 20190818172803epcas2p42fa4c0219beb7de452d276cb06bfa73a
+References: <CGME20190818172803epcas2p42fa4c0219beb7de452d276cb06bfa73a@epcas2p4.samsung.com>
+        <20190818172750.20921-1-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 20.08.2019 13:48, Krzysztof Kozlowski wrote:
-> On Tue, 20 Aug 2019 at 13:39, Kamil Konieczny
-> <k.konieczny@partner.samsung.com> wrote:
->>
->>
->>
->> On 20.08.2019 12:24, Krzysztof Kozlowski wrote:
->>> On Mon, 19 Aug 2019 at 16:24, Ard Biesheuvel <ard.biesheuvel@linaro.org> wrote:
->>>>
->>>> Align the s5p ctr(aes) implementation with other implementations
->>>> of the same mode, by setting the block size to 1.
->>>>
->>>> Signed-off-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
->>>> ---
->>>>  drivers/crypto/s5p-sss.c | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/crypto/s5p-sss.c b/drivers/crypto/s5p-sss.c
->>>> index ef90c58edb1f..010f1bb20dad 100644
->>>> --- a/drivers/crypto/s5p-sss.c
->>>> +++ b/drivers/crypto/s5p-sss.c
->>>> @@ -2173,7 +2173,7 @@ static struct crypto_alg algs[] = {
->>>>                 .cra_flags              = CRYPTO_ALG_TYPE_ABLKCIPHER |
->>>>                                           CRYPTO_ALG_ASYNC |
->>>>                                           CRYPTO_ALG_KERN_DRIVER_ONLY,
->>>> -               .cra_blocksize          = AES_BLOCK_SIZE,
->>>> +               .cra_blocksize          = 1,
->>>
->>> This makes sense but I wonder how does it work later with
->>> s5p_aes_crypt() and its check for request length alignment
->>> (AES_BLOCK_SIZE). With block size of 1 byte, I understand that
->>> req->nbytes can be for example 4 bytes which is not AES block
->>> aligned... If my reasoning is correct, then the CTR mode in s5p-sss is
->>> not fully working.
->>
->> As I remember this case there are allocated buffers with len aligned up
->> AES_BLOCK_SIZE, source data copy to one buf, hw encrypts full block,
->> then nbytes are copy back.
+On 8/18/19 19:27, Krzysztof Kozlowski wrote:
+> Extend the patterns to cover all related files in respective
+> categories:
+> 1. Samsung Exynos ARM architecture: add soc drivers headers and make
+>    directory matches consistent,
+> 2. Samsung Security SubSystem driver (crypto): add bindings,
+> 3. Samsung SoC clock drivers: add S3C24xx, S3C64xx and S5Pv210 bindings.
 
-to be precise, hw encrypts align_up(req->nbytes, AES_BLOCK_SIZE)
-
-> Buffer alignment is different thing and it is defined in cra_alignmask.
-> I am talking about req->nbytes which should be aligned according to
-> s5p_aes_crypt(). But if blocksize is 1 byte, then what possible values
-> for req->nbytes?
-
-For AES-CTR, there are blocks of size multiply of AES_BLOCK_SIZE, with last
-one which can be of any size
-
-so for req->nbytes valid values are n*AES_BLOCK_SIZE + 0...AES_BLOCK_SIZE-1
-
--- 
-Best regards,
-Kamil Konieczny
-Samsung R&D Institute Poland
-
+Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
