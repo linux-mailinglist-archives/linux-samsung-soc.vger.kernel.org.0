@@ -2,111 +2,123 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C8CC3978E7
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 14:11:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87FC697907
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 14:17:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727144AbfHUMJz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 21 Aug 2019 08:09:55 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35614 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727555AbfHUMJz (ORCPT
+        id S1727998AbfHUMQ7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Aug 2019 08:16:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58684 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727346AbfHUMQ7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Aug 2019 08:09:55 -0400
-Received: by mail-pl1-f196.google.com with SMTP id gn20so1246038plb.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 05:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UT6yE/roxwyyBSRfLOwrFlilraLjBXjoNWJQAsldDVo=;
-        b=1mTbly5hNN6suDS+BwBXn5tZNQRoJv3U+6eGIZWkxOpX8gp4MfK0srbyshCamPl8cE
-         oynbwAZaUVd3iYuDw/fFqllqnUyyMdhGmWDFTWD0+uRBHO1RABomqwNTPTloesNaBCP/
-         OF0wNlT1X2HUApuEYt9hqsB3ukfCOmKOxQ9VlFGyTVla9DArrhzV46cf0e1hqSL0Em1S
-         kMKT+OUOB39Lc9u+MllIcA6W2VixaWAmIOOCqIPym//+KF+bJLzrXd5uXWfD6RF+tn8O
-         fEItbmLNgpz+3xyfCw5xuoCb8BCqv/jPsevOVEPakCBbt5mOdjvlnK19JQHJXISJTFII
-         +AuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UT6yE/roxwyyBSRfLOwrFlilraLjBXjoNWJQAsldDVo=;
-        b=lqEBXnBQnME9RDeUhBNYxw/ks8QoEN7QK3GFwTZND1HmocukpLaaAwsR+WKZPlFsd4
-         DBi9otylpsOvOXBtqo4sK11Lv0Za4U0HcCfkKvBzpIUvEsWVJ20Yx28e1r2j00ec5EKu
-         GtNHpGMNmHpxDj4eg7fYmqcg+44GfCcyHHyMZ68bQ+OqE4dqO7+ND522rVU9nkMHFTGY
-         vx1kHC1JpGzNJRj7j/zwhySp1HMww4jgaB10krhTYlTZVNM9CatJPU38Ec5EDb447gCv
-         1LK8/SV/uNGhswfNynApD5FYCm4SV5bm7fskcNJCwK22P3zU0qS4LrbXcdcbLMpbmKsP
-         hkOQ==
-X-Gm-Message-State: APjAAAUTfz4E6QIJGX4SdHNgId1T6ECf1TZrDdrP9N5SdR9IA7OmIv03
-        Su2bb9L9n9WvL4jUcoLICXdknQ==
-X-Google-Smtp-Source: APXvYqxsoe31YiWALXWqRLHXasZTZR3nM8GXNUHwTUUu4EkoxYDPJeCxhjU4HkYSZ/HpLNbIJ9AOOg==
-X-Received: by 2002:a17:902:a410:: with SMTP id p16mr17723995plq.150.1566389394293;
-        Wed, 21 Aug 2019 05:09:54 -0700 (PDT)
-Received: from [192.168.1.188] (66.29.164.166.static.utbb.net. [66.29.164.166])
-        by smtp.gmail.com with ESMTPSA id z4sm22521476pfg.166.2019.08.21.05.09.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Aug 2019 05:09:53 -0700 (PDT)
-Subject: Re: [PATCH 5/9] block: support diskcipher
-To:     "boojin.kim" <boojin.kim@samsung.com>, linux-block@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     'Herbert Xu' <herbert@gondor.apana.org.au>,
-        "'David S. Miller'" <davem@davemloft.net>,
-        'Eric Biggers' <ebiggers@kernel.org>,
-        "'Theodore Y. Ts'o'" <tytso@mit.edu>, 'Chao Yu' <chao@kernel.org>,
-        'Jaegeuk Kim' <jaegeuk@kernel.org>,
-        'Andreas Dilger' <adilger.kernel@dilger.ca>,
-        dm-devel@redhat.com, 'Mike Snitzer' <snitzer@redhat.com>,
-        'Alasdair Kergon' <agk@redhat.com>,
-        'Krzysztof Kozlowski' <krzk@kernel.org>,
-        'Kukjin Kim' <kgene@kernel.org>,
-        'Jaehoon Chung' <jh80.chung@samsung.com>,
-        'Ulf Hansson' <ulf.hansson@linaro.org>,
-        linux-crypto@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-ext4@vger.kernel.org, linux-f2fs-devel@lists.sourceforge.net,
-        linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org
-References: <CGME20190821064226epcas2p2835b8a9084988b79107e54abfc5e7dab@epcas2p2.samsung.com>
- <004101d557eb$98b00060$ca100120$@samsung.com>
-From:   Jens Axboe <axboe@kernel.dk>
-Message-ID: <6ea5e5db-4dd4-719f-3b3e-b89099636ea6@kernel.dk>
-Date:   Wed, 21 Aug 2019 06:09:50 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 21 Aug 2019 08:16:59 -0400
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3933923401;
+        Wed, 21 Aug 2019 12:16:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1566389817;
+        bh=uynG4lj2NFKmPKucYZd6LWpEU0LW0PqM8k6juv4kk6Q=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=n5XzPGno2q7GDr4k8K4aFDxr1MHVuArZuIuRAba8kHNpJ3sIFhzq0MGouM4G0xett
+         ITlIE91yd6uf4r08BfyR7p6rw8W8m28KdhSeQpG+ed04AI7T3ZhrCorMo4CtXgG8be
+         u/EA4VZ1s5JbIepDqrjmk4ocsLQh22dVof1FpxHg=
+Received: by mail-lj1-f169.google.com with SMTP id t14so1928129lji.4;
+        Wed, 21 Aug 2019 05:16:57 -0700 (PDT)
+X-Gm-Message-State: APjAAAW4kegqaqZgggo1ygGRP7UcCdgmzMrOYF+vdu3cnpzTmSXd/CEi
+        JC4bZrx4P3ETJJXUmq051S1Ds2JezB/tz21RCcc=
+X-Google-Smtp-Source: APXvYqylX2rUmIlELH4D93bM3e4TXvEwUkh5Y4r23cXAhB6gAMzrPtx7w1O/W8NsexFVtpfI5op4YqTOQY/zJHbWoqA=
+X-Received: by 2002:a2e:9b13:: with SMTP id u19mr14134020lji.40.1566389815350;
+ Wed, 21 Aug 2019 05:16:55 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <004101d557eb$98b00060$ca100120$@samsung.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190813150827.31972-1-s.nawrocki@samsung.com>
+ <CGME20190813150852eucas1p2be4c0ab5ec2c079e3daf1af24283b27c@eucas1p2.samsung.com>
+ <20190813150827.31972-3-s.nawrocki@samsung.com> <b5359603-b337-dcd8-b025-ca7dff5f4a06@nvidia.com>
+ <CAJKOXPf597CMx=M2JmSTWe2GzBfcHFefgzSJbJ+njZGp-WfR1A@mail.gmail.com>
+ <1e428c8e-f4b5-0810-77f9-2c899c040fc7@kernel.org> <72eea1ea-2433-2f76-6265-5851554e845d@samsung.com>
+In-Reply-To: <72eea1ea-2433-2f76-6265-5851554e845d@samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 21 Aug 2019 14:16:44 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdh9eHrAuCxHkQBvJMqEnUCeU2xwkK=9yyiJ6BuTLJ+_A@mail.gmail.com>
+Message-ID: <CAJKOXPdh9eHrAuCxHkQBvJMqEnUCeU2xwkK=9yyiJ6BuTLJ+_A@mail.gmail.com>
+Subject: Re: [PATCH v3 2/9] soc: samsung: Convert exynos-chipid driver to use
+ the regmap API
+To:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Cc:     Sylwester Nawrocki <snawrocki@kernel.org>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
+        kgene@kernel.org, pankaj.dubey@samsung.com,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-pm@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 8/21/19 12:42 AM, boojin.kim wrote:
-> This patch supports crypto information to be maintained via BIO
-> and passed to the storage driver.
-> 
-> To do this, 'bi_aux_private', 'REQ_CYPTE' and 'bi_dun' are added
-> to the block layer.
-> 
-> 'bi_aux_private' is added for loading additional private information into
-> BIO.
-> 'REQ_CRYPT' is added to distinguish that bi_aux_private is being used
-> for diskcipher.
-> F2FS among encryption users uses DUN(device unit number) as
-> the IV(initial vector) for cryptographic operations.
-> DUN is stored in 'bi_dun' of bi_iter as a specific value for each BIO.
-> 
-> Before attempting to merge the two BIOs, the operation is also added to
-> verify that the crypto information contained in two BIOs is consistent.
+On Wed, 21 Aug 2019 at 13:51, Bartlomiej Zolnierkiewicz
+<b.zolnierkie@samsung.com> wrote:
+> >>> Following this change, I am now seeing the above error on our Tegra
+> >>> boards where this driver is enabled. This is triggering a kernel
+> >>> warnings test we have to fail. Hence, I don't think that you can remove
+> >>> the compatible node test here, unless you have a better way to determine
+> >>> if this is a samsung device.
+> >>
+> >> Right, this is really wrong... I missed that it is not a probe but
+> >> early init. And this init will be called on every board... Probably it
+> >> should be converted to a regular driver.
+>
+> Early initialization is needed for SoC driver to be used from within
+> arch/arm/mach-exynos/ and _initcall() usage is the usual way for SoC
+> drivers to be initialized:
+>
+> drivers/soc/amlogic/meson-gx-socinfo.c
+> drivers/soc/amlogic/meson-mx-socinfo.c
+> drivers/soc/atmel/soc.c
+> drivers/soc/bcm/brcmstb/common.c
+> drivers/soc/imx/soc-imx-scu.c
+> drivers/soc/imx/soc-imx8.c
+> drivers/soc/renesas/renesas-soc.c
+> drivers/soc/tegra/fuse/fuse-tegra.c
+> drivers/soc/ux500/ux500-soc-id.c
+> drivers/soc/versatile/soc-integrator.c
+> drivers/soc/versatile/soc-integrator.c
+>
+> The only SoC drivers that are regular drivers are:
+>
+> drivers/soc/fsl/guts.c
+> drivers/soc/versatile/soc-realview.c
 
-This isn't going to happen. With this, and the inline encryption
-proposed by Google, we'll bloat the bio even more. At least the Google
-approach didn't include bio iter changes as well.
+Thanks for pointing it out.
 
-Please work it out between yourselves so we can have a single, clean
-abstraction that works for both.
+Indeed, the initcall was needed in your set of patches here:
+https://patchwork.kernel.org/project/linux-samsung-soc/list/?series=43565&state=*
+but this work was not continued here. Maybe it will be later
+resubmitted... maybe not... who knows? Therefore I would prefer proper
+solution for current case (driver), unless patches for mach are being
+brought back to life now.
 
--- 
-Jens Axboe
+> > I'm also inclined to have it converted to a regular driver.  We already
+> > have "exynos-asv" driver matching on the chipid node (patch 3/9).
+> > The ASV patches will not be merged soon anyway, all this needs some more
+> > thought. Krzysztof, can we abandon the chipid patches for now? Your
+>
+> chipid driver is good and useful on its own. The preferred solution
+> IMHO would be to just revert "soc: samsung: Convert exynos-chipid
+> driver to use the regmap API" commit.
 
+I queued the chipid as a dependency for ASV but ASV requires the
+regmap. What would be left after reverting the regmap part? Simple
+unused printk driver? No need for such. If reverting, then let's drop
+entire driver and rework it offline.
+
+Best regards,
+Krzysztof
