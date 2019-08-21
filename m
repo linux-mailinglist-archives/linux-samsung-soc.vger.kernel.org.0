@@ -2,123 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95D4F97F19
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 17:40:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20DBB981DD
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 19:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728152AbfHUPjk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 21 Aug 2019 11:39:40 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:47411 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728026AbfHUPjj (ORCPT
+        id S1728125AbfHUR4O (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Aug 2019 13:56:14 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36883 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbfHUR4O (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Aug 2019 11:39:39 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190821153937euoutp0127a8cbea26326c13c0268ffd61831bbd~8_ky4c24H0319203192euoutp01z
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 15:39:37 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190821153937euoutp0127a8cbea26326c13c0268ffd61831bbd~8_ky4c24H0319203192euoutp01z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566401977;
-        bh=vl9eeLzvbk1o5YyBvdLkkw/r624gziAnAOA5EeDC/C8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OJBz3zUn3JTFvtdIi98ThEJuc2009ab28/ZnAeMjOZi9IdpI31cr6PyduT5VNW8N8
-         f00FYwFCIlfC19albLJhtZFJDgjX0T6ub1iT409k1gVOScX5zXc20o7AqnyLv6QtWt
-         0hWhIxQnrNHYSTE9H1/qhFsGyYrptc3hb3tMa+iQ=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190821153937eucas1p16714ac390b5c31100b9dff2a51b476cf~8_kyKcICu1998619986eucas1p1p;
-        Wed, 21 Aug 2019 15:39:37 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id E3.50.04469.8B56D5D5; Wed, 21
-        Aug 2019 16:39:36 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190821153936eucas1p22cd1a6105806cb5ad7b43252852fec05~8_kxSIdoF2217422174eucas1p2e;
-        Wed, 21 Aug 2019 15:39:36 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190821153935eusmtrp23caa3591e86f9cb41173542d1d732cee~8_kxEBkA31715517155eusmtrp2H;
-        Wed, 21 Aug 2019 15:39:35 +0000 (GMT)
-X-AuditID: cbfec7f2-54fff70000001175-a2-5d5d65b87058
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id A3.2B.04166.7B56D5D5; Wed, 21
-        Aug 2019 16:39:35 +0100 (BST)
-Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190821153935eusmtip222d51bebca59adb50083fb20061c5e17~8_kwh5lPE0822808228eusmtip2Q;
-        Wed, 21 Aug 2019 15:39:35 +0000 (GMT)
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-To:     krzk@kernel.org
-Cc:     kgene@kernel.org, pankaj.dubey@samsung.com,
+        Wed, 21 Aug 2019 13:56:14 -0400
+Received: by mail-wr1-f67.google.com with SMTP id z11so2891680wrt.4;
+        Wed, 21 Aug 2019 10:56:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3QMcAbdO89j9hbCFCxKjPRn72B52n9H62i2qWyUrTKc=;
+        b=snzrhD7EB4z6LYL/mp6+EUIR3cu1H/A2q7j+xjU2NXvQ36a15qGXC7vgV5VqppSn5/
+         QJtApAFI86b3KbrAWO7c/U83+TGdisXtXTR2qo3EoBsMpQAJ9iQv4dzIh61vI1PyPg+r
+         GrOJbatLNUJ74duYlFTaT1XVE8CcEDfudAO1Jj3Fnq4lq4uCf0zhSl0zSkY+IjOrJQ3D
+         AefDg6teIbi094gV4UJ0l3jamRHluoj5yGcz/EYZpDV3dS7Hkonb6CaLCsy/j9JPl+n2
+         G4tzRc2rVnrYVJc0fRhXOPDWMX7W9HeaRkSmq/otsMNxUHWyFgrPsse9IlhLhay1BCne
+         6ziw==
+X-Gm-Message-State: APjAAAVYYJ4k7rl5SLWt+o+aP9xAWtuLy6ffEqtqxbj3YPZ6yB93poFX
+        ysvSNlGNizm5XdKA1g/RzVg=
+X-Google-Smtp-Source: APXvYqyXIbUhXlGcLLVFLun1i20quC+8O/1XUZRT3UwzRWmduyZeM2r2J5aRsbF9VA1AfHqIAQiZ8g==
+X-Received: by 2002:adf:f1cc:: with SMTP id z12mr4554250wro.125.1566410171806;
+        Wed, 21 Aug 2019 10:56:11 -0700 (PDT)
+Received: from kozik-lap ([194.230.147.11])
+        by smtp.googlemail.com with ESMTPSA id g12sm25434578wrv.9.2019.08.21.10.56.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Aug 2019 10:56:11 -0700 (PDT)
+Date:   Wed, 21 Aug 2019 19:56:09 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Masahiro Yamada <yamada.masahiro@socionext.com>
+Cc:     Kukjin Kim <kgene@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH v2] soc: samsung: Select missing dependency for
- EXYNOS_CHIPID
-Date:   Wed, 21 Aug 2019 17:39:26 +0200
-Message-Id: <20190821153926.12297-1-s.nawrocki@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190821150711.31398-1-s.nawrocki@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42LZduznOd0dqbGxBksm6FtsnLGe1aL/8Wtm
-        i/PnN7BbbHp8jdXi8q45bBYzzu9jslh75C67xaKtX9gtDr9pZ3Xg9Ni0qpPNY/OSeo++LasY
-        PT5vkgtgieKySUnNySxLLdK3S+DKeLC0n62gmbXi1sVulgbGaSxdjJwcEgImEjMfHmHqYuTi
-        EBJYwShx8OVdRgjnC6PEm13PmCGcz4wS06bsgWtpn3ufHSKxnFFiwamt7HAtK5deYAOpYhMw
-        lOg92scIYosICEvcW7ocrIhZ4A+jRPO9vawgCWEBf4njB68xgdgsAqoSZ96cBGvgFbCW6D/Z
-        wwyxTl5i9YYDYDangI3Euy1roM74zCbx/4IChO0isfDaaah6YYlXx7ewQ9gyEv93zgf7TkKg
-        mVGiZ/dtdghnAqPE/eMLGCGqrCUOH78IdBEH0HmaEut36UOEHSXO7v8NFpYQ4JO48VYQJMwM
-        ZE7aNp0ZIswr0dEmBFGtIvF71XQmCFtKovvJfxaIEg+Jw794IOHTzyjxdvpspgmM8rMQdi1g
-        ZFzFKJ5aWpybnlpsmJdarlecmFtcmpeul5yfu4kRmC5O/zv+aQfj10tJhxgFOBiVeHgn6MbG
-        CrEmlhVX5h5ilOBgVhLhrZgTFSvEm5JYWZValB9fVJqTWnyIUZqDRUmct5rhQbSQQHpiSWp2
-        ampBahFMlomDU6qBcavysy3Rtxviezr/2bvycFcLZJ16sEfnn1xHrI7Ej4IpbjdnrRNdHun0
-        YVGayoW83x53VSI9ZUOzr9zlVekMWVwqn8Q7R0e+51iIu0aVa/cSSbWDP+7JzrquvPp7VbDb
-        b8WrC41m1sTd1vHfMOXnBGu5hsNiLm99z0q5fixyb4oIVPmxzGenEktxRqKhFnNRcSIAn4Cg
-        zRMDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrILMWRmVeSWpSXmKPExsVy+t/xe7rbU2NjDR6/MLLYOGM9q0X/49fM
-        FufPb2C32PT4GqvF5V1z2CxmnN/HZLH2yF12i0Vbv7BbHH7TzurA6bFpVSebx+Yl9R59W1Yx
-        enzeJBfAEqVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRv
-        l6CX8WBpP1tBM2vFrYvdLA2M01i6GDk5JARMJNrn3mfvYuTiEBJYyihxY8sVIIcDKCElMb9F
-        CaJGWOLPtS42iJpPjBIbp69gBEmwCRhK9B7tA7NFgIruLV0ONohZoIVJYuWvJWwgCWEBX4lz
-        p94xg9gsAqoSZ96cBGvgFbCW6D/ZwwyxQV5i9YYDYDangI3Euy1rwK4TAqq5/uoh2wRGvgWM
-        DKsYRVJLi3PTc4sN9YoTc4tL89L1kvNzNzECg3fbsZ+bdzBe2hh8iFGAg1GJh3eCbmysEGti
-        WXFl7iFGCQ5mJRHeijlRsUK8KYmVValF+fFFpTmpxYcYTYGOmsgsJZqcD4ysvJJ4Q1NDcwtL
-        Q3Njc2MzCyVx3g6BgzFCAumJJanZqakFqUUwfUwcnFINjM139qxlvCBh9/FozOzCjZVTViyP
-        DL3fXhj+dFZPRrWbg83SJmdd+e6nj2zE7eteML3u42dRNbpx5Wd6zz9ZLcHAvYLvVVKP3NQ0
-        en3r0JTwp+f3PWd/YzvllUPi4etnlgQvC+T8ktW+/oqaQ2HA1FM3pxhMPSjg8LZhrmJNeNy0
-        FQw+qtdNxZRYijMSDbWYi4oTAf7DBVx0AgAA
-X-CMS-MailID: 20190821153936eucas1p22cd1a6105806cb5ad7b43252852fec05
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190821153936eucas1p22cd1a6105806cb5ad7b43252852fec05
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190821153936eucas1p22cd1a6105806cb5ad7b43252852fec05
-References: <20190821150711.31398-1-s.nawrocki@samsung.com>
-        <CGME20190821153936eucas1p22cd1a6105806cb5ad7b43252852fec05@eucas1p2.samsung.com>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH] ARM: s3c64xx: squash samsung_usb_phy.h into
+ setup-usb-phy.c
+Message-ID: <20190821175609.GA6768@kozik-lap>
+References: <20190819155602.20843-1-yamada.masahiro@socionext.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190819155602.20843-1-yamada.masahiro@socionext.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The chipid driver uses the MFD syscon API but it was not covered
-properly in Kconfig.
+On Tue, Aug 20, 2019 at 12:56:02AM +0900, Masahiro Yamada wrote:
+> This is only used by arch/arm/mach-s3c64xx/setup-usb-phy.c
+> 
+> $ git grep samsung_usb_phy_type
+> include/linux/usb/samsung_usb_phy.h:enum samsung_usb_phy_type {
+> $ git grep USB_PHY_TYPE_DEVICE
+> arch/arm/mach-s3c64xx/setup-usb-phy.c:  if (type == USB_PHY_TYPE_DEVICE)
+> arch/arm/mach-s3c64xx/setup-usb-phy.c:  if (type == USB_PHY_TYPE_DEVICE)
+> include/linux/usb/samsung_usb_phy.h:    USB_PHY_TYPE_DEVICE,
+> $ git grep USB_PHY_TYPE_HOST
+> include/linux/usb/samsung_usb_phy.h:    USB_PHY_TYPE_HOST,
+> 
+> Actually, 'enum samsung_usb_phy_type' is unused; the 'type' parameter
+> has 'int' type. Anyway, there is no need to declare this enum in the
+> globally visible header. Squash the header.
+> 
+> Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+> ---
+> 
+>  arch/arm/mach-s3c64xx/setup-usb-phy.c        |  5 +++++
+>  arch/arm/plat-samsung/include/plat/usb-phy.h |  2 --
+>  include/linux/usb/samsung_usb_phy.h          | 17 -----------------
+>  3 files changed, 5 insertions(+), 19 deletions(-)
 
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
----
- drivers/soc/samsung/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+Thanks, applied.
 
-diff --git a/drivers/soc/samsung/Kconfig b/drivers/soc/samsung/Kconfig
-index 2905f5262197..33ad0de2de3c 100644
---- a/drivers/soc/samsung/Kconfig
-+++ b/drivers/soc/samsung/Kconfig
-@@ -10,6 +10,7 @@ if SOC_SAMSUNG
- config EXYNOS_CHIPID
- 	bool "Exynos Chipid controller driver" if COMPILE_TEST
- 	depends on ARCH_EXYNOS || COMPILE_TEST
-+	select MFD_SYSCON
- 	select SOC_BUS
- 
- config EXYNOS_PMU
--- 
-2.17.1
+Best regards,
+Krzysztof
 
