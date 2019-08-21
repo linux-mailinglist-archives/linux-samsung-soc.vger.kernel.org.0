@@ -2,50 +2,50 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80AF49758E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 11:03:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32185975DC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 11:18:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbfHUJDg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 21 Aug 2019 05:03:36 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:45039 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726591AbfHUJDg (ORCPT
+        id S1726899AbfHUJRd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Aug 2019 05:17:33 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:32801 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726752AbfHUJRd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Aug 2019 05:03:36 -0400
+        Wed, 21 Aug 2019 05:17:33 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190821090332euoutp0125cc4102b1a68a40b4223be945af1ea8~85K_HcI8D3011030110euoutp01C
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 09:03:32 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190821090332euoutp0125cc4102b1a68a40b4223be945af1ea8~85K_HcI8D3011030110euoutp01C
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190821091731euoutp0281c217c1df466112e31d5c5fc7ccf0fc~85XK_yvc21921819218euoutp02u
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 09:17:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190821091731euoutp0281c217c1df466112e31d5c5fc7ccf0fc~85XK_yvc21921819218euoutp02u
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566378213;
-        bh=HjtJNUobfqATIFzQLlgWTNQWfAG2km9Yjm1hQCOuQQ8=;
+        s=mail20170921; t=1566379051;
+        bh=U35GIxHynVoMQiX9hpVsNjntx2eSxTMxE+ImHzLg1gg=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=sIe1v6coVFPEnTxZWaKPSjjmVEkb0vW9+lzALo825HtvXQ6GdMScBkiPUMysdh8zB
-         35/Jov60nDTKRdpmHfoyMH36/3Pvd+IT8POmjtU556oE9bmIF6Mn/wG03LAzRHy//J
-         OVtaENowU/4XS9D+LXvtqPPrs2u7QL+C7E0e83h4=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        b=F9kAHYCaiYsQXovnjCvYfwPVZTT2eUrbZa5j4hb3jcw9BARjkt/XW1IaJjowAjW2y
+         BWi7j0ZswLwc2qLNgA19i9P0/AC/Yv6zGEHFraP5sSwzZYU0ut+VaVrIpu5KQQiBGd
+         njHzWBAHrZh7gO5TeBekKrGc2fBd8grrV3W/OqRY=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190821090331eucas1p2f8d80818ad60c52a691e200a581f06f3~85K8ql3wV2932829328eucas1p2J;
-        Wed, 21 Aug 2019 09:03:31 +0000 (GMT)
+        20190821091730eucas1p2ab9a0eac671a92205c4c68e104122634~85XJ6Akn_2177221772eucas1p2I;
+        Wed, 21 Aug 2019 09:17:30 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id A9.5E.04309.3E80D5D5; Wed, 21
-        Aug 2019 10:03:31 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id B6.EA.04374.92C0D5D5; Wed, 21
+        Aug 2019 10:17:29 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190821090330eucas1p1db7ea49c2ee537ab561af8123004ba4a~85K75ioFn2766327663eucas1p1R;
-        Wed, 21 Aug 2019 09:03:30 +0000 (GMT)
+        20190821091729eucas1p17ada82ea9bd6684652667c88e303d474~85XJGRuQ81444314443eucas1p1m;
+        Wed, 21 Aug 2019 09:17:29 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190821090330eusmtrp12edf7b66e01271f3c25a7f69290550db~85K7qJ_520611606116eusmtrp1S;
-        Wed, 21 Aug 2019 09:03:30 +0000 (GMT)
-X-AuditID: cbfec7f4-f2e849c0000010d5-1b-5d5d08e3bbc7
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190821091729eusmtrp21d39c8b8fdc88df54df01bce5b2b3e49~85XI36PNE1725317253eusmtrp2J;
+        Wed, 21 Aug 2019 09:17:29 +0000 (GMT)
+X-AuditID: cbfec7f5-4ddff70000001116-11-5d5d0c2972fb
 Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 75.6B.04117.2E80D5D5; Wed, 21
-        Aug 2019 10:03:30 +0100 (BST)
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 01.3D.04117.92C0D5D5; Wed, 21
+        Aug 2019 10:17:29 +0100 (BST)
 Received: from [106.120.51.20] (unknown [106.120.51.20]) by
         eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190821090329eusmtip1eeb5e13b722585a24120dd4de96d1109~85K6pwuEh0307103071eusmtip1V;
-        Wed, 21 Aug 2019 09:03:29 +0000 (GMT)
+        20190821091728eusmtip1bcba4252890d3013a86deabdc1e39f15~85XH9mgFU0853108531eusmtip1B;
+        Wed, 21 Aug 2019 09:17:28 +0000 (GMT)
 Subject: Re: [PATCH v12 3/9] drivers: memory: extend of_memory by LPDDR3
  support
 To:     Krzysztof Kozlowski <krzk@kernel.org>
@@ -64,46 +64,46 @@ Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
         willy.mh.wolff.ml@gmail.com
 From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <43c8fb01-c85c-47f7-f5c1-5fc0d0191b26@partner.samsung.com>
-Date:   Wed, 21 Aug 2019 11:03:28 +0200
+Message-ID: <21d22ba6-2254-ae5e-7ef4-5dfaa3f54229@partner.samsung.com>
+Date:   Wed, 21 Aug 2019 11:17:27 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPdue75yF=v5vsawOdfvcCMBDP6HGVXdwngBWE264kGJwg@mail.gmail.com>
+In-Reply-To: <CAJKOXPd96ExoCR-SiJfRqTbwO+_aQ6LSDVOQcrrt8JQHsoZBEw@mail.gmail.com>
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf0zMYRzHPff9WVweJ/UZxpzZZESGPcYamx9f/INhfh2OvmK6w32VkpGf
-        KXckFKcIo9ydpbQ6t3FTTRROaZUfV3EtP8ty+RFqur6Z/nt93s/78zzv9/bwlCqdHcpv1e8S
-        DXptlJr1pwsfdLgmeHiNZtJ1C0vyzuUypLb9HUMulT5liLXNg8ihq7ksOV2eqSCPj+vISc8n
-        irhctzjy5OBnjrQZ6xny3JHBEq+pFJFzrnsKcrPUzZFrtZUKUlk+l7w6kMOSI3dLOVLyOZEh
-        XTV5NHFWLySvfgeQ7w/folkg2C7akPD9WyotfKk7wgkXEipp4Y7ZzQn5liRWcGbaOMF0qJUV
-        ThRYkHC7Il7w5o9Y3H+1/8wIMWprjGiYGL7Bf0tSZsiO8hGxRbccTAJKD0pGfjzgKfC7OYVL
-        Rv68CucgcKZ8pOWhHYH1201KHrwIqlrN7L+VjsN5vSvZCNqs9t6hBcGv6/c5n2swXgo/6l/3
-        bATiEKjt/MH4TBR2MlB30NJ9L8+zOBTslp0+jxLPg8Jfnygf03gMtCVWMT4eglfC18YSRvYM
-        gkfnm2gf++ElcNjd1aNTOBheNl1SyDwSiloyemIDruah2d2B5Nhz4E31M0bmwfCxrICTeThU
-        nDbSMkuQYLrc698LnpOZvZ4ZUFJWyfgyU91lch0TZXk2dOVUIZ8MOADqWgbJEQIgtTCdkmUl
-        HDuqkt1jocD4TCFzEGTb0rgUpDb3KWbuU8bcp4z5/7tZiLagYDFa0kWK0mS9uDtU0uqkaH1k
-        6KbtunzU/V0rusra7cjxZ2MxwjxSD1DaX6zRqBhtjBSnK0bAU+pAZWzGao1KGaGN2yMatq83
-        REeJUjEaxtPqYGV8v8Y1Khyp3SVuE8UdouHfqYL3G5qA0Kp1KzrH506PWbvZ6V2Q2lBjj9hf
-        tGdggyn+yfLoM83jcoz1cdlfK5Y+b/wTeKr2nQ3fMI3XBg2pOhs5mh84YZnqfkZreGqaRyl0
-        Tvtgndq41qVZuPxGTZhr7ux2oy4kVu/w5tUw+95fUev5rMJRZ8b+7LQuehwWnlg0/yjOcqe/
-        V9PSFm3YOMogaf8CG6EILKoDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsVy+t/xu7qPOGJjDT4/FbDYOGM9q8X1L89Z
-        LeYfOcdqsfrjY0aL5sXr2Swmn5rLZHGmO9ei//FrZovz5zewW5xtesNu8bHnHqvF5V1z2Cw+
-        9x5htJhxfh+Txdojd9ktll6/yGRx8ZSrxe3GFWwWrXuPsFscftPOavHv2kYWi/1XvCxu/+az
-        +HbiEaODhMeaeWsYPb59ncTi8f5GK7vH7IaLLB47Z91l99i0qpPNY//cNewevc3v2Dz6tqxi
-        9Nh8utrj8ya5AO4oPZui/NKSVIWM/OISW6VoQwsjPUNLCz0jE0s9Q2PzWCsjUyV9O5uU1JzM
-        stQifbsEvYzOuZoFp+Qqtm/YxdrAOF2si5GTQ0LAROJny0b2LkYuDiGBpYwS+9sXsEIkxCQm
-        7dvODmELS/y51sUGUfSaUWLS4SMsIAlhgSCJ7/fusIHYIgKaEtf/fmcFKWIW2M8q8ehAD1TH
-        BCaJI31TgEZxcLAJ6EnsWFUI0sAr4Cax7ddrZhCbRUBV4mP7JbDNogIREod3zGKEqBGUODnz
-        CdgyToFAiZa7/8BqmAXMJOZtfsgMYYtL3HoynwnClpfY/nYO8wRGoVlI2mchaZmFpGUWkpYF
-        jCyrGEVSS4tz03OLjfSKE3OLS/PS9ZLzczcxAhPKtmM/t+xg7HoXfIhRgINRiYd3x83oWCHW
-        xLLiytxDjBIczEoivBVzomKFeFMSK6tSi/Lji0pzUosPMZoCPTeRWUo0OR+Y7PJK4g1NDc0t
-        LA3Njc2NzSyUxHk7BA7GCAmkJ5akZqemFqQWwfQxcXBKNTC6bg+94Xg6W0Y64gKjy4nHbom6
-        K2r89dmzUsLlvl/kcYhud+NaLcqibSOxuUxVlsNEtGwCV0vN8kcVvdY8d9c/OL86qoBDbnno
-        i6ui7yeuqZw+U63MZWO4UK3F3/NxLm0pOd+eBpkel/v+q+mXiP7lY/8sD51KFE7PzOVy6g0u
-        vpOdF/RxrxJLcUaioRZzUXEiAJjDpgs+AwAA
-X-CMS-MailID: 20190821090330eucas1p1db7ea49c2ee537ab561af8123004ba4a
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+3auWrPT8vJmkjCIStAKu3xhRIHJITAq+yOSkTMPM3LLdrSy
+        EldR62Z203Tp7MpkzcwL5q20TTIts1XkyG6kXdAszFTCsjweI//7vc/7vN/7PvCxhCqbDmS3
+        GVIEo0GbpKa9ycr7P9tC503RaBY4GyJwaW4Jhdt/fKJwYeNjCt/o60T40NUSGp9rKVDgRyf0
+        OKuzh8BtbbcY3HrwC4P7Tr6h8LOafBr3ZzYinNt2V4GLG18z+Hq7W4HdLatxx4EiGh++08hg
+        1xczhUdelJK4/vka3DHsgwcfvEcrgXdYHYgfHDhL8t88hxn+oslN8tWW1wxfZj9G8/UFDobP
+        PPSV5k9V2BFf/nAf3182a93kzd7LE4SkbbsE4/wVcd6JRS9Dkq8t3XPkcTVlQh1zjyMvFrhF
+        cPpPHiWxiitCUPhZfxx5j/IPBJ6SWoVc9CNovvWR+Ddhbcgdb9gQ1B7NpOSiF8G9B05ack3n
+        NsDQm1dj7MvNg/bfQ2MmgqunwHPQPvoUy9JcGFTZd0oeJRcFNXn3aUkmudnw27VYkv24TfD9
+        nYuSLdOgOa+LlNiLWw+VJ1xjzxNcALzsKlTIHAy3e/MJaRVwHhZspWZKvjoS6rId4wmmQ3dT
+        BSNzEPyploeBE8GUeRnJvB86swrGPRHganJT0m3EaJaSmvmyvApGip4iSQbOBzy90+QTfOBs
+        5QVClpVw9IhKds+FipNPxhf5g82Rw5xGasuEYJYJYSwTwlj+772ESDsKEFJFvU4Qww3C7jBR
+        qxdTDbqwrTv0ZWj0sz4caRqoQnd/xTsRxyL1FGVce6xGRWl3iWl6JwKWUPsq9+Rv1qiUCdq0
+        vYJxxxZjapIgOtFMllQHKPdNeher4nTaFGG7ICQLxn9dBesVaEL68qn7czbODLYaVA1xFPkW
+        DSW07JwxfNOR0helM0/2CzdHN5tnVPnT16/1QuuVznsKq7XbVBBdnKbL6on56hX5othPE7Gg
+        K/DMk9q0wYsffDLWl48sCc+mbKEZ/vG3h0KLifSMb33VqWuXE8ExKT11tqBlGbGv3KxheE5Q
+        0/l0NSkmaheGEEZR+xeNpQmlqAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTcRjG+e9cLRenOfOPH9QG3QRPHZfur5gFUR2kD1Zfwhpr1EnFXWxn
+        htqHTLPylloQOq+gRk2jNNFlpqZipeali2Y2KbWim6KmFqnkXIHfHp7n+fG+L7w0JrMSnnS0
+        wSyYDFqdglyDdy09sfttc1Wrd9hmCVSdd5dAgz8/E6ikvYdAlVNjAKWU3SXR9c4iCerO0KPs
+        sW8Y6u29R6Hnyd8pNJU5QqCXDYUkmslqByivt0mC7rTbKVQx2C9B/Z370PCFWyRKfdROobbv
+        lwm0NFCNo+ZXYWj4zzo093QU7IF8VXEV4Odmr+H85JtUii9I6sf5BxY7xddY00i+uaiK4rNS
+        Jkj+aq0V8Pe7zvEzNV7hayPYEJMxziz4RBlF8y7FMQ75s1wQYv13BrGcUqUO9g9QbA8NOSXo
+        os8Kpu2hJ9ioW299Y8tV8Zd6HhBJYHhrOnChIbMTFrfkSdLBGlrGVADYkPsJdwYb4LWmesqp
+        3eDCQDrpLH0DsDt5VOII3JjDcH7kHenQcmYbHFycJxwljGkm4GhL5j8iRwKfFI8sEzRNMiy0
+        Wc84ACmzHzbkd5AOG2c2wcW2AIftzhyFbTYLcFbWw2f54ysLuTCHYF1G28osjAmExfc/YE7t
+        Ad+Ol0ic2hvW/yjEcoDMsgq3rEIsqxDLKqQU4FYgF+JEfaRe9GdFrV6MM0SyJ436GrD8J3Ud
+        v2ttIH3iSCtgaKBwldqGjqllhPasmKBvBZDGFHJpfGGEWiY9pU1IFExGjSlOJ4itIGD5tlzM
+        0/2kcfnrDGYNF8CpUBCnUqqUgUjhIb3CPD4uYyK1ZiFGEGIF039OQrt4JgEvpfzp14FE8vzt
+        3Massqz3Exv76jrhi4NyN67x4/XX00vs/AGpq27y9NFsnHfzi77Z2FLpoq690ZFgjqlLUyXo
+        rOWbpydr+epGw5GbC5yPZnegu6D0DpvVnIkP/tW8N/bxq69N9taHBYWX7Bc/GdCX7C1DnY88
+        SqnF8L7Eeb9YBS5GaTlfzCRq/wL8G6CMPQMAAA==
+X-CMS-MailID: 20190821091729eucas1p17ada82ea9bd6684652667c88e303d474
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-RootMTR: 20190722094727eucas1p10041ba25819e6e62d639423a97435f2d
@@ -113,7 +113,7 @@ X-CMS-RootMailID: 20190722094727eucas1p10041ba25819e6e62d639423a97435f2d
 References: <CGME20190722094727eucas1p10041ba25819e6e62d639423a97435f2d@eucas1p1.samsung.com>
         <20190722094646.13342-1-l.luba@partner.samsung.com>
         <20190722094646.13342-4-l.luba@partner.samsung.com>
-        <CAJKOXPdue75yF=v5vsawOdfvcCMBDP6HGVXdwngBWE264kGJwg@mail.gmail.com>
+        <CAJKOXPd96ExoCR-SiJfRqTbwO+_aQ6LSDVOQcrrt8JQHsoZBEw@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
@@ -121,7 +121,7 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 Hi Krzysztof,
 
-On 7/24/19 1:39 PM, Krzysztof Kozlowski wrote:
+On 7/24/19 1:31 PM, Krzysztof Kozlowski wrote:
 > On Mon, 22 Jul 2019 at 11:47, Lukasz Luba <l.luba@partner.samsung.com> wrote:
 >>
 >> The patch adds AC timings information needed to support LPDDR3 and memory
@@ -157,6 +157,12 @@ On 7/24/19 1:39 PM, Krzysztof Kozlowski wrote:
 >> + * Structure for timings for LPDDR3 based on LPDDR2 plus additional fields.
 >> + * All parameters are in pico seconds(ps) unless explicitly indicated
 >> + * with a suffix like tRAS_max_ns below
+> 
+> To which tRAS_max_ns are you referring?
+The comment failed to stand the test of time, not for the first time
+though. I will update it according to the current struct.
+
+> 
 >> + */
 >> +struct lpddr3_timings {
 >> +       u32 max_freq;
@@ -228,16 +234,76 @@ On 7/24/19 1:39 PM, Krzysztof Kozlowski wrote:
 >> + * it under the terms of the GNU General Public License as published by
 >> + * the Free Software Foundation; either version 2 of the License, or
 >> + * (at your option) any later version.
+>>    */
+>>
+>>   #include <linux/device.h>
+>> @@ -149,3 +155,151 @@ const struct lpddr2_timings *of_get_ddr_timings(struct device_node *np_ddr,
+>>          return lpddr2_jedec_timings;
+>>   }
+>>   EXPORT_SYMBOL(of_get_ddr_timings);
+>> +
+>> +/**
+>> + * of_lpddr3_get_min_tck() - extract min timing values for lpddr3
+>> + * @np: pointer to ddr device tree node
+>> + * @device: device requesting for min timing values
+>> + *
+>> + * Populates the lpddr3_min_tck structure by extracting data
+>> + * from device tree node. Returns a pointer to the populated
+>> + * structure. If any error in populating the structure, returns NULL.
+>> + */
+>> +const struct lpddr3_min_tck *of_lpddr3_get_min_tck(struct device_node *np,
+>> +                                                  struct device *dev)
+>> +{
+>> +       int                     ret = 0;
+>> +       struct lpddr3_min_tck   *min;
+>> +
+>> +       min = devm_kzalloc(dev, sizeof(*min), GFP_KERNEL);
+>> +       if (!min)
+>> +               goto default_min_tck;
+>> +
+>> +       ret |= of_property_read_u32(np, "tRFC-min-tck", &min->tRFC);
+>> +       ret |= of_property_read_u32(np, "tRRD-min-tck", &min->tRRD);
+>> +       ret |= of_property_read_u32(np, "tRPab-min-tck", &min->tRPab);
+>> +       ret |= of_property_read_u32(np, "tRPpb-min-tck", &min->tRPpb);
+>> +       ret |= of_property_read_u32(np, "tRCD-min-tck", &min->tRCD);
+>> +       ret |= of_property_read_u32(np, "tRC-min-tck", &min->tRC);
+>> +       ret |= of_property_read_u32(np, "tRAS-min-tck", &min->tRAS);
+>> +       ret |= of_property_read_u32(np, "tWTR-min-tck", &min->tWTR);
+>> +       ret |= of_property_read_u32(np, "tWR-min-tck", &min->tWR);
+>> +       ret |= of_property_read_u32(np, "tRTP-min-tck", &min->tRTP);
+>> +       ret |= of_property_read_u32(np, "tW2W-C2C-min-tck", &min->tW2W_C2C);
+>> +       ret |= of_property_read_u32(np, "tR2R-C2C-min-tck", &min->tR2R_C2C);
+>> +       ret |= of_property_read_u32(np, "tWL-min-tck", &min->tWL);
+>> +       ret |= of_property_read_u32(np, "tDQSCK-min-tck", &min->tDQSCK);
+>> +       ret |= of_property_read_u32(np, "tRL-min-tck", &min->tRL);
+>> +       ret |= of_property_read_u32(np, "tFAW-min-tck", &min->tFAW);
+>> +       ret |= of_property_read_u32(np, "tXSR-min-tck", &min->tXSR);
+>> +       ret |= of_property_read_u32(np, "tXP-min-tck", &min->tXP);
+>> +       ret |= of_property_read_u32(np, "tCKE-min-tck", &min->tCKE);
+>> +       ret |= of_property_read_u32(np, "tCKESR-min-tck", &min->tCKESR);
+>> +       ret |= of_property_read_u32(np, "tMRD-min-tck", &min->tMRD);
+>> +
+>> +       if (ret) {
+>> +               dev_warn(dev, "%s: errors while parsing min-tck values\n",
+>> +                        __func__);
+>> +               devm_kfree(dev, min);
+>> +               goto default_min_tck;
+>> +       }
+>> +
+>> +       return min;
+>> +
+>> +default_min_tck:
+>> +       dev_warn(dev, "%s: using default min-tck values\n", __func__);
 > 
-> What's this?
-My bad, in the meantime Thomas Gleixner has replaced the license header.
-The old part has been automatically taken again during my re-base.
-I will just remove the old license comment.
+> Here and later - you return NULL, not default values. Your driver -
+> consumer - also behaves like with error condition, not like with
+> default values. Print just that you cannot get timings, I guess.
+OK, thank you. I will change the print.
+
+Thank you for the review.
 
 Regards,
 Lukasz
-> 
-> Please, get a independent review or ack for this patch.
 > 
 > Best regards,
 > Krzysztof
