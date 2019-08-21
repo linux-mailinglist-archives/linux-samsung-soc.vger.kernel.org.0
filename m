@@ -2,212 +2,131 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7C997AE2
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 15:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9B897E09
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Aug 2019 17:05:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728815AbfHUNbc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 21 Aug 2019 09:31:32 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:60061 "EHLO
+        id S1729055AbfHUPFv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Aug 2019 11:05:51 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:37934 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728516AbfHUNbb (ORCPT
+        with ESMTP id S1726677AbfHUPFv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Aug 2019 09:31:31 -0400
+        Wed, 21 Aug 2019 11:05:51 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190821133129euoutp014ea763dc261ea5161fc20a9b788573c5~8806yDXKm0678706787euoutp01B
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 13:31:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190821133129euoutp014ea763dc261ea5161fc20a9b788573c5~8806yDXKm0678706787euoutp01B
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190821150550euoutp016ac0bcccece11e0d546fa9eeff3146ec~8_HSUdyhx1166411664euoutp011
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Aug 2019 15:05:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190821150550euoutp016ac0bcccece11e0d546fa9eeff3146ec~8_HSUdyhx1166411664euoutp011
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566394289;
-        bh=/D2caZgtkM4Mtk1ImVESN+kr9D/hyd6bSDCa0+RCcXU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=GR7rQsQoDx+bA2Zq4SW3lrdrn0LfjOXxtFlsbBUd+mFCY6vqFzQ/STPIx3+eQntfu
-         5cm2uosnnhLrL2uchOhwqYPtBenOjxzl+ZDHJFJ9xCQZ6pg6C6ujcXTK7pVJp2h+sO
-         GEuGg3y9oa9q9FYKco/3ZT0B2fYZ3UUW4osEAjl0=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        s=mail20170921; t=1566399950;
+        bh=TapZ50bINgSULFfnU/4MVBjZqPhc/IXiiaEUktjqsEE=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=defzvmG7JEVS2t26Kts+SAzhgC8XP7PuFsfWu5pN4unMDJXHW3ZINpHdDg8fSbB2J
+         00ukLNNrLFAQvSXEN5oTsZcKBytmn3x6aZ2kiFTgEV1et2Jv1CGKSh0oQ04PJ2gOdu
+         R03xQtpIRkJoptaKy1uauDMk2g2g4h37DqDKAISw=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190821133128eucas1p1620bed3555fea4cc5ed3c77029591c86~88054BbWa1122211222eucas1p15;
-        Wed, 21 Aug 2019 13:31:28 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 87.B3.04309.0B74D5D5; Wed, 21
-        Aug 2019 14:31:28 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190821133127eucas1p243b7ca9ead6067c4980534cca2cb435c~8805FTILe2077520775eucas1p26;
-        Wed, 21 Aug 2019 13:31:27 +0000 (GMT)
+        20190821150549eucas1p1a472ee908256a42b5d07673d4f48f5dc~8_HRcbJOw1287612876eucas1p1c;
+        Wed, 21 Aug 2019 15:05:49 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 55.0D.04469.CCD5D5D5; Wed, 21
+        Aug 2019 16:05:48 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190821150548eucas1p15139f733b00e3a1a107efe39f6712fe9~8_HQyGgsO2357223572eucas1p1w;
+        Wed, 21 Aug 2019 15:05:48 +0000 (GMT)
 Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190821133127eusmtrp1abc4ffc11ae7364b72bf4e51ede9ff57~88042v3dX2187721877eusmtrp1l;
-        Wed, 21 Aug 2019 13:31:27 +0000 (GMT)
-X-AuditID: cbfec7f4-ae1ff700000010d5-c9-5d5d47b05a11
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190821150548eusmtrp29d9a9fd5759502b1257cb1e2dbb025d8~8_HQj_TcL3237532375eusmtrp2x;
+        Wed, 21 Aug 2019 15:05:48 +0000 (GMT)
+X-AuditID: cbfec7f2-569ff70000001175-d5-5d5d5dcc9c23
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 5E.0C.04166.FA74D5D5; Wed, 21
-        Aug 2019 14:31:27 +0100 (BST)
-Received: from [106.120.51.71] (unknown [106.120.51.71]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 17.48.04166.CCD5D5D5; Wed, 21
+        Aug 2019 16:05:48 +0100 (BST)
+Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190821133126eusmtip210afd004be05403649fb557e52ca5563~8804Hjb-m0921809218eusmtip2C;
-        Wed, 21 Aug 2019 13:31:26 +0000 (GMT)
-Subject: Re: [PATCH v3 2/9] soc: samsung: Convert exynos-chipid driver to
- use the regmap API
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Sylwester Nawrocki <snawrocki@kernel.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>
-From:   Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Message-ID: <d9a20ae5-4bdf-cb05-d68f-a7631517c87c@samsung.com>
-Date:   Wed, 21 Aug 2019 15:31:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAJKOXPdh9eHrAuCxHkQBvJMqEnUCeU2xwkK=9yyiJ6BuTLJ+_A@mail.gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0iTYRTGe/0u+xRnr1PxYGowKDBQs0S+Loii4SCiy19hzFz5oZKabN4L
-        Wql5oZrOoLUE7eZloC7vWkm6T00kpSzNwkumodUqcmhqas5Pyf9+7znPc55z4GUIyUfKjYlN
-        SOKUCYo4KW1HNnYt9Hkbw+TyveZmT3ZZ2yViS/g+is3SPyBZzedvBNvfbxSxtZ8HKXagtZhm
-        Z2/yiNX1t9mweRY9zVbxIyL2QYNFxGY/50Ws6XsOxeZMzRBs3XgXHYRlS4taJKs15NGyukdX
-        ZDczf9CyW/UGJJut9TxBh9sdjuLiYlM4pW9gpF2M7t0wnWjxSJsxVFJqVA35yJYB7A+mhzyZ
-        j+wYCa5AYB4apoSHBUFDvYmwqiR4FsGAxnnT8UQ3tlEvR/B0NFEwmBFMaKvXG044Akb5e7SV
-        nbEXDC3Pr08l8DMSNFWvRNYGjQ9CYY4BWVmMA4EfuE9ZmcS7QMe/Xte44NMw1mWkBI0j9Nyd
-        JK1si0/CyPTiegCBXeHDZImNwDuhyVxMWMMAX2XglaaHEtYOhWzTF0JgJ/jaXS8S2B16i26Q
-        gqEawXLu9Ia7CUF50QotqA6Bqfv12iRmLcILalp9rQg4GN627xfQAd6bHYUdHEDbeIcQymLI
-        vS4RZuwGY5mR3kzNb6kkCpBUv+Uy/ZZr9Fuu0f+PLUWkAblyyar4aE61L4FL9VEp4lXJCdE+
-        5y/G16K1L9e70m1pRq1/z3UgzCCpvbjAWy6XUIoUVXp8BwKGkDqL04rD5RJxlCI9g1NePKtM
-        juNUHWgHQ0pdxZe2jZ+R4GhFEneB4xI55WbXhrF1UyPbwr7hFsql7e68/zOZJqKzifL4o6tr
-        d/g11zmbFdPuHpnx9XJw7IRTSlqIxqPq+OGK24WrmXt+rvimNjx2DLMXh4aG1x+onrq2rZRf
-        CghQ1uTN+aoHZU9W/UzbqezVF09fHvF780mUhMa7Q1pOjQWVqaX34o4eU0dpva79XnD3OS0l
-        VTEKvz2EUqX4B67VEr1uAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsVy+t/xe7rr3WNjDebdU7b4O+kYu8X8I+dY
-        LVpmLWKx6H/8mtni/PkN7BabHl9jtbi8aw6bxefeI4wWM87vY7Lo/DKLzWLtkbvsFou2fmG3
-        aN17hN3i8Jt2Vov2py+ZLTY/OMbmIODx+9ckRo9NqzrZPDYvqffobX7H5tG3ZRWjx+dNcgFs
-        UXo2RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZM67e
-        ZCv4IlvxctVK1gbGdRJdjJwcEgImEhtn3GfuYuTiEBJYyihxeNF9li5GDqCEjMTx9WUQNcIS
-        f651sUHUvGaUOLmkgwkkISwQJ7Hs/jN2EFtEQFPi+t/vrCBFzAL7WCTaDvxgh+h4wyzR8fMa
-        WBWbgJXExPZVjCA2r4CdxJHLC1lBbBYBVYkZRy6C1YgKREiceb+CBaJGUOLkzCdgNqdAoMTd
-        F7/YQGxmAXWJP/MuMUPY4hK3nsxngrDlJba/ncM8gVFoFpL2WUhaZiFpmYWkZQEjyypGkdTS
-        4tz03GJDveLE3OLSvHS95PzcTYzAyN527OfmHYyXNgYfYhTgYFTi4Z2gGxsrxJpYVlyZe4hR
-        goNZSYS3Yk5UrBBvSmJlVWpRfnxRaU5q8SFGU6DnJjJLiSbnA5NOXkm8oamhuYWlobmxubGZ
-        hZI4b4fAwRghgfTEktTs1NSC1CKYPiYOTqkGxj4bRrkvhSXOYbKnPFI/R01w4/30Z3dZgpJM
-        9Kr9u6b+vCmyK386M/eDZnfJBVf1jDcdlWq6ciRG5qT62isS87/dXy9/ZHe2o86crFYxc+31
-        BvXz7zXNnRs1V0RzVWt9QGfkp7mmNT557b82hkkZ3Lltuddu9nZnS72gkM32pw2WrO3/W9jZ
-        q8RSnJFoqMVcVJwIANlgoLoCAwAA
-X-CMS-MailID: 20190821133127eucas1p243b7ca9ead6067c4980534cca2cb435c
+        20190821150547eusmtip2964ecbfa743a4ea2c7438188a225e546~8_HQB7Cx52516525165eusmtip2a;
+        Wed, 21 Aug 2019 15:05:47 +0000 (GMT)
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+To:     krzk@kernel.org
+Cc:     jonathanh@nvidia.com, kgene@kernel.org, pankaj.dubey@samsung.com,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: [PATCH] soc: samsung: chipid: Remove the regmap lookup error log
+Date:   Wed, 21 Aug 2019 17:05:39 +0200
+Message-Id: <20190821150539.31207-1-s.nawrocki@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFIsWRmVeSWpSXmKPExsWy7djP87pnYmNjDV41GlpsnLGe1aJl1iIW
+        i/7Hr5ktzp/fwG6x6fE1VovLu+awWcw4v4/JYu2Ru+wWi7Z+Ybc4/Kad1YHLY9OqTjaPzUvq
+        PXqb37F59G1ZxejxeZNcAGsUl01Kak5mWWqRvl0CV8b6y4eZCuZwVZx/vJmtgfEuRxcjJ4eE
+        gInE1K+z2LsYuTiEBFYwSkzZOoEZJCEk8IVRYvVzdwj7M6NE3w4fmIYr+xeyQ8SXM0osfVsB
+        0QxU3/h5PytIgk3AUKL3aB8jiC0iICxxb+lysAZmgUlMEjv61LsYOTiEBTwl2icGgoRZBFQl
+        bn87wgRi8wpYS/Q8m88KsUteYvWGA8wg8yUE3rNJTOqCWCwh4CLR/72BGcIWlnh1fAtUXEbi
+        /875TBANzYwSPbtvs0M4Exgl7h9fwAhRZS1x+PhFVpArmAU0Jdbv0ocIO0rMuf+AESQsIcAn
+        ceOtIMTNfBKTtk1nhgjzSnS0CUFUq0j8XjWdCcKWkuh+8p8FwvaQmDf9OxMkfGIlTj1YxD6B
+        UW4Wwq4FjIyrGMVTS4tz01OLDfNSy/WKE3OLS/PS9ZLzczcxAlPE6X/HP+1g/Hop6RCjAAej
+        Eg/vBN3YWCHWxLLiytxDjBIczEoivBVzomKFeFMSK6tSi/Lji0pzUosPMUpzsCiJ81YzPIgW
+        EkhPLEnNTk0tSC2CyTJxcEo1MGYeLQtUK3ufblfMKH50uf4zrZnLSmOfKG4Ka+Zcd7amK6bW
+        4Bjrgf+rtmZKT1dKa+RKsWoT1ajfn5JcuMLFk/9Yb3ez0oEF+8+widopqqxn8cjRivvdkxvY
+        lFAYtqHY8Iz+Xoc7N/jrpR59Dfb8L3Rx02PeVq6JTB7nOi8bXGDv8Ap2XGKmxFKckWioxVxU
+        nAgAt6K0Dw0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrELMWRmVeSWpSXmKPExsVy+t/xe7pnYmNjDV4dYrHYOGM9q0XLrEUs
+        Fv2PXzNbnD+/gd1i0+NrrBaXd81hs5hxfh+Txdojd9ktFm39wm5x+E07qwOXx6ZVnWwem5fU
+        e/Q2v2Pz6NuyitHj8ya5ANYoPZui/NKSVIWM/OISW6VoQwsjPUNLCz0jE0s9Q2PzWCsjUyV9
+        O5uU1JzMstQifbsEvYz1lw8zFczhqjj/eDNbA+Ndji5GTg4JAROJK/sXsncxcnEICSxllOh7
+        PYexi5EDKCElMb9FCaJGWOLPtS42iJpPjBK75+1nAUmwCRhK9B7tYwSxRYCK7i1dDjaIWWAO
+        k8TDnklgg4QFPCXaJwaC1LAIqErc/naECcTmFbCW6Hk2nxVigbzE6g0HmCcw8ixgZFjFKJJa
+        WpybnltsqFecmFtcmpeul5yfu4kRGJ7bjv3cvIPx0sbgQ4wCHIxKPLwTdGNjhVgTy4orcw8x
+        SnAwK4nwVsyJihXiTUmsrEotyo8vKs1JLT7EaAq0fCKzlGhyPjB28kriDU0NzS0sDc2NzY3N
+        LJTEeTsEDsYICaQnlqRmp6YWpBbB9DFxcEo1MAa+rZUxevqi8rGg57aV39WqC59N7XZ/fuyK
+        dFnl+fONh6RmmITOVAr94qI787+U8Mqf9+3Cd6bcYliyVXXRC85zdbylN94fW7x0dexjn8wv
+        W05Xd8n4T18a41F+w/Tp8jz2dwWi675FhSxT98mYesqNYdUSt5aKs1YXjjtlhS6UOZ35I4/l
+        1jQlluKMREMt5qLiRACGWA8AZQIAAA==
+X-CMS-MailID: 20190821150548eucas1p15139f733b00e3a1a107efe39f6712fe9
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190813150852eucas1p2be4c0ab5ec2c079e3daf1af24283b27c
+X-RootMTR: 20190821150548eucas1p15139f733b00e3a1a107efe39f6712fe9
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190813150852eucas1p2be4c0ab5ec2c079e3daf1af24283b27c
-References: <20190813150827.31972-1-s.nawrocki@samsung.com>
-        <CGME20190813150852eucas1p2be4c0ab5ec2c079e3daf1af24283b27c@eucas1p2.samsung.com>
-        <20190813150827.31972-3-s.nawrocki@samsung.com>
-        <b5359603-b337-dcd8-b025-ca7dff5f4a06@nvidia.com>
-        <CAJKOXPf597CMx=M2JmSTWe2GzBfcHFefgzSJbJ+njZGp-WfR1A@mail.gmail.com>
-        <1e428c8e-f4b5-0810-77f9-2c899c040fc7@kernel.org>
-        <72eea1ea-2433-2f76-6265-5851554e845d@samsung.com>
-        <CAJKOXPdh9eHrAuCxHkQBvJMqEnUCeU2xwkK=9yyiJ6BuTLJ+_A@mail.gmail.com>
+X-CMS-RootMailID: 20190821150548eucas1p15139f733b00e3a1a107efe39f6712fe9
+References: <CGME20190821150548eucas1p15139f733b00e3a1a107efe39f6712fe9@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+In commit 40d8aff614f7 ("soc: samsung: chipid: Convert exynos-chipid
+driver to use the regmap API") of_find_compatible_node() call was
+substituted with syscon_regmap_lookup_by_compatible() but also an error
+log was added for case where lookup fails. On multiplatform the lookup
+will always fail on any non-samsung device so the log is incorrect.
+Remove the error log and just return an error code from
+syscon_regmap_lookup_by_compatible() which internally calls
+of_find_compatible_node().
 
-On 8/21/19 2:16 PM, Krzysztof Kozlowski wrote:
-> On Wed, 21 Aug 2019 at 13:51, Bartlomiej Zolnierkiewicz
-> <b.zolnierkie@samsung.com> wrote:
->>>>> Following this change, I am now seeing the above error on our Tegra
->>>>> boards where this driver is enabled. This is triggering a kernel
->>>>> warnings test we have to fail. Hence, I don't think that you can remove
->>>>> the compatible node test here, unless you have a better way to determine
->>>>> if this is a samsung device.
->>>>
->>>> Right, this is really wrong... I missed that it is not a probe but
->>>> early init. And this init will be called on every board... Probably it
->>>> should be converted to a regular driver.
->>
->> Early initialization is needed for SoC driver to be used from within
->> arch/arm/mach-exynos/ and _initcall() usage is the usual way for SoC
->> drivers to be initialized:
->>
->> drivers/soc/amlogic/meson-gx-socinfo.c
->> drivers/soc/amlogic/meson-mx-socinfo.c
->> drivers/soc/atmel/soc.c
->> drivers/soc/bcm/brcmstb/common.c
->> drivers/soc/imx/soc-imx-scu.c
->> drivers/soc/imx/soc-imx8.c
->> drivers/soc/renesas/renesas-soc.c
->> drivers/soc/tegra/fuse/fuse-tegra.c
->> drivers/soc/ux500/ux500-soc-id.c
->> drivers/soc/versatile/soc-integrator.c
->> drivers/soc/versatile/soc-integrator.c
->>
->> The only SoC drivers that are regular drivers are:
->>
->> drivers/soc/fsl/guts.c
->> drivers/soc/versatile/soc-realview.c
-> 
-> Thanks for pointing it out.
-> 
-> Indeed, the initcall was needed in your set of patches here:
-> https://patchwork.kernel.org/project/linux-samsung-soc/list/?series=43565&state=*
-> but this work was not continued here. Maybe it will be later
-> resubmitted... maybe not... who knows? Therefore I would prefer proper
-
-The work got delayed mainly because of the request for the formal
-audit of each usage vs cache coherency. Since it is rather small
-cleanup and such audit is time consuming it became a low priority.
-
-> solution for current case (driver), unless patches for mach are being
-> brought back to life now.
-> 
->>> I'm also inclined to have it converted to a regular driver.  We already
->>> have "exynos-asv" driver matching on the chipid node (patch 3/9).
->>> The ASV patches will not be merged soon anyway, all this needs some more
->>> thought. Krzysztof, can we abandon the chipid patches for now? Your
->>
->> chipid driver is good and useful on its own. The preferred solution
->> IMHO would be to just revert "soc: samsung: Convert exynos-chipid
->> driver to use the regmap API" commit.
-
-Or just fix it by re-adding removed Exynos chipid compatible checking:
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+---
+ drivers/soc/samsung/exynos-chipid.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-index 006a95feb618..d9912bd52479 100644
+index 75b6b880d9ef..c55a47cfe617 100644
 --- a/drivers/soc/samsung/exynos-chipid.c
 +++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -55,6 +55,11 @@ int __init exynos_chipid_early_init(void)
-        u32 revision;
-        int ret;
+@@ -56,10 +56,8 @@ int __init exynos_chipid_early_init(void)
+ 	int ret;
  
-+       /* look up for chipid node */
-+       np = of_find_compatible_node(NULL, NULL, "samsung,exynos4210-chipid");
-+       if (!np)
-+               return -ENODEV;
-+
-        regmap = syscon_regmap_lookup_by_compatible("samsung,exynos4210-chipid");
-        if (IS_ERR(regmap)) {
-                pr_err("Failed to get CHIPID regmap\n");
+ 	regmap = syscon_regmap_lookup_by_compatible("samsung,exynos4210-chipid");
+-	if (IS_ERR(regmap)) {
+-		pr_err("Failed to get CHIPID regmap\n");
++	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+-	}
+ 
+ 	ret = regmap_read(regmap, EXYNOS_CHIPID_REG_PRO_ID, &product_id);
+ 	if (ret < 0)
+-- 
+2.17.1
 
-> I queued the chipid as a dependency for ASV but ASV requires the
-> regmap. What would be left after reverting the regmap part? Simple
-> unused printk driver? No need for such. If reverting, then let's drop
-
-It provides sysfs information about SoC/platform and is useful on its
-own (for debugging, reporting etc. purposes). Maybe not terrible useful
-but on OTOH the driver is only ~100 LOC.
-
-> entire driver and rework it offline.
-Best regards,
---
-Bartlomiej Zolnierkiewicz
-Samsung R&D Institute Poland
-Samsung Electronics
