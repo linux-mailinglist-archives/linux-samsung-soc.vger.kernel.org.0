@@ -2,109 +2,102 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 264099EFDB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Aug 2019 18:12:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D9CD9F079
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Aug 2019 18:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730213AbfH0QMr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 27 Aug 2019 12:12:47 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:41115 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730159AbfH0QMr (ORCPT
+        id S1729058AbfH0QlL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 27 Aug 2019 12:41:11 -0400
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:52634 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727401AbfH0QlL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 27 Aug 2019 12:12:47 -0400
-Received: by mail-qt1-f194.google.com with SMTP id i4so21805981qtj.8;
-        Tue, 27 Aug 2019 09:12:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eRE+ONyqMbnDAqAAt7DNGwf4rRMmk/Hc31TRfDzpAP4=;
-        b=NvBDM/Fmk+0Gbswsr2vZZYkLbZrTzW9TO0uzdrvfJRzEiPpKzCoMVriHaD89sI/KUK
-         AS6VURCsktY4yLe5W2fGoiAfTU5CPzvQWBoN38xm2r9ePTfYOj5fPSBrN5BtwbRsoG9f
-         pPfSmQy/Pid/S92C/IS9u8a7uyJAUUQd/mtY4Y01jbl8ehjxg+VkYjSluKb/OtAjtEal
-         lAnDQtJq7eGQUTmoTpuyDycjVplkL+Hn6xxPDtyIESFT2Ba0M3KbNVoZyZlgasgaoaHf
-         qEAYKPdS1YobzL6SsV6aFSjOUDCadaJHUTUuPOYBzrLnZ89As+JiIgFYRN7JjsrTI8pC
-         ah9g==
-X-Gm-Message-State: APjAAAWTJpoF9VkXkxG3Xvt4j8TgsEB8qVyr+I5+WyZiKYDsUas1pIuV
-        p16c6X60h3rCQ0UNr3aPFZ+O9t32KBeuYL9tKKo=
-X-Google-Smtp-Source: APXvYqzJzXwniWV11iyI5rB1xzenfbGjuNt16WjkWMKnungYxIEtSdoNzRX/9im4O+QtvL8NXUN1aMXrq3HPv0xExpQ=
-X-Received: by 2002:aed:3363:: with SMTP id u90mr23512125qtd.7.1566922365105;
- Tue, 27 Aug 2019 09:12:45 -0700 (PDT)
+        Tue, 27 Aug 2019 12:41:11 -0400
+Received: from callcc.thunk.org (guestnat-104-133-0-111.corp.google.com [104.133.0.111] (may be forged))
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id x7RGeCWG021084
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Aug 2019 12:40:13 -0400
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 70A4F42049E; Tue, 27 Aug 2019 12:40:12 -0400 (EDT)
+Date:   Tue, 27 Aug 2019 12:40:12 -0400
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     "boojin.kim" <boojin.kim@samsung.com>
+Cc:     "'Satya Tangirala'" <satyat@google.com>,
+        "'Herbert Xu'" <herbert@gondor.apana.org.au>,
+        "'David S. Miller'" <davem@davemloft.net>,
+        "'Eric Biggers'" <ebiggers@kernel.org>,
+        "'Chao Yu'" <chao@kernel.org>,
+        "'Jaegeuk Kim'" <jaegeuk@kernel.org>,
+        "'Andreas Dilger'" <adilger.kernel@dilger.ca>, dm-devel@redhat.com,
+        "'Mike Snitzer'" <snitzer@redhat.com>,
+        "'Alasdair Kergon'" <agk@redhat.com>,
+        "'Jens Axboe'" <axboe@kernel.dk>,
+        "'Krzysztof Kozlowski'" <krzk@kernel.org>,
+        "'Kukjin Kim'" <kgene@kernel.org>,
+        "'Jaehoon Chung'" <jh80.chung@samsung.com>,
+        "'Ulf Hansson'" <ulf.hansson@linaro.org>,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-ext4@vger.kernel.org, linux-f2fs-devel@lists.sourceforge.net,
+        linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org
+Subject: Re: [PATCH 5/9] block: support diskcipher
+Message-ID: <20190827164012.GN28066@mit.edu>
+Mail-Followup-To: "Theodore Y. Ts'o" <tytso@mit.edu>,
+        "boojin.kim" <boojin.kim@samsung.com>,
+        'Satya Tangirala' <satyat@google.com>,
+        'Herbert Xu' <herbert@gondor.apana.org.au>,
+        "'David S. Miller'" <davem@davemloft.net>,
+        'Eric Biggers' <ebiggers@kernel.org>, 'Chao Yu' <chao@kernel.org>,
+        'Jaegeuk Kim' <jaegeuk@kernel.org>,
+        'Andreas Dilger' <adilger.kernel@dilger.ca>, dm-devel@redhat.com,
+        'Mike Snitzer' <snitzer@redhat.com>,
+        'Alasdair Kergon' <agk@redhat.com>, 'Jens Axboe' <axboe@kernel.dk>,
+        'Krzysztof Kozlowski' <krzk@kernel.org>,
+        'Kukjin Kim' <kgene@kernel.org>,
+        'Jaehoon Chung' <jh80.chung@samsung.com>,
+        'Ulf Hansson' <ulf.hansson@linaro.org>,
+        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-ext4@vger.kernel.org, linux-f2fs-devel@lists.sourceforge.net,
+        linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org
+References: <CGME20190827083334epcas2p115d479190b9a72c886f66569add78203@epcas2p1.samsung.com>
+ <03b201d55cb2$1d4d31b0$57e79510$@samsung.com>
 MIME-Version: 1.0
-References: <20190827154851.10486-1-enric.balletbo@collabora.com> <20190827161045.GC26807@tuxbook-pro>
-In-Reply-To: <20190827161045.GC26807@tuxbook-pro>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 27 Aug 2019 18:12:28 +0200
-Message-ID: <CAK8P3a2h2gUhxcVgD5JhR1Uo4qUSuG5yp4RCrAxevNmyD4ZRTA@mail.gmail.com>
-Subject: Re: [PATCH] arm/arm64: defconfig: Update configs to use the new
- CROS_EC options
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        SoC Team <soc@kernel.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Benson Leung <bleung@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Guenter Roeck <groeck@chromium.org>, kernel@collabora.com,
-        Lee Jones <lee.jones@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Simon Horman <horms+renesas@verge.net.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        "Yannick Fertr?" <yannick.fertre@st.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <03b201d55cb2$1d4d31b0$57e79510$@samsung.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 6:08 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 27 Aug 08:48 PDT 2019, Enric Balletbo i Serra wrote:
->
-> > Recently we refactored the CrOS EC drivers moving part of the code from
-> > the MFD subsystem to the platform chrome subsystem. During this change
-> > we needed to rename some config options, so, update the defconfigs
-> > accordingly.
-> >
-> > Signed-off-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-> > Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> > Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
-> > Tested-by: Gwendal Grignou <gwendal@chromium.org>
->
-> Can we make the entries in the generic arm64 defconfig modules?
+On Tue, Aug 27, 2019 at 05:33:33PM +0900, boojin.kim wrote:
+> 
+> Dear Satya.
+> Keyslot manager is a good solution for ICE. And probably no issue for FMP.
+> But, I think it's complicated for FMP because FMP doesn't need
+> any keyslot control.
 
-Good idea.
+Hi Boojin,
 
-Actually I would prefer to have all of them as modules for consistency,
-if at all possible.
+I think the important thing to realize here is that there are a large
+number of hardware devices for which the keyslot manager *is* needed.
+And from the upstream kernel's perspective, supporting two different
+schemes for supporting the inline encryption feature is more
+complexity than just supporting one which is general enough to support
+a wider variety of hardware devices.
 
-       Arnd
+If you want somethig which is only good for the hardware platform you
+are charged to support, that's fine if it's only going to be in a
+Samsung-specific kernel.  But if your goal is to get something that
+works upstream, especially if it requires changes in core layers of
+the kernel, it's important that it's general enough to support most,
+if not all, if the hardware devices in the industry.
+
+Regards,
+
+					- Ted
