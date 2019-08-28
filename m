@@ -2,124 +2,184 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC8FBA0158
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 14:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC8DA01D6
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 14:34:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbfH1MKQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Aug 2019 08:10:16 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:44148 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbfH1MKP (ORCPT
+        id S1726457AbfH1Mec (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Aug 2019 08:34:32 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:54135 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726450AbfH1Meb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Aug 2019 08:10:15 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190828121014euoutp027c982b5ecfe828432dfcbbfc7952aea0~-FO9z3ioz3229032290euoutp02o
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 12:10:14 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190828121014euoutp027c982b5ecfe828432dfcbbfc7952aea0~-FO9z3ioz3229032290euoutp02o
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566994214;
-        bh=hbM0dbFub5dilWQZiDNc2NPkK2MLXSDTzGjKbpMBxSE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XVATmfynSyy1mZpqjvEIeSj9MpTiGl23a0nbUc/iQ6LDauU/AtvrIIC7rw2m0lncc
-         vy60Rl3t3/kwtAHIjUkdtdK8heCaosFn9w4pTPfrLL3yDQGYiIyBjJraJelwEPbEeP
-         oxg+5Zdp7M+q3Mo0SPUPGTsRqW8IBjbBCfbJT+NI=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190828121013eucas1p28be42cd0efb247cc6dd3b28843a5737c~-FO9WQFBB1354913549eucas1p2v;
-        Wed, 28 Aug 2019 12:10:13 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id BC.0D.04469.52F666D5; Wed, 28
-        Aug 2019 13:10:13 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2~-FO8c_mhh1358913589eucas1p2n;
-        Wed, 28 Aug 2019 12:10:12 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190828121012eusmtrp12adbbc9cffea5fb75aef9cdbb408447e~-FO8OlbDH1908619086eusmtrp1i;
-        Wed, 28 Aug 2019 12:10:12 +0000 (GMT)
-X-AuditID: cbfec7f2-54fff70000001175-2d-5d666f2577fc
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 8B.C4.04117.42F666D5; Wed, 28
-        Aug 2019 13:10:12 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190828121011eusmtip14396855e7a74917cc1c4810e0db3ce3c~-FO7zicJ42336023360eusmtip1X;
-        Wed, 28 Aug 2019 12:10:11 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Wed, 28 Aug 2019 08:34:31 -0400
+Received: by mail-pg1-f202.google.com with SMTP id j9so1531644pgk.20
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 05:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=vcuZObDAkuOCYj07oMJ5+M0lBgd8VRWu9mS0Y/zVm2k=;
+        b=orHgb6WxVOPpUQJa7AV7skwXHJoj7ocP5kbLV3bLs837s1hC3QLb5tR2JczMVPW8Z5
+         uV9YsqEHcfE4mP7hOHLq9QTTMoJQS/GxKK2cuSPnXGDhduO+i756QzEQgQ+KYtSyPiWz
+         NJuT+GlrOJYsWOonDsfgp6VQrx/raQxEaw9bqEbI5NkwjBLlxBeftAFx0+D/Wb8WfdYA
+         MNPPGYAYRPqxVhgu1ZdqMO6rMBX83rtuT9fVQYgVZSIKCDLmSOgWNvzhyE+4gCEwTMKb
+         pdsSBkDd0BIzRLHHo7yGUBQj7koY7mhJFpWQa6hebtnWfvvPBoroDjTmrTgtYJNakCrL
+         BgTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=vcuZObDAkuOCYj07oMJ5+M0lBgd8VRWu9mS0Y/zVm2k=;
+        b=QtdgEau16f9qd7tnX+E2I/JSFn3ZC6sv8QzKiR4jvRLCDiSIrUINSITdx7+Zn5A4Rw
+         plLx0yX+TyNoZQMIJLXPtep+Rr9Yg7yw531xrrerHjw0iZ5vaVKFsPcF6AHVLvoeCdjw
+         erwM6vDl+Fyx76SKX3uv5PjAwjgi7Ze3wX5f5EWi8Nnhg+G8SI1niDu5t3NG/1C3Ww1W
+         moc0bZaatqkRk1p+Jdzd3coq4v4Isbl3vZzoNg/3nFVCLRA7zmxO6n5gaYCw4AuAPd2h
+         ktVn4L38oi/omLaCiPDKPBTXg2CsHuuU8M4xnX99FXG4XGHw4FgP0itr5BMwGW4m6r1s
+         A8Cw==
+X-Gm-Message-State: APjAAAWQ4BT1kSVVUEnroNGcfDUyGmpDzll8PNEiTKqpmWhj4/M73y5l
+        4iNCOfC4o9aZRvt/N5UPsxgHX9A9as0=
+X-Google-Smtp-Source: APXvYqyOkm6XgZveoTQaYc4eySICPXxgwPwfdul/8FC+b3wW2pkjrEXEhwTmCgbY9Bk5HzW3EkMZpZeNt4I=
+X-Received: by 2002:a63:124a:: with SMTP id 10mr3234116pgs.254.1566995670700;
+ Wed, 28 Aug 2019 05:34:30 -0700 (PDT)
+Date:   Wed, 28 Aug 2019 14:34:15 +0200
+In-Reply-To: <6bbfb6f8-15c2-9ad2-8857-898f4c6435a3@samsung.com>
+Message-Id: <20190828123415.139441-1-darekm@google.com>
+Mime-Version: 1.0
+References: <6bbfb6f8-15c2-9ad2-8857-898f4c6435a3@samsung.com>
+X-Mailer: git-send-email 2.23.0.187.g17f5b7556c-goog
+Subject: [PATCH v7.1 9/9] drm: exynos: exynos_hdmi: use cec_notifier_conn_(un)register
+From:   Dariusz Marcinkiewicz <darekm@google.com>
+To:     dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        s.nawrocki@samsung.com, hverkuil-cisco@xs4all.nl
+Cc:     Dariusz Marcinkiewicz <darekm@google.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marc Zyngier <maz@kernel.org>
-Subject: [PATCH v3 2/2] ARM: exynos: Enable support for ARM architected
- timers
-Date:   Wed, 28 Aug 2019 14:10:05 +0200
-Message-Id: <20190828121005.29368-3-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190828121005.29368-1-m.szyprowski@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKIsWRmVeSWpSXmKPExsWy7djPc7qq+WmxBr9u8VhsnLGe1eL6l+es
-        FufPb2C32PT4GqvFjPP7mCzWHrnLbrFzzklWB3aPTas62Tw2L6n36NuyitHj8ya5AJYoLpuU
-        1JzMstQifbsEroxbn36xFRxiq7j74DRbA+N+1i5GTg4JAROJT2/bmboYuTiEBFYwSjydf4QN
-        wvnCKLFkyxdmCOczo8TS2VcYYVpWTL/OCJFYziixZf1tRriWXRu/gFWxCRhKdL3tYgOxRQS8
-        JSaf+csOUsQscBVo1LVPLF2MHBzCAgESh17wgdSwCKhKbPr7gg0kzCtgKzG1wwtimbzE6g0H
-        mEFsTgE7iUObOllAxkgIPGeTWHz9EBtEkYvE64Mnoa4Tlnh1fAs7hC0jcXpyD1RDM6PEw3Nr
-        2SGcHkaJy00zoDqsJQ4fv8gKsplZQFNi/S59EFNCwFFi0nU1CJNP4sZbQZBiZiBz0rbpzBBh
-        XomONiGIGWoSs46vg9t68MIlZgjbQ6JrQjcLJHgmMkpMmzeBfQKj/CyEXQsYGVcxiqeWFuem
-        pxYb5qWW6xUn5haX5qXrJefnbmIEJobT/45/2sH49VLSIUYBDkYlHl6OxLRYIdbEsuLK3EOM
-        EhzMSiK8j1RSY4V4UxIrq1KL8uOLSnNSiw8xSnOwKInzVjM8iBYSSE8sSc1OTS1ILYLJMnFw
-        SjUwarZ3N5zfc++M9PrHLEtf5l/ozw9zeHLlwpLkObpne52u7eQ/ctDzoMOLXVOXCtY+cZlt
-        KyQvNnmdwIydsxvf95Q3RE7yZGZTynj+7vOCW4vW7n12JIAzSbBQwk38rdemn3YXw61tZJ4e
-        0Z3nJvOzwMVW7pbAk7BwNr06VfYHNx/lOhjuu7esRImlOCPRUIu5qDgRACW2E2sIAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKLMWRmVeSWpSXmKPExsVy+t/xu7oq+WmxBrcvCVhsnLGe1eL6l+es
-        FufPb2C32PT4GqvFjPP7mCzWHrnLbrFzzklWB3aPTas62Tw2L6n36NuyitHj8ya5AJYoPZui
-        /NKSVIWM/OISW6VoQwsjPUNLCz0jE0s9Q2PzWCsjUyV9O5uU1JzMstQifbsEvYxbn36xFRxi
-        q7j74DRbA+N+1i5GTg4JAROJFdOvM3YxcnEICSxllHj2YC4LREJG4uS0BqgiYYk/17rYIIo+
-        MUpc/vWXGSTBJmAo0fUWJMHJISLgK/H4zUqwZmaBm4wSO+9odDFycAgL+En8nsgEEmYRUJXY
-        9PcFG0iYV8BWYmqHF8R4eYnVGw6ATeQUsJM4tKkTbIoQUMmDZ7sYJzDyLWBkWMUoklpanJue
-        W2ykV5yYW1yal66XnJ+7iREYpNuO/dyyg7HrXfAhRgEORiUe3oTktFgh1sSy4srcQ4wSHMxK
-        IryPVFJjhXhTEiurUovy44tKc1KLDzGaAt00kVlKNDkfGEF5JfGGpobmFpaG5sbmxmYWSuK8
-        HQIHY4QE0hNLUrNTUwtSi2D6mDg4pRoY05wuinC0FkR8yd19kOeOS0xEhPPP1squTN+zhy/k
-        PXnLeeLuitfGay+v2TPxdH3p/T3VfK5fVmjoLax+X3RobX//zfi5/Z0VndOjDivzlDz15HnS
-        cPXwuf0H7ps8FvulOPGka53mCb2dVoaft902Wfwrcsn6H8oWSx5d9png0Tk76btZVvivaCWW
-        4oxEQy3mouJEAIVY0HNoAgAA
-X-CMS-MailID: 20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2
-References: <20190828121005.29368-1-m.szyprowski@samsung.com>
-        <CGME20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2@eucas1p2.samsung.com>
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-ARM architected timer can be used together with Exynos MultiCore Timer
-driver, so enable support for it. Support for ARM architected timers is
-essential for enabling proper KVM support.
+Use the new cec_notifier_conn_(un)register() functions to
+(un)register the notifier for the HDMI connector, and fill in
+the cec_connector_info.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Changes since v7:
+	- err_runtime_disable -> err_rpm_disable
+Changes since v2:
+	- removed unnecessary call to invalidate phys address before
+	deregistering the notifier,
+	- use cec_notifier_phys_addr_invalidate instead of setting
+	invalid address on a notifier.
+
+Signed-off-by: Dariusz Marcinkiewicz <darekm@google.com>
+Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 ---
- arch/arm/mach-exynos/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/exynos/exynos_hdmi.c | 31 ++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/mach-exynos/Kconfig b/arch/arm/mach-exynos/Kconfig
-index f83786640f94..9dab1f50a02f 100644
---- a/arch/arm/mach-exynos/Kconfig
-+++ b/arch/arm/mach-exynos/Kconfig
-@@ -19,6 +19,7 @@ menuconfig ARCH_EXYNOS
- 	select EXYNOS_SROM
- 	select EXYNOS_PM_DOMAINS if PM_GENERIC_DOMAINS
- 	select GPIOLIB
-+	select HAVE_ARM_ARCH_TIMER if ARCH_EXYNOS5 && VIRTUALIZATION
- 	select HAVE_ARM_SCU if SMP
- 	select HAVE_S3C2410_I2C if I2C
- 	select HAVE_S3C2410_WATCHDOG if WATCHDOG
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index bc1565f1822ab..799f2db13efe2 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -852,6 +852,10 @@ static enum drm_connector_status hdmi_detect(struct drm_connector *connector,
+ 
+ static void hdmi_connector_destroy(struct drm_connector *connector)
+ {
++	struct hdmi_context *hdata = connector_to_hdmi(connector);
++
++	cec_notifier_conn_unregister(hdata->notifier);
++
+ 	drm_connector_unregister(connector);
+ 	drm_connector_cleanup(connector);
+ }
+@@ -935,6 +939,7 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
+ {
+ 	struct hdmi_context *hdata = encoder_to_hdmi(encoder);
+ 	struct drm_connector *connector = &hdata->connector;
++	struct cec_connector_info conn_info;
+ 	int ret;
+ 
+ 	connector->interlace_allowed = true;
+@@ -957,6 +962,15 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
+ 			DRM_DEV_ERROR(hdata->dev, "Failed to attach bridge\n");
+ 	}
+ 
++	cec_fill_conn_info_from_drm(&conn_info, connector);
++
++	hdata->notifier = cec_notifier_conn_register(hdata->dev, NULL,
++						     &conn_info);
++	if (hdata->notifier == NULL) {
++		ret = -ENOMEM;
++		DRM_DEV_ERROR(hdata->dev, "Failed to allocate CEC notifier\n");
++	}
++
+ 	return ret;
+ }
+ 
+@@ -1528,8 +1542,8 @@ static void hdmi_disable(struct drm_encoder *encoder)
+ 		 */
+ 		mutex_unlock(&hdata->mutex);
+ 		cancel_delayed_work(&hdata->hotplug_work);
+-		cec_notifier_set_phys_addr(hdata->notifier,
+-					   CEC_PHYS_ADDR_INVALID);
++		if (hdata->notifier)
++			cec_notifier_phys_addr_invalidate(hdata->notifier);
+ 		return;
+ 	}
+ 
+@@ -2006,12 +2020,6 @@ static int hdmi_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	hdata->notifier = cec_notifier_get(&pdev->dev);
+-	if (hdata->notifier == NULL) {
+-		ret = -ENOMEM;
+-		goto err_hdmiphy;
+-	}
+-
+ 	pm_runtime_enable(dev);
+ 
+ 	audio_infoframe = &hdata->audio.infoframe;
+@@ -2023,7 +2031,7 @@ static int hdmi_probe(struct platform_device *pdev)
+ 
+ 	ret = hdmi_register_audio_device(hdata);
+ 	if (ret)
+-		goto err_notifier_put;
++		goto err_rpm_disable;
+ 
+ 	ret = component_add(&pdev->dev, &hdmi_component_ops);
+ 	if (ret)
+@@ -2034,8 +2042,7 @@ static int hdmi_probe(struct platform_device *pdev)
+ err_unregister_audio:
+ 	platform_device_unregister(hdata->audio.pdev);
+ 
+-err_notifier_put:
+-	cec_notifier_put(hdata->notifier);
++err_rpm_disable:
+ 	pm_runtime_disable(dev);
+ 
+ err_hdmiphy:
+@@ -2054,12 +2061,10 @@ static int hdmi_remove(struct platform_device *pdev)
+ 	struct hdmi_context *hdata = platform_get_drvdata(pdev);
+ 
+ 	cancel_delayed_work_sync(&hdata->hotplug_work);
+-	cec_notifier_set_phys_addr(hdata->notifier, CEC_PHYS_ADDR_INVALID);
+ 
+ 	component_del(&pdev->dev, &hdmi_component_ops);
+ 	platform_device_unregister(hdata->audio.pdev);
+ 
+-	cec_notifier_put(hdata->notifier);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	if (!IS_ERR(hdata->reg_hdmi_en))
 -- 
-2.17.1
+2.23.0.187.g17f5b7556c-goog
 
