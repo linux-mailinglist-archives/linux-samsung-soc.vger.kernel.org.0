@@ -2,80 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9649FA01F4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 14:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C972A0BB2
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 22:42:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbfH1MiQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Aug 2019 08:38:16 -0400
-Received: from mail-io1-f42.google.com ([209.85.166.42]:45720 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726253AbfH1MiP (ORCPT
+        id S1726805AbfH1Ulu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Aug 2019 16:41:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53686 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726583AbfH1Ulu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Aug 2019 08:38:15 -0400
-Received: by mail-io1-f42.google.com with SMTP id t3so5404775ioj.12
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 05:38:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=z9ub6dj8BakJd5JJrKLeLyNZnt+cLi7XQzPxfXn1B/Y=;
-        b=ol+VAJf+uEe+pW+OLeIh97TD4/T+F5ti0j1SOXt8p3g3+9AxRgrzHA2mKJ5vaZU8VN
-         Mtw2wgGYnnDXzVmxqToGtF2nfMvHrJsaRTKUm6NFeBvnBEL/AE1VgB2U4A+TnFgGlFJv
-         N3OutN+gjpK3Rrv6OQryvih8Y47Q1kTDwWl9GUwd8SvcwKziaGAnwe7nyHPNsvpwQUma
-         IX11hff05i2Q3HWy3nNHliuIoVJgJZC4rPy7abvo469srBQp9xh3rCEfMD2lAM1jknIq
-         8/zI0DqvJJeFJiUb98QaHvF8wwP/1clSTYqlKYm6UCHQpY3oSvVrXFAXBEEbPpXvHWuI
-         boiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=z9ub6dj8BakJd5JJrKLeLyNZnt+cLi7XQzPxfXn1B/Y=;
-        b=BveZC27GCeu2jozaUvyw/0Nl8rwRVY8X64lGWoV2agA+0c6qWMBA7SEPNU3pzumd17
-         ANcqpPU/r+DUdI6U8tkSUUaH7urYt2kwtue/YJzHvcmQpxYaV6jFo+D6I+zSVrjpeu+r
-         F7nDwC61kCQA9aVJM/5PqKVSN4o5e+nb57in0AXDuZyEj9bynveCYrjg3/FHrWVFg+Wy
-         qvzs3GH+cqHie2yQWC+bfDTSiPHSmp+TPCqhBno73vdw05qku2c+Iis36FNIHmrGAjg3
-         sE+2a8YJDf2UV8Z6NR3NaZNPgbG2gMx/+dYnrzZF+iv8tG+QaMzHahbtiYQOyY+2rNm5
-         ypeg==
-X-Gm-Message-State: APjAAAVEDOid04P8kXVZbGA5GZwx+mK7EMeGtqgWEzE67PGqGiuPAbRv
-        LaSNXOy/DaeByu/nrUUwmXgbMsTTxyS1jQ7lyL2D6w==
-X-Google-Smtp-Source: APXvYqxbmqQHdWluIFStqQGMBY9/BhbwVz+UeYCfBFj2T06LLlJsyfJiSeDsrC/N2EuGpd3vnE0wVob9VErTw280+4w=
-X-Received: by 2002:a02:3446:: with SMTP id z6mr4201108jaz.105.1566995894846;
- Wed, 28 Aug 2019 05:38:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190814104520.6001-1-darekm@google.com> <CGME20190814104630epcas3p44755443f37e78b2613f7dda35d71bb71@epcas3p4.samsung.com>
- <20190814104520.6001-10-darekm@google.com> <6bbfb6f8-15c2-9ad2-8857-898f4c6435a3@samsung.com>
-In-Reply-To: <6bbfb6f8-15c2-9ad2-8857-898f4c6435a3@samsung.com>
-From:   Dariusz Marcinkiewicz <darekm@google.com>
-Date:   Wed, 28 Aug 2019 14:38:02 +0200
-Message-ID: <CALFZZQHZrVSaKhTSH6suOc0epMQzcgxAHddoJGxvtdhSp1tW0Q@mail.gmail.com>
-Subject: Re: [PATCH v7 9/9] drm: exynos: exynos_hdmi: use cec_notifier_conn_(un)register
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Wed, 28 Aug 2019 16:41:50 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C040020828;
+        Wed, 28 Aug 2019 20:41:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567024909;
+        bh=79HWdPBNBYF5I/cWJfXDP0h0nsh+4uutZ+ovvson+AY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OuSQNE5RfzUZo75l7c9bzZCZZmskGhv/Pr9mf/twYV6+m8jmnVeCJIA2sJ5ObHPpv
+         tUIkJEBjmgJWy1ttOVGKFm2O63hnDE8bP67mtP9fXcCRroPumTfZ4B3tlL3sL3HMuh
+         Sug+LhRHKjbnlk5csHapLzDv0fs9Z/V/9ADta3Uc=
+Date:   Wed, 28 Aug 2019 22:41:46 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jochen Sprickerhof <jochen@sprickerhof.de>,
+        Anand Moon <linux.amoon@gmail.com>
+Subject: Re: [PATCH v2 1/2 RESEND] usb: core: phy: add support for PHY
+ calibration
+Message-ID: <20190828204146.GA21235@kroah.com>
+References: <20190808094128.27213-1-m.szyprowski@samsung.com>
+ <CGME20190808094146eucas1p2a5a88ce5e7a87d47c4bcececab4df9a5@eucas1p2.samsung.com>
+ <20190808094128.27213-2-m.szyprowski@samsung.com>
+ <a380a635-e036-1a18-bc0f-947931f8735c@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a380a635-e036-1a18-bc0f-947931f8735c@samsung.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi.
+On Mon, Aug 26, 2019 at 10:55:33AM +0200, Marek Szyprowski wrote:
+> Hi Greg
+> 
+> On 2019-08-08 11:41, Marek Szyprowski wrote:
+> > Some PHYs (for example Exynos5 USB3.0 DRD PHY) require calibration to be
+> > done after every USB HCD reset. Generic PHY framework has been already
+> > extended with phy_calibrate() function in commit 36914111e682 ("drivers:
+> > phy: add calibrate method"). This patch adds support for it to generic
+> > PHY handling code in USB HCD core.
+> >
+> > Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> > Tested-by: Anand Moon <linux.amoon@gmail.com>
+> > Tested-by: Jochen Sprickerhof <jochen@sprickerhof.de>
+> 
+> Greg: any chance to give it this a try in -next? If not, maybe You can 
+> point someone whose review will help?
 
-On Wed, Aug 28, 2019 at 10:39 AM Sylwester Nawrocki
-<s.nawrocki@samsung.com> wrote:
->
-> nit: I think err_rpm_disable or err_pm_runtime_disable could be better
->      label names.
->
-Submitted v7.1 which replaces err_runtime_disable with err_rpm_disable.
+Ah crap, this is me, not the PHY maintainer :(
 
-Thank you.
+Can you resend this and I will be glad to review it.  But it would also
+be good to get Felipe's review as well.
+
+thanks,
+
+greg k-h
