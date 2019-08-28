@@ -2,165 +2,174 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CB3B49F842
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 04:21:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 521939FCD8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 10:22:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbfH1CVE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 27 Aug 2019 22:21:04 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:33041 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfH1CVA (ORCPT
+        id S1726687AbfH1IWn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Aug 2019 04:22:43 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:49674 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726292AbfH1IWm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 27 Aug 2019 22:21:00 -0400
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190828022057epoutp04bc24eb73ee566abe69d40dba7b21dd0e~_9MdYUVWk3236632366epoutp04a
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 02:20:57 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190828022057epoutp04bc24eb73ee566abe69d40dba7b21dd0e~_9MdYUVWk3236632366epoutp04a
+        Wed, 28 Aug 2019 04:22:42 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190828082241euoutp0182731082533840712c48b6fc5159dbb4~-CISmkyHC0760507605euoutp01F
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 08:22:41 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190828082241euoutp0182731082533840712c48b6fc5159dbb4~-CISmkyHC0760507605euoutp01F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566958857;
-        bh=2Id8G/Xn6V06sAdZYXMptUi6MUxaX2z3h414AQSi5/I=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=k98yVcHoY5eRWy55whZ8rcavcrMGw1LpHMDptIqy9vdMw+WVazwzt15mo01XkRRd9
-         7l4/CVj1LA+KD2X9zJQ7pDyqu9or8QDc9Y8Ar0ut0xku1LRrop+z5Ki0aMLe43HoyD
-         3N5pbfTIZQ6BYehWU3Hx+E4IXA0zFrHfzsrXO79E=
-Received: from epsnrtp5.localdomain (unknown [182.195.42.166]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20190828022056epcas2p488315cc4e34969caaecc606d9bbd2c6e~_9Mc2Raic1168911689epcas2p4l;
-        Wed, 28 Aug 2019 02:20:56 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.40.181]) by
-        epsnrtp5.localdomain (Postfix) with ESMTP id 46J8c74t4rzMqYkf; Wed, 28 Aug
-        2019 02:20:55 +0000 (GMT)
-Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
-        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        36.C7.04156.705E56D5; Wed, 28 Aug 2019 11:20:55 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190828022055epcas2p25525077d0a5a3fa5a2027bac06a10bc1~_9MbUtf8v2048620486epcas2p2Q;
-        Wed, 28 Aug 2019 02:20:55 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190828022055epsmtrp247236feb1b81a6eaa608658d164e62a4~_9MbTgesT1110211102epsmtrp2U;
-        Wed, 28 Aug 2019 02:20:55 +0000 (GMT)
-X-AuditID: b6c32a45-ddfff7000000103c-c4-5d65e5073e36
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        F0.33.03706.605E56D5; Wed, 28 Aug 2019 11:20:55 +0900 (KST)
-Received: from KORDO035251 (unknown [12.36.165.204]) by epsmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20190828022054epsmtip1cb959d74740696d9b606a29b76e0110e~_9MbAmhuG2545625456epsmtip1A;
-        Wed, 28 Aug 2019 02:20:54 +0000 (GMT)
-From:   "boojin.kim" <boojin.kim@samsung.com>
-To:     "'Theodore Y. Ts'o'" <tytso@mit.edu>
-Cc:     "'Herbert Xu'" <herbert@gondor.apana.org.au>,
-        "'David S. Miller'" <davem@davemloft.net>,
-        "'Eric Biggers'" <ebiggers@kernel.org>,
-        "'Theodore Y. Ts'o'" <tytso@mit.edu>,
-        "'Chao Yu'" <chao@kernel.org>,
-        "'Jaegeuk Kim'" <jaegeuk@kernel.org>,
-        "'Andreas Dilger'" <adilger.kernel@dilger.ca>,
-        "'Theodore Ts'o'" <tytso@mit.edu>, <dm-devel@redhat.com>,
-        "'Mike Snitzer'" <snitzer@redhat.com>,
-        "'Alasdair Kergon'" <agk@redhat.com>,
-        "'Jens Axboe'" <axboe@kernel.dk>,
-        "'Krzysztof Kozlowski'" <krzk@kernel.org>,
-        "'Kukjin Kim'" <kgene@kernel.org>,
-        "'Jaehoon Chung'" <jh80.chung@samsung.com>,
-        "'Ulf Hansson'" <ulf.hansson@linaro.org>,
-        <linux-crypto@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-ext4@vger.kernel.org>,
-        <linux-f2fs-devel@lists.sourceforge.net>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-fsdevel@vger.kernel.org>
-Subject: Re: [PATCH 5/9] block: support diskcipher
-Date:   Wed, 28 Aug 2019 11:20:53 +0900
-Message-ID: <009301d55d47$38606400$a9212c00$@samsung.com>
+        s=mail20170921; t=1566980561;
+        bh=ezN90ha61wMUtzkxioQJBYo3kcbKcHVJc2ZzvthJ9CM=;
+        h=From:Subject:To:Cc:Date:In-Reply-To:References:From;
+        b=ncVsqjrKpwY7WZBgIh9/WYJ21/Gd5/ztex6kLh+yRGUMXg3Zeu9rjHKUmphMxvLn+
+         RyD1kcU63rcE5Ub1XTosW6B7HOgur0lXgSpceb2KnkztP9pjXzixhep4fVyay7TXVY
+         SMbjGZSCRHdN32S5B533BbqrIYGnnTzm70KjH1TU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190828082240eucas1p1d9d51125f5315e2c4c051be78ed62045~-CISHcS801983319833eucas1p1S;
+        Wed, 28 Aug 2019 08:22:40 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 4B.AA.04374.0D9366D5; Wed, 28
+        Aug 2019 09:22:40 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190828082239eucas1p28be9c8ec6002f12d646cd3364d79dfba~-CIRRTY5U0583105831eucas1p2F;
+        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190828082239eusmtrp220e751afd1ae4c07a1e5dd654db64c30~-CIRDS4Fy1794617946eusmtrp25;
+        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
+X-AuditID: cbfec7f5-4ddff70000001116-11-5d6639d06381
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 30.22.04166.FC9366D5; Wed, 28
+        Aug 2019 09:22:39 +0100 (BST)
+Received: from [106.120.50.63] (unknown [106.120.50.63]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190828082239eusmtip22e934fdac1fd2df51bea9d848310a617~-CIQtceI22322823228eusmtip21;
+        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: Re: [PATCH v2 2/2] ARM: exynos: Enable support for ARM architected
+ timers
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Message-ID: <1ade54c6-aaf9-f536-484e-a2a50f443a03@samsung.com>
+Date:   Wed, 28 Aug 2019 10:22:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <d286053b6f4b4783d0638dc2dbd5858e@www.loen.fr>
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdVdRkQ7u+BKrKHPSQuBNN28o4N3VA==
-Content-Language: ko
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Tf0wbZRjOd3e9OybFs6vus6LrThYdE9arFj50qNG5XbL9gb+iMc56KZcW
-        7a/0WjbUbATXUhiRQXRuhbG5GeNgla3UjQzKXGGSOqBOZGEEt8QxDKBsApuBiNr2WOS/53m+
-        5/ne9/3efDSu+pzS0CV2t+iyC1aWXEGc7l6Xn0PdELfrWnqy0O05P4Faf/geRy2/1JLo4mf9
-        GGqM7yFQZLpBgYKdf+No72QmGmsN4Gh4wadAtdencBSPn6RQ6PplBYqMrEfXrs5j6GDTKIl+
-        OroFTTbdIVBnJEagwbONJOr5txagA/EuDPlO3QbIWzNPod7gG88/yIePX8H4PW07+NPfreUH
-        +z18qLmK5Ecvd5J825e7+Y4jsxhf0XcB5292DZH8J+FmwM+GHilKf8u60SIKxaJLK9pNjuIS
-        u7mQ3fqq8UWjIU/H5XAFKJ/V2gWbWMhu2laUs7nEmpid1ZYKVk9CKhIkid3w7EaXw+MWtRaH
-        5C5kRWex1clxzlxJsEkeuznX5LA9zel0ekPC+a7VUn/1EOWsTN/Zd7hWUQ4uplUDmobMUzBY
-        KVaDFbSKaQfw5/EmhUxmALw5vI+UyZ0E8VaAuwlveIusRwD8bfhPXCYTAJ7/ay4RT6NJZj1s
-        620GSaxmHodDi/Opa3HmHwqOzUSJ5MFKRg+91XuxJCaYtXCi6hKWrKBkCuCl/auTspK5D8YO
-        jqXsOLManvmjEU9iyGhhe/9UqiE1kwuPjr8iW9SwocqX6gcyixQcb/ATsn8T/NgbWcquhJO9
-        YUrGGjg7HSFlvBsOfXWMksM1APYt+JZMT8LAeGWqGM6sg61nN8gP8SjsGVlqLQP6uxcpWVZC
-        v08lB7PgoZlBTJY18FbNLlnmYThcD/aBNYFlMwaWzRhYNkzg/7JHANEMHhCdks0sSnont3zT
-        IZD6FNkvtYMDA9uigKEBm6703ytuVymEUqnMFgWQxlm18teshKQsFso+EF0Oo8tjFaUoMCQ2
-        UIdr7jc5El/M7jZyBn1enq7AgAx5esSuUrbdc+VtFWMW3OL7ougUXXdzGJ2mKQdm9e/PFMRj
-        773zBV9v6lKSE4+Fdg3MVVyYek5SKp6IvRms40syMn5sObHq/EM7TOdOZkd21tVrz2WWWSYa
-        Tk1jU4dBJy2xr58IfXvmNZtpf0UpZ87vuHGreyBmffiFeJeR+Kaj91prJhoJlleXfXpsob0n
-        mv91KTg++mHN1o/EzJdZQrIIXDbukoT/AJPWV5kqBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsWy7bCSnC7709RYg94Ki69fOlgs1p86xmyx
-        +m4/m8XpqWeZLOacb2Gx2PtuNqvF2j1/mC26X8lYPFk/i9nixq82Vov+x6+ZLc6f38Busenx
-        NVaLvbe0Le7f+8lkMXPeHTaLS4vcLV7N+8ZisWfvSRaLy7vmsFkc+d/PaDHj/D4mi7aNXxkt
-        Wnt+slscXxvuIOmxZeVNJo+WzeUe2w6oelw+W+qxaVUnm8eda3vYPDYvqffYveAzk0fTmaPM
-        Hu/3XWXz6NuyitHj8ya5AJ4oLpuU1JzMstQifbsEroxJ9+ayF7TzVJyZ38/awHias4uRg0NC
-        wESidYt7FyMXh5DAbkaJkzPfsHYxcgLFpSS2tu9hhrCFJe63HAGLCwk8Z5T43FQAYrMJaEts
-        Pr6KEcQWEdCQuPr3J1gNs8A0DoldH8RBbGEBI4nWrm4mEJtFQFXiZedFJpC9vAKWEhenyYOE
-        eQUEgdY+YQEJMwvoSbRtZISYIi+x/e0cqAsUJHacfc0IUiICVLLoWRBEiYjE7M425gmMgrOQ
-        DJqFMGgWkkGzkHQsYGRZxSiZWlCcm55bbFhgmJdarlecmFtcmpeul5yfu4kRHPtamjsYLy+J
-        P8QowMGoxMPbwZ8aK8SaWFZcmXuIUYKDWUmE95EKUIg3JbGyKrUoP76oNCe1+BCjNAeLkjjv
-        07xjkUIC6YklqdmpqQWpRTBZJg5OqQbGCe6KPu0piqufKnP1tu34wfCOpXqGoZpO67oI2VcH
-        eqz4CosPzjLUeH51hWb/iW3c2p8WGrj7dMxw+SJmk/ti5rSjDMePZCbVPPVd3qPhWBbPHjtv
-        ZbFB6qVNv9OePpv046uo851LB0VeyiS+PenWVX+k+d80Jp7Pto/8NjFKWcr4L715Z/M0JZbi
-        jERDLeai4kQAn059LPkCAAA=
-X-CMS-MailID: 20190828022055epcas2p25525077d0a5a3fa5a2027bac06a10bc1
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsWy7djP87oXLNNiDdo3iFlsnLGe1eL6l+es
+        FufPb2C32PT4GqvFjPP7mCx2zjnJ6sDmsWlVJ5vH5iX1Hn1bVjF6fN4kF8ASxWWTkpqTWZZa
+        pG+XwJXx4a5fwXPximcrjzA1MB4R7mLk5JAQMJH4++UiSxcjF4eQwApGiYPfjjNCOF8YJTZM
+        /8YM4XxmlFi6aTtTFyMHWMuvliKI+HJGiR8tjewQzltGiWPPjzCCzGUTMJToetvFBmILC4RI
+        zN56lgXEFhFQlPh04STYCmaBS4wS+w5OA2vgFbCT+LdkM5jNIqAqMa+llx3EFhWIkdj5pocZ
+        okZQ4uTMJ2CDOAWsJY58fQlWwywgL7H97RxmCFtc4taT+UwQzy1jl/i61gbCdpGYdPsBC4Qt
+        LPHq+BZ2CFtG4v9OkHouILuZUeLhubXsEE4Po8TlphmMEFXWEoePX2QF+Z9ZQFNi/S59iLCj
+        xObNHeyQYOGTuPFWEOIGPolJ26YzQ4R5JTrahCCq1SRmHV8Ht/bghUvMExiVZiH5bBaSb2Yh
+        +WYWwt4FjCyrGMVTS4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxApPN6X/Hv+5g3Pcn6RCjAAej
+        Eg9vB39qrBBrYllxZe4hRgkOZiUR3kcqQCHelMTKqtSi/Pii0pzU4kOM0hwsSuK81QwPooUE
+        0hNLUrNTUwtSi2CyTBycUg2MtTy9x/ml/dzmP9Odd+OO95n1cYsNtPa/nVNo/elyreCzGS+N
+        ix0LV156efqK9v7Nn/bkNV+Kqn561IjjlFtYReSnmKg1On8nfhWofJJS80B4jobsrT0RpzcX
+        Se7esG/N9Dbde/GH7psoXp+7f3rLnJPL+S+d1LrnE+Zit1j96r7MlfYHBXM3CyixFGckGmox
+        FxUnAgB6/kP+MgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsVy+t/xe7rnLdNiDQ59k7HYOGM9q8X1L89Z
+        Lc6f38BusenxNVaLGef3MVnsnHOS1YHNY9OqTjaPzUvqPfq2rGL0+LxJLoAlSs+mKL+0JFUh
+        I7+4xFYp2tDCSM/Q0kLPyMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS/jw12/gufiFc9WHmFq
+        YDwi3MXIwSEhYCLxq6Woi5GLQ0hgKaPEw3WzmbsYOYHiMhInpzWwQtjCEn+udbFBFL1mlNi2
+        +jAbSIJNwFCi620XmC0sECIxe+tZFhBbREBR4tOFk4wgDcwCVxglJt/bwg6SEBL4wijx7VMV
+        iM0rYCfxb8lmRhCbRUBVYl5LL1iNqECMxL4z29khagQlTs58AjaUU8Ba4sjXl2BxZgEziXmb
+        HzJD2PIS29/OgbLFJW49mc80gVFoFpL2WUhaZiFpmYWkZQEjyypGkdTS4tz03GJDveLE3OLS
+        vHS95PzcTYzA6Np27OfmHYyXNgYfYhTgYFTi4e3gT40VYk0sK67MPcQowcGsJML7SAUoxJuS
+        WFmVWpQfX1Sak1p8iNEU6LmJzFKiyfnAyM8riTc0NTS3sDQ0NzY3NrNQEuftEDgYIySQnliS
+        mp2aWpBaBNPHxMEp1cA465LT45d5l4LaGqff3JqltKrlS73v/NBbxgqdXk4ycvm/l15JWRhY
+        JXxq3nuOUA9VF83WgLOHemXOxSTcu+6cIH+77dWiJTWz3y4vjNTaoaSyY17/ZL1d+lxWP/0/
+        T+ZatfzE/ls8GRVf5+Tcr2CN0NS8p37p4JlvO33XTd61yG5l10m7hw93K7EUZyQaajEXFScC
+        ALNA9JnEAgAA
+X-CMS-MailID: 20190828082239eucas1p28be9c8ec6002f12d646cd3364d79dfba
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20190828022055epcas2p25525077d0a5a3fa5a2027bac06a10bc1
-References: <CGME20190828022055epcas2p25525077d0a5a3fa5a2027bac06a10bc1@epcas2p2.samsung.com>
+X-RootMTR: 20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a
+References: <20190826103142.3477-1-m.szyprowski@samsung.com>
+        <CGME20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a@eucas1p2.samsung.com>
+        <20190826103142.3477-4-m.szyprowski@samsung.com>
+        <d286053b6f4b4783d0638dc2dbd5858e@www.loen.fr>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Aug 27, 2019 at 05:33:33PM +0900, boojin.kim wrote:
->
-> Hi Boojin,
->
-> I think the important thing to realize here is that there are a large
-> number of hardware devices for which the keyslot manager *is* needed.
-> And from the upstream kernel's perspective, supporting two different
-> schemes for supporting the inline encryption feature is more
-> complexity than just supporting one which is general enough to support
-> a wider variety of hardware devices.
->
-> If you want somethig which is only good for the hardware platform you
-> are charged to support, that's fine if it's only going to be in a
-> Samsung-specific kernel.  But if your goal is to get something that
-> works upstream, especially if it requires changes in core layers of
-> the kernel, it's important that it's general enough to support most,
-> if not all, if the hardware devices in the industry.
->
-> Regards,
+Hi Marc,
 
-I understood your reply.
-But, Please consider the diskcipher isn't just for FMP. 
-The UFS in Samsung SoC also has UFS ICE. This UFS ICE can be registered 
-as an algorithm of diskcipher like FMP.
+On 2019-08-26 12:49, Marc Zyngier wrote:
+> On 2019-08-26 11:31, Marek Szyprowski wrote:
+>> ARM architected timer can be used together with Exynos MultiCore Timer
+>> driver, so enable support for it. Support for ARM architected timers is
+>> essential for enabling proper KVM support.
+>
+> How can you say that this is to "enable KVM support", while in the 
+> previous
+> patch, you set "arm,cpu-registers-not-fw-configured" which implies 
+> that you're
+> booting in secure mode with the timer's CP15 registers left to 
+> undefined values?
 
-Following is my opinion to introduce diskcipher.
-I think the common feature of ICE like FMP and UFS ICE, 
-is 'exposing cipher text to storage".
-And, Crypto test is also important for ICE.  Diskcipher supports
-the common feature of ICE. 
-I think specific functions for each ICE such as the key control of UFS ICE
-and the writing crypto table of FMP can be processed at algorithm level.
+Thanks for asking a good question!
 
-Thanks for your reply.
-Boojin Kim.
+I've did my KVM research mainly on Exynos5422-based OdroidXU3/XU4 boards 
+family. After some recently merged patches they all now boot correctly 
+in HYP mode.
+
+On all of those boards arch timers are indeed partially not configured 
+(CNTFRQ is zero). I was convinced that this also requires adding 
+"arm,cpu-registers-not-fw-configured" property to make timers fully 
+operational, but it looks that this only disables VDSO on arm32 and 
+switches to phys timers if booted in SVC mode.
+
+I've checked and KVM works fine on the mentioned boards regardless of 
+the "arm,cpu-registers-not-fw-configured" property. The only issue is 
+the lack of proper value in CNTFRQ register, what requires patching 
+timer node by adding "clock-frequency = <24000000>" property also to the 
+guest dtb.
+
+I've did my test of KVM with QEMU emulator version 3.1.0 (Debian 
+1:3.1+dfsg-8) virtualizing vexpress-a15 machine, with patched 
+vexpress-v2p-ca15-tc1.dtb and the following command line on OdroidXU3:
+
+taskset 0x30 qemu-system-arm -M vexpress-a15 -smp 2 -cpu host 
+-enable-kvm -m 512 -kernel zImage -dtb vexpress-v2p-ca15-tc1.dtb -append 
+"console=ttyAMA0 root=/dev/vda rw rootwait" -serial stdio -display none 
+-monitor null -device virtio-blk-device,drive=virtio-blk -drive 
+file=rootfs.raw,id=virtio-blk,if=none,format=raw -netdev user,id=user 
+-device virtio-net-device,netdev=user
+
+Then I've checked other boards that are capable of running in HYP mode. 
+Exynos5250 Arndale board with mainline uboot boots to HYP fine. 
+Exynos5250-based Snow Chromebook with stock bootloader boots only to SVC 
+mode. There exists a way to upgrade uboot to enable HYP, but this 
+requires HW fix to enable write access to nvram. Both boards however 
+also don't configure CNTFRQ register, but otherwise the arch timer 
+registers seems to be configured fine (virt counters are in sync between 
+CPUs).
+
+The last group of boards are Exynos5420-based Pit and Exynos5800-based 
+Pi Chromebooks. In theory they are capable in running HYP mode with a 
+patched bootloader, but stock bootloader boots only to SVC. They also 
+truly don't have arch timer registers correctly configured, as virt 
+timers are out of sync between CPUs.
+
+I will send v3 with "arm,cpu-registers-not-fw-configured" property moved 
+from the timer nodes in dtsi files to respective effected boards.
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
