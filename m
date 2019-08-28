@@ -2,174 +2,167 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 521939FCD8
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 10:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29F639FD4D
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 10:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbfH1IWn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Aug 2019 04:22:43 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:49674 "EHLO
+        id S1726450AbfH1Ij5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Aug 2019 04:39:57 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:57427 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbfH1IWm (ORCPT
+        with ESMTP id S1726292AbfH1Ij5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Aug 2019 04:22:42 -0400
+        Wed, 28 Aug 2019 04:39:57 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190828082241euoutp0182731082533840712c48b6fc5159dbb4~-CISmkyHC0760507605euoutp01F
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 08:22:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190828082241euoutp0182731082533840712c48b6fc5159dbb4~-CISmkyHC0760507605euoutp01F
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190828083955euoutp014c5ea0c9d9a12316e2abdbac607803e3~-CXWO92n02257622576euoutp01W
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 08:39:55 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190828083955euoutp014c5ea0c9d9a12316e2abdbac607803e3~-CXWO92n02257622576euoutp01W
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1566980561;
-        bh=ezN90ha61wMUtzkxioQJBYo3kcbKcHVJc2ZzvthJ9CM=;
-        h=From:Subject:To:Cc:Date:In-Reply-To:References:From;
-        b=ncVsqjrKpwY7WZBgIh9/WYJ21/Gd5/ztex6kLh+yRGUMXg3Zeu9rjHKUmphMxvLn+
-         RyD1kcU63rcE5Ub1XTosW6B7HOgur0lXgSpceb2KnkztP9pjXzixhep4fVyay7TXVY
-         SMbjGZSCRHdN32S5B533BbqrIYGnnTzm70KjH1TU=
+        s=mail20170921; t=1566981595;
+        bh=nCO1CGbNKa5rvO48tD1eLJmbBQi/YQi3un/pIVM1ksQ=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=GyUvhO6HUlrozwZ+TG0uHeVIsHhZiuw7lkq26iTfRYh/mXQq/HVm2f0FZ4Q2Brefi
+         /go/dCadcvFZSwQaJ4kn/7fqD7oQyo9qjS24MxWdthRrAkgHTAx+NJqdHM7UHBHp5L
+         S0CF7Js9555sE7kx4Y1RZlliA8d1Tv4DUheaz7QA=
 Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190828082240eucas1p1d9d51125f5315e2c4c051be78ed62045~-CISHcS801983319833eucas1p1S;
-        Wed, 28 Aug 2019 08:22:40 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 4B.AA.04374.0D9366D5; Wed, 28
-        Aug 2019 09:22:40 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190828083955eucas1p2c5ef161d4b0934ff1def119ebe330278~-CXVc2gpu2348323483eucas1p2z;
+        Wed, 28 Aug 2019 08:39:55 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 0A.DD.04374.ADD366D5; Wed, 28
+        Aug 2019 09:39:54 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190828082239eucas1p28be9c8ec6002f12d646cd3364d79dfba~-CIRRTY5U0583105831eucas1p2F;
-        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190828082239eusmtrp220e751afd1ae4c07a1e5dd654db64c30~-CIRDS4Fy1794617946eusmtrp25;
-        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
-X-AuditID: cbfec7f5-4ddff70000001116-11-5d6639d06381
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 30.22.04166.FC9366D5; Wed, 28
-        Aug 2019 09:22:39 +0100 (BST)
-Received: from [106.120.50.63] (unknown [106.120.50.63]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190828082239eusmtip22e934fdac1fd2df51bea9d848310a617~-CIQtceI22322823228eusmtip21;
-        Wed, 28 Aug 2019 08:22:39 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v2 2/2] ARM: exynos: Enable support for ARM architected
- timers
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     linux-samsung-soc@vger.kernel.org,
+        20190828083954eucas1p2b8dc8e6d795b984ec607a7e49911ff2b~-CXUm5jQe2349023490eucas1p2h;
+        Wed, 28 Aug 2019 08:39:54 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190828083953eusmtrp1093ab1005f1cbb6474ace28275f78049~-CXUYPHem2582525825eusmtrp1x;
+        Wed, 28 Aug 2019 08:39:53 +0000 (GMT)
+X-AuditID: cbfec7f5-4ddff70000001116-b1-5d663dda61d3
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id D7.07.04117.9DD366D5; Wed, 28
+        Aug 2019 09:39:53 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190828083953eusmtip198a24422c79bd0cf39db371dda376fb4~-CXTs6pHN0415604156eusmtip1z;
+        Wed, 28 Aug 2019 08:39:53 +0000 (GMT)
+Subject: Re: [PATCH v7 9/9] drm: exynos: exynos_hdmi: use
+ cec_notifier_conn_(un)register
+To:     Dariusz Marcinkiewicz <darekm@google.com>,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Message-ID: <1ade54c6-aaf9-f536-484e-a2a50f443a03@samsung.com>
-Date:   Wed, 28 Aug 2019 10:22:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <6bbfb6f8-15c2-9ad2-8857-898f4c6435a3@samsung.com>
+Date:   Wed, 28 Aug 2019 10:39:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
         Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <d286053b6f4b4783d0638dc2dbd5858e@www.loen.fr>
+In-Reply-To: <20190814104520.6001-10-darekm@google.com>
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsWy7djP87oXLNNiDdo3iFlsnLGe1eL6l+es
-        FufPb2C32PT4GqvFjPP7mCx2zjnJ6sDmsWlVJ5vH5iX1Hn1bVjF6fN4kF8ASxWWTkpqTWZZa
-        pG+XwJXx4a5fwXPximcrjzA1MB4R7mLk5JAQMJH4++UiSxcjF4eQwApGiYPfjjNCOF8YJTZM
-        /8YM4XxmlFi6aTtTFyMHWMuvliKI+HJGiR8tjewQzltGiWPPjzCCzGUTMJToetvFBmILC4RI
-        zN56lgXEFhFQlPh04STYCmaBS4wS+w5OA2vgFbCT+LdkM5jNIqAqMa+llx3EFhWIkdj5pocZ
-        okZQ4uTMJ2CDOAWsJY58fQlWwywgL7H97RxmCFtc4taT+UwQzy1jl/i61gbCdpGYdPsBC4Qt
-        LPHq+BZ2CFtG4v9OkHouILuZUeLhubXsEE4Po8TlphmMEFXWEoePX2QF+Z9ZQFNi/S59iLCj
-        xObNHeyQYOGTuPFWEOIGPolJ26YzQ4R5JTrahCCq1SRmHV8Ht/bghUvMExiVZiH5bBaSb2Yh
-        +WYWwt4FjCyrGMVTS4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxApPN6X/Hv+5g3Pcn6RCjAAej
-        Eg9vB39qrBBrYllxZe4hRgkOZiUR3kcqQCHelMTKqtSi/Pii0pzU4kOM0hwsSuK81QwPooUE
-        0hNLUrNTUwtSi2CyTBycUg2MtTy9x/ml/dzmP9Odd+OO95n1cYsNtPa/nVNo/elyreCzGS+N
-        ix0LV156efqK9v7Nn/bkNV+Kqn561IjjlFtYReSnmKg1On8nfhWofJJS80B4jobsrT0RpzcX
-        Se7esG/N9Dbde/GH7psoXp+7f3rLnJPL+S+d1LrnE+Zit1j96r7MlfYHBXM3CyixFGckGmox
-        FxUnAgB6/kP+MgMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsVy+t/xe7rnLdNiDQ59k7HYOGM9q8X1L89Z
-        Lc6f38BusenxNVaLGef3MVnsnHOS1YHNY9OqTjaPzUvqPfq2rGL0+LxJLoAlSs+mKL+0JFUh
-        I7+4xFYp2tDCSM/Q0kLPyMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS/jw12/gufiFc9WHmFq
-        YDwi3MXIwSEhYCLxq6Woi5GLQ0hgKaPEw3WzmbsYOYHiMhInpzWwQtjCEn+udbFBFL1mlNi2
-        +jAbSIJNwFCi620XmC0sECIxe+tZFhBbREBR4tOFk4wgDcwCVxglJt/bwg6SEBL4wijx7VMV
-        iM0rYCfxb8lmRhCbRUBVYl5LL1iNqECMxL4z29khagQlTs58AjaUU8Ba4sjXl2BxZgEziXmb
-        HzJD2PIS29/OgbLFJW49mc80gVFoFpL2WUhaZiFpmYWkZQEjyypGkdTS4tz03GJDveLE3OLS
-        vHS95PzcTYzA6Np27OfmHYyXNgYfYhTgYFTi4e3gT40VYk0sK67MPcQowcGsJML7SAUoxJuS
-        WFmVWpQfX1Sak1p8iNEU6LmJzFKiyfnAyM8riTc0NTS3sDQ0NzY3NrNQEuftEDgYIySQnliS
-        mp2aWpBaBNPHxMEp1cA465LT45d5l4LaGqff3JqltKrlS73v/NBbxgqdXk4ycvm/l15JWRhY
-        JXxq3nuOUA9VF83WgLOHemXOxSTcu+6cIH+77dWiJTWz3y4vjNTaoaSyY17/ZL1d+lxWP/0/
-        T+ZatfzE/ls8GRVf5+Tcr2CN0NS8p37p4JlvO33XTd61yG5l10m7hw93K7EUZyQaajEXFScC
-        ALNA9JnEAgAA
-X-CMS-MailID: 20190828082239eucas1p28be9c8ec6002f12d646cd3364d79dfba
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+3bO2Y7D6WkavqybDfujIs2MOmVZQcSBIIIoYyW27KTSZrbT
+        uhJ5AfGy6XJRuVatErR102XzVkZqDZMaUoQpa5JCqUnknGBeltuZ5H+/532f93veFz4Sk/4g
+        ZGRm1hlWk6VUyYVi3P5u4uPanm0nUtZ1F8fS+o8dAtpnv4rRlY6HiP7s/S2kuypcOF3uNuD0
+        z29dOF3WP4zRTmeNiP6Q90tE2/q/EPSnJrOQ1tW8IOibzhYBfdM4KNwRzrwat+CMxaZlbNYi
+        IVM/3kcw7hKHgHleeYUprbMixmNbxrz3ekT7QhTircdZVeZZVhOXdFScca15lMhuCz1vnviJ
+        5aAqcTEKIYHaAK6rPYJiJCalVDUCS25xUIwheGvXI154EPwqdKK5EXf+oIhvVCG4Wz8UFCMI
+        XDN/cL8rglLAtOuR0N+IpIoQPNCPBwRGVWCQ224Q+F1CKh70b0sD70qoJDB+MBN+xqmVMGOb
+        CNQXUYdgtK+N4D0LoaNiIJAQQm0Coy434MGoKMgbe0jwvBzqR8yYPwyoIhKG/74KLr4L7M52
+        Ic8RMOSoE/G8BDqNOpwfyEega+4V8cKAwO2wBKcToc3RNRtBzkasgmdNcX4Eaif0vVDxGAbd
+        Iwv5HcKg3H4D48sSKCyQ8m/EwKT1hoBnGZQM+HADkpvmXWaad41p3jWm/7EWhFtRFKvl1Oks
+        l5DFnovllGpOm5Uem3ZKbUOz369zxuFtQC1Tx1oRRSJ5qKQwnE2REsqz3AV1KwISk0dKvsfM
+        liTHlRcusppTqRqtiuVa0WISl0dJLi3oOyyl0pVn2JMsm81q5roCMkSWg0JtUUeTahWjntKc
+        38k1BUmENe70Cvflgarke3dueauv9ywzNEq96w5M/tn7MmUqc+nmg7UmRVnbYEWe6xz96MmT
+        L0OpTRunDkfXDdsOJnZz62WNr/fcr6a2xzyd7k+IeOxTR2fcbX1sUPs+NfjSCm/3Kr6uMTX9
+        OJJt3r3/zZb+khw5zmUo41djGk75D83/noN6AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsVy+t/xu7o3bdNiDV7M0bPoPXeSyeL/tonM
+        FkuOr2S0uPL1PZvFxZl3WSwm3Z/AYvHi3kUWi/7Hr5ktzp/fwG5xtukNu8Wmx9dYLS7vmsNm
+        0bNhK6vFjPP7mCxmTH7J5sDvsffbAhaPBZtKPTat6mTz2P7tAavH/e7jTB6bl9R79G1Zxejx
+        eZOcx6mvn9kDOKP0bIryS0tSFTLyi0tslaINLYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLL
+        Uov07RL0Mqbs/sRacJinYs7PF8wNjMu5uhg5OSQETCTuN79k72Lk4hASWMoo8fHhHcYuRg6g
+        hJTE/BYliBphiT/Xutggal4zSnzfso8RJCEsECXx9+5qsISIQCejxK47t1lAHGaBmcwSu1b0
+        QI3dxijxZ8kWVpAWNgFDid6jfWDtvAJ2EpPPzgGLswioSvzb9BMsLioQIXF4xyyoGkGJkzOf
+        sIDYnALmEpN7GsHizALqEn/mXWKGsMUlmr6sZIWw5SW2v53DPIFRaBaS9llIWmYhaZmFpGUB
+        I8sqRpHU0uLc9NxiI73ixNzi0rx0veT83E2MwGjfduznlh2MXe+CDzEKcDAq8fB28KfGCrEm
+        lhVX5h5ilOBgVhLhfaQCFOJNSaysSi3Kjy8qzUktPsRoCvTcRGYp0eR8YCLKK4k3NDU0t7A0
+        NDc2NzazUBLn7RA4GCMkkJ5YkpqdmlqQWgTTx8TBKdXAWHk/8qHuefNNd5nnltxWXRTqWXXl
+        y2nn3wfm7brHqOHCeant5InlAk7si0tEVi09KF/4ZqOfC+P5kBei//tM4j9HL0+68izsilSt
+        /jzR4IYXEoeWcXqFRU75ylH0TVdjzkZ1ZptntxK0jj3dbphVotGx/j27adNijwOdrae2mmVq
+        Cx+LmLwnQYmlOCPRUIu5qDgRAAkeheoMAwAA
+X-CMS-MailID: 20190828083954eucas1p2b8dc8e6d795b984ec607a7e49911ff2b
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a
+X-RootMTR: 20190814104630epcas3p44755443f37e78b2613f7dda35d71bb71
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a
-References: <20190826103142.3477-1-m.szyprowski@samsung.com>
-        <CGME20190826103203eucas1p2d67b0ef44758eb06252b340f7751701a@eucas1p2.samsung.com>
-        <20190826103142.3477-4-m.szyprowski@samsung.com>
-        <d286053b6f4b4783d0638dc2dbd5858e@www.loen.fr>
+X-CMS-RootMailID: 20190814104630epcas3p44755443f37e78b2613f7dda35d71bb71
+References: <20190814104520.6001-1-darekm@google.com>
+        <CGME20190814104630epcas3p44755443f37e78b2613f7dda35d71bb71@epcas3p4.samsung.com>
+        <20190814104520.6001-10-darekm@google.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marc,
+On 8/14/19 12:45, Dariusz Marcinkiewicz wrote:
+> Use the new cec_notifier_conn_(un)register() functions to
+> (un)register the notifier for the HDMI connector, and fill in
+> the cec_connector_info.
+> 
+> Changes since v2:
+> 	- removed unnecessary call to invalidate phys address before
+> 	deregistering the notifier,
+> 	- use cec_notifier_phys_addr_invalidate instead of setting
+> 	invalid address on a notifier.
+> 
+> Signed-off-by: Dariusz Marcinkiewicz <darekm@google.com>
+> Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-On 2019-08-26 12:49, Marc Zyngier wrote:
-> On 2019-08-26 11:31, Marek Szyprowski wrote:
->> ARM architected timer can be used together with Exynos MultiCore Timer
->> driver, so enable support for it. Support for ARM architected timers is
->> essential for enabling proper KVM support.
->
-> How can you say that this is to "enable KVM support", while in the 
-> previous
-> patch, you set "arm,cpu-registers-not-fw-configured" which implies 
-> that you're
-> booting in secure mode with the timer's CP15 registers left to 
-> undefined values?
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 
-Thanks for asking a good question!
+> diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+> index bc1565f1822ab..d532b468d9af5 100644
+> --- a/drivers/gpu/drm/exynos/exynos_hdmi.c
+> +++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
 
-I've did my KVM research mainly on Exynos5422-based OdroidXU3/XU4 boards 
-family. After some recently merged patches they all now boot correctly 
-in HYP mode.
+> @@ -2006,12 +2020,6 @@ static int hdmi_probe(struct platform_device *pdev)
+>  		}
+>  	}
+>  
+> -	hdata->notifier = cec_notifier_get(&pdev->dev);
+> -	if (hdata->notifier == NULL) {
+> -		ret = -ENOMEM;
+> -		goto err_hdmiphy;
+> -	}
+> -
+>  	pm_runtime_enable(dev);
+>  
+>  	audio_infoframe = &hdata->audio.infoframe;
+> @@ -2023,7 +2031,7 @@ static int hdmi_probe(struct platform_device *pdev)
+>  
+>  	ret = hdmi_register_audio_device(hdata);
+>  	if (ret)
+> -		goto err_notifier_put;
+> +		goto err_runtime_disable;
 
-On all of those boards arch timers are indeed partially not configured 
-(CNTFRQ is zero). I was convinced that this also requires adding 
-"arm,cpu-registers-not-fw-configured" property to make timers fully 
-operational, but it looks that this only disables VDSO on arm32 and 
-switches to phys timers if booted in SVC mode.
 
-I've checked and KVM works fine on the mentioned boards regardless of 
-the "arm,cpu-registers-not-fw-configured" property. The only issue is 
-the lack of proper value in CNTFRQ register, what requires patching 
-timer node by adding "clock-frequency = <24000000>" property also to the 
-guest dtb.
+> -err_notifier_put:
+> -	cec_notifier_put(hdata->notifier);
+> +err_runtime_disable:
+>  	pm_runtime_disable(dev);
 
-I've did my test of KVM with QEMU emulator version 3.1.0 (Debian 
-1:3.1+dfsg-8) virtualizing vexpress-a15 machine, with patched 
-vexpress-v2p-ca15-tc1.dtb and the following command line on OdroidXU3:
+nit: I think err_rpm_disable or err_pm_runtime_disable could be better 
+     label names.
 
-taskset 0x30 qemu-system-arm -M vexpress-a15 -smp 2 -cpu host 
--enable-kvm -m 512 -kernel zImage -dtb vexpress-v2p-ca15-tc1.dtb -append 
-"console=ttyAMA0 root=/dev/vda rw rootwait" -serial stdio -display none 
--monitor null -device virtio-blk-device,drive=virtio-blk -drive 
-file=rootfs.raw,id=virtio-blk,if=none,format=raw -netdev user,id=user 
--device virtio-net-device,netdev=user
-
-Then I've checked other boards that are capable of running in HYP mode. 
-Exynos5250 Arndale board with mainline uboot boots to HYP fine. 
-Exynos5250-based Snow Chromebook with stock bootloader boots only to SVC 
-mode. There exists a way to upgrade uboot to enable HYP, but this 
-requires HW fix to enable write access to nvram. Both boards however 
-also don't configure CNTFRQ register, but otherwise the arch timer 
-registers seems to be configured fine (virt counters are in sync between 
-CPUs).
-
-The last group of boards are Exynos5420-based Pit and Exynos5800-based 
-Pi Chromebooks. In theory they are capable in running HYP mode with a 
-patched bootloader, but stock bootloader boots only to SVC. They also 
-truly don't have arch timer registers correctly configured, as virt 
-timers are out of sync between CPUs.
-
-I will send v3 with "arm,cpu-registers-not-fw-configured" property moved 
-from the timer nodes in dtsi files to respective effected boards.
-
-Best regards
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Thanks,
+Sylwester
