@@ -2,147 +2,149 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F02CA014E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 14:09:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D250A0156
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Aug 2019 14:10:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726448AbfH1MJ1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Aug 2019 08:09:27 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:41368 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726259AbfH1MJ1 (ORCPT
+        id S1726368AbfH1MKP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Aug 2019 08:10:15 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:57124 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbfH1MKP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Aug 2019 08:09:27 -0400
-Received: by mail-qt1-f196.google.com with SMTP id i4so2662881qtj.8;
-        Wed, 28 Aug 2019 05:09:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uY/0QthbDm0KRk0gieS7xBLQazGhEOHEGV7wuOo/gng=;
-        b=BGYAmdWj4B0XNk0rvMFA8tozmwzlR/M2xf3gkPNBZ4Q75U4KsbWj7RWdimXtUWgmaF
-         2AwdsadbK+097tHgmE8MeraL+TJquf7NML3n6UnH6caAWoMhXoWiQ7X8QCqOWOxmY+km
-         Ks8aHnGFPHX8hYOHJx/jL7wykxOrVaksZ5minRY1ssfEqfduZd5F2AgrutHiSytCg9Jz
-         XuujESQpo1AovCoC1gz9ZTswRCpm+f+FHkZ3tlnNgwlXdakP7TRvPR/xIaUViQKJ3Oq7
-         v1VoXrxUGM4jHtuQ1x4Fx7R3QWUUk9OwW4HSz5STfHavQRcLkLBfPLJPkYG0nx+YGQu0
-         W2jg==
-X-Gm-Message-State: APjAAAXFfGVzyYZeZLZ8inEwAeyrhU8MsJtchiL1dbBtcevg7RiADsA4
-        8i1NWcyG7LBgCu7EmnpV7hOh+mndbdyB84HZENg=
-X-Google-Smtp-Source: APXvYqxPjCZy8Yr70wpAUsKG4hqpSsecPtkX5jagW7DEkIoSG6k0GIS1TjLQmGSzQOE2w0NAJB8sdbquABde5znr26Y=
-X-Received: by 2002:ad4:45c7:: with SMTP id v7mr2362538qvt.63.1566994166270;
- Wed, 28 Aug 2019 05:09:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190827154851.10486-1-enric.balletbo@collabora.com>
- <20190827161045.GC26807@tuxbook-pro> <CAK8P3a2h2gUhxcVgD5JhR1Uo4qUSuG5yp4RCrAxevNmyD4ZRTA@mail.gmail.com>
- <2db6cde1-9e7f-8b1c-f2e4-80bdd2478d28@collabora.com>
-In-Reply-To: <2db6cde1-9e7f-8b1c-f2e4-80bdd2478d28@collabora.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 28 Aug 2019 14:09:10 +0200
-Message-ID: <CAK8P3a3zYpgouGAibyMjDykZmy+ABnx6AD2cYpHnXq9Zsw2V=w@mail.gmail.com>
-Subject: Re: [PATCH] arm/arm64: defconfig: Update configs to use the new
- CROS_EC options
-To:     Enric Balletbo i Serra <enric.balletbo@collabora.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        SoC Team <soc@kernel.org>,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Benson Leung <bleung@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Collabora kernel ML <kernel@collabora.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        Wed, 28 Aug 2019 08:10:15 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190828121013euoutp015eede965129a58eeb94bbb461d3e91b4~-FO9NoxRl2141221412euoutp01H
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Aug 2019 12:10:13 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190828121013euoutp015eede965129a58eeb94bbb461d3e91b4~-FO9NoxRl2141221412euoutp01H
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1566994213;
+        bh=qxg4eKkn9BtPXnVTuj1QUTi1vX7GlxQmt1hcIeadHos=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=bRTWTw4wzxEHkrMo2WUEvkFhTku57hHpM3J7ai2LEk3KW9IpnQrrOuolVGbRlT9LJ
+         l3qfXG1GDdQ0FeTdkq+yNjRX0mbKY6JbnXfWRY/sPxyRrQu8vrIKqjIPk9UvFiVsxR
+         /mb7XVhAuIoKQrHf0JGMBS/wwmJs24m9O13g2xUU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190828121012eucas1p11c684a21fd49b1eaaa47f78e7ebbd3b3~-FO8jpyTh2730927309eucas1p1V;
+        Wed, 28 Aug 2019 12:10:12 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 6C.0D.04374.42F666D5; Wed, 28
+        Aug 2019 13:10:12 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190828121011eucas1p1ff9b23536aaa79643e5fca10c02db9a0~-FO7uoFwD0721107211eucas1p1d;
+        Wed, 28 Aug 2019 12:10:11 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190828121011eusmtrp294f9b067602613913ea20be078a736da~-FO7gjFKS1346013460eusmtrp2D;
+        Wed, 28 Aug 2019 12:10:11 +0000 (GMT)
+X-AuditID: cbfec7f5-4ddff70000001116-3a-5d666f24c9ad
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id D8.03.04166.32F666D5; Wed, 28
+        Aug 2019 13:10:11 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190828121011eusmtip1126e4504de7131131ceab2154ae52630~-FO7FHqHR2349323493eusmtip1j;
+        Wed, 28 Aug 2019 12:10:11 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Olof Johansson <olof@lixom.net>,
         Chanwoo Choi <cw00.choi@samsung.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Simon Horman <horms+renesas@verge.net.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        "Yannick Fertr?" <yannick.fertre@st.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Maxime Ripard <maxime.ripard@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Marc Zyngier <maz@kernel.org>
+Subject: [PATCH v3 0/2] Exynos SoCs: enable support for ARM Architected
+ Timers
+Date:   Wed, 28 Aug 2019 14:10:03 +0200
+Message-Id: <20190828121005.29368-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsWy7djP87oq+WmxBnfeillsnLGe1eL6l+es
+        FufPb2C32PT4GqvFjPP7mCzWHrnLbrFzzklWB3aPTas62Tw2L6n36NuyitHj8ya5AJYoLpuU
+        1JzMstQifbsErox9vw4zF5zgq1izXKmB8TF3FyMnh4SAicSjbevYuhi5OIQEVjBKfDx2hwXC
+        +cIo0fm2jQnC+cwo8fXBDlaYlpmPD0AlljNKLF3exwbXcn/veRaQKjYBQ4mut11sILaIgLfE
+        5DN/2UGKmAWuAnVc+wRUxMEhLBAgMbvNA6SGRUBV4tm268wgNq+ArUT/tY1MENvkJVZvOMAM
+        0ishcIJN4t/WzewQCReJz2eXQhUJS7w6vgUqLiPxf+d8JoiGZkaJh+fWskM4PYwSl5tmMEJU
+        WUscPn6RFeQKZgFNifW79CHCjhKt9yexgYQlBPgkbrwVBAkzA5mTtk1nhgjzSnS0CUFUq0nM
+        Or4Obu3BC5eYIWwPifYV+8FsIYFYiRVLfzNOYJSbhbBrASPjKkbx1NLi3PTUYuO81HK94sTc
+        4tK8dL3k/NxNjMAEcPrf8a87GPf9STrEKMDBqMTDm5CcFivEmlhWXJl7iFGCg1lJhPeRSmqs
+        EG9KYmVValF+fFFpTmrxIUZpDhYlcd5qhgfRQgLpiSWp2ampBalFMFkmDk6pBsaq8xf/P1jl
+        yVm/YPX3mR/W7tst6fQhWWTXruBtyy7ua5kdKf7yqvkelyaxvtvXb0fvUnN81L7J/KbHp6p+
+        L7n1/neF12gIMYVeyVwxZQufd7z3Ak6rvc/l2Db9Nu8vX2g0g/fQjivaWnLbprD7vW+bqBqW
+        t9s1fP3HBb7vNrs6lvxhkv97a8VCJZbijERDLeai4kQA55TycPwCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHLMWRmVeSWpSXmKPExsVy+t/xu7rK+WmxBjvWS1tsnLGe1eL6l+es
+        FufPb2C32PT4GqvFjPP7mCzWHrnLbrFzzklWB3aPTas62Tw2L6n36NuyitHj8ya5AJYoPZui
+        /NKSVIWM/OISW6VoQwsjPUNLCz0jE0s9Q2PzWCsjUyV9O5uU1JzMstQifbsEvYx9vw4zF5zg
+        q1izXKmB8TF3FyMnh4SAicTMxweYuhi5OIQEljJKnD58lwkiISNxcloDK4QtLPHnWhcbRNEn
+        RokVN/rYQRJsAoYSXW9BEpwcIgK+Eo/frGQBsZkFbjJK7LyjAWILC/hJ/G9YAlbPIqAq8Wzb
+        dWYQm1fAVqL/2kaoZfISqzccYJ7AyLOAkWEVo0hqaXFuem6xoV5xYm5xaV66XnJ+7iZGYNht
+        O/Zz8w7GSxuDDzEKcDAq8fAmJKfFCrEmlhVX5h5ilOBgVhLhfaSSGivEm5JYWZValB9fVJqT
+        WnyI0RRo+URmKdHkfGBM5JXEG5oamltYGpobmxubWSiJ83YIHIwREkhPLEnNTk0tSC2C6WPi
+        4JRqYGRMs74T/zpEdtt5Hjej/iXWYQeUnqXf9pda1d05939dmamlbci6AoUbOhumxhk2vtVf
+        3ejNy125X6hs2ylmq3Sbf4e7kxTVDZhUiwS//nK8fmiZ87y5jYzzYzU1H/y52ruH7WjdQcM9
+        dUFl12ODtj7m5rnjdL7kdqlamMtSvbMuyeyxp85cVmIpzkg01GIuKk4EAPX6TBlRAgAA
+X-CMS-MailID: 20190828121011eucas1p1ff9b23536aaa79643e5fca10c02db9a0
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190828121011eucas1p1ff9b23536aaa79643e5fca10c02db9a0
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190828121011eucas1p1ff9b23536aaa79643e5fca10c02db9a0
+References: <CGME20190828121011eucas1p1ff9b23536aaa79643e5fca10c02db9a0@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Aug 28, 2019 at 12:10 PM Enric Balletbo i Serra
-<enric.balletbo@collabora.com> wrote:
-> On 27/8/19 18:12, Arnd Bergmann wrote:
-> > On Tue, Aug 27, 2019 at 6:08 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> >>
-> >> On Tue 27 Aug 08:48 PDT 2019, Enric Balletbo i Serra wrote:
-> >>
-> >>> Recently we refactored the CrOS EC drivers moving part of the code from
-> >>> the MFD subsystem to the platform chrome subsystem. During this change
-> >>> we needed to rename some config options, so, update the defconfigs
-> >>> accordingly.
-> >>>
-> >>> Signed-off-by: Enric Balletbo i Serra <enric.balletbo@collabora.com>
-> >>> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> >>> Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
-> >>> Tested-by: Gwendal Grignou <gwendal@chromium.org>
-> >>
-> >> Can we make the entries in the generic arm64 defconfig modules?
-> >
-> > Good idea.
-> >
-> > Actually I would prefer to have all of them as modules for consistency,
-> > if at all possible.
-> >
->
-> It is very common boot Chromebooks from an USB device, the EC needs to be
-> built-in in order to boot from these devices, otherwise you should use an
-> initramfs. I'd like to avoid forcing people to build an initramfs just to boot
-> from these devices if possible, in fact, my usual workflow is without initramfs,
-> and knowing that with the default defconfig just should boot helps a lot sometimes.
->
-> Note that, it's not the case for EC subdevices, these are already build as modules.
+Dear All,
 
-Ok, fair enough, let's leave it built-in then.
+ARM Architected Timers are present in all CortexA7/A15 based Samsung
+Exynos SoCs. So far they were not enabled, because there were some issues
+related to their initialization. Samsung Exynos SoCs used custom timer
+hardware - Exynos MultiCore Timer. It turned out that enabling MCT it is
+also needed to get ARM Architected Timers working, because they both
+share some common hardware blocks (global system counter).
 
-> BTW, Lee asked if this patch should be squashed with the patches that really
-> renames the config options to help bisect ability, I don't have a hard opinion
-> as I don't usually run the config option between bisection steps, so please let
-> me know what do you prefer and I'll respin the patches ASAP if that's the case.
+This patchset enables support for ARM Architected Timer driver together
+with a standard Exynos MultiCore Timer driver, which is kept as a default
+timer source on ARM 32bit platforms. Support for ARM architected timers
+is essential for enabling proper KVM support on those platforms.
 
-I'm not usually worried about bisection in defconfig changes, since like you
-say most commonly one would not run 'make defconfig' betweens the
-bisection steps.
+Best regards
+Marek Szyprowski
+Samsung R&D Institute Poland
 
-If we really care about it, we could keep a symbol like this
-in drivers/platform/chrome/Kconfig for one release:
 
-config CONFIG_MFD_CROS_EC
-        tristate "Enable ChromeOS Embedded Controller"
-        select CROS_EC
-        select CHROME_PLATFORMS
-        select CONFIG_MFD_CROS_EC_DEV
-        help
-           This is a transitional Kconfig option and will be removed
-           after everyone enables the parts individually.
+Changelog:
 
-      Arnd
+v3:
+- checked the status of arch timer registers on all Exynos5 SoCs,
+  dropped 'not-fw-configured' property on most of them as requested
+  by Marc Zyngier
+- dropped enabling arch timers on Exynos3250, as there is no benefit from
+  that (none of the Exynos3250-based board boots in HYP mode)
+
+v2: https://www.spinics.net/lists/arm-kernel/msg751017.html
+- dropped MCT patches (merged to v5.1)
+- dropped timer priority change patch (merged to v5.3)
+
+v1: https://www.spinics.net/lists/arm-kernel/msg751018.html
+- initial version, covers some MCT patches previously sent as a timer
+  rework for Exynos5433
+
+
+Patch summary:
+
+Marek Szyprowski (2):
+  ARM: dts: exynos: Add support ARM architected timers on Exynos5
+  ARM: exynos: Enable support for ARM architected timers
+
+ arch/arm/boot/dts/exynos5420-peach-pit.dts | 4 ++++
+ arch/arm/boot/dts/exynos54xx.dtsi          | 9 +++++++++
+ arch/arm/boot/dts/exynos5800-peach-pi.dts  | 4 ++++
+ arch/arm/mach-exynos/Kconfig               | 1 +
+ 4 files changed, 18 insertions(+)
+
+-- 
+2.17.1
+
