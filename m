@@ -2,105 +2,94 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 30884A16E7
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Aug 2019 12:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA9E0A184A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Aug 2019 13:22:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728607AbfH2KvV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 29 Aug 2019 06:51:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59282 "EHLO mail.kernel.org"
+        id S1726416AbfH2LWE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 29 Aug 2019 07:22:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53262 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728598AbfH2KvT (ORCPT
+        id S1726926AbfH2LWE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 29 Aug 2019 06:51:19 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        Thu, 29 Aug 2019 07:22:04 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E008423405;
-        Thu, 29 Aug 2019 10:51:17 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2AFE920674;
+        Thu, 29 Aug 2019 11:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567075878;
-        bh=r2NLeZ554bhmZAOjT99GenY02RjdypTtJwuhqPonDkI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XeIQEed8rHRpNfMq2MCjcC1UQwXlR0HksGdPfub+ENFM1IDLcy7qebmrZvh6sZ86P
-         UwU1CpVW4PJBGgQIOV5ICSpdROxMA1dVKytH0UpN6m4iu2rK/Km9vfoXbAFzDqq7bR
-         XZx4IDCw1luMCxIj+fz0Dk3pcR+jLPS8pTro4RHs=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Nathan Chancellor <natechancellor@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 6/6] clk: s2mps11: Add used attribute to s2mps11_dt_match
-Date:   Thu, 29 Aug 2019 06:51:10 -0400
-Message-Id: <20190829105110.2748-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190829105110.2748-1-sashal@kernel.org>
-References: <20190829105110.2748-1-sashal@kernel.org>
+        s=default; t=1567077723;
+        bh=iMGiL1QA5nv51IfhWJcMMYZrBzmgReLmriJMg96pxjI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SZF1iEO5eKri0J0FPT6gHVUzK1xtD8HaecoihJcIJ9sGJzToVSyeiVFyVrRH+LHGS
+         O9UZqHDlLWRZAQRHFbooo2PqiyItRIuUvY0vDBeRxkLcaiQCYzt3CM7iAhOZ24D3TM
+         9FWu3EgZ6hSyFZxyAe4vwjRnFlWIjQfpuXfBQVAY=
+Date:   Thu, 29 Aug 2019 13:22:01 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jochen Sprickerhof <jochen@sprickerhof.de>,
+        Anand Moon <linux.amoon@gmail.com>
+Subject: Re: [PATCH v2 1/2 RESEND] usb: core: phy: add support for PHY
+ calibration
+Message-ID: <20190829112201.GA23823@kroah.com>
+References: <20190808094128.27213-1-m.szyprowski@samsung.com>
+ <CGME20190808094146eucas1p2a5a88ce5e7a87d47c4bcececab4df9a5@eucas1p2.samsung.com>
+ <20190808094128.27213-2-m.szyprowski@samsung.com>
+ <a380a635-e036-1a18-bc0f-947931f8735c@samsung.com>
+ <20190828204146.GA21235@kroah.com>
+ <e801e7a4-f525-baae-4c02-d271db308b5f@samsung.com>
+ <20190829102113.GA20823@kroah.com>
+ <91b0a341-e561-43f5-3daa-c6aaf33e3287@samsung.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <91b0a341-e561-43f5-3daa-c6aaf33e3287@samsung.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Nathan Chancellor <natechancellor@gmail.com>
+On Thu, Aug 29, 2019 at 12:27:34PM +0200, Marek Szyprowski wrote:
+> Hi Greg,
+> 
+> On 2019-08-29 12:21, Greg Kroah-Hartman wrote:
+> > On Thu, Aug 29, 2019 at 07:26:50AM +0200, Marek Szyprowski wrote:
+> >> Hi Greg,
+> >>
+> >> On 2019-08-28 22:41, Greg Kroah-Hartman wrote:
+> >>> On Mon, Aug 26, 2019 at 10:55:33AM +0200, Marek Szyprowski wrote:
+> >>>> Hi Greg
+> >>>>
+> >>>> On 2019-08-08 11:41, Marek Szyprowski wrote:
+> >>>>> Some PHYs (for example Exynos5 USB3.0 DRD PHY) require calibration to be
+> >>>>> done after every USB HCD reset. Generic PHY framework has been already
+> >>>>> extended with phy_calibrate() function in commit 36914111e682 ("drivers:
+> >>>>> phy: add calibrate method"). This patch adds support for it to generic
+> >>>>> PHY handling code in USB HCD core.
+> >>>>>
+> >>>>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> >>>>> Tested-by: Anand Moon <linux.amoon@gmail.com>
+> >>>>> Tested-by: Jochen Sprickerhof <jochen@sprickerhof.de>
+> >>>> Greg: any chance to give it this a try in -next? If not, maybe You can
+> >>>> point someone whose review will help?
+> >>> Ah crap, this is me, not the PHY maintainer :(
+> >>>
+> >>> Can you resend this and I will be glad to review it.  But it would also
+> >>> be good to get Felipe's review as well.
+> >> No problem, I will resend it again in a few minutes. Felipe already
+> >> acked it: https://lkml.org/lkml/2019/8/8/460
+> > I don't see the resend, did I miss it?
+> 
+> I looks so: https://lkml.org/lkml/2019/8/29/31
 
-[ Upstream commit 9c940bbe2bb47e03ca5e937d30b6a50bf9c0e671 ]
+Got it now, thanks.
 
-Clang warns after commit 8985167ecf57 ("clk: s2mps11: Fix matching when
-built as module and DT node contains compatible"):
-
-drivers/clk/clk-s2mps11.c:242:34: warning: variable 's2mps11_dt_match'
-is not needed and will not be emitted [-Wunneeded-internal-declaration]
-static const struct of_device_id s2mps11_dt_match[] = {
-                                 ^
-1 warning generated.
-
-This warning happens when a variable is used in some construct that
-doesn't require a reference to that variable to be emitted in the symbol
-table; in this case, it's MODULE_DEVICE_TABLE, which only needs to hold
-the data of the variable, not the variable itself.
-
-$ nm -S drivers/clk/clk-s2mps11.o | rg s2mps11_dt_match
-00000078 000003d4 R __mod_of__s2mps11_dt_match_device_table
-
-Normally, with device ID table variables, it means that the variable
-just needs to be tied to the device declaration at the bottom of the
-file, like s2mps11_clk_id:
-
-$ nm -S drivers/clk/clk-s2mps11.o | rg s2mps11_clk_id
-00000000 00000078 R __mod_platform__s2mps11_clk_id_device_table
-00000000 00000078 r s2mps11_clk_id
-
-However, because the comment above this deliberately doesn't want this
-variable added to .of_match_table, we need to mark s2mps11_dt_match as
-__used to silence this warning. This makes it clear to Clang that the
-variable is used for something, even if a reference to it isn't being
-emitted.
-
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
-Fixes: 8985167ecf57 ("clk: s2mps11: Fix matching when built as module and DT node contains compatible")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/clk/clk-s2mps11.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/clk/clk-s2mps11.c b/drivers/clk/clk-s2mps11.c
-index 785864893f9a6..14af5c916c9ca 100644
---- a/drivers/clk/clk-s2mps11.c
-+++ b/drivers/clk/clk-s2mps11.c
-@@ -307,7 +307,7 @@ MODULE_DEVICE_TABLE(platform, s2mps11_clk_id);
-  * This requires of_device_id table.  In the same time this will not change the
-  * actual *device* matching so do not add .of_match_table.
-  */
--static const struct of_device_id s2mps11_dt_match[] = {
-+static const struct of_device_id s2mps11_dt_match[] __used = {
- 	{
- 		.compatible = "samsung,s2mps11-clk",
- 		.data = (void *)S2MPS11X,
--- 
-2.20.1
-
+greg k-h
