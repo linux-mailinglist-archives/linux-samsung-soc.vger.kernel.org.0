@@ -2,121 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F1077A377B
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 30 Aug 2019 15:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E79B3A490D
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Sep 2019 14:06:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727729AbfH3NE2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 30 Aug 2019 09:04:28 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:59544 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727417AbfH3NE2 (ORCPT
+        id S1726275AbfIAMGZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 1 Sep 2019 08:06:25 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:42157 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726260AbfIAMGZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 30 Aug 2019 09:04:28 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190830130426euoutp02db07f43c042adc8fce46f0b2b8d286cd~-tQ3n7YMP1583915839euoutp02X
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 30 Aug 2019 13:04:26 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190830130426euoutp02db07f43c042adc8fce46f0b2b8d286cd~-tQ3n7YMP1583915839euoutp02X
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1567170266;
-        bh=2xqEu70r6RMEME0AhD6SObpfPFhGDn3/wRuu8aUgTB8=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=OyBvlEoHcUh6ImM8WdG+czJYmEo4Mu1TLHiBkgHjFafEpKIWJ0gnRe5fb6WA1zg10
-         Q3HoZhWVsxVE+VjIlS1lKHVHUaL/unDqoCPZ172JyZavzLNTHK4qOnVTuNF7Vuowbe
-         fhrW/66veJUvsDcBb2s/Msug8llr6V11XvAPkhrQ=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190830130425eucas1p161f56b09f6af505fba160b5fa5421a72~-tQ231Aq42896328963eucas1p1k;
-        Fri, 30 Aug 2019 13:04:25 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id B0.88.04309.9DE196D5; Fri, 30
-        Aug 2019 14:04:25 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190830130425eucas1p1b6806fad77366797271e70ce8ef4d296~-tQ2IVKnZ2898728987eucas1p1g;
-        Fri, 30 Aug 2019 13:04:25 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190830130424eusmtrp2c0ebcb8a459ea7f1976fdf9e6aac8c38~-tQ16NQT_2200122001eusmtrp2Z;
-        Fri, 30 Aug 2019 13:04:24 +0000 (GMT)
-X-AuditID: cbfec7f4-f2e849c0000010d5-e7-5d691ed9aa10
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id EF.79.04117.8DE196D5; Fri, 30
-        Aug 2019 14:04:24 +0100 (BST)
-Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190830130424eusmtip1860981b08019ed0e1440c2cd14d1a3be~-tQ1k85HV1527415274eusmtip1v;
-        Fri, 30 Aug 2019 13:04:24 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH] ARM: multi_v7_defconfig: Make MAX77802 regulator driver
- built-in
-Date:   Fri, 30 Aug 2019 15:04:16 +0200
-Message-Id: <20190830130416.10420-1-m.szyprowski@samsung.com>
+        Sun, 1 Sep 2019 08:06:25 -0400
+Received: by mail-pg1-f182.google.com with SMTP id p3so5824220pgb.9
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 01 Sep 2019 05:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=nB/K4fFCOmhRTBELx0mrWczJtN91X4L47iUtpc1Dn5U=;
+        b=ZQ/uvY81mcA/CqiG7bgF3OOfTCLK0bVAlFEMHNrBoUUjO8aIwroAQ5ehw14o2lRqeK
+         XqA9ZMYmVShfB3QHrNJO4jeq6N+H3Cv7ZQRSS4IlG4mnzX1KPtckhrRk/v/R17aJTJcV
+         JOC17U645BQY9fiZCOp+gcIPGXWsM+1oYvB4rtIltktOkqVWzyUDWmcLAp1/2oEb0/BR
+         hp8uFpxlT2J8a4kMLwSiLyI5z2SPXqwXRkKSPuJL+H38hGNqRMqNad9s5JOdbtXoZtFh
+         P+cqkg4Y22x8t2Sui/NpO0KkiSfBEj1KiDlWL9vKPIoOHcyR9ULjaupq4nAtU/3Rvqhe
+         5+8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nB/K4fFCOmhRTBELx0mrWczJtN91X4L47iUtpc1Dn5U=;
+        b=dGjrA0BP9r1kJowCfd392F9DMiev51AtuaWJ/nIKCCXP3iKMY/eTKH2OW9Wm1pHjbc
+         IqfQ15vN1E+BzblhYCwRJK0Jv4fsQ12u2bylQLZhEcOnAdXTzSYRdIyD1tHNkuQ+bPiK
+         RP+pDiQqR6kuUITRLNAJcKIEqNCU56YdqAzIRKBYAkzh+gfvxN3TA0KhKtieb6OzVpIS
+         dRe4UNp4pyMbuL+Z/BbEkrIRX2xCDDaifHZG84le0794QV1Iaaiwxip82hAMAewrlr3T
+         jD+Q0bUamKgfwNeIrck23fbe/dYFz9pX5/cS20vdfzzBvL6yivSpxiaKxVSHdAO+804F
+         OClg==
+X-Gm-Message-State: APjAAAWWD6LQahw23zVFD4M2C8+K1+lyC/Byle4QCS2qDzz97SsUaQeC
+        EFClSpWxAhdvvLu0fE0vEZo=
+X-Google-Smtp-Source: APXvYqySHThX8Km3wN6rbbaMlbzLhS/eo0kCnWMSQXxIyvf7bgSza0WqR/n8eynbCVmfIoGxyDr0Nw==
+X-Received: by 2002:a62:7d0d:: with SMTP id y13mr27898710pfc.150.1567339584021;
+        Sun, 01 Sep 2019 05:06:24 -0700 (PDT)
+Received: from daeinki-virtual-machine.localdomain ([58.124.60.88])
+        by smtp.gmail.com with ESMTPSA id m4sm11273538pgs.71.2019.09.01.05.06.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Sep 2019 05:06:23 -0700 (PDT)
+From:   Inki Dae <daeinki@gmail.com>
+To:     airlied@linux.ie
+Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
+Subject: [GIT PULL] exynos-drm-next
+Date:   Sun,  1 Sep 2019 21:06:19 +0900
+Message-Id: <20190901120619.3992-1-daeinki@gmail.com>
 X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsWy7djP87o35TJjDf68ULHYOGM9q8X58xvY
-        LTY9vsZqMeP8PiaLtUfusjuwemxa1cnmsXlJvUffllWMHp83yQWwRHHZpKTmZJalFunbJXBl
-        zD4iWbCLvaLx1gHWBsY9bF2MnBwSAiYSXXdfsXcxcnEICaxglHjT/IERwvnCKDHp0nNWCOcz
-        o8ThIy+AMhxgLa8mcEHElzNKzN/VyQTX0f3/PDvIXDYBQ4mut11gO0QEvCUmn/kLtoNZoI9R
-        4vreucwgCWGBYImfF3+xgtgsAqoSLx71MoHYvAK2EnvezmCHOFBeYvWGA8wgzRICB9gkDi1t
-        ZoZIuEhc/fgA6gthiVfHt0A1yEj83zmfCaKhmVHi4bm17BBOD6PE5aYZjBBV1hKHj19kBXmI
-        WUBTYv0ufYjfHCUuPA2GMPkkbrwVBClmBjInbZvODBHmlehoE4KYoSYx6/g6uK0HL1yCusxD
-        4t/ED2B7hARiJQ68ucQ4gVFuFsKqBYyMqxjFU0uLc9NTi43yUsv1ihNzi0vz0vWS83M3MQJj
-        /fS/4192MO76k3SIUYCDUYmH12J7eqwQa2JZcWXuIUYJDmYlEd55HhmxQrwpiZVVqUX58UWl
-        OanFhxilOViUxHmrGR5ECwmkJ5akZqemFqQWwWSZODilGhh1zD0esLgx/z7nznHLKuyR85Xu
-        971br6jzrVTfr1eg+jJk9QE1fRf9q2y9gloNnzJybmieYFcXXC/zZuP5e4JCzkU9e+ayGp6a
-        5Ds3dwJrY/gH0zczF5+7WnznlpmvgtXJvo9bnfMzVz76E+niU9TkI6Nz85Q9v4Ise8Ok+VNT
-        YrrtDJ5PvajEUpyRaKjFXFScCADv9/7H8QIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMLMWRmVeSWpSXmKPExsVy+t/xu7o35DJjDdZcMLTYOGM9q8X58xvY
-        LTY9vsZqMeP8PiaLtUfusjuwemxa1cnmsXlJvUffllWMHp83yQWwROnZFOWXlqQqZOQXl9gq
-        RRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunbJehlzD4iWbCLvaLx1gHWBsY9bF2M
-        HBwSAiYSryZwdTFycQgJLGWUONrxjKmLkRMoLiNxcloDK4QtLPHnWhcbRNEnRomdD94zgiTY
-        BAwlut6CJDg5RAR8JR6/WckCUsQsMIFR4nznDLANwgKBEs0v60FqWARUJV486gVbwCtgK7Hn
-        7Qx2iAXyEqs3HGCewMizgJFhFaNIamlxbnpusZFecWJucWleul5yfu4mRmCAbTv2c8sOxq53
-        wYcYBTgYlXh4LbanxwqxJpYVV+YeYpTgYFYS4Z3nkRErxJuSWFmVWpQfX1Sak1p8iNEUaPlE
-        ZinR5Hxg8OeVxBuaGppbWBqaG5sbm1koifN2CByMERJITyxJzU5NLUgtgulj4uCUamDc7ix5
-        13PZ5kVNs/dtnCQ7ZfeypQ7tKr7Ra2RnVD5+MOH6oluPTavftjLcamXxl1ojZnP2s1ebo1zM
-        yyDJt9OFvgeayge+fNQkMm3dYkkHO7P7ijwr3wjKuNxnn/xv4eYV7/QypG1N1HlURXufNj4M
-        5lpcxi5mKnSpbmsLT+xNta+cImV5D44psRRnJBpqMRcVJwIAwOK430YCAAA=
-X-CMS-MailID: 20190830130425eucas1p1b6806fad77366797271e70ce8ef4d296
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190830130425eucas1p1b6806fad77366797271e70ce8ef4d296
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190830130425eucas1p1b6806fad77366797271e70ce8ef4d296
-References: <CGME20190830130425eucas1p1b6806fad77366797271e70ce8ef4d296@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Maxim 77802 PMIC is a main PMIC for the following Exynos5 based boards:
-Odroid XU, Chromebook Pit and Chromebook Pi. Driver for its voltage
-regulator is needed very early during boot to properly instantiate SD/MMC
-devices and mount rootfs, so change that driver to be compiled-in.
+Hi Dave,
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- arch/arm/configs/multi_v7_defconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+   Just one patch which drops the use of drmP.h header file.
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index 64aa1136d43c..3dc636c3c5c7 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -562,7 +562,7 @@ CONFIG_REGULATOR_MAX8997=m
- CONFIG_REGULATOR_MAX8998=m
- CONFIG_REGULATOR_MAX77686=y
- CONFIG_REGULATOR_MAX77693=m
--CONFIG_REGULATOR_MAX77802=m
-+CONFIG_REGULATOR_MAX77802=y
- CONFIG_REGULATOR_PALMAS=y
- CONFIG_REGULATOR_PBIAS=y
- CONFIG_REGULATOR_PWM=y
--- 
-2.17.1
+   Please kindly let me know if there is any problem.
 
+Thanks,
+INki Dae
+
+The following changes since commit 578d2342ec702e5fb8a77983fabb3754ae3e9660:
+
+  Merge tag 'drm-next-5.4-2019-08-23' of git://people.freedesktop.org/~agd5f/linux into drm-next (2019-08-27 17:22:15 +1000)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos tags/exynos-drm-next-for-v5.4
+
+for you to fetch changes up to 226024b16685522ef8a97d881cffb90500ef1903:
+
+  drm/exynos: drop use of drmP.h (2019-09-01 20:55:12 +0900)
+
+----------------------------------------------------------------
+- JUst one cleanup which drops the use of drmP.h header file.
+
+----------------------------------------------------------------
+Sam Ravnborg (1):
+      drm/exynos: drop use of drmP.h
+
+ drivers/gpu/drm/exynos/exynos_drm_drv.c     | 8 ++++++++
+ drivers/gpu/drm/exynos/exynos_drm_fimc.c    | 2 ++
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c     | 2 ++
+ drivers/gpu/drm/exynos/exynos_drm_ipp.c     | 5 ++++-
+ drivers/gpu/drm/exynos/exynos_drm_ipp.h     | 2 --
+ drivers/gpu/drm/exynos/exynos_drm_rotator.c | 2 ++
+ drivers/gpu/drm/exynos/exynos_drm_scaler.c  | 1 +
+ 7 files changed, 19 insertions(+), 3 deletions(-)
