@@ -2,68 +2,112 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB35A71B6
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Sep 2019 19:32:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3B89A7200
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Sep 2019 19:54:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729113AbfICRcs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Sep 2019 13:32:48 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:43392 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728854AbfICRcs (ORCPT
+        id S1729877AbfICRyv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Sep 2019 13:54:51 -0400
+Received: from sauhun.de ([88.99.104.3]:56602 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728967AbfICRyv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Sep 2019 13:32:48 -0400
-Received: by mail-qt1-f175.google.com with SMTP id l22so8675704qtp.10;
-        Tue, 03 Sep 2019 10:32:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vgjm2gNxQwoJZ8v0bniiaqPHu8QBdyk+Apmy2AFV2l4=;
-        b=mnpH9A+wo4+d0QCiKZyQS3pzhLE0G0H7uxzVC1uveIhsg0yFDk6n1SdByvR97YhKAl
-         dWLbAEkUw9+EuIay+WpxUhDcL1naUboXtDm0t9W9SJL9MSucyyjaZ+O8SJXHKEnZd4WX
-         ASmMzUAjqEl+0h4yDSBxtLY0vBpf4nMbJ+twPJGqopXeCyAAi3CiUKq1sNdM3Ru3JitC
-         VpkCqinM6qMmfuvoDrCNPu1ScPGFaSS3WAzF2BWLQh3F5nJ7rqp7MeTIEqz9iVDCQ1Lw
-         VC9FVvJw6R/Vt5DL8HJXC968ri7bXXdjkOZNFJymJsYY1OQX9rhhNbJCrn5ZDAi/m8m5
-         49JQ==
-X-Gm-Message-State: APjAAAUpfpBVe9E8hU/7k291U1XT1ixF/FN3/SvNHew7VNZvb8N9qToI
-        LnqVrQEAP5WTcxXhd0z05jmVJzogIiIcmtxq+kwViA==
-X-Google-Smtp-Source: APXvYqyVRUIJPIQEHx95xhwPjnvSTza+9sTHKmCNkiM1M8D9DvwWC/dFC/I4zoquypk9wQ0vA4TbG60cCWZR89wfsHQ=
-X-Received: by 2002:ac8:6b1a:: with SMTP id w26mr11188688qts.304.1567531967226;
- Tue, 03 Sep 2019 10:32:47 -0700 (PDT)
+        Tue, 3 Sep 2019 13:54:51 -0400
+Received: from localhost (p54B3348D.dip0.t-ipconnect.de [84.179.52.141])
+        by pokefinder.org (Postfix) with ESMTPSA id 7FE0F2C4F2F;
+        Tue,  3 Sep 2019 19:54:49 +0200 (CEST)
+Date:   Tue, 3 Sep 2019 19:54:49 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc:     linux-i2c@vger.kernel.org, tglx@linutronix.de,
+        Benjamin Rouxel <benjamin.rouxel@uva.nl>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
+Message-ID: <20190903175449.GF2171@ninjato>
+References: <20190813115555.10542-1-bigeasy@linutronix.de>
+ <20190813115555.10542-2-bigeasy@linutronix.de>
 MIME-Version: 1.0
-References: <20190816163042.6604-1-krzk@kernel.org> <20190816163042.6604-3-krzk@kernel.org>
- <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com>
-In-Reply-To: <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 3 Sep 2019 19:32:31 +0200
-Message-ID: <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
-Subject: Re: [GIT PULL 2/3] ARM: samsung: mach for v5.4
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
-        SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XStn23h1fwudRqtG"
+Content-Disposition: inline
+In-Reply-To: <20190813115555.10542-2-bigeasy@linutronix.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Aug 21, 2019 at 9:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
 
-> > ----------------------------------------------------------------
-> > Linus Walleij (1):
-> >       ARM: samsung: Include GPIO driver header
-> >
-> > Pankaj Dubey (1):
-> >       ARM: exynos: Enable exynos-chipid driver
->
-> This last patch should be dropped so I will rework the pull request
-> and send later v2. Please ignore it for now.
+--XStn23h1fwudRqtG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't see the v2 yet. Are you still planning to send it?
+On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
+> The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
+> is masked while the primary is handler is invoked independently of
+> IRQF_ONESHOT.
+> With IRQF_ONESHOT the core code will not force-thread the interrupt and
+> this is probably not intended. I *assume* that the original author copied
+> the IRQ registration from another driver which passed a primary and
+> secondary handler and removed the secondary handler but keeping the
+> ONESHOT flag.
+>=20
+> Remove IRQF_ONESHOT.
+>=20
+> Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> Cc: Kukjin Kim <kgene@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-        Arnd
+Krzysztof, are you okay with this change?
+
+> ---
+>  drivers/i2c/busses/i2c-exynos5.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-ex=
+ynos5.c
+> index e4e7932f78000..e7514c16b756c 100644
+> --- a/drivers/i2c/busses/i2c-exynos5.c
+> +++ b/drivers/i2c/busses/i2c-exynos5.c
+> @@ -791,9 +791,7 @@ static int exynos5_i2c_probe(struct platform_device *=
+pdev)
+>  	}
+> =20
+>  	ret =3D devm_request_irq(&pdev->dev, i2c->irq, exynos5_i2c_irq,
+> -				IRQF_NO_SUSPEND | IRQF_ONESHOT,
+> -				dev_name(&pdev->dev), i2c);
+> -
+> +			       IRQF_NO_SUSPEND, dev_name(&pdev->dev), i2c);
+>  	if (ret !=3D 0) {
+>  		dev_err(&pdev->dev, "cannot request HS-I2C IRQ %d\n", i2c->irq);
+>  		goto err_clk;
+> --=20
+> 2.23.0.rc1
+>=20
+
+--XStn23h1fwudRqtG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1uqOgACgkQFA3kzBSg
+KbaGlQ/7BEFy1vEAZSvrqzwrVBJF2nJNPh5EPZT/p29f/7DuVYhD6bPpKkTtf4Nl
+QwKMNq/Ad0BxBumSobB4j+lDBVfUUDXSzUr5u5bBwhSgz9UdT8veylBhDweSyQrJ
+nth6TjquvrFw2ipzxOnWQlK/Zab8z0rY3JW0so6kgkg1RcIhzBVcCiLcCiCHJqBY
+mNyQWnmhQeXfWN/9IMMDNfs9xrtm716hXJ4XxRh0nHgfINIYiVM/3SyNmuq5sMm9
+3Is9KvxJSqzx3w3SvY5Qz/bvyv8Tl4JH3aLCVDg6Qs9BrwMPpcG1Zr3dqCK4CbHY
+1lk4tllo55fwNOH59SXsrvgUZ3vb6GNsHGgBdvV4G7z/DiR6VymlwOFctzv3mJOU
+N7zm4+V3LdeByx+i4AImTyCFcLDqGXyKnFWACpCQY+CdMuWq8wCkOaQ5DH1mifKe
+ZOYQw106uWt3BPHTCtSs3Vf57rD8lSmr8zvfbU38ewrFOelfVIPibCMbeclxoQem
+JbFPERpZ69kdH2fFdQ9tNql5Y7WKKypP+snwCLjphYWcnlShkOhpmMrtlvGsM5D1
+/nVIk9VLjrE4Emj5ikY3MqGiSM2wMJn/FZgeNLgsmgGJo1bYbdQzwF14w7UiD4Ea
+Z0ek0fsDNwWCauaKWCn4pw47AiHAtg+XVkntpg76j5PS2/zsL/s=
+=9Ykt
+-----END PGP SIGNATURE-----
+
+--XStn23h1fwudRqtG--
