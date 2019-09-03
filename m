@@ -2,42 +2,42 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4664A7198
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Sep 2019 19:21:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FB35A71B6
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Sep 2019 19:32:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729928AbfICRV6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Sep 2019 13:21:58 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:38792 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729113AbfICRV5 (ORCPT
+        id S1729113AbfICRcs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Sep 2019 13:32:48 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:43392 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728854AbfICRcs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Sep 2019 13:21:57 -0400
-Received: by mail-qk1-f195.google.com with SMTP id x5so2616724qkh.5;
-        Tue, 03 Sep 2019 10:21:57 -0700 (PDT)
+        Tue, 3 Sep 2019 13:32:48 -0400
+Received: by mail-qt1-f175.google.com with SMTP id l22so8675704qtp.10;
+        Tue, 03 Sep 2019 10:32:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+yX6K+GSfFVsEprEqhk1LVFi55m2T9zHs0bHG7G6LzQ=;
-        b=TMACJii65YjZZYZlzdL3cUCpobfuqWbw084WcoNBjPKkXiL1ftiyOHgKIrRyMfpSBi
-         ZoaeGSmCRSYGE+tWNGFkCVgpTH+kcW+W7FID74gB43CIBN0TNtTuGKUj3azI1XJUpQgl
-         +agNm2sydUCb437ShKoY23Eng4JyjvNG/tXgvPZCwlIw4biEbQzB0xJ6Say0dBZuqMYX
-         vvbjuiFmk6W5c+Y1LqZgNuKHZrzuP8tCHnXrkFZAElMsqUgvbYUHotSQFyOJy8hTH1XF
-         LJmsb25Po7/dhc7Dr5aHj0111CKsZjTB5iMffEjxwYXhKCm2c5MSERcl4Asua3PqpMsi
-         Y72A==
-X-Gm-Message-State: APjAAAUYlW2KnqKaUNWwxHY6pzWw81drlNdvx+GkJ8qFv8e614ZMpRWF
-        u0WRQiByzvxRecE7nZt9q7DxZSTdtIU6Rs467Y2zMgVU
-X-Google-Smtp-Source: APXvYqwtVaqFxj0uX5/gAyatD0C+Cv5WnzBDBxUeYKcBYyKebRJANZCfhlV3+7wKIyuDzZrhDolFX0Yg4QMPMSMw5Hg=
-X-Received: by 2002:a37:4b0d:: with SMTP id y13mr34490800qka.3.1567531316765;
- Tue, 03 Sep 2019 10:21:56 -0700 (PDT)
+        bh=Vgjm2gNxQwoJZ8v0bniiaqPHu8QBdyk+Apmy2AFV2l4=;
+        b=mnpH9A+wo4+d0QCiKZyQS3pzhLE0G0H7uxzVC1uveIhsg0yFDk6n1SdByvR97YhKAl
+         dWLbAEkUw9+EuIay+WpxUhDcL1naUboXtDm0t9W9SJL9MSucyyjaZ+O8SJXHKEnZd4WX
+         ASmMzUAjqEl+0h4yDSBxtLY0vBpf4nMbJ+twPJGqopXeCyAAi3CiUKq1sNdM3Ru3JitC
+         VpkCqinM6qMmfuvoDrCNPu1ScPGFaSS3WAzF2BWLQh3F5nJ7rqp7MeTIEqz9iVDCQ1Lw
+         VC9FVvJw6R/Vt5DL8HJXC968ri7bXXdjkOZNFJymJsYY1OQX9rhhNbJCrn5ZDAi/m8m5
+         49JQ==
+X-Gm-Message-State: APjAAAUpfpBVe9E8hU/7k291U1XT1ixF/FN3/SvNHew7VNZvb8N9qToI
+        LnqVrQEAP5WTcxXhd0z05jmVJzogIiIcmtxq+kwViA==
+X-Google-Smtp-Source: APXvYqyVRUIJPIQEHx95xhwPjnvSTza+9sTHKmCNkiM1M8D9DvwWC/dFC/I4zoquypk9wQ0vA4TbG60cCWZR89wfsHQ=
+X-Received: by 2002:ac8:6b1a:: with SMTP id w26mr11188688qts.304.1567531967226;
+ Tue, 03 Sep 2019 10:32:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190816163042.6604-1-krzk@kernel.org> <CAJKOXPcgZ2_ofZyAeTSxALkALaP-SFNfvNmNPYSPyLzuhpGZ0w@mail.gmail.com>
- <20190822183519.GA23735@kozik-lap>
-In-Reply-To: <20190822183519.GA23735@kozik-lap>
+References: <20190816163042.6604-1-krzk@kernel.org> <20190816163042.6604-3-krzk@kernel.org>
+ <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com>
+In-Reply-To: <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com>
 From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Tue, 3 Sep 2019 19:21:40 +0200
-Message-ID: <CAK8P3a1_Qw=OB31yOCrpPs8Ys+=9tt4Pnyd=3+2JGzRXJV1KAw@mail.gmail.com>
-Subject: Re: [GIT PULL 1/3] soc: samsung: Exynos for v5.4
+Date:   Tue, 3 Sep 2019 19:32:31 +0200
+Message-ID: <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
+Subject: Re: [GIT PULL 2/3] ARM: samsung: mach for v5.4
 To:     Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
         SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
@@ -51,51 +51,19 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Aug 22, 2019 at 8:35 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> On Wed, Aug 21, 2019 at 09:51:09AM +0200, Krzysztof Kozlowski wrote:
-> > On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > >
-> > > The following changes since commit 5f9e832c137075045d15cd6899ab0505cfb2ca4b:
-> > >
-> > >   Linus 5.3-rc1 (2019-07-21 14:05:38 -0700)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-drivers-5.4
-> > >
-> > > for you to fetch changes up to 40d8aff614f71ab3cab20785b4f213e3802d4e87:
-> > >
-> > >   soc: samsung: chipid: Convert exynos-chipid driver to use the regmap API (2019-08-15 20:25:25 +0200)
-> > >
-> > > ----------------------------------------------------------------
-> > > Samsung soc drivers changes for v5.4
-> > >
-> > > Add Exynos Chipid driver for identification of product IDs and SoC
-> > > revisions.  The driver also exposes chipid regmap, later to be used by
-> > > Exynos Adaptive Supply Voltage driver (adjusting voltages to different
-> > > revisions of same SoC).
+On Wed, Aug 21, 2019 at 9:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+
+> > ----------------------------------------------------------------
+> > Linus Walleij (1):
+> >       ARM: samsung: Include GPIO driver header
 > >
-> > It turns out that it brings troubles (code is executed on every
-> > platform polluting logs because it is an initcall, not a driver) so
-> > Sylwester (submitter) asked to skip the submission.
-> >
-> > Please ignore the pull request.
+> > Pankaj Dubey (1):
+> >       ARM: exynos: Enable exynos-chipid driver
 >
-> I talked with Sylwester and Bartlomiej who contributed the chipid driver
-> and they provided small incremental fixes. The driver is still useful
-> and in the future it will be expanded towards AVS. Therefore please pull
-> it or optionally wait a week and I will send incremental pull request
-> with fixes.
+> This last patch should be dropped so I will rework the pull request
+> and send later v2. Please ignore it for now.
 
-Pulled into arm/drivers for now.
+I don't see the v2 yet. Are you still planning to send it?
 
-I have drafted a related patch recently, regarding the related
-arch/arm/plat-samsung/cpu.c file. This is part of a longer series
-I'm working on, see https://pastebin.com/ZqeU3Mth for the
-current version of this patch. The observation is that mach-exynos
-is almost completely independent of plat-samsung these days, and my
-patch removes the last obstacle from separating the two. I have
-another set of patches to do the same for mach-s5pv210 (which shares
-half of its pm.c with plat-samsung, but nothing else).
-
-       Arnd
+        Arnd
