@@ -2,86 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF774A7C66
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 09:14:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA7A4A7DDC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 10:30:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728989AbfIDHOl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 03:14:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33826 "EHLO mail.kernel.org"
+        id S1726010AbfIDIaV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 04:30:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41400 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728870AbfIDHOl (ORCPT
+        id S1725966AbfIDIaU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 03:14:41 -0400
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+        Wed, 4 Sep 2019 04:30:20 -0400
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0DF082339D;
-        Wed,  4 Sep 2019 07:14:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7A9982077B;
+        Wed,  4 Sep 2019 08:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567581280;
-        bh=UhKM6/sWm4oQ05BpJZZNfaTF3lBq/9uJJ37RvJbgKNA=;
+        s=default; t=1567585819;
+        bh=Lh97Er4RFNHYTmr99oTQMZS7Qa/TTRWTwINXViZQoVE=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=wNEFVb2c/g+ykWCBmkZamGkOWzaUvbGvyPmgOPxGMePQEBhaOFq9fY8f+If5gshQE
-         9NAGOzlQZWgBKTE2frob0xLpTaSpl7esKEt+oD95+yXa1paVzuvnmJy8uI5zquUWjP
-         AIgAOpwJkEX9ZjTrB0Dn2buHg1y0NQTDqnAEG8C0=
-Received: by mail-lj1-f179.google.com with SMTP id e17so7549751ljf.13;
-        Wed, 04 Sep 2019 00:14:39 -0700 (PDT)
-X-Gm-Message-State: APjAAAUqhRmD97+b1I9w0Wj5oOZXWj3OKK+Q9u9ZkyQr09cCtwO4i6f7
-        8K+IfPIxXn4W0EmTEyG7GpGpm4X64HfEuwtdemQ=
-X-Google-Smtp-Source: APXvYqwxEBbZCCVd3db7t9OIjWZpPH3cyrgsdKPFj5Qw8NbbsvAzzdtj4ChTa6fbl5DfphaeeFB0p+kMXhysueftJZo=
-X-Received: by 2002:a2e:8091:: with SMTP id i17mr15253351ljg.13.1567581278186;
- Wed, 04 Sep 2019 00:14:38 -0700 (PDT)
+        b=Ba00XhkjsAfVIFqoUw4XDCrYjwdpq1xq93rciWJbfgzXbOezj9GZzvj6t7NWUdrUn
+         9PuREUSozNg5D0nS8Ce6qA6TFK1zkdHaVa/Et5BwOcZgT4+X/MMgeJpUYC2dnuuTSF
+         N+zR27Xtauu4APld4gioTaKLDj7RwaV4DxfJXhmw=
+Received: by mail-lf1-f46.google.com with SMTP id c12so15183044lfh.5;
+        Wed, 04 Sep 2019 01:30:19 -0700 (PDT)
+X-Gm-Message-State: APjAAAW2iCBGtd+78p0IJnwoVoiS0TaEyLpL5mTuPR5rgdyfyKnBq/8m
+        EtytvMrmxqOniL9YV9r2DP06SbbVlByvyHoi8kI=
+X-Google-Smtp-Source: APXvYqyIxWtp5ANugFBOnOwndmgq6u8lUVFdexZfuwV5PqkiNbruroxMaNtADWXFCwo+8p0GtjHdHb09f2ZRaXGy7K8=
+X-Received: by 2002:a05:6512:499:: with SMTP id v25mr19209706lfq.30.1567585817665;
+ Wed, 04 Sep 2019 01:30:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190813115555.10542-1-bigeasy@linutronix.de> <20190813115555.10542-2-bigeasy@linutronix.de>
- <20190903175449.GF2171@ninjato>
-In-Reply-To: <20190903175449.GF2171@ninjato>
+References: <20190816163042.6604-1-krzk@kernel.org> <20190816163042.6604-3-krzk@kernel.org>
+ <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com> <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
+In-Reply-To: <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 4 Sep 2019 09:14:26 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfnu2aJHWkxSecH6YZZ7t5-8528LsCaQtk5sSH0L+ayYA@mail.gmail.com>
-Message-ID: <CAJKOXPfnu2aJHWkxSecH6YZZ7t5-8528LsCaQtk5sSH0L+ayYA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        linux-i2c@vger.kernel.org, tglx@linutronix.de,
-        Benjamin Rouxel <benjamin.rouxel@uva.nl>,
-        Kukjin Kim <kgene@kernel.org>,
+Date:   Wed, 4 Sep 2019 10:30:06 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfoxVriL0GzZLp0wtYkCQC8Dn-0XXb678wXh4ePRy0dpA@mail.gmail.com>
+Message-ID: <CAJKOXPfoxVriL0GzZLp0wtYkCQC8Dn-0XXb678wXh4ePRy0dpA@mail.gmail.com>
+Subject: Re: [GIT PULL 2/3] ARM: samsung: mach for v5.4
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
+        SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 3 Sep 2019 at 19:54, Wolfram Sang <wsa@the-dreams.de> wrote:
+On Tue, 3 Sep 2019 at 19:32, Arnd Bergmann <arnd@arndb.de> wrote:
 >
-> On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
-> > The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
-> > is masked while the primary is handler is invoked independently of
-> > IRQF_ONESHOT.
-> > With IRQF_ONESHOT the core code will not force-thread the interrupt and
-> > this is probably not intended. I *assume* that the original author copied
-> > the IRQ registration from another driver which passed a primary and
-> > secondary handler and removed the secondary handler but keeping the
-> > ONESHOT flag.
-> >
-> > Remove IRQF_ONESHOT.
-> >
-> > Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> > Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> > Cc: Kukjin Kim <kgene@kernel.org>
-> > Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> > Cc: linux-samsung-soc@vger.kernel.org
-> > Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+> On Wed, Aug 21, 2019 at 9:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >
-> Krzysztof, are you okay with this change?
+> > > ----------------------------------------------------------------
+> > > Linus Walleij (1):
+> > >       ARM: samsung: Include GPIO driver header
+> > >
+> > > Pankaj Dubey (1):
+> > >       ARM: exynos: Enable exynos-chipid driver
+> >
+> > This last patch should be dropped so I will rework the pull request
+> > and send later v2. Please ignore it for now.
+>
+> I don't see the v2 yet. Are you still planning to send it?
 
-I do not have a clue what the original author back in 2013 had in
-mind, but change itself looks reasonable. I also gave it a try and it
-seems it works fine:
-
-Tested-by: Krzysztof Kozlowski <krzk@kernel.org>
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Yes, I have two more patches so I plan incremental pull today or tomorrow.
 
 Best regards,
 Krzysztof
