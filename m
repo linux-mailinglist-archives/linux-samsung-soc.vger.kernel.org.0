@@ -2,112 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E3B89A7200
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Sep 2019 19:54:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF774A7C66
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 09:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729877AbfICRyv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Sep 2019 13:54:51 -0400
-Received: from sauhun.de ([88.99.104.3]:56602 "EHLO pokefinder.org"
+        id S1728989AbfIDHOl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 03:14:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33826 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728967AbfICRyv (ORCPT
+        id S1728870AbfIDHOl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Sep 2019 13:54:51 -0400
-Received: from localhost (p54B3348D.dip0.t-ipconnect.de [84.179.52.141])
-        by pokefinder.org (Postfix) with ESMTPSA id 7FE0F2C4F2F;
-        Tue,  3 Sep 2019 19:54:49 +0200 (CEST)
-Date:   Tue, 3 Sep 2019 19:54:49 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     linux-i2c@vger.kernel.org, tglx@linutronix.de,
+        Wed, 4 Sep 2019 03:14:41 -0400
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0DF082339D;
+        Wed,  4 Sep 2019 07:14:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567581280;
+        bh=UhKM6/sWm4oQ05BpJZZNfaTF3lBq/9uJJ37RvJbgKNA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=wNEFVb2c/g+ykWCBmkZamGkOWzaUvbGvyPmgOPxGMePQEBhaOFq9fY8f+If5gshQE
+         9NAGOzlQZWgBKTE2frob0xLpTaSpl7esKEt+oD95+yXa1paVzuvnmJy8uI5zquUWjP
+         AIgAOpwJkEX9ZjTrB0Dn2buHg1y0NQTDqnAEG8C0=
+Received: by mail-lj1-f179.google.com with SMTP id e17so7549751ljf.13;
+        Wed, 04 Sep 2019 00:14:39 -0700 (PDT)
+X-Gm-Message-State: APjAAAUqhRmD97+b1I9w0Wj5oOZXWj3OKK+Q9u9ZkyQr09cCtwO4i6f7
+        8K+IfPIxXn4W0EmTEyG7GpGpm4X64HfEuwtdemQ=
+X-Google-Smtp-Source: APXvYqwxEBbZCCVd3db7t9OIjWZpPH3cyrgsdKPFj5Qw8NbbsvAzzdtj4ChTa6fbl5DfphaeeFB0p+kMXhysueftJZo=
+X-Received: by 2002:a2e:8091:: with SMTP id i17mr15253351ljg.13.1567581278186;
+ Wed, 04 Sep 2019 00:14:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190813115555.10542-1-bigeasy@linutronix.de> <20190813115555.10542-2-bigeasy@linutronix.de>
+ <20190903175449.GF2171@ninjato>
+In-Reply-To: <20190903175449.GF2171@ninjato>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 4 Sep 2019 09:14:26 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfnu2aJHWkxSecH6YZZ7t5-8528LsCaQtk5sSH0L+ayYA@mail.gmail.com>
+Message-ID: <CAJKOXPfnu2aJHWkxSecH6YZZ7t5-8528LsCaQtk5sSH0L+ayYA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        linux-i2c@vger.kernel.org, tglx@linutronix.de,
         Benjamin Rouxel <benjamin.rouxel@uva.nl>,
         Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
-Message-ID: <20190903175449.GF2171@ninjato>
-References: <20190813115555.10542-1-bigeasy@linutronix.de>
- <20190813115555.10542-2-bigeasy@linutronix.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XStn23h1fwudRqtG"
-Content-Disposition: inline
-In-Reply-To: <20190813115555.10542-2-bigeasy@linutronix.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Tue, 3 Sep 2019 at 19:54, Wolfram Sang <wsa@the-dreams.de> wrote:
+>
+> On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
+> > The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
+> > is masked while the primary is handler is invoked independently of
+> > IRQF_ONESHOT.
+> > With IRQF_ONESHOT the core code will not force-thread the interrupt and
+> > this is probably not intended. I *assume* that the original author copied
+> > the IRQ registration from another driver which passed a primary and
+> > secondary handler and removed the secondary handler but keeping the
+> > ONESHOT flag.
+> >
+> > Remove IRQF_ONESHOT.
+> >
+> > Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> > Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> > Cc: Kukjin Kim <kgene@kernel.org>
+> > Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> > Cc: linux-samsung-soc@vger.kernel.org
+> > Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+>
+> Krzysztof, are you okay with this change?
 
---XStn23h1fwudRqtG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I do not have a clue what the original author back in 2013 had in
+mind, but change itself looks reasonable. I also gave it a try and it
+seems it works fine:
 
-On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
-> The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
-> is masked while the primary is handler is invoked independently of
-> IRQF_ONESHOT.
-> With IRQF_ONESHOT the core code will not force-thread the interrupt and
-> this is probably not intended. I *assume* that the original author copied
-> the IRQ registration from another driver which passed a primary and
-> secondary handler and removed the secondary handler but keeping the
-> ONESHOT flag.
->=20
-> Remove IRQF_ONESHOT.
->=20
-> Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> Cc: Kukjin Kim <kgene@kernel.org>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: linux-samsung-soc@vger.kernel.org
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Krzysztof, are you okay with this change?
-
-> ---
->  drivers/i2c/busses/i2c-exynos5.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->=20
-> diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-ex=
-ynos5.c
-> index e4e7932f78000..e7514c16b756c 100644
-> --- a/drivers/i2c/busses/i2c-exynos5.c
-> +++ b/drivers/i2c/busses/i2c-exynos5.c
-> @@ -791,9 +791,7 @@ static int exynos5_i2c_probe(struct platform_device *=
-pdev)
->  	}
-> =20
->  	ret =3D devm_request_irq(&pdev->dev, i2c->irq, exynos5_i2c_irq,
-> -				IRQF_NO_SUSPEND | IRQF_ONESHOT,
-> -				dev_name(&pdev->dev), i2c);
-> -
-> +			       IRQF_NO_SUSPEND, dev_name(&pdev->dev), i2c);
->  	if (ret !=3D 0) {
->  		dev_err(&pdev->dev, "cannot request HS-I2C IRQ %d\n", i2c->irq);
->  		goto err_clk;
-> --=20
-> 2.23.0.rc1
->=20
-
---XStn23h1fwudRqtG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1uqOgACgkQFA3kzBSg
-KbaGlQ/7BEFy1vEAZSvrqzwrVBJF2nJNPh5EPZT/p29f/7DuVYhD6bPpKkTtf4Nl
-QwKMNq/Ad0BxBumSobB4j+lDBVfUUDXSzUr5u5bBwhSgz9UdT8veylBhDweSyQrJ
-nth6TjquvrFw2ipzxOnWQlK/Zab8z0rY3JW0so6kgkg1RcIhzBVcCiLcCiCHJqBY
-mNyQWnmhQeXfWN/9IMMDNfs9xrtm716hXJ4XxRh0nHgfINIYiVM/3SyNmuq5sMm9
-3Is9KvxJSqzx3w3SvY5Qz/bvyv8Tl4JH3aLCVDg6Qs9BrwMPpcG1Zr3dqCK4CbHY
-1lk4tllo55fwNOH59SXsrvgUZ3vb6GNsHGgBdvV4G7z/DiR6VymlwOFctzv3mJOU
-N7zm4+V3LdeByx+i4AImTyCFcLDqGXyKnFWACpCQY+CdMuWq8wCkOaQ5DH1mifKe
-ZOYQw106uWt3BPHTCtSs3Vf57rD8lSmr8zvfbU38ewrFOelfVIPibCMbeclxoQem
-JbFPERpZ69kdH2fFdQ9tNql5Y7WKKypP+snwCLjphYWcnlShkOhpmMrtlvGsM5D1
-/nVIk9VLjrE4Emj5ikY3MqGiSM2wMJn/FZgeNLgsmgGJo1bYbdQzwF14w7UiD4Ea
-Z0ek0fsDNwWCauaKWCn4pw47AiHAtg+XVkntpg76j5PS2/zsL/s=
-=9Ykt
------END PGP SIGNATURE-----
-
---XStn23h1fwudRqtG--
+Best regards,
+Krzysztof
