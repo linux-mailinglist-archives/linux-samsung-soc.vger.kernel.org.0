@@ -2,88 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FAA8A94B9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 23:13:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11954A95C3
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Sep 2019 00:11:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbfIDVNP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 17:13:15 -0400
-Received: from sauhun.de ([88.99.104.3]:46222 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726358AbfIDVNP (ORCPT
+        id S1729919AbfIDWLP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 18:11:15 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38814 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727722AbfIDWLP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 17:13:15 -0400
-Received: from localhost (p54B337F1.dip0.t-ipconnect.de [84.179.55.241])
-        by pokefinder.org (Postfix) with ESMTPSA id 3AE8E2C4F2F;
-        Wed,  4 Sep 2019 23:13:14 +0200 (CEST)
-Date:   Wed, 4 Sep 2019 23:13:13 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     linux-i2c@vger.kernel.org, tglx@linutronix.de,
-        Benjamin Rouxel <benjamin.rouxel@uva.nl>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
-Message-ID: <20190904211313.GD23608@ninjato>
-References: <20190813115555.10542-1-bigeasy@linutronix.de>
- <20190813115555.10542-2-bigeasy@linutronix.de>
+        Wed, 4 Sep 2019 18:11:15 -0400
+Received: by mail-pf1-f196.google.com with SMTP id h195so255977pfe.5;
+        Wed, 04 Sep 2019 15:11:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=g+6XpI5kpbmJFvx+kn5E+7tLpc2ZjDJn4kNPVnStE2E=;
+        b=e1kzHrrhLu3H38c3RIvFv3KFtEH9I0ixuhaalyVNjtJ9R9aUU9517BP85uBp4c3dZa
+         6DzLL79w3ZVR5oUpFF/Hw+HQ2RxOZQDPC4namhjt2TAkIKilTLiQFyR+o1Yj1In2zXDy
+         9561wWBcfEh/Zda6ZBhNy8ZYUbEjDEGuuVxdntn6eA19ptbxtScB4jIDbgcIcsKHJIZ1
+         6opBQ9JuYPHFhzVctBZsgYo4yGvrC/82132vAGrfZQnOnHxDOQVUV1WH8OPdd1L0DUNY
+         WmBC0oBFQP6xLAELnWxBOYfrAUFMrzCd0Yz/tso+7YQkzY4u3U6ofekBVa0W6M1OSYGG
+         qZoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=g+6XpI5kpbmJFvx+kn5E+7tLpc2ZjDJn4kNPVnStE2E=;
+        b=fFXaeSowFzFKieC96Y+qeHGi2+JWVDwI+nIInjR/Iotw4FsZvgF1bWwZvxVLyaejSY
+         z3QR0TplrKjRSL5qtpRyJsnKML/PdTP3crxXPM8wdp+Dmg63BeASDTrliIEKZTZTlJHa
+         A2wfAxwvkCfmE0Yel+ivtuO7vMXJ66dPPyhebQZn4rNtnMwA/yRlPLZI15CMB5GTS/Q6
+         lBDIzEUphrq8ribwGnc0WFqlpWTpYRM3juh9099S0Svq7P3Q3kWcL0Nmn0JTtPuSE5eb
+         L/xqs1K8DXY76Dr/VwDFkYN19cagN62L022Hm/io7tGRXXcDHTfuoeSl5s0Kcya4NJey
+         YvCw==
+X-Gm-Message-State: APjAAAVg8rk1MGVaaNRt79TVdiO8/hnON+TG1sf4Wb3yN6meGVjWiq1r
+        qC41cZMvJ+atC/zc5kXWTbh0pbF8MWo=
+X-Google-Smtp-Source: APXvYqzpBWtpxdm0bH8OBicigR1zPs24mRFeZDv7CLPJ6+TDtcXf9xj9XjfGvwWIe6hpB9xzS3uiMw==
+X-Received: by 2002:a63:7a01:: with SMTP id v1mr330595pgc.310.1567635073535;
+        Wed, 04 Sep 2019 15:11:13 -0700 (PDT)
+Received: from [10.230.7.147] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id e192sm55781pfh.83.2019.09.04.15.11.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 Sep 2019 15:11:12 -0700 (PDT)
+Subject: Re: [PATCH -next 07/36] spi: bcm63xx-hsspi: use
+ devm_platform_ioremap_resource() to simplify code
+To:     YueHaibing <yuehaibing@huawei.com>, broonie@kernel.org,
+        rjui@broadcom.com, sbranden@broadcom.com, eric@anholt.net,
+        wahrenst@gmx.net, shc_work@mail.ru, agross@kernel.org,
+        khilman@baylibre.com, matthias.bgg@gmail.com, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
+        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
+        benjaminfair@google.com, kgene@kernel.org, krzk@kernel.org,
+        andi@etezian.org, palmer@sifive.com, paul.walmsley@sifive.com,
+        baohua@kernel.org, mripard@kernel.org, wens@csie.org,
+        ldewangan@nvidia.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
+        michal.simek@xilinx.com
+Cc:     bcm-kernel-feedback-list@broadcom.com, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-tegra@vger.kernel.org
+References: <20190904135918.25352-1-yuehaibing@huawei.com>
+ <20190904135918.25352-8-yuehaibing@huawei.com>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <d36f7e5f-d629-dcad-61c5-fcf896cbd91e@gmail.com>
+Date:   Wed, 4 Sep 2019 15:10:57 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="x4pBfXISqBoDm8sr"
-Content-Disposition: inline
-In-Reply-To: <20190813115555.10542-2-bigeasy@linutronix.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190904135918.25352-8-yuehaibing@huawei.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 
---x4pBfXISqBoDm8sr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
-> The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
-> is masked while the primary is handler is invoked independently of
-> IRQF_ONESHOT.
-> With IRQF_ONESHOT the core code will not force-thread the interrupt and
-> this is probably not intended. I *assume* that the original author copied
-> the IRQ registration from another driver which passed a primary and
-> secondary handler and removed the secondary handler but keeping the
-> ONESHOT flag.
->=20
-> Remove IRQF_ONESHOT.
->=20
-> Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
-> Cc: Kukjin Kim <kgene@kernel.org>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: linux-samsung-soc@vger.kernel.org
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+On 9/4/2019 6:58 AM, YueHaibing wrote:
+> Use devm_platform_ioremap_resource() to simplify the code a bit.
+> This is detected by coccinelle.
+> 
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-Applied to for-next, thanks!
-
-
---x4pBfXISqBoDm8sr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1wKOkACgkQFA3kzBSg
-KbbOxw/9EUb9woFTGUxe6ImqXADvpNauUqMh05cfQpJGMfjpUytL/g1lrBAAm0A0
-+tLIIgCyZKQsGtR+iih+MaKOjiC5DySW9AqW7zi6+Omv038Ao1AH+LC37SHSEClC
-V6OHVdwC0HsbrapAJouW3rWKxxSps17jR8AgD14fIuXCZVYIGzE9etuIOGiYXkX+
-CLFL8CbvJ0mWR6+4dccjrwsFSoHRG4Rd6+iWUVUBhsBqFgnzoynYx3tkezDO5EWB
-UDUZSmwdVPeq/Xh2VW5QMidJJvnp41xM3GG0Py33xtFPyUN23y4Btqom3WzcO/Ah
-A2Nu5S/r7JCcGmJn8ihDbZlAAuXFU3OLrd5muR2YGPd7Z1N0L70cCUdFEW7GBjcF
-djUc2qexgoJ/nOqih7+cAD/mCJ1M/HOfw28dMyfeFgMDEu50uBYrjkmqx+wRqlU0
-SrRD29cx3SzswBguafeFgdceCJ/aueTfC5s4rHA+pTZTDOAz+eoENAjkSsUvoItb
-FySGQNZsFRgHOzevsWozH9F+ypMvU2Afy1kjNe9j5WN4Nf3+sszdwG8Eauib4im6
-DtI0hfLsxjLE//S8wQX4b0PZEzXAAdkD8zUzDfFHO8QkNy+2X+a6RW2DlmzKKQGJ
-kCHidGDSxLDUU0HzrejvjtUjbwq3DNn7zM9QNk91daq9SjsKBuM=
-=mqXe
------END PGP SIGNATURE-----
-
---x4pBfXISqBoDm8sr--
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
