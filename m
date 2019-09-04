@@ -2,124 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC73A9407
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 22:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FAA8A94B9
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 23:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729803AbfIDUqz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 16:46:55 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39425 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728072AbfIDUqz (ORCPT
+        id S1726528AbfIDVNP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 17:13:15 -0400
+Received: from sauhun.de ([88.99.104.3]:46222 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726358AbfIDVNP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 16:46:55 -0400
-Received: by mail-pf1-f194.google.com with SMTP id s12so36790pfe.6
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 04 Sep 2019 13:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7FpVgaIhgimDRqpweFDbMiGBjSsk/JazcD80okKL/K8=;
-        b=B3ZwBoxDNj5wp/W0+6EgPLtyn42FRM4lKEPuGul/INFNVDV0d6vrjAfI74kiYbBjwb
-         RtwOAFpFkp8ULzlYQBnaGau4RSDKiK2Sdq8Hjs6JHKbU5On8H56ARMSYggt77ImaOAXR
-         Phja5i1TBR6bjGzSRWjJc8EZqzoOHCuT1G+iocES8UWBNVeoOYiRY6HkgRLZvKh5M6Sb
-         WHzguaFI/2ByIIVLDKt6nFLW+FJbEXZiBcnjB+VvF1jsWXutZ6GLiXNq+3ly3QHxD/gn
-         UhmFNW0RtNQQoSqk6dbh3isqFmSp5AkCvUY6fi5kmUt8vL3neywbb2V1USK8/dnNvSiJ
-         Cxug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7FpVgaIhgimDRqpweFDbMiGBjSsk/JazcD80okKL/K8=;
-        b=DEYlzPVqNjC6X/BGuCbBkDseCBOsjuK17ssiw7P17f4bZIifQTnQRk0vMQUmb9UMXn
-         umaeSQ9xAnEerw9cLsAOHPECpq9ZkkmIP343QVgZqup54DJWXuOybLg6mk6wGMjsSXKJ
-         qkhNk6ux0cFrbZwz4WimJ7re3qtVAhjtXWDfC7oXD51IUs5i5bKoMb0Vjyw7g+SuBpCd
-         fT1IENhz9spGLzhREU7QVKNjYxq+aQoN3VBTyvFzW7NOAo2auLIWNRTToxTDs1hqFZvT
-         Ra9FSDR93uO3Xdp1sRcGZN2BgHZ9IDBb/KYjbQDsJSMLMwEV/BVdsTNPTg4fQvbFjZWW
-         0Llg==
-X-Gm-Message-State: APjAAAV+pZOqMWO3Nafk+XJ63H7UgfdQxr/ZJbBK9C1TLl6SMliQvK8B
-        P1aSziE1bHm/zimSnnLB3P7RRg==
-X-Google-Smtp-Source: APXvYqx6p9POXMCXKO+7CZNt3OeG669blGTjX7rgKqWleU9xBmKU6iit1LtXZOmDeIMaYc7+Sw+ZcA==
-X-Received: by 2002:a63:66c5:: with SMTP id a188mr49168pgc.127.1567630014448;
-        Wed, 04 Sep 2019 13:46:54 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id br18sm3019455pjb.20.2019.09.04.13.46.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2019 13:46:53 -0700 (PDT)
-Date:   Wed, 4 Sep 2019 13:46:49 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     broonie@kernel.org, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, eric@anholt.net, wahrenst@gmx.net,
-        shc_work@mail.ru, agross@kernel.org, khilman@baylibre.com,
-        matthias.bgg@gmail.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
-        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
-        benjaminfair@google.com, kgene@kernel.org, krzk@kernel.org,
-        andi@etezian.org, palmer@sifive.com, paul.walmsley@sifive.com,
-        baohua@kernel.org, mripard@kernel.org, wens@csie.org,
-        ldewangan@nvidia.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
-        michal.simek@xilinx.com, bcm-kernel-feedback-list@broadcom.com,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH -next 23/36] spi: spi-qcom-qspi: use
- devm_platform_ioremap_resource() to simplify code
-Message-ID: <20190904204649.GF580@tuxbook-pro>
-References: <20190904135918.25352-1-yuehaibing@huawei.com>
- <20190904135918.25352-24-yuehaibing@huawei.com>
+        Wed, 4 Sep 2019 17:13:15 -0400
+Received: from localhost (p54B337F1.dip0.t-ipconnect.de [84.179.55.241])
+        by pokefinder.org (Postfix) with ESMTPSA id 3AE8E2C4F2F;
+        Wed,  4 Sep 2019 23:13:14 +0200 (CEST)
+Date:   Wed, 4 Sep 2019 23:13:13 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc:     linux-i2c@vger.kernel.org, tglx@linutronix.de,
+        Benjamin Rouxel <benjamin.rouxel@uva.nl>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH 1/2] i2c: exynos5: Remove IRQF_ONESHOT
+Message-ID: <20190904211313.GD23608@ninjato>
+References: <20190813115555.10542-1-bigeasy@linutronix.de>
+ <20190813115555.10542-2-bigeasy@linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="x4pBfXISqBoDm8sr"
 Content-Disposition: inline
-In-Reply-To: <20190904135918.25352-24-yuehaibing@huawei.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190813115555.10542-2-bigeasy@linutronix.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed 04 Sep 06:59 PDT 2019, YueHaibing wrote:
 
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
-> 
+--x4pBfXISqBoDm8sr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Tue, Aug 13, 2019 at 01:55:54PM +0200, Sebastian Andrzej Siewior wrote:
+> The drivers sets IRQF_ONESHOT and passes only a primary handler. The IRQ
+> is masked while the primary is handler is invoked independently of
+> IRQF_ONESHOT.
+> With IRQF_ONESHOT the core code will not force-thread the interrupt and
+> this is probably not intended. I *assume* that the original author copied
+> the IRQ registration from another driver which passed a primary and
+> secondary handler and removed the secondary handler but keeping the
+> ONESHOT flag.
+>=20
+> Remove IRQF_ONESHOT.
+>=20
+> Reported-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> Tested-by: Benjamin Rouxel <benjamin.rouxel@uva.nl>
+> Cc: Kukjin Kim <kgene@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-> ---
->  drivers/spi/spi-qcom-qspi.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-> index a0ad73f..250fd60 100644
-> --- a/drivers/spi/spi-qcom-qspi.c
-> +++ b/drivers/spi/spi-qcom-qspi.c
-> @@ -424,7 +424,6 @@ static int qcom_qspi_probe(struct platform_device *pdev)
->  {
->  	int ret;
->  	struct device *dev;
-> -	struct resource *res;
->  	struct spi_master *master;
->  	struct qcom_qspi *ctrl;
->  
-> @@ -440,8 +439,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
->  
->  	spin_lock_init(&ctrl->lock);
->  	ctrl->dev = dev;
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	ctrl->base = devm_ioremap_resource(dev, res);
-> +	ctrl->base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(ctrl->base)) {
->  		ret = PTR_ERR(ctrl->base);
->  		goto exit_probe_master_put;
-> -- 
-> 2.7.4
-> 
-> 
+Applied to for-next, thanks!
+
+
+--x4pBfXISqBoDm8sr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl1wKOkACgkQFA3kzBSg
+KbbOxw/9EUb9woFTGUxe6ImqXADvpNauUqMh05cfQpJGMfjpUytL/g1lrBAAm0A0
++tLIIgCyZKQsGtR+iih+MaKOjiC5DySW9AqW7zi6+Omv038Ao1AH+LC37SHSEClC
+V6OHVdwC0HsbrapAJouW3rWKxxSps17jR8AgD14fIuXCZVYIGzE9etuIOGiYXkX+
+CLFL8CbvJ0mWR6+4dccjrwsFSoHRG4Rd6+iWUVUBhsBqFgnzoynYx3tkezDO5EWB
+UDUZSmwdVPeq/Xh2VW5QMidJJvnp41xM3GG0Py33xtFPyUN23y4Btqom3WzcO/Ah
+A2Nu5S/r7JCcGmJn8ihDbZlAAuXFU3OLrd5muR2YGPd7Z1N0L70cCUdFEW7GBjcF
+djUc2qexgoJ/nOqih7+cAD/mCJ1M/HOfw28dMyfeFgMDEu50uBYrjkmqx+wRqlU0
+SrRD29cx3SzswBguafeFgdceCJ/aueTfC5s4rHA+pTZTDOAz+eoENAjkSsUvoItb
+FySGQNZsFRgHOzevsWozH9F+ypMvU2Afy1kjNe9j5WN4Nf3+sszdwG8Eauib4im6
+DtI0hfLsxjLE//S8wQX4b0PZEzXAAdkD8zUzDfFHO8QkNy+2X+a6RW2DlmzKKQGJ
+kCHidGDSxLDUU0HzrejvjtUjbwq3DNn7zM9QNk91daq9SjsKBuM=
+=mqXe
+-----END PGP SIGNATURE-----
+
+--x4pBfXISqBoDm8sr--
