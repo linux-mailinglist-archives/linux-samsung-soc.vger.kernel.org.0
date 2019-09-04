@@ -2,49 +2,49 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19F49A7F45
+	by mail.lfdr.de (Postfix) with ESMTP id 7335AA7F47
 	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 11:24:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729650AbfIDJYx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 05:24:53 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:48464 "EHLO
+        id S1729268AbfIDJYy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 05:24:54 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:48470 "EHLO
         mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729643AbfIDJYx (ORCPT
+        with ESMTP id S1729644AbfIDJYx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Wed, 4 Sep 2019 05:24:53 -0400
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190904092451euoutp01c6d262c38313fc6137dd42453d9d546d~BMfkf7v4e1981319813euoutp010
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190904092451euoutp015ced738f9b9eba166429d28b0bb680a3~BMfk_hZfp1858918589euoutp01c
         for <linux-samsung-soc@vger.kernel.org>; Wed,  4 Sep 2019 09:24:51 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190904092451euoutp01c6d262c38313fc6137dd42453d9d546d~BMfkf7v4e1981319813euoutp010
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190904092451euoutp015ced738f9b9eba166429d28b0bb680a3~BMfk_hZfp1858918589euoutp01c
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
         s=mail20170921; t=1567589091;
-        bh=icoXPCScds9GOxVXeBes5t/StJRmpirbL+4fD1OUcHc=;
+        bh=olUHJT7CMn3noJGTWjrB4fne9Pntvwa01sKeoH8tIfY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IDZMM5zj2j+MmlJddogyg0z0DqICszOtzjnuJ6h3eUFhx85J5t7a38MOAy7wm95dt
-         41f66MrKBjE8G2g4gNNYFNAbeJpY9pcDUT3Y/BRXpDemacwE1YdUOBjmpDY9sWY1cw
-         W4gEG7pF6a1hAyt6eKsTYmLuxTuKGUjnmZbmsdOk=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        b=PRDwqfuKHifEy1LATrha/SJOTX6GY59jv2I2DrEA2VBGM6ocVSthlyD22wGuh57Wb
+         Yx+W+LkqyZb0HZjcy1/PeUMKi1g4cPhmMcofQbme57EdO/Su/m8ED94dSwAVGEguAE
+         I7X4fmuDUVfeNQgi/XJf9vJGL8lNC7ONsjQUSB0I=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190904092450eucas1p18c8d539bcda924804cd591f3aff27c1c~BMfkEjKRN1405814058eucas1p1-;
+        20190904092451eucas1p1281e3305a2d04b6ddeab074868df7795~BMfke5H9B1405814058eucas1p1B;
+        Wed,  4 Sep 2019 09:24:51 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 01.61.04374.2E28F6D5; Wed,  4
+        Sep 2019 10:24:51 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190904092450eucas1p1c97c5a12de93ac4387fa343327718300~BMfjt2Oxw1811518115eucas1p1j;
         Wed,  4 Sep 2019 09:24:50 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 8C.31.04469.2E28F6D5; Wed,  4
-        Sep 2019 10:24:50 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190904092450eucas1p2d1d24bae0effe335a5068b39323e9475~BMfjYM_cK2897028970eucas1p25;
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190904092450eusmtrp1be57f6cb16d8eb78d05663746517347d~BMfjfTD3_2981829818eusmtrp1b;
         Wed,  4 Sep 2019 09:24:50 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190904092449eusmtrp2adc59ab78340db36a1c141fe06f96663~BMfjKA1Ft2791027910eusmtrp2O;
-        Wed,  4 Sep 2019 09:24:49 +0000 (GMT)
-X-AuditID: cbfec7f2-569ff70000001175-ec-5d6f82e22208
+X-AuditID: cbfec7f5-4ddff70000001116-b5-5d6f82e24a42
 Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 12.07.04166.1E28F6D5; Wed,  4
-        Sep 2019 10:24:49 +0100 (BST)
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id BA.CA.04117.2E28F6D5; Wed,  4
+        Sep 2019 10:24:50 +0100 (BST)
 Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
         eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190904092449eusmtip16267bc26912514d261a5a43022596f96~BMfi0NTcH1532115321eusmtip1J;
+        20190904092449eusmtip1d50086048493af44ef53d239b40cca82~BMfjJoaRt1524515245eusmtip1a;
         Wed,  4 Sep 2019 09:24:49 +0000 (GMT)
 From:   Marek Szyprowski <m.szyprowski@samsung.com>
 To:     linux-samsung-soc@vger.kernel.org
@@ -52,183 +52,103 @@ Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH 1/3] arm64: dts: exynos: Move GPU under /soc node for
- Exynos5433
-Date:   Wed,  4 Sep 2019 11:24:40 +0200
-Message-Id: <20190904092442.26260-2-m.szyprowski@samsung.com>
+Subject: [PATCH 2/3] arm64: dts: exynos: Move GPU under /soc node for
+ Exynos7
+Date:   Wed,  4 Sep 2019 11:24:41 +0200
+Message-Id: <20190904092442.26260-3-m.szyprowski@samsung.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190904092442.26260-1-m.szyprowski@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsWy7djP87qPmvJjDXbfUrF4MG8bm8XGGetZ
-        Lc6f38BuMeP8PiaLtUfusjuwemxa1cnm0bdlFaPH501yAcxRXDYpqTmZZalF+nYJXBmtF6ez
-        F8yRqzgydRVLA+NHsS5GTg4JAROJR+8WM3cxcnEICaxglJj84DkrhPOFUeLKxOlQmc+MEt8+
-        LWaCadn0qo8JIrGcUWL1/OuMcC1Xb09gBqliEzCU6HrbxQZiiwioSnxuW8AOYjMLbGeUaLws
-        CGILCwRJ9C/+wwpiswDVPNo8lwXE5hWwlfj3cRE7xDZ5idUbDoDN5BSwk9i/6x3YMgmBy2wS
-        kw9egTrJReJhzxYoW1ji1fEtUM0yEv93zmeCaGhmlHh4bi07hNPDKHG5aQYjRJW1xOHjF4HO
-        4AA6T1Ni/S59iLCjxM21E9lBwhICfBI33gpCPMAnMWkbKFxAwrwSHW1CENVqErOOr4Nbe/DC
-        JWYI20Oidf1aFkgATWSUOLVrM/sERvlZCMsWMDKuYhRPLS3OTU8tNsxLLdcrTswtLs1L10vO
-        z93ECEwAp/8d/7SD8eulpEOMAhyMSjy8O/zyYoVYE8uKK3MPMUpwMCuJ8IbuyYkV4k1JrKxK
-        LcqPLyrNSS0+xCjNwaIkzlvN8CBaSCA9sSQ1OzW1ILUIJsvEwSnVwKjgXVr7UmO+Zu4ksfQp
-        ms9Ct0ZZ1mZ6mX+9+ypQ+/3mRytfby7mbAhr6Oh+s7r2uEr812mzr8xtDn9rkvr+UPcEp1+y
-        cQrVO3cpl9/acUr34QztF+6nluVKTZsR0XO1epZPpWjgubu7algM1mi8+hJzqe5+jKFH0MU3
-        92wqOr33qVosnzxl2jolluKMREMt5qLiRACs44W+/AIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrFLMWRmVeSWpSXmKPExsVy+t/xu7oPm/JjDfo6TS0ezNvGZrFxxnpW
-        i/PnN7BbzDi/j8li7ZG77A6sHptWdbJ59G1ZxejxeZNcAHOUnk1RfmlJqkJGfnGJrVK0oYWR
-        nqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXkbrxensBXPkKo5MXcXSwPhRrIuRk0NC
-        wERi06s+pi5GLg4hgaWMEq+737FBJGQkTk5rYIWwhSX+XOtigyj6xChx+sk2dpAEm4ChRNfb
-        LrAGEQFVic9tC9hBipgFdjJKNF+fDVYkLBAgsf3BCrAiFqCiR5vnsoDYvAK2Ev8+LmKH2CAv
-        sXrDAWYQm1PATmL/rneMILYQUE3/nk+sExj5FjAyrGIUSS0tzk3PLTbUK07MLS7NS9dLzs/d
-        xAgMx23Hfm7ewXhpY/AhRgEORiUe3h1+ebFCrIllxZW5hxglOJiVRHhD9+TECvGmJFZWpRbl
-        xxeV5qQWH2I0BTpqIrOUaHI+MFbySuINTQ3NLSwNzY3Njc0slMR5OwQOxggJpCeWpGanphak
-        FsH0MXFwSjUwaq/avO1IOEeBbdGqMumc6pSD/3gTZwczvjzL4PlphlT3i9bdAvsOOUq+SQ3Q
-        /icS+v33uvVWQZNTmM9aFx7p9w/PUtGd7vWliHX990OmZ/W2vzqhnm+x6EfowTmvVupaTvp9
-        sPi8knCJi4nFTpFMx2B59mKN2MP/qj6/Kzj6hk1jwqYU9ddblFiKMxINtZiLihMBnLCadF0C
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOIsWRmVeSWpSXmKPExsWy7djPc7qPm/JjDVrDLR7M28ZmsXHGelaL
+        8+c3sFvMOL+PyWLtkbvsDqwem1Z1snn0bVnF6PF5k1wAcxSXTUpqTmZZapG+XQJXxuqbc9kL
+        PvFV/Dh7mK2B8T93FyMnh4SAicTeH1eZuhi5OIQEVjBKrHrzng3C+cIocWX+MUYI5zOjxPob
+        F1hhWk4cfMgOkVjOKPFl3kZGkARYy4yjkSA2m4ChRNfbLjYQW0RAVeJz2wJ2EJtZYDujRONl
+        QRBbWMBf4ufzZiYQmwWkZuVcsHpeAVuJ9f3r2SCWyUus3nCAGcTmFLCT2L/rHdhFEgKX2STe
+        fHvMAlHkItGw+TUzhC0s8er4FnYIW0bi9OQeFoiGZkaJh+fWskM4PYwSl5tmMEJUWUscPn4R
+        6DcOoPM0Jdbv0ocIO0rM7OxlAglLCPBJ3HgrCPEAn8SkbdOZIcK8Eh1tQhDVahKzjq+DW3vw
+        wiWoczwkrqxaxQoJrImMEk/ef2abwCg/C2HZAkbGVYziqaXFuempxcZ5qeV6xYm5xaV56XrJ
+        +bmbGIHRf/rf8a87GPf9STrEKMDBqMTDKxCYFyvEmlhWXJl7iFGCg1lJhDd0T06sEG9KYmVV
+        alF+fFFpTmrxIUZpDhYlcd5qhgfRQgLpiSWp2ampBalFMFkmDk6pBsbdYTHWS71dgw/e/Jqk
+        J747UfXnidN1HNaJi+NrXqkdPFUuKKRt6Jy8aO6uvgc2DHulv5VOvrNpQRHn0SXrVzpMnOp6
+        qS40b8lvqbpnV1MX/wnr4FjMdDjn1MJ/C6a2rfuQmNQzsXeO7COf3Kcf++2Kci1u/ZfmvVmx
+        2eLl1ater8y49VQFbrcpsRRnJBpqMRcVJwIACOY0IfoCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJLMWRmVeSWpSXmKPExsVy+t/xu7qPmvJjDaZ181k8mLeNzWLjjPWs
+        FufPb2C3mHF+H5PF2iN32R1YPTat6mTz6NuyitHj8ya5AOYoPZui/NKSVIWM/OISW6VoQwsj
+        PUNLCz0jE0s9Q2PzWCsjUyV9O5uU1JzMstQifbsEvYzVN+eyF3ziq/hx9jBbA+N/7i5GTg4J
+        AROJEwcfsncxcnEICSxllLj34DczREJG4uS0BlYIW1jiz7UuNoiiT4wSD998YAJJsAkYSnS9
+        BUlwcogIqEp8blsANolZYCejRPP12UAOB4ewgK/EjgPmIDUsIDUr54LV8wrYSqzvX88GsUBe
+        YvWGA2CLOQXsJPbvescIYgsB1fTv+cQ6gZFvASPDKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxN
+        jMBg3Hbs55YdjF3vgg8xCnAwKvHw7vDLixViTSwrrsw9xCjBwawkwhu6JydWiDclsbIqtSg/
+        vqg0J7X4EKMp0FETmaVEk/OBkZJXEm9oamhuYWlobmxubGahJM7bIXAwRkggPbEkNTs1tSC1
+        CKaPiYNTqoHRsWz/v1X/t2h7bTBc4bYl69iSVerbLCdOLVxqf9R3d0yq4Jzb5fllHSvfV8b9
+        myL/aqlgOpNcy81TYfccpOvZ7e4nxdxcb17NFrRScn9WyfeLfcmsbfu4Nr9b9WzLZf7Yhgdx
+        rAq3Ul6GGU5t2TxHg/HIxV3xX4Ov8riZ/Hhk3vru9EGTY03+SizFGYmGWsxFxYkAtwLK51wC
         AAA=
-X-CMS-MailID: 20190904092450eucas1p2d1d24bae0effe335a5068b39323e9475
+X-CMS-MailID: 20190904092450eucas1p1c97c5a12de93ac4387fa343327718300
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190904092450eucas1p2d1d24bae0effe335a5068b39323e9475
+X-RootMTR: 20190904092450eucas1p1c97c5a12de93ac4387fa343327718300
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190904092450eucas1p2d1d24bae0effe335a5068b39323e9475
+X-CMS-RootMailID: 20190904092450eucas1p1c97c5a12de93ac4387fa343327718300
 References: <20190904092442.26260-1-m.szyprowski@samsung.com>
-        <CGME20190904092450eucas1p2d1d24bae0effe335a5068b39323e9475@eucas1p2.samsung.com>
+        <CGME20190904092450eucas1p1c97c5a12de93ac4387fa343327718300@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 Mali GPU hardware module is a standard hardware module integrated to
-Exynos5433 SoCs, so it should reside under the "/soc" node. The only SoC
+Exynos7 SoCs, so it should reside under the "/soc" node. The only SoC
 components which are placed in the DT root, are those, which are a part
 of CPUs: like ARM architected timers and ARM performance measurement
 units.
 
-Fixes: f0a6208b90bd ("arm64: dts: exynos: Add GPU/Mali T760 node to Exynos5433")
+Fixes: 4dc2a25d058d (arm-soc/samsung/dt64) arm64: dts: exynos: Add GPU/Mali T760 node to Exynos7
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
- arch/arm64/boot/dts/exynos/exynos5433.dtsi | 102 ++++++++++-----------
- 1 file changed, 51 insertions(+), 51 deletions(-)
+ arch/arm64/boot/dts/exynos/exynos7.dtsi | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-index a76f620f7f35..239bf44d174b 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-@@ -249,57 +249,6 @@
+diff --git a/arch/arm64/boot/dts/exynos/exynos7.dtsi b/arch/arm64/boot/dts/exynos/exynos7.dtsi
+index bcb9d8cee267..f09800f355db 100644
+--- a/arch/arm64/boot/dts/exynos/exynos7.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynos7.dtsi
+@@ -78,17 +78,6 @@
  		};
  	};
  
 -	gpu: gpu@14ac0000 {
 -		compatible = "samsung,exynos5433-mali", "arm,mali-t760";
 -		reg = <0x14ac0000 0x5000>;
--		interrupts = <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 242 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>;
 -		interrupt-names = "job", "mmu", "gpu";
--		clocks = <&cmu_g3d CLK_ACLK_G3D>;
--		clock-names = "core";
--		power-domains = <&pd_g3d>;
--		operating-points-v2 = <&gpu_opp_table>;
 -		status = "disabled";
--
--		gpu_opp_table: opp_table {
--			compatible = "operating-points-v2";
--
--			opp-160000000 {
--				opp-hz = /bits/ 64 <160000000>;
--				opp-microvolt = <1000000>;
--			};
--			opp-267000000 {
--				opp-hz = /bits/ 64 <267000000>;
--				opp-microvolt = <1000000>;
--			};
--			opp-350000000 {
--				opp-hz = /bits/ 64 <350000000>;
--				opp-microvolt = <1025000>;
--			};
--			opp-420000000 {
--				opp-hz = /bits/ 64 <420000000>;
--				opp-microvolt = <1025000>;
--			};
--			opp-500000000 {
--				opp-hz = /bits/ 64 <500000000>;
--				opp-microvolt = <1075000>;
--			};
--			opp-550000000 {
--				opp-hz = /bits/ 64 <550000000>;
--				opp-microvolt = <1125000>;
--			};
--			opp-600000000 {
--				opp-hz = /bits/ 64 <600000000>;
--				opp-microvolt = <1150000>;
--			};
--			opp-700000000 {
--				opp-hz = /bits/ 64 <700000000>;
--				opp-microvolt = <1150000>;
--			};
--		};
+-		/* TODO: operating points for DVFS, cooling device */
 -	};
 -
  	psci {
- 		compatible = "arm,psci";
+ 		compatible = "arm,psci-0.2";
  		method = "smc";
-@@ -1125,6 +1074,57 @@
- 			power-domains = <&pd_gscl>;
+@@ -523,6 +512,17 @@
+ 			status = "disabled";
  		};
  
 +		gpu: gpu@14ac0000 {
 +			compatible = "samsung,exynos5433-mali", "arm,mali-t760";
 +			reg = <0x14ac0000 0x5000>;
-+			interrupts = <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 242 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>;
 +			interrupt-names = "job", "mmu", "gpu";
-+			clocks = <&cmu_g3d CLK_ACLK_G3D>;
-+			clock-names = "core";
-+			power-domains = <&pd_g3d>;
-+			operating-points-v2 = <&gpu_opp_table>;
 +			status = "disabled";
-+
-+			gpu_opp_table: opp_table {
-+				compatible = "operating-points-v2";
-+
-+				opp-160000000 {
-+					opp-hz = /bits/ 64 <160000000>;
-+					opp-microvolt = <1000000>;
-+				};
-+				opp-267000000 {
-+					opp-hz = /bits/ 64 <267000000>;
-+					opp-microvolt = <1000000>;
-+				};
-+				opp-350000000 {
-+					opp-hz = /bits/ 64 <350000000>;
-+					opp-microvolt = <1025000>;
-+				};
-+				opp-420000000 {
-+					opp-hz = /bits/ 64 <420000000>;
-+					opp-microvolt = <1025000>;
-+				};
-+				opp-500000000 {
-+					opp-hz = /bits/ 64 <500000000>;
-+					opp-microvolt = <1075000>;
-+				};
-+				opp-550000000 {
-+					opp-hz = /bits/ 64 <550000000>;
-+					opp-microvolt = <1125000>;
-+				};
-+				opp-600000000 {
-+					opp-hz = /bits/ 64 <600000000>;
-+					opp-microvolt = <1150000>;
-+				};
-+				opp-700000000 {
-+					opp-hz = /bits/ 64 <700000000>;
-+					opp-microvolt = <1150000>;
-+				};
-+			};
++			/* TODO: operating points for DVFS, cooling device */
 +		};
 +
- 		scaler_0: scaler@15000000 {
- 			compatible = "samsung,exynos5433-scaler";
- 			reg = <0x15000000 0x1294>;
+ 		mmc_0: mmc@15740000 {
+ 			compatible = "samsung,exynos7-dw-mshc-smu";
+ 			interrupts = <GIC_SPI 201 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.17.1
 
