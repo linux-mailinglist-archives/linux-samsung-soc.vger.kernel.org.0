@@ -2,91 +2,107 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18B2AA7F6F
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 11:32:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8C3BA8031
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 12:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbfIDJcL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 05:32:11 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:43759 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbfIDJcL (ORCPT
+        id S1729335AbfIDKRG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 06:17:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43428 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728402AbfIDKRG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 05:32:11 -0400
-Received: by mail-qt1-f194.google.com with SMTP id l22so11353343qtp.10;
-        Wed, 04 Sep 2019 02:32:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UHxSEahLKpYZl+gQl13hSzG6JV/+EQf24IFbG+fM+74=;
-        b=kx8qx8PWUEE5Tk1TxXypVX5H3ixZ/YhyGW/Sz60uiXcUp81jytUEdzHn45ivhy1Xyy
-         t1V6XlUDViYVh7FwGV6hV0YLIsPud1MLJiaMSHmAkwI2SYcKLotsSCYgTf0by1/cfkF+
-         6jg5//oJul5RiTNZdecAUVoVC0L3pwq5SvpV9jyXfqFDKLNig05qMbyLnt/M1MYqHMwG
-         E5ILopdS8U4tM6qiL2mvowdrRGR162IB/S3JuZWJ3aP5e5Sd75/WGCrG4M6R8xe07ulo
-         MeQ6+2NHmUv7m857WJNHgD7BWpO5uJCPQXQlDyGJpKS1ZhMumDmYBNgX9skkPXXO0Yq9
-         ktqw==
-X-Gm-Message-State: APjAAAXbli5jJLeR28G0GXDfHQwV+E8iULDvogaVdYwjHrt16exBhPFY
-        hbSc2cLMyg3uDKIH7tRJPPG7udPv2ifAT1+vrU4=
-X-Google-Smtp-Source: APXvYqyROzVp8NdMUxBQN9T5fX/ExDvgw/NQj8JGADtVQ7H8Be+Kls547ULRLSLpK/YQ3XTPDmVl3Tk9bz7DYzm3A48=
-X-Received: by 2002:ac8:32ec:: with SMTP id a41mr7276548qtb.18.1567589529989;
- Wed, 04 Sep 2019 02:32:09 -0700 (PDT)
+        Wed, 4 Sep 2019 06:17:06 -0400
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 758B023404;
+        Wed,  4 Sep 2019 10:17:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567592224;
+        bh=2ey6sZwUX3qIGq8j1u1XlvD+weBFrsvta/y2/SgRYO8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ExpbtXwSbOkrsScqxyE87tz7tqmgZLb2I90CCXpW7DgMs9twdX+SkUOWtBesX7NOR
+         K0QMCVtyQ4MEDsxy3zdAoDWl100jhhg4EfEAnlOVaGmVW2w7j2c63lQDLfvXUULcXo
+         tTNEhkGa6Bg2QuDejirO+Ver4giFQmYlU2cflQ3E=
+Received: by mail-lf1-f52.google.com with SMTP id c12so15442251lfh.5;
+        Wed, 04 Sep 2019 03:17:04 -0700 (PDT)
+X-Gm-Message-State: APjAAAV7dg8YGnf35dE0X68d8hJBffbAJiaKOXV/JELe2fStdb0lDwcY
+        UGRp7A9pQHnBLAWoAV8yQX6mPLEPKRayD2BKLao=
+X-Google-Smtp-Source: APXvYqw/hwDzA5Mu4tWRBQjAR/A6Fp0eSBoYcr/oqkFnq3lt9L037MV1NoD9n2ZI6fGV9aSMAJqoKj9sszzXPIbkXyw=
+X-Received: by 2002:ac2:4853:: with SMTP id 19mr16737669lfy.69.1567592222558;
+ Wed, 04 Sep 2019 03:17:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190816163042.6604-1-krzk@kernel.org> <CAJKOXPcgZ2_ofZyAeTSxALkALaP-SFNfvNmNPYSPyLzuhpGZ0w@mail.gmail.com>
- <20190822183519.GA23735@kozik-lap> <CAK8P3a1_Qw=OB31yOCrpPs8Ys+=9tt4Pnyd=3+2JGzRXJV1KAw@mail.gmail.com>
- <CAJKOXPfRMXkm_pT560Ry5k-zFWpkRDmFHSs2Fb3RL7d4h=ka9g@mail.gmail.com>
-In-Reply-To: <CAJKOXPfRMXkm_pT560Ry5k-zFWpkRDmFHSs2Fb3RL7d4h=ka9g@mail.gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 4 Sep 2019 11:31:53 +0200
-Message-ID: <CAK8P3a35Cm5=QOz3O3hhczRzkT54vyeka3iJBcknFB4cVgN5-A@mail.gmail.com>
-Subject: Re: [GIT PULL 1/3] soc: samsung: Exynos for v5.4
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
-        SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+References: <CGME20190821104316eucas1p2ecd715f3105921ec83e0acf1291201f8@eucas1p2.samsung.com>
+ <20190821104303.32079-1-l.luba@partner.samsung.com>
+In-Reply-To: <20190821104303.32079-1-l.luba@partner.samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 4 Sep 2019 12:16:51 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPehHNDasNQDgTC+WtVpb_h-s0iTxXiDQY1WT=+zEdB18A@mail.gmail.com>
+Message-ID: <CAJKOXPehHNDasNQDgTC+WtVpb_h-s0iTxXiDQY1WT=+zEdB18A@mail.gmail.com>
+Subject: Re: [PATCH v13 0/8] Exynos5 Dynamic Memory Controller driver
+To:     Lukasz Luba <l.luba@partner.samsung.com>
+Cc:     devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-pm@vger.kernel.org,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        <linux-samsung-soc@vger.kernel.org>, linux-clk@vger.kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
+        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
+        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
+        kyungmin.park@samsung.com,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
+        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
+        treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
+        willy.mh.wolff.ml@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 4, 2019 at 10:37 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> On Tue, 3 Sep 2019 at 19:21, Arnd Bergmann <arnd@arndb.de> wrote:
-> > On Thu, Aug 22, 2019 at 8:35 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > I have drafted a related patch recently, regarding the related
-> > arch/arm/plat-samsung/cpu.c file. This is part of a longer series
-> > I'm working on, see https://pastebin.com/ZqeU3Mth for the
-> > current version of this patch.
+On Wed, 21 Aug 2019 at 12:43, Lukasz Luba <l.luba@partner.samsung.com> wrote:
 >
-> You can then also adjust the include path in arch/arm/mach-exynos/Makefile.
-
-Yes, that is part of the following patch, along with replacing all the
-'depends on PLAT_SAMSUNG' in Kconfig with 'depends on PLAT_SAMSUNG ||
-ARCH_EXYNOS'.
-
-> > The observation is that mach-exynos
-> > is almost completely independent of plat-samsung these days, and my
-> > patch removes the last obstacle from separating the two. I have
-> > another set of patches to do the same for mach-s5pv210 (which shares
-> > half of its pm.c with plat-samsung, but nothing else).
+> Hi all,
 >
-> Great!
+> This is v13 which makes cosmetic changes. It is based on current mainline
+> (v5.3-rc5) with with devfreq/for-next where there is a PPMU patch [1].
+>
+> The patch set adds support of Dynamic Memory Controller for Exynos5422 SoC.
+> The driver supports Dynamic Voltage and Frequency Scaling
+> for the DMC and DRAM. It also provides needed timings for different
+> speed operations of the DRAM memory.
+> There is also new generic code in of_memory and headers which allows to parse
+> LPDDR3 memories defined in device-tree.
+>
+> Here are the last changes suggested by Krzysztof during his review.
+> For the previous changes in older revisions please refer to [2], there is
+> more detailed change log.
+>
+> changes:
+> v13:
+> - skipped patch with chipID changes in DT, since it is not used anymore,
+> - removed license comment in of_memory.c since SPDX has been merged,
+> - aligned comment to the current fields in the structure,
+> - changed printed warning when timings are not found,
+>
+> Regards,
+> Lukasz Luba
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/mzx/devfreq.git/commit/?h=for-next&id=b617376df8f01c975dee66802f4da16291f92079
+> [2] https://lkml.org/lkml/2019/7/22/251
+>
 
-FYI, the other parts of the series include:
+Hi Lukasz,
 
-- Changing all s3c24xx drivers to no longer use mach/*.h or plat/*.h header
-  files, as preparation for multiplatform support. This is work in progress,
-  but mostly done, with cpufreq and ASoC as the notable exceptions.
-- Merging mach-s3c24xx, mach-s3c64xx and plat-samsung into a common
-  mach-s3c directory. This seems to work fine and looks nicer than having
-  three tightly connected directories, but the downside is that all path
-  names change and the directory becomes fairly large.
-  I think we can actually do the same thing for all remaining plat-*
-directories.
-- eventually making all ARMv5 platforms link into a single kernel, like we do
-  with ARMv6 and ARMv7 (more to be done there, but s3c24xx and pxa are
-  the harder bits here).
+Thanks for the effort and work on this patchset. The text-based
+bindings are slowly converted to JSON-schema but your patches were
+developed some time ago and have Rob's review. It would be nice if you
+or someone converted it to JSON schema later.
+Anyway, I'll pick up everything today evening either for this merge
+window or eventually postponed till next one. It is quite late in the
+cycle and I want the patches to sit in linux-next for some time.
 
-      Arnd
+Best regards,
+Krzysztof
