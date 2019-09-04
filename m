@@ -2,162 +2,147 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A099CA8316
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 14:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49A16A8790
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 21:20:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729912AbfIDMhp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 08:37:45 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:38149 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729656AbfIDMhp (ORCPT
+        id S1730502AbfIDN7i (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 09:59:38 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32]:49052 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1730219AbfIDN7h (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 08:37:45 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190904123743euoutp01abf7796db389c882a84e1d4f620a1963~BPH_AWUlg0531505315euoutp01o
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 Sep 2019 12:37:43 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190904123743euoutp01abf7796db389c882a84e1d4f620a1963~BPH_AWUlg0531505315euoutp01o
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1567600663;
-        bh=yZLCbqKVi9Hs06e9qc3/1f9Heb7upU8Fu+6TMyHC/vo=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=dHjeXkVM8Gw2Kk5MqD3+92QtRGeF91rT5l7SZ5aBrmfy3ZFoAx3KlwidQka33jRG5
-         WbsFbXcMpie/O552ErZTanOHDaX3lA9XqqUiY0xJbFbOZsvoHzFvfYzruTVDV+WhVe
-         Q1CUhkTMqGoZq8b+DBJjIK4Ooti6lFw50wc5hqzw=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190904123742eucas1p28bd5e121274d4c892f407674c960308f~BPH9UZ89C0909709097eucas1p2z;
-        Wed,  4 Sep 2019 12:37:42 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id DB.1D.04374.610BF6D5; Wed,  4
-        Sep 2019 13:37:42 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190904123741eucas1p1cdc036f1d841accce579f762d1130c96~BPH8ddrDr0994209942eucas1p1G;
-        Wed,  4 Sep 2019 12:37:41 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190904123741eusmtrp2262ad688f2a83690e15b780748b3bed5~BPH8PVgeT1156311563eusmtrp2j;
-        Wed,  4 Sep 2019 12:37:41 +0000 (GMT)
-X-AuditID: cbfec7f5-92d689c000001116-e2-5d6fb016f89c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id F4.D1.04166.510BF6D5; Wed,  4
-        Sep 2019 13:37:41 +0100 (BST)
-Received: from [106.120.51.75] (unknown [106.120.51.75]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190904123740eusmtip1c12d0a0433e2d181c1b4ae6b5ae4e5dd~BPH7i7pLO0237302373eusmtip1e;
-        Wed,  4 Sep 2019 12:37:40 +0000 (GMT)
-Subject: Re: [PATCH v2 0/9] Exynos Adaptive Supply Voltage support
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>, krzk@kernel.org,
-        robh+dt@kernel.org, vireshk@kernel.org, devicetree@vger.kernel.org,
-        kgene@kernel.org, pankaj.dubey@samsung.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, b.zolnierkie@samsung.com
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <4e6379a7-0d4b-8e0d-c225-49976b2587e0@samsung.com>
-Date:   Wed, 4 Sep 2019 14:37:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
+        Wed, 4 Sep 2019 09:59:37 -0400
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 53D972AB7375EADC37DD;
+        Wed,  4 Sep 2019 21:59:35 +0800 (CST)
+Received: from localhost (10.133.213.239) by DGGEMS404-HUB.china.huawei.com
+ (10.3.19.204) with Microsoft SMTP Server id 14.3.439.0; Wed, 4 Sep 2019
+ 21:59:28 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <broonie@kernel.org>, <f.fainelli@gmail.com>, <rjui@broadcom.com>,
+        <sbranden@broadcom.com>, <eric@anholt.net>, <wahrenst@gmx.net>,
+        <shc_work@mail.ru>, <agross@kernel.org>, <khilman@baylibre.com>,
+        <matthias.bgg@gmail.com>, <shawnguo@kernel.org>,
+        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
+        <festevam@gmail.com>, <linux-imx@nxp.com>,
+        <avifishman70@gmail.com>, <tmaimon77@gmail.com>,
+        <tali.perry1@gmail.com>, <venture@google.com>, <yuenn@google.com>,
+        <benjaminfair@google.com>, <kgene@kernel.org>, <krzk@kernel.org>,
+        <andi@etezian.org>, <palmer@sifive.com>,
+        <paul.walmsley@sifive.com>, <baohua@kernel.org>,
+        <mripard@kernel.org>, <wens@csie.org>, <ldewangan@nvidia.com>,
+        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+        <yamada.masahiro@socionext.com>, <michal.simek@xilinx.com>
+CC:     <bcm-kernel-feedback-list@broadcom.com>,
+        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-riscv@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH -next 00/36] use devm_platform_ioremap_resource() to simplify code
+Date:   Wed, 4 Sep 2019 21:58:42 +0800
+Message-ID: <20190904135918.25352-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20190820092113.gojhe3romdnvm7eu@vireshk-i7>
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTURzGO7svu66uHKfpH5OiJYRFlrYPNxKpCBpBYVQQysiVFzPn226z
-        rA+uQst36U0bC0XE5bB8mWnZMpjmssJZkSQaDZ3gS/viHGGG5rxKfvs9z/855/wfOAwh76PC
-        mbTMK7wuU6NV0DKyo29+YE9oS5Z6X7NhO9da3UxxNb0DFFcxPkNwTmeLlGsbH6K4r10mmvOW
-        9SKu2tkt4Z71/pBydS/mpFzBm14p1+pTcVZXH32IVbVZimjV6JCNVlnr81Xl7Rak8rZtTaAS
-        ZXEpvDYtl9ftjU+WXaqfcaPsX/iax2xGBvSBLUYBDGAlWMcKiGIkY+T4KYKKiZFVMYfgo62T
-        EoUXgf2HQ7p2ZKqiTyIOzAiMPVYkCg8C63wp7U8F4yNgW/AtM8OE4F0wNcz7bQJ/k0CXb4Vp
-        HANl78qRn1kcD/emKwk/kzgSuusGV/zN+BzMunooMRME/Y/dpJ8D8AEwOmZp8c4wuDXXSIm8
-        DTo9JkJcdEwKhps5Ih+FWusHWuRgmHa0r5aJgKVXNStlAN9GUPp6RCqKSgQ/HbVITB2EHsdn
-        yl+GwFHQ3LVXtA9DQ9Mo8tuAA+G7J0jcIRDudVQRos3C3UK5mI6EBUuVRORwKHEvkZVIYVzX
-        zLiujXFdG+P/d2sRaUFhvF7ISOWF/Zn81WhBkyHoM1OjL2ZltKHl3/Vx0eF7ibr/XrAjzCDF
-        Jtb1JEstpzS5Ql6GHQFDKELYszatWs6maPKu87qs8zq9lhfsaAtDKsLYGxtcSXKcqrnCp/N8
-        Nq9bm0qYgHAD2l12ejSRJzfPAR3rDl1MmGyQNeME3/AjidQVt3/nn2rTUODxfki+rHyvHdh4
-        wHVCOXWqxjGoL4ltGmedTtPxyZTRabP39EvWE9VYKKnLM5vsN858OmnjnXdytOnH4pT38y8K
-        E0X7nA/0O9S/+zvVg/FfcpPUg89DJx6SEW8VpHBJE7OL0Amafztk4alZAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsVy+t/xu7qiG/JjDVadU7XYOGM9q8X8I+dY
-        Lfofv2a2OH9+A7vFpsfXWC0u75rDZvG59wijxYzz+5gs1h65y26xaOsXdovWvUfYLTZ+9bDY
-        /OAYmwOvx6ZVnWwed67tYfPYvKTeo2/LKkaPz5vkAlij9GyK8ktLUhUy8otLbJWiDS2M9Awt
-        LfSMTCz1DI3NY62MTJX07WxSUnMyy1KL9O0S9DKWvH7CWPBGoOLt8uWMDYyneLsYOTkkBEwk
-        XvYfY+pi5OIQEljKKPH150zWLkYOoISUxPwWJYgaYYk/17rYIGpeM0psODSJCSQhLOAksef3
-        VzaQehEBLYmXN1NBapgFrjJJLN5ziQWioYFV4vK5G+wgDWwChhK9R/sYQWxeATuJSa8mMIPY
-        LAIqEvsWXQCLiwpESBzeMQuqRlDi5MwnLCA2p4ClxKzjn9hAbGYBdYk/8y4xQ9jiEk1fVrJC
-        2PIS29/OYZ7AKDQLSfssJC2zkLTMQtKygJFlFaNIamlxbnpusaFecWJucWleul5yfu4mRmC0
-        bjv2c/MOxksbgw8xCnAwKvHwPpibHyvEmlhWXJl7iFGCg1lJhDd0T06sEG9KYmVValF+fFFp
-        TmrxIUZToOcmMkuJJucDE0leSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+
-        Jg5OqQZGjsnlN97LNMpl/syrEX79RkMi6aJfVlX2doWpQnPqO91ZHib/nVyivCzpzds3ZuyM
-        82Zt/ftTMf7158h5xz8/97e80BB+o0PlrLeLyb6jZ34xBggUmpk9Fnrb8pBZOvTynsap3x6l
-        7Zc+4isns83oiMn26SprCqtO2XPMLji029Ar/SO/zpnlSizFGYmGWsxFxYkAkCSn4+wCAAA=
-X-CMS-MailID: 20190904123741eucas1p1cdc036f1d841accce579f762d1130c96
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190820092123epcas2p2170ae19467a5fb19fcfc1acdbecf9381
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190820092123epcas2p2170ae19467a5fb19fcfc1acdbecf9381
-References: <20190723020450.z2pqwetkn2tfhacq@vireshk-i7>
-        <5ef302a4-5bbf-483d-dfdf-cf76f6f69cee@samsung.com>
-        <20190725022343.p7lqalrh5svxvtu2@vireshk-i7>
-        <562dd2e7-2b24-8492-d1c1-2dc4973f07be@samsung.com>
-        <20190819090928.pke6cov52n4exlbp@vireshk-i7>
-        <b831d7c5-c830-fd65-20cf-02e209889c28@samsung.com>
-        <20190819112533.bvfyinw7fsebkufr@vireshk-i7>
-        <b7093aaf-ea56-c390-781f-6f9d0780bd8e@samsung.com>
-        <20190820030114.6flnn2omeys3lih3@vireshk-i7>
-        <06ccff05-2152-4bcc-7537-8f24da75f163@samsung.com>
-        <CGME20190820092123epcas2p2170ae19467a5fb19fcfc1acdbecf9381@epcas2p2.samsung.com>
-        <20190820092113.gojhe3romdnvm7eu@vireshk-i7>
+Content-Type: text/plain
+X-Originating-IP: [10.133.213.239]
+X-CFilter-Loop: Reflected
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+devm_platform_ioremap_resource() internally have platform_get_resource()
+and devm_ioremap_resource() in it. So instead of calling them separately
+use devm_platform_ioremap_resource() directly.
 
-On 8/20/19 11:21, Viresh Kumar wrote:
-> On 20-08-19, 11:03, Sylwester Nawrocki wrote:
->> On 8/20/19 05:01, Viresh Kumar wrote:
->>> Sorry but I am unable to understand the difficulty you are facing now. So what I
->>> suggest is something like this.
->>
->> The difficulty was about representing data from tables asv_{arm,kfc}_table[][]
->> added in patch 3/9 of the series in devicetree.  If you have no objections
->> about keeping those tables in the driver then I can't see any difficulties. 
-> 
-> The problem with keeping such tables in kernel is that they contain too much
-> magic values which very few people understand. And after some amount of time,
-> even they don't remember any of it.
->
-> What I was expecting was to remove as much of these tables as possible and do
-> the calculations to get them at runtime with some logical code which people can
-> understand later on.
+YueHaibing (36):
+  spi: altera: use devm_platform_ioremap_resource() to simplify code
+  spi: a3700: use devm_platform_ioremap_resource() to simplify code
+  spi: ath79: use devm_platform_ioremap_resource() to simplify code
+  spi: spi-axi: use devm_platform_ioremap_resource() to simplify code
+  spi: bcm2835aux: use devm_platform_ioremap_resource() to simplify code
+  spi: bcm2835: use devm_platform_ioremap_resource() to simplify code
+  spi: bcm63xx-hsspi: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: cadence: use devm_platform_ioremap_resource() to simplify code
+  spi: octeon: use devm_platform_ioremap_resource() to simplify code
+  spi: clps711x: use devm_platform_ioremap_resource() to simplify code
+  spi: coldfire-qspi: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: dw-mmio: use devm_platform_ioremap_resource() to simplify code
+  spi: spi-geni-qcom: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: lp-8841: use devm_platform_ioremap_resource() to simplify code
+  spi: meson-spicc: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: spi-meson-spifc: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: mt7621: use devm_platform_ioremap_resource() to simplify code
+  spi: mxs: use devm_platform_ioremap_resource() to simplify code
+  spi: npcm: use devm_platform_ioremap_resource() to simplify code
+  spi: nuc900: use devm_platform_ioremap_resource() to simplify code
+  spi: oc-tiny: use devm_platform_ioremap_resource() to simplify code
+  spi: pic32-sqi: use devm_platform_ioremap_resource() to simplify code
+  spi: spi-qcom-qspi: use devm_platform_ioremap_resource() to simplify
+    code
+  spi: rb4xx: use devm_platform_ioremap_resource() to simplify code
+  spi: s3c24xx: use devm_platform_ioremap_resource() to simplify code
+  spi: sifive: use devm_platform_ioremap_resource() to simplify code
+  spi: sirf: use devm_platform_ioremap_resource() to simplify code
+  spi: st-ssc4: use devm_platform_ioremap_resource() to simplify code
+  spi: sun4i: use devm_platform_ioremap_resource() to simplify code
+  spi: sun6i: use devm_platform_ioremap_resource() to simplify code
+  spi: tegra: use devm_platform_ioremap_resource() to simplify code
+  spi: uniphier: use devm_platform_ioremap_resource() to simplify code
+  spi: xlp: use devm_platform_ioremap_resource() to simplify code
+  spi: zynqmp: use devm_platform_ioremap_resource() to simplify code
+  spi: zynq-qspi: use devm_platform_ioremap_resource() to simplify code
+  spi: fsl-spi: use devm_platform_ioremap_resource() to simplify code
 
-It might be indeed far from a good design but this is all what we get from the 
-SoC vendor. AFAIU those tables are generated based on data from the production
-process, likely from some measurements.
-
-I am afraid I will not get more information for that fairly old SoCs in order to 
-replace those tables with some sensible code generating the data programmatically,
-I'm not sure it would be at all possible to do.
-
-I could add some more comments, similar to description as in my previous RFC 
-DT binding (https://patchwork.kernel.org/patch/10886013).
-
-The tables are rather simple, it's mostly all voltage values, only selecting 
-values per each frequency and chip revision might get a bit complex. 
-I'm not sure we could change that now though.
->> Then IIUC what I would need to change is to modify exynos_asv_update_cpu_opps() 
->> function in patch 3/9 to use dev_pm_opp_adjust_voltage() rather than 
->> dev_pm_opp_remove(), dev_pm_opp_add().
-> 
-> That and somehow add code to get those tables if possible.
-
-I have changed the code to use dev_pm_opp_adjust_voltage(). I was wondering 
-though, what did you mean by "triplet" when commenting on this patch
-https://patchwork.kernel.org/patch/11092245 ?
+ drivers/spi/spi-altera.c         | 4 +---
+ drivers/spi/spi-armada-3700.c    | 4 +---
+ drivers/spi/spi-ath79.c          | 4 +---
+ drivers/spi/spi-axi-spi-engine.c | 4 +---
+ drivers/spi/spi-bcm2835.c        | 4 +---
+ drivers/spi/spi-bcm2835aux.c     | 4 +---
+ drivers/spi/spi-bcm63xx-hsspi.c  | 4 +---
+ drivers/spi/spi-cadence.c        | 4 +---
+ drivers/spi/spi-cavium-octeon.c  | 4 +---
+ drivers/spi/spi-clps711x.c       | 4 +---
+ drivers/spi/spi-coldfire-qspi.c  | 4 +---
+ drivers/spi/spi-dw-mmio.c        | 4 +---
+ drivers/spi/spi-fsl-cpm.c        | 6 ++----
+ drivers/spi/spi-geni-qcom.c      | 4 +---
+ drivers/spi/spi-lp8841-rtc.c     | 4 +---
+ drivers/spi/spi-meson-spicc.c    | 4 +---
+ drivers/spi/spi-meson-spifc.c    | 4 +---
+ drivers/spi/spi-mt7621.c         | 4 +---
+ drivers/spi/spi-mxs.c            | 4 +---
+ drivers/spi/spi-npcm-pspi.c      | 4 +---
+ drivers/spi/spi-nuc900.c         | 4 +---
+ drivers/spi/spi-oc-tiny.c        | 4 +---
+ drivers/spi/spi-pic32-sqi.c      | 4 +---
+ drivers/spi/spi-qcom-qspi.c      | 4 +---
+ drivers/spi/spi-rb4xx.c          | 4 +---
+ drivers/spi/spi-s3c24xx.c        | 4 +---
+ drivers/spi/spi-sifive.c         | 4 +---
+ drivers/spi/spi-sirf.c           | 4 +---
+ drivers/spi/spi-st-ssc4.c        | 4 +---
+ drivers/spi/spi-sun4i.c          | 4 +---
+ drivers/spi/spi-sun6i.c          | 4 +---
+ drivers/spi/spi-tegra20-sflash.c | 4 +---
+ drivers/spi/spi-uniphier.c       | 4 +---
+ drivers/spi/spi-xlp.c            | 4 +---
+ drivers/spi/spi-zynq-qspi.c      | 4 +---
+ drivers/spi/spi-zynqmp-gqspi.c   | 4 +---
+ 36 files changed, 37 insertions(+), 109 deletions(-)
 
 -- 
-Regards,
-Sylwester
+2.7.4
+
+
