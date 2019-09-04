@@ -2,44 +2,44 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA7A4A7DDC
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 10:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C22BA7DFC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 10:37:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726010AbfIDIaV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 04:30:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41400 "EHLO mail.kernel.org"
+        id S1725822AbfIDIh0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 04:37:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44198 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725966AbfIDIaU (ORCPT
+        id S1725774AbfIDIh0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 04:30:20 -0400
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+        Wed, 4 Sep 2019 04:37:26 -0400
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7A9982077B;
-        Wed,  4 Sep 2019 08:30:19 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9440823400;
+        Wed,  4 Sep 2019 08:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567585819;
-        bh=Lh97Er4RFNHYTmr99oTQMZS7Qa/TTRWTwINXViZQoVE=;
+        s=default; t=1567586244;
+        bh=hoAius6REhdbGBpQkFZpk5CeOOmO3Yn/3gIEtQoNWWg=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Ba00XhkjsAfVIFqoUw4XDCrYjwdpq1xq93rciWJbfgzXbOezj9GZzvj6t7NWUdrUn
-         9PuREUSozNg5D0nS8Ce6qA6TFK1zkdHaVa/Et5BwOcZgT4+X/MMgeJpUYC2dnuuTSF
-         N+zR27Xtauu4APld4gioTaKLDj7RwaV4DxfJXhmw=
-Received: by mail-lf1-f46.google.com with SMTP id c12so15183044lfh.5;
-        Wed, 04 Sep 2019 01:30:19 -0700 (PDT)
-X-Gm-Message-State: APjAAAW2iCBGtd+78p0IJnwoVoiS0TaEyLpL5mTuPR5rgdyfyKnBq/8m
-        EtytvMrmxqOniL9YV9r2DP06SbbVlByvyHoi8kI=
-X-Google-Smtp-Source: APXvYqyIxWtp5ANugFBOnOwndmgq6u8lUVFdexZfuwV5PqkiNbruroxMaNtADWXFCwo+8p0GtjHdHb09f2ZRaXGy7K8=
-X-Received: by 2002:a05:6512:499:: with SMTP id v25mr19209706lfq.30.1567585817665;
- Wed, 04 Sep 2019 01:30:17 -0700 (PDT)
+        b=m8/PRsxKuktjjE9T7/5NZ0LBzGps6QBKzHzUtzjZnjv5htkPdHVQh8+sFQbJXM+oV
+         wJ9auiMz/imRsYyTJZzMVOUpYLK52y7ldef2H7SbULXf2DGzZeSjMAiHGgkwtzOxk2
+         m2m2Wt89goHMOd58PZStIh0ngFEFvAtWbIeFgFKk=
+Received: by mail-lf1-f41.google.com with SMTP id j4so15186608lfh.8;
+        Wed, 04 Sep 2019 01:37:24 -0700 (PDT)
+X-Gm-Message-State: APjAAAXK37eov+qy74V/wuO7vUpgxIpcxH/ci7iiVqbfFdkRR4dTilma
+        p1SPmJI10/HsqXYfksUkBNJaHVQr0TsCjMkPKCI=
+X-Google-Smtp-Source: APXvYqynl8t4zpgSOSPhgXGm6urGPD6YD5RT2LviyIZz5LcMF3/ZNtjnIiHi6xBSeCZLQGGW5B0TO2IWt+JPxz/llZY=
+X-Received: by 2002:ac2:4853:: with SMTP id 19mr16484011lfy.69.1567586242704;
+ Wed, 04 Sep 2019 01:37:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190816163042.6604-1-krzk@kernel.org> <20190816163042.6604-3-krzk@kernel.org>
- <CAJKOXPfdvzvomUfmxhGf0qjEQH3K8TADCneo9SM6m50k4b=Gyw@mail.gmail.com> <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
-In-Reply-To: <CAK8P3a0sa8WgcNnL8jusYKFr22FqGnut4kRKM-1QcB8G+ygnMg@mail.gmail.com>
+References: <20190816163042.6604-1-krzk@kernel.org> <CAJKOXPcgZ2_ofZyAeTSxALkALaP-SFNfvNmNPYSPyLzuhpGZ0w@mail.gmail.com>
+ <20190822183519.GA23735@kozik-lap> <CAK8P3a1_Qw=OB31yOCrpPs8Ys+=9tt4Pnyd=3+2JGzRXJV1KAw@mail.gmail.com>
+In-Reply-To: <CAK8P3a1_Qw=OB31yOCrpPs8Ys+=9tt4Pnyd=3+2JGzRXJV1KAw@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 4 Sep 2019 10:30:06 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfoxVriL0GzZLp0wtYkCQC8Dn-0XXb678wXh4ePRy0dpA@mail.gmail.com>
-Message-ID: <CAJKOXPfoxVriL0GzZLp0wtYkCQC8Dn-0XXb678wXh4ePRy0dpA@mail.gmail.com>
-Subject: Re: [GIT PULL 2/3] ARM: samsung: mach for v5.4
+Date:   Wed, 4 Sep 2019 10:37:11 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfRMXkm_pT560Ry5k-zFWpkRDmFHSs2Fb3RL7d4h=ka9g@mail.gmail.com>
+Message-ID: <CAJKOXPfRMXkm_pT560Ry5k-zFWpkRDmFHSs2Fb3RL7d4h=ka9g@mail.gmail.com>
+Subject: Re: [GIT PULL 1/3] soc: samsung: Exynos for v5.4
 To:     Arnd Bergmann <arnd@arndb.de>
 Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
         SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
@@ -53,24 +53,60 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 3 Sep 2019 at 19:32, Arnd Bergmann <arnd@arndb.de> wrote:
+On Tue, 3 Sep 2019 at 19:21, Arnd Bergmann <arnd@arndb.de> wrote:
 >
-> On Wed, Aug 21, 2019 at 9:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> > > ----------------------------------------------------------------
-> > > Linus Walleij (1):
-> > >       ARM: samsung: Include GPIO driver header
+> On Thu, Aug 22, 2019 at 8:35 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > On Wed, Aug 21, 2019 at 09:51:09AM +0200, Krzysztof Kozlowski wrote:
+> > > On Fri, 16 Aug 2019 at 18:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > > >
+> > > > The following changes since commit 5f9e832c137075045d15cd6899ab0505cfb2ca4b:
+> > > >
+> > > >   Linus 5.3-rc1 (2019-07-21 14:05:38 -0700)
+> > > >
+> > > > are available in the Git repository at:
+> > > >
+> > > >   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-drivers-5.4
+> > > >
+> > > > for you to fetch changes up to 40d8aff614f71ab3cab20785b4f213e3802d4e87:
+> > > >
+> > > >   soc: samsung: chipid: Convert exynos-chipid driver to use the regmap API (2019-08-15 20:25:25 +0200)
+> > > >
+> > > > ----------------------------------------------------------------
+> > > > Samsung soc drivers changes for v5.4
+> > > >
+> > > > Add Exynos Chipid driver for identification of product IDs and SoC
+> > > > revisions.  The driver also exposes chipid regmap, later to be used by
+> > > > Exynos Adaptive Supply Voltage driver (adjusting voltages to different
+> > > > revisions of same SoC).
 > > >
-> > > Pankaj Dubey (1):
-> > >       ARM: exynos: Enable exynos-chipid driver
+> > > It turns out that it brings troubles (code is executed on every
+> > > platform polluting logs because it is an initcall, not a driver) so
+> > > Sylwester (submitter) asked to skip the submission.
+> > >
+> > > Please ignore the pull request.
 > >
-> > This last patch should be dropped so I will rework the pull request
-> > and send later v2. Please ignore it for now.
+> > I talked with Sylwester and Bartlomiej who contributed the chipid driver
+> > and they provided small incremental fixes. The driver is still useful
+> > and in the future it will be expanded towards AVS. Therefore please pull
+> > it or optionally wait a week and I will send incremental pull request
+> > with fixes.
 >
-> I don't see the v2 yet. Are you still planning to send it?
+> Pulled into arm/drivers for now.
+>
+> I have drafted a related patch recently, regarding the related
+> arch/arm/plat-samsung/cpu.c file. This is part of a longer series
+> I'm working on, see https://pastebin.com/ZqeU3Mth for the
+> current version of this patch.
 
-Yes, I have two more patches so I plan incremental pull today or tomorrow.
+You can then also adjust the include path in arch/arm/mach-exynos/Makefile.
+
+> The observation is that mach-exynos
+> is almost completely independent of plat-samsung these days, and my
+> patch removes the last obstacle from separating the two. I have
+> another set of patches to do the same for mach-s5pv210 (which shares
+> half of its pm.c with plat-samsung, but nothing else).
+
+Great!
 
 Best regards,
 Krzysztof
