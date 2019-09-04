@@ -2,73 +2,85 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71F57A8DE5
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 21:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E681A91C0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 21:40:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729594AbfIDRup (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 13:50:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57120 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726495AbfIDRup (ORCPT
+        id S2388263AbfIDSZK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 14:25:10 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39642 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387988AbfIDSZJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 13:50:45 -0400
-Received: from localhost.localdomain (unknown [194.230.155.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D141822CF5;
-        Wed,  4 Sep 2019 17:50:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567619444;
-        bh=dmMtaj2IuiH+soAyGM2V76pUf5Ba7PXTyw4+f3zhu7A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g1DuSOCftqEKkSVTzgbcwEnVibt+Fndbcf8eUfBbr1indNdBJRyEHpDURm6ip6N32
-         IsrBsiHfgtF90bjkfn4ePUE2ftK3+N6n+f0zgg59GeFppRSgL522w6tFPd3jhN2/P9
-         IF+FPAz0nbWb120BSrzmj0WB+9L2j2tyoVUZC9EQ=
+        Wed, 4 Sep 2019 14:25:09 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q12so3136353wmj.4;
+        Wed, 04 Sep 2019 11:25:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZNs26im8IZSiycRp5YdzdEf5xY+Panks2L0eHlZ793s=;
+        b=Qo/FhpDlrpLbmZy2AOO5cvsZQKPxLx53cw2F2bhjcD0IsT8ffwi1wSd1LFXmvLDYwV
+         uAjyijfk2M8YwZw9XktUtF0rEnGNek0Jc+/GLiJugzvXmuXQH5v6NeR9Mt+VZMP3iqJo
+         0w84fJY9gcNsEEadVnwtp8l8D2ZxfvkTkRfMepAvTM68WvVEmxYwaYsWyKdVD4Vn6BEZ
+         +J6HUcR2kK6fbwi6P6LSYTJ21ATYfqOLBNKu2XNSwIxvV4F+gEAe7tV6qG5dSOVbATIs
+         totGlRUmDm93sUTk01IkMB2zvoohqdRHukj0bTaJFepQ5knMAZW0AkLrjMnTw+6IS+6Q
+         hVqg==
+X-Gm-Message-State: APjAAAXOaj5RRNDWDMszx/cHmK+Quj8KaTlgVEiF1ML+wNjtLwP4gs3l
+        W7kL4tpsY8zSTedTfVVRAts=
+X-Google-Smtp-Source: APXvYqzKhl9Da3x+NOQGn/asSthLbZVbQBHuEIslYz5CVROihkX7N/X4nng7WKd5gmnOLs0uBCdTJA==
+X-Received: by 2002:a1c:c78f:: with SMTP id x137mr6042843wmf.42.1567621506722;
+        Wed, 04 Sep 2019 11:25:06 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.145])
+        by smtp.googlemail.com with ESMTPSA id k6sm71403811wrg.0.2019.09.04.11.25.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 04 Sep 2019 11:25:05 -0700 (PDT)
+Date:   Wed, 4 Sep 2019 20:25:02 +0200
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
-        arm@kernel.org, soc@kernel.org
-Cc:     Pankaj Dubey <pankaj.dubey@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH 5/5] arm64: exynos: Enable exynos-chipid driver
-Date:   Wed,  4 Sep 2019 19:50:02 +0200
-Message-Id: <20190904175002.10487-6-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190904175002.10487-1-krzk@kernel.org>
-References: <20190904175002.10487-1-krzk@kernel.org>
+To:     Lukasz Luba <l.luba@partner.samsung.com>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, b.zolnierkie@samsung.com, kgene@kernel.org,
+        mark.rutland@arm.com, robh+dt@kernel.org, cw00.choi@samsung.com,
+        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
+        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
+        keescook@chromium.org, tony@atomide.com, jroedel@suse.de,
+        treding@nvidia.com, digetx@gmail.com, gregkh@linuxfoundation.org,
+        willy.mh.wolff.ml@gmail.com
+Subject: Re: [PATCH v13 7/8] ARM: dts: exynos: add DMC device for exynos5422
+Message-ID: <20190904182502.GA12918@kozik-lap>
+References: <20190821104303.32079-1-l.luba@partner.samsung.com>
+ <CGME20190821104324eucas1p16bdeb27250c8c9fa87591d6bd9743a17@eucas1p1.samsung.com>
+ <20190821104303.32079-8-l.luba@partner.samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190821104303.32079-8-l.luba@partner.samsung.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Pankaj Dubey <pankaj.dubey@samsung.com>
+On Wed, Aug 21, 2019 at 12:43:02PM +0200, Lukasz Luba wrote:
+> Add description of Dynamic Memory Controller and PPMU counters.
+> They are used by exynos5422-dmc driver.
+> There is a definition of the memory chip, which is then used during
+> calculation of timings for each OPP.
+> The algorithm in the driver needs these two sets to bound the timings.
+> 
+> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> ---
+>  arch/arm/boot/dts/exynos5420.dtsi             |  71 +++++++++++
+>  arch/arm/boot/dts/exynos5422-odroid-core.dtsi | 116 ++++++++++++++++++
+>  2 files changed, 187 insertions(+)
 
-Enable Exynos Chipid driver for accessing SoC related information.
+Thanks, applied conditionally. Please send a follow up fixing the
+checkpatch error about undocumented binding:
+https://krzk.eu/#/builders/26/builds/392
 
-Signed-off-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-Signed-off-by: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm64/Kconfig.platforms | 1 +
- 1 file changed, 1 insertion(+)
+You should not skip such checkpatch warning.
 
-diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.platforms
-index 4778c775de1b..8a098fb4f04c 100644
---- a/arch/arm64/Kconfig.platforms
-+++ b/arch/arm64/Kconfig.platforms
-@@ -77,6 +77,7 @@ config ARCH_BRCMSTB
- config ARCH_EXYNOS
- 	bool "ARMv8 based Samsung Exynos SoC family"
- 	select COMMON_CLK_SAMSUNG
-+	select EXYNOS_CHIPID
- 	select EXYNOS_PM_DOMAINS if PM_GENERIC_DOMAINS
- 	select EXYNOS_PMU
- 	select HAVE_S3C2410_WATCHDOG if WATCHDOG
--- 
-2.17.1
+Best regards,
+Krzysztof
 
