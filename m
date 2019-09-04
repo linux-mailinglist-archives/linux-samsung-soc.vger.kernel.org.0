@@ -2,119 +2,119 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43BD7A7E52
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 10:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7373A7F44
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Sep 2019 11:24:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728596AbfIDIuF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Sep 2019 04:50:05 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:48484 "EHLO
+        id S1729643AbfIDJYy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Sep 2019 05:24:54 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:34499 "EHLO
         mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727722AbfIDIuF (ORCPT
+        with ESMTP id S1729268AbfIDJYx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Sep 2019 04:50:05 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190904085003euoutp026a3d333b014fadfea63bfb87ecf98db0~BMBMHTtcO0732607326euoutp02h
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 Sep 2019 08:50:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190904085003euoutp026a3d333b014fadfea63bfb87ecf98db0~BMBMHTtcO0732607326euoutp02h
+        Wed, 4 Sep 2019 05:24:53 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190904092451euoutp02375aae94d5a38b4c6c6df5dd4bf9dfe8~BMfkTcfcL2785127851euoutp02C
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 Sep 2019 09:24:51 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190904092451euoutp02375aae94d5a38b4c6c6df5dd4bf9dfe8~BMfkTcfcL2785127851euoutp02C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1567587003;
-        bh=oFELJroshQNF4iZzaTQ4WEiPwJyriiHbT/qS8Y1Zw5w=;
+        s=mail20170921; t=1567589091;
+        bh=V370ltT0rd0fHIGcav3btRyCP3B9v6qbYkKkz3baA9s=;
         h=From:To:Cc:Subject:Date:References:From;
-        b=mJcssIyA8MtTg4R3iLUkqXq4NIiPnAfcwXh6TUqOLMMSEJqlgfdJ+G0oWq2mF2acL
-         IlerBrhjONoiI8k4MIurzJQppOp9k9ouJTSou/F1ch8SMVBvFIldsxpjgCUXU7usZm
-         GcDRrCkibl+YyGfkkWRqGKiagFnIDmpvDKi3YCtY=
+        b=d5x9fvcwcgLIk7PSKRT9xLpeY0JVpvyzCPdf7WpA5VgyjOJAEjk7qBT9rD8jpEgV8
+         HRHiZEIu7DzcWlUEOTmc0QpAq1Fm9zt0u9kQ3hvoiO24REYHjaljQv+sD6SzIjC85G
+         GhHyzlMvnH64+0l2RIHtL7z7Q3hm5IIWMhXTXD5k=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190904085002eucas1p13375705fd581ff15b671a52fcace2093~BMBLjH07g1184411844eucas1p1P;
-        Wed,  4 Sep 2019 08:50:02 +0000 (GMT)
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190904092450eucas1p2516b5418a228bb98356487ebc491e263~BMfjy9Bnw2898628986eucas1p26;
+        Wed,  4 Sep 2019 09:24:50 +0000 (GMT)
 Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id E9.B5.04309.ABA7F6D5; Wed,  4
-        Sep 2019 09:50:02 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id D7.2B.04309.2E28F6D5; Wed,  4
+        Sep 2019 10:24:50 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190904085001eucas1p2b3a120d6206983d47f0084b872042342~BMBKk7EMP2069820698eucas1p2A;
-        Wed,  4 Sep 2019 08:50:01 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190904085001eusmtrp2dbf6fde957038a388fbc2f28d014a760~BMBKkUx1F0734707347eusmtrp2z;
-        Wed,  4 Sep 2019 08:50:01 +0000 (GMT)
-X-AuditID: cbfec7f4-ae1ff700000010d5-d0-5d6f7aba6c14
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id D3.B1.04166.9BA7F6D5; Wed,  4
-        Sep 2019 09:50:01 +0100 (BST)
-Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190904085001eusmtip2984d536707372df5001e4fc75d7719aa~BMBKHgLYI1995319953eusmtip2Y;
-        Wed,  4 Sep 2019 08:50:01 +0000 (GMT)
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-To:     krzk@kernel.org
-Cc:     kgene@kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH] soc: samsung: chipid: Make exynos_chipid_early_init()
- static
-Date:   Wed,  4 Sep 2019 10:49:51 +0200
-Message-Id: <20190904084951.28971-1-s.nawrocki@samsung.com>
+        20190904092449eucas1p28ec98275a95882948f4d298f15c15325~BMfjDzlFl2694026940eucas1p2o;
+        Wed,  4 Sep 2019 09:24:49 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190904092449eusmtrp1be720517aed01c3099b48aefa2c53a76~BMfi1kYbH2981829818eusmtrp1a;
+        Wed,  4 Sep 2019 09:24:49 +0000 (GMT)
+X-AuditID: cbfec7f4-f2e849c0000010d5-ba-5d6f82e28ed9
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 2A.CA.04117.1E28F6D5; Wed,  4
+        Sep 2019 10:24:49 +0100 (BST)
+Received: from AMDC2765.DIGITAL.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190904092449eusmtip11b9b5e478f56d4d412351eceb2193622~BMficHt3R1532115321eusmtip1I;
+        Wed,  4 Sep 2019 09:24:49 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: [PATCH 0/3] arm64: dts: exynos: A few more fixes
+Date:   Wed,  4 Sep 2019 11:24:39 +0200
+Message-Id: <20190904092442.26260-1-m.szyprowski@samsung.com>
 X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsWy7djPc7q7qvJjDT7s07LYOGM9q0X/49fM
-        FufPb2C32PT4GqvF5V1z2CxmnN/HZLH2yF12i8Nv2lkdODw2repk89i8pN6jb8sqRo/Pm+QC
-        WKK4bFJSczLLUov07RK4Mjrut7EWvGKt+L77NGMDYwNrFyMnh4SAiUTX6mNANheHkMAKRonX
-        sy8xQThfGCXe/FrAAuF8ZpToPTOLGaZlx9UVUC3LGSXWTtvLDNdy7PcjdpAqNgFDid6jfYwg
-        toiAsMS9pcvZQYqYBR4xSjS1bGcBSQgL+Ev8mrwIzGYRUJU4vOMiE4jNK2AtcfnOcUaIdfIS
-        qzccANsgIXCdTeLszaNQp7tInGw8zwZhC0u8Or6FHcKWkfi/cz4TREMzo0TP7tvsEM4ERon7
-        xxdAjbWWOHz8ItAkDqCbNCXW79KHCDtKHPx6mAUkLCHAJ3HjrSBImBnInLRtOjNEmFeio00I
-        olpF4veq6UwQtpRE95P/LBC2h8S7bVvAzhQSiJX4N62FdQKj3CyEXQsYGVcxiqeWFuempxYb
-        5aWW6xUn5haX5qXrJefnbmIEpoPT/45/2cG460/SIUYBDkYlHt4dfnmxQqyJZcWVuYcYJTiY
-        lUR4Q/fkxArxpiRWVqUW5ccXleakFh9ilOZgURLnrWZ4EC0kkJ5YkpqdmlqQWgSTZeLglGpg
-        XHj1mprZ9t35/3en1K4T7rKN3XGGX22bT3JZy/ctnw1v2AcacJY8v/K+MULnucJCPtMF7xsn
-        vDJZc+tMx5NFVTazb3AqC39zV/CJC355z+nZjXVO34P5r2uwVnp9XrZxS+SJiJvqUUynzQVi
-        s+e8/vzmZt7TWUbO9QdLtDTM10pKJtyTelCwTImlOCPRUIu5qDgRAMZjjp8DAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMLMWRmVeSWpSXmKPExsVy+t/xe7o7q/JjDfpfmFpsnLGe1aL/8Wtm
-        i/PnN7BbbHp8jdXi8q45bBYzzu9jslh75C67xeE37awOHB6bVnWyeWxeUu/Rt2UVo8fnTXIB
-        LFF6NkX5pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GR33
-        21gLXrFWfN99mrGBsYG1i5GTQ0LARGLH1RVANheHkMBSRokvD9exdTFyACWkJOa3KEHUCEv8
-        udbFBmILCXxilHh9LQHEZhMwlOg92scIYosA1dxbupwdZA6zwAtGiY7Di5hAEsICvhKP3y8E
-        a2YRUJU4vOMiWJxXwFri8p3jjBAL5CVWbzjAPIGRZwEjwypGkdTS4tz03GJDveLE3OLSvHS9
-        5PzcTYzAANx27OfmHYyXNgYfYhTgYFTi4d3hlxcrxJpYVlyZe4hRgoNZSYQ3dE9OrBBvSmJl
-        VWpRfnxRaU5q8SFGU6DlE5mlRJPzgdGRVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7
-        NbUgtQimj4mDU6qBsf/epj6V1XqSzFzHV3HcqZK1MNyW6+/V4LizMW/hzKyVs9ma72hyO3VH
-        Ki3hFN7eq/GP58GmlKDJlcar6xNDJ3n0LTO7sk1s2o4HHPH61n6bcnjb3k/kO+q4aAufiGtq
-        oqmqcvnDHfYXpyeprf1xO4/Zh+0h6+Zsxqkv1pwyPvW2KHVRQamXEktxRqKhFnNRcSIA7u3g
-        VlYCAAA=
-X-CMS-MailID: 20190904085001eucas1p2b3a120d6206983d47f0084b872042342
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsWy7djPc7qPmvJjDQ6sF7Z4MG8bm8XGGetZ
+        Lc6f38BuMeP8PiaLtUfusjuwemxa1cnm0bdlFaPH501yAcxRXDYpqTmZZalF+nYJXBn3On+y
+        FUxlrWj63sbWwNjH0sXIySEhYCLR8e0AexcjF4eQwApGiWNfVrNAOF8YJZoaW5kgnM+MEs9v
+        7GOCaVnX+pERIrGcUWLy2mXscC03ry5mBaliEzCU6HrbxQZiiwioSnxuW8AOYjMLbGeUaLws
+        CGILC1hK3H39HewQFqCa7htdjCA2r4CtRNO5jawQ2+QlVm84wAxhb2GTWL9FE8J2kdj66iw7
+        hC0s8er4FihbRuL05B6wHyQEmhklHp5byw7h9DBKXG6awQhRZS1x+PhFoA0cQBdpSqzfpQ8R
+        dpQ49G8HO0hYQoBP4sZbQYib+SQmbZvODBHmlehoE4KoVpOYdXwd3NqDFy5Bnekh8fdiN1hc
+        SCBWYufOKawTGOVmIexawMi4ilE8tbQ4Nz212CgvtVyvODG3uDQvXS85P3cTIzDKT/87/mUH
+        464/SYcYBTgYlXh4d/jlxQqxJpYVV+YeYpTgYFYS4Q3dkxMrxJuSWFmVWpQfX1Sak1p8iFGa
+        g0VJnLea4UG0kEB6YklqdmpqQWoRTJaJg1OqgTF1u/18tuOri7r0vRIurJiRuM1oXuLhyR8e
+        yen/cp55e6ujzO+saZvOuPAJy1b1XH9sf1VA00bIw0uE9fu3RKapy+5u5Johp56mYLlV9xWn
+        xePPN53y4p30tsl6eX5pmhv6Rq1tcnqx35Ri9sl8u9g5vcRcrv6c+q2cs9H8RuixNUoL1r1Y
+        aqHEUpyRaKjFXFScCACaIujQ7gIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrELMWRmVeSWpSXmKPExsVy+t/xu7oPm/JjDXqb5S0ezNvGZrFxxnpW
+        i/PnN7BbzDi/j8li7ZG77A6sHptWdbJ59G1ZxejxeZNcAHOUnk1RfmlJqkJGfnGJrVK0oYWR
+        nqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXsa9zp9sBVNZK5q+t7E1MPaxdDFyckgI
+        mEisa/3I2MXIxSEksJRR4vHOjYwQCRmJk9MaWCFsYYk/17rYIIo+MUpsOfeaCSTBJmAo0fUW
+        JMHJISKgKvG5bQE7SBGzwE5Giebrs9lBEsIClhJ3X38HW8cCVNR9owtsA6+ArUTTuY1QG+Ql
+        Vm84wDyBkWcBI8MqRpHU0uLc9NxiI73ixNzi0rx0veT83E2MwPDaduznlh2MXe+CDzEKcDAq
+        8fDu8MuLFWJNLCuuzD3EKMHBrCTCG7onJ1aINyWxsiq1KD++qDQntfgQoynQ8onMUqLJ+cDQ
+        zyuJNzQ1NLewNDQ3Njc2s1AS5+0QOBgjJJCeWJKanZpakFoE08fEwSnVwHhuwZ8iL6lbvTZC
+        ixtrQ2YGb5tUzVRwlfGfYOwqyTXcG1QnHP0j1MPEHt7NHNB/wjZjh8zEGp1D/0NZnHMaf3Gd
+        1Or57sdz2PCTvKiR04nqJIGDzMbP99tkHI7TyQ5pKuXl+vZhi0LtqqbVN4KskjbkmvzKSF4Q
+        O6W6IW3Lhy9neW9POivxUomlOCPRUIu5qDgRAEf45WRFAgAA
+X-CMS-MailID: 20190904092449eucas1p28ec98275a95882948f4d298f15c15325
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190904085001eucas1p2b3a120d6206983d47f0084b872042342
+X-RootMTR: 20190904092449eucas1p28ec98275a95882948f4d298f15c15325
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190904085001eucas1p2b3a120d6206983d47f0084b872042342
-References: <CGME20190904085001eucas1p2b3a120d6206983d47f0084b872042342@eucas1p2.samsung.com>
+X-CMS-RootMailID: 20190904092449eucas1p28ec98275a95882948f4d298f15c15325
+References: <CGME20190904092449eucas1p28ec98275a95882948f4d298f15c15325@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add missing static qualifier to the chipid initcall function.
+Dear All,
 
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
----
- drivers/soc/samsung/exynos-chipid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+While fixing the issue reported by Alim Akhtar, I've noticed a few more
+issues in arm64/exynos dts files. This patchset fixes them.
 
-diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-index c55a47cfe617..25562dd0b206 100644
---- a/drivers/soc/samsung/exynos-chipid.c
-+++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -45,7 +45,7 @@ static const char * __init product_id_to_soc_id(unsigned int product_id)
- 	return NULL;
- }
- 
--int __init exynos_chipid_early_init(void)
-+static int __init exynos_chipid_early_init(void)
- {
- 	struct soc_device_attribute *soc_dev_attr;
- 	struct soc_device *soc_dev;
+Best regards
+Marek Szyprowski
+Samsung R&D Institute Poland
+
+
+Patch summary:
+
+Marek Szyprowski (3):
+  arm64: dts: exynos: Move GPU under /soc node for Exynos5433
+  arm64: dts: exynos: Move GPU under /soc node for Exynos7
+  arm64: dts: exynos: Remove useless #address-cells property for GIC
+    node
+
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi | 102 ++++++++++-----------
+ arch/arm64/boot/dts/exynos/exynos7.dtsi    |  23 +++--
+ 2 files changed, 62 insertions(+), 63 deletions(-)
+
 -- 
 2.17.1
 
