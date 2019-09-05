@@ -2,93 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8369BAAB47
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Sep 2019 20:40:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 742D6AABF6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Sep 2019 21:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732555AbfIESkY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 5 Sep 2019 14:40:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48411 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732133AbfIESkY (ORCPT
+        id S1727304AbfIET3X (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 5 Sep 2019 15:29:23 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:40921 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727171AbfIET3X (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 5 Sep 2019 14:40:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1567708792;
-        bh=bhJITHNaDSNk82tHbXwjAU2m4OSwrTVq9Dh6XgoEVgM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=l5gka5lTwefMebb8U4HzIol6vblHmV57FMzes8yN8THNc2vXcQcJZM5dhzYH/tQK4
-         Rm3QwWOLfBaeoh2LLT7euoAQqboVIkauh19AbkTP6fIUnF2EtRFEnmRjZxtUUyjeWW
-         qjS0cTFWD7MMMZtMvn1Fe9ouR8oBJi5t0xopZDuk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.1.162] ([37.4.249.90]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMCFR-1i4Ygs4Bw5-00859O; Thu, 05
- Sep 2019 20:39:52 +0200
-Subject: Re: [PATCH -next 06/36] spi: bcm2835: use
- devm_platform_ioremap_resource() to simplify code
-To:     YueHaibing <yuehaibing@huawei.com>, broonie@kernel.org,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        eric@anholt.net, shc_work@mail.ru, agross@kernel.org,
-        khilman@baylibre.com, matthias.bgg@gmail.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, avifishman70@gmail.com, tmaimon77@gmail.com,
-        tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
-        benjaminfair@google.com, kgene@kernel.org, krzk@kernel.org,
-        andi@etezian.org, palmer@sifive.com, paul.walmsley@sifive.com,
-        baohua@kernel.org, mripard@kernel.org, wens@csie.org,
-        ldewangan@nvidia.com, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, yamada.masahiro@socionext.com,
-        michal.simek@xilinx.com
-Cc:     bcm-kernel-feedback-list@broadcom.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org
-References: <20190904135918.25352-1-yuehaibing@huawei.com>
- <20190904135918.25352-7-yuehaibing@huawei.com>
-From:   Stefan Wahren <wahrenst@gmx.net>
-Message-ID: <c9c6a9ca-5725-513f-2ef3-734ecf0878b8@gmx.net>
-Date:   Thu, 5 Sep 2019 20:39:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Thu, 5 Sep 2019 15:29:23 -0400
+Received: by mail-wr1-f52.google.com with SMTP id w13so4081230wru.7
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 05 Sep 2019 12:29:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UeXEO5wB9FLEBsxmMMVpwuE+ux98TxL2vsySrExnYqM=;
+        b=nIpkcah4a9Su9pPRnoPCFpPbhrrdNUegOg0GaQfQFYCilzUHYDepg3y7Bes0ooXVL2
+         NeVtcRM4JjMckFHRc1iAAyJLLk5UFbKXMM6HfR5kITpM8jjijr7mjYHC521AF6y+2KHl
+         QZvzBauvH6AA/LjXeWpI0DDkieEbNS2Uvq7iEA0rsybnkWY6GBJKbBcKRjs6Z24bSKqG
+         5Pdcm7/VP3rz2H5ozo4vW8nciHW1btjXnd5b3uEWnEyzsZee1xeETsZjaEWC96f5Bgnh
+         qNgosCgEmWkwnFvbgiUC8Mj/bscoxCaaXhR/J4v8f3fUEc6OEtqEiOUpl17JC6cxSo+s
+         aW2g==
+X-Gm-Message-State: APjAAAUn+V4XTLun0d7e8/bemCXZ+sgb/q/w0JvMYYpjlR9L0qP3dXPl
+        CDjceXwre7IYxTAI9Zh3Pdrl/yvM
+X-Google-Smtp-Source: APXvYqxs/9aO1UVB8NO73vCntkaiCxPKXGPSaJ8TOuhfDQfnITAyIByzW+T7S8fnQGFV1RbB0aVvbA==
+X-Received: by 2002:adf:d4c3:: with SMTP id w3mr3925177wrk.100.1567711761298;
+        Thu, 05 Sep 2019 12:29:21 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.145])
+        by smtp.googlemail.com with ESMTPSA id k9sm5996342wrd.7.2019.09.05.12.29.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 05 Sep 2019 12:29:20 -0700 (PDT)
+Date:   Thu, 5 Sep 2019 21:29:18 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: Re: [PATCH 0/3] arm64: dts: exynos: A few more fixes
+Message-ID: <20190905192918.GA14046@kozik-lap>
+References: <CGME20190904092449eucas1p28ec98275a95882948f4d298f15c15325@eucas1p2.samsung.com>
+ <20190904092442.26260-1-m.szyprowski@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <20190904135918.25352-7-yuehaibing@huawei.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Provags-ID: V03:K1:PJZW3p24Sgs9pPgM0nquSd55ClUOxvx8h/ANFNBZrD5MaK8bvKD
- dHfxSFK5ClXmMrJSUR8lOZtZfJA56JgmfFkwVv7amqZJ26WGT9rJFbEFaH/uolq/SSk3/Ik
- CaU2qBvQ+UiBNHCAXrwBe+mgP4L5nXoKh99c43NCmIKAYgIHM3GmDJzctwbGc8axkanZrqb
- kItlAw0DrA85Zrq1bckLw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:anpvg5mTIZw=:5SNYFyWX4G6ecfNsrbwtlx
- /TNEmn+IvOxzbLdzuF8xREYo/Mb0quJpFUk4fLZIaDZRc/+F/YFcML45laZ3kAnjx4pBNoRjO
- FaTTfRdwtSx5/5J9nYb0tB67pARyFpiLNRZHPeVLgFdUlMdrfx0AViG2lcR1WyrQu8EmG0w66
- FupD6Vsv3CPNx5UyEqdvrM3FS14URpj0UbKkRqhhmqSsGNa/m8W9Eot0yghivFIPbC/W+4n4o
- jaTEuayyGrRuIkPrylx/NzddppI6WbP3xHMIYbF4TaVS3IkR+abQ7z50D/5xVjLSQDpKFa57B
- ckqCfAhpYRsoKkvJVpw/+ipQjDIAF41qmM6g4CRaGbxWun3LwiZB90S2AOGePNA4ppJ7aK6Og
- 93MNpeQDqmJC4jF40SzBiV5bGYKY9t+sQ2mJ9B24d0iAjzEDa/g0K89frdKWOack+tm82B6gc
- ltMtrA0QSll5wIayinj6TBLy4S3mmBODD3LFeA67qATaC6MCSj69O4LuMtMpKbtfgth06HEMu
- YJ0FQhW4KW/0YU98OTNbUKqXrcY6VxuTAlHxN5kzpG2kcl73oo3uuVp/pW874PR2mqKpBYkAF
- o17lCCG8Hmrgnk+CY4zH2ZucP3GbNBJ3NPZXroU2mZYq+cy/1ZtQEuBRWNr5TfodKF+u15XKj
- cu+WWfsEaKkKsoLiS2dJnJ8c+Lwnn9jECz1wsbWKv4phl7tgWxwFlgPe/pNTVpZ++TjJKuCsg
- T+AEnJ5C7cuUvMW8Uy1C1xK5ZCiOQe9jMAtPKAZu237ChXgkj8wrwlFue2DSDeXfP9j+jtLTA
- 0NhL8w0Uq3LMDQW6S8dUioyZ5pjNAaSxp88yWp0qceEyktCtxOL2hmy30iJPAB8V3qJyGe/Hs
- TDQiNNZqGcJ/LQ1EfJTKbn1KwFAg40weTKSTQFAHoG6T1sCUfd5POPN71s+ZYacM5pSDbzqBF
- deyy1C9MIYl0iKHg8Ajzk5Mhyl3sTIi4XtSYvss9RewaUBcYedvXA0rnnK1fxdjZrVzQAFLD4
- LAuNFdEbCzupNWUGMAeZYtJV1B6BhPD7j6jNYoXOerQckMjA6Ke57e0yNkddTN3RCspo2hPyl
- tvCoWGf7hkWKnybbkWmAhueCK2DCj42Dm/1l5jozBLE3rORYfNVAq64ralDwip1IBHAaf3bqR
- seRgj/4/fnfu787yaeEO9o1oR+2J5hYn41YKsgVXMUjRfztTZ70iv+mH+1iD3m/vETnZk=
+Content-Disposition: inline
+In-Reply-To: <20190904092442.26260-1-m.szyprowski@samsung.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Am 04.09.19 um 15:58 schrieb YueHaibing:
-> Use devm_platform_ioremap_resource() to simplify the code a bit.
-> This is detected by coccinelle.
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Stefan Wahren <wahrenst@gmx.net>
+On Wed, Sep 04, 2019 at 11:24:39AM +0200, Marek Szyprowski wrote:
+> Dear All,
+> 
+> While fixing the issue reported by Alim Akhtar, I've noticed a few more
+> issues in arm64/exynos dts files. This patchset fixes them.
+> 
+> Best regards
+> Marek Szyprowski
+> Samsung R&D Institute Poland
+
+Thanks, applied entire set.  There will be no next releases so
+unfortunately this will not get wider coverage (unless someone tests my
+for-next branch).
+
+Best regards,
+Krzysztof
+
