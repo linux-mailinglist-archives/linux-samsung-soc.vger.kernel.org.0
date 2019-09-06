@@ -2,84 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3973CAB37F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 09:52:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E55B9AB3BB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 10:11:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726837AbfIFHws (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Sep 2019 03:52:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60920 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725290AbfIFHws (ORCPT
+        id S1733154AbfIFILg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Sep 2019 04:11:36 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:58450 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbfIFILg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Sep 2019 03:52:48 -0400
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D010220842;
-        Fri,  6 Sep 2019 07:52:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567756367;
-        bh=winWBgL5TQGcDxGKWAnYQDvbmLb4EaB1sIi2qiT87RM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=I3iTW5c2Sy3Jw3wH3U8rb8Ck6BcfVtTSx7cY9quGWXplqe9xYiY/t/Nf5QupucKIi
-         iUeiD70snyQwk4hk104xe5tiV4oH5Pw/Q75/xbvl7ljpqZ/lac5ciPTi3u1zolMh8b
-         TivWfpZrPerwQ+Cmmd6uuu7x8vFE6WEGFX38/GsU=
-Received: by mail-lj1-f170.google.com with SMTP id y23so4778124ljn.5;
-        Fri, 06 Sep 2019 00:52:46 -0700 (PDT)
-X-Gm-Message-State: APjAAAVaTFIB2zKjg6HVOLRw0kTq6ELq0kSLkZoRP0JgqawjiGnr9SsH
-        yMfCYh3DpfsKVyEi0LJeicKaubXlWeb4kYGzpBo=
-X-Google-Smtp-Source: APXvYqwlILqYRT4xGA2lf0NyhxXTFgqTN26f5VG4eIgJJFkGkypXCZxvH9/zNmt7h0mx2yp1J0eOPraYUnXRWZw8Ud8=
-X-Received: by 2002:a2e:8091:: with SMTP id i17mr4913713ljg.13.1567756364930;
- Fri, 06 Sep 2019 00:52:44 -0700 (PDT)
+        Fri, 6 Sep 2019 04:11:36 -0400
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+        (Exim 4.76)
+        (envelope-from <colin.king@canonical.com>)
+        id 1i69LB-0005py-VI; Fri, 06 Sep 2019 08:11:34 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] media: s3c-camif: make array 'registers' static const, makes object smaller
+Date:   Fri,  6 Sep 2019 09:11:33 +0100
+Message-Id: <20190906081133.22543-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <CAF-0O_5TSO04M=0kdghhGKTs54QVEYn5mBh7e83EusFjS_Hg3Q@mail.gmail.com>
-In-Reply-To: <CAF-0O_5TSO04M=0kdghhGKTs54QVEYn5mBh7e83EusFjS_Hg3Q@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 6 Sep 2019 09:52:33 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPdSmCbkUxbhuoEG8+0U_o1=heHrOeWjrddgy7bedN8Rag@mail.gmail.com>
-Message-ID: <CAJKOXPdSmCbkUxbhuoEG8+0U_o1=heHrOeWjrddgy7bedN8Rag@mail.gmail.com>
-Subject: Re: cpuidle big_little driver on Odroid-xu4
-To:     Jaafar Ali <jaafarkhalaf@gmail.com>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        kgene@kernel.org, sam@ravnborg.org, linux-clk@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 1 Sep 2019 at 15:19, Jaafar Ali <jaafarkhalaf@gmail.com> wrote:
->
-> Dear Sylwester,
-> Kernel 5.3rc1
-> Hardware Odroid-XU4
-> cpuidle-big_little driver for exynos 5422 of odroid-xu3/4 is not working.
-> when I enable it in the defconfig , CONFIG_ARM_BIG_LITTLE_CPUIDLE=y,
-> the device will not boot and the heartbeat blue LED stops.
-> when the powerdown state[1] is removed form cpuidle-big_little driver
-> or the function bl_enter_powerdown is disabled by early return, the
-> kernel boots successfully and I can see cpuidle driver inside
-> /sys/devices/system/cpu/cpuidle/current_driver
-> both cpuidle-big_little power down state (exynos5420) and suspend
-> stuff are using mcpm_cpu_suspend() which in turn calls
-> mcpm_cpu_power_down() eventually.
-> while suspend stuff is working correctly and the cpu can
-> suspend/resume without problems, the cpuidle-bl is not working
-> the few difference between suspend.c and cpuidle-big_little that I
-> found are suspend.c do some more preparations such as storing resume
-> entry point "mcpm_entry_point" into S5P_INFORM0, reset
-> EXYNOS5420_CPU_STATE and save and restore some other registers.
-> Can we repeat the scenario of suspend in cpuidle-big_little
+From: Colin Ian King <colin.king@canonical.com>
 
-Hi Jaafar,
+Don't populate the array 'registers' on the stack but instead make it
+static const. Makes the object code smaller by 45 bytes.
 
-Thank you for the report. I am not sure whether big-little cpuidle was
-working properly before... (before v5.3-rc1) I added your report to
-https://exynos.wiki.kernel.org/todo_tasks
+Before:
+   text	   data	    bss	    dec	    hex	filename
+  17364	   5000	      0	  22364	   575c	platform/s3c-camif/camif-regs.o
 
-Best regards,
-Krzysztof
+After:
+   text	   data	    bss	    dec	    hex	filename
+  17255	   5064	      0	  22319	   572f	platform/s3c-camif/camif-regs.o
+
+(gcc version 9.2.1, amd64)
+
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/media/platform/s3c-camif/camif-regs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/s3c-camif/camif-regs.c b/drivers/media/platform/s3c-camif/camif-regs.c
+index 1a65532dc36d..e80204f5720c 100644
+--- a/drivers/media/platform/s3c-camif/camif-regs.c
++++ b/drivers/media/platform/s3c-camif/camif-regs.c
+@@ -553,7 +553,7 @@ void camif_hw_disable_capture(struct camif_vp *vp)
+ 
+ void camif_hw_dump_regs(struct camif_dev *camif, const char *label)
+ {
+-	struct {
++	static const struct {
+ 		u32 offset;
+ 		const char * const name;
+ 	} registers[] = {
+-- 
+2.20.1
+
