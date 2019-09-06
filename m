@@ -2,228 +2,220 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EC90ABCF0
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 17:49:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E129ABFE1
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 20:50:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393073AbfIFPtJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Sep 2019 11:49:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33128 "EHLO mail.kernel.org"
+        id S2388320AbfIFSus (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Sep 2019 14:50:48 -0400
+Received: from mout.web.de ([212.227.17.11]:39641 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732456AbfIFPtH (ORCPT
+        id S1728072AbfIFSur (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Sep 2019 11:49:07 -0400
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AED7821835;
-        Fri,  6 Sep 2019 15:49:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567784945;
-        bh=Jr5kgXqyWS7nh52NwJvOior0lys98UCdmbOdcfTtNDg=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=CWy0XUtdMPK4ldm+ALO4hNc9NhMkC9KZQ0dMR1c4PcYhArloTT5P2R24zCBNE9WW8
-         mBW9uvEmpTGaJ4qOV83YYHyVA4xMuTO9ivrxhgE4dlY0rFEBVv5g9IKT3JyRpI1YW9
-         NhVjc/T1ubb6yDj8dA0KJaL+l37rTDRrAa6opxMo=
-Received: by mail-qt1-f172.google.com with SMTP id l22so7504442qtp.10;
-        Fri, 06 Sep 2019 08:49:05 -0700 (PDT)
-X-Gm-Message-State: APjAAAV0vJIUhvJntZ2ZvXevj3MXhxXkwwrO97Q4vJIgksAAEt2MVbe9
-        4fjSQBuERe/1pdMhADPy00nd/aD0uy7VFgF+xQ==
-X-Google-Smtp-Source: APXvYqzOFUgh8GnB6rG6hXcILzhLec0cs9V0M4FXVh+YnJXdDppWGYwFW7NZzD11jYW/qoY7azAhk18Zu9nuUkLC+F4=
-X-Received: by 2002:ac8:100d:: with SMTP id z13mr3818851qti.224.1567784944824;
- Fri, 06 Sep 2019 08:49:04 -0700 (PDT)
+        Fri, 6 Sep 2019 14:50:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1567795811;
+        bh=UqJJpMX2wOb8nJEQgeIae0JSk5zfYKvW58Wq5XJ1qiQ=;
+        h=X-UI-Sender-Class:To:From:Subject:Cc:Date;
+        b=CX/tP+dWPzRY8Vqr2eoAi1vGXpJOa9EWeHObAPRjHrZigpqnsDr9g4ruuiI0WJMbp
+         AYxnez13NHKH5DpVr5SHg8UNP11ps2VnOSePeaZm7A5pU0zrqneGinRe7i538joM6x
+         XkE6B2gWGlHRlF4A8BdEr4iZl1MTmwGwkct7UPcI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.2] ([93.135.58.4]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M4qOX-1iN1v40bkb-00yyDY; Fri, 06
+ Sep 2019 20:50:11 +0200
+To:     linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>
+From:   Markus Elfring <Markus.Elfring@web.de>
+Subject: [PATCH] PCI: dwc: Use PTR_ERR_OR_ZERO() in five functions
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        kernel-janitors@vger.kernel.org,
+        YueHaibing <yuehaibing@huawei.com>,
+        zhong jiang <zhongjiang@huawei.com>
+Message-ID: <95c9dfae-af81-82ad-e989-1fdf5f29808e@web.de>
+Date:   Fri, 6 Sep 2019 20:50:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.0
 MIME-Version: 1.0
-References: <20190823145356.6341-1-krzk@kernel.org> <20190823145356.6341-5-krzk@kernel.org>
- <CAL_JsqJybT41cEqiTriLMywUQj1BtAG_9muJ4=84OkF23y53CA@mail.gmail.com>
- <CAJKOXPc0SY_8BHMsWLN=1M3VQh41+bdBiH21L4KQPA+iLPYy+A@mail.gmail.com>
- <CAL_JsqKdsABWK9Og_f38T9zf3SCFFdhU8WOJ4uJjREantoYvYQ@mail.gmail.com> <CAJKOXPfnvu=c5f6AcOSiQ_9E-C2fMf9qbEpy1Tr3QvH8LgAtpQ@mail.gmail.com>
-In-Reply-To: <CAJKOXPfnvu=c5f6AcOSiQ_9E-C2fMf9qbEpy1Tr3QvH8LgAtpQ@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Fri, 6 Sep 2019 16:48:53 +0100
-X-Gmail-Original-Message-ID: <CAL_JsqKyj3s-Mn3q_Lna0w38K3DJzvKN5d72WHzqt4CUVf5X4Q@mail.gmail.com>
-Message-ID: <CAL_JsqKyj3s-Mn3q_Lna0w38K3DJzvKN5d72WHzqt4CUVf5X4Q@mail.gmail.com>
-Subject: Re: [RFC 5/9] dt-bindings: arm: samsung: Convert Exynos PMU bindings
- to json-schema
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        =?UTF-8?Q?Pawe=C5=82_Chmiel?= <pawel.mikolaj.chmiel@gmail.com>,
-        devicetree@vger.kernel.org,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
-        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" 
-        <linux-rtc@vger.kernel.org>, notify@kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xSFzbiFK4dQGPYaCSlx0FWnqB+9gj2GZPQn32Jv99y+bS9jofJO
+ QyYNPh1pEfO9S2/4rPuKWf2MYVVSgboDrxZl19spJ9hYOWJu4b51nKTaQLbnZTrD121v8LS
+ peODpUvz33geQTpLw/PyiQql2aOuu3dgMoczP0TyLxXi7GfCaHZT45PKF/7NAaJhe+GJZst
+ ogSWQ5k5E5yKTrDPOPMTA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LIOzj7W/iq4=:3mHqx2c/YxIxZeymQYmJou
+ h6w9X7Su+y8EDx9zmm4cnR1gFm51dZY06qcImV7wCsKqqKYNZqj00qQHYAqIA1GDUmjxir2sa
+ twyBUZ2bBxDsc88wZwyrIPQfH8b5s9tDmiS6IroBv4SQa9OaBaOLgNPjDoY1z9t3lcqqVfQjL
+ XM+aqwqIFm9mTcOiT/x3J5kpBfJxd3BJbDgFli1Qs2YJ08+Y6bM5j9I+lNE4AT2K/0a0m8eo3
+ v0Dnali+oOec/bJXetjSRV54Uw5KotKZfnvk/8KfuRsY+OBv5b7aLpkA2N0dMJZJZbxD3DQkd
+ fwuVNznb4GAH0fMvRqJvg1w4BBszmOBq2LAsL7Uo+Cx1KcncU1JXTBpAgm51VAWyYkHUdfJcU
+ EFzRBI3jC1XP/N4NAmtvffJW+/D3XDP+X5n7cVqrGDQ6HxnmDfHKShs2cE0SfeaPZVNZt6Rwd
+ qu+MxJrQle34sx3PlRbHVg7+RNlcreqOfWMlAoNcMczSsrKXmldcQkQgoyNAmD805Va56ZTm3
+ tJ7d5Lr8wxH6Oh+zooF7m3wIL5sj24/zrtlVtnj0gyOvcvPjuG5nxnntwYe+LWkulIlWIJl1O
+ q5f0zGdxkslCz1T6CTPUSZyRvgv9s0LEhnU4eNslMipfVPiDELAK4X4T8cviFWLLyqiN5c00L
+ J1NRl5JvRQnVKGGr/tCAFs5kDnWLLxhFsvQ6SHsgR1m2vN6TXm1RYf0RntR/gPOSDzpgngRq/
+ UkNCq7CVM+v10oxX+NUjSCaKqF6cvTQom/G7k5UfCS+QZRCAVDSFtdeMVcQExuhHkduG6VNxq
+ JRdfOMsCusY9p7lp++WdXPj2Xx79WCvSfnk0stCt599Cb2+XaG0ny6BkjqY28t0iu/mmSgxWZ
+ V/oZ+iNXOwKb/9evrfbpzToTDe+19Ocys2x9Jh6KBTzDxyUl09cOBcxpX6nSG8HktwrGglBQs
+ tnf6DY1PSxpLOOGTcR/S6rhA7N5okLvzBUEaHL2/po+tpc3oG132GibMK7GUT/MXCWHziGotn
+ mKcP+6ZOXo4Pf32dvaVwiSuDRdKM0LQ+Csj9J9hKQRB0JKwO/ORDkpnouYGvsevJhQb8TV+lc
+ JYl6Op7TAeWfqUgdBysNdAookyTzp/jB2+ay5x01O1gtv8OMWs41zMk6jYtxBfYXR5ZYL/XGX
+ k40ZibuSQWfabTK0kJtg87yzPaCuv4wDcr5HeP+wr36jxH/dVX6p6YaI5jBSut1kDg/9Lz2Al
+ NigDGb1C85+tvFznE
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 3, 2019 at 12:03 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Tue, 3 Sep 2019 at 10:25, Rob Herring <robh+dt@kernel.org> wrote:
-> >
-> > On Tue, Sep 3, 2019 at 8:58 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > >
-> > > On Mon, 26 Aug 2019 at 13:54, Rob Herring <robh+dt@kernel.org> wrote:
-> > > >
-> > > > On Fri, Aug 23, 2019 at 9:54 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > > > >
-> > > > > Convert Samsung Exynos Power Management Unit (PMU) bindings to DT schema
-> > > > > format using json-schema.
-> > > > >
-> > > > > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> > > > > ---
-> > > > >  .../devicetree/bindings/arm/samsung/pmu.txt   | 72 --------------
-> > > > >  .../devicetree/bindings/arm/samsung/pmu.yaml  | 93 +++++++++++++++++++
-> > > > >  2 files changed, 93 insertions(+), 72 deletions(-)
-> > > > >  delete mode 100644 Documentation/devicetree/bindings/arm/samsung/pmu.txt
-> > > > >  create mode 100644 Documentation/devicetree/bindings/arm/samsung/pmu.yaml
-> > > >
-> > > >
-> > > > > diff --git a/Documentation/devicetree/bindings/arm/samsung/pmu.yaml b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
-> > > > > new file mode 100644
-> > > > > index 000000000000..818c6f3488ef
-> > > > > --- /dev/null
-> > > > > +++ b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
-> > > > > @@ -0,0 +1,93 @@
-> > > > > +# SPDX-License-Identifier: GPL-2.0
-> > > > > +%YAML 1.2
-> > > > > +---
-> > > > > +$id: http://devicetree.org/schemas/arm/samsung/pmu.yaml#
-> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > > +
-> > > > > +title: Samsung Exynos SoC series Power Management Unit (PMU)
-> > > > > +
-> > > > > +maintainers:
-> > > > > +  - Krzysztof Kozlowski <krzk@kernel.org>
-> > > > > +
-> > > > > +properties:
-> > > > > +  compatible:
-> > > > > +    items:
-> > > > > +      - enum:
-> > > > > +          - samsung,exynos3250-pmu
-> > > > > +          - samsung,exynos4210-pmu
-> > > > > +          - samsung,exynos4412-pmu
-> > > > > +          - samsung,exynos5250-pmu
-> > > > > +          - samsung,exynos5260-pmu
-> > > > > +          - samsung,exynos5410-pmu
-> > > > > +          - samsung,exynos5420-pmu
-> > > > > +          - samsung,exynos5433-pmu
-> > > > > +          - samsung,exynos7-pmu
-> > > > > +      - const: syscon
-> > > > > +
-> > > > > +  reg:
-> > > > > +    maxItems: 1
-> > > > > +
-> > > > > +  '#clock-cells':
-> > > > > +    const: 1
-> > > > > +
-> > > > > +  clock-names:
-> > > > > +    description:
-> > > > > +      list of clock names for particular CLKOUT mux inputs
-> > > > > +    # TODO: what is the maximum number of elements (mux inputs)?
-> > > > > +    minItems: 1
-> > > > > +    maxItems: 32
-> > > > > +    items:
-> > > > > +      - enum:
-> > > >
-> > > > This isn't correct as you are only defining possible names for the
-> > > > first item. Drop the '-' (making items a schema instead of a list) and
-> > > > then it applies to all. However, doing that will cause a meta-schema
-> > > > error which I need to fix to allow. Or if there's a small set of
-> > > > possibilities of number of inputs, you can list them under a 'oneOf'
-> > > > list.
-> > >
-> > > Mhmm, I cannot test it or I have an error in the schema. if I
-> > > understand correctly, this would be:
-> > >
-> > >   clock-names:
-> > >     description:
-> > >       List of clock names for particular CLKOUT mux inputs
-> > >     minItems: 1
-> > >     maxItems: 16
-> > >     items:
-> > >       clkout0
-> > >       clkout1
-> > >       clkout2
-> > >       clkout3
-> > >       clkout4
-> > >       clkout5
-> > >       clkout6
-> > >       clkout7
-> > >       clkout8
-> > >       clkout9
-> > >       clkout10
-> > >       clkout11
-> > >       clkout12
-> > >       clkout13
-> > >       clkout14
-> > >       clkout15
-> > >       clkout16
-> > >
-> > > Now it produces the error "ignoring, error in schema 'items'" but
-> > > maybe it is expected with current meta-schema?
-> >
-> > 'make dt_binding_check' will give more detailed errors.
-> >
-> > Are the inputs always contiguous 0-N? If so, you want:
-> >
-> > items:
-> >   - const: clkout0
-> >   - const: clkout1
-> >   - const: clkout2
-> >   ...
-> >
-> > If you want to express any number and order of strings is valid, then you need:
-> >
-> > items:
-> >   enum:
-> >     - clkout0
-> >     - clkout1
-> >     - clkout2
-> >
-> > Doing that is discouraged for bindings though. Currently, it will
-> > generate an error from the meta-schema, but we could change that.
->
-> It's the second case. The inputs are not contiguous. Examples:
->
-> system-controller {
->     compatible = "samsung,exynos3250-pmu", "syscon";
->     clock-names = "clkout8";
->     clocks = <&cmu CLK_FIN_PLL>;
-> }
->
-> system-controller {
->     compatible = "samsung,exynos4412-pmu", "syscon";
->     clock-names = "clkout0", "clkout1", "clkout2", "clkout3",
->                   "clkout4", "clkout8", "clkout9";
->     clocks = <&clock CLK_OUT_DMC>, <&clock CLK_OUT_TOP>,
->              <&clock CLK_OUT_LEFTBUS>, <&clock CLK_OUT_RIGHTBUS>,
->              <&clock CLK_OUT_CPU>, <&clock CLK_XXTI>, <&clock CLK_XUSBXTI>;
-> }
->
-> The bindings never required any specific ordering. Also the driver
-> just go through all indices and parses them.
->
-> Your second syntax fails:
-> Documentation/devicetree/bindings/arm/samsung/pmu.yaml:
-> properties:clock-names:items: {'enum': ['clkout0', 'clkout1',
-> 'clkout2', 'clkout3', 'clkout4', 'clkout5', 'clkout6', 'clkout7',
-> 'clkout8', 'clkout9', 'clkout10', 'clkout11', 'clkout12', 'clkout13',
-> 'clkout14', 'clkout15', 'clkout16']} is not of type 'array'
+From: Markus Elfring <elfring@users.sourceforge.net>
+Date: Fri, 6 Sep 2019 20:40:06 +0200
 
-Update dt-schema and try again. It should be allowed now. You'll also
-need to define minItems and maxItems though.
+Simplify these function implementations by using a known function.
 
-Rob
+Generated by: scripts/coccinelle/api/ptr_ret.cocci
+
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+=2D--
+ drivers/pci/controller/dwc/pci-exynos.c |  5 +----
+ drivers/pci/controller/dwc/pci-meson.c  | 10 ++--------
+ drivers/pci/controller/dwc/pcie-kirin.c | 10 ++--------
+ 3 files changed, 5 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/control=
+ler/dwc/pci-exynos.c
+index cee5f2f590e2..b6ab1cc5d895 100644
+=2D-- a/drivers/pci/controller/dwc/pci-exynos.c
++++ b/drivers/pci/controller/dwc/pci-exynos.c
+@@ -92,10 +92,7 @@ static int exynos5440_pcie_get_mem_resources(struct pla=
+tform_device *pdev,
+
+ 	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	ep->mem_res->elbi_base =3D devm_ioremap_resource(dev, res);
+-	if (IS_ERR(ep->mem_res->elbi_base))
+-		return PTR_ERR(ep->mem_res->elbi_base);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(ep->mem_res->elbi_base);
+ }
+
+ static int exynos5440_pcie_get_clk_resources(struct exynos_pcie *ep)
+diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controll=
+er/dwc/pci-meson.c
+index e35e9eaa50ee..713059918002 100644
+=2D-- a/drivers/pci/controller/dwc/pci-meson.c
++++ b/drivers/pci/controller/dwc/pci-meson.c
+@@ -182,10 +182,7 @@ static int meson_pcie_get_mems(struct platform_device=
+ *pdev,
+
+ 	/* Meson SoC has two PCI controllers use same phy register*/
+ 	mp->mem_res.phy_base =3D meson_pcie_get_mem_shared(pdev, mp, "phy");
+-	if (IS_ERR(mp->mem_res.phy_base))
+-		return PTR_ERR(mp->mem_res.phy_base);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(mp->mem_res.phy_base);
+ }
+
+ static void meson_pcie_power_on(struct meson_pcie *mp)
+@@ -259,10 +256,7 @@ static int meson_pcie_probe_clocks(struct meson_pcie =
+*mp)
+ 		return PTR_ERR(res->general_clk);
+
+ 	res->clk =3D meson_pcie_probe_clock(dev, "pcie", 0);
+-	if (IS_ERR(res->clk))
+-		return PTR_ERR(res->clk);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(res->clk);
+ }
+
+ static inline void meson_elb_writel(struct meson_pcie *mp, u32 val, u32 r=
+eg)
+diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/control=
+ler/dwc/pcie-kirin.c
+index c19617a912bd..75b1f1dde747 100644
+=2D-- a/drivers/pci/controller/dwc/pcie-kirin.c
++++ b/drivers/pci/controller/dwc/pcie-kirin.c
+@@ -138,10 +138,7 @@ static long kirin_pcie_get_clk(struct kirin_pcie *kir=
+in_pcie,
+ 		return PTR_ERR(kirin_pcie->apb_sys_clk);
+
+ 	kirin_pcie->pcie_aclk =3D devm_clk_get(dev, "pcie_aclk");
+-	if (IS_ERR(kirin_pcie->pcie_aclk))
+-		return PTR_ERR(kirin_pcie->pcie_aclk);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(kirin_pcie->pcie_aclk);
+ }
+
+ static long kirin_pcie_get_resource(struct kirin_pcie *kirin_pcie,
+@@ -174,10 +171,7 @@ static long kirin_pcie_get_resource(struct kirin_pcie=
+ *kirin_pcie,
+
+ 	kirin_pcie->sysctrl =3D
+ 		syscon_regmap_lookup_by_compatible("hisilicon,hi3660-sctrl");
+-	if (IS_ERR(kirin_pcie->sysctrl))
+-		return PTR_ERR(kirin_pcie->sysctrl);
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(kirin_pcie->sysctrl);
+ }
+
+ static int kirin_pcie_phy_init(struct kirin_pcie *kirin_pcie)
+=2D-
+2.23.0
+
