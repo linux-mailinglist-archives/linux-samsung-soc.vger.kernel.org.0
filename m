@@ -2,202 +2,228 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B127AB7E3
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 14:14:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EC90ABCF0
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Sep 2019 17:49:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391844AbfIFMON (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Sep 2019 08:14:13 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:35373 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731584AbfIFMON (ORCPT
+        id S2393073AbfIFPtJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Sep 2019 11:49:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33128 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732456AbfIFPtH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Sep 2019 08:14:13 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190906121411euoutp01720f37ec7fa79a2cf1901292b46446ee~B2F-vpnoW3128731287euoutp01k
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Sep 2019 12:14:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190906121411euoutp01720f37ec7fa79a2cf1901292b46446ee~B2F-vpnoW3128731287euoutp01k
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1567772051;
-        bh=8bq0zyXxMMGz7JArDAMaWTFTMXYIKCVTlRXFaU/lxLE=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=BVLCNstXliCJiSTE7hI5qCqLLBUnseQWq+OqvRkBiE7qqylf5ezN3RPTKorz3fW6x
-         14vcgFmCV8izPuOgtv/Sy+TDZcra7i3o1It4IfZmyejGd2+jwrTEb/84DAezjuCoWg
-         nSAtx6VEbdFTjykv6kxveRDOg6MiJ0eopr1N0YjQ=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190906121410eucas1p20d604a2935d841fd3c0bfaf07c151ec2~B2F_zQnIv1615716157eucas1p2b;
-        Fri,  6 Sep 2019 12:14:10 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 60.08.04374.29D427D5; Fri,  6
-        Sep 2019 13:14:10 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190906121409eucas1p19c9b4675d6a4a60f3fedae6597be10f3~B2F97UTwZ1740117401eucas1p1e;
-        Fri,  6 Sep 2019 12:14:09 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190906121409eusmtrp14ca8de593255321a04aeaa0d5ddbb3c8~B2F9sce9B2099920999eusmtrp1R;
-        Fri,  6 Sep 2019 12:14:09 +0000 (GMT)
-X-AuditID: cbfec7f5-4ddff70000001116-21-5d724d9287d8
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 12.F0.04117.19D427D5; Fri,  6
-        Sep 2019 13:14:09 +0100 (BST)
-Received: from [106.120.51.20] (unknown [106.120.51.20]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190906121408eusmtip24d7641472ec9002de43140e73e4a2ab1~B2F9DGPpa0190101901eusmtip2x;
-        Fri,  6 Sep 2019 12:14:08 +0000 (GMT)
-Subject: Re: [PATCH 3/3] dt-bindings: ddr: Add bindings for Samsung LPDDR3
- memories
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        willy.mh.wolff.ml@gmail.com
-From:   Lukasz Luba <l.luba@partner.samsung.com>
-Message-ID: <99d2f2be-80f8-258c-2621-a4b5ff5cd177@partner.samsung.com>
-Date:   Fri, 6 Sep 2019 14:14:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
+        Fri, 6 Sep 2019 11:49:07 -0400
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AED7821835;
+        Fri,  6 Sep 2019 15:49:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1567784945;
+        bh=Jr5kgXqyWS7nh52NwJvOior0lys98UCdmbOdcfTtNDg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=CWy0XUtdMPK4ldm+ALO4hNc9NhMkC9KZQ0dMR1c4PcYhArloTT5P2R24zCBNE9WW8
+         mBW9uvEmpTGaJ4qOV83YYHyVA4xMuTO9ivrxhgE4dlY0rFEBVv5g9IKT3JyRpI1YW9
+         NhVjc/T1ubb6yDj8dA0KJaL+l37rTDRrAa6opxMo=
+Received: by mail-qt1-f172.google.com with SMTP id l22so7504442qtp.10;
+        Fri, 06 Sep 2019 08:49:05 -0700 (PDT)
+X-Gm-Message-State: APjAAAV0vJIUhvJntZ2ZvXevj3MXhxXkwwrO97Q4vJIgksAAEt2MVbe9
+        4fjSQBuERe/1pdMhADPy00nd/aD0uy7VFgF+xQ==
+X-Google-Smtp-Source: APXvYqzOFUgh8GnB6rG6hXcILzhLec0cs9V0M4FXVh+YnJXdDppWGYwFW7NZzD11jYW/qoY7azAhk18Zu9nuUkLC+F4=
+X-Received: by 2002:ac8:100d:: with SMTP id z13mr3818851qti.224.1567784944824;
+ Fri, 06 Sep 2019 08:49:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPfEcURr_bLRaAdjWT3cb7mcuKTk8rmn7OTO=xtvjvJ=jQ@mail.gmail.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SfSyVYRjGe877eaxjb4e4+1htp9ZkIWPr2ZJJzU5tUX+0VaY68nYYDp0X
-        faloqI6PSiuc6csqnEgOIRPrOIsSslosaUIpH2tFGil5vSz//e7rvp7nvq9nD0soO6mlbJgu
-        htfrNBEq2oaseDbe6pK5Qx+0vtG6Cpdml1C4fbSfwjetLRS+2DtI4NbWhwxuPjvEYHPvWwq/
-        rs6l8Ui6FeHs1loZLrZ2Mfhue5sMdyYW0Dj5iZXB9UPnKDzW2IN8OHXRjSKkfmzsYtRm0wVa
-        XXbnjDqj3ITUI+YVO+l9Nl4hfERYHK938z5oEzpVUUhE319ybLCygU5AVfYGJGeB84TvOUnI
-        gGxYJVeAoL+rbrYYRWCsGWakYgRBcf2YbO5I7t0eWmrkI8gy5JFSMYxgMu0FLbrsuN3wMvU3
-        I7I9txba//yiRBPBWUjIrh6fvoplac4VqkxHRI+C84PU0c+UyCS3Gi53fSFFXsztgR/d9ZTk
-        WQTPc/pmdDm3C9KTemdmEZwjvOu7KZN4JVQO5xLiLOASWbjV+ImU1t4KX8tv0BLbwUBDOSPx
-        cmi6kjbrESAh/TaSOB56L16f9WyE+oY2StyZmA5TUu0myZthyphJizJwttAxvEhawRYyK7II
-        SVbA+RSl5HaC8rRXs2/oAPlF15hLSGWcF8w4L4xxXhjj/7m3EGlCjnysEKnlBQ8df9RV0EQK
-        sTqt66GoSDOa/nJNfxt+VqHayWAL4likWqjo9tEHKSlNnHA80oKAJVT2ipLS6CClIkRz/ASv
-        jzqgj43gBQtaxpIqR8XJBd2BSk6rieHDeT6a1891Zax8aQLKrzqg/pjEJOcN+Ha0+18VmA8O
-        273GDgdO7DfUOuc0B3v5ugQMbik9kZdIjevej9R9k6908rtd/DPZP8UwKHPYZgpK4gssLZBq
-        P+4+hgMKJ9YdzMh+sEl5elddv+cpPjjgTXgZTdY4FUdvuNck31mi9fHY6xzhXal6umb3I008
-        ryKFUI27M6EXNP8AELsQK24DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsVy+t/xe7oTfYtiDQ63qVpsnLGe1eL6l+es
-        FvOPnGO16H/8mtni/PkN7BZnm96wW2x6fI3V4vKuOWwWn3uPMFrMOL+PyWLtkbvsFkuvX2Sy
-        uN24gs2ide8RdovDb9pZLb6deMToIOCxZt4aRo+ds+6ye2xa1cnmsXlJvUffllWMHp83yQWw
-        RenZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunbJehl/N+2
-        krlgtWTF6+3H2RoYd4h0MXJySAiYSMxZ+oiti5GLQ0hgKaPEh8OtrBAJMYlJ+7azQ9jCEn+u
-        dUEVvWaUWLdkI1hCWCBU4kz3bzBbREBT4vrf76wgRcwCh1gkPm09zgjRMYlZYvWfqyxdjBwc
-        bAJ6EjtWFYI08Aq4SXR/eQa2jUVARWLi3RcsILaoQITE4R2zGCFqBCVOznwCFucUCJTobXnM
-        BmIzC5hJzNv8kBnCFpe49WQ+E4QtL7H97RzmCYxCs5C0z0LSMgtJyywkLQsYWVYxiqSWFuem
-        5xYb6RUn5haX5qXrJefnbmIERva2Yz+37GDsehd8iFGAg1GJh/eBQ1GsEGtiWXFl7iFGCQ5m
-        JRHe9RsLYoV4UxIrq1KL8uOLSnNSiw8xmgI9N5FZSjQ5H5h08kriDU0NzS0sDc2NzY3NLJTE
-        eTsEDsYICaQnlqRmp6YWpBbB9DFxcEo1MKp53nDxc0m0ZvQ09tv4Z0nUAdYliz+d5ErtEPvy
-        52Tl/L87HaqlraW26CbdSdnwqUqzWtYt9ImVWNqNBrFtFy476DOIpE56e9d6+fS4yWZT7Naf
-        qLx2mff7ystGOVJWbzfIRcXe3X+89m5H5FKdK/e5XoWtOP3lUJ1M8uJqsZeNy5atWLl+XZ4S
-        S3FGoqEWc1FxIgB7L0JuAgMAAA==
-X-CMS-MailID: 20190906121409eucas1p19c9b4675d6a4a60f3fedae6597be10f3
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190906101407eucas1p15eb0df53374b27497b4793eab24becf6
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190906101407eucas1p15eb0df53374b27497b4793eab24becf6
-References: <CGME20190906101407eucas1p15eb0df53374b27497b4793eab24becf6@eucas1p1.samsung.com>
-        <20190906101344.3535-1-l.luba@partner.samsung.com>
-        <20190906101344.3535-4-l.luba@partner.samsung.com>
-        <CAJKOXPfoYxTVvt_bMQOs1=BkHzUuW_WvL9zn0jTGS6LLpv=fhQ@mail.gmail.com>
-        <52963d0d-cf48-7085-5581-a94c6e15e0bd@partner.samsung.com>
-        <CAJKOXPfEcURr_bLRaAdjWT3cb7mcuKTk8rmn7OTO=xtvjvJ=jQ@mail.gmail.com>
+References: <20190823145356.6341-1-krzk@kernel.org> <20190823145356.6341-5-krzk@kernel.org>
+ <CAL_JsqJybT41cEqiTriLMywUQj1BtAG_9muJ4=84OkF23y53CA@mail.gmail.com>
+ <CAJKOXPc0SY_8BHMsWLN=1M3VQh41+bdBiH21L4KQPA+iLPYy+A@mail.gmail.com>
+ <CAL_JsqKdsABWK9Og_f38T9zf3SCFFdhU8WOJ4uJjREantoYvYQ@mail.gmail.com> <CAJKOXPfnvu=c5f6AcOSiQ_9E-C2fMf9qbEpy1Tr3QvH8LgAtpQ@mail.gmail.com>
+In-Reply-To: <CAJKOXPfnvu=c5f6AcOSiQ_9E-C2fMf9qbEpy1Tr3QvH8LgAtpQ@mail.gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 6 Sep 2019 16:48:53 +0100
+X-Gmail-Original-Message-ID: <CAL_JsqKyj3s-Mn3q_Lna0w38K3DJzvKN5d72WHzqt4CUVf5X4Q@mail.gmail.com>
+Message-ID: <CAL_JsqKyj3s-Mn3q_Lna0w38K3DJzvKN5d72WHzqt4CUVf5X4Q@mail.gmail.com>
+Subject: Re: [RFC 5/9] dt-bindings: arm: samsung: Convert Exynos PMU bindings
+ to json-schema
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        =?UTF-8?Q?Pawe=C5=82_Chmiel?= <pawel.mikolaj.chmiel@gmail.com>,
+        devicetree@vger.kernel.org,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
+        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" 
+        <linux-rtc@vger.kernel.org>, notify@kernel.org,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Tue, Sep 3, 2019 at 12:03 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On Tue, 3 Sep 2019 at 10:25, Rob Herring <robh+dt@kernel.org> wrote:
+> >
+> > On Tue, Sep 3, 2019 at 8:58 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > >
+> > > On Mon, 26 Aug 2019 at 13:54, Rob Herring <robh+dt@kernel.org> wrote:
+> > > >
+> > > > On Fri, Aug 23, 2019 at 9:54 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > > > >
+> > > > > Convert Samsung Exynos Power Management Unit (PMU) bindings to DT schema
+> > > > > format using json-schema.
+> > > > >
+> > > > > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > > > > ---
+> > > > >  .../devicetree/bindings/arm/samsung/pmu.txt   | 72 --------------
+> > > > >  .../devicetree/bindings/arm/samsung/pmu.yaml  | 93 +++++++++++++++++++
+> > > > >  2 files changed, 93 insertions(+), 72 deletions(-)
+> > > > >  delete mode 100644 Documentation/devicetree/bindings/arm/samsung/pmu.txt
+> > > > >  create mode 100644 Documentation/devicetree/bindings/arm/samsung/pmu.yaml
+> > > >
+> > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/arm/samsung/pmu.yaml b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
+> > > > > new file mode 100644
+> > > > > index 000000000000..818c6f3488ef
+> > > > > --- /dev/null
+> > > > > +++ b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
+> > > > > @@ -0,0 +1,93 @@
+> > > > > +# SPDX-License-Identifier: GPL-2.0
+> > > > > +%YAML 1.2
+> > > > > +---
+> > > > > +$id: http://devicetree.org/schemas/arm/samsung/pmu.yaml#
+> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > > +
+> > > > > +title: Samsung Exynos SoC series Power Management Unit (PMU)
+> > > > > +
+> > > > > +maintainers:
+> > > > > +  - Krzysztof Kozlowski <krzk@kernel.org>
+> > > > > +
+> > > > > +properties:
+> > > > > +  compatible:
+> > > > > +    items:
+> > > > > +      - enum:
+> > > > > +          - samsung,exynos3250-pmu
+> > > > > +          - samsung,exynos4210-pmu
+> > > > > +          - samsung,exynos4412-pmu
+> > > > > +          - samsung,exynos5250-pmu
+> > > > > +          - samsung,exynos5260-pmu
+> > > > > +          - samsung,exynos5410-pmu
+> > > > > +          - samsung,exynos5420-pmu
+> > > > > +          - samsung,exynos5433-pmu
+> > > > > +          - samsung,exynos7-pmu
+> > > > > +      - const: syscon
+> > > > > +
+> > > > > +  reg:
+> > > > > +    maxItems: 1
+> > > > > +
+> > > > > +  '#clock-cells':
+> > > > > +    const: 1
+> > > > > +
+> > > > > +  clock-names:
+> > > > > +    description:
+> > > > > +      list of clock names for particular CLKOUT mux inputs
+> > > > > +    # TODO: what is the maximum number of elements (mux inputs)?
+> > > > > +    minItems: 1
+> > > > > +    maxItems: 32
+> > > > > +    items:
+> > > > > +      - enum:
+> > > >
+> > > > This isn't correct as you are only defining possible names for the
+> > > > first item. Drop the '-' (making items a schema instead of a list) and
+> > > > then it applies to all. However, doing that will cause a meta-schema
+> > > > error which I need to fix to allow. Or if there's a small set of
+> > > > possibilities of number of inputs, you can list them under a 'oneOf'
+> > > > list.
+> > >
+> > > Mhmm, I cannot test it or I have an error in the schema. if I
+> > > understand correctly, this would be:
+> > >
+> > >   clock-names:
+> > >     description:
+> > >       List of clock names for particular CLKOUT mux inputs
+> > >     minItems: 1
+> > >     maxItems: 16
+> > >     items:
+> > >       clkout0
+> > >       clkout1
+> > >       clkout2
+> > >       clkout3
+> > >       clkout4
+> > >       clkout5
+> > >       clkout6
+> > >       clkout7
+> > >       clkout8
+> > >       clkout9
+> > >       clkout10
+> > >       clkout11
+> > >       clkout12
+> > >       clkout13
+> > >       clkout14
+> > >       clkout15
+> > >       clkout16
+> > >
+> > > Now it produces the error "ignoring, error in schema 'items'" but
+> > > maybe it is expected with current meta-schema?
+> >
+> > 'make dt_binding_check' will give more detailed errors.
+> >
+> > Are the inputs always contiguous 0-N? If so, you want:
+> >
+> > items:
+> >   - const: clkout0
+> >   - const: clkout1
+> >   - const: clkout2
+> >   ...
+> >
+> > If you want to express any number and order of strings is valid, then you need:
+> >
+> > items:
+> >   enum:
+> >     - clkout0
+> >     - clkout1
+> >     - clkout2
+> >
+> > Doing that is discouraged for bindings though. Currently, it will
+> > generate an error from the meta-schema, but we could change that.
+>
+> It's the second case. The inputs are not contiguous. Examples:
+>
+> system-controller {
+>     compatible = "samsung,exynos3250-pmu", "syscon";
+>     clock-names = "clkout8";
+>     clocks = <&cmu CLK_FIN_PLL>;
+> }
+>
+> system-controller {
+>     compatible = "samsung,exynos4412-pmu", "syscon";
+>     clock-names = "clkout0", "clkout1", "clkout2", "clkout3",
+>                   "clkout4", "clkout8", "clkout9";
+>     clocks = <&clock CLK_OUT_DMC>, <&clock CLK_OUT_TOP>,
+>              <&clock CLK_OUT_LEFTBUS>, <&clock CLK_OUT_RIGHTBUS>,
+>              <&clock CLK_OUT_CPU>, <&clock CLK_XXTI>, <&clock CLK_XUSBXTI>;
+> }
+>
+> The bindings never required any specific ordering. Also the driver
+> just go through all indices and parses them.
+>
+> Your second syntax fails:
+> Documentation/devicetree/bindings/arm/samsung/pmu.yaml:
+> properties:clock-names:items: {'enum': ['clkout0', 'clkout1',
+> 'clkout2', 'clkout3', 'clkout4', 'clkout5', 'clkout6', 'clkout7',
+> 'clkout8', 'clkout9', 'clkout10', 'clkout11', 'clkout12', 'clkout13',
+> 'clkout14', 'clkout15', 'clkout16']} is not of type 'array'
 
+Update dt-schema and try again. It should be allowed now. You'll also
+need to define minItems and maxItems though.
 
-On 9/6/19 1:50 PM, Krzysztof Kozlowski wrote:
-> On Fri, 6 Sep 2019 at 13:39, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>
->> Hi Krzysztof,
->>
->> On 9/6/19 12:56 PM, Krzysztof Kozlowski wrote:
->>> On Fri, 6 Sep 2019 at 12:14, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->>>>
->>>> Add description of bindings for Samsung k3qf2f20db LPDDR3 memory.
->>>> Minor fixes in the old documentation.
->>>>
->>>> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
->>>> ---
->>>>    .../devicetree/bindings/ddr/lpddr3.txt        | 29 +++++++++++++++++--
->>>>    1 file changed, 27 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/ddr/lpddr3.txt b/Documentation/devicetree/bindings/ddr/lpddr3.txt
->>>> index 3b2485b84b3f..de0905239767 100644
->>>> --- a/Documentation/devicetree/bindings/ddr/lpddr3.txt
->>>> +++ b/Documentation/devicetree/bindings/ddr/lpddr3.txt
->>>> @@ -40,10 +40,34 @@ Child nodes:
->>>>      a given speed-bin. Please see Documentation/devicetree/
->>>>      bindings/ddr/lpddr3-timings.txt for more information on "lpddr3-timings"
->>>>
->>>> +Samsung K3QF2F20DB LPDDR3 memory
->>>> +------------------------------------------------------------
->>>> +
->>>> +This binding uses the LPDDR3 binding (described above)
->>>> +
->>>> +Required properties:
->>>> +- compatible:  Should be:
->>>> +               "samsung,K3QF2F20DB"
->>>> +               followed by "jedec,lpddr3"
->>>> +- density  : <u32> representing density in Mb (Mega bits)
->>>> +- io-width : <u32> representing bus width. Possible value 32
->>>> +- #address-cells: Must be set to 1
->>>> +- #size-cells: Must be set to 0
->>>
->>> If you decided to repeat all properties again, then it deserves its
->>> own bindings file. However I though about simpler solution - just
->>> document compatible. Exactly the same as AT24 or AT25 EEPROM bindings.
->>> There is not much benefit from copying all these properties.
->> OK, I see. I will add only 'compatible' and skip the rest then.
->> So the lpddr3.txt file will get this addition:
->>
->> +Samsung K3QF2F20DB LPDDR3 memory
->> +------------------------------------------------------------
->> +
->> +This binding uses the LPDDR3 binding (described above)
->> +
->> +Required properties:
->> +- compatible:  Should be:
->> +               "samsung,K3QF2F20DB"
->> +               followed by "jedec,lpddr3"
->> +
->> +Optional properties:
->> +
->> +The optional properties are the same as in the LPDDR3 generic bindings and
->> +values should be taken from the data-sheet. Detailed bindings are described
->> +above.
->> +
->> +Child nodes:
->> +
->> +Detailed bindings are described in LPDDR3 generic bindings described above.
->> +
->>
->> Is it OK?
-> 
-> To me it is still a lot of text just for one compatible and I can
-> image more of such entries for other memories... However I do not mind
-> and anyway, YAML will simplify it. If you're in doubt, wait for Rob's
-> reply as this is his part.
-
-You are definitely right, YAML will simplify this.
-I will wait a few days with the v2 series, maybe Rob would like to see
-something different. If not, I will send v2 with the above change.
-Thank you for your comments.
-
-Regards,
-Lukasz
-
+Rob
