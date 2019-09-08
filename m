@@ -2,132 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D3C51ACCB8
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  8 Sep 2019 14:31:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0170EACFE9
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  8 Sep 2019 18:57:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729159AbfIHMbg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 8 Sep 2019 08:31:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52740 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728667AbfIHMbg (ORCPT
+        id S1730069AbfIHQ45 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 8 Sep 2019 12:56:57 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34588 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730063AbfIHQ45 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 8 Sep 2019 08:31:36 -0400
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8CD2E2081B;
-        Sun,  8 Sep 2019 12:31:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1567945894;
-        bh=cj9qbMaSD8MXlVqXVwfmJA/SjgnhVIKx/gTAE+c1dlY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=t2RRi7mW+3tu/jy1I2SaOW1JzHCOyPqUO5GBsm25WL58hRJ4RhNbW+rD9XJajrJcX
-         MqCeQ8v59luoDp+hUTwiTZbriCOiKAp0ylWvanNdXzsSNLIEWzNxiDwu1ri7QDYuqt
-         6zyOwYF6aLtfFHe8LUKauJjbZtD+w2UEBUSWs2/I=
-Date:   Sun, 8 Sep 2019 13:31:22 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+        Sun, 8 Sep 2019 12:56:57 -0400
+Received: by mail-pg1-f194.google.com with SMTP id n9so6387672pgc.1
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 08 Sep 2019 09:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E2f3KSrZxRio8/FeHv28ONTThNhL2TjtH0LaTd/eJz4=;
+        b=YkxKYH/ERWEtBHeMoD9KlshTjhFsDszVa0tiICeohlWVLEzIcG2mdKPWfiiXIAB9Ep
+         h6QalfbgiFdxT1gwzIyDJP5nWISKWpTHIpT1fN2L7ULPQG419Bbi7XY3FDT2eqv7Pdio
+         H1K5BfueRIQBGq3EqACgol7GvzJZ1eAgnKKZmazjR0LQiP65cCb17u0sJuotvVHS33a6
+         qj4J0lq3fFjn9VBtqa6a2jkRAsYTa2rETqDhPFBFFdRonhlNDlwxzNcmQUhBH77kLi7U
+         AS1qIGirCQTlRgJu1+io8rSZUnDci9vM9xSPVt3khu+byAO8nhRLsYoEOS2YUMuEme9n
+         8jPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E2f3KSrZxRio8/FeHv28ONTThNhL2TjtH0LaTd/eJz4=;
+        b=q2s3G3FT6YI8b94g4DuVMbG2jzL38mJhKpPDXKUAcnors8znytyceS+0XrucaNI0GM
+         6BIHCSRibxKgzLzBr3Q7EwuR4umXykj2Cg5Ysmq7iT2YTm0OauMdJQB9BSf0eQD+5rTe
+         y/q37qoV9UVJriyh+rPFhswFuemEh/ZnW3uUERBayR1pfynsGutR95PO838ZLVfpBoDm
+         SQlumiIv7W5xSa7KqoLrLItUz8FVX1+4QXCpukaTJLH47WVH8PUP3FVZBzMuHHvKMHS+
+         imMEd8Q+C8D/hlZZkdmFHI8pHMJUIec3kC+xsDxMPiBKfP8VgRjlVg4Bu2jpuRVi5qj+
+         evnQ==
+X-Gm-Message-State: APjAAAUqKp/YpEbRPipFOo8G3dlhjIlKPYVg+/3BYUVKxNGc6OgZP9s8
+        iKbXY7UxC1PPuuqifSVV9G42MA==
+X-Google-Smtp-Source: APXvYqycW5UHspFXzTlIh/iOGVx+SWpR9vq4XdyDpuh90LK48tRDCdIIhjamCNmUiV+Y56F7gJ75Lw==
+X-Received: by 2002:a63:7d05:: with SMTP id y5mr17861065pgc.425.1567961816386;
+        Sun, 08 Sep 2019 09:56:56 -0700 (PDT)
+Received: from localhost.localdomain ([24.244.23.109])
+        by smtp.googlemail.com with ESMTPSA id f188sm13834631pfa.170.2019.09.08.09.56.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Sep 2019 09:56:55 -0700 (PDT)
+From:   Tom Murphy <murphyt7@tcd.ie>
+To:     iommu@lists.linux-foundation.org
+Cc:     Tom Murphy <murphyt7@tcd.ie>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         Kukjin Kim <kgene@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Sebastian Reichel <sre@kernel.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        =?UTF-8?B?UGF3ZcWC?= Chmiel <pawel.mikolaj.chmiel@gmail.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v2 11/11] dt-bindings: iio: adc: exynos: Remove old
- requirement of two register address ranges
-Message-ID: <20190908133122.7080a124@archlinux>
-In-Reply-To: <20190907092007.9946-11-krzk@kernel.org>
-References: <20190907092007.9946-1-krzk@kernel.org>
-        <20190907092007.9946-11-krzk@kernel.org>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: [PATCH v6 0/5] iommu/amd: Convert the AMD iommu driver to the dma-iommu api
+Date:   Sun,  8 Sep 2019 09:56:36 -0700
+Message-Id: <20190908165642.22253-1-murphyt7@tcd.ie>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat,  7 Sep 2019 11:20:07 +0200
-Krzysztof Kozlowski <krzk@kernel.org> wrote:
+Convert the AMD iommu driver to the dma-iommu api. Remove the iova
+handling and reserve region code from the AMD iommu driver.
 
-> Commit fafb37cfae6d ("iio: exyno-adc: use syscon for PMU
-> register access") changed the Exynos ADC driver so the PMU syscon
-> phandle is required instead of second register address space.  The
-> bindings were not updated so fix them now.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Change-log:
+V6:
+-add more details to the description of patch 001-iommu-amd-Remove-unnecessary-locking-from-AMD-iommu-.patch
+-rename handle_deferred_device to iommu_dma_deferred_attach
+-fix double tabs in 0003-iommu-dma-iommu-Handle-deferred-devices.patch
+V5:
+-Rebase on top of linux-next
+V4:
+-Rebase on top of linux-next
+-Split the removing of the unnecessary locking in the amd iommu driver into a seperate patch
+-refactor the "iommu/dma-iommu: Handle deferred devices" patch and address comments
+v3:
+-rename dma_limit to dma_mask
+-exit handle_deferred_device early if (!is_kdump_kernel())
+-remove pointless calls to handle_deferred_device
+v2:
+-Rebase on top of this series:
+ http://git.infradead.org/users/hch/misc.git/shortlog/refs/heads/dma-iommu-ops.3
+-Add a gfp_t parameter to the iommu_ops::map function.
+-Made use of the reserve region code inside the dma-iommu api
 
-Seems sensible. Thanks for cleaning this up.
+Tom Murphy (5):
+  iommu/amd: Remove unnecessary locking from AMD iommu driver
+  iommu: Add gfp parameter to iommu_ops::map
+  iommu/dma-iommu: Handle deferred devices
+  iommu/dma-iommu: Use the dev->coherent_dma_mask
+  iommu/amd: Convert AMD iommu driver to the dma-iommu api
 
-As before I'll wait on review from Rob or similar. If they
-are going via another path (fine by me as well).
+ drivers/iommu/Kconfig           |   1 +
+ drivers/iommu/amd_iommu.c       | 690 ++++----------------------------
+ drivers/iommu/amd_iommu_types.h |   1 -
+ drivers/iommu/arm-smmu-v3.c     |   2 +-
+ drivers/iommu/arm-smmu.c        |   2 +-
+ drivers/iommu/dma-iommu.c       |  43 +-
+ drivers/iommu/exynos-iommu.c    |   2 +-
+ drivers/iommu/intel-iommu.c     |   2 +-
+ drivers/iommu/iommu.c           |  43 +-
+ drivers/iommu/ipmmu-vmsa.c      |   2 +-
+ drivers/iommu/msm_iommu.c       |   2 +-
+ drivers/iommu/mtk_iommu.c       |   2 +-
+ drivers/iommu/mtk_iommu_v1.c    |   2 +-
+ drivers/iommu/omap-iommu.c      |   2 +-
+ drivers/iommu/qcom_iommu.c      |   2 +-
+ drivers/iommu/rockchip-iommu.c  |   2 +-
+ drivers/iommu/s390-iommu.c      |   2 +-
+ drivers/iommu/tegra-gart.c      |   2 +-
+ drivers/iommu/tegra-smmu.c      |   2 +-
+ drivers/iommu/virtio-iommu.c    |   2 +-
+ include/linux/iommu.h           |  21 +-
+ 21 files changed, 178 insertions(+), 651 deletions(-)
 
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com> for
-both IIO related binding patches.
-
-Thanks,
-
-Jonathan
-
-> 
-> ---
-> 
-> Changes since v1:
-> 1. New patch.
-> ---
->  .../bindings/iio/adc/samsung,exynos-adc.yaml     | 16 ++--------------
->  1 file changed, 2 insertions(+), 14 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/iio/adc/samsung,exynos-adc.yaml b/Documentation/devicetree/bindings/iio/adc/samsung,exynos-adc.yaml
-> index dd58121f25b1..b4c6c26681d9 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/samsung,exynos-adc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/samsung,exynos-adc.yaml
-> @@ -25,8 +25,7 @@ properties:
->        - samsung,s5pv210-adc
->  
->    reg:
-> -    minItems: 1
-> -    maxItems: 2
-> +    maxItems: 1
->  
->    clocks:
->      description:
-> @@ -55,7 +54,7 @@ properties:
->      $ref: '/schemas/types.yaml#/definitions/phandle'
->      description:
->        Phandle to the PMU system controller node (to access the ADC_PHY
-> -      register on Exynos5250/5420/5800/3250).
-> +      register on Exynos3250/4x12/5250/5420/5800).
->  
->    has-touchscreen:
->      description:
-> @@ -83,19 +82,8 @@ allOf:
->                - samsung,exynos4212-adc
->                - samsung,s5pv210-adc
->      then:
-> -      properties:
-> -        reg:
-> -          items:
-> -            # For S5P and Exynos
-> -            - description: base registers
-> -            - description: phy registers
->        required:
->          - samsung,syscon-phandle
-> -    else:
-> -      properties:
-> -        reg:
-> -          items:
-> -            - description: base registers
->  
->    - if:
->        properties:
+-- 
+2.20.1
 
