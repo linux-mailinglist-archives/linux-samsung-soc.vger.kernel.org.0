@@ -2,66 +2,273 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF90ADC8C
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Sep 2019 17:57:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BEFFADD14
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Sep 2019 18:26:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388935AbfIIP5a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 9 Sep 2019 11:57:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41188 "EHLO mail.kernel.org"
+        id S2389512AbfIIQZv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 9 Sep 2019 12:25:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55824 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387886AbfIIP5a (ORCPT
+        id S1726287AbfIIQZv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 9 Sep 2019 11:57:30 -0400
+        Mon, 9 Sep 2019 12:25:51 -0400
 Received: from localhost.localdomain (unknown [194.230.155.145])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4C73B21920;
-        Mon,  9 Sep 2019 15:57:28 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CF4AC2171F;
+        Mon,  9 Sep 2019 16:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568044650;
-        bh=txx6fjNW+yD7Yjrg5RVtc6d5okKUDAGyirsR0YkwY7M=;
+        s=default; t=1568046349;
+        bh=L3l77Xo2NXGQCGOcgIoYmO3zsKpUGDHavn1c+tUnKc0=;
         h=From:To:Subject:Date:From;
-        b=PDjn5+15Mk3M8whbyOUZOPBjsRWMu4Ge5FsGh1c6LeMrmSFKIYJEJNy/yyA/kN8pv
-         Eyb8Bv/Jamj/KGoKTkpNKwQnp7caTAq8otWRIbeYo3pHMRlJWBGxY7ykJDQlfaC2tq
-         dGycDUy/JTwt5NX9k1BABpSznNBXIAgC59WAdPAo=
+        b=pwqi35Nolh/zHjoM0hopW/Zp0TgHjCNRGFuduvBgGiqnNmJveT2Ar6ow/LYn6M6bs
+         WTjXbehc2WAOX0HKQ97IqQvr9sDPI8w2zSaR7cLNGuELI+0kAsX0VOx9JRq5GTSKVU
+         /7tmb4AyU6efPo3N2J4CxLzZw0jEIx9HM4NJbbbQ=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sangbeom Kim <sbkim73@samsung.com>,
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [RESEND PATCH] regulator: s2mps11: Consistently use local variable
-Date:   Mon,  9 Sep 2019 17:57:23 +0200
-Message-Id: <20190909155723.24734-1-krzk@kernel.org>
+Subject: [PATCH] dt-bindings: timer: Convert Exynos MCT bindings to json-schema
+Date:   Mon,  9 Sep 2019 18:25:37 +0200
+Message-Id: <20190909162537.27635-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The value under 's2mps11->ext_control_gpiod[i]' is assigned to local
-variable and used in probe in one place before.  Use it consistently
-later so code will be easier to read.
+Convert Samsung Exynos Soc Multi Core Timer bindings to DT schema format
+using json-schema.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/regulator/s2mps11.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/timer/samsung,exynos4210-mct.txt |  88 --------------
+ .../timer/samsung,exynos4210-mct.yaml         | 115 ++++++++++++++++++
+ 2 files changed, 115 insertions(+), 88 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+ create mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
 
-diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
-index 054baaadfdfd..5bc00884cf51 100644
---- a/drivers/regulator/s2mps11.c
-+++ b/drivers/regulator/s2mps11.c
-@@ -1226,7 +1226,7 @@ static int s2mps11_pmic_probe(struct platform_device *pdev)
- 			goto out;
- 		}
- 
--		if (s2mps11->ext_control_gpiod[i]) {
-+		if (config.ena_gpiod) {
- 			ret = s2mps14_pmic_enable_ext_control(s2mps11,
- 					regulator);
- 			if (ret < 0) {
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+deleted file mode 100644
+index 8f78640ad64c..000000000000
+--- a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
++++ /dev/null
+@@ -1,88 +0,0 @@
+-Samsung's Multi Core Timer (MCT)
+-
+-The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
+-global timer and CPU local timers. The global timer is a 64-bit free running
+-up-counter and can generate 4 interrupts when the counter reaches one of the
+-four preset counter values. The CPU local timers are 32-bit free running
+-down-counters and generate an interrupt when the counter expires. There is
+-one CPU local timer instantiated in MCT for every CPU in the system.
+-
+-Required properties:
+-
+-- compatible: should be "samsung,exynos4210-mct".
+-  (a) "samsung,exynos4210-mct", for mct compatible with Exynos4210 mct.
+-  (b) "samsung,exynos4412-mct", for mct compatible with Exynos4412 mct.
+-
+-- reg: base address of the mct controller and length of the address space
+-  it occupies.
+-
+-- interrupts: the list of interrupts generated by the controller. The following
+-  should be the order of the interrupts specified. The local timer interrupts
+-  should be specified after the four global timer interrupts have been
+-  specified.
+-
+-	0: Global Timer Interrupt 0
+-	1: Global Timer Interrupt 1
+-	2: Global Timer Interrupt 2
+-	3: Global Timer Interrupt 3
+-	4: Local Timer Interrupt 0
+-	5: Local Timer Interrupt 1
+-	6: ..
+-	7: ..
+-	i: Local Timer Interrupt n
+-
+-  For MCT block that uses a per-processor interrupt for local timers, such
+-  as ones compatible with "samsung,exynos4412-mct", only one local timer
+-  interrupt might be specified, meaning that all local timers use the same
+-  per processor interrupt.
+-
+-Example 1: In this example, the IP contains two local timers, using separate
+-	   interrupts, so two local timer interrupts have been specified,
+-	   in addition to four global timer interrupts.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x10050000 0x800>;
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 48 0>;
+-	};
+-
+-Example 2: In this example, the timer interrupts are connected to two separate
+-	   interrupt controllers. Hence, an interrupt-map is created to map
+-	   the interrupts to the respective interrupt controllers.
+-
+-	mct@101c0000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x101C0000 0x800>;
+-		interrupt-parent = <&mct_map>;
+-		interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
+-
+-		mct_map: mct-map {
+-			#interrupt-cells = <1>;
+-			#address-cells = <0>;
+-			#size-cells = <0>;
+-			interrupt-map = <0 &gic 0 57 0>,
+-					<1 &gic 0 69 0>,
+-					<2 &combiner 12 6>,
+-					<3 &combiner 12 7>,
+-					<4 &gic 0 42 0>,
+-					<5 &gic 0 48 0>;
+-		};
+-	};
+-
+-Example 3: In this example, the IP contains four local timers, but using
+-	   a per-processor interrupt to handle them. Either all the local
+-	   timer interrupts can be specified, with the same interrupt specifier
+-	   value or just the first one.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4412-mct";
+-		reg = <0x10050000 0x800>;
+-
+-		/* Both ways are possible in this case. Either: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>;
+-		/* or: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
+-	};
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+new file mode 100644
+index 000000000000..b96d2877955f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+@@ -0,0 +1,115 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/timer/samsung,exynos4210-mct.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Samsung Exynos SoC Multi Core Timer (MCT)
++
++maintainers:
++  - Krzysztof Kozlowski <krzk@kernel.org>
++
++description: |+
++  The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
++  global timer and CPU local timers. The global timer is a 64-bit free running
++  up-counter and can generate 4 interrupts when the counter reaches one of the
++  four preset counter values. The CPU local timers are 32-bit free running
++  down-counters and generate an interrupt when the counter expires. There is
++  one CPU local timer instantiated in MCT for every CPU in the system.
++
++properties:
++  compatible:
++    enum:
++      - samsung,exynos4210-mct
++      - samsung,exynos4412-mct
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    description: |
++      Interrupts should be put in specific order. This is, the local timer
++      interrupts should be specified after the four global timer interrupts
++      have been specified:
++      0: Global Timer Interrupt 0
++      1: Global Timer Interrupt 1
++      2: Global Timer Interrupt 2
++      3: Global Timer Interrupt 3
++      4: Local Timer Interrupt 0
++      5: Local Timer Interrupt 1
++      6: ..
++      7: ..
++      i: Local Timer Interrupt n
++      For MCT block that uses a per-processor interrupt for local timers, such
++      as ones compatible with "samsung,exynos4412-mct", only one local timer
++      interrupt might be specified, meaning that all local timers use the same
++      per processor interrupt.
++    minItems: 5               # 4 Global + 1 local
++    maxItems: 20              # 4 Global + 16 local
++
++required:
++  - compatible
++  - interrupts
++  - reg
++
++examples:
++  - |
++    // In this example, the IP contains two local timers, using separate
++    // interrupts, so two local timer interrupts have been specified,
++    // in addition to four global timer interrupts.
++      mct@10050000 {
++        compatible = "samsung,exynos4210-mct";
++        reg = <0x10050000 0x800>;
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>, <0 48 0>;
++      };
++
++  - |
++    // In this example, the timer interrupts are connected to two separate
++    // interrupt controllers. Hence, an interrupt-map is created to map
++    // the interrupts to the respective interrupt controllers.
++
++    mct@101c0000 {
++      compatible = "samsung,exynos4210-mct";
++      reg = <0x101C0000 0x800>;
++      interrupt-parent = <&mct_map>;
++      interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
++
++      mct_map: mct-map {
++        #interrupt-cells = <1>;
++        #address-cells = <0>;
++        #size-cells = <0>;
++        interrupt-map = <0 &gic 0 57 0>,
++                        <1 &gic 0 69 0>,
++                        <2 &combiner 12 6>,
++                        <3 &combiner 12 7>,
++                        <4 &gic 0 42 0>,
++                        <5 &gic 0 48 0>;
++      };
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. Only one first local
++    // interrupt is specified.
++
++    mct@10050000 {
++      compatible = "samsung,exynos4412-mct";
++      reg = <0x10050000 0x800>;
++
++      interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                   <0 42 0>;
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. All the local timer
++    // interrupts are specified.
++
++    mct@10050000 {
++      compatible = "samsung,exynos4412-mct";
++      reg = <0x10050000 0x800>;
++
++      interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                   <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
++    };
 -- 
 2.17.1
 
