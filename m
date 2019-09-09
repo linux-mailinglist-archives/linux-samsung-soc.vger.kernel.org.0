@@ -2,70 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D9EBADF2A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Sep 2019 20:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C9A2ADF2F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Sep 2019 20:58:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727410AbfIISzw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 9 Sep 2019 14:55:52 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41924 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727164AbfIISzw (ORCPT
+        id S1732580AbfIIS6s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 9 Sep 2019 14:58:48 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:47102 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732524AbfIIS6s (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 9 Sep 2019 14:55:52 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h7so14259918wrw.8
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 09 Sep 2019 11:55:50 -0700 (PDT)
+        Mon, 9 Sep 2019 14:58:48 -0400
+Received: by mail-wr1-f65.google.com with SMTP id d17so2540193wrq.13
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 09 Sep 2019 11:58:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ra/gV8lPXO5Wh+Vb60+O0aQkihf+QKY6CFPEg3Fy55M=;
-        b=bK8Rm6+a4QHLmk2gUvyvjReaEvXSWSqQAsuMXvm8aKAXiS5FOsv2vsmtPF96mxAE3Z
-         N6LWMvA1I9Lpfol3gFG9lcnXq+eGampPTVdmwXn8p83esX/aKpV77dvRFsjK5LXbSFnP
-         t5SH1qZfCqdjYbBWwYQlRgEE41rrM+GLQ6lFSHZSRg3Yn4duTQgh+o86em1mayPZ1oPP
-         up9DFpNfS/uzgwlbtA3qzQpfa/20jjtkQ4XM28g9ME69zIZh0u6RvsYe3L7iexCnc3LB
-         WRfNCuL9RNc3Cdjv/258YficpCPZVKBAU9Cj+BeclXfJavUxBbDPKFxW87Q+PB5MRkt1
-         R57A==
-X-Gm-Message-State: APjAAAUdeXF03/OS8azW3yR0r9mikrkHBZXCxqaq6rmmrj1KKStEqwM2
-        eWYRcu5EG06f/fd/ors+LAEY9gJ1
-X-Google-Smtp-Source: APXvYqyxVVDbLBd/lmNb4rlXWNpQ7yGIHb1PMpq6KlcPnN//NYJPYejDZJ4hsW8yo4QfV3ZZexu8Gg==
-X-Received: by 2002:a5d:6506:: with SMTP id x6mr836883wru.22.1568055349493;
-        Mon, 09 Sep 2019 11:55:49 -0700 (PDT)
+        bh=HvRkt0TzAfkK7uPLWRNpRW+QhrAhQM2j0J6Hs+s2IqQ=;
+        b=Da+rhSMIBaZTQqJROWIlc7IQRGZdgPSnI/fQu4mHhTUdIMSeRK7NVe2y3wboWataNq
+         +GCdTxhsaQVafE6i5oMqAbH2uE+d5zgU8DK7toBfq+YXDA6oa8fl4zEKaNogmcq47///
+         l7/n0/YneI+HZ3bC84CLxkVocGQN9vNn993f/VA1NVYmI11trv17aPmyE4f1nDw/726H
+         lccW175Dwen1++0JZ+BOgc/VpMHVmCvjxy9+patxzhMH/sAroqPS2v53StHuisQjhLCD
+         2bbdmw7N6+FS4e9uvVnLWLFrtduj0uorxMtRr0mf052Ik69Ot7/LbjxEFG5tzxbjuN4N
+         Xw5A==
+X-Gm-Message-State: APjAAAWPwLcqloT2WJCNryT0/F6EnCSXumZf2JkwBdIqOzIbwutOv9c8
+        Lhi9hBcSnOrzp7lQ3aqJB9E=
+X-Google-Smtp-Source: APXvYqwa68d3w6+uCbFgeBtFQ3I/GwNC/dJsnkNxuF+q83HERWydVFzqpE5yRap3QjCQZZ+0WGpi5g==
+X-Received: by 2002:adf:f601:: with SMTP id t1mr20434150wrp.36.1568055526267;
+        Mon, 09 Sep 2019 11:58:46 -0700 (PDT)
 Received: from kozik-lap ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id s26sm28793706wrs.63.2019.09.09.11.55.48
+        by smtp.googlemail.com with ESMTPSA id 189sm705109wma.6.2019.09.09.11.58.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Sep 2019 11:55:48 -0700 (PDT)
-Date:   Mon, 9 Sep 2019 20:55:47 +0200
-From:   "krzk@kernel.org" <krzk@kernel.org>
-To:     Yao Lihua <ylhuajnu@outlook.com>
-Cc:     "kgene@kernel.org" <kgene@kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] ARM: SAMSUNG: Fix system restart support on s3c6410
-Message-ID: <20190909185547.GC10091@kozik-lap>
-References: <BY5PR12MB3699F7EF4920F878F3096DE7C4B50@BY5PR12MB3699.namprd12.prod.outlook.com>
+        Mon, 09 Sep 2019 11:58:45 -0700 (PDT)
+Date:   Mon, 9 Sep 2019 20:58:43 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v3 2/2] ARM: exynos: Enable support for ARM architected
+ timers
+Message-ID: <20190909185843.GA9827@kozik-lap>
+References: <20190828121005.29368-1-m.szyprowski@samsung.com>
+ <CGME20190828121012eucas1p2fb78bfebe16d744dc28194bb224650e2@eucas1p2.samsung.com>
+ <20190828121005.29368-3-m.szyprowski@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <BY5PR12MB3699F7EF4920F878F3096DE7C4B50@BY5PR12MB3699.namprd12.prod.outlook.com>
+In-Reply-To: <20190828121005.29368-3-m.szyprowski@samsung.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 03:30:01AM +0000, Yao Lihua wrote:
-> From: Lihua Yao <ylhuajnu@outlook.com>
+On Wed, Aug 28, 2019 at 02:10:05PM +0200, Marek Szyprowski wrote:
+> ARM architected timer can be used together with Exynos MultiCore Timer
+> driver, so enable support for it. Support for ARM architected timers is
+> essential for enabling proper KVM support.
 > 
-> S3C6410 system restart is triggered by watchdog reset.
-> 
-> Fixes: 9f55342cc2de ("ARM: dts: s3c64xx: Fix infinite interrupt in soft mode")
-> Signed-off-by: Lihua Yao <ylhuajnu@outlook.com>
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 > ---
->  arch/arm/plat-samsung/watchdog-reset.c | 1 +
+>  arch/arm/mach-exynos/Kconfig | 1 +
 
-Thanks, applied.
+Thanks, applied this one only from the set (I will have send another soc
+pull request before merge window).
 
 Best regards,
 Krzysztof
