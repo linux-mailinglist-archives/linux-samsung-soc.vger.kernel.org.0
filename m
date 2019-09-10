@@ -2,260 +2,106 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F8F1AE5D1
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Sep 2019 10:44:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 185C9AE799
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Sep 2019 12:07:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732912AbfIJIoE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 10 Sep 2019 04:44:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46560 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726496AbfIJIoE (ORCPT
+        id S2392001AbfIJKHH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Sep 2019 06:07:07 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:47576 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388027AbfIJKHH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 10 Sep 2019 04:44:04 -0400
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 87FFC20872;
-        Tue, 10 Sep 2019 08:44:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568105042;
-        bh=n2FnhZvZY86zGRCH5evX7+DlwR5AirNLeqrX264yekM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=tCo1Kq8SFbvD4DYtaThEjzPnJ8wMI1qw6EzeYppN+oebsEi1BVcA7WO5hJoIkPZ4M
-         15Ua51GgYfkUlB2GFraSGek9uGRDMdBD4zEWOFoUTC6WUivURgmZHtN7m3QVItkC9C
-         zxa2WuJkfTRc78Gbpek2RsCOfrlaW7sXlCQRfq0c=
-Received: by mail-lf1-f48.google.com with SMTP id q27so12753764lfo.10;
-        Tue, 10 Sep 2019 01:44:02 -0700 (PDT)
-X-Gm-Message-State: APjAAAXzE99L3aYSniq0OA8PoILJ/59ABgN/Grqeb/hjiFA90iEVKqvF
-        HvW2+FPOf4CmKXkSF9UzAx96ApujOwXrfhJCO98=
-X-Google-Smtp-Source: APXvYqyXRx393/LoDIHBKgAXm7I9lWbgJlOjw6C1wPm1MmUEsJ2qFw1Q5BapRrLrck9Q02orzG3OjXJU3ctiAn/YZg0=
-X-Received: by 2002:a19:770a:: with SMTP id s10mr1997656lfc.30.1568105040685;
- Tue, 10 Sep 2019 01:44:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190909183436.9045-1-krzk@kernel.org> <CAL_JsqJpZ-64Y7p1w5ctMwbjdftQPLjeh3XRHkBeS6tfYY0a+A@mail.gmail.com>
-In-Reply-To: <CAL_JsqJpZ-64Y7p1w5ctMwbjdftQPLjeh3XRHkBeS6tfYY0a+A@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Tue, 10 Sep 2019 10:43:49 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPf2b5QsNWq_7D0tyXuEcp93F_CsxEkAze_oV8Z07oNJXA@mail.gmail.com>
-Message-ID: <CAJKOXPf2b5QsNWq_7D0tyXuEcp93F_CsxEkAze_oV8Z07oNJXA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] dt-bindings: pwm: Convert PWM bindings to json-schema
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux PWM List <linux-pwm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Maciej Falkowski <m.falkowski@samsung.com>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux LED Subsystem <linux-leds@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 10 Sep 2019 06:07:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=rSWF4enHkdRTYcF1KH14HvviXZQ+MYgAvo7p7sd69rY=; b=poOAlplhypjb
+        GxHQ2Cy93fBMlai+4xHT/FACT2rvA6NyywSUFiA8a66fmHZlDJhBlZ3j+fxSCKidL+6S+J8i7JH+A
+        rvaUu2idBlPkQh1B9GXaOTyt7nxBYlKDKZXDsf7rmtCzn86jqBgY8AxwhmE1/GErQT/a5+co7kyaa
+        dXREU=;
+Received: from [148.69.85.38] (helo=fitzroy.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1i7d36-0006jA-T6; Tue, 10 Sep 2019 10:07:00 +0000
+Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
+        id 2F4B8D02D74; Tue, 10 Sep 2019 11:07:00 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Sangbeom Kim <sbkim73@samsung.com>
+Subject: Applied "regulator: s2mps11: Consistently use local variable" to the regulator tree
+In-Reply-To: <20190909155723.24734-1-krzk@kernel.org>
+X-Patchwork-Hint: ignore
+Message-Id: <20190910100700.2F4B8D02D74@fitzroy.sirena.org.uk>
+Date:   Tue, 10 Sep 2019 11:07:00 +0100 (BST)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 10 Sep 2019 at 10:33, Rob Herring <robh+dt@kernel.org> wrote:
->
-> On Mon, Sep 9, 2019 at 7:35 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >
-> > Convert generic PWM bindings to DT schema format using json-schema.  The
-> > consumer bindings are split to separate file.
-> >
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> > ---
-> >  .../devicetree/bindings/clock/pwm-clock.txt   |  2 +-
-> >  .../bindings/display/bridge/ti,sn65dsi86.txt  |  2 +-
-> >  .../devicetree/bindings/display/ssd1307fb.txt |  2 +-
-> >  .../bindings/leds/backlight/pwm-backlight.txt |  2 +-
-> >  .../devicetree/bindings/leds/leds-pwm.txt     |  2 +-
-> >  .../devicetree/bindings/mfd/max77693.txt      |  2 +-
-> >  .../bindings/pwm/atmel-hlcdc-pwm.txt          |  2 +-
-> >  .../devicetree/bindings/pwm/atmel-pwm.txt     |  2 +-
-> >  .../devicetree/bindings/pwm/atmel-tcb-pwm.txt |  2 +-
-> >  .../bindings/pwm/brcm,bcm7038-pwm.txt         |  2 +-
-> >  .../bindings/pwm/brcm,iproc-pwm.txt           |  2 +-
-> >  .../devicetree/bindings/pwm/brcm,kona-pwm.txt |  2 +-
-> >  .../devicetree/bindings/pwm/img-pwm.txt       |  2 +-
-> >  .../devicetree/bindings/pwm/imx-pwm.txt       |  2 +-
-> >  .../devicetree/bindings/pwm/imx-tpm-pwm.txt   |  2 +-
-> >  .../bindings/pwm/lpc1850-sct-pwm.txt          |  2 +-
-> >  .../devicetree/bindings/pwm/mxs-pwm.txt       |  2 +-
-> >  .../bindings/pwm/nvidia,tegra20-pwm.txt       |  2 +-
-> >  .../bindings/pwm/nxp,pca9685-pwm.txt          |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-bcm2835.txt   |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-berlin.txt    |  2 +-
-> >  .../bindings/pwm/pwm-consumers.yaml           | 76 +++++++++++++++++++
-> >  .../devicetree/bindings/pwm/pwm-fsl-ftm.txt   |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-hibvt.txt     |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-lp3943.txt    |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-mediatek.txt  |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-meson.txt     |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-mtk-disp.txt  |  2 +-
-> >  .../bindings/pwm/pwm-omap-dmtimer.txt         |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-rockchip.txt  |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-sifive.txt    |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-stm32-lp.txt  |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-stm32.txt     |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-tiecap.txt    |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-tiehrpwm.txt  |  2 +-
-> >  .../devicetree/bindings/pwm/pwm-zx.txt        |  2 +-
-> >  Documentation/devicetree/bindings/pwm/pwm.txt | 69 -----------------
-> >  .../devicetree/bindings/pwm/pwm.yaml          | 30 ++++++++
-> >  .../bindings/pwm/renesas,pwm-rcar.txt         |  2 +-
-> >  .../bindings/pwm/renesas,tpu-pwm.txt          |  4 +-
-> >  .../devicetree/bindings/pwm/spear-pwm.txt     |  2 +-
-> >  .../devicetree/bindings/pwm/st,stmpe-pwm.txt  |  2 +-
-> >  .../devicetree/bindings/pwm/ti,twl-pwm.txt    |  2 +-
-> >  .../devicetree/bindings/pwm/ti,twl-pwmled.txt |  2 +-
-> >  .../devicetree/bindings/pwm/vt8500-pwm.txt    |  2 +-
-> >  .../bindings/regulator/pwm-regulator.txt      |  2 +-
-> >  .../devicetree/bindings/timer/ingenic,tcu.txt |  2 +-
->
-> We've been leaving the .txt file with a reference to the schema file
-> to avoid doing all the updates. But as you've done it already, that's
-> good.
->
-> >  47 files changed, 151 insertions(+), 114 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/pwm/pwm-consumers.yaml
-> >  delete mode 100644 Documentation/devicetree/bindings/pwm/pwm.txt
-> >  create mode 100644 Documentation/devicetree/bindings/pwm/pwm.yaml
->
-> [...]
->
-> > diff --git a/Documentation/devicetree/bindings/pwm/pwm-consumers.yaml b/Documentation/devicetree/bindings/pwm/pwm-consumers.yaml
-> > new file mode 100644
-> > index 000000000000..39c844fe6338
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/pwm-consumers.yaml
->
-> We already have a PWM consumer schema in dt-schema repository. It
-> doesn't have the descriptions because we need permission to relicense.
-> My aim is to have all common schema in the dt-schema repo, but we have
-> a mixture because of needing to relicense.
+The patch
 
-I forgot to check it. In such case the pwm-consumers here do not offer
-much more, except some description and examples. I guess it can be
-just dropped then?
+   regulator: s2mps11: Consistently use local variable
 
-> > @@ -0,0 +1,76 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pwm/pwm-consumers.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Specifying PWM information for devices
-> > +
-> > +maintainers:
-> > +  - Thierry Reding <thierry.reding@gmail.com>
-> > +
-> > +description: |
-> > +  PWM properties should be named "pwms". The exact meaning of each pwms
-> > +  property must be documented in the device tree binding for each device.
-> > +  An optional property "pwm-names" may contain a list of strings to label
-> > +  each of the PWM devices listed in the "pwms" property. If no "pwm-names"
-> > +  property is given, the name of the user node will be used as fallback.
-> > +
-> > +  Drivers for devices that use more than a single PWM device can use the
-> > +  "pwm-names" property to map the name of the PWM device requested by the
-> > +  pwm_get() call to an index into the list given by the "pwms" property.
-> > +
-> > +properties:
-> > +  pwms:
-> > +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> > +    description: |
-> > +      Phandle to PWM controller node and pwm-specifier (controller specific).
-> > +      pwm-specifier typically encodes the chip-relative PWM number and the PWM
-> > +      period in nanoseconds.
-> > +      Optionally, the pwm-specifier can encode a number of flags (defined in
-> > +      <dt-bindings/pwm/pwm.h>) in a third cell:
-> > +        - PWM_POLARITY_INVERTED: invert the PWM signal polarity
-> > +
-> > +  pwm-names:
-> > +    $ref: /schemas/types.yaml#/definitions/string-array
-> > +    description:
-> > +      A list of strings to label each of the PWM devices listed in the "pwms"
-> > +      property. If no "pwm-names" property is given, the name of the user node
-> > +      will be used as fallback.
-> > +
-> > +required:
-> > +  - pwms
->
-> Doing this means every consumer has to include this file where as I do
-> 'select: true' some every occurrence of these properties is checked.
-> We're generally only including other schema on the provider side.
->
-> > +
-> > +dependencies:
-> > +  pwm-names: [ pwms ]
-> > +
-> > +examples:
-> > +  - |
-> > +    // The following example could be used to describe a PWM-based
-> > +    // backlight device:
-> > +
-> > +    pwm: pwm {
-> > +      #pwm-cells = <2>;
-> > +    };
-> > +
-> > +    bl: backlight {
-> > +      pwms = <&pwm 0 5000000>;
-> > +      pwm-names = "backlight";
-> > +    };
-> > +
-> > +    // Note that in the example above, specifying the "pwm-names" is redundant
-> > +    // because the name "backlight" would be used as fallback anyway.
-> > +
-> > +  - |
-> > +    // Example with optional PWM specifier for inverse polarity
-> > +
-> > +    #include <dt-bindings/pwm/pwm.h>
-> > +
-> > +    pwm2: pwm {
-> > +      #pwm-cells = <3>;
-> > +    };
-> > +
-> > +    backlight {
-> > +      pwms = <&pwm2 0 5000000 PWM_POLARITY_INVERTED>;
-> > +      pwm-names = "backlight";
-> > +    };
->
-> > diff --git a/Documentation/devicetree/bindings/pwm/pwm.yaml b/Documentation/devicetree/bindings/pwm/pwm.yaml
-> > new file mode 100644
-> > index 000000000000..5d8029f11ccc
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/pwm.yaml
-> > @@ -0,0 +1,30 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pwm/pwm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: PWM controllers (providers)
-> > +
-> > +maintainers:
-> > +  - Thierry Reding <thierry.reding@gmail.com>
-> > +
-> > +properties:
-> > +  $nodename:
-> > +    pattern: "^pwm(@.*)?$"
->
-> Copy the pattern for spi. We allow for 'pwm-[0-9]' for cases like GPIO PWMs.
+has been applied to the regulator tree at
 
-Sure
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.4
 
->
-> > +
-> > +  "#pwm-cells":
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
->
-> You don't actually need to define the type as we already have for '#.*-cells'
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
 
-OK.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Best regards,
-Krzysztof
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From d57d90f4443bd725b3facdc6130a1940af4560c4 Mon Sep 17 00:00:00 2001
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Date: Mon, 9 Sep 2019 17:57:23 +0200
+Subject: [PATCH] regulator: s2mps11: Consistently use local variable
+
+The value under 's2mps11->ext_control_gpiod[i]' is assigned to local
+variable and used in probe in one place before.  Use it consistently
+later so code will be easier to read.
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20190909155723.24734-1-krzk@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ drivers/regulator/s2mps11.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
+index 054baaadfdfd..5bc00884cf51 100644
+--- a/drivers/regulator/s2mps11.c
++++ b/drivers/regulator/s2mps11.c
+@@ -1226,7 +1226,7 @@ static int s2mps11_pmic_probe(struct platform_device *pdev)
+ 			goto out;
+ 		}
+ 
+-		if (s2mps11->ext_control_gpiod[i]) {
++		if (config.ena_gpiod) {
+ 			ret = s2mps14_pmic_enable_ext_control(s2mps11,
+ 					regulator);
+ 			if (ret < 0) {
+-- 
+2.20.1
+
