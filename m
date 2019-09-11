@@ -2,148 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 764D9AFBF9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 13:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B056AFC87
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 14:26:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbfIKL5H (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Sep 2019 07:57:07 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:59338 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726341AbfIKL5H (ORCPT
+        id S1727880AbfIKM0E (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 11 Sep 2019 08:26:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33132 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726911AbfIKM0D (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Sep 2019 07:57:07 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190911115705euoutp02bf2be5d7c10b0d739ba940b37056d6ac~DYFfDpAuJ3059430594euoutp02g
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 Sep 2019 11:57:05 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190911115705euoutp02bf2be5d7c10b0d739ba940b37056d6ac~DYFfDpAuJ3059430594euoutp02g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568203025;
-        bh=OH6rMiShoRkq4pzXu23aOxDbiKTdcWya1YQCabiUZWo=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=qNiz9DHlRsY7Q743TJAxz3IFOV06tcGoX80bFUb0P7JPXaC5cc5VPjLBo/4Fz/7CU
-         ueN8Qpje0RaSrW0Xy34luJClKZKxEBRRN9Hsnp4K4xPZDl1HoG5+7nrkHensmZFz28
-         28JCmOmkOFPYiI0ei9uMbN5h9YQa1NAFRH/OM+H8=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190911115704eucas1p2e4913ba6e16036352d5396bfcd6e1b60~DYFem1vTH0661106611eucas1p2X;
-        Wed, 11 Sep 2019 11:57:04 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id FE.C9.04469.011E87D5; Wed, 11
-        Sep 2019 12:57:04 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190911115703eucas1p1e3119c400c601a80d2c88d25ab744b38~DYFdtxlQQ2705827058eucas1p1N;
-        Wed, 11 Sep 2019 11:57:03 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190911115703eusmtrp1ae7557e36298b60adb553e64820d7327~DYFdfXUa71503915039eusmtrp1O;
-        Wed, 11 Sep 2019 11:57:03 +0000 (GMT)
-X-AuditID: cbfec7f2-994db9c000001175-e1-5d78e110d6a5
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 08.5D.04166.F01E87D5; Wed, 11
-        Sep 2019 12:57:03 +0100 (BST)
-Received: from [106.120.50.63] (unknown [106.120.50.63]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190911115703eusmtip13d3ffffe11e3b882ad3b095bb5f75059~DYFdFgB1f2440924409eusmtip1b;
-        Wed, 11 Sep 2019 11:57:03 +0000 (GMT)
+        Wed, 11 Sep 2019 08:26:03 -0400
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A9C6D20872;
+        Wed, 11 Sep 2019 12:26:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568204763;
+        bh=2pPMn/FVFbCJXIco4hndCy4yU4apLjVYE56Muit6qTY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=btzmfK97dcowxxq/8O16K0PTIHFX9tbMeTa4kmm/4lheEz68VruqQERLYbjUHM7pT
+         UQuI7VeW+2AwHOtw1j1+hzWgSQZUCqL1FzHNEviy7J4EEGFE/Q6uZpmOIjk/HmSi+A
+         nvQJ+0cyNIOUl0sZ8SvdEO6tyrB/Dxykx+hTJkDY=
+Received: by mail-lj1-f178.google.com with SMTP id y23so19453563ljn.5;
+        Wed, 11 Sep 2019 05:26:02 -0700 (PDT)
+X-Gm-Message-State: APjAAAWeURmGifab4o3ALSzzcE0gRRftC/AlKNN+3E9Huz4aGCo7Hx01
+        ZL7rpbeH+LueER2NNNmXJJJPnuuCGjtipjV6xvA=
+X-Google-Smtp-Source: APXvYqw8gd+xprNyWbgdYgqyXgDC15vF70jPsWIWsn6xVgL8eKxH8DV9rxOR9uhU6qghey5K9nKVIBQo3AdRVaPcC8k=
+X-Received: by 2002:a2e:b4e3:: with SMTP id s3mr23885542ljm.143.1568204760929;
+ Wed, 11 Sep 2019 05:26:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <CGME20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237@eucas1p2.samsung.com>
+ <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
+ <20190911110446.32058-1-m.falkowski@samsung.com> <CAJKOXPeZ2usT+bx23n-hXxsLsbZqr-0JEtyagK8sfsLaFiaH5w@mail.gmail.com>
+ <d7e938e8-d42e-be22-ce76-561159064180@samsung.com>
+In-Reply-To: <d7e938e8-d42e-be22-ce76-561159064180@samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 11 Sep 2019 14:25:49 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdM_A5Enmv_GOJuKLvfBBwi-z3qWiW4WG9L-dmuW9T5Wg@mail.gmail.com>
+Message-ID: <CAJKOXPdM_A5Enmv_GOJuKLvfBBwi-z3qWiW4WG9L-dmuW9T5Wg@mail.gmail.com>
 Subject: Re: [PATCH v3] dt-bindings: arm: samsung: Convert Samsung Exynos
  IOMMU H/W, System MMU to dt-schema
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     "linux-samsung-soc@vger.kernel.org" 
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Maciej Falkowski <m.falkowski@samsung.com>,
+        "linux-samsung-soc@vger.kernel.org" 
         <linux-samsung-soc@vger.kernel.org>, devicetree@vger.kernel.org,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         robh+dt@kernel.org, mark.rutland@arm.com,
         Andrzej Hajda <a.hajda@samsung.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <d7e938e8-d42e-be22-ce76-561159064180@samsung.com>
-Date:   Wed, 11 Sep 2019 13:57:00 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
-        Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <CAJKOXPeZ2usT+bx23n-hXxsLsbZqr-0JEtyagK8sfsLaFiaH5w@mail.gmail.com>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsWy7djPc7oCDytiDe5MV7K4te4cq8X8I0Di
-        /PkN7BaXd81hs5hxfh+TxYPmdWwWS69fZLJo3XuE3YHDY828NYwem1Z1snn0bVnF6PF5k1wA
-        SxSXTUpqTmZZapG+XQJXxve2k+wF87kqHt4+xNTAuJKji5GTQ0LAROJx4yOWLkYuDiGBFYwS
-        r57OZAJJCAl8YZRY86cMIvGZUeLitsesXYwcYB1H+uwg4ssZJbpWnmWGcN4CNTy6xArSLSyQ
-        J/GrfQMbiC0iEC6x6OQRsCJmgd+MEhceb2EHSbAJGEp0ve0CK+IVsJPYfP0emM0ioCox7Wcj
-        C4gtKhAjsfzNAxaIGkGJkzOfgNmcAoES+18cBpvDLCAvsf3tHGYIW1zi1pP5TBC/rWOXOLQx
-        H8J2kZjdf5QNwhaWeHUc4gYJARmJ05N7wP6XEGhmlHh4bi07hNPDKHG5aQYjRJW1xOHjF8H+
-        ZxbQlFi/Sx8i7Cjx5s59Nkiw8EnceCsIcQOfxKRt05khwrwSHW1CENVqErOOr4Nbe/DCJeYJ
-        jEqzkHw2C8k3s5B8Mwth7wJGllWM4qmlxbnpqcWGeanlesWJucWleel6yfm5mxiBKej0v+Of
-        djB+vZR0iFGAg1GJh1fgbkWsEGtiWXFl7iFGCQ5mJRHeBy1AId6UxMqq1KL8+KLSnNTiQ4zS
-        HCxK4rzVDA+ihQTSE0tSs1NTC1KLYLJMHJxSDYy2H49MWsCTdVTv6tu5ae/jHjJVGSSErJ43
-        MzVk/+fbG42fsbw+V9bT2LhXLVV5+t2tD49qe3eWv752MPq2Y0bJQRk9P46WhzEv/1TulheZ
-        OCtMIN07Ytmp+rN3vG+qhkxKEa9czq1z89R69qVXpZ/kNsz5oWyyg0PEwYRT5tW2Rbfmqoqm
-        fuZWYinOSDTUYi4qTgQA/+tsNz0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrLIsWRmVeSWpSXmKPExsVy+t/xu7r8DytiDT4vVbW4te4cq8X8I0Di
-        /PkN7BaXd81hs5hxfh+TxYPmdWwWS69fZLJo3XuE3YHDY828NYwem1Z1snn0bVnF6PF5k1wA
-        S5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexve2
-        k+wF87kqHt4+xNTAuJKji5GDQ0LAROJIn10XIyeHkMBSRokbt9hAbAkBGYmT0xpYIWxhiT/X
-        uoDiXEA1rxkl9r58wQ6SEBbIk/jVvgGsQUQgXOLKgvvMIEXMAr8ZJT4/3wrVMY9JYu/0N2BV
-        bAKGEl1vu8BsXgE7ic3X74HZLAKqEtN+NrKA2KICMRLbpk5ihagRlDg58wlYnFMgUGL/i8Ng
-        m5kFzCTmbX7IDGHLS2x/OwfKFpe49WQ+0wRGoVlI2mchaZmFpGUWkpYFjCyrGEVSS4tz03OL
-        DfWKE3OLS/PS9ZLzczcxAqNu27Gfm3cwXtoYfIhRgINRiYdX4G5FrBBrYllxZe4hRgkOZiUR
-        3gctQCHelMTKqtSi/Pii0pzU4kOMpkDPTWSWEk3OByaEvJJ4Q1NDcwtLQ3Njc2MzCyVx3g6B
-        gzFCAumJJanZqakFqUUwfUwcnFINjPV+vxW0J+23CH7ypH/OSX6/p/0dk8NveljM+x4Z9Jdf
-        WXThLqbrJVP0+HgXRvy4vX2GiOXxzYzznvfKm/256xp78tf1DSUmB+ec0/feWyS1PI3latGx
-        oENOM5c/LJo/TVKx14SnU0XgSbXekaXmjqGf+8V/1Z8OdE2fW9zKZu3tY89rk5vrpcRSnJFo
-        qMVcVJwIAO6aOKfQAgAA
-X-CMS-MailID: 20190911115703eucas1p1e3119c400c601a80d2c88d25ab744b38
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237
-References: <CGME20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237@eucas1p2.samsung.com>
-        <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
-        <20190911110446.32058-1-m.falkowski@samsung.com>
-        <CAJKOXPeZ2usT+bx23n-hXxsLsbZqr-0JEtyagK8sfsLaFiaH5w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzyszotf,
-
-On 2019-09-11 13:36, Krzysztof Kozlowski wrote:
-> On Wed, 11 Sep 2019 at 13:05, Maciej Falkowski <m.falkowski@samsung.com> wrote:
->> Convert Samsung Exynos IOMMU H/W, System Memory Management Unit
->> to newer dt-schema format.
->>
->> Update clock description.
->>
->> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
->> Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
->> ---
->> Hi Krzysztof,
->>
->> Thank you for feedback.
->>
->> v3:
->>
->> - remove obsolete interrupts description and
->> set its maxItems to one. There are some incompatible
->> files which will be fixed with another patch.
-> Driver stopped supporting two IRQ lines in commit
-> 7222e8db2d506197ee183de0f9b76b3ad97e8c18 (iommu/exynos: Fix build
-> errors). The second IRQ line in Exynos3250 DTS seems to be ignored.
+On Wed, 11 Sep 2019 at 13:57, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
 >
-> The patch now looks good to me:
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Hi Krzyszotf,
 >
-> However for some reasons you did not CC the IOMMU maintainers. Please
-> use scripts/get_maintainer.pl to get the list of folks to CC.
+> On 2019-09-11 13:36, Krzysztof Kozlowski wrote:
+> > On Wed, 11 Sep 2019 at 13:05, Maciej Falkowski <m.falkowski@samsung.com> wrote:
+> >> Convert Samsung Exynos IOMMU H/W, System Memory Management Unit
+> >> to newer dt-schema format.
+> >>
+> >> Update clock description.
+> >>
+> >> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+> >> Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
+> >> ---
+> >> Hi Krzysztof,
+> >>
+> >> Thank you for feedback.
+> >>
+> >> v3:
+> >>
+> >> - remove obsolete interrupts description and
+> >> set its maxItems to one. There are some incompatible
+> >> files which will be fixed with another patch.
+> > Driver stopped supporting two IRQ lines in commit
+> > 7222e8db2d506197ee183de0f9b76b3ad97e8c18 (iommu/exynos: Fix build
+> > errors). The second IRQ line in Exynos3250 DTS seems to be ignored.
+> >
+> > The patch now looks good to me:
+> > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> >
+> > However for some reasons you did not CC the IOMMU maintainers. Please
+> > use scripts/get_maintainer.pl to get the list of folks to CC.
+>
+> Frankly I don't see any reason to spam IOMMU ml or maintainer with this
+> discussion about dt-binding conversion. This patch will be merged via dt
+> tree if I got it right.
 
-Frankly I don't see any reason to spam IOMMU ml or maintainer with this 
-discussion about dt-binding conversion. This patch will be merged via dt 
-tree if I got it right.
+Indeed usually subsystem maintainers are not interested in DT schema
+conversion although they are mentioned as maintainers for this file so
+it is nice to CC them... I would not call spamming when there is
+explicit pattern for CCing.
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Best regards,
+Krzysztof
