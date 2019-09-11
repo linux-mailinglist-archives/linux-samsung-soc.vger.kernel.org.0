@@ -2,258 +2,225 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE1CAF5C6
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 08:27:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44466AF6F7
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 09:34:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726735AbfIKG1D (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Sep 2019 02:27:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34866 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726341AbfIKG1D (ORCPT
+        id S1726988AbfIKHeh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 11 Sep 2019 03:34:37 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37741 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726765AbfIKHeg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Sep 2019 02:27:03 -0400
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 84A9E21A4C;
-        Wed, 11 Sep 2019 06:27:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568183221;
-        bh=psIls2uZnyD8aULtZ7ZdVGeCU/oXNQFs5fNTc8c37BA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=0wMnm6NSoAMi4ZwyIgCyMisByOfANk0tvatkgryTmkxOSrv3jXOpXZLn7Ko3bPXf4
-         6+JXVdbfmTTwqBLextfHlDBS37zoErULbbdXanfJn/J2AzeH0Az+4LqiIVakky+IG+
-         IiGgPAaO9o1d2JwLCXsRmTkxzEwi/EHSxGSbZOK0=
-Received: by mail-lj1-f180.google.com with SMTP id 7so18789245ljw.7;
-        Tue, 10 Sep 2019 23:27:01 -0700 (PDT)
-X-Gm-Message-State: APjAAAXA37AxumEwjNivVNVL/BoAbBW1tmxQa6oJe8prZ7KKguVi1Woc
-        EuNxtLISdBSjnEnIRmjV93OhyUkOeBg+y/razeQ=
-X-Google-Smtp-Source: APXvYqw0KGJTsVber/DyRaso03CZ5aKuQemCVWi2hKR4ZyaBju2pa7/7LE+9HaukTekenCqVV1/A8KN8u5yhz6EDxdM=
-X-Received: by 2002:a2e:b4e3:: with SMTP id s3mr22848863ljm.143.1568183219643;
- Tue, 10 Sep 2019 23:26:59 -0700 (PDT)
+        Wed, 11 Sep 2019 03:34:36 -0400
+Received: by mail-wm1-f66.google.com with SMTP id r195so2207312wme.2
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 Sep 2019 00:34:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:openpgp:autocrypt:organization
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=ntQnlZ165aoTq9A7WDI2toA4HdgPISzpICPAyGRYlc4=;
+        b=DMMbzJxxUXHFi6Z63lgJ1y7Sb/XAkiZLWF0D1+uoabJCHSepnQp4es4L6JW2eVagzh
+         72rCnxWkdINIZffgA6FJDDv1cZsc+xCJ96gjFDGsnFT/hoLUjJPTrbgYaJd7PokhtWnH
+         OTfaJl12/d5r/1ERItxyTyhsgX31+DwTKVVyoNiRpdAo1kVz31c2aiTgxAUBVDnpjMAV
+         DjtgPgaTKqzDjK8Ac7atghJQxxGqy9uZA+Mg+e9bu/zTWhUlugNecrmiCFU/k80GDkh6
+         fuT2Iwj60ftMrfIVjjBd2usNbSjEkk428eJwTjzYtZ3c+FGD6oRv2oFmwmg93VzpK1Sh
+         ca5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :organization:message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=ntQnlZ165aoTq9A7WDI2toA4HdgPISzpICPAyGRYlc4=;
+        b=DOwb7ESypcB1uvclsVLtqfWhH4oJQW9Z+579pJh28zueNF1aTRFCZEvM/YQmtGmnzr
+         +ja7CIfFfnupIAj5xjVj/7CZhtuOTvUFINHL/9AOzwHTLio4zvalnNVXj7hrnuikD0Gf
+         FkZC1yuX5KyZ/4irwR7U4kqyiGjUQZGo13+pZOh+syEMtsglgPhaCRva2I5JvCk3uL4K
+         s7tMBzuHDKOoETJyR9wgoeEQJUgVfKTNQSuN/TA8+cE7I4LzPvOtFCgYkiQqSE2Wv9Q5
+         rUlHSCPmrjCnTU7G0xBRC53r+iIfDSwmt0kBiAY2sFOM/gXOr4OY28E6SLgEMnMaNLjp
+         iuXg==
+X-Gm-Message-State: APjAAAXcyIr9Rv/4DmFRh0Ix3Vey+01HKY5wvEB9MQH/ZSvTA/+t2j8N
+        rS6Oy/B7VQg4v/67v6ceFto7FQ==
+X-Google-Smtp-Source: APXvYqxxDvRVKQaWLplVyw8RxLikPJkEefVhJ7vX1GPMo2oDLkeZWy4Fj5QkFLqrwRhYintC8OnwBA==
+X-Received: by 2002:a1c:ca02:: with SMTP id a2mr2835861wmg.127.1568187271380;
+        Wed, 11 Sep 2019 00:34:31 -0700 (PDT)
+Received: from [192.168.1.62] (176-150-251-154.abo.bbox.fr. [176.150.251.154])
+        by smtp.gmail.com with ESMTPSA id d193sm3518079wmd.0.2019.09.11.00.34.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Sep 2019 00:34:30 -0700 (PDT)
+Subject: Re: [PATCH 4/7] dt-bindings: chosen: Add clocksource and clockevent
+ selection
+To:     Claudiu Beznea <claudiu.beznea@microchip.com>,
+        daniel.lezcano@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux@armlinux.org.uk, nsekhar@ti.com,
+        bgolaszewski@baylibre.com, monstr@monstr.eu, john@phrozen.org,
+        ralf@linux-mips.org, paul.burton@mips.com, jhogan@kernel.org,
+        lftan@altera.com, tglx@linutronix.de, vgupta@synopsys.com,
+        marc.zyngier@arm.com, patrice.chotard@st.com,
+        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+        eric@anholt.net, wahrenst@gmx.net, f.fainelli@gmail.com,
+        rjui@broadcom.com, sbranden@broadcom.com,
+        bcm-kernel-feedback-list@broadcom.com, linus.walleij@linaro.org,
+        shc_work@mail.ru, kgene@kernel.org, krzk@kernel.org,
+        ysato@users.sourceforge.jp, liviu.dudau@arm.com,
+        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, baohua@kernel.org,
+        nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
+        ludovic.desroches@microchip.com, baruch@tkos.co.il,
+        u.kleine-koenig@pengutronix.de, guoren@kernel.org,
+        kaloz@openwrt.org, khalasa@piap.pl, ssantosh@kernel.org,
+        vz@mleia.com, slemieux.tyco@gmail.com, khilman@baylibre.com,
+        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+        venture@google.com, yuenn@google.com, benjaminfair@google.com,
+        afaerber@suse.de, manivannan.sadhasivam@linaro.org,
+        agross@kernel.org, palmer@sifive.com, aou@eecs.berkeley.edu,
+        heiko@sntech.de, orsonzhai@gmail.com, baolin.wang@linaro.org,
+        zhang.lyra@gmail.com, maxime.ripard@bootlin.com, wens@csie.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        linux@prisktech.co.nz, john.stultz@linaro.org, sboyd@kernel.org,
+        matthias.bgg@gmail.com
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        nios2-dev@lists.rocketboards.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        uclinux-h8-devel@lists.sourceforge.jp,
+        linux-amlogic@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org, linux-riscv@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+References: <1568123236-767-1-git-send-email-claudiu.beznea@microchip.com>
+ <1568123236-767-5-git-send-email-claudiu.beznea@microchip.com>
+From:   Neil Armstrong <narmstrong@baylibre.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
+ 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
+ ZaTUOEkgIor5losDrePdPgE=
+Organization: Baylibre
+Message-ID: <81da473f-54d7-2a00-61ec-9351cdfcaaf3@baylibre.com>
+Date:   Wed, 11 Sep 2019 09:34:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CGME20190910155240eucas1p26b343fd58e0f7b7fbe8dae06fe565de7@eucas1p2.samsung.com>
- <CAJKOXPf9zBSPnQgm0tVA_6N+mgR7xiCskf8JUOmQMG8C+jF8pA@mail.gmail.com> <20190910155207.6569-1-m.falkowski@samsung.com>
-In-Reply-To: <20190910155207.6569-1-m.falkowski@samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 11 Sep 2019 08:26:48 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
-Message-ID: <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: arm: samsung: Convert Samsung Exynos
- IOMMU H/W, System MMU to dt-schema
-To:     Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1568123236-767-5-git-send-email-claudiu.beznea@microchip.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 10 Sep 2019 at 17:52, Maciej Falkowski <m.falkowski@samsung.com> wrote:
->
-> Convert Samsung Exynos IOMMU H/W, System Memory Management Unit
-> to newer dt-schema format.
->
-> Update clock description.
->
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
+Hi,
+
+On 10/09/2019 15:47, Claudiu Beznea wrote:
+> From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> 
+> Some timer drivers may behave either as clocksource or clockevent
+> or both. Until now, in case of platforms with multiple hardware
+> resources of the same type, the drivers were chosing the first
+> registered hardware resource as clocksource/clockevent and the
+> next one as clockevent/clocksource. Other were using different
+> compatibles (one for each functionality, although its about the
+> same hardware). Add DT bindings to be able to choose the
+> functionality of a timer.
+> 
+> Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 > ---
-> Hi Krzysztof,
->
-> Thank you for feedback.
->
-> New changes:
-> - style fixes including missing empty lines,
-> deletion of unneeded descriptions
->
-> - fix mistake where one example was split
-> into two separete ones.
->
-> There are some updates with clock description. I have spoken with
-> Marek Szyprowski and the right setup for clocks seems to be two pairs:
-> "sysmmu" with optional "master" or a pair of "aclk" + "pclk".
->
-> The option: "aclk" + "pclk" + "master" was never used in any
-> of device bindings and there are none compilation problems with that.
->
-> In so, clock-names are rewritten to handle this version
-> and maximal clock number is set to two.
->
-> Best regards,
-> Maciej Falkowski
-> ---
->  .../bindings/iommu/samsung,sysmmu.txt         |  67 -----------
->  .../bindings/iommu/samsung,sysmmu.yaml        | 112 ++++++++++++++++++
->  2 files changed, 112 insertions(+), 67 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
->  create mode 100644 Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
->
-> diff --git a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
-> deleted file mode 100644
-> index 525ec82615a6..000000000000
-> --- a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
-> +++ /dev/null
-> @@ -1,67 +0,0 @@
-> -Samsung Exynos IOMMU H/W, System MMU (System Memory Management Unit)
-> -
-> -Samsung's Exynos architecture contains System MMUs that enables scattered
-> -physical memory chunks visible as a contiguous region to DMA-capable peripheral
-> -devices like MFC, FIMC, FIMD, GScaler, FIMC-IS and so forth.
-> -
-> -System MMU is an IOMMU and supports identical translation table format to
-> -ARMv7 translation tables with minimum set of page properties including access
-> -permissions, shareability and security protection. In addition, System MMU has
-> -another capabilities like L2 TLB or block-fetch buffers to minimize translation
-> -latency.
-> -
-> -System MMUs are in many to one relation with peripheral devices, i.e. single
-> -peripheral device might have multiple System MMUs (usually one for each bus
-> -master), but one System MMU can handle transactions from only one peripheral
-> -device. The relation between a System MMU and the peripheral device needs to be
-> -defined in device node of the peripheral device.
-> -
-> -MFC in all Exynos SoCs and FIMD, M2M Scalers and G2D in Exynos5420 has 2 System
-> -MMUs.
-> -* MFC has one System MMU on its left and right bus.
-> -* FIMD in Exynos5420 has one System MMU for window 0 and 4, the other system MMU
-> -  for window 1, 2 and 3.
-> -* M2M Scalers and G2D in Exynos5420 has one System MMU on the read channel and
-> -  the other System MMU on the write channel.
-> -
-> -For information on assigning System MMU controller to its peripheral devices,
-> -see generic IOMMU bindings.
-> -
-> -Required properties:
-> -- compatible: Should be "samsung,exynos-sysmmu"
-> -- reg: A tuple of base address and size of System MMU registers.
-> -- #iommu-cells: Should be <0>.
-> -- interrupts: An interrupt specifier for interrupt signal of System MMU,
-> -             according to the format defined by a particular interrupt
-> -             controller.
-> -- clock-names: Should be "sysmmu" or a pair of "aclk" and "pclk" to gate
-> -              SYSMMU core clocks.
-> -              Optional "master" if the clock to the System MMU is gated by
-> -              another gate clock other core  (usually main gate clock
-> -              of peripheral device this SYSMMU belongs to).
-> -- clocks: Phandles for respective clocks described by clock-names.
-> -- power-domains: Required if the System MMU is needed to gate its power.
-> -         Please refer to the following document:
-> -         Documentation/devicetree/bindings/power/pd-samsung.txt
-> -
-> -Examples:
-> -       gsc_0: gsc@13e00000 {
-> -               compatible = "samsung,exynos5-gsc";
-> -               reg = <0x13e00000 0x1000>;
-> -               interrupts = <0 85 0>;
-> -               power-domains = <&pd_gsc>;
-> -               clocks = <&clock CLK_GSCL0>;
-> -               clock-names = "gscl";
-> -               iommus = <&sysmmu_gsc0>;
-> -       };
-> -
-> -       sysmmu_gsc0: sysmmu@13e80000 {
-> -               compatible = "samsung,exynos-sysmmu";
-> -               reg = <0x13E80000 0x1000>;
-> -               interrupt-parent = <&combiner>;
-> -               interrupts = <2 0>;
-> -               clock-names = "sysmmu", "master";
-> -               clocks = <&clock CLK_SMMU_GSCL0>, <&clock CLK_GSCL0>;
-> -               power-domains = <&pd_gsc>;
-> -               #iommu-cells = <0>;
-> -       };
-> diff --git a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-> new file mode 100644
-> index 000000000000..85d1a251f2ff
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-> @@ -0,0 +1,112 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/iommu/samsung,sysmmu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  Documentation/devicetree/bindings/chosen.txt | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/chosen.txt b/Documentation/devicetree/bindings/chosen.txt
+> index 45e79172a646..aad3034cdbdf 100644
+> --- a/Documentation/devicetree/bindings/chosen.txt
+> +++ b/Documentation/devicetree/bindings/chosen.txt
+> @@ -135,3 +135,23 @@ e.g.
+>  		linux,initrd-end = <0x82800000>;
+>  	};
+>  };
 > +
-> +title: Samsung Exynos IOMMU H/W, System MMU (System Memory Management Unit)
+> +linux,clocksource and linux,clockevent
+> +--------------------------------------
 > +
-> +maintainers:
-> +  - Marek Szyprowski <m.szyprowski@samsung.com>
+> +Those nodes have a timer property. This property is a phandle to the timer to be
+> +chosen as the clocksource or clockevent. This is only useful when the platform
+> +has multiple identical timers and it is not possible to let linux make the
+> +correct choice.
 > +
-> +description: |+
-> +  Samsung's Exynos architecture contains System MMUs that enables scattered
-> +  physical memory chunks visible as a contiguous region to DMA-capable peripheral
-> +  devices like MFC, FIMC, FIMD, GScaler, FIMC-IS and so forth.
+> +/ {
+> +	chosen {
+> +		linux,clocksource {
+> +			timer = <&timer0>;
+> +		};
 > +
-> +  System MMU is an IOMMU and supports identical translation table format to
-> +  ARMv7 translation tables with minimum set of page properties including access
-> +  permissions, shareability and security protection. In addition, System MMU has
-> +  another capabilities like L2 TLB or block-fetch buffers to minimize translation
-> +  latency.
-> +
-> +  System MMUs are in many to one relation with peripheral devices, i.e. single
-> +  peripheral device might have multiple System MMUs (usually one for each bus
-> +  master), but one System MMU can handle transactions from only one peripheral
-> +  device. The relation between a System MMU and the peripheral device needs to be
-> +  defined in device node of the peripheral device.
-> +
-> +  MFC in all Exynos SoCs and FIMD, M2M Scalers and G2D in Exynos5420 has 2 System
-> +  MMUs.
-> +  * MFC has one System MMU on its left and right bus.
-> +  * FIMD in Exynos5420 has one System MMU for window 0 and 4, the other system MMU
-> +    for window 1, 2 and 3.
-> +  * M2M Scalers and G2D in Exynos5420 has one System MMU on the read channel and
-> +    the other System MMU on the write channel.
-> +
-> +  For information on assigning System MMU controller to its peripheral devices,
-> +  see generic IOMMU bindings.
-> +
-> +properties:
-> +  compatible:
-> +    const: samsung,exynos-sysmmu
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description: |
-> +      An interrupt specifier for interrupt signal of System MMU,
-> +      according to the format defined by a particular interrupt
-> +      controller.
+> +		linux,clockevent {
+> +			timer = <&timer1>;
+> +		};
+> +	};
+> +};
+> 
 
-You left this description and it is not needed - does not bring any information.
-Add also maxItems as I believe there should be only one interrupt.
+Why not in aliases ?
 
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    oneOf:
-> +      - contains:
-> +          enum:
-> +            - sysmmu
-> +            - master
+aliases {
+    clocksource0 = &timer0;
+    clockevent0 = &timer1;
+};
 
-This is not specific enough, because it accepts:
-clock-names = "master";
-clock-names = "aclk";
+since we can have multiple of each, we should not limit ourselves to 1 clkevent
+and 1 clksource.
 
-Instead I think this could work:
-oneOf:
-  - items:
-    - const: sysmmu
-  - items:
-    - const: sysmmu
-    - const: master
-  - items:
-    - const: aclk
-    - const: pclk
+In the aliases case, each driver would expose both capabilities, and the core would select
+what to enable.
 
-Best regards,
-Krzysztof
+Neil
