@@ -2,49 +2,48 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B39FBB0514
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 23:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68791B051E
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 23:10:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729771AbfIKVHe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Sep 2019 17:07:34 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:38463 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729681AbfIKVHe (ORCPT
+        id S1729831AbfIKVK1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 11 Sep 2019 17:10:27 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:47069 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729813AbfIKVK1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Sep 2019 17:07:34 -0400
-Received: by mail-qt1-f194.google.com with SMTP id j31so245231qta.5;
-        Wed, 11 Sep 2019 14:07:34 -0700 (PDT)
+        Wed, 11 Sep 2019 17:10:27 -0400
+Received: by mail-qt1-f193.google.com with SMTP id v11so27027726qto.13;
+        Wed, 11 Sep 2019 14:10:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=AFuB2QpmFZeeFcW1/wDZ3Q3qc6SL3R+R31YUNn2vg8g=;
-        b=i1PQfPLVIgwVLpHDiD7It9LdELRRY2gF65WSTOPg+AmmjzZe3lyYdaCX6PIO2+LMkA
-         HVxeO4ymGXjgOfF4okV55tE+Qgf2T3e1LG8LMnlhJ5BV+mHwuE8Zp55rD9f9NfJ4Xhpl
-         RACSJFLV0Edl16Fv4AEcPTKti10qnVTdsSEpob8gLoePIZscURT4dVW+3n0orYITXvCM
-         B/BAow/3ZToJigKOEz/3BxGLPbmoGOvjbWMx5iKMy824K9M99UmewVdvw4Bbzcup3oXQ
-         JuVWJvDHlnQXKMHRgD5mvWeM1QmKN62VCEG2lsHyFJSJ9jQNgFQxkODTmjoYIc9Jo8u5
-         uhng==
-X-Gm-Message-State: APjAAAUkaJCJYFoAn2KqzyaSRIu5d3+y03zUjnQaR96qARQAGn3XYuur
-        OMO8AKhzPA4t1OUwFCZAEYqZ5MCqY2bnsSY4Fk4=
-X-Google-Smtp-Source: APXvYqxmXppy4+77gx+LlXeaQMHszT42JLyi2myisyPCzAxn3WpjRosxEgQuBtMuYRI4gv0BJqTsq3M7LCuPPknqN5Q=
-X-Received: by 2002:ac8:32ec:: with SMTP id a41mr36952783qtb.18.1568236053461;
- Wed, 11 Sep 2019 14:07:33 -0700 (PDT)
+        bh=23NrFChKykdY1EKYDK/1t31I0Xos3EvXXWZvJnu/Dj8=;
+        b=ZerXNUtjhMC/jKxjyPbE4KXrRRdLJqU99yhbzGTpNw4RYk7InKTWzu82H6sYkKlive
+         k+IQTxnuDZblRlDrejCBh3PdgMtOgLDRxoj73j//NKOvq/z/xr6Fura7IR/RMR5VSf4H
+         5eePrhKU19KNZPC7eew50pC6D3/eW11LMgDC8pFKhSzfwNryzN8yaBhM0VErVLX1vd45
+         qMel1E6ckZDbQiHMYahM3PG1k1vC3ebv0ysrss3wmtzksF7N/T77k1H8/AuTpcEoFsa/
+         ZYGaRNDJXQKtrbIaUP7lrjw6+NUAq3rb57Z1MSYOv4Y4gaUS/CvMUoWz1FVlHiniva76
+         WJjQ==
+X-Gm-Message-State: APjAAAWSZDasTYESDMxahRYbmIvknzj6okWCLy4IRfgBEJJV/wempiFv
+        J8dP/k38HW9KP0RR2+jrfqfkkS3mjg5VqChSb4k=
+X-Google-Smtp-Source: APXvYqzlhYH1AZxPoUWhLlKAi/3cz5wBak0YHxRnRpq/UZvZhmQwxva9MvOWocpwez0hO+aGpdkH/w0NIKo5Lc5rV+I=
+X-Received: by 2002:ad4:4529:: with SMTP id l9mr19566057qvu.45.1568236226485;
+ Wed, 11 Sep 2019 14:10:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190911183632.4317-1-krzk@kernel.org>
-In-Reply-To: <20190911183632.4317-1-krzk@kernel.org>
+References: <20190911183632.4317-1-krzk@kernel.org> <20190911183632.4317-2-krzk@kernel.org>
+In-Reply-To: <20190911183632.4317-2-krzk@kernel.org>
 From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 11 Sep 2019 23:07:17 +0200
-Message-ID: <CAK8P3a2pBV+fh0rHitZ30Zz61QNRLfNSD-nhnzq4ZtxSh66F1Q@mail.gmail.com>
-Subject: Re: [GIT PULL 1/2] arm64: dts: exynos: Pull for v5.4
+Date:   Wed, 11 Sep 2019 23:10:10 +0200
+Message-ID: <CAK8P3a0OBOrYKnwY8pCMiPQneXyrg3-O-LfrBF4=qy+HasU17g@mail.gmail.com>
+Subject: Re: [GIT PULL 2/2] ARM: samsung: mach/soc for v5.4, second pull
 To:     Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
         SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
         <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
@@ -52,32 +51,13 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 On Wed, Sep 11, 2019 at 8:36 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> ----------------------------------------------------------------
+> Samsung mach/soc changes for v5.4, part 2
 >
-> Hi,
+> 1. Fix system restart on S3C6410 due to missing match of watchdog,
+> 2. Enable suppor for ARM architected timers on Exynos.
 >
-> Unfortunately the patches were applied right after closing the linux-next.
 
-Hi Krzysztof,
+Pulled into arm/late, thanks!
 
-I took a look at these and am not convinced this is right:
-
-> 1. Fix boot of Exynos7 due to wrong address/size of memory node,
-
-The current state is clearly broken and a fix is needed, but
-I'm not sure this is the right fix. Why do you have 32-bit physical
-addressing on a 64-bit chip? I looked at commit ef72171b3621
-that introduced it, and it seems it would be better to just
-revert back to 64-bit addresses.
-
-> 2. Move GPU under /soc node,
-
-No problem
-
-> 3. Minor cleanup of #address-cells.
-
-IIRC, an interrupt-controller is required to have a #address-cells
-property, even if that is normally zero. I don't remember the
-details, but the gic binding lists it as mandatory, and I think
-the PCI interrupt-map relies on it. I would just drop this patch.
-
-    Arnd
+     Arnd
