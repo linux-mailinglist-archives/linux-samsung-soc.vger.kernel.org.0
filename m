@@ -2,323 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 517CAAFB0F
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 13:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96C8AAFB74
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 13:36:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727513AbfIKLFE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Sep 2019 07:05:04 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:40763 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727422AbfIKLFE (ORCPT
+        id S1727753AbfIKLgo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 11 Sep 2019 07:36:44 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54810 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726793AbfIKLgn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Sep 2019 07:05:04 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190911110501euoutp022cdba40ee794fe5d4d72dd0d00440d7e~DXYCOX13c0323403234euoutp02b
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 Sep 2019 11:05:01 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190911110501euoutp022cdba40ee794fe5d4d72dd0d00440d7e~DXYCOX13c0323403234euoutp02b
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568199902;
-        bh=WSauEBVwysVYicF2nbz4sA7JWfa0qdbfulQkkofDGzU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VU/wzzYiERpPbTM+F3Sv13uhQoZ0hbpajqX0AU+HpsABwOXENpHCcM0R6WXsbU0EE
-         cTgB4haES65Ot84IVMC0mN15kAXmeIMsapBrv5xgpYGM9vwRdaRK+r1bF7K0V8HTMj
-         8IADhZ/GuvYfuEZnNgXNFzc2XhOKk9/zV4QLVEAw=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190911110501eucas1p1c1b16cf1212320315cafe7bb9e6535c9~DXYBaMMbd0606106061eucas1p1t;
-        Wed, 11 Sep 2019 11:05:01 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id CD.52.04374.CD4D87D5; Wed, 11
-        Sep 2019 12:05:00 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237~DXYAkk2vd1572415724eucas1p2s;
-        Wed, 11 Sep 2019 11:05:00 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190911110459eusmtrp2adfd6162d569b96fb560c7837ef6d1ba~DXYAWZK2R0325203252eusmtrp2W;
-        Wed, 11 Sep 2019 11:04:59 +0000 (GMT)
-X-AuditID: cbfec7f5-4ddff70000001116-89-5d78d4dc9ade
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 6B.F6.04166.BD4D87D5; Wed, 11
-        Sep 2019 12:04:59 +0100 (BST)
-Received: from AMDC2459.DIGITAL.local (unknown [106.120.51.95]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190911110459eusmtip25daf33a426cf7146d85c7d8e9db39474~DXX-zIwF82328523285eusmtip2Y;
-        Wed, 11 Sep 2019 11:04:59 +0000 (GMT)
-From:   Maciej Falkowski <m.falkowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     krzk@kernel.org, robh+dt@kernel.org, m.falkowski@samsung.com,
-        mark.rutland@arm.com, m.szyprowski@samsung.com, a.hajda@samsung.com
-Subject: [PATCH v3] dt-bindings: arm: samsung: Convert Samsung Exynos IOMMU
- H/W, System MMU to dt-schema
-Date:   Wed, 11 Sep 2019 13:04:46 +0200
-Message-Id: <20190911110446.32058-1-m.falkowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHIsWRmVeSWpSXmKPExsWy7djPc7p3rlTEGvy7bGhxa905Vov5R4DE
-        +fMb2C0u75rDZjHj/D4miwfN69gs1h65y26x9PpFJovWvUfYHTg91sxbw+ixaVUnm0ffllWM
-        Hp83yQWwRHHZpKTmZJalFunbJXBlrNvJWvDbrqL/6BPGBsYzhl2MnBwSAiYSHffbmbsYuTiE
-        BFYwSmx90MQI4XxhlNj0+w0ThPOZUaJ13xdWmJZHP56wQSSWM0pc3bCPGa7lwuyr7CBVbAIG
-        Ev1v9rKA2CICiRK3f/ezgxQxC7QzSpw9cIcZJCEskCVxsKmLDcRmEVCV+Lf9MhOIzStgI7Gx
-        sxlqnbzE6g0HwOo5BQIl2vacArtJQuA7m8S//TBFLhIX/l1hgbCFJV4d38IOYctI/N85H6iB
-        A8iulrj2TRait4VR4vq0t2wQNdYSf1ZNZAOpYRbQlFi/Sx8i7Cjx5s59NohWPokbbwVBwsxA
-        5qRt05khwrwSHW1CEKaqxJsJsRCN0hKta/YzQtgeEs9f94MdLySwhFHi6DWJCYzysxBWLWBk
-        XMUonlpanJueWmycl1quV5yYW1yal66XnJ+7iRGYKk7/O/51B+O+P0mHGAU4GJV4eG+IVsQK
-        sSaWFVfmHmKU4GBWEuF90AIU4k1JrKxKLcqPLyrNSS0+xCjNwaIkzlvN8CBaSCA9sSQ1OzW1
-        ILUIJsvEwSnVwNha+Ym9UvO3UJOg0tM906bfV1Qy5+KJ0TmSlTT3idfm2RG/FsiukArgr2Hz
-        s5go3pz/w201X0LjnT33t7IInAgWWHtt56d5H29vv/XVlIu7J+/jet8eUeklll2BFyoOXb2T
-        WRkza9sEhU53J8sL1ystLVicl+pXvtnztEzgndn3vpKfZ/fV/FJiKc5INNRiLipOBAAWFo1c
-        EQMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrILMWRmVeSWpSXmKPExsVy+t/xe7q3r1TEGuxtMrG4te4cq8X8I0Di
-        /PkN7BaXd81hs5hxfh+TxYPmdWwWa4/cZbdYev0ik0Xr3iPsDpwea+atYfTYtKqTzaNvyypG
-        j8+b5AJYovRsivJLS1IVMvKLS2yVog0tjPQMLS30jEws9QyNzWOtjEyV9O1sUlJzMstSi/Tt
-        EvQy1u1kLfhtV9F/9AljA+MZwy5GTg4JAROJRz+esHUxcnEICSxllPj7agUbREJaYv+1j+wQ
-        trDEn2tdYHEhgU+MEpev8IHYbAIGEv1v9rKA2CICyRKLD+9kBBnELNDPKDHp7VqwhLBAhsSd
-        vf1gg1gEVCX+bb/MBGLzCthIbOxsZoVYIC+xesMBZhCbUyBQom3PKSaIZQESZ47eZJ3AyLeA
-        kWEVo0hqaXFuem6xoV5xYm5xaV66XnJ+7iZGYPBuO/Zz8w7GSxuDDzEKcDAq8fA+aCuPFWJN
-        LCuuzD3EKMHBrCTC+6ClIlaINyWxsiq1KD++qDQntfgQoynQUROZpUST84GRlVcSb2hqaG5h
-        aWhubG5sZqEkztshcDBGSCA9sSQ1OzW1ILUIpo+Jg1OqgbGvPfFs4Avb/UYp+febFwWbrOZ6
-        rXBW0+7h7P9OK/cuEdVzeW2Qumbt8dayhb5+N263nSwoqPqy52XHi9RLKeuPKDQqT9rt85Kx
-        J2PlP4ek46pr555/6pNZJFC7/tSXZO4b9hvDPjGpCny3npT1wezjcdfC5IPmOscu2Z09cu/g
-        1ZV/WPdsOuqhxFKckWioxVxUnAgAvmHjanQCAAA=
-X-CMS-MailID: 20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237
-References: <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com>
-        <CGME20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237@eucas1p2.samsung.com>
+        Wed, 11 Sep 2019 07:36:43 -0400
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8E2212168B;
+        Wed, 11 Sep 2019 11:36:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568201802;
+        bh=BzhirzR9rKgLcs8QYiB3WTcr5z2B+Rmcc8JzkFSqIsI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=XYXXeHI5GSr9s26qIRfYonfO2cfnZMvfdVJRX6G7HOe57tVzrYmQ0bqoZott2nf8s
+         q8u0WwmhBm6jcr1Q/uw5mHVGH6CFjkgBvwRqTKY2ctSwuZ2A7qp7q82B07ND0eB+2A
+         Ul1Q84j6FLGxkX0gnMZc9HOKqbdAZwRR/l4eZgqM=
+Received: by mail-lj1-f170.google.com with SMTP id d5so19645823lja.10;
+        Wed, 11 Sep 2019 04:36:42 -0700 (PDT)
+X-Gm-Message-State: APjAAAUSKLTmBr3IXxloAKmZckcXizq7qZCOSRolg3iwq3gt5FH0R68w
+        Ic0CWo2Yk2W4lHLQ0TCFu4EBNJTXdfDBVO5R9RQ=
+X-Google-Smtp-Source: APXvYqwfc+Lu9G+Tlo3lntibr090Kk9wKzsHWBSgh4Zee3oG+Pzgcvi5+Fv6P6cv6Yi71PWv9R2fNgse4kVCY2KSg4M=
+X-Received: by 2002:a2e:9705:: with SMTP id r5mr5012909lji.13.1568201800688;
+ Wed, 11 Sep 2019 04:36:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <CGME20190911110500eucas1p2e1304a19e2e75ee43d80fcdc3b871237@eucas1p2.samsung.com>
+ <CAJKOXPeojuk1UrYo9Wakaaq4VJt3Ts22Vi-V5xzwAXoFU5+tcA@mail.gmail.com> <20190911110446.32058-1-m.falkowski@samsung.com>
+In-Reply-To: <20190911110446.32058-1-m.falkowski@samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 11 Sep 2019 13:36:29 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPeZ2usT+bx23n-hXxsLsbZqr-0JEtyagK8sfsLaFiaH5w@mail.gmail.com>
+Message-ID: <CAJKOXPeZ2usT+bx23n-hXxsLsbZqr-0JEtyagK8sfsLaFiaH5w@mail.gmail.com>
+Subject: Re: [PATCH v3] dt-bindings: arm: samsung: Convert Samsung Exynos
+ IOMMU H/W, System MMU to dt-schema
+To:     Maciej Falkowski <m.falkowski@samsung.com>
+Cc:     "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung Exynos IOMMU H/W, System Memory Management Unit
-to newer dt-schema format.
+On Wed, 11 Sep 2019 at 13:05, Maciej Falkowski <m.falkowski@samsung.com> wrote:
+>
+> Convert Samsung Exynos IOMMU H/W, System Memory Management Unit
+> to newer dt-schema format.
+>
+> Update clock description.
+>
+> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+> Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
+> ---
+> Hi Krzysztof,
+>
+> Thank you for feedback.
+>
+> v3:
+>
+> - remove obsolete interrupts description and
+> set its maxItems to one. There are some incompatible
+> files which will be fixed with another patch.
 
-Update clock description.
+Driver stopped supporting two IRQ lines in commit
+7222e8db2d506197ee183de0f9b76b3ad97e8c18 (iommu/exynos: Fix build
+errors). The second IRQ line in Exynos3250 DTS seems to be ignored.
 
-Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
----
-Hi Krzysztof,
+The patch now looks good to me:
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Thank you for feedback.
-
-v3:
-
-- remove obsolete interrupts description and
-set its maxItems to one. There are some incompatible
-files which will be fixed with another patch.
-
-- clock-names pattern is changed to your more precise 
-version. I also added option "pclk" + "aclk" as some
-bindings are also using it.
+However for some reasons you did not CC the IOMMU maintainers. Please
+use scripts/get_maintainer.pl to get the list of folks to CC.
 
 Best regards,
-Maciej Falkowski
----
- .../bindings/iommu/samsung,sysmmu.txt         |  67 -----------
- .../bindings/iommu/samsung,sysmmu.yaml        | 112 ++++++++++++++++++
- 2 files changed, 112 insertions(+), 67 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
- create mode 100644 Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-
-diff --git a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
-deleted file mode 100644
-index 525ec82615a6..000000000000
---- a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.txt
-+++ /dev/null
-@@ -1,67 +0,0 @@
--Samsung Exynos IOMMU H/W, System MMU (System Memory Management Unit)
--
--Samsung's Exynos architecture contains System MMUs that enables scattered
--physical memory chunks visible as a contiguous region to DMA-capable peripheral
--devices like MFC, FIMC, FIMD, GScaler, FIMC-IS and so forth.
--
--System MMU is an IOMMU and supports identical translation table format to
--ARMv7 translation tables with minimum set of page properties including access
--permissions, shareability and security protection. In addition, System MMU has
--another capabilities like L2 TLB or block-fetch buffers to minimize translation
--latency.
--
--System MMUs are in many to one relation with peripheral devices, i.e. single
--peripheral device might have multiple System MMUs (usually one for each bus
--master), but one System MMU can handle transactions from only one peripheral
--device. The relation between a System MMU and the peripheral device needs to be
--defined in device node of the peripheral device.
--
--MFC in all Exynos SoCs and FIMD, M2M Scalers and G2D in Exynos5420 has 2 System
--MMUs.
--* MFC has one System MMU on its left and right bus.
--* FIMD in Exynos5420 has one System MMU for window 0 and 4, the other system MMU
--  for window 1, 2 and 3.
--* M2M Scalers and G2D in Exynos5420 has one System MMU on the read channel and
--  the other System MMU on the write channel.
--
--For information on assigning System MMU controller to its peripheral devices,
--see generic IOMMU bindings.
--
--Required properties:
--- compatible: Should be "samsung,exynos-sysmmu"
--- reg: A tuple of base address and size of System MMU registers.
--- #iommu-cells: Should be <0>.
--- interrupts: An interrupt specifier for interrupt signal of System MMU,
--	      according to the format defined by a particular interrupt
--	      controller.
--- clock-names: Should be "sysmmu" or a pair of "aclk" and "pclk" to gate
--	       SYSMMU core clocks.
--	       Optional "master" if the clock to the System MMU is gated by
--	       another gate clock other core  (usually main gate clock
--	       of peripheral device this SYSMMU belongs to).
--- clocks: Phandles for respective clocks described by clock-names.
--- power-domains: Required if the System MMU is needed to gate its power.
--	  Please refer to the following document:
--	  Documentation/devicetree/bindings/power/pd-samsung.txt
--
--Examples:
--	gsc_0: gsc@13e00000 {
--		compatible = "samsung,exynos5-gsc";
--		reg = <0x13e00000 0x1000>;
--		interrupts = <0 85 0>;
--		power-domains = <&pd_gsc>;
--		clocks = <&clock CLK_GSCL0>;
--		clock-names = "gscl";
--		iommus = <&sysmmu_gsc0>;
--	};
--
--	sysmmu_gsc0: sysmmu@13e80000 {
--		compatible = "samsung,exynos-sysmmu";
--		reg = <0x13E80000 0x1000>;
--		interrupt-parent = <&combiner>;
--		interrupts = <2 0>;
--		clock-names = "sysmmu", "master";
--		clocks = <&clock CLK_SMMU_GSCL0>, <&clock CLK_GSCL0>;
--		power-domains = <&pd_gsc>;
--		#iommu-cells = <0>;
--	};
-diff --git a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-new file mode 100644
-index 000000000000..a8141d6c326a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-@@ -0,0 +1,112 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/iommu/samsung,sysmmu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos IOMMU H/W, System MMU (System Memory Management Unit)
-+
-+maintainers:
-+  - Marek Szyprowski <m.szyprowski@samsung.com>
-+
-+description: |+
-+  Samsung's Exynos architecture contains System MMUs that enables scattered
-+  physical memory chunks visible as a contiguous region to DMA-capable peripheral
-+  devices like MFC, FIMC, FIMD, GScaler, FIMC-IS and so forth.
-+
-+  System MMU is an IOMMU and supports identical translation table format to
-+  ARMv7 translation tables with minimum set of page properties including access
-+  permissions, shareability and security protection. In addition, System MMU has
-+  another capabilities like L2 TLB or block-fetch buffers to minimize translation
-+  latency.
-+
-+  System MMUs are in many to one relation with peripheral devices, i.e. single
-+  peripheral device might have multiple System MMUs (usually one for each bus
-+  master), but one System MMU can handle transactions from only one peripheral
-+  device. The relation between a System MMU and the peripheral device needs to be
-+  defined in device node of the peripheral device.
-+
-+  MFC in all Exynos SoCs and FIMD, M2M Scalers and G2D in Exynos5420 has 2 System
-+  MMUs.
-+  * MFC has one System MMU on its left and right bus.
-+  * FIMD in Exynos5420 has one System MMU for window 0 and 4, the other system MMU
-+    for window 1, 2 and 3.
-+  * M2M Scalers and G2D in Exynos5420 has one System MMU on the read channel and
-+    the other System MMU on the write channel.
-+
-+  For information on assigning System MMU controller to its peripheral devices,
-+  see generic IOMMU bindings.
-+
-+properties:
-+  compatible:
-+    const: samsung,exynos-sysmmu
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    oneOf:
-+      - items:
-+        - const: sysmmu
-+      - items:
-+        - const: sysmmu
-+        - const: master
-+      - items:
-+        - const: aclk
-+        - const: pclk
-+      - items:
-+        - const: pclk
-+        - const: aclk
-+    description: |
-+      Should be "sysmmu" with optional "master"
-+      or a pair "aclk" with "pclk".
-+
-+  "#iommu-cells":
-+    const: 0
-+
-+  power-domains:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: |
-+      Required if the System MMU is needed to gate its power.
-+      Please refer to the following document:
-+      Documentation/devicetree/bindings/power/pd-samsung.txt
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - "#iommu-cells"
-+
-+examples:
-+  - |
-+    gsc_0: gsc@13e00000 {
-+      compatible = "samsung,exynos5-gsc";
-+      reg = <0x13e00000 0x1000>;
-+      interrupts = <0 85 0>;
-+      power-domains = <&pd_gsc>;
-+      clocks = <&clock 0>; // CLK_GSCL0
-+      clock-names = "gscl";
-+      iommus = <&sysmmu_gsc0>;
-+    };
-+
-+    sysmmu_gsc0: sysmmu@13e80000 {
-+      compatible = "samsung,exynos-sysmmu";
-+      reg = <0x13E80000 0x1000>;
-+      interrupt-parent = <&combiner>;
-+      interrupts = <2 0>;
-+      clock-names = "sysmmu", "master";
-+      clocks = <&clock 0>, // CLK_SMMU_GSCL0
-+               <&clock 0>; // CLK_GSCL0
-+      power-domains = <&pd_gsc>;
-+      #iommu-cells = <0>;
-+    };
-+
--- 
-2.17.1
-
+Krzysztof
