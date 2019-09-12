@@ -2,106 +2,194 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 596C7B0B80
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 11:36:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35DC8B0EC3
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 14:19:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730485AbfILJgG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 12 Sep 2019 05:36:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54734 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730083AbfILJgG (ORCPT
+        id S1730454AbfILMTS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Sep 2019 08:19:18 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:12270 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731283AbfILMTS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 12 Sep 2019 05:36:06 -0400
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0B74E214AE;
-        Thu, 12 Sep 2019 09:36:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568280965;
-        bh=o907g5ReEliliHp1jD4CGBcMPQ67MvCxuOBHbk2SLo8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=o1xGloPCicmW15KwhTZntnYk9UgcnskLW5PH/c/xxbRhKaLacFzc8CvB2J+0DQrRc
-         DmH0vr4s84gZGWW7v/kFNjEwG6hvRU2NYJ+PK/IKjPrj+w8caQZ0FzqV6Y9hU3WSXS
-         YX4shUuhOadTXh3H+dc6BQoY5GIQkNJIEmZn7Wi8=
-Received: by mail-lf1-f49.google.com with SMTP id u3so3654681lfl.10;
-        Thu, 12 Sep 2019 02:36:04 -0700 (PDT)
-X-Gm-Message-State: APjAAAV/ySBJw6q+9AoSlv7T/95l/EuCgXsOf075O1RUCTefc8OqRXX+
-        LdjfnfgQVoAodqRaGT9KAGtPFZsyxd5H1TY5pws=
-X-Google-Smtp-Source: APXvYqzNtU0oOWZlIguKWNCiRl9oM+J21geYpRmVzSkBE7O4GULM3ap8wAEl5NWM9fgFCw9iRpQV6IrRFR1+xbj1uWc=
-X-Received: by 2002:ac2:43b8:: with SMTP id t24mr8235535lfl.24.1568280963225;
- Thu, 12 Sep 2019 02:36:03 -0700 (PDT)
+        Thu, 12 Sep 2019 08:19:18 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190912121916epoutp043aff3988690e50acfdc241309cf9c845~DsCIy_wuo2008120081epoutp04H
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 12 Sep 2019 12:19:16 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190912121916epoutp043aff3988690e50acfdc241309cf9c845~DsCIy_wuo2008120081epoutp04H
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568290756;
+        bh=PzTe36grY6sw2UW4Pv0TfJk8OfKRzsyqw53J3AvyFYU=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=SZEeMrCRTj2BN3Cf+c42A2uJ2PM28HSXDVi+kGfQnobNuHCBwM6l/3w5pqZKc8Nfn
+         /YzSY/aqTgOyNxu54DBT2NtM8rRU86dfjupGFmD4SLqtZbL5mLXyT1vDK8yBx74kuZ
+         EPa2Of03oW/2oRuRpLxumRFTE84P1CAeodHzGz10=
+Received: from epsmges5p1new.samsung.com (unknown [182.195.42.73]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+        20190912121915epcas5p4ddbcbd2d9ef766d6b3d1e81012c4f1de~DsCH9P9aV0804308043epcas5p4y;
+        Thu, 12 Sep 2019 12:19:15 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        AF.98.04150.3C73A7D5; Thu, 12 Sep 2019 21:19:15 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+        20190912121914epcas5p3f4952e5a791470dccf8e15442a65f8e0~DsCHYNsp81220412204epcas5p3f;
+        Thu, 12 Sep 2019 12:19:14 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190912121914epsmtrp2cf02f8836306f78d5db94b499c2707e8~DsCHXbUXb1986919869epsmtrp22;
+        Thu, 12 Sep 2019 12:19:14 +0000 (GMT)
+X-AuditID: b6c32a49-a5bff70000001036-e2-5d7a37c3daad
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        77.1F.03638.2C73A7D5; Thu, 12 Sep 2019 21:19:14 +0900 (KST)
+Received: from [107.108.73.28] (unknown [107.108.73.28]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190912121913epsmtip19d14299ca1abc31d156511fab4232091~DsCGjiozQ2617226172epsmtip1j;
+        Thu, 12 Sep 2019 12:19:13 +0000 (GMT)
+Subject: Re: [PATCH] arm64: dts: exynos: Revert
+ "Remove unneeded address space mapping for soc node"
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        stable@vger.kernel.org
+From:   Alim Akhtar <alim.akhtar@samsung.com>
+Message-ID: <28550827-0ada-6f7a-dfee-a9aa3f8fd976@samsung.com>
+Date:   Thu, 12 Sep 2019 17:26:55 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <20190911183632.4317-1-krzk@kernel.org> <CAK8P3a2pBV+fh0rHitZ30Zz61QNRLfNSD-nhnzq4ZtxSh66F1Q@mail.gmail.com>
- <CAJKOXPcOSvc2DfoN+7Tca=t5dSm3RcKqmm06AfR0PAVBeY=GvQ@mail.gmail.com>
-In-Reply-To: <CAJKOXPcOSvc2DfoN+7Tca=t5dSm3RcKqmm06AfR0PAVBeY=GvQ@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 12 Sep 2019 11:35:52 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcF_NVeyR7cRnq-6obi39MocA0aRGUn_9aExjBy0VXkWw@mail.gmail.com>
-Message-ID: <CAJKOXPcF_NVeyR7cRnq-6obi39MocA0aRGUn_9aExjBy0VXkWw@mail.gmail.com>
-Subject: Re: [GIT PULL 1/2] arm64: dts: exynos: Pull for v5.4
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
-        SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190912073602.22829-1-m.szyprowski@samsung.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsWy7bCmhu5h86pYg823+Sw2zljPanH+/AZ2
+        ixnn9zFZrD1yl91iwcZHjA6sHptWdbJ59G1ZxejxeZNcAHMUl01Kak5mWWqRvl0CV8bW+duY
+        Cu5KVfT9O87UwDhDtIuRk0NCwETi0+GrbF2MXBxCArsZJRraGqCcT4wSL9c2MEI43xglOiat
+        YYJpWbmlmR0isZdR4nXzDxYI5y2jxPnGE2wgVcICaRLz364E6xARCJG4//QFK4jNLFApMX3b
+        VBYQm01AW+Lu9C1gNbwCdhJLPu5iB7FZBFQl3m98xgxiiwpESHx6cJgVokZQ4uTMJ2C9nED1
+        Db9a2SBmikvcejKfCcKWl9j+dg4zyEESAkfYJHZ272aDONtF4s+UiywQtrDEq+Nb2CFsKYnP
+        7/YC1XAA2dkSPbuMIcI1EkvnHYMqt5c4cGUOC0gJs4CmxPpd+hCr+CR6fz9hgujklehoE4Ko
+        VpVofncVqlNaYmJ3NyuE7SFx+dZcZkhQTWSUmHBkFtMERoVZSD6bheSbWUi+mYWweQEjyypG
+        ydSC4tz01GLTAsO81HK94sTc4tK8dL3k/NxNjOAEo+W5g3HWOZ9DjAIcjEo8vBY6VbFCrIll
+        xZW5hxglOJiVRHh93lTGCvGmJFZWpRblxxeV5qQWH2KU5mBREuedxHo1RkggPbEkNTs1tSC1
+        CCbLxMEp1cB4kCNmulOFd5Wyr0WbCaNo/EMp6bZDL19NbZjawrkhMMD3jEJHjpcN44bfHL8P
+        RZXOv5Ckc1knaXHy500mlzdPjZuW+mRv4AwZEZ5t0hdchczMLNSPCBrJbtC5v3ndBDnGRdP5
+        HX/4OHte6pOOMJnz+dnFxTNjH63RPLLHoL5oC3fs5omSh9qVWIozEg21mIuKEwHciVqKLAMA
+        AA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPLMWRmVeSWpSXmKPExsWy7bCSnO4h86pYg19tahYbZ6xntTh/fgO7
+        xYzz+5gs1h65y26xYOMjRgdWj02rOtk8+rasYvT4vEkugDmKyyYlNSezLLVI3y6BK2Pr/G1M
+        BXelKvr+HWdqYJwh2sXIySEhYCKxckszexcjF4eQwG5GiVnbprJCJKQlrm+cwA5hC0us/Pcc
+        qug1o8TLndOZuxg5OIQF0iS2dOeBmCICIRIL3+uBlDMLVEqsnzKRCaJ8IqNE0+5jbCAJNgFt
+        ibvTtzCB2LwCdhJLPu4Cm88ioCrxfuMzZhBbVCBC4vCOWYwQNYISJ2c+YQGxOYHqG361skEs
+        MJOYt/khM4QtLnHryXwmCFteYvvbOcwTGIVmIWmfhaRlFpKWWUhaFjCyrGKUTC0ozk3PLTYs
+        MMpLLdcrTswtLs1L10vOz93ECI4GLa0djCdOxB9iFOBgVOLhfaBZFSvEmlhWXJl7iFGCg1lJ
+        hNfnTWWsEG9KYmVValF+fFFpTmrxIUZpDhYlcV75/GORQgLpiSWp2ampBalFMFkmDk6pBsb8
+        3fzFf+s8ihSOPpv0d/+TmBTlA76+/nO8ozSuf0npWPzMtUGwR336K6cvXNvqin/IOwWeWv/z
+        Y9XvvRF7nUy6pVKyM43OTJ3WnerxWFL3vR6rx76DrS0LF89+9HYl40fZ+fMdGiqDVI4dLX/J
+        mvn7+ZqSSsOolKOrND8XsR8rfRj/uSD8xBYlluKMREMt5qLiRACDd5CIggIAAA==
+X-CMS-MailID: 20190912121914epcas5p3f4952e5a791470dccf8e15442a65f8e0
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+X-CMS-RootMailID: 20190912073608eucas1p1c2da86b1f85244a507b0f2ce96390ad3
+References: <CGME20190912073608eucas1p1c2da86b1f85244a507b0f2ce96390ad3@eucas1p1.samsung.com>
+        <20190912073602.22829-1-m.szyprowski@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 12 Sep 2019 at 08:32, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Wed, 11 Sep 2019 at 23:07, Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Wed, Sep 11, 2019 at 8:36 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > Unfortunately the patches were applied right after closing the linux-next.
-> >
-> > Hi Krzysztof,
-> >
-> > I took a look at these and am not convinced this is right:
-> >
-> > > 1. Fix boot of Exynos7 due to wrong address/size of memory node,
-> >
-> > The current state is clearly broken and a fix is needed, but
-> > I'm not sure this is the right fix. Why do you have 32-bit physical
-> > addressing on a 64-bit chip? I looked at commit ef72171b3621
-> > that introduced it, and it seems it would be better to just
-> > revert back to 64-bit addresses.
->
-> We discussed with Marek Szyprowski that either we can go back to
-> 64-bit addressing or stick to 32. There are not known boards with more
-> than 4 GB of RAM so from this point of view the choice was irrelevant.
-> At the end of discussion I mentioned to stick with other arm64 boards
-> (although not all), so revert to have 64 bit address... but Marek
-> chosen differently. Since you ask, let's go back with revert.
->
-> >
-> > > 2. Move GPU under /soc node,
-> >
-> > No problem
-> >
-> > > 3. Minor cleanup of #address-cells.
-> >
-> > IIRC, an interrupt-controller is required to have a #address-cells
-> > property, even if that is normally zero. I don't remember the
-> > details, but the gic binding lists it as mandatory, and I think
-> > the PCI interrupt-map relies on it. I would just drop this patch.
->
-> Indeed, binding requires both address and size cells. I'll drop it.
+Hi Marek,
 
-Short update: no, address-cells are not required by bindings. They are
-optional. In case of lack of them, the parent address-cells will be
-used so effectively this patch was changing it from 0 to 1. Anyway
-this was not expressed in commit msg so I'll drop it.
+On 9/12/19 1:06 PM, Marek Szyprowski wrote:
+> Commit ef72171b3621 ("arm64: dts: exynos: Remove unneeded address space
+> mapping for soc node") changed the address and size cells in root node from
+> 2 to 1, but /memory nodes for the affected boards were not updated. This
+> went unnoticed on Exynos5433-based TM2(e) boards, because they use u-boot,
+> which updates /memory node to the correct values. On the other hand, the
+> mentioned commit broke boot on Exynos7-based Espresso board, which
+> bootloader doesn't touch /memory node at all.
+> 
+> This patch reverts commit ef72171b3621, so Exynos5433 and Exynos7 SoCs
+> again matches other ARM64 platforms with 64bit mappings in root node.
+> 
+> Reported-by: Alim Akhtar <alim.akhtar@samsung.com>
+> Fixes: ef72171b3621 ("arm64: dts: exynos: Remove unneeded address space mapping for soc node")
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> Cc: <stable@vger.kernel.org>
+> Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
+> ---
+> A few more comments:
+> 
+> 1. I've added 'tested-by' tag from Alim, as his original report pointed
+> that reverting the offending commit fixes the boot issue.
+> 
+This is still valid,reverting the offending commit does work.
+Thanks!
 
-Best regards,
-Krzysztof
+> 2. This patch applies down to v4.18.
+> 
+> 3. For v5.3 release, two patches:
+>     - "arm64: dts: exynos: Move GPU under /soc node for  Exynos5433"
+>     - "arm64: dts: exynos: Move GPU under /soc node for Exynos7"
+>     has to be applied first to ensure that GPU node will have correct 'reg'
+>     property (nodes under /soc still use 32bit mappings). I'm not sure if
+>     this can be expressed somehow in stable porting tags.
+> 
+> Best regards
+> Marek Szyprowski
+> Samsung R&D Institute Poland
+> ---
+>   arch/arm64/boot/dts/exynos/exynos5433.dtsi | 6 +++---
+>   arch/arm64/boot/dts/exynos/exynos7.dtsi    | 6 +++---
+>   2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
+> index 239bf44d174b..f69530730219 100644
+> --- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
+> +++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
+> @@ -18,8 +18,8 @@
+>   
+>   / {
+>   	compatible = "samsung,exynos5433";
+> -	#address-cells = <1>;
+> -	#size-cells = <1>;
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+>   
+>   	interrupt-parent = <&gic>;
+>   
+> @@ -260,7 +260,7 @@
+>   		compatible = "simple-bus";
+>   		#address-cells = <1>;
+>   		#size-cells = <1>;
+> -		ranges;
+> +		ranges = <0x0 0x0 0x0 0x18000000>;
+>   
+>   		chipid@10000000 {
+>   			compatible = "samsung,exynos4210-chipid";
+> diff --git a/arch/arm64/boot/dts/exynos/exynos7.dtsi b/arch/arm64/boot/dts/exynos/exynos7.dtsi
+> index f09800f355db..3a00ef0a17ff 100644
+> --- a/arch/arm64/boot/dts/exynos/exynos7.dtsi
+> +++ b/arch/arm64/boot/dts/exynos/exynos7.dtsi
+> @@ -12,8 +12,8 @@
+>   / {
+>   	compatible = "samsung,exynos7";
+>   	interrupt-parent = <&gic>;
+> -	#address-cells = <1>;
+> -	#size-cells = <1>;
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+>   
+>   	aliases {
+>   		pinctrl0 = &pinctrl_alive;
+> @@ -87,7 +87,7 @@
+>   		compatible = "simple-bus";
+>   		#address-cells = <1>;
+>   		#size-cells = <1>;
+> -		ranges;
+> +		ranges = <0 0 0 0x18000000>;
+>   
+>   		chipid@10000000 {
+>   			compatible = "samsung,exynos4210-chipid";
+> 
