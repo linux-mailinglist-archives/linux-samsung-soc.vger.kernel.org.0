@@ -2,119 +2,210 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71391B1213
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 17:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AFAB129B
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 18:15:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732836AbfILPYN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 12 Sep 2019 11:24:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39436 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732566AbfILPYN (ORCPT
+        id S1729686AbfILQPy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Sep 2019 12:15:54 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:52673 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729391AbfILQPy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 12 Sep 2019 11:24:13 -0400
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 08401208E4;
-        Thu, 12 Sep 2019 15:24:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568301852;
-        bh=bRaXhV1u0cqjpneEfhxR0gG6jEgN+4VgFtV5kQmun/c=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=BOE9DB4Hdw8cFXsW8x4PrxOriKSxadypHRCWo9c+8DF4THz81DVUtk483uO5ORPzU
-         OaLkgoRm353ROAUE/udmVbtoWdkTZLXqZ7iW/Yo/zxJHisX4nPJJqGq1CQXn3GEvME
-         f2BjDhaErqYGtKEl5xPi+yP5/XWiPeBPEPCx+CHU=
-Received: by mail-lj1-f173.google.com with SMTP id 7so23973376ljw.7;
-        Thu, 12 Sep 2019 08:24:11 -0700 (PDT)
-X-Gm-Message-State: APjAAAXfFubCAB4Cx7X9OS/Y3MzG1asQwflM37fDfDEL+mbbf8qwFE4S
-        zdrSUMeJ0TH6FSCHxcNi0vQ/l/gA3x3agWmQ8OY=
-X-Google-Smtp-Source: APXvYqxNABr3C+bOkO4dMzZfH+5jApAxIf5kJBygimzlc/o72h0wDnjOUeJugcSqbVL+mn2fyQlF/zKszB/tIXv5Pfs=
-X-Received: by 2002:a2e:b601:: with SMTP id r1mr8067680ljn.80.1568301850169;
- Thu, 12 Sep 2019 08:24:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <CGME20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a@eucas1p2.samsung.com>
- <20190911133310.8365-1-m.falkowski@samsung.com> <20190912151756.27173-1-m.falkowski@samsung.com>
-In-Reply-To: <20190912151756.27173-1-m.falkowski@samsung.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 12 Sep 2019 17:23:58 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcs5K46U9mF8evCpbEap_j0Sd5kUk-xiWjwyihAL7te=Q@mail.gmail.com>
-Message-ID: <CAJKOXPcs5K46U9mF8evCpbEap_j0Sd5kUk-xiWjwyihAL7te=Q@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: exynos: remove obsolete IRQ lines
-To:     Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     devicetree@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 12 Sep 2019 12:15:54 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190912161552euoutp02a7e46f1e0eeae5ddffcc97265e5a9a5f~DvQtzlgs00432204322euoutp02G
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 12 Sep 2019 16:15:52 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190912161552euoutp02a7e46f1e0eeae5ddffcc97265e5a9a5f~DvQtzlgs00432204322euoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568304952;
+        bh=5S4jHwjySXMeViPrPMP4YNn6x+hNkId00H3i+t4121Y=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=I4gUetCiketbGypAEnn8x+J+8hyO8LPlR2nETTJH0Ax5z0iEUiULZYH33JneNd3M1
+         P8IJhItsztEqueAT6kxFuHzM11kpg19T6bPPufCaHXiXXbMK9tP36q3qBH9rtbM9mt
+         6jIhbYf+Hza+iyqp9/uRoSVxNgW/TocNEAs4Tv5U=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190912161551eucas1p162d3b75081c28ba0055f29ba9c108738~DvQs_ULft1983319833eucas1p15;
+        Thu, 12 Sep 2019 16:15:51 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id A1.E8.04309.63F6A7D5; Thu, 12
+        Sep 2019 17:15:50 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a~DvQsP4wtY2511725117eucas1p2g;
+        Thu, 12 Sep 2019 16:15:50 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190912161550eusmtrp24ea158bfa6ff6484de3615a219097eff~DvQsBuYOO1661816618eusmtrp2F;
+        Thu, 12 Sep 2019 16:15:50 +0000 (GMT)
+X-AuditID: cbfec7f4-ae1ff700000010d5-6f-5d7a6f3624a6
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 0A.22.04166.53F6A7D5; Thu, 12
+        Sep 2019 17:15:49 +0100 (BST)
+Received: from AMDC2459.DIGITAL.local (unknown [106.120.51.95]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190912161549eusmtip27f78cece0ec8888a08c554da80ef8f57~DvQrP0X3A1586615866eusmtip2E;
+        Thu, 12 Sep 2019 16:15:49 +0000 (GMT)
+From:   Maciej Falkowski <m.falkowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+        mark.rutland@arm.com, krzk@kernel.org, a.hajda@samsung.com,
+        m.szyprowski@samsung.com, m.falkowski@samsung.com
+Subject: [PATCH v2] dt-bindings: gpu: Convert Samsung Image Rotator to
+ dt-schema
+Date:   Thu, 12 Sep 2019 18:15:38 +0200
+Message-Id: <20190912161538.4321-1-m.falkowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190912093315.5744-1-m.falkowski@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsWy7djP87pm+VWxBq+n2VjcWneO1aL33Ekm
+        i//bJjJbzD8C5F75+p7N4vz5DewWl3fNYbOYcX4fk8WD5nVsFmuP3GW3WHr9IpNF694j7A48
+        HmvmrWH02PttAYvHplWdbB7bvz1g9bjffZzJo2/LKkaPz5vkAtijuGxSUnMyy1KL9O0SuDKu
+        fO9kKVgoXdGz+wJbA2ObWBcjJ4eEgIlEx4pmti5GLg4hgRWMEpNunmeEcL4wSmxtW8sO4Xxm
+        lJh//gU7TMuqls9QieWMEs97X7LAtWxavYINpIpNwECi/81esISIQBNQ+6rjYIOZBdYwSvya
+        2coEUiUsECRxv+0yUAcHB4uAqsSnj2AreAWsJZ6d2ssGsU5eYvWGA8wgNqeAjcS8eXNYQeZI
+        CCxil7j/+CQLRJGLxNF5jawQtrDEq+NboG6Vkfi/cz4TyHwJgWqJa99kIXpbGCWuT3sLtcBa
+        4s+qiWA3MAtoSqzfpQ8RdpR4+aKVHaKVT+LGW0GQMDOQOWnbdGaIMK9ER5sQhKkq8WZCLESj
+        tETrmv2MEGEPif5bZpDQ6WeUWLNrJ9sERvlZCKsWMDKuYhRPLS3OTU8tNspLLdcrTswtLs1L
+        10vOz93ECEw0p/8d/7KDcdefpEOMAhyMSjy8FjpVsUKsiWXFlbmHGCU4mJVEeH3eVMYK8aYk
+        VlalFuXHF5XmpBYfYpTmYFES561meBAtJJCeWJKanZpakFoEk2Xi4JRqYAz+caVscvMV07bD
+        h2Miz7PM/hzqvHlK4L05Gnf/b07SZNYtt+izc5o0R/Lt8jlsdu9flllJlp7dcOql2mRRpdfR
+        4rKeQdV97vPyo5bXHd+ipFld/I1ZrulGn/jx0B2rdmz7tnHlfo3/DSqz/Ywep/kYiPBP3vox
+        XyRO4Km/tcSMU/ni07re/1NiKc5INNRiLipOBAADlkh5MAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPLMWRmVeSWpSXmKPExsVy+t/xe7qm+VWxBldvWlvcWneO1aL33Ekm
+        i//bJjJbzD8C5F75+p7N4vz5DewWl3fNYbOYcX4fk8WD5nVsFmuP3GW3WHr9IpNF694j7A48
+        HmvmrWH02PttAYvHplWdbB7bvz1g9bjffZzJo2/LKkaPz5vkAtij9GyK8ktLUhUy8otLbJWi
+        DS2M9AwtLfSMTCz1DI3NY62MTJX07WxSUnMyy1KL9O0S9DKufO9kKVgoXdGz+wJbA2ObWBcj
+        J4eEgInEqpbP7F2MXBxCAksZJRr/nWCDSEhL7L/2kR3CFpb4c62LDaLoE6PEvhVtYAk2AQOJ
+        /jd7WUASIgJtjBJPTx1hAnGYBbYxSuxeex+ohYNDWCBA4vudehCTRUBV4hPEUF4Ba4lnp/ZC
+        LZOXWL3hADOIzSlgIzFv3hxWkHIhoJqGNqYJjHwLGBlWMYqklhbnpucWG+oVJ+YWl+al6yXn
+        525iBAb+tmM/N+9gvLQx+BCjAAejEg+vhU5VrBBrYllxZe4hRgkOZiURXp83lbFCvCmJlVWp
+        RfnxRaU5qcWHGE2BTprILCWanA+MyrySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLpiSWp2amp
+        BalFMH1MHJxSDYxVBjo8LOc2O92YFcS1zbW2auVnRz2deXNWpe+84P9Pr69wrUPog2btrh0C
+        Z45lKq96EdW0d+a2H3mLb68OUAj9NGWJfaWRb5RxofzLRdJ+DBWv9gj+lJGv9dJmvJnOVOEx
+        xUznqPoBrkCfK4s3Rk9kazzy9kJw/K6N98Qm1LHwT6/m9Jms6KjEUpyRaKjFXFScCAChZdWy
+        kgIAAA==
+X-CMS-MailID: 20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a
+References: <20190912093315.5744-1-m.falkowski@samsung.com>
+        <CGME20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 12 Sep 2019 at 17:18, Maciej Falkowski <m.falkowski@samsung.com> wrote:
->
-> In commit 7222e8db2d506197ee183de0f9b76b3ad97e8c18 (iommu/exynos: Fix build
-> errors) Exynos3250 iommu driver stopped supporting two IRQ lines.
-> The second IRQ line in DTS is ignored and is not needed.
->
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
-> v2:
-> - change commit message to proper version
-> - add proper recipients
+Convert Samsung Image Rotator to newer dt-schema format.
 
-Thanks, you fixed it before I replied with comments. Except the
-subject also the commit SHA should be shorter. The guide is here:
-https://elixir.bootlin.com/linux/v5.3-rc8/source/Documentation/process/submitting-patches.rst#L183
+Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+v2:
+- add required properties
+- add proper commit recipients
+---
+ .../bindings/gpu/samsung-rotator.txt          | 28 ----------
+ .../bindings/gpu/samsung-rotator.yaml         | 52 +++++++++++++++++++
+ 2 files changed, 52 insertions(+), 28 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.txt
+ create mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
 
-No need to resend, I'll fix it while applying. However this will be
-after merge window.
+diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt b/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
+deleted file mode 100644
+index 3aca2578da0b..000000000000
+--- a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
++++ /dev/null
+@@ -1,28 +0,0 @@
+-* Samsung Image Rotator
+-
+-Required properties:
+-  - compatible : value should be one of the following:
+-	* "samsung,s5pv210-rotator" for Rotator IP in S5PV210
+-	* "samsung,exynos4210-rotator" for Rotator IP in Exynos4210
+-	* "samsung,exynos4212-rotator" for Rotator IP in Exynos4212/4412
+-	* "samsung,exynos5250-rotator" for Rotator IP in Exynos5250
+-
+-  - reg : Physical base address of the IP registers and length of memory
+-	  mapped region.
+-
+-  - interrupts : Interrupt specifier for rotator interrupt, according to format
+-		 specific to interrupt parent.
+-
+-  - clocks : Clock specifier for rotator clock, according to generic clock
+-	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
+-
+-  - clock-names : Names of clocks. For exynos rotator, it should be "rotator".
+-
+-Example:
+-	rotator@12810000 {
+-		compatible = "samsung,exynos4210-rotator";
+-		reg = <0x12810000 0x1000>;
+-		interrupts = <0 83 0>;
+-		clocks = <&clock 278>;
+-		clock-names = "rotator";
+-	};
+diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
+new file mode 100644
+index 000000000000..96afafe98388
+--- /dev/null
++++ b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
+@@ -0,0 +1,52 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/gpu/samsung-rotator.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Samsung Image Rotator
++
++maintainers:
++  - Inki Dae <inki.dae@samsung.com>
++
++properties:
++  compatible:
++    enum:
++      - "samsung,s5pv210-rotator"    # for Rotator IP in S5PV210
++      - "samsung,exynos4210-rotator" # for Rotator IP in Exynos4210
++      - "samsung,exynos4212-rotator" # for Rotator IP in Exynos4212/4412
++      - "samsung,exynos5250-rotator" # for Rotator IP in Exynos5250
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    description: |
++      Clock specifier for rotator clock according to generic clock
++      bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
++    maxItems: 1
++
++  clock-names:
++    items:
++    - const: rotator
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++
++examples:
++  - |
++    rotator@12810000 {
++        compatible = "samsung,exynos4210-rotator";
++        reg = <0x12810000 0x1000>;
++        interrupts = <0 83 0>;
++        clocks = <&clock 278>;
++        clock-names = "rotator";
++    };
++
+-- 
+2.17.1
 
-Best regards,
-Krzysztof
-
-> ---
->  arch/arm/boot/dts/exynos3250.dtsi | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
-> index 784818490376..190d9160a5d1 100644
-> --- a/arch/arm/boot/dts/exynos3250.dtsi
-> +++ b/arch/arm/boot/dts/exynos3250.dtsi
-> @@ -314,8 +314,7 @@
->                 sysmmu_jpeg: sysmmu@11a60000 {
->                         compatible = "samsung,exynos-sysmmu";
->                         reg = <0x11a60000 0x1000>;
-> -                       interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>;
->                         clock-names = "sysmmu", "master";
->                         clocks = <&cmu CLK_SMMUJPEG>, <&cmu CLK_JPEG>;
->                         power-domains = <&pd_cam>;
-> @@ -355,8 +354,7 @@
->                 sysmmu_fimd0: sysmmu@11e20000 {
->                         compatible = "samsung,exynos-sysmmu";
->                         reg = <0x11e20000 0x1000>;
-> -                       interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>;
->                         clock-names = "sysmmu", "master";
->                         clocks = <&cmu CLK_SMMUFIMD0>, <&cmu CLK_FIMD0>;
->                         power-domains = <&pd_lcd0>;
-> @@ -507,8 +505,7 @@
->                 sysmmu_mfc: sysmmu@13620000 {
->                         compatible = "samsung,exynos-sysmmu";
->                         reg = <0x13620000 0x1000>;
-> -                       interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
->                         clock-names = "sysmmu", "master";
->                         clocks = <&cmu CLK_SMMUMFC_L>, <&cmu CLK_MFC>;
->                         power-domains = <&pd_mfc>;
-> --
-> 2.17.1
->
