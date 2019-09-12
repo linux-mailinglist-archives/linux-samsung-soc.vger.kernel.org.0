@@ -2,62 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 68791B051E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Sep 2019 23:10:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC96FB08D7
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 08:33:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729831AbfIKVK1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Sep 2019 17:10:27 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:47069 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729813AbfIKVK1 (ORCPT
+        id S1726761AbfILGdC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Sep 2019 02:33:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49016 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726308AbfILGdC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Sep 2019 17:10:27 -0400
-Received: by mail-qt1-f193.google.com with SMTP id v11so27027726qto.13;
-        Wed, 11 Sep 2019 14:10:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=23NrFChKykdY1EKYDK/1t31I0Xos3EvXXWZvJnu/Dj8=;
-        b=ZerXNUtjhMC/jKxjyPbE4KXrRRdLJqU99yhbzGTpNw4RYk7InKTWzu82H6sYkKlive
-         k+IQTxnuDZblRlDrejCBh3PdgMtOgLDRxoj73j//NKOvq/z/xr6Fura7IR/RMR5VSf4H
-         5eePrhKU19KNZPC7eew50pC6D3/eW11LMgDC8pFKhSzfwNryzN8yaBhM0VErVLX1vd45
-         qMel1E6ckZDbQiHMYahM3PG1k1vC3ebv0ysrss3wmtzksF7N/T77k1H8/AuTpcEoFsa/
-         ZYGaRNDJXQKtrbIaUP7lrjw6+NUAq3rb57Z1MSYOv4Y4gaUS/CvMUoWz1FVlHiniva76
-         WJjQ==
-X-Gm-Message-State: APjAAAWSZDasTYESDMxahRYbmIvknzj6okWCLy4IRfgBEJJV/wempiFv
-        J8dP/k38HW9KP0RR2+jrfqfkkS3mjg5VqChSb4k=
-X-Google-Smtp-Source: APXvYqzlhYH1AZxPoUWhLlKAi/3cz5wBak0YHxRnRpq/UZvZhmQwxva9MvOWocpwez0hO+aGpdkH/w0NIKo5Lc5rV+I=
-X-Received: by 2002:ad4:4529:: with SMTP id l9mr19566057qvu.45.1568236226485;
- Wed, 11 Sep 2019 14:10:26 -0700 (PDT)
+        Thu, 12 Sep 2019 02:33:02 -0400
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0B23D214AE;
+        Thu, 12 Sep 2019 06:33:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568269981;
+        bh=Oo2cjKAiV3rsOkBdBi7Hyx8RM4IQKUDaU+NoHYxtRkY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=n3EhKwYt1YNWIMvXgdASxGW0kH4zqKM9HsPNNFPprhlezL2o3C+ijNZ3/0K9N4b+2
+         WMu4Il3SdMs9OOtpT7BfWiqnQFMJyXE+RF9a9mUWR6GwYDVvOJWkP55iXzNVs8T8z8
+         nwt0Su+QKPMM/BZT48EsD8A6JAuXyYl2lI84TVyE=
+Received: by mail-lf1-f41.google.com with SMTP id x80so18371219lff.3;
+        Wed, 11 Sep 2019 23:33:00 -0700 (PDT)
+X-Gm-Message-State: APjAAAXiJWc5Yc/IlgZmHmP4H9mIwSr2m2iWWUF/TxC7Uhku+WZvpCkE
+        oUMZLDjNf7QWuPe4Ck9c5Eyk3uBRj4/WeGQi7Ck=
+X-Google-Smtp-Source: APXvYqznuXgFn7odIM98fPDcWkgctFSvzUYGAl/cTNXN/571YUmoELzvTRg1eO9Bthq5P/b24gmtV+lPmP0zKwmTFkg=
+X-Received: by 2002:ac2:43b8:: with SMTP id t24mr7676135lfl.24.1568269979189;
+ Wed, 11 Sep 2019 23:32:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190911183632.4317-1-krzk@kernel.org> <20190911183632.4317-2-krzk@kernel.org>
-In-Reply-To: <20190911183632.4317-2-krzk@kernel.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 11 Sep 2019 23:10:10 +0200
-Message-ID: <CAK8P3a0OBOrYKnwY8pCMiPQneXyrg3-O-LfrBF4=qy+HasU17g@mail.gmail.com>
-Subject: Re: [GIT PULL 2/2] ARM: samsung: mach/soc for v5.4, second pull
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+References: <20190911183632.4317-1-krzk@kernel.org> <CAK8P3a2pBV+fh0rHitZ30Zz61QNRLfNSD-nhnzq4ZtxSh66F1Q@mail.gmail.com>
+In-Reply-To: <CAK8P3a2pBV+fh0rHitZ30Zz61QNRLfNSD-nhnzq4ZtxSh66F1Q@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Thu, 12 Sep 2019 08:32:47 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPcOSvc2DfoN+7Tca=t5dSm3RcKqmm06AfR0PAVBeY=GvQ@mail.gmail.com>
+Message-ID: <CAJKOXPcOSvc2DfoN+7Tca=t5dSm3RcKqmm06AfR0PAVBeY=GvQ@mail.gmail.com>
+Subject: Re: [GIT PULL 1/2] arm64: dts: exynos: Pull for v5.4
+To:     Arnd Bergmann <arnd@arndb.de>
 Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
         SoC Team <soc@kernel.org>, Kukjin Kim <kgene@kernel.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
         <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 11, 2019 at 8:36 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> ----------------------------------------------------------------
-> Samsung mach/soc changes for v5.4, part 2
+On Wed, 11 Sep 2019 at 23:07, Arnd Bergmann <arnd@arndb.de> wrote:
 >
-> 1. Fix system restart on S3C6410 due to missing match of watchdog,
-> 2. Enable suppor for ARM architected timers on Exynos.
+> On Wed, Sep 11, 2019 at 8:36 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> >
+> > Hi,
+> >
+> > Unfortunately the patches were applied right after closing the linux-next.
 >
+> Hi Krzysztof,
+>
+> I took a look at these and am not convinced this is right:
+>
+> > 1. Fix boot of Exynos7 due to wrong address/size of memory node,
+>
+> The current state is clearly broken and a fix is needed, but
+> I'm not sure this is the right fix. Why do you have 32-bit physical
+> addressing on a 64-bit chip? I looked at commit ef72171b3621
+> that introduced it, and it seems it would be better to just
+> revert back to 64-bit addresses.
 
-Pulled into arm/late, thanks!
+We discussed with Marek Szyprowski that either we can go back to
+64-bit addressing or stick to 32. There are not known boards with more
+than 4 GB of RAM so from this point of view the choice was irrelevant.
+At the end of discussion I mentioned to stick with other arm64 boards
+(although not all), so revert to have 64 bit address... but Marek
+chosen differently. Since you ask, let's go back with revert.
 
-     Arnd
+>
+> > 2. Move GPU under /soc node,
+>
+> No problem
+>
+> > 3. Minor cleanup of #address-cells.
+>
+> IIRC, an interrupt-controller is required to have a #address-cells
+> property, even if that is normally zero. I don't remember the
+> details, but the gic binding lists it as mandatory, and I think
+> the PCI interrupt-map relies on it. I would just drop this patch.
+
+Indeed, binding requires both address and size cells. I'll drop it.
+
+Best regards,
+Krzysztof
