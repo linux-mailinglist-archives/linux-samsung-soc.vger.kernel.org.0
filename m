@@ -2,194 +2,149 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 35DC8B0EC3
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 14:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F51BB11F4
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Sep 2019 17:18:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730454AbfILMTS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 12 Sep 2019 08:19:18 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:12270 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731283AbfILMTS (ORCPT
+        id S1733011AbfILPSd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Sep 2019 11:18:33 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:58095 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732817AbfILPSc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 12 Sep 2019 08:19:18 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20190912121916epoutp043aff3988690e50acfdc241309cf9c845~DsCIy_wuo2008120081epoutp04H
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 12 Sep 2019 12:19:16 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20190912121916epoutp043aff3988690e50acfdc241309cf9c845~DsCIy_wuo2008120081epoutp04H
+        Thu, 12 Sep 2019 11:18:32 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190912151831euoutp01ecd9d50cd155f401dbba51871b6d06ad~DuepqHaBi2639226392euoutp01K
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 12 Sep 2019 15:18:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190912151831euoutp01ecd9d50cd155f401dbba51871b6d06ad~DuepqHaBi2639226392euoutp01K
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568290756;
-        bh=PzTe36grY6sw2UW4Pv0TfJk8OfKRzsyqw53J3AvyFYU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=SZEeMrCRTj2BN3Cf+c42A2uJ2PM28HSXDVi+kGfQnobNuHCBwM6l/3w5pqZKc8Nfn
-         /YzSY/aqTgOyNxu54DBT2NtM8rRU86dfjupGFmD4SLqtZbL5mLXyT1vDK8yBx74kuZ
-         EPa2Of03oW/2oRuRpLxumRFTE84P1CAeodHzGz10=
-Received: from epsmges5p1new.samsung.com (unknown [182.195.42.73]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20190912121915epcas5p4ddbcbd2d9ef766d6b3d1e81012c4f1de~DsCH9P9aV0804308043epcas5p4y;
-        Thu, 12 Sep 2019 12:19:15 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        AF.98.04150.3C73A7D5; Thu, 12 Sep 2019 21:19:15 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20190912121914epcas5p3f4952e5a791470dccf8e15442a65f8e0~DsCHYNsp81220412204epcas5p3f;
-        Thu, 12 Sep 2019 12:19:14 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190912121914epsmtrp2cf02f8836306f78d5db94b499c2707e8~DsCHXbUXb1986919869epsmtrp22;
-        Thu, 12 Sep 2019 12:19:14 +0000 (GMT)
-X-AuditID: b6c32a49-a5bff70000001036-e2-5d7a37c3daad
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        77.1F.03638.2C73A7D5; Thu, 12 Sep 2019 21:19:14 +0900 (KST)
-Received: from [107.108.73.28] (unknown [107.108.73.28]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190912121913epsmtip19d14299ca1abc31d156511fab4232091~DsCGjiozQ2617226172epsmtip1j;
-        Thu, 12 Sep 2019 12:19:13 +0000 (GMT)
-Subject: Re: [PATCH] arm64: dts: exynos: Revert
- "Remove unneeded address space mapping for soc node"
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        stable@vger.kernel.org
-From:   Alim Akhtar <alim.akhtar@samsung.com>
-Message-ID: <28550827-0ada-6f7a-dfee-a9aa3f8fd976@samsung.com>
-Date:   Thu, 12 Sep 2019 17:26:55 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20190912073602.22829-1-m.szyprowski@samsung.com>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsWy7bCmhu5h86pYg823+Sw2zljPanH+/AZ2
-        ixnn9zFZrD1yl91iwcZHjA6sHptWdbJ59G1ZxejxeZNcAHMUl01Kak5mWWqRvl0CV8bW+duY
-        Cu5KVfT9O87UwDhDtIuRk0NCwETi0+GrbF2MXBxCArsZJRraGqCcT4wSL9c2MEI43xglOiat
-        YYJpWbmlmR0isZdR4nXzDxYI5y2jxPnGE2wgVcICaRLz364E6xARCJG4//QFK4jNLFApMX3b
-        VBYQm01AW+Lu9C1gNbwCdhJLPu5iB7FZBFQl3m98xgxiiwpESHx6cJgVokZQ4uTMJ2C9nED1
-        Db9a2SBmikvcejKfCcKWl9j+dg4zyEESAkfYJHZ272aDONtF4s+UiywQtrDEq+Nb2CFsKYnP
-        7/YC1XAA2dkSPbuMIcI1EkvnHYMqt5c4cGUOC0gJs4CmxPpd+hCr+CR6fz9hgujklehoE4Ko
-        VpVofncVqlNaYmJ3NyuE7SFx+dZcZkhQTWSUmHBkFtMERoVZSD6bheSbWUi+mYWweQEjyypG
-        ydSC4tz01GLTAsO81HK94sTc4tK8dL3k/NxNjOAEo+W5g3HWOZ9DjAIcjEo8vBY6VbFCrIll
-        xZW5hxglOJiVRHh93lTGCvGmJFZWpRblxxeV5qQWH2KU5mBREuedxHo1RkggPbEkNTs1tSC1
-        CCbLxMEp1cB4kCNmulOFd5Wyr0WbCaNo/EMp6bZDL19NbZjawrkhMMD3jEJHjpcN44bfHL8P
-        RZXOv5Ckc1knaXHy500mlzdPjZuW+mRv4AwZEZ5t0hdchczMLNSPCBrJbtC5v3ndBDnGRdP5
-        HX/4OHte6pOOMJnz+dnFxTNjH63RPLLHoL5oC3fs5omSh9qVWIozEg21mIuKEwHciVqKLAMA
-        AA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPLMWRmVeSWpSXmKPExsWy7bCSnO4h86pYg19tahYbZ6xntTh/fgO7
-        xYzz+5gs1h65y26xYOMjRgdWj02rOtk8+rasYvT4vEkugDmKyyYlNSezLLVI3y6BK2Pr/G1M
-        BXelKvr+HWdqYJwh2sXIySEhYCKxckszexcjF4eQwG5GiVnbprJCJKQlrm+cwA5hC0us/Pcc
-        qug1o8TLndOZuxg5OIQF0iS2dOeBmCICIRIL3+uBlDMLVEqsnzKRCaJ8IqNE0+5jbCAJNgFt
-        ibvTtzCB2LwCdhJLPu4Cm88ioCrxfuMzZhBbVCBC4vCOWYwQNYISJ2c+YQGxOYHqG361skEs
-        MJOYt/khM4QtLnHryXwmCFteYvvbOcwTGIVmIWmfhaRlFpKWWUhaFjCyrGKUTC0ozk3PLTYs
-        MMpLLdcrTswtLs1L10vOz93ECI4GLa0djCdOxB9iFOBgVOLhfaBZFSvEmlhWXJl7iFGCg1lJ
-        hNfnTWWsEG9KYmVValF+fFFpTmrxIUZpDhYlcV75/GORQgLpiSWp2ampBalFMFkmDk6pBsb8
-        3fzFf+s8ihSOPpv0d/+TmBTlA76+/nO8ozSuf0npWPzMtUGwR336K6cvXNvqin/IOwWeWv/z
-        Y9XvvRF7nUy6pVKyM43OTJ3WnerxWFL3vR6rx76DrS0LF89+9HYl40fZ+fMdGiqDVI4dLX/J
-        mvn7+ZqSSsOolKOrND8XsR8rfRj/uSD8xBYlluKMREMt5qLiRACDd5CIggIAAA==
-X-CMS-MailID: 20190912121914epcas5p3f4952e5a791470dccf8e15442a65f8e0
+        s=mail20170921; t=1568301511;
+        bh=9fiqiegTet1HHXeKGZMH21sovxq29bLed8hpjvy2DWY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Cz2njkpf5UHhyYyb0bge+M0bvJ8WJob7P1FUaq5/929DZQ8+RAZFjxwjoAyh+i1Hi
+         3RSX1YlVSNdeAOuwotcp5jvhpwoJHzbFIiRnh46+dZuQy1I5O+UKPDxmHSCLdaceXv
+         d1OTqmUYaCuhqUIuENMCh4fM+FfwrZiycfB5sM/M=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190912151830eucas1p1e5abb5620ef151f7f68ed3a2d7b4ce4d~DueowiADe3012930129eucas1p1b;
+        Thu, 12 Sep 2019 15:18:30 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id D5.B3.04309.6C16A7D5; Thu, 12
+        Sep 2019 16:18:30 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a~DueoAr4eY2540325403eucas1p2J;
+        Thu, 12 Sep 2019 15:18:29 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190912151829eusmtrp12be9a8f85efd569bd033c9500bb244a8~DuenyN4CJ2459924599eusmtrp1q;
+        Thu, 12 Sep 2019 15:18:29 +0000 (GMT)
+X-AuditID: cbfec7f4-afbff700000010d5-d8-5d7a61c6c61a
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 91.ED.04166.5C16A7D5; Thu, 12
+        Sep 2019 16:18:29 +0100 (BST)
+Received: from AMDC2459.DIGITAL.local (unknown [106.120.51.95]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190912151829eusmtip2630c7a0d799b3bd16a7a226060870c26~DuenSC6Ei1425614256eusmtip2n;
+        Thu, 12 Sep 2019 15:18:29 +0000 (GMT)
+From:   Maciej Falkowski <m.falkowski@samsung.com>
+To:     devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
+        krzk@kernel.org, a.hajda@samsung.com, m.szyprowski@samsung.com,
+        m.falkowski@samsung.com
+Subject: [PATCH v2] ARM: dts: exynos: remove obsolete IRQ lines
+Date:   Thu, 12 Sep 2019 17:17:56 +0200
+Message-Id: <20190912151756.27173-1-m.falkowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190911133310.8365-1-m.falkowski@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42LZduzned1jiVWxBp9OSVvcWneO1WL+ESDR
+        //g1s8X58xvYLS7vmsNmMeP8PiaLB83r2CzWHrnLbrH0+kUmi9a9R9gduDzWzFvD6LFpVSeb
+        R9+WVYwenzfJBbBEcdmkpOZklqUW6dslcGVM+7OBqWAWf8WKI8vZGhjX8nQxcnBICJhI7NyQ
+        18XIxSEksIJRonvyREYI5wujxJe385kgnM+MEj1b+9m6GDnBOlac64RKLGeUWLHmNztcy6Ld
+        e5hAqtgEDCT63+xlAbFFBBIl3q77yQpSxCwwm1FizYLtrCAJYQF7iTOvdoHZLAKqEvc69zCC
+        2LwCNhKdv86yQKyTl1i94QAzyLGcQPHD/x1B5kgI/GeT+Ng3mRWixkVi//3pjBC2sMSr41vY
+        IWwZidOTe1ggHq2WuPZNFqK3hVHi+rS3UO9YS/xZNZENpIZZQFNi/S59iLCjxJ9JlxkhWvkk
+        brwVBAkzA5mTtk1nhgjzSnS0CUGYqhJvJsRCNEpLtK7ZD3WLh8S0cyuZIaHTzyjR3H+AdQKj
+        /CyEXQsYGVcxiqeWFuempxYb5aWW6xUn5haX5qXrJefnbmIEJo3T/45/2cG460/SIUYBDkYl
+        Hl4LnapYIdbEsuLK3EOMEhzMSiK8Pm8qY4V4UxIrq1KL8uOLSnNSiw8xSnOwKInzVjM8iBYS
+        SE8sSc1OTS1ILYLJMnFwSjUwls/h17EuqFnA9nPDlK6t/kr5Msmdr8q6PmRnztB/G77344qb
+        TGVGC2R7D55MlL3+3ueqzILXzc/1k9mOeB1qlGzhEVPgMmTjTk1OzXpkaFjWKjn15B/1LYcj
+        /WZ2/PncOj+FyVkwIytB7pLIt5SUuaaBYTJfl1osF/idOCmtKCTu7WtJpzglluKMREMt5qLi
+        RAAi6P9oFgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGLMWRmVeSWpSXmKPExsVy+t/xe7pHE6tiDV50alrcWneO1WL+ESDR
+        //g1s8X58xvYLS7vmsNmMeP8PiaLB83r2CzWHrnLbrH0+kUmi9a9R9gduDzWzFvD6LFpVSeb
+        R9+WVYwenzfJBbBE6dkU5ZeWpCpk5BeX2CpFG1oY6RlaWugZmVjqGRqbx1oZmSrp29mkpOZk
+        lqUW6dsl6GVM+7OBqWAWf8WKI8vZGhjX8nQxcnJICJhIrDjXydTFyMUhJLCUUeLZ2YesEAlp
+        if3XPrJD2MISf651sYHYQgKfGCWu/LQFsdkEDCT63+xlAbFFBJIlvj3rZAEZxCywmFFi+94P
+        YA3CAvYSZ17tAhvKIqAqca9zDyOIzStgI9H56ywLxAJ5idUbDjB3MXJwcALFD/93hNhlLfF7
+        zSamCYx8CxgZVjGKpJYW56bnFhvqFSfmFpfmpesl5+duYgSG8bZjPzfvYLy0MfgQowAHoxIP
+        r4VOVawQa2JZcWXuIUYJDmYlEV6fN5WxQrwpiZVVqUX58UWlOanFhxhNgW6ayCwlmpwPjLG8
+        knhDU0NzC0tDc2NzYzMLJXHeDoGDMUIC6YklqdmpqQWpRTB9TBycUg2MEq3sNbxOnGf60l1C
+        06wX9bk8faRnp7y+4sL7zry/S/d78R6+rrvutoBR1I7HNWorYlOqXjf2u3VbOE5994VHYVeA
+        xdupr5zbD3x9fe7fkdVbGd+4z91n9XvyRvPc5qfqxqEWPCs/c/hfZ+y5blqtH3L0wFu59UvK
+        DRnn7F75a3f3KbU1J9UylViKMxINtZiLihMB6G1QwHkCAAA=
+X-CMS-MailID: 20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20190912073608eucas1p1c2da86b1f85244a507b0f2ce96390ad3
-References: <CGME20190912073608eucas1p1c2da86b1f85244a507b0f2ce96390ad3@eucas1p1.samsung.com>
-        <20190912073602.22829-1-m.szyprowski@samsung.com>
+X-RootMTR: 20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a
+References: <20190911133310.8365-1-m.falkowski@samsung.com>
+        <CGME20190912151829eucas1p216ca28e56f62e7f484c46ce30581200a@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek,
+In commit 7222e8db2d506197ee183de0f9b76b3ad97e8c18 (iommu/exynos: Fix build
+errors) Exynos3250 iommu driver stopped supporting two IRQ lines.
+The second IRQ line in DTS is ignored and is not needed.
 
-On 9/12/19 1:06 PM, Marek Szyprowski wrote:
-> Commit ef72171b3621 ("arm64: dts: exynos: Remove unneeded address space
-> mapping for soc node") changed the address and size cells in root node from
-> 2 to 1, but /memory nodes for the affected boards were not updated. This
-> went unnoticed on Exynos5433-based TM2(e) boards, because they use u-boot,
-> which updates /memory node to the correct values. On the other hand, the
-> mentioned commit broke boot on Exynos7-based Espresso board, which
-> bootloader doesn't touch /memory node at all.
-> 
-> This patch reverts commit ef72171b3621, so Exynos5433 and Exynos7 SoCs
-> again matches other ARM64 platforms with 64bit mappings in root node.
-> 
-> Reported-by: Alim Akhtar <alim.akhtar@samsung.com>
-> Fixes: ef72171b3621 ("arm64: dts: exynos: Remove unneeded address space mapping for soc node")
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> Cc: <stable@vger.kernel.org>
-> Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
-> ---
-> A few more comments:
-> 
-> 1. I've added 'tested-by' tag from Alim, as his original report pointed
-> that reverting the offending commit fixes the boot issue.
-> 
-This is still valid,reverting the offending commit does work.
-Thanks!
+Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+v2: 
+- change commit message to proper version
+- add proper recipients
+---
+ arch/arm/boot/dts/exynos3250.dtsi | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-> 2. This patch applies down to v4.18.
-> 
-> 3. For v5.3 release, two patches:
->     - "arm64: dts: exynos: Move GPU under /soc node for  Exynos5433"
->     - "arm64: dts: exynos: Move GPU under /soc node for Exynos7"
->     has to be applied first to ensure that GPU node will have correct 'reg'
->     property (nodes under /soc still use 32bit mappings). I'm not sure if
->     this can be expressed somehow in stable porting tags.
-> 
-> Best regards
-> Marek Szyprowski
-> Samsung R&D Institute Poland
-> ---
->   arch/arm64/boot/dts/exynos/exynos5433.dtsi | 6 +++---
->   arch/arm64/boot/dts/exynos/exynos7.dtsi    | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-> index 239bf44d174b..f69530730219 100644
-> --- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-> +++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-> @@ -18,8 +18,8 @@
->   
->   / {
->   	compatible = "samsung,exynos5433";
-> -	#address-cells = <1>;
-> -	#size-cells = <1>;
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
->   
->   	interrupt-parent = <&gic>;
->   
-> @@ -260,7 +260,7 @@
->   		compatible = "simple-bus";
->   		#address-cells = <1>;
->   		#size-cells = <1>;
-> -		ranges;
-> +		ranges = <0x0 0x0 0x0 0x18000000>;
->   
->   		chipid@10000000 {
->   			compatible = "samsung,exynos4210-chipid";
-> diff --git a/arch/arm64/boot/dts/exynos/exynos7.dtsi b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-> index f09800f355db..3a00ef0a17ff 100644
-> --- a/arch/arm64/boot/dts/exynos/exynos7.dtsi
-> +++ b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-> @@ -12,8 +12,8 @@
->   / {
->   	compatible = "samsung,exynos7";
->   	interrupt-parent = <&gic>;
-> -	#address-cells = <1>;
-> -	#size-cells = <1>;
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
->   
->   	aliases {
->   		pinctrl0 = &pinctrl_alive;
-> @@ -87,7 +87,7 @@
->   		compatible = "simple-bus";
->   		#address-cells = <1>;
->   		#size-cells = <1>;
-> -		ranges;
-> +		ranges = <0 0 0 0x18000000>;
->   
->   		chipid@10000000 {
->   			compatible = "samsung,exynos4210-chipid";
-> 
+diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
+index 784818490376..190d9160a5d1 100644
+--- a/arch/arm/boot/dts/exynos3250.dtsi
++++ b/arch/arm/boot/dts/exynos3250.dtsi
+@@ -314,8 +314,7 @@
+ 		sysmmu_jpeg: sysmmu@11a60000 {
+ 			compatible = "samsung,exynos-sysmmu";
+ 			reg = <0x11a60000 0x1000>;
+-			interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>;
+ 			clock-names = "sysmmu", "master";
+ 			clocks = <&cmu CLK_SMMUJPEG>, <&cmu CLK_JPEG>;
+ 			power-domains = <&pd_cam>;
+@@ -355,8 +354,7 @@
+ 		sysmmu_fimd0: sysmmu@11e20000 {
+ 			compatible = "samsung,exynos-sysmmu";
+ 			reg = <0x11e20000 0x1000>;
+-			interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>;
+ 			clock-names = "sysmmu", "master";
+ 			clocks = <&cmu CLK_SMMUFIMD0>, <&cmu CLK_FIMD0>;
+ 			power-domains = <&pd_lcd0>;
+@@ -507,8 +505,7 @@
+ 		sysmmu_mfc: sysmmu@13620000 {
+ 			compatible = "samsung,exynos-sysmmu";
+ 			reg = <0x13620000 0x1000>;
+-			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
+ 			clock-names = "sysmmu", "master";
+ 			clocks = <&cmu CLK_SMMUMFC_L>, <&cmu CLK_MFC>;
+ 			power-domains = <&pd_mfc>;
+-- 
+2.17.1
+
