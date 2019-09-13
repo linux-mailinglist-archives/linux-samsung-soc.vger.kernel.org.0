@@ -2,186 +2,204 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26E9EB2227
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 16:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1AABB2236
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 16:39:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730695AbfIMOgR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Sep 2019 10:36:17 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:39912 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730648AbfIMOgQ (ORCPT
+        id S1730810AbfIMOg0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Sep 2019 10:36:26 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:42982 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730794AbfIMOg0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Sep 2019 10:36:16 -0400
-Received: by mail-ot1-f66.google.com with SMTP id n7so29671090otk.6;
-        Fri, 13 Sep 2019 07:36:15 -0700 (PDT)
+        Fri, 13 Sep 2019 10:36:26 -0400
+Received: by mail-oi1-f196.google.com with SMTP id z6so2787212oix.9;
+        Fri, 13 Sep 2019 07:36:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:from:to:cc:subject:references
          :mime-version:content-disposition:in-reply-to;
-        bh=jPil7naIVMsYQGDdFjyUh8y7gh27b0UjFHm5hhvq39I=;
-        b=Mi7dDc4VjG0Ggby1qQGcMxB+7Zz9Dib+H/T4HUlYo73vaekvGPNPiI/5K7GDWgtbir
-         ppdKZ1Ypj41hvM08FcBptKwdXpGmPEG48+gxyrpGzc8PLA479vXXoQXoGaUmK/WR321M
-         2tcmxzsUl6dhL7xBEG/u7eeyystsR9wFtnicuYCJ4+W8OmZAGxRq5q+RJIqqFvZmqc77
-         dLDYeiDpDhTwTmSx8Di5C7StHeMPpfkJWPyzssbMhgDBHP+8g+z8waXX7qTTGXtjZOPt
-         7UujgDhAuKSttnuZV+/qGfQBJdYRbTS+F8qr+9nfoSzd2PAuvTW+4jfSr0P1mr/Wd94D
-         zdxQ==
-X-Gm-Message-State: APjAAAX3vGKR2Pd61WEvYtSl7Xu2XuDYGBhwg7T2Bc8FeTyG19YtXnN3
-        1wAH6X8p/d74Tpq14gfqEw==
-X-Google-Smtp-Source: APXvYqy9UfdHJCkKsInfemOdhROmQLnT8mAJxKh93E3hpPr0GDO3Y7CXrUsygxmMtbApr3jAKH3feA==
-X-Received: by 2002:a9d:148:: with SMTP id 66mr11223347otu.1.1568385375377;
-        Fri, 13 Sep 2019 07:36:15 -0700 (PDT)
+        bh=C5lxB1SkamjYiGhernIFi0Hwph/keSNWsiTigjVm9FM=;
+        b=m3F4kbNtTKUumlC46gEj7w7P5pe9BK/+Xr+p4HPsxkCXce4MMi6DEzoFWrSbhiieGB
+         5qDX6J+QnBqrdxjBXd66TBd59K9Kne9fVshOGT/NRTt6S3GoojplcSGoflUkvVyjFGBo
+         fZWQLt1zV8WyfewLnjwLe/d4GS0/+oTLKF/9A/FfFgdRo8k7hRx84/W9SHK5DGQHjL9h
+         FYOtkq9LjX3gBhR6QORI+sULK2DTYn2Mstl5RuCJYSJ92Hnjl6qbQtKxwQI/E/HH1VIs
+         CcqID5qwh6LG82vt679zBHRf/AFTMZ+TujSuSzE0IDDxV1/P9CA/NzUXspZrpNmgFcz3
+         5Sng==
+X-Gm-Message-State: APjAAAWL+OMGXScrbyk4+hrFD3F3PzwVO46nqfJBGKpthbr7XMgANWfr
+        1T/TYbg/ONVnlHntr2Nx0Q==
+X-Google-Smtp-Source: APXvYqzvDKYvYkB5ScZXsHQdE+uCr/W7Tj0azlbY+saF/1MssVoS4TV7Xd9yW33r1voWLmoeCea3dA==
+X-Received: by 2002:aca:4c54:: with SMTP id z81mr3487645oia.0.1568385384572;
+        Fri, 13 Sep 2019 07:36:24 -0700 (PDT)
 Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id v2sm930279oic.49.2019.09.13.07.36.14
+        by smtp.gmail.com with ESMTPSA id d38sm10985849otb.7.2019.09.13.07.36.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 07:36:14 -0700 (PDT)
-Message-ID: <5d7ba95e.1c69fb81.bba41.66c2@mx.google.com>
-Date:   Fri, 13 Sep 2019 15:36:14 +0100
+        Fri, 13 Sep 2019 07:36:23 -0700 (PDT)
+Message-ID: <5d7ba967.1c69fb81.64b1c.ab06@mx.google.com>
+Date:   Fri, 13 Sep 2019 15:36:23 +0100
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>, Kukjin Kim <kgene@kernel.org>,
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: memory-controllers: Convert Samsung Exynos
- SROM bindings to json-schema
-References: <20190907144442.16788-1-krzk@kernel.org>
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: timer: Convert Exynos MCT bindings to
+ json-schema
+References: <20190909162537.27635-1-krzk@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190907144442.16788-1-krzk@kernel.org>
-X-Mutt-References: <20190907144442.16788-1-krzk@kernel.org>
+In-Reply-To: <20190909162537.27635-1-krzk@kernel.org>
+X-Mutt-References: <20190909162537.27635-1-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, Sep 07, 2019 at 04:44:42PM +0200, Krzysztof Kozlowski wrote:
-> Convert Samsung Exynos SROM controller bindings to DT schema format
+On Mon, Sep 09, 2019 at 06:25:37PM +0200, Krzysztof Kozlowski wrote:
+> Convert Samsung Exynos Soc Multi Core Timer bindings to DT schema format
 > using json-schema.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 > ---
->  .../memory-controllers/exynos-srom.txt        |  79 ----------
->  .../memory-controllers/exynos-srom.yaml       | 136 ++++++++++++++++++
->  2 files changed, 136 insertions(+), 79 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/memory-controllers/exynos-srom.txt
->  create mode 100644 Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
+>  .../bindings/timer/samsung,exynos4210-mct.txt |  88 --------------
+>  .../timer/samsung,exynos4210-mct.yaml         | 115 ++++++++++++++++++
+>  2 files changed, 115 insertions(+), 88 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+>  create mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
 
 
-> diff --git a/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
+> diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
 > new file mode 100644
-> index 000000000000..9573bcfd68bf
+> index 000000000000..b96d2877955f
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
-> @@ -0,0 +1,136 @@
+> +++ b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+> @@ -0,0 +1,115 @@
 > +# SPDX-License-Identifier: GPL-2.0
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/memory-controllers/exynos-srom.yaml#
+> +$id: http://devicetree.org/schemas/timer/samsung,exynos4210-mct.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Samsung Exynos SoC SROM Controller driver
+> +title: Samsung Exynos SoC Multi Core Timer (MCT)
 > +
 > +maintainers:
 > +  - Krzysztof Kozlowski <krzk@kernel.org>
 > +
 > +description: |+
-> +  The SROM controller can be used to attach external peripherals. In this case
-> +  extra properties, describing the bus behind it, should be specified.
+> +  The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
+> +  global timer and CPU local timers. The global timer is a 64-bit free running
+> +  up-counter and can generate 4 interrupts when the counter reaches one of the
+> +  four preset counter values. The CPU local timers are 32-bit free running
+> +  down-counters and generate an interrupt when the counter expires. There is
+> +  one CPU local timer instantiated in MCT for every CPU in the system.
 > +
 > +properties:
 > +  compatible:
-> +    items:
-> +      - const: samsung,exynos4210-srom
+> +    enum:
+> +      - samsung,exynos4210-mct
+> +      - samsung,exynos4412-mct
 > +
 > +  reg:
 > +    maxItems: 1
 > +
-> +  "#address-cells":
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    const: 1
-> +
-> +  ranges:
+> +  interrupts:
 > +    description: |
-> +      Reflects the memory layout with four integer values per bank. Format:
-> +      <bank-number> 0 <parent address of bank> <size>
-> +
-> +patternProperties:
-> +  "^.*@[0-9]+,[0-9]+$":
-
-How many chip selects? Can be a single digit?
-
-Also, these should be hex values.
-
-> +    type: object
-> +    description:
-> +      The actual device nodes should be added as subnodes to the SROMc node.
-> +      These subnodes, in addition to regular device specification, should
-> +      contain the following properties, describing configuration
-> +      of the relevant SROM bank.
-> +
-> +    properties:
-> +      reg:
-> +        description:
-> +          Bank number, base address (relative to start of the bank) and size
-> +          of the memory mapped for the device. Note that base address will be
-> +          typically 0 as this is the start of the bank.
-> +        maxItems: 1
-> +
-> +      reg-io-width:
-> +        allOf:
-> +          - $ref: /schemas/types.yaml#/definitions/uint32
-> +          - enum: [1, 2]
-> +        description:
-> +          Data width in bytes (1 or 2). If omitted, default of 1 is used.
-> +
-> +      samsung,srom-page-mode:
-> +        description:
-> +          If page mode is set, 4 data page mode will be configured,
-> +          else normal (1 data) page mode will be set.
-> +        type: boolean
-> +
-> +      samsung,srom-timing:
-> +        allOf:
-> +          - $ref: /schemas/types.yaml#/definitions/uint32-array
-> +          - items:
-> +              minItems: 6
-> +              maxItems: 6
-> +        description: |
-> +          Array of 6 integers, specifying bank timings in the following order:
-> +          Tacp, Tcah, Tcoh, Tacc, Tcos, Tacs.
-> +          Each value is specified in cycles and has the following meaning
-> +          and valid range:
-> +          Tacp: Page mode access cycle at Page mode (0 - 15)
-> +          Tcah: Address holding time after CSn (0 - 15)
-> +          Tcoh: Chip selection hold on OEn (0 - 15)
-> +          Tacc: Access cycle (0 - 31, the actual time is N + 1)
-> +          Tcos: Chip selection set-up before OEn (0 - 15)
-> +          Tacs: Address set-up before CSn (0 - 15)
-> +
-> +    required:
-> +      - reg
-> +      - samsung,srom-timing
+> +      Interrupts should be put in specific order. This is, the local timer
+> +      interrupts should be specified after the four global timer interrupts
+> +      have been specified:
+> +      0: Global Timer Interrupt 0
+> +      1: Global Timer Interrupt 1
+> +      2: Global Timer Interrupt 2
+> +      3: Global Timer Interrupt 3
+> +      4: Local Timer Interrupt 0
+> +      5: Local Timer Interrupt 1
+> +      6: ..
+> +      7: ..
+> +      i: Local Timer Interrupt n
+> +      For MCT block that uses a per-processor interrupt for local timers, such
+> +      as ones compatible with "samsung,exynos4412-mct", only one local timer
+> +      interrupt might be specified, meaning that all local timers use the same
+> +      per processor interrupt.
+> +    minItems: 5               # 4 Global + 1 local
+> +    maxItems: 20              # 4 Global + 16 local
 > +
 > +required:
 > +  - compatible
+> +  - interrupts
 > +  - reg
 > +
-> +allOf:
-> +  - if:
-> +      anyOf:
-> +        - required: [ "#address-cells" ]
-> +        - required: [ ranges ]
-> +        - required: [ "#size-cells" ]
-> +    then:
-> +      required:
-> +        - "#address-cells"
-> +        - ranges
-> +        - "#size-cells"
+> +examples:
+> +  - |
+> +    // In this example, the IP contains two local timers, using separate
+> +    // interrupts, so two local timer interrupts have been specified,
+> +    // in addition to four global timer interrupts.
+> +      mct@10050000 {
 
-I don't think this is necessary as the core schema should take care of 
-it. This can also be expressed using 'dependencies'. 
+Can we clean this up and use 'timer' here.
 
-Rob
+> +        compatible = "samsung,exynos4210-mct";
+> +        reg = <0x10050000 0x800>;
+> +        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+> +                     <0 42 0>, <0 48 0>;
+> +      };
+> +
+> +  - |
+> +    // In this example, the timer interrupts are connected to two separate
+> +    // interrupt controllers. Hence, an interrupt-map is created to map
+> +    // the interrupts to the respective interrupt controllers.
+> +
+> +    mct@101c0000 {
+> +      compatible = "samsung,exynos4210-mct";
+> +      reg = <0x101C0000 0x800>;
+> +      interrupt-parent = <&mct_map>;
+> +      interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
+> +
+> +      mct_map: mct-map {
+
+This needs to be documented.
+
+Note, I don't really see any reason this needs to be a child node.
+
+> +        #interrupt-cells = <1>;
+> +        #address-cells = <0>;
+> +        #size-cells = <0>;
+> +        interrupt-map = <0 &gic 0 57 0>,
+> +                        <1 &gic 0 69 0>,
+> +                        <2 &combiner 12 6>,
+> +                        <3 &combiner 12 7>,
+> +                        <4 &gic 0 42 0>,
+> +                        <5 &gic 0 48 0>;
+> +      };
+> +    };
+> +
+> +  - |
+> +    // In this example, the IP contains four local timers, but using
+> +    // a per-processor interrupt to handle them. Only one first local
+> +    // interrupt is specified.
+> +
+> +    mct@10050000 {
+> +      compatible = "samsung,exynos4412-mct";
+> +      reg = <0x10050000 0x800>;
+> +
+> +      interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+> +                   <0 42 0>;
+> +    };
+> +
+> +  - |
+> +    // In this example, the IP contains four local timers, but using
+> +    // a per-processor interrupt to handle them. All the local timer
+> +    // interrupts are specified.
+> +
+> +    mct@10050000 {
+> +      compatible = "samsung,exynos4412-mct";
+> +      reg = <0x10050000 0x800>;
+> +
+> +      interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+> +                   <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
+> +    };
+> -- 
+> 2.17.1
+> 
 
