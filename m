@@ -2,108 +2,206 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 255C6B1AE4
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 11:34:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1926CB1AFC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 11:41:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388068AbfIMJei (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Sep 2019 05:34:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37834 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388065AbfIMJei (ORCPT
+        id S1727997AbfIMJlm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Sep 2019 05:41:42 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:38444 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726673AbfIMJlk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Sep 2019 05:34:38 -0400
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EF4242089F;
-        Fri, 13 Sep 2019 09:34:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568367277;
-        bh=H9+NtvTN5Oyf3/3qCq7otSn6j+SjdYcEzVoUk777SgQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JUqhdO25DXtP+/RWXYCZ+QzcenkF30JQc17F0M637aEG6Cr7d9fjAAghLKlTBks1m
-         PZdMQr0mtwB+Q1ancXtSnTJDmjouIGnkh00QbSaAl4KEJ54L9val4FyW2vkiT4yBvV
-         FYkafksXggWKy+TYjnm8Jp0xTNYfexQvhn1KtrXs=
-Received: by mail-lj1-f172.google.com with SMTP id a4so26411321ljk.8;
-        Fri, 13 Sep 2019 02:34:36 -0700 (PDT)
-X-Gm-Message-State: APjAAAXzwVcrCGOaqX9IHoNh6bEmuCu6hStgnkXWjzfvHlJqe6ZHz0UZ
-        grnw1vz7rnXzMfC5oNF2Vu5Wgkk00UdbD6DOOBI=
-X-Google-Smtp-Source: APXvYqy5o658AEBPc5fOVRFV7GUypotpgi43Z/aqyQfjnJkobgK4lZIRZ8dAvgCn3EqfTws0Ta/hoGRE/Pj+V5zRQXQ=
-X-Received: by 2002:a2e:8785:: with SMTP id n5mr25373427lji.210.1568367275146;
- Fri, 13 Sep 2019 02:34:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190912093315.5744-1-m.falkowski@samsung.com>
- <CGME20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a@eucas1p2.samsung.com>
- <20190912161538.4321-1-m.falkowski@samsung.com> <20190913062945.GA10283@pi3>
- <e082996a-743d-807a-38c0-dee65b490771@samsung.com> <CAJKOXPdSQJ4CR_0BQjudx1NdaC0E_rU8ZDtFVSB9XwcTbxSdUg@mail.gmail.com>
-In-Reply-To: <CAJKOXPdSQJ4CR_0BQjudx1NdaC0E_rU8ZDtFVSB9XwcTbxSdUg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 13 Sep 2019 11:34:23 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPd58jsqSycgQF=v_iBti292X+ECeCQ0Tf7ErycYXrkTmQ@mail.gmail.com>
-Message-ID: <CAJKOXPd58jsqSycgQF=v_iBti292X+ECeCQ0Tf7ErycYXrkTmQ@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: gpu: Convert Samsung Image Rotator to dt-schema
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Maciej Falkowski <m.falkowski@samsung.com>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org, mark.rutland@arm.com,
-        Andrzej Hajda <a.hajda@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 13 Sep 2019 05:41:40 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190913094138euoutp02919647530bf98fd000198bf34b1d41fb~D9hy1mwji0518405184euoutp02I
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Sep 2019 09:41:38 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190913094138euoutp02919647530bf98fd000198bf34b1d41fb~D9hy1mwji0518405184euoutp02I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568367698;
+        bh=DUfibKh2tr8MmWDBAzldojteXCAsf97FcfAmYZzYvp0=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=m3r59NtRBYe9H0J2O7JU1aJF7iGRuXmudFAT8YWo2oBizIooLFNoKY941uE19tDna
+         cDyRRaipzhgyylyZUC+lHzULgWrHsHdFkMX5DOf3nGRWPnOXnkTrogb/yyUPPPfKWF
+         1RdXm8D1/QQLCZCsAzICopnS3dTiHupmzDvLT5dA=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190913094137eucas1p189206a153fe6a5b656a0abc3b2ddcc28~D9hyFo5cX1631916319eucas1p1t;
+        Fri, 13 Sep 2019 09:41:37 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 16.51.04374.1546B7D5; Fri, 13
+        Sep 2019 10:41:37 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1~D9hxTzlle1300013000eucas1p1l;
+        Fri, 13 Sep 2019 09:41:36 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190913094136eusmtrp170a964bdf2df72f66d8b0ee4121f3c99~D9hxFYsIQ2788327883eusmtrp1d;
+        Fri, 13 Sep 2019 09:41:36 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-4a-5d7b645182df
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 16.BB.04117.0546B7D5; Fri, 13
+        Sep 2019 10:41:36 +0100 (BST)
+Received: from AMDC2459.DIGITAL.local (unknown [106.120.51.95]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190913094135eusmtip1e8543ea67585bb615d24f42ea2e72529~D9hwfRpnN1498914989eusmtip1z;
+        Fri, 13 Sep 2019 09:41:35 +0000 (GMT)
+From:   Maciej Falkowski <m.falkowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
+        mark.rutland@arm.com, krzk@kernel.org, a.hajda@samsung.com,
+        m.szyprowski@samsung.com, m.falkowski@samsung.com
+Subject: [PATCH] dt-bindings: gpu: Convert Samsung Image Scaler to dt-schema
+Date:   Fri, 13 Sep 2019 11:41:23 +0200
+Message-Id: <20190913094123.23169-1-m.falkowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42LZduznOd3AlOpYg5lnRS1urTvHatF77iST
+        xf9tE5kt5h8Bcq98fc9mcf78BnaLy7vmsFnMOL+PyeJB8zo2i7VH7rJbLL1+kcmide8Rdgce
+        jzXz1jB67P22gMVj06pONo/t3x6wetzvPs7k0bdlFaPH501yAexRXDYpqTmZZalF+nYJXBkX
+        nnSzF9yVrHg8k6eBcZVIFyMnh4SAicTERc8Zuxi5OIQEVjBKXJlwHcr5wijx5MNuJpAqIYHP
+        jBKfz8B1/Px9mR2iaDmjRPfmXyxwHTMWPADrYBMwkOh/sxcsISLQxCgxf9VxsLnMAmsYJX7N
+        bAWrEhbwkVh6cysriM0ioCrRevsdO4jNK2AjMWPyEzaIffISqzccYIawu9klfrzx7WLkALJd
+        JC5NzIUIC0u8Or6FHcKWkTg9uYcFoqRa4to3WZC1EgItjBLXp72FGmkt8WfVRDaQGmYBTYn1
+        u/Qhwo4Sm5YvYYZo5ZO48VYQJMwMZE7aNh0qzCvR0SYEYapKvJkQC9EoLdG6Zj8jhO0h0XPl
+        OCMk2GIl7m6awTiBUW4WwqoFjIyrGMVTS4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxAlPJ6X/H
+        v+5g3Pcn6RCjAAejEg+vhU5VrBBrYllxZe4hRgkOZiURXp83lbFCvCmJlVWpRfnxRaU5qcWH
+        GKU5WJTEeasZHkQLCaQnlqRmp6YWpBbBZJk4OKUaGFfc/Ln+/X7OlCav27tFZXfNNpvSa20X
+        eyat/cyS1cy737/m4pffGD5XhvfAtKSdiQZXnHtbDdweSHN81uhkuzijsJPLwlkpgeM/k09A
+        TbbIrcyCha+apttNn2M9W6H/YVTQlYjJt2Ob33xJ2qEhyDT9UWzvR6OWrM5wiyBuB4FAydvG
+        rPpzlViKMxINtZiLihMBCUt9gyEDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJLMWRmVeSWpSXmKPExsVy+t/xu7oBKdWxBtN7pCxurTvHatF77iST
+        xf9tE5kt5h8Bcq98fc9mcf78BnaLy7vmsFnMOL+PyeJB8zo2i7VH7rJbLL1+kcmide8Rdgce
+        jzXz1jB67P22gMVj06pONo/t3x6wetzvPs7k0bdlFaPH501yAexRejZF+aUlqQoZ+cUltkrR
+        hhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehkXnnSzF9yVrHg8k6eBcZVIFyMn
+        h4SAicTP35fZuxi5OIQEljJKrFz7igUiIS2x/9pHdghbWOLPtS42iKJPjBLXF/UygyTYBAwk
+        +t/sZQFJiAi0MUo8PXWECcRhFtjGKLF77X02kCphAR+JpTe3soLYLAKqEq2334GN5RWwkZgx
+        +QkbxAp5idUbDjBPYORZwMiwilEktbQ4Nz232EivODG3uDQvXS85P3cTIzCYtx37uWUHY9e7
+        4EOMAhyMSjy8FjpVsUKsiWXFlbmHGCU4mJVEeH3eVMYK8aYkVlalFuXHF5XmpBYfYjQFWj6R
+        WUo0OR8YaXkl8YamhuYWlobmxubGZhZK4rwdAgdjhATSE0tSs1NTC1KLYPqYODilGhgXT1UT
+        Tn8cnmDZOv9e1/tTEuy3fuXJc2xOCFGvlX5nv51PvieKQWeF7dLfzxRdNT1v37vWYZ8wPcfP
+        brFGY4z2HRuHle2mLcZF78W2d+3r+CRz9JvCHb2kx2oz63YtneCndUfrvi5rwLnpPEVKrFXl
+        l4TP3GNdY+fpVcCbf+OF2d4VDav2rFJiKc5INNRiLipOBADgtPMpfAIAAA==
+X-CMS-MailID: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
+References: <CGME20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 13 Sep 2019 at 11:29, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Fri, 13 Sep 2019 at 11:15, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
-> >
-> > Hi Krzysztof,
-> >
-> > On 9/13/19 8:29 AM, Krzysztof Kozlowski wrote:
-> > > On Thu, Sep 12, 2019 at 06:15:38PM +0200, Maciej Falkowski wrote:
-> > >> Convert Samsung Image Rotator to newer dt-schema format.
-> > >>
-> > >> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> > >> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> > > Just to make it clear, Marek's signed-off should appear for one of
-> > > conditions:
-> > >   - he contributed some source code to your patch,
-> > >   - he took your patch, rebased, send by himself (not a case here, I
-> > >     think),
-> > >   - he contributed significant ideas, although for this there is a
-> > >     "Co-developed-by" tag.
-> > >
-> > > If someone made just review - add Reviewed-by. If someone suggested the
-> > > patch - add Suggested-by.
-> >
-> > My signed-off here was added to mark that this patch is allowed to be
-> > submitted to the public mailing list, as I have required company
-> > permissions for such activity. It is not that uncommon that a given
-> > patch has more than one signed-off and still the main author has the
-> > first signed-off tag.
->
-> Thanks for explanations. If I understand correctly, your SoB appears
-> because some internal Samsung rules. That is not what SoB is meant
-> for:
-> https://elixir.bootlin.com/linux/v5.3-rc8/source/Documentation/process/submitting-patches.rst#L431
-> If you do not contributed to the patch, did not touch it (e.g.
-> rebasing) and you are not sending it, then your SoB should not be
-> there. It looks like the same madness with Kyungmin Park long time
-> ago:
-> https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git/commit/?h=for-next&id=6c6cf64b16438eac6da9a90412a82316ad196e7c
-> Every patch was marked with SoB even though he was not involved at all
-> in the process.
->
-> That's not what kernel's SoB is for.
+Convert Samsung Image Scaler to newer dt-schema format.
 
-Ah, and if you meant that Maciej does not have the permissions to send
-the patches, then your SoB along with patch going through your account
-makes sense. Otherwise, adding your SoB and sending by Maciej, is a
-joke of company regulations. It means absolutely nothing and then
-strip it out.
+Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ .../bindings/gpu/samsung-scaler.txt           | 27 ---------
+ .../bindings/gpu/samsung-scaler.yaml          | 57 +++++++++++++++++++
+ 2 files changed, 57 insertions(+), 27 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-scaler.txt
+ create mode 100644 Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/gpu/samsung-scaler.txt b/Documentation/devicetree/bindings/gpu/samsung-scaler.txt
+deleted file mode 100644
+index 9c3d98105dfd..000000000000
+--- a/Documentation/devicetree/bindings/gpu/samsung-scaler.txt
++++ /dev/null
+@@ -1,27 +0,0 @@
+-* Samsung Exynos Image Scaler
+-
+-Required properties:
+-  - compatible : value should be one of the following:
+-	(a) "samsung,exynos5420-scaler" for Scaler IP in Exynos5420
+-	(b) "samsung,exynos5433-scaler" for Scaler IP in Exynos5433
+-
+-  - reg : Physical base address of the IP registers and length of memory
+-	  mapped region.
+-
+-  - interrupts : Interrupt specifier for scaler interrupt, according to format
+-		 specific to interrupt parent.
+-
+-  - clocks : Clock specifier for scaler clock, according to generic clock
+-	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
+-
+-  - clock-names : Names of clocks. For exynos scaler, it should be "mscl"
+-		  on 5420 and "pclk", "aclk" and "aclk_xiu" on 5433.
+-
+-Example:
+-	scaler@12800000 {
+-		compatible = "samsung,exynos5420-scaler";
+-		reg = <0x12800000 0x1294>;
+-		interrupts = <0 220 IRQ_TYPE_LEVEL_HIGH>;
+-		clocks = <&clock CLK_MSCL0>;
+-		clock-names = "mscl";
+-	};
+diff --git a/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml b/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
+new file mode 100644
+index 000000000000..ee2caab22977
+--- /dev/null
++++ b/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
+@@ -0,0 +1,57 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/gpu/samsung-scaler.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Samsung Exynos SoC Image Scaler
++
++maintainers:
++  - Inki Dae <inki.dae@samsung.com>
++
++properties:
++  compatible:
++    enum:
++      - "samsung,exynos5420-scaler"
++      - "samsung,exynos5433-scaler"
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    minItems: 1
++    maxItems: 3
++
++  clock-names:
++    oneOf:
++      - items:
++          - const: mscl
++      - items:
++          - const: pclk
++          - const: aclk
++          - const: aclk_xiu
++    description: |
++      For exynos scaler it should be:
++      - "mscl" on Exynos5420
++      - "pclk", "aclk", "aclk_xiu" on Exynos5433
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++
++examples:
++  - |
++    scaler@12800000 {
++        compatible = "samsung,exynos5420-scaler";
++        reg = <0x12800000 0x1294>;
++        interrupts = <0 220 4>; // IRQ_TYPE_LEVEL_HIGH
++        clocks = <&clock 0>; // CLK_MSCL0
++        clock-names = "mscl";
++    };
++
+-- 
+2.17.1
+
