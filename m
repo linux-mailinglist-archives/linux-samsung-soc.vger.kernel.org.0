@@ -2,206 +2,149 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1926CB1AFC
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 11:41:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65771B2256
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 16:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727997AbfIMJlm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Sep 2019 05:41:42 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:38444 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726673AbfIMJlk (ORCPT
+        id S1729796AbfIMOhI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Sep 2019 10:37:08 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:41422 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730579AbfIMOgM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Sep 2019 05:41:40 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190913094138euoutp02919647530bf98fd000198bf34b1d41fb~D9hy1mwji0518405184euoutp02I
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Sep 2019 09:41:38 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190913094138euoutp02919647530bf98fd000198bf34b1d41fb~D9hy1mwji0518405184euoutp02I
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568367698;
-        bh=DUfibKh2tr8MmWDBAzldojteXCAsf97FcfAmYZzYvp0=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=m3r59NtRBYe9H0J2O7JU1aJF7iGRuXmudFAT8YWo2oBizIooLFNoKY941uE19tDna
-         cDyRRaipzhgyylyZUC+lHzULgWrHsHdFkMX5DOf3nGRWPnOXnkTrogb/yyUPPPfKWF
-         1RdXm8D1/QQLCZCsAzICopnS3dTiHupmzDvLT5dA=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190913094137eucas1p189206a153fe6a5b656a0abc3b2ddcc28~D9hyFo5cX1631916319eucas1p1t;
-        Fri, 13 Sep 2019 09:41:37 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 16.51.04374.1546B7D5; Fri, 13
-        Sep 2019 10:41:37 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1~D9hxTzlle1300013000eucas1p1l;
-        Fri, 13 Sep 2019 09:41:36 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190913094136eusmtrp170a964bdf2df72f66d8b0ee4121f3c99~D9hxFYsIQ2788327883eusmtrp1d;
-        Fri, 13 Sep 2019 09:41:36 +0000 (GMT)
-X-AuditID: cbfec7f5-4f7ff70000001116-4a-5d7b645182df
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 16.BB.04117.0546B7D5; Fri, 13
-        Sep 2019 10:41:36 +0100 (BST)
-Received: from AMDC2459.DIGITAL.local (unknown [106.120.51.95]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190913094135eusmtip1e8543ea67585bb615d24f42ea2e72529~D9hwfRpnN1498914989eusmtip1z;
-        Fri, 13 Sep 2019 09:41:35 +0000 (GMT)
-From:   Maciej Falkowski <m.falkowski@samsung.com>
-To:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Cc:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
-        mark.rutland@arm.com, krzk@kernel.org, a.hajda@samsung.com,
-        m.szyprowski@samsung.com, m.falkowski@samsung.com
-Subject: [PATCH] dt-bindings: gpu: Convert Samsung Image Scaler to dt-schema
-Date:   Fri, 13 Sep 2019 11:41:23 +0200
-Message-Id: <20190913094123.23169-1-m.falkowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42LZduznOd3AlOpYg5lnRS1urTvHatF77iST
-        xf9tE5kt5h8Bcq98fc9mcf78BnaLy7vmsFnMOL+PyeJB8zo2i7VH7rJbLL1+kcmide8Rdgce
-        jzXz1jB67P22gMVj06pONo/t3x6wetzvPs7k0bdlFaPH501yAexRXDYpqTmZZalF+nYJXBkX
-        nnSzF9yVrHg8k6eBcZVIFyMnh4SAicTERc8Zuxi5OIQEVjBKXJlwHcr5wijx5MNuJpAqIYHP
-        jBKfz8B1/Px9mR2iaDmjRPfmXyxwHTMWPADrYBMwkOh/sxcsISLQxCgxf9VxsLnMAmsYJX7N
-        bAWrEhbwkVh6cysriM0ioCrRevsdO4jNK2AjMWPyEzaIffISqzccYIawu9klfrzx7WLkALJd
-        JC5NzIUIC0u8Or6FHcKWkTg9uYcFoqRa4to3WZC1EgItjBLXp72FGmkt8WfVRDaQGmYBTYn1
-        u/Qhwo4Sm5YvYYZo5ZO48VYQJMwMZE7aNh0qzCvR0SYEYapKvJkQC9EoLdG6Zj8jhO0h0XPl
-        OCMk2GIl7m6awTiBUW4WwqoFjIyrGMVTS4tz01OLjfNSy/WKE3OLS/PS9ZLzczcxAlPJ6X/H
-        v+5g3Pcn6RCjAAejEg+vhU5VrBBrYllxZe4hRgkOZiURXp83lbFCvCmJlVWpRfnxRaU5qcWH
-        GKU5WJTEeasZHkQLCaQnlqRmp6YWpBbBZJk4OKUaGFfc/Ln+/X7OlCav27tFZXfNNpvSa20X
-        eyat/cyS1cy737/m4pffGD5XhvfAtKSdiQZXnHtbDdweSHN81uhkuzijsJPLwlkpgeM/k09A
-        TbbIrcyCha+apttNn2M9W6H/YVTQlYjJt2Ob33xJ2qEhyDT9UWzvR6OWrM5wiyBuB4FAydvG
-        rPpzlViKMxINtZiLihMBCUt9gyEDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJLMWRmVeSWpSXmKPExsVy+t/xu7oBKdWxBtN7pCxurTvHatF77iST
-        xf9tE5kt5h8Bcq98fc9mcf78BnaLy7vmsFnMOL+PyeJB8zo2i7VH7rJbLL1+kcmide8Rdgce
-        jzXz1jB67P22gMVj06pONo/t3x6wetzvPs7k0bdlFaPH501yAexRejZF+aUlqQoZ+cUltkrR
-        hhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehkXnnSzF9yVrHg8k6eBcZVIFyMn
-        h4SAicTP35fZuxi5OIQEljJKrFz7igUiIS2x/9pHdghbWOLPtS42iKJPjBLXF/UygyTYBAwk
-        +t/sZQFJiAi0MUo8PXWECcRhFtjGKLF77X02kCphAR+JpTe3soLYLAKqEq2334GN5RWwkZgx
-        +QkbxAp5idUbDjBPYORZwMiwilEktbQ4Nz232EivODG3uDQvXS85P3cTIzCYtx37uWUHY9e7
-        4EOMAhyMSjy8FjpVsUKsiWXFlbmHGCU4mJVEeH3eVMYK8aYkVlalFuXHF5XmpBYfYjQFWj6R
-        WUo0OR8YaXkl8YamhuYWlobmxubGZhZK4rwdAgdjhATSE0tSs1NTC1KLYPqYODilGhgXT1UT
-        Tn8cnmDZOv9e1/tTEuy3fuXJc2xOCFGvlX5nv51PvieKQWeF7dLfzxRdNT1v37vWYZ8wPcfP
-        brFGY4z2HRuHle2mLcZF78W2d+3r+CRz9JvCHb2kx2oz63YtneCndUfrvi5rwLnpPEVKrFXl
-        l4TP3GNdY+fpVcCbf+OF2d4VDav2rFJiKc5INNRiLipOBADgtPMpfAIAAA==
-X-CMS-MailID: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1
-References: <CGME20190913094136eucas1p1fd424b5f5a6f0a97b31af54e55fe28c1@eucas1p1.samsung.com>
+        Fri, 13 Sep 2019 10:36:12 -0400
+Received: by mail-ot1-f67.google.com with SMTP id g16so14495337otp.8;
+        Fri, 13 Sep 2019 07:36:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:from:to:cc:subject:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Udp1qs2PnQd+suer1OhTIlkS/OekkcPK9CiDkJDjShA=;
+        b=slHt68/wZWZvVdF3p3n3Z3/kpIZrKM7cr7RoZ2CJUVnCJdw3nVxU2W9AELUPlBTQFw
+         fJR1bGq1EGIN5El8UcUCoUqNK9UHci2itT0n/Wpx3baC5ZdKqT6F0SaDzVXMLoPYbQhQ
+         sB+who7kl2LkF2w2KSgaltJEnHSPkAJyBtVr+SMh54W/f00wOhlQ8OxQ2HlTY6BVb4uj
+         zsEyNc4Hzsy78kh2ussv9hL9Zy9Fvge6TXdqRuXeNcKeNe160RfQwmff4TMzJnI0wA/g
+         KNdrEXJ/wTVmc4cpL8A6d8M3citjNPkCvTd9XespvXkUmqqL1IciAjy3g3eTv5zvpzrE
+         76ZQ==
+X-Gm-Message-State: APjAAAWluZmqw48+dtPVdHNyb3kyvghpIGe0u1SxpRwUxA/6+Xw+rBpn
+        IY8GOGcKMBPlW/BNrUj4mg==
+X-Google-Smtp-Source: APXvYqycFKRr57mlzxEV5y+yWerE/UvbEc15wS4dWm6MgJQ1ln7TuCcpwqsSqLk1VgSzUI9biggE8Q==
+X-Received: by 2002:a9d:5f9a:: with SMTP id g26mr9285769oti.27.1568385371763;
+        Fri, 13 Sep 2019 07:36:11 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id j3sm1115259oih.52.2019.09.13.07.36.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Sep 2019 07:36:10 -0700 (PDT)
+Message-ID: <5d7ba95a.1c69fb81.bfd81.77ba@mx.google.com>
+Date:   Fri, 13 Sep 2019 15:36:10 +0100
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Lukasz Luba <l.luba@partner.samsung.com>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        =?utf-8?Q?Bart=C5=82omiej_=C5=BBo=C5=82nierkiewicz?= 
+        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        kyungmin.park@samsung.com,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
+        willy.mh.wolff.ml@gmail.com
+Subject: Re: [PATCH 3/3] dt-bindings: ddr: Add bindings for Samsung LPDDR3
+ memories
+References: <CGME20190906101407eucas1p15eb0df53374b27497b4793eab24becf6@eucas1p1.samsung.com>
+ <20190906101344.3535-1-l.luba@partner.samsung.com>
+ <20190906101344.3535-4-l.luba@partner.samsung.com>
+ <CAJKOXPfoYxTVvt_bMQOs1=BkHzUuW_WvL9zn0jTGS6LLpv=fhQ@mail.gmail.com>
+ <52963d0d-cf48-7085-5581-a94c6e15e0bd@partner.samsung.com>
+ <CAJKOXPfEcURr_bLRaAdjWT3cb7mcuKTk8rmn7OTO=xtvjvJ=jQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJKOXPfEcURr_bLRaAdjWT3cb7mcuKTk8rmn7OTO=xtvjvJ=jQ@mail.gmail.com>
+X-Mutt-References: <CAJKOXPfEcURr_bLRaAdjWT3cb7mcuKTk8rmn7OTO=xtvjvJ=jQ@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung Image Scaler to newer dt-schema format.
+On Fri, Sep 06, 2019 at 01:50:26PM +0200, Krzysztof Kozlowski wrote:
+> On Fri, 6 Sep 2019 at 13:39, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+> >
+> > Hi Krzysztof,
+> >
+> > On 9/6/19 12:56 PM, Krzysztof Kozlowski wrote:
+> > > On Fri, 6 Sep 2019 at 12:14, Lukasz Luba <l.luba@partner.samsung.com> wrote:
+> > >>
+> > >> Add description of bindings for Samsung k3qf2f20db LPDDR3 memory.
+> > >> Minor fixes in the old documentation.
+> > >>
+> > >> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
+> > >> ---
+> > >>   .../devicetree/bindings/ddr/lpddr3.txt        | 29 +++++++++++++++++--
+> > >>   1 file changed, 27 insertions(+), 2 deletions(-)
+> > >>
+> > >> diff --git a/Documentation/devicetree/bindings/ddr/lpddr3.txt b/Documentation/devicetree/bindings/ddr/lpddr3.txt
+> > >> index 3b2485b84b3f..de0905239767 100644
+> > >> --- a/Documentation/devicetree/bindings/ddr/lpddr3.txt
+> > >> +++ b/Documentation/devicetree/bindings/ddr/lpddr3.txt
+> > >> @@ -40,10 +40,34 @@ Child nodes:
+> > >>     a given speed-bin. Please see Documentation/devicetree/
+> > >>     bindings/ddr/lpddr3-timings.txt for more information on "lpddr3-timings"
+> > >>
+> > >> +Samsung K3QF2F20DB LPDDR3 memory
+> > >> +------------------------------------------------------------
+> > >> +
+> > >> +This binding uses the LPDDR3 binding (described above)
+> > >> +
+> > >> +Required properties:
+> > >> +- compatible:  Should be:
+> > >> +               "samsung,K3QF2F20DB"
+> > >> +               followed by "jedec,lpddr3"
+> > >> +- density  : <u32> representing density in Mb (Mega bits)
+> > >> +- io-width : <u32> representing bus width. Possible value 32
+> > >> +- #address-cells: Must be set to 1
+> > >> +- #size-cells: Must be set to 0
+> > >
+> > > If you decided to repeat all properties again, then it deserves its
+> > > own bindings file. However I though about simpler solution - just
+> > > document compatible. Exactly the same as AT24 or AT25 EEPROM bindings.
+> > > There is not much benefit from copying all these properties.
+> > OK, I see. I will add only 'compatible' and skip the rest then.
+> > So the lpddr3.txt file will get this addition:
+> >
+> > +Samsung K3QF2F20DB LPDDR3 memory
+> > +------------------------------------------------------------
+> > +
+> > +This binding uses the LPDDR3 binding (described above)
+> > +
+> > +Required properties:
+> > +- compatible:  Should be:
+> > +               "samsung,K3QF2F20DB"
+> > +               followed by "jedec,lpddr3"
+> > +
+> > +Optional properties:
+> > +
+> > +The optional properties are the same as in the LPDDR3 generic bindings and
+> > +values should be taken from the data-sheet. Detailed bindings are described
+> > +above.
+> > +
+> > +Child nodes:
+> > +
+> > +Detailed bindings are described in LPDDR3 generic bindings described above.
+> > +
+> >
+> > Is it OK?
+> 
+> To me it is still a lot of text just for one compatible and I can
+> image more of such entries for other memories... However I do not mind
+> and anyway, YAML will simplify it. If you're in doubt, wait for Rob's
+> reply as this is his part.
 
-Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- .../bindings/gpu/samsung-scaler.txt           | 27 ---------
- .../bindings/gpu/samsung-scaler.yaml          | 57 +++++++++++++++++++
- 2 files changed, 57 insertions(+), 27 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-scaler.txt
- create mode 100644 Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
+We can't have multiple (top-level) schema in one file, so better to add 
+in where the existing compatible strings are.
 
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-scaler.txt b/Documentation/devicetree/bindings/gpu/samsung-scaler.txt
-deleted file mode 100644
-index 9c3d98105dfd..000000000000
---- a/Documentation/devicetree/bindings/gpu/samsung-scaler.txt
-+++ /dev/null
-@@ -1,27 +0,0 @@
--* Samsung Exynos Image Scaler
--
--Required properties:
--  - compatible : value should be one of the following:
--	(a) "samsung,exynos5420-scaler" for Scaler IP in Exynos5420
--	(b) "samsung,exynos5433-scaler" for Scaler IP in Exynos5433
--
--  - reg : Physical base address of the IP registers and length of memory
--	  mapped region.
--
--  - interrupts : Interrupt specifier for scaler interrupt, according to format
--		 specific to interrupt parent.
--
--  - clocks : Clock specifier for scaler clock, according to generic clock
--	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
--
--  - clock-names : Names of clocks. For exynos scaler, it should be "mscl"
--		  on 5420 and "pclk", "aclk" and "aclk_xiu" on 5433.
--
--Example:
--	scaler@12800000 {
--		compatible = "samsung,exynos5420-scaler";
--		reg = <0x12800000 0x1294>;
--		interrupts = <0 220 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&clock CLK_MSCL0>;
--		clock-names = "mscl";
--	};
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml b/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
-new file mode 100644
-index 000000000000..ee2caab22977
---- /dev/null
-+++ b/Documentation/devicetree/bindings/gpu/samsung-scaler.yaml
-@@ -0,0 +1,57 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/gpu/samsung-scaler.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos SoC Image Scaler
-+
-+maintainers:
-+  - Inki Dae <inki.dae@samsung.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - "samsung,exynos5420-scaler"
-+      - "samsung,exynos5433-scaler"
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 3
-+
-+  clock-names:
-+    oneOf:
-+      - items:
-+          - const: mscl
-+      - items:
-+          - const: pclk
-+          - const: aclk
-+          - const: aclk_xiu
-+    description: |
-+      For exynos scaler it should be:
-+      - "mscl" on Exynos5420
-+      - "pclk", "aclk", "aclk_xiu" on Exynos5433
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    scaler@12800000 {
-+        compatible = "samsung,exynos5420-scaler";
-+        reg = <0x12800000 0x1294>;
-+        interrupts = <0 220 4>; // IRQ_TYPE_LEVEL_HIGH
-+        clocks = <&clock 0>; // CLK_MSCL0
-+        clock-names = "mscl";
-+    };
-+
--- 
-2.17.1
+Rob
 
