@@ -2,211 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9769BB184F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 08:29:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55927B1A96
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 11:15:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbfIMG3w (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Sep 2019 02:29:52 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40046 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbfIMG3w (ORCPT
+        id S2387639AbfIMJPs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Sep 2019 05:15:48 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:57667 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387513AbfIMJPs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Sep 2019 02:29:52 -0400
-Received: by mail-wm1-f66.google.com with SMTP id m3so1376359wmc.5;
-        Thu, 12 Sep 2019 23:29:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Pn2QgivTbeqtu2l0M3XS0fw7E3G3pQp+Hr7YG5Qb+oY=;
-        b=GdfZdvmgclv3mS1AIMDO2YPvExh1AKQL0QK2mOrtQ/+0PEIff74k8J3Sivn6mTHIl0
-         cURxcDw+VF1B4X0L2RMj8tXYW4m/k+OvhqVx9HTzoqgTOktB/66dbPvU/GXZe7QUIIi5
-         yqO75QP7of8INDKE9OYeFs1mUsjigu7gxQQJMVNgIVt4blJt8uNTeccQMo3QgqcBXvrV
-         wPBY9JL6A1ONoU1Ip6+xru+khk7m26gKGKEFekgIIzl4cqYxdvL87KTtBd6uSJfgSr5/
-         N9pa/NIj3M+SnNESlrcgBl/ZZYoG5e/oKgAS1XIgkCF+kKCtYuK9QeBMMsaZO1cfbiki
-         7bLw==
-X-Gm-Message-State: APjAAAWuakpa3U5Pp7G8HYGyiCjIPck/pz8hEhQU1xRSFaisNcI1lA/G
-        6/GF2aWdVdpUHL8X6QVRg+0=
-X-Google-Smtp-Source: APXvYqxsmKCSOQkEnLH1A18YyjWgoTqq4r05C9UlLyHjOJchp4X8cPnGcavBcUQoam2wKeQuPwLPZQ==
-X-Received: by 2002:a1c:2883:: with SMTP id o125mr1841777wmo.31.1568356189059;
-        Thu, 12 Sep 2019 23:29:49 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id g3sm14751047wrq.64.2019.09.12.23.29.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Sep 2019 23:29:48 -0700 (PDT)
-Date:   Fri, 13 Sep 2019 08:29:45 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Maciej Falkowski <m.falkowski@samsung.com>
+        Fri, 13 Sep 2019 05:15:48 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190913091547euoutp02c56b7ca072b42e47f4af63d7cb84035f~D9LOFhWn_2308523085euoutp02B
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Sep 2019 09:15:47 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190913091547euoutp02c56b7ca072b42e47f4af63d7cb84035f~D9LOFhWn_2308523085euoutp02B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568366147;
+        bh=PR7plf5xfUSTBIvJtmBM06aLqddyK3IZ5QA/vHAAwdw=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=aOg4KrmrmGdFVwzw6e0usS8/Yv3K4SANdhFp94RdkDEyCZN/xVZJ0VXvgMwklM8PP
+         Vf5/260J5pGsWYjSre47xnEBidyoq7kEZHr2A5to9DW7WwlVzwwPqle7YhPpspjbzz
+         FDdheFdQ4C+W+9MeUcrPtLy+CeHGhSij4/Gf+rB4=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190913091546eucas1p28a71702dd105aaf9caf2f1c16f8ed313~D9LNXOJPV0954009540eucas1p2H;
+        Fri, 13 Sep 2019 09:15:46 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 1B.2E.04374.24E5B7D5; Fri, 13
+        Sep 2019 10:15:46 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190913091545eucas1p17e7a786e078fdc38ae56b1cd56e30543~D9LMh7_gR1367913679eucas1p1C;
+        Fri, 13 Sep 2019 09:15:45 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190913091545eusmtrp23bf17003f06fe85b2bde552261e5553a~D9LMT1BFD2926629266eusmtrp23;
+        Fri, 13 Sep 2019 09:15:45 +0000 (GMT)
+X-AuditID: cbfec7f5-4ddff70000001116-3d-5d7b5e42f38c
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 44.53.04166.14E5B7D5; Fri, 13
+        Sep 2019 10:15:45 +0100 (BST)
+Received: from [106.120.51.73] (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190913091544eusmtip223f7b61a5537b436821aa1ceb5f8b59e~D9LLzUcX63102731027eusmtip2G;
+        Fri, 13 Sep 2019 09:15:44 +0000 (GMT)
+Subject: Re: [PATCH v2] dt-bindings: gpu: Convert Samsung Image Rotator to
+ dt-schema
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Maciej Falkowski <m.falkowski@samsung.com>
 Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
-        mark.rutland@arm.com, a.hajda@samsung.com, m.szyprowski@samsung.com
-Subject: Re: [PATCH v2] dt-bindings: gpu: Convert Samsung Image Rotator to
- dt-schema
-Message-ID: <20190913062945.GA10283@pi3>
-References: <20190912093315.5744-1-m.falkowski@samsung.com>
- <CGME20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a@eucas1p2.samsung.com>
- <20190912161538.4321-1-m.falkowski@samsung.com>
+        mark.rutland@arm.com, a.hajda@samsung.com
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <e082996a-743d-807a-38c0-dee65b490771@samsung.com>
+Date:   Fri, 13 Sep 2019 11:15:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190912161538.4321-1-m.falkowski@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190913062945.GA10283@pi3>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJKsWRmVeSWpSXmKPExsWy7djPc7pOcdWxBlcns1ncWneO1aL33Ekm
+        i//bJjJbzD8C5F75+p7N4vz5DewWl3fNYbOYcX4fk8WD5nVsFkuvX2SyaN17hN2B22PNvDWM
+        Hnu/LWDx2LSqk81j+7cHrB73u48zefRtWcXo8XmTXAB7FJdNSmpOZllqkb5dAlfGqwu32Av+
+        cFSs3PSdsYGxl72LkZNDQsBE4ufiM6wgtpDACkaJ3/vsuhi5gOwvjBJP1pxlhnA+M0rM2tnE
+        BNNx4tl2dojEckaJj4/vMEE4bxkl3v05zwhSJSwQJrH8UwsLiC0iEC6x6OQRsFHMAi8YJT49
+        nQI2ik3AUKLrbRcbiM0rYCcx481EsDiLgKrEi+bbYLaoQITEpweHWSFqBCVOznwCNpRTQFOi
+        /dI7sDizgLzE9rdzmCFscYlbT+aDXSQhcItdYt/ByUALOIAcF4lD+xUhXhCWeHV8CzQAZCT+
+        74Spb2aUeHhuLTuE08MocblpBiNElbXE4eMXWUEGMQNtXr9LHyLsKPHyRSs7xHw+iRtvBSFu
+        4JOYtG06M0SYV6KjTQiiWk1i1vF1cGsPXrjEPIFRaRaSz2Yh+WYWkm9mIexdwMiyilE8tbQ4
+        Nz212DgvtVyvODG3uDQvXS85P3cTIzCBnf53/OsOxn1/kg4xCnAwKvHwWuhUxQqxJpYVV+Ye
+        YpTgYFYS4fV5UxkrxJuSWFmVWpQfX1Sak1p8iFGag0VJnLea4UG0kEB6YklqdmpqQWoRTJaJ
+        g1OqgVHl73O7mXMdLi2vyOuv/vL3ZegtPb0LV3QzFGenF84/bfgw/fez4ysf6Si+XcsX9rxy
+        wTqGSI2dAX16pguizR8Usz2xSpL9LvKgfrY296XwkH4vh9oW5RNXLB2frJ934Zx99ckbxh8S
+        Oj8/vZWes2vtbQuxnqoL080W3vsc/0Gb9ev7Nc/r365VYinOSDTUYi4qTgQAKJNCfFwDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsVy+t/xe7qOcdWxBrvn8FjcWneO1aL33Ekm
+        i//bJjJbzD8C5F75+p7N4vz5DewWl3fNYbOYcX4fk8WD5nVsFkuvX2SyaN17hN2B22PNvDWM
+        Hnu/LWDx2LSqk81j+7cHrB73u48zefRtWcXo8XmTXAB7lJ5NUX5pSapCRn5xia1StKGFkZ6h
+        pYWekYmlnqGxeayVkamSvp1NSmpOZllqkb5dgl7Gqwu32Av+cFSs3PSdsYGxl72LkZNDQsBE
+        4sSz7UA2F4eQwFJGiUsT17JAJGQkTk5rYIWwhSX+XOtigyh6zSjRuuAZE0hCWCBMYvmnFrAG
+        EYFwiSsL7jODFDELvGCUePzhHdTYe4wSP5qvsoFUsQkYSnS97QKzeQXsJGa8mQg2iUVAVeJF
+        820wW1QgQuLwjlmMEDWCEidnPgHbwCmgKdF+6R3YScwCZhLzNj9khrDlJba/nQNli0vcejKf
+        aQKj0Cwk7bOQtMxC0jILScsCRpZVjCKppcW56bnFhnrFibnFpXnpesn5uZsYgVG77djPzTsY
+        L20MPsQowMGoxMNroVMVK8SaWFZcmXuIUYKDWUmE1+dNZawQb0piZVVqUX58UWlOavEhRlOg
+        5yYyS4km5wMTSl5JvKGpobmFpaG5sbmxmYWSOG+HwMEYIYH0xJLU7NTUgtQimD4mDk6pBsbm
+        pqXHC6z2c3tPX8aoWvZF33WZ6NnOtvpNWzhklm1qizjG/3yW57r7Lh+3rir5yJ+7i7/FgE0n
+        cjJrQKPrrHSDN5p7XxpdFTncKCrovXanQ2P1nbnH5mzavMBSg5e95eGa6RxXf0SoTFTlv9H7
+        LWuCUb7Oe2OHy4s8VYR81Wapdk99oOqdG6vEUpyRaKjFXFScCAD/MUv48AIAAA==
+X-CMS-MailID: 20190913091545eucas1p17e7a786e078fdc38ae56b1cd56e30543
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a
+References: <20190912093315.5744-1-m.falkowski@samsung.com>
+        <CGME20190912161550eucas1p2bdc813d46f337f3717bdbfd33bae8d4a@eucas1p2.samsung.com>
+        <20190912161538.4321-1-m.falkowski@samsung.com> <20190913062945.GA10283@pi3>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Sep 12, 2019 at 06:15:38PM +0200, Maciej Falkowski wrote:
-> Convert Samsung Image Rotator to newer dt-schema format.
-> 
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Hi Krzysztof,
 
-Just to make it clear, Marek's signed-off should appear for one of
-conditions:
- - he contributed some source code to your patch,
- - he took your patch, rebased, send by himself (not a case here, I
-   think),
- - he contributed significant ideas, although for this there is a
-   "Co-developed-by" tag.
+On 9/13/19 8:29 AM, Krzysztof Kozlowski wrote:
+> On Thu, Sep 12, 2019 at 06:15:38PM +0200, Maciej Falkowski wrote:
+>> Convert Samsung Image Rotator to newer dt-schema format.
+>>
+>> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> Just to make it clear, Marek's signed-off should appear for one of
+> conditions:
+>   - he contributed some source code to your patch,
+>   - he took your patch, rebased, send by himself (not a case here, I
+>     think),
+>   - he contributed significant ideas, although for this there is a
+>     "Co-developed-by" tag.
+>
+> If someone made just review - add Reviewed-by. If someone suggested the
+> patch - add Suggested-by.
 
-If someone made just review - add Reviewed-by. If someone suggested the
-patch - add Suggested-by.
+My signed-off here was added to mark that this patch is allowed to be 
+submitted to the public mailing list, as I have required company 
+permissions for such activity. It is not that uncommon that a given 
+patch has more than one signed-off and still the main author has the 
+first signed-off tag.
 
-> ---
-> v2:
-> - add required properties
-> - add proper commit recipients
-> ---
->  .../bindings/gpu/samsung-rotator.txt          | 28 ----------
->  .../bindings/gpu/samsung-rotator.yaml         | 52 +++++++++++++++++++
->  2 files changed, 52 insertions(+), 28 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.txt
->  create mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt b/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
-> deleted file mode 100644
-> index 3aca2578da0b..000000000000
-> --- a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
-> +++ /dev/null
-> @@ -1,28 +0,0 @@
-> -* Samsung Image Rotator
-> -
-> -Required properties:
-> -  - compatible : value should be one of the following:
-> -	* "samsung,s5pv210-rotator" for Rotator IP in S5PV210
-> -	* "samsung,exynos4210-rotator" for Rotator IP in Exynos4210
-> -	* "samsung,exynos4212-rotator" for Rotator IP in Exynos4212/4412
-> -	* "samsung,exynos5250-rotator" for Rotator IP in Exynos5250
-> -
-> -  - reg : Physical base address of the IP registers and length of memory
-> -	  mapped region.
-> -
-> -  - interrupts : Interrupt specifier for rotator interrupt, according to format
-> -		 specific to interrupt parent.
-> -
-> -  - clocks : Clock specifier for rotator clock, according to generic clock
-> -	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
-> -
-> -  - clock-names : Names of clocks. For exynos rotator, it should be "rotator".
-> -
-> -Example:
-> -	rotator@12810000 {
-> -		compatible = "samsung,exynos4210-rotator";
-> -		reg = <0x12810000 0x1000>;
-> -		interrupts = <0 83 0>;
-> -		clocks = <&clock 278>;
-> -		clock-names = "rotator";
-> -	};
-> diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-> new file mode 100644
-> index 000000000000..96afafe98388
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/gpu/samsung-rotator.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung Image Rotator
+ > ...
 
-Thanks Maciej for working on this.
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
-I am trying to make the names more consistent:
-1. For Exynos bindings:
-Samsung Exynos SoC xxx yyy zzz
-
-2. For multiple SoCs (S3C, S5P, Exynos etc):
-Samsung SoC xxx yyy zzz
-
-Currently the names are mixture of legacy and new names. It is a
-nit-pick but makes all bindings look like a part of bigger effort, not
-bunch of patches done by random people. :)
-
-If there are no objections, maybe you could change it to:
-Samsung SoC Image Rotator
-
-> +
-> +maintainers:
-> +  - Inki Dae <inki.dae@samsung.com>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - "samsung,s5pv210-rotator"    # for Rotator IP in S5PV210
-> +      - "samsung,exynos4210-rotator" # for Rotator IP in Exynos4210
-> +      - "samsung,exynos4212-rotator" # for Rotator IP in Exynos4212/4412
-> +      - "samsung,exynos5250-rotator" # for Rotator IP in Exynos5250
-
-The comments are duplicating the compatible, so skip them.
-
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    description: |
-> +      Clock specifier for rotator clock according to generic clock
-> +      bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
-
-Skip the description. Clocks property is a well-known binding.
-
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +    - const: rotator
-> +    maxItems: 1
-
-I think there is no need to maxItems since all possible items are fixed.
-
-Best regards,
-Krzysztof
-
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - clocks
-> +  - clock-names
-> +
-> +examples:
-> +  - |
-> +    rotator@12810000 {
-> +        compatible = "samsung,exynos4210-rotator";
-> +        reg = <0x12810000 0x1000>;
-> +        interrupts = <0 83 0>;
-> +        clocks = <&clock 278>;
-> +        clock-names = "rotator";
-> +    };
-> +
-> -- 
-> 2.17.1
-> 
