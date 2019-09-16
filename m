@@ -2,210 +2,62 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DBD18B2238
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Sep 2019 16:39:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC92FB36E2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Sep 2019 11:13:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730844AbfIMOg1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Sep 2019 10:36:27 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:35841 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729421AbfIMOg1 (ORCPT
+        id S1731722AbfIPJM4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 16 Sep 2019 05:12:56 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:34455 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727147AbfIPJMz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Sep 2019 10:36:27 -0400
-Received: by mail-oi1-f195.google.com with SMTP id k20so2820547oih.3;
-        Fri, 13 Sep 2019 07:36:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+gFzsRCMB/S5/2NImCatrFU6mHejOO77M/5QHXhL2CE=;
-        b=jrutpeE7+krC7rUouqgACbAycUGqck/gLe1i/gMID+BhQg83ZN4ZkEPa7P3D6EtL6M
-         gmH67GqOwwnqDzyFlXm+cPWwAjviUzNxc2CoNPu1bs83Hn7pM72kKigGBG0rbahgFyzW
-         eu3oq2Pzj9nDoebdu6GSVRvkxIG8jeA4Ep53yfOJ3aaL8a5S+OhQEDwBhMPEBUFOoXk3
-         fFgEXp4JaOy2eY3CKBmW5aU4eVN75854bQz2fkepNthqKKxUuJ4LN9epJpK/cxEoRECO
-         RPojgTRJiJl/34f5ej0wj6bWks2giWZCn2Lu5It+t3CpbCbZ/6SU2dbYC1i9Qe0s+pJI
-         FiBg==
-X-Gm-Message-State: APjAAAWJ7NZLfmw3nzvPw/0ARfma9GNCFoqhWbZaitspuLL/ocFkPRRh
-        3jFcaSpzaQMiCIZzkDTTNQ==
-X-Google-Smtp-Source: APXvYqzDJcu7XMQwyfdu88xRNFK5/eDi+cajXRPFFVqk0IhjM9XwyTsN3OWNGDYIZvHiX+LnZBRMuw==
-X-Received: by 2002:a05:6808:8e3:: with SMTP id d3mr3373504oic.153.1568385385768;
-        Fri, 13 Sep 2019 07:36:25 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id o19sm841989oic.26.2019.09.13.07.36.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2019 07:36:25 -0700 (PDT)
-Date:   Fri, 13 Sep 2019 15:36:24 +0100
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>, linux-pwm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Maciej Falkowski <m.falkowski@samsung.com>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-leds@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] dt-bindings: pwm: Convert Samsung PWM bindings
- to json-schema
-Message-ID: <20190912175001.GA29884@bogus>
-References: <20190909183436.9045-1-krzk@kernel.org>
- <20190909183436.9045-2-krzk@kernel.org>
+        Mon, 16 Sep 2019 05:12:55 -0400
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1i9n3x-0003F5-RD; Mon, 16 Sep 2019 09:12:49 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Lukasz Luba <l.luba@partner.samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH][next] memory: exynos5422: fix spelling mistake "counld" -> "could"
+Date:   Mon, 16 Sep 2019 10:12:49 +0100
+Message-Id: <20190916091249.31950-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190909183436.9045-2-krzk@kernel.org>
-X-Mutt-References: <20190909183436.9045-2-krzk@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Sep 09, 2019 at 08:34:36PM +0200, Krzysztof Kozlowski wrote:
-> Convert Samsung PWM (S3C, S5P and Exynos SoCs) bindings to DT schema
-> format using json-schema.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  .../devicetree/bindings/pwm/pwm-samsung.txt   |  51 --------
->  .../devicetree/bindings/pwm/pwm-samsung.yaml  | 111 ++++++++++++++++++
->  2 files changed, 111 insertions(+), 51 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pwm/pwm-samsung.txt
->  create mode 100644 Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
+From: Colin Ian King <colin.king@canonical.com>
 
+There is a spelling mistake in a dev_err message. Fix it.
 
-> diff --git a/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml b/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
-> new file mode 100644
-> index 000000000000..90fb467bcdd5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
-> @@ -0,0 +1,111 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/pwm-samsung.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung SoC PWM timers
-> +
-> +maintainers:
-> +  - Thierry Reding <thierry.reding@gmail.com>
-> +  - Krzysztof Kozlowski <krzk@kernel.org>
-> +
-> +description: |+
-> +  Samsung SoCs contain PWM timer blocks which can be used for system clock source
-> +  and clock event timers, as well as to drive SoC outputs with PWM signal. Each
-> +  PWM timer block provides 5 PWM channels (not all of them can drive physical
-> +  outputs - see SoC and board manual).
-> +
-> +  Be aware that the clocksource driver supports only uniprocessor systems.
-> +
-> +allOf:
-> +  - $ref: pwm.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - samsung,s3c2410-pwm             # 16-bit, S3C24xx
-> +      - samsung,s3c6400-pwm             # 32-bit, S3C64xx
-> +      - samsung,s5p6440-pwm             # 32-bit, S5P64x0
-> +      - samsung,s5pc100-pwm             # 32-bit, S5PC100, S5PV210, Exynos4210 rev0 SoCs
-> +      - samsung,exynos4210-pwm          # 32-bit, Exynos
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    description: |
-> +      Should contain all following required clock names:
-> +      - "timers" - PWM base clock used to generate PWM signals,
-> +      and any subset of following optional clock names:
-> +      - "pwm-tclk0" - first external PWM clock source,
-> +      - "pwm-tclk1" - second external PWM clock source.
-> +      Note that not all IP variants allow using all external clock sources.
-> +      Refer to SoC documentation to learn which clock source configurations
-> +      are available.
-> +    oneOf:
-> +      - items:
-> +        - const: "timers"
-> +      - items:
-> +        - const: "timers"
-> +        - const: "pwm-tclk0"
-> +      - items:
-> +        - const: "timers"
-> +        - const: "pwm-tclk1"
-> +      - items:
-> +        - const: "timers"
-> +        - const: "pwm-tclk0"
-> +        - const: "pwm-tclk1"
-> +
-> +  interrupts:
-> +    description:
-> +      One interrupt per timer, starting at timer 0.
-> +    minItems: 1
-> +    maxItems: 5
-> +
-> +  "#pwm-cells":
-> +    description:
-> +      The only third cell flag supported by this binding
-> +      is PWM_POLARITY_INVERTED.
-> +    const: 3
-> +
-> +  samsung,pwm-outputs:
-> +    description:
-> +      A list of PWM channels used as PWM outputs on particular platform.
-> +      It is an array of up to 5 elements being indices of PWM channels
-> +      (from 0 to 4), the order does not matter.
-> +    # TODO: Values should not repeat
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/memory/samsung/exynos5422-dmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-uniqueItems: true
-
-Though it looks like we have to enable that keyword. (As silently 
-ignoring unknown keywords (such as typos) is 'feature' of json-schema, 
-we explicitly list keywords we use.)
-
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32-array
-> +      # FIXME: min/max limit of items does not work
-> +      - items:
-> +          minItems: 1
-> +          maxItems: 5
-> +      - items:
-> +          minimum: 0
-> +          maximum: 4
-
-I think you want:
-
-minItems: 1
-maxItems: 2
-items:
-  minimum: 0
-  maximum: 4
-
-> +
-> +required:
-> +  - clocks
-> +  - clock-names
-> +  - compatible
-> +  - interrupts
-> +  - "#pwm-cells"
-> +  - reg
-> +
-> +examples:
-> +  - |
-> +    pwm@7f006000 {
-> +      compatible = "samsung,s3c6400-pwm";
-> +      reg = <0x7f006000 0x1000>;
-> +      interrupt-parent = <&vic0>;
-> +      interrupts = <23>, <24>, <25>, <27>, <28>;
-> +      clocks = <&clock 67>;
-> +      clock-names = "timers";
-> +      samsung,pwm-outputs = <0>, <1>;
-> +      #pwm-cells = <3>;
-> +    };
-> -- 
-> 2.17.1
-> 
+diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
+index 8c2ec29a7d57..ac5f55813900 100644
+--- a/drivers/memory/samsung/exynos5422-dmc.c
++++ b/drivers/memory/samsung/exynos5422-dmc.c
+@@ -1078,7 +1078,7 @@ static int exynos5_performance_counters_init(struct exynos5_dmc *dmc)
+ 	ret = exynos5_counters_set_event(dmc);
+ 	if (ret < 0) {
+ 		exynos5_counters_disable_edev(dmc);
+-		dev_err(dmc->dev, "counld not set event counter\n");
++		dev_err(dmc->dev, "could not set event counter\n");
+ 		return ret;
+ 	}
+ 
+-- 
+2.20.1
 
