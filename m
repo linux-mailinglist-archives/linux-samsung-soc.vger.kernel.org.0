@@ -2,78 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A399B5022
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 17 Sep 2019 16:15:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E3A9B5507
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 17 Sep 2019 20:13:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbfIQOPa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 17 Sep 2019 10:15:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52962 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726308AbfIQOP3 (ORCPT
+        id S1728671AbfIQSN0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 17 Sep 2019 14:13:26 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:39812 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728492AbfIQSN0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 17 Sep 2019 10:15:29 -0400
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CA2FE218AE;
-        Tue, 17 Sep 2019 14:15:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568729728;
-        bh=+B3sRZPhkAukMdMBAYVICiPGgK/51bRCH3pDovTUbwo=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=w4/ghrVGz+s1Xa8HKjmbSv+EFYoQomNvEU6uW/JCHc+xPgFpAla3Ef1Xc5bXWrW5B
-         jhuTmBt1NGRBsA9acQjl2Py4L2JmtbGWUEhiSdVFNBg8ihClrjcR+9TNLOGfO7bkGE
-         k+2UvRiT6gdfnian3dWHLECSTFJD+KRDO8Ckiw2M=
-Received: by mail-qt1-f178.google.com with SMTP id j1so4638400qth.1;
-        Tue, 17 Sep 2019 07:15:28 -0700 (PDT)
-X-Gm-Message-State: APjAAAUUZ/2DvB1V88mYEGb6tOZw/fMgjmjwZRQLduMS63SAiaLuXnSa
-        ieo3kaS/dqyP08UUeVhn23j3U+bwVrcFxE+ujw==
-X-Google-Smtp-Source: APXvYqzA95YGsDAHuNNPxRimcQ6KIo1Xu3z8j8WHVokwnL8nyFMsfVMoZXe73MnOTmOXNpjhJW2nI4GI0hnrbY/hLoI=
-X-Received: by 2002:ac8:31b3:: with SMTP id h48mr4019256qte.300.1568729727989;
- Tue, 17 Sep 2019 07:15:27 -0700 (PDT)
+        Tue, 17 Sep 2019 14:13:26 -0400
+Received: by mail-ot1-f65.google.com with SMTP id s22so3919179otr.6;
+        Tue, 17 Sep 2019 11:13:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KQ6OBeDuode2twYSlA9ipYN3w4W7GeO3ocNtg3ta1d0=;
+        b=gkng6OzNloX47S9V78qyUaQcmdIMR1mPZtnUt0kQa6Bd6Dr0+VLWee3sUR5hfCMoDZ
+         iswt0Z2WCc8fpm/G01+nzBh7zqAAZzTi9mllZyTK0eD0ogePxhs0w0R9V245ZxKY7pjB
+         jGtf3oSlHA6sW63oag+CUyD51BAdiEtb/l1YRKnms9mH8raNL4JWCuOFmzYBY3b0xzKE
+         K10ywFxNZEaHWO4La+qSvl4ZPug3ZMFDEIkuBL3VQuKhRSUGmiZmZnCXW2vgJb0ZCQNI
+         gLEJrThEDUeVsxn+b4R0UqIMFRPX7YiIGvfRqfKz6JXoa8c74OslyJeJpBRnob0DGG2u
+         o7lQ==
+X-Gm-Message-State: APjAAAX49mniqTkPL/SpnA7NvhBDYvRO+wRqZkUABEbmPxTHG9ndp8W4
+        3m/3HEQJ6e/GO3mQVU/XiA==
+X-Google-Smtp-Source: APXvYqzapDf3fokSpvCVuLAz5B7sSKanwGbCWsfa7ySh7AxQQjSWEWwVf940e/gnVHbg7SCtd6pd/g==
+X-Received: by 2002:a9d:3f26:: with SMTP id m35mr168799otc.66.1568744004009;
+        Tue, 17 Sep 2019 11:13:24 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id e18sm982788oib.57.2019.09.17.11.13.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2019 11:13:22 -0700 (PDT)
+Date:   Tue, 17 Sep 2019 13:13:22 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     krzk@kernel.org, vireshk@kernel.org, robh+dt@kernel.org,
+        kgene@kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: Re: [PATCH v4 2/6] dt-bindings: samsung: Update the CHIP ID binding
+  documentation
+Message-ID: <20190917181322.GA683@bogus>
+References: <20190910123618.27985-1-s.nawrocki@samsung.com>
+ <CGME20190910123637eucas1p26d2051f9bdd1bdf4510f1908ea98f641@eucas1p2.samsung.com>
+ <20190910123618.27985-3-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-References: <CGME20190917120634eucas1p20addfc4e369468561714f3c44d3d8bf5@eucas1p2.samsung.com>
- <20190917111413.22711-1-m.falkowski@samsung.com> <20190917120627.28357-1-m.falkowski@samsung.com>
-In-Reply-To: <20190917120627.28357-1-m.falkowski@samsung.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 17 Sep 2019 09:15:16 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLwkVQ6VFYtUfOErA8vG2qnE+nquo_m5s0zLRqgn+bJLg@mail.gmail.com>
-Message-ID: <CAL_JsqLwkVQ6VFYtUfOErA8vG2qnE+nquo_m5s0zLRqgn+bJLg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] dt-bindings: sound: Convert Samsung SMDK audio complex
-To:     Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     Linux-ALSA <alsa-devel@alsa-project.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sangbeom Kim <sbkim73@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190910123618.27985-3-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 17, 2019 at 7:06 AM Maciej Falkowski
-<m.falkowski@samsung.com> wrote:
->
-> Convert Samsung SMDK audio complex to newer dt-schema format.
->
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+On Tue, 10 Sep 2019 14:36:14 +0200, Sylwester Nawrocki wrote:
+> This patch adds documentation of a new optional "samsung,asv-bin"
+> property in the chipid device node and documents requirement of
+> "syscon" compatible string.  These additions are needed to support
+> Exynos ASV (Adaptive Supply Voltage) feature.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 > ---
-> v2:
-> - Added missing Signed-off-by certificate
+> Changes since v3:
+>  - none
+> 
+> Changes since v2:
+>  - corrected patch summary line prefix, the patch moved in the
+>    sequence
+> 
+> Changes since v1 (RFC):
+>  - new patch
 > ---
->  .../bindings/sound/samsung,smdk-wm8994.txt    | 14 -------
->  .../bindings/sound/samsung,smdk-wm8994.yaml   | 38 +++++++++++++++++++
->  2 files changed, 38 insertions(+), 14 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/sound/samsung,smdk-wm8994.txt
->  create mode 100644 Documentation/devicetree/bindings/sound/samsung,smdk-wm8994.yaml
+>  .../devicetree/bindings/arm/samsung/exynos-chipid.txt  | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
