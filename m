@@ -2,204 +2,324 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 727B9B4C10
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 17 Sep 2019 12:38:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 254F5B4CA1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 17 Sep 2019 13:14:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726300AbfIQKiC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 17 Sep 2019 06:38:02 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:60486 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726244AbfIQKiC (ORCPT
+        id S1726230AbfIQLOZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 17 Sep 2019 07:14:25 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:38825 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725881AbfIQLOZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 17 Sep 2019 06:38:02 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190917103800euoutp020234c6dcc6f9c0f6f4c2212fd499ba0e~FM4JjNxLE2893728937euoutp02E
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 17 Sep 2019 10:38:00 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190917103800euoutp020234c6dcc6f9c0f6f4c2212fd499ba0e~FM4JjNxLE2893728937euoutp02E
+        Tue, 17 Sep 2019 07:14:25 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190917111422euoutp01d8d459f4641773179982a0e87ceec236~FNX5r5R7o2292422924euoutp01l
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 17 Sep 2019 11:14:22 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190917111422euoutp01d8d459f4641773179982a0e87ceec236~FNX5r5R7o2292422924euoutp01l
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568716680;
-        bh=dMTOUiJXpryj3x6XPv0aEEYIJHqqRS47dekWk1nhjEA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=skeo03LxM7QIw6XrBnswET5VrhR9S/11M60R+7zBUm3K1ZWZjjMj6NmOSgnQjlVbp
-         OAQQxy7Ay0TIafz/HZRCvl0F6MVDqJWkWSfs/aQvkabBEsCoemF0enSkEa1iqAOuE4
-         51NWuEAnhZDjP+U5Ja7i/PJ25Y1Kpvr0Yhx7CNtE=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190917103759eucas1p1f8df25325e4754c12a823f7263e2296a~FM4IrGNUy1434014340eucas1p1G;
-        Tue, 17 Sep 2019 10:37:59 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 48.3B.04309.687B08D5; Tue, 17
-        Sep 2019 11:37:58 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        s=mail20170921; t=1568718862;
+        bh=+T4Ln6oiDTILmNOD7NA9RZIJq3p9bQROpS3Hh10iuY4=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=fnM+BGiMe7rDSMceFjO0FgFdMCWx4YiSnskwolB0yv+mo6ikuVvXK9RJxhmEnxd8x
+         LfxY7P2haOvkcglgFMxai8vLAgYlBv/U7lrklbO+t4CU3wP1DTRFwU8QWdJzNfvUA2
+         aHl9Bb5arS/OuQeT5jq4WumC8vOBGb+x8tL0RJQo=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190917111421eucas1p24cc0a4b8720f2d388a61791724a3c1d6~FNX47f-yA2249822498eucas1p2E;
+        Tue, 17 Sep 2019 11:14:21 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id DD.03.04469.D00C08D5; Tue, 17
+        Sep 2019 12:14:21 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190917103758eucas1p10793e499209137630681186a10a4b7bd~FM4Hoz1pO1434014340eucas1p1D;
-        Tue, 17 Sep 2019 10:37:58 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20190917103758eusmtrp2ef805a9a7986ed995556f76690e3f0df~FM4HaqEit1908519085eusmtrp2O;
-        Tue, 17 Sep 2019 10:37:58 +0000 (GMT)
-X-AuditID: cbfec7f4-afbff700000010d5-12-5d80b786928f
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 3A.37.04166.587B08D5; Tue, 17
-        Sep 2019 11:37:57 +0100 (BST)
+        20190917111420eucas1p1f4c9fc370f501b1ec1e2d2fb4299db96~FNX4M9dS-0399103991eucas1p1J;
+        Tue, 17 Sep 2019 11:14:20 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190917111420eusmtrp11f60249cb22d27cb9bc5503c701ca00a~FNX3_cgzO0235002350eusmtrp1V;
+        Tue, 17 Sep 2019 11:14:20 +0000 (GMT)
+X-AuditID: cbfec7f2-569ff70000001175-f0-5d80c00d21c9
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 34.A1.04117.C00C08D5; Tue, 17
+        Sep 2019 12:14:20 +0100 (BST)
 Received: from AMDC2459.digital.local (unknown [106.120.51.95]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190917103757eusmtip208717cdb181c927823afc54f28fbf2a5~FM4G1vhY60082800828eusmtip2c;
-        Tue, 17 Sep 2019 10:37:57 +0000 (GMT)
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190917111419eusmtip1ab28af2e793c60c81d71d9c2eb2bcc94~FNX3W8Txq2311223112eusmtip1N;
+        Tue, 17 Sep 2019 11:14:19 +0000 (GMT)
 From:   Maciej Falkowski <m.falkowski@samsung.com>
-To:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+To:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Cc:     airlied@linux.ie, daniel@ffwll.ch, robh+dt@kernel.org,
-        mark.rutland@arm.com, krzk@kernel.org, a.hajda@samsung.com,
+Cc:     krzk@kernel.org, sbkim73@samsung.com, s.nawrocki@samsung.com,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, a.hajda@samsung.com,
         m.szyprowski@samsung.com, m.falkowski@samsung.com
-Subject: [PATCH v3] dt-bindings: gpu: Convert Samsung Image Rotator to
+Subject: [PATCH 1/2] dt-bindings: sound: Convert Samsung I2S controller to
  dt-schema
-Date:   Tue, 17 Sep 2019 12:37:27 +0200
-Message-Id: <20190917103727.14997-1-m.falkowski@samsung.com>
+Date:   Tue, 17 Sep 2019 13:14:12 +0200
+Message-Id: <20190917111413.22711-1-m.falkowski@samsung.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190913062945.GA10283@pi3>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsWy7djPc7rt2xtiDWa+Z7S4te4cq0XvuZNM
-        Fv+3TWS2mH8EyL3y9T2bxfnzG9gtLu+aw2Yx4/w+JosHzevYLNYeuctusfT6RSaL1r1H2B14
-        PNbMW8PosffbAhaPTas62Ty2f3vA6nG/+ziTR9+WVYwenzfJBbBHcdmkpOZklqUW6dslcGVc
-        u/CarWCmZMX/vRkNjLtFuhg5OSQETCQ+rN/B1sXIxSEksIJRYuOVE4wQzhdGiZ0bGpkhnM+M
-        EpP3HWCCaXl0/QQTRGI5o8TjA5PZQRJgLQsfV4PYbAIGEv1v9rKAFIkINDFKzF91HGwus8Aa
-        RolfM1vBRgkLBEmsXNzPCmKzCKhK3N6ynxHE5hWwkbh3pIMRYp28xOoNB5hBbE4BTYn2S+9Y
-        QQZJCCxil/iy4gILRJGLxLr5d6EahCVeHd/CDmHLSPzfOR9oGQeQXS1x7ZssRG8Lo8T1aW/Z
-        IGqsJf6smsgGUsMMtGD9Ln2IsKPErAmXoFr5JG68FQQJMwOZk7ZNZ4YI80p0tAlBmKoSbybE
-        QjRKS7Su2Q91i4dEe9tnaPDUSEzo3844gVF+FsKqBYyMqxjFU0uLc9NTi43yUsv1ihNzi0vz
-        0vWS83M3MQLTzOl/x7/sYNz1J+kQowAHoxIPr8G2+lgh1sSy4srcQ4wSHMxKIrwBtUAh3pTE
-        yqrUovz4otKc1OJDjNIcLErivNUMD6KFBNITS1KzU1MLUotgskwcnFINjFxK9f2+ivX8Wd25
-        bx/d41igIGR6quqMknJmecsBp/25CaK9mlOrLl2Uj9L0Mpp9cI6vrHexkKLMy3Ppoq8Vc3hX
-        cNwQip/HeSct+PC7KwbhWqdshcQF7XlOzqlS10rUV5cINAiq/7lMYXX9pAu1V1bZ/L4qcH72
-        i6a6PgZx0X7hZeqMfd1KLMUZiYZazEXFiQBgUiSKLwMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkkeLIzCtJLcpLzFFi42I5/e/4Pd3W7Q2xBu1nLSxurTvHatF77iST
-        xf9tE5kt5h8Bcq98fc9mcf78BnaLy7vmsFnMOL+PyeJB8zo2i7VH7rJbLL1+kcmide8Rdgce
-        jzXz1jB67P22gMVj06pONo/t3x6wetzvPs7k0bdlFaPH501yAexRejZF+aUlqQoZ+cUltkrR
-        hhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehnXLrxmK5gpWfF/b0YD426RLkZO
-        DgkBE4lH108wdTFycQgJLGWUWDf5DyNEQlpi/7WP7BC2sMSfa11sEEWfGCXafkxiBUmwCRhI
-        9L/ZywKSEBFoY5R4euoI2ChmgW2MErvX3mcDqRIWCJDYu+0q2CgWAVWJ21v2g63gFbCRuHek
-        A2qdvMTqDQeYQWxOAU2J9kvvwDYICWhI3N+1gHUCI98CRoZVjCKppcW56bnFhnrFibnFpXnp
-        esn5uZsYgcG/7djPzTsYL20MPsQowMGoxMNrsK0+Vog1say4MvcQowQHs5IIb0AtUIg3JbGy
-        KrUoP76oNCe1+BCjKdBRE5mlRJPzgZGZVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7
-        NbUgtQimj4mDU6qBUX/OrpMMOz88tn1Q1q93fYqxtZZBsc7F9ItWb5wCn72tmLXBaeM99qVN
-        F1g9Sm3FN0v4TRK4v/6Zj6ncoYAcv/qHqxLfvbX9csJm9ct892KLFpO/z1tZ44UMde/aTfHl
-        C4h6seSd1fUpHtob5W5wfDmwa8vqJToHnq/Rf114YdZ3lSwdlXrNvUosxRmJhlrMRcWJAB3p
-        4vOUAgAA
-X-CMS-MailID: 20190917103758eucas1p10793e499209137630681186a10a4b7bd
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMKsWRmVeSWpSXmKPExsWy7djP87q8BxpiDSa857G4te4cq8WVi4eY
+        LKY+fMJmMf8IkHv+/AZ2i29XOpgsLu+aw2Yx4/w+JosHzevYLNYeuctusfT6RSaL1r1H2C0O
+        v2lntbi44guTA5/Hhs9NbB5r5q1h9Ng56y67x6ZVnWwefVtWMXp83iQXwBbFZZOSmpNZllqk
+        b5fAlXGt5zNrwU2nittztrE2MP427mLk4JAQMJGY2eXTxcjFISSwglFi3qf1bBDOF0aJvlXv
+        GbsYOYGcz4wSN1uqQGyQhjX/dzNBFC1nlFj9dT8LXMemjauZQKrYBAwk+t/sZQGxRQTqJCZO
+        m8cMUsQs8JBR4s7ez+wgCWGBMImLu1vBGlgEVCW6bxxnB7mJV8BG4u2TfIht8hKrNxwA65UQ
+        mMwusXX6V1aIhIvE62MNbBC2sMSr41vYIWwZidOTe1ggfquWuPZNFqK3hVHi+rS3UPXWEn9W
+        TWQDqWEW0JRYv0sfIuwosWBfNxtEK5/EjbeCIGFmIHPStunMEGFeiY42IQhTVeLNhFiIRmmJ
+        1jX7GSFsD4mdHfdZIMEWK3HnZj/7BEa5WQirFjAyrmIUTy0tzk1PLTbMSy3XK07MLS7NS9dL
+        zs/dxAhMKqf/Hf+0g/HrpaRDjAIcjEo8vDc218cKsSaWFVfmHmKU4GBWEuENqAUK8aYkVlal
+        FuXHF5XmpBYfYpTmYFES561meBAtJJCeWJKanZpakFoEk2Xi4JRqYCxwUW+xdWUq8Dnynjld
+        jl9Md7+UrYLpjsorUS8YedYK/ym7IKX1rm+W3/f9H7uOLnvf1TrZ+NTj/kdfdEqlg/7c+/7/
+        4tvOBz+ZfITcdlkIX5Sz2Ru5p1762+L55qkW//lnPfywdlNjZ918hZgH29XLP8rWC+wUeHPT
+        cWvYvTlhcXsvqYaW5CixFGckGmoxFxUnAgCy1PfZJgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLLMWRmVeSWpSXmKPExsVy+t/xu7o8BxpiDRZukrS4te4cq8WVi4eY
+        LKY+fMJmMf8IkHv+/AZ2i29XOpgsLu+aw2Yx4/w+JosHzevYLNYeuctusfT6RSaL1r1H2C0O
+        v2lntbi44guTA5/Hhs9NbB5r5q1h9Ng56y67x6ZVnWwefVtWMXp83iQXwBalZ1OUX1qSqpCR
+        X1xiqxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OSmpNZllqkb5egl3Gt5zNrwU2nittztrE2
+        MP427mLk5JAQMJFY8383UxcjF4eQwFJGiY6u7SwQCWmJ/dc+skPYwhJ/rnWxgdhCAp8YJdae
+        UAWx2QQMJPrf7GUBaRYRaGKUmH/zJ5jDLPCWUaJlxyEmkCphgRCJNwuOMYPYLAKqEt03jgNN
+        5eDgFbCRePskH2KBvMTqDQeYJzDyLGBkWMUoklpanJueW2ykV5yYW1yal66XnJ+7iREY1NuO
+        /dyyg7HrXfAhRgEORiUe3hub62OFWBPLiitzDzFKcDArifAG1AKFeFMSK6tSi/Lji0pzUosP
+        MZoC7Z7ILCWanA+MuLySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLpiSWp2ampBalFMH1MHJxS
+        DYxJU6enb0m6V8V/Rq/ls8KKb6VbTac6azVfy7j2qmiDdugnwagFK3iuHjzHN9NG9/fN52vC
+        D/b7PPp295ThYbd5uUE/nrsKm05/WGdlHH3h2OH9brYt69c83JZTF/RKqHX2neKZxXHfP22o
+        mSiwsdS+M9PM+1CbUAfr+tItfpM+yOdoBwRHGlxXYinOSDTUYi4qTgQAo6YkfoACAAA=
+X-CMS-MailID: 20190917111420eucas1p1f4c9fc370f501b1ec1e2d2fb4299db96
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190917103758eucas1p10793e499209137630681186a10a4b7bd
+X-RootMTR: 20190917111420eucas1p1f4c9fc370f501b1ec1e2d2fb4299db96
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190917103758eucas1p10793e499209137630681186a10a4b7bd
-References: <20190913062945.GA10283@pi3>
-        <CGME20190917103758eucas1p10793e499209137630681186a10a4b7bd@eucas1p1.samsung.com>
+X-CMS-RootMailID: 20190917111420eucas1p1f4c9fc370f501b1ec1e2d2fb4299db96
+References: <CGME20190917111420eucas1p1f4c9fc370f501b1ec1e2d2fb4299db96@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung Image Rotator to newer dt-schema format.
+Convert Samsung I2S controller to newer dt-schema format
 
 Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
-v3:
-- remove unneded comments and descriptions
-- remove unneded maxItems field from clock-names property
----
- .../bindings/gpu/samsung-rotator.txt          | 28 -----------
- .../bindings/gpu/samsung-rotator.yaml         | 48 +++++++++++++++++++
- 2 files changed, 48 insertions(+), 28 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.txt
- create mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
+ .../devicetree/bindings/sound/samsung-i2s.txt |  84 -------------
+ .../bindings/sound/samsung-i2s.yaml           | 119 ++++++++++++++++++
+ 2 files changed, 119 insertions(+), 84 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.yaml
 
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt b/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
+diff --git a/Documentation/devicetree/bindings/sound/samsung-i2s.txt b/Documentation/devicetree/bindings/sound/samsung-i2s.txt
 deleted file mode 100644
-index 3aca2578da0b..000000000000
---- a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
+index a88cb00fa096..000000000000
+--- a/Documentation/devicetree/bindings/sound/samsung-i2s.txt
 +++ /dev/null
-@@ -1,28 +0,0 @@
--* Samsung Image Rotator
+@@ -1,84 +0,0 @@
+-* Samsung I2S controller
 -
--Required properties:
--  - compatible : value should be one of the following:
--	* "samsung,s5pv210-rotator" for Rotator IP in S5PV210
--	* "samsung,exynos4210-rotator" for Rotator IP in Exynos4210
--	* "samsung,exynos4212-rotator" for Rotator IP in Exynos4212/4412
--	* "samsung,exynos5250-rotator" for Rotator IP in Exynos5250
+-Required SoC Specific Properties:
 -
--  - reg : Physical base address of the IP registers and length of memory
--	  mapped region.
+-- compatible : should be one of the following.
+-   - samsung,s3c6410-i2s: for 8/16/24bit stereo I2S.
+-   - samsung,s5pv210-i2s: for 8/16/24bit multichannel(5.1) I2S with
+-     secondary fifo, s/w reset control and internal mux for root clk src.
+-   - samsung,exynos5420-i2s: for 8/16/24bit multichannel(5.1) I2S for
+-     playback, stereo channel capture, secondary fifo using internal
+-     or external dma, s/w reset control, internal mux for root clk src
+-     and 7.1 channel TDM support for playback. TDM (Time division multiplexing)
+-     is to allow transfer of multiple channel audio data on single data line.
+-   - samsung,exynos7-i2s: with all the available features of exynos5 i2s,
+-     exynos7 I2S has 7.1 channel TDM support for capture, secondary fifo
+-     with only external dma and more no.of root clk sampling frequencies.
+-   - samsung,exynos7-i2s1: I2S1 on previous samsung platforms supports
+-     stereo channels. exynos7 i2s1 upgraded to 5.1 multichannel with
+-     slightly modified bit offsets.
 -
--  - interrupts : Interrupt specifier for rotator interrupt, according to format
--		 specific to interrupt parent.
+-- reg: physical base address of the controller and length of memory mapped
+-  region.
+-- dmas: list of DMA controller phandle and DMA request line ordered pairs.
+-- dma-names: identifier string for each DMA request line in the dmas property.
+-  These strings correspond 1:1 with the ordered pairs in dmas.
+-- clocks: Handle to iis clock and RCLK source clk.
+-- clock-names:
+-  i2s0 uses some base clocks from CMU and some are from audio subsystem internal
+-  clock controller. The clock names for i2s0 should be "iis", "i2s_opclk0" and
+-  "i2s_opclk1" as shown in the example below.
+-  i2s1 and i2s2 uses clocks from CMU. The clock names for i2s1 and i2s2 should
+-  be "iis" and "i2s_opclk0".
+-  "iis" is the i2s bus clock and i2s_opclk0, i2s_opclk1 are sources of the root
+-  clk. i2s0 has internal mux to select the source of root clk and i2s1 and i2s2
+-  doesn't have any such mux.
+-- #clock-cells: should be 1, this property must be present if the I2S device
+-  is a clock provider in terms of the common clock bindings, described in
+-  ../clock/clock-bindings.txt.
+-- clock-output-names (deprecated): from the common clock bindings, names of
+-  the CDCLK I2S output clocks, suggested values are "i2s_cdclk0", "i2s_cdclk1",
+-  "i2s_cdclk3" for the I2S0, I2S1, I2S2 devices respectively.
 -
--  - clocks : Clock specifier for rotator clock, according to generic clock
--	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
+-There are following clocks available at the I2S device nodes:
+- CLK_I2S_CDCLK    - the CDCLK (CODECLKO) gate clock,
+- CLK_I2S_RCLK_PSR - the RCLK prescaler divider clock (corresponding to the
+-		    IISPSR register),
+- CLK_I2S_RCLK_SRC - the RCLKSRC mux clock (corresponding to RCLKSRC bit in
+-		    IISMOD register).
 -
--  - clock-names : Names of clocks. For exynos rotator, it should be "rotator".
+-Refer to the SoC datasheet for availability of the above clocks.
+-The CLK_I2S_RCLK_PSR and CLK_I2S_RCLK_SRC clocks are usually only available
+-in the IIS Multi Audio Interface.
+-
+-Note: Old DTs may not have the #clock-cells property and then not use the I2S
+-node as a clock supplier.
+-
+-Optional SoC Specific Properties:
+-
+-- samsung,idma-addr: Internal DMA register base address of the audio
+-  sub system(used in secondary sound source).
+-- pinctrl-0: Should specify pin control groups used for this controller.
+-- pinctrl-names: Should contain only one value - "default".
+-- #sound-dai-cells: should be 1.
+-
 -
 -Example:
--	rotator@12810000 {
--		compatible = "samsung,exynos4210-rotator";
--		reg = <0x12810000 0x1000>;
--		interrupts = <0 83 0>;
--		clocks = <&clock 278>;
--		clock-names = "rotator";
--	};
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
+-
+-i2s0: i2s@3830000 {
+-	compatible = "samsung,s5pv210-i2s";
+-	reg = <0x03830000 0x100>;
+-	dmas = <&pdma0 10
+-		&pdma0 9
+-		&pdma0 8>;
+-	dma-names = "tx", "rx", "tx-sec";
+-	clocks = <&clock_audss EXYNOS_I2S_BUS>,
+-		<&clock_audss EXYNOS_I2S_BUS>,
+-		<&clock_audss EXYNOS_SCLK_I2S>;
+-	clock-names = "iis", "i2s_opclk0", "i2s_opclk1";
+-	#clock-cells = <1>;
+-	samsung,idma-addr = <0x03000000>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2s0_bus>;
+-	#sound-dai-cells = <1>;
+-};
+diff --git a/Documentation/devicetree/bindings/sound/samsung-i2s.yaml b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
 new file mode 100644
-index 000000000000..45ce562435fa
+index 000000000000..59dc76035cb4
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-@@ -0,0 +1,48 @@
++++ b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
+@@ -0,0 +1,119 @@
 +# SPDX-License-Identifier: GPL-2.0
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/gpu/samsung-rotator.yaml#
++$id: http://devicetree.org/schemas/sound/samsung-i2s.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Samsung SoC Image Rotator
++title: Samsung SoC I2S controller
 +
 +maintainers:
-+  - Inki Dae <inki.dae@samsung.com>
++  - Krzysztof Kozlowski <krzk@kernel.org>
++  - Sangbeom Kim <sbkim73@samsung.com>
++  - Sylwester Nawrocki <s.nawrocki@samsung.com>
 +
 +properties:
 +  compatible:
++    description: |
++      samsung,s3c6410-i2s: for 8/16/24bit stereo I2S.
++
++      samsung,s5pv210-i2s: for 8/16/24bit multichannel(5.1) I2S with
++      secondary fifo, s/w reset control and internal mux for root clk src.
++
++      samsung,exynos5420-i2s: for 8/16/24bit multichannel(5.1) I2S for
++      playback, stereo channel capture, secondary fifo using internal
++      or external dma, s/w reset control, internal mux for root clk src
++      and 7.1 channel TDM support for playback. TDM (Time division multiplexing)
++      is to allow transfer of multiple channel audio data on single data line.
++
++      samsung,exynos7-i2s: with all the available features of exynos5 i2s.
++
++      exynos7 I2S has 7.1 channel TDM support for capture, secondary fifo
++      with only external dma and more no.of root clk sampling frequencies.
++
++      samsung,exynos7-i2s1: I2S1 on previous samsung platforms supports
++      stereo channels. exynos7 i2s1 upgraded to 5.1 multichannel with
++      slightly modified bit offsets.
 +    enum:
-+      - "samsung,s5pv210-rotator"
-+      - "samsung,exynos4210-rotator"
-+      - "samsung,exynos4212-rotator"
-+      - "samsung,exynos5250-rotator"
++      - "samsung,s3c6410-i2s"
++      - "samsung,s5pv210-i2s"
++      - "samsung,exynos5420-i2s"
++      - "samsung,exynos7-i2s"
++      - "samsung,exynos7-i2s1"
++
 +  reg:
 +    maxItems: 1
 +
-+  interrupts:
-+    maxItems: 1
++  dmas:
++    description: list of DMA controller phandle and DMA request line ordered pairs.
++
++  dma-names:
++    description: |
++      identifier string for each DMA request line in the dmas property.
++      These strings correspond 1:1 with the ordered pairs in dmas.
 +
 +  clocks:
-+    maxItems: 1
++    minItems: 1
++    maxItems: 3
 +
 +  clock-names:
-+    items:
-+    - const: rotator
++    oneOf:
++      - items:
++          - const: iis
++      - items:
++          - const: iis
++          - const: i2s_opclk0
++      - items:
++          - const: iis
++          - const: i2s_opclk0
++          - const: i2s_opclk1
++    description: |
++      "iis" is the i2s bus clock.
++      For i2s1 and i2s2 - "iis", "i2s_opclk0"
++      For i2s0 - "iis", "i2s_opclk0", "i2s_opclk1"
++
++  "#clock-cells":
++    const: 1
++
++  samsung,idma-addr:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: |
++      Internal DMA register base address of the audio
++      sub system(used in secondary sound source).
++
++  pinctrl-0:
++    description: Should specify pin control groups used for this controller.
++
++  pinctrl-names:
++    const: default
++
++  "#sound-dai-cells":
++    const: 1
 +
 +required:
 +  - compatible
 +  - reg
-+  - interrupts
++  - dmas
++  - dma-names
 +  - clocks
 +  - clock-names
 +
 +examples:
 +  - |
-+    rotator@12810000 {
-+        compatible = "samsung,exynos4210-rotator";
-+        reg = <0x12810000 0x1000>;
-+        interrupts = <0 83 0>;
-+        clocks = <&clock 278>;
-+        clock-names = "rotator";
++    i2s0: i2s@3830000 {
++        compatible = "samsung,s5pv210-i2s";
++        reg = <0x03830000 0x100>;
++        dmas = <&pdma0 10
++                &pdma0 9
++                &pdma0 8>;
++        dma-names = "tx", "rx", "tx-sec";
++        clocks = <&clock_audss 0>, // EXYNOS_I2S_BUS
++                <&clock_audss 0>, // EXYNOS_I2S_BUS
++                <&clock_audss 0>; // EXYNOS_SCLK_I2S
++        clock-names = "iis", "i2s_opclk0", "i2s_opclk1";
++        #clock-cells = <1>;
++        samsung,idma-addr = <0x03000000>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&i2s0_bus>;
++        #sound-dai-cells = <1>;
 +    };
 +
 -- 
