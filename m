@@ -2,122 +2,128 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61449B6552
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 16:01:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47878B6626
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 16:32:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbfIROB1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Sep 2019 10:01:27 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:54524 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfIROB1 (ORCPT
+        id S1731257AbfIROcO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Sep 2019 10:32:14 -0400
+Received: from mx0b-001ae601.pphosted.com ([67.231.152.168]:48108 "EHLO
+        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731242AbfIROcN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Sep 2019 10:01:27 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: andrzej.p)
-        with ESMTPSA id 87FE728D029
-Subject: Re: [PATCH RESEND 00/14] Next round of associating ddc adapters with
- connectors
-From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        kernel@collabora.com, Anthony Koo <Anthony.Koo@amd.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        David Francis <David.Francis@amd.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Kukjin Kim <kgene@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Jonas Karlman <jonas@kwiboo.se>, Leo Li <sunpeng.li@amd.com>,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-mediatek@lists.infradead.org, Jyri Sarha <jsarha@ti.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        linux-arm-kernel@lists.infradead.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        amd-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-        Todor Tomov <todor.tomov@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-References: <cover.1566845537.git.andrzej.p@collabora.com>
-Message-ID: <0799e830-400d-4ced-7108-c8fcfd5ef8c0@collabora.com>
-Date:   Wed, 18 Sep 2019 16:01:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Wed, 18 Sep 2019 10:32:13 -0400
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+        by mx0b-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8IEEBG9005771;
+        Wed, 18 Sep 2019 09:32:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=PODMain02222019;
+ bh=85mW0bFWiiIVuyJiPKM02zlJFmWQIMDT9ECHIvX0eJQ=;
+ b=AaegY7/Y2PorFSTmv1tusBxEPcjnGNa9+O9pQlrOHZyxaS1oObNe3xbsuJ77XJt/FytV
+ ai5CyyauW39nVL7SDis0U7KeZSzTKukIKufMtwUoShvJHhUZ499pdnyNTQ9hgdcuNZNm
+ du3u6jEfTBhbFrgSnvrOqZyLQsWUoplVxmY+J8DGixg89IL6RhcQuZ5T8NSyTxOMmzaF
+ iS2eg/unL2hWZkWN3ugb5aVWRjRWBC+8I99UdPS8P0+6z8y4no2c5/uJ5dxBQlJZFWZy
+ YhU8Efld9uy/LdmNvghxltvCz0tRAeEG95akwMHhZqqioH5bHXF0zOI50aMkGMJSNBfE RA== 
+Authentication-Results: ppops.net;
+        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
+Received: from ediex01.ad.cirrus.com ([87.246.76.36])
+        by mx0b-001ae601.pphosted.com with ESMTP id 2v37m197ex-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Wed, 18 Sep 2019 09:31:59 -0500
+Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Wed, 18 Sep
+ 2019 15:31:57 +0100
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
+ Transport; Wed, 18 Sep 2019 15:31:57 +0100
+Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
+        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id DA4CD2C3;
+        Wed, 18 Sep 2019 14:31:57 +0000 (UTC)
+Date:   Wed, 18 Sep 2019 14:31:57 +0000
+From:   Charles Keepax <ckeepax@opensource.cirrus.com>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+CC:     <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk@kernel.org>,
+        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
+        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <patches@opensource.cirrus.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
+        <m.szyprowski@samsung.com>
+Subject: Re: [PATCH v1 4/9] ASoC: wm8994: Add support for MCLKn clock gating
+Message-ID: <20190918143157.GH10204@ediswmail.ad.cirrus.com>
+References: <20190918104634.15216-1-s.nawrocki@samsung.com>
+ <CGME20190918104700eucas1p1ef0775632f5c7259fb54cab8efc96c50@eucas1p1.samsung.com>
+ <20190918104634.15216-5-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <cover.1566845537.git.andrzej.p@collabora.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20190918104634.15216-5-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Proofpoint-SPF-Result: fail
+X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
+ -all
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015 lowpriorityscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
+ definitions=main-1909180144
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi All,
+On Wed, Sep 18, 2019 at 12:46:29PM +0200, Sylwester Nawrocki wrote:
+> As an intermediate step before covering the clocking subsystem
+> of the CODEC entirely by the clk API add handling of external CODEC's
+> master clocks in DAPM events when the AIFn clocks are sourced directly
+> from MCLKn; when FLLn are used we enable/disable respective MCLKn
+> before/after FLLn is enabled/disabled.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+> @@ -2260,8 +2321,28 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+>  	/* Clear any pending completion from a previous failure */
+>  	try_wait_for_completion(&wm8994->fll_locked[id]);
+>  
+> +	switch (src) {
+> +	case WM8994_FLL_SRC_MCLK1:
+> +		mclk = control->mclk[0].clk;
+> +		break;
+> +	case WM8994_FLL_SRC_MCLK2:
+> +		mclk = control->mclk[1].clk;
+> +		break;
+> +	default:
+> +		mclk = NULL;
+> +	}
+> +
+>  	/* Enable (with fractional mode if required) */
+>  	if (freq_out) {
+> +		if (mclk) {
+> +			ret = clk_prepare_enable(mclk);
+> +			if (ret < 0) {
+> +				dev_err(component->dev,
+> +					"Failed to enable MCLK for FLL%d\n",
+> +					id + 1);
+> +				return ret;
+> +			}
+> +		}
+>  		/* Enable VMID if we need it */
+>  		if (!was_enabled) {
+>  			active_reference(component);
+> @@ -2315,6 +2396,8 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+>  
+>  			active_dereference(component);
+>  		}
+> +		if (mclk)
+> +			clk_disable_unprepare(mclk);
 
-A gentle ping.
+I don't think this works in the case of changing active FLLs.
+The driver looks like it allows changing the FLL configuration
+whilst the FLL is already active in which case it you would have
+two wm8994_set_fll calls enabling the FLL but only a single one
+disabling it. Resulting in the FLL being off but the MCLK being
+left enabled.
 
-Andrzej
-
-W dniu 26.08.2019 o 21:25, Andrzej Pietrasiewicz pisze:
-> I'm resending the patches which have somehow got lost: one patch
-> from Geert and 13 patches from me.
-> 
-> Geert's patch updates the error message to reflect the actually
-> called function's name.
-> 
-> Most of patches from me have their Acked-by and Reviewed-by tags
-> and deal with providing a ddc symlink in connector's sysfs directory.
-> 
-> Rebased onto drm-misc-next as of 26th August.
-> 
-> Andrzej Pietrasiewicz (13):
->    drm/radeon: Provide ddc symlink in connector sysfs directory
->    drm/amdgpu: Provide ddc symlink in dm connector's sysfs directory
->    drm/exynos: Provide ddc symlink in connector's sysfs
->    drm: rockchip: Provide ddc symlink in rk3066_hdmi sysfs directory
->    drm: rockchip: Provide ddc symlink in inno_hdmi sysfs directory
->    drm/msm/hdmi: Provide ddc symlink in hdmi connector sysfs directory
->    drm/mediatek: Provide ddc symlink in hdmi connector sysfs directory
->    drm/tegra: Provide ddc symlink in output connector sysfs directory
->    drm/vc4: Provide ddc symlink in connector sysfs directory
->    drm: zte: Provide ddc symlink in hdmi connector sysfs directory
->    drm: zte: Provide ddc symlink in vga connector sysfs directory
->    drm/tilcdc: Provide ddc symlink in connector sysfs directory
->    drm/i915: Provide ddc symlink in hdmi connector sysfs directory
-> 
-> Geert Uytterhoeven (1):
->    drm/bridge: ti-tfp410: Update drm_connector_init_with_ddc() error
->      message
-> 
->   .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   5 +-
->   drivers/gpu/drm/bridge/ti-tfp410.c            |   3 +-
->   drivers/gpu/drm/exynos/exynos_hdmi.c          |   6 +-
->   drivers/gpu/drm/i915/display/intel_hdmi.c     |  12 +-
->   drivers/gpu/drm/mediatek/mtk_hdmi.c           |   7 +-
->   drivers/gpu/drm/msm/hdmi/hdmi_connector.c     |   6 +-
->   drivers/gpu/drm/radeon/radeon_connectors.c    | 143 +++++++++++++-----
->   drivers/gpu/drm/rockchip/inno_hdmi.c          |   6 +-
->   drivers/gpu/drm/rockchip/rk3066_hdmi.c        |   7 +-
->   drivers/gpu/drm/tegra/hdmi.c                  |   7 +-
->   drivers/gpu/drm/tegra/sor.c                   |   7 +-
->   drivers/gpu/drm/tilcdc/tilcdc_tfp410.c        |   6 +-
->   drivers/gpu/drm/vc4/vc4_hdmi.c                |  12 +-
->   drivers/gpu/drm/zte/zx_hdmi.c                 |   6 +-
->   drivers/gpu/drm/zte/zx_vga.c                  |   6 +-
->   15 files changed, 168 insertions(+), 71 deletions(-)
-> 
-
+Thanks,
+Charles
