@@ -2,303 +2,132 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D304EB6110
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 12:08:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 644F3B61A8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 12:46:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728380AbfIRKIc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Sep 2019 06:08:32 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:42450 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbfIRKIb (ORCPT
+        id S1727026AbfIRKqy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Sep 2019 06:46:54 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:36670 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726916AbfIRKqy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Sep 2019 06:08:31 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190918100829euoutp01ffdeaf75dbcd401d5f06454cb2cf2ef3~FgHqnAe7S1646716467euoutp01W
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Sep 2019 10:08:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190918100829euoutp01ffdeaf75dbcd401d5f06454cb2cf2ef3~FgHqnAe7S1646716467euoutp01W
+        Wed, 18 Sep 2019 06:46:54 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190918104652euoutp028f1c8fb36496487f51d884b723d51dc4~FgpLqDjBf2984129841euoutp02g
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Sep 2019 10:46:52 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190918104652euoutp028f1c8fb36496487f51d884b723d51dc4~FgpLqDjBf2984129841euoutp02g
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568801309;
-        bh=SoPSWmL46dCyt6jpMsIRlH+mTit8bx9z6UaNw4gYnuI=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=RShI18E3AIkV+vc3zkY/d14qzsLlwmZSYxJ3+fLY7uKxFQo8eD5YYI5S5OypnlZ2+
-         l22di0vlPDk/MIKb9Xl8nSmGFg/1vHvsZ/d3dLXuz4utwqAVhvWE6nmKs7hgQV0J4u
-         yYOxTyYYf6N/ry5BNVy8g08breBk+Hf9XnDkjg2Y=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20190918100828eucas1p2dd539e07f9d877b5259c14c70ebd3c5b~FgHp1uUNc1518015180eucas1p2A;
-        Wed, 18 Sep 2019 10:08:28 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id D4.11.04469.C12028D5; Wed, 18
-        Sep 2019 11:08:28 +0100 (BST)
+        s=mail20170921; t=1568803612;
+        bh=ggJz+4OHEUqpSZrdoYYcYTj+Ba5FvZUZV0pOCGMmb8k=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=c8rcNFBmJY/mDx16xNixV62Snrx4Jw4CtpMWh6d8iQ24GmnFfd34cSfpEgNceMtMI
+         ejK+qbVaROwHcATQ4inNn0MuJRHtiic9kUTRBd3pwpfS6Bvuu2bAi9v4bYJFP3XA/D
+         ZV4ECaIc0LF5RgJzvBkZktmxVSx3SzS5c2+CNut4=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190918104651eucas1p15b28111f23924f96ccf4792636cee51d~FgpKsh7Rn2838228382eucas1p1v;
+        Wed, 18 Sep 2019 10:46:51 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 10.B4.04309.B1B028D5; Wed, 18
+        Sep 2019 11:46:51 +0100 (BST)
 Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20190918100827eucas1p236c0c2ac8b2b76a66165adb8cc8cb6b1~FgHpEl5C21741517415eucas1p2F;
-        Wed, 18 Sep 2019 10:08:27 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        20190918104650eucas1p2288b0b7e8081e872c4f181cb5ca8ba0d~FgpJy2Sw32181121811eucas1p2Q;
+        Wed, 18 Sep 2019 10:46:50 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190918100827eusmtrp13cd48098d61b1affadf4d1b91330fc83~FgHo0YvKq0828208282eusmtrp1j;
-        Wed, 18 Sep 2019 10:08:27 +0000 (GMT)
-X-AuditID: cbfec7f2-569ff70000001175-c6-5d82021ca455
+        20190918104650eusmtrp19ceb2288f128253001e6dbaaee5e1800~FgpJiquYc2822328223eusmtrp19;
+        Wed, 18 Sep 2019 10:46:50 +0000 (GMT)
+X-AuditID: cbfec7f4-afbff700000010d5-f6-5d820b1bdca6
 Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 29.B1.04166.B12028D5; Wed, 18
-        Sep 2019 11:08:27 +0100 (BST)
-Received: from [106.120.51.95] (unknown [106.120.51.95]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id EC.1C.04117.A1B028D5; Wed, 18
+        Sep 2019 11:46:50 +0100 (BST)
+Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
         eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20190918100826eusmtip19afee81663cbbea5348d86db266519e0~FgHoOsVsC1971319713eusmtip1J;
-        Wed, 18 Sep 2019 10:08:26 +0000 (GMT)
-Subject: Re: [PATCH v2 1/2] dt-bindings: sound: Convert Samsung I2S
- controller to dt-schema
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Linux-ALSA <alsa-devel@alsa-project.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sangbeom Kim <sbkim73@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-From:   Maciej Falkowski <m.falkowski@samsung.com>
-Message-ID: <40f56f61-a1db-a1a2-262e-1f4c771481e1@samsung.com>
-Date:   Wed, 18 Sep 2019 12:08:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
-        Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAL_JsqJmjUR63i_hKUuZwDu42rebwABHu62bQoxTRRJu5yObEA@mail.gmail.com>
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsWy7djPc7oyTE2xBotmiFjcWneO1eLKxUNM
-        FlMfPmGzmH8EyD1/fgO7xbcrHUwWl3fNYbOYcX4fk8XaI3fZLZZev8hk0br3CLvF4TftrBYX
-        V3xhcuD12PC5ic1jzbw1jB47Z91l99i0qpPNo2/LKkaPz5vkAtiiuGxSUnMyy1KL9O0SuDKO
-        9egV7NarOHFrLmMD4zulLkZODgkBE4lLl66xgthCAisYJX4sNO9i5AKyvzBKzHvzngXC+cwo
-        Mf/+XSaYjt4rZ5khEssZJSat+8YI4bxllGj49wKsSlggVuJ591IWEFtEQEViw/NbYB3MAv+Z
-        JeY/7WYDSbAJGEj0v9kLVsQrYCfx7Oh3dhCbRUBVoqHzCFhcVCBC4tODw6wQNYISJ2c+AYtz
-        CgRKXGqGqGEWkJdo3jqbGcIWl7j1ZD4TyDIJgXvsElvW3mKGuNtF4snzHVA/CEu8Or6FHcKW
-        kTg9uQdoEAeQXS1x7ZssRG8Lo8T1aW/ZIGqsJf6smsgGUsMsoCmxfpc+RNhRYtmL70wQrXwS
-        N94KQpzAJzFp23RmiDCvREebEISpKvFmQixEo7RE65r9jBMYlWYh+WsWkl9mIfllFsLaBYws
-        qxjFU0uLc9NTiw3zUsv1ihNzi0vz0vWS83M3MQKT2Ol/xz/tYPx6KekQowAHoxIPr8TZhlgh
-        1sSy4srcQ4wSHMxKIrwBtfWxQrwpiZVVqUX58UWlOanFhxilOViUxHmrGR5ECwmkJ5akZqem
-        FqQWwWSZODilGhhVdp8WvcO33PvEfslTesrytuueJ5mYxk7uKHe7s0pEwe3+bpbubI4jfn1T
-        lvPwZXZfDzzDXD5953U1/kgBqYnOydPeX3BPawjnVI7fJ7jetE7vY5Po+jflp+cc0VcoKJgo
-        f4g5WCBne9DKtKKJlo8OLeWWXP8h+hLLnzy7I2tDVt55eXPaDnElluKMREMt5qLiRACWyBR1
-        XgMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsVy+t/xu7rSTE2xBuubZS1urTvHanHl4iEm
-        i6kPn7BZzD8C5J4/v4Hd4tuVDiaLy7vmsFnMOL+PyWLtkbvsFkuvX2SyaN17hN3i8Jt2VouL
-        K74wOfB6bPjcxOaxZt4aRo+ds+6ye2xa1cnm0bdlFaPH501yAWxRejZF+aUlqQoZ+cUltkrR
-        hhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJehnHevQKdutVnLg1l7GB8Z1SFyMn
-        h4SAiUTvlbPMXYxcHEICSxklVl57xwSRkJbYf+0jO4QtLPHnWhcbRNFrRok/b5rZQBLCArES
-        jaf+gNkiAioSG57fApvELNDIItGy+TPU2C4mibu//oCNZRMwkOh/s5cFxOYVsJN4dvQ72AoW
-        AVWJhs4jYHFRgQiJwztmMULUCEqcnPkELM4pEChxqRmihlnATGLe5ofMELa8RPPW2VC2uMSt
-        J/OZJjAKzULSPgtJyywkLbOQtCxgZFnFKJJaWpybnltsqFecmFtcmpeul5yfu4kRGL3bjv3c
-        vIPx0sbgQ4wCHIxKPLwHTjXECrEmlhVX5h5ilOBgVhLhDaitjxXiTUmsrEotyo8vKs1JLT7E
-        aAr03ERmKdHkfGBiySuJNzQ1NLewNDQ3Njc2s1AS5+0QOBgjJJCeWJKanZpakFoE08fEwSnV
-        wNilcH1S89EHX33fWlcFpp6cc2NHvMqhe2LhgU3d0+/+WFJ73Lv7Q9s1/7Pev55kNwYeyHjD
-        ejbngcZzx49hl1elnf7y/OnvBXO2xQkqKXC/N3x8dcZLDp9Ox2vzm2c4becULDGQljP4fNb3
-        XM6+bc3VF5VevNn9f//s/2IWrVM2xG07Yam9JyNfiaU4I9FQi7moOBEAMz+JDPQCAAA=
-X-CMS-MailID: 20190918100827eucas1p236c0c2ac8b2b76a66165adb8cc8cb6b1
+        20190918104649eusmtip142f4b56d9d48d65ef5cdaa9c2a5c8877~FgpI5PALX0585305853eusmtip1C;
+        Wed, 18 Sep 2019 10:46:49 +0000 (GMT)
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+To:     broonie@kernel.org
+Cc:     lgirdwood@gmail.com, ckeepax@opensource.cirrus.com,
+        krzk@kernel.org, sbkim73@samsung.com, alsa-devel@alsa-project.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        patches@opensource.cirrus.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: [PATCH v1 0/9] Basic sound support for Arndale board / wm8994
+ updates
+Date:   Wed, 18 Sep 2019 12:46:25 +0200
+Message-Id: <20190918104634.15216-1-s.nawrocki@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSe0hTYRjG+85l5zjdOE7JLw2FUX8UeZkEO2CEZcT+KRQLShs186DmNm3H
+        eYtymCs1NfGOLDRJ0jlvy8uy8roaJKTWCkHUvESkSeYkCDXzdJT++33P+zy8Dy8fiUpqcV8y
+        SZvG6LQqtVQgxHre/B4L9HPPVYasvPSinRPDCN1Z047TlXOLAtpptAK6zv4Op8fGOgj6lzMf
+        oa0Ln3C6ZqwfoVvt0wTt+jGA08ZXdoIe+X4fpyea1pFwsaLDlStQPK+dJhRWc4FA8exJjqLa
+        tA0UJV1moHBZ/SOJGOGJeEadlM7ogk9eEyZ2bvUKUhvdM+sa6nEDWCQLgRsJqePQONQPCoGQ
+        lFBNAA58tSDcQEKtA1iRf4xnF4DjqzF7gfnuZoQPPAWwrLVgN70TGMotQDmXgJLB4tclgGNv
+        aj+cMnG6kESpTQSubNVihYAkvahIaOk+wHkw6jAcHyzHOBZRYdA09UjAbwuALR2D/7KQaiDg
+        /EwPxg/OwLKWEYRnL7jk6CJ4PghHy4swPnAXwKIXUwT/KAVw1lEPeFcYHHFM4FwLlDoC2/uC
+        efkU7DEbEE6GlBhOrnhyMrqDZT3VKC+LYP49Ce8+BDfM1bsVfOGDxe3dago47aoi+Msp4ftZ
+        F1IK/Gv/76oHwAx8GD2rSWDYUC2TEcSqNKxemxB0PUVjBTs/ZvSPY90G+jbjhgFFAqmHaPCt
+        QSnBVelslmYYQBKVeosib+coJaJ4VVY2o0u5qtOrGXYY+JGY1Ed0a9/nWAmVoEpjkhkmldHt
+        TRHSzdcA2mSmK8kRBmdU8UMdMPTGZfRnWhZ+bkba0DtRJZfbvkSvXrpw1ujf0JbuYauSm9NY
+        2XK2U/7B4t09zTx63OyIPbc0Z5R3bulPB1KTFQFCfE1uu1GZczMkXEYJzs9c3HYVqPOiI5a/
+        FX7czvPEGje6VGSSvHtNbBfX4aE2vRRjE1Wyo6iOVf0FuGyyMi0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrALMWRmVeSWpSXmKPExsVy+t/xu7pS3E2xBnffiVpcuXiIyWLjjPWs
+        FlMfPmGzuNK6idFi/pFzrBbnz29gt/h2pYPJYtPja6wWM87vY7JYe+Quu8Xn9/tZLVr3HmG3
+        OPymndXi4oovTA58Hhs+N7F57Jx1l91j06pONo/NS+o9ps/5z+jRt2UVo8fnTXIB7FF6NkX5
+        pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GRv/bmcrWMpd
+        MX/RAtYGxiccXYycHBICJhKPtq5k6mLk4hASWMoo0fpmLWMXIwdQQkpifosSRI2wxJ9rXWwg
+        tpDAJ0aJH+1mIDabgKFE79E+RhBbREBM4vacTmaQOcwCXcwS73f8YgVJCAv4STzZ9YIdxGYR
+        UJW4cGAyC4jNK2AtMef2XDaIBfISqzccYJ7AyLOAkWEVo0hqaXFuem6xkV5xYm5xaV66XnJ+
+        7iZGYGhvO/Zzyw7GrnfBhxgFOBiVeHglzjbECrEmlhVX5h5ilOBgVhLhDaitjxXiTUmsrEot
+        yo8vKs1JLT7EaAq0fCKzlGhyPjDu8kriDU0NzS0sDc2NzY3NLJTEeTsEDsYICaQnlqRmp6YW
+        pBbB9DFxcEo1MApOs3VRmDVZYZroC9Hm721pBqKHcrj1X6wxNuvc4Da5xVr//Qn103ftlzPe
+        78mMvsVj1DhD8fivmE8MdRcXzZ13c+69d/812uez7FX9Edvs8JDfr8742o13ATNTrQ/p8lzT
+        WvGl1vBC+aMpBf/ZNyX917iZrHvQS6JxpsK0UNeTH85b37wjulKJpTgj0VCLuag4EQBJQJG8
+        gwIAAA==
+X-CMS-MailID: 20190918104650eucas1p2288b0b7e8081e872c4f181cb5ca8ba0d
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190917120517eucas1p1188d244fac2d10d7990363ff25ffb70d
+X-RootMTR: 20190918104650eucas1p2288b0b7e8081e872c4f181cb5ca8ba0d
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190917120517eucas1p1188d244fac2d10d7990363ff25ffb70d
-References: <CGME20190917120517eucas1p1188d244fac2d10d7990363ff25ffb70d@eucas1p1.samsung.com>
-        <20190917111413.22711-1-m.falkowski@samsung.com>
-        <20190917120452.28135-1-m.falkowski@samsung.com>
-        <CAL_JsqJmjUR63i_hKUuZwDu42rebwABHu62bQoxTRRJu5yObEA@mail.gmail.com>
+X-CMS-RootMailID: 20190918104650eucas1p2288b0b7e8081e872c4f181cb5ca8ba0d
+References: <CGME20190918104650eucas1p2288b0b7e8081e872c4f181cb5ca8ba0d@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+This patch series adds basic audio support for Exynos5250 SoC based Arndale 
+board, the Bluetooth receiver source and HDMI output are not covered yet.
 
-On 9/17/19 3:05 PM, Rob Herring wrote:
+There is also one fix for wm8994 driver related to WM1811 CODEC and wm8994
+updates to handle MCLK clocks, similar to patches:
+ ae1ea48c5c59 ("ASoC: arizona: Add gating for source clocks of the FLLs")
+ 7a4413d0dc96 ("ASoC: arizona: Add gating for clock when used for direct MCLK")
 
-> On Tue, Sep 17, 2019 at 7:05 AM Maciej Falkowski
-> <m.falkowski@samsung.com> wrote:
->> Convert Samsung I2S controller to newer dt-schema format.
->>
->> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
->> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
->> ---
->> v2:
->> - Added missing Signed-off-by certificate
->> ---
->>   .../devicetree/bindings/sound/samsung-i2s.txt |  84 -------------
->>   .../bindings/sound/samsung-i2s.yaml           | 119 ++++++++++++++++++
->>   2 files changed, 119 insertions(+), 84 deletions(-)
->>   delete mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.txt
->>   create mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.yaml
->> diff --git a/Documentation/devicetree/bindings/sound/samsung-i2s.yaml b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
->> new file mode 100644
->> index 000000000000..59dc76035cb4
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
->> @@ -0,0 +1,119 @@
->> +# SPDX-License-Identifier: GPL-2.0
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/sound/samsung-i2s.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Samsung SoC I2S controller
->> +
->> +maintainers:
->> +  - Krzysztof Kozlowski <krzk@kernel.org>
->> +  - Sangbeom Kim <sbkim73@samsung.com>
->> +  - Sylwester Nawrocki <s.nawrocki@samsung.com>
->> +
->> +properties:
->> +  compatible:
->> +    description: |
->> +      samsung,s3c6410-i2s: for 8/16/24bit stereo I2S.
->> +
->> +      samsung,s5pv210-i2s: for 8/16/24bit multichannel(5.1) I2S with
->> +      secondary fifo, s/w reset control and internal mux for root clk src.
->> +
->> +      samsung,exynos5420-i2s: for 8/16/24bit multichannel(5.1) I2S for
->> +      playback, stereo channel capture, secondary fifo using internal
->> +      or external dma, s/w reset control, internal mux for root clk src
->> +      and 7.1 channel TDM support for playback. TDM (Time division multiplexing)
->> +      is to allow transfer of multiple channel audio data on single data line.
->> +
->> +      samsung,exynos7-i2s: with all the available features of exynos5 i2s.
->> +
->> +      exynos7 I2S has 7.1 channel TDM support for capture, secondary fifo
->> +      with only external dma and more no.of root clk sampling frequencies.
->> +
->> +      samsung,exynos7-i2s1: I2S1 on previous samsung platforms supports
->> +      stereo channels. exynos7 i2s1 upgraded to 5.1 multichannel with
->> +      slightly modified bit offsets.
->> +    enum:
->> +      - "samsung,s3c6410-i2s"
->> +      - "samsung,s5pv210-i2s"
->> +      - "samsung,exynos5420-i2s"
->> +      - "samsung,exynos7-i2s"
->> +      - "samsung,exynos7-i2s1"
-> No need for quotes here.
->
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  dmas:
->> +    description: list of DMA controller phandle and DMA request line ordered pairs.
-> How many?
+Sylwester Nawrocki (9):
+  ASoC: wm8994: Do not register inapplicable controls for WM1811
+  mfd: wm8994: Add support for MCLKn clock control
+  ASoC: wm8994: Add support for setting MCLKn clock rate
+  ASoC: wm8994: Add support for MCLKn clock gating
+  ASoC: samsung: arndale: Simplify DAI link initialization
+  ASoC: dt-bindings: Document "samsung,arndale-wm1811" compatible
+  ASoC: samsung: arndale: Add support for WM1811 CODEC
+  ASoC: samsung: arndale: Add missing OF node dereferencing
+  ARM: dts: arndale: Add audio support (WM1811 CODEC boards)
 
-Hi Rob,
+ .../devicetree/bindings/sound/arndale.txt     |   5 +-
+ arch/arm/boot/dts/exynos5250-arndale.dts      |  27 ++-
+ drivers/mfd/wm8994-core.c                     |   9 +
+ include/linux/mfd/wm8994/core.h               |   9 +
+ sound/soc/codecs/wm8994.c                     | 164 +++++++++++++++---
+ sound/soc/samsung/arndale_rt5631.c            | 155 +++++++++++++----
+ 6 files changed, 306 insertions(+), 63 deletions(-)
 
-I have one problem with determining size of dmas.
+-- 
+2.17.1
 
-It seems that there are only two options for dmas: tx, rx or tx, rx, tx-sec.
-
-It looks like minItems should be two and maxItems should be three.
-
-However, some of bindings have different definition of dmas.
-
-When there is:
-
-         dmas = <&pdma0 10
-                 &pdma0 9
-                 &pdma0 8>;
-
-the number of Items for dmas is one,
-
-when there is:
-
-         dmas = <&pdma0 10>,
-                      <&pdma0 9>,
-                      <&pdma0 8>;
-
-the number of Items is three.
-
-Both of these are equal from perspective of dtc,
-
-however from schema point of view, they have different size.
-
-
-What is a proper solution to this kind of problem?
-
-Best regards,
-
-Maciej Falkowski
-
->> +
->> +  dma-names:
->> +    description: |
->> +      identifier string for each DMA request line in the dmas property.
->> +      These strings correspond 1:1 with the ordered pairs in dmas.
->> +
->> +  clocks:
->> +    minItems: 1
->> +    maxItems: 3
->> +
->> +  clock-names:
->> +    oneOf:
->> +      - items:
->> +          - const: iis
->> +      - items:
->> +          - const: iis
->> +          - const: i2s_opclk0
->> +      - items:
->> +          - const: iis
->> +          - const: i2s_opclk0
->> +          - const: i2s_opclk1
->> +    description: |
->> +      "iis" is the i2s bus clock.
->> +      For i2s1 and i2s2 - "iis", "i2s_opclk0"
->> +      For i2s0 - "iis", "i2s_opclk0", "i2s_opclk1"
->> +
->> +  "#clock-cells":
->> +    const: 1
->> +
->> +  samsung,idma-addr:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: |
->> +      Internal DMA register base address of the audio
->> +      sub system(used in secondary sound source).
->> +
->> +  pinctrl-0:
->> +    description: Should specify pin control groups used for this controller.
->> +
->> +  pinctrl-names:
->> +    const: default
->> +
->> +  "#sound-dai-cells":
->> +    const: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - dmas
->> +  - dma-names
->> +  - clocks
->> +  - clock-names
->> +
->> +examples:
->> +  - |
->> +    i2s0: i2s@3830000 {
->> +        compatible = "samsung,s5pv210-i2s";
->> +        reg = <0x03830000 0x100>;
->> +        dmas = <&pdma0 10
->> +                &pdma0 9
->> +                &pdma0 8>;
->> +        dma-names = "tx", "rx", "tx-sec";
->> +        clocks = <&clock_audss 0>, // EXYNOS_I2S_BUS
->> +                <&clock_audss 0>, // EXYNOS_I2S_BUS
->> +                <&clock_audss 0>; // EXYNOS_SCLK_I2S
->> +        clock-names = "iis", "i2s_opclk0", "i2s_opclk1";
->> +        #clock-cells = <1>;
->> +        samsung,idma-addr = <0x03000000>;
->> +        pinctrl-names = "default";
->> +        pinctrl-0 = <&i2s0_bus>;
->> +        #sound-dai-cells = <1>;
->> +    };
->> +
->> --
->> 2.17.1
->>
->
