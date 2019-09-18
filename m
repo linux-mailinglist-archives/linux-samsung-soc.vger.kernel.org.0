@@ -2,85 +2,163 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DBC79B666A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 16:51:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 229DDB6931
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 19:32:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731341AbfIROv4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Sep 2019 10:51:56 -0400
-Received: from mx0b-001ae601.pphosted.com ([67.231.152.168]:38978 "EHLO
-        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731141AbfIROvz (ORCPT
+        id S1731457AbfIRRcP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Sep 2019 13:32:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42352 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729042AbfIRRcP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Sep 2019 10:51:55 -0400
-Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
-        by mx0b-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8IEmnIM003847;
-        Wed, 18 Sep 2019 09:51:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=PODMain02222019;
- bh=5hkaW0zVB7pcDMi7la/yr03m+5UIiW5/+enC+Tt7FrY=;
- b=NzRZlvVH0WikQpVg4jkJ7trlB5b57VQFLxAmP3HFWcBceJqchsh5EkPnBzJ9Wev9vr47
- ExQrYrB2Mq3GceLfWSDL5Y7nZBzXyc9JTC1nwaxYQrILhskZ9qqdAHtkUciEZApakSu6
- V2y8S5Dj3/nKRrHBXaIrWbHGWHijHv86BxWJAuAOxndKE/zYNP2u8JYFSMWF2QHSK9GM
- ITaHZl/5mByIgMMg43ARiNoWZhCgEcKH+VTeHXLEobqqNTwPrwX01PKApN9D6kSOg9bD
- 5vbYYVSVbr4qRKAVSCmjiVnXo2wKQLPigFQs0HhOFubmBx1CpCDZiPInnde8rt1+/rRF 9w== 
-Authentication-Results: ppops.net;
-        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
-Received: from ediex01.ad.cirrus.com ([87.246.76.36])
-        by mx0b-001ae601.pphosted.com with ESMTP id 2v37m198ga-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Wed, 18 Sep 2019 09:51:44 -0500
-Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Wed, 18 Sep
- 2019 15:51:42 +0100
-Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
- Transport; Wed, 18 Sep 2019 15:51:42 +0100
-Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
-        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id 584A92C1;
-        Wed, 18 Sep 2019 14:51:42 +0000 (UTC)
-Date:   Wed, 18 Sep 2019 14:51:42 +0000
-From:   Charles Keepax <ckeepax@opensource.cirrus.com>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-CC:     <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk@kernel.org>,
-        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
-        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <patches@opensource.cirrus.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
-        <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v1 8/9] ASoC: samsung: arndale: Add missing OF node
- dereferencing
-Message-ID: <20190918145142.GK10204@ediswmail.ad.cirrus.com>
-References: <20190918104634.15216-1-s.nawrocki@samsung.com>
- <CGME20190918104713eucas1p2ccfa8e9dff2cda9e8f88ac42dda2b680@eucas1p2.samsung.com>
- <20190918104634.15216-9-s.nawrocki@samsung.com>
+        Wed, 18 Sep 2019 13:32:15 -0400
+Received: from localhost.localdomain (unknown [194.230.155.145])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6680A208C0;
+        Wed, 18 Sep 2019 17:32:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568827933;
+        bh=1TixgpnrbW74TJpZIMBN4jvpzcDubcE9UumV31l30Nk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=OzltOak1RI4M1f9eGUSNpFq39Ro2X4jHeAfIiXyq0c34FJmpbNaEv7Cjcemb0poM9
+         uE04q4mDU1LrkMk30mY4EX+LhD7KA8S6J8COMeBcIJZj56YzKZ7ZEf8xMUBTP+sWFK
+         ojyxY9o/4DOqaRfganDMdAi+8phtDnFnChg4e0II=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Matt Mackall <mpm@selenic.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, bcm-kernel-feedback-list@broadcom.com,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-crypto@vger.kernel.org, linux-watchdog@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2 1/8] dt-bindings: rng: exynos4-rng: Convert Exynos PRNG bindings to json-schema
+Date:   Wed, 18 Sep 2019 19:31:34 +0200
+Message-Id: <20190918173141.4314-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20190918104634.15216-9-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Proofpoint-SPF-Result: fail
-X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
- -all
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
- adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=917 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
- definitions=main-1909180147
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 12:46:33PM +0200, Sylwester Nawrocki wrote:
-> Ensure there is no OF node references kept when the driver is removed/unbound.
-> 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
+Convert Samsung Exynos Pseudo Random Number Generator bindings to DT
+schema format using json-schema.
 
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Thanks,
-Charles
+---
+
+Changes since v1:
+1. Indent example with four spaces (more readable).
+---
+ .../bindings/rng/samsung,exynos4-rng.txt      | 19 ---------
+ .../bindings/rng/samsung,exynos4-rng.yaml     | 41 +++++++++++++++++++
+ MAINTAINERS                                   |  2 +-
+ 3 files changed, 42 insertions(+), 20 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/rng/samsung,exynos4-rng.txt
+ create mode 100644 Documentation/devicetree/bindings/rng/samsung,exynos4-rng.yaml
+
+diff --git a/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.txt b/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.txt
+deleted file mode 100644
+index a13fbdb4bd88..000000000000
+--- a/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.txt
++++ /dev/null
+@@ -1,19 +0,0 @@
+-Exynos Pseudo Random Number Generator
+-
+-Required properties:
+-
+-- compatible  : One of:
+-                - "samsung,exynos4-rng" for Exynos4210 and Exynos4412
+-                - "samsung,exynos5250-prng" for Exynos5250+
+-- reg         : Specifies base physical address and size of the registers map.
+-- clocks      : Phandle to clock-controller plus clock-specifier pair.
+-- clock-names : "secss" as a clock name.
+-
+-Example:
+-
+-	rng@10830400 {
+-		compatible = "samsung,exynos4-rng";
+-		reg = <0x10830400 0x200>;
+-		clocks = <&clock CLK_SSS>;
+-		clock-names = "secss";
+-	};
+diff --git a/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.yaml b/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.yaml
+new file mode 100644
+index 000000000000..2d075d6c87b6
+--- /dev/null
++++ b/Documentation/devicetree/bindings/rng/samsung,exynos4-rng.yaml
+@@ -0,0 +1,41 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/rng/samsung,exynos4-rng.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Samsung Exynos SoC Pseudo Random Number Generator
++
++maintainers:
++  - Krzysztof Kozlowski <krzk@kernel.org>
++
++properties:
++  compatible:
++    enum:
++      - samsung,exynos4-rng                   # for Exynos4210 and Exynos4412
++      - samsung,exynos5250-prng               # for Exynos5250+
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    items:
++      - const: secss
++
++required:
++  - compatible
++  - reg
++  - clock-names
++  - clocks
++
++examples:
++  - |
++    rng@10830400 {
++        compatible = "samsung,exynos4-rng";
++        reg = <0x10830400 0x200>;
++        clocks = <&clock 255>; // CLK_SSS
++        clock-names = "secss";
++    };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 00969a90f94c..9cec4494b9a8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14181,7 +14181,7 @@ L:	linux-crypto@vger.kernel.org
+ L:	linux-samsung-soc@vger.kernel.org
+ S:	Maintained
+ F:	drivers/crypto/exynos-rng.c
+-F:	Documentation/devicetree/bindings/rng/samsung,exynos4-rng.txt
++F:	Documentation/devicetree/bindings/rng/samsung,exynos4-rng.yaml
+ 
+ SAMSUNG EXYNOS TRUE RANDOM NUMBER GENERATOR (TRNG) DRIVER
+ M:	Łukasz Stelmach <l.stelmach@samsung.com>
+-- 
+2.17.1
+
