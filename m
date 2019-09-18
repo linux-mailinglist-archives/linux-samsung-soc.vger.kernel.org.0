@@ -2,178 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 54666B64FE
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 15:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 569DCB651B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 15:52:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbfIRNtr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Sep 2019 09:49:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52340 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726659AbfIRNtr (ORCPT
+        id S1727301AbfIRNwL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Sep 2019 09:52:11 -0400
+Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]:7830 "EHLO
+        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726562AbfIRNwL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Sep 2019 09:49:47 -0400
-Received: from mail-yw1-f47.google.com (mail-yw1-f47.google.com [209.85.161.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AF0C321920;
-        Wed, 18 Sep 2019 13:49:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568814585;
-        bh=Vsir7F3Rw0yN2oG3BxCXE+fvnqJZovYT8xzQgG4Purk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=MN6zvA84e1GAQzDF8Oc7KorTjwkfX8QhfTlV/yE89YGnvwWTCGc+sZiyx/Cd1wOXW
-         88i5Lif6ocTrKz0x4e/qziBndrZ8KfvrmDcYiFeunXLidgzYYY9Y4XgAJgMbrfpLnd
-         RywIv4FoZQGnLOZZNn62evPeLTXYCZsAF/6EsZP8=
-Received: by mail-yw1-f47.google.com with SMTP id s6so2490039ywe.5;
-        Wed, 18 Sep 2019 06:49:45 -0700 (PDT)
-X-Gm-Message-State: APjAAAXdAeFYJAy1K/CCI8GZjLjEwtZugQD2I2bo0vymfyDUPEoQNUNE
-        ZojVbJtR2VFDJgzXsQPYDOSwd9aG97LZbD0IGA==
-X-Google-Smtp-Source: APXvYqyX5J7M/JnrOKuHqti9BK5SCSbzkKBYf8CDlkD0T4RESNs7Vm4Lj+l5V24NuFFkS5g5wceeMPsbDURipVXo9vI=
-X-Received: by 2002:a0d:ddc9:: with SMTP id g192mr3041978ywe.281.1568814584947;
- Wed, 18 Sep 2019 06:49:44 -0700 (PDT)
+        Wed, 18 Sep 2019 09:52:11 -0400
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+        by mx0a-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8IDmjmw000339;
+        Wed, 18 Sep 2019 08:52:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=PODMain02222019;
+ bh=fUaJvfqlwr1NbVsxiDauo566E9A3G/B48VoqdpS3EzY=;
+ b=nR/ZO0d9QTmdT9xxyJNDTy5bo31Z9QI16110OTaCmlIlOXVPMSmXWsRpLUw3i214kRXQ
+ Kp9fjqEUftWHc47re7sxnQ+BPLXiekhwR7gkVAt01RAeyo1j5EQtq9rYDEb7ug/oDfDk
+ RCqAGMe11LHbNeA/SIcCX/hI72Wi4v0sNzOmE+VWK83biOuXs9IHkLGns0M6A8qBxrZ6
+ f3YmXJSAX0bLNBRojvLBXNEe9TCFMOD8vSbBsUWkvASBGIu50ZUYZ9Xdh+IUnSTxYwuE
+ eXkWGrTxlK6yoBfwzU/frhzQscV3TaFCUP0NDozTSrLmVPfZou94xACLa9wxEHAymf2C IA== 
+Authentication-Results: ppops.net;
+        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
+Received: from ediex02.ad.cirrus.com ([87.246.76.36])
+        by mx0a-001ae601.pphosted.com with ESMTP id 2v382qs5hk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Wed, 18 Sep 2019 08:52:00 -0500
+Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX02.ad.cirrus.com
+ (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Wed, 18 Sep
+ 2019 14:51:58 +0100
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
+ Transport; Wed, 18 Sep 2019 14:51:58 +0100
+Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
+        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id E73BF2C1;
+        Wed, 18 Sep 2019 13:51:57 +0000 (UTC)
+Date:   Wed, 18 Sep 2019 13:51:57 +0000
+From:   Charles Keepax <ckeepax@opensource.cirrus.com>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+CC:     <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk@kernel.org>,
+        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
+        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <patches@opensource.cirrus.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
+        <m.szyprowski@samsung.com>
+Subject: Re: [PATCH v1 3/9] ASoC: wm8994: Add support for setting MCLKn clock
+ rate
+Message-ID: <20190918135157.GG10204@ediswmail.ad.cirrus.com>
+References: <20190918104634.15216-1-s.nawrocki@samsung.com>
+ <CGME20190918104658eucas1p2c1f07d3e8b915d8c3a448b80d2af5df0@eucas1p2.samsung.com>
+ <20190918104634.15216-4-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-References: <CGME20190917120517eucas1p1188d244fac2d10d7990363ff25ffb70d@eucas1p1.samsung.com>
- <20190917111413.22711-1-m.falkowski@samsung.com> <20190917120452.28135-1-m.falkowski@samsung.com>
- <CAL_JsqJmjUR63i_hKUuZwDu42rebwABHu62bQoxTRRJu5yObEA@mail.gmail.com> <40f56f61-a1db-a1a2-262e-1f4c771481e1@samsung.com>
-In-Reply-To: <40f56f61-a1db-a1a2-262e-1f4c771481e1@samsung.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 18 Sep 2019 08:49:33 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ=QWk07y=h7dHFiRrKuE7NGoUr50bu3kiOC+YU8qS9jg@mail.gmail.com>
-Message-ID: <CAL_JsqJ=QWk07y=h7dHFiRrKuE7NGoUr50bu3kiOC+YU8qS9jg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: sound: Convert Samsung I2S controller
- to dt-schema
-To:     Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     Linux-ALSA <alsa-devel@alsa-project.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sangbeom Kim <sbkim73@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20190918104634.15216-4-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Proofpoint-SPF-Result: fail
+X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
+ -all
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=705 impostorscore=0
+ phishscore=0 mlxscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
+ definitions=main-1909180140
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 5:08 AM Maciej Falkowski
-<m.falkowski@samsung.com> wrote:
->
->
-> On 9/17/19 3:05 PM, Rob Herring wrote:
->
-> > On Tue, Sep 17, 2019 at 7:05 AM Maciej Falkowski
-> > <m.falkowski@samsung.com> wrote:
-> >> Convert Samsung I2S controller to newer dt-schema format.
-> >>
-> >> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> >> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> >> ---
-> >> v2:
-> >> - Added missing Signed-off-by certificate
-> >> ---
-> >>   .../devicetree/bindings/sound/samsung-i2s.txt |  84 -------------
-> >>   .../bindings/sound/samsung-i2s.yaml           | 119 ++++++++++++++++++
-> >>   2 files changed, 119 insertions(+), 84 deletions(-)
-> >>   delete mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.txt
-> >>   create mode 100644 Documentation/devicetree/bindings/sound/samsung-i2s.yaml
-> >> diff --git a/Documentation/devicetree/bindings/sound/samsung-i2s.yaml b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
-> >> new file mode 100644
-> >> index 000000000000..59dc76035cb4
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/sound/samsung-i2s.yaml
-> >> @@ -0,0 +1,119 @@
-> >> +# SPDX-License-Identifier: GPL-2.0
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/sound/samsung-i2s.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Samsung SoC I2S controller
-> >> +
-> >> +maintainers:
-> >> +  - Krzysztof Kozlowski <krzk@kernel.org>
-> >> +  - Sangbeom Kim <sbkim73@samsung.com>
-> >> +  - Sylwester Nawrocki <s.nawrocki@samsung.com>
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    description: |
-> >> +      samsung,s3c6410-i2s: for 8/16/24bit stereo I2S.
-> >> +
-> >> +      samsung,s5pv210-i2s: for 8/16/24bit multichannel(5.1) I2S with
-> >> +      secondary fifo, s/w reset control and internal mux for root clk src.
-> >> +
-> >> +      samsung,exynos5420-i2s: for 8/16/24bit multichannel(5.1) I2S for
-> >> +      playback, stereo channel capture, secondary fifo using internal
-> >> +      or external dma, s/w reset control, internal mux for root clk src
-> >> +      and 7.1 channel TDM support for playback. TDM (Time division multiplexing)
-> >> +      is to allow transfer of multiple channel audio data on single data line.
-> >> +
-> >> +      samsung,exynos7-i2s: with all the available features of exynos5 i2s.
-> >> +
-> >> +      exynos7 I2S has 7.1 channel TDM support for capture, secondary fifo
-> >> +      with only external dma and more no.of root clk sampling frequencies.
-> >> +
-> >> +      samsung,exynos7-i2s1: I2S1 on previous samsung platforms supports
-> >> +      stereo channels. exynos7 i2s1 upgraded to 5.1 multichannel with
-> >> +      slightly modified bit offsets.
-> >> +    enum:
-> >> +      - "samsung,s3c6410-i2s"
-> >> +      - "samsung,s5pv210-i2s"
-> >> +      - "samsung,exynos5420-i2s"
-> >> +      - "samsung,exynos7-i2s"
-> >> +      - "samsung,exynos7-i2s1"
-> > No need for quotes here.
-> >
-> >> +
-> >> +  reg:
-> >> +    maxItems: 1
-> >> +
-> >> +  dmas:
-> >> +    description: list of DMA controller phandle and DMA request line ordered pairs.
-> > How many?
->
-> Hi Rob,
->
-> I have one problem with determining size of dmas.
->
-> It seems that there are only two options for dmas: tx, rx or tx, rx, tx-sec.
->
-> It looks like minItems should be two and maxItems should be three.
->
-> However, some of bindings have different definition of dmas.
->
-> When there is:
->
->          dmas = <&pdma0 10
->                  &pdma0 9
->                  &pdma0 8>;
->
-> the number of Items for dmas is one,
->
-> when there is:
->
->          dmas = <&pdma0 10>,
->                       <&pdma0 9>,
->                       <&pdma0 8>;
->
-> the number of Items is three.
->
-> Both of these are equal from perspective of dtc,
->
-> however from schema point of view, they have different size.
->
->
-> What is a proper solution to this kind of problem?
+On Wed, Sep 18, 2019 at 12:46:28PM +0200, Sylwester Nawrocki wrote:
+> Extend the set_sysclk() handler so we also set frequency of the MCLK1,
+> MCLK2 clocks through clk API when those clocks are specified in DT for
+> the device.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
 
-The solution is writing things in the latter form. I have a script to
-convert a bunch of these. I need to coordinate doing that at the end
-of a merge window.
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-Rob
+Thanks,
+Charles
