@@ -2,54 +2,50 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A5D1EB628C
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 13:54:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1577FB6324
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Sep 2019 14:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728087AbfIRLyK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Sep 2019 07:54:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59974 "EHLO mail.kernel.org"
+        id S1731049AbfIRMZ0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Sep 2019 08:25:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44386 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726900AbfIRLyK (ORCPT
+        id S1726987AbfIRMZ0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Sep 2019 07:54:10 -0400
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+        Wed, 18 Sep 2019 08:25:26 -0400
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C2A0621925;
-        Wed, 18 Sep 2019 11:54:08 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D293A21929;
+        Wed, 18 Sep 2019 12:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568807648;
-        bh=kzrm6fZngJglejuB9xzhoA67Tcw2osTIaU7fAwqMKGc=;
+        s=default; t=1568809524;
+        bh=SxzYIfH5rjzK9wl9N5FzlwSoGYp9dCn7lmb1V3FIxy4=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=uQx0FUr8IoDdZVaq+Jj+7J6ZqUGHxuLlNwiVaVIlUi/OKI8xJVzEkICj7lvD6EP1D
-         cg3k8nHV8MGRGVhp0WG233Hvc9+LTsHjUbK+a2hgo+NtQSkpkdL23dcoRfVHHIcfnX
-         bwxS0rtdm1HKiG/JYxu29Q/pODBmUpenBF7llt/w=
-Received: by mail-ot1-f48.google.com with SMTP id z6so6064501otb.2;
-        Wed, 18 Sep 2019 04:54:08 -0700 (PDT)
-X-Gm-Message-State: APjAAAV7qHvVvch3UOLGybOOVUkTEgdCUKNW8UTFdtJOU1W+p9iVHpwF
-        IPHL+4ZkxJttqbfEbeZ5QrHdwifSIKyzOEBv1+I=
-X-Google-Smtp-Source: APXvYqxMySumqjsahTYagNepSWzduEcZjCnTcXjLZCN9ySJfnCXOJqZVYcNkW0eHFhR5aSfIMwQqCAuFtB0Zu2153L4=
-X-Received: by 2002:a9d:6c9a:: with SMTP id c26mr2573300otr.241.1568807648102;
- Wed, 18 Sep 2019 04:54:08 -0700 (PDT)
+        b=HsARNV7wv+/hb1F5VTpCBxAdSCoV4G9AS4Q2I/2QSEKi6Wu0FLFfuLtIN38Z58ID8
+         WnQkBYoLyZR/4XX24wB41fpa0knllyMxXiwhBnPMml89p4K1Sh6cLFGxI9YZkJNFUk
+         25Ol0lYYJz4al1Jb0yNGOKMx4Rl74YHDX4CLk7vQ=
+Received: by mail-ot1-f43.google.com with SMTP id 41so6077232oti.12;
+        Wed, 18 Sep 2019 05:25:24 -0700 (PDT)
+X-Gm-Message-State: APjAAAV+y4ibVvtjMyHelpDsVjxdyUYGE8KahuZCOHBtTHWteXu/nnqK
+        wz3Gd5gteeDqIPgo40CCPpW5nHagPzAO4Eie5oU=
+X-Google-Smtp-Source: APXvYqy6hHaWJFNdVYTig4iJmjwL6JG/W+OXmovvhUxmIEhESB9QpIKlBVojQmMW1PINOfm310FkqYRWtGzcN9ishjc=
+X-Received: by 2002:a9d:378a:: with SMTP id x10mr2672823otb.222.1568809524165;
+ Wed, 18 Sep 2019 05:25:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190909183436.9045-1-krzk@kernel.org> <20190909183436.9045-2-krzk@kernel.org>
- <20190912175001.GA29884@bogus>
-In-Reply-To: <20190912175001.GA29884@bogus>
+References: <20190907144442.16788-1-krzk@kernel.org> <5d7ba95e.1c69fb81.bba41.66c2@mx.google.com>
+In-Reply-To: <5d7ba95e.1c69fb81.bba41.66c2@mx.google.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 18 Sep 2019 13:53:56 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPeGMZhCNkKa73gE42baJUim3QtQiV_fRm=j7xL9bb1nFw@mail.gmail.com>
-Message-ID: <CAJKOXPeGMZhCNkKa73gE42baJUim3QtQiV_fRm=j7xL9bb1nFw@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] dt-bindings: pwm: Convert Samsung PWM bindings to json-schema
+Date:   Wed, 18 Sep 2019 14:25:12 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPeCH-hp40gnC4W5Fn8Z0OWqF74H4r1RQOJTCnu72wmrZQ@mail.gmail.com>
+Message-ID: <CAJKOXPeCH-hp40gnC4W5Fn8Z0OWqF74H4r1RQOJTCnu72wmrZQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: memory-controllers: Convert Samsung Exynos
+ SROM bindings to json-schema
 To:     Rob Herring <robh@kernel.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>, linux-pwm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Maciej Falkowski <m.falkowski@samsung.com>,
+Cc:     Mark Rutland <mark.rutland@arm.com>, Kukjin Kim <kgene@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         "linux-samsung-soc@vger.kernel.org" 
         <linux-samsung-soc@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-leds@vger.kernel.org,
-        linux-clk@vger.kernel.org
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
@@ -58,137 +54,142 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 On Fri, 13 Sep 2019 at 16:36, Rob Herring <robh@kernel.org> wrote:
 >
-> On Mon, Sep 09, 2019 at 08:34:36PM +0200, Krzysztof Kozlowski wrote:
-> > Convert Samsung PWM (S3C, S5P and Exynos SoCs) bindings to DT schema
-> > format using json-schema.
+> On Sat, Sep 07, 2019 at 04:44:42PM +0200, Krzysztof Kozlowski wrote:
+> > Convert Samsung Exynos SROM controller bindings to DT schema format
+> > using json-schema.
 > >
 > > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 > > ---
-> >  .../devicetree/bindings/pwm/pwm-samsung.txt   |  51 --------
-> >  .../devicetree/bindings/pwm/pwm-samsung.yaml  | 111 ++++++++++++++++++
-> >  2 files changed, 111 insertions(+), 51 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/pwm/pwm-samsung.txt
-> >  create mode 100644 Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
+> >  .../memory-controllers/exynos-srom.txt        |  79 ----------
+> >  .../memory-controllers/exynos-srom.yaml       | 136 ++++++++++++++++++
+> >  2 files changed, 136 insertions(+), 79 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/memory-controllers/exynos-srom.txt
+> >  create mode 100644 Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
 >
 >
-> > diff --git a/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml b/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
+> > diff --git a/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
 > > new file mode 100644
-> > index 000000000000..90fb467bcdd5
+> > index 000000000000..9573bcfd68bf
 > > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/pwm-samsung.yaml
-> > @@ -0,0 +1,111 @@
+> > +++ b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
+> > @@ -0,0 +1,136 @@
 > > +# SPDX-License-Identifier: GPL-2.0
 > > +%YAML 1.2
 > > +---
-> > +$id: http://devicetree.org/schemas/pwm/pwm-samsung.yaml#
+> > +$id: http://devicetree.org/schemas/memory-controllers/exynos-srom.yaml#
 > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > > +
-> > +title: Samsung SoC PWM timers
+> > +title: Samsung Exynos SoC SROM Controller driver
 > > +
 > > +maintainers:
-> > +  - Thierry Reding <thierry.reding@gmail.com>
 > > +  - Krzysztof Kozlowski <krzk@kernel.org>
 > > +
 > > +description: |+
-> > +  Samsung SoCs contain PWM timer blocks which can be used for system clock source
-> > +  and clock event timers, as well as to drive SoC outputs with PWM signal. Each
-> > +  PWM timer block provides 5 PWM channels (not all of them can drive physical
-> > +  outputs - see SoC and board manual).
-> > +
-> > +  Be aware that the clocksource driver supports only uniprocessor systems.
-> > +
-> > +allOf:
-> > +  - $ref: pwm.yaml#
+> > +  The SROM controller can be used to attach external peripherals. In this case
+> > +  extra properties, describing the bus behind it, should be specified.
 > > +
 > > +properties:
 > > +  compatible:
-> > +    enum:
-> > +      - samsung,s3c2410-pwm             # 16-bit, S3C24xx
-> > +      - samsung,s3c6400-pwm             # 32-bit, S3C64xx
-> > +      - samsung,s5p6440-pwm             # 32-bit, S5P64x0
-> > +      - samsung,s5pc100-pwm             # 32-bit, S5PC100, S5PV210, Exynos4210 rev0 SoCs
-> > +      - samsung,exynos4210-pwm          # 32-bit, Exynos
+> > +    items:
+> > +      - const: samsung,exynos4210-srom
 > > +
 > > +  reg:
 > > +    maxItems: 1
 > > +
-> > +  clocks:
-> > +    minItems: 1
-> > +    maxItems: 3
+> > +  "#address-cells":
+> > +    const: 2
 > > +
-> > +  clock-names:
+> > +  "#size-cells":
+> > +    const: 1
+> > +
+> > +  ranges:
 > > +    description: |
-> > +      Should contain all following required clock names:
-> > +      - "timers" - PWM base clock used to generate PWM signals,
-> > +      and any subset of following optional clock names:
-> > +      - "pwm-tclk0" - first external PWM clock source,
-> > +      - "pwm-tclk1" - second external PWM clock source.
-> > +      Note that not all IP variants allow using all external clock sources.
-> > +      Refer to SoC documentation to learn which clock source configurations
-> > +      are available.
-> > +    oneOf:
-> > +      - items:
-> > +        - const: "timers"
-> > +      - items:
-> > +        - const: "timers"
-> > +        - const: "pwm-tclk0"
-> > +      - items:
-> > +        - const: "timers"
-> > +        - const: "pwm-tclk1"
-> > +      - items:
-> > +        - const: "timers"
-> > +        - const: "pwm-tclk0"
-> > +        - const: "pwm-tclk1"
+> > +      Reflects the memory layout with four integer values per bank. Format:
+> > +      <bank-number> 0 <parent address of bank> <size>
 > > +
-> > +  interrupts:
-> > +    description:
-> > +      One interrupt per timer, starting at timer 0.
-> > +    minItems: 1
-> > +    maxItems: 5
-> > +
-> > +  "#pwm-cells":
-> > +    description:
-> > +      The only third cell flag supported by this binding
-> > +      is PWM_POLARITY_INVERTED.
-> > +    const: 3
-> > +
-> > +  samsung,pwm-outputs:
-> > +    description:
-> > +      A list of PWM channels used as PWM outputs on particular platform.
-> > +      It is an array of up to 5 elements being indices of PWM channels
-> > +      (from 0 to 4), the order does not matter.
-> > +    # TODO: Values should not repeat
+> > +patternProperties:
+> > +  "^.*@[0-9]+,[0-9]+$":
 >
-> uniqueItems: true
->
-> Though it looks like we have to enable that keyword. (As silently
-> ignoring unknown keywords (such as typos) is 'feature' of json-schema,
-> we explicitly list keywords we use.)
+> How many chip selects? Can be a single digit?
 
-This works fine.
+Currently up to four banks, so I can limit the pattern.
 
 >
-> > +    allOf:
-> > +      - $ref: /schemas/types.yaml#/definitions/uint32-array
-> > +      # FIXME: min/max limit of items does not work
-> > +      - items:
-> > +          minItems: 1
-> > +          maxItems: 5
-> > +      - items:
-> > +          minimum: 0
-> > +          maximum: 4
->
-> I think you want:
->
-> minItems: 1
-> maxItems: 2
-> items:
->   minimum: 0
->   maximum: 4
+> Also, these should be hex values.
 
-This not. However I figured out it is not needed. Since these are
-unique values from 0 to 4, then the size of array cannot be longer
-than 5 or shorter than 1.
+Sure.
+
+>
+> > +    type: object
+> > +    description:
+> > +      The actual device nodes should be added as subnodes to the SROMc node.
+> > +      These subnodes, in addition to regular device specification, should
+> > +      contain the following properties, describing configuration
+> > +      of the relevant SROM bank.
+> > +
+> > +    properties:
+> > +      reg:
+> > +        description:
+> > +          Bank number, base address (relative to start of the bank) and size
+> > +          of the memory mapped for the device. Note that base address will be
+> > +          typically 0 as this is the start of the bank.
+> > +        maxItems: 1
+> > +
+> > +      reg-io-width:
+> > +        allOf:
+> > +          - $ref: /schemas/types.yaml#/definitions/uint32
+> > +          - enum: [1, 2]
+> > +        description:
+> > +          Data width in bytes (1 or 2). If omitted, default of 1 is used.
+> > +
+> > +      samsung,srom-page-mode:
+> > +        description:
+> > +          If page mode is set, 4 data page mode will be configured,
+> > +          else normal (1 data) page mode will be set.
+> > +        type: boolean
+> > +
+> > +      samsung,srom-timing:
+> > +        allOf:
+> > +          - $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +          - items:
+> > +              minItems: 6
+> > +              maxItems: 6
+> > +        description: |
+> > +          Array of 6 integers, specifying bank timings in the following order:
+> > +          Tacp, Tcah, Tcoh, Tacc, Tcos, Tacs.
+> > +          Each value is specified in cycles and has the following meaning
+> > +          and valid range:
+> > +          Tacp: Page mode access cycle at Page mode (0 - 15)
+> > +          Tcah: Address holding time after CSn (0 - 15)
+> > +          Tcoh: Chip selection hold on OEn (0 - 15)
+> > +          Tacc: Access cycle (0 - 31, the actual time is N + 1)
+> > +          Tcos: Chip selection set-up before OEn (0 - 15)
+> > +          Tacs: Address set-up before CSn (0 - 15)
+> > +
+> > +    required:
+> > +      - reg
+> > +      - samsung,srom-timing
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +allOf:
+> > +  - if:
+> > +      anyOf:
+> > +        - required: [ "#address-cells" ]
+> > +        - required: [ ranges ]
+> > +        - required: [ "#size-cells" ]
+> > +    then:
+> > +      required:
+> > +        - "#address-cells"
+> > +        - ranges
+> > +        - "#size-cells"
+>
+> I don't think this is necessary as the core schema should take care of
+> it. This can also be expressed using 'dependencies'.
+
+I'll skip it then.
 
 Best regards,
 Krzysztof
