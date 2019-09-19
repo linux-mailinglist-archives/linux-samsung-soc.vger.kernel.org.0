@@ -2,87 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F06B5B744A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 09:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DE61B7451
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 09:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726566AbfISHii (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 19 Sep 2019 03:38:38 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35942 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725320AbfISHii (ORCPT
+        id S2387758AbfISHks (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Sep 2019 03:40:48 -0400
+Received: from mail-pf1-f173.google.com ([209.85.210.173]:46316 "EHLO
+        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387729AbfISHks (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 19 Sep 2019 03:38:38 -0400
-Received: by mail-wm1-f65.google.com with SMTP id m18so253928wmc.1;
-        Thu, 19 Sep 2019 00:38:36 -0700 (PDT)
+        Thu, 19 Sep 2019 03:40:48 -0400
+Received: by mail-pf1-f173.google.com with SMTP id q5so1674795pfg.13
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 Sep 2019 00:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=techveda-org.20150623.gappssmtp.com; s=20150623;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=CMGuIfdJwy5bt4geIdAc0eJZu6Nf33SLJOO5XBhd0p0=;
+        b=CZXs087stCim78gFlEL9Z5JULvrxO+0sERTwBfC8Y/zpARYd2F5zNOftaf9+Ghj9hm
+         8Up3glPWXVtC/fdwktcmL4cmJy8TWzAkmUYyKKtnelvXWPBsevom2GYkOrDOt9sUJbRZ
+         mLXaG+RPhVSD9WXHOZXtS3/DZM6pq8cqqafLFhKLPb9VBoqGR6laLEUteNSq+QK2dMPS
+         Q+LH7NXEnLSvny5+xuaB3McoUP87xVxiXS3m0SFL3BUvDrbnAMlGiQ2hYd2Obqc8sgRB
+         ByZTdzljtcWUxyzQC93/Pgw7FJp12R0VXmmdar2v8C/03uoW/eW4avp8yDp72c0RRehn
+         LLCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Y6zSWuxS8jgyDbyMqezvXVURezmzAxVKdd2OMOE7VDY=;
-        b=Q98K4MXgI2ofMOUzG0L/WgzRc2zT2vPuK0DYmLcMZR2zG0ydoOzI17+zvvHJXHIGDg
-         s8DX5nBd9UmT+vtMTK4w7UlRYprZqAqgA7BWtgeOFSUVitF/M36qiRvR0QUjR8Cn5FHW
-         DJf3nqnldyDXCsvBU2SsEwI9evQeUhIr+iIB0vae9Bx67OYX/osLu8oSoZeRYUQyClbw
-         mjZzIdAh4Xk+cJ3G2JfDQ8qr2sljC9gUnmThcLPv3mk8lMn0/CB6pCsCGeyr+Z9Z375m
-         lp2x/ao1b6DARtYEkXXjsUGVJjsNUMq6lp34EJB5UXOEeVjEJiNfPcg4h5+hLfREfjHU
-         xHAQ==
-X-Gm-Message-State: APjAAAX0dqyh17Cgz7/CWInYmNFZkHsX5CtQQ+BoM91rmAuV3y7xR66G
-        qhbV8wLrBIo7H0mhv4PMLuZp7Yhi
-X-Google-Smtp-Source: APXvYqzeq1U2LjJ1HD4/VWXclkN5qptlSoaU/lte93RCCam6t7j6L/Q8uKt9u97GzYcvPFW7th/KiA==
-X-Received: by 2002:a7b:c5ce:: with SMTP id n14mr1515680wmk.17.1568878715640;
-        Thu, 19 Sep 2019 00:38:35 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id t203sm6892411wmf.42.2019.09.19.00.38.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2019 00:38:34 -0700 (PDT)
-Date:   Thu, 19 Sep 2019 09:38:32 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     broonie@kernel.org, lgirdwood@gmail.com,
-        ckeepax@opensource.cirrus.com, sbkim73@samsung.com,
-        alsa-devel@alsa-project.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, patches@opensource.cirrus.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH v1 1/9] ASoC: wm8994: Do not register inapplicable
- controls for WM1811
-Message-ID: <20190919073832.GA13195@pi3>
-References: <20190918104634.15216-1-s.nawrocki@samsung.com>
- <CGME20190918104653eucas1p2e23ccbd05b3b780300adc9f4cb7a4c49@eucas1p2.samsung.com>
- <20190918104634.15216-2-s.nawrocki@samsung.com>
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=CMGuIfdJwy5bt4geIdAc0eJZu6Nf33SLJOO5XBhd0p0=;
+        b=eG/n9YyHHsWRpPyLaPEBY2YCsVd7wrTuLbm0ko1XrQKdWusEo5ZVCXnxpJJAnFLe5E
+         yRCzaLJRaYmeDerPrKRMfXwYPeV+bXfKG9gRivrvZbC1MeC06S6PITpqj8MHXxoGTk19
+         QdeJttN98CXLg/r6QFTmDC4Xpvyu1QXk+7EJG2qjgYxR+8+nuGNm48NHBs9ViyRHqwEe
+         FmvjKcQMRtfDiQsL6kh8U4ndz7BQ3sWNh/Egfuqq7UQZYYhodkSgUPbNCTARcPlpR1SQ
+         2/pwyQFRG3tBRvCKvWZW4H1WFzPEnpF+tB8rDEoVXmmn64hbkatV56s9sIIx375BmdGa
+         z/TA==
+X-Gm-Message-State: APjAAAVS5HOYulTjvxC2i1BxKS/2LW8SugM+rIMrI2r877BfBcAPTe0c
+        RgyGmViVb76X6QvmgCXgr9JgDQ==
+X-Google-Smtp-Source: APXvYqyPI7D3LtW3PYG+4t4qs0hFFNw1766ML/70CE4KjxoGLftVJj3lzgTj+anyGqIi79UbS3J3Cg==
+X-Received: by 2002:aa7:86c1:: with SMTP id h1mr8890668pfo.128.1568878847311;
+        Thu, 19 Sep 2019 00:40:47 -0700 (PDT)
+Received: from [192.168.1.100] ([123.201.163.9])
+        by smtp.gmail.com with ESMTPSA id y138sm12343001pfb.174.2019.09.19.00.40.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Sep 2019 00:40:46 -0700 (PDT)
+To:     kgene@kernel.org, krzk@kernel.org, wim@linux-watchdog.org,
+        linux@roeck-us.net, heiko@sntech.de
+Cc:     linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org
+From:   Suniel Mahesh <sunil.m@techveda.org>
+Subject: Samsung based S3C2440A chipset - watchdog timer issue
+Message-ID: <652bf0b2-3681-47f2-3b50-40edff52a7b5@techveda.org>
+Date:   Thu, 19 Sep 2019 13:10:40 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190918104634.15216-2-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 12:46:26PM +0200, Sylwester Nawrocki wrote:
-> In case of WM1811 device there are currently being registered controls
-> referring to registers not existing on that device.
-> It has been noticed when getting values of "AIF1ADC2 Volume", "AIF1DAC2
-> Volume" controls was failing during ALSA state restoring at boot time:
->  "amixer: Mixer hw:0 load error: Device or resource busy"
-> 
-> Reading some registers through I2C was failing with EBUSY error and indeed
-> those registers were not available according to the datasheet.
-> 
-> To fix this controls not available on WM1811 are moved to a separate array
-> and registered only for WM8994 and WM8958.
-> 
-> There are some further differences between WM8994 and WM1811, e.g. registers
-> 603h, 604h, 605h, which are not covered in this patch.
-> 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
->  sound/soc/codecs/wm8994.c | 43 +++++++++++++++++++++++----------------
->  1 file changed, 26 insertions(+), 17 deletions(-)
+Hi,
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+I am working on one of the Samsung based S3C2440A chipset based target .
 
-Best regards,
-Krzysztof
+I have couple of questions and I request someone to shed some light on these: (Thank you)
 
+The watchdog driver in linux, looks like, it just configured WDT but didn't start it (code snippet included below).
+
+May i know the reasson why WDT is not started ? Is it because u-boot already started WDT, implies it is not required to do the
+same once we jump into linux ? or is there any specific reason ?
+
+drivers/watchdog/s3c2410_wdt.c (line 53 and lines 616 - 625)
+
+#define S3C2410_WATCHDOG_ATBOOT         (0)
+....
+static int tmr_atboot   = S3C2410_WATCHDOG_ATBOOT;
+...
+...
+if (tmr_atboot && started == 0) {
+                dev_info(dev, "starting watchdog timer\n");
+                s3c2410wdt_start(&wdt->wdt_device);
+        } else if (!tmr_atboot) {
+                /* if we're not enabling the watchdog, then ensure it is
+                 * disabled if it has been left running from the bootloader
+                 * or other source */
+
+                s3c2410wdt_stop(&wdt->wdt_device);
+        }
+...
+...
+
+Tried to start WDT in linux by assigning value 1 to S3C2410_WATCHDOG_ATBOOT. The target resets.
+
+please comment.
+
+Thanks-- 
+Suniel Mahesh
