@@ -2,152 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EF9BB740D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 09:28:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F06B5B744A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 09:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732035AbfISH2c (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 19 Sep 2019 03:28:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41150 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728850AbfISH2b (ORCPT
+        id S1726566AbfISHii (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Sep 2019 03:38:38 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35942 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725320AbfISHii (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 19 Sep 2019 03:28:31 -0400
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 35E3121A49;
-        Thu, 19 Sep 2019 07:28:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568878110;
-        bh=4pZybG6ie1wq7kPEzXnAIhWrkHP0YAIy7EvNqXIs0nk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Hpi/Z6J0YAAbOxVs8ZaWgVSCqvrnR8B7P+/GUdLyupwWwixlPgAcGD61FvCiaJp8C
-         al+551ZPFPd3WOzm1y60AcTOlN8g0hc+qUf41kMC2I+ez+w5cUzQJhwDK2kKA3L993
-         YZahqK7xDgB73pcopGFoZRnJm9SuxVvlD7F/bxOA=
-Received: by mail-oi1-f182.google.com with SMTP id w6so1832859oie.11;
-        Thu, 19 Sep 2019 00:28:30 -0700 (PDT)
-X-Gm-Message-State: APjAAAVGMTNa52RjONtZZXyXp0fHnuYltVR83OxsBDG2TwOWhqcfNYRf
-        JMiUck6PtypxEMyQyI76VTK4LhKhbMmpuDorg8s=
-X-Google-Smtp-Source: APXvYqxcWCabkIkAYweLFABw3mTwh5ueZcYmaLJriDnmtFR+Tcfb38WjBVsL3eNPszwXlF4vNOXyKPu8g8TjuXaQDIc=
-X-Received: by 2002:aca:cf51:: with SMTP id f78mr1302933oig.8.1568878109494;
- Thu, 19 Sep 2019 00:28:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <CGME20190916100719eucas1p206fe95982b774840b5d6e62ba9c42c79@eucas1p2.samsung.com>
- <20190916100704.26692-1-l.luba@partner.samsung.com> <20190916100704.26692-4-l.luba@partner.samsung.com>
- <CAJKOXPcxG-mMKy5u-b0+xj_sOmrq5yq5-LYJx0Ds6_+yo_=JbA@mail.gmail.com> <4a0d1d2c-cd1d-5df4-d4b1-f2dd1ef3bb72@partner.samsung.com>
-In-Reply-To: <4a0d1d2c-cd1d-5df4-d4b1-f2dd1ef3bb72@partner.samsung.com>
+        Thu, 19 Sep 2019 03:38:38 -0400
+Received: by mail-wm1-f65.google.com with SMTP id m18so253928wmc.1;
+        Thu, 19 Sep 2019 00:38:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Y6zSWuxS8jgyDbyMqezvXVURezmzAxVKdd2OMOE7VDY=;
+        b=Q98K4MXgI2ofMOUzG0L/WgzRc2zT2vPuK0DYmLcMZR2zG0ydoOzI17+zvvHJXHIGDg
+         s8DX5nBd9UmT+vtMTK4w7UlRYprZqAqgA7BWtgeOFSUVitF/M36qiRvR0QUjR8Cn5FHW
+         DJf3nqnldyDXCsvBU2SsEwI9evQeUhIr+iIB0vae9Bx67OYX/osLu8oSoZeRYUQyClbw
+         mjZzIdAh4Xk+cJ3G2JfDQ8qr2sljC9gUnmThcLPv3mk8lMn0/CB6pCsCGeyr+Z9Z375m
+         lp2x/ao1b6DARtYEkXXjsUGVJjsNUMq6lp34EJB5UXOEeVjEJiNfPcg4h5+hLfREfjHU
+         xHAQ==
+X-Gm-Message-State: APjAAAX0dqyh17Cgz7/CWInYmNFZkHsX5CtQQ+BoM91rmAuV3y7xR66G
+        qhbV8wLrBIo7H0mhv4PMLuZp7Yhi
+X-Google-Smtp-Source: APXvYqzeq1U2LjJ1HD4/VWXclkN5qptlSoaU/lte93RCCam6t7j6L/Q8uKt9u97GzYcvPFW7th/KiA==
+X-Received: by 2002:a7b:c5ce:: with SMTP id n14mr1515680wmk.17.1568878715640;
+        Thu, 19 Sep 2019 00:38:35 -0700 (PDT)
+Received: from pi3 ([194.230.155.145])
+        by smtp.googlemail.com with ESMTPSA id t203sm6892411wmf.42.2019.09.19.00.38.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Sep 2019 00:38:34 -0700 (PDT)
+Date:   Thu, 19 Sep 2019 09:38:32 +0200
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 19 Sep 2019 09:28:18 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfBueaf2UVik8x2L_D_PTxdkvRukuWL3xh_jDiLKtt7pQ@mail.gmail.com>
-Message-ID: <CAJKOXPfBueaf2UVik8x2L_D_PTxdkvRukuWL3xh_jDiLKtt7pQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dt-bindings: ddr: Add bindings for Samsung LPDDR3 memories
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-pm@vger.kernel.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     broonie@kernel.org, lgirdwood@gmail.com,
+        ckeepax@opensource.cirrus.com, sbkim73@samsung.com,
+        alsa-devel@alsa-project.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, patches@opensource.cirrus.com,
         linux-arm-kernel@lists.infradead.org,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
-        <b.zolnierkie@samsung.com>, kgene@kernel.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
-        kyungmin.park@samsung.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        willy.mh.wolff.ml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com
+Subject: Re: [PATCH v1 1/9] ASoC: wm8994: Do not register inapplicable
+ controls for WM1811
+Message-ID: <20190919073832.GA13195@pi3>
+References: <20190918104634.15216-1-s.nawrocki@samsung.com>
+ <CGME20190918104653eucas1p2e23ccbd05b3b780300adc9f4cb7a4c49@eucas1p2.samsung.com>
+ <20190918104634.15216-2-s.nawrocki@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190918104634.15216-2-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 19 Sep 2019 at 08:49, Lukasz Luba <l.luba@partner.samsung.com> wrote:
->
-> Hi Krzysztof,
->
-> On 9/18/19 8:51 PM, Krzysztof Kozlowski wrote:
-> > On Mon, 16 Sep 2019 at 12:07, Lukasz Luba <l.luba@partner.samsung.com> wrote:
-> >>
-> >> Add compatible for Samsung k3qf2f20db LPDDR3 memory bindings.
-> >> Introduce minor fixes in the old documentation.
-> >>
-> >> Signed-off-by: Lukasz Luba <l.luba@partner.samsung.com>
-> >> ---
-> >>   Documentation/devicetree/bindings/ddr/lpddr3.txt | 9 ++++++---
-> >>   1 file changed, 6 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/ddr/lpddr3.txt b/Documentation/devicetree/bindings/ddr/lpddr3.txt
-> >> index 3b2485b84b3f..49afe794daaa 100644
-> >> --- a/Documentation/devicetree/bindings/ddr/lpddr3.txt
-> >> +++ b/Documentation/devicetree/bindings/ddr/lpddr3.txt
-> >> @@ -1,7 +1,9 @@
-> >>   * LPDDR3 SDRAM memories compliant to JEDEC JESD209-3C
-> >>
-> >>   Required properties:
-> >> -- compatible : Should be  - "jedec,lpddr3"
-> >> +- compatible : should be one of the following:
-> >> +       Generic default - "jedec,lpddr3".
-> >
-> > The convention is first compatible, then description. I gave you the
-> > example to base on - at25. Why making it different?
->
-> I have checked at25 that you pointed me to and also checked at24, which
-> has a bit longer "compatible" section.
->
-> I found that there are many "jedec,spi-nor" compatible devices, which I
-> thought would be a better example for my "jedec,lpddr3".
-> For example, two configurations, where you have a single labels or dual
-> (with specific device)
-> arch/arm/boot/dts/imx6dl-rex-basic.dts:
-> compatible = "sst,sst25vf016b", "jedec,spi-nor";
-> arch/arm/boot/dts/imx6q-ba16.dtsi:
-> compatible = "jedec,spi-nor";
->
-> The 'compatible' in documentation for the "jedec,spi-nor" is slightly
-> different (similar to at24).
-> Documentation/devicetree/bindings/mtd/jedec,spi-nor.txt
-> It has a long explanation, which is also OK. So I thought that it is
-> quite flexible what you put in there.
+On Wed, Sep 18, 2019 at 12:46:26PM +0200, Sylwester Nawrocki wrote:
+> In case of WM1811 device there are currently being registered controls
+> referring to registers not existing on that device.
+> It has been noticed when getting values of "AIF1ADC2 Volume", "AIF1DAC2
+> Volume" controls was failing during ALSA state restoring at boot time:
+>  "amixer: Mixer hw:0 load error: Device or resource busy"
+> 
+> Reading some registers through I2C was failing with EBUSY error and indeed
+> those registers were not available according to the datasheet.
+> 
+> To fix this controls not available on WM1811 are moved to a separate array
+> and registered only for WM8994 and WM8958.
+> 
+> There are some further differences between WM8994 and WM1811, e.g. registers
+> 603h, 604h, 605h, which are not covered in this patch.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+>  sound/soc/codecs/wm8994.c | 43 +++++++++++++++++++++++----------------
+>  1 file changed, 26 insertions(+), 17 deletions(-)
 
-It is flexible but I see clear pattern in existing sources:
-  jedec,spi-nor.txt
-  compatible : May include a device-specific ..
-  ...
-  Supported chip names:
-    at25df321a
-    ...
-
-  at25.txt:
-  - compatible : Should be "<vendor>,<type>", and generic value "atmel,at25".
-    Example "<vendor>,<type>" values:
-      "anvo,anv32e61w"
-      "microchip,25lc040"
-
-In these cases the doc says that "compatible should be" and then you
-have the list of values. Your example says that the compatible should
-be "Generic default" or "For Samsung 542x SoC"... :) The difference is
-slight but putting the value first is a simple and elegant solution.
-In your case one has to go to the end of sentence to find the most
-important information - the compatible value.
-
-> I have also checked Cadance QSPI controller.
-> Documentation/devicetree/bindings/mtd/cadence-quadspi.txt
-> The controller might be built-in into different vendor SoC's
-> and the "compatible" is ready to reflect it in similar fashion but
-> with a short explanation in this section.
-
-I see. I do not find this pattern as much readable as jedec-spi-nor or
-at25 therefore I mentioned them as an example to base on ("Exactly the
-same as AT24 or AT25 EEPROM bindings."). We can avoid also this entire
-discussion with YAML (which also follows approach of at25 - value
-first).
-
-> Therefore, what you see in the patch draw heavily on Cadence's qspi,
-> with a bit of inspiration from jedec,spi-nor usage.
->
-> Should I change it to at25 "compatible" style and send next patch?
-
-Yes, please. Or go to YAML and make entire discussion obsolete.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
+
