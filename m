@@ -2,85 +2,182 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB1E6B7658
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 11:33:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DDC7B78C2
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 13:58:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388638AbfISJdQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 19 Sep 2019 05:33:16 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:36066 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387767AbfISJdQ (ORCPT
+        id S2388597AbfISL6m (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Sep 2019 07:58:42 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:53552 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388639AbfISL6m (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 19 Sep 2019 05:33:16 -0400
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x8J9OI66018021;
-        Thu, 19 Sep 2019 09:33:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2019-08-05;
- bh=ntE+c9cESazn72DuT4SsObOcii7mo2s3N68Qv9djNSw=;
- b=V54QvGT+VYQNpveqIkWSOpQzqmOSxvNze/4+IsHujmBXR1puO+PnSm+OFjQLE+64pIBH
- 3qP39ipm4Kho7S6ZHmcBOjA8mzJ+e3KCkXQ1xyroKesqkUFXtwtiWMMsOIpv86zuPKSt
- /ze9oN6AhzieZKCrHeXwDd2A5aOEtpP/OYD+iYsC7Na17P/cc5tCkYOz9C4yJLLexgu6
- toq91MbiBoWIcZrvHvkL2caEYqXHl7xWz0Tt+3QG/+GOz6Nuyp6zY8AoedabO5Kx+DTe
- 60nDzRa04VjJqpqmoHOnG6p5qq0WNRsd3SlJSJ8+VrZNsf8cIdLz5mlEWo7zE3NFewin lA== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2120.oracle.com with ESMTP id 2v3vb4tny5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 19 Sep 2019 09:33:01 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id x8J9SsYw169589;
-        Thu, 19 Sep 2019 09:33:01 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by aserp3020.oracle.com with ESMTP id 2v3vbfrjxy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 19 Sep 2019 09:33:01 +0000
-Received: from abhmp0001.oracle.com (abhmp0001.oracle.com [141.146.116.7])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id x8J9Wx3D018214;
-        Thu, 19 Sep 2019 09:32:59 GMT
-Received: from kadam (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Thu, 19 Sep 2019 02:32:59 -0700
-Date:   Thu, 19 Sep 2019 12:32:46 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Lukasz Luba <l.luba@partner.samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, b.zolnierkie@samsung.com,
-        krzk@kernel.org, kgene@kernel.org, mark.rutland@arm.com,
-        robh+dt@kernel.org, cw00.choi@samsung.com,
-        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
-        s.nawrocki@samsung.com, myungjoo.ham@samsung.com,
-        willy.mh.wolff.ml@gmail.com
-Subject: Re: [PATCH v3 1/2] memory: samsung: exynos5422-dmc: Fix kfree() of
- devm-allocated memory and missing static
-Message-ID: <20190919093246.GF20699@kadam>
-References: <20190919092641.4407-1-l.luba@partner.samsung.com>
- <CGME20190919092652eucas1p12dbf9ba9d60a0c89cb7de05ab61893be@eucas1p1.samsung.com>
- <20190919092641.4407-2-l.luba@partner.samsung.com>
+        Thu, 19 Sep 2019 07:58:42 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190919115840euoutp02d22343c7a1daaebac3174ffdc4a428d7~F1RJdAQt33000230002euoutp02c
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 Sep 2019 11:58:40 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190919115840euoutp02d22343c7a1daaebac3174ffdc4a428d7~F1RJdAQt33000230002euoutp02c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568894320;
+        bh=21q9HfV2eKg/mh9khYWiU2Nbp9MldUbocb4+Q2NumeI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Pd6u3sgvp5iRA/RWFaghZS6BuqwoHjc7Gdqy2F0KhrVexwHeKzhbDo0xu/35rEhNy
+         BIkrZPPaGW82IqcmcE5lWvoVJVHSiacIDkIlSByO36aeL4tDhJLX0ujqDNoyKLcMmn
+         YYzeZnvR0/afV6vZbbNuuhs60XBDliVpSHm46RHs=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190919115839eucas1p147dd71ac5165968354be3a25f4ef2b49~F1RIsfWu_2993729937eucas1p10;
+        Thu, 19 Sep 2019 11:58:39 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 3B.A5.04469.E6D638D5; Thu, 19
+        Sep 2019 12:58:38 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190919115838eucas1p1d20b95e4d709e96831a324fc714a66dd~F1RH7zO1K1205112051eucas1p1b;
+        Thu, 19 Sep 2019 11:58:38 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190919115838eusmtrp224062b3828bb40d4ea5b5ab3171f0bd5~F1RHtlD3H0905709057eusmtrp2N;
+        Thu, 19 Sep 2019 11:58:38 +0000 (GMT)
+X-AuditID: cbfec7f2-569ff70000001175-7d-5d836d6ee403
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 50.C9.04166.E6D638D5; Thu, 19
+        Sep 2019 12:58:38 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20190919115837eusmtip1bd45667078b62682272ab4f1bceaa98c~F1RHKA5xp1104911049eusmtip1D;
+        Thu, 19 Sep 2019 11:58:37 +0000 (GMT)
+Subject: Re: [PATCH v1 4/9] ASoC: wm8994: Add support for MCLKn clock gating
+To:     Charles Keepax <ckeepax@opensource.cirrus.com>
+Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
+        sbkim73@samsung.com, patches@opensource.cirrus.com,
+        broonie@kernel.org, lgirdwood@gmail.com, krzk@kernel.org,
+        robh+dt@kernel.org, linux-arm-kernel@lists.infradead.org,
+        m.szyprowski@samsung.com
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <717b3f94-1a24-a407-398f-6a476cf7ff69@samsung.com>
+Date:   Thu, 19 Sep 2019 13:58:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190919092641.4407-2-l.luba@partner.samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9384 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1908290000 definitions=main-1909190090
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9384 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
- definitions=main-1909190090
+In-Reply-To: <20190918143157.GH10204@ediswmail.ad.cirrus.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0hTcRTud9+Trv2clgez1yiipxoVN7KoCFoUFNEfPZCadtPQTdvUXkRD
+        MeZa9gCbrpkSvRSkucx8lMY0l5UO8xWmqSQolcWcRi9cXW+R/33ne3DOB4cjlW10GHdMlyrq
+        dZokFRNAVTR+b1mh02bGRBaY1wrtrS5CKMu7Twu5A4OM0J7lREJhQwsteDwOVvjabiIE5/tO
+        Wsjz1BJCaUMvK/i+1NFC1pMGVmi9N0Zs4tUOXwajrrL1smpnSTajfnDrnNpq9yN1TnkJUvuc
+        c3ezBwKij4hJx9JFfcTGwwEJjhtNTEpB6EmT1U0b0XlsRgoO8GooaxujzSiAU+J7CPp/9CJ5
+        GEMwdOPqX8WHoObBU/ZfZKKnkpCFuwjqPK9YeRhB0DM6QJoRxwXjnZB3O14KhOBV4HV3TwZI
+        7CJgaLCDlgQGR8HFZzlIwjzeCEM5PYyEKbwIxvMaJz0z8T4Y7a+nZU8QNOUPUhJW4A1w5WsV
+        KWESh0LGWDEt43nwaMROSssAe1nIf/iOls/eCpWPLYyMg+GDu/xvnXDwVxUSciATgaXmLSsP
+        lxH0uYuQ7FoP9e5WWqpG4iVwvzpCpjeDyVHGSDTgQHgzEiQfEQhXK6ykTPNgOq+U3QvhZ4mV
+        kHEYXBj0U5eRyjalmm1KHduUOrb/e4sQVYJCxTSDNl40ROnEEysNGq0hTRe/Mi5Z60R/Xu3l
+        hHu0Eo2/jnUhzCHVdP7b4owYJa1JN5zSuhBwpCqEt6/5Q/FHNKdOi/rkQ/q0JNHgQrM5ShXK
+        n5nWf1CJ4zWpYqIopoj6fyrBKcKM6OG27JC6Qq/9Za22K7Bj2NM2X1x0fFbt2TtXnlGNvdcc
+        uR3s+uXiU36PUN3dfHRdoiJ2S8LnXcnhe3P3fzQuy59x51x58ac5B73bx4OiVaX28hj6eRyu
+        KHoRWWfs83dFFN6yKG9m6cK/7OhqsRw2ZncO881b06/bL/0qs4YsMP1sUlGGBE3UUlJv0PwG
+        VJqO7GYDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsVy+t/xu7p5uc2xBhc+clpcuXiIyWLjjPWs
+        FlMfPmGzuNK6idFi/pFzrBbnz29gt/h2pYPJYtPja6wWM87vY7JYe+Quu8Xn9/tZLVr3HmG3
+        uLjiC5MDr8eGz01sHjtn3WX32LSqk81j85J6j+lz/jN69G1ZxejxeZNcAHuUnk1RfmlJqkJG
+        fnGJrVK0oYWRnqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXsaGeSfZCuaKV3RMP87a
+        wNgm0MXIySEhYCLx784Opi5GLg4hgaWMEpsmP2bsYuQASkhJzG9RgqgRlvhzrYsNouY1o0TH
+        oSdsIDXCAj4SM5amg9SICBhJfDx+C2wOs8AhJok3H5azQzR8YZT4duQhG0gVm4ChRO/RPkYQ
+        m1fATuJ53x2wOIuAqsTXGcdYQWxRgQiJwztmQdUISpyc+YQFxOYUsJWY+G0nM4jNLKAu8Wfe
+        JShbXKLpy0pWCFteYvvbOcwTGIVmIWmfhaRlFpKWWUhaFjCyrGIUSS0tzk3PLTbUK07MLS7N
+        S9dLzs/dxAiM4W3Hfm7ewXhpY/AhRgEORiUe3h/qTbFCrIllxZW5hxglOJiVRHjnmAKFeFMS
+        K6tSi/Lji0pzUosPMZoCPTeRWUo0OR+YXvJK4g1NDc0tLA3Njc2NzSyUxHk7BA7GCAmkJ5ak
+        ZqemFqQWwfQxcXBKNTAWKh46qrBMSvtuWFL0LpllZ/7OYQuKCn7yPdrsh9pHC9nf5/bYCPFc
+        CMxcaB6SbtRfIzRnXV/j0a1lUX0RBWGHYrTn3elkMDuTHNIhxTap5IPo5WBbHZW60PAXRbuy
+        NZqXVr/csOLWx8xFErM49670vHzy99uiJVvdK72Zr2T0L31/53Zgl4QSS3FGoqEWc1FxIgDc
+        gQDX9wIAAA==
+X-CMS-MailID: 20190919115838eucas1p1d20b95e4d709e96831a324fc714a66dd
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190918104700eucas1p1ef0775632f5c7259fb54cab8efc96c50
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190918104700eucas1p1ef0775632f5c7259fb54cab8efc96c50
+References: <20190918104634.15216-1-s.nawrocki@samsung.com>
+        <CGME20190918104700eucas1p1ef0775632f5c7259fb54cab8efc96c50@eucas1p1.samsung.com>
+        <20190918104634.15216-5-s.nawrocki@samsung.com>
+        <20190918143157.GH10204@ediswmail.ad.cirrus.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Thanks!  Looks good.
+On 9/18/19 16:31, Charles Keepax wrote:
+>> @@ -2315,6 +2396,8 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+>>  
+>>  			active_dereference(component);
+>>  		}
+>> +		if (mclk)
+>> +			clk_disable_unprepare(mclk);
+>
+> I don't think this works in the case of changing active FLLs.
+> The driver looks like it allows changing the FLL configuration
+> whilst the FLL is already active in which case it you would have
+> two wm8994_set_fll calls enabling the FLL but only a single one
+> disabling it. Resulting in the FLL being off but the MCLK being
+> left enabled.
 
-regards,
-dan carpenter
+Indeed I missed this scenario, or rather assumed it won't be used.
+But since the driver allows reconfiguring active FLLs we should make
+sure such use case remains properly supported.
 
+What I came up so far as a fix is reading current FLL refclk source and 
+if FLL was enabled with that source disabling refclk, before we change FLL 
+configuration to new one.  So we have clk_disable_unprepare(MCLK) more 
+closely following FLL enable bit changes.  I have tested it and it seems 
+to work - something like below. Do you think it makes sense?
+
+-- 
+Regards,
+Sylwester
+
+---------8<----------
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index bf02e8908d5a..78a0835a095e 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -2277,6 +2277,31 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+        snd_soc_component_update_bits(component, WM8994_FLL1_CONTROL_1 + reg_offset,
+                            WM8994_FLL1_ENA, 0);
+ 
++       /* Disable MCLK if needed before we possibly change to new clock parent */
++       if (was_enabled) {
++               reg = snd_soc_component_read32(component, WM8994_FLL1_CONTROL_5
++                                                       + reg_offset);
++               reg = ((reg & WM8994_FLL1_REFCLK_SRC_MASK)
++                       >> WM8994_FLL1_REFCLK_SRC_SHIFT) + 1;
++
++               switch (reg) {
++               case WM8994_FLL_SRC_MCLK1:
++                       mclk = control->mclk[WM8994_MCLK1].clk;
++                       break;
++               case WM8994_FLL_SRC_MCLK2:
++                       mclk = control->mclk[WM8994_MCLK2].clk;
++                       break;
++               default:
++                       mclk = NULL;
++               }
++
++               clk_disable_unprepare(mclk);
++       }
++
+        if (wm8994->fll_byp && src == WM8994_FLL_SRC_BCLK &&
+            freq_in == freq_out && freq_out) {
+                dev_dbg(component->dev, "Bypassing FLL%d\n", id + 1);
+
+@@ -2396,8 +2420,6 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+ 
+                        active_dereference(component);
+                }
+-               if (mclk)
+-                       clk_disable_unprepare(mclk);
+        }
+ 
+ out:
+---------8<----------
