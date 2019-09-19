@@ -2,151 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 817B2B750F
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 10:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5329B7546
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 10:38:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388194AbfISI01 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 19 Sep 2019 04:26:27 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52103 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387637AbfISI01 (ORCPT
+        id S2388282AbfISIi3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Sep 2019 04:38:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60752 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388008AbfISIi3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 19 Sep 2019 04:26:27 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 7so3307285wme.1;
-        Thu, 19 Sep 2019 01:26:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5Kix1vWVqgxCmDUQkxBHf8UbEBayBPaxaHrzjCVpKWE=;
-        b=ce2h2urm0BT/r5eyMurKA7qfFd6wGAJFR6zPhkqRnPmbZtOW/VT/R6fLv4O1xfXrFv
-         OP86NKpmmcy+NnU6SFTOJ5mpwPosE7xMPynOU0IemfRqVKcAghoZFkP5n4WEgQJuwLnK
-         AHWxGr7J4oQbowB9QaolKW04uX487mgh0cbwFW9QOeeeYK0mOHnqrOWGQyAkIP9h8ws+
-         faZBiKuiTtAL1LexOn3h9p1YdOI1OTkMh3KKbspplr7+VrorkeT3eQeYdwb1F3388Z6f
-         /Qmj39uVfHUuNuE8/wCKpqbI7IUOatwDI/MPtNKqyyr7J3SWSiWud0UM1EBzaF81282Z
-         oNIw==
-X-Gm-Message-State: APjAAAVee7PQSkf9zxZGYaQ7J10x6Ar2yYTH65IiTwmW0UhpbhUimi4n
-        ltbTuhgcdbmUijZx5ZxyQwg=
-X-Google-Smtp-Source: APXvYqzzWYQAyNSPK0OicTAv83TGfnT3qvETBNRtC/3D58bfQtSXgxXkEDBhiDTK0t/7qWUw8Q38HA==
-X-Received: by 2002:a1c:d188:: with SMTP id i130mr1738494wmg.101.1568881585095;
-        Thu, 19 Sep 2019 01:26:25 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id n7sm2737843wrt.59.2019.09.19.01.26.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2019 01:26:24 -0700 (PDT)
-Date:   Thu, 19 Sep 2019 10:26:21 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     broonie@kernel.org, lgirdwood@gmail.com,
-        ckeepax@opensource.cirrus.com, sbkim73@samsung.com,
-        alsa-devel@alsa-project.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, patches@opensource.cirrus.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH v1 9/9] ARM: dts: arndale: Add audio support (WM1811
- CODEC boards)
-Message-ID: <20190919082621.GG13195@pi3>
-References: <20190918104634.15216-1-s.nawrocki@samsung.com>
- <CGME20190918104715eucas1p2a051a537a0e86becfbbcb36c172ef705@eucas1p2.samsung.com>
- <20190918104634.15216-10-s.nawrocki@samsung.com>
+        Thu, 19 Sep 2019 04:38:29 -0400
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 766D721929;
+        Thu, 19 Sep 2019 08:38:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1568882308;
+        bh=2kMQjkBCXiGr7zLm10MBY4u/X31OBc1OC6oW8iKd0eE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=sA3sBnKQGqzg+ubD8iSs+ztKByxO3DIHTr6Z9wBdDqOl/IKu1ZHQAED4bZ1H9Bbd0
+         er4BYaIVgDZIDxbh2HgG1Nq1nI718PSxexf2MxrSHpORGAENrPVuK/88OLbK/xHjye
+         sU4c1KV18gjWvafWuwXoUxMuVmQO/lq15FwygDCg=
+Received: by mail-oi1-f179.google.com with SMTP id k20so2061739oih.3;
+        Thu, 19 Sep 2019 01:38:28 -0700 (PDT)
+X-Gm-Message-State: APjAAAUE1WRPN4PpLcroUh9La6/M6CY7mgcsdHEETNgsieycamsS4rJY
+        d8SO4YY7KaBxNDogvthki3+4JYHz9DD983kGMAc=
+X-Google-Smtp-Source: APXvYqz1uxaw6PlvQFNdn6YP+5sz8W3DiASgyOVcPdZm5Rv2MDPDn3yyHDmh2NLkY4h2z9nCsIF1CtIHabLfLYKYuiY=
+X-Received: by 2002:aca:5045:: with SMTP id e66mr1286622oib.7.1568882307737;
+ Thu, 19 Sep 2019 01:38:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190918104634.15216-10-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+References: <652bf0b2-3681-47f2-3b50-40edff52a7b5@techveda.org>
+In-Reply-To: <652bf0b2-3681-47f2-3b50-40edff52a7b5@techveda.org>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Thu, 19 Sep 2019 10:38:16 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdoYZTr_4ysVxN17bo8FZzQXRJS=ch4BAZzY+bLsLhS9Q@mail.gmail.com>
+Message-ID: <CAJKOXPdoYZTr_4ysVxN17bo8FZzQXRJS=ch4BAZzY+bLsLhS9Q@mail.gmail.com>
+Subject: Re: Samsung based S3C2440A chipset - watchdog timer issue
+To:     Suniel Mahesh <sunil.m@techveda.org>
+Cc:     kgene@kernel.org, wim@linux-watchdog.org, linux@roeck-us.net,
+        heiko@sntech.de,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, linux-watchdog@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Sep 18, 2019 at 12:46:34PM +0200, Sylwester Nawrocki wrote:
-> Add sound node and the clock configurations for the I2S controller
-> for audio support on the Exynos5250 SoC Arndale boards with
-> WM1811 based audio daugther board.
-> 
-> We need to increase drive strength of the I2S bus, otherwise
-> the audio CODEC doesn't work. Likely the CODEC's master clock
-> is the main issue here.
-> 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
->  arch/arm/boot/dts/exynos5250-arndale.dts | 27 +++++++++++++++++++++++-
->  1 file changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/boot/dts/exynos5250-arndale.dts b/arch/arm/boot/dts/exynos5250-arndale.dts
-> index dc6fa6fe83f1..62aa6720aa88 100644
-> --- a/arch/arm/boot/dts/exynos5250-arndale.dts
-> +++ b/arch/arm/boot/dts/exynos5250-arndale.dts
-> @@ -11,6 +11,7 @@
->  #include <dt-bindings/interrupt-controller/irq.h>
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/clock/samsung,s2mps11.h>
-> +#include <dt-bindings/sound/samsung-i2s.h>
->  #include "exynos5250.dtsi"
->  
->  / {
-> @@ -135,6 +136,12 @@
->  		};
->  	};
->  
-> +	sound {
-> +		compatible = "samsung,arndale-wm1811";
-> +		samsung,audio-cpu = <&i2s0>;
-> +		samsung,audio-codec = <&wm1811>;
-> +	};
-> +
->  	fixed-rate-clocks {
->  		xxti {
->  			compatible = "samsung,clock-xxti";
-> @@ -499,12 +506,24 @@
->  	};
->  };
->  
-> +&clock {
-> +	assigned-clocks = <&clock CLK_FOUT_EPLL>;
-> +	assigned-clock-rates = <49152000>;
-> +};
-> +
-> +&clock_audss {
-> +	assigned-clocks = <&clock_audss EXYNOS_MOUT_AUDSS>;
-> +	assigned-clock-parents = <&clock CLK_FOUT_EPLL>;
-> +};
+On Thu, 19 Sep 2019 at 09:40, Suniel Mahesh <sunil.m@techveda.org> wrote:
+>
+> Hi,
+>
+> I am working on one of the Samsung based S3C2440A chipset based target .
+>
+> I have couple of questions and I request someone to shed some light on these: (Thank you)
+>
+> The watchdog driver in linux, looks like, it just configured WDT but didn't start it (code snippet included below).
+>
+> May i know the reasson why WDT is not started ? Is it because u-boot already started WDT, implies it is not required to do the
+> same once we jump into linux ? or is there any specific reason ?
+>
+> drivers/watchdog/s3c2410_wdt.c (line 53 and lines 616 - 625)
+>
+> #define S3C2410_WATCHDOG_ATBOOT         (0)
+> ....
+> static int tmr_atboot   = S3C2410_WATCHDOG_ATBOOT;
+> ...
+> ...
+> if (tmr_atboot && started == 0) {
+>                 dev_info(dev, "starting watchdog timer\n");
+>                 s3c2410wdt_start(&wdt->wdt_device);
+>         } else if (!tmr_atboot) {
+>                 /* if we're not enabling the watchdog, then ensure it is
+>                  * disabled if it has been left running from the bootloader
+>                  * or other source */
+>
+>                 s3c2410wdt_stop(&wdt->wdt_device);
+>         }
+> ...
+> ...
+>
+> Tried to start WDT in linux by assigning value 1 to S3C2410_WATCHDOG_ATBOOT. The target resets.
+>
+> please comment.
 
-Put them before "cpu" so alphabetical order is preserved.
+I think watchdog should not start during boot before user-space is
+brought up. Otherwise who will ping it? Usually watchdog is started by
+opening the watchdog device by user-space. If you need it to be
+running without user-space, there are special flags for this (see
+WDOG_HW_RUNNING and others).
 
 Best regards,
 Krzysztof
-
-> +
->  &i2c_3 {
->  	status = "okay";
->  
-> -	wm1811a@1a {
-> +	wm1811: codec@1a {
->  		compatible = "wlf,wm1811";
->  		reg = <0x1a>;
-> +		clocks = <&i2s0 CLK_I2S_CDCLK>;
-> +		clock-names = "MCLK1";
->  
->  		AVDD2-supply = <&main_dc_reg>;
->  		CPVDD-supply = <&main_dc_reg>;
-> @@ -540,9 +559,15 @@
->  };
->  
->  &i2s0 {
-> +	assigned-clocks = <&i2s0 CLK_I2S_RCLK_SRC>;
-> +	assigned-clock-parents = <&clock_audss EXYNOS_I2S_BUS>;
->  	status = "okay";
->  };
->  
-> +&i2s0_bus {
-> +	samsung,pin-drv = <EXYNOS4_PIN_DRV_LV2>;
-> +};
-> +
->  &mixer {
->  	status = "okay";
->  };
-> -- 
-> 2.17.1
-> 
