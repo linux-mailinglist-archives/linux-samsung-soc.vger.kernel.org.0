@@ -2,123 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19BACB7A6F
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 15:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50A8AB7A84
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2019 15:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389656AbfISN0b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 19 Sep 2019 09:26:31 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:37919 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389604AbfISN0a (ORCPT
+        id S2390002AbfISNbL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Sep 2019 09:31:11 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:54811 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389999AbfISNbL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 19 Sep 2019 09:26:30 -0400
-Received: by mail-pg1-f193.google.com with SMTP id x10so1923635pgi.5;
-        Thu, 19 Sep 2019 06:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CoB4KmaHfq+yxd87gkGVs6nwrNH2bvGH19ka5K/5+7s=;
-        b=V9YQYFxmlUNCybjvdRLrQvPOvSMjndmjun4zivZO+oRyzN0pCcKs6DrBWmtSRf4oy4
-         jePI3xFYjTbHTZBowP6zr6KxFzy2EN2ZaJgzFLp//LY5rnbzvgBCyKThcXevmZj6JLYX
-         C6TbcKFRpJ+/yCdLxuTyw3XRFeFy23iwJ4QDgoXTciqvwDVlCdvqX1LC+awXUsLSjn8S
-         j8CaygQUaTIVjUsAKYPxgTej9bAgQ6q1FcCews42UwY+aMHgL5sPkO5RaBzr7DHtKL9H
-         cEyP7UJUV247uLJ/YS2aK5veRcEn5btm7Osk3MShGzsSbKNmELDb14jjX2ygKunvRfBh
-         ITWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=CoB4KmaHfq+yxd87gkGVs6nwrNH2bvGH19ka5K/5+7s=;
-        b=iHAPDkf/6OrDn2t/7Rp6d666/xf5Gcr+cFAwR211+5Gur54Wo9ZAmqPtoI9iVrmARx
-         MdjfvXk8I5rZCm19NKUyIzc77jv0Byiq/WHV7EKd+rYy2R7nIcagLXx5hUvTdZUPbLpJ
-         yvedlkO/CRr50YqrWszxfj9Tob6lncsnZ1O1/mqnztbC4YehUV4dVtFijQ5LHC/+N3LL
-         qtxzcNMTg9Cr4XTjrTxtoua4tvljVK28EVNAtt5UX0Ft6V1MX9zDH2b2fP2hqyg7R5oi
-         xSeXHWg0vJjNtc9f/v7/nRXPsJGlpVXcB0MqM2/Cp4tjvYqqKxl7KUcdyNgyuN62EuY0
-         QzHg==
-X-Gm-Message-State: APjAAAVG15kBuoZz4tF2N3UMMZ6Ommu0/1GGSHrOgT08jfeX2flPFNBc
-        G4Bijm4efX/9WOOzioVFGI8P/Ywg
-X-Google-Smtp-Source: APXvYqxXBFANc621yv4NEdqoHo25S849CFrx4vJkjX5759Pvs2XA1B976aIlXE9jZz3GZcwcPyGjsg==
-X-Received: by 2002:a17:90a:b114:: with SMTP id z20mr3721493pjq.113.1568899588392;
-        Thu, 19 Sep 2019 06:26:28 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u31sm30617181pgn.93.2019.09.19.06.26.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Sep 2019 06:26:27 -0700 (PDT)
-Subject: Re: Samsung based S3C2440A chipset - watchdog timer issue
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Suniel Mahesh <sunil.m@techveda.org>
-Cc:     kgene@kernel.org, wim@linux-watchdog.org, heiko@sntech.de,
+        Thu, 19 Sep 2019 09:31:11 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190919133108euoutp018d046107a02eee5a778cf0c99fedb634~F2h5EFTnI1585915859euoutp01p
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 Sep 2019 13:31:08 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190919133108euoutp018d046107a02eee5a778cf0c99fedb634~F2h5EFTnI1585915859euoutp01p
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1568899868;
+        bh=FopNKHLEgXvbDmvlUkEcgTZYoBFpfDf+Gxyck3rMI64=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=fS+IYWDkL7UcIoHUx8jvazOe2cXyEEIJ4urwgwNV3mP7DUJjgSofNQEV5krvRm2K5
+         jK34AAHm2cksajUoJCaes2U2Qwymxra9xK0/euSnulCGD0LwUJCp5hNsWYLkH6PLKJ
+         kvLBIS4aXb/4ilZHSb0ODPdoibWcsIs7PY2f3GoQ=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190919133107eucas1p29c81b0ad1d1a6a82d863b41a661ec2a4~F2h4VBsVA0541405414eucas1p2U;
+        Thu, 19 Sep 2019 13:31:07 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 8E.24.04469.B13838D5; Thu, 19
+        Sep 2019 14:31:07 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20190919133107eucas1p1f9502dca0c106fb9e268f2636b6ec774~F2h3lT5LF2235322353eucas1p1e;
+        Thu, 19 Sep 2019 13:31:07 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190919133106eusmtrp2c59c51ddc76296b5bdc00cb72bb23539~F2h3XKIuM3220232202eusmtrp2_;
+        Thu, 19 Sep 2019 13:31:06 +0000 (GMT)
+X-AuditID: cbfec7f2-54fff70000001175-d7-5d83831b7d01
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 60.2E.04117.A13838D5; Thu, 19
+        Sep 2019 14:31:06 +0100 (BST)
+Received: from [106.120.51.75] (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190919133106eusmtip2c973d9971334728740a684d22fd689bf~F2h2we2vz2776727767eusmtip2i;
+        Thu, 19 Sep 2019 13:31:06 +0000 (GMT)
+Subject: Re: [alsa-devel] [PATCH v1 8/9] ASoC: samsung: arndale: Add missing
+ OF node dereferencing
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
         "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-watchdog@vger.kernel.org
-References: <652bf0b2-3681-47f2-3b50-40edff52a7b5@techveda.org>
- <CAJKOXPdoYZTr_4ysVxN17bo8FZzQXRJS=ch4BAZzY+bLsLhS9Q@mail.gmail.com>
-From:   Guenter Roeck <linux@roeck-us.net>
-Message-ID: <19a79d6b-e373-3ac6-0339-2ef06f14818b@roeck-us.net>
-Date:   Thu, 19 Sep 2019 06:26:26 -0700
+        <linux-samsung-soc@vger.kernel.org>, ckeepax@opensource.cirrus.com,
+        =?UTF-8?Q?Bart=c5=82omiej_=c5=bbo=c5=82nierkiewicz?= 
+        <b.zolnierkie@samsung.com>, sbkim73@samsung.com,
+        patches@opensource.cirrus.com, lgirdwood@gmail.com,
+        robh+dt@kernel.org, broonie@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <389f0e11-dd00-b373-faef-ed689037340c@samsung.com>
+Date:   Thu, 19 Sep 2019 15:31:05 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAJKOXPdoYZTr_4ysVxN17bo8FZzQXRJS=ch4BAZzY+bLsLhS9Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <CAJKOXPfwAx7vWSWS0M1JuGJvn6tKTp9yaT2qEOwmAWTUdvoptQ@mail.gmail.com>
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0hTcRT2d7e7ezUn16l5UikZKa1IXSRcSKRA4kb/aP8kxqypN5XmlM1H
+        PiBzKrrSLInpUDYp8lGhTrNMUpumqaFp6yHmI1II0wznrAg13VXyv+875/vOOR8ckiey4F5k
+        ojKVVSnlCrHAid/W92f4qLdGIwuaXJbQllEzRjdXNOL03S+zAtpSYEK0oXcYp0dGmgh61VKE
+        0aavH3C6YqQTox/3ThK0dakLpwte9BL0aN0KdlLINFnzBEy7fpJgTA3FAqbl/jVGV7WBmNLW
+        BsRYTfvDiSinkDhWkZjOqgJDLzkljBmmUEoucXW6rwbLRQO4FjmSQB2HrsFBnhY5kSKqDoHu
+        /TrOkRUEtvF6xBErgocvPwt2LOWF5RjXqEXQPjewTRYRGLrH7YPdqDjQLtbaHe6UBD6u/bLP
+        5VF9PNDWdKOthoCSQsmrUjsWUqHwevmW3cCn/MBm/I1tYQ8qEpZnenBO4woDlbP8LexIRcCE
+        bt6u51GekLdSj3P4ADxdrLInAspGwL3i7u2oYTCzcR3jsBvM97cSHPaBjXYDxhk0CG52TBAc
+        KUMw3W9EnOoE9PSPbk4iN1dIoPF5IFc+Bc35lcRWGSgX+LToyh3hAnfadDyuLISiQhGnPgh/
+        G3TbJ3jBjdkNfhkS63dF0++Ko98VR/9/rxHxG5Anm6ZOimfVUiWbEaCWJ6nTlPEBsclJJrT5
+        a0Pr/cvPkG0sxowoEomdhb4ZGpkIl6erM5PMCEie2F1YFZwnEwnj5JlZrCr5oipNwarNyJvk
+        iz2F2Q4zF0RUvDyVvcKyKaxqp4uRjl656IEm+p3v95rwKZky9k2ENt9HmVWdyuzzCAmUplq9
+        zvlOta2FxZCKn0Sjz8KC1D9IFPV2NPiY/n5WpypjqDFRtBRbv1rtEc1Eukd4O7fkeJufSH4c
+        6jiz1zFvbj77W5XtbK5v9umcPSUdpSHnSx1SOm1u6TF+7sbL4VH+hUduP0oX89UJculhnkot
+        /weQg98GZwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsVy+t/xe7pSzc2xBofOGFhcuXiIyWLjjPWs
+        FlMfPmGzuNK6idFi/pFzrBbnz29gt/h2pYPJYtPja6wWM87vY7JYe+Quu8Xn9/tZLVr3HmG3
+        uLjiC5MDr8eGz01sHjtn3WX32LSqk81j85J6j+lz/jN69G1ZxejxeZNcAHuUnk1RfmlJqkJG
+        fnGJrVK0oYWRnqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXsal+fcYCxrYK+4fW8jU
+        wHiStYuRk0NCwERicttkpi5GLg4hgaWMEh9vPWLsYuQASkhJzG9RgqgRlvhzrYsNouY1o8T7
+        RX/BmoUFUiS63i5nA7FFBDQlrv/9zgpSxCxwjFli0YVGdoiOW0wSZ37cZgepYhMwlOg92scI
+        YvMK2Emc+NQP1s0ioCrxdcEPJhBbVCBC4vCOWVA1ghInZz5hAbE5BQIlbk9/BVbPLKAu8Wfe
+        JWYIW1yi6ctKVghbXmL72znMExiFZiFpn4WkZRaSlllIWhYwsqxiFEktLc5Nzy020itOzC0u
+        zUvXS87P3cQIjOJtx35u2cHY9S74EKMAB6MSD69CeXOsEGtiWXFl7iFGCQ5mJRHeOaZNsUK8
+        KYmVValF+fFFpTmpxYcYTYGem8gsJZqcD0wweSXxhqaG5haWhubG5sZmFkrivB0CB2OEBNIT
+        S1KzU1MLUotg+pg4OKUaGLfFTdr1U+BnyYHZSw58f31QYvfqmm3TJt+/IbP/VeZha7GJ7c/m
+        /93y/pyqaPg9oUS1f4zy1d423P90HXpNZPKfT5gX/9rsd0FG/SSnqiLFqqN3mdo6JzWevPRB
+        5rb4MeGFDLObXm83F93Gomh71aX3we72UFtpZ/UEuZb02nmVrP//flm/QVmJpTgj0VCLuag4
+        EQCTUqNR+AIAAA==
+X-CMS-MailID: 20190919133107eucas1p1f9502dca0c106fb9e268f2636b6ec774
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190918104713eucas1p2ccfa8e9dff2cda9e8f88ac42dda2b680
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190918104713eucas1p2ccfa8e9dff2cda9e8f88ac42dda2b680
+References: <20190918104634.15216-1-s.nawrocki@samsung.com>
+        <CGME20190918104713eucas1p2ccfa8e9dff2cda9e8f88ac42dda2b680@eucas1p2.samsung.com>
+        <20190918104634.15216-9-s.nawrocki@samsung.com> <20190919082211.GF13195@pi3>
+        <a0072745-f7c1-86ad-2344-d73dd210e1ad@samsung.com>
+        <CAJKOXPfwAx7vWSWS0M1JuGJvn6tKTp9yaT2qEOwmAWTUdvoptQ@mail.gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 9/19/19 1:38 AM, Krzysztof Kozlowski wrote:
-> On Thu, 19 Sep 2019 at 09:40, Suniel Mahesh <sunil.m@techveda.org> wrote:
->>
->> Hi,
->>
->> I am working on one of the Samsung based S3C2440A chipset based target .
->>
->> I have couple of questions and I request someone to shed some light on these: (Thank you)
->>
->> The watchdog driver in linux, looks like, it just configured WDT but didn't start it (code snippet included below).
->>
->> May i know the reasson why WDT is not started ? Is it because u-boot already started WDT, implies it is not required to do the
->> same once we jump into linux ? or is there any specific reason ?
->>
->> drivers/watchdog/s3c2410_wdt.c (line 53 and lines 616 - 625)
->>
->> #define S3C2410_WATCHDOG_ATBOOT         (0)
->> ....
->> static int tmr_atboot   = S3C2410_WATCHDOG_ATBOOT;
->> ...
->> ...
->> if (tmr_atboot && started == 0) {
->>                  dev_info(dev, "starting watchdog timer\n");
->>                  s3c2410wdt_start(&wdt->wdt_device);
->>          } else if (!tmr_atboot) {
->>                  /* if we're not enabling the watchdog, then ensure it is
->>                   * disabled if it has been left running from the bootloader
->>                   * or other source */
->>
->>                  s3c2410wdt_stop(&wdt->wdt_device);
->>          }
->> ...
->> ...
->>
->> Tried to start WDT in linux by assigning value 1 to S3C2410_WATCHDOG_ATBOOT. The target resets.
->>
->> please comment.
-> 
-> I think watchdog should not start during boot before user-space is
-> brought up. Otherwise who will ping it? Usually watchdog is started by
-> opening the watchdog device by user-space. If you need it to be
-> running without user-space, there are special flags for this (see
-> WDOG_HW_RUNNING and others).
-> 
-That is not entirely correct. There are use cases where the watchdog
-is started on purpose and userspace has to open it within a specified
-period of time to prevent the system from rebooting. Presumably this is
-what the current driver tries to implement. WDOG_HW_RUNNING was added
-to the core after the driver was written, so it is not surprising that
-the driver does not support it. Patches welcome.
+On 9/19/19 14:58, Krzysztof Kozlowski wrote:
+> On Thu, 19 Sep 2019 at 14:49, Sylwester Nawrocki <s.nawrocki@samsung.com> wrote:
+>> On 9/19/19 10:22, Krzysztof Kozlowski wrote:
+>>> Wasn't this issue introduced in 5/9? It looks weird to fix it here...
+>> It has not been introduced by 5/9, the issue was there already before
+>> my patch, there was even no remove() callback where OF node references
+>> could be dropped.
+>
+> I see. Then please put it as first patch. You should not mix bugfixes
+> with features. If mixing, be sure they can be applied before the
+> features.
 
+I will see if it is worth the effort to rebase this patch. I didn't bother
+with that because this sound card driver is not used in mainline (there is 
+no related dts changes) and the patch is a fix for minor bug which I found
+just before posting first version of the patch series.
+
+-- 
 Thanks,
-Guenter
+Sylwester
