@@ -2,50 +2,50 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75676B9032
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Sep 2019 15:03:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51FA9B9037
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Sep 2019 15:03:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726950AbfITNDX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 20 Sep 2019 09:03:23 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:46451 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726977AbfITNDX (ORCPT
+        id S1726984AbfITND1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 20 Sep 2019 09:03:27 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:53137 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726990AbfITND0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 20 Sep 2019 09:03:23 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190920130321euoutp011b277ee4ef185813c65b5f48de8fa8e6~GJy7BSrnV2955929559euoutp01V
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Sep 2019 13:03:21 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190920130321euoutp011b277ee4ef185813c65b5f48de8fa8e6~GJy7BSrnV2955929559euoutp01V
+        Fri, 20 Sep 2019 09:03:26 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20190920130323euoutp0201b77621d152e3cb02e8d066fdf7ac3f~GJy8qF0pN2404424044euoutp02j
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Sep 2019 13:03:23 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20190920130323euoutp0201b77621d152e3cb02e8d066fdf7ac3f~GJy8qF0pN2404424044euoutp02j
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1568984601;
-        bh=JlOPACoW2mjd+3bF1MoPEIsxNgc0uMnAeyavRXGANVA=;
+        s=mail20170921; t=1568984603;
+        bh=fCiCWDJV6hWzdPW9ipEdQhbwyGKQwzSf6QI+SV7DvCc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KC7PZXRTlxZekOZD2IhRahuKjDCF1vk4zVQNSLR6Zt/cL+zsi2U8u96bWC/SW+5Hm
-         INn0j0gNDmx+vySIhQ2mrN6Z1OGj+jgAozrC10uPqR1gGXtJ2DyuDGuYaT26Ypw7UN
-         lwR6+x0VFCwtsRc/0mdIbAuYyDDqETPEvSqj2hT0=
+        b=FlSMdcyLFSd1TfBqNcLbUqVUuqeXy1fMNoeqISQJldqkSyNOBEWoUD00kCWh3n/hJ
+         3Gq5ubpfyjPoEsAPsOyRi2OBScEaHljouDtf7dMx5c2031mwSPLmi1iXKbUCuL2zPg
+         dgXaMzRH/lezNQar+x9jbeXxdIUOTwjkcNpZXweI=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20190920130321eucas1p14eddd716a9d563b55218a2ec6b8475cb~GJy6M9b8_2917429174eucas1p18;
-        Fri, 20 Sep 2019 13:03:21 +0000 (GMT)
+        20190920130322eucas1p14cece5f41f00418f148cb398c25763a1~GJy71JQiy2912829128eucas1p16;
+        Fri, 20 Sep 2019 13:03:22 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id D1.DB.04309.81EC48D5; Fri, 20
-        Sep 2019 14:03:20 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20190920130320eucas1p1ade2cf71fadfd442bcd79748e8512e09~GJy5cIFoJ2912129121eucas1p1C;
-        Fri, 20 Sep 2019 13:03:20 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20190920130319eusmtrp1a7f0cc47063296e8af21306821b1553d~GJy5Km6Tx0476604766eusmtrp1f;
-        Fri, 20 Sep 2019 13:03:19 +0000 (GMT)
-X-AuditID: cbfec7f4-ae1ff700000010d5-ee-5d84ce1895bb
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 25.DB.04309.A1EC48D5; Fri, 20
+        Sep 2019 14:03:22 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190920130321eucas1p2efe85adb3df4c546a7d81326b4c75873~GJy69HB9R1573515735eucas1p2m;
+        Fri, 20 Sep 2019 13:03:21 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20190920130321eusmtrp2b1229a6e283cb8f4d92cde532508fb28~GJy6r4Wq51022710227eusmtrp2C;
+        Fri, 20 Sep 2019 13:03:21 +0000 (GMT)
+X-AuditID: cbfec7f4-afbff700000010d5-f1-5d84ce1af475
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 40.11.04117.71EC48D5; Fri, 20
-        Sep 2019 14:03:19 +0100 (BST)
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 48.2B.04166.91EC48D5; Fri, 20
+        Sep 2019 14:03:21 +0100 (BST)
 Received: from AMDC3061.DIGITAL.local (unknown [106.120.51.75]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20190920130319eusmtip2c7bdcb035f356389188b0fe5a03b5587~GJy4eTcu_1303613036eusmtip27;
-        Fri, 20 Sep 2019 13:03:19 +0000 (GMT)
+        20190920130320eusmtip2b5d7b38fa30bc5b2b2282d90264af2c9~GJy6An3U51284812848eusmtip2e;
+        Fri, 20 Sep 2019 13:03:20 +0000 (GMT)
 From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
 To:     broonie@kernel.org, krzk@kernel.org
 Cc:     lgirdwood@gmail.com, ckeepax@opensource.cirrus.com,
@@ -56,80 +56,233 @@ Cc:     lgirdwood@gmail.com, ckeepax@opensource.cirrus.com,
         linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
         m.szyprowski@samsung.com,
         Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH v2 06/10] ASoC: dt-bindings: Document
- "samsung,arndale-wm1811" compatible
-Date:   Fri, 20 Sep 2019 15:02:15 +0200
-Message-Id: <20190920130218.32690-7-s.nawrocki@samsung.com>
+Subject: [PATCH v2 07/10] ASoC: samsung: arndale: Add support for WM1811
+ CODEC
+Date:   Fri, 20 Sep 2019 15:02:16 +0200
+Message-Id: <20190920130218.32690-8-s.nawrocki@samsung.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190920130218.32690-1-s.nawrocki@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA0WSfyyUcRzH+z53zz2Pq7OnIz5h5MaaNiQ1z0LLVtv908paW2VWhyfEHd3j
-        R+qPpBPJz1r5keZI0bXCcYpQznHXLJexUs0QtpimcbPJr5yH+u/1fX/e7+/7s+++JE9cgzuR
-        sYokRqmQxUsEQn5zz6LZG/pU4fsbZnzowX49RjeU1OH0g7EJAT2YqUV0haEPp83meoJeGMzG
-        aO34Z5wuMXdg9EvDMEHPz77D6cx2A0F3zWThdH+tBTtqK62fzxBIW8qGCalWc0cgbay+IS0u
-        X0PS/CYNks5rXU8R54VBUUx8bAqj9D1yURhTVDQsSPxJXNWVPcfT0YAgB9mQQB0EVccAZmUx
-        VYtA/ycxBwnX2YJgyNSAc4d5BC0T7fhWYuJRFcYNahB8nG7k/4uov2oJq0tA+UFedz6ysj21
-        F0ZKMjau4lFTGBR2v9ootKPCQF1iXg+QJJ/yhOKncVZZRAWCrq8C49rc4EX9e56VbaggmBri
-        moHSElA6OUpwpmPQttC5yXYwbWzaZBfovZ/L5wK3EOS+/U5wh0IEI0Y14lyB0GXsx61b8Cgv
-        qGv15eQQMHY3biwHlC0M/dpplXnreK+5mMfJIsi+LebcHrCkKd7c2QnuTqzxOZbCUFuNgHvf
-        AgSVpfJC5Fb2v0uNkAY5MsmsPJphDyiYVB9WJmeTFdE+kQlyLVr/Pr2rRssb1LocoUcUiSQ7
-        RGqTKlyMy1LYNLkeAcmT2IvKD2WEi0VRsrRrjDLhgjI5nmH1yJnkSxxF17eNhompaFkSE8cw
-        iYxya4qRNk7pSBchDFedCAaPc54FlsiboToHw2ztalZ8gEvI8uloO4/MKndLlLPG4fLJVH+L
-        eE/6yq42798/8qpfn61UsSp3NGf0z/Jz8Ao+s5jmatr9CS49kSXlm3r6tn87nLj6uHU57UqA
-        cGzluGMnw6bO6L7Qk0HjoYoWUd1S1gebZ3PkQwmfjZH57eMpWdlfF2Ss6zoDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjkeLIzCtJLcpLzFFi42I5/e/4PV3xcy2xBh9PWVhcuXiIyWLjjPWs
-        FlMfPmGzuNK6idFi/pFzrBbnz29gt/h2pYPJYtPja6wWM87vY7JYe+Quu8Xn9/tZLVr3HmG3
-        OPymndXi4oovTA58Hhs+N7F57Jx1l91j06pONo/NS+o9ps/5z+jRt2UVo8fnTXIB7FF6NkX5
-        pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GRMn3mUreMFe
-        sXXWStYGxstsXYycHBICJhJPZi9iArGFBJYySizaKdfFyAEUl5KY36IEUSIs8edaF1A5F1DJ
-        J0aJnz1P2UESbAKGEr1H+xhBbBEBTYmOebdZQYqYBb4zSRx4fJIZZJCwQKTEwVc2ICaLgKrE
-        9KXZIOW8AtYSW8/NZ4KYLy+xesMBZhCbU8BG4uUNmHOsJU7v28s+gZFvASPDKkaR1NLi3PTc
-        YiO94sTc4tK8dL3k/NxNjMA42Hbs55YdjF3vgg8xCnAwKvHwehxriRViTSwrrsw9xCjBwawk
-        wjvHtClWiDclsbIqtSg/vqg0J7X4EKMp0E0TmaVEk/OBMZpXEm9oamhuYWlobmxubGahJM7b
-        IXAwRkggPbEkNTs1tSC1CKaPiYNTqoGxX/FXxbmZi5qOPPmrJr3Adrt/S1GnY+7lkxP+z9hd
-        17t7UrTdsf2bdiwxmtZe95mDg+dwwfn7U+d8EePqy6tQrBEw227GbCwk9O7X7Ypm9gQNNsvJ
-        zzfVxC6Rv+v45ljeF2enixUX5L1fBa0vC6k4/37/87ayqs1rM267qS50fLH5f4vQlpPSSizF
-        GYmGWsxFxYkALdGSTJkCAAA=
-X-CMS-MailID: 20190920130320eucas1p1ade2cf71fadfd442bcd79748e8512e09
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSWUwTURSGvTOdztBYMhYSrsVAbDSyRLZYmQSCEn1o9AU1+iBpcJAJEKCQ
+        DouoCVjKYhFEEYuAQkAilCC1EGILLimtlaBUFJUlhB2FQHgocQWRMqBv/zn/d/5zc3IJVNSA
+        iYlERTqjVNDJEr6A1/nqp/2guF8tD6qf200NDpgR6kllG0ZVTM7wqcF8A6BqLf0YZbfrcerb
+        YBFCGaY/YVSl/TlCtVrGcMqx/AKj8p9ZcKpnsRCjBppWkKOuMr1DxZcZq8ZwmUF3nS9rf5gj
+        09asA1lphw7IHAavKPy8IDyOSU7MZJSBERcECaPtirS54Es9P1p4uUDnqwEuBCQPQf2v74gG
+        CAgR2QSgpnSczxUrANo/3AVOSkQ6ALxW7bc9MdG1uNV/BODkmvTfQHehGXUafDIYllhLNyF3
+        8gAcr1RhTggl5xFYZn2MOA03MgrOvVnf1DxyP6xecvA0gCCEZBg0Vflwy7xhi/7lZqYLGQ7n
+        h+o3nwrJThze6WvGnTwkj8OGkhiOd4MLtg6c03vgurF2i88D8EbXKM4VZQCO2+oAR4XBHtsA
+        5gxCSV/YZgrkMiNhQa4/J13h0NIuJ4xuyNudWpRrC2FRgYjL2Ad/67QIp8WweGadxyEyWG6U
+        c9e5uXHb0Rq8DHhX/V9VB4AOeDAZbEo8w4YomKwAlk5hMxTxARdTUwxg4+v0/bGtPAWm1Vgz
+        IAkg2Smse62WizA6k81OMQNIoBJ3YY1UJRcJ4+jsy4wyNUaZkcywZuBJ8CQewis7JqJFZDyd
+        ziQxTBqj3HYRwkWcC2pbY0+jesJ/78eTFX7qEmnlSPHVhIU8t0ZVpJaJstdXTx0zJVUtNvfm
+        Zw4fjqCX8RwLqwt5T3vXWM81Ts0Kpm8JZ/pClz972e4vV8fhsCDry9uJ3mHtWemZE92rntEj
+        QeSq2jco75TkyNe1wogKxDgreRdSLrYqQn0etN6LkfDYBDrYD1Wy9F/0bX3uNgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjkeLIzCtJLcpLzFFi42I5/e/4PV3Jcy2xBje7FC2uXDzEZLFxxnpW
+        i6kPn7BZXGndxGgx/8g5Vovz5zewW3y70sFksenxNVaLGef3MVmsPXKX3eLz+/2sFq17j7Bb
+        HH7TzmpxccUXJgc+jw2fm9g8ds66y+6xaVUnm8fmJfUe0+f8Z/To27KK0ePzJrkA9ig9m6L8
+        0pJUhYz84hJbpWhDCyM9Q0sLPSMTSz1DY/NYKyNTJX07m5TUnMyy1CJ9uwS9jNub8wqeGVYc
+        /rGapYFxlWYXIyeHhICJxIPdbxi7GLk4hASWMkr8nTaBuYuRAyghJTG/RQmiRljiz7UuNoia
+        T4wSNxp2sYIk2AQMJXqP9jGC2CICmhId826zghQxC3xnkjjw+CTYIGEBP4kPe7VBalgEVCVm
+        v/3MAhLmFbCW2DVLA2K+vMTqDQeYQWxOARuJlzcWMYHYQkAlp/ftZZ/AyLeAkWEVo0hqaXFu
+        em6xoV5xYm5xaV66XnJ+7iZGYBxsO/Zz8w7GSxuDDzEKcDAq8fAuONESK8SaWFZcmXuIUYKD
+        WUmEd45pU6wQb0piZVVqUX58UWlOavEhRlOgmyYyS4km5wNjNK8k3tDU0NzC0tDc2NzYzEJJ
+        nLdD4GCMkEB6YklqdmpqQWoRTB8TB6dUA6Nnkc/kw3WyW2fmepTP/F9yfv2vh97PJjPeSC9N
+        ezjNIoY1mqXKZovrxpnCXkElfbffpcpOOXE9v/NFjEq+SufL+ZsXstqarGz8u0LEMsU7Z7vK
+        m0kv1gpMnLBO0/eDmv/TgFViD3a+z8zsujSj6sXGlGPbG6eb3/twRjTgysTelXO/etsln2tS
+        YinOSDTUYi4qTgQATMwmcpkCAAA=
+X-CMS-MailID: 20190920130321eucas1p2efe85adb3df4c546a7d81326b4c75873
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20190920130320eucas1p1ade2cf71fadfd442bcd79748e8512e09
+X-RootMTR: 20190920130321eucas1p2efe85adb3df4c546a7d81326b4c75873
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20190920130320eucas1p1ade2cf71fadfd442bcd79748e8512e09
+X-CMS-RootMailID: 20190920130321eucas1p2efe85adb3df4c546a7d81326b4c75873
 References: <20190920130218.32690-1-s.nawrocki@samsung.com>
-        <CGME20190920130320eucas1p1ade2cf71fadfd442bcd79748e8512e09@eucas1p1.samsung.com>
+        <CGME20190920130321eucas1p2efe85adb3df4c546a7d81326b4c75873@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add compatible string for boards with WM1811 CODEC to the list.
+The Arndale boards come with different types of the audio daughter
+board.  In order to support the WM1811 one we add new definition of
+an ASoC card which will be registered when the driver matches on
+"samsung,arndale-wm1811" compatible.  There is no runtime detection of
+the audio daughter board type at the moment, compatible string of the
+audio card needs to be adjusted in DT, e.g. by the bootloader,
+depending on actual audio board (CODEC) used.
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 ---
 Changes since v1:
- - none
+ - removed unneeded __maybe_used attribute
 ---
- Documentation/devicetree/bindings/sound/arndale.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/samsung/Kconfig          |  2 +
+ sound/soc/samsung/arndale_rt5631.c | 85 +++++++++++++++++++++++++-----
+ 2 files changed, 74 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/arndale.txt b/Documentation/devicetree/bindings/sound/arndale.txt
-index 0e76946385ae..17530120ccfc 100644
---- a/Documentation/devicetree/bindings/sound/arndale.txt
-+++ b/Documentation/devicetree/bindings/sound/arndale.txt
-@@ -1,8 +1,9 @@
- Audio Binding for Arndale boards
+diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
+index 638983123d8f..6803cbfa9e46 100644
+--- a/sound/soc/samsung/Kconfig
++++ b/sound/soc/samsung/Kconfig
+@@ -199,6 +199,8 @@ config SND_SOC_ARNDALE_RT5631_ALC5631
+         depends on I2C
+         select SND_SAMSUNG_I2S
+         select SND_SOC_RT5631
++	select MFD_WM8994
++	select SND_SOC_WM8994
  
- Required properties:
--- compatible : Can be the following,
--			"samsung,arndale-rt5631"
-+- compatible : Can be one of the following:
-+		"samsung,arndale-rt5631",
-+		"samsung,arndale-wm1811"
+ config SND_SOC_SAMSUNG_TM2_WM5110
+ 	tristate "SoC I2S Audio support for WM5110 on TM2 board"
+diff --git a/sound/soc/samsung/arndale_rt5631.c b/sound/soc/samsung/arndale_rt5631.c
+index 004c84fafad9..1e8badb1b8f9 100644
+--- a/sound/soc/samsung/arndale_rt5631.c
++++ b/sound/soc/samsung/arndale_rt5631.c
+@@ -14,10 +14,11 @@
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
  
- - samsung,audio-cpu: The phandle of the Samsung I2S controller
- - samsung,audio-codec: The phandle of the audio codec
++#include "../codecs/wm8994.h"
+ #include "i2s.h"
+ 
+-static int arndale_hw_params(struct snd_pcm_substream *substream,
+-	struct snd_pcm_hw_params *params)
++static int arndale_rt5631_hw_params(struct snd_pcm_substream *substream,
++				    struct snd_pcm_hw_params *params)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+ 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
+@@ -47,13 +48,45 @@ static int arndale_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-static struct snd_soc_ops arndale_ops = {
+-	.hw_params = arndale_hw_params,
++static struct snd_soc_ops arndale_rt5631_ops = {
++	.hw_params = arndale_rt5631_hw_params,
++};
++
++static int arndale_wm1811_hw_params(struct snd_pcm_substream *substream,
++				    struct snd_pcm_hw_params *params)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_dai *codec_dai = rtd->codec_dai;
++	unsigned int rfs, rclk;
++
++	/* Ensure AIF1CLK is >= 3 MHz for optimal performance */
++	if (params_width(params) == 24)
++		rfs = 384;
++	else if (params_rate(params) == 8000 || params_rate(params) == 11025)
++		rfs = 512;
++	else
++		rfs = 256;
++
++	rclk = params_rate(params) * rfs;
++
++	/*
++	 * We add 1 to the frequency value to ensure proper EPLL setting
++	 * for each audio sampling rate (see epll_24mhz_tbl in drivers/clk/
++	 * samsung/clk-exynos5250.c for list of available EPLL rates).
++	 * The CODEC uses clk API and the value will be rounded hence the MCLK1
++	 * clock's frequency will still be exact multiple of the sample rate.
++	 */
++	return snd_soc_dai_set_sysclk(codec_dai, WM8994_SYSCLK_MCLK1,
++					rclk + 1, SND_SOC_CLOCK_IN);
++}
++
++static struct snd_soc_ops arndale_wm1811_ops = {
++	.hw_params = arndale_wm1811_hw_params,
+ };
+ 
+ SND_SOC_DAILINK_DEFS(rt5631_hifi,
+ 	DAILINK_COMP_ARRAY(COMP_EMPTY()),
+-	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "rt5631-hifi")),
++	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "rt5631-aif1")),
+ 	DAILINK_COMP_ARRAY(COMP_EMPTY()));
+ 
+ static struct snd_soc_dai_link arndale_rt5631_dai[] = {
+@@ -63,11 +96,28 @@ static struct snd_soc_dai_link arndale_rt5631_dai[] = {
+ 		.dai_fmt = SND_SOC_DAIFMT_I2S
+ 			| SND_SOC_DAIFMT_NB_NF
+ 			| SND_SOC_DAIFMT_CBS_CFS,
+-		.ops = &arndale_ops,
++		.ops = &arndale_rt5631_ops,
+ 		SND_SOC_DAILINK_REG(rt5631_hifi),
+ 	},
+ };
+ 
++SND_SOC_DAILINK_DEFS(wm1811_hifi,
++	DAILINK_COMP_ARRAY(COMP_EMPTY()),
++	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "wm8994-aif1")),
++	DAILINK_COMP_ARRAY(COMP_EMPTY()));
++
++static struct snd_soc_dai_link arndale_wm1811_dai[] = {
++	{
++		.name = "WM1811 HiFi",
++		.stream_name = "Primary",
++		.dai_fmt = SND_SOC_DAIFMT_I2S
++			| SND_SOC_DAIFMT_NB_NF
++			| SND_SOC_DAIFMT_CBM_CFM,
++		.ops = &arndale_wm1811_ops,
++		SND_SOC_DAILINK_REG(wm1811_hifi),
++	},
++};
++
+ static struct snd_soc_card arndale_rt5631 = {
+ 	.name = "Arndale RT5631",
+ 	.owner = THIS_MODULE,
+@@ -75,6 +125,13 @@ static struct snd_soc_card arndale_rt5631 = {
+ 	.num_links = ARRAY_SIZE(arndale_rt5631_dai),
+ };
+ 
++static struct snd_soc_card arndale_wm1811 = {
++	.name = "Arndale WM1811",
++	.owner = THIS_MODULE,
++	.dai_link = arndale_wm1811_dai,
++	.num_links = ARRAY_SIZE(arndale_wm1811_dai),
++};
++
+ static void arndale_put_of_nodes(struct snd_soc_card *card)
+ {
+ 	struct snd_soc_dai_link *dai_link;
+@@ -89,10 +146,11 @@ static void arndale_put_of_nodes(struct snd_soc_card *card)
+ static int arndale_audio_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct snd_soc_card *card = &arndale_rt5631;
++	struct snd_soc_card *card;
+ 	struct snd_soc_dai_link *dai_link;
+ 	int ret;
+ 
++	card = (struct snd_soc_card *)of_device_get_match_data(&pdev->dev);
+ 	card->dev = &pdev->dev;
+ 	dai_link = card->dai_link;
+ 
+@@ -134,18 +192,19 @@ static int arndale_audio_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id samsung_arndale_rt5631_of_match[] __maybe_unused = {
+-	{ .compatible = "samsung,arndale-rt5631", },
+-	{ .compatible = "samsung,arndale-alc5631", },
++static const struct of_device_id arndale_audio_of_match[] = {
++	{ .compatible = "samsung,arndale-rt5631",  .data = &arndale_rt5631 },
++	{ .compatible = "samsung,arndale-alc5631", .data = &arndale_rt5631 },
++	{ .compatible = "samsung,arndale-wm1811",  .data = &arndale_wm1811 },
+ 	{},
+ };
+-MODULE_DEVICE_TABLE(of, samsung_arndale_rt5631_of_match);
++MODULE_DEVICE_TABLE(of, arndale_of_match);
+ 
+ static struct platform_driver arndale_audio_driver = {
+ 	.driver = {
+-		.name   = "arndale-audio",
++		.name = "arndale-audio",
+ 		.pm = &snd_soc_pm_ops,
+-		.of_match_table = of_match_ptr(samsung_arndale_rt5631_of_match),
++		.of_match_table = arndale_audio_of_match,
+ 	},
+ 	.probe = arndale_audio_probe,
+ 	.remove = arndale_audio_remove,
 -- 
 2.17.1
 
