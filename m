@@ -2,266 +2,281 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E02B8B95CA
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Sep 2019 18:36:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26861B9EED
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 21 Sep 2019 19:02:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729361AbfITQgo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 20 Sep 2019 12:36:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50716 "EHLO mail.kernel.org"
+        id S2438052AbfIURCF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 21 Sep 2019 13:02:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39388 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725280AbfITQgo (ORCPT
+        id S2438031AbfIURCF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 20 Sep 2019 12:36:44 -0400
+        Sat, 21 Sep 2019 13:02:05 -0400
 Received: from localhost.localdomain (unknown [194.230.155.145])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6EFA420717;
-        Fri, 20 Sep 2019 16:36:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3BADC20820;
+        Sat, 21 Sep 2019 17:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1568997403;
-        bh=lIE4jV01uzsB+QRyAJS7o47UZFL6GYNBSj+eWiYGAFI=;
-        h=From:To:Subject:Date:From;
-        b=FRBD/clstpILo/t2RsJbrd5nAWmxfF7k1QzAfuNksHIxCuUbX3VbMclnmd1Ga6GGy
-         BlyOihuXoajb7Rzbh/qR0gJ5CsqKvcyCQYJukGGwloR5jrTh+twpsq3d23woB/ebce
-         dKDSCb39v3/pLRtu9ld0dhUO8/9Sk2bvg+/9lQsU=
+        s=default; t=1569085323;
+        bh=D/aj1o5oREexJ28TkCWasuQ4NQ6KQT2BjyhV/jLm9fM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ivY7rekAsl0U8vsoflBPsWSU1AXznr2gsFox8O6voDZFTrEqG0Luykrp/A9QRtYT5
+         8Buc3vvfAAZ73LPo+E9Lw5T4TsXw11aD8XTNVmqpToqtKWJ04IyUogd6ycasdC/da/
+         rFoC2lZZKsA1op+eN2x8QJiJN+Y2IHryOeAZ4Z7U=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Kamil Konieczny <k.konieczny@partner.samsung.com>,
-        linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: crypto: samsung: Convert SSS and SlimSSS bindings to json-schema
-Date:   Fri, 20 Sep 2019 18:36:35 +0200
-Message-Id: <20190920163635.9186-1-krzk@kernel.org>
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>
+Subject: [PATCH v3 1/8] dt-bindings: timer: Convert Exynos MCT bindings to json-schema
+Date:   Sat, 21 Sep 2019 19:01:45 +0200
+Message-Id: <20190921170152.5033-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung Exynos Security SubSystem (SSS) and SlimSSS hardware
-crypto accelerator bindings to DT schema format using json-schema.
+Convert Samsung Exynos Soc Multi Core Timer bindings to DT schema format
+using json-schema.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 ---
 
-Rebased on linux-next due to conflicting change in MAINTAINERS file
-coming through arm-soc tree.
-
 Changes since v1:
-1. Add additionalProperties:false
+1. Indent example with four spaces (more readable),
+2. Rename nodes in example to timer,
+3. Remove mct-map subnode.
 ---
- .../bindings/crypto/samsung-slimsss.txt       | 19 ------
- .../bindings/crypto/samsung-slimsss.yaml      | 47 +++++++++++++++
- .../bindings/crypto/samsung-sss.txt           | 32 ----------
- .../bindings/crypto/samsung-sss.yaml          | 58 +++++++++++++++++++
- MAINTAINERS                                   |  4 +-
- 5 files changed, 107 insertions(+), 53 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
- create mode 100644 Documentation/devicetree/bindings/crypto/samsung-slimsss.yaml
- delete mode 100644 Documentation/devicetree/bindings/crypto/samsung-sss.txt
- create mode 100644 Documentation/devicetree/bindings/crypto/samsung-sss.yaml
+ .../bindings/timer/samsung,exynos4210-mct.txt |  88 --------------
+ .../timer/samsung,exynos4210-mct.yaml         | 113 ++++++++++++++++++
+ 2 files changed, 113 insertions(+), 88 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+ create mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
 
-diff --git a/Documentation/devicetree/bindings/crypto/samsung-slimsss.txt b/Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
 deleted file mode 100644
-index 7ec9a5a7727a..000000000000
---- a/Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
+index 8f78640ad64c..000000000000
+--- a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
 +++ /dev/null
-@@ -1,19 +0,0 @@
--Samsung SoC SlimSSS (Slim Security SubSystem) module
+@@ -1,88 +0,0 @@
+-Samsung's Multi Core Timer (MCT)
 -
--The SlimSSS module in Exynos5433 SoC supports the following:
---- Feeder (FeedCtrl)
---- Advanced Encryption Standard (AES) with ECB,CBC,CTR,XTS and (CBC/XTS)/CTS
---- SHA-1/SHA-256 and (SHA-1/SHA-256)/HMAC
+-The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
+-global timer and CPU local timers. The global timer is a 64-bit free running
+-up-counter and can generate 4 interrupts when the counter reaches one of the
+-four preset counter values. The CPU local timers are 32-bit free running
+-down-counters and generate an interrupt when the counter expires. There is
+-one CPU local timer instantiated in MCT for every CPU in the system.
 -
 -Required properties:
 -
--- compatible : Should contain entry for slimSSS version:
--  - "samsung,exynos5433-slim-sss" for Exynos5433 SoC.
--- reg : Offset and length of the register set for the module
--- interrupts : interrupt specifiers of SlimSSS module interrupts (one feed
--		control interrupt).
+-- compatible: should be "samsung,exynos4210-mct".
+-  (a) "samsung,exynos4210-mct", for mct compatible with Exynos4210 mct.
+-  (b) "samsung,exynos4412-mct", for mct compatible with Exynos4412 mct.
 -
--- clocks : list of clock phandle and specifier pairs for all clocks listed in
--		clock-names property.
--- clock-names : list of device clock input names; should contain "pclk" and
--		"aclk" for slim-sss in Exynos5433.
-diff --git a/Documentation/devicetree/bindings/crypto/samsung-slimsss.yaml b/Documentation/devicetree/bindings/crypto/samsung-slimsss.yaml
+-- reg: base address of the mct controller and length of the address space
+-  it occupies.
+-
+-- interrupts: the list of interrupts generated by the controller. The following
+-  should be the order of the interrupts specified. The local timer interrupts
+-  should be specified after the four global timer interrupts have been
+-  specified.
+-
+-	0: Global Timer Interrupt 0
+-	1: Global Timer Interrupt 1
+-	2: Global Timer Interrupt 2
+-	3: Global Timer Interrupt 3
+-	4: Local Timer Interrupt 0
+-	5: Local Timer Interrupt 1
+-	6: ..
+-	7: ..
+-	i: Local Timer Interrupt n
+-
+-  For MCT block that uses a per-processor interrupt for local timers, such
+-  as ones compatible with "samsung,exynos4412-mct", only one local timer
+-  interrupt might be specified, meaning that all local timers use the same
+-  per processor interrupt.
+-
+-Example 1: In this example, the IP contains two local timers, using separate
+-	   interrupts, so two local timer interrupts have been specified,
+-	   in addition to four global timer interrupts.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x10050000 0x800>;
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 48 0>;
+-	};
+-
+-Example 2: In this example, the timer interrupts are connected to two separate
+-	   interrupt controllers. Hence, an interrupt-map is created to map
+-	   the interrupts to the respective interrupt controllers.
+-
+-	mct@101c0000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x101C0000 0x800>;
+-		interrupt-parent = <&mct_map>;
+-		interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
+-
+-		mct_map: mct-map {
+-			#interrupt-cells = <1>;
+-			#address-cells = <0>;
+-			#size-cells = <0>;
+-			interrupt-map = <0 &gic 0 57 0>,
+-					<1 &gic 0 69 0>,
+-					<2 &combiner 12 6>,
+-					<3 &combiner 12 7>,
+-					<4 &gic 0 42 0>,
+-					<5 &gic 0 48 0>;
+-		};
+-	};
+-
+-Example 3: In this example, the IP contains four local timers, but using
+-	   a per-processor interrupt to handle them. Either all the local
+-	   timer interrupts can be specified, with the same interrupt specifier
+-	   value or just the first one.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4412-mct";
+-		reg = <0x10050000 0x800>;
+-
+-		/* Both ways are possible in this case. Either: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>;
+-		/* or: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
+-	};
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
 new file mode 100644
-index 000000000000..04fe5dfa794a
+index 000000000000..5d6db1ddd7f6
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/crypto/samsung-slimsss.yaml
-@@ -0,0 +1,47 @@
++++ b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+@@ -0,0 +1,113 @@
 +# SPDX-License-Identifier: GPL-2.0
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/crypto/samsung-slimsss.yaml#
++$id: http://devicetree.org/schemas/timer/samsung,exynos4210-mct.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Samsung Exynos SoC SlimSSS (Slim Security SubSystem) module
++title: Samsung Exynos SoC Multi Core Timer (MCT)
 +
 +maintainers:
 +  - Krzysztof Kozlowski <krzk@kernel.org>
-+  - Kamil Konieczny <k.konieczny@partner.samsung.com>
 +
 +description: |+
-+  The SlimSSS module in Exynos5433 SoC supports the following:
-+  -- Feeder (FeedCtrl)
-+  -- Advanced Encryption Standard (AES) with ECB,CBC,CTR,XTS and (CBC/XTS)/CTS
-+  -- SHA-1/SHA-256 and (SHA-1/SHA-256)/HMAC
++  The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
++  global timer and CPU local timers. The global timer is a 64-bit free running
++  up-counter and can generate 4 interrupts when the counter reaches one of the
++  four preset counter values. The CPU local timers are 32-bit free running
++  down-counters and generate an interrupt when the counter expires. There is
++  one CPU local timer instantiated in MCT for every CPU in the system.
 +
 +properties:
 +  compatible:
-+    items:
-+      - const: samsung,exynos5433-slim-ss
++    enum:
++      - samsung,exynos4210-mct
++      - samsung,exynos4412-mct
 +
 +  reg:
 +    maxItems: 1
 +
-+  clocks:
-+    minItems: 2
-+    maxItems: 2
-+
-+  clock-names:
-+    items:
-+      - const: pclk
-+      - const: aclk
-+
 +  interrupts:
-+    description: One feed control interrupt.
-+    maxItems: 1
++    description: |
++      Interrupts should be put in specific order. This is, the local timer
++      interrupts should be specified after the four global timer interrupts
++      have been specified:
++      0: Global Timer Interrupt 0
++      1: Global Timer Interrupt 1
++      2: Global Timer Interrupt 2
++      3: Global Timer Interrupt 3
++      4: Local Timer Interrupt 0
++      5: Local Timer Interrupt 1
++      6: ..
++      7: ..
++      i: Local Timer Interrupt n
++      For MCT block that uses a per-processor interrupt for local timers, such
++      as ones compatible with "samsung,exynos4412-mct", only one local timer
++      interrupt might be specified, meaning that all local timers use the same
++      per processor interrupt.
++    minItems: 5               # 4 Global + 1 local
++    maxItems: 20              # 4 Global + 16 local
 +
 +required:
 +  - compatible
-+  - reg
-+  - clock-names
-+  - clocks
 +  - interrupts
-+
-+additionalProperties: false
-diff --git a/Documentation/devicetree/bindings/crypto/samsung-sss.txt b/Documentation/devicetree/bindings/crypto/samsung-sss.txt
-deleted file mode 100644
-index 7a5ca56683cc..000000000000
---- a/Documentation/devicetree/bindings/crypto/samsung-sss.txt
-+++ /dev/null
-@@ -1,32 +0,0 @@
--Samsung SoC SSS (Security SubSystem) module
--
--The SSS module in S5PV210 SoC supports the following:
---- Feeder (FeedCtrl)
---- Advanced Encryption Standard (AES)
---- Data Encryption Standard (DES)/3DES
---- Public Key Accelerator (PKA)
---- SHA-1/SHA-256/MD5/HMAC (SHA-1/SHA-256/MD5)/PRNG
---- PRNG: Pseudo Random Number Generator
--
--The SSS module in Exynos4 (Exynos4210) and
--Exynos5 (Exynos5420 and Exynos5250) SoCs
--supports the following also:
---- ARCFOUR (ARC4)
---- True Random Number Generator (TRNG)
---- Secure Key Manager
--
--Required properties:
--
--- compatible : Should contain entries for this and backward compatible
--  SSS versions:
--  - "samsung,s5pv210-secss" for S5PV210 SoC.
--  - "samsung,exynos4210-secss" for Exynos4210, Exynos4212, Exynos4412, Exynos5250,
--		Exynos5260 and Exynos5420 SoCs.
--- reg : Offset and length of the register set for the module
--- interrupts : interrupt specifiers of SSS module interrupts (one feed
--		control interrupt).
--
--- clocks : list of clock phandle and specifier pairs for all clocks  listed in
--		clock-names property.
--- clock-names : list of device clock input names; should contain one entry
--		"secss".
-diff --git a/Documentation/devicetree/bindings/crypto/samsung-sss.yaml b/Documentation/devicetree/bindings/crypto/samsung-sss.yaml
-new file mode 100644
-index 000000000000..cf1c47a81d7f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/crypto/samsung-sss.yaml
-@@ -0,0 +1,58 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/crypto/samsung-sss.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos SoC SSS (Security SubSystem) module
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzk@kernel.org>
-+  - Kamil Konieczny <k.konieczny@partner.samsung.com>
-+
-+description: |+
-+  The SSS module in S5PV210 SoC supports the following:
-+  -- Feeder (FeedCtrl)
-+  -- Advanced Encryption Standard (AES)
-+  -- Data Encryption Standard (DES)/3DES
-+  -- Public Key Accelerator (PKA)
-+  -- SHA-1/SHA-256/MD5/HMAC (SHA-1/SHA-256/MD5)/PRNG
-+  -- PRNG: Pseudo Random Number Generator
-+
-+  The SSS module in Exynos4 (Exynos4210) and Exynos5 (Exynos5420 and Exynos5250)
-+  SoCs supports the following also:
-+  -- ARCFOUR (ARC4)
-+  -- True Random Number Generator (TRNG)
-+  -- Secure Key Manager
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - samsung,s5pv210-secss           # for S5PV210
-+          - samsung,exynos4210-secss        # for Exynos4210, Exynos4212,
-+                                            # Exynos4412, Exynos5250,
-+                                            # Exynos5260 and Exynos5420
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: secss
-+
-+  interrupts:
-+    description: One feed control interrupt.
-+    maxItems: 1
-+
-+required:
-+  - compatible
 +  - reg
-+  - clock-names
-+  - clocks
-+  - interrupts
 +
-+additionalProperties: false
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ee4e873c0f9a..331c40ae6a01 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14256,8 +14256,8 @@ M:	Kamil Konieczny <k.konieczny@partner.samsung.com>
- L:	linux-crypto@vger.kernel.org
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
--F:	Documentation/devicetree/bindings/crypto/samsung-slimsss.txt
--F:	Documentation/devicetree/bindings/crypto/samsung-sss.txt
-+F:	Documentation/devicetree/bindings/crypto/samsung-slimsss.yaml
-+F:	Documentation/devicetree/bindings/crypto/samsung-sss.yaml
- F:	drivers/crypto/s5p-sss.c
- 
- SAMSUNG S5P/EXYNOS4 SOC SERIES CAMERA SUBSYSTEM DRIVERS
++examples:
++  - |
++    // In this example, the IP contains two local timers, using separate
++    // interrupts, so two local timer interrupts have been specified,
++    // in addition to four global timer interrupts.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4210-mct";
++        reg = <0x10050000 0x800>;
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>, <0 48 0>;
++    };
++
++  - |
++    // In this example, the timer interrupts are connected to two separate
++    // interrupt controllers. Hence, an interrupt-map is created to map
++    // the interrupts to the respective interrupt controllers.
++
++    mct: timer@101c0000 {
++        compatible = "samsung,exynos4210-mct";
++        reg = <0x101C0000 0x800>;
++        #address-cells = <0>;
++        #size-cells = <0>;
++        #interrupt-cells = <1>;
++        interrupt-parent = <&mct>;
++        interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
++        interrupt-map = <0 &gic 0 57 0>,
++                        <1 &gic 0 69 0>,
++                        <2 &combiner 12 6>,
++                        <3 &combiner 12 7>,
++                        <4 &gic 0 42 0>,
++                        <5 &gic 0 48 0>;
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. Only one first local
++    // interrupt is specified.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4412-mct";
++        reg = <0x10050000 0x800>;
++
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>;
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. All the local timer
++    // interrupts are specified.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4412-mct";
++        reg = <0x10050000 0x800>;
++
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
++    };
 -- 
 2.17.1
 
