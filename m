@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D53E1BA7E0
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Sep 2019 21:49:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 577F2BA98E
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Sep 2019 21:52:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395150AbfIVTAW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 Sep 2019 15:00:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35970 "EHLO mail.kernel.org"
+        id S1729840AbfIVTQi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 22 Sep 2019 15:16:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57826 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2395136AbfIVTAV (ORCPT
+        id S2438462AbfIVS4D (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 Sep 2019 15:00:21 -0400
+        Sun, 22 Sep 2019 14:56:03 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2FDA3208C2;
-        Sun, 22 Sep 2019 19:00:19 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 893832184D;
+        Sun, 22 Sep 2019 18:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569178820;
-        bh=wcXHOx5i/Yxq9c0RNlMMhVQk9lBkRtog124MZoxnOIo=;
+        s=default; t=1569178562;
+        bh=BBNfDOkcg1k0JdkfBUbMlcSU5RE1PB/28Jm5RYZReUY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LeQoI5ct5wELOh41WX8qljTk22/5cjL5Ms5T+0b9l+BHaroqA/lq/4EMewSlboJHv
-         MMzZxuqiLGj5MPBsDe8OKSd4qtx3y+oOWMKeogXlEzG5LixguMMBr3hNcKq4Cuv+uO
-         fW2Y7LbPcPrbLlAFa5fXHG6Vl47ZyGAk8bDDDBW0=
+        b=iZ2YcOzo7GpA5/OyvsyJzqK6tksq8/tJlLkdvPKavJwD0ke8uSVnwmSUh5QlVPBWf
+         SoxQ63gcQFg/BbqNkPuvLLbIPJVkpsMPYs0XFCUDdSeYjVZy1nWOBQrYm14qpDGEmR
+         jcBeEkuAGT3fJlXhxDorYmziYHd6SuNPLxvmmG84=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
@@ -31,12 +31,12 @@ Cc:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
         MyungJoo Ham <myungjoo.ham@samsung.com>,
         Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 32/60] PM / devfreq: exynos-bus: Correct clock enable sequence
-Date:   Sun, 22 Sep 2019 14:59:05 -0400
-Message-Id: <20190922185934.4305-32-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 076/128] PM / devfreq: exynos-bus: Correct clock enable sequence
+Date:   Sun, 22 Sep 2019 14:53:26 -0400
+Message-Id: <20190922185418.2158-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190922185934.4305-1-sashal@kernel.org>
-References: <20190922185934.4305-1-sashal@kernel.org>
+In-Reply-To: <20190922185418.2158-1-sashal@kernel.org>
+References: <20190922185418.2158-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -65,10 +65,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
-index 1b21bb60e7975..2c8f41fbe94fb 100644
+index c25658b265988..24a9658348d78 100644
 --- a/drivers/devfreq/exynos-bus.c
 +++ b/drivers/devfreq/exynos-bus.c
-@@ -198,11 +198,10 @@ static void exynos_bus_exit(struct device *dev)
+@@ -194,11 +194,10 @@ static void exynos_bus_exit(struct device *dev)
  	if (ret < 0)
  		dev_warn(dev, "failed to disable the devfreq-event devices\n");
  
@@ -82,7 +82,7 @@ index 1b21bb60e7975..2c8f41fbe94fb 100644
  }
  
  /*
-@@ -391,6 +390,7 @@ static int exynos_bus_probe(struct platform_device *pdev)
+@@ -386,6 +385,7 @@ static int exynos_bus_probe(struct platform_device *pdev)
  	struct exynos_bus *bus;
  	int ret, max_state;
  	unsigned long min_freq, max_freq;
@@ -90,7 +90,7 @@ index 1b21bb60e7975..2c8f41fbe94fb 100644
  
  	if (!np) {
  		dev_err(dev, "failed to find devicetree node\n");
-@@ -404,27 +404,27 @@ static int exynos_bus_probe(struct platform_device *pdev)
+@@ -399,27 +399,27 @@ static int exynos_bus_probe(struct platform_device *pdev)
  	bus->dev = &pdev->dev;
  	platform_set_drvdata(pdev, bus);
  
@@ -129,7 +129,7 @@ index 1b21bb60e7975..2c8f41fbe94fb 100644
  
  	/* Initialize the struct profile and governor data for parent device */
  	profile->polling_ms = 50;
-@@ -514,6 +514,9 @@ static int exynos_bus_probe(struct platform_device *pdev)
+@@ -510,6 +510,9 @@ static int exynos_bus_probe(struct platform_device *pdev)
  err:
  	dev_pm_opp_of_remove_table(dev);
  	clk_disable_unprepare(bus->clk);
