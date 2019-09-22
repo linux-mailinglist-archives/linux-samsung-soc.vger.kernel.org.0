@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E07C9BA4E4
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Sep 2019 20:57:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24BBCBA612
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Sep 2019 21:45:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407966AbfIVSwm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 Sep 2019 14:52:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51738 "EHLO mail.kernel.org"
+        id S2390783AbfIVSrY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 22 Sep 2019 14:47:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43808 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407944AbfIVSwh (ORCPT
+        id S2390763AbfIVSrX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 Sep 2019 14:52:37 -0400
+        Sun, 22 Sep 2019 14:47:23 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 134B721479;
-        Sun, 22 Sep 2019 18:52:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CA4BE2186A;
+        Sun, 22 Sep 2019 18:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569178356;
+        s=default; t=1569178042;
         bh=JynpDT/gW2P7z3FNimWG7u5TDUQgbp30m34PxCe32QM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hTEUvRCDbYRsNJuoCUoDqpj+RJ1jBT6dmfrK/umV5m7HcJdNwGpk8QKfX6XpHmqpz
-         r94M6SilCzg0TNkFk887ZLtetL2ONHvIs5fe+vvrgYZkoonkZ0wZGFTUSezBDkzbk3
-         wS4d8g8LybdNBOFpRP/Htgx1j1xLD5nB49nsjHq4=
+        b=zwt5rOM4vien/A0MB+S9nUGrpNKmxCdZY2018CZoRQzryf+w4GQkqTwheTUj5gbHm
+         4pwLYKyOGuDzIr3qz0nzpas2xriN1rYjW/jeIOrRS2wCXfUGsZkuPKmYDoUQjJ8DEW
+         Ic0hXaZ3fxyALCNV9qI0m2PZbfzexS2Hmo9ntWAk=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
@@ -31,12 +31,12 @@ Cc:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
         MyungJoo Ham <myungjoo.ham@samsung.com>,
         Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.2 111/185] PM / devfreq: exynos-bus: Correct clock enable sequence
-Date:   Sun, 22 Sep 2019 14:48:09 -0400
-Message-Id: <20190922184924.32534-111-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.3 122/203] PM / devfreq: exynos-bus: Correct clock enable sequence
+Date:   Sun, 22 Sep 2019 14:42:28 -0400
+Message-Id: <20190922184350.30563-122-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190922184924.32534-1-sashal@kernel.org>
-References: <20190922184924.32534-1-sashal@kernel.org>
+In-Reply-To: <20190922184350.30563-1-sashal@kernel.org>
+References: <20190922184350.30563-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
