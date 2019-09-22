@@ -2,145 +2,143 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 97E4BB9F04
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 21 Sep 2019 19:02:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E07C9BA4E4
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Sep 2019 20:57:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438415AbfIURCc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 21 Sep 2019 13:02:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40286 "EHLO mail.kernel.org"
+        id S2407966AbfIVSwm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 22 Sep 2019 14:52:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51738 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438407AbfIURCa (ORCPT
+        id S2407944AbfIVSwh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 21 Sep 2019 13:02:30 -0400
-Received: from localhost.localdomain (unknown [194.230.155.145])
+        Sun, 22 Sep 2019 14:52:37 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7F78F21907;
-        Sat, 21 Sep 2019 17:02:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 134B721479;
+        Sun, 22 Sep 2019 18:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569085349;
-        bh=WMIbHRXqKnTwV8Qyk4jQI2KbATovpC39pOQTs+GXcc0=;
+        s=default; t=1569178356;
+        bh=JynpDT/gW2P7z3FNimWG7u5TDUQgbp30m34PxCe32QM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Jn4oa/WZlNu7XYMRyE3vTpcyy7SDnSQ+LtCys+Cm8vBnYTyInxGkF//s24yG0dQ6j
-         tlH9/OEOS4zVc9KHgRphEc3DrVt8hSdMjy24cqhja0nhBFxCFv5DJnD2VyhB2Qerql
-         Oc5FC5g6t8yJv1hwGkHoSZkBI7VJFDIThDe+dFaQ=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        b=hTEUvRCDbYRsNJuoCUoDqpj+RJ1jBT6dmfrK/umV5m7HcJdNwGpk8QKfX6XpHmqpz
+         r94M6SilCzg0TNkFk887ZLtetL2ONHvIs5fe+vvrgYZkoonkZ0wZGFTUSezBDkzbk3
+         wS4d8g8LybdNBOFpRP/Htgx1j1xLD5nB49nsjHq4=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Kamil Konieczny <k.konieczny@partner.samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH v3 8/8] ARM: dts: exynos: Use defines for MCT interrupt GIC SPI/PPI specifier
-Date:   Sat, 21 Sep 2019 19:01:52 +0200
-Message-Id: <20190921170152.5033-8-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190921170152.5033-1-krzk@kernel.org>
-References: <20190921170152.5033-1-krzk@kernel.org>
+Subject: [PATCH AUTOSEL 5.2 111/185] PM / devfreq: exynos-bus: Correct clock enable sequence
+Date:   Sun, 22 Sep 2019 14:48:09 -0400
+Message-Id: <20190922184924.32534-111-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190922184924.32534-1-sashal@kernel.org>
+References: <20190922184924.32534-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Replace hard-coded number with appropriate define for GIC SPI or PPI
-specifier in interrupt.  This makes code easier to read.  No expected
-functionality change.
+From: Kamil Konieczny <k.konieczny@partner.samsung.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+[ Upstream commit 2c2b20e0da89c76759ee28c6824413ab2fa3bfc6 ]
+
+Regulators should be enabled before clocks to avoid h/w hang. This
+require change in exynos_bus_probe() to move exynos_bus_parse_of()
+after exynos_bus_parent_parse_of() and change in error handling.
+Similar change is needed in exynos_bus_exit() where clock should be
+disabled before regulators.
+
+Signed-off-by: Kamil Konieczny <k.konieczny@partner.samsung.com>
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos4210.dtsi |  8 ++++----
- arch/arm/boot/dts/exynos4412.dtsi |  4 ++--
- arch/arm/boot/dts/exynos5250.dtsi |  4 ++--
- arch/arm/boot/dts/exynos54xx.dtsi | 16 ++++++++--------
- 4 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/devfreq/exynos-bus.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index 38c49ab8c733..650bee6355e4 100644
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -116,12 +116,12 @@
- 			#interrupt-cells = <1>;
- 			interrupt-parent = <&mct>;
- 			interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
--			interrupt-map = <0 &gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
--					<1 &gic 0 69 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupt-map = <0 &gic GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
-+					<1 &gic GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
- 					<2 &combiner 12 6>,
- 					<3 &combiner 12 7>,
--					<4 &gic 0 42 IRQ_TYPE_LEVEL_HIGH>,
--					<5 &gic 0 48 IRQ_TYPE_LEVEL_HIGH>;
-+					<4 &gic GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>,
-+					<5 &gic GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
+index d9f377912c104..7c06df8bd74fe 100644
+--- a/drivers/devfreq/exynos-bus.c
++++ b/drivers/devfreq/exynos-bus.c
+@@ -191,11 +191,10 @@ static void exynos_bus_exit(struct device *dev)
+ 	if (ret < 0)
+ 		dev_warn(dev, "failed to disable the devfreq-event devices\n");
  
- 		watchdog: watchdog@10060000 {
-diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-index 7e2dabefd53f..0810c14bf424 100644
---- a/arch/arm/boot/dts/exynos4412.dtsi
-+++ b/arch/arm/boot/dts/exynos4412.dtsi
-@@ -253,11 +253,11 @@
- 			#interrupt-cells = <1>;
- 			interrupt-parent = <&mct>;
- 			interrupts = <0>, <1>, <2>, <3>, <4>;
--			interrupt-map = <0 &gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupt-map = <0 &gic GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
- 					<1 &combiner 12 5>,
- 					<2 &combiner 12 6>,
- 					<3 &combiner 12 7>,
--					<4 &gic 1 12 IRQ_TYPE_LEVEL_HIGH>;
-+					<4 &gic GIC_PPI 12 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+-	if (bus->regulator)
+-		regulator_disable(bus->regulator);
+-
+ 	dev_pm_opp_of_remove_table(dev);
+ 	clk_disable_unprepare(bus->clk);
++	if (bus->regulator)
++		regulator_disable(bus->regulator);
+ }
  
- 		watchdog: watchdog@10060000 {
-diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
-index e0fcf3c2f537..61f22feefda9 100644
---- a/arch/arm/boot/dts/exynos5250.dtsi
-+++ b/arch/arm/boot/dts/exynos5250.dtsi
-@@ -247,8 +247,8 @@
- 					<1 &combiner 23 4>,
- 					<2 &combiner 25 2>,
- 					<3 &combiner 25 3>,
--					<4 &gic 0 120 IRQ_TYPE_LEVEL_HIGH>,
--					<5 &gic 0 121 IRQ_TYPE_LEVEL_HIGH>;
-+					<4 &gic GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+					<5 &gic GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+ /*
+@@ -383,6 +382,7 @@ static int exynos_bus_probe(struct platform_device *pdev)
+ 	struct exynos_bus *bus;
+ 	int ret, max_state;
+ 	unsigned long min_freq, max_freq;
++	bool passive = false;
  
- 		pinctrl_0: pinctrl@11400000 {
-diff --git a/arch/arm/boot/dts/exynos54xx.dtsi b/arch/arm/boot/dts/exynos54xx.dtsi
-index a1c10a9a86f8..f52c7ce5d320 100644
---- a/arch/arm/boot/dts/exynos54xx.dtsi
-+++ b/arch/arm/boot/dts/exynos54xx.dtsi
-@@ -77,14 +77,14 @@
- 					<1 &combiner 23 4>,
- 					<2 &combiner 25 2>,
- 					<3 &combiner 25 3>,
--					<4 &gic 0 120 IRQ_TYPE_LEVEL_HIGH>,
--					<5 &gic 0 121 IRQ_TYPE_LEVEL_HIGH>,
--					<6 &gic 0 122 IRQ_TYPE_LEVEL_HIGH>,
--					<7 &gic 0 123 IRQ_TYPE_LEVEL_HIGH>,
--					<8 &gic 0 128 IRQ_TYPE_LEVEL_HIGH>,
--					<9 &gic 0 129 IRQ_TYPE_LEVEL_HIGH>,
--					<10 &gic 0 130 IRQ_TYPE_LEVEL_HIGH>,
--					<11 &gic 0 131 IRQ_TYPE_LEVEL_HIGH>;
-+					<4 &gic GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+					<5 &gic GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
-+					<6 &gic GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+					<7 &gic GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+					<8 &gic GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
-+					<9 &gic GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
-+					<10 &gic GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-+					<11 &gic GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+ 	if (!np) {
+ 		dev_err(dev, "failed to find devicetree node\n");
+@@ -396,27 +396,27 @@ static int exynos_bus_probe(struct platform_device *pdev)
+ 	bus->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, bus);
  
- 		watchdog: watchdog@101d0000 {
+-	/* Parse the device-tree to get the resource information */
+-	ret = exynos_bus_parse_of(np, bus);
+-	if (ret < 0)
+-		return ret;
+-
+ 	profile = devm_kzalloc(dev, sizeof(*profile), GFP_KERNEL);
+-	if (!profile) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
++	if (!profile)
++		return -ENOMEM;
+ 
+ 	node = of_parse_phandle(dev->of_node, "devfreq", 0);
+ 	if (node) {
+ 		of_node_put(node);
+-		goto passive;
++		passive = true;
+ 	} else {
+ 		ret = exynos_bus_parent_parse_of(np, bus);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
++	/* Parse the device-tree to get the resource information */
++	ret = exynos_bus_parse_of(np, bus);
+ 	if (ret < 0)
+-		goto err;
++		goto err_reg;
++
++	if (passive)
++		goto passive;
+ 
+ 	/* Initialize the struct profile and governor data for parent device */
+ 	profile->polling_ms = 50;
+@@ -507,6 +507,9 @@ static int exynos_bus_probe(struct platform_device *pdev)
+ err:
+ 	dev_pm_opp_of_remove_table(dev);
+ 	clk_disable_unprepare(bus->clk);
++err_reg:
++	if (!passive)
++		regulator_disable(bus->regulator);
+ 
+ 	return ret;
+ }
 -- 
-2.17.1
+2.20.1
 
