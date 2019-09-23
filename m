@@ -2,90 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C29DDBAFF4
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 10:51:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A1DFBB0FC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 11:09:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731871AbfIWIv1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 04:51:27 -0400
-Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]:54418 "EHLO
-        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731734AbfIWIv0 (ORCPT
+        id S1727921AbfIWJIP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Sep 2019 05:08:15 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46940 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727444AbfIWJIP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 04:51:26 -0400
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
-        by mx0a-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8N8nBFA006747;
-        Mon, 23 Sep 2019 03:51:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=PODMain02222019;
- bh=BjpMtBhJnZ6yh/cP1ZHvKQ1eEYxgByGKmNnK9h7ukFI=;
- b=FV0NWlKenyfQ9wRSBC+FzmSlIWKuiRI5Huzbh6gvWWvoXO2gD/MN+NfF2krpBpML4N6M
- vP919MnDOvEPBvrmYJHA38ERSbU8z7JljFdu0QF99uvs5N08V/FFZ4rTIOVZpbUQOQWg
- IhkSdYUbeqY44JdXjW5l2M10rM2RSwjI3KO6pZBxjQOS+CbCbOK+oPMPrIqzaywuHQ9E
- KMa9fZttu5DiKPOdrKWPk21QDsUQTW2flraMGhF85jp2OutEl2eL0+UFcPZTbZ/n02kh
- 4O/kWd5xpPyPvac32mQ8jOZCv+Q7j+w6pkr5/3bhtuSHlRC+MhR1/3ZeVdYIQGiaaqQL Eg== 
-Authentication-Results: ppops.net;
-        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
-Received: from ediex01.ad.cirrus.com ([87.246.76.36])
-        by mx0a-001ae601.pphosted.com with ESMTP id 2v5h923796-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Mon, 23 Sep 2019 03:51:08 -0500
-Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 23 Sep
- 2019 09:51:05 +0100
-Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
- Transport; Mon, 23 Sep 2019 09:51:05 +0100
-Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
-        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id B94A02B3;
-        Mon, 23 Sep 2019 08:51:05 +0000 (UTC)
-Date:   Mon, 23 Sep 2019 08:51:05 +0000
-From:   Charles Keepax <ckeepax@opensource.cirrus.com>
+        Mon, 23 Sep 2019 05:08:15 -0400
+Received: by mail-wr1-f66.google.com with SMTP id o18so12969650wrv.13;
+        Mon, 23 Sep 2019 02:08:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tmMoz215KHiHYt4Ll2Ro4BC6di5AJcGWo8A7DQ1dHmY=;
+        b=spkdFHh/oMTfpTRpISpunkIPtspnttXvqdla93pY+RKHSOmkqcNAsGZetdWDppTaYm
+         JU20vl3Z43vrylD5aPyp+iW4pcUd7rkPDxoaXiTkWwrtxjXmELRoBxZ9QKXDyJECU7O4
+         SGCBagaEMvr/eos13/gxDopF08KqTGjpJGZ+DNE9rwYsImKYz0vr0WcwaBYEVoo+OqOO
+         Rw77eHQIukiW752I9dhLv1rfcK1GILWzHQM3Q1Vt1jT3cTP/v36md6t6oK4aEVWbHCYZ
+         O/IEAjN8w5S+gadMvq7a2rhjwEQyhXMGSRuW4383c94L5IkIOQ9CW+OsN/9o5sZuuajV
+         nOsQ==
+X-Gm-Message-State: APjAAAUHa45vCcAW3RX9xZoFe8Gf+O4LxXM5h+9msN5HtojJ9GmJS/x6
+        CJNCa83H8CpupDznrLtyaGk1Jxyd
+X-Google-Smtp-Source: APXvYqxxz7xafqgEfOSFCn8V7BM7y8g8X0JT9J5mDxENqXlljKM+EhY7wNQyUH3m4B3AzLz2RugrKg==
+X-Received: by 2002:a5d:49cb:: with SMTP id t11mr12649575wrs.158.1569229691633;
+        Mon, 23 Sep 2019 02:08:11 -0700 (PDT)
+Received: from pi3 ([194.230.155.145])
+        by smtp.googlemail.com with ESMTPSA id a13sm21942066wrf.73.2019.09.23.02.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Sep 2019 02:08:10 -0700 (PDT)
+Date:   Mon, 23 Sep 2019 11:08:07 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-CC:     <broonie@kernel.org>, <krzk@kernel.org>, <lgirdwood@gmail.com>,
-        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
-        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <patches@opensource.cirrus.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
-        <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v2 04/10] ASoC: wm8994: Add support for MCLKn clock gating
-Message-ID: <20190923085105.GN10204@ediswmail.ad.cirrus.com>
+Cc:     broonie@kernel.org, lgirdwood@gmail.com,
+        ckeepax@opensource.cirrus.com, sbkim73@samsung.com,
+        alsa-devel@alsa-project.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, patches@opensource.cirrus.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com
+Subject: Re: [PATCH v2 02/10] ASoC: samsung: arndale: Add missing OF node
+ dereferencing
+Message-ID: <20190923090807.GA4577@pi3>
 References: <20190920130218.32690-1-s.nawrocki@samsung.com>
- <CGME20190920130317eucas1p188d724710077d704f768798c6555c741@eucas1p1.samsung.com>
- <20190920130218.32690-5-s.nawrocki@samsung.com>
+ <CGME20190920130315eucas1p2a31543214fedcdfe86196f176f554a35@eucas1p2.samsung.com>
+ <20190920130218.32690-3-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190920130218.32690-5-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Proofpoint-SPF-Result: fail
-X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
- -all
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 priorityscore=1501
- adultscore=0 mlxlogscore=943 bulkscore=0 phishscore=0 clxscore=1015
- impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
- definitions=main-1909230089
+In-Reply-To: <20190920130218.32690-3-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 03:02:13PM +0200, Sylwester Nawrocki wrote:
-> As an intermediate step before covering the clocking subsystem
-> of the CODEC entirely by the clk API add handling of external CODEC's
-> master clocks in DAPM events when the AIFn clocks are sourced directly
-> from MCLKn; when FLLn are used we enable/disable respective MCLKn
-> before/after FLLn is enabled/disabled.
+On Fri, Sep 20, 2019 at 03:02:11PM +0200, Sylwester Nawrocki wrote:
+> Ensure there is no OF node references kept when the driver
+> is removed/unbound.
 > 
+> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 > Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 > ---
+> Changes since v1:
+>  - rebased to beginning of the series
+> ---
+>  sound/soc/samsung/arndale_rt5631.c | 34 ++++++++++++++++++++++++++----
+>  1 file changed, 30 insertions(+), 4 deletions(-)
 
-Looks good to me:
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Best regards,
+Krzysztof
 
-Thanks,
-Charles
