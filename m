@@ -2,145 +2,222 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D583BB94F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 18:14:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4B19BBDC5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 23:23:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437658AbfIWQO4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 12:14:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59196 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2395236AbfIWQO4 (ORCPT
+        id S2389700AbfIWVXK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Sep 2019 17:23:10 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:34962 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388117AbfIWVXK (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 12:14:56 -0400
-Received: from localhost.localdomain (unknown [194.230.155.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 48A7F20B7C;
-        Mon, 23 Sep 2019 16:14:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1569255295;
-        bh=qXqV0J88N2dypvGBO7A/lZfZUOS9/+hk7Rbjthl+2/U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HSgzdn01o5ejN576RO+vqEPDnxHhjrna19PWbCUd2zXNLjFC1QnsYCWkiYH8VT0rb
-         2Grlxp+4Rad0kYSiRLsC6HLh7IpYUr+SPtegbvff5omkvf5pTvDqJ+8d1QPyxCEPfP
-         dRqokgYw+O0yLG7WzUkTjBcF8HpkwBNkHVAtI/4U=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH v4 8/8] ARM: dts: exynos: Use defines for MCT interrupt GIC SPI/PPI specifier
-Date:   Mon, 23 Sep 2019 18:14:11 +0200
-Message-Id: <20190923161411.9236-8-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190923161411.9236-1-krzk@kernel.org>
-References: <20190923161411.9236-1-krzk@kernel.org>
+        Mon, 23 Sep 2019 17:23:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=bWmHVulB7Ia3zVa8uWWuDJ6sdbuUGFEHD8sBOacMu8g=; b=QB4vkNcmVCFF
+        tNE6wEDzsTxsMFfra4xABuUGgxu5gAkDXKXKejrOhpKwDvxUu2SA7HCo/8qfY+HMBzVIH9PyXKfxn
+        WslcpxZ2NUCXy4V1ut6mj11NxcnFxBzi9LoAPkov2kcOFa8mmU98x63OgPvae4jmKEjdE/c7+lSbG
+        nT71M=;
+Received: from [12.157.10.114] (helo=fitzroy.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1iCVnQ-0005WS-C0; Mon, 23 Sep 2019 21:23:00 +0000
+Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
+        id B13CDD02FDA; Mon, 23 Sep 2019 22:22:58 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     alsa-devel@alsa-project.org, broonie@kernel.org,
+        b.zolnierkie@samsung.com,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        ckeepax@opensource.cirrus.com, devicetree@vger.kernel.org,
+        krzk@kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        lgirdwood@gmail.com, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        m.szyprowski@samsung.com, patches@opensource.cirrus.com,
+        robh+dt@kernel.org, sbkim73@samsung.com
+Subject: Applied "ASoC: wm8994: Do not register inapplicable controls for WM1811" to the asoc tree
+In-Reply-To: <20190920130218.32690-2-s.nawrocki@samsung.com>
+X-Patchwork-Hint: ignore
+Message-Id: <20190923212258.B13CDD02FDA@fitzroy.sirena.org.uk>
+Date:   Mon, 23 Sep 2019 22:22:58 +0100 (BST)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Replace hard-coded number with appropriate define for GIC SPI or PPI
-specifier in interrupt.  This makes code easier to read.  No expected
-functionality change.
+The patch
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+   ASoC: wm8994: Do not register inapplicable controls for WM1811
+
+has been applied to the asoc tree at
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-5.4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From ca2347190adb5e4eece73a2b16e96e651c46246b Mon Sep 17 00:00:00 2001
+From: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Date: Fri, 20 Sep 2019 15:02:10 +0200
+Subject: [PATCH] ASoC: wm8994: Do not register inapplicable controls for
+ WM1811
+
+In case of WM1811 device there are currently being registered controls
+referring to registers not existing on that device.
+It has been noticed when getting values of "AIF1ADC2 Volume", "AIF1DAC2
+Volume" controls was failing during ALSA state restoring at boot time:
+ "amixer: Mixer hw:0 load error: Device or resource busy"
+
+Reading some registers through I2C was failing with EBUSY error and
+indeed these registers were not available according to the datasheet.
+
+To fix this controls not available on WM1811 are moved to a separate
+array and registered only for WM8994 and WM8958.
+
+There are some further differences between WM8994 and WM1811,
+e.g. registers 603h, 604h, 605h, which are not covered in this patch.
+
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://lore.kernel.org/r/20190920130218.32690-2-s.nawrocki@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- arch/arm/boot/dts/exynos4210.dtsi |  8 ++++----
- arch/arm/boot/dts/exynos4412.dtsi |  4 ++--
- arch/arm/boot/dts/exynos5250.dtsi |  4 ++--
- arch/arm/boot/dts/exynos54xx.dtsi | 16 ++++++++--------
- 4 files changed, 16 insertions(+), 16 deletions(-)
+ sound/soc/codecs/wm8994.c | 43 +++++++++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
-index 5fa33d43821e..aac3b7a20a37 100644
---- a/arch/arm/boot/dts/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/exynos4210.dtsi
-@@ -111,12 +111,12 @@
- 			reg = <0x10050000 0x800>;
- 			clocks = <&clock CLK_FIN_PLL>, <&clock CLK_MCT>;
- 			clock-names = "fin_pll", "mct";
--			interrupts-extended = <&gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 69 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&gic GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&combiner 12 6>,
- 					      <&combiner 12 7>,
--					      <&gic 0 42 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 48 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&gic GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index c3d06e8bc54f..d5fb7f5dd551 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -533,13 +533,10 @@ static SOC_ENUM_SINGLE_DECL(dac_osr,
+ static SOC_ENUM_SINGLE_DECL(adc_osr,
+ 			    WM8994_OVERSAMPLING, 1, osr_text);
  
- 		watchdog: watchdog@10060000 {
-diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
-index 9b5fb4e54d7c..96a5ef3a2864 100644
---- a/arch/arm/boot/dts/exynos4412.dtsi
-+++ b/arch/arm/boot/dts/exynos4412.dtsi
-@@ -248,11 +248,11 @@
- 			reg = <0x10050000 0x800>;
- 			clocks = <&clock CLK_FIN_PLL>, <&clock CLK_MCT>;
- 			clock-names = "fin_pll", "mct";
--			interrupts-extended = <&gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&gic GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&combiner 12 5>,
- 					      <&combiner 12 6>,
- 					      <&combiner 12 7>,
--					      <&gic 1 12 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+-static const struct snd_kcontrol_new wm8994_snd_controls[] = {
++static const struct snd_kcontrol_new wm8994_common_snd_controls[] = {
+ SOC_DOUBLE_R_TLV("AIF1ADC1 Volume", WM8994_AIF1_ADC1_LEFT_VOLUME,
+ 		 WM8994_AIF1_ADC1_RIGHT_VOLUME,
+ 		 1, 119, 0, digital_tlv),
+-SOC_DOUBLE_R_TLV("AIF1ADC2 Volume", WM8994_AIF1_ADC2_LEFT_VOLUME,
+-		 WM8994_AIF1_ADC2_RIGHT_VOLUME,
+-		 1, 119, 0, digital_tlv),
+ SOC_DOUBLE_R_TLV("AIF2ADC Volume", WM8994_AIF2_ADC_LEFT_VOLUME,
+ 		 WM8994_AIF2_ADC_RIGHT_VOLUME,
+ 		 1, 119, 0, digital_tlv),
+@@ -556,8 +553,6 @@ SOC_ENUM("AIF2DACR Source", aif2dacr_src),
  
- 		watchdog: watchdog@10060000 {
-diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
-index a549eafd2c64..f01e3156191d 100644
---- a/arch/arm/boot/dts/exynos5250.dtsi
-+++ b/arch/arm/boot/dts/exynos5250.dtsi
-@@ -242,8 +242,8 @@
- 					      <&combiner 23 4>,
- 					      <&combiner 25 2>,
- 					      <&combiner 25 3>,
--					      <&gic 0 120 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 121 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&gic GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+ SOC_DOUBLE_R_TLV("AIF1DAC1 Volume", WM8994_AIF1_DAC1_LEFT_VOLUME,
+ 		 WM8994_AIF1_DAC1_RIGHT_VOLUME, 1, 96, 0, digital_tlv),
+-SOC_DOUBLE_R_TLV("AIF1DAC2 Volume", WM8994_AIF1_DAC2_LEFT_VOLUME,
+-		 WM8994_AIF1_DAC2_RIGHT_VOLUME, 1, 96, 0, digital_tlv),
+ SOC_DOUBLE_R_TLV("AIF2DAC Volume", WM8994_AIF2_DAC_LEFT_VOLUME,
+ 		 WM8994_AIF2_DAC_RIGHT_VOLUME, 1, 96, 0, digital_tlv),
  
- 		pinctrl_0: pinctrl@11400000 {
-diff --git a/arch/arm/boot/dts/exynos54xx.dtsi b/arch/arm/boot/dts/exynos54xx.dtsi
-index aca1b4831e38..06ae40a2f1e9 100644
---- a/arch/arm/boot/dts/exynos54xx.dtsi
-+++ b/arch/arm/boot/dts/exynos54xx.dtsi
-@@ -71,14 +71,14 @@
- 					      <&combiner 23 4>,
- 					      <&combiner 25 2>,
- 					      <&combiner 25 3>,
--					      <&gic 0 120 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 121 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 122 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 123 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 128 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 129 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 130 IRQ_TYPE_LEVEL_HIGH>,
--					      <&gic 0 131 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&gic GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&gic GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+@@ -565,17 +560,12 @@ SOC_SINGLE_TLV("AIF1 Boost Volume", WM8994_AIF1_CONTROL_2, 10, 3, 0, aif_tlv),
+ SOC_SINGLE_TLV("AIF2 Boost Volume", WM8994_AIF2_CONTROL_2, 10, 3, 0, aif_tlv),
  
- 		watchdog: watchdog@101d0000 {
+ SOC_SINGLE("AIF1DAC1 EQ Switch", WM8994_AIF1_DAC1_EQ_GAINS_1, 0, 1, 0),
+-SOC_SINGLE("AIF1DAC2 EQ Switch", WM8994_AIF1_DAC2_EQ_GAINS_1, 0, 1, 0),
+ SOC_SINGLE("AIF2 EQ Switch", WM8994_AIF2_EQ_GAINS_1, 0, 1, 0),
+ 
+ WM8994_DRC_SWITCH("AIF1DAC1 DRC Switch", WM8994_AIF1_DRC1_1, 2),
+ WM8994_DRC_SWITCH("AIF1ADC1L DRC Switch", WM8994_AIF1_DRC1_1, 1),
+ WM8994_DRC_SWITCH("AIF1ADC1R DRC Switch", WM8994_AIF1_DRC1_1, 0),
+ 
+-WM8994_DRC_SWITCH("AIF1DAC2 DRC Switch", WM8994_AIF1_DRC2_1, 2),
+-WM8994_DRC_SWITCH("AIF1ADC2L DRC Switch", WM8994_AIF1_DRC2_1, 1),
+-WM8994_DRC_SWITCH("AIF1ADC2R DRC Switch", WM8994_AIF1_DRC2_1, 0),
+-
+ WM8994_DRC_SWITCH("AIF2DAC DRC Switch", WM8994_AIF2_DRC_1, 2),
+ WM8994_DRC_SWITCH("AIF2ADCL DRC Switch", WM8994_AIF2_DRC_1, 1),
+ WM8994_DRC_SWITCH("AIF2ADCR DRC Switch", WM8994_AIF2_DRC_1, 0),
+@@ -594,9 +584,6 @@ SOC_SINGLE("Sidetone HPF Switch", WM8994_SIDETONE, 6, 1, 0),
+ SOC_ENUM("AIF1ADC1 HPF Mode", aif1adc1_hpf),
+ SOC_DOUBLE("AIF1ADC1 HPF Switch", WM8994_AIF1_ADC1_FILTERS, 12, 11, 1, 0),
+ 
+-SOC_ENUM("AIF1ADC2 HPF Mode", aif1adc2_hpf),
+-SOC_DOUBLE("AIF1ADC2 HPF Switch", WM8994_AIF1_ADC2_FILTERS, 12, 11, 1, 0),
+-
+ SOC_ENUM("AIF2ADC HPF Mode", aif2adc_hpf),
+ SOC_DOUBLE("AIF2ADC HPF Switch", WM8994_AIF2_ADC_FILTERS, 12, 11, 1, 0),
+ 
+@@ -637,6 +624,24 @@ SOC_SINGLE("AIF2DAC 3D Stereo Switch", WM8994_AIF2_DAC_FILTERS_2,
+ 	   8, 1, 0),
+ };
+ 
++/* Controls not available on WM1811 */
++static const struct snd_kcontrol_new wm8994_snd_controls[] = {
++SOC_DOUBLE_R_TLV("AIF1ADC2 Volume", WM8994_AIF1_ADC2_LEFT_VOLUME,
++		 WM8994_AIF1_ADC2_RIGHT_VOLUME,
++		 1, 119, 0, digital_tlv),
++SOC_DOUBLE_R_TLV("AIF1DAC2 Volume", WM8994_AIF1_DAC2_LEFT_VOLUME,
++		 WM8994_AIF1_DAC2_RIGHT_VOLUME, 1, 96, 0, digital_tlv),
++
++SOC_SINGLE("AIF1DAC2 EQ Switch", WM8994_AIF1_DAC2_EQ_GAINS_1, 0, 1, 0),
++
++WM8994_DRC_SWITCH("AIF1DAC2 DRC Switch", WM8994_AIF1_DRC2_1, 2),
++WM8994_DRC_SWITCH("AIF1ADC2L DRC Switch", WM8994_AIF1_DRC2_1, 1),
++WM8994_DRC_SWITCH("AIF1ADC2R DRC Switch", WM8994_AIF1_DRC2_1, 0),
++
++SOC_ENUM("AIF1ADC2 HPF Mode", aif1adc2_hpf),
++SOC_DOUBLE("AIF1ADC2 HPF Switch", WM8994_AIF1_ADC2_FILTERS, 12, 11, 1, 0),
++};
++
+ static const struct snd_kcontrol_new wm8994_eq_controls[] = {
+ SOC_SINGLE_TLV("AIF1DAC1 EQ1 Volume", WM8994_AIF1_DAC1_EQ_GAINS_1, 11, 31, 0,
+ 	       eq_tlv),
+@@ -4258,13 +4263,15 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 	wm8994_handle_pdata(wm8994);
+ 
+ 	wm_hubs_add_analogue_controls(component);
+-	snd_soc_add_component_controls(component, wm8994_snd_controls,
+-			     ARRAY_SIZE(wm8994_snd_controls));
++	snd_soc_add_component_controls(component, wm8994_common_snd_controls,
++				       ARRAY_SIZE(wm8994_common_snd_controls));
+ 	snd_soc_dapm_new_controls(dapm, wm8994_dapm_widgets,
+ 				  ARRAY_SIZE(wm8994_dapm_widgets));
+ 
+ 	switch (control->type) {
+ 	case WM8994:
++		snd_soc_add_component_controls(component, wm8994_snd_controls,
++					       ARRAY_SIZE(wm8994_snd_controls));
+ 		snd_soc_dapm_new_controls(dapm, wm8994_specific_dapm_widgets,
+ 					  ARRAY_SIZE(wm8994_specific_dapm_widgets));
+ 		if (control->revision < 4) {
+@@ -4284,8 +4291,10 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 		}
+ 		break;
+ 	case WM8958:
++		snd_soc_add_component_controls(component, wm8994_snd_controls,
++					       ARRAY_SIZE(wm8994_snd_controls));
+ 		snd_soc_add_component_controls(component, wm8958_snd_controls,
+-				     ARRAY_SIZE(wm8958_snd_controls));
++					       ARRAY_SIZE(wm8958_snd_controls));
+ 		snd_soc_dapm_new_controls(dapm, wm8958_dapm_widgets,
+ 					  ARRAY_SIZE(wm8958_dapm_widgets));
+ 		if (control->revision < 1) {
 -- 
-2.17.1
+2.20.1
 
