@@ -2,311 +2,296 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3703ABB427
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 14:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0572ABB940
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 18:14:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731861AbfIWMsI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 08:48:08 -0400
-Received: from regular1.263xmail.com ([211.150.70.199]:52626 "EHLO
-        regular1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730243AbfIWMsI (ORCPT
+        id S2388549AbfIWQOa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Sep 2019 12:14:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58514 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388155AbfIWQO3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 08:48:08 -0400
-X-Greylist: delayed 476 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Sep 2019 08:48:02 EDT
-Received: from hjc?rock-chips.com (unknown [192.168.167.32])
-        by regular1.263xmail.com (Postfix) with ESMTP id B3EAB3E9;
-        Mon, 23 Sep 2019 20:40:04 +0800 (CST)
-X-263anti-spam: KSV:0;BIG:0;
-X-MAIL-GRAY: 0
-X-MAIL-DELIVERY: 1
-X-KSVirus-check: 0
-X-ADDR-CHECKED4: 1
-X-ABS-CHECKED: 1
-X-SKE-CHECKED: 1
-X-ANTISPAM-LEVEL: 2
-Received: from localhost.localdomain (unknown [58.22.7.114])
-        by smtp.263.net (postfix) whith ESMTP id P10893T140454720919296S1569242369031174_;
-        Mon, 23 Sep 2019 20:40:03 +0800 (CST)
-X-IP-DOMAINF: 1
-X-UNIQUE-TAG: <34ffe67a50f98c47a25cd474b3d01953>
-X-RL-SENDER: hjc@rock-chips.com
-X-SENDER: hjc@rock-chips.com
-X-LOGIN-NAME: hjc@rock-chips.com
-X-FST-TO: dri-devel@lists.freedesktop.org
-X-SENDER-IP: 58.22.7.114
-X-ATTACHMENT-NUM: 0
-X-DNS-TYPE: 0
-From:   Sandy Huang <hjc@rock-chips.com>
-To:     dri-devel@lists.freedesktop.org, Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     hjc@rock-chips.com, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 04/36] drm: exynos: use bpp instead of cpp for drm_format_info
-Date:   Mon, 23 Sep 2019 20:38:53 +0800
-Message-Id: <1569242365-182133-5-git-send-email-hjc@rock-chips.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1569242365-182133-1-git-send-email-hjc@rock-chips.com>
-References: <1569242365-182133-1-git-send-email-hjc@rock-chips.com>
+        Mon, 23 Sep 2019 12:14:29 -0400
+Received: from localhost.localdomain (unknown [194.230.155.145])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 21A3F2168B;
+        Mon, 23 Sep 2019 16:14:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1569255268;
+        bh=H8nRPYUseeS10GjqnOPrzC9Yz/nMH7vpi1Y4wo1PFCA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=KY68NKIMh2Aa/wFDIM/Q5O1PemkYu9Kpavfm8xuoYF5+PpFW+3efiikoistWP6PHp
+         N220A8sQu8LjGgAL1uhZOZz1n4ES+TpqEhDzHXW1YHecvsK2VXBmt357oafEhyVTOR
+         8B/F4Nk2WzsJcrq2D+P/JtqPMUZFNy/BXQ2ur+aE=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Sylwester Nawrocki <snawrocki@kernel.org>
+Subject: [PATCH v4 1/8] dt-bindings: timer: Convert Exynos MCT bindings to json-schema
+Date:   Mon, 23 Sep 2019 18:14:04 +0200
+Message-Id: <20190923161411.9236-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-cpp[BytePerPlane] can't describe the 10bit data format correctly,
-So we use bpp[BitPerPlane] to instead cpp.
+Convert Samsung Exynos Soc Multi Core Timer bindings to DT schema format
+using json-schema.
 
-Signed-off-by: Sandy Huang <hjc@rock-chips.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+
 ---
- drivers/gpu/drm/exynos/exynos5433_drm_decon.c | 4 ++--
- drivers/gpu/drm/exynos/exynos7_drm_decon.c    | 6 +++---
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c     | 4 ++--
- drivers/gpu/drm/exynos/exynos_drm_fimc.c      | 6 +++---
- drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_gsc.c       | 4 ++--
- drivers/gpu/drm/exynos/exynos_drm_ipp.c       | 6 +++---
- drivers/gpu/drm/exynos/exynos_drm_rotator.c   | 4 ++--
- drivers/gpu/drm/exynos/exynos_drm_scaler.c    | 4 ++--
- drivers/gpu/drm/exynos/exynos_mixer.c         | 4 ++--
- 10 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-index 2d5cbfd..9401591 100644
---- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-@@ -356,7 +356,7 @@ static void decon_win_set_pixfmt(struct decon_context *ctx, unsigned int win,
- 		break;
- 	}
- 
--	DRM_DEV_DEBUG_KMS(ctx->dev, "cpp = %u\n", fb->format->cpp[0]);
-+	DRM_DEV_DEBUG_KMS(ctx->dev, "bpp = %u\n", fb->format->bpp[0]);
- 
- 	/*
- 	 * In case of exynos, setting dma-burst to 16Word causes permanent
-@@ -403,7 +403,7 @@ static void decon_update_plane(struct exynos_drm_crtc *crtc,
- 	struct decon_context *ctx = crtc->ctx;
- 	struct drm_framebuffer *fb = state->base.fb;
- 	unsigned int win = plane->index;
--	unsigned int cpp = fb->format->cpp[0];
-+	unsigned int cpp = fb->format->bpp[0] / 8;
- 	unsigned int pitch = fb->pitches[0];
- 	dma_addr_t dma_addr = exynos_drm_fb_dma_addr(fb, 0);
- 	u32 val;
-diff --git a/drivers/gpu/drm/exynos/exynos7_drm_decon.c b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-index f064095..d6158b7 100644
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -310,7 +310,7 @@ static void decon_win_set_pixfmt(struct decon_context *ctx, unsigned int win,
- 		break;
- 	}
- 
--	DRM_DEV_DEBUG_KMS(ctx->dev, "cpp = %d\n", fb->format->cpp[0]);
-+	DRM_DEV_DEBUG_KMS(ctx->dev, "bpp = %d\n", fb->format->bpp[0]);
- 
- 	/*
- 	 * In case of exynos, setting dma-burst to 16Word causes permanent
-@@ -320,7 +320,7 @@ static void decon_win_set_pixfmt(struct decon_context *ctx, unsigned int win,
- 	 * movement causes unstable DMA which results into iommu crash/tear.
- 	 */
- 
--	padding = (fb->pitches[0] / fb->format->cpp[0]) - fb->width;
-+	padding = (fb->pitches[0] / fb->format->bpp[0] / 8) - fb->width;
- 	if (fb->width + padding < MIN_FB_WIDTH_FOR_16WORD_BURST) {
- 		val &= ~WINCONx_BURSTLEN_MASK;
- 		val |= WINCONx_BURSTLEN_8WORD;
-@@ -387,7 +387,7 @@ static void decon_update_plane(struct exynos_drm_crtc *crtc,
- 	unsigned int last_x;
- 	unsigned int last_y;
- 	unsigned int win = plane->index;
--	unsigned int cpp = fb->format->cpp[0];
-+	unsigned int cpp = fb->format->bpp[0] / 8;
- 	unsigned int pitch = fb->pitches[0];
- 
- 	if (ctx->suspended)
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-index b0877b9..f82ac12 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-@@ -75,7 +75,7 @@ static int exynos_drm_fbdev_update(struct drm_fb_helper *helper,
- {
- 	struct fb_info *fbi;
- 	struct drm_framebuffer *fb = helper->fb;
--	unsigned int size = fb->width * fb->height * fb->format->cpp[0];
-+	unsigned int size = fb->width * fb->height * fb->format->bpp[0] / 8;
- 	unsigned int nr_pages;
- 	unsigned long offset;
- 
-@@ -100,7 +100,7 @@ static int exynos_drm_fbdev_update(struct drm_fb_helper *helper,
- 		return -EIO;
- 	}
- 
--	offset = fbi->var.xoffset * fb->format->cpp[0];
-+	offset = fbi->var.xoffset * fb->format->bpp[0] / 8;
- 	offset += fbi->var.yoffset * fb->pitches[0];
- 
- 	fbi->screen_base = exynos_gem->kvaddr + offset;
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-index a594ab7..ceb889c 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-@@ -466,7 +466,7 @@ static void fimc_src_set_transf(struct fimc_context *ctx, unsigned int rotation)
- static void fimc_set_window(struct fimc_context *ctx,
- 			    struct exynos_drm_ipp_buffer *buf)
- {
--	unsigned int real_width = buf->buf.pitch[0] / buf->format->cpp[0];
-+	unsigned int real_width = buf->buf.pitch[0] / buf->format->bpp[0] / 8;
- 	u32 cfg, h1, h2, v1, v2;
- 
- 	/* cropped image */
-@@ -501,7 +501,7 @@ static void fimc_set_window(struct fimc_context *ctx,
- static void fimc_src_set_size(struct fimc_context *ctx,
- 			      struct exynos_drm_ipp_buffer *buf)
- {
--	unsigned int real_width = buf->buf.pitch[0] / buf->format->cpp[0];
-+	unsigned int real_width = buf->buf.pitch[0] / buf->format->bpp[0] / 8;
- 	u32 cfg;
- 
- 	DRM_DEV_DEBUG_KMS(ctx->dev, "hsize[%d]vsize[%d]\n", real_width,
-@@ -843,7 +843,7 @@ static void fimc_set_scaler(struct fimc_context *ctx, struct fimc_scaler *sc)
- static void fimc_dst_set_size(struct fimc_context *ctx,
- 			     struct exynos_drm_ipp_buffer *buf)
- {
--	unsigned int real_width = buf->buf.pitch[0] / buf->format->cpp[0];
-+	unsigned int real_width = buf->buf.pitch[0] / buf->format->bpp[0] / 8;
- 	u32 cfg, cfg_ext;
- 
- 	DRM_DEV_DEBUG_KMS(ctx->dev, "hsize[%d]vsize[%d]\n", real_width,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-index 8d0a929..561597b 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-@@ -795,7 +795,7 @@ static void fimd_update_plane(struct exynos_drm_crtc *crtc,
- 	unsigned long val, size, offset;
- 	unsigned int last_x, last_y, buf_offsize, line_size;
- 	unsigned int win = plane->index;
--	unsigned int cpp = fb->format->cpp[0];
-+	unsigned int cpp = fb->format->bpp[0] / 8;
- 	unsigned int pitch = fb->pitches[0];
- 
- 	if (ctx->suspended)
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 1e4b21c..a15e2d9 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -579,7 +579,7 @@ static void gsc_src_set_size(struct gsc_context *ctx,
- 	cfg &= ~(GSC_SRCIMG_HEIGHT_MASK |
- 		GSC_SRCIMG_WIDTH_MASK);
- 
--	cfg |= (GSC_SRCIMG_WIDTH(buf->buf.pitch[0] / buf->format->cpp[0]) |
-+	cfg |= (GSC_SRCIMG_WIDTH(buf->buf.pitch[0] / buf->format->bpp[0] / 8) |
- 		GSC_SRCIMG_HEIGHT(buf->buf.height));
- 
- 	gsc_write(cfg, GSC_SRCIMG_SIZE);
-@@ -881,7 +881,7 @@ static void gsc_dst_set_size(struct gsc_context *ctx,
- 	/* original size */
- 	cfg = gsc_read(GSC_DSTIMG_SIZE);
- 	cfg &= ~(GSC_DSTIMG_HEIGHT_MASK | GSC_DSTIMG_WIDTH_MASK);
--	cfg |= GSC_DSTIMG_WIDTH(buf->buf.pitch[0] / buf->format->cpp[0]) |
-+	cfg |= GSC_DSTIMG_WIDTH(buf->buf.pitch[0] / buf->format->bpp[0] / 8) |
- 	       GSC_DSTIMG_HEIGHT(buf->buf.height);
- 	gsc_write(cfg, GSC_DSTIMG_SIZE);
- 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_ipp.c b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-index d45bfab..14c728e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-@@ -475,7 +475,7 @@ static int exynos_drm_ipp_check_size_limits(struct exynos_drm_ipp_buffer *buf,
- 	enum drm_ipp_size_id id = rotate ? IPP_LIMIT_ROTATED : IPP_LIMIT_AREA;
- 	struct drm_ipp_limit l;
- 	struct drm_exynos_ipp_limit_val *lh = &l.h, *lv = &l.v;
--	int real_width = buf->buf.pitch[0] / buf->format->cpp[0];
-+	int real_width = buf->buf.pitch[0] / buf->format->bpp[0] / 8;
- 
- 	if (!limits)
- 		return 0;
-@@ -570,8 +570,8 @@ static int exynos_drm_ipp_check_format(struct exynos_drm_ipp_task *task,
- 			     DIV_ROUND_UP(buf->buf.width, buf->format->hsub);
- 
- 		if (buf->buf.pitch[i] == 0)
--			buf->buf.pitch[i] = width * buf->format->cpp[i];
--		if (buf->buf.pitch[i] < width * buf->format->cpp[i])
-+			buf->buf.pitch[i] = width * buf->format->bpp[i] / 8;
-+		if (buf->buf.pitch[i] < width * buf->format->bpp[i] / 8)
- 			return -EINVAL;
- 		if (!buf->buf.gem_id[i])
- 			return -ENOENT;
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_rotator.c b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-index 8ebad27..8d1da0f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-@@ -139,7 +139,7 @@ static void rotator_src_set_buf(struct rot_context *rot,
- 
- 	/* Set buffer size configuration */
- 	val = ROT_SET_BUF_SIZE_H(buf->buf.height) |
--	      ROT_SET_BUF_SIZE_W(buf->buf.pitch[0] / buf->format->cpp[0]);
-+	      ROT_SET_BUF_SIZE_W(buf->buf.pitch[0] / buf->format->bpp[0] / 8);
- 	rot_write(val, ROT_SRC_BUF_SIZE);
- 
- 	/* Set crop image position configuration */
-@@ -187,7 +187,7 @@ static void rotator_dst_set_buf(struct rot_context *rot,
- 
- 	/* Set buffer size configuration */
- 	val = ROT_SET_BUF_SIZE_H(buf->buf.height) |
--	      ROT_SET_BUF_SIZE_W(buf->buf.pitch[0] / buf->format->cpp[0]);
-+	      ROT_SET_BUF_SIZE_W(buf->buf.pitch[0] / buf->format->bpp[0] / 8);
- 	rot_write(val, ROT_DST_BUF_SIZE);
- 
- 	/* Set crop image position configuration */
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_scaler.c b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-index 9af0964..c9ad312 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-@@ -166,7 +166,7 @@ static inline void scaler_set_src_span(struct scaler_context *scaler,
- 	u32 val;
- 
- 	val = SCALER_SRC_SPAN_SET_Y_SPAN(src_buf->buf.pitch[0] /
--		src_buf->format->cpp[0]);
-+		src_buf->format->bpp[0] / 8);
- 
- 	if (src_buf->format->num_planes > 1)
- 		val |= SCALER_SRC_SPAN_SET_C_SPAN(src_buf->buf.pitch[1]);
-@@ -229,7 +229,7 @@ static inline void scaler_set_dst_span(struct scaler_context *scaler,
- 	u32 val;
- 
- 	val = SCALER_DST_SPAN_SET_Y_SPAN(dst_buf->buf.pitch[0] /
--		dst_buf->format->cpp[0]);
-+		dst_buf->format->bpp[0] / 8);
- 
- 	if (dst_buf->format->num_planes > 1)
- 		val |= SCALER_DST_SPAN_SET_C_SPAN(dst_buf->buf.pitch[1]);
-diff --git a/drivers/gpu/drm/exynos/exynos_mixer.c b/drivers/gpu/drm/exynos/exynos_mixer.c
-index 7b24338f..015dbab 100644
---- a/drivers/gpu/drm/exynos/exynos_mixer.c
-+++ b/drivers/gpu/drm/exynos/exynos_mixer.c
-@@ -646,7 +646,7 @@ static void mixer_graph_buffer(struct mixer_context *ctx,
- 
- 	/* translate dma address base s.t. the source image offset is zero */
- 	dma_addr = exynos_drm_fb_dma_addr(fb, 0)
--		+ (state->src.x * fb->format->cpp[0])
-+		+ (state->src.x * fb->format->bpp[0] / 8)
- 		+ (state->src.y * fb->pitches[0]);
- 
- 	spin_lock_irqsave(&ctx->reg_slock, flags);
-@@ -657,7 +657,7 @@ static void mixer_graph_buffer(struct mixer_context *ctx,
- 
- 	/* setup geometry */
- 	mixer_reg_write(ctx, MXR_GRAPHIC_SPAN(win),
--			fb->pitches[0] / fb->format->cpp[0]);
-+			fb->pitches[0] / fb->format->bpp[0] / 8);
- 
- 	val  = MXR_GRP_WH_WIDTH(state->src.w);
- 	val |= MXR_GRP_WH_HEIGHT(state->src.h);
+Changes since v3:
+1. Use interrupts-extended instead of interrupts-map.
+
+Changes since v1:
+1. Indent example with four spaces (more readable),
+2. Rename nodes in example to timer,
+3. Remove mct-map subnode.
+---
+ .../bindings/timer/samsung,exynos4210-mct.txt |  88 ------------
+ .../timer/samsung,exynos4210-mct.yaml         | 125 ++++++++++++++++++
+ 2 files changed, 125 insertions(+), 88 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+ create mode 100644 Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
+deleted file mode 100644
+index 8f78640ad64c..000000000000
+--- a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.txt
++++ /dev/null
+@@ -1,88 +0,0 @@
+-Samsung's Multi Core Timer (MCT)
+-
+-The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
+-global timer and CPU local timers. The global timer is a 64-bit free running
+-up-counter and can generate 4 interrupts when the counter reaches one of the
+-four preset counter values. The CPU local timers are 32-bit free running
+-down-counters and generate an interrupt when the counter expires. There is
+-one CPU local timer instantiated in MCT for every CPU in the system.
+-
+-Required properties:
+-
+-- compatible: should be "samsung,exynos4210-mct".
+-  (a) "samsung,exynos4210-mct", for mct compatible with Exynos4210 mct.
+-  (b) "samsung,exynos4412-mct", for mct compatible with Exynos4412 mct.
+-
+-- reg: base address of the mct controller and length of the address space
+-  it occupies.
+-
+-- interrupts: the list of interrupts generated by the controller. The following
+-  should be the order of the interrupts specified. The local timer interrupts
+-  should be specified after the four global timer interrupts have been
+-  specified.
+-
+-	0: Global Timer Interrupt 0
+-	1: Global Timer Interrupt 1
+-	2: Global Timer Interrupt 2
+-	3: Global Timer Interrupt 3
+-	4: Local Timer Interrupt 0
+-	5: Local Timer Interrupt 1
+-	6: ..
+-	7: ..
+-	i: Local Timer Interrupt n
+-
+-  For MCT block that uses a per-processor interrupt for local timers, such
+-  as ones compatible with "samsung,exynos4412-mct", only one local timer
+-  interrupt might be specified, meaning that all local timers use the same
+-  per processor interrupt.
+-
+-Example 1: In this example, the IP contains two local timers, using separate
+-	   interrupts, so two local timer interrupts have been specified,
+-	   in addition to four global timer interrupts.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x10050000 0x800>;
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 48 0>;
+-	};
+-
+-Example 2: In this example, the timer interrupts are connected to two separate
+-	   interrupt controllers. Hence, an interrupt-map is created to map
+-	   the interrupts to the respective interrupt controllers.
+-
+-	mct@101c0000 {
+-		compatible = "samsung,exynos4210-mct";
+-		reg = <0x101C0000 0x800>;
+-		interrupt-parent = <&mct_map>;
+-		interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
+-
+-		mct_map: mct-map {
+-			#interrupt-cells = <1>;
+-			#address-cells = <0>;
+-			#size-cells = <0>;
+-			interrupt-map = <0 &gic 0 57 0>,
+-					<1 &gic 0 69 0>,
+-					<2 &combiner 12 6>,
+-					<3 &combiner 12 7>,
+-					<4 &gic 0 42 0>,
+-					<5 &gic 0 48 0>;
+-		};
+-	};
+-
+-Example 3: In this example, the IP contains four local timers, but using
+-	   a per-processor interrupt to handle them. Either all the local
+-	   timer interrupts can be specified, with the same interrupt specifier
+-	   value or just the first one.
+-
+-	mct@10050000 {
+-		compatible = "samsung,exynos4412-mct";
+-		reg = <0x10050000 0x800>;
+-
+-		/* Both ways are possible in this case. Either: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>;
+-		/* or: */
+-		interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
+-			     <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
+-	};
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+new file mode 100644
+index 000000000000..bff3f54a398f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+@@ -0,0 +1,125 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/timer/samsung,exynos4210-mct.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Samsung Exynos SoC Multi Core Timer (MCT)
++
++maintainers:
++  - Krzysztof Kozlowski <krzk@kernel.org>
++
++description: |+
++  The Samsung's Multi Core Timer (MCT) module includes two main blocks, the
++  global timer and CPU local timers. The global timer is a 64-bit free running
++  up-counter and can generate 4 interrupts when the counter reaches one of the
++  four preset counter values. The CPU local timers are 32-bit free running
++  down-counters and generate an interrupt when the counter expires. There is
++  one CPU local timer instantiated in MCT for every CPU in the system.
++
++properties:
++  compatible:
++    enum:
++      - samsung,exynos4210-mct
++      - samsung,exynos4412-mct
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    description: |
++      Interrupts should be put in specific order. This is, the local timer
++      interrupts should be specified after the four global timer interrupts
++      have been specified:
++      0: Global Timer Interrupt 0
++      1: Global Timer Interrupt 1
++      2: Global Timer Interrupt 2
++      3: Global Timer Interrupt 3
++      4: Local Timer Interrupt 0
++      5: Local Timer Interrupt 1
++      6: ..
++      7: ..
++      i: Local Timer Interrupt n
++      For MCT block that uses a per-processor interrupt for local timers, such
++      as ones compatible with "samsung,exynos4412-mct", only one local timer
++      interrupt might be specified, meaning that all local timers use the same
++      per processor interrupt.
++    minItems: 5               # 4 Global + 1 local
++    maxItems: 20              # 4 Global + 16 local
++
++  interrupts-extended:
++    description: |
++      If interrupts are coming from different controllers, this property
++      can be used instead of regular "interrupts" property.
++      The format is exactly the same as with "interrupts".
++      Interrupts should be put in specific order. This is, the local timer
++    minItems: 5               # 4 Global + 1 local
++    maxItems: 20              # 4 Global + 16 local
++
++required:
++  - compatible
++  - interrupts
++  - reg
++
++allOf:
++  - if:
++      not:
++        required:
++          - interrupts
++    then:
++      required:
++        - interrupts-extended
++
++examples:
++  - |
++    // In this example, the IP contains two local timers, using separate
++    // interrupts, so two local timer interrupts have been specified,
++    // in addition to four global timer interrupts.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4210-mct";
++        reg = <0x10050000 0x800>;
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>, <0 48 0>;
++    };
++
++  - |
++    // In this example, the timer interrupts are connected to two separate
++    // interrupt controllers. Hence, an interrupts-extended is needed.
++
++    timer@101c0000 {
++        compatible = "samsung,exynos4210-mct";
++        reg = <0x101C0000 0x800>;
++        interrupts-extended = <&gic 0 57 0>,
++                              <&gic 0 69 0>,
++                              <&combiner 12 6>,
++                              <&combiner 12 7>,
++                              <&gic 0 42 0>,
++                              <&gic 0 48 0>;
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. Only one first local
++    // interrupt is specified.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4412-mct";
++        reg = <0x10050000 0x800>;
++
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>;
++    };
++
++  - |
++    // In this example, the IP contains four local timers, but using
++    // a per-processor interrupt to handle them. All the local timer
++    // interrupts are specified.
++
++    timer@10050000 {
++        compatible = "samsung,exynos4412-mct";
++        reg = <0x10050000 0x800>;
++
++        interrupts = <0 57 0>, <0 69 0>, <0 70 0>, <0 71 0>,
++                     <0 42 0>, <0 42 0>, <0 42 0>, <0 42 0>;
++    };
 -- 
-2.7.4
-
-
+2.17.1
 
