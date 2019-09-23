@@ -2,83 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A2E5BAE53
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 09:13:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C29DDBAFF4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 10:51:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727791AbfIWHNY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 03:13:24 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:33925 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbfIWHNY (ORCPT
+        id S1731871AbfIWIv1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Sep 2019 04:51:27 -0400
+Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]:54418 "EHLO
+        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1731734AbfIWIv0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 03:13:24 -0400
-Received: by mail-wr1-f51.google.com with SMTP id a11so12651962wrx.1;
-        Mon, 23 Sep 2019 00:13:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VSmtFloVdT4HdH3hqBjqDRmLKrDCbhhNO9xFa74XQG8=;
-        b=G3D9JQFe1aD/VVzJlK3yQVrMZ1uDbaxPU5zwYdUMeeJFm2VhiIYSh9yEdXGY9DPAuN
-         lKIbFbVCtESG9c0aEpkNV7b6kAaWeQTqSlx+9BUipngGskHZsKdgi+Lx5Z0WFdYku3Jt
-         M5piux6/h3te81uz4TcotcC2IA2Mu2Udml+0JlpQZq8+eWnfWRx70Vk37bWwmswdBrcX
-         IxmAJNAWp88xeYgh4F1F6L3RmCoboyUvzDXijEk6lozbhFxnpnqRPo/9Dmy4aX5pdNxp
-         P/oksAL7Q36C9wivQJhy34pYj6h6cYAwID48lrezQ32y7bE3qPwJUqaQd2QSrmAfR00X
-         cqrA==
-X-Gm-Message-State: APjAAAUrRkh7z3puhKOCH6qxUKUF9NlK9WQ7j3lza/sJq85oB+7qKbO1
-        I4/GV9g1Dx4pqPHSmpuGFi4=
-X-Google-Smtp-Source: APXvYqzX7JpyywmwssCCGsX2MCih3fvE8W7RgPMGaeHxIMgUzIQu7rnAOAOtO0lypZquJEuBiDcaVQ==
-X-Received: by 2002:a5d:5381:: with SMTP id d1mr9285624wrv.315.1569222800656;
-        Mon, 23 Sep 2019 00:13:20 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id a18sm20701185wrh.25.2019.09.23.00.13.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2019 00:13:19 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 09:13:17 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kukjin Kim <kgene@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: Re: [RFT v3 4/8] ARM: dts: exynos: Remove MCT subnode for interrupt
- map on Exynos4210
-Message-ID: <20190923071317.GA4246@pi3>
-References: <20190921170152.5033-1-krzk@kernel.org>
- <CGME20190921203810epcas3p39f3d9e3224d2c5ef61c1e18df2ab403d@epcas3p3.samsung.com>
- <20190921170152.5033-4-krzk@kernel.org>
- <c1d02aa3-b5f2-1c5b-0b7b-8749e7c0ce9a@samsung.com>
+        Mon, 23 Sep 2019 04:51:26 -0400
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+        by mx0a-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8N8nBFA006747;
+        Mon, 23 Sep 2019 03:51:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=PODMain02222019;
+ bh=BjpMtBhJnZ6yh/cP1ZHvKQ1eEYxgByGKmNnK9h7ukFI=;
+ b=FV0NWlKenyfQ9wRSBC+FzmSlIWKuiRI5Huzbh6gvWWvoXO2gD/MN+NfF2krpBpML4N6M
+ vP919MnDOvEPBvrmYJHA38ERSbU8z7JljFdu0QF99uvs5N08V/FFZ4rTIOVZpbUQOQWg
+ IhkSdYUbeqY44JdXjW5l2M10rM2RSwjI3KO6pZBxjQOS+CbCbOK+oPMPrIqzaywuHQ9E
+ KMa9fZttu5DiKPOdrKWPk21QDsUQTW2flraMGhF85jp2OutEl2eL0+UFcPZTbZ/n02kh
+ 4O/kWd5xpPyPvac32mQ8jOZCv+Q7j+w6pkr5/3bhtuSHlRC+MhR1/3ZeVdYIQGiaaqQL Eg== 
+Authentication-Results: ppops.net;
+        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
+Received: from ediex01.ad.cirrus.com ([87.246.76.36])
+        by mx0a-001ae601.pphosted.com with ESMTP id 2v5h923796-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Mon, 23 Sep 2019 03:51:08 -0500
+Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 23 Sep
+ 2019 09:51:05 +0100
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
+ Transport; Mon, 23 Sep 2019 09:51:05 +0100
+Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
+        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id B94A02B3;
+        Mon, 23 Sep 2019 08:51:05 +0000 (UTC)
+Date:   Mon, 23 Sep 2019 08:51:05 +0000
+From:   Charles Keepax <ckeepax@opensource.cirrus.com>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+CC:     <broonie@kernel.org>, <krzk@kernel.org>, <lgirdwood@gmail.com>,
+        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
+        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <patches@opensource.cirrus.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
+        <m.szyprowski@samsung.com>
+Subject: Re: [PATCH v2 04/10] ASoC: wm8994: Add support for MCLKn clock gating
+Message-ID: <20190923085105.GN10204@ediswmail.ad.cirrus.com>
+References: <20190920130218.32690-1-s.nawrocki@samsung.com>
+ <CGME20190920130317eucas1p188d724710077d704f768798c6555c741@eucas1p1.samsung.com>
+ <20190920130218.32690-5-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <c1d02aa3-b5f2-1c5b-0b7b-8749e7c0ce9a@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190920130218.32690-5-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Proofpoint-SPF-Result: fail
+X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
+ -all
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 priorityscore=1501
+ adultscore=0 mlxlogscore=943 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
+ definitions=main-1909230089
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Sep 23, 2019 at 08:56:46AM +0200, Marek Szyprowski wrote:
-> Hi Krzysztof,
+On Fri, Sep 20, 2019 at 03:02:13PM +0200, Sylwester Nawrocki wrote:
+> As an intermediate step before covering the clocking subsystem
+> of the CODEC entirely by the clk API add handling of external CODEC's
+> master clocks in DAPM events when the AIFn clocks are sourced directly
+> from MCLKn; when FLLn are used we enable/disable respective MCLKn
+> before/after FLLn is enabled/disabled.
 > 
-> On 21.09.2019 19:01, Krzysztof Kozlowski wrote:
-> > Multi Core Timer node has interrupts routed to two different parents -
-> > GIC and combiner.  This was modeled with a interrupt-map within a
-> > subnode but can be expressed in an easier and more common way, directly
-> > in the node itself.
-> 
-> Maybe we should simply use 'interrupts-extended' based approach and 
-> simplify mct node even more (get rid of interrupt-parent, interrupts, 
-> size/address cells)?
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
 
-Indeed, that looks like the tool for this job. Thanks for hint, I'll try
-it.
+Looks good to me:
 
-Best regards,
-Krzysztof
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 
+Thanks,
+Charles
