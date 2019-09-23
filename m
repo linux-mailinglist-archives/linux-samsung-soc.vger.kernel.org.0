@@ -2,80 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FF3EBB136
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 11:17:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA743BB159
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 11:25:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731817AbfIWJRx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 05:17:53 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39805 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbfIWJRx (ORCPT
+        id S2407084AbfIWJZa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Sep 2019 05:25:30 -0400
+Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]:27944 "EHLO
+        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S2407083AbfIWJZ3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 05:17:53 -0400
-Received: by mail-wr1-f68.google.com with SMTP id r3so13047695wrj.6;
-        Mon, 23 Sep 2019 02:17:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MqnEXcdlN87EqTUKJmOH+iKlmaz8lFCv3VuvTRPKNYg=;
-        b=KA5nrDNyZGvPNpZLPvKSaNs7sQh6lOFJCJvSJq96nHrR9+ElFaH3CVPWaHEwyUPd9O
-         rj5uXbvXwh/o5U/mbP2PiSLUyboXBfetn4FKcQwnNcmIuAnJshPy8nyugNUw9aIQ6rNW
-         JtcKD+0WJVIFQvvafusXbLpq8gqfysZ9atabqA+tt7xCFm4QYSC8K7xrb8OMQ0o1VRZ3
-         +XC0Nbyn8hv4c7BleuC78ciOt8tv0y95fB3UDeHoWJw1h7K7krNW6LCclRDGMShSpT3I
-         v4KXlsucqDyvH0/XK3c6ZRfT7wsJEuyUS+GPYTmoAvkmnmGzVLklypeDcNCfLsm1tHj/
-         hF+Q==
-X-Gm-Message-State: APjAAAXCprbNe21exLds59CtRZ0ouGSDVsIkjE5KEo2MElX6Q86mL8Dy
-        LMeUhANr9KDkErbMOATI1lc=
-X-Google-Smtp-Source: APXvYqyX2jsTQWCdkodTgpoobxQ2dq01kENJEKFTxZS+dJ/vtJUB1wHtTZ9GqHaa13+NkGl3qyyvLg==
-X-Received: by 2002:a05:6000:14b:: with SMTP id r11mr1293264wrx.58.1569230269807;
-        Mon, 23 Sep 2019 02:17:49 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id y13sm13602712wrg.8.2019.09.23.02.17.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2019 02:17:48 -0700 (PDT)
-Date:   Mon, 23 Sep 2019 11:17:46 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
+        Mon, 23 Sep 2019 05:25:29 -0400
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+        by mx0a-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id x8N9OhOp004541;
+        Mon, 23 Sep 2019 04:25:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=PODMain02222019;
+ bh=OenETI2BlyjKLCH8My5ZcKXoQz9o782ZPMAD8kB1A9Y=;
+ b=I9VIqGAavSGxcFxwBs8KSWLUHZ/NGrnt9Enxz4YMZe57fIC9yRlsXcpDYcQ9PeQz6vuJ
+ AQhDwBRlmZ8N0DDZ9R8zJuwmzo1gLhalJN1DsDJs4aPzBzc+UPobGnu9fLwXycJriV8N
+ wObM9s9Ln1DMN0J3VNgcoPgB4epsjdqLFB8vUQVMaZiCm8/DhtIwaKoeBa4W7q4I/E05
+ LnQOvjk+HoxJbsQzxKu52f1swLW8rvNdfqZLKDSc86J/AK7kjdRVAd9eXmVZwrCw5Lu4
+ 0DEXCk58FQjeywMSNNdNddmbO49xyFYumqlP2DfCS9aKR2M4qfD2DC8L4N0oqhZUrM5g CA== 
+Authentication-Results: ppops.net;
+        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
+Received: from ediex02.ad.cirrus.com ([87.246.76.36])
+        by mx0a-001ae601.pphosted.com with ESMTP id 2v5h9238qa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Mon, 23 Sep 2019 04:25:19 -0500
+Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX02.ad.cirrus.com
+ (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 23 Sep
+ 2019 10:25:17 +0100
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.1.1591.10 via Frontend
+ Transport; Mon, 23 Sep 2019 10:25:17 +0100
+Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
+        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id 612982C1;
+        Mon, 23 Sep 2019 09:25:17 +0000 (UTC)
+Date:   Mon, 23 Sep 2019 09:25:17 +0000
+From:   Charles Keepax <ckeepax@opensource.cirrus.com>
 To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     broonie@kernel.org, lgirdwood@gmail.com,
-        ckeepax@opensource.cirrus.com, sbkim73@samsung.com,
-        alsa-devel@alsa-project.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, patches@opensource.cirrus.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, b.zolnierkie@samsung.com,
-        m.szyprowski@samsung.com
-Subject: Re: [PATCH v2 08/10] ASoC: samsung: Rename Arndale card driver
-Message-ID: <20190923091746.GD4577@pi3>
+CC:     <krzk@kernel.org>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <sbkim73@samsung.com>, <alsa-devel@alsa-project.org>,
+        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <patches@opensource.cirrus.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <b.zolnierkie@samsung.com>,
+        <m.szyprowski@samsung.com>
+Subject: Re: [PATCH v2 03/10] ASoC: wm8994: Add support for setting MCLK
+ clock rate
+Message-ID: <20190923092517.GO10204@ediswmail.ad.cirrus.com>
 References: <20190920130218.32690-1-s.nawrocki@samsung.com>
- <CGME20190920130323eucas1p218c6822eca3869eb0d3b7380497bbca4@eucas1p2.samsung.com>
- <20190920130218.32690-9-s.nawrocki@samsung.com>
+ <CGME20190920130316eucas1p2de713006a13c62c0b895c2e33e0d14c7@eucas1p2.samsung.com>
+ <20190920130218.32690-4-s.nawrocki@samsung.com>
+ <7334ce45-f192-4421-aa3d-d142582153ef@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20190920130218.32690-9-s.nawrocki@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <7334ce45-f192-4421-aa3d-d142582153ef@samsung.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Proofpoint-SPF-Result: fail
+X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
+ -all
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 priorityscore=1501
+ adultscore=0 mlxlogscore=742 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1908290000
+ definitions=main-1909230094
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Sep 20, 2019 at 03:02:17PM +0200, Sylwester Nawrocki wrote:
-> Rename arndale_rt5631.c to just arnddale.c as we support other CODECs
-> than RT5631.  While at it replace spaces in Kconfig with tabs.
+On Mon, Sep 23, 2019 at 11:10:48AM +0200, Sylwester Nawrocki wrote:
+> On 9/20/19 15:02, Sylwester Nawrocki wrote:
+> > Extend the set_sysclk() handler so we also set frequency of the MCLK1,
+> > MCLK2 clocks through clk API when those clocks are specified in DT.
+> > 
+> > Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+> > Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 > 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
-> Changes since v1:
->  - new patch.
-> ---
->  sound/soc/samsung/Kconfig                         | 10 +++++-----
->  sound/soc/samsung/Makefile                        |  4 ++--
->  sound/soc/samsung/{arndale_rt5631.c => arndale.c} |  0
->  3 files changed, 7 insertions(+), 7 deletions(-)
->  rename sound/soc/samsung/{arndale_rt5631.c => arndale.c} (100%)
+> Sorry, I squashed other patch to this one but forgot to remove above tags, 
+> not sure if those still stand as there was rather significant change in 
+> the patch. 
+> 
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+I am happy with my tag being there.
 
-Best regards,
-Krzysztof
-
+Thanks,
+Charles
