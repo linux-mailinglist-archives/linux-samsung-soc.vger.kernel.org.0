@@ -2,171 +2,174 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 14E2EBBDC7
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Sep 2019 23:23:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50EBABC215
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Sep 2019 08:58:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503002AbfIWVXL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Sep 2019 17:23:11 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:35032 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389687AbfIWVXL (ORCPT
+        id S1731231AbfIXG57 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Sep 2019 02:57:59 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:39422 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729244AbfIXG56 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Sep 2019 17:23:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=Z30npgjJlfsX3pcTiPkG0AL67G6fDNe+i+Vmfku2RTI=; b=SN5JixZECNnp
-        KI8DVqCg95UnVrrspPqxew/gm2Ds+7MkbiFVeEkA990dDCSvzz/HQdHcvCjubGAziBfYZBbdot4Aq
-        DQJPbZjeHIP1DI0Gy0/+B+okYNLR5xGb/L8GwJ3mqqRttUAUz/tSA40HF2h7omqp83kRK6I4TU2GZ
-        j1LH0=;
-Received: from [12.157.10.114] (helo=fitzroy.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1iCVnR-0005WT-3u; Mon, 23 Sep 2019 21:23:01 +0000
-Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
-        id 7F00DD02FE4; Mon, 23 Sep 2019 22:22:59 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     alsa-devel@alsa-project.org, broonie@kernel.org,
-        b.zolnierkie@samsung.com, ckeepax@opensource.cirrus.com,
-        devicetree@vger.kernel.org, krzk@kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>, lgirdwood@gmail.com,
+        Tue, 24 Sep 2019 02:57:58 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190924065756euoutp01fffb7c93c8965f5a50e6e9d7f0f96962~HTZAqyk8h0943509435euoutp012
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Sep 2019 06:57:56 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190924065756euoutp01fffb7c93c8965f5a50e6e9d7f0f96962~HTZAqyk8h0943509435euoutp012
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1569308276;
+        bh=x4VWDi57SmRBMcA7N4sKc9QXv3SE7cfVSrJ+k8miT3k=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Akd6uF539knzDbqpvv2u68xLdgbNW5aq1mOj0AzAkEOi5DpkPYGxqfEwAFwVJqzXb
+         9m6ZkZva8gQlrUYu1dH/yivLQoSncP0M4R2WFr77tzTvVE6KShqNkEgcqx+mJKe+Nn
+         NUUvuqHcKqe0OSzaE8n6rVgoD5kEN4A7eNwZ8MHg=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20190924065756eucas1p1e7f99b3653e63fee8452f4d5a533eaa3~HTZAZPw5X1177811778eucas1p1B;
+        Tue, 24 Sep 2019 06:57:56 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 5C.BF.04374.47EB98D5; Tue, 24
+        Sep 2019 07:57:56 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190924065756eucas1p2d3c6addaff393e1c65951e6c2129e5bd~HTZABlCkr0407304073eucas1p2m;
+        Tue, 24 Sep 2019 06:57:56 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190924065756eusmtrp15e47cd262f11ad01e022077260b827d8~HTZAAgzc42015120151eusmtrp1m;
+        Tue, 24 Sep 2019 06:57:56 +0000 (GMT)
+X-AuditID: cbfec7f5-4f7ff70000001116-c8-5d89be744835
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 19.BD.04117.37EB98D5; Tue, 24
+        Sep 2019 07:57:55 +0100 (BST)
+Received: from [106.120.51.15] (unknown [106.120.51.15]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190924065755eusmtip2a938019655ea734af0ec79bd9d15f570~HTY-cXBVt0900509005eusmtip2t;
+        Tue, 24 Sep 2019 06:57:55 +0000 (GMT)
+Subject: Re: [RFT v4 4/8] ARM: dts: exynos: Remove MCT subnode for interrupt
+ map on Exynos4210
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        m.szyprowski@samsung.com, patches@opensource.cirrus.com,
-        robh+dt@kernel.org, sbkim73@samsung.com
-Subject: Applied "ASoC: samsung: arndale: Add missing OF node dereferencing" to the asoc tree
-In-Reply-To: <20190920130218.32690-3-s.nawrocki@samsung.com>
-X-Patchwork-Hint: ignore
-Message-Id: <20190923212259.7F00DD02FE4@fitzroy.sirena.org.uk>
-Date:   Mon, 23 Sep 2019 22:22:59 +0100 (BST)
+        linux-samsung-soc@vger.kernel.org
+Cc:     Sylwester Nawrocki <snawrocki@kernel.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <e3c08a87-2650-3df8-01a6-05dff24af913@samsung.com>
+Date:   Tue, 24 Sep 2019 08:57:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20190923161411.9236-4-krzk@kernel.org>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+3bOdo7m9Hg0fDFTGmUkeKOwA5asMBhBFyIkCtGTHlRyUza1
+        rCgrvE3ReUsd1gwqzbzOK2YTLzjF2FJJxUwSDSrTSu2KWpvHyv9+z/s+3/c978tHYvSg0JWM
+        USRwSgUbKxHZ4i19P03eCYbMUL+7Dc7MRK1JyNxb2sHoei2QOzOHMWZzPcHoZ0aFzEh7mYgp
+        MRsEzMOxIQGT+qyXYNLfvseYRn0RJrWTVd+rRjJ9VaZINjnaIZItmEyErPHBDVlOUxWSLend
+        TxHnbA9GcrExSZzSNyjcNrqhphKPf+Vwuag4nUhBy1vViCSB2g+tCwfUyJakqUoEFQtLAl4s
+        Ixi7U2cRNhaxhEA94Gtl64HZ/gIhb6pA0NSZTfBiHsHEdDlmdTlR4XBz9bfI2nCmCjDo7Hks
+        sjYwyhuKFz6um0SUP6jn1et1MRUE3ZrRdcap3bDYM4tbeRsVClM/jBjvcYSBUr5uY4kxk9eH
+        83d6QOt8GcazC0zM6gR81CkC9FkhPAfDcP8Tgmcn+GBs2mA3GCzIxq1BgbqNYNpUQ/AiG8HI
+        rRLEuwKhxzgktG4Mo/ZCXfvGLg7D87E1jF+kPYzPO/IZ7CG/pXijLIaMNJp3e4LWWPvv2a4X
+        w5gGSbSbJtNumka7aRrt/3fLEV6FXLhElTyKU+1TcJd8VKxclaiI8omIk+uR5YsNrhm/tiHD
+        yoVuRJFIYieGloxQWsgmqZLl3QhITOIs1nulhdLiSDb5CqeMC1MmxnKqbrSdxCUu4qtb3pyn
+        qSg2gbvIcfGc8m9XQNq4piBO5BdAufUue0pmv0mH3bt2hUCwJqI01+8oGcY2z43ljx4yj98P
+        fCk8TV1vUz7yfJ0edkLz2URLP33xk+bt0QVc++7UF1lYdqRI3h9C/2qJ8Kh42rZzZbzZP7Xw
+        HVESfCYwy1B4XHqyw+2sXS17rLHVYTJ1dUpd7+vRtJjj4qWT4Kpo1t8LU6rYP0WIk1peAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsVy+t/xe7rF+zpjDf6utbK4te4cq8W8z7IW
+        848AGf2PXzNbnD+/gd1i0+NrrBaXd81hs5hxfh+TxdLrF5ksWvceYbdof/qS2WLzpqnMDjwe
+        a+atYfTYtKqTzePOtT1sHu/OnWP32Lyk3qNvyypGj8+b5ALYo/RsivJLS1IVMvKLS2yVog0t
+        jPQMLS30jEws9QyNzWOtjEyV9O1sUlJzMstSi/TtEvQyNq5dwVJwm79i6vR29gbGL9xdjJwc
+        EgImEk9OTGbtYuTiEBJYyihx795RNoiEjMTJaQ2sELawxJ9rXWwQRa8ZJW4f6wMrEhZIkGj8
+        +x/MFhGYyixx81ItiM0soCsx/d0bZoiGjYwSc650gk1iEzCU6HrbBdbAK2AncWjCNTCbRUBV
+        4tPhJyxdjBwcogKxEpv2mkGUCEqcnAkS5uTgBLr08cRjLBDzzSTmbX7IDGHLS2x/OwfKFpe4
+        9WQ+0wRGoVlI2mchaZmFpGUWkpYFjCyrGEVSS4tz03OLjfSKE3OLS/PS9ZLzczcxAuN227Gf
+        W3Ywdr0LPsQowMGoxMMrsa0jVog1say4MvcQowQHs5II7yattlgh3pTEyqrUovz4otKc1OJD
+        jKZAv01klhJNzgemlLySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLpiSWp2ampBalFMH1MHJxS
+        DYx5j+W3TVvm3Wd4k6nj/+u1NzNnrzi9+NpshaLnjy0NI3z5cyav8/kZuuopS2i979NdIYKi
+        P0s+fpI6rHFPQ8bkQo8U54HCzRbMc4pselsf3HZVX87wKEff1+BdftmS5kuuYrvXv/vnc/5e
+        W1LOeo4966QVud4WzHJUP5srqrO7ecvxyr1m9pJKLMUZiYZazEXFiQCJOvh18QIAAA==
+X-CMS-MailID: 20190924065756eucas1p2d3c6addaff393e1c65951e6c2129e5bd
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190923161444epcas3p280b21cfbb4448d55eb850de2d49a72d7
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190923161444epcas3p280b21cfbb4448d55eb850de2d49a72d7
+References: <20190923161411.9236-1-krzk@kernel.org>
+        <CGME20190923161444epcas3p280b21cfbb4448d55eb850de2d49a72d7@epcas3p2.samsung.com>
+        <20190923161411.9236-4-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The patch
 
-   ASoC: samsung: arndale: Add missing OF node dereferencing
+On 23.09.2019 18:14, Krzysztof Kozlowski wrote:
+> Multi Core Timer node has interrupts routed to two different parents -
+> GIC and combiner.  This was modeled with a interrupt-map within a
+> subnode but can be expressed in an easier and more common way, directly
+> in the node itself.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-has been applied to the asoc tree at
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-5.4
+Works fine on Trats and Origen boards.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+> ---
+>
+> Not tested.
+>
+> Changes since v3:
+> 1. Use interrupts-extended instead of interrupts-map.
+> ---
+>   arch/arm/boot/dts/exynos4210.dtsi | 21 ++++++---------------
+>   1 file changed, 6 insertions(+), 15 deletions(-)
+>
+> diff --git a/arch/arm/boot/dts/exynos4210.dtsi b/arch/arm/boot/dts/exynos4210.dtsi
+> index 6d3f19562aab..5fa33d43821e 100644
+> --- a/arch/arm/boot/dts/exynos4210.dtsi
+> +++ b/arch/arm/boot/dts/exynos4210.dtsi
+> @@ -109,23 +109,14 @@
+>   		mct: timer@10050000 {
+>   			compatible = "samsung,exynos4210-mct";
+>   			reg = <0x10050000 0x800>;
+> -			interrupt-parent = <&mct_map>;
+> -			interrupts = <0>, <1>, <2>, <3>, <4>, <5>;
+>   			clocks = <&clock CLK_FIN_PLL>, <&clock CLK_MCT>;
+>   			clock-names = "fin_pll", "mct";
+> -
+> -			mct_map: mct-map {
+> -				#interrupt-cells = <1>;
+> -				#address-cells = <0>;
+> -				#size-cells = <0>;
+> -				interrupt-map =
+> -					<0 &gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
+> -					<1 &gic 0 69 IRQ_TYPE_LEVEL_HIGH>,
+> -					<2 &combiner 12 6>,
+> -					<3 &combiner 12 7>,
+> -					<4 &gic 0 42 IRQ_TYPE_LEVEL_HIGH>,
+> -					<5 &gic 0 48 IRQ_TYPE_LEVEL_HIGH>;
+> -			};
+> +			interrupts-extended = <&gic 0 57 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&gic 0 69 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&combiner 12 6>,
+> +					      <&combiner 12 7>,
+> +					      <&gic 0 42 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&gic 0 48 IRQ_TYPE_LEVEL_HIGH>;
+>   		};
+>   
+>   		watchdog: watchdog@10060000 {
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From fb629fa2587d0c150792d87e3053664bfc8dc78c Mon Sep 17 00:00:00 2001
-From: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Date: Fri, 20 Sep 2019 15:02:11 +0200
-Subject: [PATCH] ASoC: samsung: arndale: Add missing OF node dereferencing
-
-Ensure there is no OF node references kept when the driver
-is removed/unbound.
-
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20190920130218.32690-3-s.nawrocki@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- sound/soc/samsung/arndale_rt5631.c | 34 ++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
-
-diff --git a/sound/soc/samsung/arndale_rt5631.c b/sound/soc/samsung/arndale_rt5631.c
-index c213913eb984..fd8c6642fb0d 100644
---- a/sound/soc/samsung/arndale_rt5631.c
-+++ b/sound/soc/samsung/arndale_rt5631.c
-@@ -5,6 +5,7 @@
- //  Author: Claude <claude@insginal.co.kr>
- 
- #include <linux/module.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/clk.h>
- 
-@@ -74,6 +75,17 @@ static struct snd_soc_card arndale_rt5631 = {
- 	.num_links = ARRAY_SIZE(arndale_rt5631_dai),
- };
- 
-+static void arndale_put_of_nodes(struct snd_soc_card *card)
-+{
-+	struct snd_soc_dai_link *dai_link;
-+	int i;
-+
-+	for_each_card_prelinks(card, i, dai_link) {
-+		of_node_put(dai_link->cpus->of_node);
-+		of_node_put(dai_link->codecs->of_node);
-+	}
-+}
-+
- static int arndale_audio_probe(struct platform_device *pdev)
- {
- 	int n, ret;
-@@ -103,18 +115,31 @@ static int arndale_audio_probe(struct platform_device *pdev)
- 		if (!arndale_rt5631_dai[0].codecs->of_node) {
- 			dev_err(&pdev->dev,
- 			"Property 'samsung,audio-codec' missing or invalid\n");
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto err_put_of_nodes;
- 		}
- 	}
- 
- 	ret = devm_snd_soc_register_card(card->dev, card);
-+	if (ret) {
-+		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n", ret);
-+		goto err_put_of_nodes;
-+	}
-+	return 0;
- 
--	if (ret)
--		dev_err(&pdev->dev, "snd_soc_register_card() failed:%d\n", ret);
--
-+err_put_of_nodes:
-+	arndale_put_of_nodes(card);
- 	return ret;
- }
- 
-+static int arndale_audio_remove(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card = platform_get_drvdata(pdev);
-+
-+	arndale_put_of_nodes(card);
-+	return 0;
-+}
-+
- static const struct of_device_id samsung_arndale_rt5631_of_match[] __maybe_unused = {
- 	{ .compatible = "samsung,arndale-rt5631", },
- 	{ .compatible = "samsung,arndale-alc5631", },
-@@ -129,6 +154,7 @@ static struct platform_driver arndale_audio_driver = {
- 		.of_match_table = of_match_ptr(samsung_arndale_rt5631_of_match),
- 	},
- 	.probe = arndale_audio_probe,
-+	.remove = arndale_audio_remove,
- };
- 
- module_platform_driver(arndale_audio_driver);
+Best regards
 -- 
-2.20.1
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
