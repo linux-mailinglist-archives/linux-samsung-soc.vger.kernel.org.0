@@ -2,176 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C2F7DBCB16
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Sep 2019 17:20:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB91EBD104
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Sep 2019 19:53:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732375AbfIXPUe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 24 Sep 2019 11:20:34 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44071 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732342AbfIXPUd (ORCPT
+        id S1730824AbfIXRxo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Sep 2019 13:53:44 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:41840 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727969AbfIXRxn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 24 Sep 2019 11:20:33 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i18so2400631wru.11;
-        Tue, 24 Sep 2019 08:20:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BehAsP/zGvLbMGAOB59imbbS81RZk/Eob4lWno5h7ug=;
-        b=jpP2iYg9uF04ZRifEEs8MFoQpyL9SonauLqcbHD9YmfWcMSeGc3pjkleaEaFHP9GlL
-         7/LcS+QvxsoInPT55Whd24ChTaPDxLQhKUXreGBL1BQa6ze1ui7h512yQYJm3ZyodMaJ
-         DM1VLHmc5bgCRGsLCNs3o3lalU24qDC9VLUKEg6WBgD7689/5bS76R/K+U3kc4fjUtzH
-         2AfFmefmvQkC17ucCnn5/kFFkQnqicUyaF7oaULDemu0txiCvGtJULRWyj4RqYqSS7if
-         FROaqXK9Bmziw0m9Yv2xfKjQDco4E2EsfBdDFTOv68FcLv/EGrDYPUzReFHu0qV1XAgn
-         djJQ==
-X-Gm-Message-State: APjAAAVyLLTtV+JrfK9PXwDKLo0Zae8Xg6jORqLkBeHKBvTFK1fFQLW5
-        92LkTuQ0XKb3Ljj2A2lmunE=
-X-Google-Smtp-Source: APXvYqyy8MgFCfM7xqDj+hRCjQuQBkjKGh9FOEEQ3dNdjyah3yXeSBlkJCLDGZmzRdpOkQ9aU7M2+w==
-X-Received: by 2002:adf:db06:: with SMTP id s6mr2848445wri.41.1569338431334;
-        Tue, 24 Sep 2019 08:20:31 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id g13sm2674561wrm.42.2019.09.24.08.20.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2019 08:20:30 -0700 (PDT)
-Date:   Tue, 24 Sep 2019 17:20:28 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        Tue, 24 Sep 2019 13:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=RfaGhOuuaoUpgOSeA87BArKChGzJFLuolLSxNgY48EI=; b=YUUOdTv/bquXQ2zrHHSKrlSFt
+        +w8XjExOCZbO5SK8wfWBtRXPYq6T7syJFvSGsQEM7ab1LTK+o/qaBbvmzSwdUt6X98vFnWQa0CsIX
+        UHSrybJfrAwp2JSl2kFMFz4uZJSd8bl0/upAu3p9d8OF1SMLvDbFi2xJnWjXHDICRrRK8=;
+Received: from [12.157.10.118] (helo=fitzroy.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1iCp0I-0002MR-BK; Tue, 24 Sep 2019 17:53:34 +0000
+Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
+        id B2EB0D02FC7; Tue, 24 Sep 2019 18:53:32 +0100 (BST)
+Date:   Tue, 24 Sep 2019 10:53:32 -0700
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
         linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Mark Brown <broonie@kernel.org>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Liam Girdwood <lgirdwood@gmail.com>,
         Maciej Falkowski <m.falkowski@samsung.com>
-Subject: Re: [PATCH] dt-bindings: sound: Convert Samsung Exynos5433 TM2(E)
- audio complex with WM5110 codec to dt-schema
-Message-ID: <20190924152028.GD9218@pi3>
-References: <CGME20190924150230eucas1p295da8f6aa018aec4acabc068f6e1afa1@eucas1p2.samsung.com>
- <20190924150146.15972-1-m.szyprowski@samsung.com>
+Subject: Re: [PATCH] ASoC: samsung: i2s: Add clocks' macros descriptions
+Message-ID: <20190924175332.GB2036@sirena.org.uk>
+References: <CGME20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee@eucas1p2.samsung.com>
+ <20190924114838.25482-1-m.szyprowski@samsung.com>
+ <20190924115307.GA9188@pi3>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="FxQkOwrLuQ+yAGv2"
 Content-Disposition: inline
-In-Reply-To: <20190924150146.15972-1-m.szyprowski@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20190924115307.GA9188@pi3>
+X-Cookie: Be careful!  UGLY strikes 9 out of 10!
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 24, 2019 at 05:01:46PM +0200, Marek Szyprowski wrote:
-> From: Maciej Falkowski <m.falkowski@samsung.com>
-> 
-> Convert Samsung Exynos5433 TM2(E) audio complex with WM5110 codec to newer dt-schema format.
-> 
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  .../bindings/sound/samsung,tm2-audio.txt      | 42 ----------
->  .../bindings/sound/samsung,tm2-audio.yaml     | 83 +++++++++++++++++++
->  2 files changed, 83 insertions(+), 42 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/sound/samsung,tm2-audio.txt
->  create mode 100644 Documentation/devicetree/bindings/sound/samsung,tm2-audio.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/samsung,tm2-audio.txt b/Documentation/devicetree/bindings/sound/samsung,tm2-audio.txt
-> deleted file mode 100644
-> index f5ccc12ddc00..000000000000
-> --- a/Documentation/devicetree/bindings/sound/samsung,tm2-audio.txt
-> +++ /dev/null
-> @@ -1,42 +0,0 @@
-> -Samsung Exynos5433 TM2(E) audio complex with WM5110 codec
-> -
-> -Required properties:
-> -
-> - - compatible		 : "samsung,tm2-audio"
-> - - model		 : the user-visible name of this sound complex
-> - - audio-codec		 : the first entry should be phandle of the wm5110 audio
-> -			   codec node, as described in ../mfd/arizona.txt;
-> -			   the second entry should be phandle of the HDMI
-> -			   transmitter node
-> - - i2s-controller	 : the list of phandle and argument tuples pointing to
-> -			   I2S controllers, the first entry should be I2S0 and
-> -			   the second one I2S1
-> - - audio-amplifier	 : the phandle of the MAX98504 amplifier
-> - - samsung,audio-routing : a list of the connections between audio components;
-> -			   each entry is a pair of strings, the first being the
-> -			   connection's sink, the second being the connection's
-> -			   source; valid names for sources and sinks are the
-> -			   WM5110's and MAX98504's pins and the jacks on the
-> -			   board: HP, SPK, Main Mic, Sub Mic, Third Mic,
-> -			   Headset Mic
-> - - mic-bias-gpios	 : GPIO pin that enables the Main Mic bias regulator
-> -
-> -
-> -Example:
-> -
-> -sound {
-> -	compatible = "samsung,tm2-audio";
-> -	audio-codec = <&wm5110>, <&hdmi>;
-> -	i2s-controller = <&i2s0 0>, <&i2s1 0>;
-> -	audio-amplifier = <&max98504>;
-> -	mic-bias-gpios = <&gpr3 2 0>;
-> -	model = "wm5110";
-> -	samsung,audio-routing =
-> -		"HP", "HPOUT1L",
-> -		"HP", "HPOUT1R",
-> -		"SPK", "SPKOUT",
-> -		"SPKOUT", "HPOUT2L",
-> -		"SPKOUT", "HPOUT2R",
-> -		"Main Mic", "MICBIAS2",
-> -		"IN1R", "Main Mic";
-> -};
-> diff --git a/Documentation/devicetree/bindings/sound/samsung,tm2-audio.yaml b/Documentation/devicetree/bindings/sound/samsung,tm2-audio.yaml
-> new file mode 100644
-> index 000000000000..377f8cbe17b8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/samsung,tm2-audio.yaml
-> @@ -0,0 +1,83 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/samsung,tm2-audio.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung Exynos SoC Exynos5433 TM2(E) audio complex with WM5110 codec
-> +
-> +maintainers:
-> +  - Krzysztof Kozlowski <krzk@kernel.org>
-> +  - Sylwester Nawrocki <s.nawrocki@samsung.com>
-> +
-> +properties:
-> +  compatible:
-> +    const: samsung,tm2-audio
-> +
-> +  model:
-> +    maxItems: 1
 
-$ref to string, then maxItems are not needed.
-Add description (copy-paste).
+--FxQkOwrLuQ+yAGv2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> +
-> +  audio-codec:
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/phandle-array
-> +      - items:
-> +          - description: |
-> +              phandle of the wm5110 audio codec node,
-> +              as described in ../mfd/arizona.txt;
-> +          - description: phandle of the HDMI transmitter node.
-> +
-> +  i2s-controller:
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/phandle-array
-> +      - items:
-> +          - description: phandle of the I2S0.
-> +          - description: phandle of the I2S1.
-> +
-> +  audio-amplifier:
+On Tue, Sep 24, 2019 at 01:53:07PM +0200, Krzysztof Kozlowski wrote:
+> On Tue, Sep 24, 2019 at 01:48:38PM +0200, Marek Szyprowski wrote:
 
-Can you order the nodes here and in required section by name (except
-compatible which should be first)?
+> > +/* the CDCLK (CODECLKO) gate clock */
+> > +#define CLK_I2S_CDCLK 0
 
-Best regards,
-Krzysztof
+> I do not find it more readable because of removal of indent
+> after define name. Also the description is not accurate - you
+> documented, not increased readability.
 
+Yeah, I agree on both points.  How about putting everything on
+one line more like:
+
+   #define CLK_I2S_CDCLK	0	/* the CDCLK (CODECLKO) gate clock */
+
+instead?
+
+Please fix your mail client to word wrap within paragraphs at something
+substantially less than 80 columns.  Doing this makes your messages much
+easier to read and reply to.
+
+--FxQkOwrLuQ+yAGv2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl2KWBsACgkQJNaLcl1U
+h9AzoQf/S2ro+Bt+q/pyvdXc6kray/h1w3lBnrewElE9HPb9/fOERfjl4x4RFpXQ
+X9F5NDh+4ol8uNUceRObxMYaYARZnLDeK3jG0/33Lu62lc0S7XkC9jMI8JlE//c1
+vgIYN/qbJOSc4f7FJtQKrjt5SNVwE6Laeg/xwtobiBBnWc36Ptj8uGmacV5XcTBI
+MAQ1DLWYyYdK12Cb1MgLrtgjVMXAPzfqpeXfnv6XrWL+yPfukYuQw9V6fkqjFEwc
+qlsWasox6b+8qYO9DPwwaIATWH7rDctNHZPczQ4JQZKKTz/L42BrkwEIpxLgmLg2
+3x+yOV+bhiZaX0VZWXOAkuGpR6d9uA==
+=zvuY
+-----END PGP SIGNATURE-----
+
+--FxQkOwrLuQ+yAGv2--
