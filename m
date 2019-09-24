@@ -2,180 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B21C7BC70E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Sep 2019 13:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADA1EBC71E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Sep 2019 13:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436500AbfIXLo0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 24 Sep 2019 07:44:26 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51926 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726923AbfIXLo0 (ORCPT
+        id S2395152AbfIXLsq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Sep 2019 07:48:46 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:41264 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388764AbfIXLsq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 24 Sep 2019 07:44:26 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 7so1900817wme.1;
-        Tue, 24 Sep 2019 04:44:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FfE5HSIoy4bnw4tW0uvOE8G/Ux5CpKN6T9ph37iVZUY=;
-        b=SmipKaBSMwrNl+MDWdtvDyxMlym+1q/mQ8pzTtrjMLJGQEo52eDglwHoMpkHrJQ8Jj
-         ogkX7aX/fA3A/28hHxiB/ronYz/r+mik4NBfK1vlO9KgR2Umo1Pdk+UG3ttWPJisVKG9
-         0iEh+7vimqQ5GjpISCvYTJhLjXRjYLyZ+4bKvQoPTISqQ6Q9eVfsppQbCGneJ7C1YAeL
-         UGpMpkTWIrs0m+boCv83xhceLAGUWEq1ooIMgXACGEBcLA7kdu+owkQ/qtIUJtyIynCm
-         oW34s3bOqU1fXqRP6cxH5cHBaWGL+1Ny/xuxpXeZ0YOoQIh29OUb4SZdwuiyd4l6FpCT
-         zhNQ==
-X-Gm-Message-State: APjAAAWkOwdIgf4aLHUJ/SzmelIbn8Dbs0ljenr9yfkwX4eIS6S31xhv
-        WFK0wHA2JIEriRtAcg4cWl9rOSpi
-X-Google-Smtp-Source: APXvYqzqFOsxB9TPB1cUrC0y7KpPMr4n+t9n/heL8MaG21Cbit3fJZ68Rk7z/b8D+BiiSUudc86+2g==
-X-Received: by 2002:a05:600c:2311:: with SMTP id 17mr2302023wmo.39.1569325463690;
-        Tue, 24 Sep 2019 04:44:23 -0700 (PDT)
-Received: from pi3 ([194.230.155.145])
-        by smtp.googlemail.com with ESMTPSA id b184sm2319180wmg.47.2019.09.24.04.44.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2019 04:44:22 -0700 (PDT)
-Date:   Tue, 24 Sep 2019 13:44:18 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 24 Sep 2019 07:48:46 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20190924114844euoutp01e8a0ca445bdd324d8f8035c04333a8ac~HXW6GKhBY0891008910euoutp01o
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Sep 2019 11:48:44 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20190924114844euoutp01e8a0ca445bdd324d8f8035c04333a8ac~HXW6GKhBY0891008910euoutp01o
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1569325724;
+        bh=o/dbitjcpBjt6m19CxhZ8Q367YRKSVkRcHnq7IXVvU4=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=nOucOyfouulZ0tfuXj9aH+KKEPZlfNZPsBYXHHVxuufkYfL42RTJnj1ZIbmZ+ChRx
+         H7cCWRkKUL38ZxnrRx4ND3IwAMIVDjhPCu9ZIEIswWkaVQbO5k1myTiXKtiIn8354m
+         nVWAXS4Oqf6Z8Dd96aH6xLdkV6VfsZlmFBKtL7BU=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20190924114843eucas1p20daf5d370dff434ea035b690ed891f6e~HXW5pZfEY1024310243eucas1p26;
+        Tue, 24 Sep 2019 11:48:43 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 5F.AD.04309.B920A8D5; Tue, 24
+        Sep 2019 12:48:43 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee~HXW5NuUUI1223012230eucas1p2x;
+        Tue, 24 Sep 2019 11:48:43 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20190924114843eusmtrp15164d2b96002f72cd9d5aab9736ccf26~HXW5MoZpe0400704007eusmtrp1R;
+        Tue, 24 Sep 2019 11:48:43 +0000 (GMT)
+X-AuditID: cbfec7f4-ae1ff700000010d5-43-5d8a029b8b06
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id BE.E7.04117.B920A8D5; Tue, 24
+        Sep 2019 12:48:43 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20190924114842eusmtip204d537e43021b3373ad860bcc0f02458~HXW4pCOxk2063020630eusmtip2s;
+        Tue, 24 Sep 2019 11:48:42 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Maciej Falkowski <m.falkowski@samsung.com>
-Subject: Re: [PATCH] dt-bindings: gpu: Convert Samsung 2D Graphics
- Accelerator to dt-schema
-Message-ID: <20190924114418.GA9157@pi3>
-References: <CGME20190924113225eucas1p131429c7f7e0d520693b89bb2a7d9e211@eucas1p1.samsung.com>
- <20190924113159.24873-1-m.szyprowski@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190924113159.24873-1-m.szyprowski@samsung.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Maciej Falkowski <m.falkowski@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH] ASoC: samsung: i2s: Add clocks' macros descriptions
+Date:   Tue, 24 Sep 2019 13:48:38 +0200
+Message-Id: <20190924114838.25482-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42LZduznOd3ZTF2xBgu3mllcuXiIyWLqwyds
+        FvOPnGO1OH9+A7vFtysdTBaXd81hs5hxfh+TxYPmdWwWa4/cZbdYev0ik0Xr3iPsFofftLM6
+        8Hhs+NzE5rFm3hpGj52z7rJ7bFrVyebRt2UVo8fnTXIBbFFcNimpOZllqUX6dglcGR8vT2Ms
+        eMxR0TJ/F2sD4372LkZODgkBE4nvG48zdTFycQgJrGCUuP5lEhtIQkjgC6PE1l+1EPZnRonW
+        o3IwDROXfWOGaFjOKLHx/nwmuIbtF5JAbDYBQ4mut11gg0QE6iTOnjnCCNLALHCESaL5/m+w
+        BmEBF4m7R6cxg9gsAqoSe7dcALN5BWwlZu3sZYTYJi+xesMBsG0SAs3sEpfn3meGSLhIrJnb
+        wAZhC0u8Or4F6h8ZidOTe1igGhglHp5byw7h9DBKXG6aATXWWuLw8YusXYwcQDdpSqzfpQ8R
+        dpRY9fAeG0hYQoBP4sZbQZAwM5A5adt0Zogwr0RHmxBEtZrErOPr4NYevHAJ6jQPia1fvrFC
+        AiVW4vT9RSwTGOVmIexawMi4ilE8tbQ4Nz212CgvtVyvODG3uDQvXS85P3cTIzCNnP53/MsO
+        xl1/kg4xCnAwKvHwSmzriBViTSwrrsw9xCjBwawkwrtJqy1WiDclsbIqtSg/vqg0J7X4EKM0
+        B4uSOG81w4NoIYH0xJLU7NTUgtQimCwTB6dUA2Ot54RDi7ZtcTkp9Lh819I3Ps9c1G9XKodX
+        /ZO+7Re36VRhmeevM5PjWPO0WJeXvRQ13SO8/7vzn/b6kAPKae7ihZcl54Sbu558OumztGbb
+        CwmJWz4W9RbiTNv/eYeGLfwS9PfMs+YvRo+yNvD/ffJ75z3mO9uvlrmm5Qi7blLdt1wu1nLa
+        ciUlluKMREMt5qLiRACQXCofHwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKLMWRmVeSWpSXmKPExsVy+t/xe7qzmbpiDZr6pC2uXDzEZDH14RM2
+        i/lHzrFanD+/gd3i25UOJovLu+awWcw4v4/J4kHzOjaLtUfuslssvX6RyaJ17xF2i8Nv2lkd
+        eDw2fG5i81gzbw2jx85Zd9k9Nq3qZPPo27KK0ePzJrkAtig9m6L80pJUhYz84hJbpWhDCyM9
+        Q0sLPSMTSz1DY/NYKyNTJX07m5TUnMyy1CJ9uwS9jI+XpzEWPOaoaJm/i7WBcT97FyMnh4SA
+        icTEZd+Yuxi5OIQEljJKvHk4gRkiISNxcloDK4QtLPHnWhcbRNEnRonJPxrZQBJsAoYSXW8h
+        EiICTYwSxzbPZAFxmAVOMUncuDqFEaRKWMBF4u7RaWBjWQRUJfZuuQBm8wrYSsza2csIsUJe
+        YvWGA8wTGHkWMDKsYhRJLS3OTc8tNtIrTswtLs1L10vOz93ECAzibcd+btnB2PUu+BCjAAej
+        Eg+vxLaOWCHWxLLiytxDjBIczEoivJu02mKFeFMSK6tSi/Lji0pzUosPMZoCLZ/ILCWanA+M
+        sLySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLpiSWp2ampBalFMH1MHJxSDYw80vdrK9elbQ5e
+        uW3RyZLCPM+Lqtrytn0BC18yyK6/zdmp+SX+duoj7yyzG9fTM5rLC29vuKXy1fIq24UMp/Uz
+        Zyyb8+ygT3LnhieRr6d9Pq607/kThcI5zovNWjxmndl7pV+ekcviz4k55zfOO/Hk9oz7Ys79
+        evzJkYVlYVPUJonKXri2ef8SJZbijERDLeai4kQAOpKoyngCAAA=
+X-CMS-MailID: 20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee
+References: <CGME20190924114843eucas1p2ea9c36289d3912e022ad7c9070fc00ee@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 24, 2019 at 01:31:59PM +0200, Marek Szyprowski wrote:
-> From: Maciej Falkowski <m.falkowski@samsung.com>
-> 
-> Convert Samsung 2D Graphics Accelerator to newer dt-schema format
-> 
-> Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  .../devicetree/bindings/gpu/samsung-g2d.txt   | 27 ----------
->  .../devicetree/bindings/gpu/samsung-g2d.yaml  | 53 +++++++++++++++++++
->  2 files changed, 53 insertions(+), 27 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-g2d.txt
->  create mode 100644 Documentation/devicetree/bindings/gpu/samsung-g2d.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/gpu/samsung-g2d.txt b/Documentation/devicetree/bindings/gpu/samsung-g2d.txt
-> deleted file mode 100644
-> index 1e7959332dbc..000000000000
-> --- a/Documentation/devicetree/bindings/gpu/samsung-g2d.txt
-> +++ /dev/null
-> @@ -1,27 +0,0 @@
-> -* Samsung 2D Graphics Accelerator
-> -
-> -Required properties:
-> -  - compatible : value should be one among the following:
-> -	(a) "samsung,s5pv210-g2d" for G2D IP present in S5PV210 & Exynos4210 SoC
-> -	(b) "samsung,exynos4212-g2d" for G2D IP present in Exynos4x12 SoCs
-> -	(c) "samsung,exynos5250-g2d" for G2D IP present in Exynos5250 SoC
-> -
-> -  - reg : Physical base address of the IP registers and length of memory
-> -	  mapped region.
-> -
-> -  - interrupts : G2D interrupt number to the CPU.
-> -  - clocks : from common clock binding: handle to G2D clocks.
-> -  - clock-names : names of clocks listed in clocks property, in the same
-> -		  order, depending on SoC type:
-> -		  - for S5PV210 and Exynos4 based SoCs: "fimg2d" and
-> -		    "sclk_fimg2d"
-> -		  - for Exynos5250 SoC: "fimg2d".
-> -
-> -Example:
-> -	g2d@12800000 {
-> -		compatible = "samsung,s5pv210-g2d";
-> -		reg = <0x12800000 0x1000>;
-> -		interrupts = <0 89 0>;
-> -		clocks = <&clock 177>, <&clock 277>;
-> -		clock-names = "sclk_fimg2d", "fimg2d";
-> -	};
->ss diff --git a/Documentation/devicetree/bindings/gpu/samsung-g2d.yaml b/Documentation/devicetree/bindings/gpu/samsung-g2d.yaml
-> new file mode 100644
-> index 000000000000..bb0a4bf168cc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/gpu/samsung-g2d.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/gpu/samsung-g2d.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung SoC 2D Graphics Accelerator
-> +
-> +maintainers:
-> +  - Inki Dae <inki.dae@samsung.com>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - samsung,s5pv210-g2d    # in S5PV210 & Exynos4210 SoC
-> +      - samsung,exynos4212-g2d # in Exynos4x12 SoCs
-> +      - samsung,exynos5250-g2d
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    oneOf:
-> +      - items: # for Exynos5250 SoC
-> +          - const: fimg2d
-> +      - items: # for S5PV210 and Exynos4 based SoCs
-> +          - const: sclk_fimg2d
-> +          - const: fimg2d
+From: Maciej Falkowski <m.falkowski@samsung.com>
 
-Just like in previous conversions ("dt-bindings: gpu: Convert Samsung
-Image Scaler to dt-schem") - you need to add here proper if-else
-constraints.
+To increase macro readability added descriptions
+to clocks macros.
+
+Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ include/dt-bindings/sound/samsung-i2s.h | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/include/dt-bindings/sound/samsung-i2s.h b/include/dt-bindings/sound/samsung-i2s.h
+index 77545f14c379..fd752475c762 100644
+--- a/include/dt-bindings/sound/samsung-i2s.h
++++ b/include/dt-bindings/sound/samsung-i2s.h
+@@ -2,8 +2,13 @@
+ #ifndef _DT_BINDINGS_SAMSUNG_I2S_H
+ #define _DT_BINDINGS_SAMSUNG_I2S_H
+ 
+-#define CLK_I2S_CDCLK		0
+-#define CLK_I2S_RCLK_SRC	1
+-#define CLK_I2S_RCLK_PSR	2
++/* the CDCLK (CODECLKO) gate clock */
++#define CLK_I2S_CDCLK 0
++
++/* the RCLKSRC mux clock (corresponding to RCLKSRC bit in IISMOD register) */
++#define CLK_I2S_RCLK_SRC 1
++
++/* the RCLK prescaler divider clock (corresponding to the IISPSR register) */
++#define CLK_I2S_RCLK_PSR 2
+ 
+ #endif /* _DT_BINDINGS_SAMSUNG_I2S_H */
+-- 
+2.17.1
 
 
-Best regards,
-Krzysztof
 
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - clocks
-> +  - clock-names
-> +
-> +examples
-> +  - |
-> +    g2d@12800000 {
-> +        compatible = "samsung,s5pv210-g2d";
-> +        reg = <0x12800000 0x1000>;
-> +        interrupts = <0 89 0>;
-> +        clocks = <&clock 177>, <&clock 277>;
-> +        clock-names = "sclk_fimg2d", "fimg2d";
-> +    };
-> +
-> -- 
-> 2.17.1
-> 
-> 
-> 
