@@ -2,83 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FD53CBE69
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Oct 2019 17:01:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF4B9CBECD
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Oct 2019 17:14:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389653AbfJDPA5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 4 Oct 2019 11:00:57 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48598 "EHLO mail.kernel.org"
+        id S2389378AbfJDPO0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 4 Oct 2019 11:14:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52010 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389651AbfJDPA5 (ORCPT
+        id S2389086AbfJDPOZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 4 Oct 2019 11:00:57 -0400
+        Fri, 4 Oct 2019 11:14:25 -0400
 Received: from localhost.localdomain (unknown [194.230.155.145])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 99E922133F;
-        Fri,  4 Oct 2019 15:00:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4017F207FF;
+        Fri,  4 Oct 2019 15:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570201256;
-        bh=oHpPukB6B9nYWBy+UwEt06VVM0sOiP39yRkduK0FfyA=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=naYVCKVE90MUi+D8gWav2uNsSkNjDc0xvWVMLN7bjXO+gK8ChM6YuTL+HGl5EVEH0
-         QoVuGX2eldJVcAoBIHR0FVq6zoEFeFy4draMwTSwOO7226+ecAVEmhII3Q1JUu6nm7
-         E4Hc2XpBajKHsK+ihIQxxY4vbt30kI2Ln0BlspP4=
+        s=default; t=1570202065;
+        bh=At7Vw3YFrrg3TOqKMg8f1TsgKNBKoiEKL7wq9XiiUKk=;
+        h=From:To:Subject:Date:From;
+        b=BeGHmF7Rbd6pkfOjo2uCfn8OcrdTdcDJynBCXDiHZNqmgwIE1+aRy4wZQW23eUGGP
+         U+RHRG2J0ZC+B7hAvb/Ik0Nsr00FdebTvb84NysQA4HHgL8yfGWaQ2VW+9bCdu7zMd
+         kUWdVsOOM75RFDTU0Ja0JGS5R4l69pzZnlhyyzYs=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Russell King <linux@armlinux.org.uk>,
-        Olof Johansson <olof@lixom.net>,
+To:     Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 2/2] ARM: multi_v7_defconfig: Enable Exynos bus and memory frequency scaling (devfreq)
-Date:   Fri,  4 Oct 2019 17:00:40 +0200
-Message-Id: <20191004150040.5833-2-krzk@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lee Jones <lee.jones@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Maciej Falkowski <m.falkowski@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-serial@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: arm: samsung: Force clkoutN names to be unique in PMU
+Date:   Fri,  4 Oct 2019 17:14:12 +0200
+Message-Id: <20191004151414.8458-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191004150040.5833-1-krzk@kernel.org>
-References: <20191004150040.5833-1-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enable devfreq events along with drivers for scaling frequency and
-voltages of Exynos buses and Dynamic Memory Controller (DMC).  This
-usually brings energy saving benefits.
-
-So far devfreq was disabled because it was causing hangs during system
-reboot (voltage not matching reset frequency). This was already fixed.
-
-Occasionally, devfreq might negatively impact performance of certain SoC
-blocks, e.g. when a bus is scaled down but some block (like Mixer with
-two Full HD windows) wants to perform high-throughput DMA operations.
+The clkoutN names of clocks must be unique because they represent
+unique inputs of clock multiplexer.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- arch/arm/configs/multi_v7_defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/arm/samsung/pmu.yaml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index 7f7978dba8ab..1296e7aaa801 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -977,11 +977,14 @@ CONFIG_ARCH_TEGRA_2x_SOC=y
- CONFIG_ARCH_TEGRA_3x_SOC=y
- CONFIG_ARCH_TEGRA_114_SOC=y
- CONFIG_ARCH_TEGRA_124_SOC=y
-+CONFIG_ARM_EXYNOS_BUS_DEVFREQ=m
- CONFIG_ARM_TEGRA_DEVFREQ=m
-+CONFIG_DEVFREQ_EVENT_EXYNOS_NOCP=m
- CONFIG_EXTCON_MAX14577=m
- CONFIG_EXTCON_MAX77693=m
- CONFIG_EXTCON_MAX8997=m
- CONFIG_TI_AEMIF=y
-+CONFIG_EXYNOS5422_DMC=m
- CONFIG_IIO=y
- CONFIG_IIO_SW_TRIGGER=y
- CONFIG_ASPEED_ADC=m
+diff --git a/Documentation/devicetree/bindings/arm/samsung/pmu.yaml b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
+index 73b56fc5bf58..d8e03716f5d2 100644
+--- a/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
++++ b/Documentation/devicetree/bindings/arm/samsung/pmu.yaml
+@@ -53,8 +53,10 @@ properties:
+       List of clock names for particular CLKOUT mux inputs
+     minItems: 1
+     maxItems: 32
+-    items:
+-      pattern: '^clkout([0-9]|[12][0-9]|3[0-1])$'
++    allOf:
++      - items:
++          pattern: '^clkout([0-9]|[12][0-9]|3[0-1])$'
++      - uniqueItems: true
+ 
+   clocks:
+     minItems: 1
 -- 
 2.17.1
 
