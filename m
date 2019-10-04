@@ -2,297 +2,265 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31611CBECF
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Oct 2019 17:14:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA5F8CC20E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Oct 2019 19:53:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389700AbfJDPOg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 4 Oct 2019 11:14:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52402 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388802AbfJDPOf (ORCPT
+        id S2388643AbfJDRwt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 4 Oct 2019 13:52:49 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:51002 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388666AbfJDRwt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 4 Oct 2019 11:14:35 -0400
-Received: from localhost.localdomain (unknown [194.230.155.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A4B08207FF;
-        Fri,  4 Oct 2019 15:14:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1570202074;
-        bh=jGn2GriHknRcM7VEKcN/Vhe/Y3uO7QORd6PlkeTX3q4=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=biAfqQM7ksmdl6mE9+E6iqLHtsiTP7ck7fq/ivIpyTTedBKFP9Se204xAqgDrwbNI
-         jc/1GqGw5vGRFIzak0OnN/rnzhz6AFddTd+72tYCbnN6dVR/AbLTFaWYf8vf09giWG
-         l5YRnMkEZuVKfYWfVWLpMBAoiP24ZYbX7xMUR79c=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Lee Jones <lee.jones@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Maciej Falkowski <m.falkowski@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-serial@vger.kernel.org
-Subject: [PATCH 3/3] dt-bindings: serial: Convert Samsung UART bindings to json-schema
-Date:   Fri,  4 Oct 2019 17:14:14 +0200
-Message-Id: <20191004151414.8458-3-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191004151414.8458-1-krzk@kernel.org>
-References: <20191004151414.8458-1-krzk@kernel.org>
+        Fri, 4 Oct 2019 13:52:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
+        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
+        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+        List-Archive; bh=+u2AFREiqiW+Htf3GfzOpHr321hwPO9MAJ3AyNjFHeI=; b=m+yVZ05mW1lJ
+        m1dyMdZVMWUpeslk4XAYOB9JrP/0r6vgP8v2aM3lbq+NCFt3HJOVdbQEcoLDX+KfewGtqR21isEKO
+        rwtId7qhDNsEcopczXmEcaRl/5E7nIU002xtJcYMn2DD3/VIaFeG/YYf4ncliewlAKvswmbI6vhPm
+        rS+7g=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.co.uk>)
+        id 1iGRkr-0003vS-8O; Fri, 04 Oct 2019 17:52:37 +0000
+Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
+        id C3EC72741EF0; Fri,  4 Oct 2019 18:52:36 +0100 (BST)
+From:   Mark Brown <broonie@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     alsa-devel@alsa-project.org, broonie@kernel.org,
+        b.zolnierkie@samsung.com, ckeepax@opensource.cirrus.com,
+        krzk@kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        lgirdwood@gmail.com, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        m.szyprowski@samsung.com, patches@opensource.cirrus.com,
+        sbkim73@samsung.com
+Subject: Applied "ASoC: samsung: arndale: Add support for WM1811 CODEC" to the asoc tree
+In-Reply-To: <20191002105652.24821-2-s.nawrocki@samsung.com>
+X-Patchwork-Hint: ignore
+Message-Id: <20191004175236.C3EC72741EF0@ypsilon.sirena.org.uk>
+Date:   Fri,  4 Oct 2019 18:52:36 +0100 (BST)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung S3C/S5P/Exynos Serial/UART bindings to DT schema format
-using json-schema.
+The patch
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+   ASoC: samsung: arndale: Add support for WM1811 CODEC
+
+has been applied to the asoc tree at
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-5.5
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From 03081cc370b9d0d91addbb163e2f5347a7f51571 Mon Sep 17 00:00:00 2001
+From: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Date: Wed, 2 Oct 2019 12:56:51 +0200
+Subject: [PATCH] ASoC: samsung: arndale: Add support for WM1811 CODEC
+
+The Arndale boards come with different types of the audio daughter
+board.  In order to support the WM1811 one we add new definition of
+an ASoC card which will be registered when the driver matches on
+"samsung,arndale-wm1811" compatible.  There is no runtime detection of
+the audio daughter board type at the moment, compatible string of the
+audio card needs to be adjusted in DT, e.g. by the bootloader,
+depending on actual audio board (CODEC) used.
+
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://lore.kernel.org/r/20191002105652.24821-2-s.nawrocki@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- .../bindings/mfd/samsung,exynos5433-lpass.txt |   2 +-
- .../bindings/serial/samsung_uart.txt          |  58 -------
- .../bindings/serial/samsung_uart.yaml         | 148 ++++++++++++++++++
- 3 files changed, 149 insertions(+), 59 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/serial/samsung_uart.txt
- create mode 100644 Documentation/devicetree/bindings/serial/samsung_uart.yaml
+ sound/soc/samsung/Kconfig          |  2 +
+ sound/soc/samsung/arndale_rt5631.c | 85 +++++++++++++++++++++++++-----
+ 2 files changed, 74 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
-index d759da606f75..30ea27c3936d 100644
---- a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
-+++ b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
-@@ -18,7 +18,7 @@ an optional sub-node. For "samsung,exynos5433-lpass" compatible this includes:
- UART, SLIMBUS, PCM, I2S, DMAC, Timers 0...4, VIC, WDT 0...1 devices.
+diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
+index 638983123d8f..6803cbfa9e46 100644
+--- a/sound/soc/samsung/Kconfig
++++ b/sound/soc/samsung/Kconfig
+@@ -199,6 +199,8 @@ config SND_SOC_ARNDALE_RT5631_ALC5631
+         depends on I2C
+         select SND_SAMSUNG_I2S
+         select SND_SOC_RT5631
++	select MFD_WM8994
++	select SND_SOC_WM8994
  
- Bindings of the sub-nodes are described in:
--  ../serial/samsung_uart.txt
-+  ../serial/samsung_uart.yaml
-   ../sound/samsung-i2s.txt
-   ../dma/arm-pl330.txt
+ config SND_SOC_SAMSUNG_TM2_WM5110
+ 	tristate "SoC I2S Audio support for WM5110 on TM2 board"
+diff --git a/sound/soc/samsung/arndale_rt5631.c b/sound/soc/samsung/arndale_rt5631.c
+index 004c84fafad9..d64602950cbd 100644
+--- a/sound/soc/samsung/arndale_rt5631.c
++++ b/sound/soc/samsung/arndale_rt5631.c
+@@ -14,10 +14,11 @@
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
  
-diff --git a/Documentation/devicetree/bindings/serial/samsung_uart.txt b/Documentation/devicetree/bindings/serial/samsung_uart.txt
-deleted file mode 100644
-index e85f37ec33f0..000000000000
---- a/Documentation/devicetree/bindings/serial/samsung_uart.txt
-+++ /dev/null
-@@ -1,58 +0,0 @@
--* Samsung's UART Controller
--
--The Samsung's UART controller is used for interfacing SoC with serial
--communicaion devices.
--
--Required properties:
--- compatible: should be one of following:
--  - "samsung,exynos4210-uart" -  Exynos4210 SoC,
--  - "samsung,s3c2410-uart" - compatible with ports present on S3C2410 SoC,
--  - "samsung,s3c2412-uart" - compatible with ports present on S3C2412 SoC,
--  - "samsung,s3c2440-uart" - compatible with ports present on S3C2440 SoC,
--  - "samsung,s3c6400-uart" - compatible with ports present on S3C6400 SoC,
--  - "samsung,s5pv210-uart" - compatible with ports present on S5PV210 SoC.
--
--- reg: base physical address of the controller and length of memory mapped
--  region.
--
--- interrupts: a single interrupt signal to SoC interrupt controller,
--  according to interrupt bindings documentation [1].
--
--- clock-names: input names of clocks used by the controller:
--  - "uart" - controller bus clock,
--  - "clk_uart_baudN" - Nth baud base clock input (N = 0, 1, ...),
--    according to SoC User's Manual (only N = 0 is allowedfor SoCs without
--    internal baud clock mux).
--- clocks: phandles and specifiers for all clocks specified in "clock-names"
--  property, in the same order, according to clock bindings documentation [2].
--
--[1] Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
--[2] Documentation/devicetree/bindings/clock/clock-bindings.txt
--
--Optional properties:
--- samsung,uart-fifosize: The fifo size supported by the UART channel
--
--Note: Each Samsung UART should have an alias correctly numbered in the
--"aliases" node, according to serialN format, where N is the port number
--(non-negative decimal integer) as specified by User's Manual of respective
--SoC.
--
--Example:
--	aliases {
--		serial0 = &uart0;
--		serial1 = &uart1;
--		serial2 = &uart2;
--	};
--
--Example:
--	uart1: serial@7f005400 {
--		compatible = "samsung,s3c6400-uart";
--		reg = <0x7f005400 0x100>;
--		interrupt-parent = <&vic1>;
--		interrupts = <6>;
--		clock-names = "uart", "clk_uart_baud2",
--				"clk_uart_baud3";
--		clocks = <&clocks PCLK_UART1>, <&clocks PCLK_UART1>,
--				<&clocks SCLK_UART>;
--		samsung,uart-fifosize = <16>;
--	};
-diff --git a/Documentation/devicetree/bindings/serial/samsung_uart.yaml b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
-new file mode 100644
-index 000000000000..276bea1c231a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
-@@ -0,0 +1,148 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/serial/samsung_uart.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++#include "../codecs/wm8994.h"
+ #include "i2s.h"
+ 
+-static int arndale_hw_params(struct snd_pcm_substream *substream,
+-	struct snd_pcm_hw_params *params)
++static int arndale_rt5631_hw_params(struct snd_pcm_substream *substream,
++				    struct snd_pcm_hw_params *params)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+ 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
+@@ -47,13 +48,45 @@ static int arndale_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-static struct snd_soc_ops arndale_ops = {
+-	.hw_params = arndale_hw_params,
++static struct snd_soc_ops arndale_rt5631_ops = {
++	.hw_params = arndale_rt5631_hw_params,
++};
 +
-+title: Samsung S3C, S5P and Exynos SoC UART Controller
++static int arndale_wm1811_hw_params(struct snd_pcm_substream *substream,
++				    struct snd_pcm_hw_params *params)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_dai *codec_dai = rtd->codec_dai;
++	unsigned int rfs, rclk;
 +
-+maintainers:
-+  - Krzysztof Kozlowski <krzk@kernel.org>
-+  - Greg Kroah-Hartman <gregkh@linuxfoundation.org>
++	/* Ensure AIF1CLK is >= 3 MHz for optimal performance */
++	if (params_width(params) == 24)
++		rfs = 384;
++	else if (params_rate(params) == 8000 || params_rate(params) == 11025)
++		rfs = 512;
++	else
++		rfs = 256;
 +
-+description: |+
-+  Each Samsung UART should have an alias correctly numbered in the "aliases"
-+  node, according to serialN format, where N is the port number (non-negative
-+  decimal integer) as specified by User's Manual of respective SoC.
++	rclk = params_rate(params) * rfs;
 +
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - samsung,s3c2410-uart
-+          - samsung,s3c2412-uart
-+          - samsung,s3c2440-uart
-+          - samsung,s3c6400-uart
-+          - samsung,s5pv210-uart
-+          - samsung,exynos4210-uart
++	/*
++	 * We add 1 to the frequency value to ensure proper EPLL setting
++	 * for each audio sampling rate (see epll_24mhz_tbl in drivers/clk/
++	 * samsung/clk-exynos5250.c for list of available EPLL rates).
++	 * The CODEC uses clk API and the value will be rounded hence the MCLK1
++	 * clock's frequency will still be exact multiple of the sample rate.
++	 */
++	return snd_soc_dai_set_sysclk(codec_dai, WM8994_SYSCLK_MCLK1,
++					rclk + 1, SND_SOC_CLOCK_IN);
++}
 +
-+  reg:
-+    maxItems: 1
++static struct snd_soc_ops arndale_wm1811_ops = {
++	.hw_params = arndale_wm1811_hw_params,
+ };
+ 
+ SND_SOC_DAILINK_DEFS(rt5631_hifi,
+ 	DAILINK_COMP_ARRAY(COMP_EMPTY()),
+-	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "rt5631-hifi")),
++	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "rt5631-aif1")),
+ 	DAILINK_COMP_ARRAY(COMP_EMPTY()));
+ 
+ static struct snd_soc_dai_link arndale_rt5631_dai[] = {
+@@ -63,11 +96,28 @@ static struct snd_soc_dai_link arndale_rt5631_dai[] = {
+ 		.dai_fmt = SND_SOC_DAIFMT_I2S
+ 			| SND_SOC_DAIFMT_NB_NF
+ 			| SND_SOC_DAIFMT_CBS_CFS,
+-		.ops = &arndale_ops,
++		.ops = &arndale_rt5631_ops,
+ 		SND_SOC_DAILINK_REG(rt5631_hifi),
+ 	},
+ };
+ 
++SND_SOC_DAILINK_DEFS(wm1811_hifi,
++	DAILINK_COMP_ARRAY(COMP_EMPTY()),
++	DAILINK_COMP_ARRAY(COMP_CODEC(NULL, "wm8994-aif1")),
++	DAILINK_COMP_ARRAY(COMP_EMPTY()));
 +
-+  clocks:
-+    minItems: 2
-+    maxItems: 5
++static struct snd_soc_dai_link arndale_wm1811_dai[] = {
++	{
++		.name = "WM1811 HiFi",
++		.stream_name = "Primary",
++		.dai_fmt = SND_SOC_DAIFMT_I2S
++			| SND_SOC_DAIFMT_NB_NF
++			| SND_SOC_DAIFMT_CBM_CFM,
++		.ops = &arndale_wm1811_ops,
++		SND_SOC_DAILINK_REG(wm1811_hifi),
++	},
++};
 +
-+  clock-names:
-+    description: |
-+      List of clock names:
-+        - "uart" - controller bus clock,
-+        - "clk_uart_baudN" - Nth baud base clock input (N = 0, 1, ...).
-+      N = 0 is allowed for SoCs without internal baud clock mux.
-+    minItems: 2
-+    maxItems: 5
-+    allOf:
-+      - uniqueItems: true
-+      - oneOf:
-+          - items:
-+              - const: uart
-+              - pattern: '^clk_uart_baud[0-3]$'
-+          - items:
-+              - const: uart
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
-+          - items:
-+              - const: uart
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
-+          - items:
-+              - const: uart
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
-+              - pattern: '^clk_uart_baud[0-3]$'
+ static struct snd_soc_card arndale_rt5631 = {
+ 	.name = "Arndale RT5631",
+ 	.owner = THIS_MODULE,
+@@ -75,6 +125,13 @@ static struct snd_soc_card arndale_rt5631 = {
+ 	.num_links = ARRAY_SIZE(arndale_rt5631_dai),
+ };
+ 
++static struct snd_soc_card arndale_wm1811 = {
++	.name = "Arndale WM1811",
++	.owner = THIS_MODULE,
++	.dai_link = arndale_wm1811_dai,
++	.num_links = ARRAY_SIZE(arndale_wm1811_dai),
++};
 +
-+  interrupts:
-+    minItems: 1
-+    maxItems: 2
-+
-+  samsung,uart-fifosize:
-+    description: The fifo size supported by the UART channel
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+      - enum: [16, 64, 256]
-+
-+required:
-+  - compatible
-+  - clocks
-+  - clock-names
-+  - interrupts
-+  - reg
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - samsung,s3c2410-uart
-+              - samsung,s5pv210-uart
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 2
-+          maxItems: 3
-+        clock-names:
-+          minItems: 2
-+          maxItems: 3
-+          allOf:
-+            - uniqueItems: true
-+            - oneOf:
-+                - items:
-+                    - const: uart
-+                    - pattern: '^clk_uart_baud[0-1]$'
-+                - items:
-+                    - const: uart
-+                    - pattern: '^clk_uart_baud[0-1]$'
-+                    - pattern: '^clk_uart_baud[0-1]$'
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - samsung,exynos4210-uart
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 2
-+          maxItems: 2
-+        clock-names:
-+          minItems: 2
-+          maxItems: 2
-+          allOf:
-+            - uniqueItems: true
-+            - items:
-+                - const: uart
-+                - const: clk_uart_baud0
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/samsung,s3c64xx-clock.h>
-+
-+    aliases {
-+        serial0 = &uart0;
-+    };
-+
-+    uart0: serial@7f005000 {
-+        compatible = "samsung,s3c6400-uart";
-+        reg = <0x7f005000 0x100>;
-+        interrupt-parent = <&vic1>;
-+        interrupts = <5>;
-+        clock-names = "uart", "clk_uart_baud2",
-+                      "clk_uart_baud3";
-+        clocks = <&clocks PCLK_UART0>, <&clocks PCLK_UART0>,
-+                 <&clocks SCLK_UART>;
-+        samsung,uart-fifosize = <16>;
-+    };
+ static void arndale_put_of_nodes(struct snd_soc_card *card)
+ {
+ 	struct snd_soc_dai_link *dai_link;
+@@ -89,10 +146,11 @@ static void arndale_put_of_nodes(struct snd_soc_card *card)
+ static int arndale_audio_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct snd_soc_card *card = &arndale_rt5631;
++	struct snd_soc_card *card;
+ 	struct snd_soc_dai_link *dai_link;
+ 	int ret;
+ 
++	card = (struct snd_soc_card *)of_device_get_match_data(&pdev->dev);
+ 	card->dev = &pdev->dev;
+ 	dai_link = card->dai_link;
+ 
+@@ -134,18 +192,19 @@ static int arndale_audio_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id samsung_arndale_rt5631_of_match[] __maybe_unused = {
+-	{ .compatible = "samsung,arndale-rt5631", },
+-	{ .compatible = "samsung,arndale-alc5631", },
++static const struct of_device_id arndale_audio_of_match[] = {
++	{ .compatible = "samsung,arndale-rt5631",  .data = &arndale_rt5631 },
++	{ .compatible = "samsung,arndale-alc5631", .data = &arndale_rt5631 },
++	{ .compatible = "samsung,arndale-wm1811",  .data = &arndale_wm1811 },
+ 	{},
+ };
+-MODULE_DEVICE_TABLE(of, samsung_arndale_rt5631_of_match);
++MODULE_DEVICE_TABLE(of, arndale_audio_of_match);
+ 
+ static struct platform_driver arndale_audio_driver = {
+ 	.driver = {
+-		.name   = "arndale-audio",
++		.name = "arndale-audio",
+ 		.pm = &snd_soc_pm_ops,
+-		.of_match_table = of_match_ptr(samsung_arndale_rt5631_of_match),
++		.of_match_table = arndale_audio_of_match,
+ 	},
+ 	.probe = arndale_audio_probe,
+ 	.remove = arndale_audio_remove,
 -- 
-2.17.1
+2.20.1
 
