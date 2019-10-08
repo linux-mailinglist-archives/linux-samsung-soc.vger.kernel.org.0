@@ -2,104 +2,131 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 580F5D0079
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Oct 2019 20:07:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D247D01A1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Oct 2019 21:55:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727220AbfJHSHz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Oct 2019 14:07:55 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:44886 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726138AbfJHSHz (ORCPT
+        id S1730827AbfJHTz2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Oct 2019 15:55:28 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:32834 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730851AbfJHTzX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Oct 2019 14:07:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=ifH1xoY5aKoXuRXG3gH0QddZRG71GBROpP6PUecmN8M=; b=LO5OnZQavdDW3QqNkTCBV9T8G
-        uTRd6/urqYwDgEFhMjC/6Rv/unPEtinTBKAMbD184rdl0Pt0PbTB5EXjJSCInQXeptMuG8EOzQU6I
-        GB2WJV7lLXZFeGDS1ARdka96UcQy9jjF6DPZIj97CgkTqDh4NPLVa4GSIU0RRavUzSWlA=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1iHttn-0000oC-AW; Tue, 08 Oct 2019 18:07:51 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 7C7FB2740D4A; Tue,  8 Oct 2019 19:07:50 +0100 (BST)
-Date:   Tue, 8 Oct 2019 19:07:50 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Kamil Konieczny <k.konieczny@samsung.com>
-Subject: Re: [PATCH] regulator: core: Skip balancing of the enabled
- regulators in regulator_enable()
-Message-ID: <20191008180750.GT4382@sirena.co.uk>
-References: <0e222fdd-4407-51ea-b75c-a62621cbe622@samsung.com>
- <20191008120611.GG4382@sirena.co.uk>
- <9268b455-ec66-97e1-909d-f964ac31c0ef@samsung.com>
- <20191008124736.GJ4382@sirena.co.uk>
- <86b9b4b5-cca5-9052-7c87-c5679dfffff4@samsung.com>
- <be8d3280-9855-ed18-b2ab-d7fb28d80b82@gmail.com>
- <20191008161535.GN4382@sirena.co.uk>
- <4ad890b7-705e-94f9-2e61-1f3a60984c91@gmail.com>
- <20191008171747.GS4382@sirena.co.uk>
- <439154a4-1502-40af-7086-d4e3eb24025f@gmail.com>
+        Tue, 8 Oct 2019 15:55:23 -0400
+Received: by mail-ed1-f44.google.com with SMTP id c4so16867352edl.0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Oct 2019 12:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=d9t6Rq0RbZ7PXIZmIcLbP2JTBMFny2QBILsKgMXZe9M=;
+        b=aMQQgi7dIXVBnmVMSSMCLgb3oXTzeafbZdgWl2Y7dgh9d3yilS1+9yTnvWoS7+GzUk
+         LWbTYKnbDzuBJ3/U6U4a0Txwis4unkVKDohWYyBjnKYrTLghN7laSYeGp1/FcmznDyEO
+         GS9pgiMN+uT0qCjbihaa5wuvtHOM98vqOW8UVjJ7Cv+EprgLSNS8LJdhrjnJyNqQEN56
+         5sfOyU15h4kpoOXNgzNljIz5N8IZnpl4XHLYJYLCwvTOpHMRDfM3ywlgrk+4Qs+isMtv
+         bwWMXB9P8rpPXCaQx70qpw2S2sG0Q07XznOIe3PPQ9uFVdh7+iWMtRM+rtyrWFblwrYM
+         wXZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=d9t6Rq0RbZ7PXIZmIcLbP2JTBMFny2QBILsKgMXZe9M=;
+        b=QtE0U79d6Bo6Rxoo47503TO7YkvDE8+xUuW/FA7UW+oiGgscD2fu6K2cFEELyDopi4
+         PIQRTd1IyMKt/VbSH7et80axL4tQrpYleeM3l9DkkxB/PYShvfB/ZhelSTBkVg8BsERh
+         4L2Nlz9ugXkiQ0CbDgS50+JVZQGKjIyPiZ9t6kO/qHa15zv10pyBsCUMukyHqHItXdIU
+         Zp1D+texmddcDes42UHyHnIaLX+tBMqxIZgitDLEo4JD1kpuIOIMEdSw4dyXtmOjOnNP
+         Wn3EBJfrMt/ErqrcgqikRr8XArXCp5BpxRGf+6CkYwXMqc94cSl9uL8pk3bYvZ7BU2Xz
+         tVkQ==
+X-Gm-Message-State: APjAAAUV53KI1TIsRBZYRlmrK8BTni0rUGvlcf/j3nEiMPLiV6Jb/Al6
+        9JnpjrC+rvn/xeVGcX4HNQopBNXzgMu/hQ3/1tk=
+X-Google-Smtp-Source: APXvYqxaZfvXk0/G1PfPN40JEbEfue6b7v2Lk/SQWmnUxoxmnZyxXwpPNC4UPIh9mJw4kQ9atMHeHG1Orcb22TWXOSk=
+X-Received: by 2002:a50:c306:: with SMTP id a6mr36339639edb.108.1570564517490;
+ Tue, 08 Oct 2019 12:55:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="IQvoI1rdlCKiYEYW"
-Content-Disposition: inline
-In-Reply-To: <439154a4-1502-40af-7086-d4e3eb24025f@gmail.com>
-X-Cookie: Do not disturb.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Received: by 2002:a17:906:cc89:0:0:0:0 with HTTP; Tue, 8 Oct 2019 12:55:16
+ -0700 (PDT)
+Reply-To: moneygram.1820@outlook.fr
+From:   MONEY GRAM <currency1000000@gmail.com>
+Date:   Tue, 8 Oct 2019 20:55:16 +0100
+Message-ID: <CAPqfnSEO==O6BEtBbcMMZfh3qcY4Bz0qndhCqbcLqZx4DCs44A@mail.gmail.com>
+Subject: HERE IS YOUR MONEY GRAM PAYMENT HAS BEEN SENT TO YOU HERE IS THE M.T.C.N:78393135
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+HERE IS YOUR MONEY GRAM PAYMENT HAS BEEN SENT TO YOU HERE IS THE
+M.T.C.N:78393135
 
---IQvoI1rdlCKiYEYW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Attn: Beneficiary,
 
-On Tue, Oct 08, 2019 at 09:00:29PM +0300, Dmitry Osipenko wrote:
-> 08.10.2019 20:17, Mark Brown =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> > On Tue, Oct 08, 2019 at 08:05:03PM +0300, Dmitry Osipenko wrote:
+This is to inform you that the America Embassy office was instructed
+to transfer your fund $980,000.00 U.S Dollars compensating all the
+SCAM VICTIMS and your email was found as one of the VICTIMS. by
+America security leading team and America representative officers so
+between today the 8th of October till 1ST Of December 2019 you will
+be receiving MONEY GRAM the sum of $6,000 dollars per day. However be informed
+that we have already sent the $6,000 dollars this morning to avoid
+cancellation of your payment, remain the total sum of $980,000.00.
 
-> >> Maybe it won't hurt to disallow a non always-on regulators to be coupl=
-ed
-> >> until there will be a real user for that case.
+You have only six hours to call this office upon the receipt of this
+email the maximum amount you will be receiving per a day starting from
+today's $6,000 and the Money Transfer Control Number of today is
+below.
 
-> > I thought that coupling with the CPU core and main SoC power regulators
-> > was one of the main use cases for this feature?
+NOTE; The sent $6,000 is on hold because of the instruction from IMF
+office, they asked us to place it on hold by requesting the (Clean
+Bill Record Certificate) which will cost you $25 in order to fulfill
+all the necessary obligation to avoid any hitches while sending you
+the payment through MONEY GRAM money transfer, the necessary
+obligation I mean here is to obtain the (Clean Bill Record
+Certificate)
 
-> Properly handling case of a disabled coupled regulator certainly will be
-> useful, but looks like there are no real users for that feature right
-> now and thus no real testing is done.
+Below is the information of today track it in our
 
-Right, sorry - I missed the double negative there.
+websitehttps://moneygarm.com/asp/orderStatus.asp?country=global
+to see is available to pick up by the receiver, but if we didn't here
+from you soon we'll pickup it up from line for security reason to
+avoid hackers stealing the money online.
 
---IQvoI1rdlCKiYEYW
-Content-Type: application/pgp-signature; name="signature.asc"
+Money Transfer Control Number M.T.C.N)::78393135
+SENDERS FIRST NAME: John
+SENDERS LAST NAME: Chun
+SENDERS COUNTRY...BENIN REPUBLIC
+TEXT QUESTION: A
+ANSWER: B
+AMOUNT: $6,000
 
------BEGIN PGP SIGNATURE-----
+We need the below details from you, to enable us place the payment to
+your name and transfer the fund to you.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl2c0HUACgkQJNaLcl1U
-h9BXzAf/a3jMX/noo6ORXwZCbU0W+bEKFBdN0mIzQnIFx2Ztn/BAEBMPD7Lj/5dn
-xIHLvwI1LkQri9I8YKdz6iZPiHIvzsyg64X4aAdU9D6WPXg26pPUHc23/Z30x67h
-tXk27uWLLLoYY45UXNoO3puKiLDB6UAyrQwLs1O3GnykKtr1BxUELCOZDnv7CH+v
-YrmK0uB/jMC+/VuWGVYdrCvjT67v5BJTdFFvM3e+1+ecI708d+04fauscefUHScL
-zTqOh42idqE1gbm3M052pwJ07A0UPBQUBjL0olVLhc6uH9DcjRTp8NNxPo1EMBCG
-1L8pkjVtrS51Fx4Z0m9fAfIuCYhWig==
-=hJR4
------END PGP SIGNATURE-----
+(Full Receivers name)...................
+(You're Country)................................
+(Address)......................................
+(Phone NuMBER-...............................
+(You're Age)............................
+(OCCUPATION)..REAL ESTATE..................
+(A Copy of Your ID CARD).SEE ATTACHMENTS.............
 
---IQvoI1rdlCKiYEYW--
+HOWEVER YOU HAVE TO PAY $25 FOR THE (Clean Bill Record Certificate)
+AND THAT IS ALL YOU HAVE TO DO ASAP.
+
+The payment will be sending to below information, such as:
+
+Receiver.............. ALAN UDE
+Country................Benin Republic
+Amount: ....................$25
+Question: .....................A
+Answer:................... B
+Sender...............Name:
+MTCN :..............
+
+According to the instruction and order we received from IMF the their
+requested $25 must be made directly to the above info's.
+
+Furthermore you are advised to call us as the instruction was passed
+that within 6hours without hearing from you, Count your payment
+canceled. Number to call is below listed manager director office of
+release order:
+DR.ALAN UDE
+Director MONEY GRAM-Benin
