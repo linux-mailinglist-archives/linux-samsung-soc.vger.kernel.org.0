@@ -2,78 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AA5FED2ADB
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Oct 2019 15:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38D5FD2BD2
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Oct 2019 15:55:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388335AbfJJNRp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 10 Oct 2019 09:17:45 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:36703 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388307AbfJJNRp (ORCPT
+        id S1726037AbfJJNzP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 10 Oct 2019 09:55:15 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:54786 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfJJNzP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 10 Oct 2019 09:17:45 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 67so4821569oto.3
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Oct 2019 06:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ub-ac-id.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=QTZIdVmjWEaVgfwGRupI4vAqJVGET3VIX90hz2R16m0=;
-        b=kbDD0ETnfb+9T5ky4afnuU19WL5B3TgSTtrvr8/78l52RfSJ/bD7cjcm8C45XsJ4wr
-         kY8zUv/ms1sLDr56E/0rqAcpldgbTirzVsO1TqrlTRt5AL5IhxusLfWbWkCQZqSDApog
-         xVZixZPZF5pv+wD9wYHHFszyBuRJ0Z0/71+2E/SGgHwnMzv66/86w9uplcX1z0grTv9p
-         1TYZ7MtIagYr+hnMPgyspL8CH18dkY1RexU6NSgr6L6/lGHi7jHNMmmGOoiBuh2azqNd
-         aWHFVXbx5cxjkbX5kJe7PAp4IU2wf06fogqa+YoO9ylF7jna+POCU+xNsHXT6R2wFQg9
-         YqYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=QTZIdVmjWEaVgfwGRupI4vAqJVGET3VIX90hz2R16m0=;
-        b=KSV0CYUWxIcWYDieNRixx/k/CMPtPg7mp4j4bxads6aGaVEslv9vTzvQOVxc1qHbtN
-         kgBLmqnTtImmHGxW11zlkTtwpJv6Dg38lyK1zcExEYE6kUOI2Kdz5Ie6x9ebZLUra3fQ
-         gqHp+NeUCtEOdShGWlyX9ndphdXkEKo7o0N29RPyCNKAry4WH7OukpMHPRPV6Lr1jdl+
-         NANxpOoBLLcegb3EWUrf+aUXo8mslV/aC6LSIU6UTqk4JbuwFjft/fSMKK7s8B8j5MjR
-         3F+ornsA7sZIIzGKbuW0Tl4eqln0mi2M7iKrHfl5KzGLubYtA26wF0SRhf4mTRybhA2f
-         E00Q==
-X-Gm-Message-State: APjAAAWsa+Dk9KM4Fln6nb/aDyDQuU/EJ8daKbIwSEVBIqsia4AhD4/H
-        4kVBDeayoio2OF+7s3cp9sFr3B4GNedJ35VIJYYV
-X-Google-Smtp-Source: APXvYqwe5B6z/3dUuNDQtQ0n2oQYOsdY3HQR3dkIin1gqVhu0NNteov05tKzv4DhJBBR4bjK2RG7Phnj6WUHoBrkRYc=
-X-Received: by 2002:a05:6830:1103:: with SMTP id w3mr7909437otq.312.1570713462861;
- Thu, 10 Oct 2019 06:17:42 -0700 (PDT)
+        Thu, 10 Oct 2019 09:55:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=pLQj4V3i63vFUYd0g5ePUI+/Ipp4Xi+oTg6pYl6S8c8=; b=DbKkj97yxH1WOlu4FqZ00/kBc
+        6avPtx+noy7lr7yBDs0bM+B8502RI4Q6khSJL4sWkbCDeL5sJIgPiFTTTf/1L3bKK/2I9DvBE4zDQ
+        i91t0R4KxxlAizdAguwuOpfGsmzR8ZIfLKwnAosipeNYxbSKgLDC8NY8dqJaeO2DN75ZY=;
+Received: from fw-tnat-cam3.arm.com ([217.140.106.51] helo=fitzroy.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.org.uk>)
+        id 1iIYuK-0001TV-Jl; Thu, 10 Oct 2019 13:55:08 +0000
+Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
+        id 8E981D0003A; Thu, 10 Oct 2019 14:55:07 +0100 (BST)
+Date:   Thu, 10 Oct 2019 14:55:07 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Dmitry Osipenko <digetx@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Kamil Konieczny <k.konieczny@samsung.com>
+Subject: Re: [PATCH] regulator: core: Skip balancing of the enabled
+ regulators in regulator_enable()
+Message-ID: <20191010135507.GS2036@sirena.org.uk>
+References: <be8d3280-9855-ed18-b2ab-d7fb28d80b82@gmail.com>
+ <20191008161535.GN4382@sirena.co.uk>
+ <4ad890b7-705e-94f9-2e61-1f3a60984c91@gmail.com>
+ <20191008171747.GS4382@sirena.co.uk>
+ <439154a4-1502-40af-7086-d4e3eb24025f@gmail.com>
+ <CGME20191008180759epcas3p3c367142db499635c71d9601dd3e63956@epcas3p3.samsung.com>
+ <20191008180750.GT4382@sirena.co.uk>
+ <c9e3ff21-ec50-97c2-06cb-b2f44c70eac8@samsung.com>
+ <20191009141352.GC3929@sirena.co.uk>
+ <c1a50291-5260-357d-1701-47526dbcd62c@samsung.com>
 MIME-Version: 1.0
-Received: by 2002:a4a:3346:0:0:0:0:0 with HTTP; Thu, 10 Oct 2019 06:17:41
- -0700 (PDT)
-Reply-To: sunrisefundingltd50@gmail.com
-From:   Valentina Yurina <v_yurina@ub.ac.id>
-Date:   Thu, 10 Oct 2019 14:17:41 +0100
-Message-ID: <CAKoEkvu4vc5Yn9-hzxQ5dYmUL=oO69=GSP0FC7O+CGz9Jni8+Q@mail.gmail.com>
-Subject: Apply For Financial investment at a lower rate 2%
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="m2KU9Mr9JJKQaAoQ"
+Content-Disposition: inline
+In-Reply-To: <c1a50291-5260-357d-1701-47526dbcd62c@samsung.com>
+X-Cookie: Be careful!  UGLY strikes 9 out of 10!
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
--- 
-Hello,
 
-We are private lenders based in UK.
+--m2KU9Mr9JJKQaAoQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do you need a loan (credit) as soon as possible. Are you in search of
-money to solve your personal needs or finance your business venture,
-then get Your desired loan today! Consult us at Sunrise Funding Ltd.
+On Thu, Oct 10, 2019 at 12:19:55PM +0200, Marek Szyprowski wrote:
+> On 09.10.2019 16:13, Mark Brown wrote:
 
-* We offer personal loan & huge capital loan at 2% interest rate to
-the general public both locally and internationally.
-* Credit amount range from $5,000.00 -- $500,000.00 and above.
-* Special $10,000,000.00 Loan offer for huge project also available.
-* Loan period of 6 months -- 10 years.
-* Loan is granted 24 hours after approval and accredited, directly in
-hand or bank account.
+> > We should revert the enable call, it shouldn't be required, and ideally
+> > the default balancer could be updated to only make configuration changes
+> > if they're actually required which would help avoid triggering any such
+> > things in future if we don't absolutely have to.
 
-Please note that you are advised to contact us for more details via
-the following e-mail address below;
+> Okay, Then in case of regulator core - do you accept the initial patch=20
+> as it indeed forces the default balancer to avoid unnecessary changes,=20
+> or do you want me to rewrite it to assume min_uV =3D current_uV for the=
+=20
+> already enabled regulators during the initial balancing, like suggested=
+=20
+> by Dmitry?
 
-EMAIL : sunrisefundingltd50@gmail.com
-FIRM : Sunrise Funding Ltd UK.
+Neither, I'm suggesting you make the change above.
+
+--m2KU9Mr9JJKQaAoQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl2fODoACgkQJNaLcl1U
+h9CH9Af/a7DbnGwYMp29eLd4J6U14L9PHlZEslj/46R5/OmCgxVycQejbXAZRHwg
+CLPcrsFx/1JnedK9CoxYw2Qo1WJvE5K0pxwnZ5zJLFfT4MZFofI468OHQcYqHAXX
+ZyJw5iZAqJ9ATGInZoCvaBL3Tde2uXqazxPAOZRull7BdSgmc5noRIOOdqV8a1mv
+n+tGJNiauaP7qAa7ZJtEdsJzPHjbNdtOWruKQxgPSE9KRLbq2fIQRG2ZtUo7fds7
++YzwfQtXOoX1XVD7aoqbWYyNAkl6taMDRzy7UhUbUiol7/knCoG4elvuMRRPAKrK
+V7mXpb9I4a9jtCf5FW4akaeiqqkOmg==
+=e3x+
+-----END PGP SIGNATURE-----
+
+--m2KU9Mr9JJKQaAoQ--
