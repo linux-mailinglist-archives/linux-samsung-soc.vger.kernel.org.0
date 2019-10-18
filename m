@@ -2,264 +2,229 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F2400DCD82
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 18 Oct 2019 20:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A132DD003
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 18 Oct 2019 22:25:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505700AbfJRSHF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 18 Oct 2019 14:07:05 -0400
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:44756 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2505686AbfJRSHF (ORCPT
+        id S2506004AbfJRUZk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 18 Oct 2019 16:25:40 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44903 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2443421AbfJRUYm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 18 Oct 2019 14:07:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=lCHGkcA5JrwM2qbr9v3SAkjr/Lxp8j5zYwsCVgBYT6Y=; b=J4DQxjy7heGY
-        BgCw33vUcNx/3/WUq51kk4/4QB2Didk6Q++bszeQRumcgExAlBIfprmhUTqXoROaLgyF7KT9GG9Ql
-        UwopbTO5fPe9hB6Dqh1L/GKHCZ6oKTr3VhQdQbQYD2YUA0Ulzn7IJ8/7N1o1gpIe9ou6r6oh1pYOW
-        5JwnY=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.co.uk>)
-        id 1iLWeQ-0004En-Oo; Fri, 18 Oct 2019 18:06:58 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
-        id 3C2B12743277; Fri, 18 Oct 2019 19:06:58 +0100 (BST)
-From:   Mark Brown <broonie@kernel.org>
-To:     Maciej Falkowski <m.falkowski@samsung.com>
-Cc:     alsa-devel@alsa-project.org,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: Applied "dt-bindings: sound: Convert Samsung Exynos Odroid XU3/XU4 audio complex to dt-schema" to the asoc tree
-In-Reply-To: <20191017100529.4183-1-m.szyprowski@samsung.com>
-X-Patchwork-Hint: ignore
-Message-Id: <20191018180658.3C2B12743277@ypsilon.sirena.org.uk>
-Date:   Fri, 18 Oct 2019 19:06:58 +0100 (BST)
+        Fri, 18 Oct 2019 16:24:42 -0400
+Received: by mail-wr1-f68.google.com with SMTP id z9so7511357wrl.11
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 18 Oct 2019 13:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Q3N53mDCanpE6hSqYL1L88s1DmfKhmQxLz1ea35m4aQ=;
+        b=s/fc2qWX6T0lJayNtn+zmecNHA/82EK25zpdHrN1e49nP8yBc5sNX+LY1dLaaTHUNK
+         FnwlHJrNuQl3YSNiQyDIp6M3chYY6rzQQnTSP3b5i+1S4h9ZKCwx5CFZT2zgXQ6tPQSh
+         WIr5Zy3hX+cPUly29nw+yFj2RCY7KINVmR7qeOdpRL+wUrdVtVgZ49KSzOJdhI9bpUlh
+         OoGPUpa7I4MmxrFWQwvqEuyfuXzkQn8qtsF+1z0E+OBOrZ+QY2CQsTazY/YnQkIagBt2
+         ribmoTOA8lGOrjY4wJ3mkLeG7iLR9FBH72L4Xa09IBS9RXK+hmNfgcsOxLGxzCN1fAPN
+         mP+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Q3N53mDCanpE6hSqYL1L88s1DmfKhmQxLz1ea35m4aQ=;
+        b=Ic/OKAtwvEwpV46DKS55LNfbVuMAChBuz9gJH9GN/O2cBaauLyCiqA+uAB/f6vFOXu
+         5lQZxpj+iwloaeWqRdSS4yRd7MwNqlvJ3HXLYw3Tyfn89QmBHV0zUCYmkznWuNasGe3r
+         btd9XJocpKz4A27KMpkLKqI3Nw0pBscBCBEHahbpeJmc4zWea7tyU8xj3U1gJIm4B+la
+         eULUREMIP2L1ttNHR/imSsQnmKuCGLFoO0PJQoiMHwMu1W/m/rs6d8HyUqKOnfgcBV5J
+         clY4dheAhTrSQtLUKPfIoo8PQf0Au1eiaRkrBZet0TeC5RLFQfc15tda1VaOuS+lQhXI
+         5zgA==
+X-Gm-Message-State: APjAAAVClkTYQQtQmXhhCGQW4OT282Uk8V3+UlQ7iB92DrSvyRCVJ9pN
+        WH2r3XThnN/a1ZF8h37Vf1pcWw==
+X-Google-Smtp-Source: APXvYqzv/DVg0a2CFaeUifEOK2ZcnM1XlXpgoZXWcgvj5iGr0hgqMguxCxwnIdQpDBZAfHAfHZkG4A==
+X-Received: by 2002:a5d:5704:: with SMTP id a4mr7899579wrv.281.1571430278743;
+        Fri, 18 Oct 2019 13:24:38 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:e437:dd4:938c:da11? ([2a01:e34:ed2f:f020:e437:dd4:938c:da11])
+        by smtp.googlemail.com with ESMTPSA id c6sm6116040wrm.71.2019.10.18.13.24.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Oct 2019 13:24:38 -0700 (PDT)
+Subject: Re: [PATCH 0/7] add support for clocksource/clockevent DT selection
+To:     Claudiu.Beznea@microchip.com, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux@armlinux.org.uk, nsekhar@ti.com,
+        bgolaszewski@baylibre.com, monstr@monstr.eu, john@phrozen.org,
+        ralf@linux-mips.org, paul.burton@mips.com, jhogan@kernel.org,
+        lftan@altera.com, tglx@linutronix.de, vgupta@synopsys.com,
+        marc.zyngier@arm.com, patrice.chotard@st.com,
+        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+        eric@anholt.net, wahrenst@gmx.net, f.fainelli@gmail.com,
+        rjui@broadcom.com, sbranden@broadcom.com,
+        bcm-kernel-feedback-list@broadcom.com, linus.walleij@linaro.org,
+        shc_work@mail.ru, kgene@kernel.org, krzk@kernel.org,
+        ysato@users.sourceforge.jp, liviu.dudau@arm.com,
+        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, baohua@kernel.org,
+        Nicolas.Ferre@microchip.com, alexandre.belloni@bootlin.com,
+        Ludovic.Desroches@microchip.com, baruch@tkos.co.il,
+        u.kleine-koenig@pengutronix.de, guoren@kernel.org,
+        kaloz@openwrt.org, khalasa@piap.pl, ssantosh@kernel.org,
+        vz@mleia.com, slemieux.tyco@gmail.com, khilman@baylibre.com,
+        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+        venture@google.com, yuenn@google.com, benjaminfair@google.com,
+        afaerber@suse.de, manivannan.sadhasivam@linaro.org,
+        narmstrong@baylibre.com, agross@kernel.org, palmer@sifive.com,
+        aou@eecs.berkeley.edu, heiko@sntech.de, orsonzhai@gmail.com,
+        baolin.wang@linaro.org, zhang.lyra@gmail.com,
+        maxime.ripard@bootlin.com, wens@csie.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, linux@prisktech.co.nz,
+        john.stultz@linaro.org, sboyd@kernel.org, matthias.bgg@gmail.com
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        nios2-dev@lists.rocketboards.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        uclinux-h8-devel@lists.sourceforge.jp,
+        linux-amlogic@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org, linux-riscv@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+References: <1568123236-767-1-git-send-email-claudiu.beznea@microchip.com>
+ <c3a68a08-d134-cd28-c8af-f757628e07f1@linaro.org>
+ <72edc5fd-df05-cba5-5aa7-39da1709415b@microchip.com>
+ <620a19d5-73b8-709d-9eec-49274ac23e51@microchip.com>
+ <187d7020-fbe9-7984-2358-8a70faef019f@microchip.com>
+ <14df6e5d-19ef-4ebc-fd11-9953bc3fc44e@linaro.org>
+ <7071b6fa-f7ed-c879-4a43-44100dbe6121@microchip.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <8e9f709f-2ded-c666-26e0-9235d6107c34@linaro.org>
+Date:   Fri, 18 Oct 2019 22:24:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <7071b6fa-f7ed-c879-4a43-44100dbe6121@microchip.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The patch
 
-   dt-bindings: sound: Convert Samsung Exynos Odroid XU3/XU4 audio complex to dt-schema
+Hi Claudiu,
 
-has been applied to the asoc tree at
+On 15/10/2019 11:23, Claudiu.Beznea@microchip.com wrote:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-5.5
+[ ... ]
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+> The timer clock source could be divided by MR.PRES + 1.
+> 
+> So, I used the clock-frequency DT binding to let user choose the timer's
+> frequency. Based on the value provided via this DT binding the best clock
+> source and prescaler is chosen via mchp_pit64b_pres_prepare() function.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+I'm willing to take the driver but I doubt the purpose of the
+clock-frequency is to let the user choose the frequency.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+[ ... ]
 
-Thanks,
-Mark
 
-From 9ac47908f35ba885eb3b4736c83185f63eef2ed2 Mon Sep 17 00:00:00 2001
-From: Maciej Falkowski <m.falkowski@samsung.com>
-Date: Thu, 17 Oct 2019 12:05:29 +0200
-Subject: [PATCH] dt-bindings: sound: Convert Samsung Exynos Odroid XU3/XU4
- audio complex to dt-schema
-
-Convert Samsung Exynos Odroid XU3/XU4 audio complex with MAX98090 codec
-to newer dt-schema format.
-
-'clocks' property is unneeded in the bindings and is left undefined in 'properties'.
-
-'samsung,audio-widgets' and 'samsung,audio-routing' are optional from driver
-perspective and they are set as unrequired.
-
-Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-[mszyprow: reordered non-standard properties]
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20191017100529.4183-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- .../bindings/sound/samsung,odroid.txt         | 54 -----------
- .../bindings/sound/samsung,odroid.yaml        | 91 +++++++++++++++++++
- 2 files changed, 91 insertions(+), 54 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/sound/samsung,odroid.txt
- create mode 100644 Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-
-diff --git a/Documentation/devicetree/bindings/sound/samsung,odroid.txt b/Documentation/devicetree/bindings/sound/samsung,odroid.txt
-deleted file mode 100644
-index e9da2200e173..000000000000
---- a/Documentation/devicetree/bindings/sound/samsung,odroid.txt
-+++ /dev/null
-@@ -1,54 +0,0 @@
--Samsung Exynos Odroid XU3/XU4 audio complex with MAX98090 codec
--
--Required properties:
--
-- - compatible - "hardkernel,odroid-xu3-audio" - for Odroid XU3 board,
--		"hardkernel,odroid-xu4-audio" - for Odroid XU4 board (deprecated),
--		"samsung,odroid-xu3-audio" - for Odroid XU3 board (deprecated),
--		"samsung,odroid-xu4-audio" - for Odroid XU4 board (deprecated)
-- - model - the user-visible name of this sound complex
-- - clocks - should contain entries matching clock names in the clock-names
--    property
-- - samsung,audio-widgets - this property specifies off-codec audio elements
--   like headphones or speakers, for details see widgets.txt
-- - samsung,audio-routing - a list of the connections between audio
--   components;  each entry is a pair of strings, the first being the
--   connection's sink, the second being the connection's source;
--   valid names for sources and sinks are the MAX98090's pins (as
--   documented in its binding), and the jacks on the board
--
--   For Odroid X2:
--     "Headphone Jack", "Mic Jack", "DMIC"
--
--   For Odroid U3, XU3:
--     "Headphone Jack", "Speakers"
--
--   For Odroid XU4:
--     no entries
--
--Required sub-nodes:
--
-- - 'cpu' subnode with a 'sound-dai' property containing the phandle of the I2S
--    controller
-- - 'codec' subnode with a 'sound-dai' property containing list of phandles
--    to the CODEC nodes, first entry must be corresponding to the MAX98090
--    CODEC and the second entry must be the phandle of the HDMI IP block node
--
--Example:
--
--sound {
--	compatible = "hardkernel,odroid-xu3-audio";
--	model = "Odroid-XU3";
--	samsung,audio-routing =
--		"Headphone Jack", "HPL",
--		"Headphone Jack", "HPR",
--		"IN1", "Mic Jack",
--		"Mic Jack", "MICBIAS";
--
--	cpu {
--		sound-dai = <&i2s0 0>;
--	};
--	codec {
--		sound-dai = <&hdmi>, <&max98090>;
--	};
--};
-diff --git a/Documentation/devicetree/bindings/sound/samsung,odroid.yaml b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-new file mode 100644
-index 000000000000..c6b244352d05
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-@@ -0,0 +1,91 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/samsung,odroid.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos Odroid XU3/XU4 audio complex with MAX98090 codec
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzk@kernel.org>
-+  - Sylwester Nawrocki <s.nawrocki@samsung.com>
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: hardkernel,odroid-xu3-audio
-+
-+      - const: hardkernel,odroid-xu4-audio
-+        deprecated: true
-+
-+      - const: samsung,odroid-xu3-audio
-+        deprecated: true
-+
-+      - const: samsung,odroid-xu4-audio
-+        deprecated: true
-+
-+  model:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: The user-visible name of this sound complex.
-+
-+  cpu:
-+    type: object
-+    properties:
-+      sound-dai:
-+        $ref: /schemas/types.yaml#/definitions/phandle-array
-+        description: phandles to the I2S controllers
-+
-+  codec:
-+    type: object
-+    properties:
-+      sound-dai:
-+        $ref: /schemas/types.yaml#/definitions/phandle-array
-+        description: |
-+          List of phandles to the CODEC nodes,
-+          first entry must be corresponding to the MAX98090 CODEC and
-+          the second entry must be the phandle of the HDMI IP block node.
-+
-+  samsung,audio-routing:
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+    description: |
-+      List of the connections between audio
-+      components;  each entry is a pair of strings, the first being the
-+      connection's sink, the second being the connection's source;
-+      valid names for sources and sinks are the MAX98090's pins (as
-+      documented in its binding), and the jacks on the board.
-+      For Odroid X2: "Headphone Jack", "Mic Jack", "DMIC"
-+      For Odroid U3, XU3: "Headphone Jack", "Speakers"
-+      For Odroid XU4: no entries
-+
-+  samsung,audio-widgets:
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+    description: |
-+      This property specifies off-codec audio elements
-+      like headphones or speakers, for details see widgets.txt
-+
-+required:
-+  - compatible
-+  - model
-+  - cpu
-+  - codec
-+
-+examples:
-+  - |
-+    sound {
-+        compatible = "hardkernel,odroid-xu3-audio";
-+        model = "Odroid-XU3";
-+        samsung,audio-routing =
-+                "Headphone Jack", "HPL",
-+                "Headphone Jack", "HPR",
-+                "IN1", "Mic Jack",
-+                "Mic Jack", "MICBIAS";
-+
-+        cpu {
-+            sound-dai = <&i2s0 0>;
-+        };
-+
-+        codec {
-+            sound-dai = <&hdmi>, <&max98090>;
-+        };
-+    };
-+
 -- 
-2.20.1
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
