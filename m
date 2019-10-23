@@ -2,118 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A98FE1DC6
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Oct 2019 16:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 539EFE1F7A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Oct 2019 17:38:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405700AbfJWOM3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 23 Oct 2019 10:12:29 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44482 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405316AbfJWOM3 (ORCPT
+        id S2406768AbfJWPig (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 23 Oct 2019 11:38:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36666 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406692AbfJWPif (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 23 Oct 2019 10:12:29 -0400
-Received: by mail-ed1-f66.google.com with SMTP id r16so15850605edq.11;
-        Wed, 23 Oct 2019 07:12:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rcTMyT1DxjA7fFrS2w24JzXu+0SnoZwJUx+ToqxoQbY=;
-        b=FnUPTeClwtKNqLjQPMFpQm0p4bhUkbflqUYO7UEG+hyFyZVhjZiTsf4NoFA9XYyTe+
-         V/dhZuVxT3Og3mA0VGA6bPYauFduz338RgypJymPhfRg51npRHOlTYhy+YNyDVFa71CQ
-         pDXm3uKCqadjRMENRqPDgHPQbW0WnDZ8HxH+OSIvm669GTsR1Py5j/6hN8iftKbNYuQj
-         Cdn3tnGQqeWvA6whCrU2M3gSRLIWrkkfFeNtMOXiKvzwQZKZhIuXzpCaVXfxsKLS8y3h
-         ewjtgPv+7Qn9QzeZrh97+/bVEZ/VUGo75ZCNX68eHbcP8LS7UhxRs/H/LCm53dl331Ai
-         uqCg==
-X-Gm-Message-State: APjAAAXsFKwQJnoIOXwHhJO0UHlYmbfpppfA6Q8hEGWo6tnmE51WHufL
-        QdETKQ90T0PcgEi0bINFee0=
-X-Google-Smtp-Source: APXvYqxkd9DwWDZi/qHKDFHlMK0H8AlyVBKbEwPxz7lMmEqyzeKCvZ18JbP/k1gOjozG9nkYwgwxAA==
-X-Received: by 2002:a50:ee8d:: with SMTP id f13mr25391791edr.285.1571839945480;
-        Wed, 23 Oct 2019 07:12:25 -0700 (PDT)
-Received: from pi3 ([194.230.155.217])
-        by smtp.googlemail.com with ESMTPSA id p9sm60974edx.4.2019.10.23.07.12.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2019 07:12:24 -0700 (PDT)
-Date:   Wed, 23 Oct 2019 16:12:21 +0200
+        Wed, 23 Oct 2019 11:38:35 -0400
+Received: from localhost.localdomain (unknown [194.230.155.217])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 58C302064A;
+        Wed, 23 Oct 2019 15:38:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571845115;
+        bh=eE8y1vH8jBO0acryf9BCwImwIuhGJ07TIWhlosnHoNA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gu6Ab9QAgNfM7NGUJR3zkec5u+/CuBA16gfkL/0IFK2M8wzH4uDyT/qkxGVnmgoSO
+         QFQW79CTNSghX8IzQpE927M+HA3Ir9B1LwqlFj18bzKf6MouKcw0GZ8VWmBjkz/agk
+         2Xk2jUDyZRjUxTGfmT7NQTGHvpiBetl6kAXZnSVE=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Kukjin Kim <kgene@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Sangbeom Kim <sbkim73@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, Olof Johansson <olof@lixom.net>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        =?utf-8?B?Q2zDqW1lbnQgUMOpcm9u?= <peron.clem@gmail.com>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Faiz Abbas <faiz_abbas@ti.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Linux PWM List <linux-pwm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        linux-serial@vger.kernel.org,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>
-Subject: Re: [PATCH 11/36] ARM: s5pv210: split from plat-samsung
-Message-ID: <20191023141221.GA11575@pi3>
-References: <20191010202802.1132272-1-arnd@arndb.de>
- <20191010203043.1241612-1-arnd@arndb.de>
- <20191010203043.1241612-11-arnd@arndb.de>
- <20191023121458.GB11048@pi3>
- <CAK8P3a3ktdA12vpi6zrTXs7-03efk2Ke_0_mQ9X40MLNcZnEqA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAK8P3a3ktdA12vpi6zrTXs7-03efk2Ke_0_mQ9X40MLNcZnEqA@mail.gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+To:     Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 1/2] ARM: s3c: Rename s3c64xx_spi_setname() function
+Date:   Wed, 23 Oct 2019 17:38:23 +0200
+Message-Id: <20191023153824.6085-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 03:17:35PM +0200, Arnd Bergmann wrote:
-> On Wed, Oct 23, 2019 at 2:15 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > On Thu, Oct 10, 2019 at 10:29:55PM +0200, Arnd Bergmann wrote:
-> > > These can be build completely independently, so split
-> > > the two Kconfig symbols.
-> > >       config DEBUG_S3C_UART0
-> > > -             depends on PLAT_SAMSUNG || ARCH_EXYNOS
-> > > +             depends on PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS
-> >
-> > How are you going to select DEBUG_S5PV210_UART now?
-> 
-> I don't see a problem here, the patch should not change the behavior at all.
-> 
-> The whole entry now looks like:
-> 
->         config DEBUG_S3C_UART0
->                 depends on PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS
->                 select DEBUG_EXYNOS_UART if ARCH_EXYNOS
->                 select DEBUG_S3C24XX_UART if ARCH_S3C24XX
->                 select DEBUG_S3C64XX_UART if ARCH_S3C64XX
->                 select DEBUG_S5PV210_UART if ARCH_S5PV210
->                 bool "Use Samsung S3C UART 0 for low-level debug"
-> 
-> so this will work as before with any of ARCH_EXYNOS, ARCH_S3C24XX,
-> ARCH_S3C64XX and ARCH_S5PV210.
-> 
-> What am I missing?
+The name s3c64xx_spi_setname() suggests it is shared with S3C64xx
+platform, but except of contents it is not.  It is called only by
+S3C24xx code, so make it clear in the name.
 
-Ah, everything is OK, I mixed up removed with added line so it looked
-reversed (removal of ARCH_S5PV210).
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm/mach-s3c24xx/s3c2416.c  | 2 +-
+ arch/arm/mach-s3c24xx/s3c2443.c  | 2 +-
+ arch/arm/mach-s3c24xx/spi-core.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Looks good.
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm/mach-s3c24xx/s3c2416.c b/arch/arm/mach-s3c24xx/s3c2416.c
+index 1cdb7bd3e713..9514196cad8c 100644
+--- a/arch/arm/mach-s3c24xx/s3c2416.c
++++ b/arch/arm/mach-s3c24xx/s3c2416.c
+@@ -113,7 +113,7 @@ void __init s3c2416_map_io(void)
+ 	/* initialize device information early */
+ 	s3c2416_default_sdhci0();
+ 	s3c2416_default_sdhci1();
+-	s3c64xx_spi_setname("s3c2443-spi");
++	s3c24xx_spi_setname("s3c2443-spi");
+ 
+ 	iotable_init(s3c2416_iodesc, ARRAY_SIZE(s3c2416_iodesc));
+ }
+diff --git a/arch/arm/mach-s3c24xx/s3c2443.c b/arch/arm/mach-s3c24xx/s3c2443.c
+index 313e369c3ddd..4cbeb74cf3d6 100644
+--- a/arch/arm/mach-s3c24xx/s3c2443.c
++++ b/arch/arm/mach-s3c24xx/s3c2443.c
+@@ -91,7 +91,7 @@ void __init s3c2443_map_io(void)
+ 	s3c24xx_gpiocfg_default.get_pull = s3c2443_gpio_getpull;
+ 
+ 	/* initialize device information early */
+-	s3c64xx_spi_setname("s3c2443-spi");
++	s3c24xx_spi_setname("s3c2443-spi");
+ 
+ 	iotable_init(s3c2443_iodesc, ARRAY_SIZE(s3c2443_iodesc));
+ }
+diff --git a/arch/arm/mach-s3c24xx/spi-core.h b/arch/arm/mach-s3c24xx/spi-core.h
+index bb555ccbe057..1048fac629a2 100644
+--- a/arch/arm/mach-s3c24xx/spi-core.h
++++ b/arch/arm/mach-s3c24xx/spi-core.h
+@@ -11,7 +11,7 @@
+  */
+ 
+ /* re-define device name depending on support. */
+-static inline void s3c64xx_spi_setname(char *name)
++static inline void s3c24xx_spi_setname(char *name)
+ {
+ #ifdef CONFIG_S3C64XX_DEV_SPI0
+ 	s3c64xx_device_spi0.name = name;
+-- 
+2.17.1
 
