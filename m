@@ -2,220 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A8548EA2A4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 30 Oct 2019 18:32:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E159EA2F8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 30 Oct 2019 19:06:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727310AbfJ3Rcc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 30 Oct 2019 13:32:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35528 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727093AbfJ3Rcb (ORCPT
+        id S1727763AbfJ3SGF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 30 Oct 2019 14:06:05 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44395 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727762AbfJ3SGE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 30 Oct 2019 13:32:31 -0400
-Received: from localhost.localdomain (unknown [194.230.155.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BC06D208C0;
-        Wed, 30 Oct 2019 17:32:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572456750;
-        bh=7YttjPf25uaH/HJ9LjN93gAC67M6cLBWLgKLTrTSIEI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jdyAXwcuImbI5Dnlq9yhye6rNZ1vtiYHuRiN2L8gbUdOGL5amFQAfRXBN/oNUIDXQ
-         Rr0GeyLu7xuKScUnY6gDOVragLGpAe8+i4iaUEgigkqGy5LKaadTlTVr65c6J3b4FR
-         waArH0hxloCLG3ahcBQ+cvtPM2pe2sJdvzWb5/4M=
+        Wed, 30 Oct 2019 14:06:04 -0400
+Received: by mail-ed1-f68.google.com with SMTP id b18so2505459edr.11;
+        Wed, 30 Oct 2019 11:06:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FrSVqR4rubXbOdoO4xIlrJ/g2AylU6DO+rRGS6ug+TM=;
+        b=uVssUMm6cjQdfCDkO8kwHYzIulhlCr5/nE+SqtXo0+491WDXG7QWahSPeru0ZFYibn
+         leaeEqPllET5IXOrX4qF6Skb+8y1383gTzhgM5hVDvNNiuS9QUNPygPkJ9O9n9XFosCB
+         t+064iV3AKOecHEQxo0lCsGy+Q/rX4oq83ZEMGu7xVqJWX/56DH16NdLtW6QMgP7NhaG
+         74a5oG4XF2fx3XwBYWxnejHJ5mfEeI2USU+utgsQq/fiZfpH2LEY0Gqttw508k1Kft6U
+         uwYojeyMFqv+WxjK6+JSCSapwJUwX88ydsGPBd5F9aXWBefdXvvbR8KZEid32+reyFKn
+         gbCg==
+X-Gm-Message-State: APjAAAU7NLQ/9XMwvQlISZmY5zwAlw6oVhpL/Cv1wY0Xn1hpMpSSC8ki
+        VurfnIUFAYuWU6jXm+qZH6s=
+X-Google-Smtp-Source: APXvYqzu4HoYoArCMfuZiHHYx5XLueApspB4kJAI+3/Kg9OneW/pR4iKPXYNA//dTC9X/UDqISTrsw==
+X-Received: by 2002:a17:906:c793:: with SMTP id cw19mr886699ejb.25.1572458762736;
+        Wed, 30 Oct 2019 11:06:02 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.180])
+        by smtp.googlemail.com with ESMTPSA id d26sm17952edu.37.2019.10.30.11.06.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 Oct 2019 11:06:01 -0700 (PDT)
+Date:   Wed, 30 Oct 2019 19:05:59 +0100
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH v3 2/2] dt-bindings: power: Convert Samsung Exynos Power Domain bindings to json-schema
-Date:   Wed, 30 Oct 2019 18:32:16 +0100
-Message-Id: <20191030173216.5993-2-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191030173216.5993-1-krzk@kernel.org>
-References: <20191030173216.5993-1-krzk@kernel.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Kukjin Kim <kgene@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] soc: samsung: exynos-asv: Potential NULL dereference in
+ exynos_asv_update_opps()
+Message-ID: <20191030180559.GA8016@kozik-lap>
+References: <20191029182742.GC17569@mwanda>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191029182742.GC17569@mwanda>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert Samsung Exynos Soc Power Domain bindings to DT schema format using
-json-schema.
+On Tue, Oct 29, 2019 at 09:27:42PM +0300, Dan Carpenter wrote:
+> The dev_pm_opp_get_opp_table() returns error pointers if it's disabled
+> in the config and it returns NULL if there is an error.  This code only
+> checks for error pointers so it could lead to an Oops inside the
+> dev_pm_opp_put_opp_table() function.
+> 
+> Fixes: 5ea428595cc5 ("soc: samsung: Add Exynos Adaptive Supply Voltage driver")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> ---
+> When we add a new driver, could we specify the which prefix will be used
+> going forward?  In other words commit 5ea428595cc5 could have the
+> prefix "soc: samsung: exynos-asv: Add Exynos Adaptive Supply Voltage
+> driver".  The "exynos-asv" bit was missing so the first person to send a
+> fix has to guess what is desired.
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Indeed, I usually do not add it on first commit to avoid duplication
+(prefix and later explanation) but I see that it would be helpful.
 
----
 
-Changes since v2:
-1. Use new name of file in samsung,sysmmu.yaml and MAINTAINERS.
+Thanks, applied.
 
-Changes since v1:
-1. Indent example with four spaces (more readable),
-2. Remove unneeded types,
-3. Add missing address in example and fix the name.
----
- .../bindings/iommu/samsung,sysmmu.yaml        |  2 +-
- .../devicetree/bindings/power/pd-samsung.txt  | 45 -------------
- .../devicetree/bindings/power/pd-samsung.yaml | 66 +++++++++++++++++++
- MAINTAINERS                                   |  2 +-
- 4 files changed, 68 insertions(+), 47 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/power/pd-samsung.txt
- create mode 100644 Documentation/devicetree/bindings/power/pd-samsung.yaml
-
-diff --git a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-index ecde98da5b72..7cdd3aaa2ba4 100644
---- a/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/samsung,sysmmu.yaml
-@@ -69,7 +69,7 @@ properties:
-     description: |
-       Required if the System MMU is needed to gate its power.
-       Please refer to the following document:
--      Documentation/devicetree/bindings/power/pd-samsung.txt
-+      Documentation/devicetree/bindings/power/pd-samsung.yaml
-     maxItems: 1
- 
- required:
-diff --git a/Documentation/devicetree/bindings/power/pd-samsung.txt b/Documentation/devicetree/bindings/power/pd-samsung.txt
-deleted file mode 100644
-index 92ef355e8f64..000000000000
---- a/Documentation/devicetree/bindings/power/pd-samsung.txt
-+++ /dev/null
-@@ -1,45 +0,0 @@
--* Samsung Exynos Power Domains
--
--Exynos processors include support for multiple power domains which are used
--to gate power to one or more peripherals on the processor.
--
--Required Properties:
--- compatible: should be one of the following.
--    * samsung,exynos4210-pd - for exynos4210 type power domain.
--    * samsung,exynos5433-pd - for exynos5433 type power domain.
--- reg: physical base address of the controller and length of memory mapped
--    region.
--- #power-domain-cells: number of cells in power domain specifier;
--    must be 0.
--
--Optional Properties:
--- label: Human readable string with domain name. Will be visible in userspace
--	to let user to distinguish between multiple domains in SoC.
--- power-domains: phandle pointing to the parent power domain, for more details
--		 see Documentation/devicetree/bindings/power/power_domain.txt
--
--Deprecated Properties:
--- clocks
--- clock-names
--
--Node of a device using power domains must have a power-domains property
--defined with a phandle to respective power domain.
--
--Example:
--
--	lcd0: power-domain-lcd0 {
--		compatible = "samsung,exynos4210-pd";
--		reg = <0x10023C00 0x10>;
--		#power-domain-cells = <0>;
--		label = "LCD0";
--	};
--
--	mfc_pd: power-domain@10044060 {
--		compatible = "samsung,exynos4210-pd";
--		reg = <0x10044060 0x20>;
--		#power-domain-cells = <0>;
--		label = "MFC";
--	};
--
--See Documentation/devicetree/bindings/power/power_domain.txt for description
--of consumer-side bindings.
-diff --git a/Documentation/devicetree/bindings/power/pd-samsung.yaml b/Documentation/devicetree/bindings/power/pd-samsung.yaml
-new file mode 100644
-index 000000000000..09bdd96c1ec1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/pd-samsung.yaml
-@@ -0,0 +1,66 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/pd-samsung.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos SoC Power Domains
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzk@kernel.org>
-+
-+description: |+
-+  Exynos processors include support for multiple power domains which are used
-+  to gate power to one or more peripherals on the processor.
-+
-+allOf:
-+  - $ref: power-domain.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - samsung,exynos4210-pd
-+      - samsung,exynos5433-pd
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    deprecated: true
-+    maxItems: 1
-+
-+  clock-names:
-+    deprecated: true
-+    maxItems: 1
-+
-+  label:
-+    description:
-+      Human readable string with domain name. Will be visible in userspace
-+      to let user to distinguish between multiple domains in SoC.
-+
-+  "#power-domain-cells":
-+    const: 0
-+
-+  power-domains:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - "#power-domain-cells"
-+  - reg
-+
-+examples:
-+  - |
-+    lcd0_pd: power-domain@10023c80 {
-+        compatible = "samsung,exynos4210-pd";
-+        reg = <0x10023c80 0x20>;
-+        #power-domain-cells = <0>;
-+        label = "LCD0";
-+    };
-+
-+    mfc_pd: power-domain@10044060 {
-+        compatible = "samsung,exynos4210-pd";
-+        reg = <0x10044060 0x20>;
-+        #power-domain-cells = <0>;
-+        label = "MFC";
-+    };
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8fde5aa64bda..7126d3e079a4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2258,7 +2258,7 @@ F:	drivers/soc/samsung/
- F:	include/linux/soc/samsung/
- F:	Documentation/arm/samsung/
- F:	Documentation/devicetree/bindings/arm/samsung/
--F:	Documentation/devicetree/bindings/power/pd-samsung.txt
-+F:	Documentation/devicetree/bindings/power/pd-samsung.yaml
- N:	exynos
- 
- ARM/SAMSUNG MOBILE MACHINE SUPPORT
--- 
-2.17.1
-
+Best regards,
+Krzysztof
