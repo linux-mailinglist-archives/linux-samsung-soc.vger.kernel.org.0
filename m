@@ -2,75 +2,223 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18865EC62A
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  1 Nov 2019 16:56:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4BFDED3BE
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Nov 2019 16:56:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729332AbfKAP4Q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 1 Nov 2019 11:56:16 -0400
-Received: from mail-il1-f195.google.com ([209.85.166.195]:36361 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729302AbfKAP4K (ORCPT
+        id S1727717AbfKCP4b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 3 Nov 2019 10:56:31 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:39561 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727523AbfKCP4b (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 1 Nov 2019 11:56:10 -0400
-Received: by mail-il1-f195.google.com with SMTP id s75so9079103ilc.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 01 Nov 2019 08:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
-        b=jkikiuxKNQxBjumG32R/xAOzBpTQzIQOGlQ9PlZMzROUxuROhIRW7LOTcmmKqgHbY3
-         GOAi1JnMWEnE/cHrGKrepuphWKFno/pbedjX9XbUWfuIb71+aWSjlL5ZBdl2tkqhPPKE
-         upGJ5iT/1C19qe7FISRldhXG8lpP7RchXgCPpOby1LewLJ9oB1SrBH33yMLjEi7ivjNF
-         o703S5ww1Ql1WeM1aVK41ldtWwBkirNy1eGYI9RnsPVvXaYfqhEH77U0dn8RQUxe2Nnp
-         f+7QOSjXXt7VdhDDkepSvRzDGCUBO3iHq8K6k3uKK4gkq+wr+4nHyD89dMwGRy4pl6Pa
-         lYoA==
+        Sun, 3 Nov 2019 10:56:31 -0500
+Received: by mail-ed1-f65.google.com with SMTP id l25so11261569edt.6;
+        Sun, 03 Nov 2019 07:56:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
-        b=QvCIvLp4Ss+WXIgPD9CFi/GVAK1cLfYH/sUspMjc9G04sm/PJEmVbxS3OoH1j6VwK9
-         2CTuIaVDn61nSF3kNmyNVTXPZ5WUjc5gUab3NDlMB7qypMApTUx2HB6sHm55QaW8XE6V
-         A/sE3jsbEyPWFOm9dpli4ZSXLI3ArLCxf0MGzLHvfk/QjYXpRCGqnJhA4rrmmPEZSKqX
-         /UvM6EU+D+ZHnkNEW1Vp5gm5E81w1WDg3c1eDFQ4f3SX43pMECSuM9XKf1w9LxwayeJ/
-         SLkAATVXWS7WSz4IuiNHTGaDyWpBYu20uzhG6hu4P6moOyEZ9zi8wACQtstsOtROSV3/
-         bbrg==
-X-Gm-Message-State: APjAAAV390AeAIc+GCgywgVYi86tKe4fN3yGjGAh2Y+0ibKui4Fw+mBj
-        SXW0XJsYqA/fncdS3UGNuy+M13bKrY63Ik7evw==
-X-Google-Smtp-Source: APXvYqykJV+0/JwFtVH+nsMp7ykNvWlhcV0rRy9Az9oSoBx/tmbFcQXrrs+n9sPNEOpMU4VQknLk5nY+7hLQNduMfzM=
-X-Received: by 2002:a92:9ac2:: with SMTP id c63mr13404416ill.8.1572623769676;
- Fri, 01 Nov 2019 08:56:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=n9GGwjavjQQOgINeeqgNFn5O1QAWzrjwrcfoPvqx32k=;
+        b=Q5fPyCCBlp95NpOkcDqzhA1nQfsHW8XOTYs6V7NlryxE5DTIptGRy/R72Z812n77pB
+         U7PZxEQEdpRzldeaBpotxrAm4sl43cTGRvtrFgo1MPglEc/PeeNoL2/dAXzS7eEaevh+
+         B8hGkYL9ms0a8UqtzMaBCm4ybN/JxlneJjlgppxx2nbv+LuTlPnFYsVeyWXGMhXkcEjk
+         f2Qpm0vy4eBm3e1C9/dIGBsMeUe9dETFEKeVU7KD8ivy7kHYxrgdUgxqhfTDqzNHU6mJ
+         r9XRrbx24W2OsxU0W14K3/eOp7rg0p26blIUpQs6VbaF5nsee5Y7HZz0sGx35kXRuNwM
+         yyDw==
+X-Gm-Message-State: APjAAAVdsNOqx5M30W4e6MLhCOSllHPT2A4pG2b6cQvRFYmMhfRx0ixI
+        YVNueAbJIQTDB6T04pXP2L4=
+X-Google-Smtp-Source: APXvYqxNP7szQhet9sXBcDrshchvID9xPkCKOWKeMWmkHoP70A6OrX+tlJ1vbiRwjVFkcS0n8I+n3g==
+X-Received: by 2002:a50:cc43:: with SMTP id n3mr24819628edi.287.1572796586774;
+        Sun, 03 Nov 2019 07:56:26 -0800 (PST)
+Received: from kozik-lap ([194.230.155.180])
+        by smtp.googlemail.com with ESMTPSA id s8sm759641edj.6.2019.11.03.07.56.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Nov 2019 07:56:26 -0800 (PST)
+Date:   Sun, 3 Nov 2019 16:56:23 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Kukjin Kim <kgene@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lee Jones <lee.jones@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Maciej Falkowski <m.falkowski@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-serial@vger.kernel.org
+Subject: Re: [PATCH 3/3] dt-bindings: serial: Convert Samsung UART bindings
+ to json-schema
+Message-ID: <20191103155623.GA6960@kozik-lap>
+References: <20191004151414.8458-1-krzk@kernel.org>
+ <20191004151414.8458-3-krzk@kernel.org>
+ <20191015194006.GA3540@bogus>
 MIME-Version: 1.0
-Received: by 2002:a02:7749:0:0:0:0:0 with HTTP; Fri, 1 Nov 2019 08:56:08 -0700 (PDT)
-Reply-To: moneygram.1820@outlook.fr
-From:   "Mary Coster, I.M.F director-Benin" 
-        <info.zennitbankplcnigerian@gmail.com>
-Date:   Fri, 1 Nov 2019 16:56:08 +0100
-Message-ID: <CABHzvrmbRd3tt-E2+9AO2XvrMQFKQcn+kao_7DN4rb=grxZAcA@mail.gmail.com>
-Subject: Contact Money Gram international service-Benin to receive your
- payment funds US$2.500,000 Million
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191015194006.GA3540@bogus>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Attn Dear,Funds Beneficiary.
-Contact Money Gram international service-Benin to receive your payment
-funds US$2.500,000 Million approved this morning through the UN
-payment settlement organization.
-Contact Person, Mr. John Dave.
-Official Director.Money Gram-Benin
-Email: moneygram.1820@outlook.fr
-Telephone +229 62619517
-Once you get intouch with Mr. John Dave, Money Gram Director, send to
-him your address including your phone numbers. He will be sending the
-transfer to you  $5000.00 USD daily until you received your complete
-payment $2.5m from the office.
-Note,I have paid the whole service fees for you but only small money
-you been required to send to this office is $23.00 only via Money Gram
-transfer.
-God bless
-Mary Coster, I.M.F director-Benin
-m.coster@aol.com
+On Tue, Oct 15, 2019 at 02:40:06PM -0500, Rob Herring wrote:
+> On Fri, Oct 04, 2019 at 05:14:14PM +0200, Krzysztof Kozlowski wrote:
+> > Convert Samsung S3C/S5P/Exynos Serial/UART bindings to DT schema format
+> > using json-schema.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > ---
+> >  .../bindings/mfd/samsung,exynos5433-lpass.txt |   2 +-
+> >  .../bindings/serial/samsung_uart.txt          |  58 -------
+> >  .../bindings/serial/samsung_uart.yaml         | 148 ++++++++++++++++++
+> >  3 files changed, 149 insertions(+), 59 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/serial/samsung_uart.txt
+> >  create mode 100644 Documentation/devicetree/bindings/serial/samsung_uart.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
+> > index d759da606f75..30ea27c3936d 100644
+> > --- a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
+> > +++ b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.txt
+> > @@ -18,7 +18,7 @@ an optional sub-node. For "samsung,exynos5433-lpass" compatible this includes:
+> >  UART, SLIMBUS, PCM, I2S, DMAC, Timers 0...4, VIC, WDT 0...1 devices.
+> >  
+> >  Bindings of the sub-nodes are described in:
+> > -  ../serial/samsung_uart.txt
+> > +  ../serial/samsung_uart.yaml
+> >    ../sound/samsung-i2s.txt
+> >    ../dma/arm-pl330.txt
+> >  
+> > diff --git a/Documentation/devicetree/bindings/serial/samsung_uart.txt b/Documentation/devicetree/bindings/serial/samsung_uart.txt
+> > deleted file mode 100644
+> > index e85f37ec33f0..000000000000
+> > --- a/Documentation/devicetree/bindings/serial/samsung_uart.txt
+> > +++ /dev/null
+> > @@ -1,58 +0,0 @@
+> > -* Samsung's UART Controller
+> > -
+> > -The Samsung's UART controller is used for interfacing SoC with serial
+> > -communicaion devices.
+> > -
+> > -Required properties:
+> > -- compatible: should be one of following:
+> > -  - "samsung,exynos4210-uart" -  Exynos4210 SoC,
+> > -  - "samsung,s3c2410-uart" - compatible with ports present on S3C2410 SoC,
+> > -  - "samsung,s3c2412-uart" - compatible with ports present on S3C2412 SoC,
+> > -  - "samsung,s3c2440-uart" - compatible with ports present on S3C2440 SoC,
+> > -  - "samsung,s3c6400-uart" - compatible with ports present on S3C6400 SoC,
+> > -  - "samsung,s5pv210-uart" - compatible with ports present on S5PV210 SoC.
+> > -
+> > -- reg: base physical address of the controller and length of memory mapped
+> > -  region.
+> > -
+> > -- interrupts: a single interrupt signal to SoC interrupt controller,
+> > -  according to interrupt bindings documentation [1].
+> > -
+> > -- clock-names: input names of clocks used by the controller:
+> > -  - "uart" - controller bus clock,
+> > -  - "clk_uart_baudN" - Nth baud base clock input (N = 0, 1, ...),
+> > -    according to SoC User's Manual (only N = 0 is allowedfor SoCs without
+> > -    internal baud clock mux).
+> > -- clocks: phandles and specifiers for all clocks specified in "clock-names"
+> > -  property, in the same order, according to clock bindings documentation [2].
+> > -
+> > -[1] Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
+> > -[2] Documentation/devicetree/bindings/clock/clock-bindings.txt
+> > -
+> > -Optional properties:
+> > -- samsung,uart-fifosize: The fifo size supported by the UART channel
+> > -
+> > -Note: Each Samsung UART should have an alias correctly numbered in the
+> > -"aliases" node, according to serialN format, where N is the port number
+> > -(non-negative decimal integer) as specified by User's Manual of respective
+> > -SoC.
+> > -
+> > -Example:
+> > -	aliases {
+> > -		serial0 = &uart0;
+> > -		serial1 = &uart1;
+> > -		serial2 = &uart2;
+> > -	};
+> > -
+> > -Example:
+> > -	uart1: serial@7f005400 {
+> > -		compatible = "samsung,s3c6400-uart";
+> > -		reg = <0x7f005400 0x100>;
+> > -		interrupt-parent = <&vic1>;
+> > -		interrupts = <6>;
+> > -		clock-names = "uart", "clk_uart_baud2",
+> > -				"clk_uart_baud3";
+> > -		clocks = <&clocks PCLK_UART1>, <&clocks PCLK_UART1>,
+> > -				<&clocks SCLK_UART>;
+> > -		samsung,uart-fifosize = <16>;
+> > -	};
+> > diff --git a/Documentation/devicetree/bindings/serial/samsung_uart.yaml b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
+> > new file mode 100644
+> > index 000000000000..276bea1c231a
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/serial/samsung_uart.yaml
+> > @@ -0,0 +1,148 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/serial/samsung_uart.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Samsung S3C, S5P and Exynos SoC UART Controller
+> > +
+> > +maintainers:
+> > +  - Krzysztof Kozlowski <krzk@kernel.org>
+> > +  - Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > +
+> > +description: |+
+> > +  Each Samsung UART should have an alias correctly numbered in the "aliases"
+> > +  node, according to serialN format, where N is the port number (non-negative
+> > +  decimal integer) as specified by User's Manual of respective SoC.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - enum:
+> > +          - samsung,s3c2410-uart
+> > +          - samsung,s3c2412-uart
+> > +          - samsung,s3c2440-uart
+> > +          - samsung,s3c6400-uart
+> > +          - samsung,s5pv210-uart
+> > +          - samsung,exynos4210-uart
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    minItems: 2
+> > +    maxItems: 5
+> > +
+> > +  clock-names:
+> > +    description: |
+> > +      List of clock names:
+> > +        - "uart" - controller bus clock,
+> > +        - "clk_uart_baudN" - Nth baud base clock input (N = 0, 1, ...).
+> 
+> Kind of redundant to list this here.
+> 
+> > +      N = 0 is allowed for SoCs without internal baud clock mux.
+> 
+> You can add a description with the item:
+> 
+> items:
+>   - pattern: '^clk_uart_baud[0-3]$'
+>     description: N = 0 is allowed for SoCs without internal baud clock mux.
+> 
+
+This caused error:
+properties:clock-names:items:1: Additional properties are not allowed ('description' was unexpected)
+../Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/serial/samsung_uart.example.dts' failed
+
+I applied rest of comments. Thanks for review!
+
+Best regards,
+Krzysztof
+
