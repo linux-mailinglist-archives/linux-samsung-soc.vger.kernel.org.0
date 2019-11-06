@@ -2,71 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 57F1EF1EC8
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Nov 2019 20:30:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E429F21ED
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Nov 2019 23:40:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728627AbfKFTa3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 6 Nov 2019 14:30:29 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59354 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726713AbfKFTa3 (ORCPT
+        id S1727295AbfKFWkU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 6 Nov 2019 17:40:20 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:33377 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbfKFWkU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 6 Nov 2019 14:30:29 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 503C92178F;
-        Wed,  6 Nov 2019 19:30:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573068628;
-        bh=k1Pgbj2+aYX796HDlV1Ckua3uDnAGzU9BajlcJ7cxs4=;
-        h=In-Reply-To:References:Subject:From:To:Cc:Date:From;
-        b=NLPMUUonM96fvY57QNjx1nDH2DwgCE06qEKhOnOKD7E+x8UJREHctwdmW04d6AzFD
-         gj4XoYhN0JRc/n0WzeQMcW2aOOG0dD2JfSAtW1QXvRp7+ff8IlD9nWiFCOMdH8J8dp
-         rsGw122KBNKAudMnVjpMZeVD495NIfmVTbLKwTj0=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <af9676da-d448-50e8-d181-680aba7078db@samsung.com>
-References: <7647a10d-8e37-f086-a014-77f8ddcdd006@samsung.com> <CGME20191031150334eucas1p1c72857d23468cd693fee18ff1175b897@eucas1p1.samsung.com> <af9676da-d448-50e8-d181-680aba7078db@samsung.com>
-Subject: Re: [GIT PULL] clk/samsung updates for v5.5
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     linux-clk <linux-clk@vger.kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-User-Agent: alot/0.8.1
-Date:   Wed, 06 Nov 2019 11:30:27 -0800
-Message-Id: <20191106193028.503C92178F@mail.kernel.org>
+        Wed, 6 Nov 2019 17:40:20 -0500
+Received: by mail-pf1-f196.google.com with SMTP id c184so255405pfb.0;
+        Wed, 06 Nov 2019 14:40:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=G+wFREXzWnU4DvNTPp24jRK6gxHaykXaWaMf/sx6ATg=;
+        b=lktGWLr3/bgx3/ucB1j1LiAdjYxPUv/VzQAxdgfeHQb4IreqFBsad+ABk5LnWp4VXN
+         ttc8B0sCWR9Tq6/LAX6Yn0gAa7L65tRj/gmKJ9zUIL0NKQUkxTvG4bp0Qebbfy66Y7bq
+         vi7UAHgEEPOAraCB0IiaShYNCUimetDf6pirOFAiteCULQyL45HCKkN8turz6u7Nhr0O
+         7UN2l2E1izSVZdI8eeq7HuujZr48EwEkvt+F7lW8Iwb6j8Dily2nOEFPcsRNZ19Xji28
+         2dJ9tmA18ToYOSAuVgtV7aQ2FnO0HDU1YkQpJ3GiWjcufjmcCCE5zCcPbeVJ0/mc5e1i
+         X4GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=G+wFREXzWnU4DvNTPp24jRK6gxHaykXaWaMf/sx6ATg=;
+        b=Y6/XxNbokdhXLNjn4IN0ob2oPfQISynM9UqH6a0+qW+oMZckhmN/PMQEHd9xFFGO41
+         hc6KoJVd9B22B5tNr7EOU+90WtTFMD9KwmPO4W5lHVeKZeJOfvTy0/cHLvVk5JCmWoin
+         g5jbugCwFOgAKfpXwvLJ2RNQyt/Z9OPTu8lsfKNF6XrHqNvF6vTu1CCBErSGuUunuByG
+         kQ6R+yi/M6jNKw4LE2vZycUNAZAkoisyuc5zn5LC33MmjtEOxlKEGekooqdbLIo0hXM6
+         DYIoaiDzuOBRLEAX1yuZwglyvcCwPduf8BWJGuh8/mH9VcYDeOj4e4ncSuMGV72h5T+p
+         /glQ==
+X-Gm-Message-State: APjAAAVQeATF0jkYvZcQtLOb1IDN+kXCrMn30CLPJisXrT0+fyFBR2XC
+        6GWiceGB+tpDa6qWmsirEXPftoveh4s=
+X-Google-Smtp-Source: APXvYqxvCPKVks8a1VhUTjXjnqv1qXKWQbwY0UcGGC+kQVTDOwaguh/Hl96NDqbeuoc4aVExN+jJ/Q==
+X-Received: by 2002:a63:934d:: with SMTP id w13mr283470pgm.185.1573080019554;
+        Wed, 06 Nov 2019 14:40:19 -0800 (PST)
+Received: from odroid.ad.adelaide.edu.au (staff-249-202.wireless.adelaide.edu.au. [129.127.249.202])
+        by smtp.googlemail.com with ESMTPSA id v2sm96783pgf.39.2019.11.06.14.40.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Nov 2019 14:40:19 -0800 (PST)
+From:   Marian Mihailescu <mihailescu2m@gmail.com>
+To:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, krzk@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, kgene@kernel.org
+Cc:     Marian Mihailescu <mihailescu2m@gmail.com>
+Subject: [PATCH v3 1/2] dt-bindings: gpu: mali-midgard: add samsung exynos 5420 compatible
+Date:   Thu,  7 Nov 2019 09:10:07 +1030
+Message-Id: <20191106224008.7588-1-mihailescu2m@gmail.com>
+X-Mailer: git-send-email 2.14.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Sylwester Nawrocki (2019-10-31 08:03:33)
-> Hi Stephen, Mike,
-> This PR is on top of my previous one (tags/clk-v5.4-samsung-fixes).
->=20
->=20
-> The following changes since commit e9323b664ce29547d996195e8a6129a351c391=
-08:
->=20
->   clk: samsung: exynos5420: Preserve PLL configuration during suspend/res=
-ume (2019-10-25 11:20:00 +0200)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/snawrocki/clk.git clk-v=
-5.5-samsung
->=20
-> for you to fetch changes up to 45f10dabb56bc5dee52df47dccd3bfab1e58eea1:
->=20
->   clk: samsung: exynos5420: Add SET_RATE_PARENT flag to clocks on G3D pat=
-h (2019-10-29 14:57:22 +0100)
->=20
-> ----------------------------------------------------------------
+Add "samsung,exynos5420-mali" binding
 
-Thanks. Pulled into clk-next
+Signed-off-by: Marian Mihailescu <mihailescu2m@gmail.com>
+---
+ Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
+index 47bc1ac36426..41b928bce4ea 100644
+--- a/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
++++ b/Documentation/devicetree/bindings/gpu/arm,mali-midgard.yaml
+@@ -38,9 +38,12 @@ properties:
+           - enum:
+              - samsung,exynos5433-mali
+           - const: arm,mali-t760
++      - items:
++          - enum:
++             - samsung,exynos5420-mali
++          - const: arm,mali-t628
+ 
+           # "arm,mali-t624"
+-          # "arm,mali-t628"
+           # "arm,mali-t830"
+           # "arm,mali-t880"
+ 
+-- 
+2.14.1
 
