@@ -2,73 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5F68FD1A3
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 15 Nov 2019 00:43:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B2AFD20C
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 15 Nov 2019 01:45:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727149AbfKNXnl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 14 Nov 2019 18:43:41 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:37654 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbfKNXnk (ORCPT
+        id S1726986AbfKOApl convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 14 Nov 2019 19:45:41 -0500
+Received: from [131.72.33.116] ([131.72.33.116]:57883 "EHLO semo.net"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726852AbfKOApl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 14 Nov 2019 18:43:40 -0500
-Received: by mail-ot1-f66.google.com with SMTP id d5so6493423otp.4;
-        Thu, 14 Nov 2019 15:43:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I8vG0IT0MDKAiIMq9HyAspnaej6ptXHEchDGTD4N3nc=;
-        b=olrwoquy+e4zS381RYST+ZX9Fbm9n+26qGv2sUfDGn0bJw5DVJ3dWBcTEY4MnhxTNj
-         Q0nZygHrTIxLOETPwY1lyHup9lkOkYcSvpWT2N6ySSryEIhYqWs8eNjfvjPP34Tjh6nS
-         /Vk1VFiyCx/vRoboELKtgvyQih4OMJbBryyUrQUwqnlXkT2z9t+Dj7qRDs3jt/I9BtQ4
-         ur9KmghKE+M2msESfmP4cDmXWEiR4JRLja2L2r7giNAS0d69d50rcKaew5EG6rmzgjm/
-         YrTrSLeIDcV62cPR1udljnAp/MoUy14rr3crvXXVvHkLLM/1lC+djm6jrVukdR4T/vyb
-         qPTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I8vG0IT0MDKAiIMq9HyAspnaej6ptXHEchDGTD4N3nc=;
-        b=C+BD0iuJ1V3Rpz2X8IhQfUYp1t6QWtavyy9b0uB8jDNQMk2VgYOuoP4Khr/nu6Ogqk
-         NpNXEKXV3mnPdQ8u3p4LP4K9lULaFKroGCn+dOfY4pNbQbMzlpEIAy2p8M43XNFx9PL/
-         CHTB2mv5oeosRWV8npjkks5tbAi5KCa6lndzXjsmFqnCw4vTGqs03nX6xYPmIA0/gHEw
-         2tdCnMp9TdqJVdOeCM6MrWBCTSPq9g2GxQgpA/zZiN/+Axq1NIdpF0z7cE+POjRcheb0
-         y01LtN3AC7RLUsXlyq1IL5rkfI3bDVtLR3Lbi/b4Ctuwf4i7YpX9vCuRcylPkiEi03Aq
-         8FzA==
-X-Gm-Message-State: APjAAAV903nsNgn9M9tjEU/5QP/QvlLhS9nvg7F2eZU9J25rK+trn/tq
-        7+6oYhRGJxx0tdo9XbmUVyBjhQ5gSSqLKAinc9k=
-X-Google-Smtp-Source: APXvYqzsrqBPtoNNMhFQSNzHFp5kcSNIvmO4gkcFegzTLuVEJ443QEDwBXQ+CJT2/fLmI0qtRTSVwcOeLkLsC0hFXfo=
-X-Received: by 2002:a9d:4712:: with SMTP id a18mr9867331otf.49.1573775019728;
- Thu, 14 Nov 2019 15:43:39 -0800 (PST)
+        Thu, 14 Nov 2019 19:45:41 -0500
+Reply-To: yuval@free2312.com
+From:   "Yuval" <tstewart@semo.net>
+To:     linux-samsung-soc@vger.kernel.org
+Subject: Business Proposal - Please Reply
+Date:   14 Nov 2019 22:44:15 -0200
+Message-ID: <20191114224414.A71CDF56CA2641A8@semo.net>
 MIME-Version: 1.0
-References: <20191114000900.26962-1-mihailescu2m@gmail.com> <20191114130643.GB3084@kozik-lap>
-In-Reply-To: <20191114130643.GB3084@kozik-lap>
-From:   Marian Mihailescu <mihailescu2m@gmail.com>
-Date:   Fri, 15 Nov 2019 10:13:30 +1030
-Message-ID: <CAM3PiRwfrFde-fv6_q2+KVCmasczsVus=ozk4B35g6GHdU9G2Q@mail.gmail.com>
-Subject: Re: [PATCH v5] ARM: dts: exynos5420: add mali dt node and enable mali
- on Odroid XU3/4
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Kukjin Kim <kgene@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Nov 14, 2019 at 11:36 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> Send the patches passing checkpatch and not introducing warnings (make
-> dtbs W=1).
->
-> Best regards,
-> Krzysztof
->
+Hello
 
-checkpatch passes successfully, fixed compile warnings in v6, please try again.
+My name is Yuval Rose, a Client Relations officer at CoinMatic, A 
+crypto currency exchange company based in Canada and one of 
+Canada’s foremost Crypto-currency exchange platforms. I have an 
+urgent lucrative business opportunity for you. I got your details 
+on the internet when I was searching for a reliable person that 
+can handle this deal and I believe you can handle it because you 
+bears the same Last-Name with the dead investor of the business 
+am about to introduce to you. This is a private and confidential 
+message from me to you and I request that it be treated as such.
 
--Marian
+I am contacting you with respect to an urgent issue regarding a 
+Bitcoin account belonging to a deceased account holder, I got 
+your contact in my quest for a Partner to stand in as a Next of 
+Kin to the deceased account holder, this was from the last 
+details she sent in to the company regarding liquidation of her 
+BTC account, since you might be aware that BTC transactions are 
+mostly anonymous. I contacted you so that you can apply to my 
+company as a relative of the deceased in order to claim the fund. 
+This is as easy as ABC since my company already took a decision 
+that the entire fund would be credited to any relative that comes 
+up for claim before the end of December this year.
+
+The Bitcoin was sold and converted to cash at the request of the 
+late account holder for onward deposit to an account to be 
+advised by her. Upon liquidation, we waited for months for info 
+on the bank account for the deposit but never got a feedback. 
+Upon inquiry, it was confirmed that she passed away (died) after 
+a cancer related ailment.
+
+At a meeting held 2 weeks ago by my Company’s Management on the 
+matter, it was resolved that unless a Next of Kin or any relative 
+of the late account Holder comes forward for claim of the funds 
+on or before 30th of December 2019 (which is practically 
+impossible) the whole funds would be converted back to Bitcoin 
+and becomes part of the Company's portfolio.
+
+With the above in mind, I decided to quickly reach out to you so 
+that you can apply to my company for claim of this fund in the 
+capacity of a Next-of-Kin/Relative. Rest assured that this is a 
+straight forward process with no risks involved whatsoever. Start 
+to finish of the process with fund deposited in your nominated 
+bank account can be achieved within a space of 10 banking days or 
+less. All that I require from you is full cooperation and 
+sincerity.
+
+I am suggestion a sharing ratio of 50/50 split after fund is 
+credited to your account. We shall have to draft up an agreement 
+to that effect if agreed. If this is OK with you and wish to 
+continue with the claim process, I will draft a letter which you 
+would email to my Company as a formal request for claim of this 
+funds.
+
+I await your reply, please provide your private phone number in 
+your reply.
+
+
+Send reply to: yuval@free2312.com
+
+
+Best Regards
+Yuval
+
+
+Toronto-Canada
