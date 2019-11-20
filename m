@@ -2,125 +2,127 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2DA0103FC2
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Nov 2019 16:46:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61A25104342
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Nov 2019 19:24:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730652AbfKTPqV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 20 Nov 2019 10:46:21 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:45084 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732471AbfKTPp6 (ORCPT
+        id S1727656AbfKTSYD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 20 Nov 2019 13:24:03 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34029 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbfKTSYD (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 20 Nov 2019 10:45:58 -0500
-Received: by mail-pf1-f193.google.com with SMTP id z4so14387375pfn.12
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Nov 2019 07:45:58 -0800 (PST)
+        Wed, 20 Nov 2019 13:24:03 -0500
+Received: by mail-wm1-f65.google.com with SMTP id j18so5765438wmk.1;
+        Wed, 20 Nov 2019 10:24:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=NSg5zBP2bkEtgf/AJ9lwtdlcJh9mMI+s8A/QE9EBrqI=;
-        b=pyfzMEiXET5WNLh0lbzWH2k8Ma4kL/gchA2TSfgf9FOt77Ipge3tgeetL+B/eMQ3nQ
-         qK74PRyKA6Xzfhp8SDKE8IDOG9FnvPqI6zAxyvVWg6TQP7y92eClE7VPgn5EQgevKmTn
-         31isyeVwYrt/63T3W7c/7GYIA5cpiXc/FjWnfRx3+zoDJBZViOljMLADxrUxQ7RA6vsu
-         R4P0FAggkEapQV9P/JrJvCvOqiJCr2EcBVxIorboYb7NdrqFEAaI3ZrbK10/PJQHQdmL
-         XAbs0VUQKIfNCfpp8OueO+3Wys7vJrR6BqL9ZgscME+PrmMK7xFCfeyBCRbpBj9pzPrW
-         baSg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ctnDyGHzcexXd+oP584wBl9d7IxFFJWy5ZdVe62LHoE=;
+        b=VL1V16VFQxZ8XMocZhWLNpaqWaciq49VEDgTT20hTZ2yyx5FJ/yiZs0L9Sk1ZjgBEK
+         ZQFwsDZMY4sQSyrSluU//F0W/SafTb60GaqzxPcYnMCkdKMrxsYxLv64vtUBgUSaN+vY
+         rUZY5N3I4wP8T67v1xbS7tpahYg9M2b2njujgRU8RfCo8J3Gs5m7wX6mbOLkOnJtXhYm
+         vFjCIbWxIQaLARPh3facBK7DFjrAUs4xeHXTq3ABYGeq5h8eJL1wagohiNRUwtReZ66b
+         acMMAu4ox1rvuHa12fYh4vee2/XbX6/7G80yZi5E8zAG5bw9D6eqf2OrPEgCs1eE4PzL
+         pNNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=NSg5zBP2bkEtgf/AJ9lwtdlcJh9mMI+s8A/QE9EBrqI=;
-        b=omLcVOY0IVHq86uqCMG7/yL8SkQEjR8OUhaTIe0gEt0scnbAQuKxEvMiMub4D8kWhY
-         6i06CE1PnJLToo98uKszHk5haS+8BVudEIQIpxUW3htYpWh3ImUdN7TlEBIkMdkeLNGm
-         4Yp2vwQKo3Ck9yFXc3ExRhSory19RSD0r3icnCdVbw/T8noEnIxd/p5BgLaZBpzEtkO7
-         tm+eQ7SlovSEQk+fiva8EotEPklfsyqQAkgw/qtpGkCdohAcQrTKc+ddLOfHJQVu6NYO
-         Wmt0peDp014jVEJP5a3fT8lu9+iQ931rK4iX1VTTSfia9LM+7HNTSSto8hXgxjalH7iD
-         u/ag==
-X-Gm-Message-State: APjAAAW2drStzvXU2dRlNWRKiKYhaTp1uCfVptl1jWs9RVZOe986V/cp
-        lxYe0JFqBwagKWQZASh9XJKV7Q==
-X-Google-Smtp-Source: APXvYqzJUD458tw9LKLIOVTpzUVrazVeldBx+3/BvF6tmCLBMY2h07OohUoX/CJQd6M8piZEF0jNfw==
-X-Received: by 2002:aa7:8b08:: with SMTP id f8mr4854182pfd.92.1574264757863;
-        Wed, 20 Nov 2019 07:45:57 -0800 (PST)
-Received: from localhost ([14.96.110.98])
-        by smtp.gmail.com with ESMTPSA id 125sm29559387pfu.136.2019.11.20.07.45.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Nov 2019 07:45:57 -0800 (PST)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, edubezval@gmail.com,
-        Amit Daniel Kachhap <amit.kachhap@gmail.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Javi Merino <javi.merino@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jun Nie <jun.nie@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 08/11] thermal: samsung: Appease the kernel-doc deity
-Date:   Wed, 20 Nov 2019 21:15:17 +0530
-Message-Id: <1ded1697c6e5eff11b034b3302b9c79e88fa9c42.1574242756.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1574242756.git.amit.kucheria@linaro.org>
-References: <cover.1574242756.git.amit.kucheria@linaro.org>
-In-Reply-To: <cover.1574242756.git.amit.kucheria@linaro.org>
-References: <cover.1574242756.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ctnDyGHzcexXd+oP584wBl9d7IxFFJWy5ZdVe62LHoE=;
+        b=Rz9HBUBifPzbWEcXtL4j3WXHxkdQj6DFd7aLgpRWuvXg0+VmxTZrZM6dFMvsro957u
+         AVVO60Wg06p44RYrjYQUAqp5CdvYnnSkJqSfGjd0gafSIeeQyXE+WTF0+VfSMkKiUYlJ
+         gaiY1pmMU7/K+qjNtyziscTEHplCH+AsA8dzi4fuA8/mtjZowoDokpa5orwIvaAUZw7r
+         AhL+69XD5VDoJp1a4/cxvVYhiJSHQek1fX8tL1o4D9ydrc5PCrY4cqxLf3vA5Fzy9SqR
+         MVQ7Y8gjmsnnIJe/hoc3iOv4UAokQ8jnznmgiERQmBez+FnMj8mtQYE43r4vN9bA38N8
+         Cq8g==
+X-Gm-Message-State: APjAAAXcqhjYCZJ6KJXVKQiOFmPrZ0gPJleECcUYOodcISn97d79Zsnw
+        IolJglrIsdLoOllz2ZliByM=
+X-Google-Smtp-Source: APXvYqwt5vSje349iw69oqaDAMKixDjb6/bUVwR02G1KgTftbQDyi/rylGLW1hUSGLsUrQbk95hTpQ==
+X-Received: by 2002:a1c:4907:: with SMTP id w7mr4848109wma.62.1574274241330;
+        Wed, 20 Nov 2019 10:24:01 -0800 (PST)
+Received: from giga-mm ([62.68.23.15])
+        by smtp.gmail.com with ESMTPSA id g184sm154611wma.8.2019.11.20.10.23.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Nov 2019 10:24:00 -0800 (PST)
+Date:   Wed, 20 Nov 2019 19:23:58 +0100
+From:   Alexander Sverdlin <alexander.sverdlin@gmail.com>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        Hartley Sweeten <hsweeten@visionengravers.com>,
+        Linus Walleij <linusw@kernel.org>,
+        Imre Kaloz <kaloz@openwrt.org>,
+        Krzysztof Halasa <khalasa@piap.pl>,
+        Lubomir Rintel <lkundrak@v3.sk>,
+        Aaro Koskinen <aaro.koskinen@iki.fi>,
+        Tony Lindgren <tony@atomide.com>,
+        Barry Song <baohua@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] ARM: Fix Kconfig indentation
+Message-Id: <20191120192358.389c43da67a4d07c0d19b90d@gmail.com>
+In-Reply-To: <20191120133734.12345-1-krzk@kernel.org>
+References: <20191120133734.12345-1-krzk@kernel.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Fix up the following warning when compiled with make W=1:
+Hi Krzysztof,
 
-linux.git/drivers/thermal/samsung/exynos_tmu.c:141: warning: bad
-line:         driver
-linux.git/drivers/thermal/samsung/exynos_tmu.c:203: warning: Function
-parameter or member 'tzd' not described in 'exynos_tmu_data'
-linux.git/drivers/thermal/samsung/exynos_tmu.c:203: warning: Function
-parameter or member 'tmu_set_trip_temp' not described in
-'exynos_tmu_data'
-linux.git/drivers/thermal/samsung/exynos_tmu.c:203: warning: Function
-parameter or member 'tmu_set_trip_hyst' not described in
-'exynos_tmu_data'
+for the EP93xx part,
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
- drivers/thermal/samsung/exynos_tmu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On Wed, 20 Nov 2019 21:37:34 +0800
+Krzysztof Kozlowski <krzk@kernel.org> wrote:
 
-diff --git a/drivers/thermal/samsung/exynos_tmu.c b/drivers/thermal/samsung/exynos_tmu.c
-index fb2c55123a99..8193b66a3f83 100644
---- a/drivers/thermal/samsung/exynos_tmu.c
-+++ b/drivers/thermal/samsung/exynos_tmu.c
-@@ -138,7 +138,7 @@ enum soc_type {
+> Adjust indentation from spaces to tab (+optional two spaces) as in
+> coding style with command like:
+> 	$ sed -e 's/^        /\t/' -i */Kconfig
+>
+
+Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
  
- /**
-  * struct exynos_tmu_data : A structure to hold the private data of the TMU
--	driver
-+ *			    driver
-  * @id: identifier of the one instance of the TMU controller.
-  * @base: base address of the single instance of the TMU controller.
-  * @base_second: base address of the common registers of the TMU controller.
-@@ -162,8 +162,11 @@ enum soc_type {
-  *	0 < reference_voltage <= 31
-  * @regulator: pointer to the TMU regulator structure.
-  * @reg_conf: pointer to structure to register with core thermal.
-+ * @tzd: pointer to thermal_zone_device structure
-  * @ntrip: number of supported trip points.
-  * @enabled: current status of TMU device
-+ * @tmu_set_trip_temp: SoC specific method to set trip (rising threshold)
-+ * @tmu_set_trip_hyst: SoC specific to set hysteresis (falling threshold)
-  * @tmu_initialize: SoC specific TMU initialization method
-  * @tmu_control: SoC specific TMU control method
-  * @tmu_read: SoC specific TMU temperature read method
--- 
-2.20.1
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  arch/arm/Kconfig-nommu        | 10 +++++-----
+>  arch/arm/Kconfig.debug        |  4 ++--
+>  arch/arm/mach-ep93xx/Kconfig  |  8 ++++----
+>  arch/arm/mach-ixp4xx/Kconfig  | 16 ++++++++--------
+>  arch/arm/mach-mmp/Kconfig     |  2 +-
+>  arch/arm/mach-omap1/Kconfig   | 14 +++++++-------
+>  arch/arm/mach-prima2/Kconfig  |  6 +++---
+>  arch/arm/mach-s3c24xx/Kconfig |  4 ++--
+>  arch/arm/mach-s3c64xx/Kconfig |  6 +++---
+>  arch/arm/plat-samsung/Kconfig |  2 +-
+>  10 files changed, 36 insertions(+), 36 deletions(-)
+> 
 
+[...]
+
+> diff --git a/arch/arm/mach-ep93xx/Kconfig b/arch/arm/mach-ep93xx/Kconfig
+> index f2db5fd38145..bf81dfab7f1b 100644
+> --- a/arch/arm/mach-ep93xx/Kconfig
+> +++ b/arch/arm/mach-ep93xx/Kconfig
+> @@ -126,10 +126,10 @@ config MACH_MICRO9S
+>  	  Contec Micro9-Slim board.
+>  
+>  config MACH_SIM_ONE
+> -        bool "Support Simplemachines Sim.One board"
+> -        help
+> -          Say 'Y' here if you want your kernel to support the
+> -          Simplemachines Sim.One board.
+> +	bool "Support Simplemachines Sim.One board"
+> +	help
+> +	  Say 'Y' here if you want your kernel to support the
+> +	  Simplemachines Sim.One board.
+>  
+>  config MACH_SNAPPER_CL15
+>  	bool "Support Bluewater Systems Snapper CL15 Module"
+
+
+-- 
+Alexander Sverdlin.
