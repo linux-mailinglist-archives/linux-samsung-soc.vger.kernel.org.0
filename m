@@ -2,109 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B5410E1A8
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Dec 2019 12:38:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 487A010E321
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Dec 2019 19:29:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725993AbfLALiz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 1 Dec 2019 06:38:55 -0500
-Received: from asavdk3.altibox.net ([109.247.116.14]:45996 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726138AbfLALiy (ORCPT
+        id S1727266AbfLAS3l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 1 Dec 2019 13:29:41 -0500
+Received: from mtax.cdmx.gob.mx ([187.141.35.197]:14583 "EHLO mtax.cdmx.gob.mx"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727297AbfLAS3l (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 1 Dec 2019 06:38:54 -0500
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 5FD8C20034;
-        Sun,  1 Dec 2019 12:33:24 +0100 (CET)
-Date:   Sun, 1 Dec 2019 12:33:23 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org,
-        Thierry Reding <thierry.reding@gmail.com>
-Cc:     Alexios Zavras <alexios.zavras@intel.com>,
-        Alison Wang <alison.wang@nxp.com>,
-        Allison Randal <allison@lohutok.net>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Enrico Weigelt <info@metux.net>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Marek Vasut <marex@denx.de>,
-        Maxime Ripard <maxime.ripard@bootlin.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Vincent Abriou <vincent.abriou@st.com>
-Subject: Re: [PATCH v1 09/16] drm/tegra: fix opencoded use of drm_panel_*
-Message-ID: <20191201113323.GE8753@ravnborg.org>
-References: <20190804201637.1240-1-sam@ravnborg.org>
- <20190804201637.1240-10-sam@ravnborg.org>
+        Sun, 1 Dec 2019 13:29:41 -0500
+X-Greylist: delayed 7140 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Dec 2019 13:29:41 EST
+X-NAI-Header: Modified by McAfee Email Gateway (4500)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cdmx.gob.mx; s=72359050-3965-11E6-920A-0192F7A2F08E;
+        t=1575217654; h=DKIM-Filter:X-Virus-Scanned:
+         Content-Type:MIME-Version:Content-Transfer-Encoding:
+         Content-Description:Subject:To:From:Date:Message-Id:
+         X-AnalysisOut:X-AnalysisOut:X-AnalysisOut:
+         X-AnalysisOut:X-AnalysisOut:X-SAAS-TrackingID:
+         X-NAI-Spam-Flag:X-NAI-Spam-Threshold:X-NAI-Spam-Score:
+         X-NAI-Spam-Rules:X-NAI-Spam-Version; bh=M
+        8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs4
+        8=; b=YpfZyxm/N30xRDnpuh7NDbDrJ9s8Hw4VBiag+xKA5qVu
+        EX9wIF/3WyzFOHpq5P343L10bUMpnURbbmaJUtFC9LTQzY4JeZ
+        Pvc5aeIXHnNeXwO5RiT0gwpsndeByQoFOE9+js/gsPcY7tglr+
+        XSMPSKfv6bEsNz0LHFLDBO4LVQc=
+Received: from cdmx.gob.mx (correo.cdmx.gob.mx [10.250.108.150]) by mtax.cdmx.gob.mx with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 28cd_481f_e8da9f6f_5ea2_494a_8b2e_dcb2ae55a5a2;
+        Sun, 01 Dec 2019 10:27:33 -0600
+Received: from localhost (localhost [127.0.0.1])
+        by cdmx.gob.mx (Postfix) with ESMTP id 36E7F1E2F65;
+        Sun,  1 Dec 2019 10:18:53 -0600 (CST)
+Received: from cdmx.gob.mx ([127.0.0.1])
+        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id edp_mqrRyrLy; Sun,  1 Dec 2019 10:18:53 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+        by cdmx.gob.mx (Postfix) with ESMTP id 166151E2878;
+        Sun,  1 Dec 2019 10:14:16 -0600 (CST)
+DKIM-Filter: OpenDKIM Filter v2.9.2 cdmx.gob.mx 166151E2878
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cdmx.gob.mx;
+        s=72359050-3965-11E6-920A-0192F7A2F08E; t=1575216856;
+        bh=M8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs48=;
+        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:To:
+         From:Date:Message-Id;
+        b=hv7xCZT9wXPKAModjl4TKiSSbcI7NwyQ9A9xf+dPTK8TxrRJLnFoIaSlEkgZcOWJC
+         VLwvIlP/SwNniZQ0V2LhBI+38nzEWLybeMcFHCAl3UJEj7ZKdhsDDGDJJZX6ZK+4Bo
+         Ku1Yj2hEJrftHlNgZzP78pVqglpHfn1fnGNhD724=
+X-Virus-Scanned: amavisd-new at cdmx.gob.mx
+Received: from cdmx.gob.mx ([127.0.0.1])
+        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id SMRi2REh1kRG; Sun,  1 Dec 2019 10:14:16 -0600 (CST)
+Received: from [192.168.0.104] (unknown [188.125.168.160])
+        by cdmx.gob.mx (Postfix) with ESMTPSA id 06C101E2E2B;
+        Sun,  1 Dec 2019 10:05:13 -0600 (CST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190804201637.1240-10-sam@ravnborg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8
-        a=pGLkceISAAAA:8 a=Ikd4Dj_1AAAA:8 a=VwQbUJbxAAAA:8 a=1aT4lBfQcbWOAA5cYXYA:9
-        a=CjuIK1q_8ugA:10 a=E9Po1WZjFZOl8hwRPBS3:22 a=AjGcO6oz07-iQ99wixmX:22
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Congratulations
+To:     Recipients <aac-styfe@cdmx.gob.mx>
+From:   "Bishop Johnr" <aac-styfe@cdmx.gob.mx>
+Date:   Sun, 01 Dec 2019 17:05:05 +0100
+Message-Id: <20191201160514.06C101E2E2B@cdmx.gob.mx>
+X-AnalysisOut: [v=2.2 cv=HeFkdmM8 c=1 sm=1 tr=0 p=6K-Ig8iNAUou4E5wYCEA:9 p]
+X-AnalysisOut: [=zRI05YRXt28A:10 a=T6zFoIZ12MK39YzkfxrL7A==:117 a=9152RP8M]
+X-AnalysisOut: [6GQqDhC/mI/QXQ==:17 a=8nJEP1OIZ-IA:10 a=pxVhFHJ0LMsA:10 a=]
+X-AnalysisOut: [pGLkceISAAAA:8 a=wPNLvfGTeEIA:10 a=M8O0W8wq6qAA:10 a=Ygvjr]
+X-AnalysisOut: [iKHvHXA2FhpO6d-:22]
+X-SAAS-TrackingID: 3f9e3ed5.0.23902149.00-2363.40384686.s12p02m002.mxlogic.net
+X-NAI-Spam-Flag: NO
+X-NAI-Spam-Threshold: 3
+X-NAI-Spam-Score: -5000
+X-NAI-Spam-Rules: 1 Rules triggered
+        WHITELISTED=-5000
+X-NAI-Spam-Version: 2.3.0.9418 : core <6686> : inlines <7165> : streams
+ <1840193> : uri <2949750>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Aug 04, 2019 at 10:16:30PM +0200, Sam Ravnborg wrote:
-> Use the drm_panel_get_modes function.
+Money was donated to you by Mr and Mrs Allen and Violet Large, just contact=
+ them with this email for more information =
 
-Applied to drm-misc-next.
 
-        Sam
-> 
-> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> Cc: linux-tegra@vger.kernel.org
-> ---
->  drivers/gpu/drm/tegra/output.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/tegra/output.c b/drivers/gpu/drm/tegra/output.c
-> index 274cb955e2e1..52b8396ec2dc 100644
-> --- a/drivers/gpu/drm/tegra/output.c
-> +++ b/drivers/gpu/drm/tegra/output.c
-> @@ -23,7 +23,7 @@ int tegra_output_connector_get_modes(struct drm_connector *connector)
->  	 * ignore any other means of obtaining a mode.
->  	 */
->  	if (output->panel) {
-> -		err = output->panel->funcs->get_modes(output->panel);
-> +		err = drm_panel_get_modes(output->panel);
->  		if (err > 0)
->  			return err;
->  	}
-> -- 
-> 2.20.1
+EMail: allenandvioletlargeaward@gmail.com
