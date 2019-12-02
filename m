@@ -2,90 +2,294 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 487A010E321
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Dec 2019 19:29:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91DD810EC21
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2019 16:15:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727266AbfLAS3l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 1 Dec 2019 13:29:41 -0500
-Received: from mtax.cdmx.gob.mx ([187.141.35.197]:14583 "EHLO mtax.cdmx.gob.mx"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727297AbfLAS3l (ORCPT
+        id S1727420AbfLBPPN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 2 Dec 2019 10:15:13 -0500
+Received: from perceval.ideasonboard.com ([213.167.242.64]:32858 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727401AbfLBPPM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 1 Dec 2019 13:29:41 -0500
-X-Greylist: delayed 7140 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Dec 2019 13:29:41 EST
-X-NAI-Header: Modified by McAfee Email Gateway (4500)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cdmx.gob.mx; s=72359050-3965-11E6-920A-0192F7A2F08E;
-        t=1575217654; h=DKIM-Filter:X-Virus-Scanned:
-         Content-Type:MIME-Version:Content-Transfer-Encoding:
-         Content-Description:Subject:To:From:Date:Message-Id:
-         X-AnalysisOut:X-AnalysisOut:X-AnalysisOut:
-         X-AnalysisOut:X-AnalysisOut:X-SAAS-TrackingID:
-         X-NAI-Spam-Flag:X-NAI-Spam-Threshold:X-NAI-Spam-Score:
-         X-NAI-Spam-Rules:X-NAI-Spam-Version; bh=M
-        8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs4
-        8=; b=YpfZyxm/N30xRDnpuh7NDbDrJ9s8Hw4VBiag+xKA5qVu
-        EX9wIF/3WyzFOHpq5P343L10bUMpnURbbmaJUtFC9LTQzY4JeZ
-        Pvc5aeIXHnNeXwO5RiT0gwpsndeByQoFOE9+js/gsPcY7tglr+
-        XSMPSKfv6bEsNz0LHFLDBO4LVQc=
-Received: from cdmx.gob.mx (correo.cdmx.gob.mx [10.250.108.150]) by mtax.cdmx.gob.mx with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-         id 28cd_481f_e8da9f6f_5ea2_494a_8b2e_dcb2ae55a5a2;
-        Sun, 01 Dec 2019 10:27:33 -0600
-Received: from localhost (localhost [127.0.0.1])
-        by cdmx.gob.mx (Postfix) with ESMTP id 36E7F1E2F65;
-        Sun,  1 Dec 2019 10:18:53 -0600 (CST)
-Received: from cdmx.gob.mx ([127.0.0.1])
-        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id edp_mqrRyrLy; Sun,  1 Dec 2019 10:18:53 -0600 (CST)
-Received: from localhost (localhost [127.0.0.1])
-        by cdmx.gob.mx (Postfix) with ESMTP id 166151E2878;
-        Sun,  1 Dec 2019 10:14:16 -0600 (CST)
-DKIM-Filter: OpenDKIM Filter v2.9.2 cdmx.gob.mx 166151E2878
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cdmx.gob.mx;
-        s=72359050-3965-11E6-920A-0192F7A2F08E; t=1575216856;
-        bh=M8rWdUYQ57RAYAgTWJQ4Rsch0kO0UXllaAVDzocOs48=;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:To:
-         From:Date:Message-Id;
-        b=hv7xCZT9wXPKAModjl4TKiSSbcI7NwyQ9A9xf+dPTK8TxrRJLnFoIaSlEkgZcOWJC
-         VLwvIlP/SwNniZQ0V2LhBI+38nzEWLybeMcFHCAl3UJEj7ZKdhsDDGDJJZX6ZK+4Bo
-         Ku1Yj2hEJrftHlNgZzP78pVqglpHfn1fnGNhD724=
-X-Virus-Scanned: amavisd-new at cdmx.gob.mx
-Received: from cdmx.gob.mx ([127.0.0.1])
-        by localhost (cdmx.gob.mx [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id SMRi2REh1kRG; Sun,  1 Dec 2019 10:14:16 -0600 (CST)
-Received: from [192.168.0.104] (unknown [188.125.168.160])
-        by cdmx.gob.mx (Postfix) with ESMTPSA id 06C101E2E2B;
-        Sun,  1 Dec 2019 10:05:13 -0600 (CST)
-Content-Type: text/plain; charset="iso-8859-1"
+        Mon, 2 Dec 2019 10:15:12 -0500
+Received: from pendragon.ideasonboard.com (81-175-216-236.bb.dnainternet.fi [81.175.216.236])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 2E11D309;
+        Mon,  2 Dec 2019 16:15:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1575299709;
+        bh=mFGJOpuePLZrsr7Ed2VYhGQqc4JmFTNL3aKD7BB6RME=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=U1xYwtDbAaxhE1hTGuuq+kUzf8of1Su/SFJ/5CD+ND1NhkYzdxvGPjMQnU9DDAlsK
+         xdKO2BSloawGiChK9+z+QPTq8dFBSFS9xOMecLTyobVUVAW0hmzdJDacL6+LgL0s9n
+         PmQDet0FgRvYJiviJwNNw81lV6KlvpHYKc6AuNZc=
+Date:   Mon, 2 Dec 2019 17:15:02 +0200
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Sean Paul <sean@poorly.run>
+Cc:     Sam Ravnborg <sam@ravnborg.org>, dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Alison Wang <alison.wang@nxp.com>,
+        Allison Randal <allison@lohutok.net>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Enrico Weigelt <info@metux.net>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marek Vasut <marex@denx.de>,
+        Maxime Ripard <maxime.ripard@bootlin.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Vincent Abriou <vincent.abriou@st.com>
+Subject: Re: [PATCH v1 14/16] drm/panel: call prepare/enable only once
+Message-ID: <20191202151502.GA18532@pendragon.ideasonboard.com>
+References: <20190804201637.1240-1-sam@ravnborg.org>
+ <20190804201637.1240-15-sam@ravnborg.org>
+ <20190805170120.GZ104440@art_vandelay>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Congratulations
-To:     Recipients <aac-styfe@cdmx.gob.mx>
-From:   "Bishop Johnr" <aac-styfe@cdmx.gob.mx>
-Date:   Sun, 01 Dec 2019 17:05:05 +0100
-Message-Id: <20191201160514.06C101E2E2B@cdmx.gob.mx>
-X-AnalysisOut: [v=2.2 cv=HeFkdmM8 c=1 sm=1 tr=0 p=6K-Ig8iNAUou4E5wYCEA:9 p]
-X-AnalysisOut: [=zRI05YRXt28A:10 a=T6zFoIZ12MK39YzkfxrL7A==:117 a=9152RP8M]
-X-AnalysisOut: [6GQqDhC/mI/QXQ==:17 a=8nJEP1OIZ-IA:10 a=pxVhFHJ0LMsA:10 a=]
-X-AnalysisOut: [pGLkceISAAAA:8 a=wPNLvfGTeEIA:10 a=M8O0W8wq6qAA:10 a=Ygvjr]
-X-AnalysisOut: [iKHvHXA2FhpO6d-:22]
-X-SAAS-TrackingID: 3f9e3ed5.0.23902149.00-2363.40384686.s12p02m002.mxlogic.net
-X-NAI-Spam-Flag: NO
-X-NAI-Spam-Threshold: 3
-X-NAI-Spam-Score: -5000
-X-NAI-Spam-Rules: 1 Rules triggered
-        WHITELISTED=-5000
-X-NAI-Spam-Version: 2.3.0.9418 : core <6686> : inlines <7165> : streams
- <1840193> : uri <2949750>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190805170120.GZ104440@art_vandelay>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Money was donated to you by Mr and Mrs Allen and Violet Large, just contact=
- them with this email for more information =
+Hi Sean,
 
+On Mon, Aug 05, 2019 at 01:01:20PM -0400, Sean Paul wrote:
+> On Sun, Aug 04, 2019 at 10:16:35PM +0200, Sam Ravnborg wrote:
+> > Many panel drivers duplicate logic to prevent prepare to be called
+> > for a panel that is already prepared.
+> > Likewise for enable.
+> > 
+> > Implement this logic in drm_panel so the individual drivers
+> > no longer needs this.
+> > A panel is considered prepared/enabled only if the prepare/enable call
+> > succeeds.
+> > For disable/unprepare it is unconditionally considered
+> > disabled/unprepared.
+> 
+> Hi Sam,
+> I did a similar thing a few years ago [1]. IIRC it was well received and just
+> needed some nits cleaned up. Unfortunately I lost interest^W^W switched to other
+> things and dropped it. So thanks for picking this back up!
+> 
+> Fast forward to today, I still think it's a good idea but I want to make sure
+> this won't negatively interact with the self refresh helpers. With the helpers
+> in place, it's possible to call disable consecutively (ie: once to enter self
+> refresh and again to actually shut down). I did a quick pass and it looks like
+> this patch might break that behavior, so you might want to take that into
+> account.
 
-EMail: allenandvioletlargeaward@gmail.com
+Is this semantics documented somewhere ? The documentation of the panel
+disable operation is pretty terse, and we need to explicitly state who
+of the caller and callee needs to track the state.
+
+> [1]- https://patchwork.freedesktop.org/series/30712/
+> 
+> > This allows calls to prepare/enable again, even if there were
+> > some issue disabling a regulator or similar during disable/unprepare.
+> > 
+> > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+> > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> > Cc: Maxime Ripard <maxime.ripard@bootlin.com>
+> > Cc: Sean Paul <sean@poorly.run>
+> > Cc: Thierry Reding <thierry.reding@gmail.com>
+> > Cc: Sam Ravnborg <sam@ravnborg.org>
+> > Cc: David Airlie <airlied@linux.ie>
+> > Cc: Daniel Vetter <daniel@ffwll.ch>
+> > ---
+> >  drivers/gpu/drm/drm_panel.c | 66 ++++++++++++++++++++++++++++++-------
+> >  include/drm/drm_panel.h     | 21 ++++++++++++
+> >  2 files changed, 75 insertions(+), 12 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+> > index da19d5b4a2f4..0853764040de 100644
+> > --- a/drivers/gpu/drm/drm_panel.c
+> > +++ b/drivers/gpu/drm/drm_panel.c
+> > @@ -66,10 +66,21 @@ EXPORT_SYMBOL(drm_panel_init);
+> >   */
+> >  int drm_panel_prepare(struct drm_panel *panel)
+> >  {
+> > -	if (panel && panel->funcs && panel->funcs->prepare)
+> > -		return panel->funcs->prepare(panel);
+> > +	int ret = -ENOSYS;
+> >  
+> > -	return panel ? -ENOSYS : -EINVAL;
+> > +	if (!panel)
+> > +		return -EINVAL;
+> > +
+> > +	if (panel->prepared)
+> > +		return 0;
+> > +
+> > +	if (panel->funcs && panel->funcs->prepare)
+> > +		ret = panel->funcs->prepare(panel);
+> > +
+> > +	if (ret >= 0)
+> > +		panel->prepared = true;
+> > +
+> > +	return ret;
+> >  }
+> >  EXPORT_SYMBOL(drm_panel_prepare);
+> >  
+> > @@ -85,10 +96,21 @@ EXPORT_SYMBOL(drm_panel_prepare);
+> >   */
+> >  int drm_panel_enable(struct drm_panel *panel)
+> >  {
+> > -	if (panel && panel->funcs && panel->funcs->enable)
+> > -		return panel->funcs->enable(panel);
+> > +	int ret = -ENOSYS;
+> >  
+> > -	return panel ? -ENOSYS : -EINVAL;
+> > +	if (!panel)
+> > +		return -EINVAL;
+> > +
+> > +	if (panel->enabled)
+> > +		return 0;
+> > +
+> > +	if (panel->funcs && panel->funcs->enable)
+> > +		ret = panel->funcs->enable(panel);
+> > +
+> > +	if (ret >= 0)
+> > +		panel->enabled = true;
+> > +
+> > +	return ret;
+> >  }
+> >  EXPORT_SYMBOL(drm_panel_enable);
+> >  
+> > @@ -104,10 +126,20 @@ EXPORT_SYMBOL(drm_panel_enable);
+> >   */
+> >  int drm_panel_disable(struct drm_panel *panel)
+> >  {
+> > -	if (panel && panel->funcs && panel->funcs->disable)
+> > -		return panel->funcs->disable(panel);
+> > +	int ret = -ENOSYS;
+> >  
+> > -	return panel ? -ENOSYS : -EINVAL;
+> > +	if (!panel)
+> > +		return -EINVAL;
+> > +
+> > +	if (!panel->enabled)
+> > +		return 0;
+> > +
+> > +	if (panel->funcs && panel->funcs->disable)
+> > +		ret = panel->funcs->disable(panel);
+> > +
+> > +	panel->enabled = false;
+> > +
+> > +	return ret;
+> >  }
+> >  EXPORT_SYMBOL(drm_panel_disable);
+> >  
+> > @@ -124,10 +156,20 @@ EXPORT_SYMBOL(drm_panel_disable);
+> >   */
+> >  int drm_panel_unprepare(struct drm_panel *panel)
+> >  {
+> > -	if (panel && panel->funcs && panel->funcs->unprepare)
+> > -		return panel->funcs->unprepare(panel);
+> > +	int ret = -ENOSYS;
+> >  
+> > -	return panel ? -ENOSYS : -EINVAL;
+> > +	if (!panel)
+> > +		return -EINVAL;
+> > +
+> > +	if (!panel->prepared)
+> > +		return 0;
+> > +
+> > +	if (panel->funcs && panel->funcs->unprepare)
+> > +		ret = panel->funcs->unprepare(panel);
+> > +
+> > +	panel->prepared = false;
+> > +
+> > +	return ret;
+> >  }
+> >  EXPORT_SYMBOL(drm_panel_unprepare);
+> >  
+> > diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
+> > index 624bd15ecfab..7493500fc9bd 100644
+> > --- a/include/drm/drm_panel.h
+> > +++ b/include/drm/drm_panel.h
+> > @@ -65,6 +65,9 @@ struct drm_panel_funcs {
+> >  	 * @prepare:
+> >  	 *
+> >  	 * Turn on panel and perform set up.
+> > +	 * When the panel is successfully prepared the prepare() function
+> > +	 * will not be called again until the panel has been unprepared.
+> > +	 *
+> >  	 */
+> >  	int (*prepare)(struct drm_panel *panel);
+> >  
+> > @@ -72,6 +75,8 @@ struct drm_panel_funcs {
+> >  	 * @enable:
+> >  	 *
+> >  	 * Enable panel (turn on back light, etc.).
+> > +	 * When the panel is successfully enabled the enable() function
+> > +	 * will not be called again until the panel has been disabled.
+> >  	 */
+> >  	int (*enable)(struct drm_panel *panel);
+> >  
+> > @@ -79,6 +84,7 @@ struct drm_panel_funcs {
+> >  	 * @disable:
+> >  	 *
+> >  	 * Disable panel (turn off back light, etc.).
+> > +	 * If the panel is already disabled the disable() function is not called.
+> >  	 */
+> >  	int (*disable)(struct drm_panel *panel);
+> >  
+> > @@ -86,6 +92,7 @@ struct drm_panel_funcs {
+> >  	 * @unprepare:
+> >  	 *
+> >  	 * Turn off panel.
+> > +	 * If the panel is already unprepared the unprepare() function is not called.
+> >  	 */
+> >  	int (*unprepare)(struct drm_panel *panel);
+> >  
+> > @@ -145,6 +152,20 @@ struct drm_panel {
+> >  	 * Panel entry in registry.
+> >  	 */
+> >  	struct list_head list;
+> > +
+> > +	/**
+> > +	 * @prepared:
+> > +	 *
+> > +	 * Set to true when the panel is successfully prepared.
+> > +	 */
+> > +	bool prepared;
+> > +
+> > +	/**
+> > +	 * @enabled:
+> > +	 *
+> > +	 * Set to true when the panel is successfully enabled.
+> > +	 */
+> > +	bool enabled;
+> >  };
+> >  
+> >  void drm_panel_init(struct drm_panel *panel);
+
+-- 
+Regards,
+
+Laurent Pinchart
