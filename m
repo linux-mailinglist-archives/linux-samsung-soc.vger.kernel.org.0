@@ -2,105 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F5A2112B27
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Dec 2019 13:15:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AD84112B58
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Dec 2019 13:22:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbfLDMPm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 Dec 2019 07:15:42 -0500
-Received: from heliosphere.sirena.org.uk ([172.104.155.198]:52450 "EHLO
-        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727445AbfLDMPm (ORCPT
+        id S1727855AbfLDMWZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Dec 2019 07:22:25 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38229 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727769AbfLDMWS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 Dec 2019 07:15:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
-        Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
-        List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-        List-Archive; bh=nJI9bFopWb7W81ncH/qoxkAYT5bre4TUTX6Zr90oAKg=; b=mDD+AJe531Ju
-        DCfXeQkdUwL0LFlYTBn7QHCuvSeLMKpcpFQmbvXvjyXtFSdhThL7SO72Bwt6RRx/XewFtnUX/qC2x
-        ZZhxsIYFVcxkKnHj+Jhiwn8Fe2k6T2oFtZUzPX3Md+cshV1PbHLcEOHM9CzDjSf64LmoiIaP1w3kv
-        kakwI=;
-Received: from fw-tnat-cam3.arm.com ([217.140.106.51] helo=fitzroy.sirena.org.uk)
-        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <broonie@sirena.org.uk>)
-        id 1icTZA-0000AV-ST; Wed, 04 Dec 2019 12:15:36 +0000
-Received: by fitzroy.sirena.org.uk (Postfix, from userid 1000)
-        id 383D3D003B4; Wed,  4 Dec 2019 12:15:36 +0000 (GMT)
-From:   Mark Brown <broonie@kernel.org>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     broonie@kernel.org, b.zolnierkie@samsung.com,
-        kernel-janitors@vger.kernel.org, krzk@kernel.org,
-        lgirdwood@gmail.com, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        sbkim73@samsung.com
-Subject: Applied "regulator: s5m8767: Fix a warning message" to the regulator tree
-In-Reply-To: <20191203214838.9680-1-christophe.jaillet@wanadoo.fr>
-Message-Id: <applied-20191203214838.9680-1-christophe.jaillet@wanadoo.fr>
-X-Patchwork-Hint: ignore
-Date:   Wed,  4 Dec 2019 12:15:36 +0000 (GMT)
+        Wed, 4 Dec 2019 07:22:18 -0500
+Received: by mail-ed1-f66.google.com with SMTP id s10so6456825edi.5
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 04 Dec 2019 04:22:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
+        b=itksFv5A2JLOzo6XVqVzXmSzWKIpGqZTNHrb4xFvrqPmHJ7WwaeLkksg0/ZJSVtv31
+         pzvXZ3OHhHMsql2Vo9oheJQHErj5CDGd5ZvPVjxDn+I4JgVPrQl1nkJy5Nb7wvQoUvM+
+         46lpgbsOy0h7DJvRAy1OQQg0Oi/exT7Imiyfeu4Gtmu6VGYFysEjNlBfvwObnE6M1THW
+         GbhC/d5DVONSKdw6y/qH20L4wjeyxlxCBE+xa1i44NzWc0HgEODgSNCM/bGDvmjdXP55
+         pwYVn13D99Hhzzv+p4qHdhRZEM3zwIJF+S9QDszHcSxOoAqtygRSNU+xVzjWpE9QCD88
+         4SHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
+        b=sIQSIQMlNiYFl9x115MWEXq0BjaNdNCyAttEKpgb8LU7+6Q9bL2ZEpE0jCRo+K4Gaq
+         FpEn9LmVWnCeoKXzZCKi38e68IxtwMEZRd1nXdJ3JJCDg5KJolC753K5waVWRE774M82
+         d95IRqRqUDbhSD0qlMwrFBCE3JQeb1jCgn8NoyPsIv158hCPDzngWjBwn4xvVAR1Ri4i
+         IRj0JHyb3KKtjkttuH+G+g5mW22/f8jtJ6tfw8T2bWPq7TTNIBl1kqJGGcWUDT0+e566
+         5si8uaj2roufRHVkEOBqZT0/nRqzpiCjeQeBwiHCCrl0tEKtuHZYMjDF41E1/ZHgPwAX
+         vf/w==
+X-Gm-Message-State: APjAAAUylnxQCQRqh5OGst0Wb8kdZxHuB7sy3GN2+OGroULkqnz8ubNO
+        x1AKRZKTdxub+5Jv4wfgZv5J0iQpklgrxNMEgj4=
+X-Google-Smtp-Source: APXvYqwlH4d/NgUk6+TTgeshJl/W0Z846j+vPwdmJMmvDKA5s5alEIOymc5OFboGvVzTvSBGNMpJNF0KpHbTN+gxpY4=
+X-Received: by 2002:aa7:d84b:: with SMTP id f11mr3689948eds.96.1575462136339;
+ Wed, 04 Dec 2019 04:22:16 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a05:6402:22dc:0:0:0:0 with HTTP; Wed, 4 Dec 2019 04:22:15
+ -0800 (PST)
+Reply-To: moneygram.1820@outlook.fr
+From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" <eco.bank1204@gmail.com>
+Date:   Wed, 4 Dec 2019 13:22:15 +0100
+Message-ID: <CAOE+jABwsq4QTifFZJGuzmZ8p9kMY_tMmS5N39hvEALE6d=OJw@mail.gmail.com>
+Subject: God has remembered your prayers I have already sent you Money Gram
+ payment of $5000.00 today, MG 1029-8096
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The patch
+Attn, dear Beneficiary.
 
-   regulator: s5m8767: Fix a warning message
+God has remembered your prayers
+I have already sent you Money Gram payment of $5000.00 today, MG 1029-8096
+This is because we have finally concluded to effect your transfer
+funds of $4.8,000.000usd
+through MONEY GRAM International Fund transfer Service
+Each payment will be sending to you by $5000.00 daily until the
+($4.8,000.000usd) is completely transferred
+we have this morning sent  MONEY GRAM payment of $5,000.00 in your name today
+So contact the MONEY GRAM Agent to pick up this first payment of $5000 now
 
-has been applied to the regulator tree at
+Contact person Mrs. Alan Ude
+Dir. MONEY GRAM Service,Benin
+Phone number: +229 98856728
+E-mail: moneygram.1820@outlook.fr
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.5
+Ask him to give you the complete mtcn, sender name, question and
+answer to enable you
+pick up the $5000.00 sent today,
+Also you are instructed to re-confirm your information's
+to Mrs.Alan Ude as listed below to avoid wrong transactions.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
+(1Your Full name:............................................
+(2 Phone number.....................................................
+(3 Contact address:.....................................
+(4 Age:..................................................................
+(5 Country..............................................
+(6) Sex .................................................................
+(7) your occupation...........................................
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+(8)Passport/By Attach or Drivers License Number:
+Contact Mrs. Alan Ude for your MONEY GRAM payment of $4.8,000.000usd
+Note please: I have paid service fees for you but the only money you
+are required
+to send to Mrs. Alan Ude is $90.00 only Transfer fee before you can
+pick up your transfer today.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Send it to via Money Gram
+Receiver's Name-----Alan Ude
+Country----------Benin
+Address-----------Cotonou
+Quest--------Honest
+Ans-----------Trust
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+I done all my best for you to receive your transfer now ok.
+We need your urgent reply
+Best Regards
+Rev.Dr Emmanuel Okoye
+CEO Ecobank-benin
 
-Thanks,
-Mark
-
-From f3c7f7b636ef5061906aa119eccc2b8dbbaf7199 Mon Sep 17 00:00:00 2001
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Date: Tue, 3 Dec 2019 22:48:38 +0100
-Subject: [PATCH] regulator: s5m8767: Fix a warning message
-
-Axe a duplicated word ("property") in a warning message.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20191203214838.9680-1-christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- drivers/regulator/s5m8767.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
-index bdc07739e9a2..12d6b8d2e97e 100644
---- a/drivers/regulator/s5m8767.c
-+++ b/drivers/regulator/s5m8767.c
-@@ -588,7 +588,7 @@ static int s5m8767_pmic_dt_parse_pdata(struct platform_device *pdev,
- 		if (of_property_read_u32(reg_np, "op_mode",
- 				&rmode->mode)) {
- 			dev_warn(iodev->dev,
--				"no op_mode property property at %pOF\n",
-+				"no op_mode property at %pOF\n",
- 				reg_np);
- 
- 			rmode->mode = S5M8767_OPMODE_NORMAL_MODE;
--- 
-2.20.1
-
+If we did not receive it urgent from you today,
+I will go ahead and release you funds to Mrs. Lyndia Ppaulson as your
+representative.
