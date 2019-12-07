@@ -2,62 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A94A115A4D
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  7 Dec 2019 01:30:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A90B8115C45
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  7 Dec 2019 14:01:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfLGAaF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Dec 2019 19:30:05 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43342 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726626AbfLGA3z (ORCPT
+        id S1726371AbfLGNBP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 7 Dec 2019 08:01:15 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:38395 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbfLGNBP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Dec 2019 19:29:55 -0500
-Received: by mail-wr1-f65.google.com with SMTP id d16so9600159wre.10
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Dec 2019 16:29:54 -0800 (PST)
+        Sat, 7 Dec 2019 08:01:15 -0500
+Received: by mail-pj1-f68.google.com with SMTP id l4so3920443pjt.5;
+        Sat, 07 Dec 2019 05:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=S7m9By4/eRnSy0vxdfJ6TocT5eJ8gcKLceyHvlHTn3o=;
-        b=LXxoS6Ed7of6jWaofmDfQc8/u3Mg9Maolmr3Vpf9Rmy6M9EqjFAuvGQ8h9p7LhnwAL
-         J2FbblgdkGgZHafRFxx28eRdV2u28AyUlEZcVvHuYvVm3rtf1quwzUCMSvqmMRhzvXWg
-         Lr2BVgHFftpJuxoM6FIG7HwvD6NJoH8mvEjpjvV8POe7OxPQSgcaMvRkWz9Uiu2DLDQI
-         zLbCM6eF/2UqhYCC9SzqWLAqDFWNhNPH2Mzqdx7SMOIQYQVzi+r4mUYfVbZ4zkg6G/Rf
-         GMyYZz2zxEAODyOdyEtKF6h6LvlYj6nQy3cPNK/qqQ+yOafhqpdxqfrrNrKMk4+XdZU4
-         ueNQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=5fKjUze8cgTvBYXr/xD7IQCKvwgAbAm/M927SNG2I2I=;
+        b=dPy+lZJgFngrRMeT6iOLRHKWYCd3SKLGtIJ5Dd8E3oQlD5jvYo4CMpj+fPb64fHvds
+         NbKXaZXnomsPFWKTN+KusvMjCIRQSs1FEdF8oHfyd1OgnCHDVATUKRKlfAPimu+wi4GG
+         sdjLJwe2RbHicK0ER5es56Ya4qTmtbn4GTZbzGPrROt3YniibE98mEhEZlOsiMMs+b0b
+         9RmspwHUtBVksnvItSwApuz9h8B5dqN37+2cD26TxxDQMwWBROOIvOGssY9Z5lbnRhjc
+         QXAX1kIeppmtKFdFlQW21UklLfA1UnZyeUQuOMiR6GypNbUCMbIcaifxAB9LUMMnTUt8
+         VW0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=S7m9By4/eRnSy0vxdfJ6TocT5eJ8gcKLceyHvlHTn3o=;
-        b=p3v2TdMSgU0wMEFt9hlxK5bJWtxsUieen2zG88Y/2F4MG8GA8w6RP//8X2Wng5/L5Z
-         4TPop4zvfcR7EM9IzlOi8rBTIMSs9XlqQkN3tI9ZSQG6kZuaggKOnwMdOzHwz1F5UWlE
-         ttj40b9Nrb2ltB/nqUfrM4uj4jGXZq8aasg07CGAAeZtueC7B9d1MpQz2ME0ZJocmW21
-         sjFZQXfxZ5glOYqDgdoZPmIlWv0zvxjdtPxz7Ad5GY/Z/IV2b7vB2HSByR/aqTlvbVkZ
-         stqGaOEG3zgroBKDZSVnkiVGHJmAh36aQWMNh7IlVQvyf4tqQbqEqV9MU/0+UqevGG6z
-         5VLQ==
-X-Gm-Message-State: APjAAAUw9XlsUMrzv7Bp4CN0S4KMFd3LQefStVfttePH7qEN5qKkQqWa
-        NvDLsEtThWPFxJf6f+DJwJ43JORGYYMAzI4GVTA=
-X-Google-Smtp-Source: APXvYqwrh3pZjAB0r+TmXxbhmAM/apODdHlIT+82DMPTCRz8CUTTqPzcZB7T3FAp1SOvDrWQKKNsT0CStxod+O7hBLs=
-X-Received: by 2002:adf:e591:: with SMTP id l17mr16654604wrm.139.1575678594023;
- Fri, 06 Dec 2019 16:29:54 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:a5d:678e:0:0:0:0:0 with HTTP; Fri, 6 Dec 2019 16:29:53 -0800 (PST)
-Reply-To: mrs.aalia.ahmed@gmail.com
-From:   "Mrs.Aalia.Ahmed" <adamhana1907@gmail.com>
-Date:   Sat, 7 Dec 2019 00:29:53 +0000
-Message-ID: <CAOGreO=8t36s1Mau26bRqTQErHsnOf5ki10AJ6EA4tNedNUo8g@mail.gmail.com>
-Subject: OK
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=5fKjUze8cgTvBYXr/xD7IQCKvwgAbAm/M927SNG2I2I=;
+        b=DslwK8/5VeQ37Vm8HGSm4IlhYj9Jv77qZHsMqxUrywYckoVgleKwZ9FW5C6i6kNkbL
+         OKzsRMDKq8/CnChJAeLqY6t5Zm6ibWc0Hx97AaNG2EU8URe2Xy6nRcMb9oAGmnFdsr1A
+         SFez1eM3JcZMscRYHictcuNT7SZ2pFsflcQd3aoAqbvLzxxWDphUkghU2AP/N807JiE+
+         Nu78IknPv/g28fH/hVfrLWJCHRQKJtPRarRiJrJpRPuQpJi14LaTTCVaFAnbjerOdrlU
+         VYQUsJ0CkTdVmlHE8lYF1pS+htz5AYs1bfdoQayr9yyHsWLSSdZUZ6IKcAz2RvGuufhY
+         fdXA==
+X-Gm-Message-State: APjAAAXSvNdjGL0KztbHfBTk/23sPKX4p0m0Sw7n02Ss6DnYz73u01TY
+        mNv/q9jY9gSggEWGB93htXo=
+X-Google-Smtp-Source: APXvYqxZxwm7RvLeAh38k1Gj3cZ7dj0pl76m+2AQ6s0Ras6tURFp580sNwwn4bqwCEvF9f/9Kn4MqA==
+X-Received: by 2002:a17:90a:30a4:: with SMTP id h33mr21279555pjb.50.1575723674750;
+        Sat, 07 Dec 2019 05:01:14 -0800 (PST)
+Received: from localhost.localdomain ([211.243.117.64])
+        by smtp.gmail.com with ESMTPSA id f7sm10241246pfk.183.2019.12.07.05.01.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Dec 2019 05:01:14 -0800 (PST)
+From:   Hyunki Koo <hyunki00.koo@gmail.com>
+To:     linux@armlinux.org.uk, kgene@kernel.org, krzk@kernel.org,
+        tglx@linutronix.de, jason@lakedaemon.net, maz@kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-team@android.com, Hyunki Koo <hyunki00.koo@samsung.com>
+Subject: [PATCH 0/2] remove direct dependancy between irq and exynos
+Date:   Sat,  7 Dec 2019 22:00:47 +0900
+Message-Id: <20191207130049.27533-1-hyunki00.koo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Greetings My Dearest One.
+From: Hyunki Koo <hyunki00.koo@samsung.com>
 
-My name is Mrs.Aalia.Ahmed, i saw your profile and became interested
-in you, please contact me through my email address
-(mrs.aalia.ahmed@gmail.com) to know each other and i have something
-very important to tell you, i wait for your response to my email ID.
-(mrs.aalia.ahmed@gmail.com
+This patch series is written to clean up dependancy of ARCH_EXYNOS
+Not all exynos device have IRQ_COMBINER, especially aarch64 EXYNOS
+but it is built for all exynos devices.
+Thus add the config for EXYNOS_IRQ_COMBINER
+remove direct between ARCH_EXYNOS and exynos-combiner.c
+and only selected on the aarch32 devices
+
+Hyunki Koo (2):
+  irqchip: define EXYNOS_IRQ_COMBINER
+  ARM: exynos: add select EXYNOS_IRQ_COMBINER
+
+ arch/arm/mach-exynos/Kconfig | 1 +
+ drivers/irqchip/Kconfig      | 7 +++++++
+ drivers/irqchip/Makefile     | 2 +-
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+-- 
+2.17.1
+
