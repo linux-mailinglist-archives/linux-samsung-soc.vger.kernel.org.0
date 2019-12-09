@@ -2,113 +2,108 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9032A1176C8
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2019 20:59:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C58641178FE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2019 23:05:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbfLIT6b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 9 Dec 2019 14:58:31 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34664 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727219AbfLIT6a (ORCPT
+        id S1726678AbfLIWFL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 9 Dec 2019 17:05:11 -0500
+Received: from asavdk4.altibox.net ([109.247.116.15]:44050 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbfLIWFL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 9 Dec 2019 14:58:30 -0500
-Received: by mail-pg1-f194.google.com with SMTP id r11so7650310pgf.1;
-        Mon, 09 Dec 2019 11:58:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nmhGacrgUHbjwjf4YiCWKNLwcIuzYeR61NYEOZcH5G8=;
-        b=SfvmNGEz3IjWYxuwoEcO8shmSAU5du/S5aNBiDTMJpQT4XtBOnZJ1GE9W+9RvTI2WQ
-         npVlDvtTnb5lU/I7kOcET6VHlpfHuyWfwymr+y2lNQnTHwHxhUbCg3I1Iah3F8KWZkMT
-         nHhosGYrJRcL/sop1M5rwot8mpuORj98u5DQjFfdRlqj5xMjO/Q7SWyo6tczFUPj//sr
-         hxSihWIUndCjgzbcLAPbT0zOw535wvVzN96o4I6caBStgrOFl8zsFinRAosnVOZcp3t9
-         GsT/9LI6bK8nP9LOg2jpk/E7f8dIW+oBIzARXjWFoRKe/VHW8/5G+eGQq7PrH/bI9WCe
-         dhOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=nmhGacrgUHbjwjf4YiCWKNLwcIuzYeR61NYEOZcH5G8=;
-        b=JIbu09m8NogQmaib7Xz/rrJzVrO81iBoILQmK3eswbvg7Zfl4ygETC1nHSZ32iUs3d
-         KI8PcwTO8RZmi1h3CPjK7lkfeJ+rmfpBtwz/AfUN0bTiWcxgV5399SL2bNymINl6DjJt
-         i8OUMPP0H83nJPVh4qIQ2fGNL7zVNnBTys1tTLbUKdTcZqE/sGDXv8frgSyZJdS6C8j+
-         J3ZdAjS8nMxRkq37vf/1ykXqn9c7gHc64CKEBtyJX3Ty9fpuF+xq5G7Y7HSAPfPU6f/2
-         k0dfdKp2EyC6MDCP4JreC48C4xqxIKLKLH1DImTfFiH+IJwbSyvqO6EV8AD9+Su6xtkZ
-         HLVA==
-X-Gm-Message-State: APjAAAXwEClr4/VubBHai5Wm1EfB38JCjBKoM6gPMIOlPc2BqwCGO+SK
-        icsFboADUBEgIkC3EaghgTg=
-X-Google-Smtp-Source: APXvYqzDVcsF4Khq7eE4x0IkNwfLh0WRPmgIHhrLa7Br8O4RSImpU5KOUcjmHxIETkRz+zep0mS+Ww==
-X-Received: by 2002:a62:1c4:: with SMTP id 187mr17758703pfb.184.1575921510177;
-        Mon, 09 Dec 2019 11:58:30 -0800 (PST)
-Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id s18sm316906pfm.27.2019.12.09.11.58.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Dec 2019 11:58:29 -0800 (PST)
-From:   Yangtao Li <tiny.windzz@gmail.com>
-To:     afaerber@suse.de, manivannan.sadhasivam@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        Eugeniy.Paltsev@synopsys.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, agross@kernel.org, s.nawrocki@samsung.com,
-        tomasz.figa@gmail.com, cw00.choi@samsung.com, kgene@kernel.org,
-        krzk@kernel.org, palmer@sifive.com, paul.walmsley@sifive.com,
-        dinguyen@kernel.org, mripard@kernel.org, wens@csie.org,
-        emilio@elopez.com.ar, pdeschrijver@nvidia.com, pgaikwad@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        matthias.bgg@gmail.com, rfontana@redhat.com,
-        gregkh@linuxfoundation.org, t-kristo@ti.com, john@phrozen.org,
-        tglx@linutronix.de, allison@lohutok.net,
-        kstewart@linuxfoundation.org, swinslow@gmail.com,
-        aisheng.dong@nxp.com, robh@kernel.org, daniel.baluta@nxp.com,
-        weiyongjun1@huawei.com, wangyan.wang@mediatek.com,
-        chunhui.dai@mediatek.com, miquel.raynal@bootlin.com,
-        heiko@sntech.de, jcmvbkbc@gmail.com, nsekhar@ti.com,
-        geert+renesas@glider.be
-Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 17/17] ARC: clk: convert to devm_platform_ioremap_resource
-Date:   Mon,  9 Dec 2019 19:57:49 +0000
-Message-Id: <20191209195749.868-17-tiny.windzz@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191209195749.868-1-tiny.windzz@gmail.com>
-References: <20191209195749.868-1-tiny.windzz@gmail.com>
+        Mon, 9 Dec 2019 17:05:11 -0500
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 9E94580514;
+        Mon,  9 Dec 2019 23:05:01 +0100 (CET)
+Date:   Mon, 9 Dec 2019 23:04:59 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     dri-devel@lists.freedesktop.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jitao Shi <jitao.shi@mediatek.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Purism Kernel Team <kernel@puri.sm>,
+        Sean Paul <sean@poorly.run>, Stefan Agner <stefan@agner.ch>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>
+Subject: Re: [PATCH v2 0/25] drm/panel infrastructure + backlight update
+Message-ID: <20191209220459.GA11015@ravnborg.org>
+References: <20191207140353.23967-1-sam@ravnborg.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191207140353.23967-1-sam@ravnborg.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=VcLZwmh9 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10
+        a=-e7YKnP9ej6YZVhYjlAA:9 a=CjuIK1q_8ugA:10
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Use devm_platform_ioremap_resource() to simplify code.
+On Sat, Dec 07, 2019 at 03:03:28PM +0100, Sam Ravnborg wrote:
+> This patchset include a couple of different
+> things - all related to panels.
+> 
+> - The callbacks are optional - so drop error if
+>   callback is not present.
+>  
+> - Add support for backlight in drm_panel.
+>   This allows us to make much simpler backlight
+>   support to most panels.
+>   The patchset include conversion of most of the
+>   trivial cases.
+> 
+> - Drop drm_connector from drm_panel.
+>   This change required many changes to most
+>   panels and many bridges and display drivers.
+>   This is by far the most invasive change in this patchset.
+> 
+> With this patchset drm_panel_(attach|detach) are nop's
+> but they are kept for now.
+> 
+> A few of these patches has been sent out before - but versioning
+> started again from v1 - as the most patches are new.
+> 
+> I have tested the panel-simple changes, and thus some
+> of the infrastructure changes.
+> The testing was done on an earlier iteration - and I ended
+> up submitting this as Laurent and others started to depend on it.
+> 
+> v2:
+>   This is mostly addressing comments from Laurent.
+>   - drop get_timings removal, we should start using it
+>   - do not fail in drm_panel_of_backlight() if DT is not enabled
+>   - updated changelogs and code comments in many places (thanks Laurent!)
+>   - get_modes is a mandatory callback - return -EOPNOTSUPP if not specified
+>   - log if backlight update fails
+>   - added a-b/r-bs
+>     o thanks to Laurent and Linus for the prompt reviews!
+> 
+> When "drm/panel: add backlight support" is reviewed I plan to
+> apply the full series to drm-misc-next.
 
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
----
- drivers/clk/clk-hsdk-pll.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Fixed the last bits pointed out by Laurent and pushed to drm-misc-next.
 
-diff --git a/drivers/clk/clk-hsdk-pll.c b/drivers/clk/clk-hsdk-pll.c
-index 97d1e8c35b71..155f2af65361 100644
---- a/drivers/clk/clk-hsdk-pll.c
-+++ b/drivers/clk/clk-hsdk-pll.c
-@@ -299,7 +299,6 @@ static const struct clk_ops hsdk_pll_ops = {
- static int hsdk_pll_clk_probe(struct platform_device *pdev)
- {
- 	int ret;
--	struct resource *mem;
- 	const char *parent_name;
- 	unsigned int num_parents;
- 	struct hsdk_pll_clk *pll_clk;
-@@ -310,8 +309,7 @@ static int hsdk_pll_clk_probe(struct platform_device *pdev)
- 	if (!pll_clk)
- 		return -ENOMEM;
- 
--	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	pll_clk->regs = devm_ioremap_resource(dev, mem);
-+	pll_clk->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(pll_clk->regs))
- 		return PTR_ERR(pll_clk->regs);
- 
--- 
-2.17.1
-
+	Sam
