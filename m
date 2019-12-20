@@ -2,97 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B3AD7127A8B
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2019 13:02:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EA1C12853C
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2019 23:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727511AbfLTMCA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 20 Dec 2019 07:02:00 -0500
-Received: from foss.arm.com ([217.140.110.172]:50074 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727473AbfLTMB7 (ORCPT
+        id S1726470AbfLTWx0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 20 Dec 2019 17:53:26 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:41396 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726030AbfLTWx0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 20 Dec 2019 07:01:59 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 057D430E;
-        Fri, 20 Dec 2019 04:01:59 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B3D843F719;
-        Fri, 20 Dec 2019 04:01:57 -0800 (PST)
-Date:   Fri, 20 Dec 2019 12:01:54 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Tzung-Bi Shih <tzungbi@google.com>,
-        ALSA development <alsa-devel@alsa-project.org>,
-        Dylan Reid <dgreid@google.com>,
-        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Takashi Iwai <tiwai@suse.de>
-Subject: Re: [alsa-devel] [PATCH v2] ASoC: max98090: save and restore SHDN
- when changing sensitive registers
-Message-ID: <20191220120154.GB4790@sirena.org.uk>
-References: <20191218162422.GG3219@sirena.org.uk>
- <ef908cb8-875e-4339-33bd-5997b594f022@samsung.com>
- <20191219123709.GB5047@sirena.org.uk>
- <aba9f63c-d993-e54e-4daa-9dbc35d0683b@samsung.com>
- <20191219130559.GE5047@sirena.org.uk>
- <a10269be-8caf-6e07-71c6-582a1d2c1458@samsung.com>
- <CGME20191219191651epcas5p2ab8031875093df401d9182e7c491eb3d@epcas5p2.samsung.com>
- <20191219191646.GH5047@sirena.org.uk>
- <b0e57646-8a14-e6c0-9daa-28c353dcb77a@samsung.com>
- <31bde14e-1fef-264a-ba1e-fc3051506bf3@samsung.com>
+        Fri, 20 Dec 2019 17:53:26 -0500
+Received: by mail-il1-f196.google.com with SMTP id f10so9285944ils.8;
+        Fri, 20 Dec 2019 14:53:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gfJyvbzdjRRE9mbB4EZAlkviKQGe4qIe+Xz7HY9aEuM=;
+        b=aIBqxl23vZ8c0QArmatsB3uRdRwHb5m27TcqSF4BEkc0XqqjA0tjdhqlfgBYUgvK/R
+         xi7hsrBO6wCP0sRoLMygtWZKYL8KPA6A8NIohYMOEP0VYi9EoT3bfFtrzK9Dg13cwuHZ
+         OAhfOoQF3kqMlWL0TdBus7swliuj4DX/bkX65Us/LgeB8uQgy2UZSu2l8aaLOqv2Jir4
+         uFJ/Q1USS6larwtkqa6iFGFLtECWZ5LrnSM24yuWftLXWluujYJpVBQ4XhEY2LLDhrmp
+         Guyrr957aoVFNN6TWRXYxSL9AG9gbZS6yYmnN/G612sqBa6cYl0sFXTxYkR0ARdEf2Bn
+         88lQ==
+X-Gm-Message-State: APjAAAXDOWvMKTE75VENC0E6a+NgWoo+D+HQuCaRP8EDIIpsue8PapBW
+        2g4fNQw/DELiXEtkPUaEBA==
+X-Google-Smtp-Source: APXvYqw7OYFLkTge6J7y1//6QDQ+9JwMiyNGQaRAZBxuTLFcST/PLF3dXOQOVRZzDiAN2/x9nZfqbA==
+X-Received: by 2002:a92:465c:: with SMTP id t89mr15163877ila.263.1576882405135;
+        Fri, 20 Dec 2019 14:53:25 -0800 (PST)
+Received: from localhost ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id l15sm3880575iom.81.2019.12.20.14.53.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2019 14:53:24 -0800 (PST)
+Date:   Fri, 20 Dec 2019 15:53:23 -0700
+From:   Rob Herring <robh@kernel.org>
+To:     Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Cc:     Benjamin Gaignard <benjamin.gaignard@st.com>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "kgene@kernel.org" <kgene@kernel.org>,
+        "krzk@kernel.org" <krzk@kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "amelie.delaunay@st.com" <amelie.delaunay@st.com>
+Subject: Re: [PATCH v2 0/2] Add yaml DWC2 bindings
+Message-ID: <20191220225323.GA26563@bogus>
+References: <20191219103536.25485-1-benjamin.gaignard@st.com>
+ <c6101bcb-1491-b9ce-b0f8-e50826202ee3@synopsys.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gatW/ieO32f1wygP"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <31bde14e-1fef-264a-ba1e-fc3051506bf3@samsung.com>
-X-Cookie: I think we're in trouble.
+In-Reply-To: <c6101bcb-1491-b9ce-b0f8-e50826202ee3@synopsys.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Thu, Dec 19, 2019 at 12:54:27PM +0000, Minas Harutyunyan wrote:
+> Hi Benjamin,
+> 
+> On 12/19/2019 2:35 PM, Benjamin Gaignard wrote:
+> > Convert DWC2 bindings to json-schema and fix issue in dtsi file.
+> > 
+> > Benjamin Gaignard (2):
+> >    dt-bindings: usb: Convert DWC2 bindings to json-schema
+> >    ARM: dts: exynos: Remove unneeded "snps,dwc2" from hsotg node
+> > 
+> >   Documentation/devicetree/bindings/usb/dwc2.txt  |  64 ----------
+> >   Documentation/devicetree/bindings/usb/dwc2.yaml | 152 ++++++++++++++++++++++++
+> >   arch/arm/boot/dts/exynos3250.dtsi               |   2 +-
+> >   3 files changed, 153 insertions(+), 65 deletions(-)
+> >   delete mode 100644 Documentation/devicetree/bindings/usb/dwc2.txt
+> >   create mode 100644 Documentation/devicetree/bindings/usb/dwc2.yaml
+> > 
+> 
+> In Maintainers file mentioned that EHCI and OHCI drivers maintainer is 
+> Alan Stern, but in 2 existing yaml files (generic-ehci.yaml and 
+> generic-ohci.yaml) mentioned that maintainer is Greg Kroah-Hartman.
+> So, I'm not sure that in dwc2.yaml file should be written me.
+> Actually I'm not familiar with documentation/bindings.
 
---gatW/ieO32f1wygP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Someone familar with DWC2 IP is ideal really.
 
-On Fri, Dec 20, 2019 at 10:05:52AM +0100, Marek Szyprowski wrote:
-> On 20.12.2019 09:28, Marek Szyprowski wrote:
-
-> > I've tried initially to cherry-pick it to v5.4, but the the code=20
-> > didn't compile due to lack of some macros, so I've gave up trying. I=20
-> > will check that now and backport needed macros too if you think this=20
-> > would help.
-
-> Same issue. I've tried backporting it to each kernel release: 5.4, 5.3,=
-=20
-> 5.2, 5.1 and 5.0 (with additional backporting "ASoC: core: add=20
-> SND_SOC_BYTES_E" and "ASoC: Define a set of DAPM pre/post-up events").=20
-> In all cases the lockdep warning and oops is the same. Backporting to=20
-> v4.9 requires more changes to get it even compiled, so I gave up.
-
-OK, thanks - that's definitely not the recent refactorings then but
-something that's been a problem for a long time.  I'm surprised nobody
-else ran into anything if that's the case...
-
---gatW/ieO32f1wygP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl38uDIACgkQJNaLcl1U
-h9DDwQf/RpDA3CXzUmuNP7lNm2NA589ZoMyxBTqzZ5LEEXZlnhOgrjiX5aYJg8Py
-4+/lSkFqCbyXPZ8v09HkgVYeSX7uk35axOOxaNwcLI5s+/APia7vEx+ni91mierJ
-rOoOBaKJ+uFhtZ2Zjxr2icu6HsjVbd7uUb5MIQDHjtdZuQ5Q++2E/jlixv/pd2LP
-r27kWtDldOALwJbG0eZk5in2q2PdRsA8ZdlQjt7hFlXF9NaqTn4sQ+6DwscmS0uZ
-0SUvLEu1OOzOdqq0nrr/GaEwmxsq68S/ZRDoz60LAKDmsO4ByoWdM+7NgT9UrCu7
-9C4jPeUPe1CtO/aFXlo3tq/+FgqLlw==
-=3XTz
------END PGP SIGNATURE-----
-
---gatW/ieO32f1wygP--
+Rob
