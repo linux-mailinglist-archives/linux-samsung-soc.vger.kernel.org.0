@@ -2,104 +2,155 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CDC9D128F70
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Dec 2019 19:51:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66B5112907C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Dec 2019 01:41:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726994AbfLVSu5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 Dec 2019 13:50:57 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:44635 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726943AbfLVSuv (ORCPT
+        id S1726166AbfLWAlU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 22 Dec 2019 19:41:20 -0500
+Received: from mailout1.samsung.com ([203.254.224.24]:40199 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726215AbfLWAlT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 Dec 2019 13:50:51 -0500
-Received: by mail-pl1-f193.google.com with SMTP id az3so6311496plb.11;
-        Sun, 22 Dec 2019 10:50:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=obMvYqnbW6FnclvcaTw1U7yQPLStwyHiLSMoMgJ8DMo=;
-        b=RdmiiwF6babAQFWUpUGLy2DZqAwZAi8V33zgiNx7dj87h8phOlTYHtZOMDCQtXFOit
-         coQqalsXFCLZlPp6YJ4THC2t7m8EEi9PnxcIXgnqBv8YojpdwQ8b1z12w3XbHM6gRe2N
-         9cXHFVzTg5EsYmr3AiWsmm30sn/yrNbhfuYIlptfe1Mjzl/GJ0cPIIf7zQeTlWRApwyt
-         ceX5KsTvJkHVzT/jsg270BpkQa+0B9D2w9kYdnxox243iMIwwKPCl092zGtmcZOreNl2
-         ops0dZYFpd4iyt33sNOKbW/8D9fDi76pS+zAn59mN4DcCTF39VQKSGfc5uBhAnozFnSr
-         F3RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=obMvYqnbW6FnclvcaTw1U7yQPLStwyHiLSMoMgJ8DMo=;
-        b=G8PYNmtuMvR6IFaeFdzhSdc8bErBVwYddSXJNs9sGiXm8DFWCkIpqr3X5pU4S8agP1
-         jBky9OWRuIYr9C+ddhq5IYKTAlM4nARrJaddy1S6Fd0BCha08t92Mg0izesKZrv6KG6h
-         7CQN5HMFQokdrlJBU3DedCDc5XyTGCWmbPGrlhrF9ZfmKQk4xxKqSNWsAxIWcYRt4OYq
-         FlCOiNR7F+0krsWl8PxUujbHcSkHaOcxb9/Cty7IYngZIZWjZgOERoASiNLRa5FNmBgK
-         5kN/7M7EQL2dbN0mPCgWyuAV9q1srnNCOa4jE5/D8e6uVcDHFgggo/NoRG3uRHSwgCR+
-         6TxA==
-X-Gm-Message-State: APjAAAUOrQ+8mwvA+9oANuSbpUlFpmm342QAwKLAVR9gEee0kd3YcPYE
-        EpreUJaFfcvXs59AGN0FyS+dXIeY/no=
-X-Google-Smtp-Source: APXvYqynfZtZtMfgSs1bDem4Zo+v6lSrgRDKxVTy4vingOzHr5+fBrYwncpXVgh6n1vtEUTebtVYcQ==
-X-Received: by 2002:a17:902:6bc9:: with SMTP id m9mr26918356plt.260.1577040650351;
-        Sun, 22 Dec 2019 10:50:50 -0800 (PST)
-Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id x8sm21284906pfd.76.2019.12.22.10.50.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 22 Dec 2019 10:50:49 -0800 (PST)
-From:   Yangtao Li <tiny.windzz@gmail.com>
-To:     ssantosh@kernel.org, paul@crapouillou.net, matthias.bgg@gmail.com,
-        rogerq@ti.com, tony@atomide.com, lukasz.luba@arm.com,
-        kgene@kernel.org, krzk@kernel.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, allison@lohutok.net, tglx@linutronix.de,
-        yong.wu@mediatek.com, jroedel@suse.de, evgreen@chromium.org,
-        rfontana@redhat.com, digetx@gmail.com, pdeschrijver@nvidia.com,
-        john@phrozen.org, alexios.zavras@intel.com, sboyd@kernel.org,
-        kstewart@linuxfoundation.org, info@metux.net,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        Sun, 22 Dec 2019 19:41:19 -0500
+Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20191223004116epoutp013d324a3652bdfcb74e2b070514d8a708~i2T0sYd8b0392603926epoutp01L
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 Dec 2019 00:41:16 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20191223004116epoutp013d324a3652bdfcb74e2b070514d8a708~i2T0sYd8b0392603926epoutp01L
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1577061676;
+        bh=hfxb9FOBtElm++yJSXU9+y6s3nokJd85p/wnbCA7/UA=;
+        h=Subject:To:From:Date:In-Reply-To:References:From;
+        b=BeqgRthAn7xyDHJ+pPZLn35WtaFt/iMDgIesKzs+8MI/e8/udTJ/tUQp33nwzI9//
+         KaHGXHh04vhttZ+8Y2jlMJf1sdVt0jhkz+VWR+1QloKtVCKxTmlo/UQiW1y6/rWZHs
+         TDLAdkbjQHl8KTOgpyW1VIAiAFBVBGmruqKDd5tQ=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+        20191223004115epcas1p3d0e18be02c3650b125600ae0d77531ab~i2T0LFzS61722617226epcas1p3x;
+        Mon, 23 Dec 2019 00:41:15 +0000 (GMT)
+Received: from epsmges1p2.samsung.com (unknown [182.195.40.158]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 47h0rw1WQ6zMqYkb; Mon, 23 Dec
+        2019 00:41:04 +0000 (GMT)
+Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
+        epsmges1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C2.4A.48498.A1D000E5; Mon, 23 Dec 2019 09:40:58 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20191223004058epcas1p21cbd51d53345b21a8737fc6e08feac24~i2Tjqqr_c2954529545epcas1p2L;
+        Mon, 23 Dec 2019 00:40:58 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20191223004057epsmtrp15671f4ce27c4b03c7e6491f7c725de16~i2Tjp36AA3041230412epsmtrp1p;
+        Mon, 23 Dec 2019 00:40:57 +0000 (GMT)
+X-AuditID: b6c32a36-a3dff7000001bd72-de-5e000d1aad2f
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        09.5E.06569.91D000E5; Mon, 23 Dec 2019 09:40:57 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20191223004057epsmtip1bc50f03921a346acf8352a324b94b2f3~i2Tjek2bG2788127881epsmtip1m;
+        Mon, 23 Dec 2019 00:40:57 +0000 (GMT)
+Subject: Re: [PATCH v2 2/2] PM / devfreq: exynos-bus: Disable devfreq-event
+ device when fails
+To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
         linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 9/9] memory: omap-gpmc: switch to platform_get_irq
-Date:   Sun, 22 Dec 2019 18:50:34 +0000
-Message-Id: <20191222185034.4665-9-tiny.windzz@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191222185034.4665-1-tiny.windzz@gmail.com>
-References: <20191222185034.4665-1-tiny.windzz@gmail.com>
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <ca7f5eb8-d549-a170-f952-90e5882b233d@samsung.com>
+Date:   Mon, 23 Dec 2019 09:47:43 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
+        Thunderbird/59.0
+MIME-Version: 1.0
+In-Reply-To: <20191222174132.3701-2-tiny.windzz@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHJsWRmVeSWpSXmKPExsWy7bCmrq4UL0OcwfznvBb9j18zW5w/v4Hd
+        4mzTG3aLTY+vsVpc3jWHzeJz7xFGixnn9zFZ3G5cwWYx9/cENgdOj52z7rJ7bFrVyeaxeUm9
+        R9+WVYwenzfJBbBGZdtkpCampBYppOYl56dk5qXbKnkHxzvHm5oZGOoaWlqYKynkJeam2iq5
+        +AToumXmAN2jpFCWmFMKFApILC5W0rezKcovLUlVyMgvLrFVSi1IySmwLNArTswtLs1L10vO
+        z7UyNDAwMgUqTMjOWH/yFWPBE86Kj439TA2Mb9m7GDk5JARMJDb/38/cxcjFISSwg1Hi4+RT
+        UM4nRom3U/awQDjfgJyGB6wwLd8v9bJDJPYySrz79Q6q5T2jxP1GkBZODmGBeInm7zPA2kUE
+        Wpkk1m+ZAJZgE9CS2P/iBhuIzS+gKHH1x2PGLkYODl4BO4mmdcYgYRYBVYn5K6cyg9iiAmES
+        J7e1MILYvAKCEidnPgEbwylgJdHUdRjsImYBcYlbT+YzQdjyEtvfzgE7SELgM5vEsicTmEDm
+        Swi4SLxaHQbxgbDEq+NboAEgJfGyvw3KrpZYefIIG0RvB6PElv0XoF42lti/dDLYHGYBTYn1
+        u/QhwooSO3/PZYTYyyfx7msPK8QqXomONiGIEmWJyw/uMkHYkhKL2zvZIGwPiU+f29kmMCrO
+        QvLZLCTfzELyzSyExQsYWVYxiqUWFOempxYbFhghx/YmRnBa1TLbwbjonM8hRgEORiUeXo5Z
+        /2OFWBPLiitzDzFKcDArifDurv0bK8SbklhZlVqUH19UmpNafIjRFBjwE5mlRJPzgSk/ryTe
+        0NTI2NjYwsTQzNTQUEmcl+PHxVghgfTEktTs1NSC1CKYPiYOTqkGxp0/3t1b+vPqI64fUn/e
+        Xf+e3ZYvyM62P2Amk1hu6f8zOlPYZ2r8uR2lcPXpyt3Lfc8vb338kknsRg238CO2Z3JBfDJt
+        ThdYfz0K3JATbRqwKmrC1zrjpXPly+fsvdTv037pzF2Wb+c/Hbdv1u3Kzdykderg11drzvNu
+        SX5zXpB9ecWDdfFdWwqVWIozEg21mIuKEwG+DUovwQMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplkeLIzCtJLcpLzFFi42LZdlhJTleSlyHOYOZSC4v+x6+ZLc6f38Bu
+        cbbpDbvFpsfXWC0u75rDZvG59wijxYzz+5gsbjeuYLOY+3sCmwOnx85Zd9k9Nq3qZPPYvKTe
+        o2/LKkaPz5vkAlijuGxSUnMyy1KL9O0SuDLWn3zFWPCEs+JjYz9TA+Nb9i5GTg4JAROJ75d6
+        gWwuDiGB3YwSLxp3MEMkJCWmXTwKZHMA2cIShw8XQ9S8ZZT4NGsJWI2wQLxE8/cZLCAJEYFW
+        JomFN+awQlTtZZR49LefFaSKTUBLYv+LG2wgNr+AosTVH48ZQabyCthJNK0zBgmzCKhKzF85
+        FWyoqECYxM4lj5lAbF4BQYmTM5+wgNicAlYSTV2HwUYyC6hL/Jl3iRnCFpe49WQ+E4QtL7H9
+        7RzmCYxCs5C0z0LSMgtJyywkLQsYWVYxSqYWFOem5xYbFhjlpZbrFSfmFpfmpesl5+duYgRH
+        kpbWDsYTJ+IPMQpwMCrx8HLM+h8rxJpYVlyZe4hRgoNZSYR3d+3fWCHelMTKqtSi/Pii0pzU
+        4kOM0hwsSuK88vnHIoUE0hNLUrNTUwtSi2CyTBycUg2M7hXb5pVENRj8P66avz61WPnas9i9
+        ra5nZ0sk6Qa9DXtzzWLDao5TXKdlnbnZbG6E8ohumMo5vehhh+Mr/kjLIrlZslW5Ta80RJNa
+        uBw+Per71681e6YB4y73K1LvA2QPFMx+Me/zF7kmt9DHt4PeHWA1vuh1Z9MNL7/na2Iau3yn
+        2j7SOPBfiaU4I9FQi7moOBEA+RjZH6ACAAA=
+X-CMS-MailID: 20191223004058epcas1p21cbd51d53345b21a8737fc6e08feac24
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20191222174142epcas1p4ad50cacad72ab368b07ee0ebc680c9b3
+References: <20191222174132.3701-1-tiny.windzz@gmail.com>
+        <CGME20191222174142epcas1p4ad50cacad72ab368b07ee0ebc680c9b3@epcas1p4.samsung.com>
+        <20191222174132.3701-2-tiny.windzz@gmail.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-platform_get_resource(pdev, IORESOURCE_IRQ) is not recommended for
-requesting IRQ's resources, as they can be not ready yet. Using
-platform_get_irq() instead is preferred for getting IRQ even if it
-was not retrieved earlier.
+On 12/23/19 2:41 AM, Yangtao Li wrote:
+> The exynos_bus_profile_init process may fail, but the devfreq event device
+> remains enabled. Call devfreq_event_disable_edev on the error return path.
+> 
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> ---
+> v2:
+> -change subject
+> -rename lable to err_edev
+> -add return value check
+> ---
+>  drivers/devfreq/exynos-bus.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
+> index 7f5917d59072..948e9340f91c 100644
+> --- a/drivers/devfreq/exynos-bus.c
+> +++ b/drivers/devfreq/exynos-bus.c
+> @@ -335,10 +335,17 @@ static int exynos_bus_profile_init(struct exynos_bus *bus,
+>  	ret = exynos_bus_set_event(bus);
+>  	if (ret < 0) {
+>  		dev_err(dev, "failed to set event to devfreq-event devices\n");
+> -		return ret;
+> +		goto err_edev;
+>  	}
+>  
+>  	return 0;
+> +
+> +err_edev:
+> +	ret = exynos_bus_disable_edev(bus);
+> +	if (ret < 0)
+> +		dev_warn(dev, "failed to disable the devfreq-event devices\n");
+> +
+> +	return ret;
+>  }
+>  
+>  static int exynos_bus_profile_init_passive(struct exynos_bus *bus,
+> 
 
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
----
- drivers/memory/omap-gpmc.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+Applied it.
 
-diff --git a/drivers/memory/omap-gpmc.c b/drivers/memory/omap-gpmc.c
-index eff26c1b1394..6dd19d168f75 100644
---- a/drivers/memory/omap-gpmc.c
-+++ b/drivers/memory/omap-gpmc.c
-@@ -2366,13 +2366,9 @@ static int gpmc_probe(struct platform_device *pdev)
- 	if (IS_ERR(gpmc_base))
- 		return PTR_ERR(gpmc_base);
- 
--	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
--	if (!res) {
--		dev_err(&pdev->dev, "Failed to get resource: irq\n");
--		return -ENOENT;
--	}
--
--	gpmc->irq = res->start;
-+	gpmc->irq = platform_get_irq(pdev, 0);
-+	if (gpmc->irq < 0)
-+		return gpmc->irq;
- 
- 	gpmc_l3_clk = devm_clk_get(&pdev->dev, "fck");
- 	if (IS_ERR(gpmc_l3_clk)) {
 -- 
-2.17.1
-
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
