@@ -2,79 +2,59 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC264129EAE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Dec 2019 08:53:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 698C2129F6A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Dec 2019 09:47:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726069AbfLXHxQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 24 Dec 2019 02:53:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44532 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725993AbfLXHxQ (ORCPT
+        id S1726262AbfLXIrN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Dec 2019 03:47:13 -0500
+Received: from mail-qv1-f65.google.com ([209.85.219.65]:33452 "EHLO
+        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726251AbfLXIrN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 24 Dec 2019 02:53:16 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 06B94206CB;
-        Tue, 24 Dec 2019 07:53:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577173995;
-        bh=ss6SNZY7yxQMuzFaKEyRWPfihgPgQFpbgyayg0eP2jk=;
-        h=In-Reply-To:References:Cc:From:To:Subject:Date:From;
-        b=dru+BUA9QuMc2DEHX8dfIfn4aU2IpNgBALSQE7pZP+/8ZX+6ZIV5l9XweeD6ZdYbe
-         Y8W1R9X3hsJsanIvkEU0oc4hC54x4K6d0BzPT8rqTDXcRv4PbYDsLuUo7cuQCLbqpL
-         nzUQEhSz2uq1In8apV6bKmWZbuSToA4MLyacDon4=
-Content-Type: text/plain; charset="utf-8"
+        Tue, 24 Dec 2019 03:47:13 -0500
+Received: by mail-qv1-f65.google.com with SMTP id z3so7273860qvn.0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Dec 2019 00:47:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=LcGU1mt+nAQIi3eKcWZpiy7DqrkNG23tK1MNYV9CB+M=;
+        b=PQC8SYLCXx+8aDuDCLCwJgk2oQh3fLzHmMXwhB5xY3bef3Vo9nrhk4Yg6HHmflz15A
+         odr7sEsXszk5IefLinD2h+1zq4e88FBObg36SZAuPRqSewet3Ta9S7nYrpgVd56Fd7Nn
+         pF4UOpFqHS/vFlCYHvNiKKET749oMuh6ba4SGm84XHPjlJH1jZ6bNkVeqECOxLVvUm4D
+         QLX5/qOjMF+sSc2kOy8uf2Xg/YtEl3CfJAdSFbQYNBLHe5VpSisBe2Vhsy7I7HtuscWQ
+         RrXf3skZb21QSlq2mtaYGqsirOIfAXY2wSc5lCy61V/R0NEOho5Faf+a1vRLR5TL05Tc
+         J2BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=LcGU1mt+nAQIi3eKcWZpiy7DqrkNG23tK1MNYV9CB+M=;
+        b=pAHTEnT96Rjyuiut/8sTz3drROTg3Amr6wn8wG5n5tUFdWqXzMQ/uxQKvGM4fkq8r9
+         4YgJqM7UPzIv7uJZRJiMBu1orNZmO9e1QPERcx2Xl1z9YCDczvQt8GcoJbS2j6Hxua1D
+         YGYoXQvca9oNBvj8tjaOJD12xkjgxXF6VLJJEkdqt2R0aybXkkCBWwm8thqbJkSPovth
+         Qg4vrrgSAJfoImn2W1Ovx9Jy97eo27u+5Q79fBpwKTevDQRxGyTNqsgraZjK9rPW6ihS
+         +cTXed0ACXuvIj8dbiyohHHnPN6JGRHHN1OSIrm7S/JayuPSKnmQOGUbr3f23LmVZoI2
+         8B1A==
+X-Gm-Message-State: APjAAAXLJkACb0fdClI/PSwEXjWFaZL7C2+a3PysJcQKctAKzOSrDvPI
+        nU8xJe6qD0GAFrrjL/D1BZTXOPquxj1jmO142Y0=
+X-Google-Smtp-Source: APXvYqzaLbNYw7chXTk9TUUPs6B60DWqUF5k2s4P095bxLhv0swSj+2PMPeIkcEn8uNvF34hBR2yK95ka1103zSo7Q4=
+X-Received: by 2002:a0c:f24a:: with SMTP id z10mr28100861qvl.33.1577177231005;
+ Tue, 24 Dec 2019 00:47:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191216131407.17225-1-m.szyprowski@samsung.com>
-References: <CGME20191216131423eucas1p2162d6bf0a870357be9f0ab308641015b@eucas1p2.samsung.com> <20191216131407.17225-1-m.szyprowski@samsung.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marian Mihailescu <mihailescu2m@gmail.com>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-clk@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v2] clk: samsung: exynos5420: Keep top G3D clocks enabled
-User-Agent: alot/0.8.1
-Date:   Mon, 23 Dec 2019 23:53:14 -0800
-Message-Id: <20191224075315.06B94206CB@mail.kernel.org>
+Received: by 2002:ad4:530a:0:0:0:0:0 with HTTP; Tue, 24 Dec 2019 00:47:10
+ -0800 (PST)
+Reply-To: bethnatividad9@gmail.com
+From:   Beth Nat <anthonymoore105@gmail.com>
+Date:   Tue, 24 Dec 2019 08:47:10 +0000
+Message-ID: <CAKqrdYCjdg7tKr1Bgbtcoo-HGDCypDL8xnV8R2ZpiJxfRimm-A@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Marek Szyprowski (2019-12-16 05:14:07)
-> In Exynos542x/5800 SoCs, the G3D leaf clocks are located in the G3D power
-> domain. This is similar to the other hardware modules and their power
-> domains. However there is one thing specific to G3D clocks hierarchy.
-> Unlike other hardware modules, the G3D clocks hierarchy doesn't have any
-> gate clock between the TOP part of the hierarchy and the part located in
-> the power domain and some SoC internal busses are sourced directly from
-> the TOP muxes. The consequence of this design if the fact that the TOP
-> part of the hierarchy has to be enabled permanently to ensure proper
-> operation of the SoC power related components (G3D power domain and
-> Exynos Power Management Unit for system suspend/resume).
->=20
-> This patch adds an explicit call to clk_prepare_enable() on the last MUX
-> in the TOP part of G3D clock hierarchy to keep it enabled permanently to
-> ensure that the internal busses get their clock regardless of the main
-> G3D clock enablement status.
->=20
-> This fixes following imprecise abort issue observed on Odroid XU3/XU4
-> after enabling Panfrost driver by commit 1a5a85c56402 "ARM: dts: exynos:
-> Add Mali/GPU node on Exynos5420 and enable it on Odroid XU3/4"):
->=20
-> panfrost 11800000.gpu: clock rate =3D 400000000
-> panfrost 11800000.gpu: failed to get regulator: -517
-> panfrost 11800000.gpu: regulator init failed -517
-> Power domain G3D disable failed
-> ...
-> panfrost 11800000.gpu: clock rate =3D 400000000
-> 8<--- cut here ---
-
-Applied to clk-fixes
-
+How are you today my dear? i saw your profile and it interests me, i
+am a Military nurse from USA. Can we be friend? I want to know more
+about you.
