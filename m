@@ -2,78 +2,125 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 787D012B6E3
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Dec 2019 18:46:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F3CB12BCE4
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 28 Dec 2019 07:44:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728753AbfL0RpV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 27 Dec 2019 12:45:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43938 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728728AbfL0RpV (ORCPT
+        id S1726018AbfL1GoF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 28 Dec 2019 01:44:05 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:47001 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725857AbfL1GoF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 27 Dec 2019 12:45:21 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D990B24653;
-        Fri, 27 Dec 2019 17:45:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577468720;
-        bh=PA4FxnAk4aNpdZ8YIp/EAybWfqD/vW0X7F1oDdtjVRc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PTmrLJS84WQ+YPrO9GRHSju0t2ucBZl0NvJWQbxSGZSGMqoxZLAevGgte7UlIuFV8
-         X9+G3UPw287hXDCQ8R2O53iYwrbVT8SZuqZe0fjgxyvs9m2/zV8W1xxYck4Au2QiYY
-         ALO9PJVde7s2VSIHn9CTVwR7WjL7mfDdhDGEofOU=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Chuhong Yuan <hslester96@gmail.com>,
-        Inki Dae <inki.dae@samsung.net>,
-        Sasha Levin <sashal@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 74/84] drm/exynos: gsc: add missed component_del
-Date:   Fri, 27 Dec 2019 12:43:42 -0500
-Message-Id: <20191227174352.6264-74-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191227174352.6264-1-sashal@kernel.org>
-References: <20191227174352.6264-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        Sat, 28 Dec 2019 01:44:05 -0500
+Received: by mail-pf1-f196.google.com with SMTP id n9so7881360pff.13;
+        Fri, 27 Dec 2019 22:44:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=k/Zh0wd0iyh47HJcj26AK+VtSYrhhFOp9r5l6dctHRg=;
+        b=cQ87Up34bttOiGDEXDLiZ+4e4O19HR8fqNNWjDzMEWGjLJeDt12PbmxIzk/sHUID9c
+         yPTUXIf5hAOPK1T2/s1zzolWudNsW/MYZkhVlRhXpj3Q8czVxQcMThExn6rkBiilqYLq
+         dz6cInYDh3jNyF8o/vex+/jNRJSs1g+OnegrFoWJtB/Ygj9clWo4AGnQsxtPXXK+K/mg
+         Jpd7VylXheG7lEVoyg9PUUlvvGYkyMSef7i/+xpgeTk0nUggIvdaAyX7jBWjWjKBLOn/
+         aDjUziw1rZ2zHCWzWzdk0QbXv70r+eWvqiN1mNHhZyUnzLWetCycgQMezieDHqOWEB9M
+         ZCCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=k/Zh0wd0iyh47HJcj26AK+VtSYrhhFOp9r5l6dctHRg=;
+        b=FK2rWTEn6pV6l2yTXeVBouAkt4NWmYtWug4hwDTsB6A1NH/VSxJthyp5EcAK87Urbr
+         99Jn5C54XVE1rIHkJJl/yeM6ZFFyudu/FDI1k56ZYdweO4Dsn7qbdczEc04PfEb5TKVx
+         toUkGHYIdoADH+Lhulr4rfMSbfQb7ggbh6DzWNVH9Y2ikgwU27tH1zEscib5yqr+6/1S
+         74C8R+Ge1+PU2rnjt3EZeo19tXx+18RAIQhAf09QgIr+f+WmF5b/zykFnG4ZSx8c8t/+
+         VjHGZDjVv0guAACduzBMl1D9662q0rL5BBZz6M+jWEeiNZc3cnP25FQOePz0/tGLJKE2
+         /LCA==
+X-Gm-Message-State: APjAAAW53UDrefiJ0Ss4Pgn/DTsv1GR56+6rQU537nWXEiDWnDwwI/Zp
+        0f7a0LWcfQLqT40920u35b8=
+X-Google-Smtp-Source: APXvYqxS56Xo+lxmahknG9q55wIA+ODBR3wY7WgCdNMBd37PV7FVIa4xuPsJ37k352RZ05q1fDWlBA==
+X-Received: by 2002:a65:66d7:: with SMTP id c23mr60290506pgw.40.1577515444820;
+        Fri, 27 Dec 2019 22:44:04 -0800 (PST)
+Received: from localhost ([43.224.245.179])
+        by smtp.gmail.com with ESMTPSA id q15sm39751585pgi.55.2019.12.27.22.44.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 27 Dec 2019 22:44:04 -0800 (PST)
+From:   qiwuchen55@gmail.com
+To:     kgene@kernel.org, krzk@kernel.org, rjw@rjwysocki.net,
+        viresh.kumar@linaro.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, chenqiwu <chenqiwu@xiaomi.com>
+Subject: [PATCH] cpufreq: s3c: avoid use after free issue in xxx_cpufreq_reboot_notifier_evt()
+Date:   Sat, 28 Dec 2019 14:43:59 +0800
+Message-Id: <1577515439-14477-1-git-send-email-qiwuchen55@gmail.com>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Chuhong Yuan <hslester96@gmail.com>
+From: chenqiwu <chenqiwu@xiaomi.com>
 
-[ Upstream commit 84c92365b20a44c363b95390ea00dfbdd786f031 ]
+There is a potential UAF issue in xxx_cpufreq_reboot_notifier_evt() that
+the cpufreq policy of cpu0 has been released before using it. So we should
+make a judgement to avoid it.
 
-The driver forgets to call component_del in remove to match component_add
-in probe.
-Add the missed call to fix it.
-
-Signed-off-by: Chuhong Yuan <hslester96@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: chenqiwu <chenqiwu@xiaomi.com>
 ---
- drivers/gpu/drm/exynos/exynos_drm_gsc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/s3c2416-cpufreq.c | 11 ++++++++++-
+ drivers/cpufreq/s5pv210-cpufreq.c | 10 +++++++++-
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 7ba414b52faa..d71188b982cb 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -1292,6 +1292,7 @@ static int gsc_remove(struct platform_device *pdev)
+diff --git a/drivers/cpufreq/s3c2416-cpufreq.c b/drivers/cpufreq/s3c2416-cpufreq.c
+index 1069103..0f576ba 100644
+--- a/drivers/cpufreq/s3c2416-cpufreq.c
++++ b/drivers/cpufreq/s3c2416-cpufreq.c
+@@ -304,6 +304,7 @@ static int s3c2416_cpufreq_reboot_notifier_evt(struct notifier_block *this,
  {
- 	struct device *dev = &pdev->dev;
+ 	struct s3c2416_data *s3c_freq = &s3c2416_cpufreq;
+ 	int ret;
++	struct cpufreq_policy policy;
  
-+	component_del(dev, &gsc_component_ops);
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
+ 	mutex_lock(&cpufreq_lock);
+ 
+@@ -318,7 +319,15 @@ static int s3c2416_cpufreq_reboot_notifier_evt(struct notifier_block *this,
+ 	 */
+ 	if (s3c_freq->is_dvs) {
+ 		pr_debug("cpufreq: leave dvs on reboot\n");
+-		ret = cpufreq_driver_target(cpufreq_cpu_get(0), FREQ_SLEEP, 0);
++
++		memset(&policy, 0, sizeof(policy));
++		ret = cpufreq_get_policy(&policy, 0);
++		if (ret < 0) {
++			pr_debug("cpufreq: get no policy for cpu0\n");
++			return NOTIFY_BAD;
++		}
++
++		ret = cpufreq_driver_target(&policy, FREQ_SLEEP, 0);
+ 		if (ret < 0)
+ 			return NOTIFY_BAD;
+ 	}
+diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
+index 5d10030..d99b4b1 100644
+--- a/drivers/cpufreq/s5pv210-cpufreq.c
++++ b/drivers/cpufreq/s5pv210-cpufreq.c
+@@ -555,8 +555,16 @@ static int s5pv210_cpufreq_reboot_notifier_event(struct notifier_block *this,
+ 						 unsigned long event, void *ptr)
+ {
+ 	int ret;
++	struct cpufreq_policy *policy;
+ 
+-	ret = cpufreq_driver_target(cpufreq_cpu_get(0), SLEEP_FREQ, 0);
++	policy = cpufreq_cpu_get(0);
++	if (!policy) {
++		pr_debug("cpufreq: get no policy for cpu0\n");
++		return NOTIFY_BAD;
++	}
++
++	ret = cpufreq_driver_target(policy, SLEEP_FREQ, 0);
++	cpufreq_cpu_put(policy);
+ 	if (ret < 0)
+ 		return NOTIFY_BAD;
  
 -- 
-2.20.1
+1.9.1
 
