@@ -2,131 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 656AF130FB2
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jan 2020 10:44:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFF10131857
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jan 2020 20:10:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbgAFJo0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Jan 2020 04:44:26 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44716 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbgAFJo0 (ORCPT
+        id S1726701AbgAFTKH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Jan 2020 14:10:07 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34323 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726569AbgAFTKH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Jan 2020 04:44:26 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 195so25872308pfw.11;
-        Mon, 06 Jan 2020 01:44:26 -0800 (PST)
+        Mon, 6 Jan 2020 14:10:07 -0500
+Received: by mail-pf1-f196.google.com with SMTP id i6so20522639pfc.1;
+        Mon, 06 Jan 2020 11:10:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
-        bh=KtGrKb7t1nXkvA9RAp03OXaiGM0Udf6t6g9rmOrwqQA=;
-        b=h3uH4bw2GU+o7uTeRb6skr6Lw6iWOzi9RYNZW+55FiG0+SlNjQei6NHPEjTEDs+5nI
-         HxYgS7bX6DgDzLlZRkirtbIM6O4tvP+ZtsdYxpaHg34HubMIlgcROK9AjKM+YESs6juR
-         4FA4EJiZq2VK5wshg1aBt5whcBt33ETeDV9DxiBzYCd9vyiMm7dWgfpK++DrsLul5NCz
-         +gSjZOjPIr0sgF+BpSEIE/Hei4C82qIjjGUfC+ATL4FqVOV5fbfk8NXlcqehG2W85uUe
-         uqBbmBXCt9uqRNSWkCTDWHtpZ2NovetviHdgDzrlhKnoc6MJl4mCF0vnyXMdyV9yS5U/
-         Ya8A==
+        bh=fn2//En0NgtGPijhIqqwb8TihozuX1XJnjpZUHvZ4zc=;
+        b=nIU4VhIxZOhYy39o1sjc1QjE5btWTxIyooXi5l878+gLXV8ZCfYhxWa3hYa5D12SXR
+         ZNdVZOrxue+qeZJMJ5APJbAcunA1BsGXDxz6pOdbz8TNL4G6s4vJ4Krqd3fqIeEgXT5c
+         uzZqy0+wqOCFEzr2f0LuH4nxqbgUxnyBI/0G07C1qRpKmhKbv857d4asnMGTzLzu+iCz
+         kuxejP+XvlvHS1CqbU8EqKNLUrrarQcqQIS09gjejl3Aufj62biJFjlgxPt+CQIPl6Qb
+         ShK6cOXmuJSw4ozd7adNW7xoA3sPl3upBPqROGXM99WHK8to5PaIqFU3PWhR0zbJfeHH
+         u+qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=KtGrKb7t1nXkvA9RAp03OXaiGM0Udf6t6g9rmOrwqQA=;
-        b=c6cvt6kXh15w2RlLb/bYt0dqwLzdOMuwRiASEKFf6dWzLiWxbkGuZjo9+zfq7G6cUH
-         sJNGgyJaDTDsSxhSs2fYwxmL7ox6Z7I+JB6II8OBdWPc9lqHRuTOHaPT2jztlTv5FjJ1
-         1YZrxzNDLCZw7+AR9ZHKWeee1F+JEPfzt71y4H/M6MDGj886p3o72PJtTPiO7Q4ahdpj
-         iy4vBH8gk0Bal+N3lY7YvXdjqHlyptfX2MaJ6GGwwjLJeux8kddHnAmVopwcLv/MhCqk
-         rn40r6NFBqM6ImM1hE7vwlm4ZZZBo433P6aa+eo82RywEveE+rB/+DxGQPFRyNcho6cS
-         iPNQ==
-X-Gm-Message-State: APjAAAUzeAlePa0IKTRre6Jq9iTOkr7RR0qMpmx8+ir1hx+EMjZn8xEj
-        yYFonlY6pAZaZRztC2GGOck=
-X-Google-Smtp-Source: APXvYqwXV771FUqOJJoDqNegv2vvgsnsYNEq3vey/xKO088jvc38DW99nYZ6CpWk+IyeSVRKLC6AAQ==
-X-Received: by 2002:a63:6c82:: with SMTP id h124mr109322399pgc.328.1578303865779;
-        Mon, 06 Jan 2020 01:44:25 -0800 (PST)
-Received: from localhost ([43.224.245.179])
-        by smtp.gmail.com with ESMTPSA id u26sm74215521pfn.46.2020.01.06.01.44.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 06 Jan 2020 01:44:25 -0800 (PST)
-From:   qiwuchen55@gmail.com
-To:     kgene@kernel.org, krzk@kernel.org, rjw@rjwysocki.net,
-        viresh.kumar@linaro.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
-        chenqiwu <chenqiwu@xiaomi.com>
-Subject: [PATCH v2] cpufreq: s3c: avoid use after free issue in xxx_cpufreq_reboot_notifier_evt()
-Date:   Mon,  6 Jan 2020 17:44:21 +0800
-Message-Id: <1578303861-7217-1-git-send-email-qiwuchen55@gmail.com>
-X-Mailer: git-send-email 1.9.1
+        bh=fn2//En0NgtGPijhIqqwb8TihozuX1XJnjpZUHvZ4zc=;
+        b=Xd0Cn7tUryrINQ/9Z/xl6fTuGKm8zqHVAzJMRCxgo07xvhh7m+qGvBKiR+k/4V+ARn
+         Q4MFyE/iH12YS4Zr/0HV3bog1i9NFI/ne3yDmaD3JucvhxpP4Of+zWna88A2aadSYffU
+         gDKmZKY+uPal93UX2JKFiNTip2eCORrHG24qyqOpZ8z4jU9vUTlSyMziGFsdH9hBrEe+
+         C5nXzPO770LhQVnwRbF21YgwEuqGcrFb1XvGEnCCkMs8ZZnD1ioYSL2BLPZ2aMCVtwIJ
+         vElR1ffHH++N7uI8PUU5ZvmH+k7v0aPA+A3qXcdiXf9YdfOo/plVT9YUlihQvbIGtXJe
+         pKyg==
+X-Gm-Message-State: APjAAAXu9E1IUgz+L6o+LHR5uS3GdEpKxwhG1+icwmW/1p9GayvM1wta
+        L37yhjmNtrQ+cxhSPoA0AZ4=
+X-Google-Smtp-Source: APXvYqzsKEDnC2EKtm0Ia2SyM+OMxaIbFAQ6+lS8DUu8VWdLD/BN8rQ9KdvdCNdNNOfmTymk5wR8Gw==
+X-Received: by 2002:a63:f64a:: with SMTP id u10mr109381095pgj.16.1578337806306;
+        Mon, 06 Jan 2020 11:10:06 -0800 (PST)
+Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
+        by smtp.gmail.com with ESMTPSA id g21sm6425496pfo.126.2020.01.06.11.10.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Jan 2020 11:10:05 -0800 (PST)
+From:   Yangtao Li <tiny.windzz@gmail.com>
+To:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
+        krzk@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Yangtao Li <tiny.windzz@gmail.com>
+Subject: [PATCH 1/2] ARM: dts: exynos: tiny4412: add fimd node
+Date:   Mon,  6 Jan 2020 19:10:02 +0000
+Message-Id: <20200106191003.21584-1-tiny.windzz@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: chenqiwu <chenqiwu@xiaomi.com>
+The patch adds fimd node for tiny4412 device.
 
-There is a potential UAF issue in xxx_cpufreq_reboot_notifier_evt() that
-the cpufreq policy of cpu0 has been released before using it. So we should
-make a judgement to avoid it.
-
-Signed-off-by: chenqiwu <chenqiwu@xiaomi.com>
+Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
-changes in v2:
- - use the combination of cpufreq_cpu_get() and cpufreq_cpu_put()
-   instead of cpufreq_get_policy() in s3c2416-cpufreq.c
----
- drivers/cpufreq/s3c2416-cpufreq.c | 12 +++++++++++-
- drivers/cpufreq/s5pv210-cpufreq.c | 11 ++++++++++-
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/exynos4412-tiny4412.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/cpufreq/s3c2416-cpufreq.c b/drivers/cpufreq/s3c2416-cpufreq.c
-index 1069103..f07c5d1 100644
---- a/drivers/cpufreq/s3c2416-cpufreq.c
-+++ b/drivers/cpufreq/s3c2416-cpufreq.c
-@@ -304,6 +304,7 @@ static int s3c2416_cpufreq_reboot_notifier_evt(struct notifier_block *this,
- {
- 	struct s3c2416_data *s3c_freq = &s3c2416_cpufreq;
- 	int ret;
-+	struct cpufreq_policy *policy;
+diff --git a/arch/arm/boot/dts/exynos4412-tiny4412.dts b/arch/arm/boot/dts/exynos4412-tiny4412.dts
+index 01f37b5ac9c4..2b62cb27420c 100644
+--- a/arch/arm/boot/dts/exynos4412-tiny4412.dts
++++ b/arch/arm/boot/dts/exynos4412-tiny4412.dts
+@@ -68,6 +68,14 @@
+ 	};
+ };
  
- 	mutex_lock(&cpufreq_lock);
- 
-@@ -318,7 +319,16 @@ static int s3c2416_cpufreq_reboot_notifier_evt(struct notifier_block *this,
- 	 */
- 	if (s3c_freq->is_dvs) {
- 		pr_debug("cpufreq: leave dvs on reboot\n");
--		ret = cpufreq_driver_target(cpufreq_cpu_get(0), FREQ_SLEEP, 0);
++&fimd {
++	pinctrl-0 = <&lcd_clk>, <&lcd_data24>;
++	pinctrl-names = "default";
++	#address-cells = <1>;
++	#size-cells = <0>;
++	status = "okay";
++};
 +
-+		policy = cpufreq_cpu_get(0);
-+		if (!policy) {
-+			pr_debug("cpufreq: get no policy for cpu0\n");
-+			return NOTIFY_BAD;
-+		}
-+
-+		ret = cpufreq_driver_target(&policy, FREQ_SLEEP, 0);
-+		cpufreq_cpu_put(policy);
-+
- 		if (ret < 0)
- 			return NOTIFY_BAD;
- 	}
-diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
-index 5d10030..e84281e 100644
---- a/drivers/cpufreq/s5pv210-cpufreq.c
-+++ b/drivers/cpufreq/s5pv210-cpufreq.c
-@@ -555,8 +555,17 @@ static int s5pv210_cpufreq_reboot_notifier_event(struct notifier_block *this,
- 						 unsigned long event, void *ptr)
- {
- 	int ret;
-+	struct cpufreq_policy *policy;
-+
-+	policy = cpufreq_cpu_get(0);
-+	if (!policy) {
-+		pr_debug("cpufreq: get no policy for cpu0\n");
-+		return NOTIFY_BAD;
-+	}
-+
-+	ret = cpufreq_driver_target(policy, SLEEP_FREQ, 0);
-+	cpufreq_cpu_put(policy);
- 
--	ret = cpufreq_driver_target(cpufreq_cpu_get(0), SLEEP_FREQ, 0);
- 	if (ret < 0)
- 		return NOTIFY_BAD;
- 
+ &rtc {
+ 	status = "okay";
+ };
 -- 
-1.9.1
+2.17.1
 
