@@ -2,106 +2,125 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E216F131859
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jan 2020 20:10:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CADA01319DA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jan 2020 21:51:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726818AbgAFTKJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Jan 2020 14:10:09 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39006 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbgAFTKI (ORCPT
+        id S1726789AbgAFUvP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Jan 2020 15:51:15 -0500
+Received: from foss.arm.com ([217.140.110.172]:49256 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726778AbgAFUvP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Jan 2020 14:10:08 -0500
-Received: by mail-pg1-f195.google.com with SMTP id b137so27284090pga.6;
-        Mon, 06 Jan 2020 11:10:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5UWJNKwGSnZRp2VqvhJODGUDqM6guG99MwzXRTV7Nb0=;
-        b=ipVTd/8WzUVxxKpTAZ5SKS4Qu+ymKDslRCsM2dW8CGQMRNF6NzHNamg6TOhJBPyGg4
-         ORhCV/Q5T8y2fc6B1zO52fudCe7Ri99+HF+7CYMnu/g6aUg/jkTAxDng5wgqVlYQPW5M
-         Eb1mHgurqw9jEMBxSZrCkCc/YNhvW1uG9OzYyDLsfbfTLtq8DxHe2/KfwxYAVG5uY07m
-         Bu+Es72kW0OdrMRIyWbKxuwGZnqRBRvhXad4hOpPqKc9VD/hJXtap77MbDviSyNM10Wi
-         rq9UBlVrwtu3Xybe/h9VTxYu7wSVEZitLRu2ig4aK71hqy34yItwhdaoDe3AQ1acwACR
-         8n1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5UWJNKwGSnZRp2VqvhJODGUDqM6guG99MwzXRTV7Nb0=;
-        b=pYL5uIdx7aZJKyaWj2wLXAJeeqolVv6liUqzlcoS60wXfZgwjqP2mVvsE61NAJkr4i
-         ytqzTjV3U4aG8EOKU/8LT8svShR8ZN8Cds4LtnpGBfiVCYydEBx1ak3XnlQ1wdrJF5DZ
-         U5p1YqY+I/N9/DfLQwferxZVhYpCM07XXOg4ajtm3QX8DOgsRBw68lyaAX0KIWvT4PWl
-         0yumoBq6/vkNYQlM956/VHWPGY3ozxW+Q+j60W0lo4gKzoDwdzorinWIsJOP/vdYmOaM
-         bWfcYT+2jS96ZEiOouiQeElvhMcSJSkCDi2siBZrdoXjg5l/mF6uMpvfpRGriCCFYaLJ
-         rHTw==
-X-Gm-Message-State: APjAAAUKM1ip9WzZeKOf1SqNxX9cNE529WGMLPVN1zdieadwqUG/nbsV
-        eOLr9cXpEa0iZb4hStipdSI=
-X-Google-Smtp-Source: APXvYqy3M3OIjOkADUaBh75HkL/X1n2uuXocdJbwJl2rTbC++kuHHBua+mNCifGNrP3hQMUCclRBEg==
-X-Received: by 2002:a63:7705:: with SMTP id s5mr110197804pgc.379.1578337808378;
-        Mon, 06 Jan 2020 11:10:08 -0800 (PST)
-Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id s24sm24868480pjp.17.2020.01.06.11.10.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 Jan 2020 11:10:07 -0800 (PST)
-From:   Yangtao Li <tiny.windzz@gmail.com>
-To:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
-        krzk@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 2/2] ARM: dts: exynos: tiny4412: add proper panel node
-Date:   Mon,  6 Jan 2020 19:10:03 +0000
-Message-Id: <20200106191003.21584-2-tiny.windzz@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200106191003.21584-1-tiny.windzz@gmail.com>
-References: <20200106191003.21584-1-tiny.windzz@gmail.com>
+        Mon, 6 Jan 2020 15:51:15 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9201C106F;
+        Mon,  6 Jan 2020 12:51:14 -0800 (PST)
+Received: from localhost (unknown [10.37.6.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 18DFD3F534;
+        Mon,  6 Jan 2020 12:51:13 -0800 (PST)
+Date:   Mon, 06 Jan 2020 20:51:12 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Sangbeom Kim <sbkim73@samsung.com>
+Subject: Applied "regulator: samsung: Rename Samsung to lowercase" to the regulator tree
+In-Reply-To: <20200103171131.9900-20-krzk@kernel.org>
+Message-Id: <applied-20200103171131.9900-20-krzk@kernel.org>
+X-Patchwork-Hint: ignore
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This patch add at070tn92 panel for tiny4412 board.
+The patch
 
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+   regulator: samsung: Rename Samsung to lowercase
+
+has been applied to the regulator tree at
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-5.6
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.  
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
+From fc2b10d13602d3e9c8a5f671898b8c77c205a36a Mon Sep 17 00:00:00 2001
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Date: Fri, 3 Jan 2020 18:11:31 +0100
+Subject: [PATCH] regulator: samsung: Rename Samsung to lowercase
+
+Fix up inconsistent usage of upper and lowercase letters in "Samsung"
+name.
+
+"SAMSUNG" is not an abbreviation but a regular trademarked name.
+Therefore it should be written with lowercase letters starting with
+capital letter.
+
+Although advertisement materials usually use uppercase "SAMSUNG", the
+lowercase version is used in all legal aspects (e.g. on Wikipedia and in
+privacy/legal statements on
+https://www.samsung.com/semiconductor/privacy-global/).
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20200103171131.9900-20-krzk@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 ---
- arch/arm/boot/dts/exynos4412-tiny4412.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/regulator/s2mpa01.c | 2 +-
+ drivers/regulator/s2mps11.c | 2 +-
+ drivers/regulator/s5m8767.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4412-tiny4412.dts b/arch/arm/boot/dts/exynos4412-tiny4412.dts
-index 2b62cb27420c..57f9d09233ad 100644
---- a/arch/arm/boot/dts/exynos4412-tiny4412.dts
-+++ b/arch/arm/boot/dts/exynos4412-tiny4412.dts
-@@ -66,6 +66,16 @@
- 			clock-frequency = <24000000>;
- 		};
- 	};
-+
-+	panel {
-+		compatible = "innolux,at070tn92";
-+
-+		port {
-+			panel_input: endpoint {
-+				remote-endpoint = <&lcdc_output>;
-+			};
-+		};
-+	};
- };
+diff --git a/drivers/regulator/s2mpa01.c b/drivers/regulator/s2mpa01.c
+index 51f7e8b74d8c..115f59530852 100644
+--- a/drivers/regulator/s2mpa01.c
++++ b/drivers/regulator/s2mpa01.c
+@@ -390,5 +390,5 @@ module_platform_driver(s2mpa01_pmic_driver);
+ /* Module information */
+ MODULE_AUTHOR("Sangbeom Kim <sbkim73@samsung.com>");
+ MODULE_AUTHOR("Sachin Kamat <sachin.kamat@samsung.com>");
+-MODULE_DESCRIPTION("SAMSUNG S2MPA01 Regulator Driver");
++MODULE_DESCRIPTION("Samsung S2MPA01 Regulator Driver");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
+index 4f2dc5ebffdc..23d288278957 100644
+--- a/drivers/regulator/s2mps11.c
++++ b/drivers/regulator/s2mps11.c
+@@ -1265,5 +1265,5 @@ module_platform_driver(s2mps11_pmic_driver);
  
- &fimd {
-@@ -74,6 +84,12 @@
- 	#address-cells = <1>;
- 	#size-cells = <0>;
- 	status = "okay";
-+	port@3 {
-+		reg = <3>;
-+		lcdc_output: endpoint {
-+			remote-endpoint = <&panel_input>;
-+		};
-+	};
- };
+ /* Module information */
+ MODULE_AUTHOR("Sangbeom Kim <sbkim73@samsung.com>");
+-MODULE_DESCRIPTION("SAMSUNG S2MPS11/S2MPS14/S2MPS15/S2MPU02 Regulator Driver");
++MODULE_DESCRIPTION("Samsung S2MPS11/S2MPS14/S2MPS15/S2MPU02 Regulator Driver");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
+index bdc07739e9a2..f5c5177bdb0a 100644
+--- a/drivers/regulator/s5m8767.c
++++ b/drivers/regulator/s5m8767.c
+@@ -1015,5 +1015,5 @@ module_exit(s5m8767_pmic_exit);
  
- &rtc {
+ /* Module information */
+ MODULE_AUTHOR("Sangbeom Kim <sbkim73@samsung.com>");
+-MODULE_DESCRIPTION("SAMSUNG S5M8767 Regulator Driver");
++MODULE_DESCRIPTION("Samsung S5M8767 Regulator Driver");
+ MODULE_LICENSE("GPL");
 -- 
-2.17.1
+2.20.1
 
