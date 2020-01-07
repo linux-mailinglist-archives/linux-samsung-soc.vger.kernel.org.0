@@ -2,109 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 27254132F09
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jan 2020 20:10:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82C47132FFC
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jan 2020 20:54:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgAGTKZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Jan 2020 14:10:25 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33036 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728540AbgAGTKX (ORCPT
+        id S1728703AbgAGTy1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Jan 2020 14:54:27 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36188 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728548AbgAGTyU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Jan 2020 14:10:23 -0500
-Received: by mail-pl1-f196.google.com with SMTP id ay11so70316plb.0;
-        Tue, 07 Jan 2020 11:10:22 -0800 (PST)
+        Tue, 7 Jan 2020 14:54:20 -0500
+Received: by mail-ed1-f65.google.com with SMTP id j17so641425edp.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jan 2020 11:54:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=udxb2nz6/O0HfR1mRrdKFyNfS9Q09XXu4H95tu0JCZs=;
-        b=acgjS9YUAcyPamemAb1Nj3Ec3zSSVYS9z7m2SeFGysjQJcpak11/bjEbqTf6TsZ5/Z
-         nmZMY8WoZI3nH5qzbrPt/udBt8ITZwOFx1ogVStEHvnKQ6IgBS62CPOpoku7bpS5OcDw
-         AqoDnrqlfHeWBxKiXghnmOEZkWYNGx+rwe2NdGja40iLS1Hac0lyATVyYqEePrC7+jQX
-         u8l0N/qIn+fvT25hJGnUjeDuEwxQRiLC+ydXDaz2N1lAqJkR5NGp8N/WeEkO7BbndWzs
-         xZlFQw4Y1Zx3kKGJWSkaI01JzGj/MAyxn5wrURDHPv5tnz/xrKBT7SoYsGbsCgJzZGzu
-         KgUQ==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=Pi/olKLeaBrqhttAwoMGSoT+Sxp+y5xY3PQr7eygtLM=;
+        b=rePy6dvW+ZH47h+1V5ZzhOdHt3hyIpKxcBqRG6Yxugb8Ug55qYyaTQK4+wINdwq55f
+         jyS7yVvOQ5iMzNISAd+yiqtmzzFVbayzDS39QWeF/dmepISKDIrC01/Pyd16Jkxknswo
+         ZxY/mmXagT/Q6hX/41m7OLd2SMfr8CZO7Ci1IzWbi02KR9YYzIjtqbyhfstjO3po9RzC
+         tRdf7rgiUAYJtfRgzdFxSV7Qq5Jehd/t/PYuqt0rxIFlDCGzailtByweOtMj5bqBnwVk
+         IjZK4uPjcTNDDRooC9FKrWtSPPIiz9LQ6akzqbAN2ioBe4cx30eADGCJ98dfGgAz0k84
+         86YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=udxb2nz6/O0HfR1mRrdKFyNfS9Q09XXu4H95tu0JCZs=;
-        b=lIXEXpgcidQzm8gX9WCBS3reou2uYx5WaMZr7PkDt3RFRql1tnfX1yzeXLghGBLLst
-         yZNUjvEFzRY/xp+pwzrCuXa4NRxo+sFEXhwUD0YKRhP9yFko3kfyDVghLAfBQsS57K8S
-         GPtln1VTsaT4/vAAdUDF4SlJ+q0bokoWNUDwmKVpoSwT6GDcEXV4CmwRJi+IqMHuygx4
-         gEAV0gUa0PnO9ceQXllz0BHdv84LWiZeU16UDWxD++bxUuAWh+OU2ncbTeFyKfgWcgqA
-         WAMEuSZJcM37m0o4dAU8NsJxopyEe2F8VKapZd/jqAYSgSYudRhLv8mUcFy5mEKwJihk
-         tQ6g==
-X-Gm-Message-State: APjAAAV2sccX5SGQpJG9CNAdko/GDQXlvgmogw3+yKuuZ/779qZjRc1h
-        dPjc9cjE6xnxVdVODfbeUK+FeaLKdIE=
-X-Google-Smtp-Source: APXvYqwDRiU7nES6NK298Wl7FIXAxcCBKJmxGZr5Hcbhc7ypDJiUD4Wl4SjDYqFbTiKPrv8b7Kk8wA==
-X-Received: by 2002:a17:902:7c85:: with SMTP id y5mr1141774pll.227.1578424222460;
-        Tue, 07 Jan 2020 11:10:22 -0800 (PST)
-Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id s7sm324776pjk.22.2020.01.07.11.10.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Jan 2020 11:10:21 -0800 (PST)
-From:   Yangtao Li <tiny.windzz@gmail.com>
-To:     robh+dt@kernel.org, mark.rutland@arm.com, kgene@kernel.org,
-        krzk@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH v2] ARM: dts: exynos: tiny4412: enable fimd node and add proper panel node
-Date:   Tue,  7 Jan 2020 19:10:20 +0000
-Message-Id: <20200107191020.27475-1-tiny.windzz@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=Pi/olKLeaBrqhttAwoMGSoT+Sxp+y5xY3PQr7eygtLM=;
+        b=lTniRoEL9mcgdJ5resFMO6SMxwlvJN6NfC8p8C9pwceeusgD6cnG9/A4R1LUOZVHLA
+         GbVd6AkTuaukSrgVRpjtThz0vvv8FhY5PRHSzllNfDZG9opN8/Jo+zAN1Dz04gTFXX0e
+         E6z0k4yoTAaZKVSOR5wmWCFfcrq9qGB01Fab3wt/UfPK8fTPCMMBmHlgOQxQSDclAb08
+         3OPQMj+E0dvTuPVqNA8cCjJ2kePDPP340Q+V1TQqIF0xkhCP1KjqNl2o8bnB3Xy/3rWY
+         asI7LYT9fWlxPKivzCS16qJiBSOSbPdmPPyg4Km0yiErwcFflBtPI2sedmKKeK7a5PAM
+         netw==
+X-Gm-Message-State: APjAAAUhOrM098j37pRsYsW3i7DKHA3quDRKYswKTiOPZOQOalpQcSWx
+        2JjuTEFMv5Um6JVKgp1Iy10T7r8TuClUAjiCGhQ=
+X-Google-Smtp-Source: APXvYqx1uh7JY9TsleWmDC3UVv1ETHY9DfduKRb8/JpOu+/AEBPnllkLYgtKF65Y7XFrgtyDYVY72zE2SUwJXZDirUk=
+X-Received: by 2002:a17:906:2894:: with SMTP id o20mr1108577ejd.199.1578426859045;
+ Tue, 07 Jan 2020 11:54:19 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a17:906:72c6:0:0:0:0 with HTTP; Tue, 7 Jan 2020 11:54:18
+ -0800 (PST)
+Reply-To: dhlexpresscouriercompany.nyusa@gmail.com
+From:   "Dr. William Johnson" <currency1000000@gmail.com>
+Date:   Tue, 7 Jan 2020 20:54:18 +0100
+Message-ID: <CAPqfnSFyOwF0m-QsrOdcFV_PCC3TSBr=YQHoQHvH0baKHfeF6Q@mail.gmail.com>
+Subject: contact Dhl office New York to receive your Prepaid ATM Master Card
+ worth $15.8Million US DOLLARS now.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enable fimd device node which is a display controller, and add panel
-node required by it.
-
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
----
-v2:
--update commit msg and merge to one patch
----
- arch/arm/boot/dts/exynos4412-tiny4412.dts | 25 +++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
-
-diff --git a/arch/arm/boot/dts/exynos4412-tiny4412.dts b/arch/arm/boot/dts/exynos4412-tiny4412.dts
-index 01f37b5ac9c4..3a91de8a8082 100644
---- a/arch/arm/boot/dts/exynos4412-tiny4412.dts
-+++ b/arch/arm/boot/dts/exynos4412-tiny4412.dts
-@@ -66,6 +66,31 @@
- 			clock-frequency = <24000000>;
- 		};
- 	};
-+
-+	panel {
-+		compatible = "innolux,at070tn92";
-+
-+		port {
-+			panel_input: endpoint {
-+				remote-endpoint = <&lcdc_output>;
-+			};
-+		};
-+	};
-+};
-+
-+&fimd {
-+	pinctrl-0 = <&lcd_clk>, <&lcd_data24>;
-+	pinctrl-names = "default";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	port@3 {
-+		reg = <3>;
-+		lcdc_output: endpoint {
-+			remote-endpoint = <&panel_input>;
-+		};
-+	};
- };
- 
- &rtc {
--- 
-2.17.1
-
+ATTN Dear Beneficiary.
+Goodnews
+I have Registered your Prepaid ATM Master Card
+worth $15.800,000.00 US DOLLARS Courier company asigned to deliver it
+to you today.
+So contact Dhl office New York to receive your Prepaid ATM Master Card
+worth $15.8Million US DOLLARS now.
+Contact Person: Mrs. Mary Michael, Director, DHL Courier Company-NY USA. 10218
+Email. dhlexpresscouriercompany.nyusa@gmail.com
+Call the office +(202) 890-8752
+Rec-Confirmed your mailing address to the office as I listed below.
+Your Full Name--------------
+House Address-----------
+Your working Phone Number----------------
+ID copy-------------------------
+Sex-----------------------------
+Note,delivery fee to your address is only $50.00. send it to this
+company urgent on itunes card today so that DHL will deliver this
+Prepaid ATM Master Card to you today according to our finally
+agreement.
+Thanks for coperations,
+Dr. William Johnson
