@@ -2,41 +2,41 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2F7813E65A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:20:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04FBA13E89C
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:33:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391569AbgAPRT7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jan 2020 12:19:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45100 "EHLO mail.kernel.org"
+        id S1729530AbgAPRdT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jan 2020 12:33:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43194 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390359AbgAPRSN (ORCPT
+        id S2404589AbgAPRag (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:18:13 -0500
+        Thu, 16 Jan 2020 12:30:36 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 96F44246C6;
-        Thu, 16 Jan 2020 17:18:11 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 03CC02472C;
+        Thu, 16 Jan 2020 17:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579195092;
-        bh=+wjsP+BL3zBz0Sf8nVBdYXWxBkY7p2jY+SVK1Rd4QWA=;
+        s=default; t=1579195835;
+        bh=3bs2tt+BQ2aDv4/lJ7CKnWz3MwHNBltAwpNAaDCYLDw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=m7FEicedoWbX3dCl9UF+kfSI9DKXD/OXBldXkTRzJdi3++AST7wq9zAUdXn4zMXvp
-         iV9dDCfk2tT/pEk9xVGV70SmrH5H+SJBa6BNj+KkhgS2ynb1xmoab6x5YDiNs76QMZ
-         wYat3p8WDYlZ2GyNnMeKiIRXTMkBl4IKU29aOBR0=
+        b=ZPZ8F3cS7N738lJD/6eWbG0Uhba+5z3HRZD6gLSa5wqHuehvPGtyAvbG3rSujufwN
+         PRJ5FwVIjWtjpSHuCqb4t0RqFAY9+ShJmvKz136O9EGDI8eOBFFEHCuzn8fK1TET5m
+         nyhV3dHFKXpuc1GB7pandRuHKTy/JkO2Y7afjfjg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Yangtao Li <tiny.windzz@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+Cc:     Marian Mihailescu <mihailescu2m@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Sasha Levin <sashal@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.14 039/371] clk: samsung: exynos4: fix refcount leak in exynos4_get_xom()
-Date:   Thu, 16 Jan 2020 12:11:47 -0500
-Message-Id: <20200116171719.16965-39-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 340/371] clk: samsung: exynos5420: Preserve CPU clocks configuration during suspend/resume
+Date:   Thu, 16 Jan 2020 12:23:32 -0500
+Message-Id: <20200116172403.18149-283-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116171719.16965-1-sashal@kernel.org>
-References: <20200116171719.16965-1-sashal@kernel.org>
+In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
+References: <20200116172403.18149-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -46,34 +46,36 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Yangtao Li <tiny.windzz@gmail.com>
+From: Marian Mihailescu <mihailescu2m@gmail.com>
 
-[ Upstream commit cee82eb9532090cd1dc953e845d71f9b1445c84e ]
+[ Upstream commit e21be0d1d7bd7f78a77613f6bcb6965e72b22fc1 ]
 
-The of_find_compatible_node() returns a node pointer with refcount
-incremented, but there is the lack of use of the of_node_put() when
-done. Add the missing of_node_put() to release the refcount.
+Save and restore top PLL related configuration registers for big (APLL)
+and LITTLE (KPLL) cores during suspend/resume cycle. So far, CPU clocks
+were reset to default values after suspend/resume cycle and performance
+after system resume was affected when performance governor has been selected.
 
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-Fixes: e062b571777f ("clk: exynos4: register clocks using common clock framework")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 773424326b51 ("clk: samsung: exynos5420: add more registers to restore list")
+Signed-off-by: Marian Mihailescu <mihailescu2m@gmail.com>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-exynos4.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/samsung/clk-exynos5420.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/samsung/clk-exynos4.c b/drivers/clk/samsung/clk-exynos4.c
-index d8d3cb67b402..3d3026221927 100644
---- a/drivers/clk/samsung/clk-exynos4.c
-+++ b/drivers/clk/samsung/clk-exynos4.c
-@@ -1240,6 +1240,7 @@ static unsigned long __init exynos4_get_xom(void)
- 			xom = readl(chipid_base + 8);
- 
- 		iounmap(chipid_base);
-+		of_node_put(np);
- 	}
- 
- 	return xom;
+diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
+index 47a14f93f869..2f54df5bef8e 100644
+--- a/drivers/clk/samsung/clk-exynos5420.c
++++ b/drivers/clk/samsung/clk-exynos5420.c
+@@ -170,6 +170,8 @@ static const unsigned long exynos5x_clk_regs[] __initconst = {
+ 	GATE_BUS_CPU,
+ 	GATE_SCLK_CPU,
+ 	CLKOUT_CMU_CPU,
++	APLL_CON0,
++	KPLL_CON0,
+ 	CPLL_CON0,
+ 	DPLL_CON0,
+ 	EPLL_CON0,
 -- 
 2.20.1
 
