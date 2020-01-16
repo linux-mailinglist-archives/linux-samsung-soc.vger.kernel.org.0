@@ -2,43 +2,41 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B93DB13E5ED
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2F7813E65A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:20:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732952AbgAPRRJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jan 2020 12:17:09 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60054 "EHLO mail.kernel.org"
+        id S2391569AbgAPRT7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jan 2020 12:19:59 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45100 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390859AbgAPRNy (ORCPT
+        id S2390359AbgAPRSN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:13:54 -0500
+        Thu, 16 Jan 2020 12:18:13 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 86E5E246A7;
-        Thu, 16 Jan 2020 17:13:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 96F44246C6;
+        Thu, 16 Jan 2020 17:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194833;
-        bh=t3NzLjqky/Ad3i0HuvmURg01ba2B4dUEqMwPsFzQWqo=;
+        s=default; t=1579195092;
+        bh=+wjsP+BL3zBz0Sf8nVBdYXWxBkY7p2jY+SVK1Rd4QWA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NUCjHXK64dpBBkIuul/oisKrmjMyYgc/IxOag+nDIo6hMmHZJd2RWhqVivQisyBkn
-         K0qNSRiwfLivIfJQ2WYmEkHNTiHlHXk9pNdqwL3h5Zyw7VK9j60XNLvT2zZJW+o7Dd
-         0PBr1pi+RUU1ypIYMkHmkMN1sR+s23jYxFe9WaX4=
+        b=m7FEicedoWbX3dCl9UF+kfSI9DKXD/OXBldXkTRzJdi3++AST7wq9zAUdXn4zMXvp
+         iV9dDCfk2tT/pEk9xVGV70SmrH5H+SJBa6BNj+KkhgS2ynb1xmoab6x5YDiNs76QMZ
+         wYat3p8WDYlZ2GyNnMeKiIRXTMkBl4IKU29aOBR0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 634/671] media: exynos4-is: Fix recursive locking in isp_video_release()
-Date:   Thu, 16 Jan 2020 12:04:32 -0500
-Message-Id: <20200116170509.12787-371-sashal@kernel.org>
+Cc:     Yangtao Li <tiny.windzz@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.14 039/371] clk: samsung: exynos4: fix refcount leak in exynos4_get_xom()
+Date:   Thu, 16 Jan 2020 12:11:47 -0500
+Message-Id: <20200116171719.16965-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
-References: <20200116170509.12787-1-sashal@kernel.org>
+In-Reply-To: <20200116171719.16965-1-sashal@kernel.org>
+References: <20200116171719.16965-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -48,38 +46,34 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Seung-Woo Kim <sw0312.kim@samsung.com>
+From: Yangtao Li <tiny.windzz@gmail.com>
 
-[ Upstream commit 704c6c80fb471d1bb0ef0d61a94617d1d55743cd ]
+[ Upstream commit cee82eb9532090cd1dc953e845d71f9b1445c84e ]
 
->From isp_video_release(), &isp->video_lock is held and subsequent
-vb2_fop_release() tries to lock vdev->lock which is same with the
-previous one. Replace vb2_fop_release() with _vb2_fop_release() to
-fix the recursive locking.
+The of_find_compatible_node() returns a node pointer with refcount
+incremented, but there is the lack of use of the of_node_put() when
+done. Add the missing of_node_put() to release the refcount.
 
-Fixes: 1380f5754cb0 ("[media] videobuf2: Add missing lock held on vb2_fop_release")
-Signed-off-by: Seung-Woo Kim <sw0312.kim@samsung.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+Fixes: e062b571777f ("clk: exynos4: register clocks using common clock framework")
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/fimc-isp-video.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/samsung/clk-exynos4.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c b/drivers/media/platform/exynos4-is/fimc-isp-video.c
-index a920164f53f1..39340abefd14 100644
---- a/drivers/media/platform/exynos4-is/fimc-isp-video.c
-+++ b/drivers/media/platform/exynos4-is/fimc-isp-video.c
-@@ -316,7 +316,7 @@ static int isp_video_release(struct file *file)
- 		ivc->streaming = 0;
+diff --git a/drivers/clk/samsung/clk-exynos4.c b/drivers/clk/samsung/clk-exynos4.c
+index d8d3cb67b402..3d3026221927 100644
+--- a/drivers/clk/samsung/clk-exynos4.c
++++ b/drivers/clk/samsung/clk-exynos4.c
+@@ -1240,6 +1240,7 @@ static unsigned long __init exynos4_get_xom(void)
+ 			xom = readl(chipid_base + 8);
+ 
+ 		iounmap(chipid_base);
++		of_node_put(np);
  	}
  
--	vb2_fop_release(file);
-+	_vb2_fop_release(file, NULL);
- 
- 	if (v4l2_fh_is_singular_file(file)) {
- 		fimc_pipeline_call(&ivc->ve, close);
+ 	return xom;
 -- 
 2.20.1
 
