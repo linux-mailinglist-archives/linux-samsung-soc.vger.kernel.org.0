@@ -2,43 +2,41 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E743D13E370
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:02:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5C9713E6D6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:22:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388255AbgAPRCF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jan 2020 12:02:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54178 "EHLO mail.kernel.org"
+        id S2390817AbgAPRNo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jan 2020 12:13:44 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59426 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387879AbgAPRCD (ORCPT
+        id S1729010AbgAPRNn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:02:03 -0500
+        Thu, 16 Jan 2020 12:13:43 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EAB18207FF;
-        Thu, 16 Jan 2020 17:02:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EE07F246A3;
+        Thu, 16 Jan 2020 17:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194123;
-        bh=O8o+WPlQAMCaUyaOt/651Bm5d0NIgeMC6LmTx2pz0D4=;
+        s=default; t=1579194822;
+        bh=L/KSiELxp369zGbGPtlCYt4xEKWsCEJceCqSHQySHVI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=yOS+jh5ENfXYVU9YdVGqeuQItcI1qZtzvZXP6B9YUiCOu6YuQuESzOASw02YJAKpR
-         2/+/KyJr0724vrvB0xxjmvlBEqIb42xe02mO3Pur41+Xpd+xFzzLyYILNGgrLgPJPo
-         Aqnl21c+8QWxdbMhNS9cGg9xosKtG/h6W4VPbhaY=
+        b=1FRzgi9ubCQRV+EzmkN2WYEVK5uh5EryC1lZzxaIsjuVqST7v04WehDNCVU1PJc7e
+         uPeTewY+AViOuo7+6R766lGX2EHpUUFiTpWogVeGHkwBGnMi+zONEDrMB6Tg7KMIMZ
+         shqOZ6ZeI5I1cC1gWRWDgpmxEyoyUShkJJ6jJTfE=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+Cc:     Marian Mihailescu <mihailescu2m@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Sasha Levin <sashal@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 215/671] clocksource/drivers/exynos_mct: Fix error path in timer resources initialization
-Date:   Thu, 16 Jan 2020 11:52:04 -0500
-Message-Id: <20200116165940.10720-98-sashal@kernel.org>
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 4.19 627/671] clk: samsung: exynos5420: Preserve CPU clocks configuration during suspend/resume
+Date:   Thu, 16 Jan 2020 12:04:25 -0500
+Message-Id: <20200116170509.12787-364-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116165940.10720-1-sashal@kernel.org>
-References: <20200116165940.10720-1-sashal@kernel.org>
+In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
+References: <20200116170509.12787-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -48,50 +46,36 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Marian Mihailescu <mihailescu2m@gmail.com>
 
-[ Upstream commit b9307420196009cdf18bad55e762ac49fb9a80f4 ]
+[ Upstream commit e21be0d1d7bd7f78a77613f6bcb6965e72b22fc1 ]
 
-While freeing interrupt handlers in error path, don't assume that all
-requested interrupts are per-processor interrupts and properly release
-standard interrupts too.
+Save and restore top PLL related configuration registers for big (APLL)
+and LITTLE (KPLL) cores during suspend/resume cycle. So far, CPU clocks
+were reset to default values after suspend/resume cycle and performance
+after system resume was affected when performance governor has been selected.
 
-Reported-by: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: 56a94f13919c ("clocksource: exynos_mct: Avoid blocking calls in the cpu hotplug notifier")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: 773424326b51 ("clk: samsung: exynos5420: add more registers to restore list")
+Signed-off-by: Marian Mihailescu <mihailescu2m@gmail.com>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/exynos_mct.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/clk/samsung/clk-exynos5420.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
-index aaf5bfa9bd9c..e3ae041ac30e 100644
---- a/drivers/clocksource/exynos_mct.c
-+++ b/drivers/clocksource/exynos_mct.c
-@@ -563,7 +563,19 @@ static int __init exynos4_timer_resources(struct device_node *np, void __iomem *
- 	return 0;
- 
- out_irq:
--	free_percpu_irq(mct_irqs[MCT_L0_IRQ], &percpu_mct_tick);
-+	if (mct_int_type == MCT_INT_PPI) {
-+		free_percpu_irq(mct_irqs[MCT_L0_IRQ], &percpu_mct_tick);
-+	} else {
-+		for_each_possible_cpu(cpu) {
-+			struct mct_clock_event_device *pcpu_mevt =
-+				per_cpu_ptr(&percpu_mct_tick, cpu);
-+
-+			if (pcpu_mevt->evt.irq != -1) {
-+				free_irq(pcpu_mevt->evt.irq, pcpu_mevt);
-+				pcpu_mevt->evt.irq = -1;
-+			}
-+		}
-+	}
- 	return err;
- }
- 
+diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
+index d5af93721299..6473af8903c5 100644
+--- a/drivers/clk/samsung/clk-exynos5420.c
++++ b/drivers/clk/samsung/clk-exynos5420.c
+@@ -171,6 +171,8 @@ static const unsigned long exynos5x_clk_regs[] __initconst = {
+ 	GATE_BUS_CPU,
+ 	GATE_SCLK_CPU,
+ 	CLKOUT_CMU_CPU,
++	APLL_CON0,
++	KPLL_CON0,
+ 	CPLL_CON0,
+ 	DPLL_CON0,
+ 	EPLL_CON0,
 -- 
 2.20.1
 
