@@ -2,43 +2,43 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 41B5313EB1B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 18:48:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E1AB13EEB8
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 19:11:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394297AbgAPRr7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jan 2020 12:47:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39748 "EHLO mail.kernel.org"
+        id S2395057AbgAPSKu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jan 2020 13:10:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53118 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406767AbgAPRqn (ORCPT
+        id S2393109AbgAPRhm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:46:43 -0500
+        Thu, 16 Jan 2020 12:37:42 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 44905246EE;
-        Thu, 16 Jan 2020 17:46:41 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A855C246C0;
+        Thu, 16 Jan 2020 17:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196802;
-        bh=LceMdP0lTz3aCuW0kPjDRp4oE/CQZJ5PTR4oo7v7fnA=;
+        s=default; t=1579196261;
+        bh=ON6UrWmq47JDT/IgdKlfSIgthc+sRzNmjam0nGQqChg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eELqZk3imwxVstkYhmxK/f7nB1bzHCVHP/zRLoaIZGr6pG21OZtlDmDat5uvDFh+O
-         SuxYalFcQ4V9D8WIl+ZkqgrGJ/dxOIIRS0TtBlgTpHgdJsSdzUW/dy3MhdJ0vBvh2C
-         nKFfwao8Ywi4xLuqBhcDs0FkiwfULAat0bUpGD1o=
+        b=xB51agJd95gsQ+efGgEquaZBw14Jt7xt/GG7d6eIoVS54PYnpjbRZtoPEkgSetc5n
+         636NFhJKigt7zPcFYUJlbdwwQcaIqxvvuoFZUM+JCHsz4wwubqC+vlkyU24wPgkavC
+         Vyq2VEnWZ+36mEJRsz7Ureu+Sj3YKe5NbeCiwTj0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sasha Levin <sashal@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 161/174] media: exynos4-is: Fix recursive locking in isp_video_release()
-Date:   Thu, 16 Jan 2020 12:42:38 -0500
-Message-Id: <20200116174251.24326-161-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 086/251] clocksource/drivers/exynos_mct: Fix error path in timer resources initialization
+Date:   Thu, 16 Jan 2020 12:33:55 -0500
+Message-Id: <20200116173641.22137-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116174251.24326-1-sashal@kernel.org>
-References: <20200116174251.24326-1-sashal@kernel.org>
+In-Reply-To: <20200116173641.22137-1-sashal@kernel.org>
+References: <20200116173641.22137-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -48,38 +48,50 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Seung-Woo Kim <sw0312.kim@samsung.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 704c6c80fb471d1bb0ef0d61a94617d1d55743cd ]
+[ Upstream commit b9307420196009cdf18bad55e762ac49fb9a80f4 ]
 
->From isp_video_release(), &isp->video_lock is held and subsequent
-vb2_fop_release() tries to lock vdev->lock which is same with the
-previous one. Replace vb2_fop_release() with _vb2_fop_release() to
-fix the recursive locking.
+While freeing interrupt handlers in error path, don't assume that all
+requested interrupts are per-processor interrupts and properly release
+standard interrupts too.
 
-Fixes: 1380f5754cb0 ("[media] videobuf2: Add missing lock held on vb2_fop_release")
-Signed-off-by: Seung-Woo Kim <sw0312.kim@samsung.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reported-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 56a94f13919c ("clocksource: exynos_mct: Avoid blocking calls in the cpu hotplug notifier")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/fimc-isp-video.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/exynos_mct.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c b/drivers/media/platform/exynos4-is/fimc-isp-video.c
-index 667d3720154a..4b7803cec37f 100644
---- a/drivers/media/platform/exynos4-is/fimc-isp-video.c
-+++ b/drivers/media/platform/exynos4-is/fimc-isp-video.c
-@@ -323,7 +323,7 @@ static int isp_video_release(struct file *file)
- 		ivc->streaming = 0;
- 	}
+diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+index d32248e2ceab..ae3cbaeffd9c 100644
+--- a/drivers/clocksource/exynos_mct.c
++++ b/drivers/clocksource/exynos_mct.c
+@@ -563,7 +563,19 @@ static int __init exynos4_timer_resources(struct device_node *np, void __iomem *
+ 	return 0;
  
--	vb2_fop_release(file);
-+	_vb2_fop_release(file, NULL);
+ out_irq:
+-	free_percpu_irq(mct_irqs[MCT_L0_IRQ], &percpu_mct_tick);
++	if (mct_int_type == MCT_INT_PPI) {
++		free_percpu_irq(mct_irqs[MCT_L0_IRQ], &percpu_mct_tick);
++	} else {
++		for_each_possible_cpu(cpu) {
++			struct mct_clock_event_device *pcpu_mevt =
++				per_cpu_ptr(&percpu_mct_tick, cpu);
++
++			if (pcpu_mevt->evt.irq != -1) {
++				free_irq(pcpu_mevt->evt.irq, pcpu_mevt);
++				pcpu_mevt->evt.irq = -1;
++			}
++		}
++	}
+ 	return err;
+ }
  
- 	if (v4l2_fh_is_singular_file(file)) {
- 		fimc_pipeline_call(&ivc->ve, close);
 -- 
 2.20.1
 
