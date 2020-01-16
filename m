@@ -2,38 +2,40 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6246A13ED2E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 19:01:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 372BF13ED3A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jan 2020 19:01:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405679AbgAPRl2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jan 2020 12:41:28 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59078 "EHLO mail.kernel.org"
+        id S2394934AbgAPSBS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jan 2020 13:01:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59204 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405669AbgAPRl1 (ORCPT
+        id S2405706AbgAPRlc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:41:27 -0500
+        Thu, 16 Jan 2020 12:41:32 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C18BB246EF;
-        Thu, 16 Jan 2020 17:41:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DBCF72470B;
+        Thu, 16 Jan 2020 17:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196487;
-        bh=YZ2eOXNd1MQ+7yOmzjKQ5GQzCB/Y6PKyK96hicTHRTs=;
+        s=default; t=1579196492;
+        bh=PSIyekv9flrRqMwXHw8WZ9qzzBUJ70eDK3NmgkqJndE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tHgeNC6ZatSXn2vm4EjG3CiCTr3B3Q1Ac9rkb8pYznl/C1rUH7a+6x5/uvJVutwZY
-         xXN1eg+V3aEnzXFoLk4icYdoqqTUeC97Vm7iwp5GxZGyPzFkEYVnZgHk3ysl50QixU
-         /rFn9TMhEd0wEl6pfeV+JPYOqNWxNGuGzUh95G0s=
+        b=T2IaP5/qRc+7rirxqiIvrax1yZ0HHmGxgJnc/BAHl5O4LGqzjGgkrYn6uo/V1zvez
+         egX6VsI1oaERuotuAcS1P/aTjXl2WbwczpXZ5Hdbbiw18Dzf6SyJe4avQp/K4Qn8dP
+         y68kKa2RIJD4vH/f4xN7pblH58TEzB9+W4PT5FjI=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Marian Mihailescu <mihailescu2m@gmail.com>,
+Cc:     Seung-Woo Kim <sw0312.kim@samsung.com>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Sasha Levin <sashal@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.9 232/251] clk: samsung: exynos5420: Preserve CPU clocks configuration during suspend/resume
-Date:   Thu, 16 Jan 2020 12:36:21 -0500
-Message-Id: <20200116173641.22137-192-sashal@kernel.org>
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.9 235/251] media: exynos4-is: Fix recursive locking in isp_video_release()
+Date:   Thu, 16 Jan 2020 12:36:24 -0500
+Message-Id: <20200116173641.22137-195-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116173641.22137-1-sashal@kernel.org>
 References: <20200116173641.22137-1-sashal@kernel.org>
@@ -46,36 +48,38 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Marian Mihailescu <mihailescu2m@gmail.com>
+From: Seung-Woo Kim <sw0312.kim@samsung.com>
 
-[ Upstream commit e21be0d1d7bd7f78a77613f6bcb6965e72b22fc1 ]
+[ Upstream commit 704c6c80fb471d1bb0ef0d61a94617d1d55743cd ]
 
-Save and restore top PLL related configuration registers for big (APLL)
-and LITTLE (KPLL) cores during suspend/resume cycle. So far, CPU clocks
-were reset to default values after suspend/resume cycle and performance
-after system resume was affected when performance governor has been selected.
+>From isp_video_release(), &isp->video_lock is held and subsequent
+vb2_fop_release() tries to lock vdev->lock which is same with the
+previous one. Replace vb2_fop_release() with _vb2_fop_release() to
+fix the recursive locking.
 
-Fixes: 773424326b51 ("clk: samsung: exynos5420: add more registers to restore list")
-Signed-off-by: Marian Mihailescu <mihailescu2m@gmail.com>
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Fixes: 1380f5754cb0 ("[media] videobuf2: Add missing lock held on vb2_fop_release")
+Signed-off-by: Seung-Woo Kim <sw0312.kim@samsung.com>
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-exynos5420.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/exynos4-is/fimc-isp-video.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
-index 2bb88d125113..7f8c7cf3c2ab 100644
---- a/drivers/clk/samsung/clk-exynos5420.c
-+++ b/drivers/clk/samsung/clk-exynos5420.c
-@@ -170,6 +170,8 @@ static const unsigned long exynos5x_clk_regs[] __initconst = {
- 	GATE_BUS_CPU,
- 	GATE_SCLK_CPU,
- 	CLKOUT_CMU_CPU,
-+	APLL_CON0,
-+	KPLL_CON0,
- 	CPLL_CON0,
- 	DPLL_CON0,
- 	EPLL_CON0,
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+index e00fa03ddc3e..0c0eec671d49 100644
+--- a/drivers/media/platform/exynos4-is/fimc-isp-video.c
++++ b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+@@ -316,7 +316,7 @@ static int isp_video_release(struct file *file)
+ 		ivc->streaming = 0;
+ 	}
+ 
+-	vb2_fop_release(file);
++	_vb2_fop_release(file, NULL);
+ 
+ 	if (v4l2_fh_is_singular_file(file)) {
+ 		fimc_pipeline_call(&ivc->ve, close);
 -- 
 2.20.1
 
