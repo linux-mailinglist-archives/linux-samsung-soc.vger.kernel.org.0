@@ -2,75 +2,63 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F6A141189
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 17 Jan 2020 20:17:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B171141F59
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 19 Jan 2020 19:44:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729486AbgAQTRN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 17 Jan 2020 14:17:13 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34589 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726761AbgAQTRM (ORCPT
+        id S1728792AbgASSoU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 19 Jan 2020 13:44:20 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:37500 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727586AbgASSoT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 17 Jan 2020 14:17:12 -0500
-Received: by mail-ed1-f67.google.com with SMTP id l8so23293672edw.1;
-        Fri, 17 Jan 2020 11:17:11 -0800 (PST)
+        Sun, 19 Jan 2020 13:44:19 -0500
+Received: by mail-il1-f196.google.com with SMTP id t8so25514073iln.4
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 19 Jan 2020 10:44:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
+        b=MveYcniUJUB532f0dlOoihdmkjAHV60cDj8LBHI8M4h+3H+egt8ZCsWSnQoG7CEhld
+         h286H+k74rDzfRQOoY/f9M81WRQr88YRuubiH3HanhIDyXki4cyulA7bNdgdh/npcklQ
+         CvJo43u8PBPBkMgEH5HatRsI+u5tlB3wEJ1Th3FBUvpApZQxsvg7pL4HfvgLhjM/SAbt
+         Wln7BJPpvNYZtoiRQX3zkLZKrm4kgBMldFao5RktgQ8gLQFv0TsxI7xopop5Q61lnjsD
+         O+Nqof9tzp5qXVHsDImBQ0OOhN8D0ZvK4JC9Zw+KV08LpajVcASte5dFUKOIeqnCFHwC
+         Gp1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=q289yoxQlOvdyPCarK/JLt94pM8vJpLny7OlspvdC2U=;
-        b=H/N9VfI5F+VbLCTqqnacmDENlICpxGCWjt6REPeR38+/qQVQw/jaqunYX4EQtJMOv5
-         Wf7I+CartBFqqBdY0QACn8tNz8vAhQIbI7ow/r8NjzllLwVW+jOIA3eBfNx7CuARLNDl
-         45DHH0MMSa37ppu40s9H3ByX0FdETc20Q+SMVKJS3QtZjeEFrw54sC9nqNkYM0Z56hMH
-         y+bhMntkITlfgFd0W+Vcfrwige+WmH6B59AkhLPlMhruW91L+Gg4F0y/KqFWIChrvI47
-         7E3ylK5M8XI1pZ6EiI9p/DuobBS7NMPlDdGeHNpn8qvAlCx1QlkDH1dOe/7ethHX8r0/
-         WDOA==
-X-Gm-Message-State: APjAAAXndD+Pv4eJeDpmdKDGC5CIQiTQgAKI2KU4bEgfEVNtJXXAJ6ls
-        GpC+/GvjuXNZx/TxPLxbBeCsLXpu
-X-Google-Smtp-Source: APXvYqwIwV5llycBdQcudfguTHQmgxrfze9/6u/R5qMPStRJpwJxV+Lfkzjjyu6VyPmwTeiFqrTg7g==
-X-Received: by 2002:a17:906:1ec8:: with SMTP id m8mr9509446ejj.355.1579288630897;
-        Fri, 17 Jan 2020 11:17:10 -0800 (PST)
-Received: from kozik-lap ([194.230.155.229])
-        by smtp.googlemail.com with ESMTPSA id d22sm1035402edp.28.2020.01.17.11.17.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Jan 2020 11:17:10 -0800 (PST)
-Date:   Fri, 17 Jan 2020 20:17:08 +0100
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>
-Subject: Re: [PATCH 3/3] ARM: multi_v7_defconfig: Enable devfreq thermal
- integration
-Message-ID: <20200117191708.GB817@kozik-lap>
-References: <20200117123448.13807-1-m.szyprowski@samsung.com>
- <CGME20200117123454eucas1p28093460c40e4300d4a58f7809f614135@eucas1p2.samsung.com>
- <20200117123448.13807-3-m.szyprowski@samsung.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
+        b=fjdr9nW01/8cgzwvXMM1lEODWNjrdnKYYMpMOKEEIxnnpp3cQhqWlJkEt6GgaCaAL3
+         1uMB43GinbKu28T/TtfyZNTTQQXHvLvfzk1AR6rJKqAhAgpC06ztfYHRxRNNdhvC1VDw
+         XGfnYjkY0H0whuR1vId8RSkZO3H/b15ehwr7FTOB1gY1V4uPjyTHbHxuuuZ0LR7E1muX
+         ttCYBKSGaLQp6UeTPjyeKSxJ3Rcbr8AWpasMGGVLw1xl4BP0kBcRm8+LZGEuW6ld+8HP
+         XZxULTNVxgL8l8MnThrT7LifaS5l/ifrMBQfoUQ3WRXhG4UaeBvQqDdgddmJ/f0EhQSC
+         FXFQ==
+X-Gm-Message-State: APjAAAXq/QLerEnsO2qvq3YYk4bjYOMJMD6UJhbA7PmYVJ2hf/gp0AEu
+        /q2Y6eY/vXMy1DhKUDcgGWsIJcEiOIuewjpV38g=
+X-Google-Smtp-Source: APXvYqzrfoOpFYdPx6ke6uIX585SnMDBN6pXKvD7iN8x9MT//+KimK2aFC33ps3ZC6gjq3Pi1pIlacgfKiFCQZrpYZA=
+X-Received: by 2002:a92:d1c1:: with SMTP id u1mr7477573ilg.66.1579459459106;
+ Sun, 19 Jan 2020 10:44:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200117123448.13807-3-m.szyprowski@samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Received: by 2002:a02:95c8:0:0:0:0:0 with HTTP; Sun, 19 Jan 2020 10:44:18
+ -0800 (PST)
+Reply-To: favordens@email.com
+From:   Favor Desmond <contecindy5@gmail.com>
+Date:   Sun, 19 Jan 2020 18:44:18 +0000
+Message-ID: <CAOfCPNxgSoAU_ns0j9jYL-ArKfcD=i8NkJvHsR4-OGvFBVDMZg@mail.gmail.com>
+Subject: HELLO
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Jan 17, 2020 at 01:34:48PM +0100, Marek Szyprowski wrote:
-> Panfrost driver provides a devfreq driver for the Mali GPU and allows to
-> scale GPU core frequency. Enable support for devfreq thermal integration
-> to enable cooling of GPU thermal zone by reducing GPU core frequency.
-> 
-> This fixes following warning during boot on Exynos5422-based Odroid XU4:
-> 
-> panfrost 11800000.gpu: [drm:panfrost_devfreq_init] Failed to register cooling device
-> 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  arch/arm/configs/multi_v7_defconfig | 1 +
-
-Thanks, applied.
-
-Best regards,
-Krzysztof
-
+Hello Dear
+Greetings to you,I am Favor Desmond from Ivory coast currently living
+in  Togo Republic,I would like to know you more, so that i can tell
+you little amount myself and my photo, email address is
+favordens@email.com
+Thanks
+Favor
