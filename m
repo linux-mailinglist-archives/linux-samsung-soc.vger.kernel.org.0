@@ -2,85 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC7F0143139
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jan 2020 19:02:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D696014326F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jan 2020 20:32:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbgATSCf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 20 Jan 2020 13:02:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46494 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726642AbgATSCe (ORCPT
+        id S1727372AbgATTcv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 20 Jan 2020 14:32:51 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42376 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726816AbgATTcm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 20 Jan 2020 13:02:34 -0500
-Received: from localhost.localdomain (unknown [194.230.155.229])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2DFE522314;
-        Mon, 20 Jan 2020 18:02:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579543354;
-        bh=5g+nhNLBu3QaKcp7T3GYytUhOVrS04sl1IWrP+4wSqk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=r2hEtFLB/hocwTKWiMWXITcsdVBrZg7eEOoxP3U3OvU4tVMZVxa/qtumf7KuOsFAh
-         JB70raMw7aosIAQP3fV7enDBefarYoslwimkcYRBEPAUBbZU2qLHbOnCFWJT+sJzpQ
-         LuAD+Xk5GJeM2eWK5I5ZnnWx2Ld91bsUBbeHaNa4=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
-        arm@kernel.org, soc@kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [GIT PULL] ARM: defconfig: Samsung defconfig for v5.6
-Date:   Mon, 20 Jan 2020 19:02:27 +0100
-Message-Id: <20200120180227.9061-1-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
+        Mon, 20 Jan 2020 14:32:42 -0500
+Received: by mail-ed1-f67.google.com with SMTP id e10so578384edv.9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 20 Jan 2020 11:32:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=z7I/Kq2V0EnXiuoACdRbnwoAql3KZ080nwyXVjlruyU=;
+        b=I1roYPqxBJzWtUK/EbeI6Kt4sZi+JdSJm6qJbGHrPRZYvHUSh5jIrCeNC6L/G/f0o1
+         SOUBr7y32ZptFoyqXLV46mqkCVXIPksz6dHNenBfKH5ZmZaxgtbXfnD4DPiQngFU9XCO
+         yyR3xavKr41v/xLWwuSw91WJb2uX+wjZFxyyrAuDZ+hvXvCheAMdiLqD+HrlaysRfXCL
+         GNNQRcxyOsqzXo4wRH2J/upuPpeDO5ZRhzNY4HfuYgHfElCshp5fZYHSWkrBX0jAzQvX
+         wM9NfRj8QHz6JxUFOI+rZ3wcUi7Ikp+pHr28kaxr4n7py/KC1H5pYclpR4JTvoTIZ7Jv
+         h8rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=z7I/Kq2V0EnXiuoACdRbnwoAql3KZ080nwyXVjlruyU=;
+        b=iOtLqJDiF6wOuSkvp/n0o0J4sz+w4IfB6sNGGWlybnT+IaCSUdYWKgXOvRPuchVpzb
+         VbdVv2pGqCcjV4W0ivy9qZam/aItaq3FQd1TB9jW6PBZRj1Iz3eFuOI1reB9EPeCmwAM
+         NXZgcRhFi3caQa4iZF9FUPOIhiP5P4WgEDMDVMGujpanxYgxwCgJ1UNENDNNBznpp3f6
+         CfKBztBGsSgoywDK4e4KteTluGHO+G2v1WbVDD9Pc15zVBCyCTE0o8ObF2wGCh+EvEY6
+         KKjGm+wuc4mv1uE86/u0noIzLp+CKCE0oCxmZWbz7OM/PyWnsyqVrAwUcQDqchPa6zCS
+         YkcA==
+X-Gm-Message-State: APjAAAUzWmw+2NlZpqLs4onU+CN+WxcRUYyrDCvzVhRbcJA46lXqT9iS
+        UNeaaQ2IfNZi1C2tXLJa/AvWLyoI4xPJTQ7+R5U=
+X-Google-Smtp-Source: APXvYqwKjCT5QnfvXWtJkO29cRmoOGR1uhIhw9Ol6eYz9VuYzVaqX/o8Ejt2WLDxZ+bl2CebXLO8AWZ4Emn93SBTQws=
+X-Received: by 2002:a17:906:1fcd:: with SMTP id e13mr898516ejt.333.1579548761316;
+ Mon, 20 Jan 2020 11:32:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a05:6402:22dc:0:0:0:0 with HTTP; Mon, 20 Jan 2020 11:32:40
+ -0800 (PST)
+Reply-To: mcclainejohn.13@gmail.com
+From:   "Prof, William Roberts" <eco.bank1204@gmail.com>
+Date:   Mon, 20 Jan 2020 20:32:40 +0100
+Message-ID: <CAOE+jABpcHQWZWhtskhDFbtTqfBe7h065WE2kC1G+jQD+tQiTA@mail.gmail.com>
+Subject: Contact Diplomatic Agent, Mr. Mcclaine John to receive your ATM CARD
+ valued the sum of $12.8Million United States Dollars
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+Attn: Dear Beneficiary,
 
-I hope it is not too late for these defconfig changes.
+I wish to inform you that the diplomatic agent conveying your ATM CARD
+valued the sum of $12.8Million United States Dollars has misplaced
+your address and he is currently stranded at (George Bush
+International Airport) Houston Texas USA now
+We required you to reconfirm the following information's below to him
+so that he can deliver your Payment CARD to you today or tomorrow
+morning as information provided with open communications via email and
+telephone for security reasons.
+HERE IS THE DETAILS  HE NEED FROM YOU URGENT
+YOUR FULL NAME:========
+ADDRESS:========
+MOBILE NO:========
+NAME OF YOUR NEAREST AIRPORT:========
+A COPY OF YOUR IDENTIFICATION :========
 
+Note; do contact the diplomatic agent immediately through the
+information's listed below
+Contact Person: Diplomatic Agent, Mr. Mcclaine John
+EMAIL: mcclainejohn.13@gmail.com
+Tel:(223) 777-7518
 
-Best regards,
-Krzysztof
+Contact the diplomatic agent immediately
+because he is waiting to hear from you today with the needed information's.
 
+NOTE: The Diplomatic agent does not know that the content of the
+consignment box is $12.800,000,00 Million United States Dollars and on
+no circumstances should you let him know the content. The consignment
+was moved from here as family treasures, so never allow him to open
+the box. Please I have paid delivery fees for you but the only money
+you must send to Mcclaine John is your ATM CARD delivery fee $25.00
+only. text Him as you contact Him Immediately
 
-The following changes since commit e42617b825f8073569da76dc4510bfa019b1c35a:
-
-  Linux 5.5-rc1 (2019-12-08 14:57:55 -0800)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-defconfig-5.6
-
-for you to fetch changes up to cdfc88f1cdbf12b666dcf2da3f1de38fb1512262:
-
-  ARM: multi_v7_defconfig: Enable devfreq thermal integration (2020-01-17 20:28:54 +0100)
-
-----------------------------------------------------------------
-Samsung defconfig changes for v5.6
-
-1. Bring back explicitly wanted options which were removed through
-   `make savedefconfig`.  savedefconfig removes options selected by
-   other symbol, however developers of this other symbol can remove
-   anytime 'select' statement.
-2. Enable NFS v4.1 and v4.2, useful in testing/CI systems.
-3. Enable thermal throttling through devfreq framework.
-
-----------------------------------------------------------------
-Krzysztof Kozlowski (3):
-      ARM: exynos_defconfig: Bring back explicitly wanted options
-      ARM: exynos_defconfig: Enable NFS v4.1 and v4.2
-      ARM: multi_v7_defconfig: Enable NFS v4.1 and v4.2
-
-Marek Szyprowski (2):
-      ARM: exynos_defconfig: Enable devfreq thermal integration
-      ARM: multi_v7_defconfig: Enable devfreq thermal integration
-
- arch/arm/configs/exynos_defconfig   | 9 +++++++++
- arch/arm/configs/multi_v7_defconfig | 3 +++
- 2 files changed, 12 insertions(+)
+Thanks,
+with Regards.
+Prof, William Roberts
+Director DHL COURIER SERVICES-Benin
