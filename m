@@ -2,63 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B171141F59
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 19 Jan 2020 19:44:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D78F1422CC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jan 2020 06:28:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgASSoU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 19 Jan 2020 13:44:20 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:37500 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727586AbgASSoT (ORCPT
+        id S1729064AbgATF20 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 20 Jan 2020 00:28:26 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46833 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbgATF2Z (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 19 Jan 2020 13:44:19 -0500
-Received: by mail-il1-f196.google.com with SMTP id t8so25514073iln.4
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 19 Jan 2020 10:44:19 -0800 (PST)
+        Mon, 20 Jan 2020 00:28:25 -0500
+Received: by mail-pl1-f195.google.com with SMTP id y8so12658517pll.13
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 19 Jan 2020 21:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
-        b=MveYcniUJUB532f0dlOoihdmkjAHV60cDj8LBHI8M4h+3H+egt8ZCsWSnQoG7CEhld
-         h286H+k74rDzfRQOoY/f9M81WRQr88YRuubiH3HanhIDyXki4cyulA7bNdgdh/npcklQ
-         CvJo43u8PBPBkMgEH5HatRsI+u5tlB3wEJ1Th3FBUvpApZQxsvg7pL4HfvgLhjM/SAbt
-         Wln7BJPpvNYZtoiRQX3zkLZKrm4kgBMldFao5RktgQ8gLQFv0TsxI7xopop5Q61lnjsD
-         O+Nqof9tzp5qXVHsDImBQ0OOhN8D0ZvK4JC9Zw+KV08LpajVcASte5dFUKOIeqnCFHwC
-         Gp1A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CTBoug2POge5IUv+BODbtuxgixi9XfhzZTWyFSqFGs8=;
+        b=EmffSu1Ekm1BEOdjUqNZPrbufY1BxZZsbLp0EIIgqSsKbdU1Y/QhUZ0CFI6Jvu8BAb
+         aok3M/fFGKuzC7xOkaqjTyJ2mnCTYKXjxBgMKJN1PHe2JLiCUC3LkFQKpPyICcRCYMYR
+         3MOBr5YIQpCU5NoJfe5Vmq3J0JJZ4PKyXmfZ+Jjf45sTPc+aKaAB1ML3RIgJ9eD31lKy
+         HfDLgUPMH4Ijh0iCSDeykSExAV84SAE31vOPmFRLDXvY3G+YoIln8ZIEkAJ14UWx0GlM
+         nVJdWNi/G1VfDywJqHu9EmCRwykzlARFuq2gaR0z8/mgJEy9xl/uXpoDjdTV9ZIRKRBr
+         bNvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/o+CA7VDRA7UR3HGeT8+/tYzwEnOXwq5B8ZHP2/HeYc=;
-        b=fjdr9nW01/8cgzwvXMM1lEODWNjrdnKYYMpMOKEEIxnnpp3cQhqWlJkEt6GgaCaAL3
-         1uMB43GinbKu28T/TtfyZNTTQQXHvLvfzk1AR6rJKqAhAgpC06ztfYHRxRNNdhvC1VDw
-         XGfnYjkY0H0whuR1vId8RSkZO3H/b15ehwr7FTOB1gY1V4uPjyTHbHxuuuZ0LR7E1muX
-         ttCYBKSGaLQp6UeTPjyeKSxJ3Rcbr8AWpasMGGVLw1xl4BP0kBcRm8+LZGEuW6ld+8HP
-         XZxULTNVxgL8l8MnThrT7LifaS5l/ifrMBQfoUQ3WRXhG4UaeBvQqDdgddmJ/f0EhQSC
-         FXFQ==
-X-Gm-Message-State: APjAAAXq/QLerEnsO2qvq3YYk4bjYOMJMD6UJhbA7PmYVJ2hf/gp0AEu
-        /q2Y6eY/vXMy1DhKUDcgGWsIJcEiOIuewjpV38g=
-X-Google-Smtp-Source: APXvYqzrfoOpFYdPx6ke6uIX585SnMDBN6pXKvD7iN8x9MT//+KimK2aFC33ps3ZC6gjq3Pi1pIlacgfKiFCQZrpYZA=
-X-Received: by 2002:a92:d1c1:: with SMTP id u1mr7477573ilg.66.1579459459106;
- Sun, 19 Jan 2020 10:44:19 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CTBoug2POge5IUv+BODbtuxgixi9XfhzZTWyFSqFGs8=;
+        b=gBl+yqx2zCSxapXaJkbpewk6hKl8JgeqmSU8niwtoWzPDiDBnKIwHNj+WMXJiWzwTM
+         o1O5kLmmz6tOraa6oTvcDFBxVkIHfda8FlTPOVDsekarB4ZouXk2WSOawzDINs0XEYbf
+         3Eq5ulu12zqbLwn6DkEIXH/Wj2uzNh3O0BqSunsH2T31/STqLpYB8Pd+ezStji92QHv0
+         sGD0QmV5gfXbsERGyxUZZoENZJ4gLITl68VWca+c2pU/iewsARIu01D59oKSMpE9VoS+
+         J2RrF7K7+k1Kq7rLPy8e0m7H5PPHRNvkJXkIqUGUNSBtTFf5yCHrQg5qIkU8hA2mQheU
+         RrVQ==
+X-Gm-Message-State: APjAAAW6Qq53xoPOfyT9fIGkxgZJ3iuEquVK/FrYu7YpSoGwiEVlfHrB
+        fJf4rv/tj9UoBfTzUAJDKEGTfw==
+X-Google-Smtp-Source: APXvYqyPVXId1vEjcr+tOT7Z4v8U9ypwhS2c/1vLrgL2t0SNuRIJzHadRuOhZQXz3K1rsfAmRcv2nw==
+X-Received: by 2002:a17:902:b48e:: with SMTP id y14mr13300276plr.260.1579498104970;
+        Sun, 19 Jan 2020 21:28:24 -0800 (PST)
+Received: from localhost ([122.172.71.156])
+        by smtp.gmail.com with ESMTPSA id s26sm37402702pfe.166.2020.01.19.21.28.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Jan 2020 21:28:23 -0800 (PST)
+Date:   Mon, 20 Jan 2020 10:58:21 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     qiwu chen <qiwuchen55@gmail.com>
+Cc:     kgene@kernel.org, krzk@kernel.org, rjw@rjwysocki.net,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
+        chenqiwu <chenqiwu@xiaomi.com>
+Subject: Re: [PATCH v3] cpufreq: s3c: fix unbalances of cpufreq policy
+ refcount
+Message-ID: <20200120052821.tvijbt3bzkn76yz6@vireshk-i7>
+References: <1578383599-11207-1-git-send-email-qiwuchen55@gmail.com>
+ <20200107080145.7c4gxilnjjxjfqpc@vireshk-i7>
+ <CAD1-QrohtJFLWDMCYmVs2G5WDcDN_E8xcsNZqJ428cEkohcB0Q@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a02:95c8:0:0:0:0:0 with HTTP; Sun, 19 Jan 2020 10:44:18
- -0800 (PST)
-Reply-To: favordens@email.com
-From:   Favor Desmond <contecindy5@gmail.com>
-Date:   Sun, 19 Jan 2020 18:44:18 +0000
-Message-ID: <CAOfCPNxgSoAU_ns0j9jYL-ArKfcD=i8NkJvHsR4-OGvFBVDMZg@mail.gmail.com>
-Subject: HELLO
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD1-QrohtJFLWDMCYmVs2G5WDcDN_E8xcsNZqJ428cEkohcB0Q@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Dear
-Greetings to you,I am Favor Desmond from Ivory coast currently living
-in  Togo Republic,I would like to know you more, so that i can tell
-you little amount myself and my photo, email address is
-favordens@email.com
-Thanks
-Favor
+On 19-01-20, 10:25, qiwu chen wrote:
+> Hi
+> Any progress about this patch?
+
+I already applied it in my tree, it will be part for v5.5-rc1.
+
+-- 
+viresh
