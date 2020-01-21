@@ -2,221 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A48A143768
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jan 2020 08:05:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 858A6143B2E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jan 2020 11:38:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727817AbgAUHFX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 21 Jan 2020 02:05:23 -0500
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:49853 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbgAUHFX (ORCPT
+        id S1729449AbgAUKiI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 21 Jan 2020 05:38:08 -0500
+Received: from baptiste.telenet-ops.be ([195.130.132.51]:33344 "EHLO
+        baptiste.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729384AbgAUKh2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 21 Jan 2020 02:05:23 -0500
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200121070521euoutp01f3c973963f836f5013562cecfc5652b6~r1Qcn0uHp1560015600euoutp01B
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jan 2020 07:05:21 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200121070521euoutp01f3c973963f836f5013562cecfc5652b6~r1Qcn0uHp1560015600euoutp01B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1579590321;
-        bh=jz6YdJe+9oiv3h/P57nB26DlekL22/ed76FQBVgaSrY=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=s/8kj1l7tfs2HhdCctTtxpgpPHXDVKLe1BqaH/X3xHeuwYn266LNYVFpurUt0klUP
-         8G430K+qe/QDCh1GQwG3qpQApxcn5lbGj3TLLeKTtZ5PruCm0vIo/m1RFnY7YPeChQ
-         Q0PootTQZfF/W1y+PWUaW7prKeK/avWkAtDu0OHI=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200121070520eucas1p1661b2a62ef7419e85b38bb21dcf6e19f~r1QcLwOsC0793607936eucas1p1M;
-        Tue, 21 Jan 2020 07:05:20 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id C5.57.60679.0B2A62E5; Tue, 21
-        Jan 2020 07:05:20 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da~r1Qb1Vxbf3176231762eucas1p23;
-        Tue, 21 Jan 2020 07:05:20 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200121070520eusmtrp28b76c75abbbe60b93670cba358a3f8f2~r1Qb0rSk31202912029eusmtrp2C;
-        Tue, 21 Jan 2020 07:05:20 +0000 (GMT)
-X-AuditID: cbfec7f4-0e5ff7000001ed07-e8-5e26a2b00467
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id DF.45.07950.0B2A62E5; Tue, 21
-        Jan 2020 07:05:20 +0000 (GMT)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200121070519eusmtip2238a581f3dbd3c7f444f819c61f486ec~r1QbcZOYR2994429944eusmtip2Q;
-        Tue, 21 Jan 2020 07:05:19 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Tue, 21 Jan 2020 05:37:28 -0500
+Received: from ramsan ([84.195.182.253])
+        by baptiste.telenet-ops.be with bizsmtp
+        id sydS2100A5USYZQ01ydS2e; Tue, 21 Jan 2020 11:37:26 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan with esmtp (Exim 4.90_1)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1itquU-00011W-8y; Tue, 21 Jan 2020 11:37:26 +0100
+Received: from geert by rox.of.borg with local (Exim 4.90_1)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1itquU-0000UC-7a; Tue, 21 Jan 2020 11:37:26 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Arnd Bergmann <arnd@arndb.de>, Kevin Hilman <khilman@kernel.org>,
+        Olof Johansson <olof@lixom.net>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>
-Subject: [PATCH v2] ARM: dts: exynos: Add GPU thermal zone cooling maps for
- Odroid XU3/XU4/HC1
-Date:   Tue, 21 Jan 2020 08:05:10 +0100
-Message-Id: <20200121070510.31520-1-m.szyprowski@samsung.com>
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 10/20] ARM: exynos: Drop unneeded select of MIGHT_HAVE_CACHE_L2X0
+Date:   Tue, 21 Jan 2020 11:37:12 +0100
+Message-Id: <20200121103722.1781-10-geert+renesas@glider.be>
 X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsWy7djPc7obFqnFGcx5JGWxccZ6VovrX56z
-        Wpw/v4Hd4vKuOWwWM87vY7JYe+QuuwObx6ZVnWwefVtWMXp83iQXwBzFZZOSmpNZllqkb5fA
-        lbH+51vmgocSFXMf7GNtYPwq2MXIySEhYCLxuOEDcxcjF4eQwApGiek/t7NBOF8YJe6sv8UM
-        UiUk8JlR4tgDEZiOtqa/UEXLGSWeT/zAAtdxsO0MO0gVm4ChRNfbLjYQW0TAWaJhaiMTSBGz
-        wDZGidcLZoIVCQskSJyesIaxi5GDg0VAVaJtJlg9r4CtxOMntxkhtslLrN5wAOw+CYEDbBJt
-        d14yQyRcJLZObWaHsIUlXh3fAmXLSPzfOZ8JoqGZUeLhubXsEE4Po8TlphlQY60l7pz7xQay
-        mVlAU2L9Ln2IsKNE1+OP7CBhCQE+iRtvwYHEDGRO2jadGSLMK9HRJgRRrSYx6/g6uLUHL1yC
-        Os1DYv2v9eyQkIuV2HLmBdMERrlZCLsWMDKuYhRPLS3OTU8tNspLLdcrTswtLs1L10vOz93E
-        CIz30/+Of9nBuOtP0iFGAQ5GJR7eF5NV44RYE8uKK3MPMUpwMCuJ8C5oAgrxpiRWVqUW5ccX
-        leakFh9ilOZgURLnNV70MlZIID2xJDU7NbUgtQgmy8TBKdXAqFbiK+J9cvuRpcLrGN5vcdsl
-        elRld1yFzxr9rcm6msUTfns+upTwqiaiWsPkiNf71O7+ebtYVBzWzTQ0FJwpzbvmXf3N9XO3
-        mLvq2CbZXj60yuiczQJ7/+bPfQrpx0T7k6bbfvVOiDb0Drq+tZ6tUeb3k6T1hlkFPzpq6jeF
-        sYVyyJsI3ctTYinOSDTUYi4qTgQAgyVECfMCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGLMWRmVeSWpSXmKPExsVy+t/xe7obFqnFGcw9yWGxccZ6VovrX56z
-        Wpw/v4Hd4vKuOWwWM87vY7JYe+QuuwObx6ZVnWwefVtWMXp83iQXwBylZ1OUX1qSqpCRX1xi
-        qxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OSmpNZllqkb5egl7H+51vmgocSFXMf7GNtYPwq
-        2MXIySEhYCLR1vSXrYuRi0NIYCmjxNHZE1khEjISJ6c1QNnCEn+udUEVfWKUWH3/LCNIgk3A
-        UKLrLUiCk0NEwFXi0IpeZpAiZoEdjBLdLRfYQRLCAnESZ1o/snQxcnCwCKhKtM0Eq+cVsJV4
-        /OQ2I8QCeYnVGw4wT2DkWcDIsIpRJLW0ODc9t9hIrzgxt7g0L10vOT93EyMwzLYd+7llB2PX
-        u+BDjAIcjEo8vA7TVOOEWBPLiitzDzFKcDArifAuaAIK8aYkVlalFuXHF5XmpBYfYjQF2j2R
-        WUo0OR8YA3kl8YamhuYWlobmxubGZhZK4rwdAgdjhATSE0tSs1NTC1KLYPqYODilGhgP6Dak
-        ztq690m/2co9felvKg9oPFdKDs45zPytqvvK3vlKJZMaTZMdlgksW5RtbHbxWPpaA8HP1/nm
-        layKnBM58Uzo8rkpeVK2R23543ZmTLT306sq52/5bMq36FyQ7TW5GSv3n9q1aWnrRUf28mdO
-        pY4fGbt4Pprsnx7FmbRSf8NLQ3+mlg4lluKMREMt5qLiRABVraLlSQIAAA==
-X-CMS-MailID: 20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da
-References: <CGME20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da@eucas1p2.samsung.com>
+In-Reply-To: <20200121103722.1781-1-geert+renesas@glider.be>
+References: <20200121103413.1337-1-geert+renesas@glider.be>
+ <20200121103722.1781-1-geert+renesas@glider.be>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add trip points and cooling maps for GPU thermal zone for Odroid
-XU3/XU4/HC1 boards. Trip points are based on the CPU thermal zone for the
-those boards.
+Support for Samsung Exynos SoCs depends on ARCH_MULTI_V7, which selects
+ARCH_MULTI_V6_V7.
+As the latter selects MIGHT_HAVE_CACHE_L2X0, there is no need for
+ARCH_EXYNOS4 to select MIGHT_HAVE_CACHE_L2X0.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-samsung-soc@vger.kernel.org
 ---
-v2:
-- removed polling-delay related properties for HC1 as requested by Krzysztof
---
- arch/arm/boot/dts/exynos5422-odroidhc1.dts    | 30 ++++++++++
- .../boot/dts/exynos5422-odroidxu3-common.dtsi | 59 +++++++++++++++++++
- 2 files changed, 89 insertions(+)
+All patches in this series are independent of each other.
+Cover letter at https://lore.kernel.org/r/20200121103413.1337-1-geert+renesas@glider.be
 
-diff --git a/arch/arm/boot/dts/exynos5422-odroidhc1.dts b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-index f163206265bb..812659260278 100644
---- a/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-+++ b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-@@ -215,6 +215,36 @@
- 				};
- 			};
- 		};
-+		gpu_thermal: gpu-thermal {
-+			thermal-sensors = <&tmu_gpu 0>;
-+			trips {
-+				gpu_alert0: gpu-alert-0 {
-+					temperature = <70000>;
-+					hysteresis = <10000>;
-+					type = "active";
-+				};
-+				gpu_alert1: gpu-alert-1 {
-+					temperature = <85000>;
-+					hysteresis = <10000>;
-+					type = "active";
-+				};
-+				gpu_crit0: gpu-crit-0 {
-+					temperature = <120000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+			cooling-maps {
-+				map0 {
-+					trip = <&gpu_alert0>;
-+					cooling-device = <&gpu 0 2>;
-+				};
-+				map1 {
-+					trip = <&gpu_alert1>;
-+					cooling-device = <&gpu 3 6>;
-+				};
-+			};
-+		};
- 	};
- 
- };
-diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-index 1865a708b49f..5da2d81e3be2 100644
---- a/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-+++ b/arch/arm/boot/dts/exynos5422-odroidxu3-common.dtsi
-@@ -357,6 +357,65 @@
- 				};
- 			};
- 		};
-+		gpu_thermal: gpu-thermal {
-+			thermal-sensors = <&tmu_gpu 0>;
-+			polling-delay-passive = <250>;
-+			polling-delay = <0>;
-+			trips {
-+				gpu_alert0: gpu-alert-0 {
-+					temperature = <50000>;
-+					hysteresis = <5000>;
-+					type = "active";
-+				};
-+				gpu_alert1: gpu-alert-1 {
-+					temperature = <60000>;
-+					hysteresis = <5000>;
-+					type = "active";
-+				};
-+				gpu_alert2: gpu-alert-2 {
-+					temperature = <70000>;
-+					hysteresis = <5000>;
-+					type = "active";
-+				};
-+				gpu_crit0: gpu-crit-0 {
-+					temperature = <120000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+				gpu_alert3: gpu-alert-3 {
-+					temperature = <70000>;
-+					hysteresis = <10000>;
-+					type = "passive";
-+				};
-+				gpu_alert4: gpu-alert-4 {
-+					temperature = <85000>;
-+					hysteresis = <10000>;
-+					type = "passive";
-+				};
-+			};
-+			cooling-maps {
-+				map0 {
-+					trip = <&gpu_alert0>;
-+					cooling-device = <&fan0 0 1>;
-+				};
-+				map1 {
-+					trip = <&gpu_alert1>;
-+					cooling-device = <&fan0 1 2>;
-+				};
-+				map2 {
-+					trip = <&gpu_alert2>;
-+					cooling-device = <&fan0 2 3>;
-+				};
-+				map3 {
-+					trip = <&gpu_alert3>;
-+					cooling-device = <&gpu 0 2>;
-+				};
-+				map4 {
-+					trip = <&gpu_alert4>;
-+					cooling-device = <&gpu 3 6>;
-+				};
-+			};
-+		};
- 	};
- };
+ arch/arm/mach-exynos/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm/mach-exynos/Kconfig b/arch/arm/mach-exynos/Kconfig
+index 73ce92a0cdb256dd..52a515017fe709ac 100644
+--- a/arch/arm/mach-exynos/Kconfig
++++ b/arch/arm/mach-exynos/Kconfig
+@@ -64,7 +64,6 @@ config ARCH_EXYNOS4
+ 	select CLKSRC_SAMSUNG_PWM if CPU_EXYNOS4210
+ 	select CPU_EXYNOS4210
+ 	select GIC_NON_BANKED
+-	select MIGHT_HAVE_CACHE_L2X0
+ 	help
+ 	  Samsung Exynos4 (Cortex-A9) SoC based systems
  
 -- 
 2.17.1
