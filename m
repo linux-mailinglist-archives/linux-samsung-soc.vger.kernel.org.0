@@ -2,74 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 97653143B2A
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jan 2020 11:38:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7950143CA4
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jan 2020 13:18:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729654AbgAUKh2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 21 Jan 2020 05:37:28 -0500
-Received: from albert.telenet-ops.be ([195.130.137.90]:38476 "EHLO
-        albert.telenet-ops.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729505AbgAUKh2 (ORCPT
+        id S1728760AbgAUMSS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 21 Jan 2020 07:18:18 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:38283 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728655AbgAUMSR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 21 Jan 2020 05:37:28 -0500
-Received: from ramsan ([84.195.182.253])
-        by albert.telenet-ops.be with bizsmtp
-        id sydS210185USYZQ06ydSoE; Tue, 21 Jan 2020 11:37:26 +0100
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan with esmtp (Exim 4.90_1)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1itquU-00011w-GD; Tue, 21 Jan 2020 11:37:26 +0100
-Received: from geert by rox.of.borg with local (Exim 4.90_1)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1itquU-0000Ud-F0; Tue, 21 Jan 2020 11:37:26 +0100
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Arnd Bergmann <arnd@arndb.de>, Kevin Hilman <khilman@kernel.org>,
-        Olof Johansson <olof@lixom.net>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 19/20] ARM: s3c64xx: Drop unneeded select of TIMER_OF
-Date:   Tue, 21 Jan 2020 11:37:21 +0100
-Message-Id: <20200121103722.1781-19-geert+renesas@glider.be>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200121103722.1781-1-geert+renesas@glider.be>
-References: <20200121103413.1337-1-geert+renesas@glider.be>
- <20200121103722.1781-1-geert+renesas@glider.be>
+        Tue, 21 Jan 2020 07:18:17 -0500
+Received: by mail-ed1-f54.google.com with SMTP id i16so2753183edr.5;
+        Tue, 21 Jan 2020 04:18:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SnG0TTyxgyt1zcjYn/1DgFM/Ap/My5QEMUd9Nz/FdQc=;
+        b=sXugVgZSjxSRARRjYDNsgNbTVBDzCJHTRryWUR68wPzT/Hebga8QIvg7mel+hsckDY
+         yfkZBnpK6DFr+jlAasf2zXFyAuLfoYsCO3rClv88iw9f7CWLlAVNVSvThZExy0aLO20C
+         RJ5gyj9/Ki4Ma45+OVtyqcQyWX/NtqSOXoMAmqjtXc3m8HC8V/FriefXZ8hHGphj4R5A
+         vG4fMvdj0RBvxk13dqInbZIo5/mQEB2BPtrin3j1gIatwM3dN9pfLWPhgybtNSbhnJmP
+         sfNlJJTyEIo65X7gQi7gwbrZRrKPfF8hnp9qiukhoNwkGIUM/T5r+oIFbyoEcujXO7sk
+         ntsg==
+X-Gm-Message-State: APjAAAWjTxCEtlFgpSZFMEijTI4sIK+1OUBJx0y6GVD8571aoRkTkhvO
+        P7d08wYGLKokcjuyVd5OQaEswWod
+X-Google-Smtp-Source: APXvYqxx2iaNPGTqZVW60KypS1ijtsKo2jYdA4u8I5swXCGUf+ubu04YZWD3F/ALLpq/zWxVztK/dg==
+X-Received: by 2002:a17:906:4d87:: with SMTP id s7mr3940129eju.221.1579609095691;
+        Tue, 21 Jan 2020 04:18:15 -0800 (PST)
+Received: from pi3 ([194.230.155.229])
+        by smtp.googlemail.com with ESMTPSA id n24sm1375491edr.30.2020.01.21.04.18.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jan 2020 04:18:15 -0800 (PST)
+Date:   Tue, 21 Jan 2020 13:18:13 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>
+Subject: Re: [PATCH v2] ARM: dts: exynos: Add GPU thermal zone cooling maps
+ for Odroid XU3/XU4/HC1
+Message-ID: <20200121121813.GA25629@pi3>
+References: <CGME20200121070520eucas1p29587eed877efcf6e6b9433440f3c10da@eucas1p2.samsung.com>
+ <20200121070510.31520-1-m.szyprowski@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200121070510.31520-1-m.szyprowski@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Support for Samsung S3C64XX systems depends on ARCH_MULTI_V6, and thus
-on ARCH_MULTIPLATFORM.
-As the latter selects TIMER_OF, there is no need for MACH_S3C64XX_DT to
-select TIMER_OF.
+On Tue, Jan 21, 2020 at 08:05:10AM +0100, Marek Szyprowski wrote:
+> Add trip points and cooling maps for GPU thermal zone for Odroid
+> XU3/XU4/HC1 boards. Trip points are based on the CPU thermal zone for the
+> those boards.
+> 
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> ---
+> v2:
+> - removed polling-delay related properties for HC1 as requested by Krzysztof
+> --
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Kukjin Kim <kgene@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-samsung-soc@vger.kernel.org
----
-All patches in this series are independent of each other.
-Cover letter at https://lore.kernel.org/r/20200121103413.1337-1-geert+renesas@glider.be
+Thanks, it looks good. It is however too late in the cycle and I will
+not be sending one more dts pull (probably only one mach/soc). I'll
+apply it after merge window.
 
- arch/arm/mach-s3c64xx/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/arch/arm/mach-s3c64xx/Kconfig b/arch/arm/mach-s3c64xx/Kconfig
-index 5700822e3c74b8e4..ac3e3563487fc6f9 100644
---- a/arch/arm/mach-s3c64xx/Kconfig
-+++ b/arch/arm/mach-s3c64xx/Kconfig
-@@ -336,7 +336,6 @@ config MACH_WLF_CRAGG_6410
- 
- config MACH_S3C64XX_DT
- 	bool "Samsung S3C6400/S3C6410 machine using Device Tree"
--	select TIMER_OF
- 	select CPU_S3C6400
- 	select CPU_S3C6410
- 	select PINCTRL
--- 
-2.17.1
+Best regards,
+Krzysztof
 
