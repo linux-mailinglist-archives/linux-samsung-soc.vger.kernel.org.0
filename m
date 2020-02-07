@@ -2,117 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EA041552B8
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2020 08:07:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1CEC15600C
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2020 21:44:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726738AbgBGHHE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 7 Feb 2020 02:07:04 -0500
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:40584 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgBGHHE (ORCPT
+        id S1727512AbgBGUoJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 7 Feb 2020 15:44:09 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:40319 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727138AbgBGUoJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 7 Feb 2020 02:07:04 -0500
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200207070702euoutp01554e60d5e32b056110adea814e64c2ba~xDPxUdV-r0759807598euoutp01S
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  7 Feb 2020 07:07:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200207070702euoutp01554e60d5e32b056110adea814e64c2ba~xDPxUdV-r0759807598euoutp01S
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1581059222;
-        bh=2XVmTi7MvAKEIBVHNlJKT2g1VeCyuBW7a1g9FJGZX/g=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=sEetgeKvvTbNXPegkuBTKIUjLy+jkh7g3+LHwiiwIz0b3wsSo6hosY2a7bz5CW82f
-         ajEvl11wg/85PE3HifHFShzbZnGRKW1QHYVNfQqT/NIX7MPefdx6PmTBG33ZVX9TDt
-         pIKF+1OMMHJtnYXez1G+9BX/jsGiqed60AB3Em8Y=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200207070701eucas1p1bfe30ee84ce8d906804bae1ad61b09f0~xDPw9p8eE2945429454eucas1p1D;
-        Fri,  7 Feb 2020 07:07:01 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id DD.AB.60698.59C0D3E5; Fri,  7
-        Feb 2020 07:07:01 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200207070701eucas1p2d6422d731f031ee66737683b54085ac7~xDPwotC6_2965429654eucas1p28;
-        Fri,  7 Feb 2020 07:07:01 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200207070701eusmtrp2f8f8a9c82c9af838fe57937792831e0e~xDPwoIQhv3034730347eusmtrp2D;
-        Fri,  7 Feb 2020 07:07:01 +0000 (GMT)
-X-AuditID: cbfec7f5-a0fff7000001ed1a-ec-5e3d0c95d9d4
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 21.DD.08375.59C0D3E5; Fri,  7
-        Feb 2020 07:07:01 +0000 (GMT)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200207070700eusmtip180c73adadb1b89532ec3db2bdeaf7af9~xDPwQtecO1760517605eusmtip1E;
-        Fri,  7 Feb 2020 07:07:00 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH] soc: samsung: chipid: Fix return value on non-Exynos
- platforms
-Date:   Fri,  7 Feb 2020 08:05:52 +0100
-Message-Id: <20200207070552.26986-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsWy7djP87pTeWzjDH6sUbPYOGM9q8X58xvY
-        LT73HmG0mHF+H5PF2iN32R1YPTat6mTz6NuyitHj8ya5AOYoLpuU1JzMstQifbsErozFJ3az
-        FDxmrfjRntrA+Jmli5GTQ0LAROLhv3usXYxcHEICKxglGrp62SCcL4wS8+YuY4ZwPjNKnF+y
-        jBGmpf/AMUaIxHJGiSeb3zPBtfxsncoKUsUmYCjR9baLDcQWEbCXuP1kGTtIEbNAH6PE9b1z
-        mUESwgKBEn/2rAayOThYBFQlvu+XAgnzCthK9H75DnWgvMTqDQfAzpAQ2MEmcWfRM2aIhIvE
-        nwNL2SBsYYlXx7ewQ9gyEv93zmeCaGhmlHh4bi07hNPDKHG5aQbUE9YSd879YgPZzCygKbF+
-        lz5E2FHiZ0sPK0hYQoBP4sZbQZAwM5A5adt0Zogwr0RHmxBEtZrErOPr4NYevHAJ6jQPicOH
-        l4DdLyQQK3Fn4Tn2CYxysxB2LWBkXMUonlpanJueWmycl1quV5yYW1yal66XnJ+7iREY5af/
-        Hf+6g3Hfn6RDjAIcjEo8vAmONnFCrIllxZW5hxglOJiVRHjP61vGCfGmJFZWpRblxxeV5qQW
-        H2KU5mBREuc1XvQyVkggPbEkNTs1tSC1CCbLxMEp1cAYcz3j5+pPSuuVbbZ5li58dG5971e1
-        GYofY7SDj+2/KWJUEPEn+uCXvGPCT/j3bZC1ed2ScVdA2uCP5tbZKqcNJESMw/w3VNvmBJyw
-        bPCZv7tXwnyCb5DsbBvzU1FHlgQXJfDfD2tlmPDjstvK3oSOzRectVSWLcrlcayQ5f7/1Ppu
-        p8bCYwFKLMUZiYZazEXFiQD6gZa57gIAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrALMWRmVeSWpSXmKPExsVy+t/xu7pTeWzjDHrXCFtsnLGe1eL8+Q3s
-        Fp97jzBazDi/j8li7ZG77A6sHptWdbJ59G1ZxejxeZNcAHOUnk1RfmlJqkJGfnGJrVK0oYWR
-        nqGlhZ6RiaWeobF5rJWRqZK+nU1Kak5mWWqRvl2CXsbiE7tZCh6zVvxoT21g/MzSxcjJISFg
-        ItF/4BhjFyMXh5DAUkaJw0u+skEkZCROTmtghbCFJf5c62KDKPrEKPFs2iQmkASbgKFE19su
-        sAYRAUeJFzs/s4MUMQtMYJQ43zkDLCEs4C+x8/5moEkcHCwCqhLf90uBhHkFbCV6v3yHukJe
-        YvWGA8wTGHkWMDKsYhRJLS3OTc8tNtQrTswtLs1L10vOz93ECAytbcd+bt7BeGlj8CFGAQ5G
-        JR7eBEebOCHWxLLiytxDjBIczEoivOf1LeOEeFMSK6tSi/Lji0pzUosPMZoC7Z7ILCWanA8M
-        +7ySeENTQ3MLS0NzY3NjMwslcd4OgYMxQgLpiSWp2ampBalFMH1MHJxSDYxiXcoWdouN0uO4
-        TgruefdG5GBi/fQzCn+PKG1+XKmzieMyz+b1p5V95ZJye3YEMYkfnK2h3sLkvbTzzavfvjdU
-        RLad/7NtUtI8dxvBb/ZHWVwe/e15/drqZ9LJY394lyVvONj8wLJ4o6DbqeKXbPMFZ6tURfln
-        cvzkLbnz9VFljhgDf73L7W9KLMUZiYZazEXFiQBiWM6IQwIAAA==
-X-CMS-MailID: 20200207070701eucas1p2d6422d731f031ee66737683b54085ac7
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200207070701eucas1p2d6422d731f031ee66737683b54085ac7
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200207070701eucas1p2d6422d731f031ee66737683b54085ac7
-References: <CGME20200207070701eucas1p2d6422d731f031ee66737683b54085ac7@eucas1p2.samsung.com>
+        Fri, 7 Feb 2020 15:44:09 -0500
+Received: by mail-ot1-f66.google.com with SMTP id i6so589812otr.7
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 07 Feb 2020 12:44:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
+        b=WJgFJ9PR0yBQ+ciD08Pby60OVZzn3dTgtieZ17slfRQssKmPnwQmAwZPgDIpR6heck
+         dDY9m0nAiR73dL1CtCDLlqWI9lV6barO9i6phYUUcmMyI9lhyUunotwwGjtLNjZZXHps
+         B+ZJy7kS8IDHqb+LatDXLkBcGkPTiMku+kX9Fb92ZmFsnK1n3liOHkc4TmrSz2VBzqpm
+         gOXxQUuwBna/l8aq9nu864h1RGE/T5vMQdJwoV4IagKfmqrsTX7n4WpDLnLJobosvK0X
+         9Z7fBUirFx02ZREq+PBFhuGxFcksAi/eOnsjoHpvtfcuXe3k+tw0qtyYWnKvHtkX+Drl
+         CMWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
+        b=XDYiMzueyjIrFeQ4JmtM6EABVj5zuqlxstweh97MCpjRDGo1LwG5FK7iyqhro0lwMX
+         5uv4fK8JJwxI2J/FSAZ34vPQUESLK4BzRI/uAAM5pkHkvM4yBvMSyTzDLTfjVLBKoqhb
+         wMA2QbPu/Yywk2xRLy0dn+f2MqXnHAi0i98O2n4bYF7O4Bq0nDWF07dwyALkD4TirFPk
+         YixkUUDruKd6nmEiwnzzUwNKvJLNyKzGyXuL6RTm5mLS97NcFRxKEGIM7HQyNAk49lnZ
+         Tr2sC2ZmbbOG12FoQnNP6W3Ex5je2TFxT4waacyFmkfF+cDQZShbRv2sUYTTnNiUNNjQ
+         zgNw==
+X-Gm-Message-State: APjAAAWPQhaUWxsJOdvEBF//S7bFcDjnzbzTQAlDhhLrlbSGjAhsMDpW
+        B7WE2556bpMMVrIVn2QvtLnynYNpM4WrYnQe+4Q=
+X-Google-Smtp-Source: APXvYqxZ0BHxezvYatUCwR5ujJY2IO6fZCUlpHww8WEnDHAAAY+0VvtiMdEe6JnWZWwDRH8AP8uVvx3q0Y+IviYPdhQ=
+X-Received: by 2002:a9d:7305:: with SMTP id e5mr948882otk.64.1581108248790;
+ Fri, 07 Feb 2020 12:44:08 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a4a:d508:0:0:0:0:0 with HTTP; Fri, 7 Feb 2020 12:44:08 -0800 (PST)
+Reply-To: auch197722@gmail.com
+From:   "Mr. Theophilus Odadudu" <cristinamedina0010@gmail.com>
+Date:   Fri, 7 Feb 2020 15:44:08 -0500
+Message-ID: <CAPNvSTj-8q7w5QPmnH26+_3xCKjEWyE+9xcb8QyQs9Xie+iYgg@mail.gmail.com>
+Subject: LETTER OF INQUIRY
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Correct the probe return value to -ENODEV on non-Exynos platforms.
+Good Day,
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- drivers/soc/samsung/exynos-chipid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I work as a clerk in a Bank here in Nigeria, I have a very
+confidential Business Proposition for you. There is a said amount of
+money floating in the bank unclaimed, belonging to the bank Foreign
+customer who die with his family in the Ethiopian Airline crash of
+March 11, 2019.
 
-diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-index 2dad4961a80b..8d4d05086906 100644
---- a/drivers/soc/samsung/exynos-chipid.c
-+++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -59,7 +59,7 @@ static int __init exynos_chipid_early_init(void)
- 	syscon = of_find_compatible_node(NULL, NULL,
- 					 "samsung,exynos4210-chipid");
- 	if (!syscon)
--		return ENODEV;
-+		return -ENODEV;
- 
- 	regmap = device_node_to_regmap(syscon);
- 	of_node_put(syscon);
--- 
-2.17.1
+I seek your good collaboration to move the fund for our benefit. we
+have agreed that 40% be yours once you help claim.
 
+Do get back to with 1) Your Full Name: (2) Residential Address: (3)
+Phone, Mobile  (4) Scan Copy of Your ID. to apply for claims of the
+funds.
+
+Regards
+Theophilus Odadudu
