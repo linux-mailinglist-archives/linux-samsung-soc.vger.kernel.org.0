@@ -2,72 +2,98 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C1CEC15600C
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2020 21:44:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A44BC157305
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Feb 2020 11:51:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727512AbgBGUoJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 7 Feb 2020 15:44:09 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:40319 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727138AbgBGUoJ (ORCPT
+        id S1727051AbgBJKvT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 10 Feb 2020 05:51:19 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:34106 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726950AbgBJKvT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 7 Feb 2020 15:44:09 -0500
-Received: by mail-ot1-f66.google.com with SMTP id i6so589812otr.7
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 07 Feb 2020 12:44:09 -0800 (PST)
+        Mon, 10 Feb 2020 05:51:19 -0500
+Received: by mail-pg1-f193.google.com with SMTP id j4so3732303pgi.1;
+        Mon, 10 Feb 2020 02:51:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=WJgFJ9PR0yBQ+ciD08Pby60OVZzn3dTgtieZ17slfRQssKmPnwQmAwZPgDIpR6heck
-         dDY9m0nAiR73dL1CtCDLlqWI9lV6barO9i6phYUUcmMyI9lhyUunotwwGjtLNjZZXHps
-         B+ZJy7kS8IDHqb+LatDXLkBcGkPTiMku+kX9Fb92ZmFsnK1n3liOHkc4TmrSz2VBzqpm
-         gOXxQUuwBna/l8aq9nu864h1RGE/T5vMQdJwoV4IagKfmqrsTX7n4WpDLnLJobosvK0X
-         9Z7fBUirFx02ZREq+PBFhuGxFcksAi/eOnsjoHpvtfcuXe3k+tw0qtyYWnKvHtkX+Drl
-         CMWw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OBq9Wxg3rNYXND45mTJejeBW0qaZ9nSsHbegXEcF9x8=;
+        b=ftHzx5eOWQlGm3C8QeR2uhQzu038c0/X4JMnx1G1weCDZyndLaC4dlIKZWqnduq5Uc
+         LxWeF9fi0gEqhJt2JHg5epLlDP4wXfiVwj6vfLY61P4yOF4ruv9k0pIMn9QtHEQBwF9i
+         dcIYqGe4+US5qAXNWHAepmlmdNq5X6V6gB8x+vrJMKC0x31J7eNxOsN1daGCeEwK5byY
+         XMUtRxktldY4sZtm0En9e8ebFIv9z2c+AM6nJTCQBuAthHoUQda0szwe6Ev6z7jNPtVQ
+         8xo7cjOp1pv3XHLEeeZtfQzo15lR/3a3mzyWlmuRV/Tiq9pvqeIoYWtdhz4tyLYZ7gNG
+         Nluw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=XDYiMzueyjIrFeQ4JmtM6EABVj5zuqlxstweh97MCpjRDGo1LwG5FK7iyqhro0lwMX
-         5uv4fK8JJwxI2J/FSAZ34vPQUESLK4BzRI/uAAM5pkHkvM4yBvMSyTzDLTfjVLBKoqhb
-         wMA2QbPu/Yywk2xRLy0dn+f2MqXnHAi0i98O2n4bYF7O4Bq0nDWF07dwyALkD4TirFPk
-         YixkUUDruKd6nmEiwnzzUwNKvJLNyKzGyXuL6RTm5mLS97NcFRxKEGIM7HQyNAk49lnZ
-         Tr2sC2ZmbbOG12FoQnNP6W3Ex5je2TFxT4waacyFmkfF+cDQZShbRv2sUYTTnNiUNNjQ
-         zgNw==
-X-Gm-Message-State: APjAAAWPQhaUWxsJOdvEBF//S7bFcDjnzbzTQAlDhhLrlbSGjAhsMDpW
-        B7WE2556bpMMVrIVn2QvtLnynYNpM4WrYnQe+4Q=
-X-Google-Smtp-Source: APXvYqxZ0BHxezvYatUCwR5ujJY2IO6fZCUlpHww8WEnDHAAAY+0VvtiMdEe6JnWZWwDRH8AP8uVvx3q0Y+IviYPdhQ=
-X-Received: by 2002:a9d:7305:: with SMTP id e5mr948882otk.64.1581108248790;
- Fri, 07 Feb 2020 12:44:08 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OBq9Wxg3rNYXND45mTJejeBW0qaZ9nSsHbegXEcF9x8=;
+        b=RlWV2lpPvUtKFAKC/Gbovw97zoxxe0xK/3QskN21ZPHh0c98uvgKYe2iK/kRFvmqpp
+         2uZqwReq1quw4sgjMuQt8KoKn4A1nPuRDEVj7DtBlD4YM0IC0bw2GL7A6lVwDOmw/Rqu
+         8+yDwofeBQPjq7hToAJyk/qjUvhbAFOkMYEydtz5iZMxQIJ63Qg237/zAupAyVqQEuX7
+         OQe3xQ8CvzbwQJSY1GRPv/TeLd+IQcZ8rkI8lYpEN1vqjHk0DEdUqO7hSj+U9lanbFzq
+         JNXhds/5HBQMIGT7KRS27VMPqoy1QJmCBFySxzhf6Xvo53w/bgCoeo7vcrzQUjIb4jtv
+         8B1g==
+X-Gm-Message-State: APjAAAWK0+ToapaflRWHPqOn6mtF1dDldCJ+6knvl3cAT2UMsuVOA1Jq
+        4wlV4WPy3bKEZVv2MzA+zgOnHFQO
+X-Google-Smtp-Source: APXvYqxeRF90/zEsikUD4SUJJypsMyD4WZjz/yht4sgsIdjSjQZ284ZxUvHiyWkJHvuqABcIpJscGA==
+X-Received: by 2002:aa7:9546:: with SMTP id w6mr608003pfq.66.1581331878197;
+        Mon, 10 Feb 2020 02:51:18 -0800 (PST)
+Received: from localhost.localdomain ([45.114.62.33])
+        by smtp.gmail.com with ESMTPSA id g18sm12104833pfi.80.2020.02.10.02.51.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2020 02:51:17 -0800 (PST)
+From:   Anand Moon <linux.amoon@gmail.com>
+To:     linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCHv3 0/3] Add support for suspend clk for Exynos5422 SoC
+Date:   Mon, 10 Feb 2020 10:51:05 +0000
+Message-Id: <20200210105108.1128-1-linux.amoon@gmail.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Received: by 2002:a4a:d508:0:0:0:0:0 with HTTP; Fri, 7 Feb 2020 12:44:08 -0800 (PST)
-Reply-To: auch197722@gmail.com
-From:   "Mr. Theophilus Odadudu" <cristinamedina0010@gmail.com>
-Date:   Fri, 7 Feb 2020 15:44:08 -0500
-Message-ID: <CAPNvSTj-8q7w5QPmnH26+_3xCKjEWyE+9xcb8QyQs9Xie+iYgg@mail.gmail.com>
-Subject: LETTER OF INQUIRY
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Good Day,
+Long time ago I tried to add suspend clk for dwc3 phy
+which was wrong appoch, see below.
 
-I work as a clerk in a Bank here in Nigeria, I have a very
-confidential Business Proposition for you. There is a said amount of
-money floating in the bank unclaimed, belonging to the bank Foreign
-customer who die with his family in the Ethiopian Airline crash of
-March 11, 2019.
+[0] https://lore.kernel.org/patchwork/patch/837635/
+[1] https://lore.kernel.org/patchwork/patch/837636/
 
-I seek your good collaboration to move the fund for our benefit. we
-have agreed that 40% be yours once you help claim.
+This patch series tries to enable suspend clk using 
+exynos dwc3 driver, for this I have added new 
+compatible string "samsung,exynos5420-dwusb3"
+so that we could add new suspend clk in addition
+to the core clk. exynos dwc3 driver will help
+enable/disable these clk.
 
-Do get back to with 1) Your Full Name: (2) Residential Address: (3)
-Phone, Mobile  (4) Scan Copy of Your ID. to apply for claims of the
-funds.
+-Anand
 
-Regards
-Theophilus Odadudu
+Anand Moon (3):
+  devicetree: bindings: exynos: Add new compatible for Exynos5420 dwc3
+    clocks support
+  ARM: dts: exynos: Add missing usbdrd3 suspend clk
+  usb: dwc3: exynos: Add support for Exynos5422 suspend clk
+
+ Documentation/devicetree/bindings/usb/exynos-usb.txt | 4 +++-
+ arch/arm/boot/dts/exynos5420.dtsi                    | 8 ++++----
+ arch/arm/boot/dts/exynos54xx.dtsi                    | 4 ++--
+ drivers/usb/dwc3/dwc3-exynos.c                       | 9 +++++++++
+ 4 files changed, 18 insertions(+), 7 deletions(-)
+
+-- 
+2.25.0
+
