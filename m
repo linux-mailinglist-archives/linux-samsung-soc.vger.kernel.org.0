@@ -2,134 +2,107 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EF73C15D3E3
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Feb 2020 09:35:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB64415EDD1
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Feb 2020 18:37:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728841AbgBNIfH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Feb 2020 03:35:07 -0500
-Received: from hqnvemgate24.nvidia.com ([216.228.121.143]:9227 "EHLO
-        hqnvemgate24.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbgBNIfG (ORCPT
+        id S2389315AbgBNRgT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Feb 2020 12:36:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55466 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389417AbgBNQFf (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Feb 2020 03:35:06 -0500
-Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate24.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5e465b770000>; Fri, 14 Feb 2020 00:33:59 -0800
-Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate101.nvidia.com (PGP Universal service);
-  Fri, 14 Feb 2020 00:35:05 -0800
-X-PGP-Universal: processed;
-        by hqpgpgate101.nvidia.com on Fri, 14 Feb 2020 00:35:05 -0800
-Received: from [10.21.133.51] (172.20.13.39) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 14 Feb
- 2020 08:35:03 +0000
-Subject: Re: [RFT PATCH v2] xhci: Fix memory leak when caching protocol
- extended capability PSI tables
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <gregkh@linuxfoundation.org>, <m.szyprowski@samsung.com>
-CC:     <pmenzel@molgen.mpg.de>, <mika.westerberg@linux.intel.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>, <krzk@kernel.org>,
-        stable <stable@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>
-References: <20d0559f-8d0f-42f5-5ebf-7f658a172161@linux.intel.com>
- <20200211150158.14475-1-mathias.nyman@linux.intel.com>
- <f42f7f73-48e7-74ad-2524-2514f29490cb@nvidia.com>
- <0f871a8f-aa96-4684-1d9c-a18c6edfb62f@linux.intel.com>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <bbe3378e-04e6-5223-a698-f744d05c9726@nvidia.com>
-Date:   Fri, 14 Feb 2020 08:35:01 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        Fri, 14 Feb 2020 11:05:35 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1EF672067D;
+        Fri, 14 Feb 2020 16:05:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581696334;
+        bh=yAMzhrXxFbZ4vnf0DkW6RKmts9rNdF5OgSzFYmXih6w=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=NWcQrPwJ7PMkC+hGgOA5Ny1kHxkqXeIkRZ7D956fd6Nm9ycPyGnRhCcLWgI/m5xOO
+         YJ1L31tk1HR3QZ3wIvDHEENgIdNnkovPiZLlDHzRdgNwIAYGeYG3FjahnbNM68R3TL
+         JwNbgP4wLa15mXlQqL3oTEXIaZqgbADDRcq4qCxA=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 172/459] ARM: exynos_defconfig: Bring back explicitly wanted options
+Date:   Fri, 14 Feb 2020 10:57:02 -0500
+Message-Id: <20200214160149.11681-172-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200214160149.11681-1-sashal@kernel.org>
+References: <20200214160149.11681-1-sashal@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <0f871a8f-aa96-4684-1d9c-a18c6edfb62f@linux.intel.com>
-X-Originating-IP: [172.20.13.39]
-X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
- HQMAIL107.nvidia.com (172.20.187.13)
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1581669239; bh=o/iBgFCXvpPVioBKODR2W9p1hS20sxzOpMN0gyU3Za8=;
-        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
-         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
-         X-ClientProxiedBy:Content-Type:Content-Language:
-         Content-Transfer-Encoding;
-        b=JN5FJkasOgrpRP1jixvxg6/9Tn53O9Lk35MCzHOsMjyjMreZ15fMg5TngJLkccqGH
-         mlt2rpq0Y7M0NqPf69t+e71jl3i78FtKhE8MeF0EmTKTAc3dg1buUELzm/76NEfOk9
-         JEaaGNVcs9+MFHnwpIXD4+5LG7gfx+FNkSxgvpy9I93u++C1tSrNpsp+wD8Qa6qoXt
-         tYMW51G+X27P5wwf+2mBtlyDn3aSCMgVcQWM4vCs1hi4F5cNpMt9Pl2/TtWb2UJP2j
-         413+GPVW5TX6YsUPP9GFl5HWl2OMwgrnHoYnO9ipz7Y7Rlx003d3ppg0rGXt9iSXKG
-         puDxJY8ziNDCA==
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-On 14/02/2020 07:47, Mathias Nyman wrote:
-> On 13.2.2020 15.33, Jon Hunter wrote:
->>
->> On 11/02/2020 15:01, Mathias Nyman wrote:
->>> xhci driver assumed that xHC controllers have at most one custom
->>> supported speed table (PSI) for all usb 3.x ports.
->>> Memory was allocated for one PSI table under the xhci hub structure.
->>>
->>> Turns out this is not the case, some controllers have a separate
->>> "supported protocol capability" entry with a PSI table for each port.
->>> This means each usb3 roothub port can in theory support different custom
->>> speeds.
->>>
->>> To solve this, cache all supported protocol capabilities with their PSI
->>> tables in an array, and add pointers to the xhci port structure so that
->>> every port points to its capability entry in the array.
->>>
->>> When creating the SuperSpeedPlus USB Device Capability BOS descriptor
->>> for the xhci USB 3.1 roothub we for now will use only data from the
->>> first USB 3.1 capable protocol capability entry in the array.
->>> This could be improved later, this patch focuses resolving
->>> the memory leak.
->>>
->>> Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
->>> Reported-by: Sajja Venkateswara Rao <VenkateswaraRao.Sajja@amd.com>
->>> Fixes: 47189098f8be ("xhci: parse xhci protocol speed ID list for usb 3.1 usage")
->>> Cc: stable <stable@vger.kernel.org> # v4.4+
->>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->>
->>
->> Since next-20200211, we have been observing a regression exiting suspend
->> on our Tegra124 Jetson TK1 board. Bisect is pointing to this commit and
->> reverting on top of -next fixes the problem.
->>
->> On exiting suspend, I am seeing the following ...
->>
->> [   56.216793] tegra-xusb 70090000.usb: Firmware already loaded, Falcon state 0x20
->> [   56.216834] usb usb3: root hub lost power or was reset
->> [   56.216837] usb usb4: root hub lost power or was reset
->> [   56.217760] tegra-xusb 70090000.usb: No ports on the roothubs?
->> [   56.218257] tegra-xusb 70090000.usb: failed to resume XHCI: -12
->> [   56.218299] PM: dpm_run_callback(): platform_pm_resume+0x0/0x40 returns -12
->> [   56.218312] PM: Device 70090000.usb failed to resume: error -12
->> [   56.334366] hub 4-0:1.0: hub_ext_port_status failed (err = -32)
->> [   56.334368] hub 3-0:1.0: hub_ext_port_status failed (err = -32)
->>
->> Let me know if you have any thoughts on this.
->>
->> Cheers
->> Jon
-> 
-> This was an issue with the first version, and should be fixed in the second.
-> 
-> next-20200211 has the faulty version, 
-> next-20200213 is fixed, reverted first version and applied second.
-> 
-> Does next-20200213 work for you?
+[ Upstream commit 9f9e2df2e64df197ff6548ef494f76be5b35d08a ]
 
-Yes it does. Sorry I am an idiot and should have read the changes and
-thread more closely!
+Few options KALLSYMS_ALL, SCSI, PM_DEVFREQ and mutex/spinlock debugging
+were removed with savedefconfig because they were selected by other
+options.  However these are user-visible options and they might not be
+selected in the future.  Exactly this happened with commit 0e4a459f56c3
+("tracing: Remove unnecessary DEBUG_FS dependency") removing the
+dependency between DEBUG_FS and TRACING.
 
-Thanks for fixing so quickly.
+To avoid losing these options in the future, explicitly mention them in
+defconfig.
 
-Jon
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/configs/exynos_defconfig | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
+diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
+index 736ed7a7bcf8e..34d4acbcee347 100644
+--- a/arch/arm/configs/exynos_defconfig
++++ b/arch/arm/configs/exynos_defconfig
+@@ -38,6 +38,7 @@ CONFIG_CRYPTO_SHA256_ARM=m
+ CONFIG_CRYPTO_SHA512_ARM=m
+ CONFIG_CRYPTO_AES_ARM_BS=m
+ CONFIG_CRYPTO_CHACHA20_NEON=m
++CONFIG_KALLSYMS_ALL=y
+ CONFIG_MODULES=y
+ CONFIG_MODULE_UNLOAD=y
+ CONFIG_PARTITION_ADVANCED=y
+@@ -92,6 +93,7 @@ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_BLK_DEV_CRYPTOLOOP=y
+ CONFIG_BLK_DEV_RAM=y
+ CONFIG_BLK_DEV_RAM_SIZE=8192
++CONFIG_SCSI=y
+ CONFIG_BLK_DEV_SD=y
+ CONFIG_CHR_DEV_SG=y
+ CONFIG_ATA=y
+@@ -290,6 +292,7 @@ CONFIG_CROS_EC_SPI=y
+ CONFIG_COMMON_CLK_MAX77686=y
+ CONFIG_COMMON_CLK_S2MPS11=y
+ CONFIG_EXYNOS_IOMMU=y
++CONFIG_PM_DEVFREQ=y
+ CONFIG_DEVFREQ_GOV_PERFORMANCE=y
+ CONFIG_DEVFREQ_GOV_POWERSAVE=y
+ CONFIG_DEVFREQ_GOV_USERSPACE=y
+@@ -354,4 +357,7 @@ CONFIG_SOFTLOCKUP_DETECTOR=y
+ # CONFIG_DETECT_HUNG_TASK is not set
+ CONFIG_PROVE_LOCKING=y
+ CONFIG_DEBUG_ATOMIC_SLEEP=y
++CONFIG_DEBUG_RT_MUTEXES=y
++CONFIG_DEBUG_SPINLOCK=y
++CONFIG_DEBUG_MUTEXES=y
+ CONFIG_DEBUG_USER=y
 -- 
-nvpublic
+2.20.1
+
