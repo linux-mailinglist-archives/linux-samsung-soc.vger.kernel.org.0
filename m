@@ -2,116 +2,128 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AADD15F222
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Feb 2020 19:09:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BC9E162193
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Feb 2020 08:43:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390813AbgBNSG7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Feb 2020 13:06:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35106 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731170AbgBNPyn (ORCPT
+        id S1726127AbgBRHnM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 18 Feb 2020 02:43:12 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:50558 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726105AbgBRHnM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:54:43 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1DD5E24684;
-        Fri, 14 Feb 2020 15:54:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695682;
-        bh=K+GbBvUYMrSGOr40poPKHl1+OJzijRKgppJ0R0XLZ9M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZwMC+UC7EYD9rN+Wa9p/lSvnmW5KE8KoQ7o4TMU/Q1mJwKKFAmbLdzrJ1tFCQVL1r
-         5yZzxTN5iyryegTP/d/y4tJhpB5GbXJmKCbMZC7Pj6wdJWZAUjmRAD3hu1N3RbQwl+
-         83z2aqYS2XdGvpZ++nLyb7plQS5kjvK9AM5mZGts=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 268/542] PM / devfreq: exynos-ppmu: Fix excessive stack usage
-Date:   Fri, 14 Feb 2020 10:44:20 -0500
-Message-Id: <20200214154854.6746-268-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
-References: <20200214154854.6746-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        Tue, 18 Feb 2020 02:43:12 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200218074310euoutp0162261bffda5ebab92b33e8f4b5c1d609~0b1d-wioe0431104311euoutp01l
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Feb 2020 07:43:10 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200218074310euoutp0162261bffda5ebab92b33e8f4b5c1d609~0b1d-wioe0431104311euoutp01l
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1582011790;
+        bh=7kA50qvGGXqvviozwVyU2lbIFhMhk+GxUZe/VR7EPGg=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=QvXGBxbRZbO3kcFnCeeQDTCV2aWSm/txAesTas+xE1FReUR+T2yJk+s1SOTXu/VvK
+         leMn0j1AOg0Z+9mtKzy6HszIVEdEuszPrQt9oj5k2DGoMxHcW/D7x9Ql9OzXzY5csj
+         pfh8Zzwsgdsw76wcIPSRC12y9Jv1tysAzG2MUAig=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20200218074310eucas1p194d346baa216e7313e3d1ff6f7b188a1~0b1d2TqKg0697406974eucas1p18;
+        Tue, 18 Feb 2020 07:43:10 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 45.AD.60698.E859B4E5; Tue, 18
+        Feb 2020 07:43:10 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200218074310eucas1p288fe322bfadcff6025aadf7b6d51ffc2~0b1doPvZ_1510815108eucas1p2Z;
+        Tue, 18 Feb 2020 07:43:10 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200218074310eusmtrp1545f957e89acfff85b2ad921772712ab~0b1dntqpZ0618206182eusmtrp1o;
+        Tue, 18 Feb 2020 07:43:10 +0000 (GMT)
+X-AuditID: cbfec7f5-a29ff7000001ed1a-d5-5e4b958e299d
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 9E.2F.07950.E859B4E5; Tue, 18
+        Feb 2020 07:43:10 +0000 (GMT)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200218074309eusmtip2bda4f4d805bebae29dd5f94e75a2e216~0b1dSaUEn2727227272eusmtip20;
+        Tue, 18 Feb 2020 07:43:09 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Subject: [PATCH] ARM: exynos_defconfig: Enable SquashFS and increase RAM
+ block device size
+Date:   Tue, 18 Feb 2020 08:43:06 +0100
+Message-Id: <20200218074306.16824-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsWy7djPc7p9U73jDDruyVtsnLGe1eL8+Q3s
+        FjPO72OyWHvkLrsDi8emVZ1sHn1bVjF6fN4kF8AcxWWTkpqTWZZapG+XwJXxYq14wQSOirdt
+        JxkbGJvYuxg5OSQETCQmPnjJ2MXIxSEksIJR4vC0hUwQzhdGiS2zvkBlPjNKfNh8n7mLkQOs
+        5UiLLER8OaPE7A/LWOA6njx5AjaXTcBQouttFxuILSKgKvG5bQE7SBGzQB+jxPW9c5lBEsIC
+        MRL/pq1iArFZgIp+bdvGCGLzCthKNK/ewApxoLzE6g0HmEGaJQQ2sEns+7KMFeIMF4mek4YQ
+        NcISr45vgXpIRuL05B4WiPpmRomH59ayQzg9jBKXm2YwQlRZS9w594sNZBCzgKbE+l36EDMd
+        JQ61xUOYfBI33gqCFDMDmZO2TYd6nleio00IYoaaxKzj6+C2HrxwiRnC9pA4sO4w2PVCArES
+        C75NZJrAKDcLYdUCRsZVjOKppcW56anFxnmp5XrFibnFpXnpesn5uZsYgXF9+t/xrzsY9/1J
+        OsQowMGoxMO7YoJXnBBrYllxZe4hRgkOZiURXm9xoBBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFe
+        40UvY4UE0hNLUrNTUwtSi2CyTBycUg2MyWpeJY1ynw1ZI2+JXBBnzGVqPCy3qfai4zPNQyLJ
+        PGvXG5Udd5pTy74u+ITpMZPdF2pVVx2JaGt5/+1S1qrJ/tZzFVeE/pyYlJX8hfVivk7YmflF
+        yvP+yPpr6VpvFGHc+ev6sRn7p71ym/qs0u7Uw4nOwtmbSpmsEnY0PH5c/VbbZnrpmfk+SizF
+        GYmGWsxFxYkAmbU7OucCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNLMWRmVeSWpSXmKPExsVy+t/xe7p9U73jDBYt47PYOGM9q8X58xvY
+        LWac38dksfbIXXYHFo9NqzrZPPq2rGL0+LxJLoA5Ss+mKL+0JFUhI7+4xFYp2tDCSM/Q0kLP
+        yMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS/jxVrxggkcFW/bTjI2MDaxdzFycEgImEgcaZHt
+        YuTiEBJYyiixbOpBxi5GTqC4jMTJaQ2sELawxJ9rXWwQRZ8YJf61nGQBSbAJGEp0vQVJcHKI
+        CKhKfG5bwA5SxCwwgVHifOcMsISwQJRE8+Wd7CA2C1DRr23bwDbwCthKNK/eALVBXmL1hgPM
+        Exh5FjAyrGIUSS0tzk3PLTbSK07MLS7NS9dLzs/dxAgMqG3Hfm7Zwdj1LvgQowAHoxIP74oJ
+        XnFCrIllxZW5hxglOJiVRHi9xYFCvCmJlVWpRfnxRaU5qcWHGE2Blk9klhJNzgcGe15JvKGp
+        obmFpaG5sbmxmYWSOG+HwMEYIYH0xJLU7NTUgtQimD4mDk6pBsZVFsUz8qd80crVbTz0S2b/
+        mnOLd+9i8pp/bfmZ04naGZuMdirWVB9eYDAveyL/f5aO35fCWQ+Y5MmE32769k5IVcPjYctL
+        +YKOTcfehBd5vDPw6vqv0OBZv/v2pBu5FfdK7XrY+9Kidu0TL7jskzadpUTyzNKTYvXek/dt
+        NJU6e/6WYfPD55JKLMUZiYZazEXFiQAQKTtsPgIAAA==
+X-CMS-MailID: 20200218074310eucas1p288fe322bfadcff6025aadf7b6d51ffc2
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200218074310eucas1p288fe322bfadcff6025aadf7b6d51ffc2
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200218074310eucas1p288fe322bfadcff6025aadf7b6d51ffc2
+References: <CGME20200218074310eucas1p288fe322bfadcff6025aadf7b6d51ffc2@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+All modules built from exynos_defconfig occupy about 55M, so enable
+squashfs filesystem support and increase default ram block device size
+to 32M to enable deploying them on initrd. Such initrd, using squashfs
+requires at least 24M.
 
-[ Upstream commit d4556f5e99d5f603913bac01adaff8670cb2d08b ]
-
-Putting a 'struct devfreq_event_dev' object on the stack is generally
-a bad idea and here it leads to a warnig about potential stack overflow:
-
-drivers/devfreq/event/exynos-ppmu.c:643:12: error: stack frame size of 1040 bytes in function 'exynos_ppmu_probe' [-Werror,-Wframe-larger-than=]
-
-There is no real need for the device structure, only the string inside
-it, so add an internal helper function that simply takes the string
-as its argument and remove the device structure.
-
-Fixes: 1dd62c66d345 ("PM / devfreq: events: extend events by type of counted data")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-[cw00.choi: Fix the issue from 'desc->name' to 'desc[j].name']
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
- drivers/devfreq/event/exynos-ppmu.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/arm/configs/exynos_defconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/devfreq/event/exynos-ppmu.c b/drivers/devfreq/event/exynos-ppmu.c
-index 85c7a77bf3f0d..055deea42c373 100644
---- a/drivers/devfreq/event/exynos-ppmu.c
-+++ b/drivers/devfreq/event/exynos-ppmu.c
-@@ -101,17 +101,22 @@ static struct __exynos_ppmu_events {
- 	PPMU_EVENT(dmc1_1),
- };
- 
--static int exynos_ppmu_find_ppmu_id(struct devfreq_event_dev *edev)
-+static int __exynos_ppmu_find_ppmu_id(const char *edev_name)
- {
- 	int i;
- 
- 	for (i = 0; i < ARRAY_SIZE(ppmu_events); i++)
--		if (!strcmp(edev->desc->name, ppmu_events[i].name))
-+		if (!strcmp(edev_name, ppmu_events[i].name))
- 			return ppmu_events[i].id;
- 
- 	return -EINVAL;
- }
- 
-+static int exynos_ppmu_find_ppmu_id(struct devfreq_event_dev *edev)
-+{
-+	return __exynos_ppmu_find_ppmu_id(edev->desc->name);
-+}
-+
- /*
-  * The devfreq-event ops structure for PPMU v1.1
-  */
-@@ -556,13 +561,11 @@ static int of_get_devfreq_events(struct device_node *np,
- 			 * use default if not.
- 			 */
- 			if (info->ppmu_type == EXYNOS_TYPE_PPMU_V2) {
--				struct devfreq_event_dev edev;
- 				int id;
- 				/* Not all registers take the same value for
- 				 * read+write data count.
- 				 */
--				edev.desc = &desc[j];
--				id = exynos_ppmu_find_ppmu_id(&edev);
-+				id = __exynos_ppmu_find_ppmu_id(desc[j].name);
- 
- 				switch (id) {
- 				case PPMU_PMNCNT0:
+diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
+index 9b889590555e..8aa40886476d 100644
+--- a/arch/arm/configs/exynos_defconfig
++++ b/arch/arm/configs/exynos_defconfig
+@@ -91,7 +91,7 @@ CONFIG_DEVTMPFS_MOUNT=y
+ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_BLK_DEV_CRYPTOLOOP=y
+ CONFIG_BLK_DEV_RAM=y
+-CONFIG_BLK_DEV_RAM_SIZE=8192
++CONFIG_BLK_DEV_RAM_SIZE=32768
+ CONFIG_SCSI=y
+ CONFIG_BLK_DEV_SD=y
+ CONFIG_CHR_DEV_SG=y
+@@ -319,6 +319,7 @@ CONFIG_VFAT_FS=y
+ CONFIG_TMPFS=y
+ CONFIG_TMPFS_POSIX_ACL=y
+ CONFIG_CRAMFS=y
++CONFIG_SQUASHFS=y
+ CONFIG_ROMFS_FS=y
+ CONFIG_NFS_FS=y
+ CONFIG_NFS_V4=y
 -- 
-2.20.1
+2.17.1
 
