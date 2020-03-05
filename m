@@ -2,150 +2,177 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BFED17A8BD
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Mar 2020 16:21:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4706817A97A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Mar 2020 16:59:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbgCEPVV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 5 Mar 2020 10:21:21 -0500
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:53930 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726243AbgCEPVU (ORCPT
+        id S1726591AbgCEP75 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 5 Mar 2020 10:59:57 -0500
+Received: from mx2.suse.de ([195.135.220.15]:56366 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725974AbgCEP75 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 5 Mar 2020 10:21:20 -0500
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200305152119euoutp01f7aba00cb171796af360cdc01515d967~5caC50-Qy2783727837euoutp01h
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  5 Mar 2020 15:21:19 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200305152119euoutp01f7aba00cb171796af360cdc01515d967~5caC50-Qy2783727837euoutp01h
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1583421679;
-        bh=bt7xLz5BTo2Y6L+7t3B71ND6twW9CSFVDvvc2h8PpEI=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=nj201T8s7R8WPqa3VeYBwEyeQKZg2Ll9mLSd+JZaiM9qSQX2J/QR0K9dZkEngwbHd
-         b32kbT46YeEfjUVr7CZ4MZU4f3cr+pNkzL1xGe8XtDdyAb7EaRRkgGWcVYHTukkMoI
-         HEGmS9waiLbLfMH099UnHXxXz4g3j9NsYrVXsN2Q=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200305152118eucas1p106a84b486ed5b972358ae8ee0997aadd~5caCpWxRF1033110331eucas1p1G;
-        Thu,  5 Mar 2020 15:21:18 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id A1.C4.60698.EE8116E5; Thu,  5
-        Mar 2020 15:21:18 +0000 (GMT)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200305152118eucas1p1fef92cacb91612ee5ddc3e6ffd2378d8~5caCVbu2l1157311573eucas1p17;
-        Thu,  5 Mar 2020 15:21:18 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200305152118eusmtrp1e80858c17edfdc35fc9a8357ee8acb04~5caCUwm8P3221932219eusmtrp1a;
-        Thu,  5 Mar 2020 15:21:18 +0000 (GMT)
-X-AuditID: cbfec7f5-a29ff7000001ed1a-ee-5e6118ee37bd
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 50.33.07950.EE8116E5; Thu,  5
-        Mar 2020 15:21:18 +0000 (GMT)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200305152118eusmtip24cd9518caa807a4a8916d112ee680873~5caB9ot4G2568325683eusmtip2F;
-        Thu,  5 Mar 2020 15:21:18 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>,
-        Simon Shields <simon@lineageos.org>
-Subject: [PATCH] ARM: dts: exynos: Fix regulator node aliasing on
- Midas-based boards
-Date:   Thu,  5 Mar 2020 16:21:08 +0100
-Message-Id: <20200305152108.20688-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsWy7djP87rvJBLjDDb/MLDYOGM9q0Xr9cfs
-        FufPb2C3mHF+H5PF2iN32S22nLnN5sDmcfRAI7PHplWdbB4t6zexefRtWcXo8XmTXABrFJdN
-        SmpOZllqkb5dAlfGitunWAomC1Qc+JXYwHiet4uRk0NCwETi2oNpbF2MXBxCAisYJS6eeckG
-        khAS+MIocb/fAiLxmVHiTs9TdpiObbs/s0MkljNKrD26mxXCAepo6r0CVsUmYCjR9bYLbJSI
-        gKrE57YFYB3MAq8ZJZZOW8gKkhAWCJN42PyQBcRmASq6//0bWDOvgK3Enb2XWSHWyUus3nCA
-        GaRZQuAEm0TPycssEAkXiVWP5zBC2MISr45vgbpPRuL05B4WiIZmRomH59ayQzg9jBKXm2ZA
-        dVhL3Dn3C+g+DqCbNCXW79IHMSUEHCWa5jlAmHwSN94KghQzA5mTtk1nhgjzSnS0CUHMUJOY
-        dXwd3NaDFy4xQ9geEmsfTmSCBGOsxIbNh5kmMMrNQli1gJFxFaN4amlxbnpqsXFearlecWJu
-        cWleul5yfu4mRmACOP3v+NcdjPv+JB1iFOBgVOLhVficECfEmlhWXJl7iFGCg1lJhFfYND5O
-        iDclsbIqtSg/vqg0J7X4EKM0B4uSOK/xopexQgLpiSWp2ampBalFMFkmDk6pBsazjq+duBNu
-        X9UxX/7Byin7ui1P5izugzdnH8srz9oX3iK72cLxmvhaoZhpJ+euXmG4as3RHytXHr6yYIZG
-        fmhYuo1b5r0fOvnbf3FOnrB34hGPoOjiGfseOhv7RkwUW/fLZd/u0x2ztohc+Bzw6+7M7szp
-        /Y9OPFqTspzB+eXP3Fs9O9tzH5yerMRSnJFoqMVcVJwIADnFsYD8AgAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrALMWRmVeSWpSXmKPExsVy+t/xe7rvJBLjDF42SVlsnLGe1aL1+mN2
-        i/PnN7BbzDi/j8li7ZG77BZbztxmc2DzOHqgkdlj06pONo+W9ZvYPPq2rGL0+LxJLoA1Ss+m
-        KL+0JFUhI7+4xFYp2tDCSM/Q0kLPyMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS9jxe1TLAWT
-        BSoO/EpsYDzP28XIySEhYCKxbfdn9i5GLg4hgaWMEju2P2eFSMhInJzWAGULS/y51sUGUfSJ
-        UWLmjV9sIAk2AUOJrrddYLaIgKrE57YFYJOYBd4ySkxZ84odJCEsECLR0niYCcRmASq6//0b
-        WJxXwFbizt7LUBvkJVZvOMA8gZFnASPDKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxNjMDQ23bs
-        55YdjF3vgg8xCnAwKvHwKnxOiBNiTSwrrsw9xCjBwawkwitsGh8nxJuSWFmVWpQfX1Sak1p8
-        iNEUaPlEZinR5HxgXOSVxBuaGppbWBqaG5sbm1koifN2CByMERJITyxJzU5NLUgtgulj4uCU
-        amDU3curyjR9+wq/GUpB20qWyOSy/Om/p8X56OGSY/rfp7K2i7g/XaypbT0vWlDsvvw67iNe
-        Hzf1HuHe6CeSeDrwbOPMgN6tlc28tycI3ur+dc/xzL3nXvMnNO9g/ff/YnLnsrrWh0yiMvFP
-        uX52lh6NmfQp4+uhEI06DeWZfcIzVM7cP3Tv/b0mJZbijERDLeai4kQAPSFiklMCAAA=
-X-CMS-MailID: 20200305152118eucas1p1fef92cacb91612ee5ddc3e6ffd2378d8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200305152118eucas1p1fef92cacb91612ee5ddc3e6ffd2378d8
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200305152118eucas1p1fef92cacb91612ee5ddc3e6ffd2378d8
-References: <CGME20200305152118eucas1p1fef92cacb91612ee5ddc3e6ffd2378d8@eucas1p1.samsung.com>
+        Thu, 5 Mar 2020 10:59:57 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 49F64AC91;
+        Thu,  5 Mar 2020 15:59:54 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     airlied@linux.ie, daniel@ffwll.ch, sam@ravnborg.org,
+        abrodkin@synopsys.com, bbrezillon@kernel.org,
+        nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
+        ludovic.desroches@microchip.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, jingoohan1@gmail.com, inki.dae@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+        stefan@agner.ch, alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
+        xinliang.liu@linaro.org, zourongrong@gmail.com,
+        john.stultz@linaro.org, kong.kongxinwei@hisilicon.com,
+        puck.chen@hisilicon.com, linux@armlinux.org.uk,
+        p.zabel@pengutronix.de, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, paul@crapouillou.net, ck.hu@mediatek.com,
+        matthias.bgg@gmail.com, laurent.pinchart@ideasonboard.com,
+        kieran.bingham+renesas@ideasonboard.com, hjc@rock-chips.com,
+        heiko@sntech.de, wens@csie.org, jernej.skrabec@siol.net,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, jsarha@ti.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, kraxel@redhat.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        sebastian.reichel@collabora.com
+Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 00/22] drm: Convert drivers to drm_simple_encoder_init()
+Date:   Thu,  5 Mar 2020 16:59:28 +0100
+Message-Id: <20200305155950.2705-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Commit d4ec0cb05064 ("ARM: dts: exynos: Add support for the
-touch-sensitive buttons on Midas family") added a new fixed regulator
-("voltage-regulator-6") to base "midas" .dtsi, but it didn't update the
-clients of that .dtsi, which define their own fixed regulators starting
-from the "voltage-regulator-6". This results in aliasing of the regulator
-dt nodes and breaks operation of OLED panel due to lack of power supply.
-Fix this by increasing the numbers in the fixed regulator names for those
-boards.
+A call to drm_simple_encoder_init() initializes an encoder without
+further functionality. It only provides the destroy callback to
+cleanup the encoder's state. Only few drivers implement more
+sophisticated encoders than that. Most drivers implement such a
+simple encoder and can use drm_simple_encoder_init() instead.
 
-Fixes: d4ec0cb05064 ("ARM: dts: exynos: Add support for the touch-sensitive buttons on Midas family")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 4 ++--
- arch/arm/boot/dts/exynos4412-n710x.dts      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+The patchset converts drivers where the encoder's instance is
+embedded in a larger data structure. The driver releases the
+memory during cleanup. Each patch replaces drm_encoder_init() with
+drm_simple_encoder_init() and removes the (now unused) driver's
+encoder functions.
 
-diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-index 31719c079d67..44f97546dd0a 100644
---- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-+++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-@@ -33,7 +33,7 @@
- 		};
- 	};
- 
--	lcd_vdd3_reg: voltage-regulator-6 {
-+	lcd_vdd3_reg: voltage-regulator-7 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LCD_VDD_2.2V";
- 		regulator-min-microvolt = <2200000>;
-@@ -42,7 +42,7 @@
- 		enable-active-high;
- 	};
- 
--	ps_als_reg: voltage-regulator-7 {
-+	ps_als_reg: voltage-regulator-8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LED_A_3.0V";
- 		regulator-min-microvolt = <3000000>;
-diff --git a/arch/arm/boot/dts/exynos4412-n710x.dts b/arch/arm/boot/dts/exynos4412-n710x.dts
-index 98cd1284cd90..4189e1fb204c 100644
---- a/arch/arm/boot/dts/exynos4412-n710x.dts
-+++ b/arch/arm/boot/dts/exynos4412-n710x.dts
-@@ -13,7 +13,7 @@
- 
- 	/* bootargs are passed in by bootloader */
- 
--	cam_vdda_reg: voltage-regulator-6 {
-+	cam_vdda_reg: voltage-regulator-7 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "CAM_SENSOR_CORE_1.2V";
- 		regulator-min-microvolt = <1200000>;
--- 
-2.17.1
+While the patchset is fairly large, the indiviual patches are self-
+contained and can be merged independently from each other. The
+simple-encoder functionality is currently in drm-misc-next, where
+these patches could go as well.
+
+Future directions: There's another common case where the driver
+calls kzalloc() plus drm_encoder_init(). Such drivers are not
+handled by this patchset. The plan here is to use a simple encoder
+with either managed memory allocation (once it's merged), or embed
+the encoder in a larger data structure and drop kzalloc() entirely.
+
+The patchset has been compile-tested on x86-64, aarch64 and arm.
+
+Thomas Zimmermann (22):
+  drm/arc: Use simple encoder
+  drm/atmel-hlcdc: Use simple encoder
+  drm/exynos: Use simple encoder
+  drm/fsl-dcu: Use simple encoder
+  drm/gma500: Use simple encoder
+  drm/hisilicon/kirin: Use simple encoder
+  drm/i2c/tda998x: Use simple encoder
+  drm/imx: Use simple encoder
+  drm/ingenic: Use simple encoder
+  drm/mediatek: Use simple encoder
+  drm/rcar-du: Use simple encoder
+  drm/rockchip: Use simple encoder
+  drm/shmobile: Use simple encoder
+  drm/sun4i: Use simple encoder
+  drm/tegra: Use simple encoder
+  drm/tidss: Use simple encoder
+  drm/tilcdc: Use simple encoder
+  drm/vc4: Use simple encoder
+  drm/virtgpu: Use simple encoder
+  drm/vkms: Use simple encoder
+  drm/writeback: Use simple encoder
+  drm/zte: Use simple encoder
+
+ drivers/gpu/drm/arc/arcpgu_hdmi.c              | 10 +++-------
+ drivers/gpu/drm/arc/arcpgu_sim.c               |  8 ++------
+ .../gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c   | 12 ++++--------
+ drivers/gpu/drm/drm_writeback.c                | 10 +++-------
+ drivers/gpu/drm/exynos/exynos_dp.c             |  8 ++------
+ drivers/gpu/drm/exynos/exynos_drm_dpi.c        |  8 ++------
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c        |  8 ++------
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c       |  8 ++------
+ drivers/gpu/drm/exynos/exynos_hdmi.c           |  8 ++------
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c      | 14 +++-----------
+ drivers/gpu/drm/gma500/cdv_intel_crt.c         | 14 +++-----------
+ drivers/gpu/drm/gma500/cdv_intel_dp.c          | 16 +++-------------
+ drivers/gpu/drm/gma500/cdv_intel_hdmi.c        |  4 ++--
+ drivers/gpu/drm/gma500/cdv_intel_lvds.c        | 17 +++--------------
+ drivers/gpu/drm/gma500/mdfld_dsi_dpi.c         |  7 +++----
+ drivers/gpu/drm/gma500/mdfld_output.h          |  1 -
+ drivers/gpu/drm/gma500/mdfld_tmd_vid.c         |  6 ------
+ drivers/gpu/drm/gma500/mdfld_tpo_vid.c         |  6 ------
+ drivers/gpu/drm/gma500/oaktrail_hdmi.c         | 14 ++------------
+ drivers/gpu/drm/gma500/oaktrail_lvds.c         |  5 +++--
+ drivers/gpu/drm/gma500/psb_intel_drv.h         |  1 -
+ drivers/gpu/drm/gma500/psb_intel_lvds.c        | 18 +++---------------
+ drivers/gpu/drm/gma500/tc35876x-dsi-lvds.c     |  5 -----
+ drivers/gpu/drm/hisilicon/kirin/dw_drm_dsi.c   |  8 ++------
+ drivers/gpu/drm/i2c/tda998x_drv.c              | 14 +++-----------
+ drivers/gpu/drm/imx/dw_hdmi-imx.c              |  8 ++------
+ drivers/gpu/drm/imx/imx-drm-core.c             |  6 ------
+ drivers/gpu/drm/imx/imx-drm.h                  |  1 -
+ drivers/gpu/drm/imx/imx-ldb.c                  |  8 ++------
+ drivers/gpu/drm/imx/imx-tve.c                  |  8 ++------
+ drivers/gpu/drm/imx/parallel-display.c         |  8 ++------
+ drivers/gpu/drm/ingenic/ingenic-drm.c          |  9 +++------
+ drivers/gpu/drm/mediatek/mtk_dpi.c             | 14 +++-----------
+ drivers/gpu/drm/mediatek/mtk_dsi.c             | 14 +++-----------
+ drivers/gpu/drm/rcar-du/rcar_du_encoder.c      | 14 +++-----------
+ .../gpu/drm/rockchip/analogix_dp-rockchip.c    |  9 +++------
+ drivers/gpu/drm/rockchip/cdn-dp-core.c         |  9 +++------
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.c    |  8 ++------
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c    |  8 ++------
+ drivers/gpu/drm/rockchip/inno_hdmi.c           |  8 ++------
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c         |  8 ++------
+ drivers/gpu/drm/rockchip/rockchip_lvds.c       | 10 +++-------
+ drivers/gpu/drm/rockchip/rockchip_rgb.c        |  8 ++------
+ drivers/gpu/drm/shmobile/shmob_drm_crtc.c      | 14 +++-----------
+ drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c         | 12 +++---------
+ drivers/gpu/drm/sun4i/sun4i_lvds.c             | 12 +++---------
+ drivers/gpu/drm/sun4i/sun4i_rgb.c              | 17 +++--------------
+ drivers/gpu/drm/sun4i/sun4i_tv.c               | 17 +++--------------
+ drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c         | 12 +++---------
+ drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c          |  8 ++------
+ drivers/gpu/drm/tegra/drm.h                    |  2 --
+ drivers/gpu/drm/tegra/dsi.c                    | 10 +++-------
+ drivers/gpu/drm/tegra/hdmi.c                   |  9 +++------
+ drivers/gpu/drm/tegra/output.c                 |  6 +-----
+ drivers/gpu/drm/tegra/rgb.c                    |  8 ++------
+ drivers/gpu/drm/tegra/sor.c                    |  8 ++------
+ drivers/gpu/drm/tidss/tidss_encoder.c          | 10 +++-------
+ drivers/gpu/drm/tilcdc/tilcdc_external.c       | 10 +++-------
+ drivers/gpu/drm/tilcdc/tilcdc_panel.c          |  8 ++------
+ drivers/gpu/drm/vc4/vc4_dpi.c                  |  8 ++------
+ drivers/gpu/drm/vc4/vc4_dsi.c                  | 15 +++------------
+ drivers/gpu/drm/vc4/vc4_hdmi.c                 | 17 ++++-------------
+ drivers/gpu/drm/vc4/vc4_vec.c                  |  8 ++------
+ drivers/gpu/drm/virtio/virtgpu_display.c       |  8 ++------
+ drivers/gpu/drm/vkms/vkms_output.c             |  8 ++------
+ drivers/gpu/drm/zte/zx_hdmi.c                  |  8 ++------
+ drivers/gpu/drm/zte/zx_tvenc.c                 |  8 ++------
+ drivers/gpu/drm/zte/zx_vga.c                   |  8 ++------
+ 68 files changed, 151 insertions(+), 488 deletions(-)
+
+--
+2.25.1
 
