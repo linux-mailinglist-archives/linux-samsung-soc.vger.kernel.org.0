@@ -2,141 +2,144 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6950817F51D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Mar 2020 11:35:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C118180866
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Mar 2020 20:49:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbgCJKfd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 10 Mar 2020 06:35:33 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:34721 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbgCJKfd (ORCPT
+        id S1726729AbgCJTtM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Mar 2020 15:49:12 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41937 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbgCJTtM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 10 Mar 2020 06:35:33 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200310103531euoutp01397bb68c10fde96831e6c6efd8785df5~66u8n7L8M3104031040euoutp01L
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Mar 2020 10:35:31 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200310103531euoutp01397bb68c10fde96831e6c6efd8785df5~66u8n7L8M3104031040euoutp01L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1583836531;
-        bh=7YWM7Z4IXWxMp+NS/R0C5Hfzu6++9AJ9hO517CES0ig=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=Bz86n5waIqhqDkWSS2cvjvhfIYmEzfpq1WaMyUaDkxhXHw+Py9Ojft/cVwe1NG/kS
-         c1AJqiDo62Ip06Ndxpzpa9OoceE5pKPRVbwwdRJkpm8gHL3sVc1sW7J/A9qMtnOKsi
-         g6FshjokGn3nE9E39Om3YiWVH3oXI4887UoKfnjg=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20200310103531eucas1p2d8fc222fab47eb72c2bf473dbd75c443~66u8R29Ng0555805558eucas1p2n;
-        Tue, 10 Mar 2020 10:35:31 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id A9.6F.61286.37D676E5; Tue, 10
-        Mar 2020 10:35:31 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200310103531eucas1p2c2d6a133dc899b21cdec6d8e9c2e9362~66u77ABoE0593005930eucas1p2y;
-        Tue, 10 Mar 2020 10:35:31 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200310103531eusmtrp2b2d97778ab0e7975eb0c646877bc5c96~66u76PT5a0345603456eusmtrp2Z;
-        Tue, 10 Mar 2020 10:35:31 +0000 (GMT)
-X-AuditID: cbfec7f2-ef1ff7000001ef66-bb-5e676d735889
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id D0.D3.08375.37D676E5; Tue, 10
-        Mar 2020 10:35:31 +0000 (GMT)
-Received: from [106.120.51.15] (unknown [106.120.51.15]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200310103530eusmtip1a707ded0cec75734fe1c5c744396d996~66u7CwumB1904819048eusmtip1N;
-        Tue, 10 Mar 2020 10:35:30 +0000 (GMT)
-Subject: Re: [PATCH] drm/bridge: analogix_dp: Split bind() into probe() and
- real bind()
-To:     Andy Yan <andy.yan@rock-chips.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Cc:     Jernej Skrabec <jernej.skrabec@siol.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Sandy Huang <hjc@rock-chips.com>,
+        Tue, 10 Mar 2020 15:49:12 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t14so5853696plr.8;
+        Tue, 10 Mar 2020 12:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jV1J0A0v5kI8D38QP7LZPmQe7Wa000FUtKtwbl8DovA=;
+        b=omQFDvmGHKXBdHPsEv5IagMxub/5iBhsEZmDaDrMaDmj83PBhBnWKghEHz1xDxVE/9
+         Qjv2aylL4IGJ68Vl7le/MblWPzJjGKCp3aXlLvHEMRVhZ46N73odzodpu6FpNAZv/Eck
+         PWZwGHXw1oX4PvVurLKthhe6L11KOstjo6vhjvntDQ+8Gvifd30uLLebpxa3Xu6LIF00
+         v6QEmjiLzkmfsaF+H8/+rrXtk9evm0g+0REDRbi2n8sMiayFE0k1YBnxCjz/4DZrjcsv
+         RbqS7ZddV8FUWKdJ/oFptjHk/VWRq8Lc3NVksZMv2fYCYNqf7OSAzMva6m/hpYKwwF7O
+         LfRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jV1J0A0v5kI8D38QP7LZPmQe7Wa000FUtKtwbl8DovA=;
+        b=Kc8byvatzN6+6/xGaHPslJ1GiS9/BFeZbhEj6/udPO2aHz3rjU9V5kGsFqbmcZqdrn
+         89voG0S7O8nEr8cdFaU6MOsfXWJKcTI1IJcrJVswghRz6+wJMs+LjsJkyXTZHjzOCoYy
+         p/RIr3JzKL7lLF3SRXEiQw4KPwVmUBDrqSh3fAuaLXDP9S4NoIdkKicfH2GMW4kJnmLF
+         SAjnOIyyIpamtAKlS72KIYLlRdlhBI91NCZvTfI8W26Iynp73ZtbX52AM9kn/3zw5t0k
+         pSGeJOSskFGN1TnTj9NhaoY/7yZWiOs2bV2eX7qWMVIWQK1eYDEBhogf4bFldpdZVIqo
+         2uWQ==
+X-Gm-Message-State: ANhLgQ3r4YH4in1WvgrsvYBZlZ3OM9jXh9RSpzVglSoBRUZoJFsvVO9f
+        QVJhokpzt0+CzpnTRz0qnvASS0wO
+X-Google-Smtp-Source: ADFU+vtvXRamWjX5o9KmUQeFzpOaqpVccOT2iNJrsaFhgH3WFG/4Ot9KKwImz4WPKGmca+i1AEEBjw==
+X-Received: by 2002:a17:90a:2ec7:: with SMTP id h7mr3449555pjs.107.1583869749046;
+        Tue, 10 Mar 2020 12:49:09 -0700 (PDT)
+Received: from localhost.localdomain ([45.114.62.228])
+        by smtp.gmail.com with ESMTPSA id d19sm3784490pfd.82.2020.03.10.12.49.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 12:49:08 -0700 (PDT)
+From:   Anand Moon <linux.amoon@gmail.com>
+To:     linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <14da8aee-71bd-bdd1-4ac9-94cb7eed7efa@samsung.com>
-Date:   Tue, 10 Mar 2020 11:35:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
-        Thunderbird/68.5.0
+        Felipe Balbi <balbi@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCHv3 0/5] Add support for FSYS power domain and enable suspend clk for Exynos542x SoC 
+Date:   Tue, 10 Mar 2020 19:48:49 +0000
+Message-Id: <20200310194854.831-1-linux.amoon@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <0a287abf-12ed-7e34-c765-144a8c10230d@rock-chips.com>
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHKsWRmVeSWpSXmKPExsWy7djP87rFuelxBjd2S1vcWneO1aL//E1G
-        i40z1rNaXPn6ns1i7qRai6vfXzJbrPgyk93i5JurLBadE5ewW3x68J/ZYsb5fUwWh/qiLWZM
-        fsnmwOvx/kYru8fOWXfZPWZ3zGT1ODHhEpPH/e7jTB6bl9R7/J21n8Wjb8sqRo8DvZNZPD5v
-        kgvgiuKySUnNySxLLdK3S+DKuNjznb3gPUvF/y2VDYwfmLsYOTkkBEwkvmxexNbFyMUhJLCC
-        UeJm9z5mCOcLo0TjgcWMEM5nRokZhxeywbTc2LQbqmU5o8T8Lx+hqt4ySuw69Yy1i5GDQ1gg
-        UuLbXzeQuIjAdkaJh7vns4M4zAI3mCRW/P/IAjKKTcBQouttF9hYXgE7iV0dT8CaWQRUJWY0
-        gpWICsRKzF55mAWiRFDi5MwnYDangJNE6/b1YE8wC8hLNG+dDWWLS9x6Mp8JZJeEwF92iZb1
-        x6HOdpFYvLKDEcIWlnh1fAs7hC0j8X8nTEMz0KXn1rJDOD2MEpebZkB1WEvcOfeLDeQ6ZgFN
-        ifW79EFMCQFHia+93hAmn8SNt4IQN/BJTNo2nRkizCvR0SYEMUNNYtbxdXBbD164xDyBUWkW
-        ks9mIflmFpJvZiGsXcDIsopRPLUUmKxSiw3zUsv1ihNzi0vz0vWS83M3MQJT3el/xz/tYPx6
-        KekQowAHoxIPb4ZuWpwQa2JZcWXuIUYJDmYlEd54+fQ4Id6UxMqq1KL8+KLSnNTiQ4zSHCxK
-        4rzGi17GCgmkJ5akZqemFqQWwWSZODilGhhD/v51nW76NMYlTbNV83vWQZt0scZD5T5mBSor
-        Tb5V9uZO2fHAaFfmZ5fbB3bzyT3a8urTT3vPUj1uhTT3F6l91XsmHqzqVnjFtvOD3vo2hrt7
-        f9yd+nqT5btN91yV7/aZ+LzaHem2ieEvY9Hew2r5v8Qzz1967fy1fHPl8+n9d2ZfW+KpEPNP
-        iaU4I9FQi7moOBEA5TgS83EDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsVy+t/xu7rFuelxBlcWM1vcWneO1aL//E1G
-        i40z1rNaXPn6ns1i7qRai6vfXzJbrPgyk93i5JurLBadE5ewW3x68J/ZYsb5fUwWh/qiLWZM
-        fsnmwOvx/kYru8fOWXfZPWZ3zGT1ODHhEpPH/e7jTB6bl9R7/J21n8Wjb8sqRo8DvZNZPD5v
-        kgvgitKzKcovLUlVyMgvLrFVija0MNIztLTQMzKx1DM0No+1MjJV0rezSUnNySxLLdK3S9DL
-        uNjznb3gPUvF/y2VDYwfmLsYOTkkBEwkbmzazdbFyMUhJLCUUeLogXfsEAkZiZPTGlghbGGJ
-        P9e6oIpeM0rMfAJSxMEhLBAp8e2vG0hcRGA7o8ShRSfZQRxmgVtMEge2fGSF6NjGJDHz0AOw
-        UWwChhJdb0FGcXLwCthJ7Op4wgoyiUVAVWJGIwtIWFQgVuLGzA4miBJBiZMzn4DFOQWcJFq3
-        rwc7m1nATGLe5odQtrxE89bZULa4xK0n85kmMArNQtI+C0nLLCQts5C0LGBkWcUokloKjNLc
-        YkO94sTc4tK8dL3k/NxNjMDo3nbs5+YdjJc2Bh9iFOBgVOLhzdBNixNiTSwrrsw9xCjBwawk
-        whsvnx4nxJuSWFmVWpQfX1Sak1p8iNEU6LeJzFKiyfnAxJNXEm9oamhuYWlobmxubGahJM7b
-        IXAwRkggPbEkNTs1tSC1CKaPiYNTqoHRR+OhjlTbRh7uu4tP8PgoX19qvoE/dIr93SV9Kh+r
-        Tj1PCuF5sf/e5ydnZQ51RNb0rl76ZbWVu+IWgXqN5HShhC436flbF56wipA0z5gVN6F69Zrn
-        v+dkfHhUfdSp9HV9iF/igZkTJ4p/T3jIdYU3eltmY61L5+KMxNap90J3VT7iubZynpOaEktx
-        RqKhFnNRcSIA8N4ZcgQDAAA=
-X-CMS-MailID: 20200310103531eucas1p2c2d6a133dc899b21cdec6d8e9c2e9362
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200302142626eucas1p25b7aec18264b1483fab9cceb86989aa8
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200302142626eucas1p25b7aec18264b1483fab9cceb86989aa8
-References: <CGME20200302142626eucas1p25b7aec18264b1483fab9cceb86989aa8@eucas1p2.samsung.com>
-        <20200302142615.14947-1-m.szyprowski@samsung.com>
-        <30f64c8f-2a12-46c2-e5eb-505bbb2088ed@samsung.com>
-        <331b5d65-f619-ff84-d4e7-55d2257a90c5@rock-chips.com>
-        <0a287abf-12ed-7e34-c765-144a8c10230d@rock-chips.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Andy,
+Series build and tested on linux next-20200306.
 
-On 10.03.2020 02:10, Andy Yan wrote:
-> [...]
+This patch series tries to enable FSYS power domain
+for USBDRD3, PDMA and USB2.0 devices.
+Some new patches is added to enable this feature.
 
-> ret = analogix_dp_dt_parse_pdata(dp);
->         if (ret)
->                 return ERR_PTR(ret);
->
->
->     I think this is the problem I tested. Now the pdata were parse in 
-> probe, but the plata_data->dev_type was populated in 
-> rockchip_dp_bind/exynos_dp_bind after probe.So we can't parse the 
-> right configuration here.
+Summary: 
+# powerdebug -d
+...
 
-Indeed, plat_data wasn't properly initialized. Thanks for finding it 
-out! I will send v2 in a few minutes.
+FSYS:
+current_state: on
+active_time: 236786 ms
+total_idle_time: 1914 ms
+Idle States:
+             State            Time
+             S0               1914
+Devices:
+         /devices/platform/soc/10010000.clock-controller/exynos5-subcmu.6.auto
+         /devices/platform/soc/12130000.phy
+         /devices/platform/soc/12100000.phy
+         /devices/platform/soc/12500000.phy
+         /devices/platform/soc/soc:amba/121a0000.pdma
+         /devices/platform/soc/soc:amba/121b0000.pdma
+         /devices/platform/soc/12110000.usb
+         /devices/platform/soc/12120000.usb
+         /devices/platform/soc/soc:usb3-0
+         /devices/platform/soc/soc:usb3-1
 
- > [...]
+This patch series tries to enable suspend clk using
+exynos dwc3 driver, for this I have added new
+compatible string "samsung,exynos5420-dwusb3"
+so that we could add new suspend clk in addition
+to the core clk. exynos dwc3 driver will help
+enable/disable these clk.
 
-Best regards
+This series PatchV2.
+--Added the clk names for exynos5420 compatible.
+--Added missing support for Exyno5410 SoC suspend clock.
+--Update the commit message to support suspend clk usages.
+
+---
+Long time ago I tried to add suspend clk for dwc3 phy
+which was wrong appoch, see below.
+
+[0] https://lore.kernel.org/patchwork/patch/837635/
+[1] https://lore.kernel.org/patchwork/patch/837636/
+
+Previous changes V3 (It was send with wrong Patch version)
+[2] https://patchwork.kernel.org/cover/11373043/
+
+-Anand
+
+Anand Moon (5):
+  devicetree: bindings: exynos: Add new compatible for Exynos5420 dwc3
+    clocks support
+  ARM: dts: exynos: Add missing usbdrd3 suspend clk
+  ARM: dts: exynos: Add FSYS power domain to Exynos542x USB nodes
+  usb: dwc3: exynos: Add support for Exynos5422 suspend clk
+  clk: samsung: exynos542x: Move FSYS subsystem clocks to its sub-CMU
+
+ .../devicetree/bindings/usb/exynos-usb.txt    |  5 ++-
+ arch/arm/boot/dts/exynos5410.dtsi             |  8 ++--
+ arch/arm/boot/dts/exynos5420.dtsi             | 24 ++++++++--
+ arch/arm/boot/dts/exynos54xx.dtsi             |  4 +-
+ drivers/clk/samsung/clk-exynos5420.c          | 45 ++++++++++++++-----
+ drivers/usb/dwc3/dwc3-exynos.c                |  9 ++++
+ 6 files changed, 73 insertions(+), 22 deletions(-)
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+2.25.1
 
