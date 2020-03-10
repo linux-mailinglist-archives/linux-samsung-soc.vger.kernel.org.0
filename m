@@ -2,123 +2,429 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A1AE217F49B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Mar 2020 11:12:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D90917F535
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Mar 2020 11:40:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbgCJKLo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 10 Mar 2020 06:11:44 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:42121 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726202AbgCJKLo (ORCPT
+        id S1726271AbgCJKky (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Mar 2020 06:40:54 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:58842 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726197AbgCJKkx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 10 Mar 2020 06:11:44 -0400
-Received: by mail-ot1-f66.google.com with SMTP id 66so12546176otd.9;
-        Tue, 10 Mar 2020 03:11:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jCYTtqKtRPChhEMP3SdFyK3zUQ497N5Se4SQbI0RklA=;
-        b=Vf27KfOZaPJN9fqG3b6SsYQMcuje0KATMB6Ws4w4IWeGZCEFLlPAcTinMWG8YJXWzf
-         kTUxtYQBqZKN/Ky0Lu0J/hL8d3dhXe6W0Dq06lASPOqig59+GtfEnaDiz6MCcjae+s3u
-         khdYtQ8QwKidbEBHnquTJGzGcb+gBUmeJePUBPtdVjpi7acyykGa+eFwxqQsNWkNYoq1
-         eHqzpYjsZ8eWjaXJ0CAQmDdiuoMV50v1jGEMTSNWywSyDiNcYzx3NBJ/tIBFSmXTMPts
-         81jHrFUjnfwJXYr6TTxpXvul+IiEphzGblpghARTwUP4pIyORB3rjxmMSD+bN8nKeIRx
-         ++4A==
-X-Gm-Message-State: ANhLgQ19O45IWZZzZnLUevyCafndwGtpZuSEe+c53WzPJajwo/ctwYi+
-        G3Pre1v5ZcbE/0SLMTawSJTYdLjXX+QyuXIrcQ0=
-X-Google-Smtp-Source: ADFU+vssgAzcj0QjNkwqKXMBxmZbVcV4/65kDwlBPN53wWEVCESi0Az4nNTiu33PAlepRYJQFKcqU7lq18xKx1kM570=
-X-Received: by 2002:a9d:b89:: with SMTP id 9mr16497345oth.297.1583835103460;
- Tue, 10 Mar 2020 03:11:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200306102301.16870-1-geert+renesas@glider.be> <CAJKOXPeknZDrA7cXbznvrcCoV4hFfaUAtd6mzHO+dbepkzueQw@mail.gmail.com>
-In-Reply-To: <CAJKOXPeknZDrA7cXbznvrcCoV4hFfaUAtd6mzHO+dbepkzueQw@mail.gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 10 Mar 2020 11:11:32 +0100
-Message-ID: <CAMuHMdVhOECZPMno3vgw4x0fo9yX5j0G9rss1QvHFyi73RRXVQ@mail.gmail.com>
-Subject: Re: [PATCH] Revert "tty: serial: samsung_tty: build it for any platform"
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>, Kukjin Kim <kgene@kernel.org>,
+        Tue, 10 Mar 2020 06:40:53 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200310104050euoutp029be1c85ab682ce371d95c7da59c0da78~66zlbn97-0981709817euoutp02Y
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Mar 2020 10:40:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200310104050euoutp029be1c85ab682ce371d95c7da59c0da78~66zlbn97-0981709817euoutp02Y
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1583836850;
+        bh=h8EnI0Ps4EDMkuvENIFMaL3EShKfIVUI0eaE4/33qXI=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=pucMQZ8Pfa7wA6SvwhyZudC8B0okCNWavKHTOBqP3OIEeiZL88EZQBbHZONkhWgzf
+         R0Lmn3NdnhHlX0diuVfhdmipgpxHXz0b+JuW31vhQVZQLkYzBBgfafD0Cx3wZgmHCy
+         UBv62R6XORDc2oCeW7j0BkGHB2CPz+1uyYmeCN8A=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200310104050eucas1p20033f6258a81cf2aac6c05c31d0a10ab~66zlB2CEV2000120001eucas1p2F;
+        Tue, 10 Mar 2020 10:40:50 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 10.17.60698.2BE676E5; Tue, 10
+        Mar 2020 10:40:50 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200310104049eucas1p107e1ec61456fce4c830d3232a400b32f~66zkoziwL2792127921eucas1p1R;
+        Tue, 10 Mar 2020 10:40:49 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200310104049eusmtrp14f270dc7b53cb7812bfe6a7404a599ad~66zkn4hMv2107721077eusmtrp1K;
+        Tue, 10 Mar 2020 10:40:49 +0000 (GMT)
+X-AuditID: cbfec7f5-a29ff7000001ed1a-64-5e676eb2d13b
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 66.23.07950.1BE676E5; Tue, 10
+        Mar 2020 10:40:49 +0000 (GMT)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200310104048eusmtip2958d88966a263faa9e295bb5988f59b2~66zjy0LT90209802098eusmtip2T;
+        Tue, 10 Mar 2020 10:40:48 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>
+Subject: [PATCH v2] drm/bridge: analogix_dp: Split bind() into probe() and
+ real bind()
+Date:   Tue, 10 Mar 2020 11:34:27 +0100
+Message-Id: <20200310103427.26048-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSe0hTYRjG+XbOdo7W7DQFP8yUBgVaambEJ2WUCR6lqP7ILuZl5mlK25Qd
+        ZxpdRpHYNDMlsyNdSDO1Nq+YpZhKNS80w1s2NC0E8453KtOcR+u/3/O9PO/z8PKRmKRc6EBG
+        q+IYtUqmkIqs8coPP01uZSp56M7PJgyZDSYhutP6BaDS7GIh6pidEKGl7yNC9DDjCsroS8dR
+        5/wQhgpmHhCoabQTR7fu5hFoqn8JQ9mttQKkf9dLoIa0YJSdOSQ6QNET3TcJ+jXXS9A5yQ+E
+        dGN6m4DuSzEK6PK8a/Qf7i1Op1UUAbrudiZOv+p6hNHTZU7H1p2x3hfJKKLjGbXH/nDrqNym
+        vbEzQQmPDKQW5AbogBUJqd3wRds8pgPWpIQqALA567GAFzMAcuVmnBfTAOa9NwvWLCVcsogf
+        PAcwpbSYsAxWLD86TlpYRHlC3ZhOZGE7SgGnkkeBhTGqEIdPun0tbEudggPNKbiFcWorHB/u
+        WNkjpnxgWopWxIc5wxcldRjPtQTM/HiWZz9Y3cIBnm3hsLGC4NkRtmSmrrSG1A0Av5n0BC9S
+        AWy/nr3q2At7TL+WE8jlRi6w+I2HBSF1EI6PXOXRBnaPbeQr28CMyvsY/yyGyUkSfsc2yBkN
+        /1LrP7WttqRh4bNGjL9ICBwZWBCkAyfuf9QTAIqAPaNhlXKG9VIxF91ZmZLVqOTu52KUZWD5
+        K7UsGmerQO1CRAOgSCBdL45yOx8qEcri2URlA4AkJrUThznLQyXiSFniJUYdE6bWKBi2AWwi
+        cam92OvpUIiEksvimAsME8uo16YC0spBC2qqrUSjJ/StE3NBEZ1Vk94DRxeNfr6Hf6fmmGp6
+        90wHvQznIrO8u3d56Vz6lbIerWYp797Y3Ag1b48mfS63Z5A+x7tGT+cPB4u/BmzIjx/M4QaJ
+        Q4uBOwxD+kJzWJJ/4BHHoM1gO2lu3MJqyxVzrlNbc+un/dISNiWdcQU6fynORsk8XTE1K/sL
+        +spw/EYDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphkeLIzCtJLcpLzFFi42I5/e/4Pd2NeelxBo8/q1ncWneO1aL//E1G
+        i40z1rNaXPn6ns3i/6PXrBZzJ9VaTLo/gcXi6veXzBYrvsxktzj55iqLRefEJewWnx78Z7aY
+        cX4fk8XaI3fZLQ71RVvMmPySzUHA4/2NVnaPnbPusnvM7pjJ6nFiwiUmj/vdx5k8Ni+p9/g7
+        az+LR9+WVYweB3ons3hsvzaP2ePzJrkA7ig9m6L80pJUhYz84hJbpWhDCyM9Q0sLPSMTSz1D
+        Y/NYKyNTJX07m5TUnMyy1CJ9uwS9jMUnrQu+hFXMW8fRwLjYs4uRk0NCwERiw6wOti5GLg4h
+        gaWMElcubmaHSMhInJzWwAphC0v8udYFVfSJUWJaZycTSIJNwFCi6y1IgpNDRCBP4uFhkDgX
+        B7PAZhaJ31vaWEASwgJhEj8uzAErYhFQlXj36grYBl4BW4m+7gY2iA3yEqs3HGCewMizgJFh
+        FaNIamlxbnpusZFecWJucWleul5yfu4mRmBMbDv2c8sOxq53wYcYBTgYlXh4BbTT4oRYE8uK
+        K3MPMUpwMCuJ8MbLp8cJ8aYkVlalFuXHF5XmpBYfYjQFWj6RWUo0OR8Yr3kl8YamhuYWlobm
+        xubGZhZK4rwdAgdjhATSE0tSs1NTC1KLYPqYODilGhiPLnPIqVby+XGeZdbjntTtV5j2GRS1
+        CVfaTPr2qW7h1uC2tRe4XubWXJYqyWZIKFvP9q7s9h/377wfdF2zyrrNIo3X/o5X7f67R0e5
+        YNtf/yNznpg5cRl/Tyzikvnfkrhyd87Ptapp/js2bzRwaoux9j9i/fjWj4p1GueuthtXVW1K
+        jzYom6fEUpyRaKjFXFScCADudgJonwIAAA==
+X-CMS-MailID: 20200310104049eucas1p107e1ec61456fce4c830d3232a400b32f
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200310104049eucas1p107e1ec61456fce4c830d3232a400b32f
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200310104049eucas1p107e1ec61456fce4c830d3232a400b32f
+References: <CGME20200310104049eucas1p107e1ec61456fce4c830d3232a400b32f@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+Analogix_dp driver acquires all its resources in the ->bind() callback,
+what is a bit against the component driver based approach, where the
+driver initialization is split into a probe(), where all resources are
+gathered, and a bind(), where all objects are created and a compound
+driver is initialized.
 
-On Mon, Mar 9, 2020 at 7:09 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> .On Fri, 6 Mar 2020 at 11:23, Geert Uytterhoeven
-> <geert+renesas@glider.be> wrote:
-> > This reverts commit 175b558d0efb8b4f33aa7bd2c1b5389b912d3019.
-> >
-> > When the user configures a kernel without support for Samsung SoCs, it
-> > makes no sense to ask the user about enabling "Samsung SoC serial
-> > support", as Samsung serial ports can only be found on Samsung SoCs.
-> >
-> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> > ---
-> >  drivers/tty/serial/Kconfig | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
->
-> Discussion about removal and then re-adding of PLAT_SAMSUNG and
-> ARCH_EXYNOS dependencies remind me [1]: "[RFC] Input: tm2-touchkey -
-> add hardware dependency".
->
-> In both cases the driver is clearly only for Samsung SoC or even for
-> particular device, although one could argue that touchscreen could be
-> reused while re-usage of serial IP of SoC is highly unlikely. My
-> understanding, maybe not correct, of "depends on" syntax is a kernel
-> source code, building or running dependency. I do not see it as a
-> hardware dependency. Although Samsung S3C/Exynos serial driver will
-> not exist outside of Samsung SoC, there is no kernel dependency.
-> Unless I missed something...
+Extract all the resource related operations to analogix_dp_probe() and
+analogix_dp_remove(), then call them before/after registration of the
+device components from the main Exynos DP and Rockchip DP drivers. Also
+move the plat_data initialization to the probe() to make it available for
+the analogix_dp_probe() function.
 
-The touchscreen is something different: I can easily mount that type of
-touchscreen on my own board, while I cannot integrate a Samsung serial
-port on my board, unless I'm using a Samsung SoC.
+This fixes the multiple calls to the bind() of the DRM compound driver
+when the DP PHY driver is not yet loaded/probed:
 
-> I understand and agree with concerns mentioned in [1] and in the
-> thread here, that removal of this "depends on" makes life of
-> distributions and generic users more difficult. To solve this problem
-> I was thinking about adding weaker type of dependency. A hint about
-> hardware dependency. Something like the "imply" is for "select". This
-> did not happen, therefore I still stand on my understanding of
-> "depends on" thus I gave positive feedback to Greg's patch.
+[drm] Exynos DRM: using 14400000.fimd device for DMA mapping operations
+exynos-drm exynos-drm: bound 14400000.fimd (ops fimd_component_ops [exynosdrm])
+exynos-drm exynos-drm: bound 14450000.mixer (ops mixer_component_ops [exynosdrm])
+exynos-dp 145b0000.dp-controller: no DP phy configured
+exynos-drm exynos-drm: failed to bind 145b0000.dp-controller (ops exynos_dp_ops [exynosdrm]): -517
+exynos-drm exynos-drm: master bind failed: -517
+...
+[drm] Exynos DRM: using 14400000.fimd device for DMA mapping operations
+exynos-drm exynos-drm: bound 14400000.fimd (ops hdmi_enable [exynosdrm])
+exynos-drm exynos-drm: bound 14450000.mixer (ops hdmi_enable [exynosdrm])
+exynos-drm exynos-drm: bound 145b0000.dp-controller (ops hdmi_enable [exynosdrm])
+exynos-drm exynos-drm: bound 14530000.hdmi (ops hdmi_enable [exynosdrm])
+[drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+Console: switching to colour frame buffer device 170x48
+exynos-drm exynos-drm: fb0: exynosdrmfb frame buffer device
+[drm] Initialized exynos 1.1.0 20180330 for exynos-drm on minor 1
+...
 
-A weak dependency can be expressed using "|| COMPILE_TESTING".
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+v2:
+- moved plat_data initialization to exynos_dp_probe/rockchip_dp_probe as
+  pointed by Andy Yan
+---
+ .../drm/bridge/analogix/analogix_dp_core.c    | 33 +++++++++++------
+ drivers/gpu/drm/exynos/exynos_dp.c            | 29 ++++++++-------
+ .../gpu/drm/rockchip/analogix_dp-rockchip.c   | 36 ++++++++++---------
+ include/drm/bridge/analogix_dp.h              |  5 +--
+ 4 files changed, 61 insertions(+), 42 deletions(-)
 
-<(not so) wild idea>
-During the past few days, I've been giving this more thought.
-And I realized we might as well get rid of pci_driver, and just have
-platform_drivers that match against "pci<VendorID>,<DeviceID>" (yes,
-this is what real Open Firmware had in the compatible property, cfr.
-http://users.telenet.be/geertu/Linux/PPC/pci/ethernetAT4/).
-That way there would be no longer a build dependency on CONFIG_PCI, and
-we can drop all "depends on PCI" from driver Kconfig symbols.
-But would dropping that dependency be welcomed? Perhaps, as "everybody"
-uses PCI.
-
-Now repeat the exercise for Zorro, TURBOchannel, NuBus, Sbus, PCMCIA,
-..., and wait for the outcry from Linus suddenly seeing lots of
-questions about support for hardware he can't possibly have in his
-machine...
-</(not so) wild idea>
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index 9ded2cef57dd..76736fb8ed94 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1652,8 +1652,7 @@ static ssize_t analogix_dpaux_transfer(struct drm_dp_aux *aux,
+ }
+ 
+ struct analogix_dp_device *
+-analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
+-		 struct analogix_dp_plat_data *plat_data)
++analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct analogix_dp_device *dp;
+@@ -1756,22 +1755,30 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
+ 					irq_flags, "analogix-dp", dp);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to request irq\n");
+-		goto err_disable_pm_runtime;
++		return ERR_PTR(ret);
+ 	}
+ 	disable_irq(dp->irq);
+ 
++	return dp;
++}
++EXPORT_SYMBOL_GPL(analogix_dp_probe);
++
++int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
++{
++	int ret;
++
+ 	dp->drm_dev = drm_dev;
+ 	dp->encoder = dp->plat_data->encoder;
+ 
+ 	dp->aux.name = "DP-AUX";
+ 	dp->aux.transfer = analogix_dpaux_transfer;
+-	dp->aux.dev = &pdev->dev;
++	dp->aux.dev = dp->dev;
+ 
+ 	ret = drm_dp_aux_register(&dp->aux);
+ 	if (ret)
+-		return ERR_PTR(ret);
++		return ret;
+ 
+-	pm_runtime_enable(dev);
++	pm_runtime_enable(dp->dev);
+ 
+ 	ret = analogix_dp_create_bridge(drm_dev, dp);
+ 	if (ret) {
+@@ -1779,13 +1786,12 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
+ 		goto err_disable_pm_runtime;
+ 	}
+ 
+-	return dp;
++	return 0;
+ 
+ err_disable_pm_runtime:
++	pm_runtime_disable(dp->dev);
+ 
+-	pm_runtime_disable(dev);
+-
+-	return ERR_PTR(ret);
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(analogix_dp_bind);
+ 
+@@ -1802,10 +1808,15 @@ void analogix_dp_unbind(struct analogix_dp_device *dp)
+ 
+ 	drm_dp_aux_unregister(&dp->aux);
+ 	pm_runtime_disable(dp->dev);
+-	clk_disable_unprepare(dp->clock);
+ }
+ EXPORT_SYMBOL_GPL(analogix_dp_unbind);
+ 
++void analogix_dp_remove(struct analogix_dp_device *dp)
++{
++	clk_disable_unprepare(dp->clock);
++}
++EXPORT_SYMBOL_GPL(analogix_dp_remove);
++
+ #ifdef CONFIG_PM
+ int analogix_dp_suspend(struct analogix_dp_device *dp)
+ {
+diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
+index d23d3502ca91..5ee090691390 100644
+--- a/drivers/gpu/drm/exynos/exynos_dp.c
++++ b/drivers/gpu/drm/exynos/exynos_dp.c
+@@ -159,15 +159,8 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
+ 	struct drm_device *drm_dev = data;
+ 	int ret;
+ 
+-	dp->dev = dev;
+ 	dp->drm_dev = drm_dev;
+ 
+-	dp->plat_data.dev_type = EXYNOS_DP;
+-	dp->plat_data.power_on_start = exynos_dp_poweron;
+-	dp->plat_data.power_off = exynos_dp_poweroff;
+-	dp->plat_data.attach = exynos_dp_bridge_attach;
+-	dp->plat_data.get_modes = exynos_dp_get_modes;
+-
+ 	if (!dp->plat_data.panel && !dp->ptn_bridge) {
+ 		ret = exynos_dp_dt_parse_panel(dp);
+ 		if (ret)
+@@ -185,13 +178,11 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
+ 
+ 	dp->plat_data.encoder = encoder;
+ 
+-	dp->adp = analogix_dp_bind(dev, dp->drm_dev, &dp->plat_data);
+-	if (IS_ERR(dp->adp)) {
++	ret = analogix_dp_bind(dp->adp, dp->drm_dev);
++	if (ret)
+ 		dp->encoder.funcs->destroy(&dp->encoder);
+-		return PTR_ERR(dp->adp);
+-	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static void exynos_dp_unbind(struct device *dev, struct device *master,
+@@ -222,6 +213,7 @@ static int exynos_dp_probe(struct platform_device *pdev)
+ 	if (!dp)
+ 		return -ENOMEM;
+ 
++	dp->dev = dev;
+ 	/*
+ 	 * We just use the drvdata until driver run into component
+ 	 * add function, and then we would set drvdata to null, so
+@@ -247,16 +239,29 @@ static int exynos_dp_probe(struct platform_device *pdev)
+ 
+ 	/* The remote port can be either a panel or a bridge */
+ 	dp->plat_data.panel = panel;
++	dp->plat_data.dev_type = EXYNOS_DP;
++	dp->plat_data.power_on_start = exynos_dp_poweron;
++	dp->plat_data.power_off = exynos_dp_poweroff;
++	dp->plat_data.attach = exynos_dp_bridge_attach;
++	dp->plat_data.get_modes = exynos_dp_get_modes;
+ 	dp->plat_data.skip_connector = !!bridge;
++
+ 	dp->ptn_bridge = bridge;
+ 
+ out:
++	dp->adp = analogix_dp_probe(dev, &dp->plat_data);
++	if (IS_ERR(dp->adp))
++		return PTR_ERR(dp->adp);
++
+ 	return component_add(&pdev->dev, &exynos_dp_ops);
+ }
+ 
+ static int exynos_dp_remove(struct platform_device *pdev)
+ {
++	struct exynos_dp_device *dp = platform_get_drvdata(pdev);
++
+ 	component_del(&pdev->dev, &exynos_dp_ops);
++	analogix_dp_remove(dp->adp);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+index f38f5e113c6b..ce98c08aa8b4 100644
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -325,15 +325,9 @@ static int rockchip_dp_bind(struct device *dev, struct device *master,
+ 			    void *data)
+ {
+ 	struct rockchip_dp_device *dp = dev_get_drvdata(dev);
+-	const struct rockchip_dp_chip_data *dp_data;
+ 	struct drm_device *drm_dev = data;
+ 	int ret;
+ 
+-	dp_data = of_device_get_match_data(dev);
+-	if (!dp_data)
+-		return -ENODEV;
+-
+-	dp->data = dp_data;
+ 	dp->drm_dev = drm_dev;
+ 
+ 	ret = rockchip_dp_drm_create_encoder(dp);
+@@ -344,16 +338,9 @@ static int rockchip_dp_bind(struct device *dev, struct device *master,
+ 
+ 	dp->plat_data.encoder = &dp->encoder;
+ 
+-	dp->plat_data.dev_type = dp->data->chip_type;
+-	dp->plat_data.power_on_start = rockchip_dp_poweron_start;
+-	dp->plat_data.power_off = rockchip_dp_powerdown;
+-	dp->plat_data.get_modes = rockchip_dp_get_modes;
+-
+-	dp->adp = analogix_dp_bind(dev, dp->drm_dev, &dp->plat_data);
+-	if (IS_ERR(dp->adp)) {
+-		ret = PTR_ERR(dp->adp);
++	ret = analogix_dp_bind(dp->adp, drm_dev);
++	if (ret)
+ 		goto err_cleanup_encoder;
+-	}
+ 
+ 	return 0;
+ err_cleanup_encoder:
+@@ -368,8 +355,6 @@ static void rockchip_dp_unbind(struct device *dev, struct device *master,
+ 
+ 	analogix_dp_unbind(dp->adp);
+ 	dp->encoder.funcs->destroy(&dp->encoder);
+-
+-	dp->adp = ERR_PTR(-ENODEV);
+ }
+ 
+ static const struct component_ops rockchip_dp_component_ops = {
+@@ -380,10 +365,15 @@ static const struct component_ops rockchip_dp_component_ops = {
+ static int rockchip_dp_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
++	const struct rockchip_dp_chip_data *dp_data;
+ 	struct drm_panel *panel = NULL;
+ 	struct rockchip_dp_device *dp;
+ 	int ret;
+ 
++	dp_data = of_device_get_match_data(dev);
++	if (!dp_data)
++		return -ENODEV;
++
+ 	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
+ 	if (ret < 0)
+ 		return ret;
+@@ -394,7 +384,12 @@ static int rockchip_dp_probe(struct platform_device *pdev)
+ 
+ 	dp->dev = dev;
+ 	dp->adp = ERR_PTR(-ENODEV);
++	dp->data = dp_data;
+ 	dp->plat_data.panel = panel;
++	dp->plat_data.dev_type = dp->data->chip_type;
++	dp->plat_data.power_on_start = rockchip_dp_poweron_start;
++	dp->plat_data.power_off = rockchip_dp_powerdown;
++	dp->plat_data.get_modes = rockchip_dp_get_modes;
+ 
+ 	ret = rockchip_dp_of_probe(dp);
+ 	if (ret < 0)
+@@ -402,12 +397,19 @@ static int rockchip_dp_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, dp);
+ 
++	dp->adp = analogix_dp_probe(dev, &dp->plat_data);
++	if (IS_ERR(dp->adp))
++		return PTR_ERR(dp->adp);
++
+ 	return component_add(dev, &rockchip_dp_component_ops);
+ }
+ 
+ static int rockchip_dp_remove(struct platform_device *pdev)
+ {
++	struct rockchip_dp_device *dp = platform_get_drvdata(pdev);
++
+ 	component_del(&pdev->dev, &rockchip_dp_component_ops);
++	analogix_dp_remove(dp->adp);
+ 
+ 	return 0;
+ }
+diff --git a/include/drm/bridge/analogix_dp.h b/include/drm/bridge/analogix_dp.h
+index 7aa2f93da49c..b0dcc07334a1 100644
+--- a/include/drm/bridge/analogix_dp.h
++++ b/include/drm/bridge/analogix_dp.h
+@@ -42,9 +42,10 @@ int analogix_dp_resume(struct analogix_dp_device *dp);
+ int analogix_dp_suspend(struct analogix_dp_device *dp);
+ 
+ struct analogix_dp_device *
+-analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
+-		 struct analogix_dp_plat_data *plat_data);
++analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data);
++int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev);
+ void analogix_dp_unbind(struct analogix_dp_device *dp);
++void analogix_dp_remove(struct analogix_dp_device *dp);
+ 
+ int analogix_dp_start_crc(struct drm_connector *connector);
+ int analogix_dp_stop_crc(struct drm_connector *connector);
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+2.17.1
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
