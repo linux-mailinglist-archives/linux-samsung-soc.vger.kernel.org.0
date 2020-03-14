@@ -2,132 +2,66 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F07B185010
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Mar 2020 21:18:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4118A1853CC
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 14 Mar 2020 02:17:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727409AbgCMUSF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Mar 2020 16:18:05 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:40212 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727391AbgCMUSF (ORCPT
+        id S1727912AbgCNBRc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Mar 2020 21:17:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59302 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726591AbgCNBRc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Mar 2020 16:18:05 -0400
-Received: by mail-lf1-f68.google.com with SMTP id j17so8896229lfe.7;
-        Fri, 13 Mar 2020 13:18:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BOrKdqp0xX849tkbGYoL5GifZ0fJWuSnmKvneHoBEPI=;
-        b=SFHap9SA3MQWq/rDzTcpj95GukhT+WmakBXzY2/W/iVbaG3CYS78HgdDNCnklu2dLE
-         kFU0QDG9SImIs7hlVZiJyUAgm7YUizziMveCoCVIzJ9O8cqrKgolPpoV6am7DfhU89XJ
-         ltxCH8nvbIYs393MHpsDO6BhvtaKdvLKO1cCTYQMgnrpgZsHazgpH66LACi+70HhiJ6l
-         AJYv+s/W3gch6gNZXXxxbLFCll+TfRRcrcTxa5xQeHRhtYaQSbszeLTX6zP5G5Jz7Jm/
-         gUDVBMvSktGH2MZ2dnKv8dJAIQub63dYzfpzuua04+X6h9+JvUqOMVK/Ctt+DZXCV3Yi
-         OCig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=BOrKdqp0xX849tkbGYoL5GifZ0fJWuSnmKvneHoBEPI=;
-        b=eyu5ID4zDDgdhfjo5oFagTZ12Fcxx7AdJolwno7zs4Xk0FKb7XNrYtJth53MqgezcB
-         VuwA1Lsw3yxhkObQnOZM+5stDp8vWZ/KJ/T1HQR1wKcVehoTeACjmfoWI8GEpsiGt3hw
-         wfXgH8vwvd2DRupaVTsOfRiDfZPD26JKXY7fj8lr6plat6sCFDiFd5TbKZ4jpuGgZETV
-         xGu+WQo2ua+CeJJN4Sznn+cg7o8RnPbce9hA2aXAzp7eshx25eI8ILaoRGIHo/MtXFK1
-         HuwzBaC8pQlzW/oXCa0pCMPClhAxI5ZveeSG0RAVtXmZd3xpV+/NUpfo/NMDnImTdNx/
-         I5UA==
-X-Gm-Message-State: ANhLgQ3SCSAbWlJcJMBQsi+dL93fdjbOjd2jXastSQ5n3hsfeGwyNEnf
-        y7EzhA9sukshzpmjhNp3th4=
-X-Google-Smtp-Source: ADFU+vuWMe8I2528Uyu2tKaIGPqCCGIWF6uu2OphKJd6rnCU8MYCRJ3bIyFwbbl07L6oMFBFxGQoig==
-X-Received: by 2002:a19:7d04:: with SMTP id y4mr9463704lfc.111.1584130682588;
-        Fri, 13 Mar 2020 13:18:02 -0700 (PDT)
-Received: from saturn.lan (18.158-248-194.customer.lyse.net. [158.248.194.18])
-        by smtp.gmail.com with ESMTPSA id v10sm30774074lfb.61.2020.03.13.13.18.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2020 13:18:01 -0700 (PDT)
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        amd-gfx@lists.freedesktop.org,
-        Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Jose Roberto de Souza <jose.souza@intel.com>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        virtualization@lists.linux-foundation.org
-Subject: [PATCH v1 3/3] drm/atmel-hlcdc: Use drm_encoder_init()
-Date:   Fri, 13 Mar 2020 21:17:44 +0100
-Message-Id: <20200313201744.19773-4-sam@ravnborg.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200313201744.19773-1-sam@ravnborg.org>
-References: <20200313201744.19773-1-sam@ravnborg.org>
+        Fri, 13 Mar 2020 21:17:32 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A13DC2074A;
+        Sat, 14 Mar 2020 01:17:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1584148651;
+        bh=+OILuvouBCX8uMF/DlchLPyrx1JavU6/eR/UOXvuv8c=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=R7xvdtknuSkmlj0jrBNdhaBIycSQ2z7QKYLKtuKhx4O87Qcm/sNM8vE+OeWqk5IlB
+         Zz74RpD+G7TgqxXlffwyX6UUf506YN4U+yRzn0iS+3a8CELbDkU83dsKnanJHrok9c
+         fZimPWbrxN9BfUoGqhYBr+IUC3iseze8NpNOD/YQ=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1d569e023b6cb7b8d0da8d1bcccd92e97fe436c8.1583896348.git.joe@perches.com>
+References: <cover.1583896344.git.joe@perches.com> <1d569e023b6cb7b8d0da8d1bcccd92e97fe436c8.1583896348.git.joe@perches.com>
+Subject: Re: [PATCH -next 010/491] ARM/SAMSUNG EXYNOS ARM ARCHITECTURES: Use fallthrough;
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+To:     Chanwoo Choi <cw00.choi@samsung.com>,
+        Joe Perches <joe@perches.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>
+Date:   Fri, 13 Mar 2020 18:17:30 -0700
+Message-ID: <158414865091.164562.17682025008359421835@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-atmel-hlcdc has no need to extend the functionality of the
-encoder, so use drm_encoder_init().
+Quoting Joe Perches (2020-03-10 21:51:24)
+> Convert the various uses of fallthrough comments to fallthrough;
+>=20
+> Done via script
+> Link: https://lore.kernel.org/lkml/b56602fcf79f849e733e7b521bb0e17895d390=
+fa.1582230379.git.joe.com/
+>=20
 
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Boris Brezillon <bbrezillon@kernel.org>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
----
- drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+This link doesn't work for me. It leads to a redirect for=20
 
-diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c
-index a845d587c315..96e0d85748d2 100644
---- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c
-+++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_output.c
-@@ -22,10 +22,6 @@ struct atmel_hlcdc_rgb_output {
- 	int bus_fmt;
- };
- 
--static const struct drm_encoder_funcs atmel_hlcdc_panel_encoder_funcs = {
--	.destroy = drm_encoder_cleanup,
--};
--
- static struct atmel_hlcdc_rgb_output *
- atmel_hlcdc_encoder_to_rgb_output(struct drm_encoder *encoder)
- {
-@@ -98,9 +94,7 @@ static int atmel_hlcdc_attach_endpoint(struct drm_device *dev, int endpoint)
- 		return -EINVAL;
- 	}
- 
--	ret = drm_encoder_init_funcs(dev, &output->encoder,
--				     &atmel_hlcdc_panel_encoder_funcs,
--				     DRM_MODE_ENCODER_NONE, NULL);
-+	ret = drm_encoder_init(dev, &output->encoder, DRM_MODE_ENCODER_NONE);
- 	if (ret)
- 		return ret;
- 
--- 
-2.20.1
+https://lore.kernel.org/lkml/b56602fcf79f849e733e7b521bb0e17895d390fa.15822=
+30379.git.joe@perches.com/
 
+>  drivers/clk/samsung/clk-s3c2443.c | 2 +-
+
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
