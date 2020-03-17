@@ -2,118 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04B97186251
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Mar 2020 03:38:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43B81187B6C
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 17 Mar 2020 09:42:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729604AbgCPCgG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 15 Mar 2020 22:36:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40876 "EHLO mail.kernel.org"
+        id S1726189AbgCQImm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 17 Mar 2020 04:42:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53064 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729712AbgCPCf4 (ORCPT
+        id S1725862AbgCQImm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 15 Mar 2020 22:35:56 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        Tue, 17 Mar 2020 04:42:42 -0400
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 11FBD206BE;
-        Mon, 16 Mar 2020 02:35:54 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6628D20663;
+        Tue, 17 Mar 2020 08:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1584326156;
-        bh=+ugl1LPMDQjGW+NcOl45tiFNhxlRBG/P+8q7FHmK50Q=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ltA4EhWPpk7SLduvSFmQEtDLUO7enwnCKerTEtqLZxowFfbcEbQ7kTJ1CKYMzMZjx
-         FCj730D6Ikus9JUzzcLMeZtSj9ltNwyq6P2yzeggdNMQcgqOS3BkT0xVcvJ00nmx1r
-         24WjIAsfZKEPJgJePMEWkZpdYS3nNa4qbYdEaUa8=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Sasha Levin <sashal@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 6/7] drm/exynos: dsi: fix workaround for the legacy clock name
-Date:   Sun, 15 Mar 2020 22:35:46 -0400
-Message-Id: <20200316023548.2347-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200316023548.2347-1-sashal@kernel.org>
-References: <20200316023548.2347-1-sashal@kernel.org>
+        s=default; t=1584434561;
+        bh=IoKaoS48Cjqtz3EXvPpCxL1bx5OpzH2wv2pbrlqhO4E=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=pNhHb5ZOklzJIBs+Mk30HLDVvQoyI0ikIuQlr7KdQcqcluM8Thc1qv+SrFtFCG6sN
+         4IQh2DLpQJp/vtcOlOOASHb/3rQ60/mqNkaD/zaZh7ZJ/r8hIEN9Rhk+sXx/9KA/2B
+         tVat7vG6pnEfRdPbSM5o6jfrb0mMZsFtsX+rCvIo=
+Received: by mail-lj1-f182.google.com with SMTP id y17so573318ljk.12;
+        Tue, 17 Mar 2020 01:42:41 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ3R6x589eVO9vcSRM11HwfMGfmiH1vrpujBL/VkubC/yalGWwVT
+        8K7pITN+oKqBhU1jmxIoEUYcriO7rmgFqVrHR5E=
+X-Google-Smtp-Source: ADFU+vsGw4leJ6Uf5P8becHc7znYz444/oKgydCNUix8TbemuH4A0iD/laSXCKIUp9XD4ychGSVZOvtwIIC+U/Mg5Ks=
+X-Received: by 2002:a05:651c:29c:: with SMTP id b28mr2143355ljo.201.1584434559542;
+ Tue, 17 Mar 2020 01:42:39 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20200310194854.831-1-linux.amoon@gmail.com> <20200310194854.831-2-linux.amoon@gmail.com>
+ <87lfo2f0k9.fsf@kernel.org>
+In-Reply-To: <87lfo2f0k9.fsf@kernel.org>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 17 Mar 2020 09:42:28 +0100
+X-Gmail-Original-Message-ID: <CAJKOXPf1GQmukWv16ydxY=78k=szTLnwM08R0wGoRNhHXgkCzA@mail.gmail.com>
+Message-ID: <CAJKOXPf1GQmukWv16ydxY=78k=szTLnwM08R0wGoRNhHXgkCzA@mail.gmail.com>
+Subject: Re: [PATCHv3 1/5] devicetree: bindings: exynos: Add new compatible
+ for Exynos5420 dwc3 clocks support
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Anand Moon <linux.amoon@gmail.com>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-clk@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+On Sun, 15 Mar 2020 at 10:08, Felipe Balbi <balbi@kernel.org> wrote:
+>
+>
+> Hi,
+>
+> Anand Moon <linux.amoon@gmail.com> writes:
+>
+> > Add the new compatible string for Exynos5422 DWC3 to support
+> > enable/disable of core and suspend clk by DWC3 driver.
+> > Also updated the clock names for compatible samsung,exynos5420-dwusb3.
+> >
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+>
+> What is the dependency here?
 
-[ Upstream commit c0fd99d659ba5582e09625c7a985d63fc2ca74b5 ]
+Felipe,
 
-Writing to the built-in strings arrays doesn't work if driver is loaded
-as kernel module. This is also considered as a bad pattern. Fix this by
-adding a call to clk_get() with legacy clock name. This fixes following
-kernel oops if driver is loaded as module:
+This patchset should not be applied. As of now, it is not needed and
+not justified.
 
-Unable to handle kernel paging request at virtual address bf047978
- pgd = (ptrval)
- [bf047978] *pgd=59344811, *pte=5903c6df, *ppte=5903c65f
- Internal error: Oops: 80f [#1] SMP ARM
- Modules linked in: mc exynosdrm(+) analogix_dp rtc_s3c exynos_ppmu i2c_gpio
- CPU: 1 PID: 212 Comm: systemd-udevd Not tainted 5.6.0-rc2-next-20200219 #326
- videodev: Linux video capture interface: v2.00
- Hardware name: Samsung Exynos (Flattened Device Tree)
- PC is at exynos_dsi_probe+0x1f0/0x384 [exynosdrm]
- LR is at exynos_dsi_probe+0x1dc/0x384 [exynosdrm]
- ...
- Process systemd-udevd (pid: 212, stack limit = 0x(ptrval))
- ...
- [<bf03cf14>] (exynos_dsi_probe [exynosdrm]) from [<c09b1ca0>] (platform_drv_probe+0x6c/0xa4)
- [<c09b1ca0>] (platform_drv_probe) from [<c09afcb8>] (really_probe+0x210/0x350)
- [<c09afcb8>] (really_probe) from [<c09aff74>] (driver_probe_device+0x60/0x1a0)
- [<c09aff74>] (driver_probe_device) from [<c09b0254>] (device_driver_attach+0x58/0x60)
- [<c09b0254>] (device_driver_attach) from [<c09b02dc>] (__driver_attach+0x80/0xbc)
- [<c09b02dc>] (__driver_attach) from [<c09ade00>] (bus_for_each_dev+0x68/0xb4)
- [<c09ade00>] (bus_for_each_dev) from [<c09aefd8>] (bus_add_driver+0x130/0x1e8)
- [<c09aefd8>] (bus_add_driver) from [<c09b0d64>] (driver_register+0x78/0x110)
- [<c09b0d64>] (driver_register) from [<bf038558>] (exynos_drm_init+0xe8/0x11c [exynosdrm])
- [<bf038558>] (exynos_drm_init [exynosdrm]) from [<c0302fa8>] (do_one_initcall+0x50/0x220)
- [<c0302fa8>] (do_one_initcall) from [<c03dd02c>] (do_init_module+0x60/0x210)
- [<c03dd02c>] (do_init_module) from [<c03dbf44>] (load_module+0x1c0c/0x2310)
- [<c03dbf44>] (load_module) from [<c03dc85c>] (sys_finit_module+0xac/0xbc)
- [<c03dc85c>] (sys_finit_module) from [<c0301000>] (ret_fast_syscall+0x0/0x54)
- Exception stack(0xd979bfa8 to 0xd979bff0)
- ...
- ---[ end trace db16efe05faab470 ]---
-
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/exynos/exynos_drm_dsi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index 1ee0b70472fd8..77ff3eed65d62 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -1914,9 +1914,10 @@ static int exynos_dsi_probe(struct platform_device *pdev)
- 		dsi->clks[i] = devm_clk_get(dev, clk_names[i]);
- 		if (IS_ERR(dsi->clks[i])) {
- 			if (strcmp(clk_names[i], "sclk_mipi") == 0) {
--				strcpy(clk_names[i], OLD_SCLK_MIPI_CLK_NAME);
--				i--;
--				continue;
-+				dsi->clks[i] = devm_clk_get(dev,
-+							OLD_SCLK_MIPI_CLK_NAME);
-+				if (!IS_ERR(dsi->clks[i]))
-+					continue;
- 			}
- 
- 			dev_info(dev, "failed to get the clock: %s\n",
--- 
-2.20.1
-
+Best regards,
+Krzysztof
