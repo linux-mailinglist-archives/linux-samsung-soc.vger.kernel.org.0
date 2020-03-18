@@ -2,198 +2,268 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CEE6189A77
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Mar 2020 12:18:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03A69189B17
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Mar 2020 12:47:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727901AbgCRLS0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Mar 2020 07:18:26 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:33672 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727867AbgCRLSQ (ORCPT
+        id S1726821AbgCRLrP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 18 Mar 2020 07:47:15 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35619 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbgCRLrO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Mar 2020 07:18:16 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20200318111814epoutp04663887df6f40561ef07e880b6e6cda6a~9YehoU14i3036530365epoutp04r
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Mar 2020 11:18:14 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20200318111814epoutp04663887df6f40561ef07e880b6e6cda6a~9YehoU14i3036530365epoutp04r
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1584530294;
-        bh=RwV5Vt68kQmcCoecxf1d7B1jkFqNuPCLo2zXINj7zdc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EuNqq+Ebf2ibB905JdLYQrqPvWlu61iCmBYmAHk1YSrVkPzPamwwknswb8/FZiyw7
-         V8cfKNyeYVD0ZV6LjYPn7aVhEvZZcWQYwVulGS9BlON6gcv3+IKE23lZOI5Xys9wLi
-         9IM1yPAwJHNiLfRbpDvfQ0REDGQFD0SHCd7yEGqg=
-Received: from epsmges5p3new.samsung.com (unknown [182.195.42.75]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20200318111814epcas5p3f0ed04cea7d7d6a37ac3a32f33b4be5e~9YehKDpgA1474914749epcas5p3J;
-        Wed, 18 Mar 2020 11:18:14 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        6F.4E.04736.673027E5; Wed, 18 Mar 2020 20:18:14 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200318111813epcas5p126d7b871b194385099e8f71f2461303e~9YegtQjL53102031020epcas5p1y;
-        Wed, 18 Mar 2020 11:18:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200318111813epsmtrp18970350639785df9a67d3d1338c3f535~9YegsYLCj1841218412epsmtrp1w;
-        Wed, 18 Mar 2020 11:18:13 +0000 (GMT)
-X-AuditID: b6c32a4b-acbff70000001280-23-5e72037625d6
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        93.3D.04024.573027E5; Wed, 18 Mar 2020 20:18:13 +0900 (KST)
-Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
-        [107.108.73.139]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200318111811epsmtip25f1300dc888d520b56e28e072c69fd62~9Yee_CYG00622906229epsmtip2x;
-        Wed, 18 Mar 2020 11:18:11 +0000 (GMT)
-From:   Alim Akhtar <alim.akhtar@samsung.com>
-To:     robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Cc:     krzk@kernel.org, avri.altman@wdc.com, martin.petersen@oracle.com,
-        kwmad.kim@samsung.com, stanley.chu@mediatek.com,
-        cang@codeaurora.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH v2 5/5] arm64: dts: Add node for ufs exynos7
-Date:   Wed, 18 Mar 2020 16:41:44 +0530
-Message-Id: <20200318111144.39525-6-alim.akhtar@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200318111144.39525-1-alim.akhtar@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsWy7bCmhm4Zc1GcwYkl3BYP5m1js3j58yqb
-        xaf1y1gt5h85x2px/vwGdoubW46yWGx6fI3V4vKuOWwWM87vY7Lovr6DzWL58X9MFq17j7Bb
-        LN16k9GB1+NyXy+Tx6ZVnWwem5fUe7Sc3M/i8fHpLRaPvi2rGD0+b5LzaD/QzRTAEcVlk5Ka
-        k1mWWqRvl8CV8W7ze+aCY1IVfWsamBoYD4p2MXJySAiYSDxom83UxcjFISSwm1Hie8N/Vgjn
-        E6PEji+P2CGcb4wSnx49ZoNpOfjuN1TVXkaJA7vnMUI4LUwS146/ZwKpYhPQlrg7fQuYLSIQ
-        IHHp/UE2kCJmgXlMEose9QAlODiEBWwk7l+1AalhEVCVOPnnFTOIzQsU/nOomRFim7zE6g0H
-        wOKcArYSf++2gi2TELjPJjGx+SsrRJGLxOy5T6AahCVeHd/CDmFLSbzsb2MH2SUhkC3Rs8sY
-        IlwjsXTeMRYI217iwJU5LCAlzAKaEut36YOEmQX4JHp/P2GC6OSV6GgTgqhWlWh+dxWqU1pi
-        Ync31AEeEv9mTWCDBMMERolTDeuYJzDKzkKYuoCRcRWjZGpBcW56arFpgXFearlecWJucWle
-        ul5yfu4mRnBC0fLewbjpnM8hRgEORiUeXo4NBXFCrIllxZW5hxglOJiVRHgXF+bHCfGmJFZW
-        pRblxxeV5qQWH2KU5mBREuedxHo1RkggPbEkNTs1tSC1CCbLxMEp1cBYN11A2kwgcs0mm+NN
-        hzY4xG6d7mp/pFr2iQ7Hqmd992Z6eNgIT+uVmChfMPt/WH7FqnblR+s+a2dvqJybXd46LTTq
-        VtpkuUPnTjBNK3WZlHXixlVjtunCOm+/V2Zfenuh6oxK8Ow9hzcl2EftM3k+t3DrmpUzdb/p
-        zn/Kb+56XP6eZ+uvCfv+KLEUZyQaajEXFScCAA/WmvckAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPLMWRmVeSWpSXmKPExsWy7bCSvG4pc1GcQUO3msWDedvYLF7+vMpm
-        8Wn9MlaL+UfOsVqcP7+B3eLmlqMsFpseX2O1uLxrDpvFjPP7mCy6r+9gs1h+/B+TReveI+wW
-        S7feZHTg9bjc18vksWlVJ5vH5iX1Hi0n97N4fHx6i8Wjb8sqRo/Pm+Q82g90MwVwRHHZpKTm
-        ZJalFunbJXBlvNv8nrngmFRF35oGpgbGg6JdjJwcEgImEgff/WYFsYUEdjNKLO7PgohLS1zf
-        OIEdwhaWWPnvOZDNBVTTxCTxcHkzM0iCTUBb4u70LUwgtohAkMS9NWtZQYqYBVYxSXT2nmXs
-        YuTgEBawkbh/1QakhkVAVeLkn1dgvbxA4T+HmhkhFshLrN5wACzOKWAr8fduKyPEQTYSxyb/
-        YpnAyLeAkWEVo2RqQXFuem6xYYFhXmq5XnFibnFpXrpecn7uJkZwMGtp7mC8vCT+EKMAB6MS
-        D2/CpoI4IdbEsuLK3EOMEhzMSiK8iwvz44R4UxIrq1KL8uOLSnNSiw8xSnOwKInzPs07Fikk
-        kJ5YkpqdmlqQWgSTZeLglGpgnGkQVfHx3z9uqae1ja947JSK1GYslFerOFOQbx+h+YgrXK1Y
-        2mLS7p9p6YsKJQ0qVvfP6Ha+5TlXalXHPfE3t3838AhaTg35LSUvk3Xr5IvE7V1TWSc8zP/m
-        wZCbfz2MS27izgUqGVNVhfOk5uVUs/xJ7N5zpGZ9SKRc3stpSVusnVNU8zcosRRnJBpqMRcV
-        JwIALZ7MAmICAAA=
-X-CMS-MailID: 20200318111813epcas5p126d7b871b194385099e8f71f2461303e
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20200318111813epcas5p126d7b871b194385099e8f71f2461303e
-References: <20200318111144.39525-1-alim.akhtar@samsung.com>
-        <CGME20200318111813epcas5p126d7b871b194385099e8f71f2461303e@epcas5p1.samsung.com>
+        Wed, 18 Mar 2020 07:47:14 -0400
+Received: by mail-lj1-f196.google.com with SMTP id u12so26654823ljo.2;
+        Wed, 18 Mar 2020 04:47:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Ab62Ifr6mdslEB8rNbBB2lyNK3id75uGbHTExJNuy2w=;
+        b=WG7AWvba1m7Bgi1xcFdbl9adYRZCezs4c7DEgzNGW4Ppp2gDney3qMECnpjEZ9ouxM
+         H44BiKKv1kIO4kfADVzWZi6BduIc0jvKC8b4hicZhkHaLJiY3Fjs8X/c2NyBO6VYzuMs
+         bNAikGIt0AS87EG3EXjKtpxq7KRQJ+BpUaJ+C9fwUfNf3/W5ys711vd3oRnzq/t+oEnm
+         /E14y0WDrXxJMSoFgn2SCrrQPhKB47PfagMsM63ovR6CpZB57ZqSKqHF3+wujuUqaoAy
+         reLYY0rhC5SEdNbKgZp4r8kRy/KC/dT+b43fXhl4vUF5hRbW6Djf7rWc4FWKYRpyEc5F
+         jU6g==
+X-Gm-Message-State: ANhLgQ2Bgm+5Xag58FsRI6ScpPCrXL6mbfHpff+LaAU5a4y2M4Jql4zR
+        7sYjBIqs2YQVPpGtX+TX1uM=
+X-Google-Smtp-Source: ADFU+vsjikg6Y2a5KjS3oadSfQozrw8fRFUY0OAeRSoGQxPf78q4+DaqJVZpkfQhudkt2r3G0F7+Xg==
+X-Received: by 2002:a2e:240e:: with SMTP id k14mr2152030ljk.228.1584532030161;
+        Wed, 18 Mar 2020 04:47:10 -0700 (PDT)
+Received: from localhost.localdomain (dc7t7ryyyyyyyyyyyyybt-3.rev.dnainternet.fi. [2001:14ba:16e1:b700::3])
+        by smtp.gmail.com with ESMTPSA id 8sm17094lfy.21.2020.03.18.04.47.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Mar 2020 04:47:09 -0700 (PDT)
+Date:   Wed, 18 Mar 2020 13:47:01 +0200
+From:   Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+To:     matti.vaittinen@fi.rohmeurope.com, mazziesaccount@gmail.com
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Andrei Stefanescu <andrei.stefanescu@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sangbeom Kim <sbkim73@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        linux-pm@vger.kernel.org, patches@opensource.cirrus.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Markus Laine <markus.laine@fi.rohmeurope.com>,
+        Mikko Mutanen <mikko.mutanen@fi.rohmeurope.com>
+Subject: [PATCH v5 0/9] Support ROHM BD99954 charger IC
+Message-ID: <cover.1584468798.git.matti.vaittinen@fi.rohmeurope.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Adding dt node foe UFS and UFS-PHY for exynos7 SoC.
+Support ROHM BD99954 Battery Management IC
 
-Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+ROHM BD99954 is a Battery Management IC for 1-4 cell Lithium-Ion
+secondary battery. BD99954 is intended to be used in space-constraint
+equipment such as Low profile Notebook PC, Tablets and other
+applications.
+
+Series extracts a "linear ranges" helper out of the regulator
+framework. Linear ranges helper is intended to help converting
+real-world values to register values when conversion is linear. I
+suspect this is useful also for power subsystem and possibly for clk.
+
+This version of series introduces new battry DT binding entries and
+adds the parsing in power_supply_get_battery_info().
+
+Changelog v5:
+ generic:
+   - rebased on top of 5.6-rc6.
+ DT-bindings:
+   - Dropped -charger extension from compatible and removed wildcard x.
+ regulators:
+   - squashed the regulator changes in one patch.
+ power-supply KConfig:
+   - fixed indentiation
+   - dropped unnecessary 'default N' from BD99954.
+
+Changelog v4:
+ generic:
+   - rebase and drop RFC.
+ DT-bindings:
+   - add I2C node address-cells and size-cells to fix yaml check errors
+   - uncomment multipleOf:
+ bd70528:
+   - add patch which renames driver internal linear_range struct to
+     avoid collision when regulator/driver.h (which gets included from
+     rohm generic header) introduces the linear_range struct.
+ regulators:
+   - rebase to v5.6-rc2 and convert also the two newly introduced
+     drivers to use linear_range struct instead of
+     regulator_linear_range.
+ linear_ranges:
+   - Fix kerneldoc.
+
+Changelog RFC-v3:
+ DT-bindings:
+   - fix the BD99954 binding (the *-microvolt Vs. *-microvolts issue is
+     still there. Not sure which one is correct)
+   - renabe tricklecharge-* binding to trickle-charge-* as suggested by
+     Rob.
+ - drop the linear-ranges helper which was written for BD70528 and
+   extract the linear-range code from regulator framework instead.
+ - refactor regulator framework to utilize extracted linear-ranges
+   code.
+ - change the struct regulator_linear_range to linear_range from
+   regulator drivers.
+ - refactor BD70528 to use regulator framework originated
+   linear-ranges code.
+ - change BD99954 to use linear-ranges code from regulator framework
+
+Changelog RFC-v2:
+ DT-bindings:
+   - Used the battery parameters described in battery.txt
+   - Added few new parameters to battery.txt
+   - Added ASCII art charging profile chart for BD99954 to explain
+     states and limits.
+ Linear ranges:
+   - Fixed division by zero error from linear-ranges code if step 0 is
+     used.
+ Power-supply core:
+   - Added parsing of new battery parameters.
+ BD99954 driver:
+   - converted to use battery parameters from battery node
+   - Added step 0 ranges for reg values which do not change voltage
+   - added dt-node to psy-config
+
+Patch 1:
+	DT binding docs for the new battery parameters
+Patch 2:
+	BD99954 charger DT binding docs
+Patch 3:
+	Linear ranges helpers
+Patch 4:
+	Rename driver internal struct linear_range from bd70528-power
+Patch 5:
+	Use linear-ranges helpers in regulator framework and
+	convert regulator drivers to use new linear_range struct.
+Patch 6:
+	Use linear-ranges helpers in bd70528 driver
+Patch 7:
+	Parsing of new battery parameters
+Patch 8:
+	ROHM BD99954 charger IC driver
+Patch 9:
+	Fix Kconfig help text indentiation for other entries as well.
+
 ---
- .../boot/dts/exynos/exynos7-espresso.dts      | 16 +++++++
- arch/arm64/boot/dts/exynos/exynos7.dtsi       | 43 ++++++++++++++++++-
- 2 files changed, 57 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos7-espresso.dts b/arch/arm64/boot/dts/exynos/exynos7-espresso.dts
-index 7af288fa9475..b59a0a32620a 100644
---- a/arch/arm64/boot/dts/exynos/exynos7-espresso.dts
-+++ b/arch/arm64/boot/dts/exynos/exynos7-espresso.dts
-@@ -406,6 +406,22 @@
- 	};
- };
- 
-+&ufs {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ufs_rst_n &ufs_refclk_out>;
-+	ufs,pwr-attr-mode = "FAST";
-+	ufs,pwr-attr-lane = <2>;
-+	ufs,pwr-attr-gear = <2>;
-+	ufs,pwr-attr-hs-series = "HS_rate_b";
-+	ufs-rx-adv-fine-gran-sup_en = <1>;
-+	ufs-rx-adv-fine-gran-step = <3>;
-+	ufs-rx-adv-min-activate-time-cap = <9>;
-+	ufs-pa-granularity = <6>;
-+	ufs-pa-tacctivate = <3>;
-+	ufs-pa-hibern8time = <20>;
-+};
-+
- &usbdrd_phy {
- 	vbus-supply = <&usb30_vbus_reg>;
- 	vbus-boost-supply = <&usb3drd_boost_5v>;
-diff --git a/arch/arm64/boot/dts/exynos/exynos7.dtsi b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-index 5558045637ac..9d16c90edd07 100644
---- a/arch/arm64/boot/dts/exynos/exynos7.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-@@ -220,9 +220,14 @@
- 			#clock-cells = <1>;
- 			clocks = <&fin_pll>, <&clock_top1 DOUT_ACLK_FSYS1_200>,
- 				 <&clock_top1 DOUT_SCLK_MMC0>,
--				 <&clock_top1 DOUT_SCLK_MMC1>;
-+				 <&clock_top1 DOUT_SCLK_MMC1>,
-+				 <&clock_top1 DOUT_SCLK_UFSUNIPRO20>,
-+				 <&clock_top1 DOUT_SCLK_PHY_FSYS1>,
-+				 <&clock_top1 DOUT_SCLK_PHY_FSYS1_26M>;
- 			clock-names = "fin_pll", "dout_aclk_fsys1_200",
--				      "dout_sclk_mmc0", "dout_sclk_mmc1";
-+				      "dout_sclk_mmc0", "dout_sclk_mmc1",
-+				      "dout_sclk_ufsunipro20", "dout_sclk_phy_fsys1",
-+				      "dout_sclk_phy_fsys1_26m";
- 		};
- 
- 		serial_0: serial@13630000 {
-@@ -601,6 +606,40 @@
- 			};
- 		};
- 
-+		ufs: ufs@15570000 {
-+			compatible = "samsung,exynos7-ufs";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+			reg = <0x15570000 0x100>,  /* 0: HCI standard */
-+				<0x15570100 0x100>,  /* 1: Vendor specificed */
-+				<0x15571000 0x200>,  /* 2: UNIPRO */
-+				<0x15572000 0x300>;  /* 3: UFS protector */
-+			reg-names = "hci", "vs_hci", "unipro", "ufsp";
-+			interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&clock_fsys1 ACLK_UFS20_LINK>,
-+				<&clock_fsys1 SCLK_UFSUNIPRO20_USER>;
-+			clock-names = "core_clk", "sclk_unipro_main";
-+			freq-table-hz = <0 0>, <0 0>;
-+			pclk-freq-avail-range = <70000000 133000000>;
-+			ufs,pwr-local-l2-timer = <8000 28000 20000>;
-+			ufs,pwr-remote-l2-timer = <12000 32000 16000>;
-+			phys = <&ufs_phy>;
-+			phy-names = "ufs-phy";
-+			status = "disabled";
-+		};
-+
-+		ufs_phy: ufs-phy@0x15571800 {
-+			compatible = "samsung,exynos7-ufs-phy";
-+			reg = <0x15571800 0x240>;
-+			reg-names = "phy-pma";
-+			samsung,pmu-syscon = <&pmu_system_controller>;
-+			#phy-cells = <0>;
-+			clocks = <&clock_fsys1 MOUT_FSYS1_PHYCLK_SEL1>,
-+				<&clock_top1 CLK_SCLK_PHY_FSYS1_26M>;
-+			clock-names = "ref_clk_parent", "ref_clk";
-+		};
-+
- 		usbdrd_phy: phy@15500000 {
- 			compatible = "samsung,exynos7-usbdrd-phy";
- 			reg = <0x15500000 0x100>;
+Matti Vaittinen (9):
+  dt-bindings: battery: add new battery parameters
+  dt_bindings: ROHM BD99954 Charger
+  drivers: base: add linear ranges helpers
+  power: supply: bd70528: rename linear_range to avoid collision
+  regulator: use linear_ranges helper
+  power: supply: bd70528: use linear ranges
+  power: supply: add battery parameters
+  power: supply: Support ROHM bd99954 charger
+  power: supply: Fix Kconfig help text indentiation
+
+ .../bindings/power/supply/battery.txt         |    6 +
+ .../bindings/power/supply/rohm,bd99954.yaml   |  155 +++
+ drivers/base/Kconfig                          |    3 +
+ drivers/base/Makefile                         |    1 +
+ drivers/base/linear_ranges.c                  |  246 ++++
+ drivers/power/supply/Kconfig                  |   34 +-
+ drivers/power/supply/Makefile                 |    1 +
+ drivers/power/supply/bd70528-charger.c        |  140 +-
+ drivers/power/supply/bd99954-charger.c        | 1171 +++++++++++++++++
+ drivers/power/supply/power_supply_core.c      |    8 +
+ drivers/regulator/88pg86x.c                   |    4 +-
+ drivers/regulator/88pm800-regulator.c         |    4 +-
+ drivers/regulator/Kconfig                     |    1 +
+ drivers/regulator/act8865-regulator.c         |    4 +-
+ drivers/regulator/act8945a-regulator.c        |    2 +-
+ drivers/regulator/arizona-ldo1.c              |    2 +-
+ drivers/regulator/arizona-micsupp.c           |    4 +-
+ drivers/regulator/as3711-regulator.c          |    6 +-
+ drivers/regulator/as3722-regulator.c          |    4 +-
+ drivers/regulator/axp20x-regulator.c          |   16 +-
+ drivers/regulator/bcm590xx-regulator.c        |    8 +-
+ drivers/regulator/bd70528-regulator.c         |    8 +-
+ drivers/regulator/bd71828-regulator.c         |   10 +-
+ drivers/regulator/bd718x7-regulator.c         |   26 +-
+ drivers/regulator/da903x.c                    |    2 +-
+ drivers/regulator/helpers.c                   |  130 +-
+ drivers/regulator/hi6421-regulator.c          |    4 +-
+ drivers/regulator/lochnagar-regulator.c       |    4 +-
+ drivers/regulator/lp873x-regulator.c          |    4 +-
+ drivers/regulator/lp87565-regulator.c         |    2 +-
+ drivers/regulator/lp8788-buck.c               |    2 +-
+ drivers/regulator/max77650-regulator.c        |    2 +-
+ drivers/regulator/mcp16502.c                  |    4 +-
+ drivers/regulator/mp8859.c                    |    2 +-
+ drivers/regulator/mt6323-regulator.c          |    6 +-
+ drivers/regulator/mt6358-regulator.c          |    8 +-
+ drivers/regulator/mt6380-regulator.c          |    6 +-
+ drivers/regulator/mt6397-regulator.c          |    6 +-
+ drivers/regulator/palmas-regulator.c          |    4 +-
+ drivers/regulator/qcom-rpmh-regulator.c       |    2 +-
+ drivers/regulator/qcom_rpm-regulator.c        |   14 +-
+ drivers/regulator/qcom_smd-regulator.c        |   70 +-
+ drivers/regulator/rk808-regulator.c           |   10 +-
+ drivers/regulator/s2mps11.c                   |   14 +-
+ drivers/regulator/sky81452-regulator.c        |    2 +-
+ drivers/regulator/stpmic1_regulator.c         |   18 +-
+ drivers/regulator/tps65086-regulator.c        |   10 +-
+ drivers/regulator/tps65217-regulator.c        |    4 +-
+ drivers/regulator/tps65218-regulator.c        |    6 +-
+ drivers/regulator/tps65912-regulator.c        |    4 +-
+ drivers/regulator/twl-regulator.c             |    4 +-
+ drivers/regulator/twl6030-regulator.c         |    2 +-
+ drivers/regulator/wm831x-dcdc.c               |    2 +-
+ drivers/regulator/wm831x-ldo.c                |    4 +-
+ drivers/regulator/wm8350-regulator.c          |    2 +-
+ drivers/regulator/wm8400-regulator.c          |    2 +-
+ include/linux/linear_range.h                  |   48 +
+ include/linux/power/bd99954-charger.h         | 1075 +++++++++++++++
+ include/linux/power_supply.h                  |    4 +
+ include/linux/regulator/driver.h              |   27 +-
+ 60 files changed, 3018 insertions(+), 356 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/power/supply/rohm,bd99954.yaml
+ create mode 100644 drivers/base/linear_ranges.c
+ create mode 100644 drivers/power/supply/bd99954-charger.c
+ create mode 100644 include/linux/linear_range.h
+ create mode 100644 include/linux/power/bd99954-charger.h
+
+
+base-commit: fb33c6510d55 ("Linux 5.6-rc6")
 -- 
-2.17.1
+2.21.0
 
+
+-- 
+Matti Vaittinen, Linux device drivers
+ROHM Semiconductors, Finland SWDC
+Kiviharjunlenkki 1E
+90220 OULU
+FINLAND
+
+~~~ "I don't think so," said Rene Descartes. Just then he vanished ~~~
+Simon says - in Latin please.
+~~~ "non cogito me" dixit Rene Descarte, deinde evanescavit ~~~
+Thanks to Simon Glass for the translation =] 
