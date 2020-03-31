@@ -2,235 +2,364 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E5751991AA
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Mar 2020 11:21:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE3C71994F5
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Mar 2020 13:12:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730638AbgCaJUp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 31 Mar 2020 05:20:45 -0400
-Received: from mx2.suse.de ([195.135.220.15]:40342 "EHLO mx2.suse.de"
+        id S1730647AbgCaLMP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 31 Mar 2020 07:12:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57940 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730568AbgCaJUk (ORCPT
+        id S1730602AbgCaLMP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 31 Mar 2020 05:20:40 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 72CB5AEF7;
-        Tue, 31 Mar 2020 09:20:37 +0000 (UTC)
-Subject: Re: [PATCH 20/22] drm/vkms: Use simple encoder
-To:     Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>
-Cc:     airlied@linux.ie, daniel@ffwll.ch, sam@ravnborg.org,
-        abrodkin@synopsys.com, bbrezillon@kernel.org,
-        nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
-        ludovic.desroches@microchip.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, jingoohan1@gmail.com, inki.dae@samsung.com,
-        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
-        stefan@agner.ch, alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
-        xinliang.liu@linaro.org, zourongrong@gmail.com,
-        john.stultz@linaro.org, kong.kongxinwei@hisilicon.com,
-        puck.chen@hisilicon.com, linux@armlinux.org.uk,
-        p.zabel@pengutronix.de, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, paul@crapouillou.net, ck.hu@mediatek.com,
-        matthias.bgg@gmail.com, laurent.pinchart@ideasonboard.com,
-        kieran.bingham+renesas@ideasonboard.com, hjc@rock-chips.com,
-        heiko@sntech.de, wens@csie.org, jernej.skrabec@siol.net,
-        thierry.reding@gmail.com, jonathanh@nvidia.com, jsarha@ti.com,
-        tomi.valkeinen@ti.com, eric@anholt.net, kraxel@redhat.com,
-        hamohammed.sa@gmail.com, sebastian.reichel@collabora.com,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-References: <20200305155950.2705-1-tzimmermann@suse.de>
- <20200305155950.2705-21-tzimmermann@suse.de>
- <20200324115905.dp5jqzbmvhbmk2rn@smtp.gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
- BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
- Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
- irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
- clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
- mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
- KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
- Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
- UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
- RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
- dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
- ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
- 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
- wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
- h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
- n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
- aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
- HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
- 3H26qrE=
-Message-ID: <eef912e5-7ab4-f8bb-6ea9-47db1c05312b@suse.de>
-Date:   Tue, 31 Mar 2020 11:20:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Tue, 31 Mar 2020 07:12:15 -0400
+Received: from mail.kernel.org (ip5f5ad4d8.dynamic.kabel-deutschland.de [95.90.212.216])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4375B20838;
+        Tue, 31 Mar 2020 11:12:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1585653133;
+        bh=G1rKh20PNlZcrxj0bxu7OOVq4n7E9ZdfbkM1U0Pfy5o=;
+        h=From:To:Cc:Subject:Date:From;
+        b=jMAH8T3JQt43zBzG4nQRWAScKIhZLvgP7nGREPtHt0KGxCEAxfzTjGbeICtbGWS/S
+         3rS/HRfVk33Ss7ts+utriBE3afmyScZfXqd28Bh5Gv2VzyPI2qVB2ayy4+QUXJtxjC
+         mBpHaG0Xk0Ku4tcuWIjLEkyxxN+zyPdHEUM8HmVQ=
+Received: from mchehab by mail.kernel.org with local (Exim 4.92.3)
+        (envelope-from <mchehab@kernel.org>)
+        id 1jJEoU-002bpp-Vs; Tue, 31 Mar 2020 13:12:10 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Linux Media Mailing List <linux-media@vger.kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        linux1394-devel@lists.sourceforge.net,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, devel@driverdev.osuosl.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org
+Subject: [PATCH v4 00/33] Media Kconfig menu reorg and improvements
+Date:   Tue, 31 Mar 2020 13:11:36 +0200
+Message-Id: <cover.1585651678.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20200324115905.dp5jqzbmvhbmk2rn@smtp.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="7lVXjZmTpLLkTKch5Y4I1GCt7Pec0fulW"
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---7lVXjZmTpLLkTKch5Y4I1GCt7Pec0fulW
-Content-Type: multipart/mixed; boundary="q11qeQog61ztY5ZBs8aYmUz8BfkF0OSCB";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>
-Cc: airlied@linux.ie, daniel@ffwll.ch, sam@ravnborg.org,
- abrodkin@synopsys.com, bbrezillon@kernel.org, nicolas.ferre@microchip.com,
- alexandre.belloni@bootlin.com, ludovic.desroches@microchip.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, jingoohan1@gmail.com,
- inki.dae@samsung.com, jy0922.shim@samsung.com, sw0312.kim@samsung.com,
- kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
- stefan@agner.ch, alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
- xinliang.liu@linaro.org, zourongrong@gmail.com, john.stultz@linaro.org,
- kong.kongxinwei@hisilicon.com, puck.chen@hisilicon.com,
- linux@armlinux.org.uk, p.zabel@pengutronix.de, shawnguo@kernel.org,
- s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
- linux-imx@nxp.com, paul@crapouillou.net, ck.hu@mediatek.com,
- matthias.bgg@gmail.com, laurent.pinchart@ideasonboard.com,
- kieran.bingham+renesas@ideasonboard.com, hjc@rock-chips.com,
- heiko@sntech.de, wens@csie.org, jernej.skrabec@siol.net,
- thierry.reding@gmail.com, jonathanh@nvidia.com, jsarha@ti.com,
- tomi.valkeinen@ti.com, eric@anholt.net, kraxel@redhat.com,
- hamohammed.sa@gmail.com, sebastian.reichel@collabora.com,
- dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-tegra@vger.kernel.org, virtualization@lists.linux-foundation.org
-Message-ID: <eef912e5-7ab4-f8bb-6ea9-47db1c05312b@suse.de>
-Subject: Re: [PATCH 20/22] drm/vkms: Use simple encoder
-References: <20200305155950.2705-1-tzimmermann@suse.de>
- <20200305155950.2705-21-tzimmermann@suse.de>
- <20200324115905.dp5jqzbmvhbmk2rn@smtp.gmail.com>
-In-Reply-To: <20200324115905.dp5jqzbmvhbmk2rn@smtp.gmail.com>
+The media Kconfig menu is complex. From time to time, it requires some
+improvements.
 
---q11qeQog61ztY5ZBs8aYmUz8BfkF0OSCB
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+This series is organized on two parts:
 
-Hi
+1. Patches 1 to 19: cleanups and improvements;
 
-Am 24.03.20 um 12:59 schrieb Rodrigo Siqueira:
-> Hi Thomas,
->=20
-> First of all, thanks for your patch!
->=20
-> I applied all your series, compiled it, and when I tried
-> `make INSTALL_MOD_PATH=3D/PATH/ modules_instal` I got the following
-> message:
->=20
->  depmod: ERROR: Cycle detected: drm_kms_helper -> drm -> drm_kms_helper=
+- Try to be smarter when selecting features. So, auto-select
+  Cypress firmware support on drivers that use it.
+  Also, auto-select Media Controller and V4L2 subdevice
+  API for devices that won't work without such features.
 
->  depmod: ERROR: Found 2 modules in dependency cycles!
->  make: *** [Makefile:1317: _modinst_post] Error 1
->=20
-> I cleaned up my local files and tried again, but I got the same error;
-> If I just use `drm-misc-next` everything is fine.  Did I miss something=
-?
+  Please notice that some drivers have can work optionally
+  with those features enabled (or not). For those, users
+  should still explicitly enable such features.
 
-I didn't change any module dependencies. Does it happen without this
-patches?
+- Platform and test drivers have now an option at the device
+  support selection;
 
-Best regards
-Thomas
+- The test drivers are not platform drivers. They deserve
+  their own directory.  When a test driver is selected, the
+  needed API support will be automatically selected.
 
->=20
-> Thanks
->=20
-> On 03/05, Thomas Zimmermann wrote:
->> The vkms driver uses an empty implementation for its encoder. Replace
->> the code with the generic simple encoder.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> ---
->>  drivers/gpu/drm/vkms/vkms_output.c | 8 ++------
->>  1 file changed, 2 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/vkms/vkms_output.c b/drivers/gpu/drm/vkms=
-/vkms_output.c
->> index fb1941a6522c..85afb77e97f0 100644
->> --- a/drivers/gpu/drm/vkms/vkms_output.c
->> +++ b/drivers/gpu/drm/vkms/vkms_output.c
->> @@ -3,6 +3,7 @@
->>  #include "vkms_drv.h"
->>  #include <drm/drm_atomic_helper.h>
->>  #include <drm/drm_probe_helper.h>
->> +#include <drm/drm_simple_kms_helper.h>
->> =20
->>  static void vkms_connector_destroy(struct drm_connector *connector)
->>  {
->> @@ -17,10 +18,6 @@ static const struct drm_connector_funcs vkms_connec=
-tor_funcs =3D {
->>  	.atomic_destroy_state =3D drm_atomic_helper_connector_destroy_state,=
+- Do some Kconfig reorg, in order to keep the main media
+  Kconfig as clean as possible.
 
->>  };
->> =20
->> -static const struct drm_encoder_funcs vkms_encoder_funcs =3D {
->> -	.destroy =3D drm_encoder_cleanup,
->> -};
->> -
->>  static int vkms_conn_get_modes(struct drm_connector *connector)
->>  {
->>  	int count;
->> @@ -70,8 +67,7 @@ int vkms_output_init(struct vkms_device *vkmsdev, in=
-t index)
->> =20
->>  	drm_connector_helper_add(connector, &vkms_conn_helper_funcs);
->> =20
->> -	ret =3D drm_encoder_init(dev, encoder, &vkms_encoder_funcs,
->> -			       DRM_MODE_ENCODER_VIRTUAL, NULL);
->> +	ret =3D drm_simple_encoder_init(dev, encoder, DRM_MODE_ENCODER_VIRTU=
-AL);
->>  	if (ret) {
->>  		DRM_ERROR("Failed to init encoder\n");
->>  		goto err_encoder;
->> --=20
->> 2.25.1
->>
->=20
+- The help messafe for media support was outdated;
 
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=FCrnberg, Germany
-(HRB 36809, AG N=FCrnberg)
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+- The ddbridge driver was abusing at the dvb dummy frontend
+  driver (meant to be just an example). It will now have its
+  own internal dummy driver, as the original one will soon receive
+  more code and become a virtual driver.
+
+- There's a longstanding issue with hybrid TV devices: for
+  an hybrid device to work, *both* analog and digital TV
+  would need to be selected. As the Kconfig language 
+  improved, we can now address it. So, selecting either
+  analog or digital TV support should display all hybrid
+  devices. When an hybrid driver is selected, both V4L2
+  and DVB core will be available.
+
+2. Patches 20 to 33: visual changes.
+
+- At the beginning, media had just "technical" options to
+  enable/disable each feature. However, that leads into
+  hundreds of different options, being a nightmare for a
+  mortal to set it up.
+
+  So, the Kconfig menu options were re-designed in order
+  to bring a more user-oriented view:
+
+  The initial items select the type of devices (analog TV,
+  digital TV, cameras, ...). Selecting it would auto-select
+  the core drivers.  The next step would be to select
+  either PCI or USB, and the needed driver.
+
+  While this makes life simpler, now there are many
+  embedded developers. Most seem to prefer to be
+  able of seeing everything without filters.
+
+  The main focus of this part is to make everybody
+  happy: it is now possible to unselect the filters, making
+  all options visible. Also, now, when the filter is enabled,
+  the media drivers menu will show a message warning
+  that the filter is active.
+
+  Hopefully, this should make both embedded developers
+  and normal users happy.
+
+- The media menus now have a more modern visual, grouping
+  options in a way that it is now clearer about what they do.
+
+  So, the Media support menu is now:
+
+	--- Media support
+	[ ] Filter media drivers
+	[ ] Autoselect ancillary drivers
+	    Media device types --->
+	    Media core support --->
+	    Video4Linux options --->
+	    Media controller options --->
+	    Digital TV options --->
+	    HDMI CEC options --->
+	    Media drivers --->
+	    Media ancillary drivers --->
+
+Mauro Carvalho Chehab (33):
+  media: dvb-usb: auto-select CYPRESS_FIRMWARE
+  media: Kconfig: add an option to filter in/out platform drivers
+  media: Kconfig: not all V4L2 platform drivers are for camera
+  media: pci: move VIDEO_PCI_SKELETON to a different Kconfig
+  media: Kconfig: update the MEDIA_SUPPORT help message
+  media: split test drivers from platform directory
+  media: Kconfig: move comment to siano include
+  media: Kconfig: move drivers-specific TTPCI_EEPROM Kconfig var
+  media: Kconfig: mode firewire comment to firewire/Kconfig
+  media: ddbridge: copy the dvb_dummy_fe driver to ddbridge
+  media: ddbridge-dummy_fe: do some vars and function renames
+  media: ddbridge: use the ddbridge's own dummy fe driver
+  media: Kconfig: mark other drivers as test drivers
+  media: Kconfig: simplify some dependencies
+  media: Kconfig: better support hybrid TV devices
+  media: Kconfig: fix selection for test drivers
+  media: add SPDX headers on Kconfig and Makefile files
+  media: dvb-core: Kconfig: default to use dynamic minors
+  media: Kconfig files: use select for V4L2 subdevs and MC
+  media: Kconfig: reorganize the drivers menu options
+  media: Kconfig: use a sub-menu to select supported devices
+  media: Kconfig: make filtering devices optional
+  media: Kconfig: warn if drivers are filtered
+  media: Kconfig: move CEC-specific options to cec/Kconfig
+  media: Kconfig: move DVB-specific options to dvb-core/Kconfig
+  media: Kconfig: move V4L2 subdev API to v4l2-core/Kconfig
+  media: Kconfig: move media controller core select to main Kconfig
+  media: Kconfig: place all options under a sub-menu
+  media: Kconfig: move the position of sub-driver autoselection
+  media: Kconfig: on !EMBEDDED && !EXPERT, enable driver filtering
+  media: Kconfig: Better organize the per-API options
+  media: i2c/Kconfig: reorganize items there
+  media: Kconfig: don't use visible for device type select
+
+ drivers/media/Kconfig                         | 262 ++++++-----
+ drivers/media/cec/Kconfig                     |  10 +
+ drivers/media/common/Kconfig                  |   2 +-
+ drivers/media/dvb-core/Kconfig                |  27 ++
+ drivers/media/dvb-frontends/Kconfig           |  15 +-
+ drivers/media/firewire/Kconfig                |   5 +-
+ drivers/media/i2c/Kconfig                     | 406 +++++++++++-------
+ drivers/media/i2c/et8ek8/Kconfig              |   4 +-
+ drivers/media/i2c/m5mols/Kconfig              |   5 +-
+ drivers/media/i2c/smiapp/Kconfig              |   5 +-
+ drivers/media/mc/Kconfig                      |  11 +-
+ drivers/media/mmc/Kconfig                     |   1 -
+ drivers/media/mmc/siano/Kconfig               |   2 +
+ drivers/media/pci/Kconfig                     |  24 +-
+ drivers/media/pci/bt8xx/Kconfig               |   5 +-
+ drivers/media/pci/cobalt/Kconfig              |   4 +-
+ drivers/media/pci/cx18/Kconfig                |   2 +-
+ drivers/media/pci/cx23885/Kconfig             |   4 +-
+ drivers/media/pci/cx88/Kconfig                |   4 +-
+ drivers/media/pci/ddbridge/Kconfig            |   1 -
+ drivers/media/pci/ddbridge/Makefile           |   2 +-
+ drivers/media/pci/ddbridge/ddbridge-core.c    |   4 +-
+ .../media/pci/ddbridge/ddbridge-dummy-fe.c    | 153 +++++++
+ .../media/pci/ddbridge/ddbridge-dummy-fe.h    |  16 +
+ drivers/media/pci/intel/ipu3/Kconfig          |   4 +-
+ drivers/media/pci/saa7134/Kconfig             |   4 +-
+ drivers/media/pci/saa7164/Kconfig             |   2 +-
+ drivers/media/pci/sta2x11/Kconfig             |   6 +-
+ drivers/media/platform/Kconfig                |  56 +--
+ drivers/media/platform/Makefile               |   5 -
+ drivers/media/platform/am437x/Kconfig         |   4 +-
+ drivers/media/platform/atmel/Kconfig          |   4 +-
+ drivers/media/platform/cadence/Kconfig        |   8 +-
+ drivers/media/platform/exynos4-is/Kconfig     |   5 +-
+ drivers/media/platform/rcar-vin/Kconfig       |   8 +-
+ drivers/media/platform/sunxi/Kconfig          |   2 +
+ drivers/media/platform/sunxi/Makefile         |   2 +
+ .../media/platform/sunxi/sun4i-csi/Kconfig    |   6 +-
+ .../media/platform/sunxi/sun4i-csi/Makefile   |   2 +
+ .../media/platform/sunxi/sun6i-csi/Kconfig    |   4 +-
+ drivers/media/platform/xilinx/Kconfig         |   4 +-
+ drivers/media/spi/Kconfig                     |   4 +-
+ drivers/media/test_drivers/Kconfig            |  28 ++
+ drivers/media/test_drivers/Makefile           |   9 +
+ .../vicodec/Kconfig                           |   0
+ .../vicodec/Makefile                          |   0
+ .../vicodec/codec-fwht.c                      |   0
+ .../vicodec/codec-fwht.h                      |   0
+ .../vicodec/codec-v4l2-fwht.c                 |   0
+ .../vicodec/codec-v4l2-fwht.h                 |   0
+ .../vicodec/vicodec-core.c                    |   0
+ .../media/{platform => test_drivers}/vim2m.c  |   0
+ .../{platform => test_drivers}/vimc/Kconfig   |   4 +-
+ .../{platform => test_drivers}/vimc/Makefile  |   0
+ .../vimc/vimc-capture.c                       |   0
+ .../vimc/vimc-common.c                        |   0
+ .../vimc/vimc-common.h                        |   0
+ .../vimc/vimc-core.c                          |   0
+ .../vimc/vimc-debayer.c                       |   0
+ .../vimc/vimc-scaler.c                        |   0
+ .../vimc/vimc-sensor.c                        |   0
+ .../vimc/vimc-streamer.c                      |   0
+ .../vimc/vimc-streamer.h                      |   0
+ .../{platform => test_drivers}/vivid/Kconfig  |   0
+ .../{platform => test_drivers}/vivid/Makefile |   0
+ .../vivid/vivid-cec.c                         |   0
+ .../vivid/vivid-cec.h                         |   0
+ .../vivid/vivid-core.c                        |   0
+ .../vivid/vivid-core.h                        |   0
+ .../vivid/vivid-ctrls.c                       |   0
+ .../vivid/vivid-ctrls.h                       |   0
+ .../vivid/vivid-kthread-cap.c                 |   0
+ .../vivid/vivid-kthread-cap.h                 |   0
+ .../vivid/vivid-kthread-out.c                 |   0
+ .../vivid/vivid-kthread-out.h                 |   0
+ .../vivid/vivid-kthread-touch.c               |   0
+ .../vivid/vivid-kthread-touch.h               |   0
+ .../vivid/vivid-meta-cap.c                    |   0
+ .../vivid/vivid-meta-cap.h                    |   0
+ .../vivid/vivid-meta-out.c                    |   0
+ .../vivid/vivid-meta-out.h                    |   0
+ .../vivid/vivid-osd.c                         |   0
+ .../vivid/vivid-osd.h                         |   0
+ .../vivid/vivid-radio-common.c                |   0
+ .../vivid/vivid-radio-common.h                |   0
+ .../vivid/vivid-radio-rx.c                    |   0
+ .../vivid/vivid-radio-rx.h                    |   0
+ .../vivid/vivid-radio-tx.c                    |   0
+ .../vivid/vivid-radio-tx.h                    |   0
+ .../vivid/vivid-rds-gen.c                     |   0
+ .../vivid/vivid-rds-gen.h                     |   0
+ .../vivid/vivid-sdr-cap.c                     |   0
+ .../vivid/vivid-sdr-cap.h                     |   0
+ .../vivid/vivid-touch-cap.c                   |   0
+ .../vivid/vivid-touch-cap.h                   |   0
+ .../vivid/vivid-vbi-cap.c                     |   0
+ .../vivid/vivid-vbi-cap.h                     |   0
+ .../vivid/vivid-vbi-gen.c                     |   0
+ .../vivid/vivid-vbi-gen.h                     |   0
+ .../vivid/vivid-vbi-out.c                     |   0
+ .../vivid/vivid-vbi-out.h                     |   0
+ .../vivid/vivid-vid-cap.c                     |   0
+ .../vivid/vivid-vid-cap.h                     |   0
+ .../vivid/vivid-vid-common.c                  |   0
+ .../vivid/vivid-vid-common.h                  |   0
+ .../vivid/vivid-vid-out.c                     |   0
+ .../vivid/vivid-vid-out.h                     |   0
+ drivers/media/usb/Kconfig                     |  14 +-
+ drivers/media/usb/au0828/Kconfig              |   6 +-
+ drivers/media/usb/cx231xx/Kconfig             |   4 +-
+ drivers/media/usb/dvb-usb/Kconfig             |   1 +
+ drivers/media/usb/pvrusb2/Kconfig             |   4 +-
+ drivers/media/usb/tm6000/Kconfig              |   4 +-
+ drivers/media/v4l2-core/Kconfig               |  19 +-
+ drivers/staging/media/hantro/Kconfig          |   5 +-
+ drivers/staging/media/hantro/Makefile         |   2 +
+ drivers/staging/media/imx/Kconfig             |   5 +-
+ drivers/staging/media/ipu3/Kconfig            |   3 +-
+ drivers/staging/media/omap4iss/Kconfig        |   4 +-
+ drivers/staging/media/rkisp1/Kconfig          |   4 +-
+ drivers/staging/media/rkisp1/Makefile         |   2 +
+ drivers/staging/media/sunxi/cedrus/Kconfig    |   5 +-
+ 122 files changed, 829 insertions(+), 398 deletions(-)
+ create mode 100644 drivers/media/pci/ddbridge/ddbridge-dummy-fe.c
+ create mode 100644 drivers/media/pci/ddbridge/ddbridge-dummy-fe.h
+ create mode 100644 drivers/media/test_drivers/Kconfig
+ create mode 100644 drivers/media/test_drivers/Makefile
+ rename drivers/media/{platform => test_drivers}/vicodec/Kconfig (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/Makefile (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/codec-fwht.c (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/codec-fwht.h (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/codec-v4l2-fwht.c (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/codec-v4l2-fwht.h (100%)
+ rename drivers/media/{platform => test_drivers}/vicodec/vicodec-core.c (100%)
+ rename drivers/media/{platform => test_drivers}/vim2m.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/Kconfig (83%)
+ rename drivers/media/{platform => test_drivers}/vimc/Makefile (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-capture.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-common.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-common.h (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-core.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-debayer.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-scaler.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-sensor.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-streamer.c (100%)
+ rename drivers/media/{platform => test_drivers}/vimc/vimc-streamer.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/Kconfig (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/Makefile (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-cec.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-cec.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-core.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-core.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-ctrls.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-ctrls.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-out.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-out.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-touch.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-kthread-touch.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-meta-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-meta-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-meta-out.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-meta-out.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-osd.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-osd.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-common.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-common.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-rx.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-rx.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-tx.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-radio-tx.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-rds-gen.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-rds-gen.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-sdr-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-sdr-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-touch-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-touch-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-gen.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-gen.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-out.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vbi-out.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-cap.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-cap.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-common.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-common.h (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-out.c (100%)
+ rename drivers/media/{platform => test_drivers}/vivid/vivid-vid-out.h (100%)
+
+-- 
+2.25.1
 
 
---q11qeQog61ztY5ZBs8aYmUz8BfkF0OSCB--
-
---7lVXjZmTpLLkTKch5Y4I1GCt7Pec0fulW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl6DC2IACgkQaA3BHVML
-eiPLVgf/ZsAHhwHhc6AopeQ3Jo5QFB+n+OZPi4AH9wfFrisYkvbEt6RhbDd4VCb0
-mvTi97EzYLGovrH11SYIE+INA07OTuQbKOKVxoB9UfXzFRuD8OeK3l0yHmVCKZzv
-/vU4cB7QBbS4dt//B9KlgxfQvq1T/bTPfZZbmf6ozduo9I3bR8xOj2V433wGdkQi
-0fjSzQ4WuFrfLv2Zn/D70oxZbm81vsBMWkq1jy/b/5iUDU6W7uHxQemiYMvtMBO2
-XwtBSX2PWyAaG43mW0QcdvhLOEgnNc62t5v78P9MRFsC7Fd/F7PkahlwCkPSFEgx
-71iw2TEYpRvkMO33t6TI5x6xofZO9g==
-=Yoq6
------END PGP SIGNATURE-----
-
---7lVXjZmTpLLkTKch5Y4I1GCt7Pec0fulW--
