@@ -2,120 +2,129 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC2601A0829
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Apr 2020 09:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5348D1A0E90
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Apr 2020 15:43:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727796AbgDGHW1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Apr 2020 03:22:27 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37171 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727635AbgDGHW1 (ORCPT
+        id S1728482AbgDGNnQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Apr 2020 09:43:16 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:35128 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728555AbgDGNnP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Apr 2020 03:22:27 -0400
-Received: by mail-ed1-f65.google.com with SMTP id de14so2776356edb.4;
-        Tue, 07 Apr 2020 00:22:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2R+3gjNy0SnBLUw5qWy9RI2DQvlFhSy+vrS7w50bWE4=;
-        b=m8+AAhZiJIL9VNZQZombf4JhXv8ni3nKHXgrxcFEKM31ImIKDSZXbPIM0bizOmwh1c
-         IZ7LNpGPGt6gX0+w+CS9Km3WDJSLymYlWDzfIDHvWmWqv1q0MbCC3RTt74xthYrYkMyZ
-         csIm0cd0QwZuyKLqckQzlkuDRTC7QINss+NeX2kQ0palKv6jagXuwvKzuSNJ3EvBxsug
-         g1h5Ck+S74owN1qpwENEaKbfwiuZn9IUeguOypRRvMWCwbb/Ly3QugamAzDxSvPwTl+S
-         OJWvceqU+HKdZ4NEX3gyNcQ3ds9GukfDjQr9cdmdohUCTLzBY/8fG1VLiWabAJKpkhc4
-         tupg==
-X-Gm-Message-State: AGi0PuY6STpJdp8e1MKVRje0egafGEesjYcrXPNzKc6Rjn72pa+uZEw8
-        jnClWoWJx0oz21tYyxLQm6o=
-X-Google-Smtp-Source: APiQypIAGwgfjaRfHihsJeJ737ZyX6DGCobU8BkZcdk7Gc5hUQmvmBkfIOK6sewJ+lnv4/IXbMKBwg==
-X-Received: by 2002:a50:9b58:: with SMTP id a24mr759017edj.353.1586244144485;
-        Tue, 07 Apr 2020 00:22:24 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.125])
-        by smtp.googlemail.com with ESMTPSA id qu11sm230130ejb.12.2020.04.07.00.22.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Apr 2020 00:22:23 -0700 (PDT)
-Date:   Tue, 7 Apr 2020 09:22:21 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Jiri Slaby <jslaby@suse.cz>
-Cc:     Hyunki Koo <hyunki00.koo@samsung.com>, gregkh@linuxfoundation.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>, linux-serial@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] tty: samsung_tty: 32-bit access for TX/RX hold
- registers
-Message-ID: <20200407072221.GA18236@kozik-lap>
-References: <20200401082721.19431-1-hyunki00.koo@samsung.com>
- <CGME20200406230902epcas2p19a8df6805dac59968d664efb9bc9419b@epcas2p1.samsung.com>
- <20200406230855.13772-1-hyunki00.koo@samsung.com>
- <62a918df-b3ba-21f4-b3ad-9f638ad104ad@suse.com>
- <20200407062439.GA21995@kozik-lap>
- <257f278b-ce96-4cfb-85ff-53e123a076f5@suse.cz>
+        Tue, 7 Apr 2020 09:43:15 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200407134314euoutp01eef476c329e99a21774044886eaac87d~DjW08cMi-2409824098euoutp01e
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Apr 2020 13:43:14 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200407134314euoutp01eef476c329e99a21774044886eaac87d~DjW08cMi-2409824098euoutp01e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1586266994;
+        bh=sZhEvnyjn1LLj7ChRwT2XLrexvdgfcq+CTsOxSFK1Ko=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=L5RM/cPWOqJHjGxAVUWEcChkF4lsYcjzWKgn5bDD+2D95EU1vPuGSvlKpmS8148Pe
+         b2KwWjs4l83vVSfdEFTKLN58IT8zK+SImEhmNCCUuCTMMZ5oJ3YpVxxSoCBRvPjR6O
+         gptTVzTZ2sOvWCg4Typ5nNq4BgdqVDY7/U24doyg=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200407134313eucas1p2eac497eabe8c7345a52ec50e03c90e7d~DjW0pTy3e0299802998eucas1p2N;
+        Tue,  7 Apr 2020 13:43:13 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 5A.7D.61286.1738C8E5; Tue,  7
+        Apr 2020 14:43:13 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200407134313eucas1p1d55cc16cb66b11ee5e1e5fd94cf25473~DjW0WDLf-0333503335eucas1p1u;
+        Tue,  7 Apr 2020 13:43:13 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200407134313eusmtrp14e553aafc5171090e82581d380ffbd22~DjW0VZoq32789027890eusmtrp1L;
+        Tue,  7 Apr 2020 13:43:13 +0000 (GMT)
+X-AuditID: cbfec7f2-f0bff7000001ef66-39-5e8c83713b0e
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id ED.1F.08375.1738C8E5; Tue,  7
+        Apr 2020 14:43:13 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200407134313eusmtip1856272ac566a2b65054279b837a16272~DjWz9D5Ht0251902519eusmtip1n;
+        Tue,  7 Apr 2020 13:43:12 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Subject: [PATCH 0/3] ExynosDRM - rework GEM internals
+Date:   Tue,  7 Apr 2020 15:42:53 +0200
+Message-Id: <20200407134256.9129-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <257f278b-ce96-4cfb-85ff-53e123a076f5@suse.cz>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsWy7djP87qFzT1xBlfv6VjcWneO1WLjjPWs
+        Fle+vmezmHR/AovFjPP7mCzWHrnLbjFj8ks2B3aP+93HmTz6tqxi9Pi8SS6AOYrLJiU1J7Ms
+        tUjfLoErY+U7voKN7BXrnh1gaWBsZOti5OCQEDCRWD1HrIuRi0NIYAWjxPdLhxghnC+MEr9W
+        foZyPjNK7P36mqmLkROs4+C3vVCJ5YwSCy53s8K1/DvWzgZSxSZgKNH1tgvMFhFwk2g6PBOs
+        iFngOqPEtx+L2EESwgKmEp3bt4CNZRFQlTjzdBcziM0rYCNxfnYXI8Q6eYnVGw5AxQUlTs58
+        wgJiMwPFm7fOZgYZKiHwm03iwtYtUA0uEneW/2GDsIUlXh3fwg5hy0icntzDAtHQzCjx8Nxa
+        dginh1HictMMqG5riTvnfoHDhllAU2L9Ln2IsKPElk29zJAg45O48VYQ4gg+iUnbpkOFeSU6
+        2oQgqtUkZh1fB7f24IVLzBC2h8Smpy/AbCGBWInz3x6yTWBUmIXktVlIXpuFcMMCRuZVjOKp
+        pcW56anFhnmp5XrFibnFpXnpesn5uZsYgYnl9L/jn3Ywfr2UdIhRgINRiYf3QWJPnBBrYllx
+        Ze4hRgkOZiURXqnezjgh3pTEyqrUovz4otKc1OJDjNIcLErivMaLXsYKCaQnlqRmp6YWpBbB
+        ZJk4OKUaGEv4FE+9n3WqUcm+Lf1W/NnMjoJah7T6kwWPv23L0lWPK+af1Sj/qV9xpcoG03lm
+        Vpr5r1h62ya+Cb4lnFvONMvrjaqM18fXj5+4Vky7Mof5yO/Ca269CY7bn0l/kvZp/Haihscr
+        f4MvZ99s3rVzfH0L7k3jeZz7vPRqEPvpvRdvR2jFJJq2KLEUZyQaajEXFScCADsBX3UoAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkkeLIzCtJLcpLzFFi42I5/e/4Xd3C5p44g43vxS1urTvHarFxxnpW
+        iytf37NZTLo/gcVixvl9TBZrj9xlt5gx+SWbA7vH/e7jTB59W1YxenzeJBfAHKVnU5RfWpKq
+        kJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRvl6CXsfIdX8FG9op1zw6w
+        NDA2snUxcnJICJhIHPy2l7GLkYtDSGApo0TfkYssEAkZiZPTGlghbGGJP9e62CCKPjFKbP7S
+        zQiSYBMwlOh62wU2SUTAQ6L523F2kCJmgduMEks/zAObJCxgKtG5fQsTiM0ioCpx5ukuZhCb
+        V8BG4vzsLkaIDfISqzccgIoLSpyc+QSolwNokLrE+nlCIGFmoJLmrbOZJzDyz0JSNQuhahaS
+        qgWMzKsYRVJLi3PTc4sN9YoTc4tL89L1kvNzNzECg3/bsZ+bdzBe2hh8iFGAg1GJh/dBYk+c
+        EGtiWXFl7iFGCQ5mJRFeqd7OOCHelMTKqtSi/Pii0pzU4kOMpkAvTGSWEk3OB0ZmXkm8oamh
+        uYWlobmxubGZhZI4b4fAwRghgfTEktTs1NSC1CKYPiYOTqkGRo7lMbfPH54j9PGH+eFC0/lP
+        Z3Ttu9HR9mtDsU/w70+/bveKJv662Ldevb+vLdm/V2VmBPN+zt+9M7fwPN+oFz/71pXOvZa5
+        M66oHJi7bMkPlRMxXgE9XNvarAuVE15UPX23pj7/3apXETn2p76bs7Pn1W+9yOWwqlDhluuv
+        YIejx4r5lJf5KymxFGckGmoxFxUnAgABgoE2lAIAAA==
+X-CMS-MailID: 20200407134313eucas1p1d55cc16cb66b11ee5e1e5fd94cf25473
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200407134313eucas1p1d55cc16cb66b11ee5e1e5fd94cf25473
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200407134313eucas1p1d55cc16cb66b11ee5e1e5fd94cf25473
+References: <CGME20200407134313eucas1p1d55cc16cb66b11ee5e1e5fd94cf25473@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Apr 07, 2020 at 08:32:56AM +0200, Jiri Slaby wrote:
-> On 07. 04. 20, 8:24, Krzysztof Kozlowski wrote:
-> > On Tue, Apr 07, 2020 at 06:49:29AM +0200, Jiri Slaby wrote:
-> >> On 07. 04. 20, 1:08, Hyunki Koo wrote:
-> >>> Support 32-bit access for the TX/RX hold registers UTXH and URXH.
-> >>>
-> >>> This is required for some newer SoCs.
-> >>>
-> >>> Signed-off-by: Hyunki Koo <hyunki00.koo@samsung.com>
-> >> ...
-> >>> ---
-> >>>  drivers/tty/serial/samsung_tty.c | 76 +++++++++++++++++++++++++++++++++-------
-> >>>  1 file changed, 64 insertions(+), 12 deletions(-)
-> >>>
-> >>> diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
-> >>> index 73f951d65b93..bdf1d4d12cb1 100644
-> >>> --- a/drivers/tty/serial/samsung_tty.c
-> >>> +++ b/drivers/tty/serial/samsung_tty.c
-> >>> @@ -154,12 +154,47 @@ struct s3c24xx_uart_port {
-> >> ...
-> >>> -#define wr_regb(port, reg, val) writeb_relaxed(val, portaddr(port, reg))
-> >>> +static void wr_reg(struct uart_port *port, u32 reg, u32 val)
-> >>> +{
-> >>> +	switch (port->iotype) {
-> >>> +	case UPIO_MEM:
-> >>> +		writeb_relaxed(val, portaddr(port, reg));
-> >>> +		break;
-> >>> +	case UPIO_MEM32:
-> >>> +		writel_relaxed(val, portaddr(port, reg));
-> >>> +		break;
-> >>> +	}
-> >>> +}
-> >>> +
-> >>>  #define wr_regl(port, reg, val) writel_relaxed(val, portaddr(port, reg))
-> >>>  
-> >>> +static void wr_reg_barrier(struct uart_port *port, u32 reg, u32 val)
-> >>
-> >> You need to explain, why you need this _barrier variant now. This change
-> >> should be done in a separate patch too.
-> > 
-> > There is no functional change in regard of barrier.  The ordered IO was
-> > used there before.
-> 
-> The patch changes one wr_reg to wr_reg_barrier without any explanation.
-> This will hardly be accepted.
+Hi
 
-I cannot find such change... I see only:
+The recent discussion under the 'drm/prime: fix extracting of the DMA
+addresses from a scatterlist' [1] patch inspired me to take a look again
+into the Exynos DRM GEM internals. I've made a little cleanup and
+reworked some parts to make them more error proof for the various
+corner-cases.
 
-@@ -2612,7 +2664,7 @@ static void samsung_early_putc(struct uart_port *port, int c)
--       writeb(c, port->membase + S3C2410_UTXH);
-+       wr_reg_barrier(port, S3C2410_UTXH, c);
+[1] https://patchwork.freedesktop.org/patch/359081/ patch 
 
-which is the same except 'b' -> 'b/l'.
+Best regards
+Marek Szyprowski
+Samsung R&D Institute Poland
 
-Best regards,
-Krzysztof
+
+Patch summary:
+
+Marek Szyprowski (3):
+  drm/exynos: gem: Remove dead-code
+  drm/exynos: gem: Rework scatter-list contiguity check on Prime import
+  drm/exynos: gem: Get rid of the internal 'pages' array
+
+ drivers/gpu/drm/exynos/exynos_drm_drv.c   |   1 -
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c |  28 +---
+ drivers/gpu/drm/exynos/exynos_drm_gem.c   | 178 ++++++++--------------
+ drivers/gpu/drm/exynos/exynos_drm_gem.h   |  16 +-
+ 4 files changed, 66 insertions(+), 157 deletions(-)
+
+-- 
+2.17.1
 
