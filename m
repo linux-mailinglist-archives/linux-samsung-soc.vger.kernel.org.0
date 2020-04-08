@@ -2,21 +2,25 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DE081A140C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Apr 2020 20:38:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18E141A215D
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 Apr 2020 14:09:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbgDGSiE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Apr 2020 14:38:04 -0400
-Received: from 8bytes.org ([81.169.241.247]:57616 "EHLO theia.8bytes.org"
+        id S1727897AbgDHMJs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 Apr 2020 08:09:48 -0400
+Received: from foss.arm.com ([217.140.110.172]:37864 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727192AbgDGSiE (ORCPT
+        id S1727896AbgDHMJs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Apr 2020 14:38:04 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 12C8A70B; Tue,  7 Apr 2020 20:37:54 +0200 (CEST)
-From:   Joerg Roedel <joro@8bytes.org>
+        Wed, 8 Apr 2020 08:09:48 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5703C31B;
+        Wed,  8 Apr 2020 05:09:47 -0700 (PDT)
+Received: from [10.57.55.221] (unknown [10.57.55.221])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AA7BA3F73D;
+        Wed,  8 Apr 2020 05:09:43 -0700 (PDT)
+Subject: Re: [RFC PATCH 17/34] iommu/arm-smmu: Store device instead of group
+ in arm_smmu_s2cr
 To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
@@ -38,69 +42,124 @@ Cc:     iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-tegra@vger.kernel.org,
         virtualization@lists.linux-foundation.org,
         Joerg Roedel <jroedel@suse.de>
-Subject: [RFC PATCH 34/34] iommu: Unexport iommu_group_get_for_dev()
-Date:   Tue,  7 Apr 2020 20:37:42 +0200
-Message-Id: <20200407183742.4344-35-joro@8bytes.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200407183742.4344-1-joro@8bytes.org>
 References: <20200407183742.4344-1-joro@8bytes.org>
+ <20200407183742.4344-18-joro@8bytes.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <98c10a41-d223-e375-9742-b6471c3dc33c@arm.com>
+Date:   Wed, 8 Apr 2020 13:09:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
+MIME-Version: 1.0
+In-Reply-To: <20200407183742.4344-18-joro@8bytes.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Joerg Roedel <jroedel@suse.de>
+On 2020-04-07 7:37 pm, Joerg Roedel wrote:
+> From: Joerg Roedel <jroedel@suse.de>
+> 
+> This is required to convert the arm-smmu driver to the
+> probe/release_device() interface.
+> 
+> Signed-off-by: Joerg Roedel <jroedel@suse.de>
+> ---
+>   drivers/iommu/arm-smmu.c | 14 +++++++++-----
+>   1 file changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index a6a5796e9c41..3493501d8b2c 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -69,7 +69,7 @@ MODULE_PARM_DESC(disable_bypass,
+>   	"Disable bypass streams such that incoming transactions from devices that are not attached to an iommu domain will report an abort back to the device and will not be allowed to pass through the SMMU.");
+>   
+>   struct arm_smmu_s2cr {
+> -	struct iommu_group		*group;
+> +	struct device			*dev;
+>   	int				count;
+>   	enum arm_smmu_s2cr_type		type;
+>   	enum arm_smmu_s2cr_privcfg	privcfg;
+> @@ -1100,7 +1100,7 @@ static int arm_smmu_master_alloc_smes(struct device *dev)
+>   	/* It worked! Now, poke the actual hardware */
+>   	for_each_cfg_sme(cfg, fwspec, i, idx) {
+>   		arm_smmu_write_sme(smmu, idx);
+> -		smmu->s2crs[idx].group = group;
+> +		smmu->s2crs[idx].dev = dev;
+>   	}
+>   
+>   	mutex_unlock(&smmu->stream_map_mutex);
+> @@ -1495,11 +1495,15 @@ static struct iommu_group *arm_smmu_device_group(struct device *dev)
+>   	int i, idx;
+>   
+>   	for_each_cfg_sme(cfg, fwspec, i, idx) {
+> -		if (group && smmu->s2crs[idx].group &&
+> -		    group != smmu->s2crs[idx].group)
+> +		struct iommu_group *idx_grp = NULL;
+> +
+> +		if (smmu->s2crs[idx].dev)
+> +			idx_grp = smmu->s2crs[idx].dev->iommu_group;
 
-The function is now only used in IOMMU core code and shouldn't be used
-outside of it anyway, so remove the export for it.
+For a hot-pluggable bus where logical devices may share Stream IDs (like 
+fsl-mc), this could happen:
 
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
----
- drivers/iommu/iommu.c | 4 ++--
- include/linux/iommu.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+   create device A
+   iommu_probe_device(A)
+     iommu_device_group(A) -> alloc group X
+   create device B
+   iommu_probe_device(B)
+     iommu_device_group(A) -> lookup returns group X
+   ...
+   iommu_remove_device(A)
+   delete device A
+   create device C
+   iommu_probe_device(C)
+     iommu_device_group(C) -> use-after-free of A
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index d9032f9d597c..8a5e1ac328dd 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -91,6 +91,7 @@ static void __iommu_detach_group(struct iommu_domain *domain,
- 				 struct iommu_group *group);
- static int iommu_create_device_direct_mappings(struct iommu_group *group,
- 					       struct device *dev);
-+static struct iommu_group *iommu_group_get_for_dev(struct device *dev);
- 
- #define IOMMU_GROUP_ATTR(_name, _mode, _show, _store)		\
- struct iommu_group_attribute iommu_group_attr_##_name =		\
-@@ -1483,7 +1484,7 @@ static int iommu_alloc_default_domain(struct device *dev)
-  * to the returned IOMMU group, which will already include the provided
-  * device.  The reference should be released with iommu_group_put().
-  */
--struct iommu_group *iommu_group_get_for_dev(struct device *dev)
-+static struct iommu_group *iommu_group_get_for_dev(struct device *dev)
- {
- 	const struct iommu_ops *ops = dev->bus->iommu_ops;
- 	struct iommu_group *group;
-@@ -1514,7 +1515,6 @@ struct iommu_group *iommu_group_get_for_dev(struct device *dev)
- 
- 	return ERR_PTR(ret);
- }
--EXPORT_SYMBOL(iommu_group_get_for_dev);
- 
- struct iommu_domain *iommu_group_default_domain(struct iommu_group *group)
- {
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index dd076366383f..7cfd2dddb49d 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -527,7 +527,6 @@ extern int iommu_page_response(struct device *dev,
- 			       struct iommu_page_response *msg);
- 
- extern int iommu_group_id(struct iommu_group *group);
--extern struct iommu_group *iommu_group_get_for_dev(struct device *dev);
- extern struct iommu_domain *iommu_group_default_domain(struct iommu_group *);
- 
- extern int iommu_domain_get_attr(struct iommu_domain *domain, enum iommu_attr,
--- 
-2.17.1
+Preserving the logical behaviour here would probably look *something* 
+like the mangled diff below, but I haven't thought it through 100%.
 
+Robin.
+
+----->8-----
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 16c4b87af42b..e88612ee47fe 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -1100,10 +1100,8 @@ static int arm_smmu_master_alloc_smes(struct 
+device *dev)
+         iommu_group_put(group);
+
+         /* It worked! Now, poke the actual hardware */
+-       for_each_cfg_sme(fwspec, i, idx) {
++       for_each_cfg_sme(fwspec, i, idx)
+                 arm_smmu_write_sme(smmu, idx);
+-               smmu->s2crs[idx].group = group;
+-       }
+
+         mutex_unlock(&smmu->stream_map_mutex);
+         return 0;
+@@ -1500,15 +1498,17 @@ static struct iommu_group 
+*arm_smmu_device_group(struct device *dev)
+         }
+
+         if (group)
+-               return iommu_group_ref_get(group);
+-
+-       if (dev_is_pci(dev))
++               iommu_group_ref_get(group);
++       else if (dev_is_pci(dev))
+                 group = pci_device_group(dev);
+         else if (dev_is_fsl_mc(dev))
+                 group = fsl_mc_device_group(dev);
+         else
+                 group = generic_device_group(dev);
+
++       for_each_cfg_sme(fwspec, i, idx)
++               smmu->s2crs[idx].group = group;
++
+         return group;
+  }
