@@ -2,80 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A46BE1A7D35
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Apr 2020 15:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D50E21A82BA
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Apr 2020 17:29:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731402AbgDNNUk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 14 Apr 2020 09:20:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731120AbgDNNUd (ORCPT
+        id S2440399AbgDNP2B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 14 Apr 2020 11:28:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729746AbgDNP14 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 14 Apr 2020 09:20:33 -0400
-X-Greylist: delayed 277 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Apr 2020 06:20:32 PDT
+        Tue, 14 Apr 2020 11:27:56 -0400
 Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED76DC061A0C;
-        Tue, 14 Apr 2020 06:20:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3409CC061A0C;
+        Tue, 14 Apr 2020 08:27:56 -0700 (PDT)
 Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 340BE45B; Tue, 14 Apr 2020 15:20:31 +0200 (CEST)
-Date:   Tue, 14 Apr 2020 15:20:29 +0200
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Joerg Roedel <jroedel@suse.de>
-Subject: Re: [PATCH] iommu/exynos: Get rid of 'struct exynos_iommu_owner'
- exynos_iommu_owner
-Message-ID: <20200414132029.GB14731@8bytes.org>
+        id 3493E2A4; Tue, 14 Apr 2020 17:27:54 +0200 (CEST)
+Date:   Tue, 14 Apr 2020 17:27:52 +0200
+From:   "joro@8bytes.org" <joro@8bytes.org>
+To:     "Derrick, Jonathan" <jonathan.derrick@intel.com>
+Cc:     "heiko@sntech.de" <heiko@sntech.de>,
+        "kgene@kernel.org" <kgene@kernel.org>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "robin.murphy@arm.com" <robin.murphy@arm.com>,
+        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "dwmw2@infradead.org" <dwmw2@infradead.org>,
+        "m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+        "krzk@kernel.org" <krzk@kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "gerald.schaefer@de.ibm.com" <gerald.schaefer@de.ibm.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        "linux-rockchip@lists.infradead.org" 
+        <linux-rockchip@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "jroedel@suse.de" <jroedel@suse.de>
+Subject: Re: [RFC PATCH 11/34] iommu: Split off default domain allocation
+ from group assignment
+Message-ID: <20200414152752.GC14731@8bytes.org>
 References: <20200407183742.4344-1-joro@8bytes.org>
- <CGME20200407184501eucas1p25407bc96e4345df406cf6ba061ae6a82@eucas1p2.samsung.com>
- <20200407183742.4344-32-joro@8bytes.org>
- <449e7f16-e719-9617-ec92-63b82c0bc33f@samsung.com>
- <f59b0bb3-8c08-9cc9-bb1a-e69b7b226f60@samsung.com>
- <20200409114620.GA16298@8bytes.org>
- <40af831b-d00c-0cf9-0a06-e60c048a9ab8@samsung.com>
+ <20200407183742.4344-12-joro@8bytes.org>
+ <6a801ff9e6471bda7c6f510dfa2ba7e7c35cb559.camel@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <40af831b-d00c-0cf9-0a06-e60c048a9ab8@samsung.com>
+In-Reply-To: <6a801ff9e6471bda7c6f510dfa2ba7e7c35cb559.camel@intel.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Apr 09, 2020 at 03:58:00PM +0200, Marek Szyprowski wrote:
-> I've checked and it works fine on top of 
-> ff68eb23308e6538ec7864c83d39540f423bbe90. However I'm not a fan of 
-> removing this 'owner' structure. It gave a nice abstraction for the all 
-> SYSMMU controllers for the given device (although most devices in the 
-> system have only one SYSMMU). Why this structure is a problem for your 
-> rework?
+Hi Jonathan,
 
-Okay, the structure itself is not a problem, I just thought it is not
-really necessary. But to keep things simple I've taken another approach
-for v2 of this series: Just use the first SYSMMU of the controllers list
-to link the device and the IOMMU. When the owner structure exists there
-is always one entry in this list, so that should work fine.
+On Mon, Apr 13, 2020 at 10:10:50PM +0000, Derrick, Jonathan wrote:
+> I had to add the following for initial VMD support. The new PCIe domain
+> added on VMD endpoint probe didn't have the dev_iommu member set on the
+> VMD subdevices, which I'm guessing is due to probe_iommu_group already
+> having been run on the VMD endpoint's group prior to those subdevices
+> being added.
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 8a5e1ac328dd..ac1e4fb9bf48 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1577,6 +1577,9 @@ static int iommu_bus_notifier(struct notifier_block *nb,
+>         if (action == BUS_NOTIFY_ADD_DEVICE) {
+>                 int ret;
+>  
+> +               if (!dev_iommu_get(dev))
+> +                       return -ENOMEM;
+> +
+>                 ret = iommu_probe_device(dev);
+>                 return (ret) ? NOTIFY_DONE : NOTIFY_OK;
+>         } else if (action == BUS_NOTIFY_REMOVED_DEVICE) {
 
-Regards,
+Right, thanks for catching this. The hotplug path does not allocate the
+dev->iommu structure yet. I'll have to figure out if the above patch
+adds it at the right place, but I'll fix it in the next version.
+
+Thanks again,
 
 	Joerg
-
