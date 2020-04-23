@@ -2,139 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDBD31B5FD6
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Apr 2020 17:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08A271B638D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Apr 2020 20:27:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729231AbgDWPqo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 23 Apr 2020 11:46:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729176AbgDWPqo (ORCPT
+        id S1730388AbgDWS1Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 23 Apr 2020 14:27:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52930 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730381AbgDWS1O (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 23 Apr 2020 11:46:44 -0400
-Received: from mo6-p02-ob.smtp.rzone.de (mo6-p02-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5302::9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F720C09B040;
-        Thu, 23 Apr 2020 08:46:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1587656801;
-        s=strato-dkim-0002; d=goldelico.com;
-        h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=ybxxfVp12h/EJrmfUJdRJSGTmKH3W7lZYEApLFlERWY=;
-        b=DrKJ9fNz8WxLH/lxvzqH+AMSam9tu2FhRn1b+DxbazOFoXyS93+afrGgpwefT4t6QC
-        /4k7b51LsSANcN/xVgHDnGc9MzXErXxCPQeHuiElt1upkXq+nvKp9tSqjV5+k1mBfxS3
-        gAkvjEQjZJNlc0Yw5yj/hGkMx2dR3nhn+e4WqxPIVEcRt6S9melWvYcV+2h+8m47DJTF
-        K+utEk2anK6Ms4Lb8UzV2Zj3a1+UkWzb9yq/ZlLTRil6UF5EXzHTWRMjAccLpfo3BT1D
-        qJ7BmeYa+eOlmSQs2uTl6iNBaTpywNCpLK63P2AacOcUu0H5TmLKFwDnMPpJpV6cP8ls
-        aO1A==
-X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMgPgp8VKxflSZ1P34KBp5hRw/qOxWRk4dCysOfl5tOw33QtdTbGcCRJGxnkq3ByzlXOnoXby"
-X-RZG-CLASS-ID: mo00
-Received: from [IPv6:2001:16b8:2692:1500:61a3:e550:2224:7950]
-        by smtp.strato.de (RZmta 46.6.2 AUTH)
-        with ESMTPSA id R0acebw3NFjv7lw
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
-        (Client did not present a certificate);
-        Thu, 23 Apr 2020 17:45:57 +0200 (CEST)
-Subject: Re: [PATCH v6 00/12] ARM/MIPS: DTS: add child nodes describing the PVRSGX GPU present in some OMAP SoC and JZ4780 (and many more)
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Content-Type: text/plain; charset=us-ascii
-From:   "H. Nikolaus Schaller" <hns@goldelico.com>
-In-Reply-To: <43688597-4b99-8f4d-9ad5-548ddff07f52@baylibre.com>
-Date:   Thu, 23 Apr 2020 17:45:55 +0200
-Cc:     Maxime Ripard <maxime@cerno.tech>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Tony Lindgren <tony@atomide.com>,
-        James Hogan <jhogan@kernel.org>,
-        Jonathan Bakker <xc-racer2@live.ca>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        linux-mips@vger.kernel.org, Paul Cercueil <paul@crapouillou.net>,
-        linux-samsung-soc@vger.kernel.org,
-        Discussions about the Letux Kernel 
-        <letux-kernel@openphoenux.org>,
-        Paul Burton <paulburton@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Airlie <airlied@linux.ie>, Chen-Yu Tsai <wens@csie.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        arm-soc <linux-arm-kernel@lists.infradead.org>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Philipp Rossak <embed3d@gmail.com>,
-        OpenPVRSGX Linux Driver Group <openpvrsgx-devgroup@letux.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ralf Baechle <ralf@linux-mips.org>,
-        =?utf-8?Q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>,
-        kernel@pyra-handheld.com
+        Thu, 23 Apr 2020 14:27:14 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14AAC09B04E
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 23 Apr 2020 11:27:13 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id z2so7490146iol.11
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 23 Apr 2020 11:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
+        b=G0MearUWJO2XoX5WFWCbOSBM0KnomNOcLxBMKb36E56Tk8IIyFbWO7z4INTed1WkRU
+         qeMi1eRR7YsA+BDT6DQvUAii78YnzCjvNMVBKy4slcZy3/gJbFRS56rTYb2i1ZQ8vqn/
+         EOaplCA4N/rSu1DPvHSaWXp+qBo2gCjTbf/vDHta9DawS0nUkV5FYws7CV/zXlK/VYiG
+         COL+ehFclZxGMjmnJCFdgQT7XS8eBs73XeZW6OQ9vAUq0KfaGK/YZHActLVD5NzSJiie
+         gXxsbNT9IQMnd4wAzDKDPSrX8AkY/tvkHFQgBX+60qxPigWKusZrEf/ce5VP7zRF3LJ+
+         eYhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=DHzQtr3OkXyFWXbvXEU307GvVJtF7cl8Gt7nfdQPyE8=;
+        b=sehz5u7oKoCGspk6YovkaqimW+iu7r2UzdDunqzmM52GYMkgvQU6FpHis5o7xYMCGx
+         lkemLcdZ5Ygjmg9A5SKuYEka9NPkX4D2uy784FYuT36PTjxpzXA4y8vQXKN92sBjN2gs
+         NwJB/fH9MLrey5KCrkIlv6mwEOnTqmKal6b4JQNNG+GEfhgVBvu7rJA/6xJ9jE5RFt8c
+         e2Xs/jxtWGNnLrQPIGsm6A92VHHsvRuwvjjOVsTMaASrmNSx4Jz4pL+v7OWi5Lc3K68R
+         MNEkbmSHhOifk9ulBABFvgNS1VXtpwYXhLuM0Qj6QYeinMfhlzr4xDsgpo30kRCDg1PS
+         lSiw==
+X-Gm-Message-State: AGi0Pubuu8fLpiQBtUIk4eAfeAoguyzdEZNC66FbTpl+UugLNLpA5pln
+        voTiL4TvFWbRSO0CApKWDAyOTBor90V8gYmvug==
+X-Google-Smtp-Source: APiQypKOhu0Ivyzu1MQANRLgnSM6D7f6PDwmOyOGFsy7UwOOUt5tM1gVxevJ7CcMC29eb2aYcjzRxadXayX+T6slpNc=
+X-Received: by 2002:a05:6602:d:: with SMTP id b13mr5025673ioa.176.1587666433220;
+ Thu, 23 Apr 2020 11:27:13 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a02:c845:0:0:0:0:0 with HTTP; Thu, 23 Apr 2020 11:27:12
+ -0700 (PDT)
+Reply-To: boa.benin107@yahoo.com
+From:   "Mrs. Angella Michelle" <info.zennitbankplcnigerian@gmail.com>
+Date:   Thu, 23 Apr 2020 20:27:12 +0200
+Message-ID: <CABHzvrnzZLe4Z0E4acOdcsDJTPa3wvp-Oz12f_M4TQ03PAGZkw@mail.gmail.com>
+Subject: Contact Eco bank-Benin to receive your payment funds transfer amount
+ of $12.800.000,00 Million USD,approved this morning by IMF.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <71F2F964-32C7-41E6-8F1A-A73161EA1BB3@goldelico.com>
-References: <20200415130233.rgn7xrtwqicptke2@gilmour.lan> <C589D06E-435E-4316-AD0A-8498325039E3@goldelico.com> <10969e64-fe1f-d692-4984-4ba916bd2161@gmail.com> <20200420073842.nx4xb3zqvu23arkc@gilmour.lan> <b5a06c19-7a3e-bcb8-5ae3-76901b9c6c35@gmail.com> <20200421112129.zjmkmzo3aftksgka@gilmour.lan> <20200421141543.GU37466@atomide.com> <D9D4D057-A73D-485F-898D-5C05E89C16B7@goldelico.com> <20200422065859.quy6ane5v7vsy5tf@gilmour.lan> <1AA57A0C-48E6-49BB-BB9A-2AAFFB371BCD@goldelico.com> <20200422151328.2oyqz7gqkbunmd6o@gilmour.lan> <07923B6C-4CCD-4B81-A98F-E19C43412A89@goldelico.com> <43688597-4b99-8f4d-9ad5-548ddff07f52@baylibre.com>
-To:     Neil Armstrong <narmstrong@baylibre.com>
-X-Mailer: Apple Mail (2.3124)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Neil,
-
-> Am 23.04.2020 um 17:00 schrieb Neil Armstrong =
-<narmstrong@baylibre.com>:
->> One thing we can learn is that "core" seems to be a de facto standard=20=
-
->> for the core clock-name. An alternative "gpu" is used by =
-nvidia,gk20a.txt.
->=20
-> Usually IPs needs a few clocks:
-> - pclk or apb or reg: the clock clocking the "slave" bus to serve the =
-registers
-> - axi or bus or ahb: the bus clocking the the "master" bus to get data =
-from system memory
-> - core: the actual clock feeding the GPU logic
-
-And the sgx544 seems to have two such clocks.
-
-> Sometimes you have a single clock for slave and master bus.
->=20
-> But you can also have separate clocks for shader cores, .. this =
-depends on the IP and it's architecture.
-> The IP can also have memories with separate clocks, etc...
-
-Indeed.
-
-> But all these clocks can be source by an unique clock on a SoC, but =
-different on another
-> SoC, this is why it's important to list them all, even optional.
->=20
-> You'll certainly have at least a reset signal, and a power domain, =
-these should exist and be optional.
-
-Well, they exist only as hints in block diagrams of some SoC data sheets
-(so we do not know if they represent the imagination definitions) and =
-the
-current driver code doesn't make use of it. Still the gpu core works.
-
-So I do not see any urgent need to add a complete list to the bindings =
-now.
-
-Unless some special SoC integration makes use of them. Then it is IMHO =
-easier
-to extend the bindings by a follow-up patch than now thinking about all
-potential options and bloating the bindings with things we (the open =
-source
-community) doesn't and can't know.
-
-My goal is to keep the bindings as minimalistic as possible. And reset =
-lines
-and power domains are (at least for those we have in the works) not =
-needed
-to make working systems.
-
-Therefore, for clocks I also would start with a minimalistic approach =
-for
-a single optional GPU core clock and leave out reset and power =
-completely.
-
-BR and thanks,
-Nikolaus
-
+Attn Dear.
+Contact Bank of Africa-Benin to receive your payment funds transfer amount =
+of
+$12.800.000,00 Million USD,approved this morning by IMF.
+Happy to inform you, we have finally deposited your payment funds
+$12.8 million us dollars with the Paying Bank of Africa-Benin
+to transfer the payment amount of $12.800,000,00 Million Us Dollars to you
+Contact the bank immediately you receive this email now.
+Director Bank of Africa-Benin: Dr. Festus Obiara
+Email id:  boa.benin107@yahoo.com
+Tel/mobile, (229) 62819378
+BOA-BENIN | GROUPE BANK OF AFRICA, boa-benin
+Avenue Jean-Paul II - 08 BP 0879 - Cotonou - B=C3=A9nin
+Phone:(229) 62819378.
+2020 GROUPE BANK OF AFRICA
+Be advised to re-confirm your bank details to this bank as listed.
+Your account Holder's name----------------
+Bank Name----------------------------------------------------------
+Bank address----------------------------------------------
+Account Numbers---------------------------------------
+Rounting-----------------------------------------------------------------
+Your direct Phone Numbers----------------------------------------------
+Note,I have paid the deposit and insurance fees for you
+But the only money you are to send to this bank is $150.00 us dollars
+Been for the wire transfer fees of your funds
+Contact Him now to receive your transfer deposited this morning
+I wait for your reply upon confirmation
+Mrs. Angella Michelle
+Editor, Zenith Bank- Companies Benin
+mrsa9389@gmail.com
