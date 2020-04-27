@@ -2,63 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1DCC1BA2AA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Apr 2020 13:41:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D70061BA3B4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Apr 2020 14:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbgD0Llm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 27 Apr 2020 07:41:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36076 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727079AbgD0Llk (ORCPT
+        id S1726390AbgD0Mke (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 27 Apr 2020 08:40:34 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:33422 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726721AbgD0Mke (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 27 Apr 2020 07:41:40 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC011C0085E2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Apr 2020 04:41:35 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id i16so16326606ils.12
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Apr 2020 04:41:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
-        b=uI1U3pP4FazEZaTfkDGgaf1Qyb1hL6AlgZB9tozzlJtw0tc2p0xAeW9BNdbY4A2XuL
-         JYn8lE6gg3HqjBgRaTT8CTSOLDZ9E79yDyBM0EGnWldSdHyzrk+BT/7frJGn/PAhMIrE
-         VCZdq7yfljhgiOOYhIeLP2AIIFXvLFMREe3IREMgf/Wimn5okrCaqK4gkS0+n2Tqfq3c
-         EFYh4cYLyK3nIET0YOm2adzDe5W5QN3hsgSvwW72euh+PRPDs3oxC82+7cfg/ZGTOz8/
-         eTagf6SblJMWIJeJ59y/zg3//EVOq9RPByBfKkQCDUJB6vE62XJLcx9qUgZNIxoYrz8S
-         JAeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=F+HbPvxQnRBlqBFKy/zn6110uxUPAWY6eSsMY6+ckPY=;
-        b=TuHMWDNOqfKaGfKdUrqLAWac2OOqBnGk8mSjJ9W1apAoTAOASI6CwnJbom2+BDxGGC
-         8IMJHp5LG+JJA51hiJcqMygrgifgEWXCj1t2Xk+lWd/kZJtvYxyNE7z793RdZ4rSZs0U
-         UpAMGFTuF6tDRLj52rWMOTWJnwG64uuBEaGK2Ago4bSZ3dHEiND3XSDVsWGcT1ptJeTT
-         6ydPRgllg2Ok9Mw6LtuK/AEXBKfQpx2DnNl0+VdaZ2iwznHjKZTqR4N00ExFSfUUqzf+
-         auUuyVxfdxcqiB45g/jrrZ6+/NYHaeYmNeW7e1rOfjxYOtH7LnU42IHK2WxOaSfmq6jV
-         egUw==
-X-Gm-Message-State: AGi0PuYmAfmhSap6JaAuDKbAJkGOfmvaCb5s3W14kSqMF7LuKHny4Hzf
-        Lg7IZjF33BER+kaGy0IOA6hDqcAzbIKXwOpuzAFuySB+9Qs=
-X-Google-Smtp-Source: APiQypJWdjzUZMbeRoAX94bUJV0IgwyoF5kUG7iPo3CBzKxW8lStFNsM/6tz3An/TyzRuH2Qw14DtavsVumw6JVLls0=
-X-Received: by 2002:a6b:7d4a:: with SMTP id d10mr4072296ioq.70.1587987694042;
- Mon, 27 Apr 2020 04:41:34 -0700 (PDT)
+        Mon, 27 Apr 2020 08:40:34 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 03RCeKGd125471;
+        Mon, 27 Apr 2020 07:40:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1587991220;
+        bh=QmZqYVuJhQpW5Co25n8i1nFbhw4FdWBDF8vcXnV1ylo=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=aqWwwtgq9GgYesv+T+gPxuEjNsQbwnv+4X5z77RLPfhWAVs+MJs4rF9XNnTGrNFIv
+         Msak3ATjQa0gBX/wrRUGupH0dQjWgVkGlZVRKUmGg7IbCZdut+DUcNu62Wqxx7Pdk9
+         q7+VnAchFIrao2AjzXGIFcqeFs17tmFSzkjOtq68=
+Received: from DFLE107.ent.ti.com (dfle107.ent.ti.com [10.64.6.28])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 03RCeKuU114941
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 27 Apr 2020 07:40:20 -0500
+Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Mon, 27
+ Apr 2020 07:40:20 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE101.ent.ti.com
+ (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Mon, 27 Apr 2020 07:40:19 -0500
+Received: from [10.250.233.85] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 03RCeH4I088463;
+        Mon, 27 Apr 2020 07:40:18 -0500
+Subject: Re: [PATCH] phy: samsung: s5pv210-usb2: Add delay after reset
+To:     Jonathan Bakker <xc-racer2@live.ca>,
+        <linux-kernel@vger.kernel.org>, <s.nawrocki@samsung.com>,
+        <kamil@wypas.org>, <krzk@kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>
+References: <BN6PR04MB06605D52502816E500683553A3D10@BN6PR04MB0660.namprd04.prod.outlook.com>
+From:   Kishon Vijay Abraham I <kishon@ti.com>
+Message-ID: <979ae7cd-2648-c516-1465-3a1507d5fefb@ti.com>
+Date:   Mon, 27 Apr 2020 18:10:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Received: by 2002:a5d:8f89:0:0:0:0:0 with HTTP; Mon, 27 Apr 2020 04:41:33
- -0700 (PDT)
-Reply-To: convy0090@gmail.com
-From:   Ruben CONVY <andrewboccc@gmail.com>
-Date:   Mon, 27 Apr 2020 12:41:33 +0100
-Message-ID: <CAHVC0+Ag87TMCmfNNwWbxXOFxn5166q8GG5wEfPjwtixj9=EXQ@mail.gmail.com>
-Subject: Why continued silence 2
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <BN6PR04MB06605D52502816E500683553A3D10@BN6PR04MB0660.namprd04.prod.outlook.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Did you receive my previous email regarding your family inheritance?
-Reply strictly through: convy0090@gmail.com
-Best Regards,
-Ruben CONVY
+Hi Jonathan,
+
+On 4/25/2020 11:06 PM, Jonathan Bakker wrote:
+> The USB phy takes some time to reset, so make sure we give it to it. The
+> delay length was taken from the 4x12 phy driver.
+> 
+> This manifested in issues with the DWC2 driver since commit fe369e1826b3
+> ("usb: dwc2: Make dwc2_readl/writel functions endianness-agnostic.")
+> where the endianness check would read the DWC ID as 0 due to the phy still
+> resetting, resulting in the wrong endian mode being chosen.
+> 
+> Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
+> ---
+>  drivers/phy/samsung/phy-s5pv210-usb2.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/phy/samsung/phy-s5pv210-usb2.c b/drivers/phy/samsung/phy-s5pv210-usb2.c
+> index 56a5083fe6f9..32be62e49804 100644
+> --- a/drivers/phy/samsung/phy-s5pv210-usb2.c
+> +++ b/drivers/phy/samsung/phy-s5pv210-usb2.c
+> @@ -139,6 +139,10 @@ static void s5pv210_phy_pwr(struct samsung_usb2_phy_instance *inst, bool on)
+>  		udelay(10);
+>  		rst &= ~rstbits;
+>  		writel(rst, drv->reg_phy + S5PV210_UPHYRST);
+> +		/* The following delay is necessary for the reset sequence to be
+> +		 * completed
+> +		 */
+> +		udelay(80);
+
+Please fix the following checkpatch check error.
+CHECK: usleep_range is preferred over udelay; see
+Documentation/timers/timers-howto.rst
+#151: FILE: drivers/phy/samsung/phy-s5pv210-usb2.c:145:
++               udelay(80);
+
+total: 0 errors, 0 warnings, 1 checks, 10 lines checked
+
+Thanks
+Kishon
