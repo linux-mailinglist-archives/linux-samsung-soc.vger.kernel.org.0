@@ -2,170 +2,144 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 519581BDC1A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 Apr 2020 14:27:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0DAF1BDF2C
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 Apr 2020 15:41:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbgD2M1J (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 Apr 2020 08:27:09 -0400
-Received: from outils.crapouillou.net ([89.234.176.41]:35684 "EHLO
-        crapouillou.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726524AbgD2M1I (ORCPT
+        id S1728579AbgD2NlE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 Apr 2020 09:41:04 -0400
+Received: from 8bytes.org ([81.169.241.247]:39514 "EHLO theia.8bytes.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727865AbgD2Nhh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 Apr 2020 08:27:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1588163225; h=from:from:sender:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=UB85kJRWkAnE/ldP2rd2WB1otm7LsPHBG/QdCMbeTtw=;
-        b=Y7SJJo7sZnaAuNIPATy0AiHIaWVsd2iyJrs83ZKmUFLR4e0sPDVaCrXhPJh3FdwWeKj5+B
-        ymuqI/fKXp9dnLKIal7QsfsqkUT5AoaSpooZL4M9yoymur1N6pMByU7yw/6mHtmHFpYRn4
-        m+cKuE3cU7bSMeleVwTgsV9u39AqbSE=
-Date:   Wed, 29 Apr 2020 14:26:46 +0200
-From:   Paul Cercueil <paul@crapouillou.net>
-Subject: Re: [PATCH v7 08/12] arm: dts: s5pv210: Add node for SGX 540
-To:     Jonathan Bakker <xc-racer2@live.ca>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        "H. Nikolaus Schaller" <hns@goldelico.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        =?iso-8859-1?q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Ralf Baechle <ralf@linux-mips.org>,
-        Paul Burton <paulburton@kernel.org>,
-        James Hogan <jhogan@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Philipp Rossak <embed3d@gmail.com>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
-        openpvrsgx-devgroup@letux.org, letux-kernel@openphoenux.org,
-        kernel@pyra-handheld.com, linux-mips@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Message-Id: <MKUJ9Q.OQG3OJ6IYGUE3@crapouillou.net>
-In-Reply-To: <BN6PR04MB0660044B5B1D45BE4CBCD2AAA3AC0@BN6PR04MB0660.namprd04.prod.outlook.com>
-References: <cover.1587760454.git.hns@goldelico.com>
-        <3fd18c747426e15fd1f3500b9c4adce2db9ddd0c.1587760454.git.hns@goldelico.com>
-        <NYBE9Q.YH08US7A7DC3@crapouillou.net>
-        <BN6PR04MB0660A180D2069848E5C03D7EA3AE0@BN6PR04MB0660.namprd04.prod.outlook.com>
-        <20200427154617.GA1798@pi3>
-        <BN6PR04MB06605F014024061C894AFBA4A3AC0@BN6PR04MB0660.namprd04.prod.outlook.com>
-        <BN6PR04MB0660044B5B1D45BE4CBCD2AAA3AC0@BN6PR04MB0660.namprd04.prod.outlook.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+        Wed, 29 Apr 2020 09:37:37 -0400
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id 49DD72E2; Wed, 29 Apr 2020 15:37:35 +0200 (CEST)
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc:     Daniel Drake <drake@endlessm.com>, jonathan.derrick@intel.com,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: [PATCH v3 00/34] iommu: Move iommu_group setup to IOMMU core code
+Date:   Wed, 29 Apr 2020 15:36:38 +0200
+Message-Id: <20200429133712.31431-1-joro@8bytes.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Jonathan,
+Hi,
 
-Le mar. 28 avril 2020 =E0 15:58, Jonathan Bakker <xc-racer2@live.ca> a=20
-=E9crit :
-> Hi all,
->=20
-> On 2020-04-28 2:39 p.m., Jonathan Bakker wrote:
->>  Hi Krzysztof,
->>=20
->>  On 2020-04-27 8:46 a.m., Krzysztof Kozlowski wrote:
->>>  On Sun, Apr 26, 2020 at 07:57:12AM -0700, Jonathan Bakker wrote:
->>>>  Hi Paul,
->>>>=20
->>>>  On 2020-04-26 5:56 a.m., Paul Cercueil wrote:
->>>>>=20
->>>>>=20
->>>>>  Le ven. 24 avril 2020 =E0 22:34, H. Nikolaus Schaller=20
->>>>> <hns@goldelico.com> a =E9crit :
->>>>>>  From: Jonathan Bakker <xc-racer2@live.ca>
->>>>>>=20
->>>>>>  All s5pv210 devices have a PowerVR SGX 540 (revision 120)=20
->>>>>> attached.
->>>>>>=20
->>>>>>  There is no external regulator for it so it can be enabled by=20
->>>>>> default.
->>>>>>=20
->>>>>>  Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
->>>>>>  Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
->>>>>>  ---
->>>>>>   arch/arm/boot/dts/s5pv210.dtsi | 13 +++++++++++++
->>>>>>   1 file changed, 13 insertions(+)
->>>>>>=20
->>>>>>  diff --git a/arch/arm/boot/dts/s5pv210.dtsi=20
->>>>>> b/arch/arm/boot/dts/s5pv210.dtsi
->>>>>>  index 2ad642f51fd9..abbdda205c1b 100644
->>>>>>  --- a/arch/arm/boot/dts/s5pv210.dtsi
->>>>>>  +++ b/arch/arm/boot/dts/s5pv210.dtsi
->>>>>>  @@ -512,6 +512,19 @@ vic3: interrupt-controller@f2300000 {
->>>>>>               #interrupt-cells =3D <1>;
->>>>>>           };
->>>>>>=20
->>>>>>  +        gpu: gpu@f3000000 {
->>>>>>  +            compatible =3D "samsung,s5pv210-sgx540-120";
->>>=20
->>>  This should not pass the bindings check because you missed last
->>>  compatibles.
->>>=20
->>=20
->>  Thanks for pointing that out, I'll add it and make sure it passes=20
->> the bindings check.
->>=20
->>>>>>  +            reg =3D <0xf3000000 0x10000>;
->>>>>>  +            interrupt-parent =3D <&vic2>;
->>>>>>  +            interrupts =3D <10>;
->>>>>>  +            clock-names =3D "core";
->>>>>>  +            clocks =3D <&clocks CLK_G3D>;
->>>>>>  +
->>>>>>  +            assigned-clocks =3D <&clocks MOUT_G3D>, <&clocks=20
->>>>>> DOUT_G3D>;
->>>>>>  +            assigned-clock-rates =3D <0>, <66700000>;
->>>>>>  +            assigned-clock-parents =3D <&clocks MOUT_MPLL>;
->>>>>=20
->>>>>  What are these clocks for, and why are they reparented /=20
->>>>> reclocked?
->>>>>=20
->>>>>  Shouldn't they be passed to 'clocks' as well?
->>>>>=20
->>>>>  -Paul
->>>>>=20
->>>>=20
->>>>  The G3D clock system can have multiple parents, and for stable=20
->>>> operation
->>>>  it's recommended to use the MPLL clock as the parent (which in=20
->>>> turn
->>>>  is actually a mux as well).  MOUT_G3D is simply the mux for=20
->>>> CLK_G3D
->>>>  (SGX core clock), DOUT_G3D is the divider.  DOUT_G3D could=20
->>>> equally be CLK_G3D
->>>>  (and probably should be, for readability) as CLK_G3D is simply=20
->>>> the gate and
->>>>  DOUT_G3D is the divider for it.
->>>=20
->>>  Good point, it should be CLK_G3D instead of DOUT.  Can you fix=20
->>> this as
->>>  well?
->>=20
->>  Yep, will do.  Nikolaus, I'll send you an updated patch to include.
->>=20
->=20
-> How are assigned-clocks handled in the yaml DT schema?  When running=20
-> make dtbs_check,
-> I end up with messages such as
->=20
-> arch/arm/boot/dts/s5pv210-aquila.dt.yaml: gpu@f3000000:=20
-> 'assigned-clock-parents', 'assigned-clock-rates', 'assigned-clocks'=20
-> do not match any of the regexes: 'pinctrl-[0-9]+'
->=20
-> Do they need to explicitly be listed as valid entries?
+here is the third version of this patch-set. Older versions can be found
+here:
 
-The assigned-* can also be moved inside the node of the clocks=20
-provider. I would say it makes more sense to have them there.
+	v1: https://lore.kernel.org/lkml/20200407183742.4344-1-joro@8bytes.org/
+	    (Has some more introductory text)
 
--Paul
+	v2: https://lore.kernel.org/lkml/20200414131542.25608-1-joro@8bytes.org/
 
+Changes v2 -> v3:
+
+	* Rebased v5.7-rc3
+
+	* Added a missing iommu_group_put() as reported by Lu Baolu.
+
+	* Added a patch to consolidate more initialization work in
+	  __iommu_probe_device(), fixing a bug where no 'struct
+	  device_iommu' was allocated in the hotplug path.
+
+There is also a git-branch available with these patches applied:
+
+	https://git.kernel.org/pub/scm/linux/kernel/git/joro/linux.git/log/?h=iommu-probe-device-v3
+
+Please review. If there are no objections I plan to put these patches
+into the IOMMU tree early next week.
+
+Thanks,
+
+	Joerg
+
+Joerg Roedel (33):
+  iommu: Move default domain allocation to separate function
+  iommu/amd: Implement iommu_ops->def_domain_type call-back
+  iommu/vt-d: Wire up iommu_ops->def_domain_type
+  iommu/amd: Remove dma_mask check from check_device()
+  iommu/amd: Return -ENODEV in add_device when device is not handled by
+    IOMMU
+  iommu: Add probe_device() and release_device() call-backs
+  iommu: Move default domain allocation to iommu_probe_device()
+  iommu: Keep a list of allocated groups in __iommu_probe_device()
+  iommu: Move new probe_device path to separate function
+  iommu: Split off default domain allocation from group assignment
+  iommu: Move iommu_group_create_direct_mappings() out of
+    iommu_group_add_device()
+  iommu: Export bus_iommu_probe() and make is safe for re-probing
+  iommu/amd: Remove dev_data->passthrough
+  iommu/amd: Convert to probe/release_device() call-backs
+  iommu/vt-d: Convert to probe/release_device() call-backs
+  iommu/arm-smmu: Convert to probe/release_device() call-backs
+  iommu/pamu: Convert to probe/release_device() call-backs
+  iommu/s390: Convert to probe/release_device() call-backs
+  iommu/virtio: Convert to probe/release_device() call-backs
+  iommu/msm: Convert to probe/release_device() call-backs
+  iommu/mediatek: Convert to probe/release_device() call-backs
+  iommu/mediatek-v1 Convert to probe/release_device() call-backs
+  iommu/qcom: Convert to probe/release_device() call-backs
+  iommu/rockchip: Convert to probe/release_device() call-backs
+  iommu/tegra: Convert to probe/release_device() call-backs
+  iommu/renesas: Convert to probe/release_device() call-backs
+  iommu/omap: Remove orphan_dev tracking
+  iommu/omap: Convert to probe/release_device() call-backs
+  iommu/exynos: Use first SYSMMU in controllers list for IOMMU core
+  iommu/exynos: Convert to probe/release_device() call-backs
+  iommu: Remove add_device()/remove_device() code-paths
+  iommu: Move more initialization to __iommu_probe_device()
+  iommu: Unexport iommu_group_get_for_dev()
+
+Sai Praneeth Prakhya (1):
+  iommu: Add def_domain_type() callback in iommu_ops
+
+ drivers/iommu/amd_iommu.c       |  97 ++++----
+ drivers/iommu/amd_iommu_types.h |   1 -
+ drivers/iommu/arm-smmu-v3.c     |  38 +---
+ drivers/iommu/arm-smmu.c        |  39 ++--
+ drivers/iommu/exynos-iommu.c    |  24 +-
+ drivers/iommu/fsl_pamu_domain.c |  22 +-
+ drivers/iommu/intel-iommu.c     |  68 +-----
+ drivers/iommu/iommu.c           | 387 +++++++++++++++++++++++++-------
+ drivers/iommu/ipmmu-vmsa.c      |  60 ++---
+ drivers/iommu/msm_iommu.c       |  34 +--
+ drivers/iommu/mtk_iommu.c       |  24 +-
+ drivers/iommu/mtk_iommu_v1.c    |  50 ++---
+ drivers/iommu/omap-iommu.c      |  99 ++------
+ drivers/iommu/qcom_iommu.c      |  24 +-
+ drivers/iommu/rockchip-iommu.c  |  26 +--
+ drivers/iommu/s390-iommu.c      |  22 +-
+ drivers/iommu/tegra-gart.c      |  24 +-
+ drivers/iommu/tegra-smmu.c      |  31 +--
+ drivers/iommu/virtio-iommu.c    |  41 +---
+ include/linux/iommu.h           |  21 +-
+ 20 files changed, 531 insertions(+), 601 deletions(-)
+
+-- 
+2.17.1
 
