@@ -2,373 +2,359 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB8431BFCC1
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 Apr 2020 16:08:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 522961C1299
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  1 May 2020 15:10:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728370AbgD3NwX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 Apr 2020 09:52:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33274 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728359AbgD3NwW (ORCPT
+        id S1728821AbgEANK0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 1 May 2020 09:10:26 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45397 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728815AbgEANK0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 Apr 2020 09:52:22 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BB13220873;
-        Thu, 30 Apr 2020 13:52:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1588254740;
-        bh=r2EjWEVUPezkNE5CyIxnKq1/Poy/iWkkjjfp4PKowvA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=Ldzs+/sa3HaFDnbxRwBTC7b7qp7tI2rorGr1ub5AnOC8qyFuB/Ms5Ih+h/+1Ac7jE
-         KRJ0BP/HGu21UUWpTsxtdFrfoUJCaZS2MWr668wdb1T5Cg5jQ+2BE3oTSsqnAyoMWH
-         CuRMJIQgCRcKzMxzUELU3suXpG/33F7zZn8US7r0=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Sasha Levin <sashal@kernel.org>,
-        dri-devel@lists.freedesktop.org,
+        Fri, 1 May 2020 09:10:26 -0400
+Received: by mail-ed1-f65.google.com with SMTP id f12so7189402edn.12;
+        Fri, 01 May 2020 06:10:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6Yg1SL1X0Nyl9McRXFdcaYuSFdnUnZQ7o/sDqSIRDtA=;
+        b=swIBo6iceVbnPPKxuTHSunypi9QzoL1Itv2BrT7IZ3iwbIlIf08qZ6xeNmTY/mWMBa
+         6AD5BIULb7N9p9ap/f1O/09mvJGKNCzkw3JymiLvgYa+47JEZKOgsqgvea4HCmXwi8Bl
+         sED5GAENwqy0p4VeXXnze6pd/y7Z86o6BnichqBQjgQqzb1y1SuRDfoVmolEaaqChVpT
+         1Qy2D6u4lVuSK7cGOx8e5YMUKYlyWg408kn1/UxMTaWpTwX4cpsMDmVMyzKCZmTEj6lj
+         meu6CEBp7fnvmzpvTOZXJqIxo1frazeAVVNdq2Oo4UiGVIUr+Y8RvKP3BRa/Sej7Mkne
+         7l0Q==
+X-Gm-Message-State: AGi0PuZHQc1z0hlCWiWmZ643+fuVZ2z6OaoCl9cI4xUSKxDmLqqDPYyc
+        /RDM2SXT2xyps34PBXOlPPg=
+X-Google-Smtp-Source: APiQypIi4/og4/HNrNIMTQ1xvfHSFwknvjONOuAhvP17Fjm8GXDXhsQF1IJtEimfQoCgQEfjxvh/+g==
+X-Received: by 2002:aa7:cf16:: with SMTP id a22mr3390029edy.77.1588338621396;
+        Fri, 01 May 2020 06:10:21 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.237])
+        by smtp.googlemail.com with ESMTPSA id b13sm402093eje.13.2020.05.01.06.10.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 May 2020 06:10:20 -0700 (PDT)
+Date:   Fri, 1 May 2020 15:10:18 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Jonathan Bakker <xc-racer2@live.ca>
+Cc:     kgene@kernel.org, robh+dt@kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.4 01/57] drm/bridge: analogix_dp: Split bind() into probe() and real bind()
-Date:   Thu, 30 Apr 2020 09:51:22 -0400
-Message-Id: <20200430135218.20372-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/13] arm: dts: s5pv210: fascinate4g: Add sleep GPIO
+ configuration
+Message-ID: <20200501131018.GA5154@kozik-lap>
+References: <20200426183604.28494-1-xc-racer2@live.ca>
+ <BN6PR04MB0660532FF97089208CCEEB2AA3AE0@BN6PR04MB0660.namprd04.prod.outlook.com>
+ <20200428100244.GA23963@kozik-lap>
+ <BN6PR04MB06605BE9E1559751E083B4E4A3AC0@BN6PR04MB0660.namprd04.prod.outlook.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <BN6PR04MB06605BE9E1559751E083B4E4A3AC0@BN6PR04MB0660.namprd04.prod.outlook.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+On Tue, Apr 28, 2020 at 04:49:36PM -0700, Jonathan Bakker wrote:
+> Hi Krzysztof,
+> 
+> On 2020-04-28 3:02 a.m., Krzysztof Kozlowski wrote:
+> > On Sun, Apr 26, 2020 at 11:35:53AM -0700, Jonathan Bakker wrote:
+> >> In order to minimize leakage current during sleep, set a config
+> >> for sleep GPIOs.
+> >>
+> >> Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
+> >> ---
+> >>  arch/arm/boot/dts/s5pv210-fascinate4g.dts | 242 ++++++++++++++++++++++
+> >>  1 file changed, 242 insertions(+)
+> >>
+> >> diff --git a/arch/arm/boot/dts/s5pv210-fascinate4g.dts b/arch/arm/boot/dts/s5pv210-fascinate4g.dts
+> >> index 07a8d9bbe5b8..94dcb9b64b9a 100644
+> >> --- a/arch/arm/boot/dts/s5pv210-fascinate4g.dts
+> >> +++ b/arch/arm/boot/dts/s5pv210-fascinate4g.dts
+> >> @@ -36,3 +36,245 @@
+> >>  		};
+> >>  	};
+> >>  };
+> >> +
+> >> +&pinctrl0 {
+> >> +	pinctrl-names = "default";
+> >> +	pinctrl-0 = <&sleep_cfg>;
+> >> +
+> >> +	sleep_cfg: sleep-cfg {
+> >> +		PIN_SLP(gpa0-0, PREV, NONE);
+> >> +		PIN_SLP(gpa0-1, PREV, NONE);
+> >> +		PIN_SLP(gpa0-2, PREV, NONE);
+> >> +		PIN_SLP(gpa0-3, OUT1, NONE);
+> > 
+> > I would be happy to see some reasoning why certain pins have disabled
+> > pull down (e.g. they are not connected or you use the same configuration
+> > as running one) and why you set them as output.
+> > 
+> 
+> Mostly it's copied from the vendor kernel configuration.  Without schematics, I can
+> only guess what's actually there.  I can go through and note what each pin appears
+> to be used for if you'd like.
 
-[ Upstream commit 83a196773b8bc6702f49df1eddc848180e350340 ]
+Then please mention that it is based on vendor kernel vx.y for product
+ABC.  In such case it will be enough.
 
-Analogix_dp driver acquires all its resources in the ->bind() callback,
-what is a bit against the component driver based approach, where the
-driver initialization is split into a probe(), where all resources are
-gathered, and a bind(), where all objects are created and a compound
-driver is initialized.
+> 
+> >> +		PIN_SLP(gpa0-4, PREV, NONE);
+> >> +		PIN_SLP(gpa0-5, PREV, NONE);
+> >> +		PIN_SLP(gpa0-6, PREV, NONE);
+> >> +		PIN_SLP(gpa0-7, PREV, NONE);
+> >> +
+> >> +		PIN_SLP(gpa1-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpa1-1, OUT0, NONE);
+> >> +		PIN_SLP(gpa1-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpa1-3, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpb-0, OUT0, NONE);
+> >> +		PIN_SLP(gpb-1, OUT1, NONE);
+> >> +		PIN_SLP(gpb-2, OUT0, NONE);
+> >> +		PIN_SLP(gpb-3, PREV, NONE);
+> >> +		PIN_SLP(gpb-4, INPUT, NONE);
+> >> +		PIN_SLP(gpb-5, PREV, NONE);
+> >> +		PIN_SLP(gpb-6, INPUT, DOWN);
+> >> +		PIN_SLP(gpb-7, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpc0-0, OUT0, NONE);
+> >> +		PIN_SLP(gpc0-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpc0-2, OUT0, NONE);
+> >> +		PIN_SLP(gpc0-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpc0-4, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpc1-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpc1-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpc1-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpc1-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpc1-4, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpd0-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpd0-1, OUT0, NONE);
+> >> +		PIN_SLP(gpd0-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpd0-3, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpd1-0, INPUT, NONE);
+> >> +		PIN_SLP(gpd1-1, INPUT, NONE);
+> >> +		PIN_SLP(gpd1-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpd1-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpd1-4, INPUT, DOWN);
+> >> +		PIN_SLP(gpd1-5, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpe0-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-4, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-5, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-6, INPUT, DOWN);
+> >> +		PIN_SLP(gpe0-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpe1-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpe1-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpe1-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpe1-3, OUT0, NONE);
+> >> +		PIN_SLP(gpe1-4, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpf0-0, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-1, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-2, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-3, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-4, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-5, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-6, OUT0, NONE);
+> >> +		PIN_SLP(gpf0-7, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpf1-0, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-1, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-2, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-3, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-4, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-5, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-6, OUT0, NONE);
+> >> +		PIN_SLP(gpf1-7, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpf2-0, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-1, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-2, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-3, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-4, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-5, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-6, OUT0, NONE);
+> >> +		PIN_SLP(gpf2-7, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpf3-0, OUT0, NONE);
+> >> +		PIN_SLP(gpf3-1, OUT0, NONE);
+> >> +		PIN_SLP(gpf3-2, OUT0, NONE);
+> >> +		PIN_SLP(gpf3-3, OUT0, NONE);
+> >> +		PIN_SLP(gpf3-4, PREV, NONE);
+> >> +		PIN_SLP(gpf3-5, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpg0-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpg0-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpg0-2, INPUT, NONE);
+> >> +		PIN_SLP(gpg0-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpg0-4, INPUT, DOWN);
+> >> +		PIN_SLP(gpg0-5, INPUT, DOWN);
+> >> +		PIN_SLP(gpg0-6, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpg1-0, OUT0, NONE);
+> >> +		PIN_SLP(gpg1-1, OUT1, NONE);
+> >> +		PIN_SLP(gpg1-2, PREV, NONE);
+> >> +		PIN_SLP(gpg1-3, OUT1, NONE);
+> >> +		PIN_SLP(gpg1-4, OUT1, NONE);
+> >> +		PIN_SLP(gpg1-5, OUT1, NONE);
+> >> +		PIN_SLP(gpg1-6, OUT1, NONE);
+> >> +
+> >> +		PIN_SLP(gpg2-0, OUT0, NONE);
+> >> +		PIN_SLP(gpg2-1, OUT0, NONE);
+> >> +		PIN_SLP(gpg2-2, INPUT, NONE);
+> >> +		PIN_SLP(gpg2-3, OUT0, NONE);
+> >> +		PIN_SLP(gpg2-4, OUT0, NONE);
+> >> +		PIN_SLP(gpg2-5, OUT0, NONE);
+> >> +		PIN_SLP(gpg2-6, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpg3-0, PREV, UP);
+> >> +		PIN_SLP(gpg3-1, PREV, UP);
+> >> +		PIN_SLP(gpg3-2, INPUT, NONE);
+> >> +		PIN_SLP(gpg3-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpg3-4, OUT0, NONE);
+> >> +		PIN_SLP(gpg3-5, OUT0, NONE);
+> >> +		PIN_SLP(gpg3-6, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpi-0, PREV, NONE);
+> > 
+> > No such name. Did you mean gpgi?
+> > 
+> > 
+> 
+> The node in s5pv210-pinctrl.dtsi is called "gpgi", but the i2s0_bus config
+> in that file uses just "gpi".  drivers/pinctrl/samsung/pinctrl-exynos-arm.c also
+> notes it just as "gpi".  I think the node should probably be renamed.
+> 
 
-Extract all the resource related operations to analogix_dp_probe() and
-analogix_dp_remove(), then call them before/after registration of the
-device components from the main Exynos DP and Rockchip DP drivers. Also
-move the plat_data initialization to the probe() to make it available for
-the analogix_dp_probe() function.
+Good point. Will you send a fix for gpgi->gpi?
 
-This fixes the multiple calls to the bind() of the DRM compound driver
-when the DP PHY driver is not yet loaded/probed:
+> >> +		PIN_SLP(gpi-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpi-2, PREV, NONE);
+> >> +		PIN_SLP(gpi-3, PREV, NONE);
+> >> +		PIN_SLP(gpi-4, PREV, NONE);
+> >> +		PIN_SLP(gpi-5, INPUT, DOWN);
+> >> +		PIN_SLP(gpi-6, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpj0-0, INPUT, NONE);
+> >> +		PIN_SLP(gpj0-1, INPUT, NONE);
+> >> +		PIN_SLP(gpj0-2, INPUT, NONE);
+> >> +		PIN_SLP(gpj0-3, INPUT, NONE);
+> >> +		PIN_SLP(gpj0-4, INPUT, NONE);
+> >> +		PIN_SLP(gpj0-5, INPUT, DOWN);
+> >> +		PIN_SLP(gpj0-6, OUT0, NONE);
+> >> +		PIN_SLP(gpj0-7, INPUT, NONE);
+> >> +
+> >> +		PIN_SLP(gpj1-0, OUT1, NONE);
+> >> +		PIN_SLP(gpj1-1, OUT0, NONE);
+> >> +		PIN_SLP(gpj1-2, INPUT, DOWN);
+> >> +		PIN_SLP(gpj1-3, PREV, NONE);
+> >> +		PIN_SLP(gpj1-4, PREV, NONE);
+> >> +		PIN_SLP(gpj1-5, OUT0, NONE);
+> >> +
+> >> +		PIN_SLP(gpj2-0, INPUT, DOWN);
+> >> +		PIN_SLP(gpj2-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpj2-2, OUT0, NONE);
+> >> +		PIN_SLP(gpj2-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpj2-4, INPUT, DOWN);
+> >> +		PIN_SLP(gpj2-5, PREV, NONE);
+> >> +		PIN_SLP(gpj2-6, PREV, NONE);
+> >> +		PIN_SLP(gpj2-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(gpj3-0, INPUT, NONE);
+> >> +		PIN_SLP(gpj3-1, INPUT, NONE);
+> >> +		PIN_SLP(gpj3-2, OUT0, NONE);
+> >> +		PIN_SLP(gpj3-3, INPUT, DOWN);
+> >> +		PIN_SLP(gpj3-4, INPUT, NONE);
+> >> +		PIN_SLP(gpj3-5, INPUT, NONE);
+> >> +		PIN_SLP(gpj3-6, INPUT, NONE);
+> >> +		PIN_SLP(gpj3-7, INPUT, NONE);
+> >> +
+> >> +		PIN_SLP(gpj4-0, INPUT, NONE);
+> >> +		PIN_SLP(gpj4-1, INPUT, DOWN);
+> >> +		PIN_SLP(gpj4-2, PREV, NONE);
+> >> +		PIN_SLP(gpj4-3, INPUT, NONE);
+> >> +		PIN_SLP(gpj4-4, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp01-0, OUT1, NONE);
+> >> +		PIN_SLP(mp01-1, OUT0, NONE);
+> >> +		PIN_SLP(mp01-2, INPUT, DOWN);
+> >> +		PIN_SLP(mp01-3, INPUT, DOWN);
+> >> +		PIN_SLP(mp01-4, OUT1, NONE);
+> >> +		PIN_SLP(mp01-5, INPUT, DOWN);
+> >> +		PIN_SLP(mp01-6, INPUT, DOWN);
+> >> +		PIN_SLP(mp01-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp02-0, INPUT, DOWN);
+> >> +		PIN_SLP(mp02-1, INPUT, DOWN);
+> >> +		PIN_SLP(mp02-2, INPUT, NONE);
+> >> +		PIN_SLP(mp02-3, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp03-0, INPUT, DOWN);
+> >> +		PIN_SLP(mp03-1, INPUT, DOWN);
+> >> +		PIN_SLP(mp03-2, OUT1, NONE);
+> >> +		PIN_SLP(mp03-3, OUT0, NONE);
+> >> +		PIN_SLP(mp03-4, INPUT, NONE);
+> >> +		PIN_SLP(mp03-5, OUT0, NONE);
+> >> +		PIN_SLP(mp03-6, INPUT, DOWN);
+> >> +		PIN_SLP(mp03-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp04-0, INPUT, DOWN);
+> >> +		PIN_SLP(mp04-1, OUT0, NONE);
+> >> +		PIN_SLP(mp04-2, INPUT, DOWN);
+> >> +		PIN_SLP(mp04-3, OUT0, NONE);
+> >> +		PIN_SLP(mp04-4, INPUT, DOWN);
+> >> +		PIN_SLP(mp04-5, INPUT, DOWN);
+> >> +		PIN_SLP(mp04-6, OUT0, NONE);
+> >> +		PIN_SLP(mp04-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp05-0, INPUT, NONE);
+> >> +		PIN_SLP(mp05-1, INPUT, NONE);
+> >> +		PIN_SLP(mp05-2, INPUT, NONE);
+> >> +		PIN_SLP(mp05-3, INPUT, NONE);
+> >> +		PIN_SLP(mp05-4, INPUT, DOWN);
+> >> +		PIN_SLP(mp05-5, OUT0, NONE);
+> >> +		PIN_SLP(mp05-6, INPUT, DOWN);
+> >> +		PIN_SLP(mp05-7, PREV, NONE);
+> >> +
+> >> +		PIN_SLP(mp06-0, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-1, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-2, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-3, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-4, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-5, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-6, INPUT, DOWN);
+> >> +		PIN_SLP(mp06-7, INPUT, DOWN);
+> >> +
+> >> +		PIN_SLP(mp07-0, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-1, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-2, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-3, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-4, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-5, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-6, INPUT, DOWN);
+> >> +		PIN_SLP(mp07-7, INPUT, DOWN);
+> >> +	};
+> > 
+> > What about gphX?
+> 
+> The gphX pins are in the alive area and don't have power down configs, they retain their
+> state over suspend.  Therefore the samsung,pin-con-pdn and samsung,pin-pud-pdn properties
+> have no effect (they're analogous to the gpxX pins in later Samsung SoCs).
 
-[drm] Exynos DRM: using 14400000.fimd device for DMA mapping operations
-exynos-drm exynos-drm: bound 14400000.fimd (ops fimd_component_ops [exynosdrm])
-exynos-drm exynos-drm: bound 14450000.mixer (ops mixer_component_ops [exynosdrm])
-exynos-dp 145b0000.dp-controller: no DP phy configured
-exynos-drm exynos-drm: failed to bind 145b0000.dp-controller (ops exynos_dp_ops [exynosdrm]): -517
-exynos-drm exynos-drm: master bind failed: -517
-...
-[drm] Exynos DRM: using 14400000.fimd device for DMA mapping operations
-exynos-drm exynos-drm: bound 14400000.fimd (ops hdmi_enable [exynosdrm])
-exynos-drm exynos-drm: bound 14450000.mixer (ops hdmi_enable [exynosdrm])
-exynos-drm exynos-drm: bound 145b0000.dp-controller (ops hdmi_enable [exynosdrm])
-exynos-drm exynos-drm: bound 14530000.hdmi (ops hdmi_enable [exynosdrm])
-[drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
-Console: switching to colour frame buffer device 170x48
-exynos-drm exynos-drm: fb0: exynosdrmfb frame buffer device
-[drm] Initialized exynos 1.1.0 20180330 for exynos-drm on minor 1
-...
+Ah, good, thanks.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200310103427.26048-1-m.szyprowski@samsung.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- .../drm/bridge/analogix/analogix_dp_core.c    | 33 +++++++++++------
- drivers/gpu/drm/exynos/exynos_dp.c            | 29 ++++++++-------
- .../gpu/drm/rockchip/analogix_dp-rockchip.c   | 36 ++++++++++---------
- include/drm/bridge/analogix_dp.h              |  5 +--
- 4 files changed, 61 insertions(+), 42 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index 22885dceaa177..1f26890a8da6e 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -1635,8 +1635,7 @@ static ssize_t analogix_dpaux_transfer(struct drm_dp_aux *aux,
- }
- 
- struct analogix_dp_device *
--analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
--		 struct analogix_dp_plat_data *plat_data)
-+analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
- 	struct analogix_dp_device *dp;
-@@ -1739,22 +1738,30 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
- 					irq_flags, "analogix-dp", dp);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to request irq\n");
--		goto err_disable_pm_runtime;
-+		return ERR_PTR(ret);
- 	}
- 	disable_irq(dp->irq);
- 
-+	return dp;
-+}
-+EXPORT_SYMBOL_GPL(analogix_dp_probe);
-+
-+int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
-+{
-+	int ret;
-+
- 	dp->drm_dev = drm_dev;
- 	dp->encoder = dp->plat_data->encoder;
- 
- 	dp->aux.name = "DP-AUX";
- 	dp->aux.transfer = analogix_dpaux_transfer;
--	dp->aux.dev = &pdev->dev;
-+	dp->aux.dev = dp->dev;
- 
- 	ret = drm_dp_aux_register(&dp->aux);
- 	if (ret)
--		return ERR_PTR(ret);
-+		return ret;
- 
--	pm_runtime_enable(dev);
-+	pm_runtime_enable(dp->dev);
- 
- 	ret = analogix_dp_create_bridge(drm_dev, dp);
- 	if (ret) {
-@@ -1762,13 +1769,12 @@ analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
- 		goto err_disable_pm_runtime;
- 	}
- 
--	return dp;
-+	return 0;
- 
- err_disable_pm_runtime:
-+	pm_runtime_disable(dp->dev);
- 
--	pm_runtime_disable(dev);
--
--	return ERR_PTR(ret);
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(analogix_dp_bind);
- 
-@@ -1785,10 +1791,15 @@ void analogix_dp_unbind(struct analogix_dp_device *dp)
- 
- 	drm_dp_aux_unregister(&dp->aux);
- 	pm_runtime_disable(dp->dev);
--	clk_disable_unprepare(dp->clock);
- }
- EXPORT_SYMBOL_GPL(analogix_dp_unbind);
- 
-+void analogix_dp_remove(struct analogix_dp_device *dp)
-+{
-+	clk_disable_unprepare(dp->clock);
-+}
-+EXPORT_SYMBOL_GPL(analogix_dp_remove);
-+
- #ifdef CONFIG_PM
- int analogix_dp_suspend(struct analogix_dp_device *dp)
- {
-diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
-index 3a0f0ba8c63a0..e0cfae744afc9 100644
---- a/drivers/gpu/drm/exynos/exynos_dp.c
-+++ b/drivers/gpu/drm/exynos/exynos_dp.c
-@@ -158,15 +158,8 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
- 	struct drm_device *drm_dev = data;
- 	int ret;
- 
--	dp->dev = dev;
- 	dp->drm_dev = drm_dev;
- 
--	dp->plat_data.dev_type = EXYNOS_DP;
--	dp->plat_data.power_on_start = exynos_dp_poweron;
--	dp->plat_data.power_off = exynos_dp_poweroff;
--	dp->plat_data.attach = exynos_dp_bridge_attach;
--	dp->plat_data.get_modes = exynos_dp_get_modes;
--
- 	if (!dp->plat_data.panel && !dp->ptn_bridge) {
- 		ret = exynos_dp_dt_parse_panel(dp);
- 		if (ret)
-@@ -184,13 +177,11 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
- 
- 	dp->plat_data.encoder = encoder;
- 
--	dp->adp = analogix_dp_bind(dev, dp->drm_dev, &dp->plat_data);
--	if (IS_ERR(dp->adp)) {
-+	ret = analogix_dp_bind(dp->adp, dp->drm_dev);
-+	if (ret)
- 		dp->encoder.funcs->destroy(&dp->encoder);
--		return PTR_ERR(dp->adp);
--	}
- 
--	return 0;
-+	return ret;
- }
- 
- static void exynos_dp_unbind(struct device *dev, struct device *master,
-@@ -221,6 +212,7 @@ static int exynos_dp_probe(struct platform_device *pdev)
- 	if (!dp)
- 		return -ENOMEM;
- 
-+	dp->dev = dev;
- 	/*
- 	 * We just use the drvdata until driver run into component
- 	 * add function, and then we would set drvdata to null, so
-@@ -246,16 +238,29 @@ static int exynos_dp_probe(struct platform_device *pdev)
- 
- 	/* The remote port can be either a panel or a bridge */
- 	dp->plat_data.panel = panel;
-+	dp->plat_data.dev_type = EXYNOS_DP;
-+	dp->plat_data.power_on_start = exynos_dp_poweron;
-+	dp->plat_data.power_off = exynos_dp_poweroff;
-+	dp->plat_data.attach = exynos_dp_bridge_attach;
-+	dp->plat_data.get_modes = exynos_dp_get_modes;
- 	dp->plat_data.skip_connector = !!bridge;
-+
- 	dp->ptn_bridge = bridge;
- 
- out:
-+	dp->adp = analogix_dp_probe(dev, &dp->plat_data);
-+	if (IS_ERR(dp->adp))
-+		return PTR_ERR(dp->adp);
-+
- 	return component_add(&pdev->dev, &exynos_dp_ops);
- }
- 
- static int exynos_dp_remove(struct platform_device *pdev)
- {
-+	struct exynos_dp_device *dp = platform_get_drvdata(pdev);
-+
- 	component_del(&pdev->dev, &exynos_dp_ops);
-+	analogix_dp_remove(dp->adp);
- 
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-index f38f5e113c6b3..ce98c08aa8b44 100644
---- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-@@ -325,15 +325,9 @@ static int rockchip_dp_bind(struct device *dev, struct device *master,
- 			    void *data)
- {
- 	struct rockchip_dp_device *dp = dev_get_drvdata(dev);
--	const struct rockchip_dp_chip_data *dp_data;
- 	struct drm_device *drm_dev = data;
- 	int ret;
- 
--	dp_data = of_device_get_match_data(dev);
--	if (!dp_data)
--		return -ENODEV;
--
--	dp->data = dp_data;
- 	dp->drm_dev = drm_dev;
- 
- 	ret = rockchip_dp_drm_create_encoder(dp);
-@@ -344,16 +338,9 @@ static int rockchip_dp_bind(struct device *dev, struct device *master,
- 
- 	dp->plat_data.encoder = &dp->encoder;
- 
--	dp->plat_data.dev_type = dp->data->chip_type;
--	dp->plat_data.power_on_start = rockchip_dp_poweron_start;
--	dp->plat_data.power_off = rockchip_dp_powerdown;
--	dp->plat_data.get_modes = rockchip_dp_get_modes;
--
--	dp->adp = analogix_dp_bind(dev, dp->drm_dev, &dp->plat_data);
--	if (IS_ERR(dp->adp)) {
--		ret = PTR_ERR(dp->adp);
-+	ret = analogix_dp_bind(dp->adp, drm_dev);
-+	if (ret)
- 		goto err_cleanup_encoder;
--	}
- 
- 	return 0;
- err_cleanup_encoder:
-@@ -368,8 +355,6 @@ static void rockchip_dp_unbind(struct device *dev, struct device *master,
- 
- 	analogix_dp_unbind(dp->adp);
- 	dp->encoder.funcs->destroy(&dp->encoder);
--
--	dp->adp = ERR_PTR(-ENODEV);
- }
- 
- static const struct component_ops rockchip_dp_component_ops = {
-@@ -380,10 +365,15 @@ static const struct component_ops rockchip_dp_component_ops = {
- static int rockchip_dp_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-+	const struct rockchip_dp_chip_data *dp_data;
- 	struct drm_panel *panel = NULL;
- 	struct rockchip_dp_device *dp;
- 	int ret;
- 
-+	dp_data = of_device_get_match_data(dev);
-+	if (!dp_data)
-+		return -ENODEV;
-+
- 	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
- 	if (ret < 0)
- 		return ret;
-@@ -394,7 +384,12 @@ static int rockchip_dp_probe(struct platform_device *pdev)
- 
- 	dp->dev = dev;
- 	dp->adp = ERR_PTR(-ENODEV);
-+	dp->data = dp_data;
- 	dp->plat_data.panel = panel;
-+	dp->plat_data.dev_type = dp->data->chip_type;
-+	dp->plat_data.power_on_start = rockchip_dp_poweron_start;
-+	dp->plat_data.power_off = rockchip_dp_powerdown;
-+	dp->plat_data.get_modes = rockchip_dp_get_modes;
- 
- 	ret = rockchip_dp_of_probe(dp);
- 	if (ret < 0)
-@@ -402,12 +397,19 @@ static int rockchip_dp_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, dp);
- 
-+	dp->adp = analogix_dp_probe(dev, &dp->plat_data);
-+	if (IS_ERR(dp->adp))
-+		return PTR_ERR(dp->adp);
-+
- 	return component_add(dev, &rockchip_dp_component_ops);
- }
- 
- static int rockchip_dp_remove(struct platform_device *pdev)
- {
-+	struct rockchip_dp_device *dp = platform_get_drvdata(pdev);
-+
- 	component_del(&pdev->dev, &rockchip_dp_component_ops);
-+	analogix_dp_remove(dp->adp);
- 
- 	return 0;
- }
-diff --git a/include/drm/bridge/analogix_dp.h b/include/drm/bridge/analogix_dp.h
-index 7aa2f93da49ca..b0dcc07334a1e 100644
---- a/include/drm/bridge/analogix_dp.h
-+++ b/include/drm/bridge/analogix_dp.h
-@@ -42,9 +42,10 @@ int analogix_dp_resume(struct analogix_dp_device *dp);
- int analogix_dp_suspend(struct analogix_dp_device *dp);
- 
- struct analogix_dp_device *
--analogix_dp_bind(struct device *dev, struct drm_device *drm_dev,
--		 struct analogix_dp_plat_data *plat_data);
-+analogix_dp_probe(struct device *dev, struct analogix_dp_plat_data *plat_data);
-+int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev);
- void analogix_dp_unbind(struct analogix_dp_device *dp);
-+void analogix_dp_remove(struct analogix_dp_device *dp);
- 
- int analogix_dp_start_crc(struct drm_connector *connector);
- int analogix_dp_stop_crc(struct drm_connector *connector);
--- 
-2.20.1
+Best regards,
+Krzysztof
 
