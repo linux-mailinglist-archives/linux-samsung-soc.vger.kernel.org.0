@@ -2,114 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1550C1C219F
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 May 2020 01:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 823EA1C235C
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 May 2020 07:35:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728178AbgEAXvz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 1 May 2020 19:51:55 -0400
-Received: from mail-dm6nam12olkn2022.outbound.protection.outlook.com ([40.92.22.22]:56160
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727963AbgEAXvn (ORCPT
+        id S1726745AbgEBFfA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 2 May 2020 01:35:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726782AbgEBFfA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 1 May 2020 19:51:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ciS1YIFugGx1qIUtnhugOatGoeNjxEIJmvzcSR+oDVUbHgmKODMesngg7M+3nVZ096ihOUtcNF7RsBbF+ZfrwzeU6nylHKKS/0ptSLkAAYRlitYjr+VdqUywBXqjAe0wd6PD89t3cITIkmrR2HJqQuB1QkXgbFN7IY1JLhIrdlBMgAWNlr7P7GucUHUCH32JCFWtKZiRfOvne5Zsj6f/NemVhToSBrZLpYmbS3EoQOG1NRFwXn/hpzG/mZ5CPVChdeXEiz14AYBSbpchcvJyBiff+eBpwxKNucdqMVaxhgtxnBmkMFhOr+MEGkFYwlLo08XHNysnHtLjk/LvmSrM1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P5O1LOzz2sPZQKkPD2FEZaAIqrK1URX6n2USXrOZGY4=;
- b=MY1Btq/5Ka/dhqJLd2bPu7ygE+vrT3bVzTeK5LQ8i1uvNcRK6YqMtfEtcgUOfEwMj9HOQuqhbhxx0QiaPigcJeHtdrdT0v6jElS99k62HN2y8tjlKUDeJpLCey45zI4V+KTK8Em5qQs36zcgOYnggBM2QB2WTZCaq8zsBVIffsFR6FJ9VWQY80ShGUyWXrD52xbJvZ5pSBs79p12izbaUHAqc3jGepQin6a6fmD975VnmONBy8j8FYAmisRqPaYC4HJEj/DVQHl/e8WDmrxcso1XnfXS6gHGqO3onPjBBwPDcZLqt68S+c+hJ/kZaHcErzKhEgfx2w8iJfLooOjfTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=live.ca; dmarc=pass action=none header.from=live.ca; dkim=pass
- header.d=live.ca; arc=none
-Received: from DM6NAM12FT056.eop-nam12.prod.protection.outlook.com
- (2a01:111:e400:fc64::4d) by
- DM6NAM12HT118.eop-nam12.prod.protection.outlook.com (2a01:111:e400:fc64::126)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.12; Fri, 1 May
- 2020 23:51:41 +0000
-Received: from BN6PR04MB0660.namprd04.prod.outlook.com
- (2a01:111:e400:fc64::46) by DM6NAM12FT056.mail.protection.outlook.com
- (2a01:111:e400:fc64::460) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.12 via Frontend
- Transport; Fri, 1 May 2020 23:51:41 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:500BD4FFDDA152933E5711F27EDDA5554E11B0EFC217C2C5FA8EF22AFA9B37A2;UpperCasedChecksum:376F5A11BF33F2485363DB9171BA7F4E04697A33EF32E87F25E6AA8627C9E564;SizeAsReceived:7853;Count:50
-Received: from BN6PR04MB0660.namprd04.prod.outlook.com
- ([fe80::ad10:4127:4bc8:76fc]) by BN6PR04MB0660.namprd04.prod.outlook.com
- ([fe80::ad10:4127:4bc8:76fc%6]) with mapi id 15.20.2958.027; Fri, 1 May 2020
- 23:51:41 +0000
-From:   Jonathan Bakker <xc-racer2@live.ca>
-To:     kgene@kernel.org, krzk@kernel.org, robh+dt@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Jonathan Bakker <xc-racer2@live.ca>
-Subject: [PATCH v2 18/18] ARM: dts: s5pv210: Correct gpi gpio node name
-Date:   Fri,  1 May 2020 16:50:19 -0700
-Message-ID: <BN6PR04MB06608BAC9303ECB0F6118AE3A3AB0@BN6PR04MB0660.namprd04.prod.outlook.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200501235019.24022-1-xc-racer2@live.ca>
-References: <20200426183604.28494-1-xc-racer2@live.ca>
- <20200501235019.24022-1-xc-racer2@live.ca>
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MWHPR17CA0058.namprd17.prod.outlook.com
- (2603:10b6:300:93::20) To BN6PR04MB0660.namprd04.prod.outlook.com
- (2603:10b6:404:d9::21)
-X-Microsoft-Original-Message-ID: <20200501235019.24022-19-xc-racer2@live.ca>
+        Sat, 2 May 2020 01:35:00 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBCEDC08E859
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  1 May 2020 22:34:59 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id e6so915597pjt.4
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 01 May 2020 22:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=+CLCV3sHPXOf3AMMGXrNmQ4JAneKOVK6Ti2wK2FOfe8=;
+        b=UeKHXnsgB9aaYZldayc5sPljcGogKdUYyIY+IKjK3pIccsE4MfVRLidWAD6YtXLLqL
+         biE+Cs0qAErH/B8d+eSkVlPyJWrvlydNawvNvPPnWHWqQyXeXD29j9O+gt0PPQR0t/6m
+         jxU0TVxzb8p5oEeiRd8sbqTX4YS4u0eYY2pUCf8LQ2PP8gGU5TTVXr7C9M9MY9Ngg5LQ
+         8rK+XnglOn0XxaJ/hLkFMhc9cGiMdnSEaAVDh0GGbGKCLkgKKQxnnRs3wGc2T9qL5n9S
+         qAxlf5GdQ0WqIucdeAeENXEeufHfAdiaoMp3mW5QDWna/UHyIJz1EIIC1LuHD9oWkjx4
+         vtKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=+CLCV3sHPXOf3AMMGXrNmQ4JAneKOVK6Ti2wK2FOfe8=;
+        b=ki4nWY7vXIM/620M+22WVElLRwfeQySrwTuNGMnCdlVDm+FF6A/suBFBOqtXSFwvDt
+         vxFgwajTyMODw6OCnlREIWSt0iCIPKCbYC9s+7PhlAp+KLe9rJV034e0iRO0KGfs4YVy
+         KMg47dTPXKmO07Y7mMdT69ALReQA9VTbRb+1aUa5PoMal+nqXEL5c9G/fmoZxl5gCuVH
+         RQRJSKlIrKpCIJGnL7Ot9JfynmpaYSXHf0WAL+VkwiEw5s9OTNnxSsMcHq0VWWT3Ihz0
+         mT1JQwXzAVUPqDa3Uak9q6F9rLd0ca9Wz3oxE1UShPeyF4qyU2fdiTzHLpQ/KpO/5dbj
+         ZeTQ==
+X-Gm-Message-State: AGi0PuZyybpoFGNUfvmIpgxBim+7xbo4jQMcYbNPM8+XntL0CU77hLwV
+        Ack5grLqzwmhCqUTUsoqZwtpYeVvlRjrYpURK0Q=
+X-Google-Smtp-Source: APiQypKMGfSzUCmf0a2TenLQfqnzPmr34msnLPa7hGKNIrAFcVPxF2mIt/H3aWYrWcIeAlCQYX22o72z85vFRMKd3hk=
+X-Received: by 2002:a17:90a:68c1:: with SMTP id q1mr3795706pjj.35.1588397699244;
+ Fri, 01 May 2020 22:34:59 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from jon-hp-6570b.telus (2001:569:fb68:9c00:8067:f823:1e15:7520) by MWHPR17CA0058.namprd17.prod.outlook.com (2603:10b6:300:93::20) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2958.20 via Frontend Transport; Fri, 1 May 2020 23:51:39 +0000
-X-Mailer: git-send-email 2.20.1
-X-Microsoft-Original-Message-ID: <20200501235019.24022-19-xc-racer2@live.ca>
-X-TMN:  [0ZkQ7nAcwNP61UKo6jm5CT6RYSlM87jxE50gKlmG/iNiAVPEIlo/p2aAykdGkuxA]
-X-MS-PublicTrafficType: Email
-X-IncomingHeaderCount: 50
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-Correlation-Id: 45c080d4-55e4-471f-7ec0-08d7ee2a983a
-X-MS-TrafficTypeDiagnostic: DM6NAM12HT118:
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JepEKslIU/Pr/uwfG2+Y0K/uV9au7rZl+8ShLP7x0rdEdbVKiDnj1hYWWVOE76srjlFlIfKFzUaX5TDTD/zFAOjUS42FxqbYMclrVbz2fNwRYa154VEz9OjI999YCM1zbbqJLqjY6sXQiVE28Iy4MaXzkFzi5sdXVCTtyopAe56zc3sYoOkqLQN8OPcIXt79fT/hYoigJyjsZNR2YsQkIg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:0;SRV:;IPV:NLI;SFV:NSPM;H:BN6PR04MB0660.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:;DIR:OUT;SFP:1901;
-X-MS-Exchange-AntiSpam-MessageData: XQuTixmKn6b9MsRaBkt/+ezCRX3fnvFFTqeUwoKzBMasII7EW0kVOBjuksND2SeTj2J5ErRigCcnxRKMgLK1X1zo60EBpDzuEZtZgMMkNrVNsP7Jron9hiCoYkkBsmzACHQ1YI5jpQoY6QszecM8pb20o6gM4V/Q9eiAjqJeKFVExoqr+pSPrEdStDsuPrjWYlalEF7mizBq3x+88ySUAQ==
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45c080d4-55e4-471f-7ec0-08d7ee2a983a
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2020 23:51:41.1629
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6NAM12HT118
+Received: by 2002:a17:90a:3227:0:0:0:0 with HTTP; Fri, 1 May 2020 22:34:58
+ -0700 (PDT)
+Reply-To: cafodhelporg@gmail.com
+From:   CAFOD UK <inffoffo2@gmail.com>
+Date:   Sat, 2 May 2020 06:34:58 +0100
+Message-ID: <CAMdM3SHNyCUc049BE6Z36oPDO=R+2VttaiPiEyhh0bkqrO5OWA@mail.gmail.com>
+Subject: CAFOD AID UK
+To:     cafodhelporg <cafodhelporg@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The node name was gpgi, but the pinctrl driver was registering the pins
-as just gpi and the "samsung,pins" i2s0 pinctrl entries refer to gpi.
-The public s5pc110 datasheet also refers to these pins as just gpi,
-so let's make sure everything is in sync and rename the node to gpi.
-
-Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
----
- arch/arm/boot/dts/s5pv210-pinctrl.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm/boot/dts/s5pv210-pinctrl.dtsi b/arch/arm/boot/dts/s5pv210-pinctrl.dtsi
-index 609f323d0805..5e8b66281f01 100644
---- a/arch/arm/boot/dts/s5pv210-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/s5pv210-pinctrl.dtsi
-@@ -202,7 +202,7 @@
- 		#interrupt-cells = <2>;
- 	};
- 
--	gpgi: gpgi {
-+	gpi: gpi {
- 		gpio-controller;
- 		#gpio-cells = <2>;
- 	};
 -- 
-2.20.1
+CAFOD,
+Romero House,
+55 Westminster Bridge Road,
+London, SE1 7JB
+www.cafod.org.uk
 
+
+
+
+
+Attn, Approved Coordinator
+
+
+The Catholic Agency for Overseas Development (Cafod) London UK has
+approved your Country as one of the Countries to be assisted for
+Humanitarian Empowerment to the less privilege people, Youths
+Education scholarship scheme as this new program has been inaugurated
+in our head office in London.
+
+
+In order to achieve these aims, we requested to appoint you as our
+Coordinator that would assist us in handling of this program in your
+Country as we have approved some fund to be use for this Humanitarian
+mobilization program.
+
+
+
+This humanitarian fund allocated for your Country will be release to
+you as soon as we approved you as our new Coordinator to start this
+project, if this coordinatorship offer is accepted by you then kindly
+send your Full Names, Full address, Your Scanned ID Card Or your copy
+Scanned International passport, Phone Numbers and your sizable
+Photograph to enable us issue you our official ID card and the legal
+certificate as our new coordinator in your Country.
+
+
+Thanks
+Ms. Anna Ford
+CAFOD's Head PRO
