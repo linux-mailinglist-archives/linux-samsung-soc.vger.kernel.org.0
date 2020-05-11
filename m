@@ -2,159 +2,153 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EF1D1CE178
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 11 May 2020 19:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2511CE4AD
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 11 May 2020 21:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730760AbgEKRTk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 May 2020 13:19:40 -0400
-Received: from mailout2.samsung.com ([203.254.224.25]:36910 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730376AbgEKRTk (ORCPT
+        id S1731243AbgEKTkY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 May 2020 15:40:24 -0400
+Received: from mail-oln040092010057.outbound.protection.outlook.com ([40.92.10.57]:13943
+        "EHLO NAM04-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729453AbgEKTkY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 May 2020 13:19:40 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20200511171936epoutp025b2e6b03e3fe0b34d9f193283d9b2230~OCPdMSDs-0300703007epoutp02W
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 May 2020 17:19:36 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20200511171936epoutp025b2e6b03e3fe0b34d9f193283d9b2230~OCPdMSDs-0300703007epoutp02W
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1589217576;
-        bh=XkZoF8bL+bmw6UFZu9nmezi2UN3bV2DKzUpjNkExP+A=;
-        h=From:To:In-Reply-To:Subject:Date:References:From;
-        b=RuqsoxaZPwCjgCwCu+zmgMdSh1sO9TFDsQTy/FdkdtpWhttU1KnAMIYRepj2DdSF/
-         QiZLIhYqCbBkRvZrwNMdnH/qdCKw3nwMaFeVCWzQ2x9FvPO2XOLPMX7UkvBcNbGlc5
-         odqZ6Wagfn4F4q4bxnrHGJ7YdmSXPNgxOIO7f+No=
-Received: from epsmges5p2new.samsung.com (unknown [182.195.42.74]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20200511171935epcas5p4837446790187456ca2d44680eed9d347~OCPb2hmUQ2639726397epcas5p4u;
-        Mon, 11 May 2020 17:19:35 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        30.20.23569.72989BE5; Tue, 12 May 2020 02:19:35 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20200511171934epcas5p3d2a352c98597f5e2fb675335f44045e8~OCPbJPusS2275922759epcas5p3n;
-        Mon, 11 May 2020 17:19:34 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200511171934epsmtrp286f54a97071b1c89e911cda715216d0e~OCPbIfG0q1266012660epsmtrp2b;
-        Mon, 11 May 2020 17:19:34 +0000 (GMT)
-X-AuditID: b6c32a4a-3c7ff70000005c11-82-5eb989276487
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        05.EA.25866.62989BE5; Tue, 12 May 2020 02:19:34 +0900 (KST)
-Received: from alimakhtar02 (unknown [107.108.234.165]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200511171931epsmtip2f45b88acd7da81b800bef79fd132c195~OCPYb2bv30769707697epsmtip2o;
-        Mon, 11 May 2020 17:19:31 +0000 (GMT)
-From:   "Alim Akhtar" <alim.akhtar@samsung.com>
-To:     "'Krzysztof Kozlowski'" <krzk@kernel.org>,
-        "'Jonathan Cameron'" <jic23@kernel.org>,
-        "'Hartmut Knaack'" <knaack.h@gmx.de>,
-        "'Lars-Peter Clausen'" <lars@metafoo.de>,
-        "'Peter Meerwald-Stadler'" <pmeerw@pmeerw.net>,
-        "'Kukjin Kim'" <kgene@kernel.org>, <linux-iio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-In-Reply-To: <20200511083348.7577-1-krzk@kernel.org>
-Subject: RE: [PATCH] iio: adc: exynos: Simplify Exynos7-specific init
-Date:   Mon, 11 May 2020 22:49:28 +0530
-Message-ID: <037501d627b8$56f06870$04d13950$@samsung.com>
-MIME-Version: 1.0
+        Mon, 11 May 2020 15:40:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OUDmzzUDI02pF8V3/IOxVAhSxSZEnwsNrbXg7AfZPDTLh8Zjc6FC8DJxb6AXNs+uWirxptpuFepXMBTJXQjbeOx1pu2mLVvLeLtIeyP8IVCh6yh4T9IwUo+QEkgD4edeGpKioSRhzTULNChlQuu2gW+8c8sNDsaj73MXL939HGmHVc03oxM5eVf0W3HrBdSqlxktEkf23rGoheqzW9dDgQdFSkTG2owrnXPawIKncKbdXam7obOE/ui8cPyGq2ZtyOeT/sUd6dU9F+Re4Qy6hpyHtONBPUi39RjBzlXUlCidrfUnDtsrWQWVOY+zSetvS/nYxfgAxnVyqd+X0BDUiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oPe79cHYrLT7fgnm2xmrMQZ2LOTrgl7ADSAeP23qE8A=;
+ b=nOYUbV4SkLmFsp4h5TBQ2viVkrgc9S1odFbwk0YPOrQdODEd+72FsS3eVh3qF8lrD3pa9/cQ0coB/f+LrJpc/BddKja4groHs7mW6ABkjPwdCGT14ZcSiBUj4340tbG5IUq61Shk40uiX0Pc11iRaAYCrDxsAbOrb9Nq2PKuIA0cVngGD0Tx16j9y9UAMOxhnMvO79crKYk9OJNTFKtBDOD/c+W5ePOEN+rUgYj7By9bull0XJmmOtqoCC7sM6WlQsxSYPaQpwetd6cNhUqXOTgInsScmIK3w5DN3LOh6VdcJy0peQrds+mD2Xp0xodxemGmFrhw8JmZ8umd0iEHtQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=live.ca; dmarc=pass action=none header.from=live.ca; dkim=pass
+ header.d=live.ca; arc=none
+Received: from SN1NAM04FT055.eop-NAM04.prod.protection.outlook.com
+ (10.152.88.54) by SN1NAM04HT120.eop-NAM04.prod.protection.outlook.com
+ (10.152.89.75) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2979.27; Mon, 11 May
+ 2020 19:40:21 +0000
+Received: from BN6PR04MB0660.namprd04.prod.outlook.com
+ (2a01:111:e400:7e4c::50) by SN1NAM04FT055.mail.protection.outlook.com
+ (2a01:111:e400:7e4c::276) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2979.27 via Frontend
+ Transport; Mon, 11 May 2020 19:40:21 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:72E7EE7FA8188B73B014FD6571BA844966295E2419F5255A20FE51EC8D36D6A4;UpperCasedChecksum:F1D8481A5A4CBA010304E954551F802575924E9DA2F1B2C6E9DA84A6B162EFB1;SizeAsReceived:9121;Count:50
+Received: from BN6PR04MB0660.namprd04.prod.outlook.com
+ ([fe80::ad10:4127:4bc8:76fc]) by BN6PR04MB0660.namprd04.prod.outlook.com
+ ([fe80::ad10:4127:4bc8:76fc%6]) with mapi id 15.20.2979.033; Mon, 11 May 2020
+ 19:40:21 +0000
+Subject: Re: [PATCH] tty: serial: samsung: Correct clock selection logic
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     kgene@kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <BN6PR04MB06604E63833EA41837EBF77BA3A30@BN6PR04MB0660.namprd04.prod.outlook.com>
+ <20200511100836.GA16828@kozik-lap>
+From:   Jonathan Bakker <xc-racer2@live.ca>
+Message-ID: <BN6PR04MB0660B66569974294E24F2044A3A10@BN6PR04MB0660.namprd04.prod.outlook.com>
+Date:   Mon, 11 May 2020 12:40:18 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+In-Reply-To: <20200511100836.GA16828@kozik-lap>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJ1pKagA2Ry5zpOzQca1EbCUSXy4gH86Yp2p1Q/gjA=
-Content-Language: en-in
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsWy7bCmpq565844gz3d3BYPmlYxWfQ/fs1s
-        sev/G2aL8+c3sFssmTyf1WLT42usFvOOvGOxuLxrDpvFjPP7mCx+7zrG7sDl8eFjnMemVZ1s
-        HpuX1HsseXOI1eN88xFGj8+b5ALYorhsUlJzMstSi/TtErgyFl3+wFSwk7ei9dUpxgbGZdxd
-        jJwcEgImEh8Wb2LtYuTiEBLYzSgxZ9c9NpCEkMAnIGe7O4T9mVHiyNN6mIZZa5rYIRp2MUrs
-        ndrNBFH0hlFiysJUEJtNQFdix+I2NpAiEYFeZomNn5eDTeUE6t7zcSuYLSzgKjH79jEWEJtF
-        QFVi04cesEG8ApYSh/6eh7IFJU7OfAJWwywgL7H97RxmiCsUJH4+XcYKYosIWEm8XDCPEaJG
-        XOLozx6omqUcEhdmcUDYLhJ/+iayQNjCEq+Ob2GHsKUkPr/bC3QPB5CdLdGzyxgiXCOxdN4x
-        qHJ7iQNX5rCAlDALaEqs36UPsYlPovf3EyaITl6JjjYhiGpVieZ3V6E6pSUmdnezQtgeErsu
-        /mGHhFQ7o0TPfcsJjAqzkPw4C8mPs5D8Mgth8QJGllWMkqkFxbnpqcWmBUZ5qeV6xYm5xaV5
-        6XrJ+bmbGMFJSstrB+PDBx/0DjEycTAeYpTgYFYS4W3J3BknxJuSWFmVWpQfX1Sak1p8iFGa
-        g0VJnDepcUuckEB6YklqdmpqQWoRTJaJg1OqgSmYYc2vhsITuiV1K+pFjD0n7PsxcYG001Sr
-        Lw45Zytqm5Wn71x9/LpRuY2E3eH35keS7JevWJQYfNHUOP6b3l5Dzye7V0d2vbolGvzM867u
-        mpud7xfVTn1/1j73RdfFNJHiR+k7PgYy9r50fsSl5Jh8e0m/7vTNt3uf2yqtPn853k5f5Nf9
-        47f+f/CvzXKxDWveNPt58bHN/LmakVeX/3CW1PIwS/h0UFLxZMfRKbvvC79Xz+3REDHVOuNV
-        qnvFo+1h/sLX7076eggtkM9UMeMWWur75iJ3LfeqzII3zkclTh4zmdfmeDcqUXTyi87OD7Ei
-        9XIZjP9SknI/hUT8SfgWpWW1z2vCihlvD9qxrlViKc5INNRiLipOBADgRj7KwQMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkkeLIzCtJLcpLzFFi42LZdlhJXletc2ecwe7JUhYPmlYxWfQ/fs1s
-        sev/G2aL8+c3sFssmTyf1WLT42usFvOOvGOxuLxrDpvFjPP7mCx+7zrG7sDl8eFjnMemVZ1s
-        HpuX1HsseXOI1eN88xFGj8+b5ALYorhsUlJzMstSi/TtErgyFl3+wFSwk7ei9dUpxgbGZdxd
-        jJwcEgImErPWNLF3MXJxCAnsYJSY/vA4O0RCWuL6xglQtrDEyn/PoYpeMUpcOz2fFSTBJqAr
-        sWNxGxtIQkRgKrPEuW+n2SCqWhklji9/yQZSxQm0Y8/HrWC2sICrxOzbx1hAbBYBVYlNH3qY
-        QGxeAUuJQ3/PQ9mCEidnPgGq4eBgFtCTaNvICBJmFpCX2P52DjPERQoSP58uAztCRMBK4uWC
-        eVA14hJHf/YwT2AUmoVk0iyESbOQTJqFpGMBI8sqRsnUguLc9NxiwwKjvNRyveLE3OLSvHS9
-        5PzcTYzg2NLS2sG4Z9UHvUOMTByMhxglOJiVRHhbMnfGCfGmJFZWpRblxxeV5qQWH2KU5mBR
-        Euf9OmthnJBAemJJanZqakFqEUyWiYNTqoFpn5ZaAduqovV9K1iKDkoJXHdf+Shu6b2fDwRs
-        tv21OXFLwaflkNUK7gcv3X1lrT9Jpp5xOzxvlb67Mlv88VeN3D2d9b2XU0WOeRpsVXa04zG8
-        euVcRNIVu7V/l1VvWXh3l9Rf9RUC0RUSYeKMU2umfJr0Ye3rpk8iXjN+zneemJjy7/DqYyvE
-        asyzK2Qa3sjzv1R6pmyv2GAeZWg6NXTHQWH2J0/XeuiYhe7r5gk3XXQxe8aP2zWL6i7XSAYK
-        5gn17nTcLr+m4MiqCasT3Ffmc6nsWavrGrHhAmvsU+PUO7d45ompcOcWf1BhXbllUs/hY9cE
-        6m/eP7hF/ueJeANbswdKxZN8zjJbz9U9sMdJiaU4I9FQi7moOBEArIs2DBwDAAA=
-X-CMS-MailID: 20200511171934epcas5p3d2a352c98597f5e2fb675335f44045e8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20200511083406epcas5p18e835634e60f362dc408d73886aa5563
-References: <CGME20200511083406epcas5p18e835634e60f362dc408d73886aa5563@epcas5p1.samsung.com>
-        <20200511083348.7577-1-krzk@kernel.org>
+X-ClientProxiedBy: CO2PR04CA0156.namprd04.prod.outlook.com (2603:10b6:104::34)
+ To BN6PR04MB0660.namprd04.prod.outlook.com (2603:10b6:404:d9::21)
+X-Microsoft-Original-Message-ID: <3f94a7d6-65c7-4fa7-f4b2-2ddc9fec10cb@live.ca>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2001:569:fb68:9c00:8067:f823:1e15:7520] (2001:569:fb68:9c00:8067:f823:1e15:7520) by CO2PR04CA0156.namprd04.prod.outlook.com (2603:10b6:104::34) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2979.27 via Frontend Transport; Mon, 11 May 2020 19:40:20 +0000
+X-Microsoft-Original-Message-ID: <3f94a7d6-65c7-4fa7-f4b2-2ddc9fec10cb@live.ca>
+X-TMN:  [MtnCR6rpauK6C5JN3dkav6WAQlB48U8Sy0q1NXDY52gErLx89AGZ6RkEzfSXVh5Z]
+X-MS-PublicTrafficType: Email
+X-IncomingHeaderCount: 50
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-Correlation-Id: 47665e5e-5e92-41dc-9ba3-08d7f5e32444
+X-MS-TrafficTypeDiagnostic: SN1NAM04HT120:
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 9PQn66Nm+45+3rLWORJVcsu7zKbS5wgJbrAwd/Uwg1mN8msulqhQqsbTY8XynQWtmaQQfmIIFN6IhazkyGSYG9zVaDLK1gfJldHov3kON1n+UC6Diw20tiO9pkDDOzjJvY+qxpbhnnpd5M7zRJmaifG86Bwfa4uPiG1gDqRubPnSCiQUZ6HLSGn+ozO64Ij5SYG8r3pGoQwXIXwDRI2iTA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:0;SRV:;IPV:NLI;SFV:NSPM;H:BN6PR04MB0660.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:;DIR:OUT;SFP:1901;
+X-MS-Exchange-AntiSpam-MessageData: ys4YbTpP2aQc1OzRWZPI9MGDprNkLvOE9GZAG3IAra7A8SLbCMKZYI9FOHkrdYel5YzErwcMZJNdOD2E/BhCKBY5f548UfsynV3Yn/3AC/NtJhdRT3tSOTgyMCTSzBwzIihLn9sjvsRL4RafvTLULza4C9HoOecSVPIHBIv27RzHkKo3yih5lRkHxoQ+o5vdNRjeWbPnWdjGLICQLcIU8g==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47665e5e-5e92-41dc-9ba3-08d7f5e32444
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2020 19:40:21.6769
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1NAM04HT120
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Krzysztof,
-Thanks for the patch.
+Hi Krzysztof,
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzk@kernel.org>
-> Sent: 11 May 2020 14:04
-> To: Jonathan Cameron <jic23@kernel.org>; Hartmut Knaack
-> <knaack.h@gmx.de>; Lars-Peter Clausen <lars@metafoo.de>; Peter Meerwald-
-> Stadler <pmeerw@pmeerw.net>; Kukjin Kim <kgene@kernel.org>; Krzysztof
-> Kozlowski <krzk@kernel.org>; linux-iio@vger.kernel.org; linux-arm-
-> kernel@lists.infradead.org; linux-samsung-soc@vger.kernel.org; linux-
-> kernel@vger.kernel.org
-> Cc: Alim Akhtar <alim.akhtar@samsung.com>
-> Subject: [PATCH] iio: adc: exynos: Simplify Exynos7-specific init
+On 2020-05-11 3:08 a.m., Krzysztof Kozlowski wrote:
+> On Fri, May 08, 2020 at 06:34:33PM -0700, Jonathan Bakker wrote:
+>> Some variants of the samsung tty driver can pick which clock
+>> to use for their baud rate generation.  In the DT conversion,
+>> a default clock was selected to be used if a specific one wasn't
+>> assigned and then a comparison of which clock rate worked better
+>> was done.  Unfortunately, the comparison was implemented in such
+>> a way that only the default clock was ever actually compared.
+>> Fix this by iterating through all possible clocks, except when a
+>> specific clock has already been picked via clk_sel (which is
+>> only possible via board files).
+>>
+>> Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
+>> ---
+>>  drivers/tty/serial/samsung_tty.c | 8 ++++----
+>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+>> index 73f951d65b93..9d2b4be44209 100644
+>> --- a/drivers/tty/serial/samsung_tty.c
+>> +++ b/drivers/tty/serial/samsung_tty.c
+>> @@ -1281,14 +1281,14 @@ static unsigned int s3c24xx_serial_getclk(struct s3c24xx_uart_port *ourport,
+>>  	struct s3c24xx_uart_info *info = ourport->info;
+>>  	struct clk *clk;
+>>  	unsigned long rate;
+>> -	unsigned int cnt, baud, quot, clk_sel, best_quot = 0;
+>> +	unsigned int cnt, baud, quot, best_quot = 0;
+>>  	char clkname[MAX_CLK_NAME_LENGTH];
+>>  	int calc_deviation, deviation = (1 << 30) - 1;
+>>  
+>> -	clk_sel = (ourport->cfg->clk_sel) ? ourport->cfg->clk_sel :
+>> -			ourport->info->def_clk_sel;
+>>  	for (cnt = 0; cnt < info->num_clks; cnt++) {
+>> -		if (!(clk_sel & (1 << cnt)))
+>> +		/* Keep selected clock if provided */
 > 
-> The Exynos7-specific code bits in ADC driver do not play with PHY:
-> the field exynos_adc_data.needs_adc_phy is not set in exynos7_adc_data
-> instance.  Therefore the initialization code does not have to check if it
-is true.
+> Makes sense and good catch.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 > 
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Tested on exynos7-espresso board so,
-Tested-by:  Alim Akhtar <alim.akhtar@samsung.com>
+> I wonder about the s3c24xx_serial_enable_baudclk() which has similar
+> pattern - is there
+> testing only def_clk_sel on purpose?
 
-> ---
-> 
-> Only build tested.
-> ---
->  drivers/iio/adc/exynos_adc.c | 3 ---
->  1 file changed, 3 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/exynos_adc.c b/drivers/iio/adc/exynos_adc.c
-index
-> 22131a677445..219c8eb32d16 100644
-> --- a/drivers/iio/adc/exynos_adc.c
-> +++ b/drivers/iio/adc/exynos_adc.c
-> @@ -449,9 +449,6 @@ static void exynos_adc_exynos7_init_hw(struct
-> exynos_adc *info)  {
->  	u32 con1, con2;
-> 
-> -	if (info->data->needs_adc_phy)
-> -		regmap_write(info->pmu_map, info->data->phy_offset, 1);
-> -
->  	con1 = ADC_V2_CON1_SOFT_RESET;
->  	writel(con1, ADC_V2_CON1(info->regs));
-> 
-> --
-> 2.17.1
+Yeah, I saw this instance too.  5086e0a409a0c ("tty: serial: samsung: Enable
+baud clock during initialisation") introduced it, which was just to make sure
+that some clock was enabled during initialization.  Since it doesn't appear to
+be critical which clock it is, I left it as it was.
 
+Thanks,
+Jonathan
 
+> 
+> Best regards,
+> Krzysztof
+> 
+>> +		if (ourport->cfg->clk_sel &&
+>> +			!(ourport->cfg->clk_sel & (1 << cnt)))
+>>  			continue;
+>>  
+>>  		sprintf(clkname, "clk_uart_baud%d", cnt);
+>> -- 
+>> 2.20.1
+>>
