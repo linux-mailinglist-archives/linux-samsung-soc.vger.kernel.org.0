@@ -2,82 +2,158 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E15DC1CEF6F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 May 2020 10:47:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44F631CF0DB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 May 2020 11:04:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728525AbgELIrY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 12 May 2020 04:47:24 -0400
-Received: from foss.arm.com ([217.140.110.172]:49504 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725776AbgELIrY (ORCPT
+        id S1729553AbgELJBP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 12 May 2020 05:01:15 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:40518 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729536AbgELJBO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 12 May 2020 04:47:24 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B14F21FB;
-        Tue, 12 May 2020 01:47:23 -0700 (PDT)
-Received: from [10.37.12.83] (unknown [10.37.12.83])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A066F3F305;
-        Tue, 12 May 2020 01:47:21 -0700 (PDT)
-Subject: Re: [PATCH] memory/samsung: reduce unnecessary mutex lock area
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Bernard Zhao <bernard@vivo.com>
-Cc:     Kukjin Kim <kgene@kernel.org>, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        opensource.kernel@vivo.com
-References: <20200508131338.32956-1-bernard@vivo.com>
- <20200512065023.GA10741@kozik-lap>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <e762ce12-eff0-d3a5-f083-2b592921de59@arm.com>
-Date:   Tue, 12 May 2020 09:47:19 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200512065023.GA10741@kozik-lap>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Tue, 12 May 2020 05:01:14 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200512090113euoutp024f9e534618527d781da58a8c7859df7d~OPFl8aBz00522905229euoutp02G
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 12 May 2020 09:01:13 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200512090113euoutp024f9e534618527d781da58a8c7859df7d~OPFl8aBz00522905229euoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1589274073;
+        bh=NhVbnJ+jqa6Cm7UcCSShQXuCIUUkP8fYD45Nu0/gv44=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=kjN0kVdlQY1j5bVaOTTBeKY7yRJWLWeRK8vtjLFmeXN+9Bx8kD2SQc1/cDOAfwwdY
+         qELap4716r3WtBMV2ij01C/WCf7iIkgfm3Pj0GyfSWK8hfb/LRTqTGkAIYTk4Z2b/c
+         xZq6lDNQhYFYlrHDTJdY48DysW2xpJXWhXurckb8=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20200512090113eucas1p1ef8c5da040086e7cd941a733488a5719~OPFloZoPF3053130531eucas1p1c;
+        Tue, 12 May 2020 09:01:13 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id A5.6B.60698.9D56ABE5; Tue, 12
+        May 2020 10:01:13 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200512090112eucas1p280707473d14730b8d3054fe9b0781a05~OPFlYNMQO2661426614eucas1p2U;
+        Tue, 12 May 2020 09:01:12 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200512090112eusmtrp15f7e3d008cd5e61e09ab2b1e8f14459b~OPFlXhG0_0188101881eusmtrp1B;
+        Tue, 12 May 2020 09:01:12 +0000 (GMT)
+X-AuditID: cbfec7f5-a0fff7000001ed1a-0b-5eba65d9f4ae
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id D2.F2.07950.8D56ABE5; Tue, 12
+        May 2020 10:01:12 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200512090112eusmtip1e6afa75d409d6f8bde05c4af7510a21e~OPFk0YbqY1148011480eusmtip1T;
+        Tue, 12 May 2020 09:01:12 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linaro-mm-sig@lists.linaro.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH v4 10/38] drm: exynos: use common helper for a scatterlist
+ contiguity check
+Date:   Tue, 12 May 2020 11:00:30 +0200
+Message-Id: <20200512090058.14910-10-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200512090058.14910-1-m.szyprowski@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsWy7djP87o3U3fFGWx9yGXRe+4kk8XGGetZ
+        Lf5vm8hsceXrezaLlauPMllMuj+BxWLBfmuLL1ceMllsenyN1eLyrjlsFjPO72OyWHvkLrvF
+        wQ9PWC1mTH7J5sDnsWbeGkaPvd8WsHhs//aA1eN+93Emj81L6j1u/3vM7DH5xnJGj903G9g8
+        +rasYvT4vEkugCuKyyYlNSezLLVI3y6BK+PB9i2sBbd4Kl43TWJtYDzI1cXIySEhYCLx8N5c
+        ZhBbSGAFo8T/1ypdjFxA9hdGienT2hghnM+MEudvLmOC6Xj56w07RGI5o0TXs7XMcC1/eueD
+        zWITMJToetvFBmKLCLQySpzo5QEpYhboYJa4NnE+0FwODmGBWImlffUgJouAqsS04yIg5bwC
+        dhJb1rczQiyTl1i94QDYSE6g+P35f1hAxkgIHGOXeLHpLxtEkYvE+lOboWxhiVfHt7BD2DIS
+        pyf3QDU0M0o8PLeWHcLpYZS43DQDaoW1xJ1zv9hArmAW0JRYv0sfIuwosW/bUnaQsIQAn8SN
+        t4IgYWYgc9K26cwQYV6JjjYhiGo1iVnH18GtPXjhElSJh8SmOSmQ4DnKKLF84wOmCYzysxB2
+        LWBkXMUonlpanJueWmycl1quV5yYW1yal66XnJ+7iRGYlk7/O/51B+O+P0mHGAU4GJV4eDuM
+        dsYJsSaWFVfmHmKU4GBWEuFtyQQK8aYkVlalFuXHF5XmpBYfYpTmYFES5zVe9DJWSCA9sSQ1
+        OzW1ILUIJsvEwSnVwMjSycz0RC/dt0w9rmzSlvfxDFYexQ4Vb+tDNKfPvT2HMaXh3q5P8/xq
+        /1nbRs6dk+lyO7CuaCv/ZqE97x4fnbYj5sf1x/0eIYobfPJuNczkDDtTs1Jrq52N8r37n99f
+        c5GMM99Z9eD7dXOJ/w7b1cKPz/h912S36Mp/6R/EA18d58pdwy/zc6MSS3FGoqEWc1FxIgCa
+        4y+URwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGIsWRmVeSWpSXmKPExsVy+t/xu7o3UnfFGTyebW7Re+4kk8XGGetZ
+        Lf5vm8hsceXrezaLlauPMllMuj+BxWLBfmuLL1ceMllsenyN1eLyrjlsFjPO72OyWHvkLrvF
+        wQ9PWC1mTH7J5sDnsWbeGkaPvd8WsHhs//aA1eN+93Emj81L6j1u/3vM7DH5xnJGj903G9g8
+        +rasYvT4vEkugCtKz6Yov7QkVSEjv7jEVina0MJIz9DSQs/IxFLP0Ng81srIVEnfziYlNSez
+        LLVI3y5BL+PB9i2sBbd4Kl43TWJtYDzI1cXIySEhYCLx8tcbdhBbSGApo8SH18IQcRmJk9Ma
+        WCFsYYk/17rYuhi5gGo+MUrs7l3OBJJgEzCU6HoLkRAR6GSUmNb9kR3EYRaYwCxxv2U1Yxcj
+        B4ewQLTE4521ICaLgKrEtOMiIL28AnYSW9a3M0IskJdYveEAM4jNCRS/P/8PC8RBhRKPrr5l
+        mcDIt4CRYRWjSGppcW56brGRXnFibnFpXrpecn7uJkZgnGw79nPLDsaud8GHGAU4GJV4eDuM
+        dsYJsSaWFVfmHmKU4GBWEuFtyQQK8aYkVlalFuXHF5XmpBYfYjQFumkis5Rocj4whvNK4g1N
+        Dc0tLA3Njc2NzSyUxHk7BA7GCAmkJ5akZqemFqQWwfQxcXBKNTCumcBn9k/UZ9c6Duk1Zedm
+        ha14rH/czPF1gMqN4xfaP+saP574S7v/1ZMNLyvXXxStP7pIfynvltmxk8S9mP/mXtu3yHqr
+        +YkT8yd+mbNwvV9ijRHjlAlCr8/Us/9c+b7+7Pd7B7ZPak1o9vlc8frRBuduAbbdzM+ME/Y6
+        fcwTPbnIctNXadl1rEosxRmJhlrMRcWJABokKdCpAgAA
+X-CMS-MailID: 20200512090112eucas1p280707473d14730b8d3054fe9b0781a05
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200512090112eucas1p280707473d14730b8d3054fe9b0781a05
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200512090112eucas1p280707473d14730b8d3054fe9b0781a05
+References: <20200512085710.14688-1-m.szyprowski@samsung.com>
+        <20200512090058.14910-1-m.szyprowski@samsung.com>
+        <CGME20200512090112eucas1p280707473d14730b8d3054fe9b0781a05@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+Use common helper for checking the contiguity of the imported dma-buf.
 
-I am sorry, I was a bit busy recently.
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+For more information, see '[PATCH v4 00/38] DRM: fix struct sg_table nents
+vs. orig_nents misuse' thread:
+https://lore.kernel.org/dri-devel/20200512085710.14688-1-m.szyprowski@samsung.com/T/
+---
+ drivers/gpu/drm/exynos/exynos_drm_gem.c | 23 +++--------------------
+ 1 file changed, 3 insertions(+), 20 deletions(-)
 
-On 5/12/20 7:50 AM, Krzysztof Kozlowski wrote:
-> On Fri, May 08, 2020 at 06:13:38AM -0700, Bernard Zhao wrote:
->> Maybe dmc->df->lock is unnecessary to protect function
->> exynos5_dmc_perf_events_check(dmc). If we have to protect,
->> dmc->lock is more better and more effective.
->> Also, it seems not needed to protect "if (ret) & dev_warn"
->> branch.
->>
->> Signed-off-by: Bernard Zhao <bernard@vivo.com>
->> ---
->>   drivers/memory/samsung/exynos5422-dmc.c | 6 ++----
->>   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> I checked the concurrent accesses and it looks correct.
-> 
-> Lukasz, any review from your side?
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_gem.c b/drivers/gpu/drm/exynos/exynos_drm_gem.c
+index 0df57ee..a49a8ea 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_gem.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_gem.c
+@@ -431,27 +431,10 @@ struct drm_gem_object *
+ {
+ 	struct exynos_drm_gem *exynos_gem;
+ 
+-	if (sgt->nents < 1)
++	/* check if the entries in the sg_table are contiguous */
++	if (drm_prime_get_contiguous_size(sgt) < attach->dmabuf->size) {
++		DRM_ERROR("buffer chunks must be mapped contiguously");
+ 		return ERR_PTR(-EINVAL);
+-
+-	/*
+-	 * Check if the provided buffer has been mapped as contiguous
+-	 * into DMA address space.
+-	 */
+-	if (sgt->nents > 1) {
+-		dma_addr_t next_addr = sg_dma_address(sgt->sgl);
+-		struct scatterlist *s;
+-		unsigned int i;
+-
+-		for_each_sg(sgt->sgl, s, sgt->nents, i) {
+-			if (!sg_dma_len(s))
+-				break;
+-			if (sg_dma_address(s) != next_addr) {
+-				DRM_ERROR("buffer chunks must be mapped contiguously");
+-				return ERR_PTR(-EINVAL);
+-			}
+-			next_addr = sg_dma_address(s) + sg_dma_len(s);
+-		}
+ 	}
+ 
+ 	exynos_gem = exynos_drm_gem_init(dev, attach->dmabuf->size);
+-- 
+1.9.1
 
-The lock from devfreq lock protects from a scenario when
-concurrent access from devfreq framework uses internal dmc fields 'load' 
-and 'total' (which are set to 'busy_time', 'total_time').
-The .get_dev_status can be called at any time (even due to thermal
-devfreq cooling action) and reads above fields.
-That's why the calculation of the new values inside dmc is protected.
-
-This patch should not be taken IMO. Maybe we can release lock before the
-if statement, just to speed-up.
-
-Regards,
-Lukasz
-
-
-> 
-> Best regards,
-> Krzysztof
-> 
