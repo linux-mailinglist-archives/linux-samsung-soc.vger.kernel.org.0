@@ -2,56 +2,191 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D03EC1D75F5
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 May 2020 13:08:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A8A1D7877
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 May 2020 14:24:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727003AbgERLIf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 18 May 2020 07:08:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54446 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726279AbgERLIf (ORCPT
+        id S1726990AbgERMYL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 18 May 2020 08:24:11 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:52162 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726919AbgERMYK (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 18 May 2020 07:08:35 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 May 2020 04:08:34 PDT
-Received: from vps.dvp24.com (unknown [IPv6:2a02:348:36:5b8c::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DCE1C061A0C;
-        Mon, 18 May 2020 04:08:34 -0700 (PDT)
-Received: from localhost ([127.0.0.1] helo=dvp24.com)
-        by vps.dvp24.com with esmtpa (Exim 4.77)
-        (envelope-from <abhay@dvp24.com>)
-        id 1jadYS-0006r4-97; Mon, 18 May 2020 13:03:32 +0200
+        Mon, 18 May 2020 08:24:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1589804649;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=aNddrvnjvVAzGmBCFtMQ5iaiY8jsBoqXulJlnAFXCC4=;
+        b=T5uumCHSDMPvC08G/0nzvx7AhJTEZpRGaKujLjWViaD1XVjKvVDf0IptrlK5FVY8VeIrlz
+        bF+MxdtrVbw7TmWqVWCuDOm81eHEHCRfXqC4bu2C7FhEfoNw8+xklIj+rU6ZnYZ082iKX2
+        GrmR37CHrerODcmEmK/32p1hVDXsgJ8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-319-SQPUkjfTNgW-PWUF3i9rDA-1; Mon, 18 May 2020 08:24:08 -0400
+X-MC-Unique: SQPUkjfTNgW-PWUF3i9rDA-1
+Received: by mail-wr1-f69.google.com with SMTP id r14so5579230wrw.8
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 18 May 2020 05:24:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=aNddrvnjvVAzGmBCFtMQ5iaiY8jsBoqXulJlnAFXCC4=;
+        b=ITItWTj7sTsM43hI/e/5ZRgjc7s/ZXM21f5ail+Sbt3n3KOq8LMReWItygZfKuHPOr
+         1BG3tfOX+darWMeKC1V4mkhbetnBPulZIOWLum0mAm9X923lkheLTrPIaQ7TNX7FqNre
+         vUhJap2k5hJ58dxGq4t1UeLyvA0rAi7PTS0HAJsSjvIrAE+uXRpi52GUDCB7O/0i2DRi
+         hn2uY19uxewB/eE8bMtE8CK2H9SdHfKYh+/WAuwR57LidIvMNgxYoaj4Zojsp7AekgmP
+         zu3LCkH1EpfI7y4r0JkQD9ZlQ3BRfe8Och9vkEmPXojRaFDb9vt7ufnz2y/s1gRIWqHS
+         OQwA==
+X-Gm-Message-State: AOAM531cxYJGC4vkwm/vSQeVyq8bZYNJHIfed2eOCpwRCdzfwyQwsCyq
+        JcgvbHGCStSl+L11IG7aPLpHKNCpJ+wp5CuSXyHx0/lZkhibwH9Yc+iCx3Mf/7/L2akZHPuC26v
+        htIsWRgqisr9IzPio4obEjVEzNAx89cw=
+X-Received: by 2002:adf:eac8:: with SMTP id o8mr19377376wrn.268.1589804647169;
+        Mon, 18 May 2020 05:24:07 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwLe3p91ExNY6QGf1SRfv5g2doyaKilcFhk73/bWJl/jln6ZVFltTOdpBm/OQccJvw+caL9KA==
+X-Received: by 2002:adf:eac8:: with SMTP id o8mr19377325wrn.268.1589804646888;
+        Mon, 18 May 2020 05:24:06 -0700 (PDT)
+Received: from x1.localdomain (2001-1c00-0c0c-fe00-d2ea-f29d-118b-24dc.cable.dynamic.v6.ziggo.nl. [2001:1c00:c0c:fe00:d2ea:f29d:118b:24dc])
+        by smtp.gmail.com with ESMTPSA id 18sm15993570wmj.19.2020.05.18.05.24.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2020 05:24:06 -0700 (PDT)
+Subject: Re: [PATCHv2 0/7] Support inhibiting input devices
+To:     Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        linux-input@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        patches@opensource.cirrus.com,
+        ibm-acpi-devel@lists.sourceforge.net,
+        platform-driver-x86@vger.kernel.org
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Len Brown <lenb@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Sylvain Lemieux <slemieux.tyco@gmail.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Barry Song <baohua@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Nick Dyer <nick@shmanahar.org>,
+        Ferruh Yigit <fery@cypress.com>,
+        Sangwon Jee <jeesw@melfas.com>,
+        Henrique de Moraes Holschuh <ibm-acpi@hmh.eng.br>,
+        kernel@collabora.com, Peter Hutterer <peter.hutterer@redhat.com>,
+        Benjamin Tissoires <btissoir@redhat.com>
+References: <20200506002746.GB89269@dtor-ws>
+ <20200515164943.28480-1-andrzej.p@collabora.com>
+ <842b95bb-8391-5806-fe65-be64b02de122@redhat.com>
+ <e6030957-97dc-5b04-7855-bc14a78164c8@collabora.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+Message-ID: <6d9921fc-5c2f-beda-4dcd-66d6970a22fe@redhat.com>
+Date:   Mon, 18 May 2020 14:24:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+In-Reply-To: <e6030957-97dc-5b04-7855-bc14a78164c8@collabora.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Date:   Mon, 18 May 2020 12:03:32 +0100
-From:   pedro hills <abhay@dvp24.com>
-To:     undisclosed-recipients:;
-Subject: (DONATION) $2 Million Has Been Donated
-Reply-To: <pedrohills@outlook.es>
-Mail-Reply-To: <pedrohills@outlook.es>
-Message-ID: <4f8b251c274cf8e27d8c41dd4ed99b52@dvp24.com>
-X-Sender: abhay@dvp24.com
-User-Agent: Roundcube Webmail/0.7.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Hi,
+
+On 5/18/20 12:48 PM, Andrzej Pietrasiewicz wrote:
+> Hi Hans,
+> 
+> W dniu 15.05.2020 o 20:19, Hans de Goede pisze:
+>> Hi Andrezj,
+>>
+>> On 5/15/20 6:49 PM, Andrzej Pietrasiewicz wrote:
+>>> Userspace might want to implement a policy to temporarily disregard input
+>>> from certain devices, including not treating them as wakeup sources.
+>>>
+>>> An example use case is a laptop, whose keyboard can be folded under the
+>>> screen to create tablet-like experience. The user then must hold the laptop
+>>> in such a way that it is difficult to avoid pressing the keyboard keys. It
+>>> is therefore desirable to temporarily disregard input from the keyboard,
+>>> until it is folded back. This obviously is a policy which should be kept
+>>> out of the kernel, but the kernel must provide suitable means to implement
+>>> such a policy.
+>>
+>> Actually libinput already binds together (inside libinput) SW_TABLET_MODE
+>> generating evdev nodes and e.g. internal keyboards on devices with 360°
+>> hinges for this reason. libinput simply closes the /dev/input/event#
+>> node when folded and re-opens it when the keyboard should become active
+>> again. Thus not only suppresses events but allows e.g. touchpads to
+>> enter runtime suspend mode which saves power. Typically closing the
+>> /dev/input/event# node will also disable the device as wakeup source.
+>>
+>> So I wonder what this series actually adds for functionality for
+>> userspace which can not already be achieved this way?
+>>
+>> I also noticed that you keep the device open (do not call the
+>> input_device's close callback) when inhibited and just throw away
+> 
+> I'm not sure if I understand you correctly, it is called:
+> 
+> +static inline void input_stop(struct input_dev *dev)
+> +{
+> +    if (dev->poller)
+> +        input_dev_poller_stop(dev->poller);
+> +    if (dev->close)
+> +        dev->close(dev);
+>                  ^^^^^^^^^^^^^^^^
+> +static int input_inhibit(struct input_dev *dev)
+> +{
+> +    int ret = 0;
+> +
+> +    mutex_lock(&dev->mutex);
+> +
+> +    if (dev->inhibited)
+> +        goto out;
+> +
+> +    if (dev->users) {
+> +        if (dev->inhibit) {
+> +            ret = dev->inhibit(dev);
+> +            if (ret)
+> +                goto out;
+> +        }
+> +        input_stop(dev);
+>                  ^^^^^^^^^^^^^^^^
+> 
+> It will not be called when dev->users is zero, but if it is zero,
+> then nobody has opened the device yet so there is nothing to close.
+
+Ah, I missed that.
+
+So if the device implements the inhibit call back then on
+inhibit it will get both the inhibit and close callback called?
+
+And what happens if the last user goes away and the device
+is not inhibited?
+
+I'm trying to understand here what the difference between the 2
+is / what the goal of having a separate inhibit callback ?
+
+IOW is there something which we want to do on close when
+the close is being done to inhibit the device, which we do
+not want to do on a normal close ?
+
+Regards,
+
+Hans
 
 
--- 
-$2 Million Has Been Donated To You,By PEDRO this is Real For More Info
-  Contact PEDRO immediately for your clame This Email:
-  pedrohills@outlook.es
-
-  Contact phone number +34632232897
-  Send Your Response To: pedrohills@outlook.es
-
-  2 Millionen US-Dollar wurden an Sie gespendet. Von PEDRO ist dies für
-weitere Informationen real
-  Wenden Sie sich umgehend an PEDRO. Diese E-Mail:
-  pedrohills@outlook.es
-
-  Kontakttelefonnummer +34632232897
-  Senden Sie Ihre Antwort an: pedrohills@outlook.es
