@@ -2,147 +2,107 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C1B11DA37E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 May 2020 23:26:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C62C1DA63E
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 May 2020 02:15:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727905AbgESV0Z (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 19 May 2020 17:26:25 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:45564 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727836AbgESV0Y (ORCPT
+        id S1727833AbgETAPd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 19 May 2020 20:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35972 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726447AbgETAPc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 19 May 2020 17:26:24 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200519212622euoutp02794b1b688b6e6c4d08b504e2e4ae7c3c~QixMMuq273228032280euoutp02E
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 May 2020 21:26:22 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200519212622euoutp02794b1b688b6e6c4d08b504e2e4ae7c3c~QixMMuq273228032280euoutp02E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1589923582;
-        bh=N/YA46ODGLlxDL+bldxjnjkd6gAUd4l+W7uUZ4+8mjA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=N7IZ1+XSIEc0+62ryPpHUXzd0heipsyVQ0dkcfzgbscuseoNoi/1W6A5OMxygUvoz
-         gGVz/VRdDGT5B3uwP1IaPuZLr+xUrMQ5nC1d6xviRxNHBnYuamfvmLEH5irA1yWsCe
-         FarzRJ93gzS8dHrHTZikamPUbOyPM+BcVAj/Fui4=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200519212621eucas1p1b01882c9c94ab188151dbd94fe920c74~QixLYgw792659226592eucas1p1d;
-        Tue, 19 May 2020 21:26:21 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id EE.EC.60698.DFE44CE5; Tue, 19
-        May 2020 22:26:21 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200519212621eucas1p13279db41d930b69e115972463c994a37~QixK7ptMf2557025570eucas1p1X;
-        Tue, 19 May 2020 21:26:21 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200519212620eusmtrp274dffa962a5015db7ae6426090390416~QixK4Em2R1118011180eusmtrp2Z;
-        Tue, 19 May 2020 21:26:20 +0000 (GMT)
-X-AuditID: cbfec7f5-a29ff7000001ed1a-23-5ec44efdac5c
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id D4.A7.08375.CFE44CE5; Tue, 19
-        May 2020 22:26:20 +0100 (BST)
-Received: from localhost (unknown [106.120.51.46]) by eusmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20200519212620eusmtip12841b5e28e124c49be41bb02b995206c~QixKt8VyS2107921079eusmtip19;
-        Tue, 19 May 2020 21:26:20 +0000 (GMT)
-From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-To:     Matt Mackall <mpm@selenic.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Markus Elfring <elfring@users.sourceforge.net>,
-        Matthias Brugger <mbrugger@suse.com>,
-        Stefan Wahren <wahrenst@gmx.net>, linux-crypto@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Stephan Mueller <smueller@chronox.de>
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-Subject: [PATCH v2 2/2] hwrng: exynos - Set the quality value
-Date:   Tue, 19 May 2020 23:25:52 +0200
-Message-Id: <20200519212552.11671-3-l.stelmach@samsung.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200519212552.11671-1-l.stelmach@samsung.com>
+        Tue, 19 May 2020 20:15:32 -0400
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30E2C061A0F
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 May 2020 17:15:32 -0700 (PDT)
+Received: by mail-il1-x141.google.com with SMTP id m6so1317668ilq.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 May 2020 17:15:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=8P15B7yVg5zuP9hnNQBrVV9U1ImrShnajp0OKHJjOZY=;
+        b=Wx+4/ptXuFftJxAB6EWXX4EikcEvn6fAkGjHsktrJGtd/9rUqxDViOPci1d9tixQHS
+         iQulWxwKajzov7en1kUO8CMyIBbWJ8leu9IhIKSMTJ0bMkp+mJHDYHt2X9t99xTjSOyr
+         PXk9SJ7S45alW/wpzFpjVe29tHB33NVNxeWG2XPIfrGyjUIscnl5bvHD1kjzAqpOgMPh
+         PW91zK3QtIl4e7smPG+UNBB6ZtB1KdqP31y/5YuKM0MO/yFrwA3c6/rWTEp4pdG64WXp
+         nqYuQTW0EvmjAm3bkLkSQga2xE2j186OXDzM3Z4YhMPRD2XmBmN0Kt9MqWg2NH5oYea6
+         ojNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=8P15B7yVg5zuP9hnNQBrVV9U1ImrShnajp0OKHJjOZY=;
+        b=qGIpcQhczxfzfw/x/ZzEF7lf3h/Uj4lKNtmmqHQH756CMlO70DUtMiQHGvxaeZ9bFd
+         /kC9XL6K4UnAkH9Ne/EOngFknU5ptr1/J/v6NtNY87sLI07rzm0/OghGsfY4sj5fzU4u
+         D9fB8/w2JNYeQpcjP5nTfDXp2gkN6rnGmCc3LtMmZYisENLw4YWcLKBK/+IQAmgbstei
+         4aS6zacb2K2ys0odFaIMIwaXICQWeLEJEjJDCAWDJFKe3RHzE/mEvuvtoigq6l4zYO3b
+         1w2Njeh/Z+xgebyeI4ZaJ5Mk9OEXs90nvaPWvJbIrjQBleF/XEMIQ4Yj2T+zdGxb034L
+         X1Wg==
+X-Gm-Message-State: AOAM530dVFFH2BxyflL8pFtwLViBJUxtl8oOBbhL3/6rSAfBzeuqkCXI
+        7eRz6s5nJ98vvNOQZ97lS7fbvEfv6+9/oQQwnCo=
+X-Google-Smtp-Source: ABdhPJzj/AxMVb8IAkWdHeqLxIZOZdQcgLux72emuTCBoQIqk27wAhs5OzlfpjrG00sGgvBR1ChbeWF6ZwazLxath0s=
+X-Received: by 2002:a92:cc4d:: with SMTP id t13mr1556771ilq.213.1589933731561;
+ Tue, 19 May 2020 17:15:31 -0700 (PDT)
 MIME-Version: 1.0
-Organization: Samsung R&D Institute Poland
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa1CMYRTHPfte9q2x9dpKx2pklj5kKGHMY8RgzHi/kNH4YoiVVxptmd2S
-        jFEjSmFrQrQqkWZXd1uWLsK2lTS1RrmNS9glMpax20i1Lu27hm+//3n+55z/mXkYQnqcljHx
-        icm8KlGRIKe9SWPnD8sC1wZzzMI+3QzsKugU42vn6yhcc6qDxJYcHYHH7GYxziyvo/GJ4SCc
-        Z/1EYIulXoyfmfQIG6yPKTz46ocI9zcX0/i8pU2Ey07bKFxm1CD8rqiBxvYqG8Jne2pI3HUv
-        h1jlz42PFSBOO9hLc98GBkRck/almCs33KY5450QzlCZQ3O3S6rFXMOVdE7TWIk4zcd6xNU1
-        PiK5I/ezKc5hmLXRZ4t35C4+IX4/rwpfucN7T8mDAWLfL/EBZ8uoKAM56VzkxQC7BN5WlVK5
-        yJuRsnoE3ZpCQhBOBPWFWrEgHAhKj36h/rYM3jzjcekQtPaeIAUxhKDq7nu3i2ZXQ17FPTf7
-        s7UUfK/gJ5lgU+HYG5u77seuAFdRv5tJNgROPhhys4RdDp+uPiaFbcGQrbvhDuvFRoJ5dIQW
-        PNOgu8jm9viy86D6yBNSmB8MmdcvEELvAAOajhSB18JEZqHnAj8Y7moUCxwEv5ouinIR84fT
-        4XTB0slbgD2JwFg86smwHF70jdGTHoINhbrmcKG8GqqttYTQ6gNPP08TEvhAgfGcpyyB41lS
-        wT0XavNaPQNlcGpYj/KRXPvfLdr/8mv/7SpDRCUK5FPUyjhevTiRTw1TK5TqlMS4sNgkpQH9
-        +Z89P7tGbqK2iZ0mxDJIPlXytKk9Rkop9qvTlCYEDCH3l+R/MMVIJbsUaQd5VdJ2VUoCrzah
-        mQwpD5Qsvvxxm5SNUyTze3l+H6/6+ypivGQZyFcxkTzS/21+uwtFXJ+yIKK4ZaXjudGqdK0/
-        nNWUeS3gYZRTP+VutK53c2xDaPx48O7ZO4deZqTroxdpcX/1nPYRxxr7rSjfcFnw9BD7a61t
-        nSbGYAn/ujX165qSt/61YfWbQmWX4jrvzDf/dHT4dR+KX7Leao8NWBZlXlVJnUNOOaneo4iY
-        R6jUit+0kkicmwMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsVy+t/xu7p//I7EGfx/Ymnxd9IxdouNM9az
-        WqztPcpicb5zObPFr3dH2C2aF69ns+h+JWPR//g1s8X58xvYLW4eWsFosenxNVaL+/d+Mllc
-        3jWHzWLG+X1MFgsmP2G1WLCtj9Hi6czNbBbvVj9htJh6ei2LxfETncwOIh6/f01i9Jh1/yyb
-        x6crV5g8ds66y+6xeNN+No9tB1Q9Nq3qZPPYP3cNu8fmJfUefVtWMXr0vdzA6LF+y1UWj6ZT
-        7awenzfJBfBF6dkU5ZeWpCpk5BeX2CpFG1oY6RlaWugZmVjqGRqbx1oZmSrp29mkpOZklqUW
-        6dsl6GXMvXCFueA/e8WX3T+YGhi/sHUxcnJICJhI3N8xhbmLkYtDSGApo8TNHw8Yuxg5gBJS
-        EivnpkPUCEv8udbFBlHzlFHi6IqfLCAJNgFHif6lJ1hBEiICe1gldt/oZAJJMAuUS7Q+fMIK
-        YgsL2Er8nXkZzGYRUJXoufAczOYVsJZ4vfIaC8QGeYn25dvBLuIUsJE48uMrmC0kkCsx8c9Z
-        qHpBiZMzn7CAHMcsoC6xfp4QSJhfQEtiTdN1Foi18hLNW2czT2AUmoWkYxZCxywkVQsYmVcx
-        iqSWFuem5xYb6hUn5haX5qXrJefnbmIEpottx35u3sF4aWPwIUYBDkYlHl6DPYfjhFgTy4or
-        cw8xSnAwK4nwTnhxKE6INyWxsiq1KD++qDQntfgQoynQmxOZpUST84GpLK8k3tDU0NzC0tDc
-        2NzYzEJJnLdD4GCMkEB6YklqdmpqQWoRTB8TB6dUA6PH9Psbp7Ko73na4mv383qVXmnWwksP
-        HlZN3RHTV8/3NpCvM+/dra8t2x/k38pT2/Oi+7D1m7q5xid0EzbtPnPVVfbBAU3WLp+2bk1G
-        M7VXq3/5XVqm/8Qo8IJiTEzG/E+O9f1hPw59/3C977TGg+aITov0D0GyO7RPeDWK+q1+qlWY
-        tykzwkKJpTgj0VCLuag4EQC9oUcTLQMAAA==
-X-CMS-MailID: 20200519212621eucas1p13279db41d930b69e115972463c994a37
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200519212621eucas1p13279db41d930b69e115972463c994a37
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200519212621eucas1p13279db41d930b69e115972463c994a37
-References: <20200514190734.32746-1-l.stelmach@samsung.com>
-        <20200519212552.11671-1-l.stelmach@samsung.com>
-        <CGME20200519212621eucas1p13279db41d930b69e115972463c994a37@eucas1p1.samsung.com>
+Received: by 2002:a4f:c055:0:0:0:0:0 with HTTP; Tue, 19 May 2020 17:15:31
+ -0700 (PDT)
+Reply-To: mstheresaheidi@yahoo.com
+From:   Ms Theresa Heidi <yinambest@gmail.com>
+Date:   Tue, 19 May 2020 19:15:31 -0500
+Message-ID: <CAMCaGKFaM8fFsEKuXphSZU9muvdBMTe6zZnMi9VTyHWtajgCaQ@mail.gmail.com>
+Subject: HELP URGENT MATTER
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The value was estimaded with ea_iid[1] using on 10485760 bytes read from
-the RNG via /dev/hwrng. The min-entropy value calculated using the most
-common value estimate (NIST SP 800-90P[2], section 6.3.1) was 7.489627.
+Dear Beloved One,
 
-[1] https://github.com/usnistgov/SP800-90B_EntropyAssessment
-[2] https://csrc.nist.gov/publications/detail/sp/800-90b/final
+CHARITY DONATION Please read carefully, I know it is true that this
+letter may come to you as a surprise. nevertheless,i humbly ask you to
+give me your attention and hear me, i am writing this mail to you with
+heavy sorrow in my heart,i have chose to reach you through Internet
+because it still remains the fastest medium of communication, after
+going through your profile in search of an honest person.
 
-Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
----
- drivers/char/hw_random/exynos-trng.c | 1 +
- 1 file changed, 1 insertion(+)
+My name is Mrs Theresa Heidi i am native France currently hospitalized
+in a private hospital here in Israel as a result of lungs cancer I am
+62 years old and I was diagnosed of lungs cancer for about 4 years
+ago, immediately after the death of my husband, who has left me
+everything he worked for. I'm with my laptop in a hospital here in
+where I have been undergoing treatment for cancer of the lungs
 
-diff --git a/drivers/char/hw_random/exynos-trng.c b/drivers/char/hw_random/exynos-trng.c
-index 8e1fe3f8dd2d..2a5896122001 100644
---- a/drivers/char/hw_random/exynos-trng.c
-+++ b/drivers/char/hw_random/exynos-trng.c
-@@ -123,6 +123,7 @@ static int exynos_trng_probe(struct platform_device *pdev)
- 	trng->rng.init = exynos_trng_init;
- 	trng->rng.read = exynos_trng_do_read;
- 	trng->rng.priv = (unsigned long) trng;
-+	trng->rng.quality = 900;
- 
- 	platform_set_drvdata(pdev, trng);
- 	trng->dev = &pdev->dev;
--- 
-2.26.2
+Now that is clear that I=E2=80=99m approaching the last-days of my life and=
+ i
+don't even need the money again for any thing and because my doctor
+told me that i would not last for the period of one year due to Lungs
+cancer problem.I have some funds inherited from my late husband, the
+sum of $15 Million United State Dollars ( US$15,000,000,00 ),
 
+This money is still with the foreign bank and the management just
+wrote me as the true owner to come forward to receive the money for
+keeping it so long or rather issue a letter of authorization to
+somebody to receive it on my behalf since I can't come over because of
+my illness or they may get it confiscated.
+
+I decided to contact you if you may be willing and interested to
+handle these trust funds in good faith before anything happens to
+me.This is not a stolen money and there are no dangers involved,is
+100% risk free with full legal proof.
+
+I want you to help me withdraw this money from the foreign bank then
+use the funds for Charity works/assistance to less privileged people
+in the society.It is my last wish to see that this money is invested
+to any organization of your choice.
+
+I want you to take 45% of the total money for your personal use while
+55% of the money will go to charity. I will appreciate your utmost
+confidentiality and trust in this matter to accomplish my heart
+desire, as I don't want anything that will jeopardize my last wish.
+
+Yours Beloved Sister.
+Mrs Theresa Heidi
