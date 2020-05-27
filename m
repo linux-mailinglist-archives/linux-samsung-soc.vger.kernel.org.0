@@ -2,55 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E93291E434C
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 May 2020 15:17:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CE4C1E4438
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 May 2020 15:46:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730065AbgE0NRG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 27 May 2020 09:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730244AbgE0NRG (ORCPT
+        id S2388634AbgE0NqY convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 27 May 2020 09:46:24 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34445 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388082AbgE0NqY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 27 May 2020 09:17:06 -0400
-X-Greylist: delayed 368 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 27 May 2020 06:17:05 PDT
-Received: from msa13.plala.or.jp (msa13.plala.or.jp [IPv6:2400:7800:0:502e::13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AB7D8C08C5C1;
-        Wed, 27 May 2020 06:17:05 -0700 (PDT)
-Received: from mwebp13 ([172.23.13.133]) by msa12.plala.or.jp with ESMTP
-          id <20200527131056.MIPU4246.msa12.plala.or.jp@mwebp13>;
-          Wed, 27 May 2020 22:10:56 +0900
-Date:   Wed, 27 May 2020 22:10:56 +0900
-From:   "Mrs.Judith Rice" <hamurafujimi@tmail.plala.or.jp>
-Reply-To: jonesevansje@gmail.com
-Message-ID: <20200527221056.JYBIZ.815.root@mwebp13>
-Subject: Spende
+        Wed, 27 May 2020 09:46:24 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r7so7377184wro.1;
+        Wed, 27 May 2020 06:46:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=qON6LSJtVCq7nI+6x1yYZ2+6ycr/GduPskOQfhEOUPE=;
+        b=kKuOyHxksmpn2viYDm6uBBYiVdhn1GauaVhRQ+yX5DeZnOEhWdoEme0j9Xby4PhXks
+         mg7qKwWiv7MFQUHzqZZ/FtiHttTg+213ZYNzix2twb4MW53K5L+G7rG+838qst8umNrU
+         JG+w8w8Ts6HYugA05UH0RnbRJeYXS7gdOGfDse6n9goRq2FVBy5wx7aK3jfjj3wKqd0P
+         lOVxKx03CbbZtRHLtrUb1NyMPOIPSI57GHsEG+PAnbJrN9VSrinUdrwxU1KbNQeTGbWT
+         OuU78RJspm8VZ4Q9nlzJuWLtl+hXmR6giwG4qestZt51Pi80nhngFNphnheRZCCpiAij
+         ngrA==
+X-Gm-Message-State: AOAM530vmzqydJgQbXcPPfQO42QMYjMYatyj/YItGiZ4bL2FwqQvT2DW
+        +R+4sXx+SrJwvcruSNZPiJ52Kxzv
+X-Google-Smtp-Source: ABdhPJz/NrNXnuz9gbxIl7rNWK4SnmfMhnN0Rx90dURWqV1qjuX/JkBxGOaGNKZ0A4lQiWmWSWSHFA==
+X-Received: by 2002:adf:f389:: with SMTP id m9mr4002908wro.195.1590587181794;
+        Wed, 27 May 2020 06:46:21 -0700 (PDT)
+Received: from pi3 ([194.230.155.118])
+        by smtp.googlemail.com with ESMTPSA id p1sm2989229wrx.44.2020.05.27.06.46.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 06:46:20 -0700 (PDT)
+Date:   Wed, 27 May 2020 15:46:18 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     georgi.djakov@linaro.org, a.swigon@samsung.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] interconnect: Allow inter-provider pairs to be
+ configured
+Message-ID: <20200527134618.GA4857@pi3>
+References: <20200521122841.8867-1-s.nawrocki@samsung.com>
+ <CGME20200521122857eucas1p1db29d5dd09e801ca22214e94022a951b@eucas1p1.samsung.com>
+ <20200521122841.8867-4-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Transfer-Encoding: 7bit
-X-Priority: 3 (Normal)
-Sensitivity: Normal
-X-VirusScan: Outbound; mvir-ac12; Wed, 27 May 2020 22:10:57 +0900
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20200521122841.8867-4-s.nawrocki@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Attn:
+On Thu, May 21, 2020 at 02:28:41PM +0200, Sylwester Nawrocki wrote:
+> From: Artur Świgoń <a.swigon@samsung.com>
+> 
+> This patch adds support for a new boolean 'inter_set' field in struct
+> icc_provider. Setting it to 'true' enables calling '->set' for
+> inter-provider node pairs. All existing users of the interconnect
+> framework allocate this structure with kzalloc, and are therefore
+> unaffected by this change.
+> 
+> This makes it easier for hierarchies like exynos-bus, where every bus
+> is probed separately and registers a separate interconnect provider, to
+> model constraints between buses.
+> 
+> Signed-off-by: Artur Świgoń <a.swigon@samsung.com>
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+>  drivers/interconnect/core.c           | 11 +++++------
+>  include/linux/interconnect-provider.h |  2 ++
+>  2 files changed, 7 insertions(+), 6 deletions(-)
 
-Es tut uns leid, dass wir Sie aufgrund eines Mismanagent of Beneficaries-Fonds von unseren ernannten Zonal Managern versp&#228;tet kontaktiert haben. Bitte beachten Sie, dass Sie qualifiziert sind, die Zahlung von 900.000,00 USD an der ATM-Karte mit neunhunderttausend Dollar zu erhalten.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Als Entsch&#228;digung von WORLD BANK / IWF (Internationaler W&#228;hrungsfonds) f&#252;r die automatisch &#252;ber einen E-Mail-Wahlautomaten gezogenen, die in der Vergangenheit noch nicht abgeschlossene Transaktionen hatten.
-
-F&#252;r weitere Informationen kontaktieren Sie bitte Rev.EVANS JONES ( jonesevansje@gmail.com )
-
-Bitte senden Sie ihm Ihre pers&#246;nlichen Daten wie:
-
-Vollst&#228;ndiger Name:
-Wohnanschrift:
-Telefonnummer:
-Herkunftsland:
-
-Gr&#252;&#223;e,
-Mrs. Judith Rice
-
+Best regards,
+Krzysztof
