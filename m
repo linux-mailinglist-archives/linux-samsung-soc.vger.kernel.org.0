@@ -2,93 +2,158 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD861E7D7E
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 29 May 2020 14:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 863801E7D99
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 29 May 2020 14:50:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726866AbgE2Mpb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 29 May 2020 08:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbgE2Mpa (ORCPT
+        id S1726965AbgE2Mtw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 29 May 2020 08:49:52 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:47322 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726887AbgE2Mtw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 29 May 2020 08:45:30 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9D5C03E969;
-        Fri, 29 May 2020 05:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Transfer-Encoding
-        :Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-        Sender:Reply-To:Content-ID:Content-Description;
-        bh=hWDpNSmqqL4jiVuIX8+MfcVSYKD0Sr0CkGGlOnTksS8=; b=Mw3cOcpwT75KMypA7DbQN76n3K
-        LmIujEvwcjqz8mB4DIQNPRDiJKYUham8VvC6rSnD6+3ba6I3VkRz3MaFsFNabdvTOT2j5AatU+Z7I
-        o2P6if4RDFm1y5wwdk2idNMSaFbHSv9nUDIt/4zeeljrafN3UYBqYE+KqfQCvuFK6OcWyAc+raczK
-        RK1oGDElglttDYT91kX4m02qQyIV6yN6hy+hALyRQRMTpe79Bv+Xx23bujAFJtHO/oMRx35Hz3zuD
-        lD4co5ouUY7qPRY4OdLY/2HO+5AIT+8BT8rZU73mdGN5IlVfIzk0ihyFqydTRs7blGIxekQ3JxAc7
-        R7D+WZjw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jeeO3-00062M-2L; Fri, 29 May 2020 12:45:23 +0000
-Date:   Fri, 29 May 2020 05:45:23 -0700
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Logan Gunthorpe <logang@deltatee.com>
-Cc:     Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org,
-        kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Fri, 29 May 2020 08:49:52 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200529124949euoutp01f8abd69c361fd9de29b86d72dc898865~TgLCn10LT2624426244euoutp01J
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 29 May 2020 12:49:49 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200529124949euoutp01f8abd69c361fd9de29b86d72dc898865~TgLCn10LT2624426244euoutp01J
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1590756589;
+        bh=aN1siSuQ/DP89e17gPstpLyzXOPICD7+xxdW1lji8ko=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=aAUlBLHnL89XEB9CBivH9EBGAbefO0xQpUFQYHE4wf2B4IENjAyTOK4Fo8rQH3dvQ
+         pb4Oxx7qWf/O+1TdAV/D4UDcC50ZerGyd9Zrl/aM0YjCN5v8I42e8X0/WE0Oql4+aZ
+         gKtmru/Q3oxBDNxy3NlL+Xb8rH2ayokPmCujJcMc=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20200529124948eucas1p110a658290579b7b93d501369234fbe5b~TgLCCgaCI2813228132eucas1p1s;
+        Fri, 29 May 2020 12:49:48 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id C0.74.60698.CE401DE5; Fri, 29
+        May 2020 13:49:48 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200529124948eucas1p175379ead8afd1932f7b7ae61e35cf632~TgLBsJgNe2814928149eucas1p1r;
+        Fri, 29 May 2020 12:49:48 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200529124948eusmtrp1d71829d89a644f99baf443bcd184fac2~TgLBrZw_q1703417034eusmtrp18;
+        Fri, 29 May 2020 12:49:48 +0000 (GMT)
+X-AuditID: cbfec7f5-a29ff7000001ed1a-eb-5ed104ec38bf
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 49.CA.07950.CE401DE5; Fri, 29
+        May 2020 13:49:48 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200529124947eusmtip137f13c0207064f2862fb3e582c786bce~TgLAwmtSB1272112721eusmtip1t;
+        Fri, 29 May 2020 12:49:47 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Dmitry Osipenko <digetx@gmail.com>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org,
-        Alex Williamson <alex.williamson@redhat.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-Message-ID: <20200529124523.GA11817@infradead.org>
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
- <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+        Viresh Kumar <viresh.kumar@linaro.org>, peron.clem@gmail.com,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        linux-samsung-soc@vger.kernel.org,
+        Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 0/2] Fix regulators coupling for Exynos5800
+Date:   Fri, 29 May 2020 14:49:38 +0200
+Message-Id: <20200529124940.10675-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0VSe0hTURjn3Ht3dxWn12l4srIaFBTkAwUPWmJlcSFJo78MNFfe1NJpu2oZ
+        JL7IOUxNyUw0LURtTufMV+YrkSSWzlc+8EFqYYpCtWkPp9R2s/77vb7z+/g4FC6uFzhT0bIE
+        Vi6TxkhIa6LlzU/9sVViOMxd3eyNtMUaAXo4/5FEE8YlAar9ugiQXt8gRB/KpjC0MabA0Gh7
+        KYkM9/sAKtZ3Yaiub1aIVn8MYGj6ySiB3ulGBGh7XEsgRd8GjrTrjL8987JkVsg0qrJJZma8
+        g2TyttyZpvdZBJPbpAJM/2QrxhgaXYKpS9bHI9iY6CRW7uYXbh21MJqBxQ+Jb88XTYJUUGSn
+        BFYUpL3gUlcaoQTWlJiuATDXmCbkiRHAzyYdxhMDgOqZOWJn5HvrW8Ab1QCWlZoshmXkwYqN
+        GZO0B1SuKUlzyJFOA7C5YggzGzi9icPO4YNKQFEOtC9s0RwwywR9CK41f7JERPQJmJdaSPJl
+        +2FtQw9ufgfS7UKYU1iA8UYA1IxvCXnsAFf6m/7ivVBXmEPwAxkAzg/WCXmSA+BoejHgU75w
+        ZvAXad4Cp49ATbsbL5+EPUa1RYa0LZxcs+d3toUFLY9wXhZBxT0xnz4MS/rr/9W+HhrBeczA
+        scUewN8kFLa0d5P5wKXkf1cFACrgxCZysZEs5yljb7ly0lguURbpejUuthH8+UW67f71NtBl
+        utILaApIbEQNj/VhYoE0iUuO7QWQwiWOolMDujCxKEKafIeVx12WJ8awXC/YQxESJ5Hns+VQ
+        MR0pTWBvsGw8K99xMcrKORUQ1yqb/ZD2RVuW7d2n5YOSzfymKu9X+0JYf6rjecF1yc1xUWaA
+        33zj+QllkKoqpdpVgXtFOJ8JqfTy+XZhzuRrUH1Zbu2QaU0p0we7O4nOi+pzeh/X+KndDYZy
+        cfjpswlunB2VmikNrjEZbQIDAoPSsWSfsYHs5dUNKxC6a0FCcFFSj6O4nJP+Bg5NcatBAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphkeLIzCtJLcpLzFFi42I5/e/4Xd03LBfjDGY8kLPYOGM9q8XUh0/Y
+        LK5/ec5qsfrjY0aL8+c3sFs8mHuTyeLblQ4mi8u75rBZfO49wmgx4/w+Jou1R+6yW7z5cZbJ
+        4va8yywWZ05fYrX4d20ji0XHkW/MFhu/ejgIeuycdZfdY9OqTjaPO9f2sHn0/zXw2HK1ncWj
+        b8sqRo/jN7YzeXzeJBfAEaVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9n
+        k5Kak1mWWqRvl6CX8ehyM1PBBaGKh9NuMDYwTuPvYuTkkBAwkfi+/SRjFyMXh5DAUkaJOTv/
+        MEMkZCROTmtghbCFJf5c62IDsYUEPjFKdH+OALHZBAwlut6CxLk4RARaGSXOv17FBOIwC7Sy
+        SCy4swpoEgeHsIC1xLb1CiANLAKqEm+3PmUCsXkFbCX6GyazQSyQl1i94QDzBEaeBYwMqxhF
+        UkuLc9Nzi430ihNzi0vz0vWS83M3MQJjYNuxn1t2MHa9Cz7EKMDBqMTDu2Hm+Tgh1sSy4src
+        Q4wSHMxKIrxOZ0/HCfGmJFZWpRblxxeV5qQWH2I0BVo+kVlKNDkfGJ95JfGGpobmFpaG5sbm
+        xmYWSuK8HQIHY4QE0hNLUrNTUwtSi2D6mDg4pRoYGypuJMaozW1eveZsiKHzgRzLyd3rn/+R
+        eMCn3VIrEi8kslq78KPAO2O+TUqRfDWrfeb1cXRJrugSqIle7rG8/HD0kcf9x0yK2h7+tbnX
+        k7158TOdkujQPXlrYyXX58Qcj76w8o9rx8kGi6KZWazPNy632DLlzIb/obeOcJWIP5eXOPrc
+        19lRiaU4I9FQi7moOBEAJ+qStZcCAAA=
+X-CMS-MailID: 20200529124948eucas1p175379ead8afd1932f7b7ae61e35cf632
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200529124948eucas1p175379ead8afd1932f7b7ae61e35cf632
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200529124948eucas1p175379ead8afd1932f7b7ae61e35cf632
+References: <CGME20200529124948eucas1p175379ead8afd1932f7b7ae61e35cf632@eucas1p1.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, May 28, 2020 at 06:00:44PM -0600, Logan Gunthorpe wrote:
-> > This issue is most likely in the i915 driver and is most likely caused by the driver not respecting the return value of the dma_map_ops::map_sg function. You can see the driver ignoring the return value here:
-> > https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
-> > 
-> > Previously this didn’t cause issues because the intel map_sg always returned the same number of elements as the input scatter gather list but with the change to this dma-iommu api this is no longer the case. I wasn’t able to track the bug down to a specific line of code unfortunately.  
+Hi!
 
-Mark did a big audit into the map_sg API abuse and initially had
-some i915 patches, but then gave up on them with this comment:
+This patchset is another attempt to fix the regulator coupling on
+Exynos5800/5422 SoCs. Here are links to the previous attempts:
 
-"The biggest TODO is DRM/i915 driver and I don't feel brave enough to fix
- it fully. The driver creatively uses sg_table->orig_nents to store the
- size of the allocate scatterlist and ignores the number of the entries
- returned by dma_map_sg function. In this patchset I only fixed the
- sg_table objects exported by dmabuf related functions. I hope that I
- didn't break anything there."
+https://lore.kernel.org/linux-samsung-soc/20191008101709.qVNy8eijBi0LynOteWFMnTg4GUwKG599n6OyYoX1Abs@z/
+https://lore.kernel.org/lkml/20191017102758.8104-1-m.szyprowski@samsung.com/
+https://lore.kernel.org/linux-pm/cover.1589528491.git.viresh.kumar@linaro.org/
+https://lore.kernel.org/linux-pm/20200528131130.17984-1-m.szyprowski@samsung.com/
 
-it would be really nice if the i915 maintainers could help with sorting
-that API abuse out.
+The problem is with "vdd_int" regulator coupled with "vdd_arm" on Odroid
+XU3/XU4 boards family. "vdd_arm" is handled by CPUfreq. "vdd_int" is
+handled by devfreq. CPUfreq initialized quite early during boot and it
+starts changing OPPs and "vdd_arm" value. Sometimes CPU activity during
+boot goes down and some low-frequency OPPs are selected, what in turn
+causes lowering "vdd_arm". This happens before devfreq applies its
+requirements on "vdd_int". Regulator balancing code reduces "vdd_arm"
+voltage value, what in turn causes lowering "vdd_int" value to the lowest
+possible value. This is much below the operation point of the wcore bus,
+which still runs at the highest frequency.
+
+The issue was hard to notice because in the most cases the board managed
+to boot properly, even when the regulator was set to lowest value allowed
+by the regulator constraints. However, it caused some random issues,
+which can be observed as "Unhandled prefetch abort" or low USB stability.
+
+Adding more and more special cases to the generic code has been rejected,
+so the only way to ensure the desired behavior on Exynos5800-based SoCs 
+is to make a custom regulator coupler driver.
+
+Best regards,
+Marek Szyprowski
+
+
+Patch summary:
+
+Marek Szyprowski (2):
+  regulator: extract voltage balancing code to separate function
+  soc: samsung: Add simple voltage coupler for Exynos5800
+
+ arch/arm/mach-exynos/Kconfig                  |  1 +
+ drivers/regulator/core.c                      | 49 ++++++++-------
+ drivers/soc/samsung/Kconfig                   |  3 +
+ drivers/soc/samsung/Makefile                  |  1 +
+ .../soc/samsung/exynos-regulator-coupler.c    | 59 +++++++++++++++++++
+ include/linux/regulator/coupler.h             |  8 +++
+ 6 files changed, 101 insertions(+), 20 deletions(-)
+ create mode 100644 drivers/soc/samsung/exynos-regulator-coupler.c
+
+-- 
+2.17.1
+
