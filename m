@@ -2,88 +2,113 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E46391EC769
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  3 Jun 2020 04:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530A31ECA87
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  3 Jun 2020 09:28:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725881AbgFCCd4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 2 Jun 2020 22:33:56 -0400
-Received: from userp2130.oracle.com ([156.151.31.86]:46580 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbgFCCdz (ORCPT
+        id S1726135AbgFCH2o (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 3 Jun 2020 03:28:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbgFCH2n (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 2 Jun 2020 22:33:55 -0400
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0532UMG6179593;
-        Wed, 3 Jun 2020 02:33:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=corp-2020-01-29;
- bh=v7slq7nogbFdY6anIseYYqTNcMjCCgPFuaiWRrPlhd4=;
- b=RmSTRVCplZZG7hH4oKzlD4CdgQl+lZtGOEJLWJHnap36bjgEKHpvZaDu4vvAIIwxQihv
- Ap3PflK9V+4GeOmmd24D82FTptVwPlFegJelVgKVR58tBAQKsab0mhdyGVw0Zvu0gTpJ
- HAsBbRmWeaq8rwD2U/jCkFSNWPjv4G6m+HqaWTOGhSNAiw+KLDqL+ThUKEXIPDr7DqZs
- Yp3lwUG0yo5Ps6M6w1+fBVH2qJ/zZ2HAaFBPx6e9q7Q40OkruVPuHY2hReIjouYSEhPg
- BGMatinBLLkYOWqDs9+5qO37OVp+Ic6ezu0GePQs5nGkHVOtR50qQ8go78Cchn2WWRNi qw== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by userp2130.oracle.com with ESMTP id 31bewqxwcj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 03 Jun 2020 02:33:44 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0532S09m087088;
-        Wed, 3 Jun 2020 02:31:43 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by userp3020.oracle.com with ESMTP id 31dju2f0ah-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 03 Jun 2020 02:31:43 +0000
-Received: from abhmp0003.oracle.com (abhmp0003.oracle.com [141.146.116.9])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0532VfJe032603;
-        Wed, 3 Jun 2020 02:31:42 GMT
-Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 02 Jun 2020 19:31:41 -0700
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     robh@kernel.org, Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        krzk@kernel.org, linux-samsung-soc@vger.kernel.org,
-        avri.altman@wdc.com, stanley.chu@mediatek.com,
-        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        cang@codeaurora.org, devicetree@vger.kernel.org,
-        kwmad.kim@samsung.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 00/10] exynos-ufs: Add support for UFS HCI
-Date:   Tue,  2 Jun 2020 22:31:32 -0400
-Message-Id: <159114947915.26776.12485309894552696104.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200528011658.71590-1-alim.akhtar@samsung.com>
-References: <CGME20200528013223epcas5p2be85fa8803326b49a905fb7225992cad@epcas5p2.samsung.com> <20200528011658.71590-1-alim.akhtar@samsung.com>
+        Wed, 3 Jun 2020 03:28:43 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EFBC05BD1E
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  3 Jun 2020 00:28:42 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id f185so865170wmf.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 03 Jun 2020 00:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=vx88ON+UFkh4ABL4pG0NLQrIOYVxNTrYi/4Z1S6HqD0=;
+        b=hCrkJTJWfBUV52aVTGVpRHJG44LK/LVRSC3DY3u2dKIeMTfwevh3sU7pclJOceR8SM
+         48evXxGkiaFsg6e7/fpzqozMhwmOpCaFZw2uzkWfm2nFVhgtyMjnuRwp6ntzUjt6sjy+
+         ELpdZwAqGZ8a6l8fxksM4LCTtR1718xF85Prj80teTw6cwbO0eQvp7eEVJurhktMpnKv
+         NwpLrgOvbRhxxbWZ71U2QtBcvj+a/ZsNqHalByZJgQmhXRbwYiBK/IBw7aRv1xTE4POv
+         NKA7s1gLfclVMYxs0nMx3woJc0SmTaE3I/31vSnvgh0MdcDiuU6vyQQPcCqKbYv/Mprn
+         e77g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=vx88ON+UFkh4ABL4pG0NLQrIOYVxNTrYi/4Z1S6HqD0=;
+        b=MMXZIh7JePvdhxyVYOTfNwzaOVfd/8u/gjf5GrB9S1aqfe+MBBnvmJFhJMPoEiVLHq
+         BJqNUEcPF6IXCR84FOn60T5iZHkulWKAYutD2NFZ6fm2Mzv1pLBSVbRI1DEpkW8LVuPM
+         DRi8HYslz6kkWNBKOb1/oHJ8UNMVdnINGpfqwWyBFUFJlIQwQmJ20ld+vgLvbYzMKdim
+         wa7u/X1PdJofP8ssIiv1qSTIv4cIu5vI7vfong/GBEJIG9qa4Gl43z7FPQaC3ABPKeJo
+         vtqvH08of+vPcO5HyOXMejHjQzJonUfdKqcA0ANvxwKLbCcpP13YLuT++LDjiacim/JT
+         ekaw==
+X-Gm-Message-State: AOAM531mNZxyuN5eCYuTABO1GLhk/NsTa0qqsrsrhbTs/DootjKRCQtv
+        ZeZFj27ndLTxCpZkqGYM8w1QxHgkSqiQraUtcdI=
+X-Google-Smtp-Source: ABdhPJwRJcii4ihsd1hlwCAcfc2YY5jqPaML6a6JW8BmFYit4rHaRpk8+X+oMwLaQmDKnBAS1jcYK5b/pARdEVHi7YQ=
+X-Received: by 2002:a7b:c951:: with SMTP id i17mr7180873wml.44.1591169319225;
+ Wed, 03 Jun 2020 00:28:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9640 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=943
- phishscore=0 malwarescore=0 mlxscore=0 adultscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2004280000 definitions=main-2006030017
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9640 signatures=668686
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 bulkscore=0
- phishscore=0 suspectscore=0 impostorscore=0 cotscore=-2147483648
- lowpriorityscore=0 mlxscore=0 adultscore=0 spamscore=0 mlxlogscore=984
- malwarescore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2004280000 definitions=main-2006030017
+Received: by 2002:a1c:7401:0:0:0:0:0 with HTTP; Wed, 3 Jun 2020 00:28:38 -0700 (PDT)
+Reply-To: anitkwas@gmail.com
+From:   "Ms. Anita Kwassou" <samolele25@gmail.com>
+Date:   Wed, 3 Jun 2020 09:28:38 +0200
+Message-ID: <CAC2D0BGOmGvCTHiSf46OQrLTG0f1M0JjNYu2-q5zS38sMvOFrQ@mail.gmail.com>
+Subject: =?UTF-8?B?0KHQutGK0L8g0L/RgNC40Y/RgtC10LssIGhlbGxv?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 28 May 2020 06:46:48 +0530, Alim Akhtar wrote:
-
-> This patch-set introduces UFS (Universal Flash Storage) host
-> controller support for Samsung family SoC. Mostly, it consists of
-> UFS PHY and host specific driver.
-> [...]
-
-Applied [1,2,3,4,5,9] to 5.9/scsi-queue. The series won't show up in
-my public tree until shortly after -rc1 is released.
-
-Thanks!
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+0KHQutGK0L8g0L/RgNC40Y/RgtC10LssDQoNCtCf0LjRiNCwINCy0Lgg0L7RgiDQn9Cw0YDQsNCz
+0LLQsNC5INCyINC60L7QvNCw0L3QtNC40YDQvtCy0LrQsCDRgSDQvdC+0LLQsNGC0LAg0LzQuA0K
+0L/QsNGA0YLQvdGM0L7RgCDRgdC70LXQtCDRg9GB0L/QtdGI0L3QvtGC0L4g0L/RgNC10LLQtdC2
+0LTQsNC90LUg0L3QsCDRgdGA0LXQtNGB0YLQstCw0YLQsCDQsiDRgNCw0LfQvNC10YAg0L3QsCAk
+DQo1LDUg0LzQuNC70LjQvtC90LAuDQoNCtCU0LAsINC60LDQutGC0L4g0LLQuCDQutCw0LfQsNGF
+INC/0YDQtdC00LgsINC90LUg0YHRitC8INCw0LvRh9C10L0g0YfQvtCy0LXQuiDQuCDRgdGK0YnQ
+viDQvtCx0LjRh9Cw0LwNCtGA0LDQt9C/0L7Qt9C90LDQudGC0LUg0YPRgdC40LvQuNGP0YLQsCDQ
+vdCwINC90Y/QutC+0LPQviwg0LHQtdC3INC30L3QsNGH0LXQvdC40LUg0LrQsNC60YrQsiDQvNC+
+0LbQtSDQtNCwINC1INC/0YDQvtCx0LvQtdC80YrRgiwNCtCp0LUg0LLQuCDQv9C+0LzQvtC70Y8g
+0LTQsCDRgdC1INGB0LLRitGA0LbQtdGC0LUg0YEg0LzQvtGPINGB0LXQutGA0LXRgtCw0YA6DQoN
+CtCTLdC20LAg0JDQvdC40YLQsCDQmtCy0LDRgdGDDQrQldC70LXQutGC0YDQvtC90L3QsCDQv9C+
+0YnQsDogYW5pdGt3YXNAZ21haWwuY29tDQoNCtCTLdC20LAg0JDQvdC40YLQsCDRidC1INCy0Lgg
+0LjQt9C/0YDQsNGC0Lgg0L7RgdC10LzQtNC10YHQtdGCINGF0LjQu9GP0LTQuCDQtNC+0LvQsNGA
+0LAgKDgwIDAwMC4wMCDRidCw0YLRgdC60LgNCtC00L7Qu9Cw0YDQsCksINC60L7QuNGC0L4NCtGJ
+0LUg0LHRitC00LUg0L/RgNC10YXQstGK0YDQu9C10L0g0LrRitC8INCy0LDRgSDQsiDQvNC10LbQ
+tNGD0L3QsNGA0L7QtNC90LAg0LLQuNC30L7QstCwINC60LDRgNGC0LAg0LfQsCDQsdCw0L3QutC+
+0LzQsNGCLA0KDQrQlNCw0LLQsNC8INCy0Lgg0YLQvtCy0LAg0L7QsdC10LfRidC10YLQtdC90LjQ
+tSDQt9CwINCy0YHQuNGH0LrQuCDQstCw0YjQuCDQv9GA0LXQtNC40YjQvdC4INGD0YHQuNC70LjR
+jyDQuCDRgdGD0LzQsNGC0LANCtC40L3QstC10YHRgtC40YDQsNGF0YLQtSDQsiDQv9GA0L7RhtC1
+0YHQsCDQvdCwINC/0YDQtdCy0L7QtCwg0L3QviDQvdC1INC80L7QttCw0YXRgtC1INC00LAg0LfQ
+sNCy0YrRgNGI0LjRgtC1DQrRgSDQvNC10L0g0LfQsNGA0LDQtNC4INGB0YLRgNCw0YUg0Lgg0L3Q
+tdCy0LXRgNC40LUuDQoNCtCQ0Lcg0YHRitGJ0L4g0LLQuCDQtNCw0LLQsNC8INGC0LDQt9C4INC8
+0LDQu9C60LAg0YHRg9C80LAg0LrQsNGC0L4g0L/RgNC40LfQvdCw0YLQtdC70L3QvtGB0YIg0LfQ
+sCDQkdC+0LMNCtCx0LXQt9C60YDQsNC50L3QuCDQvNC40LvQvtGB0YLQuCDQtNCwINGB0LHRitC0
+0L3QsCDQsiDRgtCw0LfQuCDQvNC+0Y8g0LzQtdGH0YLQsCwg0LAg0YHRitGJ0L4g0Lgg0LfQsA0K
+0LLQvtC00LXQudC60Lgg0LzQtSDRgdC/0L7QutC+0LnQvdC+INCyINGC0LDQt9C4INGB0YLRgNCw
+0L3QsC4NCg0K0KHQstGK0YDQttC10YLQtSDRgdC1INGBINCzLdC20LAg0JDQvdC40YLQsCDQuCDQ
+vtCx0YHRitC00LXRgtC1INGBINC90LXQs9C+INC60LDQuiDQuNGB0LrQsNGC0LUg0LHQsNC90LrQ
+vtC80LDRgtCwDQrQuNC30L/RgNCw0YLQtdC90L4g0LTQviDQstCw0YEg0Lgg0YHQtSDQvtC/0LjR
+gtCw0LnRgtC1INC00LAg0LzQtSDQuNC90YTQvtGA0LzQuNGA0LDRgtC1INCy0LXQtNC90LDQs9Cw
+INGJ0L7QvCDQv9C+0LvRg9GH0LjRgtC1INC60LDRgNGC0LDRgtCwLg0KDQrQndCw0Lkt0LTQvtCx
+0YDQuCDQv9C+0LbQtdC70LDQvdC40Y8sDQrQk9C+0YHQv9C+0LTQuNC9INCh0LDQvCDQntC70LXQ
+u9C1DQoNCg0KbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1t
+bW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tDQoNCg0KRGVhciBmcmllbmQsDQoNCkkg
+YW0gd3JpdGluZyB0byB5b3UgZnJvbSBQYXJhZ3VheSBvbiBhIGJ1c2luZXNzIHRyaXAgd2l0aCBt
+eSBuZXcNCnBhcnRuZXIgYWZ0ZXIgdGhlIHN1Y2Nlc3NmdWwgdHJhbnNmZXIgb2YgdGhlIGZ1bmRz
+IGluIHRoZSBhbW91bnQgb2YgJA0KNS41IG1pbGxpb24uDQoNClllcywgYXMgSSB0b2xkIHlvdSBi
+ZWZvcmUsIEkgYW0gbm90IGEgZ3JlZWR5IHBlcnNvbiBhbmQgYWxzbyBsaWtlIHRvDQpyZWNvZ25p
+emUgdGhlIGVmZm9ydHMgb2Ygc29tZW9uZSwgbm8gbWF0dGVyIHdoYXQgbWlnaHQgYmUgdGhlIHBy
+b2JsZW0sDQpJIHdpbGwgcmVxdWVzdCB5b3UgdG8gY29udGFjdCBteSBzZWNyZXRhcnk6DQoNCk1z
+LiBBbml0YSBLd2Fzc291DQpFLU1haWw6IGFuaXRrd2FzQGdtYWlsLmNvbQ0KDQpNcy4gQW5pdGEg
+d2lsbCBzZW5kIHlvdSBFaWdodHkgVGhvdXNhbmQgZG9sbGFycyAoVVMkODAuMDAwLjAwKSB3aGlj
+aA0KaXMgYmVlbiByb2xsZWQgdG8geW91IGludG8gYW4gaW50ZXJuYXRpb25hbCBBVE0gdmlzYSBj
+YXJkLA0KDQpJIGdpdmUgeW91IHRoaXMgY29tcGVuc2F0aW9uIGZvciBhbGwgeW91ciBwYXN0IGVm
+Zm9ydHMgYW5kIHRoZSBhbW91bnQNCnlvdSBpbnZlc3RlZCBpbiB0aGUgdHJhbnNsYXRpb24gcHJv
+Y2VzcywgYnV0IHlvdSBjb3VsZG4ndCBjb21wbGV0ZQ0Kd2l0aCBtZSBiZWNhdXNlIG9mIGZlYXIg
+YW5kIGRpc2JlbGlldmUuDQoNCkkgYW0gYWxzbyBnaXZpbmcgdG8geW91IHRoaXMgc21hbGwgYW1v
+dW50IGFzIGFuIGFwcHJlY2lhdGlvbiBmb3IgR29kJ3MNCmVuZGxlc3MgbWVyY2llcyB0byBtYWtl
+IGluIHRoaXMgbXkgZHJlYW0gY29tZSB0cnVlLCBhbmQgYWxzbyBmb3INCmxlYWRpbmcgbWUgcGVh
+Y2VmdWxseSB0byB0aGlzIGNvdW50cnkuDQoNCkNvbnRhY3QgTXMuIEFuaXRhIGFuZCBkaXNjdXNz
+IHdpdGggaGltIG9uIGhvdyB5b3Ugd2FudCB0aGUgQVRNIGNhcmQNCnNlbnQgdG8geW91IGFuZCB0
+cnkgdG8gaW5mb3JtIG1lIGFzIHNvb24gYXMgeW91IHJlY2VpdmVkIHRoZSBjYXJkLg0KDQpCZXN0
+IHdpc2hlcywNCk1yLiBTYW0gT2xlbGUNCg==
