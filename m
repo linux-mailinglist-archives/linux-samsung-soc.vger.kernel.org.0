@@ -2,125 +2,133 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3531FAAD4
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Jun 2020 10:12:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1C2D1FBCF0
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Jun 2020 19:31:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727054AbgFPIM4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 16 Jun 2020 04:12:56 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:42993 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727091AbgFPIMx (ORCPT
+        id S1731088AbgFPR3V (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 16 Jun 2020 13:29:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729272AbgFPR3U (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 16 Jun 2020 04:12:53 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200616081251euoutp01e1104855722e6b0f6eba94cba8b008a7~Y_AWhFcLn1793317933euoutp01W
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Jun 2020 08:12:51 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200616081251euoutp01e1104855722e6b0f6eba94cba8b008a7~Y_AWhFcLn1793317933euoutp01W
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1592295171;
-        bh=t+LeSgDb8yZiggnUrlN5WU6K26V0DBW3GJJdVArjas0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=i+jCOQIWkDGe9XGLIqdRn3w3dPjQyrpSKh2T4lHysEkAI0fN6GtaoskT83MfGVXv+
-         gWeajrzI0vI/B/8AhaLm9bdPL6Tuu3vSGvUbT6I9J3dkep1w1JtfOQsjMdb8GBKzgQ
-         Jl1jzPiRNtruHSWgiMvwqzzutkHR0VngL6gAfYtY=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20200616081250eucas1p2448a2a68035538b80b7a0ade6d623821~Y_AWLczxx2000720007eucas1p2F;
-        Tue, 16 Jun 2020 08:12:50 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id B5.5E.60698.20F78EE5; Tue, 16
-        Jun 2020 09:12:50 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200616081250eucas1p2a98f8810962ddc692fa5588a74f911b3~Y_AV5DEGu0048500485eucas1p2o;
-        Tue, 16 Jun 2020 08:12:50 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200616081250eusmtrp11e628046414c848eeef3b46c4e5d342c~Y_AV4dJ0E1314613146eusmtrp1s;
-        Tue, 16 Jun 2020 08:12:50 +0000 (GMT)
-X-AuditID: cbfec7f5-a29ff7000001ed1a-f8-5ee87f02c16d
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id A2.4A.07950.20F78EE5; Tue, 16
-        Jun 2020 09:12:50 +0100 (BST)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200616081250eusmtip269bdae8437e63967952de0a9644e93bb~Y_AVXwV1D0491904919eusmtip2j;
-        Tue, 16 Jun 2020 08:12:50 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Tue, 16 Jun 2020 13:29:20 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 421C4C061573;
+        Tue, 16 Jun 2020 10:29:20 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: andrzej.p)
+        with ESMTPSA id 4CE612A2C75
+From:   Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+To:     linux-pm@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-tegra@vger.kernel.org, patches@opensource.cirrus.com,
+        ibm-acpi-devel@lists.sourceforge.net,
+        platform-driver-x86@vger.kernel.org
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Len Brown <lenb@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: [PATCH 4/4] ARM: multi_v7_defconfig: Enable big.LITTLE cpuidle
- driver
-Date:   Tue, 16 Jun 2020 10:12:30 +0200
-Message-Id: <20200616081230.31198-5-m.szyprowski@samsung.com>
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Sylvain Lemieux <slemieux.tyco@gmail.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Barry Song <baohua@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        Nick Dyer <nick@shmanahar.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Sangwon Jee <jeesw@melfas.com>,
+        Peter Hutterer <peter.hutterer@redhat.com>,
+        Henrique de Moraes Holschuh <ibm-acpi@hmh.eng.br>,
+        Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+        kernel@collabora.com
+Subject: [PATCH] Input: document inhibiting
+Date:   Tue, 16 Jun 2020 19:29:09 +0200
+Message-Id: <20200616172909.21625-1-andrzej.p@collabora.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200616081230.31198-1-m.szyprowski@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkleLIzCtJLcpLzFFi42LZduznOV2m+hdxBrN3WlhsnLGe1WLeZ1mL
-        8+c3sFtsenyN1eJz7xFGixnn9zFZvPn9gt1iYVMLu8XaI3fZHTg91sxbw+ixaVUnm8eda3vY
-        PDYvqffo27KK0ePzJrkAtigum5TUnMyy1CJ9uwSujFdHH7EWnGatOLt3MnsD4xeWLkZODgkB
-        E4m1/5aB2UICKxglOibadDFyAdlfGCXufrvNDuF8ZpS4P2sJM0zHnm1LoRLLGSXWfPvPDNdy
-        dd9bsCo2AUOJrrddbCC2iEC6xL2/S8A6mAUmMEm8ae5n7WLk4BAWCJCYe6AGpIZFQFVizbIW
-        sHpeAVuJY7v+s0Nsk5dYveEA2ExOATuJZZufM4HMkRBoZpc4unEmI0SRi8TTmXOZIGxhiVfH
-        t0A1y0icntzDAtXAKPHw3Fp2CKeHUeJy0wyobmuJO+d+sYFcxCygKbF+lz5E2FHi7dtuJpCw
-        hACfxI23giBhZiBz0rbpzBBhXomONiGIajWJWcfXwa09eOESNLQ8JGZc/MwKCaCJQCd8fcQ2
-        gVF+FsKyBYyMqxjFU0uLc9NTi43zUsv1ihNzi0vz0vWS83M3MQITyOl/x7/uYNz3J+kQowAH
-        oxIPL0PA8zgh1sSy4srcQ4wSHMxKIrxOZ0/HCfGmJFZWpRblxxeV5qQWH2KU5mBREuc1XvQy
-        VkggPbEkNTs1tSC1CCbLxMEp1cDYuFwpojD2gdyP3fkpvemnNW45KemL31j3b86SKVsyzK90
-        sm3glHpxosxUO156z36v06q9Rz9UTyj/u/GXvQij0d47586edyldki/WK3Myedet9Lk8seVd
-        Ag7vLv7o3lq3+qiY1VrHhu7p654eNbr8/nXvl1sTEs8ZipQ7L2L0MxLM4go9Ha+jxFKckWio
-        xVxUnAgAxvgoMhwDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNLMWRmVeSWpSXmKPExsVy+t/xe7pM9S/iDJZMULXYOGM9q8W8z7IW
-        589vYLfY9Pgaq8Xn3iOMFjPO72OyePP7BbvFwqYWdou1R+6yO3B6rJm3htFj06pONo871/aw
-        eWxeUu/Rt2UVo8fnTXIBbFF6NkX5pSWpChn5xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2
-        NimpOZllqUX6dgl6Ga+OPmItOM1acXbvZPYGxi8sXYycHBICJhJ7ti1l72Lk4hASWMoosenk
-        dkaIhIzEyWkNrBC2sMSfa11sEEWfGCWOflwLlmATMJToeguS4OQQEciUWHjuJtgkZoEpTBI7
-        3u0ESwgL+Emc3TyRHcRmEVCVWLOsBSzOK2ArcWzXf3aIDfISqzccYAaxOQXsJJZtfs4EYgsB
-        1Sw7e5F5AiPfAkaGVYwiqaXFuem5xUZ6xYm5xaV56XrJ+bmbGIEBve3Yzy07GLveBR9iFOBg
-        VOLhjQh6HifEmlhWXJl7iFGCg1lJhNfp7Ok4Id6UxMqq1KL8+KLSnNTiQ4ymQEdNZJYSTc4H
-        RlteSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQbGzPMiHCVJYq82
-        eG0TEbk96/Pe7yGnref2NJt8Vu/XPX0qMOnj3h8V7Wymt0QXHP8hVRDa94fvx4e7Ue/LZ3t8
-        ktMz9Cou2tRWWFPvE90y6aibVpP0w2NXz2+4uUB+rsO0OA45F5aLSmqWr9YpWpxYcHhNeF5v
-        4QZ7vqe3G3U33p+64s96zxfrlViKMxINtZiLihMBc07dp34CAAA=
-X-CMS-MailID: 20200616081250eucas1p2a98f8810962ddc692fa5588a74f911b3
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200616081250eucas1p2a98f8810962ddc692fa5588a74f911b3
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200616081250eucas1p2a98f8810962ddc692fa5588a74f911b3
-References: <20200616081230.31198-1-m.szyprowski@samsung.com>
-        <CGME20200616081250eucas1p2a98f8810962ddc692fa5588a74f911b3@eucas1p2.samsung.com>
+In-Reply-To: <40988408-8f36-3a52-6439-34084de6b129@redhat.com>
+References: <40988408-8f36-3a52-6439-34084de6b129@redhat.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enable big.LITTLE cpuidle driver, which can be used on Exynos-based
-Peach Pit/Pi Chromebooks.
+Document inhibiting input devices and its relation to being
+a wakeup source.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 ---
- arch/arm/configs/multi_v7_defconfig | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index 95543914d3c7..6a922a8ef712 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -111,6 +111,7 @@ CONFIG_ARM_RASPBERRYPI_CPUFREQ=y
- CONFIG_QORIQ_CPUFREQ=y
- CONFIG_CPU_IDLE=y
- CONFIG_ARM_CPUIDLE=y
-+CONFIG_ARM_BIG_LITTLE_CPUIDLE=y
- CONFIG_ARM_ZYNQ_CPUIDLE=y
- CONFIG_ARM_EXYNOS_CPUIDLE=y
- CONFIG_ARM_TEGRA_CPUIDLE=y
+@Hans, @Dmitry,
+
+My fist attempt at documenting inhibiting. Kindly look at it to see if I haven't got anything
+wrong.
+
+Andrzej
+
+ Documentation/input/input-programming.rst | 36 +++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+diff --git a/Documentation/input/input-programming.rst b/Documentation/input/input-programming.rst
+index 45a4c6e05e39..0cd1ad4504fb 100644
+--- a/Documentation/input/input-programming.rst
++++ b/Documentation/input/input-programming.rst
+@@ -164,6 +164,42 @@ disconnects. Calls to both callbacks are serialized.
+ The open() callback should return a 0 in case of success or any nonzero value
+ in case of failure. The close() callback (which is void) must always succeed.
+ 
++Inhibiting input devices
++~~~~~~~~~~~~~~~~~~~~~~~~
++
++Inhibiting a device means ignoring input events from it. As such it is about maintaining
++relationships with input handlers - either an already existing relationships, or
++relationships to be established while the device is in inhibited state.
++
++If a device is inhibited, no input handler will receive events from it.
++
++The fact that nobody wants events from the device is exploited further, by calling device's
++close() (if there are users) and open() (if there are users) on inhibit and uninhibit
++operations, respectively. Indeed, the meaning of close() is to stop providing events
++to the input core and that of open() is to start providing events to the input core.
++
++Inhibiting and uninhibiting is orthogonal to opening and closing the device by input
++handlers. Userspace might want to inhibit a device in anticipation before any handler is
++positively matched against it.
++
++Inhibiting and uninhibiting is orthogonal to device's being a wakeup source, too. Being a
++wakeup source plays a role when the system is sleeping, not when the system is operating.
++How drivers should program their interaction between inhibiting, sleeping and being a wakeup
++source is driver-specific.
++
++Taking the analogy with the network devices - bringing a network interface down doesn't mean
++that it should be impossible to be wake the system up on LAN through this interface. So, there
++may be input drivers which should be considered wakeup sources even when inhibited. Actually,
++in many i2c input devices their interrupt is declared a wakeup interrupt and its handling
++happens in driver's core, which is not aware of input-specific inhibit (nor should it be).
++Composite devices containing several interfaces can be inhibited on a per-interface basis and
++e.g. inhibiting one interface shouldn't affect the device's capability of being a wakeup source.
++
++If a device is to be considered a wakeup source while inhibited, special care must be taken when
++programming its suspend(), as it might need to call device's open(). Depending on what close()
++means for the device in question not opening() it before going to sleep might make it impossible
++to provide any wakeup events. The device is going to sleep anyway.
++
+ Basic event types
+ ~~~~~~~~~~~~~~~~~
+ 
 -- 
 2.17.1
 
