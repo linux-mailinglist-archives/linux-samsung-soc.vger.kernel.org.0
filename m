@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EB031FE0C8
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 18 Jun 2020 03:50:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A161FDF9F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 18 Jun 2020 03:43:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732473AbgFRBuT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 17 Jun 2020 21:50:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35618 "EHLO mail.kernel.org"
+        id S1726920AbgFRBmE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 17 Jun 2020 21:42:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38902 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731241AbgFRB10 (ORCPT
+        id S1732305AbgFRB3a (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:27:26 -0400
+        Wed, 17 Jun 2020 21:29:30 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 58BBA21D7F;
-        Thu, 18 Jun 2020 01:27:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2BA0322229;
+        Thu, 18 Jun 2020 01:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443646;
-        bh=L5jxM9QxIyUVuj7z141yzzSyh/Vb4RBgGamMQWmlHcg=;
+        s=default; t=1592443770;
+        bh=grTMoYmHUjnzVf/gn68pvoeTwzVuwA9jfHoZouBcFWo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=moc1RpAu3LdA/XAhOsaHh+H/oIoCTL9Ge6EVJS0StdyMu+QiY3g0pIG7P+QI+4BXo
-         NtVHxmRtrfDmIETMTYh8I2+dxR0wd1m8KnHLMVn5cialMgcLzZj6Q3CNEohDD2Hkwt
-         9LtAvzLOoDJKk68I9lKgVpO+mJfurpWLFU+yma94=
+        b=yRXkleAXMBoN67YTSAlQRVsigDnyZGfsaV3PQvzSmhUV8DcqQ5+2hiytPeCeoWFbH
+         6tFHF4cyEty3+ngcDVmTBh3XILFk6p+H9sQWL6z/0yqNO12h5bArqJRbCuJ42OPcow
+         rjCqOji+T00qn8UzYytzyD4mKwc7CuSxiapTbBas=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
@@ -31,12 +31,12 @@ Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Sasha Levin <sashal@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.14 067/108] clk: samsung: exynos5433: Add IGNORE_UNUSED flag to sclk_i2s1
-Date:   Wed, 17 Jun 2020 21:25:19 -0400
-Message-Id: <20200618012600.608744-67-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 54/80] clk: samsung: exynos5433: Add IGNORE_UNUSED flag to sclk_i2s1
+Date:   Wed, 17 Jun 2020 21:27:53 -0400
+Message-Id: <20200618012819.609778-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200618012600.608744-1-sashal@kernel.org>
-References: <20200618012600.608744-1-sashal@kernel.org>
+In-Reply-To: <20200618012819.609778-1-sashal@kernel.org>
+References: <20200618012819.609778-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -93,10 +93,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
-index 1d2265f9ee97..1c327d5de98c 100644
+index 09cdd35dc434..a082b026791a 100644
 --- a/drivers/clk/samsung/clk-exynos5433.c
 +++ b/drivers/clk/samsung/clk-exynos5433.c
-@@ -1674,7 +1674,8 @@ static const struct samsung_gate_clock peric_gate_clks[] __initconst = {
+@@ -1672,7 +1672,8 @@ static const struct samsung_gate_clock peric_gate_clks[] __initconst = {
  	GATE(CLK_SCLK_PCM1, "sclk_pcm1", "sclk_pcm1_peric",
  			ENABLE_SCLK_PERIC, 7, CLK_SET_RATE_PARENT, 0),
  	GATE(CLK_SCLK_I2S1, "sclk_i2s1", "sclk_i2s1_peric",
