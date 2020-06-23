@@ -2,82 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 542B6204DBF
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jun 2020 11:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7B9A205057
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jun 2020 13:15:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731912AbgFWJU3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Jun 2020 05:20:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49302 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731971AbgFWJU3 (ORCPT
+        id S1732491AbgFWLPw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Jun 2020 07:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52572 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732488AbgFWLPq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Jun 2020 05:20:29 -0400
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AA86420738;
-        Tue, 23 Jun 2020 09:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592904029;
-        bh=Xs7k99TsOgu0hzE+yFGCz3P3zA7V/AxXkL+HCRV3E6Q=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=gGzQytR7q9QIG6t6/Au7ZRQdVDc5oRMr4aY8NYa6nwhi4zMC06Gxu7KZf1BlhcYEQ
-         NGWO4ZPC+uVFQXdc7h7GtFWKbZO7dZ4mDrc2U/9y7Newo8Le3BgCGE+PEinTT9Ohz1
-         mw5i5FW1I0PfVQy+9qc1Vlqj4qAEdfy6V8uw3O6k=
-Received: by mail-lj1-f178.google.com with SMTP id s1so22629899ljo.0;
-        Tue, 23 Jun 2020 02:20:28 -0700 (PDT)
-X-Gm-Message-State: AOAM532+gEGgK45GcKUv9tSuAeCMXUYRKpg1wuxZkPluhbq9IsVvXtGh
-        a0OdL94CkKVDfrcOz8c3DIK3Z3tZ8uwoWDDug58=
-X-Google-Smtp-Source: ABdhPJyV3VmbaZQ13gtf4a6bK4ughLQLgVLF0ksu0UOJmt9DCx/22TnKAoKwGpKzy2WNreYJgun9j/SlLT0XuM5Re80=
-X-Received: by 2002:a2e:8651:: with SMTP id i17mr10751099ljj.45.1592904026921;
- Tue, 23 Jun 2020 02:20:26 -0700 (PDT)
+        Tue, 23 Jun 2020 07:15:46 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D17C061755
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Jun 2020 04:15:45 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id s10so135854wrw.12
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Jun 2020 04:15:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=Xyy6aY3CzpTrB1jWSxZ+AZN1wwOD7LD+LfCki0d12w2TW+w1X0sGlX5yRgU+UcE3Xc
+         Sai4+ze5dk2Qt+18TpmHM4m07NxQq9zk94Aa8Z6DDOBMIfknaKRUDr9Qa4eAKRV1j2nJ
+         /ZzQzpn3D5WMkKao8WnmlQTHXZseJbZXbNWPxcMMEYSKiry/6/ClOjOSl58CrMkwNWcO
+         wQBzDNzdqe4GIGpXvGLIwxrqzJCn1eGIBa2J0WLaTzi+STb+HsZ0ZLxF09nkzg52CzUK
+         PcaoRXHmgLv/PBKUNmTO4JtULArsNuajcBSmFANYWYzFtMjegRI8J5HTV4/DSXdlz5fy
+         6iLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=IL2f7ujOBO3KC+6eD/vvvDB+n3EBKsOJcYvP2qmGd6NASoV/0lH1t38xlFnhSqdQAj
+         8WZeodINWW+xKQIXP8fMG9BA4dlYY9bU8UlSMIuj9zW5R8V4JvHRemdM5zc+0HMQVmTn
+         Sh0ExNHuvFmAQ0fRvgcGauOczcXqpz9mpCMtKFJTS+3K2bbgaBLMSxPi3rTFprR4eOdd
+         wVCZ6YeKR6IB5CqwPFNKCW0i5knttVzm23t0HOwOzx9ydzd1wZTkyc7vCAMDxUF6BiBR
+         O9S6MG/5CqBkCwBTWyK1mpb01fI4+iZhksNnZ+dEeI/7Oq2GtblcUfXT0yhXlB9hXNPG
+         LxXg==
+X-Gm-Message-State: AOAM531tfFEbipL6HLarvdch4L9MFvDfKsp5lQQJ5Cp0KgWcuJq6FM7y
+        p2cDcOwbOIBAGonfAwo0Y/Uc5ENccCYxg1KsBvY=
+X-Google-Smtp-Source: ABdhPJxtc+iGLXTpGncJsl55fUtNTlaYI1GL+Syh9U32BbYvKWSnrFcDUTy2CHQaVlATc2cvuwKiGrujIn2Ws91mXPU=
+X-Received: by 2002:adf:e948:: with SMTP id m8mr20918122wrn.398.1592910944654;
+ Tue, 23 Jun 2020 04:15:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200623074637.756-1-linux.amoon@gmail.com>
-In-Reply-To: <20200623074637.756-1-linux.amoon@gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Tue, 23 Jun 2020 11:20:15 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfU-1NF+MHnyCMoXkCD4BbOwqr3s+g+gUwDqRevO=L=sg@mail.gmail.com>
-Message-ID: <CAJKOXPfU-1NF+MHnyCMoXkCD4BbOwqr3s+g+gUwDqRevO=L=sg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "usb: dwc3: exynos: Add support for Exynos5422
- suspend clk"
-To:     Anand Moon <linux.amoon@gmail.com>
-Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Received: by 2002:a1c:f002:0:0:0:0:0 with HTTP; Tue, 23 Jun 2020 04:15:44
+ -0700 (PDT)
+Reply-To: sarahkoffi389@yahoo.co.jp
+From:   Sarah Koffi <paulwiliam782@gmail.com>
+Date:   Tue, 23 Jun 2020 12:15:44 +0100
+Message-ID: <CAHqcnY13QZ9cNfV--WUT2Yv7Bbg50EpH9YkPHEnJWyKR7jVZoA@mail.gmail.com>
+Subject: Greetings From Mrs. Sarah Koffi
+To:     sarahkoffi389@yahoo.co.jp
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 23 Jun 2020 at 09:46, Anand Moon <linux.amoon@gmail.com> wrote:
->
-> This reverts commit 07f6842341abe978e6375078f84506ec3280ece5.
->
-> Since SCLK_SCLK_USBD300 suspend clock need to be configured
-> for phy module, I wrongly mapped this clock to DWC3 code.
->
-> Cc: Felipe Balbi <balbi@kernel.org>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> ---
->  drivers/usb/dwc3/dwc3-exynos.c | 9 ---------
->  1 file changed, 9 deletions(-)
+Greetings From Mrs. Sarah Koffi
 
-But why was this patch applied in the first place? It did not pass the
-review. For the v3 I replied:
-"This patchset should not be applied. As of now, it is not needed and
-not justified."
-There were no acks and no positive reviews.
+I'm contacting you based on your good profiles I read and for a good
+reasons, I am in search of a property to buy in your country as I
+intended to come over to your
+country for investment, Though I have not meet with you before but I
+believe that one has to risk confiding in someone to succeed sometimes
+in life.
 
-My comments from previous versions of this patchset were not properly addressed.
+My name is Mrs. Sarah Koffi. My late husband deals on Crude Oil with
+Federal Government of Sudan and he has a personal Oil firm in Bentiu
+Oil zone town and Upper
+Nile city. What I have experience physically, I don't wish to
+experience it again in my life due to the recent civil Ethnic war
+cause by our President Mr. Salva Kiir
+and the rebel leader Mr Riek Machar, I have been Under United Nation
+refuge camp in chad to save my life and that of my little daughter.
 
-So here - yes, makes sense to revert it as it should have never been applied.
+Though, I do not know how you will feel to my proposal, but the truth
+is that I sneaked into Chad our neighboring country where I am living
+now as a refugee.
+I escaped with my little daughter when the rebels bust into our house
+and killed my husband as one of the big oil dealers in the country,
+ever since then, I have being on the run.
 
-Best regards,
-Krzysztof
+I left my country and move to Chad our neighboring country with the
+little ceasefire we had, due to the face to face peace meeting accord
+coordinated by the US Secretary of State, Mr John Kerry and United
+Nations in Ethiopia (Addis Ababa) between our President Mr Salva Kiir
+and the rebel leader Mr Riek Machar to stop this war.
+
+I want to solicit for your partnership with trust to invest the $8
+million dollars deposited by my late husband in Bank because my life
+is no longer safe in our country, since the rebels are looking for the
+families of all the oil business men in the country to kill, saying
+that they are they one that is milking the country dry.
+
+I will offer you 20% of the total fund for your help while I will
+partner with you for the investment in your country.
+If I get your reply.
+
+I will wait to hear from you so as to give you details.With love from
+
+ i need you to contact me here sarahkoffi389@yahoo.co.jp
+
+Mrs. Sarah Koffi
