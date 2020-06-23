@@ -2,108 +2,82 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BBEB204D07
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jun 2020 10:53:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 542B6204DBF
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Jun 2020 11:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731904AbgFWIwW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Jun 2020 04:52:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163]:41228 "EHLO loongson.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731691AbgFWIwV (ORCPT
+        id S1731912AbgFWJU3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Jun 2020 05:20:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49302 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731971AbgFWJU3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Jun 2020 04:52:21 -0400
-Received: from linux.localdomain (unknown [113.200.148.30])
-        by mail.loongson.cn (Coremail) with SMTP id AQAAf9Dxv2uFwvFecLBIAA--.12S6;
-        Tue, 23 Jun 2020 16:51:26 +0800 (CST)
-From:   Tiezhu Yang <yangtiezhu@loongson.cn>
-To:     Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>
-Cc:     Guo Ren <guoren@kernel.org>, Baruch Siach <baruch@tkos.co.il>,
-        Huacai Chen <chenhc@lemote.com>,
-        Jiaxun Yang <jiaxun.yang@flygoat.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-        Xuefeng Li <lixuefeng@loongson.cn>
-Subject: [PATCH 4/7] irqchip/loongson-pch-pic: Check return value of irq_domain_translate_twocell()
-Date:   Tue, 23 Jun 2020 16:51:13 +0800
-Message-Id: <1592902276-3969-5-git-send-email-yangtiezhu@loongson.cn>
-X-Mailer: git-send-email 2.1.0
-In-Reply-To: <1592902276-3969-1-git-send-email-yangtiezhu@loongson.cn>
-References: <1592902276-3969-1-git-send-email-yangtiezhu@loongson.cn>
-X-CM-TRANSID: AQAAf9Dxv2uFwvFecLBIAA--.12S6
-X-Coremail-Antispam: 1UD129KBjvJXoW7tF17JrW8tFWkAr1fXrW5Jrb_yoW8Xw1DpF
-        4UAwnFqr4DJFyUZw1xCws5Xry3Jw1ftFW7tayfKas3WrZ5J34qkF1UuFn5ur1rAF45JFy7
-        Zrs8KFWUuF13AFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUPa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
-        kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
-        z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
-        4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE
-        3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2I
-        x0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8
-        JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2
-        ka0xkIwI1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
-        67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MI
-        IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
-        14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-        4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfU
-        eXd1UUUUU
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+        Tue, 23 Jun 2020 05:20:29 -0400
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AA86420738;
+        Tue, 23 Jun 2020 09:20:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592904029;
+        bh=Xs7k99TsOgu0hzE+yFGCz3P3zA7V/AxXkL+HCRV3E6Q=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=gGzQytR7q9QIG6t6/Au7ZRQdVDc5oRMr4aY8NYa6nwhi4zMC06Gxu7KZf1BlhcYEQ
+         NGWO4ZPC+uVFQXdc7h7GtFWKbZO7dZ4mDrc2U/9y7Newo8Le3BgCGE+PEinTT9Ohz1
+         mw5i5FW1I0PfVQy+9qc1Vlqj4qAEdfy6V8uw3O6k=
+Received: by mail-lj1-f178.google.com with SMTP id s1so22629899ljo.0;
+        Tue, 23 Jun 2020 02:20:28 -0700 (PDT)
+X-Gm-Message-State: AOAM532+gEGgK45GcKUv9tSuAeCMXUYRKpg1wuxZkPluhbq9IsVvXtGh
+        a0OdL94CkKVDfrcOz8c3DIK3Z3tZ8uwoWDDug58=
+X-Google-Smtp-Source: ABdhPJyV3VmbaZQ13gtf4a6bK4ughLQLgVLF0ksu0UOJmt9DCx/22TnKAoKwGpKzy2WNreYJgun9j/SlLT0XuM5Re80=
+X-Received: by 2002:a2e:8651:: with SMTP id i17mr10751099ljj.45.1592904026921;
+ Tue, 23 Jun 2020 02:20:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200623074637.756-1-linux.amoon@gmail.com>
+In-Reply-To: <20200623074637.756-1-linux.amoon@gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 23 Jun 2020 11:20:15 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPfU-1NF+MHnyCMoXkCD4BbOwqr3s+g+gUwDqRevO=L=sg@mail.gmail.com>
+Message-ID: <CAJKOXPfU-1NF+MHnyCMoXkCD4BbOwqr3s+g+gUwDqRevO=L=sg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "usb: dwc3: exynos: Add support for Exynos5422
+ suspend clk"
+To:     Anand Moon <linux.amoon@gmail.com>
+Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Check the return value of irq_domain_translate_twocell() due to
-it may returns -EINVAL if failed and use variable fwspec for it,
-and then use a new variable parent_fwspec which is proper for
-irq_domain_alloc_irqs_parent().
+On Tue, 23 Jun 2020 at 09:46, Anand Moon <linux.amoon@gmail.com> wrote:
+>
+> This reverts commit 07f6842341abe978e6375078f84506ec3280ece5.
+>
+> Since SCLK_SCLK_USBD300 suspend clock need to be configured
+> for phy module, I wrongly mapped this clock to DWC3 code.
+>
+> Cc: Felipe Balbi <balbi@kernel.org>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> ---
+>  drivers/usb/dwc3/dwc3-exynos.c | 9 ---------
+>  1 file changed, 9 deletions(-)
 
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
----
- drivers/irqchip/irq-loongson-pch-pic.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+But why was this patch applied in the first place? It did not pass the
+review. For the v3 I replied:
+"This patchset should not be applied. As of now, it is not needed and
+not justified."
+There were no acks and no positive reviews.
 
-diff --git a/drivers/irqchip/irq-loongson-pch-pic.c b/drivers/irqchip/irq-loongson-pch-pic.c
-index 2a05b93..016f32c 100644
---- a/drivers/irqchip/irq-loongson-pch-pic.c
-+++ b/drivers/irqchip/irq-loongson-pch-pic.c
-@@ -135,16 +135,19 @@ static int pch_pic_alloc(struct irq_domain *domain, unsigned int virq,
- 	int err;
- 	unsigned int type;
- 	unsigned long hwirq;
--	struct irq_fwspec fwspec;
-+	struct irq_fwspec *fwspec = arg;
-+	struct irq_fwspec parent_fwspec;
- 	struct pch_pic *priv = domain->host_data;
- 
--	irq_domain_translate_twocell(domain, arg, &hwirq, &type);
-+	err = irq_domain_translate_twocell(domain, fwspec, &hwirq, &type);
-+	if (err)
-+		return err;
- 
--	fwspec.fwnode = domain->parent->fwnode;
--	fwspec.param_count = 1;
--	fwspec.param[0] = hwirq + priv->ht_vec_base;
-+	parent_fwspec.fwnode = domain->parent->fwnode;
-+	parent_fwspec.param_count = 1;
-+	parent_fwspec.param[0] = hwirq + priv->ht_vec_base;
- 
--	err = irq_domain_alloc_irqs_parent(domain, virq, 1, &fwspec);
-+	err = irq_domain_alloc_irqs_parent(domain, virq, 1, &parent_fwspec);
- 	if (err)
- 		return err;
- 
--- 
-2.1.0
+My comments from previous versions of this patchset were not properly addressed.
 
+So here - yes, makes sense to revert it as it should have never been applied.
+
+Best regards,
+Krzysztof
