@@ -2,140 +2,129 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91DB320E01B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jun 2020 23:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6071E20DD58
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jun 2020 23:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388156AbgF2Umu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Jun 2020 16:42:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731644AbgF2TOD (ORCPT
+        id S1729453AbgF2SuH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Jun 2020 14:50:07 -0400
+Received: from foss.arm.com ([217.140.110.172]:36234 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729000AbgF2SuA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:14:03 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C92C008775;
-        Mon, 29 Jun 2020 02:13:48 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id w6so15824552ejq.6;
-        Mon, 29 Jun 2020 02:13:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3y8JQhJxn3CQlaKZteqal2/97kZCmMBM7dtDyKGGv64=;
-        b=tXvn0UHMgVbxGSsnrbFejJhoGstArJKYgxJ4LsZKe3InYTYQuEMZ9MfAT/5sRv+hEm
-         HhxZY5Z7VK3/GF+b3p842g4dAC3oK/gzQ803sy+Lthtr2SdXgUbfTmP+y78CuKQe4mAi
-         t+KwfxCMS+PfQEZJfVU4oGLRjOQJaDEYCqHlJU624iQxrlcyVPOYsB59c3O649GlWCxW
-         2kMj6Ys/NjIzBbrMuy2mTA/T7yoiZlibx17cEqOhRWQCFabX45lQEtkMgoNkLMvNw5DF
-         mh9f/2ArtHAWQ6nLto6KaRSfxSz2mI0ed3UaH/Bg/nmQLtjrO/y4z6WI6wpKgIl5+pTo
-         NSlg==
-X-Gm-Message-State: AOAM532wE7IXCRE1nmDKaP1tk3VsgjhdEaNV3Gmv3UhhhK94V8TnQ0JL
-        E39KPeWhvGtCjOj6kAgeuZhDqP75
-X-Google-Smtp-Source: ABdhPJyUgK9GSbdCJz/BUuE5Y9gd62uMCDp7R4PGI83oXcm73c/vzRhudmdjK8/T6BUfn6qrxsCr9g==
-X-Received: by 2002:a17:906:3e84:: with SMTP id a4mr12493437ejj.372.1593422027202;
-        Mon, 29 Jun 2020 02:13:47 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.195])
-        by smtp.googlemail.com with ESMTPSA id f17sm28318273edj.32.2020.06.29.02.13.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Jun 2020 02:13:46 -0700 (PDT)
-Date:   Mon, 29 Jun 2020 11:13:43 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org,
+        Mon, 29 Jun 2020 14:50:00 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 125D91435;
+        Mon, 29 Jun 2020 04:41:59 -0700 (PDT)
+Received: from [10.37.12.67] (unknown [10.37.12.67])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5DA9D3F73C;
+        Mon, 29 Jun 2020 04:41:56 -0700 (PDT)
+Subject: Re: brocken devfreq simple_ondemand for Odroid XU3/4?
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Willy Wolff <willy.mh.wolff.ml@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>, linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: Re: [PATCH 1/4] ARM: exynos: Apply little core workaround only under
- secure firmware
-Message-ID: <20200629091343.GA16015@kozik-lap>
-References: <20200616081230.31198-1-m.szyprowski@samsung.com>
- <CGME20200616081249eucas1p151a8892ca0abfa3108955e1fc5054fc3@eucas1p1.samsung.com>
- <20200616081230.31198-2-m.szyprowski@samsung.com>
- <1f59ab26-94e8-6ee8-48f9-568cf1a0edfa@arm.com>
- <20200622171904.GA4174@kozik-lap>
- <96d7f0f2-63c0-8c8d-5a79-ba27295b389a@samsung.com>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20200623164733.qbhua7b6cg2umafj@macmini.local>
+ <CAJKOXPeLuq81NC2xZh3y32EB-_APbDAchZD4OW_eCgQKKO+p8w@mail.gmail.com>
+ <20200623191129.GA4171@kozik-lap>
+ <CGME20200624103308eucas1p188a5fe3cee1916d9430c9971c2dab3a3@eucas1p1.samsung.com>
+ <85f5a8c0-7d48-f2cd-3385-c56d662f2c88@arm.com>
+ <ef5184ed-00ff-4226-5ece-b0fc8eb16fb6@samsung.com>
+ <4a72fcab-e8da-8323-1fbe-98a6a4b3e0f1@arm.com>
+ <708feba7-6b11-4943-1073-a1b5e54b6283@samsung.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <cf460cc5-dbb1-efeb-3021-622ee5b0be45@arm.com>
+Date:   Mon, 29 Jun 2020 12:41:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <96d7f0f2-63c0-8c8d-5a79-ba27295b389a@samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <708feba7-6b11-4943-1073-a1b5e54b6283@samsung.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jun 29, 2020 at 10:54:27AM +0200, Marek Szyprowski wrote:
-> Hi Krzysztof,
+
+
+On 6/26/20 6:50 PM, Sylwester Nawrocki wrote:
+> Hi Lukasz,
 > 
-> On 22.06.2020 19:19, Krzysztof Kozlowski wrote:
-> > On Wed, Jun 17, 2020 at 05:26:58PM +0100, Lukasz Luba wrote:
-> >> I've give it a try with hotplug torture tests and has only one a minor
-> >> comment.
-> >>
-> >> On 6/16/20 9:12 AM, Marek Szyprowski wrote:
-> >>> The additional soft-reset call during little core power up was needed
-> >>> to properly boot all cores on the Exynos5422-based boards with secure
-> >>> firmware (like Odroid XU3/XU4 family). This however broke big.LITTLE
-> >>> CPUidle driver, which worked only on boards without secure firmware
-> >>> (like Peach-Pit/Pi Chromebooks).
-> >>>
-> >>> Apply the workaround only when board is running under secure firmware.
-> >>>
-> >>> Fixes: 833b 5794 e330 ("ARM: EXYNOS: reset Little cores when cpu is up")
-> > Fix the Fixes tag (in case of resend, otherwise I'll do it).
-> >
-> >>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> >>> ---
-> >>>    arch/arm/mach-exynos/mcpm-exynos.c | 10 +++++++---
-> >>>    1 file changed, 7 insertions(+), 3 deletions(-)
-> >>>
-> >>> diff --git a/arch/arm/mach-exynos/mcpm-exynos.c b/arch/arm/mach-exynos/mcpm-exynos.c
-> >>> index 9a681b421ae1..cd861c57d5ad 100644
-> >>> --- a/arch/arm/mach-exynos/mcpm-exynos.c
-> >>> +++ b/arch/arm/mach-exynos/mcpm-exynos.c
-> >>> @@ -26,6 +26,7 @@
-> >>>    #define EXYNOS5420_USE_L2_COMMON_UP_STATE	BIT(30)
-> >>>    static void __iomem *ns_sram_base_addr __ro_after_init;
-> >>> +static bool secure_firmware __ro_after_init;
-> >>>    /*
-> >>>     * The common v7_exit_coherency_flush API could not be used because of the
-> >>> @@ -58,15 +59,16 @@ static void __iomem *ns_sram_base_addr __ro_after_init;
-> >>>    static int exynos_cpu_powerup(unsigned int cpu, unsigned int cluster)
-> >>>    {
-> >>>    	unsigned int cpunr = cpu + (cluster * EXYNOS5420_CPUS_PER_CLUSTER);
-> >>> +	bool state;
-> >>>    	pr_debug("%s: cpu %u cluster %u\n", __func__, cpu, cluster);
-> >>>    	if (cpu >= EXYNOS5420_CPUS_PER_CLUSTER ||
-> >>>    		cluster >= EXYNOS5420_NR_CLUSTERS)
-> >>>    		return -EINVAL;
-> >>> -	if (!exynos_cpu_power_state(cpunr)) {
-> >>> -		exynos_cpu_power_up(cpunr);
-> >>> -
-> >>> +	state = exynos_cpu_power_state(cpunr);
-> >>> +	exynos_cpu_power_up(cpunr);
-> >> I can see that you have moved this call up, probably to avoid more
-> >> 'if-else' stuff. I just wanted to notify you that this function
-> >> 'exynos_cpu_powerup' is called twice when cpu is going up:
-> >> 1. by the already running cpu i.e. CPU0 and the 'state' is 0 for i.e.
-> >> CPU2
-> >> 2. by the newly starting cpu i.e. CPU2 by running
-> >> 'secondary_start_kernel' and the state is 3.
-> >>
-> >> In this scenario the 'exynos_cpu_power_up' will be called twice.
-> >> I have checked in hotplug that this is not causing any issues, but
-> >> thought maybe it's worth share it with you. Maybe you can double check
-> >> in TRM that this is not causing anything.
-> > This brings the old code, before 833b5794e33. I wonder why? I understood
-> > that only soft-reset should be skipped.
+> On 25.06.2020 12:02, Lukasz Luba wrote:
+>> Regarding the 'performance counters overflow interrupts' there is one
+>> thing worth to keep in mind: variable utilization and frequency.
+>> For example, in order to make a conclusion in algorithm deciding that
+>> the device should increase or decrease the frequency, we fix the period
+>> of observation, i.e. to 500ms. That can cause the long delay if the
+>> utilization of the device suddenly drops. For example we set an
+>> overflow threshold to value i.e. 1000 and we know that at 1000MHz
+>> and full utilization (100%) the counter will reach that threshold
+>> after 500ms (which we want, because we don't want too many interrupts
+>> per sec). What if suddenly utilization drops to 2% (i.e. from 5GB/s
+>> to 250MB/s (what if it drops to 25MB/s?!)), the counter will reach the
+>> threshold after 50*500ms = 25s. It is impossible just for the counters
+>> to predict next utilization and adjust the threshold.
 > 
-> Because otherwise the Peach boards hangs during the cpuidle. I didn't 
-> analyze the code that much to judge if it is really necessary in all 
-> cases, I only restored what worked initially. I can add a comment about 
-> that to the commit log if needed.
+> Agreed, that's in case when we use just the performance counter (PMCNT)
+> overflow interrupts. In my experiments I used the (total) cycle counter
+> (CCNT) overflow interrupts. As that counter is clocked with fixed rate
+> between devfreq updates it can be used as a timer by pre-loading it with
+> initial value depending on current bus frequency. But we could as well
+> use some reliable system timer mechanism to generate periodic events.
+> I was hoping to use the cycle counter to generate low frequency monitor
+> events and the actual performance counters overflow interrupts to detect
+> any sudden changes of utilization. However, it seems it cannot be done
+> with as simple performance counters HW architecture as on Exynos4412.
+> It looks like on Exynos5422 we have all what is needed, there is more
+> flexibility in selecting the counter source signal, e.g. each counter
+> can be a clock cycle counter or can count various bus events related to
+> actual utilization. Moreover, we could configure the counter gating period
+> and alarm interrupts are available for when the counter value drops below
+> configured MIN threshold or exceeds configured MAX value.
 
-Yes, please mention this in commit msg.
+I see. I don't have TRM for Exynos5422 so couldn't see that. I also
+have to keep in mind other platforms which might not have this feature.
 
-Best regards,
-Krzysztof
+> 
+> So it should be possible to configure the HW to generate the utilization
+> monitoring events without excessive continuous CPU intervention.
 
+I agree, that would be desirable especially for low load in the system.
+
+> But I'm rather not going to work on the Exynos5422 SoC support at the moment.
+
+I see.
+
+> 
+>> To address that, we still need to have another mechanism (like watchdog)
+>> which will be triggered just to check if the threshold needs adjustment.
+>> This mechanism can be a local timer in the driver or a framework
+>> timer running kind of 'for loop' on all this type of devices (like
+>> the scheduled workqueue). In both cases in the system there will be
+>> interrupts, timers (even at workqueues) and scheduling.
+>> The approach to force developers to implement their local watchdog
+>> timers (or workqueues) in drivers is IMHO wrong and that's why we have
+>> frameworks.
+> 
+> Yes, it should be also possible in the framework to use the counter alarm
+> events where the hardware is advanced enough, in order to avoid excessive
+> SW polling.
+
+Looks promising, but that would need more plumbing I assume.
+
+Regards,
+Lukasz
+
+> 
+> --
+> Regards,
+> Sylwester
+> 
