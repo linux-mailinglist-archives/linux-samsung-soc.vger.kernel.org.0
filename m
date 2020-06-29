@@ -2,39 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1864F20E088
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jun 2020 23:57:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5591120E1DE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Jun 2020 23:59:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730650AbgF2UrK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Jun 2020 16:47:10 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37535 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389751AbgF2Uqr (ORCPT
+        id S2389993AbgF2VAY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Jun 2020 17:00:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52960 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387950AbgF2VAW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Jun 2020 16:46:47 -0400
-Received: by mail-ed1-f65.google.com with SMTP id g20so13961170edm.4;
-        Mon, 29 Jun 2020 13:46:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fpPGAVi5ST0Msn1ZYb/hxyyJfD9nRccBP2hwCtuMGbQ=;
-        b=i7GMMqckeMJNgqcvezDmEvoJHQUY/MZrJ8k2hDVJGSw5KRWzu2RVsOe1O8nIOhOGNv
-         GPy0KUcL//XG4ESPqqiGITqL1CB25ar0ClG6kOcorNaKefN+zrJFaJyiB+jSObJ8EjtQ
-         bzID+TFgcJU2NAIJSh2dncjw3x74bnPWm61cqUIrd6SXLEHSx7knMwYn1MFWLTz7dpCp
-         tK35COpcYgqjACbqIOFvRjIzlg5pq4wT2x5mdTnmdbCupqW3SrJxAxXeSoJiMtDtW94g
-         ccgSg1oJ7T0fvB7vV/ISZaRYN9J0a2gNbPxNCuTEo3da8YHw+J6pwucC3ogxGVUr8c0C
-         +OzA==
-X-Gm-Message-State: AOAM530r9E1IFSGDstTD2J9IYoLlD9/gDYSY92eV0CwLwLR3lNGRLHUS
-        D99JI5Gj/Haf23WTs7oS/GQ=
-X-Google-Smtp-Source: ABdhPJxKgZqpneEuu5YuIHLp12CmML5exM0XVIJFM5zeSUnLRZQcoWHqnrzGNkURRUuzjRkRJIbIeQ==
-X-Received: by 2002:a05:6402:134e:: with SMTP id y14mr19784901edw.4.1593463605392;
-        Mon, 29 Jun 2020 13:46:45 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.195])
-        by smtp.googlemail.com with ESMTPSA id k23sm434660ejo.120.2020.06.29.13.46.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Jun 2020 13:46:44 -0700 (PDT)
-Date:   Mon, 29 Jun 2020 22:46:42 +0200
+        Mon, 29 Jun 2020 17:00:22 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.195])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 78E9B20720;
+        Mon, 29 Jun 2020 21:00:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593464421;
+        bh=Lh3dzYXSrs+vBBw5yfOr7+OhUwSsd0+MyH/UH8tKOb0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kupGB0hbbgG6pMG1gVN5xphVJj+12dZ1xKSPlkX2A8B6AmtuglmspwxWi1U8a7rmS
+         79mcXRtRF3gL6cFZeOQ88ZKlMAQRyq8JphSQAhpOrzMsGg4cIhhTiJ1cvYqesf+Pql
+         PN7vnxw4+JHTNM1V+rrxLS8broP9JfjrOo74VD3Q=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     Sylwester Nawrocki <snawrocki@kernel.org>
 Cc:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
@@ -44,54 +33,146 @@ Cc:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
-        Pankaj Dubey <pankaj.dubey@samsung.com>
-Subject: Re: [PATCH 1/3] ARM: dts: exynos: Fix missing empty reg/ranges
- property regulators on Trats
-Message-ID: <20200629204642.GA26060@kozik-lap>
-References: <20200629193338.29540-1-krzk@kernel.org>
- <03a23289-1188-db77-6c38-a7dddeac183c@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <03a23289-1188-db77-6c38-a7dddeac183c@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        Pankaj Dubey <pankaj.dubey@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2] ARM: dts: exynos: Fix missing empty reg/ranges property regulators on Trats
+Date:   Mon, 29 Jun 2020 22:59:48 +0200
+Message-Id: <20200629205948.32250-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jun 29, 2020 at 09:50:26PM +0200, Sylwester Nawrocki wrote:
-> Hi Krzysztof,
-> 
-> On 6/29/20 21:33, Krzysztof Kozlowski wrote:
-> > Remove the simple-bus compatible from a regulators node because its
-> > children do not have any unit addresses.  This fixes DTC warning:
-> > 
-> >      Warning (simple_bus_reg): /regulators/regulator-0: missing or empty reg/ranges property
-> > 
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> > ---
-> >   arch/arm/boot/dts/exynos4210-trats.dts | 2 --
-> >   1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/arch/arm/boot/dts/exynos4210-trats.dts b/arch/arm/boot/dts/exynos4210-trats.dts
-> > index 3d791db6095c..cec413ee4490 100644
-> > --- a/arch/arm/boot/dts/exynos4210-trats.dts
-> > +++ b/arch/arm/boot/dts/exynos4210-trats.dts
-> > @@ -31,8 +31,6 @@
-> >   	};
-> >   	regulators {
-> > -		compatible = "simple-bus";
-> 
-> I think you would also need to remove the 'regulators' node altogether,
-> otherwise with your change the subnodes below won't get parsed and the
-> regulators will not get registered.
+Remove the regulators node entirely because its children do not have any
+unit addresses.  This fixes DTC warning:
 
-Good point, I actually did not test this patch. Let me recheck and send
-a follow up.
+    Warning (simple_bus_reg): /regulators/regulator-0: missing or empty reg/ranges property
 
-Thanks for review!
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Best regards,
-Krzysztof
+---
+
+Changes since v1:
+1. Remove the node, not only compatible, as pointed out by Sylwester.
+---
+ arch/arm/boot/dts/exynos4210-trats.dts | 98 ++++++++++++--------------
+ 1 file changed, 47 insertions(+), 51 deletions(-)
+
+diff --git a/arch/arm/boot/dts/exynos4210-trats.dts b/arch/arm/boot/dts/exynos4210-trats.dts
+index 3d791db6095c..5cc96f04a4fa 100644
+--- a/arch/arm/boot/dts/exynos4210-trats.dts
++++ b/arch/arm/boot/dts/exynos4210-trats.dts
+@@ -30,62 +30,58 @@
+ 		stdout-path = "serial2:115200n8";
+ 	};
+ 
+-	regulators {
+-		compatible = "simple-bus";
+-
+-		vemmc_reg: regulator-0 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "VMEM_VDD_2.8V";
+-			regulator-min-microvolt = <2800000>;
+-			regulator-max-microvolt = <2800000>;
+-			gpio = <&gpk0 2 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	vemmc_reg: regulator-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "VMEM_VDD_2.8V";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		gpio = <&gpk0 2 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
+ 
+-		tsp_reg: regulator-1 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "TSP_FIXED_VOLTAGES";
+-			regulator-min-microvolt = <2800000>;
+-			regulator-max-microvolt = <2800000>;
+-			gpio = <&gpl0 3 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	tsp_reg: regulator-1 {
++		compatible = "regulator-fixed";
++		regulator-name = "TSP_FIXED_VOLTAGES";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		gpio = <&gpl0 3 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
+ 
+-		cam_af_28v_reg: regulator-2 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "8M_AF_2.8V_EN";
+-			regulator-min-microvolt = <2800000>;
+-			regulator-max-microvolt = <2800000>;
+-			gpio = <&gpk1 1 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	cam_af_28v_reg: regulator-2 {
++		compatible = "regulator-fixed";
++		regulator-name = "8M_AF_2.8V_EN";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		gpio = <&gpk1 1 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
+ 
+-		cam_io_en_reg: regulator-3 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "CAM_IO_EN";
+-			regulator-min-microvolt = <2800000>;
+-			regulator-max-microvolt = <2800000>;
+-			gpio = <&gpe2 1 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	cam_io_en_reg: regulator-3 {
++		compatible = "regulator-fixed";
++		regulator-name = "CAM_IO_EN";
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
++		gpio = <&gpe2 1 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
+ 
+-		cam_io_12v_reg: regulator-4 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "8M_1.2V_EN";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			gpio = <&gpe2 5 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	cam_io_12v_reg: regulator-4 {
++		compatible = "regulator-fixed";
++		regulator-name = "8M_1.2V_EN";
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1200000>;
++		gpio = <&gpe2 5 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
+ 
+-		vt_core_15v_reg: regulator-5 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "VT_CORE_1.5V";
+-			regulator-min-microvolt = <1500000>;
+-			regulator-max-microvolt = <1500000>;
+-			gpio = <&gpe2 2 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+-		};
++	vt_core_15v_reg: regulator-5 {
++		compatible = "regulator-fixed";
++		regulator-name = "VT_CORE_1.5V";
++		regulator-min-microvolt = <1500000>;
++		regulator-max-microvolt = <1500000>;
++		gpio = <&gpe2 2 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
+ 	};
+ 
+ 	gpio-keys {
+-- 
+2.17.1
 
