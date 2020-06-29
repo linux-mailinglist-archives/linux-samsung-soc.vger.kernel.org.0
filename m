@@ -2,144 +2,213 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2CF420E30B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jun 2020 00:02:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4514C20E8C5
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jun 2020 01:14:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbgF2VLA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 29 Jun 2020 17:11:00 -0400
-Received: from www.zeus03.de ([194.117.254.33]:59288 "EHLO mail.zeus03.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387537AbgF2VKg (ORCPT
+        id S1728706AbgF2Wae (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 29 Jun 2020 18:30:34 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:34430 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728614AbgF2Wac (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 29 Jun 2020 17:10:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=k1; bh=1R5VbfyjnCD0CmpFWZBQGlSYfWm+
-        NoLCMYa6SRuHNZI=; b=DuUNS0rIyBlqryiO1lADl4AQ5JfcuOPcJDV2IVFGM+pG
-        BxMC/hkT5dkyCGF6Q1HTk4aJwCOLxenQqr8CAwZ8iWxCG9hxIYJYDosJU+dNoPJO
-        Wze1Y9QWn06Sop7cYVo1anfQUotBy+ag5oUFAmqaYsB6C/ClU4FdFIxQ5eTRYoo=
-Received: (qmail 2172219 invoked from network); 29 Jun 2020 23:10:30 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 29 Jun 2020 23:10:30 +0200
-X-UD-Smtp-Session: l3s3148p1@IvsbfT+pqsMgAwDPXwOPAI5mQFP60fXe
-Date:   Mon, 29 Jun 2020 23:10:27 +0200
-From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
-To:     "Alexander A. Klimov" <grandmaster@al2klimov.de>
-Cc:     corbet@lwn.net, aaro.koskinen@iki.fi, tony@atomide.com,
-        linux@armlinux.org.uk, daniel@zonque.org, haojian.zhuang@gmail.com,
-        robert.jarzmik@free.fr, kgene@kernel.org, krzk@kernel.org,
-        dmitry.torokhov@gmail.com, lee.jones@linaro.org,
-        ulf.hansson@linaro.org, davem@davemloft.net, kuba@kernel.org,
-        b.zolnierkie@samsung.com, j.neuschaefer@gmx.net,
-        mchehab+samsung@kernel.org, gustavo@embeddedor.com,
-        gregkh@linuxfoundation.org, yanaijie@huawei.com,
-        daniel.vetter@ffwll.ch, rafael.j.wysocki@intel.com,
-        Julia.Lawall@inria.fr, linus.walleij@linaro.org,
-        viresh.kumar@linaro.org, arnd@arndb.de, jani.nikula@intel.com,
-        yuehaibing@huawei.com, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-input@vger.kernel.org,
-        linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
-        linux-parisc@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH] Remove handhelds.org links and email addresses
-Message-ID: <20200629211027.GA1481@kunai>
-References: <20200629203121.7892-1-grandmaster@al2klimov.de>
+        Mon, 29 Jun 2020 18:30:32 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200629223029euoutp02e5aee795714c2187d190794ca770d5ee~dJF388XUx1768417684euoutp02K
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Jun 2020 22:30:29 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200629223029euoutp02e5aee795714c2187d190794ca770d5ee~dJF388XUx1768417684euoutp02K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1593469829;
+        bh=yc1QjhOVZH3h6nSAiaewU41F++akJ+nUNlZBhBZwn6Y=;
+        h=Subject:To:From:Date:In-Reply-To:References:From;
+        b=EDi81zEI/VTsd6/vh8uTWLr8WRBZcP3W44PBWEnPm8bbI3c+gkkME2qY8yzECregN
+         /rSf94uvSAG12IgF6jn071aIjSrFPRQWlKC361Pb4/3af61qUBAEVJ+ILv6lJFgaac
+         bmh3qT+Crxnz74MVhoqdg6m+dDxDqILJpfrh5r8Y=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200629223028eucas1p25f11880b9e0836dbc689019e58f84d04~dJF3eNxWB1738217382eucas1p2T;
+        Mon, 29 Jun 2020 22:30:28 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id D0.61.06318.48B6AFE5; Mon, 29
+        Jun 2020 23:30:28 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200629223028eucas1p27b9482456072d7864f7505379885a0b4~dJF271ICK1738217382eucas1p2S;
+        Mon, 29 Jun 2020 22:30:28 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200629223028eusmtrp24cec66df7a0f4be5b79a6e88bd33da1c~dJF27QCHA1985619856eusmtrp2M;
+        Mon, 29 Jun 2020 22:30:28 +0000 (GMT)
+X-AuditID: cbfec7f5-371ff700000018ae-cc-5efa6b84b00d
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 52.71.06017.48B6AFE5; Mon, 29
+        Jun 2020 23:30:28 +0100 (BST)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200629223027eusmtip281de1d06c7315df07330a11f0b730d9f~dJF2h00YK0872608726eusmtip2J;
+        Mon, 29 Jun 2020 22:30:27 +0000 (GMT)
+Subject: Re: [PATCH v2 12/14] Bluetooth: Update background scan and report
+ device based on advertisement monitors
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        linux-bluetooth@vger.kernel.org,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
+        Miao-chen Chou <mcchou@chromium.org>,
+        Johan Hedberg <johan.hedberg@intel.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <cc9eb868-4f4e-e7a3-d0fb-73c54586e1d1@samsung.com>
+Date:   Tue, 30 Jun 2020 00:30:27 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G4iJoqBmSsgzjUCe"
-Content-Disposition: inline
-In-Reply-To: <20200629203121.7892-1-grandmaster@al2klimov.de>
+In-Reply-To: <4c8aeca04ed20e2776cadd9bdb57a7a3632d622c.1592404644.git.marcel@holtmann.org>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsWy7djP87ot2b/iDB4u1LTYuu8xq8Wca33M
+        FjPO72Oy+PbpF6PF6a5XLA6sHrMbLrJ4rN+9nN1j8Z6XTB6fN8kFsERx2aSk5mSWpRbp2yVw
+        ZbS3RBW0q1Xs/jOHtYFxrUIXIyeHhICJxJw1vcxdjFwcQgIrGCU+/5rNCuF8YZR4t/cUlPOZ
+        UeLfxOmsMC1Hr+9hhEgsZ5SY/20mG4TznlHi4o2XQBkODmGBYomfUzJA4iIC14BG/XvKBtLN
+        JmAo0fW2iw2khlfATuLtOgeQMIuAqsSazfsYQWxRgViJvqULwMp5BQQlTs58wgJicwpESbz+
+        OxvMZhaQl2jeOpsZwhaXuPVkPhPILgmBfnaJyQ9WskNc6iJxtakZ6mphiVfHt0DFZST+74Rp
+        aGaUeHhuLTuE08MocblpBiNElbXEnXO/wC5lFtCUWL9LHyLsKHHlXCPYkxICfBI33gpCHMEn
+        MWnbdGaIMK9ER5sQRLWaxKzj6+DWHrxwiRnC9pDYuGI50wRGxVlI3pyF5LVZSF6bhXDDAkaW
+        VYziqaXFuempxcZ5qeV6xYm5xaV56XrJ+bmbGIFJ5vS/4193MO77k3SIUYCDUYmHN+Hczzgh
+        1sSy4srcQ4wSHMxKIrxOZ0/HCfGmJFZWpRblxxeV5qQWH2KU5mBREuc1XvQyVkggPbEkNTs1
+        tSC1CCbLxMEp1cCo+SG5aFLv6adJDUtMmcWsD++Yn/vEvc/osaKl0cePtVHz5MocWtq6RWdM
+        ev/O7oLcWfGk2SKLbH/06mtIHL/ce/PC2l8p8rqifqcDz1jz9Ts+1FhWkBbQsHuSyvWM6zfV
+        HG58DZf2WK/Nu5Fr/ukJZy8VZ2naxXl2/57Sp9qxbY9Nrv/jUAklluKMREMt5qLiRAC+cRR5
+        LgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIIsWRmVeSWpSXmKPExsVy+t/xe7ot2b/iDCZ2MFts3feY1WLOtT5m
+        ixnn9zFZfPv0i9HidNcrFgdWj9kNF1k81u9ezu6xeM9LJo/Pm+QCWKL0bIryS0tSFTLyi0ts
+        laINLYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLLUov07RL0Mtpbogra1Sp2/5nD2sC4VqGL
+        kZNDQsBE4uj1PYxdjFwcQgJLGSV+3V7DBJGQkTg5rYEVwhaW+HOtiw2i6C2jxOrOFqAODg5h
+        gWKJn1MyQOIiAtcYJbZs3MYKUdTGKLG+6RobSDebgKFE11uQbg4OXgE7ibfrHEDCLAKqEms2
+        72MEsUUFYiW+3dsCVs4rIChxcuYTFhCbUyBK4vXf2WA2s4CZxLzND5khbHmJ5q2zoWxxiVtP
+        5jNNYBSchaR9FpKWWUhaZiFpWcDIsopRJLW0ODc9t9hIrzgxt7g0L10vOT93EyMwerYd+7ll
+        B2PXu+BDjAIcjEo8vAnnfsYJsSaWFVfmHmKU4GBWEuF1Ons6Tog3JbGyKrUoP76oNCe1+BCj
+        KdBzE5mlRJPzgZGdVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7NbUgtQimj4mDU6qB
+        cdH1wMSpTvs4PZncH7geKfhQsuqsptsP5Q/XUryClJT3yz7yyXp5cPGZZ9L3o3b8KE2Kunru
+        q5d+dmpOtBGXBZPVH9Owydweuox1Ygqf7YXfGHmfn3SltrTs63b2JOuC/RoHjsUtveco8CDM
+        Nl0857Ya93Xn1qPzI4XUhTnWvFXY+l9n/5KnSizFGYmGWsxFxYkA/yRborQCAAA=
+X-CMS-MailID: 20200629223028eucas1p27b9482456072d7864f7505379885a0b4
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200629223028eucas1p27b9482456072d7864f7505379885a0b4
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200629223028eucas1p27b9482456072d7864f7505379885a0b4
+References: <cover.1592404644.git.marcel@holtmann.org>
+        <4c8aeca04ed20e2776cadd9bdb57a7a3632d622c.1592404644.git.marcel@holtmann.org>
+        <CGME20200629223028eucas1p27b9482456072d7864f7505379885a0b4@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Hi
 
---G4iJoqBmSsgzjUCe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 17.06.2020 16:39, Marcel Holtmann wrote:
+> From: Miao-chen Chou <mcchou@chromium.org>
+>
+> This calls hci_update_background_scan() when there is any update on the
+> advertisement monitors. If there is at least one advertisement monitor,
+> the filtering policy of scan parameters should be 0x00. This also reports
+> device found mgmt events if there is at least one monitor.
+>
+> The following cases were tested with btmgmt advmon-* commands.
+> (1) add a ADV monitor and observe that the passive scanning is
+> triggered.
+> (2) remove the last ADV monitor and observe that the passive scanning is
+> terminated.
+> (3) with a LE peripheral paired, repeat (1) and observe the passive
+> scanning continues.
+> (4) with a LE peripheral paired, repeat (2) and observe the passive
+> scanning continues.
+> (5) with a ADV monitor, suspend/resume the host and observe the passive
+> scanning continues.
+>
+> Signed-off-by: Miao-chen Chou <mcchou@chromium.org>
+> Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 
-Hi Alexander,
+This patch landed recently in linux-next as commit 8208f5a9d435 
+("Bluetooth: Update background scan and report device based on 
+advertisement monitors").
 
-thanks for trying to fix this, yet I have some doubts.
+It causes a regression, a kernel oops during system suspend/resume cycle 
+on Samsung Exynos5250 based Snow Chromebook:
 
-On Mon, Jun 29, 2020 at 10:31:21PM +0200, Alexander A. Klimov wrote:
-> Rationale:
-> https://lore.kernel.org/linux-doc/20200626110706.7b5d4a38@lwn.net/
+8<--- cut here ---
+Unable to handle kernel NULL pointer dereference at virtual address 00000000
+pgd = 86c149f5
+[00000000] *pgd=00000000
+Internal error: Oops: 5 [#1] SMP ARM
+Modules linked in: cmac cros_ec_sysfs cros_ec_lightbar cros_ec_debugfs 
+cros_ec_chardev cros_ec_keyb cros_ec_dev snd_soc_hdmi_codec cros_ec_i2c 
+cros_ec snd_soc_snow snd_soc_i2s snd_soc_idma snd_soc_s3c_dma exynosdrm 
+analogix_dp exynos_gsc v4l2_mem2mem snd_soc_max98095 snd_soc_core 
+ac97_bus snd_pcm_dmaengine snd_pcm snd_timer nxp_ptn3460 snd soundcore 
+pwm_samsung spi_s3c64xx cyapatp crc_itu_t mwifiex_sdio mwifiex 
+sha256_generic libsha256 sha256_arm btmrvl_sdio btmrvl cfg80211 
+bluetooth s5p_mfc governor_simpleondemand videobuf2_dma_contig 
+videobuf2_memops videobuf2_v4l2 ecdh_generic ecc videobuf2_common 
+videodev phy_exynos_usb2 ohci_exynos panfrost gpu_sched mc s3c2410_wdt 
+s5p_sss s5p_cec exynos_rng rtc_s3c i2c_arb_gpio_challenge
+CPU: 1 PID: 16 Comm: kworker/1:0 Not tainted 
+5.7.0-rc7-02995-g8208f5a9d435 #8564
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_freezable mmc_rescan
+PC is at __queue_work+0x6c/0x4e8
+LR is at __queue_work+0x68/0x4e8
+pc : [<c03619d8>]    lr : [<c03619d4>]    psr: 60000093
+...
+Flags: nZCv  IRQs off  FIQs on  Mode SVC_32  ISA ARM  Segment none
+Control: 10c5387d  Table: 6be2406a  DAC: 00000051
+Process kworker/1:0 (pid: 16, stack limit = 0xf9898f75)
+Stack: (0xee117de0 to 0xee118000)
+...
+[<c03619d8>] (__queue_work) from [<c0361e94>] (queue_work_on+0x40/0x4c)
+[<c0361e94>] (queue_work_on) from [<bf17dd0c>] 
+(hci_adv_monitors_clear+0x74/0x90 [bluetooth])
+[<bf17dd0c>] (hci_adv_monitors_clear [bluetooth]) from [<bf17e138>] 
+(hci_unregister_dev+0x158/0x224 [bluetooth])
+[<bf17e138>] (hci_unregister_dev [bluetooth]) from [<bf1d1638>] 
+(btmrvl_remove_card+0x58/0x7c [btmrvl])
+[<bf1d1638>] (btmrvl_remove_card [btmrvl]) from [<c0d09698>] 
+(sdio_bus_remove+0x30/0x11c)
+[<c0d09698>] (sdio_bus_remove) from [<c09d534c>] 
+(device_release_driver_internal+0xe8/0x1ac)
+[<c09d534c>] (device_release_driver_internal) from [<c09d3e18>] 
+(bus_remove_device+0xcc/0xf8)
+[<c09d3e18>] (bus_remove_device) from [<c09cfa3c>] (device_del+0x15c/0x384)
+[<c09cfa3c>] (device_del) from [<c0d098b8>] (sdio_remove_func+0x20/0x34)
+[<c0d098b8>] (sdio_remove_func) from [<c0d075bc>] 
+(mmc_sdio_remove+0x38/0x64)
+[<c0d075bc>] (mmc_sdio_remove) from [<c0d08858>] (mmc_sdio_detect+0x6c/0xf8)
+[<c0d08858>] (mmc_sdio_detect) from [<c0cff6f0>] (mmc_rescan+0x1d0/0x42c)
+[<c0cff6f0>] (mmc_rescan) from [<c0362454>] (process_one_work+0x178/0x4ac)
+[<c0362454>] (process_one_work) from [<c0362b44>] (worker_thread+0x2c/0x530)
+[<c0362b44>] (worker_thread) from [<c0368610>] (kthread+0x12c/0x158)
+[<c0368610>] (kthread) from [<c03001a8>] (ret_from_fork+0x14/0x2c)
+Exception stack(0xee117fb0 to 0xee117ff8)
+...
+---[ end trace 0ec00d142e0a49cf ]---
 
-I think we need some text here. Clicking on a link to understand what a
-patch is about is not comfortable. You can add the link with a Link: tag
-for additional information.
+This board uses btmrvl_sdio bluetooth driver if that helps. Reverting 
+this commit in linux-next 20200629 'fixes' the issue.
 
-Removing stale email addresses may have some value, but removing...
+I can do more tests if needed on this hardware, just let me know how can 
+I help and what to do.
 
->  Compaq's Bootldr + John Dorsey's patch for Assabet support
-> -(http://www.handhelds.org/Compaq/bootldr.html)
+> ---
+>   include/net/bluetooth/hci_core.h |  1 +
+>   net/bluetooth/hci_core.c         | 13 +++++++++++++
+>   net/bluetooth/hci_event.c        |  5 +++--
+>   net/bluetooth/hci_request.c      | 17 ++++++++++++++---
+>   net/bluetooth/mgmt.c             |  5 ++++-
+>   5 files changed, 35 insertions(+), 6 deletions(-)
 
-... information like this is not good. 'Wayback machine' still has
-copies in case someone wants to look at where the infos came from.
+ > ...
 
-> - * Copyright 2004-2005  Phil Blundell <pb@handhelds.org>
-> + * Copyright 2004-2005  Phil Blundell
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
-This is an OK case in my book...
-
-
-> -MODULE_AUTHOR("Phil Blundell <pb@handhelds.org>");
-> +MODULE_AUTHOR("Phil Blundell");
-
-... same here ...
-
-> @@ -435,7 +435,6 @@
->                             case a PCI bridge (DEC chip 21152). The value of
->                             'pb' is now only initialized if a de4x5 chip is
->                             present.
-> -                           <france@handhelds.org>
-
-This is kind of a signature and should be kept IMO.
-
->   * 2001/07/23: <rmk@arm.linux.org.uk>
-> - *	- Hand merge version from handhelds.org CVS tree.  See patch
-> + *	- Hand merge version from CVS tree.  See patch
-
-That information may be useful.
-
-
->  /* SPDX-License-Identifier: GPL-2.0-only */
->  /* -*- linux-c -*-
-> - *
-> - * (C) 2003 zecke@handhelds.org
-
-Removing copyright is a bad idea.
-
-Probably some comment blocks are cruft meanwhile and can be removed as a
-whole. That can be discussed. But removing only the handhelds.org part
-makes most parts worse IMHO.
-
-Thanks and happy hacking,
-
-   Wolfram
-
-
---G4iJoqBmSsgzjUCe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl76WMAACgkQFA3kzBSg
-KbZgWA/+IxRkb15JXVvwYM1c4ReuUiEUrJ0KOI0M0XELe0YWelDrhgcOtSC0ozRT
-lTt8uizNNBK4bsRpoo+ghjZvNELOeMx+4VsVtMM+IoXXxIKha1jSJ1hqFDsBcCP0
-urAvhdaNyC+TWmEM2H98eb5JfdSxKxrzjIMs4tTBlZOBnu+wAoiDZv4mPf/y1bGv
-L33lwlFG6tkWpVX2veVNoTg04TG0LupAtXUyiI+Hnxt7srbugymQs0iwtd5sCt2R
-AG+BmuN5zmUS5cISCL6p1uXSxVRrs3FI02dwU7m5yvBfvHHSGVsx+f9wPpnpqNc8
-1I3oAR+Ct2K3lvu3uLBY2xDL4WbTmPobmzGLXbwB8ksPC/B1TV5LC/+TI2F+c+gk
-ROaTdQqzt4H0wfzNFOzYT8zGyZOoiPFro7jxCcH9CZjbkeDi19sJt7TQ6I1B0I9+
-bSTAb7s3yWhzUypFHzdR0PT97e8zeiK/xJUTbPkvv+JsDZZvPht423X7CYEUjaCo
-sPQ5UuDSfS4xT25PBabjhNeunmODzCE/+DrtbOSuM5AV63TOoVMB8zWBoJH17emH
-mRgD29xeEITWlq/fBWcPWIjgFDVanjDPYIW2/jnGqm7RLTaw703ajQSbD/7ELOAB
-84gr1NpIeJuhMnRnB11nHCJsUWnRqvl2rt7lretb/tFUB8LhGFE=
-=FQ9k
------END PGP SIGNATURE-----
-
---G4iJoqBmSsgzjUCe--
