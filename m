@@ -2,392 +2,603 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3269B2129CA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Jul 2020 18:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBAFC212DEC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Jul 2020 22:34:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726725AbgGBQiO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 2 Jul 2020 12:38:14 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:36786 "EHLO
+        id S1725954AbgGBUeW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 2 Jul 2020 16:34:22 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:35762 "EHLO
         mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726975AbgGBQiD (ORCPT
+        with ESMTP id S1726035AbgGBUeV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 2 Jul 2020 12:38:03 -0400
+        Thu, 2 Jul 2020 16:34:21 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200702163802euoutp02c2f66af374ba1bf272c06c2bb5b1a574~d-N-7j5DP0961909619euoutp02W
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  2 Jul 2020 16:38:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200702163802euoutp02c2f66af374ba1bf272c06c2bb5b1a574~d-N-7j5DP0961909619euoutp02W
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200702203417euoutp020b225cd5053ac93e1bd27f98ca20187b~eCcR_S5xd2441924419euoutp02i
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  2 Jul 2020 20:34:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200702203417euoutp020b225cd5053ac93e1bd27f98ca20187b~eCcR_S5xd2441924419euoutp02i
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1593707882;
-        bh=Feeuv3ADxxV5/AS/i7SVntFIv2q04hag2N4d6shCwSE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EMPCHfAMk1qSGZoDJ0a17W12erRg3ys7UvWYElSWhV+8s0MJWd9WJpYmcxK8Qw22S
-         cbEYjHUufVm8dvUksc/qQn6UpGS7txkM/z7YDo5RpvAe9n8lFGyzY3W/5yHD6I3zNx
-         ari7CMI/VwEeBbQf1zh1+jxrn+4gWsSiVceZViJk=
+        s=mail20170921; t=1593722057;
+        bh=F4Q9XhygBokPI3cCCxSxLMLJKoc/u8WErcqeoikqdC4=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=WvKJLSgD+f4uctkXhWJkGgYJvzU1UZfs/YwsD32tzkFJggS1OOfjlJuPizNhbz90s
+         gD6Fv+/vv0XOjEsaMC5ziEZaj/PKOpPDlHX4dMTKIaeQbK1OeMGJKA4J39MCdZRWtK
+         6WJyvp69QpjtwjKcb9JEGE6TQbO3VReKjbiasHpQ=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20200702163801eucas1p263c969961c1793d3101da93cca535994~d-N-azbaY2216322163eucas1p21;
-        Thu,  2 Jul 2020 16:38:01 +0000 (GMT)
+        20200702203416eucas1p2c6940acf003a255f05b579227c2ac1f6~eCcQ-qCUy0283902839eucas1p2Y;
+        Thu,  2 Jul 2020 20:34:16 +0000 (GMT)
 Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 20.99.05997.96D0EFE5; Thu,  2
-        Jul 2020 17:38:01 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id E8.C0.05997.8C44EFE5; Thu,  2
+        Jul 2020 21:34:16 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200702163801eucas1p12db276c7ac9e244e93e4b2f3d33ba729~d-N-HuFjj0769307693eucas1p17;
-        Thu,  2 Jul 2020 16:38:01 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200702163801eusmtrp12baf4f452fcd944228d15fe0fa459688~d-N-HBNMV1333013330eusmtrp1K;
-        Thu,  2 Jul 2020 16:38:01 +0000 (GMT)
-X-AuditID: cbfec7f4-677ff7000000176d-c2-5efe0d695ba2
+        20200702203415eucas1p1ebec4f5e3559a41ff6791b327c68aea9~eCcP3nXgI0693206932eucas1p1b;
+        Thu,  2 Jul 2020 20:34:15 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200702203415eusmtrp2164b2cd894c3cf53a586980192cc5954~eCcP24ra23270132701eusmtrp2U;
+        Thu,  2 Jul 2020 20:34:15 +0000 (GMT)
+X-AuditID: cbfec7f4-65dff7000000176d-a1-5efe44c8db6f
 Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id E0.0A.06017.96D0EFE5; Thu,  2
-        Jul 2020 17:38:01 +0100 (BST)
-Received: from AMDC3061.digital.local (unknown [106.120.51.75]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 82.02.06314.7C44EFE5; Thu,  2
+        Jul 2020 21:34:15 +0100 (BST)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
         eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200702163800eusmtip2d6bcf626c5987c5f2f1903612b6fe6e5~d-N_ZE9_S2767227672eusmtip2Z;
-        Thu,  2 Jul 2020 16:38:00 +0000 (GMT)
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-To:     georgi.djakov@linaro.org, cw00.choi@samsung.com, krzk@kernel.org
-Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org,
-        a.swigon@samsung.com, myungjoo.ham@samsung.com,
-        inki.dae@samsung.com, sw0312.kim@samsung.com,
-        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, s.nawrocki@samsung.com
-Subject: [PATCH RFC v6 6/6] drm: exynos: mixer: Add interconnect support
-Date:   Thu,  2 Jul 2020 18:37:24 +0200
-Message-Id: <20200702163724.2218-7-s.nawrocki@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200702163724.2218-1-s.nawrocki@samsung.com>
+        20200702203414eusmtip253239c5cf77a3938c92b56b0b12261e8~eCcO-qCES1934119341eusmtip2G;
+        Thu,  2 Jul 2020 20:34:14 +0000 (GMT)
+Subject: Re: [PATCH v2 5/8] ARM: dts: exynos: Remove DMA controller bus node
+ name to fix dtschema warnings
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>, linux-pwm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Pankaj Dubey <pankaj.dubey@samsung.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <11b9adcf-251f-81ad-2559-9d96c0a3ad78@samsung.com>
+Date:   Thu, 2 Jul 2020 22:34:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SazCUYRTH59n3sku9ei2TJxplp4tqcklTTy1dzdgvzZRPaaJW3kFYZte1
-        UoxsrMusNSIVkplYY7BpxyXK2mwyGMOIbGO0yijGFPuBsmW9Kt9+5zn/c/7nnHl4GH+IcOZF
-        SuIZqUQcLSBtcW330sDBSMoS4mVcckUTZZkANZbUE+j94jSByvX9BBo2z5OouF1DItWEEkcD
-        Aw1cpDGNEGio9RGJFvL0AJUMdHBQnf4jF42nV5Mos13PRV2z9whUUjhDnrIXadTZpMg48pIU
-        TeQYOKLnVXdE+U1qIFrQuJ4nL9n6hjHRkYmM1PPEVdsI+aiajEsLSG7RqLA00HdMAWx4kD4M
-        89T9uJX5dDWAveZEBbBd5UUALcYSnA0WAFRXKjAF4K1VVFVcZN+fAfjOWEf+q+j7VMC1tiJp
-        b5j3Jh9Y2ZH2h/LPZWudMDoLg9pmFWZNONAiaDLNcayM07thVW0jYWWKPg6nnjQAdr4dsLbh
-        9ZqzDS2EXQsUK7GHPQ+m1sbGViUZLx5i1v6QNnPhB1UPztb6Q5W+c50d4FdDE5fl7bC3MBdn
-        CzIAzG0b57KBEsAJQ8W6sxAa+5dJqzNG74P1rZ7s82k49uMxyZ7CDo7O2bND2EGVtnj9QhTM
-        kvNZ9S74U13MYdkZ5kz9xlmJCH6fFCqBW+mGbUo3bFP637YCYGrgxCTIYsIZ2SEJk+QhE8fI
-        EiThHtdiYzRg9av1WgyLzaD1V6gO0Dwg2EwpDSshfEKcKEuJ0QHIwwSO1Jm+3hA+FSZOucFI
-        Y69IE6IZmQ648HCBE+VTORPMp8PF8UwUw8Qx0r9ZDs/GOQ0cnf9WKvDKNqcPC5sKNmUuT98f
-        s7hriWrFF2XQub17UvPanEZMSpeip4F3J30OhFkCfXvCsNTL7u6DJ7MkrXMd8u4VarZx66BH
-        0M7bRR1yc9OW6yl9ocIjDimhLbfUgUTwYJLRLcrLr+ZtS/KFbQHlIzU6Z5Pfzc6GhKCCs7mv
-        ggW4LELsvR+TysR/ADJHsF5mAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGIsWRmVeSWpSXmKPExsVy+t/xe7qZvP/iDD5MYbe4P6+V0WLjjPWs
-        Fte/PGe1mH/kHKvFla/v2Sym793EZjHp/gQWi/PnN7BbbHp8jdXi8q45bBafe48wWsw4v4/J
-        Yu2Ru+wWtxtXsFm07j3CbnH4TTurxYzJL9kcBD02repk87hzbQ+bx/3u40wem5fUe/RtWcXo
-        8XmTXABblJ5NUX5pSapCRn5xia1StKGFkZ6hpYWekYmlnqGxeayVkamSvp1NSmpOZllqkb5d
-        gl5G241VbAUN7hU7N01ibmA8a9nFyMEhIWAisWRBRBcjF4eQwFJGie2357FCxKUk5rcodTFy
-        ApnCEn+udbFB1HxilPh5bCM7SIJNwFCi92gfI4gtIuAhcap1LSuIzSwwg1ni9CxTEFsYKP74
-        8VsmEJtFQFViyeqNYDW8AlYSTxZuYIRYIC+xesMBZpC9nALWEoc/84KEhYBKjvUvYIcoF5Q4
-        OfMJC0gJs4C6xPp5QhCb5CWat85mnsAoOAtJ1SyEqllIqhYwMq9iFEktLc5Nzy020itOzC0u
-        zUvXS87P3cQIjNNtx35u2cHY9S74EKMAB6MSD++E43/jhFgTy4orcw8xSnAwK4nwOp09HSfE
-        m5JYWZValB9fVJqTWnyI0RTos4nMUqLJ+cAUklcSb2hqaG5haWhubG5sZqEkztshcDBGSCA9
-        sSQ1OzW1ILUIpo+Jg1OqgTFAW/TG8QulvWdjzR4Le3wOkfi3rPCV4OKrPzQW1HHcmBwz75La
-        4inFQhOrzsSweWcaf8q/cXPPxJm9z/8UsPWXT+Fbk9qT5DSbT4ZLcMJK9uWzjk2oFbF7u3Si
-        8aarDMZcq6Umqx4uzJ9lLH6E9cn37beUReecfe0mrXJRdScXR8iUg009Bf5KLMUZiYZazEXF
-        iQCw9jSz6QIAAA==
-X-CMS-MailID: 20200702163801eucas1p12db276c7ac9e244e93e4b2f3d33ba729
+In-Reply-To: <20200702155149.12854-5-krzk@kernel.org>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHe3fO2TmOZse18smiaEZR4S2NXlKkImEQRdmHRMtaeVBpztq8
+        FpSX7LIkbx+awzRWdlnpdPNSdkFNnaa51LAoV4ZGmEgXt0BLy3Wy/Pb7v//nef7PAy9DSN5T
+        Xky8KolTqxRKmVBE1rVN2Hzat09H+z/OlOHB0johrtaZKPzS8ZHCZS3dFM4bGiWwzVZF43fO
+        VoTNQ/0U7msoEWK73YiwzvZYgA21DhrnPGqh8bkPIwSeaCgl8ZuCIrSFld/X22m52XhBKB/o
+        fyiUW66fludN+csv1RiRfNy8fDcdKQqJ4ZTxKZzaL/SQKO6a1Ukfs6SmNessggz0I0KL3Bhg
+        g+DLk8+0FokYCXsLwYPcqr/CgWCwPY/ixTiCzBs3hbMtA7p6xBs3EZSXNxK8+Iygp62JcFUt
+        ZJXQYRolXYaULSfAMmGgXAbB2hHkF8a7WMgGgHZM+2esmA2Frv5K2sUkuwqelmWRLl7ERoNp
+        pF7A13hAR/Hwn3c3diNMXqwU8DNXQP1YCcGzJ7weLhO4goHNYaB89BfJ770dSqtv/+WF8Mla
+        Q/O8DH7dn23IRvC+u4LmRS6Cviwd4quCYaB7cmZVZiZiLZga/FwI7FaoLlrMozu8GvPgd3CH
+        wrrLBP8shvNnJfyM1aC3Vv5LbXreS+QjmX7OZfo51+jnXKP/H3sVkUbkySVrEmI5zQYVl+qr
+        USRoklWxvkcSE8xo5uN1Tlsd91DDz8PNiGWQbL443zoVLaEUKZr0hGYEDCGTirc964yWiGMU
+        6Sc4deJBdbKS0zSjpQwp8xQHGkYOSNhYRRJ3lOOOcepZV8C4eWWgYGfX0m9hxuzs3oJaj4cC
+        br+0KnkwzLSp6as0NDfxrdF7Mxk1UX1ypTNtwZ0rp7zUnfavMXct0oyIiuECb+WJ9cWOzlpz
+        DbXnRa1PijPEfdvO4Z7w8zlrLpQU7+qNmrf3rKooaMmZth1TjMigfRn4Pbw1V27YKdiHIxtt
+        xkNix3EZqYlTBKwj1BrFb3VrRx10AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsVy+t/xe7rHXf7FGRx8KmTxYN42NouNM9az
+        Wlz/8pzVYv6Rc6wW/Y9fM1ucP7+B3eL+16OMFpseX2O1uLxrDpvF3burGC1mnN/HZLFo6xd2
+        i9a9R9gt2p++ZLb4uWsei8XtiZMZHQQ8ds66y+6xaVUnm8eda3vYPDYvqffo/2vg0bdlFaPH
+        501yAexRejZF+aUlqQoZ+cUltkrRhhZGeoaWFnpGJpZ6hsbmsVZGpkr6djYpqTmZZalF+nYJ
+        ehmLj39lL9hcXnFoxmamBsbfEV2MnBwSAiYSd2ZsZ+xi5OIQEljKKHF1/28miISMxMlpDawQ
+        trDEn2tdbCC2kMBbRok3vbUgtrBAjsTJ9a9ZQJpFBJYySzxc/5YNxGEWuM8ocb7tJzvE2M2M
+        Eh0r34ONZRMwlOh6CzGKV8BO4sy1dewgNouAisSp+U0sILaoQJzE8i3z2SFqBCVOznwCFucU
+        MJX41b0ObA6zgJnEvM0PmSFseYntb+dA2eISt57MZ5rAKDQLSfssJC2zkLTMQtKygJFlFaNI
+        amlxbnpusaFecWJucWleul5yfu4mRmCMbzv2c/MOxksbgw8xCnAwKvHwTjj+N06INbGsuDL3
+        EKMEB7OSCK/T2dNxQrwpiZVVqUX58UWlOanFhxhNgZ6byCwlmpwPTD95JfGGpobmFpaG5sbm
+        xmYWSuK8HQIHY4QE0hNLUrNTUwtSi2D6mDg4pRoYw6v0WmMn7731gi/9Tva6qorc6v5jm/2/
+        5SSa3lBLFZl36OzMa4UaWy9/vf7rzcmbQUp5FZJrY4Jz2zq3lQtwvnlm+/5zyb0tQm1GPD6W
+        XQ+mbJ185llH+72yi7827b38WK/dZdf0jrAT3XqZOu4uK91LlI/sOrEh4nTcA0cRmWNRrxa0
+        Bp1wV2Ipzkg01GIuKk4EAMeebagHAwAA
+X-CMS-MailID: 20200702203415eucas1p1ebec4f5e3559a41ff6791b327c68aea9
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200702163801eucas1p12db276c7ac9e244e93e4b2f3d33ba729
+X-RootMTR: 20200702155216eucas1p2424c5998e09d73e3b758e4cd8ba27157
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20200702163801eucas1p12db276c7ac9e244e93e4b2f3d33ba729
-References: <20200702163724.2218-1-s.nawrocki@samsung.com>
-        <CGME20200702163801eucas1p12db276c7ac9e244e93e4b2f3d33ba729@eucas1p1.samsung.com>
+X-CMS-RootMailID: 20200702155216eucas1p2424c5998e09d73e3b758e4cd8ba27157
+References: <20200702155149.12854-1-krzk@kernel.org>
+        <CGME20200702155216eucas1p2424c5998e09d73e3b758e4cd8ba27157@eucas1p2.samsung.com>
+        <20200702155149.12854-5-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This patch adds interconnect support to exynos-mixer. The mixer works
-the same as before when CONFIG_INTERCONNECT is 'n'.
+On 02.07.2020 17:51, Krzysztof Kozlowski wrote:
+> There is no need to keep DMA controller nodes under AMBA bus node.
+> Remove the "amba" node to fix dtschema warnings like:
+>
+>      amba: $nodename:0: 'amba' does not match '^(bus|soc|axi|ahb|apb)(@[0-9a-f]+)?$'
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>
+> ---
+>
+> Changes since v1:
+> 1. Remove the bus, as suggested by Marek
+> ---
+>   arch/arm/boot/dts/exynos3250.dtsi             |  47 +++----
+>   arch/arm/boot/dts/exynos4.dtsi                |  70 +++++-----
+>   .../boot/dts/exynos4210-universal_c210.dts    |   2 +-
+>   arch/arm/boot/dts/exynos5250.dtsi             |  92 ++++++-------
+>   arch/arm/boot/dts/exynos5410.dtsi             |  46 +++----
+>   arch/arm/boot/dts/exynos5420.dtsi             | 130 ++++++++----------
+>   6 files changed, 174 insertions(+), 213 deletions(-)
+>
+> diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
+> index 044e5da64a76..d3fb45a56527 100644
+> --- a/arch/arm/boot/dts/exynos3250.dtsi
+> +++ b/arch/arm/boot/dts/exynos3250.dtsi
+> @@ -418,33 +418,26 @@
+>   			status = "disabled";
+>   		};
+>   
+> -		amba {
+> -			compatible = "simple-bus";
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			ranges;
+> -
+> -			pdma0: pdma@12680000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x12680000 0x1000>;
+> -				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&cmu CLK_PDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			pdma1: pdma@12690000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x12690000 0x1000>;
+> -				interrupts = <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&cmu CLK_PDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> +		pdma0: pdma@12680000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x12680000 0x1000>;
+> +			interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&cmu CLK_PDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		pdma1: pdma@12690000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x12690000 0x1000>;
+> +			interrupts = <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&cmu CLK_PDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+>   		};
+>   
+>   		adc: adc@126c0000 {
+> diff --git a/arch/arm/boot/dts/exynos4.dtsi b/arch/arm/boot/dts/exynos4.dtsi
+> index d2779a790ce3..a1e54449f33f 100644
+> --- a/arch/arm/boot/dts/exynos4.dtsi
+> +++ b/arch/arm/boot/dts/exynos4.dtsi
+> @@ -669,45 +669,37 @@
+>   			status = "disabled";
+>   		};
+>   
+> -		amba: amba {
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			compatible = "simple-bus";
+> -			interrupt-parent = <&gic>;
+> -			ranges;
+> -
+> -			pdma0: pdma@12680000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x12680000 0x1000>;
+> -				interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			pdma1: pdma@12690000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x12690000 0x1000>;
+> -				interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			mdma1: mdma@12850000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x12850000 0x1000>;
+> -				interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_MDMA>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <1>;
+> -			};
+> +		pdma0: pdma@12680000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x12680000 0x1000>;
+> +			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		pdma1: pdma@12690000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x12690000 0x1000>;
+> +			interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		mdma1: mdma@12850000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x12850000 0x1000>;
+> +			interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_MDMA>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <1>;
+>   		};
+>   
+>   		fimd: fimd@11c00000 {
+> diff --git a/arch/arm/boot/dts/exynos4210-universal_c210.dts b/arch/arm/boot/dts/exynos4210-universal_c210.dts
+> index 02fde1a75ebd..e07aa3aa93bd 100644
+> --- a/arch/arm/boot/dts/exynos4210-universal_c210.dts
+> +++ b/arch/arm/boot/dts/exynos4210-universal_c210.dts
+> @@ -181,7 +181,7 @@
+>   	};
+>   };
+>   
+> -&amba {
+> +&soc {
 
-For proper operation of the video mixer block we need to ensure the
-interconnect busses like DMC or LEFTBUS provide enough bandwidth so
-as to avoid DMA buffer underruns in the mixer block. I.e we need to
-prevent those busses from operating in low perfomance OPPs when
-the mixer is running.
-In this patch the bus bandwidth request is done through the interconnect
-API, the bandwidth value is calculated from selected DRM mode, i.e.
-video plane width, height, refresh rate and pixel format.
 
-The bandwidth setting is synchronized with VSYNC when we are switching
-to lower bandwidth. This is required to ensure enough bandwidth for
-the device since new settings are normally being applied in the hardware
-synchronously with VSYNC.
+What about the alphabetical order of the labels here?
 
-Co-developed-by: Artur Świgoń <a.swigon@samsung.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
----
-Changes for v6:
- - the icc_set_bw() call is now only done when calculated value for
-   a crtc changes, this avoids unnecessary calls per each video frame
- - added synchronization of the interconnect bandwidth setting with
-   the mixer VSYNC in order to avoid buffer underflow when we lower
-   the interconnect bandwidth when the hardware still operates with
-   previous mode settings that require higher bandwidth. This fixed
-   IOMMU faults observed e.g. during switching from two planes to
-   a single plane operation.
 
-Changes for v5:
- - renamed soc_path variable to icc_path
----
- drivers/gpu/drm/exynos/exynos_mixer.c | 150 ++++++++++++++++++++++++++++++++--
- 1 file changed, 142 insertions(+), 8 deletions(-)
+>   	mdma0: mdma@12840000 {
+>   		compatible = "arm,pl330", "arm,primecell";
+>   		reg = <0x12840000 0x1000>;
+> diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
+> index b6135af7ef39..e3dbe4166836 100644
+> --- a/arch/arm/boot/dts/exynos5250.dtsi
+> +++ b/arch/arm/boot/dts/exynos5250.dtsi
+> @@ -679,56 +679,48 @@
+>   			samsung,pmureg-phandle = <&pmu_system_controller>;
+>   		};
+>   
+> -		amba {
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			compatible = "simple-bus";
+> -			interrupt-parent = <&gic>;
+> -			ranges;
+> -
+> -			pdma0: pdma@121a0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121A0000 0x1000>;
+> -				interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			pdma1: pdma@121b0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121B0000 0x1000>;
+> -				interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			mdma0: mdma@10800000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x10800000 0x1000>;
+> -				interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_MDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <1>;
+> -			};
+> -
+> -			mdma1: mdma@11c10000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x11C10000 0x1000>;
+> -				interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_MDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <1>;
+> -			};
+> +		pdma0: pdma@121a0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121A0000 0x1000>;
+> +			interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		pdma1: pdma@121b0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121B0000 0x1000>;
+> +			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		mdma0: mdma@10800000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x10800000 0x1000>;
+> +			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_MDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <1>;
+> +		};
+> +
+> +		mdma1: mdma@11c10000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x11C10000 0x1000>;
+> +			interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_MDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <1>;
+>   		};
+>   
+>   		gsc_0:  gsc@13e00000 {
+> diff --git a/arch/arm/boot/dts/exynos5410.dtsi b/arch/arm/boot/dts/exynos5410.dtsi
+> index 2eab80bf5f3a..abe75b9e39f5 100644
+> --- a/arch/arm/boot/dts/exynos5410.dtsi
+> +++ b/arch/arm/boot/dts/exynos5410.dtsi
+> @@ -189,34 +189,26 @@
+>   			interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+>   		};
+>   
+> -		amba {
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			compatible = "simple-bus";
+> -			interrupt-parent = <&gic>;
+> -			ranges;
+> -
+> -			pdma0: pdma@121a0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121a0000 0x1000>;
+> -				interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> +		pdma0: pdma@121a0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121a0000 0x1000>;
+> +			interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+>   
+> -			pdma1: pdma@121b0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121b0000 0x1000>;
+> -				interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> +		pdma1: pdma@121b0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121b0000 0x1000>;
+> +			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+>   		};
+>   
+>   		audi2s0: i2s@3830000 {
+> diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
+> index b672080e7469..c76460b70532 100644
+> --- a/arch/arm/boot/dts/exynos5420.dtsi
+> +++ b/arch/arm/boot/dts/exynos5420.dtsi
+> @@ -433,76 +433,68 @@
+>   			power-domains = <&mau_pd>;
+>   		};
+>   
+> -		amba {
+> -			#address-cells = <1>;
+> -			#size-cells = <1>;
+> -			compatible = "simple-bus";
+> -			interrupt-parent = <&gic>;
+> -			ranges;
+> -
+> -			adma: adma@3880000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x03880000 0x1000>;
+> -				interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock_audss EXYNOS_ADMA>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <6>;
+> -				#dma-requests = <16>;
+> -				power-domains = <&mau_pd>;
+> -			};
+> -
+> -			pdma0: pdma@121a0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121A0000 0x1000>;
+> -				interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			pdma1: pdma@121b0000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x121B0000 0x1000>;
+> -				interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_PDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <32>;
+> -			};
+> -
+> -			mdma0: mdma@10800000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x10800000 0x1000>;
+> -				interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_MDMA0>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <1>;
+> -			};
+> +		adma: adma@3880000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x03880000 0x1000>;
+> +			interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock_audss EXYNOS_ADMA>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <6>;
+> +			#dma-requests = <16>;
+> +			power-domains = <&mau_pd>;
+> +		};
+>   
+> -			mdma1: mdma@11c10000 {
+> -				compatible = "arm,pl330", "arm,primecell";
+> -				reg = <0x11C10000 0x1000>;
+> -				interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+> -				clocks = <&clock CLK_MDMA1>;
+> -				clock-names = "apb_pclk";
+> -				#dma-cells = <1>;
+> -				#dma-channels = <8>;
+> -				#dma-requests = <1>;
+> -				/*
+> -				 * MDMA1 can support both secure and non-secure
+> -				 * AXI transactions. When this is enabled in
+> -				 * the kernel for boards that run in secure
+> -				 * mode, we are getting imprecise external
+> -				 * aborts causing the kernel to oops.
+> -				 */
+> -				status = "disabled";
+> -			};
+> +		pdma0: pdma@121a0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121A0000 0x1000>;
+> +			interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		pdma1: pdma@121b0000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x121B0000 0x1000>;
+> +			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_PDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <32>;
+> +		};
+> +
+> +		mdma0: mdma@10800000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x10800000 0x1000>;
+> +			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_MDMA0>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <1>;
+> +		};
+> +
+> +		mdma1: mdma@11c10000 {
+> +			compatible = "arm,pl330", "arm,primecell";
+> +			reg = <0x11C10000 0x1000>;
+> +			interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&clock CLK_MDMA1>;
+> +			clock-names = "apb_pclk";
+> +			#dma-cells = <1>;
+> +			#dma-channels = <8>;
+> +			#dma-requests = <1>;
+> +			/*
+> +			 * MDMA1 can support both secure and non-secure
+> +			 * AXI transactions. When this is enabled in
+> +			 * the kernel for boards that run in secure
+> +			 * mode, we are getting imprecise external
+> +			 * aborts causing the kernel to oops.
+> +			 */
+> +			status = "disabled";
+>   		};
+>   
+>   		i2s0: i2s@3830000 {
 
-diff --git a/drivers/gpu/drm/exynos/exynos_mixer.c b/drivers/gpu/drm/exynos/exynos_mixer.c
-index c7e2e2e..f7babf8 100644
---- a/drivers/gpu/drm/exynos/exynos_mixer.c
-+++ b/drivers/gpu/drm/exynos/exynos_mixer.c
-@@ -13,6 +13,7 @@
- #include <linux/component.h>
- #include <linux/delay.h>
- #include <linux/i2c.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
- #include <linux/kernel.h>
-@@ -73,6 +74,7 @@ enum mixer_flag_bits {
- 	MXR_BIT_INTERLACE,
- 	MXR_BIT_VP_ENABLED,
- 	MXR_BIT_HAS_SCLK,
-+	MXR_BIT_REQUEST_BW,
- };
- 
- static const uint32_t mixer_formats[] = {
-@@ -99,6 +101,13 @@ struct mixer_context {
- 	struct exynos_drm_plane	planes[MIXER_WIN_NR];
- 	unsigned long		flags;
- 
-+	struct icc_path		*icc_path;
-+	/* memory bandwidth on the interconnect bus in B/s */
-+	unsigned long		icc_bandwidth;
-+	/* mutex protecting @icc_bandwidth and serializing access to @icc_path */
-+	struct mutex 		icc_lock;
-+	struct work_struct	work;
-+
- 	int			irq;
- 	void __iomem		*mixer_regs;
- 	void __iomem		*vp_regs;
-@@ -754,6 +763,9 @@ static irqreturn_t mixer_irq_handler(int irq, void *arg)
- 		val |= MXR_INT_CLEAR_VSYNC;
- 		val &= ~MXR_INT_STATUS_VSYNC;
- 
-+		if (test_and_clear_bit(MXR_BIT_REQUEST_BW, &ctx->flags))
-+			schedule_work(&ctx->work);
-+
- 		/* interlace scan need to check shadow register */
- 		if (test_bit(MXR_BIT_INTERLACE, &ctx->flags)
- 		    && !mixer_is_synced(ctx))
-@@ -934,6 +946,78 @@ static void mixer_disable_vblank(struct exynos_drm_crtc *crtc)
- 	mixer_reg_writemask(mixer_ctx, MXR_INT_EN, 0, MXR_INT_EN_VSYNC);
- }
- 
-+/**
-+ * mixer_get_memory_bandwidth - calculate memory bandwidth for current crtc mode
-+ * @crtc: a crtc with DRM mode to calculate the bandwidth for
-+ *
-+ * Return: memory bandwidth in B/s
-+ *
-+ * This function returns memory bandwidth calculated as a sum of amount of data
-+ * per second for each plane. The calculation is based on maximum possible pixel
-+ * resolution for a plane so as to avoid different bandwidth request per each
-+ * video frame. The formula used for calculation for each plane is:
-+ *
-+ * bw = width * height * frame_rate / interlace / (hor_subs * vert_subs)
-+ *
-+ * where:
-+ *  - width, height - (DRM mode) video frame width and height in pixels,
-+ *  - frame_rate - DRM mode frame refresh rate,
-+ *  - interlace: 1 - in case of progressive and 2 in case of interlaced video,
-+ *  - hor_subs, vert_subs - accordingly horizontal and vertical pixel
-+ *    subsampling for a plane.
-+ */
-+static unsigned int mixer_get_memory_bandwidth(struct exynos_drm_crtc *crtc)
-+{
-+	struct drm_display_mode *mode = &crtc->base.state->adjusted_mode;
-+	struct mixer_context *ctx = crtc->ctx;
-+	unsigned long bw, bandwidth = 0;
-+	int i, j, sub;
-+
-+	for (i = 0; i < MIXER_WIN_NR; i++) {
-+		struct drm_plane *plane = &ctx->planes[i].base;
-+		const struct drm_format_info *format;
-+
-+		if (plane->state && plane->state->crtc && plane->state->fb) {
-+			format = plane->state->fb->format;
-+			bw = mode->hdisplay * mode->vdisplay *
-+							drm_mode_vrefresh(mode);
-+			if (mode->flags & DRM_MODE_FLAG_INTERLACE)
-+				bw /= 2;
-+			for (j = 0; j < format->num_planes; j++) {
-+				sub = j ? (format->vsub * format->hsub) : 1;
-+				bandwidth += format->cpp[j] * bw / sub;
-+			}
-+		}
-+	}
-+
-+	return bandwidth;
-+}
-+
-+static void mixer_set_icc_bandwidth(struct mixer_context *ctx)
-+{
-+	unsigned long bandwidth;
-+	u32 avg_bw, peak_bw;
-+
-+	mutex_lock(&ctx->icc_lock);
-+
-+	/* add 20% safety margin */
-+	bandwidth = ctx->icc_bandwidth / 4 * 5;
-+
-+	avg_bw = peak_bw = Bps_to_icc(bandwidth);
-+	icc_set_bw(ctx->icc_path, avg_bw, peak_bw);
-+
-+	mutex_unlock(&ctx->icc_lock);
-+
-+	dev_dbg(ctx->dev, "safe bandwidth %lu Bps\n", bandwidth);
-+}
-+
-+static void mixer_icc_request_fn(struct work_struct *work)
-+{
-+	struct mixer_context *ctx = container_of(work, struct mixer_context,
-+						 work);
-+	mixer_set_icc_bandwidth(ctx);
-+}
-+
- static void mixer_atomic_begin(struct exynos_drm_crtc *crtc)
- {
- 	struct mixer_context *ctx = crtc->ctx;
-@@ -980,12 +1064,34 @@ static void mixer_disable_plane(struct exynos_drm_crtc *crtc,
- 
- static void mixer_atomic_flush(struct exynos_drm_crtc *crtc)
- {
--	struct mixer_context *mixer_ctx = crtc->ctx;
-+	struct mixer_context *ctx = crtc->ctx;
-+	int bw, prev_bw;
- 
--	if (!test_bit(MXR_BIT_POWERED, &mixer_ctx->flags))
-+	if (!test_bit(MXR_BIT_POWERED, &ctx->flags))
- 		return;
- 
--	mixer_enable_sync(mixer_ctx);
-+	/*
-+	 * Request necessary bandwidth on the interconnects. If new
-+	 * bandwidth is greater than current value set the new value
-+	 * immediately. Otherwise request lower bandwidth only after
-+	 * VSYNC, after the HW has actually switched to new video
-+	 * frame settings.
-+	 */
-+	if (ctx->icc_path) {
-+		bw = mixer_get_memory_bandwidth(crtc);
-+
-+		mutex_lock(&ctx->icc_lock);
-+		prev_bw = ctx->icc_bandwidth;
-+		ctx->icc_bandwidth = bw;
-+		mutex_unlock(&ctx->icc_lock);
-+
-+		if (bw > prev_bw)
-+			mixer_set_icc_bandwidth(ctx);
-+		else if (bw < prev_bw)
-+			set_bit(MXR_BIT_REQUEST_BW, &ctx->flags);
-+	}
-+
-+	mixer_enable_sync(ctx);
- 	exynos_crtc_handle_event(crtc);
- }
- 
-@@ -1036,6 +1142,10 @@ static void mixer_atomic_disable(struct exynos_drm_crtc *crtc)
- 
- 	pm_runtime_put(ctx->dev);
- 
-+	cancel_work_sync(&ctx->work);
-+	ctx->icc_bandwidth = 0;
-+	mixer_set_icc_bandwidth(ctx);
-+
- 	clear_bit(MXR_BIT_POWERED, &ctx->flags);
- }
- 
-@@ -1210,6 +1320,7 @@ static void mixer_unbind(struct device *dev, struct device *master, void *data)
- {
- 	struct mixer_context *ctx = dev_get_drvdata(dev);
- 
-+	cancel_work_sync(&ctx->work);
- 	mixer_ctx_remove(ctx);
- }
- 
-@@ -1223,19 +1334,33 @@ static int mixer_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	const struct mixer_drv_data *drv;
- 	struct mixer_context *ctx;
-+	struct icc_path *path;
- 	int ret;
- 
-+	/*
-+	 * Returns NULL if CONFIG_INTERCONNECT is disabled.
-+	 * May return ERR_PTR(-EPROBE_DEFER).
-+	 */
-+	path = of_icc_get(dev, NULL);
-+	if (IS_ERR(path))
-+		return PTR_ERR(path);
-+
- 	ctx = devm_kzalloc(&pdev->dev, sizeof(*ctx), GFP_KERNEL);
- 	if (!ctx) {
- 		DRM_DEV_ERROR(dev, "failed to alloc mixer context.\n");
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto err;
- 	}
- 
- 	drv = of_device_get_match_data(dev);
- 
-+	INIT_WORK(&ctx->work, mixer_icc_request_fn);
-+	mutex_init(&ctx->icc_lock);
-+
- 	ctx->pdev = pdev;
- 	ctx->dev = dev;
- 	ctx->mxr_ver = drv->version;
-+	ctx->icc_path = path;
- 
- 	if (drv->is_vp_enabled)
- 		__set_bit(MXR_BIT_VP_ENABLED, &ctx->flags);
-@@ -1247,17 +1372,26 @@ static int mixer_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 
- 	ret = component_add(&pdev->dev, &mixer_component_ops);
--	if (ret)
-+	if (ret) {
- 		pm_runtime_disable(dev);
--
-+		goto err;
-+	}
-+	return 0;
-+err:
-+	icc_put(path);
- 	return ret;
- }
- 
- static int mixer_remove(struct platform_device *pdev)
- {
--	pm_runtime_disable(&pdev->dev);
-+	struct device *dev = &pdev->dev;
-+	struct mixer_context *ctx = dev_get_drvdata(dev);
-+
-+	pm_runtime_disable(dev);
-+
-+	component_del(dev, &mixer_component_ops);
- 
--	component_del(&pdev->dev, &mixer_component_ops);
-+	icc_put(ctx->icc_path);
- 
- 	return 0;
- }
+Best regards
 -- 
-2.7.4
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
