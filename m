@@ -2,84 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BECC21BCFC
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Jul 2020 20:30:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4BC421BD6A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Jul 2020 21:12:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgGJSal (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Jul 2020 14:30:41 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:47080 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726872AbgGJSal (ORCPT
+        id S1727780AbgGJTLj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 Jul 2020 15:11:39 -0400
+Received: from foss.arm.com ([217.140.110.172]:35404 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726872AbgGJTLi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Jul 2020 14:30:41 -0400
-Received: from ravnborg.org (unknown [188.228.123.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id C08DE8051B;
-        Fri, 10 Jul 2020 20:30:38 +0200 (CEST)
-Date:   Fri, 10 Jul 2020 20:30:37 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>
-Subject: Re: [PATCH] drm/exynos: gem: Fix sparse warning
-Message-ID: <20200710183037.GI17565@ravnborg.org>
-References: <CGME20200707110911eucas1p1e21621f402b2aac89457647c3b2ad46f@eucas1p1.samsung.com>
- <20200707110859.3822-1-m.szyprowski@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200707110859.3822-1-m.szyprowski@samsung.com>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=QyXUC8HyAAAA:8 a=hD80L64hAAAA:8 a=e5mUnYsNAAAA:8
-        a=qO0_DFEm4Q4emWBWjJgA:9 a=CjuIK1q_8ugA:10 a=Vxmtnl_E_bksehYqCbjh:22
+        Fri, 10 Jul 2020 15:11:38 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0B3E231B;
+        Fri, 10 Jul 2020 12:11:38 -0700 (PDT)
+Received: from e123648.arm.com (unknown [10.37.12.58])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 53B003FA00;
+        Fri, 10 Jul 2020 12:11:34 -0700 (PDT)
+From:   Lukasz Luba <lukasz.luba@arm.com>
+To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     lukasz.luba@arm.com, willy.mh.wolff.ml@gmail.com,
+        k.konieczny@samsung.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, krzk@kernel.org, chanwoo@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        s.nawrocki@samsung.com, kgene@kernel.org
+Subject: [PATCH v2 0/2] Exynos5422 DMC: adjust to new devfreq monitoring mechanism
+Date:   Fri, 10 Jul 2020 20:11:20 +0100
+Message-Id: <20200710191122.11029-1-lukasz.luba@arm.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek.
+Hi all,
 
-On Tue, Jul 07, 2020 at 01:08:59PM +0200, Marek Szyprowski wrote:
-> Add a proper cast on the exynos_gem->kvaddr assignment to avoid a sparse warning.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Fixes: 9940d9d93406 ("drm/exynos: gem: Get rid of the internal 'pages' array")
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  drivers/gpu/drm/exynos/exynos_drm_gem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_gem.c b/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> index efa476858db5..65d11784f29f 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> @@ -59,7 +59,7 @@ static int exynos_drm_alloc_buf(struct exynos_drm_gem *exynos_gem, bool kvmap)
->  	}
->  
->  	if (kvmap)
-> -		exynos_gem->kvaddr = exynos_gem->cookie;
-> +		exynos_gem->kvaddr = (void __iomem *)exynos_gem->cookie;
+This is a v2 patch set adjusting Exynos5422 DMC to the new devfreq monitoring
+mechanism. This time the IRQ mode is explicitly controlled using module
+parameter (in default the driver uses polling mode = devfreq monitoring).
 
-From a brif look at the code the correct fix looks to me to drop the
-__iomem annotation of kvaddr.
-And then no cast is needed.
+The detailed cover letter describing the topic can be found here [1].
 
-Care to take a look at this?
+The patches should apply on top of Chanwoo's devfreq-next branch, where
+the new devfreq mechanism is queued [2]. If there is no objections
+I think they can go via this tree, since they logically use it.
 
-	Sam
+Changes:
+v2:
+- added Reviewed-by from Chanwoo for patch 1/2
+- added module_param which controls the mode in which the driver operates
+- switched in default to devfreq monitoring mechanism instead of interrupts
 
->  
->  	DRM_DEV_DEBUG_KMS(to_dma_dev(dev), "dma_addr(0x%lx), size(0x%lx)\n",
->  			(unsigned long)exynos_gem->dma_addr, exynos_gem->size);
-> -- 
-> 2.17.1
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Regards,
+Lukasz Luba
+
+[1] https://lore.kernel.org/linux-pm/20200708153420.29484-1-lukasz.luba@arm.com/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/chanwoo/linux.git/log/?h=devfreq-next
+
+Lukasz Luba (2):
+  memory: samsung: exynos5422-dmc: Adjust polling interval and
+    uptreshold
+  memory: samsung: exynos5422-dmc: Add module param to control IRQ mode
+
+ drivers/memory/samsung/exynos5422-dmc.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+-- 
+2.17.1
+
