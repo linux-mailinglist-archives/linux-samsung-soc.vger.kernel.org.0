@@ -2,323 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19B0C21BC56
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Jul 2020 19:35:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BECC21BCFC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Jul 2020 20:30:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727065AbgGJRfV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Jul 2020 13:35:21 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:36136 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbgGJRfV (ORCPT
+        id S1727059AbgGJSal (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 Jul 2020 14:30:41 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:47080 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726872AbgGJSal (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Jul 2020 13:35:21 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200710173520euoutp01eed5c71cbc0f9aab2f44d15eae1e8521~gdKUBE0Hy1632316323euoutp01C
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Jul 2020 17:35:20 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200710173520euoutp01eed5c71cbc0f9aab2f44d15eae1e8521~gdKUBE0Hy1632316323euoutp01C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1594402520;
-        bh=V0DP11+a7ZZ2suSsfZcV3gV1k2ID9odXgqPlooDBJjI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tMqTCU7OnANbhgR9N/BYtIvrG4xth07vLMYyieufmsM1ahjyG5z1KCjTBytOO+BH7
-         7xW0bAq5TFfDihq9aPSpXA2tIdqhKTTsYXvD8H7l+jXNIQov+RDXjSpGNyMv4O32SK
-         foI6CS7NEx6TxKUJ7YajJayVELSKIl70XkXYdt9A=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200710173519eucas1p19fa5cf2c4976ab3a52b23e3065e21ae7~gdKTbYHoa3026630266eucas1p15;
-        Fri, 10 Jul 2020 17:35:19 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id A9.5B.06456.7D6A80F5; Fri, 10
-        Jul 2020 18:35:19 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213~gdKSQz-5S2982929829eucas1p1x;
-        Fri, 10 Jul 2020 17:35:18 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200710173518eusmtrp1225ed0bb8d11e234318c8507cbec6700~gdKSQLuu60562605626eusmtrp1g;
-        Fri, 10 Jul 2020 17:35:18 +0000 (GMT)
-X-AuditID: cbfec7f2-7efff70000001938-bd-5f08a6d7f1cf
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id BA.3F.06314.6D6A80F5; Fri, 10
-        Jul 2020 18:35:18 +0100 (BST)
-Received: from AMDC3061.digital.local (unknown [106.120.51.75]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200710173517eusmtip119c54ce648d517a151d289f92a48e137~gdKRyxr8W2582925829eusmtip1W;
-        Fri, 10 Jul 2020 17:35:17 +0000 (GMT)
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-To:     broonie@kernel.org, krzk@kernel.org
-Cc:     simon@lineageos.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
-        linux-samsung-soc@vger.kernel.org, s.nawrocki@samsung.com
-Subject: [PATCH 3/3] ARM: dts: exynos: Add sound support to Midas
-Date:   Fri, 10 Jul 2020 19:35:00 +0200
-Message-Id: <20200710173500.22365-3-s.nawrocki@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200710173500.22365-1-s.nawrocki@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupgleLIzCtJLcpLzFFi42LZduzned3ryzjiDeZ3SFhcuXiIyWLjjPWs
-        FlMfPmGzmH/kHKvF+fMb2C1mnN/HZLH2yF12i9a9R9gtDr9pZ7XYcuY2mwOXx4bPTWwem1Z1
-        snm0rN/E5tG3ZRWjx+dNcgGsUVw2Kak5mWWpRfp2CVwZHScEC07pVPRcP8XUwDhRpYuRk0NC
-        wETi5f9W9i5GLg4hgRWMErM3LWGBcL4wSvTdXMAI4XxmlNhw/yhbFyMHWMv6nQoQ8eWMEudm
-        P2OF63j2dQozyFw2AUOJ3qN9jCC2iIC6xP0ZTWBFzAI3GSVmbupjA0kICzhK/Dj2jx3EZhFQ
-        lZi+5AczyAZeAWuJ56+yIO6Tl1i94QBYmFPARuLANxeQMRICzewSh68dYISocZGYefEvK4Qt
-        LPHq+BZ2CFtG4vTkHhaoBkaJnt232SGcCYwS948vgOq2lrhz7hfYa8wCmhLrd+lDhB0l7l64
-        xwLxMZ/EjbeCIGFmIHPStunMEGFeiY42IYhqFYnfq6YzQdhSEt1P/rNA2B4S57b8AYsLCfQz
-        Svy4A7RbfhbCrgWMjKsYxVNLi3PTU4sN81LL9YoTc4tL89L1kvNzNzEC08fpf8c/7WD8einp
-        EKMAB6MSD++CRI54IdbEsuLK3EOMEhzMSiK8TmdPxwnxpiRWVqUW5ccXleakFh9ilOZgURLn
-        NV70MlZIID2xJDU7NbUgtQgmy8TBKdXAyB5lx3f55cuu8oC9OduE7Vm+ek3ewbN45v/bgVdM
-        vf5m7jJhCfk9NerV6v7vwucF7Yyvs5yyLn6iuIuDZ8qtL+/EnvDL8u3e8fHzdcU05sa/Dhw5
-        5xms66fs3H241Vj/PYcX5/mV4kp6Wnvn9Wmy2m4WjHzOFPB+1WwPjV8/fTdtdTN2jHlVpMRS
-        nJFoqMVcVJwIANC43pAbAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBLMWRmVeSWpSXmKPExsVy+t/xu7rXlnHEG9xZyWNx5eIhJouNM9az
-        Wkx9+ITNYv6Rc6wW589vYLeYcX4fk8XaI3fZLVr3HmG3OPymndViy5nbbA5cHhs+N7F5bFrV
-        yebRsn4Tm0ffllWMHp83yQWwRunZFOWXlqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq
-        6dvZpKTmZJalFunbJehldJwQLDilU9Fz/RRTA+NElS5GDg4JAROJ9TsVuhi5OIQEljJKXNu1
-        mhkiLiUxv0Wpi5ETyBSW+HOtiw2i5hOjxLIzx9lBEmwChhK9R/sYQWwRAU2Jjnm3WUGKmAUe
-        MkrsP34fLCEs4Cjx49g/sAYWAVWJ6Ut+gC3gFbCWeP4qC2KBvMTqDQfAwpwCNhIHvrmAhIWA
-        Kh69+s06gZFvASPDKkaR1NLi3PTcYkO94sTc4tK8dL3k/NxNjMBQ3nbs5+YdjJc2Bh9iFOBg
-        VOLhXZDIES/EmlhWXJl7iFGCg1lJhNfp7Ok4Id6UxMqq1KL8+KLSnNTiQ4ymQCdNZJYSTc4H
-        xlleSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQZGW5/ZrfrxYddi
-        7F3+Njf4fxA+5NyryiJ58uSadQvZejz3qN1yd1HjWfgwzn+yyJIv3znnsPXNO2KRzZ834VdG
-        WvFCEa2dPkaTCo06y/JqGu4FpQY1Ne2Vvhtw8Wv6a+t8/rRwntAKVr9zWsctdZe8/qVhfuhd
-        ndMbjqsbNj3a0GRxo7jkX5wSS3FGoqEWc1FxIgDYZSzfewIAAA==
-X-CMS-MailID: 20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213
-References: <20200710173500.22365-1-s.nawrocki@samsung.com>
-        <CGME20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213@eucas1p1.samsung.com>
+        Fri, 10 Jul 2020 14:30:41 -0400
+Received: from ravnborg.org (unknown [188.228.123.71])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id C08DE8051B;
+        Fri, 10 Jul 2020 20:30:38 +0200 (CEST)
+Date:   Fri, 10 Jul 2020 20:30:37 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>
+Subject: Re: [PATCH] drm/exynos: gem: Fix sparse warning
+Message-ID: <20200710183037.GI17565@ravnborg.org>
+References: <CGME20200707110911eucas1p1e21621f402b2aac89457647c3b2ad46f@eucas1p1.samsung.com>
+ <20200707110859.3822-1-m.szyprowski@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200707110859.3822-1-m.szyprowski@samsung.com>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
+        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
+        a=kj9zAlcOel0A:10 a=QyXUC8HyAAAA:8 a=hD80L64hAAAA:8 a=e5mUnYsNAAAA:8
+        a=qO0_DFEm4Q4emWBWjJgA:9 a=CjuIK1q_8ugA:10 a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Simon Shields <simon@lineageos.org>
+Hi Marek.
 
-Update the never-mainlined "samsung,trats2-audio" binding and instead
-use the new "samsung,midas-audio" binding.
+On Tue, Jul 07, 2020 at 01:08:59PM +0200, Marek Szyprowski wrote:
+> Add a proper cast on the exynos_gem->kvaddr assignment to avoid a sparse warning.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Fixes: 9940d9d93406 ("drm/exynos: gem: Get rid of the internal 'pages' array")
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> ---
+>  drivers/gpu/drm/exynos/exynos_drm_gem.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/exynos/exynos_drm_gem.c b/drivers/gpu/drm/exynos/exynos_drm_gem.c
+> index efa476858db5..65d11784f29f 100644
+> --- a/drivers/gpu/drm/exynos/exynos_drm_gem.c
+> +++ b/drivers/gpu/drm/exynos/exynos_drm_gem.c
+> @@ -59,7 +59,7 @@ static int exynos_drm_alloc_buf(struct exynos_drm_gem *exynos_gem, bool kvmap)
+>  	}
+>  
+>  	if (kvmap)
+> -		exynos_gem->kvaddr = exynos_gem->cookie;
+> +		exynos_gem->kvaddr = (void __iomem *)exynos_gem->cookie;
 
-Signed-off-by: Simon Shields <simon@lineageos.org>
-[s.nawrocki: fixed DAPM routing entries for MICBIAS1/2, adjusted to
- changes in the DT binding]
-Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
----
- arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 38 ++++++++++++++
- arch/arm/boot/dts/exynos4412-i9300.dts      |  4 ++
- arch/arm/boot/dts/exynos4412-midas.dtsi     | 78 ++++++++++++++++++++++++-----
- arch/arm/boot/dts/exynos4412-n710x.dts      | 35 +++++++++++++
- 4 files changed, 142 insertions(+), 13 deletions(-)
+From a brif look at the code the correct fix looks to me to drop the
+__iomem annotation of kvaddr.
+And then no cast is needed.
 
-diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-index 53b3ca3..cff0980 100644
---- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-+++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-@@ -175,3 +175,41 @@
- 	gpio = <&gpm0 0 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
- };
-+
-+&submic_bias_reg {
-+	gpio = <&gpf2 0 GPIO_ACTIVE_HIGH>;
-+	enable-active-high;
-+};
-+
-+&sound {
-+	samsung,audio-routing =
-+		"HP", "HPOUT1L",
-+		"HP", "HPOUT1R",
-+
-+		"SPK", "SPKOUTLN",
-+		"SPK", "SPKOUTLP",
-+		"SPK", "SPKOUTRN",
-+		"SPK", "SPKOUTRP",
-+
-+		"RCV", "HPOUT2N",
-+		"RCV", "HPOUT2P",
-+
-+		"HDMI", "LINEOUT1N",
-+		"HDMI", "LINEOUT1P",
-+
-+		"LINE", "LINEOUT2N",
-+		"LINE", "LINEOUT2P",
-+
-+		"IN1LP", "MICBIAS1",
-+		"IN1LN", "MICBIAS1",
-+		"Main Mic", "MICBIAS1",
-+
-+		"IN1RP", "Sub Mic",
-+		"IN1RN", "Sub Mic",
-+
-+		"IN2LP:VXRN", "MICBIAS2",
-+		"Headset Mic", "MICBIAS2",
-+
-+		"IN2RN", "FM In",
-+		"IN2RP:VXRP", "FM In";
-+};
-diff --git a/arch/arm/boot/dts/exynos4412-i9300.dts b/arch/arm/boot/dts/exynos4412-i9300.dts
-index f8125a9..3691802 100644
---- a/arch/arm/boot/dts/exynos4412-i9300.dts
-+++ b/arch/arm/boot/dts/exynos4412-i9300.dts
-@@ -20,3 +20,7 @@
- 		reg =  <0x40000000 0x40000000>;
- 	};
- };
-+
-+&sound {
-+	fm-sel-gpios = <&gpl0 3 GPIO_ACTIVE_HIGH>;
-+};
-diff --git a/arch/arm/boot/dts/exynos4412-midas.dtsi b/arch/arm/boot/dts/exynos4412-midas.dtsi
-index 2c8111c..2752363 100644
---- a/arch/arm/boot/dts/exynos4412-midas.dtsi
-+++ b/arch/arm/boot/dts/exynos4412-midas.dtsi
-@@ -102,6 +102,30 @@
- 		status = "disabled";
- 	};
- 
-+	vbatt_reg: voltage-regulator-9 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VBATT";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
-+	};
-+
-+	mic_bias_reg: voltage-regulator-10 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "MICBIAS_LDO_2.8V";
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
-+		gpio = <&gpf1 7 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
-+	submic_bias_reg: voltage-regulator-11 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "SUB_MICBIAS_LDO_2.8V";
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		pinctrl-names = "default";
-@@ -266,16 +290,18 @@
- 		clock-names = "ext_clock";
- 	};
- 
--	sound {
--		compatible = "samsung,trats2-audio";
--		samsung,i2s-controller = <&i2s0>;
--		samsung,model = "Trats2";
--		samsung,audio-codec = <&wm1811>;
--		samsung,audio-routing =
--			"SPK", "SPKOUTLN",
--			"SPK", "SPKOUTLP",
--			"SPK", "SPKOUTRN",
--			"SPK", "SPKOUTRP";
-+	sound: sound {
-+		compatible = "samsung,midas-audio";
-+		model = "Midas";
-+		mic-bias-supply = <&mic_bias_reg>;
-+		submic-bias-supply = <&submic_bias_reg>;
-+
-+		cpu {
-+			sound-dai =  <&i2s0 0>;
-+		};
-+		codec {
-+			sound-dai = <&wm1811>;
-+		};
- 	};
- 
- 	thermistor-ap {
-@@ -597,11 +623,37 @@
- 	wm1811: wm1811@1a {
- 		compatible = "wlf,wm1811";
- 		reg = <0x1a>;
--		clocks = <&pmu_system_controller 0>;
--		clock-names = "MCLK1";
--		DCVDD-supply = <&ldo3_reg>;
-+		clocks = <&pmu_system_controller 0>,
-+			<&max77686 MAX77686_CLK_PMIC>;
-+		clock-names = "MCLK1", "MCLK2";
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpx3>;
-+		interrupts = <6 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		#sound-dai-cells = <0>;
-+
-+		wlf,gpio-cfg = <0x3 0x0 0x0 0x0 0x0 0x0
-+			0x0 0x8000 0x0 0x0 0x0>;
-+		wlf,micbias-cfg = <0x2f 0x2b>;
-+
-+		wlf,lineout1-feedback;
-+		wlf,lineout1-se;
-+		wlf,lineout2-se;
-+		wlf,ldoena-always-driven;
-+
-+		AVDD2-supply = <&vbatt_reg>;
- 		DBVDD1-supply = <&ldo3_reg>;
-+		DBVDD2-supply = <&vbatt_reg>;
-+		DBVDD3-supply = <&vbatt_reg>;
-+		DCVDD-supply = <&ldo3_reg>;
-+		CPVDD-supply = <&vbatt_reg>;
-+		SPKVDD1-supply = <&vbatt_reg>;
-+		SPKVDD2-supply = <&vbatt_reg>;
- 		wlf,ldo1ena = <&gpj0 4 0>;
-+		wlf,ldo2ena = <&gpj0 4 0>;
- 	};
- };
- 
-diff --git a/arch/arm/boot/dts/exynos4412-n710x.dts b/arch/arm/boot/dts/exynos4412-n710x.dts
-index 4189e1f..e0c907e 100644
---- a/arch/arm/boot/dts/exynos4412-n710x.dts
-+++ b/arch/arm/boot/dts/exynos4412-n710x.dts
-@@ -78,3 +78,38 @@
- 	gpio = <&gpm0 5 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
- };
-+
-+&sound {
-+	samsung,audio-routing =
-+		"HP", "HPOUT1L",
-+		"HP", "HPOUT1R",
-+
-+		"SPK", "SPKOUTLN",
-+		"SPK", "SPKOUTLP",
-+
-+		"RCV", "HPOUT2N",
-+		"RCV", "HPOUT2P",
-+
-+		"HDMI", "LINEOUT1N",
-+		"HDMI", "LINEOUT1P",
-+
-+		"LINE", "LINEOUT2N",
-+		"LINE", "LINEOUT2P",
-+
-+		"IN1LP", "MICBIAS2",
-+		"IN1LN", "MICBIAS2",
-+		"Headset Mic", "MICBIAS2",
-+
-+		"IN1RP", "Sub Mic",
-+		"IN1RN", "Sub Mic",
-+
-+		"IN2LP:VXRN", "Main Mic",
-+		"IN2LN", "Main Mic",
-+
-+		"IN2RN", "FM In",
-+		"IN2RP:VXRP", "FM In";
-+};
-+
-+&submic_bias_reg {
-+	regulator-always-on;
-+};
--- 
-2.7.4
+Care to take a look at this?
 
+	Sam
+
+>  
+>  	DRM_DEV_DEBUG_KMS(to_dma_dev(dev), "dma_addr(0x%lx), size(0x%lx)\n",
+>  			(unsigned long)exynos_gem->dma_addr, exynos_gem->size);
+> -- 
+> 2.17.1
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
