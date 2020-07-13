@@ -2,120 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B030321D91F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Jul 2020 16:51:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9191121D94D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Jul 2020 16:59:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729895AbgGMOu4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 13 Jul 2020 10:50:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730129AbgGMOtn (ORCPT
+        id S1729918AbgGMO7P (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 13 Jul 2020 10:59:15 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:38951 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729649AbgGMO7P (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 13 Jul 2020 10:49:43 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C632C08C5DB
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jul 2020 07:49:43 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id o8so13578628wmh.4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jul 2020 07:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=we+FYdI1lkoYeqfH+hTSe6pNVLsfmTg5CRQP3bOvglU=;
-        b=U1WN0X53vbT4MvhLNRle/Pi49aoyXp8l/FZ9qbfpELXVGRvwteyYQ59YIS581Rx0Xp
-         q5UQZNPMwm4gbhy2sGnmyUhu+w/WSyDy8SZwq5gc7YFHp11qt2IevOUpEE0bd15DH/8G
-         F0tLllXkjBOGT94L/jRw4tRXmh6xUXZ42RV3KnfYe23GHPr8WB7Izy+DlVxJwv3uNcH3
-         spPTiORGerSbhn1gcD3+8ZhgKGlr3WTLewuQPjCmNoxXAWdMLet04UicbcIPSh9F7Dh8
-         3s3nrgW8efZiHQaPyILOHhsm0gTtGvlZ75SUX8Oby7yTHrd4vKHUhLfTND2frhv/Mv0y
-         EjZw==
+        Mon, 13 Jul 2020 10:59:15 -0400
+Received: by mail-io1-f66.google.com with SMTP id f23so13790305iof.6;
+        Mon, 13 Jul 2020 07:59:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=we+FYdI1lkoYeqfH+hTSe6pNVLsfmTg5CRQP3bOvglU=;
-        b=OLULOXuCE0b3orNhwM+f8AqfgBB4/0K2qLv54+D9jYWQfIxh6OnUKLTEDyAnyLUpRm
-         x1Iy+/JDxAwfOpn81h+03QOcyh9dfcqo6B4b9ye2+61xz8ryw+dp1JZHBzXqE0aL5u/1
-         1vYkpLR28hnNXG4egIJSPWLIuhyxxGxcqXdte0g89mE2oli0oEXKZrZhTM/AWGfGMwSG
-         4YnLBP5D41pDpeR2dPVo59qhOGhpqzF7pJWqakpJUBNzr4SYj9/Puu5uyS4ZyhQ0pdz2
-         4C2QUXPPl2W3LmTCEQHI+CTiG6xYOM2Po9lFx/2rj8JT8Ea2dICW5v8xOqU9UFIINll+
-         NrVw==
-X-Gm-Message-State: AOAM533HEKfiu5K27CU/levGAD9qR7y3Jh8Gswal3/iufn5Kr5I3goeB
-        7Ce3WJ5z0r36CVUQMIHOJoBnEw==
-X-Google-Smtp-Source: ABdhPJxoVsuUxdjQrc3CM3WbousZGi/1/+jQn4P+0A7iaqIru6LA4EJm04rEqpNRn1DujBpLMkOpjw==
-X-Received: by 2002:a1c:c242:: with SMTP id s63mr311154wmf.146.1594651781752;
-        Mon, 13 Jul 2020 07:49:41 -0700 (PDT)
-Received: from localhost.localdomain ([2.31.163.6])
-        by smtp.gmail.com with ESMTPSA id o29sm26207756wra.5.2020.07.13.07.49.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5WwrQCBfCGD1oAlfh4Q+LcNaL9+7pA+S/ObwRTYKA7s=;
+        b=LKLwd+S4MPDacMi32SyNCh3ZWLF8Wi3Nm7XoF/zpJbaHECabq46sghtrBNoOhJ1zBN
+         jH8/EEcuj13F1D+L3feeSgrT/t48kQt9xTdkdEQ5O3j3r0Wwe6vkfZfzs73bCJw9A7/g
+         Dz7P1BalARhLYMr1KhokwD75VX7EKCLbg8KnMcEUafNFTicQTHA2aP4VnIWJ34Pwr5jO
+         jLjYj1Q6wXqMdfG3xl3wM0ZskQ14Tq3cOPAqHF8smCsSfCQm20FWNcEhc1QvZWDXi7Ri
+         r/FtJX08w8SySDJUGFCsYkjZZwYi14923eJA7LXDQi4DMUcrfKsvcCp3xu3tPulu1T/s
+         NJcw==
+X-Gm-Message-State: AOAM530NEkcYhN/YZYFdzF0qyXkqpOa2YvZNOteZfYav5Hk1vKIcParC
+        bypAaLWoUO0s/rPRGmY3eWOnOKxiEQ==
+X-Google-Smtp-Source: ABdhPJzHZq+wMFL1ggb2CsSFLDEJagYQZrr2Q2lLGCkDm5iY+m/zhSLIJpn5qI8RV2IDmpYmYErCOA==
+X-Received: by 2002:a05:6638:12d2:: with SMTP id v18mr502732jas.4.1594652354184;
+        Mon, 13 Jul 2020 07:59:14 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id y12sm5507378iot.49.2020.07.13.07.59.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 07:49:41 -0700 (PDT)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     linus.walleij@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 08/25] pinctrl: samsung: pinctrl-s3c64xx: Fix formatting issues
-Date:   Mon, 13 Jul 2020 15:49:13 +0100
-Message-Id: <20200713144930.1034632-9-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200713144930.1034632-1-lee.jones@linaro.org>
-References: <20200713144930.1034632-1-lee.jones@linaro.org>
+        Mon, 13 Jul 2020 07:59:13 -0700 (PDT)
+Received: (nullmailer pid 173994 invoked by uid 1000);
+        Mon, 13 Jul 2020 14:59:12 -0000
+Date:   Mon, 13 Jul 2020 08:59:12 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org,
+        simon@lineageos.org, linux-samsung-soc@vger.kernel.org,
+        b.zolnierkie@samsung.com, alsa-devel@alsa-project.org,
+        m.szyprowski@samsung.com, broonie@kernel.org, krzk@kernel.org
+Subject: Re: [PATCH 1/3] ASoC: samsung: Document DT bindings for Midas sound
+ subsystem
+Message-ID: <20200713145912.GA173446@bogus>
+References: <CGME20200710173512eucas1p101c03994a728150f18428295192edf25@eucas1p1.samsung.com>
+ <20200710173500.22365-1-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200710173500.22365-1-s.nawrocki@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Kerneldoc struct titles must be followed by whitespace else the
-checker gets confused.
+On Fri, 10 Jul 2020 19:34:58 +0200, Sylwester Nawrocki wrote:
+> This patch adds documentation of DT biding for the Midas sound complex.
+> Partially based on the *txt version by Simon Shields <simon@lineageos.org>.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+>  .../bindings/sound/samsung,midas-audio.yaml        | 105 +++++++++++++++++++++
+>  1 file changed, 105 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> 
 
-Fixes the following W=1 kernel build warning(s):
 
- drivers/pinctrl/samsung/pinctrl-s3c64xx.c:212: warning: cannot understand function prototype: 'struct s3c64xx_eint0_domain_data '
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Cc: Tomasz Figa <tomasz.figa@gmail.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/pinctrl/samsung/pinctrl-s3c64xx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/samsung,midas-audio.example.dt.yaml: sound: 'mic-bias-gpios', 'submic-bias-gpios' do not match any of the regexes: 'pinctrl-[0-9]+'
 
-diff --git a/drivers/pinctrl/samsung/pinctrl-s3c64xx.c b/drivers/pinctrl/samsung/pinctrl-s3c64xx.c
-index f97f8179f2b1b..b8166e3fe4cef 100644
---- a/drivers/pinctrl/samsung/pinctrl-s3c64xx.c
-+++ b/drivers/pinctrl/samsung/pinctrl-s3c64xx.c
-@@ -193,7 +193,7 @@ static const struct samsung_pin_bank_type bank_type_2bit_alive = {
- 	}
- 
- /**
-- * struct s3c64xx_eint0_data: EINT0 common data
-+ * struct s3c64xx_eint0_data - EINT0 common data
-  * @drvdata: pin controller driver data
-  * @domains: IRQ domains of particular EINT0 interrupts
-  * @pins: pin offsets inside of banks of particular EINT0 interrupts
-@@ -205,7 +205,7 @@ struct s3c64xx_eint0_data {
- };
- 
- /**
-- * struct s3c64xx_eint0_domain_data: EINT0 per-domain data
-+ * struct s3c64xx_eint0_domain_data - EINT0 per-domain data
-  * @bank: pin bank related to the domain
-  * @eints: EINT0 interrupts related to the domain
-  */
-@@ -215,7 +215,7 @@ struct s3c64xx_eint0_domain_data {
- };
- 
- /**
-- * struct s3c64xx_eint_gpio_data: GPIO EINT data
-+ * struct s3c64xx_eint_gpio_data - GPIO EINT data
-  * @drvdata: pin controller driver data
-  * @domains: array of domains related to EINT interrupt groups
-  */
--- 
-2.25.1
+
+See https://patchwork.ozlabs.org/patch/1327065
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
 
