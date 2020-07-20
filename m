@@ -2,99 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A974322621A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jul 2020 16:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20EAE226222
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jul 2020 16:30:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728586AbgGTO2q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 20 Jul 2020 10:28:46 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36372 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbgGTO2q (ORCPT
+        id S1726437AbgGTOaU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 20 Jul 2020 10:30:20 -0400
+Received: from mail-ej1-f67.google.com ([209.85.218.67]:44047 "EHLO
+        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726381AbgGTOaT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 20 Jul 2020 10:28:46 -0400
-Received: by mail-ed1-f65.google.com with SMTP id dg28so12922443edb.3;
-        Mon, 20 Jul 2020 07:28:44 -0700 (PDT)
+        Mon, 20 Jul 2020 10:30:19 -0400
+Received: by mail-ej1-f67.google.com with SMTP id ga4so18254095ejb.11;
+        Mon, 20 Jul 2020 07:30:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=H+HOdv0Iwx4SJS7pU46h8figf2eeiPI7mJjo5qsQTjM=;
-        b=sbPL4mearqwAawnhsKGzWlh3TWCA4qrr9Oz68ScddUIwaDzykVyl+pVNSTqwi8A5v9
-         amSR23+u4fdMw1s+T0ua9YpH3GF92Gh1lo06rFGroEVZ3UT3Q2j0h3fkXDEcUNeJHycV
-         Y6diKm5oGdG/T5AqoI+0DzKKi0ruRAltVFUsPpk4o5iVJvBQGhakGiAO8ZIpMSEssfVT
-         O5Drfu626WXrwUaKZQaoSou6hQ2nLUQPtVFhxxdOgmCdLp3JYoDLlfjr/sr/Ybj0Ycnv
-         J2m1t6k3hoqCVJL1xt1wppvtmI2wEDrz0PEtfXBEddkDLW0DG+Ueo58KvT9OfnbDH1AS
-         c2nw==
-X-Gm-Message-State: AOAM530y2/UhYq+V8mbHP07FdL15qipFiObOfMO1JmfafQNkmvxu5xzd
-        RXU600aeOlM5UcKlVdy076j/x07pBmIyFQ==
-X-Google-Smtp-Source: ABdhPJylz0Nk0hfgFk95k/OhFgpGdomfuGo3Jtt1Ad9YhcjjZAV5M/GdROa+dvfgBlDEmhpsXsUymg==
-X-Received: by 2002:aa7:cd52:: with SMTP id v18mr20782665edw.196.1595255323711;
-        Mon, 20 Jul 2020 07:28:43 -0700 (PDT)
+        bh=Vg62TiVK1fLPM3VJFvJufp+q6lBcbIw2n/ZWrxz9ifw=;
+        b=UeCEfE+iQB1hVMp7mn1vIzX06qfBrpHyhuCK3Autas35SJY/5IA6LFU5yLJZOgWk1F
+         ac36Kxh/PTDMWVvgnJ2zZ7hMsQIeDbbAWp0k1j7wWS+nLaFzFGk+piARAPN+DfhHi+ul
+         0oGraV0jv5fl4yOMMeM1zyrM+T0gWR9fhZSpUg4Ko08Ny4yRNvfgZgMeRjpCDqBQg4p1
+         J6cTbR7+aYqeb8MzWEx2A0C/mT7EbBT8chXvQ0/c9cIURPL3W3yuE9gL0S3mvjvv76+6
+         95rJ1V2w8P4kLxfRhgwaG4kCN4RSvx2/7747DxGXNu70iZbGJkGWpNy09DxabvP9PC1I
+         dh/A==
+X-Gm-Message-State: AOAM530MYqKAYm4nioJNoWXaPpG13bJdx47i9XDt2eF13ssTeKjnRo7B
+        lgGRUy9lrvSvxyALZiut7gA6Px4hVEM4jw==
+X-Google-Smtp-Source: ABdhPJxGqJjPlBcTJ4tDcgq0yl0vCLwNrgvT0pmiXL2brT9v+CjPAHofyWuzcsnq711IlFM8YzA+rg==
+X-Received: by 2002:a17:906:4145:: with SMTP id l5mr21191590ejk.334.1595255417451;
+        Mon, 20 Jul 2020 07:30:17 -0700 (PDT)
 Received: from kozik-lap ([194.230.155.200])
-        by smtp.googlemail.com with ESMTPSA id be2sm15448599edb.92.2020.07.20.07.28.42
+        by smtp.googlemail.com with ESMTPSA id kt1sm14639230ejb.78.2020.07.20.07.30.16
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Jul 2020 07:28:42 -0700 (PDT)
-Date:   Mon, 20 Jul 2020 16:28:40 +0200
+        Mon, 20 Jul 2020 07:30:16 -0700 (PDT)
+Date:   Mon, 20 Jul 2020 16:30:14 +0200
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     "Alexander A. Klimov" <grandmaster@al2klimov.de>
-Cc:     tomasz.figa@gmail.com, s.nawrocki@samsung.com,
-        linus.walleij@linaro.org, kgene@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: samsung: Replace HTTP links with HTTPS ones
-Message-ID: <20200720142840.GA1163@kozik-lap>
-References: <20200718104717.7493-1-grandmaster@al2klimov.de>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     broonie@kernel.org, simon@lineageos.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, b.zolnierkie@samsung.com,
+        m.szyprowski@samsung.com, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH 2/3] ASoC: samsung: Add sound support for Midas boards
+Message-ID: <20200720143014.GA22554@kozik-lap>
+References: <20200710173500.22365-1-s.nawrocki@samsung.com>
+ <CGME20200710173517eucas1p20c325719e385995f9f094f12d87e1dcb@eucas1p2.samsung.com>
+ <20200710173500.22365-2-s.nawrocki@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200718104717.7493-1-grandmaster@al2klimov.de>
+In-Reply-To: <20200710173500.22365-2-s.nawrocki@samsung.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, Jul 18, 2020 at 12:47:17PM +0200, Alexander A. Klimov wrote:
-> Rationale:
-> Reduces attack surface on kernel devs opening the links for MITM
-> as HTTPS traffic is much harder to manipulate.
+On Fri, Jul 10, 2020 at 07:34:59PM +0200, Sylwester Nawrocki wrote:
+> From: Simon Shields <simon@lineageos.org>
 > 
-> Deterministic algorithm:
-> For each file:
->   If not .svg:
->     For each line:
->       If doesn't contain `\bxmlns\b`:
->         For each link, `\bhttp://[^# \t\r\n]*(?:\w|/)`:
-> 	  If neither `\bgnu\.org/license`, nor `\bmozilla\.org/MPL\b`:
->             If both the HTTP and HTTPS versions
->             return 200 OK and serve the same content:
->               Replace HTTP with HTTPS.
+> This patch adds support for voice and BT calls, along with standard
+> audio output via the speaker, earpiece, headphone jack, HDMI, and
+> any accessories compatible with Midas boards. This patch also supports
+> headphone/headset detection and headsets with inline buttons.
 > 
-> Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+> Signed-off-by: Simon Shields <simon@lineageos.org>
+> [m.szyprowski: adaptation to v5.1+ kernels (DAI links initialization)]
+> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> [s.nawrocki: removal of the clk API calls for CODEC MCLK, the jack data
+>  structure moved to struct midas_priv, coding style and typo fixes,
+>  conversion to new cpu/codec/dai-node binding]
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 > ---
->  Continuing my work started at 93431e0607e5.
->  See also: git log --oneline '--author=Alexander A. Klimov <grandmaster@al2klimov.de>' v5.7..master
-> 
->  If there are any URLs to be removed completely
->  or at least not (just) HTTPSified:
->  Just clearly say so and I'll *undo my change*.
->  See also: https://lkml.org/lkml/2020/6/27/64
-> 
->  If there are any valid, but yet not changed URLs:
->  See: https://lkml.org/lkml/2020/6/26/837
-> 
->  If you apply the patch, please let me know.
-> 
-> 
->  drivers/pinctrl/samsung/pinctrl-exynos-arm.c   | 2 +-
->  drivers/pinctrl/samsung/pinctrl-exynos-arm64.c | 2 +-
->  drivers/pinctrl/samsung/pinctrl-exynos.c       | 2 +-
->  drivers/pinctrl/samsung/pinctrl-exynos.h       | 2 +-
->  drivers/pinctrl/samsung/pinctrl-samsung.c      | 2 +-
->  drivers/pinctrl/samsung/pinctrl-samsung.h      | 2 +-
+>  sound/soc/samsung/Kconfig        |   8 +
+>  sound/soc/samsung/Makefile       |   2 +
+>  sound/soc/samsung/midas_wm1811.c | 543 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 553 insertions(+)
+>  create mode 100644 sound/soc/samsung/midas_wm1811.c
 
-Thanks, applied.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
