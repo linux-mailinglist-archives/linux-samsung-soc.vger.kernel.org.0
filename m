@@ -2,78 +2,88 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF27622AAF5
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Jul 2020 10:46:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2CFB22AD99
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Jul 2020 13:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727828AbgGWIqD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 23 Jul 2020 04:46:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42594 "EHLO mail.kernel.org"
+        id S1728506AbgGWLV0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 23 Jul 2020 07:21:26 -0400
+Received: from mx2.itam.mx ([148.205.229.36]:60434 "EHLO mx2.itam.mx"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726594AbgGWIqD (ORCPT
+        id S1727940AbgGWLVE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 23 Jul 2020 04:46:03 -0400
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 93C7C2080D;
-        Thu, 23 Jul 2020 08:46:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595493962;
-        bh=AAiUgOHYkF4OY8C6u9wcRgK0SkjrjcT7mFquV/ZkHu0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=H5hGkMUvREZ+iwFO8+i+SMcFqmmp+BgQjRUFBJrapf03C6UEjOgNXbFryaTNgUscY
-         Zbi2nll/Xxe+hY84F8zM0kqcU9jYpAQnK8DhnnwXcAMOvxrR4YOwKcanTCOyMms7Pe
-         T2g+n4wkRygjCR7qIpYjy7tHYUBh5Zk+/2Mph7U0=
-Received: by mail-lf1-f48.google.com with SMTP id i80so2822963lfi.13;
-        Thu, 23 Jul 2020 01:46:02 -0700 (PDT)
-X-Gm-Message-State: AOAM532+LdDsZqfhNr0xqOVdtS67SF/wkYJM/Os27lPJTHOEm6QnPfhh
-        92kspo5OXq0karlcpVJUPtq+keGGv/IjWosjQdE=
-X-Google-Smtp-Source: ABdhPJx/xNBqL8xTZq1HPeSBfk0iFlOL0yeDMtBtfDUNemHPw2W6G2d6snW23uvP0RNxqZmdOY1npu/21VDSfjgonzU=
-X-Received: by 2002:ac2:4144:: with SMTP id c4mr1722866lfi.118.1595493960868;
- Thu, 23 Jul 2020 01:46:00 -0700 (PDT)
+        Thu, 23 Jul 2020 07:21:04 -0400
+X-Greylist: delayed 1095 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Jul 2020 07:21:03 EDT
+Received: from cronos2.itam.mx (cronos2.itam.mx [148.205.148.141])
+        by mx2.itam.mx  with ESMTP id 06NBKcMe024668-06NBKcN1024668
+        (version=TLSv1.0 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+        Thu, 23 Jul 2020 06:20:40 -0500
+Received: from [10.81.183.86] (105.8.4.105) by cronos2.itam.mx
+ (148.205.148.141) with Microsoft SMTP Server (TLS) id 14.3.468.0; Thu, 23 Jul
+ 2020 06:20:39 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20200713144930.1034632-1-lee.jones@linaro.org>
- <20200713144930.1034632-7-lee.jones@linaro.org> <20200720142714.GA6747@kozik-lap>
- <20200720144955.GD3368211@dell> <20200720145219.GA23990@kozik-lap> <CACRpkdaYQ3PEh838Qoxig4n1iNFp8AOj_Wk9jdvB-qMy0PBRKw@mail.gmail.com>
-In-Reply-To: <CACRpkdaYQ3PEh838Qoxig4n1iNFp8AOj_Wk9jdvB-qMy0PBRKw@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 23 Jul 2020 10:45:49 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPeaQvSnCtUhcDxYRxNM=fxWgsasBccPJEtHUPaek9HQjQ@mail.gmail.com>
-Message-ID: <CAJKOXPeaQvSnCtUhcDxYRxNM=fxWgsasBccPJEtHUPaek9HQjQ@mail.gmail.com>
-Subject: Re: [PATCH 06/25] pinctrl: samsung: pinctrl-samsung: Demote obvious
- misuse of kerneldoc to standard comment blocks
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Thomas Abraham <thomas.ab@samsung.com>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
+To:     Recipients <aflore98@itam.mx>
+From:   ''Tayeb Souami'' <aflore98@itam.mx>
+Date:   Thu, 23 Jul 2020 13:20:22 +0200
+Reply-To: <Tayebsouam.spende@gmail.com>
+Message-ID: <e47e41fb-8538-4895-b2d1-28d6ed6c6052@CRONOS2.itam.mx>
+X-Originating-IP: [105.8.4.105]
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=itam.mx; s=2019; c=relaxed/relaxed;
+ h=content-type:mime-version:subject:to:from:date:reply-to:message-id;
+ bh=0e+iY5sBEFO/sjChqI6a0rePLYR3wNA+X31I1uNCUzI=;
+ b=MggCH4x1XncP8pyElPekftVZ6iXbXeL5L2ayJA1eH3QnV6g7Ed7fm1x40Gh4FZijzqu+xK6ABocN
+        YyZJhZyBgPIhIolJN2pUDeKfSEvBomnoM573g5Ad9AeSICaoT0xXS8K7DqIjG4UPMWHNIdN9KZQo
+        olzWaOr21P2wvdijbHHzCfU0yy6z3fIYHHdy4aQ9u2k48tviH5XncJT0XrmZjpWzFNLkoRHVP48W
+        CX1oye1c5Hjy4s/2MWTFdscsmN2TuKjU0YBOsEW1LhoJhI2ai538uF4NJ29Ql4Nm7RIPrVeyVVo7
+        7j9mn7R4oHtqnY3FSsoOE7+5BQKQCfNSkUyeEQ==
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 23 Jul 2020 at 10:44, Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> On Mon, Jul 20, 2020 at 4:52 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > On Mon, Jul 20, 2020 at 03:49:55PM +0100, Lee Jones wrote:
->
-> > > > Thanks, applied.
-> > >
-> > > Same as the others.  Already in -next.
-> >
-> > Thanks for letting me know. I dropped all of them.
->
-> It's a bit tricky at times with clean-up topics, I want submaintainers to pick
-> it up if possible so sorry about this, it's just too much to coordinate
-> sometimes.
+Lieber Freund,
 
-No worries. Recently Samsung pinctrl driver is not that active so I
-could just provide you only a review. Maybe there is too much hustle
-to apply to sub-maintainer tree.
+Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika, der =
+Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich an 5 zu=
+f=C3=A4llige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Ma=
+il nach einem Spinball ausgew=C3=A4hlt.Ich habe den gr=C3=B6=C3=9Ften Teil =
+meines Verm=C3=B6gens auf eine Reihe von Wohlt=C3=A4tigkeitsorganisationen =
+und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die =
+Summe von =E2=82=AC 2.000.000,00 an Sie als eine der ausgew=C3=A4hlten 5 zu=
+ spenden, um meine Gewinne zu =C3=BCberpr=C3=BCfen, sehen Sie bitte meine Y=
+ou Tube Seite unten.
 
-Best regards,
-Krzysztof
+UHR MICH HIER: https://www.youtube.com/watch?v=3DZ6ui8ZDQ6Ks
+
+
+
+Das ist dein Spendencode: [TS530342018]
+
+
+
+Antworten Sie mit dem SPENDE-CODE an diese
+
+E-Mail:Tayebsouam.spende@gmail.com
+
+
+Ich hoffe, Sie und Ihre Familie gl=C3=BCcklich zu machen.
+
+Gr=C3=BC=C3=9Fe
+Herr Tayeb Souami
+
+________________________________
+
+La informaci=C3=B3n contenida en este mensaje de datos es confidencial, con=
+stituye un secreto industrial y/o profesional en t=C3=A9rminos de la legisl=
+aci=C3=B3n vigente y se encuentra dirigida exclusivamente al destinatario i=
+ndicado en dicho mensaje. Si usted recibe esta informaci=C3=B3n por error o=
+ si usted no es el destinatario del mensaje, favor de notificar al emisor, =
+y destr=C3=BAyalo.
+The information contained in this electronic message is confidential, it co=
+nstitutes a professional and/or industrial secret in terms of the current l=
+egislation, and is intended for its recipient only. If you receive this mes=
+sage by mistake or if you are not the recipient thereof, please notify the =
+sender and destroy it.
