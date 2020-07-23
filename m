@@ -2,88 +2,138 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2CFB22AD99
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Jul 2020 13:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93E8B22AF51
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Jul 2020 14:27:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728506AbgGWLV0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 23 Jul 2020 07:21:26 -0400
-Received: from mx2.itam.mx ([148.205.229.36]:60434 "EHLO mx2.itam.mx"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727940AbgGWLVE (ORCPT
+        id S1728990AbgGWM1m (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 23 Jul 2020 08:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58088 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728824AbgGWMY5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 23 Jul 2020 07:21:04 -0400
-X-Greylist: delayed 1095 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Jul 2020 07:21:03 EDT
-Received: from cronos2.itam.mx (cronos2.itam.mx [148.205.148.141])
-        by mx2.itam.mx  with ESMTP id 06NBKcMe024668-06NBKcN1024668
-        (version=TLSv1.0 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
-        Thu, 23 Jul 2020 06:20:40 -0500
-Received: from [10.81.183.86] (105.8.4.105) by cronos2.itam.mx
- (148.205.148.141) with Microsoft SMTP Server (TLS) id 14.3.468.0; Thu, 23 Jul
- 2020 06:20:39 -0500
-Content-Type: text/plain; charset="utf-8"
+        Thu, 23 Jul 2020 08:24:57 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1640DC0619E2
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 23 Jul 2020 05:24:57 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id 88so4977201wrh.3
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 23 Jul 2020 05:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mCXO0Gr/A00l7Lne4sBK8Frz9I2gxXn2t7va3NQnE+k=;
+        b=VLzuVAzwLVM/dZrwghui32Cthrp/jLIjGRFYoekwj6rOfYdWN+Ca8euH5j0gmIclVA
+         DPGAmw1kGbUVZEsPzHiJS4mVA4nIS/w0UhXhvtODtvdzRx0u3R/sEMZwyCzDADT/E9iu
+         vLDxEbeoH+2JdqhS/3o/A9XdzqzYaakIGrL8NYVb3/bFEM+CIqVptPUaom3/SoHEeGNy
+         sLA228efpCsVu2LU5uwYHYJjtRMQQlQyjtUkunjK29dLPWUIqm6go4LnmxMhmQcTNcuN
+         K+Bn4hm1c0VKWz+h46vh5QR8aI/QuPomXCz/us8WLkqhjS4TOlcTzxWt1lj0K1kR4iqs
+         V2tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mCXO0Gr/A00l7Lne4sBK8Frz9I2gxXn2t7va3NQnE+k=;
+        b=a7FyZd0Mnw7VgPAA8f6E5gpmmOzDCGKqWGgARMxwmVX7BaML6ysr5pfdmyXD/JRb7N
+         5H8KOSKtI8ZxZ64cPDx6eWEeoIJP9U2Cc6EqmKs3sd45X8sa8AV5ZeRlQ2gbu+eVwrkR
+         QNpdybU8Y2jgpoec7o6W8mdrGoE5Fj0QlNHViANDt72A7AMP1YkGA3kAmEX2sUzzIvf7
+         d2uibsPfLIq3ScnE1wvHuTgjB3YWxShg2RW+CzU4oyNIWcc74N/qNFSR3NewObUsJiQ3
+         /6Unm1hXG4Yd4sPSheQDh4nvlKs1ALVpoqUe3KlO+bZlUuMwLeOxMKynzZBQNh2ZkkPk
+         I40g==
+X-Gm-Message-State: AOAM531xjf6u8bIuw17rLCgmZoEpft7iVbPaMXvOt0DwaVcZ9yjawVbe
+        TROM6xVHcG76xhTUnxfuwFZhLg==
+X-Google-Smtp-Source: ABdhPJyHdbt4arhYy1wxPK9DL4Wp99G0wUnJEmOEIFHYKnmyhpXMeS1JDOviOFALkqZ19VIiGO62Sw==
+X-Received: by 2002:adf:cf0c:: with SMTP id o12mr3829930wrj.265.1595507095851;
+        Thu, 23 Jul 2020 05:24:55 -0700 (PDT)
+Received: from localhost.localdomain ([2.27.167.73])
+        by smtp.gmail.com with ESMTPSA id j5sm3510651wma.45.2020.07.23.05.24.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2020 05:24:55 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     jejb@linux.ibm.com, martin.petersen@oracle.com
+Cc:     linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 05/40] scsi: ufs: ufs-exynos: Make stubs 'static inline'
+Date:   Thu, 23 Jul 2020 13:24:11 +0100
+Message-Id: <20200723122446.1329773-6-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200723122446.1329773-1-lee.jones@linaro.org>
+References: <20200723122446.1329773-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
-To:     Recipients <aflore98@itam.mx>
-From:   ''Tayeb Souami'' <aflore98@itam.mx>
-Date:   Thu, 23 Jul 2020 13:20:22 +0200
-Reply-To: <Tayebsouam.spende@gmail.com>
-Message-ID: <e47e41fb-8538-4895-b2d1-28d6ed6c6052@CRONOS2.itam.mx>
-X-Originating-IP: [105.8.4.105]
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=itam.mx; s=2019; c=relaxed/relaxed;
- h=content-type:mime-version:subject:to:from:date:reply-to:message-id;
- bh=0e+iY5sBEFO/sjChqI6a0rePLYR3wNA+X31I1uNCUzI=;
- b=MggCH4x1XncP8pyElPekftVZ6iXbXeL5L2ayJA1eH3QnV6g7Ed7fm1x40Gh4FZijzqu+xK6ABocN
-        YyZJhZyBgPIhIolJN2pUDeKfSEvBomnoM573g5Ad9AeSICaoT0xXS8K7DqIjG4UPMWHNIdN9KZQo
-        olzWaOr21P2wvdijbHHzCfU0yy6z3fIYHHdy4aQ9u2k48tviH5XncJT0XrmZjpWzFNLkoRHVP48W
-        CX1oye1c5Hjy4s/2MWTFdscsmN2TuKjU0YBOsEW1LhoJhI2ai538uF4NJ29Ql4Nm7RIPrVeyVVo7
-        7j9mn7R4oHtqnY3FSsoOE7+5BQKQCfNSkUyeEQ==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Lieber Freund,
+Else the compiler complains of missing prototypes.
 
-Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika, der =
-Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich an 5 zu=
-f=C3=A4llige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Ma=
-il nach einem Spinball ausgew=C3=A4hlt.Ich habe den gr=C3=B6=C3=9Ften Teil =
-meines Verm=C3=B6gens auf eine Reihe von Wohlt=C3=A4tigkeitsorganisationen =
-und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die =
-Summe von =E2=82=AC 2.000.000,00 an Sie als eine der ausgew=C3=A4hlten 5 zu=
- spenden, um meine Gewinne zu =C3=BCberpr=C3=BCfen, sehen Sie bitte meine Y=
-ou Tube Seite unten.
+Fixes the following W=1 kernel build warning(s):
 
-UHR MICH HIER: https://www.youtube.com/watch?v=3DZ6ui8ZDQ6Ks
+ In file included from drivers/scsi/ufs/ufs-exynos.c:23:
+ drivers/scsi/ufs/ufs-exynos.h:302:6: warning: no previous prototype for ‘exynos_ufs_cmd_log_start’ [-Wmissing-prototypes]
+ 302 | void exynos_ufs_cmd_log_start(struct ufs_exynos_handle *handle,
+ | ^~~~~~~~~~~~~~~~~~~~~~~~
+ drivers/scsi/ufs/ufs-exynos.h:307:6: warning: no previous prototype for ‘exynos_ufs_cmd_log_end’ [-Wmissing-prototypes]
+ 307 | void exynos_ufs_cmd_log_end(struct ufs_exynos_handle *handle,
+ | ^~~~~~~~~~~~~~~~~~~~~~
+ drivers/scsi/ufs/ufs-exynos.h:312:5: warning: no previous prototype for ‘exynos_ufs_init_dbg’ [-Wmissing-prototypes]
+ 312 | int exynos_ufs_init_dbg(struct ufs_exynos_handle *handle, struct device *dev)
+ | ^~~~~~~~~~~~~~~~~~~
+ drivers/scsi/ufs/ufs-exynos.h:317:6: warning: no previous prototype for ‘exynos_ufs_dump_info’ [-Wmissing-prototypes]
+ 317 | void exynos_ufs_dump_info(struct ufs_exynos_handle *handle, struct device *dev)
+ | ^~~~~~~~~~~~~~~~~~~~
 
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Avri Altman <avri.altman@wdc.com>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Kiwoong Kim <kwmad.kim@samsung.com>
+Cc: linux-samsung-soc@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/scsi/ufs/ufs-exynos.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/scsi/ufs/ufs-exynos.h b/drivers/scsi/ufs/ufs-exynos.h
+index d86d0a0f74780..0908283a76936 100644
+--- a/drivers/scsi/ufs/ufs-exynos.h
++++ b/drivers/scsi/ufs/ufs-exynos.h
+@@ -299,22 +299,22 @@ void exynos_ufs_cmd_log_end(struct ufs_exynos_handle *handle,
+ int exynos_ufs_init_dbg(struct ufs_exynos_handle *handle, struct device *dev);
+ void exynos_ufs_dump_info(struct ufs_exynos_handle *handle, struct device *dev);
+ #else
+-void exynos_ufs_cmd_log_start(struct ufs_exynos_handle *handle,
+-			      struct ufs_hba *hba, int tag)
++static inline void exynos_ufs_cmd_log_start(struct ufs_exynos_handle *handle,
++					    struct ufs_hba *hba, int tag)
+ {
+ }
+ 
+-void exynos_ufs_cmd_log_end(struct ufs_exynos_handle *handle,
+-			    struct ufs_hba *hba, int tag)
++static inline void exynos_ufs_cmd_log_end(struct ufs_exynos_handle *handle,
++					  struct ufs_hba *hba, int tag)
+ {
+ }
+ 
+-int exynos_ufs_init_dbg(struct ufs_exynos_handle *handle, struct device *dev)
++static inline int exynos_ufs_init_dbg(struct ufs_exynos_handle *handle, struct device *dev)
+ {
+ 	return 0;
+ }
+ 
+-void exynos_ufs_dump_info(struct ufs_exynos_handle *handle, struct device *dev)
++static inline void exynos_ufs_dump_info(struct ufs_exynos_handle *handle, struct device *dev)
+ {
+ }
+ 
+-- 
+2.25.1
 
-Das ist dein Spendencode: [TS530342018]
-
-
-
-Antworten Sie mit dem SPENDE-CODE an diese
-
-E-Mail:Tayebsouam.spende@gmail.com
-
-
-Ich hoffe, Sie und Ihre Familie gl=C3=BCcklich zu machen.
-
-Gr=C3=BC=C3=9Fe
-Herr Tayeb Souami
-
-________________________________
-
-La informaci=C3=B3n contenida en este mensaje de datos es confidencial, con=
-stituye un secreto industrial y/o profesional en t=C3=A9rminos de la legisl=
-aci=C3=B3n vigente y se encuentra dirigida exclusivamente al destinatario i=
-ndicado en dicho mensaje. Si usted recibe esta informaci=C3=B3n por error o=
- si usted no es el destinatario del mensaje, favor de notificar al emisor, =
-y destr=C3=BAyalo.
-The information contained in this electronic message is confidential, it co=
-nstitutes a professional and/or industrial secret in terms of the current l=
-egislation, and is intended for its recipient only. If you receive this mes=
-sage by mistake or if you are not the recipient thereof, please notify the =
-sender and destroy it.
