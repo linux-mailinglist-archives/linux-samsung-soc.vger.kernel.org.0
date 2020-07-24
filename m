@@ -2,87 +2,53 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D87A22BFF7
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Jul 2020 09:43:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A767322C063
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Jul 2020 10:02:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728206AbgGXHnd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 24 Jul 2020 03:43:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37848 "EHLO mail.kernel.org"
+        id S1726703AbgGXICV convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 24 Jul 2020 04:02:21 -0400
+Received: from mx2.itam.mx ([148.205.229.36]:16832 "EHLO mx2.itam.mx"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727886AbgGXHnb (ORCPT
+        id S1726680AbgGXICV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 24 Jul 2020 03:43:31 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0FD5720786;
-        Fri, 24 Jul 2020 07:43:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595576611;
-        bh=01DVBx+cUJU2MUx86mEXbPPRcD1lVtSvl6DAEX/P6uE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lU+ri9XTeXV7fdDhxC3z7c5crNIvFy/Om3bddXaemL8BaUIDVVuX9FV6jrqSXkBWR
-         ErCM6ROOyf8AQp9eff/vfdrUX6AZ3oLt20pPHW84/j52XGmZkRf4N+7T5vd23jUQIG
-         gv0egVrlDdHC8WMUScaOHw/vG3Ki388NlnpxjqgY=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Markus Mayer <mmayer@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Roger Quadros <rogerq@ti.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Cc:     Andrew Morton <akpm@linux-foundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH v2 29/29] memory: samsung: exynos-srom: Describe the Kconfig entry
-Date:   Fri, 24 Jul 2020 09:40:38 +0200
-Message-Id: <20200724074038.5597-30-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200724074038.5597-1-krzk@kernel.org>
-References: <20200724074038.5597-1-krzk@kernel.org>
+        Fri, 24 Jul 2020 04:02:21 -0400
+Received: from cronos.itam.mx (hydrus2b.itam.mx [148.205.228.143])
+        by mx2.itam.mx  with ESMTP id 06O81esK029772-06O81esO029772
+        (version=TLSv1.0 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+        Fri, 24 Jul 2020 03:01:40 -0500
+Received: from [10.28.175.153] (105.0.7.102) by cronos.itam.mx
+ (148.205.148.91) with Microsoft SMTP Server (TLS) id 14.3.468.0; Fri, 24 Jul
+ 2020 03:01:40 -0500
+Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
+To:     Recipients@vger.kernel.org
+From:   ''Tayeb@vger.kernel.org, Souami''@vger.kernel.org
+Date:   Fri, 24 Jul 2020 10:01:25 +0200
+Reply-To: <charlesjacksonjr001@gmail.com>
+Message-ID: <3ca75345-4069-43a0-bbc7-65e6f71e5bc5@CRONOS.itam.mx>
+X-Originating-IP: [105.0.7.102]
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Write short description about the Exynos SROM controller driver.
+Hallo
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Ich bin Charles W. Jackson aus North Carolina, Vereinigte Staaten von Amerika, und ich bin der Gewinner des Mega-Millionen-Jackpots von 344 Millionen US-Dollar. Ich spende die Summe von 2.000.000 Millionen Euro als Teil der Hilfsgelder für das Corona-Virus.
 
----
+Dies ist Ihr Spendencode: [CJ530342019]
 
-Changes since v1:
-1. New patch
----
- drivers/memory/samsung/Kconfig | 7 +++++++
- 1 file changed, 7 insertions(+)
+www.youtube.com/watch?v=BSr8myiLPMQ
 
-diff --git a/drivers/memory/samsung/Kconfig b/drivers/memory/samsung/Kconfig
-index 20a8406ce786..8e240f078afc 100644
---- a/drivers/memory/samsung/Kconfig
-+++ b/drivers/memory/samsung/Kconfig
-@@ -23,5 +23,12 @@ config EXYNOS5422_DMC
- config EXYNOS_SROM
- 	bool "Exynos SROM controller driver" if COMPILE_TEST
- 	depends on (ARM && ARCH_EXYNOS) || (COMPILE_TEST && HAS_IOMEM)
-+	help
-+	  This adds driver for Samsung Exynos SoC SROM controller.  The driver
-+	  in basic operation mode only saves and restores SROM registers
-+	  during suspend.  If however appropriate device tree configuration
-+	  is provided, the driver enables support for external memory
-+	  or external devices.
-+	  If unsure, say Y on devices with Samsung Exynos SocS.
- 
- endif
--- 
-2.17.1
+Bitte antworten Sie auf diese E-Mail mit dem SPENDERCODE:
 
+charlesjacksonjr001@gmail.com
+
+Ich hoffe, dass Sie und Ihre Familie dies durchkommen
+
+
+Herr Charles Jackson
