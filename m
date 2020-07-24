@@ -2,49 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E64B322C929
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Jul 2020 17:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AA0022CCC4
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Jul 2020 20:09:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726978AbgGXP3k (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 24 Jul 2020 11:29:40 -0400
-Received: from [125.140.134.231] ([125.140.134.231]:53505 "EHLO
-        WIN-DAONO245HJF" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726593AbgGXP3i (ORCPT
+        id S1726512AbgGXSJP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 24 Jul 2020 14:09:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57220 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726326AbgGXSJP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 24 Jul 2020 11:29:38 -0400
-Received: from User ([66.154.113.229]) by WIN-DAONO245HJF with Microsoft SMTPSVC(8.5.9600.16384);
-         Sat, 25 Jul 2020 00:23:30 +0900
-Reply-To: <christopherwang36@gmail.com>
-From:   "CHRISTOPHER WANG" <christopherwang36@gmail.com>
-Subject: INVESTMENT
-Date:   Fri, 24 Jul 2020 08:23:47 -0700
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <WIN-DAONO245HJFs0J1008ef90d@WIN-DAONO245HJF>
-X-OriginalArrivalTime: 24 Jul 2020 15:23:30.0864 (UTC) FILETIME=[63269B00:01D661CE]
-To:     unlisted-recipients:; (no To-header on input)
+        Fri, 24 Jul 2020 14:09:15 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 57AC220674;
+        Fri, 24 Jul 2020 18:09:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595614155;
+        bh=WKWTRR3OpiM//OpvSkAaN+ab6FB8ru2WmmhyV77aIRk=;
+        h=From:To:Subject:Date:From;
+        b=2gPXnyeEqHeBv1avgOINVK3OnB1zXEJC7lajj6Dv/xOENZqwz9h58oaGxlkTc/rEN
+         nMGB/wuDe4JEhjQaFydwD/rKx0y/lVH7PA8Vz3TJ25/LRo10tcPGyZ+rz2yb5nxqXa
+         Vq9x1oqEh/EjnsOgRGQTr0husbnavBANkD/fZc1w=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Lukasz Luba <lukasz.luba@arm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>, linux-pm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [RFC] memory: exynos5422-dmc: Document mutex scope
+Date:   Fri, 24 Jul 2020 20:08:57 +0200
+Message-Id: <20200724180857.22119-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Document scope of the mutex used by driver.
 
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Good day,
+---
 
-You were recommended by a mutual associate. I write you regarding an investment of bearer bonds I made on behalf of a client. 
+It seems mutex was introduced to protect:
+1. setting actual frequency/voltage,
+2. dmc->curr_rate (in exynos5_dmc_get_cur_freq()).
 
-       The investment was made in 2009 and has been under my management. The said investor is deceased. The window is now available to assign these bonds to any name or company of my choice. I have all the necessary information to achieve this within 10 banking days.
-      
-       The total value of the bond is 100million pounds sterling, in a million pound denominations.
-      
-        If you can handle this, do contact me at your earliest convenience via my email christopherwang36@gmail.com
-So we can discuss the final details Thank you.
- 
-Mr CHRISTOPHER WANG
+However dmc->curr_rate in exynos5_dmc_get_status() is not protected. Is
+it a bug?
+---
+ drivers/memory/samsung/exynos5422-dmc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
+index 93e9c2429c0d..0388066a7d96 100644
+--- a/drivers/memory/samsung/exynos5422-dmc.c
++++ b/drivers/memory/samsung/exynos5422-dmc.c
+@@ -114,6 +114,7 @@ struct exynos5_dmc {
+ 	void __iomem *base_drexi0;
+ 	void __iomem *base_drexi1;
+ 	struct regmap *clk_regmap;
++	/* Protects curr_rate and frequency/voltage setting section */
+ 	struct mutex lock;
+ 	unsigned long curr_rate;
+ 	unsigned long curr_volt;
+-- 
+2.17.1
+
