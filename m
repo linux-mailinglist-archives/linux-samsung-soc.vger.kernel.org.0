@@ -2,145 +2,118 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E689E22F56B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Jul 2020 18:32:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 965F222F65B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Jul 2020 19:15:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732276AbgG0Qc4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 27 Jul 2020 12:32:56 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:41008 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729209AbgG0Qcz (ORCPT
+        id S1730372AbgG0RPZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 27 Jul 2020 13:15:25 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33893 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728021AbgG0RPZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 27 Jul 2020 12:32:55 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200727163254euoutp01fc92943911e2968948776716f0b24d15~lqRqMfn8v0313103131euoutp01g
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Jul 2020 16:32:54 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200727163254euoutp01fc92943911e2968948776716f0b24d15~lqRqMfn8v0313103131euoutp01g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1595867574;
-        bh=+k20sNF0O+eIZtuwNh+OkHMj7NqqpDTpfLAF3X8ZuOw=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=tiUPPAEawVOSJeaDWbl1Wu1yMihJeTSJv4gL5L97KIfzx5TV0aePu/OROuhpkul6j
-         hpFFocbCqWP2WVezSSRYxyKhQ69hR7y5deIPlPxOhrUPLB0hHsDt1lnzw6xgiSQpf5
-         OGxprwxilLjyQOIacdbuO+O2aJm9P5gCfZbv74YQ=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20200727163254eucas1p201e02be47bc6cda4510f22b94803124c~lqRp4KGNq0877908779eucas1p2K;
-        Mon, 27 Jul 2020 16:32:54 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 2A.31.06318.5B10F1F5; Mon, 27
-        Jul 2020 17:32:54 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20200727163253eucas1p1facafeed2a9acc00f25fec554d99d055~lqRpm6CKX1333213332eucas1p1y;
-        Mon, 27 Jul 2020 16:32:53 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200727163253eusmtrp1c6be92a604d7aa44b97e3c435e1e2ce2~lqRpmT8UX1357013570eusmtrp1T;
-        Mon, 27 Jul 2020 16:32:53 +0000 (GMT)
-X-AuditID: cbfec7f5-371ff700000018ae-16-5f1f01b52ced
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id D9.16.06017.5B10F1F5; Mon, 27
-        Jul 2020 17:32:53 +0100 (BST)
-Received: from [106.210.123.115] (unknown [106.210.123.115]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200727163253eusmtip10c94af91925132f7a8bcbbfe65a2ce61~lqRo5l08m3216632166eusmtip1n;
-        Mon, 27 Jul 2020 16:32:53 +0000 (GMT)
-Subject: Re: [PATCH 3/3] ARM: dts: exynos: Add sound support to Midas
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+        Mon, 27 Jul 2020 13:15:25 -0400
+Received: by mail-ed1-f68.google.com with SMTP id a8so12709132edy.1;
+        Mon, 27 Jul 2020 10:15:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BliIrD6HFnaqfqEV1t4dYfV86GNI6DLmsozTcMQdAAM=;
+        b=QomRHUKgXSarRZPK5qGTbvg3MOnxSeqpLfoE8OHuKD+jWoMrDv6AxXxlqm7TI81+7G
+         VNLNNZ5r0QpgLBOQ8m2k444Oqy0o89Tc6/nzKHTelfbthVvK9uk9X0X624YY5r+4RmG0
+         LGJMvlgNOAJbEBSep0O1anLwX6PQ54gtJWtZ14IWyMT+2Ew/L60guKpx6gTOUgGdhM8r
+         kgRvy2BujGmVLsZg/IorNY2QZ3vCP6FQ+X/lEK36BlzekEh9uDF6P5r7ExJ2HSIli/sU
+         5VMUQDYm2IY2DyeZB3cYI76calb2uhJQlGGoNn7W2SLB8dfQTQB+9HDAben9eUy84VLq
+         ctWg==
+X-Gm-Message-State: AOAM531OuA0b50HAPqiA2OekzMJtG/02yKSeoRW1ZCq/Rq4QEFscclDf
+        lkYbpbwhVO6g+znp9WiazRM=
+X-Google-Smtp-Source: ABdhPJxDv7/MPyfHpAwtt1qENlH8+RzlpaeCY0brayFCsvyKhCZ9X7tA1jP3eFubjrttJw5W34ce/Q==
+X-Received: by 2002:a05:6402:1ca8:: with SMTP id cz8mr21617340edb.55.1595870123499;
+        Mon, 27 Jul 2020 10:15:23 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.213])
+        by smtp.googlemail.com with ESMTPSA id sd15sm7320776ejb.66.2020.07.27.10.15.22
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Jul 2020 10:15:22 -0700 (PDT)
+Date:   Mon, 27 Jul 2020 19:15:20 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
 Cc:     broonie@kernel.org, simon@lineageos.org,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         robh+dt@kernel.org, b.zolnierkie@samsung.com,
         m.szyprowski@samsung.com, linux-samsung-soc@vger.kernel.org
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-Message-ID: <9171a38d-a77e-a936-7311-34c4f6c70d6b@samsung.com>
-Date:   Mon, 27 Jul 2020 18:32:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
-        Thunderbird/68.10.0
+Subject: Re: [PATCH v2 1/3] ASoC: samsung: Document DT bindings for Midas
+ sound subsystem
+Message-ID: <20200727171520.GB3507@kozik-lap>
+References: <CGME20200727163139eucas1p17420a06923fb625331b2ea867f75bb7e@eucas1p1.samsung.com>
+ <20200727163027.9242-1-s.nawrocki@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <20200720143458.GB22554@kozik-lap>
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0hTYRjm2zk752w0+ZyWLxoKo6ul0/TH6YJZJAzqR9E/8dLSw5R02uYl
-        RWJ4iVKbmpimhZZQuUineaPUUkyT5Q21i5uZsUwlwVALSzOPR8l/z/u8z/O9zwMfQ8gbxK5M
-        tDaB02nVMQpKSjZ2LfV5NSKPcJ+JKhE7PNghYmtLasRs0YSdYss7+8Rsf7+ZZkv620Ts084x
-        ms1q7aTZ+rdWKlCiMs+nU6o60w1KlVlTR6mM9Sakmq9zPysOlh6L5GKikzidMuCCNGpmrlkc
-        n8dcMb4rIw3oGZWNJAxgf0jPyyJ5LMePEVhr07KRdA0vIFguyqCFYR7B7ckBtOlovjckEhaP
-        EFhaZilh+IFgoLZaxKuccBCUPRmheeyM98P7lV9iXkTgIQSFb+YIfkFhX7j52rj+rAwHwBfb
-        4JqBYUi8G+YLDvL0dhwGNdNNIkHiCD137OtZJVgJUw096zyBXWDUXr6BPaBp9i7B3wLcRUPO
-        Q9tG7FNQvbBICNgJZrrraQHvBEthLikYMhDkvrDSwpCPYLy7YsN9FGx9vyk+HbFWp+a5UqBP
-        wNjAJ5KnATvAh1lHIYQD3GosJgRaBtevyQX1LvhjKhYJ2BVy7KtkPlKUbqlWuqVO6ZY6pf/v
-        ViDShFy4RH2shtP7ablkb706Vp+o1XhHxMXWobXPZPnbvdiM2pYvdiDMIMU22at293C5WJ2k
-        T4ntQMAQCmfZyV5LmFwWqU5J5XRx4brEGE7fgdwYUuEi83swHSrHGnUCd4nj4jnd5lbESFwN
-        CJlOrxaM5++ISj+T9/3cwtxejXbMXGnTGdOoKKplypLlFmr0aIvw17xssx44X3kko2opjsuI
-        NOCQmcOS1p9fg0MK7wfaZjPTPub27hscabcOL3069Hl04Jtyak/KnJ3xrJ6ksdkxPjXZsHJ8
-        sc8U7XU1oYca83FQFl/O8wniFKQ+Su3rSej06n9DnfEpSAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsVy+t/xu7pbGeXjDXq3GFhcuXiIyWLjjPWs
-        FlMfPmGzmH/kHKvF+fMb2C1mnN/HZLH2yF12i9a9R9gttpy5zebA6bHhcxObx6ZVnWweLes3
-        sXn0bVnF6PF5k1wAa5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpq
-        TmZZapG+XYJexqsPO1gL+jkq+q7NZmlg3MzWxcjJISFgIrFj7mWmLkYuDiGBpYwSi39PYuxi
-        5ABKSEnMb1GCqBGW+HOtiw2i5j2jxKcNJxlBEsICrhKzV19lB7FFBDQlrv/9zgpSxCxwmVHi
-        0pOlUFOfMUrMOHkZbB2bgKFE79E+sG5eATuJR3cusoNsYxFQlfg8UQckLCoQJ7F8y3x2iBJB
-        iZMzn7CA2JwC+hIvtp5kArGZBdQl/sy7xAxhi0vcejIfKi4vsf3tHOYJjEKzkLTPQtIyC0nL
-        LCQtCxhZVjGKpJYW56bnFhvpFSfmFpfmpesl5+duYgRG4rZjP7fsYOx6F3yIUYCDUYmH98BB
-        uXgh1sSy4srcQ4wSHMxKIrxOZ0/HCfGmJFZWpRblxxeV5qQWH2I0BfptIrOUaHI+MEnklcQb
-        mhqaW1gamhubG5tZKInzdggcjBESSE8sSc1OTS1ILYLpY+LglGpgLBXfcFlGNaHJ4XFd1Med
-        zlyvZA4wqb5/GaIxR+Z9W4JFq45N08nVTvY/IvSvn2C4fXSj2dKTv33y2BeXz7hpVTL9/ttt
-        +n2dDrt6DK62cEcvM1OfslpmuQ1/gn5EVu0hXvfzzmc5+OVE/27/GnnZjLFrubnIy9Bdsrs2
-        /3HSX1ZtJHTyUv55JZbijERDLeai4kQAhFQdldoCAAA=
-X-CMS-MailID: 20200727163253eucas1p1facafeed2a9acc00f25fec554d99d055
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213
-References: <20200710173500.22365-1-s.nawrocki@samsung.com>
-        <CGME20200710173518eucas1p1eeaaadd2359da3c863c43cd368a84213@eucas1p1.samsung.com>
-        <20200710173500.22365-3-s.nawrocki@samsung.com>
-        <20200720143458.GB22554@kozik-lap>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200727163027.9242-1-s.nawrocki@samsung.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 20.07.2020 16:34, Krzysztof Kozlowski wrote:
-> On Fri, Jul 10, 2020 at 07:35:00PM +0200, Sylwester Nawrocki wrote:
-
->> --- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
->> +++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
->> @@ -175,3 +175,41 @@
->>  	gpio = <&gpm0 0 GPIO_ACTIVE_HIGH>;
->>  	status = "okay";
->>  };
->> +
->> +&submic_bias_reg {
+On Mon, Jul 27, 2020 at 06:30:25PM +0200, Sylwester Nawrocki wrote:
+> This patch adds documentation of DT biding for the Midas sound complex.
+> Partially based on the *txt version by Simon Shields <simon@lineageos.org>.
 > 
-> Put them in alphabetical order against oder phandle overrides. Same for
-> n710x.dts.
-
->> --- a/arch/arm/boot/dts/exynos4412-midas.dtsi
->> +++ b/arch/arm/boot/dts/exynos4412-midas.dtsi
->> @@ -102,6 +102,30 @@
->>  		status = "disabled";
->>  	};
->>  
->> +	vbatt_reg: voltage-regulator-9 {
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+> Changes for v2:
+>  - fix wrong *-gpios entries in the example,
+>  - mark sound-dai properties as required.
+> ---
+>  .../bindings/sound/samsung,midas-audio.yaml        | 108 +++++++++++++++++++++
+>  1 file changed, 108 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
 > 
-> Since this is the basic DTSI for multiple boards, the numbering here
-> should be consistent. You will have to rename the ones in Galaxy S3 and
-> N710 DTSI.
+> diff --git a/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> new file mode 100644
+> index 0000000..fb685e51
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> @@ -0,0 +1,108 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/samsung,midas-audio.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Samsung Midas audio complex with WM1811 codec
+> +
+> +maintainers:
+> +  - Sylwester Nawrocki <s.nawrocki@samsung.com>
+> +
+> +properties:
+> +  compatible:
+> +    const: samsung,midas-audio
+> +
+> +  model:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: The user-visible name of this sound complex.
+> +
+> +  cpu:
+> +    type: object
+> +    properties:
+> +      sound-dai:
+> +        $ref: /schemas/types.yaml#/definitions/phandle-array
 
->> @@ -266,16 +290,18 @@
+I think it is just a phandle, not an array?
 
->> +		cpu {
->> +			sound-dai =  <&i2s0 0>;
-> 
-> Double space after '='.
+> +        description: phandle to the I2S controller
+> +    required:
+> +      - sound-dai
+> +
+> +  codec:
+> +    type: object
+> +    properties:
+> +      sound-dai:
+> +        $ref: /schemas/types.yaml#/definitions/phandle-array
 
-Thanks for your review, I have addressed all these issues in just
-posted v2.
+The same.
 
--- 
-Regards,
-Sylwester
+Best regards,
+Krzysztof
