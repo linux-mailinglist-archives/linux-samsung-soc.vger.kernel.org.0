@@ -2,90 +2,89 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BC4C230908
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jul 2020 13:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AACDD230A90
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jul 2020 14:47:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729181AbgG1Lk0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 28 Jul 2020 07:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37772 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729144AbgG1LkZ (ORCPT
+        id S1729806AbgG1MrP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 28 Jul 2020 08:47:15 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36743 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729576AbgG1MrL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 28 Jul 2020 07:40:25 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA20DC061794
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 28 Jul 2020 04:40:25 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id k23so20324451iom.10
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 28 Jul 2020 04:40:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=vUv5VsDGWSs2qLnATLcCTR+Q+8XvNFVG7Qx2ji0wZ7g=;
-        b=UxVZLdZQ2qjGCn7jmWwPlBiufinkGZSKAEX52ZTY16X6XfTCvpl7IOyOtWd/8SHCu7
-         xif1KUrCTFjJ0Tvc8bbm9yTVVyZeXZ8BIkk+Xzta3lvvGCK5Xw/TqjFlmX2JJ0dYxUro
-         fzvHH3nFv5u9HhhK3UL8C0/p3iUEDpf2rlrDswRCt2BQ3Qs2bytGRP6GLKfy7xQfOvlM
-         9UHOJaBjr4eqb5hC/0BSAnzQ0iQVXLBXv2ZoSIZeeVEx6gQTH3LtcSIjdlIdItV9pD3o
-         GGHk/ymk+7zpQKtEo5CXloVPAngmiOS5JMtepF5ogocXN7jsXu9b6jmsIiMeJO2kHg/j
-         RwuA==
+        Tue, 28 Jul 2020 08:47:11 -0400
+Received: by mail-ed1-f68.google.com with SMTP id c15so5056458edj.3;
+        Tue, 28 Jul 2020 05:47:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=vUv5VsDGWSs2qLnATLcCTR+Q+8XvNFVG7Qx2ji0wZ7g=;
-        b=dqe9o29m1ck41kr59LVptJftQDCO4gRyfPKOfh71SI6XdDFUHeOYFta93m3n/KbLg1
-         czQFdr3h8V/NZaSoqUtrFPQw7I13juf0hs5whB3HN7YRAhU5Hmg5bzW6ruF71fbJmRG0
-         3U92N6MKstrrwj8iv9W+5nR/o3UmDLE9sc0WLeHnq08qT2ap7A5Sb+Oq67KuTLBxhTIa
-         SQvg0HxypcYdZRJtHzov7IvWmo/8j70tMhANQy60nXlV4mPv2xmRDIDrNrYTHhYCk2/j
-         O8VsmAJB2Qynnwgh4QyKCoU2JTygGXGZ6m7aCgPefdWsl/9JMVWCjmDkKcaWPHqwKvCZ
-         mdIQ==
-X-Gm-Message-State: AOAM5339cPn3SgDAUwJjVUquF59+ZQ3X6NhUYhuWAsoeFvc4WPXLYYa7
-        G00ui5OOlMwYyO7hX/oAAbooM0ZgIfS0iYHZAjjY+ROqWzA=
-X-Google-Smtp-Source: ABdhPJxXu36hsPldjOmZ2MLoNmGrlCwIhAfi0rV8jqLKeHikNM4XN+NQbV8dVDj1U3EkG2gzgQ7E2I5tofJNpxXrC7A=
-X-Received: by 2002:a05:6602:811:: with SMTP id z17mr6737064iow.110.1595936416210;
- Tue, 28 Jul 2020 04:40:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=T/pqmbhLh7sKGJACzLPiIlQzkqQ8XjFefTZhyBvXBXA=;
+        b=P1tumZy99UaJrzhb/iV9NVe/+Oc6ycDDWE3D04ml/nkJcVroeiQyMJkmp2XKChbqpZ
+         F/KC4mn9Et9TiYX0ld0Hhp0M5ZDmdsge8ux/Ckfni3iDBDYPoSk5RMKp5aOxg/gXNA2D
+         Mu1bTkGy9s/KARPwzmV+8oZ4uOOZtuBTgcos/FShLRjLwRXA2EBES68gvfrefcsmosj7
+         PIIUqnq4q2HUkBRR0XiWoGhJjGkIRCMcgpXmOJQQK1PChwU8QiBK3ij4kOutIUiX52aU
+         57h2FnfopyFaojmjaCWHz2A4zdpSn4KhiDca3UUMTGzV2imdU9FUZXLvV4lN+iOhxi4q
+         R8mA==
+X-Gm-Message-State: AOAM533d7VAwGC2ReB4JLNKvwLV1fWn+Y11nP0avvQXrKoR07+hbwLXW
+        66eD2p8U34Lejr5dOJRk4UY=
+X-Google-Smtp-Source: ABdhPJxqpRPRTtJr4gwvC8HABlrPkJOd0W1I02Qx/TUd4FrazEXvNoO6XEeihc+npOZ43QoBZUN7zw==
+X-Received: by 2002:a05:6402:1a54:: with SMTP id bf20mr14060285edb.217.1595940429122;
+        Tue, 28 Jul 2020 05:47:09 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.213])
+        by smtp.googlemail.com with ESMTPSA id c7sm8221178ejr.77.2020.07.28.05.47.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Jul 2020 05:47:08 -0700 (PDT)
+Date:   Tue, 28 Jul 2020 14:47:06 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Qinglang Miao <miaoqinglang@huawei.com>
+Cc:     Kukjin Kim <kgene@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] ARM: s3c: fix return value check in
+ s3c_usb_otgphy_init()
+Message-ID: <20200728124706.GA32233@kozik-lap>
+References: <20200728022756.87687-1-miaoqinglang@huawei.com>
 MIME-Version: 1.0
-Received: by 2002:a4f:1442:0:0:0:0:0 with HTTP; Tue, 28 Jul 2020 04:40:14
- -0700 (PDT)
-From:   Rashid Al-Wahaibi <ceci1liapolo@gmail.com>
-Date:   Tue, 28 Jul 2020 12:40:14 +0100
-Message-ID: <CAGkYWRUMYJgW-sVqkora8w7ZzXrSFFsQxb2q9Bphw45=edHw4g@mail.gmail.com>
-Subject: Your Partnership
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200728022756.87687-1-miaoqinglang@huawei.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
--- 
+On Tue, Jul 28, 2020 at 10:27:56AM +0800, Qinglang Miao wrote:
+> the function clk_get() returns ERR_PTR() in case of error and
+> never returns NULL. So there's no need to test whether xusbxti
+> is NULL, just remove the redundant part in the return value check.
+> 
+> Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
+> ---
+>  arch/arm/mach-s3c64xx/setup-usb-phy.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
+Looks good, thanks. I don't plan to take anything before merge window
+(it is quite late in the cycle) so I will apply it after the window.
 
-Good day,
+Best regards,
+Krzysztof
 
-
-
-My name is Rashid Al-Wahaibi, I am from Oman but base here in the UK
-and a Managing Partner of BP Partnership Ltd, a Financial Consultancy
-Firm with office in the United Kingdom. I am contacting you based on
-the request of Ms Rosmah Mansor Najib Razak, wife of Najib Razak, the
-immediate past Malaysian Prime Minister.
-
-I found your profile satisfying and decided to contact you based on Ms
-Rosmah Mansor Najib Razak desire to invest in any viable project in
-your region.
-
-I need you to guide me on the type of investment that will be of best
-interest and provide good return on investment in your country and
-also act as her investment manager. She is ready to invest $25m to
-$50m USD
-
-I will explain further detail of this business proposal when you reply
-to this email indicating your interest.
-
-
-Regards,
-
-Rashid Al-Wahaibi,
-Bp Partnership Ltd
-60 Raglan Road
-Reigate, ENG RH2 0HN,
-United Kingdom
+> diff --git a/arch/arm/mach-s3c64xx/setup-usb-phy.c b/arch/arm/mach-s3c64xx/setup-usb-phy.c
+> index d6b0e3b26..99d743884 100644
+> --- a/arch/arm/mach-s3c64xx/setup-usb-phy.c
+> +++ b/arch/arm/mach-s3c64xx/setup-usb-phy.c
+> @@ -31,7 +31,7 @@ static int s3c_usb_otgphy_init(struct platform_device *pdev)
+>  	phyclk = readl(S3C_PHYCLK) & ~S3C_PHYCLK_CLKSEL_MASK;
+>  
+>  	xusbxti = clk_get(&pdev->dev, "xusbxti");
+> -	if (xusbxti && !IS_ERR(xusbxti)) {
+> +	if (!IS_ERR(xusbxti)) {
+>  		switch (clk_get_rate(xusbxti)) {
+>  		case 12 * MHZ:
+>  			phyclk |= S3C_PHYCLK_CLKSEL_12M;
+> -- 
+> 2.25.1
+> 
