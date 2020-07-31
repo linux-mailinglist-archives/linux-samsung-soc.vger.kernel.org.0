@@ -2,129 +2,118 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D922233BC4
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Jul 2020 01:02:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6398423436F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Jul 2020 11:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730413AbgG3XCO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 30 Jul 2020 19:02:14 -0400
-Received: from mail-co1nam11olkn2054.outbound.protection.outlook.com ([40.92.18.54]:28769
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1730816AbgG3XCL (ORCPT
+        id S1732068AbgGaJli (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 31 Jul 2020 05:41:38 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:42068 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732254AbgGaJlh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 30 Jul 2020 19:02:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MZqexn+qsxnTZvPoi94dGvycAVeQHCdVNaiklw39o22HdfDNicBrWt/yv2ldHABgW6QvLutPkUMueinpMLa/IugByZ3qjDg67+y1zXPn1oCfsbvmpZe7OXEfg4WDVRihDQJ9P1dEdhyjjA98EFQzPCSlkor6c+ylcS05wUod/obrETpJEQ88QR6iZhmnp0cOKkzCs0ZUjaOL3rYs85ip1y2pX7JTvnncxB2GwZsOvoDqc0WWVadmOumKFyR2Hyf6L/L/kfLn4pwRoLgEotJEggK7C2BryiNjSSYpudLO2D5pw5vzpiKEOjR6pwe0Bi8P9i3joJ3OW4IAPpc3QRUTGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=blb2TXRMp+yo/YM80XdL8XrZqtDJRYtixFtmZKoQWno=;
- b=h7dLPy20zV1fjbu2H+2CnNDbnCg120gmtFmXIKmFp4lgMeq7lyjYidnBrBU3fy7qfaC6uqfTK3sOiWVcSqgOuuItD3ObkBkhT8w16Li4u+MdcM5RgPfAjz+26nlScjeg3XNtY8xHzdtS9+fILwZmTtJj44NOL1nc6Rn5av8w97J85CqGahzqh2g1scRPuzBTul3EoComA47vb5psiUxwV+4hsPyqKApHC9Fv1PKPhdnsN1+q2NQFQnBsF1YoAVwDPfo8QLLI45qNdWWmRjaxAdwarjb3iFyt++f8iLPxHeSVA635PmjM+88bMmXt9PGMHmteYXBYsxmH3oS9qhGQMQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from CO1NAM11FT027.eop-nam11.prod.protection.outlook.com
- (2a01:111:e400:3861::4b) by
- CO1NAM11HT057.eop-nam11.prod.protection.outlook.com (2a01:111:e400:3861::185)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3239.20; Thu, 30 Jul
- 2020 23:02:09 +0000
-Received: from BN6PR04MB0660.namprd04.prod.outlook.com
- (2a01:111:e400:3861::4a) by CO1NAM11FT027.mail.protection.outlook.com
- (2a01:111:e400:3861::224) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3239.20 via Frontend
- Transport; Thu, 30 Jul 2020 23:02:09 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:6596A80B681EE7BBE23592754212134BA198ACEE2B5D7CB2DB0EDE81235FC83E;UpperCasedChecksum:8F19E0DF905CC33C86E76E53392147AEA5680F956105E879707AC12DB6A82CD8;SizeAsReceived:7885;Count:49
-Received: from BN6PR04MB0660.namprd04.prod.outlook.com
- ([fe80::b9c3:9bff:541d:f383]) by BN6PR04MB0660.namprd04.prod.outlook.com
- ([fe80::b9c3:9bff:541d:f383%9]) with mapi id 15.20.3239.020; Thu, 30 Jul 2020
- 23:02:09 +0000
-From:   Jonathan Bakker <xc-racer2@live.ca>
-To:     kyungmin.park@samsung.com, s.nawrocki@samsung.com,
-        mchehab@kernel.org, kgene@kernel.org, krzk@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Fri, 31 Jul 2020 05:41:37 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200731094134euoutp02e8301591af1ca6e500ae90cced57785e~mzPqc-El41149011490euoutp02D
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 Jul 2020 09:41:34 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200731094134euoutp02e8301591af1ca6e500ae90cced57785e~mzPqc-El41149011490euoutp02D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1596188494;
+        bh=GbJBbeJR03bXyFa1MMhre4R+cY8zmKVFAv+IxUgW3lY=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=l3PHEQd9eAGlq79XPadT89u/Vlbzzk/feLp5HJ7p6Zoct5DKsYUmNObm8DuztaG1C
+         vjw3eSlVxe4vF4vJkYUnLks5bwo/8JbHYyrfPQqT4FLDWjYFg1WF2zli8XCa+SCWLE
+         9P8yYqlNVWgSyh42LDHSpwj1vgF9p1dk9bBE9rZw=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200731094134eucas1p2cc877d2721c083b35afcf08b0326491e~mzPqOultR2742427424eucas1p2h;
+        Fri, 31 Jul 2020 09:41:34 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 47.8F.06456.E47E32F5; Fri, 31
+        Jul 2020 10:41:34 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200731094134eucas1p2901617e5a4bc391cde77db276f0e7e93~mzPp6TTi91805118051eucas1p24;
+        Fri, 31 Jul 2020 09:41:34 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200731094134eusmtrp207c3fddb994001b6a01207e3f65e0546~mzPp5o89e0594305943eusmtrp2k;
+        Fri, 31 Jul 2020 09:41:34 +0000 (GMT)
+X-AuditID: cbfec7f2-809ff70000001938-9d-5f23e74e7089
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 15.36.06314.D47E32F5; Fri, 31
+        Jul 2020 10:41:34 +0100 (BST)
+Received: from [106.210.123.115] (unknown [106.210.123.115]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200731094133eusmtip26b9016d1143d62093808ba7eaa560dc5~mzPpK4WEH2703327033eusmtip2P;
+        Fri, 31 Jul 2020 09:41:33 +0000 (GMT)
+Subject: Re: [PATCH v2 04/11] media: exynos4-is: Correct missing entity
+ function initialization
+To:     Jonathan Bakker <xc-racer2@live.ca>, linux-media@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org,
-        Jonathan Bakker <xc-racer2@live.ca>
-Subject: [PATCH v2 11/11] dt-bindings: media: Correct samsung-fimc parallel port numbering
-Date:   Thu, 30 Jul 2020 16:01:14 -0700
-Message-ID: <BN6PR04MB0660B938349CA15DE7BCC5BBA3710@BN6PR04MB0660.namprd04.prod.outlook.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200730230114.8572-1-xc-racer2@live.ca>
-References: <20200730230114.8572-1-xc-racer2@live.ca>
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MWHPR07CA0002.namprd07.prod.outlook.com
- (2603:10b6:300:116::12) To BN6PR04MB0660.namprd04.prod.outlook.com
- (2603:10b6:404:d9::21)
-X-Microsoft-Original-Message-ID: <20200730230114.8572-12-xc-racer2@live.ca>
+Cc:     kyungmin.park@samsung.com, mchehab@kernel.org, kgene@kernel.org,
+        krzk@kernel.org, devicetree@vger.kernel.org, robh+dt@kernel.org
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <c1b7b54c-6c97-e430-daec-f7815b54a33e@samsung.com>
+Date:   Fri, 31 Jul 2020 11:41:32 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.11.0
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from jon-hp-6570b.telus (2001:569:fb68:9c00:8067:f823:1e15:7520) by MWHPR07CA0002.namprd07.prod.outlook.com (2603:10b6:300:116::12) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3239.16 via Frontend Transport; Thu, 30 Jul 2020 23:02:07 +0000
-X-Mailer: git-send-email 2.20.1
-X-Microsoft-Original-Message-ID: <20200730230114.8572-12-xc-racer2@live.ca>
-X-TMN:  [4H0vmUXwVvtd+gYRvieb3VzExRmUgc9uRhumOxiyx0ARjfgIV6+/lmymWIVI9+Vv]
-X-MS-PublicTrafficType: Email
-X-IncomingHeaderCount: 49
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-Correlation-Id: 45929ec7-0b00-434f-37d4-08d834dc965c
-X-MS-TrafficTypeDiagnostic: CO1NAM11HT057:
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: BHfC/ydrQF3oRUjURQOQUSYTv8k/BcbcG3az97rWdstQGzWd4TiaodOb62ErBBCX9j0r/Hiuy0HAv+ZGkKQp4v7bzqYZSxYalIybvs8oWhvNzkPIagSPqEtDuVVfc0FJkj5orWe41j5bL8j/FPPKJW8I/s2+Hem+VJvd1ER8QgmIxHWySdz1AFz0FJ+rUcfyNg1aJueKnCuhHbCo50/MYQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:0;SRV:;IPV:NLI;SFV:NSPM;H:BN6PR04MB0660.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:;DIR:OUT;SFP:1901;
-X-MS-Exchange-AntiSpam-MessageData: Va8N7+GzrxSlCkFTcwGLUGCRaLywNzTlCqvgKzbSLG+LTKbyNP2FD5J7a5h2VEqNEsBlRZgOapGUEQETypC2IZreOWegXPTecPQUk6Jn4oAoMpsfgRGM2StW1zuKtFEs5hyOAiUUhY7YcaiOz07H2U/gYnGuSCqc7CaiKM+hpc0HgwyQ8u2M2mVVW/CZO+wk47wt1OQOferptIF7hevFOw==
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45929ec7-0b00-434f-37d4-08d834dc965c
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2020 23:02:09.6779
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT027.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1NAM11HT057
+In-Reply-To: <BN6PR04MB066098E34801126939AB0EF6A3710@BN6PR04MB0660.namprd04.prod.outlook.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0hTYRjm2znbOa5m36bhq0nBsqAgzezHgUQsDPZDQoKCBC+nPKi0Tdu8
+        9qehZt7TbuoUZ1oWa3lZTvNShqhDvJWWZF6iFDTNbtrFNM3tJPnveZ73eb73eeGjCdkzoRsd
+        rY7jNGpWKReJyYaupf4DJ6Z3hx2sL3RlDB39Qubq5BzBDAzUUkxfykeKMU8OC5mh5lIRk1Nr
+        ETJFA08FTJV5RcBcftJBMS8Kxkn/LQqzMVOkeHTnkqJi5BepyKs3IsWCeWeQMFjsG8EpoxM4
+        jZdfuDjKUNlIxU4QSSuWJaEOZRJZyIEGfBhWxqtFWUhMy/B9BPkPqwU8WURg7X5A8GQBQWnr
+        knAjont3k+QH9xB0FbcgnnxFcKvjisDmcsIsVI8t2ePOuAZB1fUv9ocJnI6g7I+OsrlE2Bty
+        O/PW4zQtwX5w1xRkk0m8B5pGDaQNb8ehYLG+sj8qwVLoLp6y6w44BBqHFu2VCOwCb6YMAh7v
+        gsb5UvtiwMMUtH7OF/C9A2ChcJzksRPMWuspHrvDWpNBwAdSEeS0jFI8yUfw1lqOeNcRGOv/
+        LbI1JfA+qGn24uWj0LtYR9pkwI7wel7Kl3CEaw2FBC9LICNdxrs9YNlY+K+OG2RPrZH5SK7f
+        dJp+0zn6Tefo/+8tR6QRuXDxWlUkp/VWc4meWlaljVdHep6LUZnR+r/qWbV+e4y+D55tR5hG
+        8q2S8EF5mEzIJmiTVe0IaELuLDnW1xMqk0SwyRc5TUyYJl7JadvRDpqUu0h8Kj6EyHAkG8ed
+        57hYTrMxFdAObjrkujx7OiUjLTDJXVzUM2NJmVBLR1yCVaYqY05e5d7ArEiTrCphzten7Xjm
+        tln/luARU91t3Y9e73ZpebZbrvTkyvsSiyV9CBJXEwp8jJ9C2k4ta0rq6BnfrDKL+/TPQ2fm
+        X95IXu5sTnMwKtmS5IALz1NlSo/dlN4vcJ52FQ/LSW0U672f0GjZv+Ozv2tTAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsVy+t/xe7p+z5XjDXrvMFrMP3KO1aL/8Wtm
+        i/PnN7BbnG16w26x6fE1VovLu+awWfRs2MpqMeP8PiaLZZv+MFm07j3CbnFx4l0WB26PTas6
+        2Tw2L6n3WHTzB4tH35ZVjB6fN8kFsEbp2RTll5akKmTkF5fYKkUbWhjpGVpa6BmZWOoZGpvH
+        WhmZKunb2aSk5mSWpRbp2yXoZcxfvJ294B5zxZ+tP1kbGDuZuxg5OSQETCQaHk5l6WLk4hAS
+        WMoocefaG6AEB1BCSmJ+ixJEjbDEn2tdbBA17xklPrafYQVJCAskSqy78xNskIjAekaJAyfE
+        QIqYBdoYJSZvnsQE0XEHqOPIbyaQKjYBQ4neo32MIBt4Bewklq4JAAmzCKhK7Lw9nwXEFhWI
+        k3jc+x9sKK+AoMTJmU/A4pwCsRLbL38BW8wsoC7xZ94lZghbXOLWk/lMELa8xPa3c5gnMArN
+        QtI+C0nLLCQts5C0LGBkWcUoklpanJueW2yoV5yYW1yal66XnJ+7iREYm9uO/dy8g/HSxuBD
+        jAIcjEo8vAmXlOKFWBPLiitzDzFKcDArifA6nT0dJ8SbklhZlVqUH19UmpNafIjRFOi5icxS
+        osn5wLSRVxJvaGpobmFpaG5sbmxmoSTO2yFwMEZIID2xJDU7NbUgtQimj4mDU6qB0YDZbn3a
+        zDkLJ2/4NTV1ff7a4mnLyidqn18Z5V6w6//BWxG8T8+m3Jj3o2WPon+8XM+0q8qc5rteKl5S
+        2ZbRedh3Nee14IvRXpbm66NPbxCva/Q+rTfXZPHEqzM2uoUae1Zz3PXaPK9rzxGJt0r3v36e
+        eG4Xp155sm/0Y3cX0dkWyco39MyiJyuxFGckGmoxFxUnAgAD3M8h4wIAAA==
+X-CMS-MailID: 20200731094134eucas1p2901617e5a4bc391cde77db276f0e7e93
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200730230243eucas1p210d67c908a76e5fdfbb159e3179a7cec
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200730230243eucas1p210d67c908a76e5fdfbb159e3179a7cec
+References: <20200730230114.8572-1-xc-racer2@live.ca>
+        <CGME20200730230243eucas1p210d67c908a76e5fdfbb159e3179a7cec@eucas1p2.samsung.com>
+        <BN6PR04MB066098E34801126939AB0EF6A3710@BN6PR04MB0660.namprd04.prod.outlook.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The parallel port nodes should be numbered 1 and 2, not 0 and 1
-for A and B respectively.  The driver has always implemented 1
-and 2 and the in-tree Goni DTS uses 1 as port A as well.  Update
-the documentation to match this behaviour.
+On 31.07.2020 01:01, Jonathan Bakker wrote:
+> Commit bae4500399c4 ("[media] exynos4-is: Add missing entity function
+> initialization") tried to suppress the warnings such as
+> 
+> s5p-fimc-md camera: Entity type for entity FIMC.0 was not initialized!
+> 
+> However, this missed setting for the subdev.  Set it now to avoid the
+> ugly warnings on boot.
+> 
+> Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
 
-Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
----
-Changes from v1:
-- New patch replacing patch modifying driver to match documentation
----
- Documentation/devicetree/bindings/media/samsung-fimc.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/media/samsung-fimc.txt b/Documentation/devicetree/bindings/media/samsung-fimc.txt
-index f91b9dc80eb3..20447529c985 100644
---- a/Documentation/devicetree/bindings/media/samsung-fimc.txt
-+++ b/Documentation/devicetree/bindings/media/samsung-fimc.txt
-@@ -95,7 +95,7 @@ Optional properties:
- 
- This node should contain child 'port' nodes specifying active parallel video
- input ports. It includes camera A and camera B inputs. 'reg' property in the
--port nodes specifies data input - 0, 1 indicates input A, B respectively.
-+port nodes specifies data input - 1, 2 indicates input A, B respectively.
- 
- Optional properties
- 
-@@ -172,8 +172,8 @@ Example:
- 		/* parallel camera ports */
- 		parallel-ports {
- 			/* camera A input */
--			port@0 {
--				reg = <0>;
-+			port@1 {
-+				reg = <1>;
- 				fimc0_ep: endpoint {
- 					remote-endpoint = <&s5k6aa_ep>;
- 					bus-width = <8>;
--- 
-2.20.1
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 
