@@ -2,140 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C50A23578E
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  2 Aug 2020 16:26:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBD57235A89
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  2 Aug 2020 22:36:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726517AbgHBO0V (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 2 Aug 2020 10:26:21 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:36759 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726300AbgHBO0U (ORCPT
+        id S1726058AbgHBUgL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 2 Aug 2020 16:36:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55860 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725925AbgHBUgL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 2 Aug 2020 10:26:20 -0400
-Received: by mail-lf1-f67.google.com with SMTP id c15so1838480lfi.3;
-        Sun, 02 Aug 2020 07:26:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/S75/rZPVtT/la0J520uvq4mcrCeNFGU2um+3tul+rI=;
-        b=eGYxKagEb+QN5Q7HCeGhnyhJKXIWmSd8RBVimVWipR+irMxje/N7qFbEo9bJg1Wjfr
-         /73rkoJLOwd6N5dnh3ZampC3gj12TE0GCc70OOJocJCMMdtceSvoWa2clFkVtfz42tfc
-         NVTbE3gDGn7bsADcEQq84BzSGxMRIHt9HfI+r2PzD42AqbYnIjjZfJbcHwXQnHr2aqu1
-         nV218QolJDfI8X1OyUZ1XhjebAyle3QGdgOg4XslQkNGxWl7gSMjpGEVoWy61YEdBC7i
-         e2/D2KSAFJiWtMIQqnOqpX6L3lLESHhiZ0Qjf+B9NExEmrDzEU/1KuhGueyXTVODCXmW
-         FQtw==
-X-Gm-Message-State: AOAM531OOYSQb6OEx2x8ckJJvP4MZ5XEzBRGm3PyMlBahdSl5ewxwwXr
-        XEM3Bp1fOAkrCKSRINjS+H4=
-X-Google-Smtp-Source: ABdhPJzNpdAF9CCzGfP8sG9ncd25/FPuC6g6AByGverT5oAgx7TlVWh8xE/g3DI5YXBMEkYyIP2c8Q==
-X-Received: by 2002:a19:189:: with SMTP id 131mr6399805lfb.128.1596378377807;
-        Sun, 02 Aug 2020 07:26:17 -0700 (PDT)
-Received: from workstation.lan ([95.155.85.46])
-        by smtp.gmail.com with ESMTPSA id 193sm4214136lfa.90.2020.08.02.07.26.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2020 07:26:17 -0700 (PDT)
-From:   =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
-To:     Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Jingoo Han <jingoohan1@gmail.com>, Kukjin Kim <kgene@kernel.org>,
+        Sun, 2 Aug 2020 16:36:11 -0400
+Received: from localhost.localdomain (unknown [194.230.155.117])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D79CC20722;
+        Sun,  2 Aug 2020 20:36:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596400571;
+        bh=BQ+dzz0/RbU56sb1Yo1q2mdEO2kai1wfHmpYJJz77WI=;
+        h=From:To:Subject:Date:From;
+        b=uUwuyNfOoIgk9OWczmE8sU8ApXy8yOiVT/ZukA56DkAvM2k8Xqqdxy/C+eOeEO3FC
+         44HmbAA9BSMJymAS5BoG9BN+9qwOSdQB8oOM/XEhd20wk8S1PgjOkbB5MhlIXyDokc
+         e4RMAfC0C57GgkplNVz0e9RL8ye7ThiBfl93j97s=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Yue Wang <yue.wang@Amlogic.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Hou Zhiqiang <Zhiqiang.Hou@nxp.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Toan Le <toan@os.amperecomputing.com>,
-        Ley Foon Tan <ley.foon.tan@intel.com>,
-        Shawn Lin <shawn.lin@rock-chips.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        rfi@lists.rocketboards.org
-Subject: [PATCH 09/10] PCI: rockchip: Remove dev_err() when handing an error from platform_get_irq()
-Date:   Sun,  2 Aug 2020 14:26:01 +0000
-Message-Id: <20200802142601.1635926-10-kw@linux.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200802142601.1635926-1-kw@linux.com>
-References: <20200802142601.1635926-1-kw@linux.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: s3c24xx: demote kerneldoc comment
+Date:   Sun,  2 Aug 2020 22:36:05 +0200
+Message-Id: <20200802203605.15125-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-There is no need to call the dev_err() function directly to print a
-custom message when handling an error from either the platform_get_irq()
-or platform_get_irq_byname() functions as both are going to display an
-appropriate error message in case of a failure.
+Remove kerneldoc annotation to fix warning:
 
-This change is as per suggestion from Coccinelle:
+    arch/arm/mach-s3c24xx/mach-h1940.c:185: warning:
+        cannot understand function prototype: 'struct s3c2410fb_display h1940_lcd __initdata = '
 
-  drivers/pci/controller/pcie-rockchip-host.c:553:2-9: line 553 is
-  redundant because platform_get_irq() already prints an error
-
-  drivers/pci/controller/pcie-rockchip-host.c:566:2-9: line 566 is
-  redundant because platform_get_irq() already prints an error
-
-  drivers/pci/controller/pcie-rockchip-host.c:576:2-9: line 576 is
-  redundant because platform_get_irq() already prints an error
-
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kw@linux.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/arm/mach-s3c24xx/mach-h1940.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index 94af6f5828a3..eebe05ab354f 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -549,10 +549,8 @@ static int rockchip_pcie_setup_irq(struct rockchip_pcie *rockchip)
- 	struct platform_device *pdev = to_platform_device(dev);
+diff --git a/arch/arm/mach-s3c24xx/mach-h1940.c b/arch/arm/mach-s3c24xx/mach-h1940.c
+index 89528bea89f1..c09f61d35d57 100644
+--- a/arch/arm/mach-s3c24xx/mach-h1940.c
++++ b/arch/arm/mach-s3c24xx/mach-h1940.c
+@@ -179,9 +179,9 @@ static struct s3c2410_ts_mach_info h1940_ts_cfg __initdata = {
+ 		.cfg_gpio = s3c24xx_ts_cfg_gpio,
+ };
  
- 	irq = platform_get_irq_byname(pdev, "sys");
--	if (irq < 0) {
--		dev_err(dev, "missing sys IRQ resource\n");
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	err = devm_request_irq(dev, irq, rockchip_pcie_subsys_irq_handler,
- 			       IRQF_SHARED, "pcie-sys", rockchip);
-@@ -562,20 +560,16 @@ static int rockchip_pcie_setup_irq(struct rockchip_pcie *rockchip)
- 	}
- 
- 	irq = platform_get_irq_byname(pdev, "legacy");
--	if (irq < 0) {
--		dev_err(dev, "missing legacy IRQ resource\n");
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	irq_set_chained_handler_and_data(irq,
- 					 rockchip_pcie_legacy_int_handler,
- 					 rockchip);
- 
- 	irq = platform_get_irq_byname(pdev, "client");
--	if (irq < 0) {
--		dev_err(dev, "missing client IRQ resource\n");
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	err = devm_request_irq(dev, irq, rockchip_pcie_client_irq_handler,
- 			       IRQF_SHARED, "pcie-client", rockchip);
+-/**
++/*
+  * Set lcd on or off
+- **/
++ */
+ static struct s3c2410fb_display h1940_lcd __initdata = {
+ 	.lcdcon5=	S3C2410_LCDCON5_FRM565 | \
+ 			S3C2410_LCDCON5_INVVLINE | \
 -- 
-2.27.0
+2.17.1
 
