@@ -2,16 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 365C723E147
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Aug 2020 20:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64C1323E06A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Aug 2020 20:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727982AbgHFSmg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 6 Aug 2020 14:42:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49832 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728194AbgHFSV4 (ORCPT
+        id S1728664AbgHFSdY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 6 Aug 2020 14:33:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59364 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbgHFSdT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 6 Aug 2020 14:21:56 -0400
+        Thu, 6 Aug 2020 14:33:19 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66730C0617A2
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  6 Aug 2020 11:33:19 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id f12so9099348wru.13
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 06 Aug 2020 11:33:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:resent-from:resent-date:resent-message-id
+         :resent-to:dkim-signature:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=aQVJ5KQArHQc1uqs172CvIl42cGAzuVE1S+Y7bN0gvo=;
+        b=ccHwI3y/UuMg6IwJzGZakGbM5AmMPgxNOc7Yj1rwo0aEE/W5R/z1ZSdl9jKCpK7tGq
+         LP9CRWAYs3MXj9EuwMJDfa/f4FWTgYhGAmd4STOurSCCc/nq4jCq646GbCUXBnto3+cI
+         aVMJLWL1qpVWn04s4Uqsro1HXIuJI1R/zyO2WFheN4ZXodgxduL6vSMXWf7qzZhVJLMl
+         ieorIZltT/VMCDXckJLntNIxtK/vGvlnliBfy/PysjVj7NK+BmCgMwqlT6BZN1t/IMMf
+         3Ia8gPmVBxxhkKfTkZvKQ7EGYhOdR+SMAzrWntkATOXOEZtjC/3hbfVYG3cEg+EgxUsA
+         K9gA==
+X-Gm-Message-State: AOAM530urCeSclafjG5hyUBczmdmfIF62qoP0S4i/vhL7IUgGn/KaRLv
+        S1SbG+uXRDRoy18dO8xDtzBfUg/nMbo=
+X-Google-Smtp-Source: ABdhPJz147uPnl66XM/bgOzKVSVuhqhnKdDW8RKipouCPhKYEE1HqI/DPXwbXMs4ctc035fnZ59muA==
+X-Received: by 2002:a5d:550e:: with SMTP id b14mr9168703wrv.392.1596738796222;
+        Thu, 06 Aug 2020 11:33:16 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.117])
+        by smtp.googlemail.com with ESMTPSA id h14sm7149334wml.30.2020.08.06.11.33.15
+        for <linux-samsung-soc@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Aug 2020 11:33:15 -0700 (PDT)
+Received: by 2002:ab3:1105:0:0:0:0:0 with SMTP id j5csp1540153lta;
+        Thu, 6 Aug 2020 11:21:12 -0700 (PDT)
+X-Received: by 2002:a65:48c1:: with SMTP id o1mr7897316pgs.83.1596738071781;
+        Thu, 06 Aug 2020 11:21:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1596738071; cv=none;
+        d=google.com; s=arc-20160816;
+        b=Gen2pBLG93UxYwE/lhcU2MxsiiMTYwoi09Yc4wUmly7ZMwPqynSlF4qDzpA8cJf2u6
+         dNkuXNkUeuMe8J5Ex5q43RIF6CKf5Is+E9YkTyoL5H61SMrwB6b00xgTjVIK2QVNccZN
+         BqHMQR0Tcy9QgnZgYBLvUhJ40X9TVC8dH7vgZA4vTMDhIgZUEum64TPGvg5KKL1VA0DT
+         c8JydeuipXpubJRzAeikushFxU/0rj8zsHCJaqFopiny00pMn37gh4yEO5qQETM0PufP
+         elpldAb2V1h6KJrmAsrojfypkGY3r/b4enIQSeUS4K1x2tDbMSJZnTnr/6oUEFiEPIvp
+         xEOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from
+         :dkim-signature:delivered-to;
+        bh=aQVJ5KQArHQc1uqs172CvIl42cGAzuVE1S+Y7bN0gvo=;
+        b=tgCY6TVxIQjmL3pdfT+jxVhyhbeKakTIAi3ofar1JLrYuHSO0ERnuMj1ZU6PQS9wsf
+         v7M62vzih+MMJPbH7xNt3qLbgco+l7eiLXAn4XV7sGgStVf57SBs7I2MniZu3ovyLyuI
+         L+OHC1jIp79rITwI6R8Q/ekP5LYp/b6smAgmdr1nmxach/45t8f6Qp4SUT6q0/YDIqda
+         j/xrN7oROhBwj5gzZzR2noVcVyaxx8o2bL3jkQONtgtLUNcpuBuxV2MrohZHViCiCUA9
+         6EnbB6nUsZNzusodJfpbAN3/7jhjiiYjhmbuvPDLHyFf+kVM9rH4lPTLUqTr7fC1sstO
+         y6cQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@kernel.org header.s=default header.b=AIR9gMTO;
+       spf=pass (google.com: domain of krzk@kernel.org designates 198.145.29.99 as permitted sender) smtp.mailfrom=krzk@kernel.org;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=kernel.org
+Received: from mail.kernel.org (mail.kernel.org. [198.145.29.99])
+        by mx.google.com with ESMTPS id l20si4058421plb.229.2020.08.06.11.21.11
+        for <k.kozlowski.k+kernel@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Aug 2020 11:21:11 -0700 (PDT)
+Received-SPF: pass (google.com: domain of krzk@kernel.org designates 198.145.29.99 as permitted sender) client-ip=198.145.29.99;
+Received: by mail.kernel.org (Postfix)
+        id A925422CE3; Thu,  6 Aug 2020 18:21:11 +0000 (UTC)
 Received: from localhost.localdomain (unknown [194.230.155.117])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
@@ -41,6 +102,7 @@ Message-Id: <20200806182059.2431-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200806181932.2253-1-krzk@kernel.org>
 References: <20200806181932.2253-1-krzk@kernel.org>
+X-TUID: ZwOYwYqP7My/
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
