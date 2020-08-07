@@ -2,130 +2,142 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9E0A23E05E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Aug 2020 20:32:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0960323E575
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Aug 2020 03:20:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728545AbgHFScK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 6 Aug 2020 14:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728445AbgHFSbM (ORCPT
+        id S1726078AbgHGBU0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 6 Aug 2020 21:20:26 -0400
+Received: from mailout4.samsung.com ([203.254.224.34]:20769 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726027AbgHGBUY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 6 Aug 2020 14:31:12 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C1CC0617AB
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  6 Aug 2020 11:30:13 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id c19so7103643wmd.1
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 06 Aug 2020 11:30:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:resent-from:resent-date:resent-message-id
-         :resent-to:dkim-signature:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=GgIOF6fyOLm4ikN+dwT8dD5n4ZkgAd1xYodf6BTwDNg=;
-        b=B9z2cGZ7qqv45cLkEZjfohTRMNsbT3ejiM3BfLC3OXytMv1OkcEkAkaaUJaHJPhWpL
-         MwM1MbtZs6RXR0iQVBNgDtVd8Oakvd2JCo2zvdmIfyfsui0XeHcgADC4XHafwHvzY7JH
-         X7gC0JnqlE6wmwcUFS17csusyNYpVh9js6e8zSjijWTWre3prRYLo4hWlmrnepoHSYPg
-         4dyjWHCY2m6Blg8+gZRmjNIei6pbeAe1fuNd40+P5Z9u4lYAlgGfn1uYm5QefcQ4Zzbf
-         gXl0MPVaIC0BFkcS98IzPdFRVzKUt1ROYr9Q7jZb4zRYwZT6Ab+PTcHyg00vVkVFVyqW
-         cL1A==
-X-Gm-Message-State: AOAM530ZyfF0g6uPRsWXRmoJU3h5LGq3/qyv2cV8UYW7mhSb3jX2QSzo
-        0qr3gIIp00ptFmowxsXL/rALftR8UUE=
-X-Google-Smtp-Source: ABdhPJxl5MUeWEL7oVbFhojCa/tPtimCBT0VkhOj21t9+a610kxFnfI+NV9BgUMt504vgZ+vbwktKQ==
-X-Received: by 2002:a7b:cb47:: with SMTP id v7mr3624303wmj.129.1596738612172;
-        Thu, 06 Aug 2020 11:30:12 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.117])
-        by smtp.googlemail.com with ESMTPSA id o125sm8298042wma.27.2020.08.06.11.30.11
-        for <linux-samsung-soc@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Aug 2020 11:30:11 -0700 (PDT)
-Received: by 2002:ab3:1105:0:0:0:0:0 with SMTP id j5csp1542887lta;
-        Thu, 6 Aug 2020 11:25:21 -0700 (PDT)
-X-Received: by 2002:a17:90a:e643:: with SMTP id ep3mr9895831pjb.18.1596738321257;
-        Thu, 06 Aug 2020 11:25:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1596738321; cv=none;
-        d=google.com; s=arc-20160816;
-        b=N1XyDugyBKUwiBWBUBjvNFj2xUeadcOwUKFNzLc69oUrH6WTd2HHpPMjhiMcw/pJ6t
-         N62bO2N4a7xr7/2x4vQ5HDfx1oNlzORBK/X4o8pr40/xpo6uswB537nox8iFuljI5HWR
-         M+O9E60PDybqrIehP9sMhG+O7ZzJjjC+sHL/efttA6tIpXVdUjx9KbCgFOKCUZj+A680
-         uNc9WZISpnlFXsV3fcrghluOG+zQezKqKd0Qql90aDBDrva0nt1UmiGIWDvVGj21ayWC
-         2n3Wh0WtDCMu2EW2kC3atC8AX8aoW2Ltmt+5xQxJvtnHCBVEfmuTdqZrADS6nyQjx8+Z
-         mnDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :dkim-signature:delivered-to;
-        bh=GgIOF6fyOLm4ikN+dwT8dD5n4ZkgAd1xYodf6BTwDNg=;
-        b=hjBMOjkw9HJya5fjlYA59yKkXbdBn35VL3IFotbmwhQqu6Tp06tSLSEsVgH6ndD02p
-         ZJZ0QCpYnFEXY17H7uJh5JJ0ReMvBX9szB4k9eelChjD2h+AyvxX6dEzvhRhJyWCc2HO
-         w/9ZvPG5YUv7jr9/DDqE9k50YZibeQcmWI2VtCIvEsIMyt+3aBBsCDoKkpDilva1+oQK
-         LGqq8kPo/IYSw8NmLQ5aqmAbchRwT3fdhE0Lzo2hzQu3OyW3kOH1N2n7pLW3HQBU1l5f
-         GH3PaOGb/dWBg+s7alp22kMveWuNJIM4ezwoJXRqxRu4sXMOoxj1bbYka2JlAwm5kdS0
-         feKA==
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@kernel.org header.s=default header.b=EXqHoFUB;
-       spf=pass (google.com: domain of krzk@kernel.org designates 198.145.29.99 as permitted sender) smtp.mailfrom=krzk@kernel.org;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=kernel.org
-Received: from mail.kernel.org (mail.kernel.org. [198.145.29.99])
-        by mx.google.com with ESMTPS id h7si4259802pgi.405.2020.08.06.11.25.21
-        for <k.kozlowski.k+kernel@gmail.com>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Aug 2020 11:25:21 -0700 (PDT)
-Received-SPF: pass (google.com: domain of krzk@kernel.org designates 198.145.29.99 as permitted sender) client-ip=198.145.29.99;
-Received: by mail.kernel.org (Postfix)
-        id 6A8FB23101; Thu,  6 Aug 2020 18:25:21 +0000 (UTC)
-Received: from localhost.localdomain (unknown [194.230.155.117])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6E5F623102;
-        Thu,  6 Aug 2020 18:25:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596738321;
-        bh=VAU1eGfzCZfS7G3FX+Wn/xXTQQH5HorEtjLf+F1OX28=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EXqHoFUBTp6Wfsbm9vRJqQUKwEuV8d/XmfWKVnu+R/hlUZPEP0voCFwpiql36+fxN
-         aVXfleK8EVRRbX0y8jxECPsZOaSciaIITxd4jglIIpSQ8R+zRbAXAlo6GjrQ1waz/y
-         fqaLnN6L+cykz+Rh4mjkkNs96GoIwR4C2gn4J77I=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH v2 41/41] MAINTAINERS: Add more name matches for Samsung SoC entries
-Date:   Thu,  6 Aug 2020 20:20:58 +0200
-Message-Id: <20200806182059.2431-41-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200806181932.2253-1-krzk@kernel.org>
-References: <20200806181932.2253-1-krzk@kernel.org>
-X-TUID: 9/YpJcP7Bxdz
+        Thu, 6 Aug 2020 21:20:24 -0400
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20200807012020epoutp0426abf13951a886155cbbfde3c14b3705~o17B6Mgv00866308663epoutp046
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  7 Aug 2020 01:20:20 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20200807012020epoutp0426abf13951a886155cbbfde3c14b3705~o17B6Mgv00866308663epoutp046
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1596763220;
+        bh=0bzgxzv+xoy9CsixNrx4dnMN1shAY2rIUs1e6k9XoAM=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=H3yQRv020BnNKug2KpGwRKRyPA2vFKnDTIC3DuXAausTKf1Nxc02fvVRCA71UZMHj
+         h3VRLzNWWnGdkQ1n88e8XY5L6v77mke/2g9d78KKse8gvSrg4yYjgdRK1cpH4zhuJ6
+         bkmpVWaJ6NIHzWjie4rX/3nDj1IAReooJsfpCRUQ=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20200807012020epcas1p4597259080aa38005572f96b9d09acdf1~o17BSZQ6h2682726827epcas1p4Z;
+        Fri,  7 Aug 2020 01:20:20 +0000 (GMT)
+Received: from epsmges1p1.samsung.com (unknown [182.195.40.154]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 4BN6wy14xpzMqYl1; Fri,  7 Aug
+        2020 01:20:18 +0000 (GMT)
+Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
+        epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+        25.0B.18978.D4CAC2F5; Fri,  7 Aug 2020 10:20:13 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
+        20200807012012epcas1p3f110e9d8badc6c37a363de0b70b28e42~o1656fjZD1403314033epcas1p3i;
+        Fri,  7 Aug 2020 01:20:12 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200807012012epsmtrp22c2ff9c9a9096f0dee757b8a8dcb2fce~o1655iZY71933719337epsmtrp2h;
+        Fri,  7 Aug 2020 01:20:12 +0000 (GMT)
+X-AuditID: b6c32a35-5edff70000004a22-f0-5f2cac4da10b
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        BD.06.08382.C4CAC2F5; Fri,  7 Aug 2020 10:20:12 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200807012012epsmtip163812c47bd0156efdbd57d24c419a6fa~o165rCdPU1337713377epsmtip1U;
+        Fri,  7 Aug 2020 01:20:12 +0000 (GMT)
+Subject: Re: [PATCH] clk: samsung: Prevent potential endless loop in the PLL
+ set_rate ops
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-clk@vger.kernel.org
+Cc:     tomasz.figa@gmail.com, sboyd@kernel.org, mturquette@baylibre.com,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <bb483f3c-7d83-4807-aff2-7969a43121aa@samsung.com>
+Date:   Fri, 7 Aug 2020 10:32:11 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
+        Thunderbird/59.0
+MIME-Version: 1.0
+In-Reply-To: <20200806160646.1997-1-s.nawrocki@samsung.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAJsWRmVeSWpSXmKPExsWy7bCmga7vGp14g1cHhC02zljPavGx5x6r
+        xeVdc9gsZpzfx2Sx9shddouLp1wtDr9pZ7X4d20ji8WqXX8YHTg93t9oZffYOesuu8emVZ1s
+        Hn1bVjF6fN4kF8AalW2TkZqYklqkkJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk
+        4hOg65aZA3SPkkJZYk4pUCggsbhYSd/Opii/tCRVISO/uMRWKbUgJafAskCvODG3uDQvXS85
+        P9fK0MDAyBSoMCE7Y/nlPvaCl2wVq1edZmtg3MXaxcjJISFgIrH++yvmLkYuDiGBHYwSixr/
+        s0M4nxglNvcvYYJwvjFKfFq7gQ2mpf/gWnYQW0hgL6PEnpO8EEXvGSUun1nECJIQFoiWWHp3
+        OtBcDg4RAS+JeQ26IDXMIPXtj/+BDWIT0JLY/+IGmM0voChx9cdjsF5eATuJn593soDYLAIq
+        Eje2L2UGsUUFwiRObmuBqhGUODnzCVgNp4C1xKqdV8AOYhYQl7j1ZD4ThC0vsf3tHLDfJASW
+        cki8P9AMdpCEgIvE6pVQ/wtLvDq+hR3ClpL4/G4v1JPVEitPHmGD6O1glNiy/wJUg7HE/qWT
+        mUDmMAtoSqzfpQ8RVpTY+XsuI8RePol3X3tYIVbxSnS0CUGUKEtcfnCXCcKWlFjc3sk2gVFp
+        FpJvZiH5YBaSD2YhLFvAyLKKUSy1oDg3PbXYsMAQObI3MYKTqpbpDsaJbz/oHWJk4mA8xCjB
+        wawkwpv1QjteiDclsbIqtSg/vqg0J7X4EKMpMHwnMkuJJucD03peSbyhqZGxsbGFiaGZqaGh
+        kjjvw1sK8UIC6YklqdmpqQWpRTB9TBycUg1M2gGKafUP1JS5nf/N5/62i82jyOmBTMApQcOJ
+        +55uOvQkVGt5wZXsJUt7BD6Xayeu2Hn/J5O56Htx2TSNdbPafl3l/xLI9Thvf8XWyxvnX9u5
+        nZ3hV/yRVW/mut6UePRMq9F/hjvHEo+WwxWeAolZkUqPNuhm29crdp/0mxvpUeX/gTllxec/
+        x3or9c023p/hX1Hy6a7wr92H26b/OVa70ujVk1fflOX0ps1a8mx2a03lrr1V4jX+MVMPLlac
+        oiy2Z/3ZRIsdD9XOvJvcteLomluzts/ftZWtu7BBy/tTfafBtfLO4oUTk30cplUEnTMvdkk4
+        pjklNbNHseX6+Ull1c+mTpxocsQi+mpU0bv4LCWW4oxEQy3mouJEAJ4iVyozBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmkeLIzCtJLcpLzFFi42LZdlhJTtdnjU68wbeVnBYbZ6xntfjYc4/V
+        4vKuOWwWM87vY7JYe+Quu8XFU64Wh9+0s1r8u7aRxWLVrj+MDpwe72+0snvsnHWX3WPTqk42
+        j74tqxg9Pm+SC2CN4rJJSc3JLEst0rdL4MpYfrmPveAlW8XqVafZGhh3sXYxcnJICJhI9B9c
+        y97FyMUhJLCbUaJpy2NGiISkxLSLR5m7GDmAbGGJw4eLIWreMkr8PPcGrEZYIFpi6d3pYDUi
+        Al4S8xp0QcLMAnsZJf7/rISo72OUmDBxPxtIgk1AS2L/ixtgNr+AosTVHxC7eAXsJH5+3skC
+        YrMIqEjc2L6UGcQWFQiT2LnkMRNEjaDEyZlPwGo4BawlVu28wg6xTF3iz7xLzBC2uMStJ/OZ
+        IGx5ie1v5zBPYBSehaR9FpKWWUhaZiFpWcDIsopRMrWgODc9t9iwwDAvtVyvODG3uDQvXS85
+        P3cTIzi+tDR3MG5f9UHvECMTB+MhRgkOZiUR3qwX2vFCvCmJlVWpRfnxRaU5qcWHGKU5WJTE
+        eW8ULowTEkhPLEnNTk0tSC2CyTJxcEo1MBUKfeRa8mjLLZcEtecVOumB0uruAqGXrB7MUxLe
+        y8LdVba1pbZcZh3/4ZK7Dpdf6yblsT7Krip6YvggJnT1HUuvxP0S75K9XXNDWwoYL6bHClju
+        fHn86AGfe0vP1tdHvbK/KH485Vdy19fGsOZfhmYGEVVvmHfEy36NLv317try6lXhOrz5TrzL
+        V82avlC9Z4Lntcqv9XU7++98nMJzV/fipAWrZh40Eng65WRM+q+DMy35zl5VToh88W3rvx+c
+        53vs5j091Dlp5hZGSU/eRyZrX7iUXinSFv+fNnez/eTLMtdn++88fV3Hd4L9h1veuyPOszk8
+        12i84D/Ba6lvwU1jPd/JZWr7ONgF5mguLlBiKc5INNRiLipOBADbBb+iHgMAAA==
+X-CMS-MailID: 20200807012012epcas1p3f110e9d8badc6c37a363de0b70b28e42
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20200806160653eucas1p2b7fd860f5d89589cf9df0ad0f8d3981f
+References: <CGME20200806160653eucas1p2b7fd860f5d89589cf9df0ad0f8d3981f@eucas1p2.samsung.com>
+        <20200806160646.1997-1-s.nawrocki@samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The Samsung SoC maintainer entry covers drivers and headers matching
-"exynos" name but except that there are also files for S3C24xx, S3C64xx
-and S5Pv210 SoCs.  These sometimes do not have a separate entry for a
-driver maintainer thus might miss review.  Add them to the Samsung SoC
-maintainer entry to cover all SoCs with name matches.
+Hi Sylwester,
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
+On 8/7/20 1:06 AM, Sylwester Nawrocki wrote:
+> In the .set_rate callback for some PLLs there is a loop polling state
+> of the PLL lock bit and it may become an endless loop when something
+> goes wrong with the PLL. For some PLLs there is already (duplicated)
+> code for polling with a timeout. This patch refactors that code a bit
+> and moves it to a common helper function which is then used
+> in .set_rate callbacks for all the PLLs.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+>  drivers/clk/samsung/clk-pll.c | 94 +++++++++++++----------------------
+>  1 file changed, 35 insertions(+), 59 deletions(-)
+> 
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6c74aa41e35b..7dcd9305a622 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2422,6 +2422,9 @@ F:	drivers/soc/samsung/
- F:	drivers/tty/serial/samsung*
- F:	include/linux/soc/samsung/
- N:	exynos
-+N:	s3c2410
-+N:	s3c64xx
-+N:	s5pv210
- 
- ARM/SAMSUNG MOBILE MACHINE SUPPORT
- M:	Kyungmin Park <kyungmin.park@samsung.com>
+(snip)
+
+It fix the infinite loop and unify the duplicate code.
+It looks good to me. Thanks.
+
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+
+
 -- 
-2.17.1
-
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
