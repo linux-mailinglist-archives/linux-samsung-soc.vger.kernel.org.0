@@ -2,114 +2,106 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DBCE23E874
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Aug 2020 10:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C582723E903
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Aug 2020 10:36:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbgHGIBI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 7 Aug 2020 04:01:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53846 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725805AbgHGIBG (ORCPT
+        id S1727053AbgHGIgP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 7 Aug 2020 04:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbgHGIgO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 7 Aug 2020 04:01:06 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8A25C20866;
-        Fri,  7 Aug 2020 08:01:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596787265;
-        bh=xUgnM0/zA2UWr+I99OfNrHfnZYFJtBUMEUvz2VyQjUY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=J0N3GNdGbqKbNGf7d1vTseLpvgl8Bw+85/lL4NHPbp+Aqw7bcaIYnkzLTGDbgFoCK
-         yej6ElsbfSHdTCIC2sWmalZH8PJifSbKWW5xVlUdSfMf8WHXeU3BWxEDjrvmAAGzo1
-         3Z6DITpk1GAAiyzLdUJwNMXnXyTE8aXS9LdgBRw8=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1k3xJI-000SA0-37; Fri, 07 Aug 2020 09:01:04 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 07 Aug 2020 09:01:03 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
+        Fri, 7 Aug 2020 04:36:14 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E188C061574;
+        Fri,  7 Aug 2020 01:36:14 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id 6so750363qtt.0;
+        Fri, 07 Aug 2020 01:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kdO3teMZpZhh4Zg2rIT12joG5MKLgBFbBUxDW1pI73k=;
+        b=eIR16ZnQ1nthK/tYOCxXkv+uIJlqLI5IbwPoaSHYzG5gRu20ue9nD6QcbcUL6csLHq
+         qJ2Bf3uuqmFtWK+oIJ5EzY3p1D25EFds9Q/z7v8P5eEDL2TVQ9mEVGerVe/8PbTl/Qsk
+         D11fnpEB4jlA3GJjzTBBaivnKJQfkHoMpRl7Mes/NBarDLQ2EBA5tm3fKMVXCUX5p8NE
+         VtI6+OpmTkmJ4j60tffXtyKIDmyO1/uEycScTE8E6FEgO3oFk0A8h/SRUTFFX4NyHy/D
+         pAI5tBl+++1vqtgrdk6M+NIJOrts3ioniEWB22DpA+PlR4g7FKvH16B1edACnFjwhi+W
+         txjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kdO3teMZpZhh4Zg2rIT12joG5MKLgBFbBUxDW1pI73k=;
+        b=DwXflxIr0aYng0tZNcuTXEfNuxsGg8tnZ7B3e/CXmsbpD0IPeFpYOQhxxsUUvnbhgO
+         fPCUOHgxKDRmjBlpq/vx+0W2fk0zIqG3AemOiaDUx3dZZnflq+7qh0ZsJmTNjDztYjZW
+         BtS0kJZWr8xBkRem82LKmy/GxmM5dbSy6wqI3voRTPpaN6ecCW4zHIHN6eRTUHLNdcty
+         cJjQwlaxu70QcMwQ0ovAM16IZFxGOCE2Y9q3ib9z/PZ0XcJAV8STUYzJLUEFpT0Brgo3
+         nS+9N/LjKsHGtGJ0dvKZaljM/XMnn162PHBdO5ULHIyRWft2tltWxgn4N8PSOlmUSWCC
+         ec4w==
+X-Gm-Message-State: AOAM530/rzC3S1Z2DlMccmvAue2paDuNet+gamR7/9g9RtIMYzh6stmy
+        3k77orKkO78d42dV0cf+MFc=
+X-Google-Smtp-Source: ABdhPJwBojBnRxKGIEx2o9NF/V0VbhRIv+H1iWPd1xJmwPYqw7fbihn+NBWPgbuQol6WxM2CBA7iGg==
+X-Received: by 2002:aed:3947:: with SMTP id l65mr13322315qte.374.1596789373742;
+        Fri, 07 Aug 2020 01:36:13 -0700 (PDT)
+Received: from localhost.localdomain ([2804:14d:72b1:8920:da15:c0bd:33c1:e2ad])
+        by smtp.gmail.com with ESMTPSA id c42sm7846728qte.5.2020.08.07.01.36.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2020 01:36:13 -0700 (PDT)
+From:   "Daniel W. S. Almeida" <dwlsalmeida@gmail.com>
+X-Google-Original-From: Daniel W. S. Almeida
+To:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Kukjin Kim <kgene@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v2 21/41] ARM: s3c24xx: move irqchip driver back into
- platform
-In-Reply-To: <20200806182059.2431-21-krzk@kernel.org>
-References: <20200806181932.2253-1-krzk@kernel.org>
- <20200806182059.2431-21-krzk@kernel.org>
-User-Agent: Roundcube Webmail/1.4.5
-Message-ID: <35c4ebb133e6b885abe1a0c07988599f@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: krzk@kernel.org, linux-kernel@vger.kernel.org, arnd@arndb.de, linux@armlinux.org.uk, tglx@linutronix.de, jason@lakedaemon.net, kgene@kernel.org, linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     skhan@linuxfoundation.org,
+        "Daniel W. S. Almeida" <dwlsalmeida@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 02/20] media: exynos4-is: media-dev.c: use PTR_ERR_OR_ZERO
+Date:   Fri,  7 Aug 2020 05:35:29 -0300
+Message-Id: <20200807083548.204360-2-dwlsalmeida@gmail.com>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2020-08-06 19:20, Krzysztof Kozlowski wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> It was a good idea to move it out at first, but the irqchip code
-> is still tightly connected to the s3c24xx platform code and uses
-> multiple internal header files, so just move it back for the
-> time being to avoid those dependencies.
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  arch/arm/mach-s3c24xx/Makefile                           | 1 +
->  {drivers/irqchip => arch/arm/mach-s3c24xx}/irq-s3c24xx.c | 0
->  drivers/irqchip/Makefile                                 | 1 -
->  3 files changed, 1 insertion(+), 1 deletion(-)
->  rename {drivers/irqchip => arch/arm/mach-s3c24xx}/irq-s3c24xx.c (100%)
-> 
-> diff --git a/arch/arm/mach-s3c24xx/Makefile 
-> b/arch/arm/mach-s3c24xx/Makefile
-> index 6692f2de71b2..8c31f84f8c97 100644
-> --- a/arch/arm/mach-s3c24xx/Makefile
-> +++ b/arch/arm/mach-s3c24xx/Makefile
-> @@ -8,6 +8,7 @@
->  # core
-> 
->  obj-y				+= common.o
-> +obj-y				+= irq-s3c24xx.o
-> 
->  obj-$(CONFIG_CPU_S3C2410)	+= s3c2410.o
->  obj-$(CONFIG_S3C2410_PLL)	+= pll-s3c2410.o
-> diff --git a/drivers/irqchip/irq-s3c24xx.c 
-> b/arch/arm/mach-s3c24xx/irq-s3c24xx.c
-> similarity index 100%
-> rename from drivers/irqchip/irq-s3c24xx.c
-> rename to arch/arm/mach-s3c24xx/irq-s3c24xx.c
-> diff --git a/drivers/irqchip/Makefile b/drivers/irqchip/Makefile
-> index 133f9c45744a..8c983ad774f6 100644
-> --- a/drivers/irqchip/Makefile
-> +++ b/drivers/irqchip/Makefile
-> @@ -16,7 +16,6 @@ obj-$(CONFIG_ARCH_LPC32XX)		+= irq-lpc32xx.o
->  obj-$(CONFIG_ARCH_MMP)			+= irq-mmp.o
->  obj-$(CONFIG_IRQ_MXS)			+= irq-mxs.o
->  obj-$(CONFIG_ARCH_TEGRA)		+= irq-tegra.o
-> -obj-$(CONFIG_ARCH_S3C24XX)		+= irq-s3c24xx.o
->  obj-$(CONFIG_DW_APB_ICTL)		+= irq-dw-apb-ictl.o
->  obj-$(CONFIG_CLPS711X_IRQCHIP)		+= irq-clps711x.o
->  obj-$(CONFIG_OMPIC)			+= irq-ompic.o
+From: "Daniel W. S. Almeida" <dwlsalmeida@gmail.com>
 
-Acked-by: Marc Zyngier <maz@kernel.org>
+Fixes the following coccinelle report:
 
-          M.
+drivers/media/platform/exynos4-is/media-dev.c:1273:1-3:
+WARNING: PTR_ERR_OR_ZERO can be used
+
+By using PTR_ERR_OR_ZERO in place of the existing logic.
+
+Found using - Coccinelle (http://coccinelle.lip6.fr)
+
+Signed-off-by: Daniel W. S. Almeida <dwlsalmeida@gmail.com>
+---
+ drivers/media/platform/exynos4-is/media-dev.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index 16dd660137a8..9346b08931e2 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -1270,10 +1270,8 @@ static int fimc_md_get_pinctrl(struct fimc_md *fmd)
+ 
+ 	pctl->state_idle = pinctrl_lookup_state(pctl->pinctrl,
+ 					PINCTRL_STATE_IDLE);
+-	if (IS_ERR(pctl->state_idle))
+-		return PTR_ERR(pctl->state_idle);
+ 
+-	return 0;
++	return PTR_ERR_OR_ZERO(pctl->state_idle);
+ }
+ 
+ static int cam_clk_prepare(struct clk_hw *hw)
 -- 
-Jazz is not dead. It just smells funny...
+2.28.0
+
