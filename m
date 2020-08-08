@@ -2,118 +2,115 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E03E123F84C
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  8 Aug 2020 19:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8499C23FBC0
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  9 Aug 2020 01:51:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbgHHRNT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 8 Aug 2020 13:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgHHRNT (ORCPT
+        id S1727874AbgHHXvG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 8 Aug 2020 19:51:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48524 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726648AbgHHXgK (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 8 Aug 2020 13:13:19 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA417C061756;
-        Sat,  8 Aug 2020 10:13:18 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id w12so4971921iom.4;
-        Sat, 08 Aug 2020 10:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=10CvMVkFP5s0ogDLDyQLYDDtzvGA2GFASeeImWfNvUk=;
-        b=V5zmyG2WJuuFRtXQWYNAehEPBSYzwi8qVw7YmJ9J92ZGxTUI3Tj3VA5ZAXaOo5E7dX
-         jW1jq+SfY6CsA9PNjUeGHqd4HxfznppRMyHO1Ny4OvIpxpEfp7kg2chqEQR/fw2d/txO
-         l+S+yq8d2X/KRIoBmR4WVsYIWi5Jg7OuIlpSXqu+FVDL2sHDoRL9yhZpLmaMc9PiyKOp
-         ijCw2OapJAkYJut0Qf7mVS/5Ngs3I4a9M45wN1OvyUirQD1D8aYlYnFK8CEvIS0R34Br
-         aCwcrLJdAvGPoRoHU778k01OI+CZg5kJbehPUkdprZUJ7OaLz6cw/VU1hOeMkjE9kuNv
-         MorQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=10CvMVkFP5s0ogDLDyQLYDDtzvGA2GFASeeImWfNvUk=;
-        b=WZQBwAGBTuyDJbfgfLvpx03D+uACpAzmZY/rIn6O4elef036wITx5cC9sCgoWuv/Bj
-         KCgts0RgK3wh0D6l4jqaVWwiLYTZ2HFJ/2YMfsIps8IAPWbgoflctUjOZy2ej9oIBQrX
-         bhtqsrIUFg09N+SLOySE5XoEttOtba0bUBoVBphjt6CQCpW6zTS2MvDb8rfGvAZL0IEk
-         rfcn2Xo4yVoZwyQL31viMLz7o9x3wDq6+WTqymdGeN9EfwDvUnnpN1snSO95NbY+LLDg
-         sHLjoB1IVygFCqRHaLdo1zoq9LNQnh/7MiB9F20+fwULXMBDgs0UjWmQIorf7WZoZPa4
-         XNKQ==
-X-Gm-Message-State: AOAM533+C7896IFeqb4vCUhNrpzYDKHYIz2tV2AmqW73fl8evOUt5D43
-        Ndf73PQDfMdXPBx+cOgT0ooFeSV66pT76dy+qU8=
-X-Google-Smtp-Source: ABdhPJyX64YtKJWSqwizyrJNygwkrIk1NowT0wwl2BNXq6x0fsRJt7GgJsT1h3wjxw22Xa+W7TBt26KkFZ2Np3csNIc=
-X-Received: by 2002:a6b:b888:: with SMTP id i130mr9996946iof.182.1596906797218;
- Sat, 08 Aug 2020 10:13:17 -0700 (PDT)
+        Sat, 8 Aug 2020 19:36:10 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9CD34206D8;
+        Sat,  8 Aug 2020 23:36:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596929769;
+        bh=drw5bpymsEmzse0AQE94EHwiijtRpGBgXRZNsFvsyBE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=NwbwsS0sSUkDcGgLRr8NMKwc22UybdwiKB0yp6/lhM5QUNEP+Va8Ao1WKVvNSBsjH
+         5b3jPdLunsVg/Tmbwemfea6SE2TJQlzKIHAbLARYXZG+xEFfxwJx+2qT1rxOfKqsBd
+         h8n49WipAbqXKtT+wESGbFedON66mzgBmJ/7ii5g=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.8 20/72] ARM: exynos: MCPM: Restore big.LITTLE cpuidle support
+Date:   Sat,  8 Aug 2020 19:34:49 -0400
+Message-Id: <20200808233542.3617339-20-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200808233542.3617339-1-sashal@kernel.org>
+References: <20200808233542.3617339-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <CGME20200806160653eucas1p2b7fd860f5d89589cf9df0ad0f8d3981f@eucas1p2.samsung.com>
- <20200806160646.1997-1-s.nawrocki@samsung.com> <CA+Ln22HGSj4gFRmw1rSLaTvw3TiPC9jaM6JB4Z1fbxpwsWNZWw@mail.gmail.com>
- <d980e369-73ef-89a8-6669-f7e9c5dd3243@samsung.com>
-In-Reply-To: <d980e369-73ef-89a8-6669-f7e9c5dd3243@samsung.com>
-From:   Tomasz Figa <tomasz.figa@gmail.com>
-Date:   Sat, 8 Aug 2020 19:13:05 +0200
-Message-ID: <CA+Ln22EY1HDMLKpSsfj+9UyON-51_b-pkPgd3MCyArQSAjKYSw@mail.gmail.com>
-Subject: Re: [PATCH] clk: samsung: Prevent potential endless loop in the PLL
- set_rate ops
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        "moderated list:SAMSUNG SOC CLOCK DRIVERS" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-2020=E5=B9=B48=E6=9C=887=E6=97=A5(=E9=87=91) 19:06 Sylwester Nawrocki <s.na=
-wrocki@samsung.com>:
->
-> Hi Tomasz,
->
-> On 8/6/20 18:11, Tomasz Figa wrote:
-> >> --- a/drivers/clk/samsung/clk-pll.c
-> >> +++ b/drivers/clk/samsung/clk-pll.c
-> >> @@ -63,6 +63,27 @@ static long samsung_pll_round_rate(struct clk_hw *h=
-w,
-> >>         return rate_table[i - 1].rate;
-> >>  }
-> >>
-> >> +static int samsung_pll_lock_wait(struct samsung_clk_pll *pll,
-> >> +                                unsigned int reg_mask)
-> >> +{
-> >> +       ktime_t timeout;
-> >> +
-> >> +       /* Wait until the PLL is in steady locked state */
-> >> +       timeout =3D ktime_add_ms(ktime_get(), PLL_TIMEOUT_MS);
-> >> +
-> >> +       while (!(readl_relaxed(pll->con_reg) & reg_mask)) {
-> >> +               if (ktime_after(ktime_get(), timeout)) {
-> >> +                       pr_err("%s: Could not lock PLL %s\n",
-> >> +                               __func__, clk_hw_get_name(&pll->hw));
-> >> +                       return -EFAULT;
-> >> +               }
-> >> +
-> >> +               cpu_relax();
-> >> +       }
->
-> > Thanks for the patch! Good to have this consolidated. How about going
-> > one step further and using the generic
-> > readl_relaxed_poll_timeout_atomic() helper?
->
-> Might be a good suggestion, I was considering those helpers but ended
-> up not using them in the patch. The cpu_relax() call might also not be
-> really needed now, when there is the ktime code within the loop.
-> Having multiple occurrences of readl_relaxed_poll_timeout_atomic() could
-> increase the code size due to inlining. How about keeping the
-> samsung_pll_lock_wait() function and just changing its implementation?
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-Sounds good to me, thanks!
+[ Upstream commit ea9dd8f61c8a890843f68e8dc0062ce78365aab8 ]
 
-Best regards,
-Tomasz
+Call exynos_cpu_power_up(cpunr) unconditionally. This is needed by the
+big.LITTLE cpuidle driver and has no side-effects on other code paths.
+
+The additional soft-reset call during little core power up has been added
+to properly boot all cores on the Exynos5422-based boards with secure
+firmware (like Odroid XU3/XU4 family). This however broke big.LITTLE
+CPUidle driver, which worked only on boards without secure firmware (like
+Peach-Pit/Pi Chromebooks). Apply the workaround only when board is
+running under secure firmware.
+
+Fixes: 833b5794e330 ("ARM: EXYNOS: reset Little cores when cpu is up")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/mach-exynos/mcpm-exynos.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/mach-exynos/mcpm-exynos.c b/arch/arm/mach-exynos/mcpm-exynos.c
+index 9a681b421ae11..cd861c57d5adf 100644
+--- a/arch/arm/mach-exynos/mcpm-exynos.c
++++ b/arch/arm/mach-exynos/mcpm-exynos.c
+@@ -26,6 +26,7 @@
+ #define EXYNOS5420_USE_L2_COMMON_UP_STATE	BIT(30)
+ 
+ static void __iomem *ns_sram_base_addr __ro_after_init;
++static bool secure_firmware __ro_after_init;
+ 
+ /*
+  * The common v7_exit_coherency_flush API could not be used because of the
+@@ -58,15 +59,16 @@ static void __iomem *ns_sram_base_addr __ro_after_init;
+ static int exynos_cpu_powerup(unsigned int cpu, unsigned int cluster)
+ {
+ 	unsigned int cpunr = cpu + (cluster * EXYNOS5420_CPUS_PER_CLUSTER);
++	bool state;
+ 
+ 	pr_debug("%s: cpu %u cluster %u\n", __func__, cpu, cluster);
+ 	if (cpu >= EXYNOS5420_CPUS_PER_CLUSTER ||
+ 		cluster >= EXYNOS5420_NR_CLUSTERS)
+ 		return -EINVAL;
+ 
+-	if (!exynos_cpu_power_state(cpunr)) {
+-		exynos_cpu_power_up(cpunr);
+-
++	state = exynos_cpu_power_state(cpunr);
++	exynos_cpu_power_up(cpunr);
++	if (!state && secure_firmware) {
+ 		/*
+ 		 * This assumes the cluster number of the big cores(Cortex A15)
+ 		 * is 0 and the Little cores(Cortex A7) is 1.
+@@ -258,6 +260,8 @@ static int __init exynos_mcpm_init(void)
+ 		return -ENOMEM;
+ 	}
+ 
++	secure_firmware = exynos_secure_firmware_available();
++
+ 	/*
+ 	 * To increase the stability of KFC reset we need to program
+ 	 * the PMU SPARE3 register
+-- 
+2.25.1
+
