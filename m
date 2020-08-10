@@ -2,84 +2,131 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8CBB24074F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Aug 2020 16:15:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19F69240989
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Aug 2020 17:33:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbgHJOPb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 10 Aug 2020 10:15:31 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45980 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbgHJOPb (ORCPT
+        id S1728646AbgHJPd0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 10 Aug 2020 11:33:26 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:39963 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729042AbgHJPdF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 10 Aug 2020 10:15:31 -0400
-Received: by mail-ed1-f67.google.com with SMTP id di22so6484044edb.12;
-        Mon, 10 Aug 2020 07:15:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/9w3jeHQu0tGGSbBjCL27CGFJj/E1cqCv8uax1z96uE=;
-        b=sCwCZoU5iE+LkzhKQKQVtAzw0dpsVHJyBgau7259ONYpybq/COBujwDPfLpFp8VzzZ
-         2CwapVL1bPGvqNplTpFTx5Bt5RZgj5l0lIr8CiEiJZDFXv+wi1bMYqIszCUd1ya93wRt
-         3Vloy5aP8SW5L1q16yzlypAUEM8l4vnMucM2wzsGPi3SduIMMyiBU9QDIEHMJJv9Wv8k
-         1O6dRYg4llCWv2GqzyNWqYD2AI/SwPUH0XC0NgJ3QTsSumeeFgRRKMwUXgx+zJjBT2tf
-         6wPIvSLKOYAgKq4ToQY/QsOYllhxnuChYBEA2ShV7qfv4quCDoCZKSGDBFsOlI1oSeTT
-         wSlA==
-X-Gm-Message-State: AOAM530V2yZT8A1rIUrvwdom7E0FcjNOaMLipeu02mD3/7WS2kwzB1Ax
-        bMReJFEPtB8vdtWRWnkQbZc=
-X-Google-Smtp-Source: ABdhPJwln4xOfhbOSKOZ+8uP/TEgLEw/XTopL0JiulzbP60CYhCX+ZiXbmfrXBY/H9XrTHJk0GskSg==
-X-Received: by 2002:a05:6402:1504:: with SMTP id f4mr21756997edw.163.1597068929268;
-        Mon, 10 Aug 2020 07:15:29 -0700 (PDT)
-Received: from pi3 ([194.230.155.117])
-        by smtp.googlemail.com with ESMTPSA id t18sm13397113ejf.38.2020.08.10.07.15.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 07:15:28 -0700 (PDT)
-Date:   Mon, 10 Aug 2020 16:15:26 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Tamseel Shams <m.shams@samsung.com>
-Cc:     kgene@kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com,
+        Mon, 10 Aug 2020 11:33:05 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200810153301euoutp01f38c62e8d64292806f2f9a21a60082af~p8fYPHdU11050310503euoutp01U
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Aug 2020 15:33:01 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200810153301euoutp01f38c62e8d64292806f2f9a21a60082af~p8fYPHdU11050310503euoutp01U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1597073582;
+        bh=xGW/Eb8TLGr6LjioWPTb6swHWqJ0i4j0PwmnzrrwdBk=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=SPlHI88tS5FdiPxQ3WIwJz/8vLojajrnKMA14WPsqLbgZma858x9QsuP9erC0p4aA
+         YypDZRFPikL/uhzNjHxsxqMF9yiy4DD5JOQSHr9IOAefkjQklNX1aW2MgRJbhnz2Vc
+         smir7zyf3Jonfw1GZ6v0lnjbG4kKyRhdUokblhuQ=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20200810153301eucas1p1514acd8de8ac631d4431bda243638f2c~p8fX1rjTU2756927569eucas1p1Z;
+        Mon, 10 Aug 2020 15:33:01 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 13.4D.05997.DA8613F5; Mon, 10
+        Aug 2020 16:33:01 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200810153301eucas1p2684476145e627ba124ba4740ef204712~p8fXYl1XF0867608676eucas1p2G;
+        Mon, 10 Aug 2020 15:33:01 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200810153301eusmtrp2b3a126ce1cd7e02421bff081eb9eef19~p8fXX6rRk0085100851eusmtrp2L;
+        Mon, 10 Aug 2020 15:33:01 +0000 (GMT)
+X-AuditID: cbfec7f4-65dff7000000176d-a3-5f3168ad24a3
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id BC.C2.06314.CA8613F5; Mon, 10
+        Aug 2020 16:33:00 +0100 (BST)
+Received: from AMDC3061.digital.local (unknown [106.120.51.75]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200810153300eusmtip29723c347483cb5ac7b9a1c407d0ee3ee~p8fW3v-uZ3149731497eusmtip2T;
+        Mon, 10 Aug 2020 15:33:00 +0000 (GMT)
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+To:     linux-media@vger.kernel.org
+Cc:     hslester96@gmail.com, krzk@kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alim.akhtar@samsung.com
-Subject: Re: [RFT PATCH v5] serial: samsung: Removes the IRQ not found warning
-Message-ID: <20200810141526.GA12448@pi3>
-References: <CGME20200810032514epcas5p1140fe0e44f3727953480ff0531c76b0c@epcas5p1.samsung.com>
- <20200810030021.45348-1-m.shams@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200810030021.45348-1-m.shams@samsung.com>
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: [PATCH 1/2] media: Revert
+ "media: exynos4-is: Add missed check for pinctrl_lookup_state()"
+Date:   Mon, 10 Aug 2020 17:32:39 +0200
+Message-Id: <20200810153240.23827-1-s.nawrocki@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsWy7djPc7prMwzjDR5Ok7XYOGM9q8XsQy+Z
+        Lc6f38BusenxNVaLy7vmsFn0bNjKajHj/D4mi7VH7rJbHH7TzurA6bFz1l12j02rOtk8Ni+p
+        9+jbsorR4/MmuQDWKC6blNSczLLUIn27BK6MHQ+mshRM4ay4MukhUwPjU/YuRk4OCQETiZev
+        GsBsIYEVjBKt99W7GLmA7C+MEguPLGWCcD4zShxdsh2u43XbOlaIxHJGiUnTJ7LBtXxbuJ4R
+        pIpNwFCi92gfmC0iIC/xpPcGWBGzwHdGiZ3nfrOAJIQFUiXmv+hgBbFZBFQlnjyYDWRzcPAK
+        WEt0fMmD2CYvsXrDAWaQXgmB52wSm75eZIZIuEg8PTKdBcIWlnh1fAvUeTIS/3fOZ4JoaGaU
+        6Nl9mx3CmcAocf/4AkaIKmuJO+d+sYFsYxbQlFi/Sx8i7CixqPEY2BESAnwSN94KgoSZgcxJ
+        26YzQ4R5JTrahCCqVSR+r5rOBGFLSXQ/+Q91jofEl7/HGSFhGisx7dMitgmMcrMQdi1gZFzF
+        KJ5aWpybnlpslJdarlecmFtcmpeul5yfu4kRmB5O/zv+ZQfjrj9JhxgFOBiVeHgLrA3jhVgT
+        y4orcw8xSnAwK4nwOp09HSfEm5JYWZValB9fVJqTWnyIUZqDRUmc13jRy1ghgfTEktTs1NSC
+        1CKYLBMHp1QDI/+pCcucju0p5GE4vDg8LpbJ/FPaLSvRBT/kfm+bzOy7d8W8zEvfNHj1NL9c
+        8f74c8rEF2yMwtXFEqW/WbI45epnTJj9ef5ZvzMxwTffGv+87uV4Q2sjo6nDxS29kc43rjyp
+        eXs3pf6YU6n6x28+Dcc/PL55dHUK66LJS08asi2cwGfXU/GJ+5cSS3FGoqEWc1FxIgA9j6I7
+        CwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDLMWRmVeSWpSXmKPExsVy+t/xe7prMgzjDXqvWFlsnLGe1WL2oZfM
+        FufPb2C32PT4GqvF5V1z2Cx6NmxltZhxfh+Txdojd9ktDr9pZ3Xg9Ng56y67x6ZVnWwem5fU
+        e/RtWcXo8XmTXABrlJ5NUX5pSapCRn5xia1StKGFkZ6hpYWekYmlnqGxeayVkamSvp1NSmpO
+        Zllqkb5dgl7GjgdTWQqmcFZcmfSQqYHxKXsXIyeHhICJxOu2daxdjFwcQgJLGSWaX91k6WLk
+        AEpIScxvUYKoEZb4c62LDaLmE6PE3WP/mEESbAKGEr1H+xhBbBEBeYknvTfAipgF/jNKbJx5
+        gxlkkLBAssT7VxUgNSwCqhJPHsxmBQnzClhLdHzJg5gvL7F6wwHmCYw8CxgZVjGKpJYW56bn
+        FhvqFSfmFpfmpesl5+duYgSG5LZjPzfvYLy0MfgQowAHoxIPb4G1YbwQa2JZcWXuIUYJDmYl
+        EV6ns6fjhHhTEiurUovy44tKc1KLDzGaAu2eyCwlmpwPjJe8knhDU0NzC0tDc2NzYzMLJXHe
+        DoGDMUIC6YklqdmpqQWpRTB9TBycUg2M8Twx07Z09ayJcC72twth5rh56X+re+jxFmsHpmfK
+        k1uL/2wW6Xv4wlc36EO1yA4tJea48r+y3qIbmNqPCxTszrG0c59XlG7i/dMhpOns6+97D3AG
+        KWlz7Jhw+tcke/6eTs3E6J2dIWfYk8Je/0ve8q7ge2xW1p5OhbTO/WuPeO6f2ZI0I0yJpTgj
+        0VCLuag4EQDAswvbXwIAAA==
+X-CMS-MailID: 20200810153301eucas1p2684476145e627ba124ba4740ef204712
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200810153301eucas1p2684476145e627ba124ba4740ef204712
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200810153301eucas1p2684476145e627ba124ba4740ef204712
+References: <CGME20200810153301eucas1p2684476145e627ba124ba4740ef204712@eucas1p2.samsung.com>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Aug 10, 2020 at 08:30:21AM +0530, Tamseel Shams wrote:
-> In few older Samsung SoCs like s3c2410, s3c2412
-> and s3c2440, UART IP is having 2 interrupt lines.
-> However, in other SoCs like s3c6400, s5pv210,
-> exynos5433, and exynos4210 UART is having only 1
-> interrupt line. Due to this, "platform_get_irq(platdev, 1)"
-> call in the driver gives the following false-positive error:
-> "IRQ index 1 not found" on newer SoC's.
-> 
-> This patch adds the condition to check for Tx interrupt
-> only for the those SoC's which have 2 interrupt lines.
-> 
-> Signed-off-by: Tamseel Shams <m.shams@samsung.com>
-> ---
-> Commit message is changed.
-> 
-> Added RFT, for older platform.
->  
-> Addressed Krzysztof's review comments [1]
-> [1] -> https://lkml.org/lkml/2020/7/21/150
-> 
->  drivers/tty/serial/samsung_tty.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
-> 
+The "idle" pinctrl state is optional as documented in the DT binding.
+The change introduced by the commit being reverted makes that pinctrl state
+mandatory and breaks initialization of the whole media driver, since the
+"idle" state is not specified in any mainline dts.
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+This reverts commit 18ffec750578f7447c288647d7282c7d12b1d969 to fix
+the regression.
 
-Best regards,
-Krzysztof
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+---
+ drivers/media/platform/exynos4-is/media-dev.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index 16dd660..9a57523 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -1268,11 +1268,9 @@ static int fimc_md_get_pinctrl(struct fimc_md *fmd)
+ 	if (IS_ERR(pctl->state_default))
+ 		return PTR_ERR(pctl->state_default);
+ 
++	/* PINCTRL_STATE_IDLE is optional */
+ 	pctl->state_idle = pinctrl_lookup_state(pctl->pinctrl,
+ 					PINCTRL_STATE_IDLE);
+-	if (IS_ERR(pctl->state_idle))
+-		return PTR_ERR(pctl->state_idle);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.7.4
+
