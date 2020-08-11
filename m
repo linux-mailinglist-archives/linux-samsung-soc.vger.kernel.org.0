@@ -2,122 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD6122410D9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Aug 2020 21:33:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9614B2418DD
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 11 Aug 2020 11:27:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728534AbgHJTJa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 10 Aug 2020 15:09:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35766 "EHLO mail.kernel.org"
+        id S1728391AbgHKJ1g (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 11 Aug 2020 05:27:36 -0400
+Received: from foss.arm.com ([217.140.110.172]:35860 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728522AbgHJTJ3 (ORCPT
+        id S1728224AbgHKJ1f (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 10 Aug 2020 15:09:29 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DE48D22CA1;
-        Mon, 10 Aug 2020 19:09:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597086568;
-        bh=hNul+hpMOhhwF35fU5uL+jxA8siVHVf4No5zO0w65EM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ncjRr/4T9gZRR/vagqYNyissyW9Fa5VLDHAC++lVcybtp+dqZK8iMkDbIys4eMAMR
-         6ZhtVTww0n25A0BZMNJIKP2/7DNYiq2D+orhiEXKsjo4cjXe2UrTciCmKCION3oF2j
-         XTA8Oo51HsCj8beZG+ypAbcLKUw22E71QD0r2okg=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        kernel test robot <lkp@intel.com>,
-        Sasha Levin <sashal@kernel.org>, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
+        Tue, 11 Aug 2020 05:27:35 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3F0DC1063;
+        Tue, 11 Aug 2020 02:27:35 -0700 (PDT)
+Received: from [10.37.12.49] (unknown [10.37.12.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CED8D3F22E;
+        Tue, 11 Aug 2020 02:27:33 -0700 (PDT)
+Subject: Re: [RFC] memory: exynos5422-dmc: Document mutex scope
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Kukjin Kim <kgene@kernel.org>, linux-pm@vger.kernel.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.8 21/64] memory: samsung: exynos5422-dmc: Do not ignore return code of regmap_read()
-Date:   Mon, 10 Aug 2020 15:08:16 -0400
-Message-Id: <20200810190859.3793319-21-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200810190859.3793319-1-sashal@kernel.org>
-References: <20200810190859.3793319-1-sashal@kernel.org>
+References: <20200724180857.22119-1-krzk@kernel.org>
+ <3522860a-8158-6e71-9d65-01d0e0c15f0d@arm.com>
+ <CAJKOXPe3OeKFhmtbF4OZup_ii_rxRHTaSK5BT-3T6ijqUukqtg@mail.gmail.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <6db3a6a4-fe56-d448-14c7-ed43de809acb@arm.com>
+Date:   Tue, 11 Aug 2020 10:27:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJKOXPe3OeKFhmtbF4OZup_ii_rxRHTaSK5BT-3T6ijqUukqtg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit c4f16e96d8fdd62ef12898fc0965c42093bed237 ]
 
-Check for regmap_read() return code before using the read value in
-following write in exynos5_switch_timing_regs().  Pass reading error
-code to the callers.
+On 8/9/20 10:12 AM, Krzysztof Kozlowski wrote:
+> On Tue, Aug 04, 2020 at 11:40:07AM +0100, Lukasz Luba wrote:
+>> Hi Krzysztof,
+>>
+>> On 7/24/20 7:08 PM, Krzysztof Kozlowski wrote:
+>>> Document scope of the mutex used by driver.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>>>
+>>> ---
+>>>
+>>> It seems mutex was introduced to protect:
+>>> 1. setting actual frequency/voltage,
+>>> 2. dmc->curr_rate (in exynos5_dmc_get_cur_freq()).
+>>>
+>>> However dmc->curr_rate in exynos5_dmc_get_status() is not protected. Is
+>>> it a bug?
+>>
+>> The callback get_dev_status() from devfreq->profile, which here is the
+>> exynos5_dmc_get_status() should be already called with devfreq->lock
+>> mutex hold, like e.g from simple_ondemand governor or directly
+>> using update_devfreq exported function:
+>> update_devfreq()
+>>    ->get_target_freq()
+>>      devfreq_update_stats()
+>>          df->profile->get_dev_status()
+>>
+>> The dmc->curr_rate is also used from sysfs interface from devfreq.
+>> The local dmc lock serializes also this use case (when the HW freq
+>> has changed but not set yet into curr_rate.
+> 
+> These are different locks. You cannot protect dmc->curr_rate with
+> devfreq->lock in one place and dmc-lock in other place. This won't
+> protect it.
 
-This does not introduce proper error handling for such failed reads (and
-obviously regmap_write() error is still ignored) because the driver
-ignored this in all places.  Therefor it only fixes reported issue while
-matching current driver coding style:
+There are different paths that framework goes and mainly they are
+protected by the df->lock.
+But I tend to agree, I will send a patch which adds some locking.
 
-       drivers/memory/samsung/exynos5422-dmc.c: In function 'exynos5_switch_timing_regs':
-    >> drivers/memory/samsung/exynos5422-dmc.c:216:6: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/memory/samsung/exynos5422-dmc.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
-index 25196d6268e21..85b31d3de57ad 100644
---- a/drivers/memory/samsung/exynos5422-dmc.c
-+++ b/drivers/memory/samsung/exynos5422-dmc.c
-@@ -270,12 +270,14 @@ static int find_target_freq_idx(struct exynos5_dmc *dmc,
-  * This function switches between these banks according to the
-  * currently used clock source.
-  */
--static void exynos5_switch_timing_regs(struct exynos5_dmc *dmc, bool set)
-+static int exynos5_switch_timing_regs(struct exynos5_dmc *dmc, bool set)
- {
- 	unsigned int reg;
- 	int ret;
- 
- 	ret = regmap_read(dmc->clk_regmap, CDREX_LPDDR3PHY_CON3, &reg);
-+	if (ret)
-+		return ret;
- 
- 	if (set)
- 		reg |= EXYNOS5_TIMING_SET_SWI;
-@@ -283,6 +285,8 @@ static void exynos5_switch_timing_regs(struct exynos5_dmc *dmc, bool set)
- 		reg &= ~EXYNOS5_TIMING_SET_SWI;
- 
- 	regmap_write(dmc->clk_regmap, CDREX_LPDDR3PHY_CON3, reg);
-+
-+	return 0;
- }
- 
- /**
-@@ -516,7 +520,7 @@ exynos5_dmc_switch_to_bypass_configuration(struct exynos5_dmc *dmc,
- 	/*
- 	 * Delays are long enough, so use them for the new coming clock.
- 	 */
--	exynos5_switch_timing_regs(dmc, USE_MX_MSPLL_TIMINGS);
-+	ret = exynos5_switch_timing_regs(dmc, USE_MX_MSPLL_TIMINGS);
- 
- 	return ret;
- }
-@@ -577,7 +581,9 @@ exynos5_dmc_change_freq_and_volt(struct exynos5_dmc *dmc,
- 
- 	clk_set_rate(dmc->fout_bpll, target_rate);
- 
--	exynos5_switch_timing_regs(dmc, USE_BPLL_TIMINGS);
-+	ret = exynos5_switch_timing_regs(dmc, USE_BPLL_TIMINGS);
-+	if (ret)
-+		goto disable_clocks;
- 
- 	ret = clk_set_parent(dmc->mout_mclk_cdrex, dmc->mout_bpll);
- 	if (ret)
--- 
-2.25.1
-
+Regards,
+Lukasz
