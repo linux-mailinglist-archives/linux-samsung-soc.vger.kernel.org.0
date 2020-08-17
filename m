@@ -2,82 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8881247176
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Aug 2020 20:28:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F493247370
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Aug 2020 20:56:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390877AbgHQS2G (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Aug 2020 14:28:06 -0400
-Received: from mail-ej1-f42.google.com ([209.85.218.42]:46672 "EHLO
-        mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390989AbgHQS1n (ORCPT
+        id S2403946AbgHQSzo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Aug 2020 14:55:44 -0400
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:39728 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730535AbgHQPu0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Aug 2020 14:27:43 -0400
-Received: by mail-ej1-f42.google.com with SMTP id p24so18905820ejf.13;
-        Mon, 17 Aug 2020 11:27:42 -0700 (PDT)
+        Mon, 17 Aug 2020 11:50:26 -0400
+Received: by mail-ej1-f65.google.com with SMTP id f24so18320903ejx.6;
+        Mon, 17 Aug 2020 08:50:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=In/lRzRecPXlJCsCXOUKVII8Zjza+KgDgAZ3qlg6NBY=;
-        b=BiNY0ojzti9yNUev2nTtLyzk6JZBBxmgIw+89KBTyFJPtrX4kouSN9kpSTK7LkIxw2
-         j9Pz/Kg8ccOg85UkfG1JklsNWKqwEDcH9s8+uPDlQJOZHK167K1pIqFzxB2EIaHNnu/7
-         Izz4hP5YEr1K9D+smmSYDxyTr1LGSLPOCTNxeCT0GSo8fk8BhNySaDqd11UjPliaEV+W
-         W4NvxcEExhA5BhevjU8msrwXKn20Fqx8SARrPe//BecWqABRKi3H5j+Dru1/PmLoX+kN
-         dSYZGIbBYfxJJYyNJPxhrShNpqExYZzTAA/3lu70IktG29rcgmR3OSnN9XkFPUqMdKKr
-         xmxg==
-X-Gm-Message-State: AOAM530o9Q1Rio42tofLoq3ofktyTaDx9pf01Fb89irFHehNi0hx584A
-        lUqKIcjqFLpdj7UPrbvfa+g=
-X-Google-Smtp-Source: ABdhPJzlp7hrM7e8yK6q4U5Xo1UPtQg4hALTTyDbMtxYuqmsunf77TyReaLSnblPdWrAoapQvk48kw==
-X-Received: by 2002:a17:906:54d3:: with SMTP id c19mr17313272ejp.408.1597688861304;
-        Mon, 17 Aug 2020 11:27:41 -0700 (PDT)
+        bh=CvY+Gv9fZiNUpyRo8aOD2OAX4f7HvaEYlR7elhE0eDI=;
+        b=Z9tlqxxJD367x/vsFxQW1v7W2GGDyy8/7TJtOzee1d2tvH8PCI/cdgqHw3H+k6DXEm
+         wAt37Suvj1+IfZO3xr3yRiF6kGtM41lKo44G3AQ664Q6MWBZT8ZdyFXcV7WOIDSuQYAu
+         3c55axNm2VksqwpKUbf0FAGiouwKY7mFMfGLOP1yUf3JcjIZzzo/SU2x+VwcHSLsDfG3
+         RPBmQ4OL2D0zpqsGV52iGB7JrK9UfBfwvHjI0VcUUKoLC6RvbSownFkNn7tPDHS/r2CT
+         QtJpaSYpG042Hc+UpDeuCLHZwTVpc5qYLGckSiceELHVrJUurd0f8QJMUighkm168vGx
+         TABg==
+X-Gm-Message-State: AOAM532cK3jCFIk0qKYwBvgHPXWysWJ/qhKlESqlAQIlCPnyDSdqkeSm
+        VVjvtfhPGtiiyhJNHI4jz+s=
+X-Google-Smtp-Source: ABdhPJwUH2JfieM4+gZF9eNKg35FhFE+j87Rl4f371bQ3K5WOxcwB8LzeD/gzxX+LVyjfatGHlfezg==
+X-Received: by 2002:a17:906:78e:: with SMTP id l14mr16737436ejc.67.1597679424558;
+        Mon, 17 Aug 2020 08:50:24 -0700 (PDT)
 Received: from kozik-lap ([194.230.155.216])
-        by smtp.googlemail.com with ESMTPSA id p12sm13037482edt.27.2020.08.17.11.27.38
+        by smtp.googlemail.com with ESMTPSA id g9sm14232950ejf.101.2020.08.17.08.50.23
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Aug 2020 11:27:40 -0700 (PDT)
-Date:   Mon, 17 Aug 2020 20:27:36 +0200
+        Mon, 17 Aug 2020 08:50:23 -0700 (PDT)
+Date:   Mon, 17 Aug 2020 17:50:21 +0200
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Markus Mayer <mmayer@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Roger Quadros <rogerq@ti.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Cc:     Andrew Morton <akpm@linux-foundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFT v2 01/29] memory: omap-gpmc: Remove unneeded
- asm/mach-types.h inclusion
-Message-ID: <20200817182736.GA3464@kozik-lap>
-References: <20200724074038.5597-1-krzk@kernel.org>
- <20200724074038.5597-2-krzk@kernel.org>
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, willy.mh.wolff.ml@gmail.com,
+        k.konieczny@samsung.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, chanwoo@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        s.nawrocki@samsung.com, kgene@kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: exynos: Remove interrupts from DMC
+ controller in Exynos5422
+Message-ID: <20200817155021.GC15887@kozik-lap>
+References: <20200708153420.29484-1-lukasz.luba@arm.com>
+ <20200708153420.29484-3-lukasz.luba@arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200724074038.5597-2-krzk@kernel.org>
+In-Reply-To: <20200708153420.29484-3-lukasz.luba@arm.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Jul 24, 2020 at 09:40:10AM +0200, Krzysztof Kozlowski wrote:
-> The driver does not use macros from asm/mach-types.h (neither MACH_TYPE
-> nor machine_is_xxx()).  Removal of this include allows compile testing
-> on non-ARM architectures which lack this header.
+On Wed, Jul 08, 2020 at 04:34:20PM +0100, Lukasz Luba wrote:
+> The interrupts in Dynamic Memory Controller in Exynos5422 and Odroid
+> XU3-family boards are no longer needed. They have been used in order
+> to workaround some issues in scheduled work in devfreq. Now when the
+> devfreq framework design is improved, remove the interrupt driven
+> approach and rely on devfreq monitoring mechanism with fixed intervals.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Reported-by: Willy Wolff <willy.mh.wolff.ml@gmail.com>
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 > ---
->  drivers/memory/omap-gpmc.c | 2 --
+>  arch/arm/boot/dts/exynos5420.dtsi | 3 ---
+>  1 file changed, 3 deletions(-)
 
-Applied to drivers/memory tree.
+I think the dependencies were merged so this can be safely applied
+without bisectability problems?
 
 Best regards,
 Krzysztof
