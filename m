@@ -2,62 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DA85245869
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 16 Aug 2020 17:42:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 806832465BE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Aug 2020 13:54:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726511AbgHPPmf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 16 Aug 2020 11:42:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726407AbgHPPme (ORCPT
+        id S1726612AbgHQLyk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Aug 2020 07:54:40 -0400
+Received: from mail-ej1-f66.google.com ([209.85.218.66]:37088 "EHLO
+        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbgHQLyk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 16 Aug 2020 11:42:34 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C03C061786
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 16 Aug 2020 08:42:33 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id p24so14914208ejf.13
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 16 Aug 2020 08:42:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=xQmJpZi+nycVUGBWTN1ZgDIdH1FZ7rS5GB+FHboBlss=;
-        b=VU9ZuSZldsqG92Ixt0cqcTp+T/sMKWKZ45M2xiF88xdCIl9gUjLaznem2F1Aifimiw
-         lU+MnSrTiYM/Y+v38D3tTkc5XgSAcCpOFp5KiCl51iva2kpEYBhDvpbudtfk1L/ic/EE
-         TcRnOjMC6LWSyMeadPeF53goEJ2sAU6Uu3NaFzKi6oKkflpQFnhn2g6nP4vOCU2STg5e
-         WjV+6Sr7J5Dm5ZKdexKa++gU1X9eexMgYYfvOzc1qGsyt/3jLMo3AJHsmnaG0aXrfd8E
-         JcluZOha83O63zx54E5rFPCu6P3pEFPUXDLHdmvsiAG+Vt3awhtTwQqgFRZThv1OQr96
-         3rwA==
+        Mon, 17 Aug 2020 07:54:40 -0400
+Received: by mail-ej1-f66.google.com with SMTP id qc22so17377705ejb.4;
+        Mon, 17 Aug 2020 04:54:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=xQmJpZi+nycVUGBWTN1ZgDIdH1FZ7rS5GB+FHboBlss=;
-        b=mhYj4lu5Q1NhN10uBFj7nrqrTsROosY2eci73jZRE3OuQD6/HIonUQBD2hEb3J/s8a
-         7u6gsFaI8fA1ehAF2YQsLE0fxx6GQ2oSxadR1/lxsScpmTBSl9zJeRT8hbpFW9oWBp6N
-         yiG2KJ/GA63IYPsL3ZuzgeWsl9pjfayVB5gtgjuqqxLkhV738rnbj+7ZJUtMnKn+XjOz
-         K8wsjjXkfHhu/Ey6bNJL0D31GUNMUNnPw7hbOW1WC0z4ti2SSxoqjZ5G6ZaNSFrX/Rsu
-         q2a7paCU+sr+N7j3biq9ZwjK0IfQ0sZouVk/aEknZ5LpR4mV5CPHoQszADdgCumYed4W
-         3j1Q==
-X-Gm-Message-State: AOAM5330yCFu+qo/EIOz8WzSw9p3n9/dkDW+pm5tLhi7tIxaSrtYUVvl
-        6DmmzGKtdAodDY4XVwhv0/JcZ5d2MX2FNepa3s0=
-X-Google-Smtp-Source: ABdhPJweSzj4Yq9XlUBUC0V8h5aPIT9RQLPvEbUR+zFXy8FsGj6Odo8bpjrJmFWAQ2YUcXfOsTQjg1Fn737WL+UE/w0=
-X-Received: by 2002:a17:906:a141:: with SMTP id bu1mr11053438ejb.303.1597592551614;
- Sun, 16 Aug 2020 08:42:31 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Gmv/LnTVhDrv4xWlObrgrgJVEX/mNaVJGKXV8qYtozI=;
+        b=Ue3v5MDBEdMuiNsbc4OH91xK1LVNqSrguYNy9giH+LGh6ohII25WZ9zLP5ive77Itl
+         iU3rV/DOvO4WjVbeztaj5S1mmegdXIG7zbE8LBkgINMj7Sixor5ESgN5+OacOQ6MW/0b
+         rkOsc/Gdz9LaFlVGAI50D//UlaaO4ZGYpqk/zBUyFDoye2KBxdke7GHEWYe6QSmJIXLu
+         l5sqvAQNAIfC1CH8idUup5gE9p/ZNuH9Vz0OCU0qIPUzKRZ98KPmlt/4yV5l+7Pd+ybj
+         oh/6lsHOKTeh+UQoSwlgsyYYR8+a2+gDICOSoX7e5jxrZe0Hg2adjNMNiJD1BaCs7pY0
+         l+ig==
+X-Gm-Message-State: AOAM531qTCzODtjCkdt6ZGpWXym5c3W73HFA4LpmRFi0LyabdlqO7cxF
+        2Cd6vCWk0jJij1M0Cn/eXq8=
+X-Google-Smtp-Source: ABdhPJylUYlFzbESSX2S/SjTNBdk/1xQdv9oriQFghbtaaJ60FujFjyCBl8q6FkbYF8v9lJ6dAPjlQ==
+X-Received: by 2002:a17:906:3890:: with SMTP id q16mr14249884ejd.107.1597665278339;
+        Mon, 17 Aug 2020 04:54:38 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.242])
+        by smtp.googlemail.com with ESMTPSA id v14sm14175860ejb.63.2020.08.17.04.54.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Aug 2020 04:54:37 -0700 (PDT)
+Date:   Mon, 17 Aug 2020 13:54:35 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     oss-self-reviewed-patches@listhost.cambridge.arm.com,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        kgene@kernel.org, b.zolnierkie@samsung.com
+Subject: Re: [PATCH] memory: samsung: exynos5422-dmc: Additional locking for
+ 'curr_rate'
+Message-ID: <20200817115435.GA2346@kozik-lap>
+References: <20200811101727.3976-1-lukasz.luba@arm.com>
 MIME-Version: 1.0
-Received: by 2002:a17:906:a189:0:0:0:0 with HTTP; Sun, 16 Aug 2020 08:42:31
- -0700 (PDT)
-Reply-To: curtisvani9008@gmail.com
-From:   Curtis <sanderlow002@gmail.com>
-Date:   Sun, 16 Aug 2020 15:42:31 +0000
-Message-ID: <CAOeY-49HE6X_mr4tQa_PRXhb4y6QtmCQZqwBZ1DJtm54tK2WKw@mail.gmail.com>
-Subject: dear
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200811101727.3976-1-lukasz.luba@arm.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi, i'm Curtis from US, i have something to discuss with you, i hope
-we can establish a relationship from here. i will wait for your reply,
-Thanks.
+On Tue, Aug 11, 2020 at 11:17:27AM +0100, Lukasz Luba wrote:
+> The 'curr_rate' is protected by local 'dmc->lock' in various places, but
+> not in a function exynos5_dmc_get_status(). The lock protects frequency
+> (and voltage) change process and the corresponding value stored in
+> 'curr_rate'. Add the locking mechanism to protect the 'curr_rate' reading
+> also in the exynos5_dmc_get_status().
+> 
+> Suggested-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
+>  drivers/memory/samsung/exynos5422-dmc.c | 3 +++
+
+Thanks, applied.
+
+Best regards,
+Krzysztof
+
