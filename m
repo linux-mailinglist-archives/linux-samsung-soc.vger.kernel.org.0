@@ -2,84 +2,100 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45BF6249F18
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Aug 2020 15:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80E75249FAD
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Aug 2020 15:25:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbgHSNGl convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 19 Aug 2020 09:06:41 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39955 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728679AbgHSNG3 (ORCPT
+        id S1728549AbgHSNY4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 19 Aug 2020 09:24:56 -0400
+Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:49695 "EHLO
+        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726961AbgHSNQM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 19 Aug 2020 09:06:29 -0400
-Received: by mail-ed1-f66.google.com with SMTP id a14so18043819edx.7;
-        Wed, 19 Aug 2020 06:06:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CkoDptvaZZNmItnX5xuwQ9H/oO/axh2EK0TfitHqla4=;
-        b=F35GqTTzex8JKyFEQg2EAtaeIHm9GLPislERqtmmyiWQhXbqw+u20x1oRrT2uwRbTV
-         rxGZhyEQkfiA0S/QP21iYLfwPA7ccFlI6jiQYtfQtcqFMT5oU/vtgoYhd1zAlKlDgZud
-         BZIyKM3x7WLBPEbOZzvxeCFb5SQCHwy1TwpZU1SLakhbAKu0wXE0pSBSwRbcZbM/Om0e
-         DFd6l4lbMJLeRJIWjmkM/L2lVSxvD5BDtOBRI3/MUCHPTWsPRkGpi24KoNFmuj96+QoJ
-         V11+I8yUzsf1A9VapSbDIK4/4z8qGIfkCSbsGZ3V6yUbQ2MStpWtIhOqJMz0K3NsX/0Z
-         /atg==
-X-Gm-Message-State: AOAM533Xa9Q21hhfVC4fUFdT4wIB90+w1PQBOFKhOWztgjVlDDsY3y8y
-        eYIlXp7P/0doWnMK5X1VGlw=
-X-Google-Smtp-Source: ABdhPJwwV0WcCmfVD+ifyEbNBaAywbSmIL4jqkHxU7ZQ9/DqvY9iD0ZSEWtUmwD+rCU4DKZ8XHcN9g==
-X-Received: by 2002:a05:6402:1504:: with SMTP id f4mr25029186edw.163.1597842387461;
-        Wed, 19 Aug 2020 06:06:27 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.216])
-        by smtp.googlemail.com with ESMTPSA id dc12sm18833409ejb.124.2020.08.19.06.06.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Aug 2020 06:06:26 -0700 (PDT)
-Date:   Wed, 19 Aug 2020 15:06:24 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Lukasz Stelmach <l.stelmach@samsung.com>
-Cc:     Kukjin Kim <kgene@kernel.org>, Andi Shyti <andi@etezian.org>,
-        Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        m.szyprowski@samsung.com, b.zolnierkie@samsung.com
-Subject: Re: [PATCH 2/8] spi: spi-s3s64xx: Add S3C64XX_SPI_QUIRK_CS_AUTO for
- Exynos3250
-Message-ID: <20200819130624.GB18970@kozik-lap>
-References: <20200819123914.GC18122@kozik-lap>
- <CGME20200819130122eucas1p27e9e84c4399d01409858de6d01e11b52@eucas1p2.samsung.com>
- <dleftjpn7m23j2.fsf%l.stelmach@samsung.com>
+        Wed, 19 Aug 2020 09:16:12 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id 8NwMkcqI5uuXO8NwNkhD1S; Wed, 19 Aug 2020 15:15:43 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1597842943; bh=XJUjA6GhgJMPcqkxF1vR+8X4AdV6W5Jd5RTMaz80g/k=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=M8aenhv6PjoRzN8MNsDrsM4kWTyImKm6UR7AQXDXpdUVHIN893XH9Uypb7Y1rnp32
+         MB/7dC7Aew9TvapDmY1M5tZAt5A647yXFCVRAD+uGAsVFG6A/42R0uVkkx+1CyGdnv
+         A+Aq+PSz9b2MTWhseyu8GUQJNoDeR/kY9V0sQoge7vqgaYyXP0j1F4xmA/40lzRhzj
+         Treg4CdrpH3DgyIzzkIWpPo5KvU79+YJbO+xDyIclYWUDpXw5e4xCZnTZlsQrKmDC+
+         DLJJQ7uFsa0k6/e0b/FEct+NsuoeOg+aNuRHEpNJMCY5xoTI5Bca3VEZqg5AKQkkVt
+         SjJcRdwwhBZLQ==
+Subject: Re: [PATCH 1/2] media: Revert "media: exynos4-is: Add missed check
+ for pinctrl_lookup_state()"
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-media@vger.kernel.org
+Cc:     hslester96@gmail.com, krzk@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com
+References: <CGME20200810153301eucas1p2684476145e627ba124ba4740ef204712@eucas1p2.samsung.com>
+ <20200810153240.23827-1-s.nawrocki@samsung.com>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <bdcb0a29-8c7e-3736-9936-2b25460f9aef@xs4all.nl>
+Date:   Wed, 19 Aug 2020 15:15:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <20200810153240.23827-1-s.nawrocki@samsung.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <dleftjpn7m23j2.fsf%l.stelmach@samsung.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfCkIhUtNaVpYFQcL/3qCAdkOvGF9e/YUvgKcHKX3f126eVPkUlcDSp89i09CuIk68hCjtduB4QUQvq3gZP7Meq5HWeof8IRc9ggwqYC++sRA/5kYKzcD
+ b3jz0GFnlFagsbNkMMc8mxw60JKJ9a9pCGOVLOyv0zjcuUy5ujc1zkfyvRPI6dwACSnQSeL0Jm2KTBKsDoaw4/xjqZaEkzb/FhtYklijTYBwUwSovzidJgpE
+ Kf3llJzgxFhED+K/h5tD98Msfnz12C5jooH+yTGOFuQoiEgbVkvmyKN+oU6V4q/iZMTEwwIdqBekk6xOywDZknSARo3aimryTuX0h7yxkdrvoc2Kz8Ck0ewx
+ f7TcxHV/2lIqkbwcWENjVhR0Gik3KjtO2z6cQowUHE/Omn1W1NrtcARu5EI/L4DXn6T+2HDKmtMmDGRvvDjdMv2JJtoTIqwRtiiFW7lzP4k9SRZfjtUpNv2d
+ 9Q2xLfLUmFFtk1lZ3gn6ci8YZtzhiDrzWv2RFOJSloHs1c2LXuDiioYmEq4x64SRcZzuOdygX+YJuUEgJ/jkITfv0WSfl+Z3oVRequUyRRJvubgbY1cppkNR
+ eX0=
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 03:01:21PM +0200, Lukasz Stelmach wrote:
-> It was <2020-08-19 śro 14:39>, when Krzysztof Kozlowski wrote:
-> > On Wed, Aug 19, 2020 at 02:32:02PM +0200, Łukasz Stelmach wrote:
-> >> Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
-> >
-> > Add a quirk - why?
-> 
-> Because stuff does not work without it and works with it and it is
-> turned on for other SoCs which have simmilar SPI HW.
-> 
-> > There is here no commit msg, no explanation.
-> 
-> As I wrote in the cover letter, this and previous commits make things
-> work on Exynos3250 (ARTIK5 precisely). I can't explain why. I read
-> everything I could about this HW and there were no details about
-> automatic CS handling other than how to turn it on and off.
+Hi Sylwester,
 
-At least this information would be useful. If vendor kernel also does
-it, that's another argument to use, since there are no better ones...
+Can you rebase this patch series on top of the media_tree master?
 
-Best regards,
-Krzysztof
+This series didn't apply anymore.
+
+Thanks!
+
+	Hans
+
+On 10/08/2020 17:32, Sylwester Nawrocki wrote:
+> The "idle" pinctrl state is optional as documented in the DT binding.
+> The change introduced by the commit being reverted makes that pinctrl state
+> mandatory and breaks initialization of the whole media driver, since the
+> "idle" state is not specified in any mainline dts.
+> 
+> This reverts commit 18ffec750578f7447c288647d7282c7d12b1d969 to fix
+> the regression.
+> 
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+>  drivers/media/platform/exynos4-is/media-dev.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+> index 16dd660..9a57523 100644
+> --- a/drivers/media/platform/exynos4-is/media-dev.c
+> +++ b/drivers/media/platform/exynos4-is/media-dev.c
+> @@ -1268,11 +1268,9 @@ static int fimc_md_get_pinctrl(struct fimc_md *fmd)
+>  	if (IS_ERR(pctl->state_default))
+>  		return PTR_ERR(pctl->state_default);
+>  
+> +	/* PINCTRL_STATE_IDLE is optional */
+>  	pctl->state_idle = pinctrl_lookup_state(pctl->pinctrl,
+>  					PINCTRL_STATE_IDLE);
+> -	if (IS_ERR(pctl->state_idle))
+> -		return PTR_ERR(pctl->state_idle);
+> -
+>  	return 0;
+>  }
+>  
+> 
+
