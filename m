@@ -2,429 +2,201 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 252842495EF
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Aug 2020 09:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72850249AAD
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Aug 2020 12:45:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727997AbgHSG5n (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 19 Aug 2020 02:57:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727921AbgHSG5c (ORCPT
+        id S1726919AbgHSKpO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 19 Aug 2020 06:45:14 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:35654 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726642AbgHSKpN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 19 Aug 2020 02:57:32 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9E3C061343;
-        Tue, 18 Aug 2020 23:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
-        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-        Content-Type:Content-ID:Content-Description;
-        bh=3yo70wOVkF5CaNJSKu+AlarDAtI7zXpUGNpkgTYQVWg=; b=Stap9nZF6GC9QOjwOzcCX1NDYx
-        jGVXomD9Kv31rFvbB7gCdBXXUTES2lhRo/Ye9dplxjvmv9GlaKXFAK0d1WTWoWB8yEbJSVAvr30c8
-        9F4Wz/h3LBGX5AUsie/duMpRWbktxOomFvprDLV/zNeZybGiCPY3LG1ggZ2w/RgJmGuqL1PpQrHyd
-        BfSAqDAFvc4rwVO/UOekcEg55Q1BUT0J6zjsbm8NsrVFPbisxVXvjV6RTEBiOWIPm0GL8lsuyZQpI
-        Ybvh9GTiwEe0ZBf+TXtIz+htcpCJlIbiRdGYNQxwcwGhofUTsZ8c2xOQdxxerpc6hNAhN6tmLt14n
-        N+flC3iQ==;
-Received: from [2001:4bb8:198:f3b2:86b6:2277:f429:37a1] (helo=localhost)
-        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1k8I1r-00006Q-0Z; Wed, 19 Aug 2020 06:57:00 +0000
-From:   Christoph Hellwig <hch@lst.de>
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Pawel Osciak <pawel@osciak.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matt Porter <mporter@kernel.crashing.org>,
-        iommu@lists.linux-foundation.org
-Cc:     Tom Lendacky <thomas.lendacky@amd.com>, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-ia64@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org,
-        netdev@vger.kernel.org, linux-nvme@lists.infradead.org,
-        linux-scsi@vger.kernel.org, linux-mm@kvack.org,
-        alsa-devel@alsa-project.org
-Subject: [PATCH 26/28] dmapool: add dma_alloc_pages support
-Date:   Wed, 19 Aug 2020 08:55:53 +0200
-Message-Id: <20200819065555.1802761-27-hch@lst.de>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200819065555.1802761-1-hch@lst.de>
-References: <20200819065555.1802761-1-hch@lst.de>
+        Wed, 19 Aug 2020 06:45:13 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07JAhS5P011860;
+        Wed, 19 Aug 2020 05:43:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1597833808;
+        bh=FQ/P96RlmX4WL6iS15Y4+TdcnOXuRLw5jD5fcCLIPRM=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=hq3DNU8GyRjS+6Rnn7skcN1ku0AwIVNiB8bZ3hVmcFFpSNzKBAUK00toMRz1KnLCE
+         NxcnurQiObMWPuedh5shwC1BCu6hnnUua5zjmH8lZNKmxDlxcyNuA14gMqszA0YtC2
+         JjErGKTXzkqOL97zfTZs8nV570QUwaiW3pOgGLAw=
+Received: from DLEE114.ent.ti.com (dlee114.ent.ti.com [157.170.170.25])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 07JAhSRj019744
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 19 Aug 2020 05:43:28 -0500
+Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE114.ent.ti.com
+ (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 19
+ Aug 2020 05:43:28 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE111.ent.ti.com
+ (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Wed, 19 Aug 2020 05:43:27 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07JAhFih039071;
+        Wed, 19 Aug 2020 05:43:15 -0500
+Subject: Re: [PATCH 10/20] drm/omapdrm: Introduce GEM object functions
+To:     Thomas Zimmermann <tzimmermann@suse.de>,
+        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
+        <airlied@linux.ie>, <daniel@ffwll.ch>, <linux@armlinux.org.uk>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <l.stach@pengutronix.de>, <christian.gmeiner@gmail.com>,
+        <inki.dae@samsung.com>, <jy0922.shim@samsung.com>,
+        <sw0312.kim@samsung.com>, <kyungmin.park@samsung.com>,
+        <kgene@kernel.org>, <krzk@kernel.org>,
+        <patrik.r.jakobsson@gmail.com>, <jani.nikula@linux.intel.com>,
+        <joonas.lahtinen@linux.intel.com>, <rodrigo.vivi@intel.com>,
+        <chunkuang.hu@kernel.org>, <p.zabel@pengutronix.de>,
+        <matthias.bgg@gmail.com>, <robdclark@gmail.com>, <sean@poorly.run>,
+        <bskeggs@redhat.com>, <eric@anholt.net>, <hjc@rock-chips.com>,
+        <heiko@sntech.de>, <thierry.reding@gmail.com>,
+        <jonathanh@nvidia.com>, <rodrigosiqueiramelo@gmail.com>,
+        <hamohammed.sa@gmail.com>, <oleksandr_andrushchenko@epam.com>,
+        <hyun.kwon@xilinx.com>, <laurent.pinchart@ideasonboard.com>,
+        <michal.simek@xilinx.com>, <sumit.semwal@linaro.org>,
+        <evan.quan@amd.com>, <Hawking.Zhang@amd.com>, <tianci.yin@amd.com>,
+        <marek.olsak@amd.com>, <hdegoede@redhat.com>,
+        <andrey.grodzovsky@amd.com>, <Felix.Kuehling@amd.com>,
+        <xinhui.pan@amd.com>, <aaron.liu@amd.com>, <nirmoy.das@amd.com>,
+        <chris@chris-wilson.co.uk>, <matthew.auld@intel.com>,
+        <abdiel.janulgue@linux.intel.com>,
+        <tvrtko.ursulin@linux.intel.com>, <andi.shyti@intel.com>,
+        <sam@ravnborg.org>, <miaoqinglang@huawei.com>,
+        <emil.velikov@collabora.com>
+CC:     <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+        <etnaviv@lists.freedesktop.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <intel-gfx@lists.freedesktop.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <nouveau@lists.freedesktop.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>, <xen-devel@lists.xenproject.org>
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-11-tzimmermann@suse.de>
+From:   Tomi Valkeinen <tomi.valkeinen@ti.com>
+Message-ID: <8739b085-0342-4c43-60e3-a21d6b257319@ti.com>
+Date:   Wed, 19 Aug 2020 13:43:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <20200813083644.31711-11-tzimmermann@suse.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add an new variant of a dmapool that uses non-coherent memory from
-dma_alloc_pages.  Unlike the existing mempool_create this one
-initialized a pool allocated by the caller to avoid a pointless extra
-allocation.  At some point it might be worth to also switch the coherent
-allocation over to a similar dma_pool_init_coherent helper, but that is
-better done as a separate series including a few conversions.
+Hi,
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- include/linux/dmapool.h |  23 ++++-
- mm/dmapool.c            | 211 +++++++++++++++++++++++++---------------
- 2 files changed, 154 insertions(+), 80 deletions(-)
+On 13/08/2020 11:36, Thomas Zimmermann wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces the per-driver callbacks with
+> per-instance callbacks in omapdrm.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/omapdrm/omap_drv.c |  9 ---------
+>  drivers/gpu/drm/omapdrm/omap_gem.c | 16 +++++++++++++++-
+>  drivers/gpu/drm/omapdrm/omap_gem.h |  1 -
+>  3 files changed, 15 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/omapdrm/omap_drv.c b/drivers/gpu/drm/omapdrm/omap_drv.c
+> index 53d5e184ee77..2e598b8b72af 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_drv.c
+> +++ b/drivers/gpu/drm/omapdrm/omap_drv.c
+> @@ -521,12 +521,6 @@ static int dev_open(struct drm_device *dev, struct drm_file *file)
+>  	return 0;
+>  }
+>  
+> -static const struct vm_operations_struct omap_gem_vm_ops = {
+> -	.fault = omap_gem_fault,
+> -	.open = drm_gem_vm_open,
+> -	.close = drm_gem_vm_close,
+> -};
+> -
+>  static const struct file_operations omapdriver_fops = {
+>  	.owner = THIS_MODULE,
+>  	.open = drm_open,
+> @@ -549,10 +543,7 @@ static struct drm_driver omap_drm_driver = {
+>  #endif
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+> -	.gem_prime_export = omap_gem_prime_export,
+>  	.gem_prime_import = omap_gem_prime_import,
+> -	.gem_free_object_unlocked = omap_gem_free_object,
+> -	.gem_vm_ops = &omap_gem_vm_ops,
+>  	.dumb_create = omap_gem_dumb_create,
+>  	.dumb_map_offset = omap_gem_dumb_map_offset,
+>  	.ioctls = ioctls,
+> diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
+> index d0d12d5dd76c..d68dc63dea0a 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_gem.c
+> +++ b/drivers/gpu/drm/omapdrm/omap_gem.c
+> @@ -487,7 +487,7 @@ static vm_fault_t omap_gem_fault_2d(struct drm_gem_object *obj,
+>   * vma->vm_private_data points to the GEM object that is backing this
+>   * mapping.
+>   */
+> -vm_fault_t omap_gem_fault(struct vm_fault *vmf)
+> +static vm_fault_t omap_gem_fault(struct vm_fault *vmf)
+>  {
+>  	struct vm_area_struct *vma = vmf->vma;
+>  	struct drm_gem_object *obj = vma->vm_private_data;
+> @@ -1169,6 +1169,18 @@ static bool omap_gem_validate_flags(struct drm_device *dev, u32 flags)
+>  	return true;
+>  }
+>  
+> +static const struct vm_operations_struct omap_gem_vm_ops = {
+> +	.fault = omap_gem_fault,
+> +	.open = drm_gem_vm_open,
+> +	.close = drm_gem_vm_close,
+> +};
+> +
+> +static const struct drm_gem_object_funcs omap_gem_object_funcs = {
+> +	.free = omap_gem_free_object,
+> +	.export = omap_gem_prime_export,
+> +	.vm_ops = &omap_gem_vm_ops,
+> +};
+> +
+>  /* GEM buffer object constructor */
+>  struct drm_gem_object *omap_gem_new(struct drm_device *dev,
+>  		union omap_gem_size gsize, u32 flags)
+> @@ -1236,6 +1248,8 @@ struct drm_gem_object *omap_gem_new(struct drm_device *dev,
+>  		size = PAGE_ALIGN(gsize.bytes);
+>  	}
+>  
+> +	obj->funcs = &omap_gem_object_funcs;
+> +
+>  	/* Initialize the GEM object. */
+>  	if (!(flags & OMAP_BO_MEM_SHMEM)) {
+>  		drm_gem_private_object_init(dev, obj, size);
+> diff --git a/drivers/gpu/drm/omapdrm/omap_gem.h b/drivers/gpu/drm/omapdrm/omap_gem.h
+> index 729b7812a815..9e6b5c8195d9 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_gem.h
+> +++ b/drivers/gpu/drm/omapdrm/omap_gem.h
+> @@ -69,7 +69,6 @@ struct dma_buf *omap_gem_prime_export(struct drm_gem_object *obj, int flags);
+>  struct drm_gem_object *omap_gem_prime_import(struct drm_device *dev,
+>  		struct dma_buf *buffer);
+>  
+> -vm_fault_t omap_gem_fault(struct vm_fault *vmf);
+>  int omap_gem_roll(struct drm_gem_object *obj, u32 roll);
+>  void omap_gem_cpu_sync_page(struct drm_gem_object *obj, int pgoff);
+>  void omap_gem_dma_sync_buffer(struct drm_gem_object *obj,
 
-diff --git a/include/linux/dmapool.h b/include/linux/dmapool.h
-index f632ecfb423840..1387525c4e52e8 100644
---- a/include/linux/dmapool.h
-+++ b/include/linux/dmapool.h
-@@ -11,6 +11,10 @@
- #ifndef LINUX_DMAPOOL_H
- #define	LINUX_DMAPOOL_H
- 
-+#include <linux/dma-direction.h>
-+#include <linux/gfp.h>
-+#include <linux/spinlock.h>
-+#include <linux/list.h>
- #include <linux/scatterlist.h>
- #include <asm/io.h>
- 
-@@ -18,11 +22,28 @@ struct device;
- 
- #ifdef CONFIG_HAS_DMA
- 
-+struct dma_pool {		/* the pool */
-+	struct list_head page_list;
-+	spinlock_t lock;
-+	size_t size;
-+	struct device *dev;
-+	size_t allocation;
-+	size_t boundary;
-+	bool is_coherent;
-+	enum dma_data_direction dir;
-+	char name[32];
-+	struct list_head pools;
-+};
-+
- struct dma_pool *dma_pool_create(const char *name, struct device *dev, 
- 			size_t size, size_t align, size_t allocation);
--
- void dma_pool_destroy(struct dma_pool *pool);
- 
-+int dma_pool_init(struct device *dev, struct dma_pool *pool, const char *name,
-+		size_t size, size_t align, size_t boundary,
-+		enum dma_data_direction dir);
-+void dma_pool_exit(struct dma_pool *pool);
-+
- void *dma_pool_alloc(struct dma_pool *pool, gfp_t mem_flags,
- 		     dma_addr_t *handle);
- void dma_pool_free(struct dma_pool *pool, void *vaddr, dma_addr_t addr);
-diff --git a/mm/dmapool.c b/mm/dmapool.c
-index f9fb9bbd733e0f..c60a48b22c8d6a 100644
---- a/mm/dmapool.c
-+++ b/mm/dmapool.c
-@@ -6,10 +6,10 @@
-  * Copyright 2007 Intel Corporation
-  *   Author: Matthew Wilcox <willy@linux.intel.com>
-  *
-- * This allocator returns small blocks of a given size which are DMA-able by
-- * the given device.  It uses the dma_alloc_coherent page allocator to get
-- * new pages, then splits them up into blocks of the required size.
-- * Many older drivers still have their own code to do this.
-+ * This allocator returns small blocks of a given size which are DMA-able by the
-+ * given device.  It either uses the dma_alloc_coherent or the dma_alloc_pages
-+ * allocator to get new pages, then splits them up into blocks of the required
-+ * size.
-  *
-  * The current design of this allocator is fairly simple.  The pool is
-  * represented by the 'struct dma_pool' which keeps a doubly-linked list of
-@@ -39,17 +39,6 @@
- #define DMAPOOL_DEBUG 1
- #endif
- 
--struct dma_pool {		/* the pool */
--	struct list_head page_list;
--	spinlock_t lock;
--	size_t size;
--	struct device *dev;
--	size_t allocation;
--	size_t boundary;
--	char name[32];
--	struct list_head pools;
--};
--
- struct dma_page {		/* cacheable header for 'allocation' bytes */
- 	struct list_head page_list;
- 	void *vaddr;
-@@ -104,74 +93,40 @@ show_pools(struct device *dev, struct device_attribute *attr, char *buf)
- 
- static DEVICE_ATTR(pools, 0444, show_pools, NULL);
- 
--/**
-- * dma_pool_create - Creates a pool of consistent memory blocks, for dma.
-- * @name: name of pool, for diagnostics
-- * @dev: device that will be doing the DMA
-- * @size: size of the blocks in this pool.
-- * @align: alignment requirement for blocks; must be a power of two
-- * @boundary: returned blocks won't cross this power of two boundary
-- * Context: not in_interrupt()
-- *
-- * Given one of these pools, dma_pool_alloc()
-- * may be used to allocate memory.  Such memory will all have "consistent"
-- * DMA mappings, accessible by the device and its driver without using
-- * cache flushing primitives.  The actual size of blocks allocated may be
-- * larger than requested because of alignment.
-- *
-- * If @boundary is nonzero, objects returned from dma_pool_alloc() won't
-- * cross that size boundary.  This is useful for devices which have
-- * addressing restrictions on individual DMA transfers, such as not crossing
-- * boundaries of 4KBytes.
-- *
-- * Return: a dma allocation pool with the requested characteristics, or
-- * %NULL if one can't be created.
-- */
--struct dma_pool *dma_pool_create(const char *name, struct device *dev,
--				 size_t size, size_t align, size_t boundary)
-+static int __dma_pool_init(struct device *dev, struct dma_pool *pool,
-+		const char *name, size_t size, size_t align, size_t boundary)
- {
--	struct dma_pool *retval;
- 	size_t allocation;
- 	bool empty = false;
- 
- 	if (align == 0)
- 		align = 1;
--	else if (align & (align - 1))
--		return NULL;
-+	if (align & (align - 1))
-+		return -EINVAL;
- 
- 	if (size == 0)
--		return NULL;
--	else if (size < 4)
--		size = 4;
--
--	size = ALIGN(size, align);
-+		return -EINVAL;
-+	size = ALIGN(min_t(size_t, size, 4), align);
- 	allocation = max_t(size_t, size, PAGE_SIZE);
- 
- 	if (!boundary)
- 		boundary = allocation;
--	else if ((boundary < size) || (boundary & (boundary - 1)))
--		return NULL;
--
--	retval = kmalloc_node(sizeof(*retval), GFP_KERNEL, dev_to_node(dev));
--	if (!retval)
--		return retval;
--
--	strlcpy(retval->name, name, sizeof(retval->name));
--
--	retval->dev = dev;
--
--	INIT_LIST_HEAD(&retval->page_list);
--	spin_lock_init(&retval->lock);
--	retval->size = size;
--	retval->boundary = boundary;
--	retval->allocation = allocation;
--
--	INIT_LIST_HEAD(&retval->pools);
-+	if (boundary < size || (boundary & (boundary - 1)))
-+		return -EINVAL;
-+
-+	strlcpy(pool->name, name, sizeof(pool->name));
-+	pool->dev = dev;
-+	INIT_LIST_HEAD(&pool->page_list);
-+	spin_lock_init(&pool->lock);
-+	pool->size = size;
-+	pool->boundary = boundary;
-+	pool->allocation = allocation;
-+	INIT_LIST_HEAD(&pool->pools);
- 
- 	/*
- 	 * pools_lock ensures that the ->dma_pools list does not get corrupted.
- 	 * pools_reg_lock ensures that there is not a race between
--	 * dma_pool_create() and dma_pool_destroy() or within dma_pool_create()
-+	 * __dma_pool_init() and dma_pool_exit() or within dma_pool_create()
- 	 * when the first invocation of dma_pool_create() failed on
- 	 * device_create_file() and the second assumes that it has been done (I
- 	 * know it is a short window).
-@@ -180,7 +135,7 @@ struct dma_pool *dma_pool_create(const char *name, struct device *dev,
- 	mutex_lock(&pools_lock);
- 	if (list_empty(&dev->dma_pools))
- 		empty = true;
--	list_add(&retval->pools, &dev->dma_pools);
-+	list_add(&pool->pools, &dev->dma_pools);
- 	mutex_unlock(&pools_lock);
- 	if (empty) {
- 		int err;
-@@ -188,18 +143,94 @@ struct dma_pool *dma_pool_create(const char *name, struct device *dev,
- 		err = device_create_file(dev, &dev_attr_pools);
- 		if (err) {
- 			mutex_lock(&pools_lock);
--			list_del(&retval->pools);
-+			list_del(&pool->pools);
- 			mutex_unlock(&pools_lock);
- 			mutex_unlock(&pools_reg_lock);
--			kfree(retval);
--			return NULL;
-+			return err;
- 		}
- 	}
- 	mutex_unlock(&pools_reg_lock);
--	return retval;
-+	return 0;
-+}
-+
-+/**
-+ * dma_pool_create - Creates a pool of consistent memory blocks, for dma.
-+ * @name: name of pool, for diagnostics
-+ * @dev: device that will be doing the DMA
-+ * @size: size of the blocks in this pool.
-+ * @align: alignment requirement for blocks; must be a power of two
-+ * @boundary: returned blocks won't cross this power of two boundary
-+ * Context: not in_interrupt()
-+ *
-+ * Given one of these pools, dma_pool_alloc()
-+ * may be used to allocate memory.  Such memory will all have "consistent"
-+ * DMA mappings, accessible by the device and its driver without using
-+ * cache flushing primitives.  The actual size of blocks allocated may be
-+ * larger than requested because of alignment.
-+ *
-+ * If @boundary is nonzero, objects returned from dma_pool_alloc() won't
-+ * cross that size boundary.  This is useful for devices which have
-+ * addressing restrictions on individual DMA transfers, such as not crossing
-+ * boundaries of 4KBytes.
-+ *  Return: a dma allocation pool with the requested characteristics, or
-+ * %NULL if one can't be created.
-+ */
-+struct dma_pool *dma_pool_create(const char *name, struct device *dev,
-+				 size_t size, size_t align, size_t boundary)
-+{
-+	struct dma_pool *pool;
-+
-+	pool = kmalloc_node(sizeof(*pool), GFP_KERNEL, dev_to_node(dev));
-+	if (!pool)
-+		return NULL;
-+	if (__dma_pool_init(dev, pool, name, size, align, boundary))
-+		goto out_free_pool;
-+	pool->is_coherent = true;
-+	return pool;
-+out_free_pool:
-+	kfree(pool);
-+	return NULL;
- }
- EXPORT_SYMBOL(dma_pool_create);
- 
-+/**
-+ * dma_pool_init - initialize a pool DMA addressable memory
-+ * @dev:	device that will be doing the DMA
-+ * @pool:	pool to initialize
-+ * @name:	name of pool, for diagnostics
-+ * @size:	size of the blocks in this pool.
-+ * @align:	alignment requirement for blocks; must be a power of two
-+ * @boundary:	returned blocks won't cross this power of two boundary
-+ * @dir:	DMA direction the allocations are going to be used for
-+ *
-+ * Context:	not in_interrupt()
-+ *
-+ * Given one of these pools, dma_pool_alloc() may be used to allocate memory.
-+ * Such memory will have the same semantics as memory returned from
-+ * dma_alloc_pages(), that is ownership needs to be transferred to and from the
-+ * device.  The actual size of blocks allocated may be larger than requested
-+ * because of alignment.
-+ *
-+ * If @boundary is nonzero, objects returned from dma_pool_alloc() won't
-+ * cross that size boundary.  This is useful for devices which have
-+ * addressing restrictions on individual DMA transfers, such as not crossing
-+ * boundaries of 4KBytes.
-+ */
-+int dma_pool_init(struct device *dev, struct dma_pool *pool, const char *name,
-+		size_t size, size_t align, size_t boundary,
-+		enum dma_data_direction dir)
-+{
-+	int ret;
-+
-+	ret = __dma_pool_init(dev, pool, name, size, align, boundary);
-+	if (ret)
-+		return ret;
-+	pool->is_coherent = false;
-+	pool->dir = dir;
-+	return 0;
-+}
-+EXPORT_SYMBOL(dma_pool_init);
-+
- static void pool_initialise_page(struct dma_pool *pool, struct dma_page *page)
- {
- 	unsigned int offset = 0;
-@@ -223,8 +254,12 @@ static struct dma_page *pool_alloc_page(struct dma_pool *pool, gfp_t mem_flags)
- 	page = kmalloc(sizeof(*page), mem_flags);
- 	if (!page)
- 		return NULL;
--	page->vaddr = dma_alloc_coherent(pool->dev, pool->allocation,
--					 &page->dma, mem_flags);
-+	if (pool->is_coherent)
-+		page->vaddr = dma_alloc_coherent(pool->dev, pool->allocation,
-+						 &page->dma, mem_flags);
-+	else
-+		page->vaddr = dma_alloc_pages(pool->dev, pool->allocation,
-+					      &page->dma, pool->dir, mem_flags);
- 	if (page->vaddr) {
- #ifdef	DMAPOOL_DEBUG
- 		memset(page->vaddr, POOL_POISON_FREED, pool->allocation);
-@@ -251,20 +286,25 @@ static void pool_free_page(struct dma_pool *pool, struct dma_page *page)
- #ifdef	DMAPOOL_DEBUG
- 	memset(page->vaddr, POOL_POISON_FREED, pool->allocation);
- #endif
--	dma_free_coherent(pool->dev, pool->allocation, page->vaddr, dma);
-+	if (pool->is_coherent)
-+		dma_free_coherent(pool->dev, pool->allocation, page->vaddr,
-+				  dma);
-+	else
-+		dma_free_pages(pool->dev, pool->allocation, page->vaddr, dma,
-+			       pool->dir);
- 	list_del(&page->page_list);
- 	kfree(page);
- }
- 
- /**
-- * dma_pool_destroy - destroys a pool of dma memory blocks.
-+ * dma_pool_exit - destroys a pool of dma memory blocks.
-  * @pool: dma pool that will be destroyed
-  * Context: !in_interrupt()
-  *
-- * Caller guarantees that no more memory from the pool is in use,
-- * and that nothing will try to use the pool after this call.
-+ * Caller guarantees that no more memory from the pool is in use, and that
-+ * nothing will try to use the pool after this call.
-  */
--void dma_pool_destroy(struct dma_pool *pool)
-+void dma_pool_exit(struct dma_pool *pool)
- {
- 	bool empty = false;
- 
-@@ -299,7 +339,20 @@ void dma_pool_destroy(struct dma_pool *pool)
- 		} else
- 			pool_free_page(pool, page);
- 	}
-+}
-+EXPORT_SYMBOL(dma_pool_exit);
- 
-+/**
-+ * dma_pool_destroy - destroys a pool of dma memory blocks.
-+ * @pool: dma pool that will be destroyed
-+ * Context: !in_interrupt()
-+ *
-+ * Caller guarantees that no more memory from the pool is in use,
-+ * and that nothing will try to use the pool after this call.
-+ */
-+void dma_pool_destroy(struct dma_pool *pool)
-+{
-+	dma_pool_exit(pool);
- 	kfree(pool);
- }
- EXPORT_SYMBOL(dma_pool_destroy);
+omap_gem_free_object() can also be made static, and removed from omap_gem.h.
+
+Tested on AM5 EVM.
+
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
+
+ Tomi
+
 -- 
-2.28.0
-
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
