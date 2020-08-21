@@ -2,161 +2,102 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14F1D24CC71
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Aug 2020 05:57:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADEF024CDFF
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Aug 2020 08:31:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728082AbgHUD5A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 20 Aug 2020 23:57:00 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37259 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727807AbgHUD46 (ORCPT
+        id S1726345AbgHUGbm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 21 Aug 2020 02:31:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42060 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725951AbgHUGbm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 20 Aug 2020 23:56:58 -0400
-Received: by mail-io1-f65.google.com with SMTP id b16so485080ioj.4;
-        Thu, 20 Aug 2020 20:56:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9/YPThWKebuepD09jEOhLOS7SrW7ksPYY3UHELax/QU=;
-        b=d1qJeTUtDUyEYXJ3St92Tp8URiCGPgf3NhXE1psc1WG8XNZ3+0ROmkjWxRWxvK6q+k
-         CXrM9hd4k1dBXUncHhPPB3d5eodNKy+Cmv525A1aQLEsi80uNX+VYDEdsRCv8dqNcfxw
-         03WM6RRhPF7qmxUXR9E3Q6/FaDVaSBP3vjNIA6iwB4WfLVLWU0pKZEdqliLfMzr5AyO1
-         4IHe5pfca+oky+T4pF1Q6X7e2rmZc0/3KEeVviaX91b3sxw9JVREhUeQb8VCJLqc6otW
-         UhUHJQTarVqTKz4CRV/ZOAnmqzL4f/74U8Ra0qFR2RHywspbKOEPbiWtZbWA/TP9gt4n
-         rmGQ==
-X-Gm-Message-State: AOAM532qxeNRuBBheL2y3JpwvtMEup2brvdSUpkMWVzc2/cgJxwIMbde
-        D+rPMjifHHikTQq1HOGTRA==
-X-Google-Smtp-Source: ABdhPJwTwqsPsKVkMoMEXHOo2cKMWdbZxZdy/oInmh65Y7ywfHBijNwvFaSB2WL1YEbhA5nsNJVKOg==
-X-Received: by 2002:a05:6638:1690:: with SMTP id f16mr859543jat.91.1597982216882;
-        Thu, 20 Aug 2020 20:56:56 -0700 (PDT)
-Received: from xps15.herring.priv ([64.188.179.249])
-        by smtp.googlemail.com with ESMTPSA id 79sm413923ilc.9.2020.08.20.20.56.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2020 20:56:56 -0700 (PDT)
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     linux-pci@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <eswara.kota@linux.intel.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Yue Wang <yue.wang@Amlogic.com>, Marc Zyngier <maz@kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH v2 40/40] PCI: dwc: Use DBI accessors
-Date:   Thu, 20 Aug 2020 21:54:20 -0600
-Message-Id: <20200821035420.380495-41-robh@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200821035420.380495-1-robh@kernel.org>
-References: <20200821035420.380495-1-robh@kernel.org>
+        Fri, 21 Aug 2020 02:31:42 -0400
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D848B20732;
+        Fri, 21 Aug 2020 06:31:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597991501;
+        bh=nlYLizszK9f9v583kG2r3NUZircSq8a0b7ncAj+8nCE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=icHK5nj5ReIwEwsVtVm7zKaYGoNmULev+0nWZpsolGw0fskgZbyej0dJjTasvCJSl
+         dyVIbbFqKdtRskezltcj/zCCcfZtT8K9Q6wL39HyrObOtZ2QmFy5ZvDRlDs24PSRB4
+         OuHhul5XgUWTX5ZquBlRv7fRWehPVzRQGg81x9TI=
+Received: by mail-ej1-f52.google.com with SMTP id bo3so1004135ejb.11;
+        Thu, 20 Aug 2020 23:31:40 -0700 (PDT)
+X-Gm-Message-State: AOAM530bQ0KMHn63PX+jdczb14N/tE4X2urd7fx6GNrBQoVI/+OVC7/a
+        Ca0YB2LGtJYljHP/ouXDT1xUkn2NtPXijx/uRAI=
+X-Google-Smtp-Source: ABdhPJzmsRwacUgF9wp7sh4Uo7RCl0p0/BWQy6sNA1lK7shnUeEfA2XLjnyNUqiOPykidWM5/kQR7817vJYiPMs1QXw=
+X-Received: by 2002:a17:906:9989:: with SMTP id af9mr1305560ejc.385.1597991499427;
+ Thu, 20 Aug 2020 23:31:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200708153420.29484-1-lukasz.luba@arm.com> <20200708153420.29484-3-lukasz.luba@arm.com>
+ <20200817155021.GC15887@kozik-lap> <2099aea9-5a63-6e5b-d7f9-4e6476584461@arm.com>
+In-Reply-To: <2099aea9-5a63-6e5b-d7f9-4e6476584461@arm.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Fri, 21 Aug 2020 08:31:28 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPc063m_YcouAO2Q9piJ_GV1Fh9XeS3ZZ3KR=ZyMxPKZ5w@mail.gmail.com>
+Message-ID: <CAJKOXPc063m_YcouAO2Q9piJ_GV1Fh9XeS3ZZ3KR=ZyMxPKZ5w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: exynos: Remove interrupts from DMC
+ controller in Exynos5422
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, willy.mh.wolff.ml@gmail.com,
+        k.konieczny@samsung.com, Chanwoo Choi <cw00.choi@samsung.com>,
+        =?UTF-8?B?QmFydMWCb21pZWogxbtvxYJuaWVya2lld2ljeg==?= 
+        <b.zolnierkie@samsung.com>, chanwoo@kernel.org,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        s.nawrocki@samsung.com, kgene@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Convert the remaining cases of register accesses using dbi_base rather
-than dw_pcie_(read|write)[bwl]_dbi accessors.
+On Mon, 17 Aug 2020 at 19:17, Lukasz Luba <lukasz.luba@arm.com> wrote:
+>
+> Hi Krzysztof,
+>
+> On 8/17/20 4:50 PM, Krzysztof Kozlowski wrote:
+> > On Wed, Jul 08, 2020 at 04:34:20PM +0100, Lukasz Luba wrote:
+> >> The interrupts in Dynamic Memory Controller in Exynos5422 and Odroid
+> >> XU3-family boards are no longer needed. They have been used in order
+> >> to workaround some issues in scheduled work in devfreq. Now when the
+> >> devfreq framework design is improved, remove the interrupt driven
+> >> approach and rely on devfreq monitoring mechanism with fixed intervals.
+> >>
+> >> Reported-by: Willy Wolff <willy.mh.wolff.ml@gmail.com>
+> >> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> >> ---
+> >>   arch/arm/boot/dts/exynos5420.dtsi | 3 ---
+> >>   1 file changed, 3 deletions(-)
+> >
+> > I think the dependencies were merged so this can be safely applied
+> > without bisectability problems?
+>
+> I have created v2 of that fix and it got merged
+> via Chanwoo's tree, the commit 4fc9a0470d2dc37028
+> https://lkml.org/lkml/2020/7/10/1048
+>
+> That commit switched the driver default mode from 'irq driven' to
+> new devfreq monitoring mechanism. Furthermore, when the driver is
+> built as a module, you can try to use the 'irq mode', but for this
+> you would need the DT IRQs description (this $subject tries to remove).
+>
+> I would like to keep this IRQ mode for experimentation, as I
+> described in answers to Bartek's questions:
+> https://lkml.org/lkml/2020/7/14/315
+>
+> Unfortunately, I am quite busy and won't make any progress before the
+> LPC.
 
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Pratyush Anand <pratyush.anand@gmail.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Jonathan Hunter <jonathanh@nvidia.com>
-Cc: linux-tegra@vger.kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- drivers/pci/controller/dwc/pcie-spear13xx.c |  8 ++++----
- drivers/pci/controller/dwc/pcie-tegra194.c  | 10 ++++------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+None of these were the actual answer to my question, unless by "v2 of
+that fix and it got merged" means the dependencies?
 
-diff --git a/drivers/pci/controller/dwc/pcie-spear13xx.c b/drivers/pci/controller/dwc/pcie-spear13xx.c
-index 0d8d0fe87f27..e348225f651f 100644
---- a/drivers/pci/controller/dwc/pcie-spear13xx.c
-+++ b/drivers/pci/controller/dwc/pcie-spear13xx.c
-@@ -86,12 +86,12 @@ static int spear13xx_pcie_establish_link(struct spear13xx_pcie *spear13xx_pcie)
- 	 * default value in capability register is 512 bytes. So force
- 	 * it to 128 here.
- 	 */
--	dw_pcie_read(pci->dbi_base + exp_cap_off + PCI_EXP_DEVCTL, 2, &val);
-+	val = dw_pcie_readw_dbi(pci, exp_cap_off + PCI_EXP_DEVCTL);
- 	val &= ~PCI_EXP_DEVCTL_READRQ;
--	dw_pcie_write(pci->dbi_base + exp_cap_off + PCI_EXP_DEVCTL, 2, val);
-+	dw_pcie_writew_dbi(pci, exp_cap_off + PCI_EXP_DEVCTL, val);
- 
--	dw_pcie_write(pci->dbi_base + PCI_VENDOR_ID, 2, 0x104A);
--	dw_pcie_write(pci->dbi_base + PCI_DEVICE_ID, 2, 0xCD80);
-+	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, 0x104A);
-+	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, 0xCD80);
- 
- 	/* enable ltssm */
- 	writel(DEVICE_TYPE_RC | (1 << MISCTRL_EN_ID)
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 1560c449757d..aa511ec0d800 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -816,26 +816,24 @@ static void config_gen3_gen4_eq_presets(struct tegra_pcie_dw *pcie)
- 
- 	/* Program init preset */
- 	for (i = 0; i < pcie->num_lanes; i++) {
--		dw_pcie_read(pci->dbi_base + CAP_SPCIE_CAP_OFF
--				 + (i * 2), 2, &val);
-+		val = dw_pcie_readw_dbi(pci, CAP_SPCIE_CAP_OFF + (i * 2));
- 		val &= ~CAP_SPCIE_CAP_OFF_DSP_TX_PRESET0_MASK;
- 		val |= GEN3_GEN4_EQ_PRESET_INIT;
- 		val &= ~CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_MASK;
- 		val |= (GEN3_GEN4_EQ_PRESET_INIT <<
- 			   CAP_SPCIE_CAP_OFF_USP_TX_PRESET0_SHIFT);
--		dw_pcie_write(pci->dbi_base + CAP_SPCIE_CAP_OFF
--				 + (i * 2), 2, val);
-+		dw_pcie_writew_dbi(pci, CAP_SPCIE_CAP_OFF + (i * 2), val);
- 
- 		offset = dw_pcie_find_ext_capability(pci,
- 						     PCI_EXT_CAP_ID_PL_16GT) +
- 				PCI_PL_16GT_LE_CTRL;
--		dw_pcie_read(pci->dbi_base + offset + i, 1, &val);
-+		val = dw_pcie_readb_dbi(pci, offset + i);
- 		val &= ~PCI_PL_16GT_LE_CTRL_DSP_TX_PRESET_MASK;
- 		val |= GEN3_GEN4_EQ_PRESET_INIT;
- 		val &= ~PCI_PL_16GT_LE_CTRL_USP_TX_PRESET_MASK;
- 		val |= (GEN3_GEN4_EQ_PRESET_INIT <<
- 			PCI_PL_16GT_LE_CTRL_USP_TX_PRESET_SHIFT);
--		dw_pcie_write(pci->dbi_base + offset + i, 1, val);
-+		dw_pcie_writeb_dbi(pci, offset + i, val);
- 	}
- 
- 	val = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
--- 
-2.25.1
+I'll drop it from the queue. Please resend if it is valid.
 
+Best regards,
+Krzysztof
