@@ -2,91 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0746252840
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Aug 2020 09:15:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24F92532A0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 26 Aug 2020 16:59:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726700AbgHZHP3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 26 Aug 2020 03:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbgHZHP1 (ORCPT
+        id S1726793AbgHZO7X (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 26 Aug 2020 10:59:23 -0400
+Received: from cmccmta2.chinamobile.com ([221.176.66.80]:55448 "EHLO
+        cmccmta2.chinamobile.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726757AbgHZO7W (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 26 Aug 2020 03:15:27 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8908C061574
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 26 Aug 2020 00:15:26 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ls14so457656pjb.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 26 Aug 2020 00:15:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=0Q6scoxL+d70qkSwAGY56y4zy3DvXODuXPU5bPQHzOc=;
-        b=uETILQoS7qsMgRSI6GsDvBM0d4XFagE1Ud4CXHsIbqBM7fWQPUakOYAe20BEtnXfpE
-         sz8XY6mSozCGdDR2UjWBgRh2dLp5fZZM+fY7jKUPNn4RFEGFdKpnIvR4tFeAVLYelnjF
-         qaIqDllUg+SeEq0B/tSUKxRMvg6CS42i2VIjiqmyF/M2laAIkaC02cb8nTjVhopYlMZt
-         gMTOBsfSglY/oYHP453fO1xpS2Q3Dbuki69Z1H9FCh9AjvNKGOz9PtJ1CjyjgLztru7a
-         8ZpO6uVtbE6a+Vpx3CxMLfJRvq1X+sq9PEe60+GuwC4ptFBaUmGT6WayKR9VhLBImQNO
-         +4sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=0Q6scoxL+d70qkSwAGY56y4zy3DvXODuXPU5bPQHzOc=;
-        b=IrOTjP1xoIYXTD+Yc15Uu6ooRUXkm1ny9l7ndC9FDkWG2DUO4ZIRqFjU1BOLe0gslj
-         /hU3fnns+pJtGb3v4hiaSDHLhKiIKlRgUvJO+J7Tg8oAKkc68+mTd0BCT7dgFXWTfp3l
-         M9+khtv+5P4IJ7Ma19XRcsvksMLQtT7R3MnMXdLkhy2aV1CQLmzRadVxFpAont0rgupJ
-         g8qo8CwP1AZ+5LuRL6OiC2gfsCCLERJeE0ET7HdefcaNIjDcHy9Vjb+viCSktOcBFCuW
-         qHjVm4GJmqFx0FMuGVUiEclDHVGfoa2iXemDxoUrUjYdUxHFPcQWcWVG5ARLwSItAHyc
-         loww==
-X-Gm-Message-State: AOAM530B76aoKj8f4tG+i39ivNQdJy92XaWL59S+uFvoiOkQXdyn8+WL
-        rLnimG9ejj7fPf0jdGf7iAblshi09GczWQ==
-X-Google-Smtp-Source: ABdhPJwymBjSQnCvHIlxla4xQpv5y4P/j/BjFN9Q2DRcXwBn1G5emfkIEo6gGTh2k+SYpeRGmxhrtQ==
-X-Received: by 2002:a17:902:8546:: with SMTP id d6mr10970772plo.218.1598426125191;
-        Wed, 26 Aug 2020 00:15:25 -0700 (PDT)
-Received: from daeinki-virtual-machine.localdomain ([58.124.60.88])
-        by smtp.gmail.com with ESMTPSA id m7sm1571520pfm.31.2020.08.26.00.15.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2020 00:15:24 -0700 (PDT)
-From:   Inki Dae <daeinki@gmail.com>
-To:     airlied@linux.ie
-Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
-Subject: [GIT PULL] exynos-drm-fixes
-Date:   Wed, 26 Aug 2020 16:15:20 +0900
-Message-Id: <20200826071520.3140-1-daeinki@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 26 Aug 2020 10:59:22 -0400
+X-Greylist: delayed 557 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Aug 2020 10:59:16 EDT
+Received: from spf.mail.chinamobile.com (unknown[172.16.121.11]) by rmmx-syy-dmz-app06-12006 (RichMail) with SMTP id 2ee65f46765af00-5abea; Wed, 26 Aug 2020 22:48:59 +0800 (CST)
+X-RM-TRANSID: 2ee65f46765af00-5abea
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM-FLAG: 00000000
+Received: from localhost.localdomain (unknown[112.0.144.112])
+        by rmsmtp-syy-appsvr06-12006 (RichMail) with SMTP id 2ee65f467658e6c-12e8e;
+        Wed, 26 Aug 2020 22:48:59 +0800 (CST)
+X-RM-TRANSID: 2ee65f467658e6c-12e8e
+From:   Tang Bin <tangbin@cmss.chinamobile.com>
+To:     gregkh@linuxfoundation.org, stern@rowland.harvard.edu,
+        kgene@kernel.org, krzk@kernel.org
+Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tang Bin <tangbin@cmss.chinamobile.com>,
+        Zhang Shengju <zhangshengju@cmss.chinamobile.com>
+Subject: [PATCH] usb: host: ohci-exynos: Fix error handling in exynos_ohci_probe()
+Date:   Wed, 26 Aug 2020 22:49:31 +0800
+Message-Id: <20200826144931.1828-1-tangbin@cmss.chinamobile.com>
+X-Mailer: git-send-email 2.20.1.windows.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Dave,
+If the function platform_get_irq() failed, the negative value
+returned will not be detected here. So fix error handling in
+exynos_ohci_probe(). And when get irq failed, the function
+platform_get_irq() logs an error message, so remove redundant
+message here.
 
-   Just one fixup to fix sparse warning reported.
+Fixes: 62194244cf87 ("USB: Add Samsung Exynos OHCI diver")
+Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
+Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+---
+ drivers/usb/host/ohci-exynos.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-   Please kindly let me know if there is any problem.
+diff --git a/drivers/usb/host/ohci-exynos.c b/drivers/usb/host/ohci-exynos.c
+index bd40e597f..5f5e8a64c 100644
+--- a/drivers/usb/host/ohci-exynos.c
++++ b/drivers/usb/host/ohci-exynos.c
+@@ -171,9 +171,8 @@ static int exynos_ohci_probe(struct platform_device *pdev)
+ 	hcd->rsrc_len = resource_size(res);
+ 
+ 	irq = platform_get_irq(pdev, 0);
+-	if (!irq) {
+-		dev_err(&pdev->dev, "Failed to get IRQ\n");
+-		err = -ENODEV;
++	if (irq < 0) {
++		err = irq;
+ 		goto fail_io;
+ 	}
+ 
+-- 
+2.20.1.windows.1
 
-Thanks,
-Inki Dae
 
-The following changes since commit d012a7190fc1fd72ed48911e77ca97ba4521bccd:
 
-  Linux 5.9-rc2 (2020-08-23 14:08:43 -0700)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos tags/exynos-drm-fixes-v5.9-rc3
-
-for you to fetch changes up to d4035d104313cc43b34381b585a7407f069a5132:
-
-  drm/exynos: gem: Fix sparse warning (2020-08-26 16:03:05 +0900)
-
-----------------------------------------------------------------
-One fixup
-- Just drop __iommu annotation to fix sparse warning.
-
-----------------------------------------------------------------
-Marek Szyprowski (1):
-      drm/exynos: gem: Fix sparse warning
-
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_gem.h   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
