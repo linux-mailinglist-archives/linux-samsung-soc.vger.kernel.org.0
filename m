@@ -2,47 +2,59 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0CA62554C5
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Aug 2020 09:03:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03471255655
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Aug 2020 10:25:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgH1HDU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 28 Aug 2020 03:03:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57730 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725858AbgH1HDT (ORCPT
+        id S1727971AbgH1IZb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 28 Aug 2020 04:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbgH1IZZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 28 Aug 2020 03:03:19 -0400
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A10D8214DB;
-        Fri, 28 Aug 2020 07:03:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598598198;
-        bh=4faSGkxwde2dUgjoJLxEPngM/PNDuiR7AsduftolHIs=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=sx7QHngCjfwrj5EpTWFj8h72BUzgxBMBKywR+k595Wk3fByAORr3jVBGDZLwGksw0
-         PYNKYbUpEnueECWfETWbOSoHpehiGjPGGdGrQ1xkURBaro59NTzuZqovK+ftZZdWmw
-         BIoHuIn6C7rK8aWGwpap/DKCec5A9wvC81kDbajc=
-Received: by mail-ej1-f41.google.com with SMTP id d11so108999ejt.13;
-        Fri, 28 Aug 2020 00:03:18 -0700 (PDT)
-X-Gm-Message-State: AOAM530xspcHh02fOCnYcpu+pEaZfgTuO3YftEMnW6YqSQJLP8coGynN
-        FfZwslcwId8hf8v6/WuJ3pMAsgVOo+ma1icz9NA=
-X-Google-Smtp-Source: ABdhPJxeqj21bGrdAgawvMqE4DUECkHszI8hRw0tB+YmvQTkV+0igeB3UuUCefttjGSqXjyZ8z82C9AEfK2QoACQnCo=
-X-Received: by 2002:a17:906:3e0a:: with SMTP id k10mr409528eji.148.1598598197045;
- Fri, 28 Aug 2020 00:03:17 -0700 (PDT)
+        Fri, 28 Aug 2020 04:25:25 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF72FC061264;
+        Fri, 28 Aug 2020 01:25:23 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id nv17so190976pjb.3;
+        Fri, 28 Aug 2020 01:25:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hgp9U9Y/G0zo5rd2YjDP3ShdcPx6s9r42iPuJEDI0jc=;
+        b=ECtC8Qr2QpWVT5Ln1YYdt0d41D8iu4+1QljOFImcKWuMAAwp02hB9Z/uL8VN2ey2J+
+         p3GD3wlvEExKnV3Z319A58NvE45esf1chM+0V/fjhkBUwXersN3vaLphhdr1J4difc+p
+         0CAUiHbAVl9ixDZFHnIBUOaHukXywdJoUMvTFy3YA0YF9c3y5XU82ueUeX/Egnq+CmRC
+         9hNwIbKnSRxOMPUVO8etY6uZgLfo6aqikvMDuvVT9IqO2gK9kJBCJF/qz+RdRz2245Vy
+         DFaJDmcxFVDbDqen+wlr2csyHQ1eWpt/RK7KSuNhW3eyhUvIV3DI9LK5Mo5H9XXISrU7
+         E5/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hgp9U9Y/G0zo5rd2YjDP3ShdcPx6s9r42iPuJEDI0jc=;
+        b=pctQx0EBEnxpYdTF8BTf/T8OmcYKWNG+l71XLGbNh4QWNPrKoPDqFrhe8NWAtpl0jd
+         NtwgLkYIvS0C/IUdRpCyLGd2Wpcu7M9i59xEi9YyCDeeS6b3Gw8pDrQfhyocDxydNhFz
+         Jo5ZMckd8nquGjRM+caow/WxlT54OZqMCSOBMuBUX4Xh78s2wBEqARBW9zkjK6AIl8h5
+         twpROwDA0LeYzmInsp1iaoRsyed4HZeYSPAuJ7bJjkLDfkhViV8nmVPoDyB5ul6i5LlT
+         XpLe5KfjwiVX88anWzUZoerUuJxiufLhkReJ+fCPwibw1WLcpL35YlU49+cgg0dguVJ+
+         I00g==
+X-Gm-Message-State: AOAM532arx/TYS8Jx1jO+bgzgdWVixMm7e+LzER+rpPI/sNpsmJUJX3R
+        W7m9U+x/DebwJHlHCbNdndv4QHn3KP5GF9LJ44E=
+X-Google-Smtp-Source: ABdhPJwsbuw20O2OB1p5m5faNM+P4s8DD8aLK8TuvYw3gq+cYE8m/WMyHxDzBvhpeh/QCh5ExRey2Xy2BFReiumdd/0=
+X-Received: by 2002:a17:902:b194:: with SMTP id s20mr408970plr.321.1598603123368;
+ Fri, 28 Aug 2020 01:25:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200827192642.1725-1-krzk@kernel.org> <20200827192642.1725-9-krzk@kernel.org>
- <f4a5777e-fe85-9f3f-4818-f7539f223adc@axentia.se> <20200828062443.GA17343@pi3>
- <3a5cb59b-454e-2c3f-9f31-43147e843c66@axentia.se>
-In-Reply-To: <3a5cb59b-454e-2c3f-9f31-43147e843c66@axentia.se>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 28 Aug 2020 09:03:06 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcqNE5U82UThzBTPCvucCf2LsCVSfAHE1vnecJGCKCaig@mail.gmail.com>
-Message-ID: <CAJKOXPcqNE5U82UThzBTPCvucCf2LsCVSfAHE1vnecJGCKCaig@mail.gmail.com>
+ <f4a5777e-fe85-9f3f-4818-f7539f223adc@axentia.se>
+In-Reply-To: <f4a5777e-fe85-9f3f-4818-f7539f223adc@axentia.se>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Fri, 28 Aug 2020 11:25:06 +0300
+Message-ID: <CAHp75VdWDtoGxm3uxxeXveZQ3Y_ofShdYPSXHL0Vxsz5d0miuQ@mail.gmail.com>
 Subject: Re: [PATCH v2 09/18] iio: afe: iio-rescale: Simplify with dev_err_probe()
 To:     Peter Rosin <peda@axentia.se>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
         Hartmut Knaack <knaack.h@gmx.de>,
         Lars-Peter Clausen <lars@metafoo.de>,
         Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
@@ -58,12 +70,10 @@ Cc:     Jonathan Cameron <jic23@kernel.org>,
         Beniamin Bia <beniamin.bia@analog.com>,
         Tomasz Duszynski <tomasz.duszynski@octakon.com>,
         Linus Walleij <linus.walleij@linaro.org>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        linux-iio@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
+        linux-iio <linux-iio@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org,
         linux-amlogic@lists.infradead.org,
         linux-stm32@st-md-mailman.stormreply.com
 Content-Type: text/plain; charset="UTF-8"
@@ -72,72 +82,25 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 28 Aug 2020 at 08:58, Peter Rosin <peda@axentia.se> wrote:
-> >> I'm not a huge fan of adding *one* odd line breaking the 80 column
-> >> recommendation to any file. I like to be able to fit multiple
-> >> windows side by side in a meaningful way. Also, I don't like having
-> >> a shitload of emptiness on my screen, which is what happens when some
-> >> lines are longer and you want to see it all. I strongly believe that
-> >> the 80 column rule/recommendation is still as valid as it ever was.
-> >> It's just hard to read longish lines; there's a reason newspapers
-> >> columns are quite narrow...
-> >>
-> >> Same comment for the envelope-detector (3/18).
-> >>
-> >> You will probably never look at these files again, but *I* might have
-> >> to revisit them for one reason or another, and these long lines will
-> >> annoy me when that happens.
-> >
-> > Initially I posted it with 80-characters wrap. Then I received a comment
-> > - better to stick to the new 100, as checkpatch accepts it.
-> >
-> > Now you write, better to go back to 80.
-> >
-> > Maybe then someone else will write to me, better to go to 100.
-> >
-> > And another person will reply, no, coding style still mentions 80, so
-> > keep it at 80.
-> >
-> > Sure guys, please first decide which one you prefer, then I will wrap it
-> > accordingly. :)
-> >
-> > Otherwise I will just jump from one to another depending on one person's
-> > personal preference.
-> >
-> > If there is no consensus among discussing people, I find this 100 line
-> > more readable, already got review, checkpatch accepts it so if subsystem
-> > maintainer likes it, I prefer to leave it like this.
->
-> I'm not impressed by that argument. For the files I have mentioned, it
-> does not matter very much to me if you and some random person think that
-> 100 columns might *slightly* improve readability.
->
-> Quoting coding-style
->
->   Statements longer than 80 columns should be broken into sensible chunks,
->   unless exceeding 80 columns significantly increases readability and does
->   not hide information.
->
-> Notice that word? *significantly*
+On Fri, Aug 28, 2020 at 12:46 AM Peter Rosin <peda@axentia.se> wrote:
+> On 2020-08-27 21:26, Krzysztof Kozlowski wrote:
 
-Notice also checkpatch change...
+...
 
-First of all, I don't have a preference over wrapping here. As I said,
-I sent v1 with 80 and got a response to change it to 100. You want me
-basically to bounce from A to B to A to B.
+> I'm not a huge fan of adding *one* odd line breaking the 80 column
+> recommendation to any file. I like to be able to fit multiple
+> windows side by side in a meaningful way. Also, I don't like having
+> a shitload of emptiness on my screen, which is what happens when some
+> lines are longer and you want to see it all. I strongly believe that
+> the 80 column rule/recommendation is still as valid as it ever was.
+> It's just hard to read longish lines; there's a reason newspapers
+> columns are quite narrow...
 
-> Why do I even have to speak up about this? WTF?
+Why not to introduce 66 (or so, like TeX recommends)? Or even less?
+I consider any comparison to news or natural language text is silly.
+Programming language is different in many aspects, including helpful
+scripts and utilities to browse the source code.
 
-Because we all share here our ideas...
-
-> For the patches that touch files that I originally wrote [1], my
-> preference should be clear by now.
-
-I understood your preference. There is nothing unclear here. Other
-person had different preference. I told you my arguments that it is
-not reasonable to jump A->B->A->B just because each person has a
-different view. At the end it's the subsystem maintainer's decision as
-he wants to keep his subsystem clean.
-
-Best regards,
-Krzysztof
+-- 
+With Best Regards,
+Andy Shevchenko
