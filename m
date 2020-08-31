@@ -2,95 +2,91 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5622E257A61
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 31 Aug 2020 15:27:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64FC9257AD4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 31 Aug 2020 15:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbgHaN1q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 31 Aug 2020 09:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727103AbgHaN0u (ORCPT
+        id S1726968AbgHaNuJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 31 Aug 2020 09:50:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42146 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726515AbgHaNuH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 31 Aug 2020 09:26:50 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E83C0619C8
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 31 Aug 2020 06:26:21 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id e11so6668213ljn.6
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 31 Aug 2020 06:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
-        b=HyW5/n2KU8W3FGefd/FUm/bl6fINTQmZ8owzYdBGhP5oyAu9pJQPQCMOdYEDNFegUA
-         if9VN+pra3iBgWNYJjHcBV7T99CY2GFOcHOVU+3vJ7r2Hvzgah2ZCqHTq6bk4iv0uilM
-         xQiEPrdMcYz9cIZL++pevJSb5RdixTZAk95pbnwmQ3/GOLv8xUS1vQ8t141F6N8CgROI
-         mubb31iIEGHTmIRsfQchZCL6N1v85LnpPi/V/jmyUdodp49jy+hBMBGM/QhsUL+AVu8e
-         3Cg9SzlMyigtpwqPqg6kcnc+pElD0XMp/EB9mY9MxbJL6EWXLnnT1YiTj0+V+0DhoQI2
-         wJdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
-        b=CRfeBRmYfFwY39rEsHqzZzfI3puuCKA3lSyApWx6MmXM501wIgBEOywbFyxd/SD4xE
-         mMTXLS9pjVg5Z41xAITag4a8LGHvxXAYMR5qq7q1sDv67IXCIQps3QlQP3d4ot8alewK
-         o9QnWO5I3ly1hquqj+sxVoyaV1/FDUe0UT+uRUINkyLpdxgr/jqyvaDDKPtyRbprZ63u
-         UAbuG8yaT0B9S/gz1Cbzv2SynghPowlrxxuvHv2S5u3XGMlgjbNqKEt+NO3ZpUl9daEj
-         Jpa/ztSV8Aj0VXb0Tw3CEvuSFEt0ClOMIpMKXr+Q1HoM25g3Tth0lqEHmVKDDFHjbQAX
-         fMSQ==
-X-Gm-Message-State: AOAM532RmnYoqATf/Gk42T/JzIUGTvP8YK1iRoWqoT6TzE/lotQarB9X
-        1Dem8EF/tBqxXVCNgBVEx1BqlAnyBMttnH39F0A=
-X-Google-Smtp-Source: ABdhPJxEvvXnVfErpjDwHOkyCqRTciyX/SNwRaUYVOHmxIQS6MbFpht1V2v8jY7chkhk3ZxIDw/BvL8uxGOjXPjCGG8=
-X-Received: by 2002:a2e:9c86:: with SMTP id x6mr662832lji.346.1598880379026;
- Mon, 31 Aug 2020 06:26:19 -0700 (PDT)
+        Mon, 31 Aug 2020 09:50:07 -0400
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D6936214D8;
+        Mon, 31 Aug 2020 13:50:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598881807;
+        bh=ztLmZ+941EYqr7AcuVlAnDkvVWFOEg0Wm9jORnDkfUk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=vYV/FGnlQ06Mj/nnQX76wRgv2qFhTHS7eVvVPBLvjpO93baFcabyDVe+wYQC1Lh/9
+         /QyPf451GSDyQH6zTMXYOggTlJyPDU0J/9TRQJa1M3PVfN8lyPGbPgU2+hcUYgPH/W
+         y7q1CTt1RI1xlnnrSJpNG2oXDCfTI9ekdZZNsZj0=
+Received: by mail-ej1-f41.google.com with SMTP id b17so8570941ejq.8;
+        Mon, 31 Aug 2020 06:50:06 -0700 (PDT)
+X-Gm-Message-State: AOAM533s61NeNXu8scRgccjylTOak68a9Zn2VJZQIkNSZb9uNMIIuicN
+        RBVLcfLyHrUbPfPt9Xrmv6ymsKosp07v30cvtSY=
+X-Google-Smtp-Source: ABdhPJzSNDPf0SiyxO/14ODP0ki5tEh8fCdOy7QMsQkV/SOOG8rXrfpgfQiPmDMwBNPvJpjGjdhWCIJ1LfOLyjDXiZU=
+X-Received: by 2002:a17:906:8401:: with SMTP id n1mr1217460ejx.215.1598881805398;
+ Mon, 31 Aug 2020 06:50:05 -0700 (PDT)
 MIME-Version: 1.0
-Reply-To: marie_avis12@yahoo.com
-Received: by 2002:a2e:9817:0:0:0:0:0 with HTTP; Mon, 31 Aug 2020 06:26:18
- -0700 (PDT)
-From:   Miss Maris Avis <marie.avis11@gmail.com>
-Date:   Mon, 31 Aug 2020 13:26:18 +0000
-X-Google-Sender-Auth: ENkN_TdcXF5NiFOWAHQrklZpWrk
-Message-ID: <CADTVshNj9Ztqm75AkbunLeeRTsk07qB5LsiKLoagvmiH7TvYgQ@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
+References: <20200829142501.31478-1-krzk@kernel.org> <CGME20200829142607eucas1p137f06c4bac607652e972f4c49d1a9982@eucas1p1.samsung.com>
+ <20200829142501.31478-10-krzk@kernel.org> <84ec0795-2b7f-adde-4277-2238cede8c24@samsung.com>
+In-Reply-To: <84ec0795-2b7f-adde-4277-2238cede8c24@samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 31 Aug 2020 15:49:54 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdTz0LScEFMzJtUytHo3zHwGd=w=EOpqOc04wvoLEhchQ@mail.gmail.com>
+Message-ID: <CAJKOXPdTz0LScEFMzJtUytHo3zHwGd=w=EOpqOc04wvoLEhchQ@mail.gmail.com>
+Subject: Re: [RFT 10/10] arm64: dts: exynos: Enable Arizona interrupt
+ controller in Exynos5433 TM2
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Kukjin Kim <kgene@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lee Jones <lee.jones@linaro.org>,
+        Sangbeom Kim <sbkim73@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-kernel@lists.infradead.org,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel@lists.freedesktop.org, alsa-devel@alsa-project.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Inki Dae <inki.dae@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-My Dear,
+On Mon, 31 Aug 2020 at 15:12, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
+>
+>
+> On 29.08.2020 16:25, Krzysztof Kozlowski wrote:
+> > The Wolfson Arizona codec is interrupt controller which is required by
+> > bindings.  This fixes dtbs_check warnings like:
+> >
+> >    arch/arm64/boot/dts/exynos/exynos5433-tm2e.dt.yaml: wm5110-codec@0: 'interrupt-controller' is a required property
+> >    arch/arm64/boot/dts/exynos/exynos5433-tm2e.dt.yaml: wm5110-codec@0: '#interrupt-cells' is a required property
+> >
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>
+> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+>
+> However I really wonder if it makes sense to expose this to DTS. Indeed,
+> the main MFD device of the WM5110 chip is interrupt controller, but its
+> interrupts are requested internally by the respective drivers.
 
-My name is Miss Marie Avis the only daughter of Mr. Gabriel Avis, my
-Father was dealing in Cocoa and Timber in this country before his
-death,  It is my pleasure to contact you for a business venture which
-I intend to establish in your country. Though I have not met with you
-before but I believe one has to risk confiding before you can succeed
-sometimes in life.
+In such case maybe the schema should be updated? Feel free to send a
+follow up or a replacement patch for this one.
 
-I can confide in you for my brighter future since you are a human
-being like me. There is this huge amount of Ten Million five hundred
-thousand United States dollars. ($10.500.000.00) which my late Father
-kept for me in a suspense account with one of the bank here in Abidjan
-Cote d'Ivoire before he was assassinated by unknown persons, Now I
-have decided to invest these money in your country or anywhere safe
-enough for me.
-
-I want you to help me claim this fund from the bank and have it
-transfer into your personal account in your country for investment
-purposes in your country in these areas:
-
-1). Telecommunication
-2). The transport Industry
-3). Five Star Hotel
-4). Tourism
-5). Real Estate
-
-If you can be of assistance to me I will be pleased to offer you 20%
-of the total fund.
-
-I await your soonest response.
-
-Respectfully yours,
-Miss Marie Evis
-Tel: +225597438528
+Best regards,
+Krzysztof
