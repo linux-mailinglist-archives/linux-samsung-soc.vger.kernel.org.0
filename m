@@ -2,147 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89F7B257A3A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 31 Aug 2020 15:17:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5622E257A61
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 31 Aug 2020 15:27:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727061AbgHaNRT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 31 Aug 2020 09:17:19 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:56752 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbgHaNQx (ORCPT
+        id S1727066AbgHaN1q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 31 Aug 2020 09:27:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727103AbgHaN0u (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 31 Aug 2020 09:16:53 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200831131651euoutp0220f235fb2606392d5c389e4cb6d3db5e~wXLeYJee62163421634euoutp02c
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 31 Aug 2020 13:16:51 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200831131651euoutp0220f235fb2606392d5c389e4cb6d3db5e~wXLeYJee62163421634euoutp02c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1598879811;
-        bh=5nP5KvDT5qN8c57PFcGNX+7gNR6f6VMKSvBr/mSxdxE=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=BWvvFDdiM05PYjWtryepUCs1Mgw1S15LA3h5ikuWP1x1C1rBnU6BBBDA20qlqyVSz
-         kxNkx4imUduYdH4USGSeA43nFzCtxNYGzal3MSirAjO9YuBhnQiSfBpl5BKd0et9Ex
-         j2qO7LEXgqAH5o5w1jmPOrZ3ZRmhCJ+lnacEIC3A=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200831131650eucas1p134722c283ee08857a38d94c048827828~wXLd7YaIe1484214842eucas1p1v;
-        Mon, 31 Aug 2020 13:16:50 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id BA.F8.06456.248FC4F5; Mon, 31
-        Aug 2020 14:16:50 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200831131650eucas1p296e31e2ea42c8075f3defc2d449e17b3~wXLdmR5kP1084710847eucas1p27;
-        Mon, 31 Aug 2020 13:16:50 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200831131650eusmtrp22d7506be16746006b14780816d7c5e28~wXLdlbQe63092430924eusmtrp2C;
-        Mon, 31 Aug 2020 13:16:50 +0000 (GMT)
-X-AuditID: cbfec7f2-809ff70000001938-21-5f4cf842b039
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 4B.65.06314.248FC4F5; Mon, 31
-        Aug 2020 14:16:50 +0100 (BST)
-Received: from [106.210.88.143] (unknown [106.210.88.143]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20200831131649eusmtip15b068521d7ab06a291b62c4f0d4c4872~wXLcxQKlC2717527175eusmtip1V;
-        Mon, 31 Aug 2020 13:16:49 +0000 (GMT)
-Subject: Re: [PATCH 4/4] arm64: dts: exynos: Use newer S3FWRN5 GPIO
- properties in Exynos5433 TM2
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Opasiak <k.opasiak@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-nfc@lists.01.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Inki Dae <inki.dae@samsung.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <8fe346a7-3c6c-f51d-f2a2-623931628a25@samsung.com>
-Date:   Mon, 31 Aug 2020 15:16:49 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
-        Thunderbird/68.12.0
+        Mon, 31 Aug 2020 09:26:50 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E83C0619C8
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 31 Aug 2020 06:26:21 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id e11so6668213ljn.6
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 31 Aug 2020 06:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
+        b=HyW5/n2KU8W3FGefd/FUm/bl6fINTQmZ8owzYdBGhP5oyAu9pJQPQCMOdYEDNFegUA
+         if9VN+pra3iBgWNYJjHcBV7T99CY2GFOcHOVU+3vJ7r2Hvzgah2ZCqHTq6bk4iv0uilM
+         xQiEPrdMcYz9cIZL++pevJSb5RdixTZAk95pbnwmQ3/GOLv8xUS1vQ8t141F6N8CgROI
+         mubb31iIEGHTmIRsfQchZCL6N1v85LnpPi/V/jmyUdodp49jy+hBMBGM/QhsUL+AVu8e
+         3Cg9SzlMyigtpwqPqg6kcnc+pElD0XMp/EB9mY9MxbJL6EWXLnnT1YiTj0+V+0DhoQI2
+         wJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
+        b=CRfeBRmYfFwY39rEsHqzZzfI3puuCKA3lSyApWx6MmXM501wIgBEOywbFyxd/SD4xE
+         mMTXLS9pjVg5Z41xAITag4a8LGHvxXAYMR5qq7q1sDv67IXCIQps3QlQP3d4ot8alewK
+         o9QnWO5I3ly1hquqj+sxVoyaV1/FDUe0UT+uRUINkyLpdxgr/jqyvaDDKPtyRbprZ63u
+         UAbuG8yaT0B9S/gz1Cbzv2SynghPowlrxxuvHv2S5u3XGMlgjbNqKEt+NO3ZpUl9daEj
+         Jpa/ztSV8Aj0VXb0Tw3CEvuSFEt0ClOMIpMKXr+Q1HoM25g3Tth0lqEHmVKDDFHjbQAX
+         fMSQ==
+X-Gm-Message-State: AOAM532RmnYoqATf/Gk42T/JzIUGTvP8YK1iRoWqoT6TzE/lotQarB9X
+        1Dem8EF/tBqxXVCNgBVEx1BqlAnyBMttnH39F0A=
+X-Google-Smtp-Source: ABdhPJxEvvXnVfErpjDwHOkyCqRTciyX/SNwRaUYVOHmxIQS6MbFpht1V2v8jY7chkhk3ZxIDw/BvL8uxGOjXPjCGG8=
+X-Received: by 2002:a2e:9c86:: with SMTP id x6mr662832lji.346.1598880379026;
+ Mon, 31 Aug 2020 06:26:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200829142948.32365-4-krzk@kernel.org>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFKsWRmVeSWpSXmKPExsWy7djPc7pOP3ziDRZsMbTYOGM9q8X1L89Z
-        Leacb2GxmH/kHKvFpPsTWCxuT5zGZtH/+DWzxfnzG9gtLmzrY7XY9Pgaq8XlXXPYLOZs2Mxu
-        MeP8PiaLYwvELFr3HmG3aH/6ktlBwGPLyptMHptWdbJ5dM/+x+KxeUm9R9+WVYwenzfJBbBF
-        cdmkpOZklqUW6dslcGXMXbSPueAWR8WqBd+ZGhjnsXcxcnJICJhIrG1pZQWxhQRWMEpsnaUD
-        YX9hlNj+0KGLkQvI/gxkX33OCtPQP38nO0TRckaJb29SIIreM0p8bfrIDJIQFkiSaG78ygiS
-        EBGYyyyxZcI2sASzwDpGieZN4SA2m4ChRNfbLjYQm1fATmL15i0sIDaLgKrEwQu9YNtEBeIk
-        jp16xAJRIyhxcuYTMJtTwFSi891WJoiZ8hLb386Bmi8ucevJfCaQxRICX9kljl5tYIE420Vi
-        1v05UC8IS7w6vgXqfxmJ/zthGpoZJR6eW8sO4fQwSlxumsEIUWUtcefcL6BTOYBWaEqs36UP
-        EXaUOHLmMRNIWEKAT+LGW0GII/gkJm2bzgwR5pXoaBOCqFaTmHV8HdzagxcuMU9gVJqF5LVZ
-        SN6ZheSdWQh7FzCyrGIUTy0tzk1PLTbMSy3XK07MLS7NS9dLzs/dxAhMcaf/Hf+0g/HrpaRD
-        jAIcjEo8vAFffOKFWBPLiitzDzFKcDArifA6nT0dJ8SbklhZlVqUH19UmpNafIhRmoNFSZzX
-        eNHLWCGB9MSS1OzU1ILUIpgsEwenVAOj7wSOp08PBzHtOCAUz/I4qUPwcuPuWUvVF1sefZQr
-        36/iemXRC7HC9JJkhxd2GnXPJrf2iNTrXAwWjtJdnm7r4Hqr94Niif7n08tDvA6YfWgLfPRv
-        0vKtb6c9VDsbO3OTiHL9w08fuDelHjzzZ3XnufypnpETHy+qO6ty7Wdv1qVwjwsnbxxtVGIp
-        zkg01GIuKk4EAB5Guo1tAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsVy+t/xu7pOP3ziDRrWi1tsnLGe1eL6l+es
-        FnPOt7BYzD9yjtVi0v0JLBa3J05js+h//JrZ4vz5DewWF7b1sVpsenyN1eLyrjlsFnM2bGa3
-        mHF+H5PFsQViFq17j7BbtD99yewg4LFl5U0mj02rOtk8umf/Y/HYvKTeo2/LKkaPz5vkAtii
-        9GyK8ktLUhUy8otLbJWiDS2M9AwtLfSMTCz1DI3NY62MTJX07WxSUnMyy1KL9O0S9DLmLtrH
-        XHCLo2LVgu9MDYzz2LsYOTkkBEwk+ufvBLK5OIQEljJKTNlxACohI3FyWgMrhC0s8edaFxtE
-        0VtGic6ZEAlhgSSJpS+uM4HYIgLzmSUOHFYEKWIWWMco8XpzEytEx2ZGibsXNoNVsQkYSnS9
-        BRnFycErYCexevMWFhCbRUBV4uCFXrCpogJxEmd6XkDVCEqcnPkErIZTwFSi891WsDnMAmYS
-        8zY/ZIaw5SW2v50DZYtL3Hoyn2kCo9AsJO2zkLTMQtIyC0nLAkaWVYwiqaXFuem5xYZ6xYm5
-        xaV56XrJ+bmbGIGRve3Yz807GC9tDD7EKMDBqMTDG/DFJ16INbGsuDL3EKMEB7OSCK/T2dNx
-        QrwpiZVVqUX58UWlOanFhxhNgZ6byCwlmpwPTDp5JfGGpobmFpaG5sbmxmYWSuK8HQIHY4QE
-        0hNLUrNTUwtSi2D6mDg4pRoYXdU+6nkkhj9bcdirI1BA/YGP89Lw+XGWVxqSvpp2LA64k/Fi
-        78EJMxkuJpQtncZ/2/TV7IRP6pYP/XJzz6bveJfxLCZBTtXVM6il2WqxUeWp+px7ds6uSYt/
-        FXZ1svCf/O95Xfcc3xYZS2tNsz8xrCGJQQEfJh4sVIh76Fn5/vbZRS5VPvuVWIozEg21mIuK
-        EwG42OC7AgMAAA==
-X-CMS-MailID: 20200831131650eucas1p296e31e2ea42c8075f3defc2d449e17b3
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200829143012eucas1p1b49614f85907091480a3b53ec70221b9
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200829143012eucas1p1b49614f85907091480a3b53ec70221b9
-References: <20200829142948.32365-1-krzk@kernel.org>
-        <CGME20200829143012eucas1p1b49614f85907091480a3b53ec70221b9@eucas1p1.samsung.com>
-        <20200829142948.32365-4-krzk@kernel.org>
+Reply-To: marie_avis12@yahoo.com
+Received: by 2002:a2e:9817:0:0:0:0:0 with HTTP; Mon, 31 Aug 2020 06:26:18
+ -0700 (PDT)
+From:   Miss Maris Avis <marie.avis11@gmail.com>
+Date:   Mon, 31 Aug 2020 13:26:18 +0000
+X-Google-Sender-Auth: ENkN_TdcXF5NiFOWAHQrklZpWrk
+Message-ID: <CADTVshNj9Ztqm75AkbunLeeRTsk07qB5LsiKLoagvmiH7TvYgQ@mail.gmail.com>
+Subject: Hello
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+My Dear,
 
-On 29.08.2020 16:29, Krzysztof Kozlowski wrote:
-> Since "s3fwrn5" is not a valid vendor prefix, use new GPIO properties
-> instead of the deprecated.
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->   arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-> index 250fc01de78d..24aab3ea3f52 100644
-> --- a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-> +++ b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-> @@ -795,8 +795,8 @@
->   		reg = <0x27>;
->   		interrupt-parent = <&gpa1>;
->   		interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
-> -		s3fwrn5,en-gpios = <&gpf1 4 GPIO_ACTIVE_HIGH>;
-> -		s3fwrn5,fw-gpios = <&gpj0 2 GPIO_ACTIVE_HIGH>;
-> +		en-gpios = <&gpf1 4 GPIO_ACTIVE_HIGH>;
-> +		wake-gpios = <&gpj0 2 GPIO_ACTIVE_HIGH>;
->   	};
->   };
->   
+My name is Miss Marie Avis the only daughter of Mr. Gabriel Avis, my
+Father was dealing in Cocoa and Timber in this country before his
+death,  It is my pleasure to contact you for a business venture which
+I intend to establish in your country. Though I have not met with you
+before but I believe one has to risk confiding before you can succeed
+sometimes in life.
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+I can confide in you for my brighter future since you are a human
+being like me. There is this huge amount of Ten Million five hundred
+thousand United States dollars. ($10.500.000.00) which my late Father
+kept for me in a suspense account with one of the bank here in Abidjan
+Cote d'Ivoire before he was assassinated by unknown persons, Now I
+have decided to invest these money in your country or anywhere safe
+enough for me.
 
+I want you to help me claim this fund from the bank and have it
+transfer into your personal account in your country for investment
+purposes in your country in these areas:
+
+1). Telecommunication
+2). The transport Industry
+3). Five Star Hotel
+4). Tourism
+5). Real Estate
+
+If you can be of assistance to me I will be pleased to offer you 20%
+of the total fund.
+
+I await your soonest response.
+
+Respectfully yours,
+Miss Marie Evis
+Tel: +225597438528
