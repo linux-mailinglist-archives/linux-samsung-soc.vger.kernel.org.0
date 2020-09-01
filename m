@@ -2,79 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B8032589C2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  1 Sep 2020 09:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B629258A01
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  1 Sep 2020 10:02:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728030AbgIAHzd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 1 Sep 2020 03:55:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47424 "EHLO mail.kernel.org"
+        id S1726117AbgIAICa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 1 Sep 2020 04:02:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35400 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727970AbgIAHzU (ORCPT
+        id S1726020AbgIAIC2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 1 Sep 2020 03:55:20 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.106])
+        Tue, 1 Sep 2020 04:02:28 -0400
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9D9062083B;
-        Tue,  1 Sep 2020 07:55:16 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5EDCA20684;
+        Tue,  1 Sep 2020 08:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598946920;
-        bh=zApmnDF9Ii9NjM8St9RUBDwhe2Focy2FrYiga7i/r7Q=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=T5LPiGw/g9O4Z77CpiahKBkbcMz3DQQMBXlcVnwOfFUlk8v4mf+kg1YQoNGD1iwb/
-         kymBEr6EFE1HnBAKP/pSuH3/vR7Yla/0RVAzsgKQ9ys0vxg/RWW/7U4eIG43aitJ48
-         xvkpVSMFpZMuIZqzUR/Su+NyDWaI3oYyA8W36mYE=
+        s=default; t=1598947347;
+        bh=1ixyDmyvcaJ6E2SVwbMiNbYKv4p2xcy+KPlAYk9T7dc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=KDKCTEFr23hMRnHeyr8wpDArZR3TQEJxgkrqovKuVY0MIxr0eHB51K6LV+f6YFhNM
+         nQ5GHqO+KaoJFWWRxdsc+Putqp1hN/PjqxAFKpMvqbOH6I8AebBFf/xkOI9mdfyMDJ
+         BqYcRcCcYTYehYgNOPglgnPr/tjulxgACGDD53TA=
+Received: by mail-ed1-f49.google.com with SMTP id n22so542451edt.4;
+        Tue, 01 Sep 2020 01:02:27 -0700 (PDT)
+X-Gm-Message-State: AOAM532j0AjpL5dZV1OhMWQhsiWn1yABOZiu+aUY16cbfzhC/iF+ut0g
+        dPMMSyXIlHETaC17BzkkPao8fAPbDZNuivI+Wb8=
+X-Google-Smtp-Source: ABdhPJxzRZwLG3+aqG4PWcon7WQdTeVl3OeiA0Um4gFj1J9eQYrlyjti7W1jAmtXx8V5+WIPwX7dMnM/rCr8rI37z/E=
+X-Received: by 2002:a05:6402:ca7:: with SMTP id cn7mr668084edb.143.1598947345919;
+ Tue, 01 Sep 2020 01:02:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200901075417.22481-1-krzk@kernel.org>
+In-Reply-To: <20200901075417.22481-1-krzk@kernel.org>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Tue, 1 Sep 2020 10:02:14 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPddQNCnLWoFx__VWnhGWA4B3DGXGDe=muh0r5r0Z61dgQ@mail.gmail.com>
+Message-ID: <CAJKOXPddQNCnLWoFx__VWnhGWA4B3DGXGDe=muh0r5r0Z61dgQ@mail.gmail.com>
+Subject: Re: [PATCH 00/13] ARM: dts: exynos: dtschema cleanups for Exynos5
 To:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH 13/13] ARM: dts: exynos: Use S2MPS11 clock in S3C RTC in SMDK5420
-Date:   Tue,  1 Sep 2020 09:54:17 +0200
-Message-Id: <20200901075417.22481-14-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200901075417.22481-1-krzk@kernel.org>
-References: <20200901075417.22481-1-krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Use the 32 kHz clock from S2MPS11 PMIC in the S3C RTC node. Except
-making the S3C RTC working, this also fixes dtbs_check warnings:
+On Tue, 1 Sep 2020 at 09:54, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> Hi,
+>
+> This is continuation of my series of dtschema cleanup for Exynos SoCs.
+>
+> The previous series are here:
+> https://lore.kernel.org/linux-samsung-soc/20200830135200.24304-1-krzk@kernel.org/T/#t
 
-  arch/arm/boot/dts/exynos5420-smdk5420.dt.yaml: rtc@101e0000: clocks: [[2, 317]] is too short
-  arch/arm/boot/dts/exynos5420-smdk5420.dt.yaml: rtc@101e0000: clock-names: ['rtc'] is too short
+Except the first one, other links are wrong. Here are correct:
+https://lore.kernel.org/linux-samsung-soc/20200829142948.32365-1-krzk@kernel.org/T/#t
+https://lore.kernel.org/linux-samsung-soc/ec9deeb1-8599-d755-cbfa-5db9787368e1@samsung.com/T/#t
+https://lore.kernel.org/linux-samsung-soc/20200829210652.GD796939@ravnborg.org/T/#t
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm/boot/dts/exynos5420-smdk5420.dts | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/arm/boot/dts/exynos5420-smdk5420.dts b/arch/arm/boot/dts/exynos5420-smdk5420.dts
-index 83fa800fa1eb..4e49d8095b29 100644
---- a/arch/arm/boot/dts/exynos5420-smdk5420.dts
-+++ b/arch/arm/boot/dts/exynos5420-smdk5420.dts
-@@ -9,6 +9,7 @@
- /dts-v1/;
- #include "exynos5420.dtsi"
- #include "exynos5420-cpus.dtsi"
-+#include <dt-bindings/clock/samsung,s2mps11.h>
- #include <dt-bindings/gpio/gpio.h>
- 
- / {
-@@ -401,6 +402,8 @@
- 
- &rtc {
- 	status = "okay";
-+	clocks = <&clock CLK_RTC>, <&s2mps11_osc S2MPS11_CLK_AP>;
-+	clock-names = "rtc", "rtc_src";
- };
- 
- &usbdrd_phy0 {
--- 
-2.17.1
-
+Best regards,
+Krzysztof
