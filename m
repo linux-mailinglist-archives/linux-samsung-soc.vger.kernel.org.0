@@ -2,103 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CB9D258F7D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  1 Sep 2020 15:52:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9E8E258FA7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  1 Sep 2020 15:57:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728236AbgIANwN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 1 Sep 2020 09:52:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43194 "EHLO mail.kernel.org"
+        id S1727109AbgIAN5n (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 1 Sep 2020 09:57:43 -0400
+Received: from elvis.franken.de ([193.175.24.41]:45709 "EHLO elvis.franken.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728204AbgIANvy (ORCPT
+        id S1728294AbgIANzc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 1 Sep 2020 09:51:54 -0400
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E6AF920FC3;
-        Tue,  1 Sep 2020 13:51:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598968282;
-        bh=mI5loyu1Y/tc5SvQVWEfX8DOvn19LmCbUnJb4i42P7M=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=X9hapkz+lJuyZ2B5tbcXH7w2Ufo8Rp920wemATCR6WhjDBQ6pEjEHX2Tb5PxLWHBL
-         IBPFLC/24evBLDPiFKZALPta4JpAVw8TaZPVNgqtqt7OVkIuZg7xLb3VFq57LM/I1C
-         /Vd3AEnS9RCLLC0OCsS599zf++IRqnwoekab5SoI=
-Received: by mail-ej1-f54.google.com with SMTP id h4so1794320ejj.0;
-        Tue, 01 Sep 2020 06:51:21 -0700 (PDT)
-X-Gm-Message-State: AOAM530iXAbM2/yql9A1d9qDNzOmk0VDd4Qjf7ii0rIJ/4Drf3D9acae
-        oTqpDltgDqtbVBv0tKF0BaxU5URUJs1IfAWQIHU=
-X-Google-Smtp-Source: ABdhPJyMVdPxgQ8C7jJmzqSXYOjNfFjncTudLd43V/VYCjvhae0wrEHggzpOadKxMi2piJ5FsJnbe7lg9Da8X1RKcKo=
-X-Received: by 2002:a17:906:ca4f:: with SMTP id jx15mr1530807ejb.454.1598968280357;
- Tue, 01 Sep 2020 06:51:20 -0700 (PDT)
+        Tue, 1 Sep 2020 09:55:32 -0400
+Received: from uucp (helo=alpha)
+        by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+        id 1kD6kf-0001nf-02; Tue, 01 Sep 2020 15:55:09 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+        id 62CB0C0E4C; Tue,  1 Sep 2020 15:53:04 +0200 (CEST)
+Date:   Tue, 1 Sep 2020 15:53:04 +0200
+From:   Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Pawel Osciak <pawel@osciak.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matt Porter <mporter@kernel.crashing.org>,
+        iommu@lists.linux-foundation.org,
+        Tom Lendacky <thomas.lendacky@amd.com>,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-ia64@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-parisc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        nouveau@lists.freedesktop.org, netdev@vger.kernel.org,
+        linux-nvme@lists.infradead.org, linux-scsi@vger.kernel.org,
+        linux-mm@kvack.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH 08/28] MIPS: make dma_sync_*_for_cpu a little less
+ overzealous
+Message-ID: <20200901135304.GC11944@alpha.franken.de>
+References: <20200819065555.1802761-1-hch@lst.de>
+ <20200819065555.1802761-9-hch@lst.de>
 MIME-Version: 1.0
-References: <267a81e550a0b5d479c82b5908e2a2caa4c9c874.1597061474.git.guillaume.tucker@collabora.com>
- <c0509b5f-a064-2e73-7e04-51f41a56d222@collabora.com> <CAJKOXPczS_RpSFpjGygZ_1MCYxJ_cUDRjriZvrHd6+zhmq=c8Q@mail.gmail.com>
-In-Reply-To: <CAJKOXPczS_RpSFpjGygZ_1MCYxJ_cUDRjriZvrHd6+zhmq=c8Q@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Tue, 1 Sep 2020 15:51:09 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPfT7LvHVpTdaQ1voVi=OtC4aV6hbyzcekmrPMkb+5ebNg@mail.gmail.com>
-Message-ID: <CAJKOXPfT7LvHVpTdaQ1voVi=OtC4aV6hbyzcekmrPMkb+5ebNg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] ARM: exynos: clear L310_AUX_CTRL_NS_LOCKDOWN in
- default l2c_aux_val
-To:     Guillaume Tucker <guillaume.tucker@collabora.com>
-Cc:     Russell King <linux@armlinux.org.uk>,
-        Kukjin Kim <kgene@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, kernel@collabora.com,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200819065555.1802761-9-hch@lst.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 1 Sep 2020 at 15:45, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Tue, 1 Sep 2020 at 15:34, Guillaume Tucker
-> <guillaume.tucker@collabora.com> wrote:
-> >
-> > Hi Krzysztof, Russell,
-> >
-> > On 10/08/2020 13:22, Guillaume Tucker wrote:
-> > > The L310_AUX_CTRL_NS_LOCKDOWN flag is set during the L2C enable
-> > > sequence.  There is no need to set it in the default register value,
-> > > this was done before support for it was implemented in the code.  It
-> > > is not set in the hardware initial value either.
-> > >
-> > > Clean this up by removing this flag from the default l2c_aux_val, and
-> > > add it to the l2c_aux_mask to print an alert message if it was already
-> > > set before the kernel initialisation.
-> > >
-> > > Signed-off-by: Guillaume Tucker <guillaume.tucker@collabora.com>
-> > > ---
-> > >
-> > > Notes:
-> > >     v2: fix flag name L310_AUX_CTRL_NS_LOCKDOWN
-> > >
-> > >  arch/arm/mach-exynos/exynos.c | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > I believe this v2 series has addressed all previous comments and
-> > you were waiting for the 5.9 merge window to end.  The patches
-> > all still apply cleanly on v5.9-rc3.  Do you want me to resend
-> > the series anyway or is there anything else needed at this point?
-> >
-> > Maybe one thing that wasn't completely clear in v1 was whether
-> > patch 2/4 was the right approach.  I've explained the reason
-> > behind it but didn't get a final reply from Russell[1].
->
-> I am sorry, my bad. I already applied this one and 3/4 (dts).
-> Apparently I forgot to reply with confirmation and Patchwork did not
-> notify you for some reason.
->
-> Patch 2/4 does not look like one for me so I would need ack from
-> Russell to take. Did you submit it to the ARM patches queue?
-> Patch 4/4 will wait for v5.10-rc1 as it depends on 1/4 and it is DTS patch.
+On Wed, Aug 19, 2020 at 08:55:35AM +0200, Christoph Hellwig wrote:
+> When transferring DMA ownership back to the CPU there should never
+> be any writeback from the cache, as the buffer was owned by the
+> device until now.  Instead it should just be invalidated for the
+> mapping directions where the device could have written data.
+> Note that the changes rely on the fact that kmap_atomic is stubbed
+> out for the !HIGHMEM case to simplify the code a bit.
+> 
+> Signed-off-by: Christoph Hellwig <hch@lst.de>
+> ---
+>  arch/mips/mm/dma-noncoherent.c | 44 +++++++++++++++++++++-------------
+>  1 file changed, 28 insertions(+), 16 deletions(-)
 
-Correct: Patch 4/4 will wait for v5.10 because it depends on the DTS patch.
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-Best regards,
-Krzysztof
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
