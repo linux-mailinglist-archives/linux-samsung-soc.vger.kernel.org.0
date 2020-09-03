@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 105EC25C932
+	by mail.lfdr.de (Postfix) with ESMTP id 9C8B025C933
 	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 21:14:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729311AbgICTOu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 3 Sep 2020 15:14:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35684 "EHLO mail.kernel.org"
+        id S1729319AbgICTOw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 3 Sep 2020 15:14:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35778 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728419AbgICTOs (ORCPT
+        id S1729309AbgICTOv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 3 Sep 2020 15:14:48 -0400
+        Thu, 3 Sep 2020 15:14:51 -0400
 Received: from localhost.localdomain (unknown [194.230.155.106])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1B11020DD4;
-        Thu,  3 Sep 2020 19:14:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 24D41214D8;
+        Thu,  3 Sep 2020 19:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599160487;
-        bh=vj18EzxilM/NmZXB65j0LqcoNeKYgR4PMBJi6Kfb2uk=;
+        s=default; t=1599160490;
+        bh=lXKQONHU131LLANPalwdk6k0iSEqtYKE3hqj1CGpK0g=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=pDmDEb0JKf0b1trsl6+0FL1tLHU0jngWlKv9HiZ7s7T518UBV5MSRwT/86YgK0GCX
-         Vv8ubF+xRRmJwBydsSiNfgDas+XlBVIiMcu8czndBgDMf3sJe/quZlCRwl82vjN7zd
-         ELxmFiVOsT7fH/pnbSmp33KJe4XTqTTbcopxcKzI=
+        b=Xk18qlWMCPHtVfcaNrNYGbagNOgMhFcdme81aScQ+F99M/aonwWllr0lXFFm9NHsK
+         b5P5vWxZVUomJmiKLTGrR8qlz/ylkuxg1wK8ygWJjsG3xgu8UH3OPrAM8ohVXmfOZ7
+         qIfUO2NA9y6TXj9fdfy7JrC1PJ5aC4oBRBDncAxE=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
@@ -35,9 +35,9 @@ To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v2 2/6] dt-bindings: gpu: arm,mali-utgard: Add missing properties
-Date:   Thu,  3 Sep 2020 21:14:34 +0200
-Message-Id: <20200903191438.12781-2-krzk@kernel.org>
+Subject: [PATCH v2 3/6] dt-bindings: gpu: arm,mali-utgard: Correct Maxime's email
+Date:   Thu,  3 Sep 2020 21:14:35 +0200
+Message-Id: <20200903191438.12781-3-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200903191438.12781-1-krzk@kernel.org>
 References: <20200903191438.12781-1-krzk@kernel.org>
@@ -46,35 +46,34 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add common properties appearing in DTSes (opp-table) to fix dtbs_check
-warnings like:
+Update the address of Maxime Ripard as one in @free-electrons.com does
+not work.
 
-  arch/arm/boot/dts/exynos4210-i9100.dt.yaml: gpu@13000000:
-    'opp-table' does not match any of the regexes: 'pinctrl-[0-9]+'
-
+Cc: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
 
 ---
 
 Changes since v1:
-1. Add properties instead of using unevaluated
+1. Add Ack
 ---
- Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml b/Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml
-index d4d785790eaa..30d421e6ba38 100644
+index 30d421e6ba38..eceaa176bd57 100644
 --- a/Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml
 +++ b/Documentation/devicetree/bindings/gpu/arm,mali-utgard.yaml
-@@ -101,6 +101,8 @@ properties:
+@@ -8,7 +8,7 @@ title: ARM Mali Utgard GPU
  
-   mali-supply: true
+ maintainers:
+   - Rob Herring <robh@kernel.org>
+-  - Maxime Ripard <maxime.ripard@free-electrons.com>
++  - Maxime Ripard <mripard@kernel.org>
+   - Heiko Stuebner <heiko@sntech.de>
  
-+  opp-table: true
-+
-   power-domains:
-     maxItems: 1
- 
+ properties:
 -- 
 2.17.1
 
