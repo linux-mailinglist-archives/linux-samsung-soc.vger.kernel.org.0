@@ -2,93 +2,116 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFCF825C751
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB98D25C79E
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:57:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728514AbgICQpX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 3 Sep 2020 12:45:23 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:41535 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728145AbgICQpV (ORCPT
+        id S1728951AbgICQ5g (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 3 Sep 2020 12:57:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59014 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728688AbgICQ50 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 3 Sep 2020 12:45:21 -0400
-Received: by mail-io1-f67.google.com with SMTP id m23so3623844iol.8;
-        Thu, 03 Sep 2020 09:45:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZP59A809vUXPKAmKCl/+/Toy2Yc+dTL7EkzSdpcrdXA=;
-        b=JmQlumHyxHCdAITw1RXbti28uuoFttAt5onCUNYTJ8YD/cnK4ULSN7IKJ/KNM0TfY/
-         xf8+ehMIXIO73R+p3/+bIR/oNNe0h7GhSn2y85IrCtOnM9UwgfOGFDjv2BVf5/Ios1pr
-         3fdFMDD4atn9JSQmVq+qK7laFFd59KN0J6xnreG2rlNo+0qRrEV2k9y/qtk2CfKN73zp
-         EOZByji7QFVS4Ii0EF7O8D1yZBZyAJkE+o5b9xEjtK6BwCx1hXQrsCgEiGs4q033+sFN
-         HpW/2o8SXqKzkQ8h/gE1zSkQb7HoZdNGkV9fbkQF5v7KJEZgQETK1jl/eFDZjILRJ1Eb
-         1spQ==
-X-Gm-Message-State: AOAM5331RsOfPYi4hRWHmTSg+ya+y60vWdLHLzo7Cfor+cRdvRFV+QCr
-        070PY+2hQm8PVnKkkqgUjA==
-X-Google-Smtp-Source: ABdhPJz3QtFdJj9xf68T2MjYHLUlRhw4wqkk0yrCjfmHkP7HHKrqIxRy5KYmadUP48rBi4sy6gDkig==
-X-Received: by 2002:a05:6638:d4f:: with SMTP id d15mr4016623jak.119.1599151518184;
-        Thu, 03 Sep 2020 09:45:18 -0700 (PDT)
-Received: from xps15 ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id p78sm1582218iod.0.2020.09.03.09.45.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 09:45:17 -0700 (PDT)
-Received: (nullmailer pid 2928036 invoked by uid 1000);
-        Thu, 03 Sep 2020 16:45:13 -0000
-Date:   Thu, 3 Sep 2020 10:45:13 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-kernel@lists.infradead.org,
-        David Airlie <airlied@linux.ie>,
-        Lee Jones <lee.jones@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        alsa-devel@alsa-project.org, Sangbeom Kim <sbkim73@samsung.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Kukjin Kim <kgene@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: Re: [PATCH 01/10] dt-bindings: arm: samsung: pmu: Use
- unevaluatedProperties
-Message-ID: <20200903164513.GB2925151@bogus>
-References: <20200829142501.31478-1-krzk@kernel.org>
- <159897179515.47719.9922715760129781914.b4-ty@kernel.org>
+        Thu, 3 Sep 2020 12:57:26 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB53C061249
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Sep 2020 09:57:25 -0700 (PDT)
+Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1kDsY5-0003Y5-GI; Thu, 03 Sep 2020 18:57:24 +0200
+Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.92)
+        (envelope-from <mtr@dude03.red.stw.pengutronix.de>)
+        id 1kDsY3-005L33-GY; Thu, 03 Sep 2020 18:57:19 +0200
+From:   Michael Tretter <m.tretter@pengutronix.de>
+To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
+Cc:     kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
+        krzk@kernel.org, narmstrong@baylibre.com,
+        Michael Tretter <m.tretter@pengutronix.de>
+Date:   Thu,  3 Sep 2020 18:57:01 +0200
+Message-Id: <20200903165717.1272492-1-m.tretter@pengutronix.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <159897179515.47719.9922715760129781914.b4-ty@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:1101:1d::39
+X-SA-Exim-Mail-From: mtr@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
+        metis.ext.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.4 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
+        SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
+        version=3.4.2
+Subject: [PATCH 00/16] drm/exynos: Convert driver to drm bridge
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 01, 2020 at 03:50:00PM +0100, Mark Brown wrote:
-> On Sat, 29 Aug 2020 16:24:52 +0200, Krzysztof Kozlowski wrote:
-> > Additional properties actually might appear (e.g. assigned-clocks) so
-> > use unevaluatedProperties to fix dtbs_check warnings like:
-> > 
-> >   arch/arm64/boot/dts/exynos/exynos5433-tm2.dt.yaml: system-controller@105c0000:
-> >     'assigned-clock-parents', 'assigned-clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Applied to
-> 
->    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-> 
-> Thanks!
-> 
-> [1/1] ASoC: samsung-i2s: Use unevaluatedProperties
->       commit: 8187d8300251a99e40e288be80bef6a15b7b22e4
+Hello,
 
-Please revert or drop. All these 'unevaluatedProperties' changes are 
-wrong.
+the Exynos MIPI DSI Phy is also found on the i.MX8M Mini. However, on the
+i.MX8M Mini, the bridge is driven by an LCDIF display controller instead of
+the Exynos Decon. The driver for the LCDIF does not use the component
+framework, but uses drm bridges.
 
-Rob
+This series converts the Exynos MIPI DSI into a drm bridge and makes it usable
+with such drivers. Although the driver is converted, it still supports the
+component framework API to stay compliant with the Exynos DRM driver.
+
+Unfortunately, I don't have any Exynos SoC to actually test the series.  I
+tested the driver with a few additional unfinished patches on the i.MX8M Mini
+EVK, but somebody should definitely verify that the driver is still working on
+Exynos hardware.
+
+Patch 1 is a quick documentation fix.
+
+Patches 2 to 6 implement the drm bridge interface.
+
+Patches 7 to 12 rework the driver to make it easier to split platform specific
+from common code.
+
+Patches 13 and 14 add callbacks to handle the tearing effect interrupt and to
+tell the Exynos DRM driver, if the MIPI DSI bridge is using command or video
+mode. I am not too happy with these callbacks and any suggestion for a better
+solution is very welcome.
+
+Patches 15 and 16 finally split and move the drm bridge driver out of the
+Exynos DRM driver.
+
+Michael
+
+
+Michael Tretter (16):
+  drm/encoder: remove obsolete documentation of bridge
+  drm/exynos: extract helper functions for probe
+  drm/exynos: remove in_bridge_node from exynos_dsi
+  drm/exynos: implement a drm bridge
+  drm/exynos: convert encoder functions to bridge function
+  drm/exynos: configure mode on drm bridge
+  drm/exynos: get encoder from bridge whenever possible
+  drm/exynos: use exynos_dsi as drvdata
+  drm/exynos: call probe helper from bind
+  drm/exynos: move dsi host registration to probe helper
+  drm/exynos: shift register values to fields on write
+  drm/exynos: use identifier instead of register offsets
+  drm/exynos: add callback for tearing effect handler
+  drm/exynos: add callback for enabling i80 mode
+  drm/exynos: split out platform specific code
+  drm/exynos: move bridge driver to bridges
+
+ drivers/gpu/drm/bridge/Kconfig          |    7 +
+ drivers/gpu/drm/bridge/Makefile         |    1 +
+ drivers/gpu/drm/bridge/samsung-dsim.c   | 1797 ++++++++++++++++++++++
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c | 1843 ++---------------------
+ include/drm/bridge/samsung-dsim.h       |   57 +
+ include/drm/drm_encoder.h               |    1 -
+ 6 files changed, 1967 insertions(+), 1739 deletions(-)
+ create mode 100644 drivers/gpu/drm/bridge/samsung-dsim.c
+ create mode 100644 include/drm/bridge/samsung-dsim.h
+
+-- 
+2.20.1
+
