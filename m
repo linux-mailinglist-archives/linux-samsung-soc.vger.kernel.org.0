@@ -2,34 +2,34 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC33D25C795
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F05C25C79B
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:57:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728409AbgICQ5Z (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 3 Sep 2020 12:57:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59014 "EHLO
+        id S1728514AbgICQ5f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 3 Sep 2020 12:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S1728465AbgICQ5Z (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Thu, 3 Sep 2020 12:57:25 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77CA0C061247
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Sep 2020 09:57:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC92C061245
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Sep 2020 09:57:25 -0700 (PDT)
 Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <mtr@pengutronix.de>)
-        id 1kDsY5-0003YE-GK; Thu, 03 Sep 2020 18:57:22 +0200
+        id 1kDsY5-0003YF-GM; Thu, 03 Sep 2020 18:57:23 +0200
 Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.92)
         (envelope-from <mtr@dude03.red.stw.pengutronix.de>)
-        id 1kDsY3-005L3c-Mc; Thu, 03 Sep 2020 18:57:19 +0200
+        id 1kDsY3-005L3f-N3; Thu, 03 Sep 2020 18:57:19 +0200
 From:   Michael Tretter <m.tretter@pengutronix.de>
 To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
 Cc:     kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
         krzk@kernel.org, narmstrong@baylibre.com,
         Michael Tretter <m.tretter@pengutronix.de>
-Date:   Thu,  3 Sep 2020 18:57:13 +0200
-Message-Id: <20200903165717.1272492-13-m.tretter@pengutronix.de>
+Date:   Thu,  3 Sep 2020 18:57:14 +0200
+Message-Id: <20200903165717.1272492-14-m.tretter@pengutronix.de>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200903165717.1272492-1-m.tretter@pengutronix.de>
 References: <20200903165717.1272492-1-m.tretter@pengutronix.de>
@@ -43,7 +43,7 @@ X-Spam-Level:
 X-Spam-Status: No, score=-0.4 required=4.0 tests=BAYES_00,RDNS_NONE,
         SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
         version=3.4.2
-Subject: [PATCH 12/16] drm/exynos: use identifier instead of register offsets
+Subject: [PATCH 13/16] drm/exynos: add callback for tearing effect handler
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
@@ -52,133 +52,97 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Different revisions of the MIPI-DSI PHY have slightly different register
-layouts. Currently, the register layout was stored per platform, which
-makes it necessary to define the layout for each new platform.
+The tearing effect interrupts are not handled by the MIPI DSI bridge
+driver, but the display controller driver.
 
-Keep the register layout in the driver and use identifiers to specify
-which register layout shall be used on a platform.
+Allow platforms to register a callback for the tearing effect interrupt.
 
 Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dsi.c | 54 ++++++++++++++++---------
- 1 file changed, 36 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index 21db18ae0772..287bc6e9b3ca 100644
+index 287bc6e9b3ca..993402f1f7c7 100644
 --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
 +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -239,8 +239,13 @@ struct exynos_dsi_transfer {
- #define DSIM_STATE_CMD_LPM		BIT(2)
- #define DSIM_STATE_VIDOUT_AVAILABLE	BIT(3)
- 
-+enum exynos_reg_offset {
-+	EXYNOS_REG_OFS,
-+	EXYNOS5433_REG_OFS
-+};
-+
- struct exynos_dsi_driver_data {
--	const unsigned int *reg_ofs;
-+	enum exynos_reg_offset reg_ofs;
- 	unsigned int plltmr_reg;
- 	unsigned int has_freqband:1;
- 	unsigned int has_clklane_stop:1;
-@@ -315,18 +320,6 @@ enum reg_idx {
- 	NUM_REGS
+@@ -254,6 +254,7 @@ struct exynos_dsi_driver_data {
+ 	unsigned int wait_for_reset;
+ 	unsigned int num_bits_resol;
+ 	const unsigned int *reg_values;
++	void (*te_handler)(struct drm_encoder *encoder);
  };
  
--static inline void exynos_dsi_write(struct exynos_dsi *dsi, enum reg_idx idx,
--				    u32 val)
--{
--
--	writel(val, dsi->reg_base + dsi->driver_data->reg_ofs[idx]);
--}
--
--static inline u32 exynos_dsi_read(struct exynos_dsi *dsi, enum reg_idx idx)
--{
--	return readl(dsi->reg_base + dsi->driver_data->reg_ofs[idx]);
--}
--
- static const unsigned int exynos_reg_ofs[] = {
- 	[DSIM_STATUS_REG] =  0x00,
- 	[DSIM_SWRST_REG] =  0x04,
-@@ -375,6 +368,31 @@ static const unsigned int exynos5433_reg_ofs[] = {
- 	[DSIM_PHYTIMING2_REG] = 0xBC,
+ struct exynos_dsi {
+@@ -465,6 +466,11 @@ static const unsigned int exynos5433_reg_values[] = {
+ 	[PHYTIMING_HS_TRAIL] = 0x0c,
  };
  
-+static inline void exynos_dsi_write(struct exynos_dsi *dsi, enum reg_idx idx,
-+				    u32 val)
++static void exynos_dsi_te_handler(struct drm_encoder *encoder)
 +{
-+	const unsigned int *reg_ofs;
-+
-+	if (dsi->driver_data->reg_ofs == EXYNOS5433_REG_OFS)
-+		reg_ofs = exynos5433_reg_ofs;
-+	else
-+		reg_ofs = exynos_reg_ofs;
-+
-+	writel(val, dsi->reg_base + reg_ofs[idx]);
++	exynos_drm_crtc_te_handler(encoder->crtc);
 +}
 +
-+static inline u32 exynos_dsi_read(struct exynos_dsi *dsi, enum reg_idx idx)
-+{
-+	const unsigned int *reg_ofs;
-+
-+	if (dsi->driver_data->reg_ofs == EXYNOS5433_REG_OFS)
-+		reg_ofs = exynos5433_reg_ofs;
-+	else
-+		reg_ofs = exynos_reg_ofs;
-+
-+	return readl(dsi->reg_base + reg_ofs[idx]);
-+}
-+
- enum reg_value_idx {
- 	RESET_TYPE,
- 	PLL_TIMER,
-@@ -448,7 +466,7 @@ static const unsigned int exynos5433_reg_values[] = {
- };
- 
  static const struct exynos_dsi_driver_data exynos3_dsi_driver_data = {
--	.reg_ofs = exynos_reg_ofs,
-+	.reg_ofs = EXYNOS_REG_OFS,
+ 	.reg_ofs = EXYNOS_REG_OFS,
  	.plltmr_reg = 0x50,
- 	.has_freqband = 1,
- 	.has_clklane_stop = 1,
-@@ -460,7 +478,7 @@ static const struct exynos_dsi_driver_data exynos3_dsi_driver_data = {
+@@ -475,6 +481,7 @@ static const struct exynos_dsi_driver_data exynos3_dsi_driver_data = {
+ 	.wait_for_reset = 1,
+ 	.num_bits_resol = 11,
+ 	.reg_values = reg_values,
++	.te_handler = exynos_dsi_te_handler,
  };
  
  static const struct exynos_dsi_driver_data exynos4_dsi_driver_data = {
--	.reg_ofs = exynos_reg_ofs,
-+	.reg_ofs = EXYNOS_REG_OFS,
- 	.plltmr_reg = 0x50,
- 	.has_freqband = 1,
- 	.has_clklane_stop = 1,
-@@ -472,7 +490,7 @@ static const struct exynos_dsi_driver_data exynos4_dsi_driver_data = {
+@@ -487,6 +494,7 @@ static const struct exynos_dsi_driver_data exynos4_dsi_driver_data = {
+ 	.wait_for_reset = 1,
+ 	.num_bits_resol = 11,
+ 	.reg_values = reg_values,
++	.te_handler = exynos_dsi_te_handler,
  };
  
  static const struct exynos_dsi_driver_data exynos5_dsi_driver_data = {
--	.reg_ofs = exynos_reg_ofs,
-+	.reg_ofs = EXYNOS_REG_OFS,
- 	.plltmr_reg = 0x58,
- 	.num_clks = 2,
- 	.max_freq = 1000,
-@@ -482,7 +500,7 @@ static const struct exynos_dsi_driver_data exynos5_dsi_driver_data = {
+@@ -497,6 +505,7 @@ static const struct exynos_dsi_driver_data exynos5_dsi_driver_data = {
+ 	.wait_for_reset = 1,
+ 	.num_bits_resol = 11,
+ 	.reg_values = reg_values,
++	.te_handler = exynos_dsi_te_handler,
  };
  
  static const struct exynos_dsi_driver_data exynos5433_dsi_driver_data = {
--	.reg_ofs = exynos5433_reg_ofs,
-+	.reg_ofs = EXYNOS5433_REG_OFS,
- 	.plltmr_reg = 0xa0,
- 	.has_clklane_stop = 1,
- 	.num_clks = 5,
-@@ -493,7 +511,7 @@ static const struct exynos_dsi_driver_data exynos5433_dsi_driver_data = {
+@@ -508,6 +517,7 @@ static const struct exynos_dsi_driver_data exynos5433_dsi_driver_data = {
+ 	.wait_for_reset = 0,
+ 	.num_bits_resol = 12,
+ 	.reg_values = exynos5433_reg_values,
++	.te_handler = exynos_dsi_te_handler,
  };
  
  static const struct exynos_dsi_driver_data exynos5422_dsi_driver_data = {
--	.reg_ofs = exynos5433_reg_ofs,
-+	.reg_ofs = EXYNOS5433_REG_OFS,
- 	.plltmr_reg = 0xa0,
- 	.has_clklane_stop = 1,
- 	.num_clks = 2,
+@@ -519,6 +529,7 @@ static const struct exynos_dsi_driver_data exynos5422_dsi_driver_data = {
+ 	.wait_for_reset = 1,
+ 	.num_bits_resol = 12,
+ 	.reg_values = exynos5422_reg_values,
++	.te_handler = exynos_dsi_te_handler,
+ };
+ 
+ static const struct of_device_id exynos_dsi_of_match[] = {
+@@ -1305,11 +1316,13 @@ static irqreturn_t exynos_dsi_irq(int irq, void *dev_id)
+ 
+ static irqreturn_t exynos_dsi_te_irq_handler(int irq, void *dev_id)
+ {
+-	struct exynos_dsi *dsi = (struct exynos_dsi *)dev_id;
++	struct exynos_dsi *dsi = dev_id;
++	const struct exynos_dsi_driver_data *driver_data = dsi->driver_data;
+ 	struct drm_encoder *encoder = dsi->bridge.encoder;
+ 
+-	if (dsi->state & DSIM_STATE_VIDOUT_AVAILABLE)
+-		exynos_drm_crtc_te_handler(encoder->crtc);
++	if (driver_data->te_handler &&
++	    (dsi->state & DSIM_STATE_VIDOUT_AVAILABLE))
++		driver_data->te_handler(encoder);
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.20.1
 
