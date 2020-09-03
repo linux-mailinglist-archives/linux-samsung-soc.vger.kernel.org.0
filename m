@@ -2,34 +2,34 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB0925C794
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF7F25C792
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Sep 2020 18:57:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726678AbgICQ5Z (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        id S1728491AbgICQ5Z (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
         Thu, 3 Sep 2020 12:57:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59012 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728409AbgICQ5Y (ORCPT
+        with ESMTP id S1728085AbgICQ5Y (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Thu, 3 Sep 2020 12:57:24 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703D3C061246
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68AF7C061245
         for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Sep 2020 09:57:24 -0700 (PDT)
 Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <mtr@pengutronix.de>)
-        id 1kDsY5-0003Y8-GE; Thu, 03 Sep 2020 18:57:22 +0200
+        id 1kDsY5-0003Y9-GE; Thu, 03 Sep 2020 18:57:22 +0200
 Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.92)
         (envelope-from <mtr@dude03.red.stw.pengutronix.de>)
-        id 1kDsY3-005L3F-K3; Thu, 03 Sep 2020 18:57:19 +0200
+        id 1kDsY3-005L3N-KR; Thu, 03 Sep 2020 18:57:19 +0200
 From:   Michael Tretter <m.tretter@pengutronix.de>
 To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
 Cc:     kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
         krzk@kernel.org, narmstrong@baylibre.com,
         Michael Tretter <m.tretter@pengutronix.de>
-Date:   Thu,  3 Sep 2020 18:57:07 +0200
-Message-Id: <20200903165717.1272492-7-m.tretter@pengutronix.de>
+Date:   Thu,  3 Sep 2020 18:57:08 +0200
+Message-Id: <20200903165717.1272492-8-m.tretter@pengutronix.de>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200903165717.1272492-1-m.tretter@pengutronix.de>
 References: <20200903165717.1272492-1-m.tretter@pengutronix.de>
@@ -43,7 +43,7 @@ X-Spam-Level:
 X-Spam-Status: No, score=-0.4 required=4.0 tests=BAYES_00,RDNS_NONE,
         SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
         version=3.4.2
-Subject: [PATCH 06/16] drm/exynos: configure mode on drm bridge
+Subject: [PATCH 07/16] drm/exynos: get encoder from bridge whenever possible
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
@@ -52,61 +52,70 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The driver uses the encoder to get the mode that shall be configured.
-This is not possible, if the driver is used as a bridge, because the
-encoder might not be used.
-
-Use the mode_set function to get the display mode.
+The bridge will not necessarily use the encoder of struct exynos_dsi,
+but might use another encoder from another drm driver. Therefore, the
+driver has to use the encoder from the bridge instead of the one from
+exynos_dsi.
 
 Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
 ---
- drivers/gpu/drm/exynos/exynos_drm_dsi.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index 31d62c10614a..657de5407190 100644
+index 657de5407190..51ec37304a69 100644
 --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
 +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -275,6 +275,8 @@ struct exynos_dsi {
- 	u32 mode_flags;
- 	u32 format;
- 
-+	struct drm_display_mode mode;
-+
- 	int state;
- 	struct drm_property *brightness;
- 	struct completion completed;
-@@ -883,7 +885,7 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
- 
- static void exynos_dsi_set_display_mode(struct exynos_dsi *dsi)
+@@ -1289,7 +1289,7 @@ static irqreturn_t exynos_dsi_irq(int irq, void *dev_id)
+ static irqreturn_t exynos_dsi_te_irq_handler(int irq, void *dev_id)
  {
--	struct drm_display_mode *m = &dsi->encoder.crtc->state->adjusted_mode;
-+	struct drm_display_mode *m = &dsi->mode;
- 	unsigned int num_bits_resol = dsi->driver_data->num_bits_resol;
- 	u32 reg;
+ 	struct exynos_dsi *dsi = (struct exynos_dsi *)dev_id;
+-	struct drm_encoder *encoder = &dsi->encoder;
++	struct drm_encoder *encoder = dsi->bridge.encoder;
  
-@@ -1544,10 +1546,21 @@ static void exynos_dsi_bridge_disable(struct drm_bridge *bridge)
- 	exynos_dsi_disable(dsi);
- }
- 
-+static void exynos_dsi_bridge_mode_set(struct drm_bridge *bridge,
-+				       const struct drm_display_mode *mode,
-+				       const struct drm_display_mode *adjusted_mode)
-+{
-+	struct exynos_dsi *dsi = bridge->driver_private;
-+
-+	/* The mode is set when actually enabling the device. */
-+	drm_mode_copy(&dsi->mode, adjusted_mode);
-+}
-+
- static const struct drm_bridge_funcs exynos_dsi_bridge_funcs = {
- 	.attach = exynos_dsi_bridge_attach,
- 	.enable = exynos_dsi_bridge_enable,
- 	.disable = exynos_dsi_bridge_disable,
-+	.mode_set = exynos_dsi_bridge_mode_set,
+ 	if (dsi->state & DSIM_STATE_VIDOUT_AVAILABLE)
+ 		exynos_drm_crtc_te_handler(encoder->crtc);
+@@ -1491,11 +1491,10 @@ static const struct drm_connector_helper_funcs exynos_dsi_connector_helper_funcs
+ 	.get_modes = exynos_dsi_get_modes,
  };
  
- MODULE_DEVICE_TABLE(of, exynos_dsi_of_match);
+-static int exynos_dsi_create_connector(struct drm_encoder *encoder)
++static int exynos_dsi_create_connector(struct exynos_dsi *dsi)
+ {
+-	struct exynos_dsi *dsi = encoder_to_dsi(encoder);
+ 	struct drm_connector *connector = &dsi->connector;
+-	struct drm_device *drm = encoder->dev;
++	struct drm_device *drm = dsi->bridge.dev;
+ 	int ret;
+ 
+ 	connector->polled = DRM_CONNECTOR_POLL_HPD;
+@@ -1510,7 +1509,7 @@ static int exynos_dsi_create_connector(struct drm_encoder *encoder)
+ 
+ 	connector->status = connector_status_disconnected;
+ 	drm_connector_helper_add(connector, &exynos_dsi_connector_helper_funcs);
+-	drm_connector_attach_encoder(connector, encoder);
++	drm_connector_attach_encoder(connector, dsi->bridge.encoder);
+ 	if (!drm->registered)
+ 		return 0;
+ 
+@@ -1586,7 +1585,7 @@ static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
+ 		dsi->out_bridge = out_bridge;
+ 		list_splice_init(&encoder->bridge_chain, &dsi->bridge_chain);
+ 	} else {
+-		int ret = exynos_dsi_create_connector(encoder);
++		int ret = exynos_dsi_create_connector(dsi);
+ 
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dsi->dev,
+@@ -1637,7 +1636,7 @@ static int exynos_dsi_host_detach(struct mipi_dsi_host *host,
+ 				  struct mipi_dsi_device *device)
+ {
+ 	struct exynos_dsi *dsi = host_to_dsi(host);
+-	struct drm_device *drm = dsi->encoder.dev;
++	struct drm_device *drm = dsi->bridge.encoder->dev;
+ 
+ 	if (dsi->panel) {
+ 		mutex_lock(&drm->mode_config.mutex);
 -- 
 2.20.1
 
