@@ -2,95 +2,130 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0518325EEC1
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  6 Sep 2020 17:43:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6C3225F562
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Sep 2020 10:35:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729081AbgIFPmx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 6 Sep 2020 11:42:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50274 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729077AbgIFPmA (ORCPT
+        id S1728266AbgIGIfh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Sep 2020 04:35:37 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:51019 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728321AbgIGIfe (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 6 Sep 2020 11:42:00 -0400
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DC587208B3;
-        Sun,  6 Sep 2020 15:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599406920;
-        bh=r/gOQLwi0vjxIzoJJal9o3e2qU4i0aOboXzVPzBsSr8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=LDXst8xQux98fgwS+DCPPihpnc/EIEY5qjXq28Z6Q+CGRBgcseA42lQoMei/yn6wl
-         7o3dnsXl8KCvWfXAyW6DQN8eWLud2lv08WmDva8Ob3vXhLaa5IAihtkKAgQoSAAx5o
-         w9KubcmigtPzKB26MfUkK97aI+LYQYGo4cwv/I4U=
-Received: by mail-ed1-f54.google.com with SMTP id t16so5493912edw.7;
-        Sun, 06 Sep 2020 08:41:59 -0700 (PDT)
-X-Gm-Message-State: AOAM532nFJQzpVqxCCzLyHyNjM00mgT4uKzwyTV38z3lHJtLKn5tqrbt
-        H0Xk0c8UukToWbW8LN5pcwBz9UUslDOmK+KRoic=
-X-Google-Smtp-Source: ABdhPJxIynhvt9FPtCkCknmoZlm54k/a28/XHX67a2orq3+WSH0hrY9/KZ8SKA/AvmUK58YzhTnGp1wjkPUSp+tg52g=
-X-Received: by 2002:a05:6402:ca7:: with SMTP id cn7mr17583253edb.143.1599406918482;
- Sun, 06 Sep 2020 08:41:58 -0700 (PDT)
+        Mon, 7 Sep 2020 04:35:34 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200907083530euoutp0128c3a232813dd3e3ea8be503796c071f~yc20_L9jQ2443224432euoutp01E
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Sep 2020 08:35:30 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200907083530euoutp0128c3a232813dd3e3ea8be503796c071f~yc20_L9jQ2443224432euoutp01E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1599467730;
+        bh=5eUqfqOe8KGV5WESEo8yTEImYqkmT94n8f1isYRbGf4=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=NeNlj47YxY0RenF7NKJ+DqOisirtTWY3apIWH8D2PYIzEYShIRXMBwXsGDVo3ljBq
+         gr48kyvpYc/kGhZ21fwg7fOaMIYsj9qReIHMO7DxpXZewV2QSVIinJn1fVySSFskh2
+         68aVh7qRwSON6+XmeASU43Oh+piRptTI+4W6PHOc=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200907083530eucas1p237c4cbc69058f967d229bfa4b86a248c~yc20ndh810572005720eucas1p2J;
+        Mon,  7 Sep 2020 08:35:30 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id B4.4C.05997.2D0F55F5; Mon,  7
+        Sep 2020 09:35:30 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200907083530eucas1p20417143367abaf397e2145aeccf4f623~yc20Vibeq1868418684eucas1p2k;
+        Mon,  7 Sep 2020 08:35:30 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200907083530eusmtrp26a357786861b079524ee9d055f7bdd53~yc20U0uU-0775907759eusmtrp2g;
+        Mon,  7 Sep 2020 08:35:30 +0000 (GMT)
+X-AuditID: cbfec7f4-677ff7000000176d-1f-5f55f0d2ecbf
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 76.27.06017.1D0F55F5; Mon,  7
+        Sep 2020 09:35:29 +0100 (BST)
+Received: from [106.210.123.115] (unknown [106.210.123.115]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200907083529eusmtip1e49293f67772ae653c3a7a58cd3fd7e9~yc2zpkSL12715127151eusmtip1i;
+        Mon,  7 Sep 2020 08:35:29 +0000 (GMT)
+Subject: Re: [PATCH v2 1/3] ARM: dts: exynos: Add assigned clock parent to
+ CMU in Exynos3250
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sylwester Nawrocki <snawrocki@kernel.org>
+From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
+Message-ID: <b092ef9e-b403-751e-22c3-65aa840267e6@samsung.com>
+Date:   Mon, 7 Sep 2020 10:35:28 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200804192654.12783-1-krzk@kernel.org> <20200804192654.12783-14-krzk@kernel.org>
- <159721917443.33733.7919188364233003142@swboyd.mtv.corp.google.com>
- <CGME20200812091510eucas1p15944eb26bb496e20b9fadd609063a490@eucas1p1.samsung.com>
- <CAK8P3a13u0KY0jzxNLs=irTs6ZSXyObKKTp-8KEmowcOZrZXxQ@mail.gmail.com>
- <8066413c-367d-2f8d-3e7b-dacd954675be@samsung.com> <CAK8P3a1xXe56k5nKuCJ-25h1VqWKRb9JGnFrr=SPg_icay-vZA@mail.gmail.com>
- <6ccf14a9-802f-25b8-494d-e957cafd073d@samsung.com> <20200812133109.GA15697@pi3>
- <30eb6355-0749-8268-c87a-f389dc4b4f1b@free.fr>
-In-Reply-To: <30eb6355-0749-8268-c87a-f389dc4b4f1b@free.fr>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Sun, 6 Sep 2020 17:41:46 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPcrhv=1FKE+9RxuYtCb9ZbmMcLt2N0p5pf_sUTimE5Jtw@mail.gmail.com>
-Message-ID: <CAJKOXPcrhv=1FKE+9RxuYtCb9ZbmMcLt2N0p5pf_sUTimE5Jtw@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] ARM: s3c24xx: camif: include header with
- prototypes and unify declaration
-To:     Cedric Roux <sed@free.fr>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Arnd Bergmann <arnd@arndb.de>, Stephen Boyd <sboyd@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Simtec Linux Team <linux@simtec.co.uk>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        LINUXWATCHDOG <linux-watchdog@vger.kernel.org>,
-        patches@opensource.cirrus.com,
-        Sergio Prado <sergio.prado@e-labworks.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Lihua Yao <ylhuajnu@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200906124407.GA4829@kozik-lap>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsWy7djP87qXPoTGG+xYL2gx/8g5Vov+x6+Z
+        Lc6f38BusenxNVaLy7vmsFnMOL+PyWLtkbvsFq17j7BbtD99yezA6bFpVSebx+Yl9R59W1Yx
+        enzeJBfAEsVlk5Kak1mWWqRvl8CV8fh0WcEFjoonOztYGhh/sXUxcnJICJhIPDp8g7mLkYtD
+        SGAFo8SRBUdYIJwvjBLPnrxjh3A+M0rsmLmAFaale/cMVojEckaJ1ivvoVo+Mkr8XvccbLCw
+        QJzEwcbvQO0cHCICERLbV4JNYhb4zijxtG0/WA2bgKFE79E+RhCbV8BO4t+8lSwgNouAisTC
+        y31gtijQnGOnHrFA1AhKnJz5BMzmFNCTuPbpNNgcZgFxiVtP5jNB2PIS29/OAXtIQmATu8SV
+        qTdYIM52kVjXuoEJwhaWeHV8CzuELSPxfydIM0hDM6NEz+7b7BDOBEaJ+8cXMEJUWUvcOQcK
+        Mw6gFZoS63fpQ4QdJRYvOAr2pYQAn8SNt4IQR/BJTNo2nRkizCvR0SYEUa0i8XvVdKgTpCS6
+        n/xnmcCoNAvJa7OQvDMLyTuzEPYuYGRZxSieWlqcm55abJSXWq5XnJhbXJqXrpecn7uJEZiM
+        Tv87/mUH464/SYcYBTgYlXh4X4iHxguxJpYVV+YeYpTgYFYS4XU6ezpOiDclsbIqtSg/vqg0
+        J7X4EKM0B4uSOK/xopexQgLpiSWp2ampBalFMFkmDk6pBsYZk+tsAlg2umwO0pp3pN+69ebj
+        VlMBM6fJzMa+ci8vMHJbyoeGOHlLr8i/UffOa+FUpb2/djt1HWZPn3k5eV7/PjYP49uzJXwF
+        FrModMVsO6qs47vmlFpVd9s8yXvrD9jLsUc9vSlUoPjmRPPype7rgr7MfrNwz7KCzi8qVxkW
+        +osy1+8OOqjEUpyRaKjFXFScCADXSpoCQgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrAIsWRmVeSWpSXmKPExsVy+t/xu7oXP4TGG3w7ZGMx/8g5Vov+x6+Z
+        Lc6f38BusenxNVaLy7vmsFnMOL+PyWLtkbvsFq17j7BbtD99yezA6bFpVSebx+Yl9R59W1Yx
+        enzeJBfAEqVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRv
+        l6CX8fh0WcEFjoonOztYGhh/sXUxcnJICJhIdO+ewdrFyMUhJLCUUWLlmhlMXYwcQAkpifkt
+        ShA1whJ/rnWxQdS8Z5SY23uAHSQhLBAnsebEShYQW0QgQuL1nXtgNrPAd0aJswuZIBoeMEpM
+        2rSAESTBJmAo0Xu0D8zmFbCT+DcPoplFQEVi4eU+MFsUaOiZnhdsEDWCEidnPgGLcwroSVz7
+        dJoNYoG6xJ95l5ghbHGJW0/mM0HY8hLb385hnsAoNAtJ+ywkLbOQtMxC0rKAkWUVo0hqaXFu
+        em6xkV5xYm5xaV66XnJ+7iZGYOxtO/Zzyw7GrnfBhxgFOBiVeHhfiIfGC7EmlhVX5h5ilOBg
+        VhLhdTp7Ok6INyWxsiq1KD++qDQntfgQoynQcxOZpUST84FpIa8k3tDU0NzC0tDc2NzYzEJJ
+        nLdD4GCMkEB6YklqdmpqQWoRTB8TB6dUA+NeVuZp4il+Jtyiroe8QvvM+6fW3b9u4ZKQ7uV1
+        2Ur5cZfhRG2XstW/IpN+1LHqHaqwFo6adNT29RUd2dJf6mu19/7mXeeUvSxEf48uu/f9jMIk
+        oxVzak0DGRNWfjZWqH2RcE/CJvDVRMHr2ReVDcwbe/c9t9V0MnOwnHd41RZnIwaln44TlViK
+        MxINtZiLihMB2NFKB9MCAAA=
+X-CMS-MailID: 20200907083530eucas1p20417143367abaf397e2145aeccf4f623
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200903181437eucas1p16b97d1c425672700bac7ece19084584c
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200903181437eucas1p16b97d1c425672700bac7ece19084584c
+References: <CGME20200903181437eucas1p16b97d1c425672700bac7ece19084584c@eucas1p1.samsung.com>
+        <20200903181425.5015-1-krzk@kernel.org>
+        <4bc2ea2e-65a2-6c0b-9557-5777e359241a@samsung.com>
+        <20200906124407.GA4829@kozik-lap>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 27 Aug 2020 at 22:51, Cedric Roux <sed@free.fr> wrote:
->
-> On 8/12/20 3:31 PM, Krzysztof Kozlowski wrote:
-> > Or even more important - is it worth to spend effort and time on this?
-> > If there is no single production system using recent Linux kernel, the
-> > answer should be negative...
->
-> Well, I have a server running on mini2440 with a not-too-young
-> but not-too-old kernel. I don't have much time to test recent
-> kernels though so I guess that doesn't count.
+On 06.09.2020 14:44, Krzysztof Kozlowski wrote:
+>>> diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
+>>> index a1e93fb7f694..89b160280469 100644
+>>> --- a/arch/arm/boot/dts/exynos3250.dtsi
+>>> +++ b/arch/arm/boot/dts/exynos3250.dtsi
+>>> @@ -214,6 +214,7 @@
+>>>   			compatible = "samsung,exynos3250-cmu";
+>>>   			reg = <0x10030000 0x20000>;
+>>>   			#clock-cells = <1>;
+>>> +			clocks = <&cmu CLK_FIN_PLL>;
+>> This is not a correct input clock for this CMU. Please assign it to 
+>> xusbxti, xxti or xtcxo in the respective board dts, as this is a board 
+>> property.
 
-Actually good to hear. It counts a little bit :)
+> Makes sense, although all this is kind of a hack as neither the bindings
+> nor the driver take the input clock.
 
-Best regards,
-Krzysztof
+I think we should update the bindings so possible input clocks
+to the CMU are documented for all SoCs. This is actually a bug 
+in the clock controller DT bindings that the input clocks are
+missing. Then the driver would handle both the old and the 
+updated bindings but the "clocks" property would be documented 
+as mandatory. I will try to have a look at this. 
