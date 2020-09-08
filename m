@@ -2,143 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B38A72619AD
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Sep 2020 20:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F23B261F0D
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Sep 2020 21:58:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731303AbgIHSZC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Sep 2020 14:25:02 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:50582 "EHLO vps0.lunn.ch"
+        id S1732411AbgIHT57 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Sep 2020 15:57:59 -0400
+Received: from mga09.intel.com ([134.134.136.24]:44128 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730748AbgIHSWZ (ORCPT
+        id S1730316AbgIHPfq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Sep 2020 14:22:25 -0400
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
-        (envelope-from <andrew@lunn.ch>)
-        id 1kFiG4-00Dp7f-7W; Tue, 08 Sep 2020 20:22:20 +0200
-Date:   Tue, 8 Sep 2020 20:22:20 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Lukasz Stelmach <l.stelmach@samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        b.zolnierkie@samsung.com, netdev@vger.kernel.org,
-        Russell King <linux@armlinux.org.uk>,
+        Tue, 8 Sep 2020 11:35:46 -0400
+IronPort-SDR: Vk1a8Xp01oHqi3a6rxgficaRMRGr8uTq6Dp/08L+148x0hEhYgnTroXXPB0ja9+tz03LOoCo35
+ xddhQ16YHyvw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9738"; a="159124946"
+X-IronPort-AV: E=Sophos;i="5.76,406,1592895600"; 
+   d="scan'208";a="159124946"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2020 08:28:50 -0700
+IronPort-SDR: OqiPE0Cn/mbaoFglvyhAf2rWnLm6JquwW+AKzi6KXAQYqzMCNSFdbI9D+UGi2vd+sJzRv/8Kvj
+ Oe6qN0U8cxmQ==
+X-IronPort-AV: E=Sophos;i="5.76,406,1592895600"; 
+   d="scan'208";a="480068519"
+Received: from sderix-mobl1.ger.corp.intel.com (HELO [10.214.213.131]) ([10.214.213.131])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2020 08:28:38 -0700
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+To:     Logan Gunthorpe <logang@deltatee.com>, Tom Murphy <murphyt7@tcd.ie>
+Cc:     kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-arm-kernel@lists.infradead.org, m.szyprowski@samsung.com
-Subject: Re: [PATCH 1/3] net: ax88796c: ASIX AX88796C SPI Ethernet Adapter
- Driver
-Message-ID: <20200908182220.GA3290129@lunn.ch>
-References: <20200907181854.GD3254313@lunn.ch>
- <CGME20200908174935eucas1p2f24d79b234152148b060c45863e3efeb@eucas1p2.samsung.com>
- <dleftj8sdkqhun.fsf%l.stelmach@samsung.com>
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org>
+ <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
+ <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
+ <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+Message-ID: <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+Date:   Tue, 8 Sep 2020 16:28:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dleftj8sdkqhun.fsf%l.stelmach@samsung.com>
+In-Reply-To: <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 08, 2020 at 07:49:20PM +0200, Lukasz Stelmach wrote:
-> It was <2020-09-07 pon 20:18>, when Andrew Lunn wrote:
-> >> > On Tue, Aug 25, 2020 at 07:03:09PM +0200, Łukasz Stelmach wrote:
-> >> >> +++ b/drivers/net/ethernet/asix/ax88796c_ioctl.c
-> >> >
-> >> > This is an odd filename. The ioctl code is wrong anyway, but there is
-> >> > a lot more than ioctl in here. I suggest you give it a new name.
-> >> >
-> >> 
-> >> Sure, any suggestions?
-> >
-> > Sorry, i have forgotten what is actually contained. 
+
+Hi,
+
+On 27/08/2020 22:36, Logan Gunthorpe wrote:
+> On 2020-08-23 6:04 p.m., Tom Murphy wrote:
+>> I have added a check for the sg_dma_len == 0 :
+>> """
+>>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>>          struct sgt_iter s = { .sgp = sgl };
+>>
+>> +       if (sgl && sg_dma_len(sgl) == 0)
+>> +           s.sgp = NULL;
+>>
+>>          if (s.sgp) {
+>>              .....
+>> """
+>> at location [1].
+>> but it doens't fix the problem.
 > 
-> IOCTL handler (.ndo_do_ioctl), ethtool ops, and a bunch of hw control
-> functions.
+> Based on my read of the code, it looks like we also need to change usage
+> of sgl->length... Something like the rough patch below, maybe?
+
+This thread was brought to my attention and I initially missed this 
+reply. Essentially I came to the same conclusion about the need to use 
+sg_dma_len. One small correction below:
+
+> Also, Tom, do you have an updated version of the patchset to convert the
+> Intel IOMMU to dma-iommu available? The last one I've found doesn't
+> apply cleanly (I'm assuming parts of it have been merged in slightly
+> modified forms).
 > 
-> > Does it even need to be a separate file?
+> Thanks,
 > 
-> It doesn't need, but I think it makes sense to keep ioctl and ethtool
-> stuff in a separate file. Some of the hw control function look like they
-> might change after using phylib.
-
-<driver>_ethtool.c is a common file name.
-
-> Good point. I need to figure out how to do it. Can you point (from the
-> top fou your head) a driver which does it for a simmilarly integrated
-> device?
-
-Being integrated or not makes no difference. The API usage is the
-same. drivers/net/usb/smsc95xx.c has an integrated PHY i think.
-
-> I am not arguing to keep the parameter at any cost, but I would really
-> like to know if there is a viable alternative for DT and ACPI. This chip
-> is for smaller systems which not necessarily implement advanced
-> bootloaders (and DT).
-
-What bootload is being used, if not uboot or bearbox?
-
-> According to module.h
+> Logan
 > 
-> /*
->  * Author(s), use "Name <email>" or just "Name", for multiple
->  * authors use multiple MODULE_AUTHOR() statements/lines.
->  */
-
-Thanks, did not know that.
-> >> >> +	struct net_device *ndev = ax_local->ndev;
-> >> >> +	int status;
-> >> >> +
-> >> >> +	do {
-> >> >> +		if (!(ax_local->checksum & AX_RX_CHECKSUM))
-> >> >> +			break;
-> >> >> +
-> >> >> +		/* checksum error bit is set */
-> >> >> +		if ((rxhdr->flags & RX_HDR3_L3_ERR) ||
-> >> >> +		    (rxhdr->flags & RX_HDR3_L4_ERR))
-> >> >> +			break;
-> >> >> +
-> >> >> +		if ((rxhdr->flags & RX_HDR3_L4_TYPE_TCP) ||
-> >> >> +		    (rxhdr->flags & RX_HDR3_L4_TYPE_UDP)) {
-> >> >> +			skb->ip_summed = CHECKSUM_UNNECESSARY;
-> >> >> +		}
-> >> >> +	} while (0);
-> >> >
-> >> >
-> >> > ??
-> >> >
-> >> 
-> >> if() break; Should I use goto?
-> >
-> > Sorry, i was too ambiguous. Why:
-> >
-> > do {
-> > } while (0);
-> >
-> > It is an odd construct.
+> --
 > 
-> As to "why" — you have correctly spotted, this is a vendor driver I am
-> porting. Although it's not like I am trying to avoid any changes, but
-> because this driver worked for us on older kernels (v3.10.9) I am trying
-> not to touch pieces which IMHO are good enough.
+> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+> b/drivers/gpu/drm/i915/i915
+> index b7b59328cb76..9367ac801f0c 100644
+> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>          struct sgt_iter s = { .sgp = sgl };
+> 
+> +       if (sgl && !sg_dma_len(s.sgp))
 
-My experience with vendor drivers is you nearly end up rewriting it to
-bring it up to mainline standards. I would suggest first setting up
-some automated tests, and then make lots of small changes, committed
-to git. You can then go backwards and find where regressions have been
-introduced and found by the automated tests. And then every so often
-squash it all together, ready for submission.
+I'd extend the condition to be, just to be safe:
 
-> To avoid using do{}while(0) it requires either goto (instead of breaks),
-> nesting those if()s in one another or a humongous single if(). Neither
-> looks pretty and the last one is even less readable than
-> do()while.
+	if (dma && sgl && !sg_dma_len(s.sgp))
 
-I removed too much context. Does anything useful happen afterwards?
-Maybe you can just use return? Or put that code into a helper which
-can use return rather than break?
+> +               s.sgp = NULL;
+> +
+>          if (s.sgp) {
+>                  s.max = s.curr = s.sgp->offset;
+> -               s.max += s.sgp->length;
+> -               if (dma)
+> +
+> +               if (dma) {
+> +                       s.max += sg_dma_len(s.sgp);
+>                          s.dma = sg_dma_address(s.sgp);
+> -               else
+> +               } else {
+> +                       s.max += s.sgp->length;
+>                          s.pfn = page_to_pfn(sg_page(s.sgp));
+> +               }
 
-      Andrew
+Otherwise has this been tested or alternatively how to test it? (How to 
+repro the issue.)
+
+Regards,
+
+Tvrtko
