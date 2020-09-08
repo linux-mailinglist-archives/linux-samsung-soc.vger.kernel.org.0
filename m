@@ -2,282 +2,140 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6AFC260F64
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Sep 2020 12:13:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B7F5261497
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Sep 2020 18:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729189AbgIHKNm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Sep 2020 06:13:42 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:39229 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729209AbgIHKMp (ORCPT
+        id S1731708AbgIHQ1m (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Sep 2020 12:27:42 -0400
+Received: from ale.deltatee.com ([204.191.154.188]:52582 "EHLO
+        ale.deltatee.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731915AbgIHQ1k (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Sep 2020 06:12:45 -0400
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20200908101235epoutp01917b89ab42a8fcef05d2e6f025f22be8~yx04NfPT_1398113981epoutp01U
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Sep 2020 10:12:35 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20200908101235epoutp01917b89ab42a8fcef05d2e6f025f22be8~yx04NfPT_1398113981epoutp01U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1599559955;
-        bh=J/Dt3B5epxM2hfl2xSuuQL+o/kFO8VBmHsh0AA6NAv0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tAZEZSc02t00u0GNIy9jtsUimxQ0iOXA+7AMthZyvozKVFLrnJlVjsCe7+7NJL/Bp
-         f/BsIYn/+XpyPvp2pvO+Dm/WTwH2HRRsiaIlEMM/5GwftZpLuJdvl3ksVB9/7FqtPZ
-         t2nG8UIAHga3vyPavMIe5CPRMd2Ujv1BComv5MlY=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
-        20200908101235epcas1p4e665b4bd0dc7ee631a31d9be8c14de24~yx03wozhq1793617936epcas1p4m;
-        Tue,  8 Sep 2020 10:12:35 +0000 (GMT)
-Received: from epsmges1p1.samsung.com (unknown [182.195.40.158]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4Bm1DH5tFZzMqYlv; Tue,  8 Sep
-        2020 10:12:31 +0000 (GMT)
-Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
-        epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        2B.C9.18978.F09575F5; Tue,  8 Sep 2020 19:12:31 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTPA id
-        20200908101231epcas1p4b6262aae4d5272f6cce366ac1ffbb955~yx0z5w8121795917959epcas1p4b;
-        Tue,  8 Sep 2020 10:12:31 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20200908101231epsmtrp19a55fde1eb3c2658931f53fc9c6b87b2~yx0z5FRHu1887518875epsmtrp1c;
-        Tue,  8 Sep 2020 10:12:31 +0000 (GMT)
-X-AuditID: b6c32a35-603ff70000004a22-e2-5f57590fda38
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        6E.99.08382.E09575F5; Tue,  8 Sep 2020 19:12:30 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.113.221.102]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200908101230epsmtip2282421ce7b62a585df96a94121857b21~yx0zqf2h81256012560epsmtip2k;
-        Tue,  8 Sep 2020 10:12:30 +0000 (GMT)
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-To:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, krzk@kernel.org, lukasz.luba@arm.com
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v3 3/3] PM / devfreq: event: Change prototype of
- devfreq_event_get_edev_by_phandle function
-Date:   Tue,  8 Sep 2020 19:24:47 +0900
-Message-Id: <20200908102447.15097-4-cw00.choi@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200908102447.15097-1-cw00.choi@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGKsWRmVeSWpSXmKPExsWy7bCmni5/ZHi8QdcJXYvrX56zWpw/v4Hd
-        4mzTG3aLTY+vsVpc3jWHzeJz7xFGixnn9zFZLGxqYbe43biCzYHTY828NYwem1Z1snlsXlLv
-        0bdlFaPH501yAaxR2TYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbmSgp5ibmptkou
-        PgG6bpk5QPcoKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgosC/SKE3OLS/PS9ZLz
-        c60MDQyMTIEKE7Iz1nX/Zy54aFbx7fZu1gbG/bpdjJwcEgImEouPbGMHsYUEdjBK7Jpo0MXI
-        BWR/YpQ4f+ElM0TiG6PEnUMOMA2zfv1lhyjayyjRuXAbM4TzhVFi9ukeJpAqNgEtif0vbrCB
-        2CICZRK3v1wFK2IWaGWUuPf8GliRsECuxNr+02C7WQRUJZqnrQGL8wpYSdw4/JgVYp28xOoN
-        B8DO4BSwlti+aiEbyCAJgWvsEv9ffIAqcpE42XaLEcIWlnh1fAs7hC0l8bK/Dcqullh58ghU
-        cwejxJb9F6CajSX2L50MtJkD6DxNifW79CHCihI7f88Fm8kswCfx7msPK0iJhACvREebEESJ
-        ssTlB3eZIGxJicXtnWwQtofEhy/zGCGh0scosfz+V6YJjHKzEDYsYGRcxSiWWlCcm55abFhg
-        iBxlmxjBCU7LdAfjxLcf9A4xMnEwHmKU4GBWEuHtOhQaL8SbklhZlVqUH19UmpNafIjRFBh6
-        E5mlRJPzgSk2ryTe0NTI2NjYwsTQzNTQUEmc9+EthXghgfTEktTs1NSC1CKYPiYOTqkGJplF
-        q+YfPn2Jfa5x9IxXXhYZbu//bOxWOHvoUffO1RfX9y5mrwxi4BFPrdysuvGp/6Xcsv9sm8+0
-        COhKXTxg8WT73Lqnqit77CpZ4lyDH0k+SexY8lj9jdxH7XBLX/5dE8Oydj1d2ZEgahq480Pp
-        XZPWv4x7kjxOJn681WtqIXTjZ9Vc77LnJxf/XC8S2ubn01Hk0+4Zn5PB7OEydcZpa1OTM9+Y
-        nC6rPi9+PHFLuHHHteANUxknnWZf467V5lPc6+9U8KBd/GCjcfe3RQfkeFYkmRxh0pNWOXx4
-        x7YbObX/G3/5n+faIvHNmM1T04w5UZknUSTsh8ca5lXq8yS2fFu8VlKgzW6LlvJOE+1SJZbi
-        jERDLeai4kQA66q/UfkDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrALMWRmVeSWpSXmKPExsWy7bCSvC5fZHi8wapflhbXvzxntTh/fgO7
-        xdmmN+wWmx5fY7W4vGsOm8Xn3iOMFjPO72OyWNjUwm5xu3EFmwOnx5p5axg9Nq3qZPPYvKTe
-        o2/LKkaPz5vkAlijuGxSUnMyy1KL9O0SuDLWdf9nLnhoVvHt9m7WBsb9ul2MnBwSAiYSs379
-        Ze9i5OIQEtjNKPHkzllmiISkxLSLR4FsDiBbWOLw4WKImk+MEkv+7WADqWET0JLY/+IGmC0i
-        UCOxbO4eNpAiZoFORomT016CJYQFsiWW/u1nAbFZBFQlmqetYQKxeQWsJG4cfswKsUxeYvWG
-        A2CLOQWsJbavWgjWKwRUc23JDsYJjHwLGBlWMUqmFhTnpucWGxYY5qWW6xUn5haX5qXrJefn
-        bmIEB6KW5g7G7as+6B1iZOJgPMQowcGsJMLbdSg0Xog3JbGyKrUoP76oNCe1+BCjNAeLkjjv
-        jcKFcUIC6YklqdmpqQWpRTBZJg5OqQam+ZsURflqjy1vO672PpJj79ZbCjl3RGdF1d8sP6I4
-        xTx4r3NNJPfEikmzJwX63JW4fLZxV9C6fvFjK8SX9AsX5W5W/bN/hcD5lSLzch9kax3p2pVX
-        1ZpzkH9X5OGDnCuMmyKLZDjzjzF/T3xeYfG/YZvr0i2CB86eXsB0RkyUn//XOq+LzV1e33d2
-        /va/W6RZ9Tyz6TufGYvHA631WiqGLsv23rtRm3HoUFrZrx2NgROqdibeu7e16PGMRx3qy/0W
-        G5f1MLf/Oa5n5nJ0nurs7mkXZ598oyz55VzRsXcFn77kKf3fbigUYnHI6uO/7ItrApilQhg/
-        +n/lTL1e3iN6i9/08bGMZxdKri6S9rRNUmIpzkg01GIuKk4EALtnlsyzAgAA
-X-CMS-MailID: 20200908101231epcas1p4b6262aae4d5272f6cce366ac1ffbb955
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20200908101231epcas1p4b6262aae4d5272f6cce366ac1ffbb955
-References: <20200908102447.15097-1-cw00.choi@samsung.com>
-        <CGME20200908101231epcas1p4b6262aae4d5272f6cce366ac1ffbb955@epcas1p4.samsung.com>
+        Tue, 8 Sep 2020 12:27:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=deltatee.com; s=20200525; h=Subject:Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Sender:
+        Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+        :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=DvSiEr2JCy+2h9dy7CIecEenG2gQsa0A5OP2d9PI/p0=; b=dbg0PtMPK+HbvI6GMZzh/J5E8Z
+        Q/TWc7UsDFhg1cOVJt/pysWKo3QQRWraF1mqHM6mdRGQ6y0rj+OXqZUSgbgyS5kW1MF22xpb3bm/M
+        J9Rf7mpjgRlZVOcx1SZJ6EJp7lFy55R6nqk8PsS8AEsD0hf0g4vJC65mDtFEAYzf7cE0mQHAAVUlU
+        S7bbDUQqTHtHsrq5f8RHYZU0yCa5rG3lpeqMLTKlNXStV+C6+vhM0UL/8Wjc5CgLnNZYF3jPybjc/
+        ulyb1L7dumDVfTJQeMlSwf7IyaVvWKGWBe0b9ikUV9lDLMezAf5m+fY9DJk+AU+8aTTS01s/mCgwR
+        I5zJe2Ew==;
+Received: from s01060023bee90a7d.cg.shawcable.net ([24.64.145.4] helo=[192.168.0.10])
+        by ale.deltatee.com with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <logang@deltatee.com>)
+        id 1kFfnI-0008Go-Gj; Tue, 08 Sep 2020 09:44:29 -0600
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Tom Murphy <murphyt7@tcd.ie>
+Cc:     kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org>
+ <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
+ <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
+ <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+ <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+From:   Logan Gunthorpe <logang@deltatee.com>
+Message-ID: <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com>
+Date:   Tue, 8 Sep 2020 09:44:24 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 24.64.145.4
+X-SA-Exim-Rcpt-To: robin.murphy@arm.com, kgene@kernel.org, iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org, cohuck@redhat.com, dwmw2@infradead.org, gerald.schaefer@de.ibm.com, virtualization@lists.linux-foundation.org, tglx@linutronix.de, matthias.bgg@gmail.com, linux-mediatek@lists.infradead.org, intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, linux-s390@vger.kernel.org, linux-arm-kernel@lists.infradead.org, agross@kernel.org, linux-rockchip@lists.infradead.org, hch@infradead.org, jonathanh@nvidia.com, krzk@kernel.org, maz@kernel.org, linux-samsung-soc@vger.kernel.org, jean-philippe@linaro.org, m.szyprowski@samsung.com, will@kernel.org, julien.grall@arm.com, linux-tegra@vger.kernel.org, bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org, airlied@linux.ie, kvm@vger.kernel.org, murphyt7@tcd.ie, tvrtko.ursulin@linux.intel.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on ale.deltatee.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-8.5 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A autolearn=ham autolearn_force=no version=3.4.2
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Previously, devfreq core support 'devfreq-events' property in order to get
-the devfreq-event device by phandle. But, 'devfreq-events' property name is
-not proper on devicetree binding because this name doesn't mean
-the any h/w attribute.
 
-The devfreq-event core hand over the rights to decide the property name
-for getting the devfreq-event device on devicetree. Each devfreq-event driver
-will decide the property name on devicetree binding and then pass
-the their own property name to devfreq_event_get_edev_by_phandle function.
 
-And change the prototype of devfreq_event_get_edev_count function
-because of used deprecated 'devfreq-events' property.
+On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
+>>
+>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+>> b/drivers/gpu/drm/i915/i915
+>> index b7b59328cb76..9367ac801f0c 100644
+>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+>>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>>          struct sgt_iter s = { .sgp = sgl };
+>>
+>> +       if (sgl && !sg_dma_len(s.sgp))
+> 
+> I'd extend the condition to be, just to be safe:
+>     if (dma && sgl && !sg_dma_len(s.sgp))
+>
 
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
----
- drivers/devfreq/devfreq-event.c         | 14 ++++++++------
- drivers/devfreq/exynos-bus.c            |  5 +++--
- drivers/devfreq/rk3399_dmc.c            |  2 +-
- drivers/memory/samsung/exynos5422-dmc.c |  6 ++++--
- include/linux/devfreq-event.h           | 14 ++++++++++----
- 5 files changed, 26 insertions(+), 15 deletions(-)
+Right, good catch, that's definitely necessary.
 
-diff --git a/drivers/devfreq/devfreq-event.c b/drivers/devfreq/devfreq-event.c
-index 56efbeb7851e..6765c03334bc 100644
---- a/drivers/devfreq/devfreq-event.c
-+++ b/drivers/devfreq/devfreq-event.c
-@@ -213,20 +213,21 @@ EXPORT_SYMBOL_GPL(devfreq_event_reset_event);
-  * devfreq_event_get_edev_by_phandle() - Get the devfreq-event dev from
-  *					 devicetree.
-  * @dev		: the pointer to the given device
-+ * @phandle_name: name of property holding a phandle value
-  * @index	: the index into list of devfreq-event device
-  *
-  * Note that this function return the pointer of devfreq-event device.
-  */
- struct devfreq_event_dev *devfreq_event_get_edev_by_phandle(struct device *dev,
--						      int index)
-+					const char *phandle_name, int index)
- {
- 	struct device_node *node;
- 	struct devfreq_event_dev *edev;
- 
--	if (!dev->of_node)
-+	if (!dev->of_node || !phandle_name)
- 		return ERR_PTR(-EINVAL);
- 
--	node = of_parse_phandle(dev->of_node, "devfreq-events", index);
-+	node = of_parse_phandle(dev->of_node, phandle_name, index);
- 	if (!node)
- 		return ERR_PTR(-ENODEV);
- 
-@@ -258,19 +259,20 @@ EXPORT_SYMBOL_GPL(devfreq_event_get_edev_by_phandle);
- /**
-  * devfreq_event_get_edev_count() - Get the count of devfreq-event dev
-  * @dev		: the pointer to the given device
-+ * @phandle_name: name of property holding a phandle value
-  *
-  * Note that this function return the count of devfreq-event devices.
-  */
--int devfreq_event_get_edev_count(struct device *dev)
-+int devfreq_event_get_edev_count(struct device *dev, const char *phandle_name)
- {
- 	int count;
- 
--	if (!dev->of_node) {
-+	if (!dev->of_node || !phandle_name) {
- 		dev_err(dev, "device does not have a device node entry\n");
- 		return -EINVAL;
- 	}
- 
--	count = of_property_count_elems_of_size(dev->of_node, "devfreq-events",
-+	count = of_property_count_elems_of_size(dev->of_node, phandle_name,
- 						sizeof(u32));
- 	if (count < 0) {
- 		dev_err(dev,
-diff --git a/drivers/devfreq/exynos-bus.c b/drivers/devfreq/exynos-bus.c
-index 58dbf51f0983..1e684a448c9e 100644
---- a/drivers/devfreq/exynos-bus.c
-+++ b/drivers/devfreq/exynos-bus.c
-@@ -193,7 +193,7 @@ static int exynos_bus_parent_parse_of(struct device_node *np,
- 	 * Get the devfreq-event devices to get the current utilization of
- 	 * buses. This raw data will be used in devfreq ondemand governor.
- 	 */
--	count = devfreq_event_get_edev_count(dev);
-+	count = devfreq_event_get_edev_count(dev, "devfreq-events");
- 	if (count < 0) {
- 		dev_err(dev, "failed to get the count of devfreq-event dev\n");
- 		ret = count;
-@@ -209,7 +209,8 @@ static int exynos_bus_parent_parse_of(struct device_node *np,
- 	}
- 
- 	for (i = 0; i < count; i++) {
--		bus->edev[i] = devfreq_event_get_edev_by_phandle(dev, i);
-+		bus->edev[i] = devfreq_event_get_edev_by_phandle(dev,
-+							"devfreq-events", i);
- 		if (IS_ERR(bus->edev[i])) {
- 			ret = -EPROBE_DEFER;
- 			goto err_regulator;
-diff --git a/drivers/devfreq/rk3399_dmc.c b/drivers/devfreq/rk3399_dmc.c
-index 027769e39f9b..2e912166a993 100644
---- a/drivers/devfreq/rk3399_dmc.c
-+++ b/drivers/devfreq/rk3399_dmc.c
-@@ -341,7 +341,7 @@ static int rk3399_dmcfreq_probe(struct platform_device *pdev)
- 		return PTR_ERR(data->dmc_clk);
- 	}
- 
--	data->edev = devfreq_event_get_edev_by_phandle(dev, 0);
-+	data->edev = devfreq_event_get_edev_by_phandle(dev, "devfreq-events", 0);
- 	if (IS_ERR(data->edev))
- 		return -EPROBE_DEFER;
- 
-diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
-index b9c7956e5031..714d1f6f077c 100644
---- a/drivers/memory/samsung/exynos5422-dmc.c
-+++ b/drivers/memory/samsung/exynos5422-dmc.c
-@@ -1293,7 +1293,8 @@ static int exynos5_performance_counters_init(struct exynos5_dmc *dmc)
- 	int counters_size;
- 	int ret, i;
- 
--	dmc->num_counters = devfreq_event_get_edev_count(dmc->dev);
-+	dmc->num_counters = devfreq_event_get_edev_count(dmc->dev,
-+							"devfreq-events");
- 	if (dmc->num_counters < 0) {
- 		dev_err(dmc->dev, "could not get devfreq-event counters\n");
- 		return dmc->num_counters;
-@@ -1306,7 +1307,8 @@ static int exynos5_performance_counters_init(struct exynos5_dmc *dmc)
- 
- 	for (i = 0; i < dmc->num_counters; i++) {
- 		dmc->counter[i] =
--			devfreq_event_get_edev_by_phandle(dmc->dev, i);
-+			devfreq_event_get_edev_by_phandle(dmc->dev,
-+						"devfreq-events", i);
- 		if (IS_ERR_OR_NULL(dmc->counter[i]))
- 			return -EPROBE_DEFER;
- 	}
-diff --git a/include/linux/devfreq-event.h b/include/linux/devfreq-event.h
-index f14f17f8cb7f..4a50a5c71a5f 100644
---- a/include/linux/devfreq-event.h
-+++ b/include/linux/devfreq-event.h
-@@ -106,8 +106,11 @@ extern int devfreq_event_get_event(struct devfreq_event_dev *edev,
- 				struct devfreq_event_data *edata);
- extern int devfreq_event_reset_event(struct devfreq_event_dev *edev);
- extern struct devfreq_event_dev *devfreq_event_get_edev_by_phandle(
--				struct device *dev, int index);
--extern int devfreq_event_get_edev_count(struct device *dev);
-+				struct device *dev,
-+				const char *phandle_name,
-+				int index);
-+extern int devfreq_event_get_edev_count(struct device *dev,
-+				const char *phandle_name);
- extern struct devfreq_event_dev *devfreq_event_add_edev(struct device *dev,
- 				struct devfreq_event_desc *desc);
- extern int devfreq_event_remove_edev(struct devfreq_event_dev *edev);
-@@ -152,12 +155,15 @@ static inline int devfreq_event_reset_event(struct devfreq_event_dev *edev)
- }
- 
- static inline struct devfreq_event_dev *devfreq_event_get_edev_by_phandle(
--					struct device *dev, int index)
-+					struct device *dev,
-+					const char *phandle_name,
-+					int index)
- {
- 	return ERR_PTR(-EINVAL);
- }
- 
--static inline int devfreq_event_get_edev_count(struct device *dev)
-+static inline int devfreq_event_get_edev_count(struct device *dev,
-+					const char *phandle_name)
- {
- 	return -EINVAL;
- }
--- 
-2.17.1
+>> +               s.sgp = NULL;
+>> +
+>>          if (s.sgp) {
+>>                  s.max = s.curr = s.sgp->offset;
+>> -               s.max += s.sgp->length;
+>> -               if (dma)
+>> +
+>> +               if (dma) {
+>> +                       s.max += sg_dma_len(s.sgp);
+>>                          s.dma = sg_dma_address(s.sgp);
+>> -               else
+>> +               } else {
+>> +                       s.max += s.sgp->length;
+>>                          s.pfn = page_to_pfn(sg_page(s.sgp));
+>> +               }
+> 
+> Otherwise has this been tested or alternatively how to test it? (How to
+> repro the issue.)
 
+It has not been tested. To test it, you need Tom's patch set without the
+last "DO NOT MERGE" patch:
+
+https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
+
+Thanks,
+
+Logan
