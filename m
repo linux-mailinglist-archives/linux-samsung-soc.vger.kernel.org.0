@@ -2,91 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9056126621B
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Sep 2020 17:27:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 835E7266211
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Sep 2020 17:26:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726294AbgIKP1V (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 11 Sep 2020 11:27:21 -0400
-Received: from 59-125-125-110.HINET-IP.hinet.net ([59.125.125.110]:58859 "HELO
-        mail.jen-ai.org.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with SMTP id S1726254AbgIKP1P (ORCPT
+        id S1726300AbgIKPZv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 11 Sep 2020 11:25:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56254 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726262AbgIKPZa (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:27:15 -0400
-Received: from mail.jen-ai.org.tw (localhost.localdomain [127.0.0.1])
-        by mail.jen-ai.org.tw (Postfix) with ESMTP id F12FD12070A;
-        Fri, 11 Sep 2020 21:49:16 +0800 (CST)
-From:   "Malayan Banking Berhad" <mbtransfer.com.my@jen-ai.org.tw>
-Reply-To: mbtransfer2u@hotmail.com
-Subject: Good day customer,
-Date:   Fri, 11 Sep 2020 21:49:16 +0800
-Message-Id: <20200911132311.M28858@mail.jen-ai.org.tw>
-X-Mailer: OpenWebMail 2.53 
-X-OriginatingIP: 197.210.70.234 (j1650)
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset=big5
-To:     undisclosed-recipients:;
+        Fri, 11 Sep 2020 11:25:30 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.174])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E2559222BB;
+        Fri, 11 Sep 2020 14:34:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599834846;
+        bh=ouSe3E1BUgGedI46aMfPRrEMheKNTw50AdAlm0Y74ac=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=TSlmQcxVEbkc4r6vpe2ZTb1CsL7jXAQaU0zDUG/YmAg4hIgTGUmXfaM/KLAl/v5ft
+         syogXF7HnkJbXpg/TB/oTq7Qf1X+dERYaDNVzKzWZD8ZntQgiIya5i53/y+Og4YBzJ
+         ovzPawY47ZwZtbiAAKXiB4jI/3D+kj8MG4RaInHg=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Jonathan Corbet <corbet@lwn.net>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH 3/3] ARM: s3c: Bring back notes from removed debug-macro.S
+Date:   Fri, 11 Sep 2020 16:33:43 +0200
+Message-Id: <20200911143343.498-3-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200911143343.498-1-krzk@kernel.org>
+References: <20200911143343.498-1-krzk@kernel.org>
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Malayan Banking Berhad (MAYBANK)
-Kampung Bandarshah,
-93400 Kuching,
-Sarawak,
-Malaysia.
+Documentation references notes from a removed debug-macro.S file so
+bring the contents here.
 
-Good day customer,
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm/mach-s3c/s3c64xx.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-We the management and staff of Maybank Berhad is informing you about your
-Telekom Malaysia Berhad pending funds transfer of RM 270,000 which crediting
-status is 98% and your attention is needed urgently so as enable you
-successfully receive your gift in your bank account.
+diff --git a/arch/arm/mach-s3c/s3c64xx.c b/arch/arm/mach-s3c/s3c64xx.c
+index b5fc615a482f..4dfb648142f2 100644
+--- a/arch/arm/mach-s3c/s3c64xx.c
++++ b/arch/arm/mach-s3c/s3c64xx.c
+@@ -95,7 +95,12 @@ static struct cpu_table cpu_ids[] __initdata = {
+ 
+ /* minimal IO mapping */
+ 
+-/* see notes on uart map in arch/arm/mach-s3c64xx/include/mach/debug-macro.S */
++/*
++ * note, for the boot process to work we have to keep the UART
++ * virtual address aligned to an 1MiB boundary for the L1
++ * mapping the head code makes. We keep the UART virtual address
++ * aligned and add in the offset when we load the value here.
++ */
+ #define UART_OFFS (S3C_PA_UART & 0xfffff)
+ 
+ static struct map_desc s3c_iodesc[] __initdata = {
+-- 
+2.17.1
 
-In regards to your funds transfer process we need instant confirmation from
-you before we proceed with the final step that leads to the crediting of your
-funds to your personal bank account and we want you to act fast and make sure
-you follow up with this final process in other for you to receive your
-pending funds.
-
-All you need to do is to confirm your bank account details correctly and make
-sure there is no mistake because we are doing direct bank in to your bank
-account which is cash deposit because we noticed for more than a year you
-haven't receive your gift in your bank account and this is why we are trying
-our very best to make sure you receive it this time.
-
-Provide the details correctly;
-
-Bank Account Name:
-Bank Name:
-Account Number:
-Phone Number:
-
-As soon as we receive your details we will proceed with instant bank transfer
-of your funds RM 270,000 to your personal bank account and once we have
-successfully deposited your funds in your bank account, we will send the copy
-of deposit slip to you and also send an SMS to your phone for you to confirm
-and check if you have receive your gift in your bank account.
-
-I want you to also know that if there is any fee you have spent in the past
-it will also be added to your gift sum of RM 270,000 as both will be
-deposited into your bank account. Bear it in mind that cash deposit at the
-bank counter do not require any charges because it's direct hand to hand cash
-deposit.
-
-All you have to provide will be for the security keeping fee and that is the
-only fee you will have to pay and the amount will be mentioned as soon as you
-reply back to this email.
-
-Get back to us with the required details and do not be afraid because this is
-not a scam and also you do not have to pay any charges for this cash deposit
-process.
-
-Thanks for your time reading this email as i await your reply shortly.
-
-Datuk Abdul Farid Alias
-Chief Executive Officer (CEO)
-Whatsapp: 01135016449
-MAYBANK
-Kuching, Sarawak.
