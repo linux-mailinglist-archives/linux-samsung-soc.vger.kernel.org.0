@@ -2,27 +2,27 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82777266339
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Sep 2020 18:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4480F266326
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Sep 2020 18:11:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgIKQMl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 11 Sep 2020 12:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
+        id S1726562AbgIKQLe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 11 Sep 2020 12:11:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726557AbgIKQMk (ORCPT
+        with ESMTP id S1726455AbgIKPhk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 11 Sep 2020 12:12:40 -0400
+        Fri, 11 Sep 2020 11:37:40 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85C1C0617BD
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 11 Sep 2020 06:54:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984D2C06138D
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 11 Sep 2020 06:54:29 -0700 (PDT)
 Received: from [2a0a:edc0:0:1101:1d::39] (helo=dude03.red.stw.pengutronix.de)
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <mtr@pengutronix.de>)
-        id 1kGjVK-0007wW-47; Fri, 11 Sep 2020 15:54:18 +0200
+        id 1kGjVN-0007wY-Ql; Fri, 11 Sep 2020 15:54:22 +0200
 Received: from mtr by dude03.red.stw.pengutronix.de with local (Exim 4.92)
         (envelope-from <mtr@dude03.red.stw.pengutronix.de>)
-        id 1kGjVH-00FKnn-NO; Fri, 11 Sep 2020 15:54:15 +0200
+        id 1kGjVH-00FKnt-OQ; Fri, 11 Sep 2020 15:54:15 +0200
 From:   Michael Tretter <m.tretter@pengutronix.de>
 To:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
 Cc:     kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
@@ -30,8 +30,8 @@ Cc:     kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
         sylvester.nawrocki@gmail.com, a.hajda@samsung.com,
         inki.dae@samsung.com, jy0922.shim@samsung.com,
         sw0312.kim@samsung.com, Michael Tretter <m.tretter@pengutronix.de>
-Date:   Fri, 11 Sep 2020 15:54:06 +0200
-Message-Id: <20200911135413.3654800-10-m.tretter@pengutronix.de>
+Date:   Fri, 11 Sep 2020 15:54:08 +0200
+Message-Id: <20200911135413.3654800-12-m.tretter@pengutronix.de>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200911135413.3654800-1-m.tretter@pengutronix.de>
 References: <20200911135413.3654800-1-m.tretter@pengutronix.de>
@@ -42,10 +42,10 @@ X-SA-Exim-Mail-From: mtr@pengutronix.de
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
         metis.ext.pengutronix.de
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
+X-Spam-Status: No, score=-1.1 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
         SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
         version=3.4.2
-Subject: [PATCH v2 09/16] drm/exynos: add callback for tearing effect handler
+Subject: [PATCH v2 11/16] drm/exynos: convert encoder functions to bridge function
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
@@ -54,65 +54,107 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The tearing effect interrupts are not handled by the MIPI DSI bridge
-driver, but the display controller driver.
-
-Allow platforms to register a callback for the tearing effect interrupt.
+If other drivers use the exynos_dsi driver as a bridge, they might bring
+their own encoder. Enable and disable the MIPI-DSI bridge using the
+bridge functions instead of the encoder functions.
 
 Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
 ---
-v2:
-- add handler as callback in host_ops
+v2: none
 ---
- drivers/gpu/drm/exynos/exynos_drm_dsi.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c | 33 +++++++++++++++----------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index 684a2fbef08a..2d75f9877dc0 100644
+index 5e7c1a99a3ee..a4f17d50d1d8 100644
 --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
 +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -243,6 +243,7 @@ struct exynos_dsi;
- struct exynos_dsi_host_ops {
- 	int (*attach)(struct device *dev, struct mipi_dsi_device *device);
- 	int (*detach)(struct device *dev, struct mipi_dsi_device *device);
-+	void (*te_handler)(struct device *dev);
- };
+@@ -1455,9 +1455,8 @@ static void exynos_dsi_unregister_te_irq(struct exynos_dsi *dsi)
+ 	}
+ }
  
- enum exynos_reg_offset {
-@@ -504,9 +505,17 @@ static int __exynos_dsi_host_detach(struct device *dev,
+-static void exynos_dsi_enable(struct drm_encoder *encoder)
++static void exynos_dsi_enable(struct exynos_dsi *dsi)
+ {
+-	struct exynos_dsi *dsi = encoder_to_dsi(encoder);
+ 	struct drm_bridge *iter;
+ 	int ret;
+ 
+@@ -1505,9 +1504,8 @@ static void exynos_dsi_enable(struct drm_encoder *encoder)
+ 	pm_runtime_put(dsi->dev);
+ }
+ 
+-static void exynos_dsi_disable(struct drm_encoder *encoder)
++static void exynos_dsi_disable(struct exynos_dsi *dsi)
+ {
+-	struct exynos_dsi *dsi = encoder_to_dsi(encoder);
+ 	struct drm_bridge *iter;
+ 
+ 	if (!(dsi->state & DSIM_STATE_ENABLED))
+@@ -1598,11 +1596,6 @@ static int exynos_dsi_create_connector(struct drm_encoder *encoder)
  	return 0;
  }
  
-+static void __exynos_dsi_te_handler(struct device *dev)
+-static const struct drm_encoder_helper_funcs exynos_dsi_encoder_helper_funcs = {
+-	.enable = exynos_dsi_enable,
+-	.disable = exynos_dsi_disable,
+-};
+-
+ static int exynos_dsi_bridge_attach(struct drm_bridge *bridge,
+ 				    enum drm_bridge_attach_flags flags)
+ {
+@@ -1640,7 +1633,7 @@ static void exynos_dsi_bridge_detach(struct drm_bridge *bridge)
+ 
+ 	if (dsi->panel) {
+ 		mutex_lock(&drm->mode_config.mutex);
+-		exynos_dsi_disable(&dsi->encoder);
++		exynos_dsi_disable(dsi);
+ 		dsi->panel = NULL;
+ 		dsi->connector.status = connector_status_disconnected;
+ 		mutex_unlock(&drm->mode_config.mutex);
+@@ -1652,9 +1645,25 @@ static void exynos_dsi_bridge_detach(struct drm_bridge *bridge)
+ 	}
+ }
+ 
++static void exynos_dsi_bridge_enable(struct drm_bridge *bridge)
 +{
-+	struct exynos_dsi *dsi = dev_get_drvdata(dev);
++	struct exynos_dsi *dsi = bridge->driver_private;
 +
-+	exynos_drm_crtc_te_handler(dsi->encoder.crtc);
++	exynos_dsi_enable(dsi);
 +}
 +
- static const struct exynos_dsi_host_ops exynos_dsi_host_ops = {
- 	.attach = __exynos_dsi_host_attach,
- 	.detach = __exynos_dsi_host_detach,
-+	.te_handler = __exynos_dsi_te_handler,
++static void exynos_dsi_bridge_disable(struct drm_bridge *bridge)
++{
++	struct exynos_dsi *dsi = bridge->driver_private;
++
++	exynos_dsi_disable(dsi);
++}
++
+ static const struct drm_bridge_funcs exynos_dsi_bridge_funcs = {
+ 	.attach = exynos_dsi_bridge_attach,
+ 	.detach = exynos_dsi_bridge_detach,
++	.enable = exynos_dsi_bridge_enable,
++	.disable = exynos_dsi_bridge_disable,
  };
  
- static const struct exynos_dsi_driver_data exynos3_dsi_driver_data = {
-@@ -1354,11 +1363,12 @@ static irqreturn_t exynos_dsi_irq(int irq, void *dev_id)
+ MODULE_DEVICE_TABLE(of, exynos_dsi_of_match);
+@@ -1800,8 +1809,6 @@ static int exynos_dsi_bind(struct device *dev, struct device *master,
  
- static irqreturn_t exynos_dsi_te_irq_handler(int irq, void *dev_id)
- {
--	struct exynos_dsi *dsi = (struct exynos_dsi *)dev_id;
--	struct drm_encoder *encoder = &dsi->encoder;
-+	struct exynos_dsi *dsi = dev_id;
-+	const struct exynos_dsi_host_ops *ops = dsi->driver_data->host_ops;
+ 	drm_simple_encoder_init(drm_dev, encoder, DRM_MODE_ENCODER_TMDS);
  
--	if (dsi->state & DSIM_STATE_VIDOUT_AVAILABLE)
--		exynos_drm_crtc_te_handler(encoder->crtc);
-+	if (ops && ops->te_handler &&
-+	    (dsi->state & DSIM_STATE_VIDOUT_AVAILABLE))
-+		ops->te_handler(dsi->dsi_host.dev);
+-	drm_encoder_helper_add(encoder, &exynos_dsi_encoder_helper_funcs);
+-
+ 	ret = exynos_drm_set_possible_crtcs(encoder, EXYNOS_DISPLAY_TYPE_LCD);
+ 	if (ret < 0)
+ 		return ret;
+@@ -1831,7 +1838,7 @@ static void exynos_dsi_unbind(struct device *dev, struct device *master,
+ 	struct exynos_dsi *dsi = dev_get_drvdata(dev);
+ 	struct drm_encoder *encoder = &dsi->encoder;
  
- 	return IRQ_HANDLED;
+-	exynos_dsi_disable(encoder);
++	exynos_dsi_disable(dsi);
+ 
+ 	drm_encoder_cleanup(encoder);
  }
 -- 
 2.20.1
