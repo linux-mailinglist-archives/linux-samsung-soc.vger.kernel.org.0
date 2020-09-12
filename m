@@ -2,77 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 71233266594
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Sep 2020 19:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09ABF267B3A
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 12 Sep 2020 17:25:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725778AbgIKRHn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 11 Sep 2020 13:07:43 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38773 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726279AbgIKPCG (ORCPT
+        id S1725904AbgILPZO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 12 Sep 2020 11:25:14 -0400
+Received: from smtprelay0217.hostedemail.com ([216.40.44.217]:41536 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725846AbgILPZO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:02:06 -0400
-Received: by mail-lf1-f67.google.com with SMTP id y11so6161492lfl.5;
-        Fri, 11 Sep 2020 08:00:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aOEss69u0HOf22P48MgZ3tBTFDKG/yZuI7WmzKdffDM=;
-        b=DNcECUgfGuvRnKAAT1SPl3ifhHqGMNkQ1zOQWBks2P0vaq2OnzqGak2l9S0+Q7af7J
-         D3j0ETChrd9Z69axjsOe/EAtwMNQGG1b+KneacHejfUK06l3Lug17O7NRy2fn5qMr41A
-         Lh/yL6KJXJslWGvReasIGTT1YgFm5mZZTqPqIRNSX9raZrvwkhvwIAPhEO+3ivJvLUyd
-         616thY4zTDHisw33u5oOPeo4bx+ux418oSYrPji8TcbD7vFWTFthstBSX5vrRojCUkBr
-         5d0Rvc7kclNctLQbgS5giKsMPsaS/SFvtY/+GLaA9mYSlJdANw6tbRgaHGGyQ5eHbzfJ
-         czXA==
-X-Gm-Message-State: AOAM532aTmZ0unzscYH5xi9UdaZGz6HUvphQT7Za1Ot/Af7GX9rRVqr0
-        YQjxR3QNrukPJ9LZOMe8y8IU+T0o6KB9EA==
-X-Google-Smtp-Source: ABdhPJwuI4pGTArYk3AIoPmW73BVQfttNnu3/IOhNJnwaeSyTKJzti6CLpR1dy2frjoSivz3v0G8TQ==
-X-Received: by 2002:a17:906:4993:: with SMTP id p19mr2504434eju.277.1599836063629;
-        Fri, 11 Sep 2020 07:54:23 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.174])
-        by smtp.googlemail.com with ESMTPSA id e15sm1851929eds.5.2020.09.11.07.54.21
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 Sep 2020 07:54:22 -0700 (PDT)
-Date:   Fri, 11 Sep 2020 16:54:20 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: Re: [PATCH v3 3/3] ARM: dts: exynos: Add clocks sound node in
- Exynos5422 Odroid XU4
-Message-ID: <20200911145420.GD15290@kozik-lap>
-References: <20200906142146.21266-1-krzk@kernel.org>
- <20200906142146.21266-3-krzk@kernel.org>
+        Sat, 12 Sep 2020 11:25:14 -0400
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay06.hostedemail.com (Postfix) with ESMTP id 23EEE18224D8A;
+        Sat, 12 Sep 2020 15:25:10 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:967:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2525:2553:2560:2563:2682:2685:2693:2828:2859:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3352:3622:3865:3866:3867:3868:3870:3871:3872:3874:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4321:5007:7514:9010:9012:9025:10004:10400:10848:11232:11658:11914:12043:12297:12555:12740:12760:12895:12986:13069:13161:13229:13311:13357:13439:14096:14097:14181:14659:14721:21080:21611:21627:21749:21811:30054:30062:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:2,LUA_SUMMARY:none
+X-HE-Tag: face08_0d076f6270f8
+X-Filterd-Recvd-Size: 1871
+Received: from XPS-9350.home (unknown [47.151.133.149])
+        (Authenticated sender: joe@perches.com)
+        by omf01.hostedemail.com (Postfix) with ESMTPA;
+        Sat, 12 Sep 2020 15:25:08 +0000 (UTC)
+Message-ID: <da6f30896a8fd78635b3ca454d77a5292a9aa76d.camel@perches.com>
+Subject: Re: [PATCH] MAINTAINERS: make linux-usb list remarks consistent
+From:   Joe Perches <joe@perches.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Sat, 12 Sep 2020 08:25:07 -0700
+In-Reply-To: <20200912124025.GA174230@kroah.com>
+References: <20200912121346.2796-1-lukas.bulwahn@gmail.com>
+         <alpine.DEB.2.21.2009121416500.3770@felia>
+         <20200912124025.GA174230@kroah.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.36.4-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200906142146.21266-3-krzk@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7bit
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Sep 06, 2020 at 04:21:46PM +0200, Krzysztof Kozlowski wrote:
-> The dtschema expects "clocks" property if "assigned-clocks" are used.
-> Add reference to all parent clocks to silence the dtbs_check warnings.
+On Sat, 2020-09-12 at 14:40 +0200, Greg Kroah-Hartman wrote:
+> On Sat, Sep 12, 2020 at 02:19:02PM +0200, Lukas Bulwahn wrote:
+> > 
+> > On Sat, 12 Sep 2020, Lukas Bulwahn wrote:
+> > 
+> > > This patch submission will also show me if linux-usb is moderated or not.
+> > > I have not subscribed to linux-usb and if it shows up quickly in the
+> > > archive, the list is probably not moderated, and hence, validating the
+> > > patch.
+> > > 
+> > 
+> > The patch showed up in the archives within seconds:
+> > 
+> > https://lore.kernel.org/linux-usb/20200912121346.2796-1-lukas.bulwahn@gmail.com/
+> > 
+> > So, the linux-usb list is most likely not moderated. Patch validated.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> 
-> ---
-> 
-> Changes since v2:
-> 1. Move clock properties to i2s, just like Sylwester Nawrocki did for
->    Odroid XU3.
-> ---
->  arch/arm/boot/dts/exynos5422-odroidxu4.dts | 60 ++++++++++------------
+> Yes, it is not moderated, and never has been, no idea where that idea came from.
 
-Applied with reworked commit msg.
+There's also linux-samsung-soc@vger.kernel.org
+that is listed as moderated
 
-Best regards,
-Krzysztof
+Are any of the vger lists actually moderated?
+
 
