@@ -2,158 +2,115 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 347DF269208
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Sep 2020 18:47:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB05E2693C7
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Sep 2020 19:43:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726035AbgINQrl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 14 Sep 2020 12:47:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59354 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726034AbgINPJT (ORCPT
+        id S1726161AbgINRms (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 14 Sep 2020 13:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46152 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbgINMX2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 14 Sep 2020 11:09:19 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6381720829;
-        Mon, 14 Sep 2020 15:09:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600096158;
-        bh=0ROvPwI9GHsA6soQBVXwOuivIgyaZ2vSEX0i8eZ+57s=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=KJlRnz/O4V5mlRC/axk0yDSKCcbjoVr0zU0uJHLx9DH6OAkHdR+adl/yCvsg5kmHY
-         GiL0ONjceNB+vn2xXKhpJ3I3SWINlX7TJhq+69reYdD60FYnHv4h6DKcvw7NjyPGmJ
-         VFlDL20ElYv2bhWDVt3uJkMZB5HxTS2fGuEQBYm4=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1kHq6W-00Biog-Ec; Mon, 14 Sep 2020 16:09:16 +0100
+        Mon, 14 Sep 2020 08:23:28 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 866A8C0698CC
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 14 Sep 2020 05:19:21 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id s14so1143719pju.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 14 Sep 2020 05:19:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=gxYQz48aGorfvze6exW0FuIKKJvVhs5z+cRnEenJUaY=;
+        b=tBNglRTaLAK72cBzAKJvzq6U/iFQXbaTUYaloQJ9e4BxsHTdJx3tjoY18cG9xcDFA/
+         OKK/t+7+kA/HsBYRsN3Un8xrhWukA2QnQigDOuHTb6f+vFDNGvpRFG0HfCEjo5i6H4Gv
+         vjHNQUmZwDT0e53tzCw8rQdwvqnI8Ke4sBkVydxE1rWL+E5U5xF92J5UTjFdc5MKP0f2
+         aNQtbH+RrWB8Ar5R8XbGtMAg/dXc9IWjpmCs3MHUUNx3d0Xl/iwGZ9KRahP48kf2Fxgl
+         ptrc9uLQQOsxeSfqBHPpBHM4fOk9H+6nLw4mwvWHKq6v+wS6aEOcwfcY+cY3ECz29C7D
+         EkIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=gxYQz48aGorfvze6exW0FuIKKJvVhs5z+cRnEenJUaY=;
+        b=qRccqc2fJ78FdoyC6cI2MhQ8YOZWJffB+XDYqVC+cB7bGNN11uy15DLm4KAcUCx/RW
+         OWaJUqSJKX6l60qJX+vXosCh4aFdqQV4wzXqjFRiBY5YfB9uFa53HMHzVPonfRmsK3fJ
+         D+nEGCfaHdZoHKXuyKW74jIh2OQqIGsN353IsbQ2rikKu8oeXPuHgOlUYoiVgFDpErrK
+         tj+qft5AKCeqKu5YF/O8+NcF2jH0uH+0yYD1C4PIHcQftbyRcIkGi2oJIVfAoyZtviM8
+         PWY+DKjxpNFcKkvzxLMQmXcGoHwrkIbZ0JIiD20+VD5ayP0cV87IDJ8M6R7fr4AhcSV9
+         djGw==
+X-Gm-Message-State: AOAM532f52INLXMF9I6+R2vikQGmScsP7ju8aFQAUN39OPzhio//6ojo
+        QYITsc3CrmP/npPJvpG6BnpxzY3U1VIrDmnp4LY=
+X-Google-Smtp-Source: ABdhPJwiax6n8H6Mi6LuLBXQiEbCnkIRBTvWVQh6NDRMpXm4qY2Kr2py7RUre0MxiHYCK2XCH21jiY0R50dTsrd6nTE=
+X-Received: by 2002:a17:90a:fe07:: with SMTP id ck7mr13665633pjb.20.1600085961087;
+ Mon, 14 Sep 2020 05:19:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Mon, 14 Sep 2020 16:09:16 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Russell King <linux@arm.linux.org.uk>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Valentin Schneider <Valentin.Schneider@arm.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Saravana Kannan <saravanak@google.com>,
-        kernel-team@android.com,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: Re: [PATCH v3 08/16] irqchip/gic: Configure SGIs as standard
- interrupts
-In-Reply-To: <65565f85-d932-37f3-a8cd-dbd13d7dbfad@samsung.com>
-References: <20200901144324.1071694-1-maz@kernel.org>
- <20200901144324.1071694-9-maz@kernel.org>
- <CGME20200914130601eucas1p23ce276d168dee37909b22c75499e68da@eucas1p2.samsung.com>
- <a917082d-4bfd-a6fd-db88-36e75f5f5921@samsung.com>
- <8642847d83ef5bb15663d0246d6af668@kernel.org>
- <65565f85-d932-37f3-a8cd-dbd13d7dbfad@samsung.com>
-User-Agent: Roundcube Webmail/1.4.8
-Message-ID: <14e2c690bf99280588538989014c7356@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: m.szyprowski@samsung.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, will@kernel.org, catalin.marinas@arm.com, linux@arm.linux.org.uk, tglx@linutronix.de, jason@lakedaemon.net, sumit.garg@linaro.org, Valentin.Schneider@arm.com, f.fainelli@gmail.com, gregory.clement@bootlin.com, andrew@lunn.ch, saravanak@google.com, kernel-team@android.com, linux-samsung-soc@vger.kernel.org, krzk@kernel.org, b.zolnierkie@samsung.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Received: by 2002:a05:6a10:60d1:0:0:0:0 with HTTP; Mon, 14 Sep 2020 05:19:20
+ -0700 (PDT)
+Reply-To: mrsmegwilliam6@gmail.com
+From:   Ms Mary Mcniff <diplomaticstoragecourier@gmail.com>
+Date:   Mon, 14 Sep 2020 05:19:20 -0700
+Message-ID: <CAD72A3OyvwgX8h4TAO5-FKA5Y4kYQbDJYM7GP=S_wromTUdLpQ@mail.gmail.com>
+Subject: Your Respond ASAP
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Marek,
-
-On 2020-09-14 14:26, Marek Szyprowski wrote:
-> Hi Marc,
-> 
-> On 14.09.2020 15:13, Marc Zyngier wrote:
->> On 2020-09-14 14:06, Marek Szyprowski wrote:
->>> On 01.09.2020 16:43, Marc Zyngier wrote:
->>>> Change the way we deal with GIC SGIs by turning them into proper
->>>> IRQs, and calling into the arch code to register the interrupt range
->>>> instead of a callback.
->>>> 
->>>> Reviewed-by: Valentin Schneider <valentin.schneider@arm.com>
->>>> Signed-off-by: Marc Zyngier <maz@kernel.org>
->>> This patch landed in linux next-20200914 as commit ac063232d4b0
->>> ("irqchip/gic: Configure SGIs as standard interrupts"). Sadly it 
->>> breaks
->>> booting of all Samsung Exynos 4210/4412 based boards (dual/quad ARM
->>> Cortex A9 based). Here are the last lines from the bootlog:
->>> 
->>> [    0.106322] CPU: Testing write buffer coherency: ok
->>> [    0.109895] CPU0: Spectre v2: using BPIALL workaround
->>> [    0.116057] CPU0: thread -1, cpu 0, socket 9, mpidr 80000900
->>> [    0.123885] Setting up static identity map for 0x40100000 -
->>> 0x40100060
->>> [    0.130191] rcu: Hierarchical SRCU implementation.
->>> [    0.137195] soc soc0: Exynos: CPU[EXYNOS4210] PRO_ID[0x43210211]
->>> REV[0x11] Detected
->>> [    0.145129] smp: Bringing up secondary CPUs ...
->>> [    0.156279] CPU1: thread -1, cpu 1, socket 9, mpidr 80000901
->>> [    0.156291] CPU1: Spectre v2: using BPIALL workaround
->>> [    2.716379] random: fast init done
->> 
->> Thanks for the report. Is this the funky non-banked GIC?
-> 
-> Both Exynos 4210 and 4412 use non-zero cpu-offset in GIC node in
-> device-tree: arch/arm/boot/dts/exynos{4210,4412}.dtsi, so I assume that
-> the GIC registers are not banked.
-
-Annoyingly, it seems to work correctly in QEMU:
-
-root@unassigned-hostname:~# cat /proc/interrupts
-            CPU0       CPU1
-  40:          0          0     GIC-0  89 Level     mct_comp_irq
-  41:      16144          0     GIC-0  74 Level     mct_tick0
-  42:          0      15205     GIC-0  80 Level     mct_tick1
-  43:          0          0  COMBINER  18 Edge      arm-pmu
-  44:          0          0  COMBINER  26 Edge      arm-pmu
-  46:       2270          0     GIC-0 107 Level     mmc0
-  48:        878          0     GIC-0  84 Level     13800000.serial
-  52:          0          0     GIC-0  90 Level     13860000.i2c
-  54:          0          0     GIC-0  67 Level     12680000.pdma
-  55:          0          0     GIC-0  68 Level     12690000.pdma
-  56:          0          0     GIC-0  66 Level     12850000.mdma
-  59:          0          0  COMBINER  45 Edge      13620000.sysmmu
-  60:          0          0  COMBINER  46 Edge      13630000.sysmmu
-  61:          0          0  COMBINER  44 Edge      12e20000.sysmmu
-  62:          0          0  COMBINER  34 Edge      11a20000.sysmmu
-  63:          0          0  COMBINER  35 Edge      11a30000.sysmmu
-  64:          0          0  COMBINER  36 Edge      11a40000.sysmmu
-  65:          0          0  COMBINER  37 Edge      11a50000.sysmmu
-  66:          0          0  COMBINER  38 Edge      11a60000.sysmmu
-  67:          0          0  COMBINER  40 Edge      12a30000.sysmmu
-  68:          0          0  COMBINER  42 Edge      11e20000.sysmmu
-  74:          0          0     GIC-0  79 Level     11400000.pinctrl
-  75:          0          0     GIC-0  78 Level     11000000.pinctrl
-  77:          0          0  COMBINER  39 Edge      12a20000.sysmmu
-  78:          0          0  COMBINER  43 Edge      12220000.sysmmu
-IPI0:          0          1  CPU wakeup interrupts
-IPI1:          0          0  Timer broadcast interrupts
-IPI2:         32         63  Rescheduling interrupts
-IPI3:       3925       5381  Function call interrupts
-IPI4:          0          0  CPU stop interrupts
-IPI5:       4375       3778  IRQ work interrupts
-IPI6:          0          0  completion interrupts
-Err:          0
-
-Do you happen to know whether the QEMU emulation is trustworthy?
-
-Thanks,
-
-         M.
 -- 
-Jazz is not dead. It just smells funny...
+From Chief Compliance Officer, Citigroup Inc CITIBANK
+388 Greenwich St, New York, 10013, United States United.
+PAYMENT CODE: FRB010
+Swift: PTBLBXXX
+==============================================
+
+Attention: Beneficiary,
+
+We write to inform you that Series of meetings have been held over the
+past 2 weeks with the Secretary General of United Nations,U.S
+Department of State and Dubai Union Organization this ended last
+week.And parcel is under our custody right now, It will deliver to you
+within 24 hours once you clear the charges which will cost you
+according to the BANKERS COURIER SERVICES that wish to deliver your
+ATM CARD card to
+you immediately.
+
+However, it is the pleasure of this office to inform you that your ATM
+CARD number; is 29741733 and it has been approved and upgraded in your
+favor .you call me for the pin code numbers. The ATM CARD value is us
+$10.5 Million only.
+
+Kindly contact the paying bank for the claim of your ATM visa card
+payment fund $10,500,000.00 through the below contact information;
+
+Contact Person:Mr Williams S Young
+Director of Financial Controller
+Bank Name: CITIBANK
+Bank address; 388 Greenwich St,
+New York City,10013, United States
+Email:mrsmegwilliam6@gmail.com
+
+Reconfirm the following information?
+
+(1)Your Full Name=============
+(2)Mobile Phone Number======
+(3)Current Home Address==== ====
+(4)Fax Number================
+(5)Passport/Drivers license ======
+
+Endeavor to keep me posted once you contacted the officer in charge
+through the above mentioned information.
+
+Your timely response is highly appreciated.To this end, you are
+required to forward your payment information as follows to enable us
+load your fund into the card with your information and deliver it to
+your door step. as the BANKERS COURIER SERVICES are in charge of the
+delivery services to your destination.
+
+Yours truly;
+
+Ms Mary Mcniff.
+Chief Compliance Officer, Citigroup Inc
+FEDERAL RESERVE SYSTEM.
+Email: marymcniff7@gmail.com.
