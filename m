@@ -2,56 +2,34 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07113269019
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Sep 2020 17:36:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18B2A269203
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Sep 2020 18:47:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbgINPee (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 14 Sep 2020 11:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47990 "EHLO
+        id S1726147AbgINPJY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 14 Sep 2020 11:09:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726196AbgINPeH (ORCPT
+        with ESMTP id S1725992AbgINPJH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 14 Sep 2020 11:34:07 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A12DC06174A;
-        Mon, 14 Sep 2020 08:34:06 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id a15so75289ljk.2;
-        Mon, 14 Sep 2020 08:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6QGIaljRH231VAywJdapvuATziOfA42BJnpSHpoIEVE=;
-        b=RSn2RJzblwAHTSK+plrf24n4vXY7/p/jXtG+T94xADRsRUBY8CHEBNgnMf/kQyrnxy
-         YieEPQGTw3bOqSmW8AmGOLLdGNA7YSDJLGbEMo+AGcNWh2pxH6XRgNcz8Cs5uCOpKkzC
-         gQyRsPyGfUidZAcBfjITy0I3uSNrMpc1xEktaPuU1N5ohOzXYJc8kuUdIFaZ6+PLkH1j
-         ej79ZdbMIfsu6iduHBqVwRFdln66PldWiNNCVGGJ8TfEu+jWybTfxA05D2VHpJvxymYA
-         bWH+DdU6BYBQ8HP2CiwI9zxdkYMl9jJc8yEPZeyVx3GZKr3H03N+EEitFWK+0KohnbKI
-         Gy2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6QGIaljRH231VAywJdapvuATziOfA42BJnpSHpoIEVE=;
-        b=YeYWECqoKGgbUSdB7xoMSOD7SkTRDc++YfYAp4jk2pcoR4iYbHtzsBxOMMgZAAkNIO
-         8QtdEuJPnlwOBQpkNGad07r0lsOxpKt1h2+UZ6i/kHMRtFHCAjel0r/VHQqr7/FtYbAe
-         tuG1V9nzlm84tLTlUTgV0QsgfadauDyZrs4kQmrzDhELpX9kRusWxY/R+w09JbzqL//8
-         TYkG0uoblChY5NtJ0UNIh+/C3iH4CPRt+4ThnH1eB3Vd9C4HM1RMAA0bqOKwZDTSwBwh
-         C48ANhNXerj6QSjh4FHIcX9eV8JXMcoF/jlBJK9h8vTDa7iPvTC9mCY2bplQ9NeFWN3p
-         W44g==
-X-Gm-Message-State: AOAM533/5JLXyTteFDb4tICppE4xrIsfS8mNU4Jh3XRiNR6b8pOfPFxa
-        xc5ym6NM7k92D0ZIoIA23D4=
-X-Google-Smtp-Source: ABdhPJwhd/LhTRq+JWSW5bzIk6PAoYzRDD2WFOZyHy/0zgbs8GXUoAwbOWmbxU7cQ/01j9Vl+1ORow==
-X-Received: by 2002:a05:651c:200b:: with SMTP id s11mr5091489ljo.196.1600097644849;
-        Mon, 14 Sep 2020 08:34:04 -0700 (PDT)
-Received: from wasted.omprussia.ru ([2a00:1fa0:44ca:acb2:3cb7:6882:b0eb:1108])
-        by smtp.gmail.com with ESMTPSA id l129sm3367001lfd.191.2020.09.14.08.34.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2020 08:34:04 -0700 (PDT)
-Subject: Re: [PATCH 03/17] drm/exynos: stop setting DMA_ATTR_NON_CONSISTENT
-To:     Christoph Hellwig <hch@lst.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Mon, 14 Sep 2020 11:09:07 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79CF6C06178A;
+        Mon, 14 Sep 2020 08:09:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+        References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+        Content-Type:Content-ID:Content-Description;
+        bh=Hd44flV0rNOoconJIhItgKEmFIKY+u0t7YJsM9KNpfo=; b=KmfGrfDX7byZuKSDmAvqbHPmbG
+        rVaI8AfoPY6UsW2JcwgF4VuMlzi7fLK0J2xpI95SGy0q+W5zBRBcMVQ48ucc/QC/JtBbmBw2rpIi9
+        k2hdX5nDNJVJiGWdMoQGMk7KRRTGvh0MIF+0oRVh8VPbm/iHIJ4t0AAsaDW8cmC9dxwwIAuvWz6+v
+        Gta5PNKJzPOsjrE8pPJot2z39D/4owQoF9Nt8nXSM22jnkkdQMTdKKTO6VZE0csNfpqzMQatn8xP6
+        SS2WBIoSfFEy1gOvLpecVGJG4LcKAOo3nI1A6Rs3aY3bxSBocIMVe8GEYW4DiACK5ruWQPrRzPTSo
+        HLZyS2gw==;
+Received: from 089144214092.atnat0023.highway.a1.net ([89.144.214.92] helo=localhost)
+        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1kHq5w-0003B7-Sc; Mon, 14 Sep 2020 15:08:41 +0000
+From:   Christoph Hellwig <hch@lst.de>
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
         Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
         "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
         Joonyoung Shim <jy0922.shim@samsung.com>,
@@ -69,31 +47,166 @@ Cc:     Stefan Richter <stefanr@s5r6.in-berlin.de>,
         nouveau@lists.freedesktop.org, netdev@vger.kernel.org,
         linux-scsi@vger.kernel.org, linux-mm@kvack.org,
         alsa-devel@alsa-project.org
+Subject: [PATCH 10/17] hal2: convert to dma_alloc_noncoherent
+Date:   Mon, 14 Sep 2020 16:44:26 +0200
+Message-Id: <20200914144433.1622958-11-hch@lst.de>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200914144433.1622958-1-hch@lst.de>
 References: <20200914144433.1622958-1-hch@lst.de>
- <20200914144433.1622958-4-hch@lst.de>
-From:   Sergei Shtylyov <sergei.shtylyov@gmail.com>
-Message-ID: <7a1d11c2-0fc5-e110-dabe-960e516bb343@gmail.com>
-Date:   Mon, 14 Sep 2020 18:34:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <20200914144433.1622958-4-hch@lst.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 9/14/20 5:44 PM, Christoph Hellwig wrote:
+Use the new non-coherent DMA API including proper ownership transfers.
+This also means we can allocate the buffer memory with the proper
+direction instead of bidirectional.
 
-> DMA_ATTR_NON_CONSISTENT is a no-op except on PARISC and some mips
-> configs, so don't set it in this ARM specific driver.
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+---
+ sound/mips/hal2.c | 58 ++++++++++++++++++++++-------------------------
+ 1 file changed, 27 insertions(+), 31 deletions(-)
 
-   Hm, PARICS and ARM capitalized but mips in lower case? :-)
+diff --git a/sound/mips/hal2.c b/sound/mips/hal2.c
+index ec84bc4c3a6e77..9ac9b58d7c8cdd 100644
+--- a/sound/mips/hal2.c
++++ b/sound/mips/hal2.c
+@@ -441,7 +441,8 @@ static inline void hal2_stop_adc(struct snd_hal2 *hal2)
+ 	hal2->adc.pbus.pbus->pbdma_ctrl = HPC3_PDMACTRL_LD;
+ }
+ 
+-static int hal2_alloc_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec)
++static int hal2_alloc_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec,
++		enum dma_data_direction buffer_dir)
+ {
+ 	struct device *dev = hal2->card->dev;
+ 	struct hal2_desc *desc;
+@@ -449,15 +450,15 @@ static int hal2_alloc_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec)
+ 	int count = H2_BUF_SIZE / H2_BLOCK_SIZE;
+ 	int i;
+ 
+-	codec->buffer = dma_alloc_attrs(dev, H2_BUF_SIZE, &buffer_dma,
+-					GFP_KERNEL, DMA_ATTR_NON_CONSISTENT);
++	codec->buffer = dma_alloc_noncoherent(dev, H2_BUF_SIZE, &buffer_dma,
++					buffer_dir, GFP_KERNEL);
+ 	if (!codec->buffer)
+ 		return -ENOMEM;
+-	desc = dma_alloc_attrs(dev, count * sizeof(struct hal2_desc),
+-			       &desc_dma, GFP_KERNEL, DMA_ATTR_NON_CONSISTENT);
++	desc = dma_alloc_noncoherent(dev, count * sizeof(struct hal2_desc),
++			&desc_dma, DMA_BIDIRECTIONAL, GFP_KERNEL);
+ 	if (!desc) {
+-		dma_free_attrs(dev, H2_BUF_SIZE, codec->buffer, buffer_dma,
+-			       DMA_ATTR_NON_CONSISTENT);
++		dma_free_noncoherent(dev, H2_BUF_SIZE, codec->buffer, buffer_dma,
++				buffer_dir);
+ 		return -ENOMEM;
+ 	}
+ 	codec->buffer_dma = buffer_dma;
+@@ -470,20 +471,22 @@ static int hal2_alloc_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec)
+ 		      desc_dma : desc_dma + (i + 1) * sizeof(struct hal2_desc);
+ 		desc++;
+ 	}
+-	dma_cache_sync(dev, codec->desc, count * sizeof(struct hal2_desc),
+-		       DMA_TO_DEVICE);
++	dma_sync_single_for_device(dev, codec->desc_dma,
++				   count * sizeof(struct hal2_desc),
++				   DMA_BIDIRECTIONAL);
+ 	codec->desc_count = count;
+ 	return 0;
+ }
+ 
+-static void hal2_free_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec)
++static void hal2_free_dmabuf(struct snd_hal2 *hal2, struct hal2_codec *codec,
++		enum dma_data_direction buffer_dir)
+ {
+ 	struct device *dev = hal2->card->dev;
+ 
+-	dma_free_attrs(dev, codec->desc_count * sizeof(struct hal2_desc),
+-		       codec->desc, codec->desc_dma, DMA_ATTR_NON_CONSISTENT);
+-	dma_free_attrs(dev, H2_BUF_SIZE, codec->buffer, codec->buffer_dma,
+-		       DMA_ATTR_NON_CONSISTENT);
++	dma_free_noncoherent(dev, codec->desc_count * sizeof(struct hal2_desc),
++		       codec->desc, codec->desc_dma, DMA_BIDIRECTIONAL);
++	dma_free_noncoherent(dev, H2_BUF_SIZE, codec->buffer, codec->buffer_dma,
++			buffer_dir);
+ }
+ 
+ static const struct snd_pcm_hardware hal2_pcm_hw = {
+@@ -509,21 +512,16 @@ static int hal2_playback_open(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct snd_hal2 *hal2 = snd_pcm_substream_chip(substream);
+-	int err;
+ 
+ 	runtime->hw = hal2_pcm_hw;
+-
+-	err = hal2_alloc_dmabuf(hal2, &hal2->dac);
+-	if (err)
+-		return err;
+-	return 0;
++	return hal2_alloc_dmabuf(hal2, &hal2->dac, DMA_TO_DEVICE);
+ }
+ 
+ static int hal2_playback_close(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_hal2 *hal2 = snd_pcm_substream_chip(substream);
+ 
+-	hal2_free_dmabuf(hal2, &hal2->dac);
++	hal2_free_dmabuf(hal2, &hal2->dac, DMA_TO_DEVICE);
+ 	return 0;
+ }
+ 
+@@ -579,7 +577,9 @@ static void hal2_playback_transfer(struct snd_pcm_substream *substream,
+ 	unsigned char *buf = hal2->dac.buffer + rec->hw_data;
+ 
+ 	memcpy(buf, substream->runtime->dma_area + rec->sw_data, bytes);
+-	dma_cache_sync(hal2->card->dev, buf, bytes, DMA_TO_DEVICE);
++	dma_sync_single_for_device(hal2->card->dev,
++			hal2->dac.buffer_dma + rec->hw_data, bytes,
++			DMA_TO_DEVICE);
+ 
+ }
+ 
+@@ -597,22 +597,16 @@ static int hal2_capture_open(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct snd_hal2 *hal2 = snd_pcm_substream_chip(substream);
+-	struct hal2_codec *adc = &hal2->adc;
+-	int err;
+ 
+ 	runtime->hw = hal2_pcm_hw;
+-
+-	err = hal2_alloc_dmabuf(hal2, adc);
+-	if (err)
+-		return err;
+-	return 0;
++	return hal2_alloc_dmabuf(hal2, &hal2->adc, DMA_FROM_DEVICE);
+ }
+ 
+ static int hal2_capture_close(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_hal2 *hal2 = snd_pcm_substream_chip(substream);
+ 
+-	hal2_free_dmabuf(hal2, &hal2->adc);
++	hal2_free_dmabuf(hal2, &hal2->adc, DMA_FROM_DEVICE);
+ 	return 0;
+ }
+ 
+@@ -667,7 +661,9 @@ static void hal2_capture_transfer(struct snd_pcm_substream *substream,
+ 	struct snd_hal2 *hal2 = snd_pcm_substream_chip(substream);
+ 	unsigned char *buf = hal2->adc.buffer + rec->hw_data;
+ 
+-	dma_cache_sync(hal2->card->dev, buf, bytes, DMA_FROM_DEVICE);
++	dma_sync_single_for_cpu(hal2->card->dev,
++			hal2->adc.buffer_dma + rec->hw_data, bytes,
++			DMA_FROM_DEVICE);
+ 	memcpy(substream->runtime->dma_area + rec->sw_data, buf, bytes);
+ }
+ 
+-- 
+2.28.0
 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-[...]
-
-MBR, Sergei
