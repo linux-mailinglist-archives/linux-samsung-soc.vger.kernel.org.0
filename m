@@ -2,104 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D461E26C7F3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Sep 2020 20:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 090A626C8EC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Sep 2020 21:00:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727867AbgIPShN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 16 Sep 2020 14:37:13 -0400
-Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:2940 "EHLO
-        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728075AbgIPSg7 (ORCPT
+        id S1727567AbgIPRua (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 16 Sep 2020 13:50:30 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36772 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727552AbgIPRtG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:36:59 -0400
-Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5f621e260000>; Wed, 16 Sep 2020 07:16:06 -0700
-Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate101.nvidia.com (PGP Universal service);
-  Wed, 16 Sep 2020 07:16:49 -0700
-X-PGP-Universal: processed;
-        by hqpgpgate101.nvidia.com on Wed, 16 Sep 2020 07:16:49 -0700
-Received: from [10.26.74.242] (10.124.1.5) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 16 Sep
- 2020 14:16:37 +0000
-Subject: Re: [PATCH v3 08/16] irqchip/gic: Configure SGIs as standard
- interrupts
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Marc Zyngier <maz@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Sumit Garg <sumit.garg@linaro.org>, <kernel-team@android.com>,
-        "Florian Fainelli" <f.fainelli@gmail.com>,
-        Russell King <linux@arm.linux.org.uk>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Saravana Kannan <saravanak@google.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "'Linux Samsung SOC'" <linux-samsung-soc@vger.kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Will Deacon <will@kernel.org>,
-        Valentin Schneider <Valentin.Schneider@arm.com>,
-        linux-tegra <linux-tegra@vger.kernel.org>
-References: <20200901144324.1071694-1-maz@kernel.org>
- <20200901144324.1071694-9-maz@kernel.org>
- <CGME20200914130601eucas1p23ce276d168dee37909b22c75499e68da@eucas1p2.samsung.com>
- <a917082d-4bfd-a6fd-db88-36e75f5f5921@samsung.com>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <933bc43e-3cd7-10ec-b9ec-58afaa619fb7@nvidia.com>
-Date:   Wed, 16 Sep 2020 15:16:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Wed, 16 Sep 2020 13:49:06 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z9so3940882wmk.1;
+        Wed, 16 Sep 2020 10:48:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9YduFabkaAz51UI756numtXbvX9M9QxKpDfQ0I1NJKI=;
+        b=gmmBuO/LxKkUV0a6H1DwGn8wC8eQVSludYcEeEoxVWkKhrZgcFI/mf6qsUz04bq1j3
+         beIRlm5JYDkYkq0y0ChKoJHYR0ApRt58+Cd+xQXqhrg6eUArXdD6d3t44TII3nGN2daa
+         hnY39I1D1qyUqRCX/CtUqeaoqcx53dyj+onWY6UIiY0sUBaXt2yJVB7QqnVtf38rRVii
+         swwM1L1QN0FbDkulVXTontLQafOpTXvJU+JJpXK0F7aP9PU9IBhArXm0GFCe1aZI3ZeG
+         71a7mMZbQMRKPmFH48GM4MsFDtCpbg9BV00e5qFnwRsohJoBjW2MuymTfSTSE5RZ5tew
+         k0rA==
+X-Gm-Message-State: AOAM533X3WFG7oLOjjDpoldYZLysxNVm3BF34T/SgTNorLfqdqIGJ7Nu
+        8EqyRltrCDHOeDiSTJBjgtc=
+X-Google-Smtp-Source: ABdhPJyO/sEeRuiNIVE/sPTGt/TEZkcbizXPspGpU49mJITjkoAMu1miylOrL2A27nAiAcaaihq7hg==
+X-Received: by 2002:a1c:4943:: with SMTP id w64mr5751806wma.62.1600278534553;
+        Wed, 16 Sep 2020 10:48:54 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.191])
+        by smtp.googlemail.com with ESMTPSA id q18sm33240468wre.78.2020.09.16.10.48.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 16 Sep 2020 10:48:53 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 19:48:51 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Jonathan Corbet <corbet@lwn.net>, Kukjin Kim <kgene@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 3/3] ARM: s3c: Bring back notes from removed debug-macro.S
+Message-ID: <20200916174851.GA23474@kozik-lap>
+References: <20200911143343.498-1-krzk@kernel.org>
+ <20200911143343.498-3-krzk@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <a917082d-4bfd-a6fd-db88-36e75f5f5921@samsung.com>
-X-Originating-IP: [10.124.1.5]
-X-ClientProxiedBy: HQMAIL101.nvidia.com (172.20.187.10) To
- HQMAIL107.nvidia.com (172.20.187.13)
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1600265766; bh=pV8Al2EsECbYDuX4UchdWHAopEeJoNVCwOOj35gvWvM=;
-        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
-         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
-         X-ClientProxiedBy:Content-Type:Content-Language:
-         Content-Transfer-Encoding;
-        b=h4M5AySzWoSIHgOXxW6Cn6jFLbFFw8EwZnKcPIVJxTt3lSUrVD8nJr9GNzVJRZw5V
-         mImZhD/RoS7WwjvahDfKgHkYaIXfp+ftoL0pqJHgDB+z5tAdDFpFx9bA/x6JlhfK07
-         SLOGZitVugJy7yKYTZsjbw1FujpcWOlBOZraOptc4MQLn05uQ3SocrToJ8Savf0KM4
-         SnNPc4LrFohTkfjRPSVWjsWMZh0carNG4uAOHRtzY/JiNFmLJdERbfdH1kEdnhq6Cv
-         tBNxAb5MW8py5l5lQvAPjoT6utASZ4p7GrGoOsMgMNbtZa/YXT9RYgS2d2jEzajJb+
-         5CnyNusDsNCYg==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200911143343.498-3-krzk@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marc,
-
-On 14/09/2020 14:06, Marek Szyprowski wrote:
-> Hi Marc,
+On Fri, Sep 11, 2020 at 04:33:43PM +0200, Krzysztof Kozlowski wrote:
+> Documentation references notes from a removed debug-macro.S file so
+> bring the contents here.
 > 
-> On 01.09.2020 16:43, Marc Zyngier wrote:
->> Change the way we deal with GIC SGIs by turning them into proper
->> IRQs, and calling into the arch code to register the interrupt range
->> instead of a callback.
->>
->> Reviewed-by: Valentin Schneider <valentin.schneider@arm.com>
->> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> This patch landed in linux next-20200914 as commit ac063232d4b0 
-> ("irqchip/gic: Configure SGIs as standard interrupts"). Sadly it breaks 
-> booting of all Samsung Exynos 4210/4412 based boards (dual/quad ARM 
-> Cortex A9 based). Here are the last lines from the bootlog:
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  arch/arm/mach-s3c/s3c64xx.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 
-I am observing the same thing on several Tegra boards (both arm and
-arm64). Bisect is pointing to this commit. Reverting this alone does not
-appear to be enough to fix the issue.
+Applied.
 
-Cheers
-Jon
+Best regards,
+Krzysztof
 
--- 
-nvpublic
