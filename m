@@ -2,99 +2,141 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EDD426CAAA
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Sep 2020 22:11:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ACFC26CCCC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Sep 2020 22:49:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbgIPULd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 16 Sep 2020 16:11:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
+        id S1726744AbgIPUt2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 16 Sep 2020 16:49:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727624AbgIPUKI (ORCPT
+        with ESMTP id S1726142AbgIPRAU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 16 Sep 2020 16:10:08 -0400
-X-Greylist: delayed 2600 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 16 Sep 2020 13:10:07 PDT
-Received: from mail.kapsi.fi (mail.kapsi.fi [IPv6:2001:67c:1be8::25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A68C06174A;
-        Wed, 16 Sep 2020 13:10:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kapsi.fi;
-         s=20161220; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
-        MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=g+cGRsItI8plFrm1ENJsm5T9BsZ3PevnipkmNmYaEic=; b=nsqiln7dC94KM3EbOP3WwRNekM
-        Zsn+t9m8xOpw26pB49IeRez35DrfsyTv1kF4bnBFO2sBKc88VNx6bcQTDjQnJqJrg5dHSYa7ytfRv
-        FEs8DrOUHD+Kf8bengp0S9LQhwbKDLjG38VLdCljqmqdM2p+eOcVr1Act2eLrSQz+rZvQmp8vBrcI
-        Jp0f4na136iojZcXquXOe3ins/7/1ScMqyqP/Cxp2jGXa4EBn+jPSwZ9K51c5tsd1c5g3PBuk9kQq
-        FPDKT3Capk4vfmSSek0w6Mqg8Gb1YiXaxfLS5DR4AGp+NOzQPdBkcYlvFn6/bo9oQ6regJwB2EGSo
-        vlH51i5A==;
-Received: from dsl-hkibng22-54f986-236.dhcp.inet.fi ([84.249.134.236] helo=[192.168.1.10])
-        by mail.kapsi.fi with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <cyndis@kapsi.fi>)
-        id 1kId4W-0008Fg-46; Wed, 16 Sep 2020 22:26:28 +0300
-Subject: Re: [PATCH v3 08/16] irqchip/gic: Configure SGIs as standard
- interrupts
-To:     Jon Hunter <jonathanh@nvidia.com>, Marc Zyngier <maz@kernel.org>
-Cc:     Sumit Garg <sumit.garg@linaro.org>, linus.walleij@linaro.org,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Russell King <linux@arm.linux.org.uk>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Saravana Kannan <saravanak@google.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>, kernel-team@android.com,
-        Valentin Schneider <Valentin.Schneider@arm.com>,
+        Wed, 16 Sep 2020 13:00:20 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876EEC08E85D
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 16 Sep 2020 05:09:55 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id m6so6698853wrn.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 16 Sep 2020 05:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+3jvoy/bBV/BNfVwVnfU8KcCZN1nPBtEmgjgdo9EwXk=;
+        b=FENeMTOiWrFokQkUzY6vSvMhlCXV7HMJqSDFsMTbLqeNytwJMofYpFGvXfw3GhxJQe
+         D9FUrSX8+Brv74I6kUhpyFb/XZioFwNiGTb+QuFgOQkexhfx/xeg364unF1nN8hvk40W
+         Hh+h3hsu+pBXFmPF/2PAzcQ04fALpK5XDa9tA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+3jvoy/bBV/BNfVwVnfU8KcCZN1nPBtEmgjgdo9EwXk=;
+        b=AycRJagKRjp8h1aY4emQ08fGNXmTM6m5B8lFkgw8kgrBNWD8ZFAfbY+IZzkvp95Iek
+         lwMsM72XFZK/da9ByTNSaDww7h9RN330If6FLkRmXHMtn3tAwX4vJD6DuyTTLh1R3sYj
+         1s1W32nR6S8I7Ey8wtDal9hlkOeUZpvmbHNZQwVKpFtmOh9Tj6JTGDTdJurzKEtblJ+J
+         BTp71Qox5FDxziHKpJdFr760Cph3l8LRAi1REe7CS4W2KsLyOLxVCcYJPodDJlXnLDky
+         EdM42f5xIacpkJOzojCUlbdUArAcLXg2az/5+jIFPioXN+kz7VTnYSdgOyqLIJCLVy23
+         0fsQ==
+X-Gm-Message-State: AOAM533tGCZZ+3DoQJlDCZV8kOY10rMgYww9VQLXK6XML3ZwOxYKqTvZ
+        Pi0AfZqI3pWJ6a+PPX1hZORbvQ==
+X-Google-Smtp-Source: ABdhPJwcFrpBowFHXDaGWxAmgGA6UC0qLIIbiwK0yYyfwUChHgh/bXrgr93clOHTT0R4i2flV+cOiA==
+X-Received: by 2002:a5d:4448:: with SMTP id x8mr28185933wrr.207.1600258192468;
+        Wed, 16 Sep 2020 05:09:52 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id n11sm32655611wrx.91.2020.09.16.05.09.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2020 05:09:51 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 14:09:48 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-References: <20200901144324.1071694-1-maz@kernel.org>
- <20200901144324.1071694-9-maz@kernel.org>
- <CGME20200914130601eucas1p23ce276d168dee37909b22c75499e68da@eucas1p2.samsung.com>
- <a917082d-4bfd-a6fd-db88-36e75f5f5921@samsung.com>
- <933bc43e-3cd7-10ec-b9ec-58afaa619fb7@nvidia.com>
- <3378cd07b92e87a24f1db75f708424ee@kernel.org>
- <dcf812d9-2409-bcae-1925-e21740c2932e@nvidia.com>
- <a6c7bbc91c5b23baa44f3abe35eb61c9@kernel.org>
- <d6dddab0-47aa-ddf2-959b-85493b8da52d@nvidia.com>
- <13c096832bd923f956ddd7db7e337857@kernel.org>
- <02bb9262-221a-b2cf-4471-dd3a46b442e7@nvidia.com>
-From:   Mikko Perttunen <cyndis@kapsi.fi>
-Message-ID: <63815f37-6a82-27c2-10e9-2649b2c864a0@kapsi.fi>
-Date:   Wed, 16 Sep 2020 22:26:14 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v2 17/21] drm/virtgpu: Set PRIME export function in
+ struct drm_gem_object_funcs
+Message-ID: <20200916120948.GO438822@phenom.ffwll.local>
+References: <20200915145958.19993-1-tzimmermann@suse.de>
+ <20200915145958.19993-18-tzimmermann@suse.de>
 MIME-Version: 1.0
-In-Reply-To: <02bb9262-221a-b2cf-4471-dd3a46b442e7@nvidia.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 84.249.134.236
-X-SA-Exim-Mail-From: cyndis@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200915145958.19993-18-tzimmermann@suse.de>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Sender: linux-samsung-soc-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Not sure which boards this issue is happening on, but looking at my 
-hobby kernel's git history (from a couple of years ago, memory is a bit 
-hazy), the commit labeled "Add support for TX2" adds code to drop from 
-EL2 to EL1 at boot.
+On Tue, Sep 15, 2020 at 04:59:54PM +0200, Thomas Zimmermann wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces virtgpu's per-driver PRIME export
+> function with a per-object function.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-Mikko
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-On 9/16/20 10:06 PM, Jon Hunter wrote:
-> On 16/09/2020 17:22, Marc Zyngier wrote:
->> Do you boot form EL2?
+> ---
+>  drivers/gpu/drm/virtio/virtgpu_drv.c    | 1 -
+>  drivers/gpu/drm/virtio/virtgpu_object.c | 1 +
+>  2 files changed, 1 insertion(+), 1 deletion(-)
 > 
-> Not that I am aware of. There is no hypervisor that we are using.
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
+> index b039f493bda9..1f8d6ed11d21 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_drv.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+> @@ -203,7 +203,6 @@ static struct drm_driver driver = {
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>  	.gem_prime_mmap = drm_gem_prime_mmap,
+> -	.gem_prime_export = virtgpu_gem_prime_export,
+>  	.gem_prime_import = virtgpu_gem_prime_import,
+>  	.gem_prime_import_sg_table = virtgpu_gem_prime_import_sg_table,
+>  
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_object.c b/drivers/gpu/drm/virtio/virtgpu_object.c
+> index 842f8b61aa89..4f7d7ea8194c 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_object.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+> @@ -108,6 +108,7 @@ static const struct drm_gem_object_funcs virtio_gpu_shmem_funcs = {
+>  	.close = virtio_gpu_gem_object_close,
+>  
+>  	.print_info = drm_gem_shmem_print_info,
+> +	.export = virtgpu_gem_prime_export,
+>  	.pin = drm_gem_shmem_pin,
+>  	.unpin = drm_gem_shmem_unpin,
+>  	.get_sg_table = drm_gem_shmem_get_sg_table,
+> -- 
+> 2.28.0
 > 
-> Jon
-> 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
