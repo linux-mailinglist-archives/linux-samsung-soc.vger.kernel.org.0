@@ -2,61 +2,48 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0CC826D739
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Sep 2020 10:58:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AC6D26D764
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Sep 2020 11:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726343AbgIQI4G (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 17 Sep 2020 04:56:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43834 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726153AbgIQI4G (ORCPT
+        id S1726336AbgIQJJb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 17 Sep 2020 05:09:31 -0400
+Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:8662 "EHLO
+        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726171AbgIQJJb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 17 Sep 2020 04:56:06 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9D02D20872;
-        Thu, 17 Sep 2020 08:56:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600332965;
-        bh=ASfbwo/4BJotCpMj7MrnxB32LQiVl0LY/S/7W1o9ClQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=NIsDDqrMZEiDV2K+294cpkk8I8IoVTVX++VJYwcYjwvpsHYyEivEzbcDY7kS4dv/C
-         f6MW32b0HphaYNgS5OTQxCb0fXwDpCMuadjC8HpR3T0iGaNegdR93t+LctC3djZ7TA
-         3S3HCD2P2yGXRYsv9fIdurfAplIkBU0xb393URxw=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1kIphz-00CaER-QG; Thu, 17 Sep 2020 09:56:03 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 17 Sep 2020 09:56:03 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Jon Hunter <jonathanh@nvidia.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Thu, 17 Sep 2020 05:09:31 -0400
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+        id <B5f63279c0002>; Thu, 17 Sep 2020 02:08:44 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+  by hqpgpgate101.nvidia.com (PGP Universal service);
+  Thu, 17 Sep 2020 02:09:27 -0700
+X-PGP-Universal: processed;
+        by hqpgpgate101.nvidia.com on Thu, 17 Sep 2020 02:09:27 -0700
+Received: from [10.26.74.242] (10.124.1.5) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 17 Sep
+ 2020 09:09:17 +0000
+Subject: Re: [PATCH v3 08/16] irqchip/gic: Configure SGIs as standard
+ interrupts
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Marc Zyngier <maz@kernel.org>
+CC:     Linus Walleij <linus.walleij@linaro.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@linaro.org>,
-        kernel-team@android.com, Florian Fainelli <f.fainelli@gmail.com>,
+        <linux-kernel@vger.kernel.org>,
+        "Sumit Garg" <sumit.garg@linaro.org>, <kernel-team@android.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
         Russell King <linux@arm.linux.org.uk>,
         Jason Cooper <jason@lakedaemon.net>,
         Saravana Kannan <saravanak@google.com>,
         Andrew Lunn <andrew@lunn.ch>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
+        "Gregory Clement" <gregory.clement@bootlin.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        "Linux Samsung SOC" <linux-samsung-soc@vger.kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
         Will Deacon <will@kernel.org>,
         Valentin Schneider <Valentin.Schneider@arm.com>,
         linux-tegra <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v3 08/16] irqchip/gic: Configure SGIs as standard
- interrupts
-In-Reply-To: <e317b2fe-52e3-8ce7-ba77-43d2708d660f@nvidia.com>
 References: <20200901144324.1071694-1-maz@kernel.org>
  <20200901144324.1071694-9-maz@kernel.org>
  <CGME20200914130601eucas1p23ce276d168dee37909b22c75499e68da@eucas1p2.samsung.com>
@@ -68,46 +55,98 @@ References: <20200901144324.1071694-1-maz@kernel.org>
  <a88528cd-eb76-367a-77d6-7ae20bd28304@nvidia.com>
  <81cb16323baa1c81e7bc1e8156fa47b8@kernel.org>
  <e317b2fe-52e3-8ce7-ba77-43d2708d660f@nvidia.com>
-User-Agent: Roundcube Webmail/1.4.8
-Message-ID: <2fc64291c2c890c7ea7b8718c810ad64@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: jonathanh@nvidia.com, linus.walleij@linaro.org, m.szyprowski@samsung.com, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, sumit.garg@linaro.org, kernel-team@android.com, f.fainelli@gmail.com, linux@arm.linux.org.uk, jason@lakedaemon.net, saravanak@google.com, andrew@lunn.ch, catalin.marinas@arm.com, gregory.clement@bootlin.com, b.zolnierkie@samsung.com, krzk@kernel.org, linux-samsung-soc@vger.kernel.org, tglx@linutronix.de, will@kernel.org, Valentin.Schneider@arm.com, linux-tegra@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+ <4645f636-e7cc-6983-a3b7-897c20ec5096@samsung.com>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <bec733a1-227f-d943-90dd-85fc9a993109@nvidia.com>
+Date:   Thu, 17 Sep 2020 10:09:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <4645f636-e7cc-6983-a3b7-897c20ec5096@samsung.com>
+X-Originating-IP: [10.124.1.5]
+X-ClientProxiedBy: HQMAIL111.nvidia.com (172.20.187.18) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1600333724; bh=mnh+2hfEbHi6YA77yln4HeXzAzNL58Y3B6oR5K7Jkn0=;
+        h=X-PGP-Universal:Subject:To:CC:References:From:Message-ID:Date:
+         User-Agent:MIME-Version:In-Reply-To:X-Originating-IP:
+         X-ClientProxiedBy:Content-Type:Content-Language:
+         Content-Transfer-Encoding;
+        b=F4mbesU/lx+WOj0v9InZSi8Qdgos5F7v59koJlfx85AxYkozo7GWTfPEpXc7gyUmj
+         t762hIU7FWKp+rStnubQuDvbr/WVdvTII5lBO901Po4CXZvvrTDIirgffmxrYpDUvl
+         bN3BN+sEJ8TcNU904PL04BTtBWZU2Knwr/1HrWfpwv0NmO5g1zItN3oBOYDS8rqrR5
+         DaU5vwFQs/Cj4U8THmPcXZH9lGhBbXqXk5Z22MqNoXpV6bh+dh0+rNMZH3E7bj1AMn
+         DyjqtT9yaCzO1IYmx+RP4vhBZ/6Kuwfz+Z8e4qSpQQUTZdhWafzeu70mEkKS6dIlQk
+         JkV18Q/BI3hhQ==
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2020-09-17 09:49, Jon Hunter wrote:
-> On 17/09/2020 09:45, Marc Zyngier wrote:
->> On 2020-09-17 08:54, Jon Hunter wrote:
 
->>> So far, I have only tested this patch on Tegra20. Let me try the 
->>> other
->>> failing boards this morning and see if those still fail.
->> 
->> Tegra20 (if I remember well) is a dual A9 with the same GIC 
->> implementation
->> as Ux500, hence requiring the source CPU bits to be written back. So 
->> this
->> patch should have cured it, but didn't...
->> 
->> /me puzzled.
-> 
-> Me too. Maybe there just happens to be something else also going wrong
-> in next. I am doing a bit more testing to see if applying the fix
-> directly on top of this change fixes it to try and eliminate anything
-> else in -next.
-> 
-> Linus, what -next are you testing on? I am using next-20200916.
+On 17/09/2020 09:54, Marek Szyprowski wrote:
+> Hi Jon,
+>=20
+> On 17.09.2020 10:49, Jon Hunter wrote:
+>> On 17/09/2020 09:45, Marc Zyngier wrote:
+>>> On 2020-09-17 08:54, Jon Hunter wrote:
+>>>> On 17/09/2020 08:50, Marc Zyngier wrote:
+>>>>> On 2020-09-17 08:40, Linus Walleij wrote:
+>>>>>> On Wed, Sep 16, 2020 at 5:11 PM Marc Zyngier <maz@kernel.org> wrote:
+>>>>>>
+>>>>>>> Can you try the patch below and let me know?
+>>>>>> I tried this patch and now Ux500 WORKS. So this patch is definitely
+>>>>>> something you should apply.
+>>>>>>
+>>>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (is_f=
+rankengic())
+>>>>>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 set_sgi_intid(irqstat);
+>>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 this_cpu=
+_write(sgi_intid, intid);
+>>>>>> This needs changing to irqstat to compile as pointed out by Jon.
+>>>>>>
+>>>>>> With that:
+>>>>>> Tested-by: Linus Walleij <linus.walleij@linaro.org>
+>>>>> Thanks a lot for that.
+>>>>>
+>>>>> Still need to understand why some of Jon's systems are left unbootabl=
+e,
+>>>>> despite having similar GIC implementations (Tegra194 and Tegra210 use
+>>>>> the same GIC-400, and yet only one of the two boots correctly...).
+>>>> So far, I have only tested this patch on Tegra20. Let me try the other
+>>>> failing boards this morning and see if those still fail.
+>>> Tegra20 (if I remember well) is a dual A9 with the same GIC implementat=
+ion
+>>> as Ux500, hence requiring the source CPU bits to be written back. So th=
+is
+>>> patch should have cured it, but didn't...
+>>>
+>>> /me puzzled.
+>> Me too. Maybe there just happens to be something else also going wrong
+>> in next. I am doing a bit more testing to see if applying the fix
+>> directly on top of this change fixes it to try and eliminate anything
+>> else in -next.
+>>
+>> Linus, what -next are you testing on? I am using next-20200916.
+>=20
+> next-20200916 completely broken on ARM and ARM64. Please check=20
+> next-20200915 + the mentioned fix or just check=20
+> https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log=
+/?h=3Dirq/ipi-as-irq
 
-You can directly try [1], which has all the queued fixes (and only 
-that).
+Ah thanks! Any idea what is causing the other failure on next-20200916?
 
-         M.
+Yes we have noticed that now everything fails next-20200916 so not just
+this issue.
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/ipi-as-irq
--- 
-Jazz is not dead. It just smells funny...
+Cheers
+Jon
+
+--=20
+nvpublic
