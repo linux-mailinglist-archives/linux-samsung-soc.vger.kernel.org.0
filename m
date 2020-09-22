@@ -2,93 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30B27274151
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Sep 2020 13:49:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85C6627423A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Sep 2020 14:40:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726831AbgIVLsR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Sep 2020 07:48:17 -0400
-Received: from elvis.franken.de ([193.175.24.41]:51246 "EHLO elvis.franken.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726706AbgIVLrP (ORCPT
+        id S1726563AbgIVMk4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Sep 2020 08:40:56 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:38062 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726571AbgIVMk4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Sep 2020 07:47:15 -0400
-X-Greylist: delayed 3049 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Sep 2020 07:47:10 EDT
-Received: from uucp (helo=alpha)
-        by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
-        id 1kKfxs-000822-01; Tue, 22 Sep 2020 12:56:04 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-        id 9FA31C0FFF; Tue, 22 Sep 2020 10:53:14 +0200 (CEST)
-Date:   Tue, 22 Sep 2020 10:53:14 +0200
-From:   Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Matt Porter <mporter@kernel.crashing.org>,
-        iommu@lists.linux-foundation.org,
-        Stefan Richter <stefanr@s5r6.in-berlin.de>,
-        linux1394-devel@lists.sourceforge.net, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-parisc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        nouveau@lists.freedesktop.org, netdev@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-mm@kvack.org,
-        alsa-devel@alsa-project.org
-Subject: Re: [PATCH 15/18] dma-mapping: add a new dma_alloc_pages API
-Message-ID: <20200922085314.GI8477@alpha.franken.de>
-References: <20200915155122.1768241-1-hch@lst.de>
- <20200915155122.1768241-16-hch@lst.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915155122.1768241-16-hch@lst.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Tue, 22 Sep 2020 08:40:56 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200922124054euoutp0275289c4a944d926661139e40267d2e8d~3G4XVoMHh0716207162euoutp02y
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Sep 2020 12:40:54 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200922124054euoutp0275289c4a944d926661139e40267d2e8d~3G4XVoMHh0716207162euoutp02y
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1600778454;
+        bh=n7DhkNHgAKAUHWx6vn8DcdQVMTQ0KFIjwWQaNDK71AI=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=J4vYzN/VpNt5sc/4rzmgn2g5n5J3Z9tFFGd38Mim1UV0CNRSxeHsGv56RrkzY6Cyh
+         6GLAxp0KRXJwaCfb/z9J00EHYd/JfzPRnrCRgdhonV7m423XoaSK1uzwpC87is/jWZ
+         lnY5/hU5k7DrIjlHUdPF7ZeMHJanuxpuHhhgccrg=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200922124053eucas1p23a0d46ac4ee91259234afdc7b3b42ba0~3G4W7RRYi1467914679eucas1p2l;
+        Tue, 22 Sep 2020 12:40:53 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 76.EE.06456.5D0F96F5; Tue, 22
+        Sep 2020 13:40:53 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200922124053eucas1p200d7381abf1d14e932f41ebc0f458c64~3G4WnEWSV1163211632eucas1p2E;
+        Tue, 22 Sep 2020 12:40:53 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200922124053eusmtrp17956ce56820123fd474a7ed303d03685~3G4WmayWL1098210982eusmtrp1M;
+        Tue, 22 Sep 2020 12:40:53 +0000 (GMT)
+X-AuditID: cbfec7f2-809ff70000001938-59-5f69f0d5a7da
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6A.41.06017.5D0F96F5; Tue, 22
+        Sep 2020 13:40:53 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200922124052eusmtip2c8136f6a70677dded2d0fb9626d825bc~3G4WLmmC61312913129eusmtip2B;
+        Tue, 22 Sep 2020 12:40:52 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-clk@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH] clk: samsung: exynos4: mark 'chipid' clock as
+ CLK_IGNORE_UNUSED
+Date:   Tue, 22 Sep 2020 14:40:46 +0200
+Message-Id: <20200922124046.10496-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsWy7djPc7pXP2TGG7xfpG2xccZ6VovrX56z
+        Wpw/v4Hd4mPPPVaLGef3MVmsPXKX3eLftY0sFu1PXzI7cHhsWtXJ5tG3ZRWjx+dNcgHMUVw2
+        Kak5mWWpRfp2CVwZ32YeYyyYJVBxcNlr9gbGt7xdjJwcEgImEqcPf2PtYuTiEBJYwSjx5c0B
+        RpCEkMAXRonrJ3MhEp8ZJTZOe8sI0/G6/xkbRGI5o8TM9h+MEA5Qx5LZx8Cq2AQMJbredrGB
+        2CICDhKfP70GK2IWaGGSeNq7hh0kISwQJHHx/VMmEJtFQFVi7vKLLCA2r4CtxIqdLSwQ6+Ql
+        Vm84wAzSLCFwhk2ie+YXdoiEi8SDliVQRcISr45vgYrLSJye3MMC0dDMKPHw3Fp2CKeHUeJy
+        0wyoL6wl7pz7BXQfB9BNmhLrd+lDhB0l5j8/wgoSlhDgk7jxVhAkzAxkTto2nRkizCvR0SYE
+        Ua0mMev4Ori1By9cYoawPSSmTZ7NDgnHWIkvBxezTGCUm4WwawEj4ypG8dTS4tz01GLDvNRy
+        veLE3OLSvHS95PzcTYzAJHD63/FPOxi/Xko6xCjAwajEw/viSWa8EGtiWXFl7iFGCQ5mJRFe
+        p7On44R4UxIrq1KL8uOLSnNSiw8xSnOwKInzGi96GSskkJ5YkpqdmlqQWgSTZeLglGpg3BT3
+        zjPSQcZ3tWfxt1WxM1tuHa27c8NOU7Z2do7NiVaT74Yb50n+jm0Qc4+wmPyEf27tcU3DvW6O
+        Wmrsqw+J/zO9dvhDR0DKzz85/bLdd/ql159kq68wXDTDqlX0o0fwK/8MZZP7pl++6u8yV/cv
+        yVv773cA09QVveU+638nTzGc4q7CphqjxFKckWioxVxUnAgAwg3Brv4CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrALMWRmVeSWpSXmKPExsVy+t/xe7pXP2TGG8xdKWKxccZ6VovrX56z
+        Wpw/v4Hd4mPPPVaLGef3MVmsPXKX3eLftY0sFu1PXzI7cHhsWtXJ5tG3ZRWjx+dNcgHMUXo2
+        RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZ32YeYyyY
+        JVBxcNlr9gbGt7xdjJwcEgImEq/7n7F1MXJxCAksZZSYsvolG0RCRuLktAZWCFtY4s+1Lqii
+        T4wSs3t/gxWxCRhKdL3tArNFBJwkHqx7ww5iMwt0MEms/1gBYgsLBEg8mfQCLM4ioCoxd/lF
+        FhCbV8BWYsXOFhaIBfISqzccYJ7AyLOAkWEVo0hqaXFuem6xkV5xYm5xaV66XnJ+7iZGYOht
+        O/Zzyw7GrnfBhxgFOBiVeHhfPMmMF2JNLCuuzD3EKMHBrCTC63T2dJwQb0piZVVqUX58UWlO
+        avEhRlOg5ROZpUST84FxkVcSb2hqaG5haWhubG5sZqEkztshcDBGSCA9sSQ1OzW1ILUIpo+J
+        g1OqgbEw49OFh/zK+bvm7J3bftrqY8L1IyVe5g0568yT7un83X27o+Z4MOv5ynL+LYcOH66J
+        cFdRYuZ6emHqr9v1/o43dvRKvO2yv3vV+cjKpt0zEybNdii+xrbjs+XsZW6PTCzO18jntClq
+        JBvaz57Wu/WYcvpflXfMT6x3Jt6/+6JbqKTbTE7oXqwSS3FGoqEWc1FxIgDesNzXUwIAAA==
+X-CMS-MailID: 20200922124053eucas1p200d7381abf1d14e932f41ebc0f458c64
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200922124053eucas1p200d7381abf1d14e932f41ebc0f458c64
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200922124053eucas1p200d7381abf1d14e932f41ebc0f458c64
+References: <CGME20200922124053eucas1p200d7381abf1d14e932f41ebc0f458c64@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 05:51:19PM +0200, Christoph Hellwig wrote:
-> This API is the equivalent of alloc_pages, except that the returned memory
-> is guaranteed to be DMA addressable by the passed in device.  The
-> implementation will also be used to provide a more sensible replacement
-> for DMA_ATTR_NON_CONSISTENT flag.
-> 
-> Additionally dma_alloc_noncoherent is switched over to use dma_alloc_pages
-> as its backend.
-> 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> ---
->  Documentation/core-api/dma-attributes.rst |  8 ---
->  arch/alpha/kernel/pci_iommu.c             |  2 +
->  arch/arm/mm/dma-mapping-nommu.c           |  2 +
->  arch/arm/mm/dma-mapping.c                 |  4 ++
->  arch/ia64/hp/common/sba_iommu.c           |  2 +
->  arch/mips/jazz/jazzdma.c                  |  7 +--
->  arch/powerpc/kernel/dma-iommu.c           |  2 +
->  arch/powerpc/platforms/ps3/system-bus.c   |  4 ++
->  arch/powerpc/platforms/pseries/vio.c      |  2 +
->  arch/s390/pci/pci_dma.c                   |  2 +
->  arch/x86/kernel/amd_gart_64.c             |  2 +
->  drivers/iommu/dma-iommu.c                 |  2 +
->  drivers/iommu/intel/iommu.c               |  4 ++
->  drivers/parisc/ccio-dma.c                 |  2 +
->  drivers/parisc/sba_iommu.c                |  2 +
->  drivers/xen/swiotlb-xen.c                 |  2 +
->  include/linux/dma-direct.h                |  5 ++
->  include/linux/dma-mapping.h               | 34 ++++++------
->  include/linux/dma-noncoherent.h           |  3 --
->  kernel/dma/direct.c                       | 52 ++++++++++++++++++-
->  kernel/dma/mapping.c                      | 63 +++++++++++++++++++++--
->  kernel/dma/ops_helpers.c                  | 35 +++++++++++++
->  kernel/dma/virt.c                         |  2 +
->  23 files changed, 206 insertions(+), 37 deletions(-)
+The ChipID IO region has it's own clock, which is being disabled while
+scanning for unused clocks. It turned out that some CPU hotplug, CPU idle
+or even SOC firmware code depends on the reads from that area. Fix the
+mysterious hang caused by entering deep CPU idle state by ignoring the
+'chipid' clock during unused clocks scan, as there are no direct clients
+for it which will keep it enabled.
 
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de> (MIPS part)
+Fixes: e062b571777f ("clk: exynos4: register clocks using common clock framework")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ drivers/clk/samsung/clk-exynos4.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/clk/samsung/clk-exynos4.c b/drivers/clk/samsung/clk-exynos4.c
+index 436fcd279951..bf13e29a655c 100644
+--- a/drivers/clk/samsung/clk-exynos4.c
++++ b/drivers/clk/samsung/clk-exynos4.c
+@@ -927,7 +927,7 @@ static const struct samsung_gate_clock exynos4210_gate_clks[] __initconst = {
+ 	GATE(CLK_PCIE, "pcie", "aclk133", GATE_IP_FSYS, 14, 0, 0),
+ 	GATE(CLK_SMMU_PCIE, "smmu_pcie", "aclk133", GATE_IP_FSYS, 18, 0, 0),
+ 	GATE(CLK_MODEMIF, "modemif", "aclk100", GATE_IP_PERIL, 28, 0, 0),
+-	GATE(CLK_CHIPID, "chipid", "aclk100", E4210_GATE_IP_PERIR, 0, 0, 0),
++	GATE(CLK_CHIPID, "chipid", "aclk100", E4210_GATE_IP_PERIR, 0, CLK_IGNORE_UNUSED, 0),
+ 	GATE(CLK_SYSREG, "sysreg", "aclk100", E4210_GATE_IP_PERIR, 0,
+ 			CLK_IGNORE_UNUSED, 0),
+ 	GATE(CLK_HDMI_CEC, "hdmi_cec", "aclk100", E4210_GATE_IP_PERIR, 11, 0,
+@@ -969,7 +969,7 @@ static const struct samsung_gate_clock exynos4x12_gate_clks[] __initconst = {
+ 		0),
+ 	GATE(CLK_TSADC, "tsadc", "aclk133", E4X12_GATE_BUS_FSYS1, 16, 0, 0),
+ 	GATE(CLK_MIPI_HSI, "mipi_hsi", "aclk133", GATE_IP_FSYS, 10, 0, 0),
+-	GATE(CLK_CHIPID, "chipid", "aclk100", E4X12_GATE_IP_PERIR, 0, 0, 0),
++	GATE(CLK_CHIPID, "chipid", "aclk100", E4X12_GATE_IP_PERIR, 0, CLK_IGNORE_UNUSED, 0),
+ 	GATE(CLK_SYSREG, "sysreg", "aclk100", E4X12_GATE_IP_PERIR, 1,
+ 			CLK_IGNORE_UNUSED, 0),
+ 	GATE(CLK_HDMI_CEC, "hdmi_cec", "aclk100", E4X12_GATE_IP_PERIR, 11, 0,
 -- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+2.17.1
+
