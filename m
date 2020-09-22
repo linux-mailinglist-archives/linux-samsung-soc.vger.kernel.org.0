@@ -2,96 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F522273656
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Sep 2020 01:11:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05925273707
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Sep 2020 02:06:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728814AbgIUXLc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 21 Sep 2020 19:11:32 -0400
-Received: from mail.rusoil.net ([188.128.114.25]:57383 "EHLO mail.rusoil.net"
+        id S1728634AbgIVAGy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 21 Sep 2020 20:06:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40486 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726457AbgIUXLb (ORCPT
+        id S1726537AbgIVAGy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 21 Sep 2020 19:11:31 -0400
-X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 19:11:22 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.rusoil.net (Postfix) with ESMTP id 3CFBD40D5B;
-        Tue, 22 Sep 2020 04:08:14 +0500 (YEKT)
-Received: from mail.rusoil.net ([127.0.0.1])
-        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id EV4tl_rVLSS7; Tue, 22 Sep 2020 04:08:13 +0500 (YEKT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.rusoil.net (Postfix) with ESMTP id 2C0DD40CEA;
-        Tue, 22 Sep 2020 04:08:13 +0500 (YEKT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rusoil.net 2C0DD40CEA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rusoil.net;
-        s=maildkim; t=1600729693;
-        bh=6R3BgBYiA7fkqGiiNDuwPskBnpH9JXyNAW/l3ZEA+wY=;
-        h=Date:From:Message-ID:MIME-Version;
-        b=Vnjy6nBVnSTcINEW6kER3ugTxQ4KBYKS36YiGFr6YA3B4INc+KiGVhbak8MS9Qjs4
-         d1hbAool1vpcT5tqzIahdEndE3qiAPgBOX6jsmCcvHSMZhz19GFDJ1aQySn107enqY
-         lwxWqbZRY2a+BQ8VxoJh3Rpje7MgA+/fhr9SupmU=
-X-Virus-Scanned: amavisd-new at mail.rusoil.net
-Received: from mail.rusoil.net ([127.0.0.1])
-        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id K7O08Fi_YWVd; Tue, 22 Sep 2020 04:08:12 +0500 (YEKT)
-Received: from mail.rusoil.net (mail.rusoil.net [172.16.7.34])
-        by mail.rusoil.net (Postfix) with ESMTP id 6147940C07;
-        Tue, 22 Sep 2020 04:08:10 +0500 (YEKT)
-Date:   Tue, 22 Sep 2020 04:08:09 +0500 (YEKT)
-From:   Blue Oak Mortgage and Loans <em@rusoil.net>
-Reply-To: Blue Oak Mortgage and Loans <info@bluelmtg.net>
-Message-ID: <2020026523.907101.1600729689731.JavaMail.zimbra@rusoil.net>
-Subject: Wir finanzieren Projekte und Unternehmen
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.210.183.69]
-X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF79 (Win)/8.8.12_GA_3794)
-Thread-Index: IhGK+mMcCqn+S/Et9t28g8ApaUDaLg==
-Thread-Topic: Wir finanzieren Projekte und Unternehmen
-To:     unlisted-recipients:; (no To-header on input)
+        Mon, 21 Sep 2020 20:06:54 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8CBE521789;
+        Tue, 22 Sep 2020 00:06:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600733214;
+        bh=pcuZbv7wIKPsCmBBLhS3eTcZBiFjhoPECq+gUU7NHio=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=cb4cMFhqG9PWBR9bzmyuqF2ulW5TPAFi7ZP94b3mxQTe807Dhl0d2sNfJr3ZWd+0y
+         s2rINmYzw2d1jrt8fSZV/fPpy+A1D2J5b8Vgfm2U0pJ0yhW/RAXVadjGSJ0igZUMdp
+         ma/sO8e6mpgdTbkuAvP8g1hbUYcb5qkKt+EC0TJs=
+Date:   Tue, 22 Sep 2020 01:06:01 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Sangbeom Kim <sbkim73@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+In-Reply-To: <20200921203616.19623-1-krzk@kernel.org>
+References: <20200921203616.19623-1-krzk@kernel.org>
+Subject: Re: [RFT] regulator: s5m8767: initialize driver via module_platform_driver
+Message-Id: <160073316153.6369.11503371469666905357.b4-ty@kernel.org>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Mon, 21 Sep 2020 22:36:16 +0200, Krzysztof Kozlowski wrote:
+> The driver was using subsys_initcall() because in old times deferred
+> probe was not supported everywhere and specific ordering was needed.
+> Since probe deferral works fine and specific ordering is discouraged
+> (hides dependencies between drivers and couples their boot order), the
+> driver can be converted to regular module_platform_driver.
 
+Applied to
 
-Dies ist ein Newsletter von Blue Oak Mortgage and Loans. Bitte melden Sie s=
-ich ab, wenn Sie keine E-Mail mehr von uns erhalten m=C3=B6chten.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
+Thanks!
 
-Eine kurze Einf=C3=BChrung.
+[1/1] regulator: s5m8767: initialize driver via module_platform_driver
+      commit: 8d23b0b8fc950cba2046840c46b21db9b5c0573c
 
-Wir sind ein f=C3=BChrendes Finanzierungsunternehmen in Europa. Wir finanzi=
-eren Startups / etablierte Unternehmen, finanzieren Gro=C3=9Fprojekte (Bau,=
- Landwirtschaft, Immobilien und dergleichen) zu einem niedrigen Zinssatz vo=
-n 2% pro Jahr.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Darlehensverfahren
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-1. Sie m=C3=BCssen das Online-Bewerbungsformular ausf=C3=BCllen und eine or=
-dnungsgem=C3=A4=C3=9F unterschriebene Kopie an uns zur=C3=BCcksenden.
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-2. M=C3=B6glicherweise m=C3=BCssen Sie Finanzdokumente als unterst=C3=BCtze=
-nden Nachweis f=C3=BCr die F=C3=A4higkeit zur R=C3=BCckzahlung von Krediten=
- vorlegen.
-
-3. Wenn Ihr Darlehen genehmigt wurde, m=C3=BCssen Sie eine Versicherungsgar=
-antie f=C3=BCr die Darlehenssicherheit vorlegen. Wir empfehlen eine Versich=
-erungsgesellschaft. Sie sind allein verantwortlich f=C3=BCr die Zahlung und=
- den Erwerb der Anleihe, die als Sicherheit dienen. Die H=C3=B6he der Anlei=
-he h=C3=A4ngt von Ihrem Darlehensbetrag ab. Die Versicherungsgesellschaft w=
-ird Sie durch den Prozess f=C3=BChren. (F=C3=BCr Gro=C3=9Fprojekte)
-
-4. Ihr =C3=9Cberweisungsprozess wird eingeleitet, sobald die Versicherungsa=
-nleihe =C3=BCberpr=C3=BCft wurde. Ihr Darlehensr=C3=BCckzahlungsplan wird i=
-m NC-Darlehensvertragsformular aufgef=C3=BChrt.
-
-Wenn die Bedingungen Sie beruhigen, k=C3=B6nnen Sie uns =C3=BCber die Whats=
-App-Nummer / E-Mail kontaktieren und auch unsere Website besuchen, um weite=
-re Informationen zu erhalten. Wir freuen uns darauf, von Ihnen zu h=C3=B6re=
-n.
-
-WhatsApp: + 90-552-365-3483
-E-Mail: info@bluelmtg.net
+Thanks,
+Mark
