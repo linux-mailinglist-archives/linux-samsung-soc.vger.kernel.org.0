@@ -2,103 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C8527F65C
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  1 Oct 2020 01:53:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E9F327FA22
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  1 Oct 2020 09:22:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731255AbgI3Xx1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 30 Sep 2020 19:53:27 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:44831 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbgI3Xx1 (ORCPT
+        id S1730756AbgJAHWl convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 1 Oct 2020 03:22:41 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40551 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbgJAHWl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 30 Sep 2020 19:53:27 -0400
-Received: from methusalix.internal.home.lespocky.de ([92.117.51.117]) by
- mrelayeu.kundenserver.de (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 1MgRYd-1ku3qH3u3T-00hvd8; Thu, 01 Oct 2020 01:47:55 +0200
-Received: from lemmy.internal.home.lespocky.de ([192.168.243.176] helo=lemmy.home.lespocky.de)
-        by methusalix.internal.home.lespocky.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-        (Exim 4.94)
-        (envelope-from <alex@home.lespocky.de>)
-        id 1kNlp9-0007aF-MT; Thu, 01 Oct 2020 01:47:52 +0200
-Received: (nullmailer pid 7817 invoked by uid 2001);
-        Wed, 30 Sep 2020 23:47:51 -0000
-From:   Alexander Dahl <post@lespocky.de>
-To:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Alexander Dahl <ada@thorsis.com>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Alexander Dahl <post@lespocky.de>
-Subject: [PATCH v6 7/7] MIPS: DTS: img: Fix schema warnings for pwm-leds
-Date:   Thu,  1 Oct 2020 01:46:37 +0200
-Message-Id: <20200930234637.7573-8-post@lespocky.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200930234637.7573-1-post@lespocky.de>
-References: <20200930234637.7573-1-post@lespocky.de>
+        Thu, 1 Oct 2020 03:22:41 -0400
+Received: by mail-ed1-f67.google.com with SMTP id t16so4528769edw.7;
+        Thu, 01 Oct 2020 00:22:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fwr1GeVaFEp1uM5sVnPT1yQbyvQmB6fV3m98V7FTLsE=;
+        b=HlqT77hLOhdW7BqyeFS7+kf6Nm/XJ7DIwzXYMT/FP7ZXosS4WrUF3cjc5RImcQfeq6
+         ukgQ41cklCvn7SsvrGLuLnIuZnk+/TEfDGNBgjA2UaLoLDZebRcxRc7jXIMFZB7a/EeV
+         9gHsQc7hhI5dC8aYBAkJFpboOvV/pTwRYUzGYjtE8yTC5hQDx+0VWr5S44gJaOfaRQa9
+         g2Xh1OJ5R8yRYXh0j5pkV+lYhm+jOqtPmJARIFc708a+oRNxaJVXUfr0naLo0Pn7sZUH
+         kL7uJhRErWPffAKA3QUIEYjLArpa5hRI+UlhjquBCdZ0McfTsGNqkZlZb3S6Btu5GhnL
+         8waA==
+X-Gm-Message-State: AOAM5321M2qcwc+NuWAo0VCWX5deNi0uzt81Oa/kvWuQ/dX0lmTKk/px
+        65aYfOZP4Co5yrMifwhaL7cTm+wdRKo=
+X-Google-Smtp-Source: ABdhPJyursdQ3jc4/q0hvBhAH8cOPenfHB/GW7XJSvMFDQANFlI7O7t0Exapy9HiBOqu25ycbqhjvw==
+X-Received: by 2002:aa7:ce15:: with SMTP id d21mr6744623edv.284.1601536959051;
+        Thu, 01 Oct 2020 00:22:39 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.194])
+        by smtp.googlemail.com with ESMTPSA id v25sm3367079edr.29.2020.10.01.00.22.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Oct 2020 00:22:38 -0700 (PDT)
+Date:   Thu, 1 Oct 2020 09:22:36 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com
+Subject: Re: [PATCH] ARM: dts: exynos: Add a placeholder for a MAC address
+Message-ID: <20201001072236.GA4815@kozik-lap>
+References: <CGME20200930143154eucas1p22c1560c485f5d8b8be729c76028c89c7@eucas1p2.samsung.com>
+ <20200930143151.23961-1-l.stelmach@samsung.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scan-Signature: 47063c0bd3b0440d119657da58bc7562
-X-Spam-Score: -2.9 (--)
-X-Provags-ID: V03:K1:0IUo1RRU7aAo8lMj4tzZs2tdPUuRWx/DVg9fWHk99XurY6GYSNC
- hi0k4Y+6Rvd2A96ObtnJkZ9b7FaJC8oTKeQjrqDQoiAJi59zcVISDFtcTQC5r9ppEjXMxT5
- 9JZqTtubXCNiBVhQw98FxKkqHLFjh1VvJjlQu5KTRSOTFE3yj4N8WYGh5qJoe9yvg0/N+ST
- 0mF0lowsi3Ph4kHDEtMIg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/ecUuY4q8Gc=:5pdPvjKLRtHGB+jyb6ogsm
- mseida6O/rUXoquHbx//MvOs5Y3069W/7rUsraL6Q8VMaKRBaHaZ9YpMmWMvTvq7Iy/ZM+o1P
- 3ug1TRVxllhD2Tf8UGFiH/2z5Jys0wgCL2GSzGszKKP3N1PNfig4vfq/nyvmChwF+JuMJ9cXi
- Th6iZFSTqG3oNsx0attXL+8KxXvon3FZP4eQJmr8/Et5J51O75T5X0KRiIBRSjA4LJUgZb1Op
- g/VsS4wSzaXKAdJof4lmMye/B0gN5CaIe+2gLLb3VkPuIObK9figRjq6Rj9Mdl/+Ok/sJG/YB
- LLRR0lcEsdHllHueRexDH/OALqq0YIGwrqtVEGAlIrBFTNcSa8Tla3btFaOGKtzEVCL2d6ORl
- gPTJ66cs+0DLQtFRKsN4yrKR5a3dK+uVX9/d/uoSSK9SQZjOmNPj3ThYCtJcehN5SvvfmSx2L
- VxhfphV7Zs3o4iQTJ4PJzeqprgdkiAXlVU2x1clPQyGK36NcJv+QYf1F9jV8lISwkPuhnhBja
- o4T03eH4tGYdIDQN+Ahe13cUIMfbzwJ3ZeE0prSRlgsk4Evdn17hiGjQlpkqHRRGSdxHCatZW
- +hDGpSyzd0OmLDV5iuR0zipb8TfWbpH5qTZPuSdU+lFqpWj7O0Voom3reL9mudWxGaf7Q+kl+
- jNf2QwLABuQSrWYMumMB/VYDcnGPy2+pDucow638wMe9uqLVIDFCR/0lnyR7vhFkiOyyGATJQ
- E4bwN7rKHWjSY83PwK/1sawX7PAx17LdSbR0xxmq6pu4pnWOUVSSJK5BQ82GvuO7ZBILyTfur
- l8ArD43Oi4k8MhDuYj7DkA4tfYESO+SfRmRfY98lwTkUG3Je2r2EAXUsKlUuk+kDbePtWiLgR
- A1kGCdoGG2QarQQTjJ5jYuuAxhO1Qv1JpeThZd+cQh8SHDJAuj/10UMVWYp2LsP9UFk+tEp+X
- PrOR5q7Ml2TqA+ghjTVnru/WeaZ/GJR5u6tvwZjqZXjUmJA5Kx1BMIJ4QgLuJVeJwhiKT6It3
- O3eZkORudcdbpEPydJPUv2JXHfS6U5e3n4zKke+jXQWx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20200930143151.23961-1-l.stelmach@samsung.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The node names for devices using the pwm-leds driver follow a certain
-naming scheme (now).
+On Wed, Sep 30, 2020 at 04:31:51PM +0200, Łukasz Stelmach wrote:
+> Add a placeholder for a MAC address. A bootloader may fill it
+> to set the MAC address and override EEPROM settings.
+> 
+> Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+> ---
+>  arch/arm/boot/dts/exynos5422-odroidxu3.dts | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/exynos5422-odroidxu3.dts b/arch/arm/boot/dts/exynos5422-odroidxu3.dts
+> index db0bc17a667b..9f7f3eacb750 100644
+> --- a/arch/arm/boot/dts/exynos5422-odroidxu3.dts
+> +++ b/arch/arm/boot/dts/exynos5422-odroidxu3.dts
+> @@ -70,3 +70,21 @@ &pwm {
+>  &usbdrd_dwc3_1 {
+>  	dr_mode = "peripheral";
+>  };
+> +
+> +&usbhost2 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	hub@1 {
+> +		compatible = "usb8087,0024";
+> +		reg = <1>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		ethernet: usbether@1 {
+> +			compatible = "usb0c45,6310";
+> +			reg = <1>;
+> +			mac-address = [00 00 00 00 00 00]; /* Filled in by a bootloader */
 
-Signed-off-by: Alexander Dahl <post@lespocky.de>
----
+Why do you need a placeholder? U-Boot can just append the
+address/property.
 
-Notes:
-    v6:
-      * added this patch to series
-
- arch/mips/boot/dts/img/pistachio_marduk.dts | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/arch/mips/boot/dts/img/pistachio_marduk.dts b/arch/mips/boot/dts/img/pistachio_marduk.dts
-index bf69da96dc8b..a8708783f04b 100644
---- a/arch/mips/boot/dts/img/pistachio_marduk.dts
-+++ b/arch/mips/boot/dts/img/pistachio_marduk.dts
-@@ -46,9 +46,10 @@
- 		regulator-max-microvolt = <1800000>;
- 	};
- 
--	leds {
-+	led-controller {
- 		compatible = "pwm-leds";
--		heartbeat {
-+
-+		led-1 {
- 			label = "marduk:red:heartbeat";
- 			pwms = <&pwm 3 300000>;
- 			max-brightness = <255>;
--- 
-2.20.1
-
+Best regards,
+Krzysztof
