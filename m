@@ -2,115 +2,203 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AE0928262D
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Oct 2020 21:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAB36281A2E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  2 Oct 2020 19:53:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725848AbgJCT3X (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 3 Oct 2020 15:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39468 "EHLO
+        id S2388034AbgJBRxn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 2 Oct 2020 13:53:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbgJCT3X (ORCPT
+        with ESMTP id S2387957AbgJBRxn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 3 Oct 2020 15:29:23 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B3D1C0613D0
-        for <linux-samsung-soc@vger.kernel.org>; Sat,  3 Oct 2020 12:29:22 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id m5so6097132lfp.7
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 03 Oct 2020 12:29:22 -0700 (PDT)
+        Fri, 2 Oct 2020 13:53:43 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74A0C0613E2
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  2 Oct 2020 10:53:42 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id s13so2472758wmh.4
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 02 Oct 2020 10:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6apILh/pOBmMJaPWqV+iIu8fFhBDqWAm6/FGBYx5eqA=;
-        b=o1B64Sz5ZHFWERP/mq911Y4fSS4n2fyjhUtxwee9c5J/yiJ4ynyKHSL0CRxxnfUest
-         n3sFQtymgXePC/V3j/DskZ725ur7LFjHihkDAs35AOXQprHRx8ZLoxAMlZxteGIjGCF8
-         9H/HxFxWFYDuT13gIBBV+l+HslDIdN3Scwa/4PHZmhZ6dhoOoMZyUp/jQj5LZ52KslAw
-         X3HASNGQOkAq2BqBxDtBgwu4VRdVG4nydnEuUsKu1+YhQSniN+b5jePtJ/n2QwW2Bh3z
-         u2fp4L5zp/47y/Iw9afSwP9alSArrbUDg6sSAvtHyOlvP4chmx/90BsXvXcooDJUuxI1
-         jrNQ==
+        d=ffwll.ch; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4Ic9kLI7iEmx4fzg6K/MGmVs8Kbr/xz3cK5mQ8gVn9M=;
+        b=GdOd/VH/FT5eF5Gfj5Q1p9o3Vy+IUnorHd0BlnwOL9uxqZXuqaW6hM5SPvXVoCliFo
+         bYTAnUT5U/MmyPZiyzSRP+mItblvHt3dnKeVQamNmGl1Wkstvlwhpe9QI+eMQwsUSnFG
+         vCIrvzCfJM5d8ZpALwF1YBf+lWT2Rg+eoosfY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6apILh/pOBmMJaPWqV+iIu8fFhBDqWAm6/FGBYx5eqA=;
-        b=kWOJUh5jRsKbZrIeBF2395Ns2KxeJVktR8KBXfuMHCq2/rLZmZhLxXXEj6bXm+7n8e
-         7j8WixB/SKAgYlinVsolYZuhQMeVWzxCc2CCRFBe/c81UmuJjdeGglZBXCC9HO/5FZbT
-         PX7B0d9Qcpr6tf6fISYJPSHvcsxHQM6v4n5GySdkdku1VGJd106krKEJCkuCxHwJHhxt
-         Gl4eJCrtgvJAzu6Ybi/Q6ej5go0FzhFZauZZF7CprZ6iZbytGfPnFusuOPsQ2u/BGtKa
-         SDy0JBKzOresLoI1Rk9xvj59aOiWR5jFdigeTOXRGGSY5tIHYSjBdJbj/ZNTuGFqVRKF
-         EyAA==
-X-Gm-Message-State: AOAM533WeBWp1uEpjOAo0a43y5vnYO67NEpE9gZgL/74msA8M2mbZk2b
-        rzpypCjEz7y9REceiV+pKaMDWQ==
-X-Google-Smtp-Source: ABdhPJyOe1QQXBpLdw5uNxP+eiD7p47Cr/n0DtPXX7KSdg7+Ulmgo5tIiP8wiubrO4P3eYbzBvkicg==
-X-Received: by 2002:ac2:5291:: with SMTP id q17mr2583609lfm.3.1601753360279;
-        Sat, 03 Oct 2020 12:29:20 -0700 (PDT)
-Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
-        by smtp.gmail.com with ESMTPSA id l188sm1836722lfd.127.2020.10.03.12.29.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4Ic9kLI7iEmx4fzg6K/MGmVs8Kbr/xz3cK5mQ8gVn9M=;
+        b=gbEoC4s9/+wLp+gIO7I13MBhrb94MUNhxAWIDY8PeqdTEKdp7uvPtgQOV7xkNZA2a1
+         fFAxtdRMEyM7xEgCRq8OAq2WWgUdOR6KRr2uQ6heVEYZs55IfXn6Zc8MTiADiQHw+RV7
+         c0vMeyjGOWyVO9Dh6ehH6EcAqPLlUEBfGGv6ACBNkzmOqXGEIrKBdxeqRjpKZsm1+vsn
+         aBiqL3qT+Oqd2jm6N92gYI2CpN+WoDJMr6AP0/0qfp4/Q2Oo7+0JZ2FOu0LH1WzWB9+9
+         FTo5PlJORbL6MMhx34SOhHqt7OUz8qFZZ6fIQRg1Ev/DBLTCHQsbJYH4JRQ4KmeJc0w1
+         utBQ==
+X-Gm-Message-State: AOAM530hM88v7gEMIjxEbN4/i99d8bGRRerxH0BJemCf3b3e9+tsS/SL
+        o0IB8wGXRswaR6XnZeeajsGxhg==
+X-Google-Smtp-Source: ABdhPJx4N0mByTSrMhoszno9AheTX2LZ7oZ+iqT+Q3TvlZQuWl0+xgzy8x8+JKsZ5hS5NTaTlr3Xeg==
+X-Received: by 2002:a7b:cf1a:: with SMTP id l26mr4030327wmg.164.1601661221643;
+        Fri, 02 Oct 2020 10:53:41 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id m10sm2585429wmc.9.2020.10.02.10.53.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2020 12:29:18 -0700 (PDT)
-Date:   Sat, 26 Sep 2020 12:50:26 -0700
-From:   Olof Johansson <olof@lixom.net>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, arm@kernel.org, soc@kernel.org,
+        Fri, 02 Oct 2020 10:53:40 -0700 (PDT)
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
         Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Pawel Osciak <pawel@osciak.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Oded Gabbay <oded.gabbay@gmail.com>,
+        Omer Shpigelman <oshpigelman@habana.ai>,
+        Tomer Tayar <ttayar@habana.ai>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pawel Piskorski <ppiskorski@habana.ai>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [GIT PULL 4/5] ARM: samsung: mach/soc for v5.10
-Message-ID: <20200926195026.GA2230@lx2k>
-References: <20200920160705.9651-1-krzk@kernel.org>
- <20200920160705.9651-5-krzk@kernel.org>
+        linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-mm@kvack.org
+Subject: [PATCH 1/2] mm/frame-vec: Drop gup_flags from get_vaddr_frames()
+Date:   Fri,  2 Oct 2020 19:53:02 +0200
+Message-Id: <20201002175303.390363-1-daniel.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200920160705.9651-5-krzk@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+FOLL_WRITE | FOLL_FORCE is really the only reasonable thing to do for
+simple dma device that can't guarantee write protection. Which is also
+what all the callers are using.
 
-On Sun, Sep 20, 2020 at 06:07:04PM +0200, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> This will conflict around renamed/moved files:
-> 
-> 1. arch/arm/mach-s3c/s3c24xx.c:
->    Merge both changes to new location, so:
-> =======
->  +#include "s3c24xx.h"
->  +#include "fb-core-s3c24xx.h"
->  +#include "nand-core-s3c24xx.h"
->  +#include "spi-core-s3c24xx.h"
->   
-> - static struct map_desc s3c2416_iodesc[] __initdata = {
-> + static struct map_desc s3c2416_iodesc[] __initdata __maybe_unused = {
-> =======
-> 
-> 2. drivers/soc/samsung/Kconfig
->    Add DEBUG_LL && MMU to SAMSUNG_PM_DEBUG section, so:
-> 
-> =======
->   config EXYNOS_PM_DOMAINS
->   	bool "Exynos PM domains" if COMPILE_TEST
->  -	depends on PM_GENERIC_DOMAINS || COMPILE_TEST
->  +	depends on (ARCH_EXYNOS && PM_GENERIC_DOMAINS) || COMPILE_TEST
->  +
->  +config SAMSUNG_PM_DEBUG
->  +	bool "Samsung PM Suspend debug"
->  +	depends on PM && DEBUG_KERNEL
->  +	depends on PLAT_S3C24XX || ARCH_S3C64XX || ARCH_S5PV210
->  +	depends on DEBUG_S3C24XX_UART || DEBUG_S3C2410_UART
-> ++	depends on DEBUG_LL && MMU
->  +	help
->  +	  Say Y here if you want verbose debugging from the PM Suspend and
->  +	  Resume code. See <file:Documentation/arm/samsung-s3c24xx/suspend.rst>
->  +	  for more information.
->  +
-> =======
+So just simplify this.
 
-I don't mind doing this conflict resolution, and will merge it now,
-but next time you can just base this branch on the cleanup branch.
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Pawel Osciak <pawel@osciak.com>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Tomasz Figa <tfiga@chromium.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Oded Gabbay <oded.gabbay@gmail.com>
+Cc: Omer Shpigelman <oshpigelman@habana.ai>
+Cc: Tomer Tayar <ttayar@habana.ai>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Pawel Piskorski <ppiskorski@habana.ai>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-mm@kvack.org
+---
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c           | 3 +--
+ drivers/media/common/videobuf2/videobuf2-memops.c | 3 +--
+ drivers/misc/habanalabs/common/memory.c           | 3 +--
+ include/linux/mm.h                                | 2 +-
+ mm/frame_vector.c                                 | 4 ++--
+ 5 files changed, 6 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+index 967a5cdc120e..ac452842bab3 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+@@ -480,8 +480,7 @@ static dma_addr_t *g2d_userptr_get_dma_addr(struct g2d_data *g2d,
+ 		goto err_free;
+ 	}
+ 
+-	ret = get_vaddr_frames(start, npages, FOLL_FORCE | FOLL_WRITE,
+-		g2d_userptr->vec);
++	ret = get_vaddr_frames(start, npages, g2d_userptr->vec);
+ 	if (ret != npages) {
+ 		DRM_DEV_ERROR(g2d->dev,
+ 			      "failed to get user pages from userptr.\n");
+diff --git a/drivers/media/common/videobuf2/videobuf2-memops.c b/drivers/media/common/videobuf2/videobuf2-memops.c
+index 6e9e05153f4e..9dd6c27162f4 100644
+--- a/drivers/media/common/videobuf2/videobuf2-memops.c
++++ b/drivers/media/common/videobuf2/videobuf2-memops.c
+@@ -40,7 +40,6 @@ struct frame_vector *vb2_create_framevec(unsigned long start,
+ 	unsigned long first, last;
+ 	unsigned long nr;
+ 	struct frame_vector *vec;
+-	unsigned int flags = FOLL_FORCE | FOLL_WRITE;
+ 
+ 	first = start >> PAGE_SHIFT;
+ 	last = (start + length - 1) >> PAGE_SHIFT;
+@@ -48,7 +47,7 @@ struct frame_vector *vb2_create_framevec(unsigned long start,
+ 	vec = frame_vector_create(nr);
+ 	if (!vec)
+ 		return ERR_PTR(-ENOMEM);
+-	ret = get_vaddr_frames(start & PAGE_MASK, nr, flags, vec);
++	ret = get_vaddr_frames(start & PAGE_MASK, nr, vec);
+ 	if (ret < 0)
+ 		goto out_destroy;
+ 	/* We accept only complete set of PFNs */
+diff --git a/drivers/misc/habanalabs/common/memory.c b/drivers/misc/habanalabs/common/memory.c
+index 5ff4688683fd..43b10aee8150 100644
+--- a/drivers/misc/habanalabs/common/memory.c
++++ b/drivers/misc/habanalabs/common/memory.c
+@@ -1287,8 +1287,7 @@ static int get_user_memory(struct hl_device *hdev, u64 addr, u64 size,
+ 		return -ENOMEM;
+ 	}
+ 
+-	rc = get_vaddr_frames(start, npages, FOLL_FORCE | FOLL_WRITE,
+-				userptr->vec);
++	rc = get_vaddr_frames(start, npages, userptr->vec);
+ 
+ 	if (rc != npages) {
+ 		dev_err(hdev->dev,
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 16b799a0522c..7d14aa2780d2 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1757,7 +1757,7 @@ struct frame_vector {
+ struct frame_vector *frame_vector_create(unsigned int nr_frames);
+ void frame_vector_destroy(struct frame_vector *vec);
+ int get_vaddr_frames(unsigned long start, unsigned int nr_pfns,
+-		     unsigned int gup_flags, struct frame_vector *vec);
++		     struct frame_vector *vec);
+ void put_vaddr_frames(struct frame_vector *vec);
+ int frame_vector_to_pages(struct frame_vector *vec);
+ void frame_vector_to_pfns(struct frame_vector *vec);
+diff --git a/mm/frame_vector.c b/mm/frame_vector.c
+index 10f82d5643b6..5d34c9047e9c 100644
+--- a/mm/frame_vector.c
++++ b/mm/frame_vector.c
+@@ -12,7 +12,6 @@
+  * get_vaddr_frames() - map virtual addresses to pfns
+  * @start:	starting user address
+  * @nr_frames:	number of pages / pfns from start to map
+- * @gup_flags:	flags modifying lookup behaviour
+  * @vec:	structure which receives pages / pfns of the addresses mapped.
+  *		It should have space for at least nr_frames entries.
+  *
+@@ -32,10 +31,11 @@
+  * This function takes care of grabbing mmap_lock as necessary.
+  */
+ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
+-		     unsigned int gup_flags, struct frame_vector *vec)
++		     struct frame_vector *vec)
+ {
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma;
++	unsigned int gup_flags = FOLL_WRITE | FOLL_FORCE;
+ 	int ret = 0;
+ 	int err;
+ 	int locked;
+-- 
+2.28.0
 
--Olof
