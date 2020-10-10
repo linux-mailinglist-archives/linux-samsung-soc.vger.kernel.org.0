@@ -2,158 +2,132 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D380C28A35A
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 11 Oct 2020 01:08:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27BDC28A26B
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 11 Oct 2020 00:57:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390445AbgJJW5M (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 10 Oct 2020 18:57:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731357AbgJJTxu (ORCPT
+        id S2390417AbgJJW5L (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 10 Oct 2020 18:57:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52034 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731436AbgJJTW0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 10 Oct 2020 15:53:50 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA35AC0613BC
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 10 Oct 2020 04:56:12 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id m7so13224253oie.0
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 10 Oct 2020 04:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kVkxIdHN6o3O+u6tSfedNSb1VzfwX2F8ZeWL/VdW1R0=;
-        b=PmcQ6HnUaDFVR4ZG1jxYVR6Iy6yUiTRwMlYI1/tSbKPEa/kwoMlz7zfmOuI2hn6KYq
-         V0dHtSf/LrEJbqhpaMjU8h/EJY/bF1jSwPEMaaWBwHAo1f9SuoP4vCo+L5gVrMpGB++A
-         PnZ1b3eYUezb1GhvqoZ2KN7Thv1h+lAXB1upE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kVkxIdHN6o3O+u6tSfedNSb1VzfwX2F8ZeWL/VdW1R0=;
-        b=mhM1r8CUrCXgMpW57Yp7dvsLF6gd+dj2GuuDfK3TXiqp/XK6eN5tpzaOQ/5WikD8kv
-         44jPwIDXbEkY4vcz1P+NW1+6zjrgsihZZFzSATesq0tPvSW2XZf/1+zI8LnnBzfye9Ib
-         ikrfZ5dYbThWa3jz1/I4020Fv0WdnvVTOP9/v8F0mZaxSN6A7/HOTXUy7gI+7uIeYJGx
-         2HA5N/Z7ujVi3TeP6gHXgG7z+bHiQHcf8x5WrqyCxUpEjYdPWoJyibAlophKejxkTb1D
-         PoEca9pp7fXl4QYIet0X03d0l/yLsMQXZQDVBMt6WMxqMlGtL4gVplm5BTG5UhAR7Lj1
-         Pkyw==
-X-Gm-Message-State: AOAM530sjL2INEqbIL8/MR9M17xiwj2Lf0L0kTwKDmH7TITtLiF+ABmE
-        R8gGtxJivlQE2peEhteSWbHFmVRqErUs8kgIqTRPcg==
-X-Google-Smtp-Source: ABdhPJzKftVU1haFUl3kJpPXCXE2YEa9neFI+uGYsToCivJpyHsTIlVZins4yYKilYPHMWVOsn/OllhI0jrgavqKgKA=
-X-Received: by 2002:aca:cc01:: with SMTP id c1mr3655546oig.128.1602330971569;
- Sat, 10 Oct 2020 04:56:11 -0700 (PDT)
+        Sat, 10 Oct 2020 15:22:26 -0400
+Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2FCF922404;
+        Sat, 10 Oct 2020 16:51:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602348663;
+        bh=QORHMnmWSEjYd8YMjB0g1v/EbTLN970fmst2j2tRPfM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BdKZKSbB1/KZzKiQy9HRaLRagU6gYw2wZ5P6B9weBcPigsRhwQOIICIdR+6NY93de
+         XdM5Kv70uWNgDWyVqa+haOBaVGxc+W6lZw+MhTYHD7WvAH7c58WFcO6yBjiB3V21Sj
+         hNj6td5defmDaHkzhGk173Vrz4v1ZmJ8miquhqM0=
+Date:   Sat, 10 Oct 2020 17:50:57 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     dmitry.torokhov@gmail.com
+Cc:     Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>,
+        linux-iio@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] iio: adc: exynos: do not rely on 'users' counter in
+ ISR
+Message-ID: <20201010175057.768fe3b3@archlinux>
+In-Reply-To: <20201006215509.GA2556081@dtor-ws>
+References: <20201006215509.GA2556081@dtor-ws>
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20201009075934.3509076-1-daniel.vetter@ffwll.ch>
- <20201009075934.3509076-10-daniel.vetter@ffwll.ch> <20201009123421.67a80d72@coco.lan>
- <20201009122111.GN5177@ziepe.ca> <20201009143723.45609bfb@coco.lan>
- <20201009124850.GP5177@ziepe.ca> <CAKMK7uF-hrSwzFQkp6qEP88hM1Qg8TMQOunuRHh=f2+D8MaMRg@mail.gmail.com>
- <20201010112122.587f9945@coco.lan> <CAKMK7uEKP5UMKeQHkTHWYUJkp=mz-Hvh-fJZy1KP3kT2xHpHrg@mail.gmail.com>
- <20201010133929.746d0529@coco.lan>
-In-Reply-To: <20201010133929.746d0529@coco.lan>
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Sat, 10 Oct 2020 13:56:00 +0200
-Message-ID: <CAKMK7uEwT0TBvHtVMHeSW2gwt2nhm7mpd2pNuUHUCz=EaYM3yw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/17] mm: Add unsafe_follow_pfn
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Jason Gunthorpe <jgg@ziepe.ca>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        linux-s390 <linux-s390@vger.kernel.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Kees Cook <keescook@chromium.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        John Hubbard <jhubbard@nvidia.com>,
-        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
-        Jan Kara <jack@suse.cz>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, Oct 10, 2020 at 1:39 PM Mauro Carvalho Chehab
-<mchehab+huawei@kernel.org> wrote:
->
-> Em Sat, 10 Oct 2020 12:53:49 +0200
-> Daniel Vetter <daniel.vetter@ffwll.ch> escreveu:
->
-> > Hi Mauro,
-> >
-> > You might want to read the patches more carefully, because what you're
-> > demanding is what my patches do. Short summary:
-> >
-> > - if STRICT_FOLLOW_PFN is set:
-> > a) normal memory is handled as-is (i.e. your example works) through
-> > the addition of FOLL_LONGTERM. This is the "pin the pages correctly"
-> > approach you're demanding
-> > b) for non-page memory (zerocopy sharing before dma-buf was upstreamed
-> > is the only use-case for this) it is correctly rejected with -EINVAL
-> >
-> > - if you do have blobby userspace which requires the zero-copy using
-> > userptr to work, and doesn't have any of the fallbacks implemented
-> > that you describe, this would be a regression. That's why
-> > STRICT_FOLLOW_PFN can be unset. And yes there's a real security issue
-> > in this usage, Marek also confirmed that the removal of the vma copy
-> > code a few years ago essentially broke even the weak assumptions that
-> > made the code work 10+ years ago when it was merged.
-> >
-> > so tdlr; Everything you described will keep working even with the new
-> > flag set, and everything you demand must be implemented _is_
-> > implemented in this patch series.
-> >
-> > Also please keep in mind that we are _not_ talking about the general
-> > userptr support that was merge ~20 years ago. This patch series here
-> > is _only_ about the zerocpy userptr support merged with 50ac952d2263
-> > ("[media] videobuf2-dma-sg: Support io userptr operations on io
-> > memory") in 2013.
->
-> Ok, now it is making more sense. Please update the comments for
-> patch 10/17 to describe the above.
+On Tue, 6 Oct 2020 14:55:09 -0700
+dmitry.torokhov@gmail.com wrote:
 
-Will do.
+> The order in which 'users' counter is decremented vs calling drivers'
+> close() method is implementation specific, and we should not rely on
+> it. Let's introduce driver private flag and use it to signal ISR
+> to exit when device is being closed.
+>=20
+> This has a side-effect of fixing issue of accessing inut->users
+> outside of input->mutex protection.
+>=20
+> Reported-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Reviewed-by: Micha=C5=82 Miros=C5=82aw <mirq-linux@rere.qmqm.pl>
+> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Applied to the togreg branch of iio.git and pushed out as testing
+for the autobuilders to work their magic.
 
-> We need some time to test this though, in order to check if no
-> regressions were added (except the ones due to changeset 50ac952d2263).
+Given this doesn't have a fixes tag etc I'm assuming it isn't
+high priority etc.  Let me know if it is!
 
-Yeah testing of the previous patches to switch to FOLL_LONGTERM would
-be really good. I also need that for habanalabs and ideally exynos
-too. All the userptr for normal memory should keep working, and with
-FOLL_LONGTERM it should actually work better, since with that it
-should now correctly interact with pagecache and fs code, not just
-with anon memory from malloc.
+Thanks,
 
-Thanks, Daniel
+Jonathan
+> ---
+>=20
+> v3: fixed typo in exynos_adc_ts_close() per Micha=C5=82 Miros=C5=82aw
+> v2: switched from ordinary read/write to READ_ONCE/WRITE_ONCE per Micha=
+=C5=82
+> Miros=C5=82aw
+>=20
+>  drivers/iio/adc/exynos_adc.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/iio/adc/exynos_adc.c b/drivers/iio/adc/exynos_adc.c
+> index 22131a677445..908df4b9b93c 100644
+> --- a/drivers/iio/adc/exynos_adc.c
+> +++ b/drivers/iio/adc/exynos_adc.c
+> @@ -7,6 +7,7 @@
+>   *  Copyright (C) 2013 Naveen Krishna Chatradhi <ch.naveen@samsung.com>
+>   */
+> =20
+> +#include <linux/compiler.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/interrupt.h>
+> @@ -135,6 +136,8 @@ struct exynos_adc {
+>  	u32			value;
+>  	unsigned int            version;
+> =20
+> +	bool			ts_enabled;
+> +
+>  	bool			read_ts;
+>  	u32			ts_x;
+>  	u32			ts_y;
+> @@ -633,7 +636,7 @@ static irqreturn_t exynos_ts_isr(int irq, void *dev_i=
+d)
+>  	bool pressed;
+>  	int ret;
+> =20
+> -	while (info->input->users) {
+> +	while (READ_ONCE(info->ts_enabled)) {
+>  		ret =3D exynos_read_s3c64xx_ts(dev, &x, &y);
+>  		if (ret =3D=3D -ETIMEDOUT)
+>  			break;
+> @@ -712,6 +715,7 @@ static int exynos_adc_ts_open(struct input_dev *dev)
+>  {
+>  	struct exynos_adc *info =3D input_get_drvdata(dev);
+> =20
+> +	WRITE_ONCE(info->ts_enabled, true);
+>  	enable_irq(info->tsirq);
+> =20
+>  	return 0;
+> @@ -721,6 +725,7 @@ static void exynos_adc_ts_close(struct input_dev *dev)
+>  {
+>  	struct exynos_adc *info =3D input_get_drvdata(dev);
+> =20
+> +	WRITE_ONCE(info->ts_enabled, false);
+>  	disable_irq(info->tsirq);
+>  }
+> =20
 
-> > Why this hack was merged in 2013 when we merged dma-buf almost 2 years
-> > before that I have no idea about. Imo that patch simply should never
-> > have landed, and instead dma-buf support prioritized.
->
-> If I recall correctly, we didn't have any DMABUF support
-> at the media subsystem, back on 2013.
->
-> It took some time for the DMA-BUF to arrive at media, as this
-> was not a top priority. Also, there aren't many developers that
-> understand the memory model well enough to implement DMA-BUF support
-> and touch the VB2 code, which is quite complex, as it supports
-> lots of different ways for I/O, plus works with vmalloc, DMA
-> contig and DMA scatter/gather.
->
-> Changes there should carefully be tested against different
-> drivers, in order to avoid regressions on it.
->
-> > Cheers, Daniel
->
-> Thanks,
-> Mauro
-
-
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
