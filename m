@@ -2,72 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A045E28F81D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Oct 2020 20:06:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76DD128F853
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Oct 2020 20:21:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727518AbgJOSGE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 15 Oct 2020 14:06:04 -0400
-Received: from foss.arm.com ([217.140.110.172]:54886 "EHLO foss.arm.com"
+        id S1732931AbgJOSU4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 15 Oct 2020 14:20:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56316 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726053AbgJOSGE (ORCPT
+        id S1732918AbgJOSU4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 15 Oct 2020 14:06:04 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E7A0E13D5;
-        Thu, 15 Oct 2020 11:06:03 -0700 (PDT)
-Received: from bogus (unknown [10.57.17.164])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2879D3F71F;
-        Thu, 15 Oct 2020 11:06:01 -0700 (PDT)
-Date:   Thu, 15 Oct 2020 19:05:55 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     ulf.hansson@linaro.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        Thu, 15 Oct 2020 14:20:56 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.171])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F3F3420760;
+        Thu, 15 Oct 2020 18:20:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602786055;
+        bh=4PM3lkFsHSYdM+Xy64virN9A07FT5yYAZKvrk/oAr6g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gT3M3YzNo7pyxR1DfBVU7GobBpHX5lbRW+Uic+Jkfhn18bizF3XJv9x9qsdeIcGy1
+         5FpBm3ZoOVkd5mRjGFW9TDCWVt73NTHncBn9NPTyMZwqdoFrD39779iZfFVPHRQqps
+         +H6X3Q9oGUOO/u4RR0/dxG1ys+onQfuUqrHDNg7Y=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>, nks@flawful.org,
-        georgi.djakov@linaro.org, Stephan Gerhold <stephan@gerhold.net>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH V2 1/2] opp: Allow dev_pm_opp_get_opp_table() to return
- -EPROBE_DEFER
-Message-ID: <20201015180555.gacdzkofpibkdn2e@bogus>
-References: <24ff92dd1b0ee1b802b45698520f2937418f8094.1598260050.git.viresh.kumar@linaro.org>
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Gabriel Ribba Esteva <gabriel.ribbae@gmail.com>,
+        stable@vger.kernel.org
+Subject: [PATCH 1/4] ARM: dts: exynos: fix roles of USB 3.0 ports on Odroid XU
+Date:   Thu, 15 Oct 2020 20:20:41 +0200
+Message-Id: <20201015182044.480562-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24ff92dd1b0ee1b802b45698520f2937418f8094.1598260050.git.viresh.kumar@linaro.org>
-User-Agent: NeoMutt/20171215
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Aug 24, 2020 at 02:39:32PM +0530, Viresh Kumar wrote:
-> From: Stephan Gerhold <stephan@gerhold.net>
-> 
-> The OPP core manages various resources, e.g. clocks or interconnect paths.
-> These resources are looked up when the OPP table is allocated once
-> dev_pm_opp_get_opp_table() is called the first time (either directly
-> or indirectly through one of the many helper functions).
-> 
-> At this point, the resources may not be available yet, i.e. looking them
-> up will result in -EPROBE_DEFER. Unfortunately, dev_pm_opp_get_opp_table()
-> is currently unable to propagate this error code since it only returns
-> the allocated OPP table or NULL.
->
+On Odroid XU board the USB3-0 port is a microUSB and USB3-1 port is USB
+type A (host).  The roles were copied from Odroid XU3 (Exynos5422)
+design which has it reversed.
 
-OK, this breaks with SCMI which doesn't provide clocks but manage OPPs
-directly. Before this change clk_get(dev..) was allowed to fail and
---EPROBE_DEFER was not an error. We use dev_pm_opp_add to add OPPs
-read from the firmware and this change is preventing that.
+Fixes: 8149afe4dbf9 ("ARM: dts: exynos: Add initial support for Odroid XU board")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm/boot/dts/exynos5410-odroidxu.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Sorry for checking this so late, but noticed only when this hit mainline.
-
+diff --git a/arch/arm/boot/dts/exynos5410-odroidxu.dts b/arch/arm/boot/dts/exynos5410-odroidxu.dts
+index 4f9297ae0763..353eb6ef3a04 100644
+--- a/arch/arm/boot/dts/exynos5410-odroidxu.dts
++++ b/arch/arm/boot/dts/exynos5410-odroidxu.dts
+@@ -637,11 +637,11 @@ &tmu_cpu3 {
+ };
+ 
+ &usbdrd_dwc3_0 {
+-	dr_mode = "host";
++	dr_mode = "peripheral";
+ };
+ 
+ &usbdrd_dwc3_1 {
+-	dr_mode = "peripheral";
++	dr_mode = "host";
+ };
+ 
+ &usbdrd3_0 {
 -- 
-Regards,
-Sudeep
+2.25.1
+
