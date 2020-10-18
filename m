@@ -2,39 +2,39 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C634B291CB4
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 18 Oct 2020 21:40:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82AB8291CCC
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 18 Oct 2020 21:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733264AbgJRTkB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 18 Oct 2020 15:40:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38486 "EHLO mail.kernel.org"
+        id S1732932AbgJRTkn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 18 Oct 2020 15:40:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38560 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730783AbgJRTYa (ORCPT
+        id S1730805AbgJRTYd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 18 Oct 2020 15:24:30 -0400
+        Sun, 18 Oct 2020 15:24:33 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1B33E222EC;
-        Sun, 18 Oct 2020 19:24:29 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EEC7F207DE;
+        Sun, 18 Oct 2020 19:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603049070;
-        bh=/l6hrO7GPupnXbyvP/nFnCmESAppWg17z8tPranVdBU=;
+        s=default; t=1603049072;
+        bh=ubTthlQXPGpbLr5597toqvhjvnhASr4vmo2xJWKCu+c=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=imBQjiFFR3TYa8Cldnez73iyeJv/w5q5z0/txCvqwxYUi0ysc/ZJkBVYbf9lWx8br
-         Ax7DU2Vl5Hxgj30X7nWvPeWkd/y7Bdmutrxi6tTNgXBqnzcFiwYpDpc5NDfeAuW4zg
-         TPzfTxZy3zvfbq9Ja3VEFn1ZI/a7qUOV/8/o70ZI=
+        b=GA0TUYHHi4MV4fqkkS9B1xwXeBdBueAY1vql2pPc9YqZ4MgZF7ZJ3Y+dldWNspGWg
+         eqFXkklUtXzcue7Xxw6P3CPAQPgjUbgR4aUW83ytgtsKaX15fTJRkPqTubgUSqm900
+         cwMYKkqWGaNwIzj441qEM8Z0XagAmC9cnEhmu+Gg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Qiushi Wu <wu000273@umn.edu>,
+Cc:     Dinghao Liu <dinghao.liu@zju.edu.cn>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
         Hans Verkuil <hverkuil-cisco@xs4all.nl>,
         Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 09/56] media: exynos4-is: Fix a reference count leak
-Date:   Sun, 18 Oct 2020 15:23:30 -0400
-Message-Id: <20201018192417.4055228-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 11/56] media: platform: s3c-camif: Fix runtime PM imbalance on error
+Date:   Sun, 18 Oct 2020 15:23:32 -0400
+Message-Id: <20201018192417.4055228-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201018192417.4055228-1-sashal@kernel.org>
 References: <20201018192417.4055228-1-sashal@kernel.org>
@@ -46,39 +46,51 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Qiushi Wu <wu000273@umn.edu>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 64157b2cb1940449e7df2670e85781c690266588 ]
+[ Upstream commit dafa3605fe60d5a61239d670919b2a36e712481e ]
 
 pm_runtime_get_sync() increments the runtime PM usage counter even
-when it returns an error code, causing incorrect ref count if
-pm_runtime_put_noidle() is not called in error handling paths.
-Thus call pm_runtime_put_noidle() if pm_runtime_get_sync() fails.
+when it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
 
-Signed-off-by: Qiushi Wu <wu000273@umn.edu>
+Also, call pm_runtime_disable() when pm_runtime_get_sync() returns
+an error code.
+
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Sylwester Nawrocki <snawrocki@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/mipi-csis.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/s3c-camif/camif-core.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/exynos4-is/mipi-csis.c b/drivers/media/platform/exynos4-is/mipi-csis.c
-index b4e28a299e26e..efab3ebc67564 100644
---- a/drivers/media/platform/exynos4-is/mipi-csis.c
-+++ b/drivers/media/platform/exynos4-is/mipi-csis.c
-@@ -513,8 +513,10 @@ static int s5pcsis_s_stream(struct v4l2_subdev *sd, int enable)
- 	if (enable) {
- 		s5pcsis_clear_counters(state);
- 		ret = pm_runtime_get_sync(&state->pdev->dev);
--		if (ret && ret != 1)
-+		if (ret && ret != 1) {
-+			pm_runtime_put_noidle(&state->pdev->dev);
- 			return ret;
-+		}
- 	}
+diff --git a/drivers/media/platform/s3c-camif/camif-core.c b/drivers/media/platform/s3c-camif/camif-core.c
+index 79bc0ef6bb413..8d8ed72bd0aaf 100644
+--- a/drivers/media/platform/s3c-camif/camif-core.c
++++ b/drivers/media/platform/s3c-camif/camif-core.c
+@@ -476,7 +476,7 @@ static int s3c_camif_probe(struct platform_device *pdev)
  
- 	mutex_lock(&state->lock);
+ 	ret = camif_media_dev_init(camif);
+ 	if (ret < 0)
+-		goto err_alloc;
++		goto err_pm;
+ 
+ 	ret = camif_register_sensor(camif);
+ 	if (ret < 0)
+@@ -510,10 +510,9 @@ static int s3c_camif_probe(struct platform_device *pdev)
+ 	media_device_unregister(&camif->media_dev);
+ 	media_device_cleanup(&camif->media_dev);
+ 	camif_unregister_media_entities(camif);
+-err_alloc:
++err_pm:
+ 	pm_runtime_put(dev);
+ 	pm_runtime_disable(dev);
+-err_pm:
+ 	camif_clk_put(camif);
+ err_clk:
+ 	s3c_camif_unregister_subdev(camif);
 -- 
 2.25.1
 
