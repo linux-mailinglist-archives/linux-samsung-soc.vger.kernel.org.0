@@ -2,83 +2,45 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C2A7291B4A
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 18 Oct 2020 21:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D49F292106
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 19 Oct 2020 04:02:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732143AbgJRT1g (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 18 Oct 2020 15:27:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43504 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732134AbgJRT1g (ORCPT
+        id S1730607AbgJSCCJ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 18 Oct 2020 22:02:09 -0400
+Received: from sv2.suncomserver.com ([202.45.164.34]:40734 "EHLO
+        sv2.suncomserver.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1729119AbgJSCCI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 18 Oct 2020 15:27:36 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B2A3922274;
-        Sun, 18 Oct 2020 19:27:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603049255;
-        bh=/HqbitK00QkLIbbHhw5jTLcPPXOHnA8KQORgGAso0Bw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=sEBGh/03Uac2+9eU03LjjjSGm/eK7badB4EY6rArxrUxrh4NwOFO4HlLwcDeGiZhr
-         GajSz/Zae+RNF3nuWwaKB+FqNlhoowT4qq1xG0EqKWgfkXAunD+3OBQA9cSxyFu2MS
-         NG1fWnep6LlggkkjjD7On2AsIX6jAiFPzIryUFJE=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Qiushi Wu <wu000273@umn.edu>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 05/33] media: exynos4-is: Fix a reference count leak
-Date:   Sun, 18 Oct 2020 15:27:00 -0400
-Message-Id: <20201018192728.4056577-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201018192728.4056577-1-sashal@kernel.org>
-References: <20201018192728.4056577-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        Sun, 18 Oct 2020 22:02:08 -0400
+X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Oct 2020 22:02:08 EDT
+X-No-Relay: not in my network
+Received: from [192.168.159.1] (unknown [92.222.123.200])
+        by sv2.suncomserver.com (Postfix) with ESMTPA id D30D224651A
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 19 Oct 2020 10:54:25 +0900 (JST)
+Message-Id: <bLXC3TiwSVjyE6YE9Nr7R5iJ0bdCjWOg5UBAIX1scXCn@dip.jp>
+Mime-Version: 1.0
+From:   CHRISTOPHER JACKSON <yuya@dip.jp>
+To:     "linux-samsung-soc" <linux-samsung-soc@vger.kernel.org>
+Reply-To: secimf19@herstestraters.com
+Subject: Your NEW ATM CARD PIN
+Date:   Mon, 19 Oct 2020 03:54:05 +0200
+X-Bounce-Tracking-Info: <bGludXgtc2Ftc3VuZy1zb2MJCQlsaW51eC1zYW1zdW5nLXNvY0B2Z2VyLmtlcm5lbC5vcmcJWW91ciBORVcgQVRNIENBUkQgUElOCTY0CQkyMDQ2MAlib3VuY2UJbm8Jbm8=>
+Content-type: text/plain; charset=iso-8859-1; format=flowed
+Content-transfer-encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Qiushi Wu <wu000273@umn.edu>
+Dear Beneficiary,
 
-[ Upstream commit 64157b2cb1940449e7df2670e85781c690266588 ]
+Be informed that Your ATM CARD PIN is 0985. Your daily Card withdrawal Limit is USD$10,000.00 per day. The Card is valid till April 2024 and the total amount in the ATM Master Card is Seven Hundred & Fifty Nine Thousand Dollars Only (USD$759,000.00).
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-when it returns an error code, causing incorrect ref count if
-pm_runtime_put_noidle() is not called in error handling paths.
-Thus call pm_runtime_put_noidle() if pm_runtime_get_sync() fails.
+This is your overdue Compensation Funds Covid-19  Unemployment benefits and due to you paying your tax regularly as a good citizen of your country.  Kindly reply for more details to receive your ATM card through express Courier delivery service.
 
-Signed-off-by: Qiushi Wu <wu000273@umn.edu>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/media/platform/exynos4-is/mipi-csis.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/exynos4-is/mipi-csis.c b/drivers/media/platform/exynos4-is/mipi-csis.c
-index 4b85105dc159b..4f7a0f59f36c2 100644
---- a/drivers/media/platform/exynos4-is/mipi-csis.c
-+++ b/drivers/media/platform/exynos4-is/mipi-csis.c
-@@ -513,8 +513,10 @@ static int s5pcsis_s_stream(struct v4l2_subdev *sd, int enable)
- 	if (enable) {
- 		s5pcsis_clear_counters(state);
- 		ret = pm_runtime_get_sync(&state->pdev->dev);
--		if (ret && ret != 1)
-+		if (ret && ret != 1) {
-+			pm_runtime_put_noidle(&state->pdev->dev);
- 			return ret;
-+		}
- 	}
- 
- 	mutex_lock(&state->lock);
--- 
-2.25.1
+Regards,
+Christopher Jackson
+Publicity Secretary
+International Monetary Fund (IMF)
+Stay safe Covid-19 is real
 
