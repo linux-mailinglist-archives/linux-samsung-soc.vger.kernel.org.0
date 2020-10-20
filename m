@@ -2,95 +2,179 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD8B293A71
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Oct 2020 14:00:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A75A293B21
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Oct 2020 14:20:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403771AbgJTMAe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 20 Oct 2020 08:00:34 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:52330 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394005AbgJTMAe (ORCPT
+        id S2405853AbgJTMUx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 20 Oct 2020 08:20:53 -0400
+Received: from mx2.suse.de ([195.135.220.15]:53234 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405644AbgJTMUw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 20 Oct 2020 08:00:34 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 4DB62803073D;
-        Tue, 20 Oct 2020 12:00:31 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id z3aR9aj1-qgA; Tue, 20 Oct 2020 15:00:30 +0300 (MSK)
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kukjin Kim <kgene@kernel.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH 26/29] arm64: dts: exynos: Harmonize DWC USB3 DT nodes name
-Date:   Tue, 20 Oct 2020 14:59:56 +0300
-Message-ID: <20201020115959.2658-27-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
+        Tue, 20 Oct 2020 08:20:52 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id DBC2BAEE8;
+        Tue, 20 Oct 2020 12:20:49 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        airlied@linux.ie, daniel@ffwll.ch, sam@ravnborg.org,
+        alexander.deucher@amd.com, christian.koenig@amd.com,
+        kraxel@redhat.com, l.stach@pengutronix.de,
+        linux+etnaviv@armlinux.org.uk, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, yuq825@gmail.com,
+        bskeggs@redhat.com, robh@kernel.org, tomeu.vizoso@collabora.com,
+        steven.price@arm.com, alyssa.rosenzweig@collabora.com,
+        hjc@rock-chips.com, heiko@sntech.de, hdegoede@redhat.com,
+        sean@poorly.run, eric@anholt.net, oleksandr_andrushchenko@epam.com,
+        ray.huang@amd.com, sumit.semwal@linaro.org,
+        emil.velikov@collabora.com, luben.tuikov@amd.com, apaneers@amd.com,
+        linus.walleij@linaro.org, melissa.srw@gmail.com,
+        chris@chris-wilson.co.uk, miaoqinglang@huawei.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
+        nouveau@lists.freedesktop.org, spice-devel@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, xen-devel@lists.xenproject.org,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v5 00/10] Support GEM object mappings from I/O memory
+Date:   Tue, 20 Oct 2020 14:20:36 +0200
+Message-Id: <20201020122046.31167-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-In accordance with the DWC USB3 bindings the corresponding node
-name is suppose to comply with the Generic USB HCD DT schema, which
-requires the USB nodes to have the name acceptable by the regexp:
-"^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-named.
+DRM's fbdev console uses regular load and store operations to update
+framebuffer memory. The bochs driver on sparc64 requires the use of
+I/O-specific load and store operations. We have a workaround, but need
+a long-term solution to the problem.
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
----
- arch/arm64/boot/dts/exynos/exynos5433.dtsi | 4 ++--
- arch/arm64/boot/dts/exynos/exynos7.dtsi    | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+This patchset changes GEM's vmap/vunmap interfaces to forward pointers
+of type struct dma_buf_map and updates the generic fbdev emulation to
+use them correctly. This enables I/O-memory operations on all framebuffers
+that require and support them.
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-index 74ac4ac75865..3320e596cb3f 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-@@ -1651,7 +1651,7 @@ usbdrd30: usbdrd {
- 			ranges;
- 			status = "disabled";
- 
--			usbdrd_dwc3: dwc3@15400000 {
-+			usbdrd_dwc3: usb@15400000 {
- 				compatible = "snps,dwc3";
- 				clocks = <&cmu_fsys CLK_SCLK_USBDRD30>,
- 					<&cmu_fsys CLK_ACLK_USBDRD30>,
-@@ -1704,7 +1704,7 @@ usbhost30: usbhost {
- 			ranges;
- 			status = "disabled";
- 
--			usbhost_dwc3: dwc3@15a00000 {
-+			usbhost_dwc3: usb@15a00000 {
- 				compatible = "snps,dwc3";
- 				clocks = <&cmu_fsys CLK_SCLK_USBHOST30>,
- 					<&cmu_fsys CLK_ACLK_USBHOST30>,
-diff --git a/arch/arm64/boot/dts/exynos/exynos7.dtsi b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-index b9ed6a33e290..48cd3a04fd07 100644
---- a/arch/arm64/boot/dts/exynos/exynos7.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos7.dtsi
-@@ -654,7 +654,7 @@ usbdrd3 {
- 			#size-cells = <1>;
- 			ranges;
- 
--			dwc3@15400000 {
-+			usb@15400000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x15400000 0x10000>;
- 				interrupts = <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+Patches #1 to #4 prepare VRAM helpers and drivers.
+
+Next is the update of the GEM vmap functions. Patch #5 adds vmap and vunmap
+that is usable with TTM-based GEM drivers, and patch #6 updates GEM's
+vmap/vunmap callback to forward instances of type struct dma_buf_map. While
+the patch touches many files throughout the DRM modules, the applied changes
+are mostly trivial interface fixes. Several TTM-based GEM drivers now use
+the new vmap code. Patch #7 updates GEM's internal vmap/vunmap functions to
+forward struct dma_buf_map.
+
+With struct dma_buf_map propagated through the layers, patches #8 to #10
+convert DRM clients and generic fbdev emulation to use it. Updating the
+fbdev framebuffer will select the correct functions, either for system or
+I/O memory.
+
+v5:
+	* rebase onto latest TTM changes (Chrsitian)
+	* support TTM premapped memory correctly (Christian)
+	* implement fb_read/fb_write internally (Sam, Daniel)
+	* cleanups
+v4:
+	* provide TTM vmap/vunmap plus GEM helpers and convert drivers
+	  over (Christian, Daniel)
+	* remove several empty functions
+	* more TODOs and documentation (Daniel)
+v3:
+	* recreate the whole patchset on top of struct dma_buf_map
+v2:
+	* RFC patchset
+
+
+Thomas Zimmermann (10):
+  drm/vram-helper: Remove invariant parameters from internal kmap
+    function
+  drm/cma-helper: Remove empty drm_gem_cma_prime_vunmap()
+  drm/etnaviv: Remove empty etnaviv_gem_prime_vunmap()
+  drm/exynos: Remove empty exynos_drm_gem_prime_{vmap,vunmap}()
+  drm/ttm: Add vmap/vunmap to TTM and TTM GEM helpers
+  drm/gem: Use struct dma_buf_map in GEM vmap ops and convert GEM
+    backends
+  drm/gem: Update internal GEM vmap/vunmap interfaces to use struct
+    dma_buf_map
+  drm/gem: Store client buffer mappings as struct dma_buf_map
+  dma-buf-map: Add memcpy and pointer-increment interfaces
+  drm/fb_helper: Support framebuffers in I/O memory
+
+ Documentation/gpu/todo.rst                  |  37 ++-
+ drivers/gpu/drm/Kconfig                     |   2 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |  36 ---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.h |   2 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c     |   5 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.h  |   1 -
+ drivers/gpu/drm/ast/ast_cursor.c            |  27 +--
+ drivers/gpu/drm/ast/ast_drv.h               |   7 +-
+ drivers/gpu/drm/bochs/bochs_kms.c           |   1 -
+ drivers/gpu/drm/drm_client.c                |  38 +--
+ drivers/gpu/drm/drm_fb_helper.c             | 248 ++++++++++++++++++--
+ drivers/gpu/drm/drm_gem.c                   |  29 ++-
+ drivers/gpu/drm/drm_gem_cma_helper.c        |  27 +--
+ drivers/gpu/drm/drm_gem_shmem_helper.c      |  48 ++--
+ drivers/gpu/drm/drm_gem_ttm_helper.c        |  38 +++
+ drivers/gpu/drm/drm_gem_vram_helper.c       | 117 +++++----
+ drivers/gpu/drm/drm_internal.h              |   5 +-
+ drivers/gpu/drm/drm_prime.c                 |  14 +-
+ drivers/gpu/drm/etnaviv/etnaviv_drv.h       |   3 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c       |   1 -
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |  12 +-
+ drivers/gpu/drm/exynos/exynos_drm_gem.c     |  12 -
+ drivers/gpu/drm/exynos/exynos_drm_gem.h     |   2 -
+ drivers/gpu/drm/lima/lima_gem.c             |   6 +-
+ drivers/gpu/drm/lima/lima_sched.c           |  11 +-
+ drivers/gpu/drm/mgag200/mgag200_mode.c      |  10 +-
+ drivers/gpu/drm/nouveau/Kconfig             |   1 +
+ drivers/gpu/drm/nouveau/nouveau_bo.h        |   2 -
+ drivers/gpu/drm/nouveau/nouveau_gem.c       |   6 +-
+ drivers/gpu/drm/nouveau/nouveau_gem.h       |   2 -
+ drivers/gpu/drm/nouveau/nouveau_prime.c     |  20 --
+ drivers/gpu/drm/panfrost/panfrost_perfcnt.c |  14 +-
+ drivers/gpu/drm/qxl/qxl_display.c           |  11 +-
+ drivers/gpu/drm/qxl/qxl_draw.c              |  14 +-
+ drivers/gpu/drm/qxl/qxl_drv.h               |  11 +-
+ drivers/gpu/drm/qxl/qxl_object.c            |  31 ++-
+ drivers/gpu/drm/qxl/qxl_object.h            |   2 +-
+ drivers/gpu/drm/qxl/qxl_prime.c             |  12 +-
+ drivers/gpu/drm/radeon/radeon.h             |   1 -
+ drivers/gpu/drm/radeon/radeon_gem.c         |   7 +-
+ drivers/gpu/drm/radeon/radeon_prime.c       |  20 --
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c |  22 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.h |   4 +-
+ drivers/gpu/drm/tiny/cirrus.c               |  10 +-
+ drivers/gpu/drm/tiny/gm12u320.c             |  10 +-
+ drivers/gpu/drm/ttm/ttm_bo_util.c           |  72 ++++++
+ drivers/gpu/drm/udl/udl_modeset.c           |   8 +-
+ drivers/gpu/drm/vboxvideo/vbox_mode.c       |  11 +-
+ drivers/gpu/drm/vc4/vc4_bo.c                |   7 +-
+ drivers/gpu/drm/vc4/vc4_drv.h               |   2 +-
+ drivers/gpu/drm/vgem/vgem_drv.c             |  16 +-
+ drivers/gpu/drm/vkms/vkms_plane.c           |  15 +-
+ drivers/gpu/drm/vkms/vkms_writeback.c       |  22 +-
+ drivers/gpu/drm/xen/xen_drm_front_gem.c     |  18 +-
+ drivers/gpu/drm/xen/xen_drm_front_gem.h     |   6 +-
+ include/drm/drm_client.h                    |   7 +-
+ include/drm/drm_gem.h                       |   5 +-
+ include/drm/drm_gem_cma_helper.h            |   3 +-
+ include/drm/drm_gem_shmem_helper.h          |   4 +-
+ include/drm/drm_gem_ttm_helper.h            |   6 +
+ include/drm/drm_gem_vram_helper.h           |  14 +-
+ include/drm/drm_mode_config.h               |  12 -
+ include/drm/ttm/ttm_bo_api.h                |  28 +++
+ include/linux/dma-buf-map.h                 |  93 +++++++-
+ 64 files changed, 852 insertions(+), 436 deletions(-)
+
 -- 
-2.27.0
+2.28.0
 
