@@ -2,129 +2,194 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 868B9294266
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Oct 2020 20:43:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8618294920
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Oct 2020 09:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437579AbgJTSm4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 20 Oct 2020 14:42:56 -0400
-Received: from smtprelay0130.hostedemail.com ([216.40.44.130]:38858 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2437566AbgJTSmy (ORCPT
+        id S2502104AbgJUH4R (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Oct 2020 03:56:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1]:48956 "EHLO
+        mx0a-001b2d01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2502101AbgJUH4Q (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 20 Oct 2020 14:42:54 -0400
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay02.hostedemail.com (Postfix) with ESMTP id 43FA51260;
-        Tue, 20 Oct 2020 18:42:51 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 50,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:41:355:379:599:800:960:967:973:982:988:989:1260:1277:1311:1313:1314:1345:1359:1434:1437:1515:1516:1518:1534:1542:1593:1594:1711:1730:1747:1777:1792:2198:2199:2393:2525:2553:2560:2563:2682:2685:2731:2828:2859:2911:2933:2937:2939:2942:2945:2947:2951:2954:3022:3138:3139:3140:3141:3142:3354:3622:3865:3866:3867:3868:3870:3871:3872:3873:3874:3934:3936:3938:3941:3944:3947:3950:3953:3956:3959:4321:4425:5007:6742:6743:7576:7903:8957:9025:10004:10400:10450:10455:10848:11232:11658:11914:12043:12295:12297:12663:12740:12760:12895:13153:13228:13439:14181:14659:14721:19904:19999:21080:21451:21627:21939:21990:30012:30034:30054:30070:30090:30091,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:1,LUA_SUMMARY:none
-X-HE-Tag: humor84_3a06a8527241
-X-Filterd-Recvd-Size: 4943
-Received: from XPS-9350.home (unknown [47.151.133.149])
-        (Authenticated sender: joe@perches.com)
-        by omf17.hostedemail.com (Postfix) with ESMTPA;
-        Tue, 20 Oct 2020 18:42:43 +0000 (UTC)
-Message-ID: <3bc5c2e3b3edc22a4d167ec807ecdaaf8dcda76d.camel@perches.com>
-Subject: Re: [RFC] treewide: cleanup unreachable breaks
-From:   Joe Perches <joe@perches.com>
-To:     Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>, linux-edac@vger.kernel.org,
-        linux-acpi@vger.kernel.org, linux-pm@vger.kernel.org,
-        xen-devel@lists.xenproject.org, linux-block@vger.kernel.org,
-        openipmi-developer@lists.sourceforge.net,
-        "open list:HARDWARE RANDOM NUMBER GENERATOR CORE" 
-        <linux-crypto@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-power@fi.rohmeurope.com, linux-gpio@vger.kernel.org,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org, linux-iio@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        industrypack-devel@lists.sourceforge.net,
-        linux-media@vger.kernel.org, MPT-FusionLinux.pdl@broadcom.com,
-        linux-scsi@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-can@vger.kernel.org,
-        Network Development <netdev@vger.kernel.org>,
-        intel-wired-lan@lists.osuosl.org, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        linux-stm32@st-md-mailman.stormreply.com, linux-nfc@lists.01.org,
-        linux-nvdimm <linux-nvdimm@lists.01.org>,
-        linux-pci@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org, patches@opensource.cirrus.com,
-        storagedev@microchip.com, devel@driverdev.osuosl.org,
-        linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
-        usb-storage@lists.one-eyed-alien.net,
-        linux-watchdog@vger.kernel.org, ocfs2-devel@oss.oracle.com,
-        bpf <bpf@vger.kernel.org>, linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org, keyrings@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        clang-built-linux <clang-built-linux@googlegroups.com>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        George Burgess <gbiv@google.com>
-Date:   Tue, 20 Oct 2020 11:42:42 -0700
-In-Reply-To: <CAKwvOdkR_Ttfo7_JKUiZFVqr=Uh=4b05KCPCSuzwk=zaWtA2_Q@mail.gmail.com>
-References: <20201017160928.12698-1-trix@redhat.com>
-         <20201018054332.GB593954@kroah.com>
-         <CAKwvOdkR_Ttfo7_JKUiZFVqr=Uh=4b05KCPCSuzwk=zaWtA2_Q@mail.gmail.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.4-0ubuntu1 
+        Wed, 21 Oct 2020 03:56:16 -0400
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 09L7X16V066044;
+        Wed, 21 Oct 2020 03:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=lv0GwBldnmbZQXrayavRSYj6mxTJ2VfqBwFS3jQIG0c=;
+ b=dUv4rTX/nfJgprmkjOdg/5aMNPuqyVb/enj5JDQw9bniaKU2bnh8sbD2Y8UOdBgiaPty
+ 9nnPLGBESYPJKwDsDB98+duUeED7csFciXP23ClQhtZhGQ1arOV75HXtSWrTF3bTdM/a
+ R1XwxPsvjilXzGOOu7JJ8R95o65oCrwFvZte6e1Piz4lya872/SzZHEoZ7GsuMzH19al
+ 0rnOqou3KlBmxWNZKa7kH6GzbDoXTeeuyhHGV02HSvREsYslXl3QtEAplEW7VW7RnHaK
+ AjKKmH/TdGcIYX/5UDQoDExVw2rwMpxPlF1iFwQjshxFzKC3jAP0OSpSWpJICUaYtCvb vg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 34agdm96ad-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Oct 2020 03:56:03 -0400
+Received: from m0098393.ppops.net (m0098393.ppops.net [127.0.0.1])
+        by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09L7Y7ob070104;
+        Wed, 21 Oct 2020 03:56:03 -0400
+Received: from ppma06fra.de.ibm.com (48.49.7a9f.ip4.static.sl-reverse.com [159.122.73.72])
+        by mx0a-001b2d01.pphosted.com with ESMTP id 34agdm969c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Oct 2020 03:56:03 -0400
+Received: from pps.filterd (ppma06fra.de.ibm.com [127.0.0.1])
+        by ppma06fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09L7plEK007941;
+        Wed, 21 Oct 2020 07:56:00 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+        by ppma06fra.de.ibm.com with ESMTP id 347qvha47f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 21 Oct 2020 07:56:00 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com [9.149.105.59])
+        by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 09L7twAb32506250
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 21 Oct 2020 07:55:58 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 4BD5DA4051;
+        Wed, 21 Oct 2020 07:55:58 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 88367A4055;
+        Wed, 21 Oct 2020 07:55:57 +0000 (GMT)
+Received: from [9.145.178.173] (unknown [9.145.178.173])
+        by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+        Wed, 21 Oct 2020 07:55:57 +0000 (GMT)
+Subject: Re: [PATCH v2 08/17] s390/pci: Remove races against pte updates
+To:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>, kvm@vger.kernel.org,
+        linux-mm@kvack.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-s390@vger.kernel.org,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Kees Cook <keescook@chromium.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        John Hubbard <jhubbard@nvidia.com>,
+        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+        Jan Kara <jack@suse.cz>
+References: <20201009075934.3509076-1-daniel.vetter@ffwll.ch>
+ <20201009075934.3509076-9-daniel.vetter@ffwll.ch>
+ <6deb08dd-46f3-bf26-5362-fdc696f6fd74@linux.ibm.com>
+ <20201012141906.GX438822@phenom.ffwll.local>
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+Message-ID: <3594c115-541f-806a-ee33-e99a2d1d31e8@linux.ibm.com>
+Date:   Wed, 21 Oct 2020 09:55:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20201012141906.GX438822@phenom.ffwll.local>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.737
+ definitions=2020-10-21_03:2020-10-20,2020-10-21 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ lowpriorityscore=0 spamscore=0 suspectscore=0 adultscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 clxscore=1015 mlxscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010210060
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 2020-10-19 at 12:42 -0700, Nick Desaulniers wrote:
-> On Sat, Oct 17, 2020 at 10:43 PM Greg KH <gregkh@linuxfoundation.org> wrote:
-> > On Sat, Oct 17, 2020 at 09:09:28AM -0700, trix@redhat.com wrote:
-> > > From: Tom Rix <trix@redhat.com>
-> > > 
-> > > This is a upcoming change to clean up a new warning treewide.
-> > > I am wondering if the change could be one mega patch (see below) or
-> > > normal patch per file about 100 patches or somewhere half way by collecting
-> > > early acks.
-> > 
-> > Please break it up into one-patch-per-subsystem, like normal, and get it
-> > merged that way.
-> > 
-> > Sending us a patch, without even a diffstat to review, isn't going to
-> > get you very far...
+Hi Daniel,
+
+friendly ping. I haven't seen a new version of this patch series,
+as I said I think your change for s390/pci is generally useful so
+I'm curious, are you planning on sending a new version soon?
+If you want you can also just sent this patch with the last few
+nitpicks (primarily the mail address) fixed and I'll happily apply.
+
+Best regards,
+Niklas Schnelle
+
+On 10/12/20 4:19 PM, Daniel Vetter wrote:
+> On Mon, Oct 12, 2020 at 04:03:28PM +0200, Niklas Schnelle wrote:
+... snip ....
+>>> Cc: Jason Gunthorpe <jgg@ziepe.ca>
+>>> Cc: Dan Williams <dan.j.williams@intel.com>
+>>> Cc: Kees Cook <keescook@chromium.org>
+>>> Cc: Andrew Morton <akpm@linux-foundation.org>
+>>> Cc: John Hubbard <jhubbard@nvidia.com>
+>>> Cc: Jérôme Glisse <jglisse@redhat.com>
+>>> Cc: Jan Kara <jack@suse.cz>
+>>> Cc: Dan Williams <dan.j.williams@intel.com>
+>>
+>> The above Cc: line for Dan Williams is a duplicate
+>>
+>>> Cc: linux-mm@kvack.org
+>>> Cc: linux-arm-kernel@lists.infradead.org
+>>> Cc: linux-samsung-soc@vger.kernel.org
+>>> Cc: linux-media@vger.kernel.org
+>>> Cc: Niklas Schnelle <schnelle@linux.ibm.com>
+>>> Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+>>> Cc: linux-s390@vger.kernel.org
+>>> --
+>>> v2: Move VM_IO | VM_PFNMAP checks around so they keep returning EINVAL
+>>> like before (Gerard)
+>>
+>> I think the above should go before the CC/Signed-off/Reviewev block.
 > 
-> Tom,
-> If you're able to automate this cleanup, I suggest checking in a
-> script that can be run on a directory.  Then for each subsystem you
-> can say in your commit "I ran scripts/fix_whatever.py on this subdir."
->  Then others can help you drive the tree wide cleanup.  Then we can
-> enable -Wunreachable-code-break either by default, or W=2 right now
-> might be a good idea.
+> This is a per-subsystem bikeshed :-) drivers/gpu definitely wants it
+> above, but most core subsystems want it below. I'll move it.
 > 
-> Ah, George (gbiv@, cc'ed), did an analysis recently of
-> `-Wunreachable-code-loop-increment`, `-Wunreachable-code-break`, and
-> `-Wunreachable-code-return` for Android userspace.  From the review:
-> ```
-> Spoilers: of these, it seems useful to turn on
-> -Wunreachable-code-loop-increment and -Wunreachable-code-return by
-> default for Android
-> ...
-> While these conventions about always having break arguably became
-> obsolete when we enabled -Wfallthrough, my sample turned up zero
-> potential bugs caught by this warning, and we'd need to put a lot of
-> effort into getting a clean tree. So this warning doesn't seem to be
-> worth it.
-> ```
-> Looks like there's an order of magnitude of `-Wunreachable-code-break`
-> than the other two.
+>>> ---
+>>>  arch/s390/pci/pci_mmio.c | 98 +++++++++++++++++++++++-----------------
+>>>  1 file changed, 57 insertions(+), 41 deletions(-)
+>>>
+>>> diff --git a/arch/s390/pci/pci_mmio.c b/arch/s390/pci/pci_mmio.c
+>>> index 401cf670a243..1a6adbc68ee8 100644
+>>> --- a/arch/s390/pci/pci_mmio.c
+>>> +++ b/arch/s390/pci/pci_mmio.c
+>>> @@ -119,33 +119,15 @@ static inline int __memcpy_toio_inuser(void __iomem *dst,
+>>>  	return rc;
+>>>  }
+>>>  
+>>> -static long get_pfn(unsigned long user_addr, unsigned long access,
+>>> -		    unsigned long *pfn)
+>>> -{
+>>> -	struct vm_area_struct *vma;
+>>> -	long ret;
+>>> -
+>>> -	mmap_read_lock(current->mm);
+>>> -	ret = -EINVAL;
+>>> -	vma = find_vma(current->mm, user_addr);
+>>> -	if (!vma)
+>>> -		goto out;
+>>> -	ret = -EACCES;
+>>> -	if (!(vma->vm_flags & access))
+>>> -		goto out;
+>>> -	ret = follow_pfn(vma, user_addr, pfn);
+>>> -out:
+>>> -	mmap_read_unlock(current->mm);
+>>> -	return ret;
+>>> -}
+>>> -
+>>>  SYSCALL_DEFINE3(s390_pci_mmio_write, unsigned long, mmio_addr,
+>>>  		const void __user *, user_buffer, size_t, length)
+>>>  {
+>>>  	u8 local_buf[64];
+>>>  	void __iomem *io_addr;
+>>>  	void *buf;
+>>> -	unsigned long pfn;
+>>> +	struct vm_area_struct *vma;
+>>> +	pte_t *ptep;
+>>> +	spinlock_t *ptl;
+>>
+>> With checkpatch.pl --strict the above yields a complained
+>> "CHECK: spinlock_t definition without comment" but I think
+>> that's really okay since your commit description is very clear.
+>> Same oin line 277.
 > 
-> We probably should add all 3 to W=2 builds (wrapped in cc-option).
-> I've filed https://github.com/ClangBuiltLinux/linux/issues/1180 to
-> follow up on.
-
-I suggest using W=1 as people that are doing cleanups
-generally use that and not W=123 or any other style.
-
-Every other use of W= is still quite noisy and these
-code warnings are relatively trivially to fix up.
-
-
+> I think this is a falls positive, checkpatch doesn't realize that
+> SYSCALL_DEFINE3 is a function, not a structure. And in a structure I'd
+> have added the kerneldoc or comment.
+> 
+> I'll fix up all the nits you've found for the next round. Thanks for
+> taking a look.
+> -Daniel
+> 
