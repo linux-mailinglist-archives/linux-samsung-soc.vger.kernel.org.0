@@ -2,49 +2,49 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AC262949E0
+	by mail.lfdr.de (Postfix) with ESMTP id 247FF2949DF
 	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Oct 2020 10:58:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441225AbgJUI6Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        id S2441222AbgJUI6Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
         Wed, 21 Oct 2020 04:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502354AbgJUI5T (ORCPT
+        with ESMTP id S2502359AbgJUI5U (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Oct 2020 04:57:19 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65681C0613D5
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 01:57:18 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id t9so2039299wrq.11
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 01:57:18 -0700 (PDT)
+        Wed, 21 Oct 2020 04:57:20 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3031C0613DE
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 01:57:19 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id q5so896607wmq.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 01:57:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=62xo6Yc+okj8E3g2nExt24JkphJyecIdIYx1MX/KcgQ=;
-        b=K873XhCKhky8xYu7l9PH0L4vvRQ8W4kOqwGB7em4FSZU/FH2w3o/Fs6+QECyRAghOu
-         8q8OodzeuuFUxMzw/vVk1/yMCBxwVGl1BeYckPl4pNsKxDrGH6PmKMHuJ2X/ASVVgbzy
-         2gMkhgZs8aQVpZ+fDa84ImMGzU1FdBr7OgsW4=
+        bh=8pur25W5Shkh1hHfFCpksS7ceNn2PKF9z82vTsiLN4c=;
+        b=Ijq3ip5+wV7cd7njUb6RsVnXV8g8Owp5iMrdu9TyvAk5qDDhPeT5XCXN2ALGJhsrbp
+         P5zOBKKXwRlNfH4L8OnR7mPoL971Mg4a7xN8q3N/PXmFtuMp/lDcW0snMDX7TnNSFxlk
+         g5M5E6R5TEskXfmkH4sQcqsHcoV8Z7W9kahWs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=62xo6Yc+okj8E3g2nExt24JkphJyecIdIYx1MX/KcgQ=;
-        b=MK73XLXp3jE7QYBfSBs06AGkKW0TToYmtULBGcWxoYqtAlZI3XMoNdiEiS4AuW6SUy
-         161de7IPexsnWxdbzkI9Dvz4v/OFhI0UIju1mPsM0TCaJtwVJAMk6p6nTtvzKqK4TWs2
-         /y4aPH0V/9L5mqmYfk8knUl/MaARqlyWj4R3pPaSgjVp7Glfz83NdbBul4SN4aUnd8Pm
-         09HE6jP+/kSLkOKITyr+0bjuYwfS9pCOnpCSM0W3lIfYPy3OID6yh/FsNo+3Igco2w80
-         ZwoushvZS0e618kIZuG8VOkpBLu6UzbgDjk8mOLepnbwy4rdTjfz8AaXdWvkH21hrZbG
-         ItAQ==
-X-Gm-Message-State: AOAM530id1Lg0x66BjLxsjS9kpr3qzboeI19yqZjb7m28GziKBLj4WFL
-        92bZ04gNXQcRmF21t7OGMnjk6A==
-X-Google-Smtp-Source: ABdhPJxBj+/fddzStMvRlNb0kPGellflBixkVVFjchw9D6JBYyFT9T4kixhMP79NqV0iv84nhiR1VA==
-X-Received: by 2002:a5d:480a:: with SMTP id l10mr3285006wrq.238.1603270637190;
-        Wed, 21 Oct 2020 01:57:17 -0700 (PDT)
+        bh=8pur25W5Shkh1hHfFCpksS7ceNn2PKF9z82vTsiLN4c=;
+        b=E2YxRHT+kp5tlJ3hvXPbfGDE+piIZFkxes1uJHMMXmbjKoNevBjCuVAz0b4u9grTGa
+         glbux9ir5/GNuc0q42RegyAuBD3LMs9AjQMfZhmtO3MruVVd0mXo0WzWqk+scP5vFpBu
+         37fyGrdG6NU3UAhSDZVov8IElGaAoIX4Gf8UP//gfaUF6v5INRaPmC+268wbmxao7+RJ
+         dWdwkU4bHyI+aVd8QvNKIqxYzw1yA0QOuqw0wsR9TLTWvqRvZA5r95gVyazBRnedV0vz
+         SZKAgHX/O9KEWRuRHG4sBmQT4R9D6+kQ083/W5C7a0a4wZz3MwvT5uu4zlZVDdgLtIQ0
+         46OA==
+X-Gm-Message-State: AOAM531ZoUiW0GYIoT6xTEZxVsqnQrT2NSOKiRoNQrleD6rDt0uepAXL
+        UsLYxo2GPZkDrHEDKIQj0SYF5w==
+X-Google-Smtp-Source: ABdhPJzNaFnr3EWeDP7k0cF2AHbtycSZcq0l7yhT5Nq82x3yeqTKgKPKUR9qmyptj9g+y8CFHwWMGg==
+X-Received: by 2002:a1c:2c02:: with SMTP id s2mr2512532wms.66.1603270638556;
+        Wed, 21 Oct 2020 01:57:18 -0700 (PDT)
 Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id q8sm2675939wro.32.2020.10.21.01.57.15
+        by smtp.gmail.com with ESMTPSA id q8sm2675939wro.32.2020.10.21.01.57.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 01:57:16 -0700 (PDT)
+        Wed, 21 Oct 2020 01:57:17 -0700 (PDT)
 From:   Daniel Vetter <daniel.vetter@ffwll.ch>
 To:     DRI Development <dri-devel@lists.freedesktop.org>,
         LKML <linux-kernel@vger.kernel.org>
@@ -59,18 +59,13 @@ Cc:     kvm@vger.kernel.org, linux-mm@kvack.org,
         Andrew Morton <akpm@linux-foundation.org>,
         John Hubbard <jhubbard@nvidia.com>,
         =?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-        Jan Kara <jack@suse.cz>, Pawel Osciak <pawel@osciak.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Laurent Dufour <ldufour@linux.ibm.com>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Daniel Jordan <daniel.m.jordan@oracle.com>,
-        Michel Lespinasse <walken@google.com>,
+        Jan Kara <jack@suse.cz>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Cornelia Huck <cohuck@redhat.com>,
         Daniel Vetter <daniel.vetter@ffwll.com>
-Subject: [PATCH v3 10/16] media/videbuf1|2: Mark follow_pfn usage as unsafe
-Date:   Wed, 21 Oct 2020 10:56:49 +0200
-Message-Id: <20201021085655.1192025-11-daniel.vetter@ffwll.ch>
+Subject: [PATCH v3 11/16] vfio/type1: Mark follow_pfn as unsafe
+Date:   Wed, 21 Oct 2020 10:56:50 +0200
+Message-Id: <20201021085655.1192025-12-daniel.vetter@ffwll.ch>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201021085655.1192025-1-daniel.vetter@ffwll.ch>
 References: <20201021085655.1192025-1-daniel.vetter@ffwll.ch>
@@ -81,18 +76,16 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The media model assumes that buffers are all preallocated, so that
-when a media pipeline is running we never miss a deadline because the
-buffers aren't allocated or available.
+The code seems to stuff these pfns into iommu pts (or something like
+that, I didn't follow), but there's no mmu_notifier to ensure that
+access is synchronized with pte updates.
 
-This means we cannot fix the v4l follow_pfn usage through
-mmu_notifier, without breaking how this all works. The only real fix
-is to deprecate userptr support for VM_IO | VM_PFNMAP mappings and
-tell everyone to cut over to dma-buf memory sharing for zerocopy.
+Hence mark these as unsafe. This means that with
+CONFIG_STRICT_FOLLOW_PFN, these will be rejected.
 
-userptr for normal memory will keep working as-is, this only affects
-the zerocopy userptr usage enabled in 50ac952d2263 ("[media]
-videobuf2-dma-sg: Support io userptr operations on io memory").
+Real fix is to wire up an mmu_notifier ... somehow. Probably means any
+invalidate is a fatal fault for this vfio device, but then this
+shouldn't ever happen if userspace is reasonable.
 
 Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
 Cc: Jason Gunthorpe <jgg@ziepe.ca>
@@ -107,53 +100,36 @@ Cc: linux-mm@kvack.org
 Cc: linux-arm-kernel@lists.infradead.org
 Cc: linux-samsung-soc@vger.kernel.org
 Cc: linux-media@vger.kernel.org
-Cc: Pawel Osciak <pawel@osciak.com>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: Tomasz Figa <tfiga@chromium.org>
-Cc: Laurent Dufour <ldufour@linux.ibm.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-Cc: Michel Lespinasse <walken@google.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: kvm@vger.kernel.org
 Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.com>
---
-v3:
-- Reference the commit that enabled the zerocopy userptr use case to
-  make it abundandtly clear that this patch only affects that, and not
-  normal memory userptr. The old commit message already explained that
-  normal memory userptr is unaffected, but I guess that was not clear
-  enough.
 ---
- drivers/media/common/videobuf2/frame_vector.c | 2 +-
- drivers/media/v4l2-core/videobuf-dma-contig.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/common/videobuf2/frame_vector.c b/drivers/media/common/videobuf2/frame_vector.c
-index 6590987c14bd..e630494da65c 100644
---- a/drivers/media/common/videobuf2/frame_vector.c
-+++ b/drivers/media/common/videobuf2/frame_vector.c
-@@ -69,7 +69,7 @@ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
- 			break;
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 5fbf0c1f7433..a4d53f3d0a35 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -421,7 +421,7 @@ static int follow_fault_pfn(struct vm_area_struct *vma, struct mm_struct *mm,
+ {
+ 	int ret;
  
- 		while (ret < nr_frames && start + PAGE_SIZE <= vma->vm_end) {
--			err = follow_pfn(vma, start, &nums[ret]);
-+			err = unsafe_follow_pfn(vma, start, &nums[ret]);
- 			if (err) {
- 				if (ret == 0)
- 					ret = err;
-diff --git a/drivers/media/v4l2-core/videobuf-dma-contig.c b/drivers/media/v4l2-core/videobuf-dma-contig.c
-index 52312ce2ba05..821c4a76ab96 100644
---- a/drivers/media/v4l2-core/videobuf-dma-contig.c
-+++ b/drivers/media/v4l2-core/videobuf-dma-contig.c
-@@ -183,7 +183,7 @@ static int videobuf_dma_contig_user_get(struct videobuf_dma_contig_memory *mem,
- 	user_address = untagged_baddr;
+-	ret = follow_pfn(vma, vaddr, pfn);
++	ret = unsafe_follow_pfn(vma, vaddr, pfn);
+ 	if (ret) {
+ 		bool unlocked = false;
  
- 	while (pages_done < (mem->size >> PAGE_SHIFT)) {
--		ret = follow_pfn(vma, user_address, &this_pfn);
-+		ret = unsafe_follow_pfn(vma, user_address, &this_pfn);
+@@ -435,7 +435,7 @@ static int follow_fault_pfn(struct vm_area_struct *vma, struct mm_struct *mm,
  		if (ret)
- 			break;
+ 			return ret;
  
+-		ret = follow_pfn(vma, vaddr, pfn);
++		ret = unsafe_follow_pfn(vma, vaddr, pfn);
+ 	}
+ 
+ 	return ret;
 -- 
 2.28.0
 
