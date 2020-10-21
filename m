@@ -2,151 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F5FA29547A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 Oct 2020 23:50:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7865F295516
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 22 Oct 2020 01:20:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506465AbgJUVuD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 21 Oct 2020 17:50:03 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:57530 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506456AbgJUVuD (ORCPT
+        id S2507096AbgJUXU1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 21 Oct 2020 19:20:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2507098AbgJUXU1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 21 Oct 2020 17:50:03 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201021214945euoutp02fb4c23309fe348fb2093c6d4eb71d268~AIE3M7I0Y2062820628euoutp02v
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 21:49:45 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201021214945euoutp02fb4c23309fe348fb2093c6d4eb71d268~AIE3M7I0Y2062820628euoutp02v
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1603316985;
-        bh=4fyCws4IJ/FYfmeubIZmsDv7F8YQu+sqPMRSahhjyO0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=uAQUeTsL3EV4oM9D6VUkYaW6z1pJZhWXvTLlx/PZ0N0tTPtCq+EvqZlXLsqXJt9uh
-         L3rE2Mu8IR7cw6ZqZ2CVsjTp/OhRb2wBg5+0gbNNN/QbQoY6l6unCDsv1aamehOnRB
-         gi9bErd95kWU9NwkXcZ/L6nMLklKTzynPZRvqt1I=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20201021214935eucas1p1f148e949b29a1c5c480a10aa3d499110~AIEth_NXj2935129351eucas1p1d;
-        Wed, 21 Oct 2020 21:49:35 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id 11.9C.06318.FECA09F5; Wed, 21
-        Oct 2020 22:49:35 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20201021214934eucas1p2d4acc48c40f37763c276d8d275fa9c15~AIEsqgsWh1618216182eucas1p2q;
-        Wed, 21 Oct 2020 21:49:34 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20201021214934eusmtrp1efb67b1efe137dacb88fd856555ffccc~AIEsp5GPb1537015370eusmtrp1l;
-        Wed, 21 Oct 2020 21:49:34 +0000 (GMT)
-X-AuditID: cbfec7f5-371ff700000018ae-c8-5f90acef9fc5
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id CC.E4.06017.EECA09F5; Wed, 21
-        Oct 2020 22:49:34 +0100 (BST)
-Received: from localhost (unknown [106.120.51.46]) by eusmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20201021214934eusmtip1bd463710d90630bc5f3d5abb9db7709d~AIEsd4jUo0629906299eusmtip1c;
-        Wed, 21 Oct 2020 21:49:34 +0000 (GMT)
-From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-To:     Andrew Lunn <andrew@lunn.ch>, jim.cromie@gmail.com,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     =?UTF-8?q?Bart=C5=82omiej=20=C5=BBolnierkiewicz?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
-Subject: [PATCH v3 5/5] ARM: defconfig: Enable ax88796c driver
-Date:   Wed, 21 Oct 2020 23:49:10 +0200
-Message-Id: <20201021214910.20001-6-l.stelmach@samsung.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201021214910.20001-1-l.stelmach@samsung.com>
+        Wed, 21 Oct 2020 19:20:27 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B18C0613D6
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 16:20:24 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id r8so3651502qtp.13
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 21 Oct 2020 16:20:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b4cfx4QZgYz15NDTJwDbByQvqvRvpDxc8U181kXRfhk=;
+        b=CZio0pvjUOAZVmGpPYnoIJZ3k0VTIRDxHgnxsmYuQhsz2jEdpX7JlzXAa5B1lHI4hj
+         1dkeZm3vsuYQ0+al/4Q5F2/2IuJErhNsTuza+Audcu3R6UagNTTPFO2TOlLXvivwU2k/
+         TKA9JSMlFjnoXG+A2LL1MAujxpBHcxjoID0aD31L+i9KzL1iVOVlTBMfml1ncQpAA1Ef
+         K50QmLDH8932V/fZEd6cOcCwLbIUGXgj3Ry86gAn7SRneMoAL4zkD8ulKknh501sjbP8
+         vU0trDw7S+JXN+4tdtkGwNszgrrA7N4l+RnFY0GZRBBOKZJ2H2dSIxQhc+QJQE2SJt1m
+         cPcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b4cfx4QZgYz15NDTJwDbByQvqvRvpDxc8U181kXRfhk=;
+        b=Ogjx/eLbfkaZbwCG3wO58qVnczFsAVXcaBedWuoqWOcKwX1jXgGvb6uBCTNIvCzxn8
+         hpm9mAJ779LGbAmbtpft+jejyXkjzXMylXN3ja3IWUEgMQ2nnLtJRNsSqEZ1VwDiMs9d
+         YQ9yywvyaRXrydsEOeBeEzgQpf8Kxe4c0PldxVs38wXBME+Hdv1zcearR5TSljDyLEIO
+         zqvewyhAGcv2Yg9VstS7fZrFWx4dE+HVUwCerOYe+aS6nPTzSEPUfjVjxSZxwWR10219
+         smNxahrLHtmkrVTIRfHYCd9v687Atjq8bEPIIJ0FN6leRMNQLjzhz8dQk3J1XiaH8kMo
+         ejoQ==
+X-Gm-Message-State: AOAM532J4PfCml1BnzEolZkd401Lu2Vr3YGK9kdJllRZcgHY8EqSzwhg
+        RY2AKJkfMy1/oO0zpR4g19LGEw==
+X-Google-Smtp-Source: ABdhPJylFppbCqYnSmCDnE4ueYGv0xNZzmWfiqeCGK69SNIht11gj1i8NPwvoXi//7kIPj5qPGxCVQ==
+X-Received: by 2002:ac8:1c39:: with SMTP id a54mr5530504qtk.344.1603322423832;
+        Wed, 21 Oct 2020 16:20:23 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-156-34-48-30.dhcp-dynamic.fibreop.ns.bellaliant.net. [156.34.48.30])
+        by smtp.gmail.com with ESMTPSA id n63sm2410770qka.45.2020.10.21.16.20.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2020 16:20:23 -0700 (PDT)
+Received: from jgg by mlx with local (Exim 4.94)
+        (envelope-from <jgg@ziepe.ca>)
+        id 1kVNP4-003k7m-9M; Wed, 21 Oct 2020 20:20:22 -0300
+Date:   Wed, 21 Oct 2020 20:20:22 -0300
+From:   Jason Gunthorpe <jgg@ziepe.ca>
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        linux-s390 <linux-s390@vger.kernel.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Kees Cook <keescook@chromium.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        John Hubbard <jhubbard@nvidia.com>,
+        =?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>,
+        Jan Kara <jack@suse.cz>, Bjorn Helgaas <bhelgaas@google.com>,
+        Linux PCI <linux-pci@vger.kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.com>
+Subject: Re: [PATCH v3 12/16] PCI: Obey iomem restrictions for procfs mmap
+Message-ID: <20201021232022.GN36674@ziepe.ca>
+References: <20201021085655.1192025-1-daniel.vetter@ffwll.ch>
+ <20201021085655.1192025-13-daniel.vetter@ffwll.ch>
+ <20201021125030.GK36674@ziepe.ca>
+ <CAKMK7uEWe8CaT7zjcZ6dJAKHxtxtqzjVB35fCFviwhcnqksDfw@mail.gmail.com>
+ <20201021151352.GL36674@ziepe.ca>
+ <CAKMK7uGq0=ks7Zj1Et44k7x9FwE9u_ua4zANSqrLRri0v01V+Q@mail.gmail.com>
+ <20201021163702.GM36674@ziepe.ca>
+ <CAKMK7uEjE5sHUq0hV_bnYjPKRxYyBnty0sLre+owANGZjLJg9Q@mail.gmail.com>
 MIME-Version: 1.0
-Organization: Samsung R&D Institute Poland
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHeXd2tjNpdpyiTxYaI4sEtTL0DVNU+nCgIA2FEktXHlfopmxp
-        2YcUy2umywvZHGVe0IZ5d94HDrPScoZmCSmS0cU0C4tyhuR2lPz2XH7/5/88Ly9FSKZJV+qS
-        8jKrUsoSpQI7vmFoxey11KCJOTBlAWyeNhG4pbyJxDrzTT5+MDhK4qqlchJPLr4jcdHcVwKb
-        zc1CPGYoJPGUqR7h1rlJEo/36AS43GzkYVNZP8KPB6eFeKjSGWf1DwqDHZjxyVcE0/5oisd0
-        a6eFTKs+T8C01aQz3V3LPKawXY+Y5Va3MCrK7mgcm3gplVX5BMXaXSzoHRMkZ4muNmvqiQy0
-        KsxHIgrowzCpfYjykR0loesR6EwrAi75iaDxllbIJcsIZi1PBJuSlU+fbbGErkNQ/WMvB31C
-        ULvQz7c2BHQIFNU+I60NJ3qGgKacWZsJQRsRdM+UElbKkQ6CzCGDTcGnPaDYsGCri+kAqOha
-        3bBzh5y6Tlssoo/C+LdmkmMc4Pm9DzbtdtoTGjLf2GJinb/RUUFYzYC+Q0H28BovH1HryTGY
-        +H2Gm+kI80/bN15gF4yUFPA5JB1Kiv04aQECg+4Pn2MC4N2oRWBlCHo/NPX4cOUQqPncgDip
-        PbxddOA2sF+/5C7BlcWQmy3h6D3QWNS3MdAVbs/XIw2Sarfcot2yv/a/VyUi9MiFTVEr5Kza
-        V8le8VbLFOoUpdz7QpKiFa1/upG1p7+6kPHveROiKSTdJv5+QhMjIWWp6jSFCQFFSJ3EoS9H
-        zknEcbK0a6wqKUaVksiqTWgnxZe6iH2rvpyV0HLZZTaBZZNZ1WaXR4lcM5B+NpX45e0fKZqX
-        TxREeATGV/fGuqgGvNx2HLJkxp16fz3d+cZoZ/YBxvH+wnFGbhmOivccyFdWa8L8oltm5mry
-        DLs9/PuQBtyNVbnG7iRFYHRhhyrTfKTtIx3cpjvpXHo6/LW+bJEKXXuR4BZZ3Tk45eK5Mzxi
-        cSbFfZ8iXiflqy/KDnoSKrXsH1aueBpwAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsVy+t/xu7rv1kyIN5i6Xcbi/N1DzBYbZ6xn
-        tZhzvoXFYv6Rc6wWi97PYLW49vYOq0X/49fMFufPb2C3uLCtj9Xi5qEVjBabHl9jtbi8aw6b
-        xYzz+5gsDk3dy2ix9shddotjC8QsWvceYXcQ9Lh87SKzx5aVN5k8ds66y+6xaVUnm8fmJfUe
-        O3d8ZvLo27KK0ePzJrkAjig9m6L80pJUhYz84hJbpWhDCyM9Q0sLPSMTSz1DY/NYKyNTJX07
-        m5TUnMyy1CJ9uwS9jJ7dF9gKWjkrNkxYwdzA+Ju9i5GTQ0LAROLn8xdsILaQwFJGiVn/07sY
-        OYDiUhIr56ZDlAhL/LnWBVTCBVTylFFi0Yz1YL1sAo4S/UtPsIIkRATeMEs03XvLDuIwC+xj
-        lNh/dDFYlbCAnUTTsW0sIDaLgKrEpG1vmEFsXgFridk7frNBrJCXaF++HczmFLCRuPxuAyvE
-        RdYSl95NZoSoF5Q4OfMJC8h1zALqEuvnCYGE+QW0JNY0XQcbzww0pnnrbOYJjEKzkHTMQuiY
-        haRqASPzKkaR1NLi3PTcYiO94sTc4tK8dL3k/NxNjMC43nbs55YdjF3vgg8xCnAwKvHwfvCZ
-        EC/EmlhWXJl7iFGCg1lJhNfp7Ok4Id6UxMqq1KL8+KLSnNTiQ4ymQG9OZJYSTc4Hppy8knhD
-        U0NzC0tDc2NzYzMLJXHeDoGDMUIC6YklqdmpqQWpRTB9TBycUg2MG1fIXlhqHHDJ1v38ognv
-        tqxwWu9pe3lfnfOZ/Kzzl00bvts+uzWJ1XHD9LXZNWlZto0WtpkZJx8+yFP1DTtTeWpu2//P
-        UuLCmqH9KfmFPa6cXhfdTy6TcWDd0+Rx5+xH15gl65jldbfzGk2oOCl7dqfBWVndm+r3k/NN
-        2ZfckGTzmau0SnSyEktxRqKhFnNRcSIAdD4W+AEDAAA=
-X-CMS-MailID: 20201021214934eucas1p2d4acc48c40f37763c276d8d275fa9c15
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20201021214934eucas1p2d4acc48c40f37763c276d8d275fa9c15
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20201021214934eucas1p2d4acc48c40f37763c276d8d275fa9c15
-References: <20201021214910.20001-1-l.stelmach@samsung.com>
-        <CGME20201021214934eucas1p2d4acc48c40f37763c276d8d275fa9c15@eucas1p2.samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKMK7uEjE5sHUq0hV_bnYjPKRxYyBnty0sLre+owANGZjLJg9Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enable ax88796c driver for the ethernet chip on Exynos3250-based
-ARTIK5 boards.
+On Wed, Oct 21, 2020 at 09:24:08PM +0200, Daniel Vetter wrote:
+> On Wed, Oct 21, 2020 at 6:37 PM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+> >
+> > On Wed, Oct 21, 2020 at 05:54:54PM +0200, Daniel Vetter wrote:
+> >
+> > > The trouble is that io_remap_pfn adjust vma->pgoff, so we'd need to
+> > > split that. So ideally ->mmap would never set up any ptes.
+> >
+> > /dev/mem makes pgoff == pfn so it doesn't get changed by remap.
+> >
+> > pgoff doesn't get touched for MAP_SHARED either, so there are other
+> > users that could work like this - eg anyone mmaping IO memory is
+> > probably OK.
+> 
+> I was more generally thinking for io_remap_pfn_users because of the
+> mkwrite use-case we might have in fbdev emulation in drm.
 
-Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
----
- arch/arm/configs/exynos_defconfig   | 2 ++
- arch/arm/configs/multi_v7_defconfig | 2 ++
- 2 files changed, 4 insertions(+)
+You have a use case for MAP_PRIVATE and io_remap_pfn_range()??
 
-diff --git a/arch/arm/configs/exynos_defconfig b/arch/arm/configs/exynos_defconfig
-index cf82c9d23a08..1ee902d01eef 100644
---- a/arch/arm/configs/exynos_defconfig
-+++ b/arch/arm/configs/exynos_defconfig
-@@ -107,6 +107,8 @@ CONFIG_MD=y
- CONFIG_BLK_DEV_DM=y
- CONFIG_DM_CRYPT=m
- CONFIG_NETDEVICES=y
-+CONFIG_NET_VENDOR_ASIX=y
-+CONFIG_SPI_AX88796C=y
- CONFIG_SMSC911X=y
- CONFIG_USB_RTL8150=m
- CONFIG_USB_RTL8152=y
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index e731cdf7c88c..dad53846f58f 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -243,6 +243,8 @@ CONFIG_SATA_HIGHBANK=y
- CONFIG_SATA_MV=y
- CONFIG_SATA_RCAR=y
- CONFIG_NETDEVICES=y
-+CONFIG_NET_VENDOR_ASIX=y
-+CONFIG_SPI_AX88796C=m
- CONFIG_VIRTIO_NET=y
- CONFIG_B53_SPI_DRIVER=m
- CONFIG_B53_MDIO_DRIVER=m
--- 
-2.26.2
-
+Jason
