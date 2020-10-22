@@ -2,82 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D6B2958A8
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 22 Oct 2020 08:56:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A68E82958B8
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 22 Oct 2020 09:01:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2443712AbgJVGzs convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 22 Oct 2020 02:55:48 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33012 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2411545AbgJVGzr (ORCPT
+        id S2504805AbgJVHBA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 22 Oct 2020 03:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2504801AbgJVHA5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 22 Oct 2020 02:55:47 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w23so673889edl.0;
-        Wed, 21 Oct 2020 23:55:46 -0700 (PDT)
+        Thu, 22 Oct 2020 03:00:57 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A91CC0613D6
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 22 Oct 2020 00:00:56 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id k27so668167oij.11
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 22 Oct 2020 00:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2r/6zOf2kRDD4tSmvaZuCPU8DwfuIowf0YjaeLwP4Nk=;
+        b=et6ZBeQFHerVGVhgtgtRrYMM/XKZjx8P9HBSzQAYN1qwBLnRqWCR1692Hd2N6mG2QH
+         DRodjxUs0g/udks4HbxzEysdS3iPEQ/WX4sYQzu415V2h1QQT1XnQSq/3dWFguLdKkzI
+         zrJA18zci4a+rkwc8KCUbQtvVEViy3ghNPANM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=wMeB1zJzZMK8x7XA1QSAy+WdSIpZ6mUMkpBppzeyvnw=;
-        b=YUB39IHhYcaI2qkgIOOKfF/XmPoHGFfS0TeVQ5CYM8KIr46Hlm6BYTmEPtnTVBBOrf
-         469ysRGQNWLHxg8rIUW1IeGJqTlAjNz2HvPvi2IR5C3t9/YhO9/h5Hx/1ylKO159eTCr
-         4b4fBYw8GzF8SZdauEty6jU6JheOV7S910v2N/jowVaI98dguhBd1Ash0Abm6wMhgQ4P
-         SHmy01vlio0jOOpGVpmsS1JNZki5Nwdp2YJDo335mquEmwCe2XmAwaQ+B04yMylEJdo2
-         ujecThgzXFV2/GJWkDRou9vq6DBDohQwgz+KF6whTYG7lvNpdBT3GegKCCRFhRbJCxEd
-         N4eg==
-X-Gm-Message-State: AOAM530Y8/lwqUkAA/eOTLhjrtNVz5a8k8EG5d8szMXRFyChO+5z/4OE
-        8FtrIPF1v22yHJQaH1YQBvM=
-X-Google-Smtp-Source: ABdhPJygfj7Hlq2E4HbV0n7CfCdPnc4i/J7eKS1StJBSG5I6GXjoEvLuS0tOu+gGxnqqzYGmz4+Zqg==
-X-Received: by 2002:aa7:c98f:: with SMTP id c15mr973061edt.200.1603349746176;
-        Wed, 21 Oct 2020 23:55:46 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.171])
-        by smtp.googlemail.com with ESMTPSA id e7sm303568ejm.4.2020.10.21.23.55.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 23:55:45 -0700 (PDT)
-Date:   Thu, 22 Oct 2020 08:55:42 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>, jim.cromie@gmail.com,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        =?utf-8?Q?Bart=C5=82omiej_=C5=BBolnierkiewicz?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v3 2/5] dt-bindings: net: Add bindings for AX88796C SPI
- Ethernet Adapter
-Message-ID: <20201022065542.GB3829@kozik-lap>
-References: <20201021214910.20001-1-l.stelmach@samsung.com>
- <CGME20201021214933eucas1p152c8fc594793aca56a1cbf008f8415a4@eucas1p1.samsung.com>
- <20201021214910.20001-3-l.stelmach@samsung.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2r/6zOf2kRDD4tSmvaZuCPU8DwfuIowf0YjaeLwP4Nk=;
+        b=c5PbPPkTMNUtbeVRrOENcsKESakUto9GT55fZgG+/+FQ9gZfnJe9nHFq56le8XzmCs
+         FJd6u2PcwPvWzMGCqceNi3u6/+YlqNvhJ1HgIf6+NmzS9M73/cgNYDVjGkA6RJIZx16U
+         rZeYrvqanLwmdoLYGTv/DI1ifcSMPHimo3VRHN7ZPPgHrJMjMQitJe5Il+2oDFjM8eu6
+         BEeu34jfSjRxGs0tR03oenYaVTeOlmN98DN2awNzptxyz0NLXpO/UPMFKDFeY9KR8VKf
+         XEoVPSnlUGgyKLbOkvlkOsbSUxHnup2/5T90JI0jQc1jS8WFNHHbd0E0IGHV0C8hztZo
+         xItA==
+X-Gm-Message-State: AOAM532tVvf6SqJiPYzN8ChBGQXBVdektu9PImJxTXhC8QSueZe0PGnj
+        viW93mZQJMA0w/cwmR3/8jhoZobSf3BDxjqlHMElsA==
+X-Google-Smtp-Source: ABdhPJw2FIAzZzMzBC6IGQ2084OMcZPDQegSMdZ1Ud1eEaxA84bu8yPrNPLWUQWDUUxTjx4XtxIOFs49Df+sZwbm0Kw=
+X-Received: by 2002:aca:cc01:: with SMTP id c1mr631463oig.128.1603350055185;
+ Thu, 22 Oct 2020 00:00:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <20201021214910.20001-3-l.stelmach@samsung.com>
+References: <20201021085655.1192025-1-daniel.vetter@ffwll.ch>
+ <20201021085655.1192025-13-daniel.vetter@ffwll.ch> <20201021125030.GK36674@ziepe.ca>
+ <CAKMK7uEWe8CaT7zjcZ6dJAKHxtxtqzjVB35fCFviwhcnqksDfw@mail.gmail.com>
+ <20201021151352.GL36674@ziepe.ca> <CAKMK7uGq0=ks7Zj1Et44k7x9FwE9u_ua4zANSqrLRri0v01V+Q@mail.gmail.com>
+ <20201021163702.GM36674@ziepe.ca> <CAKMK7uEjE5sHUq0hV_bnYjPKRxYyBnty0sLre+owANGZjLJg9Q@mail.gmail.com>
+ <20201021232022.GN36674@ziepe.ca>
+In-Reply-To: <20201021232022.GN36674@ziepe.ca>
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Thu, 22 Oct 2020 09:00:44 +0200
+Message-ID: <CAKMK7uEkAK42+19KRo06XzJFuMCVriEEg0jxqXq8oAdt2ExLsQ@mail.gmail.com>
+Subject: Re: [PATCH v3 12/16] PCI: Obey iomem restrictions for procfs mmap
+To:     Jason Gunthorpe <jgg@ziepe.ca>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        linux-s390 <linux-s390@vger.kernel.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Kees Cook <keescook@chromium.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        John Hubbard <jhubbard@nvidia.com>,
+        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+        Jan Kara <jack@suse.cz>, Bjorn Helgaas <bhelgaas@google.com>,
+        Linux PCI <linux-pci@vger.kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 11:49:07PM +0200, Łukasz Stelmach wrote:
-> Add bindings for AX88796C SPI Ethernet Adapter.
-> 
-> Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
-> ---
->  .../bindings/net/asix,ax88796c.yaml           | 69 +++++++++++++++++++
->  1 file changed, 69 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/asix,ax88796c.yaml
-> 
+On Thu, Oct 22, 2020 at 1:20 AM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+>
+> On Wed, Oct 21, 2020 at 09:24:08PM +0200, Daniel Vetter wrote:
+> > On Wed, Oct 21, 2020 at 6:37 PM Jason Gunthorpe <jgg@ziepe.ca> wrote:
+> > >
+> > > On Wed, Oct 21, 2020 at 05:54:54PM +0200, Daniel Vetter wrote:
+> > >
+> > > > The trouble is that io_remap_pfn adjust vma->pgoff, so we'd need to
+> > > > split that. So ideally ->mmap would never set up any ptes.
+> > >
+> > > /dev/mem makes pgoff == pfn so it doesn't get changed by remap.
+> > >
+> > > pgoff doesn't get touched for MAP_SHARED either, so there are other
+> > > users that could work like this - eg anyone mmaping IO memory is
+> > > probably OK.
+> >
+> > I was more generally thinking for io_remap_pfn_users because of the
+> > mkwrite use-case we might have in fbdev emulation in drm.
+>
+> You have a use case for MAP_PRIVATE and io_remap_pfn_range()??
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Best regards,
-Krzysztof
+Uh no :-) But for ioremaps and keep track of which pages userspace has
+touched. Problem is that there's many displays where you need to
+explicitly upload the data, and in drm we have ioctl calls for that.
+fbdev mmap assumes this just magically happens. So you need to keep
+track of write faults, launch a delayed worker which first re-protects
+all ptes and then uploads the dirty pages. And ideally we wouldn't
+have to implement this everywhere just for fbdev, but could wrap it
+around an existing mmap implementation by just intercepting mkwrite.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
