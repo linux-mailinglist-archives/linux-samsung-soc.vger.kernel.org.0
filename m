@@ -2,106 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6F829698C
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Oct 2020 08:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10DDF296ACD
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Oct 2020 09:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S372222AbgJWGMF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 23 Oct 2020 02:12:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S372213AbgJWGMF (ORCPT
+        id S376063AbgJWH6h (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 23 Oct 2020 03:58:37 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:46504 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S376079AbgJWH6f (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 23 Oct 2020 02:12:05 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15DD8C0613D2
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 22 Oct 2020 23:12:05 -0700 (PDT)
-Received: from pty.hi.pengutronix.de ([2001:67c:670:100:1d::c5])
-        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1kVqIe-00047x-IK; Fri, 23 Oct 2020 08:11:40 +0200
-Received: from ukl by pty.hi.pengutronix.de with local (Exim 4.89)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1kVqIc-0007Pm-9n; Fri, 23 Oct 2020 08:11:38 +0200
-Date:   Fri, 23 Oct 2020 08:11:36 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
+        Fri, 23 Oct 2020 03:58:35 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201023075817euoutp02c31c6c2c94104865db7a31e53100fe1c~AkBddI94k1606416064euoutp02_
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 23 Oct 2020 07:58:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201023075817euoutp02c31c6c2c94104865db7a31e53100fe1c~AkBddI94k1606416064euoutp02_
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1603439897;
+        bh=evdQ0JQ4MgQjq/lEzt1kYGqztUWWSPa+L3GuDGy0H7g=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=NhYP3Dvqz2dlqFWHumlnFuDTC3t7zmQpbyi39pa+yO9LuHQueIMrrF06RiEqsJnJq
+         MATDJqHpu68pA24WoyFnXNrCcQVv9cIHmbzbqEebfZ1avILkGXTjggIiTN6MfbZdfa
+         zkq5NxJWPuk6z3T0eefm5g2Tt5HOBPTvfsLofdu4=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20201023075754eucas1p1458e61f374553c33b1225fb6309a075d~AkBIO_S321157111571eucas1p1D;
+        Fri, 23 Oct 2020 07:57:54 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id B0.06.06318.20D829F5; Fri, 23
+        Oct 2020 08:57:54 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20201023075754eucas1p2ee617893ba13493236814235c619bc56~AkBHyK_8q1362913629eucas1p2b;
+        Fri, 23 Oct 2020 07:57:54 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20201023075754eusmtrp2ec6d97691a18777cab7006a42135eaf8~AkBHxX4Bo2144121441eusmtrp2q;
+        Fri, 23 Oct 2020 07:57:54 +0000 (GMT)
+X-AuditID: cbfec7f5-38bff700000018ae-ab-5f928d02dc78
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id D0.27.06017.10D829F5; Fri, 23
+        Oct 2020 08:57:54 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20201023075753eusmtip1655b18a053bc79db9c19ac32186fe871~AkBHMEfKA2168021680eusmtip1N;
+        Fri, 23 Oct 2020 07:57:53 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Vinod Koul <vkoul@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Kamil Debski <kamil@wypas.org>
-Subject: Re: [PATCH 1/4] MAINTAINERS: move Kamil Debski to credits
-Message-ID: <20201023061136.cjhpuh5lye6sclf6@pengutronix.de>
-References: <20201016151528.7553-1-krzk@kernel.org>
- <20201022191314.plesyizmczgdmodr@pengutronix.de>
- <20201022200925.GA2525@kozik-lap>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="64of3vfnxriskdjj"
-Content-Disposition: inline
-In-Reply-To: <20201022200925.GA2525@kozik-lap>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c5
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: [PATCH v2 0/6] Add DW PCIe support for Exynos5433 SoCs
+Date:   Fri, 23 Oct 2020 09:57:38 +0200
+Message-Id: <20201023075744.26200-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0VSWUwTURTN67QzA7EwFJQXJBCbWJdEkKBm3FGJzgdR+BMjS5UJENnsUATi
+        B4HIMoKsKhCChICU0gIpDUqFArWxNNhFSZAQiOEDlyr+FJQigrSD+Hfuuefcc+/LwxFRvSAI
+        T8/KpWVZ0gwx6s0ffOOyHuFV1SUd/dYQSnYUp5HPjFYBObNWKiAVy00YaV+sREmbrR8jp3Qt
+        KGlpNaFko03PI7///oKRauM8Rj4YMWLk0NwEEiWkVK0qQA01z2NUm0ZOaZQVKPVIqwSUaeYF
+        j3JqQmKxG95nUuiM9DxaFn4u2TvtieIzyBn2yzfUJxYBjQ8LvHBIHIOjHXbMjUWEAsBS9hIL
+        vLfwMoAtb/UCrnACaGNX+SzAPQ5dRTzHdwHYVLaJ7DhqVdM89yiUiIDsEou6DQFEFFxdId0a
+        hGhHYFG1Ebg1/sR5uNb7zKPnE/thicbs4YXEWaj+M83n1guFPf1jngBIVGOwQbeOco1oWPuh
+        C+GwP3SYtBiHg+HmkHuo21AC4IJVjXFFJYBTxY2AU52Gc9Y1z3oIcQj26cI5+gLceF61faYP
+        nFnyc9PIFqwbfIpwtBCWl4o4tQQ2m3p3Ysft77fXoeC0o5vPPWkCnOj8xasBIc3/s9oAUIJA
+        Ws5kptJMZBZ9L4yRZjLyrNSw29mZGrD1VSY3TCsvgX79lgEQOBDvEibX1CaJBNI8piDTACCO
+        iAOEFy2TiSJhirSgkJZlJ8nkGTRjAHtxvjhQGNn+NUFEpEpz6Ts0nUPL/nV5uFdQEdj9wyUZ
+        TXB+AmUbK/vEm3Eqxv76+oa8cCy+93j5eAzE1J2+wyMLB5ytk9oBX3uf1aKHBx3RwaLw/GHL
+        5EP1K4n5iiEo38UueiVqu3++OzkbfbXHPOWYO3FKeDMuPrbxfozy8vJYaAxPsafkY2ulS2me
+        bprVDkge371G+W2SYj6TJo04jMgY6V+EAoUvJgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJLMWRmVeSWpSXmKPExsVy+t/xu7pMvZPiDeaGWixpyrCYf+Qcq8WN
+        X22sFiu+zGS3uPC0h83i/PkN7BaXd81hszg77zibxYzz+5gs3vx+wW6x9shddovWvUfYLXbe
+        OcHswOuxZt4aRo+ds+6yeyzYVOqxaVUnm0ffllWMHsdvbGfy+LxJLoA9Ss+mKL+0JFUhI7+4
+        xFYp2tDCSM/Q0kLPyMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS9j2ornjAV7BCsOTY5rYNzE
+        18XIwSEhYCKxqzOyi5GLQ0hgKaPEl3sT2boYOYHiMhInpzWwQtjCEn+udbFBFH1ilNj0aAU7
+        SIJNwFCi620XWIOIgJPE+8kXmUGKmAXWMEs0tnUzgSSEBewlfq2bD2azCKhKNG86yQhi8wrY
+        Sqz9e40FYoO8xOoNB5gnMPIsYGRYxSiSWlqcm55bbKRXnJhbXJqXrpecn7uJERjM24793LKD
+        setd8CFGAQ5GJR7ehAkT44VYE8uKK3MPMUpwMCuJ8DqdPR0nxJuSWFmVWpQfX1Sak1p8iNEU
+        aPlEZinR5HxgpOWVxBuaGppbWBqaG5sbm1koifN2CByMERJITyxJzU5NLUgtgulj4uCUamBk
+        WXm58YiDsFHZtC62Z0LKfy92+YZKLFMNXdlb+n+LcvK/B685m14m7TH5Npl3z4acvcnPd3z5
+        qBPtk6RyQeqJ+KyNpqUyIt9d854UyvHNjfKTsG493Ge2SLSsj5VpjTlvSs/yG6ySuvO/PdjY
+        x7m+wifArbYy9/9l5rUXPvfE3Io/pRW20U+JpTgj0VCLuag4EQCJ/uJPfAIAAA==
+X-CMS-MailID: 20201023075754eucas1p2ee617893ba13493236814235c619bc56
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20201023075754eucas1p2ee617893ba13493236814235c619bc56
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20201023075754eucas1p2ee617893ba13493236814235c619bc56
+References: <CGME20201023075754eucas1p2ee617893ba13493236814235c619bc56@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Dear All,
 
---64of3vfnxriskdjj
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patchset is a resurrection of the DW PCIe support for the Exynos5433
+SoCs posted long time ago here: https://lkml.org/lkml/2016/12/26/6 and
+later here: https://lkml.org/lkml/2017/12/21/296 .
 
-Hello Krzysztof,
+In meantime the support for the Exynos5440 SoCs has been completely
+dropped from mainline kernel, as those SoCs never reached the market. The
+PCIe driver for Exynos5440 variant however has not been removed yet. This
+patchset simply reworks it to support the Exynos5433 variant. The lack of
+the need to support both variants significantly simplifies the driver
+code.
 
-On Thu, Oct 22, 2020 at 10:09:25PM +0200, Krzysztof Kozlowski wrote:
-> On Thu, Oct 22, 2020 at 09:13:14PM +0200, Uwe Kleine-K=F6nig wrote:
-> > this series doesn't seem to be applied and looking at the list of people
-> > this mail was sent "To:" it's not obvious who is expected to take it. I
-> > assume it is not for us linux-pwm guys and will tag it as
-> > "not-applicable" in our patchwork.
->=20
-> All of the patches, including the one here, touch actually multiple
-> subsystems, so if this is OK with you, I could take them through
-> Samsung SoC.
+Best regards,
+Marek Szyprowski
 
-I don't object. And I failed to find where pwm is touched (I assume I
-didn't look carefully enough).
+v2:
+- fixed issues in dt-bindings pointed by Krzysztof and Rob
 
-Best regards
-Uwe
+v1: https://lore.kernel.org/linux-samsung-soc/20201019094715.15343-1-m.szyprowski@samsung.com/
+- initial version of this resurrected patchset
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Patch summary:
 
---64of3vfnxriskdjj
-Content-Type: application/pgp-signature; name="signature.asc"
+Jaehoon Chung (3):
+  phy: samsung: phy-exynos-pcie: rework driver to support Exynos5433
+    PCIe PHY
+  pci: dwc: pci-exynos: rework the driver to support Exynos5433 variant
+  arm64: dts: exynos: add the WiFi/PCIe support to TM2(e) boards
 
------BEGIN PGP SIGNATURE-----
+Marek Szyprowski (3):
+  dt-bindings: pci: drop samsung,exynos5440-pcie binding
+  dt-bindings: pci: add the samsung,exynos-pcie binding
+  dt-bindings: phy: add the samsung,exynos-pcie-phy binding
 
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAl+SdBUACgkQwfwUeK3K
-7AkxRQf7B5uGR0Tf8DzE82B5Uy0nOOhk7weuNjW+IHxy78ekhlyQxfjS0sJ0rYc9
-Z6G2m0AmEmMmDVq8u0FHZ9u6viBuXKfQ4CqlNd2UiR7olagr61pGbrSxjIwgIDA4
-zSEbNILuUqqenjp6m0FGSP6HUNfUbF6pNI0XWnZELus0wST2fdIUH508b4gtlTYX
-9wRzn7EMA1jzzZtqP1okoAa2C1B2CQvXXdD3YUByJruBhXGRpJ3rf26S6wW9r59x
-snDtRxeFWYxgPWbyehWse1Il0R5LgdBAYfdFK0NNFG2EltMzB8vstGKpd9AEI2ka
-Yn6pL8rsDumxeUoXxlK2dPArdLZwuw==
-=RZQR
------END PGP SIGNATURE-----
+ .../bindings/pci/samsung,exynos-pcie.yaml     | 114 ++++++
+ .../bindings/pci/samsung,exynos5440-pcie.txt  |  58 ---
+ .../bindings/phy/samsung,exynos-pcie-phy.yaml |  51 +++
+ .../boot/dts/exynos/exynos5433-pinctrl.dtsi   |   2 +-
+ .../dts/exynos/exynos5433-tm2-common.dtsi     |  24 +-
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi    |  35 ++
+ drivers/pci/controller/dwc/Kconfig            |   3 +-
+ drivers/pci/controller/dwc/pci-exynos.c       | 358 +++++++-----------
+ drivers/pci/quirks.c                          |   1 +
+ drivers/phy/samsung/phy-exynos-pcie.c         | 304 ++++++---------
+ 10 files changed, 481 insertions(+), 469 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos5440-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos-pcie-phy.yaml
 
---64of3vfnxriskdjj--
+-- 
+2.17.1
+
