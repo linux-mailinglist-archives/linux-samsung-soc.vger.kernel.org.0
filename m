@@ -2,76 +2,89 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4846F296C18
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Oct 2020 11:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05696296DBB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Oct 2020 13:34:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S461417AbgJWJ23 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 23 Oct 2020 05:28:29 -0400
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:40867 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S461303AbgJWJ23 (ORCPT
+        id S462986AbgJWLeZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 23 Oct 2020 07:34:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42148 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S462985AbgJWLeY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 23 Oct 2020 05:28:29 -0400
-Received: by mail-ej1-f65.google.com with SMTP id z5so1432682ejw.7;
-        Fri, 23 Oct 2020 02:28:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NPuEY713o3UutUERO11Xp2e4yjYgZSU01XlNzEzL3Qo=;
-        b=abS2awKRoJHDUf2lIiX7T5dcNm4TAL0ny1vjLoagp1rSGqAStMWJZec6y0GY58Fxf+
-         raFE3ss8tIbdyPAsWI+d7i51HrlC9YRbRptnO/vHbnZMcTW9eMXnaKPfu2FkfyJ1Na0v
-         6jYLJj/cCfOcjHp0InLi2ksHsgalvhbls04jDdYxO6RuqlHBucoZo/10x3SJ2ZmTL+PL
-         UVOfTTiMCG/zwZ7mJhFx/ujaNCFz7dom454fM1t3BlcR/VC70OoSgrBA5brcDX0x1lG0
-         +cjpAhMV+0K5/6BDlH0uhWFbkW1AhjyCzGS7tnIgO7ipbWqCCkCI7ys1nVGbVsiqZCp+
-         wBZg==
-X-Gm-Message-State: AOAM533DQejuABiaDCPbVFpYOSHLzv0rdWoT6ckEP7CvGbZ0FizVfQmP
-        HjMDjjGW+XgOSLPxnyT2cUI=
-X-Google-Smtp-Source: ABdhPJyD2TcAuJSXLs7ms8T/6qRFnEJhxitOhdxO0MxZGwV8iNIs1IzWT6KBf3b7WuO5BrP+fmb65w==
-X-Received: by 2002:a17:907:4301:: with SMTP id nh1mr989136ejb.397.1603445306643;
-        Fri, 23 Oct 2020 02:28:26 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.171])
-        by smtp.googlemail.com with ESMTPSA id p16sm462604edu.74.2020.10.23.02.28.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 02:28:25 -0700 (PDT)
-Date:   Fri, 23 Oct 2020 11:28:20 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2 3/6] dt-bindings: phy: add the samsung,exynos-pcie-phy
- binding
-Message-ID: <20201023092820.GB19257@kozik-lap>
-References: <20201023075744.26200-1-m.szyprowski@samsung.com>
- <CGME20201023075755eucas1p165641c7528ea987a2e1d9d28198c0e9e@eucas1p1.samsung.com>
- <20201023075744.26200-4-m.szyprowski@samsung.com>
+        Fri, 23 Oct 2020 07:34:24 -0400
+Received: from [192.168.0.50] (89-70-52-201.dynamic.chello.pl [89.70.52.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AF78720EDD;
+        Fri, 23 Oct 2020 11:34:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603452864;
+        bh=yitxDveLp7gb378cd6M1GqApDS4EOwZaZ6lGFlzXqqI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=HfukXPPCI8BYXcw33DKfMyyUWbj+lWHR4Aumc1/9R1kRiVOwYZdTlUrXATexQc8ZY
+         gKfgamMkM5dsYQDHncbbbHExJ8+jB+0HzYJhIz+8WGs5zgoE7nMxKe1YnY9j+iTdXY
+         Fp4mCGMV/U7Ndd6acxj9fTwBv+ZQt5L4TmnMRBdg=
+Subject: Re: [PATCH 1/2] soc: samsung: exynos-pmu: instantiate clkout driver
+ as MFD
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+References: <20201001165646.32279-1-krzk@kernel.org>
+ <20201001165646.32279-2-krzk@kernel.org>
+From:   Sylwester Nawrocki <snawrocki@kernel.org>
+Message-ID: <32d3faaf-1631-3ebe-6d73-fe565c39639d@kernel.org>
+Date:   Fri, 23 Oct 2020 13:34:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <20201001165646.32279-2-krzk@kernel.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201023075744.26200-4-m.szyprowski@samsung.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 09:57:41AM +0200, Marek Szyprowski wrote:
-> Add dt-bindings for the Samsung Exynos PCIe PHY controller (Exynos5433
-> variant). Based on the text dt-binding posted by Jaehoon Chung.
-> 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  .../bindings/phy/samsung,exynos-pcie-phy.yaml | 51 +++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos-pcie-phy.yaml
-> 
+Hi,
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+On 10/1/20 18:56, Krzysztof Kozlowski wrote:
+> The Exynos clock output (clkout) driver uses same register address space
+> (Power Management Unit address space) as Exynos PMU driver and same set
+> of compatibles.  It was modeled as clock provider instantiated with
+> CLK_OF_DECLARE_DRIVE().
+> 
+> This however brings ordering problems and lack of probe deferral,
+> therefore clkout driver should be converted to a regular module and
+> instantiated as a child of PMU driver to be able to use existing
+> compatibles and address space.
 
-Best regards,
-Krzysztof
+It might have been cleaner to have the CLKOUT device as a PMU subnode in DT, 
+then device instantiation would be already covered by devm_of_platform_populate().
+But it gets a bit complicated to make such a change in a backward compatible way.
+
+I have tested both patches on Trats2, where CLKOUT provides master clock for
+the audio codec.
+
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Tested-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+ 
+
+> @@ -128,6 +134,11 @@ static int exynos_pmu_probe(struct platform_device *pdev)
+>   
+>   	platform_set_drvdata(pdev, pmu_context);
+>   
+> +	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE, exynos_pmu_devs,
+> +				   ARRAY_SIZE(exynos_pmu_devs), NULL, 0, NULL);
+> +	if (ret)
+> +		return ret;
+> +
+>   	if (devm_of_platform_populate(dev))
+>   		dev_err(dev, "Error populating children, reboot and poweroff might not work properly\n");
+
+
