@@ -2,88 +2,20 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D624F29C3AE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Oct 2020 18:49:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8967829C3FB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Oct 2020 18:51:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1822365AbgJ0Rtc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 27 Oct 2020 13:49:32 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33738 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1822115AbgJ0RrG (ORCPT
+        id S1822695AbgJ0Rvt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 27 Oct 2020 13:51:49 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:34618 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2901477AbgJ0OXy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 27 Oct 2020 13:47:06 -0400
-Received: by mail-ed1-f65.google.com with SMTP id w23so2367157edl.0
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 27 Oct 2020 10:47:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:resent-from:resent-date:resent-message-id
-         :resent-to:dmarc-filter:dkim-filter:dkim-signature:from:to:cc
-         :subject:date:message-id:in-reply-to:cms-type:references;
-        bh=w63XQDjZCP11ykXLFKcGVmM/GiTpYJJ2CyfjB4+5SLY=;
-        b=ix6q1QI7txlgx4p+5KnILhpPuQubsVWo5lxzq0lBKwGTj5G71Nj9FexxTDkUF436W5
-         MIj5Yz3CHupO2fblKS5LCkShO99Q8DrN0shDH/rSHrJaXk4arPl/z72H0AbEinOq4REK
-         rnrbF7/YF3cGYb+Uj2yAYPUjAGTQbCfaRqfJRPUMLwQNDwJsOHxb9nyxq0FEweLRTyhC
-         Peuh74YpnYwodNrwnNlljEW5Uje5lOqC7uQgQWKgwjlY4wK6le70DCfMwngxq6Wf0v0f
-         Tp1FhMQe6fdfliPOOwmQFgF2JvfXiZL4VVebpS2SGI6yf4bSjTbHThyz9aKQPoGg1Ihb
-         MWAQ==
-X-Gm-Message-State: AOAM533ErSckRIFlR0j7Zds3ww1KURAreqF7Mze8SquDadok41Cy/u3z
-        pGe+Sqn2N3b+5V+ot8vlANJqpg+zhUkNqVTg
-X-Google-Smtp-Source: ABdhPJzf6ILT0jFaDqL9gTd6iYAMi9Il0seTzdRp2BM9aI12tVEsIbu4Yvab6aIcM4Xxmr9R80NWwg==
-X-Received: by 2002:a50:8acf:: with SMTP id k15mr3440611edk.351.1603820822822;
-        Tue, 27 Oct 2020 10:47:02 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.184])
-        by smtp.googlemail.com with ESMTPSA id p9sm1422447ejo.75.2020.10.27.10.47.01
-        for <linux-samsung-soc@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 10:47:01 -0700 (PDT)
-Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=m.szyprowski@samsung.com
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: mail.kernel.org;
-        dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="FGTNg8hT"
-Received: by 2002:a17:907:685:0:0:0:0 with SMTP id wn5csp3535786ejb;
-        Tue, 27 Oct 2020 07:23:56 -0700 (PDT)
-X-Received: by 2002:a17:90a:6b08:: with SMTP id v8mr2246836pjj.126.1603808636154;
-        Tue, 27 Oct 2020 07:23:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1603808636; cv=none;
-        d=google.com; s=arc-20160816;
-        b=cbATrcWPGtK0YQKQ25QLlHz9cntZnGN6Yi8DALxp1U5r97uKp5E8eW5d+G7tnz5dBa
-         Qs9t14/WHzsXYLXj66yx3YexMeaqvM4+v4vlLTQwKx8e/NNo34+JmP6HZnztVh8Ox/y6
-         hPW7fJG+zARXWmYTOrW+U4zoBIKRFXsC4eF37cuns9RoIIEIwjMoXoRCTiZXO6r0HyZ4
-         SZ6K6cICx3dnPJxhxPBl5iQTSjwyPSK287NVL34mH7RdEwe/b+/G/C+x/xn0YB6u5UpM
-         uEXpPgMfZ8oOz9r/NWyGpVEHCiegzrVBQ/OP/B6bsXX1m+W7tz8OuF++uhg/bXEhldYz
-         5iVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=references:cms-type:in-reply-to:message-id:date:subject:cc:to:from
-         :dkim-signature:dkim-filter:dmarc-filter:delivered-to;
-        bh=w63XQDjZCP11ykXLFKcGVmM/GiTpYJJ2CyfjB4+5SLY=;
-        b=0D4GVhcUSxKD0saS5puzdRW5RwrkuUcaRh3ScpIwsl0TSvEUdjueW+HH4qelslPLFE
-         QrsDLn9L6gJGSVELcJJs8kjtXOHw2lG0gEG9bn8IeYO3JqLLm83x+7NtKgCc7nCUVPGp
-         3PttcTYl7Nea6nuQXGwDVnAT0+9HNT27VhjnoTuOe4/9nVIsHhUGIfaiNQEmiV+RZes/
-         sZ5n1wnADoFSc0chJ9pyZhnL75qdTyqLRPILA/9D4nRHT/N5hQW9XSF7BfVDu0DTMoi6
-         pCg+YRKPwdkRKJUvD1aZrwgxGc4q/Yn4Gko2yvjneRS/QpVqMS1mdwQKp6YwQt48OM1a
-         ulqA==
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@samsung.com header.s=mail20170921 header.b=FGTNg8hT;
-       spf=pass (google.com: domain of srs0=8guh=ec=samsung.com=m.szyprowski@kernel.org designates 198.145.29.99 as permitted sender) smtp.mailfrom="SRS0=8guH=EC=samsung.com=m.szyprowski@kernel.org";
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=samsung.com
-Received: from mail.kernel.org (mail.kernel.org. [198.145.29.99])
-        by mx.google.com with ESMTPS id k16si1739007pll.156.2020.10.27.07.23.55
-        for <k.kozlowski.k+kernel@gmail.com>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Oct 2020 07:23:56 -0700 (PDT)
-Received-SPF: pass (google.com: domain of srs0=8guh=ec=samsung.com=m.szyprowski@kernel.org designates 198.145.29.99 as permitted sender) client-ip=198.145.29.99;
-Received: by mail.kernel.org (Postfix)
-        id BADC5207C3; Tue, 27 Oct 2020 14:23:55 +0000 (UTC)
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPS id B779522258
-        for <krzk@kernel.org>; Tue, 27 Oct 2020 14:23:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B779522258
+        Tue, 27 Oct 2020 10:23:54 -0400
 Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201027142342euoutp0281ba328adf1b35884453968c47a85b34~B33HgdhV92797427974euoutp02t
-        for <krzk@kernel.org>; Tue, 27 Oct 2020 14:23:42 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201027142342euoutp0281ba328adf1b35884453968c47a85b34~B33HgdhV92797427974euoutp02t
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20201027142342euoutp019f69603936fecc19189f717fc4b9719e~B33HgcjAq3119531195euoutp01M
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 27 Oct 2020 14:23:42 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20201027142342euoutp019f69603936fecc19189f717fc4b9719e~B33HgcjAq3119531195euoutp01M
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
         s=mail20170921; t=1603808622;
         bh=w63XQDjZCP11ykXLFKcGVmM/GiTpYJJ2CyfjB4+5SLY=;
@@ -160,7 +92,6 @@ CMS-TYPE: 201P
 X-CMS-RootMailID: 20201027142341eucas1p299a5277c0de2a490f12a64cc84438fcf
 References: <20201027142330.5121-1-m.szyprowski@samsung.com>
         <CGME20201027142341eucas1p299a5277c0de2a490f12a64cc84438fcf@eucas1p2.samsung.com>
-X-TUID: TZvdPilne4Zh
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
