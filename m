@@ -2,218 +2,119 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4357629BD9F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Oct 2020 17:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1843A29C001
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Oct 2020 18:12:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1811898AbgJ0Qn0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 27 Oct 2020 12:43:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:25636 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1811888AbgJ0QnU (ORCPT
+        id S1816800AbgJ0RJz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 27 Oct 2020 13:09:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37886 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1816706AbgJ0RJz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 27 Oct 2020 12:43:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1603816998;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc; bh=mj6uaiHROCag3uZJ/gHJroorYDnXKuN4EyYRFIYPu8Y=;
-        b=SbUT6LrPKSG/kjhEPSpbNL37X7EqS95pLWLFJN05U8T6IvmsgoI1621azrkHaUCQe2IU+4
-        A+8ip+R7TFhvfL2PFtA2YPAVSij+jMd+5zp3Ro8XdkS11BXJM1Rlv3U/dAVL3h95weU9IY
-        Ml5NELPo7a9T9EfhM60DKYJDO3/RVn0=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-158-V3otsRpsPUG1s7a8tzeMRw-1; Tue, 27 Oct 2020 12:43:14 -0400
-X-MC-Unique: V3otsRpsPUG1s7a8tzeMRw-1
-Received: by mail-oo1-f71.google.com with SMTP id n5so1012322oov.16
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 27 Oct 2020 09:43:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=mj6uaiHROCag3uZJ/gHJroorYDnXKuN4EyYRFIYPu8Y=;
-        b=r5M+CWUEa5hMxdO36lrmU50sYL0IbiaqDVn32goMgFE3NP5KIQyfyxQP0Nk9acgu0L
-         Y8SfqVTStu+UEyjYMJf24Qo3kUY2i/9xT5db1DZ48CXrXF1//xVOyVcSPkpAZDx7Xhky
-         XfR7DqvC6ljlhHEajPclJUFFQD6RrrUVQyRnP/WFwRTcQzFEX2REgxppB6hEUe7XQ8RJ
-         vwDjo+zhMQXIW7XkVBBmPiyYGmMXkVXM+1MTG5rFIKKveiHOxZDD1u9EHwQBPcr6J6Mr
-         IiOXqJrl8YOs2sAe5kyDwMmHH4m00CmA/qgCljt56F1P0SCIFYAWMVAjmVWqqcZrCJdZ
-         frvA==
-X-Gm-Message-State: AOAM53366FTEahirsyJX00BVPUeh8UJ1/mhkOuc2Na9BnO3ERMi/VzN+
-        Dic4NitpB8QSJU50ANUcF/qpAo3aObrEjVvKjjBow/9hcGj6O0EAGkBsIZbAhh+Eyix/DOkj4i8
-        DhZhQhc5R6B/QLmhMLm4Yf3vE9RbQewE=
-X-Received: by 2002:aca:ef03:: with SMTP id n3mr2048452oih.67.1603816993826;
-        Tue, 27 Oct 2020 09:43:13 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJw7y1eCX7WfRNi9tkZnfLpiDio1qtG9FKTpwYlLMD9SlPYp6FIE57BquNUx5oTk2cs+UUc+WA==
-X-Received: by 2002:aca:ef03:: with SMTP id n3mr2048435oih.67.1603816993577;
-        Tue, 27 Oct 2020 09:43:13 -0700 (PDT)
-Received: from trix.remote.csb (075-142-250-213.res.spectrum.com. [75.142.250.213])
-        by smtp.gmail.com with ESMTPSA id l89sm90968otc.6.2020.10.27.09.43.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 09:43:12 -0700 (PDT)
-From:   trix@redhat.com
-To:     linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com
-Cc:     linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        qat-linux@intel.com, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-iio@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-mmc@vger.kernel.org,
-        netdev@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-rtc@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-aspeed@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
-        linux-btrfs@vger.kernel.org, linux-nfs@vger.kernel.org,
-        tipc-discussion@lists.sourceforge.net, alsa-devel@alsa-project.org,
-        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        =?UTF-8?q?=EF=BB=BFFrom=20=3A=20Tom=20Rix?= <trix@redhat.com>
-Subject: Subject: [RFC] clang tooling cleanups
-Date:   Tue, 27 Oct 2020 09:42:55 -0700
-Message-Id: <20201027164255.1573301-1-trix@redhat.com>
-X-Mailer: git-send-email 2.18.1
+        Tue, 27 Oct 2020 13:09:55 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.184])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9784820809;
+        Tue, 27 Oct 2020 17:09:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603818594;
+        bh=z6UP311joMNUI2Y3DIxTjxExmn5RPbWIOQuoidt8y3A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=1EMpNevVP5VuU3SS+WHzSzlR907CFo3D6f+K6/WjVq2QOv7V6kDucG91wER8FN2T3
+         wjrxO3HCDQi4+FdCHIujO5z+6CHDGRm7APM3gV15AOEDb2ip1WL85TbTdVmuUkCVJ6
+         H4Km3kJy2XRokOtNhLzYpWuZ+fsBg+8bpbzAaYos=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH v2 00/12] ARM: dts: samsung: minor node name cleanups
+Date:   Tue, 27 Oct 2020 18:09:35 +0100
+Message-Id: <20201027170947.132725-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This rfc will describe
-An upcoming treewide cleanup.
-How clang tooling was used to programatically do the clean up.
-Solicit opinions on how to generally use clang tooling.
+Hi All,
 
-The clang warning -Wextra-semi-stmt produces about 10k warnings.
-Reviewing these, a subset of semicolon after a switch looks safe to
-fix all the time.  An example problem
+Changes since v1
+================
+1. Use names proposed by Marek (light-sensor, audio-codec, image-sensor,
+   power-sensor),
+2. Use amplifier in max98504 node name.
 
-void foo(int a) {
-     switch(a) {
-     	       case 1:
-	       ...
-     }; <--- extra semicolon
-}
+Description
+===========
+A new Exynos4412 board was recently submitted and it (as expected)
+copied all not-the-best patterns from existing DTSes.  Let's fix few of
+them so any new boards will not copy old choices.
 
-Treewide, there are about 100 problems in 50 files for x86_64 allyesconfig.
-These fixes will be the upcoming cleanup.
+Best regards,
+Krzysztof
 
-clang already supports fixing this problem. Add to your command line
+Krzysztof Kozlowski (12):
+  ARM: dts: exynos: adjust node names to DT spec in Exynos3250 boards
+  ARM: dts: exynos: adjust node names to DT spec in Exynos4210 boards
+  ARM: dts: exynos: override GPIO keys node by label in Exynos4412
+    Odroid family
+  ARM: dts: exynos: adjust node names to DT spec in Exynos4412 boards
+  ARM: dts: exynos: remove redundant status=okay in Exynos4412 boards
+  ARM: dts: exynos: adjust node names to DT spec in Exynos5250 boards
+  ARM: dts: exynos: adjust node names to DT spec in Odroid XU
+  ARM: dts: exynos: adjust node names to DT spec in Exynos542x boards
+  ARM: dts: s5pv210: adjust node names to DT spec
+  arm64: dts: exynos: adjust node names to DT spec in Exynos5433 TM2
+  arm64: dts: exynos: adjust node names to DT spec in Exynos7 Espresso
+  arm64: dts: exynos: remove redundant status=okay in Exynos5433 TM2
 
-  clang -c -Wextra-semi-stmt -Xclang -fixit foo.c
+ arch/arm/boot/dts/exynos3250-artik5.dtsi      |  2 +-
+ arch/arm/boot/dts/exynos3250-monk.dts         |  8 +++---
+ arch/arm/boot/dts/exynos3250-rinato.dts       |  8 +++---
+ arch/arm/boot/dts/exynos4210-i9100.dts        |  6 ++--
+ arch/arm/boot/dts/exynos4210-origen.dts       |  4 +--
+ arch/arm/boot/dts/exynos4210-smdkv310.dts     | 22 +++++++--------
+ arch/arm/boot/dts/exynos4210-trats.dts        |  4 +--
+ arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi   |  9 +++---
+ arch/arm/boot/dts/exynos4412-itop-elite.dts   |  2 +-
+ .../boot/dts/exynos4412-itop-scp-core.dtsi    |  2 +-
+ arch/arm/boot/dts/exynos4412-midas.dtsi       | 17 +++++------
+ arch/arm/boot/dts/exynos4412-n710x.dts        |  2 +-
+ .../boot/dts/exynos4412-odroid-common.dtsi    | 10 +++----
+ arch/arm/boot/dts/exynos4412-odroidx.dts      | 28 +++++++++----------
+ arch/arm/boot/dts/exynos4412-origen.dts       | 14 +++++-----
+ arch/arm/boot/dts/exynos4412-smdk4412.dts     | 20 ++++++-------
+ arch/arm/boot/dts/exynos5250-arndale.dts      |  6 ++--
+ arch/arm/boot/dts/exynos5250-smdk5250.dts     |  4 +--
+ arch/arm/boot/dts/exynos5250-snow-common.dtsi |  4 +--
+ arch/arm/boot/dts/exynos5250-snow-rev5.dts    |  2 +-
+ arch/arm/boot/dts/exynos5250-snow.dts         |  2 +-
+ arch/arm/boot/dts/exynos5250-spring.dts       |  2 +-
+ arch/arm/boot/dts/exynos5410-odroidxu.dts     |  2 +-
+ arch/arm/boot/dts/exynos5420-arndale-octa.dts |  4 +--
+ arch/arm/boot/dts/exynos5420-peach-pit.dts    |  6 ++--
+ arch/arm/boot/dts/exynos5420-smdk5420.dts     |  2 +-
+ arch/arm/boot/dts/exynos5422-odroid-core.dtsi |  2 +-
+ .../boot/dts/exynos5422-odroidxu3-audio.dtsi  |  2 +-
+ .../boot/dts/exynos5422-odroidxu3-common.dtsi |  4 +--
+ arch/arm/boot/dts/exynos5422-odroidxu3.dts    |  8 +++---
+ arch/arm/boot/dts/exynos5800-peach-pi.dts     |  4 +--
+ arch/arm/boot/dts/s5pv210-aquila.dts          | 12 ++++----
+ arch/arm/boot/dts/s5pv210-aries.dtsi          |  4 +--
+ arch/arm/boot/dts/s5pv210-goni.dts            | 14 +++++-----
+ arch/arm/boot/dts/s5pv210-smdkv210.dts        | 20 ++++++-------
+ .../dts/exynos/exynos5433-tm2-common.dtsi     | 11 ++++----
+ .../boot/dts/exynos/exynos7-espresso.dts      |  2 +-
+ 37 files changed, 135 insertions(+), 140 deletions(-)
 
-  foo.c:8:3: warning: empty expression statement has no effect;
-    remove unnecessary ';' to silence this warning [-Wextra-semi-stmt]
-        };
-         ^
-  foo.c:8:3: note: FIX-IT applied suggested code changes
-  1 warning generated.
-
-The big problem is using this treewide is it will fix all 10k problems.
-10k changes to analyze and upstream is not practical.
-
-Another problem is the generic fixer only removes the semicolon.
-So empty lines with some tabs need to be manually cleaned.
-
-What is needed is a more precise fixer.
-
-Enter clang-tidy.
-https://clang.llvm.org/extra/clang-tidy/
-
-Already part of the static checker infrastructure, invoke on the clang
-build with
-  make clang-tidy
-
-It is only a matter of coding up a specific checker for the cleanup.
-Upstream this is review is happening here
-https://reviews.llvm.org/D90180
-
-The development of a checker/fixer is
-Start with a reproducer
-
-void foo (int a) {
-  switch (a) {};
-}
-
-Generate the abstract syntax tree (AST)
-
-  clang -Xclang -ast-dump foo.c
-
-`-FunctionDecl 
-  |-ParmVarDecl 
-  `-CompoundStmt 
-    |-SwitchStmt 
-    | |-ImplicitCastExpr
-    | | `-DeclRefExpr
-    | `-CompoundStmt
-    `-NullStmt
-
-Write a matcher to get you most of the way
-
-void SwitchSemiCheck::registerMatchers(MatchFinder *Finder) {
-  Finder->addMatcher(
-      compoundStmt(has(switchStmt().bind("switch"))).bind("comp"), this);
-}
-
-The 'bind' method is important, it allows a string to be associated
-with a node in the AST.  In this case these are
-
-`-FunctionDecl 
-  |-ParmVarDecl 
-  `-CompoundStmt <-------- comp
-    |-SwitchStmt <-------- switch
-    | |-ImplicitCastExpr
-    | | `-DeclRefExpr
-    | `-CompoundStmt
-    `-NullStmt
-
-When a match is made the 'check' method will be called.
-
-  void SwitchSemiCheck::check(const MatchFinder::MatchResult &Result) {
-    auto *C = Result.Nodes.getNodeAs<CompoundStmt>("comp");
-    auto *S = Result.Nodes.getNodeAs<SwitchStmt>("switch");
-
-This is where the string in the bind calls are changed to nodes
-
-`-FunctionDecl 
-  |-ParmVarDecl 
-  `-CompoundStmt <-------- comp, C
-    |-SwitchStmt <-------- switch, S
-    | |-ImplicitCastExpr
-    | | `-DeclRefExpr
-    | `-CompoundStmt
-    `-NullStmt <---------- looking for N
-
-And then more logic to find the NullStmt
-
-  auto Current = C->body_begin();
-  auto Next = Current;
-  Next++;
-  while (Next != C->body_end()) {
-    if (*Current == S) {
-      if (const auto *N = dyn_cast<NullStmt>(*Next)) {
-
-When it is found, a warning is printed and a FixItHint is proposed.
-
-  auto H = FixItHint::CreateReplacement(
-    SourceRange(S->getBody()->getEndLoc(), N->getSemiLoc()), "}");
-  diag(N->getSemiLoc(), "unneeded semicolon") << H;
-
-This fixit replaces from the end of switch to the semicolon with a
-'}'.  Because the end of the switch is '}' this has the effect of
-removing all the whitespace as well as the semicolon.
-
-Because of the checker's placement in clang-tidy existing linuxkernel
-checkers, all that was needed to fix the tree was to add a '-fix'to the
-build's clang-tidy call.
-
-I am looking for opinions on what we want to do specifically with
-cleanups and generally about other source-to-source programmatic
-changes to the code base.
-
-For cleanups, I think we need a new toplevel target
-
-clang-tidy-fix
-
-And an explicit list of fixers that have a very high (100%?) fix rate.
-
-Ideally a bot should make the changes, but a bot could also nag folks.
-Is there interest in a bot making the changes? Does one already exist?
-
-The general source-to-source is a bit blue sky.  Ex/ could automagicly
-refactor api, outline similar cut-n-pasted functions etc. Anything on
-someone's wishlist you want to try out ?
-
-Signed-off-by: Tom Rix <trix@redhat.com>
+-- 
+2.25.1
 
