@@ -2,121 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 406C529D578
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 23:03:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A71D29D755
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 23:23:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729302AbgJ1WDC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 18:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50688 "EHLO
+        id S1732113AbgJ1WXS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 18:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728210AbgJ1WBc (ORCPT
+        with ESMTP id S1731746AbgJ1WVp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:01:32 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE40C0613CF
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 15:01:32 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id r7so501682qkf.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 15:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i1Avim0KcggX9IKdEMHQzMezF7Rz3tSoeLz2phO/Qtk=;
-        b=krmIqsuarEYIqEPBm4Rt9OwNjTY2cNSHgrwW+emBvBI9j3l7zTHMq3GBEa/Uvb8ssx
-         HSLrplTUrRl2NeeAe4RwNMyQOtfot26unJogq38S711aVf+a4RvLZ+J9LgSCRFc/cX0W
-         +Mhvx0ovZrBsUgU5ThwXomL7XXLfgnRA6SLx0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i1Avim0KcggX9IKdEMHQzMezF7Rz3tSoeLz2phO/Qtk=;
-        b=Qnkoe+l1D5Xu+Bbx4QcSzeA2jEmoSzdvtkoxxAhiJXnn/KMDNIhxbI68LQmRVdW/kb
-         c6fO45IVXMn3/aasj36I6xVqaALqHeMojK0pqvTRegecCfQQqaUh4wrOWoHPeezRUvjo
-         uWzRXtNsHIyjJUZWlFnFTLlxayWcg2UzHoJeajtRZtFR4cpCMEIzVHPzve6m8Xrfm+Gv
-         eqmx41zCWfmJFJDgbPa4Yg0ctALXl3vULabS0HWW6utvlyP2Ys3oJiLZxilVkzApX7Lf
-         OKi8bStCzV8+3gfGF7HPhGVVE7LLmBelgqBiXUnSeARamuDsuptBei1yZKF+8t7USrsn
-         Adeg==
-X-Gm-Message-State: AOAM5331aD5cqlYqGHxm62Tc8vw/LXxlpkbuC4S+ISaaffouypMVOmpn
-        LEn7OFFJx05sN+Jh0l1dK7PGwF64WJjAVO5PwzctnBS2MngLHnPF
-X-Google-Smtp-Source: ABdhPJxAwOu26YXrml3Jp4vpuM/CyX8292+gEMtWP3BbMIEu/3OAPQMfNMfcsIA42LCh9GZJcMO/tafG5/DTfFmimXE=
-X-Received: by 2002:a05:6638:d0c:: with SMTP id q12mr6553929jaj.95.1603889974045;
- Wed, 28 Oct 2020 05:59:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201007083944.27910-1-ardb@kernel.org> <CGME20201028091912eucas1p13fb9cd947faa6bfd79199ea79648b6af@eucas1p1.samsung.com>
- <20201007083944.27910-3-ardb@kernel.org> <920965b8-6f87-3f82-9fce-d3051fc543ca@samsung.com>
- <CACPK8XfNfqToFBe0GPFTGrnPhNTYhSDiEagpB7ayBSW1DC-THA@mail.gmail.com> <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
-In-Reply-To: <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
-From:   Joel Stanley <joel@jms.id.au>
-Date:   Wed, 28 Oct 2020 12:59:20 +0000
-Message-ID: <CACPK8Xfw0WYSxGf0PnVOF40+C-KOJnX2x_q2gXrf4JZPErKBDA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ARM: move device tree mapping out of linear region
+        Wed, 28 Oct 2020 18:21:45 -0400
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E3EC0613CF
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 15:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=llnqtOUD5PjuWZRtuygvRGktMLBxoIHZ8Uu5EwB+W4s=; b=VDQN8LNuMh2lkdSja23JcySLy
+        EK3ZdQshwP15ZezmFQ4KK1Hj6IUtHF1ox0IUVTPdfJnugCZYJLboMH+E6n1KWvrnez9GfCKspNRa2
+        2dD4McYZCKpdohvK2s3KJU61S15ffJivLBr47a3nH9bNy27Dj8zYbGrMf7lestWWgde+u7B+OrSHa
+        mZbj/1Fh5cm6yBYv/Fv1pxJVQtINQWzjdV40MpOSSMCwF90IkUo8qep2Wy2mfj6P0VtaCiD7uygGP
+        rK9zWweV5BjyUHekQo/FEhhHk3VikuX912O+ZBk6McV5du6jdWphO6tZFq7udADtt23GXSSAZZcLW
+        +qiUhD4bQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:52038)
+        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <linux@armlinux.org.uk>)
+        id 1kXl4Q-0002o5-8w; Wed, 28 Oct 2020 13:00:54 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
+        (envelope-from <linux@shell.armlinux.org.uk>)
+        id 1kXl4M-00052p-Pu; Wed, 28 Oct 2020 13:00:50 +0000
+Date:   Wed, 28 Oct 2020 13:00:50 +0000
+From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
 To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+Cc:     Joel Stanley <joel@jms.id.au>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Florian Fainelli <f.fainelli@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
         Rob Herring <robh+dt@kernel.org>,
         Nicolas Pitre <nico@fluxnic.net>,
-        =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
+        =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH v2 2/2] ARM: move device tree mapping out of linear region
+Message-ID: <20201028130050.GL1551@shell.armlinux.org.uk>
+References: <20201007083944.27910-1-ardb@kernel.org>
+ <CGME20201028091912eucas1p13fb9cd947faa6bfd79199ea79648b6af@eucas1p1.samsung.com>
+ <20201007083944.27910-3-ardb@kernel.org>
+ <920965b8-6f87-3f82-9fce-d3051fc543ca@samsung.com>
+ <CACPK8XfNfqToFBe0GPFTGrnPhNTYhSDiEagpB7ayBSW1DC-THA@mail.gmail.com>
+ <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, 28 Oct 2020 at 12:53, Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Wed, 28 Oct 2020 at 13:05, Joel Stanley <joel@jms.id.au> wrote:
-> >
-> > On Wed, 28 Oct 2020 at 09:19, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
-> > > This patch landed in linux-next 20201028 as commit 7a1be318f579 ("ARM:
-> > > 9012/1: move device tree mapping out of linear region"). Sadly it broke
-> > > booting  almost all Samsung Exynos-based boards. The only one which
-> > > booted, used an appended device tree. I can provide more information if
-> > > needed, just let me know what to check. "Starting kernel ..." is the
-> > > last message I see here. No output from earlycon.
-> >
-> > A bisection lead me to this patch after the next-20201028 failed to
-> > boot on the aspeed systems in testing (aspeed_g5_defconfig).
-> >
-> > You can reproduce this with today's next and qemu 5.1:
-> >
-> > qemu-system-arm -M romulus-bmc -nographic \
-> >  -kernel arch/arm/boot/zImage \
-> >  -dtb arch/arm/boot/dts/aspeed-bmc-opp-romulus.dtb \
-> >  -initrd any-old-file
-> >
-> > It requires the initrd option to reproduce, but the initrd doesn't
-> > need to be valid as we don't make it that far.
-> >
-> > There is no output but attaching gdb shows the kernel is stuck in
-> > setup_machine_tags. (If we enable CONFIG_ATAGS it is instead stuck in
-> > calibrate_delay).
-> >
-> > (gdb) bt
-> > #0  setup_machine_tags (machine_nr=<optimized out>,
-> > __atags_vaddr=<optimized out>) at ../arch/arm/kernel/atags.h:12
-> > #1  setup_arch (cmdline_p=0x80c01fc4) at ../arch/arm/kernel/setup.c:1100
-> > #2  0x80b00d2c in start_kernel () at ../init/main.c:862
-> > #3  0x00000000 in ?? ()
-> >
-> > Reverting 7a1be318f579 on top of next allowed the system to boot again.
-> >
->
+On Wed, Oct 28, 2020 at 01:52:48PM +0100, Ard Biesheuvel wrote:
 > Does this help?
-
-Yes, that boots to userspace.
-
->
+> 
 > diff --git a/arch/arm/include/asm/memory.h b/arch/arm/include/asm/memory.h
 > index bb79e52aeb90..4f355bda872a 100644
 > --- a/arch/arm/include/asm/memory.h
 > +++ b/arch/arm/include/asm/memory.h
 > @@ -68,8 +68,8 @@
 >  #define XIP_VIRT_ADDR(physaddr)  (MODULES_VADDR + ((physaddr) & 0x000fffff))
->
+> 
 >  #define FDT_FIXED_BASE         UL(0xff800000)
 > -#define FDT_FIXED_SIZE         (2 * PMD_SIZE)
 > -#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
@@ -124,6 +83,10 @@ Yes, that boots to userspace.
 > +#define FDT_FIXED_SIZE         (2 * SECTION_SIZE)
 > +#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
 > (physaddr) % SECTION_SIZE))
->
->  #if !defined(CONFIG_SMP) && !defined(CONFIG_ARM_LPAE)
->  /*
+
+Is this correct? If the FDT fixed size is 2x, why does FDT_VIRT_ADDR()
+only work for half of it?
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
