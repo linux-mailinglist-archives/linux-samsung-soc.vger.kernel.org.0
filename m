@@ -2,487 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3311729D36A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 22:43:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 318C629D311
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 22:40:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726389AbgJ1Vnt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 17:43:49 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:46964 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726182AbgJ1Vnn (ORCPT
+        id S1727014AbgJ1Vkl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 17:40:41 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:59988 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727150AbgJ1Vkg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:43:43 -0400
-Received: by mail-yb1-f196.google.com with SMTP id a4so397483ybq.13;
-        Wed, 28 Oct 2020 14:43:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jLtdQtf3WAcV9X++ahXRYw9T14oWIpf65Dsq+SFgKNI=;
-        b=hH8HUjxchT1EZDwtfev1Ys6msQVDadPoLkSauie7NmiBQ31dH4p9ssGPrGOPafX3/f
-         2Q0TrdP1/U2PHHdizeCqsv8Mjp4Vsw4Gn+pzTYVqMZQWhxAVL2Q0aGyxsxqXmBvMZPFm
-         tC+HR0nJWYsqyhFDQCTpLNew6sVuYreuh8nOYeonrhNIAchQUo7nFrqHQ4DB9wRJG7QV
-         x8JW61yl3DlDOn8bRGHk6ZYH02+/hkmIff58pOjUVB6G5AEdZl/uhJQUw8CDKcpEWWDW
-         K6CsqqpKFWD8fZE+fDQAGrr4MgRL6QlUHCv8tZq0e2ltVaPoniEiIEc0mCMDR99X/hRk
-         pdyQ==
-X-Gm-Message-State: AOAM531g/CN1dUCOt3GYF6o2w00GmOOSZCYlTzxGqMpsZnCYbO6o6o7Y
-        IWFwHWfWzmyKlwQDxirhE3t2SYNKxA==
-X-Google-Smtp-Source: ABdhPJxnNRS14MFRfXMOMoJpknKY2nesKkmauQwraiawQ+52twXO9gG8BZtOR7eF2YbXdQeyu9DH4Q==
-X-Received: by 2002:a4a:b28b:: with SMTP id k11mr649619ooo.54.1603918043023;
-        Wed, 28 Oct 2020 13:47:23 -0700 (PDT)
-Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.googlemail.com with ESMTPSA id t17sm116123oor.3.2020.10.28.13.47.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 13:47:22 -0700 (PDT)
-From:   Rob Herring <robh@kernel.org>
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     linux-pci@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Wed, 28 Oct 2020 17:40:36 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201028214024euoutp026dc286f2c9e3af15019467ccbfbb6c15~CRdsmYie70334203342euoutp02K
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 21:40:24 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201028214024euoutp026dc286f2c9e3af15019467ccbfbb6c15~CRdsmYie70334203342euoutp02K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1603921224;
+        bh=2/xwxcxYv93eq31jsT80VcmPFIBIhKVvX8Jx5pcXie8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=GsR950TPBL7SBapAT0ookvB4G3AN18MKpsRzrnz5HvNm0MAlQOcNdBcBWe/Yr9wyl
+         Q4k70frBTstszZIQ/1S+bVewfAidaPA7sCz0pUxORiXMWXhM2/ZaHw8gXiVDFX2YFw
+         PHAAaojgkAHlq9WseckyNZNMGe/gzs5QbfPhkS8M=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20201028214016eucas1p2a66ef56297cc64b057451253e6cb19d9~CRdlPBpM72482524825eucas1p2a;
+        Wed, 28 Oct 2020 21:40:16 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 69.36.05997.045E99F5; Wed, 28
+        Oct 2020 21:40:16 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20201028214016eucas1p1257ca6d0eacfbb97a42d97a5e45e0370~CRdkh91LX2589725897eucas1p1z;
+        Wed, 28 Oct 2020 21:40:16 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20201028214016eusmtrp1e15dd8933392ab113bffcd3ca3a73d05~CRdkhMQ633223832238eusmtrp1i;
+        Wed, 28 Oct 2020 21:40:16 +0000 (GMT)
+X-AuditID: cbfec7f4-677ff7000000176d-45-5f99e540f0ba
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 06.7B.06017.045E99F5; Wed, 28
+        Oct 2020 21:40:16 +0000 (GMT)
+Received: from localhost (unknown [106.120.51.46]) by eusmtip1.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20201028214015eusmtip1289b80e5ab717c0523127d8517aa6cec~CRdkVuJPh1418714187eusmtip1R;
+        Wed, 28 Oct 2020 21:40:15 +0000 (GMT)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     Andrew Lunn <andrew@lunn.ch>, jim.cromie@gmail.com,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Kukjin Kim <kgene@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Minghuan Lian <minghuan.Lian@nxp.com>,
-        Mingkai Hu <mingkai.hu@nxp.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Roy Zang <roy.zang@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Yue Wang <yue.wang@Amlogic.com>
-Subject: [PATCH 13/13] PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
-Date:   Wed, 28 Oct 2020 15:46:46 -0500
-Message-Id: <20201028204646.356535-14-robh@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201028204646.356535-1-robh@kernel.org>
-References: <20201028204646.356535-1-robh@kernel.org>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     =?UTF-8?q?Bart=C5=82omiej=20=C5=BBolnierkiewicz?= 
+        <b.zolnierkie@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v4 1/5] dt-bindings: vendor-prefixes: Add asix prefix
+Date:   Wed, 28 Oct 2020 22:40:08 +0100
+Message-Id: <20201028214012.9712-2-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20201028214012.9712-1-l.stelmach@samsung.com>
 MIME-Version: 1.0
+Organization: Samsung R&D Institute Poland
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0hTYRju2zlnO45Wx6Pki4XBMigprxFfGqWlcH5FVH9Kai09qalTN7WU
+        wNZNK3Mxk9RmiSXp8taypcsJLlPLywpLE6+kYhniD+1iReV2uvjved/n9n7w0QQ7RnnScapU
+        Xq1SJsjFUtLcttCzOXSySOFv/R6A7cM2Aj8orKWwwX6exLdbeyhcNltI4b6ZIQrrxj8S2G6v
+        k+CX5jwKD9gqEDaN91G412IQ40J7swjbCqwIV7cOS3Bb6Sp8wdoqwb+aGiShLNfb94rg6isH
+        RFxj8bCEMxkvibmHd7O4xoY5EZdXb0TcnMlrL31Iuj2aT4hL59V+O45KY59aZsnkBfGpK112
+        6gxaoC4jFxqYLWC+9UZyGUlplqlAMPO5VewgWGYewdc76wRiDkHLZPM/x6ecBlIg7iGwdlRR
+        gmMKwUSbrwOLmTDQlXdQDpE7M0JAbfYYcgwEM4pgZOo+4VC5MRHQP9/txCSzHiqbq5zdMiYY
+        xp99kwh1ayH73mPn3oUJgYn5J5SgcYXnRROkA69kfKDqbL8TE4v6c49uEo4yYEpoMOj0i2Z6
+        cQgHrT5KyHSD6fb6P/lroDM/lxQkWZCv3ypYcxGYDV9JQRMCQz3fnDEEsxFqLX6CPAze92MB
+        roC3M67CAStAb75BCGsZ5FxkhQxvqNE1/cnzhKvTFegakhcveUrxkvOL/1eVIsKIPPg0TWIM
+        rwlU8Sd9NcpETZoqxjcqKdGEFv9d58/2+QZk+XHMhhgayZfLXg4WKVhKma7JSLQhoAm5u2xX
+        d+cRVhatzMjk1UkKdVoCr7Gh1TQp95AFlX04zDIxylQ+nueTefVfVkS7eJ5B2/Qd71ylgarr
+        7/yNU5Wb1nV2GQY3hKu9FEF1AS9C8ZybJcJYlW5KOphzYL+uNt9tQcsVpJRHiq9rR3eaRYpT
+        3uVeJZHLcvxGX2dWf/JPMdwJtsazLSGrfU/4NM36KxIqv+yOPk74aAdfZc+O1ETZLu4r6JNP
+        n9YOxe6Z3itWmeSkJlYZ4EOoNcrf8yZ3IHMDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsVy+t/xu7oOT2fGG7yfymZx/u4hZouNM9az
+        Wsw538JiMf/IOVaLRe9nsFpce3uH1aL/8Wtmi/PnN7BbXNjWx2px89AKRotNj6+xWlzeNYfN
+        Ysb5fUwWh6buZbRYe+Quu8WxBWIWrXuPsFv837OD3UHI4/K1i8weW1beZPLYOesuu8emVZ1s
+        HpuX1Hvs3PGZyaNvyypGj8+b5AI4ovRsivJLS1IVMvKLS2yVog0tjPQMLS30jEws9QyNzWOt
+        jEyV9O1sUlJzMstSi/TtEvQyDu96z1Lwk62i+8x51gbGn6xdjJwcEgImEl87drB0MXJxCAks
+        ZZQ4desBUxcjB1BCSmLl3HSIGmGJP9e62CBqnjJKzD1zjgUkwSbgKNG/9AQrSEJE4A2zRNO9
+        t+wgDrPAfUaJX59eMIJUCQu4Slz/cpYZxGYRUJVYuW8NG4jNK2Al8fjoL3aIFfIS7cu3g8U5
+        BawlnnzZDXaeEFDNz29t7BD1ghInZz5hAbmOWUBdYv08IZAwv4CWxJqm62AHMQONad46m3kC
+        o9AsJB2zEDpmIalawMi8ilEktbQ4Nz232EivODG3uDQvXS85P3cTIzDGtx37uWUHY9e74EOM
+        AhyMSjy8F27PjBdiTSwrrsw9xCjBwawkwut09nScEG9KYmVValF+fFFpTmrxIUZToDcnMkuJ
+        JucD009eSbyhqaG5haWhubG5sZmFkjhvh8DBGCGB9MSS1OzU1ILUIpg+Jg5OqQbGiqyI67KZ
+        174Vz7nTuHEZj6H+Bmu1y6uXrdyVGRE8d55YfJpkceCP2gt8TxYuFFFf7yQRMXnRVPkV59n9
+        s6+yq/yXEeWO+LIyfX9VxrktykwfDx1wVZrzJeG9xYRNhglnjQJ5FeIdyw8GuAl01K679CPN
+        WdalQNlmgvrtkqfbPwmplKcsX3VDiaU4I9FQi7moOBEA7LtW9gcDAAA=
+X-CMS-MailID: 20201028214016eucas1p1257ca6d0eacfbb97a42d97a5e45e0370
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20201028214016eucas1p1257ca6d0eacfbb97a42d97a5e45e0370
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20201028214016eucas1p1257ca6d0eacfbb97a42d97a5e45e0370
+References: <20201028214012.9712-1-l.stelmach@samsung.com>
+        <CGME20201028214016eucas1p1257ca6d0eacfbb97a42d97a5e45e0370@eucas1p1.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Many calls to dw_pcie_host_init() are in a wrapper function with
-nothing else now. Let's remove the pointless extra layer.
+Add the prefix for ASIX Electronics Corporation.
 
-Cc: Richard Zhu <hongxing.zhu@nxp.com>
-Cc: Lucas Stach <l.stach@pengutronix.de>
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Murali Karicheri <m-karicheri2@ti.com>
-Cc: Minghuan Lian <minghuan.Lian@nxp.com>
-Cc: Mingkai Hu <mingkai.hu@nxp.com>
-Cc: Roy Zang <roy.zang@nxp.com>
-Cc: Yue Wang <yue.wang@Amlogic.com>
-Cc: Kevin Hilman <khilman@baylibre.com>
-Cc: Neil Armstrong <narmstrong@baylibre.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: Jonathan Chocron <jonnyc@amazon.com>
-Cc: Jesper Nilsson <jesper.nilsson@axis.com>
-Cc: Xiaowei Song <songxiaowei@hisilicon.com>
-Cc: Binghui Wang <wangbinghui@hisilicon.com>
-Cc: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Cc: linux-amlogic@lists.infradead.org
-Cc: linux-arm-kernel@axis.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c       | 26 ++-------------------
- drivers/pci/controller/dwc/pci-keystone.c   | 19 +--------------
- drivers/pci/controller/dwc/pci-layerscape.c | 26 ++-------------------
- drivers/pci/controller/dwc/pci-meson.c      | 22 ++---------------
- drivers/pci/controller/dwc/pcie-al.c        | 20 ++--------------
- drivers/pci/controller/dwc/pcie-artpec6.c   | 23 +++---------------
- drivers/pci/controller/dwc/pcie-kirin.c     | 11 ++-------
- drivers/pci/controller/dwc/pcie-uniphier.c  | 23 +++---------------
- 8 files changed, 17 insertions(+), 153 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 4ba0b1195ecf..73e5cfc0725a 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -842,25 +842,6 @@ static const struct dw_pcie_host_ops imx6_pcie_host_ops = {
- 	.host_init = imx6_pcie_host_init,
- };
- 
--static int imx6_add_pcie_port(struct imx6_pcie *imx6_pcie,
--			      struct platform_device *pdev)
--{
--	struct dw_pcie *pci = imx6_pcie->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = &pdev->dev;
--	int ret;
--
--	pp->ops = &imx6_pcie_host_ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static const struct dw_pcie_ops dw_pcie_ops = {
- 	.start_link = imx6_pcie_start_link,
- };
-@@ -1004,6 +985,7 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
-+	pci->pp.ops = &imx6_pcie_host_ops;
- 
- 	imx6_pcie->pci = pci;
- 	imx6_pcie->drvdata = of_device_get_match_data(dev);
-@@ -1153,11 +1135,7 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = imx6_add_pcie_port(imx6_pcie, pdev);
--	if (ret < 0)
--		return ret;
--
--	return 0;
-+	return dw_pcie_host_init(&pci->pp);
- }
- 
- static void imx6_pcie_shutdown(struct platform_device *pdev)
-diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index 5a4bcc2b1ddb..719756160821 100644
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -844,23 +844,6 @@ static irqreturn_t ks_pcie_err_irq_handler(int irq, void *priv)
- 	return ks_pcie_handle_error_irq(ks_pcie);
- }
- 
--static int __init ks_pcie_add_pcie_port(struct keystone_pcie *ks_pcie,
--					struct platform_device *pdev)
--{
--	struct dw_pcie *pci = ks_pcie->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = &pdev->dev;
--	int ret;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static void ks_pcie_am654_write_dbi2(struct dw_pcie *pci, void __iomem *base,
- 				     u32 reg, size_t size, u32 val)
- {
-@@ -1255,7 +1238,7 @@ static int __init ks_pcie_probe(struct platform_device *pdev)
- 		}
- 
- 		pci->pp.ops = host_ops;
--		ret = ks_pcie_add_pcie_port(ks_pcie, pdev);
-+		ret = dw_pcie_host_init(&pci->pp);
- 		if (ret < 0)
- 			goto err_get_sync;
- 		break;
-diff --git a/drivers/pci/controller/dwc/pci-layerscape.c b/drivers/pci/controller/dwc/pci-layerscape.c
-index 400ebbebd00f..44ad34cdc3bc 100644
---- a/drivers/pci/controller/dwc/pci-layerscape.c
-+++ b/drivers/pci/controller/dwc/pci-layerscape.c
-@@ -232,31 +232,12 @@ static const struct of_device_id ls_pcie_of_match[] = {
- 	{ },
- };
- 
--static int __init ls_add_pcie_port(struct ls_pcie *pcie)
--{
--	struct dw_pcie *pci = pcie->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = pci->dev;
--	int ret;
--
--	pp->ops = pcie->drvdata->ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static int __init ls_pcie_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct dw_pcie *pci;
- 	struct ls_pcie *pcie;
- 	struct resource *dbi_base;
--	int ret;
- 
- 	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
- 	if (!pcie)
-@@ -270,6 +251,7 @@ static int __init ls_pcie_probe(struct platform_device *pdev)
- 
- 	pci->dev = dev;
- 	pci->ops = pcie->drvdata->dw_pcie_ops;
-+	pci->pp.ops = pcie->drvdata->ops;
- 
- 	pcie->pci = pci;
- 
-@@ -285,11 +267,7 @@ static int __init ls_pcie_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, pcie);
- 
--	ret = ls_add_pcie_port(pcie);
--	if (ret < 0)
--		return ret;
--
--	return 0;
-+	return dw_pcie_host_init(&pci->pp);
- }
- 
- static struct platform_driver ls_pcie_driver = {
-diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
-index 04589f0decb2..686ded034f22 100644
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -387,25 +387,6 @@ static const struct dw_pcie_host_ops meson_pcie_host_ops = {
- 	.host_init = meson_pcie_host_init,
- };
- 
--static int meson_add_pcie_port(struct meson_pcie *mp,
--			       struct platform_device *pdev)
--{
--	struct dw_pcie *pci = &mp->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = &pdev->dev;
--	int ret;
--
--	pp->ops = &meson_pcie_host_ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static const struct dw_pcie_ops dw_pcie_ops = {
- 	.link_up = meson_pcie_link_up,
- 	.start_link = meson_pcie_start_link,
-@@ -425,6 +406,7 @@ static int meson_pcie_probe(struct platform_device *pdev)
- 	pci = &mp->pci;
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
-+	pci->pp.ops = &meson_pcie_host_ops;
- 	pci->num_lanes = 1;
- 
- 	mp->phy = devm_phy_get(dev, "pcie");
-@@ -471,7 +453,7 @@ static int meson_pcie_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, mp);
- 
--	ret = meson_add_pcie_port(mp, pdev);
-+	ret = dw_pcie_host_init(&pci->pp);
- 	if (ret < 0) {
- 		dev_err(dev, "Add PCIe port failed, %d\n", ret);
- 		goto err_phy;
-diff --git a/drivers/pci/controller/dwc/pcie-al.c b/drivers/pci/controller/dwc/pcie-al.c
-index d06866921187..7ac8a37d9ce0 100644
---- a/drivers/pci/controller/dwc/pcie-al.c
-+++ b/drivers/pci/controller/dwc/pcie-al.c
-@@ -322,23 +322,6 @@ static const struct dw_pcie_host_ops al_pcie_host_ops = {
- 	.host_init = al_pcie_host_init,
- };
- 
--static int al_add_pcie_port(struct pcie_port *pp,
--			    struct platform_device *pdev)
--{
--	struct device *dev = &pdev->dev;
--	int ret;
--
--	pp->ops = &al_pcie_host_ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static const struct dw_pcie_ops dw_pcie_ops = {
- };
- 
-@@ -360,6 +343,7 @@ static int al_pcie_probe(struct platform_device *pdev)
- 
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
-+	pci->pp.ops = &al_pcie_host_ops;
- 
- 	al_pcie->pci = pci;
- 	al_pcie->dev = dev;
-@@ -384,7 +368,7 @@ static int al_pcie_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, al_pcie);
- 
--	return al_add_pcie_port(&pci->pp, pdev);
-+	return dw_pcie_host_init(&pci->pp);
- }
- 
- static const struct of_device_id al_pcie_of_match[] = {
-diff --git a/drivers/pci/controller/dwc/pcie-artpec6.c b/drivers/pci/controller/dwc/pcie-artpec6.c
-index fcba9915a606..597c282f586c 100644
---- a/drivers/pci/controller/dwc/pcie-artpec6.c
-+++ b/drivers/pci/controller/dwc/pcie-artpec6.c
-@@ -336,25 +336,6 @@ static const struct dw_pcie_host_ops artpec6_pcie_host_ops = {
- 	.host_init = artpec6_pcie_host_init,
- };
- 
--static int artpec6_add_pcie_port(struct artpec6_pcie *artpec6_pcie,
--				 struct platform_device *pdev)
--{
--	struct dw_pcie *pci = artpec6_pcie->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = pci->dev;
--	int ret;
--
--	pp->ops = &artpec6_pcie_host_ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "failed to initialize host\n");
--		return ret;
--	}
--
--	return 0;
--}
--
- static void artpec6_pcie_ep_init(struct dw_pcie_ep *ep)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -445,7 +426,9 @@ static int artpec6_pcie_probe(struct platform_device *pdev)
- 		if (!IS_ENABLED(CONFIG_PCIE_ARTPEC6_HOST))
- 			return -ENODEV;
- 
--		ret = artpec6_add_pcie_port(artpec6_pcie, pdev);
-+		pci->pp.ops = &artpec6_pcie_host_ops;
-+
-+		ret = dw_pcie_host_init(&pci->pp);
- 		if (ret < 0)
- 			return ret;
- 		break;
-diff --git a/drivers/pci/controller/dwc/pcie-kirin.c b/drivers/pci/controller/dwc/pcie-kirin.c
-index ac4bbdaf5324..026fd1e42a55 100644
---- a/drivers/pci/controller/dwc/pcie-kirin.c
-+++ b/drivers/pci/controller/dwc/pcie-kirin.c
-@@ -419,14 +419,6 @@ static const struct dw_pcie_host_ops kirin_pcie_host_ops = {
- 	.host_init = kirin_pcie_host_init,
- };
- 
--static int kirin_add_pcie_port(struct dw_pcie *pci,
--			       struct platform_device *pdev)
--{
--	pci->pp.ops = &kirin_pcie_host_ops;
--
--	return dw_pcie_host_init(&pci->pp);
--}
--
- static int kirin_pcie_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -449,6 +441,7 @@ static int kirin_pcie_probe(struct platform_device *pdev)
- 
- 	pci->dev = dev;
- 	pci->ops = &kirin_dw_pcie_ops;
-+	pci->pp.ops = &kirin_pcie_host_ops;
- 	kirin_pcie->pci = pci;
- 
- 	ret = kirin_pcie_get_clk(kirin_pcie, pdev);
-@@ -474,7 +467,7 @@ static int kirin_pcie_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, kirin_pcie);
- 
--	return kirin_add_pcie_port(pci, pdev);
-+	return dw_pcie_host_init(&pci->pp);
- }
- 
- static const struct of_device_id kirin_pcie_match[] = {
-diff --git a/drivers/pci/controller/dwc/pcie-uniphier.c b/drivers/pci/controller/dwc/pcie-uniphier.c
-index 2457e9dd098d..7e8bad326770 100644
---- a/drivers/pci/controller/dwc/pcie-uniphier.c
-+++ b/drivers/pci/controller/dwc/pcie-uniphier.c
-@@ -321,25 +321,6 @@ static const struct dw_pcie_host_ops uniphier_pcie_host_ops = {
- 	.host_init = uniphier_pcie_host_init,
- };
- 
--static int uniphier_add_pcie_port(struct uniphier_pcie_priv *priv,
--				  struct platform_device *pdev)
--{
--	struct dw_pcie *pci = &priv->pci;
--	struct pcie_port *pp = &pci->pp;
--	struct device *dev = &pdev->dev;
--	int ret;
--
--	pp->ops = &uniphier_pcie_host_ops;
--
--	ret = dw_pcie_host_init(pp);
--	if (ret) {
--		dev_err(dev, "Failed to initialize host (%d)\n", ret);
--		return ret;
--	}
--
--	return 0;
--}
--
- static int uniphier_pcie_host_enable(struct uniphier_pcie_priv *priv)
- {
- 	int ret;
-@@ -415,7 +396,9 @@ static int uniphier_pcie_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	return uniphier_add_pcie_port(priv, pdev);
-+	priv->pci.pp.ops = &uniphier_pcie_host_ops;
-+
-+	return dw_pcie_host_init(&priv->pci.pp);
- }
- 
- static const struct of_device_id uniphier_pcie_match[] = {
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 2735be1a8470..ce3b3f6c9728 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -117,6 +117,8 @@ patternProperties:
+     description: Asahi Kasei Corp.
+   "^asc,.*":
+     description: All Sensors Corporation
++  "^asix,.*":
++    description: ASIX Electronics Corporation
+   "^aspeed,.*":
+     description: ASPEED Technology Inc.
+   "^asus,.*":
 -- 
-2.25.1
+2.26.2
 
