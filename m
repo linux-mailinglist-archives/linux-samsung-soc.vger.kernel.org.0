@@ -2,161 +2,145 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38B6729D328
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 22:41:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC4F29D3A5
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 22:45:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727270AbgJ1VlW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 17:41:22 -0400
-Received: from mail.thorsis.com ([92.198.35.195]:57588 "EHLO mail.thorsis.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725601AbgJ1VlT (ORCPT
+        id S1726324AbgJ1Vpt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 17:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbgJ1Vpt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:41:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.thorsis.com (Postfix) with ESMTP id E87BE1DAB;
-        Wed, 28 Oct 2020 08:34:49 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mail.thorsis.com
-Received: from mail.thorsis.com ([127.0.0.1])
-        by localhost (mail.thorsis.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id GP4IZOfp6VRq; Wed, 28 Oct 2020 08:34:49 +0100 (CET)
-Received: by mail.thorsis.com (Postfix, from userid 109)
-        id C2C943F0C; Wed, 28 Oct 2020 08:34:48 +0100 (CET)
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RECEIVED,
-        NO_RELAYS autolearn=unavailable autolearn_force=no version=3.4.2
-From:   Alexander Dahl <ada@thorsis.com>
-To:     Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Wed, 28 Oct 2020 17:45:49 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC95C0613CF
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 14:45:48 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id r9so1082780ioo.7
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 14:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=I9SAz1Nr0rbpfdGWAlkoW2b28vlFNuIq9ln5WxnlO4E=;
+        b=jm63EXKgY9yyp1UxuzjBCQD7lC3SlsBlciOvn/TyDTxBtCltv+kSg/7eppr8WRaovK
+         l7iZ03reiAJmpcGehqZlNkYlVfd9wO1TED09s1t7az9Ed7YH1kdYHNCFN4RqGe1IgEBN
+         AEXHW4PeYMNP2qUZ+TRbeOjL37UttB+8fbDgM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=I9SAz1Nr0rbpfdGWAlkoW2b28vlFNuIq9ln5WxnlO4E=;
+        b=dDpOAm0t2cmXPzEFXAW3KX4d6avwDC8KG2tcZO1cPrYt02y6guoWdF/Mo6D1w00nZF
+         L86vE2ZMaQLLE6jL+JhpjmxLbBzuULDvK/wX2BvKRL0JRsBhg9LikIAjv/tTJHYKZwop
+         ni7cF/Yuj9CZSgJvJnkJ9+FWssks7mizV7TObEGGnXEn1xhI7iqcknNJTj2D+nkdRR5G
+         72965gK70bWjzOnjFAODzZVZGqSNMCDjNcPduXgTBIpXplqBD2pA1tzVCIVBF2ddfkBn
+         AffDInBPO85beZD4Bqv86ffnanl7F+qwzIGY75RwaSLZ/KGk8cubtPRGRRhJC0RRVUxj
+         79hw==
+X-Gm-Message-State: AOAM533x/WSYBfoXudq9rnhDb4CCeqQnKJ37Ya0+3JZBhujGPnZwOf+a
+        Bawa6VdzthbzapLO2IFxCYK40tkqYwLKQ7AmQPLPkGD+Oscybw==
+X-Google-Smtp-Source: ABdhPJwAj/+NNjUkoBXwXq5DIu0VTgWJza/6mTiWtlwuzf8bHOQ4vuDIb6imlwzIdmboQTzZiA7uP7/f3oC4UgxCMI4=
+X-Received: by 2002:a37:a81:: with SMTP id 123mr6993857qkk.487.1603890401898;
+ Wed, 28 Oct 2020 06:06:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <20201007083944.27910-1-ardb@kernel.org> <CGME20201028091912eucas1p13fb9cd947faa6bfd79199ea79648b6af@eucas1p1.samsung.com>
+ <20201007083944.27910-3-ardb@kernel.org> <920965b8-6f87-3f82-9fce-d3051fc543ca@samsung.com>
+ <CACPK8XfNfqToFBe0GPFTGrnPhNTYhSDiEagpB7ayBSW1DC-THA@mail.gmail.com>
+ <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
+ <CACPK8Xfw0WYSxGf0PnVOF40+C-KOJnX2x_q2gXrf4JZPErKBDA@mail.gmail.com> <CAMj1kXFmvzEj4PRFsqfcuz_bi3jUYArvRXb4x3bHKhgX1p6y+A@mail.gmail.com>
+In-Reply-To: <CAMj1kXFmvzEj4PRFsqfcuz_bi3jUYArvRXb4x3bHKhgX1p6y+A@mail.gmail.com>
+From:   Joel Stanley <joel@jms.id.au>
+Date:   Wed, 28 Oct 2020 13:06:29 +0000
+Message-ID: <CACPK8XdyJrcxjM9q9BfBt5u7dcsAjNhGazjY9rF1UT3mj3cDNw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] ARM: move device tree mapping out of linear region
+To:     Ard Biesheuvel <ardb@kernel.org>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mips@vger.kernel.org,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-leds@vger.kernel.org
-Subject: Re: [Linux-stm32] [PATCH v7 10/12] ARM: dts: stm32: Fix schema warnings for pwm-leds
-Date:   Wed, 28 Oct 2020 08:34:38 +0100
-Message-ID: <5231529.NqohY00Rok@ada>
-In-Reply-To: <f6ed201d-51b6-f278-7a95-3e3e49dc19ee@pengutronix.de>
-References: <20201005203451.9985-1-post@lespocky.de> <20201027100536.cpfizc67gwrolp2z@falbala.internal.home.lespocky.de> <f6ed201d-51b6-f278-7a95-3e3e49dc19ee@pengutronix.de>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+        Nicolas Pitre <nico@fluxnic.net>,
+        =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Ahmad,
+On Wed, 28 Oct 2020 at 13:00, Ard Biesheuvel <ardb@kernel.org> wrote:
+>
+> On Wed, 28 Oct 2020 at 13:59, Joel Stanley <joel@jms.id.au> wrote:
+> >
+> > On Wed, 28 Oct 2020 at 12:53, Ard Biesheuvel <ardb@kernel.org> wrote:
+> > >
+> > > On Wed, 28 Oct 2020 at 13:05, Joel Stanley <joel@jms.id.au> wrote:
+> > > >
+> > > > On Wed, 28 Oct 2020 at 09:19, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
+> > > > > This patch landed in linux-next 20201028 as commit 7a1be318f579 ("ARM:
+> > > > > 9012/1: move device tree mapping out of linear region"). Sadly it broke
+> > > > > booting  almost all Samsung Exynos-based boards. The only one which
+> > > > > booted, used an appended device tree. I can provide more information if
+> > > > > needed, just let me know what to check. "Starting kernel ..." is the
+> > > > > last message I see here. No output from earlycon.
+> > > >
+> > > > A bisection lead me to this patch after the next-20201028 failed to
+> > > > boot on the aspeed systems in testing (aspeed_g5_defconfig).
+> > > >
+> > > > You can reproduce this with today's next and qemu 5.1:
+> > > >
+> > > > qemu-system-arm -M romulus-bmc -nographic \
+> > > >  -kernel arch/arm/boot/zImage \
+> > > >  -dtb arch/arm/boot/dts/aspeed-bmc-opp-romulus.dtb \
+> > > >  -initrd any-old-file
+> > > >
+> > > > It requires the initrd option to reproduce, but the initrd doesn't
+> > > > need to be valid as we don't make it that far.
+> > > >
+> > > > There is no output but attaching gdb shows the kernel is stuck in
+> > > > setup_machine_tags. (If we enable CONFIG_ATAGS it is instead stuck in
+> > > > calibrate_delay).
+> > > >
+> > > > (gdb) bt
+> > > > #0  setup_machine_tags (machine_nr=<optimized out>,
+> > > > __atags_vaddr=<optimized out>) at ../arch/arm/kernel/atags.h:12
+> > > > #1  setup_arch (cmdline_p=0x80c01fc4) at ../arch/arm/kernel/setup.c:1100
+> > > > #2  0x80b00d2c in start_kernel () at ../init/main.c:862
+> > > > #3  0x00000000 in ?? ()
+> > > >
+> > > > Reverting 7a1be318f579 on top of next allowed the system to boot again.
+> > > >
+> > >
+> > > Does this help?
+> >
+> > Yes, that boots to userspace.
+> >
+>
+> Thanks. I'll take that as a tested-by
 
-Am Dienstag, 27. Oktober 2020, 11:58:10 CET schrieb Ahmad Fatoum:
-> Hello,
->=20
-> On 10/27/20 11:05 AM, Alexander Dahl wrote:
-> > Hello Ahmad,
-> >=20
-> > thanks for your feedback, comments below.
-> >=20
-> >>> -	led-rgb {
-> >>> +	led-controller-2 {
-> >>=20
-> >> Is a single RGB LED really a controller?
-> >=20
-> > I just followed the recommendations by Rob here.
->=20
-> Do you happen to know if the new multicolor LED support could be used her=
-e?
+Please do. Thanks for the quick fix.
 
-AFAIK not yet. The multicolor class should be ready and it is used by some=
-=20
-drivers for I=B2C connected LED controllers, but if I understood Pavel=20
-correctly, additional work has to be done for a gpio and/or pwm multicolor=
-=20
-driver. See this thread from August for example:
+Cheers,
 
-https://lore.kernel.org/linux-leds/2530787.iFCFyWWcSu@g550jk/
+Joel
 
->=20
-> I find it unfortunate that the device tree loses information relevant to
-> humans to adhere to a fixed nomenclature. Apparently led-controller isn't
-> even codified in the YAML binding (It's just in the examples). If you
-> respin, please add a comment that this is a single RGB led. I'd prefer to
-> keep the information in the DTB as well though.
-
-The "new" attributes 'function' and 'color' attributes should cover this=20
-information. IIRC those were introduced sometime before v5.4 and documentat=
-ion=20
-is in the leds/common.yaml binding. I don't see it in the scope of this pat=
-ch=20
-series, but if we would merge this warning fix first, the information is lo=
-st,=20
-so maybe those attributes should be added before?=20
-
-My heuristics on that would be looking at the label and if there's a distin=
-ct=20
-color in it, add the color property. I could do that for all pwm LEDs known=
- to=20
-the tree currently. That would be a bigger task for GPIO leds though. ;-)
-
->=20
-> >>>  		compatible =3D "pwm-leds";
-> >>>=20
-> >>> -		led-red {
-> >>> +		led-2 {
-> >>=20
-> >> Shouldn't this have been led-1 as well or is the numbering "global" ?
-> >=20
-> > Also good question. This numbering is for dts only, it usually does
-> > not correspond with LEDs on the board, so it could be numbered per
-> > led-controller as well?
->=20
-> I'd prefer that it starts by 1. That way it's aligned with PWM channel
-> ID.
-
-Ack.
-
->=20
-> Thanks for fixing the dtschema warnings by the way!
-
-Well, I "introduced" them by converting the leds-pwm binding to yaml (not=20
-merged yet), so I could as well fix the warnings then? ;-)
-
-Greets
-Alex
-
->=20
-> Cheers,
-> Ahmad
->=20
-> > Greets
-> > Alex
-> >=20
-> >>>  			label =3D "mc1:red:rgb";
-> >>>  			pwms =3D <&leds_pwm 1 1000000 0>;
-> >>>  			max-brightness =3D <255>;
-> >>>  			active-low;
-> >>>  	=09
-> >>>  		};
-> >>>=20
-> >>> -		led-green {
-> >>> +		led-3 {
-> >>>=20
-> >>>  			label =3D "mc1:green:rgb";
-> >>>  			pwms =3D <&leds_pwm 2 1000000 0>;
-> >>>  			max-brightness =3D <255>;
-> >>>  			active-low;
-> >>>  	=09
-> >>>  		};
-> >>>=20
-> >>> -		led-blue {
-> >>> +		led-4 {
-> >>>=20
-> >>>  			label =3D "mc1:blue:rgb";
-> >>>  			pwms =3D <&leds_pwm 3 1000000 0>;
-> >>>  			max-brightness =3D <255>;
-
-
-=2D-=20
-
-
-
+>
+>
+> > >
+> > > diff --git a/arch/arm/include/asm/memory.h b/arch/arm/include/asm/memory.h
+> > > index bb79e52aeb90..4f355bda872a 100644
+> > > --- a/arch/arm/include/asm/memory.h
+> > > +++ b/arch/arm/include/asm/memory.h
+> > > @@ -68,8 +68,8 @@
+> > >  #define XIP_VIRT_ADDR(physaddr)  (MODULES_VADDR + ((physaddr) & 0x000fffff))
+> > >
+> > >  #define FDT_FIXED_BASE         UL(0xff800000)
+> > > -#define FDT_FIXED_SIZE         (2 * PMD_SIZE)
+> > > -#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
+> > > (physaddr) % PMD_SIZE))
+> > > +#define FDT_FIXED_SIZE         (2 * SECTION_SIZE)
+> > > +#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
+> > > (physaddr) % SECTION_SIZE))
+> > >
+> > >  #if !defined(CONFIG_SMP) && !defined(CONFIG_ARM_LPAE)
+> > >  /*
