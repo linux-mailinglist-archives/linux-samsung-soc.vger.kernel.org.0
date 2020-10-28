@@ -2,85 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11DE729D8B9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 23:36:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5D2429DAF2
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 00:40:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388290AbgJ1WgB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 18:36:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47714 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731063AbgJ1Wd7 (ORCPT
+        id S1725812AbgJ1Xkk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 19:40:40 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:59545 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726739AbgJ1XjE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:33:59 -0400
-Received: from kozik-lap.proceq-device.com (unknown [194.230.155.184])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C340020714;
-        Wed, 28 Oct 2020 22:33:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603924438;
-        bh=B/Vu+6xItSMaZHGt13GUipfykI5xbdYfX/hIHb/tkjs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gH5DZMP8j3zLEJjFKHVUigdfh2IdjmvsKy62IkVyMupbuxo8/Kf+ZtkY5rhl29wDc
-         jY7A8wCmNJKi9wgks7zS6IuUVfk+y6Gu+JrSXN2OVSC5huWEcn34KU6LMvcRtcndSp
-         Gvb11NTwHdH+iTwPODHuSShfCdYyq/rwYMS3mVdY=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Lee Jones <lee.jones@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Andy Shevchenko <andy@kernel.org>, Milo Kim <milo.kim@ti.com>,
+        Wed, 28 Oct 2020 19:39:04 -0400
+Received: from 1.general.cking.uk.vpn ([10.172.193.212])
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1kXk8M-00040b-Cl; Wed, 28 Oct 2020 12:00:54 +0000
+To:     Nishanth Menon <nm@ti.com>
+Cc:     MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Tony Lindgren <tony@atomide.com>,
-        patches@opensource.cirrus.com, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org
-Cc:     Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: [RESEND PATCH 42/42] mfd: wm8994: use PLATFORM_DEVID_NONE
-Date:   Wed, 28 Oct 2020 23:30:09 +0100
-Message-Id: <20201028223009.369824-42-krzk@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201028223009.369824-1-krzk@kernel.org>
-References: <20201028223009.369824-1-krzk@kernel.org>
+        Linux PM <linux-pm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc@vger.kernel.org
+From:   Colin Ian King <colin.king@canonical.com>
+Subject: re: PM / devfreq: map devfreq drivers to governor using name
+Message-ID: <8aec701c-73d1-d2a1-c894-8dec844ed865@canonical.com>
+Date:   Wed, 28 Oct 2020 12:00:53 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Use PLATFORM_DEVID_NONE define instead of "-1" value because:
- - it brings some meaning,
- - it might point attention why auto device ID was not used.
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
----
- drivers/mfd/wm8994-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Static analysis of linux-next with Coverity has found a potential null
+pointer dereference issue with the following commit:
 
-diff --git a/drivers/mfd/wm8994-core.c b/drivers/mfd/wm8994-core.c
-index 3b2b93c5bbcb..5a8d4cc00cc1 100644
---- a/drivers/mfd/wm8994-core.c
-+++ b/drivers/mfd/wm8994-core.c
-@@ -578,7 +578,7 @@ static int wm8994_device_init(struct wm8994 *wm8994, int irq)
- 
- 	wm8994_irq_init(wm8994);
- 
--	ret = mfd_add_devices(wm8994->dev, -1,
-+	ret = mfd_add_devices(wm8994->dev, PLATFORM_DEVID_NONE,
- 			      wm8994_devs, ARRAY_SIZE(wm8994_devs),
- 			      NULL, 0, NULL);
- 	if (ret != 0) {
--- 
-2.25.1
+commit 1b5c1be2c88e8445a20fa1929e26c37e7ca8c926
+Author: Nishanth Menon <nm@ti.com>
+Date:   Mon Oct 29 15:01:45 2012 -0500
 
+    PM / devfreq: map devfreq drivers to governor using name
+
+
+The analysis is as follows for devfreq_remove_governor in
+drivers/devfreq/devfreq.c
+
+1312
+
+deref_ptr_in_call: Dereferencing pointer devfreq->governor.
+
+1313                if (!strncmp(devfreq->governor->name, governor->name,
+1314                             DEVFREQ_NAME_LEN)) {
+1315                        /* we should have a devfreq governor! */
+
+Dereference before null check (REVERSE_INULL)
+check_after_deref: Null-checking devfreq->governor suggests that it may
+be null, but it has already been dereferenced on all paths leading to
+the check.
+
+1316                        if (!devfreq->governor) {
+1317                                dev_warn(dev, "%s: Governor %s NOT
+present\n",
+1318                                         __func__, governor->name);
+1319                                continue;
+1320                                /* Fall through */
+
+So devfreq->governor->name is dereferencing devfreq->governor before a
+null check on devfreq->governor
+
+Colin
