@@ -2,107 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C63ED29D766
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 23:24:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA9ED29D572
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Oct 2020 23:02:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732791AbgJ1WXz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 18:23:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732781AbgJ1WXy (ORCPT
+        id S1729560AbgJ1WCm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 18:02:42 -0400
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:46545 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729557AbgJ1WCl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:23:54 -0400
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEACC0613CF
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 28 Oct 2020 15:23:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=iGNt9q4u3C8iCvbvbTSQ7zegZDgrGY8gA6FD/mliiJc=; b=tyC/p008K/KhAYOxaqxcY7WRf
-        5fd3pS3xqetPeTmL0b93VSI2MlpnAwqZtW6ekD9Qb2qKYu+Voyqo8pxBPfsdwiascoBEqzXuqGXLZ
-        AypHNaBoN2W/6e2X2tKOmLh+wxKmCJ3NBuDB8pkLltSuCGSvNl4uzz29CcFAga9unjsPZea8mYXe8
-        WIxQaen2lEQi/QwA/9J4RSEgN2AYhlEHamqHC3XwKocJtEGUe1oOmuqkm94WGedUXAi2tnNGpqL3n
-        iJmtdXWinGZrypheUhf8+0T7dcyIWuUv8zqPOhOVYmJD9GnjRX8F8ag0JlnBk7xaFRuq/tjN0Wd1v
-        BiZgnztKw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:52040)
-        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <linux@armlinux.org.uk>)
-        id 1kXlCv-0002pR-8e; Wed, 28 Oct 2020 13:09:41 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
-        (envelope-from <linux@shell.armlinux.org.uk>)
-        id 1kXlCt-00053q-Lp; Wed, 28 Oct 2020 13:09:39 +0000
-Date:   Wed, 28 Oct 2020 13:09:39 +0000
-From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
-To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     Joel Stanley <joel@jms.id.au>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Nicolas Pitre <nico@fluxnic.net>,
-        =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Subject: Re: [PATCH v2 2/2] ARM: move device tree mapping out of linear region
-Message-ID: <20201028130939.GM1551@shell.armlinux.org.uk>
-References: <20201007083944.27910-1-ardb@kernel.org>
- <CGME20201028091912eucas1p13fb9cd947faa6bfd79199ea79648b6af@eucas1p1.samsung.com>
- <20201007083944.27910-3-ardb@kernel.org>
- <920965b8-6f87-3f82-9fce-d3051fc543ca@samsung.com>
- <CACPK8XfNfqToFBe0GPFTGrnPhNTYhSDiEagpB7ayBSW1DC-THA@mail.gmail.com>
- <CAMj1kXH90MzCUJ_DHZ_2=JcWBX=Qf1PT-A9PX9EeBTVx22EkaQ@mail.gmail.com>
- <20201028130050.GL1551@shell.armlinux.org.uk>
- <CAMj1kXFWAr+-fnThgtY_jTg1_=kmhHRS5+X6jXAG9K7GegCchg@mail.gmail.com>
+        Wed, 28 Oct 2020 18:02:41 -0400
+Received: by mail-ej1-f68.google.com with SMTP id t25so999278ejd.13;
+        Wed, 28 Oct 2020 15:02:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4gLV5jqZWEzx0kSjn0ZlymUAXJbYU1uMHL1QmYMs6LA=;
+        b=tOyvKkx5fXDVh0D91p75HxFMkGyqloOP+olWNATOeuM34+S65B6Tws9gmDMcZrIPUm
+         TupdtucY+YUg/kLIcAymQ/zvgQFCCCMN5z1qSxGxOWwAtuj4MhUDTTbYVKIJl+QMmfJj
+         ZUyfMHll0Wq86hWOzNNSMBJl7DbGZ/HutEn6h1EUgpQhq5AfaGoAQg2HDmi2QDu+K3ue
+         bF3Zo+diIrGmUbblTDD0VrMjHPVqWcP0JPITksBF02IvNGhXYN56M/cF5FLxWwdEEdqN
+         Jx/HonIGisKDmA5w4e4X0pH/WZbMUkqSNbvMJKpAeISEQCQAx67l+MgK9RRA17EOdZAK
+         4H/w==
+X-Gm-Message-State: AOAM532iKjfjtf4OP972YYSs7xD/g6l0Otn4kSsVj+XUf2Ryis3yZLWK
+        G1Cy0ARM7XswQaMVLbJNDxs=
+X-Google-Smtp-Source: ABdhPJzTVbBja1pgLqS76H5a7HJ4PpaZGt8w1wdce7Ox6yZdCWF/ZVkaaOZZrdWROtKTG3r7QsBafg==
+X-Received: by 2002:a17:906:c2d2:: with SMTP id ch18mr1159055ejb.446.1603922558697;
+        Wed, 28 Oct 2020 15:02:38 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.184])
+        by smtp.googlemail.com with ESMTPSA id oz18sm411058ejb.55.2020.10.28.15.02.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 15:02:37 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 23:02:35 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Kukjin Kim <kgene@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: Re: [PATCH 1/2] soc: samsung: exynos-pmu: instantiate clkout driver
+ as MFD
+Message-ID: <20201028220235.GA271157@kozik-lap>
+References: <20201001165646.32279-1-krzk@kernel.org>
+ <20201001165646.32279-2-krzk@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMj1kXFWAr+-fnThgtY_jTg1_=kmhHRS5+X6jXAG9K7GegCchg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
+In-Reply-To: <20201001165646.32279-2-krzk@kernel.org>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 02:04:41PM +0100, Ard Biesheuvel wrote:
-> On Wed, 28 Oct 2020 at 14:01, Russell King - ARM Linux admin
-> <linux@armlinux.org.uk> wrote:
-> >
-> > On Wed, Oct 28, 2020 at 01:52:48PM +0100, Ard Biesheuvel wrote:
-> > > Does this help?
-> > >
-> > > diff --git a/arch/arm/include/asm/memory.h b/arch/arm/include/asm/memory.h
-> > > index bb79e52aeb90..4f355bda872a 100644
-> > > --- a/arch/arm/include/asm/memory.h
-> > > +++ b/arch/arm/include/asm/memory.h
-> > > @@ -68,8 +68,8 @@
-> > >  #define XIP_VIRT_ADDR(physaddr)  (MODULES_VADDR + ((physaddr) & 0x000fffff))
-> > >
-> > >  #define FDT_FIXED_BASE         UL(0xff800000)
-> > > -#define FDT_FIXED_SIZE         (2 * PMD_SIZE)
-> > > -#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
-> > > (physaddr) % PMD_SIZE))
-> > > +#define FDT_FIXED_SIZE         (2 * SECTION_SIZE)
-> > > +#define FDT_VIRT_ADDR(physaddr)        ((void *)(FDT_FIXED_BASE |
-> > > (physaddr) % SECTION_SIZE))
-> >
-> > Is this correct? If the FDT fixed size is 2x, why does FDT_VIRT_ADDR()
-> > only work for half of it?
-> >
+On Thu, Oct 01, 2020 at 06:56:45PM +0200, Krzysztof Kozlowski wrote:
+> The Exynos clock output (clkout) driver uses same register address space
+> (Power Management Unit address space) as Exynos PMU driver and same set
+> of compatibles.  It was modeled as clock provider instantiated with
+> CLK_OF_DECLARE_DRIVE().
 > 
-> Perhaps the naming is confusing. This is only used to obtain the start
-> of the virtually mapped DT, which amounts to the virtual address of
-> the section plus the physical address modulo the section size.
+> This however brings ordering problems and lack of probe deferral,
+> therefore clkout driver should be converted to a regular module and
+> instantiated as a child of PMU driver to be able to use existing
+> compatibles and address space.
 > 
-> I will rename physaddr to physbase when I respin this as a patch.
-> Shall I rename FDT_VIRT_ADDR to FDT_VIRT_BASE as well?
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  drivers/soc/samsung/exynos-pmu.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 
-Yes please, I think that makes it clearer what is going on here.
+Applied with all tags.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+Best regards,
+Krzysztof
+
