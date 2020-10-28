@@ -2,144 +2,67 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D481929DC19
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 01:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21A1829DCD3
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 01:32:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390782AbgJ2AV3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 20:21:29 -0400
-Received: from bilbo.ozlabs.org ([203.11.71.1]:44765 "EHLO ozlabs.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727315AbgJ2AV1 (ORCPT
+        id S2387509AbgJ1W3H (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 18:29:07 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40473 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387508AbgJ1W3H (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 20:21:27 -0400
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.ozlabs.org (Postfix) with ESMTPSA id 4CM5hY1c5jz9sTf;
-        Thu, 29 Oct 2020 11:21:17 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
-        s=201909; t=1603930883;
-        bh=1H+0lWYSxaRNRPccmOFzTYzYgErk8Jx3rJ+1kAphuRA=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=fBZNMVGf2DpDigzvlO5EFKrSfhcHEKaclKWRSpd0rMT3nijHNgh+K7YZaMcJgG+I1
-         Sqp0aSWWEEdsZy58/OpXsqjKdLh1Go0930GvCaNP/rPdkcm6jj8VLu+RtZAYju7Lwv
-         1OyJzCDTJEPo7fb3YVK+7vVSD947EigxRUEp47FaWl3boTdjoiwTlcbdL3lqCGS/Ir
-         HjS3q0q57c4NP98/lAG95E/PIIhVcbnSgznNbTvydd0ukv+wu90vIX/fgrejZmKL/x
-         fFgnf7BJJuzQ19szmCiiqO1GyzQ9nRbhKLLimDSXto/YVs3qcf351XsGaZm3WEkFCR
-         8YPZdn5UhcwWA==
-From:   Michael Ellerman <mpe@ellerman.id.au>
-To:     Rob Herring <robh@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        linux-pci@vger.kernel.org,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-arm-kernel@axis.com,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Minghuan Lian <minghuan.Lian@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Yue Wang <yue.wang@Amlogic.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        linuxppc-dev@lists.ozlabs.org, Lucas Stach <l.stach@pengutronix.de>
-Subject: Re: [PATCH 01/13] PCI: dwc/imx6: Drop setting PCI_MSI_FLAGS_ENABLE
-In-Reply-To: <20201028204646.356535-2-robh@kernel.org>
-References: <20201028204646.356535-1-robh@kernel.org> <20201028204646.356535-2-robh@kernel.org>
-Date:   Thu, 29 Oct 2020 11:21:16 +1100
-Message-ID: <87h7qdx4oz.fsf@mpe.ellerman.id.au>
+        Wed, 28 Oct 2020 18:29:07 -0400
+Received: by mail-wr1-f67.google.com with SMTP id m13so723569wrj.7;
+        Wed, 28 Oct 2020 15:29:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TuERzv+I0rpz7wGuytgD+7FYdwTEBi7hw79iaAsE+F4=;
+        b=btqzOokfPjt7hK371Su1Cq8JRNnPaZQdPkQhzKVPNRW5K/NnmOzcHTFtvQYXaq0tA2
+         qCVelsYrzMIe629X6wRHEAo4wyAQxC1kU47Ix3WPAMXWXCPQzJ5LL64WXKriQKbiw00N
+         rcnc17+BG7hZUaw4wjGL2SFNL8vEfjnUbRLE4VdMzYECbrDTdzeQTVUWOvM88JmuaZf8
+         eoxk0DuETyur54p2HqpPVwGEPbtFW9C1tzSVverhocN8CoPVfgnmhryPg99e37maPyG0
+         txn4jghMi9Tv2e/PLx9204TFJYRZuZDQJ6Oz2fSWlDXFE+5TuZxMG7BBNtO2K6XRzUpe
+         cZRg==
+X-Gm-Message-State: AOAM531z4OnbwuPkHRht3V9dRRscv2ckceIU0JXaEuWO6n8DgYEJGLEn
+        gMcnmqhBTd4cSEDiKCVEurLHl/8lh50mHw==
+X-Google-Smtp-Source: ABdhPJzqFo3mj4of5jE+IZvMiFxXULXKc0DG0DwWkOdEK2aXLgDE+YvMXSsMl4K4YrUuxRL82hp0jg==
+X-Received: by 2002:a17:906:c0d8:: with SMTP id bn24mr6127669ejb.480.1603869716907;
+        Wed, 28 Oct 2020 00:21:56 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.184])
+        by smtp.googlemail.com with ESMTPSA id q3sm2287534edv.17.2020.10.28.00.21.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 00:21:55 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 08:21:54 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Martin Kaiser <martin@kaiser.cx>
+Cc:     Wolfram Sang <wsa@kernel.org>, Andrzej Hajda <a.hajda@samsung.com>,
+        linux-i2c@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: exynos5: fix platform_get_irq error handling
+Message-ID: <20201028072154.GA3494@kozik-lap>
+References: <20201027214257.8099-1-martin@kaiser.cx>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201027214257.8099-1-martin@kaiser.cx>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Rob Herring <robh@kernel.org> writes:
-> No other host driver sets the PCI_MSI_FLAGS_ENABLE bit, so it must not
-> be necessary. If it is, a comment is needed.
+On Tue, Oct 27, 2020 at 10:42:57PM +0100, Martin Kaiser wrote:
+> platform_get_irq already prints an error message if the requested irq
+> was not found. Don't print another message in the driver.
+> 
+> If platform_get_irq returns an error, relay this error to the caller of the
+> probe function. Don't change all errors to -EINVAL. This breaks the case
+> where platform_get_irq returns -EPROBE_DEFER.
+> 
+> platform_get_irq never returns 0. Don't check for this. Make it clear that
+> the error path always returns a negative error code.
 
-Yeah, but git blame directly points to:
+These should be three separate commits.
 
-  75cb8d20c112 ("PCI: imx: Enable MSI from downstream components")
-
-Which has a pretty long explanation. The relevant bit probably being:
-
-  ... on i.MX6, the MSI Enable bit controls delivery of MSI interrupts
-  from components below the Root Port.
-
-
-So it seems a little rash to just remove the code.
-
-cheers
-
-
-> Cc: Richard Zhu <hongxing.zhu@nxp.com>
-> Cc: Lucas Stach <l.stach@pengutronix.de>
-> Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> Cc: Bjorn Helgaas <bhelgaas@google.com>
-> Cc: Shawn Guo <shawnguo@kernel.org>
-> Cc: Sascha Hauer <s.hauer@pengutronix.de>
-> Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-> Cc: Fabio Estevam <festevam@gmail.com>
-> Cc: NXP Linux Team <linux-imx@nxp.com>
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pci-imx6.c | 8 --------
->  1 file changed, 8 deletions(-)
->
-> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-> index 5cf1ef12fb9b..7dd137d62dca 100644
-> --- a/drivers/pci/controller/dwc/pci-imx6.c
-> +++ b/drivers/pci/controller/dwc/pci-imx6.c
-> @@ -1002,7 +1002,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
->  	struct resource *dbi_base;
->  	struct device_node *node = dev->of_node;
->  	int ret;
-> -	u16 val;
->  
->  	imx6_pcie = devm_kzalloc(dev, sizeof(*imx6_pcie), GFP_KERNEL);
->  	if (!imx6_pcie)
-> @@ -1167,13 +1166,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
->  	if (ret < 0)
->  		return ret;
->  
-> -	if (pci_msi_enabled()) {
-> -		u8 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_MSI);
-> -		val = dw_pcie_readw_dbi(pci, offset + PCI_MSI_FLAGS);
-> -		val |= PCI_MSI_FLAGS_ENABLE;
-> -		dw_pcie_writew_dbi(pci, offset + PCI_MSI_FLAGS, val);
-> -	}
-> -
->  	return 0;
->  }
->  
-> -- 
-> 2.25.1
+Best regards,
+Krzysztof
