@@ -2,94 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F05F929E1F9
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 03:05:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E19629E26C
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 03:14:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727876AbgJ2CEs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 22:04:48 -0400
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:42917 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727910AbgJ1Vsr (ORCPT
+        id S1726777AbgJ2COX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Oct 2020 22:14:23 -0400
+Received: from mail-ej1-f66.google.com ([209.85.218.66]:39630 "EHLO
+        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726741AbgJ2COW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:48:47 -0400
-Received: by mail-ej1-f65.google.com with SMTP id h24so990104ejg.9;
-        Wed, 28 Oct 2020 14:48:45 -0700 (PDT)
+        Wed, 28 Oct 2020 22:14:22 -0400
+Received: by mail-ej1-f66.google.com with SMTP id bn26so1701127ejb.6;
+        Wed, 28 Oct 2020 19:14:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=83VZz+pORqDca+ZojpaQmhO3avCC0XnIll6kPzbfGaM=;
-        b=YgGLHCJ1Dr2HPl5xg1KBfOZVuqnbLyPLnypDV3aluhLnkw7rXdqsdjlK6IcCpTzaF1
-         Ab3eLda0/Mmvc67a05sloKukffbxl/TGvCTKQq3yRwbAau0XcAbwSGxOBmI6X2UawwNZ
-         4p06km/952HVuXTLdBryh7PerR4iJyKY9EOOXml7WgUzorvAvvtnD0gILja+lHVwd4PO
-         Z6AjydSMs3OlfgT8hqt2kxcsY23/v59pz51thJl3TyruxpSDr34Jkm7RBbQxQD2b4HB2
-         aYcMTfjql9CWSzeepz4uQ++js6lcZC6Cq9bClBZdLg/da8tcEL8IMWwBOKAUKTX1ykX1
-         qe8w==
-X-Gm-Message-State: AOAM533pr3+9ccurnXmSNA151FDoTJ+1D87UE0aBoDrgcU7B+JwvTzVe
-        egI60h64D7JtKC9VjotiecE=
-X-Google-Smtp-Source: ABdhPJzB8cUta6V7xPwL4y/FEh44Tmmhk4LV/F40m2/CCzzkySz/YgZearhnQDl/zEf+L4LstELAvQ==
-X-Received: by 2002:a17:906:95d1:: with SMTP id n17mr1155400ejy.75.1603921725004;
-        Wed, 28 Oct 2020 14:48:45 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.184])
-        by smtp.googlemail.com with ESMTPSA id u13sm409317ejj.4.2020.10.28.14.48.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 14:48:44 -0700 (PDT)
-Date:   Wed, 28 Oct 2020 22:48:41 +0100
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>, Kukjin Kim <kgene@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>
-Subject: Re: [PATCH v2 00/12] ARM: dts: samsung: minor node name cleanups
-Message-ID: <20201028214841.GA266845@kozik-lap>
-References: <20201027170947.132725-1-krzk@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6JQiZAd6xHyfMhhZq7AApTbGmmllgVW7w4+YOA//K7o=;
+        b=pM/ehFqPhBnTF7n94HFzmrLtOzTidHLcHQYllXxC2rg+Kz4CQEH+HAuO6tQfdPKxLi
+         7o0S0aDI32y2eHuRLdbir7yiT53oFlvunZF709AeEH/X77//gOJKzGZnlLvq0nYkHgnr
+         A3bT9iZlBWQdu0G2Wji61Lj4Gtr2OVTax5bPzOMcJJQY+yE7AjsZzKPlU7PNM4itid0L
+         XUi+DmEKeOthbPppaFfLauKAScoSu3juylWekjGCs5Ei/JeRXx38ydPddG8sRou8nhuJ
+         NYixx9LHFcYcUM6kfkRrKzaQtyQ+Iul6a7ZBnZTic09+WbCURouaDCpZODcADvo6FpWW
+         mhIQ==
+X-Gm-Message-State: AOAM531WBXgDzinSj3xJ9/HmRNwui4ue/DUD3XoZPCKCreqPBsuzhyJG
+        P93UkNYDYdAVZgq+/unCYHR/Lb7Z7oF7Uw==
+X-Google-Smtp-Source: ABdhPJzOsJM0Jg68AWxk3T2I+1KjCJLJGi21MgR+c0ixYAV4+m83fy11Yle3XjG5htkFRvECeSgPjQ==
+X-Received: by 2002:a17:906:b110:: with SMTP id u16mr1903481ejy.55.1603937660294;
+        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
+        by smtp.gmail.com with ESMTPSA id r11sm652310edi.91.2020.10.28.19.14.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id 7so1754738ejm.0;
+        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
+X-Received: by 2002:a2e:5049:: with SMTP id v9mr855703ljd.273.1603937238672;
+ Wed, 28 Oct 2020 19:07:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201027170947.132725-1-krzk@kernel.org>
+References: <20201028223009.369824-1-krzk@kernel.org> <20201028223009.369824-5-krzk@kernel.org>
+In-Reply-To: <20201028223009.369824-5-krzk@kernel.org>
+From:   Chen-Yu Tsai <wens@csie.org>
+Date:   Thu, 29 Oct 2020 10:07:08 +0800
+X-Gmail-Original-Message-ID: <CAGb2v67puSi_wu4BV2Jac23MJMxGj33YJnZxwkfy4jHGYue+WA@mail.gmail.com>
+Message-ID: <CAGb2v67puSi_wu4BV2Jac23MJMxGj33YJnZxwkfy4jHGYue+WA@mail.gmail.com>
+Subject: Re: [RESEND PATCH 05/42] mfd: axp20x: use PLATFORM_DEVID_NONE
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        "open list:BROADCOM BCM281XX..." 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Andy Shevchenko <andy@kernel.org>, Milo Kim <milo.kim@ti.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Tony Lindgren <tony@atomide.com>,
+        patches@opensource.cirrus.com,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2835..." 
+        <linux-rpi-kernel@lists.infradead.org>,
+        "moderated list:ARM/SAMSUNG EXYNO..." 
+        <linux-samsung-soc@vger.kernel.org>,
+        "open list:OMAP2+ SUPPORT" <linux-omap@vger.kernel.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Oct 27, 2020 at 06:09:35PM +0100, Krzysztof Kozlowski wrote:
-> Hi All,
-> 
-> Changes since v1
-> ================
-> 1. Use names proposed by Marek (light-sensor, audio-codec, image-sensor,
->    power-sensor),
-> 2. Use amplifier in max98504 node name.
-> 
+On Thu, Oct 29, 2020 at 6:30 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> Use PLATFORM_DEVID_NONE define instead of "-1" value because:
+>  - it brings some meaning,
+>  - it might point attention why auto device ID was not used.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 
-Applied all twelve.
-
-Best regards,
-Krzysztof
-
-> Description
-> ===========
-> A new Exynos4412 board was recently submitted and it (as expected)
-> copied all not-the-best patterns from existing DTSes.  Let's fix few of
-> them so any new boards will not copy old choices.
-> 
-> Best regards,
-> Krzysztof
-> 
-> Krzysztof Kozlowski (12):
->   ARM: dts: exynos: adjust node names to DT spec in Exynos3250 boards
->   ARM: dts: exynos: adjust node names to DT spec in Exynos4210 boards
->   ARM: dts: exynos: override GPIO keys node by label in Exynos4412
->     Odroid family
->   ARM: dts: exynos: adjust node names to DT spec in Exynos4412 boards
->   ARM: dts: exynos: remove redundant status=okay in Exynos4412 boards
->   ARM: dts: exynos: adjust node names to DT spec in Exynos5250 boards
->   ARM: dts: exynos: adjust node names to DT spec in Odroid XU
->   ARM: dts: exynos: adjust node names to DT spec in Exynos542x boards
->   ARM: dts: s5pv210: adjust node names to DT spec
->   arm64: dts: exynos: adjust node names to DT spec in Exynos5433 TM2
->   arm64: dts: exynos: adjust node names to DT spec in Exynos7 Espresso
->   arm64: dts: exynos: remove redundant status=okay in Exynos5433 TM2
+Acked-by: Chen-Yu Tsai <wens@csie.org>
