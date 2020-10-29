@@ -2,232 +2,285 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C97229ED92
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 14:50:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E65729ED61
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 14:46:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbgJ2Nue (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 29 Oct 2020 09:50:34 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:42269 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725300AbgJ2Nud (ORCPT
+        id S1727441AbgJ2Nqf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 29 Oct 2020 09:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726354AbgJ2Nqf (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 29 Oct 2020 09:50:33 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20201029134041euoutp01803fa400b045d01cb57f38bba31c0227~CekIqZjoC0672406724euoutp01e
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 29 Oct 2020 13:40:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20201029134041euoutp01803fa400b045d01cb57f38bba31c0227~CekIqZjoC0672406724euoutp01e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1603978841;
-        bh=G7+cs0Cey9mc1jUmzGnGpiHoQ8KNRi7EJkpJq7+FJtw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=m4XN8no9xJ84HMBOlxCnje+FVbK/wC+nq+MmMQyIxtMQvFnTIbyrdTcdIUXYiTAN+
-         8DGJnox3BExRiXOXop0zaZ9jAb6CQMPK8u+XmouZ0YscPityCYGr1pCtwol6M5J/4d
-         uWjnz7a45qLvflrjzZ3bcIB3AsuPpdwvZarYSuVc=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20201029134041eucas1p155b4949ffe67b6c3d13ec01ef0cc42eb~CekH-d4MP0596605966eucas1p1M;
-        Thu, 29 Oct 2020 13:40:41 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 4C.99.05997.956CA9F5; Thu, 29
-        Oct 2020 13:40:41 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20201029134040eucas1p2a8958b44842a8a4647e3aa4521c75725~CekHj4xNl0841008410eucas1p2Z;
-        Thu, 29 Oct 2020 13:40:40 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20201029134040eusmtrp24faa91cd5b16d567bd3e90e0fb74f44c~CekHjMRNb0455804558eusmtrp2Y;
-        Thu, 29 Oct 2020 13:40:40 +0000 (GMT)
-X-AuditID: cbfec7f4-677ff7000000176d-42-5f9ac65995aa
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 6F.91.06017.856CA9F5; Thu, 29
-        Oct 2020 13:40:40 +0000 (GMT)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20201029134040eusmtip11497fb3783904a71700c403a00bb994d~CekG8YpxE2155521555eusmtip19;
-        Thu, 29 Oct 2020 13:40:40 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 6/6] arm64: dts: exynos: add the WiFi/PCIe support to
- TM2(e) boards
-Date:   Thu, 29 Oct 2020 14:40:17 +0100
-Message-Id: <20201029134017.27400-7-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201029134017.27400-1-m.szyprowski@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA0VSa0hTYRjm29nOOQ6Xx6Phh5WDdbPIWxYdSMVU6lR/qh+hgdp0J5V0yo6X
-        TARboTZvswIvmIommbdsielQsyWboW4jKQw1LOhiZGbT8NryeLT+Pe9z+Z6Xlw9HyBqRO56g
-        TGVUSnmiDBULO41LFq8IY2W0b3seSj1Qx1M1A2YRNbacK6Ia5yswyvqpEKUslnaMGtVXodRI
-        tQmlyi19Aur7yleMah2YxCh7TxdGdU8MIsESuqW6BdDdlZMYXatLo3VNt1G6uKMJ0KaxZwLa
-        pvM4h10SByiYxIR0RuUTdFkcX/axHElZlF4b6rWAHFDkrgEOOCSOQK2uB9MAMU4SjQBWlZgF
-        nEAS8wBOLyG8YAOwqH4FbCWK74+LeOEhgCWfi1B+WE/k3f0t5Fwo4Qc1M5p1AcddiWC4uEBx
-        HoSoQWDp+3EBx7sQ4bB3NZyzC4m90FqwhHG0hAiELWuRfJcUNrf3IxztQARBo1rGvQKJJgwa
-        7I829wmD6p9mIY9d4DdTB8bjndDeXSPgAzcB/GBuxfihEMBRdflm+jicMC9v7IkQB+BjvQ9P
-        n4D2vsGNYkhsg2MzzhyNrMM7nWWbtATm55K8ex+sNLX9q31hfY3wmIYt/Q2bNywFMN/2FNUC
-        aeX/sloAmoAbk8YmxTHsYSWT4c3Kk9g0ZZx3bHKSDqx/m6E/pvkuoF+NMQACBzJHiXW8IpoU
-        ydPZzCQDgDgic5WEjAxFkRKFPPM6o0qOVqUlMqwB7MCFMjeJf910JEnEyVOZqwyTwqi2VAHu
-        4J4DSo8NGBOUrTH7pVNtmWeynodl/Mgazu73Ubz0ny34lX7F1GNhzTcaQrSv5h1tw6ke20/F
-        ip3PT71LXvAkw0LfKCL2LOtHnOrp4ah7u+pIM7XkFnryYu8X3yinC7vTPcPXDEcnHfWnZXN7
-        7E7ZGq9Apb/ubMFsc8Bb7ZNbh+aMAgeZkI2X+x1EVKz8LxMU6tEyAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkkeLIzCtJLcpLzFFi42I5/e/4Xd2IY7PiDVrPq1gsacqwmH/kHKvF
-        jV9trBYrvsxkt7jwtIfN4vz5DewWl3fNYbM4O+84m8WM8/uYLN78fsFusfbIXXaL/3t2sFvs
-        vHOC2YHXY828NYweO2fdZfdYsKnUY9OqTjaPvi2rGD2O39jO5PF5k1wAe5SeTVF+aUmqQkZ+
-        cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpqTmZZapG+XYJexvRHM5gLfshXnN57nrGB
-        sVeqi5GTQ0LARKJv7m3WLkYuDiGBpYwSU1e0skMkZCROTmtghbCFJf5c62KDKPrEKPHy2Adm
-        kASbgKFE11uQBCeHiICTxPvJF8HizAIrmSUObssDsYUFwiRuznsINpRFQFXiQvdPIJuDg1fA
-        VmLN31iI+fISqzccYAYJcwrYSRxrUgIJCwFV7Dv1inkCI98CRoZVjCKppcW56bnFRnrFibnF
-        pXnpesn5uZsYgcG/7djPLTsYu94FH2IU4GBU4uG9cHtmvBBrYllxZe4hRgkOZiURXqezp+OE
-        eFMSK6tSi/Lji0pzUosPMZoCnTSRWUo0OR8YmXkl8YamhuYWlobmxubGZhZK4rwdAgdjhATS
-        E0tSs1NTC1KLYPqYODilGhg91rzuSj06tS5xTr6vjm1dRJLnBRmzv7KtcyReT/JpeP5wkuqS
-        D+dL9vikBN9O//h9zf7cc2tWlvPZW509fr1q0e3XT80MKjk6nzJr3rZpS5m2uu0d/6GFIkfO
-        rDr4n/P1pYZUxhzGrJ8PPM/Ptp3z9umG2avu3U6uuJdUsGbj/F9z9/sV7Li8XYmlOCPRUIu5
-        qDgRADSB6GuUAgAA
-X-CMS-MailID: 20201029134040eucas1p2a8958b44842a8a4647e3aa4521c75725
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20201029134040eucas1p2a8958b44842a8a4647e3aa4521c75725
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20201029134040eucas1p2a8958b44842a8a4647e3aa4521c75725
-References: <20201029134017.27400-1-m.szyprowski@samsung.com>
-        <CGME20201029134040eucas1p2a8958b44842a8a4647e3aa4521c75725@eucas1p2.samsung.com>
+        Thu, 29 Oct 2020 09:46:35 -0400
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC599C0613D3;
+        Thu, 29 Oct 2020 06:46:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:
+        Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=cSTsxDYLnXEEi/bDWUeAA20te1rJNVjNLggcXmbtZpQ=; b=XhUb+9X5JMWVorM4JHpoQ7L3c
+        AiUG1AryewCQipJ01tUvPuHknKuaIrwrLP6ZXuZXs/oD8Bh/wZrZovvYrMop17PDqM6/USIW2pUUD
+        umeOebeU4JGnmlVdsho1/rbxzTzmR36nWoPKdVF/cS/Ixz9EubS/wlFCmkLc1s0dwgtIBpNbCTthj
+        OGlL4pHZSq6Z1s4V0D/PZtQWWL1+2i5Ykl0ZKf5OlUxQUmiemIAvBUpvqt1BeXrkDiT25CoH0Xdjt
+        O4P8O/bfqdcv2y8Xb1crnRD6S15I68jz5RalozAoTAaK5LcE0TRm+2WU8TO1uIelV+a0u1QGLSDt8
+        gUmkphwwQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:52480)
+        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <linux@armlinux.org.uk>)
+        id 1kY8G7-0004Rb-Ip; Thu, 29 Oct 2020 13:46:31 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
+        (envelope-from <linux@shell.armlinux.org.uk>)
+        id 1kY8G6-0006AN-Hy; Thu, 29 Oct 2020 13:46:30 +0000
+Date:   Thu, 29 Oct 2020 13:46:30 +0000
+From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
+To:     Alexander Dahl <post@lespocky.de>
+Cc:     Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Alexander Dahl <ada@thorsis.com>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v7 02/12] dt-bindings: leds: Convert pwm to yaml
+Message-ID: <20201029134630.GE1559@shell.armlinux.org.uk>
+References: <20201005203451.9985-1-post@lespocky.de>
+ <20201005203451.9985-3-post@lespocky.de>
+ <20201028203953.eafmzeqba76qjlf2@falbala.internal.home.lespocky.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201028203953.eafmzeqba76qjlf2@falbala.internal.home.lespocky.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Jaehoon Chung <jh80.chung@samsung.com>
+On Wed, Oct 28, 2020 at 09:39:54PM +0100, Alexander Dahl wrote:
+> Hello,
+> 
+> Peter, Russel, could you please give your Acked-by or Signed-off-by on
+> this patch?  Your ack is needed, because the license is now explicitly
+> set (it was not explicit before), and you were the contributors to
+> this binding before the conversion to yaml.
 
-Add the nodes relevant to PCIe PHY and PCIe support. PCIe is used for the
-WiFi interface (Broadcom Limited BCM4358 802.11ac Wireless LAN SoC).
+For the license change only:
 
-Signed-off-by: Jaehoon Chung <jh80.chung@samsung.com>
-[mszyprow: rewrote commit message, reworked board/generic dts/dtsi split]
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- .../boot/dts/exynos/exynos5433-pinctrl.dtsi   |  2 +-
- .../dts/exynos/exynos5433-tm2-common.dtsi     | 24 ++++++++++++-
- arch/arm64/boot/dts/exynos/exynos5433.dtsi    | 36 +++++++++++++++++++
- 3 files changed, 60 insertions(+), 2 deletions(-)
+Acked-by: Russell King <rmk+kernel@armlinux.org.uk>
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433-pinctrl.dtsi b/arch/arm64/boot/dts/exynos/exynos5433-pinctrl.dtsi
-index 9df7c65593a1..32a6518517e5 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433-pinctrl.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433-pinctrl.dtsi
-@@ -329,7 +329,7 @@
- 	};
- 
- 	pcie_bus: pcie_bus {
--		samsung,pins = "gpr3-4", "gpr3-5", "gpr3-6", "gpr3-7";
-+		samsung,pins = "gpr3-4", "gpr3-5", "gpr3-6";
- 		samsung,pin-function = <EXYNOS_PIN_FUNC_3>;
- 		samsung,pin-pud = <EXYNOS_PIN_PULL_UP>;
- 	};
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-index 97a2f0c7c0cf..5ec447f0cf5d 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
-@@ -968,6 +968,25 @@
- 	bus-width = <4>;
- };
- 
-+&pcie {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie_bus &pcie_wlanen>;
-+	vdd10-supply = <&ldo6_reg>;
-+	vdd18-supply = <&ldo7_reg>;
-+	assigned-clocks = <&cmu_fsys CLK_MOUT_SCLK_PCIE_100_USER>,
-+			  <&cmu_top CLK_MOUT_SCLK_PCIE_100>;
-+	assigned-clock-parents = <&cmu_top CLK_SCLK_PCIE_100_FSYS>,
-+				 <&cmu_top CLK_MOUT_BUS_PLL_USER>;
-+	assigned-clock-rates = <0>, <100000000>;
-+	interrupt-map-mask = <0 0 0 0>;
-+	interrupt-map = <0 0 0 0 &gic GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>;
-+};
-+
-+&pcie_phy {
-+	status = "okay";
-+};
-+
- &ppmu_d0_general {
- 	status = "okay";
- 	events {
-@@ -1084,8 +1103,11 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&initial_ese>;
- 
-+	pcie_wlanen: pcie-wlanen {
-+		PIN(INPUT, gpj2-0, UP, FAST_SR4);
-+	};
-+
- 	initial_ese: initial-state {
--		PIN(INPUT, gpj2-0, DOWN, FAST_SR1);
- 		PIN(INPUT, gpj2-1, DOWN, FAST_SR1);
- 		PIN(INPUT, gpj2-2, DOWN, FAST_SR1);
- 	};
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-index 0a886bb6c806..1d2442ac432c 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-@@ -1029,6 +1029,11 @@
- 			reg = <0x145f0000 0x1038>;
- 		};
- 
-+		syscon_fsys: syscon@156f0000 {
-+			compatible = "syscon";
-+			reg = <0x156f0000 0x1044>;
-+		};
-+
- 		gsc_0: video-scaler@13c00000 {
- 			compatible = "samsung,exynos5433-gsc";
- 			reg = <0x13c00000 0x1000>;
-@@ -1830,6 +1835,37 @@
- 				status = "disabled";
- 			};
- 		};
-+
-+		pcie_phy: pcie-phy@15680000 {
-+			compatible = "samsung,exynos5433-pcie-phy";
-+			reg = <0x15680000 0x1000>;
-+			samsung,pmu-syscon = <&pmu_system_controller>;
-+			samsung,fsys-sysreg = <&syscon_fsys>;
-+			#phy-cells = <0>;
-+			status = "disabled";
-+		};
-+
-+		pcie: pcie@15700000 {
-+			compatible = "samsung,exynos5433-pcie";
-+			reg = <0x15700000 0x1000>, <0x156b0000 0x1000>,
-+			      <0x0c000000 0x1000>;
-+			reg-names = "dbi", "elbi", "config";
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+			#interrupt-cells = <1>;
-+			device_type = "pci";
-+			interrupts = <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&cmu_fsys CLK_PCIE>,
-+			         <&cmu_fsys CLK_PCLK_PCIE_PHY>;
-+			clock-names = "pcie", "pcie_bus";
-+			num-lanes = <1>;
-+			num-viewport = <3>;
-+			bus-range = <0x00 0xff>;
-+			phys = <&pcie_phy>;
-+			ranges = <0x81000000 0 0	  0x0c001000 0 0x00010000>,
-+				 <0x82000000 0 0x0c011000 0x0c011000 0 0x03feefff>;
-+			status = "disabled";
-+		};
- 	};
- 
- 	timer: timer {
+(Please drop the Cc attributation in the commit to
+linux@armlinux.org.uk thanks.)
+
+> 
+> Thanks and Greets
+> Alex
+> 
+> On Mon, Oct 05, 2020 at 10:34:41PM +0200, Alexander Dahl wrote:
+> > The example was adapted in the following ways:
+> > 
+> > - make use of the now supported 'function' and 'color' properties
+> > - remove pwm nodes, those are documented elsewhere
+> > - align node names to new dt schema rules and dt recommendations
+> > 
+> > License was not explicitly set before.  The license set now is
+> > recommended by DT project.
+> > 
+> > Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+> > Signed-off-by: Alexander Dahl <post@lespocky.de>
+> > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+> > Cc: Russell King <linux@armlinux.org.uk>
+> > ---
+> > 
+> > Notes:
+> >     NOTE: Due to license set/change this needs Acked-by or Signed-off-by from:
+> >       * Peter Ujfalusi
+> >       * Russell King
+> >     
+> >     That was discussed already with Peter (original author), still waiting
+> >     for Acked-by though …
+> >     
+> >     Changelog
+> >     ---------
+> >     v6 -> v7:
+> >       * added Reviewed-by (Krzysztof Kozlowski)
+> >       * reworded commit message (suggested by Krzysztof)
+> >       * added Reviewed-by (Rob Herring)
+> >     
+> >     v5 -> v6:
+> >       * removed pwm nodes from example (Rob)
+> >       * renamed led-controller node in example (Rob)
+> >     
+> >     v4 -> v5:
+> >       * updated based on feedback by Rob Herring
+> >       * removed Acked-by
+> >     
+> >     v3 -> v4:
+> >       * added Cc to original author of the binding
+> >     
+> >     v2 -> v3:
+> >       * changed license identifier to recommended one
+> >       * added Acked-by
+> >     
+> >     v2:
+> >       * added this patch to series (Suggested-by: Jacek Anaszewski)
+> > 
+> >  .../devicetree/bindings/leds/leds-pwm.txt     | 50 -------------
+> >  .../devicetree/bindings/leds/leds-pwm.yaml    | 70 +++++++++++++++++++
+> >  2 files changed, 70 insertions(+), 50 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/leds/leds-pwm.txt
+> >  create mode 100644 Documentation/devicetree/bindings/leds/leds-pwm.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/leds/leds-pwm.txt b/Documentation/devicetree/bindings/leds/leds-pwm.txt
+> > deleted file mode 100644
+> > index 6c6583c35f2f..000000000000
+> > --- a/Documentation/devicetree/bindings/leds/leds-pwm.txt
+> > +++ /dev/null
+> > @@ -1,50 +0,0 @@
+> > -LED connected to PWM
+> > -
+> > -Required properties:
+> > -- compatible : should be "pwm-leds".
+> > -
+> > -Each LED is represented as a sub-node of the pwm-leds device.  Each
+> > -node's name represents the name of the corresponding LED.
+> > -
+> > -LED sub-node properties:
+> > -- pwms : PWM property to point to the PWM device (phandle)/port (id) and to
+> > -  specify the period time to be used: <&phandle id period_ns>;
+> > -- pwm-names : (optional) Name to be used by the PWM subsystem for the PWM device
+> > -  For the pwms and pwm-names property please refer to:
+> > -  Documentation/devicetree/bindings/pwm/pwm.txt
+> > -- max-brightness : Maximum brightness possible for the LED
+> > -- active-low : (optional) For PWMs where the LED is wired to supply
+> > -  rather than ground.
+> > -- label :  (optional)
+> > -  see Documentation/devicetree/bindings/leds/common.txt
+> > -- linux,default-trigger :  (optional)
+> > -  see Documentation/devicetree/bindings/leds/common.txt
+> > -
+> > -Example:
+> > -
+> > -twl_pwm: pwm {
+> > -	/* provides two PWMs (id 0, 1 for PWM1 and PWM2) */
+> > -	compatible = "ti,twl6030-pwm";
+> > -	#pwm-cells = <2>;
+> > -};
+> > -
+> > -twl_pwmled: pwmled {
+> > -	/* provides one PWM (id 0 for Charing indicator LED) */
+> > -	compatible = "ti,twl6030-pwmled";
+> > -	#pwm-cells = <2>;
+> > -};
+> > -
+> > -pwmleds {
+> > -	compatible = "pwm-leds";
+> > -	kpad {
+> > -		label = "omap4::keypad";
+> > -		pwms = <&twl_pwm 0 7812500>;
+> > -		max-brightness = <127>;
+> > -	};
+> > -
+> > -	charging {
+> > -		label = "omap4:green:chrg";
+> > -		pwms = <&twl_pwmled 0 7812500>;
+> > -		max-brightness = <255>;
+> > -	};
+> > -};
+> > diff --git a/Documentation/devicetree/bindings/leds/leds-pwm.yaml b/Documentation/devicetree/bindings/leds/leds-pwm.yaml
+> > new file mode 100644
+> > index 000000000000..fe4d5fd25913
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/leds/leds-pwm.yaml
+> > @@ -0,0 +1,70 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/leds/leds-pwm.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: LEDs connected to PWM
+> > +
+> > +maintainers:
+> > +  - Pavel Machek <pavel@ucw.cz>
+> > +
+> > +description:
+> > +  Each LED is represented as a sub-node of the pwm-leds device.  Each
+> > +  node's name represents the name of the corresponding LED.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: pwm-leds
+> > +
+> > +patternProperties:
+> > +  "^led(-[0-9a-f]+)?$":
+> > +    type: object
+> > +
+> > +    $ref: common.yaml#
+> > +
+> > +    properties:
+> > +      pwms:
+> > +        maxItems: 1
+> > +
+> > +      pwm-names: true
+> > +
+> > +      max-brightness:
+> > +        description:
+> > +          Maximum brightness possible for the LED
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +
+> > +      active-low:
+> > +        description:
+> > +          For PWMs where the LED is wired to supply rather than ground.
+> > +        type: boolean
+> > +
+> > +    required:
+> > +      - pwms
+> > +      - max-brightness
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +
+> > +    #include <dt-bindings/leds/common.h>
+> > +
+> > +    led-controller {
+> > +        compatible = "pwm-leds";
+> > +
+> > +        led-1 {
+> > +            label = "omap4::keypad";
+> > +            pwms = <&twl_pwm 0 7812500>;
+> > +            max-brightness = <127>;
+> > +        };
+> > +
+> > +        led-2 {
+> > +            color = <LED_COLOR_ID_GREEN>;
+> > +            function = LED_FUNCTION_CHARGING;
+> > +            pwms = <&twl_pwmled 0 7812500>;
+> > +            max-brightness = <255>;
+> > +        };
+> > +    };
+> > +
+> > +...
+> > -- 
+> > 2.20.1
+> 
+> -- 
+> /"\ ASCII RIBBON | »With the first link, the chain is forged. The first
+> \ / CAMPAIGN     | speech censured, the first thought forbidden, the
+>  X  AGAINST      | first freedom denied, chains us all irrevocably.«
+> / \ HTML MAIL    | (Jean-Luc Picard, quoting Judge Aaron Satie)
+
+
+
 -- 
-2.17.1
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
