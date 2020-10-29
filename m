@@ -2,309 +2,170 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87D3B29EC80
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 14:10:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFCC829ED4E
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 14:43:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725747AbgJ2NKZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 29 Oct 2020 09:10:25 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:56813 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbgJ2NKZ (ORCPT
+        id S1726184AbgJ2NnJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 29 Oct 2020 09:43:09 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:39491 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727417AbgJ2Nmd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 29 Oct 2020 09:10:25 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201029131012euoutp025f5817b3d82340b7163eba3882ac70bc~CeJg9P3VV2725427254euoutp02i;
-        Thu, 29 Oct 2020 13:10:12 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201029131012euoutp025f5817b3d82340b7163eba3882ac70bc~CeJg9P3VV2725427254euoutp02i
+        Thu, 29 Oct 2020 09:42:33 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20201029134045euoutp015d37b95826628e3b45753aef67ed6d29~CekMcGWP80672406724euoutp01k
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 29 Oct 2020 13:40:45 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20201029134045euoutp015d37b95826628e3b45753aef67ed6d29~CekMcGWP80672406724euoutp01k
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1603977012;
-        bh=GhdLDQRYReg/k6n/Wulo3NxMsdJbsZSIJ8BM7RMo+cs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gEqdf0R8cCn+4HmvQW90clgioJS9yxol6tGKKNLn4vN9hG9gDCvQk7h/oG0cMo5Zs
-         iWtu5h9p5NLwvTR4vQX3gh8Ohuf4Z4DBp5mE0M7qc4Cect74FiWLmaSOmmPjumzLD8
-         RY4w44YYo1fY9WVJ6rxUoz9fjYoOHPZWylk5xi7s=
+        s=mail20170921; t=1603978845;
+        bh=aQOgeMqZjgVuAGRhabboSv5zRKv3BlW8YnKQUQEQqCo=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=fvkOLAChXPRm34PLs+pskGuF/KXhJ2sUU2yQRHc681vylXYGKu3BCP9C34G1v6knV
+         9DXZ3FS/TMaJCOjMDgtWmbVkCDn8zNmHB1Uk4hPMgo9SyNMhePHVFmRCfT8Q6fGCJm
+         0009Qz7Muw7HqxuW4XAvQRbsrvZAkosMTOU2wpv4=
 Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20201029131012eucas1p280ec12a8754c91843acf1a110e0c4ca2~CeJggUuL32721827218eucas1p27;
-        Thu, 29 Oct 2020 13:10:12 +0000 (GMT)
+        20201029134037eucas1p2a73cb2b7ce9d2b9944fd56f713123750~CekEoyReu0911309113eucas1p2U;
+        Thu, 29 Oct 2020 13:40:37 +0000 (GMT)
 Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 7E.94.05997.33FBA9F5; Thu, 29
-        Oct 2020 13:10:11 +0000 (GMT)
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id C7.99.05997.556CA9F5; Thu, 29
+        Oct 2020 13:40:37 +0000 (GMT)
 Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
         eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20201029131011eucas1p1194c5614ca8f5d3835f888c8d1c09fa1~CeJf_A4m60958109581eucas1p1A;
-        Thu, 29 Oct 2020 13:10:11 +0000 (GMT)
+        20201029134037eucas1p17f861adc0858e8a80d516dc0f2733f84~CekEQsVyI2139321393eucas1p17;
+        Thu, 29 Oct 2020 13:40:37 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20201029131011eusmtrp14ffa1a08aa2502792f1e9970f0dba190~CeJf8qyEM2317423174eusmtrp1-;
-        Thu, 29 Oct 2020 13:10:11 +0000 (GMT)
-X-AuditID: cbfec7f4-677ff7000000176d-25-5f9abf331f16
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id C8.0D.06017.33FBA9F5; Thu, 29
-        Oct 2020 13:10:11 +0000 (GMT)
-Received: from localhost (unknown [106.120.51.46]) by eusmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20201029131011eusmtip2506d73c0f4bd00c0486ad70f93b75ade~CeJfuBJPa0532105321eusmtip2T;
-        Thu, 29 Oct 2020 13:10:11 +0000 (GMT)
-From:   Lukasz Stelmach <l.stelmach@samsung.com>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     jim.cromie@gmail.com, Heiner Kallweit <hkallweit1@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
+        20201029134037eusmtrp1329729a1817a5cbc53314e48c9416181~CekEOXEsz1072510725eusmtrp1a;
+        Thu, 29 Oct 2020 13:40:37 +0000 (GMT)
+X-AuditID: cbfec7f4-677ff7000000176d-32-5f9ac6559b99
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 1A.91.06017.556CA9F5; Thu, 29
+        Oct 2020 13:40:37 +0000 (GMT)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20201029134036eusmtip1fe990fbcf4b5c607465e60a4ff159a51~CekDqpT-q1565515655eusmtip1t;
+        Thu, 29 Oct 2020 13:40:36 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        =?utf-8?Q?Bart=C5=82omiej_=C5=BBolni?= =?utf-8?Q?erkiewicz?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v4 3/5] net: ax88796c: ASIX AX88796C SPI Ethernet
- Adapter Driver
-Date:   Thu, 29 Oct 2020 14:09:57 +0100
-In-Reply-To: <20201029003131.GF933237@lunn.ch> (Andrew Lunn's message of
-        "Thu, 29 Oct 2020 01:31:31 +0100")
-Message-ID: <dleftjwnz9uqje.fsf%l.stelmach@samsung.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-="; micalg="pgp-sha256";
-        protocol="application/pgp-signature"
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHe3fO2Y7S5LQuPqyIHPXBLl4y6jUrutIJAutLiWA282AXN2tH
-        7UY3ZqFlFmo410JnlmZ4zYZamswxEWuzTKnUpNS0rZDSym6S81Xo2+//XP7P87y8LKX4yyjZ
-        Q9pEQadVx6uk3rTF/tOxIuSJMTrIXhyGnT1WClcayhlscqbQOM/mYHDBsIHBnZ+7GXytz01h
-        p7NChtssGQyu6utkcHudSYoNzgYJtt6oR7jU1iPD9vx5+GK9TbaR49s7n1N89b3XEr7W2CPj
-        q0rSpPyDwnN8bc2IhM+oLkH8SNXCXWyk97pYIf5QsqAL3LDf+6CrvVlyVO9/orLBRJ1H9/wu
-        Iy8WuFVwOy+FuYy8WQVXjMBWa6aJGEVg7yiWETGCoD61Szrd8iTdLCWJIgRfcx4hIgYR1Fm/
-        TQiWlXIBUFoa4WmYwy2C7JY/jIcproOGbEush2dze8D25aHMwzS3BN7k6CcHeHEa6H1eI/Gw
-        nFsDaaYvlIfncqFQPdQrI/FZ0JLbTxNPDeQ6P03uAJyZBUfWAEU23Qqmp1kM4dngaq6WEV4A
-        rVnptGdP4M5BVuZq0puOwGIao0lNGHQ7fk1dvAluVt6UknofePV5FpnrA5mWHIqE5ZB6SUGq
-        F0PZtcdTLkq46ipGhHn40T429boXEAw0WaXX0SLjf+cY/zvHOGFLcf5QXhdIwsvgrtlNEV4P
-        ZWXDdD5iSpCvkCRq4gRxpVY4HiCqNWKSNi7gQIKmCk18xNbx5tEaVPcnxoo4Fqlmytu6cqMV
-        jDpZPKmxosUTTu8r7rchJa1N0AqqOfLNz1r3KeSx6pOnBF1CtC4pXhCtaD5Lq3zlIQUfoxRc
-        nDpROCIIRwXddFbCeinPo51j4fFn9cqow5XhY9nfQw0Fx7ab9f1XHkYGOQ7zo5u2dOEz+UVN
-        2tV5P2bk789JaXzbs3bcfePYnVcfC07j/iuDig/BqPbFuwr71d9+A+tKtx3Zpk90vlmvbciO
-        2TE0w2UI00dEUGLRrbbde2t8kvyCWwpbI5fva3RnDr/wDRoMf6mixYPq4KWUTlT/AyMvbViQ
-        AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsVy+t/xe7rG+2fFG2x/JGpx/u4hZouNM9az
-        Wsw538JiMf/IOVaLRe9nsFpce3uH1aL/8Wtmi/PnN7BbXNjWx2qx6fE1VovLu+awWcw4v4/J
-        4tDUvYwWa4/cZbc4tkDMonXvEXYHAY/L1y4ye2xZeZPJY+esu+wem1Z1snlsXlLvsXPHZyaP
-        vi2rGD0+b5IL4IjSsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcks
-        Sy3St0vQy3h1+ThTQbNmxcZ9c5gbGFcqdjFyckgImEjs71nIBmILCSxllFjWUtTFyAEUl5JY
-        OTcdokRY4s+1LqASLqCSp4wSd+7sZwGpYRPQk1i7NgKkRkRAQWLKyT+sIDXMAjdYJB5NWswM
-        khAWCJFYdPAGI0i9kICuxKRWH5Awi4CqxK3pzWBrOQVyJda9388KYvMKmEt0zvkI1ioqYCmx
-        5cV9doi4oMTJmU9YQGxmgWyJr6ufM09gFJiFJDULSWoW0DZmAU2J9bv0IcLaEssWvmaGsG0l
-        1q17z7KAkXUVo0hqaXFuem6xkV5xYm5xaV66XnJ+7iZGYCRvO/Zzyw7GrnfBhxgFOBiVeHgv
-        3J4ZL8SaWFZcmXuIUQVozKMNqy8wSrHk5eelKonwOp09HSfEm5JYWZValB9fVJqTWnyI0RTo
-        z4nMUqLJ+cDkk1cSb2hqaG5haWhubG5sZqEkztshcDBGSCA9sSQ1OzW1ILUIpo+Jg1OqgXHq
-        i7o9/c5TtJocHQK5rscuDvdoDZvE/2FSa57urDfdWjl1aRk2E3bkWUZunKm6SnB67Y/ZG0qv
-        JwrM1XFSnNLrI1CaO+8Py5WY2DLPlpUKbq3tGplTf5QcUbXVnrLfTf6b/6rlEq7Np6clzix8
-        qfl+0cwAebdZyqrlH7XNHl0/UrDRWPVxiBJLcUaioRZzUXEiAE7o2k8GAwAA
-X-CMS-MailID: 20201029131011eucas1p1194c5614ca8f5d3835f888c8d1c09fa1
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 0/6] Add DW PCIe support for Exynos5433 SoCs
+Date:   Thu, 29 Oct 2020 14:40:11 +0100
+Message-Id: <20201029134017.27400-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsWy7djPc7qhx2bFGxy8I2expCnDYv6Rc6wW
+        N361sVqs+DKT3eLC0x42i/PnN7BbXN41h83i7LzjbBYzzu9jsnjz+wW7xdojd9kt/u/ZwW6x
+        884JZgdejzXz1jB67Jx1l91jwaZSj02rOtk8+rasYvQ4fmM7k8fnTXIB7FFcNimpOZllqUX6
+        dglcGXNvvWYvuCxWse3aEeYGxvdCXYycHBICJhK3P/1h7GLk4hASWMEo8fXCDijnC6PEhEu9
+        zBDOZ0aJjfN+scK0rD1+jA0isZxR4teviexwLW1HprODVLEJGEp0ve0CquLgEBFwkPjx1QKk
+        hllgPrPExHu3mUDiwgL2EoevFICUswioSnyfeIYZxOYVsJW4+ecsM8QyeYnVGw6AXSEh0M8u
+        cfjNHkaIhIvExPWvoS4Slnh1fAs7hC0jcXpyDwtEQzOjxMNza9khnB5GictNM6C6rSXunPsF
+        dh2zgKbE+l36EGFHie3vzoMdJyHAJ3HjrSBImBnInLRtOjNEmFeiow0admoSs46vg1t78MIl
+        qJs9JD6ePQAWFxKIlfj86hjzBEa5WQi7FjAyrmIUTy0tzk1PLTbKSy3XK07MLS7NS9dLzs/d
+        xAhMLKf/Hf+yg3HXn6RDjAIcjEo8vBduz4wXYk0sK67MPcQowcGsJMLrdPZ0nBBvSmJlVWpR
+        fnxRaU5q8SFGaQ4WJXFe40UvY4UE0hNLUrNTUwtSi2CyTBycUg2M0Uv+peXVp+9U78patnl7
+        Wx1jeEPYu9OiC52UL+jyXm+8K9nNmKL4R4qp+7VvDustr1dFau9fNwmsO/ojV0WnrY3hekTH
+        vF3Cq79JM17jP8ehpOMQKabGHqdiLcXdtbDa92X4zA08cob7rgYGSpg+OTZJLnYXy57nOTl7
+        fZ3PtZza4+AgKqvEUpyRaKjFXFScCACu9ymdKAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrFLMWRmVeSWpSXmKPExsVy+t/xu7qhx2bFGxxfxGqxpCnDYv6Rc6wW
+        N361sVqs+DKT3eLC0x42i/PnN7BbXN41h83i7LzjbBYzzu9jsnjz+wW7xdojd9kt/u/ZwW6x
+        884JZgdejzXz1jB67Jx1l91jwaZSj02rOtk8+rasYvQ4fmM7k8fnTXIB7FF6NkX5pSWpChn5
+        xSW2StGGFkZ6hpYWekYmlnqGxuaxVkamSvp2NimpOZllqUX6dgl6GXNvvWYvuCxWse3aEeYG
+        xvdCXYycHBICJhJrjx9j62Lk4hASWMoocW3/ByaIhIzEyWkNrBC2sMSfa11QRZ8YJe4tWMsG
+        kmATMJToetsFZosIOEm8n3yRGcRmFljJLHFwW14XIweHsIC9xOErBSBhFgFVie8Tz4CV8ArY
+        Stz8c5YZYr68xOoNB5gnMPIsYGRYxSiSWlqcm55bbKRXnJhbXJqXrpecn7uJERjO24793LKD
+        setd8CFGAQ5GJR7eC7dnxguxJpYVV+YeYpTgYFYS4XU6ezpOiDclsbIqtSg/vqg0J7X4EKMp
+        0PKJzFKiyfnAWMsriTc0NTS3sDQ0NzY3NrNQEuftEDgYIySQnliSmp2aWpBaBNPHxMEp1cC4
+        8bl50/0VjvVpb3TD3l6uZDM6edTihhCbzYPM39prVcU9vDMZHJ8oMnxOOXhmzp6YZyp3P5z5
+        kXbKV5Kp/ZZnVF8Q9+Of+5YuWXO+k2t9z8a9OTfL17L8O+dtFmcjsFz53aXpcz7MelWryLJH
+        XiH1qvaV88+SQ7s6FrztFX1pdriQv+3o72/TlViKMxINtZiLihMBrCByX30CAAA=
+X-CMS-MailID: 20201029134037eucas1p17f861adc0858e8a80d516dc0f2733f84
 X-Msg-Generator: CA
-X-RootMTR: 20201029131011eucas1p1194c5614ca8f5d3835f888c8d1c09fa1
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20201029134037eucas1p17f861adc0858e8a80d516dc0f2733f84
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20201029131011eucas1p1194c5614ca8f5d3835f888c8d1c09fa1
-References: <20201029003131.GF933237@lunn.ch>
-        <CGME20201029131011eucas1p1194c5614ca8f5d3835f888c8d1c09fa1@eucas1p1.samsung.com>
+X-CMS-RootMailID: 20201029134037eucas1p17f861adc0858e8a80d516dc0f2733f84
+References: <CGME20201029134037eucas1p17f861adc0858e8a80d516dc0f2733f84@eucas1p1.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Dear All,
 
-It was <2020-10-29 czw 01:31>, when Andrew Lunn wrote:
->> +static void
->> +ax88796c_get_regs(struct net_device *ndev, struct ethtool_regs *regs, v=
-oid *_p)
->> +{
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->> +	u16 *p =3D _p;
->> +	int offset, i;
->
-> You missed a reverse christmass tree fix here.
->
+This patchset is a resurrection of the DW PCIe support for the Exynos5433
+SoCs posted long time ago here: https://lkml.org/lkml/2016/12/26/6 and
+later here: https://lkml.org/lkml/2017/12/21/296 .
 
-Done.
+In meantime the support for the Exynos5440 SoCs has been completely
+dropped from mainline kernel, as those SoCs never reached the market. The
+PCIe driver for Exynos5440 variant however has not been removed yet. This
+patchset simply reworks it to support the Exynos5433 variant. The lack of
+the need to support both variants significantly simplifies the driver
+code.
 
->> +static int comp;
->> +static int msg_enable =3D NETIF_MSG_PROBE |
->> +			NETIF_MSG_LINK |
->> +			/* NETIF_MSG_TIMER | */
->> +			/* NETIF_MSG_IFDOWN | */
->> +			/* NETIF_MSG_IFUP | */
->> +			NETIF_MSG_RX_ERR |
->> +			NETIF_MSG_TX_ERR |
->> +			/* NETIF_MSG_TX_QUEUED | */
->> +			/* NETIF_MSG_INTR | */
->> +			/* NETIF_MSG_TX_DONE | */
->> +			/* NETIF_MSG_RX_STATUS | */
->> +			/* NETIF_MSG_PKTDATA | */
->> +			/* NETIF_MSG_HW | */
->> +			/* NETIF_MSG_WOL | */
->> +			0;
->
-> You should probably delete anything which is commented out.
->
+This patchset is based on the following branch:
+git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-more-dwc-cleanup
 
-Done.
+Best regards,
+Marek Szyprowski
 
->> +
->> +static char *no_regs_list =3D "80018001,e1918001,8001a001,fc0d0000";
->> +unsigned long ax88796c_no_regs_mask[AX88796C_REGDUMP_LEN / (sizeof(unsi=
-gned long) * 8)];
->> +
->> +module_param(comp, int, 0444);
->> +MODULE_PARM_DESC(comp, "0=3DNon-Compression Mode, 1=3DCompression Mode"=
-);
->
-> I think you need to find a different way to configure this. How much
-> does compression bring you anyway?
->
 
-Anything between almost 0 for large transfers, to 50 for tiniest. ~5%
-for ~500 byte transfers. Considering the chip is rather for small
-devices, that won't transfer large amounts of data, I'd rather keep some
-way to control it.
+Changelog:
 
->> +module_param(msg_enable, int, 0444);
->> +MODULE_PARM_DESC(msg_enable, "Message mask (see linux/netdevice.h for b=
-itmap)");
->
-> I know a lot of drivers have msg_enable, but DaveM is generally
-> against module parameters. So i would remove this.
->
+v3:
+- rebased onto "[00/13] PCI: dwc: Another round of clean-ups" patchset:
+  https://patchwork.kernel.org/project/linux-samsung-soc/cover/20201028204646.356535-1-robh@kernel.org/
+- fixed issues pointed by Rob in the driver logic:
+  * removed DBI_RO_WR_EN register poking
+  * made driver a standard module
+- fixed section mismatch issue
+- added "num-viewport = <3>" property to dts and bindings to fix warning
 
-These two parameters have something in common: no(?) other way to pass
-the information at the right time. Compression might be tuned in
-runtime, if there is an interface (via ethtool?) for setting custom
-knobs? Ther is such interface for msg_level level but it can be used
-before a device is probed and userland is running. Hence, there is no
-way to control msg_level during boot. I can remove those parameters, but
-I really would like to be able to control these parameter, especially
-msg_level during boot. If there is any other way, do let me know.
+v2: https://lore.kernel.org/linux-samsung-soc/20201023075744.26200-1-m.szyprowski@samsung.com/
+- fixed issues in dt-bindings pointed by Krzysztof and Rob
 
->> +static void ax88796c_set_hw_multicast(struct net_device *ndev)
->> +{
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->> +	u16 rx_ctl =3D RXCR_AB;
->> +	int mc_count =3D netdev_mc_count(ndev);
->
-> reverse christmass tree.
->
+v1: https://lore.kernel.org/linux-samsung-soc/20201019094715.15343-1-m.szyprowski@samsung.com/
+- initial version of this resurrected patchset
 
-Done.
 
->> +static struct sk_buff *
->> +ax88796c_tx_fixup(struct net_device *ndev, struct sk_buff_head *q)
->> +{
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->> +	struct sk_buff *skb, *tx_skb;
->> +	struct tx_pkt_info *info;
->> +	struct skb_data *entry;
->> +	int headroom;
->> +	int tailroom;
->> +	u8 need_pages;
->> +	u16 tol_len, pkt_len;
->> +	u8 padlen, seq_num;
->> +	u8 spi_len =3D ax_local->ax_spi.comp ? 1 : 4;
->
-> reverse christmass tree.
->
+Patch summary:
 
-Done.
+Jaehoon Chung (3):
+  phy: samsung: phy-exynos-pcie: rework driver to support Exynos5433
+    PCIe PHY
+  pci: dwc: pci-exynos: rework the driver to support Exynos5433 variant
+  arm64: dts: exynos: add the WiFi/PCIe support to TM2(e) boards
 
->> +static int ax88796c_receive(struct net_device *ndev)
->> +{
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->> +	struct sk_buff *skb;
->> +	struct skb_data *entry;
->> +	u16 w_count, pkt_len;
->> +	u8 pkt_cnt;
->
-> Reverse christmass tree
->
+Marek Szyprowski (3):
+  dt-bindings: pci: drop samsung,exynos5440-pcie binding
+  dt-bindings: pci: add the samsung,exynos-pcie binding
+  dt-bindings: phy: add the samsung,exynos-pcie-phy binding
 
-Done.
+ .../bindings/pci/samsung,exynos-pcie.yaml     | 119 ++++++
+ .../bindings/pci/samsung,exynos5440-pcie.txt  |  58 ---
+ .../bindings/phy/samsung,exynos-pcie-phy.yaml |  51 +++
+ .../boot/dts/exynos/exynos5433-pinctrl.dtsi   |   2 +-
+ .../dts/exynos/exynos5433-tm2-common.dtsi     |  24 +-
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi    |  36 ++
+ drivers/pci/controller/dwc/Kconfig            |  10 +-
+ drivers/pci/controller/dwc/pci-exynos.c       | 353 +++++++-----------
+ drivers/pci/quirks.c                          |   1 +
+ drivers/phy/samsung/phy-exynos-pcie.c         | 304 ++++++---------
+ 10 files changed, 489 insertions(+), 469 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos5440-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos-pcie-phy.yaml
 
->> +
->> +static int ax88796c_process_isr(struct ax88796c_device *ax_local)
->> +{
->> +	u16 isr;
->> +	u8 done =3D 0;
->> +	struct net_device *ndev =3D ax_local->ndev;
->
-> ...
->
+-- 
+2.17.1
 
-Done.
-
->> +static irqreturn_t ax88796c_interrupt(int irq, void *dev_instance)
->> +{
->> +	struct net_device *ndev =3D dev_instance;
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->
-> ...
->
-
-Done.
-
->> +static int
->> +ax88796c_open(struct net_device *ndev)
->> +{
->> +	struct ax88796c_device *ax_local =3D to_ax88796c_device(ndev);
->> +	int ret;
->> +	unsigned long irq_flag =3D IRQF_SHARED;
->> +	int fc =3D AX_FC_NONE;
->
-> ...
->
-
-Done.
-
->> +static int ax88796c_probe(struct spi_device *spi)
->> +{
->> +	struct net_device *ndev;
->> +	struct ax88796c_device *ax_local;
->> +	char phy_id[MII_BUS_ID_SIZE + 3];
->> +	int ret;
->> +	u16 temp;
->
-> ...
->
-
-Done.
-
-> The mdio/phy/ethtool code looks O.K. now. I've not really looked at
-> any of the frame transfer code, so i cannot comment on that.
->
->     Andrew
->
->
-
-Thanks.
-
-=2D-=20
-=C5=81ukasz Stelmach
-Samsung R&D Institute Poland
-Samsung Electronics
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEXpuyqjq9kGEVr9UQsK4enJilgBAFAl+avyYACgkQsK4enJil
-gBCBMwf9FnD8E89ec3soQSzXByQAO6P8tm2DCbrdWpJDtt+llFnrA6h087U7EBmk
-Qy/Wd/hPuhBjeNUYeX0BxJL3SHEFixlk2M18HFCJzTNbpBof7sYra9iB/q6NF/b9
-Cs+ga5m/hfLpdSqVmQdsFiWwxCpjldB5htjBOzc7cnMnCkVPKJ+Cw4/KwYFlnGOR
-F9TAPzugNnG2AH9JlOwBTZp/J6jTRlAp/naXssYWcWwJVSutidjyFJ472eElBkU/
-2q13sSwY98lR6bYlvsGEV5XFIWFiSaLNJq3rUYelbojDR3E7ZO3opbzdogn0ROxY
-MvqWStI2o5TBCDiHwp1RePhF6LdunA==
-=n2/L
------END PGP SIGNATURE-----
---=-=-=--
