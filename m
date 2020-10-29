@@ -2,87 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E19629E26C
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 03:14:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A9C729E6BE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 29 Oct 2020 10:00:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbgJ2COX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Oct 2020 22:14:23 -0400
-Received: from mail-ej1-f66.google.com ([209.85.218.66]:39630 "EHLO
-        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726741AbgJ2COW (ORCPT
+        id S1725616AbgJ2I6l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 29 Oct 2020 04:58:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725991AbgJ2I4w (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Oct 2020 22:14:22 -0400
-Received: by mail-ej1-f66.google.com with SMTP id bn26so1701127ejb.6;
-        Wed, 28 Oct 2020 19:14:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6JQiZAd6xHyfMhhZq7AApTbGmmllgVW7w4+YOA//K7o=;
-        b=pM/ehFqPhBnTF7n94HFzmrLtOzTidHLcHQYllXxC2rg+Kz4CQEH+HAuO6tQfdPKxLi
-         7o0S0aDI32y2eHuRLdbir7yiT53oFlvunZF709AeEH/X77//gOJKzGZnlLvq0nYkHgnr
-         A3bT9iZlBWQdu0G2Wji61Lj4Gtr2OVTax5bPzOMcJJQY+yE7AjsZzKPlU7PNM4itid0L
-         XUi+DmEKeOthbPppaFfLauKAScoSu3juylWekjGCs5Ei/JeRXx38ydPddG8sRou8nhuJ
-         NYixx9LHFcYcUM6kfkRrKzaQtyQ+Iul6a7ZBnZTic09+WbCURouaDCpZODcADvo6FpWW
-         mhIQ==
-X-Gm-Message-State: AOAM531WBXgDzinSj3xJ9/HmRNwui4ue/DUD3XoZPCKCreqPBsuzhyJG
-        P93UkNYDYdAVZgq+/unCYHR/Lb7Z7oF7Uw==
-X-Google-Smtp-Source: ABdhPJzOsJM0Jg68AWxk3T2I+1KjCJLJGi21MgR+c0ixYAV4+m83fy11Yle3XjG5htkFRvECeSgPjQ==
-X-Received: by 2002:a17:906:b110:: with SMTP id u16mr1903481ejy.55.1603937660294;
-        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
-        by smtp.gmail.com with ESMTPSA id r11sm652310edi.91.2020.10.28.19.14.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
-Received: by mail-ej1-f43.google.com with SMTP id 7so1754738ejm.0;
-        Wed, 28 Oct 2020 19:14:20 -0700 (PDT)
-X-Received: by 2002:a2e:5049:: with SMTP id v9mr855703ljd.273.1603937238672;
- Wed, 28 Oct 2020 19:07:18 -0700 (PDT)
+        Thu, 29 Oct 2020 04:56:52 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDB0C0613D2;
+        Thu, 29 Oct 2020 01:56:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=zoaWQCaukT2MSre+YOCy8lPWvGILO48toajhUZfqRO8=; b=qhQ4YkyVtUdCF+9/SxF+KkMnE/
+        D3OoH/RsujOjBjImJs3j7wsc+18+EhiCdslrW+7UAfcF/3Lpk99bGShz5x8vvO7NhRDvD/3/jIF/U
+        sxjKHuC9kaCmjIQSe39nGdSprah7mG+Z3Qat31XoyHOzlVqjf1/QS7I84ZB/yiztmTbIZ9tig9v0X
+        f2yLG+zhB53m3eNdAToBlpu4RWg/tOhEL5fYpqSM8QjSZe/Ra+mMDoJYV20tgz1OUmmI9HvfC/hqJ
+        Iucc/rIbeuYDkc44YiTbpdM2F7LW26KSdHCYp3Ov/mUwi9UI3WMsbmPjsLva53P4rrTMzDSlxoDzk
+        s6zrIsQQ==;
+Received: from hch by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1kY3jh-0006wc-3k; Thu, 29 Oct 2020 08:56:45 +0000
+Date:   Thu, 29 Oct 2020 08:56:44 +0000
+From:   Christoph Hellwig <hch@infradead.org>
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>, kvm@vger.kernel.org,
+        linux-mm@kvack.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-s390@vger.kernel.org,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Kees Cook <keescook@chromium.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        John Hubbard <jhubbard@nvidia.com>,
+        J??r??me Glisse <jglisse@redhat.com>, Jan Kara <jack@suse.cz>
+Subject: Re: [PATCH v4 08/15] mm: Add unsafe_follow_pfn
+Message-ID: <20201029085644.GA25658@infradead.org>
+References: <20201026105818.2585306-1-daniel.vetter@ffwll.ch>
+ <20201026105818.2585306-9-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
-References: <20201028223009.369824-1-krzk@kernel.org> <20201028223009.369824-5-krzk@kernel.org>
-In-Reply-To: <20201028223009.369824-5-krzk@kernel.org>
-From:   Chen-Yu Tsai <wens@csie.org>
-Date:   Thu, 29 Oct 2020 10:07:08 +0800
-X-Gmail-Original-Message-ID: <CAGb2v67puSi_wu4BV2Jac23MJMxGj33YJnZxwkfy4jHGYue+WA@mail.gmail.com>
-Message-ID: <CAGb2v67puSi_wu4BV2Jac23MJMxGj33YJnZxwkfy4jHGYue+WA@mail.gmail.com>
-Subject: Re: [RESEND PATCH 05/42] mfd: axp20x: use PLATFORM_DEVID_NONE
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        "open list:BROADCOM BCM281XX..." 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Andy Shevchenko <andy@kernel.org>, Milo Kim <milo.kim@ti.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Tony Lindgren <tony@atomide.com>,
-        patches@opensource.cirrus.com,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2835..." 
-        <linux-rpi-kernel@lists.infradead.org>,
-        "moderated list:ARM/SAMSUNG EXYNO..." 
-        <linux-samsung-soc@vger.kernel.org>,
-        "open list:OMAP2+ SUPPORT" <linux-omap@vger.kernel.org>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201026105818.2585306-9-daniel.vetter@ffwll.ch>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Oct 29, 2020 at 6:30 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> Use PLATFORM_DEVID_NONE define instead of "-1" value because:
->  - it brings some meaning,
->  - it might point attention why auto device ID was not used.
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> +int unsafe_follow_pfn(struct vm_area_struct *vma, unsigned long address,
+> +	unsigned long *pfn)
 
-Acked-by: Chen-Yu Tsai <wens@csie.org>
+The one tab indent here looks weird, normally tis would be two tabs
+or aligned aftetthe opening brace.
+
+> +{
+> +#ifdef CONFIG_STRICT_FOLLOW_PFN
+> +	pr_info("unsafe follow_pfn usage rejected, see CONFIG_STRICT_FOLLOW_PFN\n");
+> +	return -EINVAL;
+> +#else
+> +	WARN_ONCE(1, "unsafe follow_pfn usage\n");
+> +	add_taint(TAINT_USER, LOCKDEP_STILL_OK);
+> +
+> +	return follow_pfn(vma, address, pfn);
+> +#endif
+
+Woudn't this be a pretty good use case of "if (IS_ENABLED(...)))"?
+
+Also I'd expect the inverse polarity of the config option, that is
+a USAFE_FOLLOW_PFN option to enable to unsafe behavior.
+
+> +/**
+> + * unsafe_follow_pfn - look up PFN at a user virtual address
+> + * @vma: memory mapping
+> + * @address: user virtual address
+> + * @pfn: location to store found PFN
+> + *
+> + * Only IO mappings and raw PFN mappings are allowed.
+> + *
+> + * Returns zero and the pfn at @pfn on success, -ve otherwise.
+> + */
+> +int unsafe_follow_pfn(struct vm_area_struct *vma, unsigned long address,
+> +	unsigned long *pfn)
+> +{
+> +	return follow_pfn(vma, address, pfn);
+> +}
+> +EXPORT_SYMBOL(unsafe_follow_pfn);
+
+Any reason this doesn't use the warn and disable logic?
