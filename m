@@ -2,86 +2,62 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63BB42A1F0C
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Nov 2020 16:29:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B5F42A2039
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Nov 2020 18:18:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726555AbgKAP3A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 1 Nov 2020 10:29:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:57511 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726549AbgKAP3A (ORCPT
+        id S1727102AbgKARSk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 1 Nov 2020 12:18:40 -0500
+Received: from viti.kaiser.cx ([85.214.81.225]:52240 "EHLO viti.kaiser.cx"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726866AbgKARSj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 1 Nov 2020 10:29:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1604244538;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc; bh=bWiVlvXp1WAql73np6JVzWGg8n0Nd1xMuTUmok2L8fI=;
-        b=P30VYvUEAJ8mVBQ7u/dN67P6qA5rX3nEKr1LoLr5Wtn2U0XKxoE4NPB8DMi5yRcM/2oEuN
-        ESxfyJnDycVYCJm3hYXiPJN6znprntLPvIUj8pNo0KgMJPBM2RSGlPJqVWgQ6XP7SWaQbl
-        9x7UFDCZ074dtPzQUw54c0WCwvp5xns=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-474-_HvNf-xTNI2E63MfiwkP4g-1; Sun, 01 Nov 2020 10:28:57 -0500
-X-MC-Unique: _HvNf-xTNI2E63MfiwkP4g-1
-Received: by mail-ot1-f69.google.com with SMTP id e5so5184050otp.8
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 01 Nov 2020 07:28:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=bWiVlvXp1WAql73np6JVzWGg8n0Nd1xMuTUmok2L8fI=;
-        b=i77pFlZ5rIt6jlcp+gzFPUuxXDIG5uSqG9g0sjfNeC7dXaEQeeTMTtTJcXs6tCrUz6
-         YR9ZJD0kshy6ssH/h8D5CXIfp3ekO9PUWz13jLF/NDmreTdSG7JBsnMApqugVPcpaIoM
-         7B+F+d255edtg0WaAKTW+5mdOsZDk8/xopsAbfWW5w8/ZUZ51NLW913ZckTRj8Xd/9pl
-         3B+dOxBQix1fIrmn43QGwXo2yNcUe+Ym+EtrOc+75IwSqmEPGhhOLgpzn6SPxK1h0MUv
-         6o8UrrOrWYjeLF4MlNXOnERcLpAXwWbRnNl6nQQ7zdW3vpPLCW7dxeanqDpeBQaGROZ8
-         AkFA==
-X-Gm-Message-State: AOAM532XA8DkZm/Wlg6nm6Y/GAXnanFcmAs7KFFV4CaL49Z41AvWK/dV
-        1wGNKY1BoGen7MIq9XqPEjV73azxBLulZ5c8S73avRpC7WKbZIx40y6iEXgBd2RMDefXEevwXId
-        C30HfIZhmRp+Yx1R5qTuNla1Ei92rYG4=
-X-Received: by 2002:a9d:798f:: with SMTP id h15mr9367222otm.83.1604244536416;
-        Sun, 01 Nov 2020 07:28:56 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzzfwmS7mhGV1nrgDknHQb009zyvSbaveWLGdobtmvsJa5sVPtTe4GngH6uTIpawbEFjyUW+g==
-X-Received: by 2002:a9d:798f:: with SMTP id h15mr9367214otm.83.1604244536254;
-        Sun, 01 Nov 2020 07:28:56 -0800 (PST)
-Received: from trix.remote.csb (075-142-250-213.res.spectrum.com. [75.142.250.213])
-        by smtp.gmail.com with ESMTPSA id b92sm2948531otc.70.2020.11.01.07.28.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 07:28:55 -0800 (PST)
-From:   trix@redhat.com
-To:     kgene@kernel.org, krzk@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Tom Rix <trix@redhat.com>
-Subject: [PATCH] soc: samsung: remove unneeded semicolon
-Date:   Sun,  1 Nov 2020 07:28:44 -0800
-Message-Id: <20201101152844.2290728-1-trix@redhat.com>
-X-Mailer: git-send-email 2.18.1
+        Sun, 1 Nov 2020 12:18:39 -0500
+Received: from dslb-188-104-063-075.188.104.pools.vodafone-ip.de ([188.104.63.75] helo=martin-debian-2.paytec.ch)
+        by viti.kaiser.cx with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.89)
+        (envelope-from <martin@kaiser.cx>)
+        id 1kZGzv-0000Pi-3R; Sun, 01 Nov 2020 18:18:31 +0100
+From:   Martin Kaiser <martin@kaiser.cx>
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Cc:     linux-i2c@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Martin Kaiser <martin@kaiser.cx>
+Subject: [PATCH v2 1/3] i2c: exynos5: remove duplicate error message
+Date:   Sun,  1 Nov 2020 18:18:05 +0100
+Message-Id: <20201101171807.8182-1-martin@kaiser.cx>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20201027214257.8099-1-martin@kaiser.cx>
+References: <20201027214257.8099-1-martin@kaiser.cx>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Tom Rix <trix@redhat.com>
+platform_get_irq already prints an error message if the requested irq
+was not found. Don't print another message in the driver.
 
-A semicolon is not needed after a switch statement.
-
-Signed-off-by: Tom Rix <trix@redhat.com>
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 ---
- drivers/soc/samsung/exynos5422-asv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+changes in v2
+- split the patch in three parts
 
-diff --git a/drivers/soc/samsung/exynos5422-asv.c b/drivers/soc/samsung/exynos5422-asv.c
-index 01bb3050d678..ca409a976e34 100644
---- a/drivers/soc/samsung/exynos5422-asv.c
-+++ b/drivers/soc/samsung/exynos5422-asv.c
-@@ -383,7 +383,7 @@ static int __asv_offset_voltage(unsigned int index)
- 		return 25000;
- 	default:
- 		return 0;
--	};
-+	}
- }
+ drivers/i2c/busses/i2c-exynos5.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-exynos5.c
+index 6ce3ec03b595..c5f5fb28762d 100644
+--- a/drivers/i2c/busses/i2c-exynos5.c
++++ b/drivers/i2c/busses/i2c-exynos5.c
+@@ -779,7 +779,6 @@ static int exynos5_i2c_probe(struct platform_device *pdev)
  
- static void exynos5422_asv_offset_voltage_setup(struct exynos_asv *asv)
+ 	i2c->irq = ret = platform_get_irq(pdev, 0);
+ 	if (ret <= 0) {
+-		dev_err(&pdev->dev, "cannot find HS-I2C IRQ\n");
+ 		ret = -EINVAL;
+ 		goto err_clk;
+ 	}
 -- 
-2.18.1
+2.20.1
 
