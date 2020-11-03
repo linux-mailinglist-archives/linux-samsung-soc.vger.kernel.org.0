@@ -2,429 +2,469 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5710A2A4047
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 10:30:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6300E2A3FEA
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 10:23:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727845AbgKCJaa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Nov 2020 04:30:30 -0500
-Received: from mx2.suse.de ([195.135.220.15]:37366 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727529AbgKCJa1 (ORCPT
+        id S1727703AbgKCJXg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Nov 2020 04:23:36 -0500
+Received: from mailout2.samsung.com ([203.254.224.25]:35407 "EHLO
+        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726864AbgKCJXe (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Nov 2020 04:30:27 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 51DF4AF19;
-        Tue,  3 Nov 2020 09:30:25 +0000 (UTC)
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        airlied@linux.ie, daniel@ffwll.ch, sam@ravnborg.org,
-        alexander.deucher@amd.com, christian.koenig@amd.com,
-        kraxel@redhat.com, l.stach@pengutronix.de,
-        linux+etnaviv@armlinux.org.uk, christian.gmeiner@gmail.com,
-        inki.dae@samsung.com, jy0922.shim@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        kgene@kernel.org, krzk@kernel.org, yuq825@gmail.com,
-        bskeggs@redhat.com, robh@kernel.org, tomeu.vizoso@collabora.com,
-        steven.price@arm.com, alyssa.rosenzweig@collabora.com,
-        hjc@rock-chips.com, heiko@sntech.de, hdegoede@redhat.com,
-        sean@poorly.run, eric@anholt.net, oleksandr_andrushchenko@epam.com,
-        ray.huang@amd.com, sumit.semwal@linaro.org,
-        emil.velikov@collabora.com, luben.tuikov@amd.com, apaneers@amd.com,
-        linus.walleij@linaro.org, melissa.srw@gmail.com,
-        chris@chris-wilson.co.uk, miaoqinglang@huawei.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        etnaviv@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org, spice-devel@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, xen-devel@lists.xenproject.org,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH v7 10/10] drm/fb_helper: Support framebuffers in I/O memory
-Date:   Tue,  3 Nov 2020 10:30:15 +0100
-Message-Id: <20201103093015.1063-11-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <20201103093015.1063-1-tzimmermann@suse.de>
-References: <20201103093015.1063-1-tzimmermann@suse.de>
+        Tue, 3 Nov 2020 04:23:34 -0500
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20201103092331epoutp023a4b1c673f61b53c2d1f47840d46d97d~D9SBqEPxC3155831558epoutp02I
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Nov 2020 09:23:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20201103092331epoutp023a4b1c673f61b53c2d1f47840d46d97d~D9SBqEPxC3155831558epoutp02I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1604395411;
+        bh=t1B906RqYkSGezfQu6S2EAYprv6ig9jtCZKRr3yBMGI=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=Ij3/UTDZiOz2aqcfSdvrMabZLWObEHyYAXLg8t1NNnXpcDdszKeXZ3oCMS59Fg/DQ
+         zXRs+o8XJ1adlL4xDGDp0pxCVv4S/zxql3+nB77DKsbWAFP6oo3po8LMnoWmET4gxw
+         y5MeFF/FB5N55u8/4JB/OE/8C2gIgP9iHXSWsTSQ=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+        20201103092330epcas1p488beb56652baa99b89d476de5edfe23b~D9SA1_DHp0459604596epcas1p4J;
+        Tue,  3 Nov 2020 09:23:30 +0000 (GMT)
+Received: from epsmges1p4.samsung.com (unknown [182.195.40.153]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 4CQPTr5mm7zMqYkV; Tue,  3 Nov
+        2020 09:23:28 +0000 (GMT)
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        42.11.10463.09121AF5; Tue,  3 Nov 2020 18:23:28 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20201103092327epcas1p1b44e9a0095459568b93e967a85bbcfd0~D9R9zV4Yh0967009670epcas1p1N;
+        Tue,  3 Nov 2020 09:23:27 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20201103092327epsmtrp1904f079a45fcbee2db81cd54dc35c5b5~D9R9ycR4p0737907379epsmtrp1Q;
+        Tue,  3 Nov 2020 09:23:27 +0000 (GMT)
+X-AuditID: b6c32a38-efbff700000028df-40-5fa121905268
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        58.43.13470.F8121AF5; Tue,  3 Nov 2020 18:23:27 +0900 (KST)
+Received: from [10.113.221.102] (unknown [10.113.221.102]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20201103092327epsmtip1419c15d45ccb64ab9ea98583891761ed~D9R9dpE_Y3123331233epsmtip1J;
+        Tue,  3 Nov 2020 09:23:27 +0000 (GMT)
+Subject: Re: [PATCH v7 2/6] interconnect: Add generic interconnect driver
+ for Exynos SoCs
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        georgi.djakov@linaro.org, krzk@kernel.org
+Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org,
+        a.swigon@samsung.com, myungjoo.ham@samsung.com,
+        inki.dae@samsung.com, sw0312.kim@samsung.com,
+        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, dri-devel@lists.freedesktop.org
+From:   Chanwoo Choi <cw00.choi@samsung.com>
+Organization: Samsung Electronics
+Message-ID: <88af4e53-6c7a-c2e6-ad28-a9d6bb5bf623@samsung.com>
+Date:   Tue, 3 Nov 2020 18:37:25 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
+        Thunderbird/59.0
 MIME-Version: 1.0
+In-Reply-To: <20201030125149.8227-3-s.nawrocki@samsung.com>
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHJsWRmVeSWpSXmKPExsWy7bCmnu4ExYXxBhf2a1vcn9fKaLFxxnpW
+        i/lHzrFaXPn6ns1i+t5NbBaT7k9gsTh/fgO7xeVdc9gsPvceYbSYcX4fk8XaI3fZLW43rmCz
+        aN17hN3i8Jt2VosZk1+yOfB7bFrVyeZx59oeNo/73ceZPPq2rGL0+LxJLoA1KtsmIzUxJbVI
+        ITUvOT8lMy/dVsk7ON453tTMwFDX0NLCXEkhLzE31VbJxSdA1y0zB+hcJYWyxJxSoFBAYnGx
+        kr6dTVF+aUmqQkZ+cYmtUmpBSk6BZYFecWJucWleul5yfq6VoYGBkSlQYUJ2RsPCyUwFv2Mq
+        HtzRaWDc7d3FyMkhIWAisbVxL0sXIxeHkMAORonJf7cxQzifGCXOz9nIBOF8Y5RYePoDI0zL
+        9wffwWwhgb2MEg27uCGK3jNKPNv1ghUkISwQLfFw8i6gURwcIgIxEuvfRYCEmQVOMEkcuSMI
+        YrMJaEnsf3GDDcTmF1CUuPrjMdhMXgE7iUUzTzCB2CwCKhL9p5ayg9iiAmESJ7e1QNUISpyc
+        +YQFxOYUsJZ41bqPFWK+uMStJ/OZIGx5ieats8G+kRC4wSFx8N0KVogHXCQmXTvKDmELS7w6
+        vgXKlpJ42d8GZVdLrDx5hA2iuYNRYsv+C1DNxhL7l05mAnmMWUBTYv0ufYiwosTO33MZIRbz
+        Sbz72sMKUiIhwCvR0SYEUaIscfnBXSYIW1JicXsn2wRGpVlI3pmF5IVZSF6YhbBsASPLKkax
+        1ILi3PTUYsMCE+S43sQITshaFjsY5779oHeIkYmD8RCjBAezkghvTeS8eCHelMTKqtSi/Pii
+        0pzU4kOMpsAAnsgsJZqcD8wJeSXxhqZGxsbGFiaGZqaGhkrivH+0O+KFBNITS1KzU1MLUotg
+        +pg4OKUamOZcej33wu+ydQKXXC5O+zbDL0lbJu+adXOFpahnIqsBX2KtOv/kI1rHE/4zqLvu
+        UpLgW+aet6XBbJp974qJm5YUflk6c7+uz6Lps78/t774//KJiRV9W/SUF/ebpzwsnFd+45Lp
+        jCe3V+X1ZtzwXJbEreASItprz+xlFLrvd8Vvj+fcMat/ywjFd2yZtEl12rtDS+8u4Dz/SaVD
+        I7/ySmvFimdNEy2macWyNx75snj5O3ZlqczamRXcP9f3XwsyO3PxR79+It9pw+d67M1h2znP
+        zVp+I+PKV8HYW/fmXGK6xfwn5vDK6gsLll2zV3lw45jmv+T01eedaoSmPl1xp5XL+8bJDm2W
+        v0qJU82Dlx1VYinOSDTUYi4qTgQA2fSBolEEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJIsWRmVeSWpSXmKPExsWy7bCSnG6/4sJ4g32dqhb357UyWmycsZ7V
+        Yv6Rc6wWV76+Z7OYvncTm8Wk+xNYLM6f38BucXnXHDaLz71HGC1mnN/HZLH2yF12i9uNK9gs
+        WvceYbc4/Kad1WLG5JdsDvwem1Z1snncubaHzeN+93Emj74tqxg9Pm+SC2CN4rJJSc3JLEst
+        0rdL4MpoWDiZqeB3TMWDOzoNjLu9uxg5OSQETCS+P/jOCGILCexmlLh7hwkiLikx7eJR5i5G
+        DiBbWOLw4eIuRi6gkreMEi0L1rCAxIUFoiWmfnAEKRcRiJE4NXkWC0gNs8AJJomPqx4wQTTs
+        Z5RYdPIxC0gVm4CWxP4XN9hAbH4BRYmrPx6DLeYVsJNYNPME2GIWARWJ/lNL2UFsUYEwiZ1L
+        HjNB1AhKnJz5BGwOp4C1xKvWfawgNrOAusSfeZeYIWxxiVtP5jNB2PISzVtnM09gFJ6FpH0W
+        kpZZSFpmIWlZwMiyilEytaA4Nz232LDAMC+1XK84Mbe4NC9dLzk/dxMjODa1NHcwbl/1Qe8Q
+        IxMH4yFGCQ5mJRHemsh58UK8KYmVValF+fFFpTmpxYcYpTlYlMR5bxQujBMSSE8sSc1OTS1I
+        LYLJMnFwSjUweTMfTZjbwpFRFhhet5HB8/I2+YMvtmfyL7jgeGXyuqbk6b07zW/zL2CQ3qbw
+        PHKFqdk2oahnc7zNgjgLFL5ppgSlv5YU6k/zzrK10BZz3XNb6pPmtRO8kzV7tmy9pKZ0yE3i
+        T+vCWU2RLMpbdVYc6DTgvtit0aKzVW+nlp0m9zKdxf9yii4lR66Lzfx3+GCt+xxmxgqRRMYl
+        lj/r4huC1qxzU6v4fYFHulE34NOfj7e9BR58ZOVSne/LMoP/a97fr+WXtA9rbRKtFN8478Ck
+        A6dnPxAptWYvmx1bbGxStUa7PPetCEtogUjMsqnM6lPmv4+59vLMxgI3rpmbRGtEM9iZPj3R
+        YuWOlLcUvq7EUpyRaKjFXFScCACftNB+PAMAAA==
+X-CMS-MailID: 20201103092327epcas1p1b44e9a0095459568b93e967a85bbcfd0
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20201030125301eucas1p218b0e654cb4c826b05280f28836da8d9
+References: <20201030125149.8227-1-s.nawrocki@samsung.com>
+        <CGME20201030125301eucas1p218b0e654cb4c826b05280f28836da8d9@eucas1p2.samsung.com>
+        <20201030125149.8227-3-s.nawrocki@samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-At least sparc64 requires I/O-specific access to framebuffers. This
-patch updates the fbdev console accordingly.
+Hi Sylwester,
 
-For drivers with direct access to the framebuffer memory, the callback
-functions in struct fb_ops test for the type of memory and call the rsp
-fb_sys_ of fb_cfb_ functions. Read and write operations are implemented
-internally by DRM's fbdev helper.
+On 10/30/20 9:51 PM, Sylwester Nawrocki wrote:
+> This patch adds a generic interconnect driver for Exynos SoCs in order
+> to provide interconnect functionality for each "samsung,exynos-bus"
+> compatible device.
+> 
+> The SoC topology is a graph (or more specifically, a tree) and its
+> edges are specified using the 'samsung,interconnect-parent' in the
 
-For drivers that employ a shadow buffer, fbdev's blit function retrieves
-the framebuffer address as struct dma_buf_map, and uses dma_buf_map
-interfaces to access the buffer.
+samsung,interconnect-parent -> interconnects?
 
-The bochs driver on sparc64 uses a workaround to flag the framebuffer as
-I/O memory and avoid a HW exception. With the introduction of struct
-dma_buf_map, this is not required any longer. The patch removes the rsp
-code from both, bochs and fbdev.
 
-v7:
-	* use min_t(size_t,) (kernel test robot)
-	* return the number of bytes read/written, if any (fbdev testcase)
-v5:
-	* implement fb_read/fb_write internally (Daniel, Sam)
-v4:
-	* move dma_buf_map changes into separate patch (Daniel)
-	* TODO list: comment on fbdev updates (Daniel)
+> DT. Due to unspecified relative probing order, -EPROBE_DEFER may be
+> propagated to ensure that the parent is probed before its children.
+> 
+> Each bus is now an interconnect provider and an interconnect node as
+> well (cf. Documentation/interconnect/interconnect.rst), i.e. every bus
+> registers itself as a node. Node IDs are not hardcoded but rather
+> assigned dynamically at runtime. This approach allows for using this
+> driver with various Exynos SoCs.
+> 
+> Frequencies requested via the interconnect API for a given node are
+> propagated to devfreq using dev_pm_qos_update_request(). Please note
+> that it is not an error when CONFIG_INTERCONNECT is 'n', in which
+> case all interconnect API functions are no-op.
+> 
+> The bus-width DT property is to determine the interconnect data
+> width and traslate requested bandwidth to clock frequency for each
+> bus.
+> 
+> Signed-off-by: Artur Świgoń <a.swigon@samsung.com>
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> ---
+> Changes for v7:
+>  - adjusted to the DT property changes: "interconnects" instead
+>    of "samsung,interconnect-parent", "samsung,data-clk-ratio"
+>    instead of "bus-width",
+>  - adaptation to of_icc_get_from_provider() function changes
+>    in v5.10-rc1.
+> 
+> Changes for v6:
+>  - corrected of_node dereferencing in exynos_icc_get_parent()
+>    function,
+>  - corrected initialization of icc_node->name so as to avoid
+>    direct of_node->name dereferencing,
+>  - added parsing of bus-width DT property.
+> 
+> Changes for v5:
+>  - adjust to renamed exynos,interconnect-parent-node property,
+>  - use automatically generated platform device id as the interconect
+>    node id instead of a now unavailable devfreq->id field,
+>  - add icc_ prefix to some variables to make the code more self-commenting,
+>  - use icc_nodes_remove() instead of icc_node_del() + icc_node_destroy(),
+>  - adjust to exynos,interconnect-parent-node property rename to
+>    samsung,interconnect-parent,
+>  - converted to a separate platform driver in drivers/interconnect.
+> 
+> ---
+>  drivers/interconnect/Kconfig         |   1 +
+>  drivers/interconnect/Makefile        |   1 +
+>  drivers/interconnect/exynos/Kconfig  |   6 ++
+>  drivers/interconnect/exynos/Makefile |   4 +
+>  drivers/interconnect/exynos/exynos.c | 198 +++++++++++++++++++++++++++++++++++
+>  5 files changed, 210 insertions(+)
+>  create mode 100644 drivers/interconnect/exynos/Kconfig
+>  create mode 100644 drivers/interconnect/exynos/Makefile
+>  create mode 100644 drivers/interconnect/exynos/exynos.c
+> 
+> diff --git a/drivers/interconnect/Kconfig b/drivers/interconnect/Kconfig
+> index 5b7204e..eca6eda 100644
+> --- a/drivers/interconnect/Kconfig
+> +++ b/drivers/interconnect/Kconfig
+> @@ -11,6 +11,7 @@ menuconfig INTERCONNECT
+>  
+>  if INTERCONNECT
+>  
+> +source "drivers/interconnect/exynos/Kconfig"
+>  source "drivers/interconnect/imx/Kconfig"
+>  source "drivers/interconnect/qcom/Kconfig"
+>  
+> diff --git a/drivers/interconnect/Makefile b/drivers/interconnect/Makefile
+> index d203520..665538d 100644
+> --- a/drivers/interconnect/Makefile
+> +++ b/drivers/interconnect/Makefile
+> @@ -4,5 +4,6 @@ CFLAGS_core.o				:= -I$(src)
+>  icc-core-objs				:= core.o bulk.o
+>  
+>  obj-$(CONFIG_INTERCONNECT)		+= icc-core.o
+> +obj-$(CONFIG_INTERCONNECT_EXYNOS)	+= exynos/
+>  obj-$(CONFIG_INTERCONNECT_IMX)		+= imx/
+>  obj-$(CONFIG_INTERCONNECT_QCOM)		+= qcom/
+> diff --git a/drivers/interconnect/exynos/Kconfig b/drivers/interconnect/exynos/Kconfig
+> new file mode 100644
+> index 0000000..e51e52e
+> --- /dev/null
+> +++ b/drivers/interconnect/exynos/Kconfig
+> @@ -0,0 +1,6 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +config INTERCONNECT_EXYNOS
+> +	tristate "Exynos generic interconnect driver"
+> +	depends on ARCH_EXYNOS || COMPILE_TEST
+> +	help
+> +	  Generic interconnect driver for Exynos SoCs.
+> diff --git a/drivers/interconnect/exynos/Makefile b/drivers/interconnect/exynos/Makefile
+> new file mode 100644
+> index 0000000..e19d1df
+> --- /dev/null
+> +++ b/drivers/interconnect/exynos/Makefile
+> @@ -0,0 +1,4 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +exynos-interconnect-objs		:= exynos.o
+> +
+> +obj-$(CONFIG_INTERCONNECT_EXYNOS)	+= exynos-interconnect.o
+> diff --git a/drivers/interconnect/exynos/exynos.c b/drivers/interconnect/exynos/exynos.c
+> new file mode 100644
+> index 0000000..772d1fc
+> --- /dev/null
+> +++ b/drivers/interconnect/exynos/exynos.c
+> @@ -0,0 +1,198 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Exynos generic interconnect provider driver
+> + *
+> + * Copyright (c) 2020 Samsung Electronics Co., Ltd.
+> + *
+> + * Authors: Artur Świgoń <a.swigon@samsung.com>
+> + *          Sylwester Nawrocki <s.nawrocki@samsung.com>
+> + */
+> +#include <linux/device.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_qos.h>
+> +#include <linux/slab.h>
+> +
+> +#define EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO	8
+> +
+> +struct exynos_icc_priv {
+> +	struct device *dev;
+> +
+> +	/* One interconnect node per provider */
+> +	struct icc_provider provider;
+> +	struct icc_node *node;
+> +
+> +	struct dev_pm_qos_request qos_req;
+> +	u32 bus_clk_ratio;
+> +};
+> +
+> +static struct icc_node *exynos_icc_get_parent(struct device_node *np)
+> +{
+> +	struct of_phandle_args args;
+> +	struct icc_node_data *icc_node_data;
+> +	struct icc_node *icc_node;
+> +	int num, ret;
+> +
+> +	num = of_count_phandle_with_args(np, "interconnects",
+> +					 "#interconnect-cells");
+> +	if (num < 1)
+> +		return NULL; /* parent nodes are optional */
+> +
+> +	/* Get the interconnect target node */
+> +	ret = of_parse_phandle_with_args(np, "interconnects",
+> +					"#interconnect-cells", 0, &args);
+> +	if (ret < 0)
+> +		return ERR_PTR(ret);
+> +
+> +	icc_node_data = of_icc_get_from_provider(&args);
+> +	of_node_put(args.np);
+> +
+> +	if (IS_ERR(icc_node_data))
+> +		return ERR_CAST(icc_node_data);
+> +
+> +	icc_node = icc_node_data->node;
+> +	kfree(icc_node_data);
+> +
+> +	return icc_node;
+> +}
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Tested-by: Sam Ravnborg <sam@ravnborg.org>
----
- Documentation/gpu/todo.rst        |  19 ++-
- drivers/gpu/drm/bochs/bochs_kms.c |   1 -
- drivers/gpu/drm/drm_fb_helper.c   | 220 ++++++++++++++++++++++++++++--
- include/drm/drm_mode_config.h     |  12 --
- 4 files changed, 223 insertions(+), 29 deletions(-)
+I have a question about exynos_icc_get_parent().
+As I checked, this function returns the only one icc_node
+as parent node. But, bus_display dt node in the exynos4412.dtsi
+specifies the two interconnect node as following with bus_leftbus, bus_dmc,
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index 59f63f1d7680..acca232b025b 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -201,13 +201,28 @@ Convert drivers to use drm_fbdev_generic_setup()
- ------------------------------------------------
- 
- Most drivers can use drm_fbdev_generic_setup(). Driver have to implement
--atomic modesetting and GEM vmap support. Current generic fbdev emulation
--expects the framebuffer in system memory (or system-like memory).
-+atomic modesetting and GEM vmap support. Historically, generic fbdev emulation
-+expected the framebuffer in system memory or system-like memory. By employing
-+struct dma_buf_map, drivers with frambuffers in I/O memory can be supported
-+as well.
- 
- Contact: Maintainer of the driver you plan to convert
- 
- Level: Intermediate
- 
-+Reimplement functions in drm_fbdev_fb_ops without fbdev
-+-------------------------------------------------------
-+
-+A number of callback functions in drm_fbdev_fb_ops could benefit from
-+being rewritten without dependencies on the fbdev module. Some of the
-+helpers could further benefit from using struct dma_buf_map instead of
-+raw pointers.
-+
-+Contact: Thomas Zimmermann <tzimmermann@suse.de>, Daniel Vetter
-+
-+Level: Advanced
-+
-+
- drm_framebuffer_funcs and drm_mode_config_funcs.fb_create cleanup
- -----------------------------------------------------------------
- 
-diff --git a/drivers/gpu/drm/bochs/bochs_kms.c b/drivers/gpu/drm/bochs/bochs_kms.c
-index 13d0d04c4457..853081d186d5 100644
---- a/drivers/gpu/drm/bochs/bochs_kms.c
-+++ b/drivers/gpu/drm/bochs/bochs_kms.c
-@@ -151,7 +151,6 @@ int bochs_kms_init(struct bochs_device *bochs)
- 	bochs->dev->mode_config.preferred_depth = 24;
- 	bochs->dev->mode_config.prefer_shadow = 0;
- 	bochs->dev->mode_config.prefer_shadow_fbdev = 1;
--	bochs->dev->mode_config.fbdev_use_iomem = true;
- 	bochs->dev->mode_config.quirk_addfb_prefer_host_byte_order = true;
- 
- 	bochs->dev->mode_config.funcs = &bochs_mode_funcs;
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index a0d88130fedb..01ba1da28511 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -372,24 +372,22 @@ static void drm_fb_helper_resume_worker(struct work_struct *work)
- }
- 
- static void drm_fb_helper_dirty_blit_real(struct drm_fb_helper *fb_helper,
--					  struct drm_clip_rect *clip)
-+					  struct drm_clip_rect *clip,
-+					  struct dma_buf_map *dst)
- {
- 	struct drm_framebuffer *fb = fb_helper->fb;
- 	unsigned int cpp = fb->format->cpp[0];
- 	size_t offset = clip->y1 * fb->pitches[0] + clip->x1 * cpp;
- 	void *src = fb_helper->fbdev->screen_buffer + offset;
--	void *dst = fb_helper->buffer->map.vaddr + offset;
- 	size_t len = (clip->x2 - clip->x1) * cpp;
- 	unsigned int y;
- 
--	for (y = clip->y1; y < clip->y2; y++) {
--		if (!fb_helper->dev->mode_config.fbdev_use_iomem)
--			memcpy(dst, src, len);
--		else
--			memcpy_toio((void __iomem *)dst, src, len);
-+	dma_buf_map_incr(dst, offset); /* go to first pixel within clip rect */
- 
-+	for (y = clip->y1; y < clip->y2; y++) {
-+		dma_buf_map_memcpy_to(dst, src, len);
-+		dma_buf_map_incr(dst, fb->pitches[0]);
- 		src += fb->pitches[0];
--		dst += fb->pitches[0];
- 	}
- }
- 
-@@ -417,8 +415,9 @@ static void drm_fb_helper_dirty_work(struct work_struct *work)
- 			ret = drm_client_buffer_vmap(helper->buffer, &map);
- 			if (ret)
- 				return;
--			drm_fb_helper_dirty_blit_real(helper, &clip_copy);
-+			drm_fb_helper_dirty_blit_real(helper, &clip_copy, &map);
- 		}
-+
- 		if (helper->fb->funcs->dirty)
- 			helper->fb->funcs->dirty(helper->fb, NULL, 0, 0,
- 						 &clip_copy, 1);
-@@ -2027,6 +2026,199 @@ static int drm_fbdev_fb_mmap(struct fb_info *info, struct vm_area_struct *vma)
- 		return -ENODEV;
- }
- 
-+static bool drm_fbdev_use_iomem(struct fb_info *info)
-+{
-+	struct drm_fb_helper *fb_helper = info->par;
-+	struct drm_client_buffer *buffer = fb_helper->buffer;
-+
-+	return !drm_fbdev_use_shadow_fb(fb_helper) && buffer->map.is_iomem;
-+}
-+
-+static ssize_t fb_read_screen_base(struct fb_info *info, char __user *buf, size_t count,
-+				   loff_t pos)
-+{
-+	const char __iomem *src = info->screen_base + pos;
-+	size_t alloc_size = min(count, PAGE_SIZE);
-+	ssize_t ret = 0;
-+	int err = 0;
-+	char *tmp;
-+
-+	tmp = kmalloc(alloc_size, GFP_KERNEL);
-+	if (!tmp)
-+		return -ENOMEM;
-+
-+	while (count) {
-+		size_t c = min_t(size_t, count, alloc_size);
-+
-+		memcpy_fromio(tmp, src, c);
-+		if (copy_to_user(buf, tmp, c)) {
-+			err = -EFAULT;
-+			break;
-+		}
-+
-+		src += c;
-+		buf += c;
-+		ret += c;
-+		count -= c;
-+	}
-+
-+	kfree(tmp);
-+
-+	return ret ? ret : err;
-+}
-+
-+static ssize_t fb_read_screen_buffer(struct fb_info *info, char __user *buf, size_t count,
-+				     loff_t pos)
-+{
-+	const char *src = info->screen_buffer + pos;
-+
-+	if (copy_to_user(buf, src, count))
-+		return -EFAULT;
-+
-+	return count;
-+}
-+
-+static ssize_t drm_fbdev_fb_read(struct fb_info *info, char __user *buf,
-+				 size_t count, loff_t *ppos)
-+{
-+	loff_t pos = *ppos;
-+	size_t total_size;
-+	ssize_t ret;
-+
-+	if (info->screen_size)
-+		total_size = info->screen_size;
-+	else
-+		total_size = info->fix.smem_len;
-+
-+	if (pos >= total_size)
-+		return 0;
-+	if (count >= total_size)
-+		count = total_size;
-+	if (total_size - count < pos)
-+		count = total_size - pos;
-+
-+	if (drm_fbdev_use_iomem(info))
-+		ret = fb_read_screen_base(info, buf, count, pos);
-+	else
-+		ret = fb_read_screen_buffer(info, buf, count, pos);
-+
-+	if (ret > 0)
-+		*ppos += ret;
-+
-+	return ret;
-+}
-+
-+static ssize_t fb_write_screen_base(struct fb_info *info, const char __user *buf, size_t count,
-+				    loff_t pos)
-+{
-+	char __iomem *dst = info->screen_base + pos;
-+	size_t alloc_size = min(count, PAGE_SIZE);
-+	ssize_t ret = 0;
-+	int err = 0;
-+	u8 *tmp;
-+
-+	tmp = kmalloc(alloc_size, GFP_KERNEL);
-+	if (!tmp)
-+		return -ENOMEM;
-+
-+	while (count) {
-+		size_t c = min_t(size_t, count, alloc_size);
-+
-+		if (copy_from_user(tmp, buf, c)) {
-+			err = -EFAULT;
-+			break;
-+		}
-+		memcpy_toio(dst, tmp, c);
-+
-+		dst += c;
-+		buf += c;
-+		ret += c;
-+		count -= c;
-+	}
-+
-+	kfree(tmp);
-+
-+	return ret ? ret : err;
-+}
-+
-+static ssize_t fb_write_screen_buffer(struct fb_info *info, const char __user *buf, size_t count,
-+				      loff_t pos)
-+{
-+	char *dst = info->screen_buffer + pos;
-+
-+	if (copy_from_user(dst, buf, count))
-+		return -EFAULT;
-+
-+	return count;
-+}
-+
-+static ssize_t drm_fbdev_fb_write(struct fb_info *info, const char __user *buf,
-+				  size_t count, loff_t *ppos)
-+{
-+	loff_t pos = *ppos;
-+	size_t total_size;
-+	ssize_t ret;
-+	int err = 0;
-+
-+	if (info->screen_size)
-+		total_size = info->screen_size;
-+	else
-+		total_size = info->fix.smem_len;
-+
-+	if (pos > total_size)
-+		return -EFBIG;
-+	if (count > total_size) {
-+		err = -EFBIG;
-+		count = total_size;
-+	}
-+	if (total_size - count < pos) {
-+		if (!err)
-+			err = -ENOSPC;
-+		count = total_size - pos;
-+	}
-+
-+	/*
-+	 * Copy to framebuffer even if we already logged an error. Emulates
-+	 * the behavior of the original fbdev implementation.
-+	 */
-+	if (drm_fbdev_use_iomem(info))
-+		ret = fb_write_screen_base(info, buf, count, pos);
-+	else
-+		ret = fb_write_screen_buffer(info, buf, count, pos);
-+
-+	if (ret > 0)
-+		*ppos += ret;
-+
-+	return ret ? ret : err;
-+}
-+
-+static void drm_fbdev_fb_fillrect(struct fb_info *info,
-+				  const struct fb_fillrect *rect)
-+{
-+	if (drm_fbdev_use_iomem(info))
-+		drm_fb_helper_cfb_fillrect(info, rect);
-+	else
-+		drm_fb_helper_sys_fillrect(info, rect);
-+}
-+
-+static void drm_fbdev_fb_copyarea(struct fb_info *info,
-+				  const struct fb_copyarea *area)
-+{
-+	if (drm_fbdev_use_iomem(info))
-+		drm_fb_helper_cfb_copyarea(info, area);
-+	else
-+		drm_fb_helper_sys_copyarea(info, area);
-+}
-+
-+static void drm_fbdev_fb_imageblit(struct fb_info *info,
-+				   const struct fb_image *image)
-+{
-+	if (drm_fbdev_use_iomem(info))
-+		drm_fb_helper_cfb_imageblit(info, image);
-+	else
-+		drm_fb_helper_sys_imageblit(info, image);
-+}
-+
- static const struct fb_ops drm_fbdev_fb_ops = {
- 	.owner		= THIS_MODULE,
- 	DRM_FB_HELPER_DEFAULT_OPS,
-@@ -2034,11 +2226,11 @@ static const struct fb_ops drm_fbdev_fb_ops = {
- 	.fb_release	= drm_fbdev_fb_release,
- 	.fb_destroy	= drm_fbdev_fb_destroy,
- 	.fb_mmap	= drm_fbdev_fb_mmap,
--	.fb_read	= drm_fb_helper_sys_read,
--	.fb_write	= drm_fb_helper_sys_write,
--	.fb_fillrect	= drm_fb_helper_sys_fillrect,
--	.fb_copyarea	= drm_fb_helper_sys_copyarea,
--	.fb_imageblit	= drm_fb_helper_sys_imageblit,
-+	.fb_read	= drm_fbdev_fb_read,
-+	.fb_write	= drm_fbdev_fb_write,
-+	.fb_fillrect	= drm_fbdev_fb_fillrect,
-+	.fb_copyarea	= drm_fbdev_fb_copyarea,
-+	.fb_imageblit	= drm_fbdev_fb_imageblit,
- };
- 
- static struct fb_deferred_io drm_fbdev_defio = {
-diff --git a/include/drm/drm_mode_config.h b/include/drm/drm_mode_config.h
-index 5ffbb4ed5b35..ab424ddd7665 100644
---- a/include/drm/drm_mode_config.h
-+++ b/include/drm/drm_mode_config.h
-@@ -877,18 +877,6 @@ struct drm_mode_config {
- 	 */
- 	bool prefer_shadow_fbdev;
- 
--	/**
--	 * @fbdev_use_iomem:
--	 *
--	 * Set to true if framebuffer reside in iomem.
--	 * When set to true memcpy_toio() is used when copying the framebuffer in
--	 * drm_fb_helper.drm_fb_helper_dirty_blit_real().
--	 *
--	 * FIXME: This should be replaced with a per-mapping is_iomem
--	 * flag (like ttm does), and then used everywhere in fbdev code.
--	 */
--	bool fbdev_use_iomem;
--
- 	/**
- 	 * @quirk_addfb_prefer_xbgr_30bpp:
- 	 *
+When I checked the return value of exynos_icc_get_parent()
+during probing for bus_display device, exynos_icc_get_parent() function
+only returns 'bus_leftbus' icc_node. Do you need to add two phandle
+of icc node?
+
+diff --git a/arch/arm/boot/dts/exynos4412.dtsi b/arch/arm/boot/dts/exynos4412.dtsi
+index d07739ec8740..9e4045ceb6ab 100644
+--- a/arch/arm/boot/dts/exynos4412.dtsi
++++ b/arch/arm/boot/dts/exynos4412.dtsi
+@@ -472,7 +472,7 @@
+                        clocks = <&clock CLK_ACLK160>;
+                        clock-names = "bus";
+                        operating-points-v2 = <&bus_display_opp_table>;
+                        interconnects = <&bus_leftbus &bus_dmc>;
+                        #interconnect-cells = <0>;
+                        status = "disabled";
+                };
+
+
+> +
+> +static int exynos_generic_icc_set(struct icc_node *src, struct icc_node *dst)
+> +{
+> +	struct exynos_icc_priv *src_priv = src->data, *dst_priv = dst->data;
+> +	s32 src_freq = max(src->avg_bw, src->peak_bw) / src_priv->bus_clk_ratio;
+> +	s32 dst_freq = max(dst->avg_bw, dst->peak_bw) / dst_priv->bus_clk_ratio;
+> +	int ret;
+> +
+> +	ret = dev_pm_qos_update_request(&src_priv->qos_req, src_freq);
+> +	if (ret < 0) {
+> +		dev_err(src_priv->dev, "failed to update PM QoS of %s (src)\n",
+> +			src->name);
+> +		return ret;
+> +	}
+> +
+> +	ret = dev_pm_qos_update_request(&dst_priv->qos_req, dst_freq);
+> +	if (ret < 0) {
+> +		dev_err(dst_priv->dev, "failed to update PM QoS of %s (dst)\n",
+> +			dst->name);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static struct icc_node *exynos_generic_icc_xlate(struct of_phandle_args *spec,
+> +						 void *data)
+> +{
+> +	struct exynos_icc_priv *priv = data;
+> +
+> +	if (spec->np != priv->dev->parent->of_node)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	return priv->node;
+> +}
+> +
+> +static int exynos_generic_icc_remove(struct platform_device *pdev)
+> +{
+> +	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
+> +	struct icc_node *parent_node, *node = priv->node;
+> +
+> +	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
+> +	if (parent_node && !IS_ERR(parent_node))
+> +		icc_link_destroy(node, parent_node);
+> +
+> +	icc_nodes_remove(&priv->provider);
+> +	icc_provider_del(&priv->provider);
+> +
+> +	return 0;
+> +}
+> +
+> +static int exynos_generic_icc_probe(struct platform_device *pdev)
+> +{
+> +	struct device *bus_dev = pdev->dev.parent;
+> +	struct exynos_icc_priv *priv;
+> +	struct icc_provider *provider;
+> +	struct icc_node *icc_node, *icc_parent_node;
+> +	int ret;
+> +
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	priv->dev = &pdev->dev;
+> +	platform_set_drvdata(pdev, priv);
+> +
+> +	provider = &priv->provider;
+> +
+> +	provider->set = exynos_generic_icc_set;
+> +	provider->aggregate = icc_std_aggregate;
+> +	provider->xlate = exynos_generic_icc_xlate;
+> +	provider->dev = bus_dev;
+> +	provider->inter_set = true;
+> +	provider->data = priv;
+> +
+> +	ret = icc_provider_add(provider);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	icc_node = icc_node_create(pdev->id);
+> +	if (IS_ERR(icc_node)) {
+> +		ret = PTR_ERR(icc_node);
+> +		goto err_prov_del;
+> +	}
+> +
+> +	priv->node = icc_node;
+> +	icc_node->name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn",
+> +					bus_dev->of_node);
+> +	if (of_property_read_u32(bus_dev->of_node, "samsung,data-clock-ratio",
+> +				 &priv->bus_clk_ratio))
+> +		priv->bus_clk_ratio = EXYNOS_ICC_DEFAULT_BUS_CLK_RATIO;
+> +
+> +	/*
+> +	 * Register a PM QoS request for the parent (devfreq) device.
+> +	 */
+> +	ret = dev_pm_qos_add_request(bus_dev, &priv->qos_req,
+> +				     DEV_PM_QOS_MIN_FREQUENCY, 0);
+> +	if (ret < 0)
+> +		goto err_node_del;
+> +
+> +	icc_node->data = priv;
+> +	icc_node_add(icc_node, provider);
+> +
+> +	icc_parent_node = exynos_icc_get_parent(bus_dev->of_node);
+> +	if (IS_ERR(icc_parent_node)) {
+> +		ret = PTR_ERR(icc_parent_node);
+> +		goto err_pmqos_del;
+> +	}
+> +	if (icc_parent_node) {
+> +		ret = icc_link_create(icc_node, icc_parent_node->id);
+> +		if (ret < 0)
+> +			goto err_pmqos_del;
+> +	}
+> +
+> +	return 0;
+> +
+> +err_pmqos_del:
+> +	dev_pm_qos_remove_request(&priv->qos_req);
+> +err_node_del:
+> +	icc_nodes_remove(provider);
+> +err_prov_del:
+> +	icc_provider_del(provider);
+> +	return ret;
+> +}
+> +
+> +static struct platform_driver exynos_generic_icc_driver = {
+> +	.driver = {
+> +		.name = "exynos-generic-icc",
+> +	},
+> +	.probe = exynos_generic_icc_probe,
+> +	.remove = exynos_generic_icc_remove,
+> +};
+> +module_platform_driver(exynos_generic_icc_driver);
+> +
+> +MODULE_DESCRIPTION("Exynos generic interconnect driver");
+> +MODULE_AUTHOR("Artur Świgoń <a.swigon@samsung.com>");
+> +MODULE_AUTHOR("Sylwester Nawrocki <s.nawrocki@samsung.com>");
+> +MODULE_LICENSE("GPL v2");
+> +MODULE_ALIAS("platform:exynos-generic-icc");
+> 
+
+
 -- 
-2.29.0
-
+Best Regards,
+Chanwoo Choi
+Samsung Electronics
