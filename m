@@ -2,259 +2,147 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C2EB2A3FF3
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 10:26:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E5B92A40AC
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 10:51:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727389AbgKCJ0a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Nov 2020 04:26:30 -0500
-Received: from mailout1.samsung.com ([203.254.224.24]:36505 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727323AbgKCJ01 (ORCPT
+        id S1727068AbgKCJv1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Nov 2020 04:51:27 -0500
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:55801 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726058AbgKCJv0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Nov 2020 04:26:27 -0500
-Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20201103092624epoutp01ab37aef94dd6c4780477f94a68c382e0~D9Ui0xreh2349323493epoutp01k
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Nov 2020 09:26:24 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20201103092624epoutp01ab37aef94dd6c4780477f94a68c382e0~D9Ui0xreh2349323493epoutp01k
+        Tue, 3 Nov 2020 04:51:26 -0500
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20201103095115euoutp029e2395512bf3389d1f673b15fb2eceee~D9qOqWaAh0378703787euoutp02V
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Nov 2020 09:51:15 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20201103095115euoutp029e2395512bf3389d1f673b15fb2eceee~D9qOqWaAh0378703787euoutp02V
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1604395584;
-        bh=xxXAuVLnvvEigU4dHlqA7WtN2zrSv6gHDky4J6f+6JA=;
+        s=mail20170921; t=1604397075;
+        bh=MnhYUgRiyVn2RU1Qy2Y4w9InTkQhtgs6BrcRHBGSfoM=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=FXMvHxB/FQNdSxeQJeGCnagUe0gnwgtRfR0JEC0CWPuLA51+TU2X+dbJKLgoKUj87
-         Nu4qvHRamQGRsjJNT+evnwSkBo9QlZpvPp48/idLOpOjcoY4Z/tBmtysRMEZMhYstB
-         NySVDOQ6k09x/M4B3It8PnpgeWKtllayiN8lh6jI=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20201103092624epcas1p25a0dd944a4e24d03cbdb234741610b1c~D9UiXsK_n1805818058epcas1p2S;
-        Tue,  3 Nov 2020 09:26:24 +0000 (GMT)
-Received: from epsmges1p2.samsung.com (unknown [182.195.40.154]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4CQPY874l5zMqYkf; Tue,  3 Nov
-        2020 09:26:20 +0000 (GMT)
-Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
-        epsmges1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        99.4E.63458.C3221AF5; Tue,  3 Nov 2020 18:26:20 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20201103092620epcas1p2c4bf8c4a69e2f328f0abceef7cbfb12d~D9Ue17KtO1053710537epcas1p2c;
-        Tue,  3 Nov 2020 09:26:20 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20201103092620epsmtrp2654869d726a38db9c46bc7cb8cfbae7e~D9Ue1IVRh2378623786epsmtrp25;
-        Tue,  3 Nov 2020 09:26:20 +0000 (GMT)
-X-AuditID: b6c32a36-6dfff7000000f7e2-f9-5fa1223c8c62
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        4B.C3.13470.C3221AF5; Tue,  3 Nov 2020 18:26:20 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20201103092620epsmtip271da5f19f243cbbe70103a4aea3d2e18~D9Uej2plA0458704587epsmtip2e;
-        Tue,  3 Nov 2020 09:26:20 +0000 (GMT)
-Subject: Re: [PATCH v7 1/6] dt-bindings: devfreq: Add documentation for the
- interconnect properties
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        georgi.djakov@linaro.org, krzk@kernel.org
-Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org,
-        a.swigon@samsung.com, myungjoo.ham@samsung.com,
-        inki.dae@samsung.com, sw0312.kim@samsung.com,
-        b.zolnierkie@samsung.com, m.szyprowski@samsung.com,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, dri-devel@lists.freedesktop.org
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <2213a69c-1483-6840-28a4-ab7ca84d55bb@samsung.com>
-Date:   Tue, 3 Nov 2020 18:40:18 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
-        Thunderbird/59.0
+        b=P3mG97mXQdN5hJ/jgvIht7ryV7s+5qFQafWhNin9cZNMu4OOXRnPSpwKus9bbAG0d
+         I7K5eZJFvOzGisxXS3WhwQMNpUGFdQ7RGiDK9DZka/S8W4M8/V63MxGmF1AzliLbta
+         AUmnliD/5N+EDCCF1X3jQSp1V5fXbvijaMV7RcmA=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20201103095109eucas1p2afb98fb92380eda0c5ebd4dfbb1b097d~D9qJ5E-1b2911529115eucas1p2a;
+        Tue,  3 Nov 2020 09:51:09 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id EE.6A.06318.D0821AF5; Tue,  3
+        Nov 2020 09:51:09 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20201103095109eucas1p10f5c14bde52af8ecea147d4dac80f906~D9qJh0xKB3011530115eucas1p17;
+        Tue,  3 Nov 2020 09:51:09 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20201103095109eusmtrp1f768dc1ec1bcb83dd3c7f2214129cb4b~D9qJdR4YP1634016340eusmtrp1S;
+        Tue,  3 Nov 2020 09:51:09 +0000 (GMT)
+X-AuditID: cbfec7f5-38bff700000018ae-89-5fa1280d6e98
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id E2.60.06017.D0821AF5; Tue,  3
+        Nov 2020 09:51:09 +0000 (GMT)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20201103095109eusmtip2062283a33ff507be950ec43d9dc2e29d~D9qJI7H4m3072330723eusmtip2T;
+        Tue,  3 Nov 2020 09:51:09 +0000 (GMT)
+Subject: Re: [PATCH 2/5] ARM: dts: add Samsung's exynos4412-based p4note
+ boards
+To:     Martin Juecker <martin.juecker@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     linux-samsung-soc@vger.kernel.org, kgene@kernel.org,
+        devicetree@vger.kernel.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <0af4946e-a573-ad5a-5558-de439d49434f@samsung.com>
+Date:   Tue, 3 Nov 2020 10:51:08 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.4.0
 MIME-Version: 1.0
-In-Reply-To: <20201030125149.8227-2-s.nawrocki@samsung.com>
+In-Reply-To: <20201102212118.GA2366@adroid>
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrPJsWRmVeSWpSXmKPExsWy7bCmrq6N0sJ4g3kfzSzuz2tltNg4Yz2r
-        xfwj51gtrnx9z2Yxfe8mNotJ9yewWJw/v4Hd4vKuOWwWn3uPMFrMOL+PyWLtkbvsFrcbV7BZ
-        tO49wm5x+E07q8WMyS/ZHPg9Nq3qZPO4c20Pm8f97uNMHn1bVjF6fN4kF8AalW2TkZqYklqk
-        kJqXnJ+SmZduq+QdHO8cb2pmYKhraGlhrqSQl5ibaqvk4hOg65aZA3SukkJZYk4pUCggsbhY
-        Sd/Opii/tCRVISO/uMRWKbUgJafAskCvODG3uDQvXS85P9fK0MDAyBSoMCE748ffvSwF71Qr
-        NiyYwN7A2CrXxcjJISFgIvHr/U7GLkYuDiGBHYwSb5c/h3I+MUp8PHSeHcL5xiix/uNfNpiW
-        hm8vWCASexkltrSvgap6zyhx8M0vFpAqYYFUidnbNwF1cHCICMRIrH8XARJmFjjBJHHkjiCI
-        zSagJbH/xQ2wofwCihJXfzxmBCnnFbCT2PFWGyTMIqAisWrmY7CJogJhEie3tTCC2LwCghIn
-        Zz4Bi3MKWEssvfGICWK8uMStJ/OhbHmJ5q2zmUFOkxC4wSGx6sNFRogHXCTWLn/LCmELS7w6
-        voUdwpaS+PxuL9ST1RIrTx5hg2juAHpy/wWoBmOJ/UsnM4EcyiygKbF+lz5EWFFi5++5jBCL
-        +STefe1hBSmREOCV6GgTgihRlrj84C4ThC0psbi9k20Co9IsJO/MQvLCLCQvzEJYtoCRZRWj
-        WGpBcW56arFhgRFyZG9iBKdkLbMdjJPeftA7xMjEwXiIUYKDWUmEtyZyXrwQb0piZVVqUX58
-        UWlOavEhRlNgAE9klhJNzgdmhbySeENTI2NjYwsTQzNTQ0Mlcd4/2h3xQgLpiSWp2ampBalF
-        MH1MHJxSDUyp9+9trDDx7eZ7a/GqIG7Kgb5Cxk5eOe401un/10oLC91jbryTqjtTsc84xefz
-        u8b73iatSe+ceiLdQ46Yzz2eovSL4cYPmZi//NJ/76ncPLxaY6OJ6ScT1ZV/Xrc9EIiNl/h7
-        5DvTFtv8Rf7sz6wm+139/EPlYVSJ1oYkm/0dl6b/+iA+OZP57rf6GfsZ7mvNvCy77b/zyqNt
-        Cz6EiDjWnrow3yZ5yuI3Jx9t65H/NVcg4UDbzD/OUXfVZsrsn71ussXSHYf1UwTeT4jOklhw
-        cE6s2XKTFbsYWLf4ZV3WS/53Vf3khtdW5QYtASf/ebE1Ll+7d3thwJaiWPvbF+Ldw5c0JeQf
-        fMUTPznzkM8XJZbijERDLeai4kQAPZ7HGVIEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNIsWRmVeSWpSXmKPExsWy7bCSvK6N0sJ4gxuNChb357UyWmycsZ7V
-        Yv6Rc6wWV76+Z7OYvncTm8Wk+xNYLM6f38BucXnXHDaLz71HGC1mnN/HZLH2yF12i9uNK9gs
-        WvceYbc4/Kad1WLG5JdsDvwem1Z1snncubaHzeN+93Emj74tqxg9Pm+SC2CN4rJJSc3JLEst
-        0rdL4Mr48XcvS8E71YoNCyawNzC2ynUxcnJICJhINHx7wdLFyMUhJLCbUWLpxBYWiISkxLSL
-        R5m7GDmAbGGJw4eLIWreMkqceHOXCaRGWCBVYvb2TWwgtohAjMSpybPABjELnGCS+LjqARNE
-        x35GidWbfoJVsQloSex/cQPM5hdQlLj64zEjyAZeATuJHW+1QcIsAioSq2Y+BjtCVCBMYueS
-        x2DLeAUEJU7OfAIW5xSwllh64xFYnFlAXeLPvEvMELa4xK0n86Hi8hLNW2czT2AUnoWkfRaS
-        lllIWmYhaVnAyLKKUTK1oDg3PbfYsMAwL7Vcrzgxt7g0L10vOT93EyM4PrU0dzBuX/VB7xAj
-        EwfjIUYJDmYlEd6ayHnxQrwpiZVVqUX58UWlOanFhxilOViUxHlvFC6MExJITyxJzU5NLUgt
-        gskycXBKNTAFu3k6KbeaPf2/pftHYvFWF+OiuaeUzBUYZy14W9q04viUxLyDi7d7nvtrm7L/
-        1dzw9E8PixvjG6V19W7+tHiyTeLqhbk6b0T8Z8xWXMuef271fsWSuYw/3C7+azE4lXzdxcB9
-        q76w9P89xSeZBI9fUzl+wypDZObafhVl+RcPOK8wLud/fPaqhCHnhrfOt2Tm8zH2XwifOL1/
-        vZbU+46irJaDkUvmrXZ5VJLM0Kq2xYbPxykjuWHjYfZfZ7af/tIxo+tN8pIdBw/2HnWN616+
-        12c1x+mfpVG9IprLV4m1VGzX4SiYoPan9NUKXq9r/POD2R3eVAfx3DN+e2n3n6sT1hiU9Rmv
-        P3ho7qQoo8mblViKMxINtZiLihMBqljVrD4DAAA=
-X-CMS-MailID: 20201103092620epcas1p2c4bf8c4a69e2f328f0abceef7cbfb12d
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsWy7djPc7q8GgvjDdY/MrWYf+Qcq0X/49fM
+        FufPb2C3mHF+H5PFmX9TWRxYPXbOusvusWlVJ5vH501yAcxRXDYpqTmZZalF+nYJXBnbN7Uy
+        FXzjrOhaf5ypgfEwexcjJ4eEgInEtbv3mLoYuTiEBFYwSqyesJINJCEk8IVR4vhraYjEZ0aJ
+        Z9faWboYOcA6FlyFalgOFH/9jRHCec8oce7nDFaQbmGBQInnuz4ygdgiAmESKya9ZgJpZhYI
+        ldj92wEkzCZgKNH1tgtsGa+AncSTL6vBWlkEVCR23FgKFhcVSJL4+/kPM0SNoMTJmU9YQGxO
+        AW2JF69PM4LYzALyEtvfzmGGsMUlbj2ZD3achMBkdomzq5uZId50kVi36DorhC0s8er4Fqj3
+        ZSROT+5hgWhoZpR4eG4tO4TTwyhxuWkGI0SVtcSdc7/YID7QlFi/Sx8i7Chx/edjdkio8Enc
+        eCsIcQSfxKRt05khwrwSHW1CENVqErOOr4Nbe/DCJeYJjEqzkLw2C8k7s5C8Mwth7wJGllWM
+        4qmlxbnpqcXGeanlesWJucWleel6yfm5mxiBieX0v+NfdzDu+5N0iFGAg1GJh9chdUG8EGti
+        WXFl7iFGCQ5mJRFep7On44R4UxIrq1KL8uOLSnNSiw8xSnOwKInzGi96GSskkJ5YkpqdmlqQ
+        WgSTZeLglGpgLPbf+vHNj+AJxRrTQpW/hbCx3PyhIF8SqFgZ3a9qvfppcvqRW0Z6YXvm3Xc4
+        3LNrV/yNfyG9MTIBPwTVe/oYjATXyte+28WsxCV36AvTpgMcu1L8b19sUvjBExPhcM1s7t6e
+        0l25jIKiy+6cVqtLK4m3lGe/wpne1qZluDWsWi9e0ShgxmMlluKMREMt5qLiRACXeL/AKAMA
+        AA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBIsWRmVeSWpSXmKPExsVy+t/xe7q8GgvjDZ41yFjMP3KO1aL/8Wtm
+        i/PnN7BbzDi/j8nizL+pLA6sHjtn3WX32LSqk83j8ya5AOYoPZui/NKSVIWM/OISW6VoQwsj
+        PUNLCz0jE0s9Q2PzWCsjUyV9O5uU1JzMstQifbsEvYztm1qZCr5xVnStP87UwHiYvYuRg0NC
+        wERiwVWmLkYuDiGBpYwSc+51MHYxcgLFZSROTmtghbCFJf5c62KDKHrLKPFqwTt2kISwQKDE
+        810fmUBsEYEwif1tnWDNzAKhEkumX2ABsYUEupkkZuzgA7HZBAwlut6CDOLk4BWwk3jyZTXY
+        AhYBFYkdN5aCxUUFkiReXpjKBFEjKHFy5hOwOZwC2hIvXp+Gmm8mMW/zQ2YIW15i+9s5ULa4
+        xK0n85kmMArNQtI+C0nLLCQts5C0LGBkWcUoklpanJueW2ykV5yYW1yal66XnJ+7iREYS9uO
+        /dyyg7HrXfAhRgEORiUeXofUBfFCrIllxZW5hxglOJiVRHidzp6OE+JNSaysSi3Kjy8qzUkt
+        PsRoCvTcRGYp0eR8YJznlcQbmhqaW1gamhubG5tZKInzdggcjBESSE8sSc1OTS1ILYLpY+Lg
+        lGpgnHyBJSypfmm13ufGCQET+mXdDl5/8cJrv/ZKXfPXbOc3lFXfz3dbGuSufCVsW3d+VvV2
+        41+XyvXZp91qEX4pYzY7K8SHe6H5nt7NL6aueTE/yN5708Xu20rmv71jH6+8rC9xff/ryH81
+        b5WfPVdtLln0NO31yW3T+y/9PGQvriHzLdbwj5Z/vhJLcUaioRZzUXEiABTvj+a7AgAA
+X-CMS-MailID: 20201103095109eucas1p10f5c14bde52af8ecea147d4dac80f906
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20201030125257eucas1p29c6b018cfcdda337b2b3d2a496f0c830
-References: <20201030125149.8227-1-s.nawrocki@samsung.com>
-        <CGME20201030125257eucas1p29c6b018cfcdda337b2b3d2a496f0c830@eucas1p2.samsung.com>
-        <20201030125149.8227-2-s.nawrocki@samsung.com>
+X-RootMTR: 20201102212129eucas1p1957c9dd5d6c1ebf7c340271a5e501c5b
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20201102212129eucas1p1957c9dd5d6c1ebf7c340271a5e501c5b
+References: <20201031175836.47745-1-martin.juecker@gmail.com>
+        <20201031175836.47745-3-martin.juecker@gmail.com>
+        <20201102191845.GA64695@kozik-lap>
+        <CGME20201102212129eucas1p1957c9dd5d6c1ebf7c340271a5e501c5b@eucas1p1.samsung.com>
+        <20201102212118.GA2366@adroid>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Sylwester,
+Hi Martin,
 
-This patch contains one typo.
+On 02.11.2020 22:21, Martin Juecker wrote:
+> > ...
+>>> +
+>>> +&fimd {
+>>> +	pinctrl-0 = <&lcd_clk &lcd_data24 &pwm1_out>;
+>>> +	pinctrl-names = "default";
+>>> +	status = "okay";
+>>> +
+>>> +	display-timings {
+>>> +		timing0 {
+>>> +			clock-frequency = <66666666>;
+>>> +			hactive = <1280>;
+>>> +			vactive = <800>;
+>>> +			hfront-porch = <18>;
+>>> +			hback-porch = <36>;
+>>> +			hsync-len = <16>;
+>>> +			vback-porch = <16>;
+>>> +			vfront-porch = <4>;
+>>> +			vsync-len = <3>;
+>>> +			hsync-active = <1>;
+>>> +		};
+>>> +	};
+>> What happened with Marek's comment about this?
+>>
+> Should have mentioned it in the introduction mail. I had a look at the
+> simple panel driver and it's not enough for the display in the p4note. I
+> asked Marek in IRC whether it's ok to have this in a separate patch set
+> to have a fully working display and he agreed.
 
-On 10/30/20 9:51 PM, Sylwester Nawrocki wrote:
-> Add documentation for new optional properties in the exynos bus nodes:
-> interconnects, #interconnect-cells, samsung,data-clock-ratio.
-> These properties allow to specify the SoC interconnect structure which
-> then allows the interconnect consumer devices to request specific
-> bandwidth requirements.
-> 
-> Signed-off-by: Artur Świgoń <a.swigon@samsung.com>
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-> ---
-> Changes for v7:
->  - bus-width property replaced with samsung,data-clock-ratio,
->  - the interconnect consumer bindings used instead of vendor specific
->    properties
-> 
-> Changes for v6:
->  - added dts example of bus hierarchy definition and the interconnect
->    consumer,
->  - added new bus-width property.
-> 
-> Changes for v5:
->  - exynos,interconnect-parent-node renamed to samsung,interconnect-parent
-> ---
->  .../devicetree/bindings/devfreq/exynos-bus.txt     | 68 +++++++++++++++++++++-
->  1 file changed, 66 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/devfreq/exynos-bus.txt b/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-> index e71f752..e34175c 100644
-> --- a/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-> +++ b/Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-> @@ -51,6 +51,16 @@ Optional properties only for parent bus device:
->  - exynos,saturation-ratio: the percentage value which is used to calibrate
->  			the performance count against total cycle count.
->  
-> +Optional properties for interconnect functionality (QoS frequency constraints):
-> +- #interconnect-cells: should be 0.
-> +- interconnects: as documented in ../interconnect.txt, describes a path
-> +  at the higher level interconnects used by this interconnect provider.
-> +  If this interconnect provider is a parent of a top level interconnect
-> +  provider the property contains only one phandle.
-> +
-> +- samsung,data-clock-ratio: ratio of the data troughput in B/s to minimum data
+Yes, I agreed that the display can be added later in a separate patch. 
+However in such case I would simply remove the whole fimd node now. 
+Without a panel it is a bit useless imho. With a proper panel driver you 
+will also get rid of the timings subnode, so there is no point adding it 
+now.
 
-s/troughput/throughput
-
-> +   clock frequency in Hz, default value is 8 when this property is missing.
-> +
->  Detailed correlation between sub-blocks and power line according to Exynos SoC:
->  - In case of Exynos3250, there are two power line as following:
->  	VDD_MIF |--- DMC
-> @@ -135,7 +145,7 @@ Detailed correlation between sub-blocks and power line according to Exynos SoC:
->  		|--- PERIC (Fixed clock rate)
->  		|--- FSYS  (Fixed clock rate)
->  
-> -Example1:
-> +Example 1:
->  	Show the AXI buses of Exynos3250 SoC. Exynos3250 divides the buses to
->  	power line (regulator). The MIF (Memory Interface) AXI bus is used to
->  	transfer data between DRAM and CPU and uses the VDD_MIF regulator.
-> @@ -184,7 +194,7 @@ Example1:
->  	|L5   |200000 |200000  |400000 |300000 |       ||1000000 |
->  	----------------------------------------------------------
->  
-> -Example2 :
-> +Example 2:
->  	The bus of DMC (Dynamic Memory Controller) block in exynos3250.dtsi
->  	is listed below:
->  
-> @@ -419,3 +429,57 @@ Example2 :
->  		devfreq = <&bus_leftbus>;
->  		status = "okay";
->  	};
-> +
-> +Example 3:
-> +	An interconnect path "bus_display -- bus_leftbus -- bus_dmc" on
-> +	Exynos4412 SoC with video mixer as an interconnect consumer device.
-> +
-> +	soc {
-> +		bus_dmc: bus_dmc {
-> +			compatible = "samsung,exynos-bus";
-> +			clocks = <&clock CLK_DIV_DMC>;
-> +			clock-names = "bus";
-> +			operating-points-v2 = <&bus_dmc_opp_table>;
-> +			samsung,data-clock-ratio = <4>;
-> +			#interconnect-cells = <0>;
-> +		};
-> +
-> +		bus_leftbus: bus_leftbus {
-> +			compatible = "samsung,exynos-bus";
-> +			clocks = <&clock CLK_DIV_GDL>;
-> +			clock-names = "bus";
-> +			operating-points-v2 = <&bus_leftbus_opp_table>;
-> +			#interconnect-cells = <0>;
-> +			interconnects = <&bus_dmc>;
-> +		};
-> +
-> +		bus_display: bus_display {
-> +			compatible = "samsung,exynos-bus";
-> +			clocks = <&clock CLK_ACLK160>;
-> +			clock-names = "bus";
-> +			operating-points-v2 = <&bus_display_opp_table>;
-> +			#interconnect-cells = <0>;
-> +			interconnects = <&bus_leftbus &bus_dmc>;
-
-About adding two icc_node, I queried you on patch2.
-
-> +		};
-> +
-> +		bus_dmc_opp_table: opp_table1 {
-> +			compatible = "operating-points-v2";
-> +			/* ... */
-> +		}
-> +
-> +		bus_leftbus_opp_table: opp_table3 {
-> +			compatible = "operating-points-v2";
-> +			/* ... */
-> +		};
-> +
-> +		bus_display_opp_table: opp_table4 {
-> +			compatible = "operating-points-v2";
-> +			/* .. */
-> +		};
-> +
-> +		&mixer {
-> +			compatible = "samsung,exynos4212-mixer";
-> +			interconnects = <&bus_display &bus_dmc>;
-> +			/* ... */
-> +		};
-> +	};
-> 
-
+Best regards
 
 -- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
