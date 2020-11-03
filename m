@@ -2,187 +2,438 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 455842A3CAE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 07:15:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B7DD2A3E11
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 08:53:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726018AbgKCGPo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Nov 2020 01:15:44 -0500
-Received: from hqnvemgate24.nvidia.com ([216.228.121.143]:15892 "EHLO
-        hqnvemgate24.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbgKCGPn (ORCPT
+        id S1727567AbgKCHxr convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Nov 2020 02:53:47 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39195 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725958AbgKCHxr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Nov 2020 01:15:43 -0500
-Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate24.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
-        id <B5fa0f5910000>; Mon, 02 Nov 2020 22:15:45 -0800
-Received: from [10.2.49.167] (10.124.1.5) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 3 Nov
- 2020 06:15:40 +0000
-Subject: Re: [resource] 22b17dc667: Kernel panic - not syncing: Fatal
- exception
-To:     lkp <lkp@intel.com>, Daniel Vetter <daniel.vetter@ffwll.ch>
-CC:     DRI Development <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>, <kvm@vger.kernel.org>,
-        <linux-mm@kvack.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        "Jason Gunthorpe" <jgg@ziepe.ca>,
-        Kees Cook <keescook@chromium.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
-        Jan Kara <jack@suse.cz>, Arnd Bergmann <arnd@arndb.de>,
-        David Hildenbrand <david@redhat.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        <lkp@lists.01.org>
-References: <20201103060649.GA30210@xsang-OptiPlex-9020>
-From:   John Hubbard <jhubbard@nvidia.com>
-Message-ID: <1ec0dee9-e1bb-9cf1-a8c2-ad1e294c5acf@nvidia.com>
-Date:   Mon, 2 Nov 2020 22:15:40 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Tue, 3 Nov 2020 02:53:47 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y12so17367573wrp.6;
+        Mon, 02 Nov 2020 23:53:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=N9gY5Gecsj+pVHqsKvO/SJ65W0y0uTMLHo/A36xtoSE=;
+        b=IGRSLnEgA1fNFA4wmDLcqZUhiRFU71o3xXfSuZDj8MOJvtHA0c66OrNYrstPBD3Jgr
+         mUuBWL9gYqhX0aIAijzWwj6pN81cpI19LW0B4kx/Sq1egUOE7FmyqaNXSttnybdUXfkl
+         kS0/TqMqkUyrZLbPzwcVtAXh7NiGdWf2m/7uFM6bAv1uy7g/tTEK/xWHnGCy7bcc+83S
+         JjRkx8AEhGkCut7kFoRbJCQpiy9tn/ge3ShRBqJ7De9ue8j+XSIU4LlcRw2k1Sd9jNc9
+         hiIjN30638avzmy/NyTlndIt40S8gdcuIgS1Rco0h4Iitd605gwKPMnTJ6FynpIneST5
+         s6fg==
+X-Gm-Message-State: AOAM532F6ZNbH9w8zlqsNsXH0OnGIqof5q7xoNbFi7CG1rGqUpaOIfx5
+        IgEjojZy9tbXTERLoaI7saRWWeKzKOsZiA==
+X-Google-Smtp-Source: ABdhPJz9sr/1DgPnfkl3B81x1iD1CY7saTYctJN/PkUMql8gBCzydYvCiAL+bQQB7R/3Z32m6F0ehg==
+X-Received: by 2002:a5d:4d8b:: with SMTP id b11mr24302557wru.110.1604390023333;
+        Mon, 02 Nov 2020 23:53:43 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id m4sm25482667wrr.47.2020.11.02.23.53.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 23:53:42 -0800 (PST)
+Date:   Tue, 3 Nov 2020 08:53:40 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Martin Juecker <martin.juecker@gmail.com>
+Cc:     linux-samsung-soc@vger.kernel.org, kgene@kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/5] ARM: dts: add Samsung's exynos4412-based p4note
+ boards
+Message-ID: <20201103075340.GB3599@kozik-lap>
+References: <20201031175836.47745-1-martin.juecker@gmail.com>
+ <20201031175836.47745-3-martin.juecker@gmail.com>
+ <20201102191845.GA64695@kozik-lap>
+ <20201102212118.GA2366@adroid>
 MIME-Version: 1.0
-In-Reply-To: <20201103060649.GA30210@xsang-OptiPlex-9020>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.124.1.5]
-X-ClientProxiedBy: HQMAIL111.nvidia.com (172.20.187.18) To
- HQMAIL107.nvidia.com (172.20.187.13)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1604384145; bh=HHKB/RdS8zOAOPLdFEq5BHCD+y3I+0AFVJdR07v4b2Y=;
-        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
-         MIME-Version:In-Reply-To:Content-Type:Content-Language:
-         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-        b=JwOwCwijT1kVCiMMH7uWO3V38VR6sMEcYyvq67pbbu3hJ+DPHKUtnJqETyaxHWRIT
-         m2xUbsYFpKxlfg5ce1M6aG2etyTc++fQlJpwIDZWLn2afx9gbk7WaClnMP3sVhQoZ8
-         6GX9VHqqwD16fLg9I8hpx/8ZVIUAUWLvE6NhWo/ec4JhNV5HDtMZvF+W1nUgdeeJgj
-         Lf169WBQDhKmaXdFsKjUUEguegA0pS0aJO/LCDltQmzs+qKxkCMXJuxbSt9jQh2/0J
-         MeNCr8rseweUGqS7xAMB0+C5n0ZbF66TmR81JNS1sc11HJPPRlRgDtnh3xYDv/DVXI
-         oKrB4bDrDJhGw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20201102212118.GA2366@adroid>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 11/2/20 10:06 PM, lkp wrote:
-> Greeting,
+On Mon, Nov 02, 2020 at 10:21:18PM +0100, Martin Juecker wrote:
+> On Mon, Nov 02, 2020 at 08:18:45PM +0100, Krzysztof Kozlowski wrote:
+> > On Sat, Oct 31, 2020 at 06:58:34PM +0100, Martin Jücker wrote:
+> > > The p4note family contains a couple of variants of the Galaxy Note 10.1
+> > > tablet with mainly different modems. The GT-N8010/GT-N8013 is the wifi
+> > > only version.
+> > 
+> > The subject is v1. Did you send correct patch?
 > 
-> FYI, we noticed the following commit (built with gcc-9):
+> I probably messed up with git send-email here. I need some more time to
+> get used to it. The patch is indeed v2.
 > 
-> commit: 22b17dc667d36418ccabb9c668c4b489185fb40a ("[PATCH v5 13/15] resource: Move devmem revoke code to resource framework")
-> url: https://github.com/0day-ci/linux/commits/Daniel-Vetter/follow_pfn-and-other-iomap-races/20201030-181112
-> base: git://linuxtv.org/media_tree.git master
+> > 
+> > > 
+> > > Signed-off-by: Martin Jücker <martin.juecker@gmail.com>
+> > > ---
+> > >  arch/arm/boot/dts/Makefile                    |    1 +
+> > >  arch/arm/boot/dts/exynos4412-p4note-n8010.dts |   16 +
+> > >  arch/arm/boot/dts/exynos4412-p4note.dtsi      | 1128 +++++++++++++++++
+> > >  3 files changed, 1145 insertions(+)
+> > >  create mode 100644 arch/arm/boot/dts/exynos4412-p4note-n8010.dts
+> > >  create mode 100644 arch/arm/boot/dts/exynos4412-p4note.dtsi
+> > > 
+> > > diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> > > index 4572db3fa5ae..951853e55edb 100644
+> > > --- a/arch/arm/boot/dts/Makefile
+> > > +++ b/arch/arm/boot/dts/Makefile
+> > > @@ -195,6 +195,7 @@ dtb-$(CONFIG_ARCH_EXYNOS4) += \
+> > >  	exynos4412-odroidx.dtb \
+> > >  	exynos4412-odroidx2.dtb \
+> > >  	exynos4412-origen.dtb \
+> > > +	exynos4412-p4note-n8010.dtb \
+> > >  	exynos4412-smdk4412.dtb \
+> > >  	exynos4412-tiny4412.dtb \
+> > >  	exynos4412-trats2.dtb
+> > > diff --git a/arch/arm/boot/dts/exynos4412-p4note-n8010.dts b/arch/arm/boot/dts/exynos4412-p4note-n8010.dts
+> > > new file mode 100644
+> > > index 000000000000..f99358750e01
+> > > --- /dev/null
+> > > +++ b/arch/arm/boot/dts/exynos4412-p4note-n8010.dts
+> > > @@ -0,0 +1,16 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +/*
+> > > + * Samsung's Galaxy Note 10.1 - N801x (wifi only version)
+> > > + *
+> > > + * Copyright (c) 2020 Martin Jücker <martin.juecker@gmail.com>
+> > > + */
+> > > +
+> > > +/dts-v1/;
+> > > +#include "exynos4412-p4note.dtsi"
+> > > +
+> > > +/ {
+> > > +	model = "Samsung Galaxy Note 10.1 (GT-N8010/N8013) based on Exynos4412";
+> > > +	compatible = "samsung,n8010", "samsung,p4note", "samsung,exynos4412", "samsung,exynos4";
+> > > +
+> > > +	/* this is the base variant without any kind of modem */
+> > > +};
+> > > diff --git a/arch/arm/boot/dts/exynos4412-p4note.dtsi b/arch/arm/boot/dts/exynos4412-p4note.dtsi
+> > > new file mode 100644
+> > > index 000000000000..15b6acbbecb2
+> > > --- /dev/null
+> > > +++ b/arch/arm/boot/dts/exynos4412-p4note.dtsi
+> > > @@ -0,0 +1,1128 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +/*
+> > > + * Samsung's Exynos4412 based p4note device family base DT
+> > > + *
+> > > + * Copyright (c) 2020 Martin Jücker <martin.juecker@gmail.com>
+> > 
+> > Multiple parts of this file look like copied from the existing ones. Few
+> > comments are the same. The v1 duplicated even few minor issues like not
+> > that good naming of nodes.  It looks like it is not only based on
+> > existing sources, but uses parts of them directly.  If it is true, then
+> > include the copyright of original work as well.
+> > https://www.gnu.org/prep/maintain/html_node/Copyright-Notices.html
+> > 
 > 
-> in testcase: fsmark
-> version: fsmark-x86_64-3.3-1_20201007
-> with following parameters:
-> 
-> 	iterations: 1x
-> 	nr_threads: 1t
-> 	disk: 1BRD_48G
-> 	fs: f2fs
-> 	fs2: nfsv4
-> 	filesize: 4M
-> 	test_size: 40G
-> 	sync_method: NoSync
-> 	cpufreq_governor: performance
-> 	ucode: 0x5002f01
-> 
-> test-description: The fsmark is a file system benchmark to test synchronous write workloads, for example, mail servers workload.
-> test-url: https://sourceforge.net/projects/fsmark/
-> 
-> 
-> on test machine: 192 threads Intel(R) Xeon(R) Platinum 9242 CPU @ 2.30GHz with 192G memory
-> 
-> caused below changes (please refer to attached dmesg/kmsg for entire log/backtrace):
-> 
-> 
+> I had a look through multiple files and ended up with a mix of copying
+> and writing nodes myself. Most if not all of the copying is from the
+> midas dt, is it enough to add a note that this file is based on the
+> midas dt or should I go with the same approach like midas and only add
+> the samsung copyright here? I don't care too much what's in the header.
 
-Yep, this is the same crash that I saw. And the .config also has
+In such case we mention that works is based on the file, as you
+suggest, and usually we keep the copyright of original file.
 
-   # CONFIG_IO_STRICT_DEVMEM is not set
+> > 
+> > > + */
+> > > +
+> > > +/dts-v1/;
+> > > +#include "exynos4412.dtsi"
+> > > +#include "exynos4412-ppmu-common.dtsi"
+> > > +
+> > > +#include <dt-bindings/clock/maxim,max77686.h>
+> > > +#include <dt-bindings/gpio/gpio.h>
+> > > +#include <dt-bindings/input/linux-event-codes.h>
+> > > +#include <dt-bindings/interrupt-controller/irq.h>
+> > > +#include <dt-bindings/pinctrl/samsung.h>
+> > > +
+> > > +/ {
+> > > +	compatible = "samsung,p4note", "samsung,exynos4412", "samsung,exynos4";
+> > > +
+> > > +	memory@40000000 {
+> > > +		device_type = "memory";
+> > > +		reg = <0x40000000 0x80000000>;
+> > > +	};
+> > > +
+> > > +	chosen {
+> > > +		stdout-path = &serial_2;
+> > > +	};
+> > > +
+> > > +	firmware@204f000 {
+> > > +		compatible = "samsung,secure-firmware";
+> > > +		reg = <0x0204F000 0x1000>;
+> > > +	};
+> > > +
+> > > +	fixed-rate-clocks {
+> > > +		xxti {
+> > > +			compatible = "samsung,clock-xxti";
+> > > +			clock-frequency = <0>;
+> > > +		};
+> > > +
+> > > +		xusbxti {
+> > > +			compatible = "samsung,clock-xusbxti";
+> > > +			clock-frequency = <24000000>;
+> > > +		};
+> > > +	};
+> > > +
+> > > +	gpio-keys {
+> > > +		compatible = "gpio-keys";
+> > > +		pinctrl-names = "default";
+> > > +		pinctrl-0 = <&gpio_keys>;
+> > > +
+> > > +		key-down {
+> > > +			gpios = <&gpx2 2 GPIO_ACTIVE_LOW>;
+> > > +			linux,code = <KEY_VOLUMEDOWN>;
+> > > +			label = "volume down";
+> > > +			debounce-interval = <10>;
+> > > +		};
+> > > +
+> > > +		key-up {
+> > > +			gpios = <&gpx3 3 GPIO_ACTIVE_LOW>;
+> > > +			linux,code = <KEY_VOLUMEUP>;
+> > > +			label = "volume up";
+> > > +			debounce-interval = <10>;
+> > > +		};
+> > > +
+> > > +		key-power {
+> > > +			gpios = <&gpx2 7 GPIO_ACTIVE_LOW>;
+> > > +			linux,code = <KEY_POWER>;
+> > > +			label = "power";
+> > > +			debounce-interval = <10>;
+> > > +			wakeup-source;
+> > > +		};
+> > > +	};
+> > > +
+> > > +	voltage-regulator-1 {
+> > > +		compatible = "regulator-fixed";
+> > > +		regulator-name = "TSP_LDO1";
+> > > +		pinctrl-names = "default";
+> > > +		pinctrl-0 = <&tsp_reg_gpio_1>;
+> > > +		gpios = <&gpm4 5 GPIO_ACTIVE_HIGH>;
+> > > +		enable-active-high;
+> > > +		regulator-always-on;
+> > > +	};
+> > > +
+> > > +	voltage-regulator-2 {
+> > > +		compatible = "regulator-fixed";
+> > > +		regulator-name = "TSP_LDO2";
+> > > +		pinctrl-names = "default";
+> > > +		pinctrl-0 = <&tsp_reg_gpio_2>;
+> > > +		gpios = <&gpb 5 GPIO_ACTIVE_HIGH>;
+> > > +		enable-active-high;
+> > > +		regulator-always-on;
+> > > +	};
+> > > +
+> > > +	voltage-regulator-3 {
+> > > +		compatible = "regulator-fixed";
+> > > +		regulator-name = "TSP_LDO3";
+> > > +		pinctrl-names = "default";
+> > > +		pinctrl-0 = <&tsp_reg_gpio_3>;
+> > > +		gpios = <&gpb 7 GPIO_ACTIVE_HIGH>;
+> > > +		startup-delay-us = <20000>;
+> > > +		enable-active-high;
+> > > +		regulator-always-on;
+> > > +	};
+> > > +
+> > > +	wlan_pwrseq: sdhci3-pwrseq {
+> > > +		compatible = "mmc-pwrseq-simple";
+> > > +		reset-gpios = <&gpm3 5 GPIO_ACTIVE_LOW>;
+> > > +		pinctrl-0 = <&wifi_reset>;
+> > > +		pinctrl-names = "default";
+> > > +		clocks = <&max77686 MAX77686_CLK_PMIC>;
+> > > +		clock-names = "ext_clock";
+> > > +	};
+> > > +
+> > > +	i2c-gpio-1 {
+> > > +		compatible = "i2c-gpio";
+> > > +		sda-gpios = <&gpy2 4 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		scl-gpios = <&gpy2 5 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		i2c-gpio,delay-us = <2>;
+> > > +		#address-cells = <1>;
+> > > +		#size-cells = <0>;
+> > > +
+> > > +		magnetometer@c {
+> > > +			compatible = "asahi-kasei,ak8975";
+> > > +			reg = <0x0c>;
+> > > +			pinctrl-0 = <&ak8975_irq>;
+> > > +			pinctrl-names = "default";
+> > > +			interrupt-parent = <&gpm4>;
+> > > +			interrupts = <7 IRQ_TYPE_EDGE_RISING>;
+> > > +		};
+> > > +	};
+> > > +
+> > > +	i2c-gpio-2 {
+> > > +		compatible = "i2c-gpio";
+> > > +		sda-gpios = <&gpy0 2 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		scl-gpios = <&gpy0 3 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		i2c-gpio,delay-us = <2>;
+> > > +		#address-cells = <1>;
+> > > +		#size-cells = <0>;
+> > > +
+> > > +		fuel-gauge@36 {
+> > > +			compatible = "maxim,max17042";
+> > > +			reg = <0x36>;
+> > > +			pinctrl-0 = <&fuel_alert_irq>;
+> > > +			pinctrl-names = "default";
+> > > +			interrupt-parent = <&gpx2>;
+> > > +			interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+> > > +			maxim,rsns-microohm = <10000>;
+> > > +			maxim,over-heat-temp = <600>;
+> > > +			maxim,over-volt = <4300>;
+> > > +		};
+> > > +	};
+> > > +
+> > > +	i2c-gpio-3 {
+> > > +		compatible = "i2c-gpio";
+> > > +		sda-gpios = <&gpm4 1 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		scl-gpios = <&gpm4 0 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> > > +		i2c-gpio,delay-us = <5>;
+> > > +		#address-cells = <1>;
+> > > +		#size-cells = <0>;
+> > > +
+> > > +		adc@41 {
+> > > +			compatible = "st,stmpe811";
+> > > +			reg = <0x41>;
+> > > +			pinctrl-0 = <&stmpe_adc_irq>;
+> > > +			pinctrl-names = "default";
+> > > +			interrupt-parent = <&gpx0>;
+> > > +			interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
+> > > +			interrupt-controller;
+> > > +			irq-trigger = <0x1>;
+> > > +			st,adc-freq = <3>;
+> > > +			st,mod-12b = <1>;
+> > > +			st,ref-sel = <0>;
+> > > +			st,sample-time = <3>;
+> > > +
+> > > +			stmpe_adc {
+> > > +				compatible = "st,stmpe-adc";
+> > > +				#io-channel-cells = <1>;
+> > > +				st,norequest-mask = <0x2F>;
+> > > +			};
+> > > +		};
+> > > +	};
+> > > +};
+> > > +
+> > > +&adc {
+> > > +	vdd-supply = <&ldo3_reg>;
+> > > +	/* not verified */
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_dmc {
+> > > +	devfreq-events = <&ppmu_dmc0_3>, <&ppmu_dmc1_3>;
+> > > +	vdd-supply = <&buck1_reg>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_acp {
+> > > +	devfreq = <&bus_dmc>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_c2c {
+> > > +	devfreq = <&bus_dmc>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_leftbus {
+> > > +	devfreq-events = <&ppmu_leftbus_3>, <&ppmu_rightbus_3>;
+> > > +	vdd-supply = <&buck3_reg>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_rightbus {
+> > > +	devfreq = <&bus_leftbus>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_display {
+> > > +	devfreq = <&bus_leftbus>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_fsys {
+> > > +	devfreq = <&bus_leftbus>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_peri {
+> > > +	devfreq = <&bus_leftbus>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&bus_mfc {
+> > > +	devfreq = <&bus_leftbus>;
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&cpu0 {
+> > > +	cpu0-supply = <&buck2_reg>;
+> > > +};
+> > > +
+> > > +&cpu_thermal {
+> > > +	cooling-maps {
+> > > +		map0 {
+> > > +			/* Corresponds to 800MHz at freq_table */
+> > > +			cooling-device = <&cpu0 7 7>, <&cpu1 7 7>, <&cpu2 7 7>, <&cpu3 7 7>;
+> > > +		};
+> > > +		map1 {
+> > > +			/* Corresponds to 200MHz at freq_table */
+> > > +			cooling-device = <&cpu0 13 13>, <&cpu1 13 13>, <&cpu2 13 13>, <&cpu3 13 13>;
+> > 
+> > This is too long. Please split it at 80 with indentation of next line
+> > starting at < from the previous one.
+> > 
+> 
+> Okay
+> 
+> > 
+> > > +		};
+> > > +	};
+> > > +};
+> > > +
+> > > +&exynos_usbphy {
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&fimd {
+> > > +	pinctrl-0 = <&lcd_clk &lcd_data24 &pwm1_out>;
+> > > +	pinctrl-names = "default";
+> > > +	status = "okay";
+> > > +
+> > > +	display-timings {
+> > > +		timing0 {
+> > > +			clock-frequency = <66666666>;
+> > > +			hactive = <1280>;
+> > > +			vactive = <800>;
+> > > +			hfront-porch = <18>;
+> > > +			hback-porch = <36>;
+> > > +			hsync-len = <16>;
+> > > +			vback-porch = <16>;
+> > > +			vfront-porch = <4>;
+> > > +			vsync-len = <3>;
+> > > +			hsync-active = <1>;
+> > > +		};
+> > > +	};
+> > 
+> > What happened with Marek's comment about this?
+> > 
+> 
+> Should have mentioned it in the introduction mail. I had a look at the
+> simple panel driver and it's not enough for the display in the p4note. I
+> asked Marek in IRC whether it's ok to have this in a separate patch set
+> to have a fully working display and he agreed.
 
-so it all makes sense.
+Ah, ok.
 
-
-> If you fix the issue, kindly add following tag
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> 
-> [   28.644165] systemd[1]: RTC configured in localtime, applying delta of 0 minutes to system time.
-> 
-> [   28.699473] #PF: supervisor read access in kernel mode
-> [   28.704611] #PF: error_code(0x0000) - not-present page
-> [   28.709749] PGD 0 P4D 0
-> [   28.712291] Oops: 0000 [#1] SMP NOPTI
-> [   28.715956] CPU: 0 PID: 1 Comm: systemd Not tainted 5.10.0-rc1-00015-g22b17dc667d3 #1
-> [   28.723793] RIP: 0010:do_dentry_open+0x1c9/0x360
-> [   28.728410] Code: 84 82 01 00 00 81 ca 00 00 04 00 89 53 44 48 8b 83 f0 00 00 00 81 63 40 3f fc ff ff 48 8d bb 98 00 00 00 c7 43 34 00 00 00 00 <48> 8b 00 48 8b 70 30 e8 2b cb f4 ff f6 43 41 40 74 5a 48 8b 83 f0
-> [   28.747157] RSP: 0018:ffffc9000006fcc8 EFLAGS: 00010206
-> [   28.752380] RAX: 0000000000000000 RBX: ffff8881502ad400 RCX: 0000000000000000
-> [   28.759506] RDX: 00000000000a201d RSI: ffffffff8284d260 RDI: ffff8881502ad498
-> [   28.766639] RBP: ffff88a485a06490 R08: 0000000000000000 R09: ffffffff8284d260
-> [   28.773769] R10: ffffc9000006fcc8 R11: 756c6176006d656d R12: 0000000000000000
-> [   28.780895] R13: ffffffff8133ddc0 R14: ffff8881502ad410 R15: ffff8881502ad400
-> [   28.788028] FS:  00007ff54afa1940(0000) GS:ffff888c4f600000(0000) knlGS:0000000000000000
-> [   28.796113] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   28.801858] CR2: 0000000000000000 CR3: 0000000100120003 CR4: 00000000007706f0
-> [   28.808983] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> [   28.816114] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> [   28.823239] PKRU: 55555554
-> [   28.825952] Call Trace:
-> [   28.828412]  path_openat+0xaa8/0x10a0
-> [   28.832073]  do_filp_open+0x91/0x100
-> [   28.835653]  ? acpi_os_wait_semaphore+0x48/0x80
-> [   28.840186]  ? __check_object_size+0x136/0x160
-> [   28.844631]  do_sys_openat2+0x20d/0x2e0
-> [   28.848470]  do_sys_open+0x44/0x80
-> [   28.851878]  do_syscall_64+0x33/0x40
-> [   28.855457]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-> [   28.860509] RIP: 0033:0x7ff54c1521ae
-> [   28.864086] Code: 25 00 00 41 00 3d 00 00 41 00 74 48 48 8d 05 59 65 0d 00 8b 00 85 c0 75 69 89 f2 b8 01 01 00 00 48 89 fe bf 9c ff ff ff 0f 05 <48> 3d 00 f0 ff ff 0f 87 a6 00 00 00 48 8b 4c 24 28 64 48 33 0c 25
-> [   28.882833] RSP: 002b:00007ffd1c9586d0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
-> [   28.890399] RAX: ffffffffffffffda RBX: 00007ffd1c9587d0 RCX: 00007ff54c1521ae
-> [   28.897531] RDX: 0000000000080000 RSI: 00007ff54bfa0e5a RDI: 00000000ffffff9c
-> [   28.904662] RBP: 00007ffd1c9587d8 R08: 000000000000021f R09: 000055f837cf4290
-> [   28.911796] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000056dd9000
-> [   28.918927] R13: 00000000ffffffff R14: 00007ffd1c9587d0 R15: 0000000000000002
-> [   28.926060] Modules linked in: ip_tables
-> [   28.929986] CR2: 0000000000000000
-> mDebian GNU/Linu
-> [   28.933416] ---[ end trace 94e4f9aa3df66098 ]---
-> [   28.939355] RIP: 0010:do_dentry_open+0x1c9/0x360
-> [   28.943975] Code: 84 82 01 00 00 81 ca 00 00 04 00 89 53 44 48 8b 83 f0 00 00 00 81 63 40 3f fc ff ff 48 8d bb 98 00 00 00 c7 43 34 00 00 00 00 <48> 8b 00 48 8b 70 30 e8 2b cb f4 ff f6 43 41 40 74 5a 48 8b 83 f0
-> [   28.962721] RSP: 0018:ffffc9000006fcc8 EFLAGS: 00010206
-> [   28.967948] RAX: 0000000000000000 RBX: ffff8881502ad400 RCX: 0000000000000000
-> [   28.975079] RDX: 00000000000a201d RSI: ffffffff8284d260 RDI: ffff8881502ad498
-> [   28.982211] RBP: ffff88a485a06490 R08: 0000000000000000 R09: ffffffff8284d260
-> [   28.989337] R10: ffffc9000006fcc8 R11: 756c6176006d656d R12: 0000000000000000
-> [   28.996467] R13: ffffffff8133ddc0 R14: ffff8881502ad410 R15: ffff8881502ad400
-> [   29.003592] FS:  00007ff54afa1940(0000) GS:ffff888c4f600000(0000) knlGS:0000000000000000
-> [   29.011668] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   29.017409] CR2: 0000000000000000 CR3: 0000000100120003 CR4: 00000000007706f0
-> [   29.024539] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> [   29.031671] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> [   29.038804] PKRU: 55555554
-> [   29.041508] Kernel panic - not syncing: Fatal exception
-> ACPI MEMORY or I/O RESET_REG.
-> 
-> 
-> To reproduce:
-> 
->          git clone https://github.com/intel/lkp-tests.git
->          cd lkp-tests
->          bin/lkp install job.yaml  # job file is attached in this email
->          bin/lkp run     job.yaml
-> 
-> 
-> 
-> Thanks,
-> oliver.sang@intel.com
-> 
-
-thanks,
--- 
-John Hubbard
-NVIDIA
+Best regards,
+Krzysztof
