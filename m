@@ -2,102 +2,129 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 325622A59B8
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 23:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 748F72A5A41
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Nov 2020 23:44:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730456AbgKCWJt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Nov 2020 17:09:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34748 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730507AbgKCWJs (ORCPT
+        id S1730693AbgKCWok (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Nov 2020 17:44:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35078 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730606AbgKCWok (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Nov 2020 17:09:48 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06F9C061A47
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Nov 2020 14:09:47 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id o20so2079084eds.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Nov 2020 14:09:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WO1e+L++wPESWfr9nzOE54SCt7afrEsmsB9fEuoYvbI=;
-        b=T+/A6+J62VDvQMKYPtVg2CtBW5xawhHVZqWOERIyixTczN4MfytqxhoJQJOcs2790L
-         sj4ZJgiKijp3n63RZQtMlQ3es9rYo1weSDlwxcJm5Ag+lH4tps5I28z8LxvfwKmYtzJJ
-         /7ODS6RyMh7GrhkYAYzKWrZUgtjo08ShY2d8lFIlqSiQY56zEC4lJ332rH1cpQ0Jikk9
-         7t5YiToX4pGXA3cBIa8hr/lWANYeeU9HgWErCB0IiUFAAt6bSVSfurD3RBJy3BliIelp
-         YL3WFMt/TsTNhYtMeHyiS4JaRXQkTDS7Em1++6Jk3gmVGF0kwFa501K00ou4nDd0zP9v
-         pO8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WO1e+L++wPESWfr9nzOE54SCt7afrEsmsB9fEuoYvbI=;
-        b=rvviSdLmfKBytAnX8njtEt9t6PqVk3pNQbhzl8KRXGrXItCyWrM+mAiOOTdMj4s6Qw
-         6p23OeLm/80kvOiCQbvTJtvHS3Jf8r9QZ1RSkO3+L0cpuddX236cFuco2ClZrR5oeH8l
-         16Utax9pE+gAM8znpHv7Nz3SzkHnLTlOw5tkSitrB81ZKXha8f+PGByjmf3GDBNOHZli
-         T0j+xJ1LgrK9+v557eVebSbzOxU/S9NfHqvFc4pUCALv2QUjiKbUgUJDzCwnGOh7GHxa
-         wVzMWG2voXLPcOg6sb7resN5JbvjTAGvXRVofs2C4Uh09vJIP0m+hoWpy7TqDnUnBlqc
-         qIHA==
-X-Gm-Message-State: AOAM531j8Uo49evrZH1dTFRWl89472n0NGIBjq47dAxtPoY41jRSIkee
-        q/4UGFlLiS3ZFLBhSCmzwg7QthjbbXsZ/TMaCS/WZg==
-X-Google-Smtp-Source: ABdhPJz1NDE7PM2O7672wRWt1a0mL/+PL68eDdfq2Oj69hckQbQldL+V0lbGY3zFDyAcHIRlbnAQxlg/ZySh5dCl9Ns=
-X-Received: by 2002:aa7:d843:: with SMTP id f3mr24583081eds.354.1604441386651;
- Tue, 03 Nov 2020 14:09:46 -0800 (PST)
+        Tue, 3 Nov 2020 17:44:40 -0500
+Received: from localhost (230.sub-72-107-127.myvzw.com [72.107.127.230])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4779F21534;
+        Tue,  3 Nov 2020 22:44:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604443479;
+        bh=B0hofVyjbIarQN5JcfzWbRMadJujwsK3/oEFwLCaHaE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=aGJthRPHhGnUHt1ZdKqRmEtO85M2aHQ0EeBOkvpHEdxgqcV5i3Ard2wiJ81JAWc/6
+         kqheh439OJUiLwEjikfrm/596btquk1VT+KMzM6CPVKq/RwToIlXTv8sbNUy6UTy0i
+         BatF/rWkEZdP538Vqd3i+3FwP4h+TInyIqmAjSB8=
+Date:   Tue, 3 Nov 2020 16:44:37 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 0/6] Add DW PCIe support for Exynos5433 SoCs
+Message-ID: <20201103224437.GA271545@bjorn-Precision-5520>
 MIME-Version: 1.0
-References: <20201030100815.2269-12-daniel.vetter@ffwll.ch> <20201103212840.GA266427@bjorn-Precision-5520>
-In-Reply-To: <20201103212840.GA266427@bjorn-Precision-5520>
-From:   Dan Williams <dan.j.williams@intel.com>
-Date:   Tue, 3 Nov 2020 14:09:35 -0800
-Message-ID: <CAPcyv4jCGxWG0opLv4VzBRk5iLwu6CRse4DwF-otWkfXoGWe6A@mail.gmail.com>
-Subject: Re: [PATCH v5 11/15] PCI: Obey iomem restrictions for procfs mmap
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Daniel Vetter <daniel.vetter@ffwll.ch>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "Linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Kees Cook <keescook@chromium.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        John Hubbard <jhubbard@nvidia.com>,
-        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
-        Jan Kara <jack@suse.cz>, Bjorn Helgaas <bhelgaas@google.com>,
-        Linux PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201029134017.27400-1-m.szyprowski@samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Nov 3, 2020 at 1:28 PM Bjorn Helgaas <helgaas@kernel.org> wrote:
->
-> On Fri, Oct 30, 2020 at 11:08:11AM +0100, Daniel Vetter wrote:
-> > There's three ways to access PCI BARs from userspace: /dev/mem, sysfs
-> > files, and the old proc interface. Two check against
-> > iomem_is_exclusive, proc never did. And with CONFIG_IO_STRICT_DEVMEM,
-> > this starts to matter, since we don't want random userspace having
-> > access to PCI BARs while a driver is loaded and using it.
-> >
-> > Fix this by adding the same iomem_is_exclusive() check we already have
-> > on the sysfs side in pci_mmap_resource().
-> >
-> > References: 90a545e98126 ("restrict /dev/mem to idle io memory ranges")
-> > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
->
-> This is OK with me but it looks like IORESOURCE_EXCLUSIVE is currently
-> only used in a few places:
->
->   e1000_probe() calls pci_request_selected_regions_exclusive(),
->   ne_pci_probe() calls pci_request_regions_exclusive(),
->   vmbus_allocate_mmio() calls request_mem_region_exclusive()
->
-> which raises the question of whether it's worth keeping
-> IORESOURCE_EXCLUSIVE at all.  I'm totally fine with removing it
-> completely.
+On Thu, Oct 29, 2020 at 02:40:11PM +0100, Marek Szyprowski wrote:
+> Dear All,
+> 
+> This patchset is a resurrection of the DW PCIe support for the Exynos5433
+> SoCs posted long time ago here: https://lkml.org/lkml/2016/12/26/6 and
+> later here: https://lkml.org/lkml/2017/12/21/296 .
+> 
+> In meantime the support for the Exynos5440 SoCs has been completely
+> dropped from mainline kernel, as those SoCs never reached the market. The
+> PCIe driver for Exynos5440 variant however has not been removed yet. This
+> patchset simply reworks it to support the Exynos5433 variant. The lack of
+> the need to support both variants significantly simplifies the driver
+> code.
+> 
+> This patchset is based on the following branch:
+> git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-more-dwc-cleanup
+> 
+> Best regards,
+> Marek Szyprowski
+> 
+> 
+> Changelog:
+> 
+> v3:
+> - rebased onto "[00/13] PCI: dwc: Another round of clean-ups" patchset:
+>   https://patchwork.kernel.org/project/linux-samsung-soc/cover/20201028204646.356535-1-robh@kernel.org/
+> - fixed issues pointed by Rob in the driver logic:
+>   * removed DBI_RO_WR_EN register poking
+>   * made driver a standard module
+> - fixed section mismatch issue
+> - added "num-viewport = <3>" property to dts and bindings to fix warning
+> 
+> v2: https://lore.kernel.org/linux-samsung-soc/20201023075744.26200-1-m.szyprowski@samsung.com/
+> - fixed issues in dt-bindings pointed by Krzysztof and Rob
+> 
+> v1: https://lore.kernel.org/linux-samsung-soc/20201019094715.15343-1-m.szyprowski@samsung.com/
+> - initial version of this resurrected patchset
+> 
+> 
+> Patch summary:
 
-Now that CONFIG_IO_STRICT_DEVMEM upgrades IORESOURCE_BUSY to
-IORESOURCE_EXCLUSIVE semantics the latter has lost its meaning so I'd
-be in favor of removing it as well.
+Please follow the subject line convention:
+
+  PCI: exynos: Rework to support Exynos5433 variant
+  arm64: dts: exynos: Add WiFi/PCIe support to TM2(e) boards
+  dt-bindings: PCI: exynos: Drop samsung,exynos5440-pcie binding
+  dt-bindings: PCI: exynos: Add samsung,exynos-pcie binding
+  dt-bindings: phy: exynos: Add samsung,exynos-pcie-phy binding
+
+You can save this trouble by running "git log --oneline" on the file
+(or directory, for new files) and copying the style.
+
+> Jaehoon Chung (3):
+>   phy: samsung: phy-exynos-pcie: rework driver to support Exynos5433
+>     PCIe PHY
+>   pci: dwc: pci-exynos: rework the driver to support Exynos5433 variant
+>   arm64: dts: exynos: add the WiFi/PCIe support to TM2(e) boards
+> 
+> Marek Szyprowski (3):
+>   dt-bindings: pci: drop samsung,exynos5440-pcie binding
+>   dt-bindings: pci: add the samsung,exynos-pcie binding
+>   dt-bindings: phy: add the samsung,exynos-pcie-phy binding
+> 
+>  .../bindings/pci/samsung,exynos-pcie.yaml     | 119 ++++++
+>  .../bindings/pci/samsung,exynos5440-pcie.txt  |  58 ---
+>  .../bindings/phy/samsung,exynos-pcie-phy.yaml |  51 +++
+>  .../boot/dts/exynos/exynos5433-pinctrl.dtsi   |   2 +-
+>  .../dts/exynos/exynos5433-tm2-common.dtsi     |  24 +-
+>  arch/arm64/boot/dts/exynos/exynos5433.dtsi    |  36 ++
+>  drivers/pci/controller/dwc/Kconfig            |  10 +-
+>  drivers/pci/controller/dwc/pci-exynos.c       | 353 +++++++-----------
+>  drivers/pci/quirks.c                          |   1 +
+>  drivers/phy/samsung/phy-exynos-pcie.c         | 304 ++++++---------
+>  10 files changed, 489 insertions(+), 469 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos5440-pcie.txt
+>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos-pcie-phy.yaml
+> 
+> -- 
+> 2.17.1
+> 
