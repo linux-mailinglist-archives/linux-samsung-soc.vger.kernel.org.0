@@ -2,141 +2,165 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CB12AEDBC
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Nov 2020 10:29:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 613A32AEEA3
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Nov 2020 11:18:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbgKKJ3v (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Nov 2020 04:29:51 -0500
-Received: from userp2120.oracle.com ([156.151.31.85]:56398 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbgKKJ3t (ORCPT
+        id S1726755AbgKKKSM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 11 Nov 2020 05:18:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726557AbgKKKSM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Nov 2020 04:29:49 -0500
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AB99meS132651;
-        Wed, 11 Nov 2020 09:28:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=5jkDrh9VUno5wDztTu7VDqalYM6QsS2FNOf4jWeicfM=;
- b=KF1FscfSPqR/jGnEnLVwcEnqGoTHFz4Z2rOgEGN8IMIFxCLnarNmEf6yLZt+ubgc38ju
- FF6+4F5J68sfFBDifPqGnH5V3uPfk4w6FD5FUr0QS2M/Zdgwq3QISc6uHMw4K+crIWBZ
- ONnZvtCoT0yED3aryMEFwF8QMGQ8kCWuXGE+ZzejvBwaV98VPCaKj4q8/Jm2eCyVb7sS
- 0immoY8DntMHZsgAYS5RiANXtfW+vb+GUtthRzQTWbtXxy8A/ct0GwGlCNpnAmiN35xV
- +MFF8KI2mIgs2JJHTTFMaUrCEPh7GBQi8YyI0SPwXnsO/TJHMLq8dD9Hgr9flHokCiDv Zg== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by userp2120.oracle.com with ESMTP id 34p72ep4py-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 11 Nov 2020 09:28:56 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AB9BEYR035947;
-        Wed, 11 Nov 2020 09:28:55 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3030.oracle.com with ESMTP id 34p55pqrs2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 11 Nov 2020 09:28:55 +0000
-Received: from abhmp0015.oracle.com (abhmp0015.oracle.com [141.146.116.21])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0AB9Sllj029705;
-        Wed, 11 Nov 2020 09:28:47 GMT
-Received: from kadam (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Wed, 11 Nov 2020 01:28:47 -0800
-Date:   Wed, 11 Nov 2020 12:28:32 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     Dmitry Osipenko <digetx@gmail.com>,
-        Peter Chen <Peter.Chen@nxp.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        devicetree@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        devel@driverdev.osuosl.org, linux-samsung-soc@vger.kernel.org,
-        Nicolas Chauvet <kwizart@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-media@vger.kernel.org,
-        linux-pwm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-tegra@vger.kernel.org,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Peter Geis <pgwipeout@gmail.com>
-Subject: Re: [PATCH v1 11/30] drm/tegra: dc: Support OPP and SoC core voltage
- scaling
-Message-ID: <20201111092832.GI29398@kadam>
-References: <20201104234427.26477-1-digetx@gmail.com>
- <20201104234427.26477-12-digetx@gmail.com>
- <20201110202945.GF2375022@ulmo>
+        Wed, 11 Nov 2020 05:18:12 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46171C0613D1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 Nov 2020 02:18:12 -0800 (PST)
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1kcnCc-0007WQ-QQ; Wed, 11 Nov 2020 11:18:10 +0100
+Received: from mtr by ptx.hi.pengutronix.de with local (Exim 4.92)
+        (envelope-from <mtr@pengutronix.de>)
+        id 1kcnCa-0004L6-H0; Wed, 11 Nov 2020 11:18:08 +0100
+Date:   Wed, 11 Nov 2020 11:18:08 +0100
+From:   Michael Tretter <m.tretter@pengutronix.de>
+To:     Inki Dae <inki.dae@samsung.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        kernel@pengutronix.de, Laurent.pinchart@ideasonboard.com,
+        krzk@kernel.org, narmstrong@baylibre.com, b.zolnierkie@samsung.com,
+        sylvester.nawrocki@gmail.com, a.hajda@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com
+Subject: Re: [PATCH v2 00/16] drm/exynos: Convert driver to drm bridge
+Message-ID: <20201111101808.GA16630@pengutronix.de>
+References: <CGME20200911165401epcas1p3c7ee84dd01db93f472d6fa21c1100f29@epcas1p3.samsung.com>
+ <20200911135413.3654800-1-m.tretter@pengutronix.de>
+ <fa535450-cd68-415f-5c48-a4f753b2b70b@samsung.com>
+ <20201110081336.GB13669@pengutronix.de>
+ <fd177674-b22e-6743-9886-5590ccade2f5@samsung.com>
+ <c56586b0-f616-6a57-3628-5840a99f6c1a@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201110202945.GF2375022@ulmo>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9801 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 mlxscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011110051
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9801 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999 mlxscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011110051
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c56586b0-f616-6a57-3628-5840a99f6c1a@samsung.com>
+X-Sent-From: Pengutronix Hildesheim
+X-URL:  http://www.pengutronix.de/
+X-IRC:  #ptxdist @freenode
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-Uptime: 11:17:33 up 265 days, 17:48, 92 users,  load average: 0.20, 0.28,
+ 0.27
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: mtr@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Nov 10, 2020 at 09:29:45PM +0100, Thierry Reding wrote:
-> > +	err = dev_pm_opp_of_add_table(dc->dev);
-> > +	if (err) {
-> > +		dev_err(dc->dev, "failed to add OPP table: %d\n", err);
-> > +		goto put_hw;
-> > +	}
-> > +
-> > +	err = devm_add_action(dc->dev, tegra_dc_deinit_opp_table, dc);
-> > +	if (err)
-> > +		goto remove_table;
+On Wed, 11 Nov 2020 12:11:15 +0900, Inki Dae wrote:
+> 20. 11. 11. 오후 12:04에 Inki Dae 이(가) 쓴 글:
+> > 20. 11. 10. 오후 5:13에 Michael Tretter 이(가) 쓴 글:
+> >> On Mon, 09 Nov 2020 12:15:39 +0900, Inki Dae wrote:
+> >>> 20. 9. 11. 오후 10:53에 Michael Tretter 이(가) 쓴 글:
+> >>>> This is v2 of the series to convert the Exynos MIPI DSI driver into a drm
+> >>>> bridge and make it usable with other drivers. Although the driver is
+> >>>> converted, it still supports the component framework API to stay compliant
+> >>>> with the Exynos DRM driver.
+> >>>>
+> >>>> The Exynos MIPI DSI Phy is also found on the i.MX8M Mini. However, on the
+> >>>> i.MX8M Mini, the bridge is driven by an LCDIF display controller instead of
+> >>>> the Exynos Decon. The driver for the LCDIF does not use the component
+> >>>> framework, but uses drm bridges.
+> >>>>
+> >>>> I don't have any Exynos SoC to actually test the series. I build a dummy to
+> >>>> test the bridge with a component driver, to make sure that at least the
+> >>>> initialization is working. Furthermore, tested the driver as a bridge with a
+> >>>> few additional unfinished patches on the i.MX8M Mini EVK. However, somebody
+> >>>> should verify that the driver is still working on Exynos hardware.
+> >>>>
+> >>>> I also changed the order of the patches to first make the driver more platform
+> >>>> independent (patches 2 to 8), then convert to a drm bridge driver (patches 10
+> >>>
+> >>> Just a fundamental question, A MIPI-DSI(Display Serial Interface) bus device
+> >>> would be one of an encoder type of devices not bridge such as DSI to LVDS
+> >>> and LVDS to DSI bridge devices, and also image enhancer and image compressor
+> >>> in case of Exynos.
+> >>
+> >> I don't understand, why the MIPI-DSI bus device would be an encoder type and
+> >> DSI to LVDS or MIPI-DSI to HDMI would be bridges. For example, the device tree
+> >> documentation for the DSIM states that the DSIM receives RGB video as input
+> >> and produces MIPI-DSI as output. Thus, the DSIM is basically a parallel RGB to
+> > 
+> > MIPI-DSI receives RGB video as input and encodes it to MIPI packet and then transfers the packet to MIPI panel.
+> > And finally, MIPI panel decodes the packet and updates it - RGB data - on its SRAM.
+> > 
+> > MIPI-DSI driver programs how the RGB video should be made as MIPI packet. For more detail, you could refer to MIPI-DSI spec.
+> > This would be why we handle MIPI-DSI driver as an encoder like other ARM SoC DRM drivers did.
+> > 
+> >> MIPI-DSI bridge and the encoder is the LCD controller that encodes the video
+> >> data as parallel RGB.
+> >>
+> >> On the i.MX8MM, the LCDIF is already the encoder. On Exynos, the series
+> >> implements the encoder in the platform glue, but in the end the encoder can
+> >> probably be moved to the DECON.
+> > 
+> > As you know, Display controller can transfer RGB video to various devices such as RGB panel, CPU panel, LVDS panel via LVDS bridge, MIPI panel via MIPI-DSI bus device, and so on like below,
+> > 
+> > Display Controller --> RGB panel or CPU panel.
+> > Display Controller --> LVDS bridge --> LVDS panel.
+> > Display Controller --> MIPI DSI bus device --> MIPI Panel.
+> > ...
+> > 
+> > Display controller drivers such as FIMD and DECON series in case of Exynos don't create an encoder driver-internally instead of it depends on Display pipeline configuration - what kind of Display panel is used.
+> > In fact, if the Display pipeline uses RGB panel or CPU panel without Display bus device such as MIPI-DSI, then FIMD and DECON drivers create an encoder for it internally - just we separated the code to consider other type of panels.
+
+What happens if I add a MIPI-DSI --> HDMI bridge to the Display pipeline? Then
+the Pipeline is
+
+Display Controller --> MIPI DSI bus device --> HDMI bridge --> HDMI Panel
+
+If the type of the Display panel decides which part of the pipeline provides
+the encoder, the HDMI bridge driver would be responsible for creating the
+encoder, right? Thus, the MIPI-DSI driver would not be responsible for
+creating the encoder and would also get the encoder from another driver.
+Therefore, I prefer to think of the Display Controller as the encoder and
+other bridges are just bridges.
+
+BTW, this is exactly the Display pipeline that is used on the i.MX8MM EVK.
+
+> > 
+> > On the I.MX8MM, could you share how to handle an encoder if some board has only MIPI-DSI panel, and in this case, where is an encoder for it created? I looked into I.MX8MM DRM driver but didn't find MIPI-DSI driver.
+> > Seems that they support only parallel display, HDMI and LVDS panel.
 > 
-> Do these functions return positive values? If not, I'd prefer if this
-> check was more explicit (i.e. err < 0) for consistency with the rest of
-> this code.
+> One more thing, If I saw correctly, the LVDS driver of IMX DRM - lmx_ldb - creates an encoder internally like MIPI-DSI driver of Exynos DRM did.
+
+Yes, but the IMX DRM driver is not used on the i.MX8MM. The i.MX8MM uses the
+LCDIF display controller instead of the IPU of the i.MX6. The driver for the
+LCDIF is the mxsfb driver, which in turn uses the drm_simple_display_pipe,
+which already provides the encoder. Therefore, to use a bridge driver with a
+driver based on a drm_simple_display_pipe, the bridge driver must accept other
+encoders.
+
+Michael
+
 > 
-
-Isn't it the other way around?  It's only when the check is explicitly
-for "if (ret < 0)" that we have to wonder about positives. If the codes
-says "if (ret)" then we know that it doesn't return positive values and
-every non-zero is an error.
-
-In the kernel "if (ret)" is way more popular than "if (ret < 0)":
-
-    $ git grep 'if (\(ret\|rc\|err\))' | wc -l
-    92927
-    $ git grep 'if (\(ret\|rc\|err\) < 0)' | wc -l
-    36577
-
-And some of those are places where "ret" can be positive so we are
-forced to use the "if (ret < 0)" format.
-
-Checking for "if (ret)" is easier from a static analysis perspective.
-If it's one style is used consistently then they're the same but when
-there is a mismatch the "if (ret < 0) " will trigger a false positive
-and the "if (ret) " will not.
-
-	int var;
-
-	ret = frob(&var);
-	if (ret < 0)
-		return ret;
-
-Smatch thinks positive returns are not handled so it complains that
-"var can be uninitialized".
-
-regards,
-dan carpenter
-
+> > 
+> > Thanks,
+> > Inki Dae
+> > 
+> >>
+> >>> Why do you want to convert such MIPI-DSI driver to bridge type of driver?
+> >>> Seems not sensible. The reason would be just to share MIPI-DSI phy driver
+> >>> for Exynos with i.MX8M Mini?
+> >>
+> >> Yes, the reason is that the driver should be shared between Exynos and
+> >> i.MX8MM. It is the same IP and I don't see a reason why we should introduce
+> >> another driver for the same IP if the driver works for both SoCs.
+> >>
+> >> Michael
+> >>
+> > 
+> 
