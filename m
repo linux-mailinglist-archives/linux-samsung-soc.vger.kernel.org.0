@@ -2,32 +2,41 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2B12B0799
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Nov 2020 15:36:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DBC02B09B7
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Nov 2020 17:18:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728220AbgKLOgm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 12 Nov 2020 09:36:42 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47020 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727796AbgKLOgm (ORCPT
+        id S1728599AbgKLQSY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Nov 2020 11:18:24 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34106 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728414AbgKLQSY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 12 Nov 2020 09:36:42 -0500
-Received: from [192.168.0.50] (89-70-52-201.dynamic.chello.pl [89.70.52.201])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8EF4522240;
-        Thu, 12 Nov 2020 14:36:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605191801;
-        bh=WHYTXcTXUtjwRwboz5miIMrghny91EHYylVn7bYti+w=;
-        h=Subject:To:References:From:Cc:Date:In-Reply-To:From;
-        b=fJ4NoqmGeOyWwjXD8b7Lr2tKTT5JzA2E3dc17XlVg05vrINgndZkhjxWMXgtQF0lD
-         ik8cle9Bp9mGXti61F6eERV1dCXp9177dTgYJaQomwNqqXm9JQdA/jM+QExPtac6WS
-         q0+9DMpro+m9Hoikr5M5mVVgDselvUNDKzWDboOw=
-Subject: Re: [PATCH] clk: samsung: allow building the clkout driver as module
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-References: <20201110193749.261367-1-krzk@kernel.org>
-From:   Sylwester Nawrocki <snawrocki@kernel.org>
+        Thu, 12 Nov 2020 11:18:24 -0500
+Received: by mail-ed1-f66.google.com with SMTP id a15so6967277edy.1;
+        Thu, 12 Nov 2020 08:18:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Oi3gnOCxcrOs0+khI8hhtUkNotcrmrGmIvdN+HAPrVQ=;
+        b=S0A4nC0SjYSrGr1Egd2aP9IyG0qIy8m+KvUOtRuhrpMl9AKoBttFC69iCntDq9dk4X
+         cg9p5H3Sh36AgLnZbm2kuPHJDLsoxFiiV8vgJOCNE6UegqXYOmPEhjcNM4LR9bYFj4JH
+         W26pqQ2l4OOW1OEImqyKhqEk3KGMm2L9XK8Mn04+jgZ5J3faibP8EuNjVmv7mFlcpzBj
+         JK4Zkf0PaEmtqwgxDfvzDkqn6y4NFa6jkZNdGv2J4hTZ5hSo3J5ZMxziebIe0fClATZv
+         XnC1vZLwMr8MUap/vfCsLQ2NMIuNIWlAl8peI5DYwND6AkodWiggkoRCKebaTXBVvVKx
+         eJNA==
+X-Gm-Message-State: AOAM533AdP2JBps3jUKCLKNiOHrNq+dWPHmRf6bpTtslSmXfN0xtB+GU
+        Ow9J6p18Cz7aFSmz0b51wK0=
+X-Google-Smtp-Source: ABdhPJxU8A/Q2g0DP+feOmxvU1fP6FCS006FvMp1NfPEruaqw24Y5rJB7Z8fBGQrpkoQw1M8rMTrhw==
+X-Received: by 2002:a50:ec10:: with SMTP id g16mr544202edr.63.1605197902687;
+        Thu, 12 Nov 2020 08:18:22 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id z13sm2330880ejp.30.2020.11.12.08.18.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2020 08:18:21 -0800 (PST)
+Date:   Thu, 12 Nov 2020 17:18:20 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Sylwester Nawrocki <snawrocki@kernel.org>
 Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Tomasz Figa <tomasz.figa@gmail.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
@@ -35,69 +44,53 @@ Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
         Stephen Boyd <sboyd@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Message-ID: <92ccc476-6afd-4be9-7c72-40c9a9218b03@kernel.org>
-Date:   Thu, 12 Nov 2020 15:36:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Subject: Re: [PATCH] clk: samsung: allow building the clkout driver as module
+Message-ID: <20201112161820.GA17700@kozik-lap>
+References: <20201110193749.261367-1-krzk@kernel.org>
+ <92ccc476-6afd-4be9-7c72-40c9a9218b03@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20201110193749.261367-1-krzk@kernel.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <92ccc476-6afd-4be9-7c72-40c9a9218b03@kernel.org>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 11/10/20 20:37, Krzysztof Kozlowski wrote:
-> The Exynos clock output driver can be built as module (it does not have
-> to be part of core init process) for better customization.  Adding a
-> KConfig entry allows also compile testing for build coverage.
+On Thu, Nov 12, 2020 at 03:36:35PM +0100, Sylwester Nawrocki wrote:
+> On 11/10/20 20:37, Krzysztof Kozlowski wrote:
+> > The Exynos clock output driver can be built as module (it does not have
+> > to be part of core init process) for better customization.  Adding a
+> > KConfig entry allows also compile testing for build coverage.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-This needs to go through your tree due to dependencies on your previous
-patches, so
-
-Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-
-> ---
->   drivers/clk/samsung/Kconfig             | 10 ++++++++++
->   drivers/clk/samsung/Makefile            |  2 +-
->   drivers/clk/samsung/clk-exynos-clkout.c |  1 +
->   3 files changed, 12 insertions(+), 1 deletion(-)
+> This needs to go through your tree due to dependencies on your previous
+> patches, so
 > 
-> diff --git a/drivers/clk/samsung/Kconfig b/drivers/clk/samsung/Kconfig
-> index 57d4b3f20417..b6b2cb209543 100644
-> --- a/drivers/clk/samsung/Kconfig
-> +++ b/drivers/clk/samsung/Kconfig
-> @@ -19,6 +19,16 @@ config EXYNOS_AUDSS_CLK_CON
->   	  on some Exynos SoC variants. Choose M or Y here if you want to
->   	  use audio devices such as I2S, PCM, etc.
->   
-> +config EXYNOS_CLK_OUT
+> Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
 
-Perhaps change it EXYNOS_CLKOUT for a better match with the SoC documentation? 
+Yes, thanks.
 
-> +	tristate "Samsung Exynos clock output driver"
-> +	depends on COMMON_CLK_SAMSUNG
-> +	default y if ARCH_EXYNOS
-> +	help
-> +	  Support for the clock output (XCLKOUT) driver present on some of
-> +	  Exynos SoC variants. Usually the XCLKOUT is used to monitor the
-> +	  status of the certains clocks from SoC, but it could also be tied to
-> +	  other devices as an input clock.
+> 
+> > ---
+> >   drivers/clk/samsung/Kconfig             | 10 ++++++++++
+> >   drivers/clk/samsung/Makefile            |  2 +-
+> >   drivers/clk/samsung/clk-exynos-clkout.c |  1 +
+> >   3 files changed, 12 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/samsung/Kconfig b/drivers/clk/samsung/Kconfig
+> > index 57d4b3f20417..b6b2cb209543 100644
+> > --- a/drivers/clk/samsung/Kconfig
+> > +++ b/drivers/clk/samsung/Kconfig
+> > @@ -19,6 +19,16 @@ config EXYNOS_AUDSS_CLK_CON
+> >   	  on some Exynos SoC variants. Choose M or Y here if you want to
+> >   	  use audio devices such as I2S, PCM, etc.
+> >   
+> > +config EXYNOS_CLK_OUT
+> 
+> Perhaps change it EXYNOS_CLKOUT for a better match with the SoC documentation? 
 
-> diff --git a/drivers/clk/samsung/Makefile b/drivers/clk/samsung/Makefile
-> index 1a4e6b787978..4adbf972e9f6 100644
-> --- a/drivers/clk/samsung/Makefile
-> +++ b/drivers/clk/samsung/Makefile
-> @@ -15,7 +15,7 @@ obj-$(CONFIG_SOC_EXYNOS5420)	+= clk-exynos5420.o
->   obj-$(CONFIG_SOC_EXYNOS5420)	+= clk-exynos5-subcmu.o
->   obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos5433.o
->   obj-$(CONFIG_EXYNOS_AUDSS_CLK_CON) += clk-exynos-audss.o
-> -obj-$(CONFIG_ARCH_EXYNOS)	+= clk-exynos-clkout.o
-> +obj-$(CONFIG_EXYNOS_CLK_OUT)	+= clk-exynos-clkout.o
+Sure, I applied it with name fixup.
 
---
-Regards,
-Sylwester
+Best regards,
+Krzysztof
