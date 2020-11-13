@@ -2,192 +2,178 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9132B2088
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Nov 2020 17:36:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 926A62B214F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Nov 2020 18:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbgKMQgE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Nov 2020 11:36:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50774 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbgKMQgD (ORCPT
+        id S1726374AbgKMRCW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Nov 2020 12:02:22 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:58300 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726344AbgKMRCW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Nov 2020 11:36:03 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 724D1C0613D1;
-        Fri, 13 Nov 2020 08:36:01 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id o15so10575893wru.6;
-        Fri, 13 Nov 2020 08:36:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dQRQDur4C385F9uHjVsTWYFjOPOTyFC/a81xU2Lamvk=;
-        b=hYjtCO8hZTyLH2Kyoh58AH0k4dJctPDDMUFST3ORvzuMx/d+q622LhLzVrAUwruqpj
-         vatSp2tdsnyRwv0asO3bbpGDvd0vEZjDV3IaINbpZsJmI5S0GwzO7kZs5w4Lyo2VH/4c
-         Y1Xhiw7uCTIk5kY2QZeUv7U1NQWSzu5o9XoRi5yn+8NlZq7l2qlfEeSbzOt2RJpv5OYy
-         1x6+4v3ShQP7Hi7WCV6M1Cx8cu9XeKLqQAKEmagxoqkiRNn8VSJv/QtGIVgzQBRaUZ+M
-         mco4TyKjxVpCzCsxEz/w5kDm69UIKoK6OgA032HEi8rB4Km/3qZsxJLI5l6qtY4Bhnoc
-         fs2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dQRQDur4C385F9uHjVsTWYFjOPOTyFC/a81xU2Lamvk=;
-        b=rD/bCBXNWkpvdjvfUv6BFFy8VlXp2KjMGabFmI3TzfOO3LWol6VUkbCkkxhQSFuvDQ
-         zzlV4UqIIO53MjZ+ZqnAJ4kk1RWZgKr0SN7Q6QRLfFbUSi1D3496YTJ0NjnZuj9doJn1
-         xp+NjjMfdIH/rXXagAk8NyaTm3vcK7+bqzRucrpoIiqSbbflWvRaGyaBi1+YI8lImJHc
-         WccbtXLz2baWRRqVcYhA18waEo9R5UHGUn3ueyehMDoODPcfxchtsopU5VwNsR8C2k9s
-         vaPfqZO4cRy5ZHGFZGI/f9mc6ENdg6uOnf03jOcm//O705xHDT8SxjrOwWDbgK3QxR5u
-         +mgQ==
-X-Gm-Message-State: AOAM530rdnu0JeM4msWRvjr8ukU0CuG6RaezGylQ4UuKCfm3wcRG0ahv
-        o0LLt+51LDZJLcvN0shq1g4=
-X-Google-Smtp-Source: ABdhPJyLdoQr70KNk4+Fb/DdcC/nPPnONUO+wvv6EXYBj9QK5AbdJZn9lq3s3z7ryBX+7Ul7LRtFKg==
-X-Received: by 2002:adf:906b:: with SMTP id h98mr4463717wrh.310.1605285355248;
-        Fri, 13 Nov 2020 08:35:55 -0800 (PST)
-Received: from localhost ([217.111.27.204])
-        by smtp.gmail.com with ESMTPSA id t7sm11384960wrx.42.2020.11.13.08.35.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 08:35:53 -0800 (PST)
-Date:   Fri, 13 Nov 2020 17:35:52 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Peter Chen <Peter.Chen@nxp.com>,
-        Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Fri, 13 Nov 2020 12:02:22 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20201113170202euoutp013f0c4be35e93eae2bedd81feaaa79916~HH-NRRQ3C2367623676euoutp01I
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Nov 2020 17:02:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20201113170202euoutp013f0c4be35e93eae2bedd81feaaa79916~HH-NRRQ3C2367623676euoutp01I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1605286922;
+        bh=tJSkvdYtBXglEeNJBvB0Afa8OYWPBVISoDw/r2AmPvg=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=BQ2bPUgH9ohPlS3PqHkQ/6Vv3lzNgc1ON1GQPqRUXIbjzicGe22pqgBEuHEuk9BzH
+         1pfXQnIpDKz52RkObsiXtfG2qSSGKKGzAIjW2IK6jlEuvgkEt0Kjx9bXeBG4B9d/Gx
+         ko6uHhIvLaoPdCV/6G3l+vFeqOqPPhRtw0s3WNwM=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20201113170156eucas1p1ef5fc88bbb40f4889f328f569b3a4ef1~HH-IYlR-A2485424854eucas1p1M;
+        Fri, 13 Nov 2020 17:01:56 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id EA.9F.45488.40CBEAF5; Fri, 13
+        Nov 2020 17:01:56 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20201113170156eucas1p176314e4076c593d1f2e68159be880f86~HH-H_gmLu2493824938eucas1p19;
+        Fri, 13 Nov 2020 17:01:56 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20201113170156eusmtrp10b17ba170efe432b8373f2784fc48248~HH-H9pfx81302013020eusmtrp1i;
+        Fri, 13 Nov 2020 17:01:56 +0000 (GMT)
+X-AuditID: cbfec7f5-c5fff7000000b1b0-d6-5faebc047ad2
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 7C.71.21957.40CBEAF5; Fri, 13
+        Nov 2020 17:01:56 +0000 (GMT)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20201113170155eusmtip241ef88e172e807823aa4926cf9f31cf0~HH-HSwGx51944119441eusmtip2a;
+        Fri, 13 Nov 2020 17:01:55 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     linux-samsung-soc@vger.kernel.org, linux-pci@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jaehoon Chung <jh80.chung@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Peter Geis <pgwipeout@gmail.com>,
-        Nicolas Chauvet <kwizart@gmail.com>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        driverdevel <devel@driverdev.osuosl.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        linux-pwm@vger.kernel.org,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v1 00/30] Introduce core voltage scaling for NVIDIA
- Tegra20/30 SoCs
-Message-ID: <20201113163552.GE1408970@ulmo>
-References: <20201104234427.26477-1-digetx@gmail.com>
- <CAPDyKFr7qTU2RPhA_ZrbCayoTTNUEno1zdmvmv+8HBe-Owrfeg@mail.gmail.com>
- <cd147ab0-1304-a491-7a56-ee6199c02d32@gmail.com>
- <2716c195-083a-112f-f1e5-2f6b7152a4b5@gmail.com>
- <CAPDyKFqUMsH9dCZ=OYqfdLt==+-8NjK9n=S5jGGNXZu6Y9q=2w@mail.gmail.com>
- <1f7e90c4-6134-2e2b-4869-5afbda18ead3@gmail.com>
- <20201112204358.GA1027187@ulmo>
- <25942da9-b527-c0aa-5403-53c9cc34ad93@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="KuLpqunXa7jZSBt+"
-Content-Disposition: inline
-In-Reply-To: <25942da9-b527-c0aa-5403-53c9cc34ad93@gmail.com>
-User-Agent: Mutt/1.14.7 (2020-08-29)
+        Jingoo Han <jingoohan1@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Subject: [PATCH v4 0/5] Add DW PCIe support for Exynos5433 SoCs
+Date:   Fri, 13 Nov 2020 18:01:34 +0100
+Message-Id: <20201113170139.29956-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA0VSf0yMcRze996fquN1mb5IEfktxObrR5SRd8NkM1YkR68yXbV7C5nldmg6
+        pylTV3La8uNc16lTUUvO7eZUc12EmJz+SEnOkrNC6Hr9+O95vs/zfJ7njy+NSc4Rk+mDyWmc
+        PFmaFER64TUPh+wL8Xpj3OJ3XQtRpeYWga4qE9EVq51A7d+yCKT7UkghR5eaRC0tFRR6WldM
+        osdaG4k0LQ0i1Pe9h0Ll1g4K/aq/S6Ha14+w8LGsQWsAbG1RB8WWmNJZkz6bZHOq9IC1td8R
+        sQOmgCgqxmt1PJd08DAnX7Rmr1diWc5pKrXH76gz+x6hAIO+KjCGhswyqP91HlcBL1rC6AAs
+        7mgjBfIFQOP3VkogAwBeeZyL/Y10Kt6LBOEGgHZnH/Ev8nY4j/K4SGYJVH1Ujdyi6QlMOBx0
+        I48HY15gsPHaJZHH48ushaWFLuDBOBMMzZ3a0QYxEwaH3Vl/2gJhWYUZ84QhY6bh555uQhDW
+        wyyHTiRgX9hrq6IE7A+bL6hxIXASwE57OSUQNYBPlRoguFbB1/Zvo/MwZi68VbfIAyETASsa
+        AgU4FrZ/HO8xYyMwr6YAE57F8EyWRLgxCxbZjP9aHzie/JnMwjfW1tGVEiYWftB8Is+DgKL/
+        VSUA6IEfl87LEjh+aTJ3JISXyvj05ISQ/SkyExj5Mc0/be67QNfbH2IBIhpYAKSxoAniGeGG
+        OIk4XppxjJOnxMnTkzjeAqbQeJCfuK56RGISpGncIY5L5eR/VRE9ZrJCpNjj7OJ7h2bOamum
+        3ZczXQnz9/JF+UsLM08c8N9hTIks6UNtjmhnRIzTIvPeFsMEG9eF5mfXKpUZqR375CBPf6dp
+        pbcs9l5grP+pVrjRNTgQiv3o3uqyqw8om8J3E71TywxJt5/NL910X705c3fJirDZVy/3p82J
+        kOqIDHJ22ZPGYHOAX2TO8ohd/CrZzdLcqiZ2sXXBuhUXJ73SRpmffSp49FXLdB+XbWAV2w3x
+        3nZ9GznFJ0Czr1Vbv8Vdfda1ySfquXfuDFV+aHnLzuroGPw2Ndz4vMbt0zOtyjrkCAxDX02W
+        hnH4hkjsOjjJTQ/VureKK3wq7Z0T+f6X04NwPlG6ZB4m56W/Af4t9fKgAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrILMWRmVeSWpSXmKPExsVy+t/xe7ose9bFG1zpErDYOGM9q8WSpgyL
+        +UfOsVrc+NXGarHiy0x2iwtPe9gszp/fwG5xedccNouz846zWcw4v4/J4s3vF+wWa4/cZbf4
+        v2cHu8XOOyeYHfg81sxbw+ixc9Zddo8Fm0o9Nq3qZPPo27KK0eP4je1MHp83yQWwR+nZFOWX
+        lqQqZOQXl9gqRRtaGOkZWlroGZlY6hkam8daGZkq6dvZpKTmZJalFunbJehlrO5rZS94IV5x
+        v3MvawPjD+EuRk4OCQETiYcNL5lAbCGBpYwS0+6wQcRlJE5Oa2CFsIUl/lzrAopzANV8YpSY
+        ogwSZhMwlOh62wVWLiLgJPF+8kXmLkYuDmaBh8wSE+YcBOsVFrCXWDzzHSOIzSKgKnHg4Txm
+        EJtXwFbi79c2Zoj58hKrNxxgnsDIs4CRYRWjSGppcW56brGhXnFibnFpXrpecn7uJkZgWG87
+        9nPzDsZ5rz7qHWJk4mA8xCjBwawkwqvssCZeiDclsbIqtSg/vqg0J7X4EKMp0L6JzFKiyfnA
+        yMoriTc0MzA1NDGzNDC1NDNWEufdOheoSSA9sSQ1OzW1ILUIpo+Jg1OqgWnOXzm23Rd2aZuF
+        rnylZSWi1fFq7V0RlbfdUnt670UvUVq0fHLZpnqfLSaLU2IezirjFw9l8Xr8q5u9vih3SXXA
+        S53PX7lXXo9euNp1h7LCDf7VE1KEToZLnel0Syp8lDWhcVNzS7mrvoNf2yWzC5yqK+vn33in
+        9eiys9/1PQlLlGOu3JxaO+vi9Mjnk1yDpl3WfyFdkFDHcya7xfu04eyOq3ve1c94sfmaYcLz
+        X3xHMu3z3+tcdVC/spIj9Tlf/9WQsESla3pJB70tplRsOO3HMbHD9opX6otdCdvKz/XMaY66
+        Ey617UaTxn+jvh/L1rqFnw5/oOmXnHoh7Hj6Co7XIqdMXnzeVzDD+iyXoosSS3FGoqEWc1Fx
+        IgBGvI3U9AIAAA==
+X-CMS-MailID: 20201113170156eucas1p176314e4076c593d1f2e68159be880f86
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20201113170156eucas1p176314e4076c593d1f2e68159be880f86
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20201113170156eucas1p176314e4076c593d1f2e68159be880f86
+References: <CGME20201113170156eucas1p176314e4076c593d1f2e68159be880f86@eucas1p1.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Dear All,
 
---KuLpqunXa7jZSBt+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patchset is a resurrection of the DW PCIe support for the Exynos5433
+SoCs posted long time ago here: https://lkml.org/lkml/2016/12/26/6 and
+later here: https://lkml.org/lkml/2017/12/21/296 .
 
-On Fri, Nov 13, 2020 at 01:14:45AM +0300, Dmitry Osipenko wrote:
-> 12.11.2020 23:43, Thierry Reding =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> >> The difference in comparison to using voltage regulator directly is
-> >> minimal, basically the core-supply phandle is replaced is replaced with
-> >> a power-domain phandle in a device tree.
-> > These new power-domain handles would have to be added to devices that
-> > potentially already have a power-domain handle, right? Isn't that going
-> > to cause issues? I vaguely recall that we already have multiple power
-> > domains for the XUSB controller and we have to jump through extra hoops
-> > to make that work.
->=20
-> I modeled the core PD as a parent of the PMC sub-domains, which
-> presumably is a correct way to represent the domains topology.
->=20
-> https://gist.github.com/digetx/dfd92c7f7e0aa6cef20403c4298088d7
->=20
-> >> The only thing which makes me feel a bit uncomfortable is that there is
-> >> no real hardware node for the power domain node in a device-tree.
-> > Could we anchor the new power domain at the PMC for example? That would
-> > allow us to avoid the "virtual" node.
->=20
-> I had a thought about using PMC for the core domain, but not sure
-> whether it will be an entirely correct hardware description. Although,
-> it will be nice to have it this way.
->=20
-> This is what Tegra TRM says about PMC:
->=20
-> "The Power Management Controller (PMC) block interacts with an external
-> or Power Manager Unit (PMU). The PMC mostly controls the entry and exit
-> of the system from different sleep modes. It provides power-gating
-> controllers for SOC and CPU power-islands and also provides scratch
-> storage to save some of the context during sleep modes (when CPU and/or
-> SOC power rails are off). Additionally, PMC interacts with the external
-> Power Manager Unit (PMU)."
->=20
-> The core voltage regulator is a part of the PMU.
->=20
-> Not all core SoC devices are behind PMC, IIUC.
+In meantime the support for the Exynos5440 SoCs has been completely
+dropped from mainline kernel, as those SoCs never reached the market. The
+PCIe driver for Exynos5440 variant however has not been removed yet. This
+patchset simply reworks it to support the Exynos5433 variant. The lack of
+the need to support both variants significantly simplifies the driver
+code.
 
-There are usually some SoC devices that are always-on. Things like the
-RTC for example, can never be power-gated, as far as I recall. On newer
-chips there are usually many more blocks that can't be powergated at
-all.
+This patchset is based on the commit b90c53b06597 ("PCI: dwc: Detect
+number of iATU windows") available on the following branch:
+git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-more-dwc-cleanup
 
-> > On the other hand, if we were to
-> > use a regulator, we'd be adding a node for that, right? So isn't this
-> > effectively going to be the same node if we use a power domain? Both
-> > software constructs are using the same voltage regulator, so they should
-> > be able to be described by the same device tree node, shouldn't they?
->=20
-> I'm not exactly sure what you're meaning by "use a regulator" and "we'd
-> be adding a node for that", could you please clarify? This v1 approach
-> uses a core-supply phandle (i.e. regulator is used), it doesn't require
-> extra nodes.
+Best regards,
+Marek Szyprowski
 
-What I meant to say was that the actual supply voltage is generated by
-some device (typically one of the SD outputs of the PMIC). Whether we
-model this as a power domain or a regulator doesn't really matter,
-right? So I'm wondering if the device that generates the voltage should
-be the power domain provider, just like it is the provider of the
-regulator if this was modelled as a regulator.
 
-Thierry
+Changelog:
 
---KuLpqunXa7jZSBt+
-Content-Type: application/pgp-signature; name="signature.asc"
+v4:
+- fixed topics to better match the common style of the each subsystem
+- rebased onto "[PATCH v2 00/16] PCI: dwc: Another round of clean-ups"
+- collected tags, dropped merged dts patch
 
------BEGIN PGP SIGNATURE-----
+v3: https://lore.kernel.org/linux-samsung-soc/20201029134017.27400-1-m.szyprowski@samsung.com/
+- rebased onto "[00/13] PCI: dwc: Another round of clean-ups" patchset:
+  https://patchwork.kernel.org/project/linux-samsung-soc/cover/20201028204646.356535-1-robh@kernel.org/
+- fixed issues pointed by Rob in the driver logic:
+  * removed DBI_RO_WR_EN register poking
+  * made driver a standard module
+- fixed section mismatch issue
+- added "num-viewport = <3>" property to dts and bindings to fix warning
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl+uteUACgkQ3SOs138+
-s6HFrg//XUCBi+MoTYKA9Q0nyyDEbz8pB7xsPWf9AWJHRToygKc0DTU1ZaPQLNp+
-zx+Yg2HSEBBzzv1c5cABiz0dUaE+gkzTfY74+wByGBumAiPaFCOmamm3fwgTlzsM
-ZzTrLxJShO6bIo12gq98qI68RxlwptdQcGagjc4QLcaL1xxhdyYiEFtQj8X3rwfp
-r2ELceMzT3klMTV34ghkgQKBRkgxm3thCmk+O/+scUwM9ju23OeClHBPsq+YwWz/
-ItCwLTUXyfPTSzIqXbjPEGXPbNGS2aUdYo0YsY42Q5XswBGPGXV+VgCPd153Vyek
-x+tAG0YSkV3NWFIQKBR5iwvguqZbVYgBR8tonT+LH9qyx6wADX2bp1VtEssD3Dsq
-qWc7y+PnmrUkx895JcxYLzhGoN5Hr3xwKeTLSRxGCQQvh1fqJJO4Ja4QnBdxK1lm
-FLLCPrq0/yK+o6DKJnAWjBcVyWfY4z2MPej6lao9ZlR4nC0qaY9URhD//kujuB7R
-dsRKyAwamYzw0b1doZWjffloEhog7WbjMw8UsbF+E8K7kSNePUqgaWWMsZDwh6yI
-VrszC62dJzCUMweS9s2mSjQ08xGrcITA8i2qxMKpRQA6VoZzMAdP6WjxseQoDa4g
-6Rsyr9Mt8Ed+Gs4vssp8C6jeFDQEGXM+37kYIC8LrNM21HZoq74=
-=p82m
------END PGP SIGNATURE-----
+v2: https://lore.kernel.org/linux-samsung-soc/20201023075744.26200-1-m.szyprowski@samsung.com/
+- fixed issues in dt-bindings pointed by Krzysztof and Rob
 
---KuLpqunXa7jZSBt+--
+v1: https://lore.kernel.org/linux-samsung-soc/20201019094715.15343-1-m.szyprowski@samsung.com/
+- initial version of this resurrected patchset
+
+
+Patch summary:
+
+Jaehoon Chung (2):
+  phy: samsung: phy-exynos-pcie: rework driver to support Exynos5433
+    PCIe PHY
+  PCI: dwc: exynos: Rework the driver to support Exynos5433 variant
+
+Marek Szyprowski (3):
+  dt-bindings: PCI: exynos: drop samsung,exynos5440-pcie binding
+  dt-bindings: PCI: exynos: add the samsung,exynos-pcie binding
+  dt-bindings: phy: exynos: add the samsung,exynos-pcie-phy binding
+
+ .../bindings/pci/samsung,exynos-pcie.yaml     | 119 ++++++
+ .../bindings/pci/samsung,exynos5440-pcie.txt  |  58 ---
+ .../bindings/phy/samsung,exynos-pcie-phy.yaml |  51 +++
+ drivers/pci/controller/dwc/Kconfig            |  10 +-
+ drivers/pci/controller/dwc/pci-exynos.c       | 353 +++++++-----------
+ drivers/pci/quirks.c                          |   1 +
+ drivers/phy/samsung/phy-exynos-pcie.c         | 304 ++++++---------
+ 7 files changed, 429 insertions(+), 467 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos5440-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/phy/samsung,exynos-pcie-phy.yaml
+
+-- 
+2.17.1
+
