@@ -2,102 +2,104 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BED7D2B259D
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Nov 2020 21:35:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EB5B2B26EB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Nov 2020 22:32:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725981AbgKMUfM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Nov 2020 15:35:12 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57444 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726233AbgKMUfL (ORCPT
+        id S1726627AbgKMVcT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Nov 2020 16:32:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41272 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726272AbgKMVbt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Nov 2020 15:35:11 -0500
-Received: from kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com (unknown [163.114.132.6])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9948B2223C;
-        Fri, 13 Nov 2020 20:35:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605299710;
-        bh=cHeuOuncJHW+8hXxWpYa6tQZVFcKd3qiZmVck+KlPEc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=iRXJDAcuHA/br3g74i/3HDAiwIlZmon/0/XANIl4E9OtyDAVKz0YiO3i7lXUsSuhS
-         rBNSGw2DuAEtF2eTlcpwClf59HbtTFf4J4zA1MyYu5numvEUZgKvrgQk+mQub2dWyx
-         qmSqf7iUdvVzQgnnLeJ8Bu7h84537Wfx470wcMx8=
-Date:   Fri, 13 Nov 2020 12:35:08 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     =?UTF-8?B?xYF1a2Fzeg==?= Stelmach <l.stelmach@samsung.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>, jim.cromie@gmail.com,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        =?UTF-8?B?QmFydMWCb21pZWogxbtvbG5pZXJr?= =?UTF-8?B?aWV3aWN6?= 
-        <b.zolnierkie@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v6 3/5] net: ax88796c: ASIX AX88796C SPI Ethernet
- Adapter Driver
-Message-ID: <20201113123508.3920de4b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20201112115106.16224-4-l.stelmach@samsung.com>
-References: <20201112115106.16224-1-l.stelmach@samsung.com>
-        <CGME20201112115108eucas1p22790c6cdec17e5322424e026b3985305@eucas1p2.samsung.com>
-        <20201112115106.16224-4-l.stelmach@samsung.com>
+        Fri, 13 Nov 2020 16:31:49 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B36C061A53;
+        Fri, 13 Nov 2020 13:26:02 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id f23so15779053ejk.2;
+        Fri, 13 Nov 2020 13:26:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ca9jI3WBHA+/Ty95XDYoEtrO0wget0Oxdf5ElgxLhug=;
+        b=fZh7KoKS2atoIFT0y2rd4MnnMI13enyasI10QqACQokr98ijcqfgqEM5edQzmjbtrX
+         gJpySCE2Pkr5eCffkZsrcQUqhpGISkGNBe6UH1nsFMIyXjpGjQaVep38L8swuL+BaJTH
+         PxWROEENn/eHOp/UwiVOCQ9AfFuGhahAqGj5QHYsOXH9z8dG/7O+g3B5MJ60+v3FvvAU
+         NOPjLhVpQcTvMA2Edza93VxMoTSAp1AQwC3sRIy2lKU73mfBmGPQejOSQbbxSNB6JpV+
+         FHF9t+Jj6QYs7NEdGKhy87omRc3OMNVTEfeYS9TqTGHNR94wh+zq+CDNxM8Nc3LZTNDC
+         C3+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ca9jI3WBHA+/Ty95XDYoEtrO0wget0Oxdf5ElgxLhug=;
+        b=pBCBPPCl0LA4Q5yW5B/b10IvOt5pV0lJ8Os0REnpwnoQZkK5NEMN3CI50PHqP1OgXQ
+         1/1lS2fOcNA9I9IYpJBE2mZp7xRaofiIIOM6qhgJPnwgBURCoeJbrD9C2xmlL27Bkl5k
+         rqwtg7RF5+TfhrI78BW4jG53wk02cFY3XoMczmHWLkKwbugqmqt9quhU3vLNEhzI+EhQ
+         eQfE8/nCCXXRMVMMjioKVVCaSS+wTbpxHVk6yiwoKTbpiG2/gcYGY7jxlvlZ11/S51rx
+         7/nN3HWzQMQ4ByFOvSoivRNiGGDp5/chN1+4KqoLk3KDx6W6hdEBhgsBbOsnDQuDShhj
+         2x5A==
+X-Gm-Message-State: AOAM533OJ9o3gsp4sKt+1pjko3PSfYR8ft4lWElvCdDYZu5/haEXuiJ7
+        2HiI8zAmICCKyeGFPwcBQYU=
+X-Google-Smtp-Source: ABdhPJy256G87YyI19iLZjFO6fnuv4W3i4Cn0dtml90jNPUFVUY2p+VFQWnllYCUNK5OPIwt9PNEEA==
+X-Received: by 2002:a17:907:4302:: with SMTP id nh2mr3778126ejb.451.1605302761549;
+        Fri, 13 Nov 2020 13:26:01 -0800 (PST)
+Received: from adroid (165-170-184-091.ip-addr.vsenet.de. [91.184.170.165])
+        by smtp.gmail.com with ESMTPSA id j7sm4678200ejk.14.2020.11.13.13.26.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2020 13:26:00 -0800 (PST)
+From:   =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
+To:     linux-samsung-soc@vger.kernel.org
+Cc:     kgene@kernel.org, krzk@kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v3 0/5] add exynos4412-based p4note device family support
+Date:   Fri, 13 Nov 2020 22:25:21 +0100
+Message-Id: <20201113212525.13455-1-martin.juecker@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 12 Nov 2020 12:51:04 +0100 =C5=81ukasz Stelmach wrote:
-> ASIX AX88796[1] is a versatile ethernet adapter chip, that can be
-> connected to a CPU with a 8/16-bit bus or with an SPI. This driver
-> supports SPI connection.
->=20
-> The driver has been ported from the vendor kernel for ARTIK5[2]
-> boards. Several changes were made to adapt it to the current kernel
-> which include:
->=20
-> + updated DT configuration,
-> + clock configuration moved to DT,
-> + new timer, ethtool and gpio APIs,
-> + dev_* instead of pr_* and custom printk() wrappers,
-> + removed awkward vendor power managemtn.
-> + introduced ethtool tunable to control SPI compression
->=20
-> [1] https://www.asix.com.tw/products.php?op=3DpItemdetail&PItemID=3D104;6=
-5;86&PLine=3D65
-> [2] https://git.tizen.org/cgit/profile/common/platform/kernel/linux-3.10-=
-artik/
->=20
-> The other ax88796 driver is for NE2000 compatible AX88796L chip. These
-> chips are not compatible. Hence, two separate drivers are required.
->=20
-> Signed-off-by: =C5=81ukasz Stelmach <l.stelmach@samsung.com>
+Hello,
 
-Please make sure the new code builds cleanly with W=3D1 C=3D1
+after lots of research and trial and error, this is my first
+contribution to the linux kernel.
 
-../drivers/net/ethernet/asix/ax88796c_ioctl.c:221:19: warning: initialized =
-field overwritten [-Woverride-init]
-  221 |  .get_msglevel  =3D ax88796c_ethtool_getmsglevel,
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../drivers/net/ethernet/asix/ax88796c_ioctl.c:221:19: note: (near initializ=
-ation for =E2=80=98ax88796c_ethtool_ops.get_msglevel=E2=80=99)
-../drivers/net/ethernet/asix/ax88796c_ioctl.c:222:19: warning: initialized =
-field overwritten [-Woverride-init]
-  222 |  .set_msglevel  =3D ax88796c_ethtool_setmsglevel,
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../drivers/net/ethernet/asix/ax88796c_ioctl.c:222:19: note: (near initializ=
-ation for =E2=80=98ax88796c_ethtool_ops.set_msglevel=E2=80=99)
-In file included from ../drivers/net/ethernet/asix/ax88796c_main.h:15,
-                 from ../drivers/net/ethernet/asix/ax88796c_ioctl.c:16:
-../drivers/net/ethernet/asix/ax88796c_spi.h:25:17: warning: =E2=80=98tx_cmd=
-_buf=E2=80=99 defined but not used [-Wunused-const-variable=3D]
-   25 | static const u8 tx_cmd_buf[4] =3D {AX_SPICMD_WRITE_TXQ, 0xFF, 0xFF,=
- 0xFF};
-      |                 ^~~~~~~~~~
+These patches lay the foundation for supporting the Samsung Galaxy
+Note 10.1 device family. To the best of my knowledge there are around
+16 devices which use almost identical hardware inside with exceptions
+being the modem and one of the sensors. The first instance which I'm
+currently testing on is the N8010 which is the wifi only version that
+is identical to the N8013. There are some missing components still,
+but it's a start.
+
+v1:
+https://lore.kernel.org/linux-samsung-soc/20201024144421.34435-1-martin.juecker@gmail.com/
+
+v2:
+https://lore.kernel.org/linux-samsung-soc/20201031175836.47745-1-martin.juecker@gmail.com/
+
+Changes in v3:
+- copyright changed
+- indentation fix
+
+Changes in v2:
+- lots of label adjustments, some removed
+- unused ehci node removed
+- unused serials removed
+- compatible string is now samsung,n8010 instead of samsung,n801x
+- removed unused imports
+- voltage regulator name for TSP changed to match vendor kernel
+- i2c numbering starting from 1 now
+- two missing gpio configurations added
+- added vdd supply to adc node
+- added all regulators to max77686 node
+- pinctrl configs sorted by pin name
+
+
+Cheers
+Martin
+
+
