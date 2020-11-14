@@ -2,91 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AC2A2B271F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Nov 2020 22:36:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A0A32B2E39
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 14 Nov 2020 16:50:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726735AbgKMVgw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 13 Nov 2020 16:36:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726777AbgKMVgv (ORCPT
+        id S1727010AbgKNPtm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 14 Nov 2020 10:49:42 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46400 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726885AbgKNPtl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 13 Nov 2020 16:36:51 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A649FC08E864;
-        Fri, 13 Nov 2020 13:27:48 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id oq3so15719328ejb.7;
-        Fri, 13 Nov 2020 13:27:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=teOsIIFtobz3o9oTMjr4P4N9cJSqHYC4TqodeSUTBZw=;
-        b=Yt/fymGpqgqt08fbiKm7f9HWyYKTafKQ+QzHMIcef6e9tCzPmrJR+6JEOJ8hVmwJZ3
-         khlJmwXp4IvHtLNcg9q/NfmG4Vmr3VG9MPwNHT0c8Hc95ezOhbuYra7OVx0L0YdxJ8DW
-         lO1qo8UZm9orK8W8nywJ3zHDjR9Bnaz3yRn6Fzrc79UPm+QNrAv4GMLnlfunUS3m3D0b
-         7vCkwJvFE1hz4h6UxWJZdugsvCyIllTsPeVw9GL89xIhiwp9oo0dNQJ7DVs6H+fmd6do
-         yE6sS52WwdfPbIwUuAZFuJTFc8ROC3dEF23oEPqjxPnbZcb9zna7vpxMCgazl9Yy4mIo
-         ltYg==
+        Sat, 14 Nov 2020 10:49:41 -0500
+Received: by mail-wr1-f67.google.com with SMTP id d12so13616977wrr.13;
+        Sat, 14 Nov 2020 07:49:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=teOsIIFtobz3o9oTMjr4P4N9cJSqHYC4TqodeSUTBZw=;
-        b=Pzi0LY4gjw3TiMFTNASti11MVcVbnMdHECdIG4N2biRW1sPTqLOKw7+UNgJWtXhCnm
-         1F23XbP8LhCdtKwRSRx48RQ7wAPxsuxQYeqSoZQTNEbkSb//S2vC5VeqeV7G597tMOlM
-         ujTam4S3yDaVxXSB2AjkMMGQlPxWdUiqbQyOZyo0Lo4Iqxd48+CgD+UPF1d71j8k5TO5
-         1XqXr0fh7WAtg9ELdhz/FJ6sRTd/EWvKzz94OErL8hk1MBgegZN8/cKHWp/li9GaifBm
-         iFSsCWwSmR2KQXcH/tvS1HqHRRL+n1zj8hZbgSSLhoje3biu0j4lNFfjVWEig0EDRP73
-         V1jg==
-X-Gm-Message-State: AOAM532n46ztuaARqtqqHEg6IEGV9uPnQJWCGj+Fndo7affhQwgVbBb4
-        PM0SNXKWuJD7j3U2dEqMFUdOFEd/1gPR3y/E
-X-Google-Smtp-Source: ABdhPJyIEIYR0ajIEVvgWXv7jKdGClZjECHU+gJJ6yrnRiDcu4YGzeS8QY2fkMIs7ODWnv7hCeR6wg==
-X-Received: by 2002:a17:906:e216:: with SMTP id gf22mr3966401ejb.286.1605302867455;
-        Fri, 13 Nov 2020 13:27:47 -0800 (PST)
-Received: from adroid (165-170-184-091.ip-addr.vsenet.de. [91.184.170.165])
-        by smtp.gmail.com with ESMTPSA id n22sm5001549edr.11.2020.11.13.13.27.46
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=EQ8r5pJttfECMbi7klz393g0n/5XRY+5UKG5qivG/ww=;
+        b=sXber1hQ1I+ikfblM9m7n0uIIAA4KRFIvE4nTME14ul0C2v2OS24Etm7DOhyo0h4P/
+         sw8PIPvkJZl0KzPlDlqEHcJyUo8VhArg0JXX4fT15u55wE6csvY9yl75xY9s3g86BB2W
+         dPGTefgwvhjy821O38gTX4wIfHU7YEOM2fjkGNIolFj9zYh0rbywDatky9wt7I3b1Pop
+         gjKGlmaq+m0I9ihw50BF1bkS8BMSYZ7tN43TLNGUYysM4QoeZI4hvyr/J23LjBPkAypT
+         vxE7rPnpDAcFiuOPSIBawQrxDAS7lOO7yRJC3R9JZJ0ILl1+EoUU1vHP5vaLR2eSBpin
+         v0bw==
+X-Gm-Message-State: AOAM532mMKuy0QEs/mi2PnuwP3ilZsp6GxJmSZRJAGp3ycua3kW/N5kU
+        pwnXHVkR19xGRTtsTMxznbk=
+X-Google-Smtp-Source: ABdhPJxrJddT5J8YjMMsQDwJ9FyUwP9ykncQpw8kMv9gUdf9CRy0f46zk3qwOMdEViRo40kcUlKWqA==
+X-Received: by 2002:adf:e607:: with SMTP id p7mr9885500wrm.93.1605368979245;
+        Sat, 14 Nov 2020 07:49:39 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id w186sm14037275wmb.26.2020.11.14.07.49.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 13:27:46 -0800 (PST)
-From:   =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
-To:     linux-samsung-soc@vger.kernel.org
-Cc:     kgene@kernel.org, krzk@kernel.org, devicetree@vger.kernel.org,
-        =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
-Subject: [PATCH v3 5/5] ARM: exynos: extend cpuidle support to p4note boards
-Date:   Fri, 13 Nov 2020 22:25:26 +0100
-Message-Id: <20201113212525.13455-6-martin.juecker@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201113212525.13455-1-martin.juecker@gmail.com>
-References: <20201113212525.13455-1-martin.juecker@gmail.com>
+        Sat, 14 Nov 2020 07:49:38 -0800 (PST)
+Date:   Sat, 14 Nov 2020 16:49:36 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     xiakaixu1987@gmail.com
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kaixu Xia <kaixuxia@tencent.com>
+Subject: Re: [PATCH] ASoC: samsung: remove the unused variable value
+ assignment
+Message-ID: <20201114154936.GC14208@kozik-lap>
+References: <1605279079-6416-1-git-send-email-kaixuxia@tencent.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1605279079-6416-1-git-send-email-kaixuxia@tencent.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The p4note family supports cpuidle, so allow it to make use of this
-feature.
+On Fri, Nov 13, 2020 at 10:51:19PM +0800, xiakaixu1987@gmail.com wrote:
+> From: Kaixu Xia <kaixuxia@tencent.com>
+> 
+> The value of variable ret is overwritten by the following call
+> devm_snd_soc_register_card(), so here the value assignment is useless.
+> Remove it.
+> 
+> Reported-by: Tosk Robot <tencent_os_robot@tencent.com>
 
-Signed-off-by: Martin Jücker <martin.juecker@gmail.com>
----
- arch/arm/mach-exynos/exynos.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Where can we find the report?
 
-diff --git a/arch/arm/mach-exynos/exynos.c b/arch/arm/mach-exynos/exynos.c
-index 700763e07083..fc8291f76263 100644
---- a/arch/arm/mach-exynos/exynos.c
-+++ b/arch/arm/mach-exynos/exynos.c
-@@ -177,7 +177,8 @@ static void __init exynos_dt_machine_init(void)
- 	if (of_machine_is_compatible("samsung,exynos4210") ||
- 	    (of_machine_is_compatible("samsung,exynos4412") &&
- 	     (of_machine_is_compatible("samsung,trats2") ||
--		  of_machine_is_compatible("samsung,midas"))) ||
-+		  of_machine_is_compatible("samsung,midas") ||
-+		  of_machine_is_compatible("samsung,p4note"))) ||
- 	    of_machine_is_compatible("samsung,exynos3250") ||
- 	    of_machine_is_compatible("samsung,exynos5250"))
- 		platform_device_register(&exynos_cpuidle);
--- 
-2.25.1
+> Signed-off-by: Kaixu Xia <kaixuxia@tencent.com>
+> ---
+>  sound/soc/samsung/smdk_wm8994.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/sound/soc/samsung/smdk_wm8994.c b/sound/soc/samsung/smdk_wm8994.c
+> index 64a1a64..1db5b59 100644
+> --- a/sound/soc/samsung/smdk_wm8994.c
+> +++ b/sound/soc/samsung/smdk_wm8994.c
+> @@ -160,11 +160,9 @@ static int smdk_audio_probe(struct platform_device *pdev)
+>  		smdk_dai[0].cpus->dai_name = NULL;
+>  		smdk_dai[0].cpus->of_node = of_parse_phandle(np,
+>  				"samsung,i2s-controller", 0);
+> -		if (!smdk_dai[0].cpus->of_node) {
+> +		if (!smdk_dai[0].cpus->of_node)
+>  			dev_err(&pdev->dev,
+>  			   "Property 'samsung,i2s-controller' missing or invalid\n");
+> -			ret = -EINVAL;
 
+This should jump to out/return instead.
+
+Please use script get_maintainers.pl to get the list of people and
+mailing lists to Cc. No one would apply this patch otherwise...
+
+Best regards,
+Krzysztof
