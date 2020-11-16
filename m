@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68F1D2B4D1E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Nov 2020 18:36:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8F82B4DFA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Nov 2020 18:48:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733017AbgKPReF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 16 Nov 2020 12:34:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45178 "EHLO
+        id S1730202AbgKPRlX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 16 Nov 2020 12:41:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732988AbgKPReE (ORCPT
+        with ESMTP id S1733288AbgKPRlW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 16 Nov 2020 12:34:04 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B05C0613D3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Nov 2020 09:34:04 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id s8so19595862wrw.10
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Nov 2020 09:34:03 -0800 (PST)
+        Mon, 16 Nov 2020 12:41:22 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B37BC0613D3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Nov 2020 09:41:20 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id l1so19642811wrb.9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Nov 2020 09:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2rD08UjkD5sCRxYS0F4REDAlR1ogAYBAyad+KWz2GEw=;
-        b=K3MiO7nmCnXKxJcjVRzgh23znPiMhQF02r4EEB7ilazh6Q3typAKfns3W275i/uPwe
-         6ki3g+RVNhc0vrXZq3g/NjcHDWs+0dIiR9hbHYjXkWaHA19vmEOkeiL3NWGUAzyrgJkN
-         tHQKXYzaVPK1Y726mGhFToAlmQJnLR0vrjWl/G6HFa2g8W8po3DfiLJSh4w3r3xm1/1J
-         4iKvoDgtchsphx/S761VXUii48yJOE65It3vRJ8WDhCFz/WQHdhzXpPzR3iG+qQI4OXV
-         Kn62IC/EEYXRvvO5sxXlSmdibfJONlvMFe2LSYETrMbq3r5KirnOZfjBqtRLpviug9+T
-         jXxA==
+        bh=/LTrKOUrLFuEcCD+0qSyoyROqjXWEQVgXyT4kGkUYyc=;
+        b=bSNQfgvG0kx2bJ3swdtQ7xdZw/M07CVrB5auNpw5N9xDQefGM7DuWMHQx5RREQJCLo
+         lOZf8TeYpGpjkv9yP4evqDMYMPjqcWSAPVGExp8J3ps0dwMpt/2gp0KBOA+efQ1sUJrO
+         T8jGjkC4Hu0fok/vy4qLbnPYMivzd5YeYExvVosrFA8zFVOFK1wKKLsW/Tw1U+U5jcC+
+         QJ1SpegD6UObPK1wAX6Fam4adxSixAcmKc3mC7P5doHt6IHhLzoMi3RbISFgkkdM4zIM
+         WpU2fWQV85ZDZi7wmLzgzCbUyclK7n4r7+BwL7HrJENBNMyKVmRyyK9WQAR5PoLoRaYJ
+         yX6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2rD08UjkD5sCRxYS0F4REDAlR1ogAYBAyad+KWz2GEw=;
-        b=ZishCIsB35bxMFiiemNjrq5VHUHJ/h2zXOSZBS2+RQbZxkrIlgQXtLK78GeInvVHeV
-         K9c3eYLLBxK8a8GzAtoioJdIbEChep5PNzW+3jT2ILatY+Y6VyqouGp+o+3fBAGu1Bvq
-         AXH1VBdrNoRrUuo8FAabL9yyBPyP1jXRk7aMrVy6laJg6V3hIfY8ndywGDIjm2OdOLt3
-         dQ80z4OI+Mgrr+LiWJ9Zg/YL4b+lb45w8agpop2eRxO0uQHBMHrUztL4236kZyORJD7o
-         3OqC3Ieu+pFdd1nJxTmO90zYkacFi1uxpnKngyH4Y10RngYA+eUThql0BJa3mHPiYgBg
-         KSfQ==
-X-Gm-Message-State: AOAM533r5cFWwoZbc9IQGzPpoP3DVxFYXQQ3dpSdMLj3C80HUW7CkAxa
-        9rdcIlRM8WMY9odQI7J21rC6Ig==
-X-Google-Smtp-Source: ABdhPJynz1SYzcQjLU7vxkWKnYKhsXRdyUFjnGlTNdA6hFZ/AU7rgprYiT7u0t+B4P+Sd63V1F7+RA==
-X-Received: by 2002:adf:de12:: with SMTP id b18mr21161496wrm.187.1605548042617;
-        Mon, 16 Nov 2020 09:34:02 -0800 (PST)
+        bh=/LTrKOUrLFuEcCD+0qSyoyROqjXWEQVgXyT4kGkUYyc=;
+        b=hHqFom1O5qW/HDnhcX8zSuUd4Cw8vnXYWwPiHU6HD9z5vjv9b/GEDFoAhD+m1qCzn+
+         VzFx87yV0C9toXyhaEoJiYS23pRuZJgiCYRPsF7zHCth8Ed0NJAyZG8XtV2bxe5PJHYn
+         fD0IUmzEuJuPjmjKU6KZhnT+3OBKMUTsMEuTXqMfc2Cl+8lV6VjBHFtvZgc2wQCrbGXN
+         /hTSzbwSg0sYYuxZ7WoeVf9KQPY2Z8si1fOlzCOSiX/4r7vftvZR8lgxqa+D2XocyvGH
+         4psmdUH6HZbfMQVyrLPdZs19uUell/NFUvS3bQXoffQqXl7lcYMHmUqpub5kGA7rPo9V
+         Vpnw==
+X-Gm-Message-State: AOAM53267/c+hrZJ0XSJN2IZ50SamLz5YKe4nm/iPL9fEssWisXYX7iz
+        sRio7GRCr17DSJsCPQ4ZEbVq2Q==
+X-Google-Smtp-Source: ABdhPJyDFVFMQrl7eVTFnZgbd/avuNh+k8fjT7OAUOT9aPaRfJnSoLW2zT7JeIfuvKSpByqNZUhxZQ==
+X-Received: by 2002:a5d:6411:: with SMTP id z17mr21001758wru.112.1605548479277;
+        Mon, 16 Nov 2020 09:41:19 -0800 (PST)
 Received: from dell.default ([91.110.221.159])
-        by smtp.gmail.com with ESMTPSA id k22sm20178562wmi.34.2020.11.16.09.34.00
+        by smtp.gmail.com with ESMTPSA id n10sm24667224wrx.9.2020.11.16.09.41.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 09:34:01 -0800 (PST)
+        Mon, 16 Nov 2020 09:41:18 -0800 (PST)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     lee.jones@linaro.org
 Cc:     linux-kernel@vger.kernel.org,
@@ -104,9 +104,9 @@ Cc:     linux-kernel@vger.kernel.org,
         Sumit Semwal <sumit.semwal@linaro.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         YT SHEN <yt.shen@mediatek.com>
-Subject: [RESEND 00/42] Rid W=1 warnings from GPU (non-Radeon)
-Date:   Mon, 16 Nov 2020 17:33:14 +0000
-Message-Id: <20201116173356.1828478-1-lee.jones@linaro.org>
+Subject: [PATCH v2 00/42] Rid W=1 warnings from GPU (non-Radeon)
+Date:   Mon, 16 Nov 2020 17:40:30 +0000
+Message-Id: <20201116174112.1833368-1-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -114,6 +114,8 @@ Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
+
+[sending again, as `git send-email` crashed!]
 
 This set contains fixes for some "wouldn't it be nice if" issues,
 however most of the patches seen here have been on the MLs, but
