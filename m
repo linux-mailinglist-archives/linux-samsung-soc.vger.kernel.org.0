@@ -2,49 +2,126 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C8AE2B7749
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Nov 2020 08:51:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18D522B908D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Nov 2020 12:04:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbgKRHvQ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Nov 2020 02:51:16 -0500
-Received: from sw73-70-41.adsl.seed.net.tw ([203.73.70.41]:42373 "EHLO
-        oa.trendtek.com.tw" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbgKRHvQ (ORCPT
+        id S1725931AbgKSLCN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Nov 2020 06:02:13 -0500
+Received: from foss.arm.com ([217.140.110.172]:53128 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725843AbgKSLCM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Nov 2020 02:51:16 -0500
-Received: from [156.96.44.214] ([156.96.44.214])
-        (authenticated bits=0)
-        by oa.trendtek.com.tw (8.13.8/8.13.1) with ESMTP id 0AI7p1KF020391
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Nov 2020 15:51:11 +0800
-Message-Id: <202011180751.0AI7p1KF020391@oa.trendtek.com.tw>
-Content-Type: text/plain; charset="iso-8859-1"
+        Thu, 19 Nov 2020 06:02:12 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 627981396;
+        Thu, 19 Nov 2020 03:02:11 -0800 (PST)
+Received: from red-moon.arm.com (unknown [10.57.61.203])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 02D183F718;
+        Thu, 19 Nov 2020 03:02:03 -0800 (PST)
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        linux-tegra@vger.kernel.org, Roy Zang <roy.zang@nxp.com>,
+        linux-amlogic@lists.infradead.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-arm-kernel@axis.com, Jerome Brunet <jbrunet@baylibre.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        linuxppc-dev@lists.ozlabs.org, Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-pci@vger.kernel.org, Mingkai Hu <mingkai.hu@nxp.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        linux-omap@vger.kernel.org,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-samsung-soc@vger.kernel.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>
+Subject: Re: [PATCH v2 00/16] PCI: dwc: Another round of clean-ups
+Date:   Thu, 19 Nov 2020 11:01:58 +0000
+Message-Id: <160578351748.1677.14217204071434748520.b4-ty@arm.com>
+X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20201105211159.1814485-1-robh@kernel.org>
+References: <20201105211159.1814485-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Corporate and Personal Loan *
-To:     linux-samsung-soc@vger.kernel.org
-From:   "Investment  Corporate" <financialcapability6@gmail.com>
-Date:   Tue, 17 Nov 2020 23:51:01 -0800
-Reply-To: hmurrah39@gmail.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello linux-samsung-soc@vger.kernel.org
+On Thu, 5 Nov 2020 15:11:43 -0600, Rob Herring wrote:
+> Here's another batch of DWC PCI host refactoring. This series primarily
+> moves more of the MSI, link up, and resource handling to the core
+> code. Beyond a couple of minor fixes, new in this version is runtime
+> detection of iATU regions instead of using DT properties.
+> 
+> No doubt I've probably broken something. Please test. I've run this thru
+> kernelci and checked boards with DWC PCI which currently is just
+> Layerscape boards (hint: add boards and/or enable PCI). A git branch is
+> here[1].
+> 
+> [...]
 
+Applied to pci/dwc, thanks!
 
-We are Base Investment Company offering Corporate and Personal Loan at 3% Interest Rate for a duration of 10Years.
+[01/16] PCI: dwc: Support multiple ATU memory regions
+        https://git.kernel.org/lpieralisi/pci/c/9f9e59a480
+[02/16] PCI: dwc/intel-gw: Move ATU offset out of driver match data
+        https://git.kernel.org/lpieralisi/pci/c/1d567aac46
+[03/16] PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code
+        https://git.kernel.org/lpieralisi/pci/c/a0fd361db8
+[04/16] PCI: dwc/intel-gw: Remove some unneeded function wrappers
+        https://git.kernel.org/lpieralisi/pci/c/1cc9a55999
+[05/16] PCI: dwc: Ensure all outbound ATU windows are reset
+        https://git.kernel.org/lpieralisi/pci/c/458ad06c4c
+[06/16] PCI: dwc/dra7xx: Use the common MSI irq_chip
+        https://git.kernel.org/lpieralisi/pci/c/7f170d35f5
+[07/16] PCI: dwc: Drop the .set_num_vectors() host op
+        https://git.kernel.org/lpieralisi/pci/c/331e9bcead
+[08/16] PCI: dwc: Move MSI interrupt setup into DWC common code
+        https://git.kernel.org/lpieralisi/pci/c/5bcb1757e6
+[09/16] PCI: dwc: Rework MSI initialization
+        https://git.kernel.org/lpieralisi/pci/c/f78f02638a
+[10/16] PCI: dwc: Move link handling into common code
+        https://git.kernel.org/lpieralisi/pci/c/886a9c1347
+[11/16] PCI: dwc: Move dw_pcie_msi_init() into core
+        https://git.kernel.org/lpieralisi/pci/c/59fbab1ae4
+[12/16] PCI: dwc: Move dw_pcie_setup_rc() to DWC common code
+        https://git.kernel.org/lpieralisi/pci/c/b9ac0f9dc8
+[13/16] PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
+        https://git.kernel.org/lpieralisi/pci/c/60f5b73fa0
+[14/16] Revert "PCI: dwc/keystone: Drop duplicated 'num-viewport'"
+        https://git.kernel.org/lpieralisi/pci/c/fcde397422
+[15/16] PCI: dwc: Move inbound and outbound windows to common struct
+        https://git.kernel.org/lpieralisi/pci/c/9ca17af552
+[16/16] PCI: dwc: Detect number of iATU windows
+        https://git.kernel.org/lpieralisi/pci/c/281f1f99cf
 
-
-We also pay 1% commission to brokers, who introduce project owners for finance or other opportunities.
-
-
-Please get back to me if you are interested for more
-
-details.
-
-
-Yours faithfully,
-
-Hashim Murrah
+Thanks,
+Lorenzo
