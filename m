@@ -2,87 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3AED2BC66C
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Nov 2020 16:17:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 936882BFB0F
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 Nov 2020 22:53:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbgKVPQH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 Nov 2020 10:16:07 -0500
-Received: from mail-ej1-f66.google.com ([209.85.218.66]:39648 "EHLO
-        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727634AbgKVPQG (ORCPT
+        id S1726131AbgKVVxC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 22 Nov 2020 16:53:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725964AbgKVVxC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 Nov 2020 10:16:06 -0500
-Received: by mail-ej1-f66.google.com with SMTP id s25so19752496ejy.6;
-        Sun, 22 Nov 2020 07:16:05 -0800 (PST)
+        Sun, 22 Nov 2020 16:53:02 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9347C0613CF;
+        Sun, 22 Nov 2020 13:53:01 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id 7so20635469ejm.0;
+        Sun, 22 Nov 2020 13:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:sender:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
+        b=kkEE2V/YTTXDP5iHa3YrPOSdcZLMhJBaNU2uvO4O+F7eWx/ZdiNHkZ5JWAyxfml2yz
+         Xx7QhOEgl9gsQTZ4Rw5mg37MCvMnN4nQOu7t022g//OeEI/hJd13ZZ4s0l+HLN81fzN1
+         rSLae9LX7Jdo+68Drg0Lw9usPVqV9Zy1+KSnppN4eDy8UtiiCVIBzHNlzUu+t3MU0wvq
+         8rgautXwv4twReCvOFkxotL8AFuTtST670y361zFDUXtfvxwGOtz+kMkeW7HZNxzGHWP
+         MkboQCkN7RHFRunmIASJcYTWYpwaOk7ylfSX2OfnbY4l9SrXFZWJsj/MHqsT/4zo+f01
+         z9/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=m40ePb0WowbyEBeP3p9wxNvULWshRU43UNkM2KlTYek=;
-        b=G0W4HmqABjAU5CONb2mblEfAcM/9sEQ4GfnKOMLnsSP5xMRw6/CDtTnjPKrUbIgUyQ
-         Sjl24PrwBiwHC/llp+IhWyIjcgZoFPI8MFak4yS3G0+DZ/PLdZM+37ENBeWFBNREEEHR
-         z1m/sw3hrTgQeRTZ8XQI4xrhveK8JNhveBjYGpYNaCemhft6eQWCbhwjf5+waAsFvtqL
-         olylJlIUze5MCNJP3LRU4YqjN7dCPII7KGz2p7DKUhe9tQHlm4MJd7QxT6e+bj47piv/
-         xU5W2TnVj9gmfSRdxxQBCL3yog4ZmXinatcVOm1IYwyFV52jo/lTnk9gQyR4lOlH+qvy
-         sVzA==
-X-Gm-Message-State: AOAM531c0IUFuN0mxcPh5XnzekVxr1iWOqdlcf8DQSOF4AfTF+33F6dy
-        vZTa/uvyl5soWIOk3OSwdtbIkBoiCLc=
-X-Google-Smtp-Source: ABdhPJycg25qQotskeOlIwboUWBXMQDXocn+7gf+sHWwOPyDFL2dv4FyyMO9CUAJTMLfGVfNSor4Gg==
-X-Received: by 2002:a17:906:f289:: with SMTP id gu9mr10602939ejb.514.1606058164678;
-        Sun, 22 Nov 2020 07:16:04 -0800 (PST)
-Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.googlemail.com with ESMTPSA id f25sm3671593edr.53.2020.11.22.07.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2020 07:16:03 -0800 (PST)
-Date:   Sun, 22 Nov 2020 16:16:02 +0100
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>
-Cc:     linux-clk@vger.kernel.org, tomasz.figa@gmail.com,
-        cw00.choi@samsung.com, m.szyprowski@samsung.com, sboyd@kernel.org,
-        mturquette@baylibre.com, b.zolnierkie@samsung.com,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v5] clk: samsung: Prevent potential endless loop in the
- PLL ops
-Message-ID: <20201122151602.GA5346@kozik-lap>
-References: <CGME20201120155747eucas1p248a1f0b71fbd8f329271494d7a207347@eucas1p2.samsung.com>
- <20201120155731.26898-1-s.nawrocki@samsung.com>
+        h=x-gm-message-state:message-id:sender:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
+        b=boPZFz+4vX/BPP/IA5zNxwxy3wRRemH3PkEM5r1NDzz3W5VtSOpPgnf3j8Cc79JqXI
+         y2U3hxXFI4hgngUr2Onzrs2ehjhCuArsE35YvgUvzcK1oxkUSZ5y3217IfUgEFVmb69/
+         Y7R/TZ1+uv+/bpw3J2N6Q56XAuB0i8p/+/M/RNYCgvbpMp29/VxtY6CGr74Iv0qRn3CF
+         evPUn/2MsfWQM0NmsYAeYp25ePgXYNA/Vyq8hqsjSNMZsU8N+b9hGVwIWQBcddgBKPOx
+         owtoOftZF4GlsEEoGbqOWN81ww7Z/Xe6I1zVsp0kyowxEDf9d9UWHtG4HIrVY2HH7XZO
+         /WcQ==
+X-Gm-Message-State: AOAM533B+QrwUKraf0tMEvKc/roK7IZOmJNREqFkfpbDO/rOJ34OAt1x
+        4VgXMXOLfsdi6QUOkYIsv2A=
+X-Google-Smtp-Source: ABdhPJxIvCoN6ejsxVn/kZD1YN4/NZaWchQdgBWWfn9gva47N9Zsr4++kl6rOmBDY5t8RVVJU/YyCA==
+X-Received: by 2002:a17:906:8058:: with SMTP id x24mr42971092ejw.272.1606081980452;
+        Sun, 22 Nov 2020 13:53:00 -0800 (PST)
+Received: from [192.168.43.48] ([197.210.35.67])
+        by smtp.gmail.com with ESMTPSA id i19sm3978482ejz.71.2020.11.22.13.52.54
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 22 Nov 2020 13:52:59 -0800 (PST)
+Message-ID: <5fbaddbb.1c69fb81.9b3f2.103f@mx.google.com>
+Sender: Lena Torres <ad482289@gmail.com>
+From:   Adelina Zeuki <anglicaramose@gmail.com>
+X-Google-Original-From: "Adelina Zeuki" <  adelinazeuki@gmail.comm >
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201120155731.26898-1-s.nawrocki@samsung.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Hello !!
+To:     Recipients <adelinazeuki@gmail.comm>
+Date:   Sun, 22 Nov 2020 21:52:53 +0000
+Reply-To: adelinazeuki@gmail.com
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Nov 20, 2020 at 04:57:31PM +0100, Sylwester Nawrocki wrote:
-> The PLL status polling loops in the set_rate callbacks of some PLLs
-> have no timeout detection and may become endless loops when something
-> goes wrong with the PLL.
-> 
-> For some PLLs there is already the ktime API based timeout detection,
-> but it will not work in all conditions when .set_rate gets called.
-> In particular, before the clocksource is initialized or when the
-> timekeeping is suspended.
-> 
-> This patch adds a common helper with the PLL status bit polling and
-> timeout detection. For conditions where the timekeeping API should not
-> be used a simple readl_relaxed/cpu_relax() busy loop is added with the
-> iterations limit derived from measurements of readl_relaxed() execution
-> time for various PLL types and Exynos SoCs variants.
-> 
-> Actual PLL lock time depends on the P divider value, the VCO frequency
-> and a constant PLL type specific LOCK_FACTOR and can be calculated as
-> 
->  lock_time = Pdiv * LOCK_FACTOR / VCO_freq
-> 
-> For the ktime API use cases a common timeout value of 20 ms is applied
-> for all the PLLs with an assumption that maximum possible value of Pdiv
-> is 64, maximum possible LOCK_FACTOR value is 3000 and minimum VCO
-> frequency is 24 MHz.
-> 
-> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Hi dear,
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Best regards,
-Krzysztof
+Can i talk with you ?
