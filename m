@@ -2,157 +2,102 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1FE52BFE03
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Nov 2020 02:17:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24D5B2C0045
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Nov 2020 07:49:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgKWBRD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 Nov 2020 20:17:03 -0500
-Received: from mailout2.samsung.com ([203.254.224.25]:48450 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbgKWBRC (ORCPT
+        id S1726869AbgKWGsf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Nov 2020 01:48:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726626AbgKWGsf (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 Nov 2020 20:17:02 -0500
-Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20201123011700epoutp02046bdb3684724dfd5ea3545b7043b5a9~J-i8ML7kx1484214842epoutp02R
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 Nov 2020 01:17:00 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20201123011700epoutp02046bdb3684724dfd5ea3545b7043b5a9~J-i8ML7kx1484214842epoutp02R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1606094220;
-        bh=zVzTnuyKE3DO2//uowBhMsWnup1z0a7x1hwyk7fg5zg=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=Aps6gfjyPJ2Q9prFEC5A2XDcfvIjNEaobfUnrat1AZ90L+MbwbRBMZvHFpkKivCwS
-         zNFijCDn53fj96kkISoQ00K8uLuu3E3R4MiuUkqzsVfa6sray9oJl7J2or91SDr1aR
-         sc36Xg+SqyQO73RCLGGMxhLEf9tfXbLSlCxqHrsQ=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20201123011659epcas1p1f73f65b6aba279f2b7958c17ccf58dd8~J-i7sOpua0596505965epcas1p1L;
-        Mon, 23 Nov 2020 01:16:59 +0000 (GMT)
-Received: from epsmges1p2.samsung.com (unknown [182.195.40.153]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4CfTlF1lw6zMqYkb; Mon, 23 Nov
-        2020 01:16:57 +0000 (GMT)
-Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
-        epsmges1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        47.4A.63458.18D0BBF5; Mon, 23 Nov 2020 10:16:49 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTPA id
-        20201123011649epcas1p4824e4ed9cdcb96e74606da954f783edb~J-ix9TPv02005820058epcas1p4n;
-        Mon, 23 Nov 2020 01:16:49 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20201123011649epsmtrp1720f6cfb9eb188fce3ea745a6eefd8b2~J-ix8Os7O1181211812epsmtrp1Z;
-        Mon, 23 Nov 2020 01:16:49 +0000 (GMT)
-X-AuditID: b6c32a36-6c9ff7000000f7e2-18-5fbb0d81f8fc
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        9F.D5.13470.18D0BBF5; Mon, 23 Nov 2020 10:16:49 +0900 (KST)
-Received: from [10.113.221.211] (unknown [10.113.221.211]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20201123011648epsmtip2c593d73923d4ce98001aae700522ba1f~J-ixpnLIB0813908139epsmtip2R;
-        Mon, 23 Nov 2020 01:16:48 +0000 (GMT)
-Subject: Re: [PATCH 1/2] drm/exynos: depend on COMMON_CLK to fix compile
- tests
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Paul Cercueil <paul@crapouillou.net>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kernel test robot <lkp@intel.com>
-From:   Inki Dae <inki.dae@samsung.com>
-Message-ID: <5447e15e-d5a9-9d09-d6d1-6f9dff8cc142@samsung.com>
-Date:   Mon, 23 Nov 2020 10:24:23 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
-        Thunderbird/68.8.0
+        Mon, 23 Nov 2020 01:48:35 -0500
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A2DC0613CF;
+        Sun, 22 Nov 2020 22:48:34 -0800 (PST)
+Received: by mail-pl1-x643.google.com with SMTP id l1so126266pld.5;
+        Sun, 22 Nov 2020 22:48:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PJ6JaHRxor/ka0JdqIrqxbD/WGFaxB9On6PE/7mwuFQ=;
+        b=XYMS5tzYB1db+4HRLPGMZ6FL5f1juIfSv/FApljURg0meQvGkiDEuFZ54vN5rtTgEj
+         rKKcf25pAoLQEKlcFKjsYOpw21tUMZgdY/WqxMyiDNf0wfDyjHju0OMSm56n4Sfq6pA/
+         nt1BmRy2l5WXG5fmjeaBP80o8M4/dz29UbJn6atWupWnL+lZGVbd6cgfF3NUfYbRGuMD
+         G2cYiAUh1mK/WxX9PW8VZD5SOmE5MCWhji+AYddIo9aeOpR5pls5YyOoVyWPpTgU1R5f
+         1kSOmRSEGs8TW6Wojj6NS13uktjjbeWPfjNzDOqZdM1v6n8yLhgeKj6ebdT8rvQp8wag
+         HpPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PJ6JaHRxor/ka0JdqIrqxbD/WGFaxB9On6PE/7mwuFQ=;
+        b=XVU5SdrLC/yWBlCTVD4Em60lglUQICdPZnGSICQv/xVdeaiLmwEkVVS7RN2em9GnWV
+         uRDCtRLW1RLiBELzc8wIBQ2n7IybUo41lus85KA7fU534ppz9EdH6Hc+ZzFgB2A7x2wW
+         HLAqPvuWFdduwgfwUAN5jDQHcPIcrCmsSv34fau1qNciPCY9L8VBXYCSmJTixSP+gBpH
+         aANR07NuDJcGFmwNB/KiiSR+Wvrqg6LNHdk+Cc/lM2EJVPR73SRLToQBu0HZJKim9DCv
+         xJWqMPFtmmx1z+CRaDuOQz2GXzetuqYtoRPR7I3cAAbGnCNv5bbYjD1+njVTxHHZx/BX
+         9SJA==
+X-Gm-Message-State: AOAM530fzXbPpyW8z0IL/09wZ6nQnoerJrmxmL5NxBziFyku4Oj71WY+
+        tfZgCEJ0mjn1n8t4Jmr5Cx1Fit6Fe1M=
+X-Google-Smtp-Source: ABdhPJy/4jDe0Ku9Pn49P4SSO2HrfayI73kSBKrChviAZvZl4QhUhlWxRpjvJa9Ahc8AwXb0XUbvDQ==
+X-Received: by 2002:a17:902:a9c7:b029:d6:da66:253c with SMTP id b7-20020a170902a9c7b02900d6da66253cmr22954681plr.19.1606114114340;
+        Sun, 22 Nov 2020 22:48:34 -0800 (PST)
+Received: from dtor-ws ([2620:15c:202:201:a6ae:11ff:fe11:fcc3])
+        by smtp.gmail.com with ESMTPSA id b29sm9660730pgn.87.2020.11.22.22.48.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2020 22:48:33 -0800 (PST)
+Date:   Sun, 22 Nov 2020 22:48:31 -0800
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-input@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>
+Subject: Re: [PATCH 1/3 v2] Input: atmel_mxt_ts - Fix up inverted RESET
+ handler
+Message-ID: <20201123064831.GZ2034289@dtor-ws>
+References: <20201104153032.1387747-1-linus.walleij@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20201116175301.402787-1-krzk@kernel.org>
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKJsWRmVeSWpSXmKPExsWy7bCmnm4j7+54g0uflS16z51ksvi/bSKz
-        xZWv79ksXty7yGJx/vwGdouzTW/YLTY9vsZqcXnXHDaLGef3MVm8an7EZtG/+BKLxYzJL9kc
-        eDxWX2pn89j7bQGLx+I9L5k8Nq3qZPPY/u0Bq8f97uNMHpuX1Hv0bVnF6PF5k1wAZ1S2TUZq
-        YkpqkUJqXnJ+SmZeuq2Sd3C8c7ypmYGhrqGlhbmSQl5ibqqtkotPgK5bZg7QyUoKZYk5pUCh
-        gMTiYiV9O5ui/NKSVIWM/OISW6XUgpScAssCveLE3OLSvHS95PxcK0MDAyNToMKE7IzlB9pZ
-        Ck5yVTS+3c/cwHibo4uRk0NCwESi+c9y9i5GLg4hgR2MEg1vJzJCOJ8YJWbtOMUK4XxjlPi/
-        9io7TMudY5ugEnsZJR62r2SBcN4zSrzbfp6ti5GDQ1ggQKLpqxBIg4jAAmaJbxudQWxmAVWJ
-        13vfMoHYbED2xBX32UBsXgE7iR1NPWALWIDiezubWEBsUYEIiePdk9khagQlTs58AhbnFDCT
-        WPXvAiPETHGJW0/mM0HY8hLNW2czg9wjIXCGQ2LuyW42iKtdJL6+nwZlC0u8Or4F6hspiZf9
-        bewQDc2MEhNnnGaCcDoYJe4+vs4CUWUssX/pZCaQz5gFNCXW79KHCCtK7Pw9F+oKPol3X3tY
-        QUokBHglOtqEIEqUJI5dvMEIYUtIXFgyEeoGD4nZNz+xTWBUnIXkt1lI/pmF5J9ZCIsXMLKs
-        YhRLLSjOTU8tNiwwQo7uTYzg9KxltoNx0tsPeocYmTgYDzFKcDArifC2yu2MF+JNSaysSi3K
-        jy8qzUktPsRoCgzticxSosn5wAyRVxJvaGpkbGxsYWJoZmpoqCTO+0e7I15IID2xJDU7NbUg
-        tQimj4mDU6qByWmy+CUdtT08pzxuF5w4ctlvrZnX8as6Vja/vjQySX6yn8zXGq4xobz62jWP
-        mkKds9vqGBodwh60/bvBkmOTI3DjxPrFaTsbEv5avhQO0Iq+O2/BCrVl6/L0lO6fY5h4duFx
-        1w+CB/+YODnbqK97Pv1iWtbsGFu5332GqWEXtpaXvNxibfzvun4625mV51aoK2wXmlR396GG
-        tN3Rh+faf65/cT7oh/7a13XRhk0J0rw7n4U+kVnq8nCJGOunOTWJX67ki97JnV9VvPPZwYYQ
-        V07vP3eYTv0vT37K7xMbrt95lO9L4i3b6n+xPccK0pZPez/1muOb/uAfjdOdeqOT8+bkd3hn
-        +Dcbbjtpw/TjjhJLcUaioRZzUXEiAHIgVz1YBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEIsWRmVeSWpSXmKPExsWy7bCSvG4j7+54g1ebmC16z51ksvi/bSKz
-        xZWv79ksXty7yGJx/vwGdouzTW/YLTY9vsZqcXnXHDaLGef3MVm8an7EZtG/+BKLxYzJL9kc
-        eDxWX2pn89j7bQGLx+I9L5k8Nq3qZPPY/u0Bq8f97uNMHpuX1Hv0bVnF6PF5k1wAZxSXTUpq
-        TmZZapG+XQJXxvID7SwFJ7kqGt/uZ25gvM3RxcjJISFgInHn2CbWLkYuDiGB3YwS67ffY+li
-        5ABKSEhs2coBYQpLHD5cDFHyllHiz7JeZpC4sICfxOYlDiBxEYFFzBIfrzxhApnJLKAq8Xrv
-        WyaIhk5GibtXn7CAJNiAEhNX3GcDsXkF7CR2NPWwg9gsQPG9nU1gNaICERIt9/+wQ9QISpyc
-        CdHLKWAmserfBUaIBeoSf+ZdYoawxSVuPZkPtVheonnrbOYJjEKzkLTPQtIyC0nLLCQtCxhZ
-        VjFKphYU56bnFhsWGOallusVJ+YWl+al6yXn525iBEejluYOxu2rPugdYmTiYDzEKMHBrCTC
-        2yq3M16INyWxsiq1KD++qDQntfgQozQHi5I4743ChXFCAumJJanZqakFqUUwWSYOTqkGpqNa
-        82y05hyecO4Ek+c9ho0/Km1Zn74OX2D03ek+69uVGzvXZn9qX68u4SIf+SPBTLNavOn0QWW+
-        g+EcovvKpXr6HgbE5uluumkaz/Fp4eNXf9dwCH5+4af25yijyMy/Nz5IWIvM3bcnijchwSDw
-        bo70zc/TXmlPEfTcWPPA3nnxcV+J7NfiYXOYI0RPsQVOXlidsFXQ9uhu+bJ9p/qWmi09cnm9
-        ycam+6t6M0/MTt99JiBgfvGE2eeZla79mbrmTRXPkfdRfKejPpXd3rlg+btKy0obxtgj2x99
-        5PmllSxzMk1iq9jB3Z9Wzk29n7e/7/fWJq9trM3BlUKGJva5bnsyeq693cSUHbyk5aP4/1Yl
-        luKMREMt5qLiRAAjRKH+NQMAAA==
-X-CMS-MailID: 20201123011649epcas1p4824e4ed9cdcb96e74606da954f783edb
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20201116175410epcas1p1c0dbe17b850b30baa05d768fbdc74f5d
-References: <CGME20201116175410epcas1p1c0dbe17b850b30baa05d768fbdc74f5d@epcas1p1.samsung.com>
-        <20201116175301.402787-1-krzk@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201104153032.1387747-1-linus.walleij@linaro.org>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-HI Krzysztof,
-
-20. 11. 17. 오전 2:53에 Krzysztof Kozlowski 이(가) 쓴 글:
-> The Exynos DRM uses Common Clock Framework thus it cannot be built on
-> platforms without it (e.g. compile test on MIPS with RALINK and
-> SOC_RT305X):
+On Wed, Nov 04, 2020 at 04:30:30PM +0100, Linus Walleij wrote:
+> This driver uses GPIO descriptors to drive the touchscreen
+> RESET line. In the existing device trees this has in
+> conflict with intution been flagged as GPIO_ACTIVE_HIGH
+> and the driver then applies the reverse action by
+> driving the line low (setting to 0) to enter
+> reset state and driving the line high (setting to 1) to
+> get out of reset state.
 > 
->     /usr/bin/mips-linux-gnu-ld: drivers/gpu/drm/exynos/exynos_mixer.o: in function `mixer_bind':
->     exynos_mixer.c:(.text+0x958): undefined reference to `clk_set_parent'
+> The correct way to handle active low GPIO lines is to
+> provide the GPIO_ACTIVE_LOW in the device tree (thus
+> properly describing the hardware) and letting the GPIO
+> framework invert the assertion (driving high) to a low
+> level and vice versa.
 > 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Picked it up.
-
-Thanks,
-Inki Dae
-
-> ---
->  drivers/gpu/drm/exynos/Kconfig | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This is considered a bug since the device trees are
+> incorrectly mis-specifying the line as active high.
 > 
-> diff --git a/drivers/gpu/drm/exynos/Kconfig b/drivers/gpu/drm/exynos/Kconfig
-> index 6417f374b923..951d5f708e92 100644
-> --- a/drivers/gpu/drm/exynos/Kconfig
-> +++ b/drivers/gpu/drm/exynos/Kconfig
-> @@ -1,7 +1,8 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  config DRM_EXYNOS
->  	tristate "DRM Support for Samsung SoC Exynos Series"
-> -	depends on OF && DRM && (ARCH_S3C64XX || ARCH_S5PV210 || ARCH_EXYNOS || ARCH_MULTIPLATFORM || COMPILE_TEST)
-> +	depends on OF && DRM && COMMON_CLK
-> +	depends on ARCH_S3C64XX || ARCH_S5PV210 || ARCH_EXYNOS || ARCH_MULTIPLATFORM || COMPILE_TEST
->  	depends on MMU
->  	select DRM_KMS_HELPER
->  	select VIDEOMODE_HELPERS
+> Fix the driver and all device trees specifying a reset
+> line.
 > 
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-tegra@vger.kernel.org
+> Cc: linux-samsung-soc@vger.kernel.org
+> Cc: NXP Linux Team <linux-imx@nxp.com>
+> Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+
+Applied, thank you.
+
+-- 
+Dmitry
