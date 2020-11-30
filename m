@@ -2,59 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 484D62C82BA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Nov 2020 12:00:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FAB32C846D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Nov 2020 13:55:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725902AbgK3LAW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 30 Nov 2020 06:00:22 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37624 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727656AbgK3LAV (ORCPT
+        id S1726265AbgK3MyI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 30 Nov 2020 07:54:08 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:8533 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726001AbgK3MyG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 30 Nov 2020 06:00:21 -0500
-Received: from localhost (unknown [122.171.214.243])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 46C70207F7;
-        Mon, 30 Nov 2020 10:59:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606733981;
-        bh=10Od5snn4pdSConzB62wtzmV9/mRp7/jgGm4pu6xGr8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=zGn6PdvI7L3ZdBcBmV9AOlh3DOITLc+2vOS+nKKV+tBG69xUVchABB30Eu9oe7qSC
-         Nhd7nT2E447PKyMfs43JMByH/aA5/0e+0LcttQblaqKYEx2DBSCOCLOOwHrT5g52nv
-         dzTm5m0UItYTOOJLYtlZP/bc9EQoecnBpy6I1kHA=
-Date:   Mon, 30 Nov 2020 16:29:31 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Willy Wolff <willy.mh.wolff.ml@gmail.com>,
-        Marian Mihailescu <mihailescu2m@gmail.com>
-Subject: Re: [PATCH 1/2] phy: samsung: Add support for the Exynos5420 variant
- of the USB2 PHY
-Message-ID: <20201130105931.GP8403@vkoul-mobl>
-References: <20201120085637.7299-1-m.szyprowski@samsung.com>
- <CGME20201120085651eucas1p1d30223968745e93e6177892b400a7773@eucas1p1.samsung.com>
- <20201120085637.7299-2-m.szyprowski@samsung.com>
+        Mon, 30 Nov 2020 07:54:06 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Cl4s658FgzhkdP;
+        Mon, 30 Nov 2020 20:52:58 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 30 Nov 2020 20:53:16 +0800
+From:   Qinglang Miao <miaoqinglang@huawei.com>
+To:     =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+        "Krzysztof Kozlowski" <krzk@kernel.org>
+CC:     <linux-samsung-soc@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Qinglang Miao <miaoqinglang@huawei.com>
+Subject: [PATCH v2] hwrng: exynos - fix reference leak in exynos_trng_probe
+Date:   Mon, 30 Nov 2020 21:01:18 +0800
+Message-ID: <20201130130118.51339-1-miaoqinglang@huawei.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201120085637.7299-2-m.szyprowski@samsung.com>
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 20-11-20, 09:56, Marek Szyprowski wrote:
-> Exynos5420 differs a bit from Exynos5250 in USB2 PHY related registers in
-> the PMU region. Add a variant for the Exynos5420 case. Till now, USB2 PHY
-> worked only because the bootloader enabled the PHY, but then driver messed
-> USB 3.0 DRD related registers during the suspend/resume cycle.
+pm_runtime_get_sync will increment pm usage counter even
+failed. Forgetting to putting operation will result in a
+reference leak here.
 
-Applied, thanks
+Replace it with pm_runtime_resume_and_get to keep usage
+counter balanced. I remove err_clock label at the same.
 
+Fixes: 6cd225cc5d8a ("hwrng: exynos - add Samsung Exynos True RNG driver")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Suggested-by: Lukasz Stelmach <l.stelmach@samsung.com>
+Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
+---
+ v2: remobe useless label as Lukasz suggested.
+
+ drivers/char/hw_random/exynos-trng.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/char/hw_random/exynos-trng.c b/drivers/char/hw_random/exynos-trng.c
+index 8e1fe3f8d..ffebb72e4 100644
+--- a/drivers/char/hw_random/exynos-trng.c
++++ b/drivers/char/hw_random/exynos-trng.c
+@@ -132,7 +132,7 @@ static int exynos_trng_probe(struct platform_device *pdev)
+ 		return PTR_ERR(trng->mem);
+ 
+ 	pm_runtime_enable(&pdev->dev);
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Could not get runtime PM.\n");
+ 		goto err_pm_get;
+@@ -142,13 +142,13 @@ static int exynos_trng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(trng->clk)) {
+ 		ret = PTR_ERR(trng->clk);
+ 		dev_err(&pdev->dev, "Could not get clock.\n");
+-		goto err_clock;
++		goto err_pm_get;
+ 	}
+ 
+ 	ret = clk_prepare_enable(trng->clk);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Could not enable the clk.\n");
+-		goto err_clock;
++		goto err_pm_get;
+ 	}
+ 
+ 	ret = devm_hwrng_register(&pdev->dev, &trng->rng);
+@@ -164,9 +164,6 @@ static int exynos_trng_probe(struct platform_device *pdev)
+ err_register:
+ 	clk_disable_unprepare(trng->clk);
+ 
+-err_clock:
+-	pm_runtime_put_sync(&pdev->dev);
+-
+ err_pm_get:
+ 	pm_runtime_disable(&pdev->dev);
+ 
 -- 
-~Vinod
+2.23.0
+
