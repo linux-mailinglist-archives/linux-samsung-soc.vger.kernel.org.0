@@ -2,73 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E9012CE22E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Dec 2020 23:55:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAB772CE960
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Dec 2020 09:19:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387474AbgLCWyC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 3 Dec 2020 17:54:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59238 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727533AbgLCWyC (ORCPT
+        id S1727056AbgLDITE convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 4 Dec 2020 03:19:04 -0500
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:35691 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725866AbgLDITE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 3 Dec 2020 17:54:02 -0500
-From:   Arnd Bergmann <arnd@kernel.org>
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, linux-samsung-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: samsung: mark PM functions as __maybe_unused
-Date:   Thu,  3 Dec 2020 23:53:11 +0100
-Message-Id: <20201203225315.1477137-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.27.0
+        Fri, 4 Dec 2020 03:19:04 -0500
+Received: by mail-ej1-f68.google.com with SMTP id f23so7449447ejk.2;
+        Fri, 04 Dec 2020 00:18:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=VemDQ6EGsBsmNy3s9ek1G18QMI3vy92u8aJPDPxveeg=;
+        b=QGE20SG9uC4742ZZ3Ri0Ex++TH4TM//6WPsZk3bI5exQq0lrbqpZMF1p8s9S8rhhTR
+         tLbtTx+uZotXoQcxBwkNLQLyfb4dA8GGsBge0n5uVDVBsk90GBmS5VqsWksqTUgZFXiM
+         tSUd/SeVPF/ZqTSYVizz4n3dzyJHMpffA2QYgvPUw1OU9LFWdvniV7erZN7uU9yo+zht
+         skIRgGCqEUOIcx5gW9qq5Bb6OJlkhRHD9ORvyNkwcPv9h8Pkf/6O/hbeK//nIOZQrQd6
+         VygSp5WscnZZVeAkkW1KlK052F3PgHo4TJqzGeVKNeqW/FA8NlNXEHz/IuuraNKsfo5A
+         TZDA==
+X-Gm-Message-State: AOAM530eWSaBCnvTF9/dqiSD53DJ7SMVNNcaAz/o3c679pDHCFJxk6BZ
+        RfigG8rnRJRQ/qyEFGxbONE=
+X-Google-Smtp-Source: ABdhPJwL0al19RhXuOfgb8PeQPspdUlFB4mwc2b7uxWixr+3jMaX8oS7lNdpsirID5U93f3GAg7S4A==
+X-Received: by 2002:a17:906:c046:: with SMTP id bm6mr5770776ejb.436.1607069902146;
+        Fri, 04 Dec 2020 00:18:22 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id z22sm2504364eji.91.2020.12.04.00.18.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 00:18:20 -0800 (PST)
+Date:   Fri, 4 Dec 2020 10:18:19 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Paul Cercueil <paul@crapouillou.net>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH 2/2] drm/ingenic: depend on COMMON_CLK to fix compile
+ tests
+Message-ID: <20201204081819.GA3891@kozik-lap>
+References: <20201116175301.402787-1-krzk@kernel.org>
+ <20201116175301.402787-2-krzk@kernel.org>
+ <3ANWJQ.LV5B6V47KTYS2@crapouillou.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <3ANWJQ.LV5B6V47KTYS2@crapouillou.net>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Mon, Nov 16, 2020 at 07:54:03PM +0000, Paul Cercueil wrote:
+> Hi Krzysztof,
+> 
+> Le lun. 16 nov. 2020 à 18:53, Krzysztof Kozlowski <krzk@kernel.org> a écrit
+> :
+> > The Ingenic DRM uses Common Clock Framework thus it cannot be built on
+> > platforms without it (e.g. compile test on MIPS with RALINK and
+> > SOC_RT305X):
+> > 
+> >     /usr/bin/mips-linux-gnu-ld:
+> > drivers/gpu/drm/ingenic/ingenic-drm-drv.o: in function
+> > `ingenic_drm_bind.isra.0':
+> >     ingenic-drm-drv.c:(.text+0x1600): undefined reference to
+> > `clk_get_parent'
+> >     /usr/bin/mips-linux-gnu-ld: ingenic-drm-drv.c:(.text+0x16b0):
+> > undefined reference to `clk_get_parent'
+> > 
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> 
+> Acked-by: Paul Cercueil <paul@crapouillou.net>
 
-drivers/clk/samsung/clk-exynos-clkout.c:219:12: error: 'exynos_clkout_resume' defined but not used [-Werror=unused-function]
-  219 | static int exynos_clkout_resume(struct device *dev)
-      |            ^~~~~~~~~~~~~~~~~~~~
-drivers/clk/samsung/clk-exynos-clkout.c:210:12: error: 'exynos_clkout_suspend' defined but not used [-Werror=unused-function]
-  210 | static int exynos_clkout_suspend(struct device *dev)
-      |            ^~~~~~~~~~~~~~~~~~~~~
+Thanks for the ack.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/clk/samsung/clk-exynos-clkout.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+David and Daniel,
+I think there is no dedicated maintainer for Ingenic DRM, so can you
+pick it up directly?
 
-diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
-index 9ec2f40cc400..e6d6cbf8c4e6 100644
---- a/drivers/clk/samsung/clk-exynos-clkout.c
-+++ b/drivers/clk/samsung/clk-exynos-clkout.c
-@@ -207,7 +207,7 @@ static int exynos_clkout_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int exynos_clkout_suspend(struct device *dev)
-+static int __maybe_unused exynos_clkout_suspend(struct device *dev)
- {
- 	struct exynos_clkout *clkout = dev_get_drvdata(dev);
- 
-@@ -216,7 +216,7 @@ static int exynos_clkout_suspend(struct device *dev)
- 	return 0;
- }
- 
--static int exynos_clkout_resume(struct device *dev)
-+static int __maybe_unused exynos_clkout_resume(struct device *dev)
- {
- 	struct exynos_clkout *clkout = dev_get_drvdata(dev);
- 
--- 
-2.27.0
-
+Best regards,
+Krzysztof
