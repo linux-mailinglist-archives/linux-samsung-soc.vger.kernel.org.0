@@ -2,16 +2,16 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 910982D6A12
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Dec 2020 22:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3429F2D6A05
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Dec 2020 22:39:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404778AbgLJV36 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 10 Dec 2020 16:29:58 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41044 "EHLO mail.kernel.org"
+        id S2394026AbgLJVaC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 10 Dec 2020 16:30:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41068 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394058AbgLJV34 (ORCPT
+        id S2404807AbgLJV37 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 10 Dec 2020 16:29:56 -0500
+        Thu, 10 Dec 2020 16:29:59 -0500
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
 To:     Rob Herring <robh+dt@kernel.org>,
@@ -23,9 +23,9 @@ To:     Rob Herring <robh+dt@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH 2/9] ARM: dts: exynos: correct PMIC interrupt trigger level on Monk
-Date:   Thu, 10 Dec 2020 22:28:56 +0100
-Message-Id: <20201210212903.216728-2-krzk@kernel.org>
+Subject: [PATCH 3/9] ARM: dts: exynos: correct PMIC interrupt trigger level on Rinato
+Date:   Thu, 10 Dec 2020 22:28:57 +0100
+Message-Id: <20201210212903.216728-3-krzk@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201210212903.216728-1-krzk@kernel.org>
 References: <20201210212903.216728-1-krzk@kernel.org>
@@ -40,17 +40,17 @@ with a requirement of acknowledge from the CPU.  Without specifying the
 interrupt type in Devicetree, kernel might apply some fixed
 configuration, not necessarily working for this hardware.
 
-Fixes: e0cefb3f79d3 ("ARM: dts: add board dts file for Exynos3250-based Monk board")
+Fixes: faaf348ef468 ("ARM: dts: Add board dts file for exynos3250-rinato")
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- arch/arm/boot/dts/exynos3250-monk.dts | 2 +-
+ arch/arm/boot/dts/exynos3250-rinato.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/exynos3250-monk.dts b/arch/arm/boot/dts/exynos3250-monk.dts
-index 69451566945d..fae046e08a5d 100644
---- a/arch/arm/boot/dts/exynos3250-monk.dts
-+++ b/arch/arm/boot/dts/exynos3250-monk.dts
-@@ -200,7 +200,7 @@ &i2c_0 {
+diff --git a/arch/arm/boot/dts/exynos3250-rinato.dts b/arch/arm/boot/dts/exynos3250-rinato.dts
+index a26e3e582a7e..d64ccf4b7d32 100644
+--- a/arch/arm/boot/dts/exynos3250-rinato.dts
++++ b/arch/arm/boot/dts/exynos3250-rinato.dts
+@@ -270,7 +270,7 @@ &i2c_0 {
  	pmic@66 {
  		compatible = "samsung,s2mps14-pmic";
  		interrupt-parent = <&gpx0>;
