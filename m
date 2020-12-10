@@ -2,73 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5080F2D69EF
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Dec 2020 22:33:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B6EE2D6AB3
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Dec 2020 23:55:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405047AbgLJVat (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 10 Dec 2020 16:30:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41308 "EHLO mail.kernel.org"
+        id S2404832AbgLJV0l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 10 Dec 2020 16:26:41 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37928 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404874AbgLJVah (ORCPT
+        id S2390128AbgLJV01 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 10 Dec 2020 16:30:37 -0500
+        Thu, 10 Dec 2020 16:26:27 -0500
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     Rob Herring <robh+dt@kernel.org>,
+To:     Chanwoo Choi <cw00.choi@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Lee Jones <lee.jones@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH 9/9] mfd: sec-irq: Do not enforce (incorrect) interrupt trigger type
-Date:   Thu, 10 Dec 2020 22:29:03 +0100
-Message-Id: <20201210212903.216728-9-krzk@kernel.org>
+        Sebastian Reichel <sre@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rtc@vger.kernel.org
+Cc:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Matheus Castello <matheus@castello.eng.br>,
+        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+        Angus Ainslie <angus@akkea.ca>,
+        Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 01/18] ARM: dts: exynos: correct fuel gauge interrupt trigger level on GT-I9100
+Date:   Thu, 10 Dec 2020 22:25:17 +0100
+Message-Id: <20201210212534.216197-1-krzk@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201210212903.216728-1-krzk@kernel.org>
-References: <20201210212903.216728-1-krzk@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Interrupt line can be configured on different hardware in different way,
-even inverted.  Therefore driver should not enforce specific trigger
-type - edge falling - but instead rely on Devicetree to configure it.
+The Maxim fuel gauge datasheets describe the interrupt line as active
+low with a requirement of acknowledge from the CPU.  The falling edge
+interrupt will mostly work but it's not correct.
 
-The Samsung PMIC drivers are used only on Devicetree boards.
-
-Additionally, the PMIC datasheets describe the interrupt line as active
-low with a requirement of acknowledge from the CPU therefore the edge
-falling is not correct.
-
+Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-
 ---
+ arch/arm/boot/dts/exynos4210-i9100.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This patch should wait till DTS changes are merged, as it relies on
-proper Devicetree.
----
- drivers/mfd/sec-irq.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/mfd/sec-irq.c b/drivers/mfd/sec-irq.c
-index a98c5d165039..760f88a865ab 100644
---- a/drivers/mfd/sec-irq.c
-+++ b/drivers/mfd/sec-irq.c
-@@ -480,8 +480,7 @@ int sec_irq_init(struct sec_pmic_dev *sec_pmic)
- 	}
+diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exynos4210-i9100.dts
+index a0c3bab382ae..e56b64e237d3 100644
+--- a/arch/arm/boot/dts/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/exynos4210-i9100.dts
+@@ -136,7 +136,7 @@ battery@36 {
+ 			compatible = "maxim,max17042";
  
- 	ret = devm_regmap_add_irq_chip(sec_pmic->dev, sec_pmic->regmap_pmic,
--				       sec_pmic->irq,
--				       IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+				       sec_pmic->irq, IRQF_ONESHOT,
- 				       sec_pmic->irq_base, sec_irq_chip,
- 				       &sec_pmic->irq_data);
- 	if (ret != 0) {
+ 			interrupt-parent = <&gpx2>;
+-			interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
++			interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
+ 
+ 			pinctrl-0 = <&max17042_fuel_irq>;
+ 			pinctrl-names = "default";
 -- 
 2.25.1
 
