@@ -2,52 +2,63 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF17D2D80D1
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Dec 2020 22:17:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3ECA2D866F
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 12 Dec 2020 13:30:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404621AbgLKVNR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 11 Dec 2020 16:13:17 -0500
-Received: from server.kenspensetc.com ([185.148.128.76]:60744 "EHLO
-        server.kenspensetc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2395162AbgLKVMY (ORCPT
+        id S2393408AbgLLMaH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 12 Dec 2020 07:30:07 -0500
+Received: from smtp05.smtpout.orange.fr ([80.12.242.127]:59066 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390468AbgLLMaH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 11 Dec 2020 16:12:24 -0500
-Received: from localhost ([127.0.0.1]:48514 helo=server.kenspensetc.com)
-        by server.kenspensetc.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <sender@ridecals.com>)
-        id 1knLnA-0002CX-4B; Thu, 10 Dec 2020 08:15:32 -0500
-Received: from [70.32.0.46] ([70.32.0.46]) by ridecals.com (Horde Framework)
- with HTTPS; Thu, 10 Dec 2020 08:15:32 -0500
-Date:   Thu, 10 Dec 2020 08:15:32 -0500
-Message-ID: <20201210081532.Horde.8qYOU3VVNsL5wjy1lylWpdy@ridecals.com>
-From:   Russell Branting <sender@ridecals.com>
-Subject: Vital
-Reply-to: Goodagent01@gmail.com
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        Sat, 12 Dec 2020 07:30:07 -0500
+Received: from localhost.localdomain ([93.22.36.60])
+        by mwinf5d61 with ME
+        id 3QUL2400B1HrHD103QULvm; Sat, 12 Dec 2020 13:28:22 +0100
+X-ME-Helo: localhost.localdomain
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sat, 12 Dec 2020 13:28:22 +0100
+X-ME-IP: 93.22.36.60
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     krzk@kernel.org, b.zolnierkie@samsung.com, mturquette@baylibre.com,
+        sboyd@kernel.org, yadi.brar@samsung.com, mturquette@linaro.org
+Cc:     linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] clk: s2mps11: Fix a resource leak in error handling paths in the probe function
+Date:   Sat, 12 Dec 2020 13:28:18 +0100
+Message-Id: <20201212122818.86195-1-christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Disposition: inline
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server.kenspensetc.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - ridecals.com
-X-Get-Message-Sender-Via: server.kenspensetc.com: authenticated_id: sender9@ridecals.com
-X-Authenticated-Sender: server.kenspensetc.com: sender9@ridecals.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-To:     unlisted-recipients:; (no To-header on input)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Some resource should be released in the error handling path of the probe
+function, as already done in the remove function.
 
-I am instructed to inform you of your appointment as the next of kin  
-to your deceased relative estate. Kindly indicate your acceptance by  
-reconfirming your Full Name, Address & Phone Number for immediate  
-processing of the funds release to your control OR the deceased  
-deposited funds will be declared unclaimed.
+The remove function was fixed in commit bf416bd45738 ("clk: s2mps11: Add
+missing of_node_put and of_clk_del_provider")
 
+Fixes: 7cc560dea415 ("clk: s2mps11: Add support for s2mps11")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/clk/clk-s2mps11.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/clk-s2mps11.c b/drivers/clk/clk-s2mps11.c
+index aa21371f9104..a3e883a9f406 100644
+--- a/drivers/clk/clk-s2mps11.c
++++ b/drivers/clk/clk-s2mps11.c
+@@ -195,6 +195,7 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
+ 	return ret;
+ 
+ err_reg:
++	of_node_put(s2mps11_clks[0].clk_np);
+ 	while (--i >= 0)
+ 		clkdev_drop(s2mps11_clks[i].lookup);
+ 
+-- 
+2.27.0
 
