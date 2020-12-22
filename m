@@ -2,102 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC78C2E0065
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Dec 2020 19:48:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB0462E06C1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Dec 2020 08:32:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727667AbgLUSrw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 21 Dec 2020 13:47:52 -0500
-Received: from mail-oo1-f53.google.com ([209.85.161.53]:38575 "EHLO
-        mail-oo1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727055AbgLUSrv (ORCPT
+        id S1726082AbgLVHcR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Dec 2020 02:32:17 -0500
+Received: from mail-40131.protonmail.ch ([185.70.40.131]:23780 "EHLO
+        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726070AbgLVHcA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:47:51 -0500
-Received: by mail-oo1-f53.google.com with SMTP id i18so2441935ooh.5;
-        Mon, 21 Dec 2020 10:47:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9c4Z1cR0okEDOva6ZJZicR2jBIUZ+5XrWMqkg7M3kpw=;
-        b=hz3KlOPy99wyUWikmU8eY5avjkr6YqZ/MHNscLb8qTxnR5ow5mZQfkEp1BQhK9yvDD
-         QkvcBmjUMi1/Yd+yP+tGSDbHIGoAnTFW27ANdXx3mMbDS9ZYatSOFtQGKbnrsmvjW+K2
-         /dT870LPVAWhfhuDQEsiobUPs5+cuxn+1DViJZMhGjbBolk5+UJmlN2bkikgU22OTGhZ
-         4K9O8X7+l0yzF5d0s+mv1Xmy5d8gKGrooib30gPj42QqB2s3Vqb8ObvT9oPrLazGUg+x
-         aZCAnyWBnwY7KWt/vbq6CexJOUSZeN0646BBLp5MDT+2HuZH9qiP+eqjr3MdTaMxJMLE
-         rNcw==
-X-Gm-Message-State: AOAM5319kvPhdn1bD84KFShpOD53RplkYw4wKjIF+sSAW9e6/6kPqGCf
-        fLMjmbf1FU3L+7hCdBfblQ==
-X-Google-Smtp-Source: ABdhPJxHtxtQavMpTMYOeQXfbwlNAzcd18hUq1nv29288DdMCrjnzy/vnMDlD21MGqurHNxrq5tuvg==
-X-Received: by 2002:a4a:8353:: with SMTP id q19mr7538448oog.40.1608576430556;
-        Mon, 21 Dec 2020 10:47:10 -0800 (PST)
-Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id t72sm3697688oie.47.2020.12.21.10.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 10:47:09 -0800 (PST)
-Received: (nullmailer pid 344465 invoked by uid 1000);
-        Mon, 21 Dec 2020 18:47:07 -0000
-Date:   Mon, 21 Dec 2020 11:47:07 -0700
-From:   Rob Herring <robh@kernel.org>
+        Tue, 22 Dec 2020 02:32:00 -0500
+Date:   Tue, 22 Dec 2020 07:31:14 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1608622277;
+        bh=uD0o1RGxUdohZwqEit8GaCkXhH2zAclkKXfTpSwZqmA=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=YNkxNP1CjHq3ry96pM3okOw2TEp9G7NBSRJc42Gt8dDgcnpWw40ckl5ryYit8mbfN
+         l8dOVEDFfQ8gfrc4aPiCRtgJO3xg+FxNSxilfM91F1pA9Emu/R9/hs29cdNDkTwZje
+         DWm9sBcJh42gcHRzPTj/UYPIkPs1cuWjrSBjaoCY=
 To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        devicetree@vger.kernel.org, linux-rtc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
-        Matheus Castello <matheus@castello.eng.br>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Hans de Goede <hdegoede@redhat.com>,
+From:   Timon Baetz <timon.baetz@protonmail.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
         Lee Jones <lee.jones@linaro.org>,
-        Angus Ainslie <angus@akkea.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [RFC 17/18] mfd: max14577: Do not enforce (incorrect) interrupt
- trigger type
-Message-ID: <20201221184707.GA344409@robh.at.kernel.org>
-References: <20201210212534.216197-1-krzk@kernel.org>
- <20201210212534.216197-17-krzk@kernel.org>
+        Sebastian Reichel <sre@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Timon Baetz <timon.baetz@protonmail.com>
+Reply-To: Timon Baetz <timon.baetz@protonmail.com>
+Subject: [PATCH v3 1/7] extcon: max8997: Add CHGINS and CHGRM interrupt handling
+Message-ID: <20201222070520.710096-1-timon.baetz@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201210212534.216197-17-krzk@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 10 Dec 2020 22:25:33 +0100, Krzysztof Kozlowski wrote:
-> Interrupt line can be configured on different hardware in different way,
-> even inverted.  Therefore driver should not enforce specific trigger
-> type - edge falling - but instead rely on Devicetree to configure it.
-> 
-> The Maxim 14577/77836 datasheets describe the interrupt line as active
-> low with a requirement of acknowledge from the CPU therefore the edge
-> falling is not correct.
-> 
-> The interrupt line is shared between PMIC and charger driver, so using
-> level sensitive interrupt is here especially important to avoid races.
-> With an edge configuration in case if first PMIC signals interrupt
-> followed shortly after by the RTC, the interrupt might not be yet
-> cleared/acked thus the second one would not be noticed.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> 
-> ---
-> 
-> This patch should wait till DTS changes are merged, as it relies on
-> proper Devicetree.
-> ---
->  Documentation/devicetree/bindings/mfd/max14577.txt | 4 ++--
->  drivers/mfd/max14577.c                             | 6 +++---
->  2 files changed, 5 insertions(+), 5 deletions(-)
-> 
+This allows the MAX8997 charger to set the current limit depending on
+the detected extcon charger type.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Timon Baetz <timon.baetz@protonmail.com>
+---
+ drivers/extcon/extcon-max8997.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/extcon/extcon-max8997.c b/drivers/extcon/extcon-max899=
+7.c
+index 337b0eea4e62..e1408075ef7d 100644
+--- a/drivers/extcon/extcon-max8997.c
++++ b/drivers/extcon/extcon-max8997.c
+@@ -44,6 +44,8 @@ static struct max8997_muic_irq muic_irqs[] =3D {
+ =09{ MAX8997_MUICIRQ_ChgDetRun,=09"muic-CHGDETRUN" },
+ =09{ MAX8997_MUICIRQ_ChgTyp,=09"muic-CHGTYP" },
+ =09{ MAX8997_MUICIRQ_OVP,=09=09"muic-OVP" },
++=09{ MAX8997_PMICIRQ_CHGINS,=09"pmic-CHGINS" },
++=09{ MAX8997_PMICIRQ_CHGRM,=09"pmic-CHGRM" },
+ };
+=20
+ /* Define supported cable type */
+@@ -538,6 +540,8 @@ static void max8997_muic_irq_work(struct work_struct *w=
+ork)
+ =09case MAX8997_MUICIRQ_DCDTmr:
+ =09case MAX8997_MUICIRQ_ChgDetRun:
+ =09case MAX8997_MUICIRQ_ChgTyp:
++=09case MAX8997_PMICIRQ_CHGINS:
++=09case MAX8997_PMICIRQ_CHGRM:
+ =09=09/* Handle charger cable */
+ =09=09ret =3D max8997_muic_chg_handler(info);
+ =09=09break;
+--=20
+2.25.1
+
+
