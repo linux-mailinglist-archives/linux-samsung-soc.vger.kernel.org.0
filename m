@@ -2,222 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E91A62F31BB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Jan 2021 14:31:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B7902F3D13
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 13 Jan 2021 01:43:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727030AbhALN25 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 12 Jan 2021 08:28:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52046 "EHLO
+        id S2438127AbhALVh0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 12 Jan 2021 16:37:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbhALN24 (ORCPT
+        with ESMTP id S2437058AbhALUxP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 12 Jan 2021 08:28:56 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18785C061795
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Jan 2021 05:28:16 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id k7so594209ooa.0
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Jan 2021 05:28:16 -0800 (PST)
+        Tue, 12 Jan 2021 15:53:15 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10283C061794
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Jan 2021 12:52:35 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id b64so27869ybg.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Jan 2021 12:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/5PClQYptOKzf4VGuYg6zpVPuHDySmC7+0H8PzNXzBk=;
-        b=C11mfkBoxNn1MArI0Umb8nOkUtYdOxntZOXmnhseYbzmPd1+Beq9jgs/ZE4dUyW9Wy
-         EBszhT9WOwiUvqu5UjpMPjCoIUnvX009RS4knk8Dc76w7NDI8tq1ViX8IT6w202QO9wA
-         PDP9MvZL3ZssDHzqaEfuVOHw1KRw5KKKlWr40=
+        bh=4wcVuL2JHWUe2OSC6B91qspF/lz9pUiODDoT4Xqa+iM=;
+        b=fed1BSmonr4i0CFVaM7ytMeRTJ0XmCOw0lrfX1w8MkrlzJ/jTr3wSOTfPJMC/BhzrG
+         IPiCSToYZw6m67DQ89vmJAIuFJjQcL29aabYVT70HujxJ/GXS3I3EnOqTq0FLIJO2XyT
+         jReE/+Co++NPwvk1Tx3nwfaahWsxyX0yE4wcINKNUMMTjI0DYplMXX6mQfy8qxMB02N2
+         UfYxXQrmYBacTtXmDzJ3u28CYuDeqJA9rh7cTNw9WFVOmQn5HcJcs90M37kgo3aYAVUP
+         tivk+yniUKXPqRzVoIO5YMtvCSKfaRLqHxyTVfXSKDUpWBwwt90a0WP+803Ic+nXXfca
+         eRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/5PClQYptOKzf4VGuYg6zpVPuHDySmC7+0H8PzNXzBk=;
-        b=SLjC2fDPiCs5IMT9gKcWw5TUWt2IvrEGoluDY+luyJWq6Ikng16EpIkYChsDyVyDe9
-         h9m7nxEauzQ1i0ayzLLa2ILahupDcGE5ub3jfq122JhijrdtGjL9qwS6e5LQja9lb1Qt
-         Mv/cemjZGCjmbXMIGyscrvq4CWekYdotXVaj3KZcbCo0diX5xZ4akIz6+WpChPq7sqkE
-         ddaUFYiJncXzcmN6/JcachxZxCEjPcOPbsHwLWruFltHpIAnm0Qge8WHNhuPVWMWhm2c
-         PXIDaCcS/vfRCtWl0cxXnCaVyC9iRsDzovYpb6xykWjTy+QFP5FNt0ebPV3g127UrVfK
-         87KQ==
-X-Gm-Message-State: AOAM530W+rS9JQxhtwFacj/6QNj44cv+6EPeH0gxdrehQqlxJjBpx+al
-        p+1hxWGqkegw5FmgSqymj1OeuIt9IkOpeAqQn9Cxwg==
-X-Google-Smtp-Source: ABdhPJyVQXbd3o888VMoH+BoaA1wz0JVD78ufYjTNXTQUKQEYRQd1kyAD91V/rdI3kY7T5DbkT7sXRCWoIshBiPnLQo=
-X-Received: by 2002:a4a:9722:: with SMTP id u31mr2784698ooi.28.1610458095399;
- Tue, 12 Jan 2021 05:28:15 -0800 (PST)
+        bh=4wcVuL2JHWUe2OSC6B91qspF/lz9pUiODDoT4Xqa+iM=;
+        b=qKYJ8aRskPPxzEjscA0XGNbDy4nejXdHwPtn2UL2Nzfydb49Q/WeD0yI52qyQmckck
+         ouyqWcDbNgQPdMMDMVQCGD7ucq6ktonqHBm2+qPKoRJhdj1ypKUq+zo2P3saYRQBSYkU
+         l4KtSa2cgTLF3ioRRQlRZ5dRvxGGRY0lDUeEaiigWEyAxez+BPKecvkz7sNyeAXhpYte
+         IC1pzwQ1B9oKQ5nl1nz6SHbiA13ofLntO5c33dN+cUyOD6LvB56X88JVHZjf7h9XbK0F
+         Dq8bPk75qWg1zoBUbmzWFXmKPqn1fwVdWTnoOX+p3bKG/XVd89t2HZplclfjILRWgPtq
+         MacQ==
+X-Gm-Message-State: AOAM531v8RKjtfTgUgQewQ4k1MC0bAetaRIhrQ1RD/Ip2SKQrgfUdltp
+        H2bGxz9q8EjXvy4gOlv5pFTAG+ayWJf7OwZ3iQsTbQ==
+X-Google-Smtp-Source: ABdhPJwuTLLKnhlFDp3a9Qtnh3e6/seLDPR0sx8XyZk1MST52u3yoogdil8l1bS4/yhombgc6jNKobTh/Qr2ubS0YGs=
+X-Received: by 2002:a25:b703:: with SMTP id t3mr2191805ybj.96.1610484753991;
+ Tue, 12 Jan 2021 12:52:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20201127164131.2244124-1-daniel.vetter@ffwll.ch> <X/2jC9kBBQCfbC3d@phenom.ffwll.local>
-In-Reply-To: <X/2jC9kBBQCfbC3d@phenom.ffwll.local>
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Tue, 12 Jan 2021 14:28:03 +0100
-Message-ID: <CAKMK7uH_H7EPo_5ZZ17xp+2Nc+ikRUY8Rm34np6t6Yt5VZCWzQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/17] follow_pfn and other iomap races
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
+References: <20201218031703.3053753-1-saravanak@google.com>
+ <20201218031703.3053753-6-saravanak@google.com> <CGME20210111141814eucas1p1f388df07b789693a999042b27f0d8c2a@eucas1p1.samsung.com>
+ <5484316b-0f27-6c36-9259-5c765bb6b96c@samsung.com> <2556a69b-5da5-bf80-e051-df2d02fbc40f@samsung.com>
+ <CAGETcx8-1YzF2Br0sszJROLAWo3DSm27K071Md9wY5SOwUeLdw@mail.gmail.com> <fde65185-fd00-1f79-0f80-245eaa6c95cb@samsung.com>
+In-Reply-To: <fde65185-fd00-1f79-0f80-245eaa6c95cb@samsung.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Tue, 12 Jan 2021 12:51:58 -0800
+Message-ID: <CAGETcx_QY3h83q1fSr=h_vMQdH-TMhVYPozPuSr=q4uv2Lr48w@mail.gmail.com>
+Subject: Re: [PATCH v1 5/5] driver core: Set fw_devlink=on by default
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 2:24 PM Daniel Vetter <daniel@ffwll.ch> wrote:
+On Mon, Jan 11, 2021 at 11:11 PM Marek Szyprowski
+<m.szyprowski@samsung.com> wrote:
 >
-> On Fri, Nov 27, 2020 at 05:41:14PM +0100, Daniel Vetter wrote:
-> > Hi all
-> >
-> > Another update of my patch series to clamp down a bunch of races and gaps
-> > around follow_pfn and other access to iomem mmaps. Previous version:
-> >
-> > v1: https://lore.kernel.org/dri-devel/20201007164426.1812530-1-daniel.vetter@ffwll.ch/
-> > v2: https://lore.kernel.org/dri-devel/20201009075934.3509076-1-daniel.vetter@ffwll.ch
-> > v3: https://lore.kernel.org/dri-devel/20201021085655.1192025-1-daniel.vetter@ffwll.ch/
-> > v4: https://lore.kernel.org/dri-devel/20201026105818.2585306-1-daniel.vetter@ffwll.ch/
-> > v5: https://lore.kernel.org/dri-devel/20201030100815.2269-1-daniel.vetter@ffwll.ch/
-> > v6: https://lore.kernel.org/dri-devel/20201119144146.1045202-1-daniel.vetter@ffwll.ch/
-> >
-> > And the discussion that sparked this journey:
-> >
-> > https://lore.kernel.org/dri-devel/20201007164426.1812530-1-daniel.vetter@ffwll.ch/
-> >
-> > I think the first 12 patches are ready for landing. The parts starting
-> > with "mm: Add unsafe_follow_pfn" probably need more baking time.
-> >
-> > Andrew, can you please pick these up, or do you prefer I do a topic branch
-> > and send them to Linus directly in the next merge window?
-> >
-> > Changes in v7:
-> > - more acks/reviews
-> > - reordered with the ready pieces at the front
-> > - simplified the new follow_pfn function as Jason suggested
-> >
-> > Changes in v6:
-> > - Tested v4l userptr as Tomasz suggested. No boom observed
-> > - Added RFC for locking down follow_pfn, per discussion with Christoph and
-> >   Jason.
-> > - Explain why pup_fast is safe in relevant patches, there was a bit a
-> >   confusion when discussing v5.
-> > - Fix up the resource patch, with CONFIG_IO_STRICT_DEVMEM it crashed on
-> >   boot due to an unintended change (reported by John)
-> >
-> > Changes in v5:
-> > - Tomasz found some issues in the media patches
-> > - Polish suggested by Christoph for the unsafe_follow_pfn patch
-> >
-> > Changes in v4:
-> > - Drop the s390 patch, that was very stand-alone and now queued up to land
-> >   through s390 trees.
-> > - Comment polish per Dan's review.
-> >
-> > Changes in v3:
-> > - Bunch of polish all over, no functional changes aside from one barrier
-> >   in the resource code, for consistency.
-> > - A few more r-b tags.
-> >
-> > Changes in v2:
-> > - tons of small polish&fixes all over, thanks to all the reviewers who
-> >   spotted issues
-> > - I managed to test at least the generic_access_phys and pci mmap revoke
-> >   stuff with a few gdb sessions using our i915 debug tools (hence now also
-> >   the drm/i915 patch to properly request all the pci bar regions)
-> > - reworked approach for the pci mmap revoke: Infrastructure moved into
-> >   kernel/resource.c, address_space mapping is now set up at open time for
-> >   everyone (which required some sysfs changes). Does indeed look a lot
-> >   cleaner and a lot less invasive than I feared at first.
-> >
-> > Coments and review on the remaining bits very much welcome, especially
-> > from the kvm and vfio side.
-> >
-> > Cheers, Daniel
-> >
-> > Daniel Vetter (17):
-> >   drm/exynos: Stop using frame_vector helpers
-> >   drm/exynos: Use FOLL_LONGTERM for g2d cmdlists
-> >   misc/habana: Stop using frame_vector helpers
-> >   misc/habana: Use FOLL_LONGTERM for userptr
-> >   mm/frame-vector: Use FOLL_LONGTERM
-> >   media: videobuf2: Move frame_vector into media subsystem
-> >   mm: Close race in generic_access_phys
-> >   PCI: Obey iomem restrictions for procfs mmap
-> >   /dev/mem: Only set filp->f_mapping
-> >   resource: Move devmem revoke code to resource framework
-> >   sysfs: Support zapping of binary attr mmaps
-> >   PCI: Revoke mappings like devmem
+> On 11.01.2021 22:47, Saravana Kannan wrote:
+> > On Mon, Jan 11, 2021 at 6:18 AM Marek Szyprowski
+> > <m.szyprowski@samsung.com> wrote:
+> >> On 11.01.2021 12:12, Marek Szyprowski wrote:
+> >>> On 18.12.2020 04:17, Saravana Kannan wrote:
+> >>>> Cyclic dependencies in some firmware was one of the last remaining
+> >>>> reasons fw_devlink=on couldn't be set by default. Now that cyclic
+> >>>> dependencies don't block probing, set fw_devlink=on by default.
+> >>>>
+> >>>> Setting fw_devlink=on by default brings a bunch of benefits (currently,
+> >>>> only for systems with device tree firmware):
+> >>>> * Significantly cuts down deferred probes.
+> >>>> * Device probe is effectively attempted in graph order.
+> >>>> * Makes it much easier to load drivers as modules without having to
+> >>>>     worry about functional dependencies between modules (depmod is still
+> >>>>     needed for symbol dependencies).
+> >>>>
+> >>>> If this patch prevents some devices from probing, it's very likely due
+> >>>> to the system having one or more device drivers that "probe"/set up a
+> >>>> device (DT node with compatible property) without creating a struct
+> >>>> device for it.  If we hit such cases, the device drivers need to be
+> >>>> fixed so that they populate struct devices and probe them like normal
+> >>>> device drivers so that the driver core is aware of the devices and their
+> >>>> status. See [1] for an example of such a case.
+> >>>>
+> >>>> [1] -
+> >>>> https://lore.kernel.org/lkml/CAGETcx9PiX==mLxB9PO8Myyk6u2vhPVwTMsA5NkD-ywH5xhusw@mail.gmail.com/
+> >>>> Signed-off-by: Saravana Kannan <saravanak@google.com>
+> >>> This patch landed recently in linux next-20210111 as commit
+> >>> e590474768f1 ("driver core: Set fw_devlink=on by default"). Sadly it
+> >>> breaks Exynos IOMMU operation, what causes lots of devices being
+> >>> deferred and not probed at all. I've briefly checked and noticed that
+> >>> exynos_sysmmu_probe() is never called after this patch. This is really
+> >>> strange for me, as the SYSMMU controllers on Exynos platform are
+> >>> regular platform devices registered by the OF code. The driver code is
+> >>> here: drivers/iommu/exynos-iommu.c, example dts:
+> >>> arch/arm/boot/dts/exynos3250.dtsi (compatible = "samsung,exynos-sysmmu").
+> >> Okay, I found the source of this problem. It is caused by Exynos power
+> >> domain driver, which is not platform driver yet. I will post a patch,
+> >> which converts it to the platform driver.
+> > Thanks Marek! Hopefully the debug logs I added were sufficient to
+> > figure out the reason.
 >
-> As Jason suggested, I've pulled the first 1 patches into a topic branch.
+> Frankly, it took me a while to figure out that device core waits for the
+> power domain devices. Maybe it would be possible to add some more debug
+> messages or hints? Like the reason of the deferred probe in
+> /sys/kernel/debug/devices_deferred ?
 
-Uh this was meant to read "first _12_ patches" ofc.
--Daniel
+There's already a /sys/devices/.../<device>/waiting_for_supplier file
+that tells you if the device is waiting for a supplier device to be
+added. That file goes away once the device probes. If the file has 1,
+then it's waiting for the supplier device to be added (like your
+case). If it's 0, then the device is just waiting on one of the
+existing suppliers to probe. You can find the existing suppliers
+through /sys/devices/.../<device>/supplier:*/supplier. Also, flip
+these dev_dbg() to dev_info() if you need more details about deferred
+probing.
 
->
-> Stephen, can you please add the below to linux-next for the 5.12 merge
-> window?
->
-> git://anongit.freedesktop.org/drm/drm topic/iomem-mmap-vs-gup
->
-> Once this part has landed I'll see what to do with the below part.
->
-> Thanks, Daniel
->
-> >   mm: Add unsafe_follow_pfn
-> >   media/videobuf1|2: Mark follow_pfn usage as unsafe
-> >   vfio/type1: Mark follow_pfn as unsafe
-> >   kvm: pass kvm argument to follow_pfn callsites
-> >   mm: add mmu_notifier argument to follow_pfn
-> >
-> >  arch/powerpc/kvm/book3s_64_mmu_hv.c           |   2 +-
-> >  arch/powerpc/kvm/book3s_64_mmu_radix.c        |   2 +-
-> >  arch/powerpc/kvm/e500_mmu_host.c              |   2 +-
-> >  arch/x86/kvm/mmu/mmu.c                        |   8 +-
-> >  drivers/char/mem.c                            |  86 +-------------
-> >  drivers/gpu/drm/exynos/Kconfig                |   1 -
-> >  drivers/gpu/drm/exynos/exynos_drm_g2d.c       |  48 ++++----
-> >  drivers/media/common/videobuf2/Kconfig        |   1 -
-> >  drivers/media/common/videobuf2/Makefile       |   1 +
-> >  .../media/common/videobuf2}/frame_vector.c    |  57 ++++-----
-> >  .../media/common/videobuf2/videobuf2-memops.c |   3 +-
-> >  drivers/media/platform/omap/Kconfig           |   1 -
-> >  drivers/media/v4l2-core/videobuf-dma-contig.c |   2 +-
-> >  drivers/misc/habanalabs/Kconfig               |   1 -
-> >  drivers/misc/habanalabs/common/habanalabs.h   |   6 +-
-> >  drivers/misc/habanalabs/common/memory.c       |  52 +++-----
-> >  drivers/pci/pci-sysfs.c                       |   4 +
-> >  drivers/pci/proc.c                            |   6 +
-> >  drivers/vfio/vfio_iommu_type1.c               |   4 +-
-> >  fs/sysfs/file.c                               |  11 ++
-> >  include/linux/ioport.h                        |   6 +-
-> >  include/linux/kvm_host.h                      |   9 +-
-> >  include/linux/mm.h                            |  50 +-------
-> >  include/linux/sysfs.h                         |   2 +
-> >  include/media/frame_vector.h                  |  47 ++++++++
-> >  include/media/videobuf2-core.h                |   1 +
-> >  kernel/resource.c                             |  98 ++++++++++++++-
-> >  mm/Kconfig                                    |   3 -
-> >  mm/Makefile                                   |   1 -
-> >  mm/memory.c                                   | 112 +++++++++++++++---
-> >  mm/nommu.c                                    |  16 ++-
-> >  security/Kconfig                              |  13 ++
-> >  virt/kvm/kvm_main.c                           |  56 +++++----
-> >  33 files changed, 413 insertions(+), 299 deletions(-)
-> >  rename {mm => drivers/media/common/videobuf2}/frame_vector.c (84%)
-> >  create mode 100644 include/media/frame_vector.h
-> >
-> > --
-> > 2.29.2
-> >
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+https://lore.kernel.org/lkml/20201218031703.3053753-2-saravanak@google.com/
 
+Hopefully this meets what you are looking for?
 
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+-Saravana
