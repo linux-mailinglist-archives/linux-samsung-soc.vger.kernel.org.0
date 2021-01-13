@@ -2,234 +2,250 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2A9B2F4FB3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 13 Jan 2021 17:18:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ADEE2F528B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 13 Jan 2021 19:43:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727521AbhAMQSk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 13 Jan 2021 11:18:40 -0500
-Received: from mail-dm6nam11on2047.outbound.protection.outlook.com ([40.107.223.47]:27320
-        "EHLO NAM11-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727109AbhAMQSj (ORCPT
+        id S1728437AbhAMSll (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 13 Jan 2021 13:41:41 -0500
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:51661 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728416AbhAMSlZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 13 Jan 2021 11:18:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nzsxKkNNn9ZDNUdS6Pby4S4aCjT3UqJSQOIqBwbBKefR0xc4+RbydnJ97ECzy99aRAKFDRyodDjoxvIWr8hp3VEt498/zJSHpWHlxBqDvi3TdonXvABhwNolst0VFaxZDepxTyrBUwaUu/TVn3boj+TGfXhGh3xtjDdI2gzcEFVMvPGt4Qf/kMnfuZEWK53P8GJwJK8l5cJBNdUSX4B3LtGPT5JgBXbGG6M9xXYG1rbieKnTccFPpHdye5KPBKlkmEn6YsLG0GwH6xtf4ggQC2LzVm+kIYKVaRcxj5ycS3F2DERDEUcghBSpso8GaNRM5e2oaso8nvbOczYeYQK6hg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9kIIlKzLqdTPtllnWtxcIvEI2c7vtdqiCI7fQ2NlhWE=;
- b=CCrADieO/KDtQYbCKKLc9Sg18p0taWCMTpnt//pNVbWDXmdCCooWgPMHBe4AkGGuhINCURmBZet62eFCc3H/B+3eT2WB9VlA4aUCSaaS4acpQy/qaQeU6gKMZJm0s+upKeWCrGxYq3gzLzLxGveXBYy0dRH/92KmTYtJo1K3x59mm9ROLBf85Cz9fKIGziyi+C0u+hSGIzK+M5NYEdH4lcRFcEEzKtyCjB1xsfQkg/fiw2dVwiGAmPl9EkqrAjcqiqqhPzP9lyurC8g2eLF87vLhE02RRTp1g7JWnbVhoEksO7Q5nQi4CRKWIrJhvTbrS226JTAvm4xe4Kw4JA1whA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9kIIlKzLqdTPtllnWtxcIvEI2c7vtdqiCI7fQ2NlhWE=;
- b=3sil8yglTjDVxpMVGbxDsfqwxm57wFNk4++7IRXJALoF42sgV8NnwhM9YIPBaLxwIa/kKWlSXuV2taQAB/S6JFAQ80oqQeE3LVHZneFQvQ1vQuEHFPLRIar/3zdlUsTr3YH5U6DeJCxNh9rnsj2k+s1dTe3/wBnpAJByIgCIRCM=
-Authentication-Results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=amd.com;
-Received: from SN1PR12MB2590.namprd12.prod.outlook.com (2603:10b6:802:2e::17)
- by SN6PR12MB2607.namprd12.prod.outlook.com (2603:10b6:805:6d::30) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3742.12; Wed, 13 Jan
- 2021 16:17:45 +0000
-Received: from SN1PR12MB2590.namprd12.prod.outlook.com
- ([fe80::21ed:fdce:2ba8:2179]) by SN1PR12MB2590.namprd12.prod.outlook.com
- ([fe80::21ed:fdce:2ba8:2179%7]) with mapi id 15.20.3742.012; Wed, 13 Jan 2021
- 16:17:44 +0000
-Date:   Wed, 13 Jan 2021 10:17:34 -0600
-From:   John Allen <john.allen@amd.com>
-To:     Allen Pais <allen.lkml@gmail.com>
-Cc:     herbert@gondor.apana.org.au, davem@davemloft.net,
-        nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com,
-        ludovic.desroches@microchip.com, jesper.nilsson@axis.com,
-        lars.persson@axis.com, horia.geanta@nxp.com, aymen.sghaier@nxp.com,
-        gcherian@marvell.com, thomas.lendacky@amd.com, gilad@benyossef.com,
-        bbrezillon@kernel.org, arno@natisbad.org, schalla@marvell.com,
-        matthias.bgg@gmail.com, jamie@jamieiles.com,
-        giovanni.cabiddu@intel.com, heiko@sntech.de, krzk@kernel.org,
-        vz@mleia.com, k.konieczny@samsung.com,
-        linux-crypto@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        qat-linux@intel.com, linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Allen Pais <apais@linux.microsoft.com>,
-        Romain Perier <romain.perier@gmail.com>
-Subject: Re: [PATCH v3 06/19] crypto: ccp: convert tasklets to use new
- tasklet_setup() API
-Message-ID: <20210113161734.GA31464@theseus>
-References: <20210112014650.10887-1-allen.lkml@gmail.com>
- <20210112014650.10887-7-allen.lkml@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210112014650.10887-7-allen.lkml@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [165.204.53.104]
-X-ClientProxiedBy: BY3PR04CA0017.namprd04.prod.outlook.com
- (2603:10b6:a03:217::22) To SN1PR12MB2590.namprd12.prod.outlook.com
- (2603:10b6:802:2e::17)
+        Wed, 13 Jan 2021 13:41:25 -0500
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210113184042euoutp02c8c47da388a6c33ed28156b080901424~Z3rx8cE710297202972euoutp02C
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 13 Jan 2021 18:40:42 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210113184042euoutp02c8c47da388a6c33ed28156b080901424~Z3rx8cE710297202972euoutp02C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1610563242;
+        bh=jTHnGna2FvAIzqNFyhpFj3qv6394hSgJoF8U9q2dYNg=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=W8RjPU53/KiiaLSrHVS+vcljVmOURyrWhisoZfnNpAVkdMtwZ/pcMZD1xgQb234LK
+         5Enb17rWW0dCUF+AuOKcNP370KKQjNWkLNlFJe7Un7BXFsOO3wZ+2S+9SPqmcSrGCE
+         PoWQnplmjrs3X6ZBboyfNFrb/iLN50cemZlvxu7o=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210113184042eucas1p148b43a2db6f6e19e290b1aa283027bf5~Z3rxYmFGQ1613716137eucas1p1L;
+        Wed, 13 Jan 2021 18:40:42 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 28.99.27958.AAE3FFF5; Wed, 13
+        Jan 2021 18:40:42 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210113184041eucas1p229fed83022249faf9fd333466370be83~Z3rw9gqSG1712517125eucas1p2b;
+        Wed, 13 Jan 2021 18:40:41 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20210113184041eusmtrp1a6c5548c0a10702f1a1556c849e1c1ce~Z3rw8uwep2007620076eusmtrp1Q;
+        Wed, 13 Jan 2021 18:40:41 +0000 (GMT)
+X-AuditID: cbfec7f2-efdff70000006d36-33-5fff3eaa487a
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 38.B7.16282.9AE3FFF5; Wed, 13
+        Jan 2021 18:40:41 +0000 (GMT)
+Received: from localhost (unknown [106.120.51.46]) by eusmtip2.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20210113184041eusmtip24b95f294ae6f564d025b9acd33e1e350~Z3rwvNDyR1783017830eusmtip2P;
+        Wed, 13 Jan 2021 18:40:41 +0000 (GMT)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     Andrew Lunn <andrew@lunn.ch>, jim.cromie@gmail.com,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     =?UTF-8?q?Bart=C5=82omiej=20=C5=BBolnierkiewicz?= 
+        <b.zolnierkie@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+Subject: [PATCH v10 0/3] AX88796C SPI Ethernet Adapter
+Date:   Wed, 13 Jan 2021 19:40:25 +0100
+Message-Id: <20210113184028.4433-1-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from theseus (165.204.53.104) by BY3PR04CA0017.namprd04.prod.outlook.com (2603:10b6:a03:217::22) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3742.7 via Frontend Transport; Wed, 13 Jan 2021 16:17:41 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: cf883aea-651b-4a21-21d0-08d8b7dec2ac
-X-MS-TrafficTypeDiagnostic: SN6PR12MB2607:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <SN6PR12MB26073FD23BA1FA51CBF03B669AA90@SN6PR12MB2607.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:283;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: HmDSsuhwi7tPic/nP3AvfdiltUfETj9oI8fzXurnPH5ZWc42m7yhg46ei8u5JSAwwCfTwx1NEimukJd8ejbGdJqNZ/mMKyMwk0hECTpLO7+KsZ79A/BcMozFdzqPzm64nVgBa8M1CTmy1om5hw8JO9ou5qpLUUUKHE0N8VBsjYXVHugLkmxd+E67F5vKWXDN1B6IsPN9IRnKnOwYoQPoajKc4hvNF4NXIXojtJTumKbTrsHbBalFYLZk8dWgy2rJt0f+uFT6qww0aE1lXDSkvBw0fDctj4aRuIZr/3kTd2fZehA1WL6ELQfs4g7ftTMuzp9Gnze2qHU7AhXkzFtlDUCDIUzmfNXVUE9JhrJDeFnZQnKt9lPYABLhbIfpfNklAHhqnLoc+jK+VtSIYvVRag==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN1PR12MB2590.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(366004)(376002)(39860400002)(136003)(396003)(83380400001)(1076003)(86362001)(8936002)(54906003)(9576002)(44832011)(316002)(9686003)(52116002)(186003)(478600001)(7416002)(66946007)(66476007)(2906002)(8676002)(6496006)(33716001)(26005)(6916009)(33656002)(66556008)(16526019)(956004)(5660300002)(4326008)(55016002)(6666004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?rPtbvQ4ZuSmm1/nmvLO1XCeM/GOEfb7w2JUTvSemBSZgyktwLsm/dHeX7Kdc?=
- =?us-ascii?Q?1WDWv3ts3wjfM3BoG4kxPHGx3gATRF9yCmbDsB6HPrGfkI0j3iZ9cFnb0FJb?=
- =?us-ascii?Q?ssNqGnr15n74+76bI7900G/2mE83Ve5JIb19bB4w8wER3qjK1rwCrzXMsjIk?=
- =?us-ascii?Q?eKSKJYWdQWXYgYdDZQpebZj42cbT7n4VcFUnoZZuiMq3o6A8SocnGPhSA1Qr?=
- =?us-ascii?Q?hxKsBib7y6yJsEEvlo6aDdvRU/sB6yeyxku9ZfC80DjnxW5W527C/6AfhAxc?=
- =?us-ascii?Q?quTpcYI9RPhfudeCgvwMctf0tYq+p6gjGPj3oETl4LBGa+cl0XFwoiNOkQPX?=
- =?us-ascii?Q?nO0DWkx6gRlELFRfHTmvvPGs4k0SHVihI/W1R+nDdem+i+qfbbrRLfEhIEgN?=
- =?us-ascii?Q?iHJQ92oSbahT/rDXdLkIH9yRuiY+qjQwWInzVymU9uhGBUdqZX0Kfu35OarJ?=
- =?us-ascii?Q?To+ES7ZFcZGvWEnt2yCm959Vw0nITduNpngrTZWiorbRtPNbp4uNiKe8IH4N?=
- =?us-ascii?Q?Bdbqe46Qx07y1O+jQ8P47kage6v4yURSsvkW8CZvuhSXHL6iLxHahhR5KknY?=
- =?us-ascii?Q?6u9V8s82KL8F640TqQeWBm7K7UQLkoeSb0icP2ZAdxeTwFqcWlj6hjXSHPPN?=
- =?us-ascii?Q?LItqTTxyh5VmBe6pK6SLfxlWYXqdTqUgWccEGvoY/lJKdf0uBaPlU7UgcimM?=
- =?us-ascii?Q?bGLaX4mFoXVYKotgIhizhHDUj3UewOeTKtPw7A6LKlG9R6iNLrs0mLR8JLw4?=
- =?us-ascii?Q?LWVvmXdq+3t/vabo6EflNNvzfJsGA+XLrMC/+SN9bAVgz9pOAU6j81GoDnXy?=
- =?us-ascii?Q?lgO3T+5ijmVm0PgUoTzLqWuHVR9kBdP2ernxN+QsUStnrb0vDAzaGnr4pyKP?=
- =?us-ascii?Q?v4fI2vODcDZTI2V64EX+Sj8yg7a1A81tpJMehWydui2tZVh2HORGqnz2D9V5?=
- =?us-ascii?Q?JPgpLgcBCk4LwKfyAql2QFjtmMYAVq1G4SdrpHQEFJP3lbOrcNz54+Kggf2M?=
- =?us-ascii?Q?KciC?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthSource: SN1PR12MB2590.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2021 16:17:44.7669
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-Network-Message-Id: cf883aea-651b-4a21-21d0-08d8b7dec2ac
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CGrEbJ6lNh2Dnxqf1yX8NiKDDEXbGZTXULUarTV/3H9WEVNwJZ4z3sAQG98wGUoWYy231zEL/YgBLOS3B70VUA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR12MB2607
+Organization: Samsung R&D Institute Poland
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAKsWRmVeSWpSXmKPExsWy7djPc7qr7P7HGzyczGVx/u4hZouNM9az
+        Wsw538JiMf/IOVaLRe9nsFpce3uH1aL/8Wtmi/PnN7BbXNjWx2px89AKRotNj6+xWlzeNYfN
+        Ysb5fUwWh6buZbRYe+Quu8WxBWIWrXuPsDsIely+dpHZY8vKm0weO2fdZffYtKqTzWPzknqP
+        nTs+M3n0bVnF6PF5k1wARxSXTUpqTmZZapG+XQJXxoUFvgVPtSr6Or8yNzAuUOxi5OSQEDCR
+        ePVwN3MXIxeHkMAKRoljPYdYIJwvjBJnp39gh3A+M0rsWbmXqYuRA6zl836o+HJGiZdPprFC
+        OM8ZJb5cP8IEMpdNwFGif+kJsISIwD1mifXtDxhBHGaBfYwSO+9NYQapEhYwk9h8fSmYzSKg
+        KtF44g6YzStgJfFkwlp2iAvlJdqXb2eDiAtKnJz5hAXE5hfQkljTdB3MZgaqad46G+wLCYHF
+        nBKzlz1ggmh2kTh0+AvUIGGJV8e3QNkyEqcn97BA/FMvMXmSGURvD6PEtjk/WCBqrCXunPvF
+        BlLDLKApsX6XPkTYUeLusinsEK18EjfeCkKcwCcxadt0Zogwr0RHmxBEtYrEuv49UAOlJHpf
+        rWCEsD0kFt8+zjaBUXEWksdmIXlmFsLeBYzMqxjFU0uLc9NTiw3zUsv1ihNzi0vz0vWS83M3
+        MQIT3el/xz/tYJz76qPeIUYmDsZDjBIczEoivEXdf+OFeFMSK6tSi/Lji0pzUosPMUpzsCiJ
+        866avSZeSCA9sSQ1OzW1ILUIJsvEwSnVwOTcvEzllYT8j1cpnj1iYqLfZjw8fbDv+t2nh4vn
+        Nh0yf1jqxmb8wTDuloyUf/TBwPWFTU4rXx757b9dWm3iZYtCoXD202LJsccYdkgFOm0693TL
+        2ffam8NfP2M7t72wc83FFWuN9RnbmjK6ao7/f9xtYHqo1uCc4c2//470On5afur8aqHu81vv
+        TdJbZmYXMjOv++XfhMTDqcUpgS2aWf+EkiQ49nQ6PE8/80JSYMoXHcaFX398XffdjaP/0/Ju
+        m5PxNbm7rvxLW9Jt2dPKYDs5idnn6zJVZwHP2fFfl3x7f+dvy2++BU8vyXdvXXe44IPb0h39
+        93zcbHmvCn9vPmb/vfeig6/a6Z+6C7YJnn6oxFKckWioxVxUnAgApnj38uMDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOIsWRmVeSWpSXmKPExsVy+t/xe7or7f7HGzycqWNx/u4hZouNM9az
+        Wsw538JiMf/IOVaLRe9nsFpce3uH1aL/8Wtmi/PnN7BbXNjWx2px89AKRotNj6+xWlzeNYfN
+        Ysb5fUwWh6buZbRYe+Quu8WxBWIWrXuPsDsIely+dpHZY8vKm0weO2fdZffYtKqTzWPzknqP
+        nTs+M3n0bVnF6PF5k1wAR5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6d
+        TUpqTmZZapG+XYJexoUFvgVPtSr6Or8yNzAuUOxi5OCQEDCR+LyfvYuRi0NIYCmjxPZDp5kg
+        4lISK+emdzFyApnCEn+udbGB2EICTxklvv6wBbHZBBwl+peeYAXpFRF4wyzRdO8t2CBmgX2M
+        EvuPLmYHqRIWMJPYfH0pM4jNIqAq0XjiDpjNK2Al8WTCWnaIDfIS7cu3s0HEBSVOznzCAnIE
+        s4C6xPp5QiBhfgEtiTVN11lAbGag8uats5knMArMQtIxC6FjFpKqBYzMqxhFUkuLc9Nzi430
+        ihNzi0vz0vWS83M3MQJjdNuxn1t2MK589VHvECMTB+MhRgkOZiUR3qLuv/FCvCmJlVWpRfnx
+        RaU5qcWHGE2BPpjILCWanA9MEnkl8YZmBqaGJmaWBqaWZsZK4rwmR9bECwmkJ5akZqemFqQW
+        wfQxcXBKNTC186+VzePbZP/vWDL//EB9112snwKNHwf3Lvx25VzR2tO7+0Vf3pawyPG225uc
+        kfF4d9l98eCYxMTdl9xfcqsF2Z7Y5vCooW2zncU0m3VhRtemHr7AsTBOjqVG8dXMWS9i/mx/
+        wRiTacYSuO3Zpm/Zxdd3VEQfWfVJxMvOIHrhZYekRY3qCeo8T0LOzPd4J3d9Vi7LGb9vDKvF
+        lnII/9kSsOJKcpITa5Wh+Komh3VNy8P7Gd788nhlamQuWrFKesHm+LKmHRc0cue9qPlyVfZ2
+        SO93b/fM9k+X3zPc/Kv288xqvrxDe7+aHDWUCM/eHp759LJ5Jous6JcPT0pMP6edmuU/I9X7
+        eEp79x63471KLMUZiYZazEXFiQC5c1kGWgMAAA==
+X-CMS-MailID: 20210113184041eucas1p229fed83022249faf9fd333466370be83
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210113184041eucas1p229fed83022249faf9fd333466370be83
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210113184041eucas1p229fed83022249faf9fd333466370be83
+References: <CGME20210113184041eucas1p229fed83022249faf9fd333466370be83@eucas1p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 07:16:37AM +0530, Allen Pais wrote:
-> From: Allen Pais <apais@linux.microsoft.com>
-> 
-> In preparation for unconditionally passing the
-> struct tasklet_struct pointer to all tasklet
-> callbacks, switch to using the new tasklet_setup()
-> and from_tasklet() to pass the tasklet pointer explicitly.
-> 
-> Signed-off-by: Romain Perier <romain.perier@gmail.com>
-> Signed-off-by: Allen Pais <apais@linux.microsoft.com>
+This is a driver for AX88796C Ethernet Adapter connected in SPI mode as
+found on ARTIK5 evaluation board. The driver has been ported from a
+v3.10.9 vendor kernel for ARTIK5 board.
 
-Acked-by: John Allen <john.allen@amd.com>
+Changes in v10:
+  - removed unused variable
+ 
+Changes in v9:
+  - used pskb_extend_head()
+  - used ethtool private flags instead of tunables to switch SPI
+    compression
+  - changed
+    - alloc_skb() to netdev_alloc(skb)
+    - __pskb_trim() to pskb_trim()
+  - removed:
+    - chages to skb->truesize
+    - unnecessary casting to short
+    - return f() in a void function
+    - IRQF_SHARED flags
+    - unnecessary memset(0) of kzalloc()ed buffer
+    - unused endiannes detection
+    - unnecessary __packed attribute for some structures
+  - added:
+    - temporary variable in AX_WRITE/READ sequences
+    - missin mutex_unlock() in error paths
+  - axspi_read_reg() returns a constant value in case of an error
+  
+Changes in v8:
+  - fixed the entry in MAINTAINERS
+  - removed unnecessary netif_err()
+  - changed netif_rx() to netif_rx_ni() for code running in a process
+    context
+  - added explicit type casting for ~BIT()
 
-> ---
->  drivers/crypto/ccp/ccp-dev-v3.c    | 9 ++++-----
->  drivers/crypto/ccp/ccp-dev-v5.c    | 9 ++++-----
->  drivers/crypto/ccp/ccp-dmaengine.c | 7 +++----
->  3 files changed, 11 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/crypto/ccp/ccp-dev-v3.c b/drivers/crypto/ccp/ccp-dev-v3.c
-> index 0d5576f6ad21..858566867fa3 100644
-> --- a/drivers/crypto/ccp/ccp-dev-v3.c
-> +++ b/drivers/crypto/ccp/ccp-dev-v3.c
-> @@ -321,9 +321,9 @@ static void ccp_enable_queue_interrupts(struct ccp_device *ccp)
->  	iowrite32(ccp->qim, ccp->io_regs + IRQ_MASK_REG);
->  }
->  
-> -static void ccp_irq_bh(unsigned long data)
-> +static void ccp_irq_bh(struct tasklet_struct *t)
->  {
-> -	struct ccp_device *ccp = (struct ccp_device *)data;
-> +	struct ccp_device *ccp = from_tasklet(ccp, t, irq_tasklet);
->  	struct ccp_cmd_queue *cmd_q;
->  	u32 q_int, status;
->  	unsigned int i;
-> @@ -361,7 +361,7 @@ static irqreturn_t ccp_irq_handler(int irq, void *data)
->  	if (ccp->use_tasklet)
->  		tasklet_schedule(&ccp->irq_tasklet);
->  	else
-> -		ccp_irq_bh((unsigned long)ccp);
-> +		ccp_irq_bh(&ccp->irq_tasklet);
->  
->  	return IRQ_HANDLED;
->  }
-> @@ -457,8 +457,7 @@ static int ccp_init(struct ccp_device *ccp)
->  
->  	/* Initialize the ISR tasklet? */
->  	if (ccp->use_tasklet)
-> -		tasklet_init(&ccp->irq_tasklet, ccp_irq_bh,
-> -			     (unsigned long)ccp);
-> +		tasklet_setup(&ccp->irq_tasklet, ccp_irq_bh);
->  
->  	dev_dbg(dev, "Starting threads...\n");
->  	/* Create a kthread for each queue */
-> diff --git a/drivers/crypto/ccp/ccp-dev-v5.c b/drivers/crypto/ccp/ccp-dev-v5.c
-> index 7838f63bab32..e68b05a3169b 100644
-> --- a/drivers/crypto/ccp/ccp-dev-v5.c
-> +++ b/drivers/crypto/ccp/ccp-dev-v5.c
-> @@ -733,9 +733,9 @@ static void ccp5_enable_queue_interrupts(struct ccp_device *ccp)
->  		iowrite32(SUPPORTED_INTERRUPTS, ccp->cmd_q[i].reg_int_enable);
->  }
->  
-> -static void ccp5_irq_bh(unsigned long data)
-> +static void ccp5_irq_bh(struct tasklet_struct *t)
->  {
-> -	struct ccp_device *ccp = (struct ccp_device *)data;
-> +	struct ccp_device *ccp = from_tasklet(ccp, t, irq_tasklet);
->  	u32 status;
->  	unsigned int i;
->  
-> @@ -772,7 +772,7 @@ static irqreturn_t ccp5_irq_handler(int irq, void *data)
->  	if (ccp->use_tasklet)
->  		tasklet_schedule(&ccp->irq_tasklet);
->  	else
-> -		ccp5_irq_bh((unsigned long)ccp);
-> +		ccp5_irq_bh(&ccp->irq_tasklet);
->  	return IRQ_HANDLED;
->  }
->  
-> @@ -894,8 +894,7 @@ static int ccp5_init(struct ccp_device *ccp)
->  	}
->  	/* Initialize the ISR tasklet */
->  	if (ccp->use_tasklet)
-> -		tasklet_init(&ccp->irq_tasklet, ccp5_irq_bh,
-> -			     (unsigned long)ccp);
-> +		tasklet_setup(&ccp->irq_tasklet, ccp5_irq_bh);
->  
->  	dev_dbg(dev, "Loading LSB map...\n");
->  	/* Copy the private LSB mask to the public registers */
-> diff --git a/drivers/crypto/ccp/ccp-dmaengine.c b/drivers/crypto/ccp/ccp-dmaengine.c
-> index 0770a83bf1a5..a85690866b05 100644
-> --- a/drivers/crypto/ccp/ccp-dmaengine.c
-> +++ b/drivers/crypto/ccp/ccp-dmaengine.c
-> @@ -121,9 +121,9 @@ static void ccp_cleanup_desc_resources(struct ccp_device *ccp,
->  	}
->  }
->  
-> -static void ccp_do_cleanup(unsigned long data)
-> +static void ccp_do_cleanup(struct tasklet_struct *t)
->  {
-> -	struct ccp_dma_chan *chan = (struct ccp_dma_chan *)data;
-> +	struct ccp_dma_chan *chan = from_tasklet(chan, t, cleanup_tasklet);
->  	unsigned long flags;
->  
->  	dev_dbg(chan->ccp->dev, "%s - chan=%s\n", __func__,
-> @@ -712,8 +712,7 @@ int ccp_dmaengine_register(struct ccp_device *ccp)
->  		INIT_LIST_HEAD(&chan->active);
->  		INIT_LIST_HEAD(&chan->complete);
->  
-> -		tasklet_init(&chan->cleanup_tasklet, ccp_do_cleanup,
-> -			     (unsigned long)chan);
-> +		tasklet_setup(&chan->cleanup_tasklet, ccp_do_cleanup);
->  
->  		dma_chan->device = dma_dev;
->  		dma_cookie_init(dma_chan);
-> -- 
-> 2.25.1
-> 
+Changes in v7:
+  - removed duplicate code
+  - moved a constant buffer definition away from a header file
+
+Changes in v6:
+  - fixed typos in Kconfig
+  - checked argument value in ax88796c_set_tunable
+  - updated tags in commit messages
+
+Changes in v5:
+  - coding style (local variable declarations)
+  - added spi0 node in the DT binding example and removed
+    interrupt-parent
+  - removed comp module parameter
+  - added CONFIG_SPI_AX88796C_COMPRESSION option to set the initial
+    state of SPI compression
+  - introduced new ethtool tunable "spi-compression" to controll SPI
+    transfer compression
+  - removed unused fields in struct ax88796c_device
+  - switched from using buffers allocated on stack for SPI transfers
+    to DMA safe ones embedded in struct ax_spi and allocated with
+    kmalloc()
+
+Changes in v4:
+  - fixed compilation problems in asix,ax88796c.yaml and in
+  ax88796c_main.c introduced in v3
+
+Changes in v3:
+  - modify vendor-prefixes.yaml in a separate patch
+  - fix several problems in the dt binding
+    - removed unnecessary descriptions and properties
+    - changed the order of entries
+    - fixed problems with missing defines in the example
+  - change (1 << N) to BIT(N), left a few (0 << N)
+  - replace ax88796c_get_link(), ax88796c_get_link_ksettings(),
+    ax88796c_set_link_ksettings(), ax88796c_nway_reset(),
+    ax88796c_set_mac_address() with appropriate kernel functions.
+  - disable PHY auto-polling in MAC and use PHYLIB to track the state
+    of PHY and configure MAC
+  - propagate return values instead of returning constants in several
+    places
+  - add WARN_ON() for unlocked mutex
+  - remove local work queue and use the system_wq
+  - replace phy_connect_direct() with phy_connect() and move
+    devm_register_netdev() to the end of ax88796c_probe()
+    (Unlike phy_connect_direct() phy_connect() does not crash if the
+    network device isn't registered yet.)
+  - remove error messages on ENOMEM
+  - move free_irq() to the end of ax88796c_close() to avoid race
+    condition
+  - implement flow-control
+
+Changes in v2:
+  - use phylib
+  - added DT bindings
+  - moved #includes to *.c files
+  - used mutex instead of a semaphore for locking
+  - renamed some constants
+  - added error propagation for several functions
+  - used ethtool for dumping registers
+  - added control over checksum offloading
+  - remove vendor specific PM
+  - removed macaddr module parameter and added support for reading a MAC
+    address from platform data (e.g. DT)
+  - removed dependency on SPI from NET_VENDOR_ASIX
+  - added an entry in the MAINTAINERS file
+  - simplified logging with appropriate netif_* and netdev_* helpers
+  - lots of style fixes
+
+Łukasz Stelmach (3):
+  dt-bindings: vendor-prefixes: Add asix prefix
+  dt-bindings: net: Add bindings for AX88796C SPI Ethernet Adapter
+  net: ax88796c: ASIX AX88796C SPI Ethernet Adapter Driver
+
+ .../bindings/net/asix,ax88796c.yaml           |   73 ++
+ .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+ MAINTAINERS                                   |    6 +
+ drivers/net/ethernet/Kconfig                  |    1 +
+ drivers/net/ethernet/Makefile                 |    1 +
+ drivers/net/ethernet/asix/Kconfig             |   35 +
+ drivers/net/ethernet/asix/Makefile            |    6 +
+ drivers/net/ethernet/asix/ax88796c_ioctl.c    |  239 ++++
+ drivers/net/ethernet/asix/ax88796c_ioctl.h    |   26 +
+ drivers/net/ethernet/asix/ax88796c_main.c     | 1103 +++++++++++++++++
+ drivers/net/ethernet/asix/ax88796c_main.h     |  558 +++++++++
+ drivers/net/ethernet/asix/ax88796c_spi.c      |  115 ++
+ drivers/net/ethernet/asix/ax88796c_spi.h      |   69 ++
+ 13 files changed, 2234 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/asix,ax88796c.yaml
+ create mode 100644 drivers/net/ethernet/asix/Kconfig
+ create mode 100644 drivers/net/ethernet/asix/Makefile
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_ioctl.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_ioctl.h
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_main.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_main.h
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_spi.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_spi.h
+
+-- 
+2.26.2
+
