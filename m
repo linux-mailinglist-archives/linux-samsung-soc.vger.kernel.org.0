@@ -2,126 +2,114 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69ACC2FCC89
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Jan 2021 09:17:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA962FD49B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Jan 2021 16:54:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730629AbhATIQv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 20 Jan 2021 03:16:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55572 "EHLO
+        id S1732743AbhATPyk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 20 Jan 2021 10:54:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730152AbhATIHR (ORCPT
+        with ESMTP id S2390562AbhATPx3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 20 Jan 2021 03:07:17 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88264C061799
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Jan 2021 00:06:14 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id m6so14026553pfk.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Jan 2021 00:06:14 -0800 (PST)
+        Wed, 20 Jan 2021 10:53:29 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38FE4C061575;
+        Wed, 20 Jan 2021 07:52:49 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id o17so34757590lfg.4;
+        Wed, 20 Jan 2021 07:52:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oNkS7BO+I4iYqbb8e23nWgzCyCIirVtUbZHdA/+LLQk=;
-        b=H8ahtFkrl8XoAAXOdig+ykUsHL1WV8A6ooGgVzGod+L1cIXRgMBoBvdTwc/Bk1DSAw
-         PlXgpR+6+XSKVseQkHvUwtknt1dIbynk1U0WfmpbYJx0KfQJ60w7GCa6j2ZecpEDDwEo
-         nZZoGepdNQ9fPJxFhxL/+9UAerRGCpTZra+L94Rj4OQuHY79Ahi/XVBbvK9hMw9c+U7M
-         8X1qo+PBEB4Y4p9FSHCVeEFTMnNiPSudwgYQ7iYxcN+1kwI6v1CiXCY2zvxc5qAJyP9k
-         iZVJ8Ku2VjFoupFP/yuzfnbVR0/qVdTPP9WFLH6tYXQGiUp6x4P/9Ga2F5nvtoMXwt6r
-         eR5g==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/KIgJpukkTUseLKOL+nfTNs+iHfOcLiaf/sA4jMSc7o=;
+        b=b2NLVokQPZCUuJAyv3kiWNUb/D7/YvKoWfUJcCHR1heKGaiZjLpcSwBstX7Q3YX8MD
+         0VSL3nGarP20z1Z7t1EQA7XA2H4vpXyhlGms2qwFGmlN5vFPCkNOEwhXvgcl2dX2OHl0
+         Fk8lwe7s8eUZ2wwS5RMH6/mUWuXSRNmTjNvQCAwK5Dd3NdzmkpZHt4llHrw8Ni5khkmn
+         myMjJRhAiEUeq/sHdT1yh60NnMmGAROPatvIjJ8mP6HQeV19cvk6YGXY87IpFAtncwaV
+         v00shKKr9e/yxCXAB3jbsK18rnr4dn0SL3OuJ8SyDsoqZnywmH2zxXJFRB0YEqFQqi04
+         OP8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oNkS7BO+I4iYqbb8e23nWgzCyCIirVtUbZHdA/+LLQk=;
-        b=gdopMwtAcXA3r0OU89GYRWwBYdN5Zd7Q7uQVKpIV8wiPp1JEvjpZgQ2cM9qmeUnjlm
-         9/GbI04jbXMQ4jrVUQ6bW3li6OqOQ9xJM6seaaniwtcJp9X15y91XI+nGpSx+SlW6LTy
-         JiuHB30TZG2+E9bExYNvzK+ueSm21QTFlniIHvNuhpZ8zkqCYZujXcnbbqgDqf4qfwnD
-         NifE1oNMY2/6sGF5L/cP8ox/g7xv+NHNAD2WhOHCn8AuqO1OdFWTgz7IHr/FE8isqcv7
-         Y33YuIplIPfxd1KLBplLlrMX1e2MRtsbtDEIm7l71X7yWUmO69dHFlT/wnC0YBTFLFng
-         jMhA==
-X-Gm-Message-State: AOAM530njBZigF8t2octQrPjIh/l/F1Ly6kBsYc1GWULDaJLqYuo4X3k
-        +BUVsyVozLGN7cDLYbFP2X1wfg==
-X-Google-Smtp-Source: ABdhPJxxnQpjU22yEmNNtaWWmWh2iwZ/WZIldmsDhPNptwyaFHrkBk9JWxSodC3SuvlwGpHnbs4W8g==
-X-Received: by 2002:a63:ef14:: with SMTP id u20mr8314758pgh.93.1611129973985;
-        Wed, 20 Jan 2021 00:06:13 -0800 (PST)
-Received: from localhost ([122.172.59.240])
-        by smtp.gmail.com with ESMTPSA id p15sm1419910pgl.19.2021.01.20.00.06.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jan 2021 00:06:12 -0800 (PST)
-Date:   Wed, 20 Jan 2021 13:36:11 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Mark Brown <broonie@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [BUG] NULL pointer in dev_pm_opp_put_regulators
-Message-ID: <20210120080611.uqmik3hc5kq6mpxw@vireshk-i7>
-References: <20210120075902.lfz6cw4jgqg6e7c3@kozik-lap>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/KIgJpukkTUseLKOL+nfTNs+iHfOcLiaf/sA4jMSc7o=;
+        b=nbGUUFMp2tvkeX6XBsXTytoIiQPoz2eDIbHMmu4obTt01NoNLbaj2f9zx3wVyrCp4j
+         XIEjmjHhN6R1F1fnjSKUn9LIH2fe1HWXJOARadqqsVIByKni7NkJOPdLj+5chmh06SoZ
+         6TH9b14hriqgE1+ThonVV1NND8L1OGT9qf8dXWsrbFRjvgVWZ0Hv2ANhdQP7Pp0rUInH
+         DdyJhS2vnOcnkWMdS4WMk+TAwt6OmI0ezULfIAVj4iUL3FbjIeIkwceqBm8ZxGEFnVmy
+         1k1exhCfw1zlHcU/HC6vF73fyQJL7udqR/YCzWTZyBsWL6xCKgckEZ+apslDjtXdNUTt
+         jDZQ==
+X-Gm-Message-State: AOAM5338hi7aA1pHPOm9dFhgTGZXp4CKCcQIfKiU3dvNwEKhL+T6Bgjo
+        K/NSxyBc5oPD2aA5LNiSlbJh8+WQmjY=
+X-Google-Smtp-Source: ABdhPJz54jp4p6N7ro9OB4UGTlGLwMbj9w9A1NhmVFwuW25RiB7kgYemoqd4C3nN1Esa+ddCNU5GUA==
+X-Received: by 2002:a19:ac45:: with SMTP id r5mr4942869lfc.305.1611157967504;
+        Wed, 20 Jan 2021 07:52:47 -0800 (PST)
+Received: from [192.168.2.145] (109-252-192-57.dynamic.spd-mgts.ru. [109.252.192.57])
+        by smtp.googlemail.com with ESMTPSA id b4sm74228ljp.53.2021.01.20.07.52.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jan 2021 07:52:46 -0800 (PST)
+Subject: Re: [PATCH 02/31] opp: Add devres wrapper for
+ dev_pm_opp_set_regulators and dev_pm_opp_put_regulators
+To:     Yangtao Li <tiny.windzz@gmail.com>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com, krzk@kernel.org,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, yuq825@gmail.com, airlied@linux.ie,
+        daniel@ffwll.ch, robdclark@gmail.com, sean@poorly.run,
+        robh@kernel.org, tomeu.vizoso@collabora.com, steven.price@arm.com,
+        alyssa.rosenzweig@collabora.com, stanimir.varbanov@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        lukasz.luba@arm.com, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, vireshk@kernel.org, nm@ti.com,
+        sboyd@kernel.org, broonie@kernel.org, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, rjw@rjwysocki.net, jcrouse@codeaurora.org,
+        hoegsberg@google.com, eric@anholt.net, tzimmermann@suse.de,
+        marijn.suijten@somainline.org, gustavoars@kernel.org,
+        emil.velikov@collabora.com, jonathan@marek.ca,
+        akhilpo@codeaurora.org, smasetty@codeaurora.org,
+        airlied@redhat.com, masneyb@onstation.org, kalyan_t@codeaurora.org,
+        tanmay@codeaurora.org, ddavenport@chromium.org,
+        jsanka@codeaurora.org, rnayak@codeaurora.org,
+        tongtiangen@huawei.com, miaoqinglang@huawei.com,
+        khsieh@codeaurora.org, abhinavk@codeaurora.org,
+        chandanu@codeaurora.org, groeck@chromium.org, varar@codeaurora.org,
+        mka@chromium.org, harigovi@codeaurora.org,
+        rikard.falkeborn@gmail.com, natechancellor@gmail.com,
+        georgi.djakov@linaro.org, akashast@codeaurora.org,
+        parashar@codeaurora.org, dianders@chromium.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org
+References: <20210101165507.19486-1-tiny.windzz@gmail.com>
+ <20210101165507.19486-3-tiny.windzz@gmail.com>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <43c251a2-430a-040c-4152-94cf10c884e0@gmail.com>
+Date:   Wed, 20 Jan 2021 18:52:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210120075902.lfz6cw4jgqg6e7c3@kozik-lap>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20210101165507.19486-3-tiny.windzz@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 20-01-21, 08:59, Krzysztof Kozlowski wrote:
-> Hi,
+01.01.2021 19:54, Yangtao Li пишет:
+> Add devres wrapper for dev_pm_opp_set_regulators()
+> dev_pm_opp_put_regulators () to simplify driver code.
 > 
-> Today's next fails to boot on Exynos5422 Odroid HC1 board:
-> 
-> [    6.409023] Unable to handle kernel NULL pointer dereference at virtual address 00000004
-> [    6.417199] pgd = (ptrval)
-> [    6.419748] [00000004] *pgd=00000000
-> [    6.423499] Internal error: Oops: 805 [#1] PREEMPT SMP ARM
-> [    6.428724] Modules linked in:
-> [    6.431752] CPU: 5 PID: 1 Comm: swapper/0 Not tainted 5.11.0-rc4-next-20210120 #2
-> [    6.439209] Hardware name: Samsung Exynos (Flattened Device Tree)
-> [    6.445273] PC is at dev_pm_opp_put_regulators+0xb4/0x114
-> ...
-> [    6.680370] [<c086f51c>] (dev_pm_opp_put_regulators) from [<c08d5d48>] (exynos_bus_probe+0x45c/0x620)
-> [    6.689556] [<c08d5d48>] (exynos_bus_probe) from [<c06b49a8>] (platform_probe+0x80/0xc0)
-> [    6.697614] [<c06b49a8>] (platform_probe) from [<c06b1ab4>] (really_probe+0x1d4/0x500)
-> [    6.705499] [<c06b1ab4>] (really_probe) from [<c06b1e58>] (driver_probe_device+0x78/0x1dc)
-> [    6.713731] [<c06b1e58>] (driver_probe_device) from [<c06b236c>] (device_driver_attach+0x58/0x60)
-> [    6.722571] [<c06b236c>] (device_driver_attach) from [<c06b2470>] (__driver_attach+0xfc/0x160)
-> [    6.731149] [<c06b2470>] (__driver_attach) from [<c06af85c>] (bus_for_each_dev+0x68/0xb4)
-> [    6.739294] [<c06af85c>] (bus_for_each_dev) from [<c06b0b5c>] (bus_add_driver+0x158/0x214)
-> [    6.747526] [<c06b0b5c>] (bus_add_driver) from [<c06b3314>] (driver_register+0x78/0x110)
-> [    6.755585] [<c06b3314>] (driver_register) from [<c0102464>] (do_one_initcall+0x8c/0x430)
-> [    6.763731] [<c0102464>] (do_one_initcall) from [<c11010e4>] (kernel_init_freeable+0x190/0x1e0)
-> [    6.772397] [<c11010e4>] (kernel_init_freeable) from [<c0b4fc50>] (kernel_init+0x8/0x120)
-> [    6.780542] [<c0b4fc50>] (kernel_init) from [<c010011c>] (ret_from_fork+0x14/0x38)
-> 
-> https://krzk.eu/#/builders/21/builds/2862/steps/15/logs/serial0
-> 
-> I did not do a bisect but the last commit touching these parts was:
-> 
-> commit 302c014726dbd9fcde852985528c139d2214a1f2
-> Author: Viresh Kumar <viresh.kumar@linaro.org>
-> Date:   Tue Jan 19 11:58:58 2021 +0530
->     opp: Prepare for ->set_opp() helper to work without regulators
-> 
-> Maybe you have some idea of cause?
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> ---
+>  drivers/opp/core.c     | 50 ++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_opp.h |  9 ++++++++
+>  2 files changed, 59 insertions(+)
 
-t a/drivers/opp/core.c b/drivers/opp/core.c
-index 1ed673334565..7c0e0e76a57e 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -2038,7 +2038,7 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
-                regulator_put(opp_table->regulators[i]);
- 
-        mutex_lock(&opp_table->lock);
--       if (opp_table->sod_supplies) {
-+       if (opp_table->set_opp_data) {
-                opp_table->set_opp_data->old_opp.supplies = NULL;
-                opp_table->set_opp_data->new_opp.supplies = NULL;
-        }
-
-This shall fix it, sorry about that. I have pushed my branch again. Thanks.
-
--- 
-viresh
+Reviewed-by: Dmitry Osipenko <digetx@gmail.com>
+Tested-by: Dmitry Osipenko <digetx@gmail.com>
