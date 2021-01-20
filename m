@@ -2,204 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD8152FC3A9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Jan 2021 23:40:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B6752FCC96
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Jan 2021 09:21:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbhASWgh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 19 Jan 2021 17:36:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387686AbhASOhg (ORCPT
+        id S1729524AbhATIBr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 20 Jan 2021 03:01:47 -0500
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:52069 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730253AbhATH7s (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 19 Jan 2021 09:37:36 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5DAAC061786
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Jan 2021 06:34:58 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id f6so10726407ots.9
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Jan 2021 06:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4e0CGYDHUfu279fyABP5Y+REbie5VpiNs9f4Knw2Cok=;
-        b=VBqn8DUOGeynSeRg3k1zvnxZgxHVN/m4CmDY5MHMndd1hrRsvbsOlsUR+N5zIlZNjv
-         I1JtDyXv8bu7TYIBeBou0qbqzOTX9l2l0clQMWnlaS5BEAD0UdAQ7SGwdm49iZ4AHegS
-         P3+zFz0CEInVbSD6li/gqZsMR+ZONkqJPxGNc=
+        Wed, 20 Jan 2021 02:59:48 -0500
+Received: by mail-wm1-f47.google.com with SMTP id m2so1978310wmm.1;
+        Tue, 19 Jan 2021 23:59:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4e0CGYDHUfu279fyABP5Y+REbie5VpiNs9f4Knw2Cok=;
-        b=osNWkQDYslGWbS34u+M7fo9FxLYMbMHIErCJ2MJ9iwC2YETszx4uqTKzHy4kvjO+oo
-         QCkg5Rg8RvAzIauq0gfhCqxTtAsy0/Fpt6lE/vwgRDN4Ux1GFrsgMst0/DUnu99MgPTR
-         LP43+/M7s8nt3El3GEphD1V6h1S6qYLBe2Pt1jYdKr2AiPDrn9dhCyX9MvgCmCrlM4RV
-         SAfVN/I8g7a44alSXSkuKDfBCr73QzuTv7FJV5zoIHBWvunK+2YG5q8Fm8SXWbo55i0J
-         os/UMI1ZXzyTu0bpx2R3rP59UaaLg2FaoIJLQ2E2GBmmCZkKszb8oJhyA4a0JZtSuTKB
-         tLwA==
-X-Gm-Message-State: AOAM531jwjm5w85v64uRwyROqCwrs+1BybOwourb/G7I8raMomGDmK5Y
-        mmFVeykFYA25Nm2G9PxjPtxAosZuoLaAnSXHJnk13w==
-X-Google-Smtp-Source: ABdhPJxNAs6mhMviXMtFn7M206VEX/Eake/mU9seAOwtJ76LA2Emqx8YbNqRC8ThlQu1JNtpKUawwkeGr99A8LNHJEY=
-X-Received: by 2002:a9d:ea6:: with SMTP id 35mr3626432otj.188.1611066898227;
- Tue, 19 Jan 2021 06:34:58 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=T2Nxi0UAJrvG7QfcIV+5/q/cjGRwozwlTwF0B5esfbc=;
+        b=Rfr2tI195C+boZT9fQBqJ/SkWxEylbagQ8XfbghIfSK6lC16evvJ8H//QRRdSuXIkb
+         RwAwQ4RQ1advODC4OZM90ymrHvEPB1N1NH/8fsh0m/qNdOf5gF3xyqcdm0JycVtoE+UN
+         s0auMgSFokXdNjhNrQ7QXjlm9q8A4bo67BTYKnNQEz/C2doNdUuEffjsmOFsQ/wH69ry
+         fZp9qiOQwZqzWxKjGt8y686MAMpQi6vCk/IM0L0fxrVYVbDFQamh9utVKqtwwEbQepxL
+         9rhh5eePqZHDWEEoe3d8Abf/PfD0NfxQTAM7AQmxoozSeywnIgSBeHpsV/ybbNObpvfl
+         oYvA==
+X-Gm-Message-State: AOAM532mI6JKtS3lgk5Xm1XFStCHNeItyt7+UTBAk5rcTyrpcmIpL86R
+        8azMTU28o+4BPZ47uyjlONs=
+X-Google-Smtp-Source: ABdhPJwuoZx+7uPQvYpmVvSuwJYlxmIyZp4gj80Fm1xV/LqPgvhq9RJ1+mS9bs4zh22yQ0TDjyuX6g==
+X-Received: by 2002:a05:600c:2601:: with SMTP id h1mr3086639wma.31.1611129545414;
+        Tue, 19 Jan 2021 23:59:05 -0800 (PST)
+Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.googlemail.com with ESMTPSA id l8sm2355643wmi.8.2021.01.19.23.59.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Jan 2021 23:59:04 -0800 (PST)
+Date:   Wed, 20 Jan 2021 08:59:02 +0100
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Mark Brown <broonie@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [BUG] NULL pointer in dev_pm_opp_put_regulators
+Message-ID: <20210120075902.lfz6cw4jgqg6e7c3@kozik-lap>
 MIME-Version: 1.0
-References: <20201127164131.2244124-1-daniel.vetter@ffwll.ch>
- <20201127164131.2244124-13-daniel.vetter@ffwll.ch> <CAKMK7uGrdDrbtj0OyzqQc0CGrQwc2F3tFJU9vLfm2jjufAZ5YQ@mail.gmail.com>
- <YAbtZBU5PMr68q9E@kroah.com>
-In-Reply-To: <YAbtZBU5PMr68q9E@kroah.com>
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Tue, 19 Jan 2021 15:34:47 +0100
-Message-ID: <CAKMK7uGHSgetm7mDso6_vj+aGrR4u+ChwHb3k0QvgG0K6X2fPg@mail.gmail.com>
-Subject: Re: [PATCH v7 12/17] PCI: Revoke mappings like devmem
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Kees Cook <keescook@chromium.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        John Hubbard <jhubbard@nvidia.com>,
-        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
-        Jan Kara <jack@suse.cz>, Linux PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 3:32 PM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Tue, Jan 19, 2021 at 09:17:55AM +0100, Daniel Vetter wrote:
-> > On Fri, Nov 27, 2020 at 5:42 PM Daniel Vetter <daniel.vetter@ffwll.ch> =
-wrote:
-> > >
-> > > Since 3234ac664a87 ("/dev/mem: Revoke mappings when a driver claims
-> > > the region") /dev/kmem zaps ptes when the kernel requests exclusive
-> > > acccess to an iomem region. And with CONFIG_IO_STRICT_DEVMEM, this is
-> > > the default for all driver uses.
-> > >
-> > > Except there's two more ways to access PCI BARs: sysfs and proc mmap
-> > > support. Let's plug that hole.
-> > >
-> > > For revoke_devmem() to work we need to link our vma into the same
-> > > address_space, with consistent vma->vm_pgoff. ->pgoff is already
-> > > adjusted, because that's how (io_)remap_pfn_range works, but for the
-> > > mapping we need to adjust vma->vm_file->f_mapping. The cleanest way i=
-s
-> > > to adjust this at at ->open time:
-> > >
-> > > - for sysfs this is easy, now that binary attributes support this. We
-> > >   just set bin_attr->mapping when mmap is supported
-> > > - for procfs it's a bit more tricky, since procfs pci access has only
-> > >   one file per device, and access to a specific resources first needs
-> > >   to be set up with some ioctl calls. But mmap is only supported for
-> > >   the same resources as sysfs exposes with mmap support, and otherwis=
-e
-> > >   rejected, so we can set the mapping unconditionally at open time
-> > >   without harm.
-> > >
-> > > A special consideration is for arch_can_pci_mmap_io() - we need to
-> > > make sure that the ->f_mapping doesn't alias between ioport and iomem
-> > > space. There's only 2 ways in-tree to support mmap of ioports: generi=
-c
-> > > pci mmap (ARCH_GENERIC_PCI_MMAP_RESOURCE), and sparc as the single
-> > > architecture hand-rolling. Both approach support ioport mmap through =
-a
-> > > special pfn range and not through magic pte attributes. Aliasing is
-> > > therefore not a problem.
-> > >
-> > > The only difference in access checks left is that sysfs PCI mmap does
-> > > not check for CAP_RAWIO. I'm not really sure whether that should be
-> > > added or not.
-> > >
-> > > Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-> > > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-> > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > Cc: Jason Gunthorpe <jgg@ziepe.ca>
-> > > Cc: Kees Cook <keescook@chromium.org>
-> > > Cc: Dan Williams <dan.j.williams@intel.com>
-> > > Cc: Andrew Morton <akpm@linux-foundation.org>
-> > > Cc: John Hubbard <jhubbard@nvidia.com>
-> > > Cc: J=C3=A9r=C3=B4me Glisse <jglisse@redhat.com>
-> > > Cc: Jan Kara <jack@suse.cz>
-> > > Cc: Dan Williams <dan.j.williams@intel.com>
-> > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > Cc: linux-mm@kvack.org
-> > > Cc: linux-arm-kernel@lists.infradead.org
-> > > Cc: linux-samsung-soc@vger.kernel.org
-> > > Cc: linux-media@vger.kernel.org
-> > > Cc: Bjorn Helgaas <bhelgaas@google.com>
-> > > Cc: linux-pci@vger.kernel.org
-> > > Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > > --
-> > > v2:
-> > > - Totally new approach: Adjust filp->f_mapping at open time. Note tha=
-t
-> > >   this now works on all architectures, not just those support
-> > >   ARCH_GENERIC_PCI_MMAP_RESOURCE
-> > > ---
-> > >  drivers/pci/pci-sysfs.c | 4 ++++
-> > >  drivers/pci/proc.c      | 1 +
-> > >  2 files changed, 5 insertions(+)
-> > >
-> > > diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-> > > index d15c881e2e7e..3f1c31bc0b7c 100644
-> > > --- a/drivers/pci/pci-sysfs.c
-> > > +++ b/drivers/pci/pci-sysfs.c
-> > > @@ -929,6 +929,7 @@ void pci_create_legacy_files(struct pci_bus *b)
-> > >         b->legacy_io->read =3D pci_read_legacy_io;
-> > >         b->legacy_io->write =3D pci_write_legacy_io;
-> > >         b->legacy_io->mmap =3D pci_mmap_legacy_io;
-> > > +       b->legacy_io->mapping =3D iomem_get_mapping();
-> > >         pci_adjust_legacy_attr(b, pci_mmap_io);
-> > >         error =3D device_create_bin_file(&b->dev, b->legacy_io);
-> > >         if (error)
-> > > @@ -941,6 +942,7 @@ void pci_create_legacy_files(struct pci_bus *b)
-> > >         b->legacy_mem->size =3D 1024*1024;
-> > >         b->legacy_mem->attr.mode =3D 0600;
-> > >         b->legacy_mem->mmap =3D pci_mmap_legacy_mem;
-> > > +       b->legacy_io->mapping =3D iomem_get_mapping();
-> >
-> > Unlike the normal pci stuff below, the legacy files here go boom
-> > because they're set up much earlier in the boot sequence. This only
-> > affects HAVE_PCI_LEGACY architectures, which aren't that many. So what
-> > should we do here now:
-> > - drop the devmem revoke for these
-> > - rework the init sequence somehow to set up these files a lot later
-> > - redo the sysfs patch so that it doesn't take an address_space
-> > pointer, but instead a callback to get at that (since at open time
-> > everything is set up). Imo rather ugly
-> > - ditch this part of the series (since there's not really any takers
-> > for the latter parts it might just not make sense to push for this)
-> > - something else?
-> >
-> > Bjorn, Greg, thoughts?
->
-> What sysfs patch are you referring to here?
+Hi,
 
-Currently in linux-next:
+Today's next fails to boot on Exynos5422 Odroid HC1 board:
 
-commit 74b30195395c406c787280a77ae55aed82dbbfc7 (HEAD ->
-topic/iomem-mmap-vs-gup, drm/topic/iomem-mmap-vs-gup)
-Author: Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Fri Nov 27 17:41:25 2020 +0100
+[    6.409023] Unable to handle kernel NULL pointer dereference at virtual address 00000004
+[    6.417199] pgd = (ptrval)
+[    6.419748] [00000004] *pgd=00000000
+[    6.423499] Internal error: Oops: 805 [#1] PREEMPT SMP ARM
+[    6.428724] Modules linked in:
+[    6.431752] CPU: 5 PID: 1 Comm: swapper/0 Not tainted 5.11.0-rc4-next-20210120 #2
+[    6.439209] Hardware name: Samsung Exynos (Flattened Device Tree)
+[    6.445273] PC is at dev_pm_opp_put_regulators+0xb4/0x114
+...
+[    6.680370] [<c086f51c>] (dev_pm_opp_put_regulators) from [<c08d5d48>] (exynos_bus_probe+0x45c/0x620)
+[    6.689556] [<c08d5d48>] (exynos_bus_probe) from [<c06b49a8>] (platform_probe+0x80/0xc0)
+[    6.697614] [<c06b49a8>] (platform_probe) from [<c06b1ab4>] (really_probe+0x1d4/0x500)
+[    6.705499] [<c06b1ab4>] (really_probe) from [<c06b1e58>] (driver_probe_device+0x78/0x1dc)
+[    6.713731] [<c06b1e58>] (driver_probe_device) from [<c06b236c>] (device_driver_attach+0x58/0x60)
+[    6.722571] [<c06b236c>] (device_driver_attach) from [<c06b2470>] (__driver_attach+0xfc/0x160)
+[    6.731149] [<c06b2470>] (__driver_attach) from [<c06af85c>] (bus_for_each_dev+0x68/0xb4)
+[    6.739294] [<c06af85c>] (bus_for_each_dev) from [<c06b0b5c>] (bus_add_driver+0x158/0x214)
+[    6.747526] [<c06b0b5c>] (bus_add_driver) from [<c06b3314>] (driver_register+0x78/0x110)
+[    6.755585] [<c06b3314>] (driver_register) from [<c0102464>] (do_one_initcall+0x8c/0x430)
+[    6.763731] [<c0102464>] (do_one_initcall) from [<c11010e4>] (kernel_init_freeable+0x190/0x1e0)
+[    6.772397] [<c11010e4>] (kernel_init_freeable) from [<c0b4fc50>] (kernel_init+0x8/0x120)
+[    6.780542] [<c0b4fc50>] (kernel_init) from [<c010011c>] (ret_from_fork+0x14/0x38)
 
-   sysfs: Support zapping of binary attr mmaps
+https://krzk.eu/#/builders/21/builds/2862/steps/15/logs/serial0
 
-Or the patch right before this one in this submission here:
+I did not do a bisect but the last commit touching these parts was:
 
-https://lore.kernel.org/dri-devel/20201127164131.2244124-12-daniel.vetter@f=
-fwll.ch/
+commit 302c014726dbd9fcde852985528c139d2214a1f2
+Author: Viresh Kumar <viresh.kumar@linaro.org>
+Date:   Tue Jan 19 11:58:58 2021 +0530
+    opp: Prepare for ->set_opp() helper to work without regulators
 
-Cheers, Daniel
---=20
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Maybe you have some idea of cause?
+
+Best regards,
+Krzysztof
+
