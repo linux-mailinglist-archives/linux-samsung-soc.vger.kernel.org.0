@@ -2,122 +2,326 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E612FE116
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 21 Jan 2021 05:52:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08E852FE239
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 21 Jan 2021 07:04:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726043AbhAUEux (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 20 Jan 2021 23:50:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732513AbhAUEpc (ORCPT
+        id S1726317AbhAUGDu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 21 Jan 2021 01:03:50 -0500
+Received: from mailout3.samsung.com ([203.254.224.33]:61836 "EHLO
+        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391097AbhAUDBF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 20 Jan 2021 23:45:32 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FD13C061575;
-        Wed, 20 Jan 2021 20:44:52 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id q4so584259plr.7;
-        Wed, 20 Jan 2021 20:44:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nmGD8HgPe/79+tkqFpZtuKTtNUxMt+0Wii+rdB2TPJ0=;
-        b=eS/1ggdFWLmfnsVYZXAbwW1SmBRdM7h+i8u7eMxYshtdJMIwvsuLM6yn9GZBZ9S/K8
-         KPB7IXVkvHseo+uWh3JXdsekkzlPnpD1fO5nonseXf9GOWYDGdR+HhSALKkTBW2yHqxA
-         vhNiTnb6elTC+ROHAMTVxAmqh54NOFG8AXMg5XK2ZaPgk0Zkawh6ZbuAdmEfdFkEhZm2
-         1UIpxFwDL7fAY+OlhacieGmRlqtZX1Sk/wWXzHNgZL3wH6FTjfH0lEmZHOzXOWK4oZol
-         FrhZLsRXZ91FD1PC349AL88h5bApuFeMzE3PJ1YZJKXFQ8yXe/V3L7GGuSfN9S3XXoFM
-         SpOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nmGD8HgPe/79+tkqFpZtuKTtNUxMt+0Wii+rdB2TPJ0=;
-        b=cqRFmP4HCr6x+0vWBHmYc/FCT8RzKVW7gSjVc41N132gmYrqJJAZGYpVjEK7/hn5sA
-         b33dUNiZpvpS2ckgshygcjIrQ1Y/soWDOuJJ2z/ev+U9yf12YE61tBd8TOuZU/FEECnP
-         y9RJBNvDD07GDon1FkYel7rg5KAliqdbWfYGVSIHAJrPf26YlLtT4ANT7UF99v8HDgCW
-         OIl0FJigRiKVzKV9M0eyIunN6fO2q9OqiavGqp2JAVBLnYwimoQnTOKqtYzVfGND/gDU
-         4tTapBj8Qq+/JCXz1Vv6W0EOCvv3QD0Bbx5uhj5zWrL5KfYQerMcPNBPr5oe1+ma3LBY
-         ROMQ==
-X-Gm-Message-State: AOAM531Y9x1F3fwANvASbT4JMnl4HnGiOHsGPcJOyAGyuZG068+NBmZU
-        uDsJXrJsGV3v5k2qkwAcg+g=
-X-Google-Smtp-Source: ABdhPJwK12yN+Nm/X1Li1WBmyUtsyI++TR5W0kfCfg/xipnswNtdqtNaye9X6xF+P0AT5ihT3NrvwA==
-X-Received: by 2002:a17:902:8549:b029:de:8aaa:b012 with SMTP id d9-20020a1709028549b02900de8aaab012mr13199334plo.34.1611204292055;
-        Wed, 20 Jan 2021 20:44:52 -0800 (PST)
-Received: from localhost.localdomain ([49.207.210.174])
-        by smtp.gmail.com with ESMTPSA id jx15sm3916014pjb.17.2021.01.20.20.44.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 20:44:51 -0800 (PST)
-From:   Allen Pais <allen.lkml@gmail.com>
-To:     herbert@gondor.apana.org.au
-Cc:     davem@davemloft.net, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, ludovic.desroches@microchip.com,
-        jesper.nilsson@axis.com, lars.persson@axis.com,
-        horia.geanta@nxp.com, aymen.sghaier@nxp.com, gcherian@marvell.com,
-        thomas.lendacky@amd.com, john.allen@amd.com, gilad@benyossef.com,
-        bbrezillon@kernel.org, arno@natisbad.org, schalla@marvell.com,
-        matthias.bgg@gmail.com, jamie@jamieiles.com,
-        giovanni.cabiddu@intel.com, heiko@sntech.de, krzk@kernel.org,
-        vz@mleia.com, k.konieczny@samsung.com,
-        linux-crypto@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        qat-linux@intel.com, linux-rockchip@lists.infradead.org,
+        Wed, 20 Jan 2021 22:01:05 -0500
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20210121030013epoutp035635cab5ad228bbcefaf6d436759411f~cIA5uO8Q00738907389epoutp03c
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 21 Jan 2021 03:00:13 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20210121030013epoutp035635cab5ad228bbcefaf6d436759411f~cIA5uO8Q00738907389epoutp03c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1611198013;
+        bh=/K8/fjM/acf5faTBjH/xLQTxUnBXrcSiqnrdMVPPNzI=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=MrXEQ46XqIfBpP0zBCHqlfYoHHj1ySkiZmK06wHBoro92vuGkbUWMj9FsxV566j4G
+         9l37C71IYRPM6D82KRG5pmaO4pzY3+9aKq6f1FYFR+W1uX7p7PrkSXi37pLvKd72AC
+         mSYBY2m6W8MFuOGSWLdg7QrURx3i+STQyef43nwY=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20210121030011epcas2p4816065c3856aafbd9edf654c9d3c737e~cIA4Du3721234912349epcas2p4f;
+        Thu, 21 Jan 2021 03:00:11 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.40.184]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4DLnF44f45z4x9Pq; Thu, 21 Jan
+        2021 03:00:08 +0000 (GMT)
+Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        23.4C.05262.83EE8006; Thu, 21 Jan 2021 12:00:08 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
+        20210121030006epcas2p40fd4e30ae5bf514b7891a464462db7be~cIAzm4NK-0610606106epcas2p47;
+        Thu, 21 Jan 2021 03:00:06 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210121030006epsmtrp2bdcddf256f460113d566700ce9cb3177~cIAzmJIGj0238102381epsmtrp2f;
+        Thu, 21 Jan 2021 03:00:06 +0000 (GMT)
+X-AuditID: b6c32a47-b97ff7000000148e-b0-6008ee387b02
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        2A.0D.08745.63EE8006; Thu, 21 Jan 2021 12:00:06 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.51]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210121030006epsmtip1e470b2d270c480b21b6fd77be83f3738~cIAzZ1Jgt1896918969epsmtip1h;
+        Thu, 21 Jan 2021 03:00:06 +0000 (GMT)
+From:   Chanho Park <chanho61.park@samsung.com>
+To:     Tomasz Figa <tomasz.figa@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
-        Allen Pais <apais@linux.microsoft.com>
-Subject: [PATCH v4 19/19] crypto: octeontx: convert tasklets to use new tasklet_setup() API
-Date:   Thu, 21 Jan 2021 10:11:26 +0530
-Message-Id: <20210121044126.152274-20-allen.lkml@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210121044126.152274-1-allen.lkml@gmail.com>
-References: <20210121044126.152274-1-allen.lkml@gmail.com>
+        Chanho Park <chanho61.park@samsung.com>
+Subject: [PATCH] pinctrl: samsung: use raw_spinlock for locking
+Date:   Thu, 21 Jan 2021 12:00:09 +0900
+Message-Id: <20210121030009.25673-1-chanho61.park@samsung.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphk+LIzCtJLcpLzFFi42LZdljTXNfiHUeCQecyNovL+7Utzp/fwG4x
+        5c9yJotNj6+xWsw4v4/J4vCbdlaLVbv+MDqwe+ycdZfdY9OqTjaPO9f2sHlsXlLv0bdlFaPH
+        501yAWxROTYZqYkpqUUKqXnJ+SmZeem2St7B8c7xpmYGhrqGlhbmSgp5ibmptkouPgG6bpk5
+        QJcoKZQl5pQChQISi4uV9O1sivJLS1IVMvKLS2yVUgtScgoMDQv0ihNzi0vz0vWS83OtDA0M
+        jEyBKhNyMp61xhW8t6uYvWIeawPjZdMuRk4OCQETid0Hj7F3MXJxCAnsYJT4t/w8G4TziVFi
+        +8R3UM5nRok7W6ezwbQ8+jEDqmUXo0T31+esEM5HRonpp46xgFSxCehKbHn+ihEkISKwklFi
+        +fOFTCAJZoEyiR93HjKD2MIC9hJzPm8Ha2ARUJV4PPUFWA2vgJ3E/60zGCHWyUucXHsYKi4o
+        cXLmExaIOfISzVtnM4MskBC4xi7xftYaVogGF4lFf7awQNjCEq+Ob2GHsKUkPr/bywbR0M0o
+        0froP1RiNaNEZ6MPhG0v8Wv6FqBBHEAbNCXW79IHMSUElCWO3ILayyfRcfgvO0SYV6KjTQii
+        UV3iwPbpUFtlJbrnfIa6xkPi8aW9YIuEBGIlNi45wTiBUX4Wkm9mIflmFsLeBYzMqxjFUguK
+        c9NTi40KjJFjdRMjODlque9gnPH2g94hRiYOxkOMEhzMSiK8jyw5EoR4UxIrq1KL8uOLSnNS
+        iw8xmgLDdyKzlGhyPjA955XEG5oamZkZWJpamJoZWSiJ8xYbPIgXEkhPLEnNTk0tSC2C6WPi
+        4JRqYFLa5ywb1WaWbV/fnSFlM+O2CMPzd9YLFiy8u8Ssr/RFdrHSNP/3+nHLNEok+85ySRa6
+        PHDcvrgm1lzjtKrfz5wUtdw5Yu4rl/vY2YVW2hY9W3/AT+PB0uK7038bdmlLfXma3LDQpUV7
+        foKdvIR4x6nAuJPTeyTVN0yfytWafTs87IERV8PeD2tTLMw07ersN/3dLHfYdKq3xH9tW6X+
+        nvkh13OTN3b7rX6z2fHpPuYPjMZKyd8un8l6Fzwpo/rQDKt6C5bKtp33H9+5rqi3Lfq2zO/D
+        b9KWS5yp/GP0SOjrgjeld75r93l9f20geG9BeaDp7YupXLFTOr7tsam+53d74f7pyWsWStl8
+        VhK7osRSnJFoqMVcVJwIAEjt94cXBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrILMWRmVeSWpSXmKPExsWy7bCSnK7ZO44Eg3dLJSwu79e2OH9+A7vF
+        lD/LmSw2Pb7GajHj/D4mi8Nv2lktVu36w+jA7rFz1l12j02rOtk87lzbw+axeUm9R9+WVYwe
+        nzfJBbBFcdmkpOZklqUW6dslcGU8a40reG9XMXvFPNYGxsumXYycHBICJhKPfsxg72Lk4hAS
+        2MEocXnmA1aIhKzEs3c72CFsYYn7LUfA4kIC7xklrlzJA7HZBHQltjx/xQjSLCKwmlFi24Qp
+        jCAJZoEKiXX7/4E1CwvYS8z5vJ0FxGYRUJV4PPUFE4jNK2An8X/rDEaIBfISJ9cehooLSpyc
+        +YQFYo68RPPW2cwTGPlmIUnNQpJawMi0ilEytaA4Nz232LDAKC+1XK84Mbe4NC9dLzk/dxMj
+        OFS1tHYw7ln1Qe8QIxMH4yFGCQ5mJRHeR5YcCUK8KYmVValF+fFFpTmpxYcYpTlYlMR5L3Sd
+        jBcSSE8sSc1OTS1ILYLJMnFwSjUw5Zt/Mey8eLDQ/kPd09c6bOE2epcnbP7Z9KA9p6Ii4B6D
+        UMbO4jWfvsVlqd0pfGTw/tCHxJd13AuUnubk6HMLbH7/9AZ3Y0Lc/LUBznkqt3s/Gx1f/+/c
+        5IiJ2+8FFJs3LvjEl7CPO7dvstkzp1u3pVe9uv7YtuL6ZdfWnpk39xwKf/s0N97rkev03Bm3
+        Chs5XJzczyyXsnZxWN7n6ZN6wvv5/M1Zk38u8RVJdZF2XnN0zg3D20a5aiteLVDIn50d0jb5
+        r3ch1/TFr14tefp/mc26+ct5VSKPqLsHfm6Tn1Dz98gD+7LA7MdFzaymSxhebtzHwJbIdrbj
+        /r9Mm3UcM+7tuPz+lGbyhifi6+5O+KfEUpyRaKjFXFScCACOxUrhxAIAAA==
+X-CMS-MailID: 20210121030006epcas2p40fd4e30ae5bf514b7891a464462db7be
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20210121030006epcas2p40fd4e30ae5bf514b7891a464462db7be
+References: <CGME20210121030006epcas2p40fd4e30ae5bf514b7891a464462db7be@epcas2p4.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Allen Pais <apais@linux.microsoft.com>
+This patch converts spin_[lock|unlock] functions of pin bank to
+raw_spinlock to support preempt-rt. This can avoid BUG() assertion when
+irqchip callbacks are triggerred. Spinlocks can be converted rt_mutex
+which is preemptible when we apply preempt-rt patches.
 
-In preparation for unconditionally passing the
-struct tasklet_struct pointer to all tasklet
-callbacks, switch to using the new tasklet_setup()
-and from_tasklet() to pass the tasklet pointer explicitly.
+According to "Documentation/driver-api/gpio/driver.rst",
 
-Signed-off-by: Allen Pais <apais@linux.microsoft.com>
+"Realtime considerations: a realtime compliant GPIO driver should not
+use spinlock_t or any sleepable APIs (like PM runtime) as part of its
+irqchip implementation.
+
+- spinlock_t should be replaced with raw_spinlock_t.[1]
+"
+
+Cc: Tomasz Figa <tomasz.figa@gmail.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Chanho Park <chanho61.park@samsung.com>
 ---
- drivers/crypto/marvell/octeontx/otx_cptvf_main.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/pinctrl/samsung/pinctrl-exynos.c  | 16 ++++++++--------
+ drivers/pinctrl/samsung/pinctrl-s3c24xx.c |  4 ++--
+ drivers/pinctrl/samsung/pinctrl-samsung.c | 22 +++++++++++-----------
+ drivers/pinctrl/samsung/pinctrl-samsung.h |  2 +-
+ 4 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-index c076d0b3ad5f..831550123719 100644
---- a/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptvf_main.c
-@@ -17,11 +17,12 @@
- #define DRV_NAME	"octeontx-cptvf"
- #define DRV_VERSION	"1.0"
+diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
+index b9ea09fabf84..0cd7f33cdf25 100644
+--- a/drivers/pinctrl/samsung/pinctrl-exynos.c
++++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
+@@ -58,13 +58,13 @@ static void exynos_irq_mask(struct irq_data *irqd)
+ 	unsigned long mask;
+ 	unsigned long flags;
  
--static void vq_work_handler(unsigned long data)
-+static void vq_work_handler(struct tasklet_struct *t)
- {
--	struct otx_cptvf_wqe_info *cwqe_info =
--					(struct otx_cptvf_wqe_info *) data;
--
-+	struct otx_cptvf_wqe *cwqe = from_tasklet(cwqe, t, twork);
-+	struct otx_cptvf_wqe_info *cwqe_info = container_of(cwqe,
-+							typeof(*cwqe_info),
-+							vq_wqe[0]);
- 	otx_cpt_post_process(&cwqe_info->vq_wqe[0]);
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	mask = readl(bank->eint_base + reg_mask);
+ 	mask |= 1 << irqd->hwirq;
+ 	writel(mask, bank->eint_base + reg_mask);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
  }
  
-@@ -41,8 +42,7 @@ static int init_worker_threads(struct otx_cptvf *cptvf)
+ static void exynos_irq_ack(struct irq_data *irqd)
+@@ -97,13 +97,13 @@ static void exynos_irq_unmask(struct irq_data *irqd)
+ 	if (irqd_get_trigger_type(irqd) & IRQ_TYPE_LEVEL_MASK)
+ 		exynos_irq_ack(irqd);
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	mask = readl(bank->eint_base + reg_mask);
+ 	mask &= ~(1 << irqd->hwirq);
+ 	writel(mask, bank->eint_base + reg_mask);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ }
+ 
+ static int exynos_irq_set_type(struct irq_data *irqd, unsigned int type)
+@@ -169,14 +169,14 @@ static int exynos_irq_request_resources(struct irq_data *irqd)
+ 	shift = irqd->hwirq * bank_type->fld_width[PINCFG_TYPE_FUNC];
+ 	mask = (1 << bank_type->fld_width[PINCFG_TYPE_FUNC]) - 1;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	con = readl(bank->pctl_base + reg_con);
+ 	con &= ~(mask << shift);
+ 	con |= EXYNOS_PIN_FUNC_EINT << shift;
+ 	writel(con, bank->pctl_base + reg_con);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ 
+ 	return 0;
+ }
+@@ -192,14 +192,14 @@ static void exynos_irq_release_resources(struct irq_data *irqd)
+ 	shift = irqd->hwirq * bank_type->fld_width[PINCFG_TYPE_FUNC];
+ 	mask = (1 << bank_type->fld_width[PINCFG_TYPE_FUNC]) - 1;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	con = readl(bank->pctl_base + reg_con);
+ 	con &= ~(mask << shift);
+ 	con |= EXYNOS_PIN_FUNC_INPUT << shift;
+ 	writel(con, bank->pctl_base + reg_con);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ 
+ 	gpiochip_unlock_as_irq(&bank->gpio_chip, irqd->hwirq);
+ }
+diff --git a/drivers/pinctrl/samsung/pinctrl-s3c24xx.c b/drivers/pinctrl/samsung/pinctrl-s3c24xx.c
+index 2223ead5bd72..00d77d6946b5 100644
+--- a/drivers/pinctrl/samsung/pinctrl-s3c24xx.c
++++ b/drivers/pinctrl/samsung/pinctrl-s3c24xx.c
+@@ -145,14 +145,14 @@ static void s3c24xx_eint_set_function(struct samsung_pinctrl_drv_data *d,
+ 	shift = pin * bank_type->fld_width[PINCFG_TYPE_FUNC];
+ 	mask = (1 << bank_type->fld_width[PINCFG_TYPE_FUNC]) - 1;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	val = readl(reg);
+ 	val &= ~(mask << shift);
+ 	val |= bank->eint_func << shift;
+ 	writel(val, reg);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ }
+ 
+ static int s3c24xx_eint_type(struct irq_data *data, unsigned int type)
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
+index 608eb5a07248..376876bd6605 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.c
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+@@ -400,14 +400,14 @@ static void samsung_pinmux_setup(struct pinctrl_dev *pctldev, unsigned selector,
+ 		reg += 4;
  	}
  
- 	for (i = 0; i < cptvf->num_queues; i++) {
--		tasklet_init(&cwqe_info->vq_wqe[i].twork, vq_work_handler,
--			     (u64)cwqe_info);
-+		tasklet_setup(&cwqe_info->vq_wqe[i].twork, vq_work_handler);
- 		cwqe_info->vq_wqe[i].cptvf = cptvf;
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	data = readl(reg + type->reg_offset[PINCFG_TYPE_FUNC]);
+ 	data &= ~(mask << shift);
+ 	data |= func->val << shift;
+ 	writel(data, reg + type->reg_offset[PINCFG_TYPE_FUNC]);
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ }
+ 
+ /* enable a specified pinmux by writing to registers */
+@@ -451,7 +451,7 @@ static int samsung_pinconf_rw(struct pinctrl_dev *pctldev, unsigned int pin,
+ 	width = type->fld_width[cfg_type];
+ 	cfg_reg = type->reg_offset[cfg_type];
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 
+ 	mask = (1 << width) - 1;
+ 	shift = pin_offset * width;
+@@ -468,7 +468,7 @@ static int samsung_pinconf_rw(struct pinctrl_dev *pctldev, unsigned int pin,
+ 		*config = PINCFG_PACK(cfg_type, data);
  	}
- 	cptvf->wqe_info = cwqe_info;
+ 
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ 
+ 	return 0;
+ }
+@@ -561,9 +561,9 @@ static void samsung_gpio_set(struct gpio_chip *gc, unsigned offset, int value)
+ 	struct samsung_pin_bank *bank = gpiochip_get_data(gc);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 	samsung_gpio_set_value(gc, offset, value);
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ }
+ 
+ /* gpiolib gpio_get callback function */
+@@ -626,9 +626,9 @@ static int samsung_gpio_direction_input(struct gpio_chip *gc, unsigned offset)
+ 	unsigned long flags;
+ 	int ret;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 	ret = samsung_gpio_set_direction(gc, offset, true);
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ 	return ret;
+ }
+ 
+@@ -640,10 +640,10 @@ static int samsung_gpio_direction_output(struct gpio_chip *gc, unsigned offset,
+ 	unsigned long flags;
+ 	int ret;
+ 
+-	spin_lock_irqsave(&bank->slock, flags);
++	raw_spin_lock_irqsave(&bank->slock, flags);
+ 	samsung_gpio_set_value(gc, offset, value);
+ 	ret = samsung_gpio_set_direction(gc, offset, false);
+-	spin_unlock_irqrestore(&bank->slock, flags);
++	raw_spin_unlock_irqrestore(&bank->slock, flags);
+ 
+ 	return ret;
+ }
+@@ -1057,7 +1057,7 @@ samsung_pinctrl_get_soc_data(struct samsung_pinctrl_drv_data *d,
+ 		bank->eint_offset = bdata->eint_offset;
+ 		bank->name = bdata->name;
+ 
+-		spin_lock_init(&bank->slock);
++		raw_spin_lock_init(&bank->slock);
+ 		bank->drvdata = d;
+ 		bank->pin_base = d->nr_pins;
+ 		d->nr_pins += bank->nr_pins;
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.h b/drivers/pinctrl/samsung/pinctrl-samsung.h
+index 379f34a9a482..de44f8ec330b 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.h
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.h
+@@ -171,7 +171,7 @@ struct samsung_pin_bank {
+ 	struct gpio_chip gpio_chip;
+ 	struct pinctrl_gpio_range grange;
+ 	struct exynos_irq_chip *irq_chip;
+-	spinlock_t slock;
++	raw_spinlock_t slock;
+ 
+ 	u32 pm_save[PINCFG_TYPE_NUM + 1]; /* +1 to handle double CON registers*/
+ };
 -- 
-2.25.1
+2.30.0
 
