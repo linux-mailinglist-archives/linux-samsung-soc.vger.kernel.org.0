@@ -2,230 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CBD93108FE
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Feb 2021 11:26:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B24C03111C8
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Feb 2021 21:01:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbhBEKYq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 5 Feb 2021 05:24:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55898 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231228AbhBEKWl (ORCPT
+        id S233516AbhBESRo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 5 Feb 2021 13:17:44 -0500
+Received: from [20.39.40.203] ([20.39.40.203]:55697 "EHLO optinix.in"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S233183AbhBEPTk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 5 Feb 2021 05:22:41 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8DCF064E55;
-        Fri,  5 Feb 2021 10:21:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612520519;
-        bh=vTdK7tqpnai+N4Mr1MYvbIdxctZy8n6ZlIZgJ2TTGIs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aw9IX3t8/+kJNRGDZ+eN+AcOe96RKkF8t8qkjRXLa5ntx8zUbf71H7CUidQRP/3oy
-         /jYL5MOzNTkXCNVb+pWxV8zK/1XWdVgzZi8nk/3ExJgEbVYSOS32dh8UG2wBx57LbT
-         OfJqPh+TzyXNYzzIQJO8xNFIIAvNiGmkVtRk+/nwkolGXcSYv9TH6LThlKK8ci0QPF
-         et1/cuIWO6xPGl6ZAON1zoRCnud1K6EP3sTct9KVU3TGucYouiF7zH/V758kBhQQB7
-         LyqKl1Z8P4+8ePkkWvfs31Oj9jOtCO+JuKcTd7+EAmVmnnXr+rST7vmtWkEsN6rZhM
-         4Y7uHIzJ0CqJQ==
-Received: by pali.im (Postfix)
-        id 41ADC8A2; Fri,  5 Feb 2021 11:21:57 +0100 (CET)
-Date:   Fri, 5 Feb 2021 11:21:57 +0100
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Jan Kara <jack@suse.cz>, Kees Cook <keescook@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linux PCI <linux-pci@vger.kernel.org>,
-        Linux MM <linux-mm@kvack.org>, Jason Gunthorpe <jgg@ziepe.ca>,
-        =?utf-8?B?SsOpcsO0bWU=?= Glisse <jglisse@redhat.com>,
-        John Hubbard <jhubbard@nvidia.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        Oliver O'Halloran <oohall@gmail.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-Subject: Re: [PATCH 1/2] PCI: also set up legacy files only after sysfs init
-Message-ID: <20210205102157.n7avchjbzwbfkpdm@pali>
-References: <20210204165831.2703772-2-daniel.vetter@ffwll.ch>
- <20210204215019.GA104698@bjorn-Precision-5520>
- <20210204222407.pkx7wvmcvugdwqdd@pali>
- <CAKMK7uFeZpc4oV2GNRdP_EXmYqacg5o3jPegqqaFZZYqqRutFA@mail.gmail.com>
- <20210205100449.w2vzqozgnolxqh4h@pali>
- <CAKMK7uG9NsEzFfapZa4KF6sw0=CuD6Pyk5=7WhjxgFBut4uJkw@mail.gmail.com>
+        Fri, 5 Feb 2021 10:19:40 -0500
+dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
+        b=JFt3cjfr2gf0oZFNAIkKMxcz4dJD/YGkc0fGvOoSd3DydZ6om7JzTU837vBFVq1NIPU0D2QA5BLHZXE1+7cBmkJlbZjYCUFmJkkaBVbP88e4KHnDVRcctmBLIZ1pL5VerRqjcciKkL4DSuyXFJlGk3Z0CRoskvUoLBM7ZhpxLeqIU2BKsbHQXJZ1h2qHQhaHiD+VrGx+bGKjZzbhmRvwLDQIByq6jRcjht5MzYCcxpzOzp/k+Dev9dQj7B
+        WId68CyP4XonlI4wIMRo1xiGfUtKZ+P3cZo2ejPWBjr+ynq3dK3OxibTTEKfmOc5W1zmJFMAPQ+ZKxsa3M4d1PiYxHmg==
+Received: from User (Unknown [52.231.31.5])
+        by optinix.in with ESMTP
+        ; Mon, 1 Feb 2021 08:50:14 +0000
+Message-ID: <D474448D-A325-42CC-A881-8334C6C84BA7@optinix.in>
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <support@digitalsol.in>
+Subject: Re:read
+Date:   Mon, 1 Feb 2021 08:50:13 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKMK7uG9NsEzFfapZa4KF6sw0=CuD6Pyk5=7WhjxgFBut4uJkw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Friday 05 February 2021 11:16:00 Daniel Vetter wrote:
-> On Fri, Feb 5, 2021 at 11:04 AM Pali Rohár <pali@kernel.org> wrote:
-> >
-> > On Friday 05 February 2021 10:59:50 Daniel Vetter wrote:
-> > > On Thu, Feb 4, 2021 at 11:24 PM Pali Rohár <pali@kernel.org> wrote:
-> > > >
-> > > > On Thursday 04 February 2021 15:50:19 Bjorn Helgaas wrote:
-> > > > > [+cc Oliver, Pali, Krzysztof]
-> > > >
-> > > > Just to note that extending or using sysfs_initialized introduces
-> > > > another race condition into kernel code which results in PCI fatal
-> > > > errors. Details are in email discussion which Bjorn already sent.
-> > >
-> > > Yeah I wondered why this doesn't race.
-> >
-> > It races, but with smaller probability. I have not seen this race
-> > condition on x86. But I was able to reproduce it with native PCIe
-> > drivers on ARM64 (Marvell Armada 3720; pci-aardvark). In mentioned
-> > discussion I wrote when this race condition happen. But I understand
-> > that it is hard to simulate it.
-> 
-> btw I looked at your patch, and isn't that just reducing the race window?
+Hello,
 
-I probably have not wrote reply to that thread and only to Krzysztof on
-IRC, but my "hack" really does not solve that race condition. And as you
-wrote it only reduced occurrence on tested HW.
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
-Krzysztof wrote that would look at this issue and try to solve it
-properly. So I have not doing more investigation on that my "hack"
-patch, race conditions are hard to catch and solve...
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-> I think we have a very similar problem in drm, where the
-> drm_dev_register() for the overall device (which also registers all
-> drm_connector) can race with the hotplug of an individual connector in
-> drm_connector_register() which is hotplugged at runtime.
-> 
-> I went with a per-connector registered boolean + a lock to make sure
-> that really only one of the two call paths can end up registering the
-> connector. Part of registering connectors is setting up sysfs files,
-> so I think it's exactly the same problem as here.
-> 
-> Cheers, Daniel
-> 
-> >
-> > > but since the history goes back
-> > > to pre-git times I figured it would have been addressed somehow
-> > > already if it indeed does race.
-> > > -Daniel
-> > >
-> > > > > s/also/Also/ in subject
-> > > > >
-> > > > > On Thu, Feb 04, 2021 at 05:58:30PM +0100, Daniel Vetter wrote:
-> > > > > > We are already doing this for all the regular sysfs files on PCI
-> > > > > > devices, but not yet on the legacy io files on the PCI buses. Thus far
-> > > > > > now problem, but in the next patch I want to wire up iomem revoke
-> > > > > > support. That needs the vfs up an running already to make so that
-> > > > > > iomem_get_mapping() works.
-> > > > >
-> > > > > s/now problem/no problem/
-> > > > > s/an running/and running/
-> > > > > s/so that/sure that/ ?
-> > > > >
-> > > > > iomem_get_mapping() doesn't exist; I don't know what that should be.
-> > > > >
-> > > > > > Wire it up exactly like the existing code. Note that
-> > > > > > pci_remove_legacy_files() doesn't need a check since the one for
-> > > > > > pci_bus->legacy_io is sufficient.
-> > > > >
-> > > > > I'm not sure exactly what you mean by "the existing code."  I could
-> > > > > probably figure it out, but it would save time to mention the existing
-> > > > > function here.
-> > > > >
-> > > > > This looks like another instance where we should really apply Oliver's
-> > > > > idea of converting these to attribute_groups [1].
-> > > > >
-> > > > > The cover letter mentions options discussed with Greg in [2], but I
-> > > > > don't think the "sysfs_initialized" hack vs attribute_groups was part
-> > > > > of that discussion.
-> > > > >
-> > > > > It's not absolutely a show-stopper, but it *is* a shame to extend the
-> > > > > sysfs_initialized hack if attribute_groups could do this more cleanly
-> > > > > and help solve more than one issue.
-> > > > >
-> > > > > Bjorn
-> > > > >
-> > > > > [1] https://lore.kernel.org/r/CAOSf1CHss03DBSDO4PmTtMp0tCEu5kScn704ZEwLKGXQzBfqaA@mail.gmail.com
-> > > > > [2] https://lore.kernel.org/dri-devel/CAKMK7uGrdDrbtj0OyzqQc0CGrQwc2F3tFJU9vLfm2jjufAZ5YQ@mail.gmail.com/
-> > > > >
-> > > > > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > > > > Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-> > > > > > Cc: Jason Gunthorpe <jgg@ziepe.ca>
-> > > > > > Cc: Kees Cook <keescook@chromium.org>
-> > > > > > Cc: Dan Williams <dan.j.williams@intel.com>
-> > > > > > Cc: Andrew Morton <akpm@linux-foundation.org>
-> > > > > > Cc: John Hubbard <jhubbard@nvidia.com>
-> > > > > > Cc: Jérôme Glisse <jglisse@redhat.com>
-> > > > > > Cc: Jan Kara <jack@suse.cz>
-> > > > > > Cc: Dan Williams <dan.j.williams@intel.com>
-> > > > > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > > > Cc: linux-mm@kvack.org
-> > > > > > Cc: linux-arm-kernel@lists.infradead.org
-> > > > > > Cc: linux-samsung-soc@vger.kernel.org
-> > > > > > Cc: linux-media@vger.kernel.org
-> > > > > > Cc: Bjorn Helgaas <bhelgaas@google.com>
-> > > > > > Cc: linux-pci@vger.kernel.org
-> > > > > > ---
-> > > > > >  drivers/pci/pci-sysfs.c | 7 +++++++
-> > > > > >  1 file changed, 7 insertions(+)
-> > > > > >
-> > > > > > diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-> > > > > > index fb072f4b3176..0c45b4f7b214 100644
-> > > > > > --- a/drivers/pci/pci-sysfs.c
-> > > > > > +++ b/drivers/pci/pci-sysfs.c
-> > > > > > @@ -927,6 +927,9 @@ void pci_create_legacy_files(struct pci_bus *b)
-> > > > > >  {
-> > > > > >     int error;
-> > > > > >
-> > > > > > +   if (!sysfs_initialized)
-> > > > > > +           return;
-> > > > > > +
-> > > > > >     b->legacy_io = kcalloc(2, sizeof(struct bin_attribute),
-> > > > > >                            GFP_ATOMIC);
-> > > > > >     if (!b->legacy_io)
-> > > > > > @@ -1448,6 +1451,7 @@ void pci_remove_sysfs_dev_files(struct pci_dev *pdev)
-> > > > > >  static int __init pci_sysfs_init(void)
-> > > > > >  {
-> > > > > >     struct pci_dev *pdev = NULL;
-> > > > > > +   struct pci_bus *pbus = NULL;
-> > > > > >     int retval;
-> > > > > >
-> > > > > >     sysfs_initialized = 1;
-> > > > > > @@ -1459,6 +1463,9 @@ static int __init pci_sysfs_init(void)
-> > > > > >             }
-> > > > > >     }
-> > > > > >
-> > > > > > +   while ((pbus = pci_find_next_bus(pbus)))
-> > > > > > +           pci_create_legacy_files(pbus);
-> > > > > > +
-> > > > > >     return 0;
-> > > > > >  }
-> > > > > >  late_initcall(pci_sysfs_init);
-> > > > > > --
-> > > > > > 2.30.0
-> > > > > >
-> > > > > >
-> > > > > > _______________________________________________
-> > > > > > linux-arm-kernel mailing list
-> > > > > > linux-arm-kernel@lists.infradead.org
-> > > > > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
-> > >
-> > >
-> > >
-> > > --
-> > > Daniel Vetter
-> > > Software Engineer, Intel Corporation
-> > > http://blog.ffwll.ch
-> 
-> 
-> 
-> -- 
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
+
+Regards,
+Ms. Reem.
+
