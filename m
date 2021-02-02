@@ -2,400 +2,168 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A686C30B6C0
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Feb 2021 05:56:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E894230BFB8
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Feb 2021 14:40:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhBBE4B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 1 Feb 2021 23:56:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45508 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbhBBE4A (ORCPT
+        id S232644AbhBBNjX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 2 Feb 2021 08:39:23 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59606 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229514AbhBBNba (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 1 Feb 2021 23:56:00 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E05DAC0613ED
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Feb 2021 20:55:19 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id a20so1506340pjs.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 01 Feb 2021 20:55:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KnjYJhpsvi+EI6uh+V9emtTk5rRYy/hy1WxcaaGRj88=;
-        b=jMCQvOrib39iuufOoGnShhg7/M0QlLhgoR/DzvJuyYtnVlkdshCDsPRDtE/0jgK5k5
-         8aMyNcmbhs8BDR+1UNY05IUJIYrCvtXEVFL/6HNtEQlTwpxRbWt88F1EtwOZ9MxLQfyb
-         DTNRKEzt4tnv9/2gVzxaMgFW+eo6yqLUy2gm6ZI8O7r1C+HdaJy0zFMT1s9WTtQtJYU2
-         1P3i1Ab8BqjM566cK4qfFZdO69Xb4RzEMAHOIGIz36rUvN0mBoX/UyA4W5qvitshuPCr
-         BmfUrJDFbatH0Zfvc/D/1ftB2GWy9u/W70MmT6r5Owh7rLlxipN4VEyMXLt5CZbl8hj8
-         DQxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KnjYJhpsvi+EI6uh+V9emtTk5rRYy/hy1WxcaaGRj88=;
-        b=In0gfu5HnxVBR1voJjtN2PPllapBeiOmkcDNzaAyACTejaxvxqMPLGNZbi0wKjcHvs
-         estdd1iQAQhdWxpVxy/xSYTugG1IeoSK7YipCKqsDnqhpXgyaLoRn8HjR/HA76l3SLUs
-         tbaLvAG1hZX12G5DEtq2bxVi9Y4XUvKlpntgtVUuWh5rmcYmPbqcBrzSg6IgOB5Ho7Ny
-         wb4Ou7WsQVe/rB6KN3SCXO5Hm76GyZXRcpSdCILZgHyr4vvgVX/9WE0x1F05Efho0xc7
-         aJNUUFAXQ4f/0GMPt0KKv6Xfe3kkOAqK6qr0icXh1XKPBhw0F+4eYl14XRNYVhdoLDEV
-         BzuQ==
-X-Gm-Message-State: AOAM530h059tkihCWEWeaUroFXTVEgdAhutdZzW56uVpX8vN20OdZ+1F
-        xK+ywFDszP+SZQuhFz13mPh9HA==
-X-Google-Smtp-Source: ABdhPJwS93fNsUH31dYgXN8xBzZ5bkht/DGUPiwXokd8KJoRuC/YLfOQ67hcBaOskP59AiVUpErNJg==
-X-Received: by 2002:a17:903:22c2:b029:de:45c0:69f2 with SMTP id y2-20020a17090322c2b02900de45c069f2mr20804008plg.26.1612241719095;
-        Mon, 01 Feb 2021 20:55:19 -0800 (PST)
-Received: from localhost ([122.172.59.240])
-        by smtp.gmail.com with ESMTPSA id i3sm20044312pfq.194.2021.02.01.20.55.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Feb 2021 20:55:18 -0800 (PST)
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rafael Wysocki <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Keguang Zhang <keguang.zhang@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
+        Tue, 2 Feb 2021 08:31:30 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2EEB764F7B;
+        Tue,  2 Feb 2021 13:30:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612272602;
+        bh=9D7RURM2JxS7qUzT8CayBMlStaKkCkiMbZwsrnGaQCo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=PQrTP3tIhNzqa5zVo1AOWI+wPETJ61DSKiKgzA+vs38unwkC9i8KDCyYpbZZV/frV
+         cwJwhQQMHfHYykVeyG9iJubrGxWtaC2i8hKOzt8ObJQpOvwOn+9lyRJlySo3F27aaX
+         3vlBIPzGd4G9PWZ0ltVOdnqe7ZqCE9mT0c9Wp+H1ICKHr1GorqhQGx32rLwtIdGu6c
+         GpAC7ACnL3RXPhW0a249qRiUW6HxV6MMUg1cZ0SSnJiP8ZhZ8O7+HXzzZjccvwluiJ
+         qyd83TUVFGqP80Qx8Cc5jx2RzaL0ixBbCSKMuXJVIrMx6rZhELjCqA8tuDimOlgYNz
+         QdBU3BiiPeYMA==
+Received: by mail.kernel.org with local (Exim 4.94)
+        (envelope-from <mchehab@kernel.org>)
+        id 1l6vkl-0011yl-Bo; Tue, 02 Feb 2021 14:29:59 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
         Jonathan Hunter <jonathanh@nvidia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
-Cc:     linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Subject: [PATCH V2] cpufreq: Remove CPUFREQ_STICKY flag
-Date:   Tue,  2 Feb 2021 10:25:11 +0530
-Message-Id: <a59bb322b22c247d570b70a8e94067804287623b.1612241683.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.25.0.rc1.19.g042ed3e048af
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Wei Xu <xuwei5@hisilicon.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Zhou Wang <wangzhou1@hisilicon.com>,
+        devicetree@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH 00/13] Add support for Hikey 970 PCIe
+Date:   Tue,  2 Feb 2021 14:29:45 +0100
+Message-Id: <cover.1612271903.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-During cpufreq driver's registration, if the ->init() callback for all
-the CPUs fail then there is not much point in keeping the driver around
-as it will only account for more of unnecessary noise, for example
-cpufreq core will try to suspend/resume the driver which never got
-registered properly.
+This series add support for Kirin 970 and for the Hikey 970
+board at the already-existing  driver.
 
-The removal of such a driver is avoided if the driver carries the
-CPUFREQ_STICKY flag. This was added way back [1] in 2004 and perhaps no
-one should ever need it now. A lot of drivers do set this flag, probably
-because they just copied it from other drivers.
+patches 1-3 were previously submitted as RFC:
 
-This was added earlier for some platforms [2] because their cpufreq
-drivers were getting registered before the CPUs were registered with
-subsys framework. And hence they used to fail.
+- Patch 1 converts the Synopsys Designware PCIe binding
+  documentation to the DT schema;
+- Patch 2 converts the pcie-kirin DT binding to the DT schema;
+- Patch 3 adds some extra configuration needed by
+  Kirin 970.
 
-The same isn't true anymore though. The current code flow in the kernel
-is:
+Patches 4-5 were imported from Manivannan's Hikey 970
+tree:
 
-start_kernel()
--> kernel_init()
-   -> kernel_init_freeable()
-      -> do_basic_setup()
-         -> driver_init()
-            -> cpu_dev_init()
-               -> subsys_system_register() //For CPUs
+   https://git.linaro.org/people/manivannan.sadhasivam/96b-common.git/commit/?h=hikey970_pcie&id=4917380ad023c62960aa0f876bd4f23cefc8729e
 
-         -> do_initcalls()
-            -> cpufreq_register_driver()
+It contains the original port made by Linaro.
 
-Clearly, the CPUs will always get registered with subsys framework
-before any cpufreq driver can get probed. Remove the flag and update the
-relevant drivers.
+patches 6 to 12 contains several cleanups applied on the
+top of Manivann's work, in order to simplify the extra data
+that would be required at DT, and to ensure that the power
+regulator needed to enable the PCI support on Hikey970
+will be enabled before trying to power it on, as otherwise,
+PCI resource allocation will fail.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/include/linux/cpufreq.h?id=7cc9f0d9a1ab04cedc60d64fd8dcf7df224a3b4d
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git/commit/arch/arm/mach-sa1100/cpu-sa1100.c?id=f59d3bbe35f6268d729f51be82af8325d62f20f5
-
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
----
-V2: Detailed commit log.
-
- drivers/cpufreq/cpufreq-dt.c           |  2 +-
- drivers/cpufreq/cpufreq.c              |  3 +--
- drivers/cpufreq/davinci-cpufreq.c      |  2 +-
- drivers/cpufreq/loongson1-cpufreq.c    |  2 +-
- drivers/cpufreq/mediatek-cpufreq.c     |  2 +-
- drivers/cpufreq/omap-cpufreq.c         |  2 +-
- drivers/cpufreq/qcom-cpufreq-hw.c      |  2 +-
- drivers/cpufreq/s3c24xx-cpufreq.c      |  2 +-
- drivers/cpufreq/s5pv210-cpufreq.c      |  2 +-
- drivers/cpufreq/sa1100-cpufreq.c       |  2 +-
- drivers/cpufreq/sa1110-cpufreq.c       |  2 +-
- drivers/cpufreq/scmi-cpufreq.c         |  2 +-
- drivers/cpufreq/scpi-cpufreq.c         |  2 +-
- drivers/cpufreq/spear-cpufreq.c        |  2 +-
- drivers/cpufreq/tegra186-cpufreq.c     |  2 +-
- drivers/cpufreq/tegra194-cpufreq.c     |  3 +--
- drivers/cpufreq/vexpress-spc-cpufreq.c |  3 +--
- include/linux/cpufreq.h                | 17 +++++++----------
- 18 files changed, 24 insertions(+), 30 deletions(-)
-
-diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
-index ad4234518ef6..b1e1bdc63b01 100644
---- a/drivers/cpufreq/cpufreq-dt.c
-+++ b/drivers/cpufreq/cpufreq-dt.c
-@@ -175,7 +175,7 @@ static int cpufreq_exit(struct cpufreq_policy *policy)
- }
- 
- static struct cpufreq_driver dt_cpufreq_driver = {
--	.flags = CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK |
-+	.flags = CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		 CPUFREQ_IS_COOLING_DEV,
- 	.verify = cpufreq_generic_frequency_table_verify,
- 	.target_index = set_target,
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index d0a3525ce27f..7d0ae968def7 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2810,8 +2810,7 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
- 	if (ret)
- 		goto err_boost_unreg;
- 
--	if (!(cpufreq_driver->flags & CPUFREQ_STICKY) &&
--	    list_empty(&cpufreq_policy_list)) {
-+	if (unlikely(list_empty(&cpufreq_policy_list))) {
- 		/* if all ->init() calls failed, unregister */
- 		ret = -ENODEV;
- 		pr_debug("%s: No CPU initialized for driver %s\n", __func__,
-diff --git a/drivers/cpufreq/davinci-cpufreq.c b/drivers/cpufreq/davinci-cpufreq.c
-index 91f477a6cbc4..9e97f60f8199 100644
---- a/drivers/cpufreq/davinci-cpufreq.c
-+++ b/drivers/cpufreq/davinci-cpufreq.c
-@@ -95,7 +95,7 @@ static int davinci_cpu_init(struct cpufreq_policy *policy)
- }
- 
- static struct cpufreq_driver davinci_driver = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= davinci_target,
- 	.get		= cpufreq_generic_get,
-diff --git a/drivers/cpufreq/loongson1-cpufreq.c b/drivers/cpufreq/loongson1-cpufreq.c
-index 86f612593e49..fb72d709db56 100644
---- a/drivers/cpufreq/loongson1-cpufreq.c
-+++ b/drivers/cpufreq/loongson1-cpufreq.c
-@@ -116,7 +116,7 @@ static int ls1x_cpufreq_exit(struct cpufreq_policy *policy)
- 
- static struct cpufreq_driver ls1x_cpufreq_driver = {
- 	.name		= "cpufreq-ls1x",
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= ls1x_cpufreq_target,
- 	.get		= cpufreq_generic_get,
-diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 022e3e966e71..f2e491b25b07 100644
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -463,7 +463,7 @@ static int mtk_cpufreq_exit(struct cpufreq_policy *policy)
- }
- 
- static struct cpufreq_driver mtk_cpufreq_driver = {
--	.flags = CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK |
-+	.flags = CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		 CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 		 CPUFREQ_IS_COOLING_DEV,
- 	.verify = cpufreq_generic_frequency_table_verify,
-diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
-index 3694bb030df3..e035ee216b0f 100644
---- a/drivers/cpufreq/omap-cpufreq.c
-+++ b/drivers/cpufreq/omap-cpufreq.c
-@@ -144,7 +144,7 @@ static int omap_cpu_exit(struct cpufreq_policy *policy)
- }
- 
- static struct cpufreq_driver omap_driver = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= omap_target,
- 	.get		= cpufreq_generic_get,
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9ed5341dc515..2a3b4f44488b 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -374,7 +374,7 @@ static struct freq_attr *qcom_cpufreq_hw_attr[] = {
- };
- 
- static struct cpufreq_driver cpufreq_qcom_hw_driver = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK |
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 			  CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 			  CPUFREQ_IS_COOLING_DEV,
- 	.verify		= cpufreq_generic_frequency_table_verify,
-diff --git a/drivers/cpufreq/s3c24xx-cpufreq.c b/drivers/cpufreq/s3c24xx-cpufreq.c
-index 37efc0dc3f91..7380c32b238e 100644
---- a/drivers/cpufreq/s3c24xx-cpufreq.c
-+++ b/drivers/cpufreq/s3c24xx-cpufreq.c
-@@ -420,7 +420,7 @@ static int s3c_cpufreq_resume(struct cpufreq_policy *policy)
- #endif
- 
- static struct cpufreq_driver s3c24xx_driver = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.target		= s3c_cpufreq_target,
- 	.get		= cpufreq_generic_get,
- 	.init		= s3c_cpufreq_init,
-diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
-index bed496cf8d24..69786e5bbf05 100644
---- a/drivers/cpufreq/s5pv210-cpufreq.c
-+++ b/drivers/cpufreq/s5pv210-cpufreq.c
-@@ -574,7 +574,7 @@ static int s5pv210_cpufreq_reboot_notifier_event(struct notifier_block *this,
- }
- 
- static struct cpufreq_driver s5pv210_driver = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= s5pv210_target,
- 	.get		= cpufreq_generic_get,
-diff --git a/drivers/cpufreq/sa1100-cpufreq.c b/drivers/cpufreq/sa1100-cpufreq.c
-index 5c075ef6adc0..252b9fc26124 100644
---- a/drivers/cpufreq/sa1100-cpufreq.c
-+++ b/drivers/cpufreq/sa1100-cpufreq.c
-@@ -186,7 +186,7 @@ static int __init sa1100_cpu_init(struct cpufreq_policy *policy)
- }
- 
- static struct cpufreq_driver sa1100_driver __refdata = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK |
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 			  CPUFREQ_NO_AUTO_DYNAMIC_SWITCHING,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= sa1100_target,
-diff --git a/drivers/cpufreq/sa1110-cpufreq.c b/drivers/cpufreq/sa1110-cpufreq.c
-index d9d04d935b3a..1a83c8678a63 100644
---- a/drivers/cpufreq/sa1110-cpufreq.c
-+++ b/drivers/cpufreq/sa1110-cpufreq.c
-@@ -310,7 +310,7 @@ static int __init sa1110_cpu_init(struct cpufreq_policy *policy)
- /* sa1110_driver needs __refdata because it must remain after init registers
-  * it with cpufreq_register_driver() */
- static struct cpufreq_driver sa1110_driver __refdata = {
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK |
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 			  CPUFREQ_NO_AUTO_DYNAMIC_SWITCHING,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= sa1110_target,
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 491a0a24fb1e..5bd03b59887f 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -217,7 +217,7 @@ static int scmi_cpufreq_exit(struct cpufreq_policy *policy)
- 
- static struct cpufreq_driver scmi_cpufreq_driver = {
- 	.name	= "scmi",
--	.flags	= CPUFREQ_STICKY | CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
-+	.flags	= CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 		  CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		  CPUFREQ_IS_COOLING_DEV,
- 	.verify	= cpufreq_generic_frequency_table_verify,
-diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
-index e5140ad63db8..d6a698a1b5d1 100644
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -191,7 +191,7 @@ static int scpi_cpufreq_exit(struct cpufreq_policy *policy)
- 
- static struct cpufreq_driver scpi_cpufreq_driver = {
- 	.name	= "scpi-cpufreq",
--	.flags	= CPUFREQ_STICKY | CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
-+	.flags	= CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 		  CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		  CPUFREQ_IS_COOLING_DEV,
- 	.verify	= cpufreq_generic_frequency_table_verify,
-diff --git a/drivers/cpufreq/spear-cpufreq.c b/drivers/cpufreq/spear-cpufreq.c
-index 73bd8dc47074..7d0d62a06bf3 100644
---- a/drivers/cpufreq/spear-cpufreq.c
-+++ b/drivers/cpufreq/spear-cpufreq.c
-@@ -160,7 +160,7 @@ static int spear_cpufreq_init(struct cpufreq_policy *policy)
- 
- static struct cpufreq_driver spear_cpufreq_driver = {
- 	.name		= "cpufreq-spear",
--	.flags		= CPUFREQ_STICKY | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= spear_cpufreq_target,
- 	.get		= cpufreq_generic_get,
-diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
-index e566ea298b59..5d1943e787b0 100644
---- a/drivers/cpufreq/tegra186-cpufreq.c
-+++ b/drivers/cpufreq/tegra186-cpufreq.c
-@@ -117,7 +117,7 @@ static unsigned int tegra186_cpufreq_get(unsigned int cpu)
- 
- static struct cpufreq_driver tegra186_cpufreq_driver = {
- 	.name = "tegra186",
--	.flags = CPUFREQ_STICKY | CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
-+	.flags = CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 			CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.get = tegra186_cpufreq_get,
- 	.verify = cpufreq_generic_frequency_table_verify,
-diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
-index 6a67f36f3b80..a9620e4489ae 100644
---- a/drivers/cpufreq/tegra194-cpufreq.c
-+++ b/drivers/cpufreq/tegra194-cpufreq.c
-@@ -272,8 +272,7 @@ static int tegra194_cpufreq_set_target(struct cpufreq_policy *policy,
- 
- static struct cpufreq_driver tegra194_cpufreq_driver = {
- 	.name = "tegra194",
--	.flags = CPUFREQ_STICKY | CPUFREQ_CONST_LOOPS |
--		CPUFREQ_NEED_INITIAL_FREQ_CHECK,
-+	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify = cpufreq_generic_frequency_table_verify,
- 	.target_index = tegra194_cpufreq_set_target,
- 	.get = tegra194_get_speed,
-diff --git a/drivers/cpufreq/vexpress-spc-cpufreq.c b/drivers/cpufreq/vexpress-spc-cpufreq.c
-index f711d8eaea6a..51dfa9ae6cf5 100644
---- a/drivers/cpufreq/vexpress-spc-cpufreq.c
-+++ b/drivers/cpufreq/vexpress-spc-cpufreq.c
-@@ -486,8 +486,7 @@ static void ve_spc_cpufreq_ready(struct cpufreq_policy *policy)
- 
- static struct cpufreq_driver ve_spc_cpufreq_driver = {
- 	.name			= "vexpress-spc",
--	.flags			= CPUFREQ_STICKY |
--					CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
-+	.flags			= CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
- 					CPUFREQ_NEED_INITIAL_FREQ_CHECK,
- 	.verify			= cpufreq_generic_frequency_table_verify,
- 	.target_index		= ve_spc_cpufreq_set_target,
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index 9c8b7437b6cd..c8e40e91fe9b 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -387,8 +387,13 @@ struct cpufreq_driver {
- 
- /* flags */
- 
--/* driver isn't removed even if all ->init() calls failed */
--#define CPUFREQ_STICKY				BIT(0)
-+/*
-+ * Set by drivers that need to update internale upper and lower boundaries along
-+ * with the target frequency and so the core and governors should also invoke
-+ * the diver if the target frequency does not change, but the policy min or max
-+ * may have changed.
-+ */
-+#define CPUFREQ_NEED_UPDATE_LIMITS		BIT(0)
- 
- /* loops_per_jiffy or other kernel "constants" aren't affected by frequency transitions */
- #define CPUFREQ_CONST_LOOPS			BIT(1)
-@@ -432,14 +437,6 @@ struct cpufreq_driver {
-  */
- #define CPUFREQ_IS_COOLING_DEV			BIT(7)
- 
--/*
-- * Set by drivers that need to update internale upper and lower boundaries along
-- * with the target frequency and so the core and governors should also invoke
-- * the diver if the target frequency does not change, but the policy min or max
-- * may have changed.
-- */
--#define CPUFREQ_NEED_UPDATE_LIMITS		BIT(8)
 -
- int cpufreq_register_driver(struct cpufreq_driver *driver_data);
- int cpufreq_unregister_driver(struct cpufreq_driver *driver_data);
- 
+
+patch 13 is here mostly as an example about what is needed
+in order for PCIe (and Ethernet) to start working on Hikey 970.
+
+It won't apply cleanly, as it depends on another patch series,
+adding the needed regulator drivers.
+
+I'll re-submit patch 13 after the pending stuff gets merged
+upstream.
+
+Manivannan Sadhasivam (2):
+  pci: dwc: pcie-kirin: add HI3670 PCI-E controller support
+  arm64: dts: hisilicon: Add HI3670 PCI-E controller support
+
+Mauro Carvalho Chehab (11):
+  doc: bindings: pci: designware-pcie.txt: convert it to yaml
+  doc: bindings: kirin-pcie.txt: convert it to yaml
+  doc: bindings: add new parameters used by Hikey 970
+  pci: dwc: pcie-kirin: simplify error handling logic
+  pci: dwc: pcie-kirin: simplify kirin 970 get resource logic
+  pci: dwc: pcie-kirin: place common init code altogether
+  pci: dwc: pcie-kirin: allow to optionally require a regulator
+  pci: dwc: pcie-kirin: allow using multiple reset GPIOs
+  pci: dwc: pcie-kirin: add support for clkreq GPIOs
+  pci: dwc: pcie-kirin: cleanup kirin970_pcie_get_eyeparam()
+  arm64: dts: hisilicon: cleanup Hikey 970 PCI schema
+
+ .../bindings/pci/amlogic,meson-pcie.txt       |   4 +-
+ .../bindings/pci/axis,artpec6-pcie.txt        |   2 +-
+ .../bindings/pci/designware-pcie.txt          |  77 --
+ .../bindings/pci/fsl,imx6q-pcie.txt           |   2 +-
+ .../bindings/pci/hisilicon,kirin-pcie.yaml    | 144 ++++
+ .../bindings/pci/hisilicon-histb-pcie.txt     |   2 +-
+ .../bindings/pci/hisilicon-pcie.txt           |   2 +-
+ .../devicetree/bindings/pci/kirin-pcie.txt    |  50 --
+ .../bindings/pci/layerscape-pci.txt           |   2 +-
+ .../bindings/pci/nvidia,tegra194-pcie.txt     |   4 +-
+ .../devicetree/bindings/pci/pci-armada8k.txt  |   2 +-
+ .../devicetree/bindings/pci/pci-keystone.txt  |  10 +-
+ .../devicetree/bindings/pci/pcie-al.txt       |   2 +-
+ .../devicetree/bindings/pci/qcom,pcie.txt     |  14 +-
+ .../bindings/pci/samsung,exynos-pcie.yaml     |   2 +-
+ .../devicetree/bindings/pci/snps,pcie.yaml    | 139 ++++
+ .../pci/socionext,uniphier-pcie-ep.yaml       |   2 +-
+ .../devicetree/bindings/pci/ti-pci.txt        |   4 +-
+ .../devicetree/bindings/pci/uniphier-pcie.txt |   2 +-
+ MAINTAINERS                                   |   4 +-
+ arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |  64 ++
+ .../boot/dts/hisilicon/hikey970-pmic.dtsi     |   1 -
+ drivers/pci/controller/dwc/pcie-kirin.c       | 736 +++++++++++++++++-
+ 23 files changed, 1084 insertions(+), 187 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pci/designware-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/hisilicon,kirin-pcie.yaml
+ delete mode 100644 Documentation/devicetree/bindings/pci/kirin-pcie.txt
+ create mode 100644 Documentation/devicetree/bindings/pci/snps,pcie.yaml
+
 -- 
-2.25.0.rc1.19.g042ed3e048af
+2.29.2
+
 
