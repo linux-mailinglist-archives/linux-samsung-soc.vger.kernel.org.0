@@ -2,69 +2,263 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E96EA30E818
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Feb 2021 00:59:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53C3930DF77
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  3 Feb 2021 17:16:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234017AbhBCX5q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 3 Feb 2021 18:57:46 -0500
-Received: from 198-20-226-115.unifiedlayer.com ([198.20.226.115]:41668 "EHLO
-        198-20-226-115.unifiedlayer.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S233315AbhBCX5m (ORCPT
+        id S234769AbhBCQPs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 3 Feb 2021 11:15:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234840AbhBCQPV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 3 Feb 2021 18:57:42 -0500
-X-Greylist: delayed 59540 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2021 18:57:38 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=carnivalassure.com.bd; s=default; h=Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=miRpAdBSO5eDo01VDX+EK9bqGCmqMjXHS3kO16T6iWw=; b=rgk1ikauAU1hvTn54IcRsZV7jN
-        7ew7UnoHYswDbiAn0BwsDPvi1y7NYnu6spVFzd7wuCzuSXaeHSKXCbOKsfovgDS9G8VDov60T9hnO
-        az+ZrAdd9l4q7KVCSxwWKCfCVJbfHTSf42W46YnBkpxHquHw5LLqdFj5EdNb7huiQ1YCWmqOknYH9
-        SyIGPObfTFO7iFaqVfyi8Xbiiafcx4hzvN/iZIY/q1CFEZM+hVR0h+YPMSL3k9qRCiHtO0Ucth7ip
-        RJzG/T6UUDEki2hIinuZoSZa3/L4hnnytmaQT+A2HqKGkNS4nukEOez1R6NMYmAg56m6DyuuzrLgl
-        lDuKQ5eg==;
-Received: from [127.0.0.1] (port=45986 helo=dot.dotlines.com.sg)
-        by dot.dotlines.com.sg with esmtpa (Exim 4.93)
-        (envelope-from <noreply@carnivalassure.com.bd>)
-        id 1l7CVc-0005Wr-DK; Wed, 03 Feb 2021 01:23:28 -0600
+        Wed, 3 Feb 2021 11:15:21 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C165AC0613D6
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  3 Feb 2021 08:14:40 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id w124so403788oia.6
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 03 Feb 2021 08:14:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bCfZ/a/6NOr6nE7maD0+c3yfEPShyNSVY7EhDvteykY=;
+        b=F30Nrt9vPiAB/zyqMpbpGMCX5+9GbissyHIBmWRmyMfHwYjqRyqHPvGGNSQswndDl8
+         ueuYjPhiYQRYrUuuoE2fCSgdN6wSgEVa4WV8ZAaC0Pdwh0MqPavWRi9wHjisevfaVscM
+         tKXh1rpbVgrfZgdHoSxmfIAY/17F42+Ith6ME=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bCfZ/a/6NOr6nE7maD0+c3yfEPShyNSVY7EhDvteykY=;
+        b=Mp8VcHD7ZPAd27HunaX4wlyjdDOtQJLBzo6HF17Pgi/r8WjOJsPztLlrx5Hm9bHE4u
+         Pgtcau6yO/RfI0kGUpQ41OwUEh+eQ4OWBAHmdlDfEdXQ6lTMxESUKDiJrjJJICkrh8f9
+         k2e8oUkcZbdIcCVzLvax5l9eS0t5CumFwvztKgtW+lH8KdidpHRIVGMQYl2wKo0wrUgK
+         GwAA8dENYz7mfQHecUvVyAKuI+KbvbBI9GukfDfaREhN3SsBM1LrFsuKx6CPHNhZvfZ4
+         X84u2qXg3nJ4arD0kziWE8arEdgQ2VXULDe8qTQnAGev879bivoLWbeXvyPCBRgwaKT6
+         1JSQ==
+X-Gm-Message-State: AOAM533Q24+ldh8JbvsC1Q4werYOl/hYQTZWlcTUJCvcim76g2A5tTC/
+        KMfpMFlTSVy1ki4Hbntd2+rPicRZFjMSUprfgsUCPowWaSt7wdsa
+X-Google-Smtp-Source: ABdhPJxC2Hr09yAlU46Rq8Zw9mzo14g2j/8RncSJTzh5gFRD/Uq7tpWlsM64N23HZFbUWxoY/ZCynmvy0uA3EPvqdek=
+X-Received: by 2002:aca:1906:: with SMTP id l6mr2422037oii.101.1612368880228;
+ Wed, 03 Feb 2021 08:14:40 -0800 (PST)
 MIME-Version: 1.0
-Date:   Wed, 03 Feb 2021 01:23:26 -0600
-From:   Francois Pinault <noreply@carnivalassure.com.bd>
-To:     undisclosed-recipients:;
-Subject: Hello/Hallo
-Organization: Donation
-Reply-To: francoispinault1936@outlook.com
-Mail-Reply-To: francoispinault1936@outlook.com
-Message-ID: <1a89ab2763fcfd9504c577b99b1b1baa@carnivalassure.com.bd>
-X-Sender: noreply@carnivalassure.com.bd
-User-Agent: Roundcube Webmail/1.3.15
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dot.dotlines.com.sg
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - carnivalassure.com.bd
-X-Get-Message-Sender-Via: dot.dotlines.com.sg: authenticated_id: noreply@carnivalassure.com.bd
-X-Authenticated-Sender: dot.dotlines.com.sg: noreply@carnivalassure.com.bd
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <20201127164131.2244124-1-daniel.vetter@ffwll.ch>
+ <20201127164131.2244124-13-daniel.vetter@ffwll.ch> <CAKMK7uGrdDrbtj0OyzqQc0CGrQwc2F3tFJU9vLfm2jjufAZ5YQ@mail.gmail.com>
+ <YAbtZBU5PMr68q9E@kroah.com> <CAKMK7uGHSgetm7mDso6_vj+aGrR4u+ChwHb3k0QvgG0K6X2fPg@mail.gmail.com>
+ <YAb4yD4IbpQ3qhJG@kroah.com> <CAKMK7uF9RfqhOGzcjgXTY62-dFS7ELr+uHuRDhEjOcO-kSgY+w@mail.gmail.com>
+In-Reply-To: <CAKMK7uF9RfqhOGzcjgXTY62-dFS7ELr+uHuRDhEjOcO-kSgY+w@mail.gmail.com>
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Wed, 3 Feb 2021 17:14:29 +0100
+Message-ID: <CAKMK7uG7QiP6m5jfidn7AWVhXp1JUZNpgpNPWOV6bqo9H+7vXA@mail.gmail.com>
+Subject: Re: [PATCH v7 12/17] PCI: Revoke mappings like devmem
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        KVM list <kvm@vger.kernel.org>, Linux MM <linux-mm@kvack.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Kees Cook <keescook@chromium.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        John Hubbard <jhubbard@nvidia.com>,
+        =?UTF-8?B?SsOpcsO0bWUgR2xpc3Nl?= <jglisse@redhat.com>,
+        Jan Kara <jack@suse.cz>, Linux PCI <linux-pci@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Tue, Jan 19, 2021 at 5:03 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrot=
+e:
+>
+> On Tue, Jan 19, 2021 at 4:20 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Tue, Jan 19, 2021 at 03:34:47PM +0100, Daniel Vetter wrote:
+> > > On Tue, Jan 19, 2021 at 3:32 PM Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > On Tue, Jan 19, 2021 at 09:17:55AM +0100, Daniel Vetter wrote:
+> > > > > On Fri, Nov 27, 2020 at 5:42 PM Daniel Vetter <daniel.vetter@ffwl=
+l.ch> wrote:
+> > > > > >
+> > > > > > Since 3234ac664a87 ("/dev/mem: Revoke mappings when a driver cl=
+aims
+> > > > > > the region") /dev/kmem zaps ptes when the kernel requests exclu=
+sive
+> > > > > > acccess to an iomem region. And with CONFIG_IO_STRICT_DEVMEM, t=
+his is
+> > > > > > the default for all driver uses.
+> > > > > >
+> > > > > > Except there's two more ways to access PCI BARs: sysfs and proc=
+ mmap
+> > > > > > support. Let's plug that hole.
+> > > > > >
+> > > > > > For revoke_devmem() to work we need to link our vma into the sa=
+me
+> > > > > > address_space, with consistent vma->vm_pgoff. ->pgoff is alread=
+y
+> > > > > > adjusted, because that's how (io_)remap_pfn_range works, but fo=
+r the
+> > > > > > mapping we need to adjust vma->vm_file->f_mapping. The cleanest=
+ way is
+> > > > > > to adjust this at at ->open time:
+> > > > > >
+> > > > > > - for sysfs this is easy, now that binary attributes support th=
+is. We
+> > > > > >   just set bin_attr->mapping when mmap is supported
+> > > > > > - for procfs it's a bit more tricky, since procfs pci access ha=
+s only
+> > > > > >   one file per device, and access to a specific resources first=
+ needs
+> > > > > >   to be set up with some ioctl calls. But mmap is only supporte=
+d for
+> > > > > >   the same resources as sysfs exposes with mmap support, and ot=
+herwise
+> > > > > >   rejected, so we can set the mapping unconditionally at open t=
+ime
+> > > > > >   without harm.
+> > > > > >
+> > > > > > A special consideration is for arch_can_pci_mmap_io() - we need=
+ to
+> > > > > > make sure that the ->f_mapping doesn't alias between ioport and=
+ iomem
+> > > > > > space. There's only 2 ways in-tree to support mmap of ioports: =
+generic
+> > > > > > pci mmap (ARCH_GENERIC_PCI_MMAP_RESOURCE), and sparc as the sin=
+gle
+> > > > > > architecture hand-rolling. Both approach support ioport mmap th=
+rough a
+> > > > > > special pfn range and not through magic pte attributes. Aliasin=
+g is
+> > > > > > therefore not a problem.
+> > > > > >
+> > > > > > The only difference in access checks left is that sysfs PCI mma=
+p does
+> > > > > > not check for CAP_RAWIO. I'm not really sure whether that shoul=
+d be
+> > > > > > added or not.
+> > > > > >
+> > > > > > Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+> > > > > > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+> > > > > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> > > > > > Cc: Jason Gunthorpe <jgg@ziepe.ca>
+> > > > > > Cc: Kees Cook <keescook@chromium.org>
+> > > > > > Cc: Dan Williams <dan.j.williams@intel.com>
+> > > > > > Cc: Andrew Morton <akpm@linux-foundation.org>
+> > > > > > Cc: John Hubbard <jhubbard@nvidia.com>
+> > > > > > Cc: J=C3=A9r=C3=B4me Glisse <jglisse@redhat.com>
+> > > > > > Cc: Jan Kara <jack@suse.cz>
+> > > > > > Cc: Dan Williams <dan.j.williams@intel.com>
+> > > > > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > > > > Cc: linux-mm@kvack.org
+> > > > > > Cc: linux-arm-kernel@lists.infradead.org
+> > > > > > Cc: linux-samsung-soc@vger.kernel.org
+> > > > > > Cc: linux-media@vger.kernel.org
+> > > > > > Cc: Bjorn Helgaas <bhelgaas@google.com>
+> > > > > > Cc: linux-pci@vger.kernel.org
+> > > > > > Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+> > > > > > --
+> > > > > > v2:
+> > > > > > - Totally new approach: Adjust filp->f_mapping at open time. No=
+te that
+> > > > > >   this now works on all architectures, not just those support
+> > > > > >   ARCH_GENERIC_PCI_MMAP_RESOURCE
+> > > > > > ---
+> > > > > >  drivers/pci/pci-sysfs.c | 4 ++++
+> > > > > >  drivers/pci/proc.c      | 1 +
+> > > > > >  2 files changed, 5 insertions(+)
+> > > > > >
+> > > > > > diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+> > > > > > index d15c881e2e7e..3f1c31bc0b7c 100644
+> > > > > > --- a/drivers/pci/pci-sysfs.c
+> > > > > > +++ b/drivers/pci/pci-sysfs.c
+> > > > > > @@ -929,6 +929,7 @@ void pci_create_legacy_files(struct pci_bus=
+ *b)
+> > > > > >         b->legacy_io->read =3D pci_read_legacy_io;
+> > > > > >         b->legacy_io->write =3D pci_write_legacy_io;
+> > > > > >         b->legacy_io->mmap =3D pci_mmap_legacy_io;
+> > > > > > +       b->legacy_io->mapping =3D iomem_get_mapping();
+> > > > > >         pci_adjust_legacy_attr(b, pci_mmap_io);
+> > > > > >         error =3D device_create_bin_file(&b->dev, b->legacy_io)=
+;
+> > > > > >         if (error)
+> > > > > > @@ -941,6 +942,7 @@ void pci_create_legacy_files(struct pci_bus=
+ *b)
+> > > > > >         b->legacy_mem->size =3D 1024*1024;
+> > > > > >         b->legacy_mem->attr.mode =3D 0600;
+> > > > > >         b->legacy_mem->mmap =3D pci_mmap_legacy_mem;
+> > > > > > +       b->legacy_io->mapping =3D iomem_get_mapping();
+> > > > >
+> > > > > Unlike the normal pci stuff below, the legacy files here go boom
+> > > > > because they're set up much earlier in the boot sequence. This on=
+ly
+> > > > > affects HAVE_PCI_LEGACY architectures, which aren't that many. So=
+ what
+> > > > > should we do here now:
+> > > > > - drop the devmem revoke for these
+> > > > > - rework the init sequence somehow to set up these files a lot la=
+ter
+> > > > > - redo the sysfs patch so that it doesn't take an address_space
+> > > > > pointer, but instead a callback to get at that (since at open tim=
+e
+> > > > > everything is set up). Imo rather ugly
+> > > > > - ditch this part of the series (since there's not really any tak=
+ers
+> > > > > for the latter parts it might just not make sense to push for thi=
+s)
+> > > > > - something else?
+> > > > >
+> > > > > Bjorn, Greg, thoughts?
+> > > >
+> > > > What sysfs patch are you referring to here?
+> > >
+> > > Currently in linux-next:
+> > >
+> > > commit 74b30195395c406c787280a77ae55aed82dbbfc7 (HEAD ->
+> > > topic/iomem-mmap-vs-gup, drm/topic/iomem-mmap-vs-gup)
+> > > Author: Daniel Vetter <daniel.vetter@ffwll.ch>
+> > > Date:   Fri Nov 27 17:41:25 2020 +0100
+> > >
+> > >    sysfs: Support zapping of binary attr mmaps
+> > >
+> > > Or the patch right before this one in this submission here:
+> > >
+> > > https://lore.kernel.org/dri-devel/20201127164131.2244124-12-daniel.ve=
+tter@ffwll.ch/
+> >
+> > Ah.  Hm, a callback in the sysfs file logic seems really hairy, so I
+> > would prefer that not happen.  If no one really needs this stuff, why
+> > not just drop it like you mention?
+>
+> Well it is needed, but just on architectures I don't care about much.
+> Most relevant is perhaps powerpc (that's where Stephen hit the issue).
+> I do wonder whether we could move the legacy pci files setup to where
+> the modern stuff is set up from pci_create_resource_files() or maybe
+> pci_create_sysfs_dev_files() even for HAVE_PCI_LEGACY. I think that
+> might work, but since it's legacy flow on some funny architectures
+> (alpha, itanium, that kind of stuff) I have no idea what kind of
+> monsters I'm going to anger :-)
 
+Back from a week of vacation, I looked at this again and I think
+shouldn't be hard to fix this with the sam trick
+pci_create_sysfs_dev_files() uses: As long as sysfs_initialized isn't
+set we skip, and then later on when the vfs is up&running we can
+initialize everything.
 
--- 
-Hallo, ich bin Herr Francois Pinault, ich habe Ihnen gespendet. Sie 
-können mein Profil auf Wikipedia, Google oder Forbes überprüfen.
+To be able to apply the same thing to pci_create_legacy_files() I
+think all I need is to iterate overa all struct pci_bus in
+pci_sysfs_init() and we're good. Unfortunately I didn't find any
+for_each_pci_bus(), so how do I do that?
 
-Für Ihren Spendenanspruch und weitere Informationen kontaktieren Sie 
-mich umgehend unter francoispinault1936@outlook.com
-
-Mit freundlichen Grüßen,
-Herr Francois Pinault
+Thanks, Daniel
+--=20
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
