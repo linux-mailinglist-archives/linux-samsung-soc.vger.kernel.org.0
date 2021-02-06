@@ -2,112 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDBAA311D82
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  6 Feb 2021 14:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4981B311DFE
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  6 Feb 2021 15:52:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbhBFNqQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 6 Feb 2021 08:46:16 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:41948 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbhBFNqQ (ORCPT
+        id S229683AbhBFOwQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 6 Feb 2021 09:52:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54658 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229537AbhBFOwP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 6 Feb 2021 08:46:16 -0500
-Received: by mail-wr1-f52.google.com with SMTP id p15so11020258wrq.8;
-        Sat, 06 Feb 2021 05:45:59 -0800 (PST)
+        Sat, 6 Feb 2021 09:52:15 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16FDDC06174A
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  6 Feb 2021 06:51:29 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id y8so12892031ede.6
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 06 Feb 2021 06:51:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=sY4fgq/DSyThalwU7QX+pWYKs/8sGH7ZznMUn5qQ1EY=;
+        b=CFefMwnKKPeQHKvCTxx7Iz6/xpPfG8buysyPlZfyxD+dBsDVctD3XeD6F3cnZT2iMi
+         uRb7WGkzU6heXldEj9UeLHKdtSok9pxbjtenDSEXKDrjrppuyYOX9/GGy4h9t5g/0ZtS
+         yzsR/yQZPQg9sNUE5kzACvkJvGKdut6c6ykCFTPvID2bYgLKoyKbsSGgIFi00a/cqI2V
+         y9Tsseq1doWbV7i3hAaqtrAtSOLv2otC4FAJdrHEkRvvOBI8JtSZfciC75OECUHUwNrZ
+         Aksn3AGy0UEQguzUm+Aw9jweVZP4QTsoYiQkpkIZVgikGIIzANgjJPGpDyXjP5GrrGuh
+         /B5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7ghVbTm1KHFPZQbBwYfJEJHbvho+CoG+hwSpE/oCZOc=;
-        b=J4P49KE26VN20zQsy64nRJ9kZCTU7hT791eqjKIiShB1Hi94Uu5D2actztD64XcVou
-         wQLWncDbGwwvIh2nnGnmIpexQfhi6J3/W5eatAfHZkx2uNC1fwCYZbjVwrNWRaOELJt0
-         G5PXOHxZe4Byx77vR4TEQtqXhU+Qxy3GAQJba1I/Qreex6RpQjJJkKciFL064UAhOenw
-         gWglKEWo+SI5TA3Ksns98P61rIMv+uRPkmezsdI5IHXLQEO+kDRXwUM7ddPZT2IOszL0
-         as16vsPukj6gmcxSC2zWHZjlIU6emgZgfPx1rwc5vTJCAhTD+T0QtSDMF9w8CzmsVfnU
-         xEmA==
-X-Gm-Message-State: AOAM531bUtBJjBDr6Xc0vkKByjdoQUw5Wn/cAuiyquaIyNkMYg5hvpfT
-        gbNrOWxJOSbZ5cP1vMmGpR0=
-X-Google-Smtp-Source: ABdhPJxfZL4HL+Mq28hXXROX5oDPXTtbYpNw5IDUR7G1wwpEwQJWkmQ95FfU7I+FNgdfeWWCNapjdQ==
-X-Received: by 2002:adf:e807:: with SMTP id o7mr10750502wrm.308.1612619133829;
-        Sat, 06 Feb 2021 05:45:33 -0800 (PST)
-Received: from kozik-lap (194-95-143-94.dyn.cable.fcom.ch. [94.143.95.194])
-        by smtp.googlemail.com with ESMTPSA id w14sm16387610wro.86.2021.02.06.05.45.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Feb 2021 05:45:32 -0800 (PST)
-Date:   Sat, 6 Feb 2021 14:45:31 +0100
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
-        arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: Re: [GIT PULL 2/3] ARM: dts: samsung: DTS for v5.12
-Message-ID: <20210206134531.l5vpzlmev4v3f3uo@kozik-lap>
-References: <20210125191240.11278-1-krzk@kernel.org>
- <20210125191240.11278-3-krzk@kernel.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=sY4fgq/DSyThalwU7QX+pWYKs/8sGH7ZznMUn5qQ1EY=;
+        b=pPJDKHvNepZYv1kRjhzuvv68E7Ou+Sj8Fz9dGmPuMdwOtOhjJ8iuC9Jm9oq2IQvFYi
+         wp+4a8xEcPpImoR+W62/mvVQ9/EJFdWAdrVoNhdVgA8xIJfKFItXJIHzO65DsuAoi7rl
+         OdwlC15h8nOFVJsrkJQOkBdc6HTeDVS6QVCiWzzIsUQpZhrJ+e0trWanaCsdDGhkg4v0
+         EZqUFrftOlzeAIlbgRzVdRGcUFK9Z441ybe/exoqTwLGULQOm8cDa69IAJiQNakN9Kz1
+         SrWTV6i5Nog8LpsA6E67eYH30p7C0whDkvARihIUlGxOTzZ9VspxmeIur77YNGcdcNeo
+         DSPw==
+X-Gm-Message-State: AOAM532ooqN8ZeN+Kem3tyBr0LCpVJoDxGp9T7cUzPXxT+pC28ratXkO
+        lnAAPcEEgMy8nR5cvCQgTuWAha+sAiCc9w3XBD4=
+X-Google-Smtp-Source: ABdhPJwCx0pU5gsivANsSWVIH3KAGHaTyU0b9vBQ2VSAy9RiGKOsvm1vdTMcrBiJ7MJXwygGk5m84rsW4xdhIPK2SKk=
+X-Received: by 2002:aa7:c7d8:: with SMTP id o24mr8872325eds.328.1612623087837;
+ Sat, 06 Feb 2021 06:51:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210125191240.11278-3-krzk@kernel.org>
+Received: by 2002:a17:906:25d0:0:0:0:0 with HTTP; Sat, 6 Feb 2021 06:51:27
+ -0800 (PST)
+Reply-To: lawyer.nba@gmail.com
+From:   Barrister Daven Bango <stephennbada9@gmail.com>
+Date:   Sat, 6 Feb 2021 15:51:27 +0100
+Message-ID: <CAGSHw-BARBbVT6JpxSPuL9mSEuha_HLv1sPz68VrFfycB-btPQ@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 08:12:39PM +0100, Krzysztof Kozlowski wrote:
-> The following changes since commit 5c8fe583cce542aa0b84adc939ce85293de36e5e:
-> 
->   Linux 5.11-rc1 (2020-12-27 15:30:22 -0800)
-> 
-> are available in the Git repository at:
-> 
->   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-dt-5.12
-> 
-> for you to fetch changes up to 3803f461bd28c1c817281348509399778633e82f:
-> 
->   ARM: dts: exynos: Add top-off charging regulator node for I9100 (2021-01-03 17:33:29 +0100)
-> 
-> ----------------------------------------------------------------
-> Samsung DTS ARM changes for v5.12
-> 
-> 1. Use new compatile to properly configure Exynos5420 USB2 PHY, fixing
->    it suspend/resume cycle.
-> 2. Correct Samsung PMIC interrupt trigger levels on multiple boards.
-> 3. Correct the voltages of Samsung GT-I9100 charger and add top-off
->    charger.
-> 
+--=20
+Korisnik fonda =C4=8Destitanja, Va=C5=A1a sredstva za naknadu od 850.000,00
+ameri=C4=8Dkih dolara odobrila je Me=C4=91unarodna monetarna organizacija (=
+MMF)
+u suradnji s (FBI) nakon mnogo istraga. =C4=8Cekamo da se obratimo za
+dodatne informacije
 
-Hi everyone,
-
-Any progress or new comments about this pull request?
-
-Best regards,
-Krzysztof
-
-
-
-> ----------------------------------------------------------------
-> Krzysztof Kozlowski (6):
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Artik 5
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Monk
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Rinato
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Spring
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Arndale Octa
->       ARM: dts: exynos: correct PMIC interrupt trigger level on Odroid XU3 family
-> 
-> Marek Szyprowski (1):
->       ARM: dts: exynos: use Exynos5420 dedicated USB2 PHY compatible
-> 
-> Timon Baetz (2):
->       ARM: dts: exynos: Fix charging regulator voltage and current for I9100
->       ARM: dts: exynos: Add top-off charging regulator node for I9100
-> 
->  arch/arm/boot/dts/exynos3250-artik5.dtsi      |  2 +-
->  arch/arm/boot/dts/exynos3250-monk.dts         |  2 +-
->  arch/arm/boot/dts/exynos3250-rinato.dts       |  2 +-
->  arch/arm/boot/dts/exynos4210-i9100.dts        | 30 ++++++++++++++++-----------
->  arch/arm/boot/dts/exynos5250-spring.dts       |  2 +-
->  arch/arm/boot/dts/exynos5420-arndale-octa.dts |  2 +-
->  arch/arm/boot/dts/exynos5422-odroid-core.dtsi |  2 +-
->  arch/arm/boot/dts/exynos54xx.dtsi             |  6 +++---
->  8 files changed, 27 insertions(+), 21 deletions(-)
+Advokat: Daven Bango
+Telefon: +22891667276
+(URED MMF-a LOME TOGO)
