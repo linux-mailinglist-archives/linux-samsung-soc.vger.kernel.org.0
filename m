@@ -2,67 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0A7E312E67
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Feb 2021 11:06:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 612C63132E7
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Feb 2021 14:06:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231799AbhBHKA5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 8 Feb 2021 05:00:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbhBHJzX (ORCPT
+        id S229756AbhBHNG1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 8 Feb 2021 08:06:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53880 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229637AbhBHNG0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 8 Feb 2021 04:55:23 -0500
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34187C03C045
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  8 Feb 2021 01:46:31 -0800 (PST)
-Received: by mail-il1-x136.google.com with SMTP id g9so12169498ilc.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 08 Feb 2021 01:46:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=z7Z/JdX0RhrlgqchmamXWMY47TIIKUp5Zm0+e0J1lMs=;
-        b=EBAN8kT/RdDTitIJIwHViEDhHzNJv4CIWk9rs6YltTkWZ458GA493YyOdSoiZ3kf2I
-         cdNbMkg2fZDvPvkuycg7WSARNJ/puPrDyOFIWKtgjChKMEIfkIP2Q2XVpBk+DA9Lhucn
-         6XQlMQaKQZVW2ZyZN5QBK8n9vbP0QwsOuCEl8YnAfifh/FxrfAzpfX38semmARrCGxh8
-         WFi+25A8lhFcplpes37lwhh0IayXXJWFPkoQ+knUplL4fyj/9WvmsAavsN2O11FqYU0q
-         sXGcgyuoksh1FLpl3IVpUWra/8A8W9zD+TSlCF6rCGoTQRx8E8R9VquYNvg3vN5bAAWe
-         XSXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=z7Z/JdX0RhrlgqchmamXWMY47TIIKUp5Zm0+e0J1lMs=;
-        b=eLPvypxJvYg+Ue5bJSrbelVvIvnJvXbuBFNT/NuhfiBwtblujuoX0yObYF2GscV8uA
-         ePShjLo9A2jAoq+nii34dYno+XXA9RDUSefYKx0CPRimwRVpKv33vMPxyUPM6GQ9oOtH
-         M8j6LvQRp7Z5CqMdlYBYXhT1cQEv07csc7B1d+KPu/pDn09Izmf9D9E2KISdX4HOF8oS
-         XL6N8WMzJaWXu94rkqOI8O/yO8tigmSk3L4H0LEGybzlF1g8tLV6CKpmsjE+wUVDHrEd
-         TZWusbQkrrHS8NTbvwLrA44QAheKiaoRPAo2Nw2A/RS0Mx4qq2S7ZVdMB7gMU4YkySia
-         4KyA==
-X-Gm-Message-State: AOAM530uEACDaUhTdNKTCDY/C8ru+LUSNhcrfAZ/hbRTYPo/0vqxkLQY
-        F7G2vzW5V2Ol9uSBlVI6LwVHXlzo+TyAjDK+6UeyhxfMG94=
-X-Google-Smtp-Source: ABdhPJybDL+KhCvXPDIs57vnx74bKnUW7LRfIk9mtYaX6Td3ETIAJUIor6BltYlrl2tm2rDxnhIvTg/8Y9D/vq+/hVc=
-X-Received: by 2002:a63:c84a:: with SMTP id l10mr16253996pgi.159.1612777589348;
- Mon, 08 Feb 2021 01:46:29 -0800 (PST)
+        Mon, 8 Feb 2021 08:06:26 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5D55964E87;
+        Mon,  8 Feb 2021 13:05:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1612789545;
+        bh=n2isI83IkIAKm3kI0g0ECHwrDnwL6N3NRCask2v11K4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=tXnPlTunpFwu92+fPzbML8iTK5bFD47r16JYOL15YDq8sUvWgYSWCYcog0bcY6osU
+         xh+lzTTdf2dw06caWv1MO6c7XzUQPhI+NCh7ghzDWUQf6xcS8dhhrco7GjR7I34rmJ
+         AAk9CI3OMOEn6Zj6FjRfSEt9lA8PTIdfLFjar5HRx9sysZXAL4ErUAR5aqsPFOYObq
+         j80ngkwleGb9hiojaxB8NTYqF8n7QxPtWBTwhJ/lB5lNT4F/Ku1Ckf4BKdGuZKcJ28
+         xE5qRkCgxdLD2MZsM8eBJ2tGU/FJ3PdOZEDi+ETdJ+hGgglVpfQJhVh1xacyv5JQ+p
+         ra0oJKj0Bi0Hg==
+Received: by mail-ed1-f48.google.com with SMTP id y8so17967014ede.6;
+        Mon, 08 Feb 2021 05:05:45 -0800 (PST)
+X-Gm-Message-State: AOAM530uUifeRgy2R8rKXYjlA4n+oz6qozRRtc5BIjNxAqp3bzBLFxii
+        Sast/sGY6CBG659a2Z6hK47fnFIaHWEksJcT2yo=
+X-Google-Smtp-Source: ABdhPJy3MugBCN3vcLgylnGQXqUOP8EwHKtj6Zh2dKo2/+J+UzdE0VRMpo4trg91VeezDp2qc7vylA2ODRRIJwGyK5o=
+X-Received: by 2002:a05:6402:d05:: with SMTP id eb5mr16789013edb.143.1612789543824;
+ Mon, 08 Feb 2021 05:05:43 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a17:90a:5d0a:0:0:0:0 with HTTP; Mon, 8 Feb 2021 01:46:29
- -0800 (PST)
-Reply-To: richadtomm@qq.com
-From:   "Mr.Richard Thomas" <tommiirrrch@gmail.com>
-Date:   Mon, 8 Feb 2021 01:46:29 -0800
-Message-ID: <CAGbSTZMAc0EF+BT96=ag5apRs+Aauw-A-2pin2QX1dEQy+tMew@mail.gmail.com>
-Subject: Re Thanks.
-To:     undisclosed-recipients:;
+References: <CGME20210208114447epcas2p3507f22a555355ac7710c5ca220853e0e@epcas2p3.samsung.com>
+ <20210208114538.134766-1-taehyun.cho@samsung.com>
+In-Reply-To: <20210208114538.134766-1-taehyun.cho@samsung.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Mon, 8 Feb 2021 14:05:31 +0100
+X-Gmail-Original-Message-ID: <CAJKOXPeeopnjvdbNb=QA-wS+jcrAzgpouV2DFWe+ydGFE2J68A@mail.gmail.com>
+Message-ID: <CAJKOXPeeopnjvdbNb=QA-wS+jcrAzgpouV2DFWe+ydGFE2J68A@mail.gmail.com>
+Subject: Re: [PATCH] usb: dwc3: make USB_DWC3_EXYNOS independent
+To:     taehyun cho <taehyun.cho@samsung.com>
+Cc:     balbi@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-usb@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dear Friend,
-I will be pleased if you can allow me to invest $104M Dollars in
-Estate Management,in your company or any area you best that will be
-of good profit to both of us
+On Mon, 8 Feb 2021 at 12:51, taehyun cho <taehyun.cho@samsung.com> wrote:
+>
+> 'ARCH_EXYNOS' is no more used. 'USB_DWC3_EXYNOS' is glue layer
 
-Please do well to respond including your information for more details.
+As a maintainer of Samsung Exynos SoC, I am very surprised to hear
+that ARCH_EXYNOS is not used anymore... Quite contrary, in my opinion
+it is still used. You need to rephrase this sentence, because it's not
+possible to understand in current form.
 
-Thanks.
-Mr.Richard Thomas
+> which can be used with Synopsys DWC3 controller on Exynos SoCs.
+> 'USB_DWC3_EXYNOS' can be used from Exynos5 to Exynos9.
+
+Please provide here the answer to "why you want to remove
+ARCH_EXYNOS". Quite precise answer, please.
+
+In future, please Cc lists and people responsible for this drivers:
+scripts/get_maintainer.pl -f drivers/usb/dwc3/dwc3-exynos.c
+
+Best regards,
+Krzysztof
