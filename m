@@ -2,103 +2,175 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 623CB31566F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  9 Feb 2021 20:02:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F011315764
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  9 Feb 2021 21:05:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233215AbhBIS7B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 9 Feb 2021 13:59:01 -0500
-Received: from mx29137.godns.net ([190.228.29.137]:38811 "HELO
-        mx2923.godns.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with SMTP id S233606AbhBISt4 (ORCPT
+        id S233583AbhBIUC0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 9 Feb 2021 15:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54674 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233765AbhBITwA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 9 Feb 2021 13:49:56 -0500
-X-Greylist: delayed 744 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Feb 2021 13:49:54 EST
-Received: (qmail 4471 invoked by uid 700); 9 Feb 2021 18:36:07 -0000
-Received: from unknown (HELO web.godns.net) (192.168.3.191)
-  by 0 with SMTP; 9 Feb 2021 18:36:06 -0000
-Received: (qmail 10991 invoked by uid 11670742); 9 Feb 2021 18:36:01 -0000
-To:     linux-samsung-soc@vger.kernel.org
-Subject: =?UTF-8?Q?(Abschlie=C3=9Fende_Mitteilung_f=C3=BCr_die_Zahlung)?=
-X-PHP-Originating-Script: 11670742:stream-privte.php
-Date:   Tue, 9 Feb 2021 15:36:01 -0300
-From:   El gordo de la Primitiva Lotterie Spanien 
-        <support@laboratoriopais.com.ar>
-Reply-To: santalucia.sg.es@spainmail.com
-Message-ID: <8346bc38bbe3fadff2abc45e71a24a19@laboratoriopais.com.ar>
+        Tue, 9 Feb 2021 14:52:00 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2C6C06121E;
+        Tue,  9 Feb 2021 11:19:32 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id es14so9230014qvb.3;
+        Tue, 09 Feb 2021 11:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OfTABNqV2/dgIczcIGpTslZ48bA8VW7hHVaIj/4GfsU=;
+        b=JkitmTFeJmEERO+haqbix/PAz2MfSvvtnk7W6zSTIxx8Y+1tUVd7r7IiNoMLcH3HW3
+         YNXR0G3VK0SEMJEEyQTjuybZ2b/IA5HGgyp5sGkrSKp0pInvOBcK5SXM8v+gbwmjFWgi
+         KHiXvShvgfeddE+EdtdTz6b0HgrJUD4zyeuxAHua2aI5modiGThykPiddh+bTQ9FMRVP
+         1NcJCEVQs+JM3zzTMXzBWrqRyHy9wwGVUvQK1Sea2dGWm066uCVSFkx8S8ycMr1zbHuN
+         B+MK7U+rmeAhaZTqNTrq4axpyLWd6FpngeUAd6J1SPe746dDnOCwKgKUnYOH/vbFBtcP
+         dmuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OfTABNqV2/dgIczcIGpTslZ48bA8VW7hHVaIj/4GfsU=;
+        b=jf2Zxrsg+tww3qlrCW5FU31+hAiV8Dy2kydXwZG49Kt7uE5RWDi7DfoLU8Szv38uiY
+         pb5dDfze9kSKzoJAG8CR3a8jziV5fSoqMX7XffoRQQ31W6pQNfjUu57NmQ0SQ5piA7nE
+         QMHMRZJPoXjVH+H8dC65ogD1BePB/7CJhLtqvm38VQtgjemOT7GbjX0u/wYr8dA/7j4m
+         DCIW3ii5WFETM8dYZhRymKJlWRRYUH4r6kh7uhc+w8b7XuEDNCFicbUo+AM2+Pefnpj9
+         XuDmC08TBareEbfoRuVdUoHAfMR83srK/7EDnHNoSYm7L5fBpGbmqozyanZLNVfoo0pj
+         2xeg==
+X-Gm-Message-State: AOAM531ZY1PQgnXdYROGG0rdribykR9pJPCucCeOBGv7blmwRWLoz1aw
+        OBeN7UrepL9hb10ckUQ9Gt4=
+X-Google-Smtp-Source: ABdhPJxwpTfsaltd2sTJ+PIvZKKbEuql8jMNGKrFTE7F39NpOxjAuHsIOjA6wv1M8yFV/SlghlllTA==
+X-Received: by 2002:a0c:9e50:: with SMTP id z16mr21934994qve.13.1612898371968;
+        Tue, 09 Feb 2021 11:19:31 -0800 (PST)
+Received: from [192.168.1.49] (c-67-187-90-124.hsd1.ky.comcast.net. [67.187.90.124])
+        by smtp.gmail.com with ESMTPSA id v1sm3558596qki.49.2021.02.09.11.19.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Feb 2021 11:19:31 -0800 (PST)
+Subject: Re: [GIT PULL 2/3] ARM: dts: samsung: DTS for v5.12
+To:     Arnd Bergmann <arnd@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
+        arm-soc <arm@kernel.org>, SoC Team <soc@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+References: <20210125191240.11278-1-krzk@kernel.org>
+ <20210125191240.11278-3-krzk@kernel.org>
+ <20210206134531.l5vpzlmev4v3f3uo@kozik-lap>
+ <CAK8P3a0Kgn9PTHjsU7MbJPC8vatvb9KYJJKWxrx7zQzTNgK10g@mail.gmail.com>
+From:   Frank Rowand <frowand.list@gmail.com>
+Message-ID: <67970952-e048-efbf-446c-a703da3bc037@gmail.com>
+Date:   Tue, 9 Feb 2021 13:19:29 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK8P3a0Kgn9PTHjsU7MbJPC8vatvb9KYJJKWxrx7zQzTNgK10g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-El Gordo de la primitiva  lotterie spanien                        
-Adresse:Calle del Príncipe de Vergara, 38, 28001
-Madrid España]     
-Kontakt aufnehmen unter:] 34602 810 185 fax 34935457490]
-E-mail:]consultants24hrs@consultant.com]
+On 2/6/21 8:35 AM, Arnd Bergmann wrote:
+> On Sat, Feb 6, 2021 at 2:45 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>> On Mon, Jan 25, 2021 at 08:12:39PM +0100, Krzysztof Kozlowski wrote:
+>>>
+>>> ----------------------------------------------------------------
+>>> Samsung DTS ARM changes for v5.12
+>>>
+>>> 1. Use new compatile to properly configure Exynos5420 USB2 PHY, fixing
+>>>    it suspend/resume cycle.
+>>> 2. Correct Samsung PMIC interrupt trigger levels on multiple boards.
+>>> 3. Correct the voltages of Samsung GT-I9100 charger and add top-off
+>>>    charger.
+>>>
+>>
+>> Hi everyone,
+>>
+>> Any progress or new comments about this pull request?
+> 
+> Hi Krzysztof,
+> 
+> Sorry for not getting back to you on this earlier. I discussed this with
+> Olof the other day and we decided to merge this, I just haven't
+> gone through the pull requests over the past few days. My plan is
+> to do the next round on Monday.
+> 
+> That said, I'm still not happy about the patch we discussed in the
+> other email thread[1] and I'd like to handle it a little more strictly in
+> the future, but I agree this wasn't obvious and we have been rather
+> inconsistent about it in the past, with some platform maintainers
+> handling it way more strictly than others.
+> 
+> I've added the devicetree maintainers and a few other platform
+> maintainers to Cc here, maybe they can provide some further
+> opinions on the topic so we can come to an approach that
+> works for everyone.
+> 
+> My summary of the thread in [1] is there was a driver bug that
+> required a DT binding change. Krzysztof and the other involved
+> parties made sure the driver handles it in a backward-compatible
+> way (an old dtb file will still run into the bug but keep working
+> with new kernels), but decided that they did not need to worry
+> about the opposite case (running an old kernel with an updated
+> dtb). I noticed the compatibility break and said that I would
+> prefer this to be done in a way that is compatible both ways,
+> or at the minimum be alerted about the binding break in the
+> pull request, with an explanation about why this had to be done,
+> even when we don't think anyone is going to be affected.
+> 
+> What do others think about this? Should we generally assume
+> that breaking old kernels with new dtbs is acceptable, or should
+> we try to avoid it if possible, the same way we try to avoid
+> breaking new kernels with old dtbs? Should this be a platform
+> specific policy or should we try to handle all platforms the same
+> way?
 
-Aktenzeichen:]P09/01/02/2021.]
-Losnummer:] ESP 4447/1146411880201]
-Datum: 06/02/2021]
+The current policy (since before 2013) is that newer kernels,
+implementing new bindings, do not break with old existing dtbs.
 
-Hallo,         
-                  
-                             OFFIZIELLE MITTEILUNG,
-Diese El Gordo de la Primitiva Bonanza  Lotterie wurde und Ministerio de Industria, Comercio y Turismo  gesponsert um Tourismus in Spanien  zu fördern.
- 
-Wir sind erfreut Ihnen mit zu teilen, dass die Gewinner des Sonder Spanish Tourismus Promotional Draw bekannt gegeben worden sind. Die offizielle Liste der Gewinner  erschien am  Samstag der 16/01/2021. 
- 
-Ihre email adresse  mit der anhängenden Losnummer: ESP 4447/1146411880201  und mit der Seriennummer: ESP/018811-2020 zog die Glücksnummer: 6.16.18.33.47.51 Bonu:29,El Gordo de la Primitiva  Lotterie  6 /49 in der 3. Kategorie.
- 
-Sie sind damit gewinner von: €991,000.00 Euro. Die Summe ergibt sich aus einer Gewinnausschüttung von: €6937,000.00 Euro, die durch die ersten sieben (7) Gewinner aus der gleichen Kategorie geteilt wurde.  Dir gewinn ist bei einer sicherheitsfirma hinterlegt und in ihren namen/email  versichert. um keine komplikationen bei der abwicklung der zahlung zu verursachen bitten wir sie diese offizielle mitteilung , diskret zu behandeln.,es ist ein teil unseres sicherheitsprotokolls und garantiert ihnen einen reibungslosen Ablauf.
- 
-Alle gewinner wurden per computer aus Urlaubshotels, Fluggesellschaften und Reisebüros mailen Daten von fünf Millionen (5000000) Email adressen ausgewählt, als teil unserer Internationalen tourismus promotion programms, welches wir einmal im jahr veranstalten um Tourismus in Spanien zu fördern.
- 
-Bitte kontaktieren sie unseren auslands sachbearbeiter Herr Gabriel  bei der sicherheitsfirma Santalucia Sicherheitsfirma:Per Email an:beratergabriel.sp@consultant.com oder anrufen: 34 602 810 185 & Fax:  34 931 70 2120, um Ihr Geld schnell zu bekommen.
- 
-Denken Sie daran, jeder gewinnanspruch muss bis zum 27/02/2021 Angemeldete sein. Jeder nicht angemeldet Gewinnanspruch verfällt und geht zuruck an das Spanische Staatskasse.
-  
-WICHTIG: um verzögerungen und komplikationen zu vermeiden, bitte immer Aktenzeichen angeben.  Anbei ein anmeldeformular, bitte ausfüllen und zurück Per email an:beratergabriel.sp@consultant.com oder anrufen:  34 602 810185 & Fax:  34 931 70 2120 die sicherheitsfirma Santalucia Sicherheitsfirma.
- 
-HERZLICHEN GLUCKWUNSCH…!
-Mit freundlichen Grüßen
-MARIA HIDALGO
-VIZEPRÄSIDENTIN
- 
-BÜRO,SANTALUCIA SEGUROS S.A España 
-Plaza España, 15 - -16                            
-Madrid, 28008 España
-                           
- 
-ANMELDEFORMULAR ZUR GEWINNANSPRUCHS
-_____________________________________________ 
-Bitte füllen Sie das Formular sorgfältig aus und senden es per e mail:santalucia.sg.es@spainmail.com an der Santalucia Sicherheitsfirma mit Kopie Ihres Personalausweises oder Reisepasses.
+Old existing kernels are not required to work with new dtbs.
 
+See Documentation/devicetree/bindings/ABI.rst
 
-GEWINNBETRAG*__________AKTENZEICHEN:*ESP09/01/02/2021
-NAME:*____________________VORNAME:*_______________________
-GEBURTSDATUM:*_________________*NATIONALI:*________________
-LOSNUMMER*______________________*GLUCKSZAHLEN:*____________
-STRASSE*____________________________*NUMMER:*_______________
-WOHNORT*________________POSTLEITZAH*__________*LAND*________
-TELEFON*____________HANDY*_____________FAX*_________________
-BEFUF*__________FAMIELIENSTAND*_______________* (GESCHLECHT)
-EMAIL*________________________________________*Unterschrift*_
-  
- 
-WELCHE ZAHLUNGSFORM BEVORZUGEN SIE?  (A) BANKÜBERWEISUNG:  (B) BARSCHECK  
-BANKDATEN SIND NUR NOTWENDIG WENN SIE SICH FÜR EINE BANKÜBERWEISUNG ENTSCHIEDEN HABEN.
- 
-NAME DES GELDINSTITUTS:*__________________________
-KONTONUMMER:*_____________________________________
-SWIFT CODE:*______________________________________
-BANK ADDRESS:*____________________________________
-TELEFONNUMMER:*___________________________________
-FAX: NUMMER:*_____________________________________
+We can choose to change the rules, so I'm not saying that the
+discussion should not occur.  I'm just pointing out the
+current policy.
 
- 
-     ERKLÄRUNG DES BEGÜNSTIGTEN
-ICH ___________________________BESTÄTIGE HIERMIT, DASS ALLE INFORMATIONEN, KORREKT SIND, UND DIE VERANSTALTER DER El SPANISH LOTTERY / SANTALUCIA SICHERHEITSFIRMA NICHT VERANTWORTLICH GEMACHT WERDEN, WENN ES ZU EINER UNBERECHTIGTEN ZAHLUNG DURCH UNGENAUE INFORMATIONEN, DIE ICH IN DIESEM FORMULAR ANGEBE KOMMT.DASS 10% PROVISION DER SANTA LUCIA SECURITY COMPANY GEH?REN, SOBALD SIE IHREN GEWINN FONDS ERHALTEN. DIESE ZEHN PROZENT WERDEN IHNEN SOFORT ZURÜCKGEGEBEN, SIE ERHALTEN IHREN GEWINN AUF IHREM KONTO. (ACHTUNG Wir bitten Sie, auf diese E-Mail-Adresse zu antworten(santalucia.sg.es@spainmail.com) BÜRO-KONTOINFORMATIONEN-IBAN ES17 2100 5624 1102 0011 7719 SWIFT CODE: CAIXESBBXXX.  KONTONAME,LA PLACITA DEL MIRADOR S.L SPAIN.
-Urheberrecht© 2019-2021 Multi-Staat Lotterie Verband. Alle Rechte
+I think that ABI.rst does not state "Old existing kernels are
+not required to work with new dtbs" clearly enough, and
+should be updated to do so.
+
+I also think it would be good to explicitly say that care
+should be taken with new bindings to not break existing
+kernels, if reasonably possible.
+
+-Frank
+
+> 
+>           Arnd
+> 
+> [1] https://lore.kernel.org/lkml/20210130143949.aamac2724esupt7v@kozik-lap/
+> 
 
