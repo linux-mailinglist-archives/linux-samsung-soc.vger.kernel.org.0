@@ -2,88 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8635031C246
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Feb 2021 20:14:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B65CB31C542
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Feb 2021 03:09:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbhBOTNT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 15 Feb 2021 14:13:19 -0500
-Received: from smtp1.axis.com ([195.60.68.17]:5355 "EHLO smtp1.axis.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230048AbhBOTNR (ORCPT
+        id S229617AbhBPCJ3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 15 Feb 2021 21:09:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229497AbhBPCJ3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 15 Feb 2021 14:13:17 -0500
-X-Greylist: delayed 509 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Feb 2021 14:13:15 EST
+        Mon, 15 Feb 2021 21:09:29 -0500
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3908C061574
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Feb 2021 18:08:48 -0800 (PST)
+Received: by mail-lf1-x144.google.com with SMTP id j19so13443062lfr.12
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Feb 2021 18:08:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=axis.com; q=dns/txt; s=axis-central1; t=1613416396;
-  x=1644952396;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=wFNT4rSQCM8LHPCDltTRqOCKD9W6vi98OPConvKvLXY=;
-  b=MQ4bh4Ox9dnYXEryFOKVd5d9KjEAu+73/+YTglVvwMUQ1xUAkVVuFZ5O
-   bZPZIjyqES0kLONLIoApks/CKaa81TXpg/SIXaPPx/WZXG8toVuTfL5aL
-   noy2jm0evg/Jo35Qkmw+ZNEXHxB188oeiTDakCo3lz3wD+E9H0EX8hafm
-   zV1FoBpm891YNi/XVaZrfS+2LMQCez6NXevcmAkakoY06k2lY2VBx8h+H
-   7J8xgSm16VMoX0OsVXUy3hl2wxwazb9j8LhbuBwwv7n/jeD9D34KTuEgW
-   1v+vu6oFjYN5h4PF4uKHfxiGteO+UvR90h0O9UWowa5oq+uInE1x9cu+a
-   A==;
-From:   =?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-CC:     <kernel@axis.com>,
-        =?UTF-8?q?M=C3=A5rten=20Lindahl?= <martenli@axis.com>,
-        <linux-i2c@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] i2c: exynos5: Preserve high speed master code
-Date:   Mon, 15 Feb 2021 20:03:21 +0100
-Message-ID: <20210215190322.22094-1-marten.lindahl@axis.com>
-X-Mailer: git-send-email 2.11.0
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=bFEY7+rk+rYGeSyfJ5YVszzYI0ABCt2L5kpIMgQv62c=;
+        b=SvvhzWi2ruMGKT/j8dBctqPiOpawyaqYMcQwcvqN4nKz4u2m3COLi8RmAcMFDS7Pa4
+         awLm75AoZErEeec1tMsuA6tKDfCdli1pDh/x/tEsxIa6P2eyYY0Yx8p1W4kDSVxAfMIH
+         UBvgxI3ZFmO3I9gIDQq7EXQPoHE4BGAzX6HB+wTQA7P9M6uEF2zhXDvoApf5o/xz+zaN
+         thAVYsJt2Py6LUYY/v5vsGR28FOqPrsi+Larq+MSZRt0Z3AN6JLBFV7n6+4iahMvkEVu
+         iRRX1LrMOBkrp3cSVcqnzMpmpKtmQP1hKtCLgUM+arF21XgjbrUtraLVP7ZCSRM8R586
+         P4sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=bFEY7+rk+rYGeSyfJ5YVszzYI0ABCt2L5kpIMgQv62c=;
+        b=Iy90BlmFTEJaLeQdsxgfbqD4c4g5Amk2CeobTfx+QY87ACH2mGqTh1ZfDBBmE4sAZ+
+         aN3jgw0PyllNHRoCiXkFL7brCWIkTeJhmEJ5ZJlyp5g1rP4jd2GdNSjbOOyZbMhq62MC
+         cw7RQxK10CKrmDZ1Z1TU+If96aYhW444aa6ztYXchYZ4KRbGFR9UHidymc30UAx1Gt9K
+         0THNjBAwSwMZ5XzT/txsWRzPX72VsTA2gcuff1UcO++n0naRgVvTQmIRJ8pWY9RpFxeC
+         sbglGYoMqqnvCigPXuGfi3ngE7v9aCn8IyH/2bEthZI3ePvMkly927y+94EQcbRXDE+I
+         GM9Q==
+X-Gm-Message-State: AOAM532nu/r0nareqxHiGP0g84lnzA4pPCGLERDPny19KXN0SJwiDSuR
+        5Mjfuun5Y2Eh4/W9mRht6bwIuZKCtgi//Fo/5jI=
+X-Google-Smtp-Source: ABdhPJyl4t33c97Fp8w2olE0jOxsOcO3CD3OhOnHmAzcdbBJoesHa90esb2/siEWRZvvru0mO8i8CGbCVZ2rzQUTOac=
+X-Received: by 2002:a05:6512:2f2:: with SMTP id m18mr9889663lfq.89.1613441327357;
+ Mon, 15 Feb 2021 18:08:47 -0800 (PST)
 MIME-Version: 1.0
+Received: by 2002:ac2:5f7b:0:0:0:0:0 with HTTP; Mon, 15 Feb 2021 18:08:47
+ -0800 (PST)
+Reply-To: missfavour99@gmail.com
+From:   "Mss.favour" <dreslam657@gmail.com>
+Date:   Mon, 15 Feb 2021 18:08:47 -0800
+Message-ID: <CAMuAiXCT5=F+BdneA55yqLXV=dzQhjbWUUNqnimtY73MNqedoQ@mail.gmail.com>
+Subject: OK
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Mårten Lindahl <martenli@axis.com>
+hello,
 
-When the controller starts to send a message with the MASTER_ID field
-set (high speed), the whole I2C_ADDR register is overwritten including
-MASTER_ID as the SLV_ADDR_MAS field is set.
+I came across your email address through the google sites and I have
+much feeling over it. Apologies for my surprising email to you.I want
+to chat with you. My age is 23 years old . I am an interesting and
+kind girl. I can write that I am a romantic person. I dream of finding
+a decent person with whom I can share this wonderful life! I am
+looking for a reliable person for a future together. If you might
+think we are suitable for each other, I look forward to hearing from
+you. Friendship doesn't think distance,age or color. Friendship is
+hearing each other's voice from the heart. A friend is a gift of love
+from God and someone who cares as much as you do. I'm Miss Favour,I
+want to be your friend. I'll be glad to read from you and I will reply
+with my picture as we get to know better. Kindly reply me to
 
-This patch preserves already written fields in I2C_ADDR when writing
-SLV_ADDR_MAS.
+(missfavour99@gmail.com)
 
-Signed-off-by: Mårten Lindahl <martenli@axis.com>
----
- drivers/i2c/busses/i2c-exynos5.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Best regards
 
-diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-exynos5.c
-index 20a9881a0d6c..f2d04c241299 100644
---- a/drivers/i2c/busses/i2c-exynos5.c
-+++ b/drivers/i2c/busses/i2c-exynos5.c
-@@ -606,6 +606,7 @@ static void exynos5_i2c_message_start(struct exynos5_i2c *i2c, int stop)
- 	u32 i2c_ctl;
- 	u32 int_en = 0;
- 	u32 i2c_auto_conf = 0;
-+	u32 i2c_addr = 0;
- 	u32 fifo_ctl;
- 	unsigned long flags;
- 	unsigned short trig_lvl;
-@@ -640,7 +641,12 @@ static void exynos5_i2c_message_start(struct exynos5_i2c *i2c, int stop)
- 		int_en |= HSI2C_INT_TX_ALMOSTEMPTY_EN;
- 	}
- 
--	writel(HSI2C_SLV_ADDR_MAS(i2c->msg->addr), i2c->regs + HSI2C_ADDR);
-+	i2c_addr = HSI2C_SLV_ADDR_MAS(i2c->msg->addr);
-+
-+	if (i2c->op_clock >= I2C_MAX_FAST_MODE_PLUS_FREQ)
-+		i2c_addr |= readl(i2c->regs + HSI2C_ADDR);
-+
-+	writel(i2c_addr, i2c->regs + HSI2C_ADDR);
- 
- 	writel(fifo_ctl, i2c->regs + HSI2C_FIFO_CTL);
- 	writel(i2c_ctl, i2c->regs + HSI2C_CTL);
--- 
-2.11.0
-
+Miss Favour.
