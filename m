@@ -2,61 +2,192 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE5E326F63
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Feb 2021 23:36:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52D6C327A53
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Mar 2021 10:04:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbhB0WfL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 27 Feb 2021 17:35:11 -0500
-Received: from mail.jvpinto.com ([65.49.11.60]:42077 "EHLO mail.JVPinto.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230001AbhB0We7 (ORCPT
+        id S233747AbhCAJBz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 1 Mar 2021 04:01:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233606AbhCAJA2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 27 Feb 2021 17:34:59 -0500
-Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
- RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
- (TLS) id 15.0.1497.2; Sat, 27 Feb 2021 14:33:46 -0800
-Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
- Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Sat, 27 Feb 2021
- 14:33:32 -0800
-Reply-To: <ms.reem@yandex.com>
-From:   "Ms. Reem" <johnpinto@jvpinto.com>
-Subject: Hello okay
-Date:   Sat, 27 Feb 2021 22:33:46 +0000
+        Mon, 1 Mar 2021 04:00:28 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25026C061788
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Mar 2021 00:59:48 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id m11so17610858lji.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 01 Mar 2021 00:59:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
+        b=kcf6kcitYZpg70CypoUp8KXILwBgfW62DpbNjWslqlp4qw62fI7tzmXjPZQCmQxMc8
+         y7E4AtX2Fmm4bNLcfXcEPW4KygtdDIAQoh7/Gppn2wuQW/GKYs0Umn4Wm46XccGHSmBe
+         jy7uA45XkN8GMGoDoJDciHZsVQhSFIR5XDAoh0rW972s2s04adtjid+35nHXnoln8MA8
+         FxCO26S/5xLKeLnx947E7nXZn0Rnap1zKbmn2OkkQ+VOi8uxBgu0gE1sSxomW3gthjJM
+         ufu7iyDDX3VZgWZtHNc17YGxcgin7Xk21+hnZeVkHrui+fqknKWQ+8YcQvAzXeWUB5vl
+         a9WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AYs79IPnRt3qtzNnShKWZ7vyowWc2VUelHvdooVHnZg=;
+        b=WF+VLew4HH+x+ccurte62UC+BcCqVIQPMCWbDEr/wOku4O1QoTNGKQKRXtzEsuXfgj
+         s03VcDDitQVqrioiAgZf/z5a9STz1OSN4O0QJDXLjhSPqvBvn/1N5pZKZ+mlw/mdRViD
+         v7cYfp0idkeSfuqEf8jcJuhEhx8UzvfB0ysGWLiZlYo/5/vdvnA/7Y57QW7eHQuUz0jb
+         /w4ytDC/PqH16S9VoZFlK+vSXjzCFvGz9sBMq1mkvErq4fTvl0taLZecZjqi2SoYRUDX
+         GceSF6kM15Tm/inH3GlonjM0tJa15gcEjYIrX3BgrC4NRqh8bCssi5SvvvfSFy+JbxrC
+         M2Lg==
+X-Gm-Message-State: AOAM530IDSfACyf1xQ8ceN9EXJUwNNKAG+JNejNoXscBLDtntZ5/Z2rm
+        jCfWUclxh14yOPbOcJa3+H7xIcubp1/N0SlTzXm8/A==
+X-Google-Smtp-Source: ABdhPJyj3pw+C0NXHPjoJdDWHXn0vLK/WBMS4zWE5j9GGEZHyMLzxq+OeogebxlDuBb2zgJuFq1OMvgpJB8dxst6o6c=
+X-Received: by 2002:a2e:9754:: with SMTP id f20mr6463797ljj.200.1614589186573;
+ Mon, 01 Mar 2021 00:59:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <837a988e66554c5d95b18ae85648d3d7@RW-EXC1.JVPinto.com>
-To:     Undisclosed recipients:;
+References: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+In-Reply-To: <20210211113309.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 1 Mar 2021 09:59:35 +0100
+Message-ID: <CACRpkdbQa3BZwgtp3=061cu+y+4qkMqtXQhXH_VuHB3KcLyDCA@mail.gmail.com>
+Subject: Re: [PATCH] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
+To:     Nicolas Boichat <drinkcat@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Xin Ji <xji@analogixsemi.com>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello,
+On Thu, Feb 11, 2021 at 4:34 AM Nicolas Boichat <drinkcat@chromium.org> wrote:
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (3) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home in Cambodia on their behalf and
-for our "Mutual Benefits".
+> Many of the DSI flags have names opposite to their actual effects,
+> e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
+> be disabled. Fix this by including _NO_ in the flag names, e.g.
+> MIPI_DSI_MODE_NO_EOT_PACKET.
 
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Cambodian/Vietnam Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
+Unless someone like me interpreted it literally...
 
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-ms.reem@yandex.com
+Like in these:
 
-Regards,
-Ms. Reem.
+>  drivers/gpu/drm/mcde/mcde_dsi.c                      | 2 +-
+>  drivers/gpu/drm/panel/panel-novatek-nt35510.c        | 2 +-
+>  drivers/gpu/drm/panel/panel-samsung-s6d16d0.c        | 2 +-
+>  drivers/gpu/drm/panel/panel-sony-acx424akp.c         | 2 +-
+
+> diff --git a/drivers/gpu/drm/mcde/mcde_dsi.c b/drivers/gpu/drm/mcde/mcde_dsi.c
+> index 2314c8122992..f4cdc3cfd7d0 100644
+> --- a/drivers/gpu/drm/mcde/mcde_dsi.c
+> +++ b/drivers/gpu/drm/mcde/mcde_dsi.c
+> @@ -760,7 +760,7 @@ static void mcde_dsi_start(struct mcde_dsi *d)
+>                 DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
+>                 DSI_MCTL_MAIN_DATA_CTL_READ_EN |
+>                 DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
+> -       if (d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
+> +       if (d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+>                 val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
+
+If you read the code you can see that this is interpreted as inserting
+an EOT packet, so here you need to change the logic such:
+
+if (!d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
+    val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
+
+This will make sure the host generates the EOT packet in HS mode
+*unless* the flag is set.
+
+(I checked the data sheet.)
+
+> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35510.c b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> index b9a0e56f33e2..9d9334656803 100644
+> --- a/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> +++ b/drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> @@ -899,7 +899,7 @@ static int nt35510_probe(struct mipi_dsi_device *dsi)
+>         dsi->hs_rate = 349440000;
+>         dsi->lp_rate = 9600000;
+>         dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -               MIPI_DSI_MODE_EOT_PACKET;
+> +               MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Here you should just delete the MIPI_DSI_MODE_EOT_PACKET
+flag because this was used with the MCDE driver which interpret the
+flag literally.
+
+> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> index 4aac0d1573dd..b04b9975e9b2 100644
+> --- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> +++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+> @@ -186,7 +186,7 @@ static int s6d16d0_probe(struct mipi_dsi_device *dsi)
+>          */
+>         dsi->mode_flags =
+>                 MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -               MIPI_DSI_MODE_EOT_PACKET;
+> +               MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Same, just delete the flag.
+
+> --- a/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
+> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e63m0-dsi.c
+> @@ -97,7 +97,7 @@ static int s6e63m0_dsi_probe(struct mipi_dsi_device *dsi)
+>         dsi->hs_rate = 349440000;
+>         dsi->lp_rate = 9600000;
+>         dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
+> -               MIPI_DSI_MODE_EOT_PACKET |
+> +               MIPI_DSI_MODE_NO_EOT_PACKET |
+>                 MIPI_DSI_MODE_VIDEO_BURST;
+
+Same, just delete the flag.
+
+> diff --git a/drivers/gpu/drm/panel/panel-sony-acx424akp.c b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> index 065efae213f5..6b706cbf2f9c 100644
+> --- a/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> +++ b/drivers/gpu/drm/panel/panel-sony-acx424akp.c
+> @@ -450,7 +450,7 @@ static int acx424akp_probe(struct mipi_dsi_device *dsi)
+>         else
+>                 dsi->mode_flags =
+>                         MIPI_DSI_CLOCK_NON_CONTINUOUS |
+> -                       MIPI_DSI_MODE_EOT_PACKET;
+> +                       MIPI_DSI_MODE_NO_EOT_PACKET;
+
+Same, just delete the flag.
+
+These are all just semantic bugs due to the ambiguity of the flags, it is
+possible to provide a Fixes: flag for each file using this flag the wrong way
+but I dunno if it's worth it.
+
+Yours,
+Linus Walleij
