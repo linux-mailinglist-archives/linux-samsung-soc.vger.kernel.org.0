@@ -2,88 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD69632C2A2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Mar 2021 01:04:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9BC232C2AA
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  4 Mar 2021 01:05:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238292AbhCCU4C (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 3 Mar 2021 15:56:02 -0500
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:39321 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234010AbhCCSU4 (ORCPT
+        id S1344252AbhCCU4x (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 3 Mar 2021 15:56:53 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60546 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1349999AbhCCS2g (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 3 Mar 2021 13:20:56 -0500
-Received: by mail-wr1-f49.google.com with SMTP id b18so18272964wrn.6;
-        Wed, 03 Mar 2021 10:20:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i+wsmGB3nPUNErG75HhRRgO2R+I8z7au1VtRNGbI3kU=;
-        b=tACU2r9Qr/yQalW1sJ/XoLgRpjQNlEjGY/Dji8fLuye4Ex1LBOBMjHiZPdtCRzLATh
-         sGtwukYrlgNtTLBnMibk0ppeW2kc7LWfP9D4uJMljMYqhbsto1Yhn5CEzdC1vmQq3duR
-         kST8AHql9cFDsu1crjrXBKgLR9qpNeluno7v6Lyp6jjSMZPSqkDI1ncovdjh+FOmbQ46
-         fNvcdqIJ8IlWf5vNIEM2sosRmWjWye2EW0Omzr0/9EJdWo3dlmGQDpcnSNm+Vpf7Fx9a
-         mWQioOxSkdYEfCugU1utKTYyDam3MOpI5caXF7dVmyp401Ge+a+/qZV39AfZauAQJebN
-         eYuA==
-X-Gm-Message-State: AOAM5309HLLO4xfjNz4kRBHXBtWlqWIykH3YNAVgsXgDQVky73CdwaM/
-        CWTefaDIe647MfrG6W6wznFBrECeEE4=
-X-Google-Smtp-Source: ABdhPJzXlIPSof8TuEU/xmd9uwKvcnqjSaqVZ9KBEX0z0xFsdcZ3JuEcemsbVzh06mpoU6nkjncGFQ==
-X-Received: by 2002:adf:c40b:: with SMTP id v11mr28144512wrf.320.1614795584154;
-        Wed, 03 Mar 2021 10:19:44 -0800 (PST)
-Received: from kozik-lap (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.googlemail.com with ESMTPSA id m14sm6511797wmi.27.2021.03.03.10.19.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 10:19:43 -0800 (PST)
-Date:   Wed, 3 Mar 2021 19:19:41 +0100
+        Wed, 3 Mar 2021 13:28:36 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9A9C164EBD;
+        Wed,  3 Mar 2021 18:26:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1614796018;
+        bh=3TjdgPjZpCV5a/8Py4GtoxI2w3VgY7OFKnXhrLgP8V0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LDhRYGGyJVo5hupkxd3kzZ5puMnN76d9Y3cTrDWaC5XbZK5iUJy8VfRQYqU7ySBTG
+         PlHA8V5LxsqzdJ677AosBd8RHzcwFs6AIicPHGdH3F6YWyyJ/baMLNrWw9+OvMLij9
+         hac3odMDh+oeLE2SUChFkjGJVSGGLEPZ0G0nD+4wYt2fp8BKs0OzSRhhOcPtc/kUYd
+         6JVcRhMxMXUSbW1c8gJ7LIuf1I4XaHHOfZTQzi1wiCcA34qhM9bYd+ubEktRuhXXMO
+         L6yZlWzcfct9pJQ1ZZkFdy4k9pf/VdUYet2PmOn4aqxPNJ5q6KDtts0jxjli6lWoOq
+         5K7l+U8WXVZVw==
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Chanwoo Choi <cw00.choi@samsung.com>,
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-Cc:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Matheus Castello <matheus@castello.eng.br>,
-        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-        Angus Ainslie <angus@akkea.ca>,
-        Hans de Goede <hdegoede@redhat.com>
-Subject: Re: [PATCH 01/18] ARM: dts: exynos: correct fuel gauge interrupt
- trigger level on GT-I9100
-Message-ID: <20210303181941.yercebdxswdetf3q@kozik-lap>
-References: <20201210212534.216197-1-krzk@kernel.org>
+        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH v2] mfd: sec-irq: Do not enforce (incorrect) interrupt trigger type
+Date:   Wed,  3 Mar 2021 19:26:46 +0100
+Message-Id: <20210303182646.137008-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201210212534.216197-1-krzk@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 10:25:17PM +0100, Krzysztof Kozlowski wrote:
-> The Maxim fuel gauge datasheets describe the interrupt line as active
-> low with a requirement of acknowledge from the CPU.  The falling edge
-> interrupt will mostly work but it's not correct.
-> 
-> Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  arch/arm/boot/dts/exynos4210-i9100.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+Interrupt line can be configured on different hardware in different way,
+even inverted.  Therefore driver should not enforce specific trigger
+type - edge falling - but instead rely on Devicetree to configure it.
 
-Applied 1-10 (Exynos and S5P dts patches).
+The Samsung PMIC drivers are used only on Devicetree boards.
 
-Best regards,
-Krzysztof
+Additionally, the PMIC datasheets describe the interrupt line as active
+low with a requirement of acknowledge from the CPU therefore the edge
+falling is not correct.
+
+Marek Szyprowski reports that together with DTS change (proper level in
+DTS) it fixes RTC alarm failure that he observed from time to time on
+TM2e board.
+
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+---
+
+Changes since v1:
+1. Mention in commit msg that this fixes TM2e RTC alarm.
+2. Add Marek's tested-by.
+---
+ drivers/mfd/sec-irq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/mfd/sec-irq.c b/drivers/mfd/sec-irq.c
+index a98c5d165039..760f88a865ab 100644
+--- a/drivers/mfd/sec-irq.c
++++ b/drivers/mfd/sec-irq.c
+@@ -480,8 +480,7 @@ int sec_irq_init(struct sec_pmic_dev *sec_pmic)
+ 	}
+ 
+ 	ret = devm_regmap_add_irq_chip(sec_pmic->dev, sec_pmic->regmap_pmic,
+-				       sec_pmic->irq,
+-				       IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++				       sec_pmic->irq, IRQF_ONESHOT,
+ 				       sec_pmic->irq_base, sec_irq_chip,
+ 				       &sec_pmic->irq_data);
+ 	if (ret != 0) {
+-- 
+2.25.1
+
