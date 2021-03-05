@@ -2,64 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1C3C32E5BB
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Mar 2021 11:08:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4583832E5D8
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Mar 2021 11:11:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbhCEKIM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 5 Mar 2021 05:08:12 -0500
-Received: from youngberry.canonical.com ([91.189.89.112]:49214 "EHLO
+        id S230023AbhCEKK7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 5 Mar 2021 05:10:59 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:49543 "EHLO
         youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbhCEKII (ORCPT
+        with ESMTP id S229637AbhCEKKy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 5 Mar 2021 05:08:08 -0500
-Received: from mail-wr1-f71.google.com ([209.85.221.71])
+        Fri, 5 Mar 2021 05:10:54 -0500
+Received: from mail-wm1-f70.google.com ([209.85.128.70])
         by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.86_2)
         (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lI7NP-0005XF-Fe
-        for linux-samsung-soc@vger.kernel.org; Fri, 05 Mar 2021 10:08:07 +0000
-Received: by mail-wr1-f71.google.com with SMTP id f3so839036wrt.14
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 05 Mar 2021 02:08:07 -0800 (PST)
+        id 1lI7Q5-0005wP-EC
+        for linux-samsung-soc@vger.kernel.org; Fri, 05 Mar 2021 10:10:53 +0000
+Received: by mail-wm1-f70.google.com with SMTP id s192so573423wme.6
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 05 Mar 2021 02:10:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Ay2S85l1/jFLfWLeQBtCAoPsbPXTdqgq57n65WUa2l0=;
-        b=IKzazACi5hLP2BetEjQx3uT91yMDhxVD2tt9VDB6sGtjHRvZOT3/Ngg2mVscziFD2y
-         9AXE1NDbdaBrc8PG4gXj6tz5EIOLydfsM1nJNIbYfJ7k97Kuj9qCmi1k8wHP/al4wVJq
-         VdmbJ88CA5k3kW57lhNFfniG7tuUQKzPI3XshTlZ+oqMqt7rUz1Em0Pd7nEp27rKOoT3
-         j2bms1jlM100pdqLooGGjjvpjVBoziw/XBvuJG7Lxusj9t41hPxjO7fyesTR0bIjenJF
-         61+T3W83+Ldr97ssymo8Y+YZAdojpSMUWcMV/2cSDIhOD8p+UOX14/7eXA4qs9eEITFZ
-         +6jg==
-X-Gm-Message-State: AOAM530hIxlsRZVuAvyUA+NeFRRotUgqnpDkCL9MO5U1C7gWX8VXbKQe
-        cBtM9g3oQf6PSRC0QYIe+CSia/yd4+5QFi4/Puef92PkO/7NeKYtXsuOnHVisIZ3uYy9obCAmQL
-        0tclRS3oENETBHVb1xqFOHZ1SA2yALlmRBt+dMkOxrGxH7cnZ
-X-Received: by 2002:adf:df10:: with SMTP id y16mr8529525wrl.372.1614938887135;
-        Fri, 05 Mar 2021 02:08:07 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyOepjFppUsFOhGaPMirdRKmI7kh2qB5leecQOYR1dmX8rE+kDSdNDQJIwwIJjvtOK370QfOw==
-X-Received: by 2002:adf:df10:: with SMTP id y16mr8529510wrl.372.1614938886976;
-        Fri, 05 Mar 2021 02:08:06 -0800 (PST)
+        bh=Dc1X7XD8sIPk/f9CtULIHpjeF451ceoNr0To1nwZ7Rk=;
+        b=K7ooRia39XcZwHhb8MH473DJgVlnHDLT3M+uMYaV/Np1c3okQUeOE+FoF+n8ECX3A/
+         gdk6WYkyjLEGkVuyJdxNASUFEZOgxp6tNZoLA1ty8sMi68nyEiH54mCg9fv4jMMCIkxd
+         0ITVHfhRMvAR/xh/foCAwSGrM0qFc7o72oVTaUAERhdFV1bKp5/QXQZG2lZZSQOTV3xD
+         iP9WlNI7tJQXmRS5odUvri33bTH0qAg17bH0Nsl98B4S9tBu712yOqRHpxV9BO4mZ1DY
+         2ezr3BlfhRrU0vesa+Wullx+WzALi5pD7VjL5r3z+v7DUz1o9HCrAip7TiIXl3N6acfn
+         6RSQ==
+X-Gm-Message-State: AOAM532/392XwamDE3wFXMO8DM4MECM3kTqmKsOZe4pPntYmToE45i6f
+        D6FvQyoRFZJsfthQXJVSYJFYW4zXXEH25Xkwn7JDQOu4RvCg0X/0wTxJF4ReAVpl0X098gcBXLD
+        EvIEM8qsjCfhCOn+AOl5o4tYuuswuqI7W6tVYWtCbxykv1J3F
+X-Received: by 2002:a1c:7312:: with SMTP id d18mr8029198wmb.155.1614939053086;
+        Fri, 05 Mar 2021 02:10:53 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxJTFUqM4RWURTdZMPFSaLPGO6A85/2AN+p8IFVvZ8Jnf1yZlTvGqR63lFecZvTKp5HVZ2Rlg==
+X-Received: by 2002:a1c:7312:: with SMTP id d18mr8029170wmb.155.1614939052859;
+        Fri, 05 Mar 2021 02:10:52 -0800 (PST)
 Received: from [192.168.1.116] (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
-        by smtp.gmail.com with ESMTPSA id v188sm15378373wme.1.2021.03.05.02.08.06
+        by smtp.gmail.com with ESMTPSA id o14sm3527991wri.48.2021.03.05.02.10.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Mar 2021 02:08:06 -0800 (PST)
-Subject: Re: [PATCH 2/2] usb: gadget: s3c: Fix the error handling path in
- 's3c2410_udc_probe()'
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        balbi@kernel.org, gregkh@linuxfoundation.org, nathan@kernel.org,
-        ndesaulniers@google.com, arnd@arndb.de, gustavoars@kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-References: <20210221074133.938017-1-christophe.jaillet@wanadoo.fr>
+        Fri, 05 Mar 2021 02:10:52 -0800 (PST)
+Subject: Re: [PATCH -next] USB: gadget: udc: s3c2410_udc: fix return value
+ check in s3c2410_udc_probe()
+To:     'Wei Yongjun <weiyongjun1@huawei.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Hulk Robot <hulkci@huawei.com>
+References: <20210305034927.3232386-1-weiyongjun1@huawei.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Message-ID: <36ef897b-aedc-fcc3-89c8-c602d9733a9b@canonical.com>
-Date:   Fri, 5 Mar 2021 11:08:05 +0100
+Message-ID: <3cf7abbf-0dc8-495f-4737-2d84bbea8158@canonical.com>
+Date:   Fri, 5 Mar 2021 11:10:51 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <20210221074133.938017-1-christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20210305034927.3232386-1-weiyongjun1@huawei.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -67,25 +71,17 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 21/02/2021 08:41, Christophe JAILLET wrote:
-> Some 'clk_prepare_enable()' and 'clk_get()' must be undone in the error
-> handling path of the probe function, as already done in the remove
-> function.
+On 05/03/2021 04:49, 'Wei Yongjun wrote:
+> From: Wei Yongjun <weiyongjun1@huawei.com>
 > 
-> Fixes: 1c6d47aa4f4b ("USB Gadget driver for Samsung s3c2410 ARM SoC")
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> ---
-> checkpatch reports:
-> WARNING: Unknown commit id '1c6d47aa4f4b', maybe rebased or not pulled?
-> According to https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/usb/gadget/s3c2410_udc.c?id=3fc154b6b8134b98bb94d60cad9a46ec1ffbe372
-> the commit ID looks correct to me. Maybe something should be tweaked somewhere
-> before applying, but I don't know what!
-> ---
->  drivers/usb/gadget/udc/s3c2410_udc.c | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
+> In case of error, the function devm_platform_ioremap_resource()
+> returns ERR_PTR() and never returns NULL. The NULL test in the
+> return value check should be replaced with IS_ERR().
 > 
+> Fixes: 188db4435ac6 ("usb: gadget: s3c: use platform resources")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 
-After fixing commit sha:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
