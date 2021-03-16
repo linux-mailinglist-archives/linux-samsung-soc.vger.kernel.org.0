@@ -2,47 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E8E33D402
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Mar 2021 13:41:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 402C133D4D1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Mar 2021 14:26:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232258AbhCPMkj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 16 Mar 2021 08:40:39 -0400
-Received: from esa1.ssilver.iphmx.com ([68.232.153.64]:17364 "EHLO
-        esa1.ssilver.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232225AbhCPMkI (ORCPT
+        id S234950AbhCPNZ5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 16 Mar 2021 09:25:57 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:47003 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232098AbhCPNZZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 16 Mar 2021 08:40:08 -0400
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Mar 2021 08:39:48 EDT
-Message-Id: <ccb348$5n4mu@ob1.ssilver.iphmx.com>
-IronPort-SDR: S4YvXy3gD+ESiwlVrkbYyEIh6FAXPVDdcuBcDjgshG96V4u6Cglu6oj/bP1Ii7o1AS1wR7TruI
- 1F62UEWe57IZ7wR65H/9vuwP7VqN+Aw/YYamQf3FqwGc3WX491jcy1n6kWehcUI0W+XddJ5l2G
- 51LWC9EgzSxG5/PEx+4FpW3fhStHB5HQ6+zM2JwLYf42jP5Gv8h01/7RrYLhl4Q3VrKOVKtxiw
- Vb4Xfjl8QdcpRQxNSUSBP1UfGlgvkFHesoPrRM7JhtIyhWbYoJVVFK5Iy6lIG9IJW9J0ms7+yD
- IAw=
-Received: from unknown (HELO User) ([202.38.180.78])
-  by ob1.ssilver.iphmx.com with SMTP; 16 Mar 2021 07:31:56 -0500
-Reply-To: <benobi236@yahoo.com.co>
-From:   "Fred Grenville" <chiatatwah@camv.vn>
-Subject: Reply Asap!! 
-Date:   Tue, 16 Mar 2021 05:32:01 -0700
+        Tue, 16 Mar 2021 09:25:25 -0400
+Received: from mail-ej1-f70.google.com ([209.85.218.70])
+        by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <krzysztof.kozlowski@canonical.com>)
+        id 1lM9hJ-0001GU-Us
+        for linux-samsung-soc@vger.kernel.org; Tue, 16 Mar 2021 13:25:21 +0000
+Received: by mail-ej1-f70.google.com with SMTP id v10so13561023ejh.15
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Mar 2021 06:25:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=83ZIZm2jxLoXrgqf2w4Pq9GXA0XBAVNJX5oJ88+rGxI=;
+        b=UddezZxlEQewO980f/3Q68TR4RhHhXCyBeXA0UIemasvudFXaDiIcH4f0I/qo0JN4S
+         HRhVqtX6BGBbJLaxur+yQeiQ2qhpQDxfZrC+k0+ss0sjMf7oEScjk+q8eyqnTNwgGnVV
+         U1/i65LSqQOhmmDaTVPK+7aWa/W7vJQIxbymlfYaxNhtbCrgTt5Ivxm9kGkzgjiPoK5Z
+         dio4yUhzVwpOEhUFZf0v2rA7Wu4LhsnwrxEwDYEdQvJXul+bKfHq5cv5Suk6crYdDcGh
+         kzALXsK5vRHZZckU7fVoPLQg1VNndKps+OfwrgfJ7VCOiRIQRzdE0PVy9oVI+Fa4vcq/
+         Ypdg==
+X-Gm-Message-State: AOAM532DMjsB4Z62eyYozCBRHIedULpJVxgN4PpWTm2jtCSOK+TjIKBy
+        kkCgSUv7lSAdta+EOGCmARWOMQRfOYdbOmun1uoNeXNRB7/9OeC2wecwSwpHx1RaOCe94RV7SJj
+        NwlGuWU2F4lSIQZCXpu+whjQ0kXct+Ub7Wd1xDpw7sbF+vffr
+X-Received: by 2002:a17:906:4705:: with SMTP id y5mr29994534ejq.119.1615901121364;
+        Tue, 16 Mar 2021 06:25:21 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwUVysx7ycFc90Jo/jv+3/QyA7CJAJ1yVRgIm54vcSiVdhofTbTH8E+xznhLUPZrQ6xZzFWwQ==
+X-Received: by 2002:a17:906:4705:: with SMTP id y5mr29994516ejq.119.1615901121183;
+        Tue, 16 Mar 2021 06:25:21 -0700 (PDT)
+Received: from localhost.localdomain (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.gmail.com with ESMTPSA id sb4sm9450217ejb.71.2021.03.16.06.25.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Mar 2021 06:25:20 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [RESEND PATCH] mfd: sec: initialize driver via module_platform_driver
+Date:   Tue, 16 Mar 2021 14:25:15 +0100
+Message-Id: <20210316132515.50588-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-To:     unlisted-recipients:; (no To-header on input)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Good day
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-How are you today, did you receive the email I sent you three days ago? For important discussion on ( Investment ) If not please reply me back so that I will resend it again.
+The driver was using subsys_initcall() because in old times deferred
+probe was not supported everywhere and specific ordering was needed.
+Since probe deferral works fine and specific ordering is discouraged
+(hides dependencies between drivers and couples their boot order), the
+driver can be converted to regular module_platform_driver.
 
-Please confirm if you did ( u.abdulghani@yahoo.com.co ).
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ drivers/mfd/sec-core.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
 
-Best Regards,
-Mr. Fred Grenville
+diff --git a/drivers/mfd/sec-core.c b/drivers/mfd/sec-core.c
+index 95473ff9bb4b..8d55992da19e 100644
+--- a/drivers/mfd/sec-core.c
++++ b/drivers/mfd/sec-core.c
+@@ -549,19 +549,7 @@ static struct i2c_driver sec_pmic_driver = {
+ 	.shutdown = sec_pmic_shutdown,
+ 	.id_table = sec_pmic_id,
+ };
+-
+-static int __init sec_pmic_init(void)
+-{
+-	return i2c_add_driver(&sec_pmic_driver);
+-}
+-
+-subsys_initcall(sec_pmic_init);
+-
+-static void __exit sec_pmic_exit(void)
+-{
+-	i2c_del_driver(&sec_pmic_driver);
+-}
+-module_exit(sec_pmic_exit);
++module_i2c_driver(sec_pmic_driver);
+ 
+ MODULE_AUTHOR("Sangbeom Kim <sbkim73@samsung.com>");
+ MODULE_DESCRIPTION("Core support for the S5M MFD");
+-- 
+2.25.1
+
