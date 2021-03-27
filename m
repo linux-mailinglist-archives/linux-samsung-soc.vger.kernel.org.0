@@ -2,105 +2,133 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B1D634B511
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Mar 2021 08:39:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F69434B944
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Mar 2021 21:10:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230239AbhC0HjC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 27 Mar 2021 03:39:02 -0400
-Received: from smtp06.smtpout.orange.fr ([80.12.242.128]:24682 "EHLO
-        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbhC0Hi5 (ORCPT
+        id S230176AbhC0UJd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 27 Mar 2021 16:09:33 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:19273 "EHLO
+        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230126AbhC0UJJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 27 Mar 2021 03:38:57 -0400
-Received: from localhost.localdomain ([90.126.11.170])
-        by mwinf5d29 with ME
-        id lKev2400K3g7mfN03KevSj; Sat, 27 Mar 2021 08:38:56 +0100
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sat, 27 Mar 2021 08:38:56 +0100
-X-ME-IP: 90.126.11.170
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     balbi@kernel.org, gregkh@linuxfoundation.org,
-        krzysztof.kozlowski@canonical.com, nathan@kernel.org,
-        arnd@arndb.de, gustavoars@kernel.org, weiyongjun1@huawei.com
-Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Sat, 27 Mar 2021 16:09:09 -0400
+Date:   Sat, 27 Mar 2021 20:09:01 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1616875747;
+        bh=85GoW8qO8yhali/wL8Hzgwf0HB57PCsZmVrXXndAkHY=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=iBj9y6gdg4pKg6IcywkkEqnYFkfZYbaQl5Q89rmQNNXcyjk0O0L+/k5nO/jU3eJ6D
+         P+Eww1EXPu7GiIpbgB7QnX5/soWdNjPafX5HLU7JqSwh4XBjR/JxiOgyALdjvVGSfO
+         l7rWYlm8JBdad2tn9WLChSC4JaR07xVDy0wYxjKQ=
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+From:   Timon Baetz <timon.baetz@protonmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: [PATCH v3 2/2] usb: gadget: s3c: Fix the error handling path in 's3c2410_udc_probe()'
-Date:   Sat, 27 Mar 2021 08:38:53 +0100
-Message-Id: <2bee52e4ce968f48b4c32545cf8f3b2ab825ba82.1616830026.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <b317638464f188159bd8eea44427dd359e480625.1616830026.git.christophe.jaillet@wanadoo.fr>
-References: <b317638464f188159bd8eea44427dd359e480625.1616830026.git.christophe.jaillet@wanadoo.fr>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Timon Baetz <timon.baetz@protonmail.com>
+Reply-To: Timon Baetz <timon.baetz@protonmail.com>
+Subject: [PATCH v2] ARM: dts: exynos: Add front camera support to I9100
+Message-ID: <20210327200851.777327-1-timon.baetz@protonmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Some 'clk_prepare_enable()' and 'clk_get()' must be undone in the error
-handling path of the probe function, as already done in the remove
-function.
+Add node for Samsung S5K5BAF CMOS image sensor and
+enable the associated MIPI CSI-2 receiver node.
 
-Fixes: 3fc154b6b813 ("USB Gadget driver for Samsung s3c2410 ARM SoC")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Signed-off-by: Timon Baetz <timon.baetz@protonmail.com>
 ---
-v2: Fix a stupid error in the hash in Fixes:
-v3: Add Reviewed-by:
----
- drivers/usb/gadget/udc/s3c2410_udc.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+v2: Rename node from s5k5bafx to image-sensor and use GPIO_ACTIVE_LOW
 
-diff --git a/drivers/usb/gadget/udc/s3c2410_udc.c b/drivers/usb/gadget/udc/s3c2410_udc.c
-index b81979b3bdb6..b154b62abefa 100644
---- a/drivers/usb/gadget/udc/s3c2410_udc.c
-+++ b/drivers/usb/gadget/udc/s3c2410_udc.c
-@@ -1750,7 +1750,8 @@ static int s3c2410_udc_probe(struct platform_device *pdev)
- 	udc_clock = clk_get(NULL, "usb-device");
- 	if (IS_ERR(udc_clock)) {
- 		dev_err(dev, "failed to get udc clock source\n");
--		return PTR_ERR(udc_clock);
-+		retval = PTR_ERR(udc_clock);
-+		goto err_usb_bus_clk;
- 	}
- 
- 	clk_prepare_enable(udc_clock);
-@@ -1773,7 +1774,7 @@ static int s3c2410_udc_probe(struct platform_device *pdev)
- 	base_addr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base_addr)) {
- 		retval = PTR_ERR(base_addr);
--		goto err;
-+		goto err_udc_clk;
- 	}
- 
- 	the_controller = udc;
-@@ -1791,7 +1792,7 @@ static int s3c2410_udc_probe(struct platform_device *pdev)
- 	if (retval != 0) {
- 		dev_err(dev, "cannot get irq %i, err %d\n", irq_usbd, retval);
- 		retval = -EBUSY;
--		goto err;
-+		goto err_udc_clk;
- 	}
- 
- 	dev_dbg(dev, "got irq %i\n", irq_usbd);
-@@ -1862,7 +1863,14 @@ static int s3c2410_udc_probe(struct platform_device *pdev)
- 		gpio_free(udc_info->vbus_pin);
- err_int:
- 	free_irq(irq_usbd, udc);
--err:
-+err_udc_clk:
-+	clk_disable_unprepare(udc_clock);
-+	clk_put(udc_clock);
-+	udc_clock = NULL;
-+err_usb_bus_clk:
-+	clk_disable_unprepare(usb_bus_clock);
-+	clk_put(usb_bus_clock);
-+	usb_bus_clock = NULL;
- 
- 	return retval;
- }
--- 
-2.27.0
+ arch/arm/boot/dts/exynos4210-i9100.dts | 52 ++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
+
+diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exy=
+nos4210-i9100.dts
+index 228de6d8c9d1..f47b6eaf208f 100644
+--- a/arch/arm/boot/dts/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/exynos4210-i9100.dts
+@@ -147,6 +147,36 @@ battery@36 {
+ =09=09};
+ =09};
+
++=09i2c_s5k5baf: i2c-gpio-1 {
++=09=09compatible =3D "i2c-gpio";
++=09=09#address-cells =3D <1>;
++=09=09#size-cells =3D <0>;
++
++=09=09sda-gpios =3D <&gpc1 0 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
++=09=09scl-gpios =3D <&gpc1 2 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
++=09=09i2c-gpio,delay-us =3D <2>;
++
++=09=09image-sensor@2d {
++=09=09=09compatible =3D "samsung,s5k5baf";
++=09=09=09reg =3D <0x2d>;
++=09=09=09vdda-supply =3D <&cam_io_en_reg>;
++=09=09=09vddreg-supply =3D <&vt_core_15v_reg>;
++=09=09=09vddio-supply =3D <&vtcam_reg>;
++=09=09=09clocks =3D <&camera 0>;
++=09=09=09clock-names =3D "mclk";
++=09=09=09stbyn-gpios =3D <&gpl2 0 GPIO_ACTIVE_LOW>;
++=09=09=09rstn-gpios =3D <&gpl2 1 GPIO_ACTIVE_LOW>;
++=09=09=09clock-frequency =3D <24000000>;
++
++=09=09=09port {
++=09=09=09=09s5k5bafx_ep: endpoint {
++=09=09=09=09=09remote-endpoint =3D <&csis1_ep>;
++=09=09=09=09=09data-lanes =3D <1>;
++=09=09=09=09};
++=09=09=09};
++=09=09};
++=09};
++
+ =09spi-3 {
+ =09=09compatible =3D "spi-gpio";
+ =09=09#address-cells =3D <1>;
+@@ -220,7 +250,11 @@ pmic_ap_clk: pmic-ap-clk {
+ };
+
+ &camera {
++=09pinctrl-0 =3D <&cam_port_a_clk_active>;
++=09pinctrl-names =3D "default";
+ =09status =3D "okay";
++=09assigned-clocks =3D <&clock CLK_MOUT_CAM0>, <&clock CLK_MOUT_CAM1>;
++=09assigned-clock-parents =3D <&clock CLK_XUSBXTI>, <&clock CLK_XUSBXTI>;
+ };
+
+ &cpu0 {
+@@ -794,3 +828,21 @@ &serial_3 {
+ &tmu {
+ =09status =3D "okay";
+ };
++
++&csis_1 {
++=09status =3D "okay";
++=09vddcore-supply =3D <&vusb_reg>;
++=09vddio-supply =3D <&vmipi_reg>;
++=09clock-frequency =3D <160000000>;
++=09#address-cells =3D <1>;
++=09#size-cells =3D <0>;
++
++=09port@4 {
++=09=09reg =3D <4>;
++=09=09csis1_ep: endpoint {
++=09=09=09remote-endpoint =3D <&s5k5bafx_ep>;
++=09=09=09data-lanes =3D <1>;
++=09=09=09samsung,csis-hs-settle =3D <6>;
++=09=09};
++=09};
++};
+--
+2.25.1
+
 
