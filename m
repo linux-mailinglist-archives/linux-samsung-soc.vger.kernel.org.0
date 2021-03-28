@@ -2,63 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA80934BE1C
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 28 Mar 2021 20:08:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 710FC34BE2F
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 28 Mar 2021 20:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231214AbhC1SIB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 28 Mar 2021 14:08:01 -0400
-Received: from mail.hanoi.gov.vn ([113.160.32.33]:32049 "EHLO
-        mx01.hanoi.gov.vn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231492AbhC1SHi (ORCPT
+        id S231373AbhC1SLp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 28 Mar 2021 14:11:45 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:38670 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230092AbhC1SLW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 28 Mar 2021 14:07:38 -0400
-X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Mar 2021 14:07:32 EDT
-Received: from mx01.hanoi.gov.vn (localhost [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 4B597EC3DB;
-        Mon, 29 Mar 2021 00:58:07 +0700 (+07)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hanoi.gov.vn;
-        s=default; t=1616954288;
-        bh=FuW10Z6fSdeNlf/0u/BQ1jcwkjYBw0uHUPQgn0LGo7I=; h=Date:From:To;
-        b=MnJpubbCOoNzrGbdl4opA9pGiqD1qL1TzNpy60QO4II5VnNpsotVl818lYgRa6I3d
-         Omzy1cLH1+oH7hvhrvWFGEjWO4Du7emM//yWycfTmkwXhJBSFfgFLpRpJNgbPUcm37
-         IfeanaeGGyboioiPWx6i9EzzU+DQGarsjKQF0WLA=
-X-IMSS-DKIM-Authentication-Result: mx01.hanoi.gov.vn; sigcount=0
-Received: from mx01.hanoi.gov.vn (localhost [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 713EBEC3DD;
-        Mon, 29 Mar 2021 00:58:05 +0700 (+07)
-Received: from mail.hanoi.gov.vn (mail.hanoi.gov.vn [10.1.1.25])
-        by mx01.hanoi.gov.vn (Postfix) with ESMTPS;
-        Mon, 29 Mar 2021 00:58:05 +0700 (+07)
-Received: from mail.hanoi.gov.vn (localhost [127.0.0.1])
-        by mail.hanoi.gov.vn (Postfix) with ESMTPS id 7EB1F7F41B5D;
-        Mon, 29 Mar 2021 00:57:59 +0700 (+07)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hanoi.gov.vn (Postfix) with ESMTP id 9F9587F41B42;
-        Mon, 29 Mar 2021 00:57:56 +0700 (+07)
-Received: from mail.hanoi.gov.vn ([127.0.0.1])
-        by localhost (mail.hanoi.gov.vn [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 5aziPsZZzTJX; Mon, 29 Mar 2021 00:57:52 +0700 (+07)
-Received: from mail.hanoi.gov.vn (mail.hanoi.gov.vn [10.1.1.25])
-        by mail.hanoi.gov.vn (Postfix) with ESMTP id 923357F41B59;
-        Mon, 29 Mar 2021 00:57:49 +0700 (+07)
-Date:   Mon, 29 Mar 2021 00:57:49 +0700 (ICT)
-From:   Mackenzie Scott <ttptqd_thanhoai@hanoi.gov.vn>
-Reply-To: Mackenzie Scott <propack@propck.net>
-Message-ID: <338153864.25920933.1616954269522.JavaMail.zimbra@hanoi.gov.vn>
-Subject: Congratulations ($ 100,800,000.00)
+        Sun, 28 Mar 2021 14:11:22 -0400
+Received: from mail-ed1-f71.google.com ([209.85.208.71])
+        by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <krzysztof.kozlowski@canonical.com>)
+        id 1lQZsf-0005wI-38
+        for linux-samsung-soc@vger.kernel.org; Sun, 28 Mar 2021 18:11:21 +0000
+Received: by mail-ed1-f71.google.com with SMTP id o24so7522055edt.15
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 28 Mar 2021 11:11:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Rey3AlF6bNMfZTTg+jkx/LiRPjc90KdJa4L+s9E+65I=;
+        b=ikVfsqn3S1UKuOxCy6v285lraSce//QM3n11/f0TUVVQ7Kih0bWNfK8RzKSGdQfZii
+         lJJ+9Ev12CzH4iB/hLJRDT4/tmk5OB+DOjheNZJdsWos1n2Md+jFUpSo0/FTRSIPAcHt
+         62t4lfa7D+T7WhFIRZNnn8ps+3fI6abOFye+MBQLdzEUrSNUiOymviWo2sdAr6gS4NUR
+         k/VztAiuN4k5aWHgV2lf4fiKLm226PBJivJBJMteNjTHPwQaGP9ahOJ730iVqrzHU81i
+         2ovEBJIzzoE4A269frseijx2eGRYDygQTKEGyTU4TxDtKv8CMO5yHExY/D3Ymf6AvDL6
+         B7Gw==
+X-Gm-Message-State: AOAM532IBr46atK8DQUY6h3gDJsTcULuT8NM5bsFG6ERkh/T7JKxDZ0q
+        gcp+CrnaaZ9zR35XkAfuBYUQ3K17x277BIl7aF9TMkrprNTemLbFsDy66Uj6oyhgCT0PF9LalRX
+        GoK2fbAQyJ+k7eRGF1z4ePncz4tIddSnzN0cek8lIsWbHIzos
+X-Received: by 2002:a17:906:5495:: with SMTP id r21mr25458712ejo.471.1616955080889;
+        Sun, 28 Mar 2021 11:11:20 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyMqzeyTcGYaM/gLqBM9Eh62h3335SF++m0WO+Z/UFRWGHlTnAkUvRVICLPJ2uKs+ueEa0cVg==
+X-Received: by 2002:a17:906:5495:: with SMTP id r21mr25458700ejo.471.1616955080791;
+        Sun, 28 Mar 2021 11:11:20 -0700 (PDT)
+Received: from localhost.localdomain (adsl-84-226-167-205.adslplus.ch. [84.226.167.205])
+        by smtp.gmail.com with ESMTPSA id bt14sm7670364edb.92.2021.03.28.11.11.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Mar 2021 11:11:20 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Timon Baetz <timon.baetz@protonmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2] ARM: dts: exynos: Add front camera support to I9100
+Date:   Sun, 28 Mar 2021 20:11:16 +0200
+Message-Id: <161695507016.4212.18409865650409500354.b4-ty@canonical.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210327200851.777327-1-timon.baetz@protonmail.com>
+References: <20210327200851.777327-1-timon.baetz@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [185.107.80.217]
-X-Mailer: Zimbra 8.8.15_GA_3894 (zclient/8.8.15_GA_3894)
-Thread-Index: /8qcKB84H/IsUnGyWvfkptZHVH6P1Q==
-Thread-Topic: Congratulations ($ 100,800,000.00)
-To:     undisclosed-recipients:;
-X-TM-AS-GCONF: 00
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Sat, 27 Mar 2021 20:09:01 +0000, Timon Baetz wrote:
+> Add node for Samsung S5K5BAF CMOS image sensor and
+> enable the associated MIPI CSI-2 receiver node.
 
+Applied, thanks!
 
-Hello,i&#39;m Mackenzie Scott,Ex-wife of Amazon founder i&#39;m donating $4 billion to charities,individuals,universities across the Globe from my divorce funds,i&#39;m donating part of it to provide immediate support to people suffering economically during the COVID-19 pandemic,i have a donation worth $100,800,000.00 Dollars for you,you can contact me for more information if you&#39;re interested.
+[1/1] ARM: dts: exynos: Add front camera support to I9100
+      commit: 7f4ebf3e4ce10a1ed8ff2aee5d75568dc3522b2f
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
