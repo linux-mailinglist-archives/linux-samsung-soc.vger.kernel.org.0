@@ -2,133 +2,63 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F69434B944
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Mar 2021 21:10:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA80934BE1C
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 28 Mar 2021 20:08:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbhC0UJd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 27 Mar 2021 16:09:33 -0400
-Received: from mail2.protonmail.ch ([185.70.40.22]:19273 "EHLO
-        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbhC0UJJ (ORCPT
+        id S231214AbhC1SIB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 28 Mar 2021 14:08:01 -0400
+Received: from mail.hanoi.gov.vn ([113.160.32.33]:32049 "EHLO
+        mx01.hanoi.gov.vn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231492AbhC1SHi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 27 Mar 2021 16:09:09 -0400
-Date:   Sat, 27 Mar 2021 20:09:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1616875747;
-        bh=85GoW8qO8yhali/wL8Hzgwf0HB57PCsZmVrXXndAkHY=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=iBj9y6gdg4pKg6IcywkkEqnYFkfZYbaQl5Q89rmQNNXcyjk0O0L+/k5nO/jU3eJ6D
-         P+Eww1EXPu7GiIpbgB7QnX5/soWdNjPafX5HLU7JqSwh4XBjR/JxiOgyALdjvVGSfO
-         l7rWYlm8JBdad2tn9WLChSC4JaR07xVDy0wYxjKQ=
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-From:   Timon Baetz <timon.baetz@protonmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Timon Baetz <timon.baetz@protonmail.com>
-Reply-To: Timon Baetz <timon.baetz@protonmail.com>
-Subject: [PATCH v2] ARM: dts: exynos: Add front camera support to I9100
-Message-ID: <20210327200851.777327-1-timon.baetz@protonmail.com>
+        Sun, 28 Mar 2021 14:07:38 -0400
+X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Mar 2021 14:07:32 EDT
+Received: from mx01.hanoi.gov.vn (localhost [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 4B597EC3DB;
+        Mon, 29 Mar 2021 00:58:07 +0700 (+07)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hanoi.gov.vn;
+        s=default; t=1616954288;
+        bh=FuW10Z6fSdeNlf/0u/BQ1jcwkjYBw0uHUPQgn0LGo7I=; h=Date:From:To;
+        b=MnJpubbCOoNzrGbdl4opA9pGiqD1qL1TzNpy60QO4II5VnNpsotVl818lYgRa6I3d
+         Omzy1cLH1+oH7hvhrvWFGEjWO4Du7emM//yWycfTmkwXhJBSFfgFLpRpJNgbPUcm37
+         IfeanaeGGyboioiPWx6i9EzzU+DQGarsjKQF0WLA=
+X-IMSS-DKIM-Authentication-Result: mx01.hanoi.gov.vn; sigcount=0
+Received: from mx01.hanoi.gov.vn (localhost [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 713EBEC3DD;
+        Mon, 29 Mar 2021 00:58:05 +0700 (+07)
+Received: from mail.hanoi.gov.vn (mail.hanoi.gov.vn [10.1.1.25])
+        by mx01.hanoi.gov.vn (Postfix) with ESMTPS;
+        Mon, 29 Mar 2021 00:58:05 +0700 (+07)
+Received: from mail.hanoi.gov.vn (localhost [127.0.0.1])
+        by mail.hanoi.gov.vn (Postfix) with ESMTPS id 7EB1F7F41B5D;
+        Mon, 29 Mar 2021 00:57:59 +0700 (+07)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.hanoi.gov.vn (Postfix) with ESMTP id 9F9587F41B42;
+        Mon, 29 Mar 2021 00:57:56 +0700 (+07)
+Received: from mail.hanoi.gov.vn ([127.0.0.1])
+        by localhost (mail.hanoi.gov.vn [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 5aziPsZZzTJX; Mon, 29 Mar 2021 00:57:52 +0700 (+07)
+Received: from mail.hanoi.gov.vn (mail.hanoi.gov.vn [10.1.1.25])
+        by mail.hanoi.gov.vn (Postfix) with ESMTP id 923357F41B59;
+        Mon, 29 Mar 2021 00:57:49 +0700 (+07)
+Date:   Mon, 29 Mar 2021 00:57:49 +0700 (ICT)
+From:   Mackenzie Scott <ttptqd_thanhoai@hanoi.gov.vn>
+Reply-To: Mackenzie Scott <propack@propck.net>
+Message-ID: <338153864.25920933.1616954269522.JavaMail.zimbra@hanoi.gov.vn>
+Subject: Congratulations ($ 100,800,000.00)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [185.107.80.217]
+X-Mailer: Zimbra 8.8.15_GA_3894 (zclient/8.8.15_GA_3894)
+Thread-Index: /8qcKB84H/IsUnGyWvfkptZHVH6P1Q==
+Thread-Topic: Congratulations ($ 100,800,000.00)
+To:     undisclosed-recipients:;
+X-TM-AS-GCONF: 00
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add node for Samsung S5K5BAF CMOS image sensor and
-enable the associated MIPI CSI-2 receiver node.
-
-Signed-off-by: Timon Baetz <timon.baetz@protonmail.com>
----
-v2: Rename node from s5k5bafx to image-sensor and use GPIO_ACTIVE_LOW
-
- arch/arm/boot/dts/exynos4210-i9100.dts | 52 ++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
-
-diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exy=
-nos4210-i9100.dts
-index 228de6d8c9d1..f47b6eaf208f 100644
---- a/arch/arm/boot/dts/exynos4210-i9100.dts
-+++ b/arch/arm/boot/dts/exynos4210-i9100.dts
-@@ -147,6 +147,36 @@ battery@36 {
- =09=09};
- =09};
-
-+=09i2c_s5k5baf: i2c-gpio-1 {
-+=09=09compatible =3D "i2c-gpio";
-+=09=09#address-cells =3D <1>;
-+=09=09#size-cells =3D <0>;
-+
-+=09=09sda-gpios =3D <&gpc1 0 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+=09=09scl-gpios =3D <&gpc1 2 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+=09=09i2c-gpio,delay-us =3D <2>;
-+
-+=09=09image-sensor@2d {
-+=09=09=09compatible =3D "samsung,s5k5baf";
-+=09=09=09reg =3D <0x2d>;
-+=09=09=09vdda-supply =3D <&cam_io_en_reg>;
-+=09=09=09vddreg-supply =3D <&vt_core_15v_reg>;
-+=09=09=09vddio-supply =3D <&vtcam_reg>;
-+=09=09=09clocks =3D <&camera 0>;
-+=09=09=09clock-names =3D "mclk";
-+=09=09=09stbyn-gpios =3D <&gpl2 0 GPIO_ACTIVE_LOW>;
-+=09=09=09rstn-gpios =3D <&gpl2 1 GPIO_ACTIVE_LOW>;
-+=09=09=09clock-frequency =3D <24000000>;
-+
-+=09=09=09port {
-+=09=09=09=09s5k5bafx_ep: endpoint {
-+=09=09=09=09=09remote-endpoint =3D <&csis1_ep>;
-+=09=09=09=09=09data-lanes =3D <1>;
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+=09};
-+
- =09spi-3 {
- =09=09compatible =3D "spi-gpio";
- =09=09#address-cells =3D <1>;
-@@ -220,7 +250,11 @@ pmic_ap_clk: pmic-ap-clk {
- };
-
- &camera {
-+=09pinctrl-0 =3D <&cam_port_a_clk_active>;
-+=09pinctrl-names =3D "default";
- =09status =3D "okay";
-+=09assigned-clocks =3D <&clock CLK_MOUT_CAM0>, <&clock CLK_MOUT_CAM1>;
-+=09assigned-clock-parents =3D <&clock CLK_XUSBXTI>, <&clock CLK_XUSBXTI>;
- };
-
- &cpu0 {
-@@ -794,3 +828,21 @@ &serial_3 {
- &tmu {
- =09status =3D "okay";
- };
-+
-+&csis_1 {
-+=09status =3D "okay";
-+=09vddcore-supply =3D <&vusb_reg>;
-+=09vddio-supply =3D <&vmipi_reg>;
-+=09clock-frequency =3D <160000000>;
-+=09#address-cells =3D <1>;
-+=09#size-cells =3D <0>;
-+
-+=09port@4 {
-+=09=09reg =3D <4>;
-+=09=09csis1_ep: endpoint {
-+=09=09=09remote-endpoint =3D <&s5k5bafx_ep>;
-+=09=09=09data-lanes =3D <1>;
-+=09=09=09samsung,csis-hs-settle =3D <6>;
-+=09=09};
-+=09};
-+};
---
-2.25.1
 
 
+Hello,i&#39;m Mackenzie Scott,Ex-wife of Amazon founder i&#39;m donating $4 billion to charities,individuals,universities across the Globe from my divorce funds,i&#39;m donating part of it to provide immediate support to people suffering economically during the COVID-19 pandemic,i have a donation worth $100,800,000.00 Dollars for you,you can contact me for more information if you&#39;re interested.
