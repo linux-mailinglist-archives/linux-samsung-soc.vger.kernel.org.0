@@ -2,67 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D18773567C9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Apr 2021 11:15:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A25D03568D3
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Apr 2021 12:05:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345904AbhDGJPf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 7 Apr 2021 05:15:35 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:16812 "EHLO
-        szxga07-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234354AbhDGJPf (ORCPT
+        id S240191AbhDGKEc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Apr 2021 06:04:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39484 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1350508AbhDGKDx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 7 Apr 2021 05:15:35 -0400
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4FFdwT5cVdz9wdf;
-        Wed,  7 Apr 2021 17:13:13 +0800 (CST)
-Received: from huawei.com (10.175.103.91) by DGGEMS409-HUB.china.huawei.com
- (10.3.19.209) with Microsoft SMTP Server id 14.3.498.0; Wed, 7 Apr 2021
- 17:15:22 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>
-CC:     <sre@kernel.org>, <krzk@kernel.org>
-Subject: [PATCH -next] power: supply: s3c_adc_battery: fix possible use-after-free in s3c_adc_bat_remove()
-Date:   Wed, 7 Apr 2021 17:19:03 +0800
-Message-ID: <20210407091903.3268399-1-yangyingliang@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 7 Apr 2021 06:03:53 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 062EF6139C;
+        Wed,  7 Apr 2021 10:03:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1617789824;
+        bh=U2Q8yQRaIx4QiUDT92JbWKR5p2N8Pmme+7zcvnbeJJ0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=D2H4UEtHja2iIv2loa+fuuitQ959MN2FGakHGD8VX07eZKsavECG1occPJR8NZ+iw
+         syCag3ZhloduOHJ+yp6Le+QJENnSEuMZqR5GbzOES4ZpFa42BJgZbhbEnRrAuqnWar
+         EVGT8td4AqmWmQqfnuY4wOdlnLFki+xiAvxvxKlS1mesefU/1v0wUgcdRY0bh4SIsZ
+         n7Yv0VJpeH4MZw32BL2wIBGrHRG/Kw4LPc6QlePUA2WjVRCIqHb1+bpS6iVGM2H6sB
+         moflSRRRevnPCGjCAOAwOqW112u/0PAHVJOdUV8SSOd/jHlT3TOoAnV++GhUKmduTT
+         Nec2+miWZIEUg==
+Subject: Re: [PATCH] clk: exynos7: Mark aclk_fsys1_200 as critical
+To:     =?UTF-8?Q?Pawe=c5=82_Chmiel?= <pawel.mikolaj.chmiel@gmail.com>
+Cc:     s.nawrocki@samsung.com, tomasz.figa@gmail.com,
+        cw00.choi@samsung.com, linux-samsung-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, kgene@kernel.org, krzk@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org
+References: <20201024154346.9589-1-pawel.mikolaj.chmiel@gmail.com>
+From:   Sylwester Nawrocki <snawrocki@kernel.org>
+Message-ID: <53be0d9d-a64a-9108-85f0-40ac360757c4@kernel.org>
+Date:   Wed, 7 Apr 2021 12:03:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-CFilter-Loop: Reflected
+In-Reply-To: <20201024154346.9589-1-pawel.mikolaj.chmiel@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This driver's remove path calls cancel_delayed_work(). However, that
-function does not wait until the work function finishes. This means
-that the callback function may still be running after the driver's
-remove function has finished, which would result in a use-after-free.
+On 24.10.2020 17:43, Paweł Chmiel wrote:
+> This clock must be always enabled to allow access to any registers in
+> fsys1 CMU. Until proper solution based on runtime PM is applied
+> (similar to what was done for Exynos5433), mark that clock as critical
+> so it won't be disabled.
+> 
+> It was observed on Samsung Galaxy S6 device (based on Exynos7420), where
+> UFS module is probed before pmic used to power that device.
+> In this case defer probe was happening and that clock was disabled by
+> UFS driver, causing whole boot to hang on next CMU access.
+> 
+> Signed-off-by: Paweł Chmiel <pawel.mikolaj.chmiel@gmail.com>
+> ---
+>   drivers/clk/samsung/clk-exynos7.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/samsung/clk-exynos7.c b/drivers/clk/samsung/clk-exynos7.c
+> index c1ff715e960c..1048d83f097b 100644
+> --- a/drivers/clk/samsung/clk-exynos7.c
+> +++ b/drivers/clk/samsung/clk-exynos7.c
+> @@ -538,7 +538,8 @@ static const struct samsung_gate_clock top1_gate_clks[] __initconst = {
+>   		ENABLE_ACLK_TOP13, 28, CLK_SET_RATE_PARENT |
+>   		CLK_IS_CRITICAL, 0),
 
-Fix by calling cancel_delayed_work_sync(), which ensures that
-the work is properly cancelled, no longer running, and unable
-to re-schedule itself.
+As this patch can be backported up to the commit that introduced regression
+I have applied it instead of your v3, with a comment as below.
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
----
- drivers/power/supply/s3c_adc_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
++       /*
++        * This clock is required for the CMU_FSYS1 registers access, keep it
++        * enabled permanently until proper runtime PM support is added.
++        */
 
-diff --git a/drivers/power/supply/s3c_adc_battery.c b/drivers/power/supply/s3c_adc_battery.c
-index dc700066d7bc..68d31a3bee48 100644
---- a/drivers/power/supply/s3c_adc_battery.c
-+++ b/drivers/power/supply/s3c_adc_battery.c
-@@ -390,7 +390,7 @@ static int s3c_adc_bat_remove(struct platform_device *pdev)
- 	if (main_bat.charge_finished)
- 		free_irq(gpiod_to_irq(main_bat.charge_finished), NULL);
- 
--	cancel_delayed_work(&bat_work);
-+	cancel_delayed_work_sync(&bat_work);
- 
- 	if (pdata->exit)
- 		pdata->exit();
--- 
-2.25.1
-
+>   	GATE(CLK_ACLK_FSYS1_200, "aclk_fsys1_200", "dout_aclk_fsys1_200",
+> -		ENABLE_ACLK_TOP13, 24, CLK_SET_RATE_PARENT, 0),
+> +		ENABLE_ACLK_TOP13, 24, CLK_SET_RATE_PARENT |
+> +		CLK_IS_CRITICAL, 0),
+>   
+>   	GATE(CLK_SCLK_PHY_FSYS1_26M, "sclk_phy_fsys1_26m",
+>   		"dout_sclk_phy_fsys1_26m", ENABLE_SCLK_TOP1_FSYS11,
+  
+--
+Regards,
+Sylwester
