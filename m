@@ -2,54 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 00BB9365DB6
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Apr 2021 18:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A657365DB9
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Apr 2021 18:50:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232835AbhDTQu0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 20 Apr 2021 12:50:26 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:49797 "EHLO
+        id S233248AbhDTQu3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 20 Apr 2021 12:50:29 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:49803 "EHLO
         youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbhDTQu0 (ORCPT
+        with ESMTP id S233233AbhDTQu1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 20 Apr 2021 12:50:26 -0400
-Received: from mail-ed1-f70.google.com ([209.85.208.70])
+        Tue, 20 Apr 2021 12:50:27 -0400
+Received: from mail-ed1-f71.google.com ([209.85.208.71])
         by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.86_2)
         (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lYtZR-0003VX-Qo
-        for linux-samsung-soc@vger.kernel.org; Tue, 20 Apr 2021 16:49:53 +0000
-Received: by mail-ed1-f70.google.com with SMTP id v5-20020a0564023485b029037ff13253bcso13440095edc.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Apr 2021 09:49:53 -0700 (PDT)
+        id 1lYtZT-0003Vs-Bc
+        for linux-samsung-soc@vger.kernel.org; Tue, 20 Apr 2021 16:49:55 +0000
+Received: by mail-ed1-f71.google.com with SMTP id n18-20020a0564020612b02903853320059eso4422455edv.0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Apr 2021 09:49:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3dMD592ElHi8nMETJZuVYSTLboZNsfqcXUmwdRPVf7o=;
-        b=OkehA1M25NSmjcmLP+YphTAJ7uE1ZSW9J0hpjUcr+SSuokfKhaoSUIao0sFhSVncRI
-         pJyHCXIiFmM1lylbzEQT+OD6uu/GPMxFKdLywxzhRCG5PQj8VYOTXZQUTAPsMKSWICwL
-         ZVZfiUD6ehNaLVMCi88eUhk1WNj3aMYD4ieEiX4gzJ5Dede2M55YOuPfBGSZ7U0cPGRL
-         OHSBMhQEASW62/jsyAX9QeXzl4szQ69as79X6SSxK4RBbRzwC3oTUdrCm4RV5i8MDV7O
-         E5fcSPMoDLayTI7pHDbF0bkf6dwGVfImkNX4GInAlQh6i0rDj1NaKDhMZJ6cxpaTkbAj
-         LVwA==
-X-Gm-Message-State: AOAM533fz7QDVBDcwwwe25i3dPbm0WL3d7A1kP2CGaIpo871N67vwBwR
-        df9DJCkXDXX1muw8o6Tp0j/uU+HK44A7E7buptp/Y4ZPAtJOgYYZMnY2wFFR8jk1Af064Ez9um2
-        VobSY0Giwza3W5esRCe5avme72uwqUM1ul/dUeR4pQIxWoRgb
-X-Received: by 2002:a17:906:3544:: with SMTP id s4mr29389527eja.73.1618937393514;
-        Tue, 20 Apr 2021 09:49:53 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxml5h0MCp/k5aMeRiDFOFNo/wwzl9BNnecPMV2V8bC7mVCzWrVVPBCya4E8qd8HJd3A8nb9g==
-X-Received: by 2002:a17:906:3544:: with SMTP id s4mr29389514eja.73.1618937393389;
-        Tue, 20 Apr 2021 09:49:53 -0700 (PDT)
+        bh=Fj7Vif2aTzH3tZdsi6YgQzN1WxIkWtk37rnugc0OEF0=;
+        b=ESyVh7wa2O+en8Yve1c+AMvtUQ9ojB+umvgrWhUAcGwzeuPgTaoye002M+5piwxLjB
+         RZHU9RuYbDuPfL5gF4QBQ5hNLCKDXOftIDwHn4d9acvZXAkUJorxuEonwjcCTyVVLdrA
+         S+oh+adEyxm7MLWfFwU0C6KI5M85q0k5Al6ypg1pr7cBm2ZdkGW/0FkY2K88zCWCowFT
+         pS5vx9mwSPpZLRKiFOtisXzKxesRfwkdirMDSjOK4152b7hlSOdq6VZx41HYbIUjWJ3w
+         lOKKBaoZ9yILfAlALdiIzz2e+2gFPYomeurU/MXq/Yr7GdIiMgIHc76K4GRfGHgUC+gr
+         r42Q==
+X-Gm-Message-State: AOAM531PoWqddr1kwHGrtSwnUCi7PcnOpmqBvjWEMl/lQ/YpA4jOxmNV
+        1i6NDSpdvWRrAwko5iRNO0rrNUwpuEfJugGu29kDmoft/UwnpZvy0g9prKS7CiWOMh2TaaVcLOL
+        0yIlIOW3v5k2yH3xWpxJLCM5hdygjEp4v86QpjP7jRrOS3nVh
+X-Received: by 2002:a17:906:b6c5:: with SMTP id ec5mr28557655ejb.290.1618937395092;
+        Tue, 20 Apr 2021 09:49:55 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwSRr6NSrHQp8U2jeiaffvf8WYW9iKm2uFgtdWnQa2quGs+NQghxGhwm2wVUg9G15AZRlNR6Q==
+X-Received: by 2002:a17:906:b6c5:: with SMTP id ec5mr28557643ejb.290.1618937394964;
+        Tue, 20 Apr 2021 09:49:54 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-180-75.adslplus.ch. [188.155.180.75])
-        by smtp.gmail.com with ESMTPSA id c12sm18252873edx.54.2021.04.20.09.49.51
+        by smtp.gmail.com with ESMTPSA id c12sm18252873edx.54.2021.04.20.09.49.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 09:49:52 -0700 (PDT)
+        Tue, 20 Apr 2021 09:49:53 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 03/11] ARM: dts: exynos: enable PMIC wakeup from suspend on Arndale
-Date:   Tue, 20 Apr 2021 18:49:35 +0200
-Message-Id: <20210420164943.11152-3-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 04/11] ARM: dts: exynos: enable PMIC wakeup from suspend on Odroid XU
+Date:   Tue, 20 Apr 2021 18:49:36 +0200
+Message-Id: <20210420164943.11152-4-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210420164943.11152-1-krzysztof.kozlowski@canonical.com>
 References: <20210420164943.11152-1-krzysztof.kozlowski@canonical.com>
@@ -59,26 +59,26 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The RTC on S5M8767 PMIC can wakeup the system from suspend to RAM.
-Add a generic property for this.
+The RTC on Maxim max77802 PMIC can wakeup the system from suspend to
+RAM.  Add a generic property for this.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm/boot/dts/exynos5250-arndale.dts | 1 +
+ arch/arm/boot/dts/exynos5410-odroidxu.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/exynos5250-arndale.dts b/arch/arm/boot/dts/exynos5250-arndale.dts
-index a161f6237c7f..a771542e28b8 100644
---- a/arch/arm/boot/dts/exynos5250-arndale.dts
-+++ b/arch/arm/boot/dts/exynos5250-arndale.dts
-@@ -218,6 +218,7 @@ pmic@66 {
- 		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+diff --git a/arch/arm/boot/dts/exynos5410-odroidxu.dts b/arch/arm/boot/dts/exynos5410-odroidxu.dts
+index 949c0721cdb4..884fef55836c 100644
+--- a/arch/arm/boot/dts/exynos5410-odroidxu.dts
++++ b/arch/arm/boot/dts/exynos5410-odroidxu.dts
+@@ -190,6 +190,7 @@ max77802: pmic@9 {
  		pinctrl-names = "default";
- 		pinctrl-0 = <&s5m8767_irq>;
+ 		pinctrl-0 = <&max77802_irq>, <&pmic_dvs_1>, <&pmic_dvs_2>,
+ 			    <&pmic_dvs_3>;
 +		wakeup-source;
+ 		#clock-cells = <1>;
  
- 		vinb1-supply = <&main_dc_reg>;
- 		vinb2-supply = <&main_dc_reg>;
+ 		inl1-supply = <&buck5_reg>;
 -- 
 2.25.1
 
