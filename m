@@ -2,47 +2,47 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB65F365E0C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Apr 2021 19:01:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CADC365E0E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Apr 2021 19:01:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232901AbhDTRCH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 20 Apr 2021 13:02:07 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:50078 "EHLO
+        id S233199AbhDTRCI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 20 Apr 2021 13:02:08 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:50096 "EHLO
         youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233239AbhDTRCF (ORCPT
+        with ESMTP id S233247AbhDTRCH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 20 Apr 2021 13:02:05 -0400
-Received: from mail-ed1-f72.google.com ([209.85.208.72])
+        Tue, 20 Apr 2021 13:02:07 -0400
+Received: from mail-ej1-f69.google.com ([209.85.218.69])
         by youngberry.canonical.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.86_2)
         (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lYtkj-0004TT-9u
-        for linux-samsung-soc@vger.kernel.org; Tue, 20 Apr 2021 17:01:33 +0000
-Received: by mail-ed1-f72.google.com with SMTP id w15-20020a056402268fb02903828f878ec5so13466633edd.5
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Apr 2021 10:01:33 -0700 (PDT)
+        id 1lYtkk-0004UO-Nt
+        for linux-samsung-soc@vger.kernel.org; Tue, 20 Apr 2021 17:01:34 +0000
+Received: by mail-ej1-f69.google.com with SMTP id o25-20020a1709061d59b029037c94676df5so5047015ejh.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Apr 2021 10:01:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cK2ReUjBLXXBh4lxBc6DTRo7cWOdEm7mAeUsBKVXSvQ=;
-        b=sAso0+VYMrOpAPgqPQkbEbeUs8dtG8vnOuHmMPcyfqfCgmoYJnHr5u+9f0zuseQoka
-         CbkJ8zcggUqOrR6JTyQc6VBa50JeEZKi0dV7qlC6upgOMsbNc4q2lDiPLOWLEGkCwkhE
-         /StxsZ1/v+oyx9nFTKbZ0Os7EY3WGv9LwLEQyal02S4ugmzQ9d71dDhQThLHdBezNcwv
-         TCU0iZGNh2rq65u2S0TPwbRVNBTA9fHzWVpitmB+oO/4FQRIdx3kE3s5LSAMZSggbLVb
-         VeByxn6oXde/8lcdzLaCR3yV8ktIAvYUC0QyxN3kv5iTvnj40hMr2axuOsznPuYLWVVm
-         TMtQ==
-X-Gm-Message-State: AOAM5337vVn6dW0dx7G5sbljUCyNZiduGhCw8JUGO+OgbkvZlmjRnLUP
-        eD+AwBlPcfgpIHT94hHQhlM9CZXYSuhHEofvoDgdaOihir0PevvUIlekcaaoTZZIssZKx1bq2VJ
-        iHndTxkPa3R8mgulwNYGf5xmtZJeYlsQSTMnEm3MtWTk95PRr
-X-Received: by 2002:a05:6402:1393:: with SMTP id b19mr33272130edv.333.1618938092888;
-        Tue, 20 Apr 2021 10:01:32 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzsfo95Qfe4xzN04pErckPsV4xUg8gCjdkg5/kz+p8rSAzf6rBygGzRUjfOHfAKmqHyncJAFA==
-X-Received: by 2002:a05:6402:1393:: with SMTP id b19mr33272118edv.333.1618938092757;
-        Tue, 20 Apr 2021 10:01:32 -0700 (PDT)
+        bh=3HCzipZq3msLcuy2WkjGbMNJtslSk5WuayCRwwGv1I8=;
+        b=kOoCbyMdcRRuKOdHpHk+UrZ7L2+8szP8Sfz+VdUfG1jTM9A8UNXS6wTo0AwaAbMAS+
+         trAkvCk1W8jAnVoo7DjUtPPBO917768DY3F0QVHDBU2Owo4ugIEVBMbwPozvOb7yBuEr
+         ddVtHeKTx4uF3rH66OYWjkI+66IuTPP4uv3VfPzm4cD+S50fxUH0sxGB5xXWSB2+FYRY
+         jGHMpYf/2pFoPS37l9YAL/1RbYt1OydooasvhKzWe9SG4t461vZ/nu0QXN3+V2xdMTGV
+         num8iXS0Znd0dqVO+kFQEjeUZ21cU/vLfsKnrd5v1BjSX8rFtqL5gb9FUM28EFrpQR2P
+         Pirg==
+X-Gm-Message-State: AOAM533tTd0FlciyDHN8j/kVa17m9lEtvjUXaQuiWFjSa+WcGwXl7Mdz
+        uV1YpkptRqGrwK+PbXi2XdQOk8QL7xMv+K+gJdYCM7EMBQnq5hFUMgbEbnaRMdzX4FxggEzVCw3
+        ZhROcUYKrDJtXqNfiWkRKnUWDGku3FFElMC7mya21QqbDqE7z
+X-Received: by 2002:a05:6402:485:: with SMTP id k5mr33466131edv.211.1618938094310;
+        Tue, 20 Apr 2021 10:01:34 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxELCUSPyZrAOwt3tM3D+dUCVIuCF50hufvL6zlHUtYRnZrR2c+i038ZRqkVsJ8Am5+aEE28g==
+X-Received: by 2002:a05:6402:485:: with SMTP id k5mr33466108edv.211.1618938094155;
+        Tue, 20 Apr 2021 10:01:34 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-180-75.adslplus.ch. [188.155.180.75])
-        by smtp.gmail.com with ESMTPSA id x7sm16334441eds.67.2021.04.20.10.01.31
+        by smtp.gmail.com with ESMTPSA id x7sm16334441eds.67.2021.04.20.10.01.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 10:01:32 -0700 (PDT)
+        Tue, 20 Apr 2021 10:01:33 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Lee Jones <lee.jones@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -55,9 +55,9 @@ To:     Lee Jones <lee.jones@linaro.org>,
         linux-rtc@vger.kernel.org
 Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Sylwester Nawrocki <snawrocki@kernel.org>
-Subject: [PATCH 2/9] mfd: sec: Remove unused cfg_pmic_irq in platform data
-Date:   Tue, 20 Apr 2021 19:01:11 +0200
-Message-Id: <20210420170118.12788-3-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 3/9] mfd: sec: Remove unused device_type in platform data
+Date:   Tue, 20 Apr 2021 19:01:12 +0200
+Message-Id: <20210420170118.12788-4-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210420170118.12788-1-krzysztof.kozlowski@canonical.com>
 References: <20210420170118.12788-1-krzysztof.kozlowski@canonical.com>
@@ -67,41 +67,57 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The 'cfg_pmic_irq' field of platform data structure is not used and can
+The 'device_type' field of platform data structure is not used and can
 be safely dropped.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- drivers/mfd/sec-core.c           | 3 ---
+ drivers/mfd/sec-core.c           | 5 +----
  include/linux/mfd/samsung/core.h | 1 -
- 2 files changed, 4 deletions(-)
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/drivers/mfd/sec-core.c b/drivers/mfd/sec-core.c
-index c61c1fc62165..653d02b98d53 100644
+index 653d02b98d53..4c4db3171ce6 100644
 --- a/drivers/mfd/sec-core.c
 +++ b/drivers/mfd/sec-core.c
-@@ -382,9 +382,6 @@ static int sec_pmic_probe(struct i2c_client *i2c,
+@@ -318,7 +318,6 @@ static int sec_pmic_probe(struct i2c_client *i2c,
+ 	struct sec_platform_data *pdata;
+ 	const struct mfd_cell *sec_devs;
+ 	struct sec_pmic_dev *sec_pmic;
+-	unsigned long device_type;
+ 	int ret, num_sec_devs;
+ 
+ 	sec_pmic = devm_kzalloc(&i2c->dev, sizeof(struct sec_pmic_dev),
+@@ -330,16 +329,14 @@ static int sec_pmic_probe(struct i2c_client *i2c,
+ 	sec_pmic->dev = &i2c->dev;
+ 	sec_pmic->i2c = i2c;
+ 	sec_pmic->irq = i2c->irq;
+-	device_type = (unsigned long)of_device_get_match_data(sec_pmic->dev);
+ 
+ 	pdata = sec_pmic_i2c_parse_dt_pdata(sec_pmic->dev);
+ 	if (IS_ERR(pdata)) {
+ 		ret = PTR_ERR(pdata);
  		return ret;
  	}
+-	pdata->device_type = device_type;
  
--	if (pdata->cfg_pmic_irq)
--		pdata->cfg_pmic_irq();
--
- 	sec_irq_init(sec_pmic);
- 
- 	pm_runtime_set_active(sec_pmic->dev);
+-	sec_pmic->device_type = pdata->device_type;
++	sec_pmic->device_type = (unsigned long)of_device_get_match_data(sec_pmic->dev);
+ 	sec_pmic->irq_base = pdata->irq_base;
+ 	sec_pmic->wakeup = pdata->wakeup;
+ 	sec_pmic->pdata = pdata;
 diff --git a/include/linux/mfd/samsung/core.h b/include/linux/mfd/samsung/core.h
-index f1631a39acfc..68afc2b97a41 100644
+index 68afc2b97a41..bfde1b7c6303 100644
 --- a/include/linux/mfd/samsung/core.h
 +++ b/include/linux/mfd/samsung/core.h
-@@ -85,7 +85,6 @@ struct sec_platform_data {
+@@ -81,7 +81,6 @@ int sec_irq_resume(struct sec_pmic_dev *sec_pmic);
+ struct sec_platform_data {
+ 	struct sec_regulator_data	*regulators;
+ 	struct sec_opmode_data		*opmode;
+-	int				device_type;
  	int				num_regulators;
  
  	int				irq_base;
--	int				(*cfg_pmic_irq)(void);
- 
- 	bool				wakeup;
- 	bool				buck_voltage_lock;
 -- 
 2.25.1
 
