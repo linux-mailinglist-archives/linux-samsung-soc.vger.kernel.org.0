@@ -2,101 +2,114 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD74836C370
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Apr 2021 12:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83DBF36C442
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 27 Apr 2021 12:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237860AbhD0K22 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 27 Apr 2021 06:28:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48150 "EHLO mail.kernel.org"
+        id S237507AbhD0KiA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 27 Apr 2021 06:38:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58752 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235801AbhD0K2N (ORCPT
+        id S235370AbhD0Khl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:28:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 879436141A;
-        Tue, 27 Apr 2021 10:27:16 +0000 (UTC)
+        Tue, 27 Apr 2021 06:37:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 31ADF61164;
+        Tue, 27 Apr 2021 10:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619519236;
-        bh=ORhYQV8MaIIM9QGoq0fv1DmSrG26N8/lfMtTN/XnDlY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pWhEtfBuU+iaPtnpecEP0/LI/jxA0WIo9UTWcclJRH0K/NYiL0rpx0ZCJqAqEidOh
-         A8g8d/0AYZ7JTWk+F2JB1pRmu1V6S/XCVwBB7Ttx7+6jszFrpe4ayC1iFofaxBHdfO
-         Z+x4SQrf4i3+kzw8Y3EtBzSXkErF+7Xc0bGFa0h2WON+lrYp4KFfiwPNCFqidCIEkf
-         /8iWl6LHQyyHyp0amqj/ybGl4nY3XMQ75Evnv8GdnZVT03GZflQAedFi4Aq9+9dnXx
-         nIjn8sDYBGCIHzaTp9P56yId5WtHuboG5ppVXJiooSS1eS+YwvVY5FgACQcUGYvx+a
-         MEYFMd08CI9Eg==
-Received: by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1lbKvz-000o2e-Ae; Tue, 27 Apr 2021 12:27:15 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v3 71/79] media: s3c-camif: use pm_runtime_resume_and_get()
-Date:   Tue, 27 Apr 2021 12:27:01 +0200
-Message-Id: <a002bcaa2096cac125469b0188e5967d0e1892a0.1619519080.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <cover.1619519080.git.mchehab+huawei@kernel.org>
-References: <cover.1619519080.git.mchehab+huawei@kernel.org>
+        s=k20201202; t=1619519812;
+        bh=Pa3agcyz2NtuVM1ilvYU8h7J+lPkNnKb5CQvR3SYI/E=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=B69cMouiuHpSe3mPDuw5C/o/LAejhv6XpeioJvn43Fi9BaGuINCYDnxYJxIM7Z6vK
+         spCHxaebUv6lD1tQ+6sfbV6jsPsjv4O8W20DWiTUJENniNfVUUke9Tf3UJCbHdne6c
+         0Nz04k1X8tjjjJRJunAR2+dGqWOrWJv+qLvHqrKeLkwzgaRtsa7yiQ5b2vDrUE3tDo
+         SsAwPAEiqs8KFgEql5pf263/Jhe7I9eyOnqybU45DXaKCqKHvZ24al0CY6W6bnZ5tA
+         fGHjqLt5jJs3NtaEa25WlwKMbukhgtOwMfxywljAWXj1xmm+Hk8wBv0+CyIERDeNN0
+         Ap9jC7LXEF/ig==
+Subject: Re: [PATCH v2] media:exynos4-is: Fix a use after free in
+ isp_video_release
+To:     Lv Yunlong <lyl2019@mail.ustc.edu.cn>
+Cc:     linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        s.nawrocki@samsung.com, mchehab@kernel.org, krzk@kernel.org
+References: <20210427060255.3318-1-lyl2019@mail.ustc.edu.cn>
+From:   Sylwester Nawrocki <snawrocki@kernel.org>
+Message-ID: <a56d14d8-5be6-24ff-24f1-80274320dfe5@kernel.org>
+Date:   Tue, 27 Apr 2021 12:36:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <20210427060255.3318-1-lyl2019@mail.ustc.edu.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
-added pm_runtime_resume_and_get() in order to automatically handle
-dev->power.usage_count decrement on errors.
+On 27.04.2021 08:02, Lv Yunlong wrote:
+> In isp_video_release, file->private_data is freed via
+> _vb2_fop_release()->v4l2_fh_release(). But the freed
+> file->private_data is still used in v4l2_fh_is_singular_file()
+> ->v4l2_fh_is_singular(file->private_data), which is a use
+> after free bug.
+> 
+> My patch set file->private_data to NULL after _vb2_fop_release()
+> to avoid the use after free.
+> 
+> Fixes: 34947b8aebe3f ("[media] exynos4-is: Add the FIMC-IS ISP capture DMA driver")
+> Signed-off-by: Lv Yunlong <lyl2019@mail.ustc.edu.cn>
+> ---
+>   drivers/media/platform/exynos4-is/fimc-isp-video.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+> index 612b9872afc8..2e04589068b4 100644
+> --- a/drivers/media/platform/exynos4-is/fimc-isp-video.c
+> +++ b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+> @@ -315,7 +315,8 @@ static int isp_video_release(struct file *file)
+>   	}
+>   
+>   	_vb2_fop_release(file, NULL);
+> -
+> +	file->private_data = NULL;
 
-Use the new API, in order to cleanup the error check logic.
+>   	if (v4l2_fh_is_singular_file(file)) {
+>   		fimc_pipeline_call(&ivc->ve, close);
+>   
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- drivers/media/platform/s3c-camif/camif-capture.c | 2 +-
- drivers/media/platform/s3c-camif/camif-core.c    | 5 +++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Thank you for the patch. To ensure the pipeline stop call is done
+only when the last file handle is released we would need something
+as below.
 
-diff --git a/drivers/media/platform/s3c-camif/camif-capture.c b/drivers/media/platform/s3c-camif/camif-capture.c
-index 9ca49af29542..62241ec3b978 100644
---- a/drivers/media/platform/s3c-camif/camif-capture.c
-+++ b/drivers/media/platform/s3c-camif/camif-capture.c
-@@ -547,7 +547,7 @@ static int s3c_camif_open(struct file *file)
- 	if (ret < 0)
- 		goto unlock;
- 
--	ret = pm_runtime_get_sync(camif->dev);
-+	ret = pm_runtime_resume_and_get(camif->dev);
- 	if (ret < 0)
- 		goto err_pm;
- 
-diff --git a/drivers/media/platform/s3c-camif/camif-core.c b/drivers/media/platform/s3c-camif/camif-core.c
-index 4c3c00d59c92..e1d51fd3e700 100644
---- a/drivers/media/platform/s3c-camif/camif-core.c
-+++ b/drivers/media/platform/s3c-camif/camif-core.c
-@@ -460,9 +460,9 @@ static int s3c_camif_probe(struct platform_device *pdev)
- 
- 	pm_runtime_enable(dev);
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
--		goto err_pm;
-+		goto err_disable;
- 
- 	ret = camif_media_dev_init(camif);
- 	if (ret < 0)
-@@ -502,6 +502,7 @@ static int s3c_camif_probe(struct platform_device *pdev)
- 	camif_unregister_media_entities(camif);
- err_pm:
- 	pm_runtime_put(dev);
-+err_disable:
- 	pm_runtime_disable(dev);
- 	camif_clk_put(camif);
- err_clk:
--- 
-2.30.2
+--------8<---------
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c 
+b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+index 612b9872afc8..3335fec509cb 100644
+--- a/drivers/media/platform/exynos4-is/fimc-isp-video.c
++++ b/drivers/media/platform/exynos4-is/fimc-isp-video.c
+@@ -306,17 +306,20 @@ static int isp_video_release(struct file *file)
+         struct fimc_is_video *ivc = &isp->video_capture;
+         struct media_entity *entity = &ivc->ve.vdev.entity;
+         struct media_device *mdev = entity->graph_obj.mdev;
++       bool is_singular_file;
 
+         mutex_lock(&isp->video_lock);
+
+-       if (v4l2_fh_is_singular_file(file) && ivc->streaming) {
++       is_singular_file = v4l2_fh_is_singular_file(file);
++
++       if (is_singular_file && ivc->streaming) {
+                 media_pipeline_stop(entity);
+                 ivc->streaming = 0;
+         }
+
+         _vb2_fop_release(file, NULL);
+
+-       if (v4l2_fh_is_singular_file(file)) {
++       if (is_singular_file) {
+                 fimc_pipeline_call(&ivc->ve, close);
+
+                 mutex_lock(&mdev->graph_mutex);
+--------8<---------
+
+Regards,
+Sylwester
