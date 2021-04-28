@@ -2,44 +2,43 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA2636DA43
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Apr 2021 17:05:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB9DE36DA03
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 Apr 2021 17:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240361AbhD1OzL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 28 Apr 2021 10:55:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36654 "EHLO mail.kernel.org"
+        id S240288AbhD1Oxa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 28 Apr 2021 10:53:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35918 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240390AbhD1Oxr (ORCPT
+        id S240271AbhD1Ox3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 28 Apr 2021 10:53:47 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AD41A6193D;
-        Wed, 28 Apr 2021 14:52:44 +0000 (UTC)
+        Wed, 28 Apr 2021 10:53:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C8FBF6144B;
+        Wed, 28 Apr 2021 14:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1619621564;
-        bh=EG1Xkz5icS6rCKpEKVZN/X2JADr2Ee/ss00sHCZahe0=;
+        s=k20201202; t=1619621563;
+        bh=gtR1SkTiYJ9WApgVEIkptCtIXyrWDvbS/bAOqzd9AhE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oCHpn+fmwGV/kArmNSoUSn/jMNhaV6E/cELb1239AFp7tEHpXStLvOGkkClPlKqHs
-         S7Qm6nNL7QYa6ulOnG4byCCfTYEem7BFawbiEPTRfzL7bx/AnCwg77yK0FW7b2ZG25
-         OuBvkfQq1VMaaAzRwwV2KPZqEWGdoYalLtmAiKFIjXcFNilFv4IQA+gljSNBPDmclI
-         Fp9MWk+QZqamavqShzSNyVX15Gt7jXrKM5+jwLX5Bb+QL7MSA1f13GVKKe1Dd3ziD/
-         qufSXKj3aJNvEcWVz+MZc5fJCke6X8fF7Yrlott+4MqITcC6qdWAXSq0h3sPOIM/5W
-         NTnDpyOaC0YSg==
+        b=gui+r5mJheRBaT22aO45UqdlZpSqT3zQNryWIJ3tgxQsIurCryHjrbsq/jbdeGMs0
+         023zuja4D3XR8G280J5skQNG/R3/UneayZ0i/1mdelWGommQEvO+7uNuPLCYV0PcZt
+         bJ+OME3IvhFDTZlsy2/+Unz3JxPpyv1gixe0930RqL5dB4bA3lidAbyXDsC/o4+9Y5
+         NzqOEeyHarutwxhTJcGPCVObkCgs1lJUpSxJPIHPUYKMIBqnFsgnOmyBKAs/w5Ave4
+         OxHisHh8zhy1bGGNpC0edJXgfLrysSEh7D3j3Bzk4hfi7r2tzmoHEvuAU4vxhqR6c3
+         ycWEI0B0NRP+w==
 Received: by mail.kernel.org with local (Exim 4.94)
         (envelope-from <mchehab@kernel.org>)
-        id 1lblYP-001Dpf-JZ; Wed, 28 Apr 2021 16:52:41 +0200
+        id 1lblYP-001Dpv-OZ; Wed, 28 Apr 2021 16:52:41 +0200
 From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
         Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
         Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Kamil Debski <kamil@wypas.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH v4 02/79] media: s6p_cec: decrement usage count if disabled
-Date:   Wed, 28 Apr 2021 16:51:23 +0200
-Message-Id: <2c52c48533f6eafdb7b9c72ee2f02747e851a983.1619621413.git.mchehab+huawei@kernel.org>
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: [PATCH v4 07/79] media: exynos-gsc: don't resume at remove time
+Date:   Wed, 28 Apr 2021 16:51:28 +0200
+Message-Id: <210a2eee928d2ae7aee65e177f20cfb3f00e29ee.1619621413.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <cover.1619621413.git.mchehab+huawei@kernel.org>
 References: <cover.1619621413.git.mchehab+huawei@kernel.org>
@@ -51,31 +50,47 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-There's a bug at s5p_cec_adap_enable(): if called to
-disable the device, it should call pm_runtime_put()
-instead of pm_runtime_disable(), as the goal here is to
-decrement the usage_count and not to disable PM runtime.
+Calling pm_runtime_get_sync() at driver's removal time is not
+needed, as this will resume PM runtime. Also, the PM runtime
+code at pm_runtime_disable() already calls it, if it detects
+the need.
 
-Reported-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Fixes: 1bcbf6f4b6b0 ("[media] cec: s5p-cec: Add s5p-cec driver")
+So, change the logic in order to disable PM runtime earlier.
+
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- drivers/media/cec/platform/s5p/s5p_cec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/exynos-gsc/gsc-core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/cec/platform/s5p/s5p_cec.c b/drivers/media/cec/platform/s5p/s5p_cec.c
-index 2a3e7ffefe0a..3c7c4c3c798c 100644
---- a/drivers/media/cec/platform/s5p/s5p_cec.c
-+++ b/drivers/media/cec/platform/s5p/s5p_cec.c
-@@ -51,7 +51,7 @@ static int s5p_cec_adap_enable(struct cec_adapter *adap, bool enable)
- 	} else {
- 		s5p_cec_mask_tx_interrupts(cec);
- 		s5p_cec_mask_rx_interrupts(cec);
--		pm_runtime_disable(cec->dev);
-+		pm_runtime_put(cec->dev);
- 	}
+diff --git a/drivers/media/platform/exynos-gsc/gsc-core.c b/drivers/media/platform/exynos-gsc/gsc-core.c
+index 9f41c2e7097a..8b943075c503 100644
+--- a/drivers/media/platform/exynos-gsc/gsc-core.c
++++ b/drivers/media/platform/exynos-gsc/gsc-core.c
+@@ -1210,18 +1210,19 @@ static int gsc_remove(struct platform_device *pdev)
+ 	struct gsc_dev *gsc = platform_get_drvdata(pdev);
+ 	int i;
  
+-	pm_runtime_get_sync(&pdev->dev);
+-
+ 	gsc_unregister_m2m_device(gsc);
+ 	v4l2_device_unregister(&gsc->v4l2_dev);
+ 
+ 	vb2_dma_contig_clear_max_seg_size(&pdev->dev);
+-	for (i = 0; i < gsc->num_clocks; i++)
+-		clk_disable_unprepare(gsc->clock[i]);
+ 
+-	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
++	if (!pm_runtime_status_suspended(dev))
++		for (i = 0; i < gsc->num_clocks; i++)
++			clk_disable_unprepare(gsc->clock[i]);
++
++	pm_runtime_set_suspended(dev);
++
+ 	dev_dbg(&pdev->dev, "%s driver unloaded\n", pdev->name);
  	return 0;
+ }
 -- 
 2.30.2
 
