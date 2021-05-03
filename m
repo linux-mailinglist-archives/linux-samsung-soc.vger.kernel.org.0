@@ -2,28 +2,28 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E550B371CD0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 May 2021 18:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4E9C371CD4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 May 2021 18:56:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233135AbhECQ5C (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 May 2021 12:57:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44504 "EHLO mail.kernel.org"
+        id S232041AbhECQ5G (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 May 2021 12:57:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42894 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234940AbhECQzN (ORCPT
+        id S235284AbhECQ4I (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 May 2021 12:55:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3514061944;
-        Mon,  3 May 2021 16:42:35 +0000 (UTC)
+        Mon, 3 May 2021 12:56:08 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 93CB561979;
+        Mon,  3 May 2021 16:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1620060156;
+        s=k20201202; t=1620060194;
         bh=hereJ0RyJy+lofiGg9BMhXrGaktzxvAE3AhkPHBnmZk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PXjcLS7VAhkKZa1PATTzdbvcYKuDz/eDTupEEOZusuMOaJz7Inhg0nxYrSRETa49g
-         ObngHHtTM7uJnggkZGFwZHwuPvxLaga8kv70YghLYMCZ2wKHFe20GztJpLqfYoBpfr
-         jBw0eHzuOs3mI4HV6N1JexQ6+smFMonBsZY4pIocyWzKmoWC3kQ3Wb6JCKrMqI6Bg+
-         j1vYvZIOCWfl5fYZsYqBEL9TPzmtb3FJ1XnjCQrJlWDiVtzt0VXVAVQvwsEA4foCCl
-         uQM4keNs7qCSEqdFV0M0Bo2RoYFFgHScAGfsZnA1N074Ynh/emshjaD1pFk0+sDGPW
-         2MTo4aje5FzRQ==
+        b=Gq/aXrsTLS9bOUEgU8Nm7PHlWNvqe5P/jKQB0tlR5Z4UAhHT0hHMb1+TUzAkJyJ3U
+         2fIZ5rj3BHrYwR1NzulmiTlTuCnLfL4fcEn/OcjKOvoLnMTEHZsoATd+7DHD7zJmeT
+         INiH49kvj422XNHdJ6NQEsyEWbm7mtXsNH95ZLjX5+TEzxf7YjZcT+MH8l2E50/i80
+         G/ySJOINqqAiWYUPPFwCFJKrhthtfOAj/ZHqUs0RB9qbkgyzjizpsyptLoQfwCQPks
+         waEoQLMWZ3mBd4jAODnEQHGaP+jU5uxyOIFjV/HAlkE5sT4GC1Bq83L8owURI/tIgW
+         pNf7Skv4zdzoQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Yang Yingliang <yangyingliang@huawei.com>,
@@ -32,12 +32,12 @@ Cc:     Yang Yingliang <yangyingliang@huawei.com>,
         Sebastian Reichel <sebastian.reichel@collabora.com>,
         Sasha Levin <sashal@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 21/31] power: supply: s3c_adc_battery: fix possible use-after-free in s3c_adc_bat_remove()
-Date:   Mon,  3 May 2021 12:41:54 -0400
-Message-Id: <20210503164204.2854178-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 15/24] power: supply: s3c_adc_battery: fix possible use-after-free in s3c_adc_bat_remove()
+Date:   Mon,  3 May 2021 12:42:43 -0400
+Message-Id: <20210503164252.2854487-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210503164204.2854178-1-sashal@kernel.org>
-References: <20210503164204.2854178-1-sashal@kernel.org>
+In-Reply-To: <20210503164252.2854487-1-sashal@kernel.org>
+References: <20210503164252.2854487-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
