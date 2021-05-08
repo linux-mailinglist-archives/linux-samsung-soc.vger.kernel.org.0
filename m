@@ -2,82 +2,155 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56A98376CC1
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  8 May 2021 00:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3E76377340
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  8 May 2021 18:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230128AbhEGW1m (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 7 May 2021 18:27:42 -0400
-Received: from bosmailout01.eigbox.net ([66.96.190.1]:36027 "EHLO
-        bosmailout01.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhEGW1h (ORCPT
+        id S229575AbhEHQsF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 8 May 2021 12:48:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33300 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229544AbhEHQsE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 7 May 2021 18:27:37 -0400
-X-Greylist: delayed 1929 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2021 18:27:30 EDT
-Received: from bosmailscan09.eigbox.net ([10.20.15.9])
-        by bosmailout01.eigbox.net with esmtp (Exim)
-        id 1lf8QO-00068o-JJ; Fri, 07 May 2021 17:54:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=godsofu4.com; s=dkim; h=Sender:Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=aM9bUFGSTpfnep8zAVAJMnojqhcwpuHDFPgQnPqW4M4=; b=bjgKomV6NO5Eg5D3qsCBps1llx
-        tj4k2teSfIdfo/duBtOSoC/FW1+C1nXiYJbrvf2JDobx8fDCsgnxHFoPWOCb5eI+OJOIgvnnfKlpl
-        ZqidIuDnjEPTMao1vFwrg6M9FUKU/cz6TT5/KN4ccsk+aQli3Wgs3G1cQz5vdbC1Y2SXULFY8Mu2t
-        1PShwmiDRn71EPzgUHUVu0GG39z6uSTEuRgOXhiNl9ekuZ5QXUAEykoocvC5/DkORRmERAA91o1HY
-        Sl76pPWw9UBVGbuFbfdVPfVcFxJM5xZDrmgt6uCf9J+dn/n7LFOSOxBaL9svxxYdhOkJwdz4uh075
-        2gI+xJSw==;
-Received: from [10.115.3.32] (helo=bosimpout12)
-        by bosmailscan09.eigbox.net with esmtp (Exim)
-        id 1lf8QO-0003aD-AI; Fri, 07 May 2021 17:54:20 -0400
-Received: from boswebmail06.eigbox.net ([10.20.16.6])
-        by bosimpout12 with 
-        id 1xuH2500407qujN01xuLVi; Fri, 07 May 2021 17:54:20 -0400
-X-EN-SP-DIR: OUT
-X-EN-SP-SQ: 1
-Received: from [127.0.0.1] (helo=homestead)
-        by boswebmail06.eigbox.net with esmtp (Exim)
-        id 1lf8QL-0006fx-UG; Fri, 07 May 2021 17:54:17 -0400
-Received: from [197.239.81.229]
- by emailmg.homestead.com
- with HTTP (HTTP/1.1 POST); Fri, 07 May 2021 17:54:17 -0400
+        Sat, 8 May 2021 12:48:04 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E82C061574
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  8 May 2021 09:47:01 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2so17192628lft.4
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 08 May 2021 09:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RpBgi0AKlff8147OOEepLQzMBGFd2Jt9bavNArPpQME=;
+        b=bypPdqFJPA5UGrC7VjMqIpDRd67/c4G9oxLzYlL8bqj5WHAW1G0t+zlQDg0DLILqA8
+         K4pattodnxkJL9u3sPT5fbfMSAiz0Z1Bc3f1KBYDfpdNL36j/INuMqu9tRPTnyIKMJaK
+         wTzy/qU2N01zcOpGy1Hz/2WG6ax9Mzy9on2bQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RpBgi0AKlff8147OOEepLQzMBGFd2Jt9bavNArPpQME=;
+        b=MEVhuZOC85uNo+vLZLlm35x08mM87s2evsN9D+HlmtY174aVEwaXeE08Rr0WAd8R7j
+         GZs982sLGSCBmAUSXKqDtdIJMBeD7xk7iWsJOxrVT1dioOHbbLGGVHNFi6TbgRBjOa0c
+         aTJzLFrhOUeHY/ea6HcSsC/1Dfs44VA6pGthddezfyhYNO8GQP5U4ATB6tPzmHDwj8Gk
+         4VSlNkl0VqMcPhjhPt77AnKvR6kwh99pP/pAgfpzVLb3rY7npaveHkNOGowo8pL2hKr/
+         3HNdxCDoMu+apWQNvYdcuc8KGUPsuRd4VnTR1ynQdmjezTLhjGoPrtRniKjKQnGGb+uW
+         1B2A==
+X-Gm-Message-State: AOAM532oNJldfedVNZkW1tzG2FK7e5WpSissph4KeuzAvcWLjRVkTEJ6
+        1DoJOa9zyceFVfy/wbkPUzuw6ZOBAyluMuuyxB8=
+X-Google-Smtp-Source: ABdhPJyZ9vbHYl/63/PPk6dAAYBxGepvZLgIUQXP6rVpMI7w0VcPa+FWxkRCBZwZkHxbe0G5lKojOQ==
+X-Received: by 2002:a05:6512:78d:: with SMTP id x13mr10516015lfr.35.1620492419461;
+        Sat, 08 May 2021 09:46:59 -0700 (PDT)
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com. [209.85.167.51])
+        by smtp.gmail.com with ESMTPSA id o16sm1656861lft.304.2021.05.08.09.46.57
+        for <linux-samsung-soc@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 May 2021 09:46:57 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id x2so17146802lff.10
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 08 May 2021 09:46:57 -0700 (PDT)
+X-Received: by 2002:a19:7504:: with SMTP id y4mr10031878lfe.41.1620492417345;
+ Sat, 08 May 2021 09:46:57 -0700 (PDT)
 MIME-Version: 1.0
-Date:   Fri, 07 May 2021 21:54:17 +0000
-From:   Mrs Suzara Maling Wan <fast65@godsofu4.com>
-To:     undisclosed-recipients:;
-Subject: URGENT REPLY NEEDED
-Reply-To: suzara2017malingwan@gmail.com
-Mail-Reply-To: suzara2017malingwan@gmail.com
-Message-ID: <36acfe805efde59f3f399df1324ce6b9@godsofu4.com>
-X-Sender: fast65@godsofu4.com
-User-Agent: Roundcube Webmail/1.3.14
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-EN-AuthUser: fast65@godsofu4.com
-Sender:  Mrs Suzara Maling Wan <fast65@godsofu4.com>
+References: <YJBHiRiCGzojk25U@phenom.ffwll.local> <CAHk-=wiwgOPQ+4Eaf0GD5P_GveE6vUHsKxAT=pMsjk1v_kh4ig@mail.gmail.com>
+ <YJVijmznt1xnsCxc@phenom.ffwll.local>
+In-Reply-To: <YJVijmznt1xnsCxc@phenom.ffwll.local>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Sat, 8 May 2021 09:46:41 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgjO8-f1bUwQB=5HGzkvSS+aGACR9+H5CkkDhRgud+3MA@mail.gmail.com>
+Message-ID: <CAHk-=wgjO8-f1bUwQB=5HGzkvSS+aGACR9+H5CkkDhRgud+3MA@mail.gmail.com>
+Subject: Re: [PULL] topic/iomem-mmap-vs-gup
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux-MM <linux-mm@kvack.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+[ Daniel, please fix your broken email setup. You have this insane
+"Reply-to" list that just duplicates all the participants. Very
+broken, very annoying ]
 
+On Fri, May 7, 2021 at 8:53 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> So personally I think the entire thing should just be thrown out, it's all
+> levels of scary and we have zero-copy buffer sharing done properly with
+> dma-buf since years in v4l.
 
-My names are Mrs Suzara Maling Wan, I am a Nationality of the Republic
-of the Philippine presently base in West Africa B/F, dealing with
-exportation of Gold, I was diagnose of blood Causal decease, and my
-doctor have announce to me that I have few days to leave due to the
-condition of my sickness.
+So I've been looking at this more, and the more I look at it, the less
+I like this series.
 
-I have a desire to build an orphanage home in your country of which i
-cannot execute the project myself due to my present health condition,
-I am willing to hand over the project under your care for you to help
-me fulfill my dreams and desire of building an orphanage home in your
-country.
+I think the proper fix is to just fix things.
 
-Reply in you are will to help so that I can direct you to my bank for
-the urgent transfer of the fund/money require for the project to your
-account as I have already made the fund/money available.
+For example, I'm looking at the v4l users of follow_pfn(), and I find
+get_vaddr_frames(), which is just broken.
 
-With kind regards
-Mrs Suzara Maling Wan
+Fine, we know users are broken, but look at what appears to be the
+main user of get_vaddr_frames(): vb2_dc_get_userptr().
+
+What does that function do? Immediately after doing
+get_vaddr_frames(), it tries to turn those pfn's into page pointers,
+and then do sg_alloc_table_from_pages() on the end result.
+
+Yes, yes, it also has that "ok, that failed, let's try to see if it's
+some physically contiguous mapping" and do DMA directly to those
+physical pages, but the point there is that that only happens when
+they weren't normal pages to begin with.
+
+So thew *fix* for at least that path is to
+
+ (a) just use the regular pin_user_pages() for normal pages
+
+ (b) perhaps keep the follow_pfn() case, but then limit it to that "no
+page backing" and that physical pages case.
+
+And honestly, the "struct frame_vector" thing already *has* support
+for this, and the problem is simply that the v4l code has decided to
+have the callers ask for pfn's rather than have the callers just ask
+for a frame-vector that is either "pfn's with no paeg backing" _or_
+"page list with proper page reference counting".
+
+So this series of yours that just disables follow_pfn() actually seems
+very wrong.
+
+I think follow_pfn() is ok for the actual "this is not a 'struct page'
+backed area", and disabling that case is wrong even going forward.
+
+End result, I think the proper model is:
+
+ - keep follow_pfn(), but limit it to the "not vm_normal_page()" case,
+and return error for some real page mapping
+
+ - make the get_vaddr_frames() first try "pin_user_pages()" (and
+create a page array) and fall back to "follow_pfn()" if that fails (or
+the other way around). Set the
+
+IOW, get_vaddr_frames() would just do
+
+        vec->got_ref = is_pages;
+        vec->is_pfns = !is_pages;
+
+and everything would just work out - the v4l code seems to already
+have all the support for "it's a ofn array" vs "it's properly
+refcounted pages".
+
+So the only case we should disallow is the mixed case, that the v4l
+code already seems to not be able to handle anyway (and honestly, it
+looks like "got_ref/is_pfns" should be just one flag - they always
+have to have the opposite values).
+
+So I think this "unsafe_follow_pfn()" halfway step is actively wrong.
+It doesn't move us forward. Quite the reverse. It just makes the
+proper fix harder.
+
+End result: not pulling it, unless somebody can explain to me in small
+words why I'm wrong and have the mental capacity of a damaged rodent.
+
+                Linus
