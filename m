@@ -2,76 +2,239 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB08398A57
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Jun 2021 15:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E569C398D11
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Jun 2021 16:34:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbhFBN0U (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 2 Jun 2021 09:26:20 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:56246 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229594AbhFBN0U (ORCPT
+        id S231693AbhFBOgM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 2 Jun 2021 10:36:12 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:51133 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231696AbhFBOgH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 2 Jun 2021 09:26:20 -0400
-Received: from mail-ed1-f70.google.com ([209.85.208.70])
-        by youngberry.canonical.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1loQrM-0006S5-0X
-        for linux-samsung-soc@vger.kernel.org; Wed, 02 Jun 2021 13:24:36 +0000
-Received: by mail-ed1-f70.google.com with SMTP id v18-20020a0564023492b029038d5ad7c8a8so1402201edc.11
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Jun 2021 06:24:36 -0700 (PDT)
+        Wed, 2 Jun 2021 10:36:07 -0400
+Received: by mail-wm1-f45.google.com with SMTP id m18so1474510wmq.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Jun 2021 07:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hexu7cKSeKzuwDGfSYjJ5Naq4syeodeMqWoX460WR6c=;
+        b=YnUg9R7FAfDth6b0+i7LnprXoGOHmxfpsGVrwM1uR4qc3ylGDcN2fMm7g5Cw2B/cIW
+         j30w+lYL/AREtK2OKb6Mpkh+UhMcDOqEW8PseOYarGU/zP/skxG0FKrFJ0rR1Zs6txh8
+         5+8n+muAZdpofmyn1MIYZF5LmLJvIhct3uXEcUaKJfZq0a6R+yt4uSJuh8vvcT+wLdbZ
+         GmfEoZH5U46rZrJkBqJWpH87XABFe/4GcwKakQj6Sjpv/7rIFKu+YxANUoRR6Jxmo3RT
+         kUj/s0mLMiLiZ+uLUu1nFREt38x9aoB2pic1i2duhXYWl2LDDriXoDDCyZGQ/7coEEoi
+         NO2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZbqO9leiYLcpHf1/CeWaekIOBlRRyOOvjknnxl/dSpE=;
-        b=nMwju3arzUD5FZtYoQhvZvmok9bwHFqDDqQnwurBl9DPXKlbhiEiAZvNGXmoElB7SQ
-         PhrLBuSB2ET6zKd0Dm/DYXoXu7u/6a4xk/71Q3FvD7wllghOXaPzwm4gyOsiSmtYeVJe
-         kNS7Cf1wnTSkrUxPu6pc1tJsSEXp9Gfd3C3FsfV2+2TH2iQkEaz0rqP4SJWFNmdPc7TP
-         y75nokGymEMnR6PDs6BcbN4cz1qiXMfBXx3Fs0WK2StD/7vlzl/6xTCI3tsdcZA/IuEk
-         ayJsn+oJKyTe/3szcFT5ao6966P/90+CwHbA9ViFZa+YlGbG4AO8V0/YU4YsMAZqE8G7
-         a4/A==
-X-Gm-Message-State: AOAM532ZSHokbIHiEJOMnieNC5jCRyikvCLBHQIB+prk+uShoym8Z1Nu
-        4zkBFQcd25plgA94RGrBYt/YK3ksoaJY7t9VGbaPnfgGLVqmO1FgeLmmb1k9WF/pQTCSIYR4UDS
-        bvb7G/5SQuHIX2DJlazwMkXXWgM4wY70xwYVAEsKz5u1Ahc90
-X-Received: by 2002:a17:906:c00f:: with SMTP id e15mr36561524ejz.458.1622640275809;
-        Wed, 02 Jun 2021 06:24:35 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwtzGMwLAUU1O9hso14QGvyxJCgY0jrcJpE7S4rWWpRuQMT/j0VxL2N2oXQPuieX0XXAyNhoQ==
-X-Received: by 2002:a17:906:c00f:: with SMTP id e15mr36561505ejz.458.1622640275665;
-        Wed, 02 Jun 2021 06:24:35 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-185-9.adslplus.ch. [188.155.185.9])
-        by smtp.gmail.com with ESMTPSA id bc4sm928548edb.63.2021.06.02.06.24.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hexu7cKSeKzuwDGfSYjJ5Naq4syeodeMqWoX460WR6c=;
+        b=l85L5HiOkSag24p7usbaww/Jk37fW0ievicn/GatszPoAVtjTiF/ZunRQNIR9LkBdg
+         eJILxiX68kZelaf9ciFkRQZAJ/FgGKhKWNPSKJH/YkuDZwEOfx0pyMkhkG8XnLxgHOpx
+         ZOZSeTcJIF7CJA0Bp+cQA31TaVlgV8XWKd79/a+6Z216qO7F5QMi7ijJOd75hZOA0OU2
+         NJ4OFgzQdRJ25tRFs7eX/uB5ZDVcr5wINi0sYOd3aZ26kNKXI4PuC+OYNq3aYVffBTlw
+         hYafTceaVERwbiFjFa8itUXV+6So+vXe0TqriW4VYsuSX79Fk6hrRxO4Ca/prGz9tb6w
+         wSAg==
+X-Gm-Message-State: AOAM531kc584sNMf6494eaPYqxJ8Ta1TkRDJAUvPZVZyVlfBdBV5+dvN
+        9QQTF+sCqQtQL3ytsIx18WOdkA==
+X-Google-Smtp-Source: ABdhPJwH8/eJTRs27ADnedTTW55aDfi99/T9FH9EumVjgB06SEnGQcD9JLwfnOw2xFcXpsN5fAwH9w==
+X-Received: by 2002:a05:600c:2cd2:: with SMTP id l18mr31968202wmc.142.1622644389928;
+        Wed, 02 Jun 2021 07:33:09 -0700 (PDT)
+Received: from dell.default ([91.110.221.214])
+        by smtp.gmail.com with ESMTPSA id o11sm132315wrq.93.2021.06.02.07.33.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 06:24:35 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     linux-kernel@vger.kernel.org, catalin.marinas@arm.com,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-samsung-soc@vger.kernel.org, krzk@kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable Exynos UFS driver
-Date:   Wed,  2 Jun 2021 15:24:32 +0200
-Message-Id: <162264024536.63589.10570196675573160566.b4-ty@canonical.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210531170057.7730-1-alim.akhtar@samsung.com>
-References: <CGME20210531165414epcas5p1aae4ea3815fcbadad8b48a9210742489@epcas5p1.samsung.com> <20210531170057.7730-1-alim.akhtar@samsung.com>
+        Wed, 02 Jun 2021 07:33:09 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org, Adam Jackson <ajax@redhat.com>,
+        Ajay Kumar <ajaykumar.rs@samsung.com>,
+        Akshu Agarwal <akshua@gmail.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Alistair Popple <apopple@nvidia.com>,
+        amd-gfx@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Ben Widawsky <ben@bwidawsk.net>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Christian Koenig <christian.koenig@amd.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, Eric Anholt <eric@anholt.net>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        freedreno@lists.freedesktop.org,
+        Hans de Goede <hdegoede@redhat.com>,
+        Harry Wentland <harry.wentland@amd.com>,
+        Huang Rui <ray.huang@amd.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Leo Li <sunpeng.li@amd.com>, linaro-mm-sig@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Rossi <issor.oruam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        nouveau@lists.freedesktop.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Vincent Abriou <vincent.abriou@st.com>
+Subject: [RESEND 00/26] Rid W=1 warnings from GPU
+Date:   Wed,  2 Jun 2021 15:32:34 +0100
+Message-Id: <20210602143300.2330146-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 31 May 2021 22:30:57 +0530, Alim Akhtar wrote:
-> Enable the Exynos UFS controller and PHY configs. They need to be
-> buildin to ensure UFS devices gets detected on exynos7 and its
-> variant boards.
+Some off these patches have been knocking around for a while.
 
-Applied, thanks!
+Who will hoover them up please?
 
-[1/1] arm64: defconfig: Enable Exynos UFS driver
-      commit: 5be91fe8d91b3aed5192b763fd6f2d11c7cd354d
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-Best regards,
+Lee Jones (26):
+  drm/mediatek/mtk_disp_color: Strip incorrect doc and demote header
+  drm/mediatek/mtk_disp_gamma: Strip and demote non-conformant
+    kernel-doc header
+  drm/mediatek/mtk_disp_ovl: Strip and demote non-conformant header
+  drm/mediatek/mtk_disp_rdma: Strip and demote non-conformant kernel-doc
+    header
+  drm/sti/sti_hdmi_tx3g4c28phy: Provide function names for kernel-doc
+    headers
+  drm/sti/sti_hda: Provide missing function names
+  drm/sti/sti_tvout: Provide a bunch of missing function names
+  drm/sti/sti_hqvdp: Fix incorrectly named function 'sti_hqvdp_vtg_cb()'
+  drm/msm/disp/dpu1/dpu_encoder_phys_cmd: Remove unused variable
+    'cmd_enc'
+  drm/msm/disp/dpu1/dpu_hw_interrupts: Demote a bunch of kernel-doc
+    abuses
+  drm/msm/disp/dpu1/dpu_plane: Fix a couple of naming issues
+  drm/msm/msm_gem: Demote kernel-doc abuses
+  drm/msm/dp/dp_catalog: Correctly document param 'dp_catalog'
+  drm/msm/dp/dp_link: Fix some potential doc-rot
+  drm/nouveau/nvkm/subdev/mc/tu102: Make functions called by reference
+    static
+  drm/amd/display/dc/dce/dce_transform: Remove superfluous
+    re-initialisation of DCFE_MEM_LIGHT_SLEEP_CNTL,
+  drm/xlnx/zynqmp_disp: Fix incorrectly named enum
+    'zynqmp_disp_layer_id'
+  drm/xlnx/zynqmp_dp: Fix incorrectly name function 'zynqmp_dp_train()'
+  drm/ttm/ttm_tt: Demote non-conformant kernel-doc header
+  drm/panel/panel-raspberrypi-touchscreen: Demote kernel-doc abuse
+  drm/panel/panel-sitronix-st7701: Demote kernel-doc abuse
+  drm/vgem/vgem_drv: Standard comment blocks should not use kernel-doc
+    format
+  drm/exynos/exynos7_drm_decon: Fix incorrect naming of
+    'decon_shadow_protect_win()'
+  drm/exynos/exynos_drm_ipp: Fix documentation for
+    'exynos_drm_ipp_get_{caps,res}_ioctl()'
+  drm/vboxvideo/hgsmi_base: Place function names into headers
+  drm/vboxvideo/modesetting: Provide function names for prototype
+    headers
+
+ .../drm/amd/display/dc/dce/dce_transform.h    |  3 +-
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c    |  2 +-
+ drivers/gpu/drm/exynos/exynos_drm_ipp.c       |  4 +--
+ drivers/gpu/drm/mediatek/mtk_disp_color.c     |  3 +-
+ drivers/gpu/drm/mediatek/mtk_disp_gamma.c     |  4 +--
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c       |  3 +-
+ drivers/gpu/drm/mediatek/mtk_disp_rdma.c      |  4 +--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  4 ---
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 32 +++++++++----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  4 +--
+ drivers/gpu/drm/msm/dp/dp_catalog.c           |  2 +-
+ drivers/gpu/drm/msm/dp/dp_link.c              |  6 ++--
+ drivers/gpu/drm/msm/msm_gem.c                 |  4 +--
+ .../gpu/drm/nouveau/nvkm/subdev/mc/tu102.c    |  6 ++--
+ .../drm/panel/panel-raspberrypi-touchscreen.c |  2 +-
+ drivers/gpu/drm/panel/panel-sitronix-st7701.c |  2 +-
+ drivers/gpu/drm/sti/sti_hda.c                 |  6 ++--
+ drivers/gpu/drm/sti/sti_hdmi_tx3g4c28phy.c    |  4 +--
+ drivers/gpu/drm/sti/sti_hqvdp.c               |  2 +-
+ drivers/gpu/drm/sti/sti_tvout.c               | 18 +++++------
+ drivers/gpu/drm/ttm/ttm_tt.c                  |  2 +-
+ drivers/gpu/drm/vboxvideo/hgsmi_base.c        | 19 +++++++----
+ drivers/gpu/drm/vboxvideo/modesetting.c       | 20 +++++++-----
+ drivers/gpu/drm/vgem/vgem_drv.c               |  2 +-
+ drivers/gpu/drm/xlnx/zynqmp_disp.c            |  2 +-
+ drivers/gpu/drm/xlnx/zynqmp_dp.c              |  2 +-
+ 26 files changed, 80 insertions(+), 82 deletions(-)
+
+Cc: Adam Jackson <ajax@redhat.com>
+Cc: Ajay Kumar <ajaykumar.rs@samsung.com>
+Cc: Akshu Agarwal <akshua@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Cc: Benjamin Gaignard <benjamin.gaignard@linaro.org>
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Ben Widawsky <ben@bwidawsk.net>
+Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@linux.ie>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Fabien Dessenne <fabien.dessenne@st.com>
+Cc: freedreno@lists.freedesktop.org
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Hyun Kwon <hyun.kwon@xilinx.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Jagan Teki <jagan@amarulasolutions.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Krishna Manikandan <mkrishn@codeaurora.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Mauro Rossi <issor.oruam@gmail.com>
+Cc: Michal Simek <michal.simek@xilinx.com>
+Cc: nouveau@lists.freedesktop.org
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Vincent Abriou <vincent.abriou@st.com>
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+2.31.1
+
