@@ -2,120 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18255398D07
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Jun 2021 16:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 384F5399440
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Jun 2021 22:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231670AbhFBOfu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 2 Jun 2021 10:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231565AbhFBOfg (ORCPT
+        id S229746AbhFBUIK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 2 Jun 2021 16:08:10 -0400
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:41937 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229491AbhFBUII (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 2 Jun 2021 10:35:36 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7D1C06138A
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Jun 2021 07:33:36 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 3-20020a05600c0243b029019f2f9b2b8aso1821503wmj.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Jun 2021 07:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nxy5VbUuJktWYoN5f56DsShh05RPtQyulwCzQanfG8c=;
-        b=x+eowQOPBexKc0gjdhN++Ps5HQm+5bGTLWuF+UQ6C3gZgripNSo2eBrgQ4v/c7P3B/
-         +E+x9qPTRf1nF0Ab63hAIQpqRfG45A67ClrHAnxEyX++oCDb5wVHYSAMDWqmCuaLdRWO
-         DCEMoQS1tVfwxxlCAGr6k3nOzuwIwMxs4A/rucgb9RFiQkVR9VibqzKVMKuXuIuj5HgF
-         rij0SkVqrI3igYoqn331Lrve+WQ/wsDp1xY5XiCL2+NuGoTui+tN/YSZu3gsU5AlAJcI
-         GTWDQ+WlcukducWQBP3VHgu0bmDqVX/nmeDicehdPudN1uXapqOWz+qTWnXKjnRz2Es8
-         mfug==
+        Wed, 2 Jun 2021 16:08:08 -0400
+Received: by mail-ot1-f44.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so3574392oth.8;
+        Wed, 02 Jun 2021 13:06:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nxy5VbUuJktWYoN5f56DsShh05RPtQyulwCzQanfG8c=;
-        b=uhM7iHYFTAfmkCm/ahtnn70Bf9qEC/1RqM4EEfGy7oM1AMHxzfCTK+ru6KSx7x/MLW
-         23QXIPH9NKZfvelU7ayU20oKv/3Jd0yaslnLp49uaWvqhUUuMZ2WgaH6fNRkDNt3vOzt
-         wy1Nf3idLRsH6reIpfP5NpgtmelNIF8O1N0hjQXr0MptY5S1XdGuFE1DlShMCiAarIO+
-         lYtU4KfblS6HThyFPGjxrGJOV2ovLvyJsiJ6MTChutEpkIX1n/avOg6uASwMgSvtcFcT
-         +tlVnubuSoOUSF0YmS7WxHFAZj7Yim5jnJ3sdC+BZF3JW8JIxMLuJ6y4sXjpkImp1qq8
-         uUGw==
-X-Gm-Message-State: AOAM532RMz6Krqf0DKIt/yCWKFiMvB17m9c7jwcOnvChGfN2juGwqOQk
-        MNV/P+SsI16pAA5i3bN9jJI6Hw==
-X-Google-Smtp-Source: ABdhPJx+xBu1BihQ5vQP4ImfnxY1U8nE9Hks2Zw/N4egBmVyT9aUFGosvKogM2eahWcVW20UK7GNQw==
-X-Received: by 2002:a1c:f705:: with SMTP id v5mr5534912wmh.69.1622644414673;
-        Wed, 02 Jun 2021 07:33:34 -0700 (PDT)
-Received: from dell.default ([91.110.221.214])
-        by smtp.gmail.com with ESMTPSA id o11sm132315wrq.93.2021.06.02.07.33.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Eqg/NhAI7hbUorU0sneYRdLeG0QUON8FK2Nid9hN1UY=;
+        b=VJSmbYP3HrQKqbOzjw3tpJjFjGkz61G7E0Wuyulqx7ljopCAyYQ1TkDsHiApCi2M5n
+         MYI57o9brvzNrMFGgsXjy58Ff4eB57diI5/D3B9m2lexq9ixRxZzqkiXo15OyK3lZLka
+         Dqy8445nnJqOBZoAmoovQ9qtRq3McP/J7J0j/y3ct9FNrlPocnVIwvC8EqHkqYA7DB8l
+         2aWxwia4N+wMkCPbJXgYF9gtpomNc5dHcXUtiNUb9z2uVKOHhtCjwOixJMo5yRpR7iKQ
+         Z3aQt/pd/rbTZWfXuPXXINdCu80dmK6ar7LWcSs7l3GF98DweiYpLmyz68qgW6VsBYHV
+         tnwA==
+X-Gm-Message-State: AOAM5314IrOlteVIYirBQpnNAbfiG78TzugS+N+DEyRcJGuPuV66nsIw
+        slaRP9+w/fULxl5Hbpwzuw==
+X-Google-Smtp-Source: ABdhPJwOOhWiTlBUVMkgdreVunVQq9Th2V0p/jeTk68tZ2BCDbzX7OWLgT1+YDeOhvnir4cNa8WV0A==
+X-Received: by 2002:a9d:6194:: with SMTP id g20mr4537073otk.8.1622664371257;
+        Wed, 02 Jun 2021 13:06:11 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id i9sm189166oog.17.2021.06.02.13.06.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 07:33:34 -0700 (PDT)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [RESEND 24/26] drm/exynos/exynos_drm_ipp: Fix documentation for 'exynos_drm_ipp_get_{caps,res}_ioctl()'
-Date:   Wed,  2 Jun 2021 15:32:58 +0100
-Message-Id: <20210602143300.2330146-25-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210602143300.2330146-1-lee.jones@linaro.org>
-References: <20210602143300.2330146-1-lee.jones@linaro.org>
+        Wed, 02 Jun 2021 13:06:10 -0700 (PDT)
+Received: (nullmailer pid 3900234 invoked by uid 1000);
+        Wed, 02 Jun 2021 20:06:09 -0000
+Date:   Wed, 2 Jun 2021 15:06:09 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Mark Brown <broonie@kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        devicetree@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-rtc@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 7/7] power: supply: max17040: Do not enforce
+ (incorrect) interrupt trigger type
+Message-ID: <20210602200609.GA3900200@robh.at.kernel.org>
+References: <20210526172036.183223-1-krzysztof.kozlowski@canonical.com>
+ <20210526172036.183223-8-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210526172036.183223-8-krzysztof.kozlowski@canonical.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+On Wed, 26 May 2021 13:20:36 -0400, Krzysztof Kozlowski wrote:
+> From: Krzysztof Kozlowski <krzk@kernel.org>
+> 
+> Interrupt line can be configured on different hardware in different way,
+> even inverted.  Therefore driver should not enforce specific trigger
+> type - edge falling - but instead rely on Devicetree to configure it.
+> 
+> The Maxim 14577/77836 datasheets describe the interrupt line as active
+> low with a requirement of acknowledge from the CPU therefore the edge
+> falling is not correct.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Acked-by: Iskren Chernev <iskren.chernev@gmail.com>
+> 
+> ---
+> 
+> Changes since v1:
+> 1. Remove the 'flags' variable.
+> 2. Added ack.
+> 3. Rebase - the bindings were converted to dtschema.
+> ---
+>  .../devicetree/bindings/power/supply/maxim,max17040.yaml      | 2 +-
+>  drivers/power/supply/max17040_battery.c                       | 4 +---
+>  2 files changed, 2 insertions(+), 4 deletions(-)
+> 
 
- drivers/gpu/drm/exynos/exynos_drm_ipp.c:105: warning: expecting prototype for exynos_drm_ipp_ioctl_get_res_ioctl(). Prototype was for exynos_drm_ipp_get_res_ioctl() instead
- drivers/gpu/drm/exynos/exynos_drm_ipp.c:153: warning: expecting prototype for exynos_drm_ipp_ioctl_get_caps(). Prototype was for exynos_drm_ipp_get_caps_ioctl() instead
-
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Joonyoung Shim <jy0922.shim@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-samsung-soc@vger.kernel.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/gpu/drm/exynos/exynos_drm_ipp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_ipp.c b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-index 4f2b7551b2515..9ae8689353579 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_ipp.c
-@@ -88,7 +88,7 @@ void exynos_drm_ipp_unregister(struct device *dev,
- }
- 
- /**
-- * exynos_drm_ipp_ioctl_get_res_ioctl - enumerate all ipp modules
-+ * exynos_drm_ipp_get_res_ioctl - enumerate all ipp modules
-  * @dev: DRM device
-  * @data: ioctl data
-  * @file_priv: DRM file info
-@@ -136,7 +136,7 @@ static inline struct exynos_drm_ipp *__ipp_get(uint32_t id)
- }
- 
- /**
-- * exynos_drm_ipp_ioctl_get_caps - get ipp module capabilities and formats
-+ * exynos_drm_ipp_get_caps_ioctl - get ipp module capabilities and formats
-  * @dev: DRM device
-  * @data: ioctl data
-  * @file_priv: DRM file info
--- 
-2.31.1
-
+Acked-by: Rob Herring <robh@kernel.org>
