@@ -2,78 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFC6C3A872F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 15 Jun 2021 19:11:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83DFD3A9BC4
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Jun 2021 15:14:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbhFORNk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 15 Jun 2021 13:13:40 -0400
-Received: from szxga03-in.huawei.com ([45.249.212.189]:6383 "EHLO
-        szxga03-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbhFORNk (ORCPT
+        id S232199AbhFPNQr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 16 Jun 2021 09:16:47 -0400
+Received: from mail.oss.com.pe ([161.132.100.45]:56576 "EHLO
+        mail.consorciolp.com.pe" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230087AbhFPNQq (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 15 Jun 2021 13:13:40 -0400
-Received: from dggeml759-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4G4F9y1krwz61Wh;
-        Wed, 16 Jun 2021 01:07:34 +0800 (CST)
-Received: from localhost.localdomain (10.175.102.38) by
- dggeml759-chm.china.huawei.com (10.1.199.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2176.2; Wed, 16 Jun 2021 01:11:32 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     <weiyongjun1@huawei.com>, Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-CC:     <dri-devel@lists.freedesktop.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next] drm/exynos: g2d: fix missing unlock on error in g2d_runqueue_worker()
-Date:   Tue, 15 Jun 2021 17:21:53 +0000
-Message-ID: <20210615172153.2839275-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 16 Jun 2021 09:16:46 -0400
+X-Greylist: delayed 7750 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jun 2021 09:16:46 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.consorciolp.com.pe (Postfix) with ESMTP id C0B1D356F674D;
+        Wed, 16 Jun 2021 03:40:35 -0500 (-05)
+Received: from mail.consorciolp.com.pe ([127.0.0.1])
+        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 8V7YzM6JXfqr; Wed, 16 Jun 2021 03:40:35 -0500 (-05)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.consorciolp.com.pe (Postfix) with ESMTP id 19BF6356F6759;
+        Wed, 16 Jun 2021 03:35:32 -0500 (-05)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.consorciolp.com.pe 19BF6356F6759
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oss.com.pe;
+        s=675A380C-4679-11E8-96E4-C0788CA36BC0; t=1623832532;
+        bh=AkpNgMCGvWQwouwrpa2evERqzjv1p/CpihlhEAVDlcQ=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=nz0r6NiKx/LZYxfvAOxx1psxCUBJSpzdqgog4++Y+rB8JVwR5kwDnYGiYGRJO04Ai
+         IXtKUqIVabDG1VrU+LqXVjSFuqBVoqlF3yBPe+h3gCj78a9pat25R33biCpuzUeKY8
+         lbQrGiAwaInh5PXKYu8W09CGG9AbvLnQ1VFXkIpQoLYxyhy051morv9PMdk5injwHr
+         QBizfPA6Osg+Ju9SnyAq66K9msCaE0tsFiCBiCsCuHjULAadeDVt2dTNkiyKdCW7NT
+         PcGG1xHSOmE82Gg0L3lj9sZxTbDUZfZcWPKgCB9D+UNIt+q3QLFNagxb+SqNFs3/9s
+         oCH+txJ8WYtCg==
+X-Virus-Scanned: amavisd-new at consorciolp.com.pe
+Received: from mail.consorciolp.com.pe ([127.0.0.1])
+        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 9KLdwfLq23B1; Wed, 16 Jun 2021 03:35:32 -0500 (-05)
+Received: from cris-PC.wifi (unknown [105.9.118.225])
+        by mail.consorciolp.com.pe (Postfix) with ESMTPSA id DC0103550F835;
+        Wed, 16 Jun 2021 03:21:32 -0500 (-05)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.102.38]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- dggeml759-chm.china.huawei.com (10.1.199.138)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
+To:     Recipients <sechegaray@oss.com.pe>
+From:   ''Charles jackson'' <sechegaray@oss.com.pe>
+Date:   Wed, 16 Jun 2021 10:23:08 +0200
+Reply-To: charlesjacksonjr001@gmail.com
+Message-Id: <20210616082132.DC0103550F835@mail.consorciolp.com.pe>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add the missing unlock before return from function g2d_runqueue_worker()
-in the error handling case.
+Hallo
 
-Fixes: 445d3bed75de ("drm/exynos: use pm_runtime_resume_and_get()")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
----
- drivers/gpu/drm/exynos/exynos_drm_g2d.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Ich bin Charles W. Jackson aus North Carolina, Vereinigte Staaten von Ameri=
+ka, und ich bin der Gewinner des Mega-Millionen-Jackpots von 344 Millionen =
+US-Dollar. Ich spende die Summe von 2.000.000 Millionen Euro als Teil der H=
+ilfsgelder f=FCr das Corona-Virus.
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-index cab4d2c370a7..0ed665501ac4 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-@@ -897,13 +897,14 @@ static void g2d_runqueue_worker(struct work_struct *work)
- 			ret = pm_runtime_resume_and_get(g2d->dev);
- 			if (ret < 0) {
- 				dev_err(g2d->dev, "failed to enable G2D device.\n");
--				return;
-+				goto out;
- 			}
- 
- 			g2d_dma_start(g2d, g2d->runqueue_node);
- 		}
- 	}
- 
-+out:
- 	mutex_unlock(&g2d->runqueue_mutex);
- }
- 
+Dies ist Ihr Spendencode: [CJ530342019]
 
+www.youtube.com/watch?v=3DBSr8myiLPMQ
+	=
+
+Bitte antworten Sie auf diese E-Mail mit dem SPENDERCODE:
+
+charlesjacksonjr001@gmail.com
+
+Ich hoffe, dass Sie und Ihre Familie dies durchkommen
+
+
+Herr Charles Jackson
