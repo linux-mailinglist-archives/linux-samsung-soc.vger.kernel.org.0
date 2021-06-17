@@ -2,75 +2,55 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83DFD3A9BC4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Jun 2021 15:14:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FF3F3AAE1F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Jun 2021 09:56:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232199AbhFPNQr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 16 Jun 2021 09:16:47 -0400
-Received: from mail.oss.com.pe ([161.132.100.45]:56576 "EHLO
-        mail.consorciolp.com.pe" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbhFPNQq (ORCPT
+        id S230340AbhFQH6i (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 17 Jun 2021 03:58:38 -0400
+Received: from [122.15.141.162] ([122.15.141.162]:42940 "EHLO
+        UPCDCDAMX02.upcl.org" rhost-flags-FAIL-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S229666AbhFQH6g (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 16 Jun 2021 09:16:46 -0400
-X-Greylist: delayed 7750 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jun 2021 09:16:46 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.consorciolp.com.pe (Postfix) with ESMTP id C0B1D356F674D;
-        Wed, 16 Jun 2021 03:40:35 -0500 (-05)
-Received: from mail.consorciolp.com.pe ([127.0.0.1])
-        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 8V7YzM6JXfqr; Wed, 16 Jun 2021 03:40:35 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.consorciolp.com.pe (Postfix) with ESMTP id 19BF6356F6759;
-        Wed, 16 Jun 2021 03:35:32 -0500 (-05)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.consorciolp.com.pe 19BF6356F6759
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oss.com.pe;
-        s=675A380C-4679-11E8-96E4-C0788CA36BC0; t=1623832532;
-        bh=AkpNgMCGvWQwouwrpa2evERqzjv1p/CpihlhEAVDlcQ=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=nz0r6NiKx/LZYxfvAOxx1psxCUBJSpzdqgog4++Y+rB8JVwR5kwDnYGiYGRJO04Ai
-         IXtKUqIVabDG1VrU+LqXVjSFuqBVoqlF3yBPe+h3gCj78a9pat25R33biCpuzUeKY8
-         lbQrGiAwaInh5PXKYu8W09CGG9AbvLnQ1VFXkIpQoLYxyhy051morv9PMdk5injwHr
-         QBizfPA6Osg+Ju9SnyAq66K9msCaE0tsFiCBiCsCuHjULAadeDVt2dTNkiyKdCW7NT
-         PcGG1xHSOmE82Gg0L3lj9sZxTbDUZfZcWPKgCB9D+UNIt+q3QLFNagxb+SqNFs3/9s
-         oCH+txJ8WYtCg==
-X-Virus-Scanned: amavisd-new at consorciolp.com.pe
-Received: from mail.consorciolp.com.pe ([127.0.0.1])
-        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 9KLdwfLq23B1; Wed, 16 Jun 2021 03:35:32 -0500 (-05)
-Received: from cris-PC.wifi (unknown [105.9.118.225])
-        by mail.consorciolp.com.pe (Postfix) with ESMTPSA id DC0103550F835;
-        Wed, 16 Jun 2021 03:21:32 -0500 (-05)
-Content-Type: text/plain; charset="iso-8859-1"
+        Thu, 17 Jun 2021 03:58:36 -0400
+Received: from UPCDCDAMX02.upcl.org (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id EF84AC3EEC;
+        Thu, 17 Jun 2021 12:51:17 +0530 (IST)
+Received: from UPCDCDAMX02.upcl.org (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 9D8C1C318F;
+        Thu, 17 Jun 2021 12:50:14 +0530 (IST)
+Received: from User (unknown [210.212.82.37])
+        by UPCDCDAMX02.upcl.org (Postfix) with SMTP;
+        Thu, 17 Jun 2021 12:50:14 +0530 (IST)
+Reply-To: <marielthiago102@gmail.com>
+From:   "Mariel Thiago" <info@infotools.in>
+Subject: Re:: Please contact me it's very urgent.
+Date:   Thu, 17 Jun 2021 07:20:41 -0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
-To:     Recipients <sechegaray@oss.com.pe>
-From:   ''Charles jackson'' <sechegaray@oss.com.pe>
-Date:   Wed, 16 Jun 2021 10:23:08 +0200
-Reply-To: charlesjacksonjr001@gmail.com
-Message-Id: <20210616082132.DC0103550F835@mail.consorciolp.com.pe>
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+Message-Id: <20210617072014.9D8C1C318F@UPCDCDAMX02.upcl.org>
+To:     undisclosed-recipients:;
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSVA-9.1.0.1960-8.6.0.1013-26224.006
+X-TM-AS-Result: No-2.497-5.0-31-10
+X-imss-scan-details: No-2.497-5.0-31-10
+X-TMASE-Version: IMSVA-9.1.0.1960-8.6.1013-26224.006
+X-TMASE-Result: 10-2.496900-10.000000
+X-TMASE-MatchedRID: PEpoWB/n4wPoJ7ZHxnJI6/6CJzEkJBKDVOXpHWpii+ddyparHcc9UIhu
+        TvsiBEc/JfjcKHKDDk8K4MBRf7I7puawzjZNF/+9gM4D72plZiep43A0ENmZJqRrhpwKFLjUkZO
+        l7WKIImpu9tOD27u7FNTHX+rg7MGt505jRA97RdWRSAi45KhHyaxczqyf2GA9LHdIgRft8S1QSp
+        LfxZGQcl8vMu11r33KXPP583vQDYF3yrRBFBiPVS2s/H4x5wHg3QfwsVk0UbuGrPnef/I+ej6N5
+        5/6MNSnpdDo0PaPyGFHwD2XNKdI8sVZh7bvPcyg0m3qDro1rgcxP1evyC/00KVBBtW+D6/IR7CD
+        JBvMFOms6dZMAot5Yg==
+X-IMSS-DKIM-White-List: No
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hallo
-
-Ich bin Charles W. Jackson aus North Carolina, Vereinigte Staaten von Ameri=
-ka, und ich bin der Gewinner des Mega-Millionen-Jackpots von 344 Millionen =
-US-Dollar. Ich spende die Summe von 2.000.000 Millionen Euro als Teil der H=
-ilfsgelder f=FCr das Corona-Virus.
-
-Dies ist Ihr Spendencode: [CJ530342019]
-
-www.youtube.com/watch?v=3DBSr8myiLPMQ
-	=
-
-Bitte antworten Sie auf diese E-Mail mit dem SPENDERCODE:
-
-charlesjacksonjr001@gmail.com
-
-Ich hoffe, dass Sie und Ihre Familie dies durchkommen
-
-
-Herr Charles Jackson
+ I think I have something huge you might be interested in.
