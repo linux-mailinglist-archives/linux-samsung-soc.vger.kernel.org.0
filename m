@@ -2,345 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A564E3B1533
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Jun 2021 09:58:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E0C93B1909
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Jun 2021 13:34:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhFWIA2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 23 Jun 2021 04:00:28 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:35717 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbhFWIA1 (ORCPT
+        id S230109AbhFWLhL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 23 Jun 2021 07:37:11 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187]:11088 "EHLO
+        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230031AbhFWLhL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 23 Jun 2021 04:00:27 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20210623075808epoutp045dcfe915ec66f4b6b1f4208a2072ecd3~LJxs-tQhi0626506265epoutp04O
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 23 Jun 2021 07:58:08 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20210623075808epoutp045dcfe915ec66f4b6b1f4208a2072ecd3~LJxs-tQhi0626506265epoutp04O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1624435088;
-        bh=STnqqpqrDAa4Awhx4ERYLxNyS6G1U43Y6rlW7ZZm8YY=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=R6wvxtaPc2p9JWhbdx9GmhcVDHRjQSun52TRXSK11+ozz8dUaWPN+jAqbx4G6iQbf
-         flo4BX6BQEQQT4LLyaMsonVyfQiRlrSlodYexn1+Pk2s616bGjxdXcSOvsaQuchWmV
-         VrC063WGDUvU6hkAUVuqp1iyEVFmn9K8L9EVgORI=
-Received: from epsmges5p2new.samsung.com (unknown [182.195.42.74]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
-        20210623075807epcas5p1f467e34343b58cc245e668b11c749cdc~LJxsTVdcl2330323303epcas5p1b;
-        Wed, 23 Jun 2021 07:58:07 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        2D.19.09595.F89E2D06; Wed, 23 Jun 2021 16:58:07 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20210623062924epcas5p343049bb2c31fe088bcd022ae59361bbf~LIkOozONU0886408864epcas5p3r;
-        Wed, 23 Jun 2021 06:29:24 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210623062924epsmtrp13e0c34486b78d8cd8f7bd5fb4326018a~LIkOn4ImL1516015160epsmtrp1n;
-        Wed, 23 Jun 2021 06:29:24 +0000 (GMT)
-X-AuditID: b6c32a4a-ed5ff7000000257b-f0-60d2e98f9d2d
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        99.16.08289.4C4D2D06; Wed, 23 Jun 2021 15:29:24 +0900 (KST)
-Received: from mshams01 (unknown [107.122.12.94]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20210623062922epsmtip2fef898dc0702b4947d69d2d457b3539b~LIkNCCBzt2071920719epsmtip27;
-        Wed, 23 Jun 2021 06:29:22 +0000 (GMT)
-From:   "M Tamseel Shams" <m.shams@samsung.com>
-To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@canonical.com>,
-        <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>
-Cc:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <alim.akhtar@samsung.com>, <ajaykumar.rs@samsung.com>
-In-Reply-To: <e511bd16-fb50-bc63-d0c5-a8b4e5e78525@canonical.com>
-Subject: RE: [PATCH v3] serial: samsung: use dma_ops of DMA if attached
-Date:   Wed, 23 Jun 2021 11:59:21 +0530
-Message-ID: <00e401d767f9$1bcac470$53604d50$@samsung.com>
+        Wed, 23 Jun 2021 07:37:11 -0400
+Received: from dggeme758-chm.china.huawei.com (unknown [172.30.72.54])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4G91Lt2MrkzZhXG;
+        Wed, 23 Jun 2021 19:31:50 +0800 (CST)
+Received: from dggeme759-chm.china.huawei.com (10.3.19.105) by
+ dggeme758-chm.china.huawei.com (10.3.19.104) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2176.2; Wed, 23 Jun 2021 19:34:50 +0800
+Received: from dggeme759-chm.china.huawei.com ([10.8.81.151]) by
+ dggeme759-chm.china.huawei.com ([10.8.81.151]) with mapi id 15.01.2176.012;
+ Wed, 23 Jun 2021 19:34:50 +0800
+From:   "tiantao (H)" <tiantao6@hisilicon.com>
+Subject: =?gb2312?B?tPC4tDogW1BBVENIIHYyIDAyLzIyXSBkcm0vaGlibWM6IENhbGwgZHJtX2ly?=
+ =?gb2312?Q?q=5Funinstall()_unconditionally?=
+Thread-Topic: [PATCH v2 02/22] drm/hibmc: Call drm_irq_uninstall()
+ unconditionally
+Thread-Index: AQHXZ3BTceWJbDn8OEasIrWUx4ImYqsheBbQ
+Date:   Wed, 23 Jun 2021 11:34:50 +0000
+Message-ID: <f64f8ee5ca4a4dd3a67fe64a89feabe8@hisilicon.com>
+References: <20210622141002.11590-1-tzimmermann@suse.de>
+ <20210622141002.11590-3-tzimmermann@suse.de>
+In-Reply-To: <20210622141002.11590-3-tzimmermann@suse.de>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.40.188.144]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQItU4fysVW8QImmVYiqDo0qYjPo+wIna99BATcTGFOqWlU/0A==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SeUwTURDGfd3tdqmprqWGseLVhBgw1gvjKgoeJFSNR4wa40WrbNDQg7Sg
-        0nhUIKKEimeUtixGigoq1Yq2ActRxbNGRUIEg3J5oBQVjFGJUdfWyH+/mffNfPMlj8TEpXwp
-        uV2bxui1KrWMEOI3bkVOnJzf3aCc6uydRNd+rMPpNvYGQWcVOwi6tzCcvur/xqOdnU18+lml
-        jaBPP67m0b5is2B+iMJiMhMKZ9khQlFTeEmguGbfpzhcUYYU/c6xK4n1wrlJjHr7DkY/JVYp
-        3Fb8qwilsopdH1ru803IPScXkSRQ0VBSr8lFQlJMVSHoyX5OBIo+BNYaF8pFIX+KfgRdVwUc
-        cwPPLn/FAqJKBH2Z74LFGwQOu4vPqQhqMhyrO4BxLKF2wuPT1r9rMcqHoLP4OI/zDqEWgKV5
-        FYehVAKY2sI5xKkIePqV4CZF1GxwdrQEeQTcL+jCOcaoceDy27DAPePh++tzfG5UQi0ET6U8
-        IAmD7vrbAs4UqBISelrsKKCPh6y8vCCHwvu7FcFcUujOPxBkHRSxZcH9u6D0SU+Q46C20YZz
-        XhgVCY7KKYH2GDj5oJwX8B0G5oEuXqAvAjf7jyfAr6r84Pow6L1wgn8EySyDklkGJbMMimD5
-        73YG4WVoFJNq0CQzhpmp07XMTrlBpTGka5PlW3UaJ/r7m6KWuFF72ye5F/FI5EVAYjKJqCO7
-        QSkWJakyjIxel6hPVzMGLxpN4rIwUYnAqxRTyao0JoVhUhn9v1ceGSI18Y5nvcm7I7j5IM5j
-        PdK0LLr6czOE7blNphyrGXo0p6B8RpOBNFeQ7zNXtZK3oq0DMTZt5pCfMemhzStzjHvNVeyX
-        uS/Wja5Tuy7kT/S0+s5rJPNOZH0yWgvTzrn73TlWr9FinL3UMXJ3u7qDlZpi7hVG6ZJ+aArO
-        kls3FdlOTvPYfQm+dT6/sAu7vmRFBO2R5mWrXst+RCSwI2IXN5TGbbgIq9e+Oijax+KS7vBZ
-        8xrFc55vaUIORvUSdb5qJw5ufpsx3HUGpWiyl28+tUh+uOBozcOY/a2m1YmWxIi++IG4NWMi
-        4+MfKe+WD2wc0rOA9S/9MK7efCVjk70R08X6Zbhhm2paFKY3qH4Dzmx2W7wDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplkeLIzCtJLcpLzFFi42LZdlhJXvfIlUsJBicXSVkceH+QxeLBvG1s
-        Fs2L17NZvJsrY7Hx7Q8mi02Pr7FaXN41h81ixvl9TBZnFveyO3B6zGroZfPYtKqTzWP/3DXs
-        HpuX1Hv0bVnF6PF5k1wAWxSXTUpqTmZZapG+XQJXxuL/8xkL5nlUvL51krWBcYdVFyMnh4SA
-        icTltd+Yuxi5OIQEdjBK/Pr8nREiIS4x7dd+KFtYYuW/5+wQRU8YJZ5/n8oGkmAT0JWYdLAN
-        qJuDQ0SgUmJJkx5IDbPABUaJ7qM3oBr2M0o8fnGRDaSIU8BRYtbNIBBTWMBdouGBDIjJIqAq
-        cfEb2EReAUuJTY9uQdmCEidnPmEBsZkFtCV6H7YyQtjyEtvfzmGGOE1B4ufTZawQFzhJ7N2l
-        B1EiLvHy6BH2CYzCs5BMmoVk0iwkk2YhaVnAyLKKUTK1oDg3PbfYsMAoL7Vcrzgxt7g0L10v
-        OT93EyM4xrS0djDuWfVB7xAjEwfjIUYJDmYlEd5HLZcShHhTEiurUovy44tKc1KLDzFKc7Ao
-        ifNe6DoZLySQnliSmp2aWpBaBJNl4uCUamC64PQsUea/eTnnaqOkbMfPkvF1a12mf1Ww31u4
-        IThJeuKev0y2i4Kv7z1zXFE11W+VIhPjpamGXQkPA8U9BWXfNLjV6mkYnRC/emudzvQ769wC
-        NTfoTXnLmvnzNU/YfSXXTCPT75pfMo1PxzC9ubjjwZLEurnn3Lfpb38oZe949vQ9gTM39S7J
-        RDpsn1tgHaC85cDnSyefJ2s1v5/RFX5lh8CexFM7gmMF1q9686h5X7/gKt26+vRlsrJ7nPfW
-        SX1u3Hb0TsnuV+/kM5ZXKr3/dXCu+nM3hgWvvujGpaXks2lrO6lqpXvuiRCyZMl8mMIQX6si
-        rl7CzH6ybjnfpMDVLLVnVTUUZP0mptmzCymxFGckGmoxFxUnAgA70xIoIAMAAA==
-X-CMS-MailID: 20210623062924epcas5p343049bb2c31fe088bcd022ae59361bbf
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-X-CMS-RootMailID: 20210622091321epcas5p42e0a80b034f22ae9b82a3377193bb972
-References: <CGME20210622091321epcas5p42e0a80b034f22ae9b82a3377193bb972@epcas5p4.samsung.com>
-        <20210622091710.44032-1-m.shams@samsung.com>
-        <e511bd16-fb50-bc63-d0c5-a8b4e5e78525@canonical.com>
+X-CFilter-Loop: Reflected
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-> > When DMA is used for TX and RX by serial driver, it should pass the
-> > DMA device pointer to DMA API instead of UART device pointer. DMA
-> > device should be used for DMA API because only the DMA device is aware
-> > of how the device connects to the memory.
-> > There might be an extra level of address translation due to a SMMU
-> > attached to the DMA device. When serial device pointer device is used
-> > for DMA API, the DMA API will have no clue of the SMMU attached to the
-> > DMA device.
-> >
-> > This patch is necessary to fix the SMMU page faults which is observed
-> > when a DMA(with SMMU enabled) is attached to UART for transfer.
-> >
-> > Signed-off-by: Tamseel Shams <m.shams@samsung.com>
-> > Signed-off-by: Ajay Kumar <ajaykumar.rs@samsung.com>
-> > ---
-> > Changes since v1:
-> > 1. Rebased the patch on "tty-next" branch of TTY driver tree
-> >
-> > Changes since v2:
-> > 1. Updated the commit message.
-> > 2. Changed the comment description
-> >
-> >  drivers/tty/serial/samsung_tty.c | 62
-> > +++++++++++++++++++++++++-------
-> >  1 file changed, 50 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/drivers/tty/serial/samsung_tty.c
-> > b/drivers/tty/serial/samsung_tty.c
-> > index 9fbc61151c2e..7dd648cb7237 100644
-> > --- a/drivers/tty/serial/samsung_tty.c
-> > +++ b/drivers/tty/serial/samsung_tty.c
-> > @@ -284,8 +284,13 @@ static void s3c24xx_serial_stop_tx(struct uart_port
-> *port)
-> >  	struct s3c24xx_uart_dma *dma = ourport->dma;
-> >  	struct circ_buf *xmit = &port->state->xmit;
-> >  	struct dma_tx_state state;
-> > +	struct device *dma_map_ops_dev = ourport->port.dev;
-> >  	int count;
-> >
-> > +	/* Null pointer check for "dma" and "dma->tx_chan" */
-> 
-> The comment is not useful.
-> 
-I will remove these comments.
-> > +	if (dma && dma->tx_chan)
-> > +		dma_map_ops_dev = dma->tx_chan->device->dev;
-> > +
-> >  	if (!ourport->tx_enabled)
-> >  		return;
-> >
-> > @@ -305,7 +310,7 @@ static void s3c24xx_serial_stop_tx(struct uart_port
-> *port)
-> >  		dmaengine_pause(dma->tx_chan);
-> >  		dmaengine_tx_status(dma->tx_chan, dma->tx_cookie, &state);
-> >  		dmaengine_terminate_all(dma->tx_chan);
-> > -		dma_sync_single_for_cpu(ourport->port.dev,
-> > +		dma_sync_single_for_cpu(dma_map_ops_dev,
-> >  			dma->tx_transfer_addr, dma->tx_size,
-> DMA_TO_DEVICE);
-> >  		async_tx_ack(dma->tx_desc);
-> >  		count = dma->tx_bytes_requested - state.residue; @@ -331,14
-> +336,19
-> > @@ static void s3c24xx_serial_tx_dma_complete(void *args)
-> >  	struct circ_buf *xmit = &port->state->xmit;
-> >  	struct s3c24xx_uart_dma *dma = ourport->dma;
-> >  	struct dma_tx_state state;
-> > +	struct device *dma_map_ops_dev = ourport->port.dev;
-> >  	unsigned long flags;
-> >  	int count;
-> >
-> > +	/* Null pointer check for "dma" and "dma->tx_chan" */
-> > +	if (dma && dma->tx_chan)
-> 
-> 
-> What is the "else" here? How is it even possible? Why having this "if"
-> at all?
-> 
-As mentioned in my reply (https://lkml.org/lkml/2021/6/23/6)  to
-Robin's comments for patch version 2, I will be removing these
-"if" conditions, and directly assign DMA device pointers.
-
-> > +		dma_map_ops_dev = dma->tx_chan->device->dev;
-> > +
-> >  	dmaengine_tx_status(dma->tx_chan, dma->tx_cookie, &state);
-> >  	count = dma->tx_bytes_requested - state.residue;
-> >  	async_tx_ack(dma->tx_desc);
-> >
-> > -	dma_sync_single_for_cpu(ourport->port.dev, dma->tx_transfer_addr,
-> > +	dma_sync_single_for_cpu(dma_map_ops_dev, dma->tx_transfer_addr,
-> >  				dma->tx_size, DMA_TO_DEVICE);
-> >
-> >  	spin_lock_irqsave(&port->lock, flags); @@ -436,6 +446,11 @@ static
-> > int s3c24xx_serial_start_tx_dma(struct s3c24xx_uart_port *ourport,
-> >  	struct uart_port *port = &ourport->port;
-> >  	struct circ_buf *xmit = &port->state->xmit;
-> >  	struct s3c24xx_uart_dma *dma = ourport->dma;
-> > +	struct device *dma_map_ops_dev = ourport->port.dev;
-> > +
-> > +	/* Null pointer check for "dma" and "dma->tx_chan" */
-> > +	if (dma && dma->tx_chan)
-> > +		dma_map_ops_dev = dma->tx_chan->device->dev;
-> >
-> >  	if (ourport->tx_mode != S3C24XX_TX_DMA)
-> >  		enable_tx_dma(ourport);
-> > @@ -443,7 +458,7 @@ static int s3c24xx_serial_start_tx_dma(struct
-> s3c24xx_uart_port *ourport,
-> >  	dma->tx_size = count & ~(dma_get_cache_alignment() - 1);
-> >  	dma->tx_transfer_addr = dma->tx_addr + xmit->tail;
-> >
-> > -	dma_sync_single_for_device(ourport->port.dev, dma-
-> >tx_transfer_addr,
-> > +	dma_sync_single_for_device(dma_map_ops_dev, dma-
-> >tx_transfer_addr,
-> >  				dma->tx_size, DMA_TO_DEVICE);
-> >
-> >  	dma->tx_desc = dmaengine_prep_slave_single(dma->tx_chan,
-> > @@ -510,12 +525,17 @@ static void s3c24xx_uart_copy_rx_to_tty(struct
-> s3c24xx_uart_port *ourport,
-> >  		struct tty_port *tty, int count)
-> >  {
-> >  	struct s3c24xx_uart_dma *dma = ourport->dma;
-> > +	struct device *dma_map_ops_dev = ourport->port.dev;
-> >  	int copied;
-> >
-> > +	/* Null pointer check for "dma" and "dma->rx_chan" */
-> > +	if (dma && dma->rx_chan)
-> > +		dma_map_ops_dev = dma->rx_chan->device->dev;
-> > +
-> >  	if (!count)
-> >  		return;
-> >
-> > -	dma_sync_single_for_cpu(ourport->port.dev, dma->rx_addr,
-> > +	dma_sync_single_for_cpu(dma_map_ops_dev, dma->rx_addr,
-> >  				dma->rx_size, DMA_FROM_DEVICE);
-> >
-> >  	ourport->port.icount.rx += count;
-> > @@ -635,8 +655,13 @@ static void s3c24xx_serial_rx_dma_complete(void
-> > *args)  static void s3c64xx_start_rx_dma(struct s3c24xx_uart_port
-> > *ourport)  {
-> >  	struct s3c24xx_uart_dma *dma = ourport->dma;
-> > +	struct device *dma_map_ops_dev = ourport->port.dev;
-> > +
-> > +	/* Null pointer check for "dma" and "dma->rx_chan" */
-> > +	if (dma && dma->rx_chan)
-> > +		dma_map_ops_dev = dma->rx_chan->device->dev;
-> >
-> > -	dma_sync_single_for_device(ourport->port.dev, dma->rx_addr,
-> > +	dma_sync_single_for_device(dma_map_ops_dev, dma->rx_addr,
-> >  				dma->rx_size, DMA_FROM_DEVICE);
-> >
-> >  	dma->rx_desc = dmaengine_prep_slave_single(dma->rx_chan,
-> > @@ -1045,6 +1070,7 @@ static int s3c24xx_serial_request_dma(struct
-> s3c24xx_uart_port *p)
-> >  	struct s3c24xx_uart_dma	*dma = p->dma;
-> >  	struct dma_slave_caps dma_caps;
-> >  	const char *reason = NULL;
-> > +	struct device *dma_map_ops_dev = p->port.dev;
-> >  	int ret;
-> >
-> >  	/* Default slave configuration parameters */ @@ -1102,18 +1128,25
-> @@
-> > static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
-> >  		goto err_release_tx;
-> >  	}
-> >
-> > -	dma->rx_addr = dma_map_single(p->port.dev, dma->rx_buf,
-> > +	/* Null pointer check for "dma" and "dma->rx_chan" */
-> > +	if (dma && dma->rx_chan)
-> > +		dma_map_ops_dev = dma->rx_chan->device->dev;
-> > +
-> > +	dma->rx_addr = dma_map_single(dma_map_ops_dev, dma->rx_buf,
-> >  				dma->rx_size, DMA_FROM_DEVICE);
-> > -	if (dma_mapping_error(p->port.dev, dma->rx_addr)) {
-> > +	if (dma_mapping_error(dma_map_ops_dev, dma->rx_addr)) {
-> >  		reason = "DMA mapping error for RX buffer";
-> >  		ret = -EIO;
-> >  		goto err_free_rx;
-> >  	}
-> >
-> > +	/* Null pointer check for "dma" and "dma->tx_chan" */
-> > +	if (dma && dma->tx_chan)
-> > +		dma_map_ops_dev = dma->tx_chan->device->dev;
-> >  	/* TX buffer */
-> > -	dma->tx_addr = dma_map_single(p->port.dev, p->port.state->xmit.buf,
-> > +	dma->tx_addr = dma_map_single(dma_map_ops_dev,
-> > +p->port.state->xmit.buf,
-> >  				UART_XMIT_SIZE, DMA_TO_DEVICE);
-> > -	if (dma_mapping_error(p->port.dev, dma->tx_addr)) {
-> > +	if (dma_mapping_error(dma_map_ops_dev, dma->tx_addr)) {
-> >  		reason = "DMA mapping error for TX buffer";
-> >  		ret = -EIO;
-> >  		goto err_unmap_rx;
-> > @@ -1122,7 +1155,9 @@ static int s3c24xx_serial_request_dma(struct
-> s3c24xx_uart_port *p)
-> >  	return 0;
-> >
-> >  err_unmap_rx:
-> > -	dma_unmap_single(p->port.dev, dma->rx_addr, dma->rx_size,
-> > +	if (dma->rx_chan)
-> > +		dma_map_ops_dev = dma->rx_chan->device->dev;
-> > +	dma_unmap_single(dma_map_ops_dev, dma->rx_addr, dma->rx_size,
-> >  			 DMA_FROM_DEVICE);
-> >  err_free_rx:
-> >  	kfree(dma->rx_buf);
-> > @@ -1139,10 +1174,12 @@ static int s3c24xx_serial_request_dma(struct
-> > s3c24xx_uart_port *p)  static void s3c24xx_serial_release_dma(struct
-> > s3c24xx_uart_port *p)  {
-> >  	struct s3c24xx_uart_dma	*dma = p->dma;
-> > +	struct device *dma_map_ops_dev = p->port.dev;
-> >
-> >  	if (dma->rx_chan) {
-> > +		dma_map_ops_dev = dma->rx_chan->device->dev;
-> >  		dmaengine_terminate_all(dma->rx_chan);
-> > -		dma_unmap_single(p->port.dev, dma->rx_addr,
-> > +		dma_unmap_single(dma_map_ops_dev, dma->rx_addr,
-> >  				dma->rx_size, DMA_FROM_DEVICE);
-> >  		kfree(dma->rx_buf);
-> >  		dma_release_channel(dma->rx_chan);
-> > @@ -1150,8 +1187,9 @@ static void s3c24xx_serial_release_dma(struct
-> s3c24xx_uart_port *p)
-> >  	}
-> >
-> >  	if (dma->tx_chan) {
-> > +		dma_map_ops_dev = dma->tx_chan->device->dev;
-> >  		dmaengine_terminate_all(dma->tx_chan);
-> > -		dma_unmap_single(p->port.dev, dma->tx_addr,
-> > +		dma_unmap_single(dma_map_ops_dev, dma->tx_addr,
-> >  				UART_XMIT_SIZE, DMA_TO_DEVICE);
-> >  		dma_release_channel(dma->tx_chan);
-> >  		dma->tx_chan = NULL;
-> >
-> 
-> 
-> Best regards,
-> Krzysztof
-
-Thanks & Regards,
-Tamseel Shams
-
+DQoNCi0tLS0t08q8/tStvP4tLS0tLQ0Kt6K8/sjLOiBUaG9tYXMgWmltbWVybWFubiBbbWFpbHRv
+OnR6aW1tZXJtYW5uQHN1c2UuZGVdIA0Kt6LLzcqxvOQ6IDIwMjHE6jbUwjIyyNUgMjI6MTANCsrV
+vP7IyzogZGFuaWVsQGZmd2xsLmNoOyBhaXJsaWVkQGxpbnV4LmllOyBhbGV4YW5kZXIuZGV1Y2hl
+ckBhbWQuY29tOyBjaHJpc3RpYW4ua29lbmlnQGFtZC5jb207IFhpbmh1aS5QYW5AYW1kLmNvbTsg
+amFtZXMucWlhbi53YW5nQGFybS5jb207IGxpdml1LmR1ZGF1QGFybS5jb207IG1paGFpbC5hdGFu
+YXNzb3ZAYXJtLmNvbTsgYnJpYW4uc3RhcmtleUBhcm0uY29tOyBtYWFydGVuLmxhbmtob3JzdEBs
+aW51eC5pbnRlbC5jb207IG1yaXBhcmRAa2VybmVsLm9yZzsgaW5raS5kYWVAc2Ftc3VuZy5jb207
+IGp5MDkyMi5zaGltQHNhbXN1bmcuY29tOyBzdzAzMTIua2ltQHNhbXN1bmcuY29tOyBreXVuZ21p
+bi5wYXJrQHNhbXN1bmcuY29tOyBrcnp5c3p0b2Yua296bG93c2tpQGNhbm9uaWNhbC5jb207IHhp
+bmxpYW5nLmxpdUBsaW5hcm8ub3JnOyB0aWFudGFvIChIKSA8dGlhbnRhbzZAaGlzaWxpY29uLmNv
+bT47IGpvaG4uc3R1bHR6QGxpbmFyby5vcmc7IGtvbmd4aW53ZWkgKEEpIDxrb25nLmtvbmd4aW53
+ZWlAaGlzaWxpY29uLmNvbT47IENoZW5mZW5nIChwdWNrKSA8cHVjay5jaGVuQGhpc2lsaWNvbi5j
+b20+OyBsYXVyZW50aXUucGFsY3VAb3NzLm54cC5jb207IGwuc3RhY2hAcGVuZ3V0cm9uaXguZGU7
+IHAuemFiZWxAcGVuZ3V0cm9uaXguZGU7IHNoYXduZ3VvQGtlcm5lbC5vcmc7IHMuaGF1ZXJAcGVu
+Z3V0cm9uaXguZGU7IGtlcm5lbEBwZW5ndXRyb25peC5kZTsgZmVzdGV2YW1AZ21haWwuY29tOyBs
+aW51eC1pbXhAbnhwLmNvbTsgY2h1bmt1YW5nLmh1QGtlcm5lbC5vcmc7IG1hdHRoaWFzLmJnZ0Bn
+bWFpbC5jb207IGJza2VnZ3NAcmVkaGF0LmNvbTsgdG9tYmFAa2VybmVsLm9yZzsgaGpjQHJvY2st
+Y2hpcHMuY29tOyBoZWlrb0BzbnRlY2guZGU7IGJlbmphbWluLmdhaWduYXJkQGxpbmFyby5vcmc7
+IHlhbm5pY2suZmVydHJlQGZvc3Muc3QuY29tOyBwaGlsaXBwZS5jb3JudUBmb3NzLnN0LmNvbTsg
+bWNvcXVlbGluLnN0bTMyQGdtYWlsLmNvbTsgYWxleGFuZHJlLnRvcmd1ZUBmb3NzLnN0LmNvbTsg
+d2Vuc0Bjc2llLm9yZzsgamVybmVqLnNrcmFiZWNAZ21haWwuY29tOyB0aGllcnJ5LnJlZGluZ0Bn
+bWFpbC5jb207IGpvbmF0aGFuaEBudmlkaWEuY29tOyBqeXJpLnNhcmhhQGlraS5maTsgZW1tYUBh
+bmhvbHQubmV0OyBsaW51eC1ncmFwaGljcy1tYWludGFpbmVyQHZtd2FyZS5jb207IHphY2tyQHZt
+d2FyZS5jb207IGh5dW4ua3dvbkB4aWxpbnguY29tOyBsYXVyZW50LnBpbmNoYXJ0QGlkZWFzb25i
+b2FyZC5jb207IG1pY2hhbC5zaW1la0B4aWxpbnguY29tDQqzrcvNOiBhbWQtZ2Z4QGxpc3RzLmZy
+ZWVkZXNrdG9wLm9yZzsgZHJpLWRldmVsQGxpc3RzLmZyZWVkZXNrdG9wLm9yZzsgbGludXgtYXJt
+LWtlcm5lbEBsaXN0cy5pbmZyYWRlYWQub3JnOyBsaW51eC1zYW1zdW5nLXNvY0B2Z2VyLmtlcm5l
+bC5vcmc7IGxpbnV4LW1lZGlhdGVrQGxpc3RzLmluZnJhZGVhZC5vcmc7IG5vdXZlYXVAbGlzdHMu
+ZnJlZWRlc2t0b3Aub3JnOyBsaW51eC1yb2NrY2hpcEBsaXN0cy5pbmZyYWRlYWQub3JnOyBsaW51
+eC1zdG0zMkBzdC1tZC1tYWlsbWFuLnN0b3JtcmVwbHkuY29tOyBsaW51eC1zdW54aUBsaXN0cy5s
+aW51eC5kZXY7IGxpbnV4LXRlZ3JhQHZnZXIua2VybmVsLm9yZzsgVGhvbWFzIFppbW1lcm1hbm4g
+PHR6aW1tZXJtYW5uQHN1c2UuZGU+DQrW98ziOiBbUEFUQ0ggdjIgMDIvMjJdIGRybS9oaWJtYzog
+Q2FsbCBkcm1faXJxX3VuaW5zdGFsbCgpIHVuY29uZGl0aW9uYWxseQ0KDQpSZW1vdmUgdGhlIGNo
+ZWNrIGFyb3VuZCBkcm1faXJxX3VuaW5zdGFsbCgpLiBUaGUgc2FtZSB0ZXN0IGlzIGRvbmUgYnkg
+dGhlIGZ1bmN0aW9uIGludGVybmFsbHkuIFRoZSB0ZXN0ZWQgc3RhdGUgaW4gaXJxX2VuYWJsZWQg
+aXMgY29uc2lkZXJlZCBvYnNvbGV0ZSBhbmQgc2hvdWxkIG5vdCBiZSB1c2VkIGJ5IEtNUyBkcml2
+ZXJzLg0KDQpTaWduZWQtb2ZmLWJ5OiBUaG9tYXMgWmltbWVybWFubiA8dHppbW1lcm1hbm5Ac3Vz
+ZS5kZT4NCi0tLQ0KIGRyaXZlcnMvZ3B1L2RybS9oaXNpbGljb24vaGlibWMvaGlibWNfZHJtX2Ry
+di5jIHwgMyArLS0NCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25z
+KC0pDQoNCkFja2VkLWJ5OiBUaWFuIFRhbyA8dGlhbnRhbzZAaGlzaWxpY29uLmNvbT4NCg0KZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9oaXNpbGljb24vaGlibWMvaGlibWNfZHJtX2Rydi5j
+IGIvZHJpdmVycy9ncHUvZHJtL2hpc2lsaWNvbi9oaWJtYy9oaWJtY19kcm1fZHJ2LmMNCmluZGV4
+IGY0YmM1Mzg2NTc0YS4uZjhlZjcxMWJiZTVkIDEwMDY0NA0KLS0tIGEvZHJpdmVycy9ncHUvZHJt
+L2hpc2lsaWNvbi9oaWJtYy9oaWJtY19kcm1fZHJ2LmMNCisrKyBiL2RyaXZlcnMvZ3B1L2RybS9o
+aXNpbGljb24vaGlibWMvaGlibWNfZHJtX2Rydi5jDQpAQCAtMjUzLDggKzI1Myw3IEBAIHN0YXRp
+YyBpbnQgaGlibWNfdW5sb2FkKHN0cnVjdCBkcm1fZGV2aWNlICpkZXYpICB7DQogCWRybV9hdG9t
+aWNfaGVscGVyX3NodXRkb3duKGRldik7DQogDQotCWlmIChkZXYtPmlycV9lbmFibGVkKQ0KLQkJ
+ZHJtX2lycV91bmluc3RhbGwoZGV2KTsNCisJZHJtX2lycV91bmluc3RhbGwoZGV2KTsNCiANCiAJ
+cGNpX2Rpc2FibGVfbXNpKHRvX3BjaV9kZXYoZGV2LT5kZXYpKTsNCiANCi0tDQoyLjMyLjANCg0K
