@@ -2,110 +2,55 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31CC33B7040
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jun 2021 11:44:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B528E3B7255
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jun 2021 14:50:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232927AbhF2JrV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 29 Jun 2021 05:47:21 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:33159 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232954AbhF2JrU (ORCPT
+        id S232761AbhF2Mwp convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 29 Jun 2021 08:52:45 -0400
+Received: from [218.75.92.58] ([218.75.92.58]:65123 "EHLO WIN-VTPUBHNS72V"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S233754AbhF2Mwp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 29 Jun 2021 05:47:20 -0400
-Received: from mail-ed1-f69.google.com ([209.85.208.69])
-        by youngberry.canonical.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <krzysztof.kozlowski@canonical.com>)
-        id 1lyAIW-0005fz-8k
-        for linux-samsung-soc@vger.kernel.org; Tue, 29 Jun 2021 09:44:52 +0000
-Received: by mail-ed1-f69.google.com with SMTP id f20-20020a0564020054b0290395573bbc17so4043622edu.19
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Jun 2021 02:44:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=P6S93IgLQX/j9P4a+cNZB4S+kLehvqpx4P2yVdaV6XE=;
-        b=HscaMk8qnw08vE54FIuuRMj2sLweQQwNLxxLhucBz5XU1+2xhQDQWmySBRGW2/IKzl
-         Cg2ISAMOEad7bANWwxeM6BGfUsod8lYkMxrVVgbniBna4oqFQX53ilc3J9ulmR0lXpfv
-         ktRgb0wJSEh+62mcjppA8PanCYiJxrxofIcVWANt/jfEsJGiIwN044boTF/lsSiRY6n8
-         Kwj27oHTsdHzhlpUURxXK9fzNE05d+gihSWuPDg7GjL8VoCqTMw3LuKQaoFRVLw00NpC
-         9n8rtLQqIEMDztQrpNlwrAb4raP3iF5KLe2zyWOJM3vWEAQnNST+qCby/Ib0emCioJrs
-         z0OQ==
-X-Gm-Message-State: AOAM530p7AQPYhdmBLLOpMFNY1y/So16fi5ADGT4p2Ck4KZ1rNCQfAK1
-        L0j0b1WcUGNhq/4ibR+xDzXO6kE2KcDclW8iOodlpp32A+UM5P6ZovisRJEQftsgfbnZcoq8uhL
-        lJIjHMcwgVum4N4HGGvMddXhs+kmN27E5G0AhXFa1aHJDv9Dw
-X-Received: by 2002:a05:6402:2813:: with SMTP id h19mr38800583ede.39.1624959892034;
-        Tue, 29 Jun 2021 02:44:52 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJy06olXLZfAm05U4GcZNHdgwCRhnlpCZ8sU2e7+C3VS7EOVINUFGdMcuDwYXMbgFp8XUZyLKw==
-X-Received: by 2002:a05:6402:2813:: with SMTP id h19mr38800560ede.39.1624959891916;
-        Tue, 29 Jun 2021 02:44:51 -0700 (PDT)
-Received: from [192.168.1.115] (xdsl-188-155-177-222.adslplus.ch. [188.155.177.222])
-        by smtp.gmail.com with ESMTPSA id z28sm7763057ejl.69.2021.06.29.02.44.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jun 2021 02:44:51 -0700 (PDT)
-Subject: Re: [PATCH v5] serial: samsung: use dma_ops of DMA if attached
-To:     Tamseel Shams <m.shams@samsung.com>, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alim.akhtar@samsung.com,
-        ajaykumar.rs@samsung.com, robin.murphy@arm.com
-References: <CGME20210629045610epcas5p4fa9d2a217b351a950899073d6b7d3dfd@epcas5p4.samsung.com>
- <20210629045902.48912-1-m.shams@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Message-ID: <8569ce54-26ef-e36a-b3a9-2d31e2575bd2@canonical.com>
-Date:   Tue, 29 Jun 2021 11:44:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Tue, 29 Jun 2021 08:52:45 -0400
+Received: from [192.168.43.47] (Unknown [197.210.85.75])
+        by WIN-VTPUBHNS72V with ESMTPA
+        ; Thu, 24 Jun 2021 20:46:29 +0800
+Message-ID: <9DD3F1C1-2F4F-4FFE-B3CB-8BF95435C08F@WIN-VTPUBHNS72V>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <20210629045902.48912-1-m.shams@samsung.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: URGENT ATTENTION
+To:     Recipients <wjjt@wjjt.cn>
+From:   "Andres Auchincloss" <wjjt@wjjt.cn>
+Date:   Thu, 24 Jun 2021 14:45:58 +0200
+Reply-To: andresauchincloss926@gmail.com
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 29/06/2021 06:59, Tamseel Shams wrote:
-> When DMA is used for TX and RX by serial driver, it should
-> pass the DMA device pointer to DMA API instead of UART device
-> pointer. DMA device should be used for DMA API because only
-> the DMA device is aware of how the device connects to the memory.
-> There might be an extra level of address translation due to a
-> SMMU attached to the DMA device. When serial device is used for
-> DMA API, the DMA API will have no clue of the SMMU attached to
-> the DMA device.
-> 
-> This patch is necessary to fix the SMMU page faults
-> which is observed when a DMA(with SMMU enabled) is attached
-> to UART for transfer.
-> 
-> Signed-off-by: Tamseel Shams <m.shams@samsung.com>
-> Signed-off-by: Ajay Kumar <ajaykumar.rs@samsung.com>
-> ---
-> Changes since v1:
-> 1. Rebased the patch on "tty-next" branch of TTY driver tree
-> 
-> Changes since v2:
-> 1. Updated the commit message.
-> 2. Changed the comment description
-> 
-> Changes since v3:
-> 1. Removed the null pointer check for "dma", "dma->tx_chan" and
-> "dma->rx_chan" and instead sending DMA device pointer while calling
-> DMA API.
-> 
-> Changes since v4:
-> 1. Fixed the alignments of arguments.
-> 
->  drivers/tty/serial/samsung_tty.c | 46 +++++++++++++++++---------------
->  1 file changed, 25 insertions(+), 21 deletions(-)
-> 
+Hi,
+
+I will like to use this opportunity to wish you a productive time in 2021 and also confide in you to finalize this transaction of mutual benefits. It may seem strange to you, but it is real. This is a transaction that has no risk at all, due process shall be followed and it shall be carried out under the ambit of the financial laws. Being the Chief Financial Officer, BP Plc. I want to trust and put in your care Eighteen Million British Pounds Sterling, The funds were acquired from an over-invoiced payment from a past contract executed in one of my departments.
+
+I can't successfully achieve this transaction without presenting you as foreign contractor who will provide a bank account to receive the funds.
+
+Documentation for the claim of the funds will be legally processed and documented, so I will need your full cooperation on this matter for our mutual benefits. We will discuss details if you are interested to work with me to secure this funds. I will appreciate your prompt response in every bit of our communication. Stay Blessed and Stay Safe.
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+
+Best Regards
 
 
-Best regards,
-Krzysztof
+
+
+Tel: +1 (587) 770-0485
+Andres .B. Auchincloss
+Chief financial officerBP Petroleum p.l.c.
+
+
+
+
+                                  Copyright ©? 1996-2021
+
