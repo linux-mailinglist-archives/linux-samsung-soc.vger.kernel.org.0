@@ -2,68 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD9943BAD7B
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Jul 2021 16:45:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7617D3BAFAE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Jul 2021 01:00:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbhGDOsD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 4 Jul 2021 10:48:03 -0400
-Received: from mxout03.lancloud.ru ([45.84.86.113]:47968 "EHLO
-        mxout03.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhGDOsD (ORCPT
+        id S229549AbhGDXDd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 4 Jul 2021 19:03:33 -0400
+Received: from static-190-25-223-138.static.etb.net.co ([190.25.223.138]:58508
+        "EHLO correo.hdv.gov.co" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S229530AbhGDXDd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 4 Jul 2021 10:48:03 -0400
-Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout03.lancloud.ru EF26A20F200B
-Received: from LanCloud
-Received: from LanCloud
-Received: from LanCloud
-Subject: [PATCH v2 4/5] i2c: s3c2410: fix IRQ check
-From:   Sergey Shtylyov <s.shtylyov@omp.ru>
-To:     <linux-i2c@vger.kernel.org>
-CC:     <linux-samsung-soc@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <3712e871-bf2f-32c5-f9c2-2968c42087f8@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <771d94cf-5e82-0cb7-fb1f-5af2f0b10dd4@omp.ru>
-Date:   Sun, 4 Jul 2021 17:45:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        Sun, 4 Jul 2021 19:03:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by correo.hdv.gov.co (Postfix) with ESMTP id 8A1851E005BE;
+        Sat,  3 Jul 2021 09:18:02 -0500 (-05)
+Received: from correo.hdv.gov.co ([127.0.0.1])
+        by localhost (correo.hdv.gov.co [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id MGcTjpgJF9g8; Sat,  3 Jul 2021 09:18:02 -0500 (-05)
+Received: from localhost (localhost [127.0.0.1])
+        by correo.hdv.gov.co (Postfix) with ESMTP id 48858187B262;
+        Sat,  3 Jul 2021 09:16:52 -0500 (-05)
+DKIM-Filter: OpenDKIM Filter v2.10.3 correo.hdv.gov.co 48858187B262
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hdv.gov.co;
+        s=11DF984A-9D1F-11E6-B193-F2669FC4C452; t=1625321812;
+        bh=YlrueNvYvQTA/rsidM4wE66HE6f1WhuqcZM/LO2K65o=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=j+6sgze7m4DS9iNCgCWWfu9vvkvQtMS90MgikT2WHtEhXzgXN/pgw8ZfFLy48gw3K
+         jjm1obVVqXCJo7Ozhp6MSWpq0GKMapfw5lFIDfoFH7ub7kkrHDwVQ0H0+9WlvRwkNf
+         oON6ez9WWe5s9T/a0Jkc0bfv1kSTzF9eZvvoR2TY=
+X-Virus-Scanned: amavisd-new at correo.hdv.gov.co
+Received: from correo.hdv.gov.co ([127.0.0.1])
+        by localhost (correo.hdv.gov.co [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Bv6l6Wzf1JPD; Sat,  3 Jul 2021 09:16:52 -0500 (-05)
+Received: from [172.20.10.6] (unknown [41.147.1.129])
+        by correo.hdv.gov.co (Postfix) with ESMTPSA id 488F1186F1AC;
+        Sat,  3 Jul 2021 07:16:59 -0500 (-05)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <3712e871-bf2f-32c5-f9c2-2968c42087f8@omp.ru>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [192.168.11.198]
-X-ClientProxiedBy: LFEXT02.lancloud.ru (fd00:f066::142) To
- LFEX1907.lancloud.ru (fd00:f066::207)
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: my subject
+To:     Recipients <planeacion.arquitecto@hdv.gov.co>
+From:   planeacion.arquitecto@hdv.gov.co
+Date:   Sat, 03 Jul 2021 05:16:49 -0700
+Reply-To: callumfoundation001@gmail.com
+Message-Id: <20210703121700.488F1186F1AC@correo.hdv.gov.co>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Iff platform_get_irq() returns 0, the driver's probe() method will return 0
-early (as if the method's call was successful).  Let's consider IRQ0 valid
-for simplicity -- devm_request_irq() can always override that decision...
+Hallo,
 
-Fixes: 2bbd681ba2b ("i2c-s3c2410: Change IRQ to be plain integer.")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+ Sie haben eine Spende von 2.800.000,00 USD. Ich gewann die amerikanische L=
+otterie im Wert von 343 Millionen US-Dollar in Amerika und spendete einen T=
+eil davon an f=FCnf gl=FCckliche Menschen und Wohlt=E4tigkeitsorganisatione=
+n, die sich an meinen verstorbenen Enkel erinnern, der Anfang April vorzeit=
+ig geboren wurde und nur einen Tag lebte. F=FCr weitere Informationen wende=
+n Sie sich bitte an: callumfoundation001@gmail.com
 
----
- drivers/i2c/busses/i2c-s3c2410.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-Index: linux/drivers/i2c/busses/i2c-s3c2410.c
-===================================================================
---- linux.orig/drivers/i2c/busses/i2c-s3c2410.c
-+++ linux/drivers/i2c/busses/i2c-s3c2410.c
-@@ -1137,7 +1137,7 @@ static int s3c24xx_i2c_probe(struct plat
- 	 */
- 	if (!(i2c->quirks & QUIRK_POLL)) {
- 		i2c->irq = ret = platform_get_irq(pdev, 0);
--		if (ret <= 0) {
-+		if (ret < 0) {
- 			dev_err(&pdev->dev, "cannot find IRQ\n");
- 			clk_unprepare(i2c->clk);
- 			return ret;
+ =
 
 
+Mit freundlichen Gr=FC=DFen
+Frau Lerynne West
