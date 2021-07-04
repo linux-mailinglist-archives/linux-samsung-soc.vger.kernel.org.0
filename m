@@ -2,43 +2,44 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E8473BB0E4
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Jul 2021 01:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EE83BB222
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Jul 2021 01:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232023AbhGDXJq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 4 Jul 2021 19:09:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48966 "EHLO mail.kernel.org"
+        id S229989AbhGDXNy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 4 Jul 2021 19:13:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49270 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231425AbhGDXJN (ORCPT
+        id S231533AbhGDXJW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 4 Jul 2021 19:09:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 04A76613FB;
-        Sun,  4 Jul 2021 23:06:35 +0000 (UTC)
+        Sun, 4 Jul 2021 19:09:22 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 536706145D;
+        Sun,  4 Jul 2021 23:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625439996;
-        bh=ju547HHSoJneoZh4O62JWafGwz9NI9kYJ8MtTLOeHjg=;
+        s=k20201202; t=1625440006;
+        bh=g7YZHIXlmpzIxBwyRILjn1eXvxCLTK1iVgAuIElkdJQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EBnLOw/AOFo8LB4E7Ed0NQAloCYDDm5XUbZBUy5xvWVjTft4r2aLN1hO0zIn7hJye
-         H0LPZVEgnC1Rn3ZACShEaRfD5Bzw+VEN8faj2OCBDBuMz/XU9rsovr0X7Zdl0eDlma
-         rCG7IsOnkQ7Dcg9L5HpVE2V1aDMpgPCkOTkDOMyA4TyQS51EZgVyQL9J38VfHUVK7S
-         PSFJYK/Wf8tfPN8GUtcPuC+aGweWry0mwonfBa1EzOliVZbWgdiD/KUkyqcqr3eLdr
-         FlRcYB6drLHqOAskBzlvH49tFlN9L5kJqfHw91/qtfd6YrR/9MwTcyiUQ+Bzs6Lwn/
-         CmXB478gDsmPw==
+        b=Vo4TP+zxRKGFSQQrYfezHaW537ypc7Bm5BqAY5ETuE81SunGIq/zNHAFtaFHbrQIU
+         GvSL0v/ykuCwKei87loUoHCSOE5JsetgZ78yW0nlWvuNGK/IOYlHY/VXveh2nUrcfa
+         q3nNoHotPtTd5sOPtjDE94n+2dEJm5x1YVzUTheaPa9MasnlyGSNBFVfwM/Ti+RpMr
+         R0u7MyoFltxPWxxrSI07C/hsOJ8TxV3Q2pXLlB+qMhmyqiOytHYIKOsc2imVXI3jf6
+         YH6OXCDB+HIbT/I+/IArisFb+xO6ogSIknHZ1uVhhaNvB8W0iMADOI/fpCXNn0URSq
+         gO1JZW/fcEclA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.12 15/80] media: exynos-gsc: fix pm_runtime_get_sync() usage count
-Date:   Sun,  4 Jul 2021 19:05:11 -0400
-Message-Id: <20210704230616.1489200-15-sashal@kernel.org>
+Cc:     =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Sasha Levin <sashal@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.12 21/80] hwrng: exynos - Fix runtime PM imbalance on error
+Date:   Sun,  4 Jul 2021 19:05:17 -0400
+Message-Id: <20210704230616.1489200-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210704230616.1489200-1-sashal@kernel.org>
 References: <20210704230616.1489200-1-sashal@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
@@ -46,44 +47,44 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Łukasz Stelmach <l.stelmach@samsung.com>
 
-[ Upstream commit 59087b66ea6730c130c57d23bd9fd139b78c1ba5 ]
+[ Upstream commit 0cdbabf8bb7a6147f5adf37dbc251e92a1bbc2c7 ]
 
-The pm_runtime_get_sync() internally increments the
-dev->power.usage_count without decrementing it, even on errors.
-Replace it by the new pm_runtime_resume_and_get(), introduced by:
-commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
-in order to properly decrement the usage counter, avoiding
-a potential PM usage counter leak.
+pm_runtime_resume_and_get() wraps around pm_runtime_get_sync() and
+decrements the runtime PM usage counter in case the latter function
+fails and keeps the counter balanced.
 
-As a bonus, as pm_runtime_get_sync() always return 0 on
-success, the logic can be simplified.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos-gsc/gsc-m2m.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/char/hw_random/exynos-trng.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/exynos-gsc/gsc-m2m.c b/drivers/media/platform/exynos-gsc/gsc-m2m.c
-index 27a3c92c73bc..f1cf847d1cc2 100644
---- a/drivers/media/platform/exynos-gsc/gsc-m2m.c
-+++ b/drivers/media/platform/exynos-gsc/gsc-m2m.c
-@@ -56,10 +56,8 @@ static void __gsc_m2m_job_abort(struct gsc_ctx *ctx)
- static int gsc_m2m_start_streaming(struct vb2_queue *q, unsigned int count)
- {
- 	struct gsc_ctx *ctx = q->drv_priv;
--	int ret;
+diff --git a/drivers/char/hw_random/exynos-trng.c b/drivers/char/hw_random/exynos-trng.c
+index 8e1fe3f8dd2d..c8db62bc5ff7 100644
+--- a/drivers/char/hw_random/exynos-trng.c
++++ b/drivers/char/hw_random/exynos-trng.c
+@@ -132,7 +132,7 @@ static int exynos_trng_probe(struct platform_device *pdev)
+ 		return PTR_ERR(trng->mem);
  
--	ret = pm_runtime_get_sync(&ctx->gsc_dev->pdev->dev);
--	return ret > 0 ? 0 : ret;
-+	return pm_runtime_resume_and_get(&ctx->gsc_dev->pdev->dev);
- }
+ 	pm_runtime_enable(&pdev->dev);
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Could not get runtime PM.\n");
+ 		goto err_pm_get;
+@@ -165,7 +165,7 @@ static int exynos_trng_probe(struct platform_device *pdev)
+ 	clk_disable_unprepare(trng->clk);
  
- static void __gsc_m2m_cleanup_queue(struct gsc_ctx *ctx)
+ err_clock:
+-	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
+ 
+ err_pm_get:
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.30.2
 
