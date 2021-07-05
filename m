@@ -2,168 +2,183 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C27213BBCBB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Jul 2021 14:13:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD5DD3BBCE8
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Jul 2021 14:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231263AbhGEMPu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 5 Jul 2021 08:15:50 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:34814 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231193AbhGEMPu (ORCPT
+        id S230360AbhGEMmD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 5 Jul 2021 08:42:03 -0400
+Received: from mailout2.samsung.com ([203.254.224.25]:37632 "EHLO
+        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230336AbhGEMmD (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:15:50 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210705121312euoutp023412776847d79028168cbd2403a5344d~O4-1JT5UA1634016340euoutp02j
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  5 Jul 2021 12:13:12 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210705121312euoutp023412776847d79028168cbd2403a5344d~O4-1JT5UA1634016340euoutp02j
+        Mon, 5 Jul 2021 08:42:03 -0400
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20210705123924epoutp0229ed44e64cf57cbb895ce5ec21887a8c~O5WtcIrL82870328703epoutp02I
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  5 Jul 2021 12:39:24 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20210705123924epoutp0229ed44e64cf57cbb895ce5ec21887a8c~O5WtcIrL82870328703epoutp02I
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1625487192;
-        bh=jhQoyOq4j5ztuXa06+ODE3urKcHV8fvtEws4Dx3cOvU=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=cc+EbcsK6pcA+n6cyC2+018VOKpcSWS3IKY2+DLu3sKtXezbds9i6yxo18lhshiZC
-         o5wKTySWyj0/4xN9nrPF0z9fP7impRrGisdVRUDthw7/GOS7MnPtyZ2Acly/E9peT2
-         F/ecSyHngC7KugSJ8M935pf0d/A8h91mCVGiIB6A=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20210705121311eucas1p1a49464e10c0e259a57f629e4ac238975~O4-0h50Lf0122001220eucas1p1q;
-        Mon,  5 Jul 2021 12:13:11 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 72.D4.42068.757F2E06; Mon,  5
-        Jul 2021 13:13:11 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210705121311eucas1p19f4bdb0ebe891cb864e6d1b331b809f2~O4-zztNlo0081600816eucas1p1g;
-        Mon,  5 Jul 2021 12:13:11 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210705121311eusmtrp1c3b93afc65ae283b9f513cb6f9fc3c7c~O4-zycZXM1026010260eusmtrp1R;
-        Mon,  5 Jul 2021 12:13:11 +0000 (GMT)
-X-AuditID: cbfec7f4-c89ff7000002a454-d4-60e2f757267d
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 80.11.31287.657F2E06; Mon,  5
-        Jul 2021 13:13:10 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20210705121309eusmtip123260c7c7ff4e317d54adbecc9632e15~O4-yqbzyC2630626306eusmtip1Z;
-        Mon,  5 Jul 2021 12:13:09 +0000 (GMT)
-Subject: Re: [RFC PATCH 03/17] drm/exynos: dsi: Use the drm_panel_bridge API
-To:     Jagan Teki <jagan@amarulasolutions.com>
-Cc:     Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Marek Vasut <marex@denx.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-amarula <linux-amarula@amarulasolutions.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <03653aa2-ed43-88b3-213a-9ccc99587844@samsung.com>
-Date:   Mon, 5 Jul 2021 14:13:09 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.11.0
+        s=mail20170921; t=1625488764;
+        bh=+b1UlhnYxKP3gQD/M4hY8gPMlxFnQZGtkIv4YR07XAY=;
+        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+        b=upGzKuoh8COGJ+zSzaw0gxB/fr/O97BdEDf0o/sFoeO2qxJam7Pw+YWcCjjeFdkKY
+         yS07rQLRGGY/V1rQWlMR/7VEE/UTa5T8oIcyVxA9p/Udt4fgJyujZt8+SM7NLKg83F
+         +BnrcBFvWO3QlpUTflXFVAOErVQdRS2FlCa6LTow=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+        20210705123923epcas5p13f903f7b681d62b9a24f8b5ef6eeb958~O5WsrTt8D2594625946epcas5p1z;
+        Mon,  5 Jul 2021 12:39:23 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.40.197]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4GJQHF4TZSz4x9Pp; Mon,  5 Jul
+        2021 12:39:21 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        49.EA.09452.97DF2E06; Mon,  5 Jul 2021 21:39:21 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+        20210705110409epcas5p442a806bed53d1f2942a06d0ad4e46c16~O4DilClo70999409994epcas5p4Q;
+        Mon,  5 Jul 2021 11:04:09 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210705110409epsmtrp21fc3b83fea0be21edf7882fa90a874aa~O4DikQcYh0973909739epsmtrp2R;
+        Mon,  5 Jul 2021 11:04:09 +0000 (GMT)
+X-AuditID: b6c32a4b-43fff700000024ec-ef-60e2fd79030e
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        77.B1.08394.927E2E06; Mon,  5 Jul 2021 20:04:09 +0900 (KST)
+Received: from mshams01 (unknown [107.122.12.94]) by epsmtip1.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20210705110407epsmtip1c86d7ccaec645455f0193cf5663370e7~O4DhHDw7P1242812428epsmtip1t;
+        Mon,  5 Jul 2021 11:04:07 +0000 (GMT)
+From:   "M Tamseel Shams" <m.shams@samsung.com>
+To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@canonical.com>,
+        <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>
+Cc:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <alim.akhtar@samsung.com>
+In-Reply-To: <0c608d5e-f59b-3f05-a461-2205cece4b7e@canonical.com>
+Subject: RE: [PATCH v2] serial: samsung: Checks the return value of function
+Date:   Mon, 5 Jul 2021 16:34:05 +0530
+Message-ID: <014501d7718d$7a8939e0$6f9bada0$@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <CAMty3ZB6Y91iOBPujNWZh9h5kO4p04NioiL2zJY_j_c_LqOxBw@mail.gmail.com>
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf0wTZxjHfe+u16OxzdHieCcEks4RmRFlm+aGm2FsI4e4KfEPo5hAgRuy
-        QS1XC+qyiLg5LYV1UJTeEFRgHURZBBQUg7ES60IpSKkiKTCY66zQMRC2ThJZz8ON/z7P9/n5
-        ffMSqPwUvprIUR9kWLUqV4lLsKt3/ulbv/vvifSNptsbqeFmh4iy2JtRqrY7QIPz0zg17tpB
-        lTYEovIxI0bNtRhx6vHoPYy67PMjVG/xlJg69V29mLIYu3Cq5df7Ikr/rBGlqvq6EGrqxDFA
-        WctSqVluPCBVePH4EPrSzJiInh76WkxzRaU4XcPdxehr3IiY/v6kWUTX3fAidLerTkS779/A
-        6bESG0K31h+lL//RgdBlbU2AftoSsVO2V/JuFpObU8CwG7amS/YbLpoQjWvlocXmx2gRMEn0
-        IIiA5Nvwt45qoAcSQk7+COBiayvgE3JyDsAe/Voh8RTAOWcteNlRV9a41GEB8JfKTpEQzADI
-        2RxivkpBbodWh0fEcwi5Dv5lnsR5RskuHJb5V/KMk7FQ79O/0KXkVthptKE8Y+QaaJs6+0Jf
-        RWbC6ZoqkVATDH82P8J4DiJTYLWdA8LMSNjuq0YFDoXDj2oR/iBIzgbB5/1juHD2h9CwaBYL
-        rIBPbG1LHA57KgyY0HAcwHHHJbEQGAB0Flctmd4C3Y5ngUlEYEU0/On6BkF+H9pHRzFehqQM
-        DvmChSNksPzqGVSQpfDkCblQHRV4n+b/1t7qH0CNQMkts8Yts8Mts8P9v/ccwJpAKKPT5mUz
-        2jfVTGGMVpWn1amzYzIP5LWAwG/teW6b6wCWJzMxVoAQwAoggSpDpCGmiXS5NEt1+AjDHkhj
-        dbmM1grCCEwZKs1ou5gmJ7NVB5nPGUbDsC+zCBG0ughZU5K4a9bpyXGJ1r4a3dufFbVvffyI
-        YbL3022vV+45+oErVBN3lo1Ilib6h7y7Gz7bPKj/RJdfoZs0amoH7F9armRMVZs2J7EFJYUj
-        0fMfZe1EI2+e9xS+Rs331XzrZx/ambDkh+ODss4L5KB1j6lbVnw3KqzjzA9vOWMxvS5bWnDH
-        M7HLcUjx1Rd/poRvah+oLA23xLmLyb1wwd3dlrHdm09sc+fbEphW47BTt+nYtYyPM5PtKfK4
-        VE/S76+k5icmLNQfeWddgiEC6VUMb1Er1Cvi76WflqQd7rz1QOxd1fjNe6NNvsjyhqTj5vYE
-        Z3BUheb8g4LKhQXdinPMTYW/X4lp96ti30BZrepfccpinBwEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsVy+t/xu7ph3x8lGFw7ZW5xa905VovlZ9Yx
-        W8w/AmRd+fqezeLhVX+L3qVA3qT7E1gsvmyawGbx4t5FFouNb38wWZxtesNu0TlxCbvF8gn7
-        2Cw2Pb7GatH1ayWzxYzz+5gs3rQ1Mloc6ou2+DTrIVBo8ks2BxGPtR/vs3q8v9HK7jGroZfN
-        Y96sEyweO2fdZfeY3TGT1WPxnpdMHkeuLmb1uHNtD5vH/e7jTB6bl9R7bHy3g8mjb8sqRo/P
-        m+QC+KL0bIryS0tSFTLyi0tslaINLYz0DC0t9IxMLPUMjc1jrYxMlfTtbFJSczLLUov07RL0
-        MnrWTGEquMpT8X/dC+YGxilcXYycHBICJhKL+1YydjFycQgJLGWU2HOglRkiISNxcloDK4Qt
-        LPHnWhcbRNF7RonF2yexgSSEBXwkDp17BlYkIqAt8W3ma7A4s8ARNomVk0MhGo4ySUy48ASs
-        iE3AUKLrbRdYEa+AncTuCcfBtrEIqEgcfzMXLC4qkCzxc307VI2gxMmZT1hAbE6BQIk5Z2Yx
-        Qiwwk5i3+SEzhC0vsf3tHChbXOLWk/lMExiFZiFpn4WkZRaSlllIWhYwsqxiFEktLc5Nzy02
-        1CtOzC0uzUvXS87P3cQITCbbjv3cvINx3quPeocYmTgYDzFKcDArifCKTHmUIMSbklhZlVqU
-        H19UmpNafIjRFOificxSosn5wHSWVxJvaGZgamhiZmlgamlmrCTOu3XumnghgfTEktTs1NSC
-        1CKYPiYOTqkGptCVd2zO+8/WnxV0odNT+WGWzTajOf9WGDAp2Z55vO6y0Vz9y0ZBaurzqnot
-        Jj+0+Jgae3KuoFfs2sVrnd/syKg5GZJ09d1O0Z4Q/r9tj9NXB/BkechWvgpKfehQv+Xpc/ac
-        v9U2bfp5zB9U32kdufJZbm1Kni7fwXavovQtjJ8+N+efyNm+97unudptti+XJu6a+urZse57
-        c3RvHWx1v2IRdkhn26FlTaHOCVvLY0tVrs16qfpMwb10VtAL2QrTnDsLdT9q7pYSMd9as8D/
-        sWbdI/EPbwpZP3zjuP155qOe9zGcbyaKJjxeL77nbvK5K07TU59s7L86Z4vOzFTX1ylr49V/
-        zwntsrkaInH3JocSS3FGoqEWc1FxIgDZB5bbrwMAAA==
-X-CMS-MailID: 20210705121311eucas1p19f4bdb0ebe891cb864e6d1b331b809f2
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQH37JPbw1HOGlkSZQVzgfq3POuaFwHzBW1EAsE0F1iqzZ9PgA==
+Content-Language: en-us
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCJsWRmVeSWpSXmKPExsWy7bCmpm7l30cJBqs2y1o8mLeNzaJ58Xo2
+        i3dzZSw2vv3BZLHp8TVWi8u75rBZzDi/j8nizOJedgcOj1kNvWwem1Z1snnsn7uG3WPzknqP
+        vi2rGD0+b5ILYIvKsclITUxJLVJIzUvOT8nMS7dV8g6Od443NTMw1DW0tDBXUshLzE21VXLx
+        CdB1y8wBOkdJoSwxpxQoFJBYXKykb2dTlF9akqqQkV9cYquUWpCSU2BoVKBXnJhbXJqXrpec
+        n2tlaGBgZApUmZCT0bRhKnNBn1DFif7DzA2Mv/i6GDk5JARMJA4evsjYxcjFISSwm1HizKd3
+        7BDOJ0aJPcuusIFUCQl8Y5TY1MAF0/H58COoor2MEo0dy6GcZ4wS299dZgWpYhPQlZh0sI0Z
+        xBYRKJc4P2M2G0gRs8A6RokN3y6AJTgFHCXurL8KtJyDQ1jAR+JpazVImEVAReLHsWZ2EJtX
+        wFKiaco9ZghbUOLkzCcsIDazgLbEsoWvmSEuUpD4+XQZK8QuJ4kjb/uYIGrEJV4ePQJ2nITA
+        Qg6Ju2+WQTW4SDxe9I0dwhaWeHV8C5QtJfH53V42CDtfYv68VVD1FRIrL7yBsu0lDlyZwwJy
+        M7OApsT6XfoQYVmJqafWQe3lk+j9/YQJIs4rsWMejK0o8X93P9QqcYl3K6awTmBUmoXktVlI
+        XpuF5IVZCNsWMLKsYpRMLSjOTU8tNi0wzkstR47wTYzg5KrlvYPx0YMPeocYmTgYDzFKcDAr
+        ifCKTHmUIMSbklhZlVqUH19UmpNafIjRFBjeE5mlRJPzgek9ryTe0NTIzMzA0sDU2MLMUEmc
+        dyn7oQQhgfTEktTs1NSC1CKYPiYOTqkGJmc5Ll7LVplZnPfmlgRO8hExuJ/n/mdBW8aLO2mJ
+        6k/VP2/uUQ96Fzp14bJunzOOD6337+Xd92N25PRZKa6mOvOj/ij8fjVz8UeRzUYpd+fYm9tM
+        63tyV1jX8W3ABMb59Rc3xdo2nL/QuqKfaffkG27821hCQ5/V99Vax05+c3xr+TtvpaeKh/ou
+        GtYxtzm6Fv/+x7CE55j7IQPui2+5A0/t23fnhpJaxdbCqMusK5yKuyafcTmTUsqV2sC9e+eT
+        jWf8904N7pp6ednfE4ncERyfXhhFrmStag2+87NF5j7rjY85++snarksvicoxRDPpGe0K/rV
+        5mbNpl8TXwp9qqoVfnL8RXPg1aeGS3da9CixFGckGmoxFxUnAgCsIZ43NwQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupikeLIzCtJLcpLzFFi42LZdlhJTlfz+aMEgyXfBCwezNvGZtG8eD2b
+        xbu5MhYb3/5gstj0+BqrxeVdc9gsZpzfx2RxZnEvuwOHx6yGXjaPTas62Tz2z13D7rF5Sb1H
+        35ZVjB6fN8kFsEVx2aSk5mSWpRbp2yVwZZzeH1lwSrDi1rt3rA2M2/i6GDk5JARMJD4ffsTe
+        xcjFISSwm1Hiw5yHbBAJcYlpv/YzQtjCEiv/PYcqesIocXTTJLAEm4CuxKSDbcxdjBwcIgKV
+        Ekua9EBqmAU2MUo0n1/ICNGwn1HiZs9CsKmcAo4Sd9ZfZQRpEBbwkXjaWg0SZhFQkfhxrJkd
+        xOYVsJRomnKPGcIWlDg58wkLiM0soC3x9OZTOHvZwtfMEMcpSPx8uowVxBYRcJI48raPCaJG
+        XOLl0SPsExiFZyEZNQvJqFlIRs1C0rKAkWUVo2RqQXFuem6xYYFhXmq5XnFibnFpXrpecn7u
+        JkZwdGlp7mDcvuqD3iFGJg7GQ4wSHMxKIrwiUx4lCPGmJFZWpRblxxeV5qQWH2KU5mBREue9
+        0HUyXkggPbEkNTs1tSC1CCbLxMEp1cB0skQ5srJVUNSq8f0GE9OrWn55a14+2fU1J8SsLXXm
+        XN5Ji9rD2cPya5ZM+NX4Uf7XMpapPM1THlyMtOyf8N/zLoPMFZNJJWaKhR2RSwJCVnYs2B3T
+        JXl81WOT6z3/3lofrg82OTJ/18X6B6opk0SqxSIvL7505vvSDk3v/38z5voLJ54LfiO/6NIi
+        nY3Olv5rPacFe2281LJ64p/UR/p9oU3L7I3r+ngvSS+zEfuz5WvtE66azqcdvZG1D1Mk0x5N
+        Up5/6e/54O9RB/WP+AuVmkdwFTwW3fVNKXaBks9bsYRLTb+8rZ3DS74Lx/z/sfBuntc0qcrw
+        oJvN289UOrit+bxotfymSRX3rGd7Fd9XYinOSDTUYi4qTgQAGySe6x0DAAA=
+X-CMS-MailID: 20210705110409epcas5p442a806bed53d1f2942a06d0ad4e46c16
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210704090432eucas1p2fa4225336e35f3f5fd2fbf5da99001ff
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210704090432eucas1p2fa4225336e35f3f5fd2fbf5da99001ff
-References: <20210704090230.26489-1-jagan@amarulasolutions.com>
-        <CGME20210704090432eucas1p2fa4225336e35f3f5fd2fbf5da99001ff@eucas1p2.samsung.com>
-        <20210704090230.26489-4-jagan@amarulasolutions.com>
-        <7af964c7-0e92-f190-2a86-d7a061a05129@samsung.com>
-        <CAMty3ZB6Y91iOBPujNWZh9h5kO4p04NioiL2zJY_j_c_LqOxBw@mail.gmail.com>
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20210630133115epcas5p1706041f122819d47b18b83853b49694e
+References: <CGME20210630133115epcas5p1706041f122819d47b18b83853b49694e@epcas5p1.samsung.com>
+        <20210630133359.59275-1-m.shams@samsung.com>
+        <0c608d5e-f59b-3f05-a461-2205cece4b7e@canonical.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 05.07.2021 14:00, Jagan Teki wrote:
-> On Mon, Jul 5, 2021 at 5:18 PM Marek Szyprowski
-> <m.szyprowski@samsung.com> wrote:
->> On 04.07.2021 11:02, Jagan Teki wrote:
->>> Use drm_panel_bridge to replace manual panel and
->>> bridge_chain handling code.
->>>
->>> This makes the driver simpler to allow all components
->>> in the display pipeline to be treated as bridges by
->>> cleaning the way to generic connector handling.
->>>
->>> Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
->> This breaks Exysos DSI driver operation (Trats board worked fine with
->> only patches 1-2):
->>
->> [    2.540066] exynos4-fb 11c00000.fimd: Adding to iommu group 0
->> [    2.554733] OF: graph: no port node found in /soc/fimd@11c00000
->> [    2.602819] [drm] Exynos DRM: using 11c00000.fimd device for DMA
->> mapping operations
->> [    2.609649] exynos-drm exynos-drm: bound 11c00000.fimd (ops
->> fimd_component_ops)
->> [    2.632558] exynos-drm exynos-drm: failed to bind 11c80000.dsi (ops
->> exynos_dsi_component_ops): -22
->> [    2.642263] exynos-drm exynos-drm: master bind failed: -22
->> [    2.651017] exynos-drm: probe of exynos-drm failed with error -22
-> Thanks for testing it.
->
-> Can you check Squash of 3,4 or 3,4,5 will work or not?
 
-I've check both sets: 1-4 and 1-5 and none of them works. The result is 
-same as above. If I remember correctly, last time when I played with 
-that code, there was a problem with DRM core calling bridge ops in 
-different order than when they are used by the Exynos DSI driver.
 
-Best regards
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski=40canonical.com>
+> Sent: Thursday, July 1, 2021 12:06 PM
+> To: Tamseel Shams <m.shams=40samsung.com>; gregkh=40linuxfoundation.org;
+> jirislaby=40kernel.org
+> Cc: linux-arm-kernel=40lists.infradead.org; linux-samsung-soc=40vger.kern=
+el.org;
+> linux-serial=40vger.kernel.org; linux-kernel=40vger.kernel.org;
+> alim.akhtar=40samsung.com
+> Subject: Re: =5BPATCH v2=5D serial: samsung: Checks the return value of f=
+unction
+>=20
+> On 30/06/2021 15:33, Tamseel Shams wrote:
+> > =22uart_add_one_port=22 function call may fail and return some error co=
+de,
+> > so adding a check for return value.
+> > If it is returning some error code, then displaying the result,
+> > unregistering the driver and then returning from probe function with
+> > error code.
+> >
+> > Signed-off-by: Tamseel Shams <m.shams=40samsung.com>
+> > ---
+> > Changes since v1:
+> > 1. Added support to unregister driver on failure of =22uart_add_onr_por=
+t=22
+> > function call.
+> > 2. Commit message updated.
+> >
+> >  drivers/tty/serial/samsung_tty.c =7C 11 ++++++++++-
+> >  1 file changed, 10 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/tty/serial/samsung_tty.c
+> > b/drivers/tty/serial/samsung_tty.c
+> > index 9fbc61151c2e..188e2d2da201 100644
+> > --- a/drivers/tty/serial/samsung_tty.c
+> > +++ b/drivers/tty/serial/samsung_tty.c
+> > =40=40 -2253,7 +2253,11 =40=40 static int s3c24xx_serial_probe(struct
+> platform_device *pdev)
+> >  	=7D
+> >
+> >  	dev_dbg(&pdev->dev, =22%s: adding port=5Cn=22, __func__);
+> > -	uart_add_one_port(&s3c24xx_uart_drv, &ourport->port);
+> > +	ret =3D uart_add_one_port(&s3c24xx_uart_drv, &ourport->port);
+> > +	if (ret < 0) =7B
+> > +		dev_err(&pdev->dev, =22Failed to add uart port, err %d=5Cn=22, ret);
+> > +		goto add_port_error;
+> > +	=7D
+> >  	platform_set_drvdata(pdev, &ourport->port);
+> >
+> >  	/*
+> > =40=40 -2272,6 +2276,11 =40=40 static int s3c24xx_serial_probe(struct
+> platform_device *pdev)
+> >  	probe_index++;
+> >
+> >  	return 0;
+> > +
+> > +add_port_error:
+>=20
+> You did not unwind fully s3c24xx_serial_init_port() - clocks.
+>=20
+Hi Krzysztof,
 
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Yeah, missed the unwinding of clocks.
+Will fix this in next version.
+
+Thanks & Regards,
+Tamseel Shams
 
