@@ -2,61 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9EB43BF5C2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Jul 2021 08:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F309E3BF5E7
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  8 Jul 2021 09:02:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbhGHGu5 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 8 Jul 2021 02:50:57 -0400
-Received: from mail8.turbodal.cl ([200.27.120.195]:35222 "EHLO
-        debian.turbodal.cl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S229737AbhGHGu5 (ORCPT
+        id S229735AbhGHHFa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 8 Jul 2021 03:05:30 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:59101 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229766AbhGHHF3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 8 Jul 2021 02:50:57 -0400
-X-Greylist: delayed 2534 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Jul 2021 02:50:57 EDT
-Received: from mail4.turbodal.cl (unknown [192.100.110.128])
-        by debian.turbodal.cl (Postfix) with ESMTPS id 0919816742B;
-        Thu,  8 Jul 2021 01:57:21 -0400 (-04)
-Received: from mail4.turbodal.cl (localhost [127.0.0.1])
-        by mail4.turbodal.cl (Postfix) with ESMTPS id BADFF62E0411;
-        Thu,  8 Jul 2021 01:57:46 -0400 (-04)
-Received: from localhost (localhost [127.0.0.1])
-        by mail4.turbodal.cl (Postfix) with ESMTP id A876662E04CD;
-        Thu,  8 Jul 2021 01:57:46 -0400 (-04)
-Received: from mail4.turbodal.cl ([127.0.0.1])
-        by localhost (mail4.turbodal.cl [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id gMzXxYu3sRic; Thu,  8 Jul 2021 01:57:46 -0400 (-04)
-Received: from cris-PC.wifi (unknown [105.9.19.190])
-        by mail4.turbodal.cl (Postfix) with ESMTPSA id 8A34B62E01D8;
-        Thu,  8 Jul 2021 01:57:38 -0400 (-04)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 8 Jul 2021 03:05:29 -0400
+Received: from mail-wr1-f69.google.com ([209.85.221.69])
+        by youngberry.canonical.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.93)
+        (envelope-from <krzysztof.kozlowski@canonical.com>)
+        id 1m1O3b-00065k-SP
+        for linux-samsung-soc@vger.kernel.org; Thu, 08 Jul 2021 07:02:47 +0000
+Received: by mail-wr1-f69.google.com with SMTP id h15-20020adffd4f0000b0290137e68ed637so1584012wrs.22
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 08 Jul 2021 00:02:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3f6AjuDr9DREq/BYb5H9OJJObGL5I+SYWgZP05BzVcc=;
+        b=a1v1sCyzqppRkO4aNMcXUAT1IPWyOREwc2BN7d+HIsgXI3+V8+g+YTKu0T7BMJZR56
+         snpPsDdrPxZh2Wm1U31NCejvFuuGnWpxdPTGOwXCSpAGhxqlCUw61dta6281Cnpr4uil
+         rrhFjv1GAW1D4CdjHAcqCXNy9xpPhyd9qzBwOUQI1kDPIwildv3u9cDvIlz0G8YnMUF5
+         lmUBNbafDeNjhrj67fnhO2g3XMt5GZ3sP26ozZQKATZOFUWuvzpsVbdeQgKrxmNCGzJq
+         5H7dPxe6xWuOQeXxoL5Cyjw3FJNEvp2fFsCGvvKo+bmOSQ8GKaerq7IR6MKCdyg2T3nT
+         mqRg==
+X-Gm-Message-State: AOAM5316wgIe21L0Uy30rHIWgXSh2peqPzEdfiR3JBHvp/ySnZnIwZMY
+        b+iCKC02XdoYAfksXAIayKtaiXvsC3Iq8hJ3SDzsrvcVE9FNXo5eefKdv44r10ojOiRJneWlN0I
+        9zv7u6oQCZOYqVDUq2TN5zEQ0usy43LYwZX9iFIpbf4tCbDlo
+X-Received: by 2002:a05:600c:3644:: with SMTP id y4mr3525078wmq.85.1625727767037;
+        Thu, 08 Jul 2021 00:02:47 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJw/hWFlccAvYQ22p30X1RqIfOvCiR1jNxi8oOhZT6XSobV1yvvN4f5f+DV9uS9QzoXy2W9Cuw==
+X-Received: by 2002:a05:600c:3644:: with SMTP id y4mr3525047wmq.85.1625727766822;
+        Thu, 08 Jul 2021 00:02:46 -0700 (PDT)
+Received: from [192.168.3.211] (xdsl-188-155-177-222.adslplus.ch. [188.155.177.222])
+        by smtp.gmail.com with ESMTPSA id p15sm1025526wmq.43.2021.07.08.00.02.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Jul 2021 00:02:46 -0700 (PDT)
+Subject: Re: [PATCH] rtc: s5m: Check return value of
+ s5m_check_peding_alarm_interrupt()
+To:     Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc:     linux-rtc@vger.kernel.org,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-samsung-soc@vger.kernel.org
+References: <20210708051304.341278-1-nobuhiro1.iwamatsu@toshiba.co.jp>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Message-ID: <b584f0b3-9f2b-761d-6c33-8ebdab9f1120@canonical.com>
+Date:   Thu, 8 Jul 2021 09:02:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: spende von 2,000,000 euro
-To:     Recipients <fae.eva@ptt.cl>
-From:   ''michael weirsky'' <fae.eva@ptt.cl>
-Date:   Thu, 08 Jul 2021 07:57:23 +0200
-Reply-To: mikeweirskyspende@gmail.com
-Message-Id: <20210708055738.8A34B62E01D8@mail4.turbodal.cl>
+In-Reply-To: <20210708051304.341278-1-nobuhiro1.iwamatsu@toshiba.co.jp>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Lieber Freund,
+On 08/07/2021 07:13, Nobuhiro Iwamatsu wrote:
+> s5m_check_peding_alarm_interrupt() in s5m_rtc_read_alarm() gets the return
+> value, but doesn't use it.
+> This modifies using the s5m_check_peding_alarm_interrupt()"s return value
 
-Ich bin Herr Mike Weirsky, New Jersey, Vereinigte Staaten von Amerika, der Mega-Gewinner von $ 273million In Mega Millions Jackpot, spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt.Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die Summe von € 2.000.000,00 an Sie als eine der ausgewählten 5 zu spenden, um meine Gewinne zu überprüfen.
-Das ist dein Spendencode: [MW530342019]
+Avoid "This ..." type of sentences and use simple imperative:
+https://elixir.bootlin.com/linux/v5.13/source/Documentation/process/submitting-patches.rst#L89
 
-www.youtube.com/watch?v=un8yRTmrYMY
+> as the s5m_rtc_read_alarm()'s return value.
+> 
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Signed-off-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+> ---
+>  drivers/rtc/rtc-s5m.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 
 
-Antworten Sie mit dem SPENDE-CODE an diese 
-
-E-Mail:mikeweirskyspende@gmail.com
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
 
-Ich hoffe, Sie und Ihre Familie glücklich zu machen.
-
-Grüße
-Herr Mike Weirsky
+Best regards,
+Krzysztof
