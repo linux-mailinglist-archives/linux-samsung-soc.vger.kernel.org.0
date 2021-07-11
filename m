@@ -2,50 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 825233C2C29
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 10 Jul 2021 02:42:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6993A3C3ED6
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 11 Jul 2021 21:04:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231156AbhGJApW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 9 Jul 2021 20:45:22 -0400
-Received: from relay12.mail.gandi.net ([217.70.178.232]:38405 "EHLO
-        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbhGJApW (ORCPT
+        id S230430AbhGKTHQ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 11 Jul 2021 15:07:16 -0400
+Received: from mail.07d05.mspz7.gob.ec ([186.46.59.139]:56012 "EHLO
+        mail.07d05.mspz7.gob.ec" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229660AbhGKTHQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 9 Jul 2021 20:45:22 -0400
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-        by relay12.mail.gandi.net (Postfix) with ESMTPSA id D1EDE200002;
-        Sat, 10 Jul 2021 00:42:35 +0000 (UTC)
-From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
-To:     Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Alessandro Zummo <a.zummo@towertech.it>
-Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-samsung-soc@vger.kernel.org, linux-rtc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Subject: Re: [PATCH] rtc: s5m: Check return value of s5m_check_peding_alarm_interrupt()
-Date:   Sat, 10 Jul 2021 02:42:34 +0200
-Message-Id: <162587774658.1208259.11635583040730413749.b4-ty@bootlin.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210708051304.341278-1-nobuhiro1.iwamatsu@toshiba.co.jp>
-References: <20210708051304.341278-1-nobuhiro1.iwamatsu@toshiba.co.jp>
-MIME-Version: 1.0
+        Sun, 11 Jul 2021 15:07:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTP id 541911847DAF;
+        Sun, 11 Jul 2021 13:17:33 -0500 (-05)
+Received: from mail.07d05.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.07d05.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id Jz47rHPGQ1Hn; Sun, 11 Jul 2021 13:17:33 -0500 (-05)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTP id 16AB71847E1A;
+        Sun, 11 Jul 2021 13:17:33 -0500 (-05)
+X-Virus-Scanned: amavisd-new at 07d05.mspz7.gob.ec
+Received: from mail.07d05.mspz7.gob.ec ([127.0.0.1])
+        by localhost (mail.07d05.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id gx20uWXq7d9y; Sun, 11 Jul 2021 13:17:33 -0500 (-05)
+Received: from cris-PC.wifi (unknown [105.9.79.139])
+        by mail.07d05.mspz7.gob.ec (Postfix) with ESMTPSA id 443501847DAF;
+        Sun, 11 Jul 2021 13:17:24 -0500 (-05)
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: spende von 2,000,000 euro
+To:     Recipients <maria.coronel@07d05.mspz7.gob.ec>
+From:   ''Michael Weirsky'' <maria.coronel@07d05.mspz7.gob.ec>
+Date:   Sun, 11 Jul 2021 20:17:12 +0200
+Reply-To: mikeweirskyspende@gmail.com
+Message-Id: <20210711181725.443501847DAF@mail.07d05.mspz7.gob.ec>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 8 Jul 2021 14:13:04 +0900, Nobuhiro Iwamatsu wrote:
-> s5m_check_peding_alarm_interrupt() in s5m_rtc_read_alarm() gets the return
-> value, but doesn't use it.
-> This modifies using the s5m_check_peding_alarm_interrupt()"s return value
-> as the s5m_rtc_read_alarm()'s return value.
+Lieber Freund,
 
-Applied, thanks!
+Ich bin Herr Mike Weirsky, New Jersey, Vereinigte Staaten von Amerika, der Mega-Gewinner von $ 273million In Mega Millions Jackpot, spende ich an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Mail nach einem Spinball ausgewählt.Ich habe den größten Teil meines Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die Summe von € 2.000.000,00 an Sie als eine der ausgewählten 5 zu spenden, um meine Gewinne zu überprüfen.
+Das ist dein Spendencode: [MW530342019]
 
-[1/1] rtc: s5m: Check return value of s5m_check_peding_alarm_interrupt()
-      commit: f2581b1dfa9858e342afa8034b0f64f923bbf233
+www.youtube.com/watch?v=un8yRTmrYMY
 
-Best regards,
--- 
-Alexandre Belloni <alexandre.belloni@bootlin.com>
+
+Antworten Sie mit dem SPENDE-CODE an diese 
+
+E-Mail:mikeweirskyspende@gmail.com
+
+
+Ich hoffe, Sie und Ihre Familie glücklich zu machen.
+
+Grüße
+Herr Mike Weirsky
