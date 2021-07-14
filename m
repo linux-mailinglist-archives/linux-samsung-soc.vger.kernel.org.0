@@ -2,273 +2,121 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B97E13C7F13
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Jul 2021 09:12:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1296C3C8C41
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Jul 2021 21:39:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238212AbhGNHPI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 14 Jul 2021 03:15:08 -0400
-Received: from mailout3.samsung.com ([203.254.224.33]:21290 "EHLO
-        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238238AbhGNHO7 (ORCPT
+        id S231374AbhGNTlc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 14 Jul 2021 15:41:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35768 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233427AbhGNTla (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 14 Jul 2021 03:14:59 -0400
-Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20210714071205epoutp0334da817656038849fbe7c3c1f356fea3~RlsfktJ8Y1952519525epoutp03B
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 14 Jul 2021 07:12:05 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20210714071205epoutp0334da817656038849fbe7c3c1f356fea3~RlsfktJ8Y1952519525epoutp03B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1626246725;
-        bh=stJk41kM7OMhlXJlN10udW/YreVjbMV+Qbw3QGqr63o=;
+        Wed, 14 Jul 2021 15:41:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9E9EB613E5;
+        Wed, 14 Jul 2021 19:38:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1626291518;
+        bh=YqPZ4A7rwODNHcwjLupbqwVXr++J4UcLSbXKtNNQLfc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=k/aUtACIJnMX99bH4/sekatu62F2VQKtoPzl2y0y2eVvG8gUhyDo4SVPB2NcQfzM7
-         73eseawmxTvAfnQHxZhZt5fJHawBm49IzRI5Nb5s1PM4MaagSvmfZLbQpygeyo1Vce
-         v7PDmva6Fn0+PdWYY/S0/SAkT/ve+LbnlnIyt6g8=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20210714071205epcas2p4417cb516fd55456366fc28a1129f3d70~Rlse-dNN62508225082epcas2p44;
-        Wed, 14 Jul 2021 07:12:05 +0000 (GMT)
-Received: from epsmges2p2.samsung.com (unknown [182.195.40.189]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4GPpbQ0L4Nz4x9Q7; Wed, 14 Jul
-        2021 07:12:02 +0000 (GMT)
-Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
-        epsmges2p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        D3.BF.09541.04E8EE06; Wed, 14 Jul 2021 16:12:00 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-        20210714071200epcas2p413ca643dc459ee75ec7e5e4f8a6c05d7~RlsaWtfrl2508225082epcas2p4j;
-        Wed, 14 Jul 2021 07:12:00 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210714071200epsmtrp2fc436150d4e963483f113e77fe096f35~RlsaVeqvf0755107551epsmtrp2t;
-        Wed, 14 Jul 2021 07:12:00 +0000 (GMT)
-X-AuditID: b6c32a46-0abff70000002545-f8-60ee8e4086d0
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        28.17.08289.F3E8EE06; Wed, 14 Jul 2021 16:12:00 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.229.9.51]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210714071159epsmtip22f6575a10d01c8fef7499dc5233f7349~RlsaJCI_R2336023360epsmtip2c;
-        Wed, 14 Jul 2021 07:11:59 +0000 (GMT)
-From:   Chanho Park <chanho61.park@samsung.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>
-Cc:     Can Guo <cang@codeaurora.org>, Jaegeuk Kim <jaegeuk@kernel.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        Bart Van Assche <bvanassche@acm.org>,
-        jongmin jeong <jjmin.jeong@samsung.com>,
-        Gyunghoon Kwon <goodjob.kwon@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-Subject: [PATCH v2 15/15] scsi: ufs: ufs-exynos: introduce exynosauto v9
- virtual host
-Date:   Wed, 14 Jul 2021 16:11:31 +0900
-Message-Id: <20210714071131.101204-16-chanho61.park@samsung.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210714071131.101204-1-chanho61.park@samsung.com>
+        b=vJ5ySzOXEkGGTvpv0g0yIt0HmH3v601oJ8dK7zJOjqfcMDXSL2/B1YEDqEiwDuXWV
+         sOngoq7iT372+DSUVuDWpD4+rslrhKlVPazMPFPY1RVty2NovgXq9i40AMOo9pQtxY
+         qjmUJhSyPH0/RJT0JUB2pwP+NOBTicMYkhLnOz8DvqXe69uBndqNy4175nFXTNZ0s/
+         qQulOrrEtcGVgXDfPCYeBNdzS9MkhrDlxu/zlLKhJdGphduNbWhoFUivRe/6p/kuDM
+         5r6J4e5a4J6ckzRLvODfCNDxjUYqKNSaG3A6p1PLQm/E7H7Uxd+d8yxNbx8fzGyf+V
+         OZvD8kNE/LVEA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Sasha Levin <sashal@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.13 025/108] ARM: dts: exynos: align Broadcom WiFi with dtschema
+Date:   Wed, 14 Jul 2021 15:36:37 -0400
+Message-Id: <20210714193800.52097-25-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210714193800.52097-1-sashal@kernel.org>
+References: <20210714193800.52097-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAJsWRmVeSWpSXmKPExsWy7bCmma5D37sEg8n7lC1OPlnDZvFg3jY2
-        i5c/r7JZTPvwk9ni0/plrBaX92tb9Ox0tjg9YRGTxZP1s5gtFt3YxmSx8pqFxfnzG9gtbm45
-        ymIx4/w+Jovu6zvYLJYf/8fkIOBx+Yq3x+W+XiaPzSu0PBbvecnksWlVJ5vHhEUHGD0+Pr3F
-        4tG3ZRWjx+dNch7tB7qZAriicmwyUhNTUosUUvOS81My89JtlbyD453jTc0MDHUNLS3MlRTy
-        EnNTbZVcfAJ03TJzgP5QUihLzCkFCgUkFhcr6dvZFOWXlqQqZOQXl9gqpRak5BQYGhboFSfm
-        Fpfmpesl5+daGRoYGJkCVSbkZFzoW8Ve8Fal4vaiU4wNjL1yXYwcHBICJhIbD+V0MXJxCAns
-        YJSYsvIiG4TziVHi/b91TBDOZ6DM13fMXYycEB0Nk9khErsYJXY2bGeGcD4ySvxvOQ9WxSag
-        K7Hl+StGkIQIyOBVi++ygDjMAieZJU4vOMgOUiUsEC5x4HQbWAeLgKrE2ge72UBsXgEHib/v
-        VzJC7JOXOLXsIBOIzQkUP7jhAyNEjaDEyZlPWEBsZqCa5q2zwc6QEDjDIdHVshWq2UXiw/ld
-        7BC2sMSr41ugbCmJz+/2skE0dDNKtD76D5VYzSjR2egDYdtL/Jq+hRUUTswCmhLrd+lDgkxZ
-        4sgtqL18Eh2H/7JDhHklOtqEIBrVJQ5sn84CYctKdM/5zAphe0i829cNDa3JwEA5tJ15AqPC
-        LCTvzELyziyExQsYmVcxiqUWFOempxYbFRghx/EmRnDS1nLbwTjl7Qe9Q4xMHIyHGCU4mJVE
-        eJcavU0Q4k1JrKxKLcqPLyrNSS0+xGgKDOyJzFKiyfnAvJFXEm9oamRmZmBpamFqZmShJM7L
-        wX4oQUggPbEkNTs1tSC1CKaPiYNTqoFp39Ul01mXrXkw78C2xCMOfW7y0/llNH9+NZWfuGtO
-        qui6B5vqJOtD1lXvbp8V9EZpvaOwzifBmX/P/r27jXPSVPUvc9iU9ipdlfcLlhDeffKoVA3/
-        fRveibtKZZrW+57b6Mw3y/i3STSHEPs/1fZfmV/3LPu2Jzruv+YTB5s5T/dpCjMo/tmb+OnX
-        O+uL7/hMeQpVHp4qtD+++Cb7wTfLmeYcaf7trt4rvukL69YjTH03FLl+SOWb5nzkldtm1xnb
-        nMdoFVh/+yWXNC/DUe7nj5Nb/jgJO/UeY4ywubNKdm/ovdxULv9Y8ak3Ew7cbpbUuDrFuuim
-        uX0n25S7i+f/fnNAaU1xvPqswx1WE1lTlViKMxINtZiLihMBHGbDTGMEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupikeLIzCtJLcpLzFFi42LZdlhJXteh712CQcNTRouTT9awWTyYt43N
-        4uXPq2wW0z78ZLb4tH4Zq8Xl/doWPTudLU5PWMRk8WT9LGaLRTe2MVmsvGZhcf78BnaLm1uO
-        sljMOL+PyaL7+g42i+XH/zE5CHhcvuLtcbmvl8lj8wotj8V7XjJ5bFrVyeYxYdEBRo+PT2+x
-        ePRtWcXo8XmTnEf7gW6mAK4oLpuU1JzMstQifbsErowLfavYC96qVNxedIqxgbFXrouRk0NC
-        wERiY8Nk9i5GLg4hgR2MEm2P57JBJGQlnr3bwQ5hC0vcbznCClH0nlHi74QjjCAJNgFdiS3P
-        XzGCJEQEdjFKHD5zGGwUs8BlZolv064wg1QJC4RKXG1vYAKxWQRUJdY+2A22glfAQeLv+5WM
-        ECvkJU4tOwhWwwkUP7jhA1hcSMBe4t+21VD1ghInZz5hAbGZgeqbt85mnsAoMAtJahaS1AJG
-        plWMkqkFxbnpucWGBUZ5qeV6xYm5xaV56XrJ+bmbGMHRpaW1g3HPqg96hxiZOBgPMUpwMCuJ
-        8C41epsgxJuSWFmVWpQfX1Sak1p8iFGag0VJnPdC18l4IYH0xJLU7NTUgtQimCwTB6dUA5N+
-        nNDT6zZbtrR5ie7O3JVr/cztucfdlFkGR75flPdPM2Fz7dnh8tC0OC0t4aMnQ0/k86UXa9br
-        fb9y8oD7tVOveF4kr9/lHfV4q0+YR9FrZrX7JiLzfvka69kkyYcJbtvKaNIo321yMS6J611N
-        3Oqzzx3TvjLoF9T8bvcX0V/xzvO+37EglaY1x2dL3ZnoWMUmviN65UfP6XL9vPvbGNn9jpyN
-        4op//ttm9bJzZQb7ppYwXVCZ3PGjP37D7MOuRhsF3Q5knr8YYRFcqXlZQuGaw9asxd/2rW2/
-        6rGq+jtHmbnnt79Ld194+CWyQCHydjSTUvTalVsSd/7UyBdavM/ulbi+uk3Prm01MfvqHyix
-        FGckGmoxFxUnAgDVCJihHQMAAA==
-X-CMS-MailID: 20210714071200epcas2p413ca643dc459ee75ec7e5e4f8a6c05d7
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20210714071200epcas2p413ca643dc459ee75ec7e5e4f8a6c05d7
-References: <20210714071131.101204-1-chanho61.park@samsung.com>
-        <CGME20210714071200epcas2p413ca643dc459ee75ec7e5e4f8a6c05d7@epcas2p4.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This patch introduces virtual host driver of exynosauto v9 ufs mHCI.
-VH(Virtual Host) only supports data transfer functions. So, most of
-physical features are broken. So, we need to set below quirks.
-- UFSHCD_QUIRK_BROKEN_UIC_CMD
-- UFSHCD_QUIRK_SKIP_PH_CONFIGURATION
-Before initialization, the VH is necessary to wait until PH is ready.
-It's implemented as polling at the moment.
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-Signed-off-by: Chanho Park <chanho61.park@samsung.com>
+[ Upstream commit cc29e39412b9a78b43f7dfa09d739f8ba9fa7984 ]
+
+The Broadcom BCM4329 family dtschema expects devices to be compatible
+also with brcm,bcm4329-fmac:
+
+  arch/arm/boot/dts/exynos3250-rinato.dt.yaml: wifi@1: compatible: 'oneOf' conditional failed, one must be fixed:
+    ['brcm,bcm4334-fmac'] is too short
+    'brcm,bcm4329-fmac' was expected
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Link: https://lore.kernel.org/r/20210505135941.59898-1-krzysztof.kozlowski@canonical.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/ufs/samsung,exynos-ufs.yaml      |  1 +
- drivers/scsi/ufs/ufs-exynos.c                 | 84 +++++++++++++++++++
- 2 files changed, 85 insertions(+)
+ arch/arm/boot/dts/exynos3250-rinato.dts         | 2 +-
+ arch/arm/boot/dts/exynos4210-i9100.dts          | 2 +-
+ arch/arm/boot/dts/exynos4210-trats.dts          | 2 +-
+ arch/arm/boot/dts/exynos4210-universal_c210.dts | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-index fa5247c4a44f..9bd9ddc34791 100644
---- a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-@@ -21,6 +21,7 @@ properties:
-     enum:
-       - samsung,exynos7-ufs
-       - samsung,exynosautov9-ufs
-+      - samsung,exynosautov9-ufs-vh
+diff --git a/arch/arm/boot/dts/exynos3250-rinato.dts b/arch/arm/boot/dts/exynos3250-rinato.dts
+index c52b9cf4f74c..f6ba5e426040 100644
+--- a/arch/arm/boot/dts/exynos3250-rinato.dts
++++ b/arch/arm/boot/dts/exynos3250-rinato.dts
+@@ -653,7 +653,7 @@ &mshc_1 {
+ 	mmc-pwrseq = <&wlan_pwrseq>;
  
-   reg:
-     items:
-diff --git a/drivers/scsi/ufs/ufs-exynos.c b/drivers/scsi/ufs/ufs-exynos.c
-index 5b293a4ac6ea..c277e1feded1 100644
---- a/drivers/scsi/ufs/ufs-exynos.c
-+++ b/drivers/scsi/ufs/ufs-exynos.c
-@@ -98,6 +98,8 @@
- #define HCI_MH_ALLOWABLE_TRAN_OF_VH		0x30C
- #define HCI_MH_IID_IN_TASK_TAG			0X308
+ 	brcmf: wifi@1 {
+-		compatible = "brcm,bcm4334-fmac";
++		compatible = "brcm,bcm4334-fmac", "brcm,bcm4329-fmac";
+ 		reg = <1>;
  
-+#define PH_READY_TIMEOUT_MS			(5 * MSEC_PER_SEC)
-+
- enum {
- 	UNIPRO_L1_5 = 0,/* PHY Adapter */
- 	UNIPRO_L2,	/* Data Link */
-@@ -1362,6 +1364,68 @@ static int exynos_ufs_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	return 0;
- }
+ 		interrupt-parent = <&gpx1>;
+diff --git a/arch/arm/boot/dts/exynos4210-i9100.dts b/arch/arm/boot/dts/exynos4210-i9100.dts
+index 525ff3d2fac3..db70f62cc08f 100644
+--- a/arch/arm/boot/dts/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/exynos4210-i9100.dts
+@@ -806,7 +806,7 @@ &sdhci_3 {
+ 	pinctrl-0 = <&sd3_clk>, <&sd3_cmd>, <&sd3_bus4>;
  
-+static int exynosauto_ufs_vh_link_startup_notify(struct ufs_hba *hba,
-+						 enum ufs_notify_change_status status)
-+{
-+	if (status == POST_CHANGE) {
-+		ufshcd_set_link_active(hba);
-+		ufshcd_set_ufs_dev_active(hba);
-+		hba->wlun_dev_clr_ua = true;
-+	}
-+
-+	return 0;
-+}
-+
-+static int exynosauto_ufs_vh_wait_ph_ready(struct ufs_hba *hba)
-+{
-+	u32 mbox;
-+	ktime_t start, stop;
-+
-+	start = ktime_get();
-+	stop = ktime_add(start, ms_to_ktime(PH_READY_TIMEOUT_MS));
-+
-+	do {
-+		mbox = ufshcd_readl(hba, PH2VH_MBOX);
-+		if ((mbox & MH_MSG_MASK) == MH_MSG_PH_READY)
-+			return 0;
-+
-+		usleep_range(40, 50);
-+	} while (ktime_before(ktime_get(), stop));
-+
-+	return -ETIME;
-+}
-+
-+static int exynosauto_ufs_vh_init(struct ufs_hba *hba)
-+{
-+	struct device *dev = hba->dev;
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct exynos_ufs *ufs;
-+	int ret;
-+
-+	ufs = devm_kzalloc(dev, sizeof(*ufs), GFP_KERNEL);
-+	if (!ufs)
-+		return -ENOMEM;
-+
-+	/* exynos-specific hci */
-+	ufs->reg_hci = devm_platform_ioremap_resource_byname(pdev, "vs_hci");
-+	if (IS_ERR(ufs->reg_hci)) {
-+		dev_err(dev, "cannot ioremap for hci vendor register\n");
-+		return PTR_ERR(ufs->reg_hci);
-+	}
-+
-+	ret = exynosauto_ufs_vh_wait_ph_ready(hba);
-+	if (ret)
-+		return ret;
-+
-+	ufs->drv_data = device_get_match_data(dev);
-+	if (!ufs->drv_data)
-+		return -ENODEV;
-+
-+	exynos_ufs_priv_init(hba, ufs);
-+
-+	return 0;
-+}
-+
- static struct ufs_hba_variant_ops ufs_hba_exynos_ops = {
- 	.name				= "exynos_ufs",
- 	.init				= exynos_ufs_init,
-@@ -1376,6 +1440,12 @@ static struct ufs_hba_variant_ops ufs_hba_exynos_ops = {
- 	.resume				= exynos_ufs_resume,
- };
+ 	brcmf: wifi@1 {
+-		compatible = "brcm,bcm4330-fmac";
++		compatible = "brcm,bcm4330-fmac", "brcm,bcm4329-fmac";
+ 		reg = <1>;
  
-+static struct ufs_hba_variant_ops ufs_hba_exynosauto_vh_ops = {
-+	.name				= "exynosauto_ufs_vh",
-+	.init				= exynosauto_ufs_vh_init,
-+	.link_startup_notify		= exynosauto_ufs_vh_link_startup_notify,
-+};
-+
- static int exynos_ufs_probe(struct platform_device *pdev)
- {
- 	int err;
-@@ -1444,6 +1514,18 @@ static struct exynos_ufs_drv_data exynosauto_ufs_drvs = {
- 	.post_pwr_change	= exynosauto_ufs_post_pwr_change,
- };
+ 		interrupt-parent = <&gpx2>;
+diff --git a/arch/arm/boot/dts/exynos4210-trats.dts b/arch/arm/boot/dts/exynos4210-trats.dts
+index d2406c9146b8..3eb8df319246 100644
+--- a/arch/arm/boot/dts/exynos4210-trats.dts
++++ b/arch/arm/boot/dts/exynos4210-trats.dts
+@@ -521,7 +521,7 @@ &sdhci_3 {
+ 	pinctrl-0 = <&sd3_clk>, <&sd3_cmd>, <&sd3_bus4>;
  
-+static struct exynos_ufs_drv_data exynosauto_ufs_vh_drvs = {
-+	.vops			= &ufs_hba_exynosauto_vh_ops,
-+	.quirks			= UFSHCD_QUIRK_PRDT_BYTE_GRAN |
-+				  UFSHCI_QUIRK_SKIP_RESET_INTR_AGGR |
-+				  UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR |
-+				  UFSHCI_QUIRK_BROKEN_HCE |
-+				  UFSHCD_QUIRK_BROKEN_UIC_CMD |
-+				  UFSHCD_QUIRK_SKIP_PH_CONFIGURATION |
-+				  UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING,
-+	.opts			= EXYNOS_UFS_OPT_BROKEN_RX_SEL_IDX,
-+};
-+
- static struct exynos_ufs_drv_data exynos_ufs_drvs = {
- 	.uic_attr		= &exynos7_uic_attr,
- 	.quirks			= UFSHCD_QUIRK_PRDT_BYTE_GRAN |
-@@ -1471,6 +1553,8 @@ static const struct of_device_id exynos_ufs_of_match[] = {
- 	  .data	      = &exynos_ufs_drvs },
- 	{ .compatible = "samsung,exynosautov9-ufs",
- 	  .data	      = &exynosauto_ufs_drvs },
-+	{ .compatible = "samsung,exynosautov9-ufs-vh",
-+	  .data	      = &exynosauto_ufs_vh_drvs },
- 	{},
- };
+ 	brcmf: wifi@1 {
+-		compatible = "brcm,bcm4330-fmac";
++		compatible = "brcm,bcm4330-fmac", "brcm,bcm4329-fmac";
+ 		reg = <1>;
  
+ 		interrupt-parent = <&gpx2>;
+diff --git a/arch/arm/boot/dts/exynos4210-universal_c210.dts b/arch/arm/boot/dts/exynos4210-universal_c210.dts
+index dd44ad2c6ad6..f052853244a4 100644
+--- a/arch/arm/boot/dts/exynos4210-universal_c210.dts
++++ b/arch/arm/boot/dts/exynos4210-universal_c210.dts
+@@ -614,7 +614,7 @@ &sdhci_3 {
+ 	pinctrl-0 = <&sd3_clk>, <&sd3_cmd>, <&sd3_bus4>;
+ 
+ 	brcmf: wifi@1 {
+-		compatible = "brcm,bcm4330-fmac";
++		compatible = "brcm,bcm4330-fmac", "brcm,bcm4329-fmac";
+ 		reg = <1>;
+ 		interrupt-parent = <&gpx2>;
+ 		interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
 -- 
-2.32.0
+2.30.2
 
