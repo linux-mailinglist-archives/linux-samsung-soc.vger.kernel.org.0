@@ -2,77 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A030F3CA41A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Jul 2021 19:25:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A623CA6B1
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 Jul 2021 20:47:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234967AbhGOR2R (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 15 Jul 2021 13:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37302 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235182AbhGOR2Q (ORCPT
+        id S240077AbhGOSt6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 15 Jul 2021 14:49:58 -0400
+Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:54646
+        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239566AbhGOStr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:28:16 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19ABEC0613E1
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 15 Jul 2021 10:25:22 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id z9so5933671qkg.5
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 15 Jul 2021 10:25:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=Ibb5KNEw1DKqJEg9n4gJy5KnzVasBofn6QaWYsu9UCQ=;
-        b=VEbievBeLXzXz2IFTCJlfsSW3SGnPx5BRLHAunZVXukgfJX3HSSAUxCtdiKf61hv/8
-         dEjk1vTJjxHihT0WA1OL/uEOLbisu+eOZ9QBM+pSgOr0g3iviST/L7UaXer3M8NeFmjI
-         cUcDXANijM5RzePSgHNEUg4tiAZJvw7xY2717+o5bCXGYbN3j0in5RSdJSiv5QmZpfXV
-         xJwXiiE0C1Gs4ldNfG+SItE+RoyPJtAgR4hB34JMXRrPZxzy82ifiVVChBVQnRUKYafC
-         pLvyRURLCMNCEs5zTTafGrQe1zI12ARsnWy7gNJNMcFCKTa1+89JJPFI0mohmLMeae0x
-         ASdQ==
+        Thu, 15 Jul 2021 14:49:47 -0400
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id 02823409FD
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 15 Jul 2021 18:46:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1626374812;
+        bh=fPdYklx7VtItYhkY/OMzFdpH0tNK7E+zuo6sStsoYAw=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version:Content-Type;
+        b=dXnFa+MDY4cmTK1NjuY8Yn++9k6TthsndfdXw0Zk2KTunJHiJG68K8/+4/9F+KBC/
+         r4qsJCODehW5dUpqpdbFimIdg4Hk0CjkgZKX/WFZkljHxKYAxT0reSqsAlpyb87RZV
+         5JEy4+R4utkD/+5sakixYmcGweylFiWpqeUZJCla54nP30Q8KgG+cUs2rYLGmY9dOz
+         vB32EPWW/dffqZiOLmK0VB/gNRC7OxQl+Cnmmst8DPoc/krvzz0ruD6ynooaE8qUul
+         Uo6acg+veIYyFC9SlFhU4YnNfEoRHS55dgjpLRsT1CP8iAFLba+6+Fo7tVYGj+HZTH
+         AAOqC/PfRt80w==
+Received: by mail-ed1-f70.google.com with SMTP id x16-20020aa7d6d00000b02903a2e0d2acb7so3592928edr.16
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 15 Jul 2021 11:46:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=Ibb5KNEw1DKqJEg9n4gJy5KnzVasBofn6QaWYsu9UCQ=;
-        b=DaWL4SzCYTv/l4N1Jvve9IzDs3MNyEp/LtB1G8mY8S+TqFUJFAC53J/jB9LIe4bTvw
-         QxoykvbOdwT9y1vdxBERS/Bkv2IFPQMRj99Y5VOK7X8RnrRnCx0br80lfqMIB04l5I+t
-         PysEx8s8qNF0yDwCOf08q16CKwcSETLbieS+1qhCo+UrMVL0YhEfsIKMgJpv/GUICozF
-         OLgOH3Lz/rfhT7rwl3Y0OgGGfSMWHOuGRXk+r3DTe4/PQ3QXd4tBZAgJjzBO1CGbTMAi
-         Bzf1QaACcIlYSIFsHehk50dSzvtGu7bavXzIMury5AmZki2TwdDAgtoDXEiuf9ZKdu9I
-         tD+w==
-X-Gm-Message-State: AOAM533+bN5C5W0LGdOcEH1tgu1/WJQkazhWH4jiTcztHGyiCjp1XxEg
-        cvrCIk0zXnpgV3L6Ir80geYrh5TlrcOOdr8L3pQ=
-X-Google-Smtp-Source: ABdhPJyVA6gR/njuabWs2C2fW8gelCsYJFEl6/1qckwAKb5sFvak5SWUy5PHC6/Yk0GlmffBpcH6FQwcd62hdQoqBbA=
-X-Received: by 2002:a37:9947:: with SMTP id b68mr5263725qke.56.1626369920992;
- Thu, 15 Jul 2021 10:25:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fPdYklx7VtItYhkY/OMzFdpH0tNK7E+zuo6sStsoYAw=;
+        b=SGJ/hTOyVP2Fr6FEEval9QIvfDHrZOYgHtkwHycW06yRrlxkruFf0mDXDTkiReCA0q
+         kkPhvrPNAUd21gZvGRTH4dbJCbZNY/iYS3ut8HLTjGFpUyT/kxvYMYWOfRAnMBnPoHw5
+         LxNmxX4/bz4+e7Dtt/vxRBWr23NvoUsw5Rg9E9wlkq7u4GluUaxzYVzGu2y4TyEa9RGq
+         7MYcxmF+9CqqPyIyW4M2PNGBzzIvnunHNJ36jG6OXwfitJKkv43Krcf2ZkYdcD/zIbKG
+         gvt/FKyjMwZi7BrMTM5oLy/8/l/rqSt+68v1GixnZ2YL4vN9IczCkziCLOcIEW6eECuh
+         YI0w==
+X-Gm-Message-State: AOAM531TucxWeWNTg6e2y2u0UQEZ/wHD+GfBWcq9GepKRaIMfA/ue/FD
+        06k9smHDeU/J040LXwC5JWpNPRBJczZzndsKxafycKykhqIPR+uPGWX4PHXWIKbtoUyGvIGbOCV
+        9e7/9u7DFIPWrF2+iuRaVbxJCNIPufJyAFNqiVRKRnu8t0r1q
+X-Received: by 2002:a05:6402:291a:: with SMTP id ee26mr9053664edb.220.1626374811799;
+        Thu, 15 Jul 2021 11:46:51 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyDBFaU71T4EBsIVkf/T/sptn3NdcA7KPUP4mSyrdNw+iSXJ4imgC6n7oCA+D5ZI3prtBjuoA==
+X-Received: by 2002:a05:6402:291a:: with SMTP id ee26mr9053654edb.220.1626374811702;
+        Thu, 15 Jul 2021 11:46:51 -0700 (PDT)
+Received: from kozik-lap.lan (xdsl-188-155-177-222.adslplus.ch. [188.155.177.222])
+        by smtp.gmail.com with ESMTPSA id i25sm2790842edv.29.2021.07.15.11.46.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jul 2021 11:46:51 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Alim Akhtar <alim.akhtar@samsung.com>, robh+dt@kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] arm64: dts: exynos7: Add cpu cache information
+Date:   Thu, 15 Jul 2021 20:46:47 +0200
+Message-Id: <162637471053.9353.33889175866144667.b4-ty@canonical.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20210622130551.67446-1-alim.akhtar@samsung.com>
+References: <CGME20210622130203epcas5p48a3111fc6586b1bfe0bd3cb90f783ce0@epcas5p4.samsung.com> <20210622130551.67446-1-alim.akhtar@samsung.com>
 MIME-Version: 1.0
-Received: by 2002:a0c:e502:0:0:0:0:0 with HTTP; Thu, 15 Jul 2021 10:25:20
- -0700 (PDT)
-Reply-To: faty.muhamad@gmail.com
-From:   Ms Fatima Muhammad <steveokoh.fedexdeliveryagent@gmail.com>
-Date:   Thu, 15 Jul 2021 17:25:20 +0000
-Message-ID: <CAFKwDuBfMzCdHqoenSL2rqjnW5tE27dPjiWKbgxM_hjsa-G7pg@mail.gmail.com>
-Subject: Hello Dear
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Dear,
+On Tue, 22 Jun 2021 18:35:50 +0530, Alim Akhtar wrote:
+> This patch adds cpu caches information to its dt
+> nodes so that the same is available to userspace
+> via sysfs.
+> This SoC has 48/32 KB I/D cache for each cores
+> and 2MB of L2 cache.
 
-My name is Ms.Fatima Muhammad., Please forgive me for stressing you
-with my predicaments and I sorry to approach you through this media
-because is serves the fastest means of  my communication right now,
+Applied, thanks!
 
-I came across your Email from my personal search and I decided to
-contact you believing you will be honest to fulfill my business
-proposal which I believe that will be a very good opportunity for both
-of us. Please it is my pleasure to contact you today for a business
-partnership investments projects worth $4.6 million USD which I intend
-to establish in your country..
+[1/2] arm64: dts: exynos7: Add cpu cache information
+      commit: 43e7b8b864cc5319f323dfedf633071a434410f7
+[2/2] arm64: dts: exynos5433: Add cpu cache information
+      commit: d5c65c4aa23c52226067d7882ba2ce2055c9315d
 
-Pls If this business proposal offends your moral and ethic values do
-accept my apology. therefore kindly contact me immediately if you are
-interested for more details.
-
-Thank you for your wiliness to help me
-Yours Sincerely Fatima Muhammad
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
