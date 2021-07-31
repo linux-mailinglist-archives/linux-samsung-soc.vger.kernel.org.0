@@ -2,58 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14E193DC553
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 31 Jul 2021 11:24:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E556E3DC55A
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 31 Jul 2021 11:24:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232758AbhGaJYs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 31 Jul 2021 05:24:48 -0400
-Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:59950
+        id S233076AbhGaJYv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 31 Jul 2021 05:24:51 -0400
+Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:59978
         "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232801AbhGaJYq (ORCPT
+        by vger.kernel.org with ESMTP id S232473AbhGaJYr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 31 Jul 2021 05:24:46 -0400
+        Sat, 31 Jul 2021 05:24:47 -0400
 Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id E535E3F340
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 09:24:39 +0000 (UTC)
+        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id 1F6B23F233
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 09:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1627723479;
-        bh=LR7PylKlSM9jbeT9DvZDED63xszwtTNm8McFnmsrZzE=;
+        s=20210705; t=1627723481;
+        bh=oZaMws7fwrXQ+39v59StjW2jRchmqWMSe99swu1ZncA=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=vbhNutqO5C+wrwQrf11kMUiWHkqzEf3pRq5EVfbBlbhNKbKBh39ISmZ0ZMEwd7I1W
-         9JR2sUPtBMIB5TW7PHl9/3n9qNOR+9sfVbHuM3zMnESxe+PwhQybajB4C8IE/Qsx8v
-         Vvj3YysUgc9pN+tsVvl7rp6TEFy2AJHIKtkuBJ6OzPTFXUq7LpEn+EstOb0y6/tdLZ
-         LK4VllHS8lhNmUEgiwMqBp1P7evX4QWYBGZeIxMB/SgJJLfPEdYFW6DoMdjRqnPECe
-         fHttX9uSjTYlwccwbZyi10DCDtcxDABFhOWHZWqZe6OV+kg8+8hM5Rf+I1rtNx7vOp
-         l2UeXy7J1svRw==
-Received: by mail-ed1-f71.google.com with SMTP id de5-20020a0564023085b02903bb92fd182eso5932508edb.8
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 02:24:39 -0700 (PDT)
+        b=nXg/FIqSDxEjmBHEH0h9pnjLLCOQJDVVzCZ/umh/7rFsyRWezPguqgjA0HW2TJTZE
+         +h6JdFvLqhFLZ4jtVdtXc08Qe2yT0H1grLb72dwEmhd+WuE38yov3ldUknvN4K2UoZ
+         MftRET4rUAvA9kAKppuyGLN1TYMKaeMWmqel+MRgLmhUwdgYj/PHmjl9U5rNN8BH2u
+         O8qHuW+bKlLXDwxu5Lqx7wJwzlQYGn5AN6MYtLKuB+iDlKGa68+aMr9IqSUh9Mm9o1
+         S2dBjrQhtmzrH3AD2CRYSn1FJson4RI4y6+FquLNIMhaqEd2GEzPFjZGiMWCl4sDSl
+         GNJumKlHwx5+Q==
+Received: by mail-ed1-f71.google.com with SMTP id c1-20020aa7df010000b02903bb5c6f746eso5845113edy.10
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 02:24:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LR7PylKlSM9jbeT9DvZDED63xszwtTNm8McFnmsrZzE=;
-        b=aj0hiU0vwY/BdRjks2aAoqHMSZKEUC1neZvUxAG9gdOzBuo7/Gj1m2NS8JSQftn+NI
-         gMU4EiDY1qogIlHn0iv7Ya+sB1q9jqRYL8ja1Z08KIXveqnFd5Lo+vfT4C727nsC3hMB
-         YOT0IBQ2riiccX2GarIiyAxx0xOBuu2T0WpPmd93Q6VE0C4y1s0uSUHEKBwNLYG3y9mS
-         XJCzEYcgmVCBGzfk8vtOPwnpkuNCeBJf1dW3oDsWVNQUzYuxall+G/9XLwAUBg8nZRZP
-         y0eVkENOzLA2qnqBUaFGYoxMaNZYGzz5RzGVnxww8Nb/6pQ6cf0L9aRn2ycKi8O8QJFD
-         2sLA==
-X-Gm-Message-State: AOAM533mOUqu+l55PGv8QxGHVpvAUUuKQqwUsFObFqjWSFuz9fqPh7Yc
-        J7nOuq+dYaEgPGF5A2TScc0ituOCe7gRmiRw2U3AwThySFPuKhn3Pf4We5My6ETx1NuW0EcK1rv
-        rtj/sJfSoCzWSFAj7CIwI5Gyxk56nmn8HHblogM5U8yaS5c5L
-X-Received: by 2002:a50:d64a:: with SMTP id c10mr8402832edj.199.1627723479598;
-        Sat, 31 Jul 2021 02:24:39 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwnlJgsAJ+NC3dcAMAIjP6kd6XsZ6o25gKIxAdDwyN5QE4D1Nu5jA5QJOklXRxaOPI7XGCfBw==
-X-Received: by 2002:a50:d64a:: with SMTP id c10mr8402817edj.199.1627723479493;
-        Sat, 31 Jul 2021 02:24:39 -0700 (PDT)
+        bh=oZaMws7fwrXQ+39v59StjW2jRchmqWMSe99swu1ZncA=;
+        b=XhRfNjTXugxlN6hu7EtzgeAeXNEQKXVdvJ4uQmkoHjES2ft4IZWTm3f+v4VyBYUdVS
+         3MtTvbEGwFIE4MN9CMjOZun9asr9pZbks56tw56LxxbbgJP3BBfZBlgFqgIjhHc2gzl6
+         0FC7Slf+xgFqrFuDFze6kcQxV7rNkPd9P/sK/GanU3nmjrAP7ST2rpyKst0U4BZMucXe
+         Cl5xmTJ2yPRaaTyRdfxX01EFpT5yG5fX7JRJsoied0z5evOZO/c8C8fLkJ1BOBVoMgzB
+         8RDOZCPmhw6tGt33m/mMSVGxUE8zUn8VrTxX3uU6ihjaj90yjIe7+y04Sh+Jb1h9rVeq
+         ZPQA==
+X-Gm-Message-State: AOAM531c/8OK5GXrXbTbUZUpCVQvcHXIN6prYkmoshZOu0lmw7kxQhKz
+        ORXUa/d0fT3WcEJ2pdRSnkuYi7BzXULBfiZ8H8SBlta5Ro9va3Vsb5UyBp1yqX++zCTHBz2dfLy
+        G6C2G/vgzfqTR+TVPnQ9Uk7ggWprUJmzPFOnKVCfqtw4PAI0Z
+X-Received: by 2002:aa7:c792:: with SMTP id n18mr8329664eds.269.1627723480791;
+        Sat, 31 Jul 2021 02:24:40 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJw/sf10Y8srbg8K+efQ4NmEX6nec9k/+iYcFltTGdhcbdRPp/dreDc16TZIWHAzqpOtGFDNEg==
+X-Received: by 2002:aa7:c792:: with SMTP id n18mr8329653eds.269.1627723480696;
+        Sat, 31 Jul 2021 02:24:40 -0700 (PDT)
 Received: from localhost.localdomain ([86.32.47.9])
-        by smtp.gmail.com with ESMTPSA id r16sm1947693edt.15.2021.07.31.02.24.38
+        by smtp.gmail.com with ESMTPSA id r16sm1947693edt.15.2021.07.31.02.24.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Jul 2021 02:24:39 -0700 (PDT)
+        Sat, 31 Jul 2021 02:24:40 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -64,9 +64,9 @@ Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH 5/8] ARM: dts: exynos: add CPU topology to Exynos5260
-Date:   Sat, 31 Jul 2021 11:24:06 +0200
-Message-Id: <20210731092409.31496-5-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 6/8] ARM: dts: exynos: add CPU topology to Exynos5420
+Date:   Sat, 31 Jul 2021 11:24:07 +0200
+Message-Id: <20210731092409.31496-6-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210731092409.31496-1-krzysztof.kozlowski@canonical.com>
 References: <20210731092409.31496-1-krzysztof.kozlowski@canonical.com>
@@ -76,22 +76,21 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Describe Exynos5260 CPU topology.
+Describe Exynos5420 CPU topology.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm/boot/dts/exynos5260.dtsi | 38 ++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/exynos5420-cpus.dtsi | 32 ++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/arch/arm/boot/dts/exynos5260.dtsi b/arch/arm/boot/dts/exynos5260.dtsi
-index 973448c4ad93..52fa211525ce 100644
---- a/arch/arm/boot/dts/exynos5260.dtsi
-+++ b/arch/arm/boot/dts/exynos5260.dtsi
-@@ -34,42 +34,68 @@ cpus {
+diff --git a/arch/arm/boot/dts/exynos5420-cpus.dtsi b/arch/arm/boot/dts/exynos5420-cpus.dtsi
+index 58d1c54cf925..e9f4eb75b50f 100644
+--- a/arch/arm/boot/dts/exynos5420-cpus.dtsi
++++ b/arch/arm/boot/dts/exynos5420-cpus.dtsi
+@@ -22,6 +22,38 @@ cpus {
  		#address-cells = <1>;
  		#size-cells = <0>;
  
--		cpu@0 {
 +		cpu-map {
 +			cluster0 {
 +				core0 {
@@ -100,68 +99,33 @@ index 973448c4ad93..52fa211525ce 100644
 +				core1 {
 +					cpu = <&cpu1>;
 +				};
++				core2 {
++					cpu = <&cpu2>;
++				};
++				core3 {
++					cpu = <&cpu3>;
++				};
 +			};
 +
 +			cluster1 {
 +				core0 {
-+					cpu = <&cpu2>;
-+				};
-+				core1 {
-+					cpu = <&cpu3>;
-+				};
-+				core2 {
 +					cpu = <&cpu4>;
 +				};
-+				core3 {
++				core1 {
 +					cpu = <&cpu5>;
++				};
++				core2 {
++					cpu = <&cpu6>;
++				};
++				core3 {
++					cpu = <&cpu7>;
 +				};
 +			};
 +		};
 +
-+		cpu0: cpu@0 {
+ 		cpu0: cpu@0 {
  			device_type = "cpu";
  			compatible = "arm,cortex-a15";
- 			reg = <0x0>;
- 			cci-control-port = <&cci_control1>;
- 		};
- 
--		cpu@1 {
-+		cpu1: cpu@1 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a15";
- 			reg = <0x1>;
- 			cci-control-port = <&cci_control1>;
- 		};
- 
--		cpu@100 {
-+		cpu2: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a7";
- 			reg = <0x100>;
- 			cci-control-port = <&cci_control0>;
- 		};
- 
--		cpu@101 {
-+		cpu3: cpu@101 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a7";
- 			reg = <0x101>;
- 			cci-control-port = <&cci_control0>;
- 		};
- 
--		cpu@102 {
-+		cpu4: cpu@102 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a7";
- 			reg = <0x102>;
- 			cci-control-port = <&cci_control0>;
- 		};
- 
--		cpu@103 {
-+		cpu5: cpu@103 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a7";
- 			reg = <0x103>;
 -- 
 2.27.0
 
