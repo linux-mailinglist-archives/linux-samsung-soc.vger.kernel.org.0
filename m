@@ -2,130 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88EC93DC55C
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 31 Jul 2021 11:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FA53DCF75
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Aug 2021 06:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233169AbhGaJYx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 31 Jul 2021 05:24:53 -0400
-Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:60034
-        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233018AbhGaJYu (ORCPT
+        id S232249AbhHBEYn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 2 Aug 2021 00:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231496AbhHBEYm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 31 Jul 2021 05:24:50 -0400
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id ADFE63F110
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 09:24:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1627723483;
-        bh=chFkYRASRXmnCTx3ox4fvgdh5vYDNQ+s+kCxqXeprbY=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=YXsVsGaZWOHequaxAuPZ3u4dHs0MJOTkgf7mTsLZoA8H8ekzazepCfbrfvRFSZZJ7
-         Og+jWwcSArTtK63ZuRw2+h4CNzvLzwcPiGfXFE4zT3MA+NB1suMeZxyDGZgUWM2NY5
-         uT+a+vuXLw3wcQcQBqktccsSQwyMuaLKa2xYVi4Fp+gqRDHdzKzdfXD3h+3kQCCfw9
-         6NcVzzASnTClkIn1ySN/zM1n8/Uo/LiRh40ifLXs7inE20j45vQxz1MpgOEpkUVHJm
-         kQeZT6EPyn+UczyEcb+lHB/Vxs4+o+Yobit+RoUHJKwUxcyVBQSdAXGD7pyhQGYp0Z
-         X1+UpgqpwANjQ==
-Received: by mail-ed1-f71.google.com with SMTP id l10-20020aa7caca0000b02903b874f26036so5848179edt.20
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 31 Jul 2021 02:24:43 -0700 (PDT)
+        Mon, 2 Aug 2021 00:24:42 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1C5C0617A1
+        for <linux-samsung-soc@vger.kernel.org>; Sun,  1 Aug 2021 21:24:33 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id x11so27815979ejj.8
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 01 Aug 2021 21:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
+        b=WDq9P0bY1AsY9kO7VoQiuEkd/+xeN2uAzVka1J/B7YABFMMcv9zsRMDuUzGU3t7LVq
+         x60AdfwMQPfhhBT91CFmxmNgG6fRcK6BFaIDqx+Ms1vLOgOAYNOd4Xbt+10CNKTcRAMK
+         KeTYcmNC0bNtdVd3yLIRxS8Pr5sLxpts2NC88pKkxuGBDjkmUnJislac8lDy7dNnd85N
+         dz7rwNTEXx7I9NqC47E4asccGsO9/P6huztRZkI4lkvRJ5hB7XcOxioVdhTGqNDSXebW
+         Md0Dh2ya6SQXgvhbdFNsJy7D030uG2HCPIxJG2TxztPigkWx+ZXfNLX+hVWs0ri0sCK7
+         k48A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=chFkYRASRXmnCTx3ox4fvgdh5vYDNQ+s+kCxqXeprbY=;
-        b=ahcQpx0E2a/CcQx6C1D2HakC4ITrfAbfez1piqpFkUJU9sFC/Hfk8mdiTs3IGvnmr2
-         iPRlxhly0X3c7ARSAmw3XjqFCrbX6ZiXM+kfFmw3Aorp6PH8ACpUY2/pXyZNoex2mtZg
-         L7WPdCmEgP7h/kZvsIzenK1vubawkEi45NKtSZ686HyOi0d4fZN6uBrjuw3JCwtiHaHV
-         KmIPkU45VVQffwOQ71GsOBKP0+kkQETWX3q/RJFjwHgwTjc7lCoNRDX0paxL5JVBiJJv
-         +M0rXeeti0hb65u0j9AJCrbHbVBTDUozVaAjQRK9K86OA9hc+QpSEqyWj20Ix/DMVbW9
-         1ewA==
-X-Gm-Message-State: AOAM530Vwlz2qIqlKrBro8zgasEHRE6TbRB8LfjxqfE+k5MVYiuKTmSk
-        UdHTYexlNESOCqa+JoSAgna2MUk6R8/Wom6aGpHSTQdlhb9Mm5jh+G/1H8jvZQ6PQxGgedKZ0DT
-        oO7+5pyHJtfvCgqRPh9w5rcA5uRaLndCCFDmWdyyk7p3tGxTo
-X-Received: by 2002:a05:6402:795:: with SMTP id d21mr8286569edy.351.1627723483219;
-        Sat, 31 Jul 2021 02:24:43 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwB5LpBFJZe4d1UOd9BvYXXzvUaXaSYxvLp4RsSizpd+kp+Ein0sIsc5F4o+6q+hd41PzPxLg==
-X-Received: by 2002:a05:6402:795:: with SMTP id d21mr8286563edy.351.1627723483120;
-        Sat, 31 Jul 2021 02:24:43 -0700 (PDT)
-Received: from localhost.localdomain ([86.32.47.9])
-        by smtp.gmail.com with ESMTPSA id r16sm1947693edt.15.2021.07.31.02.24.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Jul 2021 02:24:42 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH 8/8] arm64: dts: exynos: add CPU topology to Exynos5433
-Date:   Sat, 31 Jul 2021 11:24:09 +0200
-Message-Id: <20210731092409.31496-8-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210731092409.31496-1-krzysztof.kozlowski@canonical.com>
-References: <20210731092409.31496-1-krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
+        b=FzzJr+hJ1hSAL9EgYXUkvjzpqQAOo/+M4Sa8IFtCAc1/4QsOVq64F5jNQg3ye1CkC6
+         o36LcWptfNfw6y3YW+mbPmof+boGXaaEdNXZBzHnt8R81Vtr9nGsSijuJAwt25YspinV
+         Ck1xlBf5SGKBacSXRtZbQscj8Hj9TCXUPRb5e7r6cbWTuKCrVi+C8dawfRpFBbtHl7YB
+         Dxk82I6m1aMPNxYNayC6kKIBLdRyj12DYo5HBJ1XokC/+XNkd/ITA9q420HMGIuc4zye
+         2AFIZmtZY+Dlqa2hdcKt6GoFlDolyWE0CIAh5pcK60yrzG4MqHHOE7M3tbzgsuYVDhp1
+         +0ag==
+X-Gm-Message-State: AOAM530jGhnslRbZ+GVsXAnDHfwTXHwNtlBhB2J3m1xPnsDe0ImvRheQ
+        Q1fNIOrWZi980jx589GkLmHRAbm4jA5pztSPTPU=
+X-Google-Smtp-Source: ABdhPJyge6CE4/3PK9Ai4ltivb6MMxmm7LTQ2s8bjzS0dUrr9KzpIrZxfzN76q9x5Xx6YjpKdH1irFSuudYhIT6knzs=
+X-Received: by 2002:a17:906:3b87:: with SMTP id u7mr13818454ejf.66.1627878272087;
+ Sun, 01 Aug 2021 21:24:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a17:907:d0b:0:0:0:0 with HTTP; Sun, 1 Aug 2021 21:24:31
+ -0700 (PDT)
+Reply-To: ablahikazabl67@gmail.com
+From:   Abdoulahi Kazim <drwilliamcuthbert@gmail.com>
+Date:   Mon, 2 Aug 2021 05:24:31 +0100
+Message-ID: <CAKwBCXtg5uyf7Jb2AAcE1ghxD-+sCDTGfZ6n10fsvHdbE918iA@mail.gmail.com>
+Subject: More Authentic Information
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Describe Exynos5433 CPU topology.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- arch/arm64/boot/dts/exynos/exynos5433.dtsi | 32 ++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-index 73aa0fa9b778..6a6f7dd1d65c 100644
---- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
-@@ -52,6 +52,38 @@ cpus {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
-+		cpu-map {
-+			cluster0 {
-+				core0 {
-+					cpu = <&cpu0>;
-+				};
-+				core1 {
-+					cpu = <&cpu1>;
-+				};
-+				core2 {
-+					cpu = <&cpu2>;
-+				};
-+				core3 {
-+					cpu = <&cpu3>;
-+				};
-+			};
-+
-+			cluster1 {
-+				core0 {
-+					cpu = <&cpu4>;
-+				};
-+				core1 {
-+					cpu = <&cpu5>;
-+				};
-+				core2 {
-+					cpu = <&cpu6>;
-+				};
-+				core3 {
-+					cpu = <&cpu7>;
-+				};
-+			};
-+		};
-+
- 		cpu0: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a53";
 -- 
-2.27.0
+Dear Partner,
 
+I am soliciting your partnership to relocate $12.5 Million to your
+country for investment on my behalf and you will be entitled to 30% of
+the sum once the transaction is successful made.
+
+Please indicate your genuine interest if you are capable so that i
+will send you the authentic details and documents of the transaction
+in awareness with some of my fellow Directors in the bank.
+
+If you are interested, here is my private Email address:
+(ablahikazabl67@gmail.com)
+For more authentic and legit information.
+
+
+Regards :  Abdoulahi Kazim
