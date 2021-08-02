@@ -2,71 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4629F3DD2F3
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Aug 2021 11:30:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A150C3DD6F5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Aug 2021 15:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233001AbhHBJaV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 2 Aug 2021 05:30:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232965AbhHBJaV (ORCPT
+        id S233778AbhHBNX6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 2 Aug 2021 09:23:58 -0400
+Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:45814
+        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233715AbhHBNX4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 2 Aug 2021 05:30:21 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 357CAC061798
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Aug 2021 02:30:12 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id gs8so29774462ejc.13
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Aug 2021 02:30:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=f1HK9jb2PQ2DqEz2QoT0GvdJtMzTubqzLBH4YtWvbD8=;
-        b=qlzzAKl99mr4Sh/6y6cubOOnm1iMmm72zq/21+QsW5osX+9q2T07ZFjgazah4/Rhbv
-         51njbmQrzW9V9CMBxmqrvws2sBSjeXHJybAPt5ira4IhmFf1GxTsb33VhPXlWBFpljiy
-         /S3NPXf203UNxk+stVVSoEIR5WmMv6cHZr+7vmsUyNdOfrRmI/ZmFi2UgAYjUp4g7eYv
-         Ym1hXN5+zatLKjMQdzziPkjRgogR784ozoaUH1guje3XxGM7tQb+UIAY+gx0vm9ZC/ps
-         tQbiU1TnLnKx8QrDuLKGpib3KCFtXbz8ADXC4T++b3y3C1le/yXT9m34d2C/QEGFnQOQ
-         tivQ==
+        Mon, 2 Aug 2021 09:23:56 -0400
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id 86FC73F0FF
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Aug 2021 13:23:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1627910626;
+        bh=PcYv7A5UtpI/HN8IQPlYCtcicRurm0AO4HjAfUXrPFg=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version:Content-Type;
+        b=JQ0GHuP65vX9piz3MEAq0p3R6U46Vua9V/4LJX0J8Pojfuw6HrFuY3oHI938PWvHR
+         82WoZm4nUsCTPaL2rfBYo4qSyhfe1d8rSvh+xlsSeB2xcqAhtUxoqDou42BCISf2+u
+         JGLRI+mvNBIzwUGdfXWPDr9NWUZVFx0zD86FVK3ETZqWig6k7pt+Ka7dlkFSsPAXCj
+         MaO0MsvKR74ZCDkBBJKQnsNLXRUFHcAMDyjJ7g8og3343ljk8BVn2hvfptI1XvQQ9c
+         j3+qbuI5MBCQ3trgd9J4tiwKDfOip1kMsBQ5SngvK0SvRSrwDlhzvzXYYOhB3W/uBv
+         Ly/3mclpBU13A==
+Received: by mail-ej1-f71.google.com with SMTP id q19-20020a1709064cd3b02904c5f93c0124so4612283ejt.14
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Aug 2021 06:23:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=f1HK9jb2PQ2DqEz2QoT0GvdJtMzTubqzLBH4YtWvbD8=;
-        b=ZS/TxnKC5O56p6tun5EoXM8T9dXqQZEae/JPd9qf/ZR8wDHSKVDIufrR3zgSUiJw6d
-         O6PV9LtXwRKrHjIkldKVlkzhhdICTXmfBe4RlnRcJu2RdBiKZ+Fkf/yKwP66KmXGDol5
-         RtCRwXPp+jdb3CdC08As5itsyW2UfUjypNz1TwF4i4w3yVZwGa0QKzKatxltndM8DFUC
-         FpcZBQPUX9t76d6PV8FMwN6C4FsIZSC0dlbdo+pCxME5Mf+hKmDBEymxUlWeobMt/iwY
-         iBEIU/kZb9KYuB7keDvyCPXTJRiWU/PMFyZ4Yr4QTl2KF5wTRbP1/zLBiEZmw0cnYAe5
-         H3dw==
-X-Gm-Message-State: AOAM530Jqn85sNyZlUY1swaxAetz9LlWUTgEoFYCX/r7k2S9PSuQbz5K
-        LAGBrm4L0Kcu7W25fetrYGAGyM0XUo1UNTVcUGE=
-X-Google-Smtp-Source: ABdhPJxATuVb1LWjeVd4a+jNZPfEJQM9Nr0TZPHIA/hzFbiw/SQJNlhX78np9Q8raDHKD7jjDmfA6qsqLu+GCroD6S4=
-X-Received: by 2002:a17:906:585a:: with SMTP id h26mr14625957ejs.31.1627896610830;
- Mon, 02 Aug 2021 02:30:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PcYv7A5UtpI/HN8IQPlYCtcicRurm0AO4HjAfUXrPFg=;
+        b=Xxysg1VA9SH4qcbXfK5WBQ87+3EkZlfFsIzw+mtn4rRu24gO6YEeXaQ6/gTyLvY/sd
+         acjnqHSamL6J1L7PpZdPX8lwcDCtHKutWoigDpIQd71Iz2fOCetmuGA6nxReFR7rgkt/
+         6K5m8Z1LZ35yf1FN72j2oE5p874u4CveYafWuYl5Qqn7R/8xQGe4PL4V/jb2FLeeiVdV
+         kHW3b9Gc8RSCVT/Hyzk+ttlKWn5qRQKrUFrwH+cVjptW7jzCf3e7qbm+uD/pOLb/FgGb
+         5dJI8H7bWnB4whnVatEhTHMZV3fMdmi/MEc4V7CQv5ZtsIKA8W0oC4qUQGoEKIJwBksw
+         FhBA==
+X-Gm-Message-State: AOAM530aJilCYX3O9G0lM4tZwnZcxtGtqUSNxIAsC1s/8XgleEzCvb2K
+        NOX0OYrUUWVxetwdlkmYMS3cgLp+gs6rBFyHcfv2kaW3qT73qCsgdasP2vpD7kLRk5Fu7DoV1AQ
+        1bAMry2I7Z2aUYQRAzqrjAeQc8UX3fYa9l0lVeiqh3u62GvE8
+X-Received: by 2002:a17:906:3042:: with SMTP id d2mr15817503ejd.234.1627910626320;
+        Mon, 02 Aug 2021 06:23:46 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzrA4flDvX+BAKewMQjdgTQYWuHYej9xPjsM1AuxVjzU8xxeUklp6WM1diAO6OrzbRfygP/bA==
+X-Received: by 2002:a17:906:3042:: with SMTP id d2mr15817484ejd.234.1627910626191;
+        Mon, 02 Aug 2021 06:23:46 -0700 (PDT)
+Received: from localhost.localdomain ([86.32.43.172])
+        by smtp.gmail.com with ESMTPSA id gv7sm4648671ejc.5.2021.08.02.06.23.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Aug 2021 06:23:45 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Ryu Euiyoul <ryu.real@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Charles Keepax <ckeepax@opensource.wolfsonmicro.com>
+Subject: Re: [PATCH] pinctrl: samsung: Fix pinctrl bank pin count
+Date:   Mon,  2 Aug 2021 15:23:42 +0200
+Message-Id: <162791061524.24470.4507251211900093020.b4-ty@canonical.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210730192905.7173-1-semen.protsenko@linaro.org>
+References: <20210730192905.7173-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a50:cc92:0:0:0:0:0 with HTTP; Mon, 2 Aug 2021 02:30:10 -0700 (PDT)
-Reply-To: goedert_sheryl@yahoo.com
-From:   Sheryl Goedert <activationdept5@gmail.com>
-Date:   Mon, 2 Aug 2021 12:30:10 +0300
-Message-ID: <CA+k0Uf=7FPg1o52wjerKWSwOHyKrvJ7yVEYRa5mDzg6OtbcDuw@mail.gmail.com>
-Subject: =?UTF-8?B?57Sn5oCl5Zue5bqU?=
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-LS0gDQrmiJHmmK/mnaXoh6rkvZvnvZfph4zovr7lt57nmoQgU2hlcnlsbCBHb2VkZXJ077yM5LuW
-5ZyoIDIwMjAg5bm0IDEg5pyIIDI5IOaXpeS4vuihjOeahOW8uuWKm+eQg+W9qeelqOS4rei1ouW+
-l+S6hiAzLjk2OQ0K5Lq/576O5YWD55qE5aS05aWW77yM5oiR55qE5aS05aWW5a+55oiR5p2l6K+0
-5piv5LiA56eN56Wd56aP77yM5Zug5q2k5oiR55qE5YWo5a625Lq66YO95ZCM5oSP6L+Z5qC35YGa
-44CCDQoNCuWGoOeKtueXheavkueahOeIhuWPkeS4jeS7heaYr+S4gOWcuumHjeWkp+eahOWBpeW6
-t+WNseacuu+8jOS5n+aYr+WvvOiHtOS6uuS7rOWkseS4mueahOW3qOWkp+e7j+a1juegtOWdj++8
-jOaJgOS7peaIkeiHquaEv+WGs+WumuaNkOi1oCAxLDUwMCwwMDAuMDAg5qyn5YWD77yIMTUwDQrk
-uIfmrKflhYPvvInmnaXluK7liqkgMTAg5Liq5Lq65ZKM5bCPIOS8geS4muOAgg0KDQrpgJrov4fm
-iJHnmoTnlLXlrZDpgq7ku7bkuI7miJHogZTns7vvvJpnb2VkZXJ0X3NoZXJ5bEB5YWhvby5jb20N
-CuassuS6huino+abtOWkmi/lrozmlbTnmoTnu4boioLvvIzor7fmjqXlj5fov5nkuKrku6PluIHk
-vZzkuLrmiJHlkozmiJHlrrbkurrnmoTnpLznianjgIINCg0K5pyA5aW955qE56Wd56aP77yMDQrp
-m6rojonCt+aIiOW+t+eJuQ0KZ29lZGVydF9zaGVyeWxAeWFob28uY29tDQo=
+On Fri, 30 Jul 2021 22:29:05 +0300, Sam Protsenko wrote:
+> Commit 1abd18d1a51a ("pinctrl: samsung: Register pinctrl before GPIO")
+> changes the order of GPIO and pinctrl registration: now pinctrl is
+> registered before GPIO. That means gpio_chip->ngpio is not set when
+> samsung_pinctrl_register() called, and one cannot rely on that value
+> anymore. Use `pin_bank->nr_pins' instead of `pin_bank->gpio_chip.ngpio'
+> to fix mentioned inconsistency.
+
+Applied, thanks!
+
+[1/1] pinctrl: samsung: Fix pinctrl bank pin count
+      commit: 70115558ab02fe8d28a6634350b3491a542aaa02
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
