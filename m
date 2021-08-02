@@ -2,75 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5FA53DCF75
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Aug 2021 06:24:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4629F3DD2F3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Aug 2021 11:30:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232249AbhHBEYn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 2 Aug 2021 00:24:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43836 "EHLO
+        id S233001AbhHBJaV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 2 Aug 2021 05:30:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231496AbhHBEYm (ORCPT
+        with ESMTP id S232965AbhHBJaV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 2 Aug 2021 00:24:42 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1C5C0617A1
-        for <linux-samsung-soc@vger.kernel.org>; Sun,  1 Aug 2021 21:24:33 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id x11so27815979ejj.8
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 01 Aug 2021 21:24:33 -0700 (PDT)
+        Mon, 2 Aug 2021 05:30:21 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 357CAC061798
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Aug 2021 02:30:12 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id gs8so29774462ejc.13
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Aug 2021 02:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
-        b=WDq9P0bY1AsY9kO7VoQiuEkd/+xeN2uAzVka1J/B7YABFMMcv9zsRMDuUzGU3t7LVq
-         x60AdfwMQPfhhBT91CFmxmNgG6fRcK6BFaIDqx+Ms1vLOgOAYNOd4Xbt+10CNKTcRAMK
-         KeTYcmNC0bNtdVd3yLIRxS8Pr5sLxpts2NC88pKkxuGBDjkmUnJislac8lDy7dNnd85N
-         dz7rwNTEXx7I9NqC47E4asccGsO9/P6huztRZkI4lkvRJ5hB7XcOxioVdhTGqNDSXebW
-         Md0Dh2ya6SQXgvhbdFNsJy7D030uG2HCPIxJG2TxztPigkWx+ZXfNLX+hVWs0ri0sCK7
-         k48A==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=f1HK9jb2PQ2DqEz2QoT0GvdJtMzTubqzLBH4YtWvbD8=;
+        b=qlzzAKl99mr4Sh/6y6cubOOnm1iMmm72zq/21+QsW5osX+9q2T07ZFjgazah4/Rhbv
+         51njbmQrzW9V9CMBxmqrvws2sBSjeXHJybAPt5ira4IhmFf1GxTsb33VhPXlWBFpljiy
+         /S3NPXf203UNxk+stVVSoEIR5WmMv6cHZr+7vmsUyNdOfrRmI/ZmFi2UgAYjUp4g7eYv
+         Ym1hXN5+zatLKjMQdzziPkjRgogR784ozoaUH1guje3XxGM7tQb+UIAY+gx0vm9ZC/ps
+         tQbiU1TnLnKx8QrDuLKGpib3KCFtXbz8ADXC4T++b3y3C1le/yXT9m34d2C/QEGFnQOQ
+         tivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
-        b=FzzJr+hJ1hSAL9EgYXUkvjzpqQAOo/+M4Sa8IFtCAc1/4QsOVq64F5jNQg3ye1CkC6
-         o36LcWptfNfw6y3YW+mbPmof+boGXaaEdNXZBzHnt8R81Vtr9nGsSijuJAwt25YspinV
-         Ck1xlBf5SGKBacSXRtZbQscj8Hj9TCXUPRb5e7r6cbWTuKCrVi+C8dawfRpFBbtHl7YB
-         Dxk82I6m1aMPNxYNayC6kKIBLdRyj12DYo5HBJ1XokC/+XNkd/ITA9q420HMGIuc4zye
-         2AFIZmtZY+Dlqa2hdcKt6GoFlDolyWE0CIAh5pcK60yrzG4MqHHOE7M3tbzgsuYVDhp1
-         +0ag==
-X-Gm-Message-State: AOAM530jGhnslRbZ+GVsXAnDHfwTXHwNtlBhB2J3m1xPnsDe0ImvRheQ
-        Q1fNIOrWZi980jx589GkLmHRAbm4jA5pztSPTPU=
-X-Google-Smtp-Source: ABdhPJyge6CE4/3PK9Ai4ltivb6MMxmm7LTQ2s8bjzS0dUrr9KzpIrZxfzN76q9x5Xx6YjpKdH1irFSuudYhIT6knzs=
-X-Received: by 2002:a17:906:3b87:: with SMTP id u7mr13818454ejf.66.1627878272087;
- Sun, 01 Aug 2021 21:24:32 -0700 (PDT)
+         :subject:to:content-transfer-encoding;
+        bh=f1HK9jb2PQ2DqEz2QoT0GvdJtMzTubqzLBH4YtWvbD8=;
+        b=ZS/TxnKC5O56p6tun5EoXM8T9dXqQZEae/JPd9qf/ZR8wDHSKVDIufrR3zgSUiJw6d
+         O6PV9LtXwRKrHjIkldKVlkzhhdICTXmfBe4RlnRcJu2RdBiKZ+Fkf/yKwP66KmXGDol5
+         RtCRwXPp+jdb3CdC08As5itsyW2UfUjypNz1TwF4i4w3yVZwGa0QKzKatxltndM8DFUC
+         FpcZBQPUX9t76d6PV8FMwN6C4FsIZSC0dlbdo+pCxME5Mf+hKmDBEymxUlWeobMt/iwY
+         iBEIU/kZb9KYuB7keDvyCPXTJRiWU/PMFyZ4Yr4QTl2KF5wTRbP1/zLBiEZmw0cnYAe5
+         H3dw==
+X-Gm-Message-State: AOAM530Jqn85sNyZlUY1swaxAetz9LlWUTgEoFYCX/r7k2S9PSuQbz5K
+        LAGBrm4L0Kcu7W25fetrYGAGyM0XUo1UNTVcUGE=
+X-Google-Smtp-Source: ABdhPJxATuVb1LWjeVd4a+jNZPfEJQM9Nr0TZPHIA/hzFbiw/SQJNlhX78np9Q8raDHKD7jjDmfA6qsqLu+GCroD6S4=
+X-Received: by 2002:a17:906:585a:: with SMTP id h26mr14625957ejs.31.1627896610830;
+ Mon, 02 Aug 2021 02:30:10 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a17:907:d0b:0:0:0:0 with HTTP; Sun, 1 Aug 2021 21:24:31
- -0700 (PDT)
-Reply-To: ablahikazabl67@gmail.com
-From:   Abdoulahi Kazim <drwilliamcuthbert@gmail.com>
-Date:   Mon, 2 Aug 2021 05:24:31 +0100
-Message-ID: <CAKwBCXtg5uyf7Jb2AAcE1ghxD-+sCDTGfZ6n10fsvHdbE918iA@mail.gmail.com>
-Subject: More Authentic Information
+Received: by 2002:a50:cc92:0:0:0:0:0 with HTTP; Mon, 2 Aug 2021 02:30:10 -0700 (PDT)
+Reply-To: goedert_sheryl@yahoo.com
+From:   Sheryl Goedert <activationdept5@gmail.com>
+Date:   Mon, 2 Aug 2021 12:30:10 +0300
+Message-ID: <CA+k0Uf=7FPg1o52wjerKWSwOHyKrvJ7yVEYRa5mDzg6OtbcDuw@mail.gmail.com>
+Subject: =?UTF-8?B?57Sn5oCl5Zue5bqU?=
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
--- 
-Dear Partner,
-
-I am soliciting your partnership to relocate $12.5 Million to your
-country for investment on my behalf and you will be entitled to 30% of
-the sum once the transaction is successful made.
-
-Please indicate your genuine interest if you are capable so that i
-will send you the authentic details and documents of the transaction
-in awareness with some of my fellow Directors in the bank.
-
-If you are interested, here is my private Email address:
-(ablahikazabl67@gmail.com)
-For more authentic and legit information.
-
-
-Regards :  Abdoulahi Kazim
+LS0gDQrmiJHmmK/mnaXoh6rkvZvnvZfph4zovr7lt57nmoQgU2hlcnlsbCBHb2VkZXJ077yM5LuW
+5ZyoIDIwMjAg5bm0IDEg5pyIIDI5IOaXpeS4vuihjOeahOW8uuWKm+eQg+W9qeelqOS4rei1ouW+
+l+S6hiAzLjk2OQ0K5Lq/576O5YWD55qE5aS05aWW77yM5oiR55qE5aS05aWW5a+55oiR5p2l6K+0
+5piv5LiA56eN56Wd56aP77yM5Zug5q2k5oiR55qE5YWo5a625Lq66YO95ZCM5oSP6L+Z5qC35YGa
+44CCDQoNCuWGoOeKtueXheavkueahOeIhuWPkeS4jeS7heaYr+S4gOWcuumHjeWkp+eahOWBpeW6
+t+WNseacuu+8jOS5n+aYr+WvvOiHtOS6uuS7rOWkseS4mueahOW3qOWkp+e7j+a1juegtOWdj++8
+jOaJgOS7peaIkeiHquaEv+WGs+WumuaNkOi1oCAxLDUwMCwwMDAuMDAg5qyn5YWD77yIMTUwDQrk
+uIfmrKflhYPvvInmnaXluK7liqkgMTAg5Liq5Lq65ZKM5bCPIOS8geS4muOAgg0KDQrpgJrov4fm
+iJHnmoTnlLXlrZDpgq7ku7bkuI7miJHogZTns7vvvJpnb2VkZXJ0X3NoZXJ5bEB5YWhvby5jb20N
+CuassuS6huino+abtOWkmi/lrozmlbTnmoTnu4boioLvvIzor7fmjqXlj5fov5nkuKrku6PluIHk
+vZzkuLrmiJHlkozmiJHlrrbkurrnmoTnpLznianjgIINCg0K5pyA5aW955qE56Wd56aP77yMDQrp
+m6rojonCt+aIiOW+t+eJuQ0KZ29lZGVydF9zaGVyeWxAeWFob28uY29tDQo=
