@@ -2,219 +2,158 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 911FA3DF9B1
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Aug 2021 04:32:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62F013DE74A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Aug 2021 09:37:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232116AbhHDCcP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Aug 2021 22:32:15 -0400
-Received: from mailout2.samsung.com ([203.254.224.25]:43266 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbhHDCcO (ORCPT
+        id S234240AbhHCHiE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Aug 2021 03:38:04 -0400
+Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:48368
+        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234183AbhHCHiC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Aug 2021 22:32:14 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20210804023158epoutp025f967e9474ac3bca155fa094caeef5cb~X_a6pvDIU3118731187epoutp02J
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 Aug 2021 02:31:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20210804023158epoutp025f967e9474ac3bca155fa094caeef5cb~X_a6pvDIU3118731187epoutp02J
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1628044318;
-        bh=kbTgHv/xYI2WEh9TgbergRaN4gUO/PT6mzRKwnk7qRo=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=ci2DyU06F29LmVm1R84Jp344ouM6yC7K0Gtv/hslnXgAg9nqmarU2UsvGfJbiDdrI
-         8eyDP0aMAzE/JfN1n0+akgA93ulvb8kyuaZBbWzAY0woLg7UBwev8tyOAhIhkMtcZZ
-         ShFwet7HoxeBLscwXifNoYQBMGT8SKGYjqDF1eRI=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20210804023157epcas5p3cd7324a34681f7f27ffa7592a3e421d8~X_a5g04oc0080600806epcas5p3D;
-        Wed,  4 Aug 2021 02:31:57 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.180]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 4GfbNH4hR4z4x9Q8; Wed,  4 Aug
-        2021 02:31:43 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        67.96.41701.70CF9016; Wed,  4 Aug 2021 11:31:35 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210803032734epcas5p2143008ddb212fe53fcd28b813c85c9d8~XriK76wJA0307203072epcas5p22;
-        Tue,  3 Aug 2021 03:27:34 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210803032734epsmtrp250253d00a0bcb95eb389ba59e2235cb0~XriK7Nrrq0903709037epsmtrp2E;
-        Tue,  3 Aug 2021 03:27:34 +0000 (GMT)
-X-AuditID: b6c32a4b-0c1ff7000001a2e5-62-6109fc075206
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        23.9B.08394.6A7B8016; Tue,  3 Aug 2021 12:27:34 +0900 (KST)
-Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
-        [107.108.73.139]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210803032733epsmtip257f8695ca31a55a1935839128ee154b8~XriJ90RNo0958009580epsmtip2g;
-        Tue,  3 Aug 2021 03:27:33 +0000 (GMT)
-From:   Alim Akhtar <alim.akhtar@samsung.com>
-To:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        robh+dt@kernel.org
-Cc:     krzysztof.kozlowski@canonical.com,
-        linux-samsung-soc@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH v11] dt-bindings: ufs: Add bindings for Samsung ufs host
-Date:   Tue,  3 Aug 2021 08:55:39 +0530
-Message-Id: <20210803032539.15676-1-alim.akhtar@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsWy7bCmui77H85Eg4Vt1hYP5m1js9j49geT
-        xabH11gtLu+aw2Yx4/w+JovWvUfYHdg8ZjX0snlsWtXJ5rF5Sb1H35ZVjB6fN8kFsEZl22Sk
-        JqakFimk5iXnp2TmpdsqeQfHO8ebmhkY6hpaWpgrKeQl5qbaKrn4BOi6ZeYAHaCkUJaYUwoU
-        CkgsLlbSt7Mpyi8tSVXIyC8usVVKLUjJKTAp0CtOzC0uzUvXy0stsTI0MDAyBSpMyM5Yslm9
-        4IlExaXrU1gbGNuFuxg5OSQETCQWXmhh6WLk4hAS2M0o8enXUijnE6PEkhlvmCCcb4wS7X8u
-        M8O09FzdxAqR2Mso8XfnPEYIp4VJ4sKD/6wgVWwC2hJ3p29hArFFBGIkHu6ZBxZnFiiUeNFy
-        kx3EFhbwkLjT8Q4sziKgKtH1+jwbiM0rYCNxdNpiVoht8hKrNxxgBlkgIbCMXeLhlzNQCReJ
-        vx0b2SBsYYlXx7ewQ9hSEp/f7QWKcwDZ2RI9u4whwjUSS+cdY4Gw7SUOXJnDAlLCLKApsX6X
-        PkRYVmLqqXVMEGfySfT+fsIEEeeV2DEPxlaVaH53FWqMtMTE7m5WiE0eEj09LiBhIYFYiXsT
-        +5gmMMrOQliwgJFxFaNkakFxbnpqsWmBcV5qOTyakvNzNzGCU5WW9w7GRw8+6B1iZOJgPMQo
-        wcGsJMIbeoMjUYg3JbGyKrUoP76oNCe1+BCjKTDEJjJLiSbnA5NlXkm8oYmlgYmZmZmJpbGZ
-        oZI4L3v81wQhgfTEktTs1NSC1CKYPiYOTqkGpg0nVb/Nu/+rVCiUz+3sXZG2bjnWttwl4lc/
-        Pf9i2HOfd/oZ/mSViadvyvcejrnu4+d70fR4dGGbyO/V+g22v7e+ORe6NOv0I53UiiBu/75v
-        zs9jLzZof32ysfTwv9bMNy/5om03vZXM/PRGcrJzxR0pB32RiphdLCcYtB6XJBu4rU/h9s87
-        LDBX2+Z7+rJfHjoqElvzQpVaBDr+2hxuD1c33CJz/j/bTQah76b8CXfjV+8WrZiclGuicHDd
-        W2X1rblslgvOL/nvf+XXA++W0kUncqSYl0eaGOYvZrz85LbJdsUYq2/TRK9c7nd+u/3hAr7j
-        UraHt7HpiVgGHzqQ/y/bMvDvt07TT4fMczjalFiKMxINtZiLihMBharpX94DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGJMWRmVeSWpSXmKPExsWy7bCSvO6y7RyJBrtaBC0ezNvGZrHx7Q8m
-        i02Pr7FaXN41h81ixvl9TBate4+wO7B5zGroZfPYtKqTzWPzknqPvi2rGD0+b5ILYI3isklJ
-        zcksSy3St0vgyliyWb3giUTFpetTWBsY24W7GDk5JARMJHqubmLtYuTiEBLYzSixcV8nO0RC
-        WuL6xglQtrDEyn/P2SGKmpgkfl3uYANJsAloS9ydvoWpi5GDQ0QgTqJ1fTWIySxQLHH6FxNI
-        hbCAh8SdjnesIDaLgKpE1+vzYJ28AjYSR6ctZoUYLy+xesMB5gmMPAsYGVYxSqYWFOem5xYb
-        FhjmpZbrFSfmFpfmpesl5+duYgQHjZbmDsbtqz7oHWJk4mA8xCjBwawkwqvfyp4oxJuSWFmV
-        WpQfX1Sak1p8iFGag0VJnPdC18l4IYH0xJLU7NTUgtQimCwTB6dUA1Myt+7i8zNXJ614sMDB
-        1/35GsYrIQWzko4uv3Xco/7YYu6HHnUZchveVxnOPnL699+2hzKfxfbt7uXcuURiVuoFl0tF
-        nXkLApI2da/5HuB7WWNFw/9WJ4np65Q0+R1nXmJnf3G06/y1tzpn+3U4D02/LHtracH8FJ79
-        l1/eip7daDGzL3ejstWsTdU7byw4auEyUStCbf29dWqVsVfnnPHKvD5bvu6Me7nT60L9mXs+
-        x/b6yUW1/bvF8iJTT2b1qWceSxM5eXsb/vxcOPOt54SgSfc22PzoTT/lIL/wZvU3FsEEUauZ
-        j1ZsFOi4vVx445eib2sv1h1e4iCyODL9eOvJXcpKXzt7rQOdPy9afDKrTomlOCPRUIu5qDgR
-        ADeZq/6JAgAA
-X-CMS-MailID: 20210803032734epcas5p2143008ddb212fe53fcd28b813c85c9d8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20210803032734epcas5p2143008ddb212fe53fcd28b813c85c9d8
-References: <CGME20210803032734epcas5p2143008ddb212fe53fcd28b813c85c9d8@epcas5p2.samsung.com>
+        Tue, 3 Aug 2021 03:38:02 -0400
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id 513463F364
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Aug 2021 07:37:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1627976271;
+        bh=HMiKxFSYa20UfSETkthFhrIjVbst/OK+au8qKZgzUks=;
+        h=To:Cc:References:From:Subject:Message-ID:Date:MIME-Version:
+         In-Reply-To:Content-Type;
+        b=tZPpox8+0BquNgSZ6ecGhH7CeD6Gfbvs8fSbHlXERoCPYAgrhBx0xV+eqLRUCk7dd
+         4s0XBWSKA3EWT4F6raOkB/wPlEJCAIVKHN9iJeN4YluKq5kil8flQDBO4IUOUQeApJ
+         dKtNloUtPxbD7QsOyvmdXXY3ZnGGRa0uhKLdiws/JRty/qpemQqor8EMDDhp78xFNC
+         SDsVuB0FCthYlZS6/+NEIFInmL/GlRaZu7xpGzkIw0569HElsijNyAThfKZEZC0y1V
+         SVMP1i0bkrAhPMAa0O+AY+r4rOsbYaTl2yaoEnYocmFw85Txf7sNnm27gJ8IgGlwSW
+         nWrvRf1uMKOHQ==
+Received: by mail-ej1-f69.google.com with SMTP id qf6-20020a1709077f06b029057e66b6665aso5698051ejc.18
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Aug 2021 00:37:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HMiKxFSYa20UfSETkthFhrIjVbst/OK+au8qKZgzUks=;
+        b=sEkV+LGLRIQX0nnViUxkE0G2quykIRWd9tD2xQSd+TTSvuZHndSjFb9AekH4Y/iqei
+         2L3dFJofy/vB1ayWDce9raASpJV9QbnK6CDyQuPR75qTQ16xk7Z/YE3u8NV0nQYhUjbr
+         GT76vIdokiehyTgMxNf9KsdV9sJEcnoWmNrw7qSf48rVSyIn7V1PSh0iuF4QBFxEmi9l
+         VcS8WiKVH9+y0hxIx75jINHPjJENX8OkoyvoWzNX0NlilIMOmnq9/YjKm9lMvJk5eYl3
+         W1JihiUZ4CXB3LvGwdb0eVK4LwtM+k1fLpA7FAVnZzP+EvgeLEaQvvRvtcx4bggrlRmW
+         OMbA==
+X-Gm-Message-State: AOAM532yoxTk4qMtnRORkH6EcIy0ulNXQAng23YAlULdLrOG+bNw5h4R
+        l5qymyIz3GH2a128fyh/Z/k7Hz2itNJNKhYCELEgb0aHBnHIQqRP1qwqNbrtIZuOdeaLhLTaMU3
+        GbfQM2SvFvXdxNz2gEAQX+tPb/ryxbBQwTx+JyF1Bow0p27Po
+X-Received: by 2002:a17:906:350c:: with SMTP id r12mr19518842eja.44.1627976270904;
+        Tue, 03 Aug 2021 00:37:50 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzyFBe5dbNxwlXlBXERsGZZkwqR37lHAwmEzaRMwA5uBHV4D/DUtM//HZhRsSt8v4oHJ3em0g==
+X-Received: by 2002:a17:906:350c:: with SMTP id r12mr19518821eja.44.1627976270751;
+        Tue, 03 Aug 2021 00:37:50 -0700 (PDT)
+Received: from [192.168.8.102] ([86.32.43.172])
+        by smtp.gmail.com with ESMTPSA id fi23sm4651493ejc.83.2021.08.03.00.37.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Aug 2021 00:37:49 -0700 (PDT)
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Charles Keepax <ckeepax@opensource.wolfsonmicro.com>,
+        Ryu Euiyoul <ryu.real@samsung.com>,
+        Tom Gall <tom.gall@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>
+References: <20210730144922.29111-1-semen.protsenko@linaro.org>
+ <20210730144922.29111-5-semen.protsenko@linaro.org>
+ <a1701931-136e-235c-8392-a3f64c050d74@canonical.com>
+ <CAPLW+4mMCzzyqqJTse-UEpjQoVu1b-9Xz3_3L=nmg63uKYFnGw@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: Re: [PATCH 04/12] tty: serial: samsung: Init USI to keep clocks
+ running
+Message-ID: <7364ccb2-70da-6400-ae6d-6a30171b6678@canonical.com>
+Date:   Tue, 3 Aug 2021 09:37:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAPLW+4mMCzzyqqJTse-UEpjQoVu1b-9Xz3_3L=nmg63uKYFnGw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This patch adds DT bindings for Samsung ufs hci
+On 03/08/2021 01:06, Sam Protsenko wrote:
 
-Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
----
-Changes since v10
-* Rebased on v5.14-rc2 
-* removed Rob Herring earlier Reviewed-by tag
+(...)
 
-This patch was part of exynos ufs driver series, somehow
-this got missed to applied on the tree, sending again as a new
-patch v11, removing Rob's earlier Reviewed-by tag.
+>>> diff --git a/include/linux/serial_s3c.h b/include/linux/serial_s3c.h
+>>> index f6c3323fc4c5..013c2646863e 100644
+>>> --- a/include/linux/serial_s3c.h
+>>> +++ b/include/linux/serial_s3c.h
+>>> @@ -28,6 +28,15 @@
+>>>  #define S3C2410_UFSTAT         (0x18)
+>>>  #define S3C2410_UMSTAT         (0x1C)
+>>>
+>>> +/* USI Control Register offset */
+>>> +#define USI_CON                      (0xC4)
+>>> +/* USI Option Register offset */
+>>> +#define USI_OPTION           (0xC8)
+>>> +/* USI_CON[0] = 0b0: clear USI global software reset (Active High) */
+>>> +#define USI_RESET            (0<<0)
+>>
+>> Just 0x0. I understand you wanted to hint it is a bit field, but the
+>> shift of 0 actually creates more questions.
+>>
+> 
+> After some consideration I decided to adhere to existing style and do
+> something like this (in v2):
+> 
+> 8<--------------------------------------------------------------------->8
+> #define USI_CON          (0xC4)
+> #define USI_OPTION      (0xC8)
+> 
+> #define USI_CON_RESET_CLEAR        (0<<0)
+> #define USI_CON_RESET_SET        (1<<0)
+> #define USI_CON_RESET_MASK        (1<<0)
+> 
+> #define USI_OPTION_HWACG_CLKREQ_ON    (1<<1)
+> #define USI_OPTION_HWACG_CLKSTOP_ON    (1<<2)
+> #define USI_OPTION_HWACG_MASK        (3<<1)
+> 8<--------------------------------------------------------------------->8
+> 
+> The whole reason for those comments was missing public TRM. But in the
+> end I decided it just looks ugly. Also, this way I can do RMW
+> operation (discussed above) in more logical way.
+> 
+> Please let me know if code snippets above look good to you.
 
- .../bindings/ufs/samsung,exynos-ufs.yaml      | 89 +++++++++++++++++++
- 1 file changed, 89 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
+Please skip the USI_CON_RESET_CLEAR. There is no such pattern in the
+code. Clearing bit is an obvious operation and such code is already
+everywhere:
+    val &= ~USI_CON_RESET
 
-diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-new file mode 100644
-index 000000000000..38193975c9f1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-@@ -0,0 +1,89 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/ufs/samsung,exynos-ufs.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung SoC series UFS host controller Device Tree Bindings
-+
-+maintainers:
-+  - Alim Akhtar <alim.akhtar@samsung.com>
-+
-+description: |
-+  Each Samsung UFS host controller instance should have its own node.
-+  This binding define Samsung specific binding other then what is used
-+  in the common ufshcd bindings
-+  [1] Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-+
-+properties:
-+
-+  compatible:
-+    enum:
-+      - samsung,exynos7-ufs
-+
-+  reg:
-+    items:
-+     - description: HCI register
-+     - description: vendor specific register
-+     - description: unipro register
-+     - description: UFS protector register
-+
-+  reg-names:
-+    items:
-+      - const: hci
-+      - const: vs_hci
-+      - const: unipro
-+      - const: ufsp
-+
-+  clocks:
-+    items:
-+      - description: ufs link core clock
-+      - description: unipro main clock
-+
-+  clock-names:
-+    items:
-+      - const: core_clk
-+      - const: sclk_unipro_main
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  phys:
-+    maxItems: 1
-+
-+  phy-names:
-+    const: ufs-phy
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - phys
-+  - phy-names
-+  - clocks
-+  - clock-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/exynos7-clk.h>
-+
-+    ufs: ufs@15570000 {
-+       compatible = "samsung,exynos7-ufs";
-+       reg = <0x15570000 0x100>,
-+             <0x15570100 0x100>,
-+             <0x15571000 0x200>,
-+             <0x15572000 0x300>;
-+       reg-names = "hci", "vs_hci", "unipro", "ufsp";
-+       interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
-+       clocks = <&clock_fsys1 ACLK_UFS20_LINK>,
-+                <&clock_fsys1 SCLK_UFSUNIPRO20_USER>;
-+       clock-names = "core_clk", "sclk_unipro_main";
-+       pinctrl-names = "default";
-+       pinctrl-0 = <&ufs_rst_n &ufs_refclk_out>;
-+       phys = <&ufs_phy>;
-+       phy-names = "ufs-phy";
-+    };
-+...
+(or &= ~USI_RESET_MASK)
 
-base-commit: 2734d6c1b1a089fb593ef6a23d4b70903526fe0c
--- 
-2.17.1
+Therefore for USI_CON_RESET only:
+    #define USI_CON_RESET             (1<<0)
+    #define USI_CON_RESET_MASK        (1<<0)
 
+
+Best regards,
+Krzysztof
