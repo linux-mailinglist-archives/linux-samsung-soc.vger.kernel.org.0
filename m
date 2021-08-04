@@ -2,181 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3854F3DF88D
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Aug 2021 01:35:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC2A23DFF7E
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 Aug 2021 12:42:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234213AbhHCXfi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Aug 2021 19:35:38 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:54913 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234179AbhHCXfh (ORCPT
+        id S237539AbhHDKmv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 Aug 2021 06:42:51 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:46251 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237508AbhHDKme (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Aug 2021 19:35:37 -0400
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20210803233524epoutp0185501c27504dace21b6e3eb10155d13b~X8AvvBslt1593215932epoutp01U
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Aug 2021 23:35:24 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20210803233524epoutp0185501c27504dace21b6e3eb10155d13b~X8AvvBslt1593215932epoutp01U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1628033724;
-        bh=QHkAlDyGSuVzU5TssxLvoaQvhRh5Joz67L+1dX4LHOY=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=F17tfjmb36QMNBnmU0rNtCKsfDQkl9l/sJYeZ9+PLhwDt3c/ODYMND50q6Z+3cPxf
-         LVcByG0aNCOUk2Yv7mFjyNWJRdEj1800zebE4lFU7wMMFkaR+v2DoUd+1efedFac/O
-         vgmgUZhHlvwvghBFd7xUxCzt27XynR1X/O9ZTmYU=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20210803233523epcas2p4e219074c4b16cee48ab5ec4660376447~X8Au7XGvl0890708907epcas2p4I;
-        Tue,  3 Aug 2021 23:35:23 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.40.181]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4GfWSn0DQYz4x9Ps; Tue,  3 Aug
-        2021 23:35:21 +0000 (GMT)
-Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
-        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        57.B7.09921.8B2D9016; Wed,  4 Aug 2021 08:35:20 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-        20210803233520epcas2p4c4005ef331ac281020bc76a502de1fe4~X8ArrLR3h0892908929epcas2p41;
-        Tue,  3 Aug 2021 23:35:20 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210803233519epsmtrp25606bfd3eb8337751e772e22e37f7b5f~X8Arp_0NX2516625166epsmtrp2Z;
-        Tue,  3 Aug 2021 23:35:19 +0000 (GMT)
-X-AuditID: b6c32a45-fb3ff700000026c1-dc-6109d2b80d5e
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        47.81.08394.7B2D9016; Wed,  4 Aug 2021 08:35:19 +0900 (KST)
-Received: from KORCO039056 (unknown [10.229.8.156]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20210803233519epsmtip2e498a22bb8e0a277e02e331b67389444~X8ArXzg6I0166901669epsmtip2Z;
-        Tue,  3 Aug 2021 23:35:19 +0000 (GMT)
-From:   "Chanho Park" <chanho61.park@samsung.com>
-To:     "'Bean Huo'" <huobean@gmail.com>,
-        "'Alim Akhtar'" <alim.akhtar@samsung.com>,
-        "'James E . J . Bottomley'" <jejb@linux.ibm.com>,
-        "'Martin K . Petersen'" <martin.petersen@oracle.com>
-Cc:     "'Can Guo'" <cang@codeaurora.org>,
-        "'Jaegeuk Kim'" <jaegeuk@kernel.org>,
-        "'Kiwoong Kim'" <kwmad.kim@samsung.com>,
-        "'Avri Altman'" <avri.altman@wdc.com>,
-        "'Adrian Hunter'" <adrian.hunter@intel.com>,
-        "'Christoph Hellwig'" <hch@infradead.org>,
-        "'Bart Van Assche'" <bvanassche@acm.org>,
-        "'jongmin jeong'" <jjmin.jeong@samsung.com>,
-        "'Gyunghoon Kwon'" <goodjob.kwon@samsung.com>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-scsi@vger.kernel.org>
-In-Reply-To: <73a79fbbec661cd898feda9064a10c6c182d7fad.camel@gmail.com>
-Subject: RE: [PATCH 14/15] scsi: ufs: ufs-exynos: multi-host configuration
- for exynosauto
-Date:   Wed, 4 Aug 2021 08:35:19 +0900
-Message-ID: <000001d788c0$38ba49b0$aa2edd10$@samsung.com>
+        Wed, 4 Aug 2021 06:42:34 -0400
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id B5522200004;
+        Wed,  4 Aug 2021 10:41:50 +0000 (UTC)
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Alessandro Zummo <a.zummo@towertech.it>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc:     linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 1/4] rtc: s5m: switch to devm_rtc_allocate_device
+Date:   Wed,  4 Aug 2021 12:41:29 +0200
+Message-Id: <20210804104133.5158-1-alexandre.belloni@bootlin.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEgh/xhOfR89Em7SpyJUmGCKeOVGQJl2E6sAko8FTQBPPGrXqyhAjbQ
-Content-Language: ko
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFJsWRmVeSWpSXmKPExsWy7bCmme6OS5yJBosOaVmcfLKGzeLBvG1s
-        Fi9/XmWzmPbhJ7PFp/XLWC16djpbnJ6wiMliztkGJosn62cxWyy6sY3JYuU1C4ubW46yWMw4
-        v4/Jovv6DjaL5cf/MTnwe1y+4u1xua+XyWPnrLvsHptXaHks3vOSyWPTqk42jwmLDjB6fHx6
-        i8Wjb8sqRo/Pm+Q82g90MwVwR+XYZKQmpqQWKaTmJeenZOal2yp5B8c7x5uaGRjqGlpamCsp
-        5CXmptoqufgE6Lpl5gA9oqRQlphTChQKSCwuVtK3synKLy1JVcjILy6xVUotSMkpMDQs0CtO
-        zC0uzUvXS87PtTI0MDAyBapMyMk41LCKqeA7f8WZ09vZGxgf8XQxcnJICJhIfGw5ytzFyMUh
-        JLCDUeLV2R42COcTo8Sc47uYIJxvjBLP7x9kh2lZ/+MOVGIvo8Tht3fYQBJCAi8YJZ7cEASx
-        2QT0JV52bGMFKRIR2M0o0X3iByNIglngBLPE5FPMIDangLtE64ZvTCC2sEC0xPwXP1lAbBYB
-        FYm5J1rBbF4BS4nFJzaxQdiCEidnPmGBmKMtsWzha2aIixQkfj5dxgpiiwi4Sfx4fpsJokZE
-        YnZnG1TNBw6JRw8MIGwXiekHO6DiwhKvjm+B+kxK4vO7vWD/Swh0M0q0PvoPlVjNKNHZ6ANh
-        20v8mr4FaBkH0AJNifW79EFMCQFliSO3oE7jk+g4/JcdIswr0dEmBNGoLnFg+3QWCFtWonvO
-        Z9YJjEqzkDw2C8ljs5A8MAth1wJGllWMYqkFxbnpqcVGBYbIkb2JEZzItVx3ME5++0HvECMT
-        B+MhRgkOZiUR3tAbHIlCvCmJlVWpRfnxRaU5qcWHGE2BQT2RWUo0OR+YS/JK4g1NjczMDCxN
-        LUzNjCyUxHk14r4mCAmkJ5akZqemFqQWwfQxcXBKNTAlfImfbalUHKAXai2b078puXcbTwV7
-        34dvTf+6Fj/cziJzfup3r3NLoi64CU5yO/yd83K1+/7O6OdLU0sf57jlb+xfOlvuRXcxZ3Xn
-        chmzgmCxxjLv27dePHR69qs9nMn5c5+38rldy5/N5cmc+0+vZtumvucPk7emTMg+ePS+1Ix7
-        lsoimytmlLs2TLxkwnj7WnRIncxE3Tmadr7Ga+pYzN9Xux/TaWK+M+3sVrPbh+dGXWwMFdSa
-        dii9nL/KbNtKOaYjZjvevpn9nT+k11ou8WovQ6U/x0umOUuZBaxWnFmbPCWgb8Ly4kMM3z52
-        p5z5t3bVOt4zbBkezCI3r6XIeJm82/bwdf/+wLorN62UWIozEg21mIuKEwGtgdpJbQQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsWy7bCSvO72S5yJBjf2GVmcfLKGzeLBvG1s
-        Fi9/XmWzmPbhJ7PFp/XLWC16djpbnJ6wiMliztkGJosn62cxWyy6sY3JYuU1C4ubW46yWMw4
-        v4/Jovv6DjaL5cf/MTnwe1y+4u1xua+XyWPnrLvsHptXaHks3vOSyWPTqk42jwmLDjB6fHx6
-        i8Wjb8sqRo/Pm+Q82g90MwVwR3HZpKTmZJalFunbJXBlLPi1gq3gNX/F7NlWDYzneLoYOTkk
-        BEwk1v+4w9TFyMUhJLCbUWLG0luMEAlZiWfvdrBD2MIS91uOsEIUPWOUWLf4PhNIgk1AX+Jl
-        xzZWEFtEYC+jxPueEpAiZoELzBIXdj9hg+j4zyhx899ZsCpOAXeJ1g3fwLqFBSIltq5ZAraC
-        RUBFYu6JVhYQm1fAUmLxiU1sELagxMmZT8DizALaEk9vPoWzly18zQxxnoLEz6fLoK5wk/jx
-        /DYTRI2IxOzONuYJjMKzkIyahWTULCSjZiFpWcDIsopRMrWgODc9t9iwwDAvtVyvODG3uDQv
-        XS85P3cTIziqtTR3MG5f9UHvECMTB+MhRgkOZiUR3tAbHIlCvCmJlVWpRfnxRaU5qcWHGKU5
-        WJTEeS90nYwXEkhPLEnNTk0tSC2CyTJxcEo1MCkXpd64fnSJRMC76Sxb1D0t1uZE6wdk9t/6
-        zf7Iw/6rteD6LUlxdqJ8U28pTbzCaHWyRpO5faaxvqiMVHd4t9y2+BV9VncZLE3cpunGvfmW
-        vzlxVYjYJVvVYiHun0yT399vzOk1vnC3qNNhpXXGPc4tdk8mrOV9bRctfupQcb5HTs1pAe66
-        9QVnpr/hjn43XdOvSvObIa+AV86jIvu6ei+Hiy7GDwQZuL3mGj6J1ayYYMi2Y3LoaY/v8aXe
-        e9ljnPo51s7rT7kc4vp5VXPgHtst96b82aTf9GZ/o8hapmgbrokvmY94CxxQ6doi3vX0zq4Q
-        nuLXxi9d3x9qjTU51nFE63ucsvLlxItqXAxKLMUZiYZazEXFiQA8R3PRWQMAAA==
-X-CMS-MailID: 20210803233520epcas2p4c4005ef331ac281020bc76a502de1fe4
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20210709065747epcas2p10c59e097d9770fc02134cb0545c9de4f
-References: <20210709065711.25195-1-chanho61.park@samsung.com>
-        <CGME20210709065747epcas2p10c59e097d9770fc02134cb0545c9de4f@epcas2p1.samsung.com>
-        <20210709065711.25195-15-chanho61.park@samsung.com>
-        <73a79fbbec661cd898feda9064a10c6c182d7fad.camel@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-> > We divide this M-HCI as PH(Physical Host) and VHs(Virtual Host). The
-> > PH
-> >
-> > supports all UFSHCI functions(all SAPs) same as conventional UFSHCI
-> > but
-> >
-> > the VH only supports data transfer function. Thus, except UTP_CMD_SAP
-> > and
-> >
-> > UTP_TMPSAP, the PH should handle all the physical features.
->=20
-> Hi Chanho park,
->=20
-> You mentioned this in your coverletter:
->=20
-> =22There are two types of host controllers on the UFS host controller tha=
-t
-> we designed. The UFS device has a Function Arbitor that arranges commands
-> of each host. When each host transmits a command to the Arbitor, the
-> Arbitor transmits it to the UTP layer=22.
->=20
-> where does this =22Function Arbitor=22 exit? From your comments, seems it
-> exists on the UFS device side? right? If this is true, where is related
-> code in your patch??
+Switch to devm_rtc_allocate_device/devm_rtc_register_device, this allows
+for further improvement of the driver.
 
-The =22Function Arbiter=22 is in our ufs controller as H/W and it is respon=
-sible to arrange UTP_CMD/UTP_TM among PH and VHs. When we set MHCTL registe=
-r, the controller will enable the multi-host capability and the arbiter wil=
-l be automatically enabled as well.
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+---
+ drivers/rtc/rtc-s5m.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-+static int exynosauto_ufs_post_hce_enable(struct exynos_ufs *ufs)
-+=7B
-+	struct ufs_hba *hba =3D ufs->hba;
+diff --git a/drivers/rtc/rtc-s5m.c b/drivers/rtc/rtc-s5m.c
+index 6b56f8eacba6..4c1596c55de8 100644
+--- a/drivers/rtc/rtc-s5m.c
++++ b/drivers/rtc/rtc-s5m.c
+@@ -788,12 +788,16 @@ static int s5m_rtc_probe(struct platform_device *pdev)
+ 
+ 	device_init_wakeup(&pdev->dev, 1);
+ 
+-	info->rtc_dev = devm_rtc_device_register(&pdev->dev, "s5m-rtc",
+-						 &s5m_rtc_ops, THIS_MODULE);
+-
++	info->rtc_dev = devm_rtc_allocate_device(&pdev->dev);
+ 	if (IS_ERR(info->rtc_dev))
+ 		return PTR_ERR(info->rtc_dev);
+ 
++	info->rtc_dev->ops = &s5m_rtc_ops;
 +
-+	/* Enable Virtual Host =231 */
-+	ufshcd_rmwl(hba, MHCTRL_EN_VH_MASK, MHCTRL_EN_VH(1), MHCTRL);
-+	/* Default VH Transfer permissions */
-+	hci_writel(ufs, 0x03FFE1FE, HCI_MH_ALLOWABLE_TRAN_OF_VH);
-+	/* IID information is replaced in TASKTAG=5B7:5=5D instead of IID in UCD =
-*/
-+	hci_writel(ufs, 0x1, HCI_MH_IID_IN_TASK_TAG);
++	err = devm_rtc_register_device(info->rtc_dev);
++	if (err)
++		return err;
 +
-+	return 0;
-+=7D
-
-> Maybe you only submited partial of your real driver
-> parch for this controller??
-
-Yes. The series is the initial version but it contains most of multi-host c=
-apabilities. Most of things can be handled by our UFS controller so we can =
-make driver code simpler as much as possible. Only =231 VH can be supported=
- in this patch at the moment but I have a plan to support more VHs later.
-
-Best Regards,
-Chanho Park
+ 	if (!info->irq) {
+ 		dev_info(&pdev->dev, "Alarm IRQ not available\n");
+ 		return 0;
+-- 
+2.31.1
 
