@@ -2,172 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05C343E2AE5
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Aug 2021 14:50:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01EED3E2C28
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Aug 2021 16:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343806AbhHFMuX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Aug 2021 08:50:23 -0400
-Received: from smtp-relay-canonical-0.canonical.com ([185.125.188.120]:55162
-        "EHLO smtp-relay-canonical-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1343819AbhHFMsm (ORCPT
+        id S237077AbhHFOLH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Aug 2021 10:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237040AbhHFOLB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Aug 2021 08:48:42 -0400
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com [209.85.167.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPS id 6450E3F22A
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Aug 2021 12:48:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1628254106;
-        bh=+iMOfeE6Vf9NGHS30HYXv4eokVZ3e25K5G9GYGN0DC8=;
-        h=Subject:From:To:Cc:References:Message-ID:Date:MIME-Version:
-         In-Reply-To:Content-Type;
-        b=JHwvMt8b3o+gNYv9nXKXtJFjTE86r9sWg/ZLYgaBFn5UAk+FCL7e7PRgwUXXFogXs
-         Y8DmH76Xj6ywF3gGD4mC3bPPsctUt6mvvSNi6Zi+h0WAQRTzAA/+fAU3qekLBVi76D
-         yeES0P7FWCqCzzVvrv/qB+ujXxtTTPAf6x1SLf2KyCa8lNYVMqF5n5l9zFbKQ1iHm7
-         96adW0DYRyB6Z28UMxKESmX0nssUibKoV150KX3gmBnSmVrLl+CE9TixEtZILziEKk
-         SP789yR8Siumw4BDfmYxJzvvo+rtakoIncv1a2c1jq51pRRfIunwzTX19mEtCeTQrU
-         kV/UD4/P88FoA==
-Received: by mail-lf1-f70.google.com with SMTP id p3-20020a0565121383b0290384997a48fcso3905126lfa.21
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Aug 2021 05:48:26 -0700 (PDT)
+        Fri, 6 Aug 2021 10:11:01 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121AFC0617A0
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Aug 2021 07:10:43 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id t9so18178349lfc.6
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Aug 2021 07:10:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=/oMubRmlLM5EZ/UdY6Fj3wsfS2kyoMzN9ASXgZ3xneY=;
+        b=q3xyYt1HrVQnyL1KZndhIFKim0Z6RZXWCajZa6+jKaUt/xPBmWrU2b2TpwIqgxHoY3
+         6sUeXJPoUC3zz+xqx5Y/7bh16ON7BcCcP2liy5jl/yv+hyxVGmxIcBCDJXoapuOO0RIl
+         REN9Zv+ClhtVVEMybVDTEUTnyt+YraWqvgNO4CiPEvSNbjJp0ymaQzc4FwPALfOqM4La
+         f+KzIMXFoGuca5XlZdCXXnnqi+xUiOGsem/cV9JUjNFonSZWOzEGazowyEr2eG3dp5DR
+         pLBa7cN2FmOkeXw/dSFAaB7k29Eu0Yivashc8iQbXHlro4ZoI7aiyRP21+G8wGDlMmu6
+         HPDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+iMOfeE6Vf9NGHS30HYXv4eokVZ3e25K5G9GYGN0DC8=;
-        b=JvTiJDGT+3Excayjo9nIR9MMLoW7i0P2xTRnC+UUZ9UPVHlV/l+mW0/ujBOe7jTH4W
-         VHmtZE4RVhCjNWhfedGWo4MtVSplDFCxxes1DGHF2PRPFFQ34shsHiFthcrnPI8iUA4C
-         LTgMrziwTO3R9m1rGGSQvO+Z5iaZv/PeUcrztlCPikQuAJDEBUPzaB3fCwB5HjGcMjvx
-         TvSXSMxQLcraFBjE570HFuYwIRUfrRZC1yahNJuSBnY+nIBzxlsOknZKLw9+nkNafjsK
-         tDopXXey6pVT8N0pYQGxqyihxMFS7v3XGlNTCbk8rAJTKYAnJXfuo60s2LvnOM112jb0
-         4XDg==
-X-Gm-Message-State: AOAM530H5r9I7BeNPkNoiQD3CtkBVNYuWtFPEE/BdSIxrUkxQWHUerpQ
-        wK+TPgrgDJa6BEquA/KaGFElRH/gSYSfu09gkLb2ZPo0l9SNjf7lalczsnOg7AMjAEovA6ClUQ9
-        6IR7Zelu66e17HqreX1vDk0DUEcIYGYX6YW6e3T9hi7HtZ1YG
-X-Received: by 2002:a17:906:2dc5:: with SMTP id h5mr9916672eji.515.1628254094625;
-        Fri, 06 Aug 2021 05:48:14 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyw0Ophi5VEEXPM4XZ0YWYJmokSCe46iXLol1mXc81JTaSdAe1qWBzFoVyacX3XeKr/xC3Vqg==
-X-Received: by 2002:a17:906:2dc5:: with SMTP id h5mr9916653eji.515.1628254094423;
-        Fri, 06 Aug 2021 05:48:14 -0700 (PDT)
-Received: from [192.168.8.102] ([86.32.42.198])
-        by smtp.gmail.com with ESMTPSA id lw22sm2849189ejb.74.2021.08.06.05.48.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Aug 2021 05:48:13 -0700 (PDT)
-Subject: Re: [PATCH 12/12] arm64: dts: exynos: Add Exynos850 SoC support
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Sam Protsenko <semen.protsenko@linaro.org>,
-        =?UTF-8?Q?Pawe=c5=82_Chmiel?= <pawel.mikolaj.chmiel@gmail.com>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Charles Keepax <ckeepax@opensource.wolfsonmicro.com>,
-        Ryu Euiyoul <ryu.real@samsung.com>,
-        Tom Gall <tom.gall@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
-        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>
-References: <20210730144922.29111-1-semen.protsenko@linaro.org>
- <20210730144922.29111-13-semen.protsenko@linaro.org>
- <455cfb5e-dff7-a5c0-3875-49abe3e900f3@canonical.com>
- <CAPLW+4nDS0atrbUFagDA0W_Ky5MvOiY+N+NQoQ+me4pndp_iWg@mail.gmail.com>
- <68734f6c-fc76-595c-8d34-8924dbbbb845@canonical.com>
- <CAPLW+4n_JKj5xeBHXONcv__vyAFvx3fhXoxJa17NTHK1RSJFJw@mail.gmail.com>
- <b753796c-2ce6-4166-7c20-289e950237ad@canonical.com>
-Message-ID: <bb08f7a4-1da9-fb20-f091-6a3c37a1f898@canonical.com>
-Date:   Fri, 6 Aug 2021 14:48:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=/oMubRmlLM5EZ/UdY6Fj3wsfS2kyoMzN9ASXgZ3xneY=;
+        b=J3kVrHHWZl/6zGsPJUvtsKpR1SNhV6ZrxRlbIQrdlo9O1k1ma5GTvnYvnqc9hbT4K8
+         Jh88NNi3Eny/TUiD0vvOFoAURwMcvqVKmKAL9FMLHFRzlLwzQHod/s5o0VIN0haOYAWS
+         07C1+iglLFnTCKd9Qo51sdqrD0MT1uAXJVEC3d1oZj5jTWdSJhTPK8YT8xD8pTqWbI6+
+         k1D4za11C50DbXNJDpCK3HHE+YJz/nqfxz/TWABXTV5+15om1WPEMdS3PGpB2yR/d1lf
+         8AC5KZIaj/m4kn8KfEo1gcRMBz6R64J1BCazpepI5BLO1JZQWyEVGZ8irwjsdiv8IviQ
+         7trQ==
+X-Gm-Message-State: AOAM532ZllXHg3m+/1gZlWD7iUozuRPza5+CF25ccyq5tEwqJM3pQIcy
+        +SZbYHQUyf51XjiSZtpBw5pTrfnIBowYrRKcglWGJr6ZGyonJdiG7A==
+X-Google-Smtp-Source: ABdhPJx229jhz+o+nQwdgIkoqR5HwLh3S4+JGHt0eG+5fB4X3WTmNmInTj1ZpuXDIVm9CYEhhFZzLyuZYbLrplGdX6A=
+X-Received: by 2002:a05:6402:3094:: with SMTP id de20mr13526197edb.272.1628259031175;
+ Fri, 06 Aug 2021 07:10:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <b753796c-2ce6-4166-7c20-289e950237ad@canonical.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a54:26cf:0:0:0:0:0 with HTTP; Fri, 6 Aug 2021 07:10:30 -0700 (PDT)
+Reply-To: mrmaxwellwatford@gmail.com
+From:   Maxwell Watford <orchowskiruthi@gmail.com>
+Date:   Fri, 6 Aug 2021 14:10:30 +0000
+Message-ID: <CA+q9Q6OJB6Z0+y=5_3MBDNGkAUG9rVxg7bZVma38uDOvJ+sOGw@mail.gmail.com>
+Subject: i need your reply
+To:     orchowskiruthi@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 06/08/2021 14:32, Krzysztof Kozlowski wrote:
-> On 06/08/2021 14:07, Sam Protsenko wrote:
->> On Fri, 6 Aug 2021 at 10:49, Krzysztof Kozlowski
->> <krzysztof.kozlowski@canonical.com> wrote:
->>>
->>> On 06/08/2021 01:06, Sam Protsenko wrote:
->>>> On Sat, 31 Jul 2021 at 12:03, Krzysztof Kozlowski
->>>> <krzysztof.kozlowski@canonical.com> wrote:
->>>>
->>>>>>
->>>>>> This patch adds minimal SoC support. Particular board device tree files
->>>>>> can include exynos850.dtsi file to get SoC related nodes, and then
->>>>>> reference those nodes further as needed.
->>>>>>
->>>>>> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
->>>>>> ---
->>>>>>  .../boot/dts/exynos/exynos850-pinctrl.dtsi    | 782 ++++++++++++++++++
->>>>>>  arch/arm64/boot/dts/exynos/exynos850-usi.dtsi |  30 +
->>>>>>  arch/arm64/boot/dts/exynos/exynos850.dtsi     | 245 ++++++
->>>>>
->>>>> Not buildable. Missing Makefile, missing DTS. Please submit with initial
->>>>> DTS, otherwise no one is able to verify it even compiles.
->>>>>
->>>>
->>>> This device is not available for purchase yet. I'll send the patch for
->>>> board dts once it's announced. I can do all the testing for now, if
->>>> you have any specific requests. Would it be possible for us to review
->>>> and apply only SoC support for now? Will send v2 soon...
->>>
->>> What you propose is equal to adding a driver (C source code) without
->>> ability to compile it. What's the point of having it in the kernel? It's
->>> unverifiable, unbuildable and unusable.
->>>
->>
->> Yes, I understand. That's adding code with no users, and it's not a
->> good practice.
->>
->>> We can review the DTSI however merging has to be with a DTS. Usually the
->>> SoC vendor adds first an evalkit (e.g. SMDK board). Maybe you have one
->>> for Exynos850? Otherwise if you cannot disclose the actual board, the
->>> DTSI will have to wait. You can submit drivers, though.
->>>
->>
->> Sure, let's go this way. I'll send v2 soon. Improving patches and
->> having Reviewed-by tag for those would good enough for me at this
->> point. I'll continue to prepare another Exynos850 related patches
->> until the actual board is announced, like proper clock driver, reset,
->> MMC, etc. Is it ok if I send those for a review too (so I can fix all
->> issues ahead)?
-> 
-> Sure, prepare all necessary drivers earlier. I suspect clocks will be a
-> real pain because of significant changes modeled in vendor kernel. I
-> remember Paweł Chmiel (+Cc) was doing something for these:
-> https://github.com/PabloPL/linux/tree/exynos7420
-> 
-> I mentioned before - you should also modify the chipid driver. Check
-> also other drivers in drivers/soc/samsung, although some are needed only
-> for suspend&resume.
-> 
+Greetings,
 
-You can also take a look at Exynos8895 efforts:
-https://github.com/ivoszbg/linux/commits/for-upstream/exynos8895
+We are writing to you from Ecowas Finance Controller Office Lome Togo,
+because we have received a file from the Ministry of Finance Lome-
+Togo, concerning an Inherited Fund bearing your name on it, And after
+our verifications, we found out that the funds belong to you.
 
-Since knowledge, datasheets and efforts are quite spread all over, I
-keep track of some work here:
-https://exynos.wiki.kernel.org/community
+It has been awarded and I will like to guide you to claim the funds.
+Please contact me at my private email address
+(mrmaxwellwatford@gmail.com) for more information and directive
 
-
-Best regards,
-Krzysztof
+I am looking forward to your urgent reply,
+Best regards
+Mr Maxwell Watford
