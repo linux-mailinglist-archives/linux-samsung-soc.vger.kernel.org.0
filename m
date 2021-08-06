@@ -2,71 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01EED3E2C28
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Aug 2021 16:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78CCB3E2D7D
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Aug 2021 17:21:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237077AbhHFOLH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Aug 2021 10:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
+        id S244310AbhHFPWG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Aug 2021 11:22:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237040AbhHFOLB (ORCPT
+        with ESMTP id S244268AbhHFPWF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Aug 2021 10:11:01 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121AFC0617A0
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Aug 2021 07:10:43 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id t9so18178349lfc.6
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Aug 2021 07:10:42 -0700 (PDT)
+        Fri, 6 Aug 2021 11:22:05 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB193C06179A
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Aug 2021 08:21:49 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id p38so18722983lfa.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Aug 2021 08:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/oMubRmlLM5EZ/UdY6Fj3wsfS2kyoMzN9ASXgZ3xneY=;
-        b=q3xyYt1HrVQnyL1KZndhIFKim0Z6RZXWCajZa6+jKaUt/xPBmWrU2b2TpwIqgxHoY3
-         6sUeXJPoUC3zz+xqx5Y/7bh16ON7BcCcP2liy5jl/yv+hyxVGmxIcBCDJXoapuOO0RIl
-         REN9Zv+ClhtVVEMybVDTEUTnyt+YraWqvgNO4CiPEvSNbjJp0ymaQzc4FwPALfOqM4La
-         f+KzIMXFoGuca5XlZdCXXnnqi+xUiOGsem/cV9JUjNFonSZWOzEGazowyEr2eG3dp5DR
-         pLBa7cN2FmOkeXw/dSFAaB7k29Eu0Yivashc8iQbXHlro4ZoI7aiyRP21+G8wGDlMmu6
-         HPDQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H0OxH2DLR+a7XFHFrPAZwX3xA6D5uCHw5+vNuLWj+ZY=;
+        b=pbk0Y8q49FHUjZEqTA4TnnaGPMxpn7WVjavgdfR59MN27ETDHVYSTGJT+aY0enr76w
+         FqMqk/4fWtwS84qkuXWGWxxn+gFFAtcd26lbO1xGwSyc6nRLR9cA2rBG84+wVYlw9Q+g
+         di3cRH+m4dfLCLk/M4a/6z+L/uzcxVqp+itjWYp79cevN6TJvoEyuhhFbheBZJe5LyZg
+         nKQH8E7OSS4wzevRBhFC8zIPtN9H13DEC23tbJv2MABzfJX/YJQ7EF01FixcrbGGJ4//
+         uz/n35N1lztmB08rAzzqDTrTzGhmIGDHg2aa1C6mOV3TxXi04AzNSG9v94+5KMxfbMJc
+         vnlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/oMubRmlLM5EZ/UdY6Fj3wsfS2kyoMzN9ASXgZ3xneY=;
-        b=J3kVrHHWZl/6zGsPJUvtsKpR1SNhV6ZrxRlbIQrdlo9O1k1ma5GTvnYvnqc9hbT4K8
-         Jh88NNi3Eny/TUiD0vvOFoAURwMcvqVKmKAL9FMLHFRzlLwzQHod/s5o0VIN0haOYAWS
-         07C1+iglLFnTCKd9Qo51sdqrD0MT1uAXJVEC3d1oZj5jTWdSJhTPK8YT8xD8pTqWbI6+
-         k1D4za11C50DbXNJDpCK3HHE+YJz/nqfxz/TWABXTV5+15om1WPEMdS3PGpB2yR/d1lf
-         8AC5KZIaj/m4kn8KfEo1gcRMBz6R64J1BCazpepI5BLO1JZQWyEVGZ8irwjsdiv8IviQ
-         7trQ==
-X-Gm-Message-State: AOAM532ZllXHg3m+/1gZlWD7iUozuRPza5+CF25ccyq5tEwqJM3pQIcy
-        +SZbYHQUyf51XjiSZtpBw5pTrfnIBowYrRKcglWGJr6ZGyonJdiG7A==
-X-Google-Smtp-Source: ABdhPJx229jhz+o+nQwdgIkoqR5HwLh3S4+JGHt0eG+5fB4X3WTmNmInTj1ZpuXDIVm9CYEhhFZzLyuZYbLrplGdX6A=
-X-Received: by 2002:a05:6402:3094:: with SMTP id de20mr13526197edb.272.1628259031175;
- Fri, 06 Aug 2021 07:10:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H0OxH2DLR+a7XFHFrPAZwX3xA6D5uCHw5+vNuLWj+ZY=;
+        b=WD0AfeOu/AxLAamMBgfuY7xNSBkPs9t2htuVUhDuboqiD4tTuDhOo90o0zLbXiuHPa
+         zFJU9E8KjcL1BpvmJyHETAkVH01OWjPqcWgVAT4wO7g42o2uAAWHap4BdfxwSat2W+gX
+         oZc8HVmYuqfJybQb0S9C88wcyHoGAAxta1RFlahBvof4vnuWwcDTS+xPVnzTVFWxm8tZ
+         qXK30pxm56ar+rZ5rKSpCrnS9BBT3dc540ZGIEJaSlHUeZ0bFNikmxgiyIWBL46InQym
+         Nq2wAvCgkU0+oxEehOjbQ6JSgCSKD0XUCBgP0cUJpFZUTQHDkjvao1oCBGDrkG4YB2MQ
+         1J2w==
+X-Gm-Message-State: AOAM531gTcL6luD3bW/H4IzyrzwMWHORksC+zickSzkfRUTtf17DRUvt
+        DlaRY59tsxLqgxXclFbeLf4xPw==
+X-Google-Smtp-Source: ABdhPJx31hm5hWcZpE6dWmGoFrGtIfh+zc6xG8+pt1bd/05YwEKQRDG5g7A6QE8qOgJRduWYS7orrQ==
+X-Received: by 2002:a19:6b19:: with SMTP id d25mr7721777lfa.349.1628263308041;
+        Fri, 06 Aug 2021 08:21:48 -0700 (PDT)
+Received: from localhost ([31.134.121.151])
+        by smtp.gmail.com with ESMTPSA id i3sm275324lfr.217.2021.08.06.08.21.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Aug 2021 08:21:47 -0700 (PDT)
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        =?UTF-8?q?Pawe=C5=82=20Chmiel?= <pawel.mikolaj.chmiel@gmail.com>
+Cc:     Marc Zyngier <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Charles Keepax <ckeepax@opensource.wolfsonmicro.com>,
+        Ryu Euiyoul <ryu.real@samsung.com>,
+        Tom Gall <tom.gall@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: [PATCH v2 0/8] Add minimal support for Exynos850 SoC
+Date:   Fri,  6 Aug 2021 18:21:38 +0300
+Message-Id: <20210806152146.16107-1-semen.protsenko@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Received: by 2002:a54:26cf:0:0:0:0:0 with HTTP; Fri, 6 Aug 2021 07:10:30 -0700 (PDT)
-Reply-To: mrmaxwellwatford@gmail.com
-From:   Maxwell Watford <orchowskiruthi@gmail.com>
-Date:   Fri, 6 Aug 2021 14:10:30 +0000
-Message-ID: <CA+q9Q6OJB6Z0+y=5_3MBDNGkAUG9rVxg7bZVma38uDOvJ+sOGw@mail.gmail.com>
-Subject: i need your reply
-To:     orchowskiruthi@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Greetings,
+This patch series adds initial platform support for Samsung Exynos850
+SoC [1]. With this patchset it's possible to run the kernel with BusyBox
+rootfs as a RAM disk. More advanced platform support (like MMC driver
+additions) will be added later. The idea is to keep the first submission
+minimal to ease the review, and then build up on top of that.
 
-We are writing to you from Ecowas Finance Controller Office Lome Togo,
-because we have received a file from the Ministry of Finance Lome-
-Togo, concerning an Inherited Fund bearing your name on it, And after
-our verifications, we found out that the funds belong to you.
+[1] https://www.samsung.com/semiconductor/minisite/exynos/products/mobileprocessor/exynos-850/
 
-It has been awarded and I will like to guide you to claim the funds.
-Please contact me at my private email address
-(mrmaxwellwatford@gmail.com) for more information and directive
+Changes in v2:
+ * Rebased on top of current linux-mainline
+ * Removed patch ("pinctrl: samsung: Fix pinctrl bank pin count"); it
+   was sent separately, as it's an independent fix
+ * Made the patch ("dt-bindings: pinctrl: samsung: Add Exynos850 doc")
+   to be the first in series
+ * Removed patch ("MAINTAINERS: Changes in v2"); will add that later,
+   when proper clock driver is implemented
+ * Removed patch ("dt-bindings: clock: Add bindings for Exynos850 clock
+   controller"); will add clock bindings later, when proper clock driver
+   is implemented
+ * Removed patch ("dt-bindings: interrupt-controller: Add IRQ constants
+   for Exynos850"), and used hard-coded IRQ numbers in dts instead
+ * See also changes in each particular patch
 
-I am looking forward to your urgent reply,
-Best regards
-Mr Maxwell Watford
+Sam Protsenko (8):
+  dt-bindings: pinctrl: samsung: Add Exynos850 doc
+  pinctrl: samsung: Add Exynos850 SoC specific data
+  dt-bindings: serial: samsung: Add Exynos850 doc
+  tty: serial: samsung: Init USI to keep clocks running
+  tty: serial: samsung: Fix driver data macros style
+  tty: serial: samsung: Add Exynos850 SoC data
+  clk: samsung: Add Exynos850 clock driver stub
+  arm64: dts: exynos: Add Exynos850 SoC support
+
+ .../bindings/pinctrl/samsung-pinctrl.txt      |   1 +
+ .../bindings/serial/samsung_uart.yaml         |   1 +
+ .../boot/dts/exynos/exynos850-pinctrl.dtsi    | 748 ++++++++++++++++++
+ arch/arm64/boot/dts/exynos/exynos850.dtsi     | 256 ++++++
+ drivers/clk/samsung/Makefile                  |   1 +
+ drivers/clk/samsung/clk-exynos850.c           |  64 ++
+ .../pinctrl/samsung/pinctrl-exynos-arm64.c    | 116 +++
+ drivers/pinctrl/samsung/pinctrl-exynos.h      |  29 +
+ drivers/pinctrl/samsung/pinctrl-samsung.c     |   2 +
+ drivers/pinctrl/samsung/pinctrl-samsung.h     |   1 +
+ drivers/tty/serial/samsung_tty.c              |  49 +-
+ include/linux/serial_s3c.h                    |   9 +
+ 12 files changed, 1274 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos850-pinctrl.dtsi
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos850.dtsi
+ create mode 100644 drivers/clk/samsung/clk-exynos850.c
+
+-- 
+2.30.2
+
