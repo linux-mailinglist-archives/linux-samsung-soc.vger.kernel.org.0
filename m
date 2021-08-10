@@ -2,104 +2,64 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27E153E5705
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Aug 2021 11:33:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A6E03E5B24
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Aug 2021 15:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239161AbhHJJdO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 10 Aug 2021 05:33:14 -0400
-Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:42892
-        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239119AbhHJJdB (ORCPT
+        id S241235AbhHJNWb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Aug 2021 09:22:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241238AbhHJNW2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 10 Aug 2021 05:33:01 -0400
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPS id 5EC4640658
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Aug 2021 09:32:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1628587958;
-        bh=Hsa8IKqVji29FGH+yRDuNJzfbTLnU+d/QReLlRASr30=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=qssNyyJMLQ/nuMzjqRNHiLlERiJ/cOFW7vUZb8GGNkh1/ntGwGvwN5fXjQALKOFvf
-         mojDPU4f+rGCQ910mjJu0K5/1PSACPwNQJIhDhhNdPpGa/BBrMg9mLVAfZGVoo6VpY
-         pXh3iO69ha841xKJxbH8S+jSOmKUj6c9Tp2K0p3LZ0I3l8vZCTtAMpdyhWV5013W95
-         zfsxf2ItTdhp+DnWgkUM/oi7xL/Am6tHMEwcDjyzQEaPFZJir9/6q7s4+fFCevgjAM
-         wymXKClGhy0OzdM7LaY0sVw3to3bS1+j+IegcSBNBFe92PnOrY5HOLvXJ+9JjgG906
-         uCq8g2O2n3xLA==
-Received: by mail-ej1-f69.google.com with SMTP id ci25-20020a1709072679b029058e79f6c38aso5364796ejc.13
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Aug 2021 02:32:38 -0700 (PDT)
+        Tue, 10 Aug 2021 09:22:28 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328E2C06179E
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Aug 2021 06:22:04 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id e9so4454434vst.6
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Aug 2021 06:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=2tvLhkad0w+Mh63WhnFJkmRFgYsLXsJmUqGVjzUAFIo=;
+        b=dDSNLx3NUP5oxG58KdSoVrFSUwpDzmROtok2H52Y3e+uXnhqJGHnJ1JX9lPiN6l1Q+
+         p//w5g6T8pc1VH21vteXOXD+W4dy4Rd85NoKDUxmetCEAaZT6TanHEzSrsHTgpmUV8vl
+         605G2EWKirKV8XfVw+5n8bcuNlSFJ2NxHocXkhoYSrXPo5LIVn6jl+nmmO+lJ2crTn9B
+         NhwkU00WcvH+2OooKGNyr9diwqr1+nxbwQ0UlnT4ok+ByxIul5vSn1IUZSl1mYEYm85J
+         Zcd0fWZj0nEFSxKbbI3kQuaJrzsbtlcGkUDV/eSHM2Ga+tmMMFvGlsTSnLNOCeFi+N3T
+         JaAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Hsa8IKqVji29FGH+yRDuNJzfbTLnU+d/QReLlRASr30=;
-        b=tyd0dMyDHOrxevFltdYItiGigrg6S3K4YdCF8+syft3Uz2OmIEELm0mG0iXx8bUCAY
-         gBAAgIwzYQ/CCht6r0Qt4CeFE88CwMAK6V606qJyahsR070vLS9IEph20zzAwRX5Sfw6
-         N9LiuqdT4NKs084HMHpA0BVGvW8zG5ov+LUYJ9TNGXx0oDI8NxP0x+QrhS5dH/emL850
-         LA4V0UGwBvFfF3C9mbqIWfn0NojqLPFhMtn4QpkxmyzcJy2xkAdho29nnwYI/QWM4e1j
-         T+Iw3UN/cnks4U8i8t/HT3f0bbfhRouABLOiQefPtwwt/95TaHqb7hkfZwZDHcdJPv2w
-         HT+Q==
-X-Gm-Message-State: AOAM533vLFdCWu/D6yP/LHiGVu08wY5BQTs5wgeFxyGGZVVK7rNMeWcl
-        Q6l+stu3BR49gyJRw298fS36u9nNj7MrVjCSlBykQr1+PzZzBXux/PERMK7v+G9fw/sOXhZ2qI8
-        QyqrNJFmlOkTo90ssZ6b5eohY/mZFRAokFv6o3reYzQbwDDGn
-X-Received: by 2002:a05:6402:718:: with SMTP id w24mr3802101edx.49.1628587958087;
-        Tue, 10 Aug 2021 02:32:38 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxR7C8E/KWR2jGuw3L7l7j2/qOnH9UiytPUdHGRKEP61jLqGIG5z9kzxTHeSOVYaSZs0tSahg==
-X-Received: by 2002:a05:6402:718:: with SMTP id w24mr3802084edx.49.1628587957975;
-        Tue, 10 Aug 2021 02:32:37 -0700 (PDT)
-Received: from localhost.localdomain ([86.32.42.198])
-        by smtp.gmail.com with ESMTPSA id q21sm5117606ejs.43.2021.08.10.02.32.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 02:32:37 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH v2 8/8] MAINTAINERS: clock: include S3C and S5P in Samsung SoC clock entry
-Date:   Tue, 10 Aug 2021 11:31:45 +0200
-Message-Id: <20210810093145.26153-9-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210810093145.26153-1-krzysztof.kozlowski@canonical.com>
-References: <20210810093145.26153-1-krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=2tvLhkad0w+Mh63WhnFJkmRFgYsLXsJmUqGVjzUAFIo=;
+        b=ZCJMGv2x/5Yxh5iNn0qFi+IPIX1OQQULaJG1f9cTUKGjAYb62VDr2wcAXff2I3ORHR
+         MhgUOopK2C0oTR+wv76OkWeXKZTv/5OAlhFC18Z5mlIzzzs8699/7eqJi0lSu/zyO3a/
+         iTNkbNeU13OQ2pYAFyfGHc7AtXNoGqpDgFV4AHM6724xMKEQRLzxUDnjJnMDHQLT/D7f
+         KuPwe5bPOFyYlnMsVfSbkqcT24LNvswOhMp2gKBZKgtAY0VbEZmlqbrUQtI+9X+6JcxP
+         ye/BBIxSyDFTBLioFrzBYOX5hwHYz1r2UPU/Vi5kDxRBe0fXRshYmnYLDaJvV5a7O780
+         MZ2Q==
+X-Gm-Message-State: AOAM530Os9WzYAj2ckBz+eFD833Lyq8FoxQc96M/d0aAXAJQ1BYYrhVy
+        GgsstZkhZP1VXboAp+a5h1M7IuALyxsp0dmdmRE=
+X-Google-Smtp-Source: ABdhPJwcOAv25JXC8CMe8X96emxkX6xx+mWypycxstov1r0epANB7g0McIjCL002aeaBfHD4hqKEdOm6g/SgsPckacQ=
+X-Received: by 2002:a67:dc97:: with SMTP id g23mr20796167vsk.53.1628601723382;
+ Tue, 10 Aug 2021 06:22:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Sender: immeublesourou@gmail.com
+Received: by 2002:ab0:3903:0:0:0:0:0 with HTTP; Tue, 10 Aug 2021 06:22:03
+ -0700 (PDT)
+From:   John Kumor <owo219901@gmail.com>
+Date:   Wed, 11 Aug 2021 01:22:03 +1200
+X-Google-Sender-Auth: LV4o9i_hxzzCxHYRuF64hP_-oXE
+Message-ID: <CAHdg_cRZhE1uiU6L3+zUQBq3c97zuyPeqAS9Qa6kRxCNuZnDwQ@mail.gmail.com>
+Subject: Urgent
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Cover the S3C and S5Pv210 clock controller binding headers by Samsung
-SoC clock controller drivers maintainer entry.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2dbacacac3f5..4477215ef649 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16496,6 +16496,9 @@ F:	Documentation/devicetree/bindings/clock/samsung,s3c*
- F:	Documentation/devicetree/bindings/clock/samsung,s5p*
- F:	drivers/clk/samsung/
- F:	include/dt-bindings/clock/exynos*.h
-+F:	include/dt-bindings/clock/s3c*.h
-+F:	include/dt-bindings/clock/s5p*.h
-+F:	include/dt-bindings/clock/samsung,*.h
- F:	include/linux/clk/samsung.h
- F:	include/linux/platform_data/clk-s3c2410.h
- 
--- 
-2.30.2
-
+My dear,
+Greetings! I trust that all is well with you and your family. Did you
+receive my previous email?
+Regards
+John Kumor.
