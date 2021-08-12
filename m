@@ -2,65 +2,60 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AA163E997D
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 Aug 2021 22:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC9423E9E06
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Aug 2021 07:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232127AbhHKUOy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 Aug 2021 16:14:54 -0400
-Received: from mxout01.lancloud.ru ([45.84.86.81]:53674 "EHLO
-        mxout01.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232114AbhHKUOx (ORCPT
+        id S234399AbhHLFkw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 Aug 2021 01:40:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33932 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234370AbhHLFkw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 Aug 2021 16:14:53 -0400
-Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout01.lancloud.ru 73B3020B725E
-Received: from LanCloud
-Received: from LanCloud
-Received: from LanCloud
-Subject: Re: [PATCH v2 0/5] Correctly handle plaform_get_irq()'s result in the
- i2C drivers
-From:   Sergey Shtylyov <s.shtylyov@omp.ru>
-To:     <linux-i2c@vger.kernel.org>, Wolfram Sang <wsa@kernel.org>
-CC:     Qii Wang <qii.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        George Cherian <gcherian@marvell.com>
-References: <3712e871-bf2f-32c5-f9c2-2968c42087f8@omp.ru>
- <83767306-be1b-3bcd-723c-92483b4cc612@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <cb7f1d92-7fdb-1ac9-a764-7f9996ba5742@omp.ru>
-Date:   Wed, 11 Aug 2021 23:14:24 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        Thu, 12 Aug 2021 01:40:52 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 88BE060F00;
+        Thu, 12 Aug 2021 05:40:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628746827;
+        bh=iIwawa64i19hlsx+tcPXQ0NVbCFtWVL2NbOR6eRLdJ4=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=Pl89Cu2kNBaJWnO8YSVpeACRwcJh//5YxIwCjujWaoa8SUCp8m2ovXjR/MmNkPxTC
+         Ld9tWxP72KBdOf5mnTgLl55PLi/cUEUmm2YxRBF0SqUd3iGjeIRtBW9lL1+Cpgz+ux
+         wskG882W7clweYrMiJnY06ss/KxXHpGtLVqtFzAw2pqd+S6s0egiZHDFOqMaRcS67T
+         S/VvWYIlEk7TOrY8QXMIti6GKZiyRvrJgA5dbnr8aCP8r+8UGrg7hzvUV4Uutdw2wH
+         IPv1appJ9HFz0NV+AZUEzB8V4jSQ9M+uyEW0TK4h1V8duuEDJlqbW+z+J3v+JS87Vl
+         sln10lZ3bOD2Q==
+References: <47bacc02-4e34-3208-779c-7072a6261782@omp.ru>
+ <bd69b22c-b484-5a1f-c798-78d4b78405f2@omp.ru>
+User-agent: mu4e 1.6.2; emacs 27.2
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sergey Shtylyov <s.shtylyov@omp.ru>
+Cc:     linux-usb@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v2 4/9] usb: gadget: udc: s3c2410: add IRQ check
+Date:   Thu, 12 Aug 2021 08:40:03 +0300
+In-reply-to: <bd69b22c-b484-5a1f-c798-78d4b78405f2@omp.ru>
+Message-ID: <87sfzfz0dz.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <83767306-be1b-3bcd-723c-92483b4cc612@omp.ru>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [192.168.11.198]
-X-ClientProxiedBy: LFEXT01.lancloud.ru (fd00:f066::141) To
- LFEX1907.lancloud.ru (fd00:f066::207)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 8/11/21 11:12 PM, Sergey Shtylyov wrote:
 
->> Here are 5 patches against the 'i2c/for-current' branch of Wolfram's 'linux.git' repo.
->> The affected drivers call platform_get_irq() but mis-interprete its result -- they consider
->> IRQ0 as error and (sometimes) the real error codes as valid IRQs... :-/
->>
->> [1/5] i2c: hix5hd2: fix IRQ check
->> [2/5] i2c: mt65xx: fix IRQ check
->> [3/5] i2c: pmcmsp: fix IRQ check
->> [4/5] i2c: s3c2410: fix IRQ check
->> [5/5] i2c: xlp9xx: fix main IRQ check
-> 
->    Wolfram, hat's up with this series (its status in the patchwork is still "new")? 
+Sergey Shtylyov <s.shtylyov@omp.ru> writes:
 
-   What's, of/c. :-)
+> The driver neglects to check the result of platform_get_irq()'s call and
+> blithely passes the negative error codes to request_irq() (which takes
+> *unsigned* IRQ #), causing it to fail with -EINVAL, overriding an original
+> error code. Stop calling request_irq() with the invalid IRQ #s.
+>
+> Fixes: 188db4435ac6 ("usb: gadget: s3c: use platform resources")
+> Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-MBR, Sergey
+Acked-by: Felipe Balbi <balbi@kernel.org>
 
+-- 
+balbi
