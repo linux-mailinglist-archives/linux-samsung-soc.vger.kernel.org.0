@@ -2,189 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A02333EC3F5
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 14 Aug 2021 18:55:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C1C43EC50D
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 14 Aug 2021 22:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238617AbhHNQ4W (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 14 Aug 2021 12:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52576 "EHLO
+        id S232468AbhHNUdy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 14 Aug 2021 16:33:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233116AbhHNQ4W (ORCPT
+        with ESMTP id S229489AbhHNUdx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 14 Aug 2021 12:56:22 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B795C061764;
-        Sat, 14 Aug 2021 09:55:53 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id q16so15148852ioj.0;
-        Sat, 14 Aug 2021 09:55:53 -0700 (PDT)
+        Sat, 14 Aug 2021 16:33:53 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15477C061764;
+        Sat, 14 Aug 2021 13:33:25 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id r7so18085106wrs.0;
+        Sat, 14 Aug 2021 13:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TkKxZT4mLxk5mIde0v6z+9Gul4yrYdjCFOtjnU1rDPg=;
-        b=sTYMOrGZvwIXsLStVXxA9LYq3pNG88CR7XUkoBJ7bRT09rILeQ7+5PzZOUHkc8ojCf
-         pj14BWZ+A/FmZJaKVj08tR3sITuA+U6pMh2BcUdM3XPk0lB5LT/CmEJUCvrmI5Cos/Ot
-         vVW/HqC63LuXlaYQUgAcW+u0uReAdw7yA6VF/SpXNzVGrobeNE1DvR0q1KUKiu1xlRJo
-         Y+PYS8Swz/UtuapW9ngwl7am9vUrVuUsw5n0MIvm1JLmUY7HWdfSb9hidlumw3fqH4lb
-         fFk2OKeooV3gqd4kN+rDGCPlKF53K4jt7msfdlnUx5v/VOoW7Yqa0QvWj8kTLcT64jk9
-         BZSA==
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
+        b=QRGgQjJ0WQvoAsw+M3uAmpLnmAQunT9CIHe0hZvu5UXbhmBBJTMQeI0H1XdKCs1ejh
+         sarHGzvyFtslYnCpDQfYFWGoZWxsu9dwjtX08DVP4rm6nTDlyjbdtN12tx8dZrbaq7Io
+         dV9lRBENYDbGdr6mdYDZhwfKlNkDvhpbs7CzCXIqIPUzP1ux+/G/bN48nYeQI4b88+1P
+         Wn7ksfW7JSZJ8zqfcM+YfuHPLEOeaOzx2y6MtlF8h9+50Fbzz8bdZdNs7wRvF3amf78U
+         PHucCnH5NodQoUGbMnTS2h5cyaeZRK1kUgo2kFPe9JEs3j8eT2eJWSWNrqE5UtaI3NhX
+         jWLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TkKxZT4mLxk5mIde0v6z+9Gul4yrYdjCFOtjnU1rDPg=;
-        b=J65QqjiXYEOrLKM1BFFsntCp2/SbM3iGCclbMMuD4Ra3Ht+HS5Ic2X9387NqX8YvOg
-         Bz1QvIO5CqNa7POYeUmoFkao/1qgd+xssENhYmx/Rtg8r4G2eUu/58mSTdfhBuAsF8Ef
-         XoNfBsdPhCaBRaJQwkoUN7pMrGCstV8ul6py2tcoUoWcsq7QzC0UodH31lb4pv9HCrUK
-         i5kcWHt/TPCqrv1MR+2p1xdC1RwcrsuzlcoEJxQWopFccf9yBadmenbmySWABACOVTf7
-         UJKHGwcHiSWeLWaGkvR+SGTvzODp1UXAgE2OOMa/dNq3KR/zdz22Ttp2n+rRXuAKp/Ih
-         EPrQ==
-X-Gm-Message-State: AOAM530aqGfOM0F8WDBoyMmiEWmRPLLnHvfEU/fO0xxqzBWTvyuJEhoR
-        WFrNJG+rXuAwCyZkGbfnuMNlGHIMKVnuQr9W4pw=
-X-Google-Smtp-Source: ABdhPJx0e6ayA20p27N/AVvpeQ/S9ofFLEn5vP5MNt5K39nC/5o0Xumu9QTwWrg9yInJbQywan5g/4UFQ7tnJJowl9Q=
-X-Received: by 2002:a5e:8e04:: with SMTP id a4mr4449132ion.56.1628960152421;
- Sat, 14 Aug 2021 09:55:52 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
+        b=fEADDzlcQXsMHpTLPJdV5n6ZgigEw0FFgPDW+BbrQhySiY2yLo1UB01S2lQNpa7dQp
+         bdFCwGmKGRWT51WdJ+vUsjTbufA8V/BneJamtGc7YjJLPHHZY5yChRN6hZ538FQ19wTo
+         L3JjB5S1o08I39O23jDf+zqjmSvD0KNXNtyCsXFJaoIcPdr0zHa6xzn/mY+TtLu/RtKm
+         b7qphIDxGXQaayHEQzwOS4s0RDS99c/nzpaNXY8UCB1DyfA4T9P4yn5SreToaUV4qdLG
+         CJKhuDXIghe+KxVc4hmcZJaagi1f9yBIiL4wPvUdGWrH4yMz0VM163k17OWD34ErcNYq
+         Irtw==
+X-Gm-Message-State: AOAM532dQalsSXLOxWgJIWR1/3+6nHV49+Naj6yweIU3YUVx+TmuPJ1t
+        CgEv1b+MjPhpSqmw078eP+hcfV9Tv2hVwA==
+X-Google-Smtp-Source: ABdhPJyyK54tGZzyHI7JtylMrjcY2SI0qt52Vw/Y3svVo7aCemJRmyNNjLPbWYrOGjKQSSfW74sL1w==
+X-Received: by 2002:a5d:65cc:: with SMTP id e12mr4685335wrw.266.1628973203713;
+        Sat, 14 Aug 2021 13:33:23 -0700 (PDT)
+Received: from [192.168.1.70] ([102.64.221.122])
+        by smtp.gmail.com with ESMTPSA id e17sm5604100wrs.78.2021.08.14.13.33.20
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 14 Aug 2021 13:33:23 -0700 (PDT)
+Message-ID: <61182893.1c69fb81.4ddf7.f23e@mx.google.com>
+From:   Vanina curth <curtisvani0028@gmail.com>
+X-Google-Original-From: Vanina curth
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-References: <CGME20210803032734epcas5p2143008ddb212fe53fcd28b813c85c9d8@epcas5p2.samsung.com>
- <20210803032539.15676-1-alim.akhtar@samsung.com>
-In-Reply-To: <20210803032539.15676-1-alim.akhtar@samsung.com>
-From:   Alim Akhtar <alim.akhtar@gmail.com>
-Date:   Sat, 14 Aug 2021 22:25:17 +0530
-Message-ID: <CAGOxZ53emv4H4UqT2L7tDtTXRgDrtrqti=FtfkNWo2M3rTnZMw@mail.gmail.com>
-Subject: Re: [PATCH v11] dt-bindings: ufs: Add bindings for Samsung ufs host
-To:     Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     open list <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        "robh+dt" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Sir,
+To:     Recipients <Vanina@vger.kernel.org>
+Date:   Sat, 14 Aug 2021 20:33:09 +0000
+Reply-To: curtisvani9008@gmail.com
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Ping!!
-
-On Wed, Aug 4, 2021 at 9:01 AM Alim Akhtar <alim.akhtar@samsung.com> wrote:
->
-> This patch adds DT bindings for Samsung ufs hci
->
-> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
-> ---
-> Changes since v10
-> * Rebased on v5.14-rc2
-> * removed Rob Herring earlier Reviewed-by tag
->
-> This patch was part of exynos ufs driver series, somehow
-> this got missed to applied on the tree, sending again as a new
-> patch v11, removing Rob's earlier Reviewed-by tag.
->
->  .../bindings/ufs/samsung,exynos-ufs.yaml      | 89 +++++++++++++++++++
->  1 file changed, 89 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
->
-> diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-> new file mode 100644
-> index 000000000000..38193975c9f1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-> @@ -0,0 +1,89 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/ufs/samsung,exynos-ufs.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung SoC series UFS host controller Device Tree Bindings
-> +
-> +maintainers:
-> +  - Alim Akhtar <alim.akhtar@samsung.com>
-> +
-> +description: |
-> +  Each Samsung UFS host controller instance should have its own node.
-> +  This binding define Samsung specific binding other then what is used
-> +  in the common ufshcd bindings
-> +  [1] Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-> +
-> +properties:
-> +
-> +  compatible:
-> +    enum:
-> +      - samsung,exynos7-ufs
-> +
-> +  reg:
-> +    items:
-> +     - description: HCI register
-> +     - description: vendor specific register
-> +     - description: unipro register
-> +     - description: UFS protector register
-> +
-> +  reg-names:
-> +    items:
-> +      - const: hci
-> +      - const: vs_hci
-> +      - const: unipro
-> +      - const: ufsp
-> +
-> +  clocks:
-> +    items:
-> +      - description: ufs link core clock
-> +      - description: unipro main clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core_clk
-> +      - const: sclk_unipro_main
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  phys:
-> +    maxItems: 1
-> +
-> +  phy-names:
-> +    const: ufs-phy
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - phys
-> +  - phy-names
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/exynos7-clk.h>
-> +
-> +    ufs: ufs@15570000 {
-> +       compatible = "samsung,exynos7-ufs";
-> +       reg = <0x15570000 0x100>,
-> +             <0x15570100 0x100>,
-> +             <0x15571000 0x200>,
-> +             <0x15572000 0x300>;
-> +       reg-names = "hci", "vs_hci", "unipro", "ufsp";
-> +       interrupts = <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>;
-> +       clocks = <&clock_fsys1 ACLK_UFS20_LINK>,
-> +                <&clock_fsys1 SCLK_UFSUNIPRO20_USER>;
-> +       clock-names = "core_clk", "sclk_unipro_main";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&ufs_rst_n &ufs_refclk_out>;
-> +       phys = <&ufs_phy>;
-> +       phy-names = "ufs-phy";
-> +    };
-> +...
->
-> base-commit: 2734d6c1b1a089fb593ef6a23d4b70903526fe0c
-> --
-> 2.17.1
->
-
-
--- 
-Regards,
-Alim
+How are you? I'm Vanina. I'm interested to know you and I would like to kno=
+w more about you and establish relationship with you. i will wait for your =
+response. thank you.
