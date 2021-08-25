@@ -2,58 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B68FE3F761A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 25 Aug 2021 15:41:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6690B3F7620
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 25 Aug 2021 15:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241390AbhHYNma (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 25 Aug 2021 09:42:30 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:35698
+        id S241466AbhHYNmh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 25 Aug 2021 09:42:37 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:35732
         "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241352AbhHYNm2 (ORCPT
+        by vger.kernel.org with ESMTP id S241406AbhHYNmb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 25 Aug 2021 09:42:28 -0400
+        Wed, 25 Aug 2021 09:42:31 -0400
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 788484079F
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 25 Aug 2021 13:41:42 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 80FD14079F
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 25 Aug 2021 13:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1629898902;
-        bh=Mclsayvw5vzdJqYJyjB8YKrEmbvBZm4AA48dcUpjTgs=;
+        s=20210705; t=1629898904;
+        bh=ATY1ajxT356SKXhJgI3s+Y4sHiILqbtUWXmpsvvo0DA=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=kncL+AyBPHfZC6xr7vHs4ScPutC7PCIiXK5ueYMpQ4JWyp8DysthyQmZ6IUhIEweD
-         /lPY4tdEwYihxk8+VXygZWkZm09y12t020ayWHyM4KCKqoiXsX+Oa/0/BhUbcgDbxP
-         lp6WGMIczo5yW8+Qj7xIoYB0uUVHNjL2g9+FMllzoTsHsV0nBhGgrBsMo7Zbke9cj1
-         2GGfjezFVmzHFJd2hu5BZH5K1j72GvFHNWJbbho11BkIjZAQ1kfsHQfqvMYHx6JwxE
-         OocWB8UKgp+t4N1LI3erIQ9XqK/bq1oJcEb4M9P+Uvnd2JoqaykVL72tRVoe6CoKNz
-         eS0YkUNsyqp6w==
-Received: by mail-wr1-f72.google.com with SMTP id a13-20020adfed0d000000b00156fd70137aso6534806wro.8
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 25 Aug 2021 06:41:42 -0700 (PDT)
+        b=DnKP+LN7IITcxpTflcArVcMTOdi01IfZyKyogx+qSqamnSUWfnn0Y3bi3fIotg+bu
+         WegplaAxTlx956Ulm8F0bKyyk5vRlO9xgShe2bSRZYC2388uoYpSIxC6Yy42I1Uk17
+         WK0B7pzqamXSgAq7hHw0aQDnHY30ecSJ2t76WtnBCbtTtJ3IaP7JBxNSbL/K0TrrAt
+         YYF+5kvUlAAg0xSHXyfIp0pqjxrQ8MwSXPWrwCZcxHyggWba7iW+wyMGoI5jBOMg56
+         08FiJ5g9nkGeguSGsjCbuVyWjPNcAr+i/KTfI4ZCEbXb1Ntgtf6DtdW89BR9V0ZeWh
+         tah1HxGsXJ7og==
+Received: by mail-wr1-f72.google.com with SMTP id h6-20020a5d4fc6000000b00157503046afso2585630wrw.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 25 Aug 2021 06:41:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Mclsayvw5vzdJqYJyjB8YKrEmbvBZm4AA48dcUpjTgs=;
-        b=eBG1ws5osLPhUKV46Y6fm2TxyTrk17TaltXegVuW3oOq2vMr94gVR1XtB4iSMmiIga
-         lnJKfdWAirKoWC/DNKuRNXX+ieUoSPecdetYmzE4V7YqDwx05KUd7mgOzbjzMT9jglQa
-         bMrcPWOI5iIf6xYKccNGwDPzDrtiVMX7i+0hqWgzlAEo4oB7bZC+mwxPfVzYsSqtMat7
-         2AogqqqNj4SAwH9YDo6R/mnW5GRIMnOEyw75N2HZcG6YffQJrPadeuLs+W97l4annyOW
-         w2qNxZnfXy/b2J8cmJ0RKLEo3BGbO2koP4TqLI4+HiHTMEZ0NNz+Q7cUbdj6+PPqsQml
-         hLSw==
-X-Gm-Message-State: AOAM531dOlFafqeIuBIm2nmsEGluyXsvqqxW9phV3T9+ICL5+fRHjgo3
-        dBIBJiTNB9loPbQF6dKy77tYri1CpZf14/19gaR5SgU7+H685GQBKAi9/R8LE41VTbx8eThnuIO
-        qCQf9CeCnCQQYO3bB1rbSmlTgzORxsQRuGFSqZFqUDV6larzl
-X-Received: by 2002:a5d:5908:: with SMTP id v8mr24694580wrd.8.1629898902119;
-        Wed, 25 Aug 2021 06:41:42 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzHJNime9ac9nI2qzlTFeA+AXuB8FrwyflWoZRfCyBPiJ3ohEkRferPwoc88Dy+Ml5E4n5v3w==
-X-Received: by 2002:a5d:5908:: with SMTP id v8mr24694559wrd.8.1629898901933;
-        Wed, 25 Aug 2021 06:41:41 -0700 (PDT)
+        bh=ATY1ajxT356SKXhJgI3s+Y4sHiILqbtUWXmpsvvo0DA=;
+        b=DsCPGvNbR+cYxHYhUXKhph1IyeSictYfILUcJQwyI0x9qfMAousCis5K15kw4M6ueO
+         ypLBZFTQOjjpPsW56tADwp4nNZ2FKOt7E8XVUyY2YduiDSkQ3ggf1ggBqeEW300sQZbV
+         ckh4nU1spUYoecErSgfF3iHZPS/I8CvtBQo11anwiOnn6olQ//5ABSIWUj2eA6wD84Bt
+         leGSpPkmppTNmIUwPB7z+l9WJjXfkluxg2K+BQJOjpJk33t2BbqUUcFiIMT1IpLuSuTb
+         Dt/i5t/xTyweaLPw5Jk/2AhXZ3KD2j6iQ+WOwe2xol4IVykxSSUbtr2DBJzih1iiU8tX
+         8vTw==
+X-Gm-Message-State: AOAM5306u5LNJGJEikmAcsan/geIl9IB5DHyj7LWNCIoRnvMAxsSd4c9
+        CNBggqs/uX2dRNWRQVFWkGUcLFCT4fBQX3Nx9LO/guSJ0y+QBrqfyCmn6fqq5x6YbEwF5/I+lqB
+        5/CgRAfhczMXFkkncuDoIDMtIZCctH/l5yXrH1OfmCE2QRkwV
+X-Received: by 2002:a1c:7e12:: with SMTP id z18mr9267721wmc.60.1629898903937;
+        Wed, 25 Aug 2021 06:41:43 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJx8FtLRNzcvl+bXLg9MA8Ohdp7ZHuSFaykOWO39tpnyMtJQDY2sDuKYi23BMlHYhve5WmhsLg==
+X-Received: by 2002:a1c:7e12:: with SMTP id z18mr9267687wmc.60.1629898903590;
+        Wed, 25 Aug 2021 06:41:43 -0700 (PDT)
 Received: from localhost.localdomain ([79.98.113.233])
-        by smtp.gmail.com with ESMTPSA id g5sm7185861wrq.80.2021.08.25.06.41.40
+        by smtp.gmail.com with ESMTPSA id g5sm7185861wrq.80.2021.08.25.06.41.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 06:41:41 -0700 (PDT)
+        Wed, 25 Aug 2021 06:41:43 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
@@ -65,10 +65,11 @@ To:     Michael Turquette <mturquette@baylibre.com>,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH v3 3/8] dt-bindings: clock: samsung: convert Exynos542x to dtschema
-Date:   Wed, 25 Aug 2021 15:40:51 +0200
-Message-Id: <20210825134056.219884-4-krzysztof.kozlowski@canonical.com>
+Cc:     Sam Protsenko <semen.protsenko@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 4/8] dt-bindings: clock: samsung: convert Exynos3250 to dtschema
+Date:   Wed, 25 Aug 2021 15:40:52 +0200
+Message-Id: <20210825134056.219884-5-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210825134056.219884-1-krzysztof.kozlowski@canonical.com>
 References: <20210825134056.219884-1-krzysztof.kozlowski@canonical.com>
@@ -78,32 +79,36 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Merge Exynos542x clock controller bindings to existing DT schema.
+Merge Exynos3250 clock controller bindings to existing DT schema.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../bindings/clock/exynos5420-clock.txt       | 42 -------------------
- .../bindings/clock/samsung,exynos-clock.yaml  |  9 +++-
- 2 files changed, 8 insertions(+), 43 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/clock/exynos5420-clock.txt
+ .../bindings/clock/exynos3250-clock.txt       | 57 -------------------
+ .../bindings/clock/samsung,exynos-clock.yaml  |  3 +
+ 2 files changed, 3 insertions(+), 57 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/exynos3250-clock.txt
 
-diff --git a/Documentation/devicetree/bindings/clock/exynos5420-clock.txt b/Documentation/devicetree/bindings/clock/exynos5420-clock.txt
+diff --git a/Documentation/devicetree/bindings/clock/exynos3250-clock.txt b/Documentation/devicetree/bindings/clock/exynos3250-clock.txt
 deleted file mode 100644
-index 717a7b1531c7..000000000000
---- a/Documentation/devicetree/bindings/clock/exynos5420-clock.txt
+index 7441ed519f02..000000000000
+--- a/Documentation/devicetree/bindings/clock/exynos3250-clock.txt
 +++ /dev/null
-@@ -1,42 +0,0 @@
--* Samsung Exynos5420 Clock Controller
+@@ -1,57 +0,0 @@
+-* Samsung Exynos3250 Clock Controller
 -
--The Exynos5420 clock controller generates and supplies clock to various
--controllers within the Exynos5420 SoC and for the Exynos5800 SoC.
+-The Exynos3250 clock controller generates and supplies clock to various
+-controllers within the Exynos3250 SoC.
 -
 -Required Properties:
 -
 -- compatible: should be one of the following.
--  - "samsung,exynos5420-clock" - controller compatible with Exynos5420 SoC.
--  - "samsung,exynos5800-clock" - controller compatible with Exynos5800 SoC.
+-  - "samsung,exynos3250-cmu" - controller compatible with Exynos3250 SoC.
+-  - "samsung,exynos3250-cmu-dmc" - controller compatible with
+-    Exynos3250 SoC for Dynamic Memory Controller domain.
+-  - "samsung,exynos3250-cmu-isp" - ISP block clock controller compatible
+-     with Exynos3250 SOC
 -
 -- reg: physical base address of the controller and length of memory mapped
 -  region.
@@ -114,14 +119,26 @@ index 717a7b1531c7..000000000000
 -to specify the clock which they consume.
 -
 -All available clocks are defined as preprocessor macros in
--dt-bindings/clock/exynos5420.h header and can be used in device
+-dt-bindings/clock/exynos3250.h header and can be used in device
 -tree sources.
 -
--Example 1: An example of a clock controller node is listed below.
+-Example 1: Examples of clock controller nodes are listed below.
 -
--	clock: clock-controller@10010000 {
--		compatible = "samsung,exynos5420-clock";
--		reg = <0x10010000 0x30000>;
+-	cmu: clock-controller@10030000 {
+-		compatible = "samsung,exynos3250-cmu";
+-		reg = <0x10030000 0x20000>;
+-		#clock-cells = <1>;
+-	};
+-
+-	cmu_dmc: clock-controller@105c0000 {
+-		compatible = "samsung,exynos3250-cmu-dmc";
+-		reg = <0x105C0000 0x2000>;
+-		#clock-cells = <1>;
+-	};
+-
+-	cmu_isp: clock-controller@10048000 {
+-		compatible = "samsung,exynos3250-cmu-isp";
+-		reg = <0x10048000 0x1000>;
 -		#clock-cells = <1>;
 -	};
 -
@@ -129,33 +146,27 @@ index 717a7b1531c7..000000000000
 -	   controller. Refer to the standard clock bindings for information
 -	   about 'clocks' and 'clock-names' property.
 -
--	serial@13820000 {
+-	serial@13800000 {
 -		compatible = "samsung,exynos4210-uart";
--		reg = <0x13820000 0x100>;
--		interrupts = <0 54 0>;
--		clocks = <&clock CLK_UART2>, <&clock CLK_SCLK_UART2>;
+-		reg = <0x13800000 0x100>;
+-		interrupts = <0 109 0>;
+-		clocks = <&cmu CLK_UART0>, <&cmu CLK_SCLK_UART0>;
 -		clock-names = "uart", "clk_uart_baud0";
 -	};
 diff --git a/Documentation/devicetree/bindings/clock/samsung,exynos-clock.yaml b/Documentation/devicetree/bindings/clock/samsung,exynos-clock.yaml
-index 1642f8405ed9..b807ae79e3b7 100644
+index b807ae79e3b7..9af77bdee12d 100644
 --- a/Documentation/devicetree/bindings/clock/samsung,exynos-clock.yaml
 +++ b/Documentation/devicetree/bindings/clock/samsung,exynos-clock.yaml
-@@ -18,7 +18,14 @@ description: |
- 
- properties:
+@@ -20,6 +20,9 @@ properties:
    compatible:
--    const: samsung,exynos5250-clock
-+    oneOf:
-+      - enum:
-+          - samsung,exynos5250-clock
-+      - items:
-+          - enum:
-+              - samsung,exynos5420-clock
-+              - samsung,exynos5800-clock
-+          - const: syscon
- 
-   clocks:
-     maxItems: 4
+     oneOf:
+       - enum:
++          - samsung,exynos3250-cmu
++          - samsung,exynos3250-cmu-dmc
++          - samsung,exynos3250-cmu-isp
+           - samsung,exynos5250-clock
+       - items:
+           - enum:
 -- 
 2.30.2
 
