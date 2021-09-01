@@ -2,88 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 595A83FDB3A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  1 Sep 2021 15:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F3C63FE1FE
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  1 Sep 2021 20:11:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343547AbhIAMke (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 1 Sep 2021 08:40:34 -0400
-Received: from out0.migadu.com ([94.23.1.103]:54263 "EHLO out0.migadu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1344017AbhIAMhT (ORCPT
+        id S1346837AbhIASMa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 1 Sep 2021 14:12:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346839AbhIASMX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 1 Sep 2021 08:37:19 -0400
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-        t=1630499775;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=pJotZ7v11sHuJLFfrcQ3UlD/rmnLoWbUqGvZgu+uUlQ=;
-        b=Ksl3r1rTmRB0M2mXpX3f9HLE+Wk74YmJcLEYbwzZBdQD54hAGhvFYGD5zM4s/h0i+sx1DR
-        Mhlo57w/c7ulijCj1yzWvphWGMDp/KYAc6o1fGzGjOfy/V9xwlAzs3kBDOt9hnu530Wt/M
-        SWngk6J7G3whPnJcyz5oKYn+7NbVKVk=
-From:   Jackie Liu <liu.yun@linux.dev>
-To:     krzysztof.kozlowski@canonical.com
-Cc:     linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, liu.yun@linux.dev,
-        liuyun01@kylinos.cn
-Subject: [PATCH v2] ARM: s3c: irq-s3c24xx: Fix return value check for s3c24xx_init_intc()
-Date:   Wed,  1 Sep 2021 20:35:57 +0800
-Message-Id: <20210901123557.1043953-1-liu.yun@linux.dev>
+        Wed, 1 Sep 2021 14:12:23 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702B0C0619F6
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  1 Sep 2021 11:11:23 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id g14so495059pfm.1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 01 Sep 2021 11:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2joGkq8i8C5vglZO1FYNTlWqLyr4vSiCXKQYXBVnv4Q=;
+        b=LD3mpzy1s09M3e/Eheelu/QMtbN6lrYJQ+S1BsYhmG4zP9OQuKOeD1zHV2lZaK7Hdt
+         vXoBMumPRACuZhnwd8TYAFIvdImPe0Zn4DA41GnzHGsnpDZPE0wUFWVFNzgpxF6bh6D8
+         CVxTiiIN7w8BVpPirFLytZKK2cFqqV6q9qR8cw4XmdYYgGZs+MdnDeP+neEr/SbnLI2h
+         mwT6gqJ8+HvNCQei5Zu6b3U+/YcUOepEDfVn6t0IkNG5YzxTV8mH8IqZ4zEsqBchdgxI
+         E/zGH3KCiuS7UdfEMBVKPbpzhhPyh4quLRALvE4iCHtswqSZDgWUuzksodIw8OWwGR1Z
+         0RlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2joGkq8i8C5vglZO1FYNTlWqLyr4vSiCXKQYXBVnv4Q=;
+        b=rEDD8IhRkcebcNAOJLQ+2IlSOApPoGXDgK/quXdWxUtLyMhlAM6X2S8Qj8jHiooQWO
+         S94A4pB0RF1mBDldXJftC3CrrsKoI4EMvKIH02LwXYfksKJBkhpL+e1xNRUORXmCbZq3
+         fqSq57J9Ra6jHNZdouLiBw2WAWLBL1zK+Bt/7/RSfsV7yPbpr0txrVG99P3FMk1zgdyP
+         b5MCpfkfVQG7zMCxkJs1BnVVEOo08oQMHtvxCVfL+sUFT2IB0G23doNukkkQzz6KSaNa
+         X3y1Ysknv22LcCyVlYZIQMXA6ScKdq9kL2buZIeXZyxpLH3ua3IRaVNTqTPeMI1aihiX
+         ik+Q==
+X-Gm-Message-State: AOAM5337t3lKyyYUumVPwJ9JXmw3hIh7p6UGwPNh7lvVGnA45LzvPxcp
+        3YQFvibrgGooF8Np7Eg69Swzxts/TWzVAcxBhUEzTHpt63x97g==
+X-Google-Smtp-Source: ABdhPJwbbBYGjUEQSS3Bb7EfYk34O3AVuG22pVIF78fkATQG8c+PQmeHgcc35+YrriS74Wl5STB8JbzOasp+8kCVBlk=
+X-Received: by 2002:a67:8c5:: with SMTP id 188mr1017695vsi.4.1630519870726;
+ Wed, 01 Sep 2021 11:11:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: liu.yun@linux.dev
+Received: by 2002:ab0:740d:0:0:0:0:0 with HTTP; Wed, 1 Sep 2021 11:11:10 -0700 (PDT)
+From:   CorisBank International <corisbankintlbf@gmail.com>
+Date:   Wed, 1 Sep 2021 11:11:10 -0700
+Message-ID: <CA+25hwzjLgVdtDXYWeuqFBTvAbpc4oxK0dW54s7tjGNyU_m0ow@mail.gmail.com>
+Subject: CORISBANK INTERNATIONAL OFFICIAL NOTIFICATION
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Jackie Liu <liuyun01@kylinos.cn>
+Att: Client
 
-The s3c24xx_init_intc() returns an error pointer upon failure, not NULL.
-let's add an error pointer check in s3c24xx_handle_irq.
 
-s3c_intc[0] is not NULL or ERR, we can simplify the code.
+CORISBANK INTERNATIONAL URGENT NOTIFICATION
 
-Fixes: 1f629b7a3ced ("ARM: S3C24XX: transform irq handling into a declarative form")
-Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
----
- arch/arm/mach-s3c/irq-s3c24xx.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+Notification / Notification/ Notification
 
-diff --git a/arch/arm/mach-s3c/irq-s3c24xx.c b/arch/arm/mach-s3c/irq-s3c24xx.c
-index 0c631c14a817..df471d322493 100644
---- a/arch/arm/mach-s3c/irq-s3c24xx.c
-+++ b/arch/arm/mach-s3c/irq-s3c24xx.c
-@@ -362,11 +362,24 @@ static inline int s3c24xx_handle_intc(struct s3c_irq_intc *intc,
- static asmlinkage void __exception_irq_entry s3c24xx_handle_irq(struct pt_regs *regs)
- {
- 	do {
--		if (likely(s3c_intc[0]))
--			if (s3c24xx_handle_intc(s3c_intc[0], regs, 0))
--				continue;
-+		/* For platform based machines, neither ERR nor NULL can happen here.
-+		 * The s3c24xx_handle_irq() will be set as IRQ handler iff this succeeds:
-+		 *
-+		 *    s3c_intc[0] = s3c24xx_init_intc()
-+		 *
-+		 * If this fails, the next calls to s3c24xx_init_intc() won't be executed.
-+		 *
-+		 * For DT machine, s3c_init_intc_of() could set the IRQ handler without
-+		 * setting s3c_intc[0] only if it was called with num_ctrl=0. There is no
-+		 * such code path, so again the s3c_intc[0] will have a valid pointer if
-+		 * set_handle_irq() is called.
-+		 *
-+		 * Therefore in s3c24xx_handle_irq(), the s3c_intc[0] is always something.
-+		 */
-+		if (s3c24xx_handle_intc(s3c_intc[0], regs, 0))
-+			continue;
- 
--		if (s3c_intc[2])
-+		if (!IS_ERR_OR_NULL(s3c_intc[2]))
- 			if (s3c24xx_handle_intc(s3c_intc[2], regs, 64))
- 				continue;
- 
--- 
-2.25.1
+Note, We are writing to inform you officially that Finally the Central
+Bank Financial Authority have approved to transfer your $8.2Million
+which was signed by late Mrs Rose Banneth the COVID.19 victim to
+transfer to you, Late Mrs Rose Banneth the France Lady contacted us to
+transfer her fund in our bank to you for Orphanage work before she
+died by the COVID.19
+and as it is now, you will receive your fund through our corresponding
+bank in Dubai [Emirate Investment Bank ] for security reason. Please
+you should reconfirm your details to receive the $8.2Million.
 
+Name, Country, Address, occupations, Age, Telephone number, account
+Details so that we can immediately forward to the World Bank to
+transfer the fund.
+You are advised to comply on timely manner to permit this esteem bank
+transfer your fund as scheduled.
+
+We look forward to serving you better
+Your Financial Comfort Is A Priority
+Thank you for choosing Corisbank International.
+
+Sincerely,
+
+----
+
+Mr Diakarya Ouattara
+Managing Director
+Bank Coris
+Burkina Faso
++226 556 163 37
+financial_bf_info@accountant.com
