@@ -2,98 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6B624028C9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Sep 2021 14:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 696ED403092
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Sep 2021 23:58:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344621AbhIGM3v (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Sep 2021 08:29:51 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:37518
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1344587AbhIGM3r (ORCPT
+        id S1346840AbhIGV7Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Sep 2021 17:59:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346649AbhIGV7W (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:29:47 -0400
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 430B23F046
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Sep 2021 12:28:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1631017720;
-        bh=1lz5zbXaAC/6Xt9DSvyMvWDrwTMabkYousM6j7peGJE=;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-         In-Reply-To:Content-Type;
-        b=X+paikGBkgHHKn07Xm0GYxpQ5sOKedPgIOXFMsfX6rE5xuMKDkx5U3TObNJhTG4uE
-         FIdWaMdIe0pvBJpLGFln8TNQgbkoTctNb5/RMpYGFcx90v62+llQ1WkkY8tieP68SR
-         HDUQmfRfGHra8V8Z+Mi34D+yVGuSC/gOGfM5R6DyyI4sg1rgpQmqnY0g/RkYI/TT7d
-         jj7Xp8XRIWFgRLo2yHofEQGOcwxwPkfo/EcYZ/SYYirQqHmyMl2nnpr8tkwsN1fLR/
-         6DlUixLpArreZdFwCD72vVwSNEkoV6qdegQDk6rUN6VswyQdUB0NEBtuuX54MMltAT
-         EJjEljP90CuuA==
-Received: by mail-wr1-f70.google.com with SMTP id t15-20020a5d42cf000000b001565f9c9ee8so2060589wrr.2
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Sep 2021 05:28:40 -0700 (PDT)
+        Tue, 7 Sep 2021 17:59:22 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8664DC061575
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Sep 2021 14:58:15 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id i28so22840ljm.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Sep 2021 14:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=4ZeMqFoWSo+tWRP8ze+5Nkj/uqSjpLi4OjSOBk1BCRM=;
+        b=HAij1yLle8cXKrvle5OJIaTSLfPM1NQcWlHsPb/LObcWf3XueeSbdJZbYIHyZHaxFz
+         mQgebaL8oGh1f7q5WeeVQv9iQRNOCZ15n4ZSIoFEQT4iLVFBxaTvKKfu7hd2TjaoDWOq
+         K7SOBsyLDpNBRoEnDjSLaXydp1PA0Ms+bIvCpAaSMzy16hkLf4ItV7dESsVNtkVRZ9r+
+         8ts+dr0qPZfC3FRrhlFqEmsP3hlfoeDHuSH/nx5Z488qtNl/44hbfRf3ebPWb1Edm49z
+         +XqSh6Pv5yY4TnqBlju60JpEwv8A3T0j55S/djm8e9FrFKF8Ej0owL8UKdj8n1nSJ5zG
+         Np0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1lz5zbXaAC/6Xt9DSvyMvWDrwTMabkYousM6j7peGJE=;
-        b=RKamOOSW/Nhq8/eI7tXS65znXWzbVrCeg8dNSOTg5y7rskFG0APzym9BkyWi2zSgli
-         XNtDD58/e/NeX1Zkua2lyE27Z+dLvNg0iswjukuOterUJWR6GOhDwMn6qYmhdl8r+QI6
-         jwR5SFaIQJMEmj4TMD2owUS8bvS3hcqDrnKVGqTy+//KO9reR0ercSEPzwMzGGz0cw5z
-         ZpMwuFnutv5fbR3yTgRVDw4o+wp+g6418qv+/6HfoIwX4loOjnXVXJTf4Ao5k9UD+od0
-         Xw/PmlVtACr2yTlWyxsbzmcXb+8YtGcCWwVt0keBtvu9O/c2BvM/5E4u2xEmYZzGzsgb
-         YBUg==
-X-Gm-Message-State: AOAM533lCQDzz8RcOD9bAMAnjnnYBBXLtTeTzR74exWnH+NkXZUc7/jm
-        fVtcYNt5+n5S77IqH9FH2Q1ymDw6ZE8vjCKn6itdRY+41XqiAAaJWcOdC0bklKIw/zJK4VACwkl
-        BYvcZipb+NREO9q8u7quCHJie5iRN+L51FuQlnEfd07IW99TL
-X-Received: by 2002:a05:600c:a44:: with SMTP id c4mr3736052wmq.83.1631017720023;
-        Tue, 07 Sep 2021 05:28:40 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxnia4fxnHdJbDEwVsFWre7qSHYc2QGFISEhWQFymiMZBSSOqZlc7sbdrkWnKGP+ygKpVwCvw==
-X-Received: by 2002:a05:600c:a44:: with SMTP id c4mr3736037wmq.83.1631017719840;
-        Tue, 07 Sep 2021 05:28:39 -0700 (PDT)
-Received: from [192.168.3.211] ([79.98.113.90])
-        by smtp.gmail.com with ESMTPSA id f3sm2266751wmj.28.2021.09.07.05.28.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Sep 2021 05:28:39 -0700 (PDT)
-Subject: Re: [PATCH] clk: samsung: s5pv210-audss: Make use of the helper
- function devm_platform_ioremap_resource()
-To:     Cai Huoqing <caihuoqing@baidu.com>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20210907085122.4305-1-caihuoqing@baidu.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Message-ID: <cb81b1d4-d1de-c41d-3966-ac36f282de1d@canonical.com>
-Date:   Tue, 7 Sep 2021 14:28:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=4ZeMqFoWSo+tWRP8ze+5Nkj/uqSjpLi4OjSOBk1BCRM=;
+        b=egzsI0szsQNWIjOZzwg5NknRIwNYhpqIqfDPXsatoQsiKnUidZeVZ1SJABnVX1ZIJh
+         j7LDfEpBJWOGOWM5U2c140BHPIIMIM4PSOMFED0EMb76flW2VrI4vCwvaLk399Yh3UYj
+         GnGLjcrcmngdc89FQySGD6aZIn6T2UNCHxtjKLLaIjXagjz1qXR9mc7ehpPOH1bdBLrU
+         tLWC756bA3pmT1GuNFS3PUx29XJCkkOPwmKxqFW8JJdDB9FFUMU9DFI65u1be8iUBRha
+         7hgwYonasX4eHDpbhVt2l/A3lh0yBf/RzHFoRLesW3KCTvq/VdwEfiYbkxvP653jY0GX
+         fDCw==
+X-Gm-Message-State: AOAM530A15CzCikiKmVR79n1jKRYUhbYTrSWZVPDiw7r97DPwa1q8q+7
+        RoxXtdHGE7Z58DRqm9okaB3IUYgQ5SMWVi/rng==
+X-Google-Smtp-Source: ABdhPJwZTUumxONE23bH5V3rEkU1vuSCoCeGW6NUXGyc5hPmOT+1cjs0UyLq7LGTgN2PhF5YpPEbI6AEgC6GPPvwMgM=
+X-Received: by 2002:a2e:9b0b:: with SMTP id u11mr268458lji.463.1631051892754;
+ Tue, 07 Sep 2021 14:58:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210907085122.4305-1-caihuoqing@baidu.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a2e:95d5:0:0:0:0:0 with HTTP; Tue, 7 Sep 2021 14:58:12 -0700 (PDT)
+Reply-To: hameedsaedi01@gmail.com
+From:   Hameed Saedi <hameedsaedi8@gmail.com>
+Date:   Tue, 7 Sep 2021 22:58:12 +0100
+Message-ID: <CABg9ctOhmmjpyLjqwp7VB7_RJZwMcfY9nGicE+pyNobnDLgqYQ@mail.gmail.com>
+Subject: Partnership Proposal
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 07/09/2021 10:51, Cai Huoqing wrote:
-> Use the devm_platform_ioremap_resource() helper instead of
-> calling platform_get_resource() and devm_ioremap_resource()
-> separately
-> 
-> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
-> ---
->  drivers/clk/samsung/clk-s5pv210-audss.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
+Hello,
+.
+I want to use this medium to propose a lucrative crude oil proposal
+and will need your partnership.Let me know if interested so as to
+provide further briefing on the project.
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-
-Best regards,
-Krzysztof
+Respectfully,
+Hameed Saedi
