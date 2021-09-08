@@ -2,65 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 696ED403092
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Sep 2021 23:58:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D010403B79
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 Sep 2021 16:27:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346840AbhIGV7Y (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Sep 2021 17:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346649AbhIGV7W (ORCPT
+        id S1351890AbhIHO23 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 Sep 2021 10:28:29 -0400
+Received: from smtp1.axis.com ([195.60.68.17]:11638 "EHLO smtp1.axis.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229600AbhIHO21 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:59:22 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8664DC061575
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Sep 2021 14:58:15 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id i28so22840ljm.7
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Sep 2021 14:58:15 -0700 (PDT)
+        Wed, 8 Sep 2021 10:28:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=4ZeMqFoWSo+tWRP8ze+5Nkj/uqSjpLi4OjSOBk1BCRM=;
-        b=HAij1yLle8cXKrvle5OJIaTSLfPM1NQcWlHsPb/LObcWf3XueeSbdJZbYIHyZHaxFz
-         mQgebaL8oGh1f7q5WeeVQv9iQRNOCZ15n4ZSIoFEQT4iLVFBxaTvKKfu7hd2TjaoDWOq
-         K7SOBsyLDpNBRoEnDjSLaXydp1PA0Ms+bIvCpAaSMzy16hkLf4ItV7dESsVNtkVRZ9r+
-         8ts+dr0qPZfC3FRrhlFqEmsP3hlfoeDHuSH/nx5Z488qtNl/44hbfRf3ebPWb1Edm49z
-         +XqSh6Pv5yY4TnqBlju60JpEwv8A3T0j55S/djm8e9FrFKF8Ej0owL8UKdj8n1nSJ5zG
-         Np0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=4ZeMqFoWSo+tWRP8ze+5Nkj/uqSjpLi4OjSOBk1BCRM=;
-        b=egzsI0szsQNWIjOZzwg5NknRIwNYhpqIqfDPXsatoQsiKnUidZeVZ1SJABnVX1ZIJh
-         j7LDfEpBJWOGOWM5U2c140BHPIIMIM4PSOMFED0EMb76flW2VrI4vCwvaLk399Yh3UYj
-         GnGLjcrcmngdc89FQySGD6aZIn6T2UNCHxtjKLLaIjXagjz1qXR9mc7ehpPOH1bdBLrU
-         tLWC756bA3pmT1GuNFS3PUx29XJCkkOPwmKxqFW8JJdDB9FFUMU9DFI65u1be8iUBRha
-         7hgwYonasX4eHDpbhVt2l/A3lh0yBf/RzHFoRLesW3KCTvq/VdwEfiYbkxvP653jY0GX
-         fDCw==
-X-Gm-Message-State: AOAM530A15CzCikiKmVR79n1jKRYUhbYTrSWZVPDiw7r97DPwa1q8q+7
-        RoxXtdHGE7Z58DRqm9okaB3IUYgQ5SMWVi/rng==
-X-Google-Smtp-Source: ABdhPJwZTUumxONE23bH5V3rEkU1vuSCoCeGW6NUXGyc5hPmOT+1cjs0UyLq7LGTgN2PhF5YpPEbI6AEgC6GPPvwMgM=
-X-Received: by 2002:a2e:9b0b:: with SMTP id u11mr268458lji.463.1631051892754;
- Tue, 07 Sep 2021 14:58:12 -0700 (PDT)
+  d=axis.com; q=dns/txt; s=axis-central1; t=1631111240;
+  x=1662647240;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=/Lcdys6WTmSrPy4bNO7GmCO4AO1+pwjwI5q1bpQDGaI=;
+  b=Sh4Do36+stPRYvM4DuIhOe/PvTfpFsBjzAm7eQaU4PoIsyiUnW4rv0he
+   6+EhVcTyrhOAmESSv76a21EgBGAVNBNYORRb0uFhcv8foDPFCDogVDl+N
+   VlQFZAxry+O8KwuFj861EYkntJsuS/Uww9fF65ixjVYn2+613iGLWs0S8
+   1/BYDU4xkdFn1gUCC3Bz9dEkkUnGL5z/6O1WydtTYZbY9j/1Hi7Rwzead
+   XJ35y4DpXfhc2XMe2V3X0/pQNzNO4nxQ5D5Udu46Q3NS6sYKhgoPWFc83
+   6nMyJKD3GmIOPr40g1DVWsELWF9UJ4Qgidsw/1ZxHtxPzrufixABS99gf
+   Q==;
+From:   =?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>
+CC:     =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
+        <kernel@axis.com>,
+        =?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>
+Subject: [PATCH] pwm: pwm-samsung: Trigger manual update when disabling PWM
+Date:   Wed, 8 Sep 2021 16:27:08 +0200
+Message-ID: <20210908142708.14145-1-marten.lindahl@axis.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Received: by 2002:a2e:95d5:0:0:0:0:0 with HTTP; Tue, 7 Sep 2021 14:58:12 -0700 (PDT)
-Reply-To: hameedsaedi01@gmail.com
-From:   Hameed Saedi <hameedsaedi8@gmail.com>
-Date:   Tue, 7 Sep 2021 22:58:12 +0100
-Message-ID: <CABg9ctOhmmjpyLjqwp7VB7_RJZwMcfY9nGicE+pyNobnDLgqYQ@mail.gmail.com>
-Subject: Partnership Proposal
-To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello,
-.
-I want to use this medium to propose a lucrative crude oil proposal
-and will need your partnership.Let me know if interested so as to
-provide further briefing on the project.
+When duty-cycle is at full level (100%), the TCNTn and TCMPn registers
+needs to be flushed in order to disable the signal. The PWM manual does
+not say anything about this, but states that only clearing the TCON
+auto-reload bit should be needed, and this seems to be true when the PWM
+duty-cycle is not at full level. This can be observed on an Axis
+ARTPEC-8, by running:
 
-Respectfully,
-Hameed Saedi
+  echo <period> > pwm/period
+  echo <period> > pwm/duty_cycle
+  echo 1 > pwm/enable
+  echo 0 > pwm/enable
+
+Since the TCNTn and TCMPn registers are activated when enabling the PWM
+(setting TCON auto-reload bit), and are not touched when disabling the
+PWM, the double buffered auto-reload function seems to be still active.
+Lowering duty-cycle, and restoring it again in between the enabling and
+disabling, makes the disable work since it triggers a reload of the
+TCNTn and TCMPn registers.
+
+Fix this by securing a reload of the TCNTn and TCMPn registers when
+disabling the PWM and having a full duty-cycle.
+
+Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
+---
+ drivers/pwm/pwm-samsung.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
+index f6c528f02d43..7d90652402a0 100644
+--- a/drivers/pwm/pwm-samsung.c
++++ b/drivers/pwm/pwm-samsung.c
+@@ -105,6 +105,9 @@ struct samsung_pwm_chip {
+ static DEFINE_SPINLOCK(samsung_pwm_lock);
+ #endif
+ 
++static void __pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
++				      struct pwm_device *pwm);
++
+ static inline
+ struct samsung_pwm_chip *to_samsung_pwm_chip(struct pwm_chip *chip)
+ {
+@@ -278,17 +281,21 @@ static void pwm_samsung_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 
+ 	our_chip->disabled_mask |= BIT(pwm->hwpwm);
+ 
++	/*
++	 * In case the PWM is at 100% duty cycle, force a manual
++	 * update to prevent the signal from staying high.
++	 */
++	if (readl(our_chip->base + REG_TCMPB(pwm->hwpwm)) == (u32)-1U)
++		__pwm_samsung_manual_update(our_chip, pwm);
++
+ 	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+ 
+-static void pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
++static void __pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
+ 				      struct pwm_device *pwm)
+ {
+ 	unsigned int tcon_chan = to_tcon_channel(pwm->hwpwm);
+ 	u32 tcon;
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&samsung_pwm_lock, flags);
+ 
+ 	tcon = readl(chip->base + REG_TCON);
+ 	tcon |= TCON_MANUALUPDATE(tcon_chan);
+@@ -296,6 +303,16 @@ static void pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
+ 
+ 	tcon &= ~TCON_MANUALUPDATE(tcon_chan);
+ 	writel(tcon, chip->base + REG_TCON);
++}
++
++static void pwm_samsung_manual_update(struct samsung_pwm_chip *chip,
++				      struct pwm_device *pwm)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&samsung_pwm_lock, flags);
++
++	__pwm_samsung_manual_update(chip, pwm);
+ 
+ 	spin_unlock_irqrestore(&samsung_pwm_lock, flags);
+ }
+-- 
+2.20.1
+
