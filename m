@@ -2,126 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65E28410CB3
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 19 Sep 2021 19:32:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48254410D4B
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 19 Sep 2021 22:29:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231146AbhISReS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 19 Sep 2021 13:34:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230523AbhISReP (ORCPT
+        id S232166AbhISUa6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 19 Sep 2021 16:30:58 -0400
+Received: from h03mx23.reliablemail.org ([184.154.76.211]:18260 "EHLO
+        h03mx23.reliablemail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232191AbhISUa4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 19 Sep 2021 13:34:15 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 874C5C061574;
-        Sun, 19 Sep 2021 10:32:50 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id d11so12162383ilc.8;
-        Sun, 19 Sep 2021 10:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7Gbr6qUKWHVKiXPdk5V4pk0xSy2NBQ/5pmcHqgFNJHo=;
-        b=AXOm5AdXPt/dNYXBz0ZQmUVAkNTQysRL+nzDPvs+OfsKKjeW8e7zcwbLtMKOJgBqwk
-         Sd/HH4Lj60j5HOcrUXyycsW53ObpyAMuKQtekdws7y1dshwkTOZhaYtdBeeEKjQzx0fX
-         BaZlbeBn/8FMR0kPDjr8LukGKNuy1vaVsypjh7VaVhWUGj4rhpKiu3TOvfLfigQQAKJu
-         aXL1sl41FtbDTO7QCjyzbSK7VR8PRz3esnq7ovQFfEqdXl2gW16MCvRdgvu1pSOQeIvM
-         Kc/9nzw5jraMY6ERb/dRgJLsdd6qHrU0E2zp6EFZrQkuhPEITgpWcNxAvKqowHvQCurH
-         88Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7Gbr6qUKWHVKiXPdk5V4pk0xSy2NBQ/5pmcHqgFNJHo=;
-        b=R1ijs+G3+BFZ51Lz84F+WRK4DrnutqJsdiwRA3y+QFd3Ewluc2CN+XRG4gzXYYKsuo
-         DdvRy/6x3HqdO/kkf9sIIAJTrEhs25IPwo636RI/Sa1U4cGx1FUIjTEiD/qgHOO4UEKF
-         wHXjxKSOW8rbPkzFnvWk1f6QtwLdJ7s7nq3B04222ujYRS3d2rrkCREJ8sjLmS32WQwx
-         kaiRlMyO+X3gk+OF5DLGhCCrYW5zqslUipqlQsRVuYuACTQjVcAV+ZjmgzmjwcphTDKN
-         9o4BxahjAdXOIAzX3Srs92KZYpsOAO7/c7sR8yUaMLqNxRc6P5PJ6uaJteN+S2qXW8y3
-         yZfg==
-X-Gm-Message-State: AOAM533BPSEwbeoB/RAWGUfNTbgt6V8Rl2mwuvPnuv/5P59gts0sp411
-        yQB9c2Yv37oCWtn6BRBTYC5WxK03KqAix4wecOc=
-X-Google-Smtp-Source: ABdhPJxP1B+9Kdk+qN58zeHUOx+M9WqXgfLUyibiCfebby9oMAIQOYaggirngAIT5qDJstvUfMfpsim8DJBqG28QhtM=
-X-Received: by 2002:a05:6e02:1bed:: with SMTP id y13mr5594036ilv.249.1632072769987;
- Sun, 19 Sep 2021 10:32:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210919093114.35987-1-krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20210919093114.35987-1-krzysztof.kozlowski@canonical.com>
-From:   Alim Akhtar <alim.akhtar@gmail.com>
-Date:   Sun, 19 Sep 2021 23:02:14 +0530
-Message-ID: <CAGOxZ50i6URzUQ7o7V4m7MR=2TqSeD6qx5fQaQDs+5nEq4fa2A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] soc: samsung: exynos-chipid: be a module!
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Russell King <linux@armlinux.org.uk>,
-        linux-arm-kernel@lists.infradead.org,
+        Sun, 19 Sep 2021 16:30:56 -0400
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Sep 2021 16:30:56 EDT
+X-Halon-Out: 578ab969-1985-11ec-a67c-00163c72d6d3
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=grimler.se;
+        s=default; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
+        Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=XnnylZpKKoip6qobXPOGPzi5vEJgH9r5kYC4SFQRE1c=; b=ZQIorl2A2BUxdoQ3rNw0+33ZR5
+        KHmn+B++Ru5bOm9bIWkiuLpBusrh5kurVDEIgDumjGFg2Ck3U/MIFm6CMiFxiih2hcpTRj6gG7xoC
+        Iq9uO+xplnnVjxyZgjuq64Jqe7FE7uCSYtEM3fFx7yr30GAp9h5YUoEnZNHUX8whDjKYXbkEh5Yno
+        QyAmRn/fpUmvP1w72OAAl8Y3tRGYAdQdfJ2mXMcLoAxyuaYD7ZOzmg4tS6K2whOZ2zOFi7dhqOHzv
+        E/IxraTG00xTj85Vx2GNnW/8mLywUclYth7GMw1OTE3xUHpZDVo0TZ06t1fA+y36V6UitgvqdEcAw
+        Di3Z7KkQ==;
+From:   Henrik Grimler <henrik@grimler.se>
+To:     sre@kernel.org, linux-pm@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Pankaj Dubey <pankaj.dubey@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+        ~postmarketos/upstreaming@lists.sr.ht, wolfgit@wiedmeyer.de
+Cc:     Henrik Grimler <henrik@grimler.se>
+Subject: [PATCH 0/1] power: supply: max17042_battery: use VFSOC for capacity when no rsns
+Date:   Sun, 19 Sep 2021 22:07:35 +0200
+Message-Id: <20210919200735.142862-1-henrik@grimler.se>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpsrv07.misshosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - grimler.se
+X-Get-Message-Sender-Via: cpsrv07.misshosting.com: authenticated_id: henrik@grimler.se
+X-Authenticated-Sender: cpsrv07.misshosting.com: henrik@grimler.se
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Krzysztof
+Hi,
 
-On Sun, Sep 19, 2021 at 6:28 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@canonical.com> wrote:
->
-> Hi,
->
-> Changes since v1
-> ================
-> 1. Drop patch 1/2 - exporting soc_device_to_device
-> 2. Add new patches: 1/3 and 3/3.
->
-> Question
-> ========
->
-> A question - what is the convention for naming modules: underscores '_' or
-> hyphens '-'?
->
-> The C-unit file already uses a hyphen "exynos-chipid.c", so I could
-> create a module named:
-> 1. exynos_chipid
-> 2. soc-exynos-chipid
-> 3. exynos-chip-id
->
-> The Linux device name is "exynos-chipid".
->
-> Best regards,
-> Krzysztof
->
->
-> Krzysztof Kozlowski (3):
->   soc: samsung: exynos-chipid: avoid soc_device_to_device()
->   soc: samsung: exynos-chipid: convert to a module
->   soc: samsung: exynos-chipid: do not enforce built-in
->
->  arch/arm/mach-exynos/Kconfig         |  1 -
->  drivers/soc/samsung/Kconfig          |  4 +++-
->  drivers/soc/samsung/Makefile         |  3 ++-
->  drivers/soc/samsung/exynos-chipid.c  | 14 +++++++++++---
->  drivers/soc/samsung/exynos5422-asv.c |  1 +
->  5 files changed, 17 insertions(+), 6 deletions(-)
->
-Thanks for the patches. For this series
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+This fixes so that the capacity is correctly reported for Galaxy S3.
+It is a v2 of a patch sent by Wolfgang Wiedmeyer some years ago [1].
+I have not been able to get in contact with him, but have put him as
+Suggested-by acknowledge that it is his fix.  Please let me know if
+Co-developed-by, or some other tag combination, is more appropriate
+for giving credit in this case.
 
-Also tested on exynos7 based platform, so
-Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
+[1] https://lkml.org/lkml/2016/9/25/195
 
-> --
-> 2.30.2
->
+Best regards,
+Henrik Grimler
+
+Henrik Grimler (1):
+  power: supply: max17042_battery: use VFSOC for capacity when no rsns
+
+ drivers/power/supply/max17042_battery.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 
+base-commit: 6a7ababc0268063d0798c46d5859a90ee996612f
 -- 
-Regards,
-Alim
+2.33.0
+
