@@ -2,83 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58B424150D4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 Sep 2021 21:58:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2124D4151D7
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 Sep 2021 22:55:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbhIVT7f (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 Sep 2021 15:59:35 -0400
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:45616 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhIVT7e (ORCPT
+        id S237854AbhIVU4g (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 Sep 2021 16:56:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33950 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237839AbhIVU4e (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 Sep 2021 15:59:34 -0400
-Received: by mail-ot1-f45.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso5127096otv.12;
-        Wed, 22 Sep 2021 12:58:04 -0700 (PDT)
+        Wed, 22 Sep 2021 16:56:34 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAFCC0613E1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Sep 2021 13:55:03 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id d207so14850195qkg.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Sep 2021 13:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=ijKrByR1/KtEp2Ut8Wj0vMi00kBZm/A/r1gPwOEYZIg=;
+        b=KdXnhe/3zkHeZgixn9BpXiRXniwMgDmhauf6YTuxP0wgB5yzxGI3euReyxhx9TVrxq
+         3Od5gARvk08SiaQHEdbK80uTPJiKvZD1mvaXmFEi2OlRGGLVxi9qjTdQEJHDNx6GrhQf
+         +YDVSfcVXX6hJ9tzkOuxVlwY0IK/v4ECFsMgPN0YbEUFjdWw7wtLO6HU7k0GlwYOwBU7
+         g0u5ZrnjkFj9bDNBfxTJ+EZszn5R+MIWkE1noseX+tMOjLt3VKfnAtHOf7zGnzUi7/Ss
+         4zORj2FhCL6VBd/6ui6VhZsTJDlTQFr3MO12bpjTdn18irITsVHBfbJQd5ezVh5SqLsC
+         4EBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iaPd+QHHmiMvOvCvDzF4J+PjNGw7QzM9uEOdU0ijBx0=;
-        b=lmSUzZwKLoJbi3rV8b14ueTzvSARIS4af4soLPNuuJhDc27EYAF4AQCEwxM9qG4Ldh
-         SNblY3E+Ti5x5q51TdLKUvqQI0QJJm2QI5dEG3h6sLV1pRn1FfIBfmH1dQnExZkjNaWy
-         EyK1kNhtZk8C3U3APKnabrQCrmpQBaD7IXZOVfnLZwUJtwjktLZPVCZGIRqn06lJ9jw0
-         ZRYKwZgjFp0JKPUHctXJldMcUq65m/H4988xC2qM5PjKqTwrMci6CKtIl53xUltQ6iki
-         c9xd1xgB1hIgaKTw4/4rx0dj1YHIIRI/XzN3Uxq42D42uZwLk6t9THC87ZttVLIL55J3
-         moxw==
-X-Gm-Message-State: AOAM530WnV3Nb1xYiEUoSZc0iRzm3zsRmEi/QfJOsLdjYfhWCKyev3cM
-        AJaDvQSv73T9JUfsmQWRVQ==
-X-Google-Smtp-Source: ABdhPJxYtpvzhIoY0PLePCkbi+/RqQbnPjHxc6x38GmKt2lT/UdKaSb/wKAdy90Adwnkh1e3vG2yCw==
-X-Received: by 2002:a9d:6092:: with SMTP id m18mr817222otj.215.1632340684146;
-        Wed, 22 Sep 2021 12:58:04 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id q133sm244494oia.55.2021.09.22.12.58.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 12:58:03 -0700 (PDT)
-Received: (nullmailer pid 1191863 invoked by uid 1000);
-        Wed, 22 Sep 2021 19:58:02 -0000
-Date:   Wed, 22 Sep 2021 14:58:02 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Chanho Park <chanho61.park@samsung.com>
-Cc:     devicetree@vger.kernel.org, Bean Huo <beanhuo@micron.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        Gyunghoon Kwon <goodjob.kwon@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-scsi@vger.kernel.org, Can Guo <cang@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        linux-samsung-soc@vger.kernel.org,
-        "Martin K . Petersen" <martin.petersen@oracle.com>
-Subject: Re: [PATCH v3 17/17] dt-bindings: ufs: exynos-ufs: add exynosautov9
- compatible
-Message-ID: <YUuKysgLBtB5jQv1@robh.at.kernel.org>
-References: <20210917065436.145629-1-chanho61.park@samsung.com>
- <CGME20210917065524epcas2p455b2900227b6a20994bec4816248f2bf@epcas2p4.samsung.com>
- <20210917065436.145629-18-chanho61.park@samsung.com>
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=ijKrByR1/KtEp2Ut8Wj0vMi00kBZm/A/r1gPwOEYZIg=;
+        b=0vhkk5uFKZx8HeP3XVqANI70BPoWfzmr49Jzigw1sW3aLNg0c4oJOKhKiGcNLDSgzo
+         uD7eAskRZBu50ihbM/Svq/XYtXH/EwioFLvbiWOkwZJc4uvwEn71ogJvbD+aAjJk7h4z
+         jMkPB2LbGHO+vFYh441wrs8c5EbvJs648usmVaxH1hueuypgfLtT0AgVfLQ23OA3+T5c
+         7wqPZ9n3y/a2HfLVR1TlYGyDfXWds60cSKuXOsbOtxN8B2kJNjtYQRha3ksg+RRCdRsA
+         Rd7QhLnHLRk+FTHsutgvDJue6f638wg6mHgomeZjLNu9GY33HdOsDLnW2aLOcXTh84ys
+         SHYQ==
+X-Gm-Message-State: AOAM532ohHyCN6syyHjnL0PpimhRlsE9ReysQCFNNJbDE8ovva5BNeex
+        1fCrwhxp/tjpToU1GTCk6PsfJE5mQNeylVYpruE=
+X-Google-Smtp-Source: ABdhPJwsLqRgkk9jb+wC1ECBTFJXrEEB4mmlIo/Kaul20LfIYdlAYLv9tmwaB5Pxv0AmysZSk6ZePRs2dvYCH/qVqH0=
+X-Received: by 2002:a05:6902:150a:: with SMTP id q10mr1344586ybu.515.1632344102557;
+ Wed, 22 Sep 2021 13:55:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210917065436.145629-18-chanho61.park@samsung.com>
+Sender: pablogboy98@gmail.com
+Received: by 2002:a05:7000:1903:0:0:0:0 with HTTP; Wed, 22 Sep 2021 13:55:02
+ -0700 (PDT)
+From:   Aisha Al-Qaddafi <aisha.gdaffi24@gmail.com>
+Date:   Wed, 22 Sep 2021 21:55:02 +0100
+X-Google-Sender-Auth: EgWN-7KeHIzBWxs5WISil-9jI9s
+Message-ID: <CAFZ0LQG=HorOEh0B82pMRaOtrfukA2tHOBoX92F9fX48+pG2cA@mail.gmail.com>
+Subject: My Dear Friend
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 17 Sep 2021 15:54:36 +0900, Chanho Park wrote:
-> Below two compatibles can be used for exynosautov9 SoC UFS controller.
-> 
-> - samsung,exynosautov9-ufs: ExynosAutov9 UFS Physical Host
-> - samsung,exynosautov9-ufs-vh: ExynosAutov9 UFS Virtual Host
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Chanho Park <chanho61.park@samsung.com>
-> ---
->  Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-
-Acked-by: Rob Herring <robh@kernel.org>
+Assalamu alaikum,
+I came across your e-mail contact prior to a private search while in
+need of your assistance. I am Aisha Al-Qaddafi, the only biological,
+Daughter of Former President of Libya Col. Muammar Al-Qaddafi. Am a
+single Mother and a Widow with three Children. I have investment funds
+worth Twenty Seven Million Five Hundred Thousand United State Dollar
+($27.500.000.00 ) and i need a trusted  investment Manager/Partner
+because of my current refugee status, however, I am interested in you
+for investment project assistance in your country. If you are willing
+to handle this project on my behalf kindly reply urgently to enable me
+to provide you more information about the investment
+funds.
+Best Regards
