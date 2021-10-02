@@ -2,84 +2,135 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AFC441FB59
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 Oct 2021 14:00:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77FA141FCE0
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 Oct 2021 17:53:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232947AbhJBMCJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 2 Oct 2021 08:02:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232898AbhJBMCI (ORCPT
+        id S233536AbhJBPz3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 2 Oct 2021 11:55:29 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:56986 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233438AbhJBPz2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 2 Oct 2021 08:02:08 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAA3C061570
-        for <linux-samsung-soc@vger.kernel.org>; Sat,  2 Oct 2021 05:00:22 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id y197so14678472iof.11
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 02 Oct 2021 05:00:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=DAO1bC92JOsdQ/NNexsSuEPMQkilehd80HK72Rw533l3nqgRLvVKlZ4YV3yD/WCheY
-         4oM2fGsJKCvHisgrawN73IUYlsBA00mFtxuEijoEieucGMttbEK51A9+6y1h1vfNYsSL
-         V+iO0/gGIhsADgxIDt87cycZICu4jv29F/5ETG1bQzrpIq8psSXZSsFuHD+2cbtRtNV/
-         5BovcK9ZTGyMKsheQu3wwH62Vg551soQeKVTlj9RzfHqVL5suo4MlDJx6GvxHWnDzFlb
-         x3+Zd8VPNJghIanrTHnG53Yxpt0043BQ7R/6Lfzl5vQ4F5mulm/cNLyIIEzRMo1ZftRF
-         8VCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=Eln2C5wWK5NsbjlrOKc7nWpOiFsnIQ9KAd2jksnTCOFtGPe4Z0k2qBxO439Czy6W+k
-         dlFomm95EuN6adbqMDucK8/8nWcxQH2wKiqW/tTr+qrYsuMts8Yhr0Os6raJ83irn4DK
-         DGPzb+CMXVu7A+cKMoYF3idVPd00YNIbDiic7pa6UImGImFoiqlqy5rkB2ghv97Xe6GG
-         ATn3lXnDcx3e0Cv8WU4y0SndkcXI2CfwhpURy8MMOB7IPyo4P2QyICxWINWlgoJI8aH/
-         3hjUOlF4wmAcVZkZoiX1M9qmVikwPCjCfvNb8SSFTwfQ7piWb2g+PhylyvxyrFUOTkkB
-         DQeQ==
-X-Gm-Message-State: AOAM531C985xsoC9L8H3yAWG6PqOW4roCqnrYUb58xxYVgs2KPoKgKOz
-        Li5PBtqqsrUSaqarIcs29GlpAZyns+chKgGLI5M=
-X-Google-Smtp-Source: ABdhPJzaNlegqSNGaU2rEjcw7R82KLsQUybV5SJRnD84iDcFQAkNifcNUeBKLnoeSIPUqunFsYney56+JL5zHQvZr/g=
-X-Received: by 2002:a02:a18d:: with SMTP id n13mr2632357jah.132.1633176022067;
- Sat, 02 Oct 2021 05:00:22 -0700 (PDT)
+        Sat, 2 Oct 2021 11:55:28 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: sre)
+        with ESMTPSA id D13321F411C6
+Received: by earth.universe (Postfix, from userid 1000)
+        id D4F533C0CA8; Sat,  2 Oct 2021 17:53:39 +0200 (CEST)
+Date:   Sat, 2 Oct 2021 17:53:39 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Hans de Goede <hdegoede@redhat.com>
+Cc:     Henrik Grimler <henrik@grimler.se>, m.szyprowski@samsung.com,
+        krzysztof.kozlowski@canonical.com, sebastian.krzyszkowiak@puri.sm,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, stable@vger.kernel.org,
+        Wolfgang Wiedmeyer <wolfgit@wiedmeyer.de>
+Subject: Re: [PATCH v2 1/2] power: supply: max17042_battery: use VFSOC for
+ capacity when no rsns
+Message-ID: <20211002155339.u33vym7gp5kchwrz@earth.universe>
+References: <20210929181418.4221-1-henrik@grimler.se>
+ <be608922-ef03-da35-c65c-575f301b596b@redhat.com>
 MIME-Version: 1.0
-Received: by 2002:a4f:f90d:0:0:0:0:0 with HTTP; Sat, 2 Oct 2021 05:00:21 -0700 (PDT)
-Reply-To: unitednnation0@gmail.com
-From:   "U.n" <wadebaye33@gmail.com>
-Date:   Sat, 2 Oct 2021 00:00:21 -1200
-Message-ID: <CACE0T5XpHfLe2aaSywgKNWk-y8sFt0sp3qnGdVPEMJnR3OjNpg@mail.gmail.com>
-Subject: Attention
-To:     unitednnation0@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7egjpavqn5hc2qqd"
+Content-Disposition: inline
+In-Reply-To: <be608922-ef03-da35-c65c-575f301b596b@redhat.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---=20
 
+--7egjpavqn5hc2qqd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Attention Sir/Madam
-This is the United Nation (UN). We the United Nations (UN) Globally
-has approved (US$2.500,000)( two Million Five hundred thousand
-dollars) compensation as part of our responsibilities for humanitarian
-Aid for fighting against CoronaVirus and you are among the lucky ones.
+Hi,
 
+On Wed, Sep 29, 2021 at 09:43:25PM +0200, Hans de Goede wrote:
+> On 9/29/21 8:14 PM, Henrik Grimler wrote:
+> > On Galaxy S3 (i9300/i9305), which has the max17047 fuel gauge and no
+> > current sense resistor (rsns), the RepSOC register does not provide an
+> > accurate state of charge value. The reported value is wrong, and does
+> > not change over time. VFSOC however, which uses the voltage fuel gauge
+> > to determine the state of charge, always shows an accurate value.
+> >=20
+> > For devices without current sense, VFSOC is already used for the
+> > soc-alert (0x0003 is written to MiscCFG register), so with this change
+> > the source of the alert and the PROP_CAPACITY value match.
+> >=20
+> > Fixes: 359ab9f5b154 ("power_supply: Add MAX17042 Fuel Gauge Driver")
+> > Cc: <stable@vger.kernel.org>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> > Suggested-by: Wolfgang Wiedmeyer <wolfgit@wiedmeyer.de>
+> > Signed-off-by: Henrik Grimler <henrik@grimler.se>
+> > ---
+> > Changes in v2:
+> > Re-write commit message to highlight that VFSOC is already used for
+> > alert, after Krzysztof's comments
+>=20
+> Thanks, both patches looks good to me:
+>=20
+> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+>=20
+> for the series.
 
-This compensation is for the most affected countries, communities and
-families across the global. Your funds were deposited with Bank in USA
-to transfer your funds to you via Internet Banking. You have to send
-your full details as state below:with this email Address
-  ( unitednnation0@gmail.com )
-Your full names:
-Address:
-Telephone:
-Occupation:
+Thanks, both queued.
 
+-- Sebastian
 
+>=20
+>=20
+> Regards,
+>=20
+> Hans
+>=20
+>=20
+> > ---
+> >  drivers/power/supply/max17042_battery.c | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/su=
+pply/max17042_battery.c
+> > index 8dffae76b6a3..5809ba997093 100644
+> > --- a/drivers/power/supply/max17042_battery.c
+> > +++ b/drivers/power/supply/max17042_battery.c
+> > @@ -313,7 +313,10 @@ static int max17042_get_property(struct power_supp=
+ly *psy,
+> >  		val->intval =3D data * 625 / 8;
+> >  		break;
+> >  	case POWER_SUPPLY_PROP_CAPACITY:
+> > -		ret =3D regmap_read(map, MAX17042_RepSOC, &data);
+> > +		if (chip->pdata->enable_current_sense)
+> > +			ret =3D regmap_read(map, MAX17042_RepSOC, &data);
+> > +		else
+> > +			ret =3D regmap_read(map, MAX17042_VFSOC, &data);
+> >  		if (ret < 0)
+> >  			return ret;
+> > =20
+> >=20
+> > base-commit: 5816b3e6577eaa676ceb00a848f0fd65fe2adc29
+> >=20
+>=20
 
-Yours Sincerely
-Mr. Ant=C3=B3nio Guterres
-United Nations (UN).
+--7egjpavqn5hc2qqd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmFYgIMACgkQ2O7X88g7
++poQLg/8CXVaO8gho0G+JicSoNEXEmdF+noJAB/DYjGgXihZVXKvvJQpP/fjLt7z
+28rm2NaWrV02OlWK0Rpx1ZIkCU1CPJjnnLUwxMEyKICyjJPH8p61nEYRKYSVDtN6
+Y9c9isOFNVcHUU8Sg14E+1xr9PImplWmvSTLEODb9DqJ8fBwtrO5JRJ54F3lOUkB
+Hqzv7hKYjbslAOnT/rVn3CcMhliT7xCp+GUU22sEwsUlX9P0aBHuHZPkBouTpflD
+r4y9Z6HvW3WGGSdulTvYBkPQWWYeXSrFv37pi/I65cn0GJH3hw5uUUSkQM6Mxg1u
+tRj3N5DtAR6FDGfqOSSjWhciY6N5NOs1dwAwpNnFWoX6ZQHpF3KNRt9HX1BBS37a
+TGPBHU/a66b12XiMQoALHceVRupYNJ1wqvMhkNiSfiL/mczCTS0mAZeWqyfvL9EP
+aqCHHe50hSoO/dJU5KyZW3EtCkcHUMmP4+LLR8QkZHFZdz7Zg4pcXbsmZoPZZ6eN
+9VuQDDf16VLk3fGird4gxuEoL4OhZHbMKkDdhXnfHTYG2wHmI83eanIHtOjQKazA
+zAXlFMiUy42llxw/beB/NR97/phZ9XAf2i2URrxOG1DqbpxRBbdb6XpO5qenaoox
+Cb3RUHYF4x6ZDSj/ySZnMJABlS6RzN6UAf4avYycKku0cZG4bTg=
+=HT6D
+-----END PGP SIGNATURE-----
+
+--7egjpavqn5hc2qqd--
