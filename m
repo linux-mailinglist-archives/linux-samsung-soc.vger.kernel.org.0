@@ -2,84 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 139CB41FA4E
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 Oct 2021 09:33:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AFC441FB59
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  2 Oct 2021 14:00:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232535AbhJBHen (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 2 Oct 2021 03:34:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39652 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232457AbhJBHem (ORCPT
+        id S232947AbhJBMCJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 2 Oct 2021 08:02:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232898AbhJBMCI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 2 Oct 2021 03:34:42 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9784161AE0;
-        Sat,  2 Oct 2021 07:32:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633159977;
-        bh=IndVpq6hUiMzT2bV+wFuq2sU67znH6QuPuNA09trYEA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nFmjZ4tIvGH14L9R1TRE1b5j+6wGfrEdKmEliRxI3/jjANQtzvZJdBCUYJYWjS6pF
-         mjEPmfrByYpVDhbb8iG9wmDutzEH/yNfumDvULbTNSjGdSkLgKBZrZPuztPpBC0n/5
-         0fSfVNn8JSzr30BujE15FphYYx0VHpSbY4gO+NHG1y9/aPzg/uohIHAWLpY63qihxs
-         gEVmVemA47MAkate3ttfwiiTgPg2W19O7xudzj/mfhsz2RA1ZK44a6OHtrwTl/Sc6H
-         9mIWqxyu3C0/SJcP+ZYQfEyrmtICyHI7CV8vRHDnrSQhv9MpfTsfV0qEpq5dAuZurU
-         lxKj2FXxBHrxg==
-Date:   Sat, 2 Oct 2021 09:32:54 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org
-Subject: Re: [PATCH] i2c: exynos: describe drivers in KConfig
-Message-ID: <YVgLJlv1FE8Kuqd4@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org
-References: <20210924133550.112488-1-krzysztof.kozlowski@canonical.com>
+        Sat, 2 Oct 2021 08:02:08 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAA3C061570
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  2 Oct 2021 05:00:22 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id y197so14678472iof.11
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 02 Oct 2021 05:00:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
+        b=DAO1bC92JOsdQ/NNexsSuEPMQkilehd80HK72Rw533l3nqgRLvVKlZ4YV3yD/WCheY
+         4oM2fGsJKCvHisgrawN73IUYlsBA00mFtxuEijoEieucGMttbEK51A9+6y1h1vfNYsSL
+         V+iO0/gGIhsADgxIDt87cycZICu4jv29F/5ETG1bQzrpIq8psSXZSsFuHD+2cbtRtNV/
+         5BovcK9ZTGyMKsheQu3wwH62Vg551soQeKVTlj9RzfHqVL5suo4MlDJx6GvxHWnDzFlb
+         x3+Zd8VPNJghIanrTHnG53Yxpt0043BQ7R/6Lfzl5vQ4F5mulm/cNLyIIEzRMo1ZftRF
+         8VCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
+        b=Eln2C5wWK5NsbjlrOKc7nWpOiFsnIQ9KAd2jksnTCOFtGPe4Z0k2qBxO439Czy6W+k
+         dlFomm95EuN6adbqMDucK8/8nWcxQH2wKiqW/tTr+qrYsuMts8Yhr0Os6raJ83irn4DK
+         DGPzb+CMXVu7A+cKMoYF3idVPd00YNIbDiic7pa6UImGImFoiqlqy5rkB2ghv97Xe6GG
+         ATn3lXnDcx3e0Cv8WU4y0SndkcXI2CfwhpURy8MMOB7IPyo4P2QyICxWINWlgoJI8aH/
+         3hjUOlF4wmAcVZkZoiX1M9qmVikwPCjCfvNb8SSFTwfQ7piWb2g+PhylyvxyrFUOTkkB
+         DQeQ==
+X-Gm-Message-State: AOAM531C985xsoC9L8H3yAWG6PqOW4roCqnrYUb58xxYVgs2KPoKgKOz
+        Li5PBtqqsrUSaqarIcs29GlpAZyns+chKgGLI5M=
+X-Google-Smtp-Source: ABdhPJzaNlegqSNGaU2rEjcw7R82KLsQUybV5SJRnD84iDcFQAkNifcNUeBKLnoeSIPUqunFsYney56+JL5zHQvZr/g=
+X-Received: by 2002:a02:a18d:: with SMTP id n13mr2632357jah.132.1633176022067;
+ Sat, 02 Oct 2021 05:00:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mdAwzlWYyVcIFGg3"
-Content-Disposition: inline
-In-Reply-To: <20210924133550.112488-1-krzysztof.kozlowski@canonical.com>
+Received: by 2002:a4f:f90d:0:0:0:0:0 with HTTP; Sat, 2 Oct 2021 05:00:21 -0700 (PDT)
+Reply-To: unitednnation0@gmail.com
+From:   "U.n" <wadebaye33@gmail.com>
+Date:   Sat, 2 Oct 2021 00:00:21 -1200
+Message-ID: <CACE0T5XpHfLe2aaSywgKNWk-y8sFt0sp3qnGdVPEMJnR3OjNpg@mail.gmail.com>
+Subject: Attention
+To:     unitednnation0@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-
---mdAwzlWYyVcIFGg3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Sep 24, 2021 at 03:35:49PM +0200, Krzysztof Kozlowski wrote:
-> Describe better which driver applies to which SoC, to make configuring
-> kernel for Samsung SoC easier.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-Applied to for-next, thanks!
+--=20
 
 
---mdAwzlWYyVcIFGg3
-Content-Type: application/pgp-signature; name="signature.asc"
+Attention Sir/Madam
+This is the United Nation (UN). We the United Nations (UN) Globally
+has approved (US$2.500,000)( two Million Five hundred thousand
+dollars) compensation as part of our responsibilities for humanitarian
+Aid for fighting against CoronaVirus and you are among the lucky ones.
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmFYCyYACgkQFA3kzBSg
-KbaXiA/9FwY1WOdqZl94IvrRD9CkuQ6LtGekM1x5NdIhPw/4s1LSHRhT+5xpbCPa
-rGvvUBEiuCMK5YyFkoBl23EKyH5agEV0kWiamSe6e7jJG4OyQFgAhk6Me53FjnsY
-V9aAuVVSGcErsPZxljU+fQmknxeZhK73qKvh9T1cMogFTJQf2qERVG7MesjJd3rs
-/3en16RJDTCJm7FzIR3Pk66OW5CMKp5T6w99zJft0EepLxuwSu3G6KgYuud/Xgsa
-ZobSRHaBU/AFJyhn9Q3nEOoKIAQeX23l3nYxsk3a4PyZ6CrtDCbIjdk1y28Scu9t
-463bgsIV57luilrOiJelEKLGQd2tydWPAvqKcH/LE0O9DNAqvuNg9BQXOaYMTMXG
-TNUaaDAf33ojvRCGHsR26ypo0d9a6eC8aMqt/iCTZHdpwTdoniFTAeHoqJzwgtdt
-w/P/+QBW+3SxvMa6YBZB3KurzS6In0yfs4dPq+ynvTdOKhK/1NPr7fWVHk+LCwVw
-H+ZsMGbKi/xcmUbiUc+9uhCuEh1YRZPDPPHTJ+3qWBDvw3CtuuaUxdYl8I7gf0vE
-HDetcKCR+X8E95SrlnCOSN5nd37NnI0IDG1ZQ8VrGn18UbMbE0mi+sBhs7jePQi9
-4NJH718oQ641kRHxgGGdmlkkmKI/NIXOsWUVO2jQARD4q3J/kIQ=
-=Cg0K
------END PGP SIGNATURE-----
+This compensation is for the most affected countries, communities and
+families across the global. Your funds were deposited with Bank in USA
+to transfer your funds to you via Internet Banking. You have to send
+your full details as state below:with this email Address
+  ( unitednnation0@gmail.com )
+Your full names:
+Address:
+Telephone:
+Occupation:
 
---mdAwzlWYyVcIFGg3--
+
+
+Yours Sincerely
+Mr. Ant=C3=B3nio Guterres
+United Nations (UN).
