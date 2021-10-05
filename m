@@ -2,105 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C36D642278B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Oct 2021 15:15:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1DDC422D6D
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Oct 2021 18:09:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234170AbhJENQy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Oct 2021 09:16:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55612 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234825AbhJENQy (ORCPT
+        id S236379AbhJEQLP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Oct 2021 12:11:15 -0400
+Received: from marcansoft.com ([212.63.210.85]:46704 "EHLO mail.marcansoft.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235543AbhJEQLP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Oct 2021 09:16:54 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AAF8C061755
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  5 Oct 2021 06:15:03 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v17so37251753wrv.9
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 05 Oct 2021 06:15:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=C7t36aQJ/HdVD4haldIX8sv1hXdH5zMENhm9qykkDX0=;
-        b=u/W41neVt5urYn/aY5Lkl4TT8qiB8LAHeqCJ1PtTbbe+W7kGbk1QoUtfLs5mDnG9TQ
-         Jj1ySQu0udLwMDJ4GpmxcQqsmCEnTMqFD0kd0y9PgA3xRWiGHvwk0uTovGmPoju5mQth
-         Q9DCqXk4Eo/lldLxH6LsZtKnqKTMeH3Bmm7cttIylM5HawltyfbY7gqkuuu0kbVn7waY
-         ToFLue9dvcQfauTseB+5VSd0jXUYFx2gRrUNTtsmk6fX9Ha4G6XOIGwrdwaAj5NxmSL8
-         xrLoK2hn4K6oJ3cpfEUc1CVG+qvFLKnJVlA4Y68fC07b7PitzDR+U4e8gcloSFlZSxkh
-         Kyuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=C7t36aQJ/HdVD4haldIX8sv1hXdH5zMENhm9qykkDX0=;
-        b=Pq2zi6oytfgbP6cMg5fUcRDx8tBi/7PwttdTjPEcxUTgEG9PkYZenLsf9txemHQvyc
-         iYqlUzsr08Fk9q2lMHLMun2LyakSDaMS7AypX0Wg0urv0nOcCcSmSg8sh8UiD0ky2WQH
-         rIZZU6t5GRV91MVKSd5A9vj4Qml34zZPm8YxPsnbikbNCkQvLS1s9hhQLFy3u5MRnKZ/
-         iXUAfZtJCaYx666Kb0qSTK8Q4xJCk+jqepNbIzPdQdMmGKV9BWISNeOKmn/vkZa3MxDo
-         wPkeazsXsjoUUDBbVWNqFBZ8tkFXZaA0FLQIv+/FASOJmirPsDF8a9FP9+UoXxCLhGWo
-         JOWQ==
-X-Gm-Message-State: AOAM532HGtJIsLq0clz/EcVgIBqX3fcvioPz6i298Z8olqGY7/LY6aTN
-        vvFdkJqFOXBeN+4bYIxU4j1mKw==
-X-Google-Smtp-Source: ABdhPJx+AvsAM1xJpR4F7gOV4Bz1IXec3HMpD2aJxgbeZYeQpGFuhMEfzND1sQXGP/vcePMxxmG4qg==
-X-Received: by 2002:a5d:64ca:: with SMTP id f10mr21231328wri.93.1633439701937;
-        Tue, 05 Oct 2021 06:15:01 -0700 (PDT)
-Received: from google.com ([95.148.6.175])
-        by smtp.gmail.com with ESMTPSA id k18sm1171078wrn.81.2021.10.05.06.15.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 06:15:01 -0700 (PDT)
-Date:   Tue, 5 Oct 2021 14:14:59 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Tue, 5 Oct 2021 12:11:15 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: hector@marcansoft.com)
+        by mail.marcansoft.com (Postfix) with ESMTPSA id 55D26419B4;
+        Tue,  5 Oct 2021 15:59:41 +0000 (UTC)
+From:   Hector Martin <marcan@marcan.st>
+To:     linux-arm-kernel@lists.infradead.org
+Cc:     Hector Martin <marcan@marcan.st>, Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] regulator/mfd/clock: dt-bindings: Samsung S2M
- and S5M to dtschema
-Message-ID: <YVxP0+kVxI0xQmQQ@google.com>
-References: <20211001094106.52412-1-krzysztof.kozlowski@canonical.com>
- <YVxBuEvHVdyDvaGD@sirena.org.uk>
+        Arnd Bergmann <arnd@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Kettenis <mark.kettenis@xs4all.nl>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: [PATCH 0/7] Apple SoC PMGR device power states driver
+Date:   Wed,  6 Oct 2021 00:59:16 +0900
+Message-Id: <20211005155923.173399-1-marcan@marcan.st>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YVxBuEvHVdyDvaGD@sirena.org.uk>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 05 Oct 2021, Mark Brown wrote:
+This series adds the driver for the Apple PMGR device power state
+registers. These registers can clockgate and (in some cases) powergate
+specific SoC blocks. They also control the reset line, and can have
+additional features such as automatic power management.
 
-> On Fri, Oct 01, 2021 at 11:40:56AM +0200, Krzysztof Kozlowski wrote:
-> 
-> > Merging/dependencies
-> > ====================
-> > 1. Regulator related binding changes depend on first two commits (the
-> >    fixes), because of context.
-> > 2. The mfd bindings depend on clock and regulator bindings.
-> > 
-> > The fixes and bindings changes (patches 1-10) should go via the same
-> > tree.  For example regulator or mfd tree.  I propose the regulator tree,
-> > since it will have also one driver change (the fix, first commit).
-> 
-> Lee, Stephen, Michael does Krzysztof's plan make sense to you?
+The current driver supports only the lowest/highest power states,
+provided via the genpd framework, plus reset support provided via
+the reset subsystem.
 
-I tend to take cross subsystem patches.  MFD is usually in the centre
-of these scenarios and I have tooling to easily set-up immutable
-branches/pull-requests.
+Apple's PMGRs (there are two in the T8103) have a uniform register
+bit layout (sometimes with varying features). To be able to support
+multiple SoC generations as well as express pd relationships
+dynamically, this binding describes each PMGR power state control
+as a single devicetree node. Future SoC generations are expected to
+retain backwards compatibility, allowing this driver to work on them
+with only DT changes.
 
-Always happy to discuss if others have different/better ideas though.
+#1-#2: Adds the required device tree bindings
+#3: The driver itself.
+#4: Somewhat unrelated DT change, but I wanted to get it out of the way
+    for #7
+#5: Instantiates the driver in t8103.dtsi.
+#6: Adds runtime-pm support to the Samsung UART driver, as a first
+    consumer.
+#7: Instantiates a second UART, to more easily test this.
+
+There are currently no consumers for the reset functionality, so
+it is untested, but we will be testing it soon with the NVMe driver
+(as it is required to allow driver re-binding to work properly).
+
+Hector Martin (7):
+  dt-bindings: arm: apple: Add apple,pmgr binding
+  dt-bindings: power: Add apple,pmgr-pwrstate binding
+  soc: apple: Add driver for Apple PMGR power state controls
+  arm64: dts: apple: t8103: Rename clk24 to clkref
+  arm64: dts: apple: t8103: Add the UART PMGR tree
+  tty: serial: samsung_tty: Support runtime PM
+  arm64: dts: apple: t8103: Add UART2
+
+ .../bindings/arm/apple/apple,pmgr.yaml        |  74 +++++
+ .../bindings/power/apple,pmgr-pwrstate.yaml   | 117 ++++++++
+ MAINTAINERS                                   |   3 +
+ arch/arm64/boot/dts/apple/t8103-j274.dts      |   5 +
+ arch/arm64/boot/dts/apple/t8103.dtsi          | 134 ++++++++-
+ drivers/soc/Kconfig                           |   1 +
+ drivers/soc/Makefile                          |   1 +
+ drivers/soc/apple/Kconfig                     |  21 ++
+ drivers/soc/apple/Makefile                    |   2 +
+ drivers/soc/apple/apple-pmgr-pwrstate.c       | 281 ++++++++++++++++++
+ drivers/tty/serial/samsung_tty.c              |  88 +++---
+ 11 files changed, 690 insertions(+), 37 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/apple/apple,pmgr.yaml
+ create mode 100644 Documentation/devicetree/bindings/power/apple,pmgr-pwrstate.yaml
+ create mode 100644 drivers/soc/apple/Kconfig
+ create mode 100644 drivers/soc/apple/Makefile
+ create mode 100644 drivers/soc/apple/apple-pmgr-pwrstate.c
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.33.0
+
