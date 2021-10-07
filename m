@@ -2,213 +2,234 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC2F424C8B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 06:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4502E424EF2
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 10:12:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbhJGEi3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 7 Oct 2021 00:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33456 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbhJGEi3 (ORCPT
+        id S240667AbhJGIOo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 7 Oct 2021 04:14:44 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:43211 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240699AbhJGIOO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 7 Oct 2021 00:38:29 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00F05C061746
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  6 Oct 2021 21:36:35 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id p13so18431125edw.0
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 06 Oct 2021 21:36:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1ijjwOT7EZIyL6L+ZHdsPAJoYiBwzpnU73GJ5V/IAGk=;
-        b=mMK7k0clphZneYqlrWrLku9PId4ofBMMHS+Rzx76TKK2SLsKAIJpvvn3pcY7acJKmV
-         Rehdx7BICaD6Yx6zNaqZdZl2JXqBBR7zqoYEM+8aL7ganQtG8FV5nZnvUh+LLtpp5v/E
-         NutDa5V6iRMAcV7T1Sk9Y7oHycfOF+S0YhjAfanpIHwNE79J8vsGq2373q9KJ4Qafhob
-         La+EIG6vw6QD5mjgBId1NvlG0WH5Frvjcy4iM8qPaxSIa9q451igSqwmVCVusDea9ajm
-         nN5GdmUAFPNZ18auxAUYDiZfiF8+RjsdUGsxyVoBkrPaZ/X8lPOYFHcPelebHYFWkCVM
-         XxKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1ijjwOT7EZIyL6L+ZHdsPAJoYiBwzpnU73GJ5V/IAGk=;
-        b=0k9ZV16TXlH19/WJsoDyXYj67IogQ4n9UWajyUyreiMavrxKys7kHb6HEtdUPay9io
-         xbhRANBWxUM2rwnJoBSE3junzsY+ZAo3jnIYlOTA/CaGcyoiHpiPGkg8mTiu1bv1CT94
-         9YUaIbRGkLwt1S8ZZWRnie6aLkyza8HmChklkxNoMeK9zEvsJ2rAxaxYuOqIF71ZWqPt
-         sBAeAlU9fDeaVCasu0aQS1ilA7XnTTJZkAElZQ7vubWIZeGsdtu2gKCcsDA+FRbjiNcb
-         N0GGZAAPD7/M4cMopVX62ae+DOgWic04guiZcVtmIw4djapCCKmvwhicXMyv1soSq2TX
-         Ut0Q==
-X-Gm-Message-State: AOAM530xKrp1HyzsGDDkLTdChSLtfqmca6q9lH5ghBTnrVQq8bMb8ogm
-        1ZKUYwWTJnuUxNKk1Cp7uCI=
-X-Google-Smtp-Source: ABdhPJyCqJbvcYT6ivPSDaqDu9J55OJM0pmCyxt4kke9yVJH+NwmshrBi2iL8Flra63O5m8p8gMUlw==
-X-Received: by 2002:a50:d88a:: with SMTP id p10mr3160990edj.274.1633581394516;
-        Wed, 06 Oct 2021 21:36:34 -0700 (PDT)
-Received: from [172.16.20.20] ([87.200.95.144])
-        by smtp.gmail.com with ESMTPSA id u18sm2626457edo.4.2021.10.06.21.36.32
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Oct 2021 21:36:34 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
-Subject: Re: BUG: Cannot boot Odroid XU4 from eMMC without this patch
-From:   Christian Hewitt <christianshewitt@gmail.com>
-In-Reply-To: <103943b6-3567-a241-7308-890d218eeb0f@samsung.com>
-Date:   Thu, 7 Oct 2021 08:36:31 +0400
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Marian Mihailescu <mihailescu2m@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <922F76F9-2F1C-405D-A205-AE6C7B41DFF6@gmail.com>
-References: <89888711-56BF-4E6C-92EE-2053E773B077@gmail.com>
- <CGME20210927111008epcas1p24778eabe0ab08ced2a200b48111c822b@epcas1p2.samsung.com>
- <CAJKOXPfUnLbhc6e_ccZxhVReV9jHsQ8aykkP=ghK-qURQLCdLA@mail.gmail.com>
- <fec1cc85-0c81-035b-fe89-1b6dedbb3bc5@samsung.com>
- <974A393B-EE0A-487F-8315-D4E0498DAA25@gmail.com>
- <103943b6-3567-a241-7308-890d218eeb0f@samsung.com>
-To:     Jaehoon Chung <jh80.chung@samsung.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.7)
+        Thu, 7 Oct 2021 04:14:14 -0400
+Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20211007081218epoutp01501e65ee8064567846a9576716fa3c95~rsWVoWnbp1750617506epoutp01f
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Oct 2021 08:12:18 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20211007081218epoutp01501e65ee8064567846a9576716fa3c95~rsWVoWnbp1750617506epoutp01f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1633594338;
+        bh=VsFD0Ei7GiaGOGFOGxs6Ulu5UvY/QlgMVDzrjrMJKSU=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=tFftpVWGtHpdINUcTmWf5SNX8l2vF6z+rJtiC3VLZtZIY7Qq/B5idqURkBgym9jZ4
+         /1Q3yEW9x4sHzlEOnqop/TuCtfG0P2sR1UzURwCC3dLyXrqAmM2IULCtDxC+Jfc3Tf
+         gA+ue4UdjUxJ8mF4CJFyENUxozp0cxltEEuqcezg=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas2p2.samsung.com (KnoxPortal) with ESMTP id
+        20211007081205epcas2p27578ad1382e07584d086bb71a859d402~rsWI8K7ky3113331133epcas2p2z;
+        Thu,  7 Oct 2021 08:12:05 +0000 (GMT)
+Received: from epsmges2p4.samsung.com (unknown [182.195.36.97]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4HQ3vG3xZLz4x9Q2; Thu,  7 Oct
+        2021 08:11:54 +0000 (GMT)
+Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
+        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        F5.18.09472.4CBAE516; Thu,  7 Oct 2021 17:11:48 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
+        20211007081133epcas2p31f973709609d82dbbc76bd7b51232cb2~rsVriJgSl1907519075epcas2p3q;
+        Thu,  7 Oct 2021 08:11:33 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20211007081133epsmtrp132454e4420d210217c20e61ee1fd2360~rsVrhMWUo2164721647epsmtrp1e;
+        Thu,  7 Oct 2021 08:11:33 +0000 (GMT)
+X-AuditID: b6c32a48-d5fff70000002500-e7-615eabc4285c
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        FA.A7.08750.5BBAE516; Thu,  7 Oct 2021 17:11:33 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.51]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20211007081133epsmtip2318694ee4194b9da0247d5a5e3cf9edc~rsVrSdnOQ0802008020epsmtip2-;
+        Thu,  7 Oct 2021 08:11:33 +0000 (GMT)
+From:   Chanho Park <chanho61.park@samsung.com>
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        Can Guo <cang@codeaurora.org>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Gyunghoon Kwon <goodjob.kwon@samsung.com>,
+        Sowon Na <sowon.na@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Chanho Park <chanho61.park@samsung.com>
+Subject: [PATCH v4 00/16] introduce exynosauto v9 ufs driver
+Date:   Thu,  7 Oct 2021 17:09:18 +0900
+Message-Id: <20211007080934.108804-1-chanho61.park@samsung.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01TfUwbdRj2d1euB1g9uk1/wTiacxsZBmihhZuBoYzoGTCSsbiFjLETTiC0
+        vaYfxm3GsDg6SgeyTcdWnN2K+yrMutLxJUplzcYCbplFZfAH33GFsA8IYgHB0mO6/573eZ8n
+        z/v+PnBU7MUi8RK1ntWqGSWJhQmab2xVxHoa9jHS3gs4dXu8EaOGv2nGKJ//N4z6ecQkoE49
+        9qPUjONiCOXtfJ061raD6qmxIdS4w4JStv5mhOpfMIZQ16b/RqjTd39CKPMfrRh16dYyQi36
+        u5A3I2hvXyZtKavCaG91FUI3XY6h6zt8CO20mzC6xuYG9LyjAqOfTAwI6GqXHdCzzo30UbcZ
+        yX4+tzSlmGUKWa2EVRdwhSXqolQyMyd/R74iSSqLlW2jkkmJmlGxqWRGVnbs2yXKwF6k5GNG
+        aQhQ2YxOR8ZvT9FyBj0rKeZ0+lSS1RQqNcmaOB2j0hnURXFqVv+GTCpNUASE+0uLKx94hJo7
+        0Z9Y206hZaA8qhKE4pCQw++WhoSVIAwXE60AOj0+hC9mAKyvOIfxxSyA1dWXkKeW+rlGlG+0
+        A2gxGteKJwCODZ0VrqowIha6/pwEq431xCMAx8e+DKaghBuFY23+kFXVOiIF9i7XC1axgNgM
+        56yng1hEpMEWWxPg86KgZ8GE8nwEvH1mPKhBA/zn1+uC0ZDw4PDqqF3AGzJg+8rvITxeBydv
+        uYQ8joS+L4xC3mAGsHx0Za3RAKDpcBaP0+BCrStgxgMJW6GjPX4VQuI16BlYy30BVtz4R8jT
+        IlhhFPPGaOhuqV2b4FVo/np2bQIarlhvBnkxkQevL/0QUgOiLM9sY3lmG8v/uecAagcvsRqd
+        qojVJWjk/91rAadyguDrjqFbQd3047gugOCgC0AcJdeLuLQ8RiwqZA4cZLVcvtagZHVdQBE4
+        3+No5IYCLvA91Pp8mXybVJ6UJEtOUEiTyZdFZ5fTGTFRxOjZUpbVsNqnPgQPjSxD0L6shl/L
+        o6tOJBVPhTVKc5YHP2oe/j7PWTuRU3Qv/3xihrA5/BXDxQOxvp6B0fO7B+8c609Xn+iyzt9X
+        yEZ6pKbeh8kl3Ry1x71JuTNC+uHsLlQypnp0tfxHzd4rhyxWscP+gWhfrn/x/mf9CqfL1bTp
+        nXBq52SHjXQvDb/H9rwomt+VviWKw/ae3JhDqxhrYYc11JByfHv4luhv94/8MpV6swYbfDdn
+        1nX5gpD+9CsuYvdD9ebEKXldS0rJjPfImb75ic7yBHef0bfCHXFs8L5/OFumyux+zkEfjcGv
+        PEjstt+Vo3NvmbOH9kweMpG18Z3XDlbOTPzVsZh7L2OaRkmBrpiRxaBaHfMv5z1xkmYEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkkeLIzCtJLcpLzFFi42LZdlhJXnfr6rhEg6UPlC1OPlnDZvFg3jY2
+        i5c/r7JZHHzYyWIx7cNPZotP65exWlzer23Rs9PZ4vSERUwWT9bPYrZYdGMbk8WNX22sFhvf
+        /mCymHF+H5NF9/UdbBbLj/9jsvj98xCTg6DH5SveHrMaetk8Lvf1MnlsXqHlsXjPSyaPTas6
+        2TwmLDrA6PF9fQebx8ent1g8+rasYvT4vEnOo/1AN1MATxSXTUpqTmZZapG+XQJXRteLI+wF
+        59Qr5u+cxtzA2CrfxcjJISFgIrH46xrmLkYuDiGBHYwS26evZIZIyEo8e7eDHcIWlrjfcoQV
+        oug9o8TKmztZQBJsAroSW56/YgSxRQQ+MkrM+aYFUsQscIpZYu26TWBFwgI2Emf+LQazWQRU
+        Jb7OnwFm8wrYS2xftJkRYoO8xJFfncwQcUGJkzOfgNUwA8Wbt85mnsDINwtJahaS1AJGplWM
+        kqkFxbnpucWGBUZ5qeV6xYm5xaV56XrJ+bmbGMGxpKW1g3HPqg96hxiZOBgPMUpwMCuJ8Obb
+        xyYK8aYkVlalFuXHF5XmpBYfYpTmYFES573QdTJeSCA9sSQ1OzW1ILUIJsvEwSnVwDTT8sCG
+        VdbVd3/e3JsueVnybFpE4uqflxef+B7L5q4kurL1qeW6Tr8FFjl5u/sn/zrMsim8tN2Rh/F4
+        wJ4TdjMy1HUOHPT2jV4Tci8+/MYshSQeidorQQxvL+yYI/Uxg6e/8K5p9LeF2ffsb/tKrbpk
+        8dRCQ/bSRa6LZna+qhm778i4ppZGS83l2fZu07+HxfGyLzQrm9hurVS4d+Dfo/keWzgeCVlk
+        cDt+fOX5ODLSmy1K+4vDmfoAC8EeAbPrs7OyzwT6c6QmP/13Xa1KTJFXJ+sFv+Lne7n/jnVf
+        vXJsU8axnNzvuyI6V2SIHZq1zv1REYtcuwD79k87k+UOaHw9LdXmxGqrYruc00XnsxJLcUai
+        oRZzUXEiALVwobAUAwAA
+X-CMS-MailID: 20211007081133epcas2p31f973709609d82dbbc76bd7b51232cb2
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20211007081133epcas2p31f973709609d82dbbc76bd7b51232cb2
+References: <CGME20211007081133epcas2p31f973709609d82dbbc76bd7b51232cb2@epcas2p3.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
->=20
-> On 7 Oct 2021, at 2:16 am, Jaehoon Chung <jh80.chung@samsung.com> =
-wrote:
->=20
-> Hi,
->=20
-> On 10/1/21 10:41 PM, Christian Hewitt wrote:
->>=20
->>> On 1 Oct 2021, at 4:40 am, Jaehoon Chung <jh80.chung@samsung.com> =
-wrote:
->>>=20
->>> On 9/27/21 8:09 PM, Krzysztof Kozlowski wrote:
->>>> On Mon, 13 Sept 2021 at 06:32, Christian Hewitt
->>>> <christianshewitt@gmail.com> wrote:
->>>>>=20
->>>>> =
-https://protect2.fireeye.com/v1/url?k=3D6f7d4070-30e6793d-6f7ccb3f-0cc47aa=
-8f5ba-2c8976d4b015314f&q=3D1&e=3D776d64d2-22f3-400a-a241-42af8b5f60d0&u=3D=
-https%3A%2F%2Fgithub.com%2Fchewitt%2Flinux%2Fcommit%2F8a4ebfb43a394e5dc5e9=
-fafc92a50d5e81a4f258
->>>>>=20
->>>>> If I boot any recent kernel without the above patch, the emmc =
-module on the XU4 is not detected, see:
->>>>>=20
->>>>> Without:
->>>>>=20
->>>>> [    3.227837] mmc0: tuning execution failed: -5
->>>>> [    3.231229] mmc0: error -5 whilst initialising MMC card
->>>>> [    3.536450] mmc0: tuning execution failed: -5
->>>>> [    3.539680] mmc0: error -5 whilst initialising MMC card
->>>>> [    3.794056] mmc0: tuning execution failed: -5
->>>>> [    3.794212] mmc0: error -5 whilst initialising MMC card
->>>>> [    4.111097] mmc0: tuning execution failed: -5
->>>>> [    4.115356] mmc0: error -5 whilst initialising MMC card
->>>>> [    4.426164] mmc0: tuning execution failed: -5
->>>>> [    4.429678] mmc0: error -5 whilst initialising MMC card
->>>>> [    4.756226] mmc0: tuning execution failed: -5
->>>>> [    4.760641] mmc0: error -5 whilst initialising MMC card
->>>>>=20
->>>>> With:
->>>>>=20
->>>>> [    3.305461] mmc0: new HS400 MMC card at address 0001
->>>>> [    3.307444] mmcblk0: mmc0:0001 8GME4R 7.28 GiB
->>>>> [    3.308132] mmcblk0boot0: mmc0:0001 8GME4R 4.00 MiB
->>>>> [    3.309172] mmcblk0boot1: mmc0:0001 8GME4R 4.00 MiB
->>>>> [    3.310255] mmcblk0rpmb: mmc0:0001 8GME4R 512 KiB, chardev =
-(246:0)
->>>>> [    3.315963]  mmcblk0: p1 p2
->>>>>=20
->>>>> The patch is sourced from a Linux 5.4 patchset used by several =
-retro gaming distros for XU4 images shared in the HardKernel forums. I =
-would be happy to submit it, but the original patch has no description =
-in the commit message. Not being a coding developer myself I cannot =
-explain whether it is correct or what it=E2=80=99s doing to add one. All =
-I can do is confirm that it works, and is needed. SD card boot is not an =
-issue.
->>>>>=20
->>>>> I=E2=80=99ve CC=E2=80=99d the original author (Marian) in case he =
-remembers the patch and can comment. It would be good to get this =
-upstream.
->>>>=20
->>>> The patch might have sense but would require describing conditions =
--
->>>> what MMC input and output clock settings work and which do not =
-work.
->>>> Also someone would need to test other Exynos5422 boards and other
->>>> Exynos with HS200 and HS400 support (Exynos5433, Exynos7). I think
->>>> this should not affect SD cards.
->>>=20
->>>=20
->>> Thanks for adding me.
->>> I didn't see XU4 booting fail with linux-5.15-rc1 kernel.
->>>=20
->>> [    4.561934] mmc1: new HS400 MMC card at address 0001
->>> [    4.572401] mmcblk1: mmc1:0001 SDW16G 14.7 GiB
->>> [    4.602555]  mmcblk1: p1 p2 p3 p4 < p5 p6 p7 >
->>> [    4.623201] mmcblk1boot0: mmc1:0001 SDW16G 4.00 MiB
->>> [    4.640465] mmcblk1boot1: mmc1:0001 SDW16G 4.00 MiB
->>>=20
->>> Which kernel version did you use?
->>=20
->> The original report is against 5.14.0, but I see the same with =
-5.15-rc3
->>=20
->> dmesg: =
-https://protect2.fireeye.com/v1/url?k=3D703ee5f5-2fa5dcb3-703f6eba-0cc47a3=
-003e8-ad25e9061be78bbb&q=3D1&e=3Ddf3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=3D=
-http%3A%2F%2Fix.io%2F3AuL
->> dmesg | grep mmc: =
-https://protect2.fireeye.com/v1/url?k=3D5d2277f1-02b94eb7-5d23fcbe-0cc47a3=
-003e8-b778cb8e233bbe4b&q=3D1&e=3Ddf3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=3D=
-http%3A%2F%2Fix.io%2F3AuO
->>=20
->> And if I pick that patch to my kernel branch all is good:
->>=20
->> dmesg: =
-https://protect2.fireeye.com/v1/url?k=3D8bcf7900-d4544046-8bcef24f-0cc47a3=
-003e8-6124ad41dd642d56&q=3D1&e=3Ddf3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=3D=
-http%3A%2F%2Fix.io%2F3Avf
->> dmesg | grep mmc: =
-https://protect2.fireeye.com/v1/url?k=3D66ce5f96-395566d0-66cfd4d9-0cc47a3=
-003e8-b9768331cc0e4416&q=3D1&e=3Ddf3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=3D=
-http%3A%2F%2Fix.io%2F3Ave
->>=20
->> Here=E2=80=99s an SD (or eMMC) bootable image for an XU4 that =
-exhibits the problem. You need to run =E2=80=9Csystemctl stop kodi=E2=80=9D=
- once the UART console is available else it attempts to run Kodi and =
-Panfrost (the image is created for some Panfrost poking) currently =
-wedges the board. Once the Kodi service is stopped =E2=80=9Csystemctl =
-mask kodi=E2=80=9D will prevent it from running again.
->>=20
->> =
-https://chewitt.libreelec.tv/testing/LibreELEC-Exynos.arm-10.0.0-odroid-xu=
-4.img.gz
->>=20
->> Kernel defconfig for the image: =
-https://protect2.fireeye.com/v1/url?k=3D806156b6-dffa6ff0-8060ddf9-0cc47a3=
-003e8-b2bec8fd0863dc1b&q=3D1&e=3Ddf3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=3D=
-http%3A%2F%2Fsprunge.us%2FG6uxty - basically the exynos config but with =
-a wide variety of not-needed drivers (other SoCs, network cards, etc.) =
-disabled.
->>=20
->> The board is booting from u-boot 2020.04 in case that matters.
->=20
-> Thanks for sharing information. Sorry for replying late. I will check =
-this problem on this week.=20
-> It needs to satisfy all exynos5 SoCs. I just wonder why not working =
-fine according to eMMC modules.
+In ExynosAuto(variant of the Exynos for automotive), the UFS Storage needs
+to be accessed from multi-OS. To increase IO performance and reduce SW
+complexity, we implemented UFS-IOV to support storage IO virtualization
+feature on UFS.
 
-No problem, I=E2=80=99ve been watching the thread :)
+IO virtualization increases IO performance and reduce SW complexity
+with small area cost. And IO virtualization supports virtual machine
+isolation for Security and Safety which are requested by Multi-OS system
+such as automotive application.
 
-This is the module I=E2=80=99m using =
-https://www.hardkernel.com/shop/8gb-emmc-module-h2/ .. I can probably =
-organise one to be shipped to you if needed.
+Below figure is the conception of UFS-IOV architeture.
 
-Christian=
+    +------+          +------+
+    | OS#1 |          | OS#2 |
+    +------+          +------+
+       |                 |
+ +------------+     +------------+
+ |  Physical  |     |   Virtual  |
+ |    Host    |     |    Host    |
+ +------------+     +------------+
+   |      |              | <-- UTP_CMD_SAP, UTP_TM_SAP
+   |   +-------------------------+
+   |   |    Function Arbitor     |
+   |   +-------------------------+
+ +-------------------------------+
+ |           UTP Layer           |
+ +-------------------------------+
+ +-------------------------------+
+ |           UIC Layer           |
+ +-------------------------------+
+
+There are two types of host controllers on the UFS host controller
+that we designed.
+The UFS device has a Function Arbitor that arranges commands of each host.
+When each host transmits a command to the Arbitor, the Arbitor transmits it
+to the UTP layer.
+Physical Host(PH) support all UFSHCI functions(all SAPs) same as
+conventional UFSHCI.
+Virtual Host(VH) support only data transfer function(UTP_CMD_SAP and
+UTP_TM_SAP).
+
+In an environment where multiple OSs are used, the OS that has the
+leadership of the system is called System OS(Dom0). This system OS uses
+PH and controls error handling.
+
+Since VH can only use less functions than PH, it is necessary to send a
+request to PH for Detected Error Handling in VH. To interface among PH
+and VHs, UFSHCI HW supports mailbox. PH can broadcast mail to other VH at
+the same time with arguments and VH can mail to PH with arguments.
+PH and VH generate interrupts when mails from PH or VH.
+
+In this structure, the virtual host can't support some feature and need
+to skip the some part of ufshcd code by using quirk.
+This patchs add quirks so that the UIC command is ignored and the ufshcd
+init process can be skipped for VH. Also, according to our UFS-IOV policy,
+
+First two patches, I picked them up from Jonmin's patchset[1] and the third
+patch has been dropped because we need to check it again.
+
+[1]: https://lore.kernel.org/linux-scsi/20210527030901.88403-1-jjmin.jeong@samsung.com/
+
+Patch 0003 ~ 0013, they are changes of exynos7 ufs driver to apply
+exynosauto v9 variant and PH/VH capabilities.
+Patch 0014 ~ 0017, the patches introduce exynosauto v9 ufs MHCI which
+includes PH and VH.
+
+Changes from v3:
+- Drop "[PATCH v3 06/17] scsi: ufs: ufs-exynos: get sysreg regmap for
+  io-coherency" and squash it to Patch12
+- Patch12: Use macro to avoid raw value usage and describe the value of M-Phy setting
+- Patch13: Add dma-coherent property
+- Patch14: Use macro to avoid raw value and describe the value of HCI_MH_ALLOWABLE_TRAN_OF_VH
+
+Changes from v2:
+- Separate dt-binding patches on top of
+  https://lore.kernel.org/linux-devicetree/YUNdqnZ2kYefxFUC@robh.at.kernel.org/
+
+Changes from v1:
+- Change quirk name from UFSHCD_QUIRK_SKIP_INTERFACE_CONFIGURATION to
+  UFSHCD_QUIRK_SKIP_PH_CONFIGURATION
+- Add compatibles to Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
+  on top of https://lore.kernel.org/linux-scsi/20200613024706.27975-9-alim.akhtar@samsung.com/
+
+Chanho Park (14):
+  scsi: ufs: ufs-exynos: change pclk available max value
+  scsi: ufs: ufs-exynos: simplify drv_data retrieval
+  scsi: ufs: ufs-exynos: add refclkout_stop control
+  scsi: ufs: ufs-exynos: add setup_clocks callback
+  scsi: ufs: ufs-exynos: correct timeout value setting registers
+  scsi: ufs: ufs-exynos: support custom version of ufs_hba_variant_ops
+  scsi: ufs: ufs-exynos: add EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR option
+  scsi: ufs: ufs-exynos: factor out priv data init
+  scsi: ufs: ufs-exynos: add pre/post_hce_enable drv callbacks
+  scsi: ufs: ufs-exynos: support exynosauto v9 ufs driver
+  dt-bindings: ufs: exynos-ufs: add io-coherency property
+  scsi: ufs: ufs-exynos: multi-host configuration for exynosauto
+  scsi: ufs: ufs-exynos: introduce exynosauto v9 virtual host
+  dt-bindings: ufs: exynos-ufs: add exynosautov9 compatible
+
+jongmin jeong (2):
+  scsi: ufs: add quirk to handle broken UIC command
+  scsi: ufs: add quirk to enable host controller without ph
+    configuration
+
+ .../bindings/ufs/samsung,exynos-ufs.yaml      |  13 +
+ drivers/scsi/ufs/ufs-exynos.c                 | 359 ++++++++++++++++--
+ drivers/scsi/ufs/ufs-exynos.h                 |  27 +-
+ drivers/scsi/ufs/ufshcd.c                     |   6 +
+ drivers/scsi/ufs/ufshcd.h                     |  12 +
+ 5 files changed, 391 insertions(+), 26 deletions(-)
+
+-- 
+2.33.0
+
