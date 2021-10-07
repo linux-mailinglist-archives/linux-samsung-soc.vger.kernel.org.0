@@ -2,222 +2,135 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4180F4251AC
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 13:05:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1B9D4252BE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 14:11:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240787AbhJGLGw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 7 Oct 2021 07:06:52 -0400
-Received: from mailout2.samsung.com ([203.254.224.25]:45965 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240793AbhJGLGt (ORCPT
+        id S241121AbhJGMM7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 7 Oct 2021 08:12:59 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:33241 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241133AbhJGMM4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 7 Oct 2021 07:06:49 -0400
-Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20211007110453epoutp02dc30112ab67f89a21362fa78bcf48a10~rutBdPlE50031100311epoutp02H
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Oct 2021 11:04:53 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20211007110453epoutp02dc30112ab67f89a21362fa78bcf48a10~rutBdPlE50031100311epoutp02H
+        Thu, 7 Oct 2021 08:12:56 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20211007121101epoutp0112233128b12843c669f4d78e3d796e41~rvmw-Du5w0490504905epoutp01V
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Oct 2021 12:11:01 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20211007121101epoutp0112233128b12843c669f4d78e3d796e41~rvmw-Du5w0490504905epoutp01V
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1633604693;
-        bh=HH/5aBi3V2TvyQZd9xKLhZfb2VBcD+Fh36xb9fhfJOk=;
-        h=From:Subject:To:Cc:Date:In-Reply-To:References:From;
-        b=MCZhVuQ/c0QxOoWOGczaiF+NE/Q4YWx8hPMvz3cnMTduZoaKqntTGVk/U5EL7mrBj
-         LB4BDxWsSFvb8AU955CvFGe4OrfSwJCEgg/7Zq9ITvh+1Q9+Ze9/4S432pX+jDBE+2
-         CJ+QuarEu8VqV8zLmap4mbzx02gbRDv0LW+72pFM=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20211007110453epcas1p27ca2842f6db68073d302787ed7ec6683~rutA0FZwo2514225142epcas1p2a;
-        Thu,  7 Oct 2021 11:04:53 +0000 (GMT)
-Received: from epsmges1p4.samsung.com (unknown [182.195.38.237]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4HQ7kj6YSSz4x9Q3; Thu,  7 Oct
-        2021 11:04:45 +0000 (GMT)
-Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
-        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        07.6B.62504.D44DE516; Thu,  7 Oct 2021 20:04:45 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas1p4.samsung.com (KnoxPortal) with ESMTPA id
-        20211007110444epcas1p4675f1ebd5f1b836effe413091e891667~rus4bBkFm1812218122epcas1p4B;
-        Thu,  7 Oct 2021 11:04:44 +0000 (GMT)
+        s=mail20170921; t=1633608662;
+        bh=xInT9k/I6m2WAKOg3iTEQJzcDohoWLIYCBN+bjopeIs=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=fZ1NCZTN7enoiU/H3nkx3jBWL8QWnDuYwYs+ohDEvDv7kecP6aE4YNRPzR9G1dwsf
+         qDTL90LVSMe3/E6XdMOxQyHwK+8qXphtgBYZTH9xMK4ogUZjyGvD/SWH7YTBaSKmEE
+         c1VaRssa1+PDoauJHhN+9/3SsXF8aXk4aL3zhzkU=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+        epcas2p2.samsung.com (KnoxPortal) with ESMTP id
+        20211007121101epcas2p21bad39b9ec53961060ec6978921448e5~rvmwiE9xb3249832498epcas2p2h;
+        Thu,  7 Oct 2021 12:11:01 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.36.98]) by
+        epsnrtp3.localdomain (Postfix) with ESMTP id 4HQ9C46VFsz4x9Pr; Thu,  7 Oct
+        2021 12:10:56 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        6E.8A.09749.0D3EE516; Thu,  7 Oct 2021 21:10:57 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
+        20211007121055epcas2p3b2900d4bc3b874af699d658160d5acfc~rvmrLvuFf0038000380epcas2p3y;
+        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
 Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20211007110444epsmtrp21636d63267941e4bdc77ba819621a2f9~rus4UKrig0519805198epsmtrp2y;
-        Thu,  7 Oct 2021 11:04:44 +0000 (GMT)
-X-AuditID: b6c32a38-785ff7000002f428-09-615ed44ddcbf
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20211007121055epsmtrp1f679d12bfb8fec53c3c6a2ed7f6b75e3~rvmrIRFTq0870408704epsmtrp1T;
+        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
+X-AuditID: b6c32a47-d29ff70000002615-03-615ee3d02da1
 Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
         epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        45.35.09091.B44DE516; Thu,  7 Oct 2021 20:04:43 +0900 (KST)
-Received: from [10.113.113.235] (unknown [10.113.113.235]) by
+        62.58.09091.FC3EE516; Thu,  7 Oct 2021 21:10:55 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.51]) by
         epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20211007110443epsmtip1e6a377df70a4042b37853ee142171a90~rus4E6JtH0037800378epsmtip1N;
-        Thu,  7 Oct 2021 11:04:43 +0000 (GMT)
-From:   Jaehoon Chung <jh80.chung@samsung.com>
-Subject: Re: BUG: Cannot boot Odroid XU4 from eMMC without this patch
-To:     Christian Hewitt <christianshewitt@gmail.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Marian Mihailescu <mihailescu2m@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Message-ID: <862bfe2b-3cdf-dc8f-71ff-056ed7525cff@samsung.com>
-Date:   Thu, 7 Oct 2021 20:05:23 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
-        Thunderbird/78.13.0
+        20211007121055epsmtip15db278a3a1282561121da28a13bbd9a7~rvmq4Djk51237912379epsmtip1d;
+        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
+From:   Chanho Park <chanho61.park@samsung.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        Chanho Park <chanho61.park@samsung.com>
+Subject: [PATCH 0/3] add initial support for exynosautov9
+Date:   Thu,  7 Oct 2021 21:08:52 +0900
+Message-Id: <20211007120855.56555-1-chanho61.park@samsung.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <922F76F9-2F1C-405D-A205-AE6C7B41DFF6@gmail.com>
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCJsWRmVeSWpSXmKPExsWy7bCmrq7vlbhEgwOHLS1e3ZrMbHH+/AZ2
-        ixnn9zFZrD1yl91i/bSfrBbtT18yWxxfG+7A7rFz1l12j02rOtk87lzbw+bRt2UVo8fnTXIB
-        rFHZNhmpiSmpRQqpecn5KZl56bZK3sHxzvGmZgaGuoaWFuZKCnmJuam2Si4+AbpumTlAVygp
-        lCXmlAKFAhKLi5X07WyK8ktLUhUy8otLbJVSC1JyCkwL9IoTc4tL89L18lJLrAwNDIxMgQoT
-        sjMu9Z5kLdhjVPHu7DmWBsa3Wl2MnBwSAiYSWyadZQSxhQR2MEqc+qTWxcgFZH9ilNi9vIER
-        wvnGKHG6pZcZpuPHn8/MEIm9jBIvPz5nhmh/zygx6ZgXiM0moCOx/dtxJhBbWMBV4vy8+2Ar
-        RAQMJU6tncYC0swssIRJ4vebpWDNvAJ2Ertu/QBq4OBgEVCR2HPCEyQsKhAp8ffkLlaIEkGJ
-        kzOfsIDYnAK2Evv+TWADsZkFxCVuPZnPBGHLSzRvnQ116EQOid+XZCBsF4nu/RdZIGxhiVfH
-        t7BD2FISn9/tZYOwqyV2NZ8Be0xCoINR4ta2JiaIhLHE/qWTwW5jFtCUWL9LHyKsKLHz91xG
-        iL18Eu++9rCClEgI8Ep0tAlBlKhIXHr9kglm1d0n/6FKPCT2LFafwKg4C8ljs5A8MwvJM7MQ
-        9i5gZFnFKJZaUJybnlpsWGACj+rk/NxNjODkqWWxg3Hu2w96hxiZOBgPMUpwMCuJ8ObbxyYK
-        8aYkVlalFuXHF5XmpBYfYjQFhvREZinR5Hxg+s4riTc0sTQwMTMyNrEwNDNUEuc99toyUUgg
-        PbEkNTs1tSC1CKaPiYNTqoGpdtnjCdrya/6bBa+Y0ds/xawp61Mk2/b37ze1GB9mrNi+Pely
-        Td+Rr6s/bzuq/M23sSH4BvOpxfXpa09ucenY78tjdnmKkoHIhE0HdOcv9Hu4WeueRo6D//IZ
-        i84+D61R0qgokjSPb/wq/OPAl6D/shy8jznNWJbeEhK27WBedFpWbN6Gf4eEduZt3tl97/rs
-        LkOBL95ZF6XdN/zasqm3iHv5Tf1UeQ+5765Ge/vZGhpufcjluxAeczCW50rgedZ9huFHeA/2
-        LnOtbjlqZDVvWbvrrYlTVNZ2WZxwUUvsyjjAYJtYphjJnHI7ZpbVzvh7K1cqn2A80u7FkJ7o
-        tsJFMlL95NWkXUo/xTS+ySQqsRRnJBpqMRcVJwIA0+fwGicEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGLMWRmVeSWpSXmKPExsWy7bCSnK73lbhEgz/zTS1e3ZrMbHH+/AZ2
-        ixnn9zFZrD1yl91i/bSfrBbtT18yWxxfG+7A7rFz1l12j02rOtk87lzbw+bRt2UVo8fnTXIB
-        rFFcNimpOZllqUX6dglcGZd6T7IW7DGqeHf2HEsD41utLkZODgkBE4kffz4zdzFycQgJ7GaU
-        +LxsETNEQkri89OpbF2MHEC2sMThw8UQNW8ZJa5NWcgGUsMmoCOx/dtxJhBbWMBV4vy8+4wg
-        toiAocSptdNYQBqYBZYxSdzcfpMdons5s0THp3awKl4BO4ldt34wgWxgEVCR2HPCEyQsKhAp
-        0XRiKxtEiaDEyZlPWEBsTgFbiX3/JoDFmQXUJf7Mu8QMYYtL3HoynwnClpdo3jqbeQKj0Cwk
-        7bOQtMxC0jILScsCRpZVjJKpBcW56bnFhgWGeanlesWJucWleel6yfm5mxjBUaOluYNx+6oP
-        eocYmTgYDzFKcDArifDm28cmCvGmJFZWpRblxxeV5qQWH2KU5mBREue90HUyXkggPbEkNTs1
-        tSC1CCbLxMEp1cAkJLTff+Fh54b+D4nan7YpZorcvF6r/VnwhvCPpc7LLj3hYX2y1e/+G0UX
-        4ysKfPp1WhwHF4sElBaa+NbLF8zVYud5nxWy2jWr8WHhvVyhnh9i5y9Mn3trd2St470WWYdo
-        ux1SuR8Y5AT+LP93s0Gh/ts51+mR1mIO2/OUgu9WHOPWuLOib8IOfdlpPfy3p6zysPd8uHjX
-        iUlz9yw6+5Qnx3/jhLqzFxuCFqnt/9udf4PD9sOqG2Uye1OvKjUKby2wjTTZbr9Yj2+y2JMq
-        O0OdbTv9/O2vdx1etPvEz3X9spNZovRXZK8/ba707s7Bwurl65duF/JacJ+9RH3e9buP113U
-        TYzn0Ez/UHT2T8dhJZbijERDLeai4kQAKABKzQkDAAA=
-X-CMS-MailID: 20211007110444epcas1p4675f1ebd5f1b836effe413091e891667
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpnk+LIzCtJLcpLzFFi42LZdljTQvfi47hEg6NLmCwu79e2mH/kHKvF
+        xrc/mCym/FnOZDHj/D4mi9a9R9gtDr9pZ7VYtesPowOHx6yGXjaPnbPusntsWtXJ5nHn2h42
+        j74tqxg9Pm+SC2CLyrbJSE1MSS1SSM1Lzk/JzEu3VfIOjneONzUzMNQ1tLQwV1LIS8xNtVVy
+        8QnQdcvMAbpHSaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgXqBXnJhbXJqXrpeX
+        WmJlaGBgZApUmJCd0XxhKVvBA86KBUvnsDcwzuDoYuTgkBAwkdi7w7+LkYtDSGAHo8Tbdz+Z
+        IZxPjBJrr/1nh3C+MUo8mXoCyOEE63i0ajlU1V5Gide3fkJVfWSUOPX0OxNIFZuArsSW568Y
+        QRIiAp2MEiu/bQNLMAscYJTYcsEOxBYWsJQ4vP85O8ghLAKqEk2rWEDCvAJ2El9vNzFCbJOX
+        OPKrkxkiLihxcuYTFogx8hLNW2eDXSEhcI9d4ujl06wQDS4SL9auY4awhSVeHd8CdbaUxMv+
+        NnaIhm5GidZH/6ESqxklOht9IGx7iV/Tt7CCHMQsoCmxfpc+JJCUJY7cgtrLJ9Fx+C87RJhX
+        oqNNCKJRXeLA9uksELasRPecz6wQJR4SX7q0QcJCArESUzq/ME1glJ+F5JlZSJ6ZhbB2ASPz
+        Kkax1ILi3PTUYqMCY3icJufnbmIEp0gt9x2MM95+0DvEyMTBeIhRgoNZSYQ33z42UYg3JbGy
+        KrUoP76oNCe1+BCjKTB0JzJLiSbnA5N0Xkm8oYmlgYmZmaG5kamBuZI479x/TolCAumJJanZ
+        qakFqUUwfUwcnFINTGyFM6eyXxMOdTBJu/ekSKJPNOLMFikeJsd97U/Zt/ryt2103fytNPjg
+        Zy+VKza2Lw70qAsJPDn9wSLPqG2uhaNHzPto/8IYi7Vv8gsvWRzt+7VjfkJijtPtNyu7/Stm
+        xcxTzt2/uM0kxdpyJkval5XGFtxiLD/jm0wSuSfMPzXv065Gidwrd353XEz/wJFi63jwSd2D
+        gvnTM68039q81LHzQ+yuQ4HZz3dZB2ipzeQ2WJQQwXLetWtn1Zoe1gcuy3JNC78bH/M+cDJw
+        27uFL8+H3vh9e9077Wea+7k3W/yT//RzyenKDIWPuY7/QndvPifIsPqJjN9rXrdNIh3vK8q1
+        2K45esQvlb6QJfdBQYmlOCPRUIu5qDgRAMrHl0AaBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJLMWRmVeSWpSXmKPExsWy7bCSnO75x3GJBl8eSltc3q9tMf/IOVaL
+        jW9/MFlM+bOcyWLG+X1MFq17j7BbHH7TzmqxatcfRgcOj1kNvWweO2fdZffYtKqTzePOtT1s
+        Hn1bVjF6fN4kF8AWxWWTkpqTWZZapG+XwJXRfGEpW8EDzooFS+ewNzDO4Ohi5OSQEDCReLRq
+        OXMXIxeHkMBuRonV1/rZIBKyEs/e7WCHsIUl7rccYYUoes8o8frhfUaQBJuArsSW568YQRIi
+        At2MEv2NvUwgDrPAEUaJ/99/sYBUCQtYShze/xxoFAcHi4CqRNMqsDCvgJ3E19tNjBAb5CWO
+        /OpkhogLSpyc+QSshhko3rx1NvMERr5ZSFKzkKQWMDKtYpRMLSjOTc8tNiwwzEst1ytOzC0u
+        zUvXS87P3cQIDl0tzR2M21d90DvEyMTBeIhRgoNZSYQ33z42UYg3JbGyKrUoP76oNCe1+BCj
+        NAeLkjjvha6T8UIC6YklqdmpqQWpRTBZJg5OqQYm9XRPicqal9E6898e2bnL0GPyp8fCixke
+        xMpxSzenS0aHTn6jePeZx4HYMzcTP8u/+bRwOcvS45dYVT5t5r29yePtthN8N+u3n3at3F51
+        8v+z3wt+P3u+4FRTKS/7U9nql3YRS9aeOPzy2+XAzhmxeS5nRa/pZl2xO9duO3mqnMeJib/C
+        91cpzWe2fljrZnjh9a20wxcDl0TX6ERbZZmHCgWvOXpB7t/XqOVNWw2V2/2Zu9a6qQkFRcZE
+        +hkJTFrLsvBgyedf3AxpO2rvOcuEqnH9izL68FVX0+XnoePFapt0al/xmE3pVxaLNRa5l2lw
+        PpAjOfDX9/yzzzZc1pF10zh9ImvPuV9/uouFpxe8VWIpzkg01GIuKk4EALmtZZTMAgAA
+X-CMS-MailID: 20211007121055epcas2p3b2900d4bc3b874af699d658160d5acfc
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
 DLP-Filter: Pass
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20210927111008epcas1p24778eabe0ab08ced2a200b48111c822b
-References: <89888711-56BF-4E6C-92EE-2053E773B077@gmail.com>
-        <CGME20210927111008epcas1p24778eabe0ab08ced2a200b48111c822b@epcas1p2.samsung.com>
-        <CAJKOXPfUnLbhc6e_ccZxhVReV9jHsQ8aykkP=ghK-qURQLCdLA@mail.gmail.com>
-        <fec1cc85-0c81-035b-fe89-1b6dedbb3bc5@samsung.com>
-        <974A393B-EE0A-487F-8315-D4E0498DAA25@gmail.com>
-        <103943b6-3567-a241-7308-890d218eeb0f@samsung.com>
-        <922F76F9-2F1C-405D-A205-AE6C7B41DFF6@gmail.com>
+X-CMS-RootMailID: 20211007121055epcas2p3b2900d4bc3b874af699d658160d5acfc
+References: <CGME20211007121055epcas2p3b2900d4bc3b874af699d658160d5acfc@epcas2p3.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 10/7/21 1:36 PM, Christian Hewitt wrote:
->>
->> On 7 Oct 2021, at 2:16 am, Jaehoon Chung <jh80.chung@samsung.com> wrote:
->>
->> Hi,
->>
->> On 10/1/21 10:41 PM, Christian Hewitt wrote:
->>>
->>>> On 1 Oct 2021, at 4:40 am, Jaehoon Chung <jh80.chung@samsung.com> wrote:
->>>>
->>>> On 9/27/21 8:09 PM, Krzysztof Kozlowski wrote:
->>>>> On Mon, 13 Sept 2021 at 06:32, Christian Hewitt
->>>>> <christianshewitt@gmail.com> wrote:
->>>>>>
->>>>>> https://protect2.fireeye.com/v1/url?k=6f7d4070-30e6793d-6f7ccb3f-0cc47aa8f5ba-2c8976d4b015314f&q=1&e=776d64d2-22f3-400a-a241-42af8b5f60d0&u=https%3A%2F%2Fgithub.com%2Fchewitt%2Flinux%2Fcommit%2F8a4ebfb43a394e5dc5e9fafc92a50d5e81a4f258
->>>>>>
->>>>>> If I boot any recent kernel without the above patch, the emmc module on the XU4 is not detected, see:
->>>>>>
->>>>>> Without:
->>>>>>
->>>>>> [    3.227837] mmc0: tuning execution failed: -5
->>>>>> [    3.231229] mmc0: error -5 whilst initialising MMC card
->>>>>> [    3.536450] mmc0: tuning execution failed: -5
->>>>>> [    3.539680] mmc0: error -5 whilst initialising MMC card
->>>>>> [    3.794056] mmc0: tuning execution failed: -5
->>>>>> [    3.794212] mmc0: error -5 whilst initialising MMC card
->>>>>> [    4.111097] mmc0: tuning execution failed: -5
->>>>>> [    4.115356] mmc0: error -5 whilst initialising MMC card
->>>>>> [    4.426164] mmc0: tuning execution failed: -5
->>>>>> [    4.429678] mmc0: error -5 whilst initialising MMC card
->>>>>> [    4.756226] mmc0: tuning execution failed: -5
->>>>>> [    4.760641] mmc0: error -5 whilst initialising MMC card
->>>>>>
->>>>>> With:
->>>>>>
->>>>>> [    3.305461] mmc0: new HS400 MMC card at address 0001
->>>>>> [    3.307444] mmcblk0: mmc0:0001 8GME4R 7.28 GiB
->>>>>> [    3.308132] mmcblk0boot0: mmc0:0001 8GME4R 4.00 MiB
->>>>>> [    3.309172] mmcblk0boot1: mmc0:0001 8GME4R 4.00 MiB
->>>>>> [    3.310255] mmcblk0rpmb: mmc0:0001 8GME4R 512 KiB, chardev (246:0)
->>>>>> [    3.315963]  mmcblk0: p1 p2
->>>>>>
->>>>>> The patch is sourced from a Linux 5.4 patchset used by several retro gaming distros for XU4 images shared in the HardKernel forums. I would be happy to submit it, but the original patch has no description in the commit message. Not being a coding developer myself I cannot explain whether it is correct or what it’s doing to add one. All I can do is confirm that it works, and is needed. SD card boot is not an issue.
->>>>>>
->>>>>> I’ve CC’d the original author (Marian) in case he remembers the patch and can comment. It would be good to get this upstream.
->>>>>
->>>>> The patch might have sense but would require describing conditions -
->>>>> what MMC input and output clock settings work and which do not work.
->>>>> Also someone would need to test other Exynos5422 boards and other
->>>>> Exynos with HS200 and HS400 support (Exynos5433, Exynos7). I think
->>>>> this should not affect SD cards.
->>>>
->>>>
->>>> Thanks for adding me.
->>>> I didn't see XU4 booting fail with linux-5.15-rc1 kernel.
->>>>
->>>> [    4.561934] mmc1: new HS400 MMC card at address 0001
->>>> [    4.572401] mmcblk1: mmc1:0001 SDW16G 14.7 GiB
->>>> [    4.602555]  mmcblk1: p1 p2 p3 p4 < p5 p6 p7 >
->>>> [    4.623201] mmcblk1boot0: mmc1:0001 SDW16G 4.00 MiB
->>>> [    4.640465] mmcblk1boot1: mmc1:0001 SDW16G 4.00 MiB
->>>>
->>>> Which kernel version did you use?
->>>
->>> The original report is against 5.14.0, but I see the same with 5.15-rc3
->>>
->>> dmesg: https://protect2.fireeye.com/v1/url?k=703ee5f5-2fa5dcb3-703f6eba-0cc47a3003e8-ad25e9061be78bbb&q=1&e=df3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=http%3A%2F%2Fix.io%2F3AuL
->>> dmesg | grep mmc: https://protect2.fireeye.com/v1/url?k=5d2277f1-02b94eb7-5d23fcbe-0cc47a3003e8-b778cb8e233bbe4b&q=1&e=df3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=http%3A%2F%2Fix.io%2F3AuO
->>>
->>> And if I pick that patch to my kernel branch all is good:
->>>
->>> dmesg: https://protect2.fireeye.com/v1/url?k=8bcf7900-d4544046-8bcef24f-0cc47a3003e8-6124ad41dd642d56&q=1&e=df3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=http%3A%2F%2Fix.io%2F3Avf
->>> dmesg | grep mmc: https://protect2.fireeye.com/v1/url?k=66ce5f96-395566d0-66cfd4d9-0cc47a3003e8-b9768331cc0e4416&q=1&e=df3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=http%3A%2F%2Fix.io%2F3Ave
->>>
->>> Here’s an SD (or eMMC) bootable image for an XU4 that exhibits the problem. You need to run “systemctl stop kodi” once the UART console is available else it attempts to run Kodi and Panfrost (the image is created for some Panfrost poking) currently wedges the board. Once the Kodi service is stopped “systemctl mask kodi” will prevent it from running again.
->>>
->>> https://protect2.fireeye.com/v1/url?k=b114ca54-ee8ff369-b115411b-0cc47a31309a-d8858f2897ed5521&q=1&e=addfcceb-9c68-4d7e-828c-344dd51262c2&u=https%3A%2F%2Fchewitt.libreelec.tv%2Ftesting%2FLibreELEC-Exynos.arm-10.0.0-odroid-xu4.img.gz
->>>
->>> Kernel defconfig for the image: https://protect2.fireeye.com/v1/url?k=806156b6-dffa6ff0-8060ddf9-0cc47a3003e8-b2bec8fd0863dc1b&q=1&e=df3dbd0f-ccc7-40e0-b96a-1d47883a7f71&u=http%3A%2F%2Fsprunge.us%2FG6uxty - basically the exynos config but with a wide variety of not-needed drivers (other SoCs, network cards, etc.) disabled.
->>>
->>> The board is booting from u-boot 2020.04 in case that matters.
->>
->> Thanks for sharing information. Sorry for replying late. I will check this problem on this week. 
->> It needs to satisfy all exynos5 SoCs. I just wonder why not working fine according to eMMC modules.
-> 
-> No problem, I’ve been watching the thread :)
-> 
-> This is the module I’m using https://protect2.fireeye.com/v1/url?k=991de2ef-c686dbd2-991c69a0-0cc47a31309a-1b07f48d5f69f8e8&q=1&e=addfcceb-9c68-4d7e-828c-344dd51262c2&u=https%3A%2F%2Fwww.hardkernel.com%2Fshop%2F8gb-emmc-module-h2%2F .. I can probably organise one to be shipped to you if needed.
+This patchset supports minimal set for ExynosAuto v9 SoC and SADK board.
+This contains serial_0 as uart console and ufs_0 for rootfs storage.
+Regarding UFS, it depends on UFS patchset[1].
 
-Thanks for sharing eMMC module information. I will order it. 
+[1]: https://lore.kernel.org/linux-samsung-soc/20211007080934.108804-1-chanho61.park@samsung.com/T/#t
 
-https://protect2.fireeye.com/v1/url?k=6f7d4070-30e6793d-6f7ccb3f-0cc47aa8f5ba-2c8976d4b015314f&q=1&e=776d64d2-22f3-400a-a241-42af8b5f60d0&u=https%3A%2F%2Fgithub.com%2Fchewitt%2Flinux%2Fcommit%2F8a4ebfb43a394e5dc5e9fafc92a50d5e81a4f258
+Chanho Park (3):
+  pinctrl: samsung: support ExynosAutov9 SoC pinctrl
+  arm64: dts: exynos: add initial support for exynosautov9 SoC
+  arm64: dts: exynos: add minimal support for exynosautov9 sadk board
 
-And When I have been checked the code, it seems that changing CLK_DIV value to 2 is not correct. (It's workaround to just work.)
-Maybe, it seems that phase is not a proper value about its eMMC. (After getting eMMC module, I can check in more detail.)
+ .../bindings/arm/samsung/samsung-boards.yaml  |    6 +
+ .../bindings/pinctrl/samsung-pinctrl.txt      |    1 +
+ .../boot/dts/exynos/exynosautov9-pinctrl.dtsi | 1206 +++++++++++++++++
+ .../boot/dts/exynos/exynosautov9-sadk.dts     |   52 +
+ arch/arm64/boot/dts/exynos/exynosautov9.dtsi  |  290 ++++
+ .../pinctrl/samsung/pinctrl-exynos-arm64.c    |  108 ++
+ drivers/pinctrl/samsung/pinctrl-samsung.c     |    2 +
+ drivers/pinctrl/samsung/pinctrl-samsung.h     |    1 +
+ 8 files changed, 1666 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov9-pinctrl.dtsi
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov9.dtsi
 
-Best Regards,
-Jaehoon Chung
-
-> 
-> Christian
-> 
+-- 
+2.33.0
 
