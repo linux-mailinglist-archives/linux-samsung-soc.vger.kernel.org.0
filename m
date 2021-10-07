@@ -2,202 +2,140 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A2D4252BB
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 14:11:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EBE4253AB
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Oct 2021 15:07:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241135AbhJGMM6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 7 Oct 2021 08:12:58 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:33229 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241121AbhJGMM4 (ORCPT
+        id S241013AbhJGNJm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 7 Oct 2021 09:09:42 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:35526
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S240974AbhJGNJl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 7 Oct 2021 08:12:56 -0400
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20211007121101epoutp01668248c4cb4e51f520b994065abbda06~rvmwYcu8h0490504905epoutp01U
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Oct 2021 12:11:01 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20211007121101epoutp01668248c4cb4e51f520b994065abbda06~rvmwYcu8h0490504905epoutp01U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1633608661;
-        bh=h9kOd/Bkk1qhe2ZaVNq5mfRueqVIYsaDBGH4IH+Tn5k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Y0Vc8966iNOkQZpp9ATiRj/TpbRPVtCX3Y+UJUe1iMIr5s7euNOV9t3015GfJNUZ8
-         hKSEA2+VEG55e1arjW0nuA7is4uOPWjMdM745mW+66NKUZUwsfD3NodeySAcDV6VGY
-         t/LXDLrXFS9wUBJRnJ0I+D0vuH5BzoZRjG20T228=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20211007121100epcas2p42eb6c97fd6e92403e22665622eebc97a~rvmv19LuY3145231452epcas2p4E;
-        Thu,  7 Oct 2021 12:11:00 +0000 (GMT)
-Received: from epsmges2p3.samsung.com (unknown [182.195.36.88]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4HQ9C46VPTz4x9Py; Thu,  7 Oct
-        2021 12:10:56 +0000 (GMT)
-Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
-        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        DD.8A.09749.0D3EE516; Thu,  7 Oct 2021 21:10:56 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
-        20211007121055epcas2p3257cda61bd7f28f8ac9f3ba126b8fd41~rvmrRFdK_3229632296epcas2p3C;
-        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20211007121055epsmtrp22d90744204d3c302a195b258f016792d~rvmrPcQjF1397313973epsmtrp2S;
-        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
-X-AuditID: b6c32a47-d13ff70000002615-02-615ee3d0e232
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        03.58.09091.FC3EE516; Thu,  7 Oct 2021 21:10:55 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.229.9.51]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20211007121055epsmtip1806a26f5b68da4d89283182bdf648b70~rvmrEjU1m0981909819epsmtip1G;
-        Thu,  7 Oct 2021 12:10:55 +0000 (GMT)
-From:   Chanho Park <chanho61.park@samsung.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Thu, 7 Oct 2021 09:09:41 -0400
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com [209.85.221.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A06BF3FFF2
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Oct 2021 13:07:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1633612066;
+        bh=FORzsUXne7M2qBjMCfFLm5GuHPWnU7ify0SwCg4gAzA=;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+         In-Reply-To:Content-Type;
+        b=XEqBbV2i2rSqT8ONkBiX0A2Wd5dfk07hslLT/+ZTugU8iIjX3Yv07jynl9t6i687u
+         d6gh1EQ759SPJGYRKLeawX9payUCifUnK48USmn49Fvr8Gf059XaOhlFSwCKEi2uud
+         kfWHvMzri4As5Vup2egOqCoMA/I0o/jeKPBOrngH1he78HdW4bYR2Ad1zeGLB69xqU
+         4hWpsPPqTmDjhnee8yT6T7HpZjO981ih6pbaW1JaulSWI1R8TD6w+T2QIERW0DPsip
+         p3mawA6PT3QFQ+iAWzlmCZmTa7gYDYEvmm3ksOS6hsBAAEkxgjSLx1w+RapH0/mvVd
+         TF8pI0xzC/4Yg==
+Received: by mail-wr1-f71.google.com with SMTP id c2-20020adfa302000000b0015e4260febdso4621555wrb.20
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 07 Oct 2021 06:07:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FORzsUXne7M2qBjMCfFLm5GuHPWnU7ify0SwCg4gAzA=;
+        b=y4vUs/bnPD9493u1+aZ9M57AkPWYWK2IKPn5c+Zgn8hueLIpgXrZ+jHyycSQaCXqEo
+         PsJJRqupvm0O3akBsI5Dr/nPELm2QVj+9i0l48xT3hnyRqOWrHq/M/D6IFADBN/YLhH2
+         WRPeUiEmxgriWeIeWlBlBi6TEPzHCrtJSwy1iKsu8L9n/pwYuW+QGVhkFmdm5I4AA05r
+         I4f6m7ANplly8T7pYbU0L7KdM6xqBUx2vITkijnYzzPLezaY3lZ85juDUCL2U5gGfGGV
+         IGT5AXVaq78juKn/ggFk7pUF7JGpfiAHxmQgXcnkB7ZFokywzQ9c7gxpCvSRDMx0odKK
+         te6w==
+X-Gm-Message-State: AOAM531N5Gvuz9ZddLkNuiFBwGcqrlxTFXukRjyhNkVYd1coR3PXhqZw
+        jJC377EjWdHfJXDnR1YI8+HyiAdbRAVbkQtVpZFRKVjS/eBlldl4mov61y5p0D71yGGRJMKJHQD
+        TKeWC8SoW7qznBmm7nIst/0oQSRsksoKD3pbHuZpqdnURhLVY
+X-Received: by 2002:adf:b355:: with SMTP id k21mr5428724wrd.380.1633612064190;
+        Thu, 07 Oct 2021 06:07:44 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJy5pF3b8+6MeNpQSCXgOMr7rU57lLrOb+1ZGnujvyw0abYwmsBGvSJGW2lo9jvHE2DDTsCMuQ==
+X-Received: by 2002:adf:b355:: with SMTP id k21mr5428054wrd.380.1633612059354;
+        Thu, 07 Oct 2021 06:07:39 -0700 (PDT)
+Received: from [192.168.1.115] (xdsl-188-155-186-13.adslplus.ch. [188.155.186.13])
+        by smtp.gmail.com with ESMTPSA id d2sm24198585wrc.32.2021.10.07.06.07.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Oct 2021 06:07:38 -0700 (PDT)
+Subject: Re: [PATCH v3 10/10] dt-bindings: mfd: samsung,s5m8767: document buck
+ and LDO supplies
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Tomasz Figa <tomasz.figa@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-Subject: [PATCH 3/3] arm64: dts: exynos: add minimal support for
- exynosautov9 sadk board
-Date:   Thu,  7 Oct 2021 21:08:55 +0900
-Message-Id: <20211007120855.56555-4-chanho61.park@samsung.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211007120855.56555-1-chanho61.park@samsung.com>
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        Rob Herring <robh@kernel.org>
+References: <20211006132324.76008-1-krzysztof.kozlowski@canonical.com>
+ <20211006132324.76008-11-krzysztof.kozlowski@canonical.com>
+ <CAPLW+4migQ+3NBsHgMd04N-Fc71CTzxoUMS3HN2S8377qFDa6g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Message-ID: <25ecf19b-eb40-ada6-2469-b0c29820b498@canonical.com>
+Date:   Thu, 7 Oct 2021 15:07:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEJsWRmVeSWpSXmKPExsWy7bCmue6Fx3GJBg1HjCwu79e2mH/kHKvF
-        xrc/mCym/FnOZDHj/D4mi9a9R9gtDr9pZ7VYtesPowOHx6yGXjaPnbPusntsWtXJ5nHn2h42
-        j74tqxg9Pm+SC2CLyrbJSE1MSS1SSM1Lzk/JzEu3VfIOjneONzUzMNQ1tLQwV1LIS8xNtVVy
-        8QnQdcvMAbpHSaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgXqBXnJhbXJqXrpeX
-        WmJlaGBgZApUmJCdsWTib9aCq8IVrydlNTC+4e9i5OSQEDCRuNn9nLWLkYtDSGAHo0TbqSWM
-        IAkhgU+MEovuGUEkvjFKrLv9hRWmY87/WSwQib2MEhNfHIHq+MgosfyAIYjNJqArseX5K0aQ
-        IhGBTkaJld+2MYEkmAUOMEpsuWDXxcjBISwQJdH/UBbEZBFQldi7rgSkglfATmL6walMELvk
-        JY786mQGsTkF7CUmPXrAClEjKHFy5hMWiInyEs1bZzODrJIQ+MkuMatzB1Szi8Sbw29YIGxh
-        iVfHt7BD2FISn9/tZYNo6GaUaH30HyqxmlGis9EHwraX+DV9CyvIccwCmhLrd+mDmBICyhJH
-        bkHt5ZPoOPyXHSLMK9HRJgTRqC5xYPt0qK2yEt1zPkODzUPixbyN0GCbxCjx9vQNpgmMCrOQ
-        vDMLyTuzEBYvYGRexSiWWlCcm55abFRgDI/e5PzcTYzgxKnlvoNxxtsPeocYmTgYDzFKcDAr
-        ifDm28cmCvGmJFZWpRblxxeV5qQWH2I0BYb1RGYp0eR8YOrOK4k3NLE0MDEzMzQ3MjUwVxLn
-        nfvPKVFIID2xJDU7NbUgtQimj4mDU6qByfxl9kWv6t9mh9WaHM9oKeyM5DpVWLtOzdrEVdB5
-        ttXpd5enXT10d+qsk6X1u7z+pFadWewgIid70XOW9sw3fW6STBl8Uq1MKqe35G+ekHud5/Ou
-        C8seWix5/mHOzK6sftaka7e33/4ZuWTplNLl/C8mHgjTeZtsJKa4dPrSQN5gySeHJt4uYvqf
-        s7n1T8ba2SVL1naUduxgcvY74VjA837m1u0fmb7stT6yLvLA2TzRxdOfHV+XvfPou+ZFSs0Z
-        KydJi24sMjPbnqxy+HOzlG35Q27mKU++OEzbM21BibyhtPT+jXu7raoTmCvK5qd2tvgaen/q
-        iQz1jdMy0y13C15ibGXs/6k4+kNc1/3VQkosxRmJhlrMRcWJAOyENIAlBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPLMWRmVeSWpSXmKPExsWy7bCSnO75x3GJBg8maVhc3q9tMf/IOVaL
-        jW9/MFlM+bOcyWLG+X1MFq17j7BbHH7TzmqxatcfRgcOj1kNvWweO2fdZffYtKqTzePOtT1s
-        Hn1bVjF6fN4kF8AWxWWTkpqTWZZapG+XwJWxZOJv1oKrwhWvJ2U1ML7h72Lk5JAQMJGY838W
-        SxcjF4eQwG5Gie673ewQCVmJZ+92QNnCEvdbjrBCFL1nlDh8/BZYgk1AV2LL81eMIAkRgW5G
-        if7GXiYQh1ngCKPE/++/gOZycAgLREh0/RMCMVkEVCX2risB6eUVsJOYfnAqE8QCeYkjvzqZ
-        QWxOAXuJSY8esILYQkA1bcemMELUC0qcnPmEBcRmBqpv3jqbeQKjwCwkqVlIUgsYmVYxSqYW
-        FOem5xYbFhjmpZbrFSfmFpfmpesl5+duYgSHuZbmDsbtqz7oHWJk4mA8xCjBwawkwptvH5so
-        xJuSWFmVWpQfX1Sak1p8iFGag0VJnPdC18l4IYH0xJLU7NTUgtQimCwTB6dUA5P1fhWW36/D
-        yvYY3uLZtu6O1EeFdR+++nm8Kljr5CyWviX+2FbdIK4ozd7NVgsblrxk1VnxaF2E7kaOBU9N
-        +zv/lb1YL7PdoHjR0d42pZtbH89QsJXxSnndfHRlck9U++t/b/Vym5g5tvKfdYldaPtg4weP
-        BexSLQ2fvnNvvCNgxsbG/P/MtpqsCb/sam/lFAjtv/PSmzs4cPMrzYsFHNudD51dcPcY1wtu
-        41+LBRt+n5rk4sNfZWZlJvHxs63qZma/f/vWqn3KTnj4pC391JvA5WIvb/kY5q5uLe7KX/oj
-        +HCwvzJz2TOrhGsRM5c92GZ8UV7lzGbNRVPvCeqdCJggMklwRu/J5o32/fc/npiqxFKckWio
-        xVxUnAgASbj2ueICAAA=
-X-CMS-MailID: 20211007121055epcas2p3257cda61bd7f28f8ac9f3ba126b8fd41
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20211007121055epcas2p3257cda61bd7f28f8ac9f3ba126b8fd41
-References: <20211007120855.56555-1-chanho61.park@samsung.com>
-        <CGME20211007121055epcas2p3257cda61bd7f28f8ac9f3ba126b8fd41@epcas2p3.samsung.com>
+In-Reply-To: <CAPLW+4migQ+3NBsHgMd04N-Fc71CTzxoUMS3HN2S8377qFDa6g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-SADK(Samsung Automotive Development Kit) is the development kit to
-evaluate Exynos Auto v9 SoC. It has 16GB LPDDR4 DRAM and two
-256GB Samsung UFS. This patch enables only serial console and ufs0
-device.
+On 06/10/2021 22:02, Sam Protsenko wrote:
+> On Wed, 6 Oct 2021 at 16:24, Krzysztof Kozlowski
+> <krzysztof.kozlowski@canonical.com> wrote:
+>>
+>> Document the properties with regulator supplies for bucks and LDOs.  At
+>> least one board uses it (Exynos5250 Arndale).
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> ---
+>>  .../bindings/mfd/samsung,s5m8767.yaml         | 38 +++++++++++++++++++
+>>  1 file changed, 38 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml b/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
+>> index b2529a48c890..12dea5aac8b6 100644
+>> --- a/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
+>> +++ b/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
+>> @@ -96,6 +96,44 @@ properties:
+>>      description: |
+>>        GPIO specifiers for three host gpio's used for dvs.
+>>
+>> +  vinb1-supply:
+>> +    description: Power supply for buck1
+>> +  vinb2-supply:
+>> +    description: Power supply for buck1
+> 
+> Nitpick: all those vinb* are for buck1, or that's a typo (here and below)?
 
-Signed-off-by: Chanho Park <chanho61.park@samsung.com>
----
- .../bindings/arm/samsung/samsung-boards.yaml  |  6 +++
- .../boot/dts/exynos/exynosautov9-sadk.dts     | 52 +++++++++++++++++++
- 2 files changed, 58 insertions(+)
- create mode 100644 arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
+Copy paste and needs fixing. Thanks for checking.
 
-diff --git a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-index 0796f0c87727..2147e664d5bc 100644
---- a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-+++ b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-@@ -199,6 +199,12 @@ properties:
-               - samsung,exynos7-espresso        # Samsung Exynos7 Espresso
-           - const: samsung,exynos7
- 
-+      - description: Exynos Auto v9 based boards
-+        items:
-+          - enum:
-+              - samsung,samsung,exynosautov9-sadk   # Samsung Exynos Auto v9 SADK
-+          - const: samsung,exynosautov9
-+
- required:
-   - compatible
- 
-diff --git a/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
-new file mode 100644
-index 000000000000..e59ef39a368f
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
-@@ -0,0 +1,52 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Samsung ExynosAutov9 SADK board device tree source
-+ */
-+
-+/dts-v1/;
-+#include "exynosautov9.dtsi"
-+
-+/ {
-+	model = "Samsung ExynosAutov9 SADK board";
-+	compatible = "samsung,exynosautov9-sadk", "samsung,exynosautov9";
-+
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	aliases {
-+		serial0 = &serial_0;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial_0;
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x0 0x80000000 0x0 0x77000000>,
-+		      <0x8 0x80000000 0x1 0x7ba00000>,
-+		      <0xa 0x00000000 0x2 0x00000000>;
-+	};
-+
-+	ufs_0_fixed_vcc: fixedregulator@0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ufs-vcc";
-+		gpio = <&gpq0 1 GPIO_ACTIVE_HIGH>;
-+		regulator-boot-on;
-+		enable-active-high;
-+	};
-+};
-+
-+&serial_0 {
-+	status = "okay";
-+};
-+
-+&ufs_0_phy {
-+	status = "okay";
-+};
-+
-+&ufs_0 {
-+	status = "okay";
-+	vcc-supply = <&ufs_0_fixed_vcc>;
-+	vcc-fixed-regulator;
-+};
--- 
-2.33.0
+> 
+>> +  vinb3-supply:
+>> +    description: Power supply for buck1
+>> +  vinb4-supply:
+>> +    description: Power supply for buck1
+>> +  vinb5-supply:
+>> +    description: Power supply for buck1
+>> +  vinb6-supply:
+>> +    description: Power supply for buck1
+>> +  vinb7-supply:
+>> +    description: Power supply for buck1
+>> +  vinb8-supply:
+>> +    description: Power supply for buck1
+>> +  vinb9-supply:
+>> +    description: Power supply for buck1
+>> +
 
+Best regards,
+Krzysztof
