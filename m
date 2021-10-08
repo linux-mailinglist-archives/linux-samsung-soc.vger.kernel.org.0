@@ -2,218 +2,202 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E911442667F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Oct 2021 11:16:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BA0E4269CB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Oct 2021 13:41:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237097AbhJHJSr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 8 Oct 2021 05:18:47 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:36973 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237194AbhJHJSp (ORCPT
+        id S243039AbhJHLmG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 8 Oct 2021 07:42:06 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:33542
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242408AbhJHLkA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 8 Oct 2021 05:18:45 -0400
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20211008091647epoutp046f42d644fcc4a35e6ed4a6863c5d0a41~sA37Isex_0035000350epoutp04R
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  8 Oct 2021 09:16:47 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20211008091647epoutp046f42d644fcc4a35e6ed4a6863c5d0a41~sA37Isex_0035000350epoutp04R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1633684607;
-        bh=L6NMxTUF4a1Urvf9vrvwYkd2ZglWGRkKNPGh+IcqlZE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gXRfsWtkZb1CAcN3uxtmluSmdhKw0dCy/RKgW899zcUgkDc6HkLDudbKBwHif9z3c
-         WwjMOhgbhNIX4nUaFpoDABVA3o+Ro1mzJxkr/DCPhq3ClkaMDRKkA+4gSTPRUZxyYL
-         4OLH7BwvEMcnUaPwFYq8HWwFyw+uefjrlmYzEdsw=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20211008091646epcas2p40b4ea2995f83e27bfe236c56bb32d416~sA36RxMXd0813808138epcas2p4w;
-        Fri,  8 Oct 2021 09:16:46 +0000 (GMT)
-Received: from epsmges2p4.samsung.com (unknown [182.195.36.98]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4HQjHY1q9vz4x9QG; Fri,  8 Oct
-        2021 09:16:41 +0000 (GMT)
-Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
-        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        9C.F6.09472.87C00616; Fri,  8 Oct 2021 18:16:40 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
-        20211008091640epcas2p280fb1bce16ebff863f6ae4db66b2b240~sA3z3Vkrx1824518245epcas2p2B;
-        Fri,  8 Oct 2021 09:16:40 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20211008091640epsmtrp11aa6f0cb112b8cdd664b5d46f138c5b2~sA3z2MBHr2134221342epsmtrp1r;
-        Fri,  8 Oct 2021 09:16:40 +0000 (GMT)
-X-AuditID: b6c32a48-d75ff70000002500-e6-61600c78621e
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        CD.6A.09091.77C00616; Fri,  8 Oct 2021 18:16:39 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.229.9.51]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20211008091639epsmtip1917064cfc30fd82251c531bfff223e09~sA3zqKyTV0190601906epsmtip1S;
-        Fri,  8 Oct 2021 09:16:39 +0000 (GMT)
-From:   Chanho Park <chanho61.park@samsung.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Fri, 8 Oct 2021 07:40:00 -0400
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 557E03FFFD
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  8 Oct 2021 11:38:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1633693084;
+        bh=aTSEz98+bylpmPPcNopQa23h1tajKRR6XK7sZAFZg1k=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=LwfWPQ978SogYXqg0QEhZaIt73YOlvGE6NpF/m7ST3bVX9cg8GBUCNAfJ6JuCLWIU
+         RHmO0+4eMSK6cMncCOoA3JaTeJJ4upNR6Qsj1oRqku1SJzCjEnJ92C4SAJ1ULhth+M
+         RQopOaDjJwM1OG8WssFdzp1oMcfCu9ljIWZiLFahqp8Wy025oKHyrqN/KLhGoo4igB
+         yJEXlG/vH4XrSVkzFT+GVPR8MHue0DwUHEJF3r4qlIveOlRhM0IqTlMpgM+TLsyLG9
+         6CP4qsv5t0Jow2DvB6u7PmjUEzePnzwcAFa+SSeaAWi++EP/ghHef54n2OMiHjJdN7
+         zdINtHbK/qjig==
+Received: by mail-ed1-f71.google.com with SMTP id c8-20020a50d648000000b003daa53c7518so8872519edj.21
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 08 Oct 2021 04:38:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aTSEz98+bylpmPPcNopQa23h1tajKRR6XK7sZAFZg1k=;
+        b=wG772uaZKNLvMs3ZxuGFZqG6TWM9FexaWxwS8aLlOZtL+rcVetB0dVx2xfm/iFuf0m
+         pCqXi1FOYXTjztAuErXsnARNQCFuUo4465B7IZhRDrN93pEmPmUX4OOw1wz6660jwXwH
+         PVDOumrpNVQOub70MRRTd4E5Mhl3QlrNv2Fl3HppZxzOK0n64gJARsH/+RalSOAQxAHo
+         JgKPoZA6ndoP3lvInzBJL7bXwUM2fbyDSKd9m64tXhvN4UljRrklGyOY905e5WvzhZ0q
+         GvX0bq+LUHTodN69bWqb6OnxurqkxvDQ84XA2LoQGn2ns8w32hVn+bQSP1MBrVTqMObi
+         lVcA==
+X-Gm-Message-State: AOAM533t2W7gF2JgReQvE9HplqsWQt29iOwUUBwuFr/VXFRgxJALiW3z
+        AtZsunoFDSaPMvKbsQhwH5fQpYcj2at7PtEKk6qMGwCdMIc1lAtFZ0wyRMHmAIe12s7kXlPkbC4
+        2lRUgkpikZjTHNp866T4PuYdYfnqM2c7Jk6/sRCj6Ib2A9M50
+X-Received: by 2002:a05:6402:4405:: with SMTP id y5mr3069444eda.339.1633693084007;
+        Fri, 08 Oct 2021 04:38:04 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJy8NR7U/YVnS2fiVyjL2cLT+NkCncwBCqM2zQeAmZ6DE79hAPBigKIL+nDpB77FDCkcqo6xhw==
+X-Received: by 2002:a05:6402:4405:: with SMTP id y5mr3069407eda.339.1633693083838;
+        Fri, 08 Oct 2021 04:38:03 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-186-13.adslplus.ch. [188.155.186.13])
+        by smtp.gmail.com with ESMTPSA id la1sm819948ejc.48.2021.10.08.04.38.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 04:38:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Tomasz Figa <tomasz.figa@gmail.com>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-Subject: [PATCH v2 3/3] arm64: dts: exynos: add minimal support for
- exynosautov9 sadk board
-Date:   Fri,  8 Oct 2021 18:14:43 +0900
-Message-Id: <20211008091443.44625-4-chanho61.park@samsung.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211008091443.44625-1-chanho61.park@samsung.com>
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Sam Protsenko <semen.protsenko@linaro.org>
+Subject: [PATCH v4 00/10] regulator/mfd/clock: dt-bindings: Samsung S2M and S5M to dtschema
+Date:   Fri,  8 Oct 2021 13:37:12 +0200
+Message-Id: <20211008113723.134648-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCJsWRmVeSWpSXmKPExsWy7bCmqW4FT0KiwY03yhaX92tbzD9yjtVi
-        49sfTBZT/ixnsphxfh+TReveI+wWh9+0s1qs2vWH0YHDY1ZDL5vHzll32T02repk87hzbQ+b
-        R9+WVYwenzfJBbBFZdtkpCampBYppOYl56dk5qXbKnkHxzvHm5oZGOoaWlqYKynkJeam2iq5
-        +AToumXmAN2jpFCWmFMKFApILC5W0rezKcovLUlVyMgvLrFVSi1IySkwL9ArTswtLs1L18tL
-        LbEyNDAwMgUqTMjO2HtbraBRouLX3rvsDYxHhLsYOTkkBEwkHv98wNbFyMUhJLCDUeL6kbdM
-        EM4nRokF+xewQjjfGCVaXqxi72LkAGvpuWID0i0ksJdR4tlDH4iaj4wSt468YwNJsAnoSmx5
-        /ooRJCEi0MkosfLbNiaQBLPAAUaJLRfsQGxhgViJ/lsvwRpYBFQlmq+9YAGxeQXsJE6+3ckI
-        cZ+8xJFfncwgNqeAvcTR9m5GiBpBiZMzn7BAzJSXaN46mxlkmYTAV3aJhRf2sUM0u0h8XbKX
-        GcIWlnh1fAtUXEriZX8bO0RDN6NE66P/UInVjBKdjT4Qtr3Er+lbWEFeZhbQlFi/Sx/ie2WJ
-        I7eg9vJJdBz+Cw0UXomONiGIRnWJA9uns0DYshLdcz6zQtgeEg1X/jBDAmsSo8SF7wuZJjAq
-        zELyziwk78xCWLyAkXkVo1hqQXFuemqxUYEJPIKT83M3MYKTp5bHDsbZbz/oHWJk4mA8xCjB
-        wawkwptvH5soxJuSWFmVWpQfX1Sak1p8iNEUGNgTmaVEk/OB6TuvJN7QxNLAxMzM0NzI1MBc
-        SZx37j+nRCGB9MSS1OzU1ILUIpg+Jg5OqQamWYX/OG5XVv0P4d+0JTr4s8s/vvriKPF9KWpW
-        Ffm6N06/dStXDTaxCTE7v1Jh4eQje1iip6xQuHtUe9HzeJ7vd1/1tts212ezSDVmrTL6n7Xi
-        pFeugOODfg0v5pwja0RPdPnpSG+dJZLF/Wnus5ffak553fEseuWg8pw5RCxl/tYYwQCHy8/6
-        175rc/lna+jsP7HGZtJNU57vr1+kbgnIvH1ofnLSjzXPBNvXX1TIq54zL0d8w9rM3Revzk6p
-        f9Uj80C4gqWob+fKWa8PSCUlT3Gax+R8Q7z3iM+S3oJNoWH8TfMqsrl9Zfdrc98oT7uqFLv9
-        88fw9qk7++YkR4qGrHK2CZJ56W34MnDiRw0lluKMREMt5qLiRACuHKTGJwQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrALMWRmVeSWpSXmKPExsWy7bCSnG45T0KiweZp2haX92tbzD9yjtVi
-        49sfTBZT/ixnsphxfh+TReveI+wWh9+0s1qs2vWH0YHDY1ZDL5vHzll32T02repk87hzbQ+b
-        R9+WVYwenzfJBbBFcdmkpOZklqUW6dslcGXsva1W0ChR8WvvXfYGxiPCXYwcHBICJhI9V2y6
-        GLk4hAR2M0o8XbydpYuREyguK/Hs3Q52CFtY4n7LEVaIoveMEv2fXjGCJNgEdCW2PAexuThE
-        BLqBEo29TCAOs8ARRon/33+BjRIWiJb42XMSrINFQFWi+doLsDivgJ3Eybc7GSFWyEsc+dXJ
-        DGJzCthLHG3vBosLAdU8ebEZql5Q4uTMJ2A2M1B989bZzBMYBWYhSc1CklrAyLSKUTK1oDg3
-        PbfYsMAwL7Vcrzgxt7g0L10vOT93EyM40LU0dzBuX/VB7xAjEwfjIUYJDmYlEd58+9hEId6U
-        xMqq1KL8+KLSnNTiQ4zSHCxK4rwXuk7GCwmkJ5akZqemFqQWwWSZODilGpiOZaZN530vtygk
-        aAfnvg/XFgp632lX50ietCrbpG5/90qj4Ika9y/8ftks6eI2u9Trb5Wqzjp+53RNM5Z/CXqq
-        9nI/ujlXz9mW5y23Ry7DwoX9gNIp+02cy8ynb1xy5/A/e2lVntQ3PL6h912b76n+nfGr1maP
-        m98D77U3/ln+W175btcW90vCT1ReeXoknzZdyqAd8K1Q6cDdn49nyX76fLU68+yXUq33ZfNe
-        /LC532j1N2xzk4zIurW7K+NkXpv7cu9USlvdGawlO+vXnWVr79tFXJ1/3nEq24NpHtuMTi9f
-        zBMbGe0lubio16Kdp3ayx7Ojn57sfnqgVypBbT+vyjEOndbD7tKZ567qbn2txFKckWioxVxU
-        nAgA+xMys+MCAAA=
-X-CMS-MailID: 20211008091640epcas2p280fb1bce16ebff863f6ae4db66b2b240
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20211008091640epcas2p280fb1bce16ebff863f6ae4db66b2b240
-References: <20211008091443.44625-1-chanho61.park@samsung.com>
-        <CGME20211008091640epcas2p280fb1bce16ebff863f6ae4db66b2b240@epcas2p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-SADK(Samsung Automotive Development Kit) is the development kit to
-evaluate Exynos Auto v9 SoC. It has 16GB LPDDR4 DRAM and two
-256GB Samsung UFS. This patch enables only serial console and ufs0
-device.
+Hi All,
 
-Signed-off-by: Chanho Park <chanho61.park@samsung.com>
----
- .../bindings/arm/samsung/samsung-boards.yaml  |  6 ++
- arch/arm64/boot/dts/exynos/Makefile           |  3 +-
- .../boot/dts/exynos/exynosautov9-sadk.dts     | 56 +++++++++++++++++++
- 3 files changed, 64 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
+Changes since v2
+================
+1. Add Stephen's and Rob's tags.
+2. Correct inb-supply description in patch 10/10.
 
-diff --git a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-index 0796f0c87727..ef6dc14be4b5 100644
---- a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-+++ b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
-@@ -199,6 +199,12 @@ properties:
-               - samsung,exynos7-espresso        # Samsung Exynos7 Espresso
-           - const: samsung,exynos7
- 
-+      - description: Exynos Auto v9 based boards
-+        items:
-+          - enum:
-+              - samsung,exynosautov9-sadk   # Samsung Exynos Auto v9 SADK
-+          - const: samsung,exynosautov9
-+
- required:
-   - compatible
- 
-diff --git a/arch/arm64/boot/dts/exynos/Makefile b/arch/arm64/boot/dts/exynos/Makefile
-index e0a2facde6a2..b41e86df0a84 100644
---- a/arch/arm64/boot/dts/exynos/Makefile
-+++ b/arch/arm64/boot/dts/exynos/Makefile
-@@ -2,4 +2,5 @@
- dtb-$(CONFIG_ARCH_EXYNOS) += \
- 	exynos5433-tm2.dtb	\
- 	exynos5433-tm2e.dtb	\
--	exynos7-espresso.dtb
-+	exynos7-espresso.dtb	\
-+	exynosautov9-sadk.dtb
-diff --git a/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
-new file mode 100644
-index 000000000000..ef46d7aa6e28
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Samsung ExynosAutov9 SADK board device tree source
-+ *
-+ * Copyright (c) 2021 Samsung Electronics Co., Ltd.
-+ *
-+ */
-+
-+/dts-v1/;
-+#include "exynosautov9.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+
-+/ {
-+	model = "Samsung ExynosAuto v9 SADK board";
-+	compatible = "samsung,exynosautov9-sadk", "samsung,exynosautov9";
-+
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	aliases {
-+		serial0 = &serial_0;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial_0;
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x0 0x80000000 0x0 0x77000000>,
-+		      <0x8 0x80000000 0x1 0x7ba00000>,
-+		      <0xa 0x00000000 0x2 0x00000000>;
-+	};
-+
-+	ufs_0_fixed_vcc_reg: regulator-0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ufs-vcc";
-+		gpio = <&gpq0 1 GPIO_ACTIVE_HIGH>;
-+		regulator-boot-on;
-+		enable-active-high;
-+	};
-+};
-+
-+&serial_0 {
-+	status = "okay";
-+};
-+
-+&ufs_0_phy {
-+	status = "okay";
-+};
-+
-+&ufs_0 {
-+	status = "okay";
-+	vcc-supply = <&ufs_0_fixed_vcc_reg>;
-+	vcc-fixed-regulator;
-+};
+Changes since v2
+================
+1. Add Rob's tags.
+2. Remove "regulator-name" from properties (all regulator dtschema).
+3. Move "unevaluatedProperties" higher to make code easier to read (all regulator dtschema).
+4. Add ref-type to op-mode property (patch 6: s5m8767 regulators).
+
+Changes since v1
+================
+1. Drop DTS patches - applied.
+2. Fully remove bindings/regulator/samsung,s5m8767.txt .
+3. Minor subject reformatting and few typos in text.
+
+
+Intro
+=====
+This patchset converts all devicetree bindings of Samsung S2M and S5M
+PMIC devices from txt to dtschema.
+
+It includes also two fixes because later conversion depends on it
+(contextually).
+
+
+Merging/dependencies
+====================
+1. Regulator related binding changes depend on first two commits (the
+   fixes), because of context.
+2. The mfd bindings depend on clock and regulator bindings.
+
+The fixes and bindings changes (patches 1-10) should go via the same
+tree.  For example regulator or mfd tree.
+
+Another alternative is that regulator patches (1-2, 4-6) go via Mark who
+later gives MFD a stable branch/tag to pull. Then the clock and MFD
+bindings would go on top via MFD tree. Or any other setup you would like
+to have.
+
+
+Overview of devices
+===================
+Essentially all Samsung S2M and S5M PMICs are very similar devices. They
+provide the same functionality: regulators, RTC, 2 or 3 clocks and main
+power management (e.g. power cut to SoC).
+
+The differences are mostly in registers layout and number of regulators.
+
+The drivers are built around one common part, mfd/sec-core.c, and share
+some drivers between devices:
+1. MFD sec-core for all devices,
+1. one clock driver for most of devices,
+2. one RTC driver for all devices,
+3. three regulator drivers.
+
+The regulator drivers were implementing slightly different features,
+therefore one regulator binding for all devices does not make much
+sense.  However the clock device binding can be shared.
+
+The final dtschema bindings try to implement this - share only the clock
+bindings.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (10):
+  regulator: s5m8767: do not use reset value as DVS voltage if GPIO DVS
+    is disabled
+  regulator: dt-bindings: samsung,s5m8767: correct
+    s5m8767,pmic-buck-default-dvs-idx property
+  dt-bindings: clock: samsung,s2mps11: convert to dtschema
+  regulator: dt-bindings: samsung,s2m: convert to dtschema
+  regulator: dt-bindings: samsung,s2mpa01: convert to dtschema
+  regulator: dt-bindings: samsung,s5m8767: convert to dtschema
+  dt-bindings: mfd: samsung,s2mps11: convert to dtschema
+  dt-bindings: mfd: samsung,s2mpa01: convert to dtschema
+  dt-bindings: mfd: samsung,s5m8767: convert to dtschema
+  dt-bindings: mfd: samsung,s5m8767: document buck and LDO supplies
+
+ .../bindings/clock/samsung,s2mps11.txt        |  49 ---
+ .../bindings/clock/samsung,s2mps11.yaml       |  45 +++
+ .../bindings/mfd/samsung,s2mpa01.yaml         |  91 ++++++
+ .../bindings/mfd/samsung,s2mps11.yaml         | 267 +++++++++++++++
+ .../bindings/mfd/samsung,s5m8767.yaml         | 307 ++++++++++++++++++
+ .../bindings/mfd/samsung,sec-core.txt         |  86 -----
+ .../bindings/regulator/samsung,s2mpa01.txt    |  79 -----
+ .../bindings/regulator/samsung,s2mpa01.yaml   |  62 ++++
+ .../bindings/regulator/samsung,s2mps11.txt    | 102 ------
+ .../bindings/regulator/samsung,s2mps11.yaml   |  44 +++
+ .../bindings/regulator/samsung,s2mps13.yaml   |  44 +++
+ .../bindings/regulator/samsung,s2mps14.yaml   |  44 +++
+ .../bindings/regulator/samsung,s2mps15.yaml   |  44 +++
+ .../bindings/regulator/samsung,s2mpu02.yaml   |  44 +++
+ .../bindings/regulator/samsung,s5m8767.txt    | 145 ---------
+ .../bindings/regulator/samsung,s5m8767.yaml   |  74 +++++
+ MAINTAINERS                                   |   9 +-
+ drivers/regulator/s5m8767.c                   |  21 +-
+ 18 files changed, 1080 insertions(+), 477 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/samsung,s2mps11.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/samsung,s2mps11.yaml
+ create mode 100644 Documentation/devicetree/bindings/mfd/samsung,s2mpa01.yaml
+ create mode 100644 Documentation/devicetree/bindings/mfd/samsung,s2mps11.yaml
+ create mode 100644 Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
+ delete mode 100644 Documentation/devicetree/bindings/mfd/samsung,sec-core.txt
+ delete mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mpa01.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mpa01.yaml
+ delete mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps11.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps11.yaml
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps13.yaml
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps14.yaml
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps15.yaml
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mpu02.yaml
+ delete mode 100644 Documentation/devicetree/bindings/regulator/samsung,s5m8767.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s5m8767.yaml
+
 -- 
-2.33.0
+2.30.2
 
