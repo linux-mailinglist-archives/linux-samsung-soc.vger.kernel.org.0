@@ -2,144 +2,130 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAB9C4269F6
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Oct 2021 13:43:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1171426D83
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Oct 2021 17:31:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240228AbhJHLo4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 8 Oct 2021 07:44:56 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:34008
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S243296AbhJHLnk (ORCPT
+        id S243005AbhJHPdj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 8 Oct 2021 11:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242780AbhJHPdi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 8 Oct 2021 07:43:40 -0400
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 005164001D
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  8 Oct 2021 11:41:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1633693262;
-        bh=YenCxJtlGV3PQlymT33h0MoUTyi5idKH+CvjTblUKV8=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=jMvxH1CwIT/9CBvh3h0vlXkivI6eRQceXXIPMJkT3jhsCkoJshhCfffBU3avyQBL8
-         zuJLF5TAemahK9bzlqZ3uqHIa+H4SGRnoJwO4+wvzLqLvbyOc1egqsDL59vjtPT40i
-         3LrrpN+yPvRf6rCQAXuvv4ZX8hG/e5f8gZjRv3gEgfcyfRVdAx1SsFN9b1UhEJYEJi
-         uOZsVst/LlHlZIVmJXnlBxi8KqdQ+ST7z6bQlPcMGOdMOM/4bWkkvSbdDr9aNy8p9v
-         eh6uH9kfMwHgpepLATrpITtNQGYjq93E6lt5V0T57FfYzlW8/c9WkTL++l9Jz49423
-         vUAY6U1nHJCCQ==
-Received: by mail-ed1-f72.google.com with SMTP id t28-20020a508d5c000000b003dad7fc5caeso8907197edt.11
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 08 Oct 2021 04:41:01 -0700 (PDT)
+        Fri, 8 Oct 2021 11:33:38 -0400
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31350C061570
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  8 Oct 2021 08:31:43 -0700 (PDT)
+Received: by mail-vs1-xe2a.google.com with SMTP id 188so11071712vsv.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 08 Oct 2021 08:31:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wfDWQNp2UL5+jS6p6MxQkSeoBswEyDZEW6ZvRWiqAYE=;
+        b=FG4nizPJKDttHDSuuLn3c6p8Myl+TE1ZajoLc02DiK82T5KiV2nzbAt9Lv37fLIA8x
+         jKWygR3yU4GfALjLvhn9RMbmj/MaEHuxJgQEoSfc5lYuqIkrvBvRubGjJHE63lSnPr1B
+         QTFecQ9I+HD1MPhI5wHPc4d0fh3EkJfZl/pqaQT9QiF3n1eJoI8wIO0hbET6LovqlLUG
+         idSGGFCcJz6UCgWODWsu5YjmH08T+PLc0TXKMwKEPjR5fsPatYxvLH8cm6U75QRAx9xo
+         x0+OJbzzXys4T0ZoXT5HVbErDYC6s1LvqGnsBCkjOLwX9Ue7hn4MVNOPWPtT9ip/m4Ds
+         EZSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YenCxJtlGV3PQlymT33h0MoUTyi5idKH+CvjTblUKV8=;
-        b=7o+znAGzuk2vuoiKxMH6YJxa+bPY7zzvzD/aXe38jl3C9bIoAF2aukx56XnT8Ume3b
-         hK0WQyM/mR4T+xbUs0+Vne5r73wMrQ44u6nK6Ko2lk9hSmAzV4FEsWQSBRolbSpBG+Ng
-         jOvu/Go86ivbWyFwRgvKXOyd8Adxu7WRzaYu6eQzDOGB3GHLFisZoxMBiUB5sFaRMx9m
-         RhzrdAjBz/epxvMbObryOrGiVHB1P1ZnwPiBtcLgRACprgfRXzGwoOY3i+ueHH32b9iW
-         9Z6BVtDfcVAffO9MmZzAH9x+7eIaTN9Xv4EnhvEzdlqlIOYglv/XiADyS2UG3S6EVk68
-         TtCg==
-X-Gm-Message-State: AOAM5339uyKYSD1HwG9ccy+Hft0JqFdlSjHbcahUqDU6imtKWGO7hr8I
-        ulaH/z4i6PVxJKqtUnDiKQC9VATxXWozb/s0XQoKKAGim0nJ6AUOHD2QZPZ+709TtsVvMURGx9d
-        LS+IvEsyV8NKgoGBzqg8AloflrDbqWYCrvnV44ZKXDxHCrjYX
-X-Received: by 2002:a17:907:1c0e:: with SMTP id nc14mr3610940ejc.103.1633693259156;
-        Fri, 08 Oct 2021 04:40:59 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxomzDMpxmD/kRXVctv2bbCqa67VNyIA5xEzK0LWLUsGmubPwb/clohBcAxG5qJ4i+p3jGu3g==
-X-Received: by 2002:a17:907:1c0e:: with SMTP id nc14mr3610907ejc.103.1633693258920;
-        Fri, 08 Oct 2021 04:40:58 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-186-13.adslplus.ch. [188.155.186.13])
-        by smtp.gmail.com with ESMTPSA id kw5sm10121ejc.110.2021.10.08.04.40.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 04:40:58 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Sam Protsenko <semen.protsenko@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v4 10/10] dt-bindings: mfd: samsung,s5m8767: document buck and LDO supplies
-Date:   Fri,  8 Oct 2021 13:40:24 +0200
-Message-Id: <20211008114024.135335-1-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211008113723.134648-1-krzysztof.kozlowski@canonical.com>
-References: <20211008113723.134648-1-krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wfDWQNp2UL5+jS6p6MxQkSeoBswEyDZEW6ZvRWiqAYE=;
+        b=hJUMy5dJVJaRBsFHk955SUxH5NaIBqgL71RPky3GCO3R6x+dBTT7l/nwmAEV+78dw4
+         Gu+XW6z2bRKaNO4o7xI/GHlH51VgZUofx9JWSBIjBh8zMD/vRmsPc3FRXKmcmogaxFEz
+         e2x+FW55Q+dZQEzvGu9t2IoLPtgL7e2b+OAsiz920dbvnyVweCr4vS1jKRE1+vjEZtRk
+         koC2UAiVuRUGD+O1c61lJIGg2ulBQBV3N/RpUL7kPRTqDeKmOrGfb8adT8JRUwXIBAbw
+         OI5WRzcNNRAOlg/gebLJLX2Ftv7sR46tYf+V0ALQC53G6DX2xUL5qTsIqYUklg12Vg8R
+         h/2A==
+X-Gm-Message-State: AOAM530535PjXfxbkYQioK8BAAiOsu0FqmfWR9R/urS4/gkVU4h/+e8X
+        ZEuY10Qn+5VHnw02NfKtg1oBdUZtkhtTEX7mWDmc6A==
+X-Google-Smtp-Source: ABdhPJyvkGFu2hMnsDq29OMlmBSQiVg7L1kDuYFftacecAIHtbfGGV1GkOkzVRQpb7mW2uyOr4/ZNuPmO90t1XUAn1k=
+X-Received: by 2002:a67:d91b:: with SMTP id t27mr11899992vsj.55.1633707102322;
+ Fri, 08 Oct 2021 08:31:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211007194113.10507-1-semen.protsenko@linaro.org>
+ <20211007194113.10507-4-semen.protsenko@linaro.org> <abe4bdeb-ee15-d8c8-54af-1cdf7282b004@canonical.com>
+In-Reply-To: <abe4bdeb-ee15-d8c8-54af-1cdf7282b004@canonical.com>
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+Date:   Fri, 8 Oct 2021 18:31:30 +0300
+Message-ID: <CAPLW+4mM978QS8ce9ipnhAPc0ge2H8+ZZ5bsc=7Ryq4-yL8NQw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] dt-bindings: clock: Add bindings definitions for
+ Exynos850 CMU
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        =?UTF-8?Q?Pawe=C5=82_Chmiel?= <pawel.mikolaj.chmiel@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Ryu Euiyoul <ryu.real@samsung.com>,
+        Tom Gall <tom.gall@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Document the properties with regulator supplies for bucks and LDOs.  At
-least one board uses it (Exynos5250 Arndale).
+On Fri, 8 Oct 2021 at 09:45, Krzysztof Kozlowski
+<krzysztof.kozlowski@canonical.com> wrote:
+>
+> On 07/10/2021 21:41, Sam Protsenko wrote:
+> > Clock controller driver is designed to have separate instances for each
+> > particular CMU. So clock IDs in this bindings header also start from 1
+> > for each CMU.
+> >
+> > Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > ---
+> > Changes in v2:
+> >   - Added all clock ids
+> >   - Added CLK_ prefix for all clock constants
+> >   - Added R-b tag by Krzysztof Kozlowski
+> >   - Added Ack tag by Rob Herring
+> >
+> >  include/dt-bindings/clock/exynos850.h | 141 ++++++++++++++++++++++++++
+> >  1 file changed, 141 insertions(+)
+> >  create mode 100644 include/dt-bindings/clock/exynos850.h
+> >
+> > diff --git a/include/dt-bindings/clock/exynos850.h b/include/dt-bindings/clock/exynos850.h
+> > new file mode 100644
+> > index 000000000000..a44c5f91d3c7
+> > --- /dev/null
+> > +++ b/include/dt-bindings/clock/exynos850.h
+> > @@ -0,0 +1,141 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
+>
+> The bindings are preferred to be under GPL-2.0+BSD. I don't know about
+> such policy for the headers but it seems reasonable - allows re-usage in
+> other systems. Do you mind licensing it under:
+> GPL-2.0-only or BSD-2-Clause
+> ?
+>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../bindings/mfd/samsung,s5m8767.yaml         | 38 +++++++++++++++++++
- 1 file changed, 38 insertions(+)
+Sure, will do in v3.
 
-diff --git a/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml b/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
-index b2529a48c890..5531718abdf0 100644
---- a/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
-+++ b/Documentation/devicetree/bindings/mfd/samsung,s5m8767.yaml
-@@ -96,6 +96,44 @@ properties:
-     description: |
-       GPIO specifiers for three host gpio's used for dvs.
- 
-+  vinb1-supply:
-+    description: Power supply for buck1
-+  vinb2-supply:
-+    description: Power supply for buck2
-+  vinb3-supply:
-+    description: Power supply for buck3
-+  vinb4-supply:
-+    description: Power supply for buck4
-+  vinb5-supply:
-+    description: Power supply for buck5
-+  vinb6-supply:
-+    description: Power supply for buck6
-+  vinb7-supply:
-+    description: Power supply for buck7
-+  vinb8-supply:
-+    description: Power supply for buck8
-+  vinb9-supply:
-+    description: Power supply for buck9
-+
-+  vinl1-supply:
-+    description: Power supply for LDO3, LDO10, LDO26, LDO27
-+  vinl2-supply:
-+    description: Power supply for LDO13, LDO16, LDO25, LDO28
-+  vinl3-supply:
-+    description: Power supply for LDO11, LDO14
-+  vinl4-supply:
-+    description: Power supply for LDO4, LDO9
-+  vinl5-supply:
-+    description: Power supply for LDO12, LDO17, LDO19, LDO23
-+  vinl6-supply:
-+    description: Power supply for LDO18, LDO20, LDO21, LDO24
-+  vinl7-supply:
-+    description: Power supply for LDO5, LDO22
-+  vinl8-supply:
-+    description: Power supply for LDO1, LDO6, LDO7, LDO8, LDO15
-+  vinl9-supply:
-+    description: Power supply for LDO2
-+
-   wakeup-source: true
- 
- required:
--- 
-2.30.2
-
+> Best regards,
+> Krzysztof
+>
+> > +/*
+> > + * Copyright (C) 2021 Linaro Ltd.
+> > + * Author: Sam Protsenko <semen.protsenko@linaro.org>
+> > + *
+> > + * Device Tree binding constants for Exynos850 clock controller.
+> > + */
+> > +
+> > +#ifndef _DT_BINDINGS_CLOCK_EXYNOS_850_H
+> > +#define _DT_BINDINGS_CLOCK_EXYNOS_850_H
+> > +
+> > +/* CMU_TOP */
