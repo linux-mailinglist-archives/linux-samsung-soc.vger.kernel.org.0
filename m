@@ -2,156 +2,262 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A90742D914
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Oct 2021 14:12:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E24242DA8F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Oct 2021 15:35:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbhJNMO0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 14 Oct 2021 08:14:26 -0400
-Received: from esa2.hgst.iphmx.com ([68.232.143.124]:3347 "EHLO
-        esa2.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230132AbhJNMOZ (ORCPT
+        id S231510AbhJNNhX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 14 Oct 2021 09:37:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231292AbhJNNhT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 14 Oct 2021 08:14:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1634213540; x=1665749540;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=blX+LIp7zYO7RzdGAVPGpaksCq8vfYJNVjnKJOu+e9c=;
-  b=hkXMvOj76JaaXqIkFIcSkRa3UnmXx+1sUyu0S6a9TgY2aYTXIvwr0wBp
-   WVROWb2dHCIfFd4+4PWGQ1Tqa35fKnkz9QRj0sjrVbzy7bP4uUC5NMs8r
-   1aTWOcE01BAs+ZiynCcy8/Um60b+gGa2Ji10pQ1FAuRz+aH7b2Pj+3xQh
-   gz1osSSzMLOmR4cV34N3q1qyrzEiKJyFHsLsLaS/BVSEhzY0EBz9Q1u1t
-   IQNz6Z0RnqJgvPX0L76YfuGFB+g8cfWC9G72kOZObCfpedALP51jAPW5G
-   gHnjSjfrUFTEyIHQwgl8PTqGrr4Lc+chCwWbv8BCA5rZWb9CPH12dgatJ
-   A==;
-X-IronPort-AV: E=Sophos;i="5.85,372,1624291200"; 
-   d="scan'208";a="286697985"
-Received: from mail-co1nam11lp2175.outbound.protection.outlook.com (HELO NAM11-CO1-obe.outbound.protection.outlook.com) ([104.47.56.175])
-  by ob1.hgst.iphmx.com with ESMTP; 14 Oct 2021 20:12:18 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PEpTdkUZD6rXT2K/ugTpGDk2mmNidnSOexIeAC0ZPJkx0kFQOCJuA2Ffxwlez59F/G+tY97fqf5Fe5ISNPYAwiJTQqQsm3IQfCJPnrQsKsyDQHzefNsKRuNeyQLH/s3n/crc7b1hzcBExbsn5uZmVYiSQldr5J3HKtdPVyBd1cKviBtJ2TUWd3Z1lnBIejnNxubytIuaJ6MQckkKoATYqQ50Lk6ozOJHGWVyR8uu+PWyJYO0Sj4qJpKwGHs1poehW+R6SUTguBdDEQ2/MfjsSAj9hQVtR8bqM6tEkezsJcCZAVWu2YFRFe6fVcjaVAXTg8Qpzr6f5ljIi8K+o+YLgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=blX+LIp7zYO7RzdGAVPGpaksCq8vfYJNVjnKJOu+e9c=;
- b=MgEpFgzPfkHolssMVxTeNcQBpmBXZUTQSCuXzUg04aKZZ2GHGLxo19tQS6nH+RiBxsrkH3CJVXZJkgi0zXe4nW8xGyjglCQLvhDpWqh6QCsCAA7NC8Wh4cNXYdy6v1KXeMNbF+klYwcReI9hSt91ekIJrdYiCy/MDE8yZSHUScFTBfpFCFVDBn34Oobo5OhiJ6IR53xQ5o2Ww6kgTgWNxhdKv/TT1sJapuHazlkgBtsK8tBazUmGyofQfFqI6x285z4MqQSSYtEc9IrTCVfe1QOZxZSk/r+ne3UE00mbrJPtv+h5VgSz1jbhDyCTL5Z8te4x4m8wkyrsT7idGDsU7Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+        Thu, 14 Oct 2021 09:37:19 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42558C061570
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Oct 2021 06:35:14 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id x27so26856650lfa.9
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Oct 2021 06:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=blX+LIp7zYO7RzdGAVPGpaksCq8vfYJNVjnKJOu+e9c=;
- b=gPGIzwtpR/m59M+7WSwgCwRvjB5vp1bEfz7jmumNr9ODKO/SEu0+2Fsyie1ajom8ktTCT6ZfM1jC1FgLdmGnK9MX23CIr0KNXJDvRaj7HraRMIxHbLAWESkFQDL2f42eUIO5UYGjXSMdzMTpT8xpuGV57Xd3btY3cbxId/NgFZs=
-Received: from DM6PR04MB6575.namprd04.prod.outlook.com (2603:10b6:5:1b7::7) by
- DM6PR04MB6511.namprd04.prod.outlook.com (2603:10b6:5:1bf::17) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4608.16; Thu, 14 Oct 2021 12:12:16 +0000
-Received: from DM6PR04MB6575.namprd04.prod.outlook.com
- ([fe80::edbe:4c5:6ee8:fc59]) by DM6PR04MB6575.namprd04.prod.outlook.com
- ([fe80::edbe:4c5:6ee8:fc59%4]) with mapi id 15.20.4587.030; Thu, 14 Oct 2021
- 12:12:16 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Chanho Park <chanho61.park@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-CC:     Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "hch@infradead.org" <hch@infradead.org>,
-        Can Guo <cang@codeaurora.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>,
-        Jaehoon Chung <jh80.chung@samsung.com>,
-        Gyunghoon Kwon <goodjob.kwon@samsung.com>,
-        Sowon Na <sowon.na@samsung.com>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>
-Subject: RE: [PATCH v4 07/16] scsi: ufs: ufs-exynos: correct timeout value
- setting registers
-Thread-Topic: [PATCH v4 07/16] scsi: ufs: ufs-exynos: correct timeout value
- setting registers
-Thread-Index: AQHXu1MXAFe5r6zb8EK4DOdSta2z7avScjZQ
-Date:   Thu, 14 Oct 2021 12:12:16 +0000
-Message-ID: <DM6PR04MB65752FCA8B8CDF2E0BA0988FFCB89@DM6PR04MB6575.namprd04.prod.outlook.com>
-References: <20211007080934.108804-1-chanho61.park@samsung.com>
-        <CGME20211007081134epcas2p49d174a4da55c5042e2bee42c249678c3@epcas2p4.samsung.com>
- <20211007080934.108804-8-chanho61.park@samsung.com>
-In-Reply-To: <20211007080934.108804-8-chanho61.park@samsung.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: samsung.com; dkim=none (message not signed)
- header.d=none;samsung.com; dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1ca29cb6-d53c-44ca-016c-08d98f0bdd1f
-x-ms-traffictypediagnostic: DM6PR04MB6511:
-x-ld-processed: b61c8803-16f3-4c35-9b17-6f65f441df86,ExtAddr
-x-microsoft-antispam-prvs: <DM6PR04MB65111DE686FB853B31B0B4C6FCB89@DM6PR04MB6511.namprd04.prod.outlook.com>
-wdcipoutbound: EOP-TRUE
-x-ms-oob-tlc-oobclassifiers: OLM:5516;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Nze2Lby1CDHA6zpqMtC4cNQmAc/nUf4bKAO0Zh9PCLEWF0PVFLRwA49iDBXulRSIgHA0o436PGSBIxQwicaSlmRZ1CXJKa0kllX9L9QZq1+sh4sSr1x7M643s1eVmG6OmqFJMzuvF3kkXZPCrcONfT10mYpvmTw2L9cshLiM+YCWX8W4tjE/gGEf9/9I9MhaT/3+cRSBMeCDPItQOmEgucnutU0aJYv8e/uOtXRDmqt2BWrKw7my0r2Ensi3NU7JT9t8NTqDq6s3oTgeF/38MKNXZnqiTEAlVvxoZauRLDp8wL6L+Ig569KC3/BhVKtQCf75G9OCaeSiCeTKvrJJwNJLSJ0YHnT4ZOWTu0WIj3/W9bfVSN1wCFcucLbTWPcscCfUINrwF73/N1Nph2WpovJyQgHUYrKN1TTqm57ej1Xt/WK3EqJJTvQF8o1kTsgs28KERVLl7o8ASrZpWlAwwKhqDorz+rzC72SAGSofGzIQ4BX+xIg7xLLWV/C8UfM/8p0hSKa5LGGayf21xzqM1BFV20bknd7taQSjOgIZBXRrfWL7Q4mEZvTYrpYcQLRy/d+DaGR5mw43WK6ydM0usYxjno7G5hoA7R4MDVPy9KGpZbx3AGybgugOG2Xa0W76lVoWK7p5LnepJJ/GRUfH8TDx+TQDGp2nk7UEB9ilZixwodd0FO7cTxVPWQaTVpIs1wY58osRkRD8ubF0MIs+EA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6575.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(9686003)(8676002)(508600001)(38100700002)(4326008)(66946007)(66476007)(55016002)(558084003)(186003)(2906002)(38070700005)(82960400001)(7416002)(316002)(122000001)(71200400001)(52536014)(5660300002)(6506007)(33656002)(54906003)(66556008)(7696005)(8936002)(110136005)(66446008)(26005)(86362001)(76116006)(64756008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UFl5T2VzSFFXc0ZxREVObUVkb0JFYVBYRSt1YVdFNU5DbU4rSjdYVDFmSEZu?=
- =?utf-8?B?ZHBXazZtK2ZUdmErbUJobzJXRE9iNEdrWjBFdGtrQmlNbkZTdlFGRmZXcDl0?=
- =?utf-8?B?SjJDZVVqeG5mQWtWNDVYVFRFUk14V2gvcGdtUjI1TjZKYkREUS9UTk14R1Uy?=
- =?utf-8?B?dDFYck5hUm5ubElHUjNPZnFHckpacDlFS3JQcVAzL0VVNVRCQ1JwNlZwM01r?=
- =?utf-8?B?STZGdXljRnRYejZxRUFTSkhQYWlZZnV0SGJtRHNBZGVMVnRhRU8xSU1pK0Vq?=
- =?utf-8?B?NDF0RDZrS1NyMFdnU3N2d1M0dUZuOFBxa1hqMkJ4Z1FYRHZoQnFkeXYrL3NF?=
- =?utf-8?B?S1AyRWRGRS9rRWFjeDZweGRvTVNZL2NPRVBIYWJrZmgrT2VFOGZmaE5vVENy?=
- =?utf-8?B?WHNZTXYyVEloMkw2V1IzYVFpbVozYTNqK0pIL2tMTm10a0E2R0U3RUdNR0dZ?=
- =?utf-8?B?cGh5UkpDcGY4ZnlkYXpQczA4K1ZuNkVtOWxuY0FhT1FGbFo5VTVGczVyWGlo?=
- =?utf-8?B?Yk4xZDJGNXdPNFBwR1RnRjdZNWdkN0RxMlhnU0VoZlFiRVBHU1hkTEo1a1FS?=
- =?utf-8?B?UlM4TlhXNHZzc1UwMkhXTlNXL2JsTDRycmV3Y2FjeDg5eFdqVFE4TVQ4YlBK?=
- =?utf-8?B?Sm9SYVJ3NXFlVWtHT1F0bldlQ2dQN2I5Y3g0bVduRnpRem8wbnhMT2JVQ2lr?=
- =?utf-8?B?aHRoYlhQekgxdTVOR3hMVDR0bi9GaURRVWJMcy9QNVFDdGJadk9qbkMyNlU4?=
- =?utf-8?B?Zk85bC9Cc2pMakNXMW1jNUNlSzNvWWpyalY2ZG43UEJyWWQyS0EzWGN1bTdp?=
- =?utf-8?B?djBFM0todVFlbGkyYis3WDZad1RUdStkY3VHdW5JYXBucnBvT2lXY2dROUt3?=
- =?utf-8?B?QW9SbUsvYlc1cElKUENDbkRxd3pReW9hWXBKZUhWSnR6a3hEc0lyWjBYTlVT?=
- =?utf-8?B?ODJ3ZkU4ejNxb1lBVlRwa0pqN3JUTGxkbGgrbXdRaVFXWktQbDhvK0Nnc0w0?=
- =?utf-8?B?ZW11ZHgrMFd2enZ5VjBsZWdoYThQYW9TR09jMVcyVmxMd1p5Y2ZHUUZDTXgr?=
- =?utf-8?B?dXN3cm5pb2lxb1k2Mm9mN0NtemR3YU8xTFk4QTNLcWJuZ3NJWFc4NWZUbGRH?=
- =?utf-8?B?U1ZRUTZDdkhuUElyVVdCYTZWRjRFNTlsNmNHTWt3eEcvU2Vwd1NDY0dMK1NX?=
- =?utf-8?B?allqNEpEcjBZZzZVU3V3S0NCbVFoTHpKSVlhb2kzTS9pMTVFdDlnMU5KTVFO?=
- =?utf-8?B?ek1pTEw3ZFBSRmtwTXlNNWFUUFJXNU8zTk9yUEhwaE4zQ2svSXg1OEpUVnMr?=
- =?utf-8?B?Y2E4Q0owbDRBbTBvaGMzRkVnbHhXTWtZVmw2bjU5WWtKeFpNYmFIQU5IdEtR?=
- =?utf-8?B?Y2VxL0Z4UlAxcGVKalZheFRQS3FtblRZODZmaFNFVXh1aENpZDkrVTllbmdF?=
- =?utf-8?B?WmhzL3NjcTg3YVk0MnUvWGxtT0FlV3RkTHBLNzVDZ2NOUFdFNXlTRmNNb0Rv?=
- =?utf-8?B?c1dHZXJKT1RRRThscFg4QStPYSs4WDFBa2lRRHN6NUpiTXluY0xTVVRXb3JT?=
- =?utf-8?B?M011MUhybGx0cmFMdmgvWWg1VHhYRnliVm9xeFhETzRPU05MTWlnVDZtb3Bw?=
- =?utf-8?B?SWs5dWRhd0hqb0loTWlKMzJrU3FudTRUdTBSR0VNbE5DbTJnVVN0d3hwbXB3?=
- =?utf-8?B?TzRWUlRHR2o0WndnOVNEdlVFcHZibHgzUTdRcGF5OUtrbDhWc3ZUVE9FdWlD?=
- =?utf-8?Q?IHbhQ1bFoGtdg0gZHrISjx6r2Fgyuh4tcTW88mm?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SnGd6eHlejKEAJbTJQfvjpkOnD5FU3ZOdS7LGYeSVQM=;
+        b=LFHWvAvYptUUEwmCDCxDAs2myodlz51oOeMeTvZxN/Y8w2HD/vwmfxslH+XAO/3Akw
+         AWYDDA61Mq8tbsHwEDB3jW9dW8ujxO2AOgyXIn0CmO54nOjYuncsL3868rp/iB8ohcyx
+         6R32LXFFu6IwDMpHjjKOkTLKPkAHMWIF/fdqnuiNsbgXc5xflhG3mikrJiEwq6NlKets
+         +KbHbs4BNFIqutraBS5IvVuJ7XFEVHLUEIRPDktysfcknOQvN7CbOrtRjuwrbrjGuRLq
+         TX1oKK+y6VgszQWvErn/KcEc4X0iXzoGnYUmsak3tLbQ/0VTTfo/YLtssePMqoaFnh7i
+         dWVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SnGd6eHlejKEAJbTJQfvjpkOnD5FU3ZOdS7LGYeSVQM=;
+        b=MtqePjPMaKyu80Xc6Z5LRTq1FlE8FtJdqq96/s6w+2yvA39SKnHFQN90No+4YUFHds
+         hOTsrU7gPurmo5nv8EpGOyYWGnHPAKAHOhSwZZQcBNll9xcNADHV3ubAN6HMdrZ/EHjI
+         pjApWB2xlC6tgZrDq8B/ewPlZemlr5f63NsuVDtfG7J/qrRDnXaScz1Pkf5yt9NK2RoY
+         qKkD/N+DjCCylC67GgFqtRJhd+JZvpQGF3I1/DgL5pKV6LNQtlvmAPit6j+bo+u4WQB4
+         AbDSTDol9x0dNjAYw9Zmooww14LXDJrF7V2hdpzoLpL8zzr9M0+YN2ENquoHZ1weapaX
+         PHAA==
+X-Gm-Message-State: AOAM531B1LFaLFYTsbx2OZYXi5dly2/Hm20+jCXgamAKM7CyfXHHJ9zl
+        8aKdGiwL5pclPwbK9i/ZpUv+8g==
+X-Google-Smtp-Source: ABdhPJxSZ3mCoCDfRA0lLn090vlCYBrcrcsLIxi2Vr/8FmIlPzISr0w3ZHh7eCksH/bWGWxmYfCYEg==
+X-Received: by 2002:a2e:8143:: with SMTP id t3mr5907365ljg.461.1634218509931;
+        Thu, 14 Oct 2021 06:35:09 -0700 (PDT)
+Received: from localhost ([31.134.121.151])
+        by smtp.gmail.com with ESMTPSA id s7sm227554lfe.258.2021.10.14.06.35.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Oct 2021 06:35:09 -0700 (PDT)
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/3] soc: samsung: exynos-chipid: Pass revision reg offsets
+Date:   Thu, 14 Oct 2021 16:35:06 +0300
+Message-Id: <20211014133508.1210-1-semen.protsenko@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR04MB6575.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ca29cb6-d53c-44ca-016c-08d98f0bdd1f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Oct 2021 12:12:16.5117
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: InbQGu3OomoFiHjvJIDQxkmpJagLknlVji4pib5/2yuIMlY1dg919ae4OK6Ye/669GSyJ1DDG8e5NOwfw0F1PA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6511
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-PiANCj4gUEFfUFdSTU9ERVVTRVJEQVRBMCAtPiBETF9GQzBQUk9UVElNRU9VVFZBTA0KPiBQQV9Q
-V1JNT0RFVVNFUkRBVEExIC0+IERMX1RDMFJFUExBWVRJTUVPVVRWQUwNCj4gUEFfUFdSTU9ERVVT
-RVJEQVRBMiAtPiBETF9BRkMwUkVRVElNRU9VVFZBTA0KSXMgdGhlcmUgYSBzcGVjaWZpYyByZWFz
-b24gd2h5IHRoaXMgZml4IGlzIHBhcnQgb2YgdGhlIGV4eW5vc2F1dG8gc2VyaWVzPw0KDQpUaGFu
-a3MsDQpBdnJpDQo=
+Old Exynos SoCs have both Product ID and Revision ID in one single
+register, while new SoCs tend to have two separate registers for those
+IDs. Implement handling of both cases by passing Revision ID register
+offsets in driver data.
+
+Previously existing macros for Exynos4210 (removed in this patch) were
+incorrect:
+
+    #define EXYNOS_SUBREV_MASK         (0xf << 4)
+    #define EXYNOS_MAINREV_MASK        (0xf << 0)
+
+Actual format of PRO_ID register in Exynos4210 (offset 0x0):
+
+    [31:12] Product ID
+      [9:8] Package information
+      [7:4] Main Revision Number
+      [3:0] Sub Revision Number
+
+This patch doesn't change the behavior on existing platforms, so
+'/sys/devices/soc0/revision' will show the same string as before.
+
+Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+---
+Changes in v2:
+  - Renamed *_rev_bit fields in 'struct exynos_chipid_variant' to
+    *_rev_shift
+  - Renamed EXYNOS_REV_PART_LEN to EXYNOS_REV_PART_MASK
+  - Renamed EXYNOS_REV_PART_OFF to EXYNOS_REV_PART_SHIFT
+
+Changes in v3:
+  - Rebased on top of krzk/for-next tree
+  - Fixed wrong *_rev_shift values in exynos4210_chipid_drv_data
+  - Implemented reading the register only once in case when both
+    Product ID and Revision ID are stored in the same register
+  - Tested all possible cases by emulating read register values
+  - Provided more detailed explanation in commit message
+
+ drivers/soc/samsung/exynos-chipid.c       | 69 +++++++++++++++++++----
+ include/linux/soc/samsung/exynos-chipid.h |  6 +-
+ 2 files changed, 60 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
+index b2627a3a127a..986978e83661 100644
+--- a/drivers/soc/samsung/exynos-chipid.c
++++ b/drivers/soc/samsung/exynos-chipid.c
+@@ -17,6 +17,7 @@
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+@@ -25,6 +26,17 @@
+ 
+ #include "exynos-asv.h"
+ 
++struct exynos_chipid_variant {
++	unsigned int rev_reg;		/* revision register offset */
++	unsigned int main_rev_shift;	/* main revision offset in rev_reg */
++	unsigned int sub_rev_shift;	/* sub revision offset in rev_reg */
++};
++
++struct exynos_chipid_info {
++	u32 product_id;
++	u32 revision;
++};
++
+ static const struct exynos_soc_id {
+ 	const char *name;
+ 	unsigned int id;
+@@ -50,31 +62,57 @@ static const char *product_id_to_soc_id(unsigned int product_id)
+ 	int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(soc_ids); i++)
+-		if ((product_id & EXYNOS_MASK) == soc_ids[i].id)
++		if (product_id == soc_ids[i].id)
+ 			return soc_ids[i].name;
+ 	return NULL;
+ }
+ 
++static int exynos_chipid_get_chipid_info(struct regmap *regmap,
++		const struct exynos_chipid_variant *data,
++		struct exynos_chipid_info *soc_info)
++{
++	int ret;
++	unsigned int val, main_rev, sub_rev;
++
++	ret = regmap_read(regmap, EXYNOS_CHIPID_REG_PRO_ID, &val);
++	if (ret < 0)
++		return ret;
++	soc_info->product_id = val & EXYNOS_MASK;
++
++	if (data->rev_reg != EXYNOS_CHIPID_REG_PRO_ID) {
++		ret = regmap_read(regmap, data->rev_reg, &val);
++		if (ret < 0)
++			return ret;
++	}
++	main_rev = (val >> data->main_rev_shift) & EXYNOS_REV_PART_MASK;
++	sub_rev = (val >> data->sub_rev_shift) & EXYNOS_REV_PART_MASK;
++	soc_info->revision = (main_rev << EXYNOS_REV_PART_SHIFT) | sub_rev;
++
++	return 0;
++}
++
+ static int exynos_chipid_probe(struct platform_device *pdev)
+ {
++	const struct exynos_chipid_variant *drv_data;
++	struct exynos_chipid_info soc_info;
+ 	struct soc_device_attribute *soc_dev_attr;
+ 	struct soc_device *soc_dev;
+ 	struct device_node *root;
+ 	struct regmap *regmap;
+-	u32 product_id;
+-	u32 revision;
+ 	int ret;
+ 
++	drv_data = of_device_get_match_data(&pdev->dev);
++	if (!drv_data)
++		return -EINVAL;
++
+ 	regmap = device_node_to_regmap(pdev->dev.of_node);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	ret = regmap_read(regmap, EXYNOS_CHIPID_REG_PRO_ID, &product_id);
++	ret = exynos_chipid_get_chipid_info(regmap, drv_data, &soc_info);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	revision = product_id & EXYNOS_REV_MASK;
+-
+ 	soc_dev_attr = devm_kzalloc(&pdev->dev, sizeof(*soc_dev_attr),
+ 				    GFP_KERNEL);
+ 	if (!soc_dev_attr)
+@@ -87,8 +125,8 @@ static int exynos_chipid_probe(struct platform_device *pdev)
+ 	of_node_put(root);
+ 
+ 	soc_dev_attr->revision = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+-						"%x", revision);
+-	soc_dev_attr->soc_id = product_id_to_soc_id(product_id);
++						"%x", soc_info.revision);
++	soc_dev_attr->soc_id = product_id_to_soc_id(soc_info.product_id);
+ 	if (!soc_dev_attr->soc_id) {
+ 		pr_err("Unknown SoC\n");
+ 		return -ENODEV;
+@@ -106,7 +144,7 @@ static int exynos_chipid_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, soc_dev);
+ 
+ 	dev_info(&pdev->dev, "Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
+-		 soc_dev_attr->soc_id, product_id, revision);
++		 soc_dev_attr->soc_id, soc_info.product_id, soc_info.revision);
+ 
+ 	return 0;
+ 
+@@ -125,9 +163,18 @@ static int exynos_chipid_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static const struct exynos_chipid_variant exynos4210_chipid_drv_data = {
++	.rev_reg	= 0x0,
++	.main_rev_shift	= 4,
++	.sub_rev_shift	= 0,
++};
++
+ static const struct of_device_id exynos_chipid_of_device_ids[] = {
+-	{ .compatible = "samsung,exynos4210-chipid" },
+-	{}
++	{
++		.compatible	= "samsung,exynos4210-chipid",
++		.data		= &exynos4210_chipid_drv_data,
++	},
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, exynos_chipid_of_device_ids);
+ 
+diff --git a/include/linux/soc/samsung/exynos-chipid.h b/include/linux/soc/samsung/exynos-chipid.h
+index 8bca6763f99c..62f0e2531068 100644
+--- a/include/linux/soc/samsung/exynos-chipid.h
++++ b/include/linux/soc/samsung/exynos-chipid.h
+@@ -9,10 +9,8 @@
+ #define __LINUX_SOC_EXYNOS_CHIPID_H
+ 
+ #define EXYNOS_CHIPID_REG_PRO_ID	0x00
+-#define EXYNOS_SUBREV_MASK		(0xf << 4)
+-#define EXYNOS_MAINREV_MASK		(0xf << 0)
+-#define EXYNOS_REV_MASK			(EXYNOS_SUBREV_MASK | \
+-					 EXYNOS_MAINREV_MASK)
++#define EXYNOS_REV_PART_MASK		0xf
++#define EXYNOS_REV_PART_SHIFT		4
+ #define EXYNOS_MASK			0xfffff000
+ 
+ #define EXYNOS_CHIPID_REG_PKG_ID	0x04
+-- 
+2.30.2
+
