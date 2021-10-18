@@ -2,69 +2,82 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 473AD4326B0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Oct 2021 20:39:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F4374326F5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Oct 2021 20:57:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233656AbhJRSl7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 18 Oct 2021 14:41:59 -0400
-Received: from mxout01.lancloud.ru ([45.84.86.81]:52906 "EHLO
-        mxout01.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbhJRSlu (ORCPT
+        id S231811AbhJRS7b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 18 Oct 2021 14:59:31 -0400
+Received: from relay10.mail.gandi.net ([217.70.178.230]:58791 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229924AbhJRS7a (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 18 Oct 2021 14:41:50 -0400
-Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout01.lancloud.ru 2D18D207135B
-Received: from LanCloud
-Received: from LanCloud
-Received: from LanCloud
-From:   Sergey Shtylyov <s.shtylyov@omp.ru>
-To:     <linux-usb@vger.kernel.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH 10/22] usb: host: ohci-exynos: deny IRQ0
-Date:   Mon, 18 Oct 2021 21:39:18 +0300
-Message-ID: <20211018183930.8448-11-s.shtylyov@omp.ru>
-X-Mailer: git-send-email 2.26.3
-In-Reply-To: <20211018183930.8448-1-s.shtylyov@omp.ru>
-References: <20211018183930.8448-1-s.shtylyov@omp.ru>
+        Mon, 18 Oct 2021 14:59:30 -0400
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id D2BAC240006;
+        Mon, 18 Oct 2021 18:57:16 +0000 (UTC)
+Date:   Mon, 18 Oct 2021 20:57:16 +0200
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Alessandro Zummo <a.zummo@towertech.it>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-rtc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] rtc: s3c: Remove usage of devm_rtc_device_register()
+Message-ID: <YW3DjEuszEZ1Uw6/@piout.net>
+References: <20211018173201.2166-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [192.168.11.198]
-X-ClientProxiedBy: LFEXT01.lancloud.ru (fd00:f066::141) To
- LFEX1907.lancloud.ru (fd00:f066::207)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211018173201.2166-1-semen.protsenko@linaro.org>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-If platform_get_irq() returns IRQ0 (considered invalid according to Linus)
-the driver blithely passes it to usb_add_hcd() that treats IRQ0 as no IRQ
-at all. Deny IRQ0 right away, returning -EINVAL from the probe() method...
+On 18/10/2021 20:32:01+0300, Sam Protsenko wrote:
+> devm_rtc_device_register() is deprecated. Use devm_rtc_allocate_device()
+> and devm_rtc_register_device() API instead.
+> 
 
-Fixes: 1d4169834628 ("usb: host: ohci-exynos: Fix error handling in exynos_ohci_probe()")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
----
- drivers/usb/host/ohci-exynos.c | 4 ++++
- 1 file changed, 4 insertions(+)
+If you do that, please also set the range properly, either in the same
+patch or as a follow-up.
 
-diff --git a/drivers/usb/host/ohci-exynos.c b/drivers/usb/host/ohci-exynos.c
-index 5f5e8a64c8e2..f28f28e42f43 100644
---- a/drivers/usb/host/ohci-exynos.c
-+++ b/drivers/usb/host/ohci-exynos.c
-@@ -175,6 +175,10 @@ static int exynos_ohci_probe(struct platform_device *pdev)
- 		err = irq;
- 		goto fail_io;
- 	}
-+	if (!irq) {
-+		err = -EINVAL;
-+		goto fail_io;
-+	}
- 
- 	platform_set_drvdata(pdev, hcd);
- 
+> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> ---
+>  drivers/rtc/rtc-s3c.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/rtc/rtc-s3c.c b/drivers/rtc/rtc-s3c.c
+> index e57d3ca70a78..10e591794276 100644
+> --- a/drivers/rtc/rtc-s3c.c
+> +++ b/drivers/rtc/rtc-s3c.c
+> @@ -447,15 +447,18 @@ static int s3c_rtc_probe(struct platform_device *pdev)
+>  
+>  	device_init_wakeup(&pdev->dev, 1);
+>  
+> -	/* register RTC and exit */
+> -	info->rtc = devm_rtc_device_register(&pdev->dev, "s3c", &s3c_rtcops,
+> -					     THIS_MODULE);
+> +	info->rtc = devm_rtc_allocate_device(&pdev->dev);
+>  	if (IS_ERR(info->rtc)) {
+> -		dev_err(&pdev->dev, "cannot attach rtc\n");
+>  		ret = PTR_ERR(info->rtc);
+>  		goto err_nortc;
+>  	}
+>  
+> +	info->rtc->ops = &s3c_rtcops;
+> +
+> +	ret = devm_rtc_register_device(info->rtc);
+> +	if (ret)
+> +		goto err_nortc;
+> +
+>  	ret = devm_request_irq(&pdev->dev, info->irq_alarm, s3c_rtc_alarmirq,
+>  			       0, "s3c2410-rtc alarm", info);
+>  	if (ret) {
+> -- 
+> 2.30.2
+> 
+
 -- 
-2.26.3
-
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
