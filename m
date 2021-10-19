@@ -2,97 +2,98 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6B3C4331AA
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Oct 2021 10:58:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76B4A433299
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Oct 2021 11:39:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234561AbhJSJAh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 19 Oct 2021 05:00:37 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:51266
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229930AbhJSJAg (ORCPT
+        id S235162AbhJSJl1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 19 Oct 2021 05:41:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235149AbhJSJlR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 19 Oct 2021 05:00:36 -0400
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com [209.85.167.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 78C683F4A4
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Oct 2021 08:58:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1634633903;
-        bh=E3RamXCXwP7jsVW/jJ6Nnag1iblPhlMlnb88dq3fIKI=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version:Content-Type;
-        b=kXhhU3v5oCpvB7USzPLpfTOfL4Z6IXCXivWKFa5hR/qzSIn5uzP/T1VQVRcmGIbog
-         JdOmN1RTe19J9hzXEFR6M+WN2ynVDBjydZpTytdKHbYE7CDDbWVugN7R8tCXFJkYcp
-         4eYe0EHp34+731qGXTihnYDz4PGh4x1EfsCFkBeq7vieNJiSbWyRkM70ARkNl0rUef
-         WlTiMUlh/JRw6D5nEa2KuoPoZ/trAcaSaAn1y8eYbFH5TUnlCQBuvpvK6AC/g8DPKl
-         NXdmShb6H0Y5JT/kIzJIUDKRAl+S+7Zjd3eKnOd0ohHzaNPePlEmSL1DYxOjeyKA4s
-         eNnHL5cncNgxA==
-Received: by mail-lf1-f71.google.com with SMTP id y40-20020a0565123f2800b003fded085638so1192438lfa.0
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Oct 2021 01:58:23 -0700 (PDT)
+        Tue, 19 Oct 2021 05:41:17 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391B5C061770
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Oct 2021 02:39:02 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id p4so17921448qki.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Oct 2021 02:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=h7Ka/8DlpkXEXF23rPgOfJJ3SyquA2FhD5HYDsybiG4=;
+        b=TOvN/3L74NxJ8jkZLAwc1HWcAigE5PqgL50bgmFqgfF5N3Ni/F/hFF6HKKLKTN31yN
+         HevaAXYbPfypt8hhKvSPyehT5ALdXqczNk+5xUwtC+i5sgHXh2uIQwAecZjfCaWU8ix6
+         IP3iNNDeKzM9Rarn67S7Y6Q5meavaw7Mpk+sez5Jm9gTXVkS2K7rH0HxN0wGBD1vTEZW
+         SlZ7Ohjm5TDffwxVe9psHKkZrw9F8ewS3UJdvRp48BugnVC9N6o6tGt7kOuD9dBL9WOI
+         l1dbXlU20FuuDCR1G9eGV6dpPzPq/obtSd+vSUmjw4dvgQ3M4KndmuUgzevCd5/KLP2j
+         AvJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E3RamXCXwP7jsVW/jJ6Nnag1iblPhlMlnb88dq3fIKI=;
-        b=0AYYs+2cIrWzOPFWVv5YdGDX9lHCtTLwLHKd4gAIwmnVF6JAkA4nQRL2o0WDe22qsd
-         jFCxFxPrwicA3w5a+iUobjlaJWtsR2To2pEm8jd8CSotJfezbYGsPlHgv4PC7tkOJgS9
-         QtrMJNr4ZXVGPzPHQSvJ/03qwwDQ9c/mFI+obigOK41T1ARvdEd/aI4Z9iXEXEs5fH/h
-         1o65aBVawWmTvK6OYqXX0X0CLgWNWcwx2Z8jmxpLCdeoH+CEBowvHFZFp5T0uRYML9KW
-         ZH/3XlbyCaXaL0za6MRfJkGDU5poUrLfx6VUZLsP87qrn0JRWcCv7HBLNo8L9cAdnoBT
-         NM/A==
-X-Gm-Message-State: AOAM531htQiwT2AjPvM+vmDlbS6rpGZLZjbQmGnxsANoS8HhIzfT3uAb
-        0K5xl+oxXQHtaV+U8E2URHSr9sMU4xtckoW3vywUeLgBfnAvauir1wNK1IVegR6IJODN5TZa3Io
-        HxJsksAyq2tXXVgzWjJIqZr2SUzRTbG1vldiAm3PRnGGzYCj0
-X-Received: by 2002:a2e:8041:: with SMTP id p1mr5465922ljg.158.1634633902909;
-        Tue, 19 Oct 2021 01:58:22 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzXkL9Oa/Mq5OcoNVFI8nJnyskwDrVCPs4JuPvw1CYnDmFE4T+a5DtFLuErnaFfLL3hKEIdaw==
-X-Received: by 2002:a2e:8041:: with SMTP id p1mr5465904ljg.158.1634633902777;
-        Tue, 19 Oct 2021 01:58:22 -0700 (PDT)
-Received: from kozik-lap.lan (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id 195sm1869142ljf.13.2021.10.19.01.58.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Oct 2021 01:58:22 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc:     Sylwester Nawrocki <snawrocki@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH 1/3] arm64: dts: exynos: add 'chassis-type' property
-Date:   Tue, 19 Oct 2021 10:58:20 +0200
-Message-Id: <163463389698.22504.735636032751029230.b4-ty@canonical.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211017101228.19478-1-krzysztof.kozlowski@canonical.com>
-References: <20211017101228.19478-1-krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=h7Ka/8DlpkXEXF23rPgOfJJ3SyquA2FhD5HYDsybiG4=;
+        b=PdD/l6Ab9uSIbWMh/uOXVJ4qytAgNAYchQM1WkfLRlsU3RWpGgTT+0BXsM2RMxXh5y
+         UQY23wKtc/6ElGIwwD4t6FdQKJ6IaZdngSN6qD4vHbxj0kiEMUXqkAGopV+Gn2AsrAlf
+         gmiFCJxew/12Rf5s9nPlpVnKrPMxKVZqV5GxAZ2Q6xCBFcc2D7jPZpPhto7ogkRlcFqW
+         3n/x/qIHNuf4fay7R6yXwa/v+WMkZIrudMRndEEHpXb6ESWDLepvMi7OcCu7+Cj5vlct
+         /bXsLBDOPxTPSRaRyJH9oqOvMsjQE4pEM0slK9cIVTmzd03G5A9A5dn+t6UYiiwkFiym
+         sMnA==
+X-Gm-Message-State: AOAM531NOFISapb/fEFV0MKmikVLiNTVaC8Wg+9k3s61t9CKQof9K4t+
+        GFuVp+5yiyceh28VZzDf7oD7tCbBsZhmAuzbDf9iAian6so=
+X-Google-Smtp-Source: ABdhPJzMH7/Viv+gmOFi/wRxRbcc549EbhNxq1WBmFuuCl5Y1sIaNw3hPc5P9A8SHm6QnP1HNGNAvecvirmJS/oiL6w=
+X-Received: by 2002:a02:6f5d:: with SMTP id b29mr3319085jae.113.1634636331013;
+ Tue, 19 Oct 2021 02:38:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a92:c7c6:0:0:0:0:0 with HTTP; Tue, 19 Oct 2021 02:38:50
+ -0700 (PDT)
+Reply-To: megaritalouisdrayfu199@yahoo.com
+From:   "Mrs. Margarita Louis-Dreyfus." <anniewei112@gmail.com>
+Date:   Mon, 18 Oct 2021 21:38:50 -1200
+Message-ID: <CAGT4pMkzKn8mfeY05OAG04CCAxodKEVDUk46D=O7cfK8+n1=tA@mail.gmail.com>
+Subject: Charitable funds to help the less privilege!
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 17 Oct 2021 12:12:26 +0200, Krzysztof Kozlowski wrote:
-> A new 'chassis-type' root node property has recently been approved for
-> the device-tree specification.
-> 
-> Add this property for end-user devices (such as laptops,
-> smartphones and tablets) based on Samsung Exynos ARM64 SoCs.
-> 
-> 
-> [...]
+--=20
+Hello,
 
-Applied, thanks!
+I am sorry to encroach into your privacy in this manner, my name
+Margarita Louis-Dreyfus , I find it pleasurable to offer you my
+partnership in business, i only pray at this time that your email
+address is still valid. I want to solicit your attention to receive
+money on my behalf for humanitarian project to help the less
+priviledge.
 
-[1/3] arm64: dts: exynos: add 'chassis-type' property
-      commit: 4b1a78330df4742aa862468911b38c36d3edba30
-[2/3] ARM: dts: exynos: add 'chassis-type' property
-      commit: 2b91bd8d2bce958f75c97a9bb808a1844d2f5a53
-[3/3] ARM: dts: s5pv210: add 'chassis-type' property
-      commit: 7b06c1ad884ee80e43604ba2a0bbc5f8ef3524e1
+The purpose of my contacting you is because my status would not permit
+me to do this alone. Given my current state of health, I have decided
+to donate Ninety -Eight Million United State Dollars to establish a
+foundation with your help to reach out to the less privilege, orphans,
+sick and homeless people in your country who will receive their
+blessings as i promised my God before i leave this earth.
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+I got your contact through my personal search, you were revealed as
+being quite astute in private entrepreneurship, and i have no doubt
+that you can handle this huge financial transaction. Please contact my
+executor for more information:
+
+Mr. Ford Spencer(Attorney at Law).
+For: Mrs. Margarita Louis-Dreyfus
+LEGAL DEPARTMENT LAWSON & ASSOCIATES
+(JUSTICE, FAIRPLAY & EQUITY)
+Email: fordspencer828@yahoo.com, fordspencereqs828@gmail.com
+Office: +1-970-414-1400
++1-702-714-3422
+Mobile: +1 916 269 2733
+Fax: +1-970-414-1433
+=C2=AE Property of Steven C Spence PA.
+
+Your earliest response to this letter will be appreciated.
+
+Kind Regards,
+
+Mrs. Margarita Louis-Dreyfus.
