@@ -2,237 +2,287 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 436EE435187
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Oct 2021 19:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2C0D435298
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Oct 2021 20:24:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231205AbhJTRn4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 20 Oct 2021 13:43:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231197AbhJTRnt (ORCPT
+        id S231183AbhJTS0p (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 20 Oct 2021 14:26:45 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:17819 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230325AbhJTS0o (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 20 Oct 2021 13:43:49 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F48C061760
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id gn3so3036386pjb.0
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tLS8+kBpzekWeBdekKGTRJk0E4srTCOVGmq4Px1Q8VQ=;
-        b=gJbARJpG2w9XXkcZ6CSy2/THoVI0FcFNYFPuofYL8NVisjqdt0X0eq+HH+reaQpVXm
-         5MI+SplxtlxvZ1E0OLUyfIl/XiVcXduiwQnprTmO3DEStW4HT30c1IoDI1oVZxm+iOAV
-         3/XJwkPNgY1b56D39N24JZYm6H5qZHpfKUBzM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tLS8+kBpzekWeBdekKGTRJk0E4srTCOVGmq4Px1Q8VQ=;
-        b=HCh1K7BpqTmLFIAGD90jx/jFj+2xrOgJTiOrV+NpAA69MjkUOTZgxNoeIMGKXyzIaF
-         /xR3IL/Sf/Y9U5igP1eJ50CzTH3rouL5gkK01mD8GV6O9PIi1it+gBualyX4E0qX5sXP
-         5dXw1SPTQNT6Wp5bt1SuPrO5S+M34fvaxtovjMslfPaRQBxD/RC6WWg7Ry52z2zuav/j
-         +4KoTQsK/lhcb2kJS0OFdad16CwfWvJ4gdnAhGJv4tzn/J4NfXSk+wDKfJtjm2Cxc/lI
-         5uPDfNRwC//VYrIcXNJm9I56A0RYI0rZMnztmzIW0Sj+MNMCJHntsVsT92Bpn7MZuY7Q
-         KB0w==
-X-Gm-Message-State: AOAM5330yyUBrg/X4yBFF+QON+R7cxFrnAGUiznEdTaBQc7PZ739qj0L
-        T1S6w/Ic8/RhFZeJp/f9N6HVDw==
-X-Google-Smtp-Source: ABdhPJzlGMQDOJLoQZpO+D08HsHF1MsykzBHtuqJvEm206lRGp9Qb3pe7UydXadxkqIvENvT61l62w==
-X-Received: by 2002:a17:903:1ca:b0:13e:f367:9361 with SMTP id e10-20020a17090301ca00b0013ef3679361mr507344plh.3.1634751694235;
-        Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:d5fe:85e9:caf2:ec4e])
-        by smtp.gmail.com with UTF8SMTPSA id i128sm3148602pfc.47.2021.10.20.10.41.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Oct 2021 10:41:33 -0700 (PDT)
-Date:   Wed, 20 Oct 2021 10:41:31 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Michal Simek <michal.simek@xilinx.com>
-Cc:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Doug Anderson <dianders@chromium.org>,
+        Wed, 20 Oct 2021 14:26:44 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20211020182428euoutp025f99f0d0525aa1ecb58bbae3a4bd51a3~v0FiORDT60662406624euoutp02a
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Oct 2021 18:24:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20211020182428euoutp025f99f0d0525aa1ecb58bbae3a4bd51a3~v0FiORDT60662406624euoutp02a
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1634754268;
+        bh=zqQIO3sX4SllQevxjHEgnXnobPF9hUFWnPjUb9D35jw=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=vQGEnWid9wzJSsf4GFzY+E0uhxFQHvpUYevNwkBDVBpGw4NRixmydn2nWE8pgezYl
+         azVAuA0p2HqPaTQAMiBRAQNju89O5yUPvNQrb7rWN54phXzVSBtKqjVu/h2P1gq3E0
+         T+Vu3EbH9jPCIVBO0x9LJabPdNFtVAtyd/Fc+lYo=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20211020182427eucas1p23f2bcb6bc7f84e8a456ad1eded74884d~v0FhuRlU13157331573eucas1p2P;
+        Wed, 20 Oct 2021 18:24:27 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 73.FD.56448.BDE50716; Wed, 20
+        Oct 2021 19:24:27 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20211020182427eucas1p1f8409613d882d8247bc3c014c8219b84~v0Fg3y0ia1474514745eucas1p1E;
+        Wed, 20 Oct 2021 18:24:27 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20211020182427eusmtrp214fe8a471a7bbd72cd7afc8331ed302e~v0Fg27Et22160521605eusmtrp2b;
+        Wed, 20 Oct 2021 18:24:27 +0000 (GMT)
+X-AuditID: cbfec7f5-d53ff7000002dc80-c8-61705edbcb39
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 33.29.20981.ADE50716; Wed, 20
+        Oct 2021 19:24:26 +0100 (BST)
+Received: from localhost (unknown [106.120.51.46]) by eusmtip2.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20211020182426eusmtip29f8543fa97b8199a7d2614c8bfcb3781~v0FgmHmpT3020430204eusmtip2D;
+        Wed, 20 Oct 2021 18:24:26 +0000 (GMT)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        jim.cromie@gmail.com, Heiner Kallweit <hkallweit1@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Peter Chen <peter.chen@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Roger Quadros <rogerq@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Alexandre TORGUE - foss <alexandre.torgue@foss.st.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Lionel DEBIEVE <lionel.debieve@st.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
+        Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     =?UTF-8?q?Bart=C5=82omiej=20=C5=BBolnierkiewicz?= 
+        <b.zolnierkie@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mark Brown <broonie@kernel.org>,
-        Martin =?utf-8?Q?J=C3=BCcker?= <martin.juecker@gmail.com>,
-        Nishanth Menon <nm@ti.com>,
-        Olivier MOYSAN <olivier.moysan@st.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Robert Richter <rric@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Tony Lindgren <tony@atomide.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        William Cohen <wcohen@redhat.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
-Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
-Message-ID: <YXBUywpxasyTtSCr@google.com>
-References: <20210813195228.2003500-1-mka@chromium.org>
- <YUoRq1RrOIoiBJ5+@google.com>
- <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
- <YWkiGGBKOVokBye9@kroah.com>
- <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
- <0739e563-c8e7-2a19-e440-4f32e7de3917@xilinx.com>
+        =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+Subject: [PATCH net-next v17 0/3] AX88796C SPI Ethernet Adapter
+Date:   Wed, 20 Oct 2021 20:24:19 +0200
+Message-Id: <20211020182422.362647-1-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0739e563-c8e7-2a19-e440-4f32e7de3917@xilinx.com>
+Organization: Samsung R&D Institute Poland
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEKsWRmVeSWpSXmKPExsWy7djPc7q34woSDR4dN7I4f/cQs8XGGetZ
+        Leacb2GxmH/kHKvFovczWC2uvb3DatH/+DWzxfnzG9gtLmzrY7W4eWgFo8Wmx9dYLS7vmsNm
+        MeP8PiaLQ1P3MlqsPXKX3eLYAjGL1r1H2B0EPS5fu8jssWXlTSaPnbPusntsWtXJ5rF5Sb3H
+        zh2fmTz6tqxi9Pi8SS6AI4rLJiU1J7MstUjfLoEr48byL+wFP00qTt6cwNzAuEGzi5GTQ0LA
+        ROL85AXMXYxcHEICKxglbmyfzQrhfGGUOP7nNAuE85lRYsrsA6wwLf/PL4BKLGeU+D+5Ear/
+        OaPE80/PmUCq2AQcJfqXngCbJSJwj1ni07HjbCAOs8A+Romd96Ywg1QJC9hLfLn6C2wui4Cq
+        xPx528C6eQVsJHbeOcEIsU9eou36dEaIuKDEyZlPWEBsfgEtiTVN18FsZqCa5q2zwc6QEFjO
+        KfFzaT8zRLOLxLp7d1kgbGGJV8e3sEPYMhL/d84HWsYBZNdLTJ5kBtHbwyixbc4PqHpriTvn
+        frGB1DALaEqs36UPEXaUmLDoLStEK5/EjbeCECfwSUzaNp0ZIswr0dEmBFGtIrGufw/UQCmJ
+        3lcroL7ykGj+3sY4gVFxFpLHZiF5ZhbC3gWMzKsYxVNLi3PTU4uN81LL9YoTc4tL89L1kvNz
+        NzECk93pf8e/7mBc8eqj3iFGJg7GQ4wSHMxKIry7K/IThXhTEiurUovy44tKc1KLDzFKc7Ao
+        ifPu2romXkggPbEkNTs1tSC1CCbLxMEp1cDkuM1876OzVwIMTyZp7Sj17Zj46/a/7/lsqUdm
+        Sm9hcX/f7vEoy7aysaTuxayulI8PdSSmVEl2mq92+5+VmpLurvdjub2qguhfh1MPlHUKFzHe
+        CmJ77HXk/Lc5h5aH1vybU95U88JFdd0qv4f5oZdZONzMctQ0JjBN3hWtdYFfKrMlSeH2Vbl9
+        nUvYXacstipboTulUtFpwv60cj+/0z8MGlO6enti7t3IjRNQSfJK2nxz4hwvsduPOE3ynfdV
+        p/i+vfnQ45a+/a+t/6csdE1IVH7bLaUctCpEMkCwW1aFpzmzQnvttjJfv3RVnXlL1fzmauzT
+        StSq6553zsT7UXnyhJ0Rlts77Mo/bBB+rMRSnJFoqMVcVJwIAJvQ9eXlAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJIsWRmVeSWpSXmKPExsVy+t/xe7q34goSDVbPMbQ4f/cQs8XGGetZ
+        Leacb2GxmH/kHKvFovczWC2uvb3DatH/+DWzxfnzG9gtLmzrY7W4eWgFo8Wmx9dYLS7vmsNm
+        MeP8PiaLQ1P3MlqsPXKX3eLYAjGL1r1H2B0EPS5fu8jssWXlTSaPnbPusntsWtXJ5rF5Sb3H
+        zh2fmTz6tqxi9Pi8SS6AI0rPpii/tCRVISO/uMRWKdrQwkjP0NJCz8jEUs/Q2DzWyshUSd/O
+        JiU1J7MstUjfLkEv48byL+wFP00qTt6cwNzAuEGzi5GTQ0LAROL/+QUsXYxcHEICSxkltlx4
+        x97FyAGUkJJYOTcdokZY4s+1LjaImqeMEheOLmEDSbAJOEr0Lz3BCmKLCLxhlvjZKwVSxCyw
+        j1Fi/9HF7CAJYQF7iS9Xf4EVsQioSsyft40JxOYVsJHYeecEI8QGeYm269MZIeKCEidnPmEB
+        OYJZQF1i/TwhkDC/gJbEmqbrLCA2M1B589bZzBMYBWYh6ZiF0DELSdUCRuZVjCKppcW56bnF
+        RnrFibnFpXnpesn5uZsYgXG67djPLTsYV776qHeIkYmD8RCjBAezkgjv7or8RCHelMTKqtSi
+        /Pii0pzU4kOMpkAfTGSWEk3OByaKvJJ4QzMDU0MTM0sDU0szYyVxXpMja+KFBNITS1KzU1ML
+        Uotg+pg4OKUamBIvzrhTPHFJgQDj0oSysy58h8q+5H49KyG/ofNW5ZH/a0/8feYlct568feV
+        D5q+M907c7F6osCCZXccI2dN9NJawOx+WUCT03J1lKO6q8kp99LHs+eJlLezTvtueMrD9vsu
+        KTOdlOfWa9nfzzG4ms1+4ZNM2L/Mt5dLGZwcnz5Ob0w3UL+zR9ZCSWCvF19XeOxc6RnqF7/f
+        2u3oznlp+bJJf8JSytjPvEgPTvM5dNRzx4uulp+PCk4najY9feddK+LUFb67+ERvh/TOZXI9
+        J09leTu4/uzK88h2eneJ70PxlYin100qXyUcMtE7VV9y/6n84ltu+VnTT4sKvKuNjJpicaq3
+        97/M6eef9jQppSqxFGckGmoxFxUnAgBpohjYXAMAAA==
+X-CMS-MailID: 20211020182427eucas1p1f8409613d882d8247bc3c014c8219b84
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20211020182427eucas1p1f8409613d882d8247bc3c014c8219b84
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20211020182427eucas1p1f8409613d882d8247bc3c014c8219b84
+References: <CGME20211020182427eucas1p1f8409613d882d8247bc3c014c8219b84@eucas1p1.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Oct 20, 2021 at 08:21:21AM +0200, Michal Simek wrote:
-> 
-> 
-> On 10/19/21 18:04, Fabrice Gasnier wrote:
-> > On 10/15/21 8:39 AM, Greg Kroah-Hartman wrote:
-> > > On Thu, Oct 14, 2021 at 02:38:55PM -0700, Doug Anderson wrote:
-> > > > Hi,
-> > > > 
-> > > > On Tue, Sep 21, 2021 at 10:09 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > > > > 
-> > > > > Hi Greg,
-> > > > > 
-> > > > > are there any actions pending or can this land in usb-testing?
-> > > > > 
-> > > > > I confirmed that this series can be rebased on top of v5.15-rc2
-> > > > > without conflicts.
-> > > > 
-> > > > I'm quite interested to know what the next action items are, too. This
-> > > > is one of the very few patches we have for trogdor (excluding MIPI
-> > > > camera, which is a long story) that we're carrying downstream, so I'm
-> > > > keenly interested in making sure it's unblocked (if, indeed, it's
-> > > > blocked on anything).
-> > > > 
-> > > > If folks feel that this needs more review eyes before landing again
-> > > > then I'll try to find some time in the next week or two. If it's just
-> > > > waiting for the merge window to open/close so it can have maximal bake
-> > > > time, that's cool too. Please yell if there's something that I can do
-> > > > to help, though! :-)
-> > > 
-> > > I would love more review-eyes on this please.
-> > > 
-> > 
-> > Hi,
-> > 
-> > I noticed this series some time ago, and wanted to take a closer look.
-> > 
-> > The same issue this series address is seen on stm32 board for instance.
-> > (arch/arm/boot/dts/stm32mp15xx-dkx.dtsi). On board HUB (not described in
-> > the DT) is supplied by an always-on regulator.
-> > So it could could be interesting/useful to address the same case ,
-> > on stm32 boards, where USB2 (ehci-platform driver) is used currently.
-> > 
-> > I noticed a few things, especially on the dt-bindings. I've some
-> > questions here.
-> > 
-> > In this series, RTS5411 is used. The dt-bindings documents it as a child
-> > node of the USB controller. E.g.
-> > 
-> > &usb {
-> > 	usb_hub_2_0: hub@1 {
-> > 		...
-> > 	};
-> > 
-> > 	usb_hub_3_0: hub@2 {
-> > 	};
-> > }
-> > 
-> > I had a quick look at RTS5411 datasheet. It looks like there's an i2c
-> > interface too.
-> > - I guess the I2C interface isn't used in your case ?
-> >    (I haven't checked what it could be used for...)
-> > 
-> > In the stm32 boards (stm32mp15xx-dkx), there's an usb2514b chip
-> > - that also could be wired on I2C interface (0R mount option)
-> > - unused on stm32 boards by default
-> > 
-> > usb2514b chip already has a dt-bindings (with compatible), and a driver:
-> > - drivers/usb/misc/usb251xb.c
-> > - Documentation/devicetree/bindings/usb/usb251xb.txt
-> > 
-> > It is defined more as an i2c chip, so I'd expect it as an i2c child,
-> > e.g. like:
-> > 
-> > &i2c {
-> > 	usb2514b@2c {
-> > 		compatible = "microchip,usb2514b";
-> > 		...
-> > 	};
-> > };
-> > 
-> > 
-> > This way, I don't see how it could be used together with onboard_usb_hub
-> > driver ? (But I may have missed it)
-> > Is it possible to use a phandle, instead of a child node ?
-> > 
-> > However, in the stm32mp15xx-dkx case, i2c interface isn't wired/used by
-> > default. So obviously the i2c driver isn't used. In this case, could the
-> > "microchip,usb2514b" be listed in onboard_usb_hub driver ?
-> > (wouldn't it be redundant ?)
-> > 
-> > In this case it would be a child node of the usb DT node... Maybe that's
-> > more a question for Rob: would it be "legal" regarding existing
-> > dt-bindings ?
-> 
-> We wanted to upstream driver for microchip usb5744 and based on this thread
-> with Rob
-> 
-> https://lore.kernel.org/all/CAL_JsqJZBbu+UXqUNdZwg-uv0PAsNg55026PTwhKr5wQtxCjVQ@mail.gmail.com/
-> 
-> the recommendation was to use i2c-bus link. And in our usb5744 case where
-> usb hub has only one i2c address we just hardcoded it in the driver. I
-> should be pushing this driver to xilinx soc tree soon if you want to take a
-> look.
+This is a driver for AX88796C Ethernet Adapter connected in SPI mode as
+found on ARTIK5 evaluation board. The driver has been ported from a
+v3.10.9 vendor kernel for ARTIK5 board.
 
-Interesting, with the 'i2c-bus' link it might be feasible to support the
-i2c functionality in the onboard_usb_hub driver if desired. Not sure how
-things would look when the hub can have different i2c addresses. Also in
-case of powering down the hub during system suspend any configuration
-through i2c would have to be done again on resume.
+Changes in v17:
+  - marked no_regs_list as const
+  - added myself as MODULE_AUTHOR()
+  - rearranged locking in ax88796c_close() to prevent race condition in
+    case ax88796c_work() wakes the queue after trasmission.
+
+Changes in v16:
+  - rebased onto net-next 5.15-rc2 (7fec4d39198b)
+
+Changes in v15:
+  - rebased onto net-next 5.14-rc2 (268ca4129d8d)
+  - added explicit cast of le16_to_cpus() argument to u16*
+    (reported by: kernel test robot <lkp@intel.com>)
+  - removed invalid and superfluous call to u64_stats_init()
+    (reported by: Jakub Kicinski <kuba@kernel.org>)
+
+Changes in v14:
+  - rebased onto net-next 5.14-rc1 (0d6835ffe50c)
+
+Changes in v13:
+  - rebased onto net-next (ebbf5fcb94a7)
+  - minor fix: use u64_stats_update_{begin_irqsave,end_irqrestore}
+  - minor fix: initialize the syncp lock
+
+Changes in v12:
+  - rebased to net-next-5.13
+  - added missing spaces after commas
+  - corrected indentation
+
+Changes in v11:
+  - changed stat counters to 64-bit
+  - replaced WARN_ON(!mutex_is_locked()) with lockdep_assert_held()
+  - replaced ax88796c_free_skb_queue() with __skb_queue_purge()
+  - added cancel_work_sync() for ax_work
+  - removed unused fields of struct skb_data
+  - replaced MAX() with max() from minmax.h
+  - rebased to net-next (resend)
+
+Changes in v10:
+  - removed unused variable
+
+Changes in v9:
+  - used pskb_extend_head()
+  - used ethtool private flags instead of tunables to switch SPI
+    compression
+  - changed
+    - alloc_skb() to netdev_alloc(skb)
+    - __pskb_trim() to pskb_trim()
+  - removed:
+    - chages to skb->truesize
+    - unnecessary casting to short
+    - return f() in a void function
+    - IRQF_SHARED flags
+    - unnecessary memset(0) of kzalloc()ed buffer
+    - unused endiannes detection
+    - unnecessary __packed attribute for some structures
+  - added:
+    - temporary variable in AX_WRITE/READ sequences
+    - missin mutex_unlock() in error paths
+  - axspi_read_reg() returns a constant value in case of an error
+
+Changes in v8:
+  - fixed the entry in MAINTAINERS
+  - removed unnecessary netif_err()
+  - changed netif_rx() to netif_rx_ni() for code running in a process
+    context
+  - added explicit type casting for ~BIT()
+
+Changes in v7:
+  - removed duplicate code
+  - moved a constant buffer definition away from a header file
+
+Changes in v6:
+  - fixed typos in Kconfig
+  - checked argument value in ax88796c_set_tunable
+  - updated tags in commit messages
+
+Changes in v5:
+  - coding style (local variable declarations)
+  - added spi0 node in the DT binding example and removed
+    interrupt-parent
+  - removed comp module parameter
+  - added CONFIG_SPI_AX88796C_COMPRESSION option to set the initial
+    state of SPI compression
+  - introduced new ethtool tunable "spi-compression" to control SPI
+    transfer compression
+  - removed unused fields in struct ax88796c_device
+  - switched from using buffers allocated on stack for SPI transfers
+    to DMA safe ones embedded in struct ax_spi and allocated with
+    kmalloc()
+
+Changes in v4:
+  - fixed compilation problems in asix,ax88796c.yaml and in
+  ax88796c_main.c introduced in v3
+
+Changes in v3:
+  - modify vendor-prefixes.yaml in a separate patch
+  - fix several problems in the dt binding
+    - removed unnecessary descriptions and properties
+    - changed the order of entries
+    - fixed problems with missing defines in the example
+  - change (1 << N) to BIT(N), left a few (0 << N)
+  - replace ax88796c_get_link(), ax88796c_get_link_ksettings(),
+    ax88796c_set_link_ksettings(), ax88796c_nway_reset(),
+    ax88796c_set_mac_address() with appropriate kernel functions.
+  - disable PHY auto-polling in MAC and use PHYLIB to track the state
+    of PHY and configure MAC
+  - propagate return values instead of returning constants in several
+    places
+  - add WARN_ON() for unlocked mutex
+  - remove local work queue and use the system_wq
+  - replace phy_connect_direct() with phy_connect() and move
+    devm_register_netdev() to the end of ax88796c_probe()
+    (Unlike phy_connect_direct() phy_connect() does not crash if the
+    network device isn't registered yet.)
+  - remove error messages on ENOMEM
+  - move free_irq() to the end of ax88796c_close() to avoid race
+    condition
+  - implement flow-control
+
+Changes in v2:
+  - use phylib
+  - added DT bindings
+  - moved #includes to *.c files
+  - used mutex instead of a semaphore for locking
+  - renamed some constants
+  - added error propagation for several functions
+  - used ethtool for dumping registers
+  - added control over checksum offloading
+  - remove vendor specific PM
+  - removed macaddr module parameter and added support for reading a MAC
+    address from platform data (e.g. DT)
+  - removed dependency on SPI from NET_VENDOR_ASIX
+  - added an entry in the MAINTAINERS file
+  - simplified logging with appropriate netif_* and netdev_* helpers
+  - lots of style fixes
+
+Łukasz Stelmach (3):
+  dt-bindings: vendor-prefixes: Add asix prefix
+  dt-bindings: net: Add bindings for AX88796C SPI Ethernet Adapter
+  net: ax88796c: ASIX AX88796C SPI Ethernet Adapter Driver
+
+ .../bindings/net/asix,ax88796c.yaml           |   73 ++
+ .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+ MAINTAINERS                                   |    6 +
+ drivers/net/ethernet/Kconfig                  |    1 +
+ drivers/net/ethernet/Makefile                 |    1 +
+ drivers/net/ethernet/asix/Kconfig             |   35 +
+ drivers/net/ethernet/asix/Makefile            |    6 +
+ drivers/net/ethernet/asix/ax88796c_ioctl.c    |  239 ++++
+ drivers/net/ethernet/asix/ax88796c_ioctl.h    |   26 +
+ drivers/net/ethernet/asix/ax88796c_main.c     | 1163 +++++++++++++++++
+ drivers/net/ethernet/asix/ax88796c_main.h     |  568 ++++++++
+ drivers/net/ethernet/asix/ax88796c_spi.c      |  115 ++
+ drivers/net/ethernet/asix/ax88796c_spi.h      |   69 +
+ 13 files changed, 2304 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/asix,ax88796c.yaml
+ create mode 100644 drivers/net/ethernet/asix/Kconfig
+ create mode 100644 drivers/net/ethernet/asix/Makefile
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_ioctl.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_ioctl.h
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_main.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_main.h
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_spi.c
+ create mode 100644 drivers/net/ethernet/asix/ax88796c_spi.h
+
+-- 
+2.30.2
+
