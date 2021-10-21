@@ -2,306 +2,228 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5C4F435C41
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 21 Oct 2021 09:42:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90775435C9E
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 21 Oct 2021 10:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbhJUHor (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 21 Oct 2021 03:44:47 -0400
-Received: from wnew3-smtp.messagingengine.com ([64.147.123.17]:51255 "EHLO
-        wnew3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232067AbhJUHnr (ORCPT
+        id S231321AbhJUIJr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 21 Oct 2021 04:09:47 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:41320
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231453AbhJUIJp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 21 Oct 2021 03:43:47 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.west.internal (Postfix) with ESMTP id A34EE2B00475;
-        Thu, 21 Oct 2021 03:41:29 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 21 Oct 2021 03:41:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm1; bh=aukaaii7eMmjt
-        ussZ47JHi84aYPnG7d4VwRuG6/sJ+I=; b=ZT7+Y8Q4tBaex/F9ouLOSHAfXIw+A
-        EWV+MDbmOEcFzq3qH1H78fPn3qIjkpUoXK1wluxGE5H2Hram5miwS3l0muc11tTw
-        /HjyBIvJ1DkB8tZWB13m59AGN6Rw2B52HlD+eaiQ1FWhzyHEMiHkTEqB50Wr/8t7
-        2dc2feMguqoyEuCzOS9cZYb3v/7sHIH264sYsOnC+1TH5gjmqa+rhhPgr6vJcC07
-        3pVaxWJ1q4KTxFQ3vmDrmir+Lp5DgtjthkpBhnfvu2C0yjHUNcJ1RlVX5TPudhJp
-        n5NTFunhgkbuJZRR1pZKYS99mTVDWpln0Vu9iGy+rBVdMzvAQqMxTh84w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; bh=aukaaii7eMmjtussZ47JHi84aYPnG7d4VwRuG6/sJ+I=; b=hc7/UA67
-        xEO/PK6JKnVEJG4yrESn1ZLsFWZog2NxRAdQnbSRUmLCiWLB20rDDbMiAvG77bYf
-        GH5oJrhqdyfoq7gLXqIbt5S6wNXsTW6dDbO3+1Md0UN/3bojVwpEcZr724VnVEe8
-        70NG3Sbl7RCXGBVnyBkpIVjCFnXu6n6QzRs/43ePa7qbTFLyvePJzgGh+Oeb02br
-        D6tDK4g1DK5NFYZNAASOe/iDlgxDwXiPDe+tltJHuC8PxIAnzHShkIa5wltZdxcs
-        Jdt3czsepdX1UOfTDxHn1UH8ph+nllR6Qv1tNDqIWDB9kBtW3h7P3ixu9Ge4ykql
-        uBkkhBaPz1ZDQA==
-X-ME-Sender: <xms:qRlxYRlgmPGITQWHEMZBgMMN1L01w8yz9aZqg2LLfUeOKb7BKFuhbg>
-    <xme:qRlxYc18OVHGFbZ47JoQks4FTns463uZcm_2bTnnsk3LzJXjPp3L84kbIeE--ezCk
-    9goN6xEWnXCV3ZuK1w>
-X-ME-Received: <xmr:qRlxYXqp9gUH1PB6oLnnBqJ4xGOCCYMVyXSKGB2r7_7jWcH_uMRE_MSUY5xJSqSX2PdON3Lpchgkt5qrB049qOPDNXaU-c8j7jNj8Ohw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvhedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpedvkeelveefffekjefhffeuleetleefudeifeehuddugffghffhffehveev
-    heehvdenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:qRlxYRkxpXNVmWaQVHIZGNfz-sFcxq8aTpV6XDpY98fdOmO2SaGhCA>
-    <xmx:qRlxYf0hwtT7EdiO-B_vndxeFQUkNSDriMyxI2pGFwNl6HHVr5GANg>
-    <xmx:qRlxYQtjVD2DhmFPE9u7Pl9RVD1qNcKdNE-ShH1wOeZpOvPnlbQBKQ>
-    <xmx:qRlxYSCYrxG2nP-paamASIEh4YWjs2tUXKEeKuU84sZBPTLib3w7DM9TCtI>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Oct 2021 03:41:28 -0400 (EDT)
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Tian Tao <tiantao6@hisilicon.com>,
-        freedreno@lists.freedesktop.org,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v5 21/21] drm/msm/dsi: Adjust probe order
-Date:   Thu, 21 Oct 2021 09:39:47 +0200
-Message-Id: <20211021073947.499373-22-maxime@cerno.tech>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211021073947.499373-1-maxime@cerno.tech>
-References: <20211021073947.499373-1-maxime@cerno.tech>
+        Thu, 21 Oct 2021 04:09:45 -0400
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com [209.85.208.197])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0CA763FFE2
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 21 Oct 2021 08:07:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1634803648;
+        bh=sDS7GEvXSQom9VFLoatpvyQsvf0nO+8HlK0Txu0PTXQ=;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+         In-Reply-To:Content-Type;
+        b=PADkPpd8mm9qlWsShd1/4Xd9MV8Vtkdyza6jqhuYVXB0CUWbqskRwFzekY7cmKIdZ
+         c05k/gph4IFaJeVJxG+VtODPiA5267V01ZMFOzaw88zOsm0+QE0SzQ1MHRlq9nhQDp
+         jnAbsKoc40EbsTSr/23jNyaG6Dup/Tbnx3+l7F8lVSG2xnVwQy4RwW9ue4v2lzh1Dy
+         eItPgGeIi+Cw5Y+Iex/p7L8qTzto8DRdtKm8xctThwc+2mCypQcj7h95OF5YCFSa29
+         cENwmwjSuRCYOn1t5wQgvv2N8ZgRBZ32FuT/KN2Nm40Qf8HOh5XGUBNJEGyp6vJ/12
+         lb0PJ0/mRV7TA==
+Received: by mail-lj1-f197.google.com with SMTP id o4-20020a2ebd84000000b00210ae894d18so2510047ljq.13
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 21 Oct 2021 01:07:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sDS7GEvXSQom9VFLoatpvyQsvf0nO+8HlK0Txu0PTXQ=;
+        b=tGgh/oI2LeIi8K7yyo4XrFgAofYcs+85i+NAAJkjjX5TXUcw5xuciN0IzJkYPmbzqy
+         dtR2CHz4oacciit0l2M6HXOPhFz4uR+uBNQ0tuWouanxNUFPn1WGQy4z0KBWWQ7fvYGM
+         Wih2XdYWiWb2rDwoCCu6mJyvbKriRWNVGOT8WX143HrTeBGSUsCXB5nH+3uq5ofDGHSo
+         NPUAW1SfYNukEaWZfBpFam+JjPTXg2ud618O+pTjYh/ri+rc+RHzunhgH25iAHMvC6zr
+         b/NbrMPapYFPC9igOp7da+TOi9HF/jcidsfS/Qs7x26lLs+LYIJkhravRDd2vcWHeKEC
+         yqIQ==
+X-Gm-Message-State: AOAM5326sHjGaBCAnropPJlsskN064ldcnKrDDH06YotRTCvff5w+RTk
+        lKKFZcmmuBhE4yj3IdF4B77LhBKm1xEOfu3fhGCeyNg3+wTENC5R3FtL+l9lwGreczILawMSP2g
+        +mXlv3Z6s2bPAdq1jkqTthdQ68iknCZnYIobTc+IkvWs+vthx
+X-Received: by 2002:a05:6512:6c8:: with SMTP id u8mr4148821lff.453.1634803647450;
+        Thu, 21 Oct 2021 01:07:27 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwCtWxEEyx0fBceTd9UNL5kCdwBY0brNh3ylEHk3SSt0t9e/oUHzQ848C4wSrj0JPM+f588aQ==
+X-Received: by 2002:a05:6512:6c8:: with SMTP id u8mr4148795lff.453.1634803647253;
+        Thu, 21 Oct 2021 01:07:27 -0700 (PDT)
+Received: from [192.168.3.161] (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
+        by smtp.gmail.com with ESMTPSA id m29sm397146lfo.104.2021.10.21.01.07.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Oct 2021 01:07:26 -0700 (PDT)
+Subject: Re: [PATCH v1 1/2] clocksource/drivers/exynos_mct_v2: introduce
+ Exynos MCT version 2 driver for next Exynos SoC
+To:     Youngmin Nam <youngmin.nam@samsung.com>
+Cc:     daniel.lezcano@linaro.org, tglx@linutronix.de,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, pullip.cho@samsung.com,
+        hoony.yu@samsung.com, hajun.sung@samsung.com,
+        myung-su.cha@samsung.com
+References: <20211021061804.39118-1-youngmin.nam@samsung.com>
+ <CGME20211021055112epcas2p278145beb21cd6cc4217813a41c1e1407@epcas2p2.samsung.com>
+ <20211021061804.39118-2-youngmin.nam@samsung.com>
+ <0c5dcdab-7aa3-a98f-e615-acbe98489935@canonical.com>
+ <20211021082650.GA30741@perf>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Message-ID: <1b93aaf3-ed64-b105-dec4-07b6f27b385b@canonical.com>
+Date:   Thu, 21 Oct 2021 10:07:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211021082650.GA30741@perf>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 21/10/2021 10:26, Youngmin Nam wrote:
+> On Thu, Oct 21, 2021 at 08:18:36AM +0200, Krzysztof Kozlowski wrote:
+>> On 21/10/2021 08:18, Youngmin Nam wrote:
+>>> Exynos MCT version 2 is composed of 1 FRC and 12 comparators.
+>>> The 12 comparators can produces interrupts independently,
+>>> so they can be used as local timer of each CPU.
+>>>
+>>> Signed-off-by: Youngmin Nam <youngmin.nam@samsung.com>
+>>> ---
+>>>  drivers/clocksource/Kconfig         |   6 +
+>>>  drivers/clocksource/Makefile        |   1 +
+>>>  drivers/clocksource/exynos_mct_v2.c | 336 ++++++++++++++++++++++++++++
+>>>  drivers/clocksource/exynos_mct_v2.h |  74 ++++++
+>>>  4 files changed, 417 insertions(+)
+>>>  create mode 100644 drivers/clocksource/exynos_mct_v2.c
+>>>  create mode 100644 drivers/clocksource/exynos_mct_v2.h
+>>>
+>>> diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
+>>> index 0f5e3983951a..8ac04dd7f713 100644
+>>> --- a/drivers/clocksource/Kconfig
+>>> +++ b/drivers/clocksource/Kconfig
+>>> @@ -421,6 +421,12 @@ config CLKSRC_EXYNOS_MCT
+>>>  	help
+>>>  	  Support for Multi Core Timer controller on Exynos SoCs.
+>>>  
+>>> +config CLKSRC_EXYNOS_MCT_V2
+>>> +	bool "Exynos multi core timer (ver 2) driver" if COMPILE_TEST
+>>> +	depends on ARM64
+>>
+>> depends on ARCH_EXYNOS.
+>>
+> Okay
+>>> +	help
+>>> +	  Support for Multi Core Timer controller on Exynos SoCs.
+>>> +
+>>>  config CLKSRC_SAMSUNG_PWM
+>>>  	bool "PWM timer driver for Samsung S3C, S5P" if COMPILE_TEST
+>>>  	depends on HAS_IOMEM
+>>> diff --git a/drivers/clocksource/Makefile b/drivers/clocksource/Makefile
+>>> index c17ee32a7151..dc7d5cf27516 100644
+>>> --- a/drivers/clocksource/Makefile
+>>> +++ b/drivers/clocksource/Makefile
+>>> @@ -43,6 +43,7 @@ obj-$(CONFIG_CADENCE_TTC_TIMER)	+= timer-cadence-ttc.o
+>>>  obj-$(CONFIG_CLKSRC_STM32)	+= timer-stm32.o
+>>>  obj-$(CONFIG_CLKSRC_STM32_LP)	+= timer-stm32-lp.o
+>>>  obj-$(CONFIG_CLKSRC_EXYNOS_MCT)	+= exynos_mct.o
+>>> +obj-$(CONFIG_CLKSRC_EXYNOS_MCT_V2)	+= exynos_mct_v2.o
+>>>  obj-$(CONFIG_CLKSRC_LPC32XX)	+= timer-lpc32xx.o
+>>>  obj-$(CONFIG_CLKSRC_MPS2)	+= mps2-timer.o
+>>>  obj-$(CONFIG_CLKSRC_SAMSUNG_PWM)	+= samsung_pwm_timer.o
+>>> diff --git a/drivers/clocksource/exynos_mct_v2.c b/drivers/clocksource/exynos_mct_v2.c
+>>> new file mode 100644
+>>> index 000000000000..2da6d5401629
+>>> --- /dev/null
+>>> +++ b/drivers/clocksource/exynos_mct_v2.c
+>>> @@ -0,0 +1,336 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) 2022 Samsung Electronics Co., Ltd.
+>>> + *		http://www.samsung.com
+>>> + *
+>>> + * Exynos MCT(Multi-Core Timer) version 2 support
+>>> + */
+>>> +
+>>> +#include <linux/interrupt.h>
+>>> +#include <linux/irq.h>
+>>> +#include <linux/err.h>
+>>> +#include <linux/clk.h>
+>>> +#include <linux/clockchips.h>
+>>> +#include <linux/cpu.h>
+>>> +#include <linux/delay.h>
+>>> +#include <linux/percpu.h>
+>>> +#include <linux/of.h>
+>>> +#include <linux/of_irq.h>
+>>> +#include <linux/of_address.h>
+>>> +#include <linux/clocksource.h>
+>>> +#include "exynos_mct_v2.h"
+>>> +
+>>> +static void __iomem *reg_base;
+>>> +static unsigned long osc_clk_rate;
+>>> +static int mct_irqs[MCT_NR_COMPS];
+>>> +
+>>> +static void exynos_mct_set_compensation(unsigned long osc, unsigned long rtc)
+>>> +{
+>>> +	unsigned int osc_rtc;
+>>> +	unsigned int incr_rtcclk;
+>>> +	unsigned int compen_val;
+>>> +
+>>> +	osc_rtc = (unsigned int)(osc * 1000 / rtc);
+>>> +
+>>> +	/* MCT_INCR_RTCCLK is integer part of (OSCCLK frequency/RTCCLK frequency). */
+>>> +	incr_rtcclk = (osc / rtc) + ((osc % rtc) ? 1 : 0);
+>>> +
+>>> +	/* MCT_COMPENSATE_VALUE is decimal part of (OSCCLK frequency/RTCCLK frequency). */
+>>> +	compen_val = ((osc_rtc + 5) / 10) % 100;
+>>> +	if (compen_val)
+>>> +		compen_val = 100 - compen_val;
+>>> +
+>>> +	pr_info("MCT: osc-%lu rtc-%lu incr_rtcclk:0x%08x compen_val:0x%08x\n",
+>>> +		osc, rtc, incr_rtcclk, compen_val);
+>>> +
+>>> +	writel_relaxed(incr_rtcclk, reg_base + EXYNOS_MCT_MCT_INCR_RTCCLK);
+>>> +	writel_relaxed(compen_val, reg_base + EXYNOS_MCT_COMPENSATE_VALUE);
+>>> +}
+>>> +
+>>> +/* Clocksource handling */
+>>> +static void exynos_mct_frc_start(void)
+>>> +{
+>>> +	writel_relaxed(MCT_FRC_ENABLE, reg_base + EXYNOS_MCT_MCT_FRC_ENABLE);
+>>> +}
+>>> +
+>>> +/**
+>>> + * exynos_read_count_32 - Read the lower 32-bits of the global counter
+>>> + *
+>>> + * This will read just the lower 32-bits of the global counter.
+>>> + *
+>>> + * Returns the number of cycles in the global counter (lower 32 bits).
+>>> + */
+>>
+>> All this looks like a modification of Exynos MCT driver, so you should
+>> extend that one instead. It does not look like we need two drivers.
+>> Please integrate it into existing driver instead of sending a new piece
+>> of code copied from vendor tree.
+>>
+> MCT version 2 is a completely different HW IP compared to previous MCT.
+> The new MCT has a lot of different resister sets and there are many changes on programming guide.
+> So we cannot share the previous code. At first, I also considered that way you mentioned,
+> but it would be better to implement the driver seperately to maintain the new driver cleanly.
 
-Switch to the documented order dsi-host vs bridge probe.
+We have several drivers supporting different devices and we avoid mostly
+duplicating new ones. The different register layout is not the valid
+reason - we support differences in several places. Just take a look at
+Samsung PMIC drivers where register layout is quite different between
+designs. Still one clock driver, one RTC driver and 2-3 regulator
+drivers (for ~7 devices).
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org>
-Tested-by: John Stultz <john.stultz@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
----
- drivers/gpu/drm/msm/dsi/dsi.c         | 50 ++++++++++++++++-----------
- drivers/gpu/drm/msm/dsi/dsi.h         |  2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c    | 22 ++++--------
- drivers/gpu/drm/msm/dsi/dsi_manager.c |  6 ++--
- drivers/gpu/drm/msm/msm_drv.h         |  2 ++
- 5 files changed, 43 insertions(+), 39 deletions(-)
+Similarly to SoC clock, pinctrl, PMU and other drivers - we re-use
+instead of duplicating entire driver.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 614dc7f26f2c..ad73ebb84b2d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -112,18 +112,7 @@ static int dsi_bind(struct device *dev, struct device *master, void *data)
- {
- 	struct drm_device *drm = dev_get_drvdata(master);
- 	struct msm_drm_private *priv = drm->dev_private;
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_dsi *msm_dsi;
--
--	DBG("");
--	msm_dsi = dsi_init(pdev);
--	if (IS_ERR(msm_dsi)) {
--		/* Don't fail the bind if the dsi port is not connected */
--		if (PTR_ERR(msm_dsi) == -ENODEV)
--			return 0;
--		else
--			return PTR_ERR(msm_dsi);
--	}
-+	struct msm_dsi *msm_dsi = dev_get_drvdata(dev);
- 
- 	priv->dsi[msm_dsi->id] = msm_dsi;
- 
-@@ -136,12 +125,8 @@ static void dsi_unbind(struct device *dev, struct device *master,
- 	struct drm_device *drm = dev_get_drvdata(master);
- 	struct msm_drm_private *priv = drm->dev_private;
- 	struct msm_dsi *msm_dsi = dev_get_drvdata(dev);
--	int id = msm_dsi->id;
- 
--	if (priv->dsi[id]) {
--		dsi_destroy(msm_dsi);
--		priv->dsi[id] = NULL;
--	}
-+	priv->dsi[msm_dsi->id] = NULL;
- }
- 
- static const struct component_ops dsi_ops = {
-@@ -149,15 +134,40 @@ static const struct component_ops dsi_ops = {
- 	.unbind = dsi_unbind,
- };
- 
--static int dsi_dev_probe(struct platform_device *pdev)
-+int dsi_dev_attach(struct platform_device *pdev)
- {
- 	return component_add(&pdev->dev, &dsi_ops);
- }
- 
--static int dsi_dev_remove(struct platform_device *pdev)
-+void dsi_dev_detach(struct platform_device *pdev)
- {
--	DBG("");
- 	component_del(&pdev->dev, &dsi_ops);
-+}
-+
-+static int dsi_dev_probe(struct platform_device *pdev)
-+{
-+	struct msm_dsi *msm_dsi;
-+
-+	DBG("");
-+	msm_dsi = dsi_init(pdev);
-+	if (IS_ERR(msm_dsi)) {
-+		/* Don't fail the bind if the dsi port is not connected */
-+		if (PTR_ERR(msm_dsi) == -ENODEV)
-+			return 0;
-+		else
-+			return PTR_ERR(msm_dsi);
-+	}
-+
-+	return 0;
-+}
-+
-+static int dsi_dev_remove(struct platform_device *pdev)
-+{
-+	struct msm_dsi *msm_dsi = platform_get_drvdata(pdev);
-+
-+	DBG("");
-+	dsi_destroy(msm_dsi);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index b50db91cb8a7..83787cbee419 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -116,7 +116,7 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
- struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
- unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
- struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
--int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer);
-+int msm_dsi_host_register(struct mipi_dsi_host *host);
- void msm_dsi_host_unregister(struct mipi_dsi_host *host);
- int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
- 			struct msm_dsi_phy *src_phy);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e269df285136..f741494b1bf6 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1624,6 +1624,10 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
- 	if (ret)
- 		return ret;
- 
-+	ret = dsi_dev_attach(msm_host->pdev);
-+	if (ret)
-+		return ret;
-+
- 	DBG("id=%d", msm_host->id);
- 	if (msm_host->dev)
- 		queue_work(msm_host->workqueue, &msm_host->hpd_work);
-@@ -1636,6 +1640,8 @@ static int dsi_host_detach(struct mipi_dsi_host *host,
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 
-+	dsi_dev_detach(msm_host->pdev);
-+
- 	msm_host->device_node = NULL;
- 
- 	DBG("id=%d", msm_host->id);
-@@ -1970,7 +1976,7 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
- 	return 0;
- }
- 
--int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
-+int msm_dsi_host_register(struct mipi_dsi_host *host)
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 	int ret;
-@@ -1984,20 +1990,6 @@ int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer)
- 			return ret;
- 
- 		msm_host->registered = true;
--
--		/* If the panel driver has not been probed after host register,
--		 * we should defer the host's probe.
--		 * It makes sure panel is connected when fbcon detects
--		 * connector status and gets the proper display mode to
--		 * create framebuffer.
--		 * Don't try to defer if there is nothing connected to the dsi
--		 * output
--		 */
--		if (check_defer && msm_host->device_node) {
--			if (IS_ERR(of_drm_find_panel(msm_host->device_node)))
--				if (!of_drm_find_bridge(msm_host->device_node))
--					return -EPROBE_DEFER;
--		}
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index c41d39f5b7cf..fc949a84cef6 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -72,7 +72,7 @@ static int dsi_mgr_setup_components(int id)
- 	int ret;
- 
- 	if (!IS_BONDED_DSI()) {
--		ret = msm_dsi_host_register(msm_dsi->host, true);
-+		ret = msm_dsi_host_register(msm_dsi->host);
- 		if (ret)
- 			return ret;
- 
-@@ -92,10 +92,10 @@ static int dsi_mgr_setup_components(int id)
- 		 * because only master DSI device adds the panel to global
- 		 * panel list. The panel's device is the master DSI device.
- 		 */
--		ret = msm_dsi_host_register(slave_link_dsi->host, false);
-+		ret = msm_dsi_host_register(slave_link_dsi->host);
- 		if (ret)
- 			return ret;
--		ret = msm_dsi_host_register(master_link_dsi->host, true);
-+		ret = msm_dsi_host_register(master_link_dsi->host);
- 		if (ret)
- 			return ret;
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 8b005d1ac899..31d50e98a723 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -344,6 +344,8 @@ int msm_edp_modeset_init(struct msm_edp *edp, struct drm_device *dev,
- 
- struct msm_dsi;
- #ifdef CONFIG_DRM_MSM_DSI
-+int dsi_dev_attach(struct platform_device *pdev);
-+void dsi_dev_detach(struct platform_device *pdev);
- void __init msm_dsi_register(void);
- void __exit msm_dsi_unregister(void);
- int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
--- 
-2.31.1
+I am sorry but the argument that block is different is not enough. What
+is exactly not compatible with current driver which could not be modeled
+by different driver data (or structure with ops)?
 
+Best regards,
+Krzysztof
