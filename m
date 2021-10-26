@@ -2,18 +2,18 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F5BC43B854
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Oct 2021 19:39:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E866A43B85A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Oct 2021 19:39:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236561AbhJZRmL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 26 Oct 2021 13:42:11 -0400
-Received: from mxout03.lancloud.ru ([45.84.86.113]:35604 "EHLO
+        id S237846AbhJZRmS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 26 Oct 2021 13:42:18 -0400
+Received: from mxout03.lancloud.ru ([45.84.86.113]:35626 "EHLO
         mxout03.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235281AbhJZRmL (ORCPT
+        with ESMTP id S237849AbhJZRmP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 26 Oct 2021 13:42:11 -0400
+        Tue, 26 Oct 2021 13:42:15 -0400
 Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout03.lancloud.ru 3E95E206178B
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout03.lancloud.ru 804B420617A8
 Received: from LanCloud
 Received: from LanCloud
 Received: from LanCloud
@@ -24,9 +24,9 @@ To:     <linux-usb@vger.kernel.org>,
 CC:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH v2 01/22] usb: host: ehci-exynos: deny IRQ0
-Date:   Tue, 26 Oct 2021 20:39:22 +0300
-Message-ID: <20211026173943.6829-2-s.shtylyov@omp.ru>
+Subject: [PATCH v2 10/22] usb: host: ohci-exynos: deny IRQ0
+Date:   Tue, 26 Oct 2021 20:39:31 +0300
+Message-ID: <20211026173943.6829-11-s.shtylyov@omp.ru>
 X-Mailer: git-send-email 2.26.3
 In-Reply-To: <20211026173943.6829-1-s.shtylyov@omp.ru>
 References: <20211026173943.6829-1-s.shtylyov@omp.ru>
@@ -44,21 +44,21 @@ If platform_get_irq() returns IRQ0 (considered invalid according to Linus)
 the driver blithely passes it to usb_add_hcd() that treats IRQ0 as no IRQ
 at all. Deny IRQ0 right away, returning -EINVAL from the probe() method...
 
-Fixes: 44ed240d6273 ("usb: host: ehci-exynos: Fix error check in exynos_ehci_probe()")
+Fixes: 1d4169834628 ("usb: host: ohci-exynos: Fix error handling in exynos_ohci_probe()")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
 ---
 Changes in version 2:
 - added Alan's ACK.
 
- drivers/usb/host/ehci-exynos.c | 4 ++++
+ drivers/usb/host/ohci-exynos.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/host/ehci-exynos.c b/drivers/usb/host/ehci-exynos.c
-index 1a9b7572e17f..ff4e1261801a 100644
---- a/drivers/usb/host/ehci-exynos.c
-+++ b/drivers/usb/host/ehci-exynos.c
-@@ -207,6 +207,10 @@ static int exynos_ehci_probe(struct platform_device *pdev)
+diff --git a/drivers/usb/host/ohci-exynos.c b/drivers/usb/host/ohci-exynos.c
+index 5f5e8a64c8e2..f28f28e42f43 100644
+--- a/drivers/usb/host/ohci-exynos.c
++++ b/drivers/usb/host/ohci-exynos.c
+@@ -175,6 +175,10 @@ static int exynos_ohci_probe(struct platform_device *pdev)
  		err = irq;
  		goto fail_io;
  	}
@@ -67,8 +67,8 @@ index 1a9b7572e17f..ff4e1261801a 100644
 +		goto fail_io;
 +	}
  
- 	err = exynos_ehci_phy_enable(&pdev->dev);
- 	if (err) {
+ 	platform_set_drvdata(pdev, hcd);
+ 
 -- 
 2.26.3
 
