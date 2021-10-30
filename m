@@ -2,44 +2,153 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19307440A31
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 30 Oct 2021 18:26:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9C65440A4C
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 30 Oct 2021 18:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbhJ3Q2t convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 30 Oct 2021 12:28:49 -0400
-Received: from 219-87-183-172.static.tfn.net.tw ([219.87.183.172]:48972 "EHLO
-        ms4.kntech.com.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbhJ3Q2s (ORCPT
+        id S229734AbhJ3RC0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 30 Oct 2021 13:02:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229788AbhJ3RC0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 30 Oct 2021 12:28:48 -0400
-Received: from [103.27.239.15] ([103.27.239.15])
-        (authenticated bits=0)
-        by ms4.kntech.com.tw (8.13.8/8.13.8) with ESMTP id 19RF35PJ019362
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 27 Oct 2021 23:03:15 +0800
-Message-Id: <202110271503.19RF35PJ019362@ms4.kntech.com.tw>
-Content-Type: text/plain; charset="iso-8859-1"
+        Sat, 30 Oct 2021 13:02:26 -0400
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1EBEC061764
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 30 Oct 2021 09:59:55 -0700 (PDT)
+Received: by mail-ua1-x92f.google.com with SMTP id ay21so3564317uab.12
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 30 Oct 2021 09:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l/0UUkqf6KFkNkf6dBZ0pEkCS7X6LutBL6LgNXt9kNw=;
+        b=COYcjMZHo2AhOT7Qmebs1O2714sucGcw4oOFWAZd04mujHCpsr49AG3HZtjw7Im4lg
+         ePKoBnjK9WgnzD/v5lNJMx61C/iclRy9VF3dc8XjgNfIEOeaMPRkrQ3RdG7oTsbcL0q9
+         qBJlNogLLIxUKBwUJZw5zUIGd9KoXRjJlKKLKHRVjGetr89QqXKZ6Mz75aHEqIWtSKVP
+         mqvnOV4YEnoasMfw2yTM4pF3va7X9XaC1HbVOM/jn4DaZk7Iqcooo7Io0KcxKU8RbrsD
+         sNLPWVQMO0Yx7KIVpU40dbfdaxXTs0re1gHao8v4RsL/SFjGvnuIw9G/XT4iJngYCfxs
+         h/jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l/0UUkqf6KFkNkf6dBZ0pEkCS7X6LutBL6LgNXt9kNw=;
+        b=vxESjmUq62MMfzqVmfbema9W7R63ti7KmPrc2vAOxm8bifWds4ofOq/CQaj6CmN+ND
+         R6cFeJMFeTxcxVAsLJ1d4eASykfpPd0oDR5Gs8CjnP/xKySECG3jQKLR1NJl9F3PcSQM
+         XTRmtZUSazzYErvFdQY4y9k9wPRsSoDDWcoa6JM8+4s6wqX3Ooah/QZE4S50E8v3EdFO
+         MsVZ6FyXE3cNvXmdi1eXu9cclI1SCguRHTYEZ1mkJ7Cxz3dljQbmp2pz+wKid6inCJxr
+         NxZzoOsvqWUrlYnFXF31R1QyzC3q9GLrJDQpKmkrQD1mFMrw27DRppoyzBjYJTSxrS4T
+         QwyQ==
+X-Gm-Message-State: AOAM530LwmHJzZ6K67z8PT3xZxjM0r32ngLKlCxtIbi4K88F9NNmDxKt
+        JtcHESYm9youi92AV0FhsDcQCx6ZDS+PJvrYJFiCBg==
+X-Google-Smtp-Source: ABdhPJwgB0TnW1VjXBlaMl6cHb/t+9CrkGOL3PBxBmLXFG83NcAttneComJazLR0qQ/0pGpbtjvvvjluJNY70x4qme8=
+X-Received: by 2002:a05:6102:3ece:: with SMTP id n14mr1827009vsv.55.1635613194472;
+ Sat, 30 Oct 2021 09:59:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Dear Friend,
-To:     linux-samsung-soc@vger.kernel.org
-From:   "Wahid Majrooh" <wnf@sendayan.com.my>
-Date:   Wed, 27 Oct 2021 22:03:33 +0700
-Reply-To: wfnngaf@gmail.com
+References: <20211028183527.3050-1-semen.protsenko@linaro.org>
+ <20211028183527.3050-8-semen.protsenko@linaro.org> <1ad6b625-4388-bc78-e258-eae0b9357b96@roeck-us.net>
+ <CAPLW+4kphtac24fcpVUENAMUAdHp2fkzJ0N_r_63Soq6R2VZBg@mail.gmail.com> <7c9a8dd4-7607-55a2-3d65-a445fa246667@roeck-us.net>
+In-Reply-To: <7c9a8dd4-7607-55a2-3d65-a445fa246667@roeck-us.net>
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+Date:   Sat, 30 Oct 2021 19:59:42 +0300
+Message-ID: <CAPLW+4kTANfSaw5g=rnJUJTMcT_J1Z8ju09kzmAPE70U_8KWDQ@mail.gmail.com>
+Subject: Re: [PATCH 7/7] watchdog: s3c2410: Let kernel kick watchdog
+To:     Guenter Roeck <linux@roeck-us.net>
+Cc:     Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-watchdog@vger.kernel.org,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dear Friend,
+On Sat, 30 Oct 2021 at 18:14, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> On 10/30/21 7:29 AM, Sam Protsenko wrote:
+> > On Fri, 29 Oct 2021 at 03:30, Guenter Roeck <linux@roeck-us.net> wrote:
+> >>
+> >> On 10/28/21 11:35 AM, Sam Protsenko wrote:
+> >>> When "tmr_atboot" module param is set, the watchdog is started in
+> >>> driver's probe. In that case, also set WDOG_HW_RUNNING bit to let
+> >>> watchdog core driver know it's running. This way wathcdog core can kick
+> >>> the watchdog for us (if CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED option is
+> >>> enabled), until user space takes control.
+> >>>
+> >>> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> >>> ---
+> >>>    drivers/watchdog/s3c2410_wdt.c | 26 +++++++++++++++-----------
+> >>>    1 file changed, 15 insertions(+), 11 deletions(-)
+> >>>
+> >>> diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
+> >>> index ca082b1226e3..9af014ff1468 100644
+> >>> --- a/drivers/watchdog/s3c2410_wdt.c
+> >>> +++ b/drivers/watchdog/s3c2410_wdt.c
+> >>> @@ -732,6 +732,21 @@ static int s3c2410wdt_probe(struct platform_device *pdev)
+> >>>        wdt->wdt_device.bootstatus = s3c2410wdt_get_bootstatus(wdt);
+> >>>        wdt->wdt_device.parent = dev;
+> >>>
+> >>> +     /*
+> >>> +      * If "tmr_atboot" param is non-zero, start the watchdog right now. Also
+> >>> +      * set WDOG_HW_RUNNING bit, so that watchdog core can kick the watchdog.
+> >>> +      *
+> >>> +      * If we're not enabling the watchdog, then ensure it is disabled if it
+> >>> +      * has been left running from the bootloader or other source.
+> >>> +      */
+> >>> +     if (tmr_atboot && started == 0) {
+> >>> +             dev_info(dev, "starting watchdog timer\n");
+> >>> +             s3c2410wdt_start(&wdt->wdt_device);
+> >>> +             set_bit(WDOG_HW_RUNNING, &wdt->wdt_device.status);
+> >>> +     } else if (!tmr_atboot) {
+> >>> +             s3c2410wdt_stop(&wdt->wdt_device);
+> >>> +     }
+> >>> +
+> >>
+> >> This doesn't cover the case where the watchdog is already enabled by the BIOS.
+> >> In that case, WDOG_HW_RUNNING won't be set, and the watchdog will time out
+> >> if the userspace handler is not loaded fast enough. The code should consistently
+> >> set WDOG_HW_RUNNING if the watchdog is running.
+> >>
+> >
+> > As I understand, in the case when bootloader started the watchdog, the
+> > driver just stops it. You can see it in the code you replied to.
+> >
+> >      } else if (!tmr_atboot) {
+> >              s3c2410wdt_stop(&wdt->wdt_device);
+> >
+> > In other words, having "tmr_atboot" module param makes it irrelevant
+> > whether bootloader enabled WDT or no.
+> >
+>
+> Sure, but I am concerned about "if (tmr_atboot && started)", which doesn't
+> set WDOG_HW_RUNNING with your current code, and I was looking for something
+> like
+>
+>         if (tmr_atboot) {
+>                 if (!started) {
+>                         dev_info(dev, "starting watchdog timer\n");
+>                         s3c2410wdt_start(&wdt->wdt_device);
+>                 }
+>                 set_bit(WDOG_HW_RUNNING, &wdt->wdt_device.status);
+>         } else {
+>                 s3c2410wdt_stop(&wdt->wdt_device);
+>         }
+>
 
-I am writing to you to make a proposal regarding Investing in your
-country. I am proposing to you a business development Investment in
-housing and health sector or any other sector you can recommend. My name
-is Wahid Majrooh. Former  acting Minister of Public Health of
-Afghanistan.
+Wow, I really overlooked that case. Nice catch! Not having '} else {'
+section is vicious...
 
+Though if started != 0, it means s3c2410wdt_set_heartbeat() failed to
+set wdd->timeout, and without that the watchdog core won't be able to
+calculate correctly ping interval in watchdog_next_keepalive(), and
+WDOG_HW_RUNNING bit won't do much good, right? So I'll probably just
+call s3c2410wdt_stop() in that case, to be on the safe side.
 
-Sincerely
+Also this 'started' variable name is misleading, I'll convert it to
+"bool timeout_ok" while at it.
 
-Wahid
+> Guenter
