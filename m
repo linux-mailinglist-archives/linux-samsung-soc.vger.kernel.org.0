@@ -2,78 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 553244420B8
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Nov 2021 20:22:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62D5C4420ED
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Nov 2021 20:35:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232549AbhKATYc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 1 Nov 2021 15:24:32 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:35486 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbhKATYc (ORCPT
+        id S230028AbhKATiP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 1 Nov 2021 15:38:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41200 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229933AbhKATiI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 1 Nov 2021 15:24:32 -0400
-Received: by mail-oi1-f181.google.com with SMTP id x8so22132018oix.2;
-        Mon, 01 Nov 2021 12:21:58 -0700 (PDT)
+        Mon, 1 Nov 2021 15:38:08 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65870C061714
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Nov 2021 12:35:34 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id w15so68044102edc.9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 01 Nov 2021 12:35:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IHx+6RyAT00bbPl2zwH9JrS2kr0JH1+UQLDTyQafWP0=;
+        b=KyHC/2sMIjaigeVOlTGEGijkFCjfxxTwxhKSBqFgKNJl8gzl+JgEnm3ZVQRF6GoH6M
+         N93vex8ipcoeTJp3V6JdsA42l82+4Zf+2Xedthdz6ZmdGKVSwpMuE422AsiAGgt/WUOM
+         xmwtDwGMv9Dz/J9rKlAagS4nZ1evh/kgJTLKFMmgeXDKPDUqLeDCTPcaqSSV5CnkYfo6
+         wQ+7TEz+11owwdU922VEC3FuTGzcAK/B1L2ZH21Q3Jl6QySTTiMVgUSNwkDlsvl2U31U
+         NTwhWWFcROhYuh5KJmZLQU+hQMbTKY8ZZG1hzQrhS8Q9tYP3KaePClGEYbHTapzvdXmg
+         k3pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CK8bDl/UZF3iJElpM0AUZ8j3XZuMtTVDa42QmfBmzIg=;
-        b=iGBGHlowYwzp8ZLK5CoWRa0m2noAmcSFOdV0p5NkbKRxGyHi2CSNI6PhO8cFsSaJSZ
-         iizLeyJeSJ2MxinriMdka/Jmj9lEB4VkECYO39t9bN7Z8SVHQKPnvGndACCLaHb4KiOG
-         9GWgInej3/5SJ3t4gCUvQxTZ1or965PL+3c+Z7Jm6bwfuxSMzPe4hq/4VUc4Az8Ows29
-         gTYNFZzNhXyJHH50m0On/xSZoZGoYMxiT0ghlyKAnnY/CPjvinBUet51Ff2ILW9AgAJj
-         hSpWOyhaVHe3Q3xsEzKBe7JItkzoohAcGdBcd1Bs/I6v3lTHH0hwIJX9dfG13nZhpIfy
-         e6hQ==
-X-Gm-Message-State: AOAM5308mz+LiUtdkHbjyi/dcEDJelfqEvwl04xmzCxAAj1/jVdsq3le
-        qlDSGduQKuEEWblKuwEKyzgZlP/+cQ==
-X-Google-Smtp-Source: ABdhPJxbovHOnNGmkHJoaK9iKIkmrwObE/xyfVNB/TKcn30ifdXMxz2LnyePis97GkWQgLPBIywSuA==
-X-Received: by 2002:a05:6808:3d2:: with SMTP id o18mr769126oie.121.1635794518037;
-        Mon, 01 Nov 2021 12:21:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id bi40sm569733oib.51.2021.11.01.12.21.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IHx+6RyAT00bbPl2zwH9JrS2kr0JH1+UQLDTyQafWP0=;
+        b=1qiUZPjVFgR7xKIIK74K0L7dYkHe2k21p1SWhO5mGExD1KOs/DVUe1PTllrh5dtW6U
+         hoZ5deU3ljfpIjG+7PZfwMBQRny+2W8zi9woAQkcEx7wD5UIitRlJi9jv55gBxX+qYu3
+         t7/lgP+8AIkWoiaIwAJvGJW8gpohFlzS/3GIiBoV5DQlvQdjIqaA9s1wq8HTIHjf2ZF6
+         FsCjlg+UNamVVE38C9Dyx9mshVw510gFNL/vjZDjuy9Kbgvszz38snWBpyKS+x+2YyQq
+         NXvZlPOb8hBBr0DifsEJDwnrMYhGo+uMkT2cJ3YG6N85rPTOEDZZH+GWDMQTFPexhomM
+         WrWg==
+X-Gm-Message-State: AOAM531+NxbSesilF6HIIW61wS0kHXTYtMMVrkomVqpb7UqUrp0HCHN+
+        K3JiUkts6bYk5sVdpWQMxS1asw==
+X-Google-Smtp-Source: ABdhPJyYEGncnTnzkLTin5kRwPLyQGpRlYP737W+Tw3n8ODVeVmxndxYj5KOPtogv8tmWGduU4D2QA==
+X-Received: by 2002:a17:906:c1c9:: with SMTP id bw9mr38931001ejb.3.1635795332945;
+        Mon, 01 Nov 2021 12:35:32 -0700 (PDT)
+Received: from localhost ([31.134.121.151])
+        by smtp.gmail.com with ESMTPSA id kw5sm7164357ejc.110.2021.11.01.12.35.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 12:21:57 -0700 (PDT)
-Received: (nullmailer pid 869326 invoked by uid 1000);
-        Mon, 01 Nov 2021 19:21:56 -0000
-Date:   Mon, 1 Nov 2021 14:21:56 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Sam Protsenko <semen.protsenko@linaro.org>
-Cc:     devicetree@vger.kernel.org,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mon, 01 Nov 2021 12:35:32 -0700 (PDT)
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+To:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v2 01/12] dt-bindings: watchdog: Require
- samsung,syscon-phandle for Exynos7
-Message-ID: <YYA+VH5PLSFvq1H0@robh.at.kernel.org>
-References: <20211031122216.30212-1-semen.protsenko@linaro.org>
- <20211031122216.30212-2-semen.protsenko@linaro.org>
+Subject: [PATCH 0/2] clocksource: exynos_mct: Enable MCT on ARM64
+Date:   Mon,  1 Nov 2021 21:35:29 +0200
+Message-Id: <20211101193531.15078-1-semen.protsenko@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211031122216.30212-2-semen.protsenko@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 31 Oct 2021 14:22:05 +0200, Sam Protsenko wrote:
-> Exynos7 watchdog driver is clearly indicating that its dts node must
-> define syscon phandle property. That was probably forgotten, so add it.
-> 
-> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
-> Fixes: 2b9366b66967 ("watchdog: s3c2410_wdt: Add support for Watchdog device on Exynos7")
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
-> Changes in v2:
->   - Added R-b tag by Krzysztof Kozlowski
->   - Added "Fixes" tag
-> 
->  Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
+This is re-submission of Marek Szyprowski patches, which were sent
+earlier [1], but weren't applied for some reason. Those two patches look
+helpful and benign:
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+  - [PATCH 1/2]: cleanup MCT irqs setting up
+  - [PATCH 2/2]: enable MCT on ARM64
+
+I'm mostly interested in [PATCH 2/2], which allows one to test MCT on
+Exynos850 (architected timer works fine on Exynos850, but it's nice to
+have MCT for wakeup and testing too). But cleanup one seems desirable as
+well, so sending both.
+
+[PATCH 2/2] commit message was rewritten to provide new reasoning and
+background, as original commit message was related to [1] series.
+
+[1] https://patchwork.kernel.org/project/linux-samsung-soc/cover/20181018095708.1527-1-m.szyprowski@samsung.com/
+
+Marek Szyprowski (2):
+  clocksource: exynos_mct: Refactor resources allocation
+  arm64: platform: Enable Exynos Multi-Core Timer driver
+
+ arch/arm64/Kconfig.platforms     |  1 +
+ drivers/clocksource/exynos_mct.c | 50 +++++++++++++++++++-------------
+ 2 files changed, 31 insertions(+), 20 deletions(-)
+
+-- 
+2.30.2
+
