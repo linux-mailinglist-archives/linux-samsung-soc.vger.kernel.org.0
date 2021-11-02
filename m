@@ -2,222 +2,180 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A381442444
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Nov 2021 00:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25918442597
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Nov 2021 03:20:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231501AbhKAXrx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 1 Nov 2021 19:47:53 -0400
-Received: from mailout4.samsung.com ([203.254.224.34]:33954 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231639AbhKAXrs (ORCPT
+        id S230460AbhKBCWp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 1 Nov 2021 22:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230333AbhKBCWo (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 1 Nov 2021 19:47:48 -0400
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20211101234513epoutp04bffff44d9fa5b2269a052c9670fd8a07~zkNAkvr7f1736317363epoutp04L
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Nov 2021 23:45:13 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20211101234513epoutp04bffff44d9fa5b2269a052c9670fd8a07~zkNAkvr7f1736317363epoutp04L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1635810313;
-        bh=ru+uOL2q5VmxNAOoqGn5+BJ/Rhwo/jGdnJB8swVwP1A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=d4jDYuRJxeg+vZsQwiBSq48zVfVf9Ny+493QhbK2Kcx0QrmNi57F6aXW4UHsARMRZ
-         kNxgKR7U9DD6PusVuI61SUYtFqD/S1KdLmV8ycMxybkQLmVQTYo2UYgpEnHQw4aBQy
-         CJMQ/PG1tqTi3pqbWSVPCQIPt8VSm7WSsraRcKXM=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas2p2.samsung.com (KnoxPortal) with ESMTP id
-        20211101234512epcas2p2469a6acb607d7d5ad172616d912341a5~zkM-_r7Ev0124001240epcas2p2c;
-        Mon,  1 Nov 2021 23:45:12 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.36.102]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4HjqQT2qJWz4x9Q7; Mon,  1 Nov
-        2021 23:45:05 +0000 (GMT)
-Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
-        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        6D.6E.51767.00C70816; Tue,  2 Nov 2021 08:45:04 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
-        20211101234503epcas2p2502c113c1821ecb85faf959d059f26c6~zkM3qi7Da0124001240epcas2p2_;
-        Mon,  1 Nov 2021 23:45:03 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20211101234503epsmtrp17e470317d934e667d3dfb8b36268ee11~zkM3pt69r0970709707epsmtrp1O;
-        Mon,  1 Nov 2021 23:45:03 +0000 (GMT)
-X-AuditID: b6c32a45-45dff7000000ca37-00-61807c00d44a
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        78.9C.08738.FFB70816; Tue,  2 Nov 2021 08:45:03 +0900 (KST)
-Received: from localhost.localdomain (unknown [12.36.155.123]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20211101234503epsmtip1690c433a5af41bb27e0d3ee9ba098002~zkM3YkT252653626536epsmtip1S;
-        Mon,  1 Nov 2021 23:45:03 +0000 (GMT)
-From:   Youngmin Nam <youngmin.nam@samsung.com>
-To:     krzysztof.kozlowski@canonical.com, will@kernel.org,
-        mark.rutland@arm.com, daniel.lezcano@linaro.org
-Cc:     tglx@linutronix.de, linux-kernel@vger.kernel.org,
+        Mon, 1 Nov 2021 22:22:44 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3695FC061766
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Nov 2021 19:20:10 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id h16so13257943qtk.0
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 01 Nov 2021 19:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=TeHGklbsWJ2iSzr/5MHFyU8553eNgPnreRe65lH6NhU=;
+        b=BZwfWggd+/dvjEMDdNmiEIqpxvWCv6b4m28LKY5geUgyiIj794SoJpPfXVxERVaEI9
+         tLyML6H4F7sl5fxcmB6LPxYyUJJsbKaQOIUz8Zvn6hRiYi51XMqVI83OsGive+XfWcn3
+         QajSdbJixF+6l492FHi5cEgzbKkIc9vef/TzbcUIkE0UQ9vqThJI8iFO/cpHNYmSnpKp
+         ZiLI8y6C/rhnu2m9dolNE/THLnOqAcomq3TkQL8i+M2q2r+PlvMFS8VpxIirV6daZOf0
+         Nf5K8geoGMhdgWWgwwcXrU+VTHG3Yo7TDJv79ZLb44O1ZkewXOhJ95WSBN9wKm9t0uke
+         ittA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=TeHGklbsWJ2iSzr/5MHFyU8553eNgPnreRe65lH6NhU=;
+        b=ZLRAFdpP+PfdXgRkT6VcKa5pWU7SHomk8A5LSpUCzBkXxtRtdN1RRGfhC4qAtZq4wv
+         8lOJXqRi5P/MIfLZTcRBEMOAUJYXra7gndz1D00/w2oY4TwpgHagPGilXn6lfILdMSKZ
+         mHCBLQG+1PCnshYiGEW8yFsAWewP43jtVXERgM9oNA31NVnm5JsLXZX6yca1R2POZvxX
+         brTnOkMLsefnc36BYU+2HLPo0NMNxdeWBWcphmWHJsdWqRlZPNWgWhISJwJDdm5yGc9f
+         olcRfU2P+OPU6ArNnlbpHGrFPRhCKk6X1+gD629yTk5t8vHXVxsvS6b+mNRnierzRdKO
+         z9Hw==
+X-Gm-Message-State: AOAM531pU5tEfY/6b8/JAYl2gktC1VtxqRUcNqjM9QKXmi1bh/9APBoP
+        bbrJvllaqAGC4W+pY38Ju2sCjg==
+X-Google-Smtp-Source: ABdhPJx/+fhidZPfS99qL6EEqlinvO5UtYVgf0uJS1+T+dApyVeMcfKWjGbA05SOC+8r94GMNJ5T6Q==
+X-Received: by 2002:a05:622a:2c3:: with SMTP id a3mr9430222qtx.3.1635819609361;
+        Mon, 01 Nov 2021 19:20:09 -0700 (PDT)
+Received: from fedora ([187.64.134.142])
+        by smtp.gmail.com with ESMTPSA id v16sm1371671qtw.90.2021.11.01.19.20.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Nov 2021 19:20:09 -0700 (PDT)
+Date:   Mon, 1 Nov 2021 23:20:03 -0300
+From:   =?iso-8859-1?Q?Ma=EDra?= Canal <maira.canal@usp.br>
+To:     inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        airlied@linux.ie, daniel@ffwll.ch,
+        krzysztof.kozlowski@canonical.com
+Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, pullip.cho@samsung.com,
-        hoony.yu@samsung.com, hajun.sung@samsung.com,
-        myung-su.cha@samsung.com, kgene@kernel.org,
-        Youngmin Nam <youngmin.nam@samsung.com>
-Subject: [PATCH v2 2/2] dt-bindings: timer: samsung,s5e99xx-mct: Document
- s5e99xx-mct bindings
-Date:   Tue,  2 Nov 2021 09:11:22 +0900
-Message-Id: <20211102001122.27516-3-youngmin.nam@samsung.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211102001122.27516-1-youngmin.nam@samsung.com>
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/exynos: Replace legacy gpio interface for gpiod interface
+Message-ID: <YYCgU9BfmnCgYIvO@fedora>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNJsWRmVeSWpSXmKPExsWy7bCmuS5DTUOiQescLot5n2UtmvZfYrY4
-        vvY1q0X/49fMFhvf/mCy2PT4GqvF5V1z2CxmnN/HZLH0+kUmi8WPVzBZ/Os9yGixedNUZouW
-        O6YWiw98Ynfg81gzbw2jx6yGXjaPTas62TzuXNvD5vHu3Dl2j81L6j36tqxi9Pi8SS6AIyrb
-        JiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJIS8xN9VWycUnQNctMwfoaiWFssSc
-        UqBQQGJxsZK+nU1RfmlJqkJGfnGJrVJqQUpOgXmBXnFibnFpXrpeXmqJlaGBgZEpUGFCdsbv
-        pyvZCi5IV6zd/pS5gXGCSBcjJ4eEgInE8ie9zF2MXBxCAjsYJW7PmcACkhAS+MQo8W91OoT9
-        mVFidpskTMPa7gYmiIZdjBKdf95AdQMVrf1+hhWkik1AV2LbiX+MILaIQKbEhy+fWEGKmAUW
-        MElcOPyUHSQhLJAg0b7rBDOIzSKgKjF/5VUmEJtXwFZi44wNrBDr5CWO/OoEq+EUsJO49beJ
-        BaJGUOLkzCdgNjNQTfPW2WBXSAis5JC4d2M7VLOLxKs9TxkhbGGJV8e3sEPYUhIv+9ug7HqJ
-        xduWQjVPYJSYv+kDVMJYYtazdqBmDqANmhLrd+mDmBICyhJHbkHt5ZPoOPyXHSLMK9HRJgTR
-        qCbxa8oGqK0yErsXr2CGsD0k3j9YzQYJrImMEvf3zGOZwKgwC8k7s5C8Mwth8QJG5lWMYqkF
-        xbnpqcVGBYbwGE7Oz93ECE7FWq47GCe//aB3iJGJg/EQowQHs5IIb8SFmkQh3pTEyqrUovz4
-        otKc1OJDjKbAwJ7ILCWanA/MBnkl8YYmlgYmZmaG5kamBuZK4ryWotmJQgLpiSWp2ampBalF
-        MH1MHJxSDUyGP3im5nxe9eW/S8eMWGGL9p3CR1Q/WFju3794v3z98mgum7USJ0tO9s1z8ypd
-        e/S0st7EnIWt2fff3bMsObjY//PeO5/a3vCfnSEStnTvbrdmhrS1UeERxgunrTc953HvfX/B
-        12VdAofuqv9Islk/62Hom9fxh56l7dvw/qPUy+N/14YybuDcudNv+eJvD61XVEQc2eycsNQq
-        f533jLJA0ekOc88sXS14Ya3WP2t3zlX1NWsPS358Oi9a43eKqfXGJULcB/qqPG57zVpvrHF4
-        8tW5uZoFIssuSwQ/WLHvN+fp3imOiqaTP+z5efFE4uxN+UU5R/xsd/k5vFt7vMvhiGZn7Rnd
-        7tkKlTerHijVrlNiKc5INNRiLipOBADR5fzCTgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOLMWRmVeSWpSXmKPExsWy7bCSnO7/6oZEgx2dKhbzPstaNO2/xGxx
-        fO1rVov+x6+ZLTa+/cFksenxNVaLy7vmsFnMOL+PyWLp9YtMFosfr2Cy+Nd7kNFi86apzBYt
-        d0wtFh/4xO7A57Fm3hpGj1kNvWwem1Z1snncubaHzePduXPsHpuX1Hv0bVnF6PF5k1wARxSX
-        TUpqTmZZapG+XQJXxu+nK9kKLkhXrN3+lLmBcYJIFyMnh4SAicTa7gamLkYuDiGBHYwSR+63
-        sUIkZCRur7wMZQtL3G85wgpR9JFR4t6CXywgCTYBXYltJ/4xgtgiArkSHQfmMIIUMQusYpJ4
-        0nEKrEhYIE7iyKMmMJtFQFVi/sqrTCA2r4CtxMYZG6A2yEsc+dXJDGJzCthJ3PoLUS8EVPOg
-        /QIjRL2gxMmZT8DizED1zVtnM09gFJiFJDULSWoBI9MqRsnUguLc9NxiwwKjvNRyveLE3OLS
-        vHS95PzcTYzguNHS2sG4Z9UHvUOMTByMhxglOJiVRHgjLtQkCvGmJFZWpRblxxeV5qQWH2KU
-        5mBREue90HUyXkggPbEkNTs1tSC1CCbLxMEp1cCUvcqrVo9V7cfm+AM928qS9r4Lu+3X8MQt
-        0vvGBCkjeaWVIZk8vIZv3p84xu4XGMc0Z29dh1Tnv5m9XMJ8D2Ui2bT1pCMXTpPgfZz6r36m
-        C9elCOW4GAPuCXPna+nN7ddsEwwunXFMf0+HuP1T4bMTT9j8PvbqVPl5/gs+/uIie/imFHiL
-        mMuVs4rvPHLATvWH/hK3CQ1RtxZOnnJv/749W6cHZHqz5gutDOsvnXTwibLm9h+v15zfGdOQ
-        l3lE/kzE5X5f9W2v5p29s+BmmadR48l7k/z3/btbf05k1r3vh94zq3hnPhbj/rM5VtJFblV2
-        F1e+yeFlE+90n9iq8zhviWXurLWfk1ItfecaBJxSYinOSDTUYi4qTgQAjFsOdgoDAAA=
-X-CMS-MailID: 20211101234503epcas2p2502c113c1821ecb85faf959d059f26c6
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20211101234503epcas2p2502c113c1821ecb85faf959d059f26c6
-References: <20211102001122.27516-1-youngmin.nam@samsung.com>
-        <CGME20211101234503epcas2p2502c113c1821ecb85faf959d059f26c6@epcas2p2.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add the MCT version 2 bindings for the s5e99xx SoC from samsung.
+Considering the current transition of the GPIO subsystem, remove all
+dependencies of the legacy GPIO interface (linux/gpio.h and linux
+/of_gpio.h) and replace it with the descriptor-based GPIO approach.
 
-Signed-off-by: Youngmin Nam <youngmin.nam@samsung.com>
+Signed-off-by: Maíra Canal <maira.canal@usp.br>
 ---
- .../bindings/timer/samsung,s5e99xx-mct.yaml   | 91 +++++++++++++++++++
- 1 file changed, 91 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/timer/samsung,s5e99xx-mct.yaml
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c | 42 +++++++++----------------
+ 1 file changed, 14 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/timer/samsung,s5e99xx-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,s5e99xx-mct.yaml
-new file mode 100644
-index 000000000000..c887c7797ca8
---- /dev/null
-+++ b/Documentation/devicetree/bindings/timer/samsung,s5e99xx-mct.yaml
-@@ -0,0 +1,91 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/timer/samsung,s5e99xx-mct.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung Exynos SoC Multi Core Timer (MCT)
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzk@kernel.org>
-+
-+description: |+
-+  The Samsung's Multi Core Timer (MCT) version 2 module includes
-+  one 64-bit FRC(Free Running Counter) and 12 comparators.
-+  The FRC serves up-counter and starts running at power-on.
-+  The 12 comparators use the FRC value to produce interrupts.
-+  They will produce interrupts when their internal value is matched with the FRC value.
-+  Theses interrupts can be used as local timer interrupt of each CPU.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - samsung,s5e99xx-mct
-+
-+  clocks:
-+    items:
-+      - description: OSC clock
-+      - description: PCLK clock
-+      - description: RTC clock(optional)
-+    minItems: 2
-+
-+  clock-names:
-+    items:
-+      - const: fin_pll
-+      - const: mct
-+      - const: rtc
-+    minItems: 2
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    description: |
-+      Interrupts should be put in specific order.
-+      0: Local Timer Interrupt 0
-+      1: Local Timer Interrupt 1
-+      2: Local Timer Interrupt 2
-+      3: ..
-+      4: ..
-+      i: Local Timer Interrupt n
-+    minItems: 1              #  1 local timer interrupts
-+    maxItems: 12             # 12 local timer interrupts
-+
-+  div:
-+    description: If present, OSC clock freqency will be divided with this value.
-+      And the divided value will be provided to MCT module.
-+
-+required:
-+  - compatible
-+  - clock-names
-+  - clocks
-+  - interrupts
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    // In this example, the IP contains 12 local timers, using separate interrupts,
-+    // so 12 local timer interrupts have been specified,
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    timer@10050000 {
-+        compatible = "samsung,s5e99xx-mct";
-+        reg = <0x10050000 0x800>;
-+        clocks = <&clock 1>, <&clock 10>;
-+        clock-names = "fin_pll", "mct";
-+
-+        interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 61 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 63 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 66 IRQ_TYPE_LEVEL_HIGH>;
-+    };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+index 8d137857818c..b0b1acb7e712 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+@@ -13,7 +13,6 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/irq.h>
+ #include <linux/of_device.h>
+-#include <linux/of_gpio.h>
+ #include <linux/of_graph.h>
+ #include <linux/phy/phy.h>
+ #include <linux/regulator/consumer.h>
+@@ -265,7 +264,7 @@ struct exynos_dsi {
+ 	struct clk **clks;
+ 	struct regulator_bulk_data supplies[2];
+ 	int irq;
+-	int te_gpio;
++	struct gpio_desc *te_gpio;
+ 
+ 	u32 pll_clk_rate;
+ 	u32 burst_clk_rate;
+@@ -1298,14 +1297,14 @@ static void exynos_dsi_enable_irq(struct exynos_dsi *dsi)
+ {
+ 	enable_irq(dsi->irq);
+ 
+-	if (gpio_is_valid(dsi->te_gpio))
+-		enable_irq(gpio_to_irq(dsi->te_gpio));
++	if (dsi->te_gpio)
++		enable_irq(gpiod_to_irq(dsi->te_gpio));
+ }
+ 
+ static void exynos_dsi_disable_irq(struct exynos_dsi *dsi)
+ {
+-	if (gpio_is_valid(dsi->te_gpio))
+-		disable_irq(gpio_to_irq(dsi->te_gpio));
++	if (dsi->te_gpio)
++		disable_irq(gpiod_to_irq(dsi->te_gpio));
+ 
+ 	disable_irq(dsi->irq);
+ }
+@@ -1335,29 +1334,20 @@ static int exynos_dsi_register_te_irq(struct exynos_dsi *dsi,
+ 	int ret;
+ 	int te_gpio_irq;
+ 
+-	dsi->te_gpio = of_get_named_gpio(panel->of_node, "te-gpios", 0);
+-	if (dsi->te_gpio == -ENOENT)
+-		return 0;
+-
+-	if (!gpio_is_valid(dsi->te_gpio)) {
+-		ret = dsi->te_gpio;
+-		dev_err(dsi->dev, "cannot get te-gpios, %d\n", ret);
++	dsi->te_gpio = devm_gpiod_get_optional(dsi->dev, "te", GPIOD_IN);
++	if (IS_ERR(dsi->te_gpio)) {
++		dev_err(dsi->dev, "gpio request failed with %ld\n",
++				PTR_ERR(dsi->te_gpio));
+ 		goto out;
+ 	}
+ 
+-	ret = gpio_request(dsi->te_gpio, "te_gpio");
+-	if (ret) {
+-		dev_err(dsi->dev, "gpio request failed with %d\n", ret);
+-		goto out;
+-	}
+-
+-	te_gpio_irq = gpio_to_irq(dsi->te_gpio);
++	te_gpio_irq = gpiod_to_irq(dsi->te_gpio);
+ 
+ 	ret = request_threaded_irq(te_gpio_irq, exynos_dsi_te_irq_handler, NULL,
+ 				   IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN, "TE", dsi);
+ 	if (ret) {
+ 		dev_err(dsi->dev, "request interrupt failed with %d\n", ret);
+-		gpio_free(dsi->te_gpio);
++		gpiod_put(dsi->te_gpio);
+ 		goto out;
+ 	}
+ 
+@@ -1367,10 +1357,9 @@ static int exynos_dsi_register_te_irq(struct exynos_dsi *dsi,
+ 
+ static void exynos_dsi_unregister_te_irq(struct exynos_dsi *dsi)
+ {
+-	if (gpio_is_valid(dsi->te_gpio)) {
+-		free_irq(gpio_to_irq(dsi->te_gpio), dsi);
+-		gpio_free(dsi->te_gpio);
+-		dsi->te_gpio = -ENOENT;
++	if (dsi->te_gpio) {
++		free_irq(gpiod_to_irq(dsi->te_gpio), dsi);
++		gpiod_put(dsi->te_gpio);
+ 	}
+ }
+ 
+@@ -1745,9 +1734,6 @@ static int exynos_dsi_probe(struct platform_device *pdev)
+ 	if (!dsi)
+ 		return -ENOMEM;
+ 
+-	/* To be checked as invalid one */
+-	dsi->te_gpio = -ENOENT;
+-
+ 	init_completion(&dsi->completed);
+ 	spin_lock_init(&dsi->transfer_lock);
+ 	INIT_LIST_HEAD(&dsi->transfer_list);
 -- 
-2.33.0
+2.31.1
 
