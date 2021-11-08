@@ -2,62 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B252447AD2
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Nov 2021 08:27:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B836447DF3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  8 Nov 2021 11:28:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234345AbhKHH3l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 8 Nov 2021 02:29:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235433AbhKHH3k (ORCPT
+        id S237941AbhKHKbe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 8 Nov 2021 05:31:34 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:34342 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237913AbhKHKbd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 8 Nov 2021 02:29:40 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BE4C0613F5
-        for <linux-samsung-soc@vger.kernel.org>; Sun,  7 Nov 2021 23:26:56 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id r12so58628339edt.6
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 07 Nov 2021 23:26:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=gS+G2bXPLTc8QV9oSOsVFPfildfSifO+gabOlUjPn+8=;
-        b=PnTjqCg/4dLlfwZvkIw5TCFiXXqI7eQL3D+17+RauQ+gPkf2k9hY9S+Ii/M5IA0uoj
-         tcY9XkBE8UoWnMFVRIdA+q744Hmx7Z0JsFaVREssmf6KamM5Bd6A03cMP5bTAvPf1/y/
-         DwxXsJaTEuCfFdzSQFJTUHpZB56hO6UBVJPo7/S7fIQbraF2JB9fnNx0H/YOCyXyn5Fv
-         TpIbuoc9MhMDHEy5d5ztUWIHQVhdvbVN+KOKXsEiQg7QzXSruhiqF9yWAy+A70V6Qa0U
-         ve8aiam44Pcv5P2919T2rRvgnVW0nPh2s7GY8MWiotEmFwjxJpYnpgBFa5LZ/bTsndTX
-         N0eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=gS+G2bXPLTc8QV9oSOsVFPfildfSifO+gabOlUjPn+8=;
-        b=1mn1PzKyo1lx91onB4Y2bxpxz5lr8D64F8GQ2cuQz6KR0tqACgZ/Qe5i8tVmvaybSl
-         SJiS/8Ob5ElqS4Em8Ak8m8WYaYtlc6Wlq1kKoQSmpOo28UthekYzmaebKLdWBxhuqXae
-         A7PU4V37LA1qPMyfnaBOqTDeCVJ6Z3VCC8kcnjlMk/zKoBgyvrJqjrQCSsyWPmo5LUUT
-         kMc9KBkPXx04pd4SlkyX9hFT+COrMlTrE66FqhVKaJRaXWIv/9LIiwt7HUc/5UvbMfIc
-         Oyw2FfcpfgCjbhjbTP88QSMf0W8hGY/HUIpdzSqVeVd5px6F/FIirDwRlcB+mbfdTpoB
-         0vAg==
-X-Gm-Message-State: AOAM5337dAVXbBoDMPzQfpZYYurXtuX6heubX07IiaO4cM4tqVNs2bQD
-        r4Dusln4pcxDZ2X7d6pXh6AmkJqt1gptkmVadIpOrpkKajM=
-X-Google-Smtp-Source: ABdhPJz9Akl6xfGwwFGOOyIMXLWznjij6kDDSEQ53AjVdYeVh/nfgX+la012XOuUHhNctlqPhGJ9oR9znvMO/9Cv6/o=
-X-Received: by 2002:a50:930b:: with SMTP id m11mr83450378eda.133.1636356414537;
- Sun, 07 Nov 2021 23:26:54 -0800 (PST)
+        Mon, 8 Nov 2021 05:31:33 -0500
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 7500A21B01;
+        Mon,  8 Nov 2021 10:28:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1636367328; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=/iioiyH4Q966bbevxkXK56U3XXUi7baEWWvNDv45N6I=;
+        b=y2mnRHjthYiK1CtCkk4q71zzlkNuHVsebrPumY2Fu7DDVSrRnyO5GaTNtLwTi2xWYb/BSb
+        Rn69kVxMfbCSXHyInCxS9JxJMQIiUWfoMW5FhckULdu7fjBZqCfQJ/lUzBzsWz9gwqMxp3
+        lTFCBh6nknNSMYVqqqvdqFAhESuSw4Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1636367328;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=/iioiyH4Q966bbevxkXK56U3XXUi7baEWWvNDv45N6I=;
+        b=EwpwY9IHQCBU7TChVkU3KtD5D8ovEskvbAZPMYTuu+tpo3oPg6W7WVj2uxGV29yONBwiA5
+        uYgsfCzhBUU0XvBw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1D7FC13B37;
+        Mon,  8 Nov 2021 10:28:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id Y+crBuD7iGHPHQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 08 Nov 2021 10:28:48 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@linux.ie,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        krzysztof.kozlowski@canonical.com, oleksandr_andrushchenko@epam.com
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, xen-devel@lists.xenproject.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [RESEND PATCH 0/3] drm/{exynos,xen}: Implement gem_prime_mmap with drm_gem_prime_mmap()
+Date:   Mon,  8 Nov 2021 11:28:43 +0100
+Message-Id: <20211108102846.309-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Received: by 2002:a50:2501:0:0:0:0:0 with HTTP; Sun, 7 Nov 2021 23:26:54 -0800 (PST)
-Reply-To: mariaschaefler@gmx.com
-From:   Maria Schaefler <ziskoraa@gmail.com>
-Date:   Mon, 8 Nov 2021 07:26:54 +0000
-Message-ID: <CAJh0FjiDs5_oQE4K3AME-kH_RMPNXEEapYKvrR9As+S+Dzwh5Q@mail.gmail.com>
-Subject: MY HEART CHOOSE YOU.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Given my current state of health, I have decided to donate what I
-inherited from my late husband to you to help the poor and needy. I am
-Mrs Maria Schaefler,a 57years old dying woman. I was diagnosed for
-cancer about 2 years ago and I have few months to live according to
-medical experts. Email me for my directives
+(Resending the patchset from [1]. Most drivers have already been updated and
+only two drivers are left.)
+
+Replace all remaining implementations of struct drm_driver.gem_prime_mmap
+with use drm_gem_prime_mmap(). For each affected driver, put the mmap code
+into struct drm_gem_object_funcs.mmap. With the latter change in place,
+create struct file_operations via DEFINE_DRM_GEM_FOPS().
+
+As next steps, drivers can be converted to use drm_gem_prime_mmap() and
+drm_gem_mmap() (e.g., Tegra). The default mmap code in drm_gem_prime_mmap()
+can be pushed into affected drivers or a helper function. The gem_prime_mmap
+hook can probably be removed at some point.
+
+[1] https://lore.kernel.org/dri-devel/20210609112012.10019-1-tzimmermann@suse.de/
+
+Thomas Zimmermann (3):
+  drm/exynox: Implement mmap as GEM object function
+  drm/xen: Implement mmap as GEM object function
+  drm: Update documentation and TODO of gem_prime_mmap hook
+
+ Documentation/gpu/todo.rst                |  11 ---
+ drivers/gpu/drm/exynos/exynos_drm_drv.c   |  13 +--
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c |  20 +---
+ drivers/gpu/drm/exynos/exynos_drm_gem.c   |  43 ++-------
+ drivers/gpu/drm/exynos/exynos_drm_gem.h   |   5 -
+ drivers/gpu/drm/xen/xen_drm_front.c       |  16 +---
+ drivers/gpu/drm/xen/xen_drm_front_gem.c   | 108 +++++++++-------------
+ drivers/gpu/drm/xen/xen_drm_front_gem.h   |   7 --
+ include/drm/drm_drv.h                     |  11 ++-
+ 9 files changed, 64 insertions(+), 170 deletions(-)
+
+
+base-commit: 215295e7b0a3deb2015c6d6b343b319e4f6d9a1d
+prerequisite-patch-id: c2b2f08f0eccc9f5df0c0da49fa1d36267deb11d
+prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+--
+2.33.1
+
