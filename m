@@ -2,177 +2,131 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52C5644C1A8
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Nov 2021 13:56:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA96344D360
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Nov 2021 09:48:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbhKJM6u (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 10 Nov 2021 07:58:50 -0500
-Received: from smtp-out1.suse.de ([195.135.220.28]:42132 "EHLO
-        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231503AbhKJM6u (ORCPT
+        id S231951AbhKKIu7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 11 Nov 2021 03:50:59 -0500
+Received: from mailout4.samsung.com ([203.254.224.34]:23236 "EHLO
+        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232250AbhKKIu4 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 10 Nov 2021 07:58:50 -0500
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id B672921921;
-        Wed, 10 Nov 2021 12:56:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1636548961; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IbcrZNdGCCu9qg2Kk1Wawu7N5Sn+2bqvD1tsM0ThCa8=;
-        b=JSS7iyXOYhcE2A+amQG8b/os01cMRf22I3bMpMimqyssfIzQK5gq73EgXyOBEth6APqFZX
-        h+6QANyG5Vbpo+20BE+r66JYOsV3+8IVM3uuAWZbuqzvswBA/sABtNIdEMKrfF8KyD4jB8
-        E2GX6cX+y423i8iTn5hjvokpJH9iLHE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1636548961;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=IbcrZNdGCCu9qg2Kk1Wawu7N5Sn+2bqvD1tsM0ThCa8=;
-        b=bO+GELzAiQX+Aw4orrOC1ndtvb3iJCup5CUSgEtVCLg32h7dU1Y3X3CfeeD8tdJ9DZPj2U
-        AK8OfsFfx+HO2EDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7A2B713C13;
-        Wed, 10 Nov 2021 12:56:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id W9DjHGHBi2F2DAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 10 Nov 2021 12:56:01 +0000
-Message-ID: <91b6dafa-de34-d972-50bc-b401820b5ccb@suse.de>
-Date:   Wed, 10 Nov 2021 13:56:00 +0100
+        Thu, 11 Nov 2021 03:50:56 -0500
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20211111084803epoutp04b13cad44db688da972a57bdc8d372c9d~2caiDMyEh1538315383epoutp04w
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Nov 2021 08:48:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20211111084803epoutp04b13cad44db688da972a57bdc8d372c9d~2caiDMyEh1538315383epoutp04w
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1636620483;
+        bh=kuHscA9dGAXV0iGJRJxz1QoWJ7pHx7l378kunnn98Gs=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=Brxx7lbqRB/KrNDY51I5/ZzTyGSfhfRfFb8li//M3XxGzWjGDS1U306GPK1ggcox/
+         4a1TQ4UyaAz5ODVGBZtJayJF/C+YKFiR1++Wns+4HWgZW8zHeBVJMer+OV6ZAIrnfl
+         8mMNV91a+322Y2pfRmbBo97f7mEzksMLVb1RBZBA=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20211111084802epcas2p41354d9a870b3ff33f0990e325c8223ef~2cahWYhbj0326503265epcas2p4I;
+        Thu, 11 Nov 2021 08:48:02 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.36.91]) by
+        epsnrtp3.localdomain (Postfix) with ESMTP id 4Hqb2k4YSxz4x9Qc; Thu, 11 Nov
+        2021 08:47:58 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        33.15.10014.5B8DC816; Thu, 11 Nov 2021 17:47:49 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
+        20211111084749epcas2p37aca50307180bb44a8939b7ee33b28d0~2caVJXm5J2079220792epcas2p3s;
+        Thu, 11 Nov 2021 08:47:49 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20211111084749epsmtrp11b5395a8d364aff2d7d952416fc29a8a~2caVIrX6s2184421844epsmtrp1L;
+        Thu, 11 Nov 2021 08:47:49 +0000 (GMT)
+X-AuditID: b6c32a47-473ff7000000271e-72-618cd8b5302d
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        29.C8.08738.5B8DC816; Thu, 11 Nov 2021 17:47:49 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.51]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20211111084749epsmtip27b4a8ad29fc11449e26661e75ca209fe~2caU6ThXM1450214502epsmtip2i;
+        Thu, 11 Nov 2021 08:47:49 +0000 (GMT)
+From:   Jaewon Kim <jaewon02.kim@samsung.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Wolfram Sang <wsa@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
+        chanho61.park@samsung.com,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        Jaewon Kim <jaewon02.kim@samsung.com>
+Subject: [PATCH v2 0/2] i2c: exynos5: add support for ExynosAutov9 SoC
+Date:   Thu, 11 Nov 2021 17:43:25 +0900
+Message-Id: <20211111084327.106696-1-jaewon02.kim@samsung.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: [PATCH 3/3] drm: Update documentation and TODO of gem_prime_mmap
- hook
-Content-Language: en-US
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-samsung-soc@vger.kernel.org, jy0922.shim@samsung.com,
-        krzysztof.kozlowski@canonical.com, airlied@linux.ie,
-        sw0312.kim@samsung.com, oleksandr_andrushchenko@epam.com,
-        kyungmin.park@samsung.com, dri-devel@lists.freedesktop.org,
-        xen-devel@lists.xenproject.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20211108102846.309-1-tzimmermann@suse.de>
- <20211108102846.309-4-tzimmermann@suse.de>
- <YYujGLFf+spiXMil@phenom.ffwll.local>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <YYujGLFf+spiXMil@phenom.ffwll.local>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------1un6YQuZTKE0bDSxqwf0DnRw"
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpik+LIzCtJLcpLzFFi42LZdljTQnfrjZ5Eg1nzlCwu79e22NFwhNVi
+        49sfTBYdf78wWsw4v4/JonXvEXaL531A1t39cxkdODxmNfSyeWxa1cnmcefaHjaPvi2rGD0+
+        b5ILYI3KtslITUxJLVJIzUvOT8nMS7dV8g6Od443NTMw1DW0tDBXUshLzE21VXLxCdB1y8wB
+        OkVJoSwxpxQoFJBYXKykb2dTlF9akqqQkV9cYquUWpCSU2BeoFecmFtcmpeul5daYmVoYGBk
+        ClSYkJ2xqG8mY8Entor215fYGxiPsXYxcnJICJhILPo8iamLkYtDSGAHo8TdmTvYIZxPjBLP
+        z61lg3A+M0rcbrnD2MXIAday6rcSRHwXo8TFIzuYIZyPjBJ/5vwGm8smoC3xff1iMFtEoE6i
+        e1crI0gRs8AmoI4Ps9lAEsICbhInlr4Es1kEVCVW/tnFBGLzCthJdKxrhTpQXmLihHvsEHFB
+        iZMzn7CA2MxA8eats5khai6xSzxekwthu0hMXzSPBcIWlnh1fAs7hC0l8bK/jR3ig3qJrzcc
+        QO6REOhhlFjT9YsJosZe4tf0LawgNcwCmhLrd+lDlCtLHLkFtZVPouPwX6gpvBIdbUIQjWoS
+        96eeY4OwZSQmHVkJNdBD4ueif2BxIYFYiZ7Nh1knMMrPQvLLLCS/zELYu4CReRWjWGpBcW56
+        arFRgTE8TpPzczcxghOjlvsOxhlvP+gdYmTiYDzEKMHBrCTC+/1ST6IQb0piZVVqUX58UWlO
+        avEhRlNg6E5klhJNzgem5rySeEMTSwMTMzNDcyNTA3MlcV5L0exEIYH0xJLU7NTUgtQimD4m
+        Dk6pBqYtH6a1JG4zt5+7xEOed++5P0sPT+nde+zNxx3aRanx9zbO+H/gYVxn0O5Ald8zD5u/
+        /lFeWWP6o7Ov/mFi/Q7hfbKh7V9Wihduz1v/f9tEq2WODnsbo5d2Lf6xa96Ce4+Cln2b+MD8
+        GrvgpS2vooNqjposzLvKuap3f2SMc6JUg/rH6K2+9fMm5citl3MKWe85Py6NY+Hf1G9yWnNT
+        +w+Z/0m0NKturEt59+Cp857/1Ww3BBmWh9llZCg8UrZ3lTgbounp4u/ifsmS62n/65J5TyUD
+        zjY+dJnHbvakLLCMzzP49udNK37cXNVeuHHDRsts1+msk/uNg3kTr5REiMeFXbbkce2cuenS
+        vqVbzn1TYinOSDTUYi4qTgQAYdMijhUEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMLMWRmVeSWpSXmKPExsWy7bCSvO7WGz2JBnc+cVtc3q9tsaPhCKvF
+        xrc/mCw6/n5htJhxfh+TReveI+wWz/uArLv75zI6cHjMauhl89i0qpPN4861PWwefVtWMXp8
+        3iQXwBrFZZOSmpNZllqkb5fAlbGobyZjwSe2ivbXl9gbGI+xdjFycEgImEis+q3UxcjFISSw
+        g1Fixo8Gti5GTqC4jMTyZ31QtrDE/ZYjrBBF7xkl3h74yQ6SYBPQlvi+fjFYQkSgASjxbRET
+        SIJZYBujRFNDOYgtLOAmcWLpS7BJLAKqEiv/7AKr4RWwk+hY18oKsUFeYuKEe+wQcUGJkzOf
+        sEDMkZdo3jqbeQIj3ywkqVlIUgsYmVYxSqYWFOem5xYbFhjlpZbrFSfmFpfmpesl5+duYgSH
+        q5bWDsY9qz7oHWJk4mA8xCjBwawkwvv9Uk+iEG9KYmVValF+fFFpTmrxIUZpDhYlcd4LXSfj
+        hQTSE0tSs1NTC1KLYLJMHJxSDUwRi/YJvAo+ZPTqkpdhzIkzhpuNnuSq+LZK1nvs/CXJt4x5
+        gdHWuGVC85a5fIlgLK2seuH0kMnpmmYKy5JTRvs9z+aFbgpaE8ilXyq6cbLTHJZr/BFcJT+O
+        JLydcdkqjLvPVPu9mtSG1qObT7PyLLiVOXlV1zmu2OaKRcvMj+wr93ui4PHoV+XiKRwnZdZ8
+        sZ1YtGjFkYgLS0K+H9vAfcdu3vmNK08dMWs+v2964Wavjydd/n2o7f74UvjQse6X9yctadA5
+        /8GsrdcoYloDg9fC2HkdM98aaHR3dScaTXzhuY6prMd3oqguz/9gp4Q5Uut0Yh6+uVFsbOTe
+        MF/DVzXgw4E0/5VznH43sIl//vhViaU4I9FQi7moOBEAqG2f68YCAAA=
+X-CMS-MailID: 20211111084749epcas2p37aca50307180bb44a8939b7ee33b28d0
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20211111084749epcas2p37aca50307180bb44a8939b7ee33b28d0
+References: <CGME20211111084749epcas2p37aca50307180bb44a8939b7ee33b28d0@epcas2p3.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------1un6YQuZTKE0bDSxqwf0DnRw
-Content-Type: multipart/mixed; boundary="------------APu0kFdmYGIun6HoTLUqXH0N";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-samsung-soc@vger.kernel.org, jy0922.shim@samsung.com,
- krzysztof.kozlowski@canonical.com, airlied@linux.ie, sw0312.kim@samsung.com,
- oleksandr_andrushchenko@epam.com, kyungmin.park@samsung.com,
- dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org,
- linux-arm-kernel@lists.infradead.org
-Message-ID: <91b6dafa-de34-d972-50bc-b401820b5ccb@suse.de>
-Subject: Re: [PATCH 3/3] drm: Update documentation and TODO of gem_prime_mmap
- hook
-References: <20211108102846.309-1-tzimmermann@suse.de>
- <20211108102846.309-4-tzimmermann@suse.de>
- <YYujGLFf+spiXMil@phenom.ffwll.local>
-In-Reply-To: <YYujGLFf+spiXMil@phenom.ffwll.local>
+Serial IPs(UART, I2C, SPI) are integrated into New IP-Core
+called USI(Universal Serial Interface).
 
---------------APu0kFdmYGIun6HoTLUqXH0N
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+As it is integrated into USI, there are additinal HW changes.
+Registers to control USI and sysreg to set serial IPs have been added.
+Also, some timing registres have been changed.
 
-SGkNCg0KQW0gMTAuMTEuMjEgdW0gMTE6NDYgc2NocmllYiBEYW5pZWwgVmV0dGVyOg0KPiBP
-biBNb24sIE5vdiAwOCwgMjAyMSBhdCAxMToyODo0NkFNICswMTAwLCBUaG9tYXMgWmltbWVy
-bWFubiB3cm90ZToNCj4+IFRoZSBob29rIGdlbV9wcmltZV9tbWFwIGluIHN0cnVjdCBkcm1f
-ZHJpdmVyIGlzIGRlcHJlY2F0ZWQuIERvY3VtZW50DQo+PiB0aGUgbmV3IHJlcXVpcmVtZW50
-cy4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBUaG9tYXMgWmltbWVybWFubiA8dHppbW1lcm1h
-bm5Ac3VzZS5kZT4NCj4gDQo+IFJldmlld2VkLWJ5OiBEYW5pZWwgVmV0dGVyIDxkYW5pZWwu
-dmV0dGVyQGZmd2xsLmNoPg0KDQpUaGFua3MgYSBsb3QhDQoNCldpdGggdGhlIHJlbWFpbmlu
-ZyBwYXRjaGVzIG1lcmdlZCwgYWxsIGRyaXZlcnMgd2lsbCBpbXBsZW1lbnQgDQpnZW1fcHJp
-bWVfbW1hcCB2aWEgZHJtX2dlbV9wcmltZV9tbWFwKCkgYW5kIHVzZSB0aGUgR0VNIG9iamVj
-dCdzIG1tYXAgDQpjYWxsYmFjayBmb3Igc3BlY2lmaWMgZGV0YWlscy4NCg0KVGhlIG5leHQg
-c3RlcCB3b3VsZCBiZSB0byBtb3ZlIGFsbCBjdXN0b20gaW1wbGVtZW50YXRpb25zIG9mIA0K
-ZmlsZV9vcGVyYXRpb25zLm1tYXAgaW50byB0aGUgR0VNIG9iamVjdCdzIG1tYXAgYW5kIGlt
-cGxlbWVudCB0aGUgDQpmaWxlX29wZXJhdGlvbnMgY2FsbGJhY2sgd2l0aCBkcm1fbW1hcCgp
-Lg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPj4gLS0tDQo+PiAgIERvY3VtZW50
-YXRpb24vZ3B1L3RvZG8ucnN0IHwgMTEgLS0tLS0tLS0tLS0NCj4+ICAgaW5jbHVkZS9kcm0v
-ZHJtX2Rydi5oICAgICAgfCAxMSArKysrKysrLS0tLQ0KPj4gICAyIGZpbGVzIGNoYW5nZWQs
-IDcgaW5zZXJ0aW9ucygrKSwgMTUgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBh
-L0RvY3VtZW50YXRpb24vZ3B1L3RvZG8ucnN0IGIvRG9jdW1lbnRhdGlvbi9ncHUvdG9kby5y
-c3QNCj4+IGluZGV4IDYwZDFkN2VlMDcxOS4uNjU5M2M0YzQwMDZlIDEwMDY0NA0KPj4gLS0t
-IGEvRG9jdW1lbnRhdGlvbi9ncHUvdG9kby5yc3QNCj4+ICsrKyBiL0RvY3VtZW50YXRpb24v
-Z3B1L3RvZG8ucnN0DQo+PiBAQCAtMjY4LDE3ICsyNjgsNiBAQCBDb250YWN0OiBEYW5pZWwg
-VmV0dGVyDQo+PiAgIA0KPj4gICBMZXZlbDogSW50ZXJtZWRpYXRlDQo+PiAgIA0KPj4gLUNs
-ZWFuIHVwIG1tYXAgZm9yd2FyZGluZw0KPj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-Pj4gLQ0KPj4gLUEgbG90IG9mIGRyaXZlcnMgZm9yd2FyZCBnZW0gbW1hcCBjYWxscyB0byBk
-bWEtYnVmIG1tYXAgZm9yIGltcG9ydGVkIGJ1ZmZlcnMuDQo+PiAtQW5kIGFsc28gYSBsb3Qg
-b2YgdGhlbSBmb3J3YXJkIGRtYS1idWYgbW1hcCB0byB0aGUgZ2VtIG1tYXAgaW1wbGVtZW50
-YXRpb25zLg0KPj4gLVRoZXJlJ3MgZHJtX2dlbV9wcmltZV9tbWFwKCkgZm9yIHRoaXMgbm93
-LCBidXQgc3RpbGwgbmVlZHMgdG8gYmUgcm9sbGVkIG91dC4NCj4+IC0NCj4+IC1Db250YWN0
-OiBEYW5pZWwgVmV0dGVyDQo+PiAtDQo+PiAtTGV2ZWw6IEludGVybWVkaWF0ZQ0KPj4gLQ0K
-Pj4gICBHZW5lcmljIGZiZGV2IGRlZmlvIHN1cHBvcnQNCj4+ICAgLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQo+PiAgIA0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZHJtL2RybV9k
-cnYuaCBiL2luY2x1ZGUvZHJtL2RybV9kcnYuaA0KPj4gaW5kZXggMGNkOTU5NTNjZGY1Li5h
-ODRlYjQwMjhlNWIgMTAwNjQ0DQo+PiAtLS0gYS9pbmNsdWRlL2RybS9kcm1fZHJ2LmgNCj4+
-ICsrKyBiL2luY2x1ZGUvZHJtL2RybV9kcnYuaA0KPj4gQEAgLTM0NSwxMSArMzQ1LDE0IEBA
-IHN0cnVjdCBkcm1fZHJpdmVyIHsNCj4+ICAgCSAqIG1tYXAgaG9vayBmb3IgR0VNIGRyaXZl
-cnMsIHVzZWQgdG8gaW1wbGVtZW50IGRtYS1idWYgbW1hcCBpbiB0aGUNCj4+ICAgCSAqIFBS
-SU1FIGhlbHBlcnMuDQo+PiAgIAkgKg0KPj4gLQkgKiBGSVhNRTogVGhlcmUncyB3YXkgdG9v
-IG11Y2ggZHVwbGljYXRpb24gZ29pbmcgb24gaGVyZSwgYW5kIGFsc28gbW92ZWQNCj4+IC0J
-ICogdG8gJmRybV9nZW1fb2JqZWN0X2Z1bmNzLg0KPj4gKwkgKiBUaGlzIGhvb2sgb25seSBl
-eGlzdHMgZm9yIGhpc3RvcmljYWwgcmVhc29ucy4gRHJpdmVycyBtdXN0IHVzZQ0KPj4gKwkg
-KiBkcm1fZ2VtX3ByaW1lX21tYXAoKSB0byBpbXBsZW1lbnQgaXQuDQo+PiArCSAqDQo+PiAr
-CSAqIEZJWE1FOiBDb252ZXJ0IGFsbCBkcml2ZXJzIHRvIGltcGxlbWVudCBtbWFwIGluIHN0
-cnVjdA0KPj4gKwkgKiAmZHJtX2dlbV9vYmplY3RfZnVuY3MgYW5kIGlubGluZSBkcm1fZ2Vt
-X3ByaW1lX21tYXAoKSBpbnRvDQo+PiArCSAqIGl0cyBjYWxsZXJzLiBUaGlzIGhvb2sgc2hv
-dWxkIGJlIHJlbW92ZWQgYWZ0ZXJ3YXJkcy4NCj4gDQo+IEkgdGhpbmsgYXQgbGVhc3QgaTkx
-NSBoYXMgZGlmZmVyZW50IHNlbWFudGljcyBiZXR3ZWVuIGRtYS1idWYgbW1hcCBhbmQgZ2Vt
-DQo+IG1tYXAgaW4gc29tZSBjYXNlcywgc28gdGhpcyBtaWdodCBiZSB0cmlja3kgdG8gYWNo
-aWV2ZS4gQnV0IEkgdGhpbmsNCj4gZXZlcnl3aGVyZSBlbHNlIHRoaXMgc2hvdWxkIGJlIHNv
-bGlkLg0KPiAtRGFuaWVsDQo+IA0KPj4gICAJICovDQo+PiAtCWludCAoKmdlbV9wcmltZV9t
-bWFwKShzdHJ1Y3QgZHJtX2dlbV9vYmplY3QgKm9iaiwNCj4+IC0JCQkJc3RydWN0IHZtX2Fy
-ZWFfc3RydWN0ICp2bWEpOw0KPj4gKwlpbnQgKCpnZW1fcHJpbWVfbW1hcCkoc3RydWN0IGRy
-bV9nZW1fb2JqZWN0ICpvYmosIHN0cnVjdCB2bV9hcmVhX3N0cnVjdCAqdm1hKTsNCj4+ICAg
-DQo+PiAgIAkvKioNCj4+ICAgCSAqIEBkdW1iX2NyZWF0ZToNCj4+IC0tIA0KPj4gMi4zMy4x
-DQo+Pg0KPiANCg0KLS0gDQpUaG9tYXMgWmltbWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERl
-dmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBTb2x1dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxk
-c3RyLiA1LCA5MDQwOSBOw7xybmJlcmcsIEdlcm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJu
-YmVyZykNCkdlc2Now6RmdHNmw7xocmVyOiBJdm8gVG90ZXYNCg==
+Changes in v2:
+ - Changes compatible name to "samsung,exynosautov9-hsi2c"
+ - Changes I2C type name to "I2C_TYPE_EXYNOSAUTOV9" from "I2C_TYPE_USI"
+ - Changes to clear after reset instread of clearing reset
+ - Add description about system register for USI
 
---------------APu0kFdmYGIun6HoTLUqXH0N--
+Jaewon Kim (2):
+  dt-bindings: i2c: exynos5: add exynosautov9-hsi2c compatible
+  i2c: exynos5: add support for ExynosAutov9 SoC
 
---------------1un6YQuZTKE0bDSxqwf0DnRw
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+ .../devicetree/bindings/i2c/i2c-exynos5.txt   |   7 +
+ drivers/i2c/busses/i2c-exynos5.c              | 133 ++++++++++++++++--
+ 2 files changed, 130 insertions(+), 10 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.33.1
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmGLwWAFAwAAAAAACgkQlh/E3EQov+CA
-fBAAnt27HP1sslZ8zQ6FW7dhzL7+pCcCbrAWcp0h9im+1qFVDKWgYUEFnFGBrzAPC5YN+4Uqsvkc
-QIgkdKhBqxx35e7fCeQV83msFRb1kL/Y6FmLDbR+0RfqEkWmP3Fo3HIfgf9yL0Mho/lGcN/NF+qp
-YYXy9HdAm2wlzP8EEfEQfe2zEpWOCrM2QyJ3qIxMg6Qh/sbXjP3NftH5dZ9hlHF7l5CtzeP0IXhf
-EwNzkB2bz4Tl0Vf9QhUHN3+w24jYd/4dEAk45LfTqgEQZHEhd37O4x30VntBGsMTUi+psrvX+1HC
-tPraFA0ssZI97FAbU3DWYpf9ggRBD3A9W9drQ4xUbjVBCyBsFYo/1YW+hdJXbuyL1rM/wPXH4MQ8
-iAiBd37Cgjrvj1OMeEVXUERO/ve2ILcT4XeiQHJTk8qGchaSAn+M+qIxVn3q+IIsRJRXnfQJap7Z
-FGiwdC4g9BWDl8o4yoqDdq39ICvIu/27DEHhmVy3MnwlpEP0chUANtnm4842TazKhnXKHYe//G6/
-uojiuyyW4FA5+UVoWz7dLEqsf2PYz2MEGKrNPGrmqOX9XAk0Pm2CjvgqL4qz5J1GCfwGPZbhWZ4E
-ZzYoy6JTmq5DUUh7KdOfFXvBTT4YZligymd33irsEnpHUz1ivyK1zCb5T+fl3g3hNaDa2yVGdNoW
-LyM=
-=nP0D
------END PGP SIGNATURE-----
-
---------------1un6YQuZTKE0bDSxqwf0DnRw--
