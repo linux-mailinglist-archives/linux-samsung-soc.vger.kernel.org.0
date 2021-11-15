@@ -2,95 +2,87 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 946104504CB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Nov 2021 13:58:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC541450517
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Nov 2021 14:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230118AbhKONBu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 15 Nov 2021 08:01:50 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:47026
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230157AbhKONBI (ORCPT
+        id S231573AbhKONPK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 15 Nov 2021 08:15:10 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:59626
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231695AbhKONOd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 15 Nov 2021 08:01:08 -0500
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com [209.85.208.200])
+        Mon, 15 Nov 2021 08:14:33 -0500
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com [209.85.208.199])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id CE2A83F19D
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 12:58:11 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 1283C3F1A6
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 13:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1636981091;
-        bh=2lXKGcDk8cSuLceqIHqxG7vShboL2N5LAEantx9d1mY=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=j6zesks5ecStBYkVrR4ouZyd7cmC6TDkGRgu9GjlIOB8XkKGCdHbw2FIPfmB23h/J
-         g/d7mduYK6ohSSRG323Kaorgk+WfDEs0NcDpiyF84c85C78e2VBGaZl3DSBJneEgyw
-         eHkf3l51Quy80gOqXh0LIjBbdqrGwPFQWt8JJLX1WUZSmYXxnG5lsq+T/xj1AQspat
-         pA7tfGIO8b/cmtQfAiCTVXcdjUAQv2AfsLs6f8d0OoxThjnc6IipnrmQKkgOug9x4p
-         dWBCDy+CTOTtu9CamIAb1D8zywNZ6moSgv53/9mbccovDBeJ29/vOmfJqzuus5CPDV
-         APeMXJUmZFfBA==
-Received: by mail-lj1-f200.google.com with SMTP id b16-20020a2ebc10000000b00218d00045c4so5043972ljf.5
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 04:58:11 -0800 (PST)
+        s=20210705; t=1636981897;
+        bh=OJCA5ZvzNWjkD2Sxk8qxrrXGgiPPEZw138MIcH0bp9Q=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version:Content-Type;
+        b=PC2LXtaem23MhHl1lwRpm2jNVFAieuZ5u4VRr7mVIgem6fRQDa5NKBjlJ6CFw1wNG
+         m6MnTJ1IjBrRL4WFz0zVFeBpS0lArtTox4YT6ZZOK1Q7z56xnX4QXDf/HXli73NiVD
+         /f/g+2QxCv7BtDZM4H03W31PuhtXA4ghzF2dKX7KFKe0x8hGoeKJbzOaDpH1N5NxjM
+         p06J6bZIBYcI+yVttmOex2+RhG4Wu7RA0OT1VEfjbWTA15GbYKnOE+lBrbI0ZeyP1V
+         XpugBozpap82MESz3EZtbum/yYcheTxLlRu++gwXlySFwopYIuLivnhf88n0NIJuPG
+         SBY6AljRVY3jA==
+Received: by mail-lj1-f199.google.com with SMTP id u28-20020a2ea17c000000b0021126b5cca2so3218727ljl.19
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 05:11:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2lXKGcDk8cSuLceqIHqxG7vShboL2N5LAEantx9d1mY=;
-        b=rc5GgGz7Gj0g6bs7nXHlYLewmWI1rBy7gPtu99uQt2V+qxF3cknm2nGBl3VvcbAZjA
-         RytuCKlzmtigt9SYRQ+d9B4aznGWzhp49uFfjGK0Zbx1xrsFQ/1dkDszXm/mo7ltAqn4
-         SC/KUBJWd9UucDtvHoHdD5sVicxUncEsiYSeXUqaDpJGBibCUi0WcPjzNLOUzJMIYzGg
-         dD8Hp/A3vu/bmvPKKAOAmGSATaFUl1k5mIcskQ6iu1qUI2rT8n+C5od63XSECon4MpqR
-         4Ok2QyaX0S83xP5yBoZd64CDurtScQ6sLPyretPPSlVLz1ZUXlmeMxV63bwGQtCJxlI6
-         PZFA==
-X-Gm-Message-State: AOAM5302BrftT4AoCj6uGD0JdXKd6pKHSnBX1BRPrmChVvqyOao4oP5+
-        q2q5onVbfNi90MajrYeIkHgka49O7fZhK2AFtr8xTWGMMFk9KiFUzAqxecX2Lu9wRAAVrQ8JcRJ
-        TyE2P657Opo4A3G7YbrCXU5s7SO5O/K5DsxyHpKACPPFd2gKt
-X-Received: by 2002:a2e:a696:: with SMTP id q22mr37826694lje.423.1636981091373;
-        Mon, 15 Nov 2021 04:58:11 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwSSpA6BEigGpu15ImH+tj1eDb+rSEziSgrm62AcPCKMxkKiI/gEKtDBzBfK9v9+/JUjhbvUg==
-X-Received: by 2002:a2e:a696:: with SMTP id q22mr37826660lje.423.1636981091086;
-        Mon, 15 Nov 2021 04:58:11 -0800 (PST)
-Received: from [192.168.3.67] (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id x17sm1482167lji.96.2021.11.15.04.58.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Nov 2021 04:58:10 -0800 (PST)
-Message-ID: <b4647d13-80c0-7f25-c987-a9f673b787bb@canonical.com>
-Date:   Mon, 15 Nov 2021 13:58:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: [PATCH] arm64: dts: exynosautov9: drop
- samsung,ufs-shareability-reg-offset
-Content-Language: en-US
-To:     Chanho Park <chanho61.park@samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        'Rob Herring' <robh+dt@kernel.org>
-References: <CGME20211102065208epcas2p2213e346b2c37f315e73a04f511a1037c@epcas2p2.samsung.com>
- <20211102064826.15796-1-chanho61.park@samsung.com>
- <02d501d7da12$9ec499b0$dc4dcd10$@samsung.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OJCA5ZvzNWjkD2Sxk8qxrrXGgiPPEZw138MIcH0bp9Q=;
+        b=mvOBmHQ+oJOd6LMi770PR8K33al6prVkMuJ7lHlTuFEG3PZSSHkKR/KvT0JgFIDZIs
+         vNgyn5GbFECkLQf4DHN4sI2/G/KTQ96s0+loBY1IccAuEM3Kv/He6Nno5RI5zS8NduLv
+         S6CkWiLoMjzy5/zVwFno8pjnEB1MsGr4iUdX03P6Q/K5YoxCOr9LQCxcBNjy1ndnLH7v
+         9VtdujR0PccXDhS1543oaF0l2lKcORM6Rkd6QCWy3CrDwmiXiQ8Bzy8r6OuwZUTJkS0R
+         HFIdIMO8fv4D+YGhVMC+BUmnnybjbY0DeEL/HLVIymj7CppTaXyQlFF91G7zaFTSCgP0
+         nuZA==
+X-Gm-Message-State: AOAM531wpYehza+u7cQePOyKgfpmmDUP7daDYW7CVvrjHW3c4l7Y0fmC
+        1cYaKRuwV3vqbex4hOc+lAX4PaIKwojG+4exOJTqrF9uo2o+IvlwVBa2UryiERVzsGkJZFC9Ipf
+        vBARR/EoyxEKovoxtMHs1he//0TRM8aQnWd2jyMxg3Djq7uhq
+X-Received: by 2002:a2e:a4d1:: with SMTP id p17mr37547742ljm.318.1636981896498;
+        Mon, 15 Nov 2021 05:11:36 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxdEUnILP/yVPCQGk9Fv6GL+8+eRne9/6CM/DR8GFRq0H4eSeKiYlpJViXXIWwou1uZpuumjA==
+X-Received: by 2002:a2e:a4d1:: with SMTP id p17mr37547722ljm.318.1636981896362;
+        Mon, 15 Nov 2021 05:11:36 -0800 (PST)
+Received: from krzk-bin.lan (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
+        by smtp.gmail.com with ESMTPSA id p21sm1411254lfa.289.2021.11.15.05.11.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 05:11:35 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <02d501d7da12$9ec499b0$dc4dcd10$@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Rob Herring <robh+dt@kernel.org>,
+        Chanho Park <chanho61.park@samsung.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: exynosautov9: drop samsung,ufs-shareability-reg-offset
+Date:   Mon, 15 Nov 2021 14:11:31 +0100
+Message-Id: <163698188786.128367.112304195355876732.b4-ty@canonical.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20211102064826.15796-1-chanho61.park@samsung.com>
+References: <CGME20211102065208epcas2p2213e346b2c37f315e73a04f511a1037c@epcas2p2.samsung.com> <20211102064826.15796-1-chanho61.park@samsung.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 15/11/2021 12:19, Chanho Park wrote:
-> Hi Krzysztof,
+On Tue, 2 Nov 2021 15:48:26 +0900, Chanho Park wrote:
+> samsung,ufs-shareability-reg-offset is not necessary anymore since it
+> was integrated into the second argument of samsung,sysreg.
 > 
-> Recently, Exynosauto v9 ufs patch series have been merged at v5.16-rc1.
-> So, below patch is required according to the changes. Could you please review & pick it up your tree?
-> Or Do I need to add "Fixes:" tag?
-> 
-> Best Regards,
-> Chanho Park
 > 
 
-I'll take it to fixes branch with a Fixes tag for
-31bbac5263aa63dfc8bfed2180bb6a5a3c531681.
+Applied, thanks!
 
+[1/1] arm64: dts: exynosautov9: drop samsung,ufs-shareability-reg-offset
+      commit: 4f5d06d381badc6e16f6d54eac7ab0125e9a7168
 
 Best regards,
-Krzysztof
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
