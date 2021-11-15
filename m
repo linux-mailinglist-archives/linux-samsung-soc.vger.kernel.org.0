@@ -2,69 +2,70 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FCCF4505E0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Nov 2021 14:44:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D44F4505DA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Nov 2021 14:44:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233455AbhKONrK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 15 Nov 2021 08:47:10 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:48542
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236497AbhKONo1 (ORCPT
+        id S230253AbhKONrC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 15 Nov 2021 08:47:02 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:60732
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236499AbhKONo2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 15 Nov 2021 08:44:27 -0500
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com [209.85.208.200])
+        Mon, 15 Nov 2021 08:44:28 -0500
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com [209.85.167.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 268EB3F19B
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 13:41:31 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 27AAB3F1A6
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 13:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1636983691;
-        bh=n5Hadb6xbkGaApkV40DUT8mQVW3mxdVMSv3mHiuuCFI=;
+        s=20210705; t=1636983692;
+        bh=1ZCgOXXdDSaFd9PKWHDCusbT3xu4LFc8Tvux7T3aIBU=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version:Content-Type;
-        b=sJX5/MKUeQQeoxtuykbeBi3oVeXrAdV3P5dn3zCyi8yCQhb92hrFzmAHSOIMF/I7J
-         7x2IzMbve0Jb+qdQUofnQAjOTHGscxFl4a3BZomt/J+JPB3cg+mr8mvjn9iOg5xzNi
-         X7Jh6W1WcXwMmN3P3bYQcvalwKv9rGWF/N7wi2TwJKFg6oV70CO39mX8JMWvf1mjjV
-         cRwkDn2Q0hDdTZkqR59deZTY/6qoO37p1w6DLCnylj6S9KHaHfTALh490F75TiCqSF
-         inWLpkEy6+5dnlhXVOtT7Mpj2whJ/ulEXBBE6HuvlhsYOHHnxHyL+TUBCO6PB7jQww
-         KS0vRwfZvuGyA==
-Received: by mail-lj1-f200.google.com with SMTP id y11-20020a2e978b000000b00218df7f76feso5122131lji.11
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 05:41:31 -0800 (PST)
+        b=E8q3sFU/wVQgJ/aB+lU5l4bzwv61AZwZHSXnM/ZUKZEH93Hb+LGYhrybp/VGi+B9+
+         ZOce0MfCMta2lVTF5N21atORfucvi8QY9fZWTWUNmlev2CddnYXFboONcfTQq6+TFn
+         XJEpQVrbEiN3cCl2AR6vLgA3KNlCsOleEOSXYLwr9v8uf1uAFVKd2vG0zRohCcjAbG
+         GuYM6jIqdC1CF1WYolB3IFaucAQ8V5F9qttZit4H6sfPp9wibXT4GjQGFYHz4xcKOg
+         7RnXJ8wFEvdqx1md1URx3CK5swDjVu0GNiwJJOghbP7Z97eZYjJYHVI2bWxNM0CawQ
+         ESVP1t5GICchA==
+Received: by mail-lf1-f69.google.com with SMTP id i1-20020a056512318100b003ffd4e89eb9so6715134lfe.19
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Nov 2021 05:41:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n5Hadb6xbkGaApkV40DUT8mQVW3mxdVMSv3mHiuuCFI=;
-        b=tJu/Zcb7jBOVQW79a2k+47ObPKgZ/7lh6tsHWSYNsdVY8n0Y00ltj/8NRzQzK/ovv0
-         ZJF5XvYclF5AFG0lnjvPytpg4ei9WoVFCqsf/IKevFlU4UtQr3XHve/E05P4B4ia5vNY
-         7Pm+4SMsNuwKQsL+SrwjyJX1mALpU2VWRr0eIcrj/hFjTO25ds7LwEoPXJI9o9lCIOox
-         akFbJfxmJC7LcvbTzP3EGxkAroYaGOVKUIa7P00toF+s6XQWtHwSoWT+QdCktidhKNBB
-         YutBCZjnod+qVnwU3MAuS1pfbmmi4hyrqPrwNVRrfQBqkpPy9i0wsZd7Zs+WqVTrvHKr
-         1hgg==
-X-Gm-Message-State: AOAM530D36M0F6OFNPtaS4zFuePZvC7i7UEpsIYtDmnrYEIvpEto9wK4
-        37SsNwjEDzrFFSlR7kBd8dHQLFASHyAPmF9HydzGItTVHq6DOdr2qR8ZvGcz3TTgdEuJoZSN9Ci
-        tdgTbS44T3mnV4R4AJop5kmImM3hoe5DnVD9kyQfDjfav1Z/7
-X-Received: by 2002:a05:6512:c19:: with SMTP id z25mr34685705lfu.60.1636983690561;
-        Mon, 15 Nov 2021 05:41:30 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxkpYeMAsCvuBUvs4Vf7PmAZoAzIjj2DCCMvm1MjqXaC8vi/q3I1PtjMWlG7VswioAqYx8hvg==
-X-Received: by 2002:a05:6512:c19:: with SMTP id z25mr34685689lfu.60.1636983690417;
-        Mon, 15 Nov 2021 05:41:30 -0800 (PST)
+        bh=1ZCgOXXdDSaFd9PKWHDCusbT3xu4LFc8Tvux7T3aIBU=;
+        b=K4vXrW63XxPvKTgtfcdTm4trNkQskN6/4fhz+2n1CIcYTfqWEZQRw2v9NvKf3lUidJ
+         1azeeYSVi1ywzOCJWr+hF18Lk5SnfWZrTIHayAUFhPa/YeHRXmE/25mHgZlLPD9OUit/
+         zH52veLNWW4QRUKinp6/2OUdfvTjRkpm2XC6z32wtL4LPNJWtdiLQqrYEa42Fht59yis
+         Ywb5OMOl98WDUtwimk/EebH7m+nRQWGSu5vasUkodILdHlrawT4modcSS+piEXrxT6kC
+         LVpZ6iJOFr5v5AaG+dSDqnHb4W9AxkKDw/EDhWy5bNdtbi9jGaItbBJxdRTYaim8W8gg
+         1wwQ==
+X-Gm-Message-State: AOAM530G8xMmQ0b6i0DQlo1T/pbP6e9u0+cWMc5tlXdClZhDSOIslAjD
+        VG+ulacfHAfG0dIEBH8hhrsC9/EB1WDcoo04GAX2YKfS01ISpQr7KLXj56/7B8Y7WVvmccQzN18
+        Byp5sffO0sxJ3RzZfSSVv53+IqRr6JbSahMQTTeFRVKkq5LdG
+X-Received: by 2002:a05:6512:691:: with SMTP id t17mr34698461lfe.220.1636983691674;
+        Mon, 15 Nov 2021 05:41:31 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxng74YqcBM5rQLyeNbIa3LcnMO+DI/reH2X/yvLXYaZUD1UX6NyysXD1j0gLvJDKBiAD7CTg==
+X-Received: by 2002:a05:6512:691:: with SMTP id t17mr34698445lfe.220.1636983691527;
+        Mon, 15 Nov 2021 05:41:31 -0800 (PST)
 Received: from krzk-bin.lan (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id i3sm1421786lfu.156.2021.11.15.05.41.29
+        by smtp.gmail.com with ESMTPSA id i3sm1421786lfu.156.2021.11.15.05.41.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 05:41:29 -0800 (PST)
+        Mon, 15 Nov 2021 05:41:31 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     David Virag <virag.david003@gmail.com>
-Subject: Re: [PATCH] soc: samsung: exynos-chipid: describe which SoCs go with compatibles
-Date:   Mon, 15 Nov 2021 14:41:25 +0100
-Message-Id: <163698368315.132512.16798807565852524443.b4-ty@canonical.com>
+To:     Sam Protsenko <semen.protsenko@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: samsung: pmu: Document Exynos850
+Date:   Mon, 15 Nov 2021 14:41:26 +0100
+Message-Id: <163698368315.132512.2195595073396495435.b4-ty@canonical.com>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211031205212.59505-1-krzysztof.kozlowski@canonical.com>
-References: <20211031205212.59505-1-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20211028144313.9444-1-semen.protsenko@linaro.org>
+References: <20211028144313.9444-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -72,20 +73,18 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 31 Oct 2021 21:52:12 +0100, Krzysztof Kozlowski wrote:
-> The Exynos ChipID driver, like most of the Exynos drivers, uses one
-> compatible for entire family of compatible devices using one devicetree
-> "compatible".  The compatibility is here described by programming
-> interface (register layout), not by actual values, so the product ID
-> register on one family of devices has different values for different
-> SoCs.
+On Thu, 28 Oct 2021 17:43:12 +0300, Sam Protsenko wrote:
+> Exynos850 SoC can reuse PMU driver functionality. Add corresponding
+> compatible string to PMU bindings documentation.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] soc: samsung: exynos-chipid: describe which SoCs go with compatibles
-      commit: 569e45a1135497d8dddc647bc615e26c49b070a8
+[1/2] dt-bindings: samsung: pmu: Document Exynos850
+      commit: a67cce83945170994fcef241b934699b6018b707
+[2/2] soc: samsung: exynos-pmu: Add Exynos850 support
+      commit: f5dc0140d483fcc6417d1d655481f0ff1de390b0
 
 Best regards,
 -- 
