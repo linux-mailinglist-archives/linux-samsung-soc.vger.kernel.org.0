@@ -2,93 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 112D2452F02
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Nov 2021 11:25:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C14F453092
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 16 Nov 2021 12:28:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234050AbhKPK2a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 16 Nov 2021 05:28:30 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:56188
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234123AbhKPK20 (ORCPT
+        id S235088AbhKPLbh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 16 Nov 2021 06:31:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54338 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235043AbhKPLbE (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 16 Nov 2021 05:28:26 -0500
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com [209.85.167.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id C3D703F1FC
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Nov 2021 10:25:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1637058328;
-        bh=/O+GZ0qbV9JKdbSeqRFNBm7ySSAQt685cqSjGVfpAHw=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version:Content-Type;
-        b=v0nsdLvcw33tp2dmmTfRoeWEqw7h/v4VtEbrRJTtaTnylrxuc5WuPttqIHZUnh2fT
-         7Dnsp6OtJJy4BNZd4cc7y3sZ1/ivrT+Rye795Gr45ZDVK22ruQqgjmKLiwqcY4ix9W
-         RF+46VlMcFGzfVN7ijCPg0ta6G6UjJRkkO6j1gxUpkPIg0QVVNh1KNxnv1Uf8ENdbv
-         MFOkjZPYldI3VCphoJIyS9JF52WJf5kbKR9sw0HWmPzd5DtIIQBidh/+jl8XnbhsV1
-         QOLwBP/bFFj9DLWWyRFdpXMZvOeiLE5eGSbSCeGJ2b/qw2viqKNC3zikL3NNWo8Dy0
-         Ff/2W+3Mf6JbQ==
-Received: by mail-lf1-f70.google.com with SMTP id c15-20020a05651200cf00b0040524451deeso3565886lfp.20
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Nov 2021 02:25:28 -0800 (PST)
+        Tue, 16 Nov 2021 06:31:04 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F75C079789
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Nov 2021 03:26:59 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id r8so36796934wra.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 16 Nov 2021 03:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=49VN2EPgYHrEXK97OpQX0CxGM5w7EiGtxSfN5GFh/XE=;
+        b=VPSdTQPJ5hxea0d4B/OGzopTdVjRnbFmJz+O0tAMBIW+kVpQPKiYwfvCdPxAiu9RO7
+         oe9kEcogTcLI4iYVrS1eOtN05ZsYHexXSFFQpbbx9c1Ayow9QIMNNWeK3yqQOqbV6uta
+         lYm4w6zcQWO4dqR/GNjN0aurI02r6lW3XO4xQxM/13UYVUY6ET4f0O8Iq4IG8IZUtkwp
+         NHbrha8XPUVMG3Xu1I5WAylPedohg9BtJHXmX/E5I/oVcL5vEd+kv9L+n5IA0SK5OUNr
+         Wzfz9JBOv9okjRvaOWABxHrvDpiLS87CruKZfKxQJvud8svtNp7BgBXzyICxaDFUC026
+         9ZZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/O+GZ0qbV9JKdbSeqRFNBm7ySSAQt685cqSjGVfpAHw=;
-        b=gUeyRquo/tkppf2pcSik9KzitD1fgSmH1Q1wQSym6VxjLxbyAatDahLqLIYRTVgdWo
-         zphGrZkrPn13CqwBvTgM51IChi1FfB14PjPV7XWUbcEBDs0jHDa8MKjzJMj7rGTTrr6T
-         0qTKthJOzW732Fgc1p/Qx4Tth7m+vydZKkaKF2fMoYpSblOe4wMA6PzjoHyfGT/Z59I0
-         xwp/XCS61VgQCJ/Kl/OeqLaENEKAN7Lzo14aoXS/pffDeQOXBJEORPmDxkXRpsqLnHZ3
-         cn16798DT0Jce8GEeIkSZ/GzE5BGpolkpdAdLp5o6ZSxJw0t+n8Ul1tAbzuj9h5G3uQw
-         tznQ==
-X-Gm-Message-State: AOAM5307er06z40BFd6HDUKQ8sm0DGPtgv+SPov/L0fT2cfgcm/yMsEs
-        HcdCJ9dB3iUN2S+Lt/vWBmXDcxF5dE0Qd+Jo/x+MEolL3MiuZi8GV+GNSELjVUbPA1cVBNZSAAl
-        Q80lYG2UuIVb6d6XvGq7/AbysHDDL3vkrXKdAAWlWU9oY3mVu
-X-Received: by 2002:a2e:bf26:: with SMTP id c38mr5657033ljr.523.1637058328087;
-        Tue, 16 Nov 2021 02:25:28 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxkQWpwRbE6IFJrFB9M4s6jTblkLSEi2iHO1KLrB5XVlSnuJKxSATSfrgQqBJDRIkKqXDX5ow==
-X-Received: by 2002:a2e:bf26:: with SMTP id c38mr5656998ljr.523.1637058327846;
-        Tue, 16 Nov 2021 02:25:27 -0800 (PST)
-Received: from localhost.localdomain (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id n7sm1792473ljg.113.2021.11.16.02.25.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 02:25:27 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     David Virag <virag.david003@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Tomasz Figa <tomasz.figa@gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: samsung: Document Exynos7885
-Date:   Tue, 16 Nov 2021 11:24:51 +0100
-Message-Id: <163705828808.25843.6357745358034135180.b4-ty@canonical.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211031231511.46856-1-virag.david003@gmail.com>
-References: <20211031231511.46856-1-virag.david003@gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=49VN2EPgYHrEXK97OpQX0CxGM5w7EiGtxSfN5GFh/XE=;
+        b=OMYghaIax1alJocV3GS4AdPJe+b2yBdIC1+M4dpo8xAEWgDi9NprLH9Gzhdm4k5jMH
+         lEbSOmjdacSmPEEj05H+tFrDLCHRJFKDUVoK1NblNBjDZNE0mEhgtlUBoiXLFvjMuYIJ
+         MnRub3sMXZ0UDcBhDu3Y5tKGbfrEkxTVAhz7J03EtxUhkeLcSMae1zswSZlUfMhQgrQT
+         7q0K3isZMhHmxdxiZck85cWe2nX7Dq2mv3sHiDk9qR1dP0q5WBtyttzrwyutcvjDPCX5
+         aA/DCAX/NzyHqbPcigRTATfnE1xS6u17YC2o+be1Up/snztI1jfGIEbF1pOxzC1fB07G
+         AgcA==
+X-Gm-Message-State: AOAM532NqZBcdR+qEqqAlc9A6tBc3drMDreNR4BmOrqpAzAiJv07EQh+
+        pndDH10flx8STzhSNfvBe3R1ac0Iz2TAIcAXhtM=
+X-Google-Smtp-Source: ABdhPJx7V7Pzab1iLpC1tLfl5XTeFedl5ZB5PcVwW8xnRDThhRI1kD0wWb7jxJL13vcYZKWR942PRdG0Y0xdZFQs61A=
+X-Received: by 2002:a5d:4107:: with SMTP id l7mr8132229wrp.209.1637062018294;
+ Tue, 16 Nov 2021 03:26:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a05:600c:3b97:0:0:0:0 with HTTP; Tue, 16 Nov 2021 03:26:57
+ -0800 (PST)
+Reply-To: ebodrdickson1020@gmail.com
+From:   "Dr.Dickson Ebo" <drdicksonelo1023@gmail.com>
+Date:   Tue, 16 Nov 2021 03:26:57 -0800
+Message-ID: <CABq-xD7ZFmUMjZ9aWbbAm9nEKVBK1nOq1MtQg6NNJHmUXBtxzg@mail.gmail.com>
+Subject: hi
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 1 Nov 2021 00:15:11 +0100, David Virag wrote:
-> Document compatible string for Exynos7885 SoC.
-> 
-> 
+Finance and Audit Department, Zenith Bank Plc.
 
-Applied, thanks!
+The President of the Federal Republic of Nigeria through the Zenith
+International Bank Nigeria PLC has released your
+Contract/Inheritance/Compensation Fund.
 
-[1/2] dt-bindings: pinctrl: samsung: Document Exynos7885
-      commit: 1e6a58ad39a638f29f9d3e8c8128a2ab355ad1ac
-[2/2] pinctrl: samsung: Add Exynos7885 SoC specific data
-      commit: b0ef7b1a7a07dde54c5849e0ca94070a1ed08d04
+Kindly get back to us as soon as possible.
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Yours faithfully,
+Dr. Dickson Ebo.
