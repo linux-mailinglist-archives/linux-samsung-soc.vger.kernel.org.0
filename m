@@ -2,111 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 911CC45B5D0
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Nov 2021 08:47:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FE6745CC5F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Nov 2021 19:46:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240565AbhKXHuX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Nov 2021 02:50:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S235143AbhKXStY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 24 Nov 2021 13:49:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240541AbhKXHuW (ORCPT
+        with ESMTP id S231279AbhKXStW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Nov 2021 02:50:22 -0500
-Received: from mail.marcansoft.com (marcansoft.com [IPv6:2a01:298:fe:f::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D022C061574;
-        Tue, 23 Nov 2021 23:47:13 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: hector@marcansoft.com)
-        by mail.marcansoft.com (Postfix) with ESMTPSA id AE1E641F72;
-        Wed, 24 Nov 2021 07:47:06 +0000 (UTC)
-From:   Hector Martin <marcan@marcan.st>
-To:     linux-arm-kernel@lists.infradead.org
-Cc:     Hector Martin <marcan@marcan.st>, Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Arnd Bergmann <arnd@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Kettenis <mark.kettenis@xs4all.nl>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Johan Hovold <johan@kernel.org>, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        Mark Kettenis <kettenis@openbsd.org>
-Subject: [PATCH v3 11/11] arm64: dts: apple: t8103: Add UART2
-Date:   Wed, 24 Nov 2021 16:46:25 +0900
-Message-Id: <20211124074625.182815-12-marcan@marcan.st>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211124073419.181799-1-marcan@marcan.st>
-References: <20211124073419.181799-1-marcan@marcan.st>
+        Wed, 24 Nov 2021 13:49:22 -0500
+Received: from metanate.com (unknown [IPv6:2001:8b0:1628:5005::111])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F208DC061574;
+        Wed, 24 Nov 2021 10:46:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=metanate.com; s=stronger; h=Content-Transfer-Encoding:Message-Id:Date:
+        Subject:Cc:To:From:Content-Type:Reply-To:Content-ID:Content-Description:
+        In-Reply-To:References; bh=xdJhRT8gHwOG2GAHSWsFdaRNgcw78JPzju2JYRuISc4=; b=5C
+        vNWud1YX5zuJYO41GAoZePSVD0hBMY66VLiNR/FufOmli/Yd6lpBGHYlZVV/XRy5JEkJku/r/uQLJ
+        GOLtb8KunPQ8wzsSaSEAKkMgObUhQTxqoOZ0oLNhhwIKMj3AMCNiks0i+5bjzxRy3iv91OZl7MUEO
+        52qxgoJMOZNxo1xPpI7Zp3grW/zUPonyfU7ZZgUJDLoNo3l9IiBIyNUB2oXBO7YFMzO4Spy9Hf+24
+        U1PgLEFN13nYo53f1PvjzXtAm8F8gC4Yjb2YTJMyo05i8k6HY0bikZyN5SbGmR9UycZYfITHfv0E1
+        PVmL7qQXwIpMJ7Y9UTPVH0TholPkJdkA==;
+Received: from [81.174.171.191] (helo=donbot.metanate.com)
+        by email.metanate.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <john@metanate.com>)
+        id 1mpxHU-00007s-C6; Wed, 24 Nov 2021 18:46:08 +0000
+From:   John Keeping <john@metanate.com>
+To:     linux-mmc@vger.kernel.org
+Cc:     John Keeping <john@metanate.com>, Heiko Stuebner <heiko@sntech.de>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 0/4] mmc: dw_mmc: start deprecating mshcN aliases
+Date:   Wed, 24 Nov 2021 18:45:58 +0000
+Message-Id: <20211124184603.3897245-1-john@metanate.com>
+X-Mailer: git-send-email 2.34.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Authenticated: YES
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This UART is connected to the debug port of the WLAN module. It is
-mostly useless, but makes for a good test case for runtime-pm without
-having to unbind the console from the main system UART.
+This series is prompted by discussion on a previous patch set [1] but is
+a totally different approach and only a partial solution.
 
-Reviewed-by: Mark Kettenis <kettenis@openbsd.org>
-Signed-off-by: Hector Martin <marcan@marcan.st>
----
- arch/arm64/boot/dts/apple/t8103-j274.dts |  5 +++++
- arch/arm64/boot/dts/apple/t8103.dtsi     | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
+With these patches, the dependency on the mshcN alias is totally removed
+from dw_mmc-hi3798cv200 and dw_mmc-rockchip and dw_mmc-exynos moves
+towards being able to consider the mshcN aliases deprecated.
 
-diff --git a/arch/arm64/boot/dts/apple/t8103-j274.dts b/arch/arm64/boot/dts/apple/t8103-j274.dts
-index 33a80f9501dc..86ea1b0a6cc8 100644
---- a/arch/arm64/boot/dts/apple/t8103-j274.dts
-+++ b/arch/arm64/boot/dts/apple/t8103-j274.dts
-@@ -17,6 +17,7 @@ / {
- 
- 	aliases {
- 		serial0 = &serial0;
-+		serial2 = &serial2;
- 		ethernet0 = &ethernet0;
- 	};
- 
-@@ -45,6 +46,10 @@ &serial0 {
- 	status = "okay";
- };
- 
-+&serial2 {
-+	status = "okay";
-+};
-+
- /*
-  * Force the bus number assignments so that we can declare some of the
-  * on-board devices and properties that are populated by the bootloader
-diff --git a/arch/arm64/boot/dts/apple/t8103.dtsi b/arch/arm64/boot/dts/apple/t8103.dtsi
-index 0487ac64fca3..26b5d68a5c7b 100644
---- a/arch/arm64/boot/dts/apple/t8103.dtsi
-+++ b/arch/arm64/boot/dts/apple/t8103.dtsi
-@@ -127,6 +127,18 @@ serial0: serial@235200000 {
- 			status = "disabled";
- 		};
- 
-+		serial2: serial@235208000 {
-+			compatible = "apple,s5l-uart";
-+			reg = <0x2 0x35208000 0x0 0x1000>;
-+			reg-io-width = <4>;
-+			interrupt-parent = <&aic>;
-+			interrupts = <AIC_IRQ 607 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&clk24>, <&clk24>;
-+			clock-names = "uart", "clk_uart_baud0";
-+			power-domains = <&ps_uart2>;
-+			status = "disabled";
-+		};
-+
- 		aic: interrupt-controller@23b100000 {
- 			compatible = "apple,t8103-aic", "apple,aic";
- 			#interrupt-cells = <3>;
+I haven't changed dw_mci_hi6220_caps here, although it looks like it's
+possible to apply MMC_CAP_CMD23 to all controllers there with no change
+in behaviour as the final entry is SDIO for which CMD23 is not
+applicable IIUC.  But I'm not familiar with that hardware and don't feel
+confident making that change.
+
+[1] https://lore.kernel.org/all/20211116190244.1417591-1-john@metanate.com/
+
+John Keeping (4):
+  mmc: dw_mmc: add common capabilities to replace caps
+  mmc: dw_mmc: hi3798cv200: use common_caps
+  mmc: dw_mmc: rockchip: use common_caps
+  mmc: dw_mmc: exynos: use common_caps
+
+ drivers/mmc/host/dw_mmc-exynos.c      |  9 +++++----
+ drivers/mmc/host/dw_mmc-hi3798cv200.c |  9 +--------
+ drivers/mmc/host/dw_mmc-rockchip.c    | 11 +----------
+ drivers/mmc/host/dw_mmc.c             |  3 +++
+ drivers/mmc/host/dw_mmc.h             |  3 +++
+ 5 files changed, 13 insertions(+), 22 deletions(-)
+
 -- 
-2.33.0
+2.34.0
 
