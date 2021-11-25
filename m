@@ -2,85 +2,112 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E419E45D3B5
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Nov 2021 04:44:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C7E245D995
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Nov 2021 12:53:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345223AbhKYDr1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 24 Nov 2021 22:47:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58402 "EHLO
+        id S239291AbhKYL5E (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 25 Nov 2021 06:57:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239928AbhKYDp0 (ORCPT
+        with ESMTP id S239755AbhKYLzB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 24 Nov 2021 22:45:26 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC5A9C061757
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Nov 2021 19:42:15 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id k23so9805776lje.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Nov 2021 19:42:15 -0800 (PST)
+        Thu, 25 Nov 2021 06:55:01 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B694C0613A1;
+        Thu, 25 Nov 2021 03:48:49 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id j3so11063098wrp.1;
+        Thu, 25 Nov 2021 03:48:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YMrhOIl8HoNRb8UK9oz7IZwbnC4/TM+2ttuSVPr6seY=;
-        b=QP3baR2c09O3n6364boLqwV7FSlkJ4vBU8I2Wyac+ku9KA8zZVAbAp6kIEBY8kDisP
-         Rr1LXMvG31KAkj30m1WSi6xid1h1oVqXgpvcWM9MxB6QRPhE4EiL0z5zG2py8AqA10HY
-         BTtJlliYiRFZRCsusUgTqok1D0afXuEa+oG6ZjSbkPpD+40/ATJ4Vl1Nf5p3DKxxB2sn
-         khNcfC6D/RfYnQ/Zae0nX/YkNA5VQ+a5JyeU1O+rmBvgdQD9+bccRdtLil1zaDky/jvI
-         snEHyJxP1uxIUqH0JzNVe7Lycb9uWl3YMSkIItve8tcBmNiWPPH4KxExL/2Gtrusn97q
-         Z4qw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zGTZSlpnGm2n22lxkSJEMVFE+t4NAH4c6Xl/p/baCNU=;
+        b=ggxDlHYdO+nCmw8YUmoTmFXUdtbKl0mS9AliK8qS1pDShNbNhw4sCm8M7F+WbLrHrR
+         QjTnc3i0ghnf46wkkbFOyw9SIiOr656jb8zkJ60WYFAdg2gT+laqeCk9gHAFSaS44Fww
+         Auxyyi63Uo4FKYqTOrabXLVQOlng6hAdeMofcFiUlgVf6f4fRzfdVlqQbcy7g6uKpWin
+         1Nq//GBDfbtiBr3xAVJnJ7qdcBc2y0uw1x6ywo8UGrpYUDhz+SfSq0YQxSHiZDUp3Vf0
+         CPR57y+lqyYN5O27weZ9v7GO0YynKW9NOKDrc0p0w/T1A3RYt8K3Ncj/s1ukEB7+d3hQ
+         5cUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YMrhOIl8HoNRb8UK9oz7IZwbnC4/TM+2ttuSVPr6seY=;
-        b=YrOT5rt0A+rBdxbCmeEVhWvLjnNDUI18AAu2RXUH4FDXFynQ3KY58+TsNyoqLD54kk
-         nlrE6IoNy7U9BrZqbQR+IRhVYwXStgKeq0fa86Ksyyg52sWlSd0qX9/M+de5qd9g4wg6
-         RRPDkYvjZnWfArIxv58Xm/EifxQo5c1hYbEdr21+D2aHe96tzeMxCt2ZY3c/z6GoS/7v
-         HeYl/Y0dE/rBUh+Rq6Hc1IbK5ukakQdc7ClWXcA7q+dsu8y0crgm1n2SENJ6Ymsa1zpg
-         Y5XsKM2gSm7Fg2f190WfVVznudQJ22IV4gLjYaOKD358KIBPlyLwxfcf//TNhh6o6cpH
-         DrSw==
-X-Gm-Message-State: AOAM530X//bnIVmJ/mh+egOgphfT5HrKQiFlOyCJv0+jT0ps9ybybG5R
-        bzT4DfkvUHZBCsIbyVj2UtT4h4CKmob1FdFpWu8=
-X-Google-Smtp-Source: ABdhPJxsoVZNmX+GyWwoa14B4wZtWuRgFMhqjNwZBEg+DhhjW8BFyKVOYFVmRAYitmE8u2aqs8FB8WBcl67mNWXQeeo=
-X-Received: by 2002:a2e:918e:: with SMTP id f14mr21248805ljg.109.1637811734157;
- Wed, 24 Nov 2021 19:42:14 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zGTZSlpnGm2n22lxkSJEMVFE+t4NAH4c6Xl/p/baCNU=;
+        b=shfytW1y91NWUQr0ruftIeGlSXoYwRWH9s3FZbQ3g7qZ4L2reGOOW5epthZedb0t3Z
+         EEoQenJhtX341aQRCui8f9irJCjYfoi76JPDASTEftHixu2e2KU/DNfWpmwiNO1HTH0z
+         aMBlHMyDOxfMXLpKCCvvoGCUgxKrEz8gC4xTpIA/DSXskhGDQMzmGO2OUBP5cRHsUrR6
+         tU5dq9twXDSFnOup+vlNsyaS+Enom927P2/5nQwmdRI5LaVJ4+r923U35Yeyj/XsqgDT
+         JINAUUR7FU+VRbzcEYzKC71KJo3qg7sbGCwhPfraEottyFeHqYuzBJcB75/YKlCilwDt
+         GeYA==
+X-Gm-Message-State: AOAM530kg1csmHvG6IWmV+pAvGLRRo0f/d0n/9yVd3NBNmP/1VLbbimB
+        b5GsloP+axc85zecyjVrwQtpn/DYxmM=
+X-Google-Smtp-Source: ABdhPJwGaIlEzWSzYkOIFmFGYLa8i4k+7ojXDZzjuWLF9TI9gTOa0UaEeu8MeB+7/DzoNwcWBPOppw==
+X-Received: by 2002:a5d:64c4:: with SMTP id f4mr5748349wri.6.1637840928209;
+        Thu, 25 Nov 2021 03:48:48 -0800 (PST)
+Received: from archbook.localnet (84-72-105-84.dclient.hispeed.ch. [84.72.105.84])
+        by smtp.gmail.com with ESMTPSA id o10sm3285079wri.15.2021.11.25.03.48.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Nov 2021 03:48:47 -0800 (PST)
+From:   Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
+To:     linux-mmc@vger.kernel.org, linux-rockchip@lists.infradead.org
+Cc:     John Keeping <john@metanate.com>, Heiko Stuebner <heiko@sntech.de>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        John Keeping <john@metanate.com>
+Subject: Re: [PATCH 0/4] mmc: dw_mmc: start deprecating mshcN aliases
+Date:   Thu, 25 Nov 2021 12:48:46 +0100
+Message-ID: <1727408.1NuWAi7hEM@archbook>
+In-Reply-To: <20211124184603.3897245-1-john@metanate.com>
+References: <20211124184603.3897245-1-john@metanate.com>
 MIME-Version: 1.0
-Received: by 2002:ac2:4199:0:0:0:0:0 with HTTP; Wed, 24 Nov 2021 19:42:13
- -0800 (PST)
-From:   "Mr.James Gomez" <adamsrobinson2019@gmail.com>
-Date:   Thu, 25 Nov 2021 04:42:13 +0100
-Message-ID: <CA+gMR=eoWCROHHqsHDgo1qxKKtXCqX+ZuGqJNcwbjKb3gyzf6Q@mail.gmail.com>
-Subject: We need your Urgent Reply
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
--- 
+On Mittwoch, 24. November 2021 19:45:58 CET John Keeping wrote:
+> This series is prompted by discussion on a previous patch set [1] but is
+> a totally different approach and only a partial solution.
+> 
+> With these patches, the dependency on the mshcN alias is totally removed
+> from dw_mmc-hi3798cv200 and dw_mmc-rockchip and dw_mmc-exynos moves
+> towards being able to consider the mshcN aliases deprecated.
+> 
+> I haven't changed dw_mci_hi6220_caps here, although it looks like it's
+> possible to apply MMC_CAP_CMD23 to all controllers there with no change
+> in behaviour as the final entry is SDIO for which CMD23 is not
+> applicable IIUC.  But I'm not familiar with that hardware and don't feel
+> confident making that change.
+> 
+> [1] https://lore.kernel.org/all/20211116190244.1417591-1-john@metanate.com/
+> 
+> John Keeping (4):
+>   mmc: dw_mmc: add common capabilities to replace caps
+>   mmc: dw_mmc: hi3798cv200: use common_caps
+>   mmc: dw_mmc: rockchip: use common_caps
+>   mmc: dw_mmc: exynos: use common_caps
+> 
+>  drivers/mmc/host/dw_mmc-exynos.c      |  9 +++++----
+>  drivers/mmc/host/dw_mmc-hi3798cv200.c |  9 +--------
+>  drivers/mmc/host/dw_mmc-rockchip.c    | 11 +----------
+>  drivers/mmc/host/dw_mmc.c             |  3 +++
+>  drivers/mmc/host/dw_mmc.h             |  3 +++
+>  5 files changed, 13 insertions(+), 22 deletions(-)
+> 
+> 
 
-Attention:Sir,
+For rockchip:
 
-RE: GOOD NEWS AS YOU WILL RECEIVE YOUR FUNDS THIS LAST QUARTER OF THE
-FISCAL YEAR 2021.
-I write to inform you that your name is among the beneficiaries that
-will receive their funds of usd$883,000=Only,(eight hundred and eight
-three thousand us doll Dollars Only).has been approved being for the
-draws the United Nation Secretary General {Antnio Guterres} organized
-on his visit to your country to help individuals/Internet Scam
-victims) this second quarter of the fiscal  year 2021.
-In view of this good news, I am pleased to inform you that your total
-Payment Compensation Entitlement of usd$883,000=Only has been cleared
-and approved to be released to you finally through our Offshore
-Payment Centers in two different countries which will be disclosed to
-you as soon as you respond to my proposal.
+Tested-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 
-I need your urgent verification in this Home office email: aaaa2293@outlook.com
+Tested on a rk3566 with no obvious issues arising.
 
-Your Full Names.
-Your Full Address.
-Your Mobile Tel. No./Whats app Tel. No.
-Your Occupation.
+Regards,
+Nicolas Frattaroli
 
-Kindly contact me on my private email address thus:aaaa2293@outlook.com
-Await your urgent reply.
 
-Mr.James Gomez
