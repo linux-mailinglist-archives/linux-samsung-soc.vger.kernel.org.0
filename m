@@ -2,137 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B83A346C9A9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 Dec 2021 01:55:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 868CB46CC11
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 Dec 2021 05:13:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238856AbhLHA7E (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Dec 2021 19:59:04 -0500
-Received: from mailout2.samsung.com ([203.254.224.25]:41456 "EHLO
-        mailout2.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238668AbhLHA7D (ORCPT
+        id S244179AbhLHEQw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Dec 2021 23:16:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41408 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230193AbhLHEQv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Dec 2021 19:59:03 -0500
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20211208005527epoutp021357043691b6b76ffddb4935cdef3d86~_oYmq1hs60805808058epoutp02j
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 Dec 2021 00:55:27 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20211208005527epoutp021357043691b6b76ffddb4935cdef3d86~_oYmq1hs60805808058epoutp02j
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1638924927;
-        bh=wQuQ44/o7M02aQ0FTR12+5aryFsCLHs176cin4ynVrM=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=CV/1hzAXGDLNWFCIXEOUX4AoE6IaYq1RKgkd3nraMS9eAR6oUNFQxW5M1VmVYn0RB
-         AaJm6ZFQvxSm2i2K8h1t6PTEP/yRSwP+sLpTYnBGr/3hXvVdbnS1nZfEVPya38inZ8
-         /a1zeEx6q2V27LAZr9dMTrwrCCsTqw5i9Ey7Efrc=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
-        20211208005526epcas2p339707d15c5a262310b102237258d269b~_oYmKkJmI2385223852epcas2p3Z;
-        Wed,  8 Dec 2021 00:55:26 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.36.97]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4J7zGy6VbVz4x9QH; Wed,  8 Dec
-        2021 00:55:22 +0000 (GMT)
-Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
-        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        A1.0A.51767.77200B16; Wed,  8 Dec 2021 09:55:19 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-        20211208005519epcas2p4aec9d5e05c223be8038528bab1eba223~_oYfYpO9Y0202402024epcas2p41;
-        Wed,  8 Dec 2021 00:55:19 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20211208005519epsmtrp22d186b84e70734404264684188d82cbc~_oYfXQfiC1200912009epsmtrp2F;
-        Wed,  8 Dec 2021 00:55:19 +0000 (GMT)
-X-AuditID: b6c32a45-447ff7000000ca37-a9-61b00277f8ba
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        4E.26.08738.76200B16; Wed,  8 Dec 2021 09:55:03 +0900 (KST)
-Received: from KORCO082417 (unknown [10.229.8.121]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20211208005519epsmtip20d2e89373e9d732dc81dc41739c46afa~_oYfL5zu92559825598epsmtip2N;
-        Wed,  8 Dec 2021 00:55:19 +0000 (GMT)
-From:   "Chanho Park" <chanho61.park@samsung.com>
-To:     "'David Virag'" <virag.david003@gmail.com>,
-        "'Sam Protsenko'" <semen.protsenko@linaro.org>
-Cc:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@canonical.com>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Sylwester Nawrocki'" <s.nawrocki@samsung.com>,
-        "'Tomasz Figa'" <tomasz.figa@gmail.com>,
-        "'Chanwoo Choi'" <cw00.choi@samsung.com>,
-        "'Michael Turquette'" <mturquette@baylibre.com>,
-        "'Stephen Boyd'" <sboyd@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
-In-Reply-To: <916c297dc20acdbebd29cd2b36c6286380c7c318.camel@gmail.com>
-Subject: RE: [PATCH v4 7/7] arm64: dts: exynos: Add initial device tree
- support for Exynos7885 SoC
-Date:   Wed, 8 Dec 2021 09:55:19 +0900
-Message-ID: <006701d7ebce$4567a650$d036f2f0$@samsung.com>
+        Tue, 7 Dec 2021 23:16:51 -0500
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5B4C061574
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Dec 2021 20:13:20 -0800 (PST)
+Received: by mail-il1-x141.google.com with SMTP id r2so1040610ilb.10
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Dec 2021 20:13:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
+        b=IhzYOc5TV5tRY8NA+oRQO6aAhcoLWjmDIiGp+agW0PuwWFWsW07ntJsVzV38I0OHqC
+         EzpNMp4ySTsTiHWjcoES1pDWfQa3hzEmTAjGEQsGKU00LGNUDJTNHWI4LldEus+S1mKT
+         dko5ukALMgi8bh7atGVs0Rt/fX7KXpplv23WbLhFzP1TfY2PPXBqFY9j53j/esPLibRX
+         1XRHyOwTiT/4tG9WZ3q4H7N/dOnVkB10wmKDHGYmk9qWEUW5JWqpdoVu6C7jO8de13Mw
+         Z0SLBzksJKYbu7/KIOlWOhfXUDnmMk6QWiigAfQd89OMRAg6NTmeD6n5AJpihkslyYUP
+         nSKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
+        b=3LjVmKP9DTUVpBZG6ZAstQOYFMX51rxh3B8dKlTfyTw/OyHghP9s1XnrLgaMSZBONO
+         dqtho6FyPA9k9/zXU1PXAbFkhCSnHqklUmiYZRex3Tsi+zADQEZWyRDtQX2oC46YsUnQ
+         D2j7ytLanwWknXSzA8C4Ik3fbzHMYFv4Xdvqmh7TfN4XoPmuMFp166GQeGjgo272hZTW
+         tRKYLZjYNKRGPiIvRZLn7nTMUnIo6XJi3nCRLmH6QIcYefRKcNqcoTfUS+KAVEe5GGD8
+         gXkK0c+/HeX45pEzEhfttTmO17GcSvt6DZDgCx3+q4CxiBmxh+onFRwmGydqBTxHeADi
+         tF0w==
+X-Gm-Message-State: AOAM530Npym/rVyg2j65uuBj5pumsnut0UuGqauIRt/Q6d34Q22rYOCE
+        V6iLeJYq0v/B+bM28RolVapb5U6Se8HNWaH38s5+VFqNfmPIMQ==
+X-Google-Smtp-Source: ABdhPJyRa63HXlstQIFzLUqJGv8AYgt9EsJ312gy8TgYauJosfme9E4HgsWb4N3jUnNwnaOH3Nf1ZFtOzW3RJg9WBQw=
+X-Received: by 2002:a92:cdac:: with SMTP id g12mr3699225ild.204.1638936799717;
+ Tue, 07 Dec 2021 20:13:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFtSJ5guifxMDnJAP7qBkgnfWzaigGTL4zKAVvvS7cBc9QxbAHKqA5mrMudyWA=
-Content-Language: ko
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBJsWRmVeSWpSXmKPExsWy7bCmmW4504ZEg5XvdCyuf3nOajH/yDlW
-        i41vfzBZbHp8jdXiY889VovLu+awWcw4v4/J4uIpV4vWvUfYLQ6/aWe1+HdtI4vF8z6g+Kpd
-        fxgtjr9/zOjA5/H+Riu7x6yGXjaPnbPusntsWtXJ5nHn2h42j81L6j36tqxi9Pi8SS6AIyrb
-        JiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJIS8xN9VWycUnQNctMwfobCWFssSc
-        UqBQQGJxsZK+nU1RfmlJqkJGfnGJrVJqQUpOgXmBXnFibnFpXrpeXmqJlaGBgZEpUGFCdsbE
-        5p+sBfOZK65c6GVvYLzB1MXIySEhYCJxdOlhIJuLQ0hgB6PEjFVdjBDOJ0aJE08nskM4nxkl
-        Ni7ayQLTcvr5FlYQW0hgF6PEntVmEEUvGCWmXz/ABpJgE9CXeNmxDaxIRCBB4mrHTLBJzAJf
-        mSXuL97ADJLgFHCXOPlmFthUYYEUiU9nl7GD2CwCKhKnlz8Ga+YVsJT4c3AaG4QtKHFy5hOw
-        emYBbYllC18zQ1ykIPHz6TKoZX4SV2/eZYaoEZGY3dnGDLJYQuAKh8S8PVOgXnCR6Ju9GRoC
-        whKvjm9hh7ClJD6/28sG0dDNKNH66D9UYjWjRGejD4RtL/FrOsj/HEAbNCXW79IHMSUElCWO
-        3IK6jU+i4/Bfdogwr0RHmxBEo7rEge3ToS6Qleie85l1AqPSLCSfzULy2SwkH8xC2LWAkWUV
-        o1hqQXFuemqxUYEhPLaT83M3MYKTtJbrDsbJbz/oHWJk4mA8xCjBwawkwqv2cG2iEG9KYmVV
-        alF+fFFpTmrxIUZTYFhPZJYSTc4H5om8knhDE0sDEzMzQ3MjUwNzJXHeD/7TE4UE0hNLUrNT
-        UwtSi2D6mDg4pRqYtuxY7jJV9hn3TJYP3fGi+x2eFa2YFpD0eHlkyt2u227rVgT6J869uMn0
-        z+Qp01WfOTR99r7KssnkI3/6vIuPFbWutpv3P2dZ+V7olboKk/aBn92y+69NazDsylsc8iRI
-        USOu0a7bX1955n7b1UfP8kgmsC1XrA38nGN0LiMhtvOylN32dP9us/hrSfP1z7T8nHLuht6O
-        E1P4LfeZPdDWny7813T/bc3kTSn3Yv1L075ej2H9FLb5bevcmbd9uIwemtSLf7vHXLaMq+n0
-        KYG2i680HVPvLJi26H9j9NeecI7M7SWfNllNKz2q8mdCfeAJ0+TUzY51qzm/PRaaOKtt49/J
-        HZujj01fImM74eqpUCWW4oxEQy3mouJEAIH+JTVbBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKIsWRmVeSWpSXmKPExsWy7bCSvG4604ZEg4/TuC2uf3nOajH/yDlW
-        i41vfzBZbHp8jdXiY889VovLu+awWcw4v4/J4uIpV4vWvUfYLQ6/aWe1+HdtI4vF8z6g+Kpd
-        fxgtjr9/zOjA5/H+Riu7x6yGXjaPnbPusntsWtXJ5nHn2h42j81L6j36tqxi9Pi8SS6AI4rL
-        JiU1J7MstUjfLoEr48zpsywFc5krdt7azd7AeI2pi5GTQ0LAROL08y2sXYxcHEICOxglepdf
-        ZIRIyEo8e7eDHcIWlrjfcgSq6BmjRNuDbawgCTYBfYmXHRC2iECCxLL729hAipgF/jJL/Dq3
-        jhmi4zCTxIudB8D2cQq4S5x8M4sFxBYWSJL4sXs/mM0ioCJxevljsEm8ApYSfw5OY4OwBSVO
-        znwCVsMsoC3x9OZTOHvZwtfMEOcpSPx8ugzqCj+JqzfvMkPUiEjM7mxjnsAoPAvJqFlIRs1C
-        MmoWkpYFjCyrGCVTC4pz03OLDQuM8lLL9YoTc4tL89L1kvNzNzGCY1ZLawfjnlUf9A4xMnEw
-        HmKU4GBWEuFVe7g2UYg3JbGyKrUoP76oNCe1+BCjNAeLkjjvha6T8UIC6YklqdmpqQWpRTBZ
-        Jg5OqQameL5Q5a1vX9mavd1n0BYc+Wy+hEDLuVn3FZ7/TxM7uqA3vPn9oY2KEpecN+ik3Wp8
-        Kvwz1Hqusvu6OSdZyvxXuDiIn2u5kl4xa7Puxthlm2buCWW6lFbmGHv39p79f34n2t36k1Gd
-        X3pXeZ6acrVz4dOsM4n3N4qu0hIMs/1hv/mMiGBz/obMCdVi3CeZa7L8PX7c/3515YM6tf4T
-        /11SH+/SCrHc78GQzfuAxeP96fAX10KNd64Na7Hb8C7nu2Lf+YX9l8LqPkdq2P6MZV9lLFE6
-        Z8vNjmdOvw5bOG7/sne51nO1uKwrEWe0Ji5XUVNiUFwx51XR56M7y350FvN2G5mfOnjlr/iv
-        ojt1qaxzlViKMxINtZiLihMB6pvDRUgDAAA=
-X-CMS-MailID: 20211208005519epcas2p4aec9d5e05c223be8038528bab1eba223
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20211207223050epcas2p186da08bcece9605e97573a230db88308
-References: <20211206153124.427102-1-virag.david003@gmail.com>
-        <20211206153124.427102-8-virag.david003@gmail.com>
-        <CAPLW+4k3Vmg0W0jVsTChHTG8+eeg=5QF+actz1Tk0vNV9w-y-A@mail.gmail.com>
-        <CGME20211207223050epcas2p186da08bcece9605e97573a230db88308@epcas2p1.samsung.com>
-        <916c297dc20acdbebd29cd2b36c6286380c7c318.camel@gmail.com>
+Received: by 2002:a05:6e02:1a07:0:0:0:0 with HTTP; Tue, 7 Dec 2021 20:13:19
+ -0800 (PST)
+Reply-To: dj0015639@gmail.com
+From:   David Jackson <enkenpaul@gmail.com>
+Date:   Wed, 8 Dec 2021 05:13:19 +0100
+Message-ID: <CAG7-cQ-YcFp0byqpLCXPRy0-4+-Zq7hzZMz6DzM5KzsbksYgog@mail.gmail.com>
+Subject: FEDERAL BUREAU OF INVESTIGATION
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-> > Shouldn't SoC and board files be sent as two separate patches? For
-> > example, I've checked exynos5433 and exynos7, SoC support
->=20
-> For some reason I remembered ExynosAutoV9 sending them together but I
-> was wrong, will seperate in the future.
+Our Ref: RTB /SNT/STB
+To: Beneficiary
 
-I posted it separately.
-https://lore.kernel.org/linux-samsung-soc/20211010032246.146939-1-chanho61.=
-park=40samsung.com/
+This is FBI special agents, David Jackson. I was delegated along side
+others by the United Nations to investigate scammers who has been in
+the business of swindling foreigners especially those that has one
+form of transaction/contracts and another. Please be informed that in
+the course of our investigation, we detected that your name and
+details in our Scammed Monitoring Network. We also found out that you
+were scammed of a huge sum of money by scammers via Western union and
+MoneyGram. Be informed here that in a bid to alleviate the suffering
+of scammed victims, the United Nations initiated this compensation
+program and therefore, you are entitled to the sum of Five Million Two
+Hundred Thousand United States Dollars ($5,200,000.00 USD) for being a
+victim.
 
-Best Regards,
-Chanho Park
+Note that the said fund will be transfer to you via the Citibank being
+the paying bank mandated by the United Nations officials.
 
+However, we have to inform you that we have been able to arrest some
+of the swindlers who has been in this illicit business and will all be
+prosecuted accordingly. Be informed as well that we have limited time
+to stay back here, so we will advice that you urgently respond to this
+message ASAP. And do not inform any of the people that collected money
+from you before now about this new development to avoid jeopardizing
+our investigation. All you need to do is to follow our instruction and
+receive your compensation accordingly as directed by the United
+Nations.
+
+We urgently wait to receive your response.
+
+Regards,
+DAVID JACKSON
+FEDERAL BUREAU OF INVESTIGATION
+INVESTIGATION ON ALL ONLINE WIRE TRANSFER
