@@ -2,85 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92CAE470CD4
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Dec 2021 23:07:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7156B471701
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 11 Dec 2021 22:58:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232355AbhLJWKn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Dec 2021 17:10:43 -0500
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:41653 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235440AbhLJWKm (ORCPT
+        id S231712AbhLKV6a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 11 Dec 2021 16:58:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231620AbhLKV6a (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Dec 2021 17:10:42 -0500
-Received: by mail-ot1-f41.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so11019019otl.8;
-        Fri, 10 Dec 2021 14:07:07 -0800 (PST)
+        Sat, 11 Dec 2021 16:58:30 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB3FC0617A1
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 11 Dec 2021 13:58:29 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id r11so39951905edd.9
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 11 Dec 2021 13:58:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=SOBkDHN1upt351fJGA10IENq8Lskn6OtfiA/mtFXWwbxNo6rK0VqMIikUbNdR10QL9
+         NEz57nH7+DwD4ui2QjR5G0PDUg/x30DeYlpAViKmfLpj6c8owgTXHIRe2HlXrWJIYspc
+         p1qexb7VgQzyxOs2U317jKWC2PVt5FsJQNP/qzuU8HlodfKZxoIrg2Y5u0+UlgiuF7n+
+         KF6xHlFhNhhV0WZH+n1XpQNFkro1//sIniT/eC7+Qq7omDixZHJ42uWefxucVRQsgqoP
+         MP9jAyQEdDJw2KiXunMshfyB4wcDGfWvxehuLHSr6op0i/Er4qRI4zT2OKxsbV2QjSnP
+         PYpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=+geyFh91mJ5V3Y44vs2eSC79TWdCLGhZIfhEU1MNhC0=;
-        b=2vhlohziQZ+cHSiNuvk9KrgWfVkvMR27OmjzL0ZdHKf/BT6q7DVgwoobE8Zdd8wNfV
-         TRgbeF2zIy8vP3xCM5H59z9B4HXTIdcWv9ofyqpvERXvgKFLEELNIEIFfdz1202EB2HY
-         CzCc08dUeHeYzCilat6dnoWPvKijsk9VBZHBLLMiJTIbChnGbZvvEiGjtUCu3x/1//W3
-         A7x3mXkZbb1Eevr1iFHUYiXFljc6WfME2niI00QZDUn6iVcBzRINbDulXoBtvnoMgyoJ
-         KsByWibQLI9ube/tTyY/PgdNC2E6G/hK6KwBJiVfBHsQFrFmpPGvOZEZoCTGFX2YV1e6
-         CmgQ==
-X-Gm-Message-State: AOAM530dTi7xxpjDp4zfYivlNFGAYhHX4gjFqVHlFe6rPsJlcy1+vy8k
-        GEi4jYgZ8Bg8FA7L6Zn62Q==
-X-Google-Smtp-Source: ABdhPJyDvnoFBv3NrqUYd/bYltgaO870OTAYYafWKCFdS267jASwQYxRSEh0cuvDov8+E8ICPRhtQA==
-X-Received: by 2002:a05:6830:1d67:: with SMTP id l7mr12845464oti.277.1639174026680;
-        Fri, 10 Dec 2021 14:07:06 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w19sm921238oih.44.2021.12.10.14.07.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 14:07:06 -0800 (PST)
-Received: (nullmailer pid 2012324 invoked by uid 1000);
-        Fri, 10 Dec 2021 22:07:05 -0000
-Date:   Fri, 10 Dec 2021 16:07:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     =?iso-8859-1?Q?M=E5rten?= Lindahl <marten.lindahl@axis.com>
-Cc:     Jaehoon Chung <jh80.chung@samsung.com>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Doug Anderson <dianders@google.com>, kernel@axis.com,
-        Rob Herring <robh+dt@kernel.org>, linux-mmc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] dt-bindings: mmc: exynos-dw-mshc: Add support for
- ARTPEC-8
-Message-ID: <YbPPiXh6GgJ7iHQZ@robh.at.kernel.org>
-References: <20211209205456.11027-1-marten.lindahl@axis.com>
- <20211209205456.11027-2-marten.lindahl@axis.com>
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=lv1fXKpro3o8KcX/N7jPBwA2hGIUslYI+krIqBB19QTesot+geqiO+9/kkfAIX8WXg
+         L5SSGOWND7baWjRYH6yCuusu+iDjwrRvZv+KFud55ZELwaatV1NchmYzYVn4tg6Ze94F
+         zq+x1zlUJl+YWUATfumGeK4Ir56W/NsAd2SKQmFeQRtqnNEX2Zxf9UFunX+7dWzLS+UR
+         aLlPjIFggceELiQ3OVOLcY+lV/vNJ8bOdViOXk80S17DyQYiXOyO1UpX7Our5Hz0HQzC
+         YuXiG+VcEztnSwY6xWpD1dM/xfiIJRB1bovjYrAoTGD3JMYJ7R+ChpY/KKnEh+OIzUEl
+         8GIA==
+X-Gm-Message-State: AOAM5319CYtCybDVJ3+Q8Hin1fCl9YP/ZtuVqOY4m22/g5D9sqee+inj
+        e1w3Bo65VhrAwiN9aBF5gXoN0wH8T7QVpco1q09LjegiDu1pLW48jbo=
+X-Google-Smtp-Source: ABdhPJxTVLquc00JfCv8xmVg6F+Df36Ax6F8m8eI1vWHtjjPBaUzu2dvtxl/29t2QJINStCFpJhLct20UqzajIEroTA=
+X-Received: by 2002:a17:907:6da2:: with SMTP id sb34mr33325880ejc.509.1639259897490;
+ Sat, 11 Dec 2021 13:58:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211209205456.11027-2-marten.lindahl@axis.com>
+Reply-To: martinafrancis022@gmail.com
+Sender: rebeccaalhajidangombe@gmail.com
+Received: by 2002:a17:907:94d3:0:0:0:0 with HTTP; Sat, 11 Dec 2021 13:58:16
+ -0800 (PST)
+From:   Martina Francis <martinafrancis61@gmail.com>
+Date:   Sat, 11 Dec 2021 13:58:16 -0800
+X-Google-Sender-Auth: QI6h_ccu4Os7HpLN5lf7FmNkMqQ
+Message-ID: <CANadOMYJBdKak2aObykULF4gdU88=OTR03g+XDqpCofMfFracg@mail.gmail.com>
+Subject: Bom Dia meu querido
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 09 Dec 2021 21:54:53 +0100, Mårten Lindahl wrote:
-> The ARTPEC-8 SoC has a DWMMC controller that is compatible with the
-> Exynos 7 version v2.70a. The main differences from Exynos 7 is that it
-> does not support HS400 and has extended data read timeout.
-> 
-> Add compatibility string "axis,artpec8-dw-mshc" for ARTPEC-8.
-> 
-> Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
-> 
-> v2:
->  - Change compatible string vendor prefix
-> 
-> v3 -> v4:
->  - Add Krzysztof's Reviewed-by tag
-> 
->  Documentation/devicetree/bindings/mmc/exynos-dw-mshc.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+--=20
+Bom Dia meu querido,
+Como vai voc=C3=AA hoje, meu nome =C3=A9 Dona Martina Francis, uma vi=C3=BA=
+va doente.
+Eu tenho um fundo de doa=C3=A7=C3=A3o de ($ 2.700.000,00 USD) MILH=C3=95ES =
+que quero
+doar atrav=C3=A9s de voc=C3=AA para ajudar os =C3=B3rf=C3=A3os, vi=C3=BAvas=
+, deficientes
+f=C3=ADsicos e casas de caridade.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Por favor, volte para mim imediatamente ap=C3=B3s ler esta mensagem para
+obter mais detalhes sobre esta agenda humanit=C3=A1ria.
+
+Deus te aben=C3=A7oe enquanto espero sua resposta.
+Sua irm=C3=A3.
+
+Sra. Martina Francis.
