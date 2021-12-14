@@ -2,76 +2,111 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9A05473E4D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Dec 2021 09:37:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 954BE474735
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Dec 2021 17:11:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbhLNIhw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 14 Dec 2021 03:37:52 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:45222 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231866AbhLNIhv (ORCPT
+        id S235531AbhLNQLk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 14 Dec 2021 11:11:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56706 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233351AbhLNQLj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 14 Dec 2021 03:37:51 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0D4B561361;
-        Tue, 14 Dec 2021 08:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC031C34604;
-        Tue, 14 Dec 2021 08:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639471070;
-        bh=TvV/V0V16sdLEQl+HlEmCOlDtRLk5EBJCALVpvBZbhc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ml5Vs22Z4OWRXO4JeVTbeL2BgsHRQ/ty/zN2Ze+DxlXFVRg+y9COW5RarxmS+5Kg7
-         wf0QBUnxKKB876gSFZoWXCVe68prPDZEzmSqUTvVYHI8PtDkmJjQMMFesM51+FMFA6
-         t1OhlGH9S78dbnw7coqg/CUrw07wERauvj8PMQjOB3OjAo41a4df0TGMfP+wo3fmqS
-         HjLMja3pqGYFfJfh4m7377kiG5RjyD4FS3c4LP9u0X5kiMpN1OkNTYkio0hVzGBs3T
-         OZ5oAq7vpP4UpOwKqUcj3QnMOeiRXbASSeOTkI10x4cpbgUbTb1rYR1dMKOiGi9eET
-         zVdKv1Sj9NFKQ==
-Date:   Tue, 14 Dec 2021 16:37:44 +0800
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     =?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        kernel@pengutronix.de, linux-imx@nxp.com,
-        linux-omap@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] ARM: dts: Remove unsupported properties for STMPE MFD
-Message-ID: <20211214083743.GH14056@dragon>
-References: <20211209173009.618162-1-thierry.reding@gmail.com>
+        Tue, 14 Dec 2021 11:11:39 -0500
+Received: from mail-vk1-xa2b.google.com (mail-vk1-xa2b.google.com [IPv6:2607:f8b0:4864:20::a2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80747C06173F
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Dec 2021 08:11:39 -0800 (PST)
+Received: by mail-vk1-xa2b.google.com with SMTP id 70so12783669vkx.7
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Dec 2021 08:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5tq/Pl9ONmAFdCXW/jiSrd1FQJiChNHfeL7wVihFrwg=;
+        b=fonIZ6frzwFMeYvOMCzQGYFT049lFCIGlzMaZ+okQO/Qk2RkUkwXgxMgbbG0E1AJ/U
+         yqhublnYTzdo9IGa8EXS3kHjwOPiAeWVXDTRtvn8dMycTrCcyNpfuSCr6XzXT2WXkd4N
+         beylrCdAxCSGm0j6WD6ISiicdnt2f/4p2Ri3u3+2x8J31JCnwuIivG132TxLXFcmNJmK
+         Lfz4qHHQMK+9AZs1gu8pxisfLhItoA3AjgernRLVFTpbIEAZt3Rs3u7y+tjOgp3CLsY/
+         24kLjI+fGAN2AX/dWs6jbvcmPw8s1f11iyu6b/ppnILGDIbcKF8XALzkJjco1QduFYLP
+         9ukQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5tq/Pl9ONmAFdCXW/jiSrd1FQJiChNHfeL7wVihFrwg=;
+        b=C2YYfDg3HzlvafrDX3ldBPWXbY2KWIT8lKPOhCYBM7qODArrkAVLgSQ42wNxsyteE/
+         03k+EI/blyEMpTIC+d48pyAHDXAqnP99gWResrFgC7srXEjBIU3tDNvTgXYQED9lhCIU
+         St2EyK0UqXUjr0DseOihHtCSG2KnP0u9meE9e4W6N3ctrvTwiWdsuGLc00MPugVJ2Utg
+         keM4gPUCZYhneOwCLo9B7QdeLqHIe1zQTBb7/8ygIY0SMrqJjkMyDjruMxJZ8QCeb8RG
+         5MGsI1Bj2xj/8SdWEaRfprB1F+XnaMwD8yEuO8Afftfgg9zpQyH8zJLuIjXBMczdrQ3v
+         QAnA==
+X-Gm-Message-State: AOAM530lbWBSYQtduaCbTR1RkI85gAmqaom10Cz5GFkpGtSmxEoc84xV
+        Gkn0cORmMSzq6AmnlTD0DP3OpASDvn1eS3J2dwtXKpUfnwh2rA==
+X-Google-Smtp-Source: ABdhPJwKdP12Jr1NoBj6l47hdacd390d2Motm3FzCykJUk4B/mbGJmIKS66lL5aFMtWBWkzbWhuk6pmeDm/l5OaTRuk=
+X-Received: by 2002:a05:6122:2158:: with SMTP id m24mr6951873vkd.1.1639498298544;
+ Tue, 14 Dec 2021 08:11:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211209173009.618162-1-thierry.reding@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20211207140334.10461-1-semen.protsenko@linaro.org>
+In-Reply-To: <20211207140334.10461-1-semen.protsenko@linaro.org>
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+Date:   Tue, 14 Dec 2021 18:11:26 +0200
+Message-ID: <CAPLW+4n-BjSHK4gdP=cGvAE+pZDfvYTO4yy09yNRJgSXt2VArg@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Report enabled nodes with duplicated address
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Michal Marek <michal.lkml@markovi.net>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Masahiro Yamada <masahiroy@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Dec 09, 2021 at 06:30:09PM +0100, Thierry Reding wrote:
-> From: Thierry Reding <treding@nvidia.com>
-> 
-> Some users of the STMPE MFD bindings use unsupported properties such as
-> "id", "blocks" and "irq-trigger". These look like they may have been
-> under discussion at some point but never made it into the bindings that
-> were accepted upstream.
-> 
-> Remove these unknown properties from the device trees to avoid errors
-> during validation against the DT schema.
-> 
-> Signed-off-by: Thierry Reding <treding@nvidia.com>
+On Tue, 7 Dec 2021 at 16:03, Sam Protsenko <semen.protsenko@linaro.org> wrote:
+>
+> Duplicated unit address is a normal case, as long as no more than one
+> node using that address is enabled. Having duplicated addresses is
+> already allowed by '-Wno-unique_unit_address' in DTC_FLAGS. But two
+> simultaneously enabled nodes sharing the same address is usually
+> incorrect. Add '-Wunique_unit_address_if_enabled' flag to report
+> warnings for such case when doing "make dtbs_check".
+>
+> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> Reported-by: Rob Herring <robh@kernel.org>
+> Suggested-by: Rob Herring <robh@kernel.org>
 > ---
-...
->  arch/arm/boot/dts/imx53-m53.dtsi           | 3 ---
->  arch/arm/boot/dts/imx6q-novena.dts         | 3 ---
->  arch/arm/boot/dts/imx6qdl-apalis.dtsi      | 3 ---
->  arch/arm/boot/dts/imx6qdl-colibri.dtsi     | 3 ---
+> NOTE: After applying this patch, a lot of warnings appear on "make
+> dtbs_check". I'm not completely sure if it's ok, so feel free to Nack.
+>
 
-Acked-by: Shawn Guo <shawnguo@kernel.org>
+Hi Rob,
+
+Do you think this patch is feasible? You asked me to send it before,
+though I now see it leads to a lot of errors being revealed when doing
+"make dtbs" and "make dtbs_check". Please let me know if it's Ack or
+Nack -- I'm fine with any resolution, just want to know if I should
+continue to carry it in my local branch or drop it.
+
+Thanks!
+
+>  scripts/Makefile.lib | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+> index ce6142238835..2f00c996d2e3 100644
+> --- a/scripts/Makefile.lib
+> +++ b/scripts/Makefile.lib
+> @@ -315,7 +315,8 @@ DTC_FLAGS += -Wno-unit_address_vs_reg \
+>         -Wno-alias_paths \
+>         -Wno-graph_child_address \
+>         -Wno-simple_bus_reg \
+> -       -Wno-unique_unit_address
+> +       -Wno-unique_unit_address \
+> +       -Wunique_unit_address_if_enabled
+>  endif
+>
+>  ifneq ($(findstring 2,$(KBUILD_EXTRA_WARN)),)
+> --
+> 2.30.2
+>
