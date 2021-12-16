@@ -2,97 +2,86 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69272476B18
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Dec 2021 08:38:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C56347708B
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Dec 2021 12:42:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbhLPHiM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Dec 2021 02:38:12 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:46188
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232210AbhLPHiL (ORCPT
+        id S233079AbhLPLmX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Dec 2021 06:42:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233102AbhLPLmR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Dec 2021 02:38:11 -0500
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com [209.85.167.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 431123FFDB
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Dec 2021 07:38:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1639640290;
-        bh=6XFRqSMdUPXz3BmHUNLepdt3XO5NwJG7CC0ys/8y//o=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=Q6n/XffI9GFexDoBBuIHjyJCJPAtuZ8aJ7aRq0Bfscn2WyrQkEXuSt21OhuvXHJGh
-         pUdvCUFX2YC9DengqW7p6d/Vv4SFlRZhyY051EAgmdR8E5txj+esF8Ob4gneaI61+A
-         8DYp8feAVfO+R8tmymefQCnC94kvDrOGn+mmnpuLngPvB029pAA121otJdLOiZn61j
-         QjxybgRe9qg9okN0NR6kowgLj0HuMu2UzPVlKA5mb9UQL2eGGcJePAl9k30aSWZ7EI
-         ouRbd8/1Ce+LcGGnvfxtXPgrx4mn9hfbzmOWOFBsEauLsnAsmq1CAWR+vaHPNty7ZO
-         +O5Zi/GrjPuYA==
-Received: by mail-lf1-f69.google.com with SMTP id bq6-20020a056512150600b0041bf41f5437so10274152lfb.17
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Dec 2021 23:38:10 -0800 (PST)
+        Thu, 16 Dec 2021 06:42:17 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26418C06179C
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Dec 2021 03:42:17 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id t6so23039558qkg.1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Dec 2021 03:42:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=xre5um49Rnqa1tZMCD58Cd6UlD4MleswKAp3tzt2gjo=;
+        b=RYToo8NyNPhlgiHYmZ1ikup312GHYFKKh+SoiQn5DFM08VhX1fCTukNf+Ub7gXZH+R
+         Fdt5I+ZO38LiZ7aX4HrBDtCguvWjGt4+jG/EN+k0G3h02B6emUjwzPzxnL4uWQz6AWTD
+         WqO7wKZcX2hj88TEq1skHq9q03JmZTMsDYFAuzRyTE65aq8YfmTLKW6klN/Aemrjl5Su
+         VOqZm/oCKsPxxvibvSdyBq0qcyBC7yt8asycNVxLymhtuzVbvkdkv8HRw/7WHA5ZhBTe
+         lfMRM7TjowGzvp5BFYZjQfF4jcwfD0Oa7xMNuJL1tGpMndUewyeeM3+DNYanGu61M7GC
+         kNpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=6XFRqSMdUPXz3BmHUNLepdt3XO5NwJG7CC0ys/8y//o=;
-        b=VrGYGCibbDbAdOgt/wJRV6QSLUpsKR5w/cVokRUk3QF3J1iWsj6Dg+eHu5ph8ypoWG
-         ZC89GiLH3Qp+loXS3/JFTeUGe7ARkbvb358gHWxs+XjkGZHvze6K5TPbwudVhslXnNNh
-         PjBYFw2TCDWAHEOd3CuX5dXMccUJviNwJ05AOwEyag9Ph3M5Ih9x1pb7SuhPm9SeGiMZ
-         RAcvhUD3pEldTvF+2IUS4KTi6OsnU0p/Cq3P4A91XHMLNyZx6WNrjId0OriBun427CAo
-         kFufa7c25IAKDYr4ZBbBtvbd+yvvsR2wAgYcnscLj451nA9ElxH7anO4vebfhUfGeiF2
-         YJxA==
-X-Gm-Message-State: AOAM533xPZ/rMrlXfNQVAZFsLLTm0Zpi5QcJw0xu6K3nIJiugxRCkFkW
-        zZRA2AC0CuSurF2DVG6OigAxxaE7bTHhfWf94r892kbS0IaIyV3biNH2wXgCzY16RI2iN1t4Yom
-        e58RAwevPEDwXBc31Fr+8O4oAD5kfM4xulu/CDZToDAqtSByR
-X-Received: by 2002:a05:6512:340c:: with SMTP id i12mr1545526lfr.442.1639640289600;
-        Wed, 15 Dec 2021 23:38:09 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJw6D4M3milSj9T6RMMugHsSByLIVmvgCptY8KQLkssmSHA/cG6m1PV3kpo4dpmAQxiZhglncA==
-X-Received: by 2002:a05:6512:340c:: with SMTP id i12mr1545502lfr.442.1639640289312;
-        Wed, 15 Dec 2021 23:38:09 -0800 (PST)
-Received: from [192.168.3.67] (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id s10sm955828ljd.75.2021.12.15.23.38.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Dec 2021 23:38:08 -0800 (PST)
-Message-ID: <b432dfba-2388-5a22-d319-e03ddbdf1a47@canonical.com>
-Date:   Thu, 16 Dec 2021 08:38:07 +0100
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=xre5um49Rnqa1tZMCD58Cd6UlD4MleswKAp3tzt2gjo=;
+        b=huBWnJ08NoQ8xudHcpY3AuckX5XPzp/KfKftzsJGAITZg5ljMrCwu9ZdUKnF59QA+z
+         xN4+1hERHNCZRZ0SmmB1KCgBThKAvouji1lhsBs5f8pHcgoNUtXo/ohYnamcuF7GOqI6
+         mgYDJCto0lgMSnumniZzuCQrIaMSoRGahM2JNt+wR3aHI0h7jYs4yw1eRgN3pnhjWakq
+         +rnPjhXmdMjacxQB1lZR49y0BU/WQspihux8XYRdklu5e4OSPE3xg/56vLw+M0I26crB
+         Xq4d6ECNFekl+ETfHhlfwJVam8FcaICM27rD/OgFW2rKIxmedcB32WeVYjoqnxV1l1Dn
+         q26w==
+X-Gm-Message-State: AOAM532DZh6RsEUZj41d2Gs5c8V9Oc/4gdBPL+svZi+kw1w2EzmyoyWv
+        0fj+/HllE44Kr5QxzaKj1HkMmhzHFPhvZBD4/MQ=
+X-Google-Smtp-Source: ABdhPJxYJ2zBl8EMgF/vH/Si0uACMgpOTf1urUCOAwYb4fXYvwfKJa3PKYFOZBbaDpp9AFOjwJ3sIeVfeVjNcnbyBfg=
+X-Received: by 2002:a05:620a:bc3:: with SMTP id s3mr11727889qki.197.1639654936129;
+ Thu, 16 Dec 2021 03:42:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH] usb: ohci-s3c2410: Use platform_get_irq() to get the
- interrupt
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211215225358.1993774-1-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20211215225358.1993774-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a05:622a:199c:0:0:0:0 with HTTP; Thu, 16 Dec 2021 03:42:15
+ -0800 (PST)
+Reply-To: selviasantiago1@gmail.com
+From:   Selvia Santiago <mariamatinez119@gmail.com>
+Date:   Thu, 16 Dec 2021 11:42:15 +0000
+Message-ID: <CAONDhKPUij_8sWOmcDAVKuHSL7avy+Ti7bOVRu6x__3ouvD7kw@mail.gmail.com>
+Subject: Urgent
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 15/12/2021 23:53, Rob Herring wrote:
-> Accessing platform device resources directly has long been deprecated for
-> DT as IRQ resources may not be available at device creation time. Drivers
-> relying on the static IRQ resources is blocking removing the static setup
-> from the DT core code.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  drivers/usb/host/ohci-s3c2410.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
+-- 
+Urgent
 
+I am Mrs. Selvia Santiago from Abidjan, Cote D'Ivoire, I am a widow
+suffering from long time illness (Cancer), there is funds I inherited
+from my late loving husband Mr. Santiago Carlos, the sum of (US$2.7
+Million Dollars) which he deposited in bank before his death, I need a
+honest and Faithful person that can use these funds for humanity work.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+I took this decision because I don't have any child that will inherit
+this money and I don't want a situation where this money will be used
+in an ungodly way. That is why I am taking this decision, and my
+doctor has confirmed to me that I have less than two weeks to live,
+having known my condition I decided to donate this fund to a charity
+or individual that will utilize this money to assist the poor and the
+needy in accordance to my instructions.
 
+I want you to use 70% of this funds for orphanages, school, church,
+widows, propagating the word and other humanity works,The remaining
+30% should be yours for your efforts as the new beneficiary.
 
-Best regards,
-Krzysztof
+Please if you would be able to use these funds for humanity work
+kindly reply me. As soon as I have received your response, I will give
+you further directives on how you are to go about the claims of the
+said funds.
+
+Remain blessed.
+Mrs Selvia Santiago.
