@@ -2,51 +2,60 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC9C47F61E
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Dec 2021 10:41:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E08247F8E8
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Dec 2021 21:55:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233143AbhLZJln (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 26 Dec 2021 04:41:43 -0500
-Received: from slot0.jllresort.com ([62.197.136.5]:43124 "EHLO
-        slot0.jllresort.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233157AbhLZJlm (ORCPT
+        id S234275AbhLZUzF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 26 Dec 2021 15:55:05 -0500
+Received: from wmx06.wadax.ne.jp ([203.137.83.67]:38606 "EHLO
+        wmx06.wadax.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231889AbhLZUzF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 26 Dec 2021 04:41:42 -0500
-X-Greylist: delayed 712 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Dec 2021 04:41:42 EST
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=jllresort.com;
- h=Reply-To:From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding; i=ele.mon@jllresort.com;
- bh=YsjeZq85PHLX/xT7DdrVJ3q+0CM=;
- b=YFIa2tGT/ckg6GScCviKMqZg4nAZ0dNLjxpIVV7UKYcn89rtMY1DQBsX9dMZufeeUh81KWes0ydY
-   VH0KZzYZHr0Dp5trLEuB9/0HYFobOI00/QQoVy3LKkA/CUo50E77mYmw2epZOU+6o38ftgP0NqD2
-   udW+fKwR0a8CCuZijcUU5pBVG/bpbzIqXDgTwvYexTFUmnvbbN4ziRxAnzSpMU/rkm5tx00AHzCc
-   /iF7iUvbvtHa/I5vUY1NzvITiYavX14wuiiRuPGKUaixamKtARzA36vfwa48+2EqHbJWMJRg77w2
-   TfHSHvPSWGYEf7aVd3Zqo6ombUc79KGgjN8eaQ==
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=jllresort.com;
- b=NKBM67JQhLlKPaiQAfNYUW+Ap4eYQKLNxq6x6mqVAwjvUiQmTbm2JitDPfA6h2k9g/7hjWqCQnKY
-   GieN7j0uamnC4qgmLbHn0H4h7CCBKoMULUXuN6wlNH4SnZIPuAKtkRelDO4lMNvlbK1AtlHqj2UZ
-   /6Cd88HNLZuH1+wWpLEDHLw/KV6upCQO0OMEN9x8GI4WNrS9Gs9sqiQ7rVoJ45lmAgtpMa9JdcQ/
-   jWHB/XgpUEYPZg7Wg+QDxPxiy7EO+vztQhXl8x/PFCBo5gLwlWPNR/ppLYMzTnTogt/CVVuPaw98
-   qb+E8ugPMlPKfyFEsZuv6/NCaIGberAGNJFYkQ==;
-Reply-To: mustafa.ayvaz@ayvazburosu.com
-From:   ele.mon@jllresort.com
+        Sun, 26 Dec 2021 15:55:05 -0500
+Received: from wx24.wadax.ne.jp (wx24.wadax.ne.jp [203.145.232.130])
+        by wmx06.wadax.ne.jp (Postfix) with ESMTP id 244F720C16BA
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Dec 2021 05:55:04 +0900 (JST)
+Received: by wx24.wadax.ne.jp (Postfix, from userid 1059)
+        id 618C0C0107; Mon, 27 Dec 2021 05:55:02 +0900 (JST)
 To:     linux-samsung-soc@vger.kernel.org
-Subject: Happy Weekend:
-Date:   26 Dec 2021 10:29:26 +0100
-Message-ID: <20211226102855.E2BC10C9454207DC@jllresort.com>
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckOyQiJGokLCRIJCYkNCQ2JCQkXiQ5GyhC?=
+X-PHP-Originating-Script: 1059:class-phpmailer.php
+Date:   Sun, 26 Dec 2021 20:55:02 +0000
+From:   =?ISO-2022-JP?B?GyRCNX5AODxLGyhC?= <ohta@kyoseisha.jp>
+Message-ID: <c45c88a9d58f486c8d9eff053663fad1@oneup-job.com>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=ISO-2022-JP
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Greetings to you linux-samsung-soc,
+?? Debbie liked you! Click Here: http://bit.do/fSYaW?h2bk ??様
 
-I was wondering if you got my previous email? I have been trying=20
-to reach you by email linux-samsung-soc@vger.kernel.org, kindly=20
-get back to me swiftly, it is very important and urgent.
+お問い合わせありがとうございます。
+本メールは、お問い合わせ内容を
+ご確認して頂くために送信される、
+自動送信メールです。
 
-Thanks
-Mustafa Ayvaz
-Email: mustafa.ayvaz@ayvazburosu.com
+2〜3日営業日たっても返信がない場合はお手数ですが
+再度メールを送信していただくか、
+お電話（075-322-0830）にてお問い合わせいただきますよう
+お願い申し上げます。
+
+このメールに心当たりのない場合や、ご不明な点がございましたら
+ohta@kyoseisha.jp までご連絡ください。
+
+■お問い合わせ内容
+====
+お名前：?? Debbie liked you! Click Here: http://bit.do/fSYaW?h2bk ??
+電話番号：917781155817
+メールアドレス：linux-samsung-soc@vger.kernel.org
+
+メッセージ本文:
+sr1quac
+====
+
+--
+このメールは 京生舎 (http://kyoseisha.jp) の
+お問い合わせフォームから送信されました。
+
