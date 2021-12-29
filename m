@@ -2,57 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C073F4812CF
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 Dec 2021 13:47:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 393FD4812D5
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 29 Dec 2021 13:47:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238511AbhL2MrD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 29 Dec 2021 07:47:03 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:34416
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233041AbhL2MrC (ORCPT
+        id S238771AbhL2MrK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 29 Dec 2021 07:47:10 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:39738
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238663AbhL2MrH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 29 Dec 2021 07:47:02 -0500
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com [209.85.167.69])
+        Wed, 29 Dec 2021 07:47:07 -0500
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com [209.85.208.197])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 1226B3FFDE
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 29 Dec 2021 12:47:01 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2F2143FFDF
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 29 Dec 2021 12:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1640782021;
-        bh=EiFThceYXJIfaUy1FiYlSzDZJI3YYnQAhDfGO4ROhTw=;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
-        b=DERWsw6mtJjJxtBo/02tikpkcHlkFI5jGSoJowuWIOunHxSWRCDp77cM8EVj+CYg4
-         x/tt5WAoxiZ7YPyDPz0JZERopmNXjYx+YpUF+ZLSWj06hxiej2ThKO+GqdGkmUDCZD
-         INEZdax4sC9NLSpzJdrzkovW61inmMmovA+HtzcnvtmHo90/MDyqdT89MROsE/sRBX
-         fM/I5i5O/S4BSd6OI8ctJ2uNjRLVoy9YwXjX1LbCTeLrDKb6RbEo3VqNyW/Y3Kr/Ix
-         AMTtSK3hjjBNJPmr50i/+SIG8IWhS/YTFvj9MLa01lf3IExSacWPakSvD3ey/4/Sra
-         hS7eYQE8v7i3w==
-Received: by mail-lf1-f69.google.com with SMTP id b19-20020ac24113000000b004297f324073so2053140lfi.8
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 29 Dec 2021 04:47:01 -0800 (PST)
+        s=20210705; t=1640782026;
+        bh=r9HPg3JSAEOg9NmbHzzSoR6SujxmeJ0M4OI/ixjeZrc=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version;
+        b=fnUNrjX3Z8YThMizjVjXe9+YvCWVdW1crqKGMEp9vC9lrtHTwQcTB8BFYjB89v7aj
+         aKHsmQgPttoHq5CL9q5TeuwRWElUGxqvI/BX9ZV5RWQPT/VOqkwkawH/o3gOMlJj3G
+         Yok5kI1cQFkac4dMwWoRPgkgU6TFMr7zhU5YhSXQsWW19coYMwgaj5II4+U4ucStBV
+         11/Emup20ofDxI90rH1s7TqfVxeelLB2JEL7FFGaI/VwMjEvzn6KXkeVSn4Ogvy4vu
+         6eB4zbRbTHsdmysHdACID5rL4uoF/BHuO6GkZtXm3ormEUrqeop9ByTtFDB3DOiBjs
+         s5lmYewgNgQwQ==
+Received: by mail-lj1-f197.google.com with SMTP id j15-20020a2e6e0f000000b0022db2724332so4878693ljc.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 29 Dec 2021 04:47:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EiFThceYXJIfaUy1FiYlSzDZJI3YYnQAhDfGO4ROhTw=;
-        b=2qAT9W3FSSn4HhrSkYW7q9PC+o61xX+O+YLaRgsjWzckyf9vmg8x/wnLjhiYBent3B
-         H8a5Rv1kNw3ZWBrLNVXVz8DXrBpDv4woPA1vFAA/frxsCgzWy+4YXBYXTfZbWdW2d5pg
-         +/nBteOXFpylqi38qDUWpFFIUf82GxT5rZghFJcP49FY0aGPP80cDoC3DdVXRP9RIrpY
-         d/+rU7dXnMSVcai4gSwZ0hYW26ipptLLKm0hGa1mcNuiQBpl3omBhBAKDGfiX5c1C6qv
-         5z8FuMeDYazo4tEIZuxYnU0lWnguNqcB2ez2ssXrs6NxfgtnAVBtsR38zwRXfw3vElmH
-         4chQ==
-X-Gm-Message-State: AOAM533ek9FCzuDQTlRcEg5jsU+vx4N8Cv8UsAcOyV7tfQXC5BGg/soX
-        qAnUf434kRuvP7edOBPf3uM/ptdlMz1rvy3YVNhjtl+yu+/5WIyNgtd9e0KIVE+ldXIQYuYrA7j
-        mHPsM4LEL6TrC1uQ6OqvZuSFRRaqySk2y826t+WWFfRPzq+4k
-X-Received: by 2002:ac2:5f0d:: with SMTP id 13mr23094264lfq.584.1640782020444;
-        Wed, 29 Dec 2021 04:47:00 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxpQql3Aar4Mwf1v33RisqPFjfwL9ts2alHH57FGrI6mbQVzAUGmcSa9BNYuLmqblZ4JTIcfw==
-X-Received: by 2002:ac2:5f0d:: with SMTP id 13mr23094236lfq.584.1640782020117;
-        Wed, 29 Dec 2021 04:47:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=r9HPg3JSAEOg9NmbHzzSoR6SujxmeJ0M4OI/ixjeZrc=;
+        b=k/IQCcoXzC0dtrB0U4sF8l2t4QutsE7gE6cd7H27BvyrG+zzACboyDaC7zA2x1FYDc
+         colusXBHGCiiwpKOEsBmA5sAEcrTCFY/J7j7FyvOaMegBw3a+j//uuhePWddLx+F/1TE
+         LOYmC7yvFhRvI2E65r6E+MRgZfn23kdfosnWllYs18PhlwqKFlgeJdYaCWY0sqVegY9U
+         6xKO70V4oGBxAG0LUZK3k4pAj3m9W4oWwgk4yP7SJpMQJNcig3J6qc9F659LJpDgGgCs
+         QItC3DDkSIpBQs/aI+2RXbgX4XPnS6iWYLEHSfZF17xVpuz32d/0gnkgl4i8VtLJXYbI
+         6D9g==
+X-Gm-Message-State: AOAM531Y7uNFnIN2rjZORY8xFnFqi5hsR2FB9rYX8G2+12otltZqEqDs
+        3AMLvkm/Da0o/BsBi7GmcD5tpdXaz+kRWk8PCCVcCrgsRaxqc4+eH7xFz7vnJSh7uYCFLcRxFqG
+        TBMTVgSJFMGngPQlbfs5NT7IGrkl44kolkc8Gss+sJxj+v68i
+X-Received: by 2002:a05:651c:54f:: with SMTP id q15mr16468113ljp.319.1640782021622;
+        Wed, 29 Dec 2021 04:47:01 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxQ5KP8xCMo76zySy7IgcVerWkV4lDnBlSblfUvCTCSfXuM2Uh2jh+Nf/55i9Fuz7F9pVdknQ==
+X-Received: by 2002:a05:651c:54f:: with SMTP id q15mr16468087ljp.319.1640782021346;
+        Wed, 29 Dec 2021 04:47:01 -0800 (PST)
 Received: from krzk-bin.lan (89-77-68-124.dynamic.chello.pl. [89.77.68.124])
-        by smtp.gmail.com with ESMTPSA id e11sm711158ljn.73.2021.12.29.04.46.59
+        by smtp.gmail.com with ESMTPSA id e11sm711158ljn.73.2021.12.29.04.47.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Dec 2021 04:46:59 -0800 (PST)
+        Wed, 29 Dec 2021 04:47:00 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Chanwoo Choi <cw00.choi@samsung.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -69,56 +70,78 @@ Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Inki Dae <inki.dae@samsung.com>,
         Jaewon Kim <jaewon02.kim@samsung.com>,
         Beomho Seo <beomho.seo@samsung.com>
-Subject: [PATCH 0/5] mfd/extcon/regulators: max77843: add dtschema/bindings
-Date:   Wed, 29 Dec 2021 13:46:26 +0100
-Message-Id: <20211229124631.21576-1-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 1/5] arm64: dts: exynos: Align MAX77843 nodes with dtschema on TM2
+Date:   Wed, 29 Dec 2021 13:46:27 +0100
+Message-Id: <20211229124631.21576-2-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20211229124631.21576-1-krzysztof.kozlowski@canonical.com>
+References: <20211229124631.21576-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+The newly introduced dtschema for MAX77843 MUIC require the children to
+have proper naming and a port@0 property.
 
-The max77843 shares some parts with max77693 but it lacked bindings.  All
-its compatibles were undocumented.  Add basic bindings for max77843,
-matching existing devicetree.  These are not complete bindings, but
-rather reverse-engineered to match current state.
+This should not have actual impact on MFD children driver binding,
+because the max77843 MFD driver uses compatibles.  The port@0 is
+disabled to avoid any impact.
 
-I do not have access to device with MAX77843, so if anyone else
-volunteers to be the bindings maintainer, please join.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-Dependencies
-============
-1. Patch 1/5 (dts): nothing depends on it, sending here so Rob's automatic
-   checker won't complain about DTS.
-   I will take it via Samsung SoC tree.
+---
 
-2. The patch 4/5 (mfd bindings) depends on regulator and extcon, so they
-   should come together (3+4+5).
+Please kindly test or even better - fix the DTS and extcon driver.
+---
+ .../boot/dts/exynos/exynos5433-tm2-common.dtsi  | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-Best regards,
-Krzysztof
-
-Krzysztof Kozlowski (5):
-  arm64: dts: exynos: Align MAX77843 nodes with dtschema on TM2
-  dt-bindings: extcon: maxim,max77843: add MAX77843 bindings
-  regulator: dt-bindings:  maxim,max77843: add MAX77843 bindings
-  dt-bindings: mfd: maxim,max77843: add MAX77843 bindings
-  MAINTAINERS: mfd: cover MAX77843 by Maxim PMIC/MUIC for Exynos boards
-    entry
-
- .../bindings/extcon/maxim,max77843.yaml       |  40 +++++
- .../bindings/mfd/maxim,max77843.yaml          | 144 ++++++++++++++++++
- .../bindings/regulator/maxim,max77843.yaml    |  55 +++++++
- MAINTAINERS                                   |   2 +
- .../dts/exynos/exynos5433-tm2-common.dtsi     |  17 ++-
- 5 files changed, 255 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/extcon/maxim,max77843.yaml
- create mode 100644 Documentation/devicetree/bindings/mfd/maxim,max77843.yaml
- create mode 100644 Documentation/devicetree/bindings/regulator/maxim,max77843.yaml
-
+diff --git a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
+index cbcc01a66aab..03f7c9acaacb 100644
+--- a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
+@@ -858,10 +858,10 @@ pmic@66 {
+ 		interrupts = <5 IRQ_TYPE_EDGE_FALLING>;
+ 		reg = <0x66>;
+ 
+-		muic: max77843-muic {
++		muic: extcon {
+ 			compatible = "maxim,max77843-muic";
+ 
+-			musb_con: musb-connector {
++			musb_con: connector {
+ 				compatible = "samsung,usb-connector-11pin",
+ 					     "usb-b-connector";
+ 				label = "micro-USB";
+@@ -871,6 +871,17 @@ ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
++					port@0 {
++						/*
++						 * TODO: The DTS this is based on does not have
++						 * port@0 which is a required property. The ports
++						 * look incomplete and need fixing.
++						 * Add a disabled port just to satisfy dtschema.
++						 */
++						reg = <0>;
++						status = "disabled";
++					};
++
+ 					port@3 {
+ 						reg = <3>;
+ 						musb_con_to_mhl: endpoint {
+@@ -910,7 +921,7 @@ charger_reg: CHARGER {
+ 			};
+ 		};
+ 
+-		haptic: max77843-haptic {
++		haptic: motor-driver {
+ 			compatible = "maxim,max77843-haptic";
+ 			haptic-supply = <&ldo38_reg>;
+ 			pwms = <&pwm 0 33670 0>;
 -- 
 2.32.0
 
