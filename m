@@ -2,146 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E954484522
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Jan 2022 16:46:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FBDD4845A4
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Jan 2022 16:56:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235104AbiADPqJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 4 Jan 2022 10:46:09 -0500
-Received: from mail-oi1-f180.google.com ([209.85.167.180]:44688 "EHLO
-        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234013AbiADPpw (ORCPT
+        id S235303AbiADP4G (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 4 Jan 2022 10:56:06 -0500
+Received: from sv13017.xserver.jp ([162.43.116.18]:49430 "EHLO
+        sv13017.xserver.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235364AbiADPzu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 4 Jan 2022 10:45:52 -0500
-Received: by mail-oi1-f180.google.com with SMTP id be32so59964144oib.11;
-        Tue, 04 Jan 2022 07:45:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bR+VnRjjUTwZhvl7ylzl1ud079Lz2W/GxJ0fPmozOqM=;
-        b=4qFDW4fw00HfSlXbju0C9sJGUi/xpJxCBuitNWWKInhcwa8EFzBPPIINHLn/wkYiKb
-         orft6N+kErigVutXqL4vQoQv7s55KAAxDfbiLrKNZ4Mk1zBR0ITZwEvjdwStqjwhiZVL
-         n24gsCZGsYP/6KBUygxT5RBmwuzRFvp0YIvSpVBBRE5YywNBAC5+nGfQvgCtACKQxfEA
-         Gx9llaOMv5iCy/RPqmQyLKuItjHDd11jZWZcDtADzOqylWE5s/fG90Gcw+NRLir6IFwU
-         /dRNaIsErKReuCiM38GrNw/CsZcKCYy+q3oXZjep3BA+zJndSQsmR+o0Z8MutXodv0SL
-         Azsw==
-X-Gm-Message-State: AOAM530nJhHImJnpONSNsVgRNFdkHvTW+unY+4ph/Md9uZzcHWPyg0YB
-        JTrfJ9rulD9OTjo1uv4xNQ==
-X-Google-Smtp-Source: ABdhPJwmXBTcLbs7rkUj5WzWeJ2TvhW5C6c2JfagvvfUX27bxcz6n5/oI9/iWxKjToezekQheBMyRA==
-X-Received: by 2002:aca:6746:: with SMTP id b6mr35772057oiy.167.1641311152109;
-        Tue, 04 Jan 2022 07:45:52 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id c17sm7062803otn.72.2022.01.04.07.45.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 07:45:51 -0800 (PST)
-Received: (nullmailer pid 899058 invoked by uid 1000);
-        Tue, 04 Jan 2022 15:45:50 -0000
-Date:   Tue, 4 Jan 2022 09:45:50 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Chanwoo Choi <cw00.choi@samsung.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        Inki Dae <inki.dae@samsung.com>,
-        Jaewon Kim <jaewon02.kim@samsung.com>,
-        Beomho Seo <beomho.seo@samsung.com>
-Subject: Re: [PATCH 4/5] dt-bindings: mfd: maxim,max77843: add MAX77843
- bindings
-Message-ID: <YdRrrsp1/UFYx5GN@robh.at.kernel.org>
-References: <20211229124631.21576-1-krzysztof.kozlowski@canonical.com>
- <20211229124631.21576-5-krzysztof.kozlowski@canonical.com>
+        Tue, 4 Jan 2022 10:55:50 -0500
+X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jan 2022 10:55:50 EST
+Received: from virusgw12002.xserver.jp (virusgw12002.xserver.jp [103.3.3.11])
+        by sv13017.xserver.jp (Postfix) with ESMTP id 6AA06F80165240
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jan 2022 00:47:49 +0900 (JST)
+Received: from sv13017.xserver.jp (162.43.116.18)
+ by virusgw12002.xserver.jp (F-Secure/fsigk_smtp/521/virusgw12002.xserver.jp);
+ Wed, 05 Jan 2022 00:47:49 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/521/virusgw12002.xserver.jp)
+Received: by sv13017.xserver.jp (Postfix, from userid 20007)
+        id 65A33F80305E16; Wed,  5 Jan 2022 00:47:49 +0900 (JST)
+To:     linux-samsung-soc@vger.kernel.org
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7PHUbKEI=?=
+ =?ISO-2022-JP?B?GyRCSVUkTiQqQ04kaSQ7GyhC?=
+From:   =?UTF-8?B?5qCq44Gu5oqV6LOH44Go5oqV5qmf44OW44Ot44Kw?= 
+        <t.kuramoto1013@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211229124631.21576-5-krzysztof.kozlowski@canonical.com>
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+Message-Id: <20220104154749.65A33F80305E16@sv13017.xserver.jp>
+Date:   Wed,  5 Jan 2022 00:47:49 +0900 (JST)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Dec 29, 2021 at 01:46:30PM +0100, Krzysztof Kozlowski wrote:
-> Document the bindings for MAX77843 MFD driver, based on Exynos5433 TM2
-> devicetree.  These are neither accurate nor finished bindings but at
-> least allow parsing existing DTS files.
-> 
-> The example DTS was copied from existing DTS
-> (exynos5433-tm2-common.dtsi), so keep the license as GPL-2.0-only.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
->  .../bindings/mfd/maxim,max77843.yaml          | 144 ++++++++++++++++++
->  1 file changed, 144 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mfd/maxim,max77843.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/maxim,max77843.yaml b/Documentation/devicetree/bindings/mfd/maxim,max77843.yaml
-> new file mode 100644
-> index 000000000000..7f3d74f254af
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/maxim,max77843.yaml
-> @@ -0,0 +1,144 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/maxim,max77843.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Maxim MAX77843 MicroUSB and Companion Power Management IC
-> +
-> +maintainers:
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> +
-> +description: |
-> +  This is a part of device tree bindings for Maxim MAX77843 MicroUSB
-> +  Integrated Circuit (MUIC).
-> +
-> +  The Maxim MAX77843 is a MicroUSB and Companion Power Management IC which
-> +  includes voltage current regulators, charger, fuel-gauge, haptic motor driver
-> +  and MicroUSB management IC.
-> +
-> +properties:
-> +  compatible:
-> +    const: maxim,max77843
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  extcon:
-> +    $ref: ../extcon/maxim,max77843.yaml
 
-/schemas/extcon/...
+?? Mary want to meet you! Click Here: http://inx.lv/pIaX?eee ?? 様 
 
-> +
-> +  motor-driver:
-> +    type: object
-> +    properties:
-> +      compatible:
-> +        const: maxim,max77843-haptic
-> +
-> +      haptic-supply:
-> +        description: Power supply to the haptic motor
-> +
-> +      pwms:
-> +        maxItems: 1
-> +
-> +    required:
-> +      - compatible
-> +      - haptic-supply
-> +      - pwms
-> +
-> +  regulators:
-> +    $ref: ../regulator/maxim,max77843.yaml
+株の投資と投機ブログ へお問い合わせいただき、誠にありがとうございます。
 
-And here.
+改めて担当者よりご連絡致しますので、今しばらくお待ち下さい。 
 
-With that,
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+-------------------------------------------------
+
+■お名前:
+?? Mary want to meet you! Click Here: http://inx.lv/pIaX?eee ?? 
+
+
+■メールアドレス:
+linux-samsung-soc@vger.kernel.org 
+
+
+■件名:
+fe22hy 
+
+
+■お問い合わせ内容:
+mwvm7j 
+
+-------------------------------------------------
+
