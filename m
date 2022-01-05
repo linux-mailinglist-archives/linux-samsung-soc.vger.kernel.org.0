@@ -2,116 +2,141 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E2F64853D7
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jan 2022 14:53:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07CA74856E2
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jan 2022 17:54:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240439AbiAENxh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 5 Jan 2022 08:53:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33846 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbiAENxg (ORCPT
+        id S242042AbiAEQyC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 5 Jan 2022 11:54:02 -0500
+Received: from mailout1.samsung.com ([203.254.224.24]:31631 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232796AbiAEQx7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 5 Jan 2022 08:53:36 -0500
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F258DC061761;
-        Wed,  5 Jan 2022 05:53:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=kkiD2VavxZn0Wp7PKH9hvugEiFMUM3igIeXBQopwOT4=; b=rq7v+suYAL6dyc31hydeUplLUX
-        KPE/p4MAVHNZGCWbxIIF3tSwfpULTsDI1jiOprGCUWq4mpXnvA6ZC0eSS0iCKnCPtQAbsxA6ljuO2
-        6AiovSZHbMZyBr7rq5L39qKBk8v48VwUD5Qg1txJS3ku8PMiz5/r69WyYbidfiLxsNTH4SKWvGLdY
-        4At/Yc+XcTGxekLjKcnuzOl7lULpVU6LpY22WJESUK10fCnmIvqSC2yT3hSH5/UN1sMxfRi6OU26v
-        rjAQ87UANfLKokkjgsDoPAQQb/dan4NE9GTJ/ZBek+csPURN05qbpKij0GkQih+NWy4ivJRriApby
-        yM7dPQaA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56594)
-        by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <linux@armlinux.org.uk>)
-        id 1n56j5-000846-Pu; Wed, 05 Jan 2022 13:53:15 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-        (envelope-from <linux@shell.armlinux.org.uk>)
-        id 1n56iy-0008TT-7A; Wed, 05 Jan 2022 13:53:08 +0000
-Date:   Wed, 5 Jan 2022 13:53:08 +0000
-From:   "Russell King (Oracle)" <linux@armlinux.org.uk>
-To:     Jon Hunter <jonathanh@nvidia.com>
-Cc:     Ard Biesheuvel <ardb@kernel.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Nicolas Pitre <nico@fluxnic.net>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kees Cook <keescook@chromium.org>,
-        Keith Packard <keithpac@amazon.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v4 7/7] ARM: implement support for vmap'ed stacks
-Message-ID: <YdWixPrYkR1JoFHW@shell.armlinux.org.uk>
-References: <e07a229a-e565-0077-9f8a-a24ffa45f395@samsung.com>
- <CAMj1kXG3neg0riLAaU32KLvB2PLBNzwqgO0F21nbK1ivS=FwMg@mail.gmail.com>
- <b22077f6-0925-ee00-41ea-3e52241926e2@samsung.com>
- <CAMj1kXHQrqZSE1kHaQyQyK6R58EV3cUyvJFmM1JYifaMemyUhQ@mail.gmail.com>
- <f469726d-86fb-cf54-2775-d4658d2f3a5d@samsung.com>
- <CAMj1kXGyL7yTV4+pOs9iBWYuVvVmPTZrV5r=nzqttqpZ6-vYJA@mail.gmail.com>
- <CAMuHMdWNuCVeFiDrhnFmX0F1jxz8Fs4eFx55ojJF3d2ro-udrA@mail.gmail.com>
- <bbb0c788-bd83-833c-9445-87cff525f728@nvidia.com>
- <CAMj1kXEYjUspxOnvK=3O4pkVtXT+iBPz6mkskn=K6TTUZc+W2g@mail.gmail.com>
- <4ae3e371-68d0-64d7-713e-88af45875b3f@nvidia.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4ae3e371-68d0-64d7-713e-88af45875b3f@nvidia.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+        Wed, 5 Jan 2022 11:53:59 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20220105165356epoutp014c6b1b71e7e3c98159b5d8cc8b78cddd~Hbhd-_wdF2714227142epoutp01U
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jan 2022 16:53:56 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20220105165356epoutp014c6b1b71e7e3c98159b5d8cc8b78cddd~Hbhd-_wdF2714227142epoutp01U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1641401636;
+        bh=RQ99m1jJPhIHUCeFdUy2vwQ1cn9LOk9p3qwSLPtVGdE=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=RYJy7DsERlxDCT0pjOyu+lSfM92rTg3U0vqAFkiL3lIcd9HpRcSV70lBXmyG9bfDY
+         LR4qkHS1TCjeWKIsYhoFipI4jcNF8OAU/fl0G3V7Y6Js0xv3Tncig0vCPzIXqlilaB
+         bEW3WOiHftauWoJ3PMZ2NV3SiV2YUpfpUShWlGsM=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+        20220105165355epcas5p4ff4619c163ce7dc7a3074e6d9446f9e7~HbhdU1EDm0428504285epcas5p4E;
+        Wed,  5 Jan 2022 16:53:55 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.183]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4JTbD03RXnz4x9Pv; Wed,  5 Jan
+        2022 16:53:52 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        8F.F9.06423.02DC5D16; Thu,  6 Jan 2022 01:53:52 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+        20220105165351epcas5p100b28a19d5a5e5614ea82adf5e0037b0~HbhZiT5pX3051430514epcas5p1L;
+        Wed,  5 Jan 2022 16:53:51 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20220105165351epsmtrp25a3646999e445649587770840215a756~HbhZhut9j0460604606epsmtrp2T;
+        Wed,  5 Jan 2022 16:53:51 +0000 (GMT)
+X-AuditID: b6c32a49-b13ff70000001917-aa-61d5cd2008ee
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C7.02.08738.F1DC5D16; Thu,  6 Jan 2022 01:53:51 +0900 (KST)
+Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
+        [107.108.73.139]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20220105165350epsmtip194c9172598c1fd71327517cd6fadeafb~HbhYp2gnZ0640706407epsmtip1J;
+        Wed,  5 Jan 2022 16:53:50 +0000 (GMT)
+From:   Alim Akhtar <alim.akhtar@samsung.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     krzysztof.kozlowski@canonical.com, s.nawrocki@samsung.com,
+        linux-samsung-soc@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: [PATCH] MAINTAINERS: add reviewer entry for Samsung/Exynos platform
+Date:   Wed,  5 Jan 2022 22:13:41 +0530
+Message-Id: <20220105164341.27479-1-alim.akhtar@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsWy7bCmuq7C2auJBn3PVCwezNvGZrHx7Q8m
+        i8u75rBZzDi/j8ni8Jt2VgdWj1kNvWwefVtWMXp83iQXwByVbZORmpiSWqSQmpecn5KZl26r
+        5B0c7xxvamZgqGtoaWGupJCXmJtqq+TiE6DrlpkDtFJJoSwxpxQoFJBYXKykb2dTlF9akqqQ
+        kV9cYquUWpCSU2BSoFecmFtcmpeul5daYmVoYGBkClSYkJ2x4e801oK93BVXNpxiamB8x9nF
+        yMkhIWAiseX9DpYuRi4OIYHdjBIPWv6yQzifGCV6Ws8zQzifGSUm/Z7PAtPyrG0ZG0RiF6PE
+        w9YjUE4Lk8SOnrlsIFVsAtoSd6dvYQKxRQQUJDb3PmMFKWIW6GSU2HrgDDNIQljAR2Jbxw4w
+        m0VAVWLZo3tgNq+AjUTTzC1sEOvkJVZvOAB2h4RAP7vE708L2SESLhJPVy5ggrCFJV4d3wIV
+        l5L4/G4vUDMHkJ0t0bPLGCJcI7F03jGoF+wlDlyZwwJSwiygKbF+lz5ImFmAT6L39xMmiE5e
+        iY42IYhqVYnmd1ehOqUlJnZ3s0LYHhI/r50Bu1JIIFai+30b4wRGmVkIQxcwMq5ilEwtKM5N
+        Ty02LTDMSy2HR05yfu4mRnDq0fLcwXj3wQe9Q4xMHIyHGCU4mJVEeP9KX0oU4k1JrKxKLcqP
+        LyrNSS0+xGgKDKWJzFKiyfnA5JdXEm9oYmlgYmZmZmJpbGaoJM57On1DopBAemJJanZqakFq
+        EUwfEwenVANTaRuzV1rN3rDZ3BP1K/eYJTZoOItlT1VfVdt/rr3UqGeT8Op3873zmGdpBzdU
+        H82wO9umzNC+OmtBw5KglKvW7A8YI6Ol/VgeR3Gq2Nv1KJY7dJz3idriNKnttbWfas3GiZoz
+        VqqpvtwTMyHGQzpQs+5C9SHnLclOCsJ7k1c5Xej+tWNeBnPnXo86OQOzqx2nNuUIP5EsTftu
+        amN3pMtg/qYZf37c9Lste6JUmOt5kolBWcRCnauH5QzEF0W63djWsGTOqrPzT0s9f+l57p+j
+        yr57a/SKfq9bWFh568HLpJNZSw5k3DVg2RsRcMfz6MpNgU82nFttz62wtPris/3cnr15deFz
+        FLvyt69LLVZiKc5INNRiLipOBABzFMxUxgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNJMWRmVeSWpSXmKPExsWy7bCSnK782auJBi2vVC0ezNvGZrHx7Q8m
+        i8u75rBZzDi/j8ni8Jt2VgdWj1kNvWwefVtWMXp83iQXwBzFZZOSmpNZllqkb5fAlbHh7zTW
+        gr3cFVc2nGJqYHzH2cXIySEhYCLxrG0ZWxcjF4eQwA5GiSn3z7BCJKQlrm+cwA5hC0us/Pcc
+        zBYSaGKS6FrmC2KzCWhL3J2+hQnEFhFQkNjc+4wVZBCzQC+jREvzFxaQhLCAj8S2jh3MIDaL
+        gKrEskf3wGxeARuJpplb2CAWyEus3nCAeQIjzwJGhlWMkqkFxbnpucWGBUZ5qeV6xYm5xaV5
+        6XrJ+bmbGMHhoaW1g3HPqg96hxiZOBgPMUpwMCuJ8P6VvpQoxJuSWFmVWpQfX1Sak1p8iFGa
+        g0VJnPdC18l4IYH0xJLU7NTUgtQimCwTB6dUA1PBesXYfIVVqTzl6ff8mOwyBJfbNZ1yZi7P
+        DF5Z29S6wuSNyFLtlksR+7Z03vLrn2Uz61ecDYtfsHrtQ8sS1XYFx2/q2YJMMed+Pn/rv2Zh
+        8Cv9j2ZcvaFzFs3qDj758uARRo3CVScjzn/fvl965vv1EWUsPf/dZh8vfOvwReXG+87jXXvc
+        p50u2aolF67GEuiygyOmvXdu0pO3m1Se6OvMPK7pcUP4WbrLBi0jsSudUdxrVebfW68cGMmY
+        s2XBxSfa134eU05nri7X+iQnaLZ1yYaL/m61a0P4OU990Lkt/FaSp/FwbpOY7F19Abl3uydt
+        +K94X+7vtOBtfeE7dds6Zi//bvfrxcVlHKpfQpVYijMSDbWYi4oTAUwi7BZ+AgAA
+X-CMS-MailID: 20220105165351epcas5p100b28a19d5a5e5614ea82adf5e0037b0
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20220105165351epcas5p100b28a19d5a5e5614ea82adf5e0037b0
+References: <CGME20220105165351epcas5p100b28a19d5a5e5614ea82adf5e0037b0@epcas5p1.samsung.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Jan 05, 2022 at 11:33:48AM +0000, Jon Hunter wrote:
-> On 05/01/2022 11:12, Ard Biesheuvel wrote:
-> > Thanks for the report.
-> > 
-> > It would be helpful if you could provide some more context:
-> > - does it happen on a LPAE build too?
-> > - does it only happen on SMP capable systems?
-> 
-> These are all SMP systems.
-> 
-> > - does it reproduce on such systems when using only a single CPU?
-> > (i.e., pass 'nosmp' on the kernel command line)
-> 
-> I would need to try this.
+Adds myself as reviewer for Samsung/Exynos platform to help
+in review of current and upcoming SoCs patches.
 
-Please note that I want an answer on the vmap stack patches by the
-end of today (UK time - so about five hours after this email has
-been sent) as we have only tonight and tomorrow's linux-next before
-the probable opening of the merge window.
+Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+---
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The options are:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 13f9a84a617e..ddc8e8552e8b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2544,6 +2544,7 @@ N:	rockchip
+ 
+ ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES
+ M:	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
++R:	Alim Akhtar <alim.akhtar@samsung.com>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ L:	linux-samsung-soc@vger.kernel.org
+ S:	Maintained
+@@ -15110,6 +15111,7 @@ PIN CONTROLLER - SAMSUNG
+ M:	Tomasz Figa <tomasz.figa@gmail.com>
+ M:	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+ M:	Sylwester Nawrocki <s.nawrocki@samsung.com>
++R:	Alim Akhtar <alim.akhtar@samsung.com>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ L:	linux-samsung-soc@vger.kernel.org
+ S:	Maintained
+@@ -16868,6 +16870,7 @@ SAMSUNG SOC CLOCK DRIVERS
+ M:	Sylwester Nawrocki <s.nawrocki@samsung.com>
+ M:	Tomasz Figa <tomasz.figa@gmail.com>
+ M:	Chanwoo Choi <cw00.choi@samsung.com>
++R:	Alim Akhtar <alim.akhtar@samsung.com>
+ L:	linux-samsung-soc@vger.kernel.org
+ S:	Supported
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/snawrocki/clk.git
 
-1. The problem gets fixed today and I merge the fix today so it can
-   get tested in linux-next over the next few days by the various
-   build farms and test setups.
-2. We postpone the merging of this until the very end of the merge
-   window to give more time to sort out this mess - but what it
-   means is keeping it in linux-next and keeping various platforms
-   broken during that period. However, this is really not fair for
-   other people, and some would say this isn't even an option.
-3. We drop the entire series for this merge window, meaning it gets
-   dropped from linux-next, and have another go for the neext merge
-   window.
-
-Sorry for being so demanding, but we're far too close to the merge
-window to be trying to debug a feature that is clearly causing a
-regression for several platforms.
-
+base-commit: 2585cf9dfaaddf00b069673f27bb3f8530e2039c
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+2.17.1
+
