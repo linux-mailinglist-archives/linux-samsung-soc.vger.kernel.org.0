@@ -2,140 +2,133 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7206489959
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Jan 2022 14:11:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E2D5489BE4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Jan 2022 16:11:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231131AbiAJNLq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 10 Jan 2022 08:11:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44340 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbiAJNLq (ORCPT
+        id S235972AbiAJPLG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 10 Jan 2022 10:11:06 -0500
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:51670
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235940AbiAJPLG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 10 Jan 2022 08:11:46 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC35BC061748
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Jan 2022 05:11:45 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id z22so8293769edd.12
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Jan 2022 05:11:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=STst/NZz7XpLuhkw/fjT1YooCLQUEgoChj9j28RAYfs=;
-        b=Bgie3w5lZXcUpEJsNUNnYT9D80sz6831OKMgWSWMpAMR4c04HQM1hwHkoZ1AqHgJ5M
-         pQJfhFBsNTGc+jfMsWTuSDXhNBe5XPwJ8/UQZKbYcWTDQ68Eu4MBBVsHf0V3Baa+27Pp
-         IUJW/950IUGNsTto2NnsTW49/Cy4Vf+KfgzDT0+KZ2gcb/QkEKg3LEIj8qPJpiII0Qbk
-         buE3CbPl0T8T6omQLXT3KYJBxN98pPIrfxDam1Qs0diPFN43pWVugWbd8LU8WaIGviK3
-         O/t/NLMKhR03EdE8rMi5c8T5epCw09Yzc4YmAU5QrO9ZaREbayNwAtpm1SWYSR1IiBuY
-         5w9A==
+        Mon, 10 Jan 2022 10:11:06 -0500
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 4C45740A56
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Jan 2022 15:11:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1641827462;
+        bh=tX3h7hnt8kxt/dVYtcBgB0Ej6aT/jkR+7hhXYExraYQ=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=wGSybXT0T13FsDNhbOXR6vxo2ngu/3N2vuSKfzlEtHBveDYADtNoT/ghFH9/vVUSY
+         fxrGN1Azil0wylAjqt91vHLl/aHcTmHFCh3RMgzIaLdReoT3FfejCRSqCOwRnpvSJK
+         KSzy79wkOTPuBIAJ7t9pwljyLjr9/ezGawh1ZI1/xCKeCNx5gXCOYefEv29syOIVjw
+         t4MQOI0aacWp4WOhDYa8E6E1Hddi10lQTeorjSbn1gPIb4WPW9FFyHa8/5fIPfMERY
+         hiG5gH5ChXKSXbW14Qc34j0rr5l7Mopat4YqqCfVn7EBimz+iPeLksIxy76h5Y2rBq
+         9PqlyLb2EgBig==
+Received: by mail-ed1-f71.google.com with SMTP id s7-20020a056402520700b003f841380832so10390370edd.5
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Jan 2022 07:11:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=STst/NZz7XpLuhkw/fjT1YooCLQUEgoChj9j28RAYfs=;
-        b=LC5SVY9yrPLV9Ajf0xVFA0MHZV5Fe4I1qmckxkVPJ8I48p04QKDyNZ83vsgdLejRKY
-         ocvwHIAUt9Dx8/xU+BhzW5/jGWqhAuvIVpBnNb75m8mF/aJzYPWsLj+kZoDyW73JIiqF
-         Hha9aS3LdILlSuZ3cty61YjYLKwmYMD/aIuDUPjUqsBLOVt3TgdrQLmBKzXzKceFbza2
-         1PNedaEjM+glvrfqJWKP2jhZBKXelEB1rRx/EECHYV0zNCkbgIi8asDI0VAepRdK1LZA
-         rFENHEUPu1L/1Ruf9U5JijkoALvL+jKVpQLiQeEMUgVOw0buLOYIkuvVZJQewGxQenSZ
-         qiRg==
-X-Gm-Message-State: AOAM5339u/0Kg1W6in3n6LObElp234HbPwu0spd+k5WKF2f/rx7o9tPZ
-        YCJNzGqV1JMbTEzrkw7mO1jqcHd0KBRFljFAlimGahJwJCM=
-X-Google-Smtp-Source: ABdhPJyUuzfRq9+VAp3YIslVsNF7E8r6u+SDvjtiaFw6sfTA9uOxrmlrl9JDay/jDh10uqplhgk07a+YHTpM3Ge0znw=
-X-Received: by 2002:ac2:4c51:: with SMTP id o17mr60639917lfk.558.1641820293776;
- Mon, 10 Jan 2022 05:11:33 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=tX3h7hnt8kxt/dVYtcBgB0Ej6aT/jkR+7hhXYExraYQ=;
+        b=UN5v3xD7ObrnLk2h8f81H5xTsu3RxTMADWfuvYoYRu0/DC/BurAI9H7nL8mcskt6N8
+         +ICnCpzPqL5eWa9D1xb0SLxQBCjLig6fq1riMcnXfL+mt77LxDcxdMeRtC5S6l0DQbR4
+         qdPhjtbKyBSBkwiGkMTCjR7q9ktCjuU0aXBgHQvwIMjTPtIYX75wB0jtJPY6PR2AEKeN
+         i+WIMWX4oCINv111p5zSOkjPjVK9LBQStUwdaITPZfjqDzjarq2fXM+7hFhjF+lKgnA0
+         M+ECrPqGlBzODSgQ1zdiZEL6l0DuGCJsgBwp4ed3DgIYT+OZ2ZNICc6OA8Q9mBM+piKk
+         JgXg==
+X-Gm-Message-State: AOAM5303GCbYly1DiAqRkrLfOldfqL/rVr2o+KIZp6fhv61o6m385eSt
+        BCMYKYPAbaGm+elg8siNPNiungnR3n8I+kpmzYhL6nafTjeVF/IRjLVMB/PEI48XqnMpTa4VZYc
+        YTYQv06f3oO6FvmuqdCEK6ryb9goLv2r41pCt98GI+6rZ4TFm
+X-Received: by 2002:a05:6402:2756:: with SMTP id z22mr74500edd.255.1641827460972;
+        Mon, 10 Jan 2022 07:11:00 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxwxpZo2R3+fpKQFtBTyG7e4TaBBMrhOqAuzK/7sAzUdh6Cil2bZ3WxmZvF685+f8JUGO5VTA==
+X-Received: by 2002:a05:6402:2756:: with SMTP id z22mr74475edd.255.1641827460801;
+        Mon, 10 Jan 2022 07:11:00 -0800 (PST)
+Received: from [192.168.1.126] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
+        by smtp.gmail.com with ESMTPSA id c1sm2548737ejf.92.2022.01.10.07.11.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jan 2022 07:11:00 -0800 (PST)
+Message-ID: <372040ab-6ada-62e9-727f-6daeba8e73f8@canonical.com>
+Date:   Mon, 10 Jan 2022 16:10:59 +0100
 MIME-Version: 1.0
-Received: by 2002:a05:6504:15d1:0:0:0:0 with HTTP; Mon, 10 Jan 2022 05:11:32
- -0800 (PST)
-Reply-To: gtbank107@yahoo.com
-From:   Barr Robert Richter <westernunion.benin982@gmail.com>
-Date:   Mon, 10 Jan 2022 14:11:32 +0100
-Message-ID: <CAP=nHBK9zHzp_=-EVswWQiLxEoc+HV4oqddgtnEqf-9qYab_4Q@mail.gmail.com>
-Subject: Contact GT Bank-Benin to receive your transfer amount of $18.5m US Dollars.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH 2/2] spi: dt-bindings: samsung: convert to dtschema
+Content-Language: en-US
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-spi@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20220102155807.42758-1-krzysztof.kozlowski@canonical.com>
+ <20220102155807.42758-2-krzysztof.kozlowski@canonical.com>
+ <CAPLW+4miCOwFR11gdaU1nMQZdk8zVcWOcSK=Wjd3AaCagGLyug@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <CAPLW+4miCOwFR11gdaU1nMQZdk8zVcWOcSK=Wjd3AaCagGLyug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Attn,Dear
-I need you to know that the fear of the LORD is
-the beginning of wisdom, and knowledge of the Holy One is
-understanding. As power of God Most High. And This is the confidence
-we have in approaching God, that if we ask anything according to his
-will, he hears us. I will make you know that Slow and steady wins the race.
-It is your turn to receive your overdue compensation funds total
-amount $18.5Milion  USD.
-I actualized that you will receive your transfer today without any more delay
-No More fee OK, Believe me , I am your Attorney standing here on your favor.
-I just concluded conversation with the Gt Bank Director, Mrs Mary Gate
-And She told me that your transfer is ready today
+On 03/01/2022 15:41, Sam Protsenko wrote:
+> On Sun, 2 Jan 2022 at 17:58, Krzysztof Kozlowski
+> <krzysztof.kozlowski@canonical.com> wrote:
+>>
+>> Convert the Samsung SoC (S3C24xx, S3C64xx, S5Pv210, Exynos) SPI
+>> controller bindings to DT schema format
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> ---
+>>  .../devicetree/bindings/spi/samsung,spi.yaml  | 220 ++++++++++++++++++
+>>  .../devicetree/bindings/spi/spi-samsung.txt   | 122 ----------
+>>  MAINTAINERS                                   |   2 +-
+>>  3 files changed, 221 insertions(+), 123 deletions(-)
+>>  create mode 100644 Documentation/devicetree/bindings/spi/samsung,spi.yaml
+>>  delete mode 100644 Documentation/devicetree/bindings/spi/spi-samsung.txt
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/samsung,spi.yaml b/Documentation/devicetree/bindings/spi/samsung,spi.yaml
+>> new file mode 100644
+>> index 000000000000..195bfafe05fd
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spi/samsung,spi.yaml
+>> @@ -0,0 +1,220 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spi/samsung,spi.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Samsung S3C/S5P/Exynos SoC SPI controller
+>> +
+>> +maintainers:
+>> +  - Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> +
+>> +description:
+>> +  All the SPI controller nodes should be represented in the aliases node using
+>> +  the following format 'spi{n}' where n is a unique number for the alias.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    oneOf:
+>> +      - enum:
+>> +          - samsung,s3c2443-spi
+> 
+> Maybe add the list of supported platforms for each compatible (in a
+> comment on the same line), like it was done in .txt binding?
+> 
+> Other than that:
+> 
 
-So the Bank Asked you to contact them immediately by re-confirming
-your Bank details asap.
-Because this is the Only thing holding this transfer
-If you did not trust me and Mrs Mary Gate,Who Else will you Trust?
-For we are the ones trying to protect your funds here
-and make sure that your funds is secure.
-So Promisingly, I am here to assure you, that Grate Miracle is coming on
-your way, and this funds total amount of $18.500,000 is your
-compensation, entitlement inheritance overdue funds on your name.
-Which you cannot let anything delay you from receiving your funds now,
+Sure.
 
-Finally i advised you to try your possible best and contact Gt Bank Benin
-once you get this message to receive your transfer $18.5 USD today.
-I know that a journey of thousand miles begins with a single step.
-Always put your best foot forward
-Try as hard as you can, God give you best.
-take my advice and follow the due process of your payment, the
-transfer will be released to
-you smoothly without any hitches or hindrance.
 
-Contact DR.MRS MARY GATE, Director Gt bank-Benin to receive your
-transfer amount of $18.5m US Dollars
-It was deposited and registered to your name this morning.
-Contact the Bank now to know when they will transfer to your
-country today
-
-Email id: gtbank107@yahoo.com
-Tel/mobile, +229 99069872
-Contact person, Mrs Mary Gate,Director Gt bank-Benin.
-Among the blind the one-eyed man is king
-
-As you sow, so you shall reap, i want you to receive your funds
-Best things in life are free
-Send to her your Bank Details as i listed here.
-
-Your account name-------------
-Your Bank Name----------------
-Account Number----------
-your Bank address----------
-Country-----------
-Your private phone number---------
-Routing Numbers-------------
-Swift Code-----------
-
-Note, Your funds is %100 Percent ready for
-transfer.
-Everything you do remember that Good things come to those who wait.
-I have done this work for you with my personally effort, Honesty is
-the best policy.
-now your transfer is currently deposited with paying bank this morning.
-It is by the grace of God that I received Christ, having known the truth.
-I had no choice than to do what is lawful and justice in the
-sight of God for eternal life and in the sight of man for witness of
-God & His Mercies and glory upon my life.
-
-send this needed bank details to the bank today, so that you receive
-your transfer today as
-it is available for your confirmation today.
-Please do your best as a serious person and send the fee urgent, Note
-that this transfer of $18.500.000 M USD is a Gift from God to Bless
-you.
-
-If you did not contact the bank urgent, finally the Bank will release
-your transfer of $18.500.000M USD to  Mr. David Bollen as your
-representative.
-So not allow another to claim your Money.
-Thanks For your Understanding.
-
-Barr Robert Richter, UN Attorney At Law Court-Benin
+Best regards,
+Krzysztof
