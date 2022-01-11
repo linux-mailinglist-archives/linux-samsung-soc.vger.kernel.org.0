@@ -2,58 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60AE948B877
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 11 Jan 2022 21:19:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16C5048B86D
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 11 Jan 2022 21:19:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350820AbiAKUTR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 11 Jan 2022 15:19:17 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:38568
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1346599AbiAKUSf (ORCPT
+        id S1346558AbiAKUTH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 11 Jan 2022 15:19:07 -0500
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:60488
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1345746AbiAKUSe (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 11 Jan 2022 15:18:35 -0500
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
+        Tue, 11 Jan 2022 15:18:34 -0500
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 5383E40051
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Jan 2022 20:18:34 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id B8FC940ADB
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Jan 2022 20:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1641932314;
-        bh=JHHUBFr6OMR8zM8/i6cAvf5NoFmGRGJHrNiT4tfy3rM=;
+        s=20210705; t=1641932312;
+        bh=kQHLxaxxJLFmOGqzWUxDRLkwO6oKafieScmNTdNr7i4=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=QYJrHOKKSlB3cbXm8e5jcJ3GBAYGUW/pUId7h6rBwulI8uH80CQkkqYJMzUPN/cSu
-         NWBetcJl0WlsIJFwiEbmkW6/IpxfflQPUiLQpAhY1Zkg9BHFE24eFrXSz1gvTUguEF
-         K2Z3FZ8v/wmgf1DSH5lvG7aLr8AxemABlxRyDcmQpAXJgpCtvLJSBjuHnlABT53zs7
-         UZELhrBNhWw2Uc5Knp4ukn3heqVR5qvgZQBIV/tUhiOkZYpNtmQnocUlv2iVZSqs1d
-         MWA6qxAjgMiflLOYnrAiKDNphNvpI5zX0RKZqHRc7yLTX4xybz3Ye/DnjVjCcITMWd
-         pnDD1MbRTsijw==
-Received: by mail-ed1-f72.google.com with SMTP id t1-20020a056402524100b003f8500f6e35so200004edd.8
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Jan 2022 12:18:34 -0800 (PST)
+        b=VeAGBk987DL99eyMA326D2qBmIp6pbLOyKqIahGvEtrCQcWtGZGsR7wfHQA2OvL+h
+         IyLIoRdozt4bnkBE0/V25LMMX3rmcF1bd4Y+c3e5jFQLUWMUHjM7YuF4s+b33WrDSW
+         QVKClLFciVl1JnMLAqk42iYL51KqHLSTJN/BVO9DnKat3Tse2NOEqNl9eFgYqRzfBU
+         B7yJAkRSmlz5EMzjS8oG2y8rOzpHfOWbcPv/FnpSdYNZrIKVMqyHumRXrpkQeYWqHt
+         fEfX+p6nu3eKdPAXlxF1LAgG6wUbbbS/j9yx9zjN82EwLFTplGw22Xrf6hq8fypzWy
+         GWrK9L18+3NpA==
+Received: by mail-ed1-f71.google.com with SMTP id r8-20020a05640251c800b003f9a52daa3fso148819edd.22
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Jan 2022 12:18:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JHHUBFr6OMR8zM8/i6cAvf5NoFmGRGJHrNiT4tfy3rM=;
-        b=3OWHsOyEiiH+mooEzpi6T1S8kZfMJp2KY4Vb/MoSzgEJ/NF3WwAEhB6mc4je2woYKv
-         9biwAxTrndtguk+fvGAJ/pcEZAKIJWZnszUF8/C1R6qZ8uSTPsQvzl17p3yWSEXPQbwb
-         SwLepuNihpxSJGEse6leWF/iZoLV+jnf5xrD7AbOh7EbNqIelL87GXwHbMJSmKqr8eRP
-         8B64S+U6B6ts49DwLboQ+o6Gr7PsIfbd2iZ7DGglKtPByh0L+00MFQYMfVt3vBDBP/Qg
-         GgBShhERn3jntXyUDC1wjTD9ZZq/4fpUeggDJTHwq4g09hQu+GMtPCp+w2pFUnsG6fMZ
-         q04w==
-X-Gm-Message-State: AOAM531iqENX1CwyqNFTHpoKRixE+XF9DzMTTRLXgPxutbFQEJb4Zxkb
-        K3PXuyGdj6OkVJ5IubwfuoiNb8z1Rmid0i3kPfz0G9uAE29uilzgybjIp/9BtzppCi7faeYyB/X
-        dpLmo6dPgaPiKGp87esEZMNPUPE9YBLV3x+GNTFk6w3CxbYhq
-X-Received: by 2002:a17:907:9712:: with SMTP id jg18mr5265431ejc.328.1641932310995;
-        Tue, 11 Jan 2022 12:18:30 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxy9/rcIjTsKZFScympQBOQBEOBe9i4BBbC40lJsXnfYnnYR9RgCbIQ5WcOvNKS259ya4jL8g==
-X-Received: by 2002:a17:907:9712:: with SMTP id jg18mr5265420ejc.328.1641932310844;
-        Tue, 11 Jan 2022 12:18:30 -0800 (PST)
+        bh=kQHLxaxxJLFmOGqzWUxDRLkwO6oKafieScmNTdNr7i4=;
+        b=DR3sVQ25JASN9hj0S69mg05kh8wBBIQxiyEbyMAYF0hRhSz+46veBfKw1Xjro0yUDx
+         RI4TPxSMnmkEOLEyR0itK87lnaLlrkHPIh9XtNemWDSN0hgpMuVbYTCSOAB/LKYk1Mi+
+         Lkmp7VJJ+nPg3/AOYxq6EABhXH14cVDXWA/1sABfIvKXCcO46YYXZ0atZHrjYbqYDaMU
+         PcuDx933+JWFZtFKQi3BzZ6dHSuLau3SmgfY2govgkBa+qqvRFkW5g4ehoWOd8EqF5MN
+         sfDtgwARWTC7xOZsXyzxnqdGSLCA2MgIScR8VXLOLOVjMETIUbLHfb/dLdCgM0q+Ed5a
+         aXrQ==
+X-Gm-Message-State: AOAM530ZwGhSg7ZmQrlR6etRkfKL7UJxwYTIHGfjicMF9pZs3Frg+IDV
+        w+juufp6cOBfvdKoVQ8gb+pCD5ZWnp8mtTTlJRwRhNNSqv53oUIq+tZQa/luFOtH8iUaxIYscC+
+        pVk833WHnsendrIPDJTDsu+JPaNJf6A8Oe17o3tQokFPT+Gq7
+X-Received: by 2002:a50:f086:: with SMTP id v6mr737732edl.94.1641932312220;
+        Tue, 11 Jan 2022 12:18:32 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxJA2UIH8S5lzI4JycUQ9WDc6T41H+sPiiwxmzpWvqHdoH7V+UxlOdlH0f0srHDP5vkj+BfXg==
+X-Received: by 2002:a50:f086:: with SMTP id v6mr737711edl.94.1641932312024;
+        Tue, 11 Jan 2022 12:18:32 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id e4sm4030881ejs.13.2022.01.11.12.18.29
+        by smtp.gmail.com with ESMTPSA id e4sm4030881ejs.13.2022.01.11.12.18.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jan 2022 12:18:30 -0800 (PST)
+        Tue, 11 Jan 2022 12:18:31 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Tomasz Figa <tomasz.figa@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -67,9 +67,9 @@ Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Sam Protsenko <semen.protsenko@linaro.org>,
         Chanho Park <chanho61.park@samsung.com>,
         Alim Akhtar <alim.akhtar@gmail.com>
-Subject: [PATCH v2 27/28] arm64: dts: exynos: use dedicated wake-up pinctrl compatible in Exynos850
-Date:   Tue, 11 Jan 2022 21:17:21 +0100
-Message-Id: <20220111201722.327219-21-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v2 28/28] arm64: dts: exynos: use dedicated wake-up pinctrl compatible in ExynosAutov9
+Date:   Tue, 11 Jan 2022 21:17:22 +0100
+Message-Id: <20220111201722.327219-22-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220111201426.326777-1-krzysztof.kozlowski@canonical.com>
 References: <20220111201426.326777-1-krzysztof.kozlowski@canonical.com>
@@ -90,33 +90,24 @@ ExynosAutov9 have differences:
 1. No multiplexed external wake-up interrupt, only direct,
 2. More than one pin controller capable of external wake-up interrupts.
 
-Use dedicated Exynos850 compatible for its external wake-up interrupts
+Use dedicated ExynosAutov9 compatible for its external wake-up interrupts
 controller to indicate the differences.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm64/boot/dts/exynos/exynos850.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/exynos/exynosautov9.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos850.dtsi b/arch/arm64/boot/dts/exynos/exynos850.dtsi
-index 4f0a40de5e67..bcae772e8d91 100644
---- a/arch/arm64/boot/dts/exynos/exynos850.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos850.dtsi
-@@ -346,7 +346,7 @@ pinctrl_alive: pinctrl@11850000 {
- 			reg = <0x11850000 0x1000>;
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+index de8fcb82eaec..807d500d6022 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+@@ -208,7 +208,7 @@ pinctrl_alive: pinctrl@10450000 {
+ 			reg = <0x10450000 0x1000>;
  
  			wakeup-interrupt-controller {
 -				compatible = "samsung,exynos7-wakeup-eint";
-+				compatible = "samsung,exynos850-wakeup-eint";
- 			};
- 		};
- 
-@@ -355,7 +355,7 @@ pinctrl_cmgp: pinctrl@11c30000 {
- 			reg = <0x11c30000 0x1000>;
- 
- 			wakeup-interrupt-controller {
--				compatible = "samsung,exynos7-wakeup-eint";
-+				compatible = "samsung,exynos850-wakeup-eint";
++				compatible = "samsung,exynosautov9-wakeup-eint";
  			};
  		};
  
