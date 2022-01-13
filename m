@@ -2,150 +2,112 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9CDE48D7D2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 13 Jan 2022 13:25:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 602C048D7E1
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 13 Jan 2022 13:27:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234595AbiAMMZs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 13 Jan 2022 07:25:48 -0500
-Received: from mailout1.samsung.com ([203.254.224.24]:34407 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234788AbiAMMZH (ORCPT
+        id S229648AbiAMM1d (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 13 Jan 2022 07:27:33 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:50368
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229498AbiAMM1b (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 13 Jan 2022 07:25:07 -0500
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20220113122506epoutp0185ed436275ee938e5ed23c4a2dbe21e4~J1BBvnRUB2106021060epoutp01J
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 12:25:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20220113122506epoutp0185ed436275ee938e5ed23c4a2dbe21e4~J1BBvnRUB2106021060epoutp01J
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1642076706;
-        bh=K8vTbIvFIBqHtyyqH6gBJua5O8SlNOOefAJIAr14Cl8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qHNBy2aKz0QjFpiYdBn3z76ataNtd5dBWQbkKH8wnTW5I74A5vNhfqsOALjjb0LDC
-         btar4iYmPSrOtzQtuHNdQI16jE8CTk3Jftm41Qvso9hQMy4s9O4TXcR/r/e15WMrQR
-         r808U/IIrf1Xz9PpW/BDgDaz1VJFdwirL5yqwbQ8=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
-        20220113122505epcas5p1c815dc2d2ae118cae897ce96e82e58b7~J1BBNhJCe2652426524epcas5p1g;
-        Thu, 13 Jan 2022 12:25:05 +0000 (GMT)
-Received: from epsmges5p1new.samsung.com (unknown [182.195.38.178]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4JZNt65JQYz4x9Pp; Thu, 13 Jan
-        2022 12:25:02 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
-        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        8F.D6.06423.E1A10E16; Thu, 13 Jan 2022 21:25:02 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20220113122502epcas5p37747b0c5c242c0571d294b9245963a1c~J1A94d_951006210062epcas5p3p;
-        Thu, 13 Jan 2022 12:25:02 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220113122502epsmtrp28d725e966cfd99cee4a4c476022a6bf5~J1A95ADUY3235332353epsmtrp2d;
-        Thu, 13 Jan 2022 12:25:02 +0000 (GMT)
-X-AuditID: b6c32a49-b01ff70000001917-3d-61e01a1ee6cf
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C2.B8.29871.D1A10E16; Thu, 13 Jan 2022 21:25:01 +0900 (KST)
-Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
-        [107.108.73.139]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20220113122459epsmtip2e5b4002f52af13c0bc060d4cb53c7683~J1A7RzPuN1246812468epsmtip2J;
-        Thu, 13 Jan 2022 12:24:59 +0000 (GMT)
-From:   Alim Akhtar <alim.akhtar@samsung.com>
-To:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+        Thu, 13 Jan 2022 07:27:31 -0500
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 3ACDB3F1C6
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 12:27:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1642076850;
+        bh=nWMCwBQ8qvto3g6GTsUmmbjQ5M6s0nUnB5kDMDyzI/g=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=NY2XkyypJfAUe+CR4evsCF0239IV6QOdkIjIG6Z0SDuWUOEmuXSP4aKUHCiUQiTRv
+         KOz42HUCybFssrJcYYyJGXQC2KeVjmt6MdLxsxgSaHZiv/oD6TN64k2kzCzN2kff3X
+         1YPhUYKjauzNSREqMoY6fS2dEDAJ9r/8q/93wSuFxSJWO3xZkUUp1Xe4sq7dmXzp8b
+         5J2SkFWMkKe+nqFlWGj9P3/Uihe1MpKe/9BdR18WpnmYCUlycDSD0AGq4DGFeEgdu2
+         sxC/ZMvhYu9fYi8JnMWz63GLGO/GTaxNALPbezrAL7CxqH8ZgKEVkFtIz3mH0YRW68
+         VDN54OKE1XHwA==
+Received: by mail-wm1-f70.google.com with SMTP id v190-20020a1cacc7000000b0034657bb6a66so1163950wme.6
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 04:27:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nWMCwBQ8qvto3g6GTsUmmbjQ5M6s0nUnB5kDMDyzI/g=;
+        b=IYT3MaaOvOPJ8xcfOelYDbj3wctpXSgvyfEkEBvr8cE7P24AindEbJCVm2HZ3RhbVO
+         zoBcBt9hULgWyjb6RkgUiDfQZCht9nc2cTEA0VC2A89mMpPgWS9J+6gSaWJA+0zOPYFo
+         XtDlcSR5SmqSj6wX2TSLKzDuVLrNcgY3FrsgR4k+57NVsoMm7rI0VXQVXeGqNXf2JYa/
+         +Ioyl3RX1Gjyz/6yiRL5ufr/NK0la9TZaXMDUhm+DG9FIikx6lnY7AlCjPq7Ai3n5ZMb
+         LwwmyW9FJjsxZrZ33SKymUkg476I66T/JNFEnjulb+JpP14JukeAOZzMZpaN8Ct6M981
+         r3LQ==
+X-Gm-Message-State: AOAM5336YLSTkW0tpat5nCjtyL5XTcrwp/CkK9YtHJ2LVWKW6zw6V488
+        SX5xapgIfi/qqvoaXaffl+qCkaPt4BsxWxf4nszkVcK4dLsMkwgn4U/QbTwNo5ZQcnYDtxAafSb
+        IVMjwac1fpv1o6fNWJHQJUrLgEMdSJBOE4YFAvU+Lq62jEd4j
+X-Received: by 2002:a05:600c:602a:: with SMTP id az42mr3740591wmb.27.1642076850011;
+        Thu, 13 Jan 2022 04:27:30 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzedcYD/WlL7vOvIVMshZ/IWP+2akJUFLDFNrlxlTqOjVhXt7ld4JHBwe6pD2xPZ5jcRCsI9A==
+X-Received: by 2002:a05:600c:602a:: with SMTP id az42mr3740566wmb.27.1642076849775;
+        Thu, 13 Jan 2022 04:27:29 -0800 (PST)
+Received: from [192.168.0.29] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
+        by smtp.gmail.com with ESMTPSA id c7sm3267537wri.21.2022.01.13.04.27.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jan 2022 04:27:29 -0800 (PST)
+Message-ID: <849c7772-0f7e-32ff-6ea6-c46aa6837bb4@canonical.com>
+Date:   Thu, 13 Jan 2022 13:27:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH 10/23] dt-bindings: pinctrl: samsung: Add compatible for
+ Tesla FSD SoC
+Content-Language: en-US
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 Cc:     soc@kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, olof@lixom.net,
         linus.walleij@linaro.org, catalin.marinas@arm.com,
-        robh+dt@kernel.org, krzysztof.kozlowski@canonical.com,
-        s.nawrocki@samsung.com, linux-samsung-soc@vger.kernel.org,
-        pankaj.dubey@samsung.com, Aswani Reddy <aswani.reddy@samsung.com>,
-        linux-fsd@tesla.com, Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH 23/23] clocksource: exynos_mct: Add support for handling
- three clusters
-Date:   Thu, 13 Jan 2022 17:41:43 +0530
-Message-Id: <20220113121143.22280-24-alim.akhtar@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220113121143.22280-1-alim.akhtar@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAJsWRmVeSWpSXmKPExsWy7bCmlq6c1INEg/VfRCwezNvGZnFo81Z2
-        i/fLehgt5h85x2qx8e0PJospf5YzWWx6fI3V4mPPPVaLh6/CLS7vmsNmMeP8PiaLU9c/s1ks
-        2vqF3aJ17xF2i8Nv2lktHl//w+Yg4LFm3hpGj1kNvWwem1Z1snncubaHzWPzknqPKyeaWD36
-        tqxi9PjXNJfd4/MmuQDOqGybjNTElNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sLcyWFvMTc
-        VFslF58AXbfMHKAvlBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkFKTkFJgV6xYm5xaV5
-        6Xp5qSVWhgYGRqZAhQnZGTeXv2cqeMJeseXdDtYGxn1sXYycHBICJhK7p/eygthCArsZJT7N
-        re5i5AKyPzFKtK34ygzhfGOU+DF9GSNMx7PDG9khEnsZJe6+7IFyWpgkVrW3soBUsQloS9yd
-        voUJxBYRcJO40djBBFLELNDOLHFnwl4gh4NDWCBS4tgqc5AaFgFViUu7v4HdwStgK/Fx2SGo
-        bfISqzccYAYp5wSK312VBzJGQmAph8Sir5dZIWpcJM5s3swCYQtLvDq+hR3ClpL4/G4vG0iv
-        hEC2RM8uY4hwjcTSecegyu0lDlyZwwJSwiygKbF+lz5ImFmAT6L39xMmiE5eiY42IYhqVYnm
-        d1ehOqUlJnZ3Qx3gITGpYys0FCYwShw+e419AqPsLISpCxgZVzFKphYU56anFpsWGOallsOj
-        KTk/dxMjOGlqee5gvPvgg94hRiYOxkOMEhzMSiK8/UX3E4V4UxIrq1KL8uOLSnNSiw8xmgJD
-        bCKzlGhyPjBt55XEG5pYGpiYmZmZWBqbGSqJ855O35AoJJCeWJKanZpakFoE08fEwSnVwNSv
-        NeNB7xGtNb7FB1o3Tvt7YPPEVVFNN6b3HGBTWc6437VJTGWmMjPvC8aNSuFLyh7siAyxzpNI
-        6MwX/3S+w3+zv8GKxPlxNb/38Mr9Y+Xx2SfI8OxH3NrMvhmdrw9X5hycHPlXnuEOR4tfZaT5
-        x45VJrnZ55/ZPLOZwhInxmTEIece9Mpb4FbcFm+dOeuYeHZqGSZqhdotrGMKyZzje9hn6cGL
-        eY/0WPa/3ZLyJVRq62GTLIZzj/5zznp5vo3zuRbrnAdtfiVv1x5iyUv6osnRFtaq7SQZ7bm5
-        6r/omtWzzBLS7LJeZ8qaBu2/tKBMdEdRX9VDWbfX226fk33m9yElUWrada438+sKFzRzKbEU
-        ZyQaajEXFScCAPi3N+0jBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCLMWRmVeSWpSXmKPExsWy7bCSvK6s1INEg32zVC0ezNvGZnFo81Z2
-        i/fLehgt5h85x2qx8e0PJospf5YzWWx6fI3V4mPPPVaLh6/CLS7vmsNmMeP8PiaLU9c/s1ks
-        2vqF3aJ17xF2i8Nv2lktHl//w+Yg4LFm3hpGj1kNvWwem1Z1snncubaHzWPzknqPKyeaWD36
-        tqxi9PjXNJfd4/MmuQDOKC6blNSczLLUIn27BK6Mm8vfMxU8Ya/Y8m4HawPjPrYuRk4OCQET
-        iWeHN7J3MXJxCAnsZpR4cfAfVEJa4vrGCewQtrDEyn/PwWwhgSYmia+7TEBsNgFtibvTtzCB
-        2CICHhJt/+4xgwxiFpjOLHFg2zeWLkYODmGBcIn9fZ4gNSwCqhKXdn9jBbF5BWwlPi47xAgx
-        X15i9YYDzCDlnEDxu6vyIFbZSJx7tZ5tAiPfAkaGVYySqQXFuem5xYYFhnmp5XrFibnFpXnp
-        esn5uZsYwQGvpbmDcfuqD3qHGJk4GA8xSnAwK4nw9hfdTxTiTUmsrEotyo8vKs1JLT7EKM3B
-        oiTOe6HrZLyQQHpiSWp2ampBahFMlomDU6qBKVtCMUj4/q1jm4O6V9st4F3CH1lg3CARo/FO
-        Jy013OjaW8fFFftlHos+u5bFsHSDFFdfnG3U3s7FvK3T0n+7nzSMuBWspW77sXu+/7LLU36L
-        Hk566KD5beua4FVfBJJ/CkvFS3IY3WEIanbeJ/Poh9PZvO//2q8v2cFpsqE/yv5U7I2mvnmW
-        Z0Kskq5Es6eFm8yblnWa50Lb96abbE/abh1JfX/5lZF77ZXeQxskgpMlg91P/apP6hafL/++
-        8/n0J1krjz/ZqGi8SLZUXH/67Ls2zyz37b+yzGAOv9viWX71nOdXRz4ra/KSramsnXFiy1TG
-        WVb68yNLuW559Xoz+t7/HDNxO9OUlcopfUttlFiKMxINtZiLihMBC8F3kOcCAAA=
-X-CMS-MailID: 20220113122502epcas5p37747b0c5c242c0571d294b9245963a1c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220113122502epcas5p37747b0c5c242c0571d294b9245963a1c
+        robh+dt@kernel.org, s.nawrocki@samsung.com,
+        linux-samsung-soc@vger.kernel.org, pankaj.dubey@samsung.com,
+        linux-fsd@tesla.com
 References: <20220113121143.22280-1-alim.akhtar@samsung.com>
-        <CGME20220113122502epcas5p37747b0c5c242c0571d294b9245963a1c@epcas5p3.samsung.com>
+ <CGME20220113122354epcas5p19e5cebe9e85e9ba1758fa0b9d7d1ef75@epcas5p1.samsung.com>
+ <20220113121143.22280-11-alim.akhtar@samsung.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220113121143.22280-11-alim.akhtar@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Aswani Reddy <aswani.reddy@samsung.com>
+On 13/01/2022 13:11, Alim Akhtar wrote:
+> Add compatible for Tesla Full Self-Driving SoC. The
+> pinctrl hardware IP is similar to what found on most of the
+> exynos series of SoC, so this new compatible is added in
+> samsung pinctrl binding.
+> 
+> Cc: linux-fsd@tesla.com
+> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt
+> index b8b475967ff9..ba972998a0e4 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt
+> +++ b/Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt
+> @@ -24,6 +24,7 @@ Required Properties:
+>    - "samsung,exynos7-pinctrl": for Exynos7 compatible pin-controller.
+>    - "samsung,exynos850-pinctrl": for Exynos850 compatible pin-controller.
+>    - "samsung,exynosautov9-pinctrl": for ExynosAutov9 compatible pin-controller.
+> +  - "tesla,fsd-pinctrl": for Tesla FSD SoC compatible pin-controller.
+>  
 
-This patch adds support for handling thress clusters
-(upto 12 CPUs)
+Please rebase this on my latest Samsung pinctrl dtschema patches. You
+also need a tesla vendor prefix patch (separate).
 
-Cc: linux-fsd@tesla.com
-Signed-off-by: Aswani Reddy <aswani.reddy@samsung.com>
-Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
----
- drivers/clocksource/exynos_mct.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
-index 5e3e96d3d1b9..ba3af940a687 100644
---- a/drivers/clocksource/exynos_mct.c
-+++ b/drivers/clocksource/exynos_mct.c
-@@ -78,6 +78,10 @@ enum {
- 	MCT_L5_IRQ,
- 	MCT_L6_IRQ,
- 	MCT_L7_IRQ,
-+	MCT_L8_IRQ,
-+	MCT_L9_IRQ,
-+	MCT_L10_IRQ,
-+	MCT_L11_IRQ,
- 	MCT_NR_IRQS,
- };
- 
-@@ -89,7 +93,7 @@ static int mct_irqs[MCT_NR_IRQS];
- struct mct_clock_event_device {
- 	struct clock_event_device evt;
- 	unsigned long base;
--	char name[10];
-+	char name[11];
- };
- 
- static void exynos4_mct_write(unsigned int value, unsigned long offset)
--- 
-2.17.1
-
+Best regards,
+Krzysztof
