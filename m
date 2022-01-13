@@ -2,87 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9732348DF13
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 13 Jan 2022 21:37:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2111748E06C
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 13 Jan 2022 23:38:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233085AbiAMUh6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 13 Jan 2022 15:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
+        id S238028AbiAMWi4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 13 Jan 2022 17:38:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232965AbiAMUh5 (ORCPT
+        with ESMTP id S237996AbiAMWiz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 13 Jan 2022 15:37:57 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D39C061574
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 12:37:57 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id o12so7021012lfu.12
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 12:37:57 -0800 (PST)
+        Thu, 13 Jan 2022 17:38:55 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0662C06161C
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 14:38:55 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id h23so1158336pgk.11
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 13 Jan 2022 14:38:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VEcTviwAJjTA/PedVKsrB+d6L5irDjmQTiLW4y3/Af0=;
-        b=BWfjSwRoeU2riXY1ZPs/XI/Cc41g7MMSZ2xpawgbbGgzFPgPOw2eueTj6hVygqycaV
-         lJ0A1IhD9mYvyeDXOkma1D56qzPoGGFrLuiYegOTECpdoqU/yOs7lZ3i/4+wp0d3qMvG
-         QJug3Z2HmY95KrlrKqteLfl9SytEMuYbAbDFRWrMLCGBePSANq49WJG68k9VG3m8qzus
-         JARfZubi/QnSxI1Clp9O3fCW+0zkb3tJX3iSemRcepW5ZG7HCaci8Tfhv6HVrXU04NqB
-         cmx3OV90nC5USr8gjbpiy5ODdw5CuPYmJwPZMneRWV7g4kZg7ykyHZhhuTBmJVSeftVM
-         XIJQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
+        b=TZSnmiKfh8lQHyoHB+yllzvEmA18to6wFnOGKYs0poMgePC/IzPQirrR4ktwaDnvqN
+         6MtgeXCy1yK/vlfiGBEgBcEWSdlaZhy13ZGg8bropI5LiWLT69uDg3RLIG4RAEnMei/e
+         OLsKu4ckBojbKLqXja5eQdc78QuplSbLUeUuR4YwQsmoJKPsmqAxP6kAsKKrhO2uloGx
+         jgBW3DLRyjuJTQuba5a1bywPT+79uteTY7MRR7+lTs5pNJAoJHK8njIEoPRz5bJHtGc4
+         HFHciKQwdRnv9OQdv5RacscrcPdsiz56D1dXGcQrq4Bp8NviqIrfWkgUqnbc+T36lHWO
+         JWDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VEcTviwAJjTA/PedVKsrB+d6L5irDjmQTiLW4y3/Af0=;
-        b=w16YoXsimbTM8rx41hmWEu4aKeQ7h1H+luYNdt0f9g6PuVyvOYnk0G61ABzqKXLE3H
-         dI/ruWjy/LfNGwHRPEIoBDebG9kF8RiMg3Oewgn0BdFgvGocNGdE+d41Dad2pzJqsL21
-         o3tY9OyFgBDW4DYQF7OfytAkPaByDrq+KMzXmSlVaiVdyv+9pqHm1rhgoaTP8g1MJniz
-         U6MAG8dAVc2jg5WF5SzzIABnOarNx4WQtx4diTrkmdi4XHwjIxm/vcyK8IEn4FU1egwH
-         3PtbU0NNnoEkjTLHCzigyCYFP6ZeHf4Ah2pALFQKWFI8G6wahsMvj2LWikO91qGs3WLc
-         IFyw==
-X-Gm-Message-State: AOAM533ASZXwwxCOaKfU2wLICJ1C+JHi/pid5/nSBGD/Rch7aERv4rov
-        QIQ1YeWyPd63XkUfw+idZ03VHZmxLPSeuzSu
-X-Google-Smtp-Source: ABdhPJxP+YP/Eo4PH5vp+BdZtCJMRAcFlg33a6l/fZVWsMv6jFQDaXEv33wymB1vK3cCcpq1V6TvRQ==
-X-Received: by 2002:a2e:a7d6:: with SMTP id x22mr4055309ljp.76.1642106275601;
-        Thu, 13 Jan 2022 12:37:55 -0800 (PST)
-Received: from localhost ([31.134.121.151])
-        by smtp.gmail.com with ESMTPSA id k21sm363298ljh.65.2022.01.13.12.37.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 12:37:55 -0800 (PST)
-From:   Sam Protsenko <semen.protsenko@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: samsung: Fix typo in CONFIG_EXYNOS_USI description
-Date:   Thu, 13 Jan 2022 22:37:54 +0200
-Message-Id: <20220113203754.23197-1-semen.protsenko@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
+        b=77APKoh460vjRSNpa6SxlaoVNQh9dYU7b92G77u9dqno/ZlFkdBzTQmtmRaLSePHtl
+         zoWFnmq1JOdaRx+t+xdnDc1UErfJGvspLm+8IUbOHgLsIjT4eZZOjwsM7pi4Zo8BAyQf
+         vEaD+Gc2zmZFJDWpM/fiX7GrXjS89qs6LyIqLfEMRIcYQaqokhzYHjriL3DYlbvCu8jH
+         2QD7ZebRQ586H1eG2cuoeFeThepmBWGyJQNsj19xYv6oYeV/OQ287ycQCO4p8aa0d88i
+         3WDTpPl/wmPoxJR6yjw/uQxWD00jsA95SWatHojxSj7gQR0/tuWexvby9jKfMkGI+e54
+         mglA==
+X-Gm-Message-State: AOAM533bIgACWfXscPnNte0inUsp+cnSIRuCAYPhv0NNBJiDOivC3z0C
+        bkYhPptOie0poFT6hlpXpsIOTDUNUMcrwtnqiA8=
+X-Google-Smtp-Source: ABdhPJxV+CDcXMAaoBlObNCE+WkBdJZDSsiMXXJxSU4qLOl+5GP7wjtV5hGVQqePL03Cw94D/ZrqizECvr4TNYXN3v8=
+X-Received: by 2002:a05:6a00:26c5:b0:4bd:4ad6:9c71 with SMTP id
+ p5-20020a056a0026c500b004bd4ad69c71mr6167765pfw.45.1642113535225; Thu, 13 Jan
+ 2022 14:38:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a05:6a10:f38c:0:0:0:0 with HTTP; Thu, 13 Jan 2022 14:38:54
+ -0800 (PST)
+Reply-To: mchristophdaniel@gmail.com
+From:   Marcus Galois <marcus.galois@gmail.com>
+Date:   Thu, 13 Jan 2022 23:38:54 +0100
+Message-ID: <CANqBaXWLwHBNoawbz2tGySxar8jn5q2OzEiG-GjWCyVh=aJu6w@mail.gmail.com>
+Subject: Good News Finally.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The proper name is Exynos Auto V9, not V0. It was the typo slipped in
-unnoticed, fix it.
+Hello friend.
 
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
----
- drivers/soc/samsung/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You might find it so difficult to remember me, though it is indeed a
+very long time, I am much delighted to contact you again after a long
+period of time, I remember you despite circumstances that made things
+not worked out as we projected then. I want to inform you that the
+transaction we're doing together then finally worked out and I decided
+to contact you and to let you know because of your tremendous effort
+to make things work out then.
 
-diff --git a/drivers/soc/samsung/Kconfig b/drivers/soc/samsung/Kconfig
-index a9f8b224322e..02e319508cc6 100644
---- a/drivers/soc/samsung/Kconfig
-+++ b/drivers/soc/samsung/Kconfig
-@@ -31,7 +31,7 @@ config EXYNOS_USI
- 	help
- 	  Enable support for USI block. USI (Universal Serial Interface) is an
- 	  IP-core found in modern Samsung Exynos SoCs, like Exynos850 and
--	  ExynosAutoV0. USI block can be configured to provide one of the
-+	  ExynosAutoV9. USI block can be configured to provide one of the
- 	  following serial protocols: UART, SPI or High Speed I2C.
- 
- 	  This driver allows one to configure USI for desired protocol, which
--- 
-2.30.2
+Meanwhile I must inform you that I'm presently in Caribbean Island for
+numerous business negotiation with some partners. with my sincere
+heart i have decided to compensate you with USD$900,000 for your
+dedication then on our transaction, you tried so much that period and
+I appreciated your effort. I wrote a cheque/check on your name, as
+soon as you receive it, you let me know.
 
+Contact my secretary now on his email: mchristophdaniel@gmail.com
+Name: Mr. Christoph Daniel
+
+You are to forward to him your Name........ Address.......,Phone
+number......for shipment/dispatch of the cheque/Check to you
+
+Regards,
+Mr. Marcus Galois
