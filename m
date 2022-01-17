@@ -2,149 +2,207 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C416490AF9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jan 2022 16:00:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75166490CBD
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jan 2022 17:59:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234939AbiAQPAs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jan 2022 10:00:48 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:47470
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234786AbiAQPAs (ORCPT
+        id S237757AbiAQQ7E (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jan 2022 11:59:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241154AbiAQQ7B (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jan 2022 10:00:48 -0500
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 17 Jan 2022 11:59:01 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08EFEC061574;
+        Mon, 17 Jan 2022 08:59:01 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id E0C293F1E4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Jan 2022 15:00:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1642431646;
-        bh=P1t3TusiuWvEJQvj6KQ3UI4zLwE3rcF19O3O8iabinU=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=S+hn/P/+ORd5yFuloev1kgWwDaFAaeiN7nXsJ/Qp+89KwtPN2IBixal8kgeBesRlT
-         JuMKK4SrCzKujGFYUxxNKQOm0z40SXJhTOLhDq6j0VDJeJCpv8mH7761XWr1F55ZmH
-         hJ6gp4DxAbO+DO2M4AqyUubDXzpV8h+tekH2Au09TTKSWGEiW3p+iDEQWOH4Oa52oQ
-         Te3cUZi13alBYA2rH2c53+6rO+sWQgDlZw+xmz1+DhnLX3WgX7EiPopvGNz/ix18YE
-         oGpKWMwnMk5fZO+SJ/inzEoQh6y3cF13LtsklT1mh+862F2jLFwWz2QhcrJ7wYrqwZ
-         qQnXAJqSWbkpA==
-Received: by mail-ed1-f70.google.com with SMTP id j10-20020a05640211ca00b003ff0e234fdfso14467431edw.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Jan 2022 07:00:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=P1t3TusiuWvEJQvj6KQ3UI4zLwE3rcF19O3O8iabinU=;
-        b=Nom0izZMs6tOP51MLrxAxyGYW5fzEsQDyEGRLf+q0sPJGfamwOuQW9iaeY1ZhlmPBr
-         xrQ+3gddW6Ta1Hoab2KUhEFNQ2gtwDFvdHsUujLR9x1xOVPkM8CTKBJTuEppzEKWo26c
-         nG7NBuBQILDLrvALwIXEgIAXOBkkcV1Q71QYSMz4TMvf8tSI37ZgJ7iKP0Sy1FKweS+f
-         3XMuqEn/u08pX7tKdVeXAIl1m0tao6sej1e6gqCsd2LiC7NExhKKZ+auSlgFM5pPkwoe
-         PiXFu5HLZpPOcBAPurnLUw8VwGJJIpexAgcu80vIuZKR5PcjfNwW250mDDL7fUmIl52B
-         7tWg==
-X-Gm-Message-State: AOAM530FqWOroK5jd2mw1+Q/vxavU/QcHowE2Z6MUBAtZTMgkt3kr/gJ
-        5+mCors1eP4mWSFaduHSU0Ngktgc4ZId3ZZ2BKwNKJsxKyJgJabC6Y477NtddqcZTMbioRiAu7a
-        sXLAJDkfg221vipRY8GrmyKEAaBGE4XBezNqlhNbU1mZJawHD
-X-Received: by 2002:a17:906:8053:: with SMTP id x19mr11918940ejw.485.1642431646546;
-        Mon, 17 Jan 2022 07:00:46 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwi5fMBz8oaksx3ekbOg74TUZaXBrRwCj5lzvu6SsBncvDyD0ZOfpPjH3B+rGmVa8PY2miIKA==
-X-Received: by 2002:a17:906:8053:: with SMTP id x19mr11918904ejw.485.1642431646225;
-        Mon, 17 Jan 2022 07:00:46 -0800 (PST)
-Received: from [192.168.0.39] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id bg20sm3958261ejb.59.2022.01.17.07.00.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jan 2022 07:00:45 -0800 (PST)
-Message-ID: <9b98fd89-87b5-5026-fb0c-16bb956801ea@canonical.com>
-Date:   Mon, 17 Jan 2022 16:00:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH 13/23] dt-bindings: arm: add Tesla FSD ARM SoC
-Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        SoC Team <soc@kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id C5E85B81131;
+        Mon, 17 Jan 2022 16:58:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDFBC36AF2;
+        Mon, 17 Jan 2022 16:58:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1642438738;
+        bh=yXNyj5w8WPn/dUWK5qhdWXLoj5pVBSY3hqJPXa2z4tY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=pBwFXJh7I16xBKBvnY+P0MEHpQd4FRruBXzAXY0H0plMkUA4lqc5VfMIk41ZkTo5C
+         SvwfhaUiuo2P5DPau2sO5fGMQpvsXTN1H2XnllfW6ECAGii6CKl5Y2TVS6h2T9cp+d
+         untEUPcrBZncXnhTGR2HlMZtAy6/SGwMJLGki+HVQKbu3s7w5ypwXmnsxA8ITHL3Sw
+         rxIzSX6DoReIMths0NjnGSJ4tYg9IvBXpuSBVn3UwA0q/lzBV8x7PmP8sGboydpubH
+         JucI1OLtnHps2XYHTGyerFgaqemjfu/0Mf+Urd6EJA/5B+GlUMYwUP2IWIbjgBXwY3
+         WtIhbR97U6jCg==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Sam Protsenko <semen.protsenko@linaro.org>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Pankaj Dubey <pankaj.dubey@samsung.com>, linux-fsd@tesla.com
-References: <20220113121143.22280-1-alim.akhtar@samsung.com>
- <CGME20220113122408epcas5p45053d1bf0acf2d8233a98b6c1abab6eb@epcas5p4.samsung.com>
- <20220113121143.22280-14-alim.akhtar@samsung.com>
- <53c17ddc-a049-72ed-7237-de23db7889da@canonical.com>
- <085801d80967$e4b8fe00$ae2afa00$@samsung.com>
- <5ab62673-8d46-ec1d-1c80-696421ab69ca@canonical.com>
- <00c901d80ba5$c9ae6ab0$5d0b4010$@samsung.com>
- <CAK8P3a31bCHNcNWrLX+QW+4RuK=DBpxLA_j5BFKxXxXKCT8PFQ@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <CAK8P3a31bCHNcNWrLX+QW+4RuK=DBpxLA_j5BFKxXxXKCT8PFQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Sasha Levin <sashal@kernel.org>, tomasz.figa@gmail.com,
+        cw00.choi@samsung.com, mturquette@baylibre.com, sboyd@kernel.org,
+        matthias.bgg@gmail.com, linux-samsung-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.16 02/52] clk: samsung: exynos850: Register clocks early
+Date:   Mon, 17 Jan 2022 11:58:03 -0500
+Message-Id: <20220117165853.1470420-2-sashal@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220117165853.1470420-1-sashal@kernel.org>
+References: <20220117165853.1470420-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 17/01/2022 15:14, Arnd Bergmann wrote:
-> On Mon, Jan 17, 2022 at 2:26 PM Alim Akhtar <alim.akhtar@samsung.com> wrote:
->>
->>> I cannot judge how different this is from Exynos subarchitecture - looking at
->>> patches it is not different - so I could understand a FSD sub-arch with only one
->>> SoC.
->>>
->> I understand, it is a bit difficult to visualize it with the current patch set.
->> As discuss on the other thread, FSD is different, more over the vendor is different, internal design is different.
-> 
-> Is it based on another SoC design then? Most new SoCs are derived from
-> some other
-> one, so it makes sense to put it into the same family. E.g. the Apple
-> M1 takes bits from
-> both Exynos and PA-Semi SoCs but has more newly added components than
-> either one.
+From: Sam Protsenko <semen.protsenko@linaro.org>
 
-It seems Apple M1 shares only few bits with SoC. I am aware of only UART
-driver as directly re-usable.
+[ Upstream commit bcda841f9bf2cddcf2f000cba96f2e27f6f2bdbf ]
 
-> 
-> I would argue that if this SoC shares the pinctrl, clock, spi, adc,
-> and timer implementation
+Some clocks must be registered before init calls. For example MCT clock
+(from CMU_PERI) is needed for MCT timer driver, which is registered
+with TIMER_OF_DECLARE(). By the time we get to core_initcall() used for
+clk-exynos850 platform driver init, it's already too late. Inability to
+get "mct" clock in MCT driver leads to kernel panic, as functions
+registered with *_OF_DECLARE() can't do deferred calls. MCT timer driver
+can't be fixed either, as it's acting as a clock source and it's
+essential to register it in start_kernel() -> time_init().
 
-Plus: UART, watchdog, PWM, I2C, I2S, USB PHY, DWC3 USB (in Exynos
-flavor), UFS (also in Exynos-looking flavor), MFC (video codec), some
-similarities in DW PCIe, TMU (thermal). Looking at DTS there are
-differences but just few comparing to most of shared blocks.
+Let's register CMU_PERI clocks early, using CLK_OF_DECLARE(). CMU_TOP
+generates clocks needed for CMU_PERI, but it's already registered early.
 
-Additionally SoC BSP (and maybe SoC itself...) was actually developed or
-co-developed by Samsung, judging by copyrights in the BSP code. Even the
-original DTSI has:
+While at it, let's cleanup the code a bit, by extracting everything
+related to CMU initialization and registration to the separate function.
 
-	TURBO TRAV SoC device tree source
-	Copyright (c) 2017 Samsung Electronics Co., Ltd.
+Similar issue was discussed at [1] and addressed in commit 1f7db7bbf031
+("clk: renesas: cpg-mssr: Add early clock support"), as well as in
+drivers/clk/mediatek/clk-mt2712.c.
 
+[1] https://patchwork.kernel.org/project/linux-renesas-soc/patch/20180829132954.64862-2-chris.brandt@renesas.com/
 
-Tesla could still customize it a lot, but it is a strong hint that most
-of it came from Samsung LSI and shares with existing Samsung designs.
+Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Link: https://lore.kernel.org/r/20211122144206.23134-1-semen.protsenko@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/clk/samsung/clk-exynos850.c | 70 ++++++++++++++++++++---------
+ 1 file changed, 49 insertions(+), 21 deletions(-)
 
-Have in mind that recent Exynos chips are significantly different than
-early ARMv7 or ARMv8 designs and we still consider them part of Exynos
-family.
+diff --git a/drivers/clk/samsung/clk-exynos850.c b/drivers/clk/samsung/clk-exynos850.c
+index 2294989e244c5..79cce8ba88831 100644
+--- a/drivers/clk/samsung/clk-exynos850.c
++++ b/drivers/clk/samsung/clk-exynos850.c
+@@ -60,6 +60,43 @@ static void __init exynos850_init_clocks(struct device_node *np,
+ 	iounmap(reg_base);
+ }
+ 
++/**
++ * exynos850_register_cmu - Register specified Exynos850 CMU domain
++ * @dev:	Device object; may be NULL if this function is not being
++ *		called from platform driver probe function
++ * @np:		CMU device tree node
++ * @cmu:	CMU data
++ *
++ * Register specified CMU domain, which includes next steps:
++ *
++ * 1. Enable parent clock of @cmu CMU
++ * 2. Set initial registers configuration for @cmu CMU clocks
++ * 3. Register @cmu CMU clocks using Samsung clock framework API
++ */
++static void __init exynos850_register_cmu(struct device *dev,
++		struct device_node *np, const struct samsung_cmu_info *cmu)
++{
++	/* Keep CMU parent clock running (needed for CMU registers access) */
++	if (cmu->clk_name) {
++		struct clk *parent_clk;
++
++		if (dev)
++			parent_clk = clk_get(dev, cmu->clk_name);
++		else
++			parent_clk = of_clk_get_by_name(np, cmu->clk_name);
++
++		if (IS_ERR(parent_clk)) {
++			pr_err("%s: could not find bus clock %s; err = %ld\n",
++			       __func__, cmu->clk_name, PTR_ERR(parent_clk));
++		} else {
++			clk_prepare_enable(parent_clk);
++		}
++	}
++
++	exynos850_init_clocks(np, cmu->clk_regs, cmu->nr_clk_regs);
++	samsung_cmu_register_one(np, cmu);
++}
++
+ /* ---- CMU_TOP ------------------------------------------------------------- */
+ 
+ /* Register Offset definitions for CMU_TOP (0x120e0000) */
+@@ -347,10 +384,10 @@ static const struct samsung_cmu_info top_cmu_info __initconst = {
+ 
+ static void __init exynos850_cmu_top_init(struct device_node *np)
+ {
+-	exynos850_init_clocks(np, top_clk_regs, ARRAY_SIZE(top_clk_regs));
+-	samsung_cmu_register_one(np, &top_cmu_info);
++	exynos850_register_cmu(NULL, np, &top_cmu_info);
+ }
+ 
++/* Register CMU_TOP early, as it's a dependency for other early domains */
+ CLK_OF_DECLARE(exynos850_cmu_top, "samsung,exynos850-cmu-top",
+ 	       exynos850_cmu_top_init);
+ 
+@@ -615,6 +652,15 @@ static const struct samsung_cmu_info peri_cmu_info __initconst = {
+ 	.clk_name		= "dout_peri_bus",
+ };
+ 
++static void __init exynos850_cmu_peri_init(struct device_node *np)
++{
++	exynos850_register_cmu(NULL, np, &peri_cmu_info);
++}
++
++/* Register CMU_PERI early, as it's needed for MCT timer */
++CLK_OF_DECLARE(exynos850_cmu_peri, "samsung,exynos850-cmu-peri",
++	       exynos850_cmu_peri_init);
++
+ /* ---- CMU_CORE ------------------------------------------------------------ */
+ 
+ /* Register Offset definitions for CMU_CORE (0x12000000) */
+@@ -779,24 +825,9 @@ static int __init exynos850_cmu_probe(struct platform_device *pdev)
+ {
+ 	const struct samsung_cmu_info *info;
+ 	struct device *dev = &pdev->dev;
+-	struct device_node *np = dev->of_node;
+ 
+ 	info = of_device_get_match_data(dev);
+-	exynos850_init_clocks(np, info->clk_regs, info->nr_clk_regs);
+-	samsung_cmu_register_one(np, info);
+-
+-	/* Keep bus clock running, so it's possible to access CMU registers */
+-	if (info->clk_name) {
+-		struct clk *bus_clk;
+-
+-		bus_clk = clk_get(dev, info->clk_name);
+-		if (IS_ERR(bus_clk)) {
+-			pr_err("%s: could not find bus clock %s; err = %ld\n",
+-			       __func__, info->clk_name, PTR_ERR(bus_clk));
+-		} else {
+-			clk_prepare_enable(bus_clk);
+-		}
+-	}
++	exynos850_register_cmu(dev, dev->of_node, info);
+ 
+ 	return 0;
+ }
+@@ -806,9 +837,6 @@ static const struct of_device_id exynos850_cmu_of_match[] = {
+ 	{
+ 		.compatible = "samsung,exynos850-cmu-hsi",
+ 		.data = &hsi_cmu_info,
+-	}, {
+-		.compatible = "samsung,exynos850-cmu-peri",
+-		.data = &peri_cmu_info,
+ 	}, {
+ 		.compatible = "samsung,exynos850-cmu-core",
+ 		.data = &core_cmu_info,
+-- 
+2.34.1
 
-> with Exynos, we should consider it part of the Exynos family,
-> regardless of what other
-> blocks may exist next to those.
-
-Yes. I don't see the benefit of keeping it outside of Exynos. It will
-sprinkle "depends on ARCH_EXYNOS || ARCH_FSD" all over (or depend on
-Exynos like you suggested).
-
-
-Best regards,
-Krzysztof
