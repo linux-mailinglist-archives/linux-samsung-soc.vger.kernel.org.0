@@ -2,178 +2,132 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09B14490CB8
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jan 2022 17:58:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68B76490F0B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jan 2022 18:16:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241149AbiAQQ6e (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Jan 2022 11:58:34 -0500
-Received: from h04mx16.reliablemail.org ([185.76.67.209]:24115 "EHLO
-        h04mx16.reliablemail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237805AbiAQQ6d (ORCPT
+        id S243740AbiAQROT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Jan 2022 12:14:19 -0500
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:52986
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242893AbiAQRLU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Jan 2022 11:58:33 -0500
-X-Halon-Out: b2e2f59c-77b6-11ec-a232-556aad082471
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=grimler.se;
-        s=default; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=bxHnRO+ZZNCykuv+GQhMJoyIuDE1pbW3HrrBUSFbebE=; b=h61VRck2sedpu+9pZZHhH2F1gP
-        UNhUz34RbJaoM9MpZrsN7o4O0VtuyIkHaUGaNlTxYpCU6lirPEMvomwgjEmCsFm/GH2ECzoU6zL+H
-        cLLCosj6toaWdDl0PdqKWU1JWfsAchQQhOSALPk0VBN8rJb3uzRUdDa+drs8VMc3J/b788eRKEfSB
-        FgvT2F76nZCOTT8gYC7kJrJpRxRXlQimHAxXN3RSEr/vyEQlIYfty8lwzwpfamHIsycDcvtS3t7u0
-        pF2N2KUDudaVpHyeUMCeLp6lggk+DgBzW2JZw4co5ucf0OfOBEJFeHA5UD0vJbv3HnVwxIqGu4B3b
-        aVipvsnQ==;
-Date:   Mon, 17 Jan 2022 17:58:28 +0100
-From:   Henrik Grimler <henrik@grimler.se>
-To:     Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     'Krzysztof Kozlowski' <krzysztof.kozlowski@canonical.com>,
-        semen.protsenko@linaro.org, virag.david003@gmail.com,
-        martin.juecker@gmail.com, cw00.choi@samsung.com,
-        m.szyprowski@samsung.com, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v3 3/3] ARM: dts: Add support for Samsung Chagall WiFi
-Message-ID: <YeWgNJaDHxKROpQs@grimlerstat>
-References: <20220116165035.437274-1-henrik@grimler.se>
- <20220116165035.437274-4-henrik@grimler.se>
- <ca8c4613-a058-6cde-f9e6-8530f142a821@canonical.com>
- <CGME20220116205940epcas5p3dbab01fb6bb7a4af76169231e6d94469@epcas5p3.samsung.com>
- <YeSHNCywXhp8gHC7@L14.lan>
- <001301d80b66$190901a0$4b1b04e0$@samsung.com>
+        Mon, 17 Jan 2022 12:11:20 -0500
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id C55C63F313
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Jan 2022 17:11:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1642439478;
+        bh=rYVFCe9pl7AFup8bHTYfW3/P3SXGC/+nyEtQsAxutfY=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=Oac+hn9eUEvafikHjXR4nfWdTPZdIab1KyPdEB2QFpwtztZoIG/giJc6lXC2AJjsU
+         Ktqz/LAqJyLgDCdL83SEend9MBm16b49OoN01EYRTRW2VlCQ6eXdVpMDrvMx2A4ikL
+         0TI1nyzxC12/bgqXDuT7Lhg/bqAfl1I/S7VERyFM9iwpmbsX/U2MLqshK0QcNF6ybl
+         Kf2qTrI/fkPWsXlpRzuK6lg9j7Sk+LD7rVhe8M41xkApcac74af0K0EbCpCcacs+B7
+         ocqVWCl0+8E+dho1gKsALjBVEIQOitXwueJSK8kjtQN8JopStSX8ir8eE0O0vEWwTx
+         FIB9qiVgyqgZA==
+Received: by mail-ed1-f69.google.com with SMTP id c11-20020a056402120b00b0040321cea9d4so1580268edw.23
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Jan 2022 09:11:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=rYVFCe9pl7AFup8bHTYfW3/P3SXGC/+nyEtQsAxutfY=;
+        b=BEDC+7pOGR22U32JU5Sa8y0jo5aDHHT+V5vfYq0AP8fD/xKQvVmQWhVg1VX0KGKC+U
+         kg41L5sUgq4b5ndwWzX+fy/xLWMekXLK/AZBu+A7pccVKw4W5Sy7mwbCsXAKkWJHC00K
+         eu2UgqVFP77VDfjZXl9cneu0rSd8PgI+RhbeZJ6BXLt8eQIRgMf4IdtyfG2Flz6JqfWt
+         v9Zu/aQ6ZF+1NgOlVbkVi4y2OQzc2hlXIuhozpjQZljAqS3mN6rlmifa+q23BYHaeHLr
+         w4++CmV4sxWyKPT6XWTBgktdWtyRK4dSdHRK82lbs+85JukaaBwN76j4MxAMaz/C6g5G
+         fuzg==
+X-Gm-Message-State: AOAM532KKqb2/YZw+I/Jmhry0iSNr2FT9Pc5tSxJsPo4wANLqp4VU5Nq
+        Fb5yKLL7jYaoK8mNySJoGwzlfRW//X2sY3COR2Wi3kxGMssDrL2cf2csAesSVz7FsE1LJTa2xop
+        F3EeMmLK9D70/dCeNjuTxg8nggG6Gv/i9/tJ/wcfFYYNzsONZ
+X-Received: by 2002:a17:907:16a9:: with SMTP id hc41mr17077009ejc.706.1642439478448;
+        Mon, 17 Jan 2022 09:11:18 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwdCubmpUIIeWiYR7npGWGTb6d6igWjY9M7lKb/sdt4nQUU2xIQTqvtVmX1TQrgDksa1opr+A==
+X-Received: by 2002:a17:907:16a9:: with SMTP id hc41mr17076989ejc.706.1642439478199;
+        Mon, 17 Jan 2022 09:11:18 -0800 (PST)
+Received: from [192.168.0.40] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
+        by smtp.gmail.com with ESMTPSA id i16sm6191119edu.29.2022.01.17.09.11.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jan 2022 09:11:17 -0800 (PST)
+Message-ID: <b75a0bc9-0423-83cc-11e1-d5e08952cc93@canonical.com>
+Date:   Mon, 17 Jan 2022 18:11:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <001301d80b66$190901a0$4b1b04e0$@samsung.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpsrv07.misshosting.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - grimler.se
-X-Get-Message-Sender-Via: cpsrv07.misshosting.com: authenticated_id: henrik@grimler.se
-X-Authenticated-Sender: cpsrv07.misshosting.com: henrik@grimler.se
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH AUTOSEL 5.16 02/52] clk: samsung: exynos850: Register
+ clocks early
+Content-Language: en-US
+To:     Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Cc:     Sam Protsenko <semen.protsenko@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        tomasz.figa@gmail.com, cw00.choi@samsung.com,
+        mturquette@baylibre.com, sboyd@kernel.org, matthias.bgg@gmail.com,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+References: <20220117165853.1470420-1-sashal@kernel.org>
+ <20220117165853.1470420-2-sashal@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220117165853.1470420-2-sashal@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Alim,
+On 17/01/2022 17:58, Sasha Levin wrote:
+> From: Sam Protsenko <semen.protsenko@linaro.org>
+> 
+> [ Upstream commit bcda841f9bf2cddcf2f000cba96f2e27f6f2bdbf ]
+> 
+> Some clocks must be registered before init calls. For example MCT clock
+> (from CMU_PERI) is needed for MCT timer driver, which is registered
+> with TIMER_OF_DECLARE(). By the time we get to core_initcall() used for
+> clk-exynos850 platform driver init, it's already too late. Inability to
+> get "mct" clock in MCT driver leads to kernel panic, as functions
+> registered with *_OF_DECLARE() can't do deferred calls. MCT timer driver
+> can't be fixed either, as it's acting as a clock source and it's
+> essential to register it in start_kernel() -> time_init().
+> 
+> Let's register CMU_PERI clocks early, using CLK_OF_DECLARE(). CMU_TOP
+> generates clocks needed for CMU_PERI, but it's already registered early.
+> 
+> While at it, let's cleanup the code a bit, by extracting everything
+> related to CMU initialization and registration to the separate function.
+> 
+> Similar issue was discussed at [1] and addressed in commit 1f7db7bbf031
+> ("clk: renesas: cpg-mssr: Add early clock support"), as well as in
+> drivers/clk/mediatek/clk-mt2712.c.
+> 
+> [1] https://patchwork.kernel.org/project/linux-renesas-soc/patch/20180829132954.64862-2-chris.brandt@renesas.com/
+> 
+> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> Signed-off-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> Link: https://lore.kernel.org/r/20211122144206.23134-1-semen.protsenko@linaro.org
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/clk/samsung/clk-exynos850.c | 70 ++++++++++++++++++++---------
+>  1 file changed, 49 insertions(+), 21 deletions(-)
+> 
 
-> >> > +/* External sdcard */
-> >> > +&mmc_2 {
-> >> > +	status = "okay";
-> >> > +	bus-width = <4>;
-> >> > +	cap-sd-highspeed;
-> >> > +	card-detect-delay = <200>;
-> >> > +	pinctrl-0 = <&sd2_clk &sd2_cmd &mmc2_cd &sd2_bus1 &sd2_bus4>;
-> >> > +	pinctrl-names = "default";
-> >> > +	samsung,dw-mshc-ciu-div = <3>;
-> >> > +	samsung,dw-mshc-ddr-timing = <0 2>;
-> >> > +	samsung,dw-mshc-sdr-timing = <0 4>;
-> >> > +	sd-uhs-sdr50;
-> >> > +	vmmc-supply = <&ldo19_reg>;
-> >> > +	vqmmc-supply = <&ldo13_reg>;
-> >> > +};
-> >> > +
-> >> > +&pinctrl_0 {
-> >> > +	mmc2_cd: sd2-cd-pins {
-> >> > +		samsung,pins = "gpx2-4";
-> >>
-> >> Interesting... I looked at vendor sources to board-chagall and
-> >> standard pin gpc2-2 is mentioned as PULL down and not-connected
-> >comment.
-> >>
-> >> gpx2-4 seems not mentioned at all, unless other board files are
-> >> actually used.
-> >
-> >Gpio seems to be spread out. GPIO_T_FLASH_DETECT is defined as gpx2-4 in
-> >board-universal5420-mmc.c, and then used for card detection.
-> >(Looking at it now again I see that write protection through sd2_wp should
-> >also be supported for mmc_2, can add that in next patch set.)
-> >
-> Card detect pin is generally a special function (dedicated pin) pin,
-> directly connected from SoC to card external slot.
-> And for exynos5420 it is gpc2-2 as pointed by Krzysztof.
+I propose to skip this one.
 
-gpio/pinctrl is still not my area of expertise so your feedback is
-greatly appreciated!
+Backporting it to v5.16 does not hurt but also does not bring any
+benefits for the upstream kernel users. There is no support for
+mentioned Exynos850 in v5.16.
 
-gpc2-2 does not seem to be the card-detect pin for these tablets.  If
-I add sd2_cd to pinctrl-0 above I am unable to use the sdcard at all,
-instead dmesg is filled with repeating messages like:
+It could have only meaning for some downstream, out-of-tree kernels
+which apply Exynos850 support on top of v5.16, but then they can just
+take this patch as well.
 
-[  18.669050] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 300000Hz, actual 297619HZ div = 84)
-[  18.703711] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 200000Hz, actual 200000HZ div = 125)
-[  18.737167] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 100000Hz, actual 100000HZ div = 250)
-[  19.058352] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 400000Hz, actual 396825HZ div = 63)
-[  19.093037] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 300000Hz, actual 297619HZ div = 84)
-[  19.127701] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 200000Hz, actual 200000HZ div = 125)
-[  19.162380] mmc_host mmc1: Bus speed (slot 0) = 50000000Hz (slot req 100000Hz, actual 100000HZ div = 250)
-
-gpx2-4 on the other hand switches state when an sdcard is inserted or
-removed.  After exporting relevant pins I have, with the card
-inserted:
-
-# grep -A 2 gpx2 /sys/kernel/debug/gpio
-gpiochip3: GPIOs 24-31, parent: platform/13400000.pinctrl, gpx2:
- gpio-26  (                    |Power               ) in  hi IRQ ACTIVE LOW
- gpio-28  (                    |sysfs               ) in  lo 
-
-and when removed gpx2-4 changes to high:
-
-gpiochip3: GPIOs 24-31, parent: platform/13400000.pinctrl, gpx2:
- gpio-26  (                    |Power               ) in  hi IRQ ACTIVE LOW
- gpio-28  (                    |sysfs               ) in  hi 
-
-All the gpc2 pins are low no matter if sdcard is inserted or removed:
-
-gpiochip7: GPIOs 56-62, parent: platform/13410000.pinctrl, gpc2:
- gpio-56  (                    |sysfs               ) in  lo 
- gpio-57  (                    |sysfs               ) in  lo 
- gpio-58  (                    |sysfs               ) in  lo 
- gpio-59  (                    |sysfs               ) in  lo 
- gpio-60  (                    |sysfs               ) in  lo 
- gpio-61  (                    |sysfs               ) in  lo 
- gpio-62  (                    |sysfs               ) in  lo 
-
-That being said, I am not sure if it is working properly:
-
-> Also PIN_FUNC_2 for gpx2-4 indicate that it is wakeup_int2 function.
-> Do you get a card detect interrupt when removing and inserting the card to
-> the card slot?
-
-(What is the best way to check this?) I don't get any irq related
-messages in dmesg, and I don't see any changes in /proc/interrupts if
-tracked with something like `watch -n1 "cat /proc/interrupts"` when
-card is removed or inserted, so seems likely that pin config is wrong.
-All I can find in vendor kernel for this device is that pull config is
-set to S3C_GPIO_PULL_NONE [1].  For some of the sibling tablets the
-pin is configured as {S3C_GPIO_INPUT, GPIO_LV_N, S3C_GPIO_PULL_NONE}
-[2] though, which I think should correspond to having:
-
-mmc2_cd: mmc2-cd-pins {
-  samsung,pins = "gpx2-4";
-  samsung,pin-function = <EXYNOS_PIN_FUNC_INPUT>;
-  samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
-  samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV3>;
-};
-
-Changing to that does not seem to change anything though, I don't get
-any interrupt, or any messages in dmesg, when inserting or removing
-the sdcard.
-
-> Also to avoid confusion, probably you can change the node name as "mmc2_cd:
-> mmc2-cd-pins" 
-> (as sd2-cd-pins is gpc2-2 for this SoC)
-
-Thanks, will fix in a v4 (after discussions here are settled).
-
-[1] https://github.com/exynos5420/android_kernel_samsung_exynos5420/blob/lineage-17.1/arch/arm/mach-exynos/board-universal5420-mmc.c#L388
-[2] https://github.com/exynos5420/android_kernel_samsung_exynos5420/blob/lineage-17.1/arch/arm/mach-exynos/board-n1-gpio.c#L119
 
 Best regards,
-Henrik Grimler
+Krzysztof
