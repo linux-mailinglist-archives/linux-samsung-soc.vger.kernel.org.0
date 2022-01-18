@@ -2,143 +2,77 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F708492092
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 08:52:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31D0F492203
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 10:07:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343556AbiARHwh (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 18 Jan 2022 02:52:37 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:39986
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236635AbiARHwg (ORCPT
+        id S1345224AbiARJGl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 18 Jan 2022 04:06:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38428 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345148AbiARJGk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 18 Jan 2022 02:52:36 -0500
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 3893D3F1C6
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 07:52:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1642492355;
-        bh=aNtiM+Mkd9efU1H0Wh+stfJIqfRGDAuGYHwSDx2cIxk=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=pUEsfnD4G8rzpPF1W6GCucVZvTUXP6TTMslAC6eB+nKtKLpTmsIBtPdM435v3YobL
-         CJ/Rca7bY4fKXDP6LlNt0ipz/hfM2wS9TVqiDyCI/2tY0f0TRFta1XdEPUETKQ8HeV
-         nXVme2Ec83QCAVlAO04ADZRvpjFesLr+Yy8AknVRTywmm50MlASnea40Gc9NAtO/l6
-         SjoF7a0i2oXG7AtQzQUTqFMYpCFmTts48mcC9IFElg1tmcFGBSZUMsw/0yVZP6EPo3
-         TR+vj5cZA8+FIPC4Twcf5KmKpvnv+uqsk2SlDNbjWkLrgZNsFLSl9tYFN01VAg+rD3
-         IdbmZ4IigM5HQ==
-Received: by mail-ed1-f69.google.com with SMTP id i9-20020a05640242c900b003fe97faab62so16122387edc.9
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Jan 2022 23:52:35 -0800 (PST)
+        Tue, 18 Jan 2022 04:06:40 -0500
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F4CC061574
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 01:06:40 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id g81so53672762ybg.10
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 01:06:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
+        b=Soz+QHT0dGLM8FndDi8+DmGrzF8Nand3R01M5J9drC3NXqHN7kmc4VY6l/NuWtUVfL
+         Pw1ipMH9eBCg/ZHqGLeAt2KZPu6XRfsWiJE2xzcq96Ba85LXlrKxOVNuY0HYvfKDfmKc
+         jAQ6EF695L6TTvaCdYqZtBN8gkAnqp1+r0RbNtIeu3qM6gm6h0M3GCKOMUuS25NPcq7T
+         m06EBwLGmWMwlcWjC1WtBCJ/c9tTXkQfsHougCLjPDZp39fgMD8pqVkLYWwbFdfOrAZL
+         FCMwtSnm8Hemf8tY2r2VyBfKOXtSL3AjGIsLn+yMreEST0ocUC4Xu0XEMGJmBV9pdbj2
+         rlHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aNtiM+Mkd9efU1H0Wh+stfJIqfRGDAuGYHwSDx2cIxk=;
-        b=I6eZTWrqT585JanZovjp1ssqvwrCf7qwnug1UutXYOoadTFRcEONcNmbe+56Ax2d2A
-         npIA3ALmxQUJLkCabjJCTP1vso1HbKpfwETSmbCeINZ1d5Ivg9TIqRgrfzD6aNhv5rCE
-         ECNTVivtS+dY/6gR1CltuifVZWLX1pMEPBe+sYiTWssMZh5enl28pouFQ7mhB4wpf/R5
-         Vfcj5hhP2QDes3j+lFI8YDet3qN4Nlaa4M9kk73LXRiL5OT5Egn0ENTEC+M/UzPo+7PW
-         izApg4t4ovmGeRBLlAxsXuT74/NMBeDTWBBbNX9oE1JXTwk7y4HDHNrCmb4ORAULZaeV
-         xIog==
-X-Gm-Message-State: AOAM532zCnZ/Kf8hc2weq/Svsn/hw7+eZuT1gaCG/A73q/YWJK71Otgn
-        beStoj12V4SW89oL+tSGp5KsGreuiwVzWkceFFmGUdbR5/pV+7KlRb6G9vntKLSDxc/uIYOZeQ6
-        9yxx5j5kUAnuQyuodIByENZbQMhBiU1R0TyXKKzlrSv79N7N+
-X-Received: by 2002:a17:907:1b0d:: with SMTP id mp13mr19153537ejc.29.1642492354933;
-        Mon, 17 Jan 2022 23:52:34 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwBxln2AY6zvpOpDMIrbY3pJ2WqNGAK6xMIm4ZKaNEKJULRafQ8SSXBijKpYwqfIhylcmfhEA==
-X-Received: by 2002:a17:907:1b0d:: with SMTP id mp13mr19153526ejc.29.1642492354785;
-        Mon, 17 Jan 2022 23:52:34 -0800 (PST)
-Received: from [192.168.0.40] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id a3sm5071801ejd.34.2022.01.17.23.52.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jan 2022 23:52:34 -0800 (PST)
-Message-ID: <794f39ed-3436-432c-767d-8fa60779d510@canonical.com>
-Date:   Tue, 18 Jan 2022 08:52:33 +0100
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
+        b=JeFxvisCAYqJkd3uph/LvuwAIf6kqXwGk4Xpeo3iX8dxVgftJB1T9yVRw4tlj7hE9P
+         IFPKIWY+cljZjEb3R939I8F2quKtuZufS1gcAMwzGLCVhl+ApSv/O1mjXdtsmH65/lqT
+         XUzcwi4eWG23TTN1Slb/8kqQEm+ZCx667rEi6i3FrmwBjCEijiglhWJdbTFNLRH4152d
+         +gf4pEbFXXs9zkAPSN4xSnDf50HPg3RUxnbmQfPMf9X767ZY60HKKj1YsQ6le7Lb611I
+         mDBFR/+yIftEy6B0bOMuWVuPNetagYQkqtU88CwrZkyS9uCh3eLQzYACo5iQKp4PzlKd
+         6Dpg==
+X-Gm-Message-State: AOAM530qFVikk2w312BFAMW89ESJGMsSY8ZrvA++r7t0b1atksDsl9Ai
+        ZoTvd1/ryl1EdlXUuEwCQdaZsHYn8K0Nva4/X3k=
+X-Google-Smtp-Source: ABdhPJyw0yTCzDjS933NePR8DAFAXJuHa33nOCZujulUZ2idVfAerV+90UYpawy22l7XlVZmlrM9B7gLM03XAJNOkeI=
+X-Received: by 2002:a25:37c2:: with SMTP id e185mr32076301yba.333.1642496799696;
+ Tue, 18 Jan 2022 01:06:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH v2 24/28] dt-bindings: pinctrl: samsung: convert to
- dtschema
-Content-Language: en-US
-To:     Olof Johansson <olof@lixom.net>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Alim Akhtar <alim.akhtar@gmail.com>,
-        Rob Herring <robh@kernel.org>
-References: <20220111201426.326777-1-krzysztof.kozlowski@canonical.com>
- <20220111201722.327219-18-krzysztof.kozlowski@canonical.com>
- <CACRpkdYTXSOW+sOX3wVtF4jj6xm0jr-F3HKQPGHOdAVjbasP3A@mail.gmail.com>
- <5047da7c-d3a6-5472-b0ca-7ed3dbe8a5fe@canonical.com>
- <CACRpkdbhmJ91EW395C5F2WYjWJQdJ-SBHaDm7XnQsxMuyoMmLg@mail.gmail.com>
- <77bd8fa4-2b35-352c-da07-ef91fcbed454@canonical.com>
- <CAOesGMg2eH1B94h+etPBDW3B1LMeHBytz0v2e0GfVRDv8gU0YA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <CAOesGMg2eH1B94h+etPBDW3B1LMeHBytz0v2e0GfVRDv8gU0YA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a05:7108:3655:0:0:0:0 with HTTP; Tue, 18 Jan 2022 01:06:38
+ -0800 (PST)
+Reply-To: asil.ajwad@gmail.com
+From:   Asil Ajwad <graceyaogokamboule@gmail.com>
+Date:   Mon, 17 Jan 2022 21:06:38 -1200
+Message-ID: <CA+Yy_gDoLjOfusfXaCVeyK5wpATnnfHVgZ2fw-LqNg4nowYW8A@mail.gmail.com>
+Subject: Greetings,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 17/01/2022 21:26, Olof Johansson wrote:
-> On Sun, Jan 16, 2022 at 11:45 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@canonical.com> wrote:
->>
->> On 16/01/2022 22:38, Linus Walleij wrote:
->>> On Sun, Jan 16, 2022 at 6:10 PM Krzysztof Kozlowski
->>> <krzysztof.kozlowski@canonical.com> wrote:
->>>
->>>> Anyway DTS and dtschema will have to wait for one release, because they
->>>> depend on samsung pinctrl driver change (patch #2).
->>>
->>> What about I put that (and maybe this schema) on an immutable
->>> branch so you can pull the commit into your for-arm-soc branch and
->>> put the DTS changes on top?
->>
->> That would be a solution if not a policy for arm-soc of keeping DTS
->> separate. Arnd and Olof since some time are not happy when DTS branch
->> receives any driver updates.
->>
->> Arnd, Olof,
->> This is a set of dtschema conversion + DTS alignment with new schema:
->> 1. Driver change necessary to accept new DTS (driver depends on node
->> names and this has to change because of dtschema),
->> 2. DTS commits depending on above, which convert node name to new format,
->> 3. Finally dtschema requiring new naming of the GPIO nodes.
->>
->> If I got correctly, the policy of not mixing drivers and DTS requires
->> that #2 above (DTS changes) will wait for one more release. During the
->> time, if dtschema (#3 above) is applied, there will be new warnings
->> about non-compliant DTS.
->>
->> Do you see any chance of merging driver + DTS + dtschema via same tree
->> in same release?
-> 
-> Our general guidance to separate DTS and driver changes is to avoid
-> large entangled changes between the two, and to discourage a developer
-> mentality of "the implementation is the binding".
-> 
-> I think this is a good example of when it makes sense to bring in what
-> is a fairly small and clean driver change to deal with this. So the
-> right answer here is to stage such a stable branch and merge into both
-> arm-soc and the pinctrl subsystem trees as proposed.
+-- 
+Greetings,
 
-Thanks for clarification, I'll go with this approach.
+I am Mr.Asil Ajwad, I work with United Bank of Africa, can you use
+an ATM Visa Card to withdraw money at, ATM Cash Machine in your
+country, if yes I want to transfer abounded fund the sum of $10.5million
+US-Dollars, to you from my country, this is part of the money that was
+abounded by our late old client a politician who unfortunately lost
+his life and was forced out of power Du to his greedy act, the bank will
 
-Best regards,
-Krzysztof
+change the account details to your name, and apply for a Visa Card
+with your details, the Visa Card will be send to you, and you can be
+withdrawing money with it always, whatever any amount you withdraw
+daily, you will send 60% to me and you will take 40%, the Visa Card
+and the bank account will be on your name, I will be waiting for your
+response for more details, thanks to you a lot for giving me your time.
+
+regards,
+Mr.Asil Ajwad.
