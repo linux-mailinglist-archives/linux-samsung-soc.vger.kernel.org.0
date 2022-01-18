@@ -2,80 +2,248 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE73F492642
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 14:00:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFC534927E7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 15:01:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236220AbiARNAe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 18 Jan 2022 08:00:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
+        id S244400AbiAROAr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 18 Jan 2022 09:00:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239123AbiARNAd (ORCPT
+        with ESMTP id S243931AbiAROAr (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 18 Jan 2022 08:00:33 -0500
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3109CC061401
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 05:00:33 -0800 (PST)
-Received: by mail-vk1-xa31.google.com with SMTP id w206so12375011vkd.10
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 05:00:33 -0800 (PST)
+        Tue, 18 Jan 2022 09:00:47 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 109ABC061574
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 06:00:47 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id i10so14754934uab.8
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 06:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=kt7BSYvG+rr2bLEECwLOEMCvBVZotJIk44/4XcKD9H0=;
-        b=oIAPvRrwyQK9z6AQAojxDeGAhXY+r2o1UmC6sFh8E/FwQr9mstQDRr/1NSvmGRtcCX
-         /w1QS+uNfbLsvQZX7xX+9sz3uC6D4RoCWaXbANnoA2dUrPepMcqirC5k6HNVS1fFqE0Z
-         mmnlRUiL8Xw3KIyLVLMGnExCwsSQFeIKh8JW3bqp1bYt9+tHsadbHk4RvmOHNK7Sl5QN
-         8VSQkuo3Tc4LhDddKs1B1xacb1x98ojXw9qcgRZeTdxEnzHjo/CWLLbARksjq/KHcz6i
-         aR29itdUv3X9HyWbgkBUkSe9JOKQ7x5gCFvVaYAAUeR/IrssS1C3mXYec7clwDkIPtov
-         CL+g==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vH6mrMnTcRnYhQ/60P21Ou25hu431NT7bRGY1A4qENQ=;
+        b=mcU1UpjzykY9s8XxjUDd/DoITMVGq0PCdIu+RF++pIQDPH2d24mrM58p2Y7SBoj2Yd
+         7XPEIsf1rCHYNsgUQIn3it7O99sQciNRXtE0p3j2IeB8w5/17N9XZudCAW0+Odl+PZeC
+         bgYSDzNCR65SU4NfSdihwBkyIGaFjXImoAXcEZWjMkq/JYoIjv5fLfvGPR6vkbKE/Rpw
+         Y4jo7gY4jxIoFX5PAabCvcv9K06cxywMQ0a+mwAXG/BvYM+2rvUiHC9qcuR9aWVna/gL
+         R6vgvf8+03ER0vByR/VHunDqsDvzCKNNqVu3m7Q39u3f3ggrddQimFRomtN0YZ3blDxr
+         fi2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=kt7BSYvG+rr2bLEECwLOEMCvBVZotJIk44/4XcKD9H0=;
-        b=ZlJC/b02wDK3OZtkdCkW8ILhFH2ICgIKTX7Gs/urw7GssPZzfGGStFN8oqTRXTWlrM
-         bnP7SPSJviFKdq6h2+/2lxIrt1bkE5MTtVk9Dns6RemYnhnjDtdBbP28Gq9uujNWImn+
-         mx0QOdvS6RvO2OzREYM2/Fl1/iy0pTfBFu0jgDlrjKZShJ9V1VAVWkG2PPxpcgpm1+p8
-         60oVO3egOdwk99V4Q79s2vty1Vr1tIyF8vrAQIk6gu8L9rDtxEcvSw7yIQtY0lTr4wum
-         7H4+YwxPFy1+I7i2dPTLa/pKe6QaNY76652zi5+K7cTs92lF6BniM1xZU73bXcYbrvXe
-         zGtg==
-X-Gm-Message-State: AOAM5331KgaoKpqToQfdboYc0eMKGpGLwIwyQhUzbl2iUpVp9WN/zf2k
-        dr2wBm+zvT1YXzbHG/vnfp5JfwSQmVqG7bsfNoY=
-X-Google-Smtp-Source: ABdhPJxU0Mgz8nglAQGJWvQd5fZGyHw86cgkNwVsJrkRauzIVzFmr7WCj4QJVEymoxx51zJjSdHqWP82BjKwyfLYnRA=
-X-Received: by 2002:a05:6122:1808:: with SMTP id ay8mr10188346vkb.36.1642510832144;
- Tue, 18 Jan 2022 05:00:32 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vH6mrMnTcRnYhQ/60P21Ou25hu431NT7bRGY1A4qENQ=;
+        b=nrW7R14AAxdOH1arJTD+gcYP4plhizqnPk2X0tDnftCG7qpqQ7cprjKS34GpXTnOs+
+         xvjSVpiYwCnYlSG1o0+AER86W2LlhqM67AMsB3vOapRDcByX9Bs1RMqUv2Q4FgyrsC4Y
+         +XwCWY+yCF5GAa5vCxroTyVRtXepojX6GW8tT8Pu5bSz6siZzjxEIdRWtoBF6QiyT/JF
+         xjW1gn+jYBmIrxqycNra+S0W0nOH5b2QULQiKSlCq1+flMtUkHhZVZxg2+x3LObGD+G6
+         i75TpNRaUPcT6RYC2+y2o7K/bt4webRldF8lvWFqrXhTCHe5DEqqhjPSyRPVj1fDFzFz
+         fTdg==
+X-Gm-Message-State: AOAM5308PmZ7sgWwO1If0027pmYcZjihzOFyJbirr1G+1P/nhUV9gS4N
+        oax29dEX3IfEhqSh4pzdTDC1dJgT0LNPmHjnOWyuFA==
+X-Google-Smtp-Source: ABdhPJwT+pj0knnZ6KtzMGVJehL1QVPwQ06NFEozN8EW30EpG+ix63pb9GVliVDFk2PPoXYHUEM/05EfpEXUUjlEYdU=
+X-Received: by 2002:a67:dd90:: with SMTP id i16mr9454274vsk.86.1642514446138;
+ Tue, 18 Jan 2022 06:00:46 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:ab0:3793:0:0:0:0:0 with HTTP; Tue, 18 Jan 2022 05:00:31
- -0800 (PST)
-Reply-To: mohsheikhalhamed@gmail.com
-From:   bratikox <bratikox@gmail.com>
-Date:   Tue, 18 Jan 2022 14:00:31 +0100
-Message-ID: <CAFuXTSx6Lu9odoPCd=RZLGBtKNFkTY9wS0ub46GZpRb2p6+pYQ@mail.gmail.com>
-Subject: Salam Alaikum /ADIA LOAN OFFER
-To:     undisclosed-recipients:;
+References: <20220118110928.120640-1-linus.walleij@linaro.org>
+In-Reply-To: <20220118110928.120640-1-linus.walleij@linaro.org>
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+Date:   Tue, 18 Jan 2022 16:00:34 +0200
+Message-ID: <CAPLW+4kS73Tg2C7dJ_gkMHF6=KT0pB4gQ18hAoTMTv-j5Q73pg@mail.gmail.com>
+Subject: Re: [PATCH 1/3 v2] spi: s3c64xx: Delete unused boardfile helpers
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Salam Alaikum,
+On Tue, 18 Jan 2022 at 13:11, Linus Walleij <linus.walleij@linaro.org> wrote:
+>
+> The helpers to use SPI host 1 and 2 are unused in the kernel
+> and taking up space and maintenance hours. New systems should
+> use device tree and not this, so delete the code.
+>
+> Cc: linux-samsung-soc@vger.kernel.org
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> Cc: Sylwester Nawrocki <snawrocki@kernel.org>
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+> ChangeLog v1-v2:
+> - Split out to separate patch
+> ---
 
-We are a United Arab Emirates based investment company known as Abu
-Dhabi Investment Authority working on expanding its portfolio globally
-and financing projects.
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
 
-We are offering Corporate and Personal Loan at 3.5% Interest Rate for
-a duration of 5 to 10 years.
-
-Please get back to us on Email: mohsheikhalhamed@gmail.com ,if you are
-interested for further embellishment.
-
-We also pay 2% commission to brokers who introduce project owners for
-finance or other opportunities.
-
-
- Yours truly,
- Hamed Mohammad
- (Personal Assistant)
- Abu Dhabi Investment Authority
- 211 Corniche, P.O Box 3600
- Abu Dhabi,United Arab Emirates
+>  arch/arm/mach-s3c/Kconfig                 | 12 ----
+>  arch/arm/mach-s3c/devs.c                  | 72 -----------------------
+>  arch/arm/mach-s3c/setup-spi-s3c64xx.c     |  9 ---
+>  arch/arm/mach-s3c/spi-core-s3c24xx.h      |  6 --
+>  include/linux/platform_data/spi-s3c64xx.h |  8 ---
+>  5 files changed, 107 deletions(-)
+>
+> diff --git a/arch/arm/mach-s3c/Kconfig b/arch/arm/mach-s3c/Kconfig
+> index 25606e668cf9..1899fc3f44fd 100644
+> --- a/arch/arm/mach-s3c/Kconfig
+> +++ b/arch/arm/mach-s3c/Kconfig
+> @@ -191,18 +191,6 @@ config S3C64XX_DEV_SPI0
+>           Compile in platform device definitions for S3C64XX's type
+>           SPI controller 0
+>
+> -config S3C64XX_DEV_SPI1
+> -       bool
+> -       help
+> -         Compile in platform device definitions for S3C64XX's type
+> -         SPI controller 1
+> -
+> -config S3C64XX_DEV_SPI2
+> -       bool
+> -       help
+> -         Compile in platform device definitions for S3C64XX's type
+> -         SPI controller 2
+> -
+>  config SAMSUNG_DEV_TS
+>         bool
+>         help
+> diff --git a/arch/arm/mach-s3c/devs.c b/arch/arm/mach-s3c/devs.c
+> index 06dec64848f9..9f086aee862b 100644
+> --- a/arch/arm/mach-s3c/devs.c
+> +++ b/arch/arm/mach-s3c/devs.c
+> @@ -1125,75 +1125,3 @@ void __init s3c64xx_spi0_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+>         s3c_set_platdata(&pd, sizeof(pd), &s3c64xx_device_spi0);
+>  }
+>  #endif /* CONFIG_S3C64XX_DEV_SPI0 */
+> -
+> -#ifdef CONFIG_S3C64XX_DEV_SPI1
+> -static struct resource s3c64xx_spi1_resource[] = {
+> -       [0] = DEFINE_RES_MEM(S3C_PA_SPI1, SZ_256),
+> -       [1] = DEFINE_RES_IRQ(IRQ_SPI1),
+> -};
+> -
+> -struct platform_device s3c64xx_device_spi1 = {
+> -       .name           = "s3c6410-spi",
+> -       .id             = 1,
+> -       .num_resources  = ARRAY_SIZE(s3c64xx_spi1_resource),
+> -       .resource       = s3c64xx_spi1_resource,
+> -       .dev = {
+> -               .dma_mask               = &samsung_device_dma_mask,
+> -               .coherent_dma_mask      = DMA_BIT_MASK(32),
+> -       },
+> -};
+> -
+> -void __init s3c64xx_spi1_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+> -                                               int num_cs)
+> -{
+> -       struct s3c64xx_spi_info pd;
+> -
+> -       /* Reject invalid configuration */
+> -       if (!num_cs || src_clk_nr < 0) {
+> -               pr_err("%s: Invalid SPI configuration\n", __func__);
+> -               return;
+> -       }
+> -
+> -       pd.num_cs = num_cs;
+> -       pd.src_clk_nr = src_clk_nr;
+> -       pd.cfg_gpio = (cfg_gpio) ? cfg_gpio : s3c64xx_spi1_cfg_gpio;
+> -
+> -       s3c_set_platdata(&pd, sizeof(pd), &s3c64xx_device_spi1);
+> -}
+> -#endif /* CONFIG_S3C64XX_DEV_SPI1 */
+> -
+> -#ifdef CONFIG_S3C64XX_DEV_SPI2
+> -static struct resource s3c64xx_spi2_resource[] = {
+> -       [0] = DEFINE_RES_MEM(S3C_PA_SPI2, SZ_256),
+> -       [1] = DEFINE_RES_IRQ(IRQ_SPI2),
+> -};
+> -
+> -struct platform_device s3c64xx_device_spi2 = {
+> -       .name           = "s3c6410-spi",
+> -       .id             = 2,
+> -       .num_resources  = ARRAY_SIZE(s3c64xx_spi2_resource),
+> -       .resource       = s3c64xx_spi2_resource,
+> -       .dev = {
+> -               .dma_mask               = &samsung_device_dma_mask,
+> -               .coherent_dma_mask      = DMA_BIT_MASK(32),
+> -       },
+> -};
+> -
+> -void __init s3c64xx_spi2_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+> -                                               int num_cs)
+> -{
+> -       struct s3c64xx_spi_info pd;
+> -
+> -       /* Reject invalid configuration */
+> -       if (!num_cs || src_clk_nr < 0) {
+> -               pr_err("%s: Invalid SPI configuration\n", __func__);
+> -               return;
+> -       }
+> -
+> -       pd.num_cs = num_cs;
+> -       pd.src_clk_nr = src_clk_nr;
+> -       pd.cfg_gpio = (cfg_gpio) ? cfg_gpio : s3c64xx_spi2_cfg_gpio;
+> -
+> -       s3c_set_platdata(&pd, sizeof(pd), &s3c64xx_device_spi2);
+> -}
+> -#endif /* CONFIG_S3C64XX_DEV_SPI2 */
+> diff --git a/arch/arm/mach-s3c/setup-spi-s3c64xx.c b/arch/arm/mach-s3c/setup-spi-s3c64xx.c
+> index efcf78d41585..497aff71c29c 100644
+> --- a/arch/arm/mach-s3c/setup-spi-s3c64xx.c
+> +++ b/arch/arm/mach-s3c/setup-spi-s3c64xx.c
+> @@ -16,12 +16,3 @@ int s3c64xx_spi0_cfg_gpio(void)
+>         return 0;
+>  }
+>  #endif
+> -
+> -#ifdef CONFIG_S3C64XX_DEV_SPI1
+> -int s3c64xx_spi1_cfg_gpio(void)
+> -{
+> -       s3c_gpio_cfgall_range(S3C64XX_GPC(4), 3,
+> -                               S3C_GPIO_SFN(2), S3C_GPIO_PULL_UP);
+> -       return 0;
+> -}
+> -#endif
+> diff --git a/arch/arm/mach-s3c/spi-core-s3c24xx.h b/arch/arm/mach-s3c/spi-core-s3c24xx.h
+> index 057667469cc3..919c5fd0c9af 100644
+> --- a/arch/arm/mach-s3c/spi-core-s3c24xx.h
+> +++ b/arch/arm/mach-s3c/spi-core-s3c24xx.h
+> @@ -16,12 +16,6 @@ static inline void s3c24xx_spi_setname(char *name)
+>  #ifdef CONFIG_S3C64XX_DEV_SPI0
+>         s3c64xx_device_spi0.name = name;
+>  #endif
+> -#ifdef CONFIG_S3C64XX_DEV_SPI1
+> -       s3c64xx_device_spi1.name = name;
+> -#endif
+> -#ifdef CONFIG_S3C64XX_DEV_SPI2
+> -       s3c64xx_device_spi2.name = name;
+> -#endif
+>  }
+>
+>  #endif /* __PLAT_S3C_SPI_CORE_S3C24XX_H */
+> diff --git a/include/linux/platform_data/spi-s3c64xx.h b/include/linux/platform_data/spi-s3c64xx.h
+> index 773daf7915a3..19d690f34670 100644
+> --- a/include/linux/platform_data/spi-s3c64xx.h
+> +++ b/include/linux/platform_data/spi-s3c64xx.h
+> @@ -52,17 +52,9 @@ struct s3c64xx_spi_info {
+>   */
+>  extern void s3c64xx_spi0_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+>                                                 int num_cs);
+> -extern void s3c64xx_spi1_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+> -                                               int num_cs);
+> -extern void s3c64xx_spi2_set_platdata(int (*cfg_gpio)(void), int src_clk_nr,
+> -                                               int num_cs);
+>
+>  /* defined by architecture to configure gpio */
+>  extern int s3c64xx_spi0_cfg_gpio(void);
+> -extern int s3c64xx_spi1_cfg_gpio(void);
+> -extern int s3c64xx_spi2_cfg_gpio(void);
+>
+>  extern struct s3c64xx_spi_info s3c64xx_spi0_pdata;
+> -extern struct s3c64xx_spi_info s3c64xx_spi1_pdata;
+> -extern struct s3c64xx_spi_info s3c64xx_spi2_pdata;
+>  #endif /*__SPI_S3C64XX_H */
+> --
+> 2.34.1
+>
