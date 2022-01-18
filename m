@@ -2,100 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A39F0492557
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 13:03:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE73F492642
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Jan 2022 14:00:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238978AbiARMD1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 18 Jan 2022 07:03:27 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:47528
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238285AbiARMD1 (ORCPT
+        id S236220AbiARNAe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 18 Jan 2022 08:00:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239123AbiARNAd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 18 Jan 2022 07:03:27 -0500
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 3E5413F1C6
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 12:03:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1642507406;
-        bh=7bubzIAb+ydO4SnlvnBFht1TGTz6uczOUuKDIRB3YAY=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=stt80QqWs1o9rckHcickveDZDPRJyFhZC0ELkNON2tijsA7DIsoGSCYdZvcybKJcJ
-         NfpJ/D3Y8J2bpCLFTFpp0n/s+5il0D+7QZsImTA+Lhr36nEvJnd5jNw6kSTvyzyQsG
-         RnHESYofgdRtytVgz6h0X7W5319k7DUx/Mg/NbPSD/u7YvEtecaGV1jdvf2wF6RCIL
-         KNwW342mUD/Nv6S/knxuHAq565KegPwn/eBm66iKBLQj9knFqI1fn1qse6yBPJ2512
-         9TytLFRarEd5IXxSeYCjDvTxfBy7H7wh5tq8fLupg4vLljV8dWlHd/ZB/GSNxRhqsO
-         kiZvpXcb4HN6g==
-Received: by mail-ed1-f72.google.com with SMTP id z6-20020a50eb46000000b00403a7687b5bso972544edp.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 04:03:26 -0800 (PST)
+        Tue, 18 Jan 2022 08:00:33 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3109CC061401
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 05:00:33 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id w206so12375011vkd.10
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 18 Jan 2022 05:00:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=kt7BSYvG+rr2bLEECwLOEMCvBVZotJIk44/4XcKD9H0=;
+        b=oIAPvRrwyQK9z6AQAojxDeGAhXY+r2o1UmC6sFh8E/FwQr9mstQDRr/1NSvmGRtcCX
+         /w1QS+uNfbLsvQZX7xX+9sz3uC6D4RoCWaXbANnoA2dUrPepMcqirC5k6HNVS1fFqE0Z
+         mmnlRUiL8Xw3KIyLVLMGnExCwsSQFeIKh8JW3bqp1bYt9+tHsadbHk4RvmOHNK7Sl5QN
+         8VSQkuo3Tc4LhDddKs1B1xacb1x98ojXw9qcgRZeTdxEnzHjo/CWLLbARksjq/KHcz6i
+         aR29itdUv3X9HyWbgkBUkSe9JOKQ7x5gCFvVaYAAUeR/IrssS1C3mXYec7clwDkIPtov
+         CL+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=7bubzIAb+ydO4SnlvnBFht1TGTz6uczOUuKDIRB3YAY=;
-        b=ekUtDO2wpspNoCAxjbicjbelrQ52brdaFmpO5P2N2hfzCpkDw9cAp+SPGrLLwm/QFx
-         G6N/C+Q/9xfVqD7wS4+EVZIlP4S1IXxPeRV+Rd39taay+r41frAAKC2satg6xuVOaZe5
-         exJ8iOXENTy5Uz/s2X3tXeMaVTagXfyTPJo5maHzPmQeJU2vwtOPvy87fSdyZhaaX+mV
-         8Hn8s6mjzkNsxnlBnn/v98VRInu6BtF2X6r8wijCx/coykKwao892/eTB7L7eEPwxJ3L
-         AmJ74MqeNg2X3VFq8vg7VHZZfcdmSMLGJ41jjXZvuUv07AHN/T450bGq6f5bHXwPs8H9
-         qtEA==
-X-Gm-Message-State: AOAM532rOoZj+ou0MzRXg7uhJkFLSOkxaNc6XvAiao1E4ttm18jT+V/R
-        ho553oo99hGJAGONzWW3bFQ33UZSVu+RpDkqiJ0n+I0lMZ/w5oKl1fjjFCvcUuyr7n6yoJ9pey6
-        lo+ssvEk1288zLSd1wTr919t4Q+Rt5rfjC4a9v6g0mEYgrBMH
-X-Received: by 2002:a17:907:3f83:: with SMTP id hr3mr21225590ejc.604.1642507405969;
-        Tue, 18 Jan 2022 04:03:25 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwLDQVu0Qzl4lsokyh/LNUA9+7/5AuxEAtB1FxML9RoI1adjL785IqrAjsUUFixIL9NnEpxFA==
-X-Received: by 2002:a17:907:3f83:: with SMTP id hr3mr21225578ejc.604.1642507405861;
-        Tue, 18 Jan 2022 04:03:25 -0800 (PST)
-Received: from [192.168.0.41] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id gb17sm5302273ejc.25.2022.01.18.04.03.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jan 2022 04:03:25 -0800 (PST)
-Message-ID: <f2ccfaee-5854-89fc-8c83-5275f7fd66d7@canonical.com>
-Date:   Tue, 18 Jan 2022 13:03:24 +0100
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=kt7BSYvG+rr2bLEECwLOEMCvBVZotJIk44/4XcKD9H0=;
+        b=ZlJC/b02wDK3OZtkdCkW8ILhFH2ICgIKTX7Gs/urw7GssPZzfGGStFN8oqTRXTWlrM
+         bnP7SPSJviFKdq6h2+/2lxIrt1bkE5MTtVk9Dns6RemYnhnjDtdBbP28Gq9uujNWImn+
+         mx0QOdvS6RvO2OzREYM2/Fl1/iy0pTfBFu0jgDlrjKZShJ9V1VAVWkG2PPxpcgpm1+p8
+         60oVO3egOdwk99V4Q79s2vty1Vr1tIyF8vrAQIk6gu8L9rDtxEcvSw7yIQtY0lTr4wum
+         7H4+YwxPFy1+I7i2dPTLa/pKe6QaNY76652zi5+K7cTs92lF6BniM1xZU73bXcYbrvXe
+         zGtg==
+X-Gm-Message-State: AOAM5331KgaoKpqToQfdboYc0eMKGpGLwIwyQhUzbl2iUpVp9WN/zf2k
+        dr2wBm+zvT1YXzbHG/vnfp5JfwSQmVqG7bsfNoY=
+X-Google-Smtp-Source: ABdhPJxU0Mgz8nglAQGJWvQd5fZGyHw86cgkNwVsJrkRauzIVzFmr7WCj4QJVEymoxx51zJjSdHqWP82BjKwyfLYnRA=
+X-Received: by 2002:a05:6122:1808:: with SMTP id ay8mr10188346vkb.36.1642510832144;
+ Tue, 18 Jan 2022 05:00:32 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH 3/3 v2] spi: s3c64xx: Convert to use GPIO descriptors
-Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org
-Cc:     linux-samsung-soc@vger.kernel.org,
-        Sylwester Nawrocki <snawrocki@kernel.org>
-References: <20220118110928.120640-1-linus.walleij@linaro.org>
- <20220118110928.120640-3-linus.walleij@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220118110928.120640-3-linus.walleij@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Received: by 2002:ab0:3793:0:0:0:0:0 with HTTP; Tue, 18 Jan 2022 05:00:31
+ -0800 (PST)
+Reply-To: mohsheikhalhamed@gmail.com
+From:   bratikox <bratikox@gmail.com>
+Date:   Tue, 18 Jan 2022 14:00:31 +0100
+Message-ID: <CAFuXTSx6Lu9odoPCd=RZLGBtKNFkTY9wS0ub46GZpRb2p6+pYQ@mail.gmail.com>
+Subject: Salam Alaikum /ADIA LOAN OFFER
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 18/01/2022 12:09, Linus Walleij wrote:
-> Convert the S3C64xx SPI host to use GPIO descriptors.
-> 
-> Provide GPIO descriptor tables for the one user with CS
-> 0 and 1.
-> 
-> Cc: linux-samsung-soc@vger.kernel.org
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> Cc: Sylwester Nawrocki <snawrocki@kernel.org>
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-> ---
-> ChangeLog v1-v2:
-> - Split off code cleaning to separate patches
-> ---
+Salam Alaikum,
 
-Much easier to read, thanks!
+We are a United Arab Emirates based investment company known as Abu
+Dhabi Investment Authority working on expanding its portfolio globally
+and financing projects.
+
+We are offering Corporate and Personal Loan at 3.5% Interest Rate for
+a duration of 5 to 10 years.
+
+Please get back to us on Email: mohsheikhalhamed@gmail.com ,if you are
+interested for further embellishment.
+
+We also pay 2% commission to brokers who introduce project owners for
+finance or other opportunities.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-
-Best regards,
-Krzysztof
+ Yours truly,
+ Hamed Mohammad
+ (Personal Assistant)
+ Abu Dhabi Investment Authority
+ 211 Corniche, P.O Box 3600
+ Abu Dhabi,United Arab Emirates
