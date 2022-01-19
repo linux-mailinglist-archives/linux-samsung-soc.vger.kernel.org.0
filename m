@@ -2,101 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A66F494599
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 20 Jan 2022 02:43:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E999494833
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 20 Jan 2022 08:22:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231954AbiATBnK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 19 Jan 2022 20:43:10 -0500
-Received: from 15.mo561.mail-out.ovh.net ([87.98.150.177]:60771 "EHLO
-        15.mo561.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbiATBnI (ORCPT
+        id S232412AbiATHW2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 20 Jan 2022 02:22:28 -0500
+Received: from 59-125-125-110.hinet-ip.hinet.net ([59.125.125.110]:44551 "HELO
+        mail.jen-ai.org.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with SMTP id S230113AbiATHW2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 19 Jan 2022 20:43:08 -0500
-X-Greylist: delayed 12599 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Jan 2022 20:43:08 EST
-Received: from player791.ha.ovh.net (unknown [10.109.143.72])
-        by mo561.mail-out.ovh.net (Postfix) with ESMTP id BBA0422B61
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jan 2022 20:55:55 +0000 (UTC)
-Received: from etezian.org (82-181-27-157.bb.dnainternet.fi [82.181.27.157])
-        (Authenticated sender: andi@etezian.org)
-        by player791.ha.ovh.net (Postfix) with ESMTPSA id D597A266CDB75;
-        Wed, 19 Jan 2022 20:55:36 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass (GARM-106R006390dcab6-99cd-4766-9f5f-a59f7922d779,
-                    EAD790EBCBC9E102087108CB0F5556A3B44BAE4B) smtp.auth=andi@etezian.org
-X-OVh-ClientIp: 82.181.27.157
-Date:   Wed, 19 Jan 2022 22:55:35 +0200
-From:   Andi Shyti <andi@etezian.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
-        Balletbo i Serra <enric.balletbo@collabora.com>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        Pratyush Yadav <p.yadav@ti.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-spi@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v4 5/5] spi: s3c64xx: allow controller-data to be optional
-Message-ID: <Yeh6x6U3tA7y5gvF@jack.zhora.eu>
-References: <20220119201005.13145-1-krzysztof.kozlowski@canonical.com>
- <20220119201005.13145-6-krzysztof.kozlowski@canonical.com>
+        Thu, 20 Jan 2022 02:22:28 -0500
+X-Greylist: delayed 17553 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Jan 2022 02:22:17 EST
+Received: from mail.jen-ai.org.tw (localhost.localdomain [127.0.0.1])
+        by mail.jen-ai.org.tw (Postfix) with ESMTP id 77A461214D9;
+        Thu, 20 Jan 2022 07:32:02 +0800 (CST)
+From:   "AEON CO. (M) BHD" <aeon@gift.com.my>
+Reply-To: aeon.giftonline@gmail.com
+Subject: NEW YEAR GIFT
+Date:   Thu, 20 Jan 2022 07:32:02 +0800
+Message-Id: <20220114222330.M65630@mail.jen-ai.org.tw>
+X-Mailer: OpenWebMail 2.53 
+X-OriginatingIP: 197.210.85.172 (j1650)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220119201005.13145-6-krzysztof.kozlowski@canonical.com>
-X-Ovh-Tracer-Id: 8852669495508536017
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudeigdekgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptehnughiucfuhhihthhiuceorghnughisegvthgviihirghnrdhorhhgqeenucggtffrrghtthgvrhhnpedtgfduudfhfeeuueejfeeihedtfeetgfegveehgfeuleelhfduteegieekudeifeenucfkpheptddrtddrtddrtddpkedvrddukedurddvjedrudehjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepphhlrgihvghrjeeluddrhhgrrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegrnhguihesvghtvgiiihgrnhdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdhsrghmshhunhhgqdhsohgtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+Content-Type: text/plain;
+        charset=big5
+To:     undisclosed-recipients:;
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Krzysztof,
+AEON BIG (M) SDN BHD
+Jalan Kemajuan Subang,
+Ss 16, 47500 Subang Jaya,
+Selangor,
+Malaysia.
 
-On Wed, Jan 19, 2022 at 09:10:05PM +0100, Krzysztof Kozlowski wrote:
-> The Samsung SoC SPI driver requires to provide controller-data node
-> for each of SPI peripheral device nodes.  Make this controller-data node
-> optional, so DTS could be simpler.
-> 
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-> ---
->  drivers/spi/spi-s3c64xx.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-> index 8755cd85e83c..769d958a2f86 100644
-> --- a/drivers/spi/spi-s3c64xx.c
-> +++ b/drivers/spi/spi-s3c64xx.c
-> @@ -796,16 +796,14 @@ static struct s3c64xx_spi_csinfo *s3c64xx_get_slave_ctrldata(
->  		return ERR_PTR(-EINVAL);
->  	}
->  
-> -	data_np = of_get_child_by_name(slave_np, "controller-data");
-> -	if (!data_np) {
-> -		dev_err(&spi->dev, "child node 'controller-data' not found\n");
-> -		return ERR_PTR(-EINVAL);
-> -	}
-> -
->  	cs = kzalloc(sizeof(*cs), GFP_KERNEL);
-> -	if (!cs) {
-> -		of_node_put(data_np);
-> +	if (!cs)
->  		return ERR_PTR(-ENOMEM);
-> +
-> +	data_np = of_get_child_by_name(slave_np, "controller-data");
-> +	if (!data_np) {
-> +		dev_info(&spi->dev, "child node 'controller-data' not found, using defaults\n");
+Hadiah Istimewa Tahun Baru.
 
-"not found" sounds like an error; I would just write something
-like "feedback delay set to '0' dfault", you also tell that the
-default value is '0'.
+Pemenang yang dihormati, Taniah alamat e-mel anda telah dipilih sebagai pemenang 
+bertuah sebanyak RM 300,000 (Tiga Ratus Ribu Ringgit Malaysia) untuk tahun ini promosi 
+keluarga Hari Raya Aidil Adha Online tahun ini.
 
-In any case,
+Semua peserta dipilih melalui Mesin Aturcara Dalam Talian Sistematik yang diambil dari 
+20,000 (Dua Puluh ribu) nama pengguna e-mel di seluruh Asia,sebagai sebahagian daripada 
+program promosi antarabangsa kami dan juga untuk mempromosikan semua pelanggan Syarikat 
+AEON. Oleh kerana terdapat beberapa nama dan alamat yang bercampur-campur, kami meminta 
+anda menyimpan hadiah ini secara peribadi, sehingga tuntutan anda diproses dan dana 
+anda diserahkan kepada anda. Ini adalah sebahagian daripada langkah-langkah keselamatan 
+kami untuk mengelakkan peserta atau peniru yang membuat tuntutan dua kali atau tidak 
+sah, mengambil kesempatan daripada keadaan ini.
 
-Reviewed-by: Andi Shyti <andi@etezian.org>
+Hantarkan maklumat berikut ke kiriman wang yang lain untuk memudahkan pengeluaran dana 
+anda:
+1. Nama Penuh:
+2. Alamat Perhubungan:
+3. Lelaki/Perempuan:
+4. Umur:
+5. Bujang/Berkahwin:
+6. Pekerjaan:
+7. Nombor Telefon:
 
-Andi
+Anda akan segera menghantar maklumat lengkap anda ke kiriman wang dengan maklumat di 
+bawah:
+
+Maklumat Hubungan Imbuhan:
+Pegawai Perhubungan: Shamsinar Muhamad Rusli
+E-mel: aeon.giftonline@gmail.com
+
+Pastikan anda memberikan No Rujukan anda: AEON/121/001/2021-01. No Siri:MY/RM3OOK/
+AEON21 semasa menghubungi kiriman wang untuk tuntutan.
+
+Tahniah sekali lagi atas kemenangan anda !!!
+
+Dengan hormat,
+Shafie Shamsuddin
+Pengarah Urusan
+AEON CO. (M) BHD.
