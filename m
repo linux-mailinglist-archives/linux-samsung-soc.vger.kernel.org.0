@@ -2,105 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9A5495557
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 20 Jan 2022 21:20:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF814495663
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 20 Jan 2022 23:38:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377630AbiATUUK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 20 Jan 2022 15:20:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377617AbiATUUH (ORCPT
+        id S243835AbiATWiT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 20 Jan 2022 17:38:19 -0500
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:36467 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233963AbiATWiS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 20 Jan 2022 15:20:07 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95770C061401
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 20 Jan 2022 12:20:06 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id s30so26010279lfo.7
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 20 Jan 2022 12:20:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Pw1RtCNR2WInVJgGie+Q591Om/Vjp92bOiH63X22+is=;
-        b=FAdCTNmkHImYatU6XdpAhSzDgjpEHYTA8ykjZkL8qQEwt8M3aGeEkFew2DxyYDo6S4
-         clRFhXaNpa1+MvZ8/upKHqiLhBleahsBjGp6tcbdWPsg+qiTp43SFtaujb7+uBS4Mgek
-         SexbAtvOX/BaIeXgG5eZf/ZMWrhW33TwD1t3jTa4H18pqPjGSBTPGBEcM3Bp4opSJMZb
-         HVRJp2m6N0zdFXwLGXlCvot2JLouKrJsrtdfMUU5H8mh5TFf2lSGTQeFBtEmAMdbWB0C
-         r4VbzJixNVw618ma7tF3/l7cNZQHjHzcnzdWNdHhgyxG+l+ONcIRukEw51/BNDRgGjbI
-         Xvsg==
+        Thu, 20 Jan 2022 17:38:18 -0500
+Received: by mail-oi1-f170.google.com with SMTP id r138so11101637oie.3;
+        Thu, 20 Jan 2022 14:38:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Pw1RtCNR2WInVJgGie+Q591Om/Vjp92bOiH63X22+is=;
-        b=f6qZdaAtaYzV+fp9+PhhZOHQRuBKflWL2tIM3zqKh4Y/ARZTivmxVnzougqV11Vgie
-         UIBYYYoOwG8KWlL73aJn20Qr5+1DioCnvYk2ZGaVGSGfzE33aKDH9cVbZVhfyO8slwNA
-         qzveRD/iCQQNyABHPi/1bJjN+JWOsIxzFeCXHBX5SDGE070o2wdOorEgukJKj+YFXbSX
-         NII7bN0YByIiAH9dEM2p7Idz9B/gYmTGVYC36pCVUjtrwezw+Fp93UfEFfr8D+krDdDH
-         iiVW/xp4NdezMWrC6wuOD7dePF4pPiow6ypyf3YFjtndIS1g0CIMXS2v4keoc1ouQmSx
-         GoVg==
-X-Gm-Message-State: AOAM533xPw/301RVosnD6axgt4BOvy1vSHwTlCp0Jts58TnvmleqvOTb
-        xOk9C/eM2Hm7qHr0lOGZguosrw==
-X-Google-Smtp-Source: ABdhPJyRbihYr9cGQwla7AU56lEI70374A+Hs+FgskQxGyDvi3BiO6ZqsqY2fvBEWKGvjsTKNn1jjA==
-X-Received: by 2002:a05:6512:74a:: with SMTP id c10mr750754lfs.234.1642710005001;
-        Thu, 20 Jan 2022 12:20:05 -0800 (PST)
-Received: from localhost ([31.134.121.151])
-        by smtp.gmail.com with ESMTPSA id h4sm21716lfv.220.2022.01.20.12.20.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JdY5i/vcjbMJ0CM6vrTsc2SV9D4UAPr/paJ/LZ4quKU=;
+        b=hGgdyJa1yMHhTz5S6JTDzJO6IEnMFP9U3/5udsMm3SSqOkWl7zB7VWTI7NoDg8k6eP
+         RPoNksF25A9SqHzcAwDOLe4j9ZwXgqP9gcq8yAqTL3XAd4SC52LW/L6V6VBrZ1ZXK848
+         4S6ljmX+DhZHldmPXsMkf3RebrbVDHsRlMvrjVB2TC3k9R8txBWhlvxa4kv9FEI7qFym
+         51vgf04+Lq2gmu7ge/xxf0pAX5z/9MQwLolS7O+j4GSfXIUjp7xhH/3Mu3DcxDA3WD+7
+         XOfBQPPZpMO2d6E+zKNQS7xYerzoOwWd1V7I87hh/zdC1p87NrckSc09XTpTZc/t8bNl
+         sz3w==
+X-Gm-Message-State: AOAM5324G+LR8MnOOGfeTSz1imkB1o8Ce9xedQ+7r/K+yt7CVQHsx/KB
+        h2aEBVWOyGpoXMr1hregKQ==
+X-Google-Smtp-Source: ABdhPJyl7JvGUpPUz9KEz1EogbtYVo2DcE2eLMLcKFmUHz9O/XaZ0ejP62Kqpwa0ZPL4skeK9sz7OQ==
+X-Received: by 2002:a05:6808:1a23:: with SMTP id bk35mr9736209oib.52.1642718297796;
+        Thu, 20 Jan 2022 14:38:17 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id o12sm235957ooi.18.2022.01.20.14.38.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 12:20:04 -0800 (PST)
-From:   Sam Protsenko <semen.protsenko@linaro.org>
-To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Sumit Semwal <sumit.semwal@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Cho KyongHo <pullip.cho@samsung.com>,
-        Hyesoo Yu <hyesoo.yu@samsung.com>,
-        Janghyuck Kim <janghyuck.kim@samsung.com>,
-        Jinkyu Yang <jinkyu1.yang@samsung.com>,
-        Alex <acnwigwe@google.com>, Carlos Llamas <cmllamas@google.com>,
-        Daniel Mentz <danielmentz@google.com>,
-        Erick Reyes <erickreyes@google.com>,
-        "J . Avila" <elavila@google.com>, Jonglin Lee <jonglin@google.com>,
-        Mark Salyzyn <salyzyn@google.com>,
-        Thierry Strudel <tstrudel@google.com>,
-        Will McVicker <willmcvicker@google.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-samsung-soc@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [RFC 3/3] arm64: defconfig: Enable sysmmu-v8 IOMMU
-Date:   Thu, 20 Jan 2022 22:19:58 +0200
-Message-Id: <20220120201958.2649-4-semen.protsenko@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220120201958.2649-1-semen.protsenko@linaro.org>
-References: <20220120201958.2649-1-semen.protsenko@linaro.org>
+        Thu, 20 Jan 2022 14:38:17 -0800 (PST)
+Received: (nullmailer pid 2067772 invoked by uid 1000);
+        Thu, 20 Jan 2022 22:38:15 -0000
+Date:   Thu, 20 Jan 2022 16:38:15 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        Pratyush Yadav <p.yadav@ti.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-spi@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: Re: [PATCH v5 3/4] mfd: dt-bindings: google,cros-ec: reference
+ Samsung SPI bindings
+Message-ID: <YenkV2rgEXQJ6Bc5@robh.at.kernel.org>
+References: <20220120175747.43403-1-krzysztof.kozlowski@canonical.com>
+ <20220120175747.43403-4-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220120175747.43403-4-krzysztof.kozlowski@canonical.com>
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+On Thu, Jan 20, 2022 at 06:57:46PM +0100, Krzysztof Kozlowski wrote:
+> The ChromeOS Embedded Controller appears on boards with Samsung Exynos
+> SoC, where Exynos SPI bindings expect controller-data node.  Reference
+> newly added dtschema for this property.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  .../bindings/mfd/google,cros-ec.yaml          | 29 ++++++++++---------
+>  1 file changed, 16 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> index 58a1a9405228..66a995bbbbe9 100644
+> --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> @@ -31,7 +31,7 @@ properties:
+>  
+>    controller-data:
+>      description:
+> -      SPI controller data, see bindings/spi/spi-samsung.txt
+> +      SPI controller data, see bindings/spi/samsung,spi-peripheral-props.yaml
+>      type: object
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 30516dc0b70e..bb03628b5e25 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1033,6 +1033,8 @@ CONFIG_ARM_SMMU=y
- CONFIG_ARM_SMMU_V3=y
- CONFIG_MTK_IOMMU=y
- CONFIG_QCOM_IOMMU=y
-+CONFIG_SAMSUNG_IOMMU=m
-+CONFIG_SAMSUNG_IOMMU_GROUP=y
- CONFIG_REMOTEPROC=y
- CONFIG_QCOM_Q6V5_MSS=m
- CONFIG_QCOM_Q6V5_PAS=m
--- 
-2.30.2
+We should be able to drop all of this if unevaluatedProperties is used.
 
+>  
+>    google,cros-ec-spi-pre-delay:
+> @@ -148,18 +148,21 @@ patternProperties:
+>  required:
+>    - compatible
+>  
+> -if:
+> -  properties:
+> -    compatible:
+> -      contains:
+> -        enum:
+> -          - google,cros-ec-i2c
+> -          - google,cros-ec-rpmsg
+> -then:
+> -  properties:
+> -    google,cros-ec-spi-pre-delay: false
+> -    google,cros-ec-spi-msg-delay: false
+> -    spi-max-frequency: false
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - google,cros-ec-i2c
+> +              - google,cros-ec-rpmsg
+> +    then:
+> +      properties:
+> +        google,cros-ec-spi-pre-delay: false
+> +        google,cros-ec-spi-msg-delay: false
+> +        spi-max-frequency: false
+> +
+> +  - $ref: /schemas/spi/samsung,spi-peripheral-props.yaml
+
+SPI device schemas should reference spi-peripheral-props.yaml only. 
+spi-peripheral-props.yaml in turn should reference all the vendor 
+specific peripheral property schemas.
+
+You should be able to do just:
+
+else:
+  $ref: /schemas/spi/spi-peripheral-props.yaml
+
+Can you please hold off sending anything referencing 
+spi-peripheral-props.yaml until after the merge window. Otherwise, the 
+checks fail (though I trust you've run validation).
+
+Rob
