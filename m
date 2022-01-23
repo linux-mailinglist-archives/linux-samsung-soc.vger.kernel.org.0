@@ -2,58 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62619497141
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Jan 2022 12:18:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 434DD497125
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Jan 2022 12:17:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232559AbiAWLSj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 23 Jan 2022 06:18:39 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:38486
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236271AbiAWLRA (ORCPT
+        id S236338AbiAWLRK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 23 Jan 2022 06:17:10 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:56108
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236281AbiAWLRB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 23 Jan 2022 06:17:00 -0500
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+        Sun, 23 Jan 2022 06:17:01 -0500
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 672773F1B7
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C11C33F1E0
         for <linux-samsung-soc@vger.kernel.org>; Sun, 23 Jan 2022 11:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
         s=20210705; t=1642936619;
-        bh=y357G77gKMHlTfzCL6+HEz+/UzqdnZT/McDbXpsW3BM=;
+        bh=66G1PF8Q0lr5LRIbEYZW0Tv4PnJMOlbJQ4z7W8Ayj8M=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=KCEyfW1Y6dhBG3hW8vyZXJjvQbrD3oKyZFy9b8+yB+ZaGJP2IulJs6Kbm/d2a/7mX
-         6TvYjaztkoBVaZIeZgSzq/PidKwSQgM6xK8evA5FNuF2WeNB4PJGfZic2aZyavpaTx
-         kdTZBWgTVmosWR2b8JbQIMS7W8/S69VT9r0NOiCTb3fzmKKV+rP/zEIv/dLVB7D4iF
-         45isw5dEVFJAl+JZExXPXd/9QilYsEN3DRJDctsW3bEDH/1NDqxENauFS8IzMcY8HY
-         OAc82syuHmC4AH3GFVpCRKpts/CXBz+Do1wfHBrAmV7k89PxsrocODhUYABuLbkQqg
-         14NEpFGZjlAZQ==
-Received: by mail-wm1-f71.google.com with SMTP id a189-20020a1c98c6000000b0034e32e18a21so6660169wme.9
+        b=mOOrFPaB7NK12JbqA1RJfp4LAxPp0l/w5M2vNCK6geVLim9Soq7V9HanQcm8JWGJI
+         RC6PtM4g1WvaYye9u8IXqUD25JAhN5+h+nQoZXF4+iiLu8ZTkKs5mALuKy71Afqgfe
+         XXRbFnePZn0kpcnIOh1nqP43HwBq9zL+GNr42OR5LE28t3lw8zY/Oa2/m7DJuWifzK
+         tydE7dV4nYfjdbIZ7p61+Q3tc51AvYtN7/km+18e3jdYb6w96iKYpkcF66X2G9MWr8
+         hCw3IDWD57zUpC+ScQOZ9B47UVjMZeu/h22bSAze51NCHoHqeXWbiqoOgrunIpCXVV
+         bDqw+AS9IvFTw==
+Received: by mail-wm1-f70.google.com with SMTP id m127-20020a1ca385000000b0034e992a94a8so1471595wme.5
         for <linux-samsung-soc@vger.kernel.org>; Sun, 23 Jan 2022 03:16:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y357G77gKMHlTfzCL6+HEz+/UzqdnZT/McDbXpsW3BM=;
-        b=YMvVr6QJ15xbm4Znd8BNGg6EZF6DwO6DZUJ7/4Hv7Ro9EUAwqFCjdQRP6JlbXGfeQm
-         V7BgDWKHmCo8cx1LBtpjK+NJowJjYDCXpGGXnkybANHmuGk2kZ6LAxGAXg4kdBT4z93m
-         iYAs1A8R4vEOCXVHE+/nqBxwKvN2LQBpZNeqmVwW5AAtk7c8Tqc1+ht70kE5oF4NddBh
-         0bXhYxmAqPapPfUfHnXfxRCZFG+1GRhtf9anwdAbMhCPTQofbNzAKxkeRhgxtWCwQoXS
-         MIrTpRavHen0XBbWLBX826zoX3tJuJ6c5LFeg7DdOCsDaa2fn+vZ7dDL1OPazIdhL+35
-         wE9g==
-X-Gm-Message-State: AOAM532gdz95sx+r7xXsAEsSmFAG+EWpZrfbqybeYiZaMTGebVqEni87
-        HMEYWqFy3fByna0br9P1sUBK5o+l04bCO6kMjxao/tD9T/qKr1JVRI5JkDsLm2mvjlfbCREGRDp
-        hw/qL9iXuGz7+XF3sMqsva7RyesMKooT4OGbVftlPsmTkI5Eb
-X-Received: by 2002:a5d:4906:: with SMTP id x6mr10245496wrq.552.1642936617998;
-        Sun, 23 Jan 2022 03:16:57 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwb59CpOjfY8CfprDukjo6039z0OQ3gfs8X3bsvt8yvFXtOAvk66eFpeVM1qtu1DqKws8uQug==
-X-Received: by 2002:a5d:4906:: with SMTP id x6mr10245485wrq.552.1642936617866;
-        Sun, 23 Jan 2022 03:16:57 -0800 (PST)
+        bh=66G1PF8Q0lr5LRIbEYZW0Tv4PnJMOlbJQ4z7W8Ayj8M=;
+        b=hdhiZZK9VbuE0Sv7jkVeespE/l4XKnweMDz18JeYLzBbEx7Uu6E+qSMc+ZRTgy8JHE
+         vCFL7GplsKNB6U5fZ18WiDX/3JtcnvxM/WgLLDqDuTK2OjsPms80xSTCboYzvyCQSC5z
+         VeKT3oceF/SfADK/UhXxxXmdKiZThi26aNJtoBHjZb9wQDKKb+HBa9H5T6upCPPA2aRA
+         8at9cOEeZ7rWzEtOdw8UQp6tD10zTTTqUSQoAvXjRKW2PXZ/xLe+ZmOnYIuIbc5zcdTB
+         Xi/PLOa4pZZt1NZpKsFKAWC3ymifdd3sJqF67BG0B2Do/JIYqxvXr7M+NjpqOmDuDrOQ
+         YAeQ==
+X-Gm-Message-State: AOAM531tQQgs021e9AiEOfY3Ly9hadaOzdFz7OPpY5wd+D+DbzI6LjEG
+        gzLFuM1kDquLvXjxjUZ0dJWgNGcITS/Rxa/Er7H+FdDQrqBPoC6TOdm5lncCwjlp5+oEiqWPXJV
+        7l/PIp5V4m4MJUh2PQiatoY4Z2pNBDcHClZRUDM8lBgjcoQ51
+X-Received: by 2002:a7b:c4da:: with SMTP id g26mr7689624wmk.191.1642936619325;
+        Sun, 23 Jan 2022 03:16:59 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyEem2eKrggZGWq3zOh3tVCEin/9AMSkAxLad8GyWyumd6SS0jXIESrFaTiCvb+wPkBmGYPsw==
+X-Received: by 2002:a7b:c4da:: with SMTP id g26mr7689615wmk.191.1642936619200;
+        Sun, 23 Jan 2022 03:16:59 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id m5sm10143729wms.4.2022.01.23.03.16.56
+        by smtp.gmail.com with ESMTPSA id m5sm10143729wms.4.2022.01.23.03.16.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jan 2022 03:16:57 -0800 (PST)
+        Sun, 23 Jan 2022 03:16:58 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -61,9 +61,9 @@ To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 08/12] ARM: dts: exynos: add USB DWC3 supplies to Chromebook Peach Pi
-Date:   Sun, 23 Jan 2022 12:16:40 +0100
-Message-Id: <20220123111644.25540-9-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 09/12] ARM: dts: exynos: add USB DWC3 supplies to SMDK5420
+Date:   Sun, 23 Jan 2022 12:16:41 +0100
+Message-Id: <20220123111644.25540-10-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220123111644.25540-1-krzysztof.kozlowski@canonical.com>
 References: <20220123111644.25540-1-krzysztof.kozlowski@canonical.com>
@@ -73,35 +73,35 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add required voltage regulators for USB DWC3 block on Exynos5800
-Chromebook Peach Pi board.  Due to lack of board schematics, use same
-regulators as on Odroid XU board (using same MAX77802 PMIC).
+Add required voltage regulators for USB DWC3 block on Exynos5420
+SMDK5420 board.  Due to lack of board schematics, use same
+regulators as on ArndaleOcta board.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm/boot/dts/exynos5800-peach-pi.dts | 10 ++++++++++
+ arch/arm/boot/dts/exynos5420-smdk5420.dts | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/boot/dts/exynos5800-peach-pi.dts b/arch/arm/boot/dts/exynos5800-peach-pi.dts
-index 77013ee586f8..fd6f80a9c64e 100644
---- a/arch/arm/boot/dts/exynos5800-peach-pi.dts
-+++ b/arch/arm/boot/dts/exynos5800-peach-pi.dts
-@@ -1072,6 +1072,16 @@ &tmu_gpu {
- 	vtmu-supply = <&ldo10_reg>;
+diff --git a/arch/arm/boot/dts/exynos5420-smdk5420.dts b/arch/arm/boot/dts/exynos5420-smdk5420.dts
+index a4f0e3ffedbd..69ce3e430863 100644
+--- a/arch/arm/boot/dts/exynos5420-smdk5420.dts
++++ b/arch/arm/boot/dts/exynos5420-smdk5420.dts
+@@ -407,6 +407,16 @@ &rtc {
+ 	clock-names = "rtc", "rtc_src";
  };
  
 +&usbdrd3_0 {
-+	vdd10-supply = <&ldo15_reg>;
-+	vdd33-supply = <&ldo12_reg>;
++	vdd10-supply = <&ldo11_reg>;
++	vdd33-supply = <&ldo9_reg>;
 +};
 +
 +&usbdrd3_1 {
-+	vdd10-supply = <&ldo15_reg>;
-+	vdd33-supply = <&ldo12_reg>;
++	vdd10-supply = <&ldo11_reg>;
++	vdd33-supply = <&ldo9_reg>;
 +};
 +
- &usbdrd_dwc3_0 {
- 	dr_mode = "host";
+ &usbdrd_phy0 {
+ 	vbus-supply = <&usb300_vbus_reg>;
  };
 -- 
 2.32.0
