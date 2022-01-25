@@ -2,89 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CE3949B1E2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 11:45:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0843F49B500
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 14:26:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356578AbiAYKbS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jan 2022 05:31:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345774AbiAYKVV (ORCPT
+        id S1576741AbiAYNZv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jan 2022 08:25:51 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:44334
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1385615AbiAYNWG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jan 2022 05:21:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 822F2C061776;
-        Tue, 25 Jan 2022 02:21:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 25 Jan 2022 08:22:06 -0500
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3FC66B8174B;
-        Tue, 25 Jan 2022 10:21:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E48C340E0;
-        Tue, 25 Jan 2022 10:21:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643106079;
-        bh=qW9cVwE+5dH0IFpPL717Qa3dRXeY9HY/mvR982mEXgg=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=V9GfVxyUJnASYIat8Btt3+WCQtL+zj5T+rpF3/pF/WJoqaf9VtgJZgm3xsddJ3fA+
-         Xmwe3uY4NuYHM3FFkQAK1Q6aoQNtFsbxFXkgSp9Z/yTEIw+Mtuo96BLQGYFoqLoSkZ
-         EZhma67xO+X5p3KrQwzMLgV7w4UpjcEEZ8DkyLjs2S+3L3338t52EMlMx5t2zJzzdy
-         Mj1k0rqW1OCjCOhxqTs035xtGm4ZHpcw4fy7QEidogFRaHd6jS+DPOejFTlpSf46FR
-         E/rL4UgbF3Ag1kL3sSQocX6TiQTFO4y71Tu+fN2hjATeClF8kADjPabP5gtUPjFzPA
-         +isGN27WsBORg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>, linux-spi@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-In-Reply-To: <20220119000914.192553-1-linus.walleij@linaro.org>
-References: <20220119000914.192553-1-linus.walleij@linaro.org>
-Subject: Re: [PATCH] spi: s3c24xx: Convert to GPIO descriptors
-Message-Id: <164310607765.75071.12847134364885643457.b4-ty@kernel.org>
-Date:   Tue, 25 Jan 2022 10:21:17 +0000
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 98A453F1D0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 13:21:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1643116917;
+        bh=GqSRGOwqotf00GRrIVq/CrHZH/1UrUmdSDaTt40VOAM=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=RxvTvrt9J6PTfVSgqnRqTa2EspPH7ifKJfqh7tMrQOzSlT7JKm+MwR3tZCtw7petx
+         Az1z+SlTDyYirgQxoWb4lw33C7D5dwn4BPWlIdaKX4Do278vKrGY5HsJ8CX41wWdNS
+         siZTF30+vbAJkUZTehKHr7f2faLVtCJiT0+Tdip1UbWYw/gVgSCzm2iUh5BpsYC4XW
+         ImZ2JcUrJrQi1w22C1kkIhsTXxwrHEgJ838SWXWeS8WAim/DXGaXwmg8EObdLkxCpm
+         +rHiXjA+9Pmi6uuZBElBlFmoDStJPtr/Bqb92Li2vj1FU2cfEVdW6DdV3uTjR87Fbv
+         cpMB7xmN4nJTw==
+Received: by mail-wr1-f69.google.com with SMTP id s25-20020adfa299000000b001d8d032255fso3027868wra.14
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 05:21:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GqSRGOwqotf00GRrIVq/CrHZH/1UrUmdSDaTt40VOAM=;
+        b=2ULROhqq7Zk7DNFr2+W2ae91LleFVECYbp1jImLoWzrdqK36flMC3fX3O/1Puwb5v8
+         QZN84u4NvkOxhOiLS7bX5UsYCCfEL9fu1Qf3Jvx3lWWkAnUK9KnbhQ0K4LgICU02WU4s
+         /O9SOe8iinRa4CMe+Uqa7lsGD6uhdp/BJinTQyCCsaiaZzYHzxQX0/1RNSiQgWxeiIAC
+         Ww4K8xFU7PTdSpsZnCkMTI4gS+4DoNZLEsRQF7sr7VjBBEVkd4Hb+4DwavPQL5mS6KAY
+         5ksQLUmz0EwunXJbuy9a16eWzDhgJA9MVrsAUwarQJkDpfab9MdCqzjGkC1rqVGPmJLl
+         bJFw==
+X-Gm-Message-State: AOAM531MDSUW1y3P/KoNjwhRqdGGbBvMAeYIGW+LWfO7305lrMMlv//x
+        EPfOdEIduQ9wfClkqdk6lGwh1P0T1d6lxn3irC82M5ElvpC5tBGXAQf16K1AlXYmrdm5uY/dT8L
+        9DmPlZSPqV6Hqn1Ri9HWqmzGNACcUKCl+LCxdwW94df4QZhnq
+X-Received: by 2002:adf:f14a:: with SMTP id y10mr17659167wro.145.1643116915689;
+        Tue, 25 Jan 2022 05:21:55 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxQEDd2I8GeJEKiaLo3Ns9QBAcA+Cpew7nwWs/FsWRHpr/3jD2rwboT4OiDAN2ucloeNLoOOg==
+X-Received: by 2002:adf:f14a:: with SMTP id y10mr17659159wro.145.1643116915523;
+        Tue, 25 Jan 2022 05:21:55 -0800 (PST)
+Received: from [192.168.0.59] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
+        by smtp.gmail.com with ESMTPSA id t1sm3607494wre.45.2022.01.25.05.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jan 2022 05:21:54 -0800 (PST)
+Message-ID: <d79e19e8-e15d-fe09-6ebc-c1f8aaacfc00@canonical.com>
+Date:   Tue, 25 Jan 2022 14:21:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [GIT PULL] arm64: dts: samsung: Second pull for v5.17
+Content-Language: en-US
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
+        arm-soc <arm@kernel.org>, SoC Team <soc@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+References: <20211227112959.7325-1-krzysztof.kozlowski@canonical.com>
+ <CAPLW+4n-1H5Yu3wQaus-UJ_VW_TjHrNUHaPCGCMURXg8EqxjyA@mail.gmail.com>
+ <CAK8P3a1ou-ZdrXN0MHQoJ+gGbvhXT-e2qt96_f9M8VwrdX0pAg@mail.gmail.com>
+ <CAOesGMgF3S5_XsWjEqq=-zfYXwOWFpFNA6afL81wceRUA_0FeQ@mail.gmail.com>
+ <CAPLW+4k8=ymx56R7bKOt8kMVG_uUgrTsCkVd5wiY_rkYq8dYbQ@mail.gmail.com>
+ <72a50afd-df9f-ceb3-898e-070d70dc0221@canonical.com>
+ <CAPLW+4=xaHA2a=-F4ikuUPDpoO8Waj7qrrfpgkift1aMi_hU+g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <CAPLW+4=xaHA2a=-F4ikuUPDpoO8Waj7qrrfpgkift1aMi_hU+g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, 19 Jan 2022 01:09:14 +0100, Linus Walleij wrote:
-> This driver has a bunch of custom oldstyle GPIO number-passing
-> fields and a custom set-up callback.
+On 24/01/2022 14:50, Sam Protsenko wrote:
+> On Sun, 23 Jan 2022 at 21:27, Krzysztof Kozlowski
+> <krzysztof.kozlowski@canonical.com> wrote:
+>>
+>> On 22/01/2022 13:38, Sam Protsenko wrote:
+>>> On Wed, 19 Jan 2022 at 18:53, Olof Johansson <olof@lixom.net> wrote:
+>>>>
+>>>> On Wed, Jan 19, 2022 at 8:07 AM Arnd Bergmann <arnd@arndb.de> wrote:
+>>>>>
+>>>>> On Wed, Jan 19, 2022 at 4:11 PM Sam Protsenko
+>>>>> <semen.protsenko@linaro.org> wrote:
+>>>>>> On Mon, 27 Dec 2021 at 13:30, Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> wrote:
+>>>>>>
+>>>>>> Hi Olof, Arnd,
+>>>>>>
+>>>>>> Just want to check if it's possible for those patches to be applied in
+>>>>>> v5.17? Sorry for the noise, but that's important to me.
+>>>>>
+>>>>> I can see that Olof merged merged this into the "arm/late" branch in
+>>>>> the soc tree,
+>>>>> so I assume he still plans to send it in the next few days.
+>>>>
+>>>> Yep, will be sent up today most likely.
+>>>>
+>>>
+>>> Thanks for detailed answer! Glad to hear it's still a possibility.
+>>> Please let me know if you need any actions on my side (like rebasing,
+>>> etc).
+>>>
+>>>>> With the timing over Christmas, I sent out the large bulk of the
+>>>>> contents (anything
+>>>>> I merged before Dec 23) last year, and Linus already merged it, the rest ended
+>>>>> up in the "late" branch.
+>>>>>
+>>>>> As usual, there is no guarantee that late changes make it in, but I have seen
+>>>>> no indication of any problems so far.
+>>>>
+>>>> Correct. Been sitting on it for a while in case there were fixes
+>>>> coming in for the first pieces that got merged, but in traditional
+>>>> fashion I'm guessing those will start to show up a few days after the
+>>>> late branch gets merged. :)
+>>
+>> Olof,
+>> v5.17-rc1 came earlier, so I see this part did not make into it. Is
+>> there a chance for a past-rc1 pull to Linus with it?
+>>
+>> Sam,
+>> Anyway the patches wont' get lost (you mentioned such worry in previous
+>> email to me). They might just need to wait. Unfortunately if patch,
+>> especially with new feature, is coming in the end of cycle, there is a
+>> risk it won't make it. The patches have to wait a few days in my trees
+>> before I send them to Arnd/Olof, so if the patch is coming after rc6, I
+>> can push it to Arnd/Olof around rc7, you see there is very little time.
+>>
 > 
-> The good thing is: nothing in the kernel is using it.
-> 
-> Convert the driver to use GPIO descriptors with a SPI_MASTER_GPIO_SS
-> flag so that the local CS callback also get invoked as the hardware
-> needs this.
-> 
-> [...]
+> Should I send the patch fixing hard-coded clock numbers though? I
+> remember you said I should send it once -rc1 is out. But now that dts
+> patches are not merged in mainline, I'm not sure it can still be
+> applied?
 
-Applied to
+Yeah, please wait.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+We have few patches following that pull-request, so it will be actually
+easier not to merge it to soc-tree but resend soon with the follow-ups.
 
-Thanks!
 
-[1/1] spi: s3c24xx: Convert to GPIO descriptors
-      commit: 7f2a3cf4e6077a1525092f114be7819e505773a1
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+Krzysztof
