@@ -2,71 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA36F49B999
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 18:06:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF4E849B9B7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 18:09:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242621AbiAYRFi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jan 2022 12:05:38 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:50812
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1378812AbiAYRDQ (ORCPT
+        id S231189AbiAYRIx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jan 2022 12:08:53 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:54546
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239552AbiAYRFe (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jan 2022 12:03:16 -0500
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
+        Tue, 25 Jan 2022 12:05:34 -0500
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 5311B40049
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 17:03:14 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A7D033F1C6
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 17:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1643130194;
-        bh=Khs15J5Mbq9aHaNEf8S9OePqypIZSb0dV1fDUx3j1zY=;
+        s=20210705; t=1643130332;
+        bh=dSvKZ8AHHeBFaUwfnKaz2QA3fzKNbqhnfNH57EfO12U=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version:Content-Type;
-        b=K5fG8gmRWFM6AwGXI9XORP2/4TCu0+fB5XpDcuqryZPLdzr+IgL2lgFlV/b8Tg3us
-         rwkI7xBAZLHQ8y+XgzB97sLsqgWfYB+V2xdAT1Fj5UQ2hd1xIT6JBdslruSrEc1OHB
-         bkXvLxdVNXtayptwJ5Qy1ZNT1m8+5vrBE6Oqqt7MyuZxmnIqCiGljhdVZhiEIPa5hD
-         AV0/l8d2b74/aDTvWvXWxSY4sePOjNjxpYwplbADLbmjyevZhKoz05rFIN+qfTn8Cq
-         Y7hLCk+9jzFwsUIQBhmUkP6A9N+15IJe7YZMaGP7Ojet1QpJ1ycQT2m7YoUuA1l9ce
-         3pjb9AJx5RlQw==
-Received: by mail-wr1-f70.google.com with SMTP id a11-20020adffb8b000000b001a0b0f4afe9so3332847wrr.13
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 09:03:14 -0800 (PST)
+        b=BOz5CwyW9SZaVU0hdxBLIug4WGNw7Zp8QeR7Qed1cjWli1KLDTH62t/hyQwE6s/sR
+         Rsz1a5dGdUHm6XTBoIbXiXMtYx8KIGS+w9GjfK4+d6HdKTns5PL+wYQHiIUV+160ZD
+         Y5FvpIyeSXwaj+L5kHWhS//bxTz6oW2we95h/jJLBZd5PbSqR9JE/C8GasI4WgqXVX
+         R2P3M3dRh86jjyZ8b43N8XyNniIvU+VdFh2B2FZP7JIHnYg3N8N7fRNA0XUWGAgSWM
+         UGvfQEKp1Ppo49x8sZLDUu12IN2ftn2aRJYoRXRURSg3W76XwlNlhuxCAVqxd08H/l
+         ktDejOOs/RM+g==
+Received: by mail-wm1-f72.google.com with SMTP id n19-20020a05600c501300b0034d7b01ae4dso741858wmr.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 09:05:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Khs15J5Mbq9aHaNEf8S9OePqypIZSb0dV1fDUx3j1zY=;
-        b=CEHNdfyfRCXUINBbfVwyWt2UOK585qBPLwnoZ16a3Re31Pl7K9CpnG/n/KeSdF3djJ
-         ChVO7VYmA3dW84dXbplJBI4Zlxs/vJxWtmBH29JCEgfLPQR4CBRMcPyKNgeQmsZw7cLb
-         EsmBpYH4xk83QF/lhF8/jhWgeLm3S8ecrmgyYVtF3I8IwkgGH1slsnl/BB6zU0IE8G5w
-         Kmm286qPuZvjbMV67ghd+7S5wUQM2ULcYJXdboB5+3DbxT2CBjzQdEHuLVA9X8LX2BS/
-         /zES90LHezCrvNiUU8Ng5i7sl4qTRpvJev5FdBCyJVxmnsPxJYAsDNLWoqJi5Z82wfPT
-         awYQ==
-X-Gm-Message-State: AOAM532c60bHO4QIlNXwmYH8PdIfLU3Vty7HHm2edCJiMQkcUVMUHbon
-        mV6D8s5PGvTG0U/KQhEqBsMv0vsanuDJuPl3dKzOGWIgvfgQHT8MLOWMZhkzcF5g0s0r98N2KZJ
-        xHu8cH3tyl+x58A/pNhmdf9QtiWwb0EypxotbEyyTNaH2m6wD
-X-Received: by 2002:a5d:4343:: with SMTP id u3mr18313344wrr.504.1643130192796;
-        Tue, 25 Jan 2022 09:03:12 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyG9zjm9t7btrydRtRdnKDOUoYdpl+wsZCbJPwqP/WbdmBoRfkoAn21BZz2+hcP67O92cBkLw==
-X-Received: by 2002:a5d:4343:: with SMTP id u3mr18313323wrr.504.1643130192571;
-        Tue, 25 Jan 2022 09:03:12 -0800 (PST)
+        bh=dSvKZ8AHHeBFaUwfnKaz2QA3fzKNbqhnfNH57EfO12U=;
+        b=bSTCqXbq2FRcA7eIsTItTxUp1QUjrhaaQ40oOOwUeCoh87PYN0953A+uIAxh7OtSZs
+         SJQ4cRhHgrlzbCG0LXOvsy4cnTRFf79v7l8Pk9BSQtZ4rntnB0Ad6RQ27xgw+ZcZJ1zN
+         lCih+L7z1yInSB7Py9gASHCZjMytWHf68uzmre+C5D0dVIzf/k85kkBUmSq46ZCx8pQJ
+         moF/mV45AH7ndpYtGJE2kvexqk6+q/1MykVxLagNb3bzakXbJV+WGE1En7xFi/rXzKOE
+         IOd2w5ZUZ3toU7vZk4UqiTGqJuq76o1JiZxtd6EMgTbS5hzwsdL3/mSQDs8WNcCOS3Ob
+         RvMw==
+X-Gm-Message-State: AOAM533n+obIEvsuqNKUXqSFVSlOTGRpHzT3RicJSHaXS4aroG2cmdWd
+        Ji5tGGJeUX8U4R3oBpJi+TfdlAAQuNuNnY0EBC8JWif/q0EkKX7xcBRJPLctsdOyhNReo62Soxa
+        +AnQch8Fc5kqj+uZxzZOubOZbgKINHeqlq61z89znVgzF/wrI
+X-Received: by 2002:a1c:c915:: with SMTP id f21mr3793711wmb.39.1643130332351;
+        Tue, 25 Jan 2022 09:05:32 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJy7hsKMSTS+c3tg8hbEizs0VHVpl83/TDWW7Ey8qOCr5k/EuXQApytnig+iht+MKtj+BSx35g==
+X-Received: by 2002:a1c:c915:: with SMTP id f21mr3793698wmb.39.1643130332208;
+        Tue, 25 Jan 2022 09:05:32 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id i3sm17162548wru.33.2022.01.25.09.03.11
+        by smtp.gmail.com with ESMTPSA id o15sm1082377wms.9.2022.01.25.09.05.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 09:03:11 -0800 (PST)
+        Tue, 25 Jan 2022 09:05:31 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     linux-samsung-soc@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org,
+To:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        linux-pm@vger.kernel.org, Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 00/12] usb: dt-bindings: samsung: convert to dtschema (subset)
-Date:   Tue, 25 Jan 2022 18:02:30 +0100
-Message-Id: <164313008959.78836.16134870344795249201.b4-ty@canonical.com>
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/3] ARM: dts: exynos: drop old thermal properties from Exynos4210
+Date:   Tue, 25 Jan 2022 18:04:54 +0100
+Message-Id: <164313029072.79782.14492454091056440886.b4-ty@canonical.com>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220123111644.25540-1-krzysztof.kozlowski@canonical.com>
-References: <20220123111644.25540-1-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220122132554.65192-1-krzysztof.kozlowski@canonical.com>
+References: <20220122132554.65192-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -74,39 +77,20 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 23 Jan 2022 12:16:32 +0100, Krzysztof Kozlowski wrote:
-> Dependencies
-> ============
-> None.
-> 
-> The DTS patches are independent and I will take them via Samsung SoC tree.
-> I am including them here just so automatic robot checks won't complain about
-> DTS differences against newly dtschema.
+On Sat, 22 Jan 2022 14:25:52 +0100, Krzysztof Kozlowski wrote:
+> The samsung,tmu_gain and samsung,tmu_reference_voltage properties of
+> Exynos Thermal Management Unit driver are not used since April 2018.
+> They were removed with commit fccfe0993b5d ("thermal: exynos: remove
+> parsing of samsung,tmu_gain property") and commit 61020d189dbc
+> ("thermal: exynos: remove parsing of samsung, tmu_reference_voltage
+> property"), so drop them also from Exynos4210 DTS.
 > 
 > [...]
 
-Applied subset, thanks!
+Applied, thanks!
 
-[01/12] arm64: dts: exynos: add USB DWC3 supplies to Espresso board
-        commit: 31c33503fdb3965d6aaf0db4a8c42e7d8cef1dff
-[02/12] ARM: dts: exynos: add USB DWC3 supplies to Arndale
-        commit: 52d53d937da8889964c60216a0333cb19fe0812d
-[03/12] ARM: dts: exynos: add USB DWC3 supplies to SMDK5250
-        commit: ebbb07b8d349fc2eccb67780850d2d1bbfc918d6
-[04/12] ARM: dts: exynos: add USB DWC3 supplies to Chromebook Snow
-        commit: 9745be7b5a3be39a00e6bbda3305e2d789ee4082
-[05/12] ARM: dts: exynos: add USB DWC3 supplies to Chromebook Spring
-        commit: 111ea2d6dd217684db4e7a97a2bda3bf14734427
-[06/12] ARM: dts: exynos: add USB DWC3 supplies to ArndaleOcta
-        commit: 0a14272479627bb9388ece3b0ebac72a3928062d
-[07/12] ARM: dts: exynos: add USB DWC3 supplies to Chromebook Peach Pit
-        commit: 7adf978462dadc41ea7d4138de53bc9a15922191
-[08/12] ARM: dts: exynos: add USB DWC3 supplies to Chromebook Peach Pi
-        commit: 72477416ac12e88384a96575c5f2e4bd7ac8feeb
-[09/12] ARM: dts: exynos: add USB DWC3 supplies to SMDK5420
-        commit: c441d2d73107fcb45c0affb345fe6b9bc3fd3bab
-[10/12] ARM: dts: exynos: add fake USB DWC3 supplies to SMDK5410
-        commit: 4043114504cc05d0a7ca2a061838699b500599cd
+[1/3] ARM: dts: exynos: drop old thermal properties from Exynos4210
+      commit: e20bd06fc421fba4099be51d3f56b9b1741b499b
 
 Best regards,
 -- 
