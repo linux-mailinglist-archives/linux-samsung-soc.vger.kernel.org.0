@@ -2,73 +2,53 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C388149AD11
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 08:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E075A49AE10
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 09:35:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442246AbiAYHGn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jan 2022 02:06:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392070AbiAYHDK (ORCPT
+        id S1352489AbiAYIfq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jan 2022 03:35:46 -0500
+Received: from bl19-211-117.dsl.telepac.pt ([2.80.211.117]:51588 "EHLO
+        OLDBLACK.localhost" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1353619AbiAYIbM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jan 2022 02:03:10 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C44C02B878
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Jan 2022 21:41:52 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id y11-20020a0568302a0b00b0059a54d66106so25360954otu.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Jan 2022 21:41:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=omchJdYJcVvbnbx3iWDsqNfzfvgFxRY5UV8d5JFHFd0Qxp4Fs99oOTWbnsLJvmkGLO
-         KJ9h0aIZipzZCxLYUC1EbKJQXjsTnrYD4skWPu5L6KEa7WwksJ/DgfAKn2I//FvNz16e
-         yvRSMjBJIkfJOiN7QosmIFzfX6t0OymUxXq/kzoldmt5Tk4SMXy3poAlzZfnj4tLqkCO
-         r1uVZjBjIcfKcTHUm4yIRwmNGijXGA0OAhFYRol/6hiAAZJ37V1K6a3bLM+XpGdFXGos
-         hPiIHyT9XSW8aiVFGjIdHRgRcnWLHkX21ZW87GvspRwlXlL9xuI6dXFZXWxBZnRTJWgA
-         Bk5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=KeMi8W+p20zdR41YZoRj2EapY7imNsLYkAgQIQsIzqY=;
-        b=sQQZfoOwx0qwjCtriBFupKilcgP1dDaB+zhMEEmNmNj0O3BHFeakmud+Nft3lu9S9h
-         go7z3sdnXFs8TLt1JvzMwUVDWWt6UdggBxDiuRJhH+maTGBZpwFWM6aRMf8ygyOm0DyN
-         kYfMiP9n/kdz25WAUhm+KgA7paPS9cZVufmY6hyaahXY5Hur/VJ/UVj+YoT+IOECeT6W
-         XMdhku+ik8M4MO3Ggk3V1aXQloPRF7gvGuSGcc/VaB0znzv0TgVoOdUTDhXQvaPr7YyJ
-         VhanlmhaOGzONy64grV7MBERrHJhZVPZ76ARDMDGTdFev3TOx6Fv1BiJoTqdSswCr/EZ
-         B9gA==
-X-Gm-Message-State: AOAM530ZMiOTa0g2fCfPAn9E1uokrXz2qyJPORhDMyoeULrOsyWEBJpr
-        2zlQf9K7e1ADA7SYWAAHk0ss1+FCjxUITuvdjZgFNOgDHs4=
-X-Google-Smtp-Source: ABdhPJwywiwyTtOCXfovmJIEM7Vqt+PFDzMW3tzxRj90P3fJDPhIlV2jOd/vI9WPw47eCab8Z7S4n4qldrLRD5Ly+Sc=
-X-Received: by 2002:a25:d783:: with SMTP id o125mr27594671ybg.710.1643089301256;
- Mon, 24 Jan 2022 21:41:41 -0800 (PST)
+        Tue, 25 Jan 2022 03:31:12 -0500
+Received: from Omwyizwcc ([127.0.0.1]) by localhost with
+ MailEnable ESMTP; Tue, 25 Jan 2022 08:31:09 +0000
+Message-ID: <4C9751A0384AA009BAA996C406C549C7@Omwyizwcc>
+From:   <fatima.rosary.pt@gmail.com>
+To:     <linux-samsung-soc@vger.kernel.org>
+Subject: The Miraculous Rosary of Fatima
+Date:   Tue, 25 Jan 2022 08:31:09 -0000
 MIME-Version: 1.0
-Received: by 2002:a05:7000:ad9d:0:0:0:0 with HTTP; Mon, 24 Jan 2022 21:41:40
- -0800 (PST)
-Reply-To: danielseyba@yahoo.com
-From:   Seyba Daniel <mrssuzaramaling19@gmail.com>
-Date:   Tue, 25 Jan 2022 06:41:40 +0100
-Message-ID: <CAKN-9XgQjuMspSnu-F01fv+Bgr6eZEygpsR3pZ-5cF=m78av-Q@mail.gmail.com>
-Subject: Hello,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type:   text/plain; charset=US-ASCII;
+        format=flowed   reply-type=original
+Content-Transfer-Encoding: 7BIT
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5843
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello,
+www.fatimarosarys.com
 
-I am so sorry contacting you in this means especially when we have never
-met before. I urgently seek your service to represent me in investing in
-your region / country and you will be rewarded for your service without
-affecting your present job with very little time invested in it.
+Dear Rosary Prayer
 
-My interest is in buying real estate, private schools or companies with
-potentials for rapid growth in long terms.
+I have been blessed with some amazing help in my life and in gratitude to Our Lady of Fatima, decided a few years ago to give away free of charge rosaries which I make here in Fatima from natural seeds collected in town. 
 
-So please confirm interest by responding back.
+It would be an honor to send you a Rosary if you so desire and all I ask in return is that you include me in your prayers. 
 
-My dearest regards
+If you wish to take a picture holding the rosary and a note with the City and Country where the Rosary reached I would also appreciate it but not required.
 
-Seyba Daniel
+Send me your request with the full address where I can ship to and I will be pleased to do so and thank you for helping me spread the Rosary.
+
+See recent newspaper article: https://www.noticiasdefatima.pt/sociedade/joe-guerra-nao-ha-santo-sem-passado
+
+DONATIONS - If you wish to help out in the production and delivery of the rosaries worldwide with any amount you can do it via Paypal to JSGUERRA7@GMAIL.COM.
+
+Joe P Guerra
+
++351 926 606 165
+Personal Email: jsguerra7@gmail.com
+Campaign email: fatimarosary@yahoo.com
