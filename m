@@ -2,75 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03C4349BA1A
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 18:22:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5C649B9E9
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Jan 2022 18:16:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346408AbiAYRTI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 25 Jan 2022 12:19:08 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:55150
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1343708AbiAYRNe (ORCPT
+        id S1383421AbiAYRPc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 25 Jan 2022 12:15:32 -0500
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:51448
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241219AbiAYRNa (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 25 Jan 2022 12:13:34 -0500
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
+        Tue, 25 Jan 2022 12:13:30 -0500
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id DF3873F203
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 17:11:52 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 440A040054
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 17:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1643130712;
-        bh=g7yYrXHImPhCQwOj0UskOn25n3xq1OGmRzWasb1bHQQ=;
+        s=20210705; t=1643130714;
+        bh=7TxHx9Az3jP4GXjS7R/xWiSSbyyuPYk/buescVNcwdc=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version:Content-Type;
-        b=hkdgSmAcmhMivsu2URlDkCXI8f63RavIJYIzrssxpjF1rnioTXzejmjLjtnZ6qPvf
-         xnqUJS/AVKxZxn6/OSmfufnnU2veX8jPodPaXTf9ftVnQp2m6EEp2ou0cln9sW59ya
-         fBlTS9I7bf+2r+3JVU+EiJUkjRQwMyt1RnPVTxQ4botx5jnQ3eZfD4XFuzkDHit2GX
-         tP9CbpmovQtBDPJJT26Ys9nZM1YsNtQ5N3VyQrdXOL/qsyCou2qJyhxqoWmz3x2Faj
-         KFOu3mEZBYE8ndQEnlkux4R1GB+8PrxYA4d37Sucns4ZTGTfGq4VZPfaIBA1h3edA7
-         wuy2KPSKxrllA==
-Received: by mail-wr1-f70.google.com with SMTP id g6-20020adfbc86000000b001a2d62be244so3335049wrh.23
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 09:11:52 -0800 (PST)
+        b=YnoP8Uc27tQitB3oZ3Hm/Snj3o/62XM1NgL3NHYAdwIK6V8LbZ0uDdao7d25o9ra6
+         yKYjKrCu0M4+nsDtpLc01nhbzF4W3MogmDBbNzmbDhJ3qSI702Eg+JMUhJA1A0Kn86
+         9VEcTLWdswnVBaNUZ0Akl91ft2jS9VYzffWZeJa+urzG62x7Jo2SkqEdYUBCEZyy7F
+         TaOzDBndkVzSoeObcVLI8lXx4UoILj07QJaazmPYgPnhcWA3tinSOMQN6S2ESSW6Yr
+         /Gjy7MB1aenvVzONa4DG1VQrmzvPl80RaZvgCer4TuFr7TPpRj2P7q1yXJ9fB6jwA0
+         Wb6l5ROjX7DpA==
+Received: by mail-wr1-f72.google.com with SMTP id v1-20020adfc5c1000000b001a37fd2fa2dso3367223wrg.22
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Jan 2022 09:11:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=g7yYrXHImPhCQwOj0UskOn25n3xq1OGmRzWasb1bHQQ=;
-        b=2jUeK2Za2ql4sSl0frTipYttH1gj8nYcG6uH1aiJ0WyGfvXhFj2W+va8edYakmbbwf
-         +FsrVWVCZ7cpk6pqnPXZlLzamTzmja/vtRC8u3UK8owVBjA6hpt7oAR6ATxE2GV1YhxG
-         beG0SX6kexQba9IOmwDSjj0V5XBCfv9+gDKlxgfAeyXb/0JbmEPTVoECN0l/JQVTL5DX
-         jupxtetwnaDbBpBCSHubrk7j4ELe3q+TgWXiH3hHa/vyVpmwjmYLAcck2ezor+VCGgu+
-         WZj17baYPIUwp7WbunchHaRN/UpLuuJbudMlHX300lWqENKbPP1B1vE8XoYmeJiMpbZX
-         Q8ZQ==
-X-Gm-Message-State: AOAM532rWXpV7wLjLsYm9+TA5bzUUQdzm8Ybao8IsyX56aLj2igN3ZX2
-        X1gN1zxtdnZ3wiofyeIZf9PM/aglFgH/gnSHbikMAs8u5lck9Mxzp36PQGjeQaZ3e1eDc79L/N2
-        QTyAbV/+lpj7ccoOsN14AsQdGK8oPvuT2+D82KNxLuSC0MAQy
-X-Received: by 2002:adf:e592:: with SMTP id l18mr18490655wrm.217.1643130712378;
-        Tue, 25 Jan 2022 09:11:52 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxmNgL2L2/wufXJkt0M/aVg1sqAVlqZZAkIIrefWSMS+S6RErnsKS/CAuAI5H838RBZZxTQ1g==
-X-Received: by 2002:adf:e592:: with SMTP id l18mr18490639wrm.217.1643130712199;
-        Tue, 25 Jan 2022 09:11:52 -0800 (PST)
+        bh=7TxHx9Az3jP4GXjS7R/xWiSSbyyuPYk/buescVNcwdc=;
+        b=BkQdnPG3jIRXfbN091hkxLzbUKmemz3lKGLCsGcMHObm4J8+AypSn6nogGET6gtcu7
+         2JcdfI/8mkSAGYX9bHPa42o6bi1q5vDCVYEM3zplaWKL/y3KUmcOc4WgbwJkrjGyEOWk
+         71nr8++Gzie/RWUsAKFVPgZJJBFrmBiapmCndh8bXuxGNF1EBS3m/4oe/Mtucs5MhSz3
+         aGioOgb1J4jN1ffUax34bOe3UKVp5Un8yfiBFWzzf+ORJ57G7JrF4Qc63vVlyUcq1bZh
+         C4vEcIYkpj6h75ehppTzgLiAny7IVGqrfy2nK21oJT0a6U02TiLFywvEpYypsLZc4oOk
+         ZhXw==
+X-Gm-Message-State: AOAM531av/aZYx2bOM6UcSegnmnrfI5neTm/SODzVxu1psmzgACl6Bnh
+        odCg/nwA37qZYhV9w0Zuv9tsfIfnT4kOym3E9WZg5GT6uxYtNSEcsBOUcpISodQFk12CwSnhQM0
+        MqS0YFfx8yhBXZHTqBM9o2sVc9KfvTt7H2gJvVPZ5DduNUxcp
+X-Received: by 2002:a5d:64ee:: with SMTP id g14mr20072621wri.695.1643130713832;
+        Tue, 25 Jan 2022 09:11:53 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJw8Ro1jAI/vmvdBovPg/nvWvSQlSJjY4J64VwAZ+jbuns+Jsv8ut2Ic5OsKXwBEP9xJuQdKxw==
+X-Received: by 2002:a5d:64ee:: with SMTP id g14mr20072595wri.695.1643130713542;
+        Tue, 25 Jan 2022 09:11:53 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id f8sm1185826wmg.44.2022.01.25.09.11.50
+        by smtp.gmail.com with ESMTPSA id f8sm1185826wmg.44.2022.01.25.09.11.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 09:11:51 -0800 (PST)
+        Tue, 25 Jan 2022 09:11:53 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     linux-arm-kernel@lists.infradead.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org, linux-fsd@tesla.com,
-        linus.walleij@linaro.org, olof@lixom.net, soc@kernel.org,
-        sboyd@kernel.org, linux-clk@vger.kernel.org, arnd@arndb.de,
+        Arjun K V <arjun.kv@samsung.com>, linux-fsd@tesla.com,
+        olof@lixom.net, linux-clk@vger.kernel.org,
+        Shashank Prashar <s.prashar@samsung.com>,
+        s.nawrocki@samsung.com, Sriranjani P <sriranjani.p@samsung.com>,
+        devicetree@vger.kernel.org,
+        Aswani Reddy <aswani.reddy@samsung.com>, robh+dt@kernel.org,
+        soc@kernel.org, Ajay Kumar <ajaykumar.rs@samsung.com>,
+        linus.walleij@linaro.org, sboyd@kernel.org,
+        Chandrasekar R <rcsekar@samsung.com>, arnd@arndb.de,
         linux-samsung-soc@vger.kernel.org, catalin.marinas@arm.com,
-        robh+dt@kernel.org, pankaj.dubey@samsung.com,
-        s.nawrocki@samsung.com
-Subject: Re: (subset) [PATCH v5 13/16] dt-bindings: arm: add Tesla FSD ARM SoC
-Date:   Tue, 25 Jan 2022 18:11:04 +0100
-Message-Id: <164313065136.81319.902005401446620690.b4-ty@canonical.com>
+        pankaj.dubey@samsung.com
+Subject: Re: (subset) [PATCH v5 14/16] arm64: dts: fsd: Add initial device tree support
+Date:   Tue, 25 Jan 2022 18:11:05 +0100
+Message-Id: <164313065136.81319.1739143646413756082.b4-ty@canonical.com>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220124141644.71052-14-alim.akhtar@samsung.com>
-References: <20220124141644.71052-1-alim.akhtar@samsung.com> <CGME20220124142951epcas5p255712c3a9e37b9542687587d8114bda3@epcas5p2.samsung.com> <20220124141644.71052-14-alim.akhtar@samsung.com>
+In-Reply-To: <20220124141644.71052-15-alim.akhtar@samsung.com>
+References: <20220124141644.71052-1-alim.akhtar@samsung.com> <CGME20220124142957epcas5p27ab08d4eb02fe53a03e2b36ab1d913f8@epcas5p2.samsung.com> <20220124141644.71052-15-alim.akhtar@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -78,15 +83,17 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 24 Jan 2022 19:46:41 +0530, Alim Akhtar wrote:
-> Add device tree bindings for the Tesla FSD ARM SoC.
+On Mon, 24 Jan 2022 19:46:42 +0530, Alim Akhtar wrote:
+> Add initial device tree support for "Full Self-Driving" (FSD) SoC
+> This SoC contain three clusters of four cortex-a72 CPUs and various
+> peripheral IPs.
 > 
 > 
 
 Applied, thanks!
 
-[13/16] dt-bindings: arm: add Tesla FSD ARM SoC
-        commit: d25c5eb511df3439cd91517bcbce4b274f8972b9
+[14/16] arm64: dts: fsd: Add initial device tree support
+        commit: f984dabdb5e16afb0f69b05a11ca9eeffa5b9a73
 
 Best regards,
 -- 
