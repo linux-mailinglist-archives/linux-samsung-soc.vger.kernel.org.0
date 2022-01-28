@@ -2,84 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B7AA49ED20
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 27 Jan 2022 22:11:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E704B49EF9B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Jan 2022 01:27:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344273AbiA0VLA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 27 Jan 2022 16:11:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
+        id S1345169AbiA1A1x (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 27 Jan 2022 19:27:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344220AbiA0VK7 (ORCPT
+        with ESMTP id S1344800AbiA1A1G (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 27 Jan 2022 16:10:59 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D99EC061748
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jan 2022 13:10:59 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id o10so3870011qkg.0
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jan 2022 13:10:59 -0800 (PST)
+        Thu, 27 Jan 2022 19:27:06 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8B7C061768
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jan 2022 16:27:06 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id g14so13658294ybs.8
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 27 Jan 2022 16:27:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=wXM0hly6tyNlZq07rMipvtfpnu3wRqtV0B2JSV05g3E=;
-        b=m0D8ivz9PDCDCKh/arptMpR3/ao+LhFd+WDbL0Ndw6mZAYZf1UgxGLzVj40s+AmZjb
-         DuEwjd7NT9LFwA9OjKx7vr7puLYpS6zkJNbh+1BfuQgx4db+dU06Jgc7C75K093Hwjn/
-         9mCc5rYI5j3y1VvMx9vpxL5dad+OafMT9QhIQgFRN9dvv+QgByQ7o1yzKGSP02L54Znm
-         q7FBXWGkelfiR3xpWnnkdKDqg2UlG70uCnsM1s4SP7cRlEb+IJNQAjeVKHpZy42mZonq
-         RnHAdJAaDrxUHvlQWr6CsD5rnkBvpJUkcJOYzRgUFr/Bb7DCHALpPY9Ux9K4Rjywr0lt
-         YgYA==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qdRDdfOMifbhNPhUjcrVIXglRFajzLbYO5C7vWkVOyI=;
+        b=pD42ABev/Zn+R/XfzVP+ywZUI5H1OuPJgjVMBlOM6pV+3pAC8QhOwRFY2gcAtGyLnS
+         ze/scWagZzi82n1LqGgmPxwdzbprK3szK5Z4gxbs5VTnccJP9edxP5EeIjzy5Xic8syo
+         VsrLdU9IoTXUb9M3Q3trjYYJFJr+rZ9UzkU3+v95nOcqP06hdKa/cN3uhSLjUyvP4051
+         cRYxVfLbUkLGzUs5JzHjiCY207caezP50NOEl/ZrhzUuaQETgOK0oOcTZ04NzCz3voYp
+         Er108koNs0Gn/HUECo2MWEpY/cZRa5vKYxOdy0B4QEDNIX7RmticVpDKSRs2ktrFd3QB
+         M3Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=wXM0hly6tyNlZq07rMipvtfpnu3wRqtV0B2JSV05g3E=;
-        b=57wb9NJvQwVq5fvIYOW+cYgeTxUlYrnWC6y+mrab0+Aj4LOk4LEc8qQ8UoKsQUnF90
-         Uw92+GXjeia8XGD96v/ijre0ZEUp85Yhd7c9IkUJMhIVQhkxJOISC+qtrTtDbfBWc0hg
-         4v2sQp0puxVNSDLonZFRyMPfdls+UwVvKk1PqNfTqlHdc4Wn7eQ45JTFm4oh4WTx+87o
-         GwcLMiE58VHrCiB130Ai/yO44O8FLptClcpc61Z0HU07ZvxEoOqsnXVVhRCBEyfSTBGO
-         DBRartlrFdSu/x1l9/TLBsRru87SyhpJ/fB6xg8CiiYcRMVBKKc0YiZ6jhgazoWfP42s
-         YarA==
-X-Gm-Message-State: AOAM5308BIsCKJP8s+5f8NCmjX1ws1+ErQvN4Fbcziq6CcllYJ7ah9Y1
-        UQ936c4EdMfE4dvdqUHacEDkouZtycHw6cutkHDNlq5ybGU=
-X-Google-Smtp-Source: ABdhPJxjfwa8g49rNfb5xQ4Dtq316EM5E6QepnaR+uvM+BcTaI+qmB/caHz8VslukXXXqzp0798ys0wp0mZ+YQ4gMH8=
-X-Received: by 2002:ac8:4e48:: with SMTP id e8mr4202203qtw.64.1643317847801;
- Thu, 27 Jan 2022 13:10:47 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qdRDdfOMifbhNPhUjcrVIXglRFajzLbYO5C7vWkVOyI=;
+        b=n8AgNB+b77LDgWm3BFl5ssjjK0XFm2SEhTv7PWT2XW1VZ+jrl49WwDYniTqbV9vqwC
+         IYVOxRw2o/T57N0rZQTGFlmwz8VD/wcMbUeTlJCDgBvsacTKb9pvyhdldOrd3MOe+gSh
+         u3k94/OEcMlcc5OjbCGPCjAT7c47HKlX1vkymABqsAdJI4VoLF7Ohf7qvfZkTv93Ubeg
+         o6JxGX+nGaPRVF6lQ6DbiZpQiNtaDuIDKOI65+ZQB5tM0LswQosJkMrLzi2vQCaGneYA
+         f0+JolROmLWvBuZ3MJvMET9d8ZiDu4wUqH0PX7YSQiTB8B0mjzEKYmoM1UaVTkdqkSC4
+         ZhjQ==
+X-Gm-Message-State: AOAM533i9RBaY7ll2KCWuIsWPiwK4AMwnICsAdHPJQmEppAy2y90NrD9
+        FuVEg7+AamC6txWwZQ5hlMFxIrAC4KGx4E55RBrnzA==
+X-Google-Smtp-Source: ABdhPJyEHeCnt8072aS5AUWAZkfsvisDYFuHdUVNytIL9fWtMBaARyibHEmoYuicSkzWs8DVJANUgfOaiYjvPpbJkjo=
+X-Received: by 2002:a25:2451:: with SMTP id k78mr8656152ybk.511.1643329625442;
+ Thu, 27 Jan 2022 16:27:05 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:6214:e4b:0:0:0:0 with HTTP; Thu, 27 Jan 2022 13:10:46
- -0800 (PST)
-Reply-To: eanna00111@gmail.com
-From:   Mrs Anna Edward <mussaaliooooo7@gmail.com>
-Date:   Thu, 27 Jan 2022 13:10:46 -0800
-Message-ID: <CAFbf-n2dj0f-EXo2OhZA4D_6QXVYoysuMB5_+AOQv9Sb_nGe0w@mail.gmail.com>
-Subject: Urgent Reply
-To:     undisclosed-recipients:;
+References: <CGME20220125032821epcas5p128c99ca3654fce0ec046943c90211849@epcas5p1.samsung.com>
+ <20220125031604.76009-1-alim.akhtar@samsung.com> <20220125031604.76009-2-alim.akhtar@samsung.com>
+In-Reply-To: <20220125031604.76009-2-alim.akhtar@samsung.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 28 Jan 2022 01:26:54 +0100
+Message-ID: <CACRpkdYYE9vbiFhNqJNv5VM_+YAtr2Jbg-Anoq38OY1w34zhgg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] spi: dt-bindings: samsung: Add fsd spi compatible
+To:     Alim Akhtar <alim.akhtar@samsung.com>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@canonical.com,
+        linux-samsung-soc@vger.kernel.org, pankaj.dubey@samsung.com,
+        broonie@kernel.org, andi@etezian.org, linux-spi@vger.kernel.org,
+        linux-fsd@tesla.com, Adithya K V <adithya.kv@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Greeting to you,
-Please forgive me for stressing you with my predicaments and I sorry
-to approach you through this media because it serves the fastest means
-of communication. I came across your E-mail from my personal search
-and I decided to contact you believing you will be honest to fulfill
-my final wish before I die.
+On Tue, Jan 25, 2022 at 4:28 AM Alim Akhtar <alim.akhtar@samsung.com> wrote:
 
-I am Mrs Anna Edward, 63 years, from USA, I am childless and I am
-suffering from a pro-long critical cancer, my doctors confirmed I may
-not live beyond two months from now as my ill health has defiled all
-forms of medical treatment. Since my days are numbered, I have decided
-willingly to fulfill my long-time promise to donate you the sum
-($5.000.000.00) million dollars I inherited from my late husband Mr.
-Edward Herbart, foreign bank account over years. I need a very honest
-person who can assist in transfer of this money to his or her account
-and use the funds for charity work of God while you use 50% for
-yourself. I want you to know there is no risk involved; it is 100%
-hitch free & safe.
+> Adds spi controller dt-binding compatible information for
+> Tesla Full Self-Driving (FSD) SoC.
+>
+> Cc: linux-fsd@tesla.com
+> Signed-off-by: Adithya K V <adithya.kv@samsung.com>
+> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> Reviewed-by: Andi Shyti <andi@etezian.org>
 
-If you are interested in assisting in getting this fund into your
-account for a charity project to fulfill my promise before I die
-please let me know immediately.
+The SoC is confirmed to be Tesla-specific, so:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-I will appreciate your utmost confidentiality as I wait for your reply.
-Best Regards,
-Mrs Anna Edward
+Yours,
+Linus Walleij
