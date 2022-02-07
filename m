@@ -2,71 +2,56 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF5584AB808
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Feb 2022 11:01:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF39A4AB8A7
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Feb 2022 11:30:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239114AbiBGKAJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Feb 2022 05:00:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37372 "EHLO
+        id S231800AbiBGKYv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Feb 2022 05:24:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245329AbiBGJrE (ORCPT
+        with ESMTP id S1357043AbiBGKL1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Feb 2022 04:47:04 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3FDC043181
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Feb 2022 01:47:03 -0800 (PST)
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0F3FE3F1A1
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Feb 2022 09:47:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1644227222;
-        bh=RpKisFMVOYgXhr4OBFF0I13PIr7NXdi+wKM2xMCNQ4M=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=Gn7MshsG9J1Ke5+3eCcwYpe5i0jScbu/mOcDCL99CFtmDJW5F7VjB3Z4OhybMxt55
-         LBbvP3QIlqGYuHolUrorzj+1xQHrIfG9A+cV82DAnW5YresuS9FOPa17xEHNfpxyAi
-         Yqw+Ac2081joSDl9Gdx9ktZDmLibh6CPYFnzxBLLK6AoRp/sqQi6H30k6HjJ/P2mGg
-         hp1gjJoV+O6Xxdvb5K8pe5Z9O8gK6gURhmTYNqiDECPhCwONKzELK2SuKRiZBWgTqE
-         Bxax7DtsvHf4Tk5QsYO+ZtRlFEpfhOf0/XzVizRFaPWNg1GGC6y4g3Ihbl9Gi6vH5P
-         Qo+npaKNuKHXA==
-Received: by mail-ed1-f72.google.com with SMTP id u24-20020a50d518000000b0040f8cef2463so41491edi.21
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Feb 2022 01:47:02 -0800 (PST)
+        Mon, 7 Feb 2022 05:11:27 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1989FC0401E2
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Feb 2022 02:11:09 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id m5so6474850wrb.2
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Feb 2022 02:11:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=t1grJfuaAdS3B1XhyLaLbix7QKdpfthiiXC5enSQ1wU=;
+        b=wPpS1R/uWVlqPEkanPeqJeH/0D36BtOQVNLC6MxnxsReockDsvWqZG0Z1ByYDDuvM7
+         4wItKYbdClpjxyuOyRK9/gJfr5YryUe5EgYLsk6JfeJMCd3XkXMnnxdp9JqUXD/1UkV8
+         t0mtIzGSIsgctau6xdm1KHCMbGvMNEL/JVAUQjalNg9u+oU7LrHc3Wn3uSNTw5lbgYUd
+         DpByqvFXqb50PDV3lL8IoxrzzsNtFipGmOWCNjjpRAvXUMLeFiYICD19OtjrI4lXaS4R
+         V0LkGJa1SmI6gGzOs8S5qtFDYA0i7YfRY+bvGhZQkICcuObnwhNHAjilL2KENHyKeg7s
+         CLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RpKisFMVOYgXhr4OBFF0I13PIr7NXdi+wKM2xMCNQ4M=;
-        b=t45vWRITbRUTOvFeZSP3549diByf8BSiVhWt8+VdJnUo99XbooipWPkiIeBwxwD+1M
-         gDvHQldzwW0BCkhigI4xAUyJ3jA1XbHRphEOScTwg/twO2KOFU0nllNCCPVppyhmVJMj
-         tIiX+u33P5RiAFu67QyzrGecQMdu2uq5/85T1Q4eV0cjgcTZHgwY1o0qAVgokn5OYfgq
-         DxUSdjaDN92Kyz9f17H8hK4Vd/R/GffyEbOqo9egG0IC0Rr92r572lIKT6oAKL106dJn
-         xG1GXXEPtJYO3hHMdQ2LQ49Kd4k9VQC+n5lHr2tG8CkuLMzc9+dBOybD7W25Xfox1nJo
-         5A4A==
-X-Gm-Message-State: AOAM5304cOLhjv5Qpy31R/RQ+NBP3QyFh4QxJLd0U3E+nQ+3xftt29YV
-        IeKUWfiLHRYMcrW4EoZdAKTpn7mR5XgXJ9EOQ+i2OPZATyYC0Igai6dHQxBqTD7RYu55gvbS/yd
-        +E52/9uAgzLUaz4DDlKyFeX6ybcxz42QzTNWqWJunlu96wZ43
-X-Received: by 2002:a17:907:3da1:: with SMTP id he33mr9059616ejc.603.1644227221799;
-        Mon, 07 Feb 2022 01:47:01 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJw1BoRtqvleLXKJ94x9jr4A9T/K/xfXE9FqqRN0ilJdw6S1IME3NnflwItPXK1N2kfs64wGqQ==
-X-Received: by 2002:a17:907:3da1:: with SMTP id he33mr9059600ejc.603.1644227221642;
-        Mon, 07 Feb 2022 01:47:01 -0800 (PST)
-Received: from [192.168.0.86] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id o3sm108814edt.67.2022.02.07.01.47.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Feb 2022 01:47:01 -0800 (PST)
-Message-ID: <88fcdbe6-5fef-d9cc-a645-69e35230cdeb@canonical.com>
-Date:   Mon, 7 Feb 2022 10:47:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 0/5] mfd/extcon/regulators: max77843: add
- dtschema/bindings
-Content-Language: en-US
-To:     Lee Jones <lee.jones@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=t1grJfuaAdS3B1XhyLaLbix7QKdpfthiiXC5enSQ1wU=;
+        b=AbGqNz51rPoc4QOmpAxdogqPmht1hRIbbBKPCcZyoNrpaVsfMsNzEdod4/edWIVrNJ
+         drv309Nf4Vdbc3ZQtWb34MMSuGiUcqdFZyOw/CnmHIJ+wJ5LAk8nwHGJgmWUdPhZX1BU
+         0w+kOQJuACtfIrT9K+jAhW2F+LksoVGix1M+h+43rDoLVak9P5Dokdt8COuEWcUTK9j9
+         lZXd3WjgjwHsIXCNI5OVlm+lksm8kpSc4f0GcTJ7zfCDjDjwKbZjY0iW3WOs1VK3v22F
+         KgFSFS6UpWbE7bt8EbZYpmRzdX00wcN8vO3TSB6tJ5db4duVijPbeLKDfwTT/axQkW05
+         a6tA==
+X-Gm-Message-State: AOAM532MyCz3nFO6/DFdgtbtZ51O7/HNH6fgXVSlivlTnijNAOyzN8Qh
+        wo+g6mY9wPjwZtCH5HP4vmBBLg==
+X-Google-Smtp-Source: ABdhPJyfPm5Ul6/cWxD2ilu20wXd7IFB/LmDVwLybcoxL+DwkSm+3qkAcNf1ZOyzjv+UAG62JG50qg==
+X-Received: by 2002:a05:6000:1548:: with SMTP id 8mr9155762wry.254.1644228667605;
+        Mon, 07 Feb 2022 02:11:07 -0800 (PST)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id c13sm9620833wrv.24.2022.02.07.02.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Feb 2022 02:11:07 -0800 (PST)
+Date:   Mon, 7 Feb 2022 10:11:05 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Cc:     Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
         Mark Brown <broonie@kernel.org>,
         MyungJoo Ham <myungjoo.ham@samsung.com>,
@@ -74,66 +59,84 @@ Cc:     Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         Chanwoo Choi <cw00.choi@samsung.com>
+Subject: Re: [PATCH v2 0/5] mfd/extcon/regulators: max77843: add
+ dtschema/bindings
+Message-ID: <YgDwOWRpfVBfcXxs@google.com>
 References: <20220111174805.223732-1-krzysztof.kozlowski@canonical.com>
  <1bebedb9-644f-783d-492c-84a5de91720d@canonical.com>
  <YgDnUNCNCO+JLyHU@google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <YgDnUNCNCO+JLyHU@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+ <88fcdbe6-5fef-d9cc-a645-69e35230cdeb@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <88fcdbe6-5fef-d9cc-a645-69e35230cdeb@canonical.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 07/02/2022 10:33, Lee Jones wrote:
-> On Sun, 06 Feb 2022, Krzysztof Kozlowski wrote:
-> 
->> On 11/01/2022 18:48, Krzysztof Kozlowski wrote:
->>> Hi,
->>>
->>> The max77843 shares some parts with max77693 but it lacked bindings.  All
->>> its compatibles were undocumented.  Add basic bindings for max77843,
->>> matching existing devicetree.  These are not complete bindings, but
->>> rather reverse-engineered to match current state.
->>>
->>> I do not have access to device with MAX77843, so if anyone else
->>> volunteers to be the bindings maintainer, please join.
->>>
->>> Changes since v1
->>> ================
->>> 1. MFD: Use absolute path to schemas.
->>> 2. Regulator: mention all allowed properties,
->>>    additionalProperties=false, add min/max values for voltages and
->>>    current, don't use patternProperties when not needed.
->>> 3. extcon: Use absolute path to schemas.
->>>
->>> Dependencies
->>> ============
->>> 1. Patch 1/5 (dts): nothing depends on it, sending here so Rob's automatic
->>>    checker won't complain about DTS.
->>>    I will take it via Samsung SoC tree.
->>>
->>> 2. The patch 4/5 (mfd bindings) depends on regulator and extcon, so they
->>>    should come together (2+3+4+5).
->>>
->> Dear Lee,
->>
->> This patchset was reviewed and there are no outstanding issues. Could
->> you pick up patches 2-5 (skipping DTS patch) via MFD tree?
-> 
-> Are the subsystem maintainers not going to review/ack?
-> 
+On Mon, 07 Feb 2022, Krzysztof Kozlowski wrote:
 
-Would be nice to have them, but maybe since these are dt-bindings maybe
-they were skipped? Or maybe it was the end-of-year holidays?
+> On 07/02/2022 10:33, Lee Jones wrote:
+> > On Sun, 06 Feb 2022, Krzysztof Kozlowski wrote:
+> > 
+> >> On 11/01/2022 18:48, Krzysztof Kozlowski wrote:
+> >>> Hi,
+> >>>
+> >>> The max77843 shares some parts with max77693 but it lacked bindings.  All
+> >>> its compatibles were undocumented.  Add basic bindings for max77843,
+> >>> matching existing devicetree.  These are not complete bindings, but
+> >>> rather reverse-engineered to match current state.
+> >>>
+> >>> I do not have access to device with MAX77843, so if anyone else
+> >>> volunteers to be the bindings maintainer, please join.
+> >>>
+> >>> Changes since v1
+> >>> ================
+> >>> 1. MFD: Use absolute path to schemas.
+> >>> 2. Regulator: mention all allowed properties,
+> >>>    additionalProperties=false, add min/max values for voltages and
+> >>>    current, don't use patternProperties when not needed.
+> >>> 3. extcon: Use absolute path to schemas.
+> >>>
+> >>> Dependencies
+> >>> ============
+> >>> 1. Patch 1/5 (dts): nothing depends on it, sending here so Rob's automatic
+> >>>    checker won't complain about DTS.
+> >>>    I will take it via Samsung SoC tree.
+> >>>
+> >>> 2. The patch 4/5 (mfd bindings) depends on regulator and extcon, so they
+> >>>    should come together (2+3+4+5).
+> >>>
+> >> Dear Lee,
+> >>
+> >> This patchset was reviewed and there are no outstanding issues. Could
+> >> you pick up patches 2-5 (skipping DTS patch) via MFD tree?
+> > 
+> > Are the subsystem maintainers not going to review/ack?
+> > 
+> 
+> Would be nice to have them, but maybe since these are dt-bindings maybe
+> they were skipped? 
 
-I can resend hoping it will trigger more acks. Do you wish me to resend?
+Agreed, not required, but nice to have to avoid possible conflict.
 
-Best regards,
-Krzysztof
+> Or maybe it was the end-of-year holidays?
+
+> I can resend hoping it will trigger more acks. Do you wish me to resend?
+
+That shouldn't be necessary.
+
+I'll give the guys a little while to protest/ack, then I'll merge.
+
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
