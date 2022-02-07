@@ -2,94 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EB2C4AC85D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Feb 2022 19:16:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6148B4AC969
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Feb 2022 20:24:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234499AbiBGSNz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Feb 2022 13:13:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45360 "EHLO
+        id S238174AbiBGTYS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Feb 2022 14:24:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236768AbiBGSLx (ORCPT
+        with ESMTP id S238286AbiBGTSt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Feb 2022 13:11:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C488C0401DF;
-        Mon,  7 Feb 2022 10:11:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9255A61344;
-        Mon,  7 Feb 2022 18:11:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC64C004E1;
-        Mon,  7 Feb 2022 18:11:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644257511;
-        bh=zTbjKhDfqGCsDFN7i/VJmHQxr5pfwFOsmqnPT/Z6K/I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=quON+9SF2XamyeVcfD+tNAVaBbqJZScaKFWF4xzg3sUzWwQ6Jm80t+P8MZE8WTASf
-         BFyxFX5+LEcE2Es41sStvA8eOaEIbqPUdLlx67RfIRZ3pqy2R3JZzoijUG6rxLMG6T
-         ARZtDmQwmFWpSMOgOFY29Pl6ZSSqdZeiQlNMtDnx+W194nixtlPgqmKD+p5fVSNLnT
-         vPa/qwSW57nEyTvQ6D5BsL/rZzWp47Trd/YEUlhckkqTClzJvCGxo3ipGw+HFasPsf
-         Xf8jr/9rDve9Jhgf07HXVZMbu02PeQGR5i4FX2kCrdcLkutI46XE0t+BbYW/1LjHep
-         kxE1yRzearVZw==
-Date:   Mon, 7 Feb 2022 18:11:45 +0000
-From:   Mark Brown <broonie@kernel.org>
+        Mon, 7 Feb 2022 14:18:49 -0500
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EDEBC0401DA;
+        Mon,  7 Feb 2022 11:18:49 -0800 (PST)
+Received: by mail-oo1-f50.google.com with SMTP id w5-20020a4a9785000000b0030956914befso14850496ooi.9;
+        Mon, 07 Feb 2022 11:18:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Oi2kawlC4oTchPx3SrKG6H/+C9rTjQ5ALT7bD0kBsbM=;
+        b=IOTn6/dSrBVkIMLAN09WuDkrWnvOYpwd+c+bOOqH4eh43iGsETPMnjN9ZHeoRMzOZi
+         rzgPkOr1LVAJJqN+d9vZi6WRqkHq3o+JpvgbDWCcixAk/hLJTMsed3uajQXoi61F40yx
+         pZvDE/IPf+wmjMSLJ8zJ120bNL0HJzlugJXImEHuY06QyE71vSHKtdk6CbC4hrxBUCGI
+         wSdxgoQhycGcp1GjWDZY+neV74iELNSJRpEwm+RbnFWrqq6QQv5+9IvW4ZaP194zjNcR
+         IYMoVxx6SFy6MhgFzTpFyUYUCUMt/tWiK4gsNEBOv9qo+8Cma7gcRg29KiF7gpo61JN+
+         pUxQ==
+X-Gm-Message-State: AOAM532/s4MsmU+C3erDAeOtjsiX+l+rqvOWgjg/R+qNFySwDnlStAOU
+        l3MMHGmGXpcXrGOf7dD61hunbbL2gA==
+X-Google-Smtp-Source: ABdhPJzBiNPIh1ptFdSeOpWdwMnIEqTUUUtar0nzIrVQLmfyaZJXVUoObXYgq94h6Np8yJjB7Lly4w==
+X-Received: by 2002:a05:6871:4192:: with SMTP id lc18mr138702oab.207.1644261528365;
+        Mon, 07 Feb 2022 11:18:48 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id m26sm4295846ooa.36.2022.02.07.11.18.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Feb 2022 11:18:47 -0800 (PST)
+Received: (nullmailer pid 738937 invoked by uid 1000);
+        Mon, 07 Feb 2022 19:18:46 -0000
+Date:   Mon, 7 Feb 2022 13:18:46 -0600
+From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andi Shyti <andi@etezian.org>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        Pratyush Yadav <p.yadav@ti.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-spi@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v6 4/4] spi: s3c64xx: allow controller-data to be optional
-Message-ID: <YgFg4ev1yxohRRcH@sirena.org.uk>
-References: <20220124082347.32747-1-krzysztof.kozlowski@canonical.com>
- <20220124082347.32747-5-krzysztof.kozlowski@canonical.com>
+Cc:     linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, Wolfram Sang <wsa@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH] dt-bindings: i2c: samsung,s3c2410-i2c: convert to
+ dtschema
+Message-ID: <YgFwlgXnHTIUVeOH@robh.at.kernel.org>
+References: <20220131172713.208976-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Md1/Vl269h3xtQCX"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220124082347.32747-5-krzysztof.kozlowski@canonical.com>
-X-Cookie: Never give an inch!
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220131172713.208976-1-krzysztof.kozlowski@canonical.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Mon, 31 Jan 2022 18:27:13 +0100, Krzysztof Kozlowski wrote:
+> Convert the Samsung S3C24xx/S3C64xx/S5PV210/Exynos SoC I2C Controller
+> bindings to DT schema format.
+> 
+> The conversion includes also changes/fixes to the bindings, matching the
+> real hardware and existing Linux driver:
+> 1. Do not require interrupts on samsung,exynos5-sata-phy-i2c, because
+>    there is no such.
+> 2. Do not allow gpios on samsung,exynos5-sata-phy-i2c, because they are
+>    hard-wired just like for HDMI phy.
+> 3. Do not require samsung,i2c-sda-delay and use default of 0.
+> 4. Require clock, which was always required but missing in bindings.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  .../devicetree/bindings/i2c/i2c-s3c2410.txt   |  58 -------
+>  .../bindings/i2c/samsung,s3c2410-i2c.yaml     | 164 ++++++++++++++++++
+>  2 files changed, 164 insertions(+), 58 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/i2c/i2c-s3c2410.txt
+>  create mode 100644 Documentation/devicetree/bindings/i2c/samsung,s3c2410-i2c.yaml
+> 
 
---Md1/Vl269h3xtQCX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Jan 24, 2022 at 09:23:47AM +0100, Krzysztof Kozlowski wrote:
-> The Samsung SoC SPI driver requires to provide controller-data node
-> for each of SPI peripheral device nodes.  Make this controller-data node
-> optional, so DTS could be simpler.
-
-Reviwed-by: Mark Brown <broonie@kernel.org>
-
---Md1/Vl269h3xtQCX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIBYOEACgkQJNaLcl1U
-h9B4zQf+LxRW+/UCv7GdznE4/1/MaI2bwd55sQIq9rNBbkIN8mD6U0XaWJVoRchN
-ZPLRfdGeXeGvmQiaARD9A73su4XK3sBbwrR2qFB2ULx0XGj4twZ/f2X9yv2n9beJ
-ep5UB1zX7DNgv1OMyG2Oir5upHSFCEPqAs/sU/fmMlObXIo3ges3dWGju9w66na+
-UlS0BqHMNt7UEG71FTeH/D5TG8J9IZy3QKaVbJ8eo7DujX8B+HDLZoZmJp31Lsm1
-VTjCBq1FSSVMoJZh1NnfjIP/VhNQGOvBb6pw5/mUdCNsbS4NYIriImcxyBBS0JL6
-4wFh/Aw7Yg2GMFHiCimB2OidqopSew==
-=+exr
------END PGP SIGNATURE-----
-
---Md1/Vl269h3xtQCX--
+Applied, thanks!
