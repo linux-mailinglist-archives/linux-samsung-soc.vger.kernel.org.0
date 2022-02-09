@@ -2,99 +2,104 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE3024AED0B
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 09:47:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A4B54AEDAC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 10:10:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233729AbiBIIra (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 9 Feb 2022 03:47:30 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:52056 "EHLO
+        id S233525AbiBIJJj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 9 Feb 2022 04:09:39 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:48044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233529AbiBIIra (ORCPT
+        with ESMTP id S234105AbiBIJJi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 9 Feb 2022 03:47:30 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D38CE00E585;
-        Wed,  9 Feb 2022 00:47:22 -0800 (PST)
+        Wed, 9 Feb 2022 04:09:38 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2906FDF28B0D
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Feb 2022 01:09:34 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id s10so2841535wra.5
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Feb 2022 01:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644396443; x=1675932443;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=3E/k9hHBNfXwsD5JScD3Hm1owmhXeuhCGouRaTwikqE=;
-  b=Zk3fcnUiysMH58XvdL1/h5RmYmpE45coU6tuBbcmzKBNkc7b+Tl/9Kyk
-   HJKnMnx1rtuTnbfWJWxvhG07cA1dfJNAbbSnLAX7L49SOkeSD6Ys5Ilsk
-   /NGAuLJld7SVaZu2Bn2J8ooG1L6Ur3HHf5OJyd7BeCa9tLPMg/ax9kOte
-   8=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Feb 2022 00:41:20 -0800
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 00:41:20 -0800
-Received: from [10.216.42.92] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
- 00:41:17 -0800
-Message-ID: <c055e4e8-fd11-49e9-c7a9-bf2f1ec9de36@quicinc.com>
-Date:   Wed, 9 Feb 2022 14:11:13 +0530
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=DUmHVshkvWp2RY/UyFIfNWg44HUvXNupx5/iL+mP6EE=;
+        b=cxBl8c4P1cvv7Tv6Dxk+62SeRqlxp783g9ffvZPcvj5SJRfu8Y6LIcGLX1P+PQUir1
+         JevDJ2yBQILmIxQKvle+oy2/AgeJcMxr7cQ5OnZlimYcAHwtKeDdZYZHMPb0EHmRwAnQ
+         bkY/luTPPSGkTJfJtM0KYEGCCZ0935BbQORU49iVDHsMazLlLZxx4ws6k7VsWiGbcHdO
+         2n9Kd73b/O9ADWc9TVL+e/6moIiwEvkDYLij9NO/G/zFrjdEosbXDFuCG0jL7w9PBWGq
+         PJTwvsglhwoyrTPIly6PKGuD8YvmdkxDU6mCB7U16I8Zo5FS7shj0XUiIBw1SA48GY9H
+         2tqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=DUmHVshkvWp2RY/UyFIfNWg44HUvXNupx5/iL+mP6EE=;
+        b=YFha+qQRIsFJkpv6Ci5E92/lML+1BK9uIwdRUf4FT9divbWCY2r9Wc0ce76k2pRBDk
+         WBwp6gbM0h/L3VkIarDi/2pKg3zTyPaKqcoJR2E+G+CSIARaMqKNEujk5OA2yxmVPq/a
+         jzqgA/Xzy7prp6k4cz5s8MtOCgObTt3XVYQb1BTrlCnQgw5b1oXkNbdrF9TSnsYZEXuL
+         YgHLBU2d6IFipdz36TFbWe3JCizPWejcWw6ajcVjHm8vyBa9MQK3Qgcadd3Qvixj42L8
+         ECGEB/akYavYeNc1T/GLnyXLs2l/RFn/f9vWtc8/kgA8INHyJGkob70Pj+HCiNbNWa3I
+         9exA==
+X-Gm-Message-State: AOAM531eMKvDmxikKJjxsbst59A+upV0kc/FoMvoSvG+mc7WgCc7MVaE
+        GkyXVzpKlBrpghD7e90W0VNdwnpTTD/tB1KLpe8=
+X-Google-Smtp-Source: ABdhPJz1eS/722hgBMJEKEmRQ3BeLd0T99TaFj3I8lpWO5ISQ3AZczjYElqtFC5T7e46PUbwMK5c/brZBkn+v75JiXM=
+X-Received: by 2002:a05:6000:1e15:: with SMTP id bj21mr1250622wrb.222.1644397749318;
+ Wed, 09 Feb 2022 01:09:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v2] regmap-irq: Use regmap_irq_update_bits instead of
- regmap_write
-Content-Language: en-US
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
-References: <20220119142953.1804-1-quic_pkumpatl@quicinc.com>
- <CGME20220208122955eucas1p2d4e32f51224242e9ebd0bce58b9c04ca@eucas1p2.samsung.com>
- <39f1b598-58ca-1e3d-3065-8dd692ee7c9f@samsung.com>
-From:   Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-In-Reply-To: <39f1b598-58ca-1e3d-3065-8dd692ee7c9f@samsung.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:600c:3acd:0:0:0:0 with HTTP; Wed, 9 Feb 2022 01:09:08
+ -0800 (PST)
+Reply-To: howardnewell923@gmail.com
+From:   Howard Newell <muhammed.gaba113@gmail.com>
+Date:   Wed, 9 Feb 2022 09:09:08 +0000
+Message-ID: <CAMz__ZafWt0s3=ymLud7o1xDCgoEomNd-D18xr=hh=hGJ1maCA@mail.gmail.com>
+Subject: re
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,HK_SCAM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:42b listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4916]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [muhammed.gaba113[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [muhammed.gaba113[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [howardnewell923[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.1 HK_SCAM No description available.
+        *  3.4 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+-- 
+Hi
+I want to know from you if you received my message concerning your
+compensation file with United Nations Compensation Program. Please
+confirm
 
-On 2/8/2022 5:59 PM, Marek Szyprowski wrote:
-
-> There is something wrong with this patch. Since it landed in linux-next
-> (20220204) I get an interrupt storm on two of my test devices:
->
-> 1. ARM 32bit Exynos4412-based Trats2 ("wm8994-codec wm8994-codec: FIFO
-> error" message)
->
-> 2. ARM 64bit Exynos5433-based TM2e ("arizona spi1.0: Mixer dropped
-> sample" message)
->
-> Definitely the interrupts are not acknowledged properly. Once I find
-> some spare time, I will check it further which regmap configuration
-> triggers the issue, but it is definitely related to this patch.
-> Reverting it on top of current linux-next fixes the issue.
-
-Change is needed to handle the interrupt ack properly to clear the ack.
-
-I observed that the regmap_irq_update_bits() writes the register only if 
-it finds a difference b/w existing reg value to update reg value.
-
-This may be causing the interrupt storm issue mentioned above.
-
-Setting the mask_writeonly flag to 1, to force write the register may 
-resolve the interrupt storm issue.
-
---Prasad
-
+Kind regards!
+Howard Newell
+London WC2N 4JS, UK
