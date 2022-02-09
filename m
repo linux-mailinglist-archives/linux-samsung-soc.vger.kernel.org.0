@@ -2,66 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EADF24B0044
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 23:30:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 110344B0051
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 23:31:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236011AbiBIWaA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 9 Feb 2022 17:30:00 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35566 "EHLO
+        id S235827AbiBIWa0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 9 Feb 2022 17:30:26 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235873AbiBIW35 (ORCPT
+        with ESMTP id S236155AbiBIWaF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 9 Feb 2022 17:29:57 -0500
+        Wed, 9 Feb 2022 17:30:05 -0500
 Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E756E0186FD;
-        Wed,  9 Feb 2022 14:29:12 -0800 (PST)
-Received: by mail-oi1-f173.google.com with SMTP id v67so4041690oie.9;
-        Wed, 09 Feb 2022 14:29:12 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2059AE024616;
+        Wed,  9 Feb 2022 14:29:50 -0800 (PST)
+Received: by mail-oi1-f173.google.com with SMTP id y23so4030904oia.13;
+        Wed, 09 Feb 2022 14:29:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Y1j55Hi253ENIjk9c8eQJUDKu/kw6HxF3YDkUmKAaFA=;
-        b=G0vAC57Dgwk9uvKHGVEozxcUGVggynzVliFXgbipR5s4TMOKL36l4WIGMOfs8IXVQa
-         rxv+YTj5KT7Dp8WvOjbp5QxNL1Haa48ONnymSfOfHz/3hKdKQ0VGy5P9iVHnUqO6LZcN
-         tZdm+vBpUOTDiqtW8G1XiljFbbJUy8Qow5v3MKqtSbm22pa27SLxkPNLDncKjzb3uqDN
-         DrMOYbTbcZQNCatFuxMYsqWWRhRyu9hFd3a1PD76Br+hD5ulncZ9YO2BG/hmg8pB+DF0
-         H80gO8qRe9Y6cSNgU3JfGnodpl8otmF61y6CB17/bCw1uyyIt0BHCVlAsMbVuQJwGAZB
-         +nOw==
-X-Gm-Message-State: AOAM531FXRQyOqN2r1c0SYe+LRuFS8u2vRkTcfuX87PcseF3dH6/GFWc
-        QmMXJ5AMnaEfrUeoafboew==
-X-Google-Smtp-Source: ABdhPJyWHZDh7iGpE68bYX52cJf57I+WPA/yoHKidBDIJKLnhHEM6X7QjjesMGIyqJ36cy6LVjG3dA==
-X-Received: by 2002:aca:aa54:: with SMTP id t81mr1901323oie.126.1644445751859;
-        Wed, 09 Feb 2022 14:29:11 -0800 (PST)
+        bh=LGItSpVyO4E2kjjIY3eLoaT3e1GMgzzef9yeodLXUW4=;
+        b=C6DGt6KGHgSMFyNgbNisv9z2P+UjzIH3t8aiRuGi1Njc1qApIGIaxN0P2wcX1HIHTA
+         K+Bbf45zdmS/6BfBvsfylj8dxO/twfS7eJBa60qOeV6FWzgdzsSnE8MFH4vKVavnbiHe
+         pnQflS8RVuyQm4SaIllIOOiiAofrHnL+LsihijJzBL5kopSah6QZtYKTtM3fh8KZQQqS
+         6b8QGgz/GULJAJtLGNbl0LVCNX0mAzLc3VO9Rdb5cHFB4aJygn6fNfFWNoBGXoH/EOje
+         uT5p0+pRQaEITr4fog4NOANKDM/uKt9AgJh5dRHMilw6cJNsFp8zvIlUb5vAOLf+/qVP
+         yn7Q==
+X-Gm-Message-State: AOAM5330pqEoEb00rK6t7ruCszES9sz36l9lMDe+9dE4t8Ps4hiIYiUD
+        hn7ZcLvHYAJtjGFtleROKg==
+X-Google-Smtp-Source: ABdhPJycLuy7p16aiiS0Lgo2CVfXP5rkqJlHcZTXDXoCeUehiDhWgN3AMjKEs0+1dZEHYtVUAFhSPg==
+X-Received: by 2002:aca:1c03:: with SMTP id c3mr2129549oic.94.1644445789467;
+        Wed, 09 Feb 2022 14:29:49 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id ep17sm7660740oab.21.2022.02.09.14.29.10
+        by smtp.gmail.com with ESMTPSA id x19sm7206610otj.59.2022.02.09.14.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 14:29:11 -0800 (PST)
-Received: (nullmailer pid 1055586 invoked by uid 1000);
-        Wed, 09 Feb 2022 22:29:10 -0000
-Date:   Wed, 9 Feb 2022 16:29:10 -0600
+        Wed, 09 Feb 2022 14:29:48 -0800 (PST)
+Received: (nullmailer pid 1056785 invoked by uid 1000);
+        Wed, 09 Feb 2022 22:29:47 -0000
+Date:   Wed, 9 Feb 2022 16:29:47 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-phy@lists.infradead.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
         Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Guenter Roeck <linux@roeck-us.net>,
         Vinod Koul <vkoul@kernel.org>,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 4/8] dt-bindings: phy: samsung,dp-video-phy: convert to
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: Re: [PATCH 5/8] dt-bindings: phy: samsung,usb2-phy: convert to
  dtschema
-Message-ID: <YgRANt0hByXkupTj@robh.at.kernel.org>
+Message-ID: <YgRAWzYYrg65Kwg+@robh.at.kernel.org>
 References: <20220129193646.372481-1-krzysztof.kozlowski@canonical.com>
- <20220129193646.372481-4-krzysztof.kozlowski@canonical.com>
+ <20220129193646.372481-5-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220129193646.372481-4-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220129193646.372481-5-krzysztof.kozlowski@canonical.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -73,15 +72,19 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, 29 Jan 2022 20:36:42 +0100, Krzysztof Kozlowski wrote:
-> Convert the Samsung SoC DisplayPort PHY bindings to DT schema format.
+On Sat, 29 Jan 2022 20:36:43 +0100, Krzysztof Kozlowski wrote:
+> Convert the Samsung SoC USB 2.0 PHY bindings to DT schema format.
+> 
+> Except the conversion, add also vbus-supply property which was already
+> used by the driver and DTS.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 > ---
->  .../bindings/phy/samsung,dp-video-phy.yaml    | 41 +++++++++++++++++++
->  .../devicetree/bindings/phy/samsung-phy.txt   | 11 -----
->  2 files changed, 41 insertions(+), 11 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/samsung,dp-video-phy.yaml
+>  .../bindings/phy/samsung,usb2-phy.yaml        | 102 ++++++++++++++++++
+>  .../devicetree/bindings/phy/samsung-phy.txt   |  60 -----------
+>  MAINTAINERS                                   |   2 +-
+>  3 files changed, 103 insertions(+), 61 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/samsung,usb2-phy.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
