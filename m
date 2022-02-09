@@ -1,101 +1,87 @@
 Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0D144AE3D6
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Feb 2022 23:24:38 +0100 (CET)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id 6B4934AE77A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 04:11:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386314AbiBHWY3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Feb 2022 17:24:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47688 "EHLO
+        id S1354948AbiBIDIW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Feb 2022 22:08:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386292AbiBHUCk (ORCPT
+        with ESMTP id S235951AbiBIDFI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Feb 2022 15:02:40 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A52AC0613CB;
-        Tue,  8 Feb 2022 12:02:39 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D415A615A7;
-        Tue,  8 Feb 2022 20:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B92FC004E1;
-        Tue,  8 Feb 2022 20:02:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644350558;
-        bh=76ABg2Dlvjl73zDQJvo3h1QYiJvQxOXAQJYzRa9Onu4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=idEZsdqPKRmGaSIUSROU3HsIP0i6pXlrujkYqVPHdNRGJcX25aTFMNKx8/BPhMcob
-         3d89OhmoK6r4wY/E2bu3bP2paFTMvXkU94MnkcH9POJH8b5tXPG9rkGJf5m0SgQOyE
-         dYEsfSeNVgsY8LXZQn5HHarLWTq3twB6SZ+zEHKBNrm6bnG96q40z/qakROB3gFApC
-         dp4LlOVL+u1Ng9ajbsg1ap4HpkiEZ3hNoiJYn+p3NZRsWt/dq57JC6Bf2vffsbRjDN
-         vnJh/n+g+WIvUqSsqkrPFit5CbhC+FhVGAfKO2CUHny9QjqhhpUeun+7vxG6JxvZnP
-         /KumfOOXbguaA==
-Received: by mail-ej1-f46.google.com with SMTP id s21so771541ejx.12;
-        Tue, 08 Feb 2022 12:02:38 -0800 (PST)
-X-Gm-Message-State: AOAM530aBdHSIKhDe6sRdtK5Zfe7miqEF9fd+OUD44GFFH0xq57dsgWv
-        NB+rcrEzUA0bisE7HUZXOfmc6mKsJxfkaeCpfA==
-X-Google-Smtp-Source: ABdhPJwYJJZa+vnjfBK/WR+7SL6UFvywYM6EfsfWcrdXGMBkFX9fiAap0UJtx2BRAmtyBeG/7Drode5OumzOI+e5wUY=
-X-Received: by 2002:a17:906:f0cb:: with SMTP id dk11mr4930847ejb.20.1644350556421;
- Tue, 08 Feb 2022 12:02:36 -0800 (PST)
+        Tue, 8 Feb 2022 22:05:08 -0500
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83F4C03E942;
+        Tue,  8 Feb 2022 19:04:02 -0800 (PST)
+Received: by mail-oo1-f49.google.com with SMTP id u47-20020a4a9732000000b00316d0257de0so979692ooi.7;
+        Tue, 08 Feb 2022 19:04:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9WxSx+PhSoNOK7Va3SOOiKpYlGJipFHoYDAnRzf0rEU=;
+        b=yjPf7b7dMoATHvCrWRfCh26704ofnNBr0AtZM7MvdWX7LUFEeNk5rnn88EImE18SLq
+         7E3GiCBCujeaODwkF/tNMsh2KvEtGKvnKHUcR1Go+BHmA7r9YkJXwxsuUiUsnkG1jADI
+         oh6TOhokS9s/+i8zbu+qTt9wxDdDO8CU9X2IHVW1TarW1G3yPbsnqqZ78euLG5H2YgY/
+         N3Fk9UGTsniHnSxVL1nKWRhOWK9vQhkIhT05lxdZ9nWntA7UvhZhomK63zXdyt6TKxpZ
+         rMc+Fi5s8w/ADPqAJ3g0ZF/C7tMcifLU1LbxYP/vfWrIl8fTHB6EedCfnqjdu2dGsd7n
+         ZmWg==
+X-Gm-Message-State: AOAM533FmkjkyxUL11Xzk3FRe0lBBHhR3I2qCKPyZ6n3g0zirs2BySdS
+        yW23En5V3d8kPVWuvYjhTg==
+X-Google-Smtp-Source: ABdhPJxz2Kc/1R1MFOvpiJkeFhlo3yjJLGr1Vk/RpOOKjTnQ0snSdqTnlGoVchdxbZOKxx6quNK/dQ==
+X-Received: by 2002:a05:6870:1010:: with SMTP id 16mr103247oai.281.1644375842063;
+        Tue, 08 Feb 2022 19:04:02 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id a128sm6151603oob.17.2022.02.08.19.04.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 19:04:01 -0800 (PST)
+Received: (nullmailer pid 3542310 invoked by uid 1000);
+        Wed, 09 Feb 2022 03:04:00 -0000
+Date:   Tue, 8 Feb 2022 21:04:00 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        linux-pm@vger.kernel.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: thermal: samsung: convert to dtschema
+Message-ID: <YgMvIIKqXygIHK4k@robh.at.kernel.org>
+References: <20220122132554.65192-1-krzysztof.kozlowski@canonical.com>
+ <20220122132554.65192-2-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-References: <20211207140334.10461-1-semen.protsenko@linaro.org> <CAPLW+4n-BjSHK4gdP=cGvAE+pZDfvYTO4yy09yNRJgSXt2VArg@mail.gmail.com>
-In-Reply-To: <CAPLW+4n-BjSHK4gdP=cGvAE+pZDfvYTO4yy09yNRJgSXt2VArg@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 8 Feb 2022 14:02:24 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJ3CwT-iuf2NoM=sjPr-Qowzv61Gtv_zvSAoyj7qdZMNA@mail.gmail.com>
-Message-ID: <CAL_JsqJ3CwT-iuf2NoM=sjPr-Qowzv61Gtv_zvSAoyj7qdZMNA@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Report enabled nodes with duplicated address
-To:     Sam Protsenko <semen.protsenko@linaro.org>
-Cc:     Nick Desaulniers <ndesaulniers@google.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220122132554.65192-2-krzysztof.kozlowski@canonical.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Dec 14, 2021 at 10:11 AM Sam Protsenko
-<semen.protsenko@linaro.org> wrote:
->
-> On Tue, 7 Dec 2021 at 16:03, Sam Protsenko <semen.protsenko@linaro.org> wrote:
-> >
-> > Duplicated unit address is a normal case, as long as no more than one
-> > node using that address is enabled. Having duplicated addresses is
-> > already allowed by '-Wno-unique_unit_address' in DTC_FLAGS. But two
-> > simultaneously enabled nodes sharing the same address is usually
-> > incorrect. Add '-Wunique_unit_address_if_enabled' flag to report
-> > warnings for such case when doing "make dtbs_check".
-> >
-> > Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
-> > Reported-by: Rob Herring <robh@kernel.org>
-> > Suggested-by: Rob Herring <robh@kernel.org>
-> > ---
-> > NOTE: After applying this patch, a lot of warnings appear on "make
-> > dtbs_check". I'm not completely sure if it's ok, so feel free to Nack.
-> >
->
-> Hi Rob,
->
-> Do you think this patch is feasible? You asked me to send it before,
-> though I now see it leads to a lot of errors being revealed when doing
-> "make dtbs" and "make dtbs_check". Please let me know if it's Ack or
-> Nack -- I'm fine with any resolution, just want to know if I should
-> continue to carry it in my local branch or drop it.
+On Sat, 22 Jan 2022 14:25:53 +0100, Krzysztof Kozlowski wrote:
+> Convert the Samsung Exynos SoC Thermal Management Unit bindings to DT
+> schema format.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  .../bindings/thermal/exynos-thermal.txt       | 106 ----------
+>  .../thermal/samsung,exynos-thermal.yaml       | 184 ++++++++++++++++++
+>  2 files changed, 184 insertions(+), 106 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/thermal/exynos-thermal.txt
+>  create mode 100644 Documentation/devicetree/bindings/thermal/samsung,exynos-thermal.yaml
+> 
 
-Sorry, I'd missed this. Anyway, since there are lots of warnings, we
-can't apply this.
-
-Rob
+Reviewed-by: Rob Herring <robh@kernel.org>
