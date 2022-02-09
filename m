@@ -2,64 +2,66 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DA194AE784
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 04:11:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE3024AED0B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Feb 2022 09:47:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234831AbiBIDIX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Feb 2022 22:08:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
+        id S233729AbiBIIra (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 9 Feb 2022 03:47:30 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:52056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349694AbiBIDGd (ORCPT
+        with ESMTP id S233529AbiBIIra (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Feb 2022 22:06:33 -0500
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06C53C0612BC;
-        Tue,  8 Feb 2022 19:06:25 -0800 (PST)
-Received: by mail-oi1-f173.google.com with SMTP id q8so1174522oiw.7;
-        Tue, 08 Feb 2022 19:06:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5Q+2vnIsjejUqQ8ahgYrYH7fS2Q0Im+8Cgkb2EVwayM=;
-        b=SgT824Irm9Eit68XAT1fXRkijDHnFy3BwNa1MHo6mo1pomeuRvEKDiVZWbMDeqG16m
-         awbiUx3PZlIlPWWSEFTIwnX6L103oxS4l/ddDwN9etbNTZ+BepqioDGUvfwZ0EO6lwS/
-         EEMzB2Z1eWVbi5VtpGSDzqsZGdZXEJsRMbfONEPFVQUdIpCt0k4BSLBWJQ+E/F5ybRrD
-         sZ0V/Jy13V0FGge+zdII21w9J2MLVDWUzlpw4RaOo3kGYQD1zFqTSQHYe5HdYoIuLWmT
-         yQEYMkyib1Id0mjpdLiQaLiRX9zeRRAWVT+H/A1hhhYRMWoUFuxYERz6ZKF7soA4j50b
-         bhXQ==
-X-Gm-Message-State: AOAM53362Z1RqAkgUboate8ECn6LWpSUQjdE7rzIu+k1Mn0LC+MP/T6y
-        93Qx3tCtVaL9L+wfG5lHdw==
-X-Google-Smtp-Source: ABdhPJyJtXTIsMjg464SoJfL0WpKl14WPLTJ6Yp9FfnS0DqO0gQTxSRxNfM/OduHB/yVod63K2o/qg==
-X-Received: by 2002:a05:6808:1a11:: with SMTP id bk17mr89827oib.105.1644375984335;
-        Tue, 08 Feb 2022 19:06:24 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id s13sm6166559ooh.43.2022.02.08.19.06.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 19:06:23 -0800 (PST)
-Received: (nullmailer pid 3545969 invoked by uid 1000);
-        Wed, 09 Feb 2022 03:06:22 -0000
-Date:   Tue, 8 Feb 2022 21:06:22 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     devicetree@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 12/12] dt-bindings: usb: samsung,exynos-usb2: convert to
- dtschema
-Message-ID: <YgMvrveS7KPp/48M@robh.at.kernel.org>
-References: <20220123111644.25540-1-krzysztof.kozlowski@canonical.com>
- <20220123111644.25540-13-krzysztof.kozlowski@canonical.com>
+        Wed, 9 Feb 2022 03:47:30 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D38CE00E585;
+        Wed,  9 Feb 2022 00:47:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644396443; x=1675932443;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=3E/k9hHBNfXwsD5JScD3Hm1owmhXeuhCGouRaTwikqE=;
+  b=Zk3fcnUiysMH58XvdL1/h5RmYmpE45coU6tuBbcmzKBNkc7b+Tl/9Kyk
+   HJKnMnx1rtuTnbfWJWxvhG07cA1dfJNAbbSnLAX7L49SOkeSD6Ys5Ilsk
+   /NGAuLJld7SVaZu2Bn2J8ooG1L6Ur3HHf5OJyd7BeCa9tLPMg/ax9kOte
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Feb 2022 00:41:20 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 00:41:20 -0800
+Received: from [10.216.42.92] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
+ 00:41:17 -0800
+Message-ID: <c055e4e8-fd11-49e9-c7a9-bf2f1ec9de36@quicinc.com>
+Date:   Wed, 9 Feb 2022 14:11:13 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220123111644.25540-13-krzysztof.kozlowski@canonical.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v2] regmap-irq: Use regmap_irq_update_bits instead of
+ regmap_write
+Content-Language: en-US
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+References: <20220119142953.1804-1-quic_pkumpatl@quicinc.com>
+ <CGME20220208122955eucas1p2d4e32f51224242e9ebd0bce58b9c04ca@eucas1p2.samsung.com>
+ <39f1b598-58ca-1e3d-3065-8dd692ee7c9f@samsung.com>
+From:   Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+In-Reply-To: <39f1b598-58ca-1e3d-3065-8dd692ee7c9f@samsung.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,17 +69,32 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 23 Jan 2022 12:16:44 +0100, Krzysztof Kozlowski wrote:
-> Convert the Samsung Exynos SoC USB 2.0 EHCI and OHCI Controller bindings
-> to DT schema format.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
->  .../devicetree/bindings/usb/exynos-usb.txt    |  66 ----------
->  .../bindings/usb/samsung,exynos-usb2.yaml     | 117 ++++++++++++++++++
->  2 files changed, 117 insertions(+), 66 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/usb/exynos-usb.txt
->  create mode 100644 Documentation/devicetree/bindings/usb/samsung,exynos-usb2.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+On 2/8/2022 5:59 PM, Marek Szyprowski wrote:
+
+> There is something wrong with this patch. Since it landed in linux-next
+> (20220204) I get an interrupt storm on two of my test devices:
+>
+> 1. ARM 32bit Exynos4412-based Trats2 ("wm8994-codec wm8994-codec: FIFO
+> error" message)
+>
+> 2. ARM 64bit Exynos5433-based TM2e ("arizona spi1.0: Mixer dropped
+> sample" message)
+>
+> Definitely the interrupts are not acknowledged properly. Once I find
+> some spare time, I will check it further which regmap configuration
+> triggers the issue, but it is definitely related to this patch.
+> Reverting it on top of current linux-next fixes the issue.
+
+Change is needed to handle the interrupt ack properly to clear the ack.
+
+I observed that the regmap_irq_update_bits() writes the register only if 
+it finds a difference b/w existing reg value to update reg value.
+
+This may be causing the interrupt storm issue mentioned above.
+
+Setting the mask_writeonly flag to 1, to force write the register may 
+resolve the interrupt storm issue.
+
+--Prasad
+
