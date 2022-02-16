@@ -2,27 +2,27 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40C134B8229
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Feb 2022 08:52:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 203DA4B823E
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Feb 2022 08:52:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbiBPHu6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 16 Feb 2022 02:50:58 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:42318 "EHLO
+        id S231357AbiBPHvG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 16 Feb 2022 02:51:06 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:46622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231317AbiBPHua (ORCPT
+        with ESMTP id S231340AbiBPHvA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 16 Feb 2022 02:50:30 -0500
+        Wed, 16 Feb 2022 02:51:00 -0500
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719DC1D9DFB
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 15 Feb 2022 23:50:06 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C7C189
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 15 Feb 2022 23:50:42 -0800 (PST)
 Received: from dude.hi.pengutronix.de ([2001:67c:670:100:1d::7])
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <ore@pengutronix.de>)
-        id 1nKF46-000363-Uf; Wed, 16 Feb 2022 08:49:30 +0100
+        id 1nKF46-000364-Uv; Wed, 16 Feb 2022 08:49:30 +0100
 Received: from ore by dude.hi.pengutronix.de with local (Exim 4.94.2)
         (envelope-from <ore@pengutronix.de>)
-        id 1nKF45-00FBbs-92; Wed, 16 Feb 2022 08:49:29 +0100
+        id 1nKF45-00FBc1-Au; Wed, 16 Feb 2022 08:49:29 +0100
 From:   Oleksij Rempel <o.rempel@pengutronix.de>
 To:     =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
         "David S. Miller" <davem@davemloft.net>,
@@ -42,9 +42,9 @@ Cc:     Oleksij Rempel <o.rempel@pengutronix.de>, kernel@pengutronix.de,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
         linux-tegra@vger.kernel.org
-Subject: [PATCH v5 7/9] ARM: dts: omap3/4/5: fix ethernet node name for different OMAP boards
-Date:   Wed, 16 Feb 2022 08:49:25 +0100
-Message-Id: <20220216074927.3619425-8-o.rempel@pengutronix.de>
+Subject: [PATCH v5 8/9] ARM: dts: tegra20/30: fix ethernet node name for different tegra boards
+Date:   Wed, 16 Feb 2022 08:49:26 +0100
+Message-Id: <20220216074927.3619425-9-o.rempel@pengutronix.de>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220216074927.3619425-1-o.rempel@pengutronix.de>
 References: <20220216074927.3619425-1-o.rempel@pengutronix.de>
@@ -64,7 +64,7 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 The node name of Ethernet controller should be "ethernet" instead of
-"usbether" as required by Ethernet controller devicetree schema:
+"asix" or "smsc" as required by Ethernet controller devicetree schema:
  Documentation/devicetree/bindings/net/ethernet-controller.yaml
 
 This patch can potentially affect boot loaders patching against full
@@ -72,64 +72,50 @@ node path instead of using device aliases.
 
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 ---
- arch/arm/boot/dts/omap3-beagle-xm.dts     | 2 +-
- arch/arm/boot/dts/omap4-panda-common.dtsi | 2 +-
- arch/arm/boot/dts/omap5-igep0050.dts      | 2 +-
- arch/arm/boot/dts/omap5-uevm.dts          | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/tegra20-colibri.dtsi | 2 +-
+ arch/arm/boot/dts/tegra30-colibri.dtsi | 2 +-
+ arch/arm/boot/dts/tegra30-ouya.dts     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/omap3-beagle-xm.dts b/arch/arm/boot/dts/omap3-beagle-xm.dts
-index a858ebfa1500..35eced6521ef 100644
---- a/arch/arm/boot/dts/omap3-beagle-xm.dts
-+++ b/arch/arm/boot/dts/omap3-beagle-xm.dts
-@@ -370,7 +370,7 @@ hub@2 {
+diff --git a/arch/arm/boot/dts/tegra20-colibri.dtsi b/arch/arm/boot/dts/tegra20-colibri.dtsi
+index 1eefb9ee4ac8..8ebd8afc857d 100644
+--- a/arch/arm/boot/dts/tegra20-colibri.dtsi
++++ b/arch/arm/boot/dts/tegra20-colibri.dtsi
+@@ -691,7 +691,7 @@ usb@c5004000 {
  		#address-cells = <1>;
  		#size-cells = <0>;
  
--		ethernet: usbether@1 {
-+		ethernet: ethernet@1 {
- 			compatible = "usb424,ec00";
+-		asix@1 {
++		ethernet@1 {
+ 			compatible = "usbb95,772b";
  			reg = <1>;
- 		};
-diff --git a/arch/arm/boot/dts/omap4-panda-common.dtsi b/arch/arm/boot/dts/omap4-panda-common.dtsi
-index 609a8dea946b..518652a599bd 100644
---- a/arch/arm/boot/dts/omap4-panda-common.dtsi
-+++ b/arch/arm/boot/dts/omap4-panda-common.dtsi
-@@ -558,7 +558,7 @@ hub@1 {
+ 			local-mac-address = [00 00 00 00 00 00];
+diff --git a/arch/arm/boot/dts/tegra30-colibri.dtsi b/arch/arm/boot/dts/tegra30-colibri.dtsi
+index be691a1c33a1..22231d450b1b 100644
+--- a/arch/arm/boot/dts/tegra30-colibri.dtsi
++++ b/arch/arm/boot/dts/tegra30-colibri.dtsi
+@@ -960,7 +960,7 @@ usb@7d004000 {
  		#address-cells = <1>;
  		#size-cells = <0>;
  
--		ethernet: usbether@1 {
-+		ethernet: ethernet@1 {
- 			compatible = "usb424,ec00";
+-		asix@1 {
++		ethernet@1 {
+ 			compatible = "usbb95,772b";
  			reg = <1>;
- 		};
-diff --git a/arch/arm/boot/dts/omap5-igep0050.dts b/arch/arm/boot/dts/omap5-igep0050.dts
-index 76e499d89d24..3851120857d7 100644
---- a/arch/arm/boot/dts/omap5-igep0050.dts
-+++ b/arch/arm/boot/dts/omap5-igep0050.dts
-@@ -128,7 +128,7 @@ hub@2 {
+ 			local-mac-address = [00 00 00 00 00 00];
+diff --git a/arch/arm/boot/dts/tegra30-ouya.dts b/arch/arm/boot/dts/tegra30-ouya.dts
+index a5cfbab5f565..e58dda4f9d2c 100644
+--- a/arch/arm/boot/dts/tegra30-ouya.dts
++++ b/arch/arm/boot/dts/tegra30-ouya.dts
+@@ -4553,7 +4553,7 @@ usb@7d004000 {
  		#address-cells = <1>;
  		#size-cells = <0>;
  
--		ethernet: usbether@3 {
-+		ethernet: ethernet@3 {
- 			compatible = "usb424,7500";
- 			reg = <3>;
- 		};
-diff --git a/arch/arm/boot/dts/omap5-uevm.dts b/arch/arm/boot/dts/omap5-uevm.dts
-index 51d5fcae5081..453da9f18a99 100644
---- a/arch/arm/boot/dts/omap5-uevm.dts
-+++ b/arch/arm/boot/dts/omap5-uevm.dts
-@@ -209,7 +209,7 @@ hub@2 {
- 		#size-cells = <0>;
- 	};
- 
--	ethernet: usbether@3 {
-+	ethernet: ethernet@3 {
- 		compatible = "usb424,9730";
- 		reg = <3>;
- 	};
+-		smsc@2 { /* SMSC 10/100T Ethernet Controller */
++		ethernet@2 { /* SMSC 10/100T Ethernet Controller */
+ 			compatible = "usb424,9e00";
+ 			reg = <2>;
+ 			local-mac-address = [00 11 22 33 44 55];
 -- 
 2.30.2
 
