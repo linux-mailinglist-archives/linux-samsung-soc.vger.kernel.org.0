@@ -2,108 +2,167 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E72054BE9E8
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Feb 2022 19:09:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D27B4BE844
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Feb 2022 19:05:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiBURmF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 21 Feb 2022 12:42:05 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50168 "EHLO
+        id S233175AbiBURel (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 21 Feb 2022 12:34:41 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbiBURl0 (ORCPT
+        with ESMTP id S232223AbiBURek (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 21 Feb 2022 12:41:26 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB5A27162
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Feb 2022 09:40:32 -0800 (PST)
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id B0A2B3F1CA
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Feb 2022 17:40:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645465230;
-        bh=LpXc1xYis15tzZuBaX7CvS9s8Rflb3ZQ3aLFG0/YcJA=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=FU0iDj/NLtFSFs7+KGn6wQno8TgVaM2AgpOHn0c74upm1Fgpm1kTpq7iT8OeLUUuD
-         fFnAfRRHbsRWVpQ0EGWlzmwpwLOxTwzbvgmF9rxEvB7iejuV0IfXkAVcNfV74eUnnE
-         Hulu205dtMhTXnDYxDvDiQvcBxgAB1623a7bI2KO1nZj/wd6kJBMhdOsFsc+7sAF4r
-         ncHdIMiZgY/Pba6B8gfiW8Fj95sjFkWzddIeM5mq4Eoqgg0C6wa4+DJ/pKsK2YW3me
-         PjjvuxG1K7W24ULolQXjGR+yHoZqZqF/vQxYhQW0fprQuz22HBqru+yyKB0WtgtBR0
-         gH3aeO1TbG3CQ==
-Received: by mail-ed1-f70.google.com with SMTP id l14-20020aa7cace000000b003f7f8e1cbbdso10481425edt.20
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Feb 2022 09:40:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LpXc1xYis15tzZuBaX7CvS9s8Rflb3ZQ3aLFG0/YcJA=;
-        b=rEY5iafIrwuD5BG5EssYbHuNXUn+rTIv+qjRYmx4ZvH237FJSHO0q0y5UsndCew3s/
-         /Fwj0Q2ZFDIoMRh6+wwuGV9YCF94C4s3S3ligCDTdODeqjqGDYF7UJSq0cwx+f1ur5ih
-         YjXCgZRMHbJDQ9tn74fQI1eaSJgJLda1RXD4g2ciNexEjuW7aW4S5yBR3IbytbBHOvIx
-         xrGAVFLeRiHp1IsnewaQLHtw0brlQwwIVOX9Kkr3IbVu/zYxslCdKU3iUF6CFk77GEEb
-         t+M+YA1zNvt6AuQRAbHeckULqHGE8s90spsY13hhDo6R+/v8t0IdRqA3viD9lSiBk94h
-         1xTA==
-X-Gm-Message-State: AOAM531mnXZrtIkzmFCkXnHuBzlDkvyxPCXU2jx+0EGhn6gnaU0xlIeC
-        GUwzg56QSx7EetaJyCK5p+P7EEPAa5pE5x2d/tFb32ruEhLJzE7+TdCjCKYE2TAmUP0t7Gv15Rv
-        NMO9VlcL4HchHQju0Rgv1an499hShcGhTT/yXIdq8JcVzZcs1
-X-Received: by 2002:a50:fc05:0:b0:408:4d18:5070 with SMTP id i5-20020a50fc05000000b004084d185070mr22842609edr.365.1645465230438;
-        Mon, 21 Feb 2022 09:40:30 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxMxvJLsv/ZkxbFBnRkJZaiCErCEJ36+3HERlONGEdDrjbZqffp0RJNO7yqStYkMMNu0XCjfQ==
-X-Received: by 2002:a50:fc05:0:b0:408:4d18:5070 with SMTP id i5-20020a50fc05000000b004084d185070mr22842598edr.365.1645465230312;
-        Mon, 21 Feb 2022 09:40:30 -0800 (PST)
-Received: from [192.168.0.122] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id hp7sm259204ejc.144.2022.02.21.09.40.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Feb 2022 09:40:29 -0800 (PST)
-Message-ID: <bf907500-fbf4-dae9-2e7a-e14d61a85b87@canonical.com>
-Date:   Mon, 21 Feb 2022 18:40:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 3/3] clocksource/drivers/exynos_mct: increase the size
- of name array
-Content-Language: en-US
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc:     linux-samsung-soc@vger.kernel.org, daniel.lezcano@linaro.org,
+        Mon, 21 Feb 2022 12:34:40 -0500
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A271B798
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Feb 2022 09:34:14 -0800 (PST)
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20220221173409epoutp04784899e830c0222859e7d4fa9b38e2ff~V3ZAErdEb0950509505epoutp04Z
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Feb 2022 17:34:09 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20220221173409epoutp04784899e830c0222859e7d4fa9b38e2ff~V3ZAErdEb0950509505epoutp04Z
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1645464849;
+        bh=8QoAWANia+LWatCrvDo7c2KtZTARPPnVpiok40+vh4Y=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=Pil936/uh1MGuQRTIDs31keIymPZaEoGCDjuOqwI2CWBs5WaCMCZkwfNQAqax7LFX
+         WPYrEmnF6kfWYhph6Z7biMQpHooonCY8AZZP+sV9SNfS52kpKMWTMqBOh6WJpLAwj2
+         T0Zi1uXowwM42kIih1k1cwjPsORjY8pArIaUWDss=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+        20220221173408epcas5p10ae318bb1443a7bdadecd43456ae8f41~V3Y_25q0b0912709127epcas5p10;
+        Mon, 21 Feb 2022 17:34:08 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.183]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4K2Ttg1wzpz4x9Pr; Mon, 21 Feb
+        2022 17:34:03 +0000 (GMT)
+Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        F3.A0.06423.A0DC3126; Tue, 22 Feb 2022 02:34:02 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+        20220221173402epcas5p3f85b10debc38c7ec1e1bd607055672d8~V3Y5ZinoD0424704247epcas5p3V;
+        Mon, 21 Feb 2022 17:34:02 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20220221173402epsmtrp1e821ef541eff55cdedae510a4853e1b3~V3Y5YuyW-2875828758epsmtrp16;
+        Mon, 21 Feb 2022 17:34:02 +0000 (GMT)
+X-AuditID: b6c32a49-b01ff70000001917-aa-6213cd0aad21
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        99.DA.29871.A0DC3126; Tue, 22 Feb 2022 02:34:02 +0900 (KST)
+Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
+        [107.108.73.139]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20220221173400epsmtip262b43f76e966b435aacb3b28e52979b4~V3Y4HTTGA0830808308epsmtip2R;
+        Mon, 21 Feb 2022 17:34:00 +0000 (GMT)
+From:   Alim Akhtar <alim.akhtar@samsung.com>
+To:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     krzysztof.kozlowski@canonical.com,
+        linux-samsung-soc@vger.kernel.org, daniel.lezcano@linaro.org,
         tglx@linutronix.de, pankaj.dubey@samsung.com,
-        m.szyprowski@samsung.com
-References: <20220221174547.26176-1-alim.akhtar@samsung.com>
- <CGME20220221173407epcas5p117620b55b5f5a94d6a525342374efa51@epcas5p1.samsung.com>
- <20220221174547.26176-3-alim.akhtar@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220221174547.26176-3-alim.akhtar@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        m.szyprowski@samsung.com, Alim Akhtar <alim.akhtar@samsung.com>
+Subject: [PATCH v3 1/3] clocksource/drivers/exynos_mct: Remove mct interrupt
+ index enum
+Date:   Mon, 21 Feb 2022 23:15:45 +0530
+Message-Id: <20220221174547.26176-1-alim.akhtar@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCKsWRmVeSWpSXmKPExsWy7bCmli7XWeEkg7m7zS0ezNvGZjHvs6zF
+        xrc/mCw2Pb7GanF51xw2ixnn9zFZrD1yl91i0dYv7BabN01lduD0mNXQy+Zx59oeNo93586x
+        e2xeUu/Rt2UVo8fnTXIBbFHZNhmpiSmpRQqpecn5KZl56bZK3sHxzvGmZgaGuoaWFuZKCnmJ
+        uam2Si4+AbpumTlANykplCXmlAKFAhKLi5X07WyK8ktLUhUy8otLbJVSC1JyCkwK9IoTc4tL
+        89L18lJLrAwNDIxMgQoTsjOWbO5iKbjCVdE04zF7A+N9ji5GTg4JAROJX8e+sHYxcnEICexm
+        lJiz+BsjhPOJUeLi6jNQmW+MEi9mzGWDaZk0eSdU1V5GiXuP+qCcFiaJSy9WMIFUsQloS9yd
+        vgXMFhFwk7jR2MEEUsQscI1R4s/EQ4wgCWGBSInO7jesIDaLgKrEza4vYCt4BWwkzrSsYoRY
+        Jy+xesMBZpBmCYFD7BLTJj1jgUi4SHxZu54JwhaWeHV8CzuELSXxsr8NyOYAsrMlenYZQ4Rr
+        JJbOOwbVai9x4MocFpASZgFNifW79EHCzAJ8Er2/nzBBdPJKdLQJQVSrSjS/uwrVKS0xsbub
+        FcL2kDi5dxqYLSQQK3F49TGmCYwysxCGLmBkXMUomVpQnJueWmxaYJiXWg6PnOT83E2M4OSl
+        5bmD8e6DD3qHGJk4GA8xSnAwK4nw3mEXThLiTUmsrEotyo8vKs1JLT7EaAoMpYnMUqLJ+cD0
+        mVcSb2hiaWBiZmZmYmlsZqgkzns6fUOikEB6YklqdmpqQWoRTB8TB6dUA5PMvfrXi9cl9U89
+        NJeRJf9+nMfCrSK3p6mbnZxxdMOtwx+nTflea/j8q2u0VSNjkvDRc/LxK28yNhbFXTR9/Oo0
+        58KqnXpnL35kL47sOCo2d4qDfOaTbzl83wKutU1/+cPX2kgt5BHDpevyT184ST3asuBKxFrW
+        vQeYZ820qVw0ZcHlmd8YflxaNO+FYqMyN+8aSa32h6c7pZdVHNvu+/EG07qW55vnR03KKF51
+        +arVhbOCbyTf115yYRRQ+f6ZdWPIg6CQ/87371zO7tScUnPiiOG8y4Udd2xlq9Zs2up6ys1m
+        VtBbZoGarRqGjbNCn35xS6naEpS2IuWza9yHP0F3GFZMeD1HZcq5RYeWL/G2u6nEUpyRaKjF
+        XFScCAB2614i5wMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplluLIzCtJLcpLzFFi42LZdlhJXpfrrHCSwcY+QYsH87axWcz7LGux
+        8e0PJotNj6+xWlzeNYfNYsb5fUwWa4/cZbdYtPULu8XmTVOZHTg9ZjX0snncubaHzePduXPs
+        HpuX1Hv0bVnF6PF5k1wAWxSXTUpqTmZZapG+XQJXxpLNXSwFV7gqmmY8Zm9gvM/RxcjJISFg
+        IjFp8k7GLkYuDiGB3YwSpy+cZYNISEtc3ziBHcIWllj57zk7RFETk8SmA1MZQRJsAtoSd6dv
+        YQKxRQQ8JNr+3WMGKWIWuMco8btlGliRsEC4xOqPn8EmsQioStzs+gK2gVfARuJMyypGiA3y
+        Eqs3HGCewMizgJFhFaNkakFxbnpusWGBYV5quV5xYm5xaV66XnJ+7iZGcIhpae5g3L7qg94h
+        RiYOxkOMEhzMSiK8d9iFk4R4UxIrq1KL8uOLSnNSiw8xSnOwKInzXug6GS8kkJ5YkpqdmlqQ
+        WgSTZeLglGpgMlVI+JonrXPUmnXVeQOZB5tbfs0tTpv/V3RCvgv/x9qK/MNO9e8ltbJf5WYu
+        vF0RGXU/4mLJ0YmJl46FvEx8ciRpftTv9L13czi6F2f81Hzbvs14s0hizJGT55qOZ+2WrTnR
+        a/T4VDc71+x2ox0N/8uN55zufypU9uYe47TVrzeWOXHMitqiaMzE9qj01z6VXW82Fp95kl34
+        qGCLwinNJ5eeGTTfV1ueV3jDV9cruFX1oZ3IK6eYiQkRh8R2+OqF/wrXXyl3eN7GIw+m/Az3
+        vbuXQWE640mLn0KnONbtNDz7o2GmuMWJuZrPSy3mdpqLcnLpNW1szehZ5fORQWTSD+Xv/gsf
+        HIlXZZ6Tr8D2W4mlOCPRUIu5qDgRAEiWLAagAgAA
+X-CMS-MailID: 20220221173402epcas5p3f85b10debc38c7ec1e1bd607055672d8
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20220221173402epcas5p3f85b10debc38c7ec1e1bd607055672d8
+References: <CGME20220221173402epcas5p3f85b10debc38c7ec1e1bd607055672d8@epcas5p3.samsung.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 21/02/2022 18:45, Alim Akhtar wrote:
-> Variable _name_ hold mct_tick number per cpu and it is currently
-> limited to 10. Which restrict the scalability of the MCT driver for
-> the SoC which has more local timers interrupts (>= 12).
-> Increase the length of it to make mct_tick printed correctly for
-> each local timer interrupts per CPU.
-> 
-> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
-> ---
->  drivers/clocksource/exynos_mct.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
+MCT driver define an enum which list global and local timer's
+irq index. Most of them are not used but MCT_G0_IRQ and
+MCT_L0_IRQ and these two are at a fixed offset/index.
+Get rid of this enum and use a #define for the used irq index.
 
+No functional changes expected.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+---
+ drivers/clocksource/exynos_mct.c | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
+diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+index 6db3d5511b0f..b3f3d27a837b 100644
+--- a/drivers/clocksource/exynos_mct.c
++++ b/drivers/clocksource/exynos_mct.c
+@@ -60,27 +60,17 @@
+ #define MCT_CLKEVENTS_RATING		350
+ #endif
+ 
++/* There are four Global timers starting with 0 offset */
++#define MCT_G0_IRQ	0
++/* Local timers count starts after global timer count */
++#define MCT_L0_IRQ	4
++#define MCT_NR_IRQS	12
++
+ enum {
+ 	MCT_INT_SPI,
+ 	MCT_INT_PPI
+ };
+ 
+-enum {
+-	MCT_G0_IRQ,
+-	MCT_G1_IRQ,
+-	MCT_G2_IRQ,
+-	MCT_G3_IRQ,
+-	MCT_L0_IRQ,
+-	MCT_L1_IRQ,
+-	MCT_L2_IRQ,
+-	MCT_L3_IRQ,
+-	MCT_L4_IRQ,
+-	MCT_L5_IRQ,
+-	MCT_L6_IRQ,
+-	MCT_L7_IRQ,
+-	MCT_NR_IRQS,
+-};
+-
+ static void __iomem *reg_base;
+ static unsigned long clk_rate;
+ static unsigned int mct_int_type;
+-- 
+2.25.1
 
-Best regards,
-Krzysztof
