@@ -2,61 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A170E4BFBAE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:02:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F15234BFB98
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:02:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233002AbiBVPB0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Feb 2022 10:01:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47676 "EHLO
+        id S233126AbiBVPBT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Feb 2022 10:01:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233040AbiBVPAt (ORCPT
+        with ESMTP id S233149AbiBVPAz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:00:49 -0500
+        Tue, 22 Feb 2022 10:00:55 -0500
 Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBDF410E57C
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:02 -0800 (PST)
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C99A10EC5F
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:07 -0800 (PST)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 62F9F3FCB1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:00:00 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 8EED440812
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645542000;
-        bh=4OhXJxblf34wMx5+uRUs16cf2JFWMcvDQKlBG/4EIbg=;
+        s=20210705; t=1645542002;
+        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=A8q+IGKUfAM8ea8bjjeC66pIYRgsgXI5QvFmBAjWvMq1VoxJcy/sPXrFFZviIhILY
-         EIWELaukoBa7aeJF9nLyVOkiTAceoYiuNYqA7GJZmmONINAb2V6YUCsshX+UPH7XIH
-         2ZA4aLge+YOHc3/AY3NXty/uLAnv8ENuy7Kid079y+sd4rdab6PBfZwT4PFjyHeqOm
-         n7BbN3oa4IWuzvfVqg0314/LV9TCJ3QgD3U2IOcKSl2BAWjMAzCJM/fGalPfcTHQjr
-         kK5LhoMQvQ89O6edCw69sfTlB3ul2ucHRwNedOqpNANNcsYj4SiJ0iuSsEnxD8OVzB
-         Eual/81vpCjUA==
-Received: by mail-ed1-f71.google.com with SMTP id o5-20020a50c905000000b00410effbf65dso12077403edh.17
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:00 -0800 (PST)
+        b=iyDq1tbkJf+9Q5xXoAFCuJM23bV735qnBjiNaQruOElGZ1TsmBGwVWACq/uMXb649
+         fu4uOd0GB0exylnFoJP4t5DaS/s9Wq0kDQf4x/02ypQqPQWSxtSI8j9PsgXtYHlFrV
+         a13X20p+d8FPOlvU6r2VRQRE0PDhQOEpV7T94QoLQ9BnHv5ff3BRRPt2UTtTGAXzMJ
+         uh8340d6iP3wae+G54ovCBBWfehvhWQg3ZR+wU8Ww3Nz+vSMu3xV1TjcBMSghpXMfD
+         r9hAhyUof8x5fMba6JpEsv5SXAknVOZ3x97RE5uYMm5nArFxoUoCj3EikG//0m/To6
+         RLMm4dd+w9ayQ==
+Received: by mail-ed1-f69.google.com with SMTP id dy17-20020a05640231f100b00412897682b4so10326861edb.18
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4OhXJxblf34wMx5+uRUs16cf2JFWMcvDQKlBG/4EIbg=;
-        b=fYshmd6m0YpMdCCVis0kZ+MSvxwKljawD5jrdCQgTpv1DBphjx9Amrm1nFBvWza3EO
-         dFcYEj2IQOb4R5cwQRobqpqhZ0/ft86oPgBtXKMT2dJqx0aQsElnc+kHx+9+rlvBtX68
-         UHpDFA6GK+p588h82Oo1W7yxs3mDUtcI0wj6If9T+sol9LZQAMGNT+fjM4FiqjRD8IY3
-         D2mrlLyS0VbFr8w8Iqx6FDbYoKPO8ePqBztkuwxL55HHHjXU7omd/0MQF33diBiUsG8+
-         lYkB076q2rPJZ8emxZLo7zO+bXMZklZsVru0cfdX/0JPwPcSZGHF79xsk/bbNaayJVDK
-         PBlg==
-X-Gm-Message-State: AOAM5324SXfkA87KXjg9q0zq4OxeZTvJ/ga7gl4oB0V561XPmpT4w+tA
-        JogSsPv1uxp1R+pJbD04E0M/etGfbPgQKEmMOvjiofisiWkJ0T4WNbfA4IfDxDE0Otl5+ra1nwV
-        7MElMHrKRlw2VWRnBo2QyFQkhMi5ZQqy9kyYsWNZtKA9Pr9Sg
-X-Received: by 2002:aa7:cd81:0:b0:410:d64e:aa31 with SMTP id x1-20020aa7cd81000000b00410d64eaa31mr26939003edv.167.1645541995664;
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyaJdWHb8xk+e2xSEaK1p8tjIOgBKlnOjh9riknUovYkgJh1fsrFc3SbrR3EFVhnzBs85hG8A==
-X-Received: by 2002:aa7:cd81:0:b0:410:d64e:aa31 with SMTP id x1-20020aa7cd81000000b00410d64eaa31mr26938989edv.167.1645541995521;
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
+        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
+        b=aBDtQs0TCeb1MUp4LfsjWwOpQ48vt6TBzC3GUmkoVIDZamFY7FSIbDcfWCA4SAMNS8
+         7dUBwpzFlIdL70J52ohfb1XlPlu6ojJIXNQVlEzGNUYJ3iU+U5EBks9HmyxonaJxOJcc
+         ryV6HByn9Jwvbn1NjqMHInVw+GWGEZm/eBL4O4CadMlhb+vPsogGmD2513mv/tpOpxm6
+         5mlwgHgstq/NN35B6jEnq+BkcGspOwA5GtKapJISwUZyvccxwne/ZaBX8Gd5WB5kqErW
+         wNjKs8pGCCJqwQdkAOeSjO3FPIEdCMl4+t0gQa5vL7SlLkyDK9MFPUBM+CBG65E4eulF
+         GfoQ==
+X-Gm-Message-State: AOAM533qyuoMMXrxsmLaTOfYqjuDJIbVKYzTJGIqXHDgn1qiVmgnWeNI
+        etBpt4Ik4adTV8aI/SLvwMfE1tVPnB5mnaEB9WcYS8xTAxd/qe3M2U/5ZxObh2YVNNgaQVffgIl
+        YEVp9TpKGHBmEN0If5MAbk8GjptRPdmSNM/Q71KS8p6dL3su8
+X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705732edq.439.1645541997724;
+        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwfSFtNX/a3KL4lHPEAhSPb3vHh30FiudcrzDoMBrPmGyj5vo81xOj/2DV7Q8M391vFSdj/vQ==
+X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705712edq.439.1645541997526;
+        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.54
+        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
+        Tue, 22 Feb 2022 06:59:56 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
@@ -77,9 +77,9 @@ To:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
-Subject: [PATCH v2 10/15] arm64: dts: hi3670: use 'freq-table' in UFS node
-Date:   Tue, 22 Feb 2022 15:58:49 +0100
-Message-Id: <20220222145854.358646-11-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v2 11/15] arm64: dts: ti: use 'freq-table' in UFS node
+Date:   Tue, 22 Feb 2022 15:58:50 +0100
+Message-Id: <20220222145854.358646-12-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
 References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
@@ -100,24 +100,24 @@ The uint32-array requires also element to be passed within one <> block.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm64/boot/dts/hisilicon/hi3670.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/hisilicon/hi3670.dtsi b/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-index 636c8817df7e..754b3a66ec0d 100644
---- a/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-@@ -671,8 +671,8 @@ ufs: ufs@ff3c0000 {
- 			clocks = <&crg_ctrl HI3670_CLK_GATE_UFSIO_REF>,
- 				 <&crg_ctrl HI3670_CLK_GATE_UFS_SUBSYS>;
- 			clock-names = "ref_clk", "phy_clk";
--			freq-table-hz = <0 0
--					 0 0>;
-+			freq-table = <0 0>,
-+				     <0 0>;
- 			/* offset: 0x84; bit: 12 */
- 			resets = <&crg_rst 0x84 12>;
- 			reset-names = "rst";
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+index 599861259a30..34aff40c6b8e 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+@@ -1257,7 +1257,9 @@ ufs@4e84000 {
+ 			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
+ 			reg = <0x0 0x4e84000 0x0 0x10000>;
+ 			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+-			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
++			freq-table = <250000000 250000000>,
++				     <19200000 19200000>,
++				     <19200000 19200000>;
+ 			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
+ 			clock-names = "core_clk", "phy_clk", "ref_clk";
+ 			dma-coherent;
 -- 
 2.32.0
 
