@@ -2,61 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F15234BFB98
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:02:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D2FC4BFB92
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:02:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233126AbiBVPBT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Feb 2022 10:01:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
+        id S233203AbiBVPBR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Feb 2022 10:01:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233149AbiBVPAz (ORCPT
+        with ESMTP id S233052AbiBVPAn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:00:55 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C99A10EC5F
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:07 -0800 (PST)
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        Tue, 22 Feb 2022 10:00:43 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6256610E553
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:01 -0800 (PST)
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 8EED440812
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:00:02 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 19EF640303
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645542002;
-        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
+        s=20210705; t=1645542000;
+        bh=1gnJNDJDw/4tQtVmWxy7bj3CuaQdR4fw8lY4W6WZrSM=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=iyDq1tbkJf+9Q5xXoAFCuJM23bV735qnBjiNaQruOElGZ1TsmBGwVWACq/uMXb649
-         fu4uOd0GB0exylnFoJP4t5DaS/s9Wq0kDQf4x/02ypQqPQWSxtSI8j9PsgXtYHlFrV
-         a13X20p+d8FPOlvU6r2VRQRE0PDhQOEpV7T94QoLQ9BnHv5ff3BRRPt2UTtTGAXzMJ
-         uh8340d6iP3wae+G54ovCBBWfehvhWQg3ZR+wU8Ww3Nz+vSMu3xV1TjcBMSghpXMfD
-         r9hAhyUof8x5fMba6JpEsv5SXAknVOZ3x97RE5uYMm5nArFxoUoCj3EikG//0m/To6
-         RLMm4dd+w9ayQ==
-Received: by mail-ed1-f69.google.com with SMTP id dy17-20020a05640231f100b00412897682b4so10326861edb.18
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:02 -0800 (PST)
+        b=gixVhZQMyF3xxFGNUO3zr1OdYaZvOBXJAareyCcxtXn3sOSC2RYXGT9911qrUySI/
+         I8PI0UyWYU4hnWXEC/oumqfpK7MtTZ4MsfB4TRXGXHrWf3ZG86nFXZoVJgURsgfj+L
+         mer7HKSB3wloGIgpwOiWlSpl9OcPKYFWVOXC4OYdNaxKnC59w7hi+7G+avLzCRTENT
+         1eY+oSAKHSV/0+p6dLG9ih0TrJvhzTpIL1wiyBNqKZwKdjQxW8+qBHcxZviQZn//z4
+         Zeni9p7j2AFIM2UjbTRU7B5ABOW9OboMpYWulgBkEBYzP0VG+1BTgAw5JhN6KecrVa
+         zGgeGeBu0i97A==
+Received: by mail-ej1-f72.google.com with SMTP id r18-20020a17090609d200b006a6e943d09eso5864959eje.20
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
-        b=aBDtQs0TCeb1MUp4LfsjWwOpQ48vt6TBzC3GUmkoVIDZamFY7FSIbDcfWCA4SAMNS8
-         7dUBwpzFlIdL70J52ohfb1XlPlu6ojJIXNQVlEzGNUYJ3iU+U5EBks9HmyxonaJxOJcc
-         ryV6HByn9Jwvbn1NjqMHInVw+GWGEZm/eBL4O4CadMlhb+vPsogGmD2513mv/tpOpxm6
-         5mlwgHgstq/NN35B6jEnq+BkcGspOwA5GtKapJISwUZyvccxwne/ZaBX8Gd5WB5kqErW
-         wNjKs8pGCCJqwQdkAOeSjO3FPIEdCMl4+t0gQa5vL7SlLkyDK9MFPUBM+CBG65E4eulF
-         GfoQ==
-X-Gm-Message-State: AOAM533qyuoMMXrxsmLaTOfYqjuDJIbVKYzTJGIqXHDgn1qiVmgnWeNI
-        etBpt4Ik4adTV8aI/SLvwMfE1tVPnB5mnaEB9WcYS8xTAxd/qe3M2U/5ZxObh2YVNNgaQVffgIl
-        YEVp9TpKGHBmEN0If5MAbk8GjptRPdmSNM/Q71KS8p6dL3su8
-X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705732edq.439.1645541997724;
-        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwfSFtNX/a3KL4lHPEAhSPb3vHh30FiudcrzDoMBrPmGyj5vo81xOj/2DV7Q8M391vFSdj/vQ==
-X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705712edq.439.1645541997526;
-        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
+        bh=1gnJNDJDw/4tQtVmWxy7bj3CuaQdR4fw8lY4W6WZrSM=;
+        b=itee7i0j+qAsws4REp7RULAMo/OkbJrozQ5XvBOV7TU901m9rw/EiS0DYkCsQ3Cnxb
+         xCyV2xzfQJmuYk+rx4Wz5u6JGJZv7N84JgM+7GS3Kl8y8LUCwqPFjJRhZYds+8qA91x3
+         3Z9kFHYn1jmlan8Y53x5e463PRv81Oc/lawF1TodYFfm5mh4siTqxpxccpLoYEx0vLuv
+         i9Yi4B9e0Hb8ChZFnyp4XB5RuEjAEsDN1/xVXVexmwy/mvkSYmJzQG0JI4oe5CM+aFxX
+         V1ejp5NV+hZJFU7kM6T0w3ges3UphqC/+gx3VnJEZhic54bdqGSnzY99bHSyc+2GCSH6
+         Lh9w==
+X-Gm-Message-State: AOAM53253rqh/CpD+HCfo9Wg+tb6baZ24za+pU08nfmEUIgV2jOW5OVN
+        Zc94kJQUfkxYssgmbaTIB2tB5oE3xMlS37CcAcd3L466dSCRIUUO+S7UILlB6R+jvgMXmyGNAvM
+        1dxTLPiAY8gcz0krqzdiIk1ft7+wRd1nHBvs78xdyzZvvVYHb
+X-Received: by 2002:a17:906:b155:b0:6c9:ea2d:3363 with SMTP id bt21-20020a170906b15500b006c9ea2d3363mr19204641ejb.729.1645541999443;
+        Tue, 22 Feb 2022 06:59:59 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz2oukZ+ozjlCm/noxM1LqqYguIfKnFdQpkzhzOSXTFSlmiKD/vXLNfpJoPvuzwYTi07oxrug==
+X-Received: by 2002:a17:906:b155:b0:6c9:ea2d:3363 with SMTP id bt21-20020a170906b15500b006c9ea2d3363mr19204621ejb.729.1645541999288;
+        Tue, 22 Feb 2022 06:59:59 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.55
+        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 06:59:56 -0800 (PST)
+        Tue, 22 Feb 2022 06:59:58 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
@@ -77,9 +77,9 @@ To:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
-Subject: [PATCH v2 11/15] arm64: dts: ti: use 'freq-table' in UFS node
-Date:   Tue, 22 Feb 2022 15:58:50 +0100
-Message-Id: <20220222145854.358646-12-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v2 12/15] arm64: dts: qcom: use 'freq-table' in UFS node
+Date:   Tue, 22 Feb 2022 15:58:51 +0100
+Message-Id: <20220222145854.358646-13-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
 References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
@@ -100,24 +100,106 @@ The uint32-array requires also element to be passed within one <> block.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi  | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-index 599861259a30..34aff40c6b8e 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-@@ -1257,7 +1257,9 @@ ufs@4e84000 {
- 			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
- 			reg = <0x0 0x4e84000 0x0 0x10000>;
- 			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
--			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
-+			freq-table = <250000000 250000000>,
-+				     <19200000 19200000>,
-+				     <19200000 19200000>;
- 			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
- 			clock-names = "core_clk", "phy_clk", "ref_clk";
- 			dma-coherent;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index c85825ea1623..fad1bbfa1c0a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1761,7 +1761,7 @@ ufshc: ufshc@624000 {
+ 				<&rpmcc RPM_SMD_LN_BB_CLK>,
+ 				<&gcc GCC_UFS_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<100000000 200000000>,
+ 				<0 0>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 2fda21e810c9..87336c5866c0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -990,7 +990,7 @@ ufshc: ufshc@1da4000 {
+ 				<&gcc GCC_UFS_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_RX_SYMBOL_1_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<50000000 200000000>,
+ 				<0 0>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 0d6286d27dd4..23caa29e7862 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2274,7 +2274,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
+ 				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<50000000 200000000>,
+ 				<0 0>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index d15fee495238..db2ac197c630 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1782,7 +1782,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
+ 				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<37500000 300000000>,
+ 				<0 0>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index fdaf303ba047..8c9e3c4ac5ac 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2133,7 +2133,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<37500000 300000000>,
+ 				<0 0>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index d242bab69c2e..a26bd3f13d4a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1935,7 +1935,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<75000000 300000000>,
+ 				<75000000 300000000>,
+ 				<0 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 934e29b9e153..edb904b58c0c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1398,7 +1398,7 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+ 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+-			freq-table-hz =
++			freq-table =
+ 				<75000000 300000000>,
+ 				<0 0>,
+ 				<0 0>,
 -- 
 2.32.0
 
