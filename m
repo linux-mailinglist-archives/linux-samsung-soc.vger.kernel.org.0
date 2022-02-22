@@ -2,66 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C6834BFBB8
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:02:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 241DA4BFBCE
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Feb 2022 16:03:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233149AbiBVPBV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Feb 2022 10:01:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48706 "EHLO
+        id S233076AbiBVPDV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Feb 2022 10:03:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233150AbiBVPAz (ORCPT
+        with ESMTP id S233486AbiBVPDC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:00:55 -0500
+        Tue, 22 Feb 2022 10:03:02 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60FD610EC55
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:06 -0800 (PST)
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9EE613DE03
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:01:59 -0800 (PST)
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 4948A4003C
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:00:05 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A21173F1D0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 15:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645542005;
-        bh=LfKEooVWXSt0X9amI75MXA0ImuzcwyjqGr8txR6hCCo=;
-        h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=vc3RucsustSnI9z6fj1AZ3faXkw/uB81BLhjsfHz9uRvUq0axAi6FjprYifCaTms2
-         G/jZ5OzN3Fsjqjp3rsoU3oDbFNiRJX2kApHmhH+rnhTqdDTx5nOGGuQIQ6z5ypInDT
-         XQZhR0GMrPt225HGhVjquKJrxdjFIkraKhNTHqmrvpXeZ8puofX0OhzAWd4CK4s/vq
-         9GzlJ8XZX/v1ep8CVwanxcr1kJpqdvVbDSGMOKMMO8rOrzUgh3NRPONnqXvUrres2E
-         cQUpSxkQE6or1M4U3Lv7nrjl8vQ/IdP5JnUWZeNc5MxtirhxkAKnBLLSweT95TmM/D
-         k/vJQLd/Zafog==
-Received: by mail-ed1-f69.google.com with SMTP id j10-20020a05640211ca00b004090fd8a936so12090987edw.23
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:00:05 -0800 (PST)
+        s=20210705; t=1645542118;
+        bh=HtdrJ3I4lOo9P+o7lWSeEHgMO5/UUG8VsgHgTsClLgE=;
+        h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+         In-Reply-To:Content-Type;
+        b=nogJOYgMjP3q+1b/iv2nOshul4hi1Qzqf45kW8TCCOWPllzgXgILW5EqmXlmGCYLj
+         FQEoq4nn5jmJh/JmPCd34AMkX0IeGBP93PHeGlzxIwPfegABA10huL4vLq4KEiMweG
+         hL4wO8m6VVIiMgZ4QWQlbjUqakBj67AR0hDFx7b9G71y/nRH3bhSvMym642cWIgegg
+         D8CtidGbLgmZzG3dBzKf5AEU1FzxhfQ0Vwyk6P/bIzzmt+zVvbINfFIzZ9PYcZhKrn
+         RrfODmhSqW+XyMtFOmengPlhpEkmK6wFUmfDvpJiCP4UWn1rKGrmj5vS51nivFgtkN
+         5jfv/E9UoCKRA==
+Received: by mail-ed1-f72.google.com with SMTP id dy17-20020a05640231f100b00412897682b4so10331563edb.18
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 22 Feb 2022 07:01:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LfKEooVWXSt0X9amI75MXA0ImuzcwyjqGr8txR6hCCo=;
-        b=VVntYhlJqVfwLTjVQvJpUNiHKkpMZbRv2g+P4UJlqLYZDNEmNO497SfOZlpJIdsAgM
-         p9XM29D9W5bDFP/LsXxJ3oUgJ5xgRr0u4oU2mBi+8IpWlSwKul/+HIhoLbLsM0aVZJLh
-         P0E+ur33BiaaUSbmWQ0AkYtHKqrfisUXo5+LnHt+N4iMkBS7Qx/MM8Zvc8W5bOqCiMin
-         KDLr/lsPv2WxO5gOSNgHBdDj50nD9erLhDxZHELM2S3Zo2PONk1eWEw9LZvvkl8++0oj
-         sHzrLmwkEXAFOecHx2FnEYWTWz/fIp+Jk5uJDx1puINPJ9VixCT5SG1Yp4IWHqtNvrtG
-         nNXA==
-X-Gm-Message-State: AOAM533dGtPYn8POPEbosyYGNTB1YAsQtUjCi+mi8vk4Pdm/tV1XoQIu
-        8Z4uxaNx0/PhehaA+wBS7l0UKrEQtTMdTC+s6btecssNk62DlSGyc+zYfWZA2+wNXL80I0o2b2n
-        y1weFMkzGmcE2Ja7TIEKiFHg0k9KYVHlGQysGVF090YvelzDf
-X-Received: by 2002:a17:906:70c2:b0:6cf:e1cc:4d8c with SMTP id g2-20020a17090670c200b006cfe1cc4d8cmr20090142ejk.696.1645542004844;
-        Tue, 22 Feb 2022 07:00:04 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyR3qbd+Iftv6XGp15bvvgUICPOPWMYZg+AzIuOxdejdmzbh/iz1wm8C/0MI15ezn8MGt0S6w==
-X-Received: by 2002:a17:906:70c2:b0:6cf:e1cc:4d8c with SMTP id g2-20020a17090670c200b006cfe1cc4d8cmr20090120ejk.696.1645542004625;
-        Tue, 22 Feb 2022 07:00:04 -0800 (PST)
-Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.07.00.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 07:00:04 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HtdrJ3I4lOo9P+o7lWSeEHgMO5/UUG8VsgHgTsClLgE=;
+        b=XsHbVQudvYK6BKwVS4dkisjZimQD+aLDIHp4BKhmv6bhrRSafHFQ5jIU2q91JS3X1P
+         yAQTjn/JD9/9XiBwAAaH4wiD5C1yvVWqf5yVh+4ovFEzAodbf/7cfsaVF3YpwyPlwdhr
+         JYGlgJttlKKZFzSEtzOIertmSAsmuWE+T0foQCGngf5+atvJaVdA6HzMOhA81PmnarI9
+         YGO8cbPJ9ks54vjEmVbD7DXE1JBaxhmmi5XutnyZqlg5SvPgZdQ0Os5gGaxpNmI0G92m
+         U+1LQdK34/MMIbah9hVFfCIXuG6ZrX1/1TwVHcwjz1SeHBtQIvwHbG3Hd91kWVSuL/Qx
+         qqyA==
+X-Gm-Message-State: AOAM533gpmVYLzxJ/aLPyY2WGQcnWcPnxay05NqCUhQqzMgZJhv5cdxK
+        gOCotCb8l+Vy7mjNthS2yZG1qDXv3wcP3TpxYVkFDXwjUPBkrpsWueKyY86q3/EzYR+sddukzQ7
+        +PpQdSU0n87P5Qz8SjYyQBRFH/4FSuOCksoU/CXYxQyY8pMLh
+X-Received: by 2002:a17:906:b005:b0:6b4:8861:597b with SMTP id v5-20020a170906b00500b006b48861597bmr19372062ejy.238.1645542107962;
+        Tue, 22 Feb 2022 07:01:47 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyl5ajALOLJhstZXNm4FFrBok2iV4kiyLbSmxL7nyMkd0sVGKDRLluG1qlnkwVf1Pl3ETi9Pw==
+X-Received: by 2002:a17:906:b005:b0:6b4:8861:597b with SMTP id v5-20020a170906b00500b006b48861597bmr19372009ejy.238.1645542107580;
+        Tue, 22 Feb 2022 07:01:47 -0800 (PST)
+Received: from [192.168.0.124] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id ci16sm6345629ejb.128.2022.02.22.07.01.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Feb 2022 07:01:47 -0800 (PST)
+Message-ID: <4e459bbb-ca6c-4ca2-efe9-8ab4d4f3b648@canonical.com>
+Date:   Tue, 22 Feb 2022 16:01:45 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 05/15] dt-bindings: ufs: qcom,ufs: convert to dtschema
+Content-Language: en-US
 To:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Wei Xu <xuwei5@hisilicon.com>, Nishanth Menon <nm@ti.com>,
@@ -77,60 +83,56 @@ To:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
-Subject: [PATCH v2 15/15] arm64: dts: qcom: sm8350: drop duplicated ref_clk in UFS
-Date:   Tue, 22 Feb 2022 15:58:54 +0100
-Message-Id: <20220222145854.358646-16-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
 References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <20220222145854.358646-6-krzysztof.kozlowski@canonical.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220222145854.358646-6-krzysztof.kozlowski@canonical.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-ref_clk clock in UFS node is already there with a <0 0> frequency, which
-matches other DTSI files.
+On 22/02/2022 15:58, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm Universal Flash Storage (UFS) Controller to DT
+> schema format.
+> 
+> Except the conversion, add also properties already present in DTS:
+> iommus, interconnects and power-domains.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 241 ++++++++++++++++++
+>  .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  90 -------
+>  2 files changed, 241 insertions(+), 90 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> new file mode 100644
+> index 000000000000..356217124222
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -0,0 +1,241 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Universal Flash Storage (UFS) Controller
+> +
+> +maintainers:
+> +  - Yaniv Gardi <ygardi@codeaurora.org>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+This email bounces ("User doesn't exist: ygardi@codeaurora.org"), so
+maintainer is needed for Qualcomm UFS bindings.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index a26bd3f13d4a..cb6442c9e761 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1916,7 +1916,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 			iommus = <&apps_smmu 0xe0 0x0>;
- 
- 			clock-names =
--				"ref_clk",
- 				"core_clk",
- 				"bus_aggr_clk",
- 				"iface_clk",
-@@ -1926,7 +1925,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 				"rx_lane0_sync_clk",
- 				"rx_lane1_sync_clk";
- 			clocks =
--				<&rpmhcc RPMH_CXO_CLK>,
- 				<&gcc GCC_UFS_PHY_AXI_CLK>,
- 				<&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
- 				<&gcc GCC_UFS_PHY_AHB_CLK>,
-@@ -1936,7 +1934,6 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
- 				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
- 			freq-table =
--				<75000000 300000000>,
- 				<75000000 300000000>,
- 				<0 0>,
- 				<0 0>,
--- 
-2.32.0
-
+Best regards,
+Krzysztof
