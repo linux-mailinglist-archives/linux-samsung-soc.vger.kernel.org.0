@@ -2,108 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 750CE4CA437
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Mar 2022 12:52:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFEE34CA868
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Mar 2022 15:45:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241619AbiCBLwu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 2 Mar 2022 06:52:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50470 "EHLO
+        id S243198AbiCBOqk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 2 Mar 2022 09:46:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241612AbiCBLwt (ORCPT
+        with ESMTP id S236928AbiCBOqj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 2 Mar 2022 06:52:49 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18EEBA76A
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Mar 2022 03:52:06 -0800 (PST)
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 8E9593F607
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Mar 2022 11:52:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646221925;
-        bh=GZ+2gRpwKiQW36vuEeC1R6O1z6W6FXlkVCMt+nuuy1c=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=VT+rVZNfBj+nKfYmg/tutfP0Nv3y4RtQh/4j7iTWQF0yQLOY1urUfFI/M3Qr6OG/M
-         AI+kuPW8MliFePZThcX3JJnJL28GeiW0FTRfVeKZzoQ1XaT22RZ9kF83Hmyfh5TggA
-         /0cx8MMLMBmUdGi3dwaj8JUhEdjRjBpUH9+IoFeve9JkFuGCpJc2FwzB2nAVduaIV0
-         MWPOBwFtGpwtPxi1XJuygI/SbcZ1Qv/S1ROpdWkoBx10utXiFlRwdu8WDOyH5O6G4x
-         7mhsitO56pPUCAgBvf5mRCfkcqoSOxP0eJ19jQkGgwWpscpZSTRON6UlwXP97I4YYF
-         Cc//H9guDzCUA==
-Received: by mail-ej1-f71.google.com with SMTP id d7-20020a1709061f4700b006bbf73a7becso858503ejk.17
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Mar 2022 03:52:05 -0800 (PST)
+        Wed, 2 Mar 2022 09:46:39 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23106C793C
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Mar 2022 06:45:56 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id i11so2566676eda.9
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Mar 2022 06:45:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=/+L2bZn7FnbIIrc4xC4DNyFnX/h+6EZYJnbtj5bZqaA=;
+        b=fGjaVmN75ZZ7sA1ZXhOG66i5chKR/xTTcWZT/g9KPyJMt+e2OJbVO2MBdJMivdmv+l
+         lAfnoo5m8yMN8QoAC78mlKrHhBcIXExq/pC0bjBA1szNZVCIcH09lDrLlgjfYYBq9gQY
+         ZAPciVsWFLcyRXGDZ16RAFNqedSIQQsvjdNqMKDKq9uiuFO3b6qK99vyg8ZigkZQuHaz
+         1qSdXE+STZifh7lsO7E0Cn5bJVgaldjgDWDnZZZciKFJzh3e6qSafybuC4YuHVNNDQ99
+         tNEQqbTwh1brCQ3Xq9RQiLSOWfXk+XFYEb0Y1cqW/sEc79waHjinhM6SFgsMhJUAt3dW
+         6JIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=GZ+2gRpwKiQW36vuEeC1R6O1z6W6FXlkVCMt+nuuy1c=;
-        b=sOerqb91/cUvyJVi6M+d0jTtMhcZyYgkobnpNyiWbvWQ3/54RPRvMwdhb6Ef6dZa90
-         AjEfhJfgjag3AnUR4eCVXSZDZIkuIkHJ1yzRIQAqIeW0AGpMlpEwn8p2xd5zMtSNUegg
-         gGZgIRWnVeOpjBYNssD3enhTx2fx2yz87VMXBSFN0IHzGRKl0S4DhVpbYYAF6my0wATn
-         DrAdTZRPaajKhDQjirxK6nZEnokHtpIe1yY12O2R6+69u+JqE34xV14yroTtdKgqCh1A
-         yYYW/MdZ33o5y8ZhyfvjJAptjpbHScJvTtvKQUMqnOuuPP86RYhq6fSu/WbxjKoohhfx
-         ZKRg==
-X-Gm-Message-State: AOAM530xdVZiEkempBr9X63Cz37LFdWWvOayQs46CZdQaX4w6IiycLcL
-        +AwXlz5Ff3ithyUNj46EqJISTHTfqNbV+zPnhbRI22TDYnJkalaiR5BojmrffHB9XVdxE3oWt7x
-        TlJXn1mnA3F8+OBHqhC6Z6dFvDCNU/idDbE+vtnd3rWSMAwEg
-X-Received: by 2002:a05:6402:372:b0:40a:bbf4:7973 with SMTP id s18-20020a056402037200b0040abbf47973mr28811625edw.399.1646221925281;
-        Wed, 02 Mar 2022 03:52:05 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyHlgE9lrc9DIKhd5HEEpVRbPqfpkzxaQ24qbVi00bwUH6CL9gHM16wriclt0C6f0bHFRgaaw==
-X-Received: by 2002:a05:6402:372:b0:40a:bbf4:7973 with SMTP id s18-20020a056402037200b0040abbf47973mr28811606edw.399.1646221925129;
-        Wed, 02 Mar 2022 03:52:05 -0800 (PST)
-Received: from [192.168.0.136] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id c4-20020a170906340400b006d077e850b5sm6286439ejb.23.2022.03.02.03.52.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 03:52:04 -0800 (PST)
-Message-ID: <6f17b476-0bba-5820-5cf2-7c888750ce31@canonical.com>
-Date:   Wed, 2 Mar 2022 12:52:03 +0100
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=/+L2bZn7FnbIIrc4xC4DNyFnX/h+6EZYJnbtj5bZqaA=;
+        b=CZveivvGzQKCkiqCyUKoqoeREY3fSOwvW0i2P6AHAhP/WgVWc9Kega5MCPWBRMsMpA
+         Ew7zqg8uqpARWBwYOZdulgkMaGup6jBMK7syGbZpEvho3AUejgUDm4NTXTQR1eOPP8dp
+         ELYa2/viP/68ixPVOzgJi5KL3n4WN5V5+KeCJNyE9xzjpNEjRaSeROn9l/PhMoyk1l3h
+         kI+7ytuKvUup+xxXU4EQpZMY4AcHPHlaVTtZvkN2rvTue4MVegRXvDIlGizt9aI5S+Go
+         lQtm1OFsPDYuF64nB6f6y50HwgMe5enjogQR3pngJBtMWZUUhaMyrPRaqLx91bBGIZGp
+         OXfw==
+X-Gm-Message-State: AOAM5328qOMX3DNBFFtXIqS5pDnfRomwUkaIO6NC8dZqq0jgPwDoovg1
+        EXOuOFhSb4sM5rb6ym8X8w8DkbCgj+/dGOBoMoA=
+X-Google-Smtp-Source: ABdhPJxHdbLBLmNLeNmMv1+HKBMZTWhofHfYote/VqLA47MgiLFEisaNAt068V04KLcgz1aok4lMVwge1kMS3O/4F90=
+X-Received: by 2002:a05:6402:50d4:b0:413:2a27:6b56 with SMTP id
+ h20-20020a05640250d400b004132a276b56mr30000802edb.228.1646232354574; Wed, 02
+ Mar 2022 06:45:54 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2] serial: samsung: Add samsung_early_read to support
- early kgdboc
-Content-Language: en-US
-To:     Woody Lin <woodylin@google.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, markcheng@google.com
-References: <20220302114923.144523-1-woodylin@google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220302114923.144523-1-woodylin@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Sender: elizabeth.hoisington1@gmail.com
+Received: by 2002:a50:3ac4:0:0:0:0:0 with HTTP; Wed, 2 Mar 2022 06:45:53 -0800 (PST)
+From:   Mrs Elizabeth Balkiwala <elizabeth.balkiwala1@gmail.com>
+Date:   Wed, 2 Mar 2022 06:45:53 -0800
+X-Google-Sender-Auth: Xlq5Uljr3TF0nMaW9i3nQ7jILs4
+Message-ID: <CANhm-9v+jf=kbAQ9UZx=Y=g0FSgHLcsyWprUSXmva_S9pDBXSA@mail.gmail.com>
+Subject: I AM SGT ELIZABETH
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
+        T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 02/03/2022 12:49, Woody Lin wrote:
-> The 'kgdboc_earlycon_init' looks for boot console that has both .read
-> and .write callbacks. Adds 'samsung_early_read' to samsung_tty.c's early
-> console to support kgdboc.
-> 
-> Signed-off-by: Woody Lin <woodylin@google.com>
-> ---
-> v2:
-> add 'const' to 'struct samsung_early_console_data *data'
-> ---
->  drivers/tty/serial/samsung_tty.c | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
-> 
+Hello, Dearest Friend,
 
+I Am Sgt Elizabeth Balkiwala, I have something important discussion
+for you, please reply
+urgently for more details give you further information. And I hereby
+advice to contact me by this email address   elizabeth.balkiwala1@gmail.com
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-
-Best regards,
-Krzysztof
+REDARDS
+Sgt. Elizabeth Balkiwala
