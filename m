@@ -2,89 +2,151 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6EC24CA127
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Mar 2022 10:47:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D79D4CA206
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  2 Mar 2022 11:20:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbiCBJsU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 2 Mar 2022 04:48:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49216 "EHLO
+        id S240952AbiCBKUl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 2 Mar 2022 05:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240648AbiCBJsS (ORCPT
+        with ESMTP id S231748AbiCBKUl (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 2 Mar 2022 04:48:18 -0500
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F48E2E088
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Mar 2022 01:47:30 -0800 (PST)
-Received: by mail-qv1-xf34.google.com with SMTP id 8so1062754qvf.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Mar 2022 01:47:30 -0800 (PST)
+        Wed, 2 Mar 2022 05:20:41 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668789134D
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Mar 2022 02:19:58 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id k130-20020a628488000000b004f362b45f28so1026749pfd.9
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 02 Mar 2022 02:19:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=oVymzacBmHlfSEBN0NUcViscc1BlJREjJA6+b6RGOmg=;
-        b=QWdde23KNX46k7WkqryQHz1i3nNKX3hJ6bUw0DjcHiOt75WWu7w5auh04nLkT/xnOJ
-         R0VQHYTpPb3pK1dC5Q61RFQMwi4trskiEVa2TQn04UuisHYWibAazS7ATmu54TIBxXdA
-         5lK9Ys3nLH2M+OL5YbUWmBjXKkfNKuHDhT335FY7373hVh3ljtDU7hufDm+HoFdxRSC5
-         irTZ1zsjvdJCrCgb+ck2wdaojqCCFwevHlYpXu0UnAPPXOqgUXh+Q4uM4deQ12SqSBxO
-         anQ3SzaZnzqNuLNM3DIBa/tSUB0jwrQxi9OOPrEA2SXa6sqI0YSXgXVQjBwH2TaK1Eg7
-         1gOQ==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=Yq89WbWr/nKtI2RVDgbrgWiRqIUUvQxU4ZRP/u39Tc4=;
+        b=lm4zJUzyhqzs2nvdFpXSR0vlIVib2Ri38tWVjvsqeYEdwiEB/dxkr1OjSZBdKRIhWP
+         mOqCavmFBymWwOrD0rp4KYZUr0Ol+p86D4yAkeZDMOBUmioLtRyAM0Y1Re2kFojye2S9
+         /6G7U6K078XM38L9pSWDyY9HW4BfENWa5utIpmtqViWK+Ug7VhxoX0G30P6Y/VM7NA3s
+         8b6NdWbCkU5JymN+ENB5BeIRq7YDKcgcMbdIW4IuZbqJ1MlPQtNZSq9tFLPP/uvLtCWz
+         rPBhwC6kcAIriegH5SODZ3BROXUxIylYmljIiX+77sNZvgtnxxVDyiMyoxqUfQzcmhKN
+         yNhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=oVymzacBmHlfSEBN0NUcViscc1BlJREjJA6+b6RGOmg=;
-        b=0/kjQg9UQHxkgFcMddo1e4ndLxUwokhN5fw6W9aB6elpp439HmzkJ0EBjy6PDGHHPe
-         8Dt3lVuwAQGhnWLe6xJWqA0q/Uww2dYd4YL6BcDagZouBD3o87DHdPF0UvTpbNcg2O0/
-         6VN1mdi2H4zmE0LyT8T/B6jUcm3TSk27jKUYbRL9JmEW0Ut7qR52+AQyeaWmyTVkP5M8
-         6/3gaimfgGMid9S9Wb56C1wfNPgdkSzt1wL6P3wbN8pAwE7PL/tqYBf+YSpZzuG8SDEU
-         VZaBXBEQdTOasWvZqhJRv8QwnTyYMrjXn9aGOcL6W1WxLtqGfhMyTLtr4kRgOOcuIejM
-         voFg==
-X-Gm-Message-State: AOAM532PRIlhU4oZwoYTX9/mA3L/mPpaOxwLuCAWoal6+DkqxFw6/v/+
-        upoGrjEbQVTKLTEHrNQh5st1YJJX9dISQw7VOGU=
-X-Google-Smtp-Source: ABdhPJwbpxn+o5lpNUFUhQmBWdx4hvUvkX98PANWZ50On8S1tPm3b2kQMdzMgrFsQtUtHu3RHExhB4D+i2WeoxrhN7I=
-X-Received: by 2002:a05:6214:f2d:b0:432:dc5f:ea15 with SMTP id
- iw13-20020a0562140f2d00b00432dc5fea15mr14989081qvb.81.1646214448456; Wed, 02
- Mar 2022 01:47:28 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:ad4:5443:0:0:0:0:0 with HTTP; Wed, 2 Mar 2022 01:47:27 -0800 (PST)
-From:   Anna Zakharchenko <fpar.org@gmail.com>
-Date:   Wed, 2 Mar 2022 10:47:27 +0100
-Message-ID: <CALr0R0oEzU-WF+OhADUDAnG2qytOv4T7_0dX6YBZoqPbR=3=NA@mail.gmail.com>
-Subject: Re: Help me in Ukraine
-To:     undisclosed-recipients:;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=Yq89WbWr/nKtI2RVDgbrgWiRqIUUvQxU4ZRP/u39Tc4=;
+        b=Fq02AztH2CX+/9EDwOi7e6Y98FgXLcFYk8jyEQNDSfQqDYCP6SnrZKrJXdfslo4Lj3
+         Rk+PcOnPzD0fCfwovrlADezgLb1nR2HIS1n+5kWIB7QeJ9+cPsls/UjOPBLfO+9/c7ME
+         V7uE1vxyV2Lt4mHEdFSljqQDVCQCfqCnKFW67MgJZxEYKwVa9QxiAl2XSUfXVTpExwxz
+         xpHsQucEdA4D8BzFfHy6w8elEILUx82MHS6bi8BuNSeOtbezaZVKRBQNW8yvi6WgJFmR
+         TKXZJ5rJlvV87pqp/YlUFP2lKN07p7n6edwRhmIhCuJK+zdqdTrqYCLceVQ6awMh6hfa
+         a8lQ==
+X-Gm-Message-State: AOAM532iNamZxiuJ+4rHoLaXo+FZkqlyQGng/PqSFZJwbBpP4bkY3JQc
+        p3SjuC/Rd/4gzbQNcXwc8FAvToEAmtkWxA==
+X-Google-Smtp-Source: ABdhPJzEXQNhD0xqT2s2x//pYYtesl+TerhASD0Ziddn/5GiSvMBYaO6FAMA2Ou6p+she/JPNCFbtFSgjrrJtQ==
+X-Received: from woodylin.ntc.corp.google.com ([2401:fa00:fc:202:3ddc:5127:fcb7:1fad])
+ (user=woodylin job=sendgmr) by 2002:a17:903:2285:b0:151:4b38:298e with SMTP
+ id b5-20020a170903228500b001514b38298emr20044336plh.36.1646216397851; Wed, 02
+ Mar 2022 02:19:57 -0800 (PST)
+Date:   Wed,  2 Mar 2022 18:19:25 +0800
+Message-Id: <20220302101925.210810-1-woodylin@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
+Subject: [PATCH] serial: samsung: Add samsung_early_read to support early kgdboc
+From:   Woody Lin <woodylin@google.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, woodylin@google.com,
+        markcheng@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.8 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
-        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        FREEMAIL_FROM,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_MONEY_PERCENT,T_SCC_BODY_TEXT_LINE,UNDISC_MONEY,URG_BIZ autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: No, score=-10.1 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello,
+The 'kgdboc_earlycon_init' looks for boot console that has both .read
+and .write callbacks. Adds 'samsung_early_read' to samsung_tty.c's early
+console to support kgdboc.
 
+Signed-off-by: Woody Lin <woodylin@google.com>
+---
+ drivers/tty/serial/samsung_tty.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-I am a Russian widow trapped in Ukraine's Donbass region amid Vladimir
-Putin's senseless conflict. During the 2014 battle in the Donbass, I
-lost my husband, a prominent Ukrainian businessman, who died without
-having children with me. I am currently in an underground bunker in
-Donetsk Oblast, a separatist war zone recognized by Russian President
-Vladimir Putin. I urgently request your assistance in moving my family
-trust fund worth =C2=A33,500,000.00 from the UK to your country to prevent
-European Union sanctions from seizing my money because I am a Russian
-citizen.
+diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+index d002a4e48ed9..eeb30d016ff1 100644
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -2949,6 +2949,7 @@ static void wr_reg_barrier(struct uart_port *port, u32 reg, u32 val)
+ 
+ struct samsung_early_console_data {
+ 	u32 txfull_mask;
++	u32 rxfifo_mask;
+ };
+ 
+ static void samsung_early_busyuart(struct uart_port *port)
+@@ -2983,6 +2984,26 @@ static void samsung_early_write(struct console *con, const char *s,
+ 	uart_console_write(&dev->port, s, n, samsung_early_putc);
+ }
+ 
++static int samsung_early_read(struct console *con, char *s, unsigned int n)
++{
++	struct earlycon_device *dev = con->data;
++	struct samsung_early_console_data *data = dev->port.private_data;
++	int ch, ufstat, num_read = 0;
++
++	while (num_read < n) {
++		ufstat = rd_regl(&dev->port, S3C2410_UFSTAT);
++		if (!(ufstat & data->rxfifo_mask))
++			break;
++		ch = rd_reg(&dev->port, S3C2410_URXH);
++		if (ch == NO_POLL_CHAR)
++			break;
++
++		s[num_read++] = ch;
++	}
++
++	return num_read;
++}
++
+ static int __init samsung_early_console_setup(struct earlycon_device *device,
+ 					      const char *opt)
+ {
+@@ -2990,12 +3011,14 @@ static int __init samsung_early_console_setup(struct earlycon_device *device,
+ 		return -ENODEV;
+ 
+ 	device->con->write = samsung_early_write;
++	device->con->read = samsung_early_read;
+ 	return 0;
+ }
+ 
+ /* S3C2410 */
+ static struct samsung_early_console_data s3c2410_early_console_data = {
+ 	.txfull_mask = S3C2410_UFSTAT_TXFULL,
++	.rxfifo_mask = S3C2410_UFSTAT_RXFULL | S3C2410_UFSTAT_RXMASK,
+ };
+ 
+ static int __init s3c2410_early_console_setup(struct earlycon_device *device,
+@@ -3011,6 +3034,7 @@ OF_EARLYCON_DECLARE(s3c2410, "samsung,s3c2410-uart",
+ /* S3C2412, S3C2440, S3C64xx */
+ static struct samsung_early_console_data s3c2440_early_console_data = {
+ 	.txfull_mask = S3C2440_UFSTAT_TXFULL,
++	.rxfifo_mask = S3C2440_UFSTAT_RXFULL | S3C2440_UFSTAT_RXMASK,
+ };
+ 
+ static int __init s3c2440_early_console_setup(struct earlycon_device *device,
+@@ -3030,6 +3054,7 @@ OF_EARLYCON_DECLARE(s3c6400, "samsung,s3c6400-uart",
+ /* S5PV210, Exynos */
+ static struct samsung_early_console_data s5pv210_early_console_data = {
+ 	.txfull_mask = S5PV210_UFSTAT_TXFULL,
++	.rxfifo_mask = S5PV210_UFSTAT_RXFULL | S5PV210_UFSTAT_RXMASK,
+ };
+ 
+ static int __init s5pv210_early_console_setup(struct earlycon_device *device,
+-- 
+2.35.1.574.g5d30c73bfb-goog
 
-Please help me save and protect this money. You will receive 30% of
-the total money as a reward for your efforts, while you must keep 70%
-for me until the conflict is over. For more information, you can
-contact me directly at (anna@sc2000.net).
-
-
-Cordially
-Anna Zakharchenko
-My email address is: anna@sc2000.net
