@@ -2,110 +2,76 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96E134CD439
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Mar 2022 13:25:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00EFC4CE9B4
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  6 Mar 2022 07:51:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239714AbiCDM0B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 4 Mar 2022 07:26:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60134 "EHLO
+        id S233117AbiCFGwD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 6 Mar 2022 01:52:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238800AbiCDMZ7 (ORCPT
+        with ESMTP id S233064AbiCFGvz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 4 Mar 2022 07:25:59 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630091B0BCE
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  4 Mar 2022 04:25:07 -0800 (PST)
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 388753F621
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  4 Mar 2022 12:25:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646396706;
-        bh=sMfVOQVh3QDv09HKuf77ip6IaDuNbDVh/tnxPccjD3M=;
-        h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=OSiNLVksYhv5BFZYyWz7Z0kz/NKn/mboV6ONJF/avttnv/LglB34ywPTh/xlOuCA1
-         zXQNGtB6dlkV7ovP8rmL+8ono9GJ4sQTfrbtGZne7WpZEGYcsjcGNMn2+TxXi4JlHK
-         8rA61suFkKRiZkgewlCQ+8ORtdatiVZ0TLdxBfsRNSOVz73kOSPSqqlr+gd+mpwcVh
-         IhaEXsgJ34l5Ms5YxxZkdzw4YY47w/rHqLwpN7+OsYZVO0NzDql0ZZzwLm6YzfhVCE
-         en3IY63jKPoGsr8U3JkycQmDWNMWW5KrYmQ0PvtULLHt57ibEwKxFmfrKcvrGZw+x2
-         q+j83C6TgpSYQ==
-Received: by mail-ej1-f72.google.com with SMTP id la22-20020a170907781600b006a7884de505so4330998ejc.7
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 04 Mar 2022 04:25:06 -0800 (PST)
+        Sun, 6 Mar 2022 01:51:55 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C2D66610
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  5 Mar 2022 22:51:00 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id j15so21070779lfe.11
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 05 Mar 2022 22:51:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=KDgAx1nMZI4VA0728iAuqALj69hyn7X0WLLUiz2m+OH09NDtWJqkn0K0IjhaqXccDL
+         nYA9IS56U+BvEYDp5ZuYOTDJ28DkbGQXOo4nCoFRXwOq8btCUGBKve+nLdvXGAtQGfZd
+         8/3HmQyIohZytZNIAaZ2YSJ+VGfF2cuAbX+92kqJIy7dPjcCYPV+qxcIVHj5OJkNioe8
+         RnnPJV63I7FofbcYlKCR7cawwHR+Gyj/OksLFoNh7LOBENUnMHRRrWfgS+R5N0DbQgRd
+         FM7OvtlHYW5haJ9bCovh/xFv8pj40s/F/HFWyLhlvxnDTkjGlvvz7xTkeBicCtgptiHh
+         fIkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sMfVOQVh3QDv09HKuf77ip6IaDuNbDVh/tnxPccjD3M=;
-        b=6lWMkpzhOQTmG41PzFALaVj4N0mJgUwsmXcT7kpTDUEyswtZzSSG2JEjRx577+ayu/
-         ARRISmOgWWHJlo6lRgcOsgYOvyhBrBR3C5WbX5pTTTlwI6qEvjiGQpfguqbO2Yp8kMJh
-         pqUaxYbi1tNOz8sshng2jlWQaq7frhpCJRjC9012TfS3SAai81GEFDcMFXCEpL6OWQAx
-         DmfnYLWrBhjYBfj0JXRFotAt58vRXJBfhv9YpWbmyIus54r1frAy1GCfp1twg8dROovj
-         ey2y6vzwb9SOWJ5eqxhKC17zcqDIP0++lP9XKtvVAZpnpPf2aaejBm3xx/xTcEbmuPtw
-         56WQ==
-X-Gm-Message-State: AOAM530CKDpTsZ/JtkXJdi8Wum7UplLrwoxLd6i2Uq3FnkZWyL8Sd1vH
-        3D70lcEYPSyOkbHS7tQW9LDb/nLW9aBZp9E1l0FyqIsi7QsK/dXJCzggTHvjDykDoUlwrBvQN/R
-        7WRXZXBV7jF98qb6A40SbK0cdYJ1gRZnRoHy7sbkelmYkM98X
-X-Received: by 2002:aa7:d14f:0:b0:415:cf37:324b with SMTP id r15-20020aa7d14f000000b00415cf37324bmr9098551edo.263.1646396705938;
-        Fri, 04 Mar 2022 04:25:05 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzKMSVDmEk/neqIWD4dYZYTA7KTOdHcqfRP178ukkaNKBBjSxa1rHQ9JAwE06E9Efaict8Eiw==
-X-Received: by 2002:aa7:d14f:0:b0:415:cf37:324b with SMTP id r15-20020aa7d14f000000b00415cf37324bmr9098533edo.263.1646396705766;
-        Fri, 04 Mar 2022 04:25:05 -0800 (PST)
-Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id r23-20020aa7da17000000b00415a1431488sm2047368eds.4.2022.03.04.04.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 04:25:05 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v2 4/4] arm64: dts: tesla: add a specific compatible to MCT on FSD
-Date:   Fri,  4 Mar 2022 13:24:24 +0100
-Message-Id: <20220304122424.307885-5-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220304122424.307885-1-krzysztof.kozlowski@canonical.com>
-References: <20220304122424.307885-1-krzysztof.kozlowski@canonical.com>
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=p4+hlAOzwN1YTWbJltKEaeh3hdNjX5SbjQK/NfFjbtV8X2ltkKLswkGtLFGRhHnO8N
+         kezrnkh4Y9LKUcX3aqgIn7fjk1K06pGLmymBGWbfI/RqvhmPSX00qnwh7hGkLXpwGrYx
+         FR0kbdvi7lLGBGY3wkoIdQHgLs6/V9wAQUY5i3ToFP/pgE/s71zHRwvl2G+H0jLkv70w
+         /UVyyduZuq7ZCDc3SUPHS+ZwoluXZd3t4tjUBNlCz+++AZp+7Hj/Zm50Mqi1/j5bFnlA
+         LafPwDPjPsFhwQpSeSNZF0AbsLN8zE5kCh9s57PVAxFLHMf4/nGXxMirH8TNfMRwrUJm
+         il6w==
+X-Gm-Message-State: AOAM530oIjuRE+w9UoclGmKtwCttCmbee/HXucVG+UzQqttCbuiURgA0
+        DFrwJWJsmfcxrI1wC8olCGJwZcnaN4mQ+I2O+SMzo1+AF18=
+X-Google-Smtp-Source: ABdhPJzq04i8VJyC6uwySEx5tzgrtxCg/XL0hqdBTWFWm66/zQAuy3m2ubrZV75jrYUP9jvmG0PdhfRUhLuebg8/B7w=
+X-Received: by 2002:a2e:94c7:0:b0:247:de4e:e9bc with SMTP id
+ r7-20020a2e94c7000000b00247de4ee9bcmr2397951ljh.397.1646549448778; Sat, 05
+ Mar 2022 22:50:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Reply-To: mrs.susanelwoodhara17@gmail.com
+Sender: mrs.arawyann@gmail.com
+Received: by 2002:ab3:7d89:0:0:0:0:0 with HTTP; Sat, 5 Mar 2022 22:50:48 -0800 (PST)
+From:   Mrs Susan Elwood Hara <mrs.susanelwoodhara17@gmail.com>
+Date:   Sun, 6 Mar 2022 06:50:48 +0000
+X-Google-Sender-Auth: NOWRSnt_sskMD3s295a30bcHvEs
+Message-ID: <CACppo47TD9J4Sy+vaJu1wXHqd88WqFwMNn6OdkY1khwXu3TuFw@mail.gmail.com>
+Subject: GOD BLESS YOU AS YOU REPLY URGENTLY
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        SUBJ_ALL_CAPS,T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE,UNDISC_MONEY
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-One compatible is used for the Multi-Core Timer on Tesla FSD SoC, which
-is correct but not specific enough.  The MCT blocks have different
-number of interrupts, so add a second specific compatible to Tesla FSD.
+GOD BLESS YOU AS YOU REPLY URGENTLY
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- arch/arm64/boot/dts/tesla/fsd.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/tesla/fsd.dtsi b/arch/arm64/boot/dts/tesla/fsd.dtsi
-index 9a652abcbcac..10c217a57a7d 100644
---- a/arch/arm64/boot/dts/tesla/fsd.dtsi
-+++ b/arch/arm64/boot/dts/tesla/fsd.dtsi
-@@ -727,7 +727,7 @@ spi_2: spi@14160000 {
- 		};
- 
- 		timer@10040000 {
--			compatible = "samsung,exynos4210-mct";
-+			compatible = "tesla,fsd-mct", "samsung,exynos4210-mct";
- 			reg = <0x0 0x10040000 0x0 0x800>;
- 			interrupts = <GIC_SPI 455 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 456 IRQ_TYPE_LEVEL_HIGH>,
--- 
-2.32.0
-
+ Hello Dear,
+Greetings, I am contacting you regarding an important information i
+have for you please reply to confirm your email address and for more
+details Thanks
+Regards
+Mrs Susan Elwood Hara.
