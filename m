@@ -2,112 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 890884CF3EA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 09:47:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1DA4CF3F8
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 09:51:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233067AbiCGIr7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Mar 2022 03:47:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54556 "EHLO
+        id S231229AbiCGIv4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Mar 2022 03:51:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233266AbiCGIr5 (ORCPT
+        with ESMTP id S233754AbiCGIvz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Mar 2022 03:47:57 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9886352D
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 00:47:03 -0800 (PST)
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 4FC333F5F7
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 08:47:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646642821;
-        bh=cTVS5wZOGaAoIcz1M4Y4sLTFfhLOC06ze/gaw6hqXNw=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=SS+2a6ideT8YDbS371Foym8KXdJxQC/R/mxCiUblsH07rj2xiJIhg3O1KFwChQb+p
-         jsVgTssmW8zFH68V3ZKC468/xfdOqKDZgcTYh2zP6VtMIsrZm6ZjZGapTC4DxZmbm7
-         Xu5oEuU0s+os9w4hpu0h3heEs0R6+152SqmH17vqMnSgmDozsC/2YuRjZC8/9IGDx1
-         hsPU/pr7NyOHYMAI+3q9es3IWu8eI+lKsfzqVvDvRJhAv/Hs9nwpdNTrgNPsJ9p6wS
-         tqkxqr1POFZimngoT1MQ/bliQWuSVtb7QdQQjAKp2XhvbspJXjMjQfAhjKNs0lO/RJ
-         C/pOrpJk5rvmQ==
-Received: by mail-ed1-f71.google.com with SMTP id b24-20020a50e798000000b0041631767675so2313378edn.23
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Mar 2022 00:47:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cTVS5wZOGaAoIcz1M4Y4sLTFfhLOC06ze/gaw6hqXNw=;
-        b=frJHXyCQEMBm3VRQ1kJIBQBCaMBORgX2uFfqNEBtD4YHAUpqlIWASIyIamKZa+fKBB
-         LPca2+WLiYNIViIqPES/D7tm5NIoEz6mshwnwf0xqK6CVz21HZfrsRPcfuaHp7Jmonz0
-         2cPUSUJkvQljVAamhA6ugdGzkd1i5/8D3BAd6lNL6I3NfGhMQfug+HitFCT0OCWeq6eF
-         +AdmD0pedo2IK1+Cz2NDc6FnRAVeoCRMN+8t/hcvhn7aKQHoPzjnkTpc3b8y1pN6h86/
-         O4GiTAd/eNpPK/INBo3OtU8b92IbX7DVOuw1xlFoYXCrUPBO/ZGj7fr1WfzonJZYIoSH
-         rXMA==
-X-Gm-Message-State: AOAM533R1JE/blYtTahblVLYZ1A9FHMKbyvry2W6EtN1wJrR0I6HML7o
-        h0tWeZhWWWpWt3mwW1SLste8aHwY56XJnu0+hqP9Cdg0kGhG9rEJeYxR4qcaT+/cfoNeiA/8Ki9
-        UfzKDEQzjEM4RZqF9AZLZQmf1PGMzl4gg3MsMYztv+zX0dF6d
-X-Received: by 2002:a05:6402:2754:b0:416:55c4:c883 with SMTP id z20-20020a056402275400b0041655c4c883mr1452288edd.285.1646642820898;
-        Mon, 07 Mar 2022 00:47:00 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwlcygC1225VRsCfRH7PGhqlqVVmwDsWlgFrgal65RixQmIDsY1lehMdFc//YJEm1fs3ijWuQ==
-X-Received: by 2002:a05:6402:2754:b0:416:55c4:c883 with SMTP id z20-20020a056402275400b0041655c4c883mr1452278edd.285.1646642820720;
-        Mon, 07 Mar 2022 00:47:00 -0800 (PST)
-Received: from [192.168.0.140] (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
-        by smtp.gmail.com with ESMTPSA id h20-20020a1709060f5400b006d6d54b9203sm4474446ejj.38.2022.03.07.00.46.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 00:46:59 -0800 (PST)
-Message-ID: <e021ee5d-1d4d-61ea-8eb4-51ca87820b2f@canonical.com>
-Date:   Mon, 7 Mar 2022 09:46:59 +0100
+        Mon, 7 Mar 2022 03:51:55 -0500
+Received: from smtp2.axis.com (smtp2.axis.com [195.60.68.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5B110D1;
+        Mon,  7 Mar 2022 00:51:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=axis.com; q=dns/txt; s=axis-central1; t=1646643061;
+  x=1678179061;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=bVG6vwdlcHFBo+UrFcLHvLdJ2KogK7OxC3zq2iPwzuk=;
+  b=DE01NczPkB923mIOMYfvrljSBf5CIeX3XFjyUL2GIJhR0KwOjMS7pzdT
+   pIQP4vZ+eGVRPs3kJepYI0stYqxckTStcNFiuHk2t0xwvKbnFg4ncCehx
+   HfJ2KF0kvI3NUEOHfd1U1vcBV0IMqzIoLmvO2r3nz9VhJwXWxhyOzPv9p
+   +WrG7vxQHUiq/qbZJUghY+vAsF0pd1LIpnkKxiFDzuelUPcI+wHyc1fbn
+   vtIDqMqwZNz4vHYfdVy09SIkBQsWnmK8YXnpJloppqNMXvvT80hMt/Jhy
+   WUTj5ohx/C0GP9TN5ssXeSQTZw1YMVw+b3c2Q2F6jkd/CVYczUlRtmWqJ
+   g==;
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     <gregkh@linuxfoundation.org>, <jirislaby@kernel.org>,
+        <krzysztof.kozlowski@canonical.com>
+CC:     <kernel@axis.com>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robh+dt@kernel.org>,
+        <alim.akhtar@samsung.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>
+Subject: [PATCH 0/2] Add support for ARTPEC-8 UART
+Date:   Mon, 7 Mar 2022 09:50:51 +0100
+Message-ID: <20220307085053.1636475-1-vincent.whitchurch@axis.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] clocksource/drivers/exynos_mct: Enable building on ARTPEC
-Content-Language: en-US
-To:     Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Cc:     kernel@axis.com, alim.akhtar@samsung.com,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20220307083744.1592533-1-vincent.whitchurch@axis.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220307083744.1592533-1-vincent.whitchurch@axis.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 07/03/2022 09:37, Vincent Whitchurch wrote:
-> This timer block is used on ARTPEC-8.
-> 
-> Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
-> ---
->  drivers/clocksource/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
-> index ae95d06a4a8f..2ea981ef23af 100644
-> --- a/drivers/clocksource/Kconfig
-> +++ b/drivers/clocksource/Kconfig
-> @@ -419,7 +419,7 @@ config ATMEL_TCB_CLKSRC
->  config CLKSRC_EXYNOS_MCT
->  	bool "Exynos multi core timer driver" if COMPILE_TEST
->  	depends on ARM || ARM64
-> -	depends on ARCH_EXYNOS || COMPILE_TEST
-> +	depends on ARCH_ARTPEC || ARCH_EXYNOS || COMPILE_TEST
+This series adds support for the UART hardware on the ARTPEC-8 chip.  This
+block is already supported by an existing driver so only a small patch to
+describe the properties of the variant is required.
 
-This looks ok, but please also provide compatible in the bindings (if
-driver stays the same) on top of my patches specifying number of interrupts:
-https://github.com/krzk/linux/commits/n/dt-bindings-exynos-mct-v2
+Vincent Whitchurch (2):
+  dt-bindings: serial: samsung: Add ARTPEC-8 UART
+  tty: serial: samsung: Add ARTPEC-8 support
 
-Best regards,
-Krzysztof
+ .../bindings/serial/samsung_uart.yaml         |  1 +
+ drivers/tty/serial/Kconfig                    |  2 +-
+ drivers/tty/serial/samsung_tty.c              | 38 +++++++++++++++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
+
+-- 
+2.34.1
+
