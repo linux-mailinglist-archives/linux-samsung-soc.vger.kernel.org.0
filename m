@@ -2,105 +2,166 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 346304CF353
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 09:10:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BC7E4CF3AD
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 09:34:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236135AbiCGILS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Mar 2022 03:11:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46718 "EHLO
+        id S233268AbiCGIfT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Mar 2022 03:35:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236167AbiCGILI (ORCPT
+        with ESMTP id S232508AbiCGIfS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Mar 2022 03:11:08 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672F251307
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 00:10:10 -0800 (PST)
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 3A41E3F1AF
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 08:10:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646640609;
-        bh=rZiSscehpFaw25MYSQrGhTmta6JFYZvBO72KN+MNtGk=;
-        h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-         In-Reply-To:Content-Type;
-        b=seiWrj7pASYo59gEsGP6r3jWGc5ym8vZqIAqde2j1ONMIXs9tc3+9WUt5ARe0Psjn
-         +dXTUrSIVONY6f9a7o1UNhFdYssjUtbjOSeFq0BX9Ou/2HbDSxUoEMyq0PvSSVpgU/
-         VNfqtMGWTT2zNPoaiOZqjWuj9d5p+Ttn0inSTYg7WX2UiBV3FQP+SrpDmc8mvDRag/
-         kGpVQXQdRQ0YWMWnL4ywE23epaNHcKKZcIR1y8Z2hFRcDcr8SnoUvNSofbewJepnq+
-         bzsk7VeJLboiPS8HK2bfot9HkJQ1ezBiAFNNutDLlMwNXjni2Co1J6rsMZ2jWdgZAF
-         FcUf/+dHCcFQg==
-Received: by mail-ed1-f69.google.com with SMTP id o20-20020aa7dd54000000b00413bc19ad08so8176372edw.7
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Mar 2022 00:10:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=rZiSscehpFaw25MYSQrGhTmta6JFYZvBO72KN+MNtGk=;
-        b=tB6MgWI8zyaCatXXPjQHDUMHJRLVYdNdkKMCIljb+QCp4XOAZSKVpY+44zXHQxu9ne
-         sNwP2NwpHdJtxzmiz1+UVEVWsUNftoqFHuSk4o+Y8Ua2Gk9fsx6sVb8P63TvM3+mvPFh
-         OZ3lvascaeZ4oZ902UrMGU7pvJNvwHaFsnrbom+SGA+zII4a0q7QzxgMdwADWF+LrGtG
-         038U2OVuc1JTrTkv2lTwHvgq4KfQ/UQYSAZk4axKDGylA1kK3BZocPS++GyJmOFOuTu3
-         g3k/wUjtKpJGAOcYQS37k93oOoR2YTSABBNKLo1/kyUhsLntlrvv3Uv7/kIxsU/7n/Oc
-         at0A==
-X-Gm-Message-State: AOAM530Ao18gwMLAYHNQJpotEiRjutl+o2FgllH7Z1T+s5v9OzRtnXG3
-        KJwUDUMRI+Gy5jIyB4fOp/Bbu/RttZBit8E3ikUU5aoyR5Y297SrE3YXLCTFTybNev/Jezwf4fQ
-        ibyFSir7z6PN6L1Ht3N3SpVxpllAuUT7QjUfyjFY6Gi/NsQ18
-X-Received: by 2002:a17:906:b6c7:b0:6db:2e14:875 with SMTP id ec7-20020a170906b6c700b006db2e140875mr2778338ejb.737.1646640608117;
-        Mon, 07 Mar 2022 00:10:08 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyd6HS0bvQ2SwL7iCHkBfje+k5g6sDwg1lh8KmBe4nqnJ4FmOFFYvoqWBiy8wC//2osRBIahw==
-X-Received: by 2002:a17:906:b6c7:b0:6db:2e14:875 with SMTP id ec7-20020a170906b6c700b006db2e140875mr2778324ejb.737.1646640607971;
-        Mon, 07 Mar 2022 00:10:07 -0800 (PST)
-Received: from [192.168.0.140] (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
-        by smtp.gmail.com with ESMTPSA id u4-20020a170906780400b006ce69ff6050sm4482993ejm.69.2022.03.07.00.10.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 00:10:07 -0800 (PST)
-Message-ID: <9e4bd211-89e2-f7ef-735e-1d6bc9b795cd@canonical.com>
-Date:   Mon, 7 Mar 2022 09:10:06 +0100
+        Mon, 7 Mar 2022 03:35:18 -0500
+X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Mar 2022 00:34:24 PST
+Received: from smtp2.axis.com (smtp2.axis.com [195.60.68.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A1C65D9
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 00:34:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=axis.com; q=dns/txt; s=axis-central1; t=1646642065;
+  x=1678178065;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=mhhc4KiuxbavjISsXlMiWu5G1CPhO3zCf6Xz+ptSOuQ=;
+  b=BFOM5uuOhA+Rw2VWlOsCxONtaMaWLHx6yEMi3ctTkN9DO0aH81th+NNy
+   L797bfwEYhQ3fjTuBMGd7awI/PIjEOylh8Xd92qiuv0deh8Jo8dsIkGwB
+   Eb8VHwXet9WJj0/AnDoP1C+fn14dqlTVCl688P8vBsBrfxLw3GBaNa3he
+   otfPxzbjjGn3ceSI95nWYzt9kcRgE2s17+MKR8jJLfwoWWrtllG2PYu3D
+   lUfNOqnr2x12hTtKIbFizwmmJcQSL8ehROoNElIHVjE7qFEqB/W/gt5ji
+   U6JSBCSuzFQMRP0Vz25PVwDm9Ld1B6EDXiDwH4YTSa7hW8n+9oWt9Pe1Z
+   A==;
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     <kernel@axis.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>
+Subject: [PATCH] clocksource/drivers/exynos_mct: Support using only local timer
+Date:   Mon, 7 Mar 2022 09:32:55 +0100
+Message-ID: <20220307083255.1577365-1-vincent.whitchurch@axis.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 1/7] tty: serial: samsung: embed s3c24xx_uart_info in
- parent structure
-Content-Language: en-US
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220307080810.53847-1-krzysztof.kozlowski@canonical.com>
- <20220307080852.53992-1-krzysztof.kozlowski@canonical.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220307080852.53992-1-krzysztof.kozlowski@canonical.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 07/03/2022 09:08, Krzysztof Kozlowski wrote:
-> Embed "struct s3c24xx_uart_info" directly as a member of "struct
-> s3c24xx_serial_drv_data" instead of keeping it as a pointer.  This makes
-> the code clearer (obvious ownership of "struct s3c24xx_serial_drv_data")
-> and saves one pointer.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-> ---
+The ARTPEC-8 SoC has a quad-core Cortex-A53 and a single-core Cortex-A5
+which share one MCT with one global and eight local timers.
 
-I had SMTP troubles when sending so this one duplicated itself. Sorry
-for the noise.
+The Cortex-A53 boots first and starts the global FRC and also registers
+a clock events device using the global timer.  (This global timer clock
+events is usually replaced by arch timer clock events for each of the
+cores.)
 
+When the A5 boots, we should not use the global timer interrupts or
+write to the global timer registers.  This is because even if there are
+four global comparators, the control bits for all four are in the same
+registers, and we would need to synchronize between the cpus.  Instead,
+the global timer FRC (already started by the A53) should be used as the
+clock source, and one of the local timers which are not used by the A53
+can be used for clock events on the A5.
 
-Best regards,
-Krzysztof
+To support this, add a module param to set the local timer starting
+index.  If this parameter is non-zero, the global timer clock events
+device is not registered and we don't write to the global FRC if it is
+already started.
+
+Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+---
+ drivers/clocksource/exynos_mct.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+index f29c812b70c9..7ea2919b1808 100644
+--- a/drivers/clocksource/exynos_mct.c
++++ b/drivers/clocksource/exynos_mct.c
+@@ -33,7 +33,7 @@
+ #define EXYNOS4_MCT_G_INT_ENB		EXYNOS4_MCTREG(0x248)
+ #define EXYNOS4_MCT_G_WSTAT		EXYNOS4_MCTREG(0x24C)
+ #define _EXYNOS4_MCT_L_BASE		EXYNOS4_MCTREG(0x300)
+-#define EXYNOS4_MCT_L_BASE(x)		(_EXYNOS4_MCT_L_BASE + (0x100 * x))
++#define EXYNOS4_MCT_L_BASE(x)		(_EXYNOS4_MCT_L_BASE + (0x100 * (x)))
+ #define EXYNOS4_MCT_L_MASK		(0xffffff00)
+ 
+ #define MCT_L_TCNTB_OFFSET		(0x00)
+@@ -77,6 +77,13 @@ static unsigned long clk_rate;
+ static unsigned int mct_int_type;
+ static int mct_irqs[MCT_NR_IRQS];
+ 
++/*
++ * First local timer index to use.  If non-zero, global
++ * timer is not written to.
++ */
++static unsigned int mct_local_idx;
++module_param_named(local_idx, mct_local_idx, int, 0);
++
+ struct mct_clock_event_device {
+ 	struct clock_event_device evt;
+ 	unsigned long base;
+@@ -157,6 +164,17 @@ static void exynos4_mct_frc_start(void)
+ 	u32 reg;
+ 
+ 	reg = readl_relaxed(reg_base + EXYNOS4_MCT_G_TCON);
++
++	/*
++	 * If the FRC is already running, we don't need to start it again.  We
++	 * could probably just do this on all systems, but, to avoid any risk
++	 * for regressions, we only do it on systems where it's absolutely
++	 * necessary (i.e., on systems where writes to the global registers
++	 * need to be avoided).
++	 */
++	if (mct_local_idx && (reg & MCT_G_TCON_START))
++		return;
++
+ 	reg |= MCT_G_TCON_START;
+ 	exynos4_mct_write(reg, EXYNOS4_MCT_G_TCON);
+ }
+@@ -449,7 +467,7 @@ static int exynos4_mct_starting_cpu(unsigned int cpu)
+ 		per_cpu_ptr(&percpu_mct_tick, cpu);
+ 	struct clock_event_device *evt = &mevt->evt;
+ 
+-	mevt->base = EXYNOS4_MCT_L_BASE(cpu);
++	mevt->base = EXYNOS4_MCT_L_BASE(mct_local_idx + cpu);
+ 	snprintf(mevt->name, sizeof(mevt->name), "mct_tick%d", cpu);
+ 
+ 	evt->name = mevt->name;
+@@ -554,13 +572,14 @@ static int __init exynos4_timer_interrupts(struct device_node *np,
+ 	} else {
+ 		for_each_possible_cpu(cpu) {
+ 			int mct_irq;
++			unsigned int irqidx = MCT_L0_IRQ + mct_local_idx + cpu;
+ 			struct mct_clock_event_device *pcpu_mevt =
+ 				per_cpu_ptr(&percpu_mct_tick, cpu);
+ 
+ 			pcpu_mevt->evt.irq = -1;
+-			if (MCT_L0_IRQ + cpu >= ARRAY_SIZE(mct_irqs))
++			if (irqidx >= ARRAY_SIZE(mct_irqs))
+ 				break;
+-			mct_irq = mct_irqs[MCT_L0_IRQ + cpu];
++			mct_irq = mct_irqs[irqidx];
+ 
+ 			irq_set_status_flags(mct_irq, IRQ_NOAUTOEN);
+ 			if (request_irq(mct_irq,
+@@ -619,7 +638,7 @@ static int __init mct_init_dt(struct device_node *np, unsigned int int_type)
+ 	if (ret)
+ 		return ret;
+ 
+-	return exynos4_clockevent_init();
++	return (mct_local_idx == 0) ? exynos4_clockevent_init() : ret;
+ }
+ 
+ 
+-- 
+2.34.1
+
