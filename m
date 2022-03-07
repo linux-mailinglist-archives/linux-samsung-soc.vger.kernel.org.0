@@ -2,103 +2,157 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A569C4CF4DF
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 10:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C28204CF5A2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Mar 2022 10:29:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233116AbiCGJYI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Mar 2022 04:24:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52514 "EHLO
+        id S237159AbiCGJaP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Mar 2022 04:30:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237335AbiCGJXp (ORCPT
+        with ESMTP id S237124AbiCGJ1o (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Mar 2022 04:23:45 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C36C527D1
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Mar 2022 01:22:50 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id b5so22174591wrr.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Mar 2022 01:22:50 -0800 (PST)
+        Mon, 7 Mar 2022 04:27:44 -0500
+Received: from smtp1.axis.com (smtp1.axis.com [195.60.68.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 679B75A085;
+        Mon,  7 Mar 2022 01:24:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=2H3bOlfOoJGazb69yKfS/sfq+9Q8+S0RoO93d6v477E=;
-        b=qitkM+VpPRyZ/7PZxnPXOdyD3DXCy+67o2nET6cp2jEHCTTb96yr41T9AXJKcRZ1hp
-         WtyeZpk2YKhEzas9JXy9ICW3KI0X/3Wzyc9WDibpfnb2G0CE29bV37s7HfSgRyeLO5rA
-         FuhXPOGGHm96mkDBm7ZmCjkUpIRg3diZIX12Q4cPLHN76zYpmUyPawOfOhTZ6ydVkIn1
-         M94R2/vtVzuXVSv/qfYLNWiXAfxND42doEg7n4P7aZnq0s4onroDm9r77+mxTEyAYZEI
-         5Gg/6aJSHVh+Ow4TQE49JKlw+ShZ7Oe+tU1tMGw8k8jBgPxnFLR0W/cmlWWDaL/tG9pN
-         fTcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=2H3bOlfOoJGazb69yKfS/sfq+9Q8+S0RoO93d6v477E=;
-        b=GUQooE9kxBVg3UyS/EF2pGXIozb9BdnRmIfQ+UglXUp/hj+kPsXlkIecKCIAEWuoPG
-         5WxitAl8FrARgHbf3AiZxJwv+AFlVhMR/VSYM2IF7aH33uNSpGvbRCa0EWv+iRddGsGI
-         RiNWWz2YMpzYEzCqZFa3zfNGhJ2yJ9lgiFFBbVRHqRal7T57dI/1cVwj9/yM9ibEJlWc
-         XT+Ge45koeG2OZGGXgTshrs5/U2hnFfn3SbOb7SU6G6FsIBD7Ob6doj2t35SXO4cl6UO
-         dKfxtyEeclUIiGeH+WdLSrD8lOKKx6SB2tGUw3cXeurjBbGyZI8hvgYkIN5nOS6N/rXN
-         rTPg==
-X-Gm-Message-State: AOAM530Qav0Q2jCCgjuOQPbOIkV5ca1Z7sExgwjOr63WYmWO13ZRTSOh
-        VaZZWZzNNraAIrNUW2DcCGxMuA==
-X-Google-Smtp-Source: ABdhPJxPhwAw8l9WqBnwJbxiH9KL3OutpuQdPLX3w899jAz9Onsp44AI9k8My/RHezDWBSOGBG/UKw==
-X-Received: by 2002:a5d:5449:0:b0:1f0:1a0c:963f with SMTP id w9-20020a5d5449000000b001f01a0c963fmr7231900wrv.98.1646644968650;
-        Mon, 07 Mar 2022 01:22:48 -0800 (PST)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id b1-20020a5d40c1000000b001f1dd6ea504sm5440695wrq.59.2022.03.07.01.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 01:22:48 -0800 (PST)
-Date:   Mon, 7 Mar 2022 09:22:46 +0000
-From:   Lee Jones <lee.jones@linaro.org>
+  d=axis.com; q=dns/txt; s=axis-central1; t=1646645089;
+  x=1678181089;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4CmVi/4Nf+c+fLXTqFUvrIaFiJk/ULe4N6+IxCPq3IQ=;
+  b=GC2kH2F+Y2dJTEEI/0VeXF1PrM/7q65pYGHW+mOxqBG5cP9C/3cSKl8c
+   tCmu3/bWfntMP2eNYBv1Zildq1NfifIa/6RzVs6/CKaLtjXdbWfpv+1aM
+   iwL8E5hwb60pu8na6qBbnzDz+xBHcRsXzNPmYSo9dF5YWGch5Oo6EaW1K
+   cXqRHk3nDuAqSeQN+8ueevQ59OO/LHEWi0b+4jLZgfegpwGBr7xXAYiNf
+   oHoU8sq19TBn5DLrMFkWJUoiluZYTj1JYyV1Io9kT9Zm/22I0xrpv0i6h
+   EqylWszECzVtbo7xVt+t2126rtOBa7wmKfPmWAirj3xKUMdAkQGLvBViL
+   w==;
+Date:   Mon, 7 Mar 2022 10:24:37 +0100
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
+CC:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>, kernel <kernel@axis.com>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        Pratyush Yadav <p.yadav@ti.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-spi@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v6 4/4] spi: s3c64xx: allow controller-data to be optional
-Message-ID: <YiXO5plQdpsVfwo1@google.com>
-References: <20220124082347.32747-1-krzysztof.kozlowski@canonical.com>
- <20220124082347.32747-5-krzysztof.kozlowski@canonical.com>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [PATCH] clocksource/drivers/exynos_mct: Support using only local
+ timer
+Message-ID: <20220307092437.GA32457@axis.com>
+References: <20220307083255.1577365-1-vincent.whitchurch@axis.com>
+ <08992f48-6cb6-8dc0-33d2-f18f942d2bee@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220124082347.32747-5-krzysztof.kozlowski@canonical.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <08992f48-6cb6-8dc0-33d2-f18f942d2bee@canonical.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 24 Jan 2022, Krzysztof Kozlowski wrote:
-
-> The Samsung SoC SPI driver requires to provide controller-data node
-> for each of SPI peripheral device nodes.  Make this controller-data node
-> optional, so DTS could be simpler.
+On Mon, Mar 07, 2022 at 10:06:26AM +0100, Krzysztof Kozlowski wrote:
+> On 07/03/2022 09:32, Vincent Whitchurch wrote:
+> > The ARTPEC-8 SoC has a quad-core Cortex-A53 and a single-core Cortex-A5
+> > which share one MCT with one global and eight local timers.
+> > 
+> > The Cortex-A53 boots first and starts the global FRC and also registers
+> > a clock events device using the global timer.  (This global timer clock
+> > events is usually replaced by arch timer clock events for each of the
+> > cores.)
+> > 
+> > When the A5 boots, we should not use the global timer interrupts or
+> > write to the global timer registers.  This is because even if there are
+> > four global comparators, the control bits for all four are in the same
+> > registers, and we would need to synchronize between the cpus.  Instead,
+> > the global timer FRC (already started by the A53) should be used as the
+> > clock source, and one of the local timers which are not used by the A53
+> > can be used for clock events on the A5.
+> > 
+> > To support this, add a module param to set the local timer starting
+> > index.  If this parameter is non-zero, the global timer clock events
+> > device is not registered and we don't write to the global FRC if it is
+> > already started.
+> > 
+> > Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+> > ---
+> >  drivers/clocksource/exynos_mct.c | 29 ++++++++++++++++++++++++-----
+> >  1 file changed, 24 insertions(+), 5 deletions(-)
 > 
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-> Reviewed-by: Andi Shyti <andi@etezian.org>
-> ---
->  drivers/spi/spi-s3c64xx.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
+> This should not be send separately from the previous patch.
 
-Applied, thanks.
+OK, I will put it in a series.
 
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> 
+> > 
+> > diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+> > index f29c812b70c9..7ea2919b1808 100644
+> > --- a/drivers/clocksource/exynos_mct.c
+> > +++ b/drivers/clocksource/exynos_mct.c
+> > @@ -33,7 +33,7 @@
+> >  #define EXYNOS4_MCT_G_INT_ENB		EXYNOS4_MCTREG(0x248)
+> >  #define EXYNOS4_MCT_G_WSTAT		EXYNOS4_MCTREG(0x24C)
+> >  #define _EXYNOS4_MCT_L_BASE		EXYNOS4_MCTREG(0x300)
+> > -#define EXYNOS4_MCT_L_BASE(x)		(_EXYNOS4_MCT_L_BASE + (0x100 * x))
+> > +#define EXYNOS4_MCT_L_BASE(x)		(_EXYNOS4_MCT_L_BASE + (0x100 * (x)))
+> >  #define EXYNOS4_MCT_L_MASK		(0xffffff00)
+> >  
+> >  #define MCT_L_TCNTB_OFFSET		(0x00)
+> > @@ -77,6 +77,13 @@ static unsigned long clk_rate;
+> >  static unsigned int mct_int_type;
+> >  static int mct_irqs[MCT_NR_IRQS];
+> >  
+> > +/*
+> > + * First local timer index to use.  If non-zero, global
+> > + * timer is not written to.
+> > + */
+> > +static unsigned int mct_local_idx;
+> > +module_param_named(local_idx, mct_local_idx, int, 0);
+> 
+> No, it's a no go. Please use dedicated compatible if you need specific
+> quirks.
+
+I could add a compatible, but please note that the hardware itself does
+not have any quirks, it's only the usage of the hardware from one of the
+Linux kernels (see the explanation below) which is different.  Is it
+correct to use a compatible to distinguish between these kind of
+software-determined usage differences?
+
+> 
+> > +
+> >  struct mct_clock_event_device {
+> >  	struct clock_event_device evt;
+> >  	unsigned long base;
+> > @@ -157,6 +164,17 @@ static void exynos4_mct_frc_start(void)
+> >  	u32 reg;
+> >  
+> >  	reg = readl_relaxed(reg_base + EXYNOS4_MCT_G_TCON);
+> > +
+> > +	/*
+> > +	 * If the FRC is already running, we don't need to start it again.  We
+> > +	 * could probably just do this on all systems, but, to avoid any risk
+> > +	 * for regressions, we only do it on systems where it's absolutely
+> > +	 * necessary (i.e., on systems where writes to the global registers
+> > +	 * need to be avoided).
+> > +	 */
+> > +	if (mct_local_idx && (reg & MCT_G_TCON_START))
+> > +		return;
+> 
+> I don't get it. exynos4_mct_frc_start() is called exactly only once in
+> the system - during init. Not once per every CPU or cluster (I
+> understood you have two clusters, right?).
+
+Not quite.  The Cortex-A53 and the Cortex-A5 do not have cache-coherency
+between them, so they are not run in an SMP configuration.  From the
+Cortex-A53's perspective, the Cortex-A5 looks like any other hardware
+block.  The Cortex-A5 could just as well have run some other operating
+system, but I run Linux on it.  So there are two separate, independent
+Linux kernels running on the SoC.
