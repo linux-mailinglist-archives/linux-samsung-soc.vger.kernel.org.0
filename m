@@ -2,54 +2,67 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E98D4D7C61
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Mar 2022 08:56:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34EEE4D7C82
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Mar 2022 08:56:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236931AbiCNH5h (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 14 Mar 2022 03:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41786 "EHLO
+        id S237111AbiCNH56 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 14 Mar 2022 03:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236891AbiCNH5d (ORCPT
+        with ESMTP id S237017AbiCNH5v (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 14 Mar 2022 03:57:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4062841332;
-        Mon, 14 Mar 2022 00:56:07 -0700 (PDT)
+        Mon, 14 Mar 2022 03:57:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0600841997;
+        Mon, 14 Mar 2022 00:56:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 74EA56118B;
-        Mon, 14 Mar 2022 07:56:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D84C3410A;
-        Mon, 14 Mar 2022 07:56:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 185B2611FD;
+        Mon, 14 Mar 2022 07:56:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F43FC341E3;
+        Mon, 14 Mar 2022 07:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647244561;
-        bh=hcqGiVMGEQIJn5Zfm3Z7qG75i5R0pCGvpzO7FNRk+eU=;
+        s=k20201202; t=1647244563;
+        bh=Mm+qCsHSu8Dp1CpN98CSeM8jWa7KHMho9OOVupv4bwY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZA02ar7X7XIKezfgSma6shYE1pnDu79d9iWt0NjnZTqCO7TJXjEx88lvZTnXlCIZH
-         asVqWAxZIXSV9ixD5RqbesRnMkMvafAb9z455NYnELgf6TOypLCE18UYHe8OygjIeX
-         fb9MV+UzXOVRQEKfez9QeC6Fxgb5y93lwfkd+SUQHqW8s9tDcfk9q1pjPv/e9YnTnH
-         dG+o6g/rUu2fjfOCLO7hcAQCOBG0HEcN34QYZRjqoG6ZYhCbbI6urAWfxruTQ6L0pL
-         yVbWQr2bqbzgUqqMjL8rdQmDErhpDU0FhGxnJjZ0/R+2rB7NdKdYFqYyt4FwOCjqfC
-         MTZZJBPokE8yg==
+        b=ihX3qxY/RaPxjoslofATvI6eE2r8Wxji3JRZkmFDJU+NHOPHNURtgsiJOKPM+lbDy
+         inwXKJyzSBz3UTMNdyL41+11FyCkN6Jo8z/4NtsDq7xLqoUWgHY4HIoEYGZwRY5+Yc
+         rHkFMfRd2pvLhZx093PnvylkhfVApYIAL6tr103Ej49mJCAE2E8GwJUGzpc8y0ZL4H
+         pA1BCyNBZgauFIpVQqC+sLau8+J86CZ6cN7KBXcBC4fjcqmIlCgbbqMHHCIsJJUZ+R
+         lmkUZ4qYtwGBHrT5UGlPnNX2FAUMwxc8E+MgU6+IvKjsc20og1gGrntYmb6phd16VT
+         yXUtnVM1FkndQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
         (envelope-from <mchehab@kernel.org>)
-        id 1nTfYc-001kV5-UT; Mon, 14 Mar 2022 08:55:58 +0100
+        id 1nTfYe-001kXP-Dm; Mon, 14 Mar 2022 08:56:00 +0100
 From:   Mauro Carvalho Chehab <mchehab@kernel.org>
 Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
         =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
         <niklas.soderlund+renesas@ragnatech.se>,
+        Cai Huoqing <caihuoqing@baidu.com>,
         Dmitry Osipenko <digetx@gmail.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Jacopo Mondi <jacopo@jmondi.org>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
         Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Lv Yunlong <lyl2019@mail.ustc.edu.cn>,
         Ming Qian <ming.qian@nxp.com>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Zhen Lei <thunder.leizhen@huawei.com>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 14/64] media: platform: exynos-gsc: move config to its own file
-Date:   Mon, 14 Mar 2022 08:55:06 +0100
-Message-Id: <03342e1f211a7062cc435797a19d7cfa7aa145d5.1647242579.git.mchehab@kernel.org>
+Subject: [PATCH 50/64] media: platform: rename exynos4-is/ to samsung/exynos4-is/
+Date:   Mon, 14 Mar 2022 08:55:42 +0100
+Message-Id: <ddc78c2e90b9ae2ae23e2eb98f38a0b707318c21.1647242579.git.mchehab@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <cover.1647242578.git.mchehab@kernel.org>
 References: <cover.1647242578.git.mchehab@kernel.org>
@@ -66,8 +79,8 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-In order to better organize the platform/Kconfig, place
-exynos-gsc-specific config stuff on a separate Kconfig file.
+As the end goal is to have platform drivers split by vendor,
+rename exynos4-is/ to samsung/exynos4-is/.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 ---
@@ -75,56 +88,323 @@ Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
 See [PATCH 00/64] at: https://lore.kernel.org/all/cover.1647242578.git.mchehab@kernel.org/
 
- drivers/media/platform/Kconfig            | 11 +----------
- drivers/media/platform/exynos-gsc/Kconfig | 10 ++++++++++
- 2 files changed, 11 insertions(+), 10 deletions(-)
- create mode 100644 drivers/media/platform/exynos-gsc/Kconfig
+ Documentation/admin-guide/media/fimc.rst           |  2 +-
+ .../driver-api/media/drivers/fimc-devel.rst        | 14 +++++++-------
+ MAINTAINERS                                        |  2 +-
+ drivers/media/platform/Kconfig                     |  2 +-
+ drivers/media/platform/Makefile                    |  2 +-
+ .../platform/{ => samsung}/exynos4-is/Kconfig      |  0
+ .../platform/{ => samsung}/exynos4-is/Makefile     |  0
+ .../platform/{ => samsung}/exynos4-is/common.c     |  0
+ .../platform/{ => samsung}/exynos4-is/common.h     |  0
+ .../{ => samsung}/exynos4-is/fimc-capture.c        |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-core.c  |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-core.h  |  0
+ .../{ => samsung}/exynos4-is/fimc-is-command.h     |  0
+ .../{ => samsung}/exynos4-is/fimc-is-errno.c       |  0
+ .../{ => samsung}/exynos4-is/fimc-is-errno.h       |  0
+ .../{ => samsung}/exynos4-is/fimc-is-i2c.c         |  0
+ .../{ => samsung}/exynos4-is/fimc-is-i2c.h         |  0
+ .../{ => samsung}/exynos4-is/fimc-is-param.c       |  0
+ .../{ => samsung}/exynos4-is/fimc-is-param.h       |  0
+ .../{ => samsung}/exynos4-is/fimc-is-regs.c        |  0
+ .../{ => samsung}/exynos4-is/fimc-is-regs.h        |  0
+ .../{ => samsung}/exynos4-is/fimc-is-sensor.c      |  0
+ .../{ => samsung}/exynos4-is/fimc-is-sensor.h      |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-is.c    |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-is.h    |  0
+ .../{ => samsung}/exynos4-is/fimc-isp-video.c      |  0
+ .../{ => samsung}/exynos4-is/fimc-isp-video.h      |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-isp.c   |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-isp.h   |  0
+ .../{ => samsung}/exynos4-is/fimc-lite-reg.c       |  0
+ .../{ => samsung}/exynos4-is/fimc-lite-reg.h       |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-lite.c  |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-lite.h  |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-m2m.c   |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-reg.c   |  0
+ .../platform/{ => samsung}/exynos4-is/fimc-reg.h   |  0
+ .../platform/{ => samsung}/exynos4-is/media-dev.c  |  0
+ .../platform/{ => samsung}/exynos4-is/media-dev.h  |  0
+ .../platform/{ => samsung}/exynos4-is/mipi-csis.c  |  0
+ .../platform/{ => samsung}/exynos4-is/mipi-csis.h  |  0
+ 40 files changed, 11 insertions(+), 11 deletions(-)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/Kconfig (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/Makefile (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/common.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/common.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-capture.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-core.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-core.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-command.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-errno.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-errno.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-i2c.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-i2c.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-param.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-param.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-regs.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-regs.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-sensor.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is-sensor.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-is.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-isp-video.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-isp-video.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-isp.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-isp.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-lite-reg.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-lite-reg.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-lite.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-lite.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-m2m.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-reg.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/fimc-reg.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/media-dev.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/media-dev.h (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/mipi-csis.c (100%)
+ rename drivers/media/platform/{ => samsung}/exynos4-is/mipi-csis.h (100%)
 
+diff --git a/Documentation/admin-guide/media/fimc.rst b/Documentation/admin-guide/media/fimc.rst
+index 56b149d9a527..267ef52fe387 100644
+--- a/Documentation/admin-guide/media/fimc.rst
++++ b/Documentation/admin-guide/media/fimc.rst
+@@ -14,7 +14,7 @@ data from LCD controller (FIMD) through the SoC internal writeback data
+ path.  There are multiple FIMC instances in the SoCs (up to 4), having
+ slightly different capabilities, like pixel alignment constraints, rotator
+ availability, LCD writeback support, etc. The driver is located at
+-drivers/media/platform/exynos4-is directory.
++drivers/media/platform/samsung/exynos4-is directory.
+ 
+ Supported SoCs
+ --------------
+diff --git a/Documentation/driver-api/media/drivers/fimc-devel.rst b/Documentation/driver-api/media/drivers/fimc-devel.rst
+index 956e3a9901f8..4c6b7c8be19f 100644
+--- a/Documentation/driver-api/media/drivers/fimc-devel.rst
++++ b/Documentation/driver-api/media/drivers/fimc-devel.rst
+@@ -12,22 +12,22 @@ Files partitioning
+ 
+ - media device driver
+ 
+-  drivers/media/platform/exynos4-is/media-dev.[ch]
++  drivers/media/platform/samsung/exynos4-is/media-dev.[ch]
+ 
+ - camera capture video device driver
+ 
+-  drivers/media/platform/exynos4-is/fimc-capture.c
++  drivers/media/platform/samsung/exynos4-is/fimc-capture.c
+ 
+ - MIPI-CSI2 receiver subdev
+ 
+-  drivers/media/platform/exynos4-is/mipi-csis.[ch]
++  drivers/media/platform/samsung/exynos4-is/mipi-csis.[ch]
+ 
+ - video post-processor (mem-to-mem)
+ 
+-  drivers/media/platform/exynos4-is/fimc-core.c
++  drivers/media/platform/samsung/exynos4-is/fimc-core.c
+ 
+ - common files
+ 
+-  drivers/media/platform/exynos4-is/fimc-core.h
+-  drivers/media/platform/exynos4-is/fimc-reg.h
+-  drivers/media/platform/exynos4-is/regs-fimc.h
++  drivers/media/platform/samsung/exynos4-is/fimc-core.h
++  drivers/media/platform/samsung/exynos4-is/fimc-reg.h
++  drivers/media/platform/samsung/exynos4-is/regs-fimc.h
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 74901acf8f06..b1418853d56f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17103,7 +17103,7 @@ M:	Sylwester Nawrocki <s.nawrocki@samsung.com>
+ L:	linux-media@vger.kernel.org
+ S:	Supported
+ Q:	https://patchwork.linuxtv.org/project/linux-media/list/
+-F:	drivers/media/platform/exynos4-is/
++F:	drivers/media/platform/samsung/exynos4-is/
+ 
+ SAMSUNG SOC CLOCK DRIVERS
+ M:	Sylwester Nawrocki <s.nawrocki@samsung.com>
 diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-index 0bf9dd5da845..57ca2426a83b 100644
+index 7b88ef15f8c8..6d2221a9c6ee 100644
 --- a/drivers/media/platform/Kconfig
 +++ b/drivers/media/platform/Kconfig
-@@ -46,6 +46,7 @@ source "drivers/media/platform/cadence/Kconfig"
- source "drivers/media/platform/coda/Kconfig"
+@@ -75,7 +75,6 @@ source "drivers/media/platform/cadence/Kconfig"
+ source "drivers/media/platform/chips-media/Kconfig"
  source "drivers/media/platform/davinci/Kconfig"
- 
-+source "drivers/media/platform/exynos-gsc/Kconfig"
- source "drivers/media/platform/omap/Kconfig"
- 
- source "drivers/media/platform/aspeed/Kconfig"
-@@ -317,16 +318,6 @@ config VIDEO_SAMSUNG_S5P_MFC
- 	help
- 	    MFC 5.1 and 6.x driver for V4L2
- 
--config VIDEO_SAMSUNG_EXYNOS_GSC
--	tristate "Samsung Exynos G-Scaler driver"
--	depends on V4L_MEM2MEM_DRIVERS
--	depends on VIDEO_DEV && VIDEO_V4L2
--	depends on ARCH_EXYNOS || COMPILE_TEST
--	select VIDEOBUF2_DMA_CONTIG
--	select V4L2_MEM2MEM_DEV
--	help
--	  This is a v4l2 driver for Samsung EXYNOS5 SoC G-Scaler.
--
- config VIDEO_STI_BDISP
- 	tristate "STMicroelectronics BDISP 2D blitter driver"
- 	depends on V4L_MEM2MEM_DRIVERS
-diff --git a/drivers/media/platform/exynos-gsc/Kconfig b/drivers/media/platform/exynos-gsc/Kconfig
-new file mode 100644
-index 000000000000..f9bdffe915b4
---- /dev/null
-+++ b/drivers/media/platform/exynos-gsc/Kconfig
-@@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+config VIDEO_SAMSUNG_EXYNOS_GSC
-+	tristate "Samsung Exynos G-Scaler driver"
-+	depends on V4L_MEM2MEM_DRIVERS
-+	depends on VIDEO_DEV && VIDEO_V4L2
-+	depends on ARCH_EXYNOS || COMPILE_TEST
-+	select VIDEOBUF2_DMA_CONTIG
-+	select V4L2_MEM2MEM_DEV
-+	help
-+	  This is a v4l2 driver for Samsung EXYNOS5 SoC G-Scaler.
+ source "drivers/media/platform/exynos-gsc/Kconfig"
+-source "drivers/media/platform/exynos4-is/Kconfig"
+ source "drivers/media/platform/intel/Kconfig"
+ source "drivers/media/platform/marvell/Kconfig"
+ source "drivers/media/platform/mediatek/mtk-jpeg/Kconfig"
+@@ -94,6 +93,7 @@ source "drivers/media/platform/s3c-camif/Kconfig"
+ source "drivers/media/platform/s5p-g2d/Kconfig"
+ source "drivers/media/platform/s5p-jpeg/Kconfig"
+ source "drivers/media/platform/s5p-mfc/Kconfig"
++source "drivers/media/platform/samsung/exynos4-is/Kconfig"
+ source "drivers/media/platform/sti/Kconfig"
+ source "drivers/media/platform/stm32/Kconfig"
+ source "drivers/media/platform/ti-vpe/Kconfig"
+diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
+index 7a28b60dbbe6..613ca6a3efa7 100644
+--- a/drivers/media/platform/Makefile
++++ b/drivers/media/platform/Makefile
+@@ -15,7 +15,6 @@ obj-y += cadence/
+ obj-y += chips-media/
+ obj-y += davinci/
+ obj-y += exynos-gsc/
+-obj-y += exynos4-is/
+ obj-y += intel/
+ obj-y += marvell/
+ obj-y += mediatek/mtk-jpeg/
+@@ -36,6 +35,7 @@ obj-y += s3c-camif/
+ obj-y += s5p-g2d/
+ obj-y += s5p-jpeg/
+ obj-y += s5p-mfc/
++obj-y += samsung/exynos4-is/
+ obj-y += sti/bdisp/
+ obj-y += sti/c8sectpfe/
+ obj-y += sti/delta/
+diff --git a/drivers/media/platform/exynos4-is/Kconfig b/drivers/media/platform/samsung/exynos4-is/Kconfig
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/Kconfig
+rename to drivers/media/platform/samsung/exynos4-is/Kconfig
+diff --git a/drivers/media/platform/exynos4-is/Makefile b/drivers/media/platform/samsung/exynos4-is/Makefile
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/Makefile
+rename to drivers/media/platform/samsung/exynos4-is/Makefile
+diff --git a/drivers/media/platform/exynos4-is/common.c b/drivers/media/platform/samsung/exynos4-is/common.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/common.c
+rename to drivers/media/platform/samsung/exynos4-is/common.c
+diff --git a/drivers/media/platform/exynos4-is/common.h b/drivers/media/platform/samsung/exynos4-is/common.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/common.h
+rename to drivers/media/platform/samsung/exynos4-is/common.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-capture.c b/drivers/media/platform/samsung/exynos4-is/fimc-capture.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-capture.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-capture.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-core.c b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-core.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-core.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-core.h b/drivers/media/platform/samsung/exynos4-is/fimc-core.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-core.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-core.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-command.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-command.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-command.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-command.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-errno.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-errno.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-errno.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-errno.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-errno.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-errno.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-errno.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-errno.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-i2c.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-i2c.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-i2c.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-i2c.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-i2c.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-i2c.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-i2c.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-i2c.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-param.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-param.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-param.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-param.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-param.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-param.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-param.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-param.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-regs.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-regs.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-regs.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-regs.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-regs.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-regs.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-regs.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-sensor.c b/drivers/media/platform/samsung/exynos4-is/fimc-is-sensor.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-sensor.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-sensor.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is-sensor.h b/drivers/media/platform/samsung/exynos4-is/fimc-is-sensor.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is-sensor.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is-sensor.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-is.c b/drivers/media/platform/samsung/exynos4-is/fimc-is.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-is.h b/drivers/media/platform/samsung/exynos4-is/fimc-is.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-is.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-is.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.c b/drivers/media/platform/samsung/exynos4-is/fimc-isp-video.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-isp-video.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-isp-video.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp-video.h b/drivers/media/platform/samsung/exynos4-is/fimc-isp-video.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-isp-video.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-isp-video.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp.c b/drivers/media/platform/samsung/exynos4-is/fimc-isp.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-isp.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-isp.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-isp.h b/drivers/media/platform/samsung/exynos4-is/fimc-isp.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-isp.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-isp.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-lite-reg.c b/drivers/media/platform/samsung/exynos4-is/fimc-lite-reg.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-lite-reg.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-lite-reg.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-lite-reg.h b/drivers/media/platform/samsung/exynos4-is/fimc-lite-reg.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-lite-reg.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-lite-reg.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-lite.c b/drivers/media/platform/samsung/exynos4-is/fimc-lite.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-lite.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-lite.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-lite.h b/drivers/media/platform/samsung/exynos4-is/fimc-lite.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-lite.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-lite.h
+diff --git a/drivers/media/platform/exynos4-is/fimc-m2m.c b/drivers/media/platform/samsung/exynos4-is/fimc-m2m.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-m2m.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-m2m.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-reg.c b/drivers/media/platform/samsung/exynos4-is/fimc-reg.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-reg.c
+rename to drivers/media/platform/samsung/exynos4-is/fimc-reg.c
+diff --git a/drivers/media/platform/exynos4-is/fimc-reg.h b/drivers/media/platform/samsung/exynos4-is/fimc-reg.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/fimc-reg.h
+rename to drivers/media/platform/samsung/exynos4-is/fimc-reg.h
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/media-dev.c
+rename to drivers/media/platform/samsung/exynos4-is/media-dev.c
+diff --git a/drivers/media/platform/exynos4-is/media-dev.h b/drivers/media/platform/samsung/exynos4-is/media-dev.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/media-dev.h
+rename to drivers/media/platform/samsung/exynos4-is/media-dev.h
+diff --git a/drivers/media/platform/exynos4-is/mipi-csis.c b/drivers/media/platform/samsung/exynos4-is/mipi-csis.c
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/mipi-csis.c
+rename to drivers/media/platform/samsung/exynos4-is/mipi-csis.c
+diff --git a/drivers/media/platform/exynos4-is/mipi-csis.h b/drivers/media/platform/samsung/exynos4-is/mipi-csis.h
+similarity index 100%
+rename from drivers/media/platform/exynos4-is/mipi-csis.h
+rename to drivers/media/platform/samsung/exynos4-is/mipi-csis.h
 -- 
 2.35.1
 
