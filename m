@@ -2,219 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A78854DE317
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 18 Mar 2022 21:59:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F289E4E19FF
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 20 Mar 2022 06:41:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240981AbiCRVAc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 18 Mar 2022 17:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34040 "EHLO
+        id S244738AbiCTFmj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 20 Mar 2022 01:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240971AbiCRVAb (ORCPT
+        with ESMTP id S234851AbiCTFmi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 18 Mar 2022 17:00:31 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0C781B3F78
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id q11so10657364iod.6
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
+        Sun, 20 Mar 2022 01:42:38 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722E689CC1
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 19 Mar 2022 22:41:15 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so8671354wme.5
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 19 Mar 2022 22:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
-        b=R3B03hXdzmRL4FMHavxss76+tb9Q0Hy78NbdGoHIgmWRsuIfciGr2JWywHMf/Kpkhf
-         QniqntLtfhiE8E3Wo0oxTFcS1KWerJtG5tNgnrk3j2xUiX43wMMg+/mjp1wKd5A4aRIu
-         ErIGjgvdava6sQlmLmDCO8Qr2P9RfzXvczFjE=
+        d=gmail.com; s=20210112;
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=nHz08v+KGykef/EY5wszhlvcWuKfz0UE0QFNYs1Ac5U=;
+        b=FtYdHqyFWOOYb6sMZeH6Q7Uc9fn5A1uhPIC/KUvfRtfOfoLqtGmE7HaSHHPiOP8vMT
+         gcLRmRFGi1ZFWBB26d4sYSnHc2DJldadZVG8YPxVoo7T/mXQNBrXuMg8qDnk/BkJCVv/
+         K4asB7J2OWXqG7ELR6HcSOV/ExA7fo57jsxdjWogwC3WOMB3oCbeGwXCDxjogvI6z1F9
+         rprkYjHpuc0VzuRnGAi7+zNOe+LRg8DnGHlSuBhYLYomPZsfsnVjRO5JX1wezJznmR4x
+         9ZZCLLGayEvGzTQR0nSkxVLFejRy2oLewMkpb9AvfqI2wRLd93rCCl7KOpjffFL1SqM3
+         s0GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
-        b=7Ooe87YkiXAbdNnwaybNGImXnjnphPRFE4tk+zu3uYk3GlrBKFjWvqDJ+qBxIzlhDE
-         PoEwTzR5gOHplYWuXu34WA/ol6ZcDdX4vaWZ8tmWrs5YOs5y2pSyl7dXJR79RxlxrwYr
-         2BvWOpoKLYc6k57i3/joAMvsXtxwZ2/xqXLGlrdBpWiM4ph/ZIlL5x51+1jbiqT6GQrX
-         JU9pP8oHs3ZQrsW/9KedAlHuflav2Z0nV5eRK4n7f30Ht3LVvsmSHogAPQnh/Pan11gF
-         OGacCa8tnppSavkBeoHHTjoGQGFhw0u67808ABecl21Pjg5k4RCacWqlhx7xkmgt8HXl
-         CbJQ==
-X-Gm-Message-State: AOAM532Y74LWcDcFwU8vTApVYEaMIGsllssaBGhEpZNLGC+V9Y+H37gN
-        MCIBFtYDOYcFT0DoHYFZ+LcHiw==
-X-Google-Smtp-Source: ABdhPJw+g6qtXnLujFKVRv55AGvVhZcbGPndogV4eznqetPdpLwXYueCN6beIFsP8OoV/l235xaSaw==
-X-Received: by 2002:a5d:9542:0:b0:648:f92b:7bc6 with SMTP id a2-20020a5d9542000000b00648f92b7bc6mr5223132ios.73.1647637149068;
-        Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
-Received: from [192.168.1.128] ([71.205.29.0])
-        by smtp.gmail.com with ESMTPSA id d14-20020a056602328e00b006494aa126c2sm3528385ioz.11.2022.03.18.13.59.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 13:59:08 -0700 (PDT)
-Subject: Re: [PATCH 64/64] media: Kconfig: cleanup VIDEO_DEV dependencies
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Fabio Estevam <festevam@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Giulio Benetti <giulio.benetti@benettiengineering.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Heungjun Kim <riverful.kim@samsung.com>,
-        Houlong Wei <houlong.wei@mediatek.com>,
-        Hugues Fruchet <hugues.fruchet@foss.st.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Jacob Chen <jacob-chen@iotwrt.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Joe Hung <joe_hung@ilitek.com>, Joel Stanley <joel@jms.id.au>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kieran Bingham <kieran.bingham@ideasonboard.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Marek Vasut <marex@denx.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Martina Krasteva <martinax.krasteva@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Grzeschik <m.grzeschik@pengutronix.de>,
-        Michael Tretter <m.tretter@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Mike Isely <isely@pobox.com>, Ming Qian <ming.qian@nxp.com>,
-        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
-        Mirela Rabulea <mirela.rabulea@nxp.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Olivier Lorin <o.lorin@laposte.net>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Pavel Machek <pavel@ucw.cz>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Rick Chang <rick.chang@mediatek.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Sean Young <sean@mess.org>, Shawn Guo <shawnguo@kernel.org>,
-        Shawn Tu <shawnx.tu@intel.com>,
-        Shijie Qin <shijie.qin@nxp.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Todor Tomov <todor.too@gmail.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Yong Deng <yong.deng@magewell.com>,
-        Yong Zhi <yong.zhi@intel.com>, Zhou Peng <eagle.zhou@nxp.com>,
-        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-usb@vger.kernel.org, mjpeg-users@lists.sourceforge.net,
-        openbmc@lists.ozlabs.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <cover.1647242578.git.mchehab@kernel.org>
- <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
-From:   Shuah Khan <skhan@linuxfoundation.org>
-Message-ID: <9e02d88a-3344-8d91-c652-72cb989506de@linuxfoundation.org>
-Date:   Fri, 18 Mar 2022 14:59:05 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=nHz08v+KGykef/EY5wszhlvcWuKfz0UE0QFNYs1Ac5U=;
+        b=gIXD8KQmnKE1kkyBOR5dQ1O+Y1gZPPjNI9tv80SkEQM1sbkQH5b6lPK2gNnCW4wcq5
+         RSkdKIcVt/WhKGCo9Su9uw1USfQouqflEki+/Omfb75HHhocg/KAKc95OM7H6X1HJhfI
+         OPFX2uJ+BMi2iH8sJ9Zpq3HiLiFrigQfZFHRJGhZpIZQt4QKzN9R/HEA4MHwGJluBZ3m
+         t9oBk3tHv/UcjaOvfIzzy9yH2BZ1KbBapUHWTi76sopOABk0t5DUfSQrYvWqB4dm1nSQ
+         CL9F/EmzPDQNlm8w5RbjjwshQiByv+TWM9ohUycFXUDn88FduFcm7K82idlfyrk0CZun
+         XqRg==
+X-Gm-Message-State: AOAM532wkeiiaFH2EjuE0FS3aZJ+OhUOezQkRk5V0KnBnnNpM/J7eBbO
+        SZIoI2dpliY+JIO3YBH8g9XO8rPQu3kvog==
+X-Google-Smtp-Source: ABdhPJy1kqoiwLaxtcRQe0v8MzhK9RuhxxnuFNVq/HdaRmiGTERb4AiGCW/6neHEuaFyKM4RjYbWgw==
+X-Received: by 2002:a05:600c:1da5:b0:38c:9951:fa9f with SMTP id p37-20020a05600c1da500b0038c9951fa9fmr3658334wms.11.1647754873729;
+        Sat, 19 Mar 2022 22:41:13 -0700 (PDT)
+Received: from [192.168.0.111] ([196.171.25.64])
+        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm14440322wri.0.2022.03.19.22.41.09
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 19 Mar 2022 22:41:13 -0700 (PDT)
+Message-ID: <6236be79.1c69fb81.cebb7.7f33@mx.google.com>
+From:   "Vanina C." <curtisvani0097@gmail.com>
+X-Google-Original-From: Vanina C.
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-In-Reply-To: <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Regards to you
+To:     Recipients <Vanina@vger.kernel.org>
+Date:   Sun, 20 Mar 2022 05:41:00 +0000
+Reply-To: curtisvani9008@gmail.com
+X-Spam-Status: No, score=2.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,TO_MALFORMED,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 3/14/22 1:55 AM, Mauro Carvalho Chehab wrote:
-> media Kconfig has two entries associated to V4L API:
-> VIDEO_DEV and VIDEO_V4L2.
-> 
-> On Kernel 2.6.x, there were two V4L APIs, each one with its own flag.
-> VIDEO_DEV were meant to:
-> 	1) enable Video4Linux and make its Kconfig options to appear;
-> 	2) it makes the Kernel build the V4L core.
-> 
-> while VIDEO_V4L2 where used to distinguish between drivers that
-> implement the newer API and drivers that implemented the former one.
-> 
-> With time, such meaning changed, specially after the removal of
-> all V4L version 1 drivers.
-> 
-> At the current implementation, VIDEO_DEV only does (1): it enables
-> the media options related to V4L, that now has:
-> 
-> 	menu "Video4Linux options"
-> 		visible if VIDEO_DEV
-> 
-> 	source "drivers/media/v4l2-core/Kconfig"
-> 	endmenu
-> 
-> but it doesn't affect anymore the V4L core drivers.
-> 
-> The rationale is that the V4L2 core has a "soft" dependency
-> at the I2C bus, and now requires to select a number of other
-> Kconfig options:
-> 
-> 	config VIDEO_V4L2
-> 		tristate
-> 		depends on (I2C || I2C=n) && VIDEO_DEV
-> 		select RATIONAL
-> 		select VIDEOBUF2_V4L2 if VIDEOBUF2_CORE
-> 		default (I2C || I2C=n) && VIDEO_DEV
-> 
-> In the past, merging them would be tricky, but it seems that it is now
-> possible to merge those symbols, in order to simplify V4L dependencies.
-> 
-> Let's keep VIDEO_DEV, as this one is used on some make *defconfig
-> configurations.
-> 
-> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-> ---
-> 
-
->   drivers/media/test-drivers/vicodec/Kconfig    |   2 +-
->   drivers/media/test-drivers/vimc/Kconfig       |   2 +-
->   drivers/media/test-drivers/vivid/Kconfig      |   2 +-
->
-
-For vimc change: (trimmed the recipient list to send response)
-
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
-
-
-
+Greetings, I'm Vanina C. how are you my dear, Kindly respond to me, it's my=
+ pleasure to meet you, hope we can establish a relationship from here.
