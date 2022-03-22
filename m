@@ -2,184 +2,143 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03DBF4E474B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Mar 2022 21:14:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415144E4761
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Mar 2022 21:21:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiCVUPu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Mar 2022 16:15:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
+        id S232570AbiCVUXJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Mar 2022 16:23:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233410AbiCVUPs (ORCPT
+        with ESMTP id S232965AbiCVUXI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Mar 2022 16:15:48 -0400
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11olkn2060.outbound.protection.outlook.com [40.92.20.60])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97BFDF63;
-        Tue, 22 Mar 2022 13:14:20 -0700 (PDT)
+        Tue, 22 Mar 2022 16:23:08 -0400
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam07olkn2055.outbound.protection.outlook.com [40.92.15.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86AB6583B;
+        Tue, 22 Mar 2022 13:21:39 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TR7OdXqul9SIZcI+DMr4egApol6kZ4fz2N1rQKGYQNKkljxP3quBi7fpmoSaPtbLpX35QBx1wlJJVKjtMOp3gkIilQKJCC3ov7I8aGMkQJXgcIHxVeew/3B1yiS1xQjx9zeBwg3YXsRDU/pqEQf6IxYkOVJPBYT2B9Ucik8WZ92O8a8La2Ofl59Zr7ptViiMrCBZaXr9TvQ8YnMYPlNWdP9Js/SeDwKHIuD8aW9cCex84Bbc74TH1o97DZh5m9WIVqYunIdsMY2K78GF3HIqxLENkSTp+ZQE0kZxov+1ky8BxCGzfmFGyQlPTJZ1TKl2NKCrsZxECY0d0aO7gb9vyA==
+ b=TbT0pdFNaFPPp91htMftj5Nd6R47A1knv7hXDzLve3mBl2+Pfwiu6AVg6s3S+L32tNy+qhv5oZMCaz/RGn8yOuoDlnoxrA4M+HAemkHxiibU1zP4Wh7kNQDZhGe6WuJ25j4Pn8x9xKeE8PNSUjRLKuREFB4QoDjsmZ2++jil0wIq9R967Fy0KmsnUtStzBLRQsXqMsqZ/6lo3AzyQ5oup51a4W9SVSGojs/541uOdNOQJ8E70v0b4voa7Csk/mr4gRXvzIsw66vUV64O0eMlBe0ZcrxszUn9xXzjk5zod+FWbcB3ZVCEdqSy9W4aDDon4HO2goAIVCEG/V+zez/1HQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nFbvMZoEnRIj1hXG53utVqyxuf4e5prW49IEdyuFKYQ=;
- b=L2ulqK1EkSZAWNKkHvSO7x3EyKADc5glXOzlIBE7vii665cPkjRPf+5g52mC05PSaOiC6pz1HSFJd6+j/Y0KKpQECGDt37H8xfhqwa8Q2XQBOzgJBVL/O39NotKR1bsatz2JxoJ5LxsfVGbqCO0HyDSgVTOJSJLX+vOyoVNkO41j02xMXrjal3rzx4OnEgrkpBMAb/hOhvmMKHMkNsBmoikDTZBemZzqrMZv9jmDqjyvr0FCsEdqy3EAr1hWNzasW7uzUuqCOj17xRfb7GFDdXSE/Qv89ulRrqMqLLxAfsOo89gdtaax5na+uoSsbHKLLa3oW5TNrme27HVES1xbTA==
+ bh=iKUdJNU3HsjcgvpaDcN8glDhmKdVXPbWmZLHDRSf3E0=;
+ b=Tdybg2mXJdJuN7e0zfG8q93e2YrKOxa88ukdrPBFuTfN6yBJJGo88/eczn1uV8ZCIZUh9ay+e+7s1UKqHqMjQp+Yhqb6ncdM12Lfp9ERghHkje1yPFgQ32f1MpHK5E7nBNctdKEIQcrMfpTS15MzKc6LVG8rXkgxoUtn1aOnSFK8nQH6dTVE1vDkhezZu/04rwcoZkh6kItD395RDyFi+VwC8/MOutJ8a/M63PtlcQqIo0yVNOStmqCvZykx313LHeiruPmjeOpsgWyT9Xi9ksn8f9npSu3JlIaxdLPIJyRa0nxOj51H/fEaSGotLAm2FPEdbL2sXwMk5Py8RFDv+A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 Received: from CY4PR04MB0567.namprd04.prod.outlook.com (2603:10b6:903:b1::20)
- by BN6PR04MB0660.namprd04.prod.outlook.com (2603:10b6:404:d9::21) with
+ by DM5PR04MB0253.namprd04.prod.outlook.com (2603:10b6:3:6d::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5102.16; Tue, 22 Mar
- 2022 20:14:19 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5081.15; Tue, 22 Mar
+ 2022 20:21:38 +0000
 Received: from CY4PR04MB0567.namprd04.prod.outlook.com
  ([fe80::451b:e5ed:c1a3:4070]) by CY4PR04MB0567.namprd04.prod.outlook.com
  ([fe80::451b:e5ed:c1a3:4070%5]) with mapi id 15.20.5102.016; Tue, 22 Mar 2022
- 20:14:19 +0000
-From:   Jonathan Bakker <xc-racer2@live.ca>
+ 20:21:38 +0000
+Subject: Re: [PATCH 0/7] ARM: dts: s5pv210: Bugfixes, features, and
+ improvements
 To:     krzk@kernel.org, alim.akhtar@samsung.com
 Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jonathan Bakker <xc-racer2@live.ca>
-Subject: [PATCH 1/7] ARM: dts: s5pv210: Split memory nodes to match spec
-Date:   Tue, 22 Mar 2022 13:11:38 -0700
-Message-ID: <CY4PR04MB0567E33A07D8761C2D485327CB179@CY4PR04MB0567.namprd04.prod.outlook.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220322201144.20320-1-xc-racer2@live.ca>
-References: <20220322201144.20320-1-xc-racer2@live.ca>
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-TMN:  [aP9eTJQxIdQImTd5NrhT45+PVcU3gxJ5RsCTJrxYvYv1VlDKIOSiS0ygtlMyf+PZ]
-X-ClientProxiedBy: MWHPR17CA0094.namprd17.prod.outlook.com
- (2603:10b6:300:c2::32) To CY4PR04MB0567.namprd04.prod.outlook.com
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <CY4PR04MB05677B4C4E26A8A179F6ABC0CB179@CY4PR04MB0567.namprd04.prod.outlook.com>
+From:   Jonathan Bakker <xc-racer2@live.ca>
+Message-ID: <CY4PR04MB05673676DA7E6E4BF275305ECB179@CY4PR04MB0567.namprd04.prod.outlook.com>
+Date:   Tue, 22 Mar 2022 13:21:36 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+In-Reply-To: <CY4PR04MB05677B4C4E26A8A179F6ABC0CB179@CY4PR04MB0567.namprd04.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TMN:  [HAnldOGDVXVzGXgH6cD7dOOUFnHCnq/znYc12QJj2+5/Ko6U/+1x2kOgqP+6BhTh]
+X-ClientProxiedBy: MW4PR04CA0115.namprd04.prod.outlook.com
+ (2603:10b6:303:83::30) To CY4PR04MB0567.namprd04.prod.outlook.com
  (2603:10b6:903:b1::20)
-X-Microsoft-Original-Message-ID: <20220322201144.20320-2-xc-racer2@live.ca>
+X-Microsoft-Original-Message-ID: <4e451cff-6907-8c6a-8758-77a1a20abc16@live.ca>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 3e0647f0-0ac6-4f90-cc13-08da0c408b52
-X-MS-TrafficTypeDiagnostic: BN6PR04MB0660:EE_
+X-MS-Office365-Filtering-Correlation-Id: b64f8564-60d8-40ec-dcc3-08da0c419160
+X-MS-TrafficTypeDiagnostic: DM5PR04MB0253:EE_
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DmlgAVCS9tJFo/ucG26D/nZ0N++V27bcz+vAnOlEe2eT4mfPoTCjKg7GXqn0iNhGMry6EIAxi3wXRizVok25gcQ0ujawS7JhZALtKTsXZ9pm0uQniyvYE5SynlkapEDhlDxzPHvUX3jNSEblx23GqYfzi8yRCKEm4R0hcUJdYxLUTvuZXMtuaGeEZ5pH0WNcpmzhIGqD7jbVFsD/k1nnOczGN2/WoQ2GYHM2LNQCc0M8Als0JB8KCbSr6jQMvMrc42lL89pjiZb1bT9B9cmM9/q3Txq+0GcSTW5xKI5P7B/Qg5lXpp0c38r2QvmfxqJzlz+gBHpf/A7HVbMx9cXCYobxMtyq/8ttH0EtaKUuUrmFl5XRvzj3EztrC7r14X9IoQ3OKkzn2+q5r1NEWul7sGGxvaY+0xKloQUrzpcYPL5pJ8HMVrwdtzfqEuNlgX9VyXGkr8qsMWGIaY3uZ3NgC9/MOyylsAcd7p1wmi2rY/ui3oAyIYswRBLWiXmrvOTaAiHBJ4PrVVsJG5cf+WAebJzCKN65cciq2XoMcBWGZI9CeHYTfHumkqIr2vzZRXYpp4OZNkWYiwyH1RyffEBSuQ==
+X-Microsoft-Antispam-Message-Info: DAk0R7B2KC721hdTlaZjzLyUlkGKFEd7RiycwbXcO691jLMhDIqMs+n5kYlissTHotnmbhAMj7Az308HAXVUyLxjN2LSoQ4PjOuLe5WztD/n6O/zyF4O2BN5xouCbJ4hsX3bXT8YM9rJcq1j+sOIoZyje4K/DfRzDJ/CwLf0fx7Qsxm06hkfDp19MQkzkmS2CHPmN2tg37xP+MdfXm1TZwgxic5wi0hu7MLVr1BxfttU8ILgGF0oPOENpenkwWtir3Xh33RmOAeBHq5LHEUzryRzGYAT3qUurFtOCwNr++A2I//3dQ89bS/i8X+upAHTxQXvd5xBgJX0Xc4x6YogcP0MBS8/RHO4K5KpVT09bYwr4BgcWvw804201VRCnTVJWaw5VATp6bM4OqWH2PA0Bo1bqhaVByJNtnZtLPuLlr0JQEDMj2iD7CeLg1++9OWwDFIkBpCX/LIY9QMzo1k5rYhel9Z9i1N5shfdsMpG7HGa1WxNdLjktb/NlRMW9BaLfPZOFp+je/PQerO/kFB11ewkRP/hiLz9UhxFSXlYc089gk0UzQ4TyrztSdogVyCn+fE4DrnNO1XDkFim/33vJA==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?en81dzpjnJHzrGFX8dNHWvMFv5RkTyJaGwGPiaaH3ayeQO5BkqG3x7xOsuyd?=
- =?us-ascii?Q?mZxT8PKNjeJuviXIyirTVJ0MTOG81b8StQJklQKaUqZ/vQlBqrGQnYtvtM+x?=
- =?us-ascii?Q?BdhjwPyHki0Accmn0fuK4XhQbSWdwPE/jvv57dwipVBHhMfFASfQk15QE/d2?=
- =?us-ascii?Q?gR7lM8ta6/J7hlVJKeiokwYnmuK+cSFYzFwAQ2JFiB62vwtMUWkOBJopJCVu?=
- =?us-ascii?Q?rf0galT02bDCxPFkV3U2/pylMh4Tip0A1VFIgkOkLSI7Hp6elcZNVPOZsoFr?=
- =?us-ascii?Q?FyzKtm6J/eaJtS0B5HUGoFKk9ibRLLocVJcbxoTY2KuLSdoqxpDlXliAtWYS?=
- =?us-ascii?Q?00N5bmqR0qOfDWnx8z4/zxWS5ECOome4I/PdZLdYpH3PpnG6D0/SwObOpeYK?=
- =?us-ascii?Q?Gk+loq4MEa9UvTX3ZI3UqRILnSbuSm73GQ5szekuC8RvWr2AV3m7Uqc8jtBc?=
- =?us-ascii?Q?kAXZ3at1as8NQVwwBT62mXJRL6u+BmYC88L0zsw7BETnrTvxuzUJD8K94iDN?=
- =?us-ascii?Q?X5Tc7Mru8+hRS/s/cl/h0DgjpAPLdWXywPj2UizTt61PwOJlC+mftTXE2rQZ?=
- =?us-ascii?Q?7yglNZjWRByro0LxuGuaqB7sDvvYkmH/KZRMLSZIO8Ifxc20YwTSBa34E5C6?=
- =?us-ascii?Q?nAJ57afJdJofLWRmKBpeb5kOf7bjoqusY4XdgaYri+E7VLexw4XqGi/tsknN?=
- =?us-ascii?Q?AElxRu5BgA7L4J8zDG1aoZeArNQA2w4wNJjrbyaRSq54CSl3hxmJusqtAbI3?=
- =?us-ascii?Q?v2MZxyhNXZvGnbRqC2oalA7aJ6bPOUulafLnvNOzy+XSny5XGwEfHcYct9lu?=
- =?us-ascii?Q?J7bFeD6BTsaMbgwV7qRv8/ncVqHs6fPvWgsTjSTG+7Oy8OnpwjeNE71uVXvr?=
- =?us-ascii?Q?XpF/urSxP2SogDe6SXqIyOp2lh9HtPjp4XGMJpXlncth8YSohD5I4S13wJE/?=
- =?us-ascii?Q?7rxuJMNpiF/UHnVy/aJBO+cNrQ+ELf8phCuHkqNAu/ZTYaTfn2pLZOEjEYO0?=
- =?us-ascii?Q?mgShJvQzQKgWPFFCOiYR13WYb9hf82r7LitxWZoFN1Fg2soOBNEo/I/9tAvh?=
- =?us-ascii?Q?Uvh7hE9zJAhvpDQHQMSyfZ/wxYSSxFPq6148XYS6Snc4p/ty770Ymnpxjwt7?=
- =?us-ascii?Q?HAvdpumeNiJVMzG933w8FvJqSp9aVkXIbcuRZxSa6+BA/Ob8mqePN200YCdR?=
- =?us-ascii?Q?u4M9q/vadOKpnF4Wmt/B5bkmqnCuyhV3DeGimQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Ym9OK2RvbVUyS2pEdlVoTUh3a2ZZUVJJSkplRnJjZ3dLVDBZVnlNZTJwR1NJ?=
+ =?utf-8?B?MDIvVExZM0tWSWlNRmlOUE5WMHZBRzNFZFBIeDYxdHpRZk15ZXBlNklxZlNX?=
+ =?utf-8?B?bithcHgxSVFzTHkvN05wR2Q0SEFxQU9xNzIrZVNlRzB1bmtsZ1lZZ3huell4?=
+ =?utf-8?B?WlJqOTgrYm10Mk5Oa3h2T3hLdEIxOUtlRXFBeXJDTllyZzIwOEZrWnlWUlJQ?=
+ =?utf-8?B?WGdqWFpJNndSWUJ6UkpDUUtleFY0Y0s5TTBOQ002bDZwSHpUYmNGdGowMXhp?=
+ =?utf-8?B?RjlaN1pRQUxsa2prbm5YVEVreEVUUDBvcVNkNCtpb2JmbHVGVzZBSzMrcXpG?=
+ =?utf-8?B?bWlhb1dyTCtMcCtGTEVwZWQ3dmtPVDdMSW1EdHNPMTdXNlBKT2Rocjh4Y2Rv?=
+ =?utf-8?B?WENKWmg4Y0VMeFhnWDI2bWRMWUFtMG5JL3NELy9nQ21iL1N0SlAyd2FILzVG?=
+ =?utf-8?B?YUZoZTJjZko0cVJ4bkhhb3ZYSjZLbXd0YUNhbUx3ZDllN1JjNWdFbVc3TlRz?=
+ =?utf-8?B?ZlpoZFhYSXpJVHpNdWZ2ZVk3L1BqT2VDOFF2Ymo1NTBEcDNFMEI2TlJMUC84?=
+ =?utf-8?B?S2hMVjd5d3htbFE4SmhqQndjSklHY0dPbUpYeFhnM3JiZDNuNzY3N01sNHFk?=
+ =?utf-8?B?dXBQR3M3RHBqajJUMmZjSG5QTnA3aTdLN1dRanUyQXlRQkh5RlBkV2l4QUtq?=
+ =?utf-8?B?SkRMb291N2Vib05WRjhPd0pLQ1h1M2pqUkZqY0FPdmh4SGV1c3pmcXQxQ2dX?=
+ =?utf-8?B?TWhRd0dwODdPQytLUWtlV2lpajhNOU8vRkExV2tnbGN0UklweVJ2MDFEM1VD?=
+ =?utf-8?B?NGpXcEd6U1FJZlFXTmRyTEhHNDQ4czdnK1ZCMTJseWxlU1M3blV2Q244OStE?=
+ =?utf-8?B?TjE5WXZ4dWs1bFdveUdLU0NVcFBPNTlBM1VyR1RCN3VJUXZPdVVidVNwT0Nu?=
+ =?utf-8?B?YmpwWUN2VDNJZVNacjhrSm1QOEdQZ0V0cTYxV1QxbGFDTmVka1BRTkxQV0FB?=
+ =?utf-8?B?ODR3SlVRNVcxcy8yYXBEM0ErdGRxV1M4L3J4NVpna0ZMVXUvUDZ4eEFIV0Nr?=
+ =?utf-8?B?KytOZk1uRG8rQ2t0cEl3KzNOOTcxS1hoYll6Z0pwbXk2dC9XRTk0QklGa0Nl?=
+ =?utf-8?B?M1UyMGhiZzUxOUFWM2R1ZldseGZENSs1cE1oeHJZV05IMW1RMWNrK01mUG80?=
+ =?utf-8?B?cWZrS3dRSlQzRmFYQUtrcXNseU9ERWJyQmoweWhYV0JXQ00rVUNZc0lCNXlW?=
+ =?utf-8?B?Qk03K0RKN3FRZVBVYytVaE1QeWIwWHBnQ3AvZWJPTkpKT284UGNKY2t5SkZs?=
+ =?utf-8?B?T2hMd2lhaktCYkc2cjJEYkVtcG84TngzSHdxNDcxdWhkdkVIeVpENFk1SUxr?=
+ =?utf-8?B?TWFpaXpYZW16bXBPTmJUQ1FHbzZXb0dLSjhHRldrRUN0YUFtajMwN1BBRGNB?=
+ =?utf-8?B?WmJCcmhUanAwZVd3WndUTldSUkdmQnZkL2JxaEZSVXRuYUxyMEQ3U3BveWho?=
+ =?utf-8?B?VHFvVzlSTjJXaFg5L1ZKdkwrNHBJTlZkcVR1UFl4WjlPRUNFMlRYcTRMZFM5?=
+ =?utf-8?B?VGpIMzhtQXhBWWkrQVdnSlNzcHU3Wisvc3JzVytPVkF2aUwyZWUyTnh1SDNm?=
+ =?utf-8?B?azdDRW8weFc3cG5La3NLb1Naa3lPVlE9PQ==?=
 X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-edb50.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e0647f0-0ac6-4f90-cc13-08da0c408b52
+X-MS-Exchange-CrossTenant-Network-Message-Id: b64f8564-60d8-40ec-dcc3-08da0c419160
 X-MS-Exchange-CrossTenant-AuthSource: CY4PR04MB0567.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2022 20:14:19.3120
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2022 20:21:38.1235
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR04MB0660
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR04MB0253
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_00,FORGED_MUA_MOZILLA,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Memory nodes should only have a singular reg property in them, so
-split the memory nodes such that there is only per node.
+Sorry, it appears that I ran into connectivity issues part way through sending
+the patchset.  Should I resend the entire series or is there a way to get
+git send-email to retry/continue?
 
-Signed-off-by: Jonathan Bakker <xc-racer2@live.ca>
----
- arch/arm/boot/dts/s5pv210-aquila.dts |  8 ++++++--
- arch/arm/boot/dts/s5pv210-aries.dtsi | 14 +++++++++++---
- arch/arm/boot/dts/s5pv210-goni.dts   | 14 +++++++++++---
- 3 files changed, 28 insertions(+), 8 deletions(-)
+Thanks,
+Jonathan
 
-diff --git a/arch/arm/boot/dts/s5pv210-aquila.dts b/arch/arm/boot/dts/s5pv210-aquila.dts
-index 6423348034b6..6984479ddba3 100644
---- a/arch/arm/boot/dts/s5pv210-aquila.dts
-+++ b/arch/arm/boot/dts/s5pv210-aquila.dts
-@@ -29,8 +29,12 @@
- 
- 	memory@30000000 {
- 		device_type = "memory";
--		reg = <0x30000000 0x05000000
--			0x40000000 0x18000000>;
-+		reg = <0x30000000 0x05000000>;
-+	};
-+
-+	memory@40000000 {
-+		device_type = "memory";
-+		reg = <0x40000000 0x18000000>;
- 	};
- 
- 	pmic_ap_clk: clock-0 {
-diff --git a/arch/arm/boot/dts/s5pv210-aries.dtsi b/arch/arm/boot/dts/s5pv210-aries.dtsi
-index 160f8cd9a68d..70ff56daf4cb 100644
---- a/arch/arm/boot/dts/s5pv210-aries.dtsi
-+++ b/arch/arm/boot/dts/s5pv210-aries.dtsi
-@@ -24,9 +24,17 @@
- 
- 	memory@30000000 {
- 		device_type = "memory";
--		reg = <0x30000000 0x05000000
--			0x40000000 0x10000000
--			0x50000000 0x08000000>;
-+		reg = <0x30000000 0x05000000>;
-+	};
-+
-+	memory@40000000 {
-+		device_type = "memory";
-+		reg = <0x40000000 0x10000000>;
-+	};
-+
-+	memory@50000000 {
-+		device_type = "memory";
-+		reg = <0x50000000 0x08000000>;
- 	};
- 
- 	reserved-memory {
-diff --git a/arch/arm/boot/dts/s5pv210-goni.dts b/arch/arm/boot/dts/s5pv210-goni.dts
-index c6f39147cb96..2c66ec5cbfbb 100644
---- a/arch/arm/boot/dts/s5pv210-goni.dts
-+++ b/arch/arm/boot/dts/s5pv210-goni.dts
-@@ -30,9 +30,17 @@
- 
- 	memory@30000000 {
- 		device_type = "memory";
--		reg = <0x30000000 0x05000000
--			0x40000000 0x10000000
--			0x50000000 0x08000000>;
-+		reg = <0x30000000 0x05000000>;
-+	};
-+
-+	memory@40000000 {
-+		device_type = "memory";
-+		reg = <0x40000000 0x10000000>;
-+	};
-+
-+	memory@50000000 {
-+		device_type = "memory";
-+		reg = <0x50000000 0x08000000>;
- 	};
- 
- 	pmic_ap_clk: clock-0 {
--- 
-2.20.1
-
+On 2022-03-22 1:11 p.m., Jonathan Bakker wrote:
+> Various cleanups to fix warnings when running make dtbs_check are included,
+> as are bugfixes for the panel CS pin and bluetooth interrupt name on Aries.
+> 
+> The new feature is charging support for Aries board, note that the galaxys
+> (i9000) and fascinate4g (SGH-T959P) have slightly different batteries,
+> and so the DTS can't be shared.
+> 
+> Jonathan Bakker (7):
+>   ARM: dts: s5pv210: Split memory nodes to match spec
+>   ARM: dts: s5pv210: Adjust I2S entries to match spec
+>   ARM: dts: s5pv210: Adjust DMA node names to match spec
+>   ARM: dts: s5pv210: Remove spi-cs-high on panel in Aries
+>   ARM: dts: s5pv210: Correct interrupt name for bluetooth in Aries
+>   ARM: dts: s5pv210: Add charger regulator to max8998 in Aries
+>   ARM: dts: s5pv210: Add charger support in Aries
+> 
+>  arch/arm/boot/dts/s5pv210-aquila.dts      |   8 +-
+>  arch/arm/boot/dts/s5pv210-aries.dtsi      |  25 +++-
+>  arch/arm/boot/dts/s5pv210-fascinate4g.dts | 162 ++++++++++++++++++++++
+>  arch/arm/boot/dts/s5pv210-galaxys.dts     | 144 +++++++++++++++++++
+>  arch/arm/boot/dts/s5pv210-goni.dts        |  14 +-
+>  arch/arm/boot/dts/s5pv210.dtsi            |  24 ++--
+>  6 files changed, 354 insertions(+), 23 deletions(-)
+> 
