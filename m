@@ -2,118 +2,191 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A02CF4EB230
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Mar 2022 18:49:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDEE24EBBEF
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 30 Mar 2022 09:40:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239886AbiC2QuD (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 29 Mar 2022 12:50:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32962 "EHLO
+        id S243903AbiC3HmW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 30 Mar 2022 03:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239884AbiC2QuA (ORCPT
+        with ESMTP id S243918AbiC3HmU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 29 Mar 2022 12:50:00 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4768924F283;
-        Tue, 29 Mar 2022 09:48:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648572496; x=1680108496;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=l79PCfT680tSg5itoW3f+C4BVaO65e08V3oBAzUaQsg=;
-  b=mvTq5SvPLjHI/l9uBUOpTYZmJJVadA8YNncWNLQx+QiakguhpbM4VspM
-   VaxWLPlpIUPknbSNYXY3NLh/XGiiR9Z7RL7idOykqABsWWOMNgzYdcyvp
-   D+PoTKtf+XVq0a594l4/aPxSBaO/X5vbH3x1x/2i9ja96LFpDBNCxuRY0
-   hvqOCk97ETR1e8ODEmPKXEC+vKERFzlk8vk572oATFZyvvc89WHbS/0af
-   TKmcNBCwKUhfAxsXq9qKfhNP5H+wKm49qkVW1hCaVms9q4fQQxCmgU/Ku
-   LnBhVjXPbgA6+vmE1VxbaCFFosB1r1aJ7Ld+Cfqa4eeVHMa9wZAn/2Ikq
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10301"; a="284206058"
-X-IronPort-AV: E=Sophos;i="5.90,220,1643702400"; 
-   d="scan'208";a="284206058"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 09:42:43 -0700
-X-IronPort-AV: E=Sophos;i="5.90,220,1643702400"; 
-   d="scan'208";a="554327473"
-Received: from smile.fi.intel.com ([10.237.72.59])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 09:42:36 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1nZEuu-008rb0-Vw;
-        Tue, 29 Mar 2022 19:42:00 +0300
-Date:   Tue, 29 Mar 2022 19:42:00 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Neil Armstrong <narmstrong@baylibre.com>
-Cc:     Qianggui Song <qianggui.song@amlogic.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        openbmc@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Subject: Re: [PATCH v2 09/13] pinctrl: meson: Rename REG_* to MREG_*
-Message-ID: <YkM22GwhxV+YKl8l@smile.fi.intel.com>
-References: <20220329152926.50958-1-andriy.shevchenko@linux.intel.com>
- <20220329152926.50958-10-andriy.shevchenko@linux.intel.com>
- <94e888fe-d8fc-5379-302f-66d64f2ae10b@baylibre.com>
+        Wed, 30 Mar 2022 03:42:20 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D20952B20
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 30 Mar 2022 00:40:28 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id dr20so39691284ejc.6
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 30 Mar 2022 00:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+fs03Qe5m2CAu5KA7NU3Z7yweF+5+DwbdVq/GJFIlNE=;
+        b=ex8tbjLk+0Wdtww3/CDPCbeeyLzltz0XLQc/kTGGTDckS/aAdfHU1y7YDh2lCuBufg
+         Ek3B1nIyDJdNsPVUy2NwJrgskAa32uAMMhpUF+ioSNpcoeiIAHavfW2099ojPSgGgGE7
+         3wwUH7K1JfxGG5Oh2XaYKHO6HRUlrl/X+HalWZxsta48unjq55f29E/F+qMNNuJ7eoYl
+         2Oh4jvG+kTw2UxKDpcbRT31SQQrknt0Vr6BpK8XQ5ksZ20VzYu2SILthbcfonJ5y9j7y
+         zdneLGKv9fMRV6s8puMlExF9mMzmdNqwdQKM0fJr9OyZjPVuBcrKUEmVwqQ3UzS2KKhQ
+         gqpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+fs03Qe5m2CAu5KA7NU3Z7yweF+5+DwbdVq/GJFIlNE=;
+        b=hcvQA+9hB3iSkgcrxbCvK8dkMs9DohVGXuf3XWwBSe6NkeBWKiQeykxCQU+2y3ZEwg
+         DDTyXRwnzrsACZUZ2Kerzt3/H9SpGtDhU3xUkwBOuoP2J3uhBkOAGS1012Ud9+TYMYik
+         GRZjnvZJiU39MQ/xaCaeJ9avLM3ipPkM6Z/Yhj0bKVeLsRztQitR3fiGiGBcXsC93gm9
+         bpToSKabOks0xNyFAgWDIK8rhdagWfsnQndxIdgJ1pi8uJVSk55IJNYfJDKF8IIxS6YY
+         gSaZzUKDXfTqwzUeYSRGsEuYpTZxgV4J4u0qP5SxebKWEgGIKe14CXQaDVZp2AX4GDVb
+         qV+Q==
+X-Gm-Message-State: AOAM532jdr6X7BIDf1VyJqUqph8BIw5sMqS/paf/svtECmv76Ai/enAy
+        liBDVwtZzouxZ/FIOciEWPoIX/xohP+gyG75
+X-Google-Smtp-Source: ABdhPJyiytUzrzTtKzum6T4/uPQMwS6KDq/FK9+HsYlM+syWEDDFNiRdcVYelGPuda/Y0L8MSc4LVQ==
+X-Received: by 2002:a17:907:971c:b0:6e0:dd95:9fc6 with SMTP id jg28-20020a170907971c00b006e0dd959fc6mr2088118ejc.256.1648626026637;
+        Wed, 30 Mar 2022 00:40:26 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id s20-20020a056402015400b00418f9574a36sm9536640edu.73.2022.03.30.00.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Mar 2022 00:40:26 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-nfc@lists.01.org,
+        netdev@vger.kernel.org
+Cc:     Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 0/2] MAINTAINERS/dt-bindings: changes to my emails
+Date:   Wed, 30 Mar 2022 09:40:14 +0200
+Message-Id: <20220330074016.12896-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <94e888fe-d8fc-5379-302f-66d64f2ae10b@baylibre.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Mar 29, 2022 at 06:13:19PM +0200, Neil Armstrong wrote:
-> On 29/03/2022 17:29, Andy Shevchenko wrote:
-> > Rename REG_* to * as a prerequisite for enabling COMPILE_TEST.
-> 
-> What error do you hit ?
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-arch/x86/include/asm/arch_hweight.h:9:17: error: expected identifier before string constant
-9 | #define REG_OUT "a"
-  |                 ^~~
-drivers/pinctrl/meson/pinctrl-meson.h:69:9: note: in expansion of macro ‘REG_OUT’
-69 |         REG_OUT,
+Hi,
 
-And some more.
+I can take both patches via my Samsung SoC tree, if that's ok.
 
-> MREG_ is rather ugly, something like PINCONF_REG_ or more simpler MESON_REG_ would be more appropriate.
+Best regards,
+Krzysztof
 
-Fine with me.
+Krzysztof Kozlowski (2):
+  dt-bindings: update Krzysztof Kozlowski's email
+  MAINTAINERS: update Krzysztof Kozlowski's email to Linaro
+
+ .../clock/samsung,exynos-audss-clock.yaml     |  2 +-
+ .../bindings/clock/samsung,exynos-clock.yaml  |  2 +-
+ .../clock/samsung,exynos-ext-clock.yaml       |  2 +-
+ .../clock/samsung,exynos4412-isp-clock.yaml   |  2 +-
+ .../clock/samsung,exynos5260-clock.yaml       |  2 +-
+ .../clock/samsung,exynos5410-clock.yaml       |  2 +-
+ .../clock/samsung,exynos5433-clock.yaml       |  2 +-
+ .../bindings/clock/samsung,exynos7-clock.yaml |  2 +-
+ .../clock/samsung,exynos7885-clock.yaml       |  2 +-
+ .../clock/samsung,exynos850-clock.yaml        |  2 +-
+ .../bindings/clock/samsung,s2mps11.yaml       |  2 +-
+ .../clock/samsung,s5pv210-audss-clock.yaml    |  2 +-
+ .../bindings/clock/samsung,s5pv210-clock.yaml |  2 +-
+ .../devfreq/event/samsung,exynos-nocp.yaml    |  2 +-
+ .../devfreq/event/samsung,exynos-ppmu.yaml    |  2 +-
+ .../samsung/samsung,exynos-hdmi-ddc.yaml      |  2 +-
+ .../display/samsung/samsung,exynos-hdmi.yaml  |  2 +-
+ .../display/samsung/samsung,exynos-mixer.yaml |  2 +-
+ .../samsung/samsung,exynos5433-decon.yaml     |  2 +-
+ .../samsung/samsung,exynos5433-mic.yaml       |  2 +-
+ .../samsung/samsung,exynos7-decon.yaml        |  2 +-
+ .../display/samsung/samsung,fimd.yaml         |  2 +-
+ .../bindings/extcon/maxim,max77843.yaml       |  2 +-
+ .../bindings/hwmon/lltc,ltc4151.yaml          |  2 +-
+ .../bindings/hwmon/microchip,mcp3021.yaml     |  2 +-
+ .../bindings/hwmon/sensirion,sht15.yaml       |  2 +-
+ .../devicetree/bindings/hwmon/ti,tmp102.yaml  |  2 +-
+ .../devicetree/bindings/hwmon/ti,tmp108.yaml  |  2 +-
+ .../devicetree/bindings/i2c/i2c-exynos5.yaml  |  2 +-
+ .../bindings/i2c/samsung,s3c2410-i2c.yaml     |  2 +-
+ .../samsung,exynos4210-combiner.yaml          |  2 +-
+ .../bindings/leds/maxim,max77693.yaml         |  2 +-
+ .../memory-controllers/brcm,dpfe-cpu.yaml     |  2 +-
+ .../ddr/jedec,lpddr2-timings.yaml             |  2 +-
+ .../memory-controllers/ddr/jedec,lpddr2.yaml  |  2 +-
+ .../ddr/jedec,lpddr3-timings.yaml             |  2 +-
+ .../memory-controllers/ddr/jedec,lpddr3.yaml  |  2 +-
+ .../marvell,mvebu-sdram-controller.yaml       |  2 +-
+ .../qca,ath79-ddr-controller.yaml             |  2 +-
+ .../memory-controllers/renesas,h8300-bsc.yaml |  2 +-
+ .../samsung,exynos5422-dmc.yaml               |  2 +-
+ .../memory-controllers/synopsys,ddrc-ecc.yaml |  2 +-
+ .../memory-controllers/ti,da8xx-ddrctl.yaml   |  2 +-
+ .../bindings/mfd/maxim,max14577.yaml          |  2 +-
+ .../bindings/mfd/maxim,max77686.yaml          |  2 +-
+ .../bindings/mfd/maxim,max77693.yaml          |  2 +-
+ .../bindings/mfd/maxim,max77802.yaml          |  2 +-
+ .../bindings/mfd/maxim,max77843.yaml          |  2 +-
+ .../mfd/samsung,exynos5433-lpass.yaml         |  2 +-
+ .../bindings/mfd/samsung,s2mpa01.yaml         |  2 +-
+ .../bindings/mfd/samsung,s2mps11.yaml         |  2 +-
+ .../bindings/mfd/samsung,s5m8767.yaml         |  2 +-
+ .../bindings/net/nfc/marvell,nci.yaml         |  2 +-
+ .../devicetree/bindings/net/nfc/nxp,nci.yaml  |  2 +-
+ .../bindings/net/nfc/nxp,pn532.yaml           |  2 +-
+ .../bindings/net/nfc/nxp,pn544.yaml           |  2 +-
+ .../bindings/net/nfc/st,st-nci.yaml           |  2 +-
+ .../bindings/net/nfc/st,st21nfca.yaml         |  2 +-
+ .../bindings/net/nfc/st,st95hf.yaml           |  2 +-
+ .../bindings/net/nfc/ti,trf7970a.yaml         |  2 +-
+ .../bindings/phy/samsung,dp-video-phy.yaml    |  2 +-
+ .../bindings/phy/samsung,exynos-hdmi-phy.yaml |  2 +-
+ .../phy/samsung,exynos5250-sata-phy.yaml      |  2 +-
+ .../bindings/phy/samsung,mipi-video-phy.yaml  |  2 +-
+ .../bindings/phy/samsung,usb2-phy.yaml        |  2 +-
+ .../bindings/phy/samsung,usb3-drd-phy.yaml    |  2 +-
+ .../pinctrl/samsung,pinctrl-gpio-bank.yaml    |  2 +-
+ .../pinctrl/samsung,pinctrl-pins-cfg.yaml     |  2 +-
+ .../samsung,pinctrl-wakeup-interrupt.yaml     |  2 +-
+ .../bindings/pinctrl/samsung,pinctrl.yaml     |  2 +-
+ .../bindings/power/supply/maxim,max14577.yaml |  2 +-
+ .../bindings/power/supply/maxim,max77693.yaml |  2 +-
+ .../bindings/regulator/maxim,max14577.yaml    |  2 +-
+ .../bindings/regulator/maxim,max77686.yaml    |  2 +-
+ .../bindings/regulator/maxim,max77693.yaml    |  2 +-
+ .../bindings/regulator/maxim,max77802.yaml    |  2 +-
+ .../bindings/regulator/maxim,max77843.yaml    |  2 +-
+ .../bindings/regulator/maxim,max8952.yaml     |  2 +-
+ .../bindings/regulator/maxim,max8973.yaml     |  2 +-
+ .../bindings/regulator/maxim,max8997.yaml     |  2 +-
+ .../bindings/regulator/samsung,s2mpa01.yaml   |  2 +-
+ .../bindings/regulator/samsung,s2mps11.yaml   |  2 +-
+ .../bindings/regulator/samsung,s2mps13.yaml   |  2 +-
+ .../bindings/regulator/samsung,s2mps14.yaml   |  2 +-
+ .../bindings/regulator/samsung,s2mps15.yaml   |  2 +-
+ .../bindings/regulator/samsung,s2mpu02.yaml   |  2 +-
+ .../bindings/regulator/samsung,s5m8767.yaml   |  2 +-
+ .../bindings/rng/samsung,exynos5250-trng.yaml |  2 +-
+ .../bindings/rng/timeriomem_rng.yaml          |  2 +-
+ .../bindings/soc/samsung/exynos-usi.yaml      |  2 +-
+ .../bindings/sound/samsung,arndale.yaml       |  2 +-
+ .../bindings/sound/samsung,smdk5250.yaml      |  2 +-
+ .../bindings/sound/samsung,snow.yaml          |  2 +-
+ .../bindings/sound/samsung,tm2.yaml           |  2 +-
+ .../spi/samsung,spi-peripheral-props.yaml     |  2 +-
+ .../devicetree/bindings/spi/samsung,spi.yaml  |  2 +-
+ .../thermal/samsung,exynos-thermal.yaml       |  2 +-
+ .../bindings/usb/samsung,exynos-dwc3.yaml     |  2 +-
+ .../bindings/usb/samsung,exynos-usb2.yaml     |  2 +-
+ MAINTAINERS                                   | 36 +++++++++----------
+ 100 files changed, 117 insertions(+), 117 deletions(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.32.0
 
