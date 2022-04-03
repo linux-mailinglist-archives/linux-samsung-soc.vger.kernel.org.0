@@ -2,77 +2,71 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AA2F4F06C4
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Apr 2022 04:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F734F06F4
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Apr 2022 05:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbiDCCQu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 2 Apr 2022 22:16:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51456 "EHLO
+        id S233703AbiDCDIU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 2 Apr 2022 23:08:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbiDCCQu (ORCPT
+        with ESMTP id S231690AbiDCDIT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 2 Apr 2022 22:16:50 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 838423A5E9;
-        Sat,  2 Apr 2022 19:14:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E4B65CE0B1F;
-        Sun,  3 Apr 2022 02:14:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1296C340EE;
-        Sun,  3 Apr 2022 02:14:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648952094;
-        bh=sqYLDU+fwXFcPGJInHBWfYzYzKNM+vXb4OU6AqfFR5Y=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=F1X32ELEee+RI/dSMDPAySBSdLkKwiVKCHLwRK5n527vp3R5wQkhrWukmjZxAJlP2
-         G5E8CV1QceJf6wlLaBr8GkYxgSSo4DblLao4ucsvUTOlUCqXCuwAn08wJc/2TCQIWx
-         xu+/uC8oWHvbnAscyks5cgG3RW9t68reBjvRU4Bnb6Jj98dxOGlgJe4q4XqUGhPcAB
-         P1spjwFMZ2cDzwUey3p6CwFZa8Sf14FWslTuDb317mGx2qudxtihxOWVe6HLyTHYvM
-         BjALABzcu1IioUMsOFmHw7UA4djoZsrEAZLEIkWP1G2w17PNsYP5NkKvgoorj+GmIX
-         3XcLieuQlXJXA==
-Content-Type: text/plain; charset="utf-8"
+        Sat, 2 Apr 2022 23:08:19 -0400
+X-Greylist: delayed 345 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 02 Apr 2022 20:06:09 PDT
+Received: from mta-out-03.alice.it (mta-out-03.alice.it [217.169.118.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A7C5038BF4
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  2 Apr 2022 20:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alice.it; s=20211207; t=1648955169; 
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        h=Reply-To:From:To:Date:Message-ID:MIME-Version;
+        b=MwWddbL45eDcCECGk+KWXHCMNWiXNlJO9CUsysT0gdi+VSwNtFgp5ENhm3/awsEGZ/53Wor20XgxQCKMl3pOhtr8wEBhJeIxsc7U2uK6jBur+kA3KXiuRKgFpInBkWBUexI3dohfwnVXPuq2XKJwNtLUZLg4ZCu41c+fxge03tTOglUdmrQUZRyVw6a6rx2xWZhMAJCf+kmZ/0KwSvJ4t/KCXP+oHOGH5mvnzMtAtRBiDTXtqMX75NX1zSnQPI+jjaMB5mjJFhrEWEqcdmpIvoHGvIGhM17EETKu0XLpxFgxmoUmLLMJLDsM1YlKMluGTjZvcwKvKpjoD14DEUpw9Q==
+X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedvvddrudeiledgiedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuvffgnffgvefqoffkvfetnffktedpqfgfvfenuceurghilhhouhhtmecufedtudenucfgmhhpthihuchsuhgsjhgvtghtucdluddtmdengfhmphhthicusghougihucdlhedtmdenucfjughrpehrhffvfffkggestddtfedttddttdenucfhrhhomhephggvuchhrghvvgcurghnuchofhhfvghruchtohcuihhnvhgvshhtuchinhcuhihouhhrucgtohhunhhtrhihuchunhguvghrucgruchjohhinhhtuchvvghnthhurhgvuchprghrthhnvghrshhhihhpuchplhgvrghsvgcurhgvphhlhicufhhorhcumhhorhgvucguvghtrghilhhsuceofhgpphgvnhhnrgesrghlihgtvgdrihhtqeenucggtffrrghtthgvrhhnpeehjeetgefhleetiedtkeelfffgjeeugeegleekueffgfegtdekkeeifedvvdffteenucfkphepudejiedrvddvjedrvdegvddrudeltdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhephhgvlhhopegrlhhitggvrdhithdpihhnvghtpedujeeirddvvdejrddvgedvrdduledtpdhmrghilhhfrhhomhepfhgpphgvnhhnrgesrghlihgtvgdrihhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqshgrmhhsuhhnghdqshhotgesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-RazorGate-Vade-Verdict: clean 60
+X-RazorGate-Vade-Classification: clean
+Received: from alice.it (176.227.242.190) by mta-out-03.alice.it (5.8.807.04) (authenticated as f_penna@alice.it)
+        id 623C9D0500EBCB40 for linux-samsung-soc@vger.kernel.org; Sun, 3 Apr 2022 05:00:22 +0200
+Reply-To: dougfield20@inbox.lv
+From:   We have an offer to invest in your country under a
+         joint venture partnership please reply for more
+         details <f_penna@alice.it>
+To:     linux-samsung-soc@vger.kernel.org
+Date:   02 Apr 2022 20:00:20 -0700
+Message-ID: <20220402200020.E1B0327B4711466B@alice.it>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220401122839.nn74rtftvzgjqjrg@houat>
-References: <20220325161144.1901695-4-maxime@cerno.tech> <366a0232-bb4a-c357-6aa8-636e398e05eb@samsung.com> <20220330084710.3r6b5pjspz5hdmy6@houat> <YkV3ch7R7YxlATW+@atomide.com> <20220331095456.dyyxsiu2b3yw2vvs@houat> <YkXCGlrok0niwlyg@atomide.com> <20220331153134.h3alp24hzquajkly@houat> <YkXeGS5zaovOaEzp@atomide.com> <20220331215818.F11BEC340F0@smtp.kernel.org> <20220401122839.nn74rtftvzgjqjrg@houat>
-Subject: Re: [PATCH v2 3/3] clk: Drop the rate range on clk_put
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Tony Lindgren <tony@atomide.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mike Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-To:     Maxime Ripard <maxime@cerno.tech>
-Date:   Sat, 02 Apr 2022 19:14:51 -0700
-User-Agent: alot/0.10
-Message-Id: <20220403021453.F1296C340EE@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_50,BODY_EMPTY,
+        DKIM_INVALID,DKIM_SIGNED,EMPTY_MESSAGE,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,MISSING_SUBJECT,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L3,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.7 RCVD_IN_DNSWL_LOW RBL: Sender listed at https://www.dnswl.org/,
+        *       low trust
+        *      [217.169.118.9 listed in list.dnswl.org]
+        *  0.0 RCVD_IN_MSPIKE_L3 RBL: Low reputation (-3)
+        *      [217.169.118.9 listed in bl.mailspike.net]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5051]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [f_penna[at]alice.it]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [dougfield20[at]inbox.lv]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        *  2.3 EMPTY_MESSAGE Message appears to have no textual parts and no
+        *      Subject: text
+        *  1.8 MISSING_SUBJECT Missing Subject: header
+        *  0.1 DKIM_INVALID DKIM or DK signature exists, but is not valid
+        *  0.0 RCVD_IN_MSPIKE_BL Mailspike blacklisted
+        *  0.0 BODY_EMPTY No body text in message
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Maxime Ripard (2022-04-01 05:28:39)
-> Hi,
->=20
-> On Thu, Mar 31, 2022 at 02:58:17PM -0700, Stephen Boyd wrote:
-> >=20
-> > I don't think clk_put() dropping a range request is very important right
-> > now. If this isn't fixed tomorrow then we should revert out this patch
-> > so systems can boot -rc1 and try to fix it in parallel.
->=20
-> Yeah, it can definitely be reverted. I'm not so sure that the issue is
-> with this patch itself though but more that it now triggers a fault
-> reliably.
->=20
-
-I don't see a revert sent yet so I'll send one now.
