@@ -2,68 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2152C4F1CA3
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ABB34F1C63
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382379AbiDDV2L (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:28:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36374 "EHLO
+        id S237667AbiDDV1I (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379371AbiDDRDy (ORCPT
+        with ESMTP id S1379379AbiDDRD5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 4 Apr 2022 13:03:54 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C99D40A24
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:01:57 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id g20so11880517edw.6
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:01:57 -0700 (PDT)
+        Mon, 4 Apr 2022 13:03:57 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D2C540A28
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:01 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id i27so14188062ejd.9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v5Fmb4acPC59cWZXdkuaYjyiaNIFHAYaKvTirVUtyb4=;
-        b=R8hcC66HpgMWLqprAc3n6eEdxFsgMtSPa37JJtF4M0LOQQxhDV5/c47atRSa8zHosK
-         Kj07u92mYfjSCKDxQZFzeMjmsmm7NhVNpY5mDun8DDsQF4JXKdDOelLXIdq98qZ7/IL9
-         g6bE11BZY9RBWmwwWMvikscr8Amc9ceyc7EEEEpaUrDTePh7BARB0NmuQqIQqVV60bO3
-         GiPI6qxMRN40VVREzeXloXjPRaeTBLUNufaBhPEFyffYoIJIeH+L1HvOF/Xht0HgJ/ap
-         61sRx4y6JRk8DqFdDNReLUgtRu17YVLKHYcC9EzLe+eUFkzUW2EckiHPNdxFgYDlWW5D
-         xLWg==
+        bh=XDRai04CA05RswVKu5alUWJtGVzhDwT89lcIpEMtwKM=;
+        b=YGjEVbKrxaCj2fiISbwvOvVSLZ42rj3jHDAPpX+ykNsk90fFh/VsuaFoFMNYtyxuzF
+         nVi1FnYccUZfV3/L6BEPiJ0lmNO/JN8Kl/CXMB+yUcnqfXIsneiUpStjBd+YralAyO8R
+         JLRIj8Rz1nEW9LenHRh9+U+poKxEmfIx3v0EhYx8lPOK7IVh+YyBW2M/utkM2TUi6YtW
+         ecN1C1KwqD/KkxPnoqCS1NdxfskdpaEB08QOhOK7NFRh4ccuynpl9jFvSDFIFCiqBGEg
+         hD9fv5XB7Jz+vbUMOAPD6yJO7KoPbmdn4G0J5eypih98p+tNOvZfhExy67YIyPuCt1Y7
+         P6SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v5Fmb4acPC59cWZXdkuaYjyiaNIFHAYaKvTirVUtyb4=;
-        b=iwB9eDmnOFcgewkx2NtvkEQaMdSbbyPwogDAcaHMR7o+sQM9ytOFW5Rf/M639IKlgi
-         DddvbSryKrpat1AcCz6D/yhTD+rAXMUCgrnWg0KKIhBLma5mx8C/DyRd8hLg4REv7UBY
-         P6d3Ec1xy7IeVkaQhkq7zTqD2/ovL+dkUVfM+OoktGx8hyt7hOr7rHk+2fFeyeqQCpBh
-         +dCC5LpD9IuVUIu6aRg3xY4Iv32eZHdWvc7tqg9npAgT5TTcOReoeqcHGXBRFEyIPON0
-         CrESPTABw9EW2V4OADuOVeXjFpd3wsENLkcFGcu01spbEuBievS/KVI435Sr1i9uvcXQ
-         rkYw==
-X-Gm-Message-State: AOAM531O6pUyYFo9pqlBzWRNiz9hIioQ7qJ1MVXb4lZtT2UJiYXFT6I5
-        c18uKgPfulFYMvpYYEhCbtlKBg==
-X-Google-Smtp-Source: ABdhPJxw9oxoZGvi5JcalnhggHj8GMN53jspFBnnKS9BPbdilK/xZWUSjz+E8N965+hn6nwIGmMlgA==
-X-Received: by 2002:a05:6402:2318:b0:413:7645:fa51 with SMTP id l24-20020a056402231800b004137645fa51mr1136945eda.201.1649091716073;
-        Mon, 04 Apr 2022 10:01:56 -0700 (PDT)
+        bh=XDRai04CA05RswVKu5alUWJtGVzhDwT89lcIpEMtwKM=;
+        b=7ezNN21cyPeXv4c8UucMbFQEGlWCuCVDmC18CysslvmiGIzYYrae8Wgd5u+w1L8rat
+         3aXk0mdlr+V/KcjgVe28hJifoDJbUAJIHlmXNSXjRa06k8eekwIuv6RcCqrUXtUbBI0U
+         0FN+PQ0vMUtU/qFbYhjxQcBB+q33D6wOjPZGroOALyNE7e0nySPT5z5SjBb+zoBRmxq5
+         Yuq1+rdhRK4l+UIdUL21DaISWrWWbUKaFISC4jY/QR8NVyHPFNOiozeDPoqNMQUYX9yy
+         rtbUBP69vk3myiuukdYT6/aM1nkKMLba9r5ssPJmS8k5jX7X8GPPHMyKpEdrbtLMdWOf
+         qWUg==
+X-Gm-Message-State: AOAM532z99wo2MvPx1TcR4xe3NtTrB1TTI9v5F2Lin3x8mgDv+U6I7Ey
+        GOh1Z8EGmIUGfiInbT16HyR9bg==
+X-Google-Smtp-Source: ABdhPJxjxE1555uF2gVoe5qYPFLZ+9GXlrvyiQUh8yEYi1nxgJCJ+oxDdo2NSpOk6a60bL6TomwbSQ==
+X-Received: by 2002:a17:907:96a8:b0:6e7:c54e:66e4 with SMTP id hd40-20020a17090796a800b006e7c54e66e4mr1100334ejc.322.1649091717687;
+        Mon, 04 Apr 2022 10:01:57 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.01.55
+        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.01.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 10:01:55 -0700 (PDT)
+        Mon, 04 Apr 2022 10:01:56 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     linux-usb@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH 2/5] ARM: dts: s5pv210: align EHCI/OHCI nodes with dtschema
-Date:   Mon,  4 Apr 2022 19:01:45 +0200
-Message-Id: <164909169269.1688455.16830992649596254488.b4-ty@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <snawrocki@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: Re: [PATCH] ARM: dts: exynos: drop deprecated SFR region from MIPI phy
+Date:   Mon,  4 Apr 2022 19:01:46 +0200
+Message-Id: <164909169269.1688455.14606590160258224493.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220314181948.246434-2-krzysztof.kozlowski@canonical.com>
-References: <20220314181948.246434-1-krzysztof.kozlowski@canonical.com> <20220314181948.246434-2-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220314184113.251013-1-krzysztof.kozlowski@canonical.com>
+References: <20220314184113.251013-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -77,15 +77,20 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 14 Mar 2022 19:19:45 +0100, Krzysztof Kozlowski wrote:
-> The node names should be generic and USB DT schema expects "usb" names.
+On Mon, 14 Mar 2022 19:41:13 +0100, Krzysztof Kozlowski wrote:
+> Commit e4b3d38088df ("phy: exynos-video-mipi: Fix regression by adding
+> support for PMU regmap") deprecated the usage of unit address in MIPI
+> phy node, in favor of a syscon phandle.  Deprecating was a correct
+> approach because that unit address was actually coming from Power
+> Management Unit SFR range so its usage here caused overlapped memory
+> mapping.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[2/5] ARM: dts: s5pv210: align EHCI/OHCI nodes with dtschema
-      commit: ab92681ca16194c966844ed4dd2c336705e0c727
+[1/1] ARM: dts: exynos: drop deprecated SFR region from MIPI phy
+      commit: 04398e04173f1be0b21d7cd50c54e8affcebe106
 
 Best regards,
 -- 
