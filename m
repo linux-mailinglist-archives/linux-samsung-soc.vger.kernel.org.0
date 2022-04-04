@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D8CF4F1C93
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21DAF4F1C98
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382361AbiDDV1s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36468 "EHLO
+        id S242271AbiDDV2A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:28:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379384AbiDDRD7 (ORCPT
+        with ESMTP id S1379386AbiDDRD7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Mon, 4 Apr 2022 13:03:59 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E1A40A2B
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:02 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id yy13so21343538ejb.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:02 -0700 (PDT)
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C00540A23
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:03 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id r13so21299247ejd.5
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wlQmbWsbwLY4Jm0uWTn3f9S3+SAlsRt/5TjBscaW/ec=;
-        b=Q++fS72PqHfuYFjBF7/g/8eYmp6uBJVDEGuLQRS6akI68tCD9V7hqUoKuQx8eCMGP2
-         LY111E0bOeFLm1f7/gaAgmur6VHUqL9f+t4L/k2UCtejxKn+AhoPu+s0vZsFqldsCa9Y
-         jiY4+moa33mqZ+Z8MEl4DVy/sxOYPiL/F+3Ua7Xr2zesZuXmPMVQRpaH53WjmQmGjX5E
-         ghG1kjTtNoQxofdWzIUVj98HP8MQIhPj8LIDnwgxfB1576G4uN+iKtqe9fW+SgqvK1CY
-         4RgTKoJZdrU4tcnSGEMZj7gdrGmcwfF+R/nP0xLzY2/r+4C+UsEVAAzEkgwmWOuqjVw7
-         PdVg==
+        bh=fTtmY+6kEY48dXDt92pAxKFA5nufZVaGUszJn2KSj7Q=;
+        b=UoomhqtwgUrejeY/SCN+1Dep4CWzZhUfhrmtVDDBEt4UhRyFQ3a9DQY0HZGJxfZ8h3
+         1eiFIoyW3Ezepg4hYMtIES9QgFXXqVeuQJjAHGIRNr2GE9htsMnv4tRL1bBQnpRbwMHL
+         GJGHJrvuDF0Pfymdr8RHYq4aIdeZWIcVtJkjNpBBa3P2oZhKtbHX01oKUUDk2wwxWaNy
+         OypSqHrPAo9MHrKZa8GKblq5dRgkRTocm2oA7GEr1/nwzT4Voo5ugca4Rgn0w+xvHDFD
+         apQvJb8YLhrDxvABOX6lb+F3IA6zeuwokQsrXGQwaw7IuXoCzSXeqCSMyJmGV5h7uMDk
+         HiIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wlQmbWsbwLY4Jm0uWTn3f9S3+SAlsRt/5TjBscaW/ec=;
-        b=Y9hkIYGACPe8zyBc6gQMWRJvriiw+CpxgNfdhnoIdEltaaucYDJaOKRwgG0NjGgSsw
-         Vy5jzjterhH2tcmo2I+ZgEnGXqYHtuhwEKahhX2I5olhB7VaaKA19g9IHJUkmn99LirW
-         DdLB1agNzc1rlR1lEyTbcnUIjNGZ+idmch2Z06w4huwRSXTcYOdSRfm8Mu0VCg8Jrqqv
-         uG15lc0H3W52qnCzHUwDWPdkLXcqqDWUTrkMMCpXO36bYu3XPMQYX/RlZXoLz/46kPJ2
-         KrIEMjRz0bC9LZuZ6uVo0YOIQP0b8tJpLyDDAT/ulkwZWRn/toEB/a1AdAJik8+3fHMX
-         YFFw==
-X-Gm-Message-State: AOAM531c/+z5QcY0vTbHARUabBEhtkxIBSMzpUlS0PtrPn05gPHzzFlc
-        l2hb/OlH1EnoS46EtLXR8MJUSw==
-X-Google-Smtp-Source: ABdhPJxsy+zfihA7Fi6o4Ei91Fm+4NalCj1W+rFnZ60rDuEKgLQ1M2JebdUfl1JFAwblr1YXiYMxjw==
-X-Received: by 2002:a17:906:4787:b0:6e1:409f:8deb with SMTP id cw7-20020a170906478700b006e1409f8debmr1081940ejc.80.1649091720949;
-        Mon, 04 Apr 2022 10:02:00 -0700 (PDT)
+        bh=fTtmY+6kEY48dXDt92pAxKFA5nufZVaGUszJn2KSj7Q=;
+        b=xdXlFuxFy1Ts1iHQxUToiCSCdgY094tRLSxw7ahXhAyUuDdUmsbAjEGK6ReSTdqV8D
+         EI9hAvA0FC91Ic27iXycsSc0Z+5gKDRV9mH7jrIpSvVtxQ3p8QSXpX2j5VYykfZCvuay
+         DBFe57DBC5K3NUhZiPZHpLKHZZZrM85W0dR86sgqeY2xIxLDIekQOF41pcuFjWTySv4a
+         RA05u5S8GUcGSeJ+QVn7YHZeu4kXyOZ8HVRuCukUdxP382gQ9BWh5f7LzUEemlGdTbE/
+         Bxqv64IQa4ndzlieFd95AZ72CL0tRybBbxltexAxCBvzADC0BFLm2OdIRuNxn3CY7eCs
+         4yjg==
+X-Gm-Message-State: AOAM5302m4KosfgQF3OzB7xlaQY+4fqDFjPCSV65kPTBYYScZcGGL7Ru
+        awkv4KPdgREZgSyk15+d5F4GFQ==
+X-Google-Smtp-Source: ABdhPJzNNWr2tpPZJ5TXhj+1dMy4Ij5a4dyOvyKFovCPsbkyQci20MirVmatIhBwjLaXk1L0KkhiYg==
+X-Received: by 2002:a17:907:608f:b0:6e8:395:43fe with SMTP id ht15-20020a170907608f00b006e8039543femr1005391ejc.439.1649091722097;
+        Mon, 04 Apr 2022 10:02:02 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.01.59
+        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.02.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 10:02:00 -0700 (PDT)
+        Mon, 04 Apr 2022 10:02:01 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
@@ -58,18 +58,18 @@ To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         Thomas Gleixner <tglx@linutronix.de>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v2 3/4] arm64: dts: exynos: add a specific compatible to MCT
-Date:   Mon,  4 Apr 2022 19:01:48 +0200
-Message-Id: <164909169270.1688455.15004420209137649762.b4-ty@linaro.org>
+Subject: Re: (subset) [PATCH v2 4/4] arm64: dts: tesla: add a specific compatible to MCT on FSD
+Date:   Mon,  4 Apr 2022 19:01:49 +0200
+Message-Id: <164909169269.1688455.2895247009152071238.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220304122424.307885-4-krzysztof.kozlowski@canonical.com>
-References: <20220304122424.307885-1-krzysztof.kozlowski@canonical.com> <20220304122424.307885-4-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220304122424.307885-5-krzysztof.kozlowski@canonical.com>
+References: <20220304122424.307885-1-krzysztof.kozlowski@canonical.com> <20220304122424.307885-5-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,18 +77,17 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 4 Mar 2022 13:24:23 +0100, Krzysztof Kozlowski wrote:
-> One compatible is used for the Multi-Core Timer on most of the Samsung
-> Exynos SoCs, which is correct but not specific enough.  These MCT blocks
-> have different number of interrupts, so add a second specific
-> compatible to Exynos5433 and Exynos850.
+On Fri, 4 Mar 2022 13:24:24 +0100, Krzysztof Kozlowski wrote:
+> One compatible is used for the Multi-Core Timer on Tesla FSD SoC, which
+> is correct but not specific enough.  The MCT blocks have different
+> number of interrupts, so add a second specific compatible to Tesla FSD.
 > 
 > 
 
 Applied, thanks!
 
-[3/4] arm64: dts: exynos: add a specific compatible to MCT
-      commit: 2616922241706ec5c2c5ae95d5ac1d3120575ded
+[4/4] arm64: dts: tesla: add a specific compatible to MCT on FSD
+      commit: 22cbcb8f4a17c194d208f686fc3ea37fc860bd71
 
 Best regards,
 -- 
