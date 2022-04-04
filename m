@@ -2,68 +2,67 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 530E34F1C73
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA45B4F1C9D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244392AbiDDV1W (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:27:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36648 "EHLO
+        id S1382372AbiDDV2H (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:28:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379397AbiDDREZ (ORCPT
+        with ESMTP id S1379417AbiDDRKT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 4 Apr 2022 13:04:25 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F60C40A29
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:29 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bq8so21255539ejb.10
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:29 -0700 (PDT)
+        Mon, 4 Apr 2022 13:10:19 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63F5F40A22
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:08:22 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a6so10417525ejk.0
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AZy7e16Ig1JG7qj3MBTWcZiECGvCR3TfCcY9SM2k7uA=;
-        b=TkwLryzG8xq8ZJgUcCjQo23owBZZxVZFlkUrfEjVt10WatBuovqiDNcaYbAr25omCj
-         d/kdNNsblDqCmWG5ynrU8fhTXwQ/8Ch/9Es+pyux5G6XK9KlilWd6omMRts4Qr5EVCOD
-         vT85iI2i9IE/qPYUVU9NmGMmM53GkB4/i/SaTw9UAzzF0fYfcXY5EVrC8qm7/w4jB6DI
-         iI0q2d55LAvT0MvFWh0m8iwFkBjqZ4+uErSypFFgzJUqqdQ3WSZwOkiq1AaAApg8LADP
-         LOsfRO1HtVp7I2biiAyX3xEtqSmtatDXPSIpc592+g14AaVuhm+poLEgUDxFYxX8L/xy
-         9UqQ==
+        bh=LXXr7F0cW3RTrkA8M6uuznqZSvmvR1TGt0LOYkCfNSQ=;
+        b=wBUWd1KOHSXpqah/8BaOgmo8qLPdZf1sdgt0au6YhBPtGFBBh2rBCHyFSGtQaXNZe7
+         khGltgNxaO32X6qwHt4slyv3JWF+NX5P+dHNeemg4Dp4Rj2oEKD1T3M7L+jBkvG0cEaj
+         XWzBID2cjpeX8s/+1fc7UvWjmeXe7cRskPgFVjXw5x5VHbcBDjc3bg59jDMUgbQMp0QD
+         LFBiJ6j2JSV6MBnkz8TAYalVInVz6tEnJZIX0E2/DYb+fBpSM+arJRv+VD6RXlRi6b5Y
+         Ek8TgLsFU9b5Qf6uMfaf/Q6xTn5QkVOkUzkmJD5P8m3DccA+TDLPfosr3ptDA05BQWii
+         dHCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AZy7e16Ig1JG7qj3MBTWcZiECGvCR3TfCcY9SM2k7uA=;
-        b=v9XQM5AUKOsjGCMJQaRpHk36WgioN0Cpl7nH/RLWvmT0xnOlFca/FtbQCemPdTw20A
-         HZCVJwliYjLpi481DtMt84Aag/3PueQ/QW7bh2iOm+LmSoaOm29Qp2WXMtnzlCsFn9q9
-         0iOxgk1adITGWeh1K0vnqT6f2x12PZ+DZSAUtSGXkCdPGXApvfd1QRIeZotnTo6joRGz
-         TPM1K2tp3b3jXsMb/kUp1aSLzjqzRo4Z2UrgvOJlLcYJAs5VKPSbh0fyxlA79k2MBCpZ
-         W6Lz4W4Gm0DABwEWYcR+GZ+UFCXcMidFswMRSlp09fOZkQ5S/B58jnoI0zudB+NvNkz9
-         eDOw==
-X-Gm-Message-State: AOAM532r2638mlsPXq7Id/D2htYoWWfCkfRgJ4G0GgnMlo3DXDFC2Mss
-        KzsguTBHL5NV8D1+HNwORvn0DA==
-X-Google-Smtp-Source: ABdhPJw30fbKCfQKHVKnmx6muF5fQbHs2yESn5RWTv0aghy4f7F4Sy0XYE4R1cIxrr0pe2nLy7vXTQ==
-X-Received: by 2002:a17:907:7205:b0:6e7:ee50:ea94 with SMTP id dr5-20020a170907720500b006e7ee50ea94mr1050231ejc.351.1649091747789;
-        Mon, 04 Apr 2022 10:02:27 -0700 (PDT)
+        bh=LXXr7F0cW3RTrkA8M6uuznqZSvmvR1TGt0LOYkCfNSQ=;
+        b=4vtaQlRZlRLs3Ip2bkbX4KX6knWrWql9LBZNltUnEf3mtGddqsx/OK50Rj+kQooJZl
+         jtH2Kq8hmQOD+HqBKZgW0AvQgyZdQ84rlb8Z7obY7Fa/ZP4OOixizROiJIFRxIki7h27
+         s/cTbaK6LySSsGwfX6YzKyb46kfM82fVVATZc7qXb+aivOXBukWr1OKcXtCvP2kdxLNn
+         Gzv638rpZauePGOXaR8Onz+vGY52sqIVQAaZUqqu6Gr6olHyhyqYTpA77XPkqqJY+Pd1
+         NdW4pg2ezkuj2VeSPCotxhK3tHiGXGDN78/dMtGBNVB+uVwqqRGmFySUP9BUJj92cMSL
+         88zw==
+X-Gm-Message-State: AOAM531sE3zkjItevwOvAq0ZDojgUeyUvygTmDdaJ4d7R+BKFfYsCPwS
+        Yh4HdUOkAAF3c6g1SwTVXxPyaw==
+X-Google-Smtp-Source: ABdhPJx2qo4HGcrJqr114ZtIIY4ckwTEFuRMwUlvOaFJCAC2pEj4AzRRvX7sa3sEZVcPo8HyRUAHlA==
+X-Received: by 2002:a17:907:a41e:b0:6e7:9ea9:8350 with SMTP id sg30-20020a170907a41e00b006e79ea98350mr1021136ejc.377.1649092101002;
+        Mon, 04 Apr 2022 10:08:21 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id hs12-20020a1709073e8c00b006dfdfdac005sm4588927ejc.174.2022.04.04.10.02.26
+        by smtp.gmail.com with ESMTPSA id u25-20020a170906b11900b006e08588afedsm4565827ejy.132.2022.04.04.10.08.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 10:02:27 -0700 (PDT)
+        Mon, 04 Apr 2022 10:08:20 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Dmitry Osipenko <digetx@gmail.com>,
-        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
+To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Lukasz Luba <lukasz.luba@arm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v3 8/8] ARM: dts: exynos: remove deprecated unit address for LPDDR3 timings on Odroid
-Date:   Mon,  4 Apr 2022 19:02:24 +0200
-Message-Id: <164909174137.1688710.5639682730055944531.b4-ty@linaro.org>
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] memory: samsung: exynos5422-dmc: Avoid some over memory allocation
+Date:   Mon,  4 Apr 2022 19:08:14 +0200
+Message-Id: <164909209237.1690243.6125620782539753539.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220206135918.211990-1-krzysztof.kozlowski@canonical.com>
-References: <20220206135807.211767-1-krzysztof.kozlowski@canonical.com> <20220206135918.211990-1-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <69d7e69346986e2fdb994d4382954c932f9f0993.1647760213.git.christophe.jaillet@wanadoo.fr>
+References: <69d7e69346986e2fdb994d4382954c932f9f0993.1647760213.git.christophe.jaillet@wanadoo.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -77,16 +76,22 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 6 Feb 2022 14:59:18 +0100, Krzysztof Kozlowski wrote:
-> Passing maximum frequency of LPDDR3 memory timings as unit address was
-> deprecated in favor of 'max-freq' property.
+On Sun, 20 Mar 2022 08:10:30 +0100, Christophe JAILLET wrote:
+> 'dmc->counter' is a 'struct devfreq_event_dev **', so there is some
+> over memory allocation. 'counters_size' should be computed with
+> 'sizeof(struct devfreq_event_dev *)'.
 > 
+> Use 'sizeof(*dmc->counter)' instead to fix it.
 > 
+> While at it, use devm_kcalloc() instead of devm_kzalloc()+open coded
+> multiplication.
+> 
+> [...]
 
 Applied, thanks!
 
-[8/8] ARM: dts: exynos: remove deprecated unit address for LPDDR3 timings on Odroid
-      commit: c3d3727c8531ba78fc725995ce34cf948ebf1dae
+[1/1] memory: samsung: exynos5422-dmc: Avoid some over memory allocation
+      commit: 56653827f0d7bc7c2d8bac0e119fd1521fa9990a
 
 Best regards,
 -- 
