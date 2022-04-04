@@ -2,74 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21DAF4F1C98
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11B474F1C9B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242271AbiDDV2A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:28:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36496 "EHLO
+        id S1379374AbiDDV2D (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379386AbiDDRD7 (ORCPT
+        with ESMTP id S1379394AbiDDREZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 4 Apr 2022 13:03:59 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C00540A23
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:03 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id r13so21299247ejd.5
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:03 -0700 (PDT)
+        Mon, 4 Apr 2022 13:04:25 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BB6140A24
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:28 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id p23so4339865edi.8
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fTtmY+6kEY48dXDt92pAxKFA5nufZVaGUszJn2KSj7Q=;
-        b=UoomhqtwgUrejeY/SCN+1Dep4CWzZhUfhrmtVDDBEt4UhRyFQ3a9DQY0HZGJxfZ8h3
-         1eiFIoyW3Ezepg4hYMtIES9QgFXXqVeuQJjAHGIRNr2GE9htsMnv4tRL1bBQnpRbwMHL
-         GJGHJrvuDF0Pfymdr8RHYq4aIdeZWIcVtJkjNpBBa3P2oZhKtbHX01oKUUDk2wwxWaNy
-         OypSqHrPAo9MHrKZa8GKblq5dRgkRTocm2oA7GEr1/nwzT4Voo5ugca4Rgn0w+xvHDFD
-         apQvJb8YLhrDxvABOX6lb+F3IA6zeuwokQsrXGQwaw7IuXoCzSXeqCSMyJmGV5h7uMDk
-         HiIw==
+        bh=/p+WLNXUI5URczlcIPz1GEY0wJAQj0mnV+4JMB7lqlo=;
+        b=BmdxHiK7k94C6Aa24uQsBO1PPJFFU5ov8NdL0rGqw0M5yeUxzrwb6IaZ+rE9b385Bf
+         JQosvScc4VRXQe5Lr/uLZkYmOZQlKXPTmVZhFiWsiOZ2nbhmEAg9O3+3S8Di0Yk4acOR
+         IZzNQz3PxZ3LpBaNoDDAw8u/1+uTVBVLKWhZkKdXT9RVCxU51RGFZ5nUgahZ1ECPrNA5
+         SmkccAmDuEIF+5ibk+/zYy3sGMg/wyFlEqz2EQBKz0mv6/qBFpQl8SVs8sObsCmwbXtN
+         VorJKnSgo9b/cFfjLNyIh3X3AV6qM729p5t141sHICz68ssz9RPIFX/cT8w211EvrlGe
+         BB4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fTtmY+6kEY48dXDt92pAxKFA5nufZVaGUszJn2KSj7Q=;
-        b=xdXlFuxFy1Ts1iHQxUToiCSCdgY094tRLSxw7ahXhAyUuDdUmsbAjEGK6ReSTdqV8D
-         EI9hAvA0FC91Ic27iXycsSc0Z+5gKDRV9mH7jrIpSvVtxQ3p8QSXpX2j5VYykfZCvuay
-         DBFe57DBC5K3NUhZiPZHpLKHZZZrM85W0dR86sgqeY2xIxLDIekQOF41pcuFjWTySv4a
-         RA05u5S8GUcGSeJ+QVn7YHZeu4kXyOZ8HVRuCukUdxP382gQ9BWh5f7LzUEemlGdTbE/
-         Bxqv64IQa4ndzlieFd95AZ72CL0tRybBbxltexAxCBvzADC0BFLm2OdIRuNxn3CY7eCs
-         4yjg==
-X-Gm-Message-State: AOAM5302m4KosfgQF3OzB7xlaQY+4fqDFjPCSV65kPTBYYScZcGGL7Ru
-        awkv4KPdgREZgSyk15+d5F4GFQ==
-X-Google-Smtp-Source: ABdhPJzNNWr2tpPZJ5TXhj+1dMy4Ij5a4dyOvyKFovCPsbkyQci20MirVmatIhBwjLaXk1L0KkhiYg==
-X-Received: by 2002:a17:907:608f:b0:6e8:395:43fe with SMTP id ht15-20020a170907608f00b006e8039543femr1005391ejc.439.1649091722097;
-        Mon, 04 Apr 2022 10:02:02 -0700 (PDT)
+        bh=/p+WLNXUI5URczlcIPz1GEY0wJAQj0mnV+4JMB7lqlo=;
+        b=Cn9a8Mtg/Q34apC9sV8TpITevGTbvBvmn11JGzoU3l8VXN4gQ9H5ayaAOwr+40t/E3
+         77AODNDr+l1oP2urViV5rG7+EGkPEAMte8Zb5d9V0vEsQcxDniSJ1z3XNDh6+zVSbGmS
+         Umzh9cRZd7uDPCP7BQ80MK3LbtKe3acA4xAdVbaQfXs2ncYeF8hI6l6xgsE02nmIhK5y
+         eNBqPR/ND7Kerp+wsX68MEshcPxAfGFFP44Kle17FG+nqu+Sej0RrCRnsrd7gLWhzAo0
+         2cciXd3AqxbAcaLPRzB5earqbMSS1TsxrZYUyHB6twP7+44PCswjrxfzJ4WARDnE5wtU
+         jOEQ==
+X-Gm-Message-State: AOAM5331BhBA0gWWD0IbtavAeBDhx/TOcgurOvWhCj6g28ZB3EI5PIc4
+        dtdzdatYadP3frkM68FH2df0WhN5knHHtOrM
+X-Google-Smtp-Source: ABdhPJxD2eBoIbkXILLZ9KRSfUZ3rClQVNQQ/eUgdwSQJWKc8yH4C442dv0oSfAnGSVVUqE22Ht25w==
+X-Received: by 2002:aa7:d553:0:b0:416:4dfc:126d with SMTP id u19-20020aa7d553000000b004164dfc126dmr1140735edr.213.1649091746662;
+        Mon, 04 Apr 2022 10:02:26 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.02.01
+        by smtp.gmail.com with ESMTPSA id hs12-20020a1709073e8c00b006dfdfdac005sm4588927ejc.174.2022.04.04.10.02.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 10:02:01 -0700 (PDT)
+        Mon, 04 Apr 2022 10:02:26 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
+To:     linux-samsung-soc@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Thomas Gleixner <tglx@linutronix.de>
+        linux-arm-kernel@lists.infradead.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v2 4/4] arm64: dts: tesla: add a specific compatible to MCT on FSD
-Date:   Mon,  4 Apr 2022 19:01:49 +0200
-Message-Id: <164909169269.1688455.2895247009152071238.b4-ty@linaro.org>
+Subject: Re: [PATCH] arm64: dts: exynos: move aliases to board in Exynos850
+Date:   Mon,  4 Apr 2022 19:02:23 +0200
+Message-Id: <164909174137.1688710.12339580855506130725.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220304122424.307885-5-krzysztof.kozlowski@canonical.com>
-References: <20220304122424.307885-1-krzysztof.kozlowski@canonical.com> <20220304122424.307885-5-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220221075219.10827-1-krzysztof.kozlowski@canonical.com>
+References: <20220221075219.10827-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,17 +75,21 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 4 Mar 2022 13:24:24 +0100, Krzysztof Kozlowski wrote:
-> One compatible is used for the Multi-Core Timer on Tesla FSD SoC, which
-> is correct but not specific enough.  The MCT blocks have different
-> number of interrupts, so add a second specific compatible to Tesla FSD.
+On Mon, 21 Feb 2022 08:52:19 +0100, Krzysztof Kozlowski wrote:
+> The aliases for typical blocks which are disabled by default in DTSI
+> (like I2C, UART and MMC) should be defined in the board DTS.  The board
+> should add aliases only for enabled blocks according to its specific
+> order.
 > 
+> On Exynos850, move aliases of enabled blocks to E850-96 board and remove
+> unused ones.
 > 
+> [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: tesla: add a specific compatible to MCT on FSD
-      commit: 22cbcb8f4a17c194d208f686fc3ea37fc860bd71
+[1/1] arm64: dts: exynos: move aliases to board in Exynos850
+      commit: f4324583cd4d4979ff2e885a44b8335eb4c4bfa3
 
 Best regards,
 -- 
