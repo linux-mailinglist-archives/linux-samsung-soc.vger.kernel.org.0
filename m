@@ -2,76 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61F924F1C79
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06D924F1C72
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379285AbiDDV1a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:27:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59580 "EHLO
+        id S1379183AbiDDV10 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379348AbiDDRBi (ORCPT
+        with ESMTP id S1379359AbiDDRDt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 4 Apr 2022 13:01:38 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB523ED34
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 09:59:41 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id x20so4013410edi.12
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 09:59:41 -0700 (PDT)
+        Mon, 4 Apr 2022 13:03:49 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4F240A22
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:01:52 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id qh7so11261344ejb.11
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K9yJQc0wkhnwMDhgXpgCEfPM9bu3vOLPPiNhGs87tdw=;
-        b=cgzwMQNJrkEkuA/TSpVw6ciE+AieAtsIUBAX0inodIP9kosF+epgt0L0EnhY8Z9Dq9
-         kXrcX81qBx3Q7UBgZbAOjmYZrAOZGfpwoQF1NvDKCCGvlkvhvcuHO4WrBHhz2U74SaEY
-         yGz9bYq2L1EQDNZ8orhmVvYivWFaRt8lrvnUF+f0K4ElLK6f4wUydgxDANLzF3m5Ygcx
-         0nO5acxv0nuE1jwJcjwhow5VDytwsOkLCOobrY5Yl+b1js/TQF1HfysRSxsxIc6Oics8
-         j1ITZLN/ltYeBvypuH7UAWz5bTKtDIVObpgrMNbtPPy1wtf/uHmOzEGEB886B+n8kAh5
-         Vctw==
+        bh=UdkDEqkIYPJe0IiYUAZgG3drRMBxCNYZ0wWJB+F1HJ0=;
+        b=yacEimsDx6EtXhSWHR/u21DYYeYT9nBoPDXNwwFSAu4BxrNH/02l8Jf0vS2eCMbpIU
+         4nU6ssTnMI8IBH7ITy6CMY9Rqpn2XqqHD/Qv5Pk7XP1v84UzIGqgJRGjPtUZVyxRIDtL
+         Qii4Bl6kloDFcqMAfmZM9+RN2dGVyQEAYYhY2TeDm6TThDumjRSwNzzPv7rIXafodpsO
+         2l2Ez3vbAS0i3rrootsn44qWArjG0w0/lWvCNbjtG5I6jyTGp2Z6DbLIH0xp8EsIJR1m
+         pl7hOkTknGWEnYZDkxd5/hebWcXvVqzn/23EXFD/rPqGB+fC00wHdTC/AZHMzzPaesAU
+         Dj1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K9yJQc0wkhnwMDhgXpgCEfPM9bu3vOLPPiNhGs87tdw=;
-        b=dhc94QRK2zuguPgQgjlwI1hxKhzNQx1o+xScmiAiwbPpOtGz1yRBbPdrYEs+gPuBWm
-         Jfuk7QMu8zEIsy+WlyPCCarWA2vcwM3lvrO0IemwOURC7x7MtOETXjfxSMDcmKz5VaRw
-         OoJsj7mPiYNgcVE/fQP9UhDdlKO920DPg3bkXPzF3iUOS3E6Mk8JYiYGL8pJHprvUL9j
-         2oXZtnDRt1Y8mPraNfyYWwHlmUS5oswX5W1K5q5mAuhKFgNLDIzVrkZkI14m453CEOjP
-         dUHJ5McYDmOXSJbit1d4epV7LQot8xNsY89gD5OKoGQNFR3ZiXGc+IsTQ1wln2tCgyze
-         lQ1A==
-X-Gm-Message-State: AOAM532MkEh71/fgV+dcKt9LZFmdcXONouCDI5PItqNF9lH3ArLdO67r
-        Rw0jLVBVwkpbbLytmNqFSw4gww==
-X-Google-Smtp-Source: ABdhPJzBhdE3FgiK+1M2zu1kC8mpq7C8emkC1dljmr9hgg9ou7CPhZBlTrACZ/AtTHyx2qnVlgtpJg==
-X-Received: by 2002:aa7:c1cd:0:b0:419:fdb:e17e with SMTP id d13-20020aa7c1cd000000b004190fdbe17emr1156256edp.364.1649091579797;
-        Mon, 04 Apr 2022 09:59:39 -0700 (PDT)
+        bh=UdkDEqkIYPJe0IiYUAZgG3drRMBxCNYZ0wWJB+F1HJ0=;
+        b=AqGaQUqPRO7w3Rer/2TwhGorNa1j1OApst/wfVAfe5jDBUz8/LraI2cBba+oSYN2/D
+         HfP5NaTmZmGQmidhAo+KeNZe/W7ZBne+MVxhdeE7v/J37vlN/E5Xm+lmdTgRh5IorAG7
+         +3Afsq1b6gRuo5n9M9jJKgErjABgrzrG/gu1M/uACaxnBAeRkxWPH0UsUgV6b3Bil+7j
+         X61tWZAR/A6i3dMo1G4FAbeYRKsHWoEzpASY+HP3X7gEkV76Jw+9pg/TY7YGgd4hcKuf
+         xL5YGVayN62kfTNEIAhx0FLXYoTQdWoazS6S41UKEf/ZpHsIgiMe+Kwp1Wbi3EsUfxhY
+         ef2A==
+X-Gm-Message-State: AOAM530KmVYGVnXjV17l6yRQ1wppVpM7u7Rinjjr75QyCozd53RwrVZ6
+        mF7O1QE1e+T/2VsYEY7rlX6fdlRFcjn3stS8
+X-Google-Smtp-Source: ABdhPJwO8zEjm4+YadazUoXaa5sFLCdT/YW3MQ4yRm1ptx5qUf09HRh8cZszFmuXUB+1t5biovDWKA==
+X-Received: by 2002:a17:906:280b:b0:6ce:f3c7:688f with SMTP id r11-20020a170906280b00b006cef3c7688fmr1079563ejc.468.1649091710942;
+        Mon, 04 Apr 2022 10:01:50 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id bp11-20020a170907918b00b006e6d451dc36sm2938072ejb.49.2022.04.04.09.59.38
+        by smtp.gmail.com with ESMTPSA id c5-20020a170906d18500b006ce371f09d4sm4557770ejz.57.2022.04.04.10.01.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 09:59:39 -0700 (PDT)
+        Mon, 04 Apr 2022 10:01:50 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-samsung-soc@vger.kernel.org,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+To:     Russell King <linux@armlinux.org.uk>,
+        Julia Lawall <Julia.Lawall@inria.fr>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        kernel-janitors@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        Ajay Kumar <ajaykumar.rs@samsung.com>,
-        linux-gpio@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org
-Cc:     kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] pinctrl: samsung: staticize fsd_pin_ctrl
-Date:   Mon,  4 Apr 2022 18:59:33 +0200
-Message-Id: <164909156896.1676419.11230425886960608496.b4-ty@linaro.org>
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: Re: [PATCH] ARM: s3c: fix typos in comments
+Date:   Mon,  4 Apr 2022 19:01:41 +0200
+Message-Id: <164909169269.1688455.7499660640126725885.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220331194526.52444-1-krzysztof.kozlowski@linaro.org>
-References: <20220331194526.52444-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220318103729.157574-31-Julia.Lawall@inria.fr>
+References: <20220318103729.157574-31-Julia.Lawall@inria.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,20 +76,16 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 31 Mar 2022 21:45:26 +0200, Krzysztof Kozlowski wrote:
-> struct fsd_pin_ctrl is not used outside of the file, so it can be made
-> static.  This fixes sparse warning:
-> 
->   drivers/pinctrl/samsung/pinctrl-exynos-arm64.c:773:31: sparse:
->     symbol 'fsd_pin_ctrl' was not declared. Should it be static?
+On Fri, 18 Mar 2022 11:37:26 +0100, Julia Lawall wrote:
+> Various spelling mistakes in comments.
+> Detected with the help of Coccinelle.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] pinctrl: samsung: staticize fsd_pin_ctrl
-      commit: abb860ac7e3f022a233f34b12d035d49abfc114d
+[1/1] ARM: s3c: fix typos in comments
+      commit: 170a0c56c5ec597fa15447e63272827a80a19be1
 
 Best regards,
 -- 
