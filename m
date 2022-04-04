@@ -2,72 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11B474F1C9B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530E34F1C73
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  4 Apr 2022 23:28:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379374AbiDDV2D (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 4 Apr 2022 17:28:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36614 "EHLO
+        id S244392AbiDDV1W (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 4 Apr 2022 17:27:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379394AbiDDREZ (ORCPT
+        with ESMTP id S1379397AbiDDREZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Mon, 4 Apr 2022 13:04:25 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BB6140A24
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:28 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id p23so4339865edi.8
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:28 -0700 (PDT)
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F60C40A29
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  4 Apr 2022 10:02:29 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id bq8so21255539ejb.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Apr 2022 10:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/p+WLNXUI5URczlcIPz1GEY0wJAQj0mnV+4JMB7lqlo=;
-        b=BmdxHiK7k94C6Aa24uQsBO1PPJFFU5ov8NdL0rGqw0M5yeUxzrwb6IaZ+rE9b385Bf
-         JQosvScc4VRXQe5Lr/uLZkYmOZQlKXPTmVZhFiWsiOZ2nbhmEAg9O3+3S8Di0Yk4acOR
-         IZzNQz3PxZ3LpBaNoDDAw8u/1+uTVBVLKWhZkKdXT9RVCxU51RGFZ5nUgahZ1ECPrNA5
-         SmkccAmDuEIF+5ibk+/zYy3sGMg/wyFlEqz2EQBKz0mv6/qBFpQl8SVs8sObsCmwbXtN
-         VorJKnSgo9b/cFfjLNyIh3X3AV6qM729p5t141sHICz68ssz9RPIFX/cT8w211EvrlGe
-         BB4g==
+        bh=AZy7e16Ig1JG7qj3MBTWcZiECGvCR3TfCcY9SM2k7uA=;
+        b=TkwLryzG8xq8ZJgUcCjQo23owBZZxVZFlkUrfEjVt10WatBuovqiDNcaYbAr25omCj
+         d/kdNNsblDqCmWG5ynrU8fhTXwQ/8Ch/9Es+pyux5G6XK9KlilWd6omMRts4Qr5EVCOD
+         vT85iI2i9IE/qPYUVU9NmGMmM53GkB4/i/SaTw9UAzzF0fYfcXY5EVrC8qm7/w4jB6DI
+         iI0q2d55LAvT0MvFWh0m8iwFkBjqZ4+uErSypFFgzJUqqdQ3WSZwOkiq1AaAApg8LADP
+         LOsfRO1HtVp7I2biiAyX3xEtqSmtatDXPSIpc592+g14AaVuhm+poLEgUDxFYxX8L/xy
+         9UqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/p+WLNXUI5URczlcIPz1GEY0wJAQj0mnV+4JMB7lqlo=;
-        b=Cn9a8Mtg/Q34apC9sV8TpITevGTbvBvmn11JGzoU3l8VXN4gQ9H5ayaAOwr+40t/E3
-         77AODNDr+l1oP2urViV5rG7+EGkPEAMte8Zb5d9V0vEsQcxDniSJ1z3XNDh6+zVSbGmS
-         Umzh9cRZd7uDPCP7BQ80MK3LbtKe3acA4xAdVbaQfXs2ncYeF8hI6l6xgsE02nmIhK5y
-         eNBqPR/ND7Kerp+wsX68MEshcPxAfGFFP44Kle17FG+nqu+Sej0RrCRnsrd7gLWhzAo0
-         2cciXd3AqxbAcaLPRzB5earqbMSS1TsxrZYUyHB6twP7+44PCswjrxfzJ4WARDnE5wtU
-         jOEQ==
-X-Gm-Message-State: AOAM5331BhBA0gWWD0IbtavAeBDhx/TOcgurOvWhCj6g28ZB3EI5PIc4
-        dtdzdatYadP3frkM68FH2df0WhN5knHHtOrM
-X-Google-Smtp-Source: ABdhPJxD2eBoIbkXILLZ9KRSfUZ3rClQVNQQ/eUgdwSQJWKc8yH4C442dv0oSfAnGSVVUqE22Ht25w==
-X-Received: by 2002:aa7:d553:0:b0:416:4dfc:126d with SMTP id u19-20020aa7d553000000b004164dfc126dmr1140735edr.213.1649091746662;
-        Mon, 04 Apr 2022 10:02:26 -0700 (PDT)
+        bh=AZy7e16Ig1JG7qj3MBTWcZiECGvCR3TfCcY9SM2k7uA=;
+        b=v9XQM5AUKOsjGCMJQaRpHk36WgioN0Cpl7nH/RLWvmT0xnOlFca/FtbQCemPdTw20A
+         HZCVJwliYjLpi481DtMt84Aag/3PueQ/QW7bh2iOm+LmSoaOm29Qp2WXMtnzlCsFn9q9
+         0iOxgk1adITGWeh1K0vnqT6f2x12PZ+DZSAUtSGXkCdPGXApvfd1QRIeZotnTo6joRGz
+         TPM1K2tp3b3jXsMb/kUp1aSLzjqzRo4Z2UrgvOJlLcYJAs5VKPSbh0fyxlA79k2MBCpZ
+         W6Lz4W4Gm0DABwEWYcR+GZ+UFCXcMidFswMRSlp09fOZkQ5S/B58jnoI0zudB+NvNkz9
+         eDOw==
+X-Gm-Message-State: AOAM532r2638mlsPXq7Id/D2htYoWWfCkfRgJ4G0GgnMlo3DXDFC2Mss
+        KzsguTBHL5NV8D1+HNwORvn0DA==
+X-Google-Smtp-Source: ABdhPJw30fbKCfQKHVKnmx6muF5fQbHs2yESn5RWTv0aghy4f7F4Sy0XYE4R1cIxrr0pe2nLy7vXTQ==
+X-Received: by 2002:a17:907:7205:b0:6e7:ee50:ea94 with SMTP id dr5-20020a170907720500b006e7ee50ea94mr1050231ejc.351.1649091747789;
+        Mon, 04 Apr 2022 10:02:27 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id hs12-20020a1709073e8c00b006dfdfdac005sm4588927ejc.174.2022.04.04.10.02.25
+        by smtp.gmail.com with ESMTPSA id hs12-20020a1709073e8c00b006dfdfdac005sm4588927ejc.174.2022.04.04.10.02.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 10:02:26 -0700 (PDT)
+        Mon, 04 Apr 2022 10:02:27 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     linux-samsung-soc@vger.kernel.org,
+To:     Dmitry Osipenko <digetx@gmail.com>,
+        linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Lukasz Luba <lukasz.luba@arm.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-kernel@lists.infradead.org
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] arm64: dts: exynos: move aliases to board in Exynos850
-Date:   Mon,  4 Apr 2022 19:02:23 +0200
-Message-Id: <164909174137.1688710.12339580855506130725.b4-ty@linaro.org>
+Subject: Re: (subset) [PATCH v3 8/8] ARM: dts: exynos: remove deprecated unit address for LPDDR3 timings on Odroid
+Date:   Mon,  4 Apr 2022 19:02:24 +0200
+Message-Id: <164909174137.1688710.5639682730055944531.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220221075219.10827-1-krzysztof.kozlowski@canonical.com>
-References: <20220221075219.10827-1-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220206135918.211990-1-krzysztof.kozlowski@canonical.com>
+References: <20220206135807.211767-1-krzysztof.kozlowski@canonical.com> <20220206135918.211990-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,21 +77,16 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 21 Feb 2022 08:52:19 +0100, Krzysztof Kozlowski wrote:
-> The aliases for typical blocks which are disabled by default in DTSI
-> (like I2C, UART and MMC) should be defined in the board DTS.  The board
-> should add aliases only for enabled blocks according to its specific
-> order.
+On Sun, 6 Feb 2022 14:59:18 +0100, Krzysztof Kozlowski wrote:
+> Passing maximum frequency of LPDDR3 memory timings as unit address was
+> deprecated in favor of 'max-freq' property.
 > 
-> On Exynos850, move aliases of enabled blocks to E850-96 board and remove
-> unused ones.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: exynos: move aliases to board in Exynos850
-      commit: f4324583cd4d4979ff2e885a44b8335eb4c4bfa3
+[8/8] ARM: dts: exynos: remove deprecated unit address for LPDDR3 timings on Odroid
+      commit: c3d3727c8531ba78fc725995ce34cf948ebf1dae
 
 Best regards,
 -- 
