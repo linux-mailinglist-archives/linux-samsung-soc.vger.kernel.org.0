@@ -2,36 +2,36 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B4CA4F2AA5
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 13:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5131F4F2E90
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 14:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350175AbiDEJ4B (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Apr 2022 05:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
+        id S1350206AbiDEJ4V (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Apr 2022 05:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236078AbiDEJbC (ORCPT
+        with ESMTP id S236135AbiDEJbN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:31:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D0922528;
-        Tue,  5 Apr 2022 02:18:17 -0700 (PDT)
+        Tue, 5 Apr 2022 05:31:13 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4CFF26FA;
+        Tue,  5 Apr 2022 02:18:35 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5558A61577;
-        Tue,  5 Apr 2022 09:18:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17DEC385A7;
-        Tue,  5 Apr 2022 09:18:11 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 65FAEB81B62;
+        Tue,  5 Apr 2022 09:18:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200F6C385AC;
+        Tue,  5 Apr 2022 09:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649150296;
-        bh=Wo392uEawl61tpBst45l5+t1WaSNVll46ELOkHU90ak=;
+        s=k20201202; t=1649150313;
+        bh=J6wtCACpXBxLmkz/EnCKwxs03UNfKLPJWoTIRgLakyY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jwT5G0+JvjM2OoUCGaf7dYjAeelIXoF2JQyLEDTgg7eL7brW0igNcD8hgCb2+AW/J
-         4tB/4rEj+j3WEKLmckBuSbMUCBHVOx9o+7W0p60kim0EtQLwBJiZSYfvpqvKQJEmc3
-         9tLXDeU2SuIb587y/0UMTLL17i0Sc44upoLNM3s7HAgf1q4h/4tejh5e9aE4UI0SeF
-         C6QSoTcFXYsc/DVQcO0/D7hCJNWWPi6Iv4sUe/g3trQRnePL1vh8UizJTelrDYLrKA
-         VStP18jigA5M4KUgLuDYG9G75F/IELARplzLiX5uAY14Yi8cmfH8rrZNtcq0pdJg0A
-         ZI0Dbpvsr0s+g==
+        b=sbF8ZztCBrqYcjuwKSVQCiU3VGjPjEz3Tye5ptnnpKrxGhc8riDbmT+V8Oq5SZGyy
+         dEzr2RGLAXRp5rN636zq2zXhCJIUbvm3fYB2A68PY9RufYkgdmj7D+7BymNlCCdZs/
+         eRzM5C760LUirkjJvrgnDwVWGShrPVJiFvQyYVJVIMmZ6OwMk6KcDI/LpW5G4kU8dt
+         d/kbIFqmxXff97E9GGvcxxcBTFZW5GhgosYEaOtAkKeE/lO4gTG5hb6WUjfEPTsSTc
+         Q2N8r2QLLzL8A9Xmr0B7IPyd5oddNm1Oasj71bxHcpZDtlJ/XhJBYFQpbLBaa/3ST9
+         xzLnDaOFom/Ew==
 From:   Arnd Bergmann <arnd@kernel.org>
 Cc:     Arnd Bergmann <arnd@arndb.de>,
         Russell King <linux@armlinux.org.uk>,
@@ -56,9 +56,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
-Subject: [PATCH 02/12] ARM: ep93xx: renumber interrupts
-Date:   Tue,  5 Apr 2022 11:17:40 +0200
-Message-Id: <20220405091750.3076973-3-arnd@kernel.org>
+Subject: [PATCH 05/12] ARM: ep93xx: multiplatform support
+Date:   Tue,  5 Apr 2022 11:17:43 +0200
+Message-Id: <20220405091750.3076973-6-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20220405091750.3076973-1-arnd@kernel.org>
 References: <20220405091750.3076973-1-arnd@kernel.org>
@@ -66,8 +66,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 To:     unlisted-recipients:; (no To-header on input)
@@ -77,168 +77,227 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-With the move to irq domains, no irqchip must start at number 0,
-so shift all the hardwired IRQ numbers by one.
+With the clock support and the interrupts out of the way, ep93xx can be
+compiled into the same kernel image as the other ARMv4/v5 platforms. The
+last obstacle are the two workarounds for broken boot loaders that
+require us to re-initialize the ethernet controller and/or the watchdog
+on certain machines.
 
-Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Move this code into the decompressor sources directly, checking for
+each possibly affected machine individually.
+
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/mach-ep93xx/core.c              |   4 +-
- arch/arm/mach-ep93xx/include/mach/irqs.h | 122 ++++++++++++-----------
- 2 files changed, 65 insertions(+), 61 deletions(-)
+ arch/arm/Kconfig                              | 16 -----
+ .../compressed/misc-ep93xx.h}                 | 69 +++++++++----------
+ arch/arm/boot/compressed/misc.c               |  4 ++
+ arch/arm/configs/ep93xx_defconfig             |  2 +
+ arch/arm/mach-ep93xx/Kconfig                  | 12 ++++
+ 5 files changed, 51 insertions(+), 52 deletions(-)
+ rename arch/arm/{mach-ep93xx/include/mach/uncompress.h => boot/compressed/misc-ep93xx.h} (51%)
 
-diff --git a/arch/arm/mach-ep93xx/core.c b/arch/arm/mach-ep93xx/core.c
-index a3b4e843456a..e4569a5acc3f 100644
---- a/arch/arm/mach-ep93xx/core.c
-+++ b/arch/arm/mach-ep93xx/core.c
-@@ -75,8 +75,8 @@ void __init ep93xx_map_io(void)
-  *************************************************************************/
- void __init ep93xx_init_irq(void)
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 5177e54cc14c..2bd611beefe1 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -347,22 +347,6 @@ config ARCH_MULTIPLATFORM
+ 	select SPARSE_IRQ
+ 	select USE_OF
+ 
+-config ARCH_EP93XX
+-	bool "EP93xx-based"
+-	select ARCH_SPARSEMEM_ENABLE
+-	select ARM_AMBA
+-	imply ARM_PATCH_PHYS_VIRT
+-	select ARM_VIC
+-	select AUTO_ZRELADDR
+-	select CLKSRC_MMIO
+-	select CPU_ARM920T
+-	select GPIOLIB
+-	select COMMON_CLK
+-	select IRQ_DOMAIN
+-	select SPARSE_IRQ
+-	help
+-	  This enables support for the Cirrus EP93xx series of CPUs.
+-
+ config ARCH_FOOTBRIDGE
+ 	bool "FootBridge"
+ 	select CPU_SA110
+diff --git a/arch/arm/mach-ep93xx/include/mach/uncompress.h b/arch/arm/boot/compressed/misc-ep93xx.h
+similarity index 51%
+rename from arch/arm/mach-ep93xx/include/mach/uncompress.h
+rename to arch/arm/boot/compressed/misc-ep93xx.h
+index e20bcab702b2..3dc942589cba 100644
+--- a/arch/arm/mach-ep93xx/include/mach/uncompress.h
++++ b/arch/arm/boot/compressed/misc-ep93xx.h
+@@ -1,54 +1,25 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+ /*
+- * arch/arm/mach-ep93xx/include/mach/uncompress.h
+- *
+  * Copyright (C) 2006 Lennert Buytenhek <buytenh@wantstofly.org>
+  */
+ 
+ #include <asm/mach-types.h>
+ 
+-static unsigned char __raw_readb(unsigned int ptr)
+-{
+-	return *((volatile unsigned char *)ptr);
+-}
+-
+-static unsigned int __raw_readl(unsigned int ptr)
++static inline unsigned int __raw_readl(unsigned int ptr)
  {
--	vic_init(EP93XX_VIC1_BASE, 0, EP93XX_VIC1_VALID_IRQ_MASK, 0);
--	vic_init(EP93XX_VIC2_BASE, 32, EP93XX_VIC2_VALID_IRQ_MASK, 0);
-+	vic_init(EP93XX_VIC1_BASE, IRQ_EP93XX_VIC0, EP93XX_VIC1_VALID_IRQ_MASK, 0);
-+	vic_init(EP93XX_VIC2_BASE, IRQ_EP93XX_VIC1, EP93XX_VIC2_VALID_IRQ_MASK, 0);
+ 	return *((volatile unsigned int *)ptr);
  }
  
+-static void __raw_writeb(unsigned char value, unsigned int ptr)
++static inline void __raw_writeb(unsigned char value, unsigned int ptr)
+ {
+ 	*((volatile unsigned char *)ptr) = value;
+ }
  
-diff --git a/arch/arm/mach-ep93xx/include/mach/irqs.h b/arch/arm/mach-ep93xx/include/mach/irqs.h
-index 244daf83ce6d..60c69c4ed7e1 100644
---- a/arch/arm/mach-ep93xx/include/mach/irqs.h
-+++ b/arch/arm/mach-ep93xx/include/mach/irqs.h
-@@ -6,69 +6,73 @@
- #ifndef __ASM_ARCH_IRQS_H
- #define __ASM_ARCH_IRQS_H
+-static void __raw_writel(unsigned int value, unsigned int ptr)
++static inline void __raw_writel(unsigned int value, unsigned int ptr)
+ {
+ 	*((volatile unsigned int *)ptr) = value;
+ }
  
--#define IRQ_EP93XX_COMMRX		2
--#define IRQ_EP93XX_COMMTX		3
--#define IRQ_EP93XX_TIMER1		4
--#define IRQ_EP93XX_TIMER2		5
--#define IRQ_EP93XX_AACINTR		6
--#define IRQ_EP93XX_DMAM2P0		7
--#define IRQ_EP93XX_DMAM2P1		8
--#define IRQ_EP93XX_DMAM2P2		9
--#define IRQ_EP93XX_DMAM2P3		10
--#define IRQ_EP93XX_DMAM2P4		11
--#define IRQ_EP93XX_DMAM2P5		12
--#define IRQ_EP93XX_DMAM2P6		13
--#define IRQ_EP93XX_DMAM2P7		14
--#define IRQ_EP93XX_DMAM2P8		15
--#define IRQ_EP93XX_DMAM2P9		16
--#define IRQ_EP93XX_DMAM2M0		17
--#define IRQ_EP93XX_DMAM2M1		18
--#define IRQ_EP93XX_GPIO0MUX		19
--#define IRQ_EP93XX_GPIO1MUX		20
--#define IRQ_EP93XX_GPIO2MUX		21
--#define IRQ_EP93XX_GPIO3MUX		22
--#define IRQ_EP93XX_UART1RX		23
--#define IRQ_EP93XX_UART1TX		24
--#define IRQ_EP93XX_UART2RX		25
--#define IRQ_EP93XX_UART2TX		26
--#define IRQ_EP93XX_UART3RX		27
--#define IRQ_EP93XX_UART3TX		28
--#define IRQ_EP93XX_KEY			29
--#define IRQ_EP93XX_TOUCH		30
-+#define IRQ_EP93XX_VIC0			1
+-#define PHYS_UART_DATA		(CONFIG_DEBUG_UART_PHYS + 0x00)
+-#define PHYS_UART_FLAG		(CONFIG_DEBUG_UART_PHYS + 0x18)
+-#define UART_FLAG_TXFF		0x20
+-
+-static inline void putc(int c)
+-{
+-	int i;
+-
+-	for (i = 0; i < 10000; i++) {
+-		/* Transmit fifo not full? */
+-		if (!(__raw_readb(PHYS_UART_FLAG) & UART_FLAG_TXFF))
+-			break;
+-	}
+-
+-	__raw_writeb(c, PHYS_UART_DATA);
+-}
+-
+-static inline void flush(void)
+-{
+-}
+-
+-
+ /*
+  * Some bootloaders don't turn off DMA from the ethernet MAC before
+  * jumping to linux, which means that we might end up with bits of RX
+@@ -58,7 +29,7 @@ static inline void flush(void)
+ #define PHYS_ETH_SELF_CTL		0x80010020
+ #define ETH_SELF_CTL_RESET		0x00000001
+ 
+-static void ethernet_reset(void)
++static inline void ep93xx_ethernet_reset(void)
+ {
+ 	unsigned int v;
+ 
+@@ -75,15 +46,41 @@ static void ethernet_reset(void)
+ #define TS72XX_WDT_FEED_PHYS_BASE	0x23c00000
+ #define TS72XX_WDT_FEED_VAL		0x05
+ 
+-static void __maybe_unused ts72xx_watchdog_disable(void)
++static inline void __maybe_unused ts72xx_watchdog_disable(void)
+ {
+ 	__raw_writeb(TS72XX_WDT_FEED_VAL, TS72XX_WDT_FEED_PHYS_BASE);
+ 	__raw_writeb(0, TS72XX_WDT_CONTROL_PHYS_BASE);
+ }
+ 
+-static void arch_decomp_setup(void)
++static inline void ep93xx_decomp_setup(void)
+ {
+ 	if (machine_is_ts72xx())
+ 		ts72xx_watchdog_disable();
+-	ethernet_reset();
 +
-+#define IRQ_EP93XX_COMMRX		(IRQ_EP93XX_VIC0 + 2)
-+#define IRQ_EP93XX_COMMTX		(IRQ_EP93XX_VIC0 + 3)
-+#define IRQ_EP93XX_TIMER1		(IRQ_EP93XX_VIC0 + 4)
-+#define IRQ_EP93XX_TIMER2		(IRQ_EP93XX_VIC0 + 5)
-+#define IRQ_EP93XX_AACINTR		(IRQ_EP93XX_VIC0 + 6)
-+#define IRQ_EP93XX_DMAM2P0		(IRQ_EP93XX_VIC0 + 7)
-+#define IRQ_EP93XX_DMAM2P1		(IRQ_EP93XX_VIC0 + 8)
-+#define IRQ_EP93XX_DMAM2P2		(IRQ_EP93XX_VIC0 + 9)
-+#define IRQ_EP93XX_DMAM2P3		(IRQ_EP93XX_VIC0 + 10)
-+#define IRQ_EP93XX_DMAM2P4		(IRQ_EP93XX_VIC0 + 11)
-+#define IRQ_EP93XX_DMAM2P5		(IRQ_EP93XX_VIC0 + 12)
-+#define IRQ_EP93XX_DMAM2P6		(IRQ_EP93XX_VIC0 + 13)
-+#define IRQ_EP93XX_DMAM2P7		(IRQ_EP93XX_VIC0 + 14)
-+#define IRQ_EP93XX_DMAM2P8		(IRQ_EP93XX_VIC0 + 15)
-+#define IRQ_EP93XX_DMAM2P9		(IRQ_EP93XX_VIC0 + 16)
-+#define IRQ_EP93XX_DMAM2M0		(IRQ_EP93XX_VIC0 + 17)
-+#define IRQ_EP93XX_DMAM2M1		(IRQ_EP93XX_VIC0 + 18)
-+#define IRQ_EP93XX_GPIO0MUX		(IRQ_EP93XX_VIC0 + 19)
-+#define IRQ_EP93XX_GPIO1MUX		(IRQ_EP93XX_VIC0 + 20)
-+#define IRQ_EP93XX_GPIO2MUX		(IRQ_EP93XX_VIC0 + 21)
-+#define IRQ_EP93XX_GPIO3MUX		(IRQ_EP93XX_VIC0 + 22)
-+#define IRQ_EP93XX_UART1RX		(IRQ_EP93XX_VIC0 + 23)
-+#define IRQ_EP93XX_UART1TX		(IRQ_EP93XX_VIC0 + 24)
-+#define IRQ_EP93XX_UART2RX		(IRQ_EP93XX_VIC0 + 25)
-+#define IRQ_EP93XX_UART2TX		(IRQ_EP93XX_VIC0 + 26)
-+#define IRQ_EP93XX_UART3RX		(IRQ_EP93XX_VIC0 + 27)
-+#define IRQ_EP93XX_UART3TX		(IRQ_EP93XX_VIC0 + 28)
-+#define IRQ_EP93XX_KEY			(IRQ_EP93XX_VIC0 + 29)
-+#define IRQ_EP93XX_TOUCH		(IRQ_EP93XX_VIC0 + 30)
- #define EP93XX_VIC1_VALID_IRQ_MASK	0x7ffffffc
++	if (machine_is_adssphere() ||
++	    machine_is_edb9301() ||
++	    machine_is_edb9302() ||
++	    machine_is_edb9302a() ||
++	    machine_is_edb9302a() ||
++	    machine_is_edb9307() ||
++	    machine_is_edb9307a() ||
++	    machine_is_edb9307a() ||
++	    machine_is_edb9312() ||
++	    machine_is_edb9315() ||
++	    machine_is_edb9315a() ||
++	    machine_is_edb9315a() ||
++	    machine_is_gesbc9312() ||
++	    machine_is_micro9() ||
++	    machine_is_micro9l() ||
++	    machine_is_micro9m() ||
++	    machine_is_micro9s() ||
++	    machine_is_micro9m() ||
++	    machine_is_micro9l() ||
++	    machine_is_micro9s() ||
++	    machine_is_sim_one() ||
++	    machine_is_snapper_cl15() ||
++	    machine_is_ts72xx() ||
++	    machine_is_bk3() ||
++	    machine_is_vision_ep9307())
++		ep93xx_ethernet_reset();
+ }
+diff --git a/arch/arm/boot/compressed/misc.c b/arch/arm/boot/compressed/misc.c
+index c3c66ff2d696..cb2e069dc73f 100644
+--- a/arch/arm/boot/compressed/misc.c
++++ b/arch/arm/boot/compressed/misc.c
+@@ -23,6 +23,7 @@ unsigned int __machine_arch_type;
+ #include <linux/types.h>
+ #include <linux/linkage.h>
+ #include "misc.h"
++#include "misc-ep93xx.h"
  
--#define IRQ_EP93XX_EXT0			32
--#define IRQ_EP93XX_EXT1			33
--#define IRQ_EP93XX_EXT2			34
--#define IRQ_EP93XX_64HZ			35
--#define IRQ_EP93XX_WATCHDOG		36
--#define IRQ_EP93XX_RTC			37
--#define IRQ_EP93XX_IRDA			38
--#define IRQ_EP93XX_ETHERNET		39
--#define IRQ_EP93XX_EXT3			40
--#define IRQ_EP93XX_PROG			41
--#define IRQ_EP93XX_1HZ			42
--#define IRQ_EP93XX_VSYNC		43
--#define IRQ_EP93XX_VIDEO_FIFO		44
--#define IRQ_EP93XX_SSP1RX		45
--#define IRQ_EP93XX_SSP1TX		46
--#define IRQ_EP93XX_GPIO4MUX		47
--#define IRQ_EP93XX_GPIO5MUX		48
--#define IRQ_EP93XX_GPIO6MUX		49
--#define IRQ_EP93XX_GPIO7MUX		50
--#define IRQ_EP93XX_TIMER3		51
--#define IRQ_EP93XX_UART1		52
--#define IRQ_EP93XX_SSP			53
--#define IRQ_EP93XX_UART2		54
--#define IRQ_EP93XX_UART3		55
--#define IRQ_EP93XX_USB			56
--#define IRQ_EP93XX_ETHERNET_PME		57
--#define IRQ_EP93XX_DSP			58
--#define IRQ_EP93XX_GPIO_AB		59
--#define IRQ_EP93XX_SAI			60
-+#define IRQ_EP93XX_VIC1			(IRQ_EP93XX_VIC0 + 32)
+ static void putstr(const char *ptr);
+ 
+@@ -143,6 +144,9 @@ decompress_kernel(unsigned long output_start, unsigned long free_mem_ptr_p,
+ 	free_mem_end_ptr	= free_mem_ptr_end_p;
+ 	__machine_arch_type	= arch_id;
+ 
++#ifdef CONFIG_ARCH_EP93XX
++	ep93xx_decomp_setup();
++#endif
+ 	arch_decomp_setup();
+ 
+ 	putstr("Uncompressing Linux...");
+diff --git a/arch/arm/configs/ep93xx_defconfig b/arch/arm/configs/ep93xx_defconfig
+index 88d5ecc2121e..fef802b7af8c 100644
+--- a/arch/arm/configs/ep93xx_defconfig
++++ b/arch/arm/configs/ep93xx_defconfig
+@@ -11,6 +11,8 @@ CONFIG_MODULE_UNLOAD=y
+ CONFIG_MODULE_FORCE_UNLOAD=y
+ # CONFIG_BLK_DEV_BSG is not set
+ CONFIG_PARTITION_ADVANCED=y
++CONFIG_ARCH_MULTI_V4T=y
++# CONFIG_ARCH_MULTI_V7 is not set
+ CONFIG_ARCH_EP93XX=y
+ CONFIG_MACH_ADSSPHERE=y
+ CONFIG_MACH_EDB9301=y
+diff --git a/arch/arm/mach-ep93xx/Kconfig b/arch/arm/mach-ep93xx/Kconfig
+index 15c68a646d51..aa502ab57404 100644
+--- a/arch/arm/mach-ep93xx/Kconfig
++++ b/arch/arm/mach-ep93xx/Kconfig
+@@ -1,4 +1,16 @@
+ # SPDX-License-Identifier: GPL-2.0-only
++menuconfig ARCH_EP93XX
++	bool "EP93xx-based"
++	depends on ARCH_MULTI_V4T
++	select ARCH_SPARSEMEM_ENABLE
++	select ARM_AMBA
++	select ARM_VIC
++	select CLKSRC_MMIO
++	select CPU_ARM920T
++	select GPIOLIB
++	help
++	  This enables support for the Cirrus EP93xx series of CPUs.
 +
-+#define IRQ_EP93XX_EXT0			(IRQ_EP93XX_VIC1 + 0)
-+#define IRQ_EP93XX_EXT1			(IRQ_EP93XX_VIC1 + 1)
-+#define IRQ_EP93XX_EXT2			(IRQ_EP93XX_VIC1 + 2)
-+#define IRQ_EP93XX_64HZ			(IRQ_EP93XX_VIC1 + 3)
-+#define IRQ_EP93XX_WATCHDOG		(IRQ_EP93XX_VIC1 + 4)
-+#define IRQ_EP93XX_RTC			(IRQ_EP93XX_VIC1 + 5)
-+#define IRQ_EP93XX_IRDA			(IRQ_EP93XX_VIC1 + 6)
-+#define IRQ_EP93XX_ETHERNET		(IRQ_EP93XX_VIC1 + 7)
-+#define IRQ_EP93XX_EXT3			(IRQ_EP93XX_VIC1 + 8)
-+#define IRQ_EP93XX_PROG			(IRQ_EP93XX_VIC1 + 9)
-+#define IRQ_EP93XX_1HZ			(IRQ_EP93XX_VIC1 + 10)
-+#define IRQ_EP93XX_VSYNC		(IRQ_EP93XX_VIC1 + 11)
-+#define IRQ_EP93XX_VIDEO_FIFO		(IRQ_EP93XX_VIC1 + 12)
-+#define IRQ_EP93XX_SSP1RX		(IRQ_EP93XX_VIC1 + 13)
-+#define IRQ_EP93XX_SSP1TX		(IRQ_EP93XX_VIC1 + 14)
-+#define IRQ_EP93XX_GPIO4MUX		(IRQ_EP93XX_VIC1 + 15)
-+#define IRQ_EP93XX_GPIO5MUX		(IRQ_EP93XX_VIC1 + 16)
-+#define IRQ_EP93XX_GPIO6MUX		(IRQ_EP93XX_VIC1 + 17)
-+#define IRQ_EP93XX_GPIO7MUX		(IRQ_EP93XX_VIC1 + 18)
-+#define IRQ_EP93XX_TIMER3		(IRQ_EP93XX_VIC1 + 19)
-+#define IRQ_EP93XX_UART1		(IRQ_EP93XX_VIC1 + 20)
-+#define IRQ_EP93XX_SSP			(IRQ_EP93XX_VIC1 + 21)
-+#define IRQ_EP93XX_UART2		(IRQ_EP93XX_VIC1 + 22)
-+#define IRQ_EP93XX_UART3		(IRQ_EP93XX_VIC1 + 23)
-+#define IRQ_EP93XX_USB			(IRQ_EP93XX_VIC1 + 24)
-+#define IRQ_EP93XX_ETHERNET_PME		(IRQ_EP93XX_VIC1 + 25)
-+#define IRQ_EP93XX_DSP			(IRQ_EP93XX_VIC1 + 26)
-+#define IRQ_EP93XX_GPIO_AB		(IRQ_EP93XX_VIC1 + 27)
-+#define IRQ_EP93XX_SAI			(IRQ_EP93XX_VIC1 + 28)
- #define EP93XX_VIC2_VALID_IRQ_MASK	0x1fffffff
+ if ARCH_EP93XX
  
--#define NR_EP93XX_IRQS			(64 + 24)
-+#define NR_EP93XX_IRQS			(IRQ_EP93XX_VIC1 + 32 + 24)
- 
- #define EP93XX_BOARD_IRQ(x)		(NR_EP93XX_IRQS + (x))
- #define EP93XX_BOARD_IRQS		32
+ menu "Cirrus EP93xx Implementation Options"
 -- 
 2.29.2
 
