@@ -2,36 +2,36 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2D7B4F3274
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 14:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F33E84F3228
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 14:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350149AbiDEJzj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Apr 2022 05:55:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39966 "EHLO
+        id S1350220AbiDEJ43 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Apr 2022 05:56:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236093AbiDEJbC (ORCPT
+        with ESMTP id S236210AbiDEJbN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:31:02 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B5EAB;
-        Tue,  5 Apr 2022 02:18:30 -0700 (PDT)
+        Tue, 5 Apr 2022 05:31:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBAD76437;
+        Tue,  5 Apr 2022 02:18:39 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 09F28B81BBF;
-        Tue,  5 Apr 2022 09:18:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB253C385A6;
-        Tue,  5 Apr 2022 09:18:22 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 56C2861645;
+        Tue,  5 Apr 2022 09:18:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C77AC385A7;
+        Tue,  5 Apr 2022 09:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649150307;
-        bh=7bz3/9lFuVh6UBeyajoRrHQp8fJ3tuWsYxqwUL9XLow=;
+        s=k20201202; t=1649150318;
+        bh=w8WO3r1/6EvuoSLPQGBL9Us7xTBObOlHCa40AeXtIeY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MdzemasPpcRVHcsYcZB862RJF3oi/0MUX3sF8g6zofH5KtbGNamY8KXBIXdD+lVvu
-         hCqN9ILnauBlXEobsF+MtOlREhVk9UB9sVFHTVIogKQ4JY78BzxxsC9NHGRB8p5D5L
-         WsfKgBz7VRvgTzcEi19R16cXvOb6gEGG73+bgNJKoRQ09voQ7U3oeTnacCsGiIakvl
-         4LB+tz3rJGq3TApbKnVSHrmzH6a7vIEKkkUKopN0ZDizh9wHvhmcNQ2ZJfVcvJP4Li
-         P1L/DojopvMD6vvAyaQJr8eKyQt+pDJPJdEd9H0BYqKEwnUERtZ4sFlNRhni2l9pp9
-         FgKsZecnF29Jg==
+        b=rqBg3o8zToypF97gy4CjO10o8frcXxeLLjvkd3R7JshwyzFjX3z891APWKWfN4sly
+         T9hfedvmirq5B04qZHDp2J6U01Wd7QGv5SdLcZ2C1+PdaTYZpNIyhK87PGsM3GhFQK
+         xOej3YV44ze7bB3PWJ5UvycQuMWCKhMsOcwPjQVqvPUDr+MqEDhApCb6jhGfK00hAE
+         1YXcpmD18TaPIIcR4F/0i0vc4gMWDj7RYzDU67//ZmDjpceunfuQE3vakSp52t4eHQ
+         nuwvVtRL4in/h4DI+1s+MH6V4eGNDY6oXnAzPWMr37N9aL2KEPI13U8CQgsNfyP0ZA
+         jKC/r0v9HgwpA==
 From:   Arnd Bergmann <arnd@kernel.org>
 Cc:     Arnd Bergmann <arnd@arndb.de>,
         Russell King <linux@armlinux.org.uk>,
@@ -55,10 +55,11 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Stephen Boyd <sboyd@kernel.org>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
-Subject: [PATCH 04/12] ARM: ep93xx: make mach/ep93xx-regs.h local
-Date:   Tue,  5 Apr 2022 11:17:42 +0200
-Message-Id: <20220405091750.3076973-5-arnd@kernel.org>
+        linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com,
+        Jason Cooper <jason@lakedaemon.net>
+Subject: [PATCH 06/12] ARM: dove: multiplatform support
+Date:   Tue,  5 Apr 2022 11:17:44 +0200
+Message-Id: <20220405091750.3076973-7-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20220405091750.3076973-1-arnd@kernel.org>
 References: <20220405091750.3076973-1-arnd@kernel.org>
@@ -77,74 +78,156 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-Nothing relies on it outside of arch/arm/mach-ep93xx/, so just move
-it there.
+The dove platform is now ready to be enabled for multiplatform
+support, this patch does the switch over by modifying the Kconfig file,
+the defconfig and removing the last mach/*.h header that becomes obsolete
+with this.
 
-Cc: Hartley Sweeten <hsweeten@visionengravers.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+This work was originally done in 2015 as all the ARMv7 machiens
+gove moved over to multiplatform builds, but at the time it conflicted
+with some patches that Russell was trying to upstream, so we
+left it at that.
+
+I hope that there is no longer a need to keep dove separate from the
+rest, so we can either add it to the other ARMv7 platforms, or just
+replace it with the DT based platform code for the same hardware
+in mach-mvebu and remove mach-dove entirely.
+
+Acked-by: Andrew Lunn <andrew@lunn.ch>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Jason Cooper <jason@lakedaemon.net>
+Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: Gregory Clement <gregory.clement@bootlin.com>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/mach-ep93xx/{include/mach => }/ep93xx-regs.h | 4 ----
- arch/arm/mach-ep93xx/gpio-ep93xx.h                    | 2 +-
- arch/arm/mach-ep93xx/include/mach/uncompress.h        | 1 -
- arch/arm/mach-ep93xx/soc.h                            | 2 +-
- 4 files changed, 2 insertions(+), 7 deletions(-)
- rename arch/arm/mach-ep93xx/{include/mach => }/ep93xx-regs.h (94%)
+ arch/arm/Kconfig                             | 14 --------
+ arch/arm/configs/dove_defconfig              |  2 ++
+ arch/arm/mach-dove/Kconfig                   | 16 ++++++---
+ arch/arm/mach-dove/Makefile                  |  2 ++
+ arch/arm/mach-dove/include/mach/uncompress.h | 34 --------------------
+ 5 files changed, 16 insertions(+), 52 deletions(-)
+ delete mode 100644 arch/arm/mach-dove/include/mach/uncompress.h
 
-diff --git a/arch/arm/mach-ep93xx/include/mach/ep93xx-regs.h b/arch/arm/mach-ep93xx/ep93xx-regs.h
-similarity index 94%
-rename from arch/arm/mach-ep93xx/include/mach/ep93xx-regs.h
-rename to arch/arm/mach-ep93xx/ep93xx-regs.h
-index 6839ea032e58..8fa3646de0a4 100644
---- a/arch/arm/mach-ep93xx/include/mach/ep93xx-regs.h
-+++ b/arch/arm/mach-ep93xx/ep93xx-regs.h
-@@ -1,8 +1,4 @@
- /* SPDX-License-Identifier: GPL-2.0 */
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 2bd611beefe1..faf696173af7 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -383,20 +383,6 @@ config ARCH_IXP4XX
+ 	help
+ 	  Support for Intel's IXP4XX (XScale) family of processors.
+ 
+-config ARCH_DOVE
+-	bool "Marvell Dove"
+-	select CPU_PJ4
+-	select GPIOLIB
+-	select HAVE_PCI
+-	select MVEBU_MBUS
+-	select PINCTRL
+-	select PINCTRL_DOVE
+-	select PLAT_ORION_LEGACY
+-	select SPARSE_IRQ
+-	select PM_GENERIC_DOMAINS if PM
+-	help
+-	  Support for the Marvell Dove SoC 88AP510
+-
+ config ARCH_PXA
+ 	bool "PXA2xx/PXA3xx-based"
+ 	select ARCH_MTD_XIP
+diff --git a/arch/arm/configs/dove_defconfig b/arch/arm/configs/dove_defconfig
+index 33074fdab2ea..f8fb4758f80d 100644
+--- a/arch/arm/configs/dove_defconfig
++++ b/arch/arm/configs/dove_defconfig
+@@ -8,6 +8,8 @@ CONFIG_MODULES=y
+ CONFIG_MODULE_UNLOAD=y
+ # CONFIG_BLK_DEV_BSG is not set
+ CONFIG_PARTITION_ADVANCED=y
++# CONFIG_ARCH_MULTI_V6 is not set
++CONFIG_ARCH_MULTI_V7=y
+ CONFIG_ARCH_DOVE=y
+ CONFIG_MACH_DOVE_DB=y
+ CONFIG_MACH_CM_A510=y
+diff --git a/arch/arm/mach-dove/Kconfig b/arch/arm/mach-dove/Kconfig
+index 7747fe64420a..c30c69c664ea 100644
+--- a/arch/arm/mach-dove/Kconfig
++++ b/arch/arm/mach-dove/Kconfig
+@@ -1,7 +1,17 @@
+ # SPDX-License-Identifier: GPL-2.0
+-if ARCH_DOVE
++menuconfig ARCH_DOVE
++	bool "Marvell Dove" if ARCH_MULTI_V7
++	select CPU_PJ4
++	select GPIOLIB
++	select MVEBU_MBUS
++	select PINCTRL
++	select PINCTRL_DOVE
++	select PLAT_ORION_LEGACY
++	select PM_GENERIC_DOMAINS if PM
++	help
++	  Support for the Marvell Dove SoC 88AP510
+ 
+-menu "Marvell Dove Implementations"
++if ARCH_DOVE
+ 
+ config DOVE_LEGACY
+ 	bool
+@@ -21,6 +31,4 @@ config MACH_CM_A510
+ 	  Say 'Y' here if you want your kernel to support the
+ 	  CompuLab CM-A510 Board.
+ 
+-endmenu
+-
+ endif
+diff --git a/arch/arm/mach-dove/Makefile b/arch/arm/mach-dove/Makefile
+index cdf163cab738..e83f6492834d 100644
+--- a/arch/arm/mach-dove/Makefile
++++ b/arch/arm/mach-dove/Makefile
+@@ -1,4 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
++ccflags-$(CONFIG_ARCH_MULTIPLATFORM) := -I$(srctree)/arch/arm/plat-orion/include
++
+ obj-y				+= common.o
+ obj-$(CONFIG_DOVE_LEGACY)	+= irq.o mpp.o
+ obj-$(CONFIG_PCI)		+= pcie.o
+diff --git a/arch/arm/mach-dove/include/mach/uncompress.h b/arch/arm/mach-dove/include/mach/uncompress.h
+deleted file mode 100644
+index ddf873f35e2b..000000000000
+--- a/arch/arm/mach-dove/include/mach/uncompress.h
++++ /dev/null
+@@ -1,34 +0,0 @@
 -/*
-- * arch/arm/mach-ep93xx/include/mach/ep93xx-regs.h
+- * This file is licensed under the terms of the GNU General Public
+- * License version 2.  This program is licensed "as is" without any
+- * warranty of any kind, whether express or implied.
 - */
 -
- #ifndef __ASM_ARCH_EP93XX_REGS_H
- #define __ASM_ARCH_EP93XX_REGS_H
- 
-diff --git a/arch/arm/mach-ep93xx/gpio-ep93xx.h b/arch/arm/mach-ep93xx/gpio-ep93xx.h
-index 242af4a401ea..7b46eb7e5507 100644
---- a/arch/arm/mach-ep93xx/gpio-ep93xx.h
-+++ b/arch/arm/mach-ep93xx/gpio-ep93xx.h
-@@ -4,7 +4,7 @@
- #ifndef __GPIO_EP93XX_H
- #define __GPIO_EP93XX_H
- 
--#include <mach/ep93xx-regs.h>
-+#include "ep93xx-regs.h"
- 
- #define EP93XX_GPIO_PHYS_BASE		EP93XX_APB_PHYS(0x00040000)
- #define EP93XX_GPIO_BASE		EP93XX_APB_IOMEM(0x00040000)
-diff --git a/arch/arm/mach-ep93xx/include/mach/uncompress.h b/arch/arm/mach-ep93xx/include/mach/uncompress.h
-index b3ec1db988db..e20bcab702b2 100644
---- a/arch/arm/mach-ep93xx/include/mach/uncompress.h
-+++ b/arch/arm/mach-ep93xx/include/mach/uncompress.h
-@@ -5,7 +5,6 @@
-  * Copyright (C) 2006 Lennert Buytenhek <buytenh@wantstofly.org>
-  */
- 
--#include <mach/ep93xx-regs.h>
- #include <asm/mach-types.h>
- 
- static unsigned char __raw_readb(unsigned int ptr)
-diff --git a/arch/arm/mach-ep93xx/soc.h b/arch/arm/mach-ep93xx/soc.h
-index f0986e288d19..3245ebbd5069 100644
---- a/arch/arm/mach-ep93xx/soc.h
-+++ b/arch/arm/mach-ep93xx/soc.h
-@@ -9,7 +9,7 @@
- #ifndef _EP93XX_SOC_H
- #define _EP93XX_SOC_H
- 
--#include <mach/ep93xx-regs.h>
-+#include "ep93xx-regs.h"
- #include "irqs.h"
- 
- /*
+-#define UART0_PHYS_BASE (0xf1000000 + 0x12000)
+-
+-#define UART_THR ((volatile unsigned char *)(UART0_PHYS_BASE + 0x0))
+-#define UART_LSR ((volatile unsigned char *)(UART0_PHYS_BASE + 0x14))
+-
+-#define LSR_THRE	0x20
+-
+-static inline void putc(const char c)
+-{
+-	int i;
+-
+-	for (i = 0; i < 0x1000; i++) {
+-		/* Transmit fifo not full? */
+-		if (*UART_LSR & LSR_THRE)
+-			break;
+-	}
+-
+-	*UART_THR = c;
+-}
+-
+-static inline void flush(void)
+-{
+-}
+-
+-/*
+- * nothing to do
+- */
+-#define arch_decomp_setup()
 -- 
 2.29.2
 
