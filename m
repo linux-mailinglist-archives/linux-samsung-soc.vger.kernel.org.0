@@ -2,83 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C5FB4F5051
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 04:20:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D08C4F5057
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 04:20:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241711AbiDFBUi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Apr 2022 21:20:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59488 "EHLO
+        id S1392524AbiDFBWE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Apr 2022 21:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1457670AbiDEQc6 (ORCPT
+        with ESMTP id S1573256AbiDESf2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Apr 2022 12:32:58 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24158BF00A
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  5 Apr 2022 09:30:57 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-2eb57fd3f56so78301707b3.8
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 05 Apr 2022 09:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KMTS6ZzHfqr0cBt89fdY6xnjYm43a4DPuwzvi/5KFcU=;
-        b=GfRipIriW+4Gj99TqghbKjqPOWjqvQue0SDRC4xYdndLHj14kAu4g3o3HbRpq6OgaD
-         Sn5pT4Z+6R1oJj23BSQ3wpF7CHtOUv1KqyofptkTp7Zjl47B9Y3A3JwDNhcn3tuTwLvP
-         Ur2dd8w+slSKU4TcOWV01cvwPCEC1SpHjBtjbb5VvcqSJGQCubjtJbLpzVirhDpU+S8w
-         pQBn9XJtkFGu1pwS/xFAkRR612gGqFmLkKD5w4ZeCdC1JeNlITkXhKL/EI3/g/5k1qXR
-         JYfMlyH0cOCO2YB8okcmQzy934x3VMAmYrn20RlsTdQON1UeQZGjZbsdDhgXhNHVxOdi
-         mV6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KMTS6ZzHfqr0cBt89fdY6xnjYm43a4DPuwzvi/5KFcU=;
-        b=bUu4fj6SabSkGgw+oDmb88SU49vJHgtU7qj2tNHIBnmvqeRleJ/vUGuzFJpbZEO8yM
-         uvQS2UrV0g4PmKcYEsVSbufQPchU31zPUQn9Te9YKPFGMiL7Aa73z+oHXu+wjWmtDAM9
-         vqndKmyr3TjGIlooqTuTM0k+nrnxL98GZJC3blZ+J4Es46p8WGfFvQI74+giVRr5DXE5
-         X+dlUFGmrbzpoQ2AqfhmF+9bvvUakuDKjFvgnMdNR6T7X+0MD/1hHv7pztN89zLvcXem
-         6naLGuAbFbtotVFCj8MjrB52fLVLT1usthTYgPJijjXKfCdsuoXYx6OriPhHksUOgfRL
-         ADeA==
-X-Gm-Message-State: AOAM531GW0HRqh3EG6+lVDAzjNlbenV2PGE9EWhoN9taK9Dnk6vqrMpL
-        mlEil+3rayiErHFzpERNQPgOSVaTwYBYcsdPhC5lsA==
-X-Google-Smtp-Source: ABdhPJyIgna9axSeomjEBQ4XMEGPKbQbe9lvwwQnq3ep9YudH9QmF87Opki8o1yO4mskUXTOYwEcNk+E7wb+6fxKfmM=
-X-Received: by 2002:a0d:cc55:0:b0:2eb:994c:1b56 with SMTP id
- o82-20020a0dcc55000000b002eb994c1b56mr3445672ywd.437.1649176256367; Tue, 05
- Apr 2022 09:30:56 -0700 (PDT)
+        Tue, 5 Apr 2022 14:35:28 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8AB13F6F;
+        Tue,  5 Apr 2022 11:33:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 47D3CB81F86;
+        Tue,  5 Apr 2022 18:33:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18183C385B1;
+        Tue,  5 Apr 2022 18:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649183607;
+        bh=ZUxbSBZ3h5TlMPFt4FZd4UJUlah4Y41D/DcQvCB4HHY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=WBNF0PMEz3S24e5ZmkkSTviC1o6JSDDLnvPKMLuOTbq98ijOb1h1anaD+M0MqBCAX
+         qGMvBVPYhZ/wl8CkEEvXiGUrIDfIAr57JleW+UEM8+xEglqb+SlKZyTnHsVFm5Ycb+
+         4q5KeS/C/5zEqqSjca8c8z+IVGagPpn0u2XWRxZAuChTkv7xI0BM47F1RCopRWn+Qh
+         pTpBPx/oRnv8OYcc34iom/1ocD+j1sfG79lZ2yqOLfI2poDodz6U1N3KScczpCTA3T
+         VFSG63Xz3mEzOIMFyQ5YJd/HtvEtGBSA12D1fWMMRBM6SveTf8TdT50+dTAyRksByi
+         1F+e6Ylz7UJ8w==
+Received: by mail-wr1-f45.google.com with SMTP id m30so20695984wrb.1;
+        Tue, 05 Apr 2022 11:33:27 -0700 (PDT)
+X-Gm-Message-State: AOAM532fuE7J96wWbzwMcHOoosDIDW7JlYNANHegtXZeAoK+JDch5nJN
+        f9oqWtxmgfzUhA+f1YCFMm22gP0wOHXgFsaAaq4=
+X-Google-Smtp-Source: ABdhPJyewe9dKH4iPAQ2ncrwvBN2zM58zMWaVXuQn/R34OzrtcdUCZ1RyKCpcpZjlkdOFdkiAKfJXKGTnyUo5ALgpXU=
+X-Received: by 2002:adf:cd02:0:b0:206:ff2:236 with SMTP id w2-20020adfcd02000000b002060ff20236mr3807678wrm.192.1649183605142;
+ Tue, 05 Apr 2022 11:33:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220405091750.3076973-1-arnd@kernel.org> <20220405091750.3076973-2-arnd@kernel.org>
-In-Reply-To: <20220405091750.3076973-2-arnd@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 5 Apr 2022 18:30:43 +0200
-Message-ID: <CACRpkdZHFmxB+dHyeFSJjgXeBc-KPtBNS50m-EZDUOjd2EHKZw@mail.gmail.com>
+ <20220405141500.ixjl6qsy4cczghgt@bogus>
+In-Reply-To: <20220405141500.ixjl6qsy4cczghgt@bogus>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Tue, 5 Apr 2022 20:33:09 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1T5w3cJG-4Y2WaWZcUmAtcjP-BKNCC3f0bf8=1CTdV6Q@mail.gmail.com>
+Message-ID: <CAK8P3a1T5w3cJG-4Y2WaWZcUmAtcjP-BKNCC3f0bf8=1CTdV6Q@mail.gmail.com>
 Subject: Re: [PATCH 01/12] ARM: versatile: move integrator/realview/vexpress
  to versatile
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Russell King <linux@armlinux.org.uk>,
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Russell King <linux@armlinux.org.uk>,
         Hartley Sweeten <hsweeten@visionengravers.com>,
         Alexander Sverdlin <alexander.sverdlin@gmail.com>,
         Hubert Feurstein <hubert.feurstein@contec.at>,
         Lukasz Majewski <lukma@denx.de>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Imre Kaloz <kaloz@openwrt.org>,
         Krzysztof Halasa <khalasa@piap.pl>,
         Andrew Lunn <andrew@lunn.ch>,
         Gregory Clement <gregory.clement@bootlin.com>,
         Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Simtec Linux Team <linux@simtec.co.uk>,
-        Liviu Dudau <Liviu.Dudau@arm.com>,
-        Sudeep Holla <Sudeep.Holla@arm.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Ard Biesheuvel <ardb@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>, patches@opensource.cirrus.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,23 +84,28 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Apr 5, 2022 at 11:18 AM Arnd Bergmann <arnd@kernel.org> wrote:
-
-> From: Arnd Bergmann <arnd@arndb.de>
+On Tue, Apr 5, 2022 at 4:15 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> These are all fairly small platforms by now, and they are
-> closely related. Just move them all into a single directory.
+> On Tue, Apr 05, 2022 at 11:17:39AM +0200, Arnd Bergmann wrote:
+> > From: Arnd Bergmann <arnd@arndb.de>
+> >
+> > These are all fairly small platforms by now, and they are
+> > closely related. Just move them all into a single directory.
+> >
 >
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Liviu Dudau <liviu.dudau@arm.com>
-> Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> Tested-by: Sudeep Holla <sudeep.holla@arm.com>
-> Acked-by: Sudeep Holla <sudeep.holla@arm.com>
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> I had forgotten about this. When do you plan to merge this ? I guess for
+> v5.19. The reason I ask is that one of the branch triggered loads of
+> kernel-doc warning[1] and I was bit confused with the file path. I did post
+> the fix[2] for kernel-doc and was planning to send it as fix for v5.18, but
+> let me know what do you prefer as it conflicts with this patch.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+I originally wanted to merge this back in 2019, hoping we can do it
+all for 5.19 now. The problem with the warnings is that moving a file
+makes lkp think it's a regression when it otherwise ignores existing
+warnings that seem harmless.
 
-I can't test much right now, but I sure trust you with this!
+I can probably apply the warning fixes on top here, and I think it would
+also work to have them in a separate branch, since git usually figures
+out the merges across renames.
 
-Yours,
-Linus Walleij
+       Arnd
