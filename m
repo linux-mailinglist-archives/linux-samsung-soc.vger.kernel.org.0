@@ -2,43 +2,43 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF9124F2FBF
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 14:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB0184F32D9
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 15:00:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350180AbiDEJ4D (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Apr 2022 05:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43004 "EHLO
+        id S1350231AbiDEJ4e (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Apr 2022 05:56:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237332AbiDEJbo (ORCPT
+        with ESMTP id S1349247AbiDEJt3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:31:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69F929E;
-        Tue,  5 Apr 2022 02:19:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 5 Apr 2022 05:49:29 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACCF122BDB;
+        Tue,  5 Apr 2022 02:43:00 -0700 (PDT)
+Received: from ktm (85-222-111-42.dynamic.chello.pl [85.222.111.42])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9E196B80DA1;
-        Tue,  5 Apr 2022 09:19:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E981C385A2;
-        Tue,  5 Apr 2022 09:19:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649150351;
-        bh=DeQtVM10KaxSTi7JtqRVyZcnxrwnHXMAjUTF+jS4kR0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ifw51FaMc8qRGtx8hI5Ek3EFTkoPpLJADkxkwhSZHQVts8pt5F1u44eCudiVRu/Ds
-         xsqqFWczHvUOpfFrf6GV6ypFNVy7yfY2SOMHp8l44QI3fyiGszJmFQy0UObBXS8bzb
-         A+w+bDU8N+08m6gejQHCT4hbP2YVFFLlQV/cibi4U8GfiEVHIkC5AEfFwvvoRP1tcB
-         eXYcH+5dtw/1I2uD4fe1cYqUpFe9TkjsauKM5hbXcnRW8EsY/ZoZtX1M8Y2fpuW4gX
-         rVWTTfuqMjBDO12V9x4xphk2ydsUCZldjhfDyqRDC56ltN8/uCmEL9AI85uRMMLseV
-         Dx7nO3/uIArBw==
-From:   Arnd Bergmann <arnd@kernel.org>
+        (Authenticated sender: lukma@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 112EF807DF;
+        Tue,  5 Apr 2022 11:42:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1649151770;
+        bh=D8nn68p20zH9IA29cWstg2/uav1hb5K8VVPH0v7EEls=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=vMKzt9zYlaHl+ixw2bHKn/r5zqi7riTeWyBzT9s5Rg2z8bhbvgAsatYicfadOP5lS
+         9hbejVZejRCPRoTNP1aTvSUQ0ydeB4tuoy1kVlfNgEossiKOI1S3vrOifrXlPo9Qka
+         sMPi7FYHJqtSNI0/E0b/kfkEpwijuNT2V9WUeCi2/TlMyBZ1GfGfi6dpQDNk6i8mid
+         hwaVxItt6Qwv9N73itgOMsuKUwSV00opFqDlbSxoBqqTjIiuJaoqNELlAoOD6gTeaw
+         4fHEVKWtqxOvgPHHVDnqKTBmJQJt7OlwN8Ygq0RtjFsRR4RDEqsx1q/gl97b/O7iix
+         aE5zaNS9CsVxg==
+Date:   Tue, 5 Apr 2022 11:42:39 +0200
+From:   Lukasz Majewski <lukma@denx.de>
+To:     Arnd Bergmann <arnd@kernel.org>
 Cc:     Arnd Bergmann <arnd@arndb.de>,
         Russell King <linux@armlinux.org.uk>,
         Hartley Sweeten <hsweeten@visionengravers.com>,
         Alexander Sverdlin <alexander.sverdlin@gmail.com>,
         Hubert Feurstein <hubert.feurstein@contec.at>,
-        Lukasz Majewski <lukma@denx.de>,
         Krzysztof Kozlowski <krzk@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Linus Walleij <linus.walleij@linaro.org>,
@@ -56,184 +56,231 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
-Subject: [PATCH 12/12] ARM: ixp4xx: enable multiplatform support
-Date:   Tue,  5 Apr 2022 11:17:50 +0200
-Message-Id: <20220405091750.3076973-13-arnd@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20220405091750.3076973-1-arnd@kernel.org>
+Subject: Re: [PATCH 02/12] ARM: ep93xx: renumber interrupts
+Message-ID: <20220405114239.6c801983@ktm>
+In-Reply-To: <20220405091750.3076973-3-arnd@kernel.org>
 References: <20220405091750.3076973-1-arnd@kernel.org>
+        <20220405091750.3076973-3-arnd@kernel.org>
+Organization: denx.de
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ boundary="Sig_/H22OkBcUjFxW3WCVBJL/tlR"; protocol="application/pgp-signature"
+X-Virus-Scanned: clamav-milter 0.103.5 at phobos.denx.de
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+--Sig_/H22OkBcUjFxW3WCVBJL/tlR
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-After all the work that Linus Walleij did on this platform, it can be
-part of a generic kernel build as well.
+On Tue,  5 Apr 2022 11:17:40 +0200
+Arnd Bergmann <arnd@kernel.org> wrote:
 
-Note that there are known bugs in little-endian mode on ixp4xx, and
-no other ARMv5 platform at this point supports big-endian mode, or is
-likely to in the future, so there is limited practical value in this,
-but it helps with build testing and ixp4xx little-endian support may
-get fixed in the future.
+> From: Arnd Bergmann <arnd@arndb.de>
+>=20
+> With the move to irq domains, no irqchip must start at number 0,
+> so shift all the hardwired IRQ numbers by one.
+>=20
+> Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+>  arch/arm/mach-ep93xx/core.c              |   4 +-
+>  arch/arm/mach-ep93xx/include/mach/irqs.h | 122
+> ++++++++++++----------- 2 files changed, 65 insertions(+), 61
+> deletions(-)
+>=20
+> diff --git a/arch/arm/mach-ep93xx/core.c b/arch/arm/mach-ep93xx/core.c
+> index a3b4e843456a..e4569a5acc3f 100644
+> --- a/arch/arm/mach-ep93xx/core.c
+> +++ b/arch/arm/mach-ep93xx/core.c
+> @@ -75,8 +75,8 @@ void __init ep93xx_map_io(void)
+>   ***********************************************************************=
+**/
+>  void __init ep93xx_init_irq(void)
+>  {
+> -	vic_init(EP93XX_VIC1_BASE, 0, EP93XX_VIC1_VALID_IRQ_MASK, 0);
+> -	vic_init(EP93XX_VIC2_BASE, 32, EP93XX_VIC2_VALID_IRQ_MASK,
+> 0);
+> +	vic_init(EP93XX_VIC1_BASE, IRQ_EP93XX_VIC0,
+> EP93XX_VIC1_VALID_IRQ_MASK, 0);
+> +	vic_init(EP93XX_VIC2_BASE, IRQ_EP93XX_VIC1,
+> EP93XX_VIC2_VALID_IRQ_MASK, 0); }
+> =20
+> =20
+> diff --git a/arch/arm/mach-ep93xx/include/mach/irqs.h
+> b/arch/arm/mach-ep93xx/include/mach/irqs.h index
+> 244daf83ce6d..60c69c4ed7e1 100644 ---
+> a/arch/arm/mach-ep93xx/include/mach/irqs.h +++
+> b/arch/arm/mach-ep93xx/include/mach/irqs.h @@ -6,69 +6,73 @@
+>  #ifndef __ASM_ARCH_IRQS_H
+>  #define __ASM_ARCH_IRQS_H
+> =20
+> -#define IRQ_EP93XX_COMMRX		2
+> -#define IRQ_EP93XX_COMMTX		3
+> -#define IRQ_EP93XX_TIMER1		4
+> -#define IRQ_EP93XX_TIMER2		5
+> -#define IRQ_EP93XX_AACINTR		6
+> -#define IRQ_EP93XX_DMAM2P0		7
+> -#define IRQ_EP93XX_DMAM2P1		8
+> -#define IRQ_EP93XX_DMAM2P2		9
+> -#define IRQ_EP93XX_DMAM2P3		10
+> -#define IRQ_EP93XX_DMAM2P4		11
+> -#define IRQ_EP93XX_DMAM2P5		12
+> -#define IRQ_EP93XX_DMAM2P6		13
+> -#define IRQ_EP93XX_DMAM2P7		14
+> -#define IRQ_EP93XX_DMAM2P8		15
+> -#define IRQ_EP93XX_DMAM2P9		16
+> -#define IRQ_EP93XX_DMAM2M0		17
+> -#define IRQ_EP93XX_DMAM2M1		18
+> -#define IRQ_EP93XX_GPIO0MUX		19
+> -#define IRQ_EP93XX_GPIO1MUX		20
+> -#define IRQ_EP93XX_GPIO2MUX		21
+> -#define IRQ_EP93XX_GPIO3MUX		22
+> -#define IRQ_EP93XX_UART1RX		23
+> -#define IRQ_EP93XX_UART1TX		24
+> -#define IRQ_EP93XX_UART2RX		25
+> -#define IRQ_EP93XX_UART2TX		26
+> -#define IRQ_EP93XX_UART3RX		27
+> -#define IRQ_EP93XX_UART3TX		28
+> -#define IRQ_EP93XX_KEY			29
+> -#define IRQ_EP93XX_TOUCH		30
+> +#define IRQ_EP93XX_VIC0			1
+> +
+> +#define IRQ_EP93XX_COMMRX		(IRQ_EP93XX_VIC0 + 2)
+> +#define IRQ_EP93XX_COMMTX		(IRQ_EP93XX_VIC0 + 3)
+> +#define IRQ_EP93XX_TIMER1		(IRQ_EP93XX_VIC0 + 4)
+> +#define IRQ_EP93XX_TIMER2		(IRQ_EP93XX_VIC0 + 5)
+> +#define IRQ_EP93XX_AACINTR		(IRQ_EP93XX_VIC0 + 6)
+> +#define IRQ_EP93XX_DMAM2P0		(IRQ_EP93XX_VIC0 + 7)
+> +#define IRQ_EP93XX_DMAM2P1		(IRQ_EP93XX_VIC0 + 8)
+> +#define IRQ_EP93XX_DMAM2P2		(IRQ_EP93XX_VIC0 + 9)
+> +#define IRQ_EP93XX_DMAM2P3		(IRQ_EP93XX_VIC0 + 10)
+> +#define IRQ_EP93XX_DMAM2P4		(IRQ_EP93XX_VIC0 + 11)
+> +#define IRQ_EP93XX_DMAM2P5		(IRQ_EP93XX_VIC0 + 12)
+> +#define IRQ_EP93XX_DMAM2P6		(IRQ_EP93XX_VIC0 + 13)
+> +#define IRQ_EP93XX_DMAM2P7		(IRQ_EP93XX_VIC0 + 14)
+> +#define IRQ_EP93XX_DMAM2P8		(IRQ_EP93XX_VIC0 + 15)
+> +#define IRQ_EP93XX_DMAM2P9		(IRQ_EP93XX_VIC0 + 16)
+> +#define IRQ_EP93XX_DMAM2M0		(IRQ_EP93XX_VIC0 + 17)
+> +#define IRQ_EP93XX_DMAM2M1		(IRQ_EP93XX_VIC0 + 18)
+> +#define IRQ_EP93XX_GPIO0MUX		(IRQ_EP93XX_VIC0 + 19)
+> +#define IRQ_EP93XX_GPIO1MUX		(IRQ_EP93XX_VIC0 + 20)
+> +#define IRQ_EP93XX_GPIO2MUX		(IRQ_EP93XX_VIC0 + 21)
+> +#define IRQ_EP93XX_GPIO3MUX		(IRQ_EP93XX_VIC0 + 22)
+> +#define IRQ_EP93XX_UART1RX		(IRQ_EP93XX_VIC0 + 23)
+> +#define IRQ_EP93XX_UART1TX		(IRQ_EP93XX_VIC0 + 24)
+> +#define IRQ_EP93XX_UART2RX		(IRQ_EP93XX_VIC0 + 25)
+> +#define IRQ_EP93XX_UART2TX		(IRQ_EP93XX_VIC0 + 26)
+> +#define IRQ_EP93XX_UART3RX		(IRQ_EP93XX_VIC0 + 27)
+> +#define IRQ_EP93XX_UART3TX		(IRQ_EP93XX_VIC0 + 28)
+> +#define IRQ_EP93XX_KEY			(IRQ_EP93XX_VIC0 + 29)
+> +#define IRQ_EP93XX_TOUCH		(IRQ_EP93XX_VIC0 + 30)
+>  #define EP93XX_VIC1_VALID_IRQ_MASK	0x7ffffffc
+> =20
+> -#define IRQ_EP93XX_EXT0			32
+> -#define IRQ_EP93XX_EXT1			33
+> -#define IRQ_EP93XX_EXT2			34
+> -#define IRQ_EP93XX_64HZ			35
+> -#define IRQ_EP93XX_WATCHDOG		36
+> -#define IRQ_EP93XX_RTC			37
+> -#define IRQ_EP93XX_IRDA			38
+> -#define IRQ_EP93XX_ETHERNET		39
+> -#define IRQ_EP93XX_EXT3			40
+> -#define IRQ_EP93XX_PROG			41
+> -#define IRQ_EP93XX_1HZ			42
+> -#define IRQ_EP93XX_VSYNC		43
+> -#define IRQ_EP93XX_VIDEO_FIFO		44
+> -#define IRQ_EP93XX_SSP1RX		45
+> -#define IRQ_EP93XX_SSP1TX		46
+> -#define IRQ_EP93XX_GPIO4MUX		47
+> -#define IRQ_EP93XX_GPIO5MUX		48
+> -#define IRQ_EP93XX_GPIO6MUX		49
+> -#define IRQ_EP93XX_GPIO7MUX		50
+> -#define IRQ_EP93XX_TIMER3		51
+> -#define IRQ_EP93XX_UART1		52
+> -#define IRQ_EP93XX_SSP			53
+> -#define IRQ_EP93XX_UART2		54
+> -#define IRQ_EP93XX_UART3		55
+> -#define IRQ_EP93XX_USB			56
+> -#define IRQ_EP93XX_ETHERNET_PME		57
+> -#define IRQ_EP93XX_DSP			58
+> -#define IRQ_EP93XX_GPIO_AB		59
+> -#define IRQ_EP93XX_SAI			60
+> +#define IRQ_EP93XX_VIC1			(IRQ_EP93XX_VIC0 + 32)
+> +
+> +#define IRQ_EP93XX_EXT0			(IRQ_EP93XX_VIC1 + 0)
+> +#define IRQ_EP93XX_EXT1			(IRQ_EP93XX_VIC1 + 1)
+> +#define IRQ_EP93XX_EXT2			(IRQ_EP93XX_VIC1 + 2)
+> +#define IRQ_EP93XX_64HZ			(IRQ_EP93XX_VIC1 + 3)
+> +#define IRQ_EP93XX_WATCHDOG		(IRQ_EP93XX_VIC1 + 4)
+> +#define IRQ_EP93XX_RTC			(IRQ_EP93XX_VIC1 + 5)
+> +#define IRQ_EP93XX_IRDA			(IRQ_EP93XX_VIC1 + 6)
+> +#define IRQ_EP93XX_ETHERNET		(IRQ_EP93XX_VIC1 + 7)
+> +#define IRQ_EP93XX_EXT3			(IRQ_EP93XX_VIC1 + 8)
+> +#define IRQ_EP93XX_PROG			(IRQ_EP93XX_VIC1 + 9)
+> +#define IRQ_EP93XX_1HZ			(IRQ_EP93XX_VIC1 + 10)
+> +#define IRQ_EP93XX_VSYNC		(IRQ_EP93XX_VIC1 + 11)
+> +#define IRQ_EP93XX_VIDEO_FIFO		(IRQ_EP93XX_VIC1 + 12)
+> +#define IRQ_EP93XX_SSP1RX		(IRQ_EP93XX_VIC1 + 13)
+> +#define IRQ_EP93XX_SSP1TX		(IRQ_EP93XX_VIC1 + 14)
+> +#define IRQ_EP93XX_GPIO4MUX		(IRQ_EP93XX_VIC1 + 15)
+> +#define IRQ_EP93XX_GPIO5MUX		(IRQ_EP93XX_VIC1 + 16)
+> +#define IRQ_EP93XX_GPIO6MUX		(IRQ_EP93XX_VIC1 + 17)
+> +#define IRQ_EP93XX_GPIO7MUX		(IRQ_EP93XX_VIC1 + 18)
+> +#define IRQ_EP93XX_TIMER3		(IRQ_EP93XX_VIC1 + 19)
+> +#define IRQ_EP93XX_UART1		(IRQ_EP93XX_VIC1 + 20)
+> +#define IRQ_EP93XX_SSP			(IRQ_EP93XX_VIC1 + 21)
+> +#define IRQ_EP93XX_UART2		(IRQ_EP93XX_VIC1 + 22)
+> +#define IRQ_EP93XX_UART3		(IRQ_EP93XX_VIC1 + 23)
+> +#define IRQ_EP93XX_USB			(IRQ_EP93XX_VIC1 + 24)
+> +#define IRQ_EP93XX_ETHERNET_PME		(IRQ_EP93XX_VIC1 + 25)
+> +#define IRQ_EP93XX_DSP			(IRQ_EP93XX_VIC1 + 26)
+> +#define IRQ_EP93XX_GPIO_AB		(IRQ_EP93XX_VIC1 + 27)
+> +#define IRQ_EP93XX_SAI			(IRQ_EP93XX_VIC1 + 28)
+>  #define EP93XX_VIC2_VALID_IRQ_MASK	0x1fffffff
+> =20
+> -#define NR_EP93XX_IRQS			(64 + 24)
+> +#define NR_EP93XX_IRQS			(IRQ_EP93XX_VIC1 + 32
+> + 24)=20
+>  #define EP93XX_BOARD_IRQ(x)		(NR_EP93XX_IRQS + (x))
+>  #define EP93XX_BOARD_IRQS		32
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- arch/arm/Kconfig                              | 16 ------
- arch/arm/mach-ixp4xx/Kconfig                  | 22 +++++---
- arch/arm/mach-ixp4xx/Makefile.boot            |  4 --
- .../arm/mach-ixp4xx/include/mach/uncompress.h | 54 -------------------
- 4 files changed, 15 insertions(+), 81 deletions(-)
- delete mode 100644 arch/arm/mach-ixp4xx/Makefile.boot
- delete mode 100644 arch/arm/mach-ixp4xx/include/mach/uncompress.h
+Reviewed-by: Lukasz Majewski <lukma@denx.de>
 
-diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 4d98de155e20..db9b9ed5d7c7 100644
---- a/arch/arm/Kconfig
-+++ b/arch/arm/Kconfig
-@@ -357,22 +357,6 @@ config ARCH_FOOTBRIDGE
- 	  Support for systems based on the DC21285 companion chip
- 	  ("FootBridge"), such as the Simtec CATS and the Rebel NetWinder.
- 
--config ARCH_IXP4XX
--	bool "IXP4xx-based"
--	depends on CPU_BIG_ENDIAN
--	select ARM_PATCH_PHYS_VIRT
--	select CPU_XSCALE
--	select GPIO_IXP4XX
--	select GPIOLIB
--	select HAVE_PCI
--	select IXP4XX_IRQ
--	select IXP4XX_TIMER
--	select SPARSE_IRQ
--	select USB_EHCI_BIG_ENDIAN_DESC
--	select USB_EHCI_BIG_ENDIAN_MMIO
--	help
--	  Support for Intel's IXP4XX (XScale) family of processors.
--
- config ARCH_PXA
- 	bool "PXA2xx/PXA3xx-based"
- 	depends on CPU_LITTLE_ENDIAN
-diff --git a/arch/arm/mach-ixp4xx/Kconfig b/arch/arm/mach-ixp4xx/Kconfig
-index f41ba3f42fc8..dc6ea3c2e3ed 100644
---- a/arch/arm/mach-ixp4xx/Kconfig
-+++ b/arch/arm/mach-ixp4xx/Kconfig
-@@ -1,9 +1,20 @@
- # SPDX-License-Identifier: GPL-2.0-only
--if ARCH_IXP4XX
--
--menu "Intel IXP4xx Implementation Options"
-+menuconfig ARCH_IXP4XX
-+	bool "IXP4xx-based platforms"
-+	depends on ARCH_MULTI_V5
-+	depends on CPU_BIG_ENDIAN
-+	select CPU_XSCALE
-+	select GPIO_IXP4XX
-+	select GPIOLIB
-+	select FORCE_PCI
-+	select IXP4XX_IRQ
-+	select IXP4XX_TIMER
-+	select USB_EHCI_BIG_ENDIAN_DESC
-+	select USB_EHCI_BIG_ENDIAN_MMIO
-+	help
-+	  Support for Intel's IXP4XX (XScale) family of processors.
- 
--comment "IXP4xx Platforms"
-+if ARCH_IXP4XX
- 
- config MACH_IXP4XX_OF
- 	bool
-@@ -12,11 +23,8 @@ config MACH_IXP4XX_OF
- 	select ARM_APPENDED_DTB # Old Redboot bootloaders deployed
- 	select I2C
- 	select I2C_IOP3XX
--	select PCI
- 	select USE_OF
- 	help
- 	  Say 'Y' here to support Device Tree-based IXP4xx platforms.
- 
--endmenu
--
- endif
-diff --git a/arch/arm/mach-ixp4xx/Makefile.boot b/arch/arm/mach-ixp4xx/Makefile.boot
-deleted file mode 100644
-index 9b015bd1ef27..000000000000
---- a/arch/arm/mach-ixp4xx/Makefile.boot
-+++ /dev/null
-@@ -1,4 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0-only
--   zreladdr-y	+= 0x00008000
--params_phys-y	:= 0x00000100
--
-diff --git a/arch/arm/mach-ixp4xx/include/mach/uncompress.h b/arch/arm/mach-ixp4xx/include/mach/uncompress.h
-deleted file mode 100644
-index 09e7663e6a55..000000000000
---- a/arch/arm/mach-ixp4xx/include/mach/uncompress.h
-+++ /dev/null
-@@ -1,54 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-only */
--/*
-- * arch/arm/mach-ixp4xx/include/mach/uncompress.h 
-- *
-- * Copyright (C) 2002 Intel Corporation.
-- * Copyright (C) 2003-2004 MontaVista Software, Inc.
-- */
--
--#ifndef _ARCH_UNCOMPRESS_H_
--#define _ARCH_UNCOMPRESS_H_
--
--#include <asm/mach-types.h>
--#include <linux/serial_reg.h>
--
--#define IXP4XX_UART1_BASE_PHYS 0xc8000000
--#define IXP4XX_UART2_BASE_PHYS 0xc8001000
--
--#define TX_DONE (UART_LSR_TEMT|UART_LSR_THRE)
--
--volatile u32* uart_base;
--
--static inline void putc(int c)
--{
--	/* Check THRE and TEMT bits before we transmit the character.
--	 */
--	while ((uart_base[UART_LSR] & TX_DONE) != TX_DONE)
--		barrier();
--
--	*uart_base = c;
--}
--
--static void flush(void)
--{
--}
--
--static __inline__ void __arch_decomp_setup(unsigned long arch_id)
--{
--	/*
--	 * Some boards are using UART2 as console
--	 */
--	if (machine_is_adi_coyote() || machine_is_gtwx5715() ||
--	    machine_is_gateway7001() || machine_is_wg302v2() ||
--	    machine_is_devixp() || machine_is_miccpt() || machine_is_mic256())
--		uart_base = (volatile u32*) IXP4XX_UART2_BASE_PHYS;
--	else
--		uart_base = (volatile u32*) IXP4XX_UART1_BASE_PHYS;
--}
--
--/*
-- * arch_id is a variable in decompress_kernel()
-- */
--#define arch_decomp_setup()	__arch_decomp_setup(arch_id)
--
--#endif
--- 
-2.29.2
 
+Best regards,
+
+Lukasz Majewski
+
+--
+
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+Phone: (+49)-8142-66989-59 Fax: (+49)-8142-66989-80 Email: lukma@denx.de
+
+--Sig_/H22OkBcUjFxW3WCVBJL/tlR
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEgAyFJ+N6uu6+XupJAR8vZIA0zr0FAmJMDw8ACgkQAR8vZIA0
+zr1SOAf8C3tls/6WR7Qy5iXu9WsEcgIEPTbRrhygLqd0tUh/tVFB4wcJ12aZH7Lg
+MNAjl+U2OakSR/uDzz3yp6XBuyefC6yXeOOzFcTC/LR9Ej6JiOesx0iFwDC/ZcLR
+IGdZfK9NTEoz+FrlVsx3GHYjKJqlC24EhSP+K0AUi8S4OPrqXFcrVDY6Lr+gY1RR
+4twWwhdtgfk3hxHfcQwxgU4ixjaTvcTE11noapfPl9NpGGOyBeI94l+do1+tDVNH
+RZK6mqc7xUBV7bzLvfF1FUpMabDf9t9slrhCHy35QXPMd/xHUfAPQjE+Da+dAcyp
+ahfdu0NW55neEu2FtbMC8kdfmIH/3Q==
+=VhiN
+-----END PGP SIGNATURE-----
+
+--Sig_/H22OkBcUjFxW3WCVBJL/tlR--
