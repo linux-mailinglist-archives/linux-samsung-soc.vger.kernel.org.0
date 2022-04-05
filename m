@@ -2,137 +2,85 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EBD24F430A
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Apr 2022 23:54:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7C704F5056
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 04:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234485AbiDEOed (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 5 Apr 2022 10:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
+        id S236634AbiDFBVz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 5 Apr 2022 21:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378124AbiDENNR (ORCPT
+        with ESMTP id S1446407AbiDEPof (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 5 Apr 2022 09:13:17 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9289E9A98F
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  5 Apr 2022 05:13:20 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id k23so22812826ejd.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 05 Apr 2022 05:13:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w/Z5VzjPaah7N0YUbtAhapqjSjMXfGCadaBASbAspD0=;
-        b=7dOiBFDRRvuhX8nNQguHmbWm8+QE2DPP5lE6QQD4Pd+x55V/KnhDuzAmKXTJfOARUL
-         v+TNzqGFPW3+EGqiUCPOVmiDKgZxsGTSTnC0X5ZQVtl974YDs4B5Iz5CXjBqWbou2Awp
-         yWqAzw62kex2Pk0y9GpVAT1Se8ZGHdxfLA76vbdm1RNCzc9+ANL/kg7ntkI2zIpHTr/m
-         Llp/luaTI55RpNSJ/yjFbyWKipC98B7qcWuHW98I4ksMx0B2VYan5xfJEd3fz9r65Fbo
-         yYv+658/+ggJ1eqVFoc8k39bYRCt6XFnmBAmyIWw26HtjOd8PhMgKFU8rHcLxqexneSl
-         iQZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w/Z5VzjPaah7N0YUbtAhapqjSjMXfGCadaBASbAspD0=;
-        b=r7CQVEax/Gdts7J2XiXdP3p7nvv3vYqamCAXPs9CInrygTTW1nbhCCpAGIse7PEEoQ
-         0Jp+9H6dJ13BBSWb8qAymYhkfGTW0Bxs5tR+uF8XrCBft30LwpdlWHVzOKSctnCweVLw
-         VWSuFcE8mC3Z+tnC1b2Iox9Dj7B67rA6j4RKm/WtOKEaa3aUsSh0rcHQkE0oxDftLprC
-         WKYnk39l7BD9iFOThFMF100psxU0JHTMLD7bKd8Jl2/Z3Hu6sI22h/p8yDy++reNoymW
-         WzlpNiwAN4FO9OjbpWlreIr964tl3pU+7N5ImX4RefBuahMiVTOL7VmI7TQ/neohixtZ
-         hdeA==
-X-Gm-Message-State: AOAM530dvt4kKnodin7tJPXF3mkbBdlPY9EGVsDzidBIXnJWjQ4u3i4X
-        rPA12llrXSNKGammb16sf5P1xZo1ZLV9zn7tzwVVyQ==
-X-Google-Smtp-Source: ABdhPJxVvhV5WZmApCq0DsgEovGa26+9MHznvNSVzqBc6ACt4ofBrfoHmbUA4s/kOIOSyV1hrsGZJlqKWGVuGtI+4qo=
-X-Received: by 2002:a17:906:6a1d:b0:6e8:35a:4439 with SMTP id
- qw29-20020a1709066a1d00b006e8035a4439mr3387538ejc.734.1649160799105; Tue, 05
- Apr 2022 05:13:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220401103604.8705-1-andriy.shevchenko@linux.intel.com> <20220401103604.8705-3-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20220401103604.8705-3-andriy.shevchenko@linux.intel.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 5 Apr 2022 14:13:08 +0200
-Message-ID: <CAMRc=MeaSC6kvwfGAhX7XbeFvaw7MiozTj1p+ThZYCHZFppSzg@mail.gmail.com>
-Subject: Re: [PATCH v4 02/13] gpiolib: Introduce gpiochip_node_count() helper
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Qianggui Song <qianggui.song@amlogic.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Tue, 5 Apr 2022 11:44:35 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D9FF1F55EC;
+        Tue,  5 Apr 2022 07:15:07 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D38723A;
+        Tue,  5 Apr 2022 07:15:07 -0700 (PDT)
+Received: from bogus (unknown [10.57.43.163])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4847D3F5A1;
+        Tue,  5 Apr 2022 07:15:03 -0700 (PDT)
+Date:   Tue, 5 Apr 2022 15:15:00 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Russell King <linux@armlinux.org.uk>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Hartley Sweeten <hsweeten@visionengravers.com>,
+        Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+        Hubert Feurstein <hubert.feurstein@contec.at>,
+        Lukasz Majewski <lukma@denx.de>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Linus Walleij <linus.walleij@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-amlogic@lists.infradead.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Imre Kaloz <kaloz@openwrt.org>,
+        Krzysztof Halasa <khalasa@piap.pl>,
         Andrew Lunn <andrew@lunn.ch>,
         Gregory Clement <gregory.clement@bootlin.com>,
         Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Simtec Linux Team <linux@simtec.co.uk>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
+Subject: Re: [PATCH 01/12] ARM: versatile: move integrator/realview/vexpress
+ to versatile
+Message-ID: <20220405141500.ixjl6qsy4cczghgt@bogus>
+References: <20220405091750.3076973-1-arnd@kernel.org>
+ <20220405091750.3076973-2-arnd@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220405091750.3076973-2-arnd@kernel.org>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Apr 1, 2022 at 12:36 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> The gpiochip_node_count() helper iterates over the device child nodes that
-> have the "gpio-controller" property set. It returns the number of such nodes
-> under a given device.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
->  include/linux/gpio/driver.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-> index bfc91f122d5f..12de0b22b4ef 100644
-> --- a/include/linux/gpio/driver.h
-> +++ b/include/linux/gpio/driver.h
-> @@ -755,4 +755,15 @@ static inline void gpiochip_unlock_as_irq(struct gpio_chip *gc,
->         device_for_each_child_node(dev, child)                                  \
->                 if (!fwnode_property_present(child, "gpio-controller")) {} else
->
-> +static inline unsigned int gpiochip_node_count(struct device *dev)
-> +{
-> +       struct fwnode_handle *child;
-> +       unsigned int count = 0;
-> +
-> +       for_each_gpiochip_node(dev, child)
-> +               count++;
-> +
-> +       return count;
-> +}
-> +
->  #endif /* __LINUX_GPIO_DRIVER_H */
-> --
-> 2.35.1
->
+On Tue, Apr 05, 2022 at 11:17:39AM +0200, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> These are all fairly small platforms by now, and they are
+> closely related. Just move them all into a single directory.
+> 
 
-Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
+I had forgotten about this. When do you plan to merge this ? I guess for
+v5.19. The reason I ask is that one of the branch triggered loads of
+kernel-doc warning[1] and I was bit confused with the file path. I did post
+the fix[2] for kernel-doc and was planning to send it as fix for v5.18, but
+let me know what do you prefer as it conflicts with this patch.
+
+-- 
+Regards,
+Sudeep
+
+[1] https://lore.kernel.org/linux-doc/202204031026.4ogKxt89-lkp@intel.com/
+[2] https://lore.kernel.org/all/20220404130207.1162445-1-sudeep.holla@arm.com/
+
