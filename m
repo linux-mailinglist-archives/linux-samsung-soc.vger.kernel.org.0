@@ -2,162 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 292E54F5DF1
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 14:45:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21CA74F5F30
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 15:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232004AbiDFMiZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 6 Apr 2022 08:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
+        id S232827AbiDFNPs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 6 Apr 2022 09:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232228AbiDFMhm (ORCPT
+        with ESMTP id S233072AbiDFNOD (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 6 Apr 2022 08:37:42 -0400
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907AC574208
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  6 Apr 2022 01:39:20 -0700 (PDT)
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20220406083917epoutp038a2dc3b69c0a2785f28fe9b551c45a77~jQekGmA-i1035710357epoutp03D
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  6 Apr 2022 08:39:17 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20220406083917epoutp038a2dc3b69c0a2785f28fe9b551c45a77~jQekGmA-i1035710357epoutp03D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1649234357;
-        bh=c54J3bp3plJLsFTEsC6S4PiShdQ+U2ETlWezGJ5k9AU=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=GgTfNlu/DqsW/v+kbvyZhMvnMFBp5HWny63eXhyVnqMLhKd3js+qYF4bNEfrZ/8iS
-         bEp+IuGhQD6P7HdWvt9cni8OkC7PMITCDWx3HPvQurjl7rFTAYp2vDxTP97PFBjN2O
-         ldpuBFkdyWLlso/B45mIxtzs7n1gzItl8zjVeBzY=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
-        20220406083916epcas2p30ee3bd4de04a7094344cb5b8d505cf97~jQejeaHxI1105711057epcas2p3L;
-        Wed,  6 Apr 2022 08:39:16 +0000 (GMT)
-Received: from epsmges2p3.samsung.com (unknown [182.195.36.88]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4KYHxG5LbKz4x9QP; Wed,  6 Apr
-        2022 08:39:14 +0000 (GMT)
-Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
-        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        7D.73.25540.1B15D426; Wed,  6 Apr 2022 17:39:13 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-        20220406083912epcas2p4aa5946cfaf84e6bac9c56dd25e1dedba~jQefHh_or1577715777epcas2p4a;
-        Wed,  6 Apr 2022 08:39:12 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220406083912epsmtrp26b4cbfbb2728036861c67c2a23586fa8~jQefDrx8S0804408044epsmtrp2T;
-        Wed,  6 Apr 2022 08:39:12 +0000 (GMT)
-X-AuditID: b6c32a47-831ff700000063c4-3b-624d51b12991
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        AE.2E.03370.0B15D426; Wed,  6 Apr 2022 17:39:12 +0900 (KST)
-Received: from KORCO006858 (unknown [10.229.18.72]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20220406083912epsmtip27e9c3fce16ef8727cfd6495a3dde8d86~jQee38F521809018090epsmtip2r;
-        Wed,  6 Apr 2022 08:39:12 +0000 (GMT)
-From:   "Jaewon Kim" <jaewon02.kim@samsung.com>
-To:     "'Greg Kroah-Hartman'" <gregkh@linuxfoundation.org>
-Cc:     "'Krzysztof Kozlowski'" <krzk@kernel.org>,
-        "'Alim Akhtar'" <alim.akhtar@samsung.com>,
-        "'Jiri Slaby'" <jirislaby@kernel.org>,
+        Wed, 6 Apr 2022 09:14:03 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DEA31D66DF;
+        Wed,  6 Apr 2022 02:52:31 -0700 (PDT)
+Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.53])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4KYJbY3GntzBrxP;
+        Wed,  6 Apr 2022 17:08:57 +0800 (CST)
+Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
+ dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Wed, 6 Apr 2022 17:13:02 +0800
+Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
+ (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.21; Wed, 6 Apr
+ 2022 17:13:07 +0800
+From:   Yang Yingliang <yangyingliang@huawei.com>
+To:     <linux-kernel@vger.kernel.org>,
         <linux-samsung-soc@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
-        <linux-serial@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "'Chanho Park'" <chanho61.park@samsung.com>
-In-Reply-To: <Yk1NmTdUgMcSIq1O@kroah.com>
-Subject: RE: [PATCH 1/1] tty: serial: samsung: add spin_lock for interrupt
- and console_write
-Date:   Wed, 6 Apr 2022 17:39:11 +0900
-Message-ID: <042701d84991$ca50d410$5ef27c30$@samsung.com>
+        <dri-devel@lists.freedesktop.org>
+CC:     <jagan@amarulasolutions.com>, <m.szyprowski@samsung.com>,
+        <robert.foss@linaro.org>
+Subject: [PATCH -next] drm/exynos: mic: fix return value check in exynos_mic_probe()
+Date:   Wed, 6 Apr 2022 17:22:00 +0800
+Message-ID: <20220406092200.2581262-1-yangyingliang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: ko
-Thread-Index: AQKAReulhVQQuLhL7TJZSLDDSdoOSgMPy/dDAfNn9KQCezrJxqtWoyVQ
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHJsWRmVeSWpSXmKPExsWy7bCmme7GQN8kg7l93BYP5m1js7i8X9ui
-        efF6Not3c2Uszp/fwG6x6fE1VovLu+awWcw4v4/J4sziXnYHTo9NqzrZPPbPXcPusXlJvUff
-        llWMHp83yQWwRmXbZKQmpqQWKaTmJeenZOal2yp5B8c7x5uaGRjqGlpamCsp5CXmptoqufgE
-        6Lpl5gBdo6RQlphTChQKSCwuVtK3synKLy1JVcjILy6xVUotSMkpMC/QK07MLS7NS9fLSy2x
-        MjQwMDIFKkzIzug895Gl4DFHxeTetywNjL/Yuhg5OSQETCQ2TvrH3sXIxSEksINRYsXXrUwQ
-        zidGiXXfzkM5nxklpu/uZIVpOdY7ESqxi1Hi4aTDYLOEBF4wSuzbzA1iswnoSuzc+IodxBYR
-        MJeY+/A4mM0scJBJ4lQvD4jNKaAp8XTeebBeYYE4iRm7toPZLAIqEtPebgar5xWwlNg+eRIr
-        hC0ocXLmExaIOfIS29/OYYY4SEHi59NlrBBxEYnZnW3MEHvdJF49uMoIcqiEwFIOiU3bF0E9
-        7SJxbu1xRghbWOLV8S3sELaUxOd3e6FqiiWO93xngmhuYJQ4e+cA1PvGErOetQM1cwBt05RY
-        v0sfxJQQUJY4cgvqNj6JjsN/2SHCvBIdbUIQjWoS96eeg5ouIzHpyEqmCYxKs5B8NgvJZ7OQ
-        fDMLYdcCRpZVjGKpBcW56anFRgXG8MhOzs/dxAhOqFruOxhnvP2gd4iRiYPxEKMEB7OSCG9V
-        rk+SEG9KYmVValF+fFFpTmrxIUZTYFhPZJYSTc4HpvS8knhDE0sDEzMzQ3MjUwNzJXFer5QN
-        iUIC6YklqdmpqQWpRTB9TBycUg1MG6/3WbELlrQV85xfxOKWnv94vU+bR8LiUx650ZL+pjvj
-        hIIvCHT+ZNG+r2dsXZx2cGdZr3bh+atS6h1nVTdNkQsPizqlnKnCs+Lan/OM+7b8MLyxq84g
-        0p3Fy42JU4TDdU3i9KIF6Zm8B/pe5xQ9+7PQi3fbg445l8w3/X3+V3Dq4n063HuMivrPXZd+
-        uTQjTv3cCoN7Ob4TLGKMqzbcVP26Sch46gJviwtzVPY/fMYnnyTd4STLNenzQ5sZJ0UrEyc3
-        6d49en7RpJ9L0nOPRFbsXhaY+/v28nnxtlVLhBX2JmZqPNLtEi/7FvzgKVs321QnwUPPdVW2
-        zlr5wESh4Mo8Vruy9vyd63oaVvcqsRRnJBpqMRcVJwIAGb05bDEEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkkeLIzCtJLcpLzFFi42LZdlhJXndDoG+SwcILHBYP5m1js7i8X9ui
-        efF6Not3c2Uszp/fwG6x6fE1VovLu+awWcw4v4/J4sziXnYHTo9NqzrZPPbPXcPusXlJvUff
-        llWMHp83yQWwRnHZpKTmZJalFunbJXBldJ77yFLwmKNicu9blgbGX2xdjJwcEgImEsd6JzJ1
-        MXJxCAnsYJS4Nm0NO0RCRmL5sz6oImGJ+y1HWCGKnjFK3P6yiAUkwSagK7Fz4yuwBhEBc4m5
-        D4+zgxQxCxxnklj2pgUsISRwj1FiRbc2iM0poCnxdN55sKnCAjEStyeeBhvEIqAiMe3tZrB6
-        XgFLie2TJ7FC2IISJ2c+AarhABqqJ9G2kREkzCwgL7H97RxmiOMUJH4+XcYKEReRmN3Zxgxx
-        j5vEqwdXGScwCs9CMmkWwqRZSCbNQtK9gJFlFaNkakFxbnpusWGBUV5quV5xYm5xaV66XnJ+
-        7iZGcGxpae1g3LPqg94hRiYOxkOMEhzMSiK8Vbk+SUK8KYmVValF+fFFpTmpxYcYpTlYlMR5
-        L3SdjBcSSE8sSc1OTS1ILYLJMnFwSjUwMfiFy7peerY+xVShfG8K70KZ2xNEl+9OuRxYq+fL
-        MkUrLPfLTJMpRfP2/rG2uCFxXzfw5AQuxcZrrhuYtq3dlhIoxXw4qCRx6y3HvN6ZgiaNTZss
-        bp9bIX7o8RyZ9x5nj3luaj7/qOjcUl3f2mMaNtoJ4Vsn3Dt9+1nF4ll/yp/pBkl959qy/fw6
-        oUdFjOL7+udMFNrW6dQTt+FS06ffa8rqE7s+PAmLWTB7adSEYoaTAQFnF1n9Mvu9d9vWzVz7
-        Dzv5ZX+aM+sIV+6cDVLi3FovhWdo7lrT/U55xr7mtwwyYfPV+VksM87KSYV/eZ81VdBu4eEK
-        ya+Hvgjq3bln0b9MZjeX6au6eVsTvaVOJymxFGckGmoxFxUnAgCFkTMMHAMAAA==
-X-CMS-MailID: 20220406083912epcas2p4aa5946cfaf84e6bac9c56dd25e1dedba
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.103.91]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500007.china.huawei.com (7.185.36.183)
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220406081823epcas2p2f7afa27e2402c4fc02c9bee5972bed4f
-References: <20220406082216.11206-1-jaewon02.kim@samsung.com>
-        <CGME20220406081823epcas2p2f7afa27e2402c4fc02c9bee5972bed4f@epcas2p2.samsung.com>
-        <20220406082216.11206-2-jaewon02.kim@samsung.com>
-        <Yk1NmTdUgMcSIq1O@kroah.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello 
+If of_graph_get_remote_node() fails, it returns NULL pointer, replaces
+IS_ERR() check with NULL pointer check.
 
-On 22. 4. 6. 17:21, Greg Kroah-Hartman wrote: 
-> On Wed, Apr 06, 2022 at 05:22:16PM +0900, Jaewon Kim wrote:
-> > The console_write and IRQ handler can run concurrently.
-> > Problems may occurs console_write is continuously executed while the
-> > IRQ handler is running.
-> >
-> > Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
-> > ---
-> >  drivers/tty/serial/samsung_tty.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> >
-> > diff --git a/drivers/tty/serial/samsung_tty.c
-> > b/drivers/tty/serial/samsung_tty.c
-> > index e1585fbae909..9db479d728b5 100644
-> > --- a/drivers/tty/serial/samsung_tty.c
-> > +++ b/drivers/tty/serial/samsung_tty.c
-> > @@ -2480,12 +2480,24 @@ s3c24xx_serial_console_write(struct console *co, const char *s,
-> >  			     unsigned int count)
-> >  {
-> >  	unsigned int ucon = rd_regl(cons_uart, S3C2410_UCON);
-> > +	unsigned long flags;
-> > +	bool locked = 1;
-> 
-> "1" is not a boolean :)
+Fixes: dd8b6803bc49 ("exynos: drm: dsi: Attach in_bridge in MIC driver")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+---
+ drivers/gpu/drm/exynos/exynos_drm_mic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-return value of spin_trylock() is 1 or 0.
-It seems better to keep it as an int than to change it to bool.
-I will return it to int.
-
-
-Thanks
-Jaewon Kim
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_mic.c b/drivers/gpu/drm/exynos/exynos_drm_mic.c
+index 9e06f8e2a863..43fc357a6682 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_mic.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_mic.c
+@@ -434,9 +434,9 @@ static int exynos_mic_probe(struct platform_device *pdev)
+ 
+ 	remote = of_graph_get_remote_node(dev->of_node, 1, 0);
+ 	mic->next_bridge = of_drm_find_bridge(remote);
+-	if (IS_ERR(mic->next_bridge)) {
++	if (!mic->next_bridge) {
+ 		DRM_DEV_ERROR(dev, "mic: Failed to find next bridge\n");
+-		ret = PTR_ERR(mic->next_bridge);
++		ret = -EINVAL;
+ 		goto err;
+ 	}
+ 
+-- 
+2.25.1
 
