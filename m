@@ -2,53 +2,64 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2FB4F5C69
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 13:40:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A5CA4F5F43
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Apr 2022 15:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236223AbiDFLdW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 6 Apr 2022 07:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59858 "EHLO
+        id S232520AbiDFN0O (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 6 Apr 2022 09:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236750AbiDFLcu (ORCPT
+        with ESMTP id S233291AbiDFNZw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 6 Apr 2022 07:32:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DB2B1BB820;
-        Wed,  6 Apr 2022 01:21:51 -0700 (PDT)
+        Wed, 6 Apr 2022 09:25:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF84386A89;
+        Tue,  5 Apr 2022 18:13:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 16FCDB81FB7;
-        Wed,  6 Apr 2022 08:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E835C385A1;
-        Wed,  6 Apr 2022 08:21:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1649233308;
-        bh=m02B52PlbTGkHsglDWYkbPf87t6nOSAI6SsL2u6s9WU=;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 67F2F61923;
+        Wed,  6 Apr 2022 01:13:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D82AC385A1;
+        Wed,  6 Apr 2022 01:13:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649207598;
+        bh=XhrRwaJr766BJcr+zRvpxYXxBy6jna9TGrTSweXCY1Y=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dmHURPUrahNYrn7D2K0tE4AfQoQwL9KCcwOVFz4YF8tjyg7IESCEUUr0Xt/EbQcxA
-         aE98Em+gCM0thhr269/aiLBr8phAStBLl9zuDH1mD1TDm5MeHozKdsrEtWq+Mu9hzY
-         qh6zzKhJscn44zJUQmNlYDuqfCwIEoHorKnVKwqg=
-Date:   Wed, 6 Apr 2022 10:21:45 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Jaewon Kim <jaewon02.kim@samsung.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-Subject: Re: [PATCH 1/1] tty: serial: samsung: add spin_lock for interrupt
- and console_write
-Message-ID: <Yk1NmTdUgMcSIq1O@kroah.com>
-References: <20220406082216.11206-1-jaewon02.kim@samsung.com>
- <CGME20220406081823epcas2p2f7afa27e2402c4fc02c9bee5972bed4f@epcas2p2.samsung.com>
- <20220406082216.11206-2-jaewon02.kim@samsung.com>
+        b=g8Oqp0wSAhnciHM0lfhuzwuROBlAV0QXRuF062IwHGhpgOFIKfLzrVHCccbzRkOin
+         7R0C0T2xEWGUUREEo79Ws2luDtk97Bcv5Ix1hjIqwDgbv7+de+7BD6E+WqzDBDPNRe
+         WLEMFqAz1mSdFu+lYXB/7w2enU5on5KfevctBaZCzti1J+5FSBMla8KL9U+coMTrDc
+         PT9TDJs3mvxU1JWtZW7ZFa0n0gCUnxc2cb75v7MSxLS7xP52BBXPpbMrZorpTWBtNy
+         bV7obvFWjwnCmzqkA00ARtjNoz8YawBqMbRpjx+OerzeqhQ4pFZPyamnWaUQCXhzGN
+         Efl3Qn+Ia+nGA==
+Date:   Wed, 6 Apr 2022 09:13:10 +0800
+From:   Shawn Guo <shawnguo@kernel.org>
+To:     Oleksij Rempel <o.rempel@pengutronix.de>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>
+Cc:     =?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Ray Jui <rjui@broadcom.com>, Rob Herring <robh+dt@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Scott Branden <sbranden@broadcom.com>,
+        Tony Lindgren <tony@atomide.com>, kernel@pengutronix.de,
+        bcm-kernel-feedback-list@broadcom.com, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v5 9/9] arm64: dts: imx8mm-kontron: fix ethernet node name
+Message-ID: <20220406011310.GC129381@dragon>
+References: <20220216074927.3619425-1-o.rempel@pengutronix.de>
+ <20220216074927.3619425-10-o.rempel@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220406082216.11206-2-jaewon02.kim@samsung.com>
+In-Reply-To: <20220216074927.3619425-10-o.rempel@pengutronix.de>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -59,26 +70,41 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Apr 06, 2022 at 05:22:16PM +0900, Jaewon Kim wrote:
-> The console_write and IRQ handler can run concurrently.
-> Problems may occurs console_write is continuously executed while
-> the IRQ handler is running.
++ Frieder Schrempf who is the board owner.
+
+On Wed, Feb 16, 2022 at 08:49:27AM +0100, Oleksij Rempel wrote:
+> The node name of Ethernet controller should be "ethernet" instead of
+> "usbether" as required by Ethernet controller devicetree schema:
+>  Documentation/devicetree/bindings/net/ethernet-controller.yaml
 > 
-> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+> This patch can potentially affect boot loaders patching against full
+> node path instead of using device aliases.
+
+Frieder,
+
+Are you okay with that?
+
+Shawn
+
+> 
+> Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 > ---
->  drivers/tty/serial/samsung_tty.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>  arch/arm64/boot/dts/freescale/imx8mm-kontron-n801x-s.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
-> index e1585fbae909..9db479d728b5 100644
-> --- a/drivers/tty/serial/samsung_tty.c
-> +++ b/drivers/tty/serial/samsung_tty.c
-> @@ -2480,12 +2480,24 @@ s3c24xx_serial_console_write(struct console *co, const char *s,
->  			     unsigned int count)
->  {
->  	unsigned int ucon = rd_regl(cons_uart, S3C2410_UCON);
-> +	unsigned long flags;
-> +	bool locked = 1;
-
-"1" is not a boolean :)
-
+> diff --git a/arch/arm64/boot/dts/freescale/imx8mm-kontron-n801x-s.dts b/arch/arm64/boot/dts/freescale/imx8mm-kontron-n801x-s.dts
+> index d40caf14ac4a..23be1ec538ba 100644
+> --- a/arch/arm64/boot/dts/freescale/imx8mm-kontron-n801x-s.dts
+> +++ b/arch/arm64/boot/dts/freescale/imx8mm-kontron-n801x-s.dts
+> @@ -182,7 +182,7 @@ usb1@1 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> -		usbnet: usbether@1 {
+> +		usbnet: ethernet@1 {
+>  			compatible = "usb424,ec00";
+>  			reg = <1>;
+>  			local-mac-address = [ 00 00 00 00 00 00 ];
+> -- 
+> 2.30.2
+> 
