@@ -2,207 +2,183 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1A5C4F7919
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Apr 2022 10:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF5454F7931
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Apr 2022 10:12:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231636AbiDGIJx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 7 Apr 2022 04:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49132 "EHLO
+        id S232801AbiDGIOd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 7 Apr 2022 04:14:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242996AbiDGIIE (ORCPT
+        with ESMTP id S243135AbiDGIMw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 7 Apr 2022 04:08:04 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CC21AEC86
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Apr 2022 01:05:50 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id p15so9135392ejc.7
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 07 Apr 2022 01:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4mBqmv7n4vaPJNzqJP9XRBObc2z1tM4karynGs0Phtk=;
-        b=Qq1qfnd9npA9nHTudyH/BT6S+kcCLVHNf9FrbefprUkxea94X8hHKsnDNg+5ccEGxg
-         r87XTfa5dzAOXyeJTgAkuMot3slOlmPogMwQ8ucdoxREihf/skk2LM/xagYN39q3PdRf
-         xBbsjsQsh5y4SbVMM59UZ4mUCez68EVSWLHdq50/ZCHxPZb32E21a4WnjkPJG2VwSd/s
-         HVI6IEgv2O7gO+NAkdITQg9KnvdviEUjAMCF9rnluidnZIwPSBSTPlbvMllHW9oBbxfD
-         fQHxbmFsSaxJ3f64QMIHsEpnJsN+s/IN5/MUdLDcT3Dn3QzfAgwadsnppVAHALW1JUnY
-         Vtew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4mBqmv7n4vaPJNzqJP9XRBObc2z1tM4karynGs0Phtk=;
-        b=wSyiP72TAFuGnoM04Ujzh+KzQRx//mzLZKZGJ8pPPR+FLfZ/gp3zyjUKq4G5R7JAz5
-         LJGfsh0hY3OXzVU9cSNFVtWlpsVzZFJkgJTkLAUNwuDJshgIkqUtpLrttlKMZ/g0zwxm
-         vbyRHH6qvlBBVY8tJyM+0VDyZxf3KsBxYj8nMjl73xtMUqxyqricSFHKENRsbomwRrtA
-         vDEj4/f2/d5ZtmIiYeyylp+Nj3BG44xhCVv01M85fhA5GCSKd7wEPVYKdgng90NwcMFu
-         l9fMCeCaZJY1RZuQB1gCKiVa+dut2QNJRxqBtQt5R1T/R7h9T7Q3Og8C6B/vHgOR5TJA
-         8kwg==
-X-Gm-Message-State: AOAM532xQS6gAg//NqXdNuw92zu56Wf+JB+dpi4O03sn1H2DcCuD+jri
-        eDvDI8MR8wQr5J56vkJPpsARsA==
-X-Google-Smtp-Source: ABdhPJyHdAGSEzniLyxDIIzfiDZCPSJ8ph+g9N9poqt0EGINfDqa0e4lfi/998p+LVKaG22T2l1KCA==
-X-Received: by 2002:a17:907:7255:b0:6e7:e853:73b8 with SMTP id ds21-20020a170907725500b006e7e85373b8mr12655082ejc.172.1649318748546;
-        Thu, 07 Apr 2022 01:05:48 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id m14-20020a056402510e00b0041d0c0942adsm217575edd.52.2022.04.07.01.05.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 01:05:48 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
-        arm@kernel.org, soc@kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Thu, 7 Apr 2022 04:12:52 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2BD1C6EEC;
+        Thu,  7 Apr 2022 01:09:56 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id BF6823200F76;
+        Thu,  7 Apr 2022 04:09:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 07 Apr 2022 04:09:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; bh=33I+fZ1kqaoH1BTmydgzC4TuSwCoEES+/40hDO
+        mxd6c=; b=wlfLL322Q/m+7Dc+oUh60UhRP6CG4CRlOafKIjARDz0Lf/ka7XZe1A
+        BVDS1s65yFa9gs4u+xkRUCiF4ipttrg5RDUvBHY0NbbhDmDR4rqz82Z2YyhKKv38
+        D6YQbaQOftGUelmweA1Dveiwwy9lvL6QJMJ1GNyRvAr72eJ9UvD3vak3ipavON2d
+        CoramREFIbZEA9l3IGD/3iL+iflPq1eictxTIlFZS+/sgNffzotLvmm6z+1QzGOd
+        BVtOMWZdFKYDPRsu3Nkn5JMjwjuuukie3x/tSd/TJ17tlYQJsrZfU7eEk4HSVtTW
+        nVjnhKf+MtrXi/HF65+/pa7n9NU+jtNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=33I+fZ1kqaoH1BTmy
+        dgzC4TuSwCoEES+/40hDOmxd6c=; b=WNED18hVmvs8VodQ1dA8Wrx7zpjjsURG7
+        Y8FG8T4TFlhgWLrggXLD0JzMRjU/CfHzY4obC0ZDG9Xtz+tiakrxgwyGz7rYN/zY
+        f8AtLW/9rHh9+7M0wMHgsi3zAfqt0/espve3Zoa3mIU4g3rSepx3iDvXv7itGHZ/
+        u/mp41FyTSwgQivWY3FGH6+/PC/KxuW/4j3+Wpvx9rp08sdZN/dVQkKbabrJsXpk
+        xLcR88gK7eqCaXRt+BXoPqLlRAIeg3ShBGn2jovDhapVjH3Tr60JwLC5PLG5XFlR
+        Hou5v+KthDwZLzloh/AlILdCg8FnV9hx7bChXwlRMxJ7pdlmoUQ6w==
+X-ME-Sender: <xms:SJxOYkBij5BzsNS1iZikoUvRuTKudwJ0oqE0C0npwvZ8ckOinOFiwQ>
+    <xme:SJxOYmhxSLqd9qCRCKLpggC4VG459vLMOlPm-8kqfvtLygeNuFz2nnfYoEy1EItKz
+    3IbLPFPx8Reaa9G-WY>
+X-ME-Received: <xmr:SJxOYnkR_BloLAIY7F6naLoS9ZuAte3__vp8zCfXV44TEV4DFbt2DJ3P8sQkgsfHQkG2cDGkuu2wgy_Kh67sWrTcZG4f2AYy1wU2Mz0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudejkecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihimhgvucft
+    ihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrghtthgvrh
+    hnpeevgeduteektefhtefggfdtkeekgfehhffffeegudelheegheeiueevfeegvdeigeen
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:SJxOYqySddZreOL1tT-r60OiXxYUSAIjfd-lqtiIBnbtcqlmES6doA>
+    <xmx:SJxOYpS_qYyYHXILNRfzIEo_QHaSYW5q11p2VJeTcGsxZFSglCJYCQ>
+    <xmx:SJxOYlYmvNu0uYvVdIOeCY5lXg8IGtu-pe6gyX8odZqTJj7-YJ0RdA>
+    <xmx:SZxOYm-2BHK9D1fls2FCo9uXxwZ4kt3D3113KHle9CpJCK4bEuY2jQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 7 Apr 2022 04:09:44 -0400 (EDT)
+Date:   Thu, 7 Apr 2022 10:09:43 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc:     Tony Lindgren <tony@atomide.com>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [GIT PULL] ARM: samsung: Fixes for v5.18 (current cycle)
-Date:   Thu,  7 Apr 2022 10:05:45 +0200
-Message-Id: <20220407080545.112290-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: Re: (EXT) Re: (EXT) Re: (EXT) Re: (EXT) Re: (EXT) Re: (EXT) Re:
+ [PATCH v2 3/3] clk: Drop the rate range on clk_put
+Message-ID: <20220407080943.o5qpnw5trtqwqkmq@houat>
+References: <20220325161144.1901695-1-maxime@cerno.tech>
+ <4391300.LvFx2qVVIh@steina-w>
+ <20220404072712.bbsbkq3cpyx4xuzy@houat>
+ <12990313.uLZWGnKmhe@steina-w>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zy42mrjvu2jsbpn4"
+Content-Disposition: inline
+In-Reply-To: <12990313.uLZWGnKmhe@steina-w>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-Hi,
+--zy42mrjvu2jsbpn4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For the v5.18, please.
+Hi Alexander,
 
-Best regards,
-Krzysztof
+On Mon, Apr 04, 2022 at 12:54:02PM +0200, Alexander Stein wrote:
+> Am Montag, 4. April 2022, 09:27:12 CEST schrieb Maxime Ripard:
+> > On Mon, Apr 04, 2022 at 09:06:42AM +0200, Alexander Stein wrote:
+> > > Here is the requested output:
+> > > ---
+> > > $ ./scripts/faddr2line build_arm64/vmlinux
+> > > 'clk_mux_determine_rate_flags+0x33c/0x380'
+> > > clk_mux_determine_rate_flags+0x33c/0x380:
+> > > clk_mux_determine_rate_flags at drivers/clk/clk.c:627
+> > > ---
+> > > From a first look it seems that 'best_parent' is just a NULL-pointer =
+here.
+> > > With this small fix
+> > > --->8---
+> > > diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> > > index 071857ef381a..45e081330fac 100644
+> > > --- a/drivers/clk/clk.c
+> > > +++ b/drivers/clk/clk.c
+> > > @@ -626,7 +626,7 @@ int clk_mux_determine_rate_flags(struct clk_hw *h=
+w,
+> > >=20
+> > >         pr_crit("%s: Best parent %s (%lu)\n",
+> > >        =20
+> > >                 __func__,
+> > >=20
+> > > -               best_parent->name,
+> > > +               best_parent? best_parent->name : "unknown",
+> > >=20
+> > >                 best);
+> > >        =20
+> > >         return 0;
+> > >=20
+> > > --->8---
+> > >=20
+> > > The boot eventually get stuck, but at a later point.Which is probably=
+ why
+> > > your analysis found nothing strange. Due to the size of the output I =
+put
+> > > it on a gist on github [1]. Please note that this is still based on a
+> > > next-20220331 based tree without the revert.
+> >=20
+> > I've looked into it over the weekend, and ran qemu on an imx6 to try to
+> > see if it was any similar
+> >=20
+> > I believe the issue comes from the fact that the core will forward rate
+> > requests structure to the parent clock as is, and if the parent clock
+> > changes the parent it wants, we end up trying to use that parent in the
+> > initial clock which doesn't work really well.
+> >=20
+> > I've fixed it in my branch here:
+> > https://github.com/mripard/linux/commits/rpi/clk-improvements-more-fixes
+>=20
+> Thanks for providing another patchset. Unfortunately, my board hangs stil=
+l at=20
+> the same location. For reference I put a branch based on next-20220401 on=
+ [1].
+> Reverting still does the jobs, a branch is shown on [2]
+>=20
+> next-20220404 has the offending patch already reverted, so this should wo=
+rk=20
+> again, I did not test it on that base on purpose.
 
+Could you give it another try with the branch I pushed today?
 
-The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
+I've fixed some issues for exynos4 that could explain why it doesn't
+boot on imx8 as well.
 
-  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
+Maxime
 
-are available in the Git repository at:
+--zy42mrjvu2jsbpn4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-fixes-5.18
+-----BEGIN PGP SIGNATURE-----
 
-for you to fetch changes up to 1a9f338f9cf96f8338d5592dee5fce222929e4f7:
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYk6cRwAKCRDj7w1vZxhR
+xfeHAQDF+E9uE9KQ6zBENb2dwCqwLzqtt7ovlhch8oNXP4M3TwD/flUsKr4kQA1o
+sOntot2+Gb41KdEDVW4XNQmC2OJUHgo=
+=MxCM
+-----END PGP SIGNATURE-----
 
-  MAINTAINERS: update Krzysztof Kozlowski's email to Linaro (2022-04-04 15:43:20 +0200)
-
-----------------------------------------------------------------
-Samsung fixes for v5.18
-
-Update Krzysztof Kozlowski's email address in multiple maintainer
-entries.  The old one @canonical.com bounces already.
-
-----------------------------------------------------------------
-Krzysztof Kozlowski (2):
-      dt-bindings: update Krzysztof Kozlowski's email
-      MAINTAINERS: update Krzysztof Kozlowski's email to Linaro
-
- .../bindings/clock/samsung,exynos-audss-clock.yaml |  2 +-
- .../bindings/clock/samsung,exynos-clock.yaml       |  2 +-
- .../bindings/clock/samsung,exynos-ext-clock.yaml   |  2 +-
- .../clock/samsung,exynos4412-isp-clock.yaml        |  2 +-
- .../bindings/clock/samsung,exynos5260-clock.yaml   |  2 +-
- .../bindings/clock/samsung,exynos5410-clock.yaml   |  2 +-
- .../bindings/clock/samsung,exynos5433-clock.yaml   |  2 +-
- .../bindings/clock/samsung,exynos7-clock.yaml      |  2 +-
- .../bindings/clock/samsung,exynos7885-clock.yaml   |  2 +-
- .../bindings/clock/samsung,exynos850-clock.yaml    |  2 +-
- .../devicetree/bindings/clock/samsung,s2mps11.yaml |  2 +-
- .../clock/samsung,s5pv210-audss-clock.yaml         |  2 +-
- .../bindings/clock/samsung,s5pv210-clock.yaml      |  2 +-
- .../devfreq/event/samsung,exynos-nocp.yaml         |  2 +-
- .../devfreq/event/samsung,exynos-ppmu.yaml         |  2 +-
- .../display/samsung/samsung,exynos-hdmi-ddc.yaml   |  2 +-
- .../display/samsung/samsung,exynos-hdmi.yaml       |  2 +-
- .../display/samsung/samsung,exynos-mixer.yaml      |  2 +-
- .../display/samsung/samsung,exynos5433-decon.yaml  |  2 +-
- .../display/samsung/samsung,exynos5433-mic.yaml    |  2 +-
- .../display/samsung/samsung,exynos7-decon.yaml     |  2 +-
- .../bindings/display/samsung/samsung,fimd.yaml     |  2 +-
- .../devicetree/bindings/extcon/maxim,max77843.yaml |  2 +-
- .../devicetree/bindings/hwmon/lltc,ltc4151.yaml    |  2 +-
- .../bindings/hwmon/microchip,mcp3021.yaml          |  2 +-
- .../devicetree/bindings/hwmon/sensirion,sht15.yaml |  2 +-
- .../devicetree/bindings/hwmon/ti,tmp102.yaml       |  2 +-
- .../devicetree/bindings/hwmon/ti,tmp108.yaml       |  2 +-
- .../devicetree/bindings/i2c/i2c-exynos5.yaml       |  2 +-
- .../bindings/i2c/samsung,s3c2410-i2c.yaml          |  2 +-
- .../samsung,exynos4210-combiner.yaml               |  2 +-
- .../devicetree/bindings/leds/maxim,max77693.yaml   |  2 +-
- .../bindings/memory-controllers/brcm,dpfe-cpu.yaml |  2 +-
- .../ddr/jedec,lpddr2-timings.yaml                  |  2 +-
- .../memory-controllers/ddr/jedec,lpddr2.yaml       |  2 +-
- .../ddr/jedec,lpddr3-timings.yaml                  |  2 +-
- .../memory-controllers/ddr/jedec,lpddr3.yaml       |  2 +-
- .../marvell,mvebu-sdram-controller.yaml            |  2 +-
- .../qca,ath79-ddr-controller.yaml                  |  2 +-
- .../memory-controllers/renesas,h8300-bsc.yaml      |  2 +-
- .../memory-controllers/samsung,exynos5422-dmc.yaml |  2 +-
- .../memory-controllers/synopsys,ddrc-ecc.yaml      |  2 +-
- .../memory-controllers/ti,da8xx-ddrctl.yaml        |  2 +-
- .../devicetree/bindings/mfd/maxim,max14577.yaml    |  2 +-
- .../devicetree/bindings/mfd/maxim,max77686.yaml    |  2 +-
- .../devicetree/bindings/mfd/maxim,max77693.yaml    |  2 +-
- .../devicetree/bindings/mfd/maxim,max77802.yaml    |  2 +-
- .../devicetree/bindings/mfd/maxim,max77843.yaml    |  2 +-
- .../bindings/mfd/samsung,exynos5433-lpass.yaml     |  2 +-
- .../devicetree/bindings/mfd/samsung,s2mpa01.yaml   |  2 +-
- .../devicetree/bindings/mfd/samsung,s2mps11.yaml   |  2 +-
- .../devicetree/bindings/mfd/samsung,s5m8767.yaml   |  2 +-
- .../devicetree/bindings/net/nfc/marvell,nci.yaml   |  2 +-
- .../devicetree/bindings/net/nfc/nxp,nci.yaml       |  2 +-
- .../devicetree/bindings/net/nfc/nxp,pn532.yaml     |  2 +-
- .../devicetree/bindings/net/nfc/nxp,pn544.yaml     |  2 +-
- .../devicetree/bindings/net/nfc/st,st-nci.yaml     |  2 +-
- .../devicetree/bindings/net/nfc/st,st21nfca.yaml   |  2 +-
- .../devicetree/bindings/net/nfc/st,st95hf.yaml     |  2 +-
- .../devicetree/bindings/net/nfc/ti,trf7970a.yaml   |  2 +-
- .../bindings/phy/samsung,dp-video-phy.yaml         |  2 +-
- .../bindings/phy/samsung,exynos-hdmi-phy.yaml      |  2 +-
- .../bindings/phy/samsung,exynos5250-sata-phy.yaml  |  2 +-
- .../bindings/phy/samsung,mipi-video-phy.yaml       |  2 +-
- .../devicetree/bindings/phy/samsung,usb2-phy.yaml  |  2 +-
- .../bindings/phy/samsung,usb3-drd-phy.yaml         |  2 +-
- .../pinctrl/samsung,pinctrl-gpio-bank.yaml         |  2 +-
- .../bindings/pinctrl/samsung,pinctrl-pins-cfg.yaml |  2 +-
- .../pinctrl/samsung,pinctrl-wakeup-interrupt.yaml  |  2 +-
- .../bindings/pinctrl/samsung,pinctrl.yaml          |  2 +-
- .../bindings/power/supply/maxim,max14577.yaml      |  2 +-
- .../bindings/power/supply/maxim,max77693.yaml      |  2 +-
- .../bindings/regulator/maxim,max14577.yaml         |  2 +-
- .../bindings/regulator/maxim,max77686.yaml         |  2 +-
- .../bindings/regulator/maxim,max77693.yaml         |  2 +-
- .../bindings/regulator/maxim,max77802.yaml         |  2 +-
- .../bindings/regulator/maxim,max77843.yaml         |  2 +-
- .../bindings/regulator/maxim,max8952.yaml          |  2 +-
- .../bindings/regulator/maxim,max8973.yaml          |  2 +-
- .../bindings/regulator/maxim,max8997.yaml          |  2 +-
- .../bindings/regulator/samsung,s2mpa01.yaml        |  2 +-
- .../bindings/regulator/samsung,s2mps11.yaml        |  2 +-
- .../bindings/regulator/samsung,s2mps13.yaml        |  2 +-
- .../bindings/regulator/samsung,s2mps14.yaml        |  2 +-
- .../bindings/regulator/samsung,s2mps15.yaml        |  2 +-
- .../bindings/regulator/samsung,s2mpu02.yaml        |  2 +-
- .../bindings/regulator/samsung,s5m8767.yaml        |  2 +-
- .../bindings/rng/samsung,exynos5250-trng.yaml      |  2 +-
- .../devicetree/bindings/rng/timeriomem_rng.yaml    |  2 +-
- .../bindings/soc/samsung/exynos-usi.yaml           |  2 +-
- .../devicetree/bindings/sound/samsung,arndale.yaml |  2 +-
- .../bindings/sound/samsung,smdk5250.yaml           |  2 +-
- .../devicetree/bindings/sound/samsung,snow.yaml    |  2 +-
- .../devicetree/bindings/sound/samsung,tm2.yaml     |  2 +-
- .../bindings/spi/samsung,spi-peripheral-props.yaml |  2 +-
- .../devicetree/bindings/spi/samsung,spi.yaml       |  2 +-
- .../bindings/thermal/samsung,exynos-thermal.yaml   |  2 +-
- .../bindings/usb/samsung,exynos-dwc3.yaml          |  2 +-
- .../bindings/usb/samsung,exynos-usb2.yaml          |  2 +-
- MAINTAINERS                                        | 36 +++++++++++-----------
- 100 files changed, 117 insertions(+), 117 deletions(-)
+--zy42mrjvu2jsbpn4--
