@@ -2,32 +2,32 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6CF4F77F1
+	by mail.lfdr.de (Postfix) with ESMTP id E88FD4F77F3
 	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Apr 2022 09:45:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242061AbiDGHqm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 7 Apr 2022 03:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59568 "EHLO
+        id S242079AbiDGHqr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 7 Apr 2022 03:46:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242071AbiDGHql (ORCPT
+        with ESMTP id S242080AbiDGHqp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 7 Apr 2022 03:46:41 -0400
+        Thu, 7 Apr 2022 03:46:45 -0400
 Received: from smtp1.axis.com (smtp1.axis.com [195.60.68.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D998A56C0;
-        Thu,  7 Apr 2022 00:44:40 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E309B201B3;
+        Thu,  7 Apr 2022 00:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=axis.com; q=dns/txt; s=axis-central1; t=1649317481;
-  x=1680853481;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=aubwDq9tMnlBoW39EfmW7FC5ktvDw7fUudEWZrJpI4Y=;
-  b=MjpeZo21laPFd/Gt+dpIBp6NNSmRQm6vGG58NBhzagj/tP11s6XVnzOu
-   akzI+GTUk061zoobOJD3TtqnvbXnCxluG7BMvDiXoRf9cWtHGADPeUFQe
-   kTHWO92VYdghadWR005LyRM5ndKtGlHqKdAD8uIRglc+tbJLsYBTLWHGE
-   bhZB7oXhElMHF8QBMw9teWmjjp1H/KYQUtJV1PkmFuG2FeHwKSzjA7yAR
-   c4Ew+4kjlMRGFI2M38hiSVP/ZBfA7hnCVFdGUSelOmwZmOUKhIwzQY/tX
-   qGXB9zd9b2NjTKkgK1/YnC/QSjD6LW6aNmIxEQ20s7DaZ2wThYqi7VeKS
-   Q==;
+  d=axis.com; q=dns/txt; s=axis-central1; t=1649317485;
+  x=1680853485;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=vA3kixnFjao/9/fHNVBKrG7js6zXxb2/Djlg20H3FvE=;
+  b=cXt2dZZiZX2S9nCWfCk5JC/4ZWuNU2Hohwnvt6+nNwMHZgpy1/jutTYC
+   s/I4VPntNzz2ZhjhDEwz8VdT7E3TIzscwwgLFaf00xVnPmQN2YmiOn27l
+   lm6opZufaG6KU4FPGDJG0Q2GGaDtw8IVFPZnkEvXQTWKSipPnuzje0Mqr
+   7oYGtF1wh3W6CtzoSsfm0HyYCDuerg4bwIj+1Fi5Py/ceOi/1Ww8aNhmq
+   HmoWtCAv+b4iaBU1ZWBzq1YMrsmbnV+qeL0/QpeBhCXEqa0StVlgzN2HP
+   1+2VwsC4SkD/BOlCSLoIYXV2VKx83fNKgxi1xgxXomDUWfu2TyqhGK+ao
+   A==;
 From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
 To:     <krzk@kernel.org>, <tglx@linutronix.de>,
         <daniel.lezcano@linaro.org>
@@ -37,10 +37,12 @@ CC:     <kernel@axis.com>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-samsung-soc@vger.kernel.org>, <alim.akhtar@samsung.com>,
         <devicetree@vger.kernel.org>, <robh+dt@kernel.org>
-Subject: [PATCH v3 0/4] clocksource: Add MCT support for ARTPEC-8
-Date:   Thu, 7 Apr 2022 09:44:28 +0200
-Message-ID: <20220407074432.424578-1-vincent.whitchurch@axis.com>
+Subject: [PATCH v3 1/4] dt-bindings: timer: exynos4210-mct: Add ARTPEC-8 MCT support
+Date:   Thu, 7 Apr 2022 09:44:29 +0200
+Message-ID: <20220407074432.424578-2-vincent.whitchurch@axis.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220407074432.424578-1-vincent.whitchurch@axis.com>
+References: <20220407074432.424578-1-vincent.whitchurch@axis.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -54,44 +56,105 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This series add supports for the timer block on ARTPEC-8.  The block itself is
-fully compatible with the existing exynos4210-mct driver.  The ARTPEC-8 SoC
-uses this block from two separate processors running Linux (AMP) so it needs
-some extra code to allow this sharing.
+The ARTPEC-8 has an MCT with 4 global and 8 local timer interrupts.
 
-v3:
-- Split and rename devicetree properties
-- Add vendor prefix to devicetree properties
-- Change descriptions of properties to hopefully describe hardware
-- Remove addition of more global variables to the driver
+The SoC has a quad-core Cortex-A53 and a single-core Cortex-A5 which
+share one MCT with one global and eight local timers.  The Cortex-A53
+and Cortex-A5 do not have cache-coherency between them, and therefore
+run two separate kernels.
 
-v2:
-- The series is now rebased on top of Krzysztof's patch "dt-bindings: timer:
-  exynos4210-mct: describe known hardware and its interrupts".
-- Combine the Kconfig change and the local timer change into one series
-- Use devicetree property rather than module parameter for the local timer handling
-- Add specific compatible with the correct number of interrupts.
+The Cortex-A53 boots first and starts the global free-running counter
+and also registers a clock events device using the global timer.  (This
+global timer clock events is usually replaced by arch timer clock events
+for each of the cores.)
 
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
+When the A5 boots (via the A53), it should not use the global timer
+interrupts or write to the global timer registers.  This is because even
+if there are four global comparators, the control bits for all four are
+in the same registers, and we would need to synchronize between the
+cpus.  Instead, the global timer FRC (already started by the A53) should
+be used as the clock source, and one of the local timers which are not
+used by the A53 can be used for clock events on the A5.
 
-Cc: linux-samsung-soc@vger.kernel.org
-Cc: alim.akhtar@samsung.com
+To support this hardware, add a compatible for the MCT as well as two
+new properties to describe the hardware-mandated sharing of the FRC and
+dedicating local timers to specific processors.
 
-Cc: devicetree@vger.kernel.org
-Cc: robh+dt@kernel.org
+Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+---
 
-Vincent Whitchurch (4):
-  dt-bindings: timer: exynos4210-mct: Add ARTPEC-8 MCT support
-  clocksource/drivers/exynos_mct: Support frc-shared property
-  clocksource/drivers/exynos_mct: Support local-timers property
-  clocksource/drivers/exynos_mct: Enable building on ARTPEC
+Notes:
+    v3:
+    - Add all required bindings for ARTPEC-8 in one patch
+    - Rename and split local-timer-only to samsung,local-timers and
+      samsung,frc-shared
+    - Restrict above properties to the ARTPEC-8 compatible.
+    - Rewrite descriptions of properties to hopefully describe hardware.
+    
+    v2:
+    - Use devicetree property instead of module parameter.
 
- .../timer/samsung,exynos4210-mct.yaml         | 26 +++++++
- drivers/clocksource/Kconfig                   |  2 +-
- drivers/clocksource/exynos_mct.c              | 72 ++++++++++++++++---
- 3 files changed, 90 insertions(+), 10 deletions(-)
+ .../timer/samsung,exynos4210-mct.yaml         | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
+diff --git a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+index 1584944c7ac4..bcfc849ca087 100644
+--- a/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
++++ b/Documentation/devicetree/bindings/timer/samsung,exynos4210-mct.yaml
+@@ -25,6 +25,7 @@ properties:
+           - samsung,exynos4412-mct
+       - items:
+           - enum:
++              - axis,artpec8-mct
+               - samsung,exynos3250-mct
+               - samsung,exynos5250-mct
+               - samsung,exynos5260-mct
+@@ -46,6 +47,19 @@ properties:
+   reg:
+     maxItems: 1
+ 
++  samsung,frc-shared:
++    type: boolean
++    description: |
++      Indicates that the hardware requires that this processor share the
++      free-running counter with a different (main) processor.
++
++  samsung,local-timers:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 16
++    description: |
++      List of indices of local timers usable from this processor.
++
+   interrupts:
+     description: |
+       Interrupts should be put in specific order. This is, the local timer
+@@ -75,6 +89,17 @@ required:
+   - reg
+ 
+ allOf:
++  - if:
++      not:
++        properties:
++          compatible:
++            contains:
++              enum:
++                - axis,artpec8-mct
++    then:
++      properties:
++        samsung,local-timers: false
++        samsung,frc-shared: false
+   - if:
+       properties:
+         compatible:
+@@ -102,6 +127,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - axis,artpec8-mct
+               - samsung,exynos5260-mct
+               - samsung,exynos5420-mct
+               - samsung,exynos5433-mct
 -- 
 2.34.1
 
