@@ -2,33 +2,33 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AA3A501327
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Apr 2022 17:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B5B0501071
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Apr 2022 16:45:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240987AbiDNOn3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 14 Apr 2022 10:43:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42474 "EHLO
+        id S244942AbiDNNgt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 14 Apr 2022 09:36:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346525AbiDNN52 (ORCPT
+        with ESMTP id S1344020AbiDNNaP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 14 Apr 2022 09:57:28 -0400
+        Thu, 14 Apr 2022 09:30:15 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C46C9BBAC;
-        Thu, 14 Apr 2022 06:47:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A915B92D0B;
+        Thu, 14 Apr 2022 06:26:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CD841B8298A;
-        Thu, 14 Apr 2022 13:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1247CC385A1;
-        Thu, 14 Apr 2022 13:47:17 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6BB87B8296A;
+        Thu, 14 Apr 2022 13:26:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D2AC385A5;
+        Thu, 14 Apr 2022 13:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1649944037;
+        s=korg; t=1649942782;
         bh=ITigphVQFmh5JxYzbL8+UnueKu6Qw9t5JBKsneFXQbc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=yyvMDR2zITE4fE/P5Ho4nVwQB9X8pUZIt2Bl61wFbY5pUEBwqibjHDCkNBRqzGLD8
-         aesrzvZ4eFjOqKBKd924aFV678CEUVza755QwFvluRfP4WWjPYDADai1ZQikuoCX14
-         84MyJbg4WvinX5PVIFPSwz6REi4xX3DiDu1Nunvk=
+        b=IEUZWcYdRv2X+dk3Ln/DVktNtYUesTcfCuQ9OVQGWdp+P09fuLa2VnpKmfafqOBwh
+         PFIzjUs1aib2GZhbc+2rFved81QgTXonlxMydV3ykubRrGF2deiAOfvgAAqHGyioGv
+         Sby0L3EdLHR+Q2nfcnJ4nOGz7ikBHSfxLIaIF+WM=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,12 +40,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-samsung-soc@vger.kernel.org, patches@armlinux.org.uk,
         "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 371/475] ARM: 9187/1: JIVE: fix return value of __setup handler
-Date:   Thu, 14 Apr 2022 15:12:36 +0200
-Message-Id: <20220414110905.459586471@linuxfoundation.org>
+Subject: [PATCH 4.19 259/338] ARM: 9187/1: JIVE: fix return value of __setup handler
+Date:   Thu, 14 Apr 2022 15:12:42 +0200
+Message-Id: <20220414110846.261453214@linuxfoundation.org>
 X-Mailer: git-send-email 2.35.2
-In-Reply-To: <20220414110855.141582785@linuxfoundation.org>
-References: <20220414110855.141582785@linuxfoundation.org>
+In-Reply-To: <20220414110838.883074566@linuxfoundation.org>
+References: <20220414110838.883074566@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
