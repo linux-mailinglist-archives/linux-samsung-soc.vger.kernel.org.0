@@ -2,107 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4714551AC82
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  4 May 2022 20:12:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC57251B433
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 May 2022 02:09:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354427AbiEDSQa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 May 2022 14:16:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34750 "EHLO
+        id S231693AbiEEAGM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 4 May 2022 20:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354674AbiEDSQR (ORCPT
+        with ESMTP id S1383559AbiEDX5t (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 May 2022 14:16:17 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2026FBF4D;
-        Wed,  4 May 2022 10:35:21 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id i62so1705286pgd.6;
-        Wed, 04 May 2022 10:35:21 -0700 (PDT)
+        Wed, 4 May 2022 19:57:49 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA089517F3
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 May 2022 16:54:10 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id c5-20020a9d75c5000000b00605ff3b9997so1966263otl.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 04 May 2022 16:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MNJT9YzuHEAZEheWVsgmUZA8nQvMITugjqtFZYM9yzI=;
-        b=qcvs0NN+UVLDdqTT/NYRME6WjfWaBW9uy3X41u9k0CfY18BT3f5gCWMNZE4/q4a85Z
-         sKi3aujMmD7fDjjzcsmNqQkcfVEGlJWNRnnplaI6dRB5RvFnZ6J7JoLzizRSPp5CTYec
-         XPDynShDMimsPffdW5eCCobD4HRmGqnQBN9yF1JJgBehshm0NOt+H7JqsrUcKCQGnXgJ
-         P4077BcV0nsL+gDac5n0DRVw7GbFd1uQWaAqe59BUOxtYvt7HFWhyhJ1XLSvRpUxdzs0
-         Uh8+0uytNj71iSqMzLuRpJE8DHD239+uAMRIKhZ0glEQY+BRRPcQtOs78SSYTALpv8c6
-         gsIA==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
+        b=Dn1MT8x7p4Rbn+pctwVkt7IgIdUxT0LRLjox/JaF9ttsZ2N8sUUglHFRxQa3sl75aK
+         h1U1JpCoOjPff8rV+LL0edQuBh+YvYlTbZ4zx127Qa80qMcS49J0d2nS2s7mVVadwp/M
+         vGp6wV8qQhR9tMRiQjyWHIJslgvG4HigF7p24aLxixJ1l99K68kLikab9Y0HgtSpkDYW
+         0+riuhXlj9dAnGs04evyYz4sFXKtm0FlJKiBI2Dtbo7ebvKr6E7XJkxgxzCXhReMwL1D
+         yv9OUeo9KjH+/RIlVXefhsYivAQRdlwo604eWoXrrvRFVxcSgXwgPis+UtVhyLpBWx3z
+         WyWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MNJT9YzuHEAZEheWVsgmUZA8nQvMITugjqtFZYM9yzI=;
-        b=8BVFhmnoslpqBO5xrCvkZga6pdOf+OalP7O2xZ6WkNtc0eyy/FbNY62k5yqKY2JDC4
-         KYHOAKjIsHkUrbpq3Ta2d9hDW0kIINL27DEDNpfbOtw5LfBfEhkaCXNKFaH3AIMrDC/n
-         FKstlv68dz46Jf5jU3yjUlWcDomdSONFQcb68ID616xF6OMfwukyS3cDXtM4dcGQybmv
-         2yFynPAif2tltshuBH7jBMuG+1+SADn3picXCp1G/iQeaxYpkbWAmnjgn3a0vNemVLxP
-         97XPv/VJq1whjB4jnWnHlHfrKOI542yGtCBeox0p7IkUznPBZJoA7G4lEMgsqjA4d7Zz
-         vldg==
-X-Gm-Message-State: AOAM530MR5o1T5bilPrnh+a6CTB0c04iX/wgTcROrQPod099YnVpHkPZ
-        OF/xiL2+ujN4VRjc7HwiZM5a75+UiWs=
-X-Google-Smtp-Source: ABdhPJwcUisFPL9uPWplV1T40GpRsHfI54F/UB7Jj6vFaHRLvxruWDuWodqfjBrwJ+3g+vkgrpzIvg==
-X-Received: by 2002:a62:7ccc:0:b0:510:4e07:79f3 with SMTP id x195-20020a627ccc000000b005104e0779f3mr2050271pfc.10.1651685721045;
-        Wed, 04 May 2022 10:35:21 -0700 (PDT)
-Received: from [172.30.1.41] ([14.32.163.5])
-        by smtp.gmail.com with ESMTPSA id n9-20020a170903110900b0015e8d4eb1c1sm8616219plh.11.2022.05.04.10.35.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 May 2022 10:35:20 -0700 (PDT)
-Message-ID: <df273a5d-793d-0069-2df6-77b05050b2d2@gmail.com>
-Date:   Thu, 5 May 2022 02:35:15 +0900
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
+        b=2Fogp9DQH0Xnz6kAW+rKc7gvizkA93r2+ZHksZMuylM9veU+5yIhYYwvgxRVQvKlTx
+         ENbXTymtgQ7p3jkhuE7KjdYflfq7xfjOyXN86mCuum1OGAdY3H9pDsOlaPhcIiNz/Bsj
+         vJwq0R9JCUiCsb1VRpmsUvzGx+t+qVkiB7ypaRuYSeG6mMlnWLY8K5zUJNDhIxZAm3Wv
+         LARqcpPv1kxzfp/zmHPgdn6UVngmA1TOLX3c3dZmJXox0HOOD9aQzNlvlHJbUV/dYtnV
+         92ofBPkiViU2jKJueXEepW50DgQPpwvBKsg/y3IAda2R7cVtKIqPciJrpthn5+Cf1EPn
+         70aw==
+X-Gm-Message-State: AOAM530tsNizM1rQOwCkJ7PZJEdlQOjMWFhnO5HbNI8a8HHu8D9VKtky
+        lNQ3Tl69udG3YAsTtxMakpvxolaPd4X3RFbDjriWvvAvKk0cZA==
+X-Google-Smtp-Source: ABdhPJyXbFHNtxfp8+qt+M9kuv/iG7XfFeFFPd7I4/fmpdxuycMtmf6dIJw5ghtZAT2CwgvAVE/kUl0HxsirxLIU8v0=
+X-Received: by 2002:a9d:6b16:0:b0:605:e0eb:d3d6 with SMTP id
+ g22-20020a9d6b16000000b00605e0ebd3d6mr8263208otp.213.1651708440302; Wed, 04
+ May 2022 16:54:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v3 02/12] dt-bindings: clock: add Exynos Auto v9 SoC CMU
- bindings
-Content-Language: en-US
-To:     Chanho Park <chanho61.park@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Sam Protsenko <semen.protsenko@linaro.org>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-References: <20220504075154.58819-1-chanho61.park@samsung.com>
- <CGME20220504075003epcas2p17f37265b522bb0c26dbdd4ebeec92ab9@epcas2p1.samsung.com>
- <20220504075154.58819-3-chanho61.park@samsung.com>
-From:   Chanwoo Choi <cwchoi00@gmail.com>
-In-Reply-To: <20220504075154.58819-3-chanho61.park@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:59
+ -0700 (PDT)
+Reply-To: ortegainvestmmentforrealinvest@gmail.com
+From:   Info <joybhector64@gmail.com>
+Date:   Thu, 5 May 2022 05:23:59 +0530
+Message-ID: <CAP7KLYgH9LcKHS-KgR0zObHAgC6Fr3D+dOJSbDKurTc_12+iFw@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:343 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [joybhector64[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [joybhector64[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 22. 5. 4. 16:51, Chanho Park wrote:
-> Add dt-schema for Exynos Auto v9 SoC clock controller.
-> 
-> Signed-off-by: Chanho Park <chanho61.park@samsung.com>
-> ---
->   .../clock/samsung,exynosautov9-clock.yaml     | 219 ++++++++++++++++++
->   1 file changed, 219 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/clock/samsung,exynosautov9-clock.yaml
-> 
-
-
-(snip)
-
-Reviewed-by: Chanwoo Choi <cw00.choi@samsung.com>
-
 -- 
-Best Regards,
-Samsung Electronics
-Chanwoo Choi
+I am an investor. I came from the USA and I have many investments all
+over the world.
+
+I want you to partner with me to invest in your country I am into many
+investment such as real Estate or buying of properties i can also
+invest money in any of existing business with equity royalty or by %
+percentage so on,
+Warm regards
