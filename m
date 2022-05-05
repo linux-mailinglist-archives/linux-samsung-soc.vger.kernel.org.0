@@ -2,101 +2,102 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC57251B433
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 May 2022 02:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8311251B84D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 May 2022 08:59:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231693AbiEEAGM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 4 May 2022 20:06:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41660 "EHLO
+        id S239435AbiEEHCv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 5 May 2022 03:02:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383559AbiEDX5t (ORCPT
+        with ESMTP id S235166AbiEEHCu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 4 May 2022 19:57:49 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA089517F3
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 May 2022 16:54:10 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id c5-20020a9d75c5000000b00605ff3b9997so1966263otl.0
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 04 May 2022 16:54:10 -0700 (PDT)
+        Thu, 5 May 2022 03:02:50 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B517C377EF
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  4 May 2022 23:59:11 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id t6so4784916wra.4
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 04 May 2022 23:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=Dn1MT8x7p4Rbn+pctwVkt7IgIdUxT0LRLjox/JaF9ttsZ2N8sUUglHFRxQa3sl75aK
-         h1U1JpCoOjPff8rV+LL0edQuBh+YvYlTbZ4zx127Qa80qMcS49J0d2nS2s7mVVadwp/M
-         vGp6wV8qQhR9tMRiQjyWHIJslgvG4HigF7p24aLxixJ1l99K68kLikab9Y0HgtSpkDYW
-         0+riuhXlj9dAnGs04evyYz4sFXKtm0FlJKiBI2Dtbo7ebvKr6E7XJkxgxzCXhReMwL1D
-         yv9OUeo9KjH+/RIlVXefhsYivAQRdlwo604eWoXrrvRFVxcSgXwgPis+UtVhyLpBWx3z
-         WyWg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wd4ok3cDOHB5wDGagz2JXxx8EixvjmbVG4hC2YrmyoU=;
+        b=OqTwDMtirNy2WePdt2AVOU1Rs9zpKeayaMF6f6WZtE/giQLQEGVaNHX3TqUgySrKm5
+         xKuLa4jCJ/edid6EsHM/rKHCIsAlcUh7V+3LN3lKgmiRdg4VbxA33vRQFx/UCzwF2wx2
+         aquYZfcLyD/+AY/hhrGgTr2SyId1keEFkyJC5aeBT34IA+SBp9bD0svW2ZLOBeL1geEi
+         cyOLIgncn8vhiqPwDxzd4XaeyIWmv2mdL9B6bhfacbfSN3riO0qQi3yf3QAcazwkPkZg
+         QhXXYdPeB+1LBCi43lPwQK18d9AT7RIZJuQCw9slRsW+q8Kd51Io0L9zWieltvcDyJ8Q
+         RxTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=2Fogp9DQH0Xnz6kAW+rKc7gvizkA93r2+ZHksZMuylM9veU+5yIhYYwvgxRVQvKlTx
-         ENbXTymtgQ7p3jkhuE7KjdYflfq7xfjOyXN86mCuum1OGAdY3H9pDsOlaPhcIiNz/Bsj
-         vJwq0R9JCUiCsb1VRpmsUvzGx+t+qVkiB7ypaRuYSeG6mMlnWLY8K5zUJNDhIxZAm3Wv
-         LARqcpPv1kxzfp/zmHPgdn6UVngmA1TOLX3c3dZmJXox0HOOD9aQzNlvlHJbUV/dYtnV
-         92ofBPkiViU2jKJueXEepW50DgQPpwvBKsg/y3IAda2R7cVtKIqPciJrpthn5+Cf1EPn
-         70aw==
-X-Gm-Message-State: AOAM530tsNizM1rQOwCkJ7PZJEdlQOjMWFhnO5HbNI8a8HHu8D9VKtky
-        lNQ3Tl69udG3YAsTtxMakpvxolaPd4X3RFbDjriWvvAvKk0cZA==
-X-Google-Smtp-Source: ABdhPJyXbFHNtxfp8+qt+M9kuv/iG7XfFeFFPd7I4/fmpdxuycMtmf6dIJw5ghtZAT2CwgvAVE/kUl0HxsirxLIU8v0=
-X-Received: by 2002:a9d:6b16:0:b0:605:e0eb:d3d6 with SMTP id
- g22-20020a9d6b16000000b00605e0ebd3d6mr8263208otp.213.1651708440302; Wed, 04
- May 2022 16:54:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wd4ok3cDOHB5wDGagz2JXxx8EixvjmbVG4hC2YrmyoU=;
+        b=5DJq+abz99WPHmAx2eaxse2KJuRy5xbcoJE0XA6eQDwMrGCWOOCyesjW8iRxWqs/03
+         rtQBc4zkaOwKC3EWmYQoIudsoB2R2+jSrZE8EL1mewOV1zkV1RHXiG7GfI84Zf5xhHWT
+         w+5wAzExGj3WsJ+cECgWQK37z5S27hK9Wx1544GMpNBv/g+08W4rBOOYl5M1lfFMUYHl
+         NfhEaBZsT9phsiqK2klQWbe8W6n2iBT1BptccO/deALRLFJkKWt4lZyz/VkR5m852LH/
+         /QJrqvqXWLAVsvLsBcpJZkfkX0xvN6+1NL6PpMXDubJEvAuN/s5/MqJz9BtQtKPoVGdN
+         5Vrw==
+X-Gm-Message-State: AOAM533lHWi5c+reXivjxZJWdeKoOSdjN0Vtdw4GJNL1c86+54ofOvmP
+        /y6t99cmO42ux4hQI3v8MKgCdw==
+X-Google-Smtp-Source: ABdhPJx9qg616FnYA1EykYSalL6iMhfC/q9j2bUx7PEudPzvmYzF2PF5EsDDUMDx4yL2FaSotl7DHQ==
+X-Received: by 2002:a05:6000:168c:b0:20c:6072:f82a with SMTP id y12-20020a056000168c00b0020c6072f82amr14370609wrd.410.1651733950294;
+        Wed, 04 May 2022 23:59:10 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id o9-20020a5d6709000000b0020c5253d8c1sm511198wru.13.2022.05.04.23.59.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 May 2022 23:59:09 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 01/12] dt-bindings: clock: add clock binding definitions for Exynos Auto v9
+Date:   Thu,  5 May 2022 08:59:07 +0200
+Message-Id: <165173394468.29323.9947040528440118224.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220504075154.58819-2-chanho61.park@samsung.com>
+References: <20220504075154.58819-1-chanho61.park@samsung.com> <CGME20220504075003epcas2p3708d1853dae290bc42cfacd318767c8d@epcas2p3.samsung.com> <20220504075154.58819-2-chanho61.park@samsung.com>
 MIME-Version: 1.0
-Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:59
- -0700 (PDT)
-Reply-To: ortegainvestmmentforrealinvest@gmail.com
-From:   Info <joybhector64@gmail.com>
-Date:   Thu, 5 May 2022 05:23:59 +0530
-Message-ID: <CAP7KLYgH9LcKHS-KgR0zObHAgC6Fr3D+dOJSbDKurTc_12+iFw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:343 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [joybhector64[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [joybhector64[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
--- 
-I am an investor. I came from the USA and I have many investments all
-over the world.
+On Wed, 4 May 2022 16:51:43 +0900, Chanho Park wrote:
+> Add device tree clock binding definitions for below CMU blocks.
+> 
+> - CMU_TOP
+> - CMU_BUSMC
+> - CMU_CORE
+> - CMU_FYS2
+> - CMU_PERIC0 / C1
+> - CMU_PERIS
+> 
+> [...]
 
-I want you to partner with me to invest in your country I am into many
-investment such as real Estate or buying of properties i can also
-invest money in any of existing business with equity royalty or by %
-percentage so on,
-Warm regards
+Applied, thanks!
+
+[01/12] dt-bindings: clock: add clock binding definitions for Exynos Auto v9
+        commit: 680e1c8370a2ed7aff4f99ce3cebf79873d68f59
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
