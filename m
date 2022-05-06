@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B77E51D325
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 May 2022 10:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7D5751D31E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 May 2022 10:15:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383700AbiEFISb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 May 2022 04:18:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
+        id S1351853AbiEFISe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 May 2022 04:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389830AbiEFISa (ORCPT
+        with ESMTP id S1376981AbiEFISa (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
         Fri, 6 May 2022 04:18:30 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F08068313
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 May 2022 01:14:47 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id l62-20020a1c2541000000b0038e4570af2fso3904409wml.5
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 May 2022 01:14:47 -0700 (PDT)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2E067D29
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 May 2022 01:14:48 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id d5so8977985wrb.6
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 May 2022 01:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xpOcDZG3VsHKMRkqd+A+g34iqZmhtRfpCGSjJhC44/I=;
-        b=mylpU264xNwSuqHcl7TSS/pfgkflTa4CM+C1PTNplNI4s8FdOsBhLpH14M/HeTEbhi
-         DK83CbrTfTd84dHPWLP7m+ZkI/IX3g/XGZkSMECMEsjXZW3xj9qFbJ8dBICPxhAoneJM
-         7Rz9F5552e5TRXaOhNuQ+JtNTNtPJFZ/1P0rnW7N+L2JMeQo7EIhEDYM+63BHcPbhR5C
-         uzW/u9Xabsn55Z2X850E7RdPqfdQzDpjWlMLkHCl7jyZkdAK8Vb6Z2HjoyEz+1mxj+KU
-         Op4mLdD0dbOY0lK6BufdUL9I6sYj1cJ0wwp78BOPHW0+eAviXrsoNnv2m5EDF5ksMuNs
-         hfBQ==
+        bh=LPR6X1/5iNCBXtbnX66uCQIutWnYnxxfF1cQKI0F89Q=;
+        b=WkgG6WSI+10URWnnxADk2gnFNJ7bptdLwRVp9djlHAJC/eaWKg+rXuPJzFeQPcUeHl
+         SHeiu6I3qjq+3S2C3cHTMGmjMtaSjtzM6AUGz3j+6feJSWcS1V8tocQrlzRQiPUWCZPj
+         A4QMzUMgK4vgIxb6Th1x+SuKo3MpBBoYOqPE973ci0+XE2odjSfElW+xsTMCEn1MB/51
+         z3kSIDhW+Oogj9KYFayjIRwjW+sWf3slUb0V5Nhw9MGo4H4pyI8Z7PBDrtrRb2d3WMg6
+         30Ro0MpSLWlBluimv7AU1fxMvVbfFx+avJzVYX/n8Co07R48PseO7Q2FxwI4lOfupNM2
+         u8xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xpOcDZG3VsHKMRkqd+A+g34iqZmhtRfpCGSjJhC44/I=;
-        b=CB36jWdsUyxVEF92Rpo3HG4UfrBDt0cCSGrJdxbQr9X3VR4DirwD6Cjii/RZYpo4ja
-         7d8k5jA4cQaqXz0fqID1fNh4bieTk86CzGRvRUnUHe+EFic8meGwYfFG8Ve2mOIzp/AM
-         LPSHC97vWNkic8t+Jg5iQ4+tgc/jDnos9+6iR9G5dVr1Rc4xlXxVoXvnv8EC0N80G3hg
-         0kAVZNrqlI5tQppB8Ryr+gUEEzlim9njUJacxzYDI6OeH0RG7QZeVR0SkfyLXiUBJ1fW
-         ztimUnjIzLaV4F3nzT7UpRE7gK4quhSj6Yh4gEZJbU1H7HigCYXgKaqFCxW8usYNL7hT
-         TpOw==
-X-Gm-Message-State: AOAM5302zvkOclpBhtTRXPlPDcWZzVkI//k4iyMa0/O9aNDvt5pjhPIC
-        t9FuhEbD87Jzwtp7ontxsjaafQ==
-X-Google-Smtp-Source: ABdhPJwMarLKCW6zCDyx+rdB95U5y3SehGvBMfkYKv6TJHd5tJPqliYy21laG2ZaVGuCUNYuWEsNRA==
-X-Received: by 2002:a05:600c:3393:b0:394:160a:18aa with SMTP id o19-20020a05600c339300b00394160a18aamr8762137wmp.58.1651824886077;
-        Fri, 06 May 2022 01:14:46 -0700 (PDT)
+        bh=LPR6X1/5iNCBXtbnX66uCQIutWnYnxxfF1cQKI0F89Q=;
+        b=7n/0wPTzgvg+zQSaGCmbzuKG5cJ3to+ijRP2M+GhcqQFsz1TlXf9JNgYaFNVtgzYxX
+         IQnd1Q2SJU/nejoDTNfcqmZZlHo9N6oNBEJVfywV+xiRt6FJHxJZPzOAAT+G1mfs5ncj
+         XHYow4IfScWVlDmxUEfdayInyEn6c/k9kw8bJdNkXkaGBw/Y5Yeme9EUTUsTQaRK7+Js
+         FlpZvtnjhu1EyH9GTzcvR4tkImDjeSc63wXZKyvnIbbIBugQOXRLvJaTxB0Bdhkhzh1E
+         fbjtC5Ma1XpCarLHviOwQK+SpkCb+Ed94BMu13dbfwEM1IHlHUuKQ65eAHbr5pnEqSI7
+         Vu4g==
+X-Gm-Message-State: AOAM5315CmOSA3QSGsXiZ1tRx1HBC2PLQy2QdYrybrfJgdu0HOWAbpOY
+        G04JQnMd9676aOVjZUgE/1zOIg==
+X-Google-Smtp-Source: ABdhPJxCwSWKm1pKbetAWMNdn/ekJKOLq/QpcIQOJBTr93TqXwZyP5/HYHS/ZW6GosYHPQbbllOCgQ==
+X-Received: by 2002:adf:dc0e:0:b0:20c:8a3f:b523 with SMTP id t14-20020adfdc0e000000b0020c8a3fb523mr1673836wri.201.1651824887180;
+        Fri, 06 May 2022 01:14:47 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id c14-20020adffb0e000000b0020c6fa5a797sm3059657wrr.91.2022.05.06.01.14.45
+        by smtp.gmail.com with ESMTPSA id c14-20020adffb0e000000b0020c6fa5a797sm3059657wrr.91.2022.05.06.01.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 May 2022 01:14:45 -0700 (PDT)
+        Fri, 06 May 2022 01:14:46 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
         arm@kernel.org, soc@kernel.org
@@ -56,9 +56,9 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [GIT PULL 3/6] ARM: drivers: samsung: for v5.19
-Date:   Fri,  6 May 2022 10:14:35 +0200
-Message-Id: <20220506081438.149192-3-krzysztof.kozlowski@linaro.org>
+Subject: [GIT PULL 4/6] ARM: dts: samsung: pull for v5.19, part two
+Date:   Fri,  6 May 2022 10:14:36 +0200
+Message-Id: <20220506081438.149192-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220506081438.149192-1-krzysztof.kozlowski@linaro.org>
 References: <20220506081438.149192-1-krzysztof.kozlowski@linaro.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,35 +76,42 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 Hi,
 
-Actually only binding changes.
+On top of previous pull.
 
 Best regards,
 Krzysztof
 
 
-The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
+The following changes since commit 9e916fb9bc3d16066286f19fc9c51d26a6aec6bd:
 
-  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
+  ARM: dts: s5pv210: align DMA channels with dtschema (2022-04-09 18:50:05 +0200)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-drivers-5.19
+  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-dt-5.19-2
 
-for you to fetch changes up to 5fe580196dd9b7d8eb2a99629055bb4ffa00f262:
+for you to fetch changes up to d414b7a3f370d640cff544a3aa3a41abf34fd5d6:
 
-  dt-bindings: timer: exynos4210-mct: describe known hardware and its interrupts (2022-04-24 16:53:46 +0200)
-
-----------------------------------------------------------------
-Samsung SoC drivers changes for v5.19
-
-Make MCT and USI bindings stricter by describing expected interrupts
-per variant and expected child node.
+  ARM: dts: exynos: drop useless 'dma-channels/requests' properties (2022-05-04 10:23:27 +0200)
 
 ----------------------------------------------------------------
-Krzysztof Kozlowski (2):
-      dt-bindings: soc: samsung: usi: refer to dtschema for SPI
-      dt-bindings: timer: exynos4210-mct: describe known hardware and its interrupts
+Samsung DTS ARM changes for v5.19, part two
 
- .../bindings/soc/samsung/exynos-usi.yaml           |  2 +-
- .../bindings/timer/samsung,exynos4210-mct.yaml     | 67 +++++++++++++++++++++-
- 2 files changed, 65 insertions(+), 4 deletions(-)
+1. Cleanups: unused and undocumented dma-channels and dma-requests.
+2. Correct compatible of Samsung EEPROM on S5PV210.
+
+----------------------------------------------------------------
+Krzysztof Kozlowski (3):
+      ARM: dts: exynos: add atmel,24c128 fallback to Samsung EEPROM
+      ARM: dts: s5pv210: drop useless 'dma-channels/requests' properties
+      ARM: dts: exynos: drop useless 'dma-channels/requests' properties
+
+ arch/arm/boot/dts/exynos3250.dtsi               |  4 ----
+ arch/arm/boot/dts/exynos4.dtsi                  |  6 ------
+ arch/arm/boot/dts/exynos4210-universal_c210.dts |  2 --
+ arch/arm/boot/dts/exynos5250-smdk5250.dts       |  4 ++--
+ arch/arm/boot/dts/exynos5250.dtsi               |  8 --------
+ arch/arm/boot/dts/exynos5410.dtsi               |  4 ----
+ arch/arm/boot/dts/exynos5420.dtsi               | 10 ----------
+ arch/arm/boot/dts/s5pv210.dtsi                  |  6 ------
+ 8 files changed, 2 insertions(+), 42 deletions(-)
