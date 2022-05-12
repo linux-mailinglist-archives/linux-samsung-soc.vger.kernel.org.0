@@ -2,223 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B70952369E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 11 May 2022 17:02:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1443C524E52
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 May 2022 15:32:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245504AbiEKPCr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 11 May 2022 11:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
+        id S1352268AbiELNcR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 12 May 2022 09:32:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245499AbiEKPC2 (ORCPT
+        with ESMTP id S1354439AbiELNcP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 11 May 2022 11:02:28 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26D037BD8
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 May 2022 08:02:04 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20220511150203euoutp0114475688393ad4f5831ec0fb084e584a~uFRwFWX2B0475404754euoutp01B
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 11 May 2022 15:02:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20220511150203euoutp0114475688393ad4f5831ec0fb084e584a~uFRwFWX2B0475404754euoutp01B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1652281323;
-        bh=01KONJ5CQ9mRixgKLlzLiuq2X4gzrTFQGjvCaQweokM=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=IHXRz2wfoYh0G2zceyZT4txCNQw5cwzbyUweQiEDoauE0wgRdK5NTMhr7vIY1OJoO
-         sA1wZGww9ZlT9GaCfI6xCm2IdswyRGNm5lPkB9ONsqisow+ciQsdjimpcry1ZAJn4r
-         W3ROE63FDwXLLcL+5QsuBUyYUHa7pb59YPpH6ZCg=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20220511150202eucas1p19c814440725b2c755eedc6716b02c176~uFRvgYeHq0262602626eucas1p1R;
-        Wed, 11 May 2022 15:02:02 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id B6.7C.09887.AEFCB726; Wed, 11
-        May 2022 16:02:02 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20220511150202eucas1p2f62bc28fc02a5f7024b8177279adcd4b~uFRu_MKEk1323113231eucas1p2L;
-        Wed, 11 May 2022 15:02:02 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20220511150202eusmtrp1c96aa149689c4728a488bf13069946ef~uFRu7Oizz2779827798eusmtrp1w;
-        Wed, 11 May 2022 15:02:02 +0000 (GMT)
-X-AuditID: cbfec7f4-471ff7000000269f-66-627bcfea5564
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 3E.62.09522.9EFCB726; Wed, 11
-        May 2022 16:02:02 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20220511150201eusmtip2b6ec3553aaf22de57306aa6102da33e7~uFRt4Bqk71588415884eusmtip2i;
-        Wed, 11 May 2022 15:02:00 +0000 (GMT)
-Message-ID: <e8e56e98-59aa-62b1-2b96-3a0436e91dac@samsung.com>
-Date:   Wed, 11 May 2022 17:02:00 +0200
+        Thu, 12 May 2022 09:32:15 -0400
+Received: from mail.pekanbaru.go.id (mail.pekanbaru.go.id [103.131.245.194])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5098362A05;
+        Thu, 12 May 2022 06:32:13 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 29D741740831;
+        Thu, 12 May 2022 10:45:39 +0700 (WIB)
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id ybG2F_UFSS8T; Thu, 12 May 2022 10:45:38 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id D39BF98ADEB;
+        Thu, 12 May 2022 10:45:36 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.pekanbaru.go.id D39BF98ADEB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pekanbaru.go.id;
+        s=EA5C5C9E-4206-11EC-835B-1ADACEA726A0; t=1652327137;
+        bh=WgQd2bW8hb2KeIDNbeIeW1Bb4lp6m29iibMhAQT/egc=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=DKBGnmH+XUMxF7mbuqnl+A0cShjfGahdtyyp96XPCBjXQsmASWaZn5qz+kQ7ulvou
+         FdiqacYdQbx/z7f3tPeWjj8e2o3NSyqgSbZ0DLByVay5Hvp2H053E/9RlhrmgTE00o
+         1gDYdHRgdH1W08Z/Vvua2MwHE9x8k+x8Y4JoaM96ZLUxK94HHGBJzcnQDDps+SSBr0
+         Qm53toniY8cmS5aCQbhUMze/q+WxgHzWISX9eI3Oa4HOwU25IO3a/MQF1NYsoheAIB
+         pdFeWAVE2kLZ9+p3KcJTgBPCnocN7Q0nerWxis5zS+nWFOtx19yc0jP1bqAxy++W5w
+         DK/Usf4AHuh4g==
+X-Virus-Scanned: amavisd-new at mail.pekanbaru.go.id
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id H_euiQBdZE49; Thu, 12 May 2022 10:45:36 +0700 (WIB)
+Received: from [192.168.15.101] (unknown [41.79.219.176])
+        by mail.pekanbaru.go.id (Postfix) with ESMTPSA id 6F85798ADDC;
+        Thu, 12 May 2022 10:45:27 +0700 (WIB)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0)
-        Gecko/20100101 Thunderbird/91.9.0
-Subject: Re: [PATCH v2 05/12] drm: bridge: samsung-dsim: Add DSI init in
- bridge pre_enable()
-Content-Language: en-US
-To:     Jagan Teki <jagan@amarulasolutions.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Fancy Fang <chen.fang@nxp.com>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
-        Adam Ford <aford173@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
-Cc:     Matteo Lisi <matteo.lisi@engicam.com>,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-amarula <linux-amarula@amarulasolutions.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20220504114021.33265-6-jagan@amarulasolutions.com>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphk+LIzCtJLcpLzFFi42LZduznOd1X56uTDM7d1LK4c/s0s8X9xZ9Z
-        LF7fXsFmceXrezaL3qXnWC0m3Z/AYvFl0wQ2ixf3LrJYnG16w27ROXEJu8XyCfvYLDY9vsZq
-        0fVrJbPFjPP7mCxOP1rPbHGqsZXF4lBftMWnWQ+B4pNfsllcPPGJ2eL777PMDqIeaz/eZ/V4
-        f6OV3WPKiSOsHud67rJ57Jx1l91jdsdMVo/Fe14yeRy5upjV4861PWwe97uPM3lsXlLvsfHd
-        DiaPvi2rGD0+b5IL4IvisklJzcksSy3St0vgyri0/iJbwRTRisuTm9gaGH8LdDFyckgImEjM
-        vHqHqYuRi0NIYAWjROPiDmYI5wujxM1zh6Ccz4wS79o2ssO07Ls5hw0isZxRovvVHkYI5yOj
-        xPPttxhBqngF7CS+7t8KZrMIqEpsO3WWDSIuKHFy5hMWEFtUIEnizZurzCC2sECcxI7WFjCb
-        WUBc4taT+UwgtojAJFaJpi/iIAuYQRb0/HgIVsQmYCjR9bYLbCingIPE7f0/GSGa5SW2v53D
-        DHFqE5dE57qsLkYOINtFYurPJIiwsMSr41ugvpGROD25hwWiJF/i7wxjiHCFxLXXa6CmWEvc
-        OfeLDaSEWUBTYv0ufYiwo8T3Xz8YITr5JG68FYTYzycxadt0Zogwr0RHmxBEtZrErOPr4HYe
-        vHCJeQKj0iykIJmF5PVZSD6ZhbB3ASPLKkbx1NLi3PTUYqO81HK94sTc4tK8dL3k/NxNjMAE
-        e/rf8S87GJe/+qh3iJGJg/EQowQHs5II7/6+iiQh3pTEyqrUovz4otKc1OJDjNIcLErivMmZ
-        GxKFBNITS1KzU1MLUotgskwcnFINTFzZaSEvejaaK97Ttq9fuavy7YQfyx5LT8sr79LdXnTS
-        +uRHs83Lz96y3W9w3kkhSnfqJ/GtwqXf15UoqBmIHNdi7nA+qpofqFaxx0yQKaA1Z+Lh/zav
-        Jrfnm289uPh3bNZPbpkztmkNyr/Pvv/wx+X2RoP4H71hlW/+GdTWpvMozeVpPRv1/cV1EV+u
-        H01l3K977pgvWrbdV7fhsP8s/mCLX+a6FW4uwdP3vOHskF/7Y7qn6T+9ssfTZ24Sv3r1YGhK
-        N3dT2bnP1wO0XzQcTsoxcP+i9civY/aFY49Drk7Wkt4wpz4te/v68L9XWl/WefXFVSxpXfxA
-        wO7J86T8jqmf+HZnqD8xkL79P/7eYyWW4oxEQy3mouJEAM6zkpQfBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsVy+t/xe7qvzlcnGZyaz2Rx5/ZpZov7iz+z
-        WLy+vYLN4srX92wWvUvPsVpMuj+BxeLLpglsFi/uXWSxONv0ht2ic+ISdovlE/axWWx6fI3V
-        ouvXSmaLGef3MVmcfrSe2eJUYyuLxaG+aItPsx4CxSe/ZLO4eOITs8X332eZHUQ91n68z+rx
-        /kYru8eUE0dYPc713GXz2DnrLrvH7I6ZrB6L97xk8jhydTGrx51re9g87ncfZ/LYvKTeY+O7
-        HUwefVtWMXp83iQXwBelZ1OUX1qSqpCRX1xiqxRtaGGkZ2hpoWdkYqlnaGwea2VkqqRvZ5OS
-        mpNZllqkb5egl3Fp/UW2gimiFZcnN7E1MP4W6GLk5JAQMJHYd3MOWxcjF4eQwFJGib55R5kh
-        EjISJ6c1sELYwhJ/rnVBFb1nlJj87zxYglfATuLr/q2MIDaLgKrEtlNn2SDighInZz5h6WLk
-        4BAVSJI4cpgfJCwsECexo7UFbD6zgLjErSfzmUBmighMY5W49/Yr2AJmgY+MEpcmb2GH2HaS
-        UeJg23SwqWwChhJdb7vAbE4BB4nb+38yQowyk+ja2gVly0tsfzuHeQKj0Cwkh8xCsnEWkpZZ
-        SFoWMLKsYhRJLS3OTc8tNtQrTswtLs1L10vOz93ECEwt24793LyDcd6rj3qHGJk4GA8xSnAw
-        K4nw7u+rSBLiTUmsrEotyo8vKs1JLT7EaAoMjYnMUqLJ+cDkllcSb2hmYGpoYmZpYGppZqwk
-        zutZ0JEoJJCeWJKanZpakFoE08fEwSnVwMTjxNr5oL69b66vgJOPheBFIYXw3My8/3fzVTkl
-        ne897dSM5d/8Sv26StqEZR845FU1f+zS5dW10fVYJL1gk14En1ie6/Yan61TpGKX2u//H9Qq
-        elf6TELoT9vSo5mSdySMq485nmOXPOU9ZZfJapnPUi9cJtbmKh5hWWHDlu4zw5bPfYKjBtdf
-        ZVGB8PT3aeebsqqblWYmxDxbtdVf+ezRuQWqB0StL0c9tZgfe/Jgf/b5myFhTk3sjE2eNwMV
-        3iWfi+5qmV1xqak4cYGIa5tUuv8fVUXVBPnjz263aayeEbL1fhf7ERmfzu2mCc95C/ZZPdeV
-        mdAWdTDnj0tQkjhj+6YVMffWL5l46ooSS3FGoqEWc1FxIgCcyoqctgMAAA==
-X-CMS-MailID: 20220511150202eucas1p2f62bc28fc02a5f7024b8177279adcd4b
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20220504114121eucas1p1aff92a52f2c4e1905b4c9672331b7db6
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20220504114121eucas1p1aff92a52f2c4e1905b4c9672331b7db6
-References: <20220504114021.33265-1-jagan@amarulasolutions.com>
-        <CGME20220504114121eucas1p1aff92a52f2c4e1905b4c9672331b7db6@eucas1p1.samsung.com>
-        <20220504114021.33265-6-jagan@amarulasolutions.com>
-X-Spam-Status: No, score=-8.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Awaiting your response 
+To:     Recipients <waterproject@pekanbaru.go.id>
+From:   waterproject@pekanbaru.go.id
+Date:   Thu, 12 May 2022 04:45:19 +0100
+Reply-To: test@hostnextdoor.com
+Message-Id: <20220512034527.6F85798ADDC@mail.pekanbaru.go.id>
+X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_SBL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 04.05.2022 13:40, Jagan Teki wrote:
-> Host transfer() in DSI master will invoke only when the DSI commands
-> are sent from DSI devices like DSI Panel or DSI bridges and this
-> host transfer wouldn't invoke for I2C-based-DSI bridge drivers.
->
-> Handling DSI host initialization in transfer calls misses the
-> controller setup for I2C configured DSI bridges.
->
-> This patch adds the DSI initialization from transfer to bridge
-> pre_enable as the bridge pre_enable API is invoked by core as
-> it is common across all classes of DSI device drivers.
->
-> v2:
-> * check initialized state in samsung_dsim_init
->
-> v1:
-> * keep DSI init in host transfer
->
-> Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
-
-This doesn't work with Exynos DSI and DSI panels. Here is a bit more 
-detailed explanation and my solution for this:
-
-https://lore.kernel.org/all/e96197f9-948a-997e-5453-9f9d179b5f5a@samsung.com/
+Hi =
 
 
-> ---
->   drivers/gpu/drm/bridge/samsung-dsim.c | 18 ++++++++++++------
->   1 file changed, 12 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-> index 60dc863113a0..b9361af5ef2d 100644
-> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
-> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-> @@ -1259,6 +1259,9 @@ static int samsung_dsim_init(struct samsung_dsim *dsi)
->   {
->   	const struct samsung_dsim_driver_data *driver_data = dsi->driver_data;
->   
-> +	if (dsi->state & DSIM_STATE_INITIALIZED)
-> +		return 0;
-> +
->   	samsung_dsim_reset(dsi);
->   	samsung_dsim_enable_irq(dsi);
->   
-> @@ -1271,6 +1274,8 @@ static int samsung_dsim_init(struct samsung_dsim *dsi)
->   	samsung_dsim_set_phy_ctrl(dsi);
->   	samsung_dsim_init_link(dsi);
->   
-> +	dsi->state |= DSIM_STATE_INITIALIZED;
-> +
->   	return 0;
->   }
->   
-> @@ -1290,6 +1295,10 @@ static void samsung_dsim_atomic_pre_enable(struct drm_bridge *bridge,
->   	}
->   
->   	dsi->state |= DSIM_STATE_ENABLED;
-> +
-> +	ret = samsung_dsim_init(dsi);
-> +	if (ret)
-> +		return;
->   }
->   
->   static void samsung_dsim_atomic_enable(struct drm_bridge *bridge,
-> @@ -1464,12 +1473,9 @@ static ssize_t samsung_dsim_host_transfer(struct mipi_dsi_host *host,
->   	if (!(dsi->state & DSIM_STATE_ENABLED))
->   		return -EINVAL;
->   
-> -	if (!(dsi->state & DSIM_STATE_INITIALIZED)) {
-> -		ret = samsung_dsim_init(dsi);
-> -		if (ret)
-> -			return ret;
-> -		dsi->state |= DSIM_STATE_INITIALIZED;
-> -	}
-> +	ret = samsung_dsim_init(dsi);
-> +	if (ret)
-> +		return ret;
->   
->   	ret = mipi_dsi_create_packet(&xfer.packet, msg);
->   	if (ret < 0)
+Did you get my previous email? I have attempted over 3 times to open up com=
+munication with you. Please acknowledge if you receive this email. =
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
 
+Regards
+Morten Friis
