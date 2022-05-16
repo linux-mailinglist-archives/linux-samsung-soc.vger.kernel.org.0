@@ -2,114 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D1A52869B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 May 2022 16:12:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B96C528E3A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 May 2022 21:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244401AbiEPOLw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 16 May 2022 10:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
+        id S1345657AbiEPTjt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 16 May 2022 15:39:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244489AbiEPOLv (ORCPT
+        with ESMTP id S1345600AbiEPTi5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 16 May 2022 10:11:51 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05D7120F4F
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 May 2022 07:11:47 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id c24so16544698lfv.11
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 May 2022 07:11:46 -0700 (PDT)
+        Mon, 16 May 2022 15:38:57 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A71423F88C;
+        Mon, 16 May 2022 12:38:45 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id i40so4692715eda.7;
+        Mon, 16 May 2022 12:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=V/pFhyZ7PlSKfX2hWY5gCxthekoCEZH2niVLMkmY+d0=;
-        b=qD8VsVBt4UMCA5G5JENPpcOuQCAaOzdAneycAjMg6LOQpyS4sAHT54G6k2mvmnIbv2
-         98ZRbpvEtB3simyFamItgL4TNTf2gC66bDXzAOVk3KfZx4B5KylFpRhyQOVdaccaASb6
-         ukhlSb9fZ8j+Wgz/yNsIUyFXGuMUcdlvYCr0lFYE2dlugp0M7wSdfF7IgzpGbAzh6OvN
-         schXFtDwJ4M122WVipx30WqBa4jFjkUshjkwu7ZfzRgyeZMBJmUNwKOVNzjTz9Qn4Jkv
-         w8chTblgTAdDv4rljzbioSWAPaJn1tma3WPLrONkCe87raEFv7lQZpEnPEA2l+6RiJYp
-         o5TQ==
+        bh=LebDF3RuPxmX1Cw/8NAKFfKs/e37d3Ws73/ZUWsOSYY=;
+        b=bseiz9mTWBFks9ltjnA8R2a+/W7/FVLzfkmSDHkJfeKfQX1rYGRuIyUViZL8yKA9mF
+         MLEAdCbqCH+RPshFcSqj8Y/AkfxtyUTdOtL2F5UnpHv0UXW0mf1LKw3QS/uRg9BEqWq7
+         QMATuJ+nvY4vq7d4KZnFOq4VS8QyGepI2Sam7Qz6f6IallvZ+rxo7sHaARhKMtw359gl
+         9H/CUYF9h8DrFCKvAY6T1zMs8VFaRAwHSyzzb1/zafJQy5vhl5bQ42vFNfVAh7T7ClI8
+         oRRmlyG0j5tAoD3DEzyuDLbHY6upzDkmAnY6zHLJ8BGTThl1mtVURC7BBqr7hvTVZUbw
+         kcCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=V/pFhyZ7PlSKfX2hWY5gCxthekoCEZH2niVLMkmY+d0=;
-        b=x2b+3reeGSxL8mlWZQb44mxxwHsdSeB5MIh1K2K2PGll67GRaK0LTUAFaii4/m9N3L
-         utj+/yuelXIEtCMu31TU0ebcCvSbOJwnHg0TgYu9008gVwkRQOvyoDr/7mBdQfes1eMO
-         HeSWpANtdeAoodFoUgS3my4vVcThZFJ+Xk5o1aclLOV1RCaLI1YaWLJ9qzQApxEABI6k
-         oHvCmPb/vrbaNhfsU8SVnQtE0oR7W4gG9GaMlQ55jdHXwu5k5CmXMX29Dc9DDny4c2fl
-         g1KYYsSIKH0C0SAy+pNt18gLkrS5l4fARJkR4oWLY276603P0WMW2KQovwIA2rxDEvDY
-         L8IA==
-X-Gm-Message-State: AOAM530UP7hLR0KRFPtb9eZDRmaNN0aUF1Bc+w28bSBIONWzWQbGFnZv
-        B5ZNYaXPkd1QmbePuLhpYSwdjA==
-X-Google-Smtp-Source: ABdhPJyMPsqvy8XDKgku0gZQwXhmnnZ5EpgXXspxlZSWVKx1viBGeZmSndZZ79xeXmlvrRfbouhPyQ==
-X-Received: by 2002:a05:6512:33c8:b0:473:9d8f:a01b with SMTP id d8-20020a05651233c800b004739d8fa01bmr13369570lfg.619.1652710304272;
-        Mon, 16 May 2022 07:11:44 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b5-20020ac247e5000000b0047255d2116bsm1315538lfp.154.2022.05.16.07.11.43
+        bh=LebDF3RuPxmX1Cw/8NAKFfKs/e37d3Ws73/ZUWsOSYY=;
+        b=bQAU7dH3n3ni1KT0j80EoabV5Q3NzXee7YMiF/RDOkdDdI0mfh4nwvKeA60967TDMB
+         hQds208CVNIYz+Y84XbzXe5m/H2sRwnXQPScqcAaFnbDTPaBr1KpygD4tBpk4hlDRJjs
+         R1tQNWwlOtZJi3IWSW7N2/IkkbmKWB8hkN8wDV1SXOquv1TtAa3g3o5K4bASsFUEz/4G
+         +2DFL21cAa1MPMisgszKLqyHfRWBPjzfzAtT2EhKEN7PHY5TQWbCR28qiPUO1OBt4Zi5
+         7WQG4oFlIk5R1znnYzzwhbgmFpZMtLFZLu/KR9Y0a6e7t1wEd/WEzCt6TGjhJEFCeizC
+         +kkA==
+X-Gm-Message-State: AOAM533Q6CzTq50rh+UzXdJrxu437jdpEQhqll4+4ePpZkitStn73OPm
+        Hf/lxjgW7CvqJv3HXkA2ik0=
+X-Google-Smtp-Source: ABdhPJyTP9Rwj4orjplkbScv8cYbfHA3DBy1Z17s4DcQWsXitJXORWnR2TTE2sCfqqK/ke8zXrzj6Q==
+X-Received: by 2002:a05:6402:f13:b0:428:a849:d0c1 with SMTP id i19-20020a0564020f1300b00428a849d0c1mr15059561eda.346.1652729923428;
+        Mon, 16 May 2022 12:38:43 -0700 (PDT)
+Received: from adroid (102-167-184-091.ip-addr.vsenet.de. [91.184.167.102])
+        by smtp.gmail.com with ESMTPSA id s7-20020a170906220700b006f3ef214e45sm94042ejs.171.2022.05.16.12.38.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 07:11:43 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 16 May 2022 12:38:43 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
+To:     linux-samsung-soc@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v2] dt-bindings: mfd: samsung,exynos5433-lpass: drop useless 'dma-channels/requests' properties
-Date:   Mon, 16 May 2022 16:11:23 +0200
-Message-Id: <20220516141123.4579-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
+Subject: [PATCH 1/3] dt-bindings: display: simple: add support for Samsung LTL101AL01
+Date:   Mon, 16 May 2022 21:37:07 +0200
+Message-Id: <20220516193709.10037-1-martin.juecker@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The pl330 DMA controller provides number of DMA channels and requests
-through its registers, so duplicating this information (with a chance of
-mistakes) in DTS is pointless.  Additionally the DTS used always wrong
-property names which causes DT schema check failures - the bindings
-documented 'dma-channels' and 'dma-requests' properties without leading
-hash sign.
+Add the Samsung LTL101AL01 WXGA LCD panel to the list.
 
-Reported-by: Rob Herring <robh@kernel.org>
-Fixes: e18183cefc8b ("mfd: Add DT bindings documentation for Samsung Exynos LPASS")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Acked-by: Rob Herring <robh@kernel.org>
-
+Signed-off-by: Martin Jücker <martin.juecker@gmail.com>
 ---
+ .../devicetree/bindings/display/panel/panel-simple.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes since v1:
-1. v1 was ment to be applied but I cannot find it in MFD tree.
-2. Drop the properties entirely as turned out during discussions.
-
-v1: https://lore.kernel.org/all/YmpkE0FgEhPNneg+@google.com/
----
- .../devicetree/bindings/mfd/samsung,exynos5433-lpass.yaml       | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.yaml b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.yaml
-index f7bb67d10eff..69c15744c864 100644
---- a/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.yaml
-+++ b/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.yaml
-@@ -79,8 +79,6 @@ examples:
-             clocks = <&cmu_aud CLK_ACLK_DMAC>;
-             clock-names = "apb_pclk";
-             #dma-cells = <1>;
--            #dma-channels = <8>;
--            #dma-requests = <32>;
-             power-domains = <&pd_aud>;
-         };
- 
+diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+index 1eb9dd4f8f58..9501b5a3c011 100644
+--- a/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
++++ b/Documentation/devicetree/bindings/display/panel/panel-simple.yaml
+@@ -270,6 +270,8 @@ properties:
+       - samsung,atna33xc20
+         # Samsung 12.2" (2560x1600 pixels) TFT LCD panel
+       - samsung,lsn122dl01-c01
++        # Samsung Electronics 10.1" WXGA (1280x800) TFT LCD panel
++      - samsung,ltl101al01
+         # Samsung Electronics 10.1" WSVGA TFT LCD panel
+       - samsung,ltn101nt05
+         # Samsung Electronics 14" WXGA (1366x768) TFT LCD panel
 -- 
-2.32.0
+2.25.1
 
