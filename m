@@ -2,93 +2,174 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BCA152C703
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 May 2022 00:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF3652DD6D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 May 2022 21:08:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbiERW5c (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 May 2022 18:57:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46470 "EHLO
+        id S241127AbiESTIw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 May 2022 15:08:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbiERW5U (ORCPT
+        with ESMTP id S229541AbiESTIv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 May 2022 18:57:20 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 189815F7D
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 May 2022 15:57:05 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id t26so6161946ybt.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 May 2022 15:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
-        b=ovbcf3BPb/ZrA/FpQ+ZjErGDIEZ9sF3fYOxqsE4Z0xdiTlYY9UY36hS3ty6MLllddq
-         FdZzNc2PcFHW5cwKZ0FlQqx6F8uTY06Ab/cmT+eL89dkm6I4fHT5v6DDGzwY+fqIjM8b
-         RjeYQt93Ckr4p0lPVWY342OwWKznH6xDl4nV36uj7bwrBPcHFh3ePzF5GNEmu/mQBhIV
-         GwWDekgJIDWSV60014hyLdzt2NtjUStY8MI6SiwBWMH8LEBnRGkE0W6Db0zUE9IYWmDQ
-         Ifd6nbhkESdcIbQrjo3sdEfmdPtb1VAIHCw/LAZv1DOtvQwqLYnhML4dVDmuoYeMmVFn
-         q7TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=mZ3wqB4NmL7z6lpFr/h15h1rYqsZKafJnUpMVahbEPg=;
-        b=6Z+MKX2T8ZlXoLkqkiToPHnloSsUiVuaFHJKfjCAnkwc6SAmSP0NMM0XgyoEnDqcWj
-         ZLBNPoQI0snbOSNV3LJY4viSycai3YTGHwnPMcir2harkYKjnXpZXnv09I8PemzI/xRa
-         B30CP6TkZL8o/LWOaOaqBUSSFKUdGvVRIe/b45aBLSMUtbBh9bgfGBr015rsejdm3U68
-         Dy9W+HlxhnupadBJIGolt0wrQAJs4SP7AfizLLCz+tKj7jlx3p4ke8/5IbK/dZbA3gZC
-         EDyJGcWwIORaJE8L0UFSFX1eCcRvB/FGLQnnhpg2iS62hDsXSIRHtq70nBhberOlADpj
-         sh5g==
-X-Gm-Message-State: AOAM533FgmXEpRGBkL4ZZkqhb3mqz3Xkv/++8hYCXM9pCkH9sMn2i9FS
-        5XzAcqsgRLWTduyo4gSPkZm2vtA0IwDH8TPrTrFYsTskNYKvQFn9KjRQvtl8
-X-Google-Smtp-Source: ABdhPJyyLDAg+sVdsLTxwEXiZ5avjedwK/uWMP/Y3UWcChEjwDE+iXuY4kOycHY8vIqM/rcV0hLTcVdg0IN0RAQYgBc=
-X-Received: by 2002:a5b:f87:0:b0:64a:9aa6:e181 with SMTP id
- q7-20020a5b0f87000000b0064a9aa6e181mr1852277ybh.157.1652914614913; Wed, 18
- May 2022 15:56:54 -0700 (PDT)
+        Thu, 19 May 2022 15:08:51 -0400
+Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0077AAE26B;
+        Thu, 19 May 2022 12:08:49 -0700 (PDT)
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+         client-signature RSA-PSS (4096 bits) client-digest SHA256)
+        (Client CN "*.hostsharing.net", Issuer "RapidSSL TLS DV RSA Mixed SHA256 2020 CA-1" (verified OK))
+        by bmailout2.hostsharing.net (Postfix) with ESMTPS id BB09B280F2F66;
+        Thu, 19 May 2022 21:08:41 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+        id A2A862E66F4; Thu, 19 May 2022 21:08:41 +0200 (CEST)
+Date:   Thu, 19 May 2022 21:08:41 +0200
+From:   Lukas Wunner <lukas@wunner.de>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Eric Dumazet <edumazet@google.com>, netdev@vger.kernel.org,
+        linux-usb@vger.kernel.org,
+        Steve Glendinning <steve.glendinning@shawell.net>,
+        UNGLinuxDriver@microchip.com, Oliver Neukum <oneukum@suse.com>,
+        Andre Edich <andre.edich@microchip.com>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Martyn Welch <martyn.welch@collabora.com>,
+        Gabriel Hojda <ghojda@yo2urs.ro>,
+        Christoph Fritz <chf.fritz@googlemail.com>,
+        Lino Sanfilippo <LinoSanfilippo@gmx.de>,
+        Philipp Rosenberger <p.rosenberger@kunbus.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Ferry Toth <fntoth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [PATCH net-next v3 5/7] usbnet: smsc95xx: Forward PHY interrupts
+ to PHY driver to avoid polling
+Message-ID: <20220519190841.GA30869@wunner.de>
+References: <cover.1652343655.git.lukas@wunner.de>
+ <748ac44eeb97b209f66182f3788d2a49d7bc28fe.1652343655.git.lukas@wunner.de>
+ <CGME20220517101846eucas1p2c132f7e7032ed00996e222e9cc6cdf99@eucas1p2.samsung.com>
+ <a5315a8a-32c2-962f-f696-de9a26d30091@samsung.com>
 MIME-Version: 1.0
-Received: by 2002:a05:7000:7143:0:0:0:0 with HTTP; Wed, 18 May 2022 15:56:53
- -0700 (PDT)
-Reply-To: tonywenn@asia.com
-From:   Tony Wen <weboutloock4@gmail.com>
-Date:   Thu, 19 May 2022 06:56:53 +0800
-Message-ID: <CAE2_YrD=5bo8j9+ah-xptEBBV-HEC4=Gb0SRHf996phiopc3WQ@mail.gmail.com>
-Subject: engage
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4865]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [weboutloock4[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [weboutloock4[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.4 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a5315a8a-32c2-962f-f696-de9a26d30091@samsung.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Can I engage your services?
+On Tue, May 17, 2022 at 12:18:45PM +0200, Marek Szyprowski wrote:
+> This patch landed in the recent linux next-20220516 as commit 
+> 1ce8b37241ed ("usbnet: smsc95xx: Forward PHY interrupts to PHY driver to 
+> avoid polling"). Unfortunately it breaks smsc95xx usb ethernet operation 
+> after system suspend-resume cycle. On the Odroid XU3 board I got the 
+> following warning in the kernel log:
+> 
+> # time rtcwake -s10 -mmem
+> rtcwake: wakeup from "mem" using /dev/rtc0 at Tue May 17 09:16:07 2022
+> PM: suspend entry (deep)
+> Filesystems sync: 0.001 seconds
+> Freezing user space processes ... (elapsed 0.002 seconds) done.
+> OOM killer disabled.
+> Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+> printk: Suspending console(s) (use no_console_suspend to debug)
+> smsc95xx 4-1.1:1.0 eth0: entering SUSPEND2 mode
+> smsc95xx 4-1.1:1.0 eth0: Failed to read reg index 0x00000114: -113
+> smsc95xx 4-1.1:1.0 eth0: Error reading MII_ACCESS
+> smsc95xx 4-1.1:1.0 eth0: __smsc95xx_mdio_read: MII is busy
+> ------------[ cut here ]------------
+> WARNING: CPU: 2 PID: 73 at drivers/net/phy/phy.c:946
+> phy_state_machine+0x98/0x28c
+[...]
+> It looks that the driver's suspend/resume operations might need some 
+> adjustments. After the system suspend/resume cycle the driver is not 
+> operational anymore. Reverting the $subject patch on top of linux 
+> next-20220516 restores ethernet operation after system suspend/resume.
+
+Thanks a lot for the report.  It seems the PHY is signaling a link change
+shortly before system sleep and by the time the phy_state_machine() worker
+gets around to handle it, the device has already been suspended and thus
+refuses any further USB requests with -EHOSTUNREACH (-113):
+
+usb_suspend_both()
+  usb_suspend_interface()
+    smsc95xx_suspend()
+      usbnet_suspend()
+        __usbnet_status_stop_force() # stops interrupt polling,
+                                     # link change is signaled before this
+
+  udev->can_submit = 0               # refuse further URBs
+
+Assuming the above theory is correct, calling phy_stop_machine()
+after usbnet_suspend() would be sufficient to fix the issue.
+It cancels the phy_state_machine() worker.
+
+The small patch below does that.  Could you give it a spin?
+
+Taking a step back though, I'm wondering if there's a bigger problem here:
+This is a USB device, so we stop receiving interrupts once the Interrupt
+Endpoint is no longer polled.  But what if a PHY's interrupt is attached
+to a GPIO of the SoC and that interrupt is raised while the system is
+suspending?  The interrupt handler may likewise try to reach an
+inaccessible (suspended) device.
+
+The right thing to do would probably be to signal wakeup.  But the
+PHY drivers' irq handlers instead schedule the phy_state_machine().
+Perhaps we need something like the following at the top of
+phy_state_machine():
+
+	if (phydev->suspended) {
+		pm_wakeup_dev_event(&phydev->mdio.dev, 0, true);
+		return;
+	}
+
+However, phydev->suspended is set at the *bottom* of phy_suspend(),
+it would have to be set at the *top* of mdio_bus_phy_suspend()
+for the above to be correct.  Hmmm...
+
+Thanks,
+
+Lukas
+
+-- >8 --
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index bd03e16..d351a6c 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -1201,6 +1201,7 @@ static int smsc95xx_bind(struct usbnet *dev, struct usb_interface *intf)
+ 	}
+ 
+ 	pdata->phydev->irq = phy_irq;
++	pdata->phydev->mac_managed_pm = true;
+ 	pdata->phydev->is_internal = is_internal_phy;
+ 
+ 	/* detect device revision as different features may be available */
+@@ -1496,6 +1497,9 @@ static int smsc95xx_suspend(struct usb_interface *intf, pm_message_t message)
+ 		return ret;
+ 	}
+ 
++	if (netif_running(dev->net))
++		phy_stop(pdata->phydev);
++
+ 	if (pdata->suspend_flags) {
+ 		netdev_warn(dev->net, "error during last resume\n");
+ 		pdata->suspend_flags = 0;
+@@ -1778,6 +1782,8 @@ static int smsc95xx_resume(struct usb_interface *intf)
+ 	}
+ 
+ 	phy_init_hw(pdata->phydev);
++	if (netif_running(dev->net))
++		phy_start(pdata->phydev);
+ 
+ 	ret = usbnet_resume(intf);
+ 	if (ret < 0)
