@@ -2,135 +2,159 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBD1152E415
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 May 2022 06:52:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0190452E408
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 May 2022 06:51:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345315AbiETEwa (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 20 May 2022 00:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46020 "EHLO
+        id S237024AbiETEvi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 20 May 2022 00:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345428AbiETEwX (ORCPT
+        with ESMTP id S230318AbiETEvh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 20 May 2022 00:52:23 -0400
-X-Greylist: delayed 1096 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 21:52:16 PDT
-Received: from CHN02-BJS-obe.outbound.protection.partner.outlook.cn (mail-bjschn02hn2233.outbound.protection.partner.outlook.cn [139.219.17.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0373D66FA1;
-        Thu, 19 May 2022 21:52:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dTgGc0h/0At8MBttzBkK8Ng18cD+wAmbmz35rRkzX2XuiAckWJA0l1KXg8aLkYfgPi7sDokHr+gmzTfIOQwiuhqYCylSHEqPt4cwrvgFr0m85bRiUMvUETEKTlm2tUySZxPlti+0GU9By9/3mxtOUO/cUjSSKmn595kW29RMwYjYtkiypQRgPmuVxyfcb9fdrJBYHRPYr8r98y/a+ZOGc7Cz05b0xj0XOGRFR/5K2M2Cwk6d50WHTQe/WWhbyj2nzaSrEa3wSi8zTbAhTmFZgTNxODWIAMQF2tutBJ8+w3lTD0TPpI8pR1KexM3pWkefgXNuSL/aAK10aamR2eAVhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XHa7Vpxtm/u3S4otqoZTmpXUuVJNGmaT4A6UJUMDuKo=;
- b=jIaZzQhQA82X+a0w7q6rEhMwvvJys6dL9lzHi1YcEHPXS0ShHMMxGO/E4kwE5RFdGDsxNV/sDXzSRe5V7FiQcHL7Ts3xOoARSBxYkYqqvuNArc6vqgtGlFu+AzSbLh8oMxVQ9FPDfsbHSlaWFqdvxPZX/f2splna30cRSGNYvSwZ4FzRM49vG68NhNSeZxr5lh/6ufXPq8Z5seuvKGxNF+4vTk6EHcPf3VXZLySJiwb6dS6lBwDOhGTkERmYJy+B1dkjzVFh2cEISar82BftErG47D2dGJELAvGzNLcV/KfE5uLQShbBvdXYkyqL2DULEUdgNIrISQpbX7mJZzo/Dg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gientech.com; dmarc=pass action=none header.from=gientech.com;
- dkim=pass header.d=gientech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gientech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XHa7Vpxtm/u3S4otqoZTmpXUuVJNGmaT4A6UJUMDuKo=;
- b=foLc+ZHUrkiTBblRVDfCc5ao8/S+6hbc/DEoLKcVaPpPajKnX4z7jSqL3SVfuMywUWqjNX+MXQpx8lfrn58abX8BQ7LyfzpBFg7lGTgSn3OWVF6ByZHmCqQIQruFX9tY6ITLzTeCdVYTr3g07IyxdRCBQpaevPHM0jyKGIrqu23jo48JVXDsd/H8mBYChEC31FE1W17JIWlGPi7Yn9hvE5K4PslZrcVIsfkoq8jh5tyLdDvbf3AlnqATiYXQwFGngzOSFF+k3dXhjkcz2T09rHYyBYW90HKJldrCOPFwxUy0umrG6snFvwq5WbkBpNfCmPYPNQe80G+qndcTRfokPA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gientech.com;
-Received: from SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn (10.43.110.19) by
- SHXPR01MB0575.CHNPR01.prod.partner.outlook.cn (10.43.109.207) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5273.15; Fri, 20 May 2022 04:19:12 +0000
-Received: from SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn ([10.43.110.19])
- by SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn ([10.43.110.19]) with mapi
- id 15.20.5273.017; Fri, 20 May 2022 04:19:12 +0000
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Ree
-To:     Recipients <cuidong.liu@gientech.com>
-From:   "J Wu" <cuidong.liu@gientech.com>
-Date:   Wed, 18 May 2022 21:19:15 +0000
-Reply-To: contact@jimmywu.online
-X-ClientProxiedBy: BJSPR01CA0002.CHNPR01.prod.partner.outlook.cn
- (10.43.34.142) To SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn
- (10.43.110.19)
-Message-ID: <SHXPR01MB06238D40DEF6AAD61B0227D389D19@SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn>
+        Fri, 20 May 2022 00:51:37 -0400
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B721EEE6
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 May 2022 21:51:35 -0700 (PDT)
+Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20220520045132epoutp014f5b59b5da60a61b0fbb9634d45f5134~wtwQ9_Q7C0435404354epoutp01i
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 May 2022 04:51:32 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20220520045132epoutp014f5b59b5da60a61b0fbb9634d45f5134~wtwQ9_Q7C0435404354epoutp01i
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1653022292;
+        bh=0s/WE1fRITBuNFHC2Z39v8u36PMK9xRG27XBcVT667w=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=uVxDyj75i+Mvgzogj+gs2kquKeeD6Qyt9ERcvRy3Qiqd4C2PB5JYqQcbH+4scV4gL
+         NND8rF3BqT2x6L17DEMza92raGAohd813IgY/xX9opXvIjHGJ35AZlE/EXdvp2DXql
+         7CRy4l8yW/WVWTod1bs7KVyQ2O44Oby/HqbjnRxg=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
+        20220520045131epcas2p4a892b08378e752803693d1170ec3ecf6~wtwQV-sZx0684006840epcas2p4H;
+        Fri, 20 May 2022 04:51:31 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.36.88]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4L4Dp83cfRz4x9Pv; Fri, 20 May
+        2022 04:51:28 +0000 (GMT)
+Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        15.03.10028.C4E17826; Fri, 20 May 2022 13:51:24 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas2p1.samsung.com (KnoxPortal) with ESMTPA id
+        20220520045124epcas2p12235472b7e9f7588003a7c8c238e8866~wtwJfJhTV0743507435epcas2p1W;
+        Fri, 20 May 2022 04:51:24 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20220520045124epsmtrp24bdc8a9f36b68e7bd9e0f65929326d56~wtwJeb0yh0544805448epsmtrp2R;
+        Fri, 20 May 2022 04:51:24 +0000 (GMT)
+X-AuditID: b6c32a47-573ff7000000272c-9d-62871e4c2624
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        6D.75.11276.B4E17826; Fri, 20 May 2022 13:51:23 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.51]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20220520045123epsmtip2f2cb8aee8d578ca5265e7bc482cb0130~wtwJR3Swi2365623656epsmtip23;
+        Fri, 20 May 2022 04:51:23 +0000 (GMT)
+From:   Chanho Park <chanho61.park@samsung.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        Chanho Park <chanho61.park@samsung.com>
+Subject: [PATCH] arm64: dts: exynoautov9: add syscon reboot/reboot_mode
+ support
+Date:   Fri, 20 May 2022 13:52:10 +0900
+Message-Id: <20220520045210.55132-1-chanho61.park@samsung.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 41ca1767-fbf2-4795-4231-08da39141d61
-X-MS-TrafficTypeDiagnostic: SHXPR01MB0575:EE_
-X-Microsoft-Antispam-PRVS: <SHXPR01MB05757B59B2D012F5EB1E390D89D39@SHXPR01MB0575.CHNPR01.prod.partner.outlook.cn>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?2HAd0fwgQDXkUZsGOEW4k34pXdmeGj4x7s+V0ucJJ4+0gri2WmjmZnuBM0?=
- =?iso-8859-1?Q?vwoY9h8ruvMfbVR52dwMpwwjF3PjR7nWXSXKTJLbveOT/OOiyP2rOkOTVf?=
- =?iso-8859-1?Q?/PsCHnU7yKCeKnLH2iLW5+7FxP6daDPy34OXIZ3/GIFtlNsB5aAFX0mp5k?=
- =?iso-8859-1?Q?97q76D9I63IVoNUqzQ7cyar+J7q5Gz6MZhEV4qf7vBq98Ywv8wsUnf5M+b?=
- =?iso-8859-1?Q?qkIBcJeSR85lKdc6JVTKjnymWzx4dhPlGXcMOmVHpDiVcODvy84XoZ19vA?=
- =?iso-8859-1?Q?rsiS8UO425yUlZzB/bmJ0XXUo5zxtJuP+ASQ7bttTVyVcWv8rn0Ug04yX9?=
- =?iso-8859-1?Q?FHOkBofWyrZB1A6Fw8Rv3soQkWwFv805wG8/2OO/ztl8FlkwCjSfVfX3Qr?=
- =?iso-8859-1?Q?7ta+6oUgAlRo6uQqaGTaEWebQUUMbF7mhUgeJKmy4sAXhso+1OizEWc870?=
- =?iso-8859-1?Q?N47RC4/V9QyM/2jjKTqzSMUng2a+Q9qtexDhPq+Qo11YjqDiVdh/doiGGf?=
- =?iso-8859-1?Q?utMHTDSXL3bU+iw6D6CzELrMB6LY61pDs6hoz13FBQjUZ4mfKSJb2yNnfR?=
- =?iso-8859-1?Q?82/QueIVmOzx1ejFP7jCP/elAFg1pBYlfvdh1+yTuDgQIAAe7ihfXMBNu1?=
- =?iso-8859-1?Q?DhTATPMOvBpWIVTrbORhG3TRia/8X35kKPMtL/S46PiqHlkvQaAw3N8R25?=
- =?iso-8859-1?Q?nRyhHQ6XWxEldG+T/lTJ1FIBp8K6ec2W5DQjrxKTLNAbVsrplJBZAqLce9?=
- =?iso-8859-1?Q?vq9U0DNC8yjtnQRZCnpFf881vbxkMOtVoYCfU8mXBGFaw+M3nr449bpnDs?=
- =?iso-8859-1?Q?qIGmckV+DkVHmvj3/ctn02kTdqbdAvBnaYItZ1rWXoJWs4qXYJ1UsmUjpw?=
- =?iso-8859-1?Q?GeGB/wzThmlKYdWhtvsN0JBNQbYTe1ZH8D8E+0i8PDqV8D71Mr35xcRfzi?=
- =?iso-8859-1?Q?WtzDAfGQlkAj4OOtAvygcuyTrK2vyO6ss3tCHD0jpvba29iyAMJxYCbKG+?=
- =?iso-8859-1?Q?w5ELAWO/hsrNSfLYPgjkWziv/hV7NdoR60shxlV9dRs5Ywvg+EUdvKY+rB?=
- =?iso-8859-1?Q?7Q=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn;PTR:;CAT:OSPM;SFS:(13230001)(366004)(7696005)(52116002)(40160700002)(19618925003)(38100700002)(6200100001)(558084003)(38350700002)(26005)(8936002)(8676002)(4270600006)(40180700001)(9686003)(6862004)(66946007)(7406005)(66556008)(7416002)(55016003)(7366002)(66476007)(186003)(86362001)(2906002)(508600001)(7116003)(3480700007)(33656002)(62346012);DIR:OUT;SFP:1501;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?6m47vHuf/0UBnw9LibOUdsnIfmAruF36JKfn1tgu4grukT4hnZWiw5hvE9?=
- =?iso-8859-1?Q?9Vv9ls/8Fdx709ZJdfi0AtnYCnY3DnppEVWL/3JwZpZpqAMd+AOSLonxgZ?=
- =?iso-8859-1?Q?j44XCnFpe0KXi9D/V+11FBhM64kJXv/a/KI8MRje1MWhEYjFEka1OrJzo4?=
- =?iso-8859-1?Q?HGeQ6tuCkcXxCyEw5ObqL8y8XLjCh6ggbAN0Siktlc3NYgcVC9iD9qDryp?=
- =?iso-8859-1?Q?+HCJLqZM1j9QBMuzJUR4tYsHLdSIij0JwdH9ybyEyoBbUSySTQTgKk0Mpf?=
- =?iso-8859-1?Q?sJQXUrASo0euRv2NTSAjnEF50OdOI9MoHsM9j86I8wQwN0pDhf25jeCPlJ?=
- =?iso-8859-1?Q?PJKCzbozxjy7xKoDRMNdYgd60GH0RU07edJnjK/DMndUDLDoRhpPJKIQHc?=
- =?iso-8859-1?Q?um4U9qnjP/yTmhhGGJ0bV/+ZXe99ZcnpjlE9GhNHM85Bv12SkZM0ousRl2?=
- =?iso-8859-1?Q?j5hb2r5OmOvzYrpSUPc8hB6low05FFDDBCyRdF/PDmjnhm10URBsOszZmS?=
- =?iso-8859-1?Q?Wf8Zep1qfz897pLFq6JALjGHmmIllqp5N5OeyLFWkyOnZF/LTR32mjoZbg?=
- =?iso-8859-1?Q?QPsxrbuxJpRK35ZSmX6lZDEvqwgaAaLAnvkWnyO22S6mryutx4WYPszi78?=
- =?iso-8859-1?Q?a4F9MGxm0jYp8TE46NcIg7YypeGQme4quh+Hl3DEZUnY1o/RFcCJ8mo3uQ?=
- =?iso-8859-1?Q?2KhjgzlxS4zmXDO+8C2qFI3SQoa5kshmRK/bUuTIOZkp8hM+sQyDD2WfrY?=
- =?iso-8859-1?Q?HqnLi9Ya6ShG+UIsRIndFqrFxnKIKAWQvdVVeZMAl0r1LsXqn9lRqGaOOi?=
- =?iso-8859-1?Q?L/rvCHRtOaG8NN0AzYg2G32OxvN/7F2D2DEh4d2dZJhXz+rKK60AMG0WQp?=
- =?iso-8859-1?Q?4dgnhHteSpD7702Qwd+xVBwXQT8t1uQ5VLB7VeVfsj9gzAjeRG3dPTX3SQ?=
- =?iso-8859-1?Q?pG9YyFOnd1KEFSeSQijJ12hDt527v0eTjmZUyGQ47NL8VuanUF7GFtiuR9?=
- =?iso-8859-1?Q?tq2jN4xFxNyFbmuaGJdZqLj7Ibja8FxR9yyJM/rKIy6XZd0CX2F3IOYVCr?=
- =?iso-8859-1?Q?ad3RBmaTwUJsQz9Zzmj0zNxzxelisTeF0Ca50tIiXebIwgkW3kdc77h5l1?=
- =?iso-8859-1?Q?L0wYuAj3sOQz0c2EI6l8DNLqrnrSwioDsoybp9p5M5FXjthIN6hh5M3ZCd?=
- =?iso-8859-1?Q?dhLLAcb9iQ/D86VeUjgZpSUlg/+xJF/p4PuzF0UlvUrUTj7di6D2/+R9jb?=
- =?iso-8859-1?Q?IfM7EUwnkm6Ev9UEoTrpOqNFfOeg6K/ifwnW5KU7kaMDHBe7pyim7Go2A3?=
- =?iso-8859-1?Q?2rA7iOiWLwIdGh4cJzn9BbdeSy3FHGfYq5iLYHlIVcb2oNSAYjmK2mp/f0?=
- =?iso-8859-1?Q?E+IANm02fXX9Tg1NNNX8O+wQBlMMgy2Zu5aZlunScS95YdBd3R4sDjm1/v?=
- =?iso-8859-1?Q?NwQSTv0rdTzvP7iDIftbNCTM6ociCiAETUViKxR/nGaIivR+bEG+7YD0Vn?=
- =?iso-8859-1?Q?eAI/Fu/lQT+W0SesbBwgZD/+GmcKA8cjpUMFe6c0Ofl4xa4uIU64/GrPVu?=
- =?iso-8859-1?Q?HGH5toj4UVlzAGpZ82NknoLtJRJIZK78+fQHMO1sWbpUZ828sh7nVWoB19?=
- =?iso-8859-1?Q?WUfT6ORQ2koZBzLDRbeI/EKirVHyLDRCFxVSXDqSoyoZ5xuDe46LIgHaVH?=
- =?iso-8859-1?Q?eU85FZCjjzu5cW1bHrpVXR1iU0zaRt3vZH7Ur58OZw25PB+tAz2Vzl7r8v?=
- =?iso-8859-1?Q?WDLQ=3D=3D?=
-X-OriginatorOrg: gientech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41ca1767-fbf2-4795-4231-08da39141d61
-X-MS-Exchange-CrossTenant-AuthSource: SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2022 21:19:38.2482
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 89592e53-6f9d-4b93-82b1-9f8da689f1b4
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: k0DUz4TNoHO9cM0vkzNpHWdemcLULpCXtHA3c6a0BN6Aea57Y2GajnwScipA1Nv/Q+ZyJyP/DCFexWvIgzQlyc256IuC6ZL5cypLU3ro7vM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SHXPR01MB0575
-X-Spam-Status: No, score=3.3 required=5.0 tests=BAYES_50,DATE_IN_PAST_24_48,
-        DKIM_INVALID,DKIM_SIGNED,FORGED_SPF_HELO,KHOP_HELO_FCRDNS,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPKsWRmVeSWpSXmKPExsWy7bCmqa6PXHuSweot1hYP5m1js7i8X9vi
+        +pfnrBbzj5xjteh78ZDZYsb5fUwWrXuPsFs879vH5MDhsWlVJ5vHnWt72Dz6tqxi9Pi8SS6A
+        JSrbJiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJIS8xN9VWycUnQNctMwfoCiWF
+        ssScUqBQQGJxsZK+nU1RfmlJqkJGfnGJrVJqQUpOgXmBXnFibnFpXrpeXmqJlaGBgZEpUGFC
+        dsbuK/1MBSu5K3ZvDW1gXMzZxcjJISFgIrH8wErWLkYuDiGBHYwS9//9ZYFwPjFKbL7VzQzh
+        fGOUePF9FhNMy6yDbYwQib2MEp2H9zNBOB8ZJVqPr2cDqWIT0JXY8vwVI4gtIhAvcf5NI9hc
+        ZoGXjBInLj1gAUkICwRKHFv6CKyBRUBV4s7sm6wgNq+AnUR3+wEWiHXyEhvm9zJDxAUlTs58
+        AhZnBoo3b50Ndp+EwDl2idXvD7NDNLhILL7xHepWYYlXx7dAxaUkPr/bywZhF0ssnfWJCaK5
+        gVHi8rZfUAljiVnP2oHO5gDaoCmxfpc+iCkhoCxx5BbUXj6JjsN/2SHCvBIdbUIQjeoSB7ZP
+        hzpZVqJ7zmdWCNtDYvL332DDhQRiJb5N3sw6gVF+FpJvZiH5ZhbC3gWMzKsYxVILinPTU4uN
+        CozhsZqcn7uJEZwStdx3MM54+0HvECMTB+MhRgkOZiURXsbcliQh3pTEyqrUovz4otKc1OJD
+        jKbA8J3ILCWanA9Mynkl8YYmlgYmZmaG5kamBuZK4rxeKRsShQTSE0tSs1NTC1KLYPqYODil
+        Gpjab5jm18oJRlxYV6bjGjHZXeqvw8xv29wf6kVG+XxtnGJ43HJfy5KQ+16yktpndDrnbt3y
+        XNn32JRIxsh7Pamae4qEGyvt+aTTlgTPUX2qpWGw51nlWys+q2XLNVovPzyeY162cOtlruN9
+        OrLl4XMzhVnji5cXmnPo5LxkObtg8/LEN0dWa88oOuH6PZNJ7ZuYhVPzdOcLscYGBw8Wu55e
+        FT19KqfLi7v36rOWN31RiHi2MeK9ZtajqXJLyg47spdZVCl271/KfrlG/nZHg7E37/R7wVGH
+        FFuTFoQu5Entv+u3afEc62W5D/Z/6l4cNkmOS6Jx32W7yvBzKzs0RZ+k2X+V0Xr9cMrJC+vU
+        0pVYijMSDbWYi4oTAX9yt7QSBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsWy7bCSvK63XHuSwZedlhYP5m1js7i8X9vi
+        +pfnrBbzj5xjteh78ZDZYsb5fUwWrXuPsFs879vH5MDhsWlVJ5vHnWt72Dz6tqxi9Pi8SS6A
+        JYrLJiU1J7MstUjfLoErY/eVfqaCldwVu7eGNjAu5uxi5OSQEDCRmHWwjbGLkYtDSGA3o8Td
+        jadYIBKyEs/e7WCHsIUl7rccYQWxhQTeM0rc/ANWwyagK7Hl+StGEFtEIF5i6bkfLCCDmAXe
+        Mkr8ezATKMHBISzgLzFltx5IDYuAqsSd2TfB5vAK2El0tx+A2iUvsWF+LzNEXFDi5MwnYHFm
+        oHjz1tnMExj5ZiFJzUKSWsDItIpRMrWgODc9t9iwwDAvtVyvODG3uDQvXS85P3cTIzhAtTR3
+        MG5f9UHvECMTB+MhRgkOZiURXsbcliQh3pTEyqrUovz4otKc1OJDjNIcLErivBe6TsYLCaQn
+        lqRmp6YWpBbBZJk4OKUamGZ6xkf7dDY0xm1/e7l95nG1zTfN9P6fdpKbv0Jw1aYAH8ZnJsYp
+        lSuXVt84+GBpy8Hlst99278p3S69k5z73jFma4GfYWbhm9wzl2O3vnr4IPbXsi0ljTraJe4v
+        Zh+8bJqfNCH2q3CJSLqFO8vbooagRNep34xS/8quj12y7nadJb/kHJHe99esVyXmmln6nIkp
+        1H15TIjjUuODbvE188M32ISEqeedCtGzmmX/f3KP+9TK5BUHUze9n5mlkXmfgyPfWvOU0Iyj
+        hz612UsmPVyTIbx6x6JlDItKggJmfhKWeDWx0Nn+yJd1XqWRp6sa9626E+U65eMSttMSU/SX
+        7/tsOv2YS93VtR8mfWwsPaLEUpyRaKjFXFScCABS6PrBvwIAAA==
+X-CMS-MailID: 20220520045124epcas2p12235472b7e9f7588003a7c8c238e8866
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20220520045124epcas2p12235472b7e9f7588003a7c8c238e8866
+References: <CGME20220520045124epcas2p12235472b7e9f7588003a7c8c238e8866@epcas2p1.samsung.com>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Can you do a job with me?
+Reboot of exynosautov9 SoC can be handled by setting the bit(
+SWRESET_SYSTEM[1]) of SYSTEM_CONFIGURATION register(PMU + 0x3a00).
+syscon-reboot-mode can be used to indicate the reboot mode for
+bootloader. SYSIP_DAT0 register(PMU + 0x810) will not be cleared after
+reboot so bootloader can enter the boot mode according to the value.
+
+Signed-off-by: Chanho Park <chanho61.park@samsung.com>
+---
+ arch/arm64/boot/dts/exynos/exynosautov9.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+index 0ce46ec5cdc3..d99e53406ee0 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+@@ -312,6 +312,22 @@ pinctrl_peric1: pinctrl@10830000 {
+ 		pmu_system_controller: system-controller@10460000 {
+ 			compatible = "samsung,exynos7-pmu", "syscon";
+ 			reg = <0x10460000 0x10000>;
++
++			reboot: syscon-reboot {
++				compatible = "syscon-reboot";
++				regmap = <&pmu_system_controller>;
++				offset = <0x3a00>; /* SYSTEM_CONFIGURATION */
++				value = <0x2>;
++				mask = <0x2>;
++			};
++
++			reboot_mode: syscon-reboot-mode {
++				compatible = "syscon-reboot-mode";
++				offset = <0x810>; /* SYSIP_DAT0 */
++				mode-bootloader = <0xfc>;
++				mode-fastboot = <0xfa>;
++				mode-recovery = <0xff>;
++			};
+ 		};
+ 
+ 		syscon_fsys2: syscon@17c20000 {
+-- 
+2.36.1
+
