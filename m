@@ -2,65 +2,100 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B2D45303C9
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 22 May 2022 17:19:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B36AE530A65
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 10:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346899AbiEVPTY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 22 May 2022 11:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
+        id S229716AbiEWHkW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 May 2022 03:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbiEVPTX (ORCPT
+        with ESMTP id S230143AbiEWHkT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 22 May 2022 11:19:23 -0400
-X-Greylist: delayed 141 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 22 May 2022 08:19:18 PDT
-Received: from jari.cn (unknown [218.92.28.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2BEF813F09
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 22 May 2022 08:19:17 -0700 (PDT)
-Received: by ajax-webmail-localhost.localdomain (Coremail) ; Sun, 22 May
- 2022 23:11:34 +0800 (GMT+08:00)
-X-Originating-IP: [182.148.12.156]
-Date:   Sun, 22 May 2022 23:11:34 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?B?6ZmI5a2m5YW1?= <chenxuebing@jari.cn>
-To:     krzk@kernel.org
-Cc:     alim.akhtar@samsung.com, linux@armlinux.org.uk,
-        linux-arm-kernel@lists.infradead.org,
+        Mon, 23 May 2022 03:40:19 -0400
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5301D328
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 00:40:17 -0700 (PDT)
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 303703F1D3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 06:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1653288177;
+        bh=ElcnKNUngg8XsyxDb1irNReBJTeKSXIKHCZV8bfpqcM=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=IdN9ij9KhQXTvjru0ZoAxBjP95dggo2tqLm3ORh0ytDKKCzdiZoFFCwvy0DCjKPhL
+         MgYPIu7nVc0n3F/TPTZZd2UozF3MZKXH+q1Pp1e1zAK0teWZCs986NpxhfhRt01WMR
+         52EXXmcKJJ/jJ3enknqkCHUIRtNvDeGeX/kujL+YcZTmB9CSxUyzgC0STzvhIugf+n
+         /aQFQG/HyL4ZLnTdfrL08VCzs/o/hHvqVh2nQcGf7m9q92Vkb7NOadDxKpOcX5NOzK
+         QQDExWINMDCmSy6jblAByF3lePru7NfFRbO4KfZrjRepyI2gloS5Ht14sSMCVshP4o
+         0b+Du3nhOl3TQ==
+Received: by mail-ej1-f70.google.com with SMTP id v13-20020a170906b00d00b006f51e289f7cso5399597ejy.19
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 22 May 2022 23:42:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ElcnKNUngg8XsyxDb1irNReBJTeKSXIKHCZV8bfpqcM=;
+        b=tLUb0T+cAJvOxLdsc2WJ+XXdwgOiErZ+fHSc/91VFqhYwtA4WVxT5FwQA1ljroCZDV
+         rQnKwnv0n/iJTOgYv1Rh8mR1eD9DWFtJiBIrGNPn7fRT0uUbQ9fMkxlbXoqHcZlfDsWQ
+         /VHDBUPDBmWhVLAfhFLQyt/eKCqEqapWbLWQTjuMPmas1G5oZw1xrWRIiKt9yPw9FUXc
+         KZwMd/gAuz45Iw8DpZFl52kqHXcVpK//7dQfgZbhE8FZAzTzO8GgrQz/3daxOvcAvyy9
+         yLfZlqanQd8S2s53HVPuT1TEdmIPajAjHr4O7+ZkJpKEWUBRnxBW6Uuoa90Qh8biDYjD
+         qsHw==
+X-Gm-Message-State: AOAM533nhp4E6IhcHj+QGORCGgY0z5onzY0TTOhLlEGqinhURIjgN+Kl
+        OWti6tb1BuaXg4qYSez3vdo6jjkz3LGVgfuDyuGUDQ0iLSz05XQlCYRrVuQ+yBD7nqdFkf93QVN
+        z2RWgCrzVx7/JTPhbjnyVg16OQtuv50PPpHpQQ1v+k3+pcvdN
+X-Received: by 2002:a17:907:3f1f:b0:6fe:b40a:21f0 with SMTP id hq31-20020a1709073f1f00b006feb40a21f0mr11298522ejc.744.1653288176922;
+        Sun, 22 May 2022 23:42:56 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJybibqjJfbfowQwaW7O5HhenR3cdlBBXdit+jG7WP/mL+1F6AIWKRTXROJ5W9mpz1+M1cLFTg==
+X-Received: by 2002:a17:907:3f1f:b0:6fe:b40a:21f0 with SMTP id hq31-20020a1709073f1f00b006feb40a21f0mr11298514ejc.744.1653288176736;
+        Sun, 22 May 2022 23:42:56 -0700 (PDT)
+Received: from gollum.fritz.box ([194.191.244.86])
+        by smtp.gmail.com with ESMTPSA id p3-20020a056402074300b0042617ba63a5sm7792416edy.47.2022.05.22.23.42.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 May 2022 23:42:56 -0700 (PDT)
+From:   Juerg Haefliger <juerg.haefliger@canonical.com>
+X-Google-Original-From: Juerg Haefliger <juergh@canonical.com>
+To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        linux@armlinux.org.uk, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH] ARM: s3c: Use strscpy to replace strlcpy
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.1 build 20210329(c53f3fee)
- Copyright (c) 2002-2022 www.mailtech.cn
- mispb-4e503810-ca60-4ec8-a188-7102c18937cf-zhkzyfz.cn
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+Cc:     linux-kernel@vger.kernel.org,
+        Juerg Haefliger <juergh@canonical.com>
+Subject: [PATCH 0/3] ARM: s3c: Kconfig: Style cleanups
+Date:   Mon, 23 May 2022 08:42:49 +0200
+Message-Id: <20220523064252.11938-1-juergh@canonical.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Message-ID: <1f4faebf.9e6.180ec52dc40.Coremail.chenxuebing@jari.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AQAAfwBHUW+nUopiSQA3AA--.652W
-X-CM-SenderInfo: hfkh05pxhex0nj6mt2flof0/1tbiAQAOCmFEYxsksAAAsM
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-        daVFxhVjvjDU=
-X-Spam-Status: No, score=2.2 required=5.0 tests=BAYES_00,RCVD_IN_PBL,RDNS_NONE,
-        T_SCC_BODY_TEXT_LINE,T_SPF_HELO_PERMERROR,T_SPF_PERMERROR autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
-X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-ClRoZSBzdHJsY3B5IHNob3VsZCBub3QgYmUgdXNlZCBiZWNhdXNlIGl0IGRvZXNuJ3QgbGltaXQg
-dGhlIHNvdXJjZQpsZW5ndGguICBQcmVmZXJyZWQgaXMgc3Ryc2NweS4KClNpZ25lZC1vZmYtYnk6
-IFh1ZUJpbmcgQ2hlbiA8Y2hlbnh1ZWJpbmdAamFyaS5jbj4KLS0tCiBhcmNoL2FybS9tYWNoLXMz
-Yy9tYWNoLW1pbmkyNDQwLmMgfCAyICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyks
-IDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9hcmNoL2FybS9tYWNoLXMzYy9tYWNoLW1pbmky
-NDQwLmMgYi9hcmNoL2FybS9tYWNoLXMzYy9tYWNoLW1pbmkyNDQwLmMKaW5kZXggNTUxZWM2NjBh
-YjU5Li45OGNlYmMwNjUyMWMgMTAwNjQ0Ci0tLSBhL2FyY2gvYXJtL21hY2gtczNjL21hY2gtbWlu
-aTI0NDAuYworKysgYi9hcmNoL2FybS9tYWNoLXMzYy9tYWNoLW1pbmkyNDQwLmMKQEAgLTYyNCw3
-ICs2MjQsNyBAQCBzdGF0aWMgY2hhciBtaW5pMjQ0MF9mZWF0dXJlc19zdHJbMTJdIF9faW5pdGRh
-dGEgPSAiMHRiIjsKIHN0YXRpYyBpbnQgX19pbml0IG1pbmkyNDQwX2ZlYXR1cmVzX3NldHVwKGNo
-YXIgKnN0cikKIHsKIAlpZiAoc3RyKQotCQlzdHJsY3B5KG1pbmkyNDQwX2ZlYXR1cmVzX3N0ciwg
-c3RyLAorCQlzdHJzY3B5KG1pbmkyNDQwX2ZlYXR1cmVzX3N0ciwgc3RyLAogCQkJc2l6ZW9mKG1p
-bmkyNDQwX2ZlYXR1cmVzX3N0cikpOwogCXJldHVybiAxOwogfQotLSAKMi4zNi4xCg==
+The majority of the Kconfig files use a single tab for basic indentation
+and a single tab followed by two whitespaces for help text indentation.
+Fix the lines that don't follow this convention.
+
+While at it, add missing trailing comments to endif statements and replace
+tabs before comments with whitespaces (which seems to be more common).
+
+Juerg Haefliger (3):
+  ARM: s3c: Kconfig: Fix indentation
+  ARM: s3c: Kconfig.s3c24xx: Fix indentation and replace some tabs
+  ARM: s3c: Kconfig.s3c64xx: Fix indentation
+
+ arch/arm/mach-s3c/Kconfig         | 14 +++++++-------
+ arch/arm/mach-s3c/Kconfig.s3c24xx | 26 ++++++++++++--------------
+ arch/arm/mach-s3c/Kconfig.s3c64xx | 16 ++++++++--------
+ 3 files changed, 27 insertions(+), 29 deletions(-)
+
+-- 
+2.32.0
+
