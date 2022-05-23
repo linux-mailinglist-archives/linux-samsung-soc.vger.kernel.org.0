@@ -2,61 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C479530ACD
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 10:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54C11530AF9
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 10:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230171AbiEWHkU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 May 2022 03:40:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
+        id S229950AbiEWHca (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 May 2022 03:32:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbiEWHkT (ORCPT
+        with ESMTP id S232087AbiEWHcS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 May 2022 03:40:19 -0400
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92951D308
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 00:40:17 -0700 (PDT)
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+        Mon, 23 May 2022 03:32:18 -0400
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F69E28725
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 00:29:50 -0700 (PDT)
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 4DAC63FD7D
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 06:42:58 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 219923F217
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 06:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1653288178;
-        bh=yEO41M4QEwl2GHy1OyiRTroQlrDw56y+j0EhDtN4chM=;
+        s=20210705; t=1653288180;
+        bh=0Fn1JXeiAOQvsSv4ME7qjx3lVZQDLG08r06uAlMp+Ak=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=oBlKs4eaIoVGZRneocVzF8NraXtRtVAiN5nMZ0ti3oWOLc821vr7WhiyKoLV1Fd+F
-         x91qasJk4fsp/N+E/kujl4tiuXXuK//GUk5gGzJ69hYI+xlF5IGx46Sr6YN2jeX/uf
-         4jYF3lyWgPSQVwr0OwV+u34oDAsVN5BRjsIJNYtI4XispWZU3saQtONw8D2qgoNcCo
-         I3NKvfZyEuJU9i7ajatMc3ikBBU3Tv6SBY72wtbCH+O9g6FtK60vU+rc/WwHDpiEhI
-         zx9/KPk6H8P0ZWeMLVPJ0JT7sT83zJjXmoOtelOUTwgK2WId6e4fGdXcuDhxU5R6/G
-         yLkVHGod5MCJw==
-Received: by mail-ej1-f69.google.com with SMTP id n2-20020a170906724200b006fed87ccbb8so554475ejk.7
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 22 May 2022 23:42:58 -0700 (PDT)
+        b=js1qMoqoMME8t78ukg0V2HnCD1AdUlBjqU28EN3w2rZecgaRGR/skKawwhXXKx7c2
+         UX4gt0IuxAfr7wmAinYY5O1hMjKe7dE9DBaA3/Czga/p+P6cOn+/5CcvQvfrObmtw/
+         KKMLwXac6u4XpzPo+fgEn7gfsKgXeqQ+TklNymYRQXfAJhvlz+L51wV0tJMkFhdMT4
+         Jt+e9L793wjV27TGmVK96ZwrCsbiHv+B4O/0/UOW+A6NDJM5nhKBjq5J2nxnfNhp99
+         pAvROTsuOznz5kB5QCAZbt+227NhNt/CMlwI4wEyIPxYt9T2YwvKaGMJLeIj28YrJL
+         MyM0Gg/dUs82w==
+Received: by mail-ej1-f70.google.com with SMTP id i14-20020a17090639ce00b006dabe6a112fso5406727eje.13
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 22 May 2022 23:43:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yEO41M4QEwl2GHy1OyiRTroQlrDw56y+j0EhDtN4chM=;
-        b=E3lOp5Hc6kK75zfqGJbGELI+xLZ0ybCoixqEt+K/W41W4sqQ2+OPZN3GOQ3cPJYY0B
-         dvRnnD20KY3QjYdC/AswxYZuqB1auBNk3t9KqZwgejybaa4HBR7E9VfjToFaYZ4D6xwt
-         XHYVrBnBID0SSRZi3a4h/xff+45KwjQWjXVDEICCJ078GeYyD3Et2vi3fKYhNhDjSHto
-         bt34mgKhKBe/fx6X/tXOoyPpTYtzN4YPqOpQkK2vYQZnJ6wBN2T8gmg6/xuyGiAikXJl
-         csqIp+pK9NvZ0xAUNZuT0GBDIHv6+WPUuH6PsD3UZHQHXR9+sbN1YBC9q0Or2tKAUGU1
-         3L1A==
-X-Gm-Message-State: AOAM530gK3QOfCInkBslmzFiVnoSZ0jOkEptLEqKMv4g66PTPZYuWYD/
-        WDJH3IX27AphtP8dqUNG8m1eecZiYOtaZtVyrAHddxA2/Ff7WuraxZrJ1hMiDxeqVuMl7V/9wf9
-        Yn1Gk7iE8k/dF3y44OuTUcTFhIfnGuMTfadIpAeV3qi/fWEix
-X-Received: by 2002:a05:6402:5415:b0:42b:228:5cf with SMTP id ev21-20020a056402541500b0042b022805cfmr19522529edb.245.1653288178044;
+        bh=0Fn1JXeiAOQvsSv4ME7qjx3lVZQDLG08r06uAlMp+Ak=;
+        b=oVJSbnUSbkCM2IkzYypH1cBBO8PCRJIE51RXuDQFqzD58ZPGANpUSJgfS0SXAfEOLU
+         OqJ8+n448Y4V3yrtc8NTbaeLKsGKTSNFo8DvuwM0BIoendHhitnF2/LarvVS3VDtHzfN
+         Dn/AFHniLuFG0aprjUMbKdLzoNboJ3km+AOd8Lau03yYtJ3zoLlXpUySuBmdfxuzqZft
+         E2VJ2JHAfoOBSuEGZIsan53ZNyzw26c0heZlHvv56MUDzJ7xA5JXsEBvrorXnRr4vcAF
+         /hBToinjNs5oxpzTrVkkzzftApf6xKYSIY4WHozZX1JHy9XIJjGx8/7oUzgYLpK/foZc
+         CnUw==
+X-Gm-Message-State: AOAM533Jtd70tOSVdOnTQv0xV0bfuogJMta+OX5l8f2ggZdMMfvS9ck7
+        EsnXEEclR1ySdZVPD8ktr30/e6CQDAVpqE+LYR/ucdFJmue/uRLjpqJFdzIxwvWfBZgTc3B3xS6
+        qFdGzMBLbXHH0yY2dwnSRZLghS3PeWYvOuSthneptH/NeVREm
+X-Received: by 2002:a05:6402:174c:b0:42a:b4df:3aa7 with SMTP id v12-20020a056402174c00b0042ab4df3aa7mr22241466edx.263.1653288178997;
         Sun, 22 May 2022 23:42:58 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwJ7ytld9I2P8mL8R1KS+HF6d7ge2qDH3qWflgznfKAeHOLzLYMEmXjk7V+OZ0SsEf9b43icQ==
-X-Received: by 2002:a05:6402:5415:b0:42b:228:5cf with SMTP id ev21-20020a056402541500b0042b022805cfmr19522520edb.245.1653288177859;
-        Sun, 22 May 2022 23:42:57 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyXGU3a9rNtXp1i8dxNZ2qWALsHyrukZ0RD+lIEHrPJw1VeHxe4hbjKgVr8+47QB60PgYV82Q==
+X-Received: by 2002:a05:6402:174c:b0:42a:b4df:3aa7 with SMTP id v12-20020a056402174c00b0042ab4df3aa7mr22241456edx.263.1653288178851;
+        Sun, 22 May 2022 23:42:58 -0700 (PDT)
 Received: from gollum.fritz.box ([194.191.244.86])
-        by smtp.gmail.com with ESMTPSA id p3-20020a056402074300b0042617ba63a5sm7792416edy.47.2022.05.22.23.42.56
+        by smtp.gmail.com with ESMTPSA id p3-20020a056402074300b0042617ba63a5sm7792416edy.47.2022.05.22.23.42.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 May 2022 23:42:57 -0700 (PDT)
+        Sun, 22 May 2022 23:42:58 -0700 (PDT)
 From:   Juerg Haefliger <juerg.haefliger@canonical.com>
 X-Google-Original-From: Juerg Haefliger <juergh@canonical.com>
 To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
@@ -64,9 +64,9 @@ To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
         linux-samsung-soc@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org,
         Juerg Haefliger <juergh@canonical.com>
-Subject: [PATCH 1/3] ARM: s3c: Kconfig: Fix indentation
-Date:   Mon, 23 May 2022 08:42:50 +0200
-Message-Id: <20220523064252.11938-2-juergh@canonical.com>
+Subject: [PATCH 2/3] ARM: s3c: Kconfig.s3c24xx: Fix indentation and replace some tabs
+Date:   Mon, 23 May 2022 08:42:51 +0200
+Message-Id: <20220523064252.11938-3-juergh@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220523064252.11938-1-juergh@canonical.com>
 References: <20220523064252.11938-1-juergh@canonical.com>
@@ -74,7 +74,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,51 +86,119 @@ The convention for indentation seems to be a single tab. Help text is
 further indented by an additional two whitespaces. Fix the lines that
 violate these rules.
 
+While add it, replace tabs before comments with whitespaces and squeeze
+multiple empty lines.
+
 Signed-off-by: Juerg Haefliger <juergh@canonical.com>
 ---
- arch/arm/mach-s3c/Kconfig | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm/mach-s3c/Kconfig.s3c24xx | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm/mach-s3c/Kconfig b/arch/arm/mach-s3c/Kconfig
-index 1899fc3f44fd..860df703f696 100644
---- a/arch/arm/mach-s3c/Kconfig
-+++ b/arch/arm/mach-s3c/Kconfig
-@@ -43,12 +43,12 @@ config SAMSUNG_ATAGS
- 	def_bool n
- 	depends on ATAGS
+diff --git a/arch/arm/mach-s3c/Kconfig.s3c24xx b/arch/arm/mach-s3c/Kconfig.s3c24xx
+index 000e3e234f71..a7625e772905 100644
+--- a/arch/arm/mach-s3c/Kconfig.s3c24xx
++++ b/arch/arm/mach-s3c/Kconfig.s3c24xx
+@@ -17,8 +17,6 @@ config PLAT_S3C24XX
  	help
--	   This option enables ATAGS based boot support code for
--	   Samsung platforms, including static platform devices, legacy
--	   clock, timer and interrupt initialization, etc.
-+	  This option enables ATAGS based boot support code for
-+	  Samsung platforms, including static platform devices, legacy
-+	  clock, timer and interrupt initialization, etc.
+ 	  Base platform code for any Samsung S3C24XX device
  
--	   Platforms that support only DT based boot need not to select
--	   this option.
-+	  Platforms that support only DT based boot need not to select
-+	  this option.
+-
+-
+ menu "Samsung S3C24XX SoCs Support"
  
- if SAMSUNG_ATAGS
+ comment "S3C24XX SoCs"
+@@ -268,7 +266,7 @@ config MACH_VR1000
+ 	help
+ 	  Say Y here if you are using the Thorcom VR1000 board.
  
-@@ -102,7 +102,7 @@ config S3C_DEV_HSMMC3
- config S3C_DEV_HWMON
+-endif	# CPU_S3C2410
++endif # CPU_S3C2410
+ 
+ config S3C2412_PM_SLEEP
+ 	bool
+@@ -342,7 +340,7 @@ config MACH_VSTMS
+ 	help
+ 	  Say Y here if you are using an VSTMS board
+ 
+-endif	# CPU_S3C2412
++endif # CPU_S3C2412
+ 
+ if CPU_S3C2416
+ 
+@@ -390,7 +388,7 @@ config MACH_S3C2416_DT
+ 	  Note: This is under development and not all peripherals can be supported
+ 	  with this machine file.
+ 
+-endif	# CPU_S3C2416
++endif # CPU_S3C2416
+ 
+ if CPU_S3C2440 || CPU_S3C2442
+ 
+@@ -419,7 +417,7 @@ config S3C2440_PLL_16934400
+ 	default y if S3C24XX_PLL
+ 	help
+ 	  PLL tables for S3C2440 or S3C2442 CPUs with 16.934MHz crystals.
+-endif
++endif # CPU_S3C2440 || CPU_S3C2442
+ 
+ if CPU_S3C2440
+ 
+@@ -515,7 +513,7 @@ config SMDK2440_CPU2440
+ 	default y if ARCH_S3C2440
+ 	select S3C2440_XTAL_16934400
+ 
+-endif	# CPU_S3C2440
++endif # CPU_S3C2440
+ 
+ if CPU_S3C2442
+ 
+@@ -535,7 +533,7 @@ config MACH_NEO1973_GTA02
+ 	select S3C24XX_PWM
+ 	select S3C_DEV_USB_HOST
+ 	help
+-	   Say Y here if you are using the Openmoko GTA02 / Freerunner GSM Phone
++	  Say Y here if you are using the Openmoko GTA02 / Freerunner GSM Phone
+ 
+ config MACH_RX1950
+ 	bool "HP iPAQ rx1950"
+@@ -547,9 +545,9 @@ config MACH_RX1950
+ 	select S3C24XX_PWM
+ 	select S3C_DEV_NAND
+ 	help
+-	   Say Y here if you're using HP iPAQ rx1950
++	  Say Y here if you're using HP iPAQ rx1950
+ 
+-endif	# CPU_S3C2442
++endif # CPU_S3C2442
+ 
+ if CPU_S3C2443 || CPU_S3C2416
+ 
+@@ -558,7 +556,7 @@ config S3C2443_SETUP_SPI
+ 	help
+ 	  Common setup code for SPI GPIO configurations
+ 
+-endif	# CPU_S3C2443 || CPU_S3C2416
++endif # CPU_S3C2443 || CPU_S3C2416
+ 
+ if CPU_S3C2443
+ 
+@@ -571,13 +569,13 @@ config MACH_SMDK2443
+ 	help
+ 	  Say Y here if you are using an SMDK2443
+ 
+-endif	# CPU_S3C2443
++endif # CPU_S3C2443
+ 
+ config PM_H1940
  	bool
  	help
--	    Compile in platform device definitions for HWMON
-+	  Compile in platform device definitions for HWMON
+ 	  Internal node for H1940 and related PM
  
- config S3C_DEV_I2C1
- 	bool
-@@ -194,7 +194,7 @@ config S3C64XX_DEV_SPI0
- config SAMSUNG_DEV_TS
- 	bool
- 	help
--	    Common in platform device definitions for touchscreen device
-+	  Common in platform device definitions for touchscreen device
+-endmenu	# Samsung S3C24XX SoCs Support
++endmenu # "Samsung S3C24XX SoCs Support"
  
- config SAMSUNG_DEV_KEYPAD
- 	bool
+-endif	# ARCH_S3C24XX
++endif # ARCH_S3C24XX
 -- 
 2.32.0
 
