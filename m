@@ -2,55 +2,55 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09FD753101F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 15:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5235530EE9
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 15:17:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235001AbiEWLj5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 May 2022 07:39:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51150 "EHLO
+        id S234935AbiEWLjR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 May 2022 07:39:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234990AbiEWLjK (ORCPT
+        with ESMTP id S234969AbiEWLjG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 May 2022 07:39:10 -0400
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A57065045F
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 04:39:06 -0700 (PDT)
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20220523113904epoutp0311d7c8374de32a64468091005e4dbe1b~xuP9CuC4i2706927069epoutp03S
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 11:39:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20220523113904epoutp0311d7c8374de32a64468091005e4dbe1b~xuP9CuC4i2706927069epoutp03S
+        Mon, 23 May 2022 07:39:06 -0400
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51DF250459
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 04:39:05 -0700 (PDT)
+Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20220523113903epoutp016a503002eed0994eb778e54b84296abc~xuP73NhGu2097420974epoutp01i
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 11:39:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20220523113903epoutp016a503002eed0994eb778e54b84296abc~xuP73NhGu2097420974epoutp01i
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1653305944;
-        bh=eQ47bUorVseyx5i7N/Wh2bBVkNPEPJ6ZdjxWU7QFSgI=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=vVzW/pXUuLms2zSyRAdcraWSSji4vsJly9VKPVXCQEiA69SApy6Dog0zYQ2FmKF3t
-         2epe2EkEYtN9ehiuVJrmb1jCAT00QudhR4t9ukju+a0tBqU7HLD8zP/mXeN6YV/Dwt
-         FHbayuLvsWhl/gBR1wCiCi36Tqzhp4CpUOZ6ZbMo=
+        s=mail20170921; t=1653305943;
+        bh=QTnuRgwdtfc4648MyAX/JHurfFX4SVS6f1GtBil8Cm4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=AqVKZRh3Wv5xx3NTFULW8Benmv4gSdmrVbePNR43IKIsNrctrcefGoxHOF18cQiw+
+         FPa8pMeMOn0fgJkZiSwLuUPqOiDCrNDf8ilfUBBxH/nRxWHUA93MokrgScBRGKQ+XL
+         V6brgitSVRk3TD+oV1GbFtVPiHXGCedaJsWx3i20=
 Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas2p4.samsung.com (KnoxPortal) with ESMTP id
-        20220523113904epcas2p4d251e5c31babc5a48f9eb1608346cab6~xuP8cJz5M1573315733epcas2p4t;
-        Mon, 23 May 2022 11:39:04 +0000 (GMT)
-Received: from epsmges2p4.samsung.com (unknown [182.195.36.90]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4L6Fj12KTsz4x9Pq; Mon, 23 May
+        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
+        20220523113902epcas2p38eb326bb340d499b306d91741507be72~xuP7SCaLP0050400504epcas2p3E;
+        Mon, 23 May 2022 11:39:02 +0000 (GMT)
+Received: from epsmges2p3.samsung.com (unknown [182.195.36.99]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4L6Fj13nKLz4x9Pw; Mon, 23 May
         2022 11:39:01 +0000 (GMT)
 Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
-        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        0A.CD.09694.5527B826; Mon, 23 May 2022 20:39:01 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p1.samsung.com (KnoxPortal) with ESMTPA id
-        20220523113900epcas2p1479e12a846dc27cfc7c0835e5dc0179a~xuP5js_XE3009230092epcas2p1F;
-        Mon, 23 May 2022 11:39:00 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220523113900epsmtrp2dd614c961fa10af25d308beeb0f6157b~xuP5i8nU50448504485epsmtrp2B;
-        Mon, 23 May 2022 11:39:00 +0000 (GMT)
-X-AuditID: b6c32a48-495ff700000025de-01-628b725511bc
+        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C9.70.10028.5527B826; Mon, 23 May 2022 20:39:01 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
+        20220523113901epcas2p3373d84386a309ea2cebc364dbf876bf2~xuP5skNtp0050400504epcas2p39;
+        Mon, 23 May 2022 11:39:01 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20220523113901epsmtrp1750e657284e8b2cbda26f64f2ad23b7b~xuP5qW8X_2953729537epsmtrp1N;
+        Mon, 23 May 2022 11:39:01 +0000 (GMT)
+X-AuditID: b6c32a47-573ff7000000272c-be-628b7255c1d0
 Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        1D.F8.08924.4527B826; Mon, 23 May 2022 20:39:00 +0900 (KST)
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        AC.FD.11276.4527B826; Mon, 23 May 2022 20:39:00 +0900 (KST)
 Received: from localhost.localdomain (unknown [10.229.9.51]) by
         epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20220523113900epsmtip133b0c7f270e22f337f58253231fcdd9e~xuP5WnSoe1792717927epsmtip1j;
+        20220523113900epsmtip11b0e60405086a1a6321ed6077afca59e~xuP5cfNkw1792417924epsmtip1j;
         Mon, 23 May 2022 11:39:00 +0000 (GMT)
 From:   Chanho Park <chanho61.park@samsung.com>
 To:     Rob Herring <robh+dt@kernel.org>,
@@ -59,53 +59,57 @@ Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Sam Protsenko <semen.protsenko@linaro.org>,
         linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-Subject: [PATCH v2 0/3] support watchdog for exynosautov9
-Date:   Mon, 23 May 2022 20:39:16 +0900
-Message-Id: <20220523113919.59571-1-chanho61.park@samsung.com>
+        Chanho Park <chanho61.park@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/3] dt-bindings: watchdog: add exynosautov9 compatible
+Date:   Mon, 23 May 2022 20:39:17 +0900
+Message-Id: <20220523113919.59571-2-chanho61.park@samsung.com>
 X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220523113919.59571-1-chanho61.park@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNKsWRmVeSWpSXmKPExsWy7bCmuW5oUXeSwbJ+XosH87axWVzer21x
-        /ctzVov5R86xWvS9eMhsMeP8PiaL1r1H2C2e9+1jcuDw2LSqk83jzrU9bB59W1YxenzeJBfA
-        EpVtk5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6kkJeYm2qr5OIToOuWmQN0hZJC
-        WWJOKVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwLxArzgxt7g0L10vL7XEytDAwMgUqDAh
-        O+Nt13PmgvNsFT++ijYwLmXtYuTkkBAwkdjfNJe5i5GLQ0hgB6PEhIbPLCAJIYFPjBKfbiVC
-        JD4zSnR+2ABUxQHWsXWOE0TNLkaJI+cMIGo+Mkp8O9jPCJJgE9CV2PL8FZgtIhAvcf5NIwtI
-        EbPAS0aJE5cegG0QFrCU6Pt3F6yIRUBVYsf+/cwgNq+AncSrzx+gzpOX2DC/FyouKHFy5hOw
-        XmagePPW2WBnSwicY5do6b7FCnGdi8SXzliIXmGJV8e3sEPYUhKf3+1lg7CLJZbO+sQE0dvA
-        KHF52y+ohLHErGftjCBzmAU0Jdbv0ocYqSxx5BbUWj6JjsN/2SHCvBIdbUIQjeoSB7ZPZ4Gw
-        ZSW653yGut5DYvebG9DwjJV4cWg92wRG+VlInpmF5JlZCHsXMDKvYhRLLSjOTU8tNiowgcdo
-        cn7uJkZwKtTy2ME4++0HvUOMTByMhxglOJiVRHi3J3YkCfGmJFZWpRblxxeV5qQWH2I0BQbv
-        RGYp0eR8YDLOK4k3NLE0MDEzMzQ3MjUwVxLn9UrZkCgkkJ5YkpqdmlqQWgTTx8TBKdXAVFkq
-        5PUk+bRq2+fSq7dvVStWnpRo+bsjpbDuXZH53vTWOrVT/ie8lytUHWFVC428xydre+SK0/wH
-        L6Za1h79OO+6ukT49L8FNp9O1Fm9bHqnapwbImSyftHxB8t23lr5djXPDydJx5XLKzPv7X27
-        x2zC91vWFv/uvKms1G6Y/1NHZOKbVyuy+49/vftA8u2te/JOgW8fvU/9J/5GWzFW/P5nF9ln
-        LrfcxC5XscUtm1Cm+/9Tx697x4wOzgr+uL3Igtdv0cZXsyfwdG+JNYmMslWUS2RMOzuBddvJ
-        oz+iAlQnpu+4G/Rrec1zxSl7DbMZv/8Sklfk/lj/OcLw3krRIplJMyadsi4TuJXJqv3y31Ml
-        luKMREMt5qLiRACx1YOJDgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLLMWRmVeSWpSXmKPExsWy7bCSnG5IUXeSwe3LphYP5m1js7i8X9vi
-        +pfnrBbzj5xjteh78ZDZYsb5fUwWrXuPsFs879vH5MDhsWlVJ5vHnWt72Dz6tqxi9Pi8SS6A
-        JYrLJiU1J7MstUjfLoEr423Xc+aC82wVP76KNjAuZe1i5OCQEDCR2DrHqYuRi0NIYAejxIy/
-        v5i6GDmB4rISz97tYIewhSXutxxhhSh6zyhxb2UnG0iCTUBXYsvzV4wgtohAvMTScz9YQIqY
-        Bd4ySvx7MBMsISxgKdH37y6YzSKgKrFj/35mEJtXwE7i1ecPrBAb5CU2zO+FigtKnJz5hAXE
-        ZgaKN2+dzTyBkW8WktQsJKkFjEyrGCVTC4pz03OLDQuM8lLL9YoTc4tL89L1kvNzNzGCQ1RL
-        awfjnlUf9A4xMnEwHmKU4GBWEuHdntiRJMSbklhZlVqUH19UmpNafIhRmoNFSZz3QtfJeCGB
-        9MSS1OzU1ILUIpgsEwenVAMT33k59jglk46XnNJba8UmF8+1MNu4YnaBk5rJ3h/Rx9Y/4DfR
-        swrdGJOa+IWzRjkp9qZu7InjPII58U6zZ57NL1kT3/zv07nNf17GV4ikRk6qKXg503eJ6YZd
-        71bKLlXvSktwfLCyQfn/mWD/iAO3gltmGlv2r3grEnxri8hcoyk+1jE/9bfmK8cvcZ/4J6lH
-        /k0e8/I8ga6XD8773m83LzqytUtK0zvojcGRDfnvb9w5Iu5/atb8TO48j1yJZas/Hvzw6lDY
-        5F1Rvx3tHgTazN27IN/coGKu21uLUIskcX2ZsNCKHxOOJKV670sVWHzmXX5zFXfhpBkMWZNv
-        Pnu9TJqTpfGqydEHnn0a/D+UWIozEg21mIuKEwH4hYZ8wAIAAA==
-X-CMS-MailID: 20220523113900epcas2p1479e12a846dc27cfc7c0835e5dc0179a
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAJsWRmVeSWpSXmKPExsWy7bCmuW5oUXeSwcrjMhYP5m1js7i8X9vi
+        +pfnrBbzj5xjteh78ZDZYu/rrewWM87vY7Jo3XuE3eJ53z4mB06PTas62TzuXNvD5tG3ZRWj
+        x+dNcgEsUdk2GamJKalFCql5yfkpmXnptkrewfHO8aZmBoa6hpYW5koKeYm5qbZKLj4Bum6Z
+        OUCnKCmUJeaUAoUCEouLlfTtbIryS0tSFTLyi0tslVILUnIKzAv0ihNzi0vz0vXyUkusDA0M
+        jEyBChOyM569Oc9YMJ+7Yvm7T0wNjH0cXYycHBICJhLLJ15i72Lk4hAS2MEo0fBxLiOE84lR
+        4ujKzVCZb4wSO1d+ZO5i5ABrWTA7CKRbSGAvo8S7+VUQNR8ZJXbt3s0IkmAT0JXY8vwVmC0i
+        EC9x/k0jC0gRs8BCJokJp3azgiSEBbwklq+ZzgRiswioSvxd9QbM5hWwk5jwew4jxH3yEhvm
+        9zKD2JwC9hLv7/2CqhGUODnzCQuIzQxU07x1NjPIAgmBr+wSLQcPsUE0u0jsWbmGCcIWlnh1
+        fAs7hC0l8bK/Dcoullg66xMTRHMDo8Tlbb+gmo0lZj1rZwR5mVlAU2L9Ln2I75UljtyC2ssn
+        0XH4LztEmFeio00IolFd4sD26SwQtqxE95zPrBC2h8S3phdskMCaxCgx5dYRtgmMCrOQvDML
+        yTuzEBYvYGRexSiWWlCcm55abFRgDI/h5PzcTYzgpKnlvoNxxtsPeocYmTgYDzFKcDArifBu
+        T+xIEuJNSaysSi3Kjy8qzUktPsRoCgzsicxSosn5wLSdVxJvaGJpYGJmZmhuZGpgriTO65Wy
+        IVFIID2xJDU7NbUgtQimj4mDU6qBKUMpxJVJYnftlGN6+kqdd1iWezbN/LnHylPqq5KGdd07
+        Zmf/+w3vLl0QWsNp6h63LVb8Z5HvlF0iXNx3uQIEFDn/LTlRqteXUR1/smvnFu2X99YnZieH
+        /3//drbvghcGMg7qd9doloot+RIY0xQ48SRrsnnyNpGZN3N6GyfZZ12VNTJP37bQdX/Rlp3r
+        OEyeduiK7RFNbXsjbX561QbFebYeBS9tE0P323gcuyi6aYfVBtWXAvl34pY+7Du3UpjV6PuN
+        v8UM7al/pqi/M491NW0st12++V7zlImsogL6e86ckZtavvKpzK3vPlZ6fDciS8+btSp7ppV/
+        LnaJECpdwM+ppSjc71fvmsbPN1GJpTgj0VCLuag4EQD6WYgbIwQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNLMWRmVeSWpSXmKPExsWy7bCSnG5IUXeSwY0dlhYP5m1js7i8X9vi
+        +pfnrBbzj5xjteh78ZDZYu/rrewWM87vY7Jo3XuE3eJ53z4mB06PTas62TzuXNvD5tG3ZRWj
+        x+dNcgEsUVw2Kak5mWWpRfp2CVwZz96cZyyYz12x/N0npgbGPo4uRg4OCQETiQWzg7oYuTiE
+        BHYzStzvvs7cxcgJFJeVePZuBzuELSxxv+UIK0TRe0aJa1uWgyXYBHQltjx/xQhiiwjESyw9
+        94MFpIhZYCmTxPrV7UwgCWEBL4nla6aD2SwCqhJ/V70Bs3kF7CQm/J7DCLFBXmLD/F6wzZwC
+        9hLv7/0CqxECqnnevIAZol5Q4uTMJywgNjNQffPW2cwTGAVmIUnNQpJawMi0ilEytaA4Nz23
+        2LDAMC+1XK84Mbe4NC9dLzk/dxMjOLy1NHcwbl/1Qe8QIxMH4yFGCQ5mJRHe7YkdSUK8KYmV
+        ValF+fFFpTmpxYcYpTlYlMR5L3SdjBcSSE8sSc1OTS1ILYLJMnFwSjUwTbhwYfpJq2ft6cdY
+        m+Y+Ln/pd2/e4ZTGzyLH7v6vmLPryfHSJ9ENbG0/lqn4TDw09Wvxk5NBLSe9f9/W53h7cb+E
+        66J1HUoGrDZ5N6/es30osmNe1fz5ZRw7jXcnyMbnSHrkbopbvKmHOTXp1Nf7bFLssht/ylUu
+        E9u3fUuZtdV+H/9JU48udL7V1u63sfFhE6vLqgXNlxPXVvCsf7Bg53lBRju3jR9ZJ18KK2hW
+        /CYbcXuNy1uXKTszTJ/4+l14cjqQf/Jp2fO/Vy2vCLQ0F/m/+EqL3IrenGWL3y83S/kyYcUm
+        P3NFgfXHrjJ77xbrnbO3SDGOXT8mMnDDlO7DM5kPzlmgt7vy5mPDR6cFFtsrsRRnJBpqMRcV
+        JwIAG447Wd4CAAA=
+X-CMS-MailID: 20220523113901epcas2p3373d84386a309ea2cebc364dbf876bf2
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: AUTO_CONFIDENTIAL
 CMS-TYPE: 102P
 DLP-Filter: Pass
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220523113900epcas2p1479e12a846dc27cfc7c0835e5dc0179a
-References: <CGME20220523113900epcas2p1479e12a846dc27cfc7c0835e5dc0179a@epcas2p1.samsung.com>
+X-CMS-RootMailID: 20220523113901epcas2p3373d84386a309ea2cebc364dbf876bf2
+References: <20220523113919.59571-1-chanho61.park@samsung.com>
+        <CGME20220523113901epcas2p3373d84386a309ea2cebc364dbf876bf2@epcas2p3.samsung.com>
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
@@ -117,25 +121,43 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This adds to support watchdog and its device tree nodes for Exynos Auto
-v9 SoC. Like exynos850, the SoC has two cpu watchdog devices but they
-have different CPU configurations compared with exynos850. So, we need
-to add separate configurations for Exynos Auto v9 SoC.
+Adds "samsung,exynosautov9-wdt" to samsung-wdt compatible. This has two
+cpu watchdogs like exynos850.
 
-Changes from v1:
-- Add Krzysztof's RB tags for #1, #2 patch.
-- Drop "status" property of exynosautov9.dtsi and drop #4 patch.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanho Park <chanho61.park@samsung.com>
+---
+ Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Chanho Park (3):
-  dt-bindings: watchdog: add exynosautov9 compatible
-  watchdog: s3c2410_wdt: support exynosautov9 watchdog
-  arm64: dts: exynosautov9: add watchdog DT nodes
-
- .../bindings/watchdog/samsung-wdt.yaml        |  3 ++
- arch/arm64/boot/dts/exynos/exynosautov9.dtsi  | 20 +++++++++
- drivers/watchdog/s3c2410_wdt.c                | 41 +++++++++++++++++--
- 3 files changed, 60 insertions(+), 4 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml b/Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml
+index b08373336b16..8fb6656ba0c2 100644
+--- a/Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml
+@@ -23,6 +23,7 @@ properties:
+       - samsung,exynos5420-wdt                # for Exynos5420
+       - samsung,exynos7-wdt                   # for Exynos7
+       - samsung,exynos850-wdt                 # for Exynos850
++      - samsung,exynosautov9-wdt              # for Exynosautov9
+ 
+   reg:
+     maxItems: 1
+@@ -67,6 +68,7 @@ allOf:
+               - samsung,exynos5420-wdt
+               - samsung,exynos7-wdt
+               - samsung,exynos850-wdt
++              - samsung,exynosautov9-wdt
+     then:
+       required:
+         - samsung,syscon-phandle
+@@ -76,6 +78,7 @@ allOf:
+           contains:
+             enum:
+               - samsung,exynos850-wdt
++              - samsung,exynosautov9-wdt
+     then:
+       properties:
+         clocks:
 -- 
 2.36.1
 
