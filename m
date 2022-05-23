@@ -2,71 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A323C5309E4
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 09:20:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE63530BD5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 May 2022 11:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiEWHU3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 May 2022 03:20:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59776 "EHLO
+        id S231585AbiEWIE0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 May 2022 04:04:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbiEWHTs (ORCPT
+        with ESMTP id S231562AbiEWIEY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 May 2022 03:19:48 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F9E137A81
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 00:11:41 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 27so11153961ljw.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 00:11:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Gc26+rcVZkyKMkbZyQm/Ic2rBEPkaemn6MN2whuu+68=;
-        b=Dvb2vocUO2tRjyqe2xnNFFh330GtVJXAbqh1EPAJtoqLIBwm6FJUavmAMb9RVO/d1R
-         HJBDlsBFMi3TyopQWQWRCjCr+hsjSiUU2rKav7Hv2vnXef54dBGn3gyhXIl4MoP2G3ot
-         YY0oBaEzKHm0zJfqF09w2sHcJbpM+TN9y2k7C/DYcCWJetUCKznndJOzPobXhYXwdyEu
-         fKPrrYefvWMNnrXdEn/5AQwvYFIH1XX0zYDWlg1M8XjfjhkWk1t6/XR1zJanSFA+97/X
-         /WY1VsCDBv1x1ufNcsLX6avdzGXk8J84NrPylV4Ih2CECEdJskf1SyECypbFExLbB00O
-         sZPg==
+        Mon, 23 May 2022 04:04:24 -0400
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BB2411150
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 01:04:19 -0700 (PDT)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 19AFB3F21D
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 08:04:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1653293058;
+        bh=i10Qv2DK8LgAfvLl/28UAS+bU8kNjJDBm8S3mqaIAkM=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+         MIME-Version;
+        b=kHwZOElbvNoXMadOAOnFhimbRT4YfXXw3yOlLTLTu5A4rofJEIDIZDS5gUYqiWWv4
+         40cD7IICUIBVt+RLIU78tZkjNxfTRsDdOzrhfGMjxoqeG1XYatugNQRGjZcZv7jyHh
+         oIkEGQ3WQIaWhovK9oRn9ESkRgfbFWOVW2GQ7B27lnFKchEdAjCNGNLEc9Tow51WUM
+         0Jy8WPqq5Bx9IVF/UfTwoZ/Ob5evL3jWilh4J/g5TeHX8lwXBTewCmGkhEoCkvJn4b
+         heHAa4avWgDSv9VwfaomEy92ci954nNmYVN+yILNnjgzRRMIAYIpNDLHn3O1J+/Ei3
+         0TLOOFef8nxgw==
+Received: by mail-ed1-f69.google.com with SMTP id w14-20020a50fa8e000000b0042ab142d677so10162845edr.11
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 May 2022 01:04:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Gc26+rcVZkyKMkbZyQm/Ic2rBEPkaemn6MN2whuu+68=;
-        b=3rb5zgRbNwiH5SM7WewNpyl6y7OnNhRcrMFWJfrcqQWhTAwE/IySTq5uGFXP7Bb2b6
-         o23d0nkYEngQLBUqhCm/y4ZUse01sktLfEXdV7NO6+gN2ZbJztQdrcae25+2hRaPscoE
-         tr8Dt3yY8od05YZB6+i3k3TiB4IOfiJXws94sFGUHqrQwUBKa0tEKjQlCCIx5jZXRBO1
-         oQoNCpCgVQU6QOpUZY5Sonk6qnrTnfRwizd4P24a+9C6E0aOJRGErcxLPMdyGLxrujXo
-         p29q1c6uCRAMcY2or0Rs7m/5HxjYTBzDKs4H3hjT0u1S9wSX9Zk/cpGVyooZ2GiHnCJv
-         TylQ==
-X-Gm-Message-State: AOAM5327AlJUylYsp4nIUbSSyDEe1+WsbULAkqipXigNVCFpU29p1kSv
-        vG1wE3EZUfSZ/RMrVq5auNLOuw==
-X-Google-Smtp-Source: ABdhPJwH0ehCNPSgTTmhOE/+2s4KV1XW8o5fwpph2ttS7Bp02Stf/i51tIX1yyAPlAq/zLTvOHqXJQ==
-X-Received: by 2002:a05:651c:11c6:b0:253:e817:abc6 with SMTP id z6-20020a05651c11c600b00253e817abc6mr3794822ljo.164.1653289852568;
-        Mon, 23 May 2022 00:10:52 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h23-20020a2e9017000000b0024f3d1daec1sm1639751ljg.73.2022.05.23.00.10.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 May 2022 00:10:52 -0700 (PDT)
-Message-ID: <de01b027-d2ec-683b-290c-86eae5ccc605@linaro.org>
-Date:   Mon, 23 May 2022 09:10:51 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] ARM: s3c: Use strscpy to replace strlcpy
-Content-Language: en-US
-To:     =?UTF-8?B?6ZmI5a2m5YW1?= <chenxuebing@jari.cn>
-Cc:     alim.akhtar@samsung.com, linux@armlinux.org.uk,
-        linux-arm-kernel@lists.infradead.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=i10Qv2DK8LgAfvLl/28UAS+bU8kNjJDBm8S3mqaIAkM=;
+        b=qibJJq/SITNpQeNgKrIM9Nq+eIGjfSTt9U9LU71AiK6KGJPmip9iEwBRRkcmC2FpkO
+         G3ieoXrrZIbGeb15fpVfj7gja1eWfoY2KPcc8f939FxR7ec7iX74tfnycypvnXPmI3Yf
+         Twr2lCfBPEg4tOnJ/X+DNdQcsdkMux6HCb4iiDtS4uT7PPRO73+4hIBTe25gNbwQddcf
+         sVJckD33BYvQbTusrXImoSMwMEBYxF2/t4WicZaxNAZ6b40OsKiEJE5W6N9KwDEkqZei
+         UmPzAQtZ2PfwhlKYI+Cjf62Pdqv9pvLIMbAylNqE0K1oW6oh+c8WlVGQXFel95G0gKVl
+         iU3w==
+X-Gm-Message-State: AOAM532EwkRxsRUvrVFd8DQu/DiD5qIIgrDFeLHmFgbEBN0cmYUTUJuw
+        MN0u+/X7YgbbdEHPWU+NY26o66ACY/j8CGhroel/5kucBJKVv9jkOqBJCNnBaU5ZSotZ561Yy+v
+        g7LneUcqWsetUIeVYU4c9IGhgf41irRVs0QqbgaUaLCqcLS8E
+X-Received: by 2002:a17:907:6d93:b0:6fe:cf1c:cdab with SMTP id sb19-20020a1709076d9300b006fecf1ccdabmr4919402ejc.609.1653293057814;
+        Mon, 23 May 2022 01:04:17 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzAtsAMmmZi6MDmNtECtNY2OYdpHyInL5O1rGQFD4XR9wk0qCNdrz23QVYcMm/EuyDNGL0OYQ==
+X-Received: by 2002:a17:907:6d93:b0:6fe:cf1c:cdab with SMTP id sb19-20020a1709076d9300b006fecf1ccdabmr4919379ejc.609.1653293057473;
+        Mon, 23 May 2022 01:04:17 -0700 (PDT)
+Received: from gollum.fritz.box ([194.191.244.86])
+        by smtp.gmail.com with ESMTPSA id mm24-20020a170906cc5800b006fe9ba21333sm4431045ejb.113.2022.05.23.01.04.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 May 2022 01:04:17 -0700 (PDT)
+From:   Juerg Haefliger <juerg.haefliger@canonical.com>
+X-Google-Original-From: Juerg Haefliger <juergh@canonical.com>
+To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        linux@armlinux.org.uk, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-References: <1f4faebf.9e6.180ec52dc40.Coremail.chenxuebing@jari.cn>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1f4faebf.9e6.180ec52dc40.Coremail.chenxuebing@jari.cn>
-Content-Type: text/plain; charset=UTF-8
+Cc:     linux-kernel@vger.kernel.org,
+        Juerg Haefliger <juergh@canonical.com>
+Subject: [PATCH 2/3 v2] ARM: s3c: Kconfig.s3c24xx: Fix indentation and replace some tabs
+Date:   Mon, 23 May 2022 10:04:09 +0200
+Message-Id: <20220523080409.14949-1-juergh@canonical.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <000c01d86e721c025105406f30samsung.com>
+References: <000c01d86e721c025105406f30samsung.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,35 +82,127 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 22/05/2022 17:11, 陈学兵 wrote:
-> 
-> The strlcpy should not be used because it doesn't limit the source
-> length.  Preferred is strscpy.
-> 
-> Signed-off-by: XueBing Chen <chenxuebing@jari.cn>
+The convention for indentation seems to be a single tab. Help text is
+further indented by an additional two whitespaces. Fix the lines that
+violate these rules.
 
-Your name in From field does not match exactly one used in
-Signed-off-by. Name might be actually the same, but different alphabet
-is used. Please use the same one - latin transliteration - in both cases.
+While add it, replace tabs before comments with whitespaces (which seems to
+be more common), add a missing trailing endif comment and squeeze multiple
+empty lines.
 
-> ---
->  arch/arm/mach-s3c/mach-mini2440.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/mach-s3c/mach-mini2440.c b/arch/arm/mach-s3c/mach-mini2440.c
-> index 551ec660ab59..98cebc06521c 100644
-> --- a/arch/arm/mach-s3c/mach-mini2440.c
-> +++ b/arch/arm/mach-s3c/mach-mini2440.c
-> @@ -624,7 +624,7 @@ static char mini2440_features_str[12] __initdata = "0tb";
->  static int __init mini2440_features_setup(char *str)
->  {
->  	if (str)
-> -		strlcpy(mini2440_features_str, str,
-> +		strscpy(mini2440_features_str, str,
->  			sizeof(mini2440_features_str));
->  	return 1;
->  }
+Signed-off-by: Juerg Haefliger <juergh@canonical.com>
+---
+v2:
+  Mention additional changes in the commit message.
+---
+ arch/arm/mach-s3c/Kconfig.s3c24xx | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
+diff --git a/arch/arm/mach-s3c/Kconfig.s3c24xx b/arch/arm/mach-s3c/Kconfig.s3c24xx
+index 000e3e234f71..a7625e772905 100644
+--- a/arch/arm/mach-s3c/Kconfig.s3c24xx
++++ b/arch/arm/mach-s3c/Kconfig.s3c24xx
+@@ -17,8 +17,6 @@ config PLAT_S3C24XX
+ 	help
+ 	  Base platform code for any Samsung S3C24XX device
+ 
+-
+-
+ menu "Samsung S3C24XX SoCs Support"
+ 
+ comment "S3C24XX SoCs"
+@@ -268,7 +266,7 @@ config MACH_VR1000
+ 	help
+ 	  Say Y here if you are using the Thorcom VR1000 board.
+ 
+-endif	# CPU_S3C2410
++endif # CPU_S3C2410
+ 
+ config S3C2412_PM_SLEEP
+ 	bool
+@@ -342,7 +340,7 @@ config MACH_VSTMS
+ 	help
+ 	  Say Y here if you are using an VSTMS board
+ 
+-endif	# CPU_S3C2412
++endif # CPU_S3C2412
+ 
+ if CPU_S3C2416
+ 
+@@ -390,7 +388,7 @@ config MACH_S3C2416_DT
+ 	  Note: This is under development and not all peripherals can be supported
+ 	  with this machine file.
+ 
+-endif	# CPU_S3C2416
++endif # CPU_S3C2416
+ 
+ if CPU_S3C2440 || CPU_S3C2442
+ 
+@@ -419,7 +417,7 @@ config S3C2440_PLL_16934400
+ 	default y if S3C24XX_PLL
+ 	help
+ 	  PLL tables for S3C2440 or S3C2442 CPUs with 16.934MHz crystals.
+-endif
++endif # CPU_S3C2440 || CPU_S3C2442
+ 
+ if CPU_S3C2440
+ 
+@@ -515,7 +513,7 @@ config SMDK2440_CPU2440
+ 	default y if ARCH_S3C2440
+ 	select S3C2440_XTAL_16934400
+ 
+-endif	# CPU_S3C2440
++endif # CPU_S3C2440
+ 
+ if CPU_S3C2442
+ 
+@@ -535,7 +533,7 @@ config MACH_NEO1973_GTA02
+ 	select S3C24XX_PWM
+ 	select S3C_DEV_USB_HOST
+ 	help
+-	   Say Y here if you are using the Openmoko GTA02 / Freerunner GSM Phone
++	  Say Y here if you are using the Openmoko GTA02 / Freerunner GSM Phone
+ 
+ config MACH_RX1950
+ 	bool "HP iPAQ rx1950"
+@@ -547,9 +545,9 @@ config MACH_RX1950
+ 	select S3C24XX_PWM
+ 	select S3C_DEV_NAND
+ 	help
+-	   Say Y here if you're using HP iPAQ rx1950
++	  Say Y here if you're using HP iPAQ rx1950
+ 
+-endif	# CPU_S3C2442
++endif # CPU_S3C2442
+ 
+ if CPU_S3C2443 || CPU_S3C2416
+ 
+@@ -558,7 +556,7 @@ config S3C2443_SETUP_SPI
+ 	help
+ 	  Common setup code for SPI GPIO configurations
+ 
+-endif	# CPU_S3C2443 || CPU_S3C2416
++endif # CPU_S3C2443 || CPU_S3C2416
+ 
+ if CPU_S3C2443
+ 
+@@ -571,13 +569,13 @@ config MACH_SMDK2443
+ 	help
+ 	  Say Y here if you are using an SMDK2443
+ 
+-endif	# CPU_S3C2443
++endif # CPU_S3C2443
+ 
+ config PM_H1940
+ 	bool
+ 	help
+ 	  Internal node for H1940 and related PM
+ 
+-endmenu	# Samsung S3C24XX SoCs Support
++endmenu # "Samsung S3C24XX SoCs Support"
+ 
+-endif	# ARCH_S3C24XX
++endif # ARCH_S3C24XX
+-- 
+2.32.0
 
-Best regards,
-Krzysztof
