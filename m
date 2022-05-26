@@ -2,74 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A5865350C9
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 26 May 2022 16:37:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E9475354D4
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 26 May 2022 22:45:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347697AbiEZOhi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 26 May 2022 10:37:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36896 "EHLO
+        id S236903AbiEZUoO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 26 May 2022 16:44:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347396AbiEZOhf (ORCPT
+        with ESMTP id S1349072AbiEZUnv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 26 May 2022 10:37:35 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E58ECD6813
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 26 May 2022 07:37:30 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id gh17so3422730ejc.6
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 26 May 2022 07:37:30 -0700 (PDT)
+        Thu, 26 May 2022 16:43:51 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFBB9E7314
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 26 May 2022 13:43:28 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id m20so5058694ejj.10
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 26 May 2022 13:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=j0PQ9KvLcDyhGe/3AHaycqSIR9icXjVWVlUf+JYxn18=;
-        b=ERm27+39gtNECxQMYFX5EkW3ltwET1+2QLwXKG10T6xvWxBHHxrlFqCWX3PptaiPXg
-         Otbc2egol/N+bCdp22qnTPAiTop/KSIiuRi2pW/Qyugyy8Eb0LWGNet2rKcY54LDmpyC
-         GSGV/P5YYmV2gciXxlUxFxehFmYZsYOKWxW9ygr0XX9s/v11mVMJMr+VFRXjPcasdTaC
-         7nitZtcw4E5HimUb9YTQS49PwBD3b0mgqoMWsJpbadGOygjkDROVl7u52ACrO8Vr4ZxE
-         T89UCdcpRqdZk9w5hiu3x/k9PIWTTkg/wE8UNH7pCm4HOlK93XkeOXMpYrmvZdYdMtWl
-         U85g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=61SDdlI/WkCqCxMIXxDin340q/9pKul5ClTEVboRWS4=;
+        b=ENxKB7k1c/ZGV4wSMizWGUYlXla7EY+KcuTEWIdR4K3LqZXQNQYCdPdonJkglV3hni
+         9Y9kgwkJSPSwkTAwvdtAYawWKgGEZnPBOW3Lu5j4/bG2vLZYFrhxFVJJARdMJMA8kcs8
+         cKt/5reimCGAyjs8yUHgL5EWYvrGMfoDXtxR7KlpfvL1yUB6/byAGfAPRex8yGb+W4RY
+         6m0Yv5E+5x/z7E8Cwyn98M57knnt24VrXeFDtN9UguY32VPeWSSgBCqDlHx1nBTqnpZG
+         UBZOo//HLzdznGWHwe0MRS9o3yOTZHX8A66UM8RsafOue75TDum//Ia5dWPOmyLs8Gdf
+         Q1Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j0PQ9KvLcDyhGe/3AHaycqSIR9icXjVWVlUf+JYxn18=;
-        b=stP2RzLwT+K7dAD4H3d80GY9xaz1ZA4IQZvrD6L3Ce11GkNA0cv9I0NcxyNgi/vAnq
-         TgV3ixcjYJ7KLqRC2Es0U5VZg/5PIK7q/w8vV1OlU5/mjFxV46ua/vbd3Wof9bV2f//4
-         M8yjNI9+h3qWOG3ck+zO6hG6HCUCuwI6AbOWYoJ/4lbkNFCFvRhbL19frhXVzaMeVlbe
-         pgLhBl4w1G92yIQ/uOjVPB9PdNNrlqUqEkE8KyGC6nvfALA2MFJUWSjvLps0DtzKdXIK
-         7D7IufBrrxSE9LXr5hVTfqf6HJvEQAefxJuRG3UOD3vtRqAlDjk9E6xLUkxq1okwbO70
-         PQag==
-X-Gm-Message-State: AOAM531XHxgcJvXGYIJ2jUevO8QvJ1cpi7sOuvPSrpemWQhzrJcJImV0
-        nVjuSshyYUMcA5wdV+BtjbCXww==
-X-Google-Smtp-Source: ABdhPJz0TGEj4D8JCwSgEF4ZkDJuijpUzGCx6tNkMnvHxE5o9H5mGyw//NzbhGFp79EzYVL9MUj2+A==
-X-Received: by 2002:a17:906:b048:b0:6fe:be4a:3ecf with SMTP id bj8-20020a170906b04800b006febe4a3ecfmr23471529ejb.104.1653575849408;
-        Thu, 26 May 2022 07:37:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=61SDdlI/WkCqCxMIXxDin340q/9pKul5ClTEVboRWS4=;
+        b=RHYjoE6uvqsKyIpSsgaJSRr6htFczG5dENqvr6tEQvriMfn+XMPQko8T9bCaA14P2p
+         NvJ4TkS8OiPn0TUieVrKQalCB3gAuTgk2nv2VhG16pSoKYcj8d2gk6U/J8b+/GvG22Nz
+         38yTaxauugRC4igC6984y9/sPsPjY0HVySfv/gYOcx+SL0nTMjQHm2z1SLCiTgqg6F9Q
+         x+a3WlbE4NKxGjt0hSWCRqdGpSIwCNBNQHsVt5AZ9iSOVbY7z8d7NRrIEvuTYji9n+7N
+         u+c6/oQkmjQWIGAqwHWiU8C28/KQyyGGsOio5P07VFnWx0LoeJ24dHKv3L/uASheJUT9
+         R0wA==
+X-Gm-Message-State: AOAM532+IdfM0pqHpiD/n8xb/rNxXXUY00wdWsMAjEpWxwtY+pry0T4W
+        /1FAOHd3mEihmc4jjL2MFUrcdw==
+X-Google-Smtp-Source: ABdhPJxBYTEfl97pyUDWNEiYeiRo028m5NzT74n56sjtRyphUKYAKiajTWdqTYhQWx0qOFaqYwwvEQ==
+X-Received: by 2002:a17:906:cb97:b0:6fe:ec71:a49 with SMTP id mf23-20020a170906cb9700b006feec710a49mr19773575ejb.540.1653597807380;
+        Thu, 26 May 2022 13:43:27 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id f27-20020a50a6db000000b0042be2dfa8bdsm267962edc.81.2022.05.26.07.37.28
+        by smtp.gmail.com with ESMTPSA id y11-20020a170906070b00b006fec28bd09fsm816846ejb.22.2022.05.26.13.43.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 07:37:28 -0700 (PDT)
+        Thu, 26 May 2022 13:43:26 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 7/7] dt-bindings: pinctrl: deprecate header with register constants
-Date:   Thu, 26 May 2022 16:37:07 +0200
-Message-Id: <20220526143707.767490-8-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: exynos: adjust whitespace around '='
+Date:   Thu, 26 May 2022 22:43:22 +0200
+Message-Id: <20220526204323.832243-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220526143707.767490-1-krzysztof.kozlowski@linaro.org>
-References: <20220526143707.767490-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,129 +71,32 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-For convenience (less code duplication, some meaning added to raw
-number), the pin controller pin configuration register values
-were defined in the bindings header.  These are not some IDs or other
-abstraction layer but raw numbers used in the registers
-
-These constants do not fit the purpose of bindings.  They do not provide
-any abstraction, any hardware and driver independent ID.  With minor
-exceptions, the Linux drivers actually do not use the bindings header at
-all.
-
-All of the constants were moved already to headers local to DTS
-(residing in DTS directory), so remove any references to the bindings
-header and add a warning tha tit is deprecated.
+Fix whitespace coding style: use single space instead of tabs or
+multiple spaces around '=' sign in property assignment.  No functional
+changes (same DTB).
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/pinctrl/samsung/pinctrl-exynos.c  | 6 ++----
- drivers/pinctrl/samsung/pinctrl-exynos.h  | 3 +++
- drivers/pinctrl/samsung/pinctrl-samsung.c | 4 +---
- drivers/pinctrl/samsung/pinctrl-samsung.h | 8 ++++++++
- include/dt-bindings/pinctrl/samsung.h     | 3 +++
- 5 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
-index 6d7ca1758292..a8212fc126bf 100644
---- a/drivers/pinctrl/samsung/pinctrl-exynos.c
-+++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
-@@ -27,8 +27,6 @@
- #include <linux/soc/samsung/exynos-pmu.h>
- #include <linux/soc/samsung/exynos-regs-pmu.h>
+---
+
+Output compared with dtx_diff and fdtdump.
+---
+ arch/arm64/boot/dts/exynos/exynosautov9.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+index 0ce46ec5cdc3..5827e1228fa9 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+@@ -364,7 +364,7 @@ ufs_0_phy: ufs0-phy@17e04000 {
+ 		};
  
--#include <dt-bindings/pinctrl/samsung.h>
--
- #include "pinctrl-samsung.h"
- #include "pinctrl-exynos.h"
+ 		ufs_0: ufs0@17e00000 {
+-			compatible ="samsung,exynosautov9-ufs";
++			compatible = "samsung,exynosautov9-ufs";
  
-@@ -173,7 +171,7 @@ static int exynos_irq_request_resources(struct irq_data *irqd)
- 
- 	con = readl(bank->pctl_base + reg_con);
- 	con &= ~(mask << shift);
--	con |= EXYNOS_PIN_FUNC_EINT << shift;
-+	con |= EXYNOS_PIN_CON_FUNC_EINT << shift;
- 	writel(con, bank->pctl_base + reg_con);
- 
- 	raw_spin_unlock_irqrestore(&bank->slock, flags);
-@@ -196,7 +194,7 @@ static void exynos_irq_release_resources(struct irq_data *irqd)
- 
- 	con = readl(bank->pctl_base + reg_con);
- 	con &= ~(mask << shift);
--	con |= EXYNOS_PIN_FUNC_INPUT << shift;
-+	con |= PIN_CON_FUNC_INPUT << shift;
- 	writel(con, bank->pctl_base + reg_con);
- 
- 	raw_spin_unlock_irqrestore(&bank->slock, flags);
-diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.h b/drivers/pinctrl/samsung/pinctrl-exynos.h
-index bfad1ced8017..7bd6d82c9f36 100644
---- a/drivers/pinctrl/samsung/pinctrl-exynos.h
-+++ b/drivers/pinctrl/samsung/pinctrl-exynos.h
-@@ -16,6 +16,9 @@
- #ifndef __PINCTRL_SAMSUNG_EXYNOS_H
- #define __PINCTRL_SAMSUNG_EXYNOS_H
- 
-+/* Values for the pin CON register */
-+#define EXYNOS_PIN_CON_FUNC_EINT	0xf
-+
- /* External GPIO and wakeup interrupt related definitions */
- #define EXYNOS_GPIO_ECON_OFFSET		0x700
- #define EXYNOS_GPIO_EFLTCON_OFFSET	0x800
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
-index 26d309d2516d..4837bceb767b 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.c
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
-@@ -26,8 +26,6 @@
- #include <linux/of_device.h>
- #include <linux/spinlock.h>
- 
--#include <dt-bindings/pinctrl/samsung.h>
--
- #include "../core.h"
- #include "pinctrl-samsung.h"
- 
-@@ -614,7 +612,7 @@ static int samsung_gpio_set_direction(struct gpio_chip *gc,
- 	data = readl(reg);
- 	data &= ~(mask << shift);
- 	if (!input)
--		data |= EXYNOS_PIN_FUNC_OUTPUT << shift;
-+		data |= PIN_CON_FUNC_OUTPUT << shift;
- 	writel(data, reg);
- 
- 	return 0;
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.h b/drivers/pinctrl/samsung/pinctrl-samsung.h
-index fc6f5199c548..9af93e3d8d9f 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.h
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.h
-@@ -53,6 +53,14 @@ enum pincfg_type {
- #define PINCFG_UNPACK_TYPE(cfg)		((cfg) & PINCFG_TYPE_MASK)
- #define PINCFG_UNPACK_VALUE(cfg)	(((cfg) & PINCFG_VALUE_MASK) >> \
- 						PINCFG_VALUE_SHIFT)
-+/*
-+ * Values for the pin CON register, choosing pin function.
-+ * The basic set (input and output) are same between: S3C24xx, S3C64xx, S5PV210,
-+ * Exynos ARMv7, Exynos ARMv8, Tesla FSD.
-+ */
-+#define PIN_CON_FUNC_INPUT		0x0
-+#define PIN_CON_FUNC_OUTPUT		0x1
-+
- /**
-  * enum eint_type - possible external interrupt types.
-  * @EINT_TYPE_NONE: bank does not support external interrupts
-diff --git a/include/dt-bindings/pinctrl/samsung.h b/include/dt-bindings/pinctrl/samsung.h
-index 950970634dfe..23e2ffcf6ab8 100644
---- a/include/dt-bindings/pinctrl/samsung.h
-+++ b/include/dt-bindings/pinctrl/samsung.h
-@@ -10,6 +10,9 @@
- #ifndef __DT_BINDINGS_PINCTRL_SAMSUNG_H__
- #define __DT_BINDINGS_PINCTRL_SAMSUNG_H__
- 
-+#warning "These bindings were deprecated, because they do not match the actual bindings but register values." \
-+	 "Instead include the header in the DTS source directory."
-+
- #define EXYNOS_PIN_PULL_NONE		0
- #define EXYNOS_PIN_PULL_DOWN		1
- #define EXYNOS_PIN_PULL_UP		3
+ 			reg = <0x17e00000 0x100>,  /* 0: HCI standard */
+ 				<0x17e01100 0x410>,  /* 1: Vendor-specific */
 -- 
 2.34.1
 
