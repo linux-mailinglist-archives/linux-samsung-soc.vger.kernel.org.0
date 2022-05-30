@@ -2,36 +2,36 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED22D5381DE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 May 2022 16:33:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8526D5381E0
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 May 2022 16:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241210AbiE3OVV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        id S237595AbiE3OVV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
         Mon, 30 May 2022 10:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50278 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240662AbiE3OQR (ORCPT
+        with ESMTP id S241405AbiE3ORe (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 30 May 2022 10:16:17 -0400
+        Mon, 30 May 2022 10:17:34 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7A4EBEBF;
-        Mon, 30 May 2022 06:43:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9DA79C2DB;
+        Mon, 30 May 2022 06:46:29 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0E32960F47;
-        Mon, 30 May 2022 13:43:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273C5C3411A;
-        Mon, 30 May 2022 13:43:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5385560EC3;
+        Mon, 30 May 2022 13:46:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E00C385B8;
+        Mon, 30 May 2022 13:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1653918198;
+        s=k20201202; t=1653918388;
         bh=CTn9HCUjXYHSwA99rQmy+i5tCftAg7PvxJaOxRnYJjo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Z/yxXOBmAcAT8S9BICcwNH2sJCGTMm1xZXCZt3oTTTUcjpY9061Ri12L0rGiauuBx
-         iV+bo3JVjKMzU76fW68kRsgieIDTT0LOzwicz2KXIoqe/FiRF4e9WzHrJk1XSIL3kF
-         ggNYZWMl2vVn3C/a1QoqVzXt3MPAcpW0MqpcSc3XidXLQUtErtIiiKsbaINIveFa8B
-         mpn2P6yMs4hmb3kRpNTEUMYoTohkENxi92RwA9DZe2OH9tozbvKR3UEqcwmMdJXXui
-         DRqHV70WBsKejDSdXSvpwAevDepQvsXz5NLCeqKy93lb84DK0ntDkYEcQU99qIDorI
-         Nswwugi7kGprQ==
+        b=uTHMoz7HU13xEHD2CgNB/6Rs68PX2q8FhJhl2DH6HmMyWalNclQhC9tHABoEnw9Ch
+         sGFhT54cItGLM6dqKO0cfIqybjZclY+YdfzkD+4s/R7I8rxgg/CqTIQ7hOc8gY/ysG
+         fKkBWQqjx+m3O+AKbe7WFZ73/uTsC9s1tGx96LbqibqZDa4GTsmERiMK4ZAXpbKSF7
+         I3iRRAtJ/RpbyZ/GoVu75BykKDiAM2FI/s6w1jRszqYTp+cvdD2+mIm+sWCQbdEVXg
+         iTS0X4pfgkKG4KAfeZt9to0r4GUO6x63sRsb/Y7qGEGK9oqyxXppjBSsCYU0S0apUt
+         l5QNworoJYAoA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Kwanghoon Son <k.son@samsung.com>,
@@ -42,12 +42,12 @@ Cc:     Kwanghoon Son <k.son@samsung.com>,
         krzysztof.kozlowski@linaro.org, linux-media@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 091/109] media: exynos4-is: Fix compile warning
-Date:   Mon, 30 May 2022 09:38:07 -0400
-Message-Id: <20220530133825.1933431-91-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 64/76] media: exynos4-is: Fix compile warning
+Date:   Mon, 30 May 2022 09:43:54 -0400
+Message-Id: <20220530134406.1934928-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220530133825.1933431-1-sashal@kernel.org>
-References: <20220530133825.1933431-1-sashal@kernel.org>
+In-Reply-To: <20220530134406.1934928-1-sashal@kernel.org>
+References: <20220530134406.1934928-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
