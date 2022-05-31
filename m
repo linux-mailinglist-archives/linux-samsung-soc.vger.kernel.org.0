@@ -2,189 +2,115 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10EBE538D3B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 May 2022 10:51:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1762538D11
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 May 2022 10:43:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245022AbiEaIut (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 31 May 2022 04:50:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40440 "EHLO
+        id S234948AbiEaInZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 31 May 2022 04:43:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239543AbiEaIus (ORCPT
+        with ESMTP id S244902AbiEaInT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 31 May 2022 04:50:48 -0400
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E24458CCC5
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 May 2022 01:50:40 -0700 (PDT)
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20220531085038epoutp03782a651a30881be7ab24065a616115fc~0JHLRx3G21619416194epoutp039
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 May 2022 08:50:38 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20220531085038epoutp03782a651a30881be7ab24065a616115fc~0JHLRx3G21619416194epoutp039
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1653987038;
-        bh=IpFxR21ycRBwZRy0NNV1Ev8sWHWxLpZ9m/zI8Ok5k78=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=sq0zHCQD0hRVep5tLQ4Hv46dD1HpoODAgE8GS1dGA6O+gbdjQRQ+56yQ0h77XWOHb
-         um5CAxfJYO9CtCMzrdEoWjVVTqnizviQwrFsda/C92apDfii6QVkGXYkKjMN8hbCRI
-         rfeS8OkfcR3Sv1YJj8GNAN/SEccouuyA3ljA7RMg=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20220531085037epcas5p3f2c28435cbe804a2db53baf7d42dea94~0JHKfXJn00381703817epcas5p3R;
-        Tue, 31 May 2022 08:50:37 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.179]) by
-        epsnrtp1.localdomain (Postfix) with ESMTP id 4LC5Zv74jMz4x9QP; Tue, 31 May
-        2022 08:50:31 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
-        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C1.3B.09762.7D6D5926; Tue, 31 May 2022 17:50:31 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20220531084251epcas5p3101ab1f7043863212544b6fdeeb480bd~0JAYHlO5k2662826628epcas5p37;
-        Tue, 31 May 2022 08:42:51 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220531084251epsmtrp2f050a837365c4169e2e72d7b83d767a4~0JAYDQdfV2385123851epsmtrp2I;
-        Tue, 31 May 2022 08:42:51 +0000 (GMT)
-X-AuditID: b6c32a4b-213ff70000002622-9a-6295d6d7d52a
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        8F.59.08924.B05D5926; Tue, 31 May 2022 17:42:51 +0900 (KST)
-Received: from mshams02 (unknown [107.122.12.94]) by epsmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20220531084249epsmtip1dec96aa9b1d1384b569338e8653bcf58~0JAWL0ZjF2129221292epsmtip1-;
-        Tue, 31 May 2022 08:42:49 +0000 (GMT)
-From:   "m.shams" <m.shams@samsung.com>
-To:     "'Jonathan Cameron'" <jic23@kernel.org>
-Cc:     <lars@metafoo.de>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>,
-        <geert@linux-m68k.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <alim.akhtar@samsung.com>, <paul@crapouillou.net>,
-        <linux-fsd@tesla.com>
-In-Reply-To: <20220522122555.6c65d2b6@jic23-huawei>
-Subject: RE: [PATCH v2 2/3] iio: adc: exynos-adc: Add support for ADC FSD-HW
- controller
-Date:   Tue, 31 May 2022 14:12:46 +0530
-Message-ID: <015b01d874ca$69aa8bb0$3cffa310$@samsung.com>
+        Tue, 31 May 2022 04:43:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 09F5A6F4AA
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 May 2022 01:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1653986594;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=9fPaBZDsV84kO0IEmLkMM+G7p0afLOtSjYZX9TssTp0=;
+        b=MOEenxCBRkxv3kNinQ6gZ+jKu7wQGbSN2LCeDGgcEmWfXFuS7UDU5xWv5Xd/7A50D+2/z7
+        liJmbgFPuS01ZW+XYCbSKKB2HM6GumD/wIpNDfSm1/PP7LAAfdAOik8u16dlhgChRuSFlN
+        kcHV/bFJvsSfX7GgZsinHJS9z0nDsTA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-385-neyobBlSMliv57Btpl6CCA-1; Tue, 31 May 2022 04:43:12 -0400
+X-MC-Unique: neyobBlSMliv57Btpl6CCA-1
+Received: by mail-wr1-f69.google.com with SMTP id z5-20020a5d4d05000000b0020e6457f2b4so1889141wrt.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 May 2022 01:43:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=9fPaBZDsV84kO0IEmLkMM+G7p0afLOtSjYZX9TssTp0=;
+        b=0oOxkVmh/OGfaOiClybf+YRIu+UtWa0wyUy8o/IpjKVx7FO8JVv/j64J1YmTjlipV2
+         b1Lv2bZpv8YGk3VtTH90xOzKlvZUGKLolSI2TiF+m+fTp61jrlqxBBJgjr/rXroV4qA7
+         JiXHFN7zI4Gv0dK0vqsbye/vLkZFg3MTcl3TFGHCcMP2C0Fpbun0aM7s9qencC60Puw4
+         k1xJRQVnMwBIa9W2avnwKjN52g9JTbgwqWN9h36Fx4phobmrO1qkiNV2irOB1rTWQAz4
+         ELgtotGLGbBR9m3063C5oV41CwO+V7J3+nINF07KrwdRT2B84cG47/gwUvxYlqFULyxU
+         WGqg==
+X-Gm-Message-State: AOAM530nzl/lwvN51yMTf1A88BTeGc3n0QszJj4SmenI1epixFFFwV9K
+        +MVxo8Fco5kpDdGSNbXggiF/EQ4H/YpjALULKxGdW60AnKQgvYmQSYsPgSqZjZuXRVX4FIgoDk2
+        25Sp9X04AeHDu1bC3Zt5pdIimOSi+OoY=
+X-Received: by 2002:a05:600c:3b05:b0:397:54ce:896 with SMTP id m5-20020a05600c3b0500b0039754ce0896mr22494781wms.3.1653986591069;
+        Tue, 31 May 2022 01:43:11 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzfshR+I/hDPQmtoECOmlS+FrzrfxKwqTinLxQRa/ZAYNB2+FaUFLoMjB75XtGMJIFbhKjijA==
+X-Received: by 2002:a05:600c:3b05:b0:397:54ce:896 with SMTP id m5-20020a05600c3b0500b0039754ce0896mr22494767wms.3.1653986590859;
+        Tue, 31 May 2022 01:43:10 -0700 (PDT)
+Received: from gerbillo.redhat.com (146-241-112-184.dyn.eolo.it. [146.241.112.184])
+        by smtp.gmail.com with ESMTPSA id g9-20020a05600c4ec900b0039c17452732sm1554367wmq.19.2022.05.31.01.43.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 May 2022 01:43:10 -0700 (PDT)
+Message-ID: <e530dc2021d43a29b64f985d7365319eab0d5595.camel@redhat.com>
+Subject: Re: [PATCH 1/6] netlink: fix missing destruction of rhash table in
+ error case
+From:   Paolo Abeni <pabeni@redhat.com>
+To:     Chengguang Xu <cgxu519@mykernel.net>, netdev@vger.kernel.org,
+        linux-staging@lists.linux.dev, linux-scsi@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org
+Date:   Tue, 31 May 2022 10:43:09 +0200
+In-Reply-To: <20220529153456.4183738-2-cgxu519@mykernel.net>
+References: <20220529153456.4183738-1-cgxu519@mykernel.net>
+         <20220529153456.4183738-2-cgxu519@mykernel.net>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 (3.42.4-2.fc35) 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-in
-Thread-Index: AQIGNN21wa2G9ryxTCo9HfAX0Xxs4AIEb8M6AoyC4FABXCk8mKytwBtw
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGJsWRmVeSWpSXmKPExsWy7bCmlu71a1OTDDYfN7F4MG8bm8X8I+dY
-        LZ7d2stk8aBpFZPFy1n32CyWTJ7ParHp8TVWi4evwi3mHXnHYnF51xw2ixnn9zFZ9C++xGLR
-        uvcIuwOvx+pL7Wwem1Z1snkcOtzB6LF5Sb3HkjeHWD36tqxi9PjXNJfd4/MmuQCOqGybjNTE
-        lNQihdS85PyUzLx0WyXv4HjneFMzA0NdQ0sLcyWFvMTcVFslF58AXbfMHKCLlRTKEnNKgUIB
-        icXFSvp2NkX5pSWpChn5xSW2SqkFKTkFJgV6xYm5xaV56Xp5qSVWhgYGRqZAhQnZGV83vGIu
-        OMhbMXfafvYGxk9cXYycHBICJhIbOt6xdTFycQgJ7GaUePm0iRHC+cQoMb3vBzOE85lR4u+s
-        mYwwLd0X90AldjFKbDi0lxXCecYo8fvxeSCHg4NNQFVix00RkAYRAW2JvW8Ogo1lFrjMJHFn
-        6nU2kASngLFEY+NUVhBbWCBS4tv2SWA2C1Dvus0nmEDm8ApYSnR3SYOEeQUEJU7OfMICYjML
-        yEtsfzuHGeIgBYmfT5exQsTFJY7+7GGG2Osmsbb/MzvIXgmBGxwSMyd0s0E0uEjcnPkVqllY
-        4tXxLewQtpTE53d7oWrSJeY+7GWCsAsklu36DlVjL3HgyhwWkNuYBTQl1u/ShwjLSkw9tY4J
-        4gY+id7fT6BaeSV2zIOxFSX+7+6HGiMu8W7FFNYJjEqzkLw2C8lrs5C8Mwth2wJGllWMkqkF
-        xbnpqcWmBcZ5qeXwCE/Oz93ECE7QWt47GB89+KB3iJGJg/EQowQHs5IIb8muqUlCvCmJlVWp
-        RfnxRaU5qcWHGE2BwT2RWUo0OR+YI/JK4g1NLA1MzMzMTCyNzQyVxHkF/jcmCQmkJ5akZqem
-        FqQWwfQxcXBKNTAt93G+z73hReHejWWmt+P8vkl7l+sV9ZytUq4/a2idcHDr3wNbFr76aHXO
-        jLHYRMHP4Vfxr/mWz1bpMk5Z4fj66NKvV3llZ2x8m9T+L9tqWX4V84r7zBtnd72Yzx41S2rq
-        C6YnV3dXRO3aMMHTsDJ3B9/lhZHTHl7Xb8hc0xz2sOGXoLNL0XFh9XOHv8Vtaw+Neapzq3/X
-        I/urV/Xfb7pXPf9zs6ZJveBupiwJZ7v72pFVqhcnzVT8vnlCxu9N1pNizrRflX48OUDk/7ca
-        3/m+EwuMJuZyXXp3amrzrOT63rr0N5X/ZO+/UPt26lHJgWLDfk+2VjmvkGvLdx5KCdpxf4H9
-        p4kr1j9VY+n2NZP/ocRSnJFoqMVcVJwIAGA213ZZBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNIsWRmVeSWpSXmKPExsWy7bCSnC731alJBp03hSwezNvGZjH/yDlW
-        i2e39jJZPGhaxWTxctY9Noslk+ezWmx6fI3V4uGrcIt5R96xWFzeNYfNYsb5fUwW/YsvsVi0
-        7j3C7sDrsfpSO5vHplWdbB6HDncwemxeUu+x5M0hVo++LasYPf41zWX3+LxJLoAjissmJTUn
-        syy1SN8ugSvj64ZXzAUHeSvmTtvP3sD4iauLkZNDQsBEovviHmYQW0hgB6PE21eMEHFxiWm/
-        9kPZwhIr/z1n72LkAqp5wijRtr8LyOHgYBNQldhxUwSkRkRAW2Lvm4OMIDXMAg+ZJC6e/M4C
-        0XCPUWLKi+NgGzgFjCUaG6eygtjCAuESvz4sYwKxWYAGrdt8gglkKK+ApUR3lzRImFdAUOLk
-        zCcsIGFmAT2Jto1g9zALyEtsfzuHGeI2BYmfT5exQsTFJY7+7GGGuMdNYm3/Z/YJjMKzkEya
-        hTBpFpJJs5B0L2BkWcUomVpQnJueW2xYYJSXWq5XnJhbXJqXrpecn7uJERyfWlo7GPes+qB3
-        iJGJg/EQowQHs5IIb8muqUlCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeS90nYwXEkhPLEnNTk0t
-        SC2CyTJxcEo1MHFszj8kU3AlxfvZ1rs2pg0X8hVnPkl8Nndi3W8B1z4Ndr7HJ2ZnRaa5+lls
-        Wp09+aq/POv/Ztvd88TunX0Uxxvan62r8H8yz8P4+fx7bzzXMVD58WVjm8kmpZU7GHWmerz7
-        17pC6chhg/kdIt/67Fb8CMu0bc15Kj2P822Q0lKZFYLfc6elv9MsSm8OyFoTqS3jJeDUnblh
-        Vlj6j3NnuTOuObN0ROzW7pKJUVPh/+J9jOV5n+fGvMdiDhV/2rlK31RUsqU5NV4RZ2b5uKlo
-        NYND89x7GjXu33xOL19/jO3fXQOjtxMv/+iRcLlf4zlvf778svPeMzOyJwi3HHNxqop+uD3m
-        g1vTy4eTlnWoK7EUZyQaajEXFScCAKTqlwU+AwAA
-X-CMS-MailID: 20220531084251epcas5p3101ab1f7043863212544b6fdeeb480bd
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220520145802epcas5p2153cb572493e3bccd702e0ecce1171fb
-References: <20220520145820.67667-1-m.shams@samsung.com>
-        <CGME20220520145802epcas5p2153cb572493e3bccd702e0ecce1171fb@epcas5p2.samsung.com>
-        <20220520145820.67667-3-m.shams@samsung.com>
-        <20220522122555.6c65d2b6@jic23-huawei>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Hello,
 
-Hi Jonathan,
+On Sun, 2022-05-29 at 23:34 +0800, Chengguang Xu wrote:
+> Fix missing destruction(when '(--i) == 0') for error case in
+> netlink_proto_init().
+> 
+> Signed-off-by: Chengguang Xu <cgxu519@mykernel.net>
+> ---
+>  net/netlink/af_netlink.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+> index 0cd91f813a3b..bd0b090a378b 100644
+> --- a/net/netlink/af_netlink.c
+> +++ b/net/netlink/af_netlink.c
+> @@ -2887,7 +2887,7 @@ static int __init netlink_proto_init(void)
+>  	for (i = 0; i < MAX_LINKS; i++) {
+>  		if (rhashtable_init(&nl_table[i].hash,
+>  				    &netlink_rhashtable_params) < 0) {
+> -			while (--i > 0)
+> +			while (--i >= 0)
+>  				rhashtable_destroy(&nl_table[i].hash);
+>  			kfree(nl_table);
+>  			goto panic;
 
-On Fri, 20 May 2022 20:28:19 +0530
-Tamseel Shams <m.shams@samsung.com> wrote:
+The patch looks correct to me, but it looks like each patch in this
+series is targeting a different tree. I suggest to re-send, splitting
+the series into individual patches, and sending each of them to the
+appropriate tree. You can retain Dan's Review tag.
 
->> From: Alim Akhtar <alim.akhtar@samsung.com>
->> 
->> Exynos's ADC-FSD-HW has some difference in registers set, number of 
->> programmable channels (16 channel) etc. This patch adds support for 
->> ADC-FSD-HW controller version.
->> 
->> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
->> Signed-off-by: Tamseel Shams <m.shams@samsung.com>
->
-> Hi,
->
-> One suggestion inline, otherwise LGTM. Plenty of time to tidy this up as
-this won't make the upcoming merge window - I'll be queuing it up for 5.20
->
-> Thanks,
->
-> Jonathan
->
+Thanks,
 
-Okay, Thanks for reviewing.
-
->> ---
->> - Changes since v1
->> * Addressed Jonathan's comment by using already provided isr handle
->> 
->>  drivers/iio/adc/exynos_adc.c | 55 
->> ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 55 insertions(+)
->> 
->> diff --git a/drivers/iio/adc/exynos_adc.c 
->> b/drivers/iio/adc/exynos_adc.c index cff1ba57fb16..183ae591327a 100644
->> --- a/drivers/iio/adc/exynos_adc.c
->> +++ b/drivers/iio/adc/exynos_adc.c
->> @@ -55,6 +55,11 @@
->>  #define ADC_V2_INT_ST(x)	((x) + 0x14)
->>  #define ADC_V2_VER(x)		((x) + 0x20)
->>  
->> +/* ADC_FSD_HW register definitions */
->> +#define ADC_FSD_DAT(x)			((x) + 0x08)
->
-> I mention this below, but these different register sets should be in the
-struct exynos_adc_data to avoid the need for an if "compatible" == check on
-each use of > them.
->
-
-Can you clarify on how exactly you want me to add these register sets to
-struct exynos_adc_data?
-Do you mean just for these registers or other registers too which are
-defined in this way only?
-
-
-Thanks & Regards,
-Tamseel Shams
+Paolo
 
