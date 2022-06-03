@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E00FB53C7F4
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 Jun 2022 11:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED6553C7EC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 Jun 2022 11:50:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243233AbiFCJuK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 3 Jun 2022 05:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
+        id S243234AbiFCJuG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 3 Jun 2022 05:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243195AbiFCJtz (ORCPT
+        with ESMTP id S243223AbiFCJt5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 3 Jun 2022 05:49:55 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C159248EC
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  3 Jun 2022 02:49:54 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id s6so3331223eja.0
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 03 Jun 2022 02:49:54 -0700 (PDT)
+        Fri, 3 Jun 2022 05:49:57 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FACA24967
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  3 Jun 2022 02:49:55 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id z7so9432086edm.13
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 03 Jun 2022 02:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WaLJt1WvpAiKJ7sF3CVE05WSOaNxkvjsdRpKOJWQz3Q=;
-        b=w74wUAT9vqdRHGsMZNYQK3D7R/1cOktInyuV3fwhPb7HPQK2zLCUKUUKQhTPs62P1n
-         FLnH8MilsWpm0RuOcos8h1k4GpOMYjAuJqyZ4a+4kKQxf4F1obBBA2Pfo5RKyGOVlwt2
-         G7mtY3lsidPC2qFBmlvkgOgBuimHJML5s4I2R4kFaQAPFw0AN3iOP/wUmNJelAh+/K3M
-         YyGY9T8NwhrcpSGt+umTNtoQkf13Rb+7ZH3hj4/4smvuIFwCckVaDECNJ530f64f2Dgc
-         G25AP36CmCteILLGiadoBbi6ixGeJOHLt2i8vNERbxN4DhwcPYxGhYaFxAcaRCSRuigH
-         77tQ==
+        bh=Ums06lpbM+PTGvsWcIDhEEbhw0J/2ZTCTZEOaQpH01c=;
+        b=atYIgWK/6FRawaETkeUwdXYIh+5RCPmZ6VyzX0t1MxzCN7gsZGXo89BKMBDxxpxCbw
+         ESnWPHa3fkokCeYzHS7HI/ToXVIi+ZqW9WQ5Fhvbkhnx1eANmO222pfUml31+LYrH2y7
+         EkW/Ww2cZdpMyFu8XuHwezN3rEDD/utnsi2LIR7+vzN0vaRMlSLbd5MbeeTUoQGcHGY3
+         Z0bRgDr7z7LoDz60cBWExz+ScIQXHVfa8lXxnOT1iNM9rg2dljw1Giy0PdKw4F+sdgeu
+         BvVn0XDB3Ww6dfdY5j8wOqGk/5DHoFQ/PdN9AJ9AGjYtEFACIM0l173LQDYeZNPB9Vyt
+         VxTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WaLJt1WvpAiKJ7sF3CVE05WSOaNxkvjsdRpKOJWQz3Q=;
-        b=Kps0aIwFFgmSDVJYKY+m6eKSyR6pwv9Ba7OOZcXLuSBlqlbIOnT+6mKhKgEeapF5gj
-         mtYwjSpNyA2TDXW5lZKIY6FG/F/8Umjkuv1JBqqdLr5hnzTAuJYdRmYGgJIt5BdKnPOj
-         QIYZKX2/zDgLy2HbrV2i8rVeE3/Cut5xcxUpH2FZN6YIfti4DdAmHvEYH4441hAEMK9a
-         VoBUljT9BQcoMLz26jygLlC1wrVs971unjnp75hRjuc0ZIqEnTX24tSSE3+I/UQ+5mOc
-         qtVMikegTHqtKpJ4FoWDbioVS2qNtmvL6ceg8+4SpJh+vKNPU5VYKSwpWeSQHW+fMaOw
-         rCvA==
-X-Gm-Message-State: AOAM531RD2Fu2ecsjGF1NTJgB9m9twG7wBNko/UZDc4w9jw79w2KR785
-        Rpz14M6ixnyNomFCHS4qyLsMdg==
-X-Google-Smtp-Source: ABdhPJyzQR9OcqECUT1o4sZ9dbMtCmyD8F4HPSgsDufPrHUEHfgWUWoSq+1elGkdLtHzgNdMTz9rmA==
-X-Received: by 2002:a17:907:94d2:b0:6ff:2690:eae9 with SMTP id dn18-20020a17090794d200b006ff2690eae9mr7825022ejc.307.1654249792755;
-        Fri, 03 Jun 2022 02:49:52 -0700 (PDT)
+        bh=Ums06lpbM+PTGvsWcIDhEEbhw0J/2ZTCTZEOaQpH01c=;
+        b=pETi/h8ro99/ngSn3J55uoq62XYeR+M8qXPQfHpsmBmAdXMHVjfRMuS5qjFbrVMmQ9
+         0DRtpvXl2mF23+hOmKmxDFrLXuEboMpdTXpYC8A+ERZUpclLpVTw5RNjireIy2imw1HU
+         TtfxgZaZqWxx5MSo4PUxgMRv7exijomS7xWxTTqjoHDjssURsWogAzf4JqF3potrQjjl
+         11RA0ip9mBg0ocs6QDX7cZGp4jC3mLrCche43sWCSyakpwJWDEnlYWqylcdOlZENeiYS
+         qnexAtW1lImRejf6G3DL5JJEJl228z68GTdvbJDkE3Qfh3C5zMDFz2MDYNbZFO0U2yJp
+         U3sA==
+X-Gm-Message-State: AOAM533yNaBEVru9BqJDIIgQ8NdL74O+K1xjiy4OoF3ThHgaj/oQf4B9
+        YJ2z1eEbu5OZ67QrTh2gUTGmow==
+X-Google-Smtp-Source: ABdhPJzrd3PUALKrqr7kQ7Hn+0AluZ6uwepz5o7BbwOoD/e3jxFINqcWp42bWORfoFn+OT2gGlztHg==
+X-Received: by 2002:a05:6402:e99:b0:41d:11f2:85e0 with SMTP id h25-20020a0564020e9900b0041d11f285e0mr9670216eda.339.1654249793985;
+        Fri, 03 Jun 2022 02:49:53 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id y22-20020aa7ca16000000b0042dcbc3f302sm3669561eds.36.2022.06.03.02.49.51
+        by smtp.gmail.com with ESMTPSA id y22-20020aa7ca16000000b0042dcbc3f302sm3669561eds.36.2022.06.03.02.49.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 02:49:52 -0700 (PDT)
+        Fri, 03 Jun 2022 02:49:53 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -58,9 +58,9 @@ To:     Ulf Hansson <ulf.hansson@linaro.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/3] ARM: dts: exynos: align MMC node name with dtschema
-Date:   Fri,  3 Jun 2022 11:49:44 +0200
-Message-Id: <20220603094946.509919-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/3] arm64: dts: exynos: align MMC node name with dtschema
+Date:   Fri,  3 Jun 2022 11:49:45 +0200
+Message-Id: <20220603094946.509919-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220603094946.509919-1-krzysztof.kozlowski@linaro.org>
 References: <20220603094946.509919-1-krzysztof.kozlowski@linaro.org>
@@ -68,7 +68,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,40 +81,40 @@ The node names should be generic and MMC controller dtschema expects
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/exynos3250.dtsi | 6 +++---
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos3250.dtsi b/arch/arm/boot/dts/exynos3250.dtsi
-index 78dad233ff34..326b9e0ed8d3 100644
---- a/arch/arm/boot/dts/exynos3250.dtsi
-+++ b/arch/arm/boot/dts/exynos3250.dtsi
-@@ -376,7 +376,7 @@ hsotg: hsotg@12480000 {
+diff --git a/arch/arm64/boot/dts/exynos/exynos5433.dtsi b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
+index 75b548e495a0..bd6a354b9cb5 100644
+--- a/arch/arm64/boot/dts/exynos/exynos5433.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynos5433.dtsi
+@@ -1820,7 +1820,7 @@ usbhost_dwc3: usb@15a00000 {
+ 			};
+ 		};
+ 
+-		mshc_0: mshc@15540000 {
++		mshc_0: mmc@15540000 {
+ 			compatible = "samsung,exynos7-dw-mshc-smu";
+ 			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
+ 			#address-cells = <1>;
+@@ -1833,7 +1833,7 @@ mshc_0: mshc@15540000 {
  			status = "disabled";
  		};
  
--		mshc_0: mshc@12510000 {
-+		mshc_0: mmc@12510000 {
- 			compatible = "samsung,exynos5420-dw-mshc";
- 			reg = <0x12510000 0x1000>;
- 			interrupts = <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;
-@@ -388,7 +388,7 @@ mshc_0: mshc@12510000 {
+-		mshc_1: mshc@15550000 {
++		mshc_1: mmc@15550000 {
+ 			compatible = "samsung,exynos7-dw-mshc-smu";
+ 			interrupts = <GIC_SPI 226 IRQ_TYPE_LEVEL_HIGH>;
+ 			#address-cells = <1>;
+@@ -1846,7 +1846,7 @@ mshc_1: mshc@15550000 {
  			status = "disabled";
  		};
  
--		mshc_1: mshc@12520000 {
-+		mshc_1: mmc@12520000 {
- 			compatible = "samsung,exynos5420-dw-mshc";
- 			reg = <0x12520000 0x1000>;
- 			interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-@@ -400,7 +400,7 @@ mshc_1: mshc@12520000 {
- 			status = "disabled";
- 		};
- 
--		mshc_2: mshc@12530000 {
-+		mshc_2: mmc@12530000 {
- 			compatible = "samsung,exynos5250-dw-mshc";
- 			reg = <0x12530000 0x1000>;
- 			interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
+-		mshc_2: mshc@15560000 {
++		mshc_2: mmc@15560000 {
+ 			compatible = "samsung,exynos7-dw-mshc-smu";
+ 			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
+ 			#address-cells = <1>;
 -- 
 2.34.1
 
