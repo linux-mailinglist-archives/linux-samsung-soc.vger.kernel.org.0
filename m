@@ -2,53 +2,61 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 080D053DCBE
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  5 Jun 2022 18:05:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A62E53DCCD
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  5 Jun 2022 18:07:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351098AbiFEQFm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 5 Jun 2022 12:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46138 "EHLO
+        id S1351137AbiFEQHK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 5 Jun 2022 12:07:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351077AbiFEQFj (ORCPT
+        with ESMTP id S1350632AbiFEQHJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 5 Jun 2022 12:05:39 -0400
+        Sun, 5 Jun 2022 12:07:09 -0400
 Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC664DF67
-        for <linux-samsung-soc@vger.kernel.org>; Sun,  5 Jun 2022 09:05:36 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id m20so24672180ejj.10
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 05 Jun 2022 09:05:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0512F5
+        for <linux-samsung-soc@vger.kernel.org>; Sun,  5 Jun 2022 09:07:07 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id gl15so10851462ejb.4
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 05 Jun 2022 09:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UnEy8V6gE2d73YKWzCoW+lrNzkfCzBornaZdJIUsn5E=;
-        b=h54vGCuf3s+A0WXKEjiezuYcYr+FXOViaAKSe3vpyle6501XMhcOzwFUgBrgrBGBqb
-         ToLxit6RzDkwbX0zo5cnu74DseWJjpLY2YcpOkdTYyq+lOAmsFfZ1D0oxCts9As3DeRT
-         wREjZpDjVbtTlXs/9BD/HJBJGAOxiUJ1M/I8BlMlpF/1siVYKvxGVdQP3FB2O6VpVa8A
-         5g3WnU+7cD4KaKjK0NyoSjOAzJvIzkLqvmedNJJl6kZFzrrOh3SozFseFMaRKce12qrX
-         fbBzVd89F5xMVloY0VohIk0zpRp0lWyKzsv7p2L48cFm8PRcmWz4mwB+syzPx3/IlhKr
-         9Ohw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xCX7O8NhzvosQ50yk3GTkKJIoOozPRyC9OGxboOSoUY=;
+        b=XRB/B2HvcnHjpSY8mhPrsMez/FqrID+PhNvQkXoB5lRndHTYAU1PBfj7pM/igUW7tc
+         L1z9Z8yFXxAYjUeWmDalrSqltwk+GC+RfdUPdqnQ/e/XxW6A2t/oap45lGOJ/R/pc29U
+         OUXNgoiA5adWZxC69J5vl0X4j+1jgrDrXfxuKWL4TAPiObXDElGXbZy4eWoltwIYxKby
+         LtB2vcKbt4On/6Rko4XecEdJPKfmqOAVUdJcjtOjskWUhKkzCbnzlaG8is/yXk40xSr4
+         ndlPxW0t6ksAdvFda9e8NIV/IoT1tTPq5tHOiQL+OaLUdYyt6p0+w2obfSHXx8q0+UnM
+         NNIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UnEy8V6gE2d73YKWzCoW+lrNzkfCzBornaZdJIUsn5E=;
-        b=Wvk8VAagFWoIv1/D7cdB0AErXVvkixquyf3JnYv9Ybz1L+RDa/9sMjFnyn3/+BG1j1
-         tubsfYTV916d1VxG+vFMrQzHdU//z/UcERQV1tApz1Hi+/+djubWEm7HcB+JRI3SNnit
-         yDQOmKu23mf5ZXj0Rv5MspuMrhAxr3UFIfqPHnwxfwU+acCuSDnV9HmzzQz1s3uXMAcd
-         FM9asBv1N3qtY1NsBYp/+SHXfXdXPAHeK7IAHmcNmTsVnP1Tk2VZ53X0Z8HGe+PTZvMT
-         OOUnbzFowie740BE3WrH4J4OUMW1OGup1rFKFViQ0SGK157eztkCfjDcNd6Il/UmcT0E
-         4XRw==
-X-Gm-Message-State: AOAM5332tpmRhiYjOUbyBVawfjtT0OXn8nMfh3nHMeUi1XpLEGVBUTJ1
-        wEh2UtRszly0K++6rVRIosYbsg==
-X-Google-Smtp-Source: ABdhPJySBYFwVYmEJKD+EOusGlyb+c6/Fify1F32ILKzFx8KeU09tbhoLpC+yspCW/dCCme1S5Pa+w==
-X-Received: by 2002:a17:907:6e88:b0:707:ea6b:5e15 with SMTP id sh8-20020a1709076e8800b00707ea6b5e15mr17481798ejc.57.1654445134865;
-        Sun, 05 Jun 2022 09:05:34 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id x18-20020a170906805200b0070b7875aa6asm3969963ejw.166.2022.06.05.09.05.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jun 2022 09:05:34 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xCX7O8NhzvosQ50yk3GTkKJIoOozPRyC9OGxboOSoUY=;
+        b=NO/TbgxZ2xGvzqg9d8YMqtFUjBMVhH6/XA2V/55wYfIeloXk03qIt1AqcJMlI1DwHN
+         9CKDkSFX9l7IxhAAUeqiRfKCHhO5ed9+/EOm3JW2SzE6VKqRFWFcrO7n6wIgtkfw/PtS
+         dPOgMP8BYESaIZ52lsVfsAuugoQWdTBP3a0ZNsTng0OOYu3cZ02enqZv7uZHrDJskQAQ
+         REaKLLwcLxDCUuawM0Glr5tK0KezmLnic77fVG8oPKvJ4guKrzn1c/05J4WXeNaKHHio
+         FruwSBDOl8dxeEL49ZJtIO8TLlDR/kORGqbKosU6wKC9U/tuORxTRhZ3WSPMKAglVgI2
+         HhUg==
+X-Gm-Message-State: AOAM530hyY4OGzvoRWkUGHeTNCZrrDxsZXZ/+SgjHfS3Es/7uwhK5Ldj
+        P/4qNqMpjnsNsn6sxOdnLQ+xyg==
+X-Google-Smtp-Source: ABdhPJzyB4vzVySmjCZzv2QY4cQpaKl2NPICl1GkzNdQ+5tqZ247Q0nUN0lnrmIliVTKFleNxN6Kpg==
+X-Received: by 2002:a17:907:7f0b:b0:6ff:4502:9c2f with SMTP id qf11-20020a1709077f0b00b006ff45029c2fmr18228155ejc.532.1654445225579;
+        Sun, 05 Jun 2022 09:07:05 -0700 (PDT)
+Received: from [192.168.0.181] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id lk24-20020a170906cb1800b006fa84a0af2asm5394921ejb.16.2022.06.05.09.07.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Jun 2022 09:07:05 -0700 (PDT)
+Message-ID: <6ac8c5c7-8d53-7bdb-2a1f-b49f95231c73@linaro.org>
+Date:   Sun, 5 Jun 2022 18:07:03 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 8/8] dt-bindings: pinctrl: samsung: deprecate header
+ with register constants
+Content-Language: en-US
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
@@ -58,20 +66,17 @@ To:     Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-gpio@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Chanho Park <chanho61.park@samsung.com>,
+Cc:     Chanho Park <chanho61.park@samsung.com>,
         Linus Walleij <linus.wallej@linaro.org>
-Subject: [PATCH v3 8/8] dt-bindings: pinctrl: samsung: deprecate header with register constants
-Date:   Sun,  5 Jun 2022 18:05:08 +0200
-Message-Id: <20220605160508.134075-9-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220605160508.134075-1-krzysztof.kozlowski@linaro.org>
 References: <20220605160508.134075-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+ <20220605160508.134075-9-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220605160508.134075-9-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,46 +84,27 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-For convenience (less code duplication, some meaning added to raw
-number), the pin controller pin configuration register values
-were defined in the bindings header.  These are not some IDs or other
-abstraction layer but raw numbers used in the registers
+On 05/06/2022 18:05, Krzysztof Kozlowski wrote:
+> For convenience (less code duplication, some meaning added to raw
+> number), the pin controller pin configuration register values
+> were defined in the bindings header.  These are not some IDs or other
+> abstraction layer but raw numbers used in the registers
+> 
+> These constants do not fit the purpose of bindings.  They do not provide
+> any abstraction, any hardware and driver independent ID.  With minor
+> exceptions, the Linux drivers actually do not use the bindings header at
+> all.
+> 
+> All of the constants were moved already to headers local to DTS
+> (residing in DTS directory) and to Samsung pinctrl driver (where
+> applicable), so remove any references to the bindings header and add a
+> warning tha tit is deprecated.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Chanho Park <chanho61.park@samsung.com>
+> Reviewed-by: Linus Walleij <linus.wallej@linaro.org>
 
-These constants do not fit the purpose of bindings.  They do not provide
-any abstraction, any hardware and driver independent ID.  With minor
-exceptions, the Linux drivers actually do not use the bindings header at
-all.
+This needs fixup in address             ^^^^.
 
-All of the constants were moved already to headers local to DTS
-(residing in DTS directory) and to Samsung pinctrl driver (where
-applicable), so remove any references to the bindings header and add a
-warning tha tit is deprecated.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Chanho Park <chanho61.park@samsung.com>
-Reviewed-by: Linus Walleij <linus.wallej@linaro.org>
----
- include/dt-bindings/pinctrl/samsung.h | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/include/dt-bindings/pinctrl/samsung.h b/include/dt-bindings/pinctrl/samsung.h
-index 950970634dfe..d1da5ff68d0c 100644
---- a/include/dt-bindings/pinctrl/samsung.h
-+++ b/include/dt-bindings/pinctrl/samsung.h
-@@ -10,6 +10,13 @@
- #ifndef __DT_BINDINGS_PINCTRL_SAMSUNG_H__
- #define __DT_BINDINGS_PINCTRL_SAMSUNG_H__
- 
-+/*
-+ * These bindings are deprecated, because they do not match the actual
-+ * concept of bindings but rather contain pure register values.
-+ * Instead include the header in the DTS source directory.
-+ */
-+#warning "These bindings are deprecated. Instead use the header in the DTS source directory."
-+
- #define EXYNOS_PIN_PULL_NONE		0
- #define EXYNOS_PIN_PULL_DOWN		1
- #define EXYNOS_PIN_PULL_UP		3
--- 
-2.34.1
-
+Best regards,
+Krzysztof
