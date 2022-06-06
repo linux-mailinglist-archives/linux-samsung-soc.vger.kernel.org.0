@@ -2,112 +2,156 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 507CA53EA4F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jun 2022 19:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D7A53E74B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Jun 2022 19:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239786AbiFFOd6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Jun 2022 10:33:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54452 "EHLO
+        id S240700AbiFFP0M (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Jun 2022 11:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239732AbiFFOd5 (ORCPT
+        with ESMTP id S240584AbiFFPZw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Jun 2022 10:33:57 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D5D0D2C13F;
-        Mon,  6 Jun 2022 07:33:55 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8CACF15DB;
-        Mon,  6 Jun 2022 07:33:55 -0700 (PDT)
-Received: from [10.57.81.38] (unknown [10.57.81.38])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 555903F73B;
-        Mon,  6 Jun 2022 07:33:48 -0700 (PDT)
-Message-ID: <1e0e5403-1e65-db9a-c8e7-34e316bfda8e@arm.com>
-Date:   Mon, 6 Jun 2022 15:33:42 +0100
+        Mon, 6 Jun 2022 11:25:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BADE1CD350;
+        Mon,  6 Jun 2022 08:25:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 97A6761532;
+        Mon,  6 Jun 2022 15:25:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9A7C341DE;
+        Mon,  6 Jun 2022 15:25:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1654529149;
+        bh=JJt0IO+HD16nKaMzBkekejjxzH6zJTBr5QCuFRGczGE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FQvjxVAjYkRkMlnXeUbGK/ffXS9EGiIGJB6czmy41m7BUi+gGlw+X1Vu+xVWhr8kL
+         VZmd7RutDKDJkQ6+PNC2k4EBuWcMiwehnWLeUgcaztEFymFfTpyADom9iKEZ2r0U6R
+         8QTKxcO8tqR2nN17KQ7uaYrNw3fG0aG82GOK9/YW0npuVqsyv4lNhNtBEPuUTmVVIT
+         XOE4wPosVqLjYqBNBMuGPxA5PXF0QCAYswfnxGdyJu5zTk6VkYY/y8ZNnVzT895FLj
+         P6YX/uUQeJAT8yJ01In++Ksk7XfTNpL0aA6OZ6qjgQfLIhLB4De2E2AivHQOnNJprR
+         rbUcjc+xUJibQ==
+Received: from mchehab by mail.kernel.org with local (Exim 4.95)
+        (envelope-from <mchehab@kernel.org>)
+        id 1nyEby-0012On-0x;
+        Mon, 06 Jun 2022 16:25:46 +0100
+From:   Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-kernel@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Borislav Petkov <bp@alien8.de>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        Federico Vaga <federico.vaga@vaga.pv.it>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Ingo Molnar <mingo@redhat.com>,
+        Jarkko Sakkinen <jarkko@kernel.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Markus Mayer <mmayer@broadcom.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        keyrings@vger.kernel.org, kvm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-cachefs@redhat.com,
+        linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
+        linux-m68k@lists.linux-m68k.org, linux-mmc@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-usb@vger.kernel.org,
+        x86@kernel.org
+Subject: [PATCH 00/23] Update Documentation/ cross-references
+Date:   Mon,  6 Jun 2022 16:25:22 +0100
+Message-Id: <cover.1654529011.git.mchehab@kernel.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/5] iommu: Ensure device has the same iommu_ops as the
- domain
-Content-Language: en-GB
-To:     Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
-        joro@8bytes.org, will@kernel.org, marcan@marcan.st,
-        sven@svenpeter.dev, robdclark@gmail.com, m.szyprowski@samsung.com,
-        krzysztof.kozlowski@linaro.org, baolu.lu@linux.intel.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        matthias.bgg@gmail.com, heiko@sntech.de, orsonzhai@gmail.com,
-        baolin.wang7@gmail.com, zhang.lyra@gmail.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        jean-philippe@linaro.org, alex.williamson@redhat.com
-Cc:     suravee.suthikulpanit@amd.com, alyssa@rosenzweig.io,
-        alim.akhtar@samsung.com, dwmw2@infradead.org, yong.wu@mediatek.com,
-        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
-        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-        cohuck@redhat.com, iommu@lists.linux-foundation.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-References: <20220606061927.26049-1-nicolinc@nvidia.com>
- <20220606061927.26049-3-nicolinc@nvidia.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20220606061927.26049-3-nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 2022-06-06 07:19, Nicolin Chen wrote:
-> The core code should not call an iommu driver op with a struct device
-> parameter unless it knows that the dev_iommu_priv_get() for that struct
-> device was setup by the same driver. Otherwise in a mixed driver system
-> the iommu_priv could be casted to the wrong type.
+Hi John,
 
-We don't have mixed-driver systems, and there are plenty more 
-significant problems than this one to solve before we can (but thanks 
-for pointing it out - I hadn't got as far as auditing the public 
-interfaces yet). Once domains are allocated via a particular device's 
-IOMMU instance in the first place, there will be ample opportunity for 
-the core to stash suitable identifying information in the domain for 
-itself. TBH even the current code could do it without needing the 
-weirdly invasive changes here.
+There were a number of DT binding conversions and other docs change that
+were not updated. Address them, in order to keep the cross-references on
+a sane state.
 
-> Store the iommu_ops pointer in the iommu_domain and use it as a check to
-> validate that the struct device is correct before invoking any domain op
-> that accepts a struct device.
+Patch series is against v5.19-rc1 (and applies cleanly on the top of
+today's -next).
 
-In fact this even describes exactly that - "Store the iommu_ops pointer 
-in the iommu_domain", vs. the "Store the iommu_ops pointer in the 
-iommu_domain_ops" which the patch is actually doing :/
+Mauro Carvalho Chehab (23):
+  dt-bindings: mfd: bd9571mwv: update rohm,bd9571mwv.yaml reference
+  dt-bindings: interrupt-controller: update brcm,l2-intc.yaml reference
+  dt-bindings: arm: update vexpress-config.yaml references
+  dt-bindings: reset: update st,stih407-powerdown.yaml references
+  dt-bindings: mfd: rk808: update rockchip,rk808.yaml reference
+  dt-bindings: mmc: exynos-dw-mshc: update samsung,pinctrl.yaml
+    reference
+  docs: netdev: update maintainer-netdev.rst reference
+  docs: filesystems: update netfs-api.rst reference
+  Documentation: update watch_queue.rst references
+  Documentation: KVM: update s390-pv.rst reference
+  Documentation: KVM: update amd-memory-encryption.rst references
+  Documentation: KVM: update msr.rst reference
+  Documentation: KVM: update s390-diag.rst reference
+  MAINTAINERS: update arm,hdlcd.yaml reference
+  MAINTAINERS: update arm,komeda.yaml reference
+  MAINTAINERS: update arm,malidp.yaml reference
+  MAINTAINERS: update cortina,gemini-ethernet.yaml reference
+  MAINTAINERS: update dongwoon,dw9807-vcm.yaml reference
+  MAINTAINERS: update maxim,max77693.yaml reference
+  MAINTAINERS: update snps,axs10x-reset.yaml reference
+  objtool: update objtool.txt references
+  ASoC: wm8731: update wlf,wm8731.yaml reference
+  arch: m68k: q40: README: drop references to IDE driver
 
-[...]
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 19cf28d40ebe..8a1f437a51f2 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -1963,6 +1963,10 @@ static int __iommu_attach_device(struct iommu_domain *domain,
->   {
->   	int ret;
->   
-> +	/* Ensure the device was probe'd onto the same driver as the domain */
-> +	if (dev->bus->iommu_ops != domain->ops->iommu_ops)
+ .../ABI/testing/sysfs-driver-bd9571mwv-regulator   |  2 +-
+ Documentation/admin-guide/kernel-parameters.txt    |  2 +-
+ .../bindings/cpufreq/brcm,stb-avs-cpu-freq.txt     |  2 +-
+ .../devicetree/bindings/hwmon/vexpress.txt         |  2 +-
+ .../devicetree/bindings/mmc/exynos-dw-mshc.txt     |  2 +-
+ .../devicetree/bindings/phy/phy-stih407-usb.txt    |  2 +-
+ .../devicetree/bindings/pinctrl/pinctrl-rk805.txt  |  2 +-
+ .../devicetree/bindings/regulator/vexpress.txt     |  2 +-
+ .../bindings/sound/atmel-sam9x5-wm8731-audio.txt   |  2 +-
+ Documentation/devicetree/bindings/usb/dwc3-st.txt  |  2 +-
+ Documentation/devicetree/bindings/usb/ehci-st.txt  |  2 +-
+ Documentation/devicetree/bindings/usb/ohci-st.txt  |  2 +-
+ Documentation/security/keys/core.rst               |  2 +-
+ Documentation/security/secrets/coco.rst            |  2 +-
+ .../translations/it_IT/networking/netdev-FAQ.rst   |  2 +-
+ Documentation/virt/kvm/api.rst                     |  4 ++--
+ Documentation/virt/kvm/s390/s390-pv-boot.rst       |  2 +-
+ Documentation/virt/kvm/x86/hypercalls.rst          |  2 +-
+ Documentation/x86/orc-unwinder.rst                 |  2 +-
+ MAINTAINERS                                        | 14 +++++++-------
+ arch/m68k/q40/README                               |  4 +---
+ include/linux/fscache.h                            |  2 +-
+ include/linux/objtool.h                            |  2 +-
+ include/linux/watch_queue.h                        |  2 +-
+ init/Kconfig                                       |  2 +-
+ kernel/watch_queue.c                               |  2 +-
+ lib/Kconfig.debug                                  |  2 +-
+ tools/include/linux/objtool.h                      |  2 +-
+ tools/objtool/check.c                              |  2 +-
+ 29 files changed, 36 insertions(+), 38 deletions(-)
 
-Nope, dev_iommu_ops(dev) please. Furthermore I think the logical place 
-to put this is in iommu_group_do_attach_device(), since that's the 
-gateway for the public interfaces - we shouldn't need to second-guess 
-ourselves for internal default-domain-related calls.
+-- 
+2.36.1
 
-Thanks,
-Robin.
 
-> +		return -EMEDIUMTYPE;
-> +
->   	if (unlikely(domain->ops->attach_dev == NULL))
->   		return -ENODEV;
