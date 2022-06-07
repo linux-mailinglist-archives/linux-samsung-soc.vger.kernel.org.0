@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE9453F8C9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 10:54:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64D1453F8CF
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 10:54:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238755AbiFGIyH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Jun 2022 04:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58408 "EHLO
+        id S238775AbiFGIyR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Jun 2022 04:54:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238857AbiFGIxu (ORCPT
+        with ESMTP id S238812AbiFGIxz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Jun 2022 04:53:50 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0EC5E2773
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 01:53:48 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id v1so23090978ejg.13
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 01:53:48 -0700 (PDT)
+        Tue, 7 Jun 2022 04:53:55 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C527AE27B0
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 01:53:49 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id h23so22696338ejj.12
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 01:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fzBuAR9UDJdEVpcbgdt0O2mvjmHEINRyMFw6wNgyr3E=;
-        b=rwvnvsSYurnHmYUfbllx7fkQ00GNGlNvOQ5Ot6n9wAr0hp0KWuv0/ulSBNHM7hUo/N
-         /4kl50ORD3GQG9CGeDtpo0JgO5zv2NEgAdtrmlxLqfxt9zcAos4eS0wlpoUJmQhbNHDn
-         Fd61UYRs9+fLPZpm8gU7HoJ180e/RLHoy9OPHDi9jT9pb2wyzBc5B49rtTuEaUh5EvnB
-         ezM7lvECesihDFsy4SVly1k5+ivlTCI4k5c+7daA6tFpkcbjGZ6otperos5b5AYYF2xG
-         PG1NvlUw8vZonktp2j421NNWY1TgUgCvnmzAJJ5iKX+zM36pw0qdREDaE24QA+Z97fnE
-         tL0g==
+        bh=pIg+CahqaTlAIc8abTH45c6tboCmTrQs/b0+gs1DDec=;
+        b=Wmt3WkfQAxJcyqO1RMeCSulBf5MfEf6x75VtRaiFDlraQwBAMff94cvZ9wxr3eUYYp
+         WbsAQq/aRiNWZqNZxEa5bPCuhDtRA+xxD/OprmefYpSXPw3iKnflHtqdYitflmY8gBoG
+         Q3lVXN6UXdlylxdKjEF0c5ZVFDFQLG4QEu5xZ8IUL89SnMPpvRXn1IKpXD8jbTIUw5zw
+         P9830DYNdaJsOQFRsjlAJVhj9sp7xBmAz3dQ8P+IdCjSVfg1A3VHepmFtdgFRq0UFiV0
+         QuGoZTKMji54VwMzTG+rk7MtTQVxdDlDYRbbguBlFH45X2ep7iNj0m90pncthDsG81Ct
+         WfYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fzBuAR9UDJdEVpcbgdt0O2mvjmHEINRyMFw6wNgyr3E=;
-        b=Vzvqsfcw4NT1JcFEOCLPY3wfTnOBM6PmnuGQN1qksd+ceinWazyKG6MJNMFWptSIRf
-         Iyiy3ZzOiPq4Z2TjV5iU984IfGjM29+BO797ONSWWqBe7hd4Ykng1AzVIbAZf64GbXcT
-         flppRchia0nJ/VkTlY7zmwnkP7BuxzBUnKOLoBdE7eIzCmbF+MxqJVZcymY4Jx6c4b5f
-         2saJz5r3aAMbV+rUmfXj/40XkK0mqC5UW/BI5ni/ts2rZTfTSIZDxqFvvdAXwX1qO2sf
-         phlv799stRmpmu5VLdbNVMnSy8ZRxAlWyddEJOCHQ2O9nSaKipkit1TIS6cRO6WLgdkq
-         pCIg==
-X-Gm-Message-State: AOAM532GZar92ymjqOasE1vlc0U3H1eAFKqsHMIDz0Ca3Eq/2zF+yuEb
-        i90bi6D+aR8E91K6Yp5J2Ag/yA==
-X-Google-Smtp-Source: ABdhPJyaP6QfGmtpXahcRU81dJSgLxzGwwrgMIskLfJYmHQQAB9erOZcoyj8ao4pruJEblf+n3qXew==
-X-Received: by 2002:a17:907:1b24:b0:6ff:235c:2ffd with SMTP id mp36-20020a1709071b2400b006ff235c2ffdmr26737673ejc.116.1654592026906;
-        Tue, 07 Jun 2022 01:53:46 -0700 (PDT)
+        bh=pIg+CahqaTlAIc8abTH45c6tboCmTrQs/b0+gs1DDec=;
+        b=zrxGkBtNGLKA6kasZsTFplq0GO3wHd63xwigA10PydfaJe9IxQW9k5iaoA8bXhB7BV
+         J+OR1Adj9XiteNiJdl7O/mzKi7FWNYVHHXBVwYL40Y1oJ/Z/GaKodmvpgZRWApdLTw3z
+         8IiKWktWub9r34AIS7EJFoBIjiSYSX0g1aUzxpwLBJ6R5yQkOwwPWE0PFjFFyX8geaOC
+         eVVmJGxhChj80fu6loQ7ox3iv+Z8FQIaB1DiPBG03HrXn1W3UgdWD2MdxjEZkoEjV40s
+         5ASODqQRXwZFV+UVqxxI+1jWXklQkMrCcZwMqqkd0z6Y9TQJd2YdMi2YTSqIKJYNgczY
+         9UxQ==
+X-Gm-Message-State: AOAM533P8aaD1xm+34q0TILbAOkuW01i1nTA7MBhanH9yl2oZzVRWDVM
+        xTzS7FHxZP5uz7lu23Uv8cxAWw==
+X-Google-Smtp-Source: ABdhPJzlc4UfIcbo4lt+tExZxEqs80aD/mhH62tRVZNmsGTPLGAWchklnkFLnZ78s0lUo5qmG+VEiQ==
+X-Received: by 2002:a17:907:2992:b0:70c:4ddf:5d88 with SMTP id eu18-20020a170907299200b0070c4ddf5d88mr21824993ejc.20.1654592027886;
+        Tue, 07 Jun 2022 01:53:47 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
         by smtp.gmail.com with ESMTPSA id k16-20020a1709061c1000b00705cdfec71esm7176703ejg.7.2022.06.07.01.53.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 01:53:46 -0700 (PDT)
+        Tue, 07 Jun 2022 01:53:47 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -57,9 +57,9 @@ To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/3] ARM: dts: exynos: align aat1290 flash LED node with bindings in Galaxy S3
-Date:   Tue,  7 Jun 2022 10:53:42 +0200
-Message-Id: <20220607085343.72414-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/3] ARM: dts: exynos: add function and color to aat1290 flash LED node in Galaxy S3
+Date:   Tue,  7 Jun 2022 10:53:43 +0200
+Message-Id: <20220607085343.72414-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220607085343.72414-1-krzysztof.kozlowski@linaro.org>
 References: <20220607085343.72414-1-krzysztof.kozlowski@linaro.org>
@@ -67,7 +67,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,26 +75,35 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The bindings expect aat1290 flash LED child node to be named "led".
+Add common LED properties - the function and color - to aat1290 flash
+LED node in Galaxy S3.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-index 03dffc690b79..72901772fcad 100644
+index 72901772fcad..d76f3678dcab 100644
 --- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
 +++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-@@ -25,7 +25,7 @@ led-controller {
- 		pinctrl-1 = <&camera_flash_host>;
- 		pinctrl-2 = <&camera_flash_isp>;
+@@ -7,6 +7,7 @@
+  */
  
--		flash-led {
-+		led {
+ /dts-v1/;
++#include <dt-bindings/leds/common.h>
+ #include "exynos4412-midas.dtsi"
+ 
+ / {
+@@ -27,6 +28,8 @@ led-controller {
+ 
+ 		led {
  			label = "flash";
++			function = LED_FUNCTION_FLASH;
++			color = <LED_COLOR_ID_WHITE>;
  			led-max-microamp = <520833>;
  			flash-max-microamp = <1012500>;
+ 			flash-max-timeout-us = <1940000>;
 -- 
 2.34.1
 
