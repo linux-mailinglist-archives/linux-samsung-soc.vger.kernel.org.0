@@ -2,132 +2,362 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BBAB53F9C1
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 11:29:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87FBE53FB9F
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 12:43:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239444AbiFGJ3F (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Jun 2022 05:29:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41724 "EHLO
+        id S241302AbiFGKnp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Jun 2022 06:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239549AbiFGJ2O (ORCPT
+        with ESMTP id S240346AbiFGKnn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Jun 2022 05:28:14 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58284527C3
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 02:28:12 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id i39so2122391ybj.9
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 02:28:12 -0700 (PDT)
+        Tue, 7 Jun 2022 06:43:43 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40D01D0F9
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 03:43:41 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id q1so18719195ljb.5
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 03:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=ohM259uqobJqtM7gttWurWj7P+4iDfPJquHax95olDY=;
-        b=gujHBVxqWIlmngbJHwwatlrY6K2BhXGLJOXKENebOL4hOCXVjvoa+7rQ+wCwOuo7nz
-         8e28HbaszMFtjrNu2xJwHUtJo1p0vWs5cPK29M2FpYQX1yrDGputAW1tF1NfmP59wawm
-         4ciGU9SnxDgRMb84mTOs96+/9zN97uENfqj9/+eZfuG77h5pSaMszmbmnWOwi9m+gNzd
-         5NtwsZACk2ULSP0cRt0MdNUxBuwzIbCfzmloCBb/Ue1QhCyZ8f6GEgrTXVIY7durHnKk
-         UWQF6j7yHnTlxlvI9xCgSzii4NusQH9ADfpyzQwiF9b+OrCBSH3adFs9TwqclNBk9aQF
-         O14A==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=evgAct11a1TYPRheoIlJLQhXVJrTuU9bOjsfV23Avqw=;
+        b=qANVYdQ+9itvpavGc6MnZ0bEEYtuG/S0TD7O5THbApTupQVK5WC/xUgyW4zrOKzScS
+         IkKdbSKrhWVV4kjV+tKgaAJbhld9Ga+6A02wYEEvb1PVd9kP8Nb+Rg9PMy1irhu+SOB9
+         BBanZ/Q4qAvolz8p06e4wM0p0jC86K3jlPhnGLaLtwGUM6nOQ6XncxXXlJvw1GzSQ+On
+         QB9hGkzyn4octkkQhZ3QpqSOfZU2H0KGfzqb1SAWE0l6gOVqYY5/cuQWh+ZUoQUk/c4B
+         ptGzqp7jVOrW8BdzrDZVz4t+bZmleMhcKYOKwcHFx0VfTrWfBWm/ungqSLR4yf488VUJ
+         2sUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=ohM259uqobJqtM7gttWurWj7P+4iDfPJquHax95olDY=;
-        b=P/CYhreBzIUh68vMafs1j9QObNK1tNEGTS8i+s7OKmXg+N/bbAVW8b5Sjma26OR0yg
-         H6BlJzYmLMCzXfODvOPSS+0TvgEiK7yMVvcocXISWchGDEVa2hTNKaDWLQ1402cSMkq6
-         7kKxT/ukC/Vab+YWNrauebsQa8GLKFLv7I1+/5ScUf/TPxqPWPrUw0/lonT+PyjjTWX1
-         eSGBtTC6sO2Qc7lZ4dvIzeaV/x3i2bdPFAbdz0EEb+m9xsaT0L/M+JTqOBKnSZVCvtZp
-         yeI5vihXWjY1dmF7wMxZx+utZwlgpImZB6jMGH8xBK3yMUTTIyFLii5a9N776wukDBuE
-         mSGQ==
-X-Gm-Message-State: AOAM533yOaqU9WFGz5hlr04JEICqbdVNtZP8WDsNef2CrSQRUNR079H9
-        jJ+HQAH4yzMwJM/oNvs9NaKWvvC75tqUrZKe2DiQ+QHMCXNUI/I6
-X-Google-Smtp-Source: ABdhPJxTYNOyqQTj+pRtv7B26L++zgaw4oyR9fAzq9Xjy/qi86fDOL5mMOdKcDA6Petw4QZgBH7CHdeaexgYk1On3ls=
-X-Received: by 2002:a05:6830:919:b0:60a:fe63:e321 with SMTP id
- v25-20020a056830091900b0060afe63e321mr11494607ott.227.1654594080399; Tue, 07
- Jun 2022 02:28:00 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=evgAct11a1TYPRheoIlJLQhXVJrTuU9bOjsfV23Avqw=;
+        b=bC1Vg0n0jpadhpolchm/XYsSIjfisL3CvWqXN1920yyy1jL4ad/FNMqM9bJO3LP2RA
+         XiZsV8mFCE6jt6VwOzSnjaHxcJOGTyAF6gWdvxIG4cUdw51MEbPOEE1t9lnCO/0lDaSW
+         Q0hAWBtw7uF0lO0uZrQoyFCAv61N753XweS3xTbEQAjHn4WeXM93BN0UgYuciD75ylDc
+         4BPj8uXfjEV5dy6AKugAl/kq1UCCuEqdT16ju+cOtAnGveOD+As11TOVQq+Oq2HEfcQN
+         hx3iga+X7kul8W6iOxpJopzvIOE9/Qlepr8KtQxzIBOEm9HFS0xkckeuK58ivsp9EiKo
+         vedA==
+X-Gm-Message-State: AOAM532gxSZoUEIdkPYgehVVSOyJWcDbK9qXjjtZREw/riXBi8wV+IXN
+        CIamBJ9195i+Y9xKevp9WdzwT+4HMRUVNnE/MSLW0Q==
+X-Google-Smtp-Source: ABdhPJxfu092lIskwlbt96SOq5msxFiU8Y8vFBpnsRSNiNhu5QNrtp44OLeBrwmZqjeKusFGs6kMiPnRBA94ttSz1uI=
+X-Received: by 2002:a05:651c:12c5:b0:255:9384:b385 with SMTP id
+ 5-20020a05651c12c500b002559384b385mr6761961lje.229.1654598618811; Tue, 07 Jun
+ 2022 03:43:38 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6358:99a5:b0:a2:a1fa:9308 with HTTP; Tue, 7 Jun 2022
- 02:28:00 -0700 (PDT)
-Reply-To: robertbaileys_spende@aol.com
-From:   Robert Baileys <mercymiji.j@gmail.com>
-Date:   Tue, 7 Jun 2022 11:28:00 +0200
-Message-ID: <CAAD1zOZ9bCDqBnjmbC3dQfgC=P2zTqAS=TP3q5qK5TFB5=Q9dQ@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
+References: <20220605163710.144210-1-krzysztof.kozlowski@linaro.org> <20220605163710.144210-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220605163710.144210-4-krzysztof.kozlowski@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 7 Jun 2022 12:43:02 +0200
+Message-ID: <CAPDyKFobjbk2+t4fH7EG0dZPXYg6zQXizq7-ieZsh_42cpDQ=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] dt-bindings: mmc: samsung,exynos-dw-mshc: convert
+ to dtschema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Jaehoon Chung <jh80.chung@samsung.com>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,UNDISC_MONEY autolearn=no
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [mercymiji.j[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.3 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  0.6 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---=20
-Hallo, lieber Beg=C3=BCnstigter,
+On Sun, 5 Jun 2022 at 18:37, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Convert the Samsung Exynos SoC specific extensions to the Synopsys
+> Designware Mobile Storage Host Controller to DT schema.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Sie haben diese E-Mail von der Robert Bailey Foundation erhalten. Ich
-bin ein pensionierter Regierungsangestellter aus Harlem und ein
-Powerball-Lotterie-Jackpot-Gewinner von 343,8 Millionen Dollar. Ich
-bin der gr=C3=B6=C3=9Fte Jackpot-Gewinner in der Geschichte der New York Lo=
-ttery
-in Amerika. Ich habe diesen Wettbewerb am 27. Oktober 2018 gewonnen
-und m=C3=B6chte Ihnen mitteilen, dass Google in Kooperation mit Microsoft
-Ihre "E-Mail-Adresse" f=C3=BCr meine Anfrage hat und diese 3.000.000,00
-Millionen Euro kosten wird. Ich spende diese 3 Millionen Euro an Sie,
-um auch Wohlt=C3=A4tigkeitsorganisationen und armen Menschen in Ihrer
-Gemeinde zu helfen, damit wir die Welt zu einem besseren Ort f=C3=BCr alle
-machen k=C3=B6nnen. Bitte besuchen Sie die folgende Website f=C3=BCr weiter=
-e
-Informationen, damit Sie diesen 3 Mio. EUR Ausgaben nicht skeptisch
-gegen=C3=BCberstehen.
-https://nypost.com/2018/11/14/meet-the-winner-of-the-biggest-lottery-jackpo=
-t-in-new-york-history/Sie
-Weitere Best=C3=A4tigungen kann ich auch auf meinem Youtube suchen:
-https://www.youtube.com/watch?v=3DH5vT18Ysavc
-Bitte antworten Sie mir per E-Mail (robertbaileys_spende@aol.com).
-Sie m=C3=BCssen diese E-Mail sofort beantworten, damit die =C3=BCberweisend=
-e
-Bank mit dem Erhalt dieser Spende in H=C3=B6he von 3.000.000,00 Millionen
-Euro beginnen kann.
-Bitte kontaktieren Sie die untenstehende E-Mail-Adresse f=C3=BCr weitere
-Informationen, damit Sie diese Spende von der =C3=BCberweisenden Bank
-erhalten k=C3=B6nnen. E-Mail: robertbaileys_spende@aol.com
+Applied for next, thanks!
 
-Gr=C3=BC=C3=9Fe,
-Robert Bailey
-* * * * * * * * * * * * * * * *
+Kind regards
+Uffe
 
-Powerball-Jackpot-Gewinner
-E-Mail: robertbaileys_spende@aol.com
+
+> ---
+>  .../bindings/mmc/exynos-dw-mshc.txt           |  94 -----------
+>  .../bindings/mmc/samsung,exynos-dw-mshc.yaml  | 159 ++++++++++++++++++
+>  2 files changed, 159 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mmc/exynos-dw-mshc.txt
+>  create mode 100644 Documentation/devicetree/bindings/mmc/samsung,exynos-dw-mshc.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/exynos-dw-mshc.txt b/Documentation/devicetree/bindings/mmc/exynos-dw-mshc.txt
+> deleted file mode 100644
+> index 753e9d7d8956..000000000000
+> --- a/Documentation/devicetree/bindings/mmc/exynos-dw-mshc.txt
+> +++ /dev/null
+> @@ -1,94 +0,0 @@
+> -* Samsung Exynos specific extensions to the Synopsys Designware Mobile
+> -  Storage Host Controller
+> -
+> -The Synopsys designware mobile storage host controller is used to interface
+> -a SoC with storage medium such as eMMC or SD/MMC cards. This file documents
+> -differences between the core Synopsys dw mshc controller properties described
+> -by synopsys-dw-mshc.txt and the properties used by the Samsung Exynos specific
+> -extensions to the Synopsys Designware Mobile Storage Host Controller.
+> -
+> -Required Properties:
+> -
+> -* compatible: should be
+> -       - "samsung,exynos4210-dw-mshc": for controllers with Samsung Exynos4210
+> -         specific extensions.
+> -       - "samsung,exynos4412-dw-mshc": for controllers with Samsung Exynos4412
+> -         specific extensions.
+> -       - "samsung,exynos5250-dw-mshc": for controllers with Samsung Exynos5250
+> -         specific extensions.
+> -       - "samsung,exynos5420-dw-mshc": for controllers with Samsung Exynos5420
+> -         specific extensions.
+> -       - "samsung,exynos7-dw-mshc": for controllers with Samsung Exynos7
+> -         specific extensions.
+> -       - "samsung,exynos7-dw-mshc-smu": for controllers with Samsung Exynos7
+> -         specific extensions having an SMU.
+> -       - "axis,artpec8-dw-mshc": for controllers with ARTPEC-8 specific
+> -         extensions.
+> -
+> -* samsung,dw-mshc-ciu-div: Specifies the divider value for the card interface
+> -  unit (ciu) clock. This property is applicable only for Exynos5 SoC's and
+> -  ignored for Exynos4 SoC's. The valid range of divider value is 0 to 7.
+> -
+> -* samsung,dw-mshc-sdr-timing: Specifies the value of CIU clock phase shift value
+> -  in transmit mode and CIU clock phase shift value in receive mode for single
+> -  data rate mode operation. Refer notes below for the order of the cells and the
+> -  valid values.
+> -
+> -* samsung,dw-mshc-ddr-timing: Specifies the value of CUI clock phase shift value
+> -  in transmit mode and CIU clock phase shift value in receive mode for double
+> -  data rate mode operation. Refer notes below for the order of the cells and the
+> -  valid values.
+> -* samsung,dw-mshc-hs400-timing: Specifies the value of CIU TX and RX clock phase
+> -  shift value for hs400 mode operation.
+> -
+> -  Notes for the sdr-timing and ddr-timing values:
+> -
+> -    The order of the cells should be
+> -      - First Cell: CIU clock phase shift value for tx mode.
+> -      - Second Cell: CIU clock phase shift value for rx mode.
+> -
+> -    Valid values for SDR and DDR CIU clock timing for Exynos5250:
+> -      - valid value for tx phase shift and rx phase shift is 0 to 7.
+> -      - when CIU clock divider value is set to 3, all possible 8 phase shift
+> -        values can be used.
+> -      - if CIU clock divider value is 0 (that is divide by 1), both tx and rx
+> -        phase shift clocks should be 0.
+> -
+> -* samsung,read-strobe-delay: RCLK (Data strobe) delay to control HS400 mode
+> -  (Latency value for delay line in Read path)
+> -
+> -Required properties for a slot (Deprecated - Recommend to use one slot per host):
+> -
+> -* gpios: specifies a list of gpios used for command, clock and data bus. The
+> -  first gpio is the command line and the second gpio is the clock line. The
+> -  rest of the gpios (depending on the bus-width property) are the data lines in
+> -  no particular order. The format of the gpio specifier depends on the gpio
+> -  controller.
+> -(Deprecated - Refer to Documentation/devicetree/bindings/pinctrl/samsung-pinctrl.txt)
+> -
+> -Example:
+> -
+> -  The MSHC controller node can be split into two portions, SoC specific and
+> -  board specific portions as listed below.
+> -
+> -       dwmmc0@12200000 {
+> -               compatible = "samsung,exynos5250-dw-mshc";
+> -               reg = <0x12200000 0x1000>;
+> -               interrupts = <0 75 0>;
+> -               #address-cells = <1>;
+> -               #size-cells = <0>;
+> -       };
+> -
+> -       dwmmc0@12200000 {
+> -               cap-mmc-highspeed;
+> -               cap-sd-highspeed;
+> -               broken-cd;
+> -               fifo-depth = <0x80>;
+> -               card-detect-delay = <200>;
+> -               samsung,dw-mshc-ciu-div = <3>;
+> -               samsung,dw-mshc-sdr-timing = <2 3>;
+> -               samsung,dw-mshc-ddr-timing = <1 2>;
+> -               samsung,dw-mshc-hs400-timing = <0 2>;
+> -               samsung,read-strobe-delay = <90>;
+> -               bus-width = <8>;
+> -       };
+> diff --git a/Documentation/devicetree/bindings/mmc/samsung,exynos-dw-mshc.yaml b/Documentation/devicetree/bindings/mmc/samsung,exynos-dw-mshc.yaml
+> new file mode 100644
+> index 000000000000..80c557e938a2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mmc/samsung,exynos-dw-mshc.yaml
+> @@ -0,0 +1,159 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mmc/samsung,exynos-dw-mshc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title:
+> +  Samsung Exynos SoC specific extensions to the Synopsys Designware Mobile
+> +  Storage Host Controller
+> +
+> +maintainers:
+> +  - Jaehoon Chung <jh80.chung@samsung.com>
+> +  - Krzysztof Kozlowski <krzk@kernel.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - samsung,exynos4210-dw-mshc
+> +      - samsung,exynos4412-dw-mshc
+> +      - samsung,exynos5250-dw-mshc
+> +      - samsung,exynos5420-dw-mshc
+> +      - samsung,exynos7-dw-mshc
+> +      - samsung,exynos7-dw-mshc-smu
+> +      - axis,artpec8-dw-mshc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 2
+> +    description:
+> +      Handle to "biu" and "ciu" clocks for the
+> +      bus interface unit clock and the card interface unit clock.
+> +
+> +  clock-names:
+> +    items:
+> +      - const: biu
+> +      - const: ciu
+> +
+> +  samsung,dw-mshc-ciu-div:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 7
+> +    description:
+> +      The divider value for the card interface unit (ciu) clock.
+> +
+> +  samsung,dw-mshc-ddr-timing:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    items:
+> +      - description: CIU clock phase shift value for tx mode
+> +        minimum: 0
+> +        maximum: 7
+> +      - description: CIU clock phase shift value for rx mode
+> +        minimum: 0
+> +        maximum: 7
+> +    description:
+> +      The value of CUI clock phase shift value in transmit mode and CIU clock
+> +      phase shift value in receive mode for double data rate mode operation.
+> +      See also samsung,dw-mshc-hs400-timing property.
+> +
+> +  samsung,dw-mshc-hs400-timing:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    items:
+> +      - description: CIU clock phase shift value for tx mode
+> +        minimum: 0
+> +        maximum: 7
+> +      - description: CIU clock phase shift value for rx mode
+> +        minimum: 0
+> +        maximum: 7
+> +    description: |
+> +      The value of CIU TX and RX clock phase shift value for HS400 mode
+> +      operation.
+> +      Valid values for SDR and DDR CIU clock timing::
+> +        - valid value for tx phase shift and rx phase shift is 0 to 7.
+> +        - when CIU clock divider value is set to 3, all possible 8 phase shift
+> +          values can be used.
+> +        - if CIU clock divider value is 0 (that is divide by 1), both tx and rx
+> +          phase shift clocks should be 0.
+> +      If missing, values from samsung,dw-mshc-ddr-timing property are used.
+> +
+> +  samsung,dw-mshc-sdr-timing:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> +    items:
+> +      - description: CIU clock phase shift value for tx mode
+> +        minimum: 0
+> +        maximum: 7
+> +      - description: CIU clock phase shift value for rx mode
+> +        minimum: 0
+> +        maximum: 7
+> +    description:
+> +      The value of CIU clock phase shift value in transmit mode and CIU clock
+> +      phase shift value in receive mode for single data rate mode operation.
+> +      See also samsung,dw-mshc-hs400-timing property.
+> +
+> +  samsung,read-strobe-delay:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      RCLK (Data strobe) delay to control HS400 mode (Latency value for delay
+> +      line in Read path). If missing, default from hardware is used.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - clocks
+> +  - clock-names
+> +  - samsung,dw-mshc-ddr-timing
+> +  - samsung,dw-mshc-sdr-timing
+> +
+> +allOf:
+> +  - $ref: "synopsys-dw-mshc-common.yaml#"
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - samsung,exynos5250-dw-mshc
+> +              - samsung,exynos5420-dw-mshc
+> +              - samsung,exynos7-dw-mshc
+> +              - samsung,exynos7-dw-mshc-smu
+> +              - axis,artpec8-dw-mshc
+> +    then:
+> +      required:
+> +        - samsung,dw-mshc-ciu-div
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/exynos5420.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    mmc@12220000 {
+> +        compatible = "samsung,exynos5420-dw-mshc";
+> +        interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_HIGH>;
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +        reg = <0x12220000 0x1000>;
+> +        clocks = <&clock CLK_MMC2>, <&clock CLK_SCLK_MMC2>;
+> +        clock-names = "biu", "ciu";
+> +        fifo-depth = <0x40>;
+> +        card-detect-delay = <200>;
+> +        samsung,dw-mshc-ciu-div = <3>;
+> +        samsung,dw-mshc-sdr-timing = <0 4>;
+> +        samsung,dw-mshc-ddr-timing = <0 2>;
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&sd2_clk &sd2_cmd &sd2_cd &sd2_wp &sd2_bus1 &sd2_bus4>;
+> +        bus-width = <4>;
+> +        cap-sd-highspeed;
+> +        max-frequency = <200000000>;
+> +        vmmc-supply = <&ldo19_reg>;
+> +        vqmmc-supply = <&ldo13_reg>;
+> +        sd-uhs-sdr50;
+> +        sd-uhs-sdr104;
+> +        sd-uhs-ddr50;
+> +    };
+> --
+> 2.34.1
+>
