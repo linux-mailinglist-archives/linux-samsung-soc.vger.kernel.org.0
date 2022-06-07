@@ -2,108 +2,132 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64D1453F8CF
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 10:54:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BBAB53F9C1
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Jun 2022 11:29:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238775AbiFGIyR (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Jun 2022 04:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59066 "EHLO
+        id S239444AbiFGJ3F (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Jun 2022 05:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238812AbiFGIxz (ORCPT
+        with ESMTP id S239549AbiFGJ2O (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Jun 2022 04:53:55 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C527AE27B0
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 01:53:49 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id h23so22696338ejj.12
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 01:53:49 -0700 (PDT)
+        Tue, 7 Jun 2022 05:28:14 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58284527C3
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Jun 2022 02:28:12 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id i39so2122391ybj.9
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 07 Jun 2022 02:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pIg+CahqaTlAIc8abTH45c6tboCmTrQs/b0+gs1DDec=;
-        b=Wmt3WkfQAxJcyqO1RMeCSulBf5MfEf6x75VtRaiFDlraQwBAMff94cvZ9wxr3eUYYp
-         WbsAQq/aRiNWZqNZxEa5bPCuhDtRA+xxD/OprmefYpSXPw3iKnflHtqdYitflmY8gBoG
-         Q3lVXN6UXdlylxdKjEF0c5ZVFDFQLG4QEu5xZ8IUL89SnMPpvRXn1IKpXD8jbTIUw5zw
-         P9830DYNdaJsOQFRsjlAJVhj9sp7xBmAz3dQ8P+IdCjSVfg1A3VHepmFtdgFRq0UFiV0
-         QuGoZTKMji54VwMzTG+rk7MtTQVxdDlDYRbbguBlFH45X2ep7iNj0m90pncthDsG81Ct
-         WfYw==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ohM259uqobJqtM7gttWurWj7P+4iDfPJquHax95olDY=;
+        b=gujHBVxqWIlmngbJHwwatlrY6K2BhXGLJOXKENebOL4hOCXVjvoa+7rQ+wCwOuo7nz
+         8e28HbaszMFtjrNu2xJwHUtJo1p0vWs5cPK29M2FpYQX1yrDGputAW1tF1NfmP59wawm
+         4ciGU9SnxDgRMb84mTOs96+/9zN97uENfqj9/+eZfuG77h5pSaMszmbmnWOwi9m+gNzd
+         5NtwsZACk2ULSP0cRt0MdNUxBuwzIbCfzmloCBb/Ue1QhCyZ8f6GEgrTXVIY7durHnKk
+         UWQF6j7yHnTlxlvI9xCgSzii4NusQH9ADfpyzQwiF9b+OrCBSH3adFs9TwqclNBk9aQF
+         O14A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pIg+CahqaTlAIc8abTH45c6tboCmTrQs/b0+gs1DDec=;
-        b=zrxGkBtNGLKA6kasZsTFplq0GO3wHd63xwigA10PydfaJe9IxQW9k5iaoA8bXhB7BV
-         J+OR1Adj9XiteNiJdl7O/mzKi7FWNYVHHXBVwYL40Y1oJ/Z/GaKodmvpgZRWApdLTw3z
-         8IiKWktWub9r34AIS7EJFoBIjiSYSX0g1aUzxpwLBJ6R5yQkOwwPWE0PFjFFyX8geaOC
-         eVVmJGxhChj80fu6loQ7ox3iv+Z8FQIaB1DiPBG03HrXn1W3UgdWD2MdxjEZkoEjV40s
-         5ASODqQRXwZFV+UVqxxI+1jWXklQkMrCcZwMqqkd0z6Y9TQJd2YdMi2YTSqIKJYNgczY
-         9UxQ==
-X-Gm-Message-State: AOAM533P8aaD1xm+34q0TILbAOkuW01i1nTA7MBhanH9yl2oZzVRWDVM
-        xTzS7FHxZP5uz7lu23Uv8cxAWw==
-X-Google-Smtp-Source: ABdhPJzlc4UfIcbo4lt+tExZxEqs80aD/mhH62tRVZNmsGTPLGAWchklnkFLnZ78s0lUo5qmG+VEiQ==
-X-Received: by 2002:a17:907:2992:b0:70c:4ddf:5d88 with SMTP id eu18-20020a170907299200b0070c4ddf5d88mr21824993ejc.20.1654592027886;
-        Tue, 07 Jun 2022 01:53:47 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id k16-20020a1709061c1000b00705cdfec71esm7176703ejg.7.2022.06.07.01.53.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jun 2022 01:53:47 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] ARM: dts: exynos: add function and color to aat1290 flash LED node in Galaxy S3
-Date:   Tue,  7 Jun 2022 10:53:43 +0200
-Message-Id: <20220607085343.72414-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220607085343.72414-1-krzysztof.kozlowski@linaro.org>
-References: <20220607085343.72414-1-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=ohM259uqobJqtM7gttWurWj7P+4iDfPJquHax95olDY=;
+        b=P/CYhreBzIUh68vMafs1j9QObNK1tNEGTS8i+s7OKmXg+N/bbAVW8b5Sjma26OR0yg
+         H6BlJzYmLMCzXfODvOPSS+0TvgEiK7yMVvcocXISWchGDEVa2hTNKaDWLQ1402cSMkq6
+         7kKxT/ukC/Vab+YWNrauebsQa8GLKFLv7I1+/5ScUf/TPxqPWPrUw0/lonT+PyjjTWX1
+         eSGBtTC6sO2Qc7lZ4dvIzeaV/x3i2bdPFAbdz0EEb+m9xsaT0L/M+JTqOBKnSZVCvtZp
+         yeI5vihXWjY1dmF7wMxZx+utZwlgpImZB6jMGH8xBK3yMUTTIyFLii5a9N776wukDBuE
+         mSGQ==
+X-Gm-Message-State: AOAM533yOaqU9WFGz5hlr04JEICqbdVNtZP8WDsNef2CrSQRUNR079H9
+        jJ+HQAH4yzMwJM/oNvs9NaKWvvC75tqUrZKe2DiQ+QHMCXNUI/I6
+X-Google-Smtp-Source: ABdhPJxTYNOyqQTj+pRtv7B26L++zgaw4oyR9fAzq9Xjy/qi86fDOL5mMOdKcDA6Petw4QZgBH7CHdeaexgYk1On3ls=
+X-Received: by 2002:a05:6830:919:b0:60a:fe63:e321 with SMTP id
+ v25-20020a056830091900b0060afe63e321mr11494607ott.227.1654594080399; Tue, 07
+ Jun 2022 02:28:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Received: by 2002:a05:6358:99a5:b0:a2:a1fa:9308 with HTTP; Tue, 7 Jun 2022
+ 02:28:00 -0700 (PDT)
+Reply-To: robertbaileys_spende@aol.com
+From:   Robert Baileys <mercymiji.j@gmail.com>
+Date:   Tue, 7 Jun 2022 11:28:00 +0200
+Message-ID: <CAAD1zOZ9bCDqBnjmbC3dQfgC=P2zTqAS=TP3q5qK5TFB5=Q9dQ@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,UNDISC_MONEY autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b29 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [mercymiji.j[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.3 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.6 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add common LED properties - the function and color - to aat1290 flash
-LED node in Galaxy S3.
+--=20
+Hallo, lieber Beg=C3=BCnstigter,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+Sie haben diese E-Mail von der Robert Bailey Foundation erhalten. Ich
+bin ein pensionierter Regierungsangestellter aus Harlem und ein
+Powerball-Lotterie-Jackpot-Gewinner von 343,8 Millionen Dollar. Ich
+bin der gr=C3=B6=C3=9Fte Jackpot-Gewinner in der Geschichte der New York Lo=
+ttery
+in Amerika. Ich habe diesen Wettbewerb am 27. Oktober 2018 gewonnen
+und m=C3=B6chte Ihnen mitteilen, dass Google in Kooperation mit Microsoft
+Ihre "E-Mail-Adresse" f=C3=BCr meine Anfrage hat und diese 3.000.000,00
+Millionen Euro kosten wird. Ich spende diese 3 Millionen Euro an Sie,
+um auch Wohlt=C3=A4tigkeitsorganisationen und armen Menschen in Ihrer
+Gemeinde zu helfen, damit wir die Welt zu einem besseren Ort f=C3=BCr alle
+machen k=C3=B6nnen. Bitte besuchen Sie die folgende Website f=C3=BCr weiter=
+e
+Informationen, damit Sie diesen 3 Mio. EUR Ausgaben nicht skeptisch
+gegen=C3=BCberstehen.
+https://nypost.com/2018/11/14/meet-the-winner-of-the-biggest-lottery-jackpo=
+t-in-new-york-history/Sie
+Weitere Best=C3=A4tigungen kann ich auch auf meinem Youtube suchen:
+https://www.youtube.com/watch?v=3DH5vT18Ysavc
+Bitte antworten Sie mir per E-Mail (robertbaileys_spende@aol.com).
+Sie m=C3=BCssen diese E-Mail sofort beantworten, damit die =C3=BCberweisend=
+e
+Bank mit dem Erhalt dieser Spende in H=C3=B6he von 3.000.000,00 Millionen
+Euro beginnen kann.
+Bitte kontaktieren Sie die untenstehende E-Mail-Adresse f=C3=BCr weitere
+Informationen, damit Sie diese Spende von der =C3=BCberweisenden Bank
+erhalten k=C3=B6nnen. E-Mail: robertbaileys_spende@aol.com
 
-diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-index 72901772fcad..d76f3678dcab 100644
---- a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-+++ b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-@@ -7,6 +7,7 @@
-  */
- 
- /dts-v1/;
-+#include <dt-bindings/leds/common.h>
- #include "exynos4412-midas.dtsi"
- 
- / {
-@@ -27,6 +28,8 @@ led-controller {
- 
- 		led {
- 			label = "flash";
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
- 			led-max-microamp = <520833>;
- 			flash-max-microamp = <1012500>;
- 			flash-max-timeout-us = <1940000>;
--- 
-2.34.1
+Gr=C3=BC=C3=9Fe,
+Robert Bailey
+* * * * * * * * * * * * * * * *
 
+Powerball-Jackpot-Gewinner
+E-Mail: robertbaileys_spende@aol.com
