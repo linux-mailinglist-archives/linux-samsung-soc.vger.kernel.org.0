@@ -2,68 +2,79 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81E5C54845D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Jun 2022 12:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 624B25487A5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Jun 2022 17:59:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241700AbiFMKOy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 13 Jun 2022 06:14:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58354 "EHLO
+        id S240881AbiFMNA3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 13 Jun 2022 09:00:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241577AbiFMKOj (ORCPT
+        with ESMTP id S1357078AbiFMM62 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 13 Jun 2022 06:14:39 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CD1CE11
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jun 2022 03:14:34 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id h23so10160718ejj.12
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jun 2022 03:14:34 -0700 (PDT)
+        Mon, 13 Jun 2022 08:58:28 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFCC10A9
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jun 2022 04:17:32 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id h23so10454517ejj.12
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Jun 2022 04:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M46PCkjJ2OifC0xaqwZJ7l8A4H9uAcmd8SjFaU1ZI3o=;
-        b=RY32gASyfk41ROBUhtm7wusGacyUTe5+H8ZMqeHzaR2h7UknN9RbikleB7Vzgo5/aN
-         qHO37sPTq+UUwbHnakGMJafJ/JOPPxwhitAGUBF7n3OFEe8P/NIS8p3OKqL8wv5L2GIm
-         6pmPjIwLKMU/A/b+7TQ7do/4KVOWgOcRYxiDNnXKTC7AbDxvfdT7qkwHZZCd9Da5M9tm
-         Pg5VYi16kYv/RuHVaWdSDEDq6EYXAVHufR0D7nSyMF0Bs8vEl4bfLQR3ROEeR8UyOydk
-         edovqXodfaCVZd4CRsKBjgskDrH+K/lf4hbinJJ9aGdKVUvI8n9islLSU7QV7+kJXNWP
-         4c0g==
+        d=amarulasolutions.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FO5eQRnnKHa3c3u3uxHcn5ZlaPTIIVuUOMy3m36ikoQ=;
+        b=K5E4/xzxiOPflSJ7TE4smffiIvjbrel6Kugrqo92KYRAU4jspIY3Q2jHQadjy+4un2
+         8znSkTk//qJ/p3nmNcW1bVytKIxyBy8fpBgRbbNGhz/f45KXQ7TsWwgNnBvEhzEsGnGK
+         NmiI2K01ywDlI+qtp6+Z2ocLTuCFhsTkeywP4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M46PCkjJ2OifC0xaqwZJ7l8A4H9uAcmd8SjFaU1ZI3o=;
-        b=0FJrkZ/ufxCMbyWbGEoZiz+7eUuz8HyiGuIvhI7SbetIRa3GLkCmDy7UX8Cp7vBwmf
-         k7r+/tVxc2VplPwKlzp1YqPHpWqkeKFGfKObD6vxot+Q8L+25Bxp9sDscbSYmMRd8ySY
-         kHVnFWGN+sOFdYrJWOiu8yM+j7NerYAXISVUDZGD3sOgCAkRvUDPVd0ZQZQ28V5VAGf+
-         Uvbktku7mp5h98aWUPGXZuNYGoYyDeDhaz49sr2NhETDdMk8R4eMQP6JsZafzMwpMuz2
-         SUTJz8yJmB6xjN1Qvr0inH11oV7hVcE6N2teEndRI36RuhiKtXNV16GMZO6ltUBwFjBg
-         /fTg==
-X-Gm-Message-State: AOAM531aMcs1BOalJrRtSzZLR0jVeVtGOjTL1e/xqeyKck9WsAG8rahp
-        Hb0AFdDl7up3SYZ+tu1QT6N6gw==
-X-Google-Smtp-Source: ABdhPJw63RL7dYHdoDbusyEcWLmssYal+r5BY4+7+lRfm3Z0XJfoRLsIaSNcWuOfIbK+EpvPFW1/aQ==
-X-Received: by 2002:a17:907:6e8f:b0:710:865b:9c90 with SMTP id sh15-20020a1709076e8f00b00710865b9c90mr39900307ejc.27.1655115272913;
-        Mon, 13 Jun 2022 03:14:32 -0700 (PDT)
-Received: from krzk-bin.monzoon.net (80-254-69-65.dynamic.monzoon.net. [80.254.69.65])
-        by smtp.gmail.com with ESMTPSA id y9-20020a170906524900b006fec69696a0sm3639863ejm.220.2022.06.13.03.14.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jun 2022 03:14:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] scsi: ufs: exynos: constify driver data
-Date:   Mon, 13 Jun 2022 12:14:29 +0200
-Message-Id: <20220613101429.114449-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FO5eQRnnKHa3c3u3uxHcn5ZlaPTIIVuUOMy3m36ikoQ=;
+        b=mnP/V/77CRqeOnGfpCm0wnWwc1QttSjXz1QqlI+G7/dJ0jqPYEwJ/txr/gXkUTTG2G
+         nGB5GvU0M+6EKfpl0Owv6VeuQPL9yPxNUIfNuIn0sl2Ys1gXQF8SgwAj7MQp6hMGGiAR
+         9mcXMrJK8jP+1Ogyc8DMUuJGOZHGU6Ju85Jk6rKtT9dXkmch7Bh7ySRRMWI3WXFCA9kn
+         ETo3ZbFOyaAShAoHtVeBQBHB52Z+gwHKdd7Bqym2T8dVOP5C9+zHoMCDGdxaes7LoHO8
+         lidfWkn9B1ltUjh0RvQCntzEi1vsmcPK11R+pTeAp9l76MX44XAoeACp5/8XHkbIVNna
+         SLsg==
+X-Gm-Message-State: AOAM533OXBDdEe8iK/979WZtksVl+QiyZwiL10Yn/wx2L4rvUySJY+YI
+        /59CnYur28avaOG7Ihki24jPw4COgGogHcr2FeSyiA==
+X-Google-Smtp-Source: ABdhPJy1YGZXyB3xGCSbNeenonti+4M6z/MEDflCOhq9mOF1UZMvm9qqASBBngbBmqx6Ppcp1MWW8C49KWXoGSrDIkg=
+X-Received: by 2002:a17:906:494b:b0:710:7954:f6ce with SMTP id
+ f11-20020a170906494b00b007107954f6cemr43312372ejt.123.1655119050611; Mon, 13
+ Jun 2022 04:17:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220504114021.33265-1-jagan@amarulasolutions.com>
+ <20220504114021.33265-9-jagan@amarulasolutions.com> <17782795-10f1-067d-c6af-f82d64c6273e@intel.com>
+In-Reply-To: <17782795-10f1-067d-c6af-f82d64c6273e@intel.com>
+From:   Jagan Teki <jagan@amarulasolutions.com>
+Date:   Mon, 13 Jun 2022 16:47:19 +0530
+Message-ID: <CAMty3ZBYkQ8GJL+9r+zXhjrFjb+XCLgBh8pY=f+FVM_DHm-SPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/12] drm: bridge: samsung-dsim: Add atomic_check
+To:     Andrzej Hajda <andrzej.hajda@intel.com>
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>,
+        Fancy Fang <chen.fang@nxp.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
+        Adam Ford <aford173@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Matteo Lisi <matteo.lisi@engicam.com>,
+        dri-devel@lists.freedesktop.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-amarula <linux-amarula@amarulasolutions.com>,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,62 +82,53 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Constify the drv data because it should not be modified (used by
-multiple devices).
+On Wed, May 11, 2022 at 4:01 PM Andrzej Hajda <andrzej.hajda@intel.com> wrote:
+>
+> On 04.05.2022 13:40, Jagan Teki wrote:
+> > Fixing up the mode flags is required in order to correlate the
+> > correct sync flags of the surrounding components in the chain
+> > to make sure the whole pipeline can work properly.
+> >
+> > So, handle the mode flags via bridge, atomic_check.
+> >
+> > v2:
+> > * none
+> >
+> > v1:
+> > * fix mode flags in atomic_check instead of mode_fixup
+> >
+> > Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
+> > ---
+> >   drivers/gpu/drm/bridge/samsung-dsim.c | 14 ++++++++++++++
+> >   1 file changed, 14 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
+> > index b618e52d0ee3..bd78cef890e4 100644
+> > --- a/drivers/gpu/drm/bridge/samsung-dsim.c
+> > +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+> > @@ -1340,6 +1340,19 @@ static void samsung_dsim_atomic_post_disable(struct drm_bridge *bridge,
+> >       pm_runtime_put_sync(dsi->dev);
+> >   }
+> >
+> > +static int samsung_dsim_atomic_check(struct drm_bridge *bridge,
+> > +                                  struct drm_bridge_state *bridge_state,
+> > +                                  struct drm_crtc_state *crtc_state,
+> > +                                  struct drm_connector_state *conn_state)
+> > +{
+> > +     struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
+> > +
+> > +     adjusted_mode->flags |= (DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
+> > +     adjusted_mode->flags &= ~(DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
+>
+>
+> 1. Shouldn't this be in mode_fixup callback?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/ufs/host/ufs-exynos.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+Possible to do it on mode_fixup, yes. if we want to do the same stuff
+on atomic API then atomic_check is the proper helper.
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index a81d8cbd542f..9fef706d896e 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -157,7 +157,6 @@ enum {
- 
- #define CNTR_DIV_VAL 40
- 
--static struct exynos_ufs_drv_data exynos_ufs_drvs;
- static void exynos_ufs_auto_ctrl_hcc(struct exynos_ufs *ufs, bool en);
- static void exynos_ufs_ctrl_clkstop(struct exynos_ufs *ufs, bool en);
- 
-@@ -1473,7 +1472,7 @@ static int exynosauto_ufs_vh_init(struct ufs_hba *hba)
- 	return 0;
- }
- 
--static struct ufs_hba_variant_ops ufs_hba_exynos_ops = {
-+static const struct ufs_hba_variant_ops ufs_hba_exynos_ops = {
- 	.name				= "exynos_ufs",
- 	.init				= exynos_ufs_init,
- 	.hce_enable_notify		= exynos_ufs_hce_enable_notify,
-@@ -1545,7 +1544,7 @@ static struct exynos_ufs_uic_attr exynos7_uic_attr = {
- 	.pa_dbg_option_suite		= 0x30103,
- };
- 
--static struct exynos_ufs_drv_data exynosauto_ufs_drvs = {
-+static const struct exynos_ufs_drv_data exynosauto_ufs_drvs = {
- 	.uic_attr		= &exynos7_uic_attr,
- 	.quirks			= UFSHCD_QUIRK_PRDT_BYTE_GRAN |
- 				  UFSHCI_QUIRK_SKIP_RESET_INTR_AGGR |
-@@ -1561,7 +1560,7 @@ static struct exynos_ufs_drv_data exynosauto_ufs_drvs = {
- 	.post_pwr_change	= exynosauto_ufs_post_pwr_change,
- };
- 
--static struct exynos_ufs_drv_data exynosauto_ufs_vh_drvs = {
-+static const struct exynos_ufs_drv_data exynosauto_ufs_vh_drvs = {
- 	.vops			= &ufs_hba_exynosauto_vh_ops,
- 	.quirks			= UFSHCD_QUIRK_PRDT_BYTE_GRAN |
- 				  UFSHCI_QUIRK_SKIP_RESET_INTR_AGGR |
-@@ -1573,7 +1572,7 @@ static struct exynos_ufs_drv_data exynosauto_ufs_vh_drvs = {
- 	.opts			= EXYNOS_UFS_OPT_BROKEN_RX_SEL_IDX,
- };
- 
--static struct exynos_ufs_drv_data exynos_ufs_drvs = {
-+static const struct exynos_ufs_drv_data exynos_ufs_drvs = {
- 	.uic_attr		= &exynos7_uic_attr,
- 	.quirks			= UFSHCD_QUIRK_PRDT_BYTE_GRAN |
- 				  UFSHCI_QUIRK_BROKEN_REQ_LIST_CLR |
--- 
-2.34.1
+> 2. Where this requirement comes from? As Marek says it breaks Samsung
+> platforms and is against DSIM specification[1]:
 
+At least the bridge chain starting from LCDIF+DSIM requires active high sync.
+
+Jagan.
