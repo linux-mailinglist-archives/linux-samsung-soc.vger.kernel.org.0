@@ -2,93 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9374554D63E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jun 2022 02:48:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2EE854DBAE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jun 2022 09:32:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347926AbiFPAs2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 15 Jun 2022 20:48:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
+        id S1359466AbiFPHcV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jun 2022 03:32:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348113AbiFPAs0 (ORCPT
+        with ESMTP id S1359433AbiFPHcM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 15 Jun 2022 20:48:26 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43B6056B29
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Jun 2022 17:48:26 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id u2so108430pfc.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Jun 2022 17:48:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=qp3edhQcRtMcVJoA9hlhbeV2zjC7yml5vSoU96PZRCs=;
-        b=L+UOgh6JQRaNTE/JReN21PZAoB/6nnToA8fEWd5A+dV/kER0XwItK85xWljunHAbTj
-         gOaYlkoLs9AiT21Vx1wjmuduTErEd1/98fh87mBOcBvIwRDs7OMQg+T9OkjjR38w5sga
-         LmpXul/uvGcZVf+0MZIjD0IOMj5eNX1KXKh9uEOiRQP1MphFTgqUEf/wocXBm9tkhGOs
-         3oVI5BeEmbGRlqhvnxG5msKYLs4O6Y39pClLn2jaUo+RbTZoTSNpakdN7Wus8OCgGfgP
-         /RTmsCBnKxT9chsIAsIQHwGGdaZs/ySBEqpyKS8SMvKvTZZUxNMPQI63L5K188AIDF2J
-         i1GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qp3edhQcRtMcVJoA9hlhbeV2zjC7yml5vSoU96PZRCs=;
-        b=nnUtqDz5dLgneMAkpzqVMaBfw6CECZBFNPY0fj2Nj6r1MmXJNlAztlN+tJ18pP+CBw
-         XdMtS95mjrZXsTt30g4jQJnk0idupfgtrU77GmAa4gpilOHNGwdL7eCtOc8zDFr95qSa
-         zsxYxIKVoHerV76VDmAsSzp6zlfDYlL88+/rwHHZRkNeC9pfjMCoBfS9sZkl2GlJQjE8
-         dAw1ty49mdU0WYWoPXPQxwUj5JHWkBbmbvl7PeKhMVjHwJY1LfYSlg9F058k077MPLWr
-         ja6MeXXRCUSnTC1rAUDA9QcHOpfi6TaF70DPjt5F3KG5V/HXev3i6HL4dRyf+WyTAlWD
-         GNPQ==
-X-Gm-Message-State: AJIora9JqbEcmbNCxy2z6RGzAHvBdvc10W22jfxiPajNwXtaYYoWA+aO
-        n2Y4fGSfHGt+7b4GmA48ih3nSw==
-X-Google-Smtp-Source: AGRyM1ueSK+tw3uFtmBZQL6kWbqp7RpDDRh7PzZWAcZOgdQZukfyMUyAAaRPhzF5ukPOnTqzdqLexw==
-X-Received: by 2002:a63:6f0b:0:b0:408:b8d9:f491 with SMTP id k11-20020a636f0b000000b00408b8d9f491mr2152776pgc.496.1655340505789;
-        Wed, 15 Jun 2022 17:48:25 -0700 (PDT)
-Received: from krzk-bin.. ([192.77.111.2])
-        by smtp.gmail.com with ESMTPSA id f11-20020a170902684b00b001635c9e7f77sm253518pln.57.2022.06.15.17.48.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jun 2022 17:48:25 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        arm@kernel.org, Olof Johansson <olof@lixom.net>,
-        linux-arm-kernel@lists.infradead.org,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-samsung-soc@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        soc@kernel.org
-Subject: Re: (subset) [PATCH v2 48/48] ARM: dts: s5pv210: align gpio-key node names with dtschema
-Date:   Wed, 15 Jun 2022 17:48:22 -0700
-Message-Id: <165534049853.17040.18012306290229997818.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220609114047.380793-9-krzysztof.kozlowski@linaro.org>
-References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org> <20220609114047.380793-9-krzysztof.kozlowski@linaro.org>
+        Thu, 16 Jun 2022 03:32:12 -0400
+Received: from me-region.ru (email.me-region.ru [178.238.126.75])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id D7D015C741
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Jun 2022 00:32:08 -0700 (PDT)
+Received: from rmail.major-express.ru (rmail [127.0.0.1])
+        by me-region.ru (Postfix) with ESMTP id D012F2AEBF1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Jun 2022 10:32:07 +0300 (MSK)
+Authentication-Results: rmail.major-express.ru (amavisd-new); dkim=pass
+        reason="pass (just generated, assumed good)" header.d=me-region.ru
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=me-region.ru; h=
+        reply-to:date:date:from:from:to:subject:subject
+        :content-description:content-transfer-encoding:mime-version
+        :content-type:content-type; s=dkim; t=1655364726; x=1656228727;
+         bh=q+AB6wTcFowTQDN3yBj6V7w56hj7BQnkh6i5A0MwiTQ=; b=NVYdyUoMeJ8C
+        q7EAM00AVekVPPg2yVbvN8D62eH222T6jkZVxccDGV8nWWi9DwlvEfLSstG08n7a
+        5fvH1K8ugooaUxkJky1QKrUz/SjDEyySxpljg1kZcIc7F6XEvRCYWixBiYjsXzUJ
+        NfKigXXz8+aZF4cKZAWlIl+RkyQ5qRA=
+X-Virus-Scanned: Debian amavisd-new at rmail
+Received: from me-region.ru ([127.0.0.1])
+        by rmail.major-express.ru (rmail.major-express.ru [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 3nmAXpSUiJjv for <linux-samsung-soc@vger.kernel.org>;
+        Thu, 16 Jun 2022 10:32:06 +0300 (MSK)
+Received: from [2.56.59.106] (unknown [2.56.59.106])
+        by me-region.ru (Postfix) with ESMTPSA id 5AEB32B165D;
+        Wed, 15 Jun 2022 12:33:03 +0300 (MSK)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Good day, 93.189.94.68
+To:     Recipients <postmaster@me-region.ru>
+From:   "Lynn Page" <postmaster@me-region.ru>
+Date:   Wed, 15 Jun 2022 02:32:53 -0700
+Reply-To: lewislekan@outlook.com
+Message-Id: <20220616073207.D012F2AEBF1@me-region.ru>
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_50,DKIM_INVALID,
+        DKIM_SIGNED,FREEMAIL_FORGED_REPLYTO,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_MSPIKE_H2,RCVD_IN_VALIDITY_RPBL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  1.3 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in
+        *      bl.spamcop.net
+        *      [Blocked - see <https://www.spamcop.net/bl.shtml?2.56.59.106>]
+        *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
+        *      https://senderscore.org/blocklistlookup/
+        *      [178.238.126.75 listed in bl.score.senderscore.com]
+        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [178.238.126.75 listed in wl.mailspike.net]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        *  0.1 DKIM_INVALID DKIM or DK signature exists, but is not valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 9 Jun 2022 13:40:47 +0200, Krzysztof Kozlowski wrote:
-> The node names should be generic and DT schema expects certain pattern
-> (e.g. with key/button/switch).
-> 
-> 
+Good day,
 
-Applied, thanks!
+This email will come to your as surprise, i will like to discuss Business P=
+roposal with u Kindly get back to me asap
 
-[48/48] ARM: dts: s5pv210: align gpio-key node names with dtschema
-        https://git.kernel.org/krzk/linux/c/8b86f733c0e512f92e43a9db1559498ef64d244e
-
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Mrs.Lynn Page
