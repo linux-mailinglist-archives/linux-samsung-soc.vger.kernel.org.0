@@ -2,87 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6B6D54DB6F
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jun 2022 09:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F26B54DF05
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 16 Jun 2022 12:26:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbiFPHXy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jun 2022 03:23:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40682 "EHLO
+        id S1376549AbiFPKZs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 16 Jun 2022 06:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiFPHXx (ORCPT
+        with ESMTP id S1376563AbiFPKZn (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jun 2022 03:23:53 -0400
-Received: from smtpbg153.qq.com (smtpbg153.qq.com [13.245.218.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 251883630F
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Jun 2022 00:23:50 -0700 (PDT)
-X-QQ-mid: bizesmtp82t1655364220tyuagdlm
-Received: from localhost.localdomain ( [113.57.152.160])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Thu, 16 Jun 2022 15:23:33 +0800 (CST)
-X-QQ-SSF: 01400000002000D0M000B00A0000000
-X-QQ-FEAT: hR9GyqeohSiJBYTk+od0+lv++0Drp2ggk1O87ehDvPVH2JX41fZIZnXCoewT9
-        TvOgRgq9lVfPm0SlkOBg/+/dgKmP5Dzt0drUXwhgN8R93L+T0Zp4KSovkT1dPALxMg/IQfL
-        RBcW5ySW1hUXBXv/mduoWlWrFI5HvhFqXSH77EulhOr4Ica2nZwXQlFQhuMQlf8stKZLM8P
-        TP7X4WgIl5QbsfoimPYgTJ9fRL1JsGn0gwq/w3fpgLasqQ8P1KlYVhziuulIozvFw7Xb07h
-        bkPzEW0TqvRHqZmEFVskxWZrIU8nI7SCXjwsnBU/paad1lTQNLDn1JfMkFnMpV858Xicslp
-        pikr4+oLT6sVb4zG5jbg51o21kVPA==
-X-QQ-GoodBg: 2
-From:   hongao <hongao@uniontech.com>
-To:     inki.dae@samsung.com, jy0922.shim@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        airlied@linux.ie, daniel@ffwll.ch, krzysztof.kozlowski@linaro.org,
-        alim.akhtar@samsung.com
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        hongao <hongao@uniontech.com>
-Subject: [PATCH] drm/exynos: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Thu, 16 Jun 2022 15:22:33 +0800
-Message-Id: <20220616072233.8302-1-hongao@uniontech.com>
-X-Mailer: git-send-email 2.20.1
+        Thu, 16 Jun 2022 06:25:43 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5CA5DA00
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Jun 2022 03:25:41 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id h36so1503857lfv.9
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 16 Jun 2022 03:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
+        b=ABukwHqeSM98uGcshbCxcb5wQWHGiHfFagypt7/loMb9v2FDjwcTgJrhBtRxVWf1v2
+         BXStPbBsgYSqnUGGl7zGBKM5CMLd7osq6XxwDfWGiMcFn4Pi67uCFUXjvoArP/U14XOy
+         mQeS4UYPV1T6X+0EnR/uBN8wVFg+Gtbvf3f6qSheDv1gjHNHTXbbedH61hcExrUHexoJ
+         rx1Jgk5bVM9b9AL2u7FDe7guhHcyiN+kbqYLFek60/qjs7XvLdFeOWURUBV0kwO8CI+7
+         Cgd19SBjyhxlRHqwqo9b9KDCVX/Ur+QyoWeFC2a2uxKLH7+bPAsMu0Sd6y37iHP37kUl
+         Kx9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=lLG88JCPgF7Yhflf4FNi4GQedsSNMbwmPtgneUr9Mu0=;
+        b=Z+zdlMVTptkipWCquOCBXvaYw/aOTuKsY+xM7LnBw6wL2FeqmGKI55TiwXEx/YBn7Q
+         pzW7cwKgCZnNOnHOCcFDsoWbwdBKqyTx+XK3won+6iQaa0IoMFAmzg8Fg2y6lLAivk/B
+         SQz80AVdMCg2i9ddZwPMMNWr7sjqktkIVJEtVGXJoL3e0RGHG2cvABDmI0KliK+l93e0
+         gXezS9uRD0ZN9cnX5ei6ucYpHlrLC/pPTvfYPSnc5Aa8wAOGvuSERBt5pTzhDPXQuY29
+         FAF79Wcx8JsD4casRlzh0TMFSfIAyHGwSjHdx0ONUiLqSqjKTuXdiw7qjR6WB1pMsS9B
+         fmKQ==
+X-Gm-Message-State: AJIora/gqNUxU9OmGwEZbaXqSXjrzzfDFD+lBGGarzffsC+HNNwjEwsV
+        Pf6SHhfMpfGIECH9O0vdxKe2OsrDEbLR5qYuRVM=
+X-Google-Smtp-Source: AGRyM1v58shGjEx7x4KAdFNHXuS9Ixy8KMeEpc8k/MiglXee1uXZfo7fZhbkGUuLzTt8pK6QeU3FZUcLi8QQvzcrZAY=
+X-Received: by 2002:a19:ca0c:0:b0:479:46c:2917 with SMTP id
+ a12-20020a19ca0c000000b00479046c2917mr2283112lfg.160.1655375140632; Thu, 16
+ Jun 2022 03:25:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign8
-X-QQ-Bgrelay: 1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6520:28c2:b0:1f3:cf5:e20d with HTTP; Thu, 16 Jun 2022
+ 03:25:39 -0700 (PDT)
+Reply-To: clmloans9@gmail.com
+From:   MR ANTHONY EDWARD <bashirusman02021@gmail.com>
+Date:   Thu, 16 Jun 2022 11:25:39 +0100
+Message-ID: <CAGOBX5aJbCGJvAx_fa099PFZmXDUdUgW9p6nY_cgZy+0W2JLtg@mail.gmail.com>
+Subject: DARLEHENSANGEBOT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Once EDID is parsed, the monitor HDMI support information is available
-through drm_display_info.is_hdmi.
+--=20
+Ben=C3=B6tigen Sie ein Gesch=C3=A4ftsdarlehen oder ein Darlehen jeglicher A=
+rt?
+Wenn ja, kontaktieren Sie uns
 
-This driver calls drm_detect_hdmi_monitor() to receive the same
-information, which is less efficient.
-
-Avoid calling drm_detect_hdmi_monitor() and use drm_display_info.is_hdmi
-instead.
-
-Signed-off-by: hongao <hongao@uniontech.com>
----
- drivers/gpu/drm/exynos/exynos_hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index 7655142a4651..17e9f5efbcfc 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -893,7 +893,7 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	if (!edid)
- 		return -ENODEV;
- 
--	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
-+	hdata->dvi_mode = !connector->display_info.is_hdmi;
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
- 			  (hdata->dvi_mode ? "dvi monitor" : "hdmi monitor"),
- 			  edid->width_cm, edid->height_cm);
--- 
-2.20.1
-
-
-
+*Vollst=C3=A4ndiger Name:
+* Ben=C3=B6tigte Menge:
+*Leihdauer:
+*Mobiltelefon:
+*Land:
