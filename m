@@ -2,88 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FD1754EF3E
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 17 Jun 2022 04:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0D5E54F669
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 17 Jun 2022 13:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379730AbiFQCVx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 16 Jun 2022 22:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
+        id S1382271AbiFQLJw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 17 Jun 2022 07:09:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379338AbiFQCVv (ORCPT
+        with ESMTP id S1382164AbiFQLJv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 16 Jun 2022 22:21:51 -0400
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E64264D09;
-        Thu, 16 Jun 2022 19:21:51 -0700 (PDT)
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25H0a6rS032735;
-        Fri, 17 Jun 2022 02:21:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2021-07-09;
- bh=XzuU00wEn/oMcU0IoMH4V8VEADCDpYRgPmSpYj2eHtI=;
- b=XrAuw/vBYkygOjD1WdltaYPhmoZerGOUZlKHN6O0QV+ldk1brobXjnUfcD+v2QdpgMt8
- I7hSKJ4epYtV3L27kSUOAyazPf6dGBwYkuOrkJt4eoOCAz4dpCfqsH99EDpKmpWM5/Qn
- kDg1ljMFcA/peVYaYM7QDna8KUst7njNxvvhfHAZ1vlYMFkSNkjNI7uDgFZXMxMeujJY
- 0qEiYAkqs8hCH2vyLO9VJ2UNrE4yPalvJQ78wBCDI3XhaudzKVb2UrsiidcEs+WmP47t
- 1cuZQQBJws5FMvnMZ7kJZv/5ZfX2IUnjlw/rmb6fdTliZjw2MIrtiYpIkXeP4XFaXXia lg== 
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
-        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3gmhu2vv27-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 17 Jun 2022 02:21:43 +0000
-Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.16.1.2/8.16.1.2) with SMTP id 25H2G77W029132;
-        Fri, 17 Jun 2022 02:21:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3gpr27jd87-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 17 Jun 2022 02:21:42 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-        by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 25H2LejH040352;
-        Fri, 17 Jun 2022 02:21:41 GMT
-Received: from ca-mkp.mkp.ca.oracle.com (ca-mkp.ca.oracle.com [10.156.108.201])
-        by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3gpr27jd7c-2;
-        Fri, 17 Jun 2022 02:21:41 +0000
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     linux-kernel@vger.kernel.org,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>
-Subject: Re: [PATCH] scsi: ufs: exynos: constify driver data
-Date:   Thu, 16 Jun 2022 22:21:35 -0400
-Message-Id: <165543243410.26207.14002828862319128042.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.35.2
-In-Reply-To: <20220613101429.114449-1-krzysztof.kozlowski@linaro.org>
-References: <20220613101429.114449-1-krzysztof.kozlowski@linaro.org>
+        Fri, 17 Jun 2022 07:09:51 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2591B6CA89
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 17 Jun 2022 04:09:50 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id s6so6381424lfo.13
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 17 Jun 2022 04:09:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=Jh3M8LDovYWs/mBJiVJoI/DS8xun0EDDqspVSX/swmY=;
+        b=EsSqKI1SMSLuenvGcu7WTL3V7zFTGmjUsljSLgtVwAHqlLErA5xxmBy2JmMaFxtxeX
+         u2znEqr5Id9yXIy65CeL2zDYYkXd+7OH7tXB6MSECLWix0wwJclUqK/T3laLowK3jTwK
+         u51+r1p6BgxAEzgsBqjmgUREPoVWrTDeqBBOyQGyVUzPxo1LeU+SXn5VLzhTuh2ZzYXS
+         i/nd1xzfCcfKnrSlaGbTLNZe7t3ZDUTkow24oui9dblNY2w/aB61eq8G3FPsu2+aM81U
+         IWClR+QxexYx2l3uwJyqdCqUolou7LtJ13pi/hqqz0CyFs93zGIKLXx3UgGWaPEEXUpW
+         /9xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=Jh3M8LDovYWs/mBJiVJoI/DS8xun0EDDqspVSX/swmY=;
+        b=yIziOX7Ja4Fpy1v4OC4L9DNP14EoZruqjQ3+idkr+tGzphoCJ2KOeMf/ybRZ9iNYbT
+         xUTJktLaEVZ993kaqrLRb/c9Ti3EN9OhkBFU1yl1yrql2U+GZP0hKT9yZB4nvVaTTl/L
+         XSnnXJUsfHKqouHiG6IIVNcYNUJfKbQWFP3TvnG1SbdEain5MtTJ0szwmiCiPO7oyAP/
+         +yfGtPwpnZrm8XDI4kpGyr99snwQqNKdq6wz/lL76KRBRwpcGn0Nzh03nHPrv+MMBa6Z
+         9Nxqx1KyBXns31FlWlT+TfCG3KmAsSXPmBR2x7gHqmADU1A3kpYW8K9qmDmpjto+9CLP
+         pO5Q==
+X-Gm-Message-State: AJIora8udUOMg3B4HgE9cDcqarCrXrBgRgrIdsU+VOQ2S/yL/T2jVuHI
+        8lWkuLAOVpxTnaHQz7FXI+m7QKbKSOLmGQXGBz0=
+X-Google-Smtp-Source: AGRyM1vLzwF4FCaudnvd5ad3/nPHQ4t1msEdIFVsz7XwgUhRC0T/B1APVaOIMfuMW9/Dnyg7I4ZnkRf9phgujEwZYBg=
+X-Received: by 2002:a05:6512:791:b0:479:3fc7:e91a with SMTP id
+ x17-20020a056512079100b004793fc7e91amr5186313lfr.388.1655464188537; Fri, 17
+ Jun 2022 04:09:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Yz-RNPi0yq4Pa-Huz1TWZeZ56gDSs2-8
-X-Proofpoint-ORIG-GUID: Yz-RNPi0yq4Pa-Huz1TWZeZ56gDSs2-8
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:ab3:680f:0:0:0:0:0 with HTTP; Fri, 17 Jun 2022 04:09:47
+ -0700 (PDT)
+Reply-To: sj7209917@gmail.com
+From:   Joseph smith <maelyskpeta@gmail.com>
+Date:   Fri, 17 Jun 2022 04:09:47 -0700
+Message-ID: <CACKGxpwNntSiDYpo4jDZAURubmoyC63t47YzZ=2dVK24mhgW2g@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 13 Jun 2022 12:14:29 +0200, Krzysztof Kozlowski wrote:
-
-> Constify the drv data because it should not be modified (used by
-> multiple devices).
-> 
-> 
-
-Applied to 5.20/scsi-queue, thanks!
-
-[1/1] scsi: ufs: exynos: constify driver data
-      https://git.kernel.org/mkp/scsi/c/dcad25cb2500
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Hi   are you available to  speak now
+Thanks
