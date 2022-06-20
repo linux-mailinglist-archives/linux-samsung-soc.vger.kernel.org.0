@@ -2,52 +2,52 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83CC5552349
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jun 2022 19:57:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B649552358
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 20 Jun 2022 19:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244859AbiFTR5v (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 20 Jun 2022 13:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44842 "EHLO
+        id S245007AbiFTR6H (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 20 Jun 2022 13:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244936AbiFTR5j (ORCPT
+        with ESMTP id S243226AbiFTR5k (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 20 Jun 2022 13:57:39 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B071EEFA
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 20 Jun 2022 10:57:38 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id eo8so16234156edb.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 20 Jun 2022 10:57:38 -0700 (PDT)
+        Mon, 20 Jun 2022 13:57:40 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6865C1F2C0
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 20 Jun 2022 10:57:39 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id o9so6926492edt.12
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 20 Jun 2022 10:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QdYt/KuZ8ZY9+ff+QpyUq9uIL2yZfZHFaxnC+UiSozk=;
-        b=qLTElkzwNBDDwmCKMVWclmi43W4+alHdokrH8RMkKOesGUAkWBitUjkLetqlPBvlLm
-         gNuJ4oVMlAUa8WE7tMEs8IRNSLsZzaVPayI/Lj8BmWMtXSiDqQqnrNRXt7Z2A+l6t0SF
-         YD5vaW/+C39T0QMGweFTdnBtKsAi1lvSaoDEsCeFclz+hUDaX+hbiwF7rRtIk4R7hSll
-         PX+GcMKf405+ZYNuYph2fmfu93bQpSZTsfDVp7VL1V8M+ZyrUMjiuKKmR2F4An9yZ1x2
-         AYZTuSlKZGsrjBz/2bPMNh0qvLL6Xj8vv/C6+Nq5QEoQxd10YZHT9HZkiM9fueA1rW9j
-         ooTQ==
+        bh=dPjc9m9jjOSDqacncQHGMk6hFz5gDzF+xAgCPwYpZfo=;
+        b=O0eVkmFKWn0CEFQyhwJfh6gSkxLut+snaPIhrX88n4irfnWjH209+LLoE/dJpMjx3d
+         xG9Up6PF+INz94I0O7TqkbGUzR2JwxJoAusNtIKzN6gYb8u5kPeVZRJyGX/mKToUgXrP
+         NNQDDA9sILZcM3mdEcSB+djhLidp0iyhgrPahf0ID2igZ8LuJqORtUBn31oZOeRZm5L4
+         X66P3jlGqoQdDmprWtMpg5nSqqJFrW2x+wr2EZH2HGk5804jFqESYVzrBiWeScCJq316
+         /Ljfahxr4lbxFHdDG2IFzKRmAr04ZstfYP3R5dXm4+NUnwXYStqI+0rNgDuXw+C7ryVS
+         OB2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QdYt/KuZ8ZY9+ff+QpyUq9uIL2yZfZHFaxnC+UiSozk=;
-        b=QvQb8/uU1upgGcZNNXMWFIKOef1eUh47HjYJY3wZexGmTTGXCDGfIiQC7rTLkVEo+0
-         a94/BhxOe8SelfD9kOHhebtcRc/Tg9MGg36DJKORtl0Oxf887wMQJnJWocreQTNaQrvN
-         O2U2T3yTci0LsOB5MxTLMAEgim4Arx5pWe3Xh91CbUoEUcry9vfJ6ZcNMgnJ2kflYWtn
-         G0eH270csWYOSHhq6w/Z0nvR+GIKHRW0gPv5OJ03B+nFPX6wj9HUbGTSuLc8DvNsV+B3
-         InQVGnVXN69Tb+1BsiaRyE5dLJ4zq14leVy5EJfXlxn3X6ogyfjxn9Bz/0dM+wEzMNnb
-         r3Pg==
-X-Gm-Message-State: AJIora824UByYSvKTldktHiLTL04Zv5LvaaOFJvOAbAnfarMVumCWu3D
-        YYW/3SzheVlDd2QI4ClN7TGhzg==
-X-Google-Smtp-Source: AGRyM1uMebg0/BpFhY5Q5IqpYhWsyjyLUKCGWnRAk/WrVI15dgi8rFqj9bqqwWpi9+FapDAJJdhKOw==
-X-Received: by 2002:a05:6402:3713:b0:435:539e:a939 with SMTP id ek19-20020a056402371300b00435539ea939mr26643572edb.160.1655747856830;
-        Mon, 20 Jun 2022 10:57:36 -0700 (PDT)
+        bh=dPjc9m9jjOSDqacncQHGMk6hFz5gDzF+xAgCPwYpZfo=;
+        b=5ORUNmLsahhAtr7QoxedqO7qwWoFL7AVmsRhn3tYTAUX4HEnEgLsotrWawo6SfdlMt
+         k4fiinHSDhd6pFINNKkWLKlGrLApcHgkb5juxtyQBnyWPOnNXgbMlO29RD6FBTrWkC0Q
+         qEZzsPvncMfqflK4IgYpehw4VAWZwokGosPqZN0SYUEVkpWW8tjLsMrfFJKnLNhdRuuW
+         BEmbtT8PEQg9amIXzJZZeFf193dvpsLb/5zGng+Bz/BlRMw4HsfAsKz6Ff/Xd6V7Lvic
+         OtWmNPvUuA9fnCwMidk9nZ7WTd85kjc4nrqIVYOaXbsERifX+5Kk4YBjXDEzzfscnU4q
+         QuNw==
+X-Gm-Message-State: AJIora+4IZeTsYCn8rubzLlsURuyWIlTaWX+DapSlouywLTcA7aQO5X0
+        BLVV3uyHMbKkHc5aiRH7R7FRcg==
+X-Google-Smtp-Source: AGRyM1uRIbcBM9VViZJowdqff2MvNDYIlrVp69Pj5JNKPD7u5fAAfv0cs6xkqSAbbBaqHkHsA6zBpA==
+X-Received: by 2002:a05:6402:3329:b0:435:8136:cb70 with SMTP id e41-20020a056402332900b004358136cb70mr7037286eda.106.1655747857948;
+        Mon, 20 Jun 2022 10:57:37 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
         by smtp.gmail.com with ESMTPSA id g13-20020aa7c84d000000b004357b717a96sm4309925edt.85.2022.06.20.10.57.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jun 2022 10:57:36 -0700 (PDT)
+        Mon, 20 Jun 2022 10:57:37 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -55,9 +55,9 @@ To:     Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 6/8] ARM: dts: exynos: add function and color to LED node in Odroid HC1
-Date:   Mon, 20 Jun 2022 19:57:14 +0200
-Message-Id: <20220620175716.132143-7-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 7/8] ARM: dts: exynos: add function and color to LED node in Odroid XU4
+Date:   Mon, 20 Jun 2022 19:57:15 +0200
+Message-Id: <20220620175716.132143-8-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220620175716.132143-1-krzysztof.kozlowski@linaro.org>
 References: <20220620175716.132143-1-krzysztof.kozlowski@linaro.org>
@@ -74,26 +74,26 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 Add common LED properties - the function and color - to LED node in
-Exynos5422 Odroid HC1, so we can drop deprecated label property.
+Exynos5422 Odroid XU4, so we can drop deprecated label property.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/exynos5422-odroidhc1.dts | 4 +++-
+ arch/arm/boot/dts/exynos5422-odroidxu4.dts | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/exynos5422-odroidhc1.dts b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-index d91f7fa2cf80..3de7019572a2 100644
---- a/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-+++ b/arch/arm/boot/dts/exynos5422-odroidhc1.dts
-@@ -8,6 +8,7 @@
+diff --git a/arch/arm/boot/dts/exynos5422-odroidxu4.dts b/arch/arm/boot/dts/exynos5422-odroidxu4.dts
+index 1c24f9b35973..f5fb617f46bd 100644
+--- a/arch/arm/boot/dts/exynos5422-odroidxu4.dts
++++ b/arch/arm/boot/dts/exynos5422-odroidxu4.dts
+@@ -9,6 +9,7 @@
   */
  
  /dts-v1/;
 +#include <dt-bindings/leds/common.h>
- #include "exynos5422-odroid-core.dtsi"
+ #include <dt-bindings/sound/samsung-i2s.h>
+ #include "exynos5422-odroidxu3-common.dtsi"
  
- / {
-@@ -19,7 +20,8 @@ led-controller {
+@@ -21,7 +22,8 @@ led-controller {
  		compatible = "pwm-leds";
  
  		led-1 {
