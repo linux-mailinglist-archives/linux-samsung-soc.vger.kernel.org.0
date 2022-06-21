@@ -2,108 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ECDF552ED5
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jun 2022 11:41:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FB725532FB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jun 2022 15:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349469AbiFUJkS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 21 Jun 2022 05:40:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
+        id S1348873AbiFUNLW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 21 Jun 2022 09:11:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349281AbiFUJkI (ORCPT
+        with ESMTP id S231492AbiFUNLU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 21 Jun 2022 05:40:08 -0400
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2442727CE5
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 02:39:56 -0700 (PDT)
-Received: by mail-ua1-x933.google.com with SMTP id u13so4871487uaq.10
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 02:39:55 -0700 (PDT)
+        Tue, 21 Jun 2022 09:11:20 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121111EEF3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 06:11:19 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id o10so19313856edi.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 06:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
-        b=NKhg6kSkfnglJlsPDVUWhCY3Iibudx7OhZC5CePFgeNekYJKNrcmU8wB8gkktmjPqY
-         f0o4DET3nwW7oGb1WQAmWVCm6yLISrVrQXMY/9qoCppMNLX7K/jA/JZ+JMs1mNT38j+N
-         qSlM2vTiSOIkQo5cZ6oY4dkMVda7fWn0vzKRT295Q67AStI8u0BTanvw38uSxo4IMvFm
-         mtbeFJOQugEk6bmbrSLJZHxNWvSEoU0AT9TQz59V3jAGDZbWiI6U0Fx8UlroTYMr9wGQ
-         +xC78kHT5AZK7k/f6wmWhdDj3ThC5Cy20ctCKCcYvb/idPExEpgvQXB/UX/ziCu3vO07
-         Q2/g==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=iKG7ipis6svDRJZdPtz2/v7PW+5iNIJmzZjHALS7NSA=;
+        b=okX+XmWFVy8JkpopHuzLRfgSke7JTv9kr3wB8aAZYW7uPFgGtBNefvBCzCyVSiD2HY
+         TnUi0Ww2tDe/iD32IcnsZcbSSPly/JQvMmMcTC95dxbVfXqlV0Oj+1EtG5LQkRBhj6AT
+         4Lr8qoiBBS9N3HvMdWPHUGFj8a5z2FnZCngklGjalL/tVkMuaHywyOyaJ2+S45XkCky2
+         X/cFcjcDmKY6TZw5/yaaHZ8YQRFHBZ6DSEPFcQGQ5jyjgr/uIuyX82plxGm9LxkOVi6f
+         78GBh57ZNFjKjSoKxxdssEvscwQqRR95ejACIeFNNFrY7WMO63gX3D8zse3OsiXEA0h7
+         2eEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
-        b=dWOOVya1D+kkvnKT0K1N9HQsTmPqDan/w5CwjEvuINZ5YuQOe8+XqjsyLsCyr6V1ma
-         nq7siz6v//cQsDYYa2LnE95se+IlvnO+VsRnRAXWk50k/+YcgA8Yu8nEO0vOoj9CP63y
-         Szp2AJ+Z1KxVaQ+3BaYrQQIS4XSTQUWLRO0ACtL00xqCK0cfyhCkuirRCck6zqVirtHe
-         /ikRD43/EX0NDNX14qWQPxSA8Au/ANWny0dfdkjmeCt/6a37QTKoF/xfN72PtuMSZN7S
-         ZHCdCw7dMhuXpLAYor9KUuTzM/bC/PIrrMRQuNQU51iLxP6iOcHRFqpwnKOEflCxXOGi
-         gBMQ==
-X-Gm-Message-State: AJIora9fvdJh1RdKRJtgc4eRwR9qndbYVQ9xq5beLB4q0HUoHD61H/fS
-        T0Ikh6AXtPuhyt/WQBvTZKgfEjtHdXf8gK+u4T/PUqHmeLzg5L9P
-X-Google-Smtp-Source: AGRyM1sTF/SvvxCyraPE52znD36ZX02jNmxmam87lP8bWzXT3yTfChS1a9JgJI9LjBXh9tpS4qLO5E/t+5efudcEruY=
-X-Received: by 2002:a0d:d7c7:0:b0:317:bfe8:4f2 with SMTP id
- z190-20020a0dd7c7000000b00317bfe804f2mr12417910ywd.276.1655804384555; Tue, 21
- Jun 2022 02:39:44 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iKG7ipis6svDRJZdPtz2/v7PW+5iNIJmzZjHALS7NSA=;
+        b=hOQYKOxSAG/+5vV5HOQZzrUogP6U4zQAYVXy0QClrw296Wzbjf05DHriOVnSpD7Rql
+         jCdv3oD8CDnFn2pV9BteVB+X4/L4xA0uxGTVCOjkYwz/ZfrokvvKRhiph2POSqKcqhCm
+         hmioUgcIJ/WmmkObmGyQ5tLAU5babYBqnN/x7loDOS1bvbayQY75fCnFeh84ooD96N4B
+         /Xm9QN2kBzqlBJWHToAtXkpaX5YQXyyB04HyXZ/fnpx/dh2zZwazRBdnPut8LRkED5G6
+         LSDH/vESKc5QKwUDZ+O7WyhoOtivIwI8MPofM4npejNmmmKjS6/8E26ljmB9axJvSAP9
+         PmVA==
+X-Gm-Message-State: AJIora+4gCiliLPlRomBLeoPKkbsTFAKj0IUu0CHlZdAiWpmGd3SgVUq
+        2Up7ulhcgFu8db/cH1bw7h5stuAh1EIJGg==
+X-Google-Smtp-Source: AGRyM1vKW37lesBOhQl1w2hkQXH+6mMPK7WPBmLgxo70ZkWNzmO3m43rOEkPpANuofDWkYzsHia7IQ==
+X-Received: by 2002:a05:6402:2419:b0:435:1e2a:19ce with SMTP id t25-20020a056402241900b004351e2a19cemr35898425eda.370.1655817077646;
+        Tue, 21 Jun 2022 06:11:17 -0700 (PDT)
+Received: from [192.168.0.220] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id u17-20020a1709060b1100b006ff52dfccf3sm7522455ejg.211.2022.06.21.06.11.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jun 2022 06:11:17 -0700 (PDT)
+Message-ID: <d0f3bab8-fadb-709c-7118-20e23fba1dc4@linaro.org>
+Date:   Tue, 21 Jun 2022 15:11:15 +0200
 MIME-Version: 1.0
-Received: by 2002:a05:7010:e10a:b0:2d9:e631:94d0 with HTTP; Tue, 21 Jun 2022
- 02:39:44 -0700 (PDT)
-Reply-To: dimitryedik@gmail.com
-From:   Dimitry Edik <lsbthdwrds@gmail.com>
-Date:   Tue, 21 Jun 2022 02:39:44 -0700
-Message-ID: <CAGrL05aBO8rbFuij24J-APa+Luis69gEjhj35iv_GZfkHCVYDQ@mail.gmail.com>
-Subject: Dear Partner,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_MONEY_PERCENT,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,
-        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:933 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [lsbthdwrds[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
-        *      email?
-        *  0.0 T_MONEY_PERCENT X% of a lot of money for you
-        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *******
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v4 3/4] clocksource/drivers/exynos_mct: Support
+ local-timers property
+Content-Language: en-US
+To:     tglx@linutronix.de, daniel.lezcano@linaro.org
+Cc:     kernel@axis.com, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, alim.akhtar@samsung.com,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        krzysztof.kozlowski@linaro.org
+References: <20220609112738.359385-1-vincent.whitchurch@axis.com>
+ <20220609112738.359385-4-vincent.whitchurch@axis.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220609112738.359385-4-vincent.whitchurch@axis.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Dear,
+On 09/06/2022 13:27, Vincent Whitchurch wrote:
+> If the device tree indicates that the hardware requires that the
+> processor only use certain local timers, respect that.
+> 
+> Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
 
-My Name is Dimitry Edik from Russia A special assistance to my Russia
-boss who deals in oil import and export He was killed by the Ukraine
-soldiers at the border side. He supplied
-oil to the Philippines company and he was paid over 90 per cent of the
-transaction and the remaining $18.6 Million dollars have been paid into a
-Taiwan bank in the Philippines..i want a partner that will assist me
-with the claims. Is a (DEAL ) 40% for you and 60% for me
-I have all information for the claims.
-Kindly read and reply to me back is 100 per cent risk-free
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Yours Sincerely
-Dimitry Edik
+Daniel,
+All patches got my review. Do you need here anything more? It seems it's
+only me who reviews such code, so I don't expect more Rb-tags. :)
+
+Best regards,
+Krzysztof
