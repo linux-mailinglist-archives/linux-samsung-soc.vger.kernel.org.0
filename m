@@ -2,146 +2,108 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58929552888
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jun 2022 02:15:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ECDF552ED5
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Jun 2022 11:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245737AbiFUAOk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 20 Jun 2022 20:14:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42748 "EHLO
+        id S1349469AbiFUJkS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 21 Jun 2022 05:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236390AbiFUAOj (ORCPT
+        with ESMTP id S1349281AbiFUJkI (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 20 Jun 2022 20:14:39 -0400
-X-Greylist: delayed 1201 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 20 Jun 2022 17:14:37 PDT
-Received: from gnutoo.cyberdimension.org (cyberdimension.org [IPv6:2001:910:1314:ffff::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D2B1836D;
-        Mon, 20 Jun 2022 17:14:36 -0700 (PDT)
-Received: from gnutoo.cyberdimension.org (localhost [127.0.0.1])
-        by cyberdimension.org (OpenSMTPD) with ESMTP id 0950e3d8;
-        Mon, 20 Jun 2022 23:39:55 +0000 (UTC)
-Received: from primarylaptop.localdomain (localhost [::1])
-        by gnutoo.cyberdimension.org (OpenSMTPD) with ESMTP id 8547062c;
-        Mon, 20 Jun 2022 23:39:55 +0000 (UTC)
-Date:   Tue, 21 Jun 2022 01:47:48 +0200
-From:   Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>
-To:     Krzysztof Kozlowski via Replicant <replicant@osuosl.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Simon Shields <simon@lineageos.org>,
-        Martin =?UTF-8?B?SsO8Y2tlcg==?= <martin.juecker@gmail.com>
-Subject: Re: [Replicant] [PATCH 3/3] ARM: dts: exynos: add function and
- color to aat1290 flash LED node in Galaxy S3
-Message-ID: <20220621014748.1c0b2b05@primarylaptop.localdomain>
-In-Reply-To: <f1cc0f5a-12fb-28bc-7345-13ac2bf5b74d@linaro.org>
-References: <20220607085343.72414-1-krzysztof.kozlowski@linaro.org>
-        <20220607085343.72414-3-krzysztof.kozlowski@linaro.org>
-        <4a7f8ab6-c061-3861-5790-b6c0fbd7cad1@gmail.com>
-        <ef62a7bb-2217-2947-17dd-fc4a51acdea5@linaro.org>
-        <f1402a1d-a74d-f7b9-b9e2-fc3991781e64@gmail.com>
-        <f1cc0f5a-12fb-28bc-7345-13ac2bf5b74d@linaro.org>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; i686-pc-linux-gnu)
+        Tue, 21 Jun 2022 05:40:08 -0400
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2442727CE5
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 02:39:56 -0700 (PDT)
+Received: by mail-ua1-x933.google.com with SMTP id u13so4871487uaq.10
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Jun 2022 02:39:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
+        b=NKhg6kSkfnglJlsPDVUWhCY3Iibudx7OhZC5CePFgeNekYJKNrcmU8wB8gkktmjPqY
+         f0o4DET3nwW7oGb1WQAmWVCm6yLISrVrQXMY/9qoCppMNLX7K/jA/JZ+JMs1mNT38j+N
+         qSlM2vTiSOIkQo5cZ6oY4dkMVda7fWn0vzKRT295Q67AStI8u0BTanvw38uSxo4IMvFm
+         mtbeFJOQugEk6bmbrSLJZHxNWvSEoU0AT9TQz59V3jAGDZbWiI6U0Fx8UlroTYMr9wGQ
+         +xC78kHT5AZK7k/f6wmWhdDj3ThC5Cy20ctCKCcYvb/idPExEpgvQXB/UX/ziCu3vO07
+         Q2/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=/0bRExIb6Mv4sy5raFRmeQINC+UUx7zEZcUUOWWOPJg=;
+        b=dWOOVya1D+kkvnKT0K1N9HQsTmPqDan/w5CwjEvuINZ5YuQOe8+XqjsyLsCyr6V1ma
+         nq7siz6v//cQsDYYa2LnE95se+IlvnO+VsRnRAXWk50k/+YcgA8Yu8nEO0vOoj9CP63y
+         Szp2AJ+Z1KxVaQ+3BaYrQQIS4XSTQUWLRO0ACtL00xqCK0cfyhCkuirRCck6zqVirtHe
+         /ikRD43/EX0NDNX14qWQPxSA8Au/ANWny0dfdkjmeCt/6a37QTKoF/xfN72PtuMSZN7S
+         ZHCdCw7dMhuXpLAYor9KUuTzM/bC/PIrrMRQuNQU51iLxP6iOcHRFqpwnKOEflCxXOGi
+         gBMQ==
+X-Gm-Message-State: AJIora9fvdJh1RdKRJtgc4eRwR9qndbYVQ9xq5beLB4q0HUoHD61H/fS
+        T0Ikh6AXtPuhyt/WQBvTZKgfEjtHdXf8gK+u4T/PUqHmeLzg5L9P
+X-Google-Smtp-Source: AGRyM1sTF/SvvxCyraPE52znD36ZX02jNmxmam87lP8bWzXT3yTfChS1a9JgJI9LjBXh9tpS4qLO5E/t+5efudcEruY=
+X-Received: by 2002:a0d:d7c7:0:b0:317:bfe8:4f2 with SMTP id
+ z190-20020a0dd7c7000000b00317bfe804f2mr12417910ywd.276.1655804384555; Tue, 21
+ Jun 2022 02:39:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/RXcLkuiECAhv+Y3/6Gw0ixN";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Received: by 2002:a05:7010:e10a:b0:2d9:e631:94d0 with HTTP; Tue, 21 Jun 2022
+ 02:39:44 -0700 (PDT)
+Reply-To: dimitryedik@gmail.com
+From:   Dimitry Edik <lsbthdwrds@gmail.com>
+Date:   Tue, 21 Jun 2022 02:39:44 -0700
+Message-ID: <CAGrL05aBO8rbFuij24J-APa+Luis69gEjhj35iv_GZfkHCVYDQ@mail.gmail.com>
+Subject: Dear Partner,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_MONEY_PERCENT,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,
+        UNDISC_MONEY autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:933 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [lsbthdwrds[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  2.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  0.0 T_MONEY_PERCENT X% of a lot of money for you
+        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
---Sig_/RXcLkuiECAhv+Y3/6Gw0ixN
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hello Dear,
 
-On Sun, 12 Jun 2022 19:06:09 +0200
-Krzysztof Kozlowski via Replicant <replicant@osuosl.org> wrote:
+My Name is Dimitry Edik from Russia A special assistance to my Russia
+boss who deals in oil import and export He was killed by the Ukraine
+soldiers at the border side. He supplied
+oil to the Philippines company and he was paid over 90 per cent of the
+transaction and the remaining $18.6 Million dollars have been paid into a
+Taiwan bank in the Philippines..i want a partner that will assist me
+with the claims. Is a (DEAL ) 40% for you and 60% for me
+I have all information for the claims.
+Kindly read and reply to me back is 100 per cent risk-free
 
-> On 12/06/2022 17:09, Jacek Anaszewski wrote:
-> > On 6/10/22 12:14, Krzysztof Kozlowski wrote:
-> >> On 09/06/2022 22:31, Jacek Anaszewski wrote:
-> >>> Hi Krzysztof,
-> >>>
-> >>> On 6/7/22 10:53, Krzysztof Kozlowski wrote:
-> >>>> Add common LED properties - the function and color - to aat1290
-> >>>> flash LED node in Galaxy S3.
-> >>>>
-> >>>> Signed-off-by: Krzysztof Kozlowski
-> >>>> <krzysztof.kozlowski@linaro.org> ---
-> >>>>    arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi | 3 +++
-> >>>>    1 file changed, 3 insertions(+)
-> >>>>
-> >>>> diff --git a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi
-> >>>> b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi index
-> >>>> 72901772fcad..d76f3678dcab 100644 ---
-> >>>> a/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi +++
-> >>>> b/arch/arm/boot/dts/exynos4412-galaxy-s3.dtsi @@ -7,6 +7,7 @@
-> >>>>     */
-> >>>>   =20
-> >>>>    /dts-v1/;
-> >>>> +#include <dt-bindings/leds/common.h>
-> >>>>    #include "exynos4412-midas.dtsi"
-> >>>>   =20
-> >>>>    / {
-> >>>> @@ -27,6 +28,8 @@ led-controller {
-> >>>>   =20
-> >>>>    		led {
-> >>>>    			label =3D "flash";
-> >>>> +			function =3D LED_FUNCTION_FLASH;
-> >>>> +			color =3D <LED_COLOR_ID_WHITE>;
-> >>>
-> >>> Addition of these two properties will not change anything because
-> >>> the label has precedence. It is deprecated, but if you introduce
-> >>> function and color to the binding instead of the label, the
-> >>> resulting LED class device name will change.
-> >>
-> >> Which is not necessarily what we want, right? Adding these
-> >> properties is a proper description of hardware, regardless whether
-> >> current Linux implementation uses them or not.
-> >=20
-> > Actually I'd just drop label in addition to your change.
-> > I don't think it would break anybody seriously - not expecting it
-> > has any larger group of users and having uniformly constructed DTS
-> > files in the mainline has greater value.
-> >=20
->=20
-> What about some PostmarketOSos, LineageOS and other OSes?
->=20
-> Let me Cc here some folks - Simon, Martin, is the label in flash LED
-> node anyhow important for you? Can it be dropped and replaced with
-> function+color?
-We don't have flash or camera support yet with Replicant version(s) that
-use kernel(s) based on upstream Linux, so it won't break anything.
-
-Denis.
-
---Sig_/RXcLkuiECAhv+Y3/6Gw0ixN
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEeC+d2+Nrp/PU3kkGX138wUF34mMFAmKxByUACgkQX138wUF3
-4mMYKBAAizG0drTNSDYUxHg7Da7PcIFOxip+GcGDJLI27Fi0cFg/kEyaJboALnxx
-Q3CvVhpuJqOGKDe0HfF6FZO/+BxzShNC/NxDXUlfkyI2SXvY3EAqe4kBkU7ynyKc
-aejrFq9CTXXvnPiVbyRlOzz15tkj8byNqNvN7cgd6kGzLtU13B7w+tPBzL3lg5Zh
-sT/kPqF8Wq++sN1INqMT9g1WVUUWl47dia1DJ9xz11qYznYCKea7Khej/vOsRh9b
-Aue1drPuUX+19MEGaCmkvXJAwhP3gMJVSrxuPg0iKJwwNMS93o2bRQmST0MIqp+F
-UAvDTEHqxpWhCG1O3wwKFLAVZCSlPr0bf8o8iRyMrJF+y1Cu/h9VA+ejvRSsyvIr
-Ggk7X0uBWphQIzESAW8z3Ggl8ZDev17m6kn99kHa522fhbT7zpxMzmbKMfmtI4CZ
-kHdmyNiJXVblYc9nIdF1OdjoeNxuJaYRSPFX+rzIluT2Hd17Ds6AkgoyNAvjRmOT
-Omh3UORRJgSxE2L0yECrpfXbSenPuaKQqv1OUcNjaHj6k3VonRi4DbFeGMRCOCr5
-aDs+T1CgdPDOzxytoxrevY5g1aY6iIIIjkqQOVn8gFF6KmyarAmr6XVARHURYenI
-7fPUQnHtSdHqBS5NlDvYwhMDL992U1ibbhNDsSE0NUpElEIU4ZU=
-=YOd1
------END PGP SIGNATURE-----
-
---Sig_/RXcLkuiECAhv+Y3/6Gw0ixN--
+Yours Sincerely
+Dimitry Edik
