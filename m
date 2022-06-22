@@ -2,89 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 790A6554917
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 Jun 2022 14:16:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6573554E7B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 22 Jun 2022 17:04:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353412AbiFVL7H (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 Jun 2022 07:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41066 "EHLO
+        id S1358983AbiFVPEQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 Jun 2022 11:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357150AbiFVL67 (ORCPT
+        with ESMTP id S1358987AbiFVPED (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 Jun 2022 07:58:59 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C603CA50
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Jun 2022 04:58:56 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id ay16so14332934ejb.6
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Jun 2022 04:58:56 -0700 (PDT)
+        Wed, 22 Jun 2022 11:04:03 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61183EAB9
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Jun 2022 08:03:53 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id u37so16356947pfg.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Jun 2022 08:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=TubmODShT3jlb3v00kGpERu9RrmPlpU/0Z9qGMR5zOs=;
-        b=UYhfGGFbTwqGWb2uOb2hIeLMZDiVaGsArTQT5CtqWMJr/DQwpOs9zzcruTjSyElnZQ
-         XLhlSYZvIg8ahvqehcovOnsU/B4gqFkMs/tua5li1r4YkkcxVaYAR3Ct5TcE7hwjbbEx
-         +Lg5XIgKixE3Er2SvaxrtIMOuAwzZ2l/qZD06lT/nud2Cg2ZlbQspppvdEUj4rcMDEvU
-         tN5BLe84ZtJrVm26EqM8CaJF1eaNv59c7klw9ROBx/GlMvjY5Cd16lzqG0jO8wXJQ7ig
-         9UBnc/YjkxMLHPJBlPUHIDzuyMD2mMZZQOo+/LlBrIZ8pNB5s593b4lwjF6zIQqW5uz9
-         WMcg==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=vhZEVnaGNBjosB86GDUW8b2wHjB/+QU31bPXl36TqFE=;
+        b=Jt/qXO7TwQJF3EWuk5p4azKGOCxq/Rzk3KoLqC6Pwff+0tHhs8als9639cidnzFde4
+         ry7ero38QELHA22RBkZWtE0xNRPiiPEWIvKtPd0fZpNhUDrKHRyETW5WgRrbPPmi6/vT
+         vJpxoQNLrGfsMgIfV+PXszjD1nMaBRUe0Gxx0eYZw7YGtSc5pfRkGeshne5cjr5BaKxu
+         3INPcNuWqxw7/0puGY6UuhzUSAv6SoxD7Bz3CVHuDQWru55+lIHO02gOv78FJXnTYNjB
+         rbtWgbiyhkE21LXWR11Bk6fRJOPFFcU92J8XbdNavb7vvb9W0t8MjYRzeI2ufnWOCsiS
+         AGLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TubmODShT3jlb3v00kGpERu9RrmPlpU/0Z9qGMR5zOs=;
-        b=JDlDTus/112d7LA2/dQ6ShQT/GjrhbrkfWId9WL64c9XPxrFhNbjPTCZvF8Jtikiwc
-         0U49YWW3P5whMFZCG/cOHuoFhwzhoFL6WT0VycwOzgtiMQBS6WLljqoZVXPUKDvfOS6j
-         oW3AmdBQcUk+TO5j/eA9qB+5RN0GgzsQAvSJp8us9P+ecT/AwNQ0hrC1cv18cI6jaXfS
-         poxyi5tWwtA0qgXgygeJEcMo/dg+LzWUF1nIXsJc085x1bLRthx4dYOrTqjlnDBi5vDo
-         kHxuHPpNFeZxyN/F0F3gpq/6X0Z9Qbe3VoaII0nfvIGxwtL/vloSw6Vmrc8UMA0b+0+0
-         ojeQ==
-X-Gm-Message-State: AJIora9mbR86pYqWCjPhu2p9uapgY1SJyl+LX/unizzkMuMrj4CgmyyP
-        cWfAMZ8DvH64tC/dTcrmIy6ZYA==
-X-Google-Smtp-Source: AGRyM1sShVPcdJqilUZ2pSQF6ujR77qLdps0duCEkxqzuEYxDASdWz1FiZ4LSBwOe0AJHI8FJUr52A==
-X-Received: by 2002:a17:907:3f95:b0:722:abe4:5132 with SMTP id hr21-20020a1709073f9500b00722abe45132mr2828914ejc.757.1655899135084;
-        Wed, 22 Jun 2022 04:58:55 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id qw21-20020a1709066a1500b0070c4abe4706sm1746212ejc.158.2022.06.22.04.58.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jun 2022 04:58:54 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        krzysztof.kozlowski@linaro.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, robh+dt@kernel.org,
-        pavel@ucw.cz, linux-leds@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, alim.akhtar@samsung.com,
-        jacek.anaszewski@gmail.com
-Subject: Re: (subset) [PATCH v2 3/3] ARM: dts: exynos: add function and color to aat1290 flash LED node in Galaxy S3
-Date:   Wed, 22 Jun 2022 13:58:50 +0200
-Message-Id: <165589912783.8422.8897560005665418003.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220620175033.130468-4-krzysztof.kozlowski@linaro.org>
-References: <20220620175033.130468-1-krzysztof.kozlowski@linaro.org> <20220620175033.130468-4-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=vhZEVnaGNBjosB86GDUW8b2wHjB/+QU31bPXl36TqFE=;
+        b=69K+7HUGc9DdU3tbnQeUuSFiQWQnMHTmR9BAZb6kGhMICeK6uMNe8z3SbrFSdTqJ0C
+         OjMWr6Hfrd/Bv1zi7bJ4GGLGiRfAmLmunZTADBHN0GViQvV/Zx6RvFPAyKikPaiWX1qL
+         kseE6LNl7v2LKMsiZiWz5tvlv8u91DyzMvz6NjseiIycWSjTri1Kzal3UVlWQSJHPTf3
+         6g9AuEaRktjuES1E0N7de+6Met2n1jXIwtR7IKKQxSqk4ns+r7zKmwPrFCoeQ7+CXKMu
+         vjlPbBQJhXKsndLbeuKnVAe3QjaquSoct7Qmk9Boqt+nIZocNgOXRtn1RLY+eW60oHj3
+         a9+w==
+X-Gm-Message-State: AJIora9JP83IYkT9wXxUQblLg00R32fagvkNO9jmllAbZZnZMstGeW5F
+        3gVkKZGmTkY0t1RuEaGr6mK4oEAZyDVcmQBAFzc=
+X-Google-Smtp-Source: AGRyM1uVFGSnpr+dTCH2B3yi91+xpZWxlNuq532hGAWMLDkFZu1Qrq3wwA6KogrJ63y1ppaQwcWp21NviyeWeo5Xswg=
+X-Received: by 2002:a63:af1c:0:b0:40c:f9fb:deca with SMTP id
+ w28-20020a63af1c000000b0040cf9fbdecamr3305128pge.479.1655910232628; Wed, 22
+ Jun 2022 08:03:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a17:903:2308:b0:16a:1b3f:f74b with HTTP; Wed, 22 Jun 2022
+ 08:03:51 -0700 (PDT)
+Reply-To: sales0212@asonmedsystemsinc.com
+From:   Prasad Ronni <lerwickfinance7@gmail.com>
+Date:   Wed, 22 Jun 2022 16:03:51 +0100
+Message-ID: <CAFkto5szY9scoLwccBhUx92cgUVnT2cx2c=WmxiOTkm7N_y9gg@mail.gmail.com>
+Subject: Service Needed.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, 20 Jun 2022 19:50:33 +0200, Krzysztof Kozlowski wrote:
-> Add common LED properties - the function and color - to aat1290 flash
-> LED node in Galaxy S3, so we can drop deprecated label property.
-> 
-> 
-
-Applied, thanks!
-
-[3/3] ARM: dts: exynos: add function and color to aat1290 flash LED node in Galaxy S3
-      https://git.kernel.org/krzk/linux/c/ebadc8a63645f7923dc63154ad8d290313f03101
-
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Hi,
+
+Are you currently open to work as our executive company representative
+on contractual basis working remotely? If yes, we will be happy to
+share more details. Looking forward to your response.
+
+Regards,
