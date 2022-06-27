@@ -2,126 +2,143 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F176F55DFDA
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jun 2022 15:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8AC855C71E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jun 2022 14:53:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235908AbiF0LiP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 27 Jun 2022 07:38:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
+        id S238140AbiF0LyX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 27 Jun 2022 07:54:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236486AbiF0Lhf (ORCPT
+        with ESMTP id S238871AbiF0Lwp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 27 Jun 2022 07:37:35 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9A7284
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Jun 2022 04:33:19 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id k22so12615213wrd.6
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Jun 2022 04:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Z0+42hwPxJRW2NOYXQq1yAA2G18X1kFzaXXIzfIU7Y0=;
-        b=cpTd6YGid5AkI7RW5HLEZXAPozOhTexJoEfT0qjthaHUNZ2A7dx76HDr0fGUiRYS8Z
-         M5SbnM9f42Wd1vUM59oYKKxvSkMjV4T64Q0rYHxW5eie/SeKVx4fIrJ4ibDwuy1E56rm
-         fxmKggepcNq/e0SGI2C4mpDBgPmnyFLUn+JiDBP3lz93qV0Gg8JWPtxLj8MQzHUSm46q
-         x1TvNPGKALFy8HMcHmbXJ2lDjbG9+4MR9jgxr+XwCr9Jar/SBKtgJ7KkzjkkMMLADFJ1
-         ngPO3IydADk2zWnM4xtDKn/iU7eLgCfM4ASpezgTuLgwecFjzFYCXFAW+kR1Ge3FiKm4
-         CFWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Z0+42hwPxJRW2NOYXQq1yAA2G18X1kFzaXXIzfIU7Y0=;
-        b=H2AIXmVJLYTbju8vJ8J3fXLxhGx+V5zNfFWZFVy9ffaRuaTo3AVRrjbsxd9o2gMzpH
-         IrGDoN+q2UyShZwteLwLZvegunH192pXawDe9sGM/E0D4fWXhmrxBwPnSmnS+azzCbBf
-         glQMI4c9nuZMU1Pr9PCbFqHq1M+RRKlpyVD9RaEOXqon/7hS7deAqcrxcrWmaRHnvJdp
-         PuRTJiMyWqafs2E8yHybNyxhispOUtIlhHUZUd5d7ag0DOsK766rNf6hfGxyM5M2P5s+
-         qmRH6utg1voi0aXwX9cw7KWPxbWQ8DxdVrBVirxu018duZsNp+oA8Wb2oAQ2R1HG49lp
-         pJTg==
-X-Gm-Message-State: AJIora9ASE96nUc2zoLSLSgezVnq9u5ulKSU05anCtA2gpIClfscRJj/
-        jNutWpYV6qZvKpqbs6igPsQEIw==
-X-Google-Smtp-Source: AGRyM1unIBvJ7AV/DYf/ubxQ8SFUyH7+XRvr6orNfWBMDXevMB+2os0CwP6Q1jZ0wFc9tsvR8EsWEA==
-X-Received: by 2002:a5d:59ae:0:b0:217:2519:8a0f with SMTP id p14-20020a5d59ae000000b0021725198a0fmr11685479wrr.383.1656329598105;
-        Mon, 27 Jun 2022 04:33:18 -0700 (PDT)
-Received: from [192.168.0.249] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id 2-20020a05600c228200b003a03be171b1sm11462219wmf.43.2022.06.27.04.33.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jun 2022 04:33:17 -0700 (PDT)
-Message-ID: <0e9aab63-7ddf-dead-11b2-4ba81235dcb4@linaro.org>
-Date:   Mon, 27 Jun 2022 13:33:16 +0200
+        Mon, 27 Jun 2022 07:52:45 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3382BDED1;
+        Mon, 27 Jun 2022 04:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656330370; x=1687866370;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=038ViQj4OdJMOtsCH8E05gcJKrV6mUvMiaaLGQCFo14=;
+  b=MvkWEbVLP4mP0s/WkY4CK3hUeVibF9JQOL1q//3tHt7oe0kp0XhjemPe
+   uhldW23mIg8276oH2EvSTE0xtBRz++DwKc+/dcUzjRFcecnJ9dMd625zH
+   6IgQeT62GkxAjWQst3gGQCKoZ0a3+FNTaDCt3KDGxi5VZf6bwclut4tfe
+   GIBFG+qb2ToII8wlRzONuJ3uL8fPMtLKl+/rMn4cMffJNwCvD+mgFs9kf
+   kZ8qDr38+9wvwU6ubU/uBi6VyP6t5cLVZBDHA8ArOXgpIJC88oX4SN6Og
+   F+eEUxAgr3EDoBEcL55V/fFpVf+1VMQYAfUKxXbSxgBbn+WRX/Tjz4AQU
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10390"; a="278973156"
+X-IronPort-AV: E=Sophos;i="5.92,226,1650956400"; 
+   d="scan'208";a="278973156"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 04:46:09 -0700
+X-IronPort-AV: E=Sophos;i="5.92,226,1650956400"; 
+   d="scan'208";a="646396113"
+Received: from gretavix-mobl3.amr.corp.intel.com ([10.249.43.78])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 04:46:07 -0700
+Date:   Mon, 27 Jun 2022 14:46:07 +0300 (EEST)
+From:   =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To:     Chanho Park <chanho61.park@samsung.com>
+cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Hector Martin <marcan@marcan.st>,
+        Jaewon Kim <jaewon02.kim@samsung.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-serial <linux-serial@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] tty: serial: samsung_tty: loopback mode support
+In-Reply-To: <20220627032353.8868-1-chanho61.park@samsung.com>
+Message-ID: <ab327a8f-f520-ad85-c0fc-1e505647164c@linux.intel.com>
+References: <CGME20220627032556epcas2p26c2cd2786888a5018607bf651bc5dec0@epcas2p2.samsung.com> <20220627032353.8868-1-chanho61.park@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 1/3] dt-bindings: clock: exynosautov9: correct clock
- numbering of peric0/c1
-Content-Language: en-US
-To:     Chanho Park <chanho61.park@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20220627005210.6473-1-chanho61.park@samsung.com>
- <CGME20220627005413epcas2p39750fb5876366881b8535ee516c1bebe@epcas2p3.samsung.com>
- <20220627005210.6473-2-chanho61.park@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220627005210.6473-2-chanho61.park@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 27/06/2022 02:52, Chanho Park wrote:
-> There are duplicated definitions of peric0 and peric1 cmu blocks. Thus,
-> they should be defined correctly as numerical order.
+On Mon, 27 Jun 2022, Chanho Park wrote:
+
+> Internal loopback mode can be supported by setting
+> S3C2443_UCON_LOOPBACK bit. The mode & bit can be supported since
+> s3c2410 and later SoCs.
+
+In that case, why is the  LOOPBACK define named 2443 and not 2410???
+
+The change looks fine otherwise.
+
+I note though that many of the current drivers won't return TOICM_LOOP 
+from ->get_mctrl() but I don't think it's exactly wrong to return it 
+either. Perhaps lack of returning it is due to 
+Documentation/driver-api/serial/driver.rst not including TOICM_LOOP in 
+get_mctrl's list of information but only in set_mctrl's one.
+
+-- 
+ i.
+
+> We can test it by linux-serial-test program[1]
+> with -k option. It will set TIOCM_LOOP mode during test.
 > 
-> Fixes: 680e1c8370a2 ("dt-bindings: clock: add clock binding definitions for Exynos Auto v9")
+> -k, --loopback     Use internal hardware loop back
+> 
+> [1]: https://github.com/cbrake/linux-serial-test
 > Signed-off-by: Chanho Park <chanho61.park@samsung.com>
 > ---
->  .../dt-bindings/clock/samsung,exynosautov9.h  | 56 +++++++++----------
->  1 file changed, 28 insertions(+), 28 deletions(-)
+>  drivers/tty/serial/samsung_tty.c | 19 ++++++++++++++++---
+>  1 file changed, 16 insertions(+), 3 deletions(-)
 > 
-> diff --git a/include/dt-bindings/clock/samsung,exynosautov9.h b/include/dt-bindings/clock/samsung,exynosautov9.h
-> index ea9f91b4eb1a..a7db6516593f 100644
-> --- a/include/dt-bindings/clock/samsung,exynosautov9.h
-> +++ b/include/dt-bindings/clock/samsung,exynosautov9.h
-> @@ -226,21 +226,21 @@
->  #define CLK_GOUT_PERIC0_IPCLK_8		28
->  #define CLK_GOUT_PERIC0_IPCLK_9		29
->  #define CLK_GOUT_PERIC0_IPCLK_10	30
-> -#define CLK_GOUT_PERIC0_IPCLK_11	30
-> -#define CLK_GOUT_PERIC0_PCLK_0		31
-> -#define CLK_GOUT_PERIC0_PCLK_1		32
-> -#define CLK_GOUT_PERIC0_PCLK_2		33
-> -#define CLK_GOUT_PERIC0_PCLK_3		34
-> -#define CLK_GOUT_PERIC0_PCLK_4		35
-> -#define CLK_GOUT_PERIC0_PCLK_5		36
-> -#define CLK_GOUT_PERIC0_PCLK_6		37
-> -#define CLK_GOUT_PERIC0_PCLK_7		38
-> -#define CLK_GOUT_PERIC0_PCLK_8		39
-> -#define CLK_GOUT_PERIC0_PCLK_9		40
-> -#define CLK_GOUT_PERIC0_PCLK_10		41
-> -#define CLK_GOUT_PERIC0_PCLK_11		42
-> +#define CLK_GOUT_PERIC0_IPCLK_11	31
-> +#define CLK_GOUT_PERIC0_PCLK_0		32
-> +#define CLK_GOUT_PERIC0_PCLK_1		33
+> diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+> index d5ca904def34..d7d035cd95c0 100644
+> --- a/drivers/tty/serial/samsung_tty.c
+> +++ b/drivers/tty/serial/samsung_tty.c
+> @@ -1002,16 +1002,22 @@ static unsigned int s3c24xx_serial_tx_empty(struct uart_port *port)
+>  static unsigned int s3c24xx_serial_get_mctrl(struct uart_port *port)
+>  {
+>  	unsigned int umstat = rd_reg(port, S3C2410_UMSTAT);
+> +	unsigned int ucon = rd_reg(port, S3C2410_UCON);
+> +	unsigned int mctrl = TIOCM_CAR | TIOCM_DSR;
+>  
+>  	if (umstat & S3C2410_UMSTAT_CTS)
+> -		return TIOCM_CAR | TIOCM_DSR | TIOCM_CTS;
+> -	else
+> -		return TIOCM_CAR | TIOCM_DSR;
+> +		mctrl |= TIOCM_CTS;
+> +
+> +	if (ucon & S3C2443_UCON_LOOPBACK)
+> +		mctrl |= TIOCM_LOOP;
+> +
+> +	return mctrl;
+>  }
+>  
+>  static void s3c24xx_serial_set_mctrl(struct uart_port *port, unsigned int mctrl)
+>  {
+>  	unsigned int umcon = rd_regl(port, S3C2410_UMCON);
+> +	unsigned int ucon = rd_reg(port, S3C2410_UCON);
+>  
+>  	if (mctrl & TIOCM_RTS)
+>  		umcon |= S3C2410_UMCOM_RTS_LOW;
+> @@ -1019,6 +1025,13 @@ static void s3c24xx_serial_set_mctrl(struct uart_port *port, unsigned int mctrl)
+>  		umcon &= ~S3C2410_UMCOM_RTS_LOW;
+>  
+>  	wr_regl(port, S3C2410_UMCON, umcon);
+> +
+> +	if (mctrl & TIOCM_LOOP)
+> +		ucon |= S3C2443_UCON_LOOPBACK;
+> +	else
+> +		ucon &= ~S3C2443_UCON_LOOPBACK;
+> +
+> +	wr_regl(port, S3C2410_UCON, ucon);
+>  }
+>  
+>  static void s3c24xx_serial_break_ctl(struct uart_port *port, int break_state)
+> 
 
-Is this a fix for current cycle? If yes, it's ok, otherwise all other
-IDs should not be changed, because it's part of ABI.
-
-Best regards,
-Krzysztof
