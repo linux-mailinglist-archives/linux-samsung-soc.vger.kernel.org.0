@@ -2,140 +2,85 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ED5055C9E7
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jun 2022 14:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33EA455E206
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 28 Jun 2022 15:34:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238694AbiF0Lxp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 27 Jun 2022 07:53:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55994 "EHLO
+        id S239587AbiF0MIX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 27 Jun 2022 08:08:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239037AbiF0LxE (ORCPT
+        with ESMTP id S240473AbiF0MHp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 27 Jun 2022 07:53:04 -0400
-Received: from smtp2.axis.com (smtp2.axis.com [195.60.68.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C653DF53;
-        Mon, 27 Jun 2022 04:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=axis.com; q=dns/txt; s=axis-central1; t=1656330456;
-  x=1687866456;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=HvYHOeFy99wGwq/w2fx0FEcTo66gkhtePc7lFcpF/fs=;
-  b=YrScMb56OEuqc9o6FhUutnD/8QeywtmPSgdmJVGgOjiGve7Rk4JVR94p
-   OmgEcEZZtvVnYg8H2pm66ekaT1ksGnX3BD5bOVro6njJDTuf4P469THMN
-   nukZ0UD0zMDP+exFbknv/aXk3yp/hLUO3AwzMyfAEDqViKimHRbJFcCqj
-   vTG9e9Z4s3IVfxlIa2PH0qbwNz8C9FPt8SVzBbpx5WW+iY5uHelZJoQr1
-   D5B6lJizOvq4fYM5wA1G06UvpmU/v3/JPbH/N4iF1nZQpHIShZ2imSQwK
-   7l6oF+7nq2WGcKczL2gV8rLQzkKmvhes81lHwLspEL7qHaFMYXlnpkkLE
-   g==;
-Date:   Mon, 27 Jun 2022 13:47:33 +0200
-From:   Jesper Nilsson <Jesper.Nilsson@axis.com>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-CC:     Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 27 Jun 2022 08:07:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DAFACE14;
+        Mon, 27 Jun 2022 05:06:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F09BE614FA;
+        Mon, 27 Jun 2022 12:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D259FC3411D;
+        Mon, 27 Jun 2022 12:06:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1656331590;
+        bh=FRa7EhIZdH14xBmvGsuv9S2UuKN37r7iywmSP/vdMaA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=W4hcTuyj1ifMWkRDNmE/plM51pKxWaVXjUEEKuoXONAGp5cMJJXK6/eRYcCAC36go
+         18OZhmx6On3Hv5juJfqJUL7PdTEcmkOVr8p9JWIOpPm6GvFTByoaNROVE8+re8S05q
+         jFbfEIzYfRWyi6N1L00mZxkhCFBCjZZOQ2mwD7Ss=
+Date:   Mon, 27 Jun 2022 13:52:18 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Chanho Park <chanho61.park@samsung.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Minghuan Lian <minghuan.Lian@nxp.com>,
-        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-        Yue Wang <yue.wang@Amlogic.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Jesper Nilsson <Jesper.Nilsson@axis.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Greentime Hu <greentime.hu@sifive.com>,
-        Rahul Tanwar <rtanwar@maxlinear.com>,
-        Srikanth Thokala <srikanth.thokala@intel.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Frank Li <Frank.Li@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-        "linux-amlogic@lists.infradead.org" 
-        <linux-amlogic@lists.infradead.org>,
-        linux-arm-kernel <linux-arm-kernel@axis.com>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH RESEND v5 15/18] PCI: dwc: Add dw_ prefix to the
- pcie_port structure name
-Message-ID: <20220627114733.GG13332@axis.com>
-References: <20220624143428.8334-1-Sergey.Semin@baikalelectronics.ru>
- <20220624143428.8334-16-Sergey.Semin@baikalelectronics.ru>
+        Hector Martin <marcan@marcan.st>,
+        Jaewon Kim <jaewon02.kim@samsung.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] tty: serial: samsung_tty: support more than 4 uart ports
+Message-ID: <YrmZ8ikVsnAGrBXF@kroah.com>
+References: <CGME20220627071726epcas2p476cfa45f74a73bfd0fcfe03eacc2df60@epcas2p4.samsung.com>
+ <20220627071512.18180-1-chanho61.park@samsung.com>
+ <2efd725f-3d99-c1df-23ce-9ee60bbe4600@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220624143428.8334-16-Sergey.Semin@baikalelectronics.ru>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <2efd725f-3d99-c1df-23ce-9ee60bbe4600@linaro.org>
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Jun 24, 2022 at 04:34:25PM +0200, Serge Semin wrote:
-> All of the DW PCIe core driver entities have names with the dw_ prefix in
-> order to easily distinguish local and common PCIe name spaces. All except
-> the pcie_port structure which contains the DW PCIe Root Port descriptor.
-> For historical reason the structure has retained the original name since
-> commit 340cba6092c2 ("pci: Add PCIe driver for Samsung Exynos") when
-> the DW PCIe IP-core support was added to the kernel. Let's finally fix
-> that by adding the dw_ prefix to the structure name and by adding the _rp
-> suffix to be similar to the EP counterpart. Thus the name will be coherent
-> with the common driver naming policy. It shall make the driver code more
-> readable eliminating visual confusion between the local and generic PCI
-> name spaces.
+On Mon, Jun 27, 2022 at 12:33:51PM +0200, Krzysztof Kozlowski wrote:
+> On 27/06/2022 09:15, Chanho Park wrote:
+> > Regarding Exynos Auto v9 SoC, it supports uarts up to 12. However, the
+> > maximum number of the ports has been derived from
+> > CONFIG_SERIAL_SAMSUNG_UARTS and tightly coupled with the config for
+> > previous Samsung SoCs such as s3c24xx and s3c64xx. To overcome this
+> > limitation, this changes the usage of the definition to UART_NR which is
+> > widely used from other serial drivers. This also defines the value to 12
+> > only for ARM64 SoCs to not affect the change to previous arm32 SoCs.
+> > Instead of enumerating all the ports as predefined arrays, this
+> > introduces s3c24xx_serial_init_port_default that is initializing the
+> > structure as default value. 
+> > Regarding the ports which are greater than 4
+> > will be initialized as default value and the fifo size will be retrieved
+> > from the DT property.
 > 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> You need to explain why you are doing this.
+> 
+> It's confusing to initialize some statically and some dynamically.
 
-Sorry, I never replied in the thread for the last patch,
-your reasoning for not changing the parameter name made sense.
+I agree, why not just make them all dynamic?
 
-For the ARTPEC-6 parts,
+thanks,
 
-Acked-by: Jesper Nilsson <jesper.nilsson@axis.com>
-
-/^JN - Jesper Nilsson
--- 
-               Jesper Nilsson -- jesper.nilsson@axis.com
+greg k-h
