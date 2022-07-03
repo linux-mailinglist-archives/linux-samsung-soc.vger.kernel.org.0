@@ -2,100 +2,99 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72E99564815
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 16:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C676D564877
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 17:42:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232725AbiGCO2b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 3 Jul 2022 10:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40942 "EHLO
+        id S232646AbiGCPmf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 3 Jul 2022 11:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232728AbiGCO23 (ORCPT
+        with ESMTP id S230446AbiGCPmd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 3 Jul 2022 10:28:29 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DC56322;
-        Sun,  3 Jul 2022 07:28:26 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id e69so5903773ybh.2;
-        Sun, 03 Jul 2022 07:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9jdpozfV1qmOZRGsJtmMSQ4ytOWKV2O6MRnturbNT4M=;
-        b=pB+tq0qVBJaTwwb2RFXnZahTMnmUBiaDu99OcfpEf+PiOi5lYzI1BUOtmWQl7/AiIt
-         HNKxyMsG+o2szTbyEfF3uCLnOqsr6g18DNAxquj9SPdxRK8RHXb+GXnj+4o5RvO+ri27
-         CzoL4o7pOkuzQa6ksUivvINPg+n5r0hlipSwbQhGhDndksamSU5TIbZUtypyrgPKDCWc
-         POv/h6VVdo9oyXhNgc4cUrrndSK+GslLtBGrHfyW6pBaiVXu/zVdR1qmH5iKzgeUkp0T
-         oNftLkgrAnuD7IH32/qucHLMOxjn5KnjdeLKFYwcFGV2K+s/oZAZt0t9L7z9XeY3QV6a
-         jjPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9jdpozfV1qmOZRGsJtmMSQ4ytOWKV2O6MRnturbNT4M=;
-        b=1AO1dpLiPjfzmxoOGiEG6YQP7V6d2cp+RtYuoTcTErqPdcPpiGw3TbgGIC6+AJS7nG
-         t3y7ckgffc7e+HpwYqgRIktyZSiWF1t+cXrBBgbMkjRP+yW5RoSmJNVr04e/PF/5krby
-         wtdzU7XCnAGocBhcipFSkhFw4fS9e2PryYh/x5Ba6SY3Gut2Dv8erBjI4KKwi98SYIxO
-         2qN7813DYCL5HW3gHjjuWy5Veax4kFhtz5lI4vEX0jipZZo9h7sqol8c0uC2AQsPVHGp
-         4os7s8xbymRTp30fPaljwzPXpb0yz4Wd0iFt632FXRhsBbfXkDG9sPz4m9SwVyEX6IkU
-         BZWg==
-X-Gm-Message-State: AJIora9V9UFDKnhIrbFbOJHSYzDyuWXPGSJJriTLT1o6S+kvb5y/6VFq
-        jocp1glHjlfCyUMkrVkp/p+8+h36gELHrtk5MMFySamQzhWzC9jW
-X-Google-Smtp-Source: AGRyM1tqnJgQOfi3UrRgfvuocrSY+MaCsGlCRyLUJ9PHx0o9Hb28zY4qErIVqyb8vnII+Jb2Di1DDTknMSmm9ymGbUU=
-X-Received: by 2002:a05:6902:1142:b0:66d:999a:81a7 with SMTP id
- p2-20020a056902114200b0066d999a81a7mr22460227ybu.460.1656858505971; Sun, 03
- Jul 2022 07:28:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220703112101.24493-1-aidanmacdonald.0x0@gmail.com>
-In-Reply-To: <20220703112101.24493-1-aidanmacdonald.0x0@gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Sun, 3 Jul 2022 16:27:49 +0200
-Message-ID: <CAHp75VdjPVzOQ15S93GDnYz3cUFkHF-sF97f5GhoDEHdM+iFDQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/12] regmap-irq cleanups and refactoring
-To:     Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sun, 3 Jul 2022 11:42:33 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2850D633C;
+        Sun,  3 Jul 2022 08:42:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656862952; x=1688398952;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=PSyqYyC0J2kJSoqRvHgJQSUMUuLg3p+H4Cjpxh3d8gQ=;
+  b=MUxtuedVSVXOvdRdCQ0MlYirX5stqMxuiJLfq3gn0UCP1JxMcTnnxqkj
+   aj2ZVIrvu8GEQNcgbng5eXnf1iuJ4oOfduqFzLbdUDYGrhboVdaCtf8WQ
+   zqH96fG+RqPFe4DH/vGyhBnYQO8pcZfgo2zD+aPWCa9dqB+ObWTDFsroB
+   qSQuAj5ecZxsI1rT+Nxbsi6kcPhmsD5Fk2Ll6B9Y1/CaSdSxwjDlLkDhG
+   K8Ng7RT7GLDcEVZY4Svgfd/Okr1yja7E0mzuPBbblf2498owNPx6EMvL2
+   NZ+cJVsHrjpOTySHoFfeKvoBo1PCh8RxjYNcnNtk9QXaci9Dlje5h0TRg
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10397"; a="265986455"
+X-IronPort-AV: E=Sophos;i="5.92,241,1650956400"; 
+   d="scan'208";a="265986455"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2022 08:42:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,241,1650956400"; 
+   d="scan'208";a="596759636"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga007.fm.intel.com with ESMTP; 03 Jul 2022 08:42:27 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id CF93111D; Sun,  3 Jul 2022 18:42:33 +0300 (EEST)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Michael Walle <michael@walle.cc>,
         Krzysztof Kozlowski <krzk@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matti Vaittinen <mazziesaccount@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Sam Protsenko <semen.protsenko@linaro.org>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org
+Cc:     Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Till Harbaum <till@harbaum.org>, Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH v2 1/2] lib/string_helpers: Add str_read_write() helper
+Date:   Sun,  3 Jul 2022 18:42:31 +0300
+Message-Id: <20220703154232.55549-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Jul 3, 2022 at 1:20 PM Aidan MacDonald
-<aidanmacdonald.0x0@gmail.com> wrote:
->
-> This series is an attempt at cleaning up the regmap-irq API in order
-> to simplify things and consolidate existing features, while at the
-> same time generalizing it to support a wider range of hardware.
->
-> There is a new system for IRQ type configuration, some tweaks to
-> unmask registers so they're more intuitive and useful, and a new
-> callback for calculating register addresses. There's also a few
-> minor code cleanups in here.
->
-> Several existing features have been marked deprecated. Warnings will
-> be issued for any drivers that use deprecated features, but they'll
-> otherwise continue to function normally.
->
-> One important caveat: not all of these changes are tested beyond
-> compile testing, since I don't have hardware to exercise all of
-> the features.
+Add str_read_write() helper to retun 'read' or 'write' string literal.
 
-Obviously you haven't rebased it on top of
-https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regmap.git/log/?h=for-5.20
-so it may not be applied.
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+v2: no changes
+ include/linux/string_helpers.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/include/linux/string_helpers.h b/include/linux/string_helpers.h
+index 4d72258d42fd..9e22cd78f3b8 100644
+--- a/include/linux/string_helpers.h
++++ b/include/linux/string_helpers.h
+@@ -126,4 +126,9 @@ static inline const char *str_enabled_disabled(bool v)
+ 	return v ? "enabled" : "disabled";
+ }
+ 
++static inline const char *str_read_write(bool v)
++{
++	return v ? "read" : "write";
++}
++
+ #endif
 -- 
-With Best Regards,
-Andy Shevchenko
+2.35.1
+
