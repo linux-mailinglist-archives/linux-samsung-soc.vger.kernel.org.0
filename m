@@ -2,122 +2,100 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CE915646D3
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 12:47:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E99564815
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 16:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232367AbiGCKrk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 3 Jul 2022 06:47:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
+        id S232725AbiGCO2b (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 3 Jul 2022 10:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232373AbiGCKrb (ORCPT
+        with ESMTP id S232728AbiGCO23 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 3 Jul 2022 06:47:31 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA986431;
-        Sun,  3 Jul 2022 03:47:22 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id z41so8265369ede.1;
-        Sun, 03 Jul 2022 03:47:22 -0700 (PDT)
+        Sun, 3 Jul 2022 10:28:29 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DC56322;
+        Sun,  3 Jul 2022 07:28:26 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id e69so5903773ybh.2;
+        Sun, 03 Jul 2022 07:28:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-transfer-encoding:user-agent:mime-version;
-        bh=xtZe00jcrHCWayegr58xFfUp2h3js8Bof36AjGw58FU=;
-        b=LHTZ6sd9Ylw0mhtbQPt/yWf3J9vu7LgLvrQ2hPvUPpfNDO/Mv4xdqmhAlOM4oVSz9+
-         yP+pH7VDq5J0bfVfFX/4ofM9et9VoauQO6/67ZpO5wlZ7/nxqo8QY/sZW9qbGIMFESzJ
-         y2GhjpLU1+yjhJ3o7oruqb/tO9oUHnpq3BD1WJwxTuMrbGBwkysz2KQxInZkjmd2+HKo
-         9hnAbYIlJrkOlO7IkbhGKjceeqBoVi9MdS994NI3MopaLTCo2YpYK4VAArGhkCsc/AN0
-         scmcnr6I9vskBSXS5H3VqnLI42uKWD0fhbgUMkZD+dkgc7swGyy/1Rn/cwisYL3CB/z3
-         es1Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9jdpozfV1qmOZRGsJtmMSQ4ytOWKV2O6MRnturbNT4M=;
+        b=pB+tq0qVBJaTwwb2RFXnZahTMnmUBiaDu99OcfpEf+PiOi5lYzI1BUOtmWQl7/AiIt
+         HNKxyMsG+o2szTbyEfF3uCLnOqsr6g18DNAxquj9SPdxRK8RHXb+GXnj+4o5RvO+ri27
+         CzoL4o7pOkuzQa6ksUivvINPg+n5r0hlipSwbQhGhDndksamSU5TIbZUtypyrgPKDCWc
+         POv/h6VVdo9oyXhNgc4cUrrndSK+GslLtBGrHfyW6pBaiVXu/zVdR1qmH5iKzgeUkp0T
+         oNftLkgrAnuD7IH32/qucHLMOxjn5KnjdeLKFYwcFGV2K+s/oZAZt0t9L7z9XeY3QV6a
+         jjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-transfer-encoding:user-agent:mime-version;
-        bh=xtZe00jcrHCWayegr58xFfUp2h3js8Bof36AjGw58FU=;
-        b=uhnbO9nDdzmNSYNLVjvQZZnuj4lUUgGNwBnMG0yWpiia69iBsr3Sl9RYWh4S0L07g7
-         kHSDuCEHQcMapo026/pSsB3JaqAAhnmK/OhE4ZbzieSiRJGBjfZ36oaQhLfXNSvz7EpG
-         0+BK4nI2o32g2zYHOZc2ZakMfQNZBqvzYjWI8wq1rC9FiS1GttOnRkObVa2LxQEfc/7H
-         uo44e0LUOMsZnIp0xtHcET4X2XrYWCQ9trmRD6RFn7gcEx8xw+vTP1fZa44GkLwpoPNP
-         N5xebckXdwu1JHgwbDJNwG/ADHg28x2aGA7qwgfTtxm5wr1B31q2NCxJya4wgRV++3zc
-         9XKA==
-X-Gm-Message-State: AJIora+xFTipZ1fIVoKI5sW4CPJyhXq0jaifjL7t5YvXcVcprnQy9Sjx
-        Tf4w8p2nfSrgiwPPU5PUGuTkruDeAtQpOA==
-X-Google-Smtp-Source: AGRyM1tGVPJyIq3szdnRuDtIIMLXe+/hYDrptJIGBirIXbjThF7HJVmbD5r7tXNhzxzCPtbySChhdA==
-X-Received: by 2002:a05:6402:1e88:b0:435:bf05:f0f with SMTP id f8-20020a0564021e8800b00435bf050f0fmr31256381edf.2.1656845241327;
-        Sun, 03 Jul 2022 03:47:21 -0700 (PDT)
-Received: from ?IPv6:2a02:ab88:368f:2080:5d6e:322:57b6:5f03? ([2a02:ab88:368f:2080:5d6e:322:57b6:5f03])
-        by smtp.gmail.com with ESMTPSA id kw24-20020a170907771800b0072a3216c23asm5791972ejc.154.2022.07.03.03.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Jul 2022 03:47:20 -0700 (PDT)
-Message-ID: <67943ec4dcfe85d6d616a5507437d99f6c5638a2.camel@gmail.com>
-Subject: Re: [PATCH 0/4] iommu/exynos: Add basic support for SysMMU v7
-From:   David Virag <virag.david003@gmail.com>
-To:     Sam Protsenko <semen.protsenko@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Janghyuck Kim <janghyuck.kim@samsung.com>,
-        Cho KyongHo <pullip.cho@samsung.com>,
-        Daniel Mentz <danielmentz@google.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        iommu@lists.linux-foundation.org, iommu@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Sun, 03 Jul 2022 14:47:20 +0200
-In-Reply-To: <CAPLW+4kYbG7PRYo_L6N5xMa+F9DFBpyph4B+zb2R4kBbE3EKHg@mail.gmail.com>
-References: <20220702213724.3949-1-semen.protsenko@linaro.org>
-         <CAPLW+4kYbG7PRYo_L6N5xMa+F9DFBpyph4B+zb2R4kBbE3EKHg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.2 
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9jdpozfV1qmOZRGsJtmMSQ4ytOWKV2O6MRnturbNT4M=;
+        b=1AO1dpLiPjfzmxoOGiEG6YQP7V6d2cp+RtYuoTcTErqPdcPpiGw3TbgGIC6+AJS7nG
+         t3y7ckgffc7e+HpwYqgRIktyZSiWF1t+cXrBBgbMkjRP+yW5RoSmJNVr04e/PF/5krby
+         wtdzU7XCnAGocBhcipFSkhFw4fS9e2PryYh/x5Ba6SY3Gut2Dv8erBjI4KKwi98SYIxO
+         2qN7813DYCL5HW3gHjjuWy5Veax4kFhtz5lI4vEX0jipZZo9h7sqol8c0uC2AQsPVHGp
+         4os7s8xbymRTp30fPaljwzPXpb0yz4Wd0iFt632FXRhsBbfXkDG9sPz4m9SwVyEX6IkU
+         BZWg==
+X-Gm-Message-State: AJIora9V9UFDKnhIrbFbOJHSYzDyuWXPGSJJriTLT1o6S+kvb5y/6VFq
+        jocp1glHjlfCyUMkrVkp/p+8+h36gELHrtk5MMFySamQzhWzC9jW
+X-Google-Smtp-Source: AGRyM1tqnJgQOfi3UrRgfvuocrSY+MaCsGlCRyLUJ9PHx0o9Hb28zY4qErIVqyb8vnII+Jb2Di1DDTknMSmm9ymGbUU=
+X-Received: by 2002:a05:6902:1142:b0:66d:999a:81a7 with SMTP id
+ p2-20020a056902114200b0066d999a81a7mr22460227ybu.460.1656858505971; Sun, 03
+ Jul 2022 07:28:25 -0700 (PDT)
 MIME-Version: 1.0
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20220703112101.24493-1-aidanmacdonald.0x0@gmail.com>
+In-Reply-To: <20220703112101.24493-1-aidanmacdonald.0x0@gmail.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Sun, 3 Jul 2022 16:27:49 +0200
+Message-ID: <CAHp75VdjPVzOQ15S93GDnYz3cUFkHF-sF97f5GhoDEHdM+iFDQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/12] regmap-irq cleanups and refactoring
+To:     Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 2022-07-03 at 00:48 +0300, Sam Protsenko wrote:
-[...]
-> Hi Marek,
->=20
-> As I understand, you have some board with SysMMU v7, which is not VM
-> capable (judging from the patches you shared earlier). Could you
-> please somehow verify if this series works fine for you? For example,
-> this testing driver [1] can be helpful.
->=20
-> Thanks!
->=20
-> [1]
-> https://github.com/joe-skb7/linux/commit/bbadd46fa525fe1fef2ccbdfff81f7d2=
-9caf0506
+On Sun, Jul 3, 2022 at 1:20 PM Aidan MacDonald
+<aidanmacdonald.0x0@gmail.com> wrote:
+>
+> This series is an attempt at cleaning up the regmap-irq API in order
+> to simplify things and consolidate existing features, while at the
+> same time generalizing it to support a wider range of hardware.
+>
+> There is a new system for IRQ type configuration, some tweaks to
+> unmask registers so they're more intuitive and useful, and a new
+> callback for calculating register addresses. There's also a few
+> minor code cleanups in here.
+>
+> Several existing features have been marked deprecated. Warnings will
+> be issued for any drivers that use deprecated features, but they'll
+> otherwise continue to function normally.
+>
+> One important caveat: not all of these changes are tested beyond
+> compile testing, since I don't have hardware to exercise all of
+> the features.
 
-Hi Sam,
+Obviously you haven't rebased it on top of
+https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regmap.git/log/?h=for-5.20
+so it may not be applied.
 
-Not Marek here, but I wanted to try this on my jackpotlte (Exynos
-7885). The driver reports it's DPU sysmmu as version 7.2, and manually
-reading the capabilities registers it looks like it has the 2nd
-capability register but not the VM capability.
-
-After applying your patches, adding your test driver (with SYSMMU_BASE
-corrected to 7885 value), and adding the sysmmu to dt, I tried to cat
-the test file that it creates in debugfs and I got an SError kernel
-panic.
-
-I tried tracing where the SError happens and it looks like it's this
-line:
-	/* Preload for emulation */
-	iowrite32(rw | vpn, obj->reg_base + MMU_EMU_PRELOAD);
-
-Trying to read the EMU registers using devmem results in a "Bus error".
-
-Could these emulation registers be missing from my SysMMU? Do you have
-any info on what version should have it? Or maybe some capability bit?
-I'll try testing it with DECON/DPP later and see if it works that way.
-
-Best regards,
-David
+-- 
+With Best Regards,
+Andy Shevchenko
