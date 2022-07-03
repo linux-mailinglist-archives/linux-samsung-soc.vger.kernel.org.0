@@ -2,154 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D77FB564430
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 06:19:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72FFE5646F0
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  3 Jul 2022 13:05:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232216AbiGCD7T (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 2 Jul 2022 23:59:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58062 "EHLO
+        id S232366AbiGCLFy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 3 Jul 2022 07:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232243AbiGCD63 (ORCPT
+        with ESMTP id S229993AbiGCLFx (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 2 Jul 2022 23:58:29 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8A8BF41
-        for <linux-samsung-soc@vger.kernel.org>; Sat,  2 Jul 2022 20:57:36 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id i126so8957077oih.4
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 02 Jul 2022 20:57:35 -0700 (PDT)
+        Sun, 3 Jul 2022 07:05:53 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A15B67643;
+        Sun,  3 Jul 2022 04:05:52 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id cl1so9445503wrb.4;
+        Sun, 03 Jul 2022 04:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=S2PQt3HxkBxUYjC+VtlXEq4NoCpstcc7waq7Ie+ZSSw=;
-        b=LcxkuQlcBom6K7cYz2cObFcKqvmFziGvIewxr5CVdQDXpiVs4Qe1p9/ma3MjpEBl0m
-         LdiaLTeEwxUPT1iylGK2uBRwa96fvGW0y6QRWq5F+NZCFL6N1e6TXJlkAQCGEx5XaKBZ
-         bMXT/f+ogoq6vs4TCzgBdramsCAz0nmWRD4br2nzTC8FHRTsVjgo15di4+fdqYbsWQIV
-         4/vga7HK3myEs7r2HcBsoYeS5QL/sXXpo879hazt2tPiyyJMP+yzm9vvBM9i2od8IqAh
-         LSpFzHsWhZD+5n1ToMnLkj0S4zSlSFpghH27+UmeVqnGiX+vxJHJBYAk1fLnQfBbxsFF
-         J2sg==
+        d=gmail.com; s=20210112;
+        h=references:from:to:cc:subject:in-reply-to:date:message-id
+         :mime-version;
+        bh=7DUjjtXVZ1JAAkcFuhk8EQe1NcnY/rlPFrCMqUddOfE=;
+        b=oFvgtd6O9hfvRAcNCd5d8OYRmqxxyQgYH6J+5+ylHpN23I2fFjJtvOR1QF2NH/CNlD
+         AmfhiVcYW+oBZur0Hmb9eOEW58qEXaxnJuaxyElZ8NI7+cW+qHzbqx/iqjtqe64qi1fj
+         R5RP06UTKNeLWc8fER6u4wTw9xXROBitppJMt5VDwtk7uIaETFljwoz7M3alxrsdjtoO
+         PCfm8Ha6+NOTh2ujNqxo/0FeAGIunHNDMa4fJiv9Lcc20SgrKFww7zgDHVDjxJQY2pYJ
+         maFTF1SBvjBtUCC2WV2morJunT39i6/qey3A6csF4sUGbklb97KO6iR6lsPPWLfm3J+Z
+         s8zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=S2PQt3HxkBxUYjC+VtlXEq4NoCpstcc7waq7Ie+ZSSw=;
-        b=7bggHHkyBrlyfZt7M8YZZXtM5omiaoVm/dDYA2Db2fS+sg+Whz3u3vFu/Y92g4/51U
-         QaV5pW93hpkMR26ytXKHfiipTmEEud0ZpPrwmZHB1NceKH9j2bCiM8W6DEmaIOSxT9Ii
-         xwRovPlPKVxisjPnsKetH3OXbfWM2I0jo7vmX1YKnIhtuzS1MTFzb4sAgnbULuP35b59
-         gVpGpE3u1/MgxGH1UHe5yije5UGmVmL9TWzqyxHLWie9CDU0tK2MeMXj63Ny360lD64q
-         y3VpabHF5oRYbZTI3tEluK3L8PcDu2PSsd7CcLpfAPOM58cSwFRmQkRqPGT8R4fvtKcL
-         06yQ==
-X-Gm-Message-State: AJIora/RVIFNYkbQ+mYyh1PSl5LdTAlJAI+tKg1C9oe7WuIB1XRHURUw
-        wg6+3ZZQgFe1Q6JHpdpqKIo2Pg==
-X-Google-Smtp-Source: AGRyM1vPsLVLSd2YTyZeBHDlHn82rVPH0GlTr+Bdo5oMuTiVoQgn60DY/3PL3sh3O2ct5ts3e02W/w==
-X-Received: by 2002:a05:6808:1b25:b0:32e:e59c:3901 with SMTP id bx37-20020a0568081b2500b0032ee59c3901mr13881725oib.186.1656820650648;
-        Sat, 02 Jul 2022 20:57:30 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.28
+        h=x-gm-message-state:references:from:to:cc:subject:in-reply-to:date
+         :message-id:mime-version;
+        bh=7DUjjtXVZ1JAAkcFuhk8EQe1NcnY/rlPFrCMqUddOfE=;
+        b=190qCKE3bT8pgko8Ka8byK9xs9eM5rlFpf/OB0DT6h2McEQp/lcTcNs7RfSPqP5aDM
+         4+GhVGaQz60k6+oLaAnvtKUnu6f/Lc7QlrcwQckmJMhpgoV39au/GREixEXtqcDHr2EO
+         uFraMavsxRC4Kd767DuxorL78JFdFVBtPqBYbfbIKWQ0+FmqqBD/WiF+9sWTxwNYDqB9
+         LyZlMduM8//aTadUgy0vTcktcMejduZOwkkBU1suSJZG2jThkXVh+u2OWaG2JsRggjxr
+         XxLDY0l+5196G2wIUL5YIk/K3yqE7SMq/FLIGf0z7FypTX2ZfXfKNqywKNEyDGOV/hoP
+         tI9g==
+X-Gm-Message-State: AJIora+EMooBTN8/AnjFXDBiHhDUMC6aD+zv7yql5bRiK4ehne1SNp84
+        yE5pFy5vT+aKGo4dO8gIMLfBaZgMyos=
+X-Google-Smtp-Source: AGRyM1sKT10TsS+cvZPa4L87pJ75lgV274uxpDpZcGo8HftTtSx2T6JR52jwbeaTEczN/SSYQ9m0xQ==
+X-Received: by 2002:a05:6000:1547:b0:21b:a2e2:6151 with SMTP id 7-20020a056000154700b0021ba2e26151mr21597551wry.481.1656846351065;
+        Sun, 03 Jul 2022 04:05:51 -0700 (PDT)
+Received: from localhost (92.40.202.9.threembb.co.uk. [92.40.202.9])
+        by smtp.gmail.com with ESMTPSA id d21-20020a1c7315000000b003a02cbf862esm15934392wmb.13.2022.07.03.04.05.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jul 2022 20:57:29 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Olof Johansson <olof@lixom.net>, soc@kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, arm@kernel.org
-Cc:     Li Yang <leoyang.li@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Tero Kristo <kristo@kernel.org>,
-        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
-        Hauke Mehrtens <hauke@hauke-m.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        linux-rockchip@lists.infradead.org,
-        Russell King <linux@armlinux.org.uk>,
-        =?UTF-8?q?Beno=C3=AEt=20Cousson?= <bcousson@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-tegra@vger.kernel.org,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        linux-gpio@vger.kernel.org, Kevin Hilman <khilman@baylibre.com>,
-        linux-amlogic@lists.infradead.org,
-        Fabio Estevam <festevam@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Heiko Stuebner <heiko@sntech.de>, Nishanth Menon <nm@ti.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Peter Rosin <peda@axentia.se>,
-        linux-arm-kernel@lists.infradead.org,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        openbmc@lists.ozlabs.org,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
-        linux-omap@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        Ray Jui <rjui@broadcom.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-input@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        Chen-Yu Tsai <wens@csie.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>
-Subject: Re: (subset) [PATCH v2 00/48] dt-bindings: input: gpio-keys: rework matching children
-Date:   Sat,  2 Jul 2022 22:56:25 -0500
-Message-Id: <165682055971.445910.5189932421143220440.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
-References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+        Sun, 03 Jul 2022 04:05:50 -0700 (PDT)
+References: <20220623211420.918875-1-aidanmacdonald.0x0@gmail.com>
+ <20220623211420.918875-12-aidanmacdonald.0x0@gmail.com>
+ <CGME20220701163330eucas1p13456e7757d9d2bc8d0aa35c16f143590@eucas1p1.samsung.com>
+ <acaaf77f-3282-8544-dd3c-7915fc1a6a4f@samsung.com>
+From:   Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     broonie@kernel.org, gregkh@linuxfoundation.org, rafael@kernel.org,
+        andy.shevchenko@gmail.com, mazziesaccount@gmail.com,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>
+Subject: Re: [PATCH v2 11/12] regmap-irq: Add get_irq_reg() callback
+In-reply-to: <acaaf77f-3282-8544-dd3c-7915fc1a6a4f@samsung.com>
+Date:   Sun, 03 Jul 2022 12:06:58 +0100
+Message-ID: <J6lhcwtTNjo9XCDWYcEz3QEWJBaJ34Qk@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, 9 Jun 2022 13:37:21 +0200, Krzysztof Kozlowski wrote:
-> Merging
-> =======
-> 1. dt-bindings: rebased on top of Rob's:
->    https://lore.kernel.org/all/20220608211207.2058487-1-robh@kernel.org/
-> 
-> 2. DTS patches are independent. They can be picked up directly by sub-arch
->    maintainers, by Arnd or Olof, or eventually by me (if you wish).
-> 
-> [...]
 
-Applied, thanks!
+Marek Szyprowski <m.szyprowski@samsung.com> writes:
 
-[27/48] arm64: dts: qcom: align gpio-key node names with dtschema
-        commit: b08f5cbd69dcd25f5ab2a0798fe3836a97a9d7c6
-[28/48] arm64: dts: qcom: correct gpio-keys properties
-        commit: 5a4b0b853a2914403746b0a1decab695202ff242
-[29/48] arm64: dts: qcom: sdm630-sony-xperia-nile: drop unneeded status from gpio-keys
-        commit: 9d8840f6ee426b6dfcb65bdf39e2898652e2b1e5
-[30/48] arm64: dts: qcom: align led node names with dtschema
-        commit: 3cfe94d660a8ebc19e78ea0a4781d7e9a1054c65
+> Hi All,
+>
+> On 23.06.2022 23:14, Aidan MacDonald wrote:
+>> Replace the internal sub_irq_reg() function with a public callback
+>> that drivers can use when they have more complex register layouts.
+>> The default implementation is regmap_irq_get_irq_reg_linear(), used
+>> if the chip doesn't provide its own callback.
+>>
+>> Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+>> ---
+>
+> This patch landed in today's linux next-20220701 as commit bdf9b86cd3ad 
+> ("regmap-irq: Add get_irq_reg() callback"). I've noticed that it causes 
+> a regression on my test systems: the RTC alarm stopped working on all 
+> boards with Samsung PMICs (drivers/mfd/sec*.c). There are no 
+> warnings/oopses/etc. Waitng for the RTC alarm lasts forever, so it looks 
+> that something is broken with interrupts. Reverting it on top of 
+> linux-next fixes the issue.
+>
+> Unfortunately I'm going for a holidays for the whole next week and I'm 
+> not able to analyze this issue further today. Krzysztof: maybe You will 
+> be able to provide some more hints which regmap irq variant is broken?
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+Fortunately it's nothing complicated -- just a typo. Thanks for testing.
+
+>>   drivers/base/regmap/regmap-irq.c | 126 ++++++++++++++++++++-----------
+>>   include/linux/regmap.h           |  15 +++-
+>>   2 files changed, 93 insertions(+), 48 deletions(-)
+>> [..]
+>> +unsigned int regmap_irq_get_irq_reg_linear(struct regmap_irq_chip_data *data,
+>> +					   unsigned int base, int index)
+>> +{
+>> +	const struct regmap_irq_chip *chip = data->chip;
+>> +	struct regmap *map = data->map;
+>> +
+>> +	/*
+>> +	 * FIXME: This is for backward compatibility and should be removed
+>> +	 * when not_fixed_stride is dropped (it's only used by qcom-pm8008).
+>> +	 */
+>> +	if (chip->not_fixed_stride && chip->sub_reg_offsets) {
+>> +		struct regmap_irq_sub_irq_map *subreg;
+>> +
+>> +		subreg = &chip->sub_reg_offsets[0];
+>> +		return base + subreg->offset[0];
+>> +	}
+>> +
+>> +	return base + index * map->reg_stride * chip->irq_reg_stride;
+
+chip->irq_reg_stride is usually 0. This should be data->irq_reg_stride,
+which will be corrected to the default value of 1.
+
+>> +}
+>> +EXPORT_SYMBOL_GPL(regmap_irq_get_irq_reg_linear);
+>> +
+>>   /**
+>>    * regmap_irq_set_type_config_simple() - Simple IRQ type configuration callback.
+>>    * @buf: Buffer containing configuration register values, this is a 2D array of
+>> @@ -862,6 +891,11 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+>
+> Best regards
