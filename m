@@ -2,77 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75A6A56C845
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  9 Jul 2022 11:20:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B7556C9BD
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  9 Jul 2022 15:58:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiGIJUZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 9 Jul 2022 05:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32972 "EHLO
+        id S229598AbiGIN6J (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 9 Jul 2022 09:58:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiGIJUY (ORCPT
+        with ESMTP id S229564AbiGIN6I (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 9 Jul 2022 05:20:24 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 450CB655B9
-        for <linux-samsung-soc@vger.kernel.org>; Sat,  9 Jul 2022 02:20:23 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id os14so1346828ejb.4
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 09 Jul 2022 02:20:23 -0700 (PDT)
+        Sat, 9 Jul 2022 09:58:08 -0400
+X-Greylist: delayed 61 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 09 Jul 2022 06:58:08 PDT
+Received: from mailrelay4-1.pub.mailoutpod1-cph3.one.com (mailrelay4-1.pub.mailoutpod1-cph3.one.com [46.30.210.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 174C5491FB
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  9 Jul 2022 06:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TKvyPiNZ+anjmYa10tWJwFVa+LgbgMa6tcU0LfkkBNI=;
-        b=Rw4EfubfZ/faCl4SO4kGUHTsF29gYmjUZN5r9EX2QvJZu1MCNedG9zlXeV2AhFrD+e
-         SXaisYWxi2fUxcpk19A/i7AtZbMpv3lr7KUgXbxpkLIIUEJyCshVIYNhva/EaDsmb0pp
-         34YplPkczi2T6yFHhiVl87ULuueLNlq21qgKhbgzefk/zgF3MSAJ/EB94FuyhPSFpwaS
-         LQjwd8/JA89CMxd1TzBKztR50rgjHQG/1pn1q4sYpKoJjmXYoL3DuCwTrbCj9+TXy7u2
-         AhJgLh9STUmqhDuCm1GQgtrOxx/JMJRJrDLbc1QMj3bXzNJMrA0fbQKeShJ/tnNmoYAB
-         5OTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TKvyPiNZ+anjmYa10tWJwFVa+LgbgMa6tcU0LfkkBNI=;
-        b=0sAaDaPYlHq9wD9jkCkVTAgu2EXuHvL7gHB8TacFmNJvYuebyCcJeBEwcBbSjwT6RL
-         B/HFhJ/I4/kuqXX64/dEnWtBI+Bz8E2f0FVjctL4KyeRR50C09tHfdFKkUpoAsidGhLN
-         RszHY600dXKQVtQc7n4/5UqnYhiKnKh0k70b5SvoOFEk7Ab+WkEujhAvsEdY59p4+63r
-         VSe14RDkAEcPMVPMHa/xgRE7BmkAA1xctc2KoI3elccCPQOeQTMl4pxYfH7hQ2nosG8j
-         7gpQlQCz+Cn0+tXeRU9BIqX77pxviMOb98jl8KS7waORFysRrzsA0M5arBEMx2SLdoFH
-         nc0A==
-X-Gm-Message-State: AJIora+66eQ0o37w+7z5Qd6/nsf96/QHLuoo3+Blehf1NN0dZI6Bh6DU
-        r3ubvNqBRF0ywxHPqwztaEJn4SqIwNu2GBPysUA=
-X-Google-Smtp-Source: AGRyM1u+lkUomLC9sj7m2S98v3aFMbUcPQRo+XYLcmPa7mGw7szcEoVya6ud7PjqcZccMjpswFD4wRZfo1uSn8ZwKfk=
-X-Received: by 2002:a17:907:1c8f:b0:6e8:f898:63bb with SMTP id
- nb15-20020a1709071c8f00b006e8f89863bbmr8101819ejc.721.1657358421741; Sat, 09
- Jul 2022 02:20:21 -0700 (PDT)
+        d=ravnborg.org; s=rsa1;
+        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+         message-id:subject:cc:to:from:date:from;
+        bh=QDvYa9cFEorN1ILaq5p0/t/GBxoIQgB2tyKasIexqXs=;
+        b=uHxHgDorQxChvH4gH2fuo2MNARVNejJimVx6FLSWFl/wA01O2eLtrgFIQbsYwJRP/im+6jA2ffGBX
+         Ic+bJZAUf3QMQugASocmdQQCjGyHUgzIP78TPUjvQZJUMAAe1ob1xDGCTDIKLGogh9sdontAFn5NDf
+         7l+K6QNVGW3WLl+jiCdyT4e6OzNo3zmnPTu9DR3zF95QERBperdvqKnQsP0/g79v3ffuLc8B/azhhi
+         sytiEsNxMM2sDaCKU9BpcSscUqS82ls8KL7++GkaE+rrbjSCsTxlnJEnfigoDyWX3j0prPhyF1HdBc
+         V2zLMM+RPs9L5/BI0R69GiCNpi+h7KQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=ed1;
+        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+         message-id:subject:cc:to:from:date:from;
+        bh=QDvYa9cFEorN1ILaq5p0/t/GBxoIQgB2tyKasIexqXs=;
+        b=OJYGdGwmD39yIGuezDD0shzbCZ80kbR/J8mg/gZnpYSmcwSzAvbTO8P3kVlx4THYAdM1qwFICXjmS
+         xWE8pO6Ag==
+X-HalOne-Cookie: e9bc3fa241fdae21be51ef3314c024f593f38501
+X-HalOne-ID: 03389c65-ff8f-11ec-823c-d0431ea8bb10
+Received: from mailproxy1.cst.dirpod4-cph3.one.com (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+        by mailrelay4.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
+        id 03389c65-ff8f-11ec-823c-d0431ea8bb10;
+        Sat, 09 Jul 2022 13:57:04 +0000 (UTC)
+Date:   Sat, 9 Jul 2022 15:57:02 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Martin =?iso-8859-1?Q?J=FCcker?= <martin.juecker@gmail.com>
+Cc:     linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Thierry Reding <thierry.reding@gmail.com>
+Subject: Re: [PATCH 1/3] dt-bindings: display: simple: add support for
+ Samsung LTL101AL01
+Message-ID: <YsmJLhHBUGPHh7nL@ravnborg.org>
+References: <20220516193709.10037-1-martin.juecker@gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a17:907:a40c:0:0:0:0 with HTTP; Sat, 9 Jul 2022 02:20:21
- -0700 (PDT)
-From:   John Jacob <jjacobvsusa@gmail.com>
-Date:   Sat, 9 Jul 2022 12:20:21 +0300
-Message-ID: <CAKZDKkCKN5p+6LNhGP=88n5ZYzzERAMdH-XX-DunqQw+dsw0iQ@mail.gmail.com>
-Subject: Confirm Receipt
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=1.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLY,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220516193709.10037-1-martin.juecker@gmail.com>
+X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello Dear,
+Hi Martin,
 
-I am Daniel Affum a retired civil servant i have a  business to
-discuss with you from the Eastern part of Africa aimed at agreed
-percentage upon your acceptance of my hand in business and friendship.
-Kindly respond to me if you are interested to partner with me for an
-update.Very important.
+On Mon, May 16, 2022 at 09:37:07PM +0200, Martin Jücker wrote:
+> Add the Samsung LTL101AL01 WXGA LCD panel to the list.
+> 
+> Signed-off-by: Martin Jücker <martin.juecker@gmail.com>
 
-Yours Sincerely,
-Jacob John.
-For,
-Daniel Affum.
-Reply to: danielaffum005@yahoo.com
+Applied to drm-misc (drm-misc-next).
+
+	Sam
