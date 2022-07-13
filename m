@@ -2,133 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CED2573888
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 13 Jul 2022 16:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E568573D26
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 13 Jul 2022 21:33:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231482AbiGMOPA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 13 Jul 2022 10:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49484 "EHLO
+        id S236919AbiGMTda (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 13 Jul 2022 15:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229770AbiGMOPA (ORCPT
+        with ESMTP id S236723AbiGMTd2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 13 Jul 2022 10:15:00 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03494255B5
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 13 Jul 2022 07:14:59 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id a39so13635738ljq.11
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 13 Jul 2022 07:14:58 -0700 (PDT)
+        Wed, 13 Jul 2022 15:33:28 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81652E685
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 13 Jul 2022 12:33:26 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id x125so9067674vsb.13
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 13 Jul 2022 12:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PGcV0udwGjSruZ22N9l9PLf+/uHhdyNzh4czvTCR/yA=;
-        b=zCTXM9N+lWM7M4yu4edy1tV1WT6siuoQVV6e1kZX7hZCPivLfKVDwNmZtMUzVTGTpk
-         Ef/AqPA3Cez2+uOeq9HV/f45tl55LY3/Lm6rh//1MmfnE/laT91v1pxoExx7UEnUDxCn
-         k+YUuX3kPsjFkja4s3YHSyZTONf48zrSpsqopdXI6QpK4QNe2dvl0s1rizEh9vWkXkxq
-         lZrrKtazdbhBNmmNGYg9KXcMYXNveeSxUh+6khWPFBJhyJjhsUPhsNKbhjX+X4GDpXmE
-         bKl01T2O+MbqurfsuoXEoHQI8RzhgK8jlETIuCE/jnpt5a0WPd/D2VtgyjbibRTLuymr
-         MrXA==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=CAIH/48VCAZZUEhRpfaRPTSaBdpuCbyHyIV69iiJf1M=;
+        b=aM1IhBunUxE23qoS04VXLKhmfEzv0G+rIPuL+tw7ecWQpkkV/VIRfagQrgSyOoTIAm
+         AZWPXQE2ns7ZNMtu2h9VrGRckGYmFXAYncydcobmDBiRLde8BCgwi2hlvMDHXzYgqMkQ
+         SeJxIk0u87w3y3HvNwB5qYF3cTerdoWv2b9mV8jFDizIJX8stbEHhwQnKSILH4q0Huup
+         hTOO9Jx4LSsJcLZc09WMxCsF4ciSzvQTXVpvt0KUlX7r0Y8qXhkOofhAjq9rhr7n0O3a
+         0Nz5Fyl2IiFFXOdqA4nMId1341Np8datpnUgsVwvaqGydn6uB0z1+35u/mxwEULjiUxM
+         xCNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PGcV0udwGjSruZ22N9l9PLf+/uHhdyNzh4czvTCR/yA=;
-        b=b8RmvcRX7i3L5gdJM8V6Ckg82DhVvZoncvI96b18TDQctSHwqdnAaJ3691izt0j80+
-         ARMdFeqnsyix8/oMVHEjmFS3Y0m+snHI2x6m0XRAIsvJ18C+SQ4FVB326gUCN17AwqHI
-         5zL3KH2Q1bC3XXNUKroN0jhm2ClCTk1jZws+dklQ1ejz7n5HfjDRLEg+N/6oRioP3qHC
-         tSLhI3S/k7emOROjeoTXXGXfy0ztTlRZr3UJBAL7+v3ZPEG45Gug8gMLxZHNDVfyGWrP
-         kHF0qRLFCoRT5X1J4141pvwWKzczDBz1GpnaqgSUOBk/o+40uM+KiN/b6oef/0zfEo6L
-         dg0A==
-X-Gm-Message-State: AJIora/wa3XlgdYa/7ylMdmrKDmyE1KNXWTWW3zc9t311KQfhNN8LZVu
-        0ZR+xs7oBOahTU6MTxSwyat3e9rpMe0ioYUPCuNHCA==
-X-Google-Smtp-Source: AGRyM1tG9FwWpL3QNN3CU2va1RCPbzZzojzMQ4cZgpcwNihHlrvL0DxO6/vvEBv8w67LwDpTW1hzi0m3ohydLI4AQ8s=
-X-Received: by 2002:a2e:bd11:0:b0:25d:4f94:ac79 with SMTP id
- n17-20020a2ebd11000000b0025d4f94ac79mr1943417ljq.4.1657721697308; Wed, 13 Jul
- 2022 07:14:57 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=CAIH/48VCAZZUEhRpfaRPTSaBdpuCbyHyIV69iiJf1M=;
+        b=HuRbesoWfOOrXvDThnDwnV5gbaoOku39fltZrjFatRv9TcO6YQ3vAe0vbPsWqVpZ/H
+         GBF9oBdJPEHQm2O2QbdEs18m+9o/2BkSlrLTZwoZk9VQ8VoXPjMH+7QeTKrmCIl77UH+
+         0aaqVgpJyUGuDdDUeABjVOGqdSneceDjCMhLfT79WrqXKql1nXKKshCedwj6XJclL9H6
+         4kv81xcQW+SB8vVHIb13i+L/+1ebFLS3vDRIpAPYTIr0Nnp2Vs+Brot+OqjLYEIQwPgZ
+         i3a1bbj6UvlWHVloLvZZN8Wjzh0ef+jnVlvGZtbPEs6u62GGwSaq9CZdM+hETpLjM+ly
+         rg7g==
+X-Gm-Message-State: AJIora8HnlnEp4ho+xxxUSBncaPQPf1VsaZiFHD76ZnR++bAe2KG5fw8
+        s4ruTrD5rR+Oo67hHeInXkUtau4Qw2877XzlzaM=
+X-Google-Smtp-Source: AGRyM1sJxaHNFmNllzWTe6lcXJtKq+jpeM0H1VbICZMt0N2iL7xjj1CQ/iGumgoql0QuMbeebjAgPClviShoH8saaK0=
+X-Received: by 2002:a67:a449:0:b0:357:3407:9f60 with SMTP id
+ p9-20020a67a449000000b0035734079f60mr2391818vsh.17.1657740805145; Wed, 13 Jul
+ 2022 12:33:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220702213724.3949-1-semen.protsenko@linaro.org>
- <CAPLW+4kYbG7PRYo_L6N5xMa+F9DFBpyph4B+zb2R4kBbE3EKHg@mail.gmail.com> <67943ec4dcfe85d6d616a5507437d99f6c5638a2.camel@gmail.com>
-In-Reply-To: <67943ec4dcfe85d6d616a5507437d99f6c5638a2.camel@gmail.com>
-From:   Sam Protsenko <semen.protsenko@linaro.org>
-Date:   Wed, 13 Jul 2022 17:14:46 +0300
-Message-ID: <CAPLW+4=pikbLQZLabv7aZvGhA_30xaJRYLxK+uOUUXnwu2Byow@mail.gmail.com>
-Subject: Re: [PATCH 0/4] iommu/exynos: Add basic support for SysMMU v7
-To:     David Virag <virag.david003@gmail.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Janghyuck Kim <janghyuck.kim@samsung.com>,
-        Cho KyongHo <pullip.cho@samsung.com>,
-        Daniel Mentz <danielmentz@google.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        iommu@lists.linux-foundation.org, iommu@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Received: by 2002:a67:e05b:0:0:0:0:0 with HTTP; Wed, 13 Jul 2022 12:33:24
+ -0700 (PDT)
+Reply-To: pstefanopessina80@gmail.com
+From:   STEFANO PESSINA <awabuts49@gmail.com>
+Date:   Wed, 13 Jul 2022 22:33:24 +0300
+Message-ID: <CABqU-Kt960=z5WPCBXkW7U+2SM=criymhoesJ=oQD7uhrCaFLQ@mail.gmail.com>
+Subject: donation
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:e44 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.4987]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [awabuts49[at]gmail.com]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [pstefanopessina80[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [awabuts49[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, 3 Jul 2022 at 13:47, David Virag <virag.david003@gmail.com> wrote:
->
-> On Sun, 2022-07-03 at 00:48 +0300, Sam Protsenko wrote:
-> [...]
-> > Hi Marek,
-> >
-> > As I understand, you have some board with SysMMU v7, which is not VM
-> > capable (judging from the patches you shared earlier). Could you
-> > please somehow verify if this series works fine for you? For example,
-> > this testing driver [1] can be helpful.
-> >
-> > Thanks!
-> >
-> > [1]
-> > https://github.com/joe-skb7/linux/commit/bbadd46fa525fe1fef2ccbdfff81f7d29caf0506
->
-> Hi Sam,
->
-> Not Marek here, but I wanted to try this on my jackpotlte (Exynos
-> 7885). The driver reports it's DPU sysmmu as version 7.2, and manually
-> reading the capabilities registers it looks like it has the 2nd
-> capability register but not the VM capability.
->
-> After applying your patches, adding your test driver (with SYSMMU_BASE
-> corrected to 7885 value), and adding the sysmmu to dt, I tried to cat
-> the test file that it creates in debugfs and I got an SError kernel
-> panic.
->
-> I tried tracing where the SError happens and it looks like it's this
-> line:
->         /* Preload for emulation */
->         iowrite32(rw | vpn, obj->reg_base + MMU_EMU_PRELOAD);
->
-> Trying to read the EMU registers using devmem results in a "Bus error".
->
-> Could these emulation registers be missing from my SysMMU? Do you have
-> any info on what version should have it? Or maybe some capability bit?
-> I'll try testing it with DECON/DPP later and see if it works that way.
->
+--=20
 
-Hey David,
-
-Can you please try out the [1] branch again? I've added support for
-Exynos7885 there, using the info provided by Janghyuck Kim: apparently
-Exynos7885 has EMU registers, but those have some other offsets than
-on Exynos850:
-
-    #define MMU_EMU_PRELOAD    0x8040
-    #define MMU_EMU_SHOT       0x8044
-
-I wonder if my changes to [1] do the trick.
-
-[1] https://github.com/joe-skb7/linux/tree/e850-96-mainline-iommu
-
-> Best regards,
-> David
+Congratulations!
+The sum of =E2=82=AC1,500,000.00 has been donated to you by STEFANO PESSINA=
+.
+Kindly get back for more info via pstefanopessina80@gmail.com
