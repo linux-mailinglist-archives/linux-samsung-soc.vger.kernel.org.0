@@ -2,143 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 687A4576A9C
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 16 Jul 2022 01:23:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37B45577E8C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Jul 2022 11:25:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232341AbiGOXVj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 15 Jul 2022 19:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48562 "EHLO
+        id S233754AbiGRJYl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 18 Jul 2022 05:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232157AbiGOXVd (ORCPT
+        with ESMTP id S233644AbiGRJYT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 15 Jul 2022 19:21:33 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4561C93C39;
-        Fri, 15 Jul 2022 16:21:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 94801B82F03;
-        Fri, 15 Jul 2022 23:21:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8CFC34115;
-        Fri, 15 Jul 2022 23:21:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1657927282;
-        bh=J5W0p4ucASc4vcM38f4aAA0aBmwfM4SM9vH8Xt0UEZ4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=MIhvZ7dyMNTqXpgIUIKXdHkUN20tBif8oS4/LgKCwjiH8brwnLVDd+vcILhnOI3vM
-         EuUnP/YFXNcXIb8iowT53tmDt5Z7brcoFxZx1I2PHndD6GVq4FRzcN6B4lSA7r1c0x
-         LRs7BiRfZhswP2QzAM7v+kcXHwG3uhGSpRpoBh7tP/lYN27XpA3Wwu2I/6VdrNh4dZ
-         c/4dgeNHnAl0kxerrkkp2/h8qJHXUBrBwce+k++MHN4yN45rRnoN1Wi3jYa+fu9gL2
-         VBMCW6QAwre/G32926VhoMuoFDygW8Ylbrb/BNvFkQflBfDAfIryBBvmSHUQ97ivxH
-         tDpERWrjFJ+zQ==
-Date:   Fri, 15 Jul 2022 18:21:20 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-pci@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-phy@lists.infradead.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 1/2] phy: samsung: phy-exynos-pcie: sanitize
- init/power_on callbacks
-Message-ID: <20220715232120.GA1216057@bhelgaas>
+        Mon, 18 Jul 2022 05:24:19 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2716384
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Jul 2022 02:24:18 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id f65so10009107pgc.12
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Jul 2022 02:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=DBXVr+2yQA4Yc+mJwCPapHs1PcqJSd/+SbzdjhsE7eQ=;
+        b=MSsTVbFkaO1i0b6iYF4wSYh06F2HTXmGIXPyHrILtQ2s6jMBXG1Yn+aEJfK2iRAJT6
+         NmrNd4xd0gFLMUEDQBve40T+9E+hlRxZ6zjJ0cfLZOMJ+ZoYae/2TJgcSK40DQ/79I+x
+         CXsCT3LngwqyL8AGRr3k8Z5MK6kqW+o2646ZUdvtdeLSiQBCV4S0xE22Nd8wxeqa/lh4
+         HQf4RfXSCmaJPAX+jcqvLUo30V58vCNMmFGUOzGT0MBYY3XD6dKZUBjH6vxqmJt5z2oA
+         b70zS2ejVI1g6bm/bo1wXIEPB7aWMfYSp0nKSwol+y8sMj0XjDBWB1PGiSJeF1+esdhT
+         Ri5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=DBXVr+2yQA4Yc+mJwCPapHs1PcqJSd/+SbzdjhsE7eQ=;
+        b=YyO31GSSurGF+pCCvuJu4TxRDZ8zHyG1ONM7MXnWrVDGHWyf2sUifOzDoTrtk9FIcW
+         a7H9FKz7LT8zcRrnYo0bBZ0RNHwMytoYWluViTDjl6BKLQsGhJVbsqTK03OaGGvBPQCu
+         aKJssLtp176nV9lDa0YIp6YAsEXG0GeI27s3CMN6N7UEVto5eATIwLTocwJn1uXK/6gb
+         BKxDM7E1dPcdN9Yv57pOcbHZDKq6T7z3tzaFHJXJpGW8eaAgNXBO1kcSbSU/3OI5n28p
+         Pj2sajpNvKXTLYP/RDpqXL5/l7CChETPT4B6CLP9wsbm+EmBtupE2JbUt9XeIEmctHya
+         vbOw==
+X-Gm-Message-State: AJIora/c2iRsLgoAWtqFe10jFScppkapkSIxUAOR8zuLyOzN2n5l6Btl
+        ugVk+/AhRUQhtDcCXRCMpuo9wimHf/Km4OvjxWc=
+X-Google-Smtp-Source: AGRyM1vnYYwVzPkudbVH1tEcqvnh2Lnbp1XBf/6zkLu5nBLzLG5OKW3Gi9FuMu26BDF/Rwpo2XrcHo7DNKRVdHg7SfU=
+X-Received: by 2002:a63:500c:0:b0:412:a56c:9ac with SMTP id
+ e12-20020a63500c000000b00412a56c09acmr24499527pgb.158.1658136257640; Mon, 18
+ Jul 2022 02:24:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220628220409.26545-1-m.szyprowski@samsung.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Sender: chrisdicksonchris@gmail.com
+Received: by 2002:a05:6a10:cea7:b0:2b8:f444:258a with HTTP; Mon, 18 Jul 2022
+ 02:24:17 -0700 (PDT)
+From:   Chevronoil Corporation <corporationchevronoil@gmail.com>
+Date:   Mon, 18 Jul 2022 10:24:17 +0100
+X-Google-Sender-Auth: RiYy3Tz5WvLzlsewENpWwW36SXQ
+Message-ID: <CAKhAfvg=zeDCymzh7Eeo9P2okCA4GW8Ys=GehJ+gDJN9scz9Xw@mail.gmail.com>
+Subject: UPDATE ME IF INTERESTED
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Jun 29, 2022 at 12:04:08AM +0200, Marek Szyprowski wrote:
-> The exynos-pcie driver called phy_power_on() and then phy_init() for some
-> historical reasons. However the generic PHY framework assumes that the
-> proper sequence is to call phy_init() first, then phy_power_on(). The
-> operations done by both functions should be considered as one action and
-> as such they are called by the exynos-pcie driver (without doing anything
-> between them). The initialization is just a sequence of register writes,
-> which cannot be altered, without breaking the hardware operation.
-> 
-> To match the generic PHY framework requirement, simply move all register
-> writes to the phy_init()/phy_exit() and drop power_on()/power_off()
-> callbacks. This way the driver will also work with the old (incorrect)
-> PHY initialization call sequence.
-> 
-> Reported-by: Bjorn Helgaas <helgaas@kernel.org>
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+BEWARE, Real company doesn't ask for money, Chevron Oil and Gas United
+States is employing now free flight ticket, if you are interested
+reply with your Resume/CV.
 
-Both applied to pci/ctrl/exynos for v5.20, thanks!
-
-> ---
->  drivers/phy/samsung/phy-exynos-pcie.c | 25 +++++++++----------------
->  1 file changed, 9 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/phy/samsung/phy-exynos-pcie.c b/drivers/phy/samsung/phy-exynos-pcie.c
-> index 578cfe07d07a..53c9230c2907 100644
-> --- a/drivers/phy/samsung/phy-exynos-pcie.c
-> +++ b/drivers/phy/samsung/phy-exynos-pcie.c
-> @@ -51,6 +51,13 @@ static int exynos5433_pcie_phy_init(struct phy *phy)
->  {
->  	struct exynos_pcie_phy *ep = phy_get_drvdata(phy);
->  
-> +	regmap_update_bits(ep->pmureg, EXYNOS5433_PMU_PCIE_PHY_OFFSET,
-> +			   BIT(0), 1);
-> +	regmap_update_bits(ep->fsysreg, PCIE_EXYNOS5433_PHY_GLOBAL_RESET,
-> +			   PCIE_APP_REQ_EXIT_L1_MODE, 0);
-> +	regmap_update_bits(ep->fsysreg, PCIE_EXYNOS5433_PHY_L1SUB_CM_CON,
-> +			   PCIE_REFCLK_GATING_EN, 0);
-> +
->  	regmap_update_bits(ep->fsysreg,	PCIE_EXYNOS5433_PHY_COMMON_RESET,
->  			   PCIE_PHY_RESET, 1);
->  	regmap_update_bits(ep->fsysreg, PCIE_EXYNOS5433_PHY_MAC_RESET,
-> @@ -109,20 +116,7 @@ static int exynos5433_pcie_phy_init(struct phy *phy)
->  	return 0;
->  }
->  
-> -static int exynos5433_pcie_phy_power_on(struct phy *phy)
-> -{
-> -	struct exynos_pcie_phy *ep = phy_get_drvdata(phy);
-> -
-> -	regmap_update_bits(ep->pmureg, EXYNOS5433_PMU_PCIE_PHY_OFFSET,
-> -			   BIT(0), 1);
-> -	regmap_update_bits(ep->fsysreg, PCIE_EXYNOS5433_PHY_GLOBAL_RESET,
-> -			   PCIE_APP_REQ_EXIT_L1_MODE, 0);
-> -	regmap_update_bits(ep->fsysreg, PCIE_EXYNOS5433_PHY_L1SUB_CM_CON,
-> -			   PCIE_REFCLK_GATING_EN, 0);
-> -	return 0;
-> -}
-> -
-> -static int exynos5433_pcie_phy_power_off(struct phy *phy)
-> +static int exynos5433_pcie_phy_exit(struct phy *phy)
->  {
->  	struct exynos_pcie_phy *ep = phy_get_drvdata(phy);
->  
-> @@ -135,8 +129,7 @@ static int exynos5433_pcie_phy_power_off(struct phy *phy)
->  
->  static const struct phy_ops exynos5433_phy_ops = {
->  	.init		= exynos5433_pcie_phy_init,
-> -	.power_on	= exynos5433_pcie_phy_power_on,
-> -	.power_off	= exynos5433_pcie_phy_power_off,
-> +	.exit		= exynos5433_pcie_phy_exit,
->  	.owner		= THIS_MODULE,
->  };
->  
-> -- 
-> 2.17.1
-> 
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+Regards,
+Mr Jack McDonald.
+Chevron Corporation United USA.
