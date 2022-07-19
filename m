@@ -2,79 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 534FE578A0A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Jul 2022 21:01:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF105579128
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Jul 2022 05:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235351AbiGRTBd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 18 Jul 2022 15:01:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
+        id S236537AbiGSDJT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 18 Jul 2022 23:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234750AbiGRTB0 (ORCPT
+        with ESMTP id S236114AbiGSDJR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 18 Jul 2022 15:01:26 -0400
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A632B2F670
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Jul 2022 12:01:17 -0700 (PDT)
-Received: by mail-ua1-x934.google.com with SMTP id s7so5640002uao.4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Jul 2022 12:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=h0ZslgqQ94UM3iGDYCZGEx8ZwvbYHY5ZrQARiO/Kpbc=;
-        b=IQXHlBQ3jHSYUTt89EYBBYMpS/rXYtHBaNUJ6e2ZzB07/ETpvOJM0/ZijryokIEfDh
-         oJG0jiachEiIldTcksV5XzU+dy3csOVeMrzVRYAIpdf4PUrGYfI/KNNvcLIWjvmc8oHa
-         yWKlPWKnOFkuEw2Mq2CzZYpqcRK9kJ+LygeUXE0izxh4s3I+nauj1w40rP+480vJCi+X
-         rAPSoEvo8wXV23cydMjOZnuzBivYToT/OwjRuq1iqX/8Isb8Rqougy46FnOdoQuh9Z/u
-         z7xKihQATs9EIIDqpmGAQl/2n//vpMk3ZDpLHQioaLk/1hVBrL4som/CgeyT77yPFwbn
-         VU6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=h0ZslgqQ94UM3iGDYCZGEx8ZwvbYHY5ZrQARiO/Kpbc=;
-        b=PAu5Rqcc4dPnz6S/dLJsJOsn+uYP0r6fZmw4brZaGeh9g00SLTeiVIwYE3jA0S+m5d
-         QdBlAXb/xxaJJRAhpUqJPH22Fjkv8r+D+DrcLW8dIR1gF74iD3WdELDdWvCmJiOgfUDe
-         MTQATiL/YQBRCvgzcK+kr6p6b1GN6UtvbygKBgTR24Ya/35A5nYwm9k30m/6s35d00D0
-         vmOlFxMafedFHGHtNUUTgSV00FL3Z5HGAADqM9W+LfX9aUY5LqmKsSiZJJOzl+F39OC1
-         3UDXy0Zo3vDcJoEVLcMPc2lv1VGa8mRNe1B7AEKur57OfABZI0d89hJidkVN1W/pYvff
-         5pRw==
-X-Gm-Message-State: AJIora9D4jcm5B5M3jPsgTO5Q3MoJyNR1mCpBvhqYAu5abxQuGQVA3ZZ
-        k09R8f8p9GHsOPpIJnDnwCawZUSxKkvtPHSSv7F9Qi1/LjRRMw==
-X-Google-Smtp-Source: AGRyM1sOF4caZ/Mzb7i1HwUB8dyXYAmjf9y+Pd1nVHRKiUHeMR6opOrMc10oZNu5DLkN2HS0cpkKNGEh0T+MU99Jmes=
-X-Received: by 2002:a81:5747:0:b0:31d:1bb8:65b7 with SMTP id
- l68-20020a815747000000b0031d1bb865b7mr30830046ywb.168.1658170865217; Mon, 18
- Jul 2022 12:01:05 -0700 (PDT)
+        Mon, 18 Jul 2022 23:09:17 -0400
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDE83C173;
+        Mon, 18 Jul 2022 20:09:16 -0700 (PDT)
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26IKihg8024556;
+        Tue, 19 Jul 2022 03:09:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2022-7-12;
+ bh=SelJW1NFk8AZ0XjTZ3yL2HdUivxxk0nyrbeU6D4RpIE=;
+ b=qRlKzhb1vRwswI5yqB9U6CQ6bsTGStNz0DZJMwobxet0Gs9R+2V/cqO8iiI3hC32cbEk
+ dx/HTJmPZH2kUBPtHohzlaJ+pv9tKzuLTjyNMqn6HIV7bPmOeX5Bf8FkC9dJVNulOna6
+ 5+y+zX2lgMIXm9sfB8OEF98+v9Xte90+QZGr2yIyI0QPaM50HPjNDvF21zeS7kAdz5cH
+ 0JDUIhkeT9yv576zUPIkmgIuV1fjtmOZlD2cCAGNNlVLOYq0Z6sQl6AM33OPX2NteKH7
+ Eu/xo4NOMRKILslhb2O2Hcgzz5sACOlz773aPlUhUuZHAMs7rA6e03GoJmiTPA1vp1vc cw== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3hbm42cyma-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 19 Jul 2022 03:09:02 +0000
+Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 26IND6rQ002047;
+        Tue, 19 Jul 2022 03:09:02 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3hc1k2ypt4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 19 Jul 2022 03:09:02 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 26J391U1016855;
+        Tue, 19 Jul 2022 03:09:01 GMT
+Received: from ca-mkp.mkp.ca.oracle.com (ca-mkp.ca.oracle.com [10.156.108.201])
+        by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3hc1k2ypt1-1;
+        Tue, 19 Jul 2022 03:09:01 +0000
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-arm-kernel@lists.infradead.org, linux-scsi@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] change exynos ufs phy control
+Date:   Mon, 18 Jul 2022 23:08:54 -0400
+Message-Id: <165820009733.29375.13730837711131450349.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220706020255.151177-1-chanho61.park@samsung.com>
+References: <CGME20220706020540epcas2p37a8b697af2c6786db9e4ed67cf20a40f@epcas2p3.samsung.com> <20220706020255.151177-1-chanho61.park@samsung.com>
 MIME-Version: 1.0
-Received: by 2002:a05:6919:4004:b0:cc:50ff:b3d8 with HTTP; Mon, 18 Jul 2022
- 12:01:04 -0700 (PDT)
-Reply-To: lilywilliam989@gmail.com
-From:   Lily William <sgtalberts@gmail.com>
-Date:   Mon, 18 Jul 2022 11:01:04 -0800
-Message-ID: <CALPTejMFgL0Bg7jCKa7j+5KxVv_jnSM4ZPq-QhHCiUpG_ZswsQ@mail.gmail.com>
-Subject: Hi Dear,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-18_22,2022-07-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 adultscore=0 phishscore=0
+ mlxlogscore=999 spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2206140000
+ definitions=main-2207190011
+X-Proofpoint-ORIG-GUID: D1y6NFQDdt_KabmPI9U_UHxu2d-dmPWi
+X-Proofpoint-GUID: D1y6NFQDdt_KabmPI9U_UHxu2d-dmPWi
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Dear,
+On Wed, 6 Jul 2022 11:02:52 +0900, Chanho Park wrote:
 
-My name is Dr Lily William from the United States.I am a French and
-American nationality (dual) living in the U.S and sometimes in France
-for Work Purpose.
+> Since commit 1599069a62c6 ("phy: core: Warn when phy_power_on is called
+> before phy_init"), below warning has been reported.
+> 
+> phy_power_on was called before phy_init
+> 
+> To address this, we need to remove phy_power_on from
+> exynos_ufs_phy_init.
+> 
+> [...]
 
-I hope you consider my friend request. I will share some of my pics
-and more details about myself when I get your response.
+Applied to 5.20/scsi-queue, thanks!
 
-Thanks
+[3/3] ufs: ufs-exynos: change ufs phy control sequence
+      https://git.kernel.org/mkp/scsi/c/3d73b200f989
 
-With love
-Lily
+-- 
+Martin K. Petersen	Oracle Linux Engineering
