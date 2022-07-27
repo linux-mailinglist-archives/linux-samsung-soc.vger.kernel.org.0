@@ -2,200 +2,109 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97A30581AB4
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Jul 2022 22:08:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACBA8581D2D
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 Jul 2022 03:34:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239737AbiGZUHq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 26 Jul 2022 16:07:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46362 "EHLO
+        id S240085AbiG0Bd6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 26 Jul 2022 21:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239709AbiGZUHq (ORCPT
+        with ESMTP id S240086AbiG0Bdz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 26 Jul 2022 16:07:46 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD83A33A37
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Jul 2022 13:07:44 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id j22so28099462ejs.2
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Jul 2022 13:07:44 -0700 (PDT)
+        Tue, 26 Jul 2022 21:33:55 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5345C3B942
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Jul 2022 18:33:54 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id r13-20020a17090a454d00b001f04dfc6195so344660pjm.2
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Jul 2022 18:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=upg6JemQobvxpbvcYkGZTE7woCjfAjYx23pabDH6S70=;
-        b=KY2REAUeTrxKpGxnAFQJ6G5IfIIF7/usG+WAYcQ8mBBct/cgEIHf6gFa/H+I97ylFy
-         hO1ugpx1K4FDC5+1Wl7nAV9YHIQyhQbkcjR2tCZxnHCqEpsNB5uaRlmAx+c3TMVg8gKD
-         WnFmR3DAUnG1WBLjo5jWhavTgSHvkMUmDsVBNnoeG9uK2ncFB5aB70Qh2lk4LzP597mz
-         iTzEPubySBp2IOKJeqrNSb3Ka09PUGVChg3I2f1ahx/QZJjVOoNRruThA0rztxT4Avaz
-         NB89vxSGFOX4UK0OXQ1w8q8f0uCXY0qLSOB+pn5P6EZZfi34THjmmuttz+9Gz2oJtEm+
-         GQ2A==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=1N3h8/3xSQWX6SxOF5BPCgS/YJL4wXTsZ8CkYeFIT3M=;
+        b=QpSGMoTn06o1HCqJaequgVUCWVDL6y7V2pJAXhgcZslE7hepnB5qO5bhCsayf8BgZT
+         ioAnJDRO4dHDHZqT9epxdMWWuTHPxYpYQv7N9ry1QlIk5/V+cdUycj6fXPdRo+zdPUo4
+         +0Z324w4ZR5jGLPTe46w9q+JE1ZZ5ABziZoQBzBQTrwwhqWlRBOLEcHVBm9L7dK5/Xdi
+         xfKd8NoIGd/LYe/RpZOiwPs5NxYvdylykP+HFfsBwc/HIFJB2XohGmZzvFpXtiCPc2sI
+         KLyTgTV/B/ZJi0VZmQ1yZMC9+h2YpRh2EOANQBwbCIdYGeqvIQFkcbdQymaE9OuWqLHy
+         Y7lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=upg6JemQobvxpbvcYkGZTE7woCjfAjYx23pabDH6S70=;
-        b=mZ4T4yPAUdt653CJCbmBfvkJqfiBJLyhpM0bsOjZtetStQcKfqtITJWP5BAOmfduf7
-         fAzhWlCFq7a2hJaKzrU78dA7+MBAAYYWq7f+7byotAJORwCIVKwGgEvg2cg7UmPOFUKQ
-         o+8Y9ba1k4fFQS+FRgURZOnDGm0jA58FWuGyY7ZKuYHSa+HZnBYkEAqeWQ9EUn79nnfo
-         vIz6P/2QevKR0lGjwRQcSRkexUNxJmJohOh+omRu8ypkg1p3AXnlx9MpLNQut4tv4BgU
-         GUqoI193OfkcziwIVIFMULGpz1Ds/fA6jGsramit+XwyA4sldyxVDUndjWIfZO7bw16P
-         emXg==
-X-Gm-Message-State: AJIora8johz0Pykop67E23vjXj06Ou6djuxHptrcCiZCtTBGWZSq5H/B
-        XUQjXSesrvQkgHC92NVVYQhiLw==
-X-Google-Smtp-Source: AGRyM1tv8wHXbb3eS/p+8L9YeTdBUJHXMCzexwSOl616wnPkWcjsERUOZMKK3rw0gqgrbcuNtcqbRg==
-X-Received: by 2002:a17:907:9620:b0:72b:5822:93d0 with SMTP id gb32-20020a170907962000b0072b582293d0mr15931780ejc.235.1658866063225;
-        Tue, 26 Jul 2022 13:07:43 -0700 (PDT)
-Received: from localhost ([31.134.121.151])
-        by smtp.gmail.com with ESMTPSA id ba17-20020a0564021ad100b0043c87da1ab6sm862947edb.48.2022.07.26.13.07.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 13:07:42 -0700 (PDT)
-From:   Sam Protsenko <semen.protsenko@linaro.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Janghyuck Kim <janghyuck.kim@samsung.com>,
-        Cho KyongHo <pullip.cho@samsung.com>,
-        Daniel Mentz <danielmentz@google.com>,
-        David Virag <virag.david003@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>, iommu@lists.linux.dev,
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=1N3h8/3xSQWX6SxOF5BPCgS/YJL4wXTsZ8CkYeFIT3M=;
+        b=43I3vReYn4zEbEY7uBQjNLUqe4g9A5fxziS8A5E6B0OxaJFbmpFitsqOgh8TkuRRtN
+         GtMUxzThYISkDom8heNC5x4z2kurI2Ufrq1T00uWLCVXCKdZOeUuD/SIf/rgp4k1mnWO
+         sxLnj4JIAjhfD4aqCdX5dX7OKkemXeYVwtLUnWM7o1BldPMu27Fg4ze0wx07txPkWyBe
+         jx/YWWOJNL3fqVlHIHyi0Uvyz6t/bESmpPbJsr7I0eD/JwPBasG9Xs/K38Qw2nSJiak7
+         3WLuN1z9sRx+bBM7fK6IhRm6IoFkx6Z9aWbXE936+IH38VDuubN7mruq3STpDdkhz2Vr
+         SKGg==
+X-Gm-Message-State: AJIora8CI3T4HzPidKcfSd0MdWomXSF2SHdjgb9FanggrHbfk4UV6Dpm
+        dXCIigOG0dwga3yYl8zhyc/sxVyxpWdb++g=
+X-Google-Smtp-Source: AGRyM1tNXxJJfexei0sXfG1FBir9ecawTKSUmr8oBmd7eGPMiF6IiFNkyG65ifGlltihpNEjyyTucthrEgJjoHc=
+X-Received: from saravanak.san.corp.google.com ([2620:15c:2d:3:f771:727:f95a:5335])
+ (user=saravanak job=sendgmr) by 2002:a17:90a:6b45:b0:1e3:3cfa:3104 with SMTP
+ id x5-20020a17090a6b4500b001e33cfa3104mr1862493pjl.113.1658885633796; Tue, 26
+ Jul 2022 18:33:53 -0700 (PDT)
+Date:   Tue, 26 Jul 2022 18:33:48 -0700
+Message-Id: <20220727013349.3056826-1-saravanak@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
+Subject: [PATCH v1] pinctrl: samsung: Finish initializing the gpios before
+ registering them
+From:   Saravana Kannan <saravanak@google.com>
+To:     Tomasz Figa <tomasz.figa@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Saravana Kannan <saravanak@google.com>, kernel-team@android.com,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] iommu/exynos: Implement fault handling on SysMMU v7
-Date:   Tue, 26 Jul 2022 23:07:39 +0300
-Message-Id: <20220726200739.30017-3-semen.protsenko@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220726200739.30017-1-semen.protsenko@linaro.org>
-References: <20220726200739.30017-1-semen.protsenko@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-SysMMU v7 has a bit different registers for getting the fault info:
-  - there is one single register (MMU_FAULT_VA) to get the fault address
-  - fault access type (R/W) can be read from MMU_FAULT_TRANS_INFO
-    register now
-  - interrupt status register has different bits w.r.t. previous SysMMU
-    versions
-  - VM and non-VM layouts have different register addresses
+As soon as a gpio is registered, it should be usable by a consumer. So,
+do all the initialization before registering the gpios. Without this
+change, a consumer can request a GPIO IRQ and have the gpio to IRQ
+mapping fail.
 
-Add correct fault handling implementation for SysMMU v7, according to
-all mentioned differences. Only VID #0 (default) is handled, as VM
-domains support is not implemented yet.
-
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Saravana Kannan <saravanak@google.com>
 ---
- drivers/iommu/exynos-iommu.c | 48 +++++++++++++++++++++++++++++++++---
- 1 file changed, 44 insertions(+), 4 deletions(-)
+ drivers/pinctrl/samsung/pinctrl-samsung.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-index 766d409e084a..ac47c796741b 100644
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -217,6 +217,13 @@ static const char * const sysmmu_v5_fault_names[] = {
- 	"SECURITY PROTECTION"
- };
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
+index 26d309d2516d..a302b38a63a8 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.c
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+@@ -1168,15 +1168,15 @@ static int samsung_pinctrl_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_put_banks;
  
-+static const char * const sysmmu_v7_fault_names[] = {
-+	"PTW",
-+	"PAGE",
-+	"ACCESS PROTECTION",
-+	"RESERVED"
-+};
+-	ret = samsung_gpiolib_register(pdev, drvdata);
+-	if (ret)
+-		goto err_unregister;
+-
+ 	if (ctrl->eint_gpio_init)
+ 		ctrl->eint_gpio_init(drvdata);
+ 	if (ctrl->eint_wkup_init)
+ 		ctrl->eint_wkup_init(drvdata);
+ 
++	ret = samsung_gpiolib_register(pdev, drvdata);
++	if (ret)
++		goto err_unregister;
 +
- /*
-  * This structure is attached to dev->iommu->priv of the master device
-  * on device add, contains a list of SYSMMU controllers defined by device tree,
-@@ -260,6 +267,8 @@ struct sysmmu_variant {
- 	u32 flush_end;		/* end address of range invalidation */
- 	u32 int_status;		/* interrupt status information */
- 	u32 int_clear;		/* clear the interrupt */
-+	u32 fault_va;		/* IOVA address that caused fault */
-+	u32 fault_info;		/* fault transaction info */
+ 	platform_set_drvdata(pdev, drvdata);
  
- 	int (*get_fault_info)(struct sysmmu_drvdata *data, unsigned int itype,
- 			      struct sysmmu_fault *fault);
-@@ -337,6 +346,19 @@ static int exynos_sysmmu_v5_get_fault_info(struct sysmmu_drvdata *data,
  	return 0;
- }
- 
-+static int exynos_sysmmu_v7_get_fault_info(struct sysmmu_drvdata *data,
-+					   unsigned int itype,
-+					   struct sysmmu_fault *fault)
-+{
-+	u32 info = readl(SYSMMU_REG(data, fault_info));
-+
-+	fault->addr = readl(SYSMMU_REG(data, fault_va));
-+	fault->name = sysmmu_v7_fault_names[itype % 4];
-+	fault->type = (info & BIT(20)) ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ;
-+
-+	return 0;
-+}
-+
- /* SysMMU v1..v3 */
- static const struct sysmmu_variant sysmmu_v1_variant = {
- 	.flush_all	= 0x0c,
-@@ -348,7 +370,7 @@ static const struct sysmmu_variant sysmmu_v1_variant = {
- 	.get_fault_info	= exynos_sysmmu_v1_get_fault_info,
- };
- 
--/* SysMMU v5 and v7 (non-VM capable) */
-+/* SysMMU v5 */
- static const struct sysmmu_variant sysmmu_v5_variant = {
- 	.pt_base	= 0x0c,
- 	.flush_all	= 0x10,
-@@ -362,7 +384,23 @@ static const struct sysmmu_variant sysmmu_v5_variant = {
- 	.get_fault_info	= exynos_sysmmu_v5_get_fault_info,
- };
- 
--/* SysMMU v7: VM capable register set */
-+/* SysMMU v7: non-VM capable register layout */
-+static const struct sysmmu_variant sysmmu_v7_variant = {
-+	.pt_base	= 0x0c,
-+	.flush_all	= 0x10,
-+	.flush_entry	= 0x14,
-+	.flush_range	= 0x18,
-+	.flush_start	= 0x20,
-+	.flush_end	= 0x24,
-+	.int_status	= 0x60,
-+	.int_clear	= 0x64,
-+	.fault_va	= 0x70,
-+	.fault_info	= 0x78,
-+
-+	.get_fault_info	= exynos_sysmmu_v7_get_fault_info,
-+};
-+
-+/* SysMMU v7: VM capable register layout */
- static const struct sysmmu_variant sysmmu_v7_vm_variant = {
- 	.pt_base	= 0x800c,
- 	.flush_all	= 0x8010,
-@@ -372,8 +410,10 @@ static const struct sysmmu_variant sysmmu_v7_vm_variant = {
- 	.flush_end	= 0x8024,
- 	.int_status	= 0x60,
- 	.int_clear	= 0x64,
-+	.fault_va	= 0x1000,
-+	.fault_info	= 0x1004,
- 
--	.get_fault_info	= exynos_sysmmu_v5_get_fault_info,
-+	.get_fault_info	= exynos_sysmmu_v7_get_fault_info,
- };
- 
- static struct exynos_iommu_domain *to_exynos_domain(struct iommu_domain *dom)
-@@ -496,7 +536,7 @@ static void __sysmmu_get_version(struct sysmmu_drvdata *data)
- 		if (data->has_vcr)
- 			data->variant = &sysmmu_v7_vm_variant;
- 		else
--			data->variant = &sysmmu_v5_variant;
-+			data->variant = &sysmmu_v7_variant;
- 	}
- 
- 	__sysmmu_disable_clocks(data);
 -- 
-2.30.2
+2.37.1.359.gd136c6c3e2-goog
 
