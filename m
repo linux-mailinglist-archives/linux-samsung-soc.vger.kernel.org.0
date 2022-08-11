@@ -2,107 +2,142 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E234D58E305
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 10 Aug 2022 00:17:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5CA858FB93
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 11 Aug 2022 13:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbiHIWQm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 9 Aug 2022 18:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38360 "EHLO
+        id S234648AbiHKLqW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 11 Aug 2022 07:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbiHIWPW (ORCPT
+        with ESMTP id S234066AbiHKLqV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 9 Aug 2022 18:15:22 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86DA426AE8
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  9 Aug 2022 15:15:16 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id i84so10759181ioa.6
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 09 Aug 2022 15:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=QTP95oQi+RYhXbI8sz4RyTZp0RSE4jP48cyyUmWbTiK1ItvOHbADVtjkGHK/8zFbqv
-         EIzUG3d4HgG5eAQxnVHuBpH33ycuIiNpMEXk8S0LHARhhQGb6AufQVVn/40aQfLvP77W
-         778oK7qnpGZXO0Q2aGCYT4Mad4FGDHlh1br3s7D4D+9Vr7gPQrhXDR8bwR1fyz6kQ1n2
-         /mI7/+oIm6xqfpBjeRephfywWnzvzUcqvvdKwYuFsxmTm/GRVEQb9jKfBsLPvHEPeyBR
-         SLk52BQ10Zm7GZ4Mv5gugSKJZhGFXVOipaGDVsAOq6ABLyMrmGMv+5RYTjL3cqduwO+M
-         O1Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=UoM7ubijf18CEi6wWLENwGVCdCU32m1SS31znptbzufYVVgQI3FIAzwdnrIf1IM105
-         fRuK44YNIHgrmc+Wk9KCjeKno/vibniccnFoLq8QmMssbtkeCFiXbz18SLUMHk7m7l6S
-         WjgQocTzk0nC/G7j4i1D/igJR9C91PrpkOmjLGoXucYxefr6v2pCp2uFdRblEbkC4oBU
-         DY3Ux5EldTNyUt6BbDpfNZDJwe1IdvgAzpJ7cZT8YLhTBrDymAJaqnC9n9+oCQ0SCofR
-         371edt6nmcmZh8xGh12UT6p0yNfdsrBoocAUbUg4cRvBBIgQzrE+Q7s9kG8BvinzvhAV
-         euMA==
-X-Gm-Message-State: ACgBeo2wyBhIZMALYoWqirS2aGFY4JIJ/TLMgT8L4sptqEtBI/6n9NYj
-        d/zBJ+Vv/CRV+iaQOo3Pr9y44jEfgWquAYv0up2ny8kLYUdpjg==
-X-Google-Smtp-Source: AA6agR7pJ6r7fhR2kV9XLe+oV3h+/ej1weqLnpTQS1YP5ule1vsDwGSNCnOW6LlEIY2xTapZFY+hu5KXPqSjTYpoaJM=
-X-Received: by 2002:a63:4642:0:b0:41b:d353:c5c7 with SMTP id
- v2-20020a634642000000b0041bd353c5c7mr20359415pgk.568.1660083303718; Tue, 09
- Aug 2022 15:15:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:6a10:e8a6:b0:2d4:fb1c:cc5e with HTTP; Tue, 9 Aug 2022
- 15:15:03 -0700 (PDT)
-Reply-To: wijh555@gmail.com
-From:   "Dr. Ali Moses" <alimoses07@gmail.com>
-Date:   Tue, 9 Aug 2022 15:15:03 -0700
-Message-ID: <CADWzZe65tcOX2+bMZfMLLauGpHEQ9Cdv814nLU=uQvKzDFrEVg@mail.gmail.com>
-Subject: Good Day,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:d30 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [alimoses07[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [wijh555[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [alimoses07[at]gmail.com]
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+        Thu, 11 Aug 2022 07:46:21 -0400
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D19661DB1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Aug 2022 04:46:19 -0700 (PDT)
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20220811114617epoutp0313c7bc3519757e1b01594b626c497c83~KR9F3SVk80199401994epoutp033
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 11 Aug 2022 11:46:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20220811114617epoutp0313c7bc3519757e1b01594b626c497c83~KR9F3SVk80199401994epoutp033
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1660218377;
+        bh=rB/gvBVWvLIu7HTWugyowvJ5OV0wFMrOhW9GykTAGio=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=kFS0oCoD1ksZ0slYKJntqgqjCc0D0elmzTRCs8PEKamLaGvWm5JbJxUVrPvZz/Ul1
+         uElMII5ghgsEPwxg0H0S1a8mdwWdfFiMRlPbScjOltm71Zq28xvCM7vZtRw5vutFxJ
+         oGSMvMha37n3AWpePQ+reA/dvSGqDSOPA4vUruPI=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas5p2.samsung.com (KnoxPortal) with ESMTP id
+        20220811114616epcas5p20e860f87a13af8c89701ec6adc6df663~KR9FGbST72919329193epcas5p25;
+        Thu, 11 Aug 2022 11:46:16 +0000 (GMT)
+Received: from epsmges5p2new.samsung.com (unknown [182.195.38.177]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4M3Q4Q6zByz4x9Pq; Thu, 11 Aug
+        2022 11:46:14 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        AD.E0.09494.60CE4F26; Thu, 11 Aug 2022 20:46:14 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+        20220811114614epcas5p29046e326acc8d13824479504e80a0d49~KR9Ch5Z822876028760epcas5p27;
+        Thu, 11 Aug 2022 11:46:14 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20220811114614epsmtrp21b83be63e967a1317ab7235713d4ab3b~KR9ChF2911552215522epsmtrp2a;
+        Thu, 11 Aug 2022 11:46:14 +0000 (GMT)
+X-AuditID: b6c32a4a-201ff70000012516-a8-62f4ec06ca77
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        7F.EF.08905.50CE4F26; Thu, 11 Aug 2022 20:46:13 +0900 (KST)
+Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
+        [107.109.115.6]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20220811114612epsmtip133ef77525e3f653d6a0b4fbbe5ff0d4b~KR9BFqO4C3069330693epsmtip1N;
+        Thu, 11 Aug 2022 11:46:12 +0000 (GMT)
+From:   Alim Akhtar <alim.akhtar@samsung.com>
+To:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc:     krzysztof.kozlowski+dt@linaro.org, avri.altman@wdc.com,
+        bvanassche@acm.org, martin.petersen@oracle.com,
+        chanho61.park@samsung.com, linux-samsung-soc@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Subject: [PATCH] scsi: ufs: host: ufs-exynos: staticize fsd_ufs_drvs
+Date:   Thu, 11 Aug 2022 17:05:50 +0530
+Message-Id: <20220811113550.31914-1-alim.akhtar@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDKsWRmVeSWpSXmKPExsWy7bCmhi7bmy9JBotuGlk8mLeNzeLlz6ts
+        FtM+/GS2uLxf26LvxUNmi02Pr7FaXN41h81ixvl9TBbd13ewWSw//o/Jgcvj8hVvjzvX9rB5
+        bF5S7/Hx6S0Wj74tqxg9Pm+S82g/0M0UwB6VbZORmpiSWqSQmpecn5KZl26r5B0c7xxvamZg
+        qGtoaWGupJCXmJtqq+TiE6DrlpkDdJySQlliTilQKCCxuFhJ386mKL+0JFUhI7+4xFYptSAl
+        p8CkQK84Mbe4NC9dLy+1xMrQwMDIFKgwITvj+7mNbAXrOSre9LSyNjB+YOti5OSQEDCReDPz
+        FVMXIxeHkMBuRokVXdcZIZxPjBKnHjyCcr4xSrz9spQFpmXN9sXsEIm9jBLXJu1mg3CamSQa
+        zlxgAqliE9CWuDt9C5gtIpAicXX/T7AlzAKXGSX2zbkOlhAWcJHYsvcA0A4ODhYBVYmWm6Ug
+        YV4BG4kH13qhtslLrN5wgBmkV0LgHLvEjyk9jBAJF4llk65C2cISr45vYYewpSQ+v9vLBjJT
+        QsBDYtEfKYhwhsTb5euhyu0lDlyZwwJSwiygKbF+lz5ImFmAT6L39xMmiE5eiY42IYhqVYnm
+        d1ehrpGWmNjdzQphe0js/QARFxKIldj5eTbLBEaZWQhDFzAyrmKUTC0ozk1PLTYtMMpLLYfH
+        TXJ+7iZGcDLT8trB+PDBB71DjEwcjIcYJTiYlUR4yxZ9ThLiTUmsrEotyo8vKs1JLT7EaAoM
+        pInMUqLJ+cB0mlcSb2hiaWBiZmZmYmlsZqgkzut1dVOSkEB6YklqdmpqQWoRTB8TB6dUA9Pa
+        kM/buzSElOVqliRuyNwVcXDLXv5Da/auf998wzHJWvYK8/7H734e+7Xrir5bxvVE9om83U9r
+        /5YKLdlzP2/OuilPD3H/2P+G5eCJc0m2V8wiGvp8JjzPrri0759eWnLC9Q4rh29mE686rmDP
+        iAqSK86UaBR+ef7ILhEWtrXpXAwJ8udeyj8wOhU6R3unXnbe31+v4u8te2+q5sG4ysvU0WHP
+        yc+WqudZmHftDVoxibfuld373c3h1oJs+Ze0pfyb7e/Z5L2oWS3W8jF78jmFYzGdPBoCMyv3
+        C/+6WH5smseTE73lLjbLflol3ZlsIT/lyKTLL82e1TM+futygu1s3J09JindjOuCb+d3Xdig
+        xFKckWioxVxUnAgAGWTPOe8DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCLMWRmVeSWpSXmKPExsWy7bCSnC7rmy9JBj9XWlg8mLeNzeLlz6ts
+        FtM+/GS2uLxf26LvxUNmi02Pr7FaXN41h81ixvl9TBbd13ewWSw//o/Jgcvj8hVvjzvX9rB5
+        bF5S7/Hx6S0Wj74tqxg9Pm+S82g/0M0UwB7FZZOSmpNZllqkb5fAlfH93Ea2gvUcFW96Wlkb
+        GD+wdTFyckgImEis2b6YvYuRi0NIYDejxO6WK8wQCWmJ6xsnsEPYwhIr/z2HKmpkkli+eT0T
+        SIJNQFvi7vQtQDYHh4hAmsS3kyogNcwCtxkl1n34BLZBWMBFYsveA4wgNSwCqhItN0tBwrwC
+        NhIPrvWyQMyXl1i94QDzBEaeBYwMqxglUwuKc9Nziw0LDPNSy/WKE3OLS/PS9ZLzczcxggNO
+        S3MH4/ZVH/QOMTJxMB5ilOBgVhLhLVv0OUmINyWxsiq1KD++qDQntfgQozQHi5I474Wuk/FC
+        AumJJanZqakFqUUwWSYOTqkGpiZ5g2Ut/ns2vG3K8rqmsfeooOwJRRVlsetvX6kdf3CwQ3/X
+        1QvTsy3fGCzmuOg9c5nwQwMGnwwXjz8zi+/+j7br628uZ14hvXiSkkdBo0TPYlkDYakIj+3/
+        /bgveXeefbW4mJ17lsmkvjC7G3ePbOM7nfZM3mUbn1bVtNLrhpWCJ5UuzV++p5RTiftBB+dU
+        38wF9ws/nt32c82023MVdh380HNER3ryYcapbb0dx6WeLWP1mbL7e0OLLnfEVbsGRk1LyyPH
+        3S9nOspsnm+VHlbR6WfzaVmo4fWMFa5ex434vYW4Pzs/e2NkeOrY1VnTywIZZki1PfrXeurw
+        5sx/hlM4lGvVNHef23hk3SPbY0osxRmJhlrMRcWJAFjAtuenAgAA
+X-CMS-MailID: 20220811114614epcas5p29046e326acc8d13824479504e80a0d49
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20220811114614epcas5p29046e326acc8d13824479504e80a0d49
+References: <CGME20220811114614epcas5p29046e326acc8d13824479504e80a0d49@epcas5p2.samsung.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+struct fsd_ufs_drvs is not used outside this file, so made it static.
+This fixes sparse warning:
+
+drivers/ufs/host/ufs-exynos.c:1721:28: sparse: sparse:
+symbol 'fsd_ufs_drvs' was not declared. Should it be static?
+
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 216f74e8059a ("scsi: ufs: host: ufs-exynos: Add support for FSD UFS HCI")
+Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+---
+ drivers/ufs/host/ufs-exynos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index eced97538082..6cef19118e07 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -1711,7 +1711,7 @@ static struct exynos_ufs_uic_attr fsd_uic_attr = {
+ 	.pa_dbg_option_suite		= 0x2E820183,
+ };
+ 
+-struct exynos_ufs_drv_data fsd_ufs_drvs = {
++static struct exynos_ufs_drv_data fsd_ufs_drvs = {
+ 	.uic_attr               = &fsd_uic_attr,
+ 	.quirks                 = UFSHCD_QUIRK_PRDT_BYTE_GRAN |
+ 				  UFSHCI_QUIRK_BROKEN_REQ_LIST_CLR |
 -- 
-Hello,
-We the Board Directors believe you are in good health, doing great and
-with the hope that this mail will meet you in good condition, We are
-privileged and delighted to reach you via email" And we are urgently
-waiting to hear from you. and again your number is not connecting.
+2.25.1
 
-My regards,
-Dr. Ali Moses..
-
-Sincerely,
-Prof. Chin Guang
