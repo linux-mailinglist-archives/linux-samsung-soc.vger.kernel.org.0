@@ -2,106 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CEA159B57F
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 21 Aug 2022 18:44:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7FDB59B99B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 Aug 2022 08:33:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230474AbiHUQny (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 21 Aug 2022 12:43:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57756 "EHLO
+        id S233178AbiHVGcT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 Aug 2022 02:32:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbiHUQnx (ORCPT
+        with ESMTP id S233103AbiHVGcO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 21 Aug 2022 12:43:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81ECD14009
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 21 Aug 2022 09:43:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 22CB1B80B94
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 21 Aug 2022 16:43:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DD0C433D6;
-        Sun, 21 Aug 2022 16:43:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661100229;
-        bh=WtlqS8ekb/Mvx6VAbI+TwumMMQt1oc7YbdmyEkIiH44=;
-        h=From:To:Cc:Subject:Date:From;
-        b=pJaxtuLEWhjv1PRUdfqLKqY7gv2cIWW+6VkwvFXHd+7ToCyzR/435P330iWvE3H+4
-         jKdCt9m4sGY2kWpQTzqKD5RAND/6ifnvt7H4NynFECs3nLx8xB78GosbkAYSz+yBLW
-         uDUXPPSxHM9eoy4TDkQooYu71JYmbxwBKURJfcEO8SCSOdALW24vmIkmsUNjTjtjN5
-         q53bxeyYxDgHqAXGZsfvM0RauAb8ZQAJUTH+diMt+R45AVHWdnXxkpBBQt5CePiSWF
-         WiY/kmGpMRFeLMPmG5LYms4/FvZ3uEulBKnC6AkAtNplhHx8u7WoSXEQOAcnHsZvA2
-         tJTx0lDpKXgTQ==
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     alsa-devel@alsa-project.org, linux-samsung-soc@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH] ASoC: samsung: Use iio_get_channel_type() accessor.
-Date:   Sun, 21 Aug 2022 17:09:14 +0100
-Message-Id: <20220821160914.2207116-1-jic23@kernel.org>
-X-Mailer: git-send-email 2.37.2
+        Mon, 22 Aug 2022 02:32:14 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C28E4286E8
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 21 Aug 2022 23:32:10 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id d16so6606604wrr.3
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 21 Aug 2022 23:32:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc;
+        bh=o31t8HDG7QptfeLJ+04Jkz8j9NFHlDWTE2XxPfy4mY4=;
+        b=FrYubPa5iRhzf+WrRPsmiY5vXh9yxeGqcT0p84Sdu/VMPFizo2ximY48tx9ylUHZED
+         mPTBYvFdQSWyQvZFeiwO+ZxRcjtLQByT4adG/DoNeZBMtMz8P1WBGCNUfwXOknCVageC
+         gOsO411NxXs0bFn/r4hWP6vZOvFFR4JKHsjmj17OEFnj3UyoPLJL3/F0BAPtvb3VrkKu
+         kt20y5+o7H2J6gAggdKUcj8w21Ihg/D6nYx+sWVa7eEOorpRHZwPseeMvJY9pUuIFhbk
+         K7EW0i+70qlXOgawP99bZ1X3czl9u7y6nzREE0Ep8RS/WLsefyESE2bvTvChiDPA3pa9
+         MIHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc;
+        bh=o31t8HDG7QptfeLJ+04Jkz8j9NFHlDWTE2XxPfy4mY4=;
+        b=SV2jx814hap+KOGgTo5+wEKC2tEuX2A3hV+7vr0T/15paRu5RouQqLgbm8Q6T/U/5O
+         Yqo5pPh5ucsYXD8536uHFRzHQl8dCFW1XTzWfMe5PZAb3Tq/pEHk27Nkz6glAIe84bv9
+         QdvwSK8ilr/L0kIKEUtjUjGHJzOscoIYf+MVoEfKuK/ZlHQ8LtTNBGROuktrQlYgAlqb
+         56qHYAVqwcPFNSa6tYKcdjDQzXp+HsM0QtgFKgTlj6v7gN/TKWua6cRK096YNJG7Jf3K
+         01/CyenaPBGiBBVkO6L7Bo1u6gflL26O3kv2QxCqsSBnwg+VBfh8BqABb358hHI4UsXK
+         MnBw==
+X-Gm-Message-State: ACgBeo2g9LkG6e3NroaAdNMz0NaAKD22Wf/zDAKMDtpfxZpc8AohCoFd
+        oMUukJUx0R1VipsPAL58U7g++a3CD1L2u1ng+s8=
+X-Google-Smtp-Source: AA6agR6NTSbaljBeT6nBHwpsZV+iFEjaf84R55z0GxoNRdmBRntcrfv1xOl7luJnB44WOhlEhx6CPLwQoMYUPfF5qd0=
+X-Received: by 2002:a5d:4ad2:0:b0:225:285e:3ec1 with SMTP id
+ y18-20020a5d4ad2000000b00225285e3ec1mr9924326wrs.24.1661149927923; Sun, 21
+ Aug 2022 23:32:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a5d:5444:0:0:0:0:0 with HTTP; Sun, 21 Aug 2022 23:32:07
+ -0700 (PDT)
+Reply-To: maddahabdwabbo@gmail.com
+From:   Abd-jaafari Maddah <sheishenalyeshmanbetovichu@gmail.com>
+Date:   Sun, 21 Aug 2022 23:32:07 -0700
+Message-ID: <CALX-7+0_G-U-D9doENGdbc90dSeV5o=VML+dqaJkbMJ9UiPshQ@mail.gmail.com>
+Subject: Why No Response Yet?
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-struct iio_chan_spec is meant to be opaque to IIO consumer drivers
-which should only use the interfaces in linux/iio/consumer.h.
-Use the provided accessor function to find get the type of the
-channel instead of directly reading it form the structure.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
----
- sound/soc/samsung/aries_wm8994.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/sound/soc/samsung/aries_wm8994.c b/sound/soc/samsung/aries_wm8994.c
-index e7d52d27132e..0fbbf3b02c09 100644
---- a/sound/soc/samsung/aries_wm8994.c
-+++ b/sound/soc/samsung/aries_wm8994.c
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0+
- #include <linux/extcon.h>
- #include <linux/iio/consumer.h>
--#include <linux/iio/iio.h>
- #include <linux/input-event-codes.h>
- #include <linux/mfd/wm8994/registers.h>
- #include <linux/module.h>
-@@ -543,6 +542,7 @@ static int aries_audio_probe(struct platform_device *pdev)
- 	struct aries_wm8994_data *priv;
- 	struct snd_soc_dai_link *dai_link;
- 	const struct of_device_id *match;
-+	enum iio_chan_type channel_type;
- 	int ret, i;
- 
- 	if (!np)
-@@ -594,7 +594,11 @@ static int aries_audio_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(priv->adc),
- 				     "Failed to get ADC channel");
- 
--	if (priv->adc->channel->type != IIO_VOLTAGE)
-+	ret = iio_get_channel_type(priv->adc, &channel_type);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get ADC channel type");
-+	if (channel_type != IIO_VOLTAGE)
- 		return -EINVAL;
- 
- 	priv->gpio_headset_key = devm_gpiod_get(dev, "headset-key",
 -- 
-2.37.2
-
+Dear,
+I had sent you a mail but i don't think you received it that's why am writing
+you again,it's important we discuss.
+Am waiting,
+Abd-Jafaari Maddah
