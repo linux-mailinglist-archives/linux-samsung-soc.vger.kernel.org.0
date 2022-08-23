@@ -2,134 +2,161 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 355B459D29F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Aug 2022 09:52:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D4FA59E621
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Aug 2022 17:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241295AbiHWHv2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Aug 2022 03:51:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33296 "EHLO
+        id S243605AbiHWPhJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Aug 2022 11:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241420AbiHWHvO (ORCPT
+        with ESMTP id S241442AbiHWPgk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Aug 2022 03:51:14 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE81E6566C
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Aug 2022 00:51:09 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20220823075106euoutp01181ae3a7de80b3699f9030d0d5408844~N6fLAYr_D1038810388euoutp01i
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Aug 2022 07:51:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20220823075106euoutp01181ae3a7de80b3699f9030d0d5408844~N6fLAYr_D1038810388euoutp01i
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1661241066;
-        bh=OdAUYDUE0RtxDQJxlta/lTLQKVFbvQ5IcKfejb7SxWc=;
-        h=Date:Subject:To:From:In-Reply-To:References:From;
-        b=YzmgmcreHTCQyHKzbK7wQcdrFDvjDpGnfAdLxrBybth93xVC13cEfcwL3nXZ9FbsZ
-         luZQ/FVXNGsnho4N++2uYNlnSzdyjlGF9TtsV1fmnx3v1z3ZbHzWo3/Cz6QW+LrlII
-         moB4MVkgjLPZQj4dR1wy2LEXAOSnqMBRpLoODUsw=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20220823075105eucas1p27cf58d12d4928050fc3bd26ebe977b56~N6fKaInLg0812408124eucas1p2R;
-        Tue, 23 Aug 2022 07:51:05 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 85.D8.07817.9E684036; Tue, 23
-        Aug 2022 08:51:05 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20220823075105eucas1p24f6502d7088ffeb65180723f4c7b246c~N6fKA_8PA0769807698eucas1p2l;
-        Tue, 23 Aug 2022 07:51:05 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20220823075105eusmtrp105eefa20678a3cf5dac665d1e9457bc8~N6fKAEZ9Y0366903669eusmtrp1w;
-        Tue, 23 Aug 2022 07:51:05 +0000 (GMT)
-X-AuditID: cbfec7f4-893ff70000011e89-0e-630486e9ec36
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 1A.34.10862.9E684036; Tue, 23
-        Aug 2022 08:51:05 +0100 (BST)
-Received: from [106.210.134.141] (unknown [106.210.134.141]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20220823075104eusmtip236de6fdbca44ee6174d98b378a9f9f27~N6fJaM3L92482924829eusmtip2A;
-        Tue, 23 Aug 2022 07:51:04 +0000 (GMT)
-Message-ID: <64f39fcd-9dfb-1c40-377c-034f5f043072@samsung.com>
-Date:   Tue, 23 Aug 2022 09:51:04 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0)
-        Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH] clk: samsung: MAINTAINERS: add Krzysztof Kozlowski
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
+        Tue, 23 Aug 2022 11:36:40 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22108BFE9E;
+        Tue, 23 Aug 2022 04:26:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id ECC83B81CE9;
+        Tue, 23 Aug 2022 11:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8A2C433C1;
+        Tue, 23 Aug 2022 11:25:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1661253932;
+        bh=RHJfmfbErHaYXPty7Vle5Iu9cuS5MQAgVtFca0ryUqk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eJYYTySjiuQgiWdmHsEUf3gaqYRsV1W/Z9PLIP8bbagZnqtvifScrNxoueFvwcm3T
+         Yk1364u/0oUQTr/Hkj+z2Aw8PNbHS1Jg8lcSrwW47OgtNGbdVbQrShTlaHi6QTbXbk
+         EoqAhS4GC2KAhNC5E53bP4fCo7p4uCcB1QQ/uwdU=
+Date:   Tue, 23 Aug 2022 13:25:27 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Tobias Klauser <tklauser@distanz.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Alexander Shiyan <shc_work@mail.ru>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pali Rohar <pali@kernel.org>,
+        Andreas Farber <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-From:   Sylwester Nawrocki <s.nawrocki@samsung.com>
-In-Reply-To: <20220823073154.359090-1-krzysztof.kozlowski@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsWy7djPc7ov21iSDZ4v0bJ4MG8bm8X1L89Z
-        Lfa+3spu8bHnHqvF5V1z2CxmnN/HZHHxlKvFv2sbWSxW7frD6MDp8f5GK7vHzll32T02repk
-        87hzbQ+bR9+WVYwenzfJBbBFcdmkpOZklqUW6dslcGW8bT7IWPCduWLe0pdMDYzTmbsYOTkk
-        BEwkHp1sZu1i5OIQEljBKPH7w34mCOcLo0T3mruMEM5nRomJC//AtXT0/GOHSCxnlFj5dT6U
-        85FRYv7xtUwgVbwCdhJ9b7+ygtgsAqoSF9d9YYSIC0qcnPmEBcQWFUiWePZ/MTuILSzgLnFr
-        QRNYPbOAuMStJ/PB7hARuMMk0fjwE1gDm4ChRO/RPrBBnAKuEq/b9rBBNMhLbH87B+q8FxwS
-        /euNIWwXiWMn7rJA2MISr45vYYewZSROT+6BitdLTJ5yhQ3C7mCU+LrXDMK2lpiw6QRQnANo
-        vqbE+l36EGFHiTML3zKBhCUE+CRuvBWEuIBPYtI2UJiChHklOtqEIKpVJH6vms4EYUtJdD/5
-        D7XUQ2LF7k9MExgVZyEFyiwkz89C8tcshBsWMLKsYhRPLS3OTU8tNspLLdcrTswtLs1L10vO
-        z93ECExPp/8d/7KDcfmrj3qHGJk4GA8xSnAwK4nwVl9kSBbiTUmsrEotyo8vKs1JLT7EKM3B
-        oiTOm5y5IVFIID2xJDU7NbUgtQgmy8TBKdXAxC2S6fW4kPdLksPq69zPVFy8Paf+CLJe4s3e
-        l60eblY+2Wd7CsM/vr3e7Z5m2/6JaRVe+mg09WbZrnLV1B3hfGJy8m92sOzZ+SZixgfXx/b3
-        WzZwlRyJkjxtPm1H2+3I1U+/Wf37WvTwquTlG+IbPWzfyV8JLt20m5NXUHPr3ScHV75/eM2s
-        RrV3e9G2GUI5De0vX1gfOx8/g+PmGyYm5eWfBEwVI7UUrLjnqN4MUZ2i/cOt65eRXf7i29t/
-        mdWbLgzUz3kn2/RKksE/N0/PPz91yoZdZ5ykVp3Yc19D3idWlHnqson9LlbzjM7/NPr6N1s9
-        UfjExMOXtLYtXqo5W+PVv0mBvrkT3jBqp8x6ocRSnJFoqMVcVJwIANv0p32+AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsVy+t/xe7ov21iSDU5f5rV4MG8bm8X1L89Z
-        Lfa+3spu8bHnHqvF5V1z2CxmnN/HZHHxlKvFv2sbWSxW7frD6MDp8f5GK7vHzll32T02repk
-        87hzbQ+bR9+WVYwenzfJBbBF6dkU5ZeWpCpk5BeX2CpFG1oY6RlaWugZmVjqGRqbx1oZmSrp
-        29mkpOZklqUW6dsl6GW8bT7IWPCduWLe0pdMDYzTmbsYOTkkBEwkOnr+sXcxcnEICSxllHi5
-        /RqQwwGUkJKY36IEUSMs8edaFxtEzXtGidnXN7GCJHgF7CT63n4Fs1kEVCUurvvCCBEXlDg5
-        8wkLiC0qkCyx4NBSMFtYwF3i1oImsHpmAXGJW0/mM4EMFRG4xyTx9eUtJogNMxglVmxaAHYe
-        m4ChRO/RPrCpnAKuEq/b9rCBXMcsoC6xfp4QxCB5ie1v5zBPYBSchWT3LCQ7ZiF0zELSsYCR
-        ZRWjSGppcW56brGRXnFibnFpXrpecn7uJkZg3G079nPLDsaVrz7qHWJk4mA8xCjBwawkwlt9
-        kSFZiDclsbIqtSg/vqg0J7X4EKMp0P8TmaVEk/OBkZ9XEm9oZmBqaGJmaWBqaWasJM7rWdCR
-        KCSQnliSmp2aWpBaBNPHxMEp1cC0bN/ZHNPYNjO90JSnLtf5V862bnx4oU3m8II5FtxXv8bZ
-        1X89mLyguyxiueRpzqSmY8m37MREcsOjF2sFnZVm+RuzwNLx7rXQYz4rp56QF0nZH2RWrFfr
-        tnJ2p71yxtxgt7zM4q7re9Kq5U5JtL75I1ph4My1Kf/Xv9V3Vp1ruO4h8+SksO95YVetGX6c
-        M3p6t1y70d3AcF+0VGCd8OSpmcqV8b8EKtTUO+8VZdinNcY+q45V3K90zp1zjsQu0eDlu2vW
-        a++fp3TW4seKzuOTj4j+apTLPBayYvEnrsgOOfWmQxESGxM/2s72ME3uUb8hmHvwzdHE9IuN
-        OlcLHfinLj73ad/LZZUWy+XZ9iuxFGckGmoxFxUnAgAtkIR/RAMAAA==
-X-CMS-MailID: 20220823075105eucas1p24f6502d7088ffeb65180723f4c7b246c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20220823073202eucas1p148f4ef93a8469ccfb5f4f2bdc7146555
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20220823073202eucas1p148f4ef93a8469ccfb5f4f2bdc7146555
-References: <CGME20220823073202eucas1p148f4ef93a8469ccfb5f4f2bdc7146555@eucas1p1.samsung.com>
-        <20220823073154.359090-1-krzysztof.kozlowski@linaro.org>
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh@kernel.org>,
+        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
+        kevin hilman <khilman@kernel.org>,
+        ulf hansson <ulf.hansson@linaro.org>,
+        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
+        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
+        andrew lunn <andrew@lunn.ch>,
+        heiner kallweit <hkallweit1@gmail.com>,
+        eric dumazet <edumazet@google.com>,
+        jakub kicinski <kuba@kernel.org>,
+        paolo abeni <pabeni@redhat.com>,
+        linus walleij <linus.walleij@linaro.org>,
+        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
+        david ahern <dsahern@kernel.org>, kernel-team@android.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        sparclinux@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] Fix console probe delay when stdout-path isn't set
+Message-ID: <YwS5J3effuHQJRZ5@kroah.com>
+References: <20220701012647.2007122-1-saravanak@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220701012647.2007122-1-saravanak@google.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 23.08.2022 09:31, Krzysztof Kozlowski wrote:
-> Add Krzysztof Kozlowski (already Samsung SoC maintainer) as Samsung SoC
-> clock maintainer to handle the patches.
+On Thu, Jun 30, 2022 at 06:26:38PM -0700, Saravana Kannan wrote:
+> These patches are on top of driver-core-next.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Agreed with Sylwester who is recently busy. Let me handle some patches
-> as I already handle rest of Samsung SoC.
-> 
-> I plan to send pulls the same way Sylwester did - to Stephen.
+> Even if stdout-path isn't set in DT, this patch should take console
+> probe times back to how they were before the deferred_probe_timeout
+> clean up series[1].
 
-Acked-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Now dropped from my queue due to lack of a response to other reviewer's
+questions.
 
+thanks,
+
+greg k-h
