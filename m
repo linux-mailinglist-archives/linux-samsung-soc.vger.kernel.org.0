@@ -2,87 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A3CD59E5AB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Aug 2022 17:09:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5019D59E69E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 23 Aug 2022 18:09:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242254AbiHWPHQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 23 Aug 2022 11:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
+        id S242759AbiHWQJB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 23 Aug 2022 12:09:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242257AbiHWPHB (ORCPT
+        with ESMTP id S235189AbiHWQIh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 23 Aug 2022 11:07:01 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AACE329919
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Aug 2022 05:34:54 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id u24so7789703lji.0
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 23 Aug 2022 05:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=LKZ/vD9wmefmxQhO5lusEK9ST+HwNC5+PjaBESEeuys=;
-        b=PNuO0zhUMklVqPdf6qtK0nfdumM0D/Hwz68Et5tlv2nG5/gv32viakxB828FJTpumU
-         Aae/Z+CSJylb7YeQo5ZpvXQLQBvTL5ZPweD7ZtbTxAwnasS5Mjj8P1Z3SY0UI8zJkw6E
-         alks5XAmeD2iTCBoE+pPEEV74Rs4QYHRof2L+p43UKmz1BjeU4zLhfgW3mbRp3khtQhN
-         y7P1p799H1Gew4TPx3MUn/Kpx1RKjY1Nj8yfVOi35Zx7TxglHceo+qf52K6WbRm1eNuY
-         o9FQw7e/FUccFk62vxZdki1FO9wlC6zf35I9uEhvfKpCfvJWuyzrkbB3pzdBve80yQSq
-         Kbhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=LKZ/vD9wmefmxQhO5lusEK9ST+HwNC5+PjaBESEeuys=;
-        b=R15ZQJQpBVcsssOrx8gZVKZ8fm2JDH6dXkcW/9b3i+hysq10I8wLyUuDAjH+qGCBiL
-         KUn9t/qfon1qeGkpXlkX8S949KNq1D2lhfUmrl8VBRgjIuMPkvYhanmTH1D55tIB7ky4
-         I3lxO8mXDGvyueUtxr7QJiVcBlT81lnaxuhSloP1PaBivoe8xyqONCrR2x6e7tgaFwh9
-         AVvuG0U5IA+5u7EQxZ0HGF4JI15jwykAkZ/WyuIGK+0cVeUbXH2S6h6Yt3zDwQlBqzVw
-         OczMQCCfw1FteuW4rxXoW0/QoOlZy++eMldL+6OooklGrwTgsAh7QxkK7oJa2akA+aLT
-         msJg==
-X-Gm-Message-State: ACgBeo1HZgeEqbTh0kenpirlBTbGgEKVNbFP/zh1gIzYtlwysarnEzoU
-        Nu5kpjV2nimNv1JDjGvgFpRQAw==
-X-Google-Smtp-Source: AA6agR4JmXTLU+9iQlgcfuYvL+JDv7qCLq/Y3gaBjTKTmiOhXuKPPQ+hEuE+Fzp0Ch1sp1ZHonydVg==
-X-Received: by 2002:a05:651c:905:b0:25e:67a8:4dd0 with SMTP id e5-20020a05651c090500b0025e67a84dd0mr7700929ljq.232.1661258092397;
-        Tue, 23 Aug 2022 05:34:52 -0700 (PDT)
-Received: from [192.168.0.11] (89-27-92-210.bb.dnainternet.fi. [89.27.92.210])
-        by smtp.gmail.com with ESMTPSA id b10-20020a19670a000000b0048a9e899693sm2492704lfc.16.2022.08.23.05.34.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 05:34:49 -0700 (PDT)
-Message-ID: <577fc85b-3bdc-35a1-c54b-fbc37774b34b@linaro.org>
-Date:   Tue, 23 Aug 2022 15:34:48 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] drm/exynos: fix repeated words in comments
-Content-Language: en-US
-To:     Jilin Yuan <yuanjilin@cdjrlc.com>, airlied@linux.ie,
-        daniel@ffwll.ch
+        Tue, 23 Aug 2022 12:08:37 -0400
+Received: from bg5.exmail.qq.com (bg4.exmail.qq.com [43.155.67.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88FC83058C8;
+        Tue, 23 Aug 2022 05:22:02 -0700 (PDT)
+X-QQ-mid: bizesmtp82t1661257285tvampdxi
+Received: from localhost.localdomain ( [182.148.14.124])
+        by bizesmtp.qq.com (ESMTP) with 
+        id ; Tue, 23 Aug 2022 20:21:24 +0800 (CST)
+X-QQ-SSF: 01000000002000C0D000B00A0000000
+X-QQ-FEAT: DQ0OCu3gog0eXFOOnpCwfQFj8W5pO1yvcYnu2yB4JEjFW0CpTRtb4p4mtINdw
+        eRzERUAFTv7UB3UEcfhSh8ivr++4kI62EdT5P/cX8N4V/JkcroxZ1CsX7Pnkn6Ccg37ptx8
+        Hy4aPKYuzmsHKM8g8tgGXvIriP3C1G8k3Idny93DtEOEG+ILZyHtmEBONjr4RnQIU8pyP1N
+        Ab7bAvQXWhDt1Hly1zA0rOnDL6eSSDGCSI/13naVFjDdk6cWUJIz74T8v50J1JInJAd4u3h
+        llYvT/ALwXZNDazh6y4I2cPFe7vVlY0yQrF/lGcDEawn4QJ0gshvjhO2xxHBeIpO98uqqAC
+        bHsZlAAdE44FZ4NvSZpvdWx1VNSDucE8YOkZlCv6MYp+YpGr1DkQilj4TAmMTU/MWnyrcbT
+X-QQ-GoodBg: 0
+From:   Jilin Yuan <yuanjilin@cdjrlc.com>
+To:     airlied@linux.ie, daniel@ffwll.ch, krzysztof.kozlowski@linaro.org
 Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220823122117.15757-1-yuanjilin@cdjrlc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220823122117.15757-1-yuanjilin@cdjrlc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jilin Yuan <yuanjilin@cdjrlc.com>
+Subject: [PATCH] drm/exynos: fix repeated words in comments
+Date:   Tue, 23 Aug 2022 20:21:17 +0800
+Message-Id: <20220823122117.15757-1-yuanjilin@cdjrlc.com>
+X-Mailer: git-send-email 2.36.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: bizesmtp:cdjrlc.com:qybglogicsvr:qybglogicsvr4
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 23/08/2022 15:21, Jilin Yuan wrote:
->  Delete the redundant word 'next'.
-> 
+ Delete the redundant word 'next'.
 
-Use scripts/get_maintainers.pl to CC all maintainers and relevant
-mailing lists.
+Signed-off-by: Jilin Yuan <yuanjilin@cdjrlc.com>
+---
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+index 471fd6c8135f..4f9edca66632 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+@@ -1195,7 +1195,7 @@ int exynos_g2d_set_cmdlist_ioctl(struct drm_device *drm_dev, void *data,
+ 	 * If don't clear SFR registers, the cmdlist is affected by register
+ 	 * values of previous cmdlist. G2D hw executes SFR clear command and
+ 	 * a next command at the same time then the next command is ignored and
+-	 * is executed rightly from next next command, so needs a dummy command
++	 * is executed rightly from next command, so needs a dummy command
+ 	 * to next command of SFR clear command.
+ 	 */
+ 	cmdlist->data[cmdlist->last++] = G2D_SOFT_RESET;
+-- 
+2.36.1
+
