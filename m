@@ -2,126 +2,59 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD3A65A08F7
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Aug 2022 08:40:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CF255A09FC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Aug 2022 09:21:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235442AbiHYGkj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 25 Aug 2022 02:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49000 "EHLO
+        id S234869AbiHYHVU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 25 Aug 2022 03:21:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235252AbiHYGkh (ORCPT
+        with ESMTP id S233519AbiHYHVU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 25 Aug 2022 02:40:37 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043BF7656
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Aug 2022 23:40:34 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id z20so18497765ljq.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Aug 2022 23:40:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Hxs/x32k0wl5TtEJWin9IF/OZYyYHuwn2WA9sVkAPH4=;
-        b=ggHLVlPzMVeo5o60HoxiBTPeE4b7XvUvw7wCzxVRNSSxvZrDzA0vum3fttHKJZb1fR
-         ST8lBPut9MqchJJeAk+l32ls+cCSMyClhfXUvVYMKIEhPoNwHBoIrhjkvVDI2hc/QbDh
-         pgjS3TRKKqt46IeSOS3sTeECjqy8EEbXyu7dFuu5GTwYGmOMnU7ROusgefK8z35FK/e4
-         0i7ICMCPQxxrz3krhI1mirSmSzgAmZGdmZM6HYzcNk4VNzZvSWefNz2tttcalQl43l/V
-         lqnW25YgvOxlavOf3rM4vrivoTNbdMcBJLeQRPCXEiwVKsJ3WVtb88F7aCzDu2UXWzKs
-         F5/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Hxs/x32k0wl5TtEJWin9IF/OZYyYHuwn2WA9sVkAPH4=;
-        b=75rAdpa/gyMPoVlNxZsxTbizv+fKmi4c/tpWFgtbLGJQCayEtik2tOibGjeuUsLG9E
-         j4IvrY9ms+f8cm+LDfm3WibtxvM3jtcmM2Z/QrGs7l5aB+LIMrGysugrlVRo6QQmB4uQ
-         CblJkhih3akHXV4EkjQ2CT8bKI+3iWUF6TfTyajvecBE3V0qP1ofRh4dnc1E3zatEDr7
-         MdU1DscAErp1Cti1Vvp8AYjYbmF9AzH7x1SLQwk/4qqjgi1E/VNkP+v3MWfGeMu+RAyL
-         yffitUcmTHWsS9i83Fq6dNmqIfCs3wAuD31PRFZxyIEGiZxcrgJ2gC9bB4zy8Tb19w0k
-         wy+Q==
-X-Gm-Message-State: ACgBeo3QcWrn+w6mxYJOUvxEX8Ibg7NCse2HJcaiLq5naPGevf0u0F7C
-        tvPHN91UFdb/J8Zx/8R9s4uX5Q==
-X-Google-Smtp-Source: AA6agR4sp9L/aoyZrx2uYhRDhFUfFvBZsJbtMUKU/6yfJBjXbHfPdGvgpeQbd0c1lWSvZ8iGu6FKYQ==
-X-Received: by 2002:a05:651c:b2c:b0:261:d82f:75b8 with SMTP id b44-20020a05651c0b2c00b00261d82f75b8mr601195ljr.266.1661409632356;
-        Wed, 24 Aug 2022 23:40:32 -0700 (PDT)
-Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
-        by smtp.gmail.com with ESMTPSA id m6-20020a056512114600b00492d7a7b4e3sm339246lfg.4.2022.08.24.23.40.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Aug 2022 23:40:31 -0700 (PDT)
-Message-ID: <e5239fb9-07fd-3263-76a8-afb2f89b7d7e@linaro.org>
-Date:   Thu, 25 Aug 2022 09:40:30 +0300
+        Thu, 25 Aug 2022 03:21:20 -0400
+Received: from pmu4.uberaba.mg.gov.br (unknown [201.62.58.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C1B8498D14;
+        Thu, 25 Aug 2022 00:21:16 -0700 (PDT)
+Received: by pmu4.uberaba.mg.gov.br (Postfix, from userid 48)
+        id 8EAB7E80C06; Thu, 25 Aug 2022 03:47:42 -0300 (-03)
+To:     undisclosed-recipients:;
+Subject: Urgent Reply Immediately
+X-PHP-Originating-Script: 48:rcube.php
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] ARM: configs: replace CONFIG_NO_HZ=y with
- CONFIG_NO_HZ_IDLE=y
-Content-Language: en-US
-To:     Stefan Hansson <newbie13xd@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Taichi Sugaya <sugaya.taichi@socionext.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org
-References: <20220822161018.16101-1-newbie13xd@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220822161018.16101-1-newbie13xd@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Date:   Thu, 25 Aug 2022 12:17:21 +0530
+From:   "@Alice" <info_alicewalton@uberaba.mg.gov.br>
+Reply-To: alice011walton@outlook.co.th
+Mail-Reply-To: alice011walton@outlook.co.th
+Message-ID: <963be179dc13d7f622a1d503bd30f24c@uberaba.mg.gov.br>
+X-Sender: info_alicewalton@uberaba.mg.gov.br
+User-Agent: Roundcube Webmail/1.0.2
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=ADVANCE_FEE_4_NEW,BAYES_50,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_MONEY,URG_BIZ autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5059]
+        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
+        *      [201.62.58.19 listed in wl.mailspike.net]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.6 URG_BIZ Contains urgent matter
+        *  2.2 ADVANCE_FEE_4_NEW Appears to be advance fee fraud (Nigerian
+        *      419)
+        *  2.1 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 22/08/2022 19:10, Stefan Hansson wrote:
-> According to https://www.kernel.org/doc/html/latest/timers/no_hz.html,
-> CONFIG_NO_HZ=y should be replaced by CONFIG_NO_HZ_IDLE=y for newer
-> kernels, so let's reflect that in the 32-bit ARM defconfigs.
-> 
 
-Thanks for the patch. You did not send it to ARM SoC maintainers and
-their Patchwork mailbox, so I don't think it will be picked up. Please
-resend with proper Cc list to ARM AND ARM64 SoC SUB-ARCHITECTURES
-(COMMON PARTS)
 
-Best regards,
-Krzysztof
+-- 
+I'm Mrs Alice Walton, I have an important issue to discuss
+with you, for details. Revert to My Private
+email: alice011walton@outlook.co.th
