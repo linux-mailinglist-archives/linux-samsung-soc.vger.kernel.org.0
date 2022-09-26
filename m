@@ -2,151 +2,115 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08DCF5E97D6
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 26 Sep 2022 04:07:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A645EA431
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 26 Sep 2022 13:41:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232938AbiIZCHd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 25 Sep 2022 22:07:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33968 "EHLO
+        id S238318AbiIZLlq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 26 Sep 2022 07:41:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbiIZCHb (ORCPT
+        with ESMTP id S238315AbiIZLlH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 25 Sep 2022 22:07:31 -0400
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E90FC275DA
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 25 Sep 2022 19:07:28 -0700 (PDT)
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20220926020726epoutp03fcfad6a053aacf80df7e0b24e3243999~YRu0dNjBr0353603536epoutp03i
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 26 Sep 2022 02:07:26 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20220926020726epoutp03fcfad6a053aacf80df7e0b24e3243999~YRu0dNjBr0353603536epoutp03i
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1664158046;
-        bh=Mpg7/mwmu0u6sTXfXsAp22NnBHYNU7QE+pyJNfOWwgA=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=chDxqVEix78NG4sTOfQLQhg/6TK1rjDYX9DpkGGQes23ZahUL0dDJErpXNiSWStCb
-         FO/+D+Rmr+Ky1+neeOCWlGrTsqEWHlT+xe54kYr09nsZF9lz94NG/xXlgcxv5wPOnI
-         fgFLxc2I0P/vUSX4jxQpOEUk3a/U82CkZQrTo8yU=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20220926020726epcas1p25325023c5392e3a8cf4708e01ec1da79~YRu0OZFoL1800118001epcas1p2g;
-        Mon, 26 Sep 2022 02:07:26 +0000 (GMT)
-Received: from epsmges1p4.samsung.com (unknown [182.195.36.136]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4MbR3J6CTZz4x9Q9; Mon, 26 Sep
-        2022 02:07:24 +0000 (GMT)
-Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
-        epsmges1p4.samsung.com (Symantec Messaging Gateway) with SMTP id
-        46.2E.07691.B5901336; Mon, 26 Sep 2022 11:07:23 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20220926020723epcas1p29e968d4d47ae3b95211c219fcd045d02~YRuxc9QJ41838818388epcas1p2H;
-        Mon, 26 Sep 2022 02:07:23 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220926020723epsmtrp2d5f11098fe15e0994e4410a84e0c342b~YRuxcIiqq2290722907epsmtrp2G;
-        Mon, 26 Sep 2022 02:07:23 +0000 (GMT)
-X-AuditID: b6c32a38-0cdff70000021e0b-42-6331095b2442
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        B4.47.14392.B5901336; Mon, 26 Sep 2022 11:07:23 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.113.221.211]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20220926020723epsmtip2e3a17d1cc687976c3ebc4ebeb5bb6543~YRuxRY_o70998709987epsmtip2T;
-        Mon, 26 Sep 2022 02:07:23 +0000 (GMT)
-From:   Inki Dae <inki.dae@samsung.com>
-To:     airlied@linux.ie, daniel@ffwll.ch
-Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org
-Subject: [GIT PULL] exynos-drm-next
-Date:   Mon, 26 Sep 2022 11:07:23 +0900
-Message-Id: <20220926020723.270065-1-inki.dae@samsung.com>
-X-Mailer: git-send-email 2.25.1
+        Mon, 26 Sep 2022 07:41:07 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F3C6E2F0
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 26 Sep 2022 03:45:25 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id o2so10115678lfc.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 26 Sep 2022 03:45:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=rNWG4JRe++162NhDsfBIYQjTSKMyRVIRJUKX50ptAGY=;
+        b=apxdxC/SZwYOVZdXn24zNBfDFMi7EsEuSmVWj/G5E7GAKkNZyQyX/ID4c6HnZkHbEo
+         gVMD4bQFbeOrQzgMFGXt6eu5MdTVjYOiSSK3WpdMOafWWegTCyoqHnLWdZoGsGIyhy3k
+         iLFE1mtY8NVMrsD6yL0AKE0H8fz4x5egsl7ImWlfltr1xExX2ugkok9daCAdEp1QVZCx
+         RxOIL3VKv3EttfaNcX9i+6zAP8GaBP2BX9PjdQz+mZcSyK9cbMbVeRUgFOGLGd5rD+ei
+         YEcX0uNahfhoa/VxgdTxGNAt//86dEk0bX3m5temSnsyOz5wgR7zNsnGVteXqUuJ1no+
+         V0Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=rNWG4JRe++162NhDsfBIYQjTSKMyRVIRJUKX50ptAGY=;
+        b=wr6aoijVmLg1ONJRpb6e0qO0olUMXaUMICOwKJB1apQoKM/XekW4tTmZTgGnPgVCz7
+         /SZrHuiidCDjOkErDNbBX4ByRonCj06ntraxbtPVf2RSdq2OkA1YauyEiLW2K0qjBuOc
+         lW44CRPiJDSFoiG/sjU2bpGYw5IzAf4SJ3tq0h+wzyk3Nlsmh5KAYx84OEeFNobUoXTm
+         bOxElMqg+LV+iBLP2o2wv4TOWuCLdMGsuvAfU0OJCM2MmxmUCJj52xyXw1/ktlSytJd6
+         gOXNyraXWUR/vI64SaUkZaiW4GerTcWwlZ/ur0Gg4/AxpOkluusv2w8Eljj9cSvP6g8m
+         XD9Q==
+X-Gm-Message-State: ACrzQf0wBVUZAknwlCc1+FIHGJ6Imi9BQZzguFTKbs9wiX8nvww2J5em
+        IdwDuUb4upGWOzLcP3TkH+esQA==
+X-Google-Smtp-Source: AMsMyM7CTPcD1Iie9wuX6WkBzCWvvWDCPmmDKnQ42CjusRkxdgW8d+lPCLtPFyFHH5xQbvrQRr7TgQ==
+X-Received: by 2002:a19:4f01:0:b0:49c:94fc:1848 with SMTP id d1-20020a194f01000000b0049c94fc1848mr8103685lfb.415.1664189046445;
+        Mon, 26 Sep 2022 03:44:06 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id y1-20020a05651c020100b0026c423959desm2313408ljn.25.2022.09.26.03.44.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 03:44:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Kukjin Kim <kgene.kim@samsung.com>,
+        Tomasz Figa <t.figa@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
+        arm@kernel.org, soc@kernel.org
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH PULL 1/2] ARM: dts: exynos: correct s5k6a3 reset polarity on Midas family
+Date:   Mon, 26 Sep 2022 12:43:53 +0200
+Message-Id: <20220926104354.118578-2-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220926104354.118578-1-krzysztof.kozlowski@linaro.org>
+References: <20220926104354.118578-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrLKsWRmVeSWpSXmKPExsWy7bCmnm40p2GywdJ7yha9504yWfzfNpHZ
-        4srX92wWM87vY3Jg8dj7bQGLx/ZvD1g97ncfZ/L4vEkugCUq2yYjNTEltUghNS85PyUzL91W
-        yTs43jne1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMHaKWSQlliTilQKCCxuFhJ386mKL+0JFUh
-        I7+4xFYptSAlp8C0QK84Mbe4NC9dLy+1xMrQwMDIFKgwITvjwYZbbAWLuSuezljJ3MB4hrOL
-        kZNDQsBE4uOHBrYuRi4OIYEdjBLPXv9jhXA+MUocaWpkhHC+MUp8aFrCAtMy89IBFojEXkaJ
-        xhnPoKq+MEqcvf2LEaSKTUBVYuKK+2wgtgiQ/XbSY2YQm1nATeLP0rNgk4QFlCV2X9/HCmKz
-        ANV8fbOKqYuRg4NXwEriy2dLiGXyQMu+s4PYvAKCEidnPmGBGCMv0bx1NjPIXgmBTewSX798
-        ZYJocJE4s+g5M4QtLPHq+BZ2CFtK4vO7vWwQDZMZJe5cX8EC4cxglDj88zojRJWxxP6lk8Gu
-        YBbQlFi/Sx8irCix8/dcRojNfBLvvvawgpRICPBKdLQJQZQoSRy7eANqioTEhSUT2SBsD4mV
-        U+aB3SAkECuxbepklgmM8rOQ/DMLyT+zEBYvYGRexSiWWlCcm55abFhgAo/W5PzcTYzgdKdl
-        sYNx7tsPeocYmTgYDzFKcDArifCmXNRNFuJNSaysSi3Kjy8qzUktPsRoCgzgicxSosn5wISb
-        VxJvaGJpYGJmZGxiYWhmqCTO2zBDK1lIID2xJDU7NbUgtQimj4mDU6qBaUZ6mNTdPH7llAPa
-        2Q2MZzUeT9rgsrksd96VhNsHr8YujP5dO0eqzlfv4IziaH/hJWt7tqi99XouZhq1R71u0hcn
-        nqTA3ERPxoqd/3dFdXjxO2e945obt7W87tEqLhU+Wy/j9K4zJ0r4l3vZnZruuu2d1L+9aSXB
-        sqnpbYuuPw9x3nopaIpw2qqLEru3tXeVZAp1uGhEiKT9+vhoSr21RIyBYP+JGbGnjulwPxWo
-        cnkZzcUmsoOjpWXrDcZ9T5SC+lcsuP9L5UphrPDlA8zuHRXe14veNZrEL928vk5XlZ+Z821U
-        7V9vcyGdHU8PXPq8Y/4lh7BCc1nmcxP23t1bG1Rr6XntjHROwNcduxcosRRnJBpqMRcVJwIA
-        /Rc6OAAEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBLMWRmVeSWpSXmKPExsWy7bCSvG40p2GyweI9PBa9504yWfzfNpHZ
-        4srX92wWM87vY3Jg8dj7bQGLx/ZvD1g97ncfZ/L4vEkugCWKyyYlNSezLLVI3y6BK+PBhlts
-        BYu5K57OWMncwHiGs4uRk0NCwERi5qUDLF2MXBxCArsZJWZ+mMHWxcgBlJCQ2LKVA8IUljh8
-        uBii5BOjxM8XU9lBetkEVCUmrrjPBmKLCKhLPLi8kBHEZhbwkHi/ZzVYjbCAssTu6/tYQWwW
-        oPqvb1YxgczkFbCS+PLZEuIEeaATvoOV8woISpyc+YQFYoy8RPPW2cwTGPlmIUnNQpJawMi0
-        ilEytaA4Nz232LDAMC+1XK84Mbe4NC9dLzk/dxMjOPC0NHcwbl/1Qe8QIxMH4yFGCQ5mJRHe
-        lIu6yUK8KYmVValF+fFFpTmpxYcYpTlYlMR5L3SdjBcSSE8sSc1OTS1ILYLJMnFwSjUwiUmk
-        vltyM0binIdb6eVzVRymVUHrF0lUr1fftmRxi53w9IVmjRF/PXNm6RZvmO/pxR6+IzPvy0vZ
-        vbeddrzcY3pIaMncl+f8n39IvbE1dY26SOP7rcHK7IwzFEzvbd46e4fUMRejtrZJAcVrV+oG
-        V97v64tnlglteHL6S9bS6pela+UO83N6c14+YvP3bAHD28vP5z2IS5i24/WWybmurtkrGAP3
-        T9Gd+dz4pcOS4iUdyVM9zRRXCj5Yoa1kbLUrvqwnfe15k8ees6UVDs93+Tzb79PfpqgHvqZP
-        VBt1yuyPxAlNsql3zXKVMuzUPcJQtu1BvlLvT67kZsFVgvn94ubP9mbKrGaauGnmi47FSizF
-        GYmGWsxFxYkAFWDBE6sCAAA=
-X-CMS-MailID: 20220926020723epcas1p29e968d4d47ae3b95211c219fcd045d02
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220926020723epcas1p29e968d4d47ae3b95211c219fcd045d02
-References: <CGME20220926020723epcas1p29e968d4d47ae3b95211c219fcd045d02@epcas1p2.samsung.com>
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Dave and Daniel,
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-   Sorry for late. Just one cleanup and fixup which corrects return type.
+According to s5k6a3 driver code, the reset line for the chip appears to
+be active low. This also matches the typical polarity of reset lines in
+general. Let's fix it up as having correct polarity in DTS is important
+when the driver will be switched over to gpiod API.
 
-Please kindly let me know if there is any problem.
+Fixes: b4fec64758ab ("ARM: dts: Add camera device nodes for Exynos4412 TRATS2 board")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220913164104.203957-1-dmitry.torokhov@gmail.com
+---
+ arch/arm/boot/dts/exynos4412-midas.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Inki Dae
+diff --git a/arch/arm/boot/dts/exynos4412-midas.dtsi b/arch/arm/boot/dts/exynos4412-midas.dtsi
+index b967397a46c5..8e1c19a8ad06 100644
+--- a/arch/arm/boot/dts/exynos4412-midas.dtsi
++++ b/arch/arm/boot/dts/exynos4412-midas.dtsi
+@@ -586,7 +586,7 @@ image-sensor@10 {
+ 		clocks = <&camera 1>;
+ 		clock-names = "extclk";
+ 		samsung,camclk-out = <1>;
+-		gpios = <&gpm1 6 GPIO_ACTIVE_HIGH>;
++		gpios = <&gpm1 6 GPIO_ACTIVE_LOW>;
+ 
+ 		port {
+ 			is_s5k6a3_ep: endpoint {
+-- 
+2.34.1
 
-The following changes since commit 320305923c88258ce50c75bf721e9bf2e420ab27:
-
-  Merge tag 'du-next-20220907' of git://linuxtv.org/pinchartl/media into drm-next (2022-09-23 03:52:08 +1000)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos tags/exynos-drm-next-for-v6.1
-
-for you to fetch changes up to 1261255531088208daeca818e2b486030b5339e5:
-
-  drm/exynos: Fix return type for mixer_mode_valid and hdmi_mode_valid (2022-09-26 10:13:00 +0900)
-
-----------------------------------------------------------------
-Cleanup
-- Use drm_display_info.is_hdmi instead of drm_detect_hdmi_monitor()
-  for efficiency.
-Fixup
-- Correct return type of mixer_mode_valid and hdmi_mode_valid functions.
-  This was reported by Dan Carpenter, https://github.com/ClangBuiltLinux/linux/issues/1703
-
-----------------------------------------------------------------
-Nathan Huckleberry (1):
-      drm/exynos: Fix return type for mixer_mode_valid and hdmi_mode_valid
-
-hongao (1):
-      drm/exynos: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-
- drivers/gpu/drm/exynos/exynos_hdmi.c  | 6 +++---
- drivers/gpu/drm/exynos/exynos_mixer.c | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
