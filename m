@@ -2,118 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B72175EA89B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 26 Sep 2022 16:38:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48F055EA9C1
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 26 Sep 2022 17:10:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234602AbiIZOit (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 26 Sep 2022 10:38:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60552 "EHLO
+        id S235663AbiIZPJ5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 26 Sep 2022 11:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234779AbiIZOiZ (ORCPT
+        with ESMTP id S235661AbiIZPJY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 26 Sep 2022 10:38:25 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC666C127
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 26 Sep 2022 05:58:34 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id x29so7369088ljq.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 26 Sep 2022 05:58:34 -0700 (PDT)
+        Mon, 26 Sep 2022 11:09:24 -0400
+Received: from smtp2.axis.com (smtp2.axis.com [195.60.68.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077A752FD2;
+        Mon, 26 Sep 2022 06:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=w6V4EDGBi7bc0hFey/MeSVbaztlhpHUML/SAzePq6Ps=;
-        b=s3T/OeCEjWcCz7Xde265NAXhd7T92aAzYkDD+yKiPpScRmSd7Z4y2P82OY2M8nHASJ
-         vQ8AcpgWf6saxJ3NSt/KnIRozgerqP2P2jqVxa7KEecSIF9bIIQwcbuJoGIeQmHfvCnx
-         NvexNjf7ezbHy/MylH1N15/injexr/BCIZOt4fethBLaTvM/H+kqm6p9F/feqNUaxHMc
-         IdiIi7dRkww+j0Cf7tswoUT+dDQCzF9FVv+54eqMsYYAvF+Wwpq3wJOwrl1ntA0Vzmv0
-         +dkSHUrqakgRkAN46UrUm8HEI4MAjypOFH4wTZPHqUZyN/ewgxhbZU5nKs3yyR+HPzuI
-         Jf+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=w6V4EDGBi7bc0hFey/MeSVbaztlhpHUML/SAzePq6Ps=;
-        b=8H4hjSJ1VyWWebkktjhUDRfl6zE0R7UQaXJM94UmDMnPAZ26ya1z2Sy86Z8pSoax29
-         Yg+yyHS1a1qS+Vzlv0vj3qDAkzaWWBOAQerBpLSzdolphlCPiW2eJ+alEbt9ZD/IPZPE
-         qgPlQBgdTNt3w0O1qWD7qL80S4MC43y6dXDLlHoKOokkTi1uFTmHe9Yu65sn76V53QEA
-         +sqD5Jhn5RUp7lj354fMtFcOohtW0QmivG4HDhholuQovgpqOw3Ar1R+1Fsm6ItoBFWp
-         TCcPVuItiah0xCeNTZ5hbDCerJR7WioqyiTI0W5mfaqd+aRwTZI+L3lG0Zj5OY8pj8zk
-         RZ9w==
-X-Gm-Message-State: ACrzQf1kAWBV2HRvFr3YEBQnT1kN6MGqbNMnjexTC4g0LutHziIKRSPm
-        taWdqNZAQGlNJDU5fniUR4ZmfQ==
-X-Google-Smtp-Source: AMsMyM4LA+tL4Jz/ex7fkTi1ACk8iXZOpCcJWqZscXaQxyNRSe9Ac633TD2N2XyvQSlagF944m2FUg==
-X-Received: by 2002:a2e:be24:0:b0:26d:9942:dfe with SMTP id z36-20020a2ebe24000000b0026d99420dfemr1721034ljq.16.1664197112498;
-        Mon, 26 Sep 2022 05:58:32 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q2-20020a19a402000000b00492d7a7b4e3sm2528790lfc.4.2022.09.26.05.58.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 05:58:27 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: s5pv210: correct double "pins" in pinmux node
-Date:   Mon, 26 Sep 2022 14:58:24 +0200
-Message-Id: <20220926125824.477920-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+  d=axis.com; q=dns/txt; s=axis-central1; t=1664199754;
+  x=1695735754;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=z+SSPGyOZfEIh3tj+j1JJaoE55e3O7nhgeSNDbNps14=;
+  b=OkdZNGA2/oB1hw2MdbaGHBmbpfLQMfiUyrWEN4GbzXnDCVfbYgghoL6X
+   fN9wpT4eKK3LmY5vOFj+foCdwRkG9EXnNc6aBbP4Zyt47R1bnjP2lVqnV
+   XN1qJpEubpjoVDrQuydluXzANv65pEMwaNQ/E3HT4CHlTmuQhv9ETgtDz
+   QgmU86p8sU9WqXz7mBidoGxAtaNk/FLtNSRxrOCHoLjlwFx07gKfo7zem
+   D8+PQnbxRYTT293XcLU+UGxu5tT3SvpTewy9SGUm+KFtNujDczHAOcpeN
+   Qq9rKFjFDF26iHxmZEdEpDKd1EZP50bSWq5nWxKdKSHKP7N/IeBLEU1fO
+   w==;
+Date:   Mon, 26 Sep 2022 15:42:30 +0200
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     Mark Brown <broonie@kernel.org>
+CC:     <krzysztof.kozlowski@linaro.org>, <andi@etezian.org>,
+        <kernel@axis.com>, <alim.akhtar@samsung.com>,
+        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH 4/4] spi: s3c64xx: Fix large transfers with DMA
+Message-ID: <YzGsRkyf9tyvjvBy@axis.com>
+References: <20220916113951.228398-1-vincent.whitchurch@axis.com>
+ <20220916113951.228398-5-vincent.whitchurch@axis.com>
+ <Yyh+5ZWXel9SHuWi@sirena.org.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Yyh+5ZWXel9SHuWi@sirena.org.uk>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Drop second "pins" suffix from pin configuration/mux nodes.
+On Mon, Sep 19, 2022 at 03:38:29PM +0100, Mark Brown wrote:
+> On Fri, Sep 16, 2022 at 01:39:51PM +0200, Vincent Whitchurch wrote:
+> > The COUNT_VALUE in the PACKET_CNT register is 16-bit so the maximum
+> > value is 65535.  Asking the driver to transfer a larger size currently
+> > leads to the DMA transfer timing out.  Fix this by splitting the
+> > transfer as needed.
+> 
+> The driver should just set max_transfer_size and let the core
+> handle this.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/s5pv210-aries.dtsi  | 4 ++--
- arch/arm/boot/dts/s5pv210-galaxys.dts | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/s5pv210-aries.dtsi b/arch/arm/boot/dts/s5pv210-aries.dtsi
-index 5541df4df628..964c5fe51755 100644
---- a/arch/arm/boot/dts/s5pv210-aries.dtsi
-+++ b/arch/arm/boot/dts/s5pv210-aries.dtsi
-@@ -738,7 +738,7 @@ wifi_wake: wifi-wake-pins {
- 		samsung,pin-pud = <S5PV210_PIN_PULL_NONE>;
- 	};
- 
--	magnetometer_i2c_pins: yas529-i2c-pins-pins {
-+	magnetometer_i2c_pins: yas529-i2c-pins {
- 		samsung,pins = "gpj0-0", "gpj0-1";
- 		samsung,pin-pud = <S5PV210_PIN_PULL_NONE>;
- 		samsung,pin-drv = <S5PV210_PIN_DRV_LV1>;
-@@ -788,7 +788,7 @@ accel_i2c_pins: accel-i2c-pins {
- 		samsung,pin-drv = <S5PV210_PIN_DRV_LV1>;
- 	};
- 
--	pmic_i2c_pins: pmic-i2c-pins-pins {
-+	pmic_i2c_pins: pmic-i2c-pins {
- 		samsung,pins = "gpj4-0", "gpj4-3";
- 		samsung,pin-pud = <S5PV210_PIN_PULL_NONE>;
- 		samsung,pin-drv = <S5PV210_PIN_DRV_LV1>;
-diff --git a/arch/arm/boot/dts/s5pv210-galaxys.dts b/arch/arm/boot/dts/s5pv210-galaxys.dts
-index cdd3653d487f..532d3f5bceb1 100644
---- a/arch/arm/boot/dts/s5pv210-galaxys.dts
-+++ b/arch/arm/boot/dts/s5pv210-galaxys.dts
-@@ -150,7 +150,7 @@ &pinctrl0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sleep_cfg>;
- 
--	fm_i2c_pins: fm-i2c-pins-pins {
-+	fm_i2c_pins: fm-i2c-pins {
- 		samsung,pins = "gpd1-2", "gpd1-3";
- 		samsung,pin-pud = <S5PV210_PIN_PULL_NONE>;
- 		samsung,pin-drv = <S5PV210_PIN_DRV_LV1>;
--- 
-2.34.1
-
+Hmm, AFAICS, the core doesn't actually do anything with
+max_transfer_size?  It's only used from spi-mem and a handful of other
+clients via spi_max_transfer_size().
