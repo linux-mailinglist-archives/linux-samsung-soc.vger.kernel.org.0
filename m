@@ -2,245 +2,305 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 995425F2C0A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Oct 2022 10:38:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EFE25F2D27
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Oct 2022 11:27:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231367AbiJCIiY (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Oct 2022 04:38:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33420 "EHLO
+        id S231440AbiJCJ1A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Oct 2022 05:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231393AbiJCIiA (ORCPT
+        with ESMTP id S231196AbiJCJ0l (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Oct 2022 04:38:00 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0CC51415
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Oct 2022 01:11:26 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20221003075318euoutp01dafdb1f5efd0d4d2280169ecd27a14bf~af9y1b1gj0780007800euoutp01D
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Oct 2022 07:53:18 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20221003075318euoutp01dafdb1f5efd0d4d2280169ecd27a14bf~af9y1b1gj0780007800euoutp01D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1664783598;
-        bh=I/he9TmsAKMs+6KcXTY2tzeyBeXnKW9nIUFsNc5f4X0=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=K/pIdqEyEQQf0AhhhrNMvwita9oXJwVZltB2JvH/gafymffmBotdwBd82MVCJMWyo
-         MZeou4P6U0CTrKsEVKc+EBVIfnjJDpvGPpl90t0r2PjV7lUbpqvcUQFUg3uD2fDTZq
-         5zN+7avcSs4E1yqRKqLjEyIMZ6EqzjfdPfy1uE3E=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20221003075317eucas1p262b3f662139f35a34244e5b462bf152e~af9yI6joZ1623616236eucas1p2H;
-        Mon,  3 Oct 2022 07:53:17 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 98.9C.29727.DE49A336; Mon,  3
-        Oct 2022 08:53:17 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20221003075316eucas1p16e76fab0c0b48f4e717e10f53c996c29~af9xkq3JB2315323153eucas1p1r;
-        Mon,  3 Oct 2022 07:53:16 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20221003075316eusmtrp124fef559090e6ab334c752a69128399e~af9xjlcDW1927519275eusmtrp1Y;
-        Mon,  3 Oct 2022 07:53:16 +0000 (GMT)
-X-AuditID: cbfec7f2-205ff7000001741f-36-633a94ed49a7
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id C4.75.10862.CE49A336; Mon,  3
-        Oct 2022 08:53:16 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20221003075315eusmtip27de4f93995bf64fe67f3f8561f29ca91~af9wd7Pt21067510675eusmtip27;
-        Mon,  3 Oct 2022 07:53:15 +0000 (GMT)
-Message-ID: <8ace62ee-14fa-2536-7750-47d102269c17@samsung.com>
-Date:   Mon, 3 Oct 2022 09:53:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0)
-        Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [PATCH v5 06/11] drm: bridge: samsung-dsim: Add atomic_check
-Content-Language: en-US
-To:     Jagan Teki <jagan@amarulasolutions.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Fancy Fang <chen.fang@nxp.com>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
-        Adam Ford <aford173@gmail.com>,
-        Neil Armstrong <narmstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
-        Marek Vasut <marex@denx.de>
-Cc:     Matteo Lisi <matteo.lisi@engicam.com>,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
+        Mon, 3 Oct 2022 05:26:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30AC3EA7F
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Oct 2022 02:26:27 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id iv17so6614049wmb.4
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Oct 2022 02:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Y0YHAX3IJBqRSh8IZpETtoKcuFjw3ABnoFNc1724Vds=;
+        b=GjfNsTOxmJdj45+RKYb1TM0lEdBnuZxA6sW1PEl18hHm79qpCIjEgq/G0mKrtdWD8z
+         ZROtTIsL1eq8tr4SGVQvMltIuGmC3RAfHyz1PKadg9cvvfifsSiNOURFQkuvwqZ/tkw3
+         Y7lre3wkrP9eUfv6luXTaySBGXzE4CdAZ5S3y0E64Xgc+O+yulO1IfI/Tore+n/O5VUX
+         CsV8Yq3BcPStkrjjvpWKolh+6hBP+9DpTCVSpNWnKYDsVgVOeJAOGi317NLcYVjuNInj
+         9bolsynJTJkSYJR0gq54lwySDgUs0DCrk3iZeZrU5vDil158EV3D4O3l3mQnCNgGcG2L
+         Adig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Y0YHAX3IJBqRSh8IZpETtoKcuFjw3ABnoFNc1724Vds=;
+        b=QahzppNgdYbaXQ9TT5vDtmDNWWMsxVhOoNPm1+3WWrki9BfXCMj+WDeo9r/9q5unda
+         JsC9mbFUQTVFnYgUHmV+XBKA0czkkevySYxJ6D2SnrgaOgi1mBA4FCRuGo+VzqEF+dul
+         N0VFakM6M6LhLBq0N1ZAbln/rMK2gL3sF4+lcT7dGBR7lKXP2l8odJAcCiIAdpuKYa5D
+         lItzwEq71qUyp6HAUVoasmTP3QZFB0JKRROjGj/RmyKWMNYZ9z62w7afq7Qf/V6o8v2V
+         HsMPzC+3EWs0SaYaph9GHR9ASun3va2qVJ9c2Ved2cDfbbjPcLI0jGlyrxbzD3yDxBAH
+         8+fA==
+X-Gm-Message-State: ACrzQf2gr2wij/GyYSNmDb0MZbGiwT2+mqWmhAeZ2dyE9uvvCZ+MwcIl
+        gdQgz42b3CgEIgK54SUh69mlRg==
+X-Google-Smtp-Source: AMsMyM7LcedHRSysrolU97GwYTo+lD5iowjy2A36yZBNhF5GXYg86rK+G5ZyetvmXN1buwMkh0GYvw==
+X-Received: by 2002:a05:600c:3845:b0:3b4:b187:3d09 with SMTP id s5-20020a05600c384500b003b4b1873d09mr6206257wmr.96.1664789173820;
+        Mon, 03 Oct 2022 02:26:13 -0700 (PDT)
+Received: from mai.. ([2a05:6e02:1041:c10:f3a:9f5e:1605:a75a])
+        by smtp.gmail.com with ESMTPSA id ay3-20020a5d6f03000000b0022cc157bf26sm9707520wrb.85.2022.10.03.02.26.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Oct 2022 02:26:13 -0700 (PDT)
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     daniel.lezcano@linaro.org, rafael@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        rui.zhang@intel.com, Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
-        linux-amarula <linux-amarula@amarulasolutions.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20220916181731.89764-7-jagan@amarulasolutions.com>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01SfUxTVxz19n20dCt5lK+bjgE2zjmXoWzM3I3ZadDwtmToEpdt/jHWlCeg
-        fKUFhzrH16bQFSwUIz75SkCBEgQLs8wxooilWgVLFJdS6YDKRgUnH46VLjraNzf+O+f8zrnn
-        d2+uABOfIiWC1IxsRpkhT5OSQvyiyT34xmzlu4rNy9YQZB+1YMjRsICjh6PNJLrz5A8SlZ4d
-        JFCFQ4ujRYOWRL+PWXF0q3CGj0rKG/moSdtLIsPkCIHUyy0Yqhrq5aGZYwUAWSbaMXSj4Dsc
-        DVdeJdE8O74y1U2TyGqex9CS5xa2LYRum3MQdC1rxulKcz9BD2ruk/SP7H0+fab4NEE39Ezz
-        6P67DQRtH+khacf3Azy6szGPvvCom0eXdekBvWAI3+2/V/heEpOWepBRbpJ9KUwxDlv4WZPh
-        ubZ7D4h88DdUAz8BpGKgbrIDVwOhQEw1A/iYrSA4sghg23gL6XWJqQUAT8z4PU80qk/8a2oC
-        cMn2LY8jcwCap574EiJKBsfrS4EX49Q6OOkw4ZweAK+fdvpwMKWAbvVlnz+Q+gC2OO2EF2NU
-        KLQ563yHBlFtBCw7pyG9BPM2aP4ax7wukoqG6lm1L+1HbYOu9psYl46AxtlqzBuAVJkQ6koL
-        MW7xHXDIbsU5HAhdA118DodBi06Dc4HjANZ7HDyOaAHM/80GOFcstA8ur9QJVipeg+2XNnHy
-        dnjzfBfulSHlD3+ZDeCW8IcVF09hnCyCxcfEnHs9ZAfO/1d75fYwpgVSdtXDsKsegF11Hfb/
-        3nqA60Eok6NKT2ZU0RnMV1EqeboqJyM5SpGZbgArf9fydGC+G9S45qL6AE8A+gAUYNIgUeXa
-        dxRiUZL80GFGmZmozEljVH3gJQEuDRWRVRsVYipZns0cYJgsRvl8yhP4SfJ5WabW6S+a6jQ/
-        3S7Z9Wfn6/w1l48eWpJgi0FAVhgcse6R3lV9svwSm+tI2BDz0dYh3QPFnq9VEvf7HcUhrREj
-        6odVpvgjNY8bRIbANc9uJL9aEhtg3H9wZ7CqLnCXQttd7o440GtM0P9KJo6W127e0RpWdLTo
-        RUli/zf8Japn4pN924l43dXjYpP1ZCRIjHOnTTyTnhu7+3O4fio+6k3bXmeNecqMeUpq4voj
-        5T+4a9mwF/JbP9/3dmb608WP97Nxd7QXpM7DRvJDT1zep6lHUrZsyL53zRWZfV0jkhm3bskM
-        uZIEcjuzYi3NBUWmsT0xO8+81bPek8CTXavOI17ueOWzOimuSpFHb8SUKvk/xeIGhioEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsVy+t/xe7pvplglG3zaqGNx5/ZpZov7iz+z
-        WLy+vYLN4srX92wWvUvPsVpMuj+BxeLLpglsFi/uXWSxONv0ht2ic+ISdovlE/axWWx6fI3V
-        ouvXSmaLGef3MVm8aWtktDj9aD2zxanGVhaLS1MOs1l8mvUQKDv5JZvFxROfmC2+/z7L7CDm
-        sfbjfVaPebNOsHhMOXGE1eNcz102j52z7rJ7zO6YyeqxeM9LJo8jVxezety5tofN4373cSaP
-        zUvqPTa+28Hk0bdlFaPH501yAXxRejZF+aUlqQoZ+cUltkrRhhZGeoaWFnpGJpZ6hsbmsVZG
-        pkr6djYpqTmZZalF+nYJehnbL51mL3gsV3Hr+lPWBsY/El2MnBwSAiYSS7r6WbsYuTiEBJYy
-        Svyee5YdIiEjcXJaAyuELSzx51oXG0TRe0aJbRM2MIMkeAXsJB4u6GUEsVkEVCQe3z/GAhEX
-        lDg58wmYLSqQLPHyz0SwocICnhIrn9wBG8osIC5x68l8JpChIgKbWSX2vpsA5jALfGSUuDR5
-        CzvEupOMEufurAJrZxMwlOh6C3IHJwengIPEq/VnmCFGmUl0be1ihLDlJba/ncM8gVFoFpJL
-        ZiHZOAtJyywkLQsYWVYxiqSWFuem5xYb6RUn5haX5qXrJefnbmIEJpptx35u2cG48tVHvUOM
-        TByMhxglOJiVRHinKFomC/GmJFZWpRblxxeV5qQWH2I0BQbHRGYp0eR8YKrLK4k3NDMwNTQx
-        szQwtTQzVhLn9SzoSBQSSE8sSc1OTS1ILYLpY+LglGpgynTbrybboNOyS/K8pvAXFfW5f29L
-        rlUPUHt1erp/TROH1+p7WQURZjG+E1vKxZXOh09P9+Q/O7FrR4Ky9P/5hV7Fy/tYn+Wc7Jiz
-        u1D8stsXgT1Tgq6rmzBfnKMy54T1n/WH3ayrq0+FFUq/9T8tOevchhj2d8l98irFjy7eXj4x
-        f7t117ne7A8LllatEn3Ycj55+ZqYjztXH15nvGfWz4NTnsS0qHY+P/tf1feNXVDTJR72aROt
-        nqwssUpYsvD+9lpZrZhm1y36y5P+y8mtdYw8k/z5kct2uT0rPb9u9gh4fvL2i39rxHcbMmRw
-        hHQsz1npUiHR3B//e0my4+kpk4+52K3aVz3JNyhbnLXaQ4mlOCPRUIu5qDgRAEczlAq9AwAA
-X-CMS-MailID: 20221003075316eucas1p16e76fab0c0b48f4e717e10f53c996c29
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20220916181908eucas1p1651aa83d7dc30d68c9e24dda0ef4157b
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20220916181908eucas1p1651aa83d7dc30d68c9e24dda0ef4157b
-References: <20220916181731.89764-1-jagan@amarulasolutions.com>
-        <CGME20220916181908eucas1p1651aa83d7dc30d68c9e24dda0ef4157b@eucas1p1.samsung.com>
-        <20220916181731.89764-7-jagan@amarulasolutions.com>
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org
+Subject: [PATCH v8 00/29] Rework the trip points creation
+Date:   Mon,  3 Oct 2022 11:25:33 +0200
+Message-Id: <20221003092602.1323944-1-daniel.lezcano@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Jagan,
+This work is the pre-requisite of handling correctly when the trip
+point are crossed. For that we need to rework how the trip points are
+declared and assigned to a thermal zone.
 
-On 16.09.2022 20:17, Jagan Teki wrote:
-> Look like an explicit fixing up of mode_flags is required for DSIM IP
-> present in i.MX8M Mini/Nano SoCs.
->
-> At least the LCDIF + DSIM needs active low sync polarities in order
-> to correlate the correct sync flags of the surrounding components in
-> the chain to make sure the whole pipeline can work properly.
->
-> On the other hand the i.MX 8M Mini Applications Processor Reference Manual,
-> Rev. 3, 11/2020 says.
-> "13.6.3.5.2 RGB interface
->   Vsync, Hsync, and VDEN are active high signals."
->
-> No clear evidence about whether it can be documentation issues or
-> something, so added a comment FIXME for this and updated the active low
-> sync polarities using SAMSUNG_DSIM_TYPE_IMX8MM hw_type.
->
-> v5:
-> * rebase based new bridge changes [mszyprow]
-> * remove DSIM_QUIRK_FIXUP_SYNC_POL
-> * add hw_type check for sync polarities change.
->
-> v4:
-> * none
->
-> v3:
-> * add DSIM_QUIRK_FIXUP_SYNC_POL to handle mode_flasg fixup
->
-> v2:
-> * none
->
-> v1:
-> * fix mode flags in atomic_check instead of mode_fixup
->
-> Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
-> ---
->   drivers/gpu/drm/bridge/samsung-dsim.c | 26 ++++++++++++++++++++++++++
->   include/drm/bridge/samsung-dsim.h     |  1 +
->   2 files changed, 27 insertions(+)
->
-> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-> index 6d524338d4ff..8abf89326424 100644
-> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
-> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-> @@ -1315,6 +1315,31 @@ static void samsung_dsim_atomic_post_disable(struct drm_bridge *bridge,
->   	pm_runtime_put_sync(dsi->dev);
->   }
->   
-> +static int samsung_dsim_atomic_check(struct drm_bridge *bridge,
-> +				     struct drm_bridge_state *bridge_state,
-> +				     struct drm_crtc_state *crtc_state,
-> +				     struct drm_connector_state *conn_state)
-> +{
-> +	struct samsung_dsim *dsi = bridge_to_dsi(bridge);
-> +	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-> +
-> +	if (dsi->plat_data->hw_type & SAMSUNG_DSIM_TYPE_IMX8MM) {
+Even if it appears to be a common sense to have the trip points being
+ordered, this no guarantee neither documentation telling that is the
+case.
 
-Again the above should be 'if (dsi->plat_data->hw_type == 
-SAMSUNG_DSIM_TYPE_IMX8MM)', hw_type is not a bitmask.
+One solution could have been to create an ordered array of trips built
+when registering the thermal zone by calling the different get_trip*
+ops. However those ops receive a thermal zone pointer which is not
+known as it is in the process of creating it.
 
+This cyclic dependency shows we have to rework how we manage the trip
+points.
 
-> +		/**
-> +		 * FIXME:
-> +		 * At least LCDIF + DSIM needs active low sync,
-> +		 * but i.MX 8M Mini Applications Processor Reference Manual,
-> +		 * Rev. 3, 11/2020 says
-> +		 *
-> +		 * 13.6.3.5.2 RGB interface
-> +		 * Vsync, Hsync, and VDEN are active high signals.
-> +		 */
-> +		adjusted_mode->flags |= (DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-> +		adjusted_mode->flags &= ~(DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static void samsung_dsim_mode_set(struct drm_bridge *bridge,
->   				  const struct drm_display_mode *mode,
->   				  const struct drm_display_mode *adjusted_mode)
-> @@ -1337,6 +1362,7 @@ static const struct drm_bridge_funcs samsung_dsim_bridge_funcs = {
->   	.atomic_duplicate_state		= drm_atomic_helper_bridge_duplicate_state,
->   	.atomic_destroy_state		= drm_atomic_helper_bridge_destroy_state,
->   	.atomic_reset			= drm_atomic_helper_bridge_reset,
-> +	.atomic_check			= samsung_dsim_atomic_check,
->   	.atomic_pre_enable		= samsung_dsim_atomic_pre_enable,
->   	.atomic_enable			= samsung_dsim_atomic_enable,
->   	.atomic_disable			= samsung_dsim_atomic_disable,
-> diff --git a/include/drm/bridge/samsung-dsim.h b/include/drm/bridge/samsung-dsim.h
-> index 57b27d75369e..0c5a905f3de7 100644
-> --- a/include/drm/bridge/samsung-dsim.h
-> +++ b/include/drm/bridge/samsung-dsim.h
-> @@ -27,6 +27,7 @@ enum samsung_dsim_type {
->   	SAMSUNG_DSIM_TYPE_EXYNOS5410,
->   	SAMSUNG_DSIM_TYPE_EXYNOS5422,
->   	SAMSUNG_DSIM_TYPE_EXYNOS5433,
-> +	SAMSUNG_DSIM_TYPE_IMX8MM,
->   	SAMSUNG_DSIM_TYPE_COUNT,
->   };
->   
+Actually, all the trip points definition can be common to the backend
+sensor drivers and we can factor out the thermal trip structure in all
+of them.
 
-Best regards
+Then, as we register the thermal trips array, they will be available
+in the thermal zone structure and a core function can return the trip
+given its id.
+
+The get_trip_* ops won't be needed anymore and could be removed. The
+resulting code will be another step forward to a self encapsulated
+generic thermal framework.
+
+Most of the drivers can be converted more or less easily. This series
+does a first round with most of the drivers. Some remain and will be
+converted but with a smaller set of changes as the conversion is a bit
+more complex.
+
+Changelog:
+ v8:
+    - Pretty oneline change and parenthesis removal (Rafael)
+    - Collected tags
+ v7:
+    - Added missing return 0 in the x86_pkg_temp driver
+ v6:
+    - Improved the code for the get_crit_temp() function as suggested by Rafael
+    - Removed inner parenthesis in the set_trip_temp() function and invert the
+      conditions. Check the type of the trip point is unchanged
+    - Folded patch 4 with 1
+    - Add per thermal zone info message in the bang-bang governor
+    - Folded the fix for an uninitialized variable in int340x_thermal_zone_add()
+ v5:
+    - Fixed a deadlock when calling thermal_zone_get_trip() while
+      handling the thermal zone lock
+    - Remove an extra line in the sysfs change
+    - Collected tags
+v4:
+   - Remove extra lines on exynos changes as reported by Krzysztof Kozlowski
+   - Collected tags
+ v3:
+   - Reorg the series to be git-bisect safe
+   - Added the set_trip generic function
+   - Added the get_crit_temp generic function
+   - Removed more dead code in the thermal-of
+   - Fixed the exynos changelog
+   - Fixed the error check for the exynos drivers
+   - Collected tags
+ v2:
+   - Added missing EXPORT_SYMBOL_GPL() for thermal_zone_get_trip()
+   - Removed tab whitespace in the acerhdf driver
+   - Collected tags
+
+Cc: Raju Rangoju <rajur@chelsio.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Peter Kaestle <peter@piie.net>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Mark Gross <markgross@kernel.org>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Nicolas Saenz Julienne <nsaenz@kernel.org>
+Cc: Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Ray Jui <rjui@broadcom.com>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Support Opensource <support.opensource@diasemi.com>
+Cc: Lukasz Luba <lukasz.luba@arm.com>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: "Niklas Söderlund" <niklas.soderlund@ragnatech.se>
+Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Eduardo Valentin <edubezval@gmail.com>
+Cc: Keerthy <j-keerthy@ti.com>
+Cc: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Antoine Tenart <atenart@kernel.org>
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: Dmitry Osipenko <digetx@gmail.com>
+Cc: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: platform-driver-x86@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Cc: linux-rpi-kernel@lists.infradead.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-renesas-soc@vger.kernel.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-tegra@vger.kernel.org
+Cc: linux-omap@vger.kernel.org
+
+Daniel Lezcano (29):
+  thermal/core: Add a generic thermal_zone_get_trip() function
+  thermal/sysfs: Always expose hysteresis attributes
+  thermal/core: Add a generic thermal_zone_set_trip() function
+  thermal/core/governors: Use thermal_zone_get_trip() instead of ops
+    functions
+  thermal/of: Use generic thermal_zone_get_trip() function
+  thermal/of: Remove unused functions
+  thermal/drivers/exynos: Use generic thermal_zone_get_trip() function
+  thermal/drivers/exynos: of_thermal_get_ntrips()
+  thermal/drivers/exynos: Replace of_thermal_is_trip_valid() by
+    thermal_zone_get_trip()
+  thermal/drivers/tegra: Use generic thermal_zone_get_trip() function
+  thermal/drivers/uniphier: Use generic thermal_zone_get_trip() function
+  thermal/drivers/hisi: Use generic thermal_zone_get_trip() function
+  thermal/drivers/qcom: Use generic thermal_zone_get_trip() function
+  thermal/drivers/armada: Use generic thermal_zone_get_trip() function
+  thermal/drivers/rcar_gen3: Use the generic function to get the number
+    of trips
+  thermal/of: Remove of_thermal_get_ntrips()
+  thermal/of: Remove of_thermal_is_trip_valid()
+  thermal/of: Remove of_thermal_set_trip_hyst()
+  thermal/of: Remove of_thermal_get_crit_temp()
+  thermal/drivers/st: Use generic trip points
+  thermal/drivers/imx: Use generic thermal_zone_get_trip() function
+  thermal/drivers/rcar: Use generic thermal_zone_get_trip() function
+  thermal/drivers/broadcom: Use generic thermal_zone_get_trip() function
+  thermal/drivers/da9062: Use generic thermal_zone_get_trip() function
+  thermal/drivers/ti: Remove unused macros ti_thermal_get_trip_value() /
+    ti_thermal_trip_is_valid()
+  thermal/drivers/acerhdf: Use generic thermal_zone_get_trip() function
+  thermal/drivers/cxgb4: Use generic thermal_zone_get_trip() function
+  thermal/intel/int340x: Replace parameter to simplify
+  thermal/drivers/intel: Use generic thermal_zone_get_trip() function
+
+ drivers/net/ethernet/chelsio/cxgb4/cxgb4.h    |   2 -
+ .../ethernet/chelsio/cxgb4/cxgb4_thermal.c    |  41 +----
+ drivers/platform/x86/acerhdf.c                |  73 +++-----
+ drivers/thermal/armada_thermal.c              |  39 ++---
+ drivers/thermal/broadcom/bcm2835_thermal.c    |   8 +-
+ drivers/thermal/da9062-thermal.c              |  52 +-----
+ drivers/thermal/gov_bang_bang.c               |  39 +++--
+ drivers/thermal/gov_fair_share.c              |  18 +-
+ drivers/thermal/gov_power_allocator.c         |  51 +++---
+ drivers/thermal/gov_step_wise.c               |  22 ++-
+ drivers/thermal/hisi_thermal.c                |  11 +-
+ drivers/thermal/imx_thermal.c                 |  72 +++-----
+ .../int340x_thermal/int340x_thermal_zone.c    |  33 ++--
+ .../int340x_thermal/int340x_thermal_zone.h    |   4 +-
+ .../processor_thermal_device.c                |  10 +-
+ drivers/thermal/intel/x86_pkg_temp_thermal.c  | 120 +++++++------
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c   |  39 ++---
+ drivers/thermal/rcar_gen3_thermal.c           |   2 +-
+ drivers/thermal/rcar_thermal.c                |  53 +-----
+ drivers/thermal/samsung/exynos_tmu.c          |  57 +++----
+ drivers/thermal/st/st_thermal.c               |  47 +----
+ drivers/thermal/tegra/soctherm.c              |  33 ++--
+ drivers/thermal/tegra/tegra30-tsensor.c       |  17 +-
+ drivers/thermal/thermal_core.c                | 160 +++++++++++++++---
+ drivers/thermal/thermal_core.h                |  24 +--
+ drivers/thermal/thermal_helpers.c             |  28 +--
+ drivers/thermal/thermal_netlink.c             |  21 +--
+ drivers/thermal/thermal_of.c                  | 116 -------------
+ drivers/thermal/thermal_sysfs.c               | 133 +++++----------
+ drivers/thermal/ti-soc-thermal/ti-thermal.h   |  15 --
+ drivers/thermal/uniphier_thermal.c            |  27 ++-
+ include/linux/thermal.h                       |  10 ++
+ 32 files changed, 559 insertions(+), 818 deletions(-)
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+2.34.1
 
