@@ -2,289 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 158335F6A8E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Oct 2022 17:26:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC26D5F6AE8
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Oct 2022 17:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231386AbiJFP0k (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 6 Oct 2022 11:26:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38818 "EHLO
+        id S231857AbiJFPo3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 6 Oct 2022 11:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231826AbiJFP0g (ORCPT
+        with ESMTP id S231645AbiJFPo1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 6 Oct 2022 11:26:36 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D259BC475
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  6 Oct 2022 08:26:35 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-132fb4fd495so2535677fac.12
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 06 Oct 2022 08:26:35 -0700 (PDT)
+        Thu, 6 Oct 2022 11:44:27 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE857AC0C
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  6 Oct 2022 08:44:26 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id x40so2663397ljq.9
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 06 Oct 2022 08:44:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gateworks-com.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qEgg6vU+1CShCyrvh11UlBgdaJjiNvI37fqYdKhnNwU=;
-        b=pHuTH+IOzjjSQkyEAXbIYdJibMg2T/yHhNW5bdD+Zy7vO2BhlKqvuse1vTzTvXMGRC
-         SF5ZvW6rOBwK7IR88numKnbolMnzdd81s/JUyI4BJQEXdboIt+9+PdsAUPplNr+9lEkI
-         1F3PYFoEx0vuMK157xQFZJn/k1s+BBAONABw1ruoJsjnJf3LFcpaf79quXg8V/NGuSUS
-         O+WQFwQScgrnwoIY4k9UXJNlM7ouOrxkEYjneqMblb4Seiye/7pOuTytLwX3OowTN7S2
-         e8inlXPIfglqz/SYAcCHWkzf9gvUrUaZAWUP+qLEPoi3jJCXxM8lpdk7mc3dAGPuH50F
-         fdYQ==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OQx//nIMTXIuGES5wdU306SDyqo/9GYHWGhMmpKB5Ag=;
+        b=dkwiFroVHj3L9SGdoZ95RCyLVkjnHYgm9/CBiXs13sPGT2nym/FM5n4FLckiNbuojv
+         BOQxcVX1x0JPjuG77CxI4nw9bvtdGghlwLXgiCGHw8K8atTv5MOSWyYwI9XAPGqtwW04
+         65PLiDpKVi7JN55Y3zCSdzGWV93eJZlMBpyeKCCu9exoOFNx0bd7vE9kxDJBweTsInSI
+         fTX5IG+DO+uO04T31PeNyN+MSvOYnGgrxJ+poYLlRlIOW4nPkfvF4nxa87xocwPn2b2S
+         9Kx0MJXMGZvT7tfTqZ2mMhiextz6S8VcLqRrKQ+ziV3UuhzVK3wc5JSCJ2NygrX0Ir0J
+         xkMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qEgg6vU+1CShCyrvh11UlBgdaJjiNvI37fqYdKhnNwU=;
-        b=aLc57D+9F+Kjh7KSFdHy2tS/sRiDcAnDS97dzLRJGeNhVB4My7vnWLrKdV5ewbLqzt
-         SbvYtg3B8nc7h9YV5JZx138ktbhP33oexMUSpXXhlgTebwmdUuvpS4u746p4ugic+w8T
-         VpkiLxdHNpy+kCi+J4pkjZD3hnnON33m12XIyBUl+aFsnhzkQj9PDqEefUgN/7/NtbXU
-         p2TkzmeD84Z862ed2vFJDcdsYuTsFR0NPhRrMAwspLG8myoXS+FuFWtf73kKf8YUY7dc
-         0IftzlgcSwMgOurYpNmgoe5dUNFBTJiQMsmz3bIUTJBsPtG3kat88AmI1WFM8RzFq95a
-         JiKg==
-X-Gm-Message-State: ACrzQf1KhJWFl1J5/Yi9Iaf4Oxvjkz1mK2c4eF9lfvjBkwoAiWvndcmf
-        swzHcPz0+KLtjYqJiwiWgDNGX06xtJjq2KUQjKugGQ==
-X-Google-Smtp-Source: AMsMyM7hTLBuIuqwNiVTXUWuH+V72A93pKxUMgju4zsOE/gKIpYqIL99d8dKTgGUpkiIKz3d+hdm7y6E6BtW4OfsIcY=
-X-Received: by 2002:a05:6870:15c8:b0:133:16e6:5af8 with SMTP id
- k8-20020a05687015c800b0013316e65af8mr1653718oad.80.1665069994311; Thu, 06 Oct
- 2022 08:26:34 -0700 (PDT)
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OQx//nIMTXIuGES5wdU306SDyqo/9GYHWGhMmpKB5Ag=;
+        b=NFPUjJokaQZskDkhUqh7TcArdQFwwkuE/2XlOc8p4car6iCLFvXVG77fl9NKLg9Kyn
+         7d0xZ7CAnn6DIrvxd7/D4IdXI0YYC6IITkOyvpSsw2sAbhb77ONMC2waWzqFJqcZPHll
+         phpsVlDQwnP53HVtgYExQ2wCq5r4cYRyyf8ZBSvJIRIsK2zrnX8y1GVtChsYeqEWArpz
+         MTEcJP0DGaNDC/pRFKv5FnwsIge+/cD0NN7q/LZZ+EZRVhJ4Sbp3WrrB9wWkje1WAOQ9
+         dMSdSRiJq3u/7bXsdADfxYNDjfD0r1z2cw/AN7n0+z0x994DKj+OdP3J2MgKHBBObKlN
+         v82w==
+X-Gm-Message-State: ACrzQf0ifezsL/6PYM306SOMx3vzc79c2TcL6y95H2jFAK4yteKJYgIL
+        VXckpgux2khr0yBaCEWiRJvCQMqEtzja8+1eqTs=
+X-Google-Smtp-Source: AMsMyM5+s4jjf8fdufCXDofarmK4zonzH6jlgTi9ZfF3MrBk1FztHnqdI75ePTGIzQ+IhlVAaxo7AVkZTvOioKZ73Q8=
+X-Received: by 2002:a2e:9d8e:0:b0:26e:3e2:2ebc with SMTP id
+ c14-20020a2e9d8e000000b0026e03e22ebcmr112900ljj.166.1665071064414; Thu, 06
+ Oct 2022 08:44:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <CGME20221005151323eucas1p2c69fc9989b84a9d74d568469ccd81f35@eucas1p2.samsung.com>
- <20221005151309.7278-1-jagan@amarulasolutions.com> <df3abb7c-66ae-4495-4a73-c59880a6fdff@samsung.com>
-In-Reply-To: <df3abb7c-66ae-4495-4a73-c59880a6fdff@samsung.com>
-From:   Tim Harvey <tharvey@gateworks.com>
-Date:   Thu, 6 Oct 2022 08:26:22 -0700
-Message-ID: <CAJ+vNU0R95ZDkfwo6hz_fb1E8z7ZZRNd7XU2uArsE0WhxvaJDQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/10] drm: bridge: Add Samsung MIPI DSIM bridge
-To:     Jagan Teki <jagan@amarulasolutions.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Frieder Schrempf <frieder.schrempf@kontron.de>,
-        Fancy Fang <chen.fang@nxp.com>,
-        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
-        Adam Ford <aford173@gmail.com>,
-        Neil Armstrong <narmstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
-        Marek Vasut <marex@denx.de>,
-        Matteo Lisi <matteo.lisi@engicam.com>,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-amarula <linux-amarula@amarulasolutions.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
+Sender: missabibatu@gmail.com
+Received: by 2002:ab3:161a:0:b0:1e7:b9d2:aa86 with HTTP; Thu, 6 Oct 2022
+ 08:44:23 -0700 (PDT)
+From:   Hassan Abdul <mimihassan972@gmail.com>
+Date:   Thu, 6 Oct 2022 16:44:23 +0100
+X-Google-Sender-Auth: FaXzkabW_wkg-p5H10Gqb2niNWo
+Message-ID: <CAHRP2D42fgs8WuQuzsvYBVQj28KN3yM_yfNpTn0U_OJvtqBCvw@mail.gmail.com>
+Subject: Reply Me
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=3.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,LOTS_OF_MONEY,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Oct 5, 2022 at 1:51 PM Marek Szyprowski
-<m.szyprowski@samsung.com> wrote:
->
-> Hi Jagan,
->
-> On 05.10.2022 17:12, Jagan Teki wrote:
-> > This series supports common bridge support for Samsung MIPI DSIM
-> > which is used in Exynos and i.MX8MM SoC's.
-> >
-> > The final bridge supports both the Exynos and i.MX8MM DSI devices.
-> >
-> > Changes for v7:
-> > * fix the drm bridge attach chain for exynos drm dsi driver
-> > * fix the hw_type checking logic
-> >
-> > Changes for v6:
-> > * handle previous bridge for exynos dsi while attaching bridge
-> >
-> > Changes for v5:
-> > * bridge changes to support multi-arch
-> > * updated and clear commit messages
-> > * add hw_type via plat data
-> > * removed unneeded quirk
-> > * rebased on linux-next
-> >
-> > Changes for v4:
-> > * include Inki Dae in MAINTAINERS
-> > * remove dsi_driver probe in exynos_drm_drv to support multi-arch build
-> > * update init handling to ensure host init done on first cmd transfer
-> >
-> > Changes for v3:
-> > * fix the mult-arch build
-> > * fix dsi host init
-> > * updated commit messages
-> >
-> > Changes for v2:
-> > * fix bridge handling
-> > * fix dsi host init
-> > * correct the commit messages
-> >
-> > Patch 0001:   Samsung DSIM bridge
-> >
-> > Patch 0002:   PHY optional
-> >
-> > Patch 0003:   OF-graph or Child node lookup
-> >
-> > Patch 0004:   DSI host initialization
-> >
-> > Patch 0005:   atomic check
-> >
-> > Patch 0006:   PMS_P offset via plat data
-> >
-> > Patch 0007:   atomic_get_input_bus_fmts
-> >
-> > Patch 0008:   input_bus_flags
-> >
-> > Patch 0009:   document fsl,imx8mm-mipi-dsim
-> >
-> > Patch 0010:   add i.MX8MM DSIM support
-> >
-> > Tested in Engicam i.Core MX8M Mini SoM.
->
-> This finally doesn't break Exynos DSI. :) Feel free to add:
->
-> Acked-by: Marek Szyprowski
->
-> Tested-by: Marek Szyprowski
->
-> The next step would be to merge Dave's patchset and remove the hacks
-> added here and there. Otherwise we will end up adding even more hacks soon.
-
-Jagan,
-
-I've also tested this latest series with a Gateworks
-imx8mm-venice-gw73xx-0x with a RaspberryPi MIPI DSI compatible DFR0550
-display with the following dt overlay:
-
-/dts-v1/;
-/plugin/;
-
-&{/} {
-        compatible = "gw,imx8mm-gw73xx-0x", "fsl,imx8mm";
-
-        panel {
-                compatible = "powertip,ph800480t013-idf02";
-                power-supply = <&attiny>;
-                backlight = <&attiny>;
-
-                port {
-                        panel_out_bridge: endpoint {
-                                remote-endpoint = <&bridge_out_panel>;
-                        };
-                };
-        };
-};
-
-&i2c3 {
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        attiny: regulator@45 {
-                compatible = "raspberrypi,7inch-touchscreen-panel-regulator";
-                reg = <0x45>;
-        };
-};
-
-&dsi {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        status = "okay";
-
-        bridge@0 {
-                compatible = "toshiba,tc358762";
-                reg = <0>;
-                vddc-supply = <&attiny>;
-                status = "okay";
-
-                ports {
-                        #address-cells = <1>;
-                        #size-cells = <0>;
-
-                        port@0 {
-                                reg = <0>;
-                                bridge_in_dsi: endpoint {
-                                        remote-endpoint = <&dsi_out_bridge>;
-
-                                };
-                        };
-
-                        port@1 {
-                                reg = <1>;
-                                bridge_out_panel: endpoint {
-                                        remote-endpoint = <&panel_out_bridge>;
-                                };
-                        };
-                };
-        };
-
-        ports {
-                #address-cells = <1>;
-                #size-cells = <0>;
-
-                port@1 {
-                        reg = <1>;
-
-                        dsi_out_bridge: endpoint {
-                                remote-endpoint = <&bridge_in_dsi>;
-                        };
-                };
-        };
-};
-
-&lcdif {
-        status = "okay";
-};
-
-
-Tested-by: Tim Harvey <tharvey@gateworks.com> # imx8mm-venice-gw73xx-0x
-
-Thanks for all your work on this!
-
-Best Regards,
-
-Tim
-
-
-
->
-> > Repo:
-> > https://gitlab.com/openedev/kernel/-/commits/imx8mm-dsi-v7
-> >
-> > Any inputs?
-> > Jagan.
-> >
-> > Jagan Teki (10):
-> >    drm: bridge: Add Samsung DSIM bridge driver
-> >    drm: bridge: samsung-dsim: Lookup OF-graph or Child node devices
-> >    drm: bridge: samsung-dsim: Mark PHY as optional
-> >    drm: bridge: samsung-dsim: Handle proper DSI host initialization
-> >    drm: bridge: samsung-dsim: Add atomic_check
-> >    drm: bridge: samsung-dsim: Add platform PLL_P (PMS_P) offset
-> >    drm: bridge: samsung-dsim: Add atomic_get_input_bus_fmts
-> >    drm: bridge: samsung-dsim: Add input_bus_flags
-> >    dt-bindings: display: exynos: dsim: Add NXP i.MX8MM support
-> >    drm: bridge: samsung-dsim: Add i.MX8MM support
-> >
-> >   .../bindings/display/exynos/exynos_dsim.txt   |    1 +
-> >   MAINTAINERS                                   |    9 +
-> >   drivers/gpu/drm/bridge/Kconfig                |   12 +
-> >   drivers/gpu/drm/bridge/Makefile               |    1 +
-> >   drivers/gpu/drm/bridge/samsung-dsim.c         | 1856 +++++++++++++++++
-> >   drivers/gpu/drm/exynos/Kconfig                |    1 +
-> >   drivers/gpu/drm/exynos/exynos_drm_dsi.c       | 1766 +---------------
-> >   include/drm/bridge/samsung-dsim.h             |  115 +
-> >   8 files changed, 2108 insertions(+), 1653 deletions(-)
-> >   create mode 100644 drivers/gpu/drm/bridge/samsung-dsim.c
-> >   create mode 100644 include/drm/bridge/samsung-dsim.h
-> >
-> Best regards
-> --
-> Marek Szyprowski, PhD
-> Samsung R&D Institute Poland
->
+i am Mrs Mimi Hassan Abdul Muhammad, and i was diagnosed with  cancer
+about 2 years ago,before i go for my surgery i  have to do this by helping the
+Less-privileged, with this fund so If you are interested to use the
+sum of US17.3Million that is in  a Finance house) in  OUAGADOUGOU
+BURKINA FASO to help them, kindly get back to me for more information.
+Warm Regards,
+Mrs Mimi Hassan Abdul Muhammad
