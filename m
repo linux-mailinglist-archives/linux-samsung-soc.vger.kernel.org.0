@@ -2,302 +2,191 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ADAD5FAE87
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 11 Oct 2022 10:36:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE4225FAE03
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 11 Oct 2022 10:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229840AbiJKIgc (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 11 Oct 2022 04:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57438 "EHLO
+        id S230021AbiJKIG0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 11 Oct 2022 04:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbiJKIgb (ORCPT
+        with ESMTP id S229483AbiJKIGW (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 11 Oct 2022 04:36:31 -0400
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8246B5FDE
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Oct 2022 01:36:29 -0700 (PDT)
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20221011083623epoutp03528da7a5375a0f27f65e027e71eb2aaf~c9tski8Qs2105621056epoutp03Q
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 11 Oct 2022 08:36:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20221011083623epoutp03528da7a5375a0f27f65e027e71eb2aaf~c9tski8Qs2105621056epoutp03Q
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1665477383;
-        bh=FxZXstTVZ5WaTjdioUsVMZPbOQeROiPSyOQt/DfZdv8=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=SIz/meJUFEWMM0BcMJYJEPbCbwmQ0okZdO1bnMXGCu6YP8ZVl4N1AgQfZDyLSnT7D
-         nQ2Ff0aAnWn0bNjU8BAxO4btv3ulTozoBtP2wHZR7zBkCaUuBGGF2NM+V6qtUIs3Jz
-         j5UoYbU49/pX9fY6AIrwDjerNpw4aHs577B4CSg4=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20221011083622epcas5p4e996b9f6b75ef2964e05103d05af125a~c9tsA5eQv2460424604epcas5p4u;
-        Tue, 11 Oct 2022 08:36:22 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.179]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4Mmpz62zbGz4x9QD; Tue, 11 Oct
-        2022 08:36:18 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        21.EB.56352.10B25436; Tue, 11 Oct 2022 17:36:17 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20221011083029epcas5p3cef6047d23d0682a9cb70ba6178067a8~c9ojJxzKa1037710377epcas5p3a;
-        Tue, 11 Oct 2022 08:30:29 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20221011083029epsmtrp2411e00dc67fc3e40435558623e0b20f2~c9ojIu3Vd2657426574epsmtrp2k;
-        Tue, 11 Oct 2022 08:30:29 +0000 (GMT)
-X-AuditID: b6c32a4b-383ff7000001dc20-63-63452b015241
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        4A.65.14392.5A925436; Tue, 11 Oct 2022 17:30:29 +0900 (KST)
-Received: from cheetah.sa.corp.samsungelectronics.net (unknown
-        [107.109.115.53]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20221011083027epsmtip2865ea2df94a67adf242ff7248b00e225~c9ohnPhEK1555815558epsmtip2s;
-        Tue, 11 Oct 2022 08:30:27 +0000 (GMT)
-From:   Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        alim.akhtar@samsung.com, chanho61.park@samsung.com,
-        linus.walleij@linaro.org, pankaj.dubey@samsung.com
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tue, 11 Oct 2022 04:06:22 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8DF7B1C2;
+        Tue, 11 Oct 2022 01:06:21 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id l19so8500789qvu.4;
+        Tue, 11 Oct 2022 01:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jGyomjq7ozY4Q7akXL/Pfyv8X5Aj6pujM8b1a5l18ro=;
+        b=KOtVn1MyCyveoDiOyhPS4b+kccEhBn5uycP8wq1nxcQaoVO7ujP/OY5Ywr26ZnhCam
+         JtV49vXZAkHxc9fQhnFZ0yR5qa3H1k6BdicVcmNeApeNekWkjySS1eI7a345vma1iB5u
+         m0hpdgw4rj+ZcUPoYHTwGBEZDDkn60NhzkSfKSFxnPmncP0SZs0DSM0BTPcBCa0Y7kT+
+         OJDRY26vA+5llcDmHVjT/wbShwFCBj2+8IX1jMumA781Wi5bVtrpUwScLhBWATEJPXxO
+         rA3UjsbwHJCPXoxP8zsPzOmD/iX/cV77mwqa0OtltmMedasLu6ChGyGJ30OpeSGXY/hO
+         eF4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jGyomjq7ozY4Q7akXL/Pfyv8X5Aj6pujM8b1a5l18ro=;
+        b=nPSuSXRPqu5GYxEaW5cFqX9dhA1QTkluyDMAJ+ydHs8EY4zaGuI6S/FLUQAzOF5PW4
+         zceSPTvenAPY21/FAOpcleWjj1zAC68zk0pQW8fWf9xlFE8vVY9nH3bpYlCSEg+QtR0K
+         lvB9L+xQJu6xZS/mM+coQQ6DrQmB8z8RUx4toAcVApjpLeFZbt3kvaRZKYKbMdwVB5gI
+         4BxYCV43p6ze2WTOVdcr4Xa6+7EMkFDDtLqpS/MFfqPzQzS9C/Dv0U917pbU1qTLbeRp
+         eaHEfy3i9tgyNOOnKEGmnpZq2ilZOu67pH2SbyS4n/bLqZTRd2doobKxEuJXyTmJaO+E
+         PUAg==
+X-Gm-Message-State: ACrzQf0ykC4WTQBViC+c/Bds/87EObaELNmxUVXZdQY/u65BDLB9rVLj
+        FFacF9A5N0aPTCQPmUDYu0d8OBYp9+QKIGYHG4E=
+X-Google-Smtp-Source: AMsMyM6bBfvn1Kn2m3jyePvTWTQZr99mPqgEF96ov5+b6DzzOQAB1TTkjSwFdYjW5mK99JzXiScvlDmHriUb73Md/f4=
+X-Received: by 2002:a05:6214:29ee:b0:4b1:c1d2:6635 with SMTP id
+ jv14-20020a05621429ee00b004b1c1d26635mr18081815qvb.82.1665475580262; Tue, 11
+ Oct 2022 01:06:20 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
+ <20221010201453.77401-3-andriy.shevchenko@linux.intel.com> <Y0SyVwjDl7NGfTPn@sol>
+In-Reply-To: <Y0SyVwjDl7NGfTPn@sol>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 11 Oct 2022 11:05:42 +0300
+Message-ID: <CAHp75Vf4oS8g0zxgismtLrzsJ7AE-bdMEq+GAzx2=Mwnhuk3UA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
+To:     Kent Gibson <warthog618@gmail.com>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Billy Tsai <billy_tsai@aspeedtech.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org,
-        Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: [PATCH V2] arm64: dts: fix drive strength macros as per FSD HW UM
-Date:   Tue, 11 Oct 2022 13:33:59 +0530
-Message-Id: <20221011080359.76220-1-p.rajanbabu@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFKsWRmVeSWpSXmKPExsWy7bCmhi6jtmuyweUnXBYP5m1js7i8X9ti
-        /pFzrBZ9Lx4yW0z5s5zJ4vKuOWwWM87vY7I4ujHYYtHWL+wWrXuPsDtweWxa1cnmcefaHjaP
-        vi2rGD0+b5ILYInKtslITUxJLVJIzUvOT8nMS7dV8g6Od443NTMw1DW0tDBXUshLzE21VXLx
-        CdB1y8wBOkdJoSwxpxQoFJBYXKykb2dTlF9akqqQkV9cYquUWpCSU2BSoFecmFtcmpeul5da
-        YmVoYGBkClSYkJ1xePF15oJOg4p5/e/ZGxh3qncxcnJICJhIzF54ihHEFhLYzSjx5VFCFyMX
-        kP2JUeLQn7nsEM43RomHpz+ywHSsnzaVFaJjL6PEyk0REEWtTBKrHi8EK2ITMJVYNaeRFSQh
-        IrCUUeL/p0WMIA6zwBRGia3bbgA5HBzCAl4S5yepgjSwCKhKbNn5mw3E5hWwkfjV1s4EsU1e
-        YvWGA8wgvRICu9gl7s24D3WGi8SuqS+hbGGJV8e3sEPYUhKf3+1lg7DzJaZ9bIayKyTaPm6A
-        GmovceDKHBaQG5gFNCXW79KHCMtKTD21DqyEWYBPovf3E6hyXokd82BsVYn1yzcxQtjSEvuu
-        7wV7RULAQ+LfxEBIoMRKbH66kX0Co+wshAULGBlXMUqmFhTnpqcWmxYY56WWw+MpOT93EyM4
-        kWl572B89OCD3iFGJg7GQ4wSHMxKIryM852ShXhTEiurUovy44tKc1KLDzGaAoNsIrOUaHI+
-        MJXmlcQbmlgamJiZmZlYGpsZKonzLp6hlSwkkJ5YkpqdmlqQWgTTx8TBKdXAxBT19cKcR0sy
-        p6TuqE6QePVZ8t5R0Y8N8TWTlm2MrLNX32E83f3U0QOnY08cjLqs4lwcztHMlLu+Zo9RTLro
-        zg7rlBkLeKeq/uC10HlyyIr3y+GLysl33x1oVT2m79u74P/HxiUz+e79Ebzj98rneGlYdpPU
-        IevqLfdPGP7RYWVQNl70MSfL0E6+Z0JEq9ArxU4ev1j70C/ujw0ZX900Dua+JW33Z0qt+P+u
-        UCmBaZ63vv28r2Ti4DorOV756PtOlcgXvxNkLjIbb//rwJnpOV8shTFOfOsLZ162HR+eXp61
-        9b7W6xmWun2v54VtvupWI52gLfB/YSdb8ZKOmsnfd56z/Jpy0nyt4spFT+/9V2Ipzkg01GIu
-        Kk4EAFXFL/DtAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjluLIzCtJLcpLzFFi42LZdlhJXneppmuyQfNaOYsH87axWVzer20x
-        /8g5Vou+Fw+ZLab8Wc5kcXnXHDaLGef3MVkc3RhssWjrF3aL1r1H2B24PDat6mTzuHNtD5tH
-        35ZVjB6fN8kFsERx2aSk5mSWpRbp2yVwZRxefJ25oNOgYl7/e/YGxp3qXYycHBICJhLrp01l
-        BbGFBHYzSmw9XAkRl5aY3r+HDcIWllj57zl7FyMXUE0zk8S0tmnMIAk2AVOJVXMaWUESIgKr
-        GSU+97eDdTALTGOU2DW1vouRg0NYwEvi/CRVkDCLgKrElp2/wUp4BWwkfrW1M0EskJdYveEA
-        8wRGngWMDKsYJVMLinPTc4sNCwzzUsv1ihNzi0vz0vWS83M3MYKDSktzB+P2VR/0DjEycTAe
-        YpTgYFYS4WWc75QsxJuSWFmVWpQfX1Sak1p8iFGag0VJnPdC18l4IYH0xJLU7NTUgtQimCwT
-        B6dUA9OKlSL60+Is/+92FOnrnNb7Yb++ZbFNJs/XI5wlAr/UwirWhv9zD/qzgncHv9CpFY75
-        UxYoXIuP8tVaajmhu+lXRo3069OcH2vO1yxLKnWeaXsi///ev7NL5dO5fMzv6DJNva4xrf/L
-        tqR/fTYbS4xWtu0/FSlzRuI742wBHiE/Pt/7f6K7DYwfBXLnakbucrFdl5ufrrBf7sJshuw6
-        FsvmW2t5cwSr8rd32Bw15eLgfVBZUOMW8vLsnJn/X9z48v/JL8eVM3MT3ovfjJ8fkaBQIF3y
-        SDNo0bGVhWcX7Y4sr/wr+mrih/UR1+6JLJ3//xGPf0pRftN0vYSmae/sDiRuMfzuoaattKzy
-        UxfXFCWW4oxEQy3mouJEADYl5sSZAgAA
-X-CMS-MailID: 20221011083029epcas5p3cef6047d23d0682a9cb70ba6178067a8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20221011083029epcas5p3cef6047d23d0682a9cb70ba6178067a8
-References: <CGME20221011083029epcas5p3cef6047d23d0682a9cb70ba6178067a8@epcas5p3.samsung.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Joel Stanley <joel@jms.id.au>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Shevchenko <andy@kernel.org>,
+        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Drive strength macros defined for FSD platform is not reflecting actual
-name and values as per HW UM. FSD SoC pinctrl has following four levels of
-drive-strength and their corresponding values:
-Level-1 <-> 0
-Level-2 <-> 1
-Level-4 <-> 2
-Level-6 <-> 3
+On Tue, Oct 11, 2022 at 3:02 AM Kent Gibson <warthog618@gmail.com> wrote:
+> On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
 
-The commit 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
-used drive strength macros defined for Exynos4 SoC family. For some IPs
-the macros values of Exynos4 matched and worked well, but Exynos4 SoC
-family drive-strength (names and values) is not exactly matching with
-FSD SoC.
+...
 
-Fix the drive strength macros to reflect actual names and values given
-in FSD HW UM. This also ensures that the existing peripherals in device
-tree file is using correct drive strength MACROs to function as
-expected.
+> > -#include <linux/gpio.h>
+> >  #include <linux/gpio/driver.h>
+> > +#include <linux/gpio.h>
+> > +#include <linux/hte.h>
+>
+> Ok with the hte re-order.
+>
+> But moving the gpio subsystem header after the gpio/driver is not
+> alphabetical ('.' precedes '/') and it read better and made more sense
+> to me the way it was.
 
-Fixes: 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
-Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
----
- arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi | 34 +++++++++++-----------
- arch/arm64/boot/dts/tesla/fsd-pinctrl.h    |  6 ++--
- 2 files changed, 20 insertions(+), 20 deletions(-)
+I see, I guess this is vim sort vs shell sort. Strange, they should
+follow the locale settings...
 
-diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-index d0abb9aa0e9e..e3852c946352 100644
---- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-+++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-@@ -55,14 +55,14 @@
- 		samsung,pins = "gpf5-0";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV2>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	ufs_refclk_out: ufs-refclk-out-pins {
- 		samsung,pins = "gpf5-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV2>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- };
- 
-@@ -239,105 +239,105 @@
- 		samsung,pins = "gpb6-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV2>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	pwm1_out: pwm1-out-pins {
- 		samsung,pins = "gpb6-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV2>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c0_bus: hs-i2c0-bus-pins {
- 		samsung,pins = "gpb0-0", "gpb0-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c1_bus: hs-i2c1-bus-pins {
- 		samsung,pins = "gpb0-2", "gpb0-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c2_bus: hs-i2c2-bus-pins {
- 		samsung,pins = "gpb0-4", "gpb0-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c3_bus: hs-i2c3-bus-pins {
- 		samsung,pins = "gpb0-6", "gpb0-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c4_bus: hs-i2c4-bus-pins {
- 		samsung,pins = "gpb1-0", "gpb1-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c5_bus: hs-i2c5-bus-pins {
- 		samsung,pins = "gpb1-2", "gpb1-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c6_bus: hs-i2c6-bus-pins {
- 		samsung,pins = "gpb1-4", "gpb1-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c7_bus: hs-i2c7-bus-pins {
- 		samsung,pins = "gpb1-6", "gpb1-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart0_data: uart0-data-pins {
- 		samsung,pins = "gpb7-0", "gpb7-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart1_data: uart1-data-pins {
- 		samsung,pins = "gpb7-4", "gpb7-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi0_bus: spi0-bus-pins {
- 		samsung,pins = "gpb4-0", "gpb4-2", "gpb4-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi1_bus: spi1-bus-pins {
- 		samsung,pins = "gpb4-4", "gpb4-6", "gpb4-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi2_bus: spi2-bus-pins {
- 		samsung,pins = "gpb5-0", "gpb5-2", "gpb5-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- };
- 
-diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.h b/arch/arm64/boot/dts/tesla/fsd-pinctrl.h
-index 6ffbda362493..c397d02208a0 100644
---- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.h
-+++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.h
-@@ -16,9 +16,9 @@
- #define FSD_PIN_PULL_UP			3
- 
- #define FSD_PIN_DRV_LV1			0
--#define FSD_PIN_DRV_LV2			2
--#define FSD_PIN_DRV_LV3			1
--#define FSD_PIN_DRV_LV4			3
-+#define FSD_PIN_DRV_LV2			1
-+#define FSD_PIN_DRV_LV4			2
-+#define FSD_PIN_DRV_LV6			3
- 
- #define FSD_PIN_FUNC_INPUT		0
- #define FSD_PIN_FUNC_OUTPUT		1
--- 
-2.17.1
+...
 
+> > +#include <linux/seq_file.h>
+>
+> I wasn't aware that we use anything from seq_file.
+> What am I missing?
+
+I will recheck, because in v6.0 I don't see anything, but LKP was not
+okay with something IIRC.
+
+
+
+
+--
+With Best Regards,
+Andy Shevchenko
