@@ -2,84 +2,53 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64B706010E0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Oct 2022 16:14:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5D26021B7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Oct 2022 05:06:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbiJQOOj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 17 Oct 2022 10:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49156 "EHLO
+        id S230351AbiJRDGu (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 17 Oct 2022 23:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbiJQOOi (ORCPT
+        with ESMTP id S230189AbiJRDGi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 17 Oct 2022 10:14:38 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A77F5B4
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Oct 2022 07:14:35 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id bp11so18664845wrb.9
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Oct 2022 07:14:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vq5kCnUtoL+6Ezgs4d51zvzN1gUGsMC/kvnhiOvxhZA=;
-        b=tz3RbYuUFruNlDazal9vUSlnltiLDHvOxIl0LPUBuv6NxoHo4Vq9jqpO+al2nQKQI5
-         jgcl8xIehpkHmpp4r4Q+IWD+dhvC9i80tQ5Wzp5nQou+s9jLpG8rhqY+Uh7I5z9wMxlt
-         QF2zH65EKK1nXRdZNuvu7k7GEGtmX3+rZ5JWHfOoipbWSqjwn6KyzKKMzAZ85ZEuOHMV
-         bpTAOFrf+BiU+6sZmU/F2OjMtWb1YvTZFJTAJeSXADdnC0J3jbbszwQAP0UX8EnC6t2Q
-         DvyGE8C+YTFM/9xHctANb6CMFAo6zi46s9s+OfhIkFxaQNacgLnWj/3UByTYBYsKua1p
-         9K6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vq5kCnUtoL+6Ezgs4d51zvzN1gUGsMC/kvnhiOvxhZA=;
-        b=lousUdt+SqlLg6cSyGUpwwe8E1Z49/Lu8lWB54fAJlGtLXcB1SssFwx1DLYBhh6sCg
-         wdBKmOIUEvf05N73JLwPgpYJGLOCzviOnb6NqxKv/ToJ7RsGeBMUhGPEMDGTESeDT3Tc
-         hkrASisYFJBZr81BT9+PDiFsfl1DTDpZMa/KRg7ef+X65qYuWucgzseE48E3n2qRaNo5
-         VtjlaHJJtGTcBjE8zC71iFITx5yFqRInlBt7COg84PFcUD7YbiB6yCXXN7v2S5nizYvh
-         a/wC3w2gvXTdUkC7CZbba4bOu/9+50YbQ+84BxZ/MNH6sqTipQ0vMesujb3rTQ+SLjFx
-         PVpQ==
-X-Gm-Message-State: ACrzQf25ksBLJgSGNL+V7J1ThxyUxBnvrt3s4j2mtEFMyQI2qe+4vl+b
-        YbsbFjYnn7Eq7y5SzhH6lSmaZw==
-X-Google-Smtp-Source: AMsMyM7CM0UpKnoMrB0XCN0oLx3Pp5aNEqNuOcOBP8m2CUuk58Y8mdiVuC8BXiFJDuJcLQxlD0XrEg==
-X-Received: by 2002:adf:fd4a:0:b0:22d:d3aa:e004 with SMTP id h10-20020adffd4a000000b0022dd3aae004mr6402643wrs.173.1666016073416;
-        Mon, 17 Oct 2022 07:14:33 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:ea6:24ea:3fe7:64b9? ([2a05:6e02:1041:c10:ea6:24ea:3fe7:64b9])
-        by smtp.googlemail.com with ESMTPSA id x17-20020adff0d1000000b00231ed902a4esm8608659wro.5.2022.10.17.07.14.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 07:14:33 -0700 (PDT)
-Message-ID: <e7229067-71e5-0b1c-fd46-acd5a64ecc2b@linaro.org>
-Date:   Mon, 17 Oct 2022 16:14:31 +0200
+        Mon, 17 Oct 2022 23:06:38 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30DC73901;
+        Mon, 17 Oct 2022 20:06:36 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6596DB81C5C;
+        Tue, 18 Oct 2022 03:06:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FB7C43141;
+        Tue, 18 Oct 2022 03:06:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666062394;
+        bh=TgPmSxG73o1j43Hh1nLaVBRIR68zjBpA0IPJMPe2ikI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=kB6WuQC9TdG7ex1XbLonRWXCaE548TbuN4P80FnPNRF0nQaKFG/I+sZRPs656ttkU
+         rKAN4wdvOAc+cYEiWTP4+K+LRBngCA22vOsLepvigjV9WgIvapzV40y4moYHVwYXcQ
+         g2ByC/fM077viJKq1her6JuZirVXEYS8Ex1gzTSUIlPSPFyCZ3DpC/ItJf7tHcgfVk
+         Bp1gQZhjCfTHKuip16gzN88/7zZutGTOJ5sjodnPboODsHLGfRg/Uk1Y29DnLWuctz
+         KrDL7KDkoklmzw3yYstwvoqrrUHFKq3dywnRkyCPyZIIzkgN2aHX3YOQdh8dpVfp4U
+         NRwsqXXu0JQ6Q==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     krzysztof.kozlowski@linaro.org, dmitry.torokhov@gmail.com
+Cc:     linux-arm-kernel@lists.infradead.org, alim.akhtar@samsung.com,
+        k.opasiak@samsung.com, linux-kernel@vger.kernel.org,
+        agross@kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/3] arm64: dts: exynos: fix polarity of "enable" line of NFC chip
+Date:   Mon, 17 Oct 2022 22:05:15 -0500
+Message-Id: <166606235860.3553294.4751927209979123286.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220929011557.4165216-1-dmitry.torokhov@gmail.com>
+References: <20220929011557.4165216-1-dmitry.torokhov@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] thermal/drivers/exynos: Fix NULL pointer dereference when
- getting the critical temp
-Content-Language: en-US
-To:     Marek Szyprowski <m.szyprowski@samsung.com>, rafael@kernel.org
-Cc:     Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "open list:SAMSUNG THERMAL DRIVER" <linux-pm@vger.kernel.org>,
-        "open list:SAMSUNG THERMAL DRIVER" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" 
-        <linux-arm-kernel@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <4e4d873b-4a40-334a-34e7-defb0fcc4e6b@samsung.com>
- <CGME20221003133014eucas1p1fe47bf216e05f96e946c7dcc5fc7eea9@eucas1p1.samsung.com>
- <20221003132943.1383065-1-daniel.lezcano@linaro.org>
- <1155a694-b821-d41a-da54-8a9656d90e50@samsung.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <1155a694-b821-d41a-da54-8a9656d90e50@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,30 +56,29 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 17/10/2022 15:48, Marek Szyprowski wrote:
-> Hi Daniel,
+On Wed, 28 Sep 2022 18:15:55 -0700, Dmitry Torokhov wrote:
+> According to s3fwrn5 driver code the "enable" GPIO line is driven "high"
+> when chip is not in use (mode is S3FWRN5_MODE_COLD), and is driven "low"
+> when chip is in use.
 > 
-> On 03.10.2022 15:29, Daniel Lezcano wrote:
->> The driver is assuming the get_critical temperature exists as it is
->> inherited by the thermal of ops. But this one has been removed in
->> favor of the generic one.
->>
->> Use the generic thermal_zone_get_crit_temp() function instead
->>
->> Fixes: 13bea86623b ("thermal/of: Remove of_thermal_get_crit_temp(")
->> Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
->> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> s3fwrn5_phy_power_ctrl():
 > 
-> This patch has been dropped from -next, is there are reason for that?
+> 	...
+> 	gpio_set_value(phy->gpio_en, 1);
+> 	...
+> 	if (mode != S3FWRN5_MODE_COLD) {
+> 		msleep(S3FWRN5_EN_WAIT_TIME);
+> 		gpio_set_value(phy->gpio_en, 0);
+> 		msleep(S3FWRN5_EN_WAIT_TIME);
+> 	}
+> 
+> [...]
 
-No, my mistake. I dropped it accidentally when I rebased the branch.
+Applied, thanks!
 
-Thanks for pointing it out.
+[2/3] arm64: dts: qcom: msm8916-samsung-a2015: fix polarity of "enable" line of NFC chip
+      commit: 978bc4c578a6d7baffc5646b0f327da036b3051b
 
-
+Best regards,
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Bjorn Andersson <andersson@kernel.org>
