@@ -2,49 +2,48 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68E92607FFF
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Oct 2022 22:42:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27536608016
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 21 Oct 2022 22:47:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbiJUUmU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 21 Oct 2022 16:42:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45838 "EHLO
+        id S229926AbiJUUrF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 21 Oct 2022 16:47:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230125AbiJUUmB (ORCPT
+        with ESMTP id S230080AbiJUUqc (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 21 Oct 2022 16:42:01 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED52140E43;
-        Fri, 21 Oct 2022 13:41:13 -0700 (PDT)
+        Fri, 21 Oct 2022 16:46:32 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A11BD2995C9;
+        Fri, 21 Oct 2022 13:46:07 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2ADFBB82D23;
-        Fri, 21 Oct 2022 20:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0017C433D6;
-        Fri, 21 Oct 2022 20:41:08 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id A496FCE2BD4;
+        Fri, 21 Oct 2022 20:45:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEA3C433D6;
+        Fri, 21 Oct 2022 20:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666384870;
-        bh=tehsC4Nds0UIzYea1wZIFRCjPzJjx5qNx8jGpeoAIiA=;
+        s=k20201202; t=1666385112;
+        bh=tq2/NapKhyhj/nZ7UhIrjnv6uKjQg8q5BUCehbxRKV8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WR4HBn2uLAMK7iJnrKPhpVEnsfLCJJllc74DrBjEEEi+RSzERCAb8G9TZoB57X4BX
-         BdhZAvgCX2PCD6Ek5iHcozKkz+dJL3EXuxNPK/Xe65IRHHb8PfLL1pyK+4VTK8wrSa
-         6ZZvW62Y5X7w1gQYJ+V9s854nUlnB1XrmWE4Iflk2Nb97BbF8M8hY8puonuqLNE4xJ
-         IGG04GlSLx/LUVIZJ4Z2VHj3ym+WhGGX5cpGGwbp3/vkzicdgrIH1SDGBSKdc+CWWF
-         pgndYGl/e+ujgbprZUF7rnWeRJ+gHEAaytfiTF5x2AuQ3Q3r1Szpxmz4pSo/boaozf
-         pmA+VLYedJgkw==
+        b=SB3QFe5LK0b+E/lFpE+2wEY35sjtJodRiiuoDy9SLn5Cqeu0V/vx5oviEBkxpnoqP
+         vvm12zSEEnmDRnYlw2pbjdkW6Gfx+FT75vQFcbslNL4I19GusCdiFRJMQRowqqGF5w
+         /pn1S70gZTkepqPHjiaNIaB/RAFOgP8HuWbQqilStb3w6UUVAyaFtrYR504COnoE5Q
+         Q8UACn9Mvil3BLSmCJZ3dnhqa4u64sVt4Yh1rQDqSgWrYKip3Geqd/G2OnUgME95AR
+         qdcQ0XADqEcloCkpN4EQ/KUo5+RC2XAGHOqMk6SO9LnEQuCmQSjy36QUy5rViHDuIn
+         wsDWlpY+5/9+w==
 From:   Arnd Bergmann <arnd@kernel.org>
 To:     linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 06/21] ARM: s3c: remove s3c6400 support
-Date:   Fri, 21 Oct 2022 22:27:39 +0200
-Message-Id: <20221021203329.4143397-6-arnd@kernel.org>
+        linux-mmc@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 10/21] mmc: remove s3cmci driver
+Date:   Fri, 21 Oct 2022 22:27:43 +0200
+Message-Id: <20221021203329.4143397-10-arnd@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20221021202254.4142411-1-arnd@kernel.org>
 References: <20221021202254.4142411-1-arnd@kernel.org>
@@ -61,55 +60,113 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-No board file and no dts file references the s3c6400 now, it's only
-s3c6410, so remove the final bits as well.
+The s3c24xx platform is gone, so this driver can be removed as well.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm/mach-s3c/Makefile.s3c64xx |  1 -
- arch/arm/mach-s3c/s3c6400.c        | 84 ------------------------------
- arch/arm/mach-s3c/s3c64xx.c        |  8 ---
- 3 files changed, 93 deletions(-)
- delete mode 100644 arch/arm/mach-s3c/s3c6400.c
+ MAINTAINERS                              |    6 -
+ drivers/mmc/host/Kconfig                 |   43 -
+ drivers/mmc/host/Makefile                |    1 -
+ drivers/mmc/host/s3cmci.c                | 1777 ----------------------
+ drivers/mmc/host/s3cmci.h                |   75 -
+ include/linux/platform_data/mmc-s3cmci.h |   51 -
+ 6 files changed, 1953 deletions(-)
+ delete mode 100644 drivers/mmc/host/s3cmci.c
+ delete mode 100644 drivers/mmc/host/s3cmci.h
+ delete mode 100644 include/linux/platform_data/mmc-s3cmci.h
 
-diff --git a/arch/arm/mach-s3c/Makefile.s3c64xx b/arch/arm/mach-s3c/Makefile.s3c64xx
-index 13cda2fe7b6c..61287ad2ea42 100644
---- a/arch/arm/mach-s3c/Makefile.s3c64xx
-+++ b/arch/arm/mach-s3c/Makefile.s3c64xx
-@@ -16,7 +16,6 @@ obj-$(CONFIG_PM_SLEEP)          += irq-pm-s3c64xx.o
- # Core
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2caf42b0328a..503ebd9800db 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17920,12 +17920,6 @@ S:	Supported
+ W:	http://www.ibm.com/developerworks/linux/linux390/
+ F:	drivers/s390/scsi/zfcp_*
  
- obj-y				+= s3c64xx.o
--obj-$(CONFIG_CPU_S3C6400)	+= s3c6400.o
- obj-$(CONFIG_CPU_S3C6410)	+= s3c6410.o
+-S3C24XX SD/MMC Driver
+-M:	Ben Dooks <ben-linux@fluff.org>
+-L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+-S:	Supported
+-F:	drivers/mmc/host/s3cmci.*
+-
+ SAA6588 RDS RECEIVER DRIVER
+ M:	Hans Verkuil <hverkuil@xs4all.nl>
+ L:	linux-media@vger.kernel.org
+diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+index 79d8ddf1f616..75e8c364243d 100644
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -619,49 +619,6 @@ config MMC_SPI
  
- # DMA support
-diff --git a/arch/arm/mach-s3c/s3c6400.c b/arch/arm/mach-s3c/s3c6400.c
+ 	  If unsure, or if your system has no SPI master driver, say N.
+ 
+-config MMC_S3C
+-	tristate "Samsung S3C SD/MMC Card Interface support"
+-	depends on ARCH_S3C24XX || COMPILE_TEST
+-	depends on S3C24XX_DMAC || COMPILE_TEST
+-	help
+-	  This selects a driver for the MCI interface found in
+-	  Samsung's S3C2410, S3C2412, S3C2440, S3C2442 CPUs.
+-	  If you have a board based on one of those and a MMC/SD
+-	  slot, say Y or M here.
+-
+-	  If unsure, say N.
+-
+-config MMC_S3C_HW_SDIO_IRQ
+-	bool "Hardware support for SDIO IRQ"
+-	depends on MMC_S3C
+-	help
+-	  Enable the hardware support for SDIO interrupts instead of using
+-	  the generic polling code.
+-
+-choice
+-	prompt "Samsung S3C SD/MMC transfer code"
+-	depends on MMC_S3C
+-
+-config MMC_S3C_PIO
+-	bool "Use PIO transfers only"
+-	help
+-	  Use PIO to transfer data between memory and the hardware.
+-
+-	  PIO is slower than DMA as it requires CPU instructions to
+-	  move the data. This has been the traditional default for
+-	  the S3C MCI driver.
+-
+-config MMC_S3C_DMA
+-	bool "Use DMA transfers only"
+-	help
+-	  Use DMA to transfer data between memory and the hardware.
+-
+-	  Currently, the DMA support in this driver seems to not be
+-	  working properly and needs to be debugged before this
+-	  option is useful.
+-
+-endchoice
+-
+ config MMC_SDRICOH_CS
+ 	tristate "MMC/SD driver for Ricoh Bay1Controllers"
+ 	depends on PCI && PCMCIA
+diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+index 0baeb0b004f7..885e19e21e75 100644
+--- a/drivers/mmc/host/Makefile
++++ b/drivers/mmc/host/Makefile
+@@ -34,7 +34,6 @@ obj-$(CONFIG_MMC_MVSDIO)	+= mvsdio.o
+ obj-$(CONFIG_MMC_DAVINCI)       += davinci_mmc.o
+ obj-$(CONFIG_MMC_SPI)		+= mmc_spi.o
+ obj-$(CONFIG_MMC_SPI)		+= of_mmc_spi.o
+-obj-$(CONFIG_MMC_S3C)   	+= s3cmci.o
+ obj-$(CONFIG_MMC_SDRICOH_CS)	+= sdricoh_cs.o
+ obj-$(CONFIG_MMC_TMIO_CORE)	+= tmio_mmc_core.o
+ obj-$(CONFIG_MMC_SDHI)		+= renesas_sdhi_core.o
+diff --git a/drivers/mmc/host/s3cmci.c b/drivers/mmc/host/s3cmci.c
 deleted file mode 100644
-index d47f1d6067b4..000000000000
-diff --git a/arch/arm/mach-s3c/s3c64xx.c b/arch/arm/mach-s3c/s3c64xx.c
-index 0a8116c108fe..ad13d7e13e5e 100644
---- a/arch/arm/mach-s3c/s3c64xx.c
-+++ b/arch/arm/mach-s3c/s3c64xx.c
-@@ -72,18 +72,10 @@ static void __init s3c64xx_init_uarts(struct s3c2410_uartcfg *cfg, int no)
- 
- /* table of supported CPUs */
- 
--static const char name_s3c6400[] = "S3C6400";
- static const char name_s3c6410[] = "S3C6410";
- 
- static struct cpu_table cpu_ids[] __initdata = {
- 	{
--		.idcode		= S3C6400_CPU_ID,
--		.idmask		= S3C64XX_CPU_MASK,
--		.map_io		= s3c6400_map_io,
--		.init_uarts	= s3c64xx_init_uarts,
--		.init		= s3c6400_init,
--		.name		= name_s3c6400,
--	}, {
- 		.idcode		= S3C6410_CPU_ID,
- 		.idmask		= S3C64XX_CPU_MASK,
- 		.map_io		= s3c6410_map_io,
+index 8d5929a32d34..000000000000
+diff --git a/drivers/mmc/host/s3cmci.h b/drivers/mmc/host/s3cmci.h
+deleted file mode 100644
+index 8b65d7ad9f97..000000000000
+diff --git a/include/linux/platform_data/mmc-s3cmci.h b/include/linux/platform_data/mmc-s3cmci.h
+deleted file mode 100644
+index bacb86db3112..000000000000
 -- 
 2.29.2
 
