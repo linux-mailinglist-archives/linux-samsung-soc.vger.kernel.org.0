@@ -2,74 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 626D5608456
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Oct 2022 06:44:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B574608B01
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Oct 2022 11:20:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229596AbiJVEoG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 22 Oct 2022 00:44:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42364 "EHLO
+        id S229736AbiJVJUM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 22 Oct 2022 05:20:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbiJVEoF (ORCPT
+        with ESMTP id S232197AbiJVJTT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 22 Oct 2022 00:44:05 -0400
-X-Greylist: delayed 2810 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 21 Oct 2022 21:44:01 PDT
-Received: from eclip245.hostpapavps.net (eclip245.hostpapavps.net [103.26.143.239])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A53D12A934C
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 21 Oct 2022 21:44:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=oaa-archery.on.ca; s=default; h=Content-Type:MIME-Version:Message-ID:
-        Reply-To:From:Date:Subject:To:Sender:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=xJXRdyAKV05LyDYNM6a7GhUo4Yl5e5US9YGxa4AS+Mg=; b=CfJv3YQT0eMvpqaiC1KxJl1Mgm
-        aynoA/qMQUOwy6CbyfXCz4t7j7PDww21pmbSBNAnjTTZkbPc0tTzD+CWRC2FN742mi2NCMuuicBt+
-        CKh8PtVLoCnTUAoEvswi1j5hDA+Rd36JyCv9ILMuxetUnaduV3ECwIwVlBQwhpbKVSVHwAbYDQJbS
-        7qu1EFuaDsJkIffCH9Qj67YQY+5UW6DukIxCQsFk6fam1/GQ4Xtr2sGzdKEAnO9TpwqBzJvAORwST
-        zWLEtoJV/d2sGSck6EFwtdPD94c36KS+pgwZBsb3GMvPgTD6q5h+Yi4Xw/W7V3HlyAHe38XqRTqoy
-        1l3CakGg==;
-Received: from oaa by eclip245.hostpapavps.net with local (Exim 4.95)
-        (envelope-from <website@oaa-archery.on.ca>)
-        id 1om5dG-0007Cq-0Q
-        for linux-samsung-soc@vger.kernel.org;
-        Sat, 22 Oct 2022 03:57:10 +0000
-To:     linux-samsung-soc@vger.kernel.org
-Subject: Copy of: fully_nude_sex nlq.page.link/CmoN#
-X-PHP-Script: archeryontario.ca/index.php for 109.169.158.135
-X-PHP-Originating-Script: 1015:class.phpmailer.php
-Date:   Sat, 22 Oct 2022 03:57:09 +0000
-From:   Archery Ontario <website@oaa-archery.on.ca>
-Reply-To: "free_online_young_sex ujc.page.link/39gu#biani" 
-          <linux-samsung-soc@vger.kernel.org>
-Message-ID: <6e50430048840097dd8c786451a7a46f@archeryontario.ca>
+        Sat, 22 Oct 2022 05:19:19 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA7E30AAA6
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 22 Oct 2022 01:32:29 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id g130so5708863oia.13
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 22 Oct 2022 01:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:sender:reply-to:mime-version:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=nNMBkCIwl/6gK+toGqNRGG/YLL0fF324bx1qaOH1y4x3OIjxLq/HHYoLEQ6DIXVMhZ
+         yBP/JqjfeKgn2zVw2pvLxCg6MQgOccj9D0PS+BxibSDKUMZPqFuO1BH9rucwVtk0imfk
+         Uf1JB6y6hh5nwSF4l3nIHzMcJeO23qzW5xyKvOUo02NXv/UxA+fb1xfQ7gd0wj97+Png
+         rtJzhayXE1f7/T0HHp6tTaPH4f4DE9rtLLXyoMLmdIeuEqEwHYp6KAIXioE2APt9Vqok
+         QcnzNnKCtevhk7rrd2+8KLFUz2JMtjuKTuyIwbz60pUc4RihSWynNyvtYnVRFpjOFC8v
+         n2WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:sender:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=4m11vjjnYwmZxvRvzbUqYZEY9yR23FYK6R373QaFcv8CIC4ltLdkXeAMUN0dx3yveq
+         HexgNUnGJpX/CdlScfKtHBJ8WiMkhkLv2J6Vs2mOxseYrmxjBIa/sQZqmsMqHPyFinaF
+         BU8RqTh9sn+QtRMATef88M0ba8rQi2engq8HUAyo2edNuHmMvfIw5ou9zTLlayKX+YOM
+         NVFSkeUJ+1SJRqLVig0xB3ySPxkNTd2BeAfnKA3TkHyNB5GEk9sQ38w0ZHltduMDZsLd
+         18ZIdvMCYbCaNiw8rRAYBbIvLxSdQxooUSFyu4YxlhV40D2hGQHvGAiE/tZWdiWKJn8m
+         ccRQ==
+X-Gm-Message-State: ACrzQf1hQwSzaIViPM61NQbxJXZcpcdiu9fa9qPQ2d0qAvH6oXSBspRQ
+        tke21CWJaUQTwjY2sRjqcjvN5mC0IZY5N1IirB0=
+X-Google-Smtp-Source: AMsMyM7DV/UQjMDmfWUDARQEST583xXUpUhZuwI6Yo6QWpU1NylqbjJLzURvxWrib8B1x1GiMXZKxXX9K7ug1XjFr6Y=
+X-Received: by 2002:a05:6808:13d2:b0:355:1770:c6ef with SMTP id
+ d18-20020a05680813d200b003551770c6efmr21666671oiw.284.1666427448022; Sat, 22
+ Oct 2022 01:30:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - eclip245.hostpapavps.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [1015 993] / [47 12]
-X-AntiAbuse: Sender Address Domain - oaa-archery.on.ca
-X-Get-Message-Sender-Via: eclip245.hostpapavps.net: authenticated_id: oaa/from_h
-X-Authenticated-Sender: eclip245.hostpapavps.net: website@oaa-archery.on.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SHORT_SHORTNER autolearn=ham autolearn_force=no version=3.4.6
+Reply-To: mrs.susanelwoodhara17@gmail.com
+Sender: mrs.arawayann01@gmail.com
+Received: by 2002:a05:6838:aea5:0:0:0:0 with HTTP; Sat, 22 Oct 2022 01:30:47
+ -0700 (PDT)
+From:   Mrs Susan Elwood Hara <mrs.susanelwoodhara17@gmail.com>
+Date:   Sat, 22 Oct 2022 08:30:47 +0000
+X-Google-Sender-Auth: UfMdHY-IGn2vy7vhRxwr3_PMsYw
+Message-ID: <CAAOf0OErkdBB+pkMfQKO+67_RwCPJjBUpQs9uCH=U1CN1QD5=w@mail.gmail.com>
+Subject: GOD BLESS YOU AS YOU REPLY URGENTLY
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.4 required=5.0 tests=BAYES_60,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:22c listed in]
+        [list.dnswl.org]
+        *  1.5 BAYES_60 BODY: Bayes spam probability is 60 to 80%
+        *      [score: 0.7366]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [mrs.arawayann01[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [mrs.susanelwoodhara17[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [mrs.susanelwoodhara17[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  3.1 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This is a copy of the following message you sent to Ontario Association of Archers via Archery Ontario | Provincial Sport Governing body for Archery
+GOD BLESS YOU AS YOU REPLY URGENTLY
 
-This is an enquiry email via https://archeryontario.ca/ from:
-free_online_young_sex
- ujc.page.link/39gu#
-biani <linux-samsung-soc@vger.kernel.org>
-
-free_celebrity_sex_scenes_videos
- xsg.page.link/BkRX#
-
+ Hello Dear,
+Greetings, I am contacting you regarding an important information i
+have for you please reply to confirm your email address and for more
+details Thanks
+Regards
+Mrs Susan Elwood Hara.
