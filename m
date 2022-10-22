@@ -2,105 +2,92 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B574608B01
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Oct 2022 11:20:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 810F7608BEA
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Oct 2022 12:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbiJVJUM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 22 Oct 2022 05:20:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
+        id S230466AbiJVKsp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 22 Oct 2022 06:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232197AbiJVJTT (ORCPT
+        with ESMTP id S230298AbiJVKsF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 22 Oct 2022 05:19:19 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA7E30AAA6
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 22 Oct 2022 01:32:29 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id g130so5708863oia.13
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 22 Oct 2022 01:32:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:sender:reply-to:mime-version:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
-        b=nNMBkCIwl/6gK+toGqNRGG/YLL0fF324bx1qaOH1y4x3OIjxLq/HHYoLEQ6DIXVMhZ
-         yBP/JqjfeKgn2zVw2pvLxCg6MQgOccj9D0PS+BxibSDKUMZPqFuO1BH9rucwVtk0imfk
-         Uf1JB6y6hh5nwSF4l3nIHzMcJeO23qzW5xyKvOUo02NXv/UxA+fb1xfQ7gd0wj97+Png
-         rtJzhayXE1f7/T0HHp6tTaPH4f4DE9rtLLXyoMLmdIeuEqEwHYp6KAIXioE2APt9Vqok
-         QcnzNnKCtevhk7rrd2+8KLFUz2JMtjuKTuyIwbz60pUc4RihSWynNyvtYnVRFpjOFC8v
-         n2WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:sender:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
-        b=4m11vjjnYwmZxvRvzbUqYZEY9yR23FYK6R373QaFcv8CIC4ltLdkXeAMUN0dx3yveq
-         HexgNUnGJpX/CdlScfKtHBJ8WiMkhkLv2J6Vs2mOxseYrmxjBIa/sQZqmsMqHPyFinaF
-         BU8RqTh9sn+QtRMATef88M0ba8rQi2engq8HUAyo2edNuHmMvfIw5ou9zTLlayKX+YOM
-         NVFSkeUJ+1SJRqLVig0xB3ySPxkNTd2BeAfnKA3TkHyNB5GEk9sQ38w0ZHltduMDZsLd
-         18ZIdvMCYbCaNiw8rRAYBbIvLxSdQxooUSFyu4YxlhV40D2hGQHvGAiE/tZWdiWKJn8m
-         ccRQ==
-X-Gm-Message-State: ACrzQf1hQwSzaIViPM61NQbxJXZcpcdiu9fa9qPQ2d0qAvH6oXSBspRQ
-        tke21CWJaUQTwjY2sRjqcjvN5mC0IZY5N1IirB0=
-X-Google-Smtp-Source: AMsMyM7DV/UQjMDmfWUDARQEST583xXUpUhZuwI6Yo6QWpU1NylqbjJLzURvxWrib8B1x1GiMXZKxXX9K7ug1XjFr6Y=
-X-Received: by 2002:a05:6808:13d2:b0:355:1770:c6ef with SMTP id
- d18-20020a05680813d200b003551770c6efmr21666671oiw.284.1666427448022; Sat, 22
- Oct 2022 01:30:48 -0700 (PDT)
+        Sat, 22 Oct 2022 06:48:05 -0400
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6C736DF4;
+        Sat, 22 Oct 2022 03:05:42 -0700 (PDT)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 42D611C09E5; Sat, 22 Oct 2022 12:04:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+        t=1666433091;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=dglD9eYSoY+3krortBgXrhoLYnL9pFjbZFahJEBGrus=;
+        b=jxD7H1772uFc+xkDEUXOUxBX27YukDMzrm02WH+qL6K+4jZpBm1L5ruhpOlDDRiaQAZeir
+        KJtHd1k3R/xh+mcnTUgeuwTtZxLGOqbvWtv+mD1yOefh0HA65FNeRFDfWHtDrYtvMu2jJV
+        3PqU5vBktC1N4TFkfKMSBirTMEFzrHc=
+Date:   Sat, 22 Oct 2022 12:04:50 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
+        Simtec Linux Team <linux@simtec.co.uk>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+        linux-leds@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH 12/21] leds: remove s3c24xx driver
+Message-ID: <20221022100450.GD10427@duo.ucw.cz>
+References: <20221021202254.4142411-1-arnd@kernel.org>
+ <20221021203329.4143397-12-arnd@kernel.org>
 MIME-Version: 1.0
-Reply-To: mrs.susanelwoodhara17@gmail.com
-Sender: mrs.arawayann01@gmail.com
-Received: by 2002:a05:6838:aea5:0:0:0:0 with HTTP; Sat, 22 Oct 2022 01:30:47
- -0700 (PDT)
-From:   Mrs Susan Elwood Hara <mrs.susanelwoodhara17@gmail.com>
-Date:   Sat, 22 Oct 2022 08:30:47 +0000
-X-Google-Sender-Auth: UfMdHY-IGn2vy7vhRxwr3_PMsYw
-Message-ID: <CAAOf0OErkdBB+pkMfQKO+67_RwCPJjBUpQs9uCH=U1CN1QD5=w@mail.gmail.com>
-Subject: GOD BLESS YOU AS YOU REPLY URGENTLY
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.4 required=5.0 tests=BAYES_60,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:22c listed in]
-        [list.dnswl.org]
-        *  1.5 BAYES_60 BODY: Bayes spam probability is 60 to 80%
-        *      [score: 0.7366]
-        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [mrs.arawayann01[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mrs.susanelwoodhara17[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [mrs.susanelwoodhara17[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  3.1 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *****
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="ieNMXl1Fr3cevapt"
+Content-Disposition: inline
+In-Reply-To: <20221021203329.4143397-12-arnd@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-GOD BLESS YOU AS YOU REPLY URGENTLY
 
- Hello Dear,
-Greetings, I am contacting you regarding an important information i
-have for you please reply to confirm your email address and for more
-details Thanks
-Regards
-Mrs Susan Elwood Hara.
+--ieNMXl1Fr3cevapt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
+> From: Arnd Bergmann <arnd@arndb.de>
+>=20
+> The s3c24xx platform is gone, so the led driver can be
+> removed as well.
+>=20
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+
+git am failed, but I guess this is not critical...
+
+Best regards,
+								Pavel
+							=09
+--=20
+People of Russia, stop Putin before his war on Ukraine escalates.
+
+--ieNMXl1Fr3cevapt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY1PAQgAKCRAw5/Bqldv6
+8j2UAJ9TSLqUb87pUMzXln9X7UAKeZvTRgCfWgHUaFpSlcgtO7F7LJE9R5khcUs=
+=pSY8
+-----END PGP SIGNATURE-----
+
+--ieNMXl1Fr3cevapt--
