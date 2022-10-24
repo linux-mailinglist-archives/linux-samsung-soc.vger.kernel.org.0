@@ -2,92 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77BBF60ADCA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 16:34:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0C8460AF1E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 17:34:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236967AbiJXOem (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 10:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32816 "EHLO
+        id S230187AbiJXPex (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 11:34:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237223AbiJXOeH (ORCPT
+        with ESMTP id S231814AbiJXPeZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 10:34:07 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0FA0109C;
-        Mon, 24 Oct 2022 06:09:30 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id f140so8932190pfa.1;
-        Mon, 24 Oct 2022 06:09:30 -0700 (PDT)
+        Mon, 24 Oct 2022 11:34:25 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE261BB575
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 07:21:39 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id f22so5673780qto.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 07:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aSpoXN2MutncQ4V4fSkz8rocQLQbOT8gk060tfwv6HA=;
-        b=VM2TGjTfd+9M4I2mEG2+ugX0olw7fq2OtJFlXmjmJ0HzOFp220J+qB0zejrhdaF4Pb
-         gCEBZqVjF4BeYFyXIkaryPMseczZTWPyf4E3skQlhv67F/KKEbIMTtkW7zLU7cwnvZh3
-         Ps8enynyDxVDq274klUmbkSQ0V5geo7J3t9XjD4PTqpbeVuGCmEB2gp6hvUrYqPw1qat
-         9ZM/PvWkZEAHNH5ohtZShp+bopXN36SDFa3D6IWMh2koKC9/jKK7eLn5KNPcT6blEH9N
-         MgMznOG8jO6ztumaiHZRQkcki9Rafmm+EXr5vmFK/WB+ezpEmvrIbIf4eYS17OFbSoGn
-         2y6w==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F6/Gkom4ZPWK7cMyC9zfoGrRQqMQlvaVxP5vBufeZGo=;
+        b=mejxcpn1uI9RNrXj4eSCcG9DdTDntnxcnQ0p/X47na73KIw0QDk7VkvlILO4BSrYgp
+         mkn7tFJD3SrWeBS8Di3gq9DA5FUvvsC50J/9oz4yxFiJJiejBjUzWJPi/ZKN3zvis58+
+         hpSzdLcfitVxKOxLluaifzo8FoP0wUqqmZFtYg2hwCo2zafUy6EroWzcDjm3+xcDisq2
+         N1CWbTgDk4vur3LIsKxe2Lco4CeujIspSWYT+2zDs8dCzln+2w8TC5Z2C3l8ky4Wqy6A
+         gPjmAgKo3UBTk4REpOhQz3rp0lGnB8xu5+Q55qMdpYKPuP662wbj8Nkzqpu8TtC8RKxI
+         SAQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aSpoXN2MutncQ4V4fSkz8rocQLQbOT8gk060tfwv6HA=;
-        b=6Cy3sovahQzWfvbF4o+ofXl3X3MWP8gbP5fOk/nBnarIRYhUzZSheuNdhfIUj2Far6
-         VKT0dXkWHSO1rYbW8/nwxW4xsst33CkUxR/Mh/ZSO4HlOi4Ex/QXOQdNljYX1g8mAqux
-         YwJqVfvTP84pI0IhNU6gFbn01wc9Ueh7cLJPQWg37C5k6UjIZUer9MvfHdIk5pEakAnT
-         c+wn/KfojV5VJuLEc/HbcWObgZECKdSuX2cIt6mhy1rAaisD+tffkklvdgx5plXEV5I1
-         aIjCGZu3w2GpQam1S9R5fi1AuNkLXwy4F7QtHHYOnNBj/Rpe3FSJo2X2iD/9TZN/CMKA
-         cVng==
-X-Gm-Message-State: ACrzQf2X7LXNaqzuJOZZjec1GeceCKmT68KHDzP743LYa2UoCmdAVDUw
-        DDnLcvEDAc+/GhMAVqLo3Vk8ZxNp3jvIWg==
-X-Google-Smtp-Source: AMsMyM4Itf01KbOxiaNjiBUgyf+DpgIlzp3VGzHaSWpIcHHq161KV+eJ6EGMlbFzo7SnxI5ZcF332Q==
-X-Received: by 2002:a63:5761:0:b0:46e:b96b:e76 with SMTP id h33-20020a635761000000b0046eb96b0e76mr14719715pgm.534.1666612658465;
-        Mon, 24 Oct 2022 04:57:38 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:3698:60f8:9964:1fb4])
-        by smtp.gmail.com with ESMTPSA id e28-20020a056a0000dc00b0056afd55722asm5560034pfj.153.2022.10.24.04.57.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 04:57:37 -0700 (PDT)
-Date:   Mon, 24 Oct 2022 04:57:34 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F6/Gkom4ZPWK7cMyC9zfoGrRQqMQlvaVxP5vBufeZGo=;
+        b=TqQHuT3pw1DdOndczIk9F/0pe8RCyBXIWS0ZHmvKanovy95wpgq0OslyglhZp8KzZq
+         an6PmyX41Ii+nxD8JXUKZiKZ5BmEYckxDDhu3JKjlyUPy054+TaIe2uzpUXc5u1ZJMwE
+         6lZavwuzON6yiweCaOa1EwDHX1pP5RrJOh3CpOUHSNA/OEfj79vvVeGchdL8UcA41oLw
+         xVX/4bdOEhGRluFZBMXT1MIYdZfU01jGGh9ajW1jnH0L9Z2x2CdxvzowhPczr4FPkbRs
+         SQgG0zRR+O4cTwYXVbRvteGegeB7bCe6cjrY8LaUuC5qrF5nJwQq+woleNxZ/6IXo4uc
+         j1Qw==
+X-Gm-Message-State: ACrzQf0Zd2+HQppoRuDLRe71PLTUy0wwqsJ5PAnoSUd0UrZcsPW+BMro
+        c7x56Hge73V+65mNfbtmE/aBwHZQRC8MYQ==
+X-Google-Smtp-Source: AMsMyM7QY9u7Z1kYexxENhtYjDsCBL6DV4I13tRCpUzNLXQT4rVNiSMxlYrOH2XNj9HBkERybeb7Og==
+X-Received: by 2002:a05:622a:134e:b0:39c:f1c2:60db with SMTP id w14-20020a05622a134e00b0039cf1c260dbmr27492997qtk.188.1666614612300;
+        Mon, 24 Oct 2022 05:30:12 -0700 (PDT)
+Received: from [192.168.1.8] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id i8-20020a05620a074800b006cea2984c9bsm14548147qki.100.2022.10.24.05.30.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Oct 2022 05:30:11 -0700 (PDT)
+Message-ID: <bb7840e1-6748-3d51-c491-6d6c0257e055@linaro.org>
+Date:   Mon, 24 Oct 2022 08:30:10 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH 06/21] ARM: s3c: remove s3c6400 support
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-input@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 17/21] input: remove s3c24xx touchscreen driver
-Message-ID: <Y1Z9rrO2rVRtF22f@google.com>
+        Heiko Stuebner <heiko@sntech.de>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        linux-samsung-soc@vger.kernel.org
 References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-17-arnd@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221021203329.4143397-17-arnd@kernel.org>
+ <20221021203329.4143397-6-arnd@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221021203329.4143397-6-arnd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 10:27:50PM +0200, Arnd Bergmann wrote:
+On 21/10/2022 16:27, Arnd Bergmann wrote:
 > From: Arnd Bergmann <arnd@arndb.de>
 > 
-> The s3c24xx SoC support and its adc driver was removed, so this driver
-> has no remaining users.
+> No board file and no dts file references the s3c6400 now, it's only
+> s3c6410, so remove the final bits as well.
 > 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks.
+Best regards,
+Krzysztof
 
--- 
-Dmitry
