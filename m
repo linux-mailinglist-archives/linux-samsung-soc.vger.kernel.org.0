@@ -2,74 +2,78 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 142B260ADAF
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 16:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 241BE60ADC4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 16:34:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236948AbiJXOah (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 10:30:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55952 "EHLO
+        id S230499AbiJXOeQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 10:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237181AbiJXO3T (ORCPT
+        with ESMTP id S231821AbiJXOdt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 10:29:19 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72363D6BBF
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:02:59 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id z30so5946769qkz.13
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:02:58 -0700 (PDT)
+        Mon, 24 Oct 2022 10:33:49 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121F39AFFC
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:08:44 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id c23so5522701qtw.8
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Sj4rwP10ivbaDE642zXPeXGYeb0v6Kqa3KmwN/UeLFs=;
-        b=ygyV3F3B3SB9mhfxjp4anjK5UNQFKHJJo5IaehlqtAI53Y+yEOQeLL2ZPxnDNkoWY9
-         OmKRj7j9XjcmIoqurMww59yTsGJd/fWg0AqLT4vx9OQpsKwTH4wcLB4H+ZW5Bjw6gIKM
-         quOpnfFwbVAa1PDBxXdJPS0/6hway+YgPp4WuU6lb8Fe2wGC8BcZlm57qj4LYdZ9SDOC
-         BS/MjLbrMtF6Pc0aKP6NMgT8lAK94a5edDivtSRa+j/a02QO6wZ/SVskOmQTawKdpvCG
-         SEE5rqE7omBdmZDQvM80mAV9epgnQJh5tgi2EBir//bSXLVIyaQlW1VPiwy0Y1yS6jDZ
-         r+1Q==
+        bh=V2WxXBEhE9lmDiSCmtp6HlQFdsUIOok3Tbt3p22NXFQ=;
+        b=pIjNTn/Fw5wWPAnx2/iV0f7mAvnR9IX0NCgHKJpazCJnQ1lUaI1x7+jTaz8VYmauFw
+         9RqxCpRkKWJd0rFVRquaxty4jObK9YVXOa8B/ART4GgclBBJOiCLUvD6UkecvNvTkile
+         Ql1kTwcznQdIkkerX139c4qhw/erTM55HQ9pbOj9I0/RwJtwvlh3lN+18e4GyNGwyzp3
+         mH33QTClrMl467lrxdZ7cG5i9eC+l3SJ70c+d4lOhzQSMVlJMYEvZ6E1qskDNlYxbBRW
+         tYGZ4Ht2h0l8C7iXxxoaMskAXr8pI/BeMKNAHkC1ZTdhH8k524eluQdJ0zLMClj5sVRK
+         tYxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sj4rwP10ivbaDE642zXPeXGYeb0v6Kqa3KmwN/UeLFs=;
-        b=WcE+No9nHRbJb4LJBlArM01Y1JTJKVhEft4Idi4phDmrMwBcg2kW8nBPWjQnlwyIY4
-         vEzTEbP3U3wYFXZiFqeYY/yOWxsUh796BeH/6L3RqrnJTt9YM4NmqPnPXFqHwaYI+8kX
-         lk3FoEt4bq82feiBYlMnbVgInN3Jppap+/wCJD98WeRsQHi2YjT8aeSW16VZoq1U2hix
-         MiP3ID7tITpYkg9k74SbesfDMpzFY+pIfWQMOmdrndbfCnNEY0QJPkE4m6DmXx7Zfvdi
-         GndhBLGdVXrv8EFLnG5ffXdRx7XkirgULo+vK01+SY26xtkpmhhTkji/Yhi0aKZi8trs
-         HvBw==
-X-Gm-Message-State: ACrzQf30v92scoC+EmSTuqv2CLasTp93AdYV/eBrEJmvvWZ5YfbPVH0L
-        3EiShavdnhG6gBJKe63ZVGOkCO0rxNqbcA==
-X-Google-Smtp-Source: AMsMyM7pzk/fyuwTkYEax7kxBeF9PwuIw06aw9bDXVI99J5zmBKOsE3HMgFtSnUxcFMBsHfUk4GpGQ==
-X-Received: by 2002:a05:622a:64c:b0:39c:ba62:ef05 with SMTP id a12-20020a05622a064c00b0039cba62ef05mr26908111qtb.351.1666615946883;
-        Mon, 24 Oct 2022 05:52:26 -0700 (PDT)
+        bh=V2WxXBEhE9lmDiSCmtp6HlQFdsUIOok3Tbt3p22NXFQ=;
+        b=F9aAAFi94v5I3lmWo4KMoDHOIY0mrjB/5yZdRkmsaI52p3x5HaGstXmFxlSHJ/jgg4
+         yEf/La5j6nVlvNFQbltiEpKfOJehgUw2WDLwudmZG3HH3NO2NFZHg/5evA1gQOyEweZJ
+         Nf6zkDTat9nBskC39CTDueH1FXae4DscNu0ourjGA2t/Wo0sRfjYqXk00jnWEchssns/
+         LvznpM08plzDDXi+NYz6u5kfc3vM5l/0a1xx1ycZcTBV+MKwJUJO7MnCB6Kqpf79Mp+4
+         4ZyOnGg+rSiXJMJi15zNqOY/CYtgZg6W8l+s2UctIaF5Yeepqbof/hb/crS+oPns/6Y9
+         XUoQ==
+X-Gm-Message-State: ACrzQf2Uh5RFEYChbea91E5BSu3JKb+ywd0/p9+tUfAWLWd+e3ym9wuY
+        bxDIAgKQ/o1E38xj1CtozePi39pUl/X57A==
+X-Google-Smtp-Source: AMsMyM6zKtB0VLD6JglF4BT8OXGL92tkP9rpSuRx3jzlARvuiFn8HIW3TcUaeoMq28LG3WQoVTOaKw==
+X-Received: by 2002:a05:622a:15d1:b0:39c:f1da:fe0e with SMTP id d17-20020a05622a15d100b0039cf1dafe0emr27027912qty.662.1666616007083;
+        Mon, 24 Oct 2022 05:53:27 -0700 (PDT)
 Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id 134-20020a370a8c000000b006cbcdc6efedsm14682583qkk.41.2022.10.24.05.52.25
+        by smtp.gmail.com with ESMTPSA id y8-20020ac81288000000b00398a7c860c2sm12704392qti.4.2022.10.24.05.53.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 05:52:26 -0700 (PDT)
-Message-ID: <e93a0495-3024-d5a0-cec0-205c210d0c8f@linaro.org>
-Date:   Mon, 24 Oct 2022 08:52:24 -0400
+        Mon, 24 Oct 2022 05:53:26 -0700 (PDT)
+Message-ID: <78b09272-4184-b2d6-3849-a6e0e8a16255@linaro.org>
+Date:   Mon, 24 Oct 2022 08:53:24 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH 20/21] soc: s3c: remove pm-debug hack
+Subject: Re: [PATCH 21/21] ASoC: samsung: remove unused drivers
 Content-Language: en-US
 To:     Arnd Bergmann <arnd@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
+        linux-arm-kernel@lists.infradead.org,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        Chanho Park <chanho61.park@samsung.com>,
-        linux-samsung-soc@vger.kernel.org
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        linux-samsung-soc@vger.kernel.org, alsa-devel@alsa-project.org
 References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-20-arnd@kernel.org>
+ <20221021203329.4143397-21-arnd@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221021203329.4143397-20-arnd@kernel.org>
+In-Reply-To: <20221021203329.4143397-21-arnd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,10 +88,13 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 On 21/10/2022 16:27, Arnd Bergmann wrote:
 > From: Arnd Bergmann <arnd@arndb.de>
 > 
-> CONFIG_SAMSUNG_PM_DEBUG was only used on s3c24xx because of the
-> DEBUG_S3C24XX_UART dependency. Since s3c24xx is now gone, and nobody
-> ever noticed this option being missing from s3c64xx, it can be safely
-> removed as well.
+> The s3c24xx SoC platform was completely removed, as were most of the
+> s3c64xx based board files, leaving only the DT based machines as well
+> as the MACH_WLF_CRAGG_6410 machine. All other board specific ASoC
+> driver can can now be recycled.
+> 
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
