@@ -2,144 +2,194 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84B9260B50D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 20:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A71F360B62E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 20:50:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231752AbiJXSMT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 14:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50176 "EHLO
+        id S231582AbiJXSuX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 14:50:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231805AbiJXSMC (ORCPT
+        with ESMTP id S232075AbiJXStz (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 14:12:02 -0400
-Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com [64.147.123.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E4B626C44E;
-        Mon, 24 Oct 2022 09:53:44 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.west.internal (Postfix) with ESMTP id 382C32B066F1;
-        Mon, 24 Oct 2022 10:27:54 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Mon, 24 Oct 2022 10:27:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; t=1666621673; x=
-        1666628873; bh=j5Xmm1hIOnDXfjVvOH1nBH2jD1dezyQFcZOvqExQy/Q=; b=R
-        FOCrFIiTxT4VVyc9mEDQdkEn+wGl6bgl85vYTnOHs9SmkuBXihbN449jNzacB8jI
-        rTTZjSbMHEkOE6lva8OK7H+tWMs7X8EpOfrjmtb6/oVOGDu9QbZ0yoFBmwCcqV/f
-        OY2S9hiS5k+xnEniFrSzWv69cVnlbB0lhSbJ9CqHWVp9ya8AIfEqbYesbuFRq9Qd
-        PSVVASHWixWTm4BTrueGRqrr2qoyHEcyvUm2O9mtgTacw1X/e4TGUOI7spwRF4k8
-        NrLH6dKrsa3XnjqeccrXYuGDRxoUwvp7+h9Ls1LReoWuxJMTQSMuUwY2jFO3D+Jm
-        dHiTM/iSZCKnRNoHbTlJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1666621673; x=
-        1666628873; bh=j5Xmm1hIOnDXfjVvOH1nBH2jD1dezyQFcZOvqExQy/Q=; b=j
-        bQ9YG0M5QUfhAMC5KcxlBfNv3OPZ3dcPqvAHDAkHJFJBtkG/oKiHEgB/CGkfd5D4
-        4WXIXCvh3vM6V7jLlWzrMUTV4Fpaa7SNUDAMOjP9/s26EtfpqJpXHuJvjncEf/Hb
-        l2A1rrOSEilHAzFog8P4c885b26rzqZmcbf/q5PoNykrPcDsbeuOwk+rlSf/XLVe
-        pO9o+yifsE2IWF0Wd9xtiS41jAXVVz31C3ZyF1314cL/e+AOiNL9MtukAPZEZ2j8
-        gZbNNP84mt+QmazljsROIuA11JsXMnAQOzsIvfqse5ElLjsQWYAznhJvSftlDiy8
-        UDnTIRgLvHwK0iMEY12aQ==
-X-ME-Sender: <xms:6KBWY_gwmdA9MhV8F7kI-IAT6RjoV8UyoY8vJd_im8nzMhPr-w5SEg>
-    <xme:6KBWY8DFzu_H1NXJNLoNcdftX0Fccg83xmP1gZ_Oo0PjdmKShBDqthVvsAPur-jjx
-    nKKucVvJWn2dHOfBYM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrgedtgedgjedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpefgkeeuleegieeghfduudeltdekfeffjeeuleehleefudettddtgfevueef
-    feeigeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:6KBWY_EKFaUSxfmbFq4u45xHq3kzkmlHX7APZxOrmpX4NKAPPIVhLw>
-    <xmx:6KBWY8Sa2YoRcKoTYZV4cAVrgo3XWvtPHJE_rauldYzUHnGUJcpV8g>
-    <xmx:6KBWY8zBpoCDaeX7eS6StOnrb6kSgFjb8QNDCQkjBv4w_fjHvPPK9g>
-    <xmx:6aBWY7iVKZZZeLJhXB65ARrCr06Q6ReuiHPabu10swOp_0SKXFR2BwSFrZk>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id F38B1B60086; Mon, 24 Oct 2022 10:27:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1047-g9e4af4ada4-fm-20221005.001-g9e4af4ad
-Mime-Version: 1.0
-Message-Id: <8d6ddb0d-98be-4c4d-9523-f024c339c8d0@app.fastmail.com>
-In-Reply-To: <2204103.iZASKD2KPV@diego>
-References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-1-arnd@kernel.org> <2204103.iZASKD2KPV@diego>
-Date:   Mon, 24 Oct 2022 16:27:31 +0200
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
-        linux-arm-kernel@lists.infradead.org,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Arnd Bergmann" <arnd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, "Ben Dooks" <ben-linux@fluff.org>,
-        "Simtec Linux Team" <linux@simtec.co.uk>,
-        "Arnaud Patard" <arnaud.patard@rtp-net.org>,
-        "Christer Weinigel" <christer@weinigel.se>,
-        "Guillaume GOURAT" <guillaume.gourat@nexvision.tv>,
-        openmoko-kernel@lists.openmoko.org,
-        "Jonathan Corbet" <corbet@lwn.net>,
-        "Alim Akhtar" <alim.akhtar@samsung.com>,
-        "Olof Johansson" <olof@lixom.net>, soc@kernel.org,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Sylwester Nawrocki" <s.nawrocki@samsung.com>,
-        "Tomasz Figa" <tomasz.figa@gmail.com>,
-        "Chanwoo Choi" <cw00.choi@samsung.com>,
-        "Michael Turquette" <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>, linux-doc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 01/21] ARM: s3c: remove all s3c24xx support
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 24 Oct 2022 14:49:55 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B02B515B
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 10:30:47 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id e4so5618332pfl.2
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 10:30:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qmRRnyqrCvwVZ4E+oJVYPxgBWe3Nt02//jegX+ZgfXw=;
+        b=kdHeBtjq4ZnpqOIg+37lgXyiiaV3XXQxNaZGixyhH4yGbriDik/YMamv1PIALwJB3S
+         PIhDMnY/vm/pkGypr1P6W3mkZZj/2eaXU6mzGOoZcdl15PA9lATbTdansjVERGg0m6er
+         TtwGBd743y163YzlUIa8+YRjEtr6k89CN001APSknZuojX58QHVySFt9nd7/w+vnOv9f
+         9MUTXHe9sVFD7VrygaScnu1jgprdX2Aqdui4C5n0KQ+bWEAFClJIABGxkMxysD581Jg/
+         YVGY7Nfdl3L+cCNFnRl2ww+khw7cJYfuDEfYxVJxuXDmnJj8xurh9sOI6++yZTCfq+pa
+         VTQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qmRRnyqrCvwVZ4E+oJVYPxgBWe3Nt02//jegX+ZgfXw=;
+        b=haqpBIABWFhUrdYFtWUj9RLKQCO81V7C1wZ8AWWsCmUwjmF0T6U/L5qYyHy50g72MP
+         Y5VHtZsiATrL0P0DJuHQCwymWqVSAm3kcF16WiCjSw/Dmr3czEpIrEPEHpXnzAMf8thI
+         7ogMmf3pCZaLs1w3+lgFL5oP+V0tR5TlwmprCdIUgEqbLluHh5WsgnVeglyCJu2pnyBG
+         b5kjLk+3bnyJYf4b14lELNnZWayTBOXbNiTUjRhZ6ud7fneOohc2AMnNO39nspUNMEsy
+         yGCEOFwgOP6UT/FQcS7SXr5c1m0pRgw5ApYVDwTZH4hK6ee9edHlqI4urGqvBndz3qh7
+         mZ0Q==
+X-Gm-Message-State: ACrzQf1FpJnYBiXy+QYgVGuWQ3UwirilLyWQjkTzUXKIfc7qIcWpXKMo
+        a3/P6w+U2I99R64tfIZaGVuf/U7u5MEcdNPYmP9kkn1O0eg=
+X-Google-Smtp-Source: AMsMyM6z4NWUjsrgFdg2kbiI+O6qCein5eD6LUCQUgk6TnK5ysp32+5l+WsLYktaQ1Vb3USEOGT8E2HIVczRn7CUhKw=
+X-Received: by 2002:a63:464d:0:b0:441:5968:cd0e with SMTP id
+ v13-20020a63464d000000b004415968cd0emr29972204pgk.595.1666630413870; Mon, 24
+ Oct 2022 09:53:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221021202254.4142411-1-arnd@kernel.org> <20221021203329.4143397-10-arnd@kernel.org>
+In-Reply-To: <20221021203329.4143397-10-arnd@kernel.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 24 Oct 2022 18:52:55 +0200
+Message-ID: <CAPDyKFpUzDD7X0GhP4ahqF=AyCGCMfSXjPW0qZ5vUnJMc=iT6Q@mail.gmail.com>
+Subject: Re: [PATCH 10/21] mmc: remove s3cmci driver
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
+        Simtec Linux Team <linux@simtec.co.uk>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-mmc@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sat, Oct 22, 2022, at 22:56, Heiko St=C3=BCbner wrote:
-> Am Freitag, 21. Oktober 2022, 22:27:34 CEST schrieb Arnd Bergmann:
->> From: Arnd Bergmann <arnd@arndb.de>
->>=20
->> The platform was deprecated in commit 6a5e69c7ddea ("ARM: s3c: mark
->> as deprecated and schedule removal") and can be removed. This includes
->> all files that are exclusively for s3c24xx and not shared with s3c64x=
-x,
->> as well as the glue logic in Kconfig and the maintainer file entries.
->>=20
->> Cc: Arnaud Patard <arnaud.patard@rtp-net.org>
->> Cc: Ben Dooks <ben-linux@fluff.org>
->> Cc: Christer Weinigel <christer@weinigel.se>
->> Cc: Guillaume GOURAT <guillaume.gourat@nexvision.tv>
->> Cc: Heiko Stuebner <heiko@sntech.de>
->> Cc: Simtec Linux Team <linux@simtec.co.uk>
->> Cc: openmoko-kernel@lists.openmoko.org
->> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+On Fri, 21 Oct 2022 at 22:45, Arnd Bergmann <arnd@kernel.org> wrote:
 >
-> So many memories of me starting out in the kernel on s3c24xx.
-> But it's no use trying to keep stuff around that nobody will likely
-> ever use again. So with a sad face
+> From: Arnd Bergmann <arnd@arndb.de>
 >
-> Acked-by: Heiko Stuebner <heiko@sntech.de>
+> The s3c24xx platform is gone, so this driver can be removed as well.
 >
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Kind regards
+Uffe
+
+
+> ---
+>  MAINTAINERS                              |    6 -
+>  drivers/mmc/host/Kconfig                 |   43 -
+>  drivers/mmc/host/Makefile                |    1 -
+>  drivers/mmc/host/s3cmci.c                | 1777 ----------------------
+>  drivers/mmc/host/s3cmci.h                |   75 -
+>  include/linux/platform_data/mmc-s3cmci.h |   51 -
+>  6 files changed, 1953 deletions(-)
+>  delete mode 100644 drivers/mmc/host/s3cmci.c
+>  delete mode 100644 drivers/mmc/host/s3cmci.h
+>  delete mode 100644 include/linux/platform_data/mmc-s3cmci.h
 >
-> though you might want to also include
-> 	drivers/dma/s3c24xx-dma.c
-
-This was in a separate patch that removes the driver:
-
-https://lore.kernel.org/linux-arm-kernel/20221021203329.4143397-14-arnd@=
-kernel.org/
-
-In the first patch, I only include references to removed
-Kconfig symbols that would not make sense to split out into
-separate patches.
-
-    Arnd
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2caf42b0328a..503ebd9800db 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -17920,12 +17920,6 @@ S:     Supported
+>  W:     http://www.ibm.com/developerworks/linux/linux390/
+>  F:     drivers/s390/scsi/zfcp_*
+>
+> -S3C24XX SD/MMC Driver
+> -M:     Ben Dooks <ben-linux@fluff.org>
+> -L:     linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+> -S:     Supported
+> -F:     drivers/mmc/host/s3cmci.*
+> -
+>  SAA6588 RDS RECEIVER DRIVER
+>  M:     Hans Verkuil <hverkuil@xs4all.nl>
+>  L:     linux-media@vger.kernel.org
+> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+> index 79d8ddf1f616..75e8c364243d 100644
+> --- a/drivers/mmc/host/Kconfig
+> +++ b/drivers/mmc/host/Kconfig
+> @@ -619,49 +619,6 @@ config MMC_SPI
+>
+>           If unsure, or if your system has no SPI master driver, say N.
+>
+> -config MMC_S3C
+> -       tristate "Samsung S3C SD/MMC Card Interface support"
+> -       depends on ARCH_S3C24XX || COMPILE_TEST
+> -       depends on S3C24XX_DMAC || COMPILE_TEST
+> -       help
+> -         This selects a driver for the MCI interface found in
+> -         Samsung's S3C2410, S3C2412, S3C2440, S3C2442 CPUs.
+> -         If you have a board based on one of those and a MMC/SD
+> -         slot, say Y or M here.
+> -
+> -         If unsure, say N.
+> -
+> -config MMC_S3C_HW_SDIO_IRQ
+> -       bool "Hardware support for SDIO IRQ"
+> -       depends on MMC_S3C
+> -       help
+> -         Enable the hardware support for SDIO interrupts instead of using
+> -         the generic polling code.
+> -
+> -choice
+> -       prompt "Samsung S3C SD/MMC transfer code"
+> -       depends on MMC_S3C
+> -
+> -config MMC_S3C_PIO
+> -       bool "Use PIO transfers only"
+> -       help
+> -         Use PIO to transfer data between memory and the hardware.
+> -
+> -         PIO is slower than DMA as it requires CPU instructions to
+> -         move the data. This has been the traditional default for
+> -         the S3C MCI driver.
+> -
+> -config MMC_S3C_DMA
+> -       bool "Use DMA transfers only"
+> -       help
+> -         Use DMA to transfer data between memory and the hardware.
+> -
+> -         Currently, the DMA support in this driver seems to not be
+> -         working properly and needs to be debugged before this
+> -         option is useful.
+> -
+> -endchoice
+> -
+>  config MMC_SDRICOH_CS
+>         tristate "MMC/SD driver for Ricoh Bay1Controllers"
+>         depends on PCI && PCMCIA
+> diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> index 0baeb0b004f7..885e19e21e75 100644
+> --- a/drivers/mmc/host/Makefile
+> +++ b/drivers/mmc/host/Makefile
+> @@ -34,7 +34,6 @@ obj-$(CONFIG_MMC_MVSDIO)      += mvsdio.o
+>  obj-$(CONFIG_MMC_DAVINCI)       += davinci_mmc.o
+>  obj-$(CONFIG_MMC_SPI)          += mmc_spi.o
+>  obj-$(CONFIG_MMC_SPI)          += of_mmc_spi.o
+> -obj-$(CONFIG_MMC_S3C)          += s3cmci.o
+>  obj-$(CONFIG_MMC_SDRICOH_CS)   += sdricoh_cs.o
+>  obj-$(CONFIG_MMC_TMIO_CORE)    += tmio_mmc_core.o
+>  obj-$(CONFIG_MMC_SDHI)         += renesas_sdhi_core.o
+> diff --git a/drivers/mmc/host/s3cmci.c b/drivers/mmc/host/s3cmci.c
+> deleted file mode 100644
+> index 8d5929a32d34..000000000000
+> diff --git a/drivers/mmc/host/s3cmci.h b/drivers/mmc/host/s3cmci.h
+> deleted file mode 100644
+> index 8b65d7ad9f97..000000000000
+> diff --git a/include/linux/platform_data/mmc-s3cmci.h b/include/linux/platform_data/mmc-s3cmci.h
+> deleted file mode 100644
+> index bacb86db3112..000000000000
+> --
+> 2.29.2
+>
