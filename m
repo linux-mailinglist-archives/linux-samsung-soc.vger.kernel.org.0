@@ -2,84 +2,80 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2742360AAE1
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 15:42:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8448360AC05
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 16:01:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234174AbiJXNmK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 09:42:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55000 "EHLO
+        id S236843AbiJXOBz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 10:01:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236449AbiJXNkL (ORCPT
+        with ESMTP id S236928AbiJXOAm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 09:40:11 -0400
-Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C581CB1DF3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:36:59 -0700 (PDT)
-Received: by mail-vk1-xa32.google.com with SMTP id a66so4604155vkc.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:36:59 -0700 (PDT)
+        Mon, 24 Oct 2022 10:00:42 -0400
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E750980495
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:47:27 -0700 (PDT)
+Received: by mail-io1-f54.google.com with SMTP id r142so7537731iod.11
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=t/bSMV1G3NHftbbiOMlkZDGHMaXgJ5YWpzbaRA4vltk=;
-        b=i4/IMfcBcqGglzqf/SOvPdhvpU7og45mEipaleqJvV0IxkNgUXpeN/5TqBeDm27w+B
-         IQj2IgB/C6j4DCe1/0GlHqq10k8PL5xAGcJIWtEDJ+4DhQb0DpIUOnTArvyeyTG3btf2
-         acgOXuAqVzKQ4nSgiYnWsg6RdIJA076s29z+kMFvxN/D9pNE9ifkIJtiX7Nfo+mPIGd3
-         KS6lmrFs1I57KeLB4unHBQIPM0rrdTFTWNcnNPqnMJPMRbVZe/EMzCCGeTrEm2sHlibk
-         JYibkdFzHQ598Ngik1IJ6MFW6sc5fncG6eeHbHIedrJmnqC9gM3ieMmr3EdmSBJsPFHF
-         ozvQ==
+        bh=bPvGa97y5q4/yNn+YYREFINJ16OQcdMmVgM+wz4Gjoc=;
+        b=qBrKhoX3br7NLa0X2PY4m8righ7u83mybm9+NRa9wbf3xFOT/FbXAC4kU6JnNMZQ90
+         5svF30fqP3MU5aDod6HAn09pBVDgb6DBkvTZ74Isgw17vB4XtOjO7m163cnAdyaHhIrA
+         g2TCsmWfOf9HNi9TXQb64BQ7fuFFOmpmxsYqJt1COp4kZD+q0vtxdpFVlAVv7GkcQ8YC
+         ffwJcNMHOT7rmySlWN+t4QiGyZKaPEXJdxnxOgvOcf1mMWkp0HRJQCN+io1dYF1gh6q+
+         eKAtnXWL1iAzEhwJtOmiDpngEozELlGSyUwOlWtKzIrWgiJ9U6m2WY82ouYVfiWeJjL8
+         MdFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t/bSMV1G3NHftbbiOMlkZDGHMaXgJ5YWpzbaRA4vltk=;
-        b=WDOgCi6FQDdv/9Fy+BQ5LT0JiYxSFhve6cjZORJtO1XOG1mdqSLEl8GmFP7PHpVOnL
-         UEjptggE4Co/kPPnY1Jozb439NIJR/W0UFcSdCgT4Jgf71AVMlWYblAosDjyp7EMXg0L
-         JPPKfBszXwg5kPJpU1i5tNNCNGVrjnjPS+ZAfF3Svn0QPZpkqY1zD61fNcr729k+7fAh
-         9JlQwmcaX54j7tVd47Ol+sRXAYq+eXmEjM6F2b9mlayPSV4srR0/0KidCJ/1Gbv1lYJV
-         0cCHCk4Q2/l/QzUTQoq/3pBc2nIK+esNX8PJmOHkER7BLekXGSU3HJqG4RsAMlDKuCHR
-         jZQA==
-X-Gm-Message-State: ACrzQf2cuahOaD1bo1GJc3I14UkmSro0qmyARlnB/N+WGMfO3/pOT0Hm
-        JAz0kxS+V0m9/4G4eEVhwWoqpaQVSNpw5Q==
-X-Google-Smtp-Source: AMsMyM7Vpky++x5MIrkJgLvsDPhgytK0mR3B44Tn1o/0g0QQxp6rwdOkC063mLEkuVJ38OVb52Zveg==
-X-Received: by 2002:a0c:dd13:0:b0:4bb:664c:5aaa with SMTP id u19-20020a0cdd13000000b004bb664c5aaamr6607970qvk.121.1666614397292;
-        Mon, 24 Oct 2022 05:26:37 -0700 (PDT)
+        bh=bPvGa97y5q4/yNn+YYREFINJ16OQcdMmVgM+wz4Gjoc=;
+        b=epWk3eiMPUUvtvPP9B0DaQlmrcUt+1ceKRuaOaLYyAGPrCZ4OYBzhSYf8DXjZlIxI4
+         mL12yst1400/iPhQbhPF3KtfTH81Lb68pn9RNhNM69G59qg8zN20+NnjtTq0VowPhhmC
+         GGhyIrQbZI5aau2kyrAKUzhEbQhjSWjtjswd70YXlpb+roaTIEZbxnjIY7OdKuxt75Nc
+         0eTI9sLGGjEbV/GAYCioJPh7z4ErKPZzoJtiKZAt3z0S46SGA6iS3CexO4erD+gefGPk
+         47uzGKWBG9A6Vi0x0Kc4hyohONac8sxzGsCA4JlgwlJVvuOb9I4kbg8B+NI4v7l4NaXz
+         0lEg==
+X-Gm-Message-State: ACrzQf28et+EdyuDLM0f2DrRuu8pZIv+9iqDmj3FnYv3t70zk+QnKUb0
+        dlO7mTX0TeShFPcUQtDtU1u9QjYfttdN5A==
+X-Google-Smtp-Source: AMsMyM7EYh1ejwFY2USGW8DFT0b/rUYzFLiVrz06YsLEAhRKFwNDPvh1rFazu864RVBKbhTwpJXvvg==
+X-Received: by 2002:ac8:5791:0:b0:39c:f20f:b7f5 with SMTP id v17-20020ac85791000000b0039cf20fb7f5mr26487093qta.360.1666615077517;
+        Mon, 24 Oct 2022 05:37:57 -0700 (PDT)
 Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id k11-20020a05620a0b8b00b006cf3592cc20sm14672531qkh.55.2022.10.24.05.26.35
+        by smtp.gmail.com with ESMTPSA id do35-20020a05620a2b2300b006b95b0a714esm8020183qkb.17.2022.10.24.05.37.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 05:26:36 -0700 (PDT)
-Message-ID: <774a317d-959c-a40d-5855-d5094ee55c70@linaro.org>
-Date:   Mon, 24 Oct 2022 08:26:34 -0400
+        Mon, 24 Oct 2022 05:37:56 -0700 (PDT)
+Message-ID: <7f7ea721-42c7-6d5c-6b84-cf597d21ac29@linaro.org>
+Date:   Mon, 24 Oct 2022 08:37:55 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH 03/21] ARM: s3c: remove most s3c64xx board support
+Subject: Re: [PATCH 12/21] leds: remove s3c24xx driver
 Content-Language: en-US
 To:     Arnd Bergmann <arnd@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
+        linux-arm-kernel@lists.infradead.org, Pavel Machek <pavel@ucw.cz>
 Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
-        Kwangwoo Lee <kwangwoo.lee@gmail.com>,
-        Peter Korsgaard <jacmet@sunsite.dk>,
-        Darius Augulis <augulis.darius@gmail.com>,
-        Maurus Cuelenaere <mcuelenaere@gmail.com>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Juerg Haefliger <juerg.haefliger@canonical.com>,
-        Sam Protsenko <semen.protsenko@linaro.org>,
-        linux-samsung-soc@vger.kernel.org
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+        linux-leds@vger.kernel.org, linux-samsung-soc@vger.kernel.org
 References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-3-arnd@kernel.org>
+ <20221021203329.4143397-12-arnd@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221021203329.4143397-3-arnd@kernel.org>
+In-Reply-To: <20221021203329.4143397-12-arnd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,14 +85,9 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 On 21/10/2022 16:27, Arnd Bergmann wrote:
 > From: Arnd Bergmann <arnd@arndb.de>
 > 
-> All traditional board files except for MACH_WLF_CRAGG_6410 were
-> marked as unused, so remove them now.
+> The s3c24xx platform is gone, so the led driver can be
+> removed as well.
 > 
-> Cc: Kwangwoo Lee <kwangwoo.lee@gmail.com>
-> Cc: Peter Korsgaard <jacmet@sunsite.dk>
-> Cc: Darius Augulis <augulis.darius@gmail.com>
-> Cc: Maurus Cuelenaere <mcuelenaere@gmail.com>
-> Cc: Ben Dooks <ben-linux@fluff.org>
 > Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 > ---
 
