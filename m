@@ -2,79 +2,83 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2152360AED6
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 17:17:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05EF260AC96
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 16:11:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231274AbiJXPRU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 11:17:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59628 "EHLO
+        id S231511AbiJXOKv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 10:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230319AbiJXPQy (ORCPT
+        with ESMTP id S236864AbiJXOJg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 11:16:54 -0400
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F6E078BE9
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:56:11 -0700 (PDT)
-Received: by mail-io1-f43.google.com with SMTP id p16so7743674iod.6
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 06:56:11 -0700 (PDT)
+        Mon, 24 Oct 2022 10:09:36 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52441C513A
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:51:30 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id o65so7591304iof.4
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6s8WA+syYl/1soPYugl8PgRcJUKvL8znur65OKyCTY8=;
-        b=O4MW5Mz8AyKyDlwQp6prA3grYcTgM+7SDh5ALqtcwq8HOqoXmYnE73w5dRu/Jcqwod
-         lK8ED3cOblYtl+6O6Vnj2bd+HIKLhr5SJRZB5w/lliAoR7H/b0lI76cNRWfU8GjNwJ9F
-         2jPmL6UWjTjcoHKwSfTQN01OzFd6BL19NZnUlN7a10a8v3n8e+gjgHZqDUUQObYNtKYi
-         xV7cxTbLIZYYxIYD3XViMzFKJa9UvhbEiu6MKFcyeYrBoEv8kz2vpZ1NEuvTGstPrV6M
-         eSU7fgy0hEmbSa1ho6YiSlY8U5EJNxOeLNms9485OnDOgHcv69wz02CBVp4qC0MFs7r+
-         yh+w==
+        bh=Qf5QsYgh2ubEhyoXafR9Kn67ARvXDBZur7bOPc+n/Bo=;
+        b=p1vNCJ7X8KKqRqOvcCIXMfbJLj+u7cqBipeu2tBcTR9gb7FTq/FxIhtEPXP4EbCyX+
+         b8I50Rp/0nU1+lvqCZ+XUDwbKxfynxRGTBX01G4DJImc1cJADmEYzHKrzsgus7sZisVY
+         5ogHQFYV6UznU2kHi3Yj1IGBbhXrTP+dLm0fFMLPJS7y8+231L/a/CqR5gjz5Fwm6nvO
+         6M194xkD8RT+uuVJ65JtDGsv7hF87eHB8OGmRiqTHMrR2BtMCZP+dioBkAYN6Wmwersv
+         UaE8eQzXHLWw0vXDyUcxtch1CqCD/Sk42/P5YQg6cJ/lhnUrGPu99CZe2CfzkSGSm3bH
+         YPGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6s8WA+syYl/1soPYugl8PgRcJUKvL8znur65OKyCTY8=;
-        b=peVrRqudHHGZc6ewDyN3Nsc+K2l3xBDdajmPWpjbmHuEOTjVNNa2afPoRsv9jys9Ub
-         7gZEgjZmste6YFTKED0cMzjB7EKI59Oi1JwDXVSpu5YdDKYfMLaNfGG4iYx1ueuF4OG+
-         6KHhbQSAhJmsQCpslwPqzK0bmVx8qX3FwyBmqSEK0AiIOydIjzJ+U3iceu9YHZcH7LGn
-         b18QUyyFJAUeAT2P3TjDPzJpk0eHjqG42wTfKU9vlORnFI2aFgj1MY52JvJ2hEGZ73tI
-         stqSx1f5ApgsKcfRw78sg6K39FzCsnUXwSOceIKgFW0CQhPe5c2E5x/GF2b1yVXOnhmA
-         gAaw==
-X-Gm-Message-State: ACrzQf3Jvf2JVeA0Iyq4+KLTbBDaXAE8K0Iled03EzxJZLuF5pxLa1e+
-        CZtZ38GxaEXf6R3q2WbCtyEDjpwWu+bRXA==
-X-Google-Smtp-Source: AMsMyM78IBElxH8BgFkoT519PImmXgVVPmXKo+cy//tqAhGj3gFdCsN0VRVhe+sZ5YMuqfvc7mXViw==
-X-Received: by 2002:ae9:e8ce:0:b0:6ed:22ee:305e with SMTP id a197-20020ae9e8ce000000b006ed22ee305emr22099101qkg.255.1666614959885;
-        Mon, 24 Oct 2022 05:35:59 -0700 (PDT)
+        bh=Qf5QsYgh2ubEhyoXafR9Kn67ARvXDBZur7bOPc+n/Bo=;
+        b=LIsWmydTu6pMt/hNyWenzSevCiHCnga1fLB8q0lgrSEKsDJIwtZPAVf/FNO0Vuc1ff
+         4COW14yL5UTdVph1drBlmr3/sSzMAw1ZqQl8KXxlU777CGzgEnxMBFzqw3hJzdEqocml
+         d4O/0VcTpvB1XjqMi0agzI8ShCdhlhOA1SqBsVxeXOCXSbskYvEgpaxlbMMMqXrfJ3Ig
+         s9//PNjz/Pp6tQLLWF18jcoVuJd4B64FSc91JXIGgeVSDYsRN4IQZrWmFhtDxncvdCmH
+         mvoXCj9wFyiSib9tS+6oYizP8gpsuah2cUs7KgzSzThY1BYQF6KJCE6cVe+0wX88wxrO
+         TSKA==
+X-Gm-Message-State: ACrzQf1QmT+zonXQN11fFpz4+SIm6EA3G0EY+PSTMs5GE4JQ1UyvcMZP
+        a/kkiIbqC3kZ6Gxte0DQUred+7hkOebUCA==
+X-Google-Smtp-Source: AMsMyM52NKv6SK0ywQRUj5knTKvSie99CLY/ydJHwCLndJgZV0IUmqP6mLOFgcvBx/OEagNE0cg5Uw==
+X-Received: by 2002:a05:622a:1743:b0:39c:d80f:9b93 with SMTP id l3-20020a05622a174300b0039cd80f9b93mr26057665qtk.571.1666615040623;
+        Mon, 24 Oct 2022 05:37:20 -0700 (PDT)
 Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id cd15-20020a05622a418f00b0035bafecff78sm12693087qtb.74.2022.10.24.05.35.58
+        by smtp.gmail.com with ESMTPSA id bz12-20020a05622a1e8c00b0039a1146e0e1sm12820884qtb.33.2022.10.24.05.37.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 05:35:59 -0700 (PDT)
-Message-ID: <a896c106-d261-c763-7410-0f2acefebd41@linaro.org>
-Date:   Mon, 24 Oct 2022 08:35:52 -0400
+        Mon, 24 Oct 2022 05:37:20 -0700 (PDT)
+Message-ID: <5af7d4db-b171-6149-4d24-c40c7115ebfa@linaro.org>
+Date:   Mon, 24 Oct 2022 08:37:18 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH 10/21] mmc: remove s3cmci driver
+Subject: Re: [PATCH 11/21] clk: remove s3c24xx driver
 Content-Language: en-US
 To:     Arnd Bergmann <arnd@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
-        Ulf Hansson <ulf.hansson@linaro.org>
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-mmc@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org
 References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-10-arnd@kernel.org>
+ <20221021203329.4143397-11-arnd@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221021203329.4143397-10-arnd@kernel.org>
+In-Reply-To: <20221021203329.4143397-11-arnd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,9 +88,8 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 On 21/10/2022 16:27, Arnd Bergmann wrote:
 > From: Arnd Bergmann <arnd@arndb.de>
 > 
-> The s3c24xx platform is gone, so this driver can be removed as well.
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> The s3c24xx platform is gone, so the clk driver can be removed as
+> well.
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
