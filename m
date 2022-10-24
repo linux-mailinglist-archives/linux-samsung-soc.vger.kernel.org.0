@@ -2,98 +2,121 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D46EB60A2EB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 13:49:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3373B60AB62
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Oct 2022 15:51:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231309AbiJXLtl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 24 Oct 2022 07:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32896 "EHLO
+        id S236534AbiJXNv3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 24 Oct 2022 09:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231891AbiJXLtK (ORCPT
+        with ESMTP id S236442AbiJXNuX (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 24 Oct 2022 07:49:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9433B6DAD0;
-        Mon, 24 Oct 2022 04:43:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E6E36612B4;
-        Mon, 24 Oct 2022 11:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48252C433D7;
-        Mon, 24 Oct 2022 11:41:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666611671;
-        bh=A6/oipM71dqfAOwoHLSoCZr4TU1lNCTmy5FXPcGzouo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cbS82jc0CZ1yyefji8RT33SmBxwpPrpttejfn+Zfe+r42CJe9fZxMMFa/WhmVXcz3
-         3RZ8e/+Z5pgPlEI+COlTJ9K256TfTaTUjsB8oZmZ1OIBOQbD4u7hBmgbdpvA6M1b0m
-         8XzJhVJg6EjxxZvI9/sLyLwozToT0XKxJ0BvPwTbc6jbdrkSBDVjYYF6FsBA5fzkLC
-         VvRz57xySik+kE5hU5lAkgtJusvZurWmieD1D0uZW3MQOP96nF7jaCt0SqDRxSjd4g
-         QBo/i/Rl3fGtY/35fvYHyNn4iPXHq0EoafhmMbgtzrlp3LWX64nDvtt+fxMrn+dtPG
-         zlJCme3YuxgyQ==
-Date:   Mon, 24 Oct 2022 12:41:05 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
+        Mon, 24 Oct 2022 09:50:23 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5666AB7EFC
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:41:49 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id io19so3372645plb.8
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 24 Oct 2022 05:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Jh8UQ4JmTZN9hL0/8CXAkNYRnuwMy/n4/v6mITjc4KY=;
+        b=y0W+zUyiBftSd0JgAGoPOqPtmV13guRpqzbMHskUNvLCEuQ6pihIc7oGP6TuC3oQt5
+         NjC6zT2GBgFpwt3TaO3sCktoTg2zHU1fTtWzfcwSmh6ykgmIp95Eot8a0sqsecpFyW7x
+         1HT6dR9s6lU9w8AQMYPhYLXd1Gu3x1edoP1WhBwFF/jIaERMSCG6bAABteTZbOS+Taz8
+         m7SCCh9de8RQXNTOTCxekuN5wUYGpUE+af/pdLsiLsH9H7ozUi1IJplIrGjD7sC4Tf7t
+         s+A+OHtLvPIWSHgE+4xzSs5FzW53+pzJ7Liv/i1SA0R2VvOs5lkPyZK2zhrwcwhQeqwz
+         cUfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jh8UQ4JmTZN9hL0/8CXAkNYRnuwMy/n4/v6mITjc4KY=;
+        b=3ZPF6j7/28ybieWd83H6aTVyvYDnzdamDuUnLfyEwgbp55rHPfMxFddvO9v/+CRFgO
+         93R5J6MUtzE1sM4MAVFp5vhMopWEXRfuCSSZVfQIK/3lFpPQbByIoZ0dwuh5CGaOju7o
+         52P96x/0d7QGz9Wy+wmN/pzvNIzqzyGdClW11GR5b9QJT3nG6eL8reL1OXbMmQa6DdTG
+         ExuGCFCGWTjLA7A0jQmPdTMJfUq1ir/tQDljRbdKAGYMftDBLHFPH7ybUW2z/rCBYikD
+         R6a2sckAHXjXvVFapprpnOtX5MwxHzFWSO9IwWJOPAkpj3zNNq4EDiJAoQIsfr6TSMyi
+         Bb4w==
+X-Gm-Message-State: ACrzQf2pNveRsCSgAOySe7QIoQ6ZL3j7ytymidcXFEqbqWbDj89MxNy9
+        89Qd8nSfB7PvhcuruxH1cf/suFoVahS2HQ==
+X-Google-Smtp-Source: AMsMyM64HS96JA+t5NegWTBhGoXrPmUTvN8S9j1oIuC6j5JnhVzd28Edhbio8VxlddWIvdR7T0/thQ==
+X-Received: by 2002:a0c:8ccc:0:b0:4b2:382e:ddaa with SMTP id q12-20020a0c8ccc000000b004b2382eddaamr27200510qvb.33.1666614368794;
+        Mon, 24 Oct 2022 05:26:08 -0700 (PDT)
+Received: from [192.168.1.8] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id u30-20020a37ab1e000000b006ef0350db8asm9109052qke.128.2022.10.24.05.26.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Oct 2022 05:26:08 -0700 (PDT)
+Message-ID: <a354c24d-0355-7c9d-ad05-4c21561af4dc@linaro.org>
+Date:   Mon, 24 Oct 2022 08:26:05 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH 02/21] ARM: s3c: remove s3c24xx specific hacks
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@kernel.org>,
+        linux-arm-kernel@lists.infradead.org
+Cc:     linux-kernel@vger.kernel.org, Ben Dooks <ben-linux@fluff.org>,
         Simtec Linux Team <linux@simtec.co.uk>,
         Arnd Bergmann <arnd@arndb.de>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Juerg Haefliger <juerg.haefliger@canonical.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
         Tomasz Figa <tomasz.figa@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        linux-samsung-soc@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH 05/21] ARM: s3c: simplify platform code
-Message-ID: <Y1Z50S/PNmN8AC80@sirena.org.uk>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-gpio@vger.kernel.org, linux-rtc@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, linux-clk@vger.kernel.org
 References: <20221021202254.4142411-1-arnd@kernel.org>
- <20221021203329.4143397-5-arnd@kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9pGWQfBvLlZkCvgv"
-Content-Disposition: inline
-In-Reply-To: <20221021203329.4143397-5-arnd@kernel.org>
-X-Cookie: You will forget that you ever knew me.
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <20221021203329.4143397-2-arnd@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221021203329.4143397-2-arnd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-
---9pGWQfBvLlZkCvgv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Oct 21, 2022 at 10:27:38PM +0200, Arnd Bergmann wrote:
+On 21/10/2022 16:27, Arnd Bergmann wrote:
 > From: Arnd Bergmann <arnd@arndb.de>
->=20
-> Following down the now unused symbols and header files, some additional
-> content can be dropped that is used by neither the s3c64xx DT support
-> nor the crag6410 board.
+> 
+> A number of device drivers reference CONFIG_ARM_S3C24XX_CPUFREQ or
+> similar symbols that are no longer available with the platform gone,
+> though the drivers themselves are still used on newer platforms,
+> so remove these hacks.
+> 
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Acked-by: Mark Brown <broonie@kernel.org>
 
---9pGWQfBvLlZkCvgv
-Content-Type: application/pgp-signature; name="signature.asc"
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
------BEGIN PGP SIGNATURE-----
+Best regards,
+Krzysztof
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNWedAACgkQJNaLcl1U
-h9ArOQf+K5qqoOOxAGzLopphyCLIbse0iafJnFcSrDjVkLggygiFXAq8cE0AcwTZ
-dBQ76sL/NMCgdghnaM0S7iwRqc0SXfciE31GgnjqnbZdgImxEAfDe5N0lbUBVjOQ
-eF8EjYasv7LH/sVfk0fKP109S8Qb5KAxVzVAe1Dn6k7NkiqPsMk9iorBsUP5z22R
-+KmhrB0unrOe8HaR8htn9AF15fJgMKENsOkxr1guNotYz4VtdrS3ozKavFkPJzxh
-xe3aIgJaHRwuUH/NYsJ25Y3xrUO2i5nNUpRIlto3YqbxXxg+bWKKnYcMDM5RBKno
-KKKyUfGrF2TYP8icVtKAI8w3OCSAfg==
-=wtbH
------END PGP SIGNATURE-----
-
---9pGWQfBvLlZkCvgv--
