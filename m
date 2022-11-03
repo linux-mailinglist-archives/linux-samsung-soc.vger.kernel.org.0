@@ -2,118 +2,199 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DA8B618184
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Nov 2022 16:15:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E202A618445
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Nov 2022 17:26:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232155AbiKCPPK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 3 Nov 2022 11:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55298 "EHLO
+        id S231688AbiKCQ0K (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 3 Nov 2022 12:26:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbiKCPPF (ORCPT
+        with ESMTP id S229950AbiKCQ0D (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 3 Nov 2022 11:15:05 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 866511571F;
-        Thu,  3 Nov 2022 08:15:03 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        Thu, 3 Nov 2022 12:26:03 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85391AD85
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Nov 2022 09:26:02 -0700 (PDT)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 426EA1F900;
-        Thu,  3 Nov 2022 15:15:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1667488502; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=HgxG97nmydzNCVipkHzgPf3aCI1grjy0cqRB+0/Ck74=;
-        b=kcgtu9PKiyMKUj8GxwYh+/ORcWz7+UhaRslLpGT/0EYXH4EiaVWbRO1rXX+RnuBF5OjTj2
-        Xec3+JBI90xwvAliyOtjTY3B94F0kq3muNjviJe52VZzz9N0Nd9Yc6Mfuv+xD0GBg/lfBm
-        F9ORYgDvXcxRapg5A3YBRJRoUxxeEtI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1667488502;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=HgxG97nmydzNCVipkHzgPf3aCI1grjy0cqRB+0/Ck74=;
-        b=BTICG+mmiOcUdGuFYoU4C0nyEBYhfhmngf4Ev9loTA8Jed/wbNJaxvDDbye+EQL4FS5m+K
-        t/wO99a1pUjQkKCQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B325D13AAF;
-        Thu,  3 Nov 2022 15:15:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id 8LVrKvXaY2PBGgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Thu, 03 Nov 2022 15:15:01 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     daniel@ffwll.ch, airlied@gmail.com, sam@ravnborg.org,
-        javierm@redhat.com, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com
-Cc:     "linux-hyperv@vger.kernel.orglinux-hyperv"@vger.kernel.org,
-        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-samsung-soc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, xen-devel@lists.xenproject.org,
-        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org,
-        spice-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 23/23] drm/fb-helper: Clarify use of last_close and output_poll_changed
-Date:   Thu,  3 Nov 2022 16:14:46 +0100
-Message-Id: <20221103151446.2638-24-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221103151446.2638-1-tzimmermann@suse.de>
-References: <20221103151446.2638-1-tzimmermann@suse.de>
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 5DEB18519D;
+        Thu,  3 Nov 2022 17:25:59 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1667492761;
+        bh=XyGlCckHVL9Mp4qbwYrY3wTxsiY5XVy50GuuK2Hwr38=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=zcrxY9K5YKhjpJHBv4/GXrJ9WLCPqi32lTd/+V+eGVyleZTYmoIJEkOI05rtgcUPB
+         ey+lYsICO6LDNhpfLVQIiww19x0grg81w0qUfFba9fCtWUKo60BIGwp7BdeQS277Df
+         J/WnhG2OLJ9oYpVliHJ1FwHT92TKNW4k1xYSPiqlnn3SFVTzE4waLL2OLbErNzzqjy
+         D4CmmJx7yNLN7CW62a/6I1s7m8OkI0Yn1ZX8lgYvnZHGTTlGGzjG2q4J75Z8uyHsxK
+         rYTQZsdi485ZHlKCVOoABddUM4CqnR7IqFPonPPuXdOnvBjW5v5FDoW1tJBWOes8hc
+         6NBJJcQ20ZVUw==
+Message-ID: <9262c207-2b72-6638-0274-0ce1d0d830c9@denx.de>
+Date:   Thu, 3 Nov 2022 17:02:13 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v7 07/10] drm: bridge: samsung-dsim: Add
+ atomic_get_input_bus_fmts
+Content-Language: en-US
+To:     Jagan Teki <jagan@amarulasolutions.com>
+Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>,
+        Fancy Fang <chen.fang@nxp.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
+        Adam Ford <aford173@gmail.com>,
+        Neil Armstrong <narmstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+        Matteo Lisi <matteo.lisi@engicam.com>,
+        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-amarula <linux-amarula@amarulasolutions.com>
+References: <20221005151309.7278-1-jagan@amarulasolutions.com>
+ <20221005151309.7278-8-jagan@amarulasolutions.com>
+ <d837f6e3-d869-6543-2361-a7843c00ed8a@denx.de>
+ <CAMty3ZDQCsJF+EuG_gvZ-MbkePO55GHfX_yvmKdzqE1fdAR55g@mail.gmail.com>
+From:   Marek Vasut <marex@denx.de>
+In-Reply-To: <CAMty3ZDQCsJF+EuG_gvZ-MbkePO55GHfX_yvmKdzqE1fdAR55g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
+X-Virus-Status: Clean
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Clarify documentation in the use of struct drm_driver.last_close and
-struct drm_mode_config_funcs.output_poll_changed. Those callbacks should
-not be said for fbdev implementations on top of struct drm_client_funcs.
+On 11/3/22 10:39, Jagan Teki wrote:
+> On Sun, Oct 16, 2022 at 3:31 AM Marek Vasut <marex@denx.de> wrote:
+>>
+>> On 10/5/22 17:13, Jagan Teki wrote:
+>>
+>> [...]
+>>
+>>> @@ -1321,6 +1322,32 @@ static void samsung_dsim_atomic_post_disable(struct drm_bridge *bridge,
+>>>        pm_runtime_put_sync(dsi->dev);
+>>>    }
+>>>
+>>> +#define MAX_INPUT_SEL_FORMATS        1
+>>> +
+>>> +static u32 *
+>>> +samsung_dsim_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
+>>> +                                    struct drm_bridge_state *bridge_state,
+>>> +                                    struct drm_crtc_state *crtc_state,
+>>> +                                    struct drm_connector_state *conn_state,
+>>> +                                    u32 output_fmt,
+>>> +                                    unsigned int *num_input_fmts)
+>>> +{
+>>> +     u32 *input_fmts;
+>>> +
+>>> +     *num_input_fmts = 0;
+>>> +
+>>> +     input_fmts = kcalloc(MAX_INPUT_SEL_FORMATS, sizeof(*input_fmts),
+>>> +                          GFP_KERNEL);
+>>> +     if (!input_fmts)
+>>> +             return NULL;
+>>> +
+>>> +     /* This is the DSI-end bus format */
+>>> +     input_fmts[0] = MEDIA_BUS_FMT_RGB888_1X24;
+>>> +     *num_input_fmts = 1;
+>>
+>> Is this the only supported format ? NXP AN13573 lists the following:
+>>
+>> i.MX 8/RT MIPI DSI/CSI-2, Rev. 0, 21 March 2022
+>> 3.7.4 Pixel formats
+>> Table 14. DSI pixel packing formats
+>>
+>> Loosely Packed Pixel Stream, 20-bit YCbCr, 4:2:2
+>> Packed Pixel Stream, 24-bit YCbCr, 4:2:2
+>> Packed Pixel Stream, 16-bit YCbCr, 4:2:2
+> 
+> Look like these are unsupported in media-bus-format.h list.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/drm_fb_helper.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Aren't those:
 
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index 5eb2f0d4bf8d4..e0384f967c0b3 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -89,11 +89,13 @@ static DEFINE_MUTEX(kernel_fb_helper_lock);
-  * It will automatically set up deferred I/O if the driver requires a shadow
-  * buffer.
-  *
-- * At runtime drivers should restore the fbdev console by using
-+ * Existing fbdev implementations should restore the fbdev console by using
-  * drm_fb_helper_lastclose() as their &drm_driver.lastclose callback.
-  * They should also notify the fb helper code from updates to the output
-  * configuration by using drm_fb_helper_output_poll_changed() as their
-- * &drm_mode_config_funcs.output_poll_changed callback.
-+ * &drm_mode_config_funcs.output_poll_changed callback. New implementations
-+ * of fbdev should be build on top of struct &drm_client_funcs, which handles
-+ * this automatically. Setting the old callbacks should be avoided.
-  *
-  * For suspend/resume consider using drm_mode_config_helper_suspend() and
-  * drm_mode_config_helper_resume() which takes care of fbdev as well.
--- 
-2.38.0
+MEDIA_BUS_FMT_UYVY12_1X24
+MEDIA_BUS_FMT_UYVY8_1X16
 
+?
+
+Those are packed, and subsampled 4:2:2
+
+>> Packed Pixel Stream, 30-bit RGB, 10-10-10
+
+MEDIA_BUS_FMT_RGB101010_1X30
+
+>> Packed Pixel Stream, 36-bit RGB, 12-12-12
+
+MEDIA_BUS_FMT_RGB121212_1X36
+
+>> Packed Pixel Stream, 12-bit YCbCr, 4:2:0
+> 
+> Same issue, unsupported.
+
+The 12-bit packed 4:2:0 might be something along the lines of
+
+drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
+MEDIA_BUS_FMT_YUYV8_1_5X8, /* YUV420 */
+
+>> Packed Pixel Stream, 16-bit RGB, 5-6-5
+> 
+> MEDIA_BUS_FMT_RGB565_1X16
+> 
+>> Packed Pixel Stream, 18-bit RGB, 6-6-6
+> 
+> Same issue, unsupported.
+
+MEDIA_BUS_FMT_RGB666_1X18
+
+>> Loosely Packed Pixel Stream, 18-bit RGB, 6-6-6
+>> Packed Pixel Stream, 24-bit RGB, 8-8-8 Format
+> 
+> MEDIA_BUS_FMT_RGB666_1X18
+> MEDIA_BUS_FMT_RGB888_1X24
+> 
+>>
+>> The MX8MM/MN LCDIF can generate all of those RGB formats , the MX8MP
+>> LCDIFv3 can also generate the 16bit YCbCr .
+> 
+> Is YCbCr denoted as UYVY in media-bus-format.h ?
+I think this applies:
+
+https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/colorspaces.html
+"
+Sometimes people confuse Y’CbCr as being a colorspace. This is not 
+correct, it is just an encoding of an R’G’B’ color into luma and chroma 
+values.
+"
+
+And esp. this:
+
+"
+In order to correctly interpret a color you need to know the 
+quantization range, whether it is R’G’B’ or Y’CbCr, the used Y’CbCr 
+encoding and the colorspace. From that information you can calculate the 
+corresponding CIE XYZ color and map that again to whatever colorspace 
+your display device uses.
+"
+
+Which means that in order to properly describe or interpret the data, 
+you need the entire v4l2_mbus_framefmt content, not just the pixel code:
+
+https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/subdev-formats.html
+
+But this information is not passed across the bus, that's metadata 
+internal to the kernel.
