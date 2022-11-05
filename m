@@ -2,103 +2,74 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A7A261A0E9
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  4 Nov 2022 20:24:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D435461DA2B
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  5 Nov 2022 13:39:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiKDTYB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 4 Nov 2022 15:24:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55250 "EHLO
+        id S229883AbiKEMj0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 5 Nov 2022 08:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbiKDTXi (ORCPT
+        with ESMTP id S229703AbiKEMjN (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 4 Nov 2022 15:23:38 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF30193F1
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  4 Nov 2022 12:23:25 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id k2so3676989qkk.7
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 04 Nov 2022 12:23:25 -0700 (PDT)
+        Sat, 5 Nov 2022 08:39:13 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB0518362
+        for <linux-samsung-soc@vger.kernel.org>; Sat,  5 Nov 2022 05:39:09 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id b62so6606949pgc.0
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 05 Nov 2022 05:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hwx4i8kl3gAwulupSSsSkTjIChny3+b4UG2pCOA9J1M=;
-        b=NWihxHTRWa7P5zAWtjlkyg2Vnu7KgSW/DAq99rTTsQv+FWpEqkQHsNv8lD5ZZ9y9Ji
-         Q3LOosWuCXo1aT9A+WeLm0twlsu+DUIRj80oG7YCqVA9FHTvbvYsoGMWnm6t7mz+ykBZ
-         PnwoHwsgEJTfKvGYfb/SsiQljzmT5hMmKACvnnzY9mYfTepTmoG/TNvyf0w/YEYPn1H8
-         Gqa2MLN+Dz+72bDyzEUDjz34yb3vmM6MHFhKiKwYnIPWud5Q3euMqHPzGFrdrOHM/03H
-         6C/fBFvQVnUfQkXKhqpIOzOAzjAPnAsoDF7cfmZoMy/a/tEH9AZkr5mJraDURAgp1yrY
-         G4eQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=RIHC9n/dKVExSLG73bd8Y0TEFLCe8HTSL+2d7yE6D2NKhaBTGC77yJTmz2n+UQEoLn
+         jxE36/CP2zWRsxdrbl6Qipo/1wujKwbWTegmQtKA5KaKY5c5k0uls/46uPweryK1Q/70
+         p7KuiiXfJ0vih3FChZlrnOZ0SimajpgL+AXRNjZnSx1jbzFH5llJcPftmYgxT0KBp7aY
+         Nvw2mfIN1dkT84jofHnK9dh7XMfTMquPbJMMLMjB0Dp08MAIB2DxhF8xAtCfYFVwsPDo
+         kuNK/heTlVtwv9hHFhKrR/b4yxRwRja7vVsRsbB9inWGKh1FmpKXNdm91a1Uu/cF0CiR
+         QmBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hwx4i8kl3gAwulupSSsSkTjIChny3+b4UG2pCOA9J1M=;
-        b=uEpwfv0+NY/P7K9UJ1Jg129u9lBXEDUflphP+8L6Ctgi2RfB9ZFuWL/bI9/kw/f/Ok
-         BP6JleTj6+gYbqt03uYzRiksRiSA4zoM/o905Z8M/y/wqmrvYdSFttOVF1njktxrArJm
-         83md6RfX01QEDKc8Dl39iQJPX2VzMLl7wNHV+DPclz6knpnezXyt1EIVu8I+7bTZ39k4
-         X41tI4lw1nBqms7MPTndoIz39ly2BCbPsiMqcAafhPL+D7r3JmoJ7Njtf61pZEKUwESe
-         3v7YlC/ec5Jpheoucv34n1UUMGQaxZenb8qqtPIQbOrh6W+kM0YzskKeF5O6ppz+NOUn
-         gG1A==
-X-Gm-Message-State: ACrzQf2J1yQlWShuYomwQcSQsgXKNI51MEpCzNxuy7jMgiERCU6fSpWh
-        6iLl2tWroJnajtP7Af6sJVKxDg==
-X-Google-Smtp-Source: AMsMyM63sQCJoLYWZE5iFa4ctJHidpSzagskhSlfSYHwmkvrA5KnZ60XMwDLlcNcUyRHhD3T6m0MMg==
-X-Received: by 2002:a05:620a:404c:b0:6d9:4c49:9d5f with SMTP id i12-20020a05620a404c00b006d94c499d5fmr28032759qko.708.1667589804684;
-        Fri, 04 Nov 2022 12:23:24 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id bq8-20020a05622a1c0800b003a4f435e381sm112870qtb.18.2022.11.04.12.23.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 12:23:23 -0700 (PDT)
-Message-ID: <7fe8cb02-be1f-ecac-134d-b78e596d4140@linaro.org>
-Date:   Fri, 4 Nov 2022 15:23:21 -0400
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=fJWnmRvScxFHNNO6t0Vy9UApwRlEEqCb6FYZcBX5I7b4ycll0hIzkaLnrTTfQBEx2H
+         JZt5RDGT2ZGwWYT8DU77f6J78cQt0D4Krj9m5hhn33HNTb1jFGmE7Fas/t5c9KuhPg0H
+         zjGdnUvypC5d8qNv1EejDMCRvN5mftW2AqZYhJpw1n8BO6Wmev+Qjj8NykfBAtl09r3L
+         tP+twlcZ3NjArgiN3ZreuD8lFY181B/8dt+YF+rF9g0h7CciaUz/Nj/QDPfcwLxXmSa7
+         t15e3pvwJ+Au7Lbq/bnGpZcDHmlxufHD7jFO+NC+RQ47vxkFtfElF6qtTlc+1p15jmxK
+         nR3A==
+X-Gm-Message-State: ACrzQf3JqyPH6wxbANxVsaJZmLe0B4pik5QeA/yhUZY+woOxHMqg5Rmg
+        pLtDBmNmxl5LlCzgkQ10cJNsgQKfosP4XAfvAxE=
+X-Google-Smtp-Source: AMsMyM7B0KgO1ePqgiznBJPxBFqW0p1QJVzP9XdnRybtCWEEA1+7r7SGcBMaZXE781qwVCHZ0F/UGDKN4buuMG8EUng=
+X-Received: by 2002:a63:8aca:0:b0:461:25fe:e7c5 with SMTP id
+ y193-20020a638aca000000b0046125fee7c5mr34958534pgd.395.1667651947704; Sat, 05
+ Nov 2022 05:39:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] dt-bindings: clock: exynosautov9: fix reference to
- CMU_FSYS1 mmc card clock
-To:     Inbaraj <inbaraj.e@samsung.com>, krzysztof.kozlowski@linaro.org,
-        s.nawrocki@samsung.com, tomasz.figa@gmail.com,
-        cw00.choi@samsung.com, alim.akhtar@samsung.com,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        chanho61.park@samsung.com
-Cc:     linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, pankaj.dubey@samsung.com
-References: <CGME20221104085410epcas5p24d88f59001b739075e9e190e2c47841e@epcas5p2.samsung.com>
- <20221104090019.88387-1-inbaraj.e@samsung.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221104090019.88387-1-inbaraj.e@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Received: by 2002:a05:7301:2e91:b0:83:922d:c616 with HTTP; Sat, 5 Nov 2022
+ 05:39:06 -0700 (PDT)
+Reply-To: stefanopessia755@hotmail.com
+From:   Stefano Pessina <wamathaibenard@gmail.com>
+Date:   Sat, 5 Nov 2022 15:39:06 +0300
+Message-ID: <CAN7bvZKFRi6jCy913fp9Nu5T=uorMfPGun5ibm5bYqhSVn2ZFA@mail.gmail.com>
+Subject: Geldspende
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 04/11/2022 05:00, Inbaraj wrote:
-> Fix reference to CMU_FSYS1 mmc card clock to gout clock instead of dout.
-> 
-> This fixes make dtbs_check warning as shown below:
-> 
-> arch/arm64/boot/dts/exynos/exynosautov9-sadk.dtb: clock-controller@17040000:
-> clock-names:2: 'dout_clkcmu_fsys1_mmc_card' was expected
-> From schema: /home/inbaraj/mainline/linux/Documentation/devicetree/
-> bindings/clock/samsung,exynosautov9-clock.yaml
-> 
-> Fixes: 4b6ec8d88623 ("dt-bindings: clock: exynosautov9: add schema for cmu_fsys0/1")
-> Signed-off-by: Inbaraj <inbaraj.e@samsung.com>
-
-One more comment - is Inbaraj your full legal name? Full name must be
-used in From and Sob. Your email address has some additional "e", so I
-wonder.
-
-Best regards,
-Krzysztof
-
+--=20
+Die Summe von 500.000,00 =E2=82=AC wurde Ihnen von STEFANO PESSINA gespende=
+t.
+Bitte kontaktieren Sie uns f=C3=BCr weitere Informationen =C3=BCber
+stefanopessia755@hotmail.com
