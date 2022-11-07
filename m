@@ -2,90 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6C961F53E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Nov 2022 15:17:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 061BF61F62C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Nov 2022 15:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232213AbiKGORS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Nov 2022 09:17:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
+        id S231376AbiKGOge (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 7 Nov 2022 09:36:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232083AbiKGOQ4 (ORCPT
+        with ESMTP id S229638AbiKGOgb (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Nov 2022 09:16:56 -0500
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBFCB1CFF0;
-        Mon,  7 Nov 2022 06:16:54 -0800 (PST)
-From:   John Ogness <john.ogness@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1667830613;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=CoILEQrelgclmLZ3I9Bp0tGORaTvK064dNQM6uNGkhM=;
-        b=Hxxn3M2YEUZ39fDg1K8VMLHgr24Bztgip7MtE5GFTWejedYOTXhyeCdbJCq8S0SVuwAxFc
-        3oTBTm6DkBylJdeMGlliYzNR85r8VodFZFrkpYgdM65qN8DKhBX8uCJKr2UqDetCyshPao
-        sAJYhlBlmDpL8nYkXuOroyEJswxN5o/4Ys7rc9rj86+MCORH/s9u3VNaae6lCg2dWGxRx6
-        hfp2r5D2XnHf/wFBhotQFHJQB1yknP8uirmLq2S7vyMZsBouryFE3yk9PyOVdqCpOY6Yf0
-        HAq3GA2+wRvxbwPNHnKGakc19IHLEWvlOWTujQcmh1kULfUo3DCYrP4LRMsIMQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1667830613;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=CoILEQrelgclmLZ3I9Bp0tGORaTvK064dNQM6uNGkhM=;
-        b=KQEYSXXDSnadzvFVpp56SFo7RXRXwHEShMf1hEj55GJAlbhKPlEHgKaDRBj6yuP6iS7AQ6
-        vpWqnAdI6D3taZBw==
-To:     Petr Mladek <pmladek@suse.com>
-Cc:     Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [PATCH printk v3 29/40] tty: serial: samsung_tty: use console_is_registered()
-Date:   Mon,  7 Nov 2022 15:22:27 +0106
-Message-Id: <20221107141638.3790965-30-john.ogness@linutronix.de>
-In-Reply-To: <20221107141638.3790965-1-john.ogness@linutronix.de>
-References: <20221107141638.3790965-1-john.ogness@linutronix.de>
+        Mon, 7 Nov 2022 09:36:31 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD5DC21A
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Nov 2022 06:36:29 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id u2so16578142ljl.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Nov 2022 06:36:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LqIVZEeBf3uiHZU4NmaZFcaInDSQv2WV0V3yZxmUSaM=;
+        b=yriZm8CvC+/u6Ha3VhxGKctXjrWrVtg04n+IwoYHZrkNOK1i4AZyiQrN0r5smL+q/Z
+         rMDrz/WV9fTd+TWZurNqWfGl9UVEPubVX0HsnsOTuRkASKznAQ+Py1NI8k6AZIb45bn7
+         JjgadSRwG92CPFIrd80y8SVbIHEuMq8C8SnmeK86rgOhQcZhwLBvOuldlkmHXIRK+fKf
+         xDPbJfjutvOTiUsRrKaebBS8bohdPmB3HeEXgMoULGexEzAyFTwyaS67LHs465jt8Vuu
+         1d+xKFJYqSHms60eWWkaFFmFiVol3KEfwD20ekcqoJRli8n9ChHhO8TakrYLsBvqYUqU
+         yelQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LqIVZEeBf3uiHZU4NmaZFcaInDSQv2WV0V3yZxmUSaM=;
+        b=ktQdCFmxWMiJ03XykHP3kel/GJ8AUYepGPwfR8XzPAmmk31K7/tt5aNKZu3k159v5Y
+         8GuzX3V+6X+QXvKgHj82nyn87yQ+HQx7uaOE7yUaht8LZBxFhmC7SwHIB4+5oY11XkCC
+         zjAM3d+XC0oGZpCtP4IrxuhsdCtOZLYT6X/kSnR4Zhv6+Bs/fdWxMxumrLQgr4w9PHqE
+         QERPFb8u0/fAYjvGcMZk+zGRQpu5CB3ewPeEQL/NvI7Kscdo9z9Dy2IQRX31xddIl4xz
+         zQFlmwW4oGTIeAFUf9hQAxL2x/0tYd8mf2OYpfgcvroLyQv1itYlm3q8X5kzqwTwuoP3
+         OHkw==
+X-Gm-Message-State: ANoB5plpE2WYGDF7IbUChKU9/FV0K+Ejnt+B5a+fRz+2zj8blTB51Hl+
+        YO/L0Y3OV9y/uMIbUfRbamcnEg==
+X-Google-Smtp-Source: AA0mqf5RmQNBqtBRxyGo20Mn+gZ2BBYK+tzFf/gbojSwxL0JPqZy60SjJAwKKAFCXqi8QNURwjvKjQ==
+X-Received: by 2002:a05:651c:212a:b0:278:a461:cb7d with SMTP id a42-20020a05651c212a00b00278a461cb7dmr1576286ljq.246.1667831787939;
+        Mon, 07 Nov 2022 06:36:27 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id v12-20020a2ea60c000000b0026fb5525ee4sm1250408ljp.116.2022.11.07.06.36.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Nov 2022 06:36:27 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     s.nawrocki@samsung.com, tomasz.figa@gmail.com,
+        cw00.choi@samsung.com, chanho61.park@samsung.com,
+        alim.akhtar@samsung.com, sboyd@kernel.org, mturquette@baylibre.com,
+        robh+dt@kernel.org, Inbaraj E <inbaraj.e@samsung.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-clk@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        pankaj.dubey@samsung.com, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: clock: exynosautov9: fix reference to CMU_FSYS1
+Date:   Mon,  7 Nov 2022 15:36:25 +0100
+Message-Id: <166783178314.199427.8409536178718528714.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221107124337.114135-1-inbaraj.e@samsung.com>
+References: <CGME20221107123641epcas5p26e310f1ab6addb4fa6757f5147b8e50b@epcas5p2.samsung.com> <20221107124337.114135-1-inbaraj.e@samsung.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,INVALID_DATE_TZ_ABSURD,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-It is not reliable to check for CON_ENABLED in order to identify if a
-console is registered. Use console_is_registered() instead.
+On Mon, 7 Nov 2022 18:13:37 +0530, Inbaraj E wrote:
+> Fix reference to CMU_FSYS1 mmc card clock to gout clock instead of dout.
+> 
+> "gout" is output of a gate clock.
+> Unlike any other clocks, the fsys1 mmc top clock does not have a divider.
+> So, it should be "mout -> gout" instead of "mout -> gout -> dout".
+> 
+> This fixes make dtbs_check warning as shown below:
+> 
+> [...]
 
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
----
- drivers/tty/serial/samsung_tty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied, thanks!
 
-diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
-index 77d1363029f5..9c252c9ca95a 100644
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -1732,7 +1732,7 @@ static void __init s3c24xx_serial_register_console(void)
- 
- static void s3c24xx_serial_unregister_console(void)
- {
--	if (s3c24xx_serial_console.flags & CON_ENABLED)
-+	if (console_is_registered(&s3c24xx_serial_console))
- 		unregister_console(&s3c24xx_serial_console);
- }
- 
+[1/1] dt-bindings: clock: exynosautov9: fix reference to CMU_FSYS1
+      https://git.kernel.org/krzk/linux/c/4854e8b083d800b421c02d3a8482fbfe27fb33ec
+
+Best regards,
 -- 
-2.30.2
-
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
