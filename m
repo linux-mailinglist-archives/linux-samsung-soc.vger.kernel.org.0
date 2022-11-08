@@ -2,128 +2,106 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16FFC620D7D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Nov 2022 11:38:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65E01620EAE
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Nov 2022 12:21:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233683AbiKHKho (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Nov 2022 05:37:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58260 "EHLO
+        id S234106AbiKHLVr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Nov 2022 06:21:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233710AbiKHKhT (ORCPT
+        with ESMTP id S234086AbiKHLVf (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:37:19 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B8BA4090E
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Nov 2022 02:37:01 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id g7so20646187lfv.5
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Nov 2022 02:37:01 -0800 (PST)
+        Tue, 8 Nov 2022 06:21:35 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7D24877C
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Nov 2022 03:21:34 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-3701a0681daso130820447b3.4
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Nov 2022 03:21:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F1eU2MNzr9lEfofB/L6YKz5jRjvrNUwGoC1RPrJsqIc=;
-        b=qxlKoNOCj8bwEn/unr4ZPcnBCXcdPnwp6/SZBWWeD1f+nNzLQZ17cHnkenX1JoZ+nJ
-         l5mhxoz3baMzHRwcGvuZBeAgFsbmfiw5waqPt908NhhIv4tecxmqQPdV0Dhf9IJm8Dt0
-         k0NtuvI7zoLtlVsm93UDSI5nvXT8giTAEmr04mTtPEhLQpmnA/bd5jRs34pBIxkPVDZp
-         sLD6ufM7RkVvdGhirGvWrEpWffO+PQUzvRoxY2bs+2fNm4Hu8I9+dliDE1l3I0yRMuNK
-         qnErbVUK+0FDLBkKVwWv6dWzXNsnSoy7R0nrBCaZxdKQNiCL0RQeH6J78bt+69PPVLrT
-         Kytw==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
+        b=V0hDTk3NboyMzkv0Lw5jMGvSeB4k0ph3nxLoHOF5MibsKhiuYBHsXPoIVRa8Oo8UPh
+         Wvjog20gdi0n41qdP3Rn5A14gMYaVJwTh4hfuev2DA0/X0wSQedNjt9GN82+WKiYtVUQ
+         x8J8YVIZmJcWmAalVAumZrsT4CMZPwWg7x2DyWRAOYNJsCpkLQmDMgWda/smW1s9OgCX
+         p45tnTvP4x0ZC3/TT6nABuMOVvsmYQ4Yq4D1+zQt9iYrlUQKJ5DnbULDNPRPHtLqU2J8
+         Aor8EnPgpj1OOrgw4NMo3Dio83f4NYHs49mzHpW63G77TFuvCusQuplIlLiOQ71Nghnx
+         /j/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=to:subject:message-id:date:from:reply-to:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F1eU2MNzr9lEfofB/L6YKz5jRjvrNUwGoC1RPrJsqIc=;
-        b=XUC7i4dYmyjx5oq0sgoY9ATxQUdS9o3OCW5ayTgtiYBvjjpojpgx44PPaq5lSQaxJp
-         6BdEBax/EC1lXasi/vYzSMhunml2Gifgtw7EqF5WJ/6grXv2Td6k1NDXkqYTrs3U798e
-         iMzrl6h15bfyXnxk8OovQ+eA95KDZyNJIpzFo5L2CFg900+XPfYUHllgMwXvnInez6jI
-         G7vL1EBW99CQV/KU+1YC2Wt10B4YMnxeRmYCVhC1JuwoBRKwzRzx5A7GOS8kqPH8w6ZH
-         h8Qge6XWXr/i8vTicFmDQA4Q149O6XVXT5lvNvqHpchI7bmytFY0v2y+5kjGlZMMDIdE
-         EL6g==
-X-Gm-Message-State: ACrzQf1xqRF7QLMCF6n6MdKpPrwGx1FvXYS+HbWehv7O77wUW7vPyE/W
-        3ca8CAB8ZZxaHY1iRLKJNUHV8oODusj2zQ==
-X-Google-Smtp-Source: AMsMyM6S9IhbB/K0PCnZCtTSePbIeEuS4EFok4irDdkDhHZDjaoZyjyvFW3wOa0V66uhD+fgmiISkQ==
-X-Received: by 2002:ac2:569c:0:b0:4b1:966f:7a19 with SMTP id 28-20020ac2569c000000b004b1966f7a19mr8890286lfr.587.1667903819567;
-        Tue, 08 Nov 2022 02:36:59 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id l10-20020a056512110a00b00497b198987bsm1726912lfg.26.2022.11.08.02.36.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 02:36:59 -0800 (PST)
-Message-ID: <2ba09d50-229a-25d6-e437-c0b31429eaf0@linaro.org>
-Date:   Tue, 8 Nov 2022 11:36:57 +0100
+        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
+        b=FwjTcS50BuhKY6T/EKBdMAUtgEBk+G2Nn67wfG37kWWQI3x6z/3IiqVN2M+W1m6FG7
+         A1RZViyT9NjDcQDCl+7LqIOBjiKnLu+GqzzvrWWXzbhC+L+vXEfTUS0rGh9TC1cFc/Qd
+         LOQHtV4bE/0+hn6fHLyfI9M+Sb4u3vuqhfTp14XM0JNaeFlttSjqpfS5t9eBcdC9rXBQ
+         KdQJjxjps/81sfYQXyBmUShBGqpu8gbM8Z6d7Pn0+o/6//Ym6XG48ap7GGcq98YLFm4G
+         QRoLBPakaG62dyTKxKSy6MzSGvv+Spmz82zTm4V85CYBXAK6udQ5kU5Rac1xTHcMIRRZ
+         GJUg==
+X-Gm-Message-State: ACrzQf1f1BBvm2Yru7bjdfnKgAabXW0Dj7xexAdUPTcOkSbHsb7rEhn6
+        pkwGWHlz9s8u3JysQH47JrFmcdUv+59F5e2yED8=
+X-Google-Smtp-Source: AMsMyM4w1t61GwYMzTnXa5MXwNg+7pxTA0bsgV4eCqAPL+W4EbLEm3G8CBmeG1uGRH8iSxKlzSiSe8v4dR25QIcqGKs=
+X-Received: by 2002:a81:8644:0:b0:349:1126:97a4 with SMTP id
+ w65-20020a818644000000b00349112697a4mr50325593ywf.333.1667906493520; Tue, 08
+ Nov 2022 03:21:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 3/6] dt-bindings: sound: Add sound card bindings for Tesla
- FSD
-To:     Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
-        'Rob Herring' <robh@kernel.org>
-Cc:     lgirdwood@gmail.com, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, s.nawrocki@samsung.com,
-        perex@perex.cz, tiwai@suse.com, pankaj.dubey@samsung.com,
-        alim.akhtar@samsung.com, rcsekar@samsung.com,
-        aswani.reddy@samsung.com, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-References: <20221014102151.108539-1-p.rajanbabu@samsung.com>
- <CGME20221014104901epcas5p1a61ea81c3b1640bd8a064633c0b1e40d@epcas5p1.samsung.com>
- <20221014102151.108539-4-p.rajanbabu@samsung.com>
- <20221014151325.GA1940481-robh@kernel.org>
- <04b901d8e529$573b17e0$05b147a0$@samsung.com>
- <253fc459-c3dc-7710-6f34-0466d5301482@linaro.org>
- <01c101d8f333$b3bc8db0$1b35a910$@samsung.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <01c101d8f333$b3bc8db0$1b35a910$@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:7010:a38a:b0:313:c983:1d7e with HTTP; Tue, 8 Nov 2022
+ 03:21:32 -0800 (PST)
+Reply-To: mrinvest1010@gmail.com
+From:   "K. A. Mr. Kairi" <ctocik2@gmail.com>
+Date:   Tue, 8 Nov 2022 03:21:32 -0800
+Message-ID: <CAC9COZdKPqPKFW4wjvc8XNOHBj4eLofd_gqNhdeb9JYXVhMXnQ@mail.gmail.com>
+Subject: Re: My Response..
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:112d listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [mrinvest1010[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [ctocik2[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ctocik2[at]gmail.com]
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 08/11/2022 06:33, Padmanabhan Rajanbabu wrote:
->>>
->>> The actual reason for having a custom sound card driver lies in the
->>> fact that the Samsung i2s cpu dai requires configuration of some
->>> Samsung specific properties like rfs, bfs, codec clock direction and
->>> root clock source. We do not have flexibility of configuring the same
->>> in simple card driver (sound/soc/generic/simple-card.c) or audio graph
->>> card driver (sound/soc/generic/audio-graph-card.c). The binding has
->>> been added to support the custom sound card driver.
->>>
->>> I understand from your query that the newly added card has device tree
->>> nodes and properties which are used in simple card as well, but having
->>> a different or new prefixes. I believe to address that, we can
->>> restructure the string names to generic ones.
->>
->> You must use generic, existing properties where applicable.
-> 
-> Okay
-> 
->>
->>> But I would like to understand, to reuse the simple card or audio
->>> graph card bindings, can we add secondary compatible strings in the
->>> simple card dt-binding for the custom sound card to probe ?
->>
->> If you see other vendor compatibles there, then yes... But there aren't any,
->> right?
-> 
-> Yes you are right, we don't see other vendor compatibles. But, am I allowed
-> to add such secondary compatibles so that we can extend the simple card
-> and its utilities to a large extent?
-> 
-> If no, then I believe we will need a separate binding to extend the generic
-> properties.
+-- 
+Hi
 
-If you have any custom properties, then yes. But you don't have.
+How are you with your family, I have a serious client, whom will be
+interested to invest in your country, I got your Details through the
+Investment Network and world Global Business directory.
 
+If you are interested for more details.....
 
-Best regards,
-Krzysztof
-
+Sincerely,
+Kairi Andrew
