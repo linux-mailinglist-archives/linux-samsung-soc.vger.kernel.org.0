@@ -2,144 +2,214 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4A34620869
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Nov 2022 05:46:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9E5362097A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Nov 2022 07:19:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232654AbiKHEqQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 7 Nov 2022 23:46:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55754 "EHLO
+        id S232958AbiKHGTs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Nov 2022 01:19:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232911AbiKHEqO (ORCPT
+        with ESMTP id S230053AbiKHGT3 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 7 Nov 2022 23:46:14 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5391812AEB
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Nov 2022 20:46:13 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id kt23so35497380ejc.7
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Nov 2022 20:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fra4yIWv6TZGqY5e50Ht4t7fKg9qXIteCxj5r9JD6vc=;
-        b=k5nrvygDjfG84Jq8usw3TAeubZw8DjisC8BDW/Nl99poBxOVm3b4Emj6HmmfjmpRDg
-         6UqJx+Zje8uwbw0492FSt+SP9nPZpSClhlI2a7jkV8gf4dZ+NQhHw/+vcVeKfiMshCy8
-         l5vHZxgwLrsSFmUFQ9k9AqBdcglrJDMAIuZNg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fra4yIWv6TZGqY5e50Ht4t7fKg9qXIteCxj5r9JD6vc=;
-        b=sdSBtt6tKlNvlzert/JUv+5vrflJzRTPVkpPOdJZhiGFvxYP5ZzYIKfIuKTCQcSiCk
-         WK6CH6VJisV8qtNx4CY4Pyti009Bktc7GKbzJWbpirb9FdHTjTBOaTg1/2/YlIEx99xW
-         EPpzSbF14nHX+mIKhnSWJO9Ulh1gImI0o3eYx3VZ2VGHmbf6QHc7h/B/CzbLOOZQhtba
-         x4wDgVGwBz41z8Xjxwt7Qtvwy1E8SexPASw/QgZZJPAYstz3BxYcgXYrs5GBpIp5/mOd
-         UjFHb7CzHg3r7K4RXSa51a0oYhDwpAfhQccXMTMOqF/o7m6GyVmY0QoqmStKxipflSnz
-         zhqg==
-X-Gm-Message-State: ACrzQf0sSbAiBFJwedDbgLEsflOFwAVzDIJsNmpO1Up30WiayY/jspp8
-        54vnVT4fmuMRunjNM+DJzAHk50ytHxBIhQ==
-X-Google-Smtp-Source: AMsMyM4mrtUJwSARLPQhdgYFU4lAI0IZi91eHoGZKVF1v5vhpdD4WZiNQX8jxt9MxS3KVXfh4lWJZg==
-X-Received: by 2002:a17:907:a0c7:b0:7ad:dc65:bf8e with SMTP id hw7-20020a170907a0c700b007addc65bf8emr39885916ejc.133.1667882771649;
-        Mon, 07 Nov 2022 20:46:11 -0800 (PST)
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com. [209.85.218.45])
-        by smtp.gmail.com with ESMTPSA id l2-20020a1709063d2200b007adbd01c566sm4278906ejf.146.2022.11.07.20.46.09
-        for <linux-samsung-soc@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 20:46:10 -0800 (PST)
-Received: by mail-ej1-f45.google.com with SMTP id f27so35573020eje.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 07 Nov 2022 20:46:09 -0800 (PST)
-X-Received: by 2002:a17:906:ee8e:b0:730:3646:d178 with SMTP id
- wt14-20020a170906ee8e00b007303646d178mr51989213ejb.426.1667882769115; Mon, 07
- Nov 2022 20:46:09 -0800 (PST)
+        Tue, 8 Nov 2022 01:19:29 -0500
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E3334092B
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Nov 2022 22:19:18 -0800 (PST)
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20221108061916epoutp03c9c81bc1067222b409222f938ea52630~lh5_b9T2l3080930809epoutp03m
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Nov 2022 06:19:16 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20221108061916epoutp03c9c81bc1067222b409222f938ea52630~lh5_b9T2l3080930809epoutp03m
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1667888356;
+        bh=pCyICg+T2pU44yGLH3yU7sufLwS47i+fgjYOGPfGVZY=;
+        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+        b=A1wt6cf8kRFOEN/M+xPVBGqbZtOVRjudZCVw97qLoiZYl83/iAFYbXPRPMJTpoWR8
+         QkaPC8ZpEDXzoYkzQokdvJ/xi4WDNn085peu/oD//1RZG2FFAP5Wi+zhQLG+clvorG
+         E/tDiEizo5T25GLK4UVaMzUV9pK46uqeWothQgxE=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+        20221108061916epcas5p16bfd1d4ba40803e01de667e2f6d37707~lh5_LMn7J1630416304epcas5p1C;
+        Tue,  8 Nov 2022 06:19:16 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.177]) by
+        epsnrtp3.localdomain (Postfix) with ESMTP id 4N5yc25MwCz4x9Q8; Tue,  8 Nov
+        2022 06:19:14 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        16.8C.01710.2E4F9636; Tue,  8 Nov 2022 15:19:14 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+        20221108052344epcas5p17cbce08314e6eb1cf045a8e92f1892d3~lhJe_UvsQ0477904779epcas5p1T;
+        Tue,  8 Nov 2022 05:23:44 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20221108052344epsmtrp212d88900e39ee4ae43cb5a4428ee5002~lhJe8FYzG0254502545epsmtrp2I;
+        Tue,  8 Nov 2022 05:23:44 +0000 (GMT)
+X-AuditID: b6c32a49-c9ffa700000006ae-67-6369f4e21b90
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        82.78.14392.0E7E9636; Tue,  8 Nov 2022 14:23:44 +0900 (KST)
+Received: from FDSFTE070 (unknown [107.116.189.86]) by epsmtip2.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20221108052341epsmtip2a11f325717c4ea22e53306b232a80b3b~lhJcoiYhu1722017220epsmtip2i;
+        Tue,  8 Nov 2022 05:23:41 +0000 (GMT)
+From:   "Padmanabhan Rajanbabu" <p.rajanbabu@samsung.com>
+To:     "'Mark Brown'" <broonie@kernel.org>
+Cc:     <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <s.nawrocki@samsung.com>,
+        <perex@perex.cz>, <tiwai@suse.com>, <pankaj.dubey@samsung.com>,
+        <alim.akhtar@samsung.com>, <rcsekar@samsung.com>,
+        <aswani.reddy@samsung.com>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>
+In-Reply-To: <Y1KIT4nk7C8SQ45x@sirena.org.uk>
+Subject: RE: [PATCH 2/6] ASoC: samsung: i2s: configure PSR from sound card
+Date:   Tue, 8 Nov 2022 10:53:40 +0530
+Message-ID: <01ba01d8f332$44eb3810$cec1a830$@samsung.com>
 MIME-Version: 1.0
-References: <20221107161740.144456-1-david@redhat.com> <20221107161740.144456-17-david@redhat.com>
-In-Reply-To: <20221107161740.144456-17-david@redhat.com>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Tue, 8 Nov 2022 13:45:57 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5C3Ba1WhjYJF_7tW06mgvzoz9KTakNo+Tz8h_f6dGKzHQ@mail.gmail.com>
-Message-ID: <CAAFQd5C3Ba1WhjYJF_7tW06mgvzoz9KTakNo+Tz8h_f6dGKzHQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 16/19] mm/frame-vector: remove FOLL_FORCE usage
-To:     David Hildenbrand <david@redhat.com>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-kselftest@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        John Hubbard <jhubbard@nvidia.com>,
-        Peter Xu <peterx@redhat.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andrea Arcangeli <aarcange@redhat.com>,
-        Hugh Dickins <hughd@google.com>, Nadav Amit <namit@vmware.com>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Matthew Wilcox <willy@infradead.org>,
-        Mike Kravetz <mike.kravetz@oracle.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        David Airlie <airlied@gmail.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKFI9qd/qMOsyXBjKz4d8Q6MS4QvwJEXTuNARMAzQMCgN8f5gMWNkuwArAClESsfye50A==
+Content-Language: en-in
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEJsWRmVeSWpSXmKPExsWy7bCmhu6jL5nJBifeqVo8mLeNzeLKxUNM
+        Foc2b2W3mPrwCZvF/CPnWC36Xjxktvh2pYPJ4vKuOWwWM87vY7JYtPULu0Xnrn5Wi1kXdrBa
+        tO49wm5x+E07q8WG72sZHfg9NnxuYvPYOesuu8emVZ1sHneu7WHz2Pd2GZtH35ZVjB7rt1xl
+        8fi8SS6AIyrbJiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJIS8xN9VWycUnQNct
+        MwfoeiWFssScUqBQQGJxsZK+nU1RfmlJqkJGfnGJrVJqQUpOgUmBXnFibnFpXrpeXmqJlaGB
+        gZEpUGFCdkb/+6tMBeclKza+/cbcwPheqIuRk0NCwESi9eB3ti5GLg4hgd2MEhcvvmCBcD4x
+        Smw+uBkq841R4tiGT2wwLdfezmUCsYUE9jJKHJoVCFH0glHi19kedpAEm4C5xKK9SxlBbBEB
+        dYmjmzayghQxC3QxS2w48g5oBwcHp4CuxOv1sSA1wgJeEmd61jGD2CwCKhI7PsxhAbF5BSwl
+        LvW8ZIOwBSVOznwCFmcWkJfY/nYOM8RBChI/ny5jhdgVJvH0+XOoGnGJoz97mEH2Sgh84JA4
+        /eU2O0SDi8Sk1e+gmoUlXh3fAhWXkvj8bi/Ul/kS0z42Q9kVEm0fNzBB2PYSB67MAbufWUBT
+        Yv0ufYiwrMTUU+uYIPbySfT+fgJVziuxYx6MrSqxfvkmRghbWmLf9b2MExiVZiF5bRaS12Yh
+        eWEWwrYFjCyrGCVTC4pz01OLTQsM81LL4RGenJ+7iRGcuLU8dzDeffBB7xAjEwfjIUYJDmYl
+        EV6RmsxkId6UxMqq1KL8+KLSnNTiQ4ymwPCeyCwlmpwPzB15JfGGJpYGJmZmZiaWxmaGSuK8
+        i2doJQsJpCeWpGanphakFsH0MXFwSjUwaRVlFIqKGi/Zf/61ylxnrfKkfdwC2w/7/l4jLOQS
+        PmH5O1Mh2f17g5MNPzxbuuXOih3ti0Itzwumyfp8P2jGVHg17McPtp1LXs7SMa17wDIhs8B7
+        Tla7A0/mhIs6ikwWUw6xiB8pSXoyqcL7YiOnc1cHA3cQ+4RvMYeupy0K0T2tNKfh3f9+EcaE
+        d0nKbM+KTpez7JwpVf5j2a0VtrpPFRluWB9e6xGZZc3LuvKsarvwUqNJE7d9uHP3t+HJm1sC
+        T1a/OvznbI/ipxcdPwQ2vJulv2f5pv1foqoj3QRF/28rLv/vf01AVKfiXZhD3YeXa/fcNLrn
+        Hrhuac/tpl+8W1hlbml9sf6VUG3R1b8tQomlOCPRUIu5qDgRANEN9dxlBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBIsWRmVeSWpSXmKPExsWy7bCSvO6D55nJBtc+slo8mLeNzeLKxUNM
+        Foc2b2W3mPrwCZvF/CPnWC36Xjxktvh2pYPJ4vKuOWwWM87vY7JYtPULu0Xnrn5Wi1kXdrBa
+        tO49wm5x+E07q8WG72sZHfg9NnxuYvPYOesuu8emVZ1sHneu7WHz2Pd2GZtH35ZVjB7rt1xl
+        8fi8SS6AI4rLJiU1J7MstUjfLoEro//9VaaC85IVG99+Y25gfC/UxcjJISFgInHt7VymLkYu
+        DiGB3YwSj5bdY4JISEtM79/DBmELS6z895wdougZo8Tyt48YQRJsAuYSi/YuBbNFBNQljm7a
+        yApSxCwwg1ni0K1LrCAJIYGNTBINK8q6GDk4OAV0JV6vjwUJCwt4SZzpWccMYrMIqEjs+DCH
+        BcTmFbCUuNTzkg3CFpQ4OfMJC0grs4CeRNtGsFXMAvIS29/OYYa4TUHi59NlrBAnhEk8ff6c
+        BaJGXOLozx7mCYzCs5BMmoUwaRaSSbOQdCxgZFnFKJlaUJybnltsWGCYl1quV5yYW1yal66X
+        nJ+7iREcuVqaOxi3r/qgd4iRiYPxEKMEB7OSCK9ITWayEG9KYmVValF+fFFpTmrxIUZpDhYl
+        cd4LXSfjhQTSE0tSs1NTC1KLYLJMHJxSDUzic211tdZpyl3avrJt7cz5naEi71n2JxVwTXT/
+        uHn5utNzlpv7fSt3NovvdbB/E26SLZv7tiiiZla2VaVmlvd/icWZ+6NvfptituRPIsMf3X0a
+        TY1frfSFL2l/nyi+WvbKwfO7pS25o+3bcgve2fuUG/ivPHpmvm2k96tT7kX6KUmFnZ4HPjNf
+        3lAj7DRDVVkv7svpDa+zd8trTzT6e2nP5uhfZ38oXdPrnVRz6c1TsYWea9YmbvM497Ltn73P
+        70nf5NM0Zdk+cXz23bT6IJN6X/3Sg6/Dvk47UrRu3/c3LlHdv5Rbzl5r8Ge8YTRbwltn64vt
+        L58+39zUGLB3A2PNwtD8E8k2qrbL2LMc1RSVWIozEg21mIuKEwFlzP+kSwMAAA==
+X-CMS-MailID: 20221108052344epcas5p17cbce08314e6eb1cf045a8e92f1892d3
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20221014104857epcas5p2a275a1d606ca066227228d13bcf5b120
+References: <20221014102151.108539-1-p.rajanbabu@samsung.com>
+        <CGME20221014104857epcas5p2a275a1d606ca066227228d13bcf5b120@epcas5p2.samsung.com>
+        <20221014102151.108539-3-p.rajanbabu@samsung.com>
+        <Y0lPz91gbovAub9D@sirena.org.uk>
+        <04a101d8e523$30804b80$9180e280$@samsung.com>
+        <Y1KIT4nk7C8SQ45x@sirena.org.uk>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi David,
 
-On Tue, Nov 8, 2022 at 1:19 AM David Hildenbrand <david@redhat.com> wrote:
->
-> FOLL_FORCE is really only for debugger access. According to commit
-> 707947247e95 ("media: videobuf2-vmalloc: get_userptr: buffers are always
-> writable"), the pinned pages are always writable.
 
-Actually that patch is only a workaround to temporarily disable
-support for read-only pages as they seemed to suffer from some
-corruption issues in the retrieved user pages. We expect to support
-read-only pages as hardware input after. That said, FOLL_FORCE doesn't
-sound like the right thing even in that case, but I don't know the
-background behind it being added here in the first place. +Hans
-Verkuil +Marek Szyprowski do you happen to remember anything about it?
+> -----Original Message-----
+> From: Mark Brown [mailto:broonie@kernel.org]
+> Sent: 21 October 2022 05:24 PM
+> To: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+> Cc: lgirdwood@gmail.com; robh+dt@kernel.org;
+> krzysztof.kozlowski+dt@linaro.org; s.nawrocki@samsung.com;
+> perex@perex.cz; tiwai@suse.com; pankaj.dubey@samsung.com;
+> alim.akhtar@samsung.com; rcsekar@samsung.com;
+> aswani.reddy@samsung.com; alsa-devel@alsa-project.org;
+> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-samsung-
+> soc@vger.kernel.org
+> Subject: Re: [PATCH 2/6] ASoC: samsung: i2s: configure PSR from sound card
+> 
+> On Fri, Oct 21, 2022 at 01:30:25PM +0530, Padmanabhan Rajanbabu wrote:
+> 
+> > We can overcome this scenario to an extent if we can get a flexibility
+> > to Configure both PSR as well as RFS.
+> 
+> Why does it make sense for the machine driver to worry about this rather
+> than having the I2S controller driver configure the clock tree?
 
-Best regards,
-Tomasz
 
->
-> FOLL_FORCE in this case seems to be a legacy leftover. Let's just remove
-> it.
->
-> Cc: Tomasz Figa <tfiga@chromium.org>
-> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
->  drivers/media/common/videobuf2/frame_vector.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/media/common/videobuf2/frame_vector.c b/drivers/media/common/videobuf2/frame_vector.c
-> index 542dde9d2609..062e98148c53 100644
-> --- a/drivers/media/common/videobuf2/frame_vector.c
-> +++ b/drivers/media/common/videobuf2/frame_vector.c
-> @@ -50,7 +50,7 @@ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
->         start = untagged_addr(start);
->
->         ret = pin_user_pages_fast(start, nr_frames,
-> -                                 FOLL_FORCE | FOLL_WRITE | FOLL_LONGTERM,
-> +                                 FOLL_WRITE | FOLL_LONGTERM,
->                                   (struct page **)(vec->ptrs));
->         if (ret > 0) {
->                 vec->got_ref = true;
-> --
-> 2.38.1
->
+                       ____________________________________________
+_____           |                  __
+| 
+|         |	        |	             |   \
+|
+|CMU|	        |	             |     \
+|
+|FSD  |-  |---|-|--------->|       \        _________    _________
+|
+|___  |    |    | |op_clk0|         |      |               |     |
+|             |
+	  |    | |	             |MUX|----|  PSR       |----|  RFS
+|--cdclk  |
+	  |    | |              |         |      |_______|     |_______|
+|
+	  |    | |--------->|        /
+|
+	  |    |  op_clk1 |      /
+|
+	  |    | 	             |_ /
+|
+	  |    |___________________________________________|
+	  |
+	  |-----> To other FSD SoC Peripherals
+	 
+In FSD I2S, the clock source is not an independent source but a common clock
+source being shared by many IPs in the same domain.
+
+Changing the clock tree will impact other IPs in the domain as they are
+dependent on the same source for functionality.
+
+We can understand your point to bring the PSR changes under the I2S CPU DAI
+driver by adding a separate compatible and data for the FSD SoC. But If we
+take
+the example of existing sound cards such as sound/soc/samsung/tm2_wm5110.c,
+the op_clk is supplied via external audio pll to the controller and PLL
+configuration
+is taken care by the sound card. Since the configuration of PLL is more
+specific to
+the tm2 platform, it makes use of the flexibility of changing the RFS and
+BFS
+using the sysclk and clkdiv hooks provided by exynos7-i2s CPU DAI along with
+PLL tuning for precise sampling frequency.
+
+Similar to the above example, the choice of clock source under discussion is
+not a
+limitation of exynos7-i2s controller, but instead is a limitation on the FSD
+SoC.
+By using the proposed change, we can ensure that the exynos CPU DAI driver
+is
+giving additional hooks similar to existing hooks for BFS, RFS and CDCLK
+direction
+so that sound cards can use snd_soc_dai_set_sysclk and
+snd_soc_dai_set_clkdiv
+to customize the same.
+
+An alternative approach is to use the cpu dai as bit clock and frame clock
+consumer (i.e. in slave mode) so that codec can supply the MCLK to FSD for
+playback and capture. But this will deviate from the actual usecase for FSD
+SoC, where the CPU DAI is intended to function as master.
+
