@@ -2,147 +2,201 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 245F7622883
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Nov 2022 11:30:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A3D46229A8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Nov 2022 12:08:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbiKIKay (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 9 Nov 2022 05:30:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50592 "EHLO
+        id S230138AbiKILIw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 9 Nov 2022 06:08:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbiKIKax (ORCPT
+        with ESMTP id S230012AbiKILIt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 9 Nov 2022 05:30:53 -0500
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAE413D09
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Nov 2022 02:30:48 -0800 (PST)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20221109103046euoutp0147944df9fd08c04e79cf44e5815b0707~l4_2C_WgV1719017190euoutp01m
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Nov 2022 10:30:46 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20221109103046euoutp0147944df9fd08c04e79cf44e5815b0707~l4_2C_WgV1719017190euoutp01m
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1667989846;
-        bh=/etd5kD9w8L90TlDqlXrxnt7UM33SVVOSuXkHYCsYRY=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=p/27teNcpdieHnGqIiNQye6RYVh1wI03lcexjMbNlBFx40qgdrnUYK6Gaz5vYOKbI
-         dihwb16txyvqTpBuVvCJf2Ubu39OZH4QCZft0mKTiyHoG11S9S05jE2maiLNI3lmjc
-         /oYb6UthmZ+JWtxCTIVdIjVUFaPrQZqrxcv7swGY=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20221109103046eucas1p2a25b14d877f2b2aab5f8ae726df7ed8e~l4_1z5QtS2008220082eucas1p2I;
-        Wed,  9 Nov 2022 10:30:46 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 29.CE.10112.5518B636; Wed,  9
-        Nov 2022 10:30:45 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20221109103045eucas1p15c8385866dbbbe53df1a83a5a5faebe4~l4_1N4Lg60284602846eucas1p1G;
-        Wed,  9 Nov 2022 10:30:45 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20221109103045eusmtrp2e8e5d0c896d6bca1e929174b39117cbf~l4_1NQ43R3025830258eusmtrp2I;
-        Wed,  9 Nov 2022 10:30:45 +0000 (GMT)
-X-AuditID: cbfec7f4-d09ff70000002780-36-636b8155ca0f
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 1E.EA.08916.5518B636; Wed,  9
-        Nov 2022 10:30:45 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20221109103044eusmtip2aab04283d0849c46b47cf4d795660227~l4_0xiBLR0848208482eusmtip2N;
-        Wed,  9 Nov 2022 10:30:44 +0000 (GMT)
-Message-ID: <3588b0c4-032c-dd8c-bfff-912ae3816f38@samsung.com>
-Date:   Wed, 9 Nov 2022 11:30:44 +0100
+        Wed, 9 Nov 2022 06:08:49 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DC064F0
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Nov 2022 03:08:48 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id x21so25203737ljg.10
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Nov 2022 03:08:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Po/oE6njQiBff55UY7iHnbnmP3bUmGTTPuxVa98ca/E=;
+        b=nfvstYiVEqJ4B/Y7gFTtFqb+zwkfqLe2oUHFU7Q7YPebY7s0Y6eV4YDZyHV1gJacNS
+         ZPGY+4n7/m/BJmeCmxTqmJZCZ1H7NIlqd1/s4Fn0bmREAl5j6epjgIZ3ZPwEmM5DSUks
+         emNd1839fXZhKI5ZA4UDQoEZTtaFr2k3DKpAqO+hEJBsHUAO+JCrZrmvSaC5NTHmy0nY
+         OAkNK2SKZ0EvUF1McrXoUIO0vZVObAiCga1Y2o/BX3D8+ouuwWAKdJZDERtnFv+ppMnA
+         oyp67D8pTGPkTxbgiuEXznxJydKPCw4mjf2p1RxCTLFIxZvV7Y5K+rIAv9NJu2c79Rbe
+         xV9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Po/oE6njQiBff55UY7iHnbnmP3bUmGTTPuxVa98ca/E=;
+        b=gNmVN4EurNyxQbXtD+gtQwcXbhurJT0PZOmWP0rqqY+F1k/Eb7SDCV8BiBaXwyAWK+
+         nEGaw+mY4VUL+DBoqpb8P6gq7HwTYSKlZ5xRifk7EeA1BupiS5KsBi2gs3C5IFMhf8wm
+         HmAAJgR21Dv6XXqCug/eQDJN6M1BOy3g6xHKKJVq/PgeNvCrAoIctPUNe3tHBbER/+T0
+         wzCbIXn//H8AOC+4wBTG+ci4AUahVWG+vicjvYyX9gQ68kfFCinPE1reLY4Ws4rRrBdp
+         zy6mb5k3tVUdvYpFNwgdY2Wn1VoABS5nLGpxIXx05hCGCCEISaNAzeSp1x9aYEs/M3rk
+         Hr8w==
+X-Gm-Message-State: ACrzQf1aBQDUV0QJggdV+oeIfyJove3joYzVtqSJPCIXjCfyXIBAs/Vg
+        e85MvI7JGpUoRylwHgqJapxGIQ==
+X-Google-Smtp-Source: AMsMyM5p0ZHZaQ/AP0mdulopVpCZmJQWvNB1dMM+Yrnm3uXNeQ33S1MOn6+4hX7dBKV3PZJIN/qZWA==
+X-Received: by 2002:a2e:b006:0:b0:277:21c8:aac1 with SMTP id y6-20020a2eb006000000b0027721c8aac1mr8208645ljk.430.1667992127040;
+        Wed, 09 Nov 2022 03:08:47 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id p23-20020a2ea4d7000000b002770473d813sm2040839ljm.140.2022.11.09.03.08.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Nov 2022 03:08:46 -0800 (PST)
+Message-ID: <709daf8b-a58e-9247-c5d8-f3be3e60fe70@linaro.org>
+Date:   Wed, 9 Nov 2022 12:08:45 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
-        Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH] media: exynos4-is: don't rely on the v4l2_async_subdev
- internals
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/6] dt-bindings: Document the SYSREG specific
+ compatibles found on FSD SoC
 Content-Language: en-US
-To:     Sakari Ailus <sakari.ailus@iki.fi>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-media@vger.kernel.org,
-        'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
-        Daniel Scally <djrscally@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <Y2tzBUXHnZmZNClM@valkosipuli.retiisi.eu>
+To:     Vivek Yadav <vivek.2311@samsung.com>, rcsekar@samsung.com,
+        krzysztof.kozlowski+dt@linaro.org, wg@grandegger.com,
+        mkl@pengutronix.de, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com, pankaj.dubey@samsung.com,
+        ravi.patel@samsung.com, alim.akhtar@samsung.com,
+        linux-fsd@tesla.com, robh+dt@kernel.org
+Cc:     linux-can@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        aswani.reddy@samsung.com, sriranjani.p@samsung.com
+References: <20221109100928.109478-1-vivek.2311@samsung.com>
+ <CGME20221109100245epcas5p38a01aed025f491d39a09508ebcdcef84@epcas5p3.samsung.com>
+ <20221109100928.109478-2-vivek.2311@samsung.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221109100928.109478-2-vivek.2311@samsung.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsWy7djPc7qhjdnJBi3X1Cy2HX7HanFq8jMm
-        i86JS9gtejZsZbWYcX4fk8XhN+2sFmf2r2RzYPfYOesuu8fsjpmsHoe/LmTx6NuyitHj8yY5
-        j1NfP7MHsEVx2aSk5mSWpRbp2yVwZfT/XMZesJ+zYunUyywNjH/Yuxg5OCQETCR+XuDqYuTk
-        EBJYwSjxbGpBFyMXkP2FUeLuswlMEM5nRomG9rVsIFUgDZ8evGSGSCxnlJi0vpMRwvnIKDH3
-        1SQmkCpeATuJj83fWUBsFgEViUkrr7JAxAUlTs58AmaLCqRI7O7eBmYLC4RLHGztZAWxmQXE
-        JW49mQ82R0RATeLppocsIAuYBbqZJGbufMcMkmATMJToetsFdhKngJnEy+U3oJrlJba/nQN2
-        noTAEw6J03ufQd3tIjHv4AJmCFtY4tXxLewQtozE/53zmSAa2hklFvy+D+VMAPr6+S1GiCpr
-        iTvnfrGBgoxZQFNi/S59iLCjRNfcVcyQkOSTuPFWEOIIPolJ26ZDhXklOtqEIKrVJGYdXwe3
-        9uCFS8wTGJVmIYXLLCT/z0LyziyEvQsYWVYxiqeWFuempxYb5aWW6xUn5haX5qXrJefnbmIE
-        pqPT/45/2cG4/NVHvUOMTByMhxglOJiVRHi5NbKThXhTEiurUovy44tKc1KLDzFKc7AoifOy
-        zdBKFhJITyxJzU5NLUgtgskycXBKNTBtS/hxZMqV0x8VAhbOjn48Zc0l40tXT5ZIx529wbcg
-        Y8r7iyczcisqDdxeBvzMeGtWvt4rhTmex8NLaGHnA5YMMwaf7h0iL0r4Tj98U376cqVefrHq
-        jDxpq29nXvHt7ZIzT5hyhb99/4Gj+eYfn2UluWkEqU2axtL6/s5nLv/cAxvt7Nljp//+rH8g
-        NC5w4d2+dRnrBU6X/nOXuTPh7MqcmRfPZjr6fvVRWjx/y33ttblrfFqcKowP9U0wWShZqueo
-        78rHXiZwMy5pn9VppifntR/63wxjmT1tPa9wsWbaLK2Ui7O8lb7eujD1w6qK+EBZ0WXX5+yT
-        lm1OEmP9K3st7oniWk3py+cfTJtZc+CfEktxRqKhFnNRcSIA67rI7bYDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGIsWRmVeSWpSXmKPExsVy+t/xe7qhjdnJBsemCVpsO/yO1eLU5GdM
-        Fp0Tl7Bb9GzYymox4/w+JovDb9pZLc7sX8nmwO6xc9Zddo/ZHTNZPQ5/Xcji0bdlFaPH501y
-        Hqe+fmYPYIvSsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3S
-        t0vQy+j/uYy9YD9nxdKpl1kaGP+wdzFyckgImEh8evCSuYuRi0NIYCmjRO+di2wQCRmJk9Ma
-        WCFsYYk/17rYIIreM0osu3AVrJtXwE7iY/N3FhCbRUBFYtLKqywQcUGJkzOfANkcHKICKRLf
-        ztWBhIUFwiUOtnaCzWQWEJe49WQ+E4gtIqAm8XTTQxaQ+cwC3UwSe/d+YIFYtpxJYsuMF2BD
-        2QQMJbredoFdxylgJvFy+Q2oSWYSXVu7GCFseYntb+cwT2AUmoXkjllIFs5C0jILScsCRpZV
-        jCKppcW56bnFhnrFibnFpXnpesn5uZsYgRG47djPzTsY5736qHeIkYmD8RCjBAezkggvt0Z2
-        shBvSmJlVWpRfnxRaU5q8SFGU2BgTGSWEk3OB6aAvJJ4QzMDU0MTM0sDU0szYyVxXs+CjkQh
-        gfTEktTs1NSC1CKYPiYOTqkGJrW1vLumngl5trZA3lmnLpJRsXxa5Ke/Fzr335uRZbO7LKvB
-        /Oz8PptrJdsX7eb9ePtz8pRE2zIJTfs7WbpmTfPEi9QkTc1nK0nPCdjpseXBgYPhL59Er8l1
-        Z0oLK2BXVqta9vpwTta3cw+MCme7Bt/i0Bb8eJB5c5XbzQmP2KojszUPnzh35uCPsKcZtTW5
-        T57naMj96X/GFt3nIcKdmychZvEnd67GNFYLBfGQYycO/pao9lpfEXEuvfma7F+byPBrzZdu
-        bJO9Gsn/8cWEvr31l1oXmWQ2+UtPY5nrePrKB9dP69SKWTqWeBz4mvrtqbQC3x2pmfEy61c5
-        1pYUzDn3T9H06m77zIV/Dp/SUGIpzkg01GIuKk4EAJcQRg9JAwAA
-X-CMS-MailID: 20221109103045eucas1p15c8385866dbbbe53df1a83a5a5faebe4
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20220923094232eucas1p1deb3985c9637a0876609c75967175e9b
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20220923094232eucas1p1deb3985c9637a0876609c75967175e9b
-References: <CGME20220923094232eucas1p1deb3985c9637a0876609c75967175e9b@eucas1p1.samsung.com>
-        <20220923094201.18047-1-m.szyprowski@samsung.com>
-        <ad5d4efb-c31f-585a-cdc5-c66744deee59@samsung.com>
-        <fa77dbaa-e62a-b365-3b54-357e2074932f@samsung.com>
-        <Y2tzBUXHnZmZNClM@valkosipuli.retiisi.eu>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 09.11.2022 10:29, Sakari Ailus wrote:
-> On Tue, Nov 08, 2022 at 03:14:14PM +0100, Marek Szyprowski wrote:
->> On 05.10.2022 16:47, Sylwester Nawrocki wrote:
->>> On 23.09.2022 11:42, Marek Szyprowski wrote:
->>>> Commit 1f391df44607 ("media: v4l2-async: Use endpoints in
->>>> __v4l2_async_nf_add_fwnode_remote()") changed the data that is stored in
->>>> the v4l2_async_subdev internals from the fwnode pointer to the parent
->>>> device to the fwnode pointer to the matched endpoint. This broke the
->>>> sensor matching code, which relied on the particular fwnode data in the
->>>> v4l2_async_subdev internals. Fix this by simply matching the
->>>> v4l2_async_subdev pointer, which is already available there.
->>>>
->>>> Reported-by: Daniel Scally <djrscally@gmail.com>
->>>> Fixes: fa91f1056f17 ("[media] exynos4-is: Add support for asynchronous subdevices registration")
->>>> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
->>> Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
->> Gentle ping for merging this fix.
-> It's in my PR to Mauro:
+On 09/11/2022 11:09, Vivek Yadav wrote:
+> From: Sriranjani P <sriranjani.p@samsung.com>
+> 
 
-Thanks for pointing this. I missed that. Sorry for the noise.
+Use subject prefixes matching the subsystem (git log --oneline -- ...).
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+> Describe the compatible properties for SYSREG controllers found on
+> FSD SoC.
+
+This is ARM SoC patch, split it from the patchset.
+
+> 
+> Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
+> Signed-off-by: Pankaj Kumar Dubey <pankaj.dubey@samsung.com>
+> Signed-off-by: Ravi Patel <ravi.patel@samsung.com>
+> Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
+> Cc: devicetree@vger.kernel.org
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+
+Drop the Cc list from commit log. It's not helpful.
+
+> Signed-off-by: Sriranjani P <sriranjani.p@samsung.com>
+> ---
+>  .../devicetree/bindings/arm/tesla-sysreg.yaml | 50 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 51 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/tesla-sysreg.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/tesla-sysreg.yaml b/Documentation/devicetree/bindings/arm/tesla-sysreg.yaml
+> new file mode 100644
+> index 000000000000..bbcc6dd75918
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/tesla-sysreg.yaml
+
+arm is only for top level stuff. This goes to soc under tesla or samsung
+directory.
+
+> @@ -0,0 +1,50 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/tesla-sysreg.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Tesla Full Self-Driving platform's system registers
+> +
+> +maintainers:
+> +  - Alim Akhtar <alim.akhtar@samsung.com>
+> +
+> +description: |
+> +  This is a system control registers block, providing multiple low level
+> +  platform functions like board detection and identification, software
+> +  interrupt generation.
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+
+No need for oneOf.
+
+> +      - items:
+> +          - enum:
+> +              - tesla,sysreg_fsys0
+> +              - tesla,sysreg_peric
+
+From where did you get underscores in compatibles?
+
+> +          - const: syscon
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    soc {
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+> +
+> +      sysreg_fsys0: system-controller@15030000 {
+> +            compatible = "tesla,sysreg_fsys0", "syscon";
+
+Use 4 spaces for example indentation.
+
+> +            reg = <0x0 0x15030000 0x0 0x1000>;
+> +      };
+> +
+> +      sysreg_peric: system-controller@14030000 {
+> +            compatible = "tesla,sysreg_peric", "syscon";
+> +            reg = <0x0 0x14030000 0x0 0x1000>;
+> +      };
+
+One example is enough, they are the same.
+> +    };
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a198da986146..56995e7d63ad 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2943,6 +2943,7 @@ M:	linux-fsd@tesla.com
+>  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+>  L:	linux-samsung-soc@vger.kernel.org
+>  S:	Maintained
+> +F:	Documentation/devicetree/bindings/arm/tesla-sysreg.yaml
+>  F:	arch/arm64/boot/dts/tesla*
+>  
+>  ARM/TETON BGA MACHINE SUPPORT
+
+Best regards,
+Krzysztof
 
