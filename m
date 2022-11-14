@@ -2,54 +2,134 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 019B7627164
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 13 Nov 2022 18:58:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 065FA627412
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 14 Nov 2022 02:11:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233847AbiKMR6s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 13 Nov 2022 12:58:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52212 "EHLO
+        id S235660AbiKNBLb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 13 Nov 2022 20:11:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232676AbiKMR6r (ORCPT
+        with ESMTP id S235579AbiKNBLa (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 13 Nov 2022 12:58:47 -0500
-Received: from mail.seambee.club (unknown [220.158.233.91])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50FB2AED
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 13 Nov 2022 09:58:45 -0800 (PST)
-Received: by mail.seambee.club (Postfix, from userid 48)
-        id 9C4EC63153A; Mon, 14 Nov 2022 00:39:26 +0700 (+07)
-To:     linux-samsung-soc@vger.kernel.org
-Subject: New Reorder Nov 11th
-X-PHP-Originating-Script: 0:myuawhawnq.php
-From:   Richard Martins <sales56901@outlook.com>
-Reply-To: matins133294@hotmail.com
+        Sun, 13 Nov 2022 20:11:30 -0500
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B3DFCFA
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 13 Nov 2022 17:11:29 -0800 (PST)
+Received: by mail-vk1-xa2e.google.com with SMTP id r13so4277449vkf.2
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 13 Nov 2022 17:11:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l2JJJpT0ZAjed7VELB5YPuXJMHJUvXdHN4Gx50WFZ2Q=;
+        b=dbe3cQHbcFqonNsjvCZQxgrzGLGy8dfsGA55BO3FuXHwPkRofmYZFbA+gd7jJDCmc8
+         Qa8IXmkZIB6FVJETBpi2t5ZBpgw8T5c4MPh2DqY9K57vX/1/xhcif4E04r/vao7gwLv6
+         s7voBGiIy4NEzxwqdVANa8ZMpEDvndGprBV6w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l2JJJpT0ZAjed7VELB5YPuXJMHJUvXdHN4Gx50WFZ2Q=;
+        b=kFo3/GWN8hhyqMiWgVejMYeJZd5Iveo/1LRa3t9EDR8QWLJHiUYuRO1TQvIQQ5RqLi
+         6VXAqND1HxJ08/FbUQCPWG0IXiFvBZ6ZEj/GEqyJxue9jqjOf0MH/91g5YYgoZDfI3Ly
+         4JWSDQDN9zmmos6c00KFHcQYcoCDLAC93yqmEr4e8U9KVFy+0NU19+IaSokY5SRlyegx
+         mvliNSy+GahNNt/W8G6s2Ze52Hb6MKgAj7zADG/Go7uKHzYXMzE0h95d/nOx6aN86CjT
+         2VaUTUOOJRXuqFSqyEcgatzUe02/SKXcYwfrIwb8p/hQQYtvsOpk18Ps1jn/81p1KtBP
+         Y6nQ==
+X-Gm-Message-State: ANoB5plXnbs+Bh3shUwTEgKFlwHx7V534f5vsJH1oCE24Coy2VtjYSpi
+        O5eG+JkNUPqEqoJoXik1KKksfV52oWYp03bZpQJUaA==
+X-Google-Smtp-Source: AA0mqf7OCNSTYyU8cwy8NjWFqYTpVq0mYrZ6+3c5WtDvjw5nmr5nQzFmn/CpTIoO/+6tW19gfFk+dUy7QDooVct8Z7o=
+X-Received: by 2002:a05:6122:1786:b0:3b8:a3f9:be82 with SMTP id
+ o6-20020a056122178600b003b8a3f9be82mr5348280vkf.18.1668388288785; Sun, 13 Nov
+ 2022 17:11:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Message-Id: <20221113173926.9C4EC63153A@mail.seambee.club>
-Date:   Mon, 14 Nov 2022 00:39:26 +0700 (+07)
-X-Spam-Status: No, score=4.4 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_VALIDITY_RPBL,RDNS_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+References: <20221110183853.3678209-1-jagan@amarulasolutions.com>
+ <20221110183853.3678209-2-jagan@amarulasolutions.com> <CANMq1KCHQExVVp1jHjhRB2pMqeFFE1Cg1GVmnN83v=z1KzJt0Q@mail.gmail.com>
+ <CAMty3ZBC3pbWf4yixjv4DZWFR+fYkPctiL3hzubgY8RF4ZGHmA@mail.gmail.com>
+ <CANMq1KDmF+cMo8qZh7UyM1vyZ6BD_cFPc6j2MNMNPFiutqxL3w@mail.gmail.com> <c82a77f3-17a1-1b59-96da-924daae3678c@denx.de>
+In-Reply-To: <c82a77f3-17a1-1b59-96da-924daae3678c@denx.de>
+From:   Nicolas Boichat <drinkcat@chromium.org>
+Date:   Mon, 14 Nov 2022 09:11:17 +0800
+Message-ID: <CANMq1KBMJDcfcbfYGtRj+MDJgFKg_i5Rw6ZJuoZy0D_kzkob3Q@mail.gmail.com>
+Subject: Re: [PATCH v8 01/14] drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags
+To:     Marek Vasut <marex@denx.de>
+Cc:     Jagan Teki <jagan@amarulasolutions.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>,
+        Fancy Fang <chen.fang@nxp.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
+        Adam Ford <aford173@gmail.com>,
+        Neil Armstrong <narmstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+        Matteo Lisi <matteo.lisi@engicam.com>,
+        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-amarula <linux-amarula@amarulasolutions.com>,
+        =?UTF-8?Q?S=C3=A9bastien_Szymanski?= 
+        <sebastien.szymanski@armadeus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi, Friend,
- 
-This is Richard Martins and I'm the purchasing manager from K&B Trading(SANTIAGO) in Chile.
-We are glad to know about your company from the web and we are interested in your products.
-Kindly send us your Latest catalog and price list for our trial order, Thanks.
- 
-Best Regards,
-Mr. Richard Martins
-Purchasing Manager
-K&B Trading (SANTIAGO) Chile
-Add: Marchant Pereira 190,Providencia,Santiago
-Tel.:  56 2 2204 5852
+On Sun, Nov 13, 2022 at 8:29 AM Marek Vasut <marex@denx.de> wrote:
+>
+> On 11/11/22 13:12, Nicolas Boichat wrote:
+>
+> [...]
+>
+> >>> BTW, are you sure DSIM_HSE_MODE is correct now?
+> >>
+> >> Yes, we have tested in imx8m platforms as well. S=C3=A9bastien Szymans=
+ki
+> >> initially observed this issue on the imx8m platform.
+> >
+> > I'll repeat, are you sure about HSE specifically? You invert the
+> > polarity for HBP, HFP, and HSA, which makes sense given your patch
+> > 02/14.
+> >
+> > I'm concerned about HSE. Is the bit really a disable bit?
+> > MIPI_DSI_MODE_VIDEO_HSE is supposed to be an enable flag, so you
+> > should not do `reg |=3D DSIM_HSE_DISABLE;`, probably.
+>
+> I suspect the HSE bit is a misnomer, but its handling in the driver is
+> correct.
+>
+> i.MX 8M Plus Applications Processor Reference Manual, Rev. 1, 06/2021
+> Page 5436
+>
+> 23 HseDisableMode
+>
+> In Vsync pulse and Vporch area, MIPI DSI master transfers only Hsync
+> start packet to MIPI DSI slave at MIPI DSI spec 1.1r02. This bit
+> transfers Hsync end packet in Vsync pulse and Vporch area (optional).
+>
+> 0 =3D Disables transfer
+> 1 =3D Enables transfer
+>
+> In command mode, this bit is ignored.
 
+Okay. I'd suggest adding a comment in the code, it'd be so tempting to
+attempt to "fix" this as the if/or pattern looks different from the
+others.
 
+But it's up to you all.
+
+Thanks,
