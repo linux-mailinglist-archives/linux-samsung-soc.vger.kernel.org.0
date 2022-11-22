@@ -2,91 +2,96 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBA1263324A
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Nov 2022 02:42:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4D563329B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 22 Nov 2022 03:04:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232347AbiKVBmq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 21 Nov 2022 20:42:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46012 "EHLO
+        id S232432AbiKVCEC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 21 Nov 2022 21:04:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232342AbiKVBmo (ORCPT
+        with ESMTP id S232429AbiKVCD6 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 21 Nov 2022 20:42:44 -0500
-Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.40])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F0811457;
-        Mon, 21 Nov 2022 17:42:42 -0800 (PST)
-Received: from mxct.zte.com.cn (unknown [192.168.251.13])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4NGRpS6tcHz8RV6L;
-        Tue, 22 Nov 2022 09:42:40 +0800 (CST)
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxct.zte.com.cn (FangMail) with ESMTPS id 4NGRpP3HKwz4y0vV;
-        Tue, 22 Nov 2022 09:42:37 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.40.50])
-        by mse-fl1.zte.com.cn with SMTP id 2AM1gR7S031422;
-        Tue, 22 Nov 2022 09:42:27 +0800 (+08)
-        (envelope-from ye.xingchen@zte.com.cn)
-Received: from mapi (xaxapp02[null])
-        by mapi (Zmail) with MAPI id mid31;
-        Tue, 22 Nov 2022 09:42:28 +0800 (CST)
-Date:   Tue, 22 Nov 2022 09:42:28 +0800 (CST)
-X-Zmail-TransId: 2afa637c29044ce033db
-X-Mailer: Zmail v1.0
-Message-ID: <202211220942288196359@zte.com.cn>
-Mime-Version: 1.0
-From:   <ye.xingchen@zte.com.cn>
-To:     <cw00.choi@samsung.com>
-Cc:     <myungjoo.ham@samsung.com>, <kyungmin.park@samsung.com>,
-        <krzysztof.kozlowski@linaro.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <chi.minghao@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIXSBQTSAvIGRldmZyZXE6IGV2ZW50OiB1c2UKCiBkZXZtX3BsYXRmb3JtX2dldF9hbmRfaW9yZW1hcF9yZXNvdXJjZSgp?=
-Content-Type: text/plain;
-        charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 2AM1gR7S031422
-X-Fangmail-Gw-Spam-Type: 0
-X-FangMail-Miltered: at cgslv5.04-192.168.250.137.novalocal with ID 637C2910.000 by FangMail milter!
-X-FangMail-Envelope: 1669081360/4NGRpS6tcHz8RV6L/637C2910.000/192.168.251.13/[192.168.251.13]/mxct.zte.com.cn/<ye.xingchen@zte.com.cn>
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 637C2910.000/4NGRpS6tcHz8RV6L
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Mon, 21 Nov 2022 21:03:58 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0682BDEAC8;
+        Mon, 21 Nov 2022 18:03:57 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-3938dc90ab0so112022607b3.4;
+        Mon, 21 Nov 2022 18:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+ptI+nYITeW1gKXUBABTe9iXK3+s6B6YR5hHe/uuAEk=;
+        b=aMtTD3FN91QuunzdQeJlDFtrgk7U61gYOsbhNxGjRp6qOvuSQkBew+G4nOb+I9lvjF
+         Gvs0dtTw0XcjDq6vXXhmaX9VsIHd8e463rPOH0Bxk4Sy1KIy/nR86RLTDqLLbgDLiX5M
+         1pT48i0anCd7RZ9HovhykDcZM0SUo2HaZUolkcviIdE4jWp2J2ei7J4oEwWyAwscRAXa
+         c9n8fcZoX4lvlZTtKRqv0PdoMhIrwHqCj0a8OByHjz8muMqyBbx/19CCSAPsRWSUkt86
+         JtyywhmXW6PofLaTX0Bq3IZxMJ8SNpQwsI2rz1fS+ygF4ST18Skr2SvqYXLiYZwIzIA8
+         xO7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+ptI+nYITeW1gKXUBABTe9iXK3+s6B6YR5hHe/uuAEk=;
+        b=B7uz6hV7HoonPjutfh+7FRl/+3a7EOI+PmZ2Gz5bjDDtNpYyFntXNWfKQnc9rgpIQF
+         r0GJbXDaBaNTeK+n+kKclyf3ssevdL9sLKAnY6HhwzhWJ3DuSajrstyl3K2Kmh1yjSK7
+         t+yobEKa1pfLm+tZwxxi+e9IVwSsUIv6uG+2iuV2OiofOtA0kcJ4DMmuOIGQ7hpdmRLX
+         YVJAlgVf9/S17MP+9nY2M1hqMr/MNwr8OKw20/2XRulqSsvTbfr3IuVSBLccbB8Qwrw4
+         nFSbGfxIbGOvJTJzB8cu59EEa0U1U9bFf1pi3IQOgTycfXEaDq6UVp1x2PhEIefxK3pl
+         rpxw==
+X-Gm-Message-State: ANoB5pm6qRT6tWp00zsNKXuassLG8V5FdWh8Ey2rbDF//mElEi5rea7e
+        5Wpww4WwjgKIek9IkCt1waJZ3RJ0jrWG+NtKUGtsJWQaW1TeW2+R
+X-Google-Smtp-Source: AA0mqf4J/yGvWf07lle42oLrKocwEUTgOWE6vyJjrwDumrKphjCqlctEtjZfGzrbCQNvzw7Tn4wd9zgCPP+0RJOZyRU=
+X-Received: by 2002:a81:574f:0:b0:39b:4c23:9cf0 with SMTP id
+ l76-20020a81574f000000b0039b4c239cf0mr1397275ywb.185.1669082636235; Mon, 21
+ Nov 2022 18:03:56 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a25:9f88:0:0:0:0:0 with HTTP; Mon, 21 Nov 2022 18:03:55
+ -0800 (PST)
+From:   Felipe Bedetti <felipebedetticosta@gmail.com>
+Date:   Mon, 21 Nov 2022 23:03:55 -0300
+Message-ID: <CAFO8uswgpf01EKXfi6ULE_481mMCLr737E1sRuq29jQf1yQ=4Q@mail.gmail.com>
+Subject: Norah Colly
+To:     linux rdma <linux-rdma@vger.kernel.org>,
+        linux s390 <linux-s390@vger.kernel.org>,
+        linux samsung soc <linux-samsung-soc@vger.kernel.org>,
+        linux scsi <linux-scsi@vger.kernel.org>,
+        linux sctp <linux-sctp@vger.kernel.org>,
+        linux security module <linux-security-module@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,BODY_SINGLE_URI,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SHORT_SHORTNER,SPF_HELO_NONE,SPF_PASS,
+        SUSPICIOUS_RECIPS,TVD_SPACE_RATIO autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:112c listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  2.5 SUSPICIOUS_RECIPS Similar addresses in recipient list
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [felipebedetticosta[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 TVD_SPACE_RATIO No description available.
+        *  1.6 SHORT_SHORTNER Short body with little more than a link to a
+        *      shortener
+        *  0.7 BODY_SINGLE_URI Message body is only a URI
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Minghao Chi <chi.minghao@zte.com.cn>
-
-Convert platform_get_resource(), devm_ioremap_resource() to a single
-call to devm_platform_get_and_ioremap_resource(), as this is exactly
-what this function does.
-
-Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
-Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
----
- drivers/devfreq/event/exynos-nocp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/devfreq/event/exynos-nocp.c b/drivers/devfreq/event/exynos-nocp.c
-index ccc531ee6938..c1cc23bcb995 100644
---- a/drivers/devfreq/event/exynos-nocp.c
-+++ b/drivers/devfreq/event/exynos-nocp.c
-@@ -214,8 +214,7 @@ static int exynos_nocp_parse_dt(struct platform_device *pdev,
- 		nocp->clk = NULL;
-
- 	/* Maps the memory mapped IO to control nocp register */
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	base = devm_ioremap_resource(dev, res);
-+	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-
--- 
-2.25.1
+https://bit.ly/3gk1Aho
