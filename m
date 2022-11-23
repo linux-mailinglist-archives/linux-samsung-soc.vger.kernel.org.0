@@ -2,58 +2,45 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E8BA634BCD
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Nov 2022 01:47:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8576634E47
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 23 Nov 2022 04:23:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234827AbiKWArN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 22 Nov 2022 19:47:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
+        id S234684AbiKWDXX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 22 Nov 2022 22:23:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235329AbiKWArM (ORCPT
+        with ESMTP id S232723AbiKWDXV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 22 Nov 2022 19:47:12 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F460D5A1B;
-        Tue, 22 Nov 2022 16:47:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F00796194A;
-        Wed, 23 Nov 2022 00:47:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5245DC433D7;
-        Wed, 23 Nov 2022 00:47:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1669164430;
-        bh=lDXdSzw4PMXXXF3nLrHVxQyZSnT026dh4Nn6IkU0BoE=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=fONDl5k1h7xPaYRhwR/ZemCKa1Gug8LSReGg8z2vWwv7Uv0JSpU41MJlxzUlsuK91
-         SwRGmf/yw1FozuNeod0H7EdllsB067ZT4XnurkY+bjamJoVclq8WDH7pDeYFv6Hw49
-         GkPj0rQP3qpv4DkIdBuyoo6rDN7GtTCIRNgzxaXI6Vjmj6adT5BrcYLdDoMQOWiOdD
-         VWDBx8Y05U24utxAk0MUzFeq8K5aCsMkzhm045ZpDpGVLHasrj1J81oISP949JY0Gy
-         3ckwwR5QyAyhOdkQnbm76ZxvfAS7EsWw/vdyiebEy4IhMkyJG83ef8I4AdkyozVn+0
-         G3IXfxIetxfYQ==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 22 Nov 2022 22:23:21 -0500
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776886C711;
+        Tue, 22 Nov 2022 19:23:20 -0800 (PST)
+Received: from dggpeml500023.china.huawei.com (unknown [172.30.72.56])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NH5zQ3JHJzHw2r;
+        Wed, 23 Nov 2022 11:22:42 +0800 (CST)
+Received: from ubuntu1804.huawei.com (10.67.174.58) by
+ dggpeml500023.china.huawei.com (7.185.36.114) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Wed, 23 Nov 2022 11:23:18 +0800
+From:   Xiu Jianfeng <xiujianfeng@huawei.com>
+To:     <krzysztof.kozlowski@linaro.org>, <s.nawrocki@samsung.com>,
+        <tomasz.figa@gmail.com>, <cw00.choi@samsung.com>,
+        <alim.akhtar@samsung.com>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <dianders@chromium.org>,
+        <yadi.brar@samsung.com>, <mturquette@linaro.org>
+CC:     <linux-samsung-soc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] clk: samsung: Fix memory leak in _samsung_clk_register_pll()
+Date:   Wed, 23 Nov 2022 11:20:15 +0800
+Message-ID: <20221123032015.63980-1-xiujianfeng@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221116092616.17960-1-krzysztof.kozlowski@linaro.org>
-References: <20221116092616.17960-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [GIT PULL] clk: samsung: Pull for v6.2
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        linux-clk@vger.kernel.org, Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Date:   Tue, 22 Nov 2022 16:47:08 -0800
-User-Agent: alot/0.10
-Message-Id: <20221123004710.5245DC433D7@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.58]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ dggpeml500023.china.huawei.com (7.185.36.114)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,23 +48,28 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2022-11-16 01:26:16)
-> The following changes since commit 9abf2313adc1ca1b6180c508c25f22f9395cc7=
-80:
->=20
->   Linux 6.1-rc1 (2022-10-16 15:36:24 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/sam=
-sung-clk-6.2
->=20
-> for you to fetch changes up to 2bc5febd05abe86c3e3d4b4f18dff4bc4316c1be:
->=20
->   clk: samsung: Revert "clk: samsung: exynos-clkout: Use of_device_get_ma=
-tch_data()" (2022-11-15 10:36:54 +0100)
->=20
-> ----------------------------------------------------------------
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-Thanks. Pulled into clk-fixes even though the subject says v6.2 they
-look like fixes that we really want now instead of later.
+Fixes: 3ff6e0d8d64d ("clk: samsung: Add support to register rate_table for samsung plls")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+---
+ drivers/clk/samsung/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
+index fe383471c5f0..0ff28938943f 100644
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -1583,6 +1583,7 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 	if (ret) {
+ 		pr_err("%s: failed to register pll clock %s : %d\n",
+ 			__func__, pll_clk->name, ret);
++		kfree(pll->rate_table);
+ 		kfree(pll);
+ 		return;
+ 	}
+-- 
+2.17.1
+
