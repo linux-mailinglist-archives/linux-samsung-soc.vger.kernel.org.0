@@ -2,75 +2,60 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 330C96388A7
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Nov 2022 12:23:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2900638BCD
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Nov 2022 15:05:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229795AbiKYLXQ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 25 Nov 2022 06:23:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50456 "EHLO
+        id S229846AbiKYOF3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 25 Nov 2022 09:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231143AbiKYLWl (ORCPT
+        with ESMTP id S229669AbiKYOF2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 25 Nov 2022 06:22:41 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18F7E0C5
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Nov 2022 03:22:37 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id b9so4811574ljr.5
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Nov 2022 03:22:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FQ/0iaidjrwAErPgZV7KfavzFSlKA7jOMFJg48+/n7s=;
-        b=gwXpS+b3PHcPdSK1t8UGF3HSIoSW/ExTHv9RCn7Sh43VXek/50LHltfku32RBC50jb
-         bRX0oTTXOgw0aqvEJJrDX+iuWbvvMfqwIi9im2noaNXDBvR2h8dBVR8IyBmQphs0Ld83
-         8II4f3hW4AJjrTZlPYtqvgCbEKwxaWP4HB9Okb0xlSjnkdttTemNtIygmF7nl7Ap+0O0
-         QE1Glo2j59ruRhKSPfz/8zJr0/KtgL4qFhORls20irZZFP3taG+8FeVLbqLRtReFnAIs
-         ZDV3s6tGm7lOuyQCt0osKo1OfuXUZF3ogZPdTGUvPNX3nFx0inzcdnPuSYJu+9Ro9b8g
-         97/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FQ/0iaidjrwAErPgZV7KfavzFSlKA7jOMFJg48+/n7s=;
-        b=bMWAX1pSsdBml45uHdHNpuUniu+42KKmxjvy1yKgTwHCw0wTmWV28nR9e0D1vQA/EL
-         fh3qLTb/QvnXFGgMn1ox5byzAhLC/BgbNUqhDCssAuINoTDNPyvFZcGfSLkFHeneDx46
-         a+pQ5ywM4soBzZiHMmE9073ygGtkCzoqijtnADkqNgMz+W6RoTsI4xEF8msjcGtBTqOj
-         CQJDhZpd8NFrd2wWcmo4Y1LCNkBOEajrO4pamw3EJRzlBuNwiMLM1Z6/n4D7KxBidFS1
-         HlAwOKSfKV7NLWdKwLJlBunlAGdEx7PeW1aWF0FQbl9I2KjP0l919VD7l/Ubirng+SlR
-         Q5Ig==
-X-Gm-Message-State: ANoB5pkRNrsra0IWMSAgKbR9kRzJ/NmU2nlXmAzbQfyyNQX+olllvu4r
-        wJmSao0OIeT50EP78mIKnOP4bQ==
-X-Google-Smtp-Source: AA0mqf4Hkwe4H/vLtfLCeT7OTu+xc2bljnqQr7M0x6kMg0rrOGjRTbYXrL43oxNfs0wQ40G6aEX8ow==
-X-Received: by 2002:a2e:9789:0:b0:277:41d:6c1e with SMTP id y9-20020a2e9789000000b00277041d6c1emr11294977lji.330.1669375355712;
-        Fri, 25 Nov 2022 03:22:35 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c1-20020a056512074100b004a478c2f4desm483904lfs.163.2022.11.25.03.22.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 03:22:35 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Fri, 25 Nov 2022 09:05:28 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFC231E71F;
+        Fri, 25 Nov 2022 06:05:27 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9C50BB82A92;
+        Fri, 25 Nov 2022 14:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC909C433C1;
+        Fri, 25 Nov 2022 14:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1669385125;
+        bh=DRn5Jso4mMhB2yfvIbIsbzLAh0LJRniW2BI/aXXkdw4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aeDB3wI00BtU1YX7z0iwD/DGtnFkNSSvkfG69YeGaIh+RBOgWyxQLhl3zJFgibl67
+         sk38YAOFs2go1I1/FiFZz2mdWNxi5Nw/eILM2kFXJ0C/b/DRQji2aLd5EpJgAYKrpR
+         NC8ccLP5jy1a4FNFpwG/hi132JAWyjiWUO/shFbTgvvXh0H559OB5e/piwJgw/8DcJ
+         ivVI3Ne26KUMEIFYGDYtA/unAxlx3mwHmPjoOlR1VlRq+GGlzYYIFz1tULhfd2qEoF
+         ug8wW05+w/9Iu+PMgYpbX+Cqpj1U3CqkfaJQeMGsJ4FojzhqXnD85gqNCLXVLGwPcS
+         OFUrNMMEFbsuQ==
+Date:   Fri, 25 Nov 2022 14:05:19 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-samsung-soc@vger.kernel.org,
         Sriranjani P <sriranjani.p@samsung.com>,
         Chanho Park <chanho61.park@samsung.com>,
         Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH 4/4] dt-bindings: soc: samsung: exynos-sysreg: add clocks for Exynos850
-Date:   Fri, 25 Nov 2022 12:22:01 +0100
-Message-Id: <20221125112201.240178-4-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221125112201.240178-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/4] dt-bindings: soc: samsung: exynos-sysreg: split from
+ syscon
+Message-ID: <Y4DLn3BkC2SCahee@google.com>
 References: <20221125112201.240178-1-krzysztof.kozlowski@linaro.org>
+ <20221125112201.240178-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20221125112201.240178-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,50 +63,27 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Exynos850 has dedicated clock for accessing SYSREGs.  Allow it, even
-though Linux currently does not enable them and relies on bootloader.
+On Fri, 25 Nov 2022, Krzysztof Kozlowski wrote:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Split Samsung Exynos SoC SYSREG bindings to own file to narrow the
+> bindings and do not allow other parts of syscon.yaml.  This allows
+> further customization of Samsung SoC bindings.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Cc: Sriranjani P <sriranjani.p@samsung.com>
+> Cc: Chanho Park <chanho61.park@samsung.com>
+> Cc: Sam Protsenko <semen.protsenko@linaro.org>
+> ---
+>  .../devicetree/bindings/mfd/syscon.yaml       |  6 ---
 
----
+Acked-by: Lee Jones <lee@kernel.org>
 
-Cc: Sriranjani P <sriranjani.p@samsung.com>
-Cc: Chanho Park <chanho61.park@samsung.com>
-Cc: Sam Protsenko <semen.protsenko@linaro.org>
----
- .../soc/samsung/samsung,exynos-sysreg.yaml        | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+>  .../soc/samsung/samsung,exynos-sysreg.yaml    | 39 +++++++++++++++++++
+>  2 files changed, 39 insertions(+), 6 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
 
-diff --git a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-index 42357466005e..27cea934a286 100644
---- a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-+++ b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-@@ -36,10 +36,25 @@ properties:
-   reg:
-     maxItems: 1
- 
-+  clocks:
-+    maxItems: 1
-+
- required:
-   - compatible
-   - reg
- 
-+allOf:
-+  - if:
-+      not:
-+        properties:
-+          compatible:
-+            contains:
-+              enum:
-+                - samsung,exynos850-sysreg
-+    then:
-+      properties:
-+        clocks: false
-+
- additionalProperties: false
- 
- examples:
 -- 
-2.34.1
-
+Lee Jones [李琼斯]
