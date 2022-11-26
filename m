@@ -2,87 +2,131 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AD7F6394C5
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 26 Nov 2022 10:00:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95BF4639607
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 26 Nov 2022 14:08:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiKZJAN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 26 Nov 2022 04:00:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58310 "EHLO
+        id S229551AbiKZNIC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 26 Nov 2022 08:08:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiKZJAK (ORCPT
+        with ESMTP id S229515AbiKZNIB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 26 Nov 2022 04:00:10 -0500
-X-Greylist: delayed 1290 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Nov 2022 01:00:05 PST
-Received: from sp13.canonet.ne.jp (sp13.canonet.ne.jp [210.134.168.90])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BBC802098C;
-        Sat, 26 Nov 2022 01:00:05 -0800 (PST)
-Received: from csp13.canonet.ne.jp (unknown [172.21.160.133])
-        by sp13.canonet.ne.jp (Postfix) with ESMTP id 099161E03D3;
-        Sat, 26 Nov 2022 17:17:37 +0900 (JST)
-Received: from echeck13.canonet.ne.jp ([172.21.160.123])
-        by csp3 with ESMTP
-        id yqNVovGVhxJr5yqNVocUA4; Sat, 26 Nov 2022 17:17:37 +0900
-X-CNT-CMCheck-Reason: "undefined", "v=2.4 cv=S49nfKgP c=1 sm=1 tr=0
- ts=6381cba1 cx=g_jp:t_eml p=JJaDG7uySNsA:10 p=Ik1pXvdftEAPl7FGfynI:22
- a=c8wCX2VJ6RehaN9m5YqYzw==:117 a=yr9NA9NbXb0B05yJHQEWeQ==:17
- a=PlGk70OYzacA:10 a=kj9zAlcOel0A:10 a=9xFQ1JgjjksA:10 a=x7bEGLp0ZPQA:10
- a=JQiPw2jszkcqZPIXoVMA:9 a=CjuIK1q_8ugA:10"
-X-CNT-CMCheck-Score: 100.00
-Received: from echeck13.canonet.ne.jp (localhost [127.0.0.1])
-        by esets.canonet.ne.jp (Postfix) with ESMTP id 9B11A1C0251;
-        Sat, 26 Nov 2022 17:17:37 +0900 (JST)
-X-Virus-Scanner: This message was checked by ESET Mail Security
-        for Linux/BSD. For more information on ESET Mail Security,
-        please, visit our website: http://www.eset.com/.
-Received: from smtp13.canonet.ne.jp (unknown [172.21.160.103])
-        by echeck13.canonet.ne.jp (Postfix) with ESMTP id 6BA4E1C0263;
-        Sat, 26 Nov 2022 17:17:37 +0900 (JST)
-Received: from eikohnet.co.jp (webmail.canonet.ne.jp [210.134.169.250])
-        by smtp13.canonet.ne.jp (Postfix) with ESMTPA id A506115F964;
-        Sat, 26 Nov 2022 17:17:36 +0900 (JST)
+        Sat, 26 Nov 2022 08:08:01 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A071C12A
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 26 Nov 2022 05:07:59 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id be13so10698852lfb.4
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 26 Nov 2022 05:07:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PumZpgWWCLIt7GuPFKuRL0B5pDS2/W2Oy2A7hBHkkG0=;
+        b=ivWfLCpCTigcI4CW6DnkfkcGmtbFXQdDSOHEfEY9ANghziwgE0vyCf30XMc7LxVqlz
+         DX7EI/eII8uVUIvrXN2yuGievg1KPUSHmjOGWzL2qD/IKKHGVxs8opyuPT92FbSMXwRj
+         jOrAcdEvQ71f1E/32SX90VQxcW5KO0fUolyAUsdDtp2xc0DioE/T+XPjrQPi/B+TMEqm
+         1O9+b09wZia+PgDBG7lcoKTbGx+kvtYFkiLf9gLRa3ene6mTjLWcTwxt5bU+3/uK6u0u
+         rFnCKE0Pak7H1a1GozXdKLZ1Df2k9H+A9asulM/3Ly8+RpfbC+F3SMR99SHDP711CTPk
+         QmNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PumZpgWWCLIt7GuPFKuRL0B5pDS2/W2Oy2A7hBHkkG0=;
+        b=1BGcVxWrUAmO45IIE8//ljevudXIdRxKq3TkAWIHwXn56t9vMvRnCGife+gatPtgm4
+         aE9SG6Q4J3l0HKebsFzUOdniCx7m+OR0sakxf6neTYELt2tBfTIqRfLpWXc5nnJG0lJk
+         ctXIK3EHHorFJgzAwoEND6j0OoUl0WQokyYv3hAnze4DHUMwIIfkXiHv0fPfzInLkp3l
+         KcAdG3O+9J8YUlXNkUEf9SCnH1NHZpTuSYHQlC9JGB0lJemng3I3iaFLhZDiex17Zw7l
+         QDMVeu6109EVY8BpgEVNIBQ0E+r5i4dxFlWO1FjX3hOaQ5ZV/eaOaeyJiHwOJEoQAaYa
+         seXg==
+X-Gm-Message-State: ANoB5pncnHl7padrnKLw5DhNI47f/4J4oO73iuxWqf+TsiZhDJ+eOYgP
+        iZZipJZAVcf7r73GgYeYb9F9qg==
+X-Google-Smtp-Source: AA0mqf4KKLZQIWEHr4q51nApvU3vh2NWWMLJctdKVErLPvKx4kWD7uVIvt/497Orjd1ZPEKrw9AjAQ==
+X-Received: by 2002:a05:6512:48b:b0:4b4:9196:af54 with SMTP id v11-20020a056512048b00b004b49196af54mr8332834lfq.686.1669468076446;
+        Sat, 26 Nov 2022 05:07:56 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id o5-20020a198c05000000b00498fc3d4d15sm911376lfd.190.2022.11.26.05.07.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Nov 2022 05:07:55 -0800 (PST)
+Message-ID: <fc6f32e1-9aa6-8106-24e4-ff020e641c48@linaro.org>
+Date:   Sat, 26 Nov 2022 14:07:54 +0100
 MIME-Version: 1.0
-Message-ID: <20221126081736.00001C7B.0156@eikohnet.co.jp>
-Date:   Sat, 26 Nov 2022 17:17:36 +0900
-From:   "Mrs Zainab Abbas" <toda@eikohnet.co.jp>
-To:     <Inbox@eikohnet.co.jp>
-Reply-To: <mrs.zainababbas75@gmail.com>
-Subject: Hi
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH 2/4] dt-bindings: soc: samsung: exynos-sysreg: split from
+ syscon
+To:     Sriranjani P <sriranjani.p@samsung.com>,
+        'Lee Jones' <lee@kernel.org>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Krzysztof Kozlowski' <krzysztof.kozlowski+dt@linaro.org>,
+        'Alim Akhtar' <alim.akhtar@samsung.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     'Chanho Park' <chanho61.park@samsung.com>,
+        'Sam Protsenko' <semen.protsenko@linaro.org>
+References: <20221125112201.240178-1-krzysztof.kozlowski@linaro.org>
+ <CGME20221125112238epcas5p25b27eec809d72032216f2f8c375ea45b@epcas5p2.samsung.com>
+ <20221125112201.240178-2-krzysztof.kozlowski@linaro.org>
+ <016d01d900da$c46a6d80$4d3f4880$@samsung.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <016d01d900da$c46a6d80$4d3f4880$@samsung.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-ORGANIZATION: Mrs Zainab Abbas
-X-MAILER: Active! mail
-X-EsetResult: clean, %VIRUSNAME%
-X-ESET-AS: R=OK;S=0;OP=CALC;TIME=1669450657;VERSION=7940;MC=3218539519;TRN=0;CRV=0;IPC=210.134.169.250;SP=4;SIPS=1;PI=5;F=0
-X-I-ESET-AS: RN=0;RNP=
-X-ESET-Antispam: OK
-X-Spam-Status: Yes, score=7.8 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,HK_NAME_MR_MRS,
-        SPF_HELO_NONE,SPF_PASS,UNRESOLVED_TEMPLATE,XPRIO_SHORT_SUBJ
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5018]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  1.3 UNRESOLVED_TEMPLATE Headers contain an unresolved template
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mrs.zainababbas75[at]gmail.com]
-        *  1.0 HK_NAME_MR_MRS No description available.
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-        *  2.4 XPRIO_SHORT_SUBJ Has X Priority header + short subject
-X-Spam-Level: *******
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On 25/11/2022 15:32, Sriranjani P wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Krzysztof Kozlowski [mailto:krzysztof.kozlowski@linaro.org]
+>> Sent: 25 November 2022 16:52
+>> To: Lee Jones <lee@kernel.org>; Rob Herring <robh+dt@kernel.org>;
+> Krzysztof
+>> Kozlowski <krzysztof.kozlowski+dt@linaro.org>; Alim Akhtar
+>> <alim.akhtar@samsung.com>; devicetree@vger.kernel.org; linux-
+>> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+> linux-samsung-
+>> soc@vger.kernel.org
+>> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>; Sriranjani P
+>> <sriranjani.p@samsung.com>; Chanho Park <chanho61.park@samsung.com>;
+>> Sam Protsenko <semen.protsenko@linaro.org>
+>> Subject: [PATCH 2/4] dt-bindings: soc: samsung: exynos-sysreg: split from
+>> syscon
+>>
+>> Split Samsung Exynos SoC SYSREG bindings to own file to narrow the
+> bindings
+>> and do not allow other parts of syscon.yaml.  This allows further
+> customization
+>> of Samsung SoC bindings.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Cc: Sriranjani P <sriranjani.p@samsung.com>
+>> Cc: Chanho Park <chanho61.park@samsung.com>
+>> Cc: Sam Protsenko <semen.protsenko@linaro.org>
+>> ---
+> 
+> We agree for add separate YAML for  Samsung Exynos and hence I think we can 
+> go ahead and add  separate yaml for Tesla FSD.
+> Reviewed-by: Sriranjani P <sriranjani.p@samsung.com>
 
-Hello,
-Good day, I am still waiting for your reply to my previous email, hope you see the email?
+Tesla FSD should go to the same file. No need for another binding for
+same design...
 
-Regards
-Mrs Zainab Abbas
-
+Best regards,
+Krzysztof
 
