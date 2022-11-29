@@ -2,183 +2,441 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EAD663C866
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Nov 2022 20:29:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF5A63C815
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Nov 2022 20:20:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236980AbiK2T35 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 29 Nov 2022 14:29:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43540 "EHLO
+        id S236826AbiK2TUO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 29 Nov 2022 14:20:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236984AbiK2T3Y (ORCPT
+        with ESMTP id S236797AbiK2TTZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 29 Nov 2022 14:29:24 -0500
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5065C2C124
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 11:27:47 -0800 (PST)
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20221129192746epoutp042c73441b293433a547dca7773a73cf4c~sJNao4u5H0458904589epoutp04e
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 19:27:46 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20221129192746epoutp042c73441b293433a547dca7773a73cf4c~sJNao4u5H0458904589epoutp04e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1669750066;
-        bh=r4Q+3DcpeLgg0ND65yZqk12Y88w9C9XYbMKCdRwmA7g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hVZbmt+PhsiqGTsS991VzyNB1Zb3PglOKVSu/kw0eDWPlGnWZyokNiV0bi4CrjIu0
-         8CBqAwxFIpsLhgXU1Bbrby05Dew4BUD6O02rAzVRUnBoo6zD6AnMCqea2gmUNMpNVa
-         g390Ikey1roLAj3aLcwjsG8F9WOFGyp0avU1uegA=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20221129192744epcas5p34525c201c3827a0e6535abf20d7fa9c5~sJNZOS_ud2189421894epcas5p3o;
-        Tue, 29 Nov 2022 19:27:44 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.177]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4NMC6712nXz4x9Pt; Tue, 29 Nov
-        2022 19:27:43 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        80.59.56352.E2D56836; Wed, 30 Nov 2022 04:27:43 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-        20221129115546epcas5p3d5ef247af122c4041f50337ed2ec148c~sDCxQVTvu1588315883epcas5p3_;
-        Tue, 29 Nov 2022 11:55:46 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20221129115546epsmtrp26107b42a0d16ee11f38059c78e8d4c56~sDCxPmA8v1810718107epsmtrp2H;
-        Tue, 29 Nov 2022 11:55:46 +0000 (GMT)
-X-AuditID: b6c32a4b-5f7fe7000001dc20-11-63865d2e5b3c
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        6D.89.18644.243F5836; Tue, 29 Nov 2022 20:55:46 +0900 (KST)
-Received: from cheetah.sa.corp.samsungelectronics.net (unknown
-        [107.109.115.53]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20221129115544epsmtip15a5fdff3791825de5f4fc541f02f5a3b~sDCvpAMVS0590005900epsmtip1J;
-        Tue, 29 Nov 2022 11:55:44 +0000 (GMT)
-From:   Sriranjani P <sriranjani.p@samsung.com>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        devicetree@vger.kernel.org, alim.akhtar@samsung.com,
-        pankaj.dubey@samsung.com, ravi.patel@samsung.com,
-        sathya@samsung.com
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Sriranjani P <sriranjani.p@samsung.com>
-Subject: [PATCH v4 2/2] arm64: dts: fsd: add sysreg device node
-Date:   Tue, 29 Nov 2022 17:25:31 +0530
-Message-Id: <20221129115531.102932-3-sriranjani.p@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20221129115531.102932-1-sriranjani.p@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKKsWRmVeSWpSXmKPExsWy7bCmuq5+bFuywaozzBYP5m1js5h/5Byr
-        Rd+Lh8wWmx5fY7W4vGsOm8WM8/uYLBZt/cJu8fDDHnaL1r1H2C2+HHnNaHH7zTpWB26PTas6
-        2TzuXNvD5rF5Sb1H35ZVjB6fN8kFsEZl22SkJqakFimk5iXnp2TmpdsqeQfHO8ebmhkY6hpa
-        WpgrKeQl5qbaKrn4BOi6ZeYAXaakUJaYUwoUCkgsLlbSt7Mpyi8tSVXIyC8usVVKLUjJKTAp
-        0CtOzC0uzUvXy0stsTI0MDAyBSpMyM54t2w9c8Fe/oopj+4yNzDu5+li5OSQEDCRuNryia2L
-        kYtDSGA3o0Tfo7fsEM4nRomNG1dDOZ8ZJdbtW8oE07L27BdmEFtIYBejxLEmG4iiViaJI9tX
-        s4Ik2AR0JVqvfWYCSYgI7GCUeD3pAJjDLDCFUaL723qwKmEBe4mWxavZQGwWAVWJjfP/g63g
-        FbCTeLbhHCvEOnmJ1RsOgK3jBKo/3fGJFWSQhMBLdokDu+ezQRS5SCxe+wvqPmGJV8e3sEPY
-        UhKf3+2FqkmX2HxkM9TQHImOpmZmCNte4sCVOSxdjBxA12lKrN+lDxGWlZh6ah3YSGYBPone
-        30+gxvNK7JgHY6tJLH7UCWXLSKx99AlqvIfEucY5rJBgmcQocWH7WcYJjHKzEFYsYGRcxSiZ
-        WlCcm55abFpgnJdaDo+35PzcTYzg9KflvYPx0YMPeocYmTgYDzFKcDArifB+DGpNFuJNSays
-        Si3Kjy8qzUktPsRoCgzAicxSosn5wAScVxJvaGJpYGJmZmZiaWxmqCTOu3iGVrKQQHpiSWp2
-        ampBahFMHxMHp1QD01blSEnvlwv3fXhjfnFOiy9vyT+PxrSKtf80TNq3NJ0Mi2bbF3vrUYlF
-        qm31+23Jrb4pcXFdr6acm2h+eGLT7aP8k/ynHWDbZK16fp/yT8F+wz2f9/i1dlbVXww5sGT1
-        /yLHy3vT977d9f6XyJGsuY5WbB71C2I2HvIt5l/85c0Vxp7FPy9rL5R9ccODLXP53wfOk6/w
-        sqn3LGfX2C/gdtM2c6M5f1r67st92fueXawXevnfQojPyG+bKIPEhZS7VQsSnxYxbp9stFDc
-        NO5uks79PwXHF1aLFj/snHG9b+qUJH65D3+7tXUNHz/OuXS+e7q78a2HE3+zlx6rkTVo5zt4
-        0lihT+Tr47XJyTc0GJRYijMSDbWYi4oTAWuzvdQIBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsWy7bCSnK7T59Zkg9e/OC0ezNvGZjH/yDlW
-        i74XD5ktNj2+xmpxedccNosZ5/cxWSza+oXd4uGHPewWrXuPsFt8OfKa0eL2m3WsDtwem1Z1
-        snncubaHzWPzknqPvi2rGD0+b5ILYI3isklJzcksSy3St0vgyni3bD1zwV7+iimP7jI3MO7n
-        6WLk5JAQMJFYe/YLcxcjF4eQwA5GiQOvtrNCJGQkTj5YwgxhC0us/PecHaKomUni15JPLCAJ
-        NgFdidZrn5lAEiICBxgldvcuYQRxmAVmMEr8XT+HEaRKWMBeomXxajYQm0VAVWLj/P9MIDav
-        gJ3Esw3noNbJS6zecABsHSdQ/emOT2BxIaCaF1cuME9g5FvAyLCKUTK1oDg3PbfYsMAoL7Vc
-        rzgxt7g0L10vOT93EyM4QLW0djDuWfVB7xAjEwfjIUYJDmYlEd6PQa3JQrwpiZVVqUX58UWl
-        OanFhxilOViUxHkvdJ2MFxJITyxJzU5NLUgtgskycXBKNTDVtsvMY/u2tlpG78n8FazJAmtZ
-        csTrE8xq7v2IEkzo5jV4mf2KtVVwV/H9uxsFI3/LHpo9X8Js+5L7jwJqGr3nZTY2ue6qbLXR
-        y5h4fe+nM6aLrn4+6rinQ+XZRH+lua4ng3J6PdVe1b+reG5xOf+AoGHOJ8Nz/6KXqHVz35CX
-        ePpJqtH6Q+9t/9aPL3t5hfrU/qu/fLfk8COW1cXbMu45fdyzXmWNnsKpsrunsuv+mh1ru2pm
-        5PTzwuW+c/YCFvJqX+4mzJw+peljRP2OD9ZtS8uj+N7P+PlUQ3qrbLeeqhl7k7J3+MoLUz2m
-        M5i1s36XuSjwd2dAuOKMghbhsytWPL5gUXfCxNlhQYC5g7gSS3FGoqEWc1FxIgAv9pLxvwIA
-        AA==
-X-CMS-MailID: 20221129115546epcas5p3d5ef247af122c4041f50337ed2ec148c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20221129115546epcas5p3d5ef247af122c4041f50337ed2ec148c
-References: <20221129115531.102932-1-sriranjani.p@samsung.com>
-        <CGME20221129115546epcas5p3d5ef247af122c4041f50337ed2ec148c@epcas5p3.samsung.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 29 Nov 2022 14:19:25 -0500
+Received: from aposti.net (aposti.net [89.234.176.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51572ED75;
+        Tue, 29 Nov 2022 11:19:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
+        s=mail; t=1669749482; h=from:from:sender:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+         content-type:content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=TxPyr5OE9Kv8eh+gr1qxY7n7aII0x0jKS9Z4WPcAii8=;
+        b=qi9Trj/rcgYq3ZZJ/Rw0daD/NEAKBRLKWMRsxITpt0C5rJOV0C8PCVMD/sHyrwDw9RsF4L
+        pvHgltbAgqAMJTJgRse5SI7g6rVo6lEVmY1PI0MBpXiOl+9ltm0Dc8D9obXZ3XTDcCoqkB
+        ngvH2SP6p4Mnwt+QhwtqdySpYpMlkXg=
+From:   Paul Cercueil <paul@crapouillou.net>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Paul Cercueil <paul@crapouillou.net>,
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH v2 09/26] drm: exynos: Remove #ifdef guards for PM related functions
+Date:   Tue, 29 Nov 2022 19:17:16 +0000
+Message-Id: <20221129191733.137897-10-paul@crapouillou.net>
+In-Reply-To: <20221129191733.137897-1-paul@crapouillou.net>
+References: <20221129191733.137897-1-paul@crapouillou.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add SYSREG controller device node, which is available in PERIC, FSYS0,
-FSYS1 and CAM block of FSD SoC.
+Use the DEFINE_RUNTIME_DEV_PM_OPS(), SYSTEM_SLEEP_PM_OPS(),
+RUNTIME_PM_OPS() and pm_ptr() macros to handle the runtime and suspend
+PM callbacks.
 
-Signed-off-by: Alim Akhtar <alim.akhtar@samsung.com>
-Signed-off-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-Signed-off-by: Sriranjani P <sriranjani.p@samsung.com>
+These macros allow the suspend and resume functions to be automatically
+dropped by the compiler when CONFIG_PM is disabled, without having
+to use #ifdef guards.
+
+This has the advantage of always compiling these functions in,
+independently of any Kconfig option. Thanks to that, bugs and other
+regressions are subsequently easier to catch.
+
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Acked-by : Inki Dae <inki.dae@samsung.com>
 ---
- arch/arm64/boot/dts/tesla/fsd.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+---
+ drivers/gpu/drm/exynos/exynos5433_drm_decon.c | 13 ++++---------
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c    | 12 +++---------
+ drivers/gpu/drm/exynos/exynos_dp.c            | 11 +++--------
+ drivers/gpu/drm/exynos/exynos_drm_fimc.c      | 11 +++--------
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 11 +++--------
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c       | 10 +++-------
+ drivers/gpu/drm/exynos/exynos_drm_mic.c       | 11 +++--------
+ drivers/gpu/drm/exynos/exynos_drm_rotator.c   | 12 +++---------
+ drivers/gpu/drm/exynos/exynos_drm_scaler.c    | 12 +++---------
+ 9 files changed, 28 insertions(+), 75 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/tesla/fsd.dtsi b/arch/arm64/boot/dts/tesla/fsd.dtsi
-index f35bc5a288c2..ff625fb71fbe 100644
---- a/arch/arm64/boot/dts/tesla/fsd.dtsi
-+++ b/arch/arm64/boot/dts/tesla/fsd.dtsi
-@@ -466,6 +466,11 @@
- 			clock-names = "fin_pll";
- 		};
+diff --git a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+index 8155d7e650f1..2867b39fa35e 100644
+--- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+@@ -710,7 +710,6 @@ static irqreturn_t decon_irq_handler(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
  
-+		sysreg_cam: system-controller@12630000 {
-+			compatible = "tesla,fsd-cam-sysreg", "syscon";
-+			reg = <0x0 0x12630000 0x0 0x500>;
-+		};
-+
- 		clock_mfc: clock-controller@12810000 {
- 			compatible = "tesla,fsd-clock-mfc";
- 			reg = <0x0 0x12810000 0x0 0x3000>;
-@@ -492,6 +497,11 @@
- 				"dout_cmu_peric_shared1div4_dmaclk";
- 		};
+-#ifdef CONFIG_PM
+ static int exynos5433_decon_suspend(struct device *dev)
+ {
+ 	struct decon_context *ctx = dev_get_drvdata(dev);
+@@ -741,14 +740,10 @@ static int exynos5433_decon_resume(struct device *dev)
  
-+		sysreg_peric: system-controller@14030000 {
-+			compatible = "tesla,fsd-peric-sysreg", "syscon";
-+			reg = <0x0 0x14030000 0x0 0x1000>;
-+		};
-+
- 		clock_fsys0: clock-controller@15010000 {
- 			compatible = "tesla,fsd-clock-fsys0";
- 			reg = <0x0 0x15010000 0x0 0x3000>;
-@@ -506,6 +516,11 @@
- 				"dout_cmu_fsys0_shared0div4";
- 		};
+ 	return ret;
+ }
+-#endif
  
-+		sysreg_fsys0: system-controller@15030000 {
-+			compatible = "tesla,fsd-fsys0-sysreg", "syscon";
-+			reg = <0x0 0x15030000 0x0 0x1000>;
-+		};
-+
- 		clock_fsys1: clock-controller@16810000 {
- 			compatible = "tesla,fsd-clock-fsys1";
- 			reg = <0x0 0x16810000 0x0 0x3000>;
-@@ -518,6 +533,11 @@
- 				"dout_cmu_fsys1_shared0div4";
- 		};
+-static const struct dev_pm_ops exynos5433_decon_pm_ops = {
+-	SET_RUNTIME_PM_OPS(exynos5433_decon_suspend, exynos5433_decon_resume,
+-			   NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				     pm_runtime_force_resume)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(exynos5433_decon_pm_ops,
++				 exynos5433_decon_suspend,
++				 exynos5433_decon_resume, NULL);
  
-+		sysreg_fsys1: system-controller@16830000 {
-+			compatible = "tesla,fsd-fsys1-sysreg", "syscon";
-+			reg = <0x0 0x16830000 0x0 0x1000>;
-+		};
-+
- 		mdma0: dma-controller@10100000 {
- 			compatible = "arm,pl330", "arm,primecell";
- 			reg = <0x0 0x10100000 0x0 0x1000>;
+ static const struct of_device_id exynos5433_decon_driver_dt_match[] = {
+ 	{
+@@ -881,7 +876,7 @@ struct platform_driver exynos5433_decon_driver = {
+ 	.remove		= exynos5433_decon_remove,
+ 	.driver		= {
+ 		.name	= "exynos5433-decon",
+-		.pm	= &exynos5433_decon_pm_ops,
++		.pm	= pm_ptr(&exynos5433_decon_pm_ops),
+ 		.of_match_table = exynos5433_decon_driver_dt_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos7_drm_decon.c b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+index 7080cf7952ec..3126f735dedc 100644
+--- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+@@ -779,7 +779,6 @@ static int decon_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+ static int exynos7_decon_suspend(struct device *dev)
+ {
+ 	struct decon_context *ctx = dev_get_drvdata(dev);
+@@ -836,21 +835,16 @@ static int exynos7_decon_resume(struct device *dev)
+ err_pclk_enable:
+ 	return ret;
+ }
+-#endif
+ 
+-static const struct dev_pm_ops exynos7_decon_pm_ops = {
+-	SET_RUNTIME_PM_OPS(exynos7_decon_suspend, exynos7_decon_resume,
+-			   NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(exynos7_decon_pm_ops, exynos7_decon_suspend,
++				 exynos7_decon_resume, NULL);
+ 
+ struct platform_driver decon_driver = {
+ 	.probe		= decon_probe,
+ 	.remove		= decon_remove,
+ 	.driver		= {
+ 		.name	= "exynos-decon",
+-		.pm	= &exynos7_decon_pm_ops,
++		.pm	= pm_ptr(&exynos7_decon_pm_ops),
+ 		.of_match_table = decon_driver_dt_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
+index 4e3d3d5f6866..3404ec1367fb 100644
+--- a/drivers/gpu/drm/exynos/exynos_dp.c
++++ b/drivers/gpu/drm/exynos/exynos_dp.c
+@@ -260,7 +260,6 @@ static int exynos_dp_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+ static int exynos_dp_suspend(struct device *dev)
+ {
+ 	struct exynos_dp_device *dp = dev_get_drvdata(dev);
+@@ -274,13 +273,9 @@ static int exynos_dp_resume(struct device *dev)
+ 
+ 	return analogix_dp_resume(dp->adp);
+ }
+-#endif
+ 
+-static const struct dev_pm_ops exynos_dp_pm_ops = {
+-	SET_RUNTIME_PM_OPS(exynos_dp_suspend, exynos_dp_resume, NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(exynos_dp_pm_ops, exynos_dp_suspend,
++				 exynos_dp_resume, NULL);
+ 
+ static const struct of_device_id exynos_dp_match[] = {
+ 	{ .compatible = "samsung,exynos5-dp" },
+@@ -294,7 +289,7 @@ struct platform_driver dp_driver = {
+ 	.driver		= {
+ 		.name	= "exynos-dp",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &exynos_dp_pm_ops,
++		.pm	= pm_ptr(&exynos_dp_pm_ops),
+ 		.of_match_table = exynos_dp_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+index 0ee32e4b1e43..8de2714599fc 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
+@@ -1381,7 +1381,6 @@ static int fimc_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+ static int fimc_runtime_suspend(struct device *dev)
+ {
+ 	struct fimc_context *ctx = get_fimc_context(dev);
+@@ -1398,13 +1397,9 @@ static int fimc_runtime_resume(struct device *dev)
+ 	DRM_DEV_DEBUG_KMS(dev, "id[%d]\n", ctx->id);
+ 	return clk_prepare_enable(ctx->clocks[FIMC_CLK_GATE]);
+ }
+-#endif
+ 
+-static const struct dev_pm_ops fimc_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(fimc_runtime_suspend, fimc_runtime_resume, NULL)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(fimc_pm_ops, fimc_runtime_suspend,
++				 fimc_runtime_resume, NULL);
+ 
+ static const struct of_device_id fimc_of_match[] = {
+ 	{ .compatible = "samsung,exynos4210-fimc" },
+@@ -1420,6 +1415,6 @@ struct platform_driver fimc_driver = {
+ 		.of_match_table = fimc_of_match,
+ 		.name	= "exynos-drm-fimc",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &fimc_pm_ops,
++		.pm	= pm_ptr(&fimc_pm_ops),
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index ae6636e6658e..7f4a0be03dd1 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -1287,7 +1287,6 @@ static int fimd_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+ static int exynos_fimd_suspend(struct device *dev)
+ {
+ 	struct fimd_context *ctx = dev_get_drvdata(dev);
+@@ -1321,13 +1320,9 @@ static int exynos_fimd_resume(struct device *dev)
+ 
+ 	return 0;
+ }
+-#endif
+ 
+-static const struct dev_pm_ops exynos_fimd_pm_ops = {
+-	SET_RUNTIME_PM_OPS(exynos_fimd_suspend, exynos_fimd_resume, NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(exynos_fimd_pm_ops, exynos_fimd_suspend,
++				 exynos_fimd_resume, NULL);
+ 
+ struct platform_driver fimd_driver = {
+ 	.probe		= fimd_probe,
+@@ -1335,7 +1330,7 @@ struct platform_driver fimd_driver = {
+ 	.driver		= {
+ 		.name	= "exynos4-fb",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &exynos_fimd_pm_ops,
++		.pm	= pm_ptr(&exynos_fimd_pm_ops),
+ 		.of_match_table = fimd_driver_dt_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+index 471fd6c8135f..7711cb67b807 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+@@ -1549,7 +1549,6 @@ static int g2d_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM_SLEEP
+ static int g2d_suspend(struct device *dev)
+ {
+ 	struct g2d_data *g2d = dev_get_drvdata(dev);
+@@ -1574,9 +1573,7 @@ static int g2d_resume(struct device *dev)
+ 
+ 	return 0;
+ }
+-#endif
+ 
+-#ifdef CONFIG_PM
+ static int g2d_runtime_suspend(struct device *dev)
+ {
+ 	struct g2d_data *g2d = dev_get_drvdata(dev);
+@@ -1597,11 +1594,10 @@ static int g2d_runtime_resume(struct device *dev)
+ 
+ 	return ret;
+ }
+-#endif
+ 
+ static const struct dev_pm_ops g2d_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(g2d_suspend, g2d_resume)
+-	SET_RUNTIME_PM_OPS(g2d_runtime_suspend, g2d_runtime_resume, NULL)
++	SYSTEM_SLEEP_PM_OPS(g2d_suspend, g2d_resume)
++	RUNTIME_PM_OPS(g2d_runtime_suspend, g2d_runtime_resume, NULL)
+ };
+ 
+ static const struct of_device_id exynos_g2d_match[] = {
+@@ -1617,7 +1613,7 @@ struct platform_driver g2d_driver = {
+ 	.driver		= {
+ 		.name	= "exynos-drm-g2d",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &g2d_pm_ops,
++		.pm	= pm_ptr(&g2d_pm_ops),
+ 		.of_match_table = exynos_g2d_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_mic.c b/drivers/gpu/drm/exynos/exynos_drm_mic.c
+index 09ce28ee08d9..17bab5b1663f 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_mic.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_mic.c
+@@ -340,7 +340,6 @@ static const struct component_ops exynos_mic_component_ops = {
+ 	.unbind	= exynos_mic_unbind,
+ };
+ 
+-#ifdef CONFIG_PM
+ static int exynos_mic_suspend(struct device *dev)
+ {
+ 	struct exynos_mic *mic = dev_get_drvdata(dev);
+@@ -369,13 +368,9 @@ static int exynos_mic_resume(struct device *dev)
+ 	}
+ 	return 0;
+ }
+-#endif
+ 
+-static const struct dev_pm_ops exynos_mic_pm_ops = {
+-	SET_RUNTIME_PM_OPS(exynos_mic_suspend, exynos_mic_resume, NULL)
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(exynos_mic_pm_ops, exynos_mic_suspend,
++				 exynos_mic_resume, NULL);
+ 
+ static int exynos_mic_probe(struct platform_device *pdev)
+ {
+@@ -470,7 +465,7 @@ struct platform_driver mic_driver = {
+ 	.remove		= exynos_mic_remove,
+ 	.driver		= {
+ 		.name	= "exynos-mic",
+-		.pm	= &exynos_mic_pm_ops,
++		.pm	= pm_ptr(&exynos_mic_pm_ops),
+ 		.owner	= THIS_MODULE,
+ 		.of_match_table = exynos_mic_of_match,
+ 	},
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_rotator.c b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
+index dec7df35baa9..8706f377c349 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_rotator.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
+@@ -340,7 +340,6 @@ static int rotator_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+ static int rotator_runtime_suspend(struct device *dev)
+ {
+ 	struct rot_context *rot = dev_get_drvdata(dev);
+@@ -355,7 +354,6 @@ static int rotator_runtime_resume(struct device *dev)
+ 
+ 	return clk_prepare_enable(rot->clock);
+ }
+-#endif
+ 
+ static const struct drm_exynos_ipp_limit rotator_s5pv210_rbg888_limits[] = {
+ 	{ IPP_SIZE_LIMIT(BUFFER, .h = { 8, SZ_16K }, .v = { 8, SZ_16K }) },
+@@ -450,12 +448,8 @@ static const struct of_device_id exynos_rotator_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, exynos_rotator_match);
+ 
+-static const struct dev_pm_ops rotator_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(rotator_runtime_suspend, rotator_runtime_resume,
+-									NULL)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(rotator_pm_ops, rotator_runtime_suspend,
++				 rotator_runtime_resume, NULL);
+ 
+ struct platform_driver rotator_driver = {
+ 	.probe		= rotator_probe,
+@@ -463,7 +457,7 @@ struct platform_driver rotator_driver = {
+ 	.driver		= {
+ 		.name	= "exynos-rotator",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &rotator_pm_ops,
++		.pm	= pm_ptr(&rotator_pm_ops),
+ 		.of_match_table = exynos_rotator_match,
+ 	},
+ };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_scaler.c b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
+index 3c049fb658a3..20608e9780ce 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_scaler.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
+@@ -550,8 +550,6 @@ static int scaler_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_PM
+-
+ static int clk_disable_unprepare_wrapper(struct clk *clk)
+ {
+ 	clk_disable_unprepare(clk);
+@@ -584,13 +582,9 @@ static int scaler_runtime_resume(struct device *dev)
+ 
+ 	return  scaler_clk_ctrl(scaler, true);
+ }
+-#endif
+ 
+-static const struct dev_pm_ops scaler_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(scaler_runtime_suspend, scaler_runtime_resume, NULL)
+-};
++static DEFINE_RUNTIME_DEV_PM_OPS(scaler_pm_ops, scaler_runtime_suspend,
++				 scaler_runtime_resume, NULL);
+ 
+ static const struct drm_exynos_ipp_limit scaler_5420_two_pixel_hv_limits[] = {
+ 	{ IPP_SIZE_LIMIT(BUFFER, .h = { 16, SZ_8K }, .v = { 16, SZ_8K }) },
+@@ -731,7 +725,7 @@ struct platform_driver scaler_driver = {
+ 	.driver		= {
+ 		.name	= "exynos-scaler",
+ 		.owner	= THIS_MODULE,
+-		.pm	= &scaler_pm_ops,
++		.pm	= pm_ptr(&scaler_pm_ops),
+ 		.of_match_table = exynos_scaler_match,
+ 	},
+ };
 -- 
-2.17.1
+2.35.1
 
