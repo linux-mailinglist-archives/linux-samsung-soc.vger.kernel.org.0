@@ -2,165 +2,160 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C0E063BCC2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Nov 2022 10:17:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9DFE63C85F
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Nov 2022 20:29:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbiK2JR0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 29 Nov 2022 04:17:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
+        id S237032AbiK2T3a (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 29 Nov 2022 14:29:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbiK2JRW (ORCPT
+        with ESMTP id S237014AbiK2T3L (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 29 Nov 2022 04:17:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC2658025
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 01:15:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1669713326;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=kLZwFc2T16+VzxzvdeqP7dZ+DZAGfAAiD+u0EUrSQ8s=;
-        b=OvXTU6p0Ct0GG3VEsw6AOZSjwusuY/Ng6cuNku1asLSrx9F6Mc66uLvd7qxMRAZbOAL+J5
-        Q8DdnyjmltiPLfDTqjLE3SaozLtbjrW5pWS5w+X7WF2iZ/48KkE540YFRqNv9Zfo0kmyyh
-        pze47cOZYmn8QXjChvz5wyc79I3BaI4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-502-bqS8XCByM_CkFiCH-qcMuQ-1; Tue, 29 Nov 2022 04:15:24 -0500
-X-MC-Unique: bqS8XCByM_CkFiCH-qcMuQ-1
-Received: by mail-wm1-f72.google.com with SMTP id m17-20020a05600c3b1100b003cf9cc47da5so7494972wms.9
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 01:15:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kLZwFc2T16+VzxzvdeqP7dZ+DZAGfAAiD+u0EUrSQ8s=;
-        b=NuMs3gMLjIT57Z77VhKrNBLM8ydWEr39wvG2Yl0Vbh0eXI0rOuz8yGtoUyr5nyszoD
-         +O1dXxDS9SQlVPtAco7wVV45bUorKnELipuNt7W0O+Lla07FoN/CXkn3cA8f6C9tYd4C
-         CCU7DDRJeefXqALw4iT+vId0AEUvXvYDiXyvs3s02kU/HRpXnxEeAldeJFGeer3HjJcs
-         dS4pB2JGd9f+ipJlmeEmmYPCLIrlbWJ1ZHiO9Scuv/+0Hup9Nm1pmHJHRsMirANsWcNe
-         OFvw3Gdq/D4n6tx/rtfkYKq9skC2dSmMPE2LbR21T1fBIzBK7V+cEF2taRbwUbYDsfac
-         9Q8g==
-X-Gm-Message-State: ANoB5plFaiDui5Z6bdcpKE8MA8jqcK511Y1EO0yU5VOVf+IUyRTtyU5M
-        mPi3QgZsPgD4qAB1i+ovP0wFdVObt91ToIrG3DzApqmN1RdWFE47NtLL7jiBfmSyam9kn5eX0eZ
-        MrwaU3kh5mhRYLvmS6AF3TenNk5Z9tmw=
-X-Received: by 2002:a05:600c:430c:b0:3cf:8ed7:7124 with SMTP id p12-20020a05600c430c00b003cf8ed77124mr42243426wme.140.1669713323599;
-        Tue, 29 Nov 2022 01:15:23 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf5aMoFyhfTZRz6WGw0GcgDkcONZAiRyZAh+e0PFHXmVnEtFtgvwKaxuOXbIxhdoVgI1OB8H+Q==
-X-Received: by 2002:a05:600c:430c:b0:3cf:8ed7:7124 with SMTP id p12-20020a05600c430c00b003cf8ed77124mr42243382wme.140.1669713323266;
-        Tue, 29 Nov 2022 01:15:23 -0800 (PST)
-Received: from ?IPV6:2003:cb:c705:ca00:3fb8:c253:3bf7:b60e? (p200300cbc705ca003fb8c2533bf7b60e.dip0.t-ipconnect.de. [2003:cb:c705:ca00:3fb8:c253:3bf7:b60e])
-        by smtp.gmail.com with ESMTPSA id n26-20020a05600c3b9a00b003c6b70a4d69sm1498998wms.42.2022.11.29.01.15.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Nov 2022 01:15:22 -0800 (PST)
-Message-ID: <abcba252-13a0-50aa-79ec-28b649c892cd@redhat.com>
-Date:   Tue, 29 Nov 2022 10:15:20 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH mm-unstable v1 16/20] mm/frame-vector: remove FOLL_FORCE
- usage
-Content-Language: en-US
-To:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Andrew Morton <akpm@linux-foundation.org>
-Cc:     linux-kernel@vger.kernel.org, x86@kernel.org,
-        linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-ia64@vger.kernel.org, linux-mips@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, sparclinux@vger.kernel.org,
-        linux-um@lists.infradead.org, etnaviv@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-mm@kvack.org,
-        linux-perf-users@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        linux-kselftest@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        John Hubbard <jhubbard@nvidia.com>,
-        Peter Xu <peterx@redhat.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andrea Arcangeli <aarcange@redhat.com>,
-        Hugh Dickins <hughd@google.com>, Nadav Amit <namit@vmware.com>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Matthew Wilcox <willy@infradead.org>,
-        Mike Kravetz <mike.kravetz@oracle.com>,
-        Muchun Song <songmuchun@bytedance.com>,
-        Shuah Khan <shuah@kernel.org>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        David Airlie <airlied@gmail.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Christoph Hellwig <hch@infradead.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-References: <20221116102659.70287-1-david@redhat.com>
- <20221116102659.70287-17-david@redhat.com>
- <81fb0fa3-2e06-b765-56ac-a7d981194e59@redhat.com>
- <08b65ac6-6786-1080-18f8-d2be109c85fc@xs4all.nl>
- <9d0bf98a-3d6a-1082-e992-1338e1525935@redhat.com>
- <20221128145927.df895bf1966cfa125cae9668@linux-foundation.org>
- <22b1107b-0acc-5772-a883-8f3c4682eb1b@redhat.com>
- <c2681582-1e24-7ed9-e4fb-e2dd17a93aed@xs4all.nl>
-From:   David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-In-Reply-To: <c2681582-1e24-7ed9-e4fb-e2dd17a93aed@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 29 Nov 2022 14:29:11 -0500
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95EE76D968
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 11:27:30 -0800 (PST)
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20221129192728epoutp0165ddd620a5293d14076a88a9d3cc9986~sJNJyjpDY3227432274epoutp01e
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Nov 2022 19:27:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20221129192728epoutp0165ddd620a5293d14076a88a9d3cc9986~sJNJyjpDY3227432274epoutp01e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1669750048;
+        bh=STCK5RfPzELDMJmCy9YzVVF5dbjowicVwJJKF6VsqJg=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=FcQwOuatDuTv0S01TA6kRCLlcF67Yug4My7rvTLddQPtly70FeBiP9kG+SEPvk3XJ
+         LH6Pjhu9FzYq0bxbxZPiH8KLvsXLrKDWnOxqGdvDfvU45U/SsdrPD1eZ9jRI4ZgQPT
+         exdFIfxOK1z9/jBiTl5jr9fEvXezVdwe78zPQt10=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas5p2.samsung.com (KnoxPortal) with ESMTP id
+        20221129192727epcas5p257b0887b90992e4feb97542860cb89cc~sJNJS1M1P3081130811epcas5p2Q;
+        Tue, 29 Nov 2022 19:27:27 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.183]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4NMC5n6Xhfz4x9Pp; Tue, 29 Nov
+        2022 19:27:25 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        89.16.01710.D1D56836; Wed, 30 Nov 2022 04:27:25 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+        20221129115540epcas5p370eb47c404a8d2c08ab4f264ae983481~sDCrY4q0z1588315883epcas5p35;
+        Tue, 29 Nov 2022 11:55:40 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20221129115540epsmtrp269114761f9371f5f541c956ed776a204~sDCrYGQu31810718107epsmtrp2G;
+        Tue, 29 Nov 2022 11:55:40 +0000 (GMT)
+X-AuditID: b6c32a49-a41ff700000006ae-2d-63865d1d7739
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        D8.F1.14392.B33F5836; Tue, 29 Nov 2022 20:55:39 +0900 (KST)
+Received: from cheetah.sa.corp.samsungelectronics.net (unknown
+        [107.109.115.53]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20221129115538epsmtip1cb909db884274918e41d6ea77e3ad035~sDCpzIBhZ0481604816epsmtip1g;
+        Tue, 29 Nov 2022 11:55:38 +0000 (GMT)
+From:   Sriranjani P <sriranjani.p@samsung.com>
+To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        devicetree@vger.kernel.org, alim.akhtar@samsung.com,
+        pankaj.dubey@samsung.com, ravi.patel@samsung.com,
+        sathya@samsung.com
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        Sriranjani P <sriranjani.p@samsung.com>
+Subject: [PATCH v4 0/2] arm64: dts: Add SYSREG nodes for FSD SoC
+Date:   Tue, 29 Nov 2022 17:25:29 +0530
+Message-Id: <20221129115531.102932-1-sriranjani.p@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJKsWRmVeSWpSXmKPExsWy7bCmpq5sbFuywYVWE4sH87axWcw/co7V
+        ou/FQ2aLTY+vsVpc3jWHzWLG+X1MFou2fmG3ePhhD7tF694j7BZfjrxmtLj9Zh2rA7fHplWd
+        bB53ru1h89i8pN6jb8sqRo/Pm+QCWKOybTJSE1NSixRS85LzUzLz0m2VvIPjneNNzQwMdQ0t
+        LcyVFPISc1NtlVx8AnTdMnOALlNSKEvMKQUKBSQWFyvp29kU5ZeWpCpk5BeX2CqlFqTkFJgU
+        6BUn5haX5qXr5aWWWBkaGBiZAhUmZGdcfnqZqWACb8X+5YuYGhgvcXUxcnJICJhInLp8irWL
+        kYtDSGA3o8SpXXOYIZxPjBKtHy6yQDjfGCU2zz/OBtOydt5cNojEXkaJdR23GSGcViaJQxfu
+        sYBUsQnoSrRe+8wEkhAR2MEo8XrSATCHWWAKo0T3t/WsIFXCAg4SzX/amUFsFgFViScnv4Lt
+        4BWwk/j68QEjxD55idUbDoBdJSFwjl3idGMLVMJF4vuqncwQtrDEq+Nb2CFsKYnP7/ZCHZsu
+        sfnIZlYIO0eio6kZqt5e4sCVOUCncgBdpCmxfpc+RFhWYuqpdUwgNrMAn0Tv7ydMEHFeiR3z
+        YGw1icWPOqFsGYm1jz5BjfeQuPDhLtj3QgKxEo1LV7NOYJSdhbBhASPjKkbJ1ILi3PTUYtMC
+        w7zUcnhcJefnbmIEpzktzx2Mdx980DvEyMTBeIhRgoNZSYT3Y1BrshBvSmJlVWpRfnxRaU5q
+        8SFGU2CYTWSWEk3OBybavJJ4QxNLAxMzMzMTS2MzQyVx3sUztJKFBNITS1KzU1MLUotg+pg4
+        OKUamBbGT98R/OXsx6ruLUJpfK3ub47N33RgerYbYwVDrvMvzittpzav998z1+rhzsYq1xX7
+        3rC+kzjL4aqq5Bfuvu6AymqN0M0ls2a5n3noyv3uCe/rtQ6ax6ZtsVh+bn/rwmXRPF+Tn/6+
+        mrb+0yyLmfUvrha9/Nyfc/9x1exsvaa7S99yTr2WnmHs//Pokd/n1zqsvDlz8+sXyRsfe4ZN
+        78hjCHSLqT908p7/cV3p489efF/wf86yCf2LLv04yt7k/2yj/JfnSQnPmvRdYyKely+71yT/
+        aoJ3/IyYcrMJv7naPLJdH28qObv1Ri+PSX/v/fqCU2p/jkz8LLfsfWJJ6fbHz5cz3z3gZ6F5
+        cb3YFy/tWiWW4oxEQy3mouJEAG98iJ78AwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMLMWRmVeSWpSXmKPExsWy7bCSnK7159Zkg4XfTSwezNvGZjH/yDlW
+        i74XD5ktNj2+xmpxedccNosZ5/cxWSza+oXd4uGHPewWrXuPsFt8OfKa0eL2m3WsDtwem1Z1
+        snncubaHzWPzknqPvi2rGD0+b5ILYI3isklJzcksSy3St0vgyrj89DJTwQTeiv3LFzE1MF7i
+        6mLk5JAQMJFYO28uG4gtJLCbUeLKMUmIuIzEyQdLmCFsYYmV/56zdzFyAdU0M0nM3jCZCSTB
+        JqAr0XrtMxNIQkTgAKPE7t4ljCAOs8AMRom/6+cwglQJCzhINP9pBxvFIqAq8eTkV7B1vAJ2
+        El8/PmCEWCEvsXrDAeYJjDwLGBlWMUqmFhTnpucWGxYY5qWW6xUn5haX5qXrJefnbmIEh5uW
+        5g7G7as+6B1iZOJgPMQowcGsJML7Mag1WYg3JbGyKrUoP76oNCe1+BCjNAeLkjjvha6T8UIC
+        6YklqdmpqQWpRTBZJg5OqQamhP6NAv+fcgYpNfSHb1zGZ+abf/HohO/NPfdEIwPvagR8Xey2
+        +7n25sXM8XW7r0me/tQ+85Vmd7fIbe2vd46zJBS9rro+816q5bMNPw4Gb1kZrm+v+quvKzDM
+        5suB5VmJfzpDDU94XDnmLMVc5PcpurX848msN7n9hUwB6kc6F74IXnuT0+Lt0kvFE3f+37Bu
+        XY6IiOnr1R6vzhaJaS1l+zTz/o+nklVayvtLTQ8eX/RP7MlGz2qhxhVZi1Zzz7XVili4h+lA
+        gtbPAo/pp/8X3Nnx5bTui7/z/05OmCzjVNjDZbjO3MX4VvBy361qbMp8K3wXVlfYCsxzXRR7
+        nvvbw04pj+WzLsS+ThM/8HF6uxJLcUaioRZzUXEiANlXU2OmAgAA
+X-CMS-MailID: 20221129115540epcas5p370eb47c404a8d2c08ab4f264ae983481
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20221129115540epcas5p370eb47c404a8d2c08ab4f264ae983481
+References: <CGME20221129115540epcas5p370eb47c404a8d2c08ab4f264ae983481@epcas5p3.samsung.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 29.11.22 10:08, Hans Verkuil wrote:
-> On 29/11/2022 09:48, David Hildenbrand wrote:
->> On 28.11.22 23:59, Andrew Morton wrote:
->>> On Mon, 28 Nov 2022 09:18:47 +0100 David Hildenbrand <david@redhat.com> wrote:
->>>
->>>>> Less chances of things going wrong that way.
->>>>>
->>>>> Just mention in the v2 cover letter that the first patch was added to
->>>>> make it easy to backport that fix without being hampered by merge
->>>>> conflicts if it was added after your frame_vector.c patch.
->>>>
->>>> Yes, that's the way I would naturally do, it, however, Andrew prefers
->>>> delta updates for minor changes.
->>>>
->>>> @Andrew, whatever you prefer!
->>>
->>> I'm inclined to let things sit as they are.  Cross-tree conflicts
->>> happen, and Linus handles them.  I'll flag this (very simple) conflict
->>> in the pull request, if MM merges second.  If v4l merges second then
->>> hopefully they will do the same.  But this one is so simple that Linus
->>> hardly needs our help.
-> 
-> It's not about cross-tree conflicts, it's about the fact that my patch is
-> a fix that needs to be backported to older kernels. It should apply cleanly
-> to those older kernels if my patch goes in first, but if it is the other way
-> around I would have to make a new patch for the stable kernels.
+FSD has few system controller register blocks. This patch series intends to
+add support of device node for system controller registers group that
+resides in PERIC, FSYS0, FSYS1 and CAM blocks of FSD SoC. As these will
+be used by PCIE, EQoS and CSI module. Patches for adding support for PCIE,
+EQoS and CSI are already under review at [1], [2] and [3].
 
-IIUC, the conflict will be resolved at merge time and the merge 
-resolution will be part of the merge commit. It doesn't matter in which 
-order the patches go upstream, the merge commit resolves the problematic 
-overlap.
+Also this patch series add required DT bindings for such system controller
+of FSD SoC.
 
-So your patch will be upstream as intended, where it can be cleanly 
-backported.
+[1]: https://lkml.org/lkml/2022/11/21/463
+[2]: https://lkml.org/lkml/2022/11/4/420
+[3]: https://lkml.org/lkml/2022/11/20/363
 
-Hope I am not twisting reality ;)
+These changes are made on top of Krzysztof's patches [4] posted as part of
+splitting Samsung Exynos SoC SYSREG bindings to own file.
+
+[4]: https://lkml.org/lkml/2022/11/25/370
+
+Changes since v3:
+1. As per update from Krzysztof, add dedicated compatibles for sysreg found
+on FSD SoC in the exynos-sysreg.yaml file.
+2. Add CAM block sysreg changes in the dtsi file and respective compatible
+in binding document.
+
+Changes since v2:
+1. Updated compatibles as per improvements suggested by Krzysztof.
+
+Changes since v1:
+1. Fixed SoB in [PATCH 1/2] dt-bindings: mfd: syscon: Add tesla compatible
+found on FSD SoC.
+2. Address review comments from Krzysztof on [PATCH 2/2] and aligned sysreg
+node near to respective blocks sorted in order of unit address.
+
+Sriranjani P (2):
+  dt-bindings: soc: samsung: exynos-sysreg: Add tesla FSD sysreg
+    compatibles
+  arm64: dts: fsd: add sysreg device node
+
+ .../soc/samsung/samsung,exynos-sysreg.yaml    |  4 ++++
+ arch/arm64/boot/dts/tesla/fsd.dtsi            | 20 +++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
 -- 
-Thanks,
-
-David / dhildenb
+2.17.1
 
