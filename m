@@ -2,77 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DEA2645747
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Dec 2022 11:13:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C62CD645790
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Dec 2022 11:23:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229895AbiLGKNi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 7 Dec 2022 05:13:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S230388AbiLGKXE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 7 Dec 2022 05:23:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbiLGKNg (ORCPT
+        with ESMTP id S229925AbiLGKXB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 7 Dec 2022 05:13:36 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3A0F023
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Dec 2022 02:13:35 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id s8so27937659lfc.8
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Dec 2022 02:13:35 -0800 (PST)
+        Wed, 7 Dec 2022 05:23:01 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C40E01182D
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Dec 2022 02:22:58 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id x6so20351763lji.10
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Dec 2022 02:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EfzRINXvTujbfGexnmXcZib+yfVoupZmsTbefxlDJnw=;
-        b=Go0DCB4+6QM2Lz8HnEfnjEpYF04o+zaCU7giFE1dNJHPtFZR5dW2o8AD9bJh6xS56M
-         /FQa5LGWbUAyDnAozVwWajxACvIDzprJP50Pd4jaGNkLi4BbZhIZT1UI07AH5K1qCypS
-         RafclyjEf7X7t06AEtXF3LtrqAaloeMTBbfIdL7lkba1TP5oi2eJjr9474OsrIDssan8
-         bkAxZo4ORF5q7zjsJN3QbCUMc2owtn6hCIkXP5yY2inq/43m/k8zaDpyDNqycQ1eDHyQ
-         RfQlxRbzQMBzzZWxcI3CZL/AlilnzwC6TyH57ElK/uzlnKcKfltQlVPu1hroedcj+CCP
-         FXbg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1sijU5enLkDTq3DQ0nw0PYtfD3Qi+72BKYHiCTRs2ZU=;
+        b=HZxXQqZ3S3FWmVtrocczB6d8HV4sm0tQJeYbpg4VYj1wUZu5In8brBDiGw5LJHzZEh
+         zarVKSoEq5WN7ZOvOL4qZ+QAACHaJ3hZRjtS/u/PWaFnpuj3VJ8YcKj+1YfDTxgmPo4v
+         CErSg8d8YiyQgIZsNb3NVn/ySgblrjRn9kYXtDOdO0YyQn5y255pH16yDlt3sOU5LYG3
+         2TVtzB8YghEkfZ9Y7z6Mscy1fDDgD3OgJmNMr9Dcisba2yyfU2reI8Rny6r/ZqOG1vJr
+         EoUYzUhbmQcy3BRUz7QOLxWbKT2EwWys5YqmirMvHz17JzH11jYwxgkv/wRYjCXu8x8Q
+         jfHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EfzRINXvTujbfGexnmXcZib+yfVoupZmsTbefxlDJnw=;
-        b=fT4IkQSPdyB+mELvQR7ZUlXvrgQAvChis1Xc4rbIGXUnLKH4+D/3W55l5OI9Yo7RO6
-         q+V3RWo9qVvPsYhUC/22nbMEnsOjOi8/TiUaennY5faEARtrvmqJ7PNTARxhW1jlQS/q
-         7tME5hoTQsdNQgVgJDG3vTx/VKwmKFFc6ozh2T14G/6bKneDZ9rmCndzBh/AQUT3iPba
-         ePVsIUCceA4Ll0XQw1jCrBj0cns9xFJiiAdR00YQexFzDgfKfVziLYOmaWZhKXcrhaBl
-         aNo2ccQgvaQ2mQM2//FTutiAyTQGJW+nHxXYuf9my3+Pixd/q1+zUEbSh0PzoZjA1ySK
-         pWfg==
-X-Gm-Message-State: ANoB5plXShViKIR+pynuRT2W7Vw3hQng3t1XAo3JGaYvyggfj9b1RP8U
-        gk6EQ+LVHpwPJ7ZuVKs3APiyjg==
-X-Google-Smtp-Source: AA0mqf7hsCAj+w8XCvjyZUfiTkBTV5WU3JxoUzeIJmMqZ0pP8HJxm1PyMERjuSoo3lfnPbIlTSY2KA==
-X-Received: by 2002:a05:6512:2520:b0:4a2:6907:98d8 with SMTP id be32-20020a056512252000b004a2690798d8mr25290485lfb.28.1670408013714;
-        Wed, 07 Dec 2022 02:13:33 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id m16-20020a056512359000b004b57d186aaasm840449lfr.249.2022.12.07.02.13.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Dec 2022 02:13:33 -0800 (PST)
-Message-ID: <13a7ac60-c9a2-aa60-f8ba-640d9e99ab44@linaro.org>
-Date:   Wed, 7 Dec 2022 11:13:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 3/4] dt-bindings: soc: samsung: exynos-sysreg: add
- dedicated SYSREG compatibles to Exynosautov9
-Content-Language: en-US
-To:     Sriranjani P <sriranjani.p@samsung.com>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        alim.akhtar@samsung.com, pankaj.dubey@samsung.com,
-        ravi.patel@samsung.com
-Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-References: <20221207085832.86909-1-sriranjani.p@samsung.com>
- <CGME20221207085852epcas5p3de090e5b0abec213c1b5511e1da3eeff@epcas5p3.samsung.com>
- <20221207085832.86909-4-sriranjani.p@samsung.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1sijU5enLkDTq3DQ0nw0PYtfD3Qi+72BKYHiCTRs2ZU=;
+        b=N9v53eR8OwFEXtGu+WVwUlUBkG2FL0FL5wAFiFy7CAsSWAu0CwVzxhDwHTBfJcA8Pa
+         eqmw8i+mWcfjEIse601+QFIWyWgX2iw78qHNiX4gkVtvZgKUVelZ+uNSGPnVcyz6vkOd
+         VFt3udEilbr5yhZWAaGCci0keoBeKHSubhdYrVnj1yjEGUash2N5ictIyduLccTwxs7g
+         aIgUKW6msnyywhQztvMFu+b7DQ9Qy3RJUei1rYJcmJWUAzaRdONyzvfwYF30RXElmdLQ
+         6Hqt94CGdFhGywHnO2CDWMBoDEkQurGtJ47CJXtYf6bcxKUFPgFhkdBN/FBC0MnWErtN
+         v+Vw==
+X-Gm-Message-State: ANoB5pkbqqJKn8gxsUjgjGkBJDnL9/b4AsoUV/sa6TDVS3dbt9sKACwa
+        Fs296PxYcjYKRvQoIa5l8g7r7g==
+X-Google-Smtp-Source: AA0mqf5h4sxrFTul2bwSrjyQP2HZcpafzgXYhRs9WtHjL8fjJIlDzOVwcLZqY3H4sd1gKZL9bdaOjg==
+X-Received: by 2002:a05:651c:1147:b0:277:4726:bcf2 with SMTP id h7-20020a05651c114700b002774726bcf2mr26270843ljo.107.1670408576811;
+        Wed, 07 Dec 2022 02:22:56 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id bu31-20020a056512169f00b00499b27a329esm1953183lfb.300.2022.12.07.02.22.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 02:22:56 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221207085832.86909-4-sriranjani.p@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Joe Tessler <jrt@google.com>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Jeff Chase <jnchase@google.com>, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 0/9] media: dt-bindings: common CEC properties
+Date:   Wed,  7 Dec 2022 11:22:44 +0100
+Message-Id: <20221207102253.26663-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,45 +88,62 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 07/12/2022 09:58, Sriranjani P wrote:
-> Exynosautov9 has several different SYSREGs, so use dedicated compatibles
-> for them and deprecate usage of generic Exynosautov9 compatible alone.
-> 
-> Signed-off-by: Sriranjani P <sriranjani.p@samsung.com>
-> ---
->  .../bindings/soc/samsung/samsung,exynos-sysreg.yaml  | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-> index f57bc7c194a1..b6105d261b47 100644
-> --- a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-> +++ b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
-> @@ -17,7 +17,6 @@ properties:
->                - samsung,exynos3-sysreg
->                - samsung,exynos4-sysreg
->                - samsung,exynos5-sysreg
-> -              - samsung,exynosautov9-sysreg
->                - tesla,fsd-cam-sysreg
->                - tesla,fsd-fsys0-sysreg
->                - tesla,fsd-fsys1-sysreg
-> @@ -45,6 +44,17 @@ properties:
->            - const: samsung,exynos850-sysreg
->            - const: syscon
->          deprecated: true
-> +      - items:
-> +          - enum:
-> +              - samsung,exynosautov9-fsys2-sysreg
-> +              - samsung,exynosautov9-peric0-sysreg
-> +              - samsung,exynosautov9-peric1-sysreg
-> +          - const: samsung,exynosautov9-sysreg
-> +          - const: syscon
-> +      - items:
-> +          - const: samsung,exynosautov9-sysreg
-> +          - const: syscon
+Hi,
 
-Same comment here - let's make it part of enums which are deprecated (so
-together with 5433 and 850)
+Changes since v2:
+================
+1. nvidia,tegra114-cec: Rename to nvidia,tegra114-cec.yaml.
+2. nvidia,tegra114-cec: Nvidia->NVIDIA.
+3. Add acks/rb tags.
+
+Changes since v1
+================
+1. chrontel,ch7322: fix node name to 'cec'.
+2. Add ack tags.
 
 Best regards,
 Krzysztof
+
+Krzysztof Kozlowski (9):
+  media: dt-bindings: amlogic,meson-gx-ao-cec: move to cec subfolder
+  media: dt-bindings: st,stm32-cec: move to cec subfolder
+  media: dt-bindings: cec: convert common CEC properties to DT schema
+  media: dt-bindings: amlogic,meson-gx-ao-cec: reference common CEC
+    properties
+  media: dt-bindings: chrontel,ch7322: reference common CEC properties
+  media: dt-bindings: samsung,s5p-cec: convert to DT schema
+  media: dt-bindings: cec-gpio: convert to DT schema
+  media: dt-bindings: nvidia,tegra114-cec: convert to DT schema
+  media: dt-bindings: st,stih-cec: convert to DT schema
+
+ .../devicetree/bindings/media/cec-gpio.txt    | 42 -----------
+ .../devicetree/bindings/media/cec.txt         |  8 --
+ .../{ => cec}/amlogic,meson-gx-ao-cec.yaml    | 11 +--
+ .../bindings/media/cec/cec-common.yaml        | 28 +++++++
+ .../bindings/media/cec/cec-gpio.yaml          | 73 +++++++++++++++++++
+ .../media/cec/nvidia,tegra114-cec.yaml        | 58 +++++++++++++++
+ .../bindings/media/cec/samsung,s5p-cec.yaml   | 66 +++++++++++++++++
+ .../bindings/media/cec/st,stih-cec.yaml       | 66 +++++++++++++++++
+ .../media/{ => cec}/st,stm32-cec.yaml         |  4 +-
+ .../bindings/media/i2c/chrontel,ch7322.yaml   | 11 ++-
+ .../devicetree/bindings/media/s5p-cec.txt     | 36 ---------
+ .../devicetree/bindings/media/stih-cec.txt    | 27 -------
+ .../devicetree/bindings/media/tegra-cec.txt   | 27 -------
+ MAINTAINERS                                   | 12 +--
+ 14 files changed, 308 insertions(+), 161 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/media/cec-gpio.txt
+ delete mode 100644 Documentation/devicetree/bindings/media/cec.txt
+ rename Documentation/devicetree/bindings/media/{ => cec}/amlogic,meson-gx-ao-cec.yaml (86%)
+ create mode 100644 Documentation/devicetree/bindings/media/cec/cec-common.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/cec/cec-gpio.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/cec/nvidia,tegra114-cec.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/cec/samsung,s5p-cec.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/cec/st,stih-cec.yaml
+ rename Documentation/devicetree/bindings/media/{ => cec}/st,stm32-cec.yaml (89%)
+ delete mode 100644 Documentation/devicetree/bindings/media/s5p-cec.txt
+ delete mode 100644 Documentation/devicetree/bindings/media/stih-cec.txt
+ delete mode 100644 Documentation/devicetree/bindings/media/tegra-cec.txt
+
+-- 
+2.34.1
 
