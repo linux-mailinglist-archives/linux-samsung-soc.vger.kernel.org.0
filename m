@@ -2,41 +2,42 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DE2B6491E6
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 11 Dec 2022 03:28:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C0B26491E7
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 11 Dec 2022 03:28:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbiLKC2w (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 10 Dec 2022 21:28:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37274 "EHLO
+        id S229932AbiLKC2z (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 10 Dec 2022 21:28:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbiLKC2r (ORCPT
+        with ESMTP id S229915AbiLKC2t (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 10 Dec 2022 21:28:47 -0500
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25C813E04
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 10 Dec 2022 18:28:43 -0800 (PST)
+        Sat, 10 Dec 2022 21:28:49 -0500
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09F113E0A
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 10 Dec 2022 18:28:45 -0800 (PST)
 Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: marex@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id E9446852F9;
-        Sun, 11 Dec 2022 03:28:39 +0100 (CET)
+        by phobos.denx.de (Postfix) with ESMTPSA id 69AAB85310;
+        Sun, 11 Dec 2022 03:28:42 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1670725721;
-        bh=a7OGGyzB3bRRvcuqRMgBWQlfKRLtcP1rUZLMlxeOuVA=;
+        s=phobos-20191101; t=1670725724;
+        bh=PR09U3y+R+YdZq5prMeTG0Ox7PAgTIFkMw+NnKXTozI=;
         h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=tsa00Od7MtlmifiMsvkREhfSJQ33NtHD4yyyDVEg7Q0m+08XHjhdhfGLa8Llk3aGq
-         MIVYyglSvm0JOUIsIXdaP7Atpq+lqa0hWtiiauSFI09ImyoDQ0pWXtLGMle8/d7cH4
-         gQZBzedJeIqAEJd5LvlQxQ3f0TcYInbOKVq/0QELam/Xj6+aGEsp0bdMbByTegTeeu
-         QQ7ivvLD4WkJhgqoYphPeCqSFhjwFc7jbQKF3yGmJdDt0rV6xceb2u9YlXIPoHAJ8C
-         NkS36GRHCfbWOz4kE2UFUZadIBE3brDJA9wbKjnuOoWSgZ3gu3FRXKesyGV2tRb6OH
-         utTekM9uQ7lGg==
-Message-ID: <d93b1fac-df4d-0de8-80f8-f9fcef811862@denx.de>
-Date:   Sun, 11 Dec 2022 03:15:56 +0100
+        b=0NGNSlOjpw/8ZJSisoipuCm+/ylUBMxkyZRbZFKv5NJ06f2sxTRXHcugpzn37BBM9
+         oyiaOyrmiIj9eVp1RMlYX1Wi3QRRu8bXnAptZGwxBEWXZTV+oiEf2T1VosB7SzyefF
+         AbSmMTvTxFmxHq3cTWoNHDUiakKMMpkMLBm4w0/v9kl6yZQJPJ/x5WCbhmGySG8hw7
+         DJxffnXCX4BL5RemflHlatjegIfb3NqA7e7g/Z6B9RQFoMwO1MGASPCOm0D7cXaqh8
+         4RfRVO3mTsFMRhZfQ2oYK+iQXUU2PPsFnlzyWB7jfBdi9ESKDCxubgH1ygCHUg2hmN
+         HOEWGYu0fENJA==
+Message-ID: <7b77deb9-858c-7dd9-110e-3590dff9c4d6@denx.de>
+Date:   Sun, 11 Dec 2022 03:17:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Subject: Re: [PATCH v9 04/18] drm: exynos: dsi: Fix MIPI_DSI*_NO_* mode flags
+Subject: Re: [PATCH v9 05/18] drm: exynos: dsi: Properly name HSA/HBP/HFP/HSE
+ bits
 Content-Language: en-US
 To:     Jagan Teki <jagan@amarulasolutions.com>,
         Andrzej Hajda <andrzej.hajda@intel.com>,
@@ -59,15 +60,13 @@ Cc:     Matteo Lisi <matteo.lisi@engicam.com>,
         linux-arm-kernel@lists.infradead.org,
         NXP Linux Team <linux-imx@nxp.com>,
         linux-amarula <linux-amarula@amarulasolutions.com>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        =?UTF-8?Q?S=c3=a9bastien_Szymanski?= 
-        <sebastien.szymanski@armadeus.com>
+        Nicolas Boichat <drinkcat@chromium.org>
 References: <20221209152343.180139-1-jagan@amarulasolutions.com>
- <20221209152343.180139-5-jagan@amarulasolutions.com>
+ <20221209152343.180139-6-jagan@amarulasolutions.com>
 From:   Marek Vasut <marex@denx.de>
-In-Reply-To: <20221209152343.180139-5-jagan@amarulasolutions.com>
+In-Reply-To: <20221209152343.180139-6-jagan@amarulasolutions.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
 X-Virus-Status: Clean
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,18 +79,22 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 On 12/9/22 16:23, Jagan Teki wrote:
-> HFP/HBP/HSA/EOT_PACKET modes in Exynos DSI host specifies
+> HSA/HBP/HFP/HSE mode bits in Processor Reference Manuals specify
+> a naming conversion as 'disable mode bit' due to its bit definition,
 > 0 = Enable and 1 = Disable.
 > 
-> The logic for checking these mode flags was correct before
-> the MIPI_DSI*_NO_* mode flag conversion.
+> For HSE bit, the i.MX 8M Mini/Nano/Plus Applications Processor
+> Reference Manual named this bit as 'HseDisableMode' but the bit
+> definition is quite opposite like
+> 0 = Disables transfer
+> 1 = Enables transfer
+> which clearly states that HSE is not a disable bit.
 > 
-> Fix the MIPI_DSI*_NO_* mode flags handling.
+> HSE is named as per the manual even though it is not a disable
+> bit however the driver logic for handling HSE is based on the
+> MIPI_DSI_MODE_VIDEO_HSE flag itself.
 > 
-> Fixes: <0f3b68b66a6d> ("drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling
-> features")
-> Reviewed-by: Nicolas Boichat <drinkcat@chromium.org>
-> Reported-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+> Cc: Nicolas Boichat <drinkcat@chromium.org>
 > Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
 
 Reviewed-by: Marek Vasut <marex@denx.de>
