@@ -2,178 +2,175 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C38A65BAD3
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Jan 2023 07:43:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5B4765BD79
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Jan 2023 10:52:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236890AbjACGml (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Jan 2023 01:42:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
+        id S233783AbjACJwB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Jan 2023 04:52:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236867AbjACGlu (ORCPT
+        with ESMTP id S237308AbjACJvw (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Jan 2023 01:41:50 -0500
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88D2DE9B
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Jan 2023 22:41:48 -0800 (PST)
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20230103064147epoutp04c3cd92a36019f01ab269a2b1b637cd03~2uVnf7r920289702897epoutp04B
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Jan 2023 06:41:47 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20230103064147epoutp04c3cd92a36019f01ab269a2b1b637cd03~2uVnf7r920289702897epoutp04B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1672728107;
-        bh=nhdfKuY6VgLCY5Ul25sLP3BbNNJgGEW2tayYvQfRUgw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ph+LWPskbfKUGO7UY177YNtMXlsarDPEKm0qoeptwGP03qRqOk1cIPs4aU9+Cn0Fw
-         Z4WJeBcBUzT/fU335RV8+E9K91tKsQbCr0MtdufKkVIGq+g2eG0C0kdgLbdPiC832Z
-         U9XmmXhK3PBZ+sY7XJIMRejShQFFHAriw9K7oUno=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-        20230103064146epcas5p3421ed7c35cbbedafdc426bd54dfb8356~2uVm5944U0590305903epcas5p3g;
-        Tue,  3 Jan 2023 06:41:46 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.177]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4NmNS818Gcz4x9Q4; Tue,  3 Jan
-        2023 06:41:44 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        0E.E0.62806.72EC3B36; Tue,  3 Jan 2023 15:41:44 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-        20230103045706epcas5p14f2f951d162899234c7f5f7a0998ab6b~2s6Of__Ck2038120381epcas5p1b;
-        Tue,  3 Jan 2023 04:57:06 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230103045706epsmtrp21d91195338b2a9b7de0c58c4d8ae04ac~2s6Oak1wS0749107491epsmtrp2-;
-        Tue,  3 Jan 2023 04:57:06 +0000 (GMT)
-X-AuditID: b6c32a4a-c43ff7000000f556-17-63b3ce27ec1d
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        E1.15.10542.2A5B3B36; Tue,  3 Jan 2023 13:57:06 +0900 (KST)
-Received: from cheetah.sa.corp.samsungelectronics.net (unknown
-        [107.109.115.53]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20230103045704epsmtip27788c0c81554ab6969b69128dd45d984~2s6MNWlBL3215832158epsmtip2O;
-        Tue,  3 Jan 2023 04:57:04 +0000 (GMT)
-From:   Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-To:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, s.nawrocki@samsung.com,
-        perex@perex.cz, tiwai@suse.com, pankaj.dubey@samsung.com,
-        alim.akhtar@samsung.com, rcsekar@samsung.com,
-        aswani.reddy@samsung.com
-Cc:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Subject: [PATCH v2 5/5] arm64: dts: fsd: Add sound card node for Tesla FSD
-Date:   Tue,  3 Jan 2023 10:26:13 +0530
-Message-Id: <20230103045613.100309-6-p.rajanbabu@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230103045613.100309-1-p.rajanbabu@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLJsWRmVeSWpSXmKPExsWy7bCmpq7Guc3JBttnMlk8mLeNzeLKxUNM
-        Foc2b2W3mPrwCZvF/CPnWC36Xjxktvh2pYPJ4vKuOWwWM87vY7I4ujHYYtHWL+wWnbv6WS1m
-        XdjBatG69wi7xeE37awWG76vZXQQ8NjwuYnNY+esu+wem1Z1snncubaHzWPf22VsHn1bVjF6
-        rN9ylcXj8ya5AI6obJuM1MSU1CKF1Lzk/JTMvHRbJe/geOd4UzMDQ11DSwtzJYW8xNxUWyUX
-        nwBdt8wcoA+UFMoSc0qBQgGJxcVK+nY2RfmlJakKGfnFJbZKqQUpOQUmBXrFibnFpXnpenmp
-        JVaGBgZGpkCFCdkZ02ZMYis4x1Wxpm8mWwPjAo4uRk4OCQETic1NLaxdjFwcQgK7GSU+PX3F
-        BOF8YpRYN/k9O4TzmVHi/o4jrDAtX0+3QFXtYpSYMe8dE0hCSKCVSeLAqUQQm03AVGLVnEaw
-        uSICTUwSbW8msoA4zAIbGSVOH3sI1iEs4CXx+cEaRhCbRUBVYsf6HWA2r4CtxN6FJ5gg1slL
-        rN5wgBnE5hSwk/jTcQFstYTAXA6Jz6fXMUIUuUgs2PIF6j5hiVfHt7BD2FISn9/tZYOw8yWm
-        fWyGsisk2j5ugFpgL3Hgyhyg6ziArtOUWL9LHyIsKzH11DqwEmYBPone30+gynkldsyDsVUl
-        1i/fBHWCtMS+63uhbA+J7hePGSFBNJFR4vGWP4wTGOVmIaxYwMi4ilEytaA4Nz212LTAKC+1
-        HB5vyfm5mxjB6VTLawfjwwcf9A4xMnEwHmKU4GBWEuGd9GJTshBvSmJlVWpRfnxRaU5q8SFG
-        U2AATmSWEk3OByb0vJJ4QxNLAxMzMzMTS2MzQyVx3tSt85OFBNITS1KzU1MLUotg+pg4OKUa
-        mDQ4TTevOt2g8bh04/tcSa39ERXvWnqtAjz3aLC7NNXPqvso/9K9by+zpznXP/kT6xoLblfN
-        eady6tGn0ls+y85u+GsXUyB5VCgkxcTjeFn8rrmZvV6xvcerWe+re5S/y9pUV+az9smsiNWr
-        f4Q5FK84E6CcURWu0uq6x2uHxWe2LpcZG8t5v2s7/I7fGa0r1SenKNPpoW785fgjpR+V53em
-        X/zutjEocZa8Y0eLmMj/jN6zVw7131Mya41ma/wiYafwTriv/qnxsph7wXMTTh4rO8z7cv9j
-        wVd3etTMT0q2le+qtio9dOHPPzOuM7OWJp21tc0Oeeunx5ImJz1f7+KfhfuuVR9jytbod5un
-        xFKckWioxVxUnAgAoVMNajAEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMLMWRmVeSWpSXmKPExsWy7bCSvO6irZuTDd791rZ4MG8bm8WVi4eY
-        LA5t3spuMfXhEzaL+UfOsVr0vXjIbPHtSgeTxeVdc9gsZpzfx2RxdGOwxaKtX9gtOnf1s1rM
-        urCD1aJ17xF2i8Nv2lktNnxfy+gg4LHhcxObx85Zd9k9Nq3qZPO4c20Pm8e+t8vYPPq2rGL0
-        WL/lKovH501yARxRXDYpqTmZZalF+nYJXBnTZkxiKzjHVbGmbyZbA+MCji5GTg4JAROJr6db
-        mLoYuTiEBHYwSjRuWc8CkZCWmN6/hw3CFpZY+e85O0RRM5PE1sZTYAk2AVOJVXMaWUESIgIT
-        mCROvjsG1s0ssJVRYupnIxBbWMBL4vODNYwgNouAqsSO9TvAbF4BW4m9C08wQWyQl1i94QAz
-        iM0pYCfxp+MCWFwIqGZ7wyfmCYx8CxgZVjFKphYU56bnFhsWGOWllusVJ+YWl+al6yXn525i
-        BIe7ltYOxj2rPugdYmTiYDzEKMHBrCTCO+nFpmQh3pTEyqrUovz4otKc1OJDjNIcLErivBe6
-        TsYLCaQnlqRmp6YWpBbBZJk4OKUamOaW1l0LXR7OxP7ssHXN05mCAl8+tjXWePuVu1oZF+jk
-        mMtt/+Jjs2VDfOIkYb4v3jcqvPUe/Wef22jMwtw180eV09vY2dYPHxQp3WjJPL9LzlG6fL/E
-        v6fu79QFDp21vDafSeOyR9jRwrCmmV+und+T1dB3bcWLt+su2V1SmLJXbgOHwtO7IZclHj14
-        tOJK+2WmIvn792adzNeamrnY9XtW2Z19c+6sjy36fKVIwcKysd8toV++sjNi3+nrRy76My82
-        mXhFJu3HRNWOlp3ntp3v4do47a9dvaGj16R7jXvTL6+VW2TRYLAkN6M+g3959M1bmf/c2jyr
-        OVT5VAT9Vi2xPGIllBPm4B+5U2PfZyWW4oxEQy3mouJEAJT4uDvmAgAA
-X-CMS-MailID: 20230103045706epcas5p14f2f951d162899234c7f5f7a0998ab6b
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20230103045706epcas5p14f2f951d162899234c7f5f7a0998ab6b
-References: <20230103045613.100309-1-p.rajanbabu@samsung.com>
-        <CGME20230103045706epcas5p14f2f951d162899234c7f5f7a0998ab6b@epcas5p1.samsung.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Tue, 3 Jan 2023 04:51:52 -0500
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72070EE13
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Jan 2023 01:51:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1672739509; x=1704275509;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=HaOHD/dXS68xXURn+R9LoVsKFBSgwemRrONqLSwdBjc=;
+  b=Zr4gBcp+jdxWfDmhId+yyMOz1bpb1FN4j8y4mqnGAwC+xYCVThC8eD0q
+   Yl71nhPCCXtF4bGJDO8Mb1DvMe7h1vNqf5fqiqj5LJv7j28TgTgCMhV9z
+   YjAJ6cOZACkFdMGZM2DvMlHFgfqC5DQuQf3lNlJPpqPW+yjOHtYaUojRY
+   oW4tDrHUrniqeOmkzx5ceHISpTeGRniRHhByKq8RVnXoQhfcLZU492PV3
+   LSMlvVLuU4doqru0G0RjxcogtO+YWTT5+atZpvILnnFbtk6DGgV/SLtU6
+   JC1J7ZBdhfiGZyFEVyTKV5LhahFu0ze1LUFnJYJj0yDlAGgaFl4+zxRQ1
+   A==;
+X-IronPort-AV: E=Sophos;i="5.96,296,1665439200"; 
+   d="scan'208";a="28217837"
+Received: from unknown (HELO tq-pgp-pr1.tq-net.de) ([192.168.6.15])
+  by mx1-pgp.tq-group.com with ESMTP; 03 Jan 2023 10:51:47 +0100
+Received: from mx1.tq-group.com ([192.168.6.7])
+  by tq-pgp-pr1.tq-net.de (PGP Universal service);
+  Tue, 03 Jan 2023 10:51:47 +0100
+X-PGP-Universal: processed;
+        by tq-pgp-pr1.tq-net.de on Tue, 03 Jan 2023 10:51:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1672739507; x=1704275507;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=HaOHD/dXS68xXURn+R9LoVsKFBSgwemRrONqLSwdBjc=;
+  b=QHbb0E41O1umG0uCnQ5Fy6UNxUpCtrGLEIsoHgDmPE0hJgZtkwvbVJXt
+   1cvAPJ17LC6UYdr1IOUOaJjUUbPgxJzw82NU7noJlVFT9HbSlIL230lmQ
+   /vW24sKxbwcCCPpzJNnSmHD2g8+NQxnbe0Fuz+mhsRwB9AiUlTFQhdoc7
+   35avELVf7SdtZbv/NswwojGUum+DRyFGZHYNIyxE2U4nm6m+7wxxCWY2m
+   7VdQAE3y4/X1v6R/x9ZO+jr/sU6Q7TMyL2dtbYlQ7RB3oy4k/iy53t5nz
+   X6t3zu5Q6FPa11K+zNZAopmR5GPK7S9gYAg9W4kWsdXGcrdC7lBDIpQY0
+   Q==;
+X-IronPort-AV: E=Sophos;i="5.96,296,1665439200"; 
+   d="scan'208";a="28217836"
+Received: from vtuxmail01.tq-net.de ([10.115.0.20])
+  by mx1.tq-group.com with ESMTP; 03 Jan 2023 10:51:47 +0100
+Received: from steina-w.localnet (unknown [10.123.53.21])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by vtuxmail01.tq-net.de (Postfix) with ESMTPSA id C74FB280056;
+        Tue,  3 Jan 2023 10:51:46 +0100 (CET)
+From:   Alexander Stein <alexander.stein@ew.tq-group.com>
+To:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>,
+        Fancy Fang <chen.fang@nxp.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
+        Adam Ford <aford173@gmail.com>,
+        Neil Armstrong <narmstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Marek Vasut <marex@denx.de>
+Cc:     "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Matteo Lisi <matteo.lisi@engicam.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-amarula <linux-amarula@amarulasolutions.com>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Jagan Teki <jagan@amarulasolutions.com>
+Subject: Re: [PATCH v10 00/18] drm: Add Samsung MIPI DSIM bridge
+Date:   Tue, 03 Jan 2023 10:51:44 +0100
+Message-ID: <1983452.PIDvDuAF1L@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <a6ad86a0-2831-34aa-2c2a-f6d683dc5713@denx.de>
+References: <kcEE.rJtELH1tRkiK3DwrGM4cgg.ADqA2lER2QE@vtuxmail01.tq-net.de> <a6ad86a0-2831-34aa-2c2a-f6d683dc5713@denx.de>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add device tree node support for sound card on Tesla FSD board
+Hi Marek,
 
-Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
----
- arch/arm64/boot/dts/tesla/fsd-evb.dts | 37 +++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+Am Sonntag, 18. Dezember 2022, 00:55:57 CET schrieb Marek Vasut:
+> On 12/16/22 14:25, Alexander Stein wrote:
+> Hi,
+> 
+> [...]
+> 
+> > Oh, nice, thanks for the pointer. When setting
+> > 
+> >> samsung,burst-clock-frequency = <668250000>;
+> > 
+> > in imx8mm.dtsi
+> > I get a non-flickering display using 4 lanes. Although admittedly this is
+> > just random guessing. I'm not sure which clock exactly has to be in the
+> > range CHA_DSI_CLK_RANGE is configured to. With 4 lanes SN65DSI84 is
+> > configured for> 
+> > 205-210 MHz (0x29), while I get these PLL PMS settings on DSIM:
+> >> samsung-dsim 32e10000.dsi: PLL freq 668250000, (p 4, m 99, s 0)
+> >> samsung-dsim 32e10000.dsi: hs_clk = 668250000, byte_clk = 83531250,
+> >> esc_clk
+> > 
+> > = 16706250
+> 
+> If I recall it right, minimum PLL frequency is:
+> 
+> fPMS=1.2*width*height*bpp*fps=1.2*800*480*24*60=663.5 MHz
+> 
+> the link frequency is then
+> 
+> fHS=fPMS/lanes/2=82.9 MHz (on the DDR clock lane)
 
-diff --git a/arch/arm64/boot/dts/tesla/fsd-evb.dts b/arch/arm64/boot/dts/tesla/fsd-evb.dts
-index e2fd49774f15..ce726bddfb50 100644
---- a/arch/arm64/boot/dts/tesla/fsd-evb.dts
-+++ b/arch/arm64/boot/dts/tesla/fsd-evb.dts
-@@ -29,6 +29,43 @@
- 		device_type = "memory";
- 		reg = <0x0 0x80000000 0x2 0x00000000>;
- 	};
-+
-+	sound {
-+		compatible = "simple-audio-card";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		simple-audio-card,name = "FSD Audio Card";
-+		simple-audio-card,widgets =
-+			"Line", "Line Out",
-+			"Line", "Line In";
-+		simple-audio-card,routing =
-+			"Line Out", "LLOUT",
-+			"Line Out", "RLOUT",
-+			"MIC2L", "Line In",
-+			"MIC2R", "Line In";
-+
-+		status = "okay";
-+
-+		simple-audio-card,dai-link@0 {
-+			reg = <0>;
-+			format = "i2s";
-+			bitclock-master = <&tlv320aic3x>;
-+			frame-master = <&tlv320aic3x>;
-+
-+			cpu0 {
-+				sound-dai = <&i2s_0 0>;
-+			};
-+			cpu1 {
-+				sound-dai = <&i2s_0 1>;
-+			};
-+			codec {
-+				sound-dai = <&tlv320aic3x>;
-+				system-clock-frequency = <33000000>;
-+			};
-+		};
-+	};
- };
- 
- &fin_pll {
--- 
-2.17.1
+Mh, there is something bogus about this. Right now the PLL freq is set 
+depending on 'samsung,burst-clock-frequency' property. But this actually is 
+somehow depending on the number of lanes I configure. From the debug output 
+hs_clk and PLL freq are identical. AFAICS there is also no divider from PLL to 
+hs_clk in the register map.
+
+> So DSI83 should be in the range of 80..85 MHz input clock if I calculate
+> this right. Can you check what is the value of mode->clock, the
+> mipi_dsi_panel_format_to_bpp() return value, ctx->dsi->lanes in dsi83
+> sm65dsi83_get_dsi_range() ?
+
+A working setup on a tianma,tm070jvhg33 display (1280x800) is:
+> samsung-dsim 32e10000.dsi: PLL freq 891000000, (p 3, m 99, s 0)
+> samsung-dsim 32e10000.dsi: hs_clk = 891000000, byte_clk = 111375000, esc_clk 
+= 18562500
+> sn65dsi83 2-002d: mode->clock: 68200
+> sn65dsi83 2-002d: mode bpp: 24
+> sn65dsi83 2-002d: ctx->dsi->lanes: 3
+> sn65dsi83 2-002d: samsung_dsim_set_pll: 0x37
+
+Calculating backwards, sn64dsi83 is expecting a clock in the range of 275-280 
+MHz. But I fail to see a corresponding clock in the DSIM PLL configuration.
+
+Best regards,
+Alexander
+
+> > AFAICS DSIM bridge is configurung hs_clk, byte_clk and esc_clk just from
+> > DT
+> > properties, while SN65DSI84 is using display mode and number of lanes.
+> > 
+> > Is it expected that the DSIM PLL frequencies are set in DT for a specific
+> > bridge/display setup?
+> 
+> No, there should be negotiation between the host and bridge/panel, I
+> tried to propose two variants, but they were all rejected.
+
+
+
 
