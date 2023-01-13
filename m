@@ -2,79 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 706C06684BB
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Jan 2023 21:57:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BEC3669042
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Jan 2023 09:13:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240222AbjALU5A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 12 Jan 2023 15:57:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
+        id S240773AbjAMINw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 13 Jan 2023 03:13:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240248AbjALUxo (ORCPT
+        with ESMTP id S231745AbjAMINL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 12 Jan 2023 15:53:44 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDA81B9F6;
-        Thu, 12 Jan 2023 12:38:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 13 Jan 2023 03:13:11 -0500
+X-Greylist: delayed 3602 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 13 Jan 2023 00:11:49 PST
+Received: from mp-relay-02.fibernetics.ca (mp-relay-02.fibernetics.ca [208.85.217.137])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DF048827;
+        Fri, 13 Jan 2023 00:11:46 -0800 (PST)
+Received: from mailpool-fe-01.fibernetics.ca (mailpool-fe-01.fibernetics.ca [208.85.217.144])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5587CB81FBC;
-        Thu, 12 Jan 2023 20:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D9AC433F1;
-        Thu, 12 Jan 2023 20:38:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673555919;
-        bh=gjvrulXFQQsIJPhTaPkrnulSY0e6m1bUykAs4O76JSo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=DNDJysRuALju6JJUrewTVBybpRgH/wVMB372IAG4OcyXVE9z7/rhjJzFWwgz30JSD
-         yThQqUpduxY7QbEPKhqWSXx29VjrTuOyLCOgC54NAwA2HoAYQT5Nwk6EsmXEoiRVO5
-         98JY6SsNbqTwdmbq6d24+w12f/eIehnRIALFbJnab/8BCindTt3yUV5biR2+nqv+2P
-         I56eauJK5CFeavsbv1KaFRJ/f3F8i0PaV5DADit81WjgE+bGdugznmU6rl/7JYNmC6
-         U9+YLZsLHuT1XtDDxJ8AvH8eMAplyBoc+AZaX4kFXnz7o4LF99rhhJgACAbhbx9H+/
-         XK6kH3DmrMFug==
-Message-ID: <50ac63fbb30495504b5ebda08f5e56dc.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        by mp-relay-02.fibernetics.ca (Postfix) with ESMTPS id 2BD0A70D66;
+        Fri, 13 Jan 2023 05:47:46 +0000 (UTC)
+Received: from localhost (mailpool-mx-01.fibernetics.ca [208.85.217.140])
+        by mailpool-fe-01.fibernetics.ca (Postfix) with ESMTP id D208626892;
+        Fri, 13 Jan 2023 05:47:45 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at 
+X-Spam-Score: 3.651
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.6 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_NONE,
+        SPF_PASS,SUBJ_ALL_CAPS autolearn=no autolearn_force=no version=3.4.6
+Received: from mailpool-fe-01.fibernetics.ca ([208.85.217.144])
+        by localhost (mail-mx-01.fibernetics.ca [208.85.217.140]) (amavisd-new, port 10024)
+        with ESMTP id esUwsufxhvnb; Fri, 13 Jan 2023 05:47:45 +0000 (UTC)
+Received: from localhost (unknown [208.85.220.72])
+        by mail.ca.inter.net (Postfix) with ESMTP id F10692688E;
+        Fri, 13 Jan 2023 05:47:42 +0000 (UTC)
+Received: from reverse.rain.network (reverse.rain.network [197.184.176.8])
+ by webmail.ca.inter.net (Horde Framework) with HTTP; Fri, 13 Jan 2023
+ 00:47:42 -0500
+Message-ID: <20230113004742.621163hyb1z0eida@webmail.ca.inter.net>
+Date:   Fri, 13 Jan 2023 00:47:42 -0500
+From:   INFO <boothg@istar.ca>
+Reply-to: s.g0392440821@gmail.com
+To:     undisclosed-recipients:;
+Subject: IST DIESE E-MAIL AKTIV?
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230105141231.2006353-1-arnd@kernel.org>
-References: <20230105141231.2006353-1-arnd@kernel.org>
-Subject: Re: [PATCH] clk: samsung: remove s3c24xx specific pll bits
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Chanwoo Choi <cwchoi00@gmail.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Ajay Kumar <ajaykumar.rs@samsung.com>,
-        Pankaj Dubey <pankaj.dubey@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Arnd Bergmann <arnd@kernel.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>
-Date:   Thu, 12 Jan 2023 12:38:36 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=ISO-8859-1;
+ DelSp="Yes";
+ format="flowed"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Internet Messaging Program (IMP) H3 (4.3.7)
+X-Originating-User-Info: boothg@istar.ca 208.85.219.96
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Arnd Bergmann (2023-01-05 06:12:13)
-> From: Arnd Bergmann <arnd@arndb.de>
->=20
-> With the s3c24xx clk driver gone, the portions of the pll driver
-> for it can also be removed.
->=20
-> Suggested-by: Chanwoo Choi <cwchoi00@gmail.com>
-> Cc: Chanwoo Choi <cwchoi00@gmail.com>
-> Link: https://lore.kernel.org/linux-arm-kernel/0e0eff12-d8ea-72e9-d135-42=
-59dda9a750@gmail.com/
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+
+Sehr geehrter E-Mail-Begünstigter, Sie wurden für eine Spende in Höhe  
+von 3.500.000,00 ? ausgewählt. Wenden Sie sich an diese  
+E-Mail-Adresse: s.g0392440821@gmail.com, um weitere Informationen zum  
+Erhalt Ihrer Spende zu erhalten. Vielen Dank
+
