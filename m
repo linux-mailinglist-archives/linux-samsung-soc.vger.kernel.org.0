@@ -2,125 +2,167 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECFDD66B1D5
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 15 Jan 2023 16:06:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 722F266B6AC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Jan 2023 05:43:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231160AbjAOPGl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 15 Jan 2023 10:06:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48834 "EHLO
+        id S231823AbjAPEnv (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 15 Jan 2023 23:43:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231243AbjAOPGk (ORCPT
+        with ESMTP id S231787AbjAPEnp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 15 Jan 2023 10:06:40 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 484AF8689
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 15 Jan 2023 07:06:39 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id ss4so55423914ejb.11
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 15 Jan 2023 07:06:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6mV2i5/nB+6SQc3dRdfPMP5cMJSxy5rQiGnmFtQCfgQ=;
-        b=Gxs+wgA/dB9MSMphhEcVZMGRdxcy+UPE25FznZluA2FOhVqJ8U4Eo6zqWEi5g8q+A6
-         T2YCrsRaw2aw287emFzJt2/ALkOUorBkXUkLb7nQcm3aMpYdWdY34Y4e9tzVftHi5pB/
-         QUiyVIb7EhiDGlRUBHdxbLoXoux/oAaLuWbDE8nUnxECJO1s2AgEyv89Zw85RCoGuqky
-         1c006IJMXIKKrHw8onTaVEqeCArUieCwzFrrPxeH/Ev52mY+GtzWhHq6Jh5u7Jm63qbQ
-         BtuEzdm7hMKrDoNu9eA8iDVemEFbPuV1wjrMIIAv1Yngxj7XKL/ZayYJEs7BRku/+Al0
-         C56g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6mV2i5/nB+6SQc3dRdfPMP5cMJSxy5rQiGnmFtQCfgQ=;
-        b=2wFdSCElF9gaN23u3JJv35xjmTRuh46EyQReRqRZysehdqmA82EXKNoAmnLi+nW3XZ
-         MDRIrXqlSNTKZgLFsQ/ZKXlVXtPps61bUV3y/aDI22ru+Zq2irSnhUTZmaer/na9OOnm
-         rv9GUNxw9gg7eFYGP9uYNTHxpt1fR+MULNmsruhXSoMRjFnR6DLPFACOkBvUmkgUdXbL
-         OKCLwyE+nqTbi3KvyLmXPFkLjxwZ7I/ZFqPDDzyntVnicAVpuKn2QDSo+qQHkg5tne1f
-         V+YMrrHq4eOCF3SzEJM4NCYr9/O7S9hznZDpPzQQixxQpAl1vW+Xi4TvfTdvQZW0GvCz
-         X2Fw==
-X-Gm-Message-State: AFqh2kq+tKbRDwuyvU5gNouexKv0jmSTHicO5xWErx8t6bshk8b5IYC9
-        VHzEdkxVxaNl+HeLWkBpr2LwGQ==
-X-Google-Smtp-Source: AMrXdXtoJE1Ir5Xn52Iji4CbQo6oLweEklRVp9bvVaH0Nk2PtWen++DWHI0yZaagkGlYpbUC+Ijg7A==
-X-Received: by 2002:a17:906:b108:b0:843:a9fe:f115 with SMTP id u8-20020a170906b10800b00843a9fef115mr79416292ejy.32.1673795197836;
-        Sun, 15 Jan 2023 07:06:37 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id kz14-20020a17090777ce00b007c17b3a4163sm10914026ejc.15.2023.01.15.07.06.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jan 2023 07:06:37 -0800 (PST)
-Message-ID: <a4982e06-a6a4-a8c9-3b24-24f798c61f73@linaro.org>
-Date:   Sun, 15 Jan 2023 16:06:34 +0100
+        Sun, 15 Jan 2023 23:43:45 -0500
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC5A83F4
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 15 Jan 2023 20:43:41 -0800 (PST)
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20230116044337epoutp04e254d733e025d62205ab1d10317e7f9f~6sHKWPvCS3241632416epoutp04j
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Jan 2023 04:43:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20230116044337epoutp04e254d733e025d62205ab1d10317e7f9f~6sHKWPvCS3241632416epoutp04j
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1673844217;
+        bh=IvJBdGIdcYRMsJ9xPD6Iz04fX+aKGWGqsKip4KPnIoI=;
+        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+        b=VFuHZDxiXzeyrSAlGaC8qdrk9IIMfxl4pJq3yArQFH60bcN2IdoGF12DzCkkRK4Hx
+         cU+nhfFaNGENtkkpB9e3T1W5qJt2rz/KxoadpfAKvH2sru5BGhdTRwAXvVRX+V5ha1
+         q8Qen37flaoYqVLP+lLEZFLbqYucXLfIvIFBZBvs=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+        20230116044337epcas5p4670c73cd881c3bc1784b8569782f9eae~6sHJ0I_6B0552205522epcas5p4G;
+        Mon, 16 Jan 2023 04:43:37 +0000 (GMT)
+Received: from epsmges5p2new.samsung.com (unknown [182.195.38.177]) by
+        epsnrtp3.localdomain (Postfix) with ESMTP id 4NwKCq31Wjz4x9Pp; Mon, 16 Jan
+        2023 04:43:35 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        22.C9.62806.6F5D4C36; Mon, 16 Jan 2023 13:43:34 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+        20230116040959epcas5p4ec43384242bc9c14fca04aa9a3650d31~6rpy7eJZ_3108631086epcas5p47;
+        Mon, 16 Jan 2023 04:09:59 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20230116040959epsmtrp115ae447bde732b8e42b12fe00fe605a2~6rpy6dxLH1798717987epsmtrp1L;
+        Mon, 16 Jan 2023 04:09:59 +0000 (GMT)
+X-AuditID: b6c32a4a-ea5fa7000000f556-1b-63c4d5f652f5
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        51.5F.10542.71EC4C36; Mon, 16 Jan 2023 13:09:59 +0900 (KST)
+Received: from FDSFTE070 (unknown [107.116.189.86]) by epsmtip2.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20230116040957epsmtip221bd062b3f2cd134ef14021df01805ae~6rpwufDFS2521725217epsmtip2o;
+        Mon, 16 Jan 2023 04:09:57 +0000 (GMT)
+From:   "Padmanabhan Rajanbabu" <p.rajanbabu@samsung.com>
+To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <s.nawrocki@samsung.com>,
+        <perex@perex.cz>, <tiwai@suse.com>, <pankaj.dubey@samsung.com>,
+        <alim.akhtar@samsung.com>, <rcsekar@samsung.com>,
+        <aswani.reddy@samsung.com>
+Cc:     <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>
+In-Reply-To: <e5cd9794-d8ce-7285-5da2-7f3b6bf8dc2a@linaro.org>
+Subject: RE: [PATCH v3 2/5] ASoC: samsung: i2s: add support for FSD I2S
+Date:   Mon, 16 Jan 2023 09:39:56 +0530
+Message-ID: <039d01d92960$665c6230$33152690$@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 4/5] arm64: dts: fsd: Add codec node for Tesla FSD
-Content-Language: en-US
-To:     Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
-        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, s.nawrocki@samsung.com,
-        perex@perex.cz, tiwai@suse.com, pankaj.dubey@samsung.com,
-        alim.akhtar@samsung.com, rcsekar@samsung.com,
-        aswani.reddy@samsung.com
-Cc:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-References: <20230113121749.4657-1-p.rajanbabu@samsung.com>
- <CGME20230113121830epcas5p4cc336a48f4597ba84ab1352774242f75@epcas5p4.samsung.com>
- <20230113121749.4657-5-p.rajanbabu@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230113121749.4657-5-p.rajanbabu@samsung.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-in
+Thread-Index: AQHLbZyfFuOXMbrDWpBwvoqdO4xuvAKyiR4/AjNceAgCN7SsGK6C+E4g
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Tf0xTVxjN7fvRFlPyKDju2KbNU7KBAi0r+JgiJjpscBGS/WO2ZPBS3lpC
+        aZu+suEiDEVA2AYKwdVSgWkGFnUQbBlWS7SFmDri6Ky6qUwwKIyBkyKQ6n61fbjx3/nOPed+
+        93z3XgEi/gWPExRpjYxBS2tIPALtdyckJC3dGlJKHR1CarytH6d8XhePcl2w86mWiUmcah+6
+        gVEN0xMI5fw9yC35jvComw4LTpl+HORRp+zP+FSdoxGjzKMDGFXtHOJT7tlajOpdPg92EIre
+        hUO44qJ5jK/o667DFfdvX8YVg3OduKLB1g0UPbZbqGKhb12e4IPibWqGLmQMEkar1BUWaVWZ
+        5J7383fmp6VLZUmyDGoLKdHSJUwmueu9vKTsIk0wAin5hNaUBqk8mmXJlO3bDLpSIyNR61hj
+        JsnoCzV6uT6ZpUvYUq0qWcsY35FJpalpQWFBsdp39gimb1hT1jpejVSCTmE9EAggIYePZgvq
+        QYRATFwC8B9TD+AKP4BLh+dxrlgA8PqvTl49EIYdNy4+RrkFB4CBJ1/zuWIawOqmY2hIhRNb
+        4Cnnt+G9YggfDwbO1oYtCFEDoNN7HoRUQmI7nDL1YCEcTeyGF2aseAijRDysejwV1oiIDOgP
+        LGIcjoKeE5PhDgixHn4/Z0G4M0lg4FEnxvGxcDjwZZiPIbJh7R9Pwo0h8VQAzX9aMc6wC7ZO
+        X8E5HA1nrtn4HI6DvzXWrGAdPD5ftaIpgzXzvSsDyIJXfBY0ND6ESIA9jhSOfgO2XP+Ox50h
+        En71YnJFLoIDbS9xPOzp6gMcfg0O3nGCo4A0r4pmXhXNvCqO+f9uHQDtBq8yerZExbBp+lQt
+        8+l/V67UlfSB8BtPzBkAE+NPk12AJwAuAAUIGSPa63ArxaJCev9njEGXbyjVMKwLpAXnfQyJ
+        W6vUBT+J1pgvk2dI5enp6fKMt9NlZKyIsbcrxYSKNjLFDKNnDC99PIEwrpL35u6IO6cP/Dyz
+        oRlRewMPDsxpYMuofV+zcCTrjLopz3m53qZpdNUVfyPcfLfES45GfnxQcfrdoz88/7u+T/z6
+        4SmvIS23wrj87AvfuXaPtH+M3W+K6qWzKxrKYz8vEj9XV5xoGp66F3lfVj65t2pdoOyMb328
+        bM+AyD1bXnctQChHrHH7eHby0KXlrY7Na7GortzWTbk5jQ+y3hK3RN/zG8cenlNamv6yum8X
+        dGzc5G+2xAxajDdHrWaP9ODJhauLCQmJvZkfUVvlHS/aHVo0x5Nyd7itEmPM6I6f/FBzNbXt
+        FXRNrNqv2tA9AxZP2jz00ocbWx+q5CNdZeadpjkSZdW0LBExsPS/ClfgrmwEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEIsWRmVeSWpSXmKPExsWy7bCSvK74uSPJBi9XKlo8mLeNzeLKxUNM
+        Foc2b2W3mPrwCZvF/CPnWC36Xjxkttj7Gij27UoHk8XlXXPYLGac38dksWjrF3aLzl39rBaz
+        LuxgtWjde4Td4vCbdlaLDd/XMjoIeGz43MTmsXPWXXaPTas62TzuXNvD5rHv7TI2j74tqxg9
+        1m+5yuLxeZNcAEcUl01Kak5mWWqRvl0CV8aV1R2sBX3cFbMftDI3MC7j7GLk5JAQMJE4t/MZ
+        SxcjF4eQwA5GicZtq5kgEtIS0/v3sEHYwhIr/z1nhyh6xijR9Gg9I0iCTcBcYtHepYwgCRGB
+        R0wSc+c/YgNxmAW6GCWO/13JDNHynlFidctXsFmcAnYSz2esZwWxhQXcJTa/WgkWZxFQlWh+
+        9hxsLK+ApcSnn19ZIWxBiZMzn7CA2MwC2hK9D1sZIWx5ie1v5zBD3Kcg8fPpMlaIuLjE0Z89
+        YHERATeJ9vfvWCYwCs9CMmoWklGzkIyahaR9ASPLKkbJ1ILi3PTcYsMCo7zUcr3ixNzi0rx0
+        veT83E2M4GjW0trBuGfVB71DjEwcjIcYJTiYlUR4/XYdThbiTUmsrEotyo8vKs1JLT7EKM3B
+        oiTOe6HrZLyQQHpiSWp2ampBahFMlomDU6qB6dQ216aWUyeeHnTTi2dZ9mrp17dczcc/zHrX
+        HX+1lC3xZmbShvtCO7p8vrsyGRsusk8qtXR4eGDiTQ99Q1vl1fLqM5dU/1ri+7Qg7Gxm/xaj
+        w2KzcgIvWcYsf9xbPCv1fPc/vXCWcKUnvdIPvmT9ENATNVp73j+z8/S74rgp5/e/Ls7gcDNs
+        2DbZpuN78tWT2p/8cmJuG72ZPiXkf37e75faWoL/fVQcam980nkosV8st+CV4eGiCS/nnXum
+        73bk+8Ujv05939ojd+auo+Ed1fSd2396hiSvjNLOzT297sJU3RYz54T411ZhEutvfozI0N9j
+        w5PXcl7a5AbT343RhmstbEMOqK1h2FJkM0l7lhJLcUaioRZzUXEiAM9MmPBVAwAA
+X-CMS-MailID: 20230116040959epcas5p4ec43384242bc9c14fca04aa9a3650d31
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20230113121821epcas5p4ebd116d75f12dafeb09391eb6f7a2646
+References: <20230113121749.4657-1-p.rajanbabu@samsung.com>
+        <CGME20230113121821epcas5p4ebd116d75f12dafeb09391eb6f7a2646@epcas5p4.samsung.com>
+        <20230113121749.4657-3-p.rajanbabu@samsung.com>
+        <e5cd9794-d8ce-7285-5da2-7f3b6bf8dc2a@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 13/01/2023 13:17, Padmanabhan Rajanbabu wrote:
-> Add device tree node support for codec on Tesla FSD platform.
+
+
+> -----Original Message-----
+> From: Krzysztof Kozlowski [mailto:krzysztof.kozlowski@linaro.org]
+> Sent: 15 January 2023 08:33 PM
+> To: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>;
+> lgirdwood@gmail.com; broonie@kernel.org; robh+dt@kernel.org;
+> krzysztof.kozlowski+dt@linaro.org; s.nawrocki@samsung.com;
+> perex@perex.cz; tiwai@suse.com; pankaj.dubey@samsung.com;
+> alim.akhtar@samsung.com; rcsekar@samsung.com;
+> aswani.reddy@samsung.com
+> Cc: alsa-devel@alsa-project.org; devicetree@vger.kernel.org; linux-
+> kernel@vger.kernel.org; linux-samsung-soc@vger.kernel.org
+> Subject: Re: [PATCH v3 2/5] ASoC: samsung: i2s: add support for FSD I2S
 > 
-> Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-> ---
->  arch/arm64/boot/dts/tesla/fsd-evb.dts | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> On 13/01/2023 13:17, Padmanabhan Rajanbabu wrote:
+> > Add support for enabling I2S controller on FSD platform.
+> >
+> > FSD I2S controller is based on Exynos7 I2S controller, supporting 2CH
+> > playback/capture in I2S mode and 7.1CH playback/capture in TDM mode.
+> >
+> > Reported-by: kernel test robot <lkp@intel.com>
 > 
-> diff --git a/arch/arm64/boot/dts/tesla/fsd-evb.dts b/arch/arm64/boot/dts/tesla/fsd-evb.dts
-> index cf5f2ce4d2a7..2f211a1ad50d 100644
-> --- a/arch/arm64/boot/dts/tesla/fsd-evb.dts
-> +++ b/arch/arm64/boot/dts/tesla/fsd-evb.dts
-> @@ -10,6 +10,7 @@
->  
->  /dts-v1/;
->  #include "fsd.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
->  
->  / {
->  	model = "Tesla Full Self-Driving (FSD) Evaluation board";
-> @@ -34,6 +35,17 @@
->  	clock-frequency = <24000000>;
->  };
->  
-> +&hsi2c_5 {
-> +	status = "okay";
-> +
-> +	tlv320aic3x: codec@18 {
-> +		compatible = "ti,tlv320aic3104";
-> +		reg = <0x18>;
-> +		#sound-dai-cells = <0>;
-> +		reset-gpios = <&gpg1 6 GPIO_ACTIVE_LOW>;
-> +	};
-> +};
-> +
+> Drop. It's for the bugs. Just be sure that the code compiles without W=1
+> warnings.
 
-Why there is i2s here? What was the base of this patch?
+Okay, got it. I'll drop it in the upcoming patchset.
 
+> 
+> 
+> > Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+> > ---
+> >  sound/soc/samsung/i2s-regs.h |  1 +
+> >  sound/soc/samsung/i2s.c      | 53
+> ++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 54 insertions(+)
+> Best regards,
+> Krzysztof
 
-Best regards,
-Krzysztof
 
