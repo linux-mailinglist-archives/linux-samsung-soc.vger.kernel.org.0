@@ -2,113 +2,109 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE0EA678020
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Jan 2023 16:41:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4054F677FE6
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 23 Jan 2023 16:35:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbjAWPlW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 23 Jan 2023 10:41:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47560 "EHLO
+        id S232629AbjAWPft (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 23 Jan 2023 10:35:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232786AbjAWPlV (ORCPT
+        with ESMTP id S232410AbjAWPfs (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 23 Jan 2023 10:41:21 -0500
-X-Greylist: delayed 405 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 23 Jan 2023 07:41:19 PST
-Received: from out-140.mta0.migadu.com (out-140.mta0.migadu.com [IPv6:2001:41d0:1004:224b::8c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE552A15B
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 Jan 2023 07:41:19 -0800 (PST)
-Date:   Mon, 23 Jan 2023 16:34:27 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grimler.se; s=key1;
-        t=1674488070;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qa6ykdif3qPx60n5o/W3CrQiW/SVFhDTfRQq7YvN39Q=;
-        b=I+1YPVl4ZXJkYR/A6IFAO9yGwLw1SDhN+vVTnMO0fqh2CvgQvL+P6biJdtUl4c6rbmBCiH
-        UqCbPteCoOoWpyjL8Cmj1+gcPTJBZ1AJFkEGRlAAF8s+nQj95HdCNtFD2oWB1dhT/lkuc8
-        Y6oO+AfVsJtk9cSFqRroX1U7Q487LP0=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Henrik Grimler <henrik@grimler.se>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        replicant@osuosl.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Martin =?iso-8859-1?Q?J=FCcker?= <martin.juecker@gmail.com>
-Subject: Re: [RFT 05/11] ARM: dts: exynos: add ports in HDMI bridge in
- Exynos4412 Midas
-Message-ID: <Y86pA6xo9EttJJ6g@L14.lan>
-References: <20230120155404.323386-1-krzysztof.kozlowski@linaro.org>
- <20230120155404.323386-6-krzysztof.kozlowski@linaro.org>
+        Mon, 23 Jan 2023 10:35:48 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A092916E
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 Jan 2023 07:35:47 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id o17-20020a05600c511100b003db021ef437so8855417wms.4
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 23 Jan 2023 07:35:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZV/YupdBHfYEgxMNJ/vNSCWnKrdy7rcoPltaDFLsCpE=;
+        b=BUMAANqbKkian0KWpTAwTx7mPcxBcConTeVmyWCjq5Kzn8SbuLc4CtuebTKN9J3iMP
+         JSv7/gXEkjdu5rBaCy//KstbYcBQBzEZ6IcYzJgWoYafO2igUiY/rbnRs68/9ANW1X3v
+         I8vd5jcmZgJylW3o+04nOQ3Mx6DIix6ru33mdEJKdipJIM5JrEFxqsopuvK+Fg3UwQqG
+         dX8cSOLrqHfPJjiNtvkTrzbv/1oO5i6VIkMTnL0XVlis7IzvOlybQ6wRvbelmwgkFOpw
+         Yh939Cheh5P7ZxSN8E3qZWRSGqb6BimxDLQQqpigOWbzN9TpVm4BLBI4DKaxsHWwI/ZE
+         qUrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZV/YupdBHfYEgxMNJ/vNSCWnKrdy7rcoPltaDFLsCpE=;
+        b=v1El5ZwKB8LcAVyLxuObXM8/mIK723xxMNboYdIC++8iXNmUjceCk6xWDY1z3Zu95y
+         2lWujqn34fhWLfEbyBjYsirDWrRnjr1mHgosXWzODRdPROeywyi/kILYhIdxLvyO/Ssx
+         0ggeqffrRX35fwcpA6SUwijmvVEZjZoL7PgxQ34CMka+0xBSHu5ih9IAOI3iepGxslU0
+         ONannYI+TDdvg+e9n/6gY08+hQmh+DHIX147L5mBa6z3ylsXWsJLIO3h4obDIJAZdBqv
+         cQ6E/cj+chGtTvVvuufAKe+y/AHiUc/0j68IYo6IzOL62LejxACByqAOw4021INdlw7o
+         1syA==
+X-Gm-Message-State: AFqh2kptaSA57h/Si6cMBsYCfoaqY79335Y8PrUGPf7ZiW+GeyvU1EbK
+        YxoAzbz8Fi2Gitq5NcUGzzSMRA==
+X-Google-Smtp-Source: AMrXdXv8boPuYWxImbIFEMrMA8f8P8adojZQbCuvYWC6/21kKUR23nqIM4iyDG6Uy1+FC2jzl1Siww==
+X-Received: by 2002:a05:600c:4f83:b0:3db:eab:a600 with SMTP id n3-20020a05600c4f8300b003db0eaba600mr21346884wmq.7.1674488146174;
+        Mon, 23 Jan 2023 07:35:46 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id t13-20020a1c770d000000b003db0ee277b2sm10948154wmi.5.2023.01.23.07.35.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 07:35:45 -0800 (PST)
+Message-ID: <51e31914-6b86-b83b-898e-2d2d31a59620@linaro.org>
+Date:   Mon, 23 Jan 2023 16:35:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230120155404.323386-6-krzysztof.kozlowski@linaro.org>
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2 2/2] arm: dts: exynos5422: Add device-tree for Samsung
+ Galaxy S5 (SM-G900H)
+Content-Language: en-US
+To:     Markuss Broks <markuss.broks@gmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230121201926.46990-1-markuss.broks@gmail.com>
+ <20230121201926.46990-3-markuss.broks@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230121201926.46990-3-markuss.broks@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi,
+On 21/01/2023 21:19, Markuss Broks wrote:
+> Samsung Galaxy S5 (SM-G900H) was sold alongside Samsung Galaxy S5
+> with Snapdragon SoC, however the Exynos version features a 3G
+> capable Intel modem instead of Qualcomm version featuring LTE modem.
+> This phone is based on Exynos5422. Currently, the touchscreen,
+> USB, eMMC and the PMIC are enabled in the device-tree.
+> 
+> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
+> ---
+>  arch/arm/boot/dts/Makefile                   |   1 +
+>  arch/arm/boot/dts/exynos5422-samsung-k3g.dts | 676 +++++++++++++++++++
+>  2 files changed, 677 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/exynos5422-samsung-k3g.dts
+> 
 
-I see you have already merged this, but FWIW HDMI works as well as
-before on exynos4412-i9300, so:
+I gave it a try but dtbs_check complain:
 
-Tested-by: Henrik Grimler <henrik@grimler.se>
+/home/krzk/dev/linux/linux/out/arch/arm/boot/dts/exynos5422-samsung-k3g.dtb:
+pinctrl@13400000: 's2mps11-irq-pin', 'touch-int-pin' do not match any of
+the regexes: '^(initial|sleep)-state$', '^[a-z0-9-]+-pins$',
+'^[a-z]+[0-9]*-gpio-bank$', 'pinctrl-[0-9]+'
+	From schema:
+/home/krzk/dev/linux/linux/Documentation/devicetree/bindings/pinctrl/samsung,pinctrl.yaml
 
-Longer explanation: HDMI output only works on i9300 if MHL cable is
-attached before device boots, so probably bootloader sets up some
-settings that the sii9234 driver does not handle (correctly) if cable
-is hot plugged.
 
 Best regards,
-Henrik Grimler
+Krzysztof
 
-On Fri, Jan 20, 2023 at 04:53:58PM +0100, Krzysztof Kozlowski wrote:
-> The SII9234 HDMI bridge expects ports property:
-> 
->   exynos4412-i9305.dtb: hdmi-bridge@39: 'ports' is a required property
->   exynos4412-i9305.dtb: hdmi-bridge@39: 'port' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm/boot/dts/exynos4412-midas.dtsi | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/exynos4412-midas.dtsi b/arch/arm/boot/dts/exynos4412-midas.dtsi
-> index 8e1c19a8ad06..a626d33d1330 100644
-> --- a/arch/arm/boot/dts/exynos4412-midas.dtsi
-> +++ b/arch/arm/boot/dts/exynos4412-midas.dtsi
-> @@ -273,9 +273,16 @@ sii9234: hdmi-bridge@39 {
->  			interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
->  			reg = <0x39>;
->  
-> -			port {
-> -				mhl_to_hdmi: endpoint {
-> -					remote-endpoint = <&hdmi_to_mhl>;
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					mhl_to_hdmi: endpoint {
-> +						remote-endpoint = <&hdmi_to_mhl>;
-> +					};
->  				};
->  			};
->  		};
-> -- 
-> 2.34.1
-> 
