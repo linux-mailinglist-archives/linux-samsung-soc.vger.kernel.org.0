@@ -2,149 +2,220 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC01D67A132
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jan 2023 19:38:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5BC167A270
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jan 2023 20:13:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbjAXSiC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 24 Jan 2023 13:38:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41904 "EHLO
+        id S233235AbjAXTNH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Jan 2023 14:13:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233488AbjAXSiB (ORCPT
+        with ESMTP id S231142AbjAXTNG (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 24 Jan 2023 13:38:01 -0500
-Received: from laurent.telenet-ops.be (laurent.telenet-ops.be [IPv6:2a02:1800:110:4::f00:19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DA6233F4
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jan 2023 10:37:58 -0800 (PST)
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed50:2f4a:8573:c294:b2ce])
-        by laurent.telenet-ops.be with bizsmtp
-        id CidZ2900K56uRqi01idZ2h; Tue, 24 Jan 2023 19:37:55 +0100
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtp (Exim 4.95)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1pKOAe-007HCs-OB;
-        Tue, 24 Jan 2023 19:37:33 +0100
-Received: from geert by rox.of.borg with local (Exim 4.95)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1pKOAn-002n1A-8j;
-        Tue, 24 Jan 2023 19:37:33 +0100
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Madalin Bucur <madalin.bucur@nxp.com>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        UNGLinuxDriver@microchip.com,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Siddharth Vadapalli <s-vadapalli@ti.com>,
-        Russell King <linux@armlinux.org.uk>
-Cc:     linux-phy@lists.infradead.org, linux-doc@vger.kernel.org,
-        netdev@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v2 9/9] usb: host: ohci-exynos: Convert to devm_of_phy_optional_get()
-Date:   Tue, 24 Jan 2023 19:37:28 +0100
-Message-Id: <3adc5dd1149a17ea7daf4463549feab886c6b145.1674584626.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1674584626.git.geert+renesas@glider.be>
-References: <cover.1674584626.git.geert+renesas@glider.be>
+        Tue, 24 Jan 2023 14:13:06 -0500
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E6112063
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jan 2023 11:13:05 -0800 (PST)
+Received: by mail-yb1-xb30.google.com with SMTP id 203so20145114yby.10
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jan 2023 11:13:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=amarulasolutions.com; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dZlQnd1Ps/0Xsk7T1j6t5D52f6MhzQcFEYAGns4bZa8=;
+        b=bmagdcu7XlzGpU70LABD8M5lxLdhXB3wkOKWSZPqyH4GTVU8JoSgHROWfoCexhHGwm
+         xR+WxKbhO9XiouHFq3q9vrkFI+Lbq+iVRKA3eu5WGCgr05ppxAzJiLkQ0I+K+ZwmyAqN
+         m1uO34/0FWHositfHFOaXDpuiqKLPi4JxAMBw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dZlQnd1Ps/0Xsk7T1j6t5D52f6MhzQcFEYAGns4bZa8=;
+        b=00MEHZq6I66qXKp4YPhS+qrpoLBog4LetsKVPaYIjPGR255JWf9C2ORKnxTo5eTsZ2
+         wagcUekeRFboG8xvEKA0BshyzqU2NJyrRXRb41y6rWU4hvGaZwNyzE8XoddCa4FGypKI
+         0mm0j969dJu2LRk5CdHdqvlOCvuHyBmBjDBIDr9Zv2OFmYIToCoG2+iG3P3h9plloTvW
+         eUwBH/gUbCGoX5DMo9ZNPmey39qRwUN/avBPfcRpv+Q2QyCbxwi5/F5IetKJFO98k1xf
+         VL43VdXrvaXo6ptPQjOSpo+JGY4iuzA+4s8B+RvUUpe/6gxj4Rg9cJABcNDZeAa+lSzu
+         ViEg==
+X-Gm-Message-State: AO0yUKW2vPYwcBt2ITUh2k149OBxChMUjLrqdW3vIqRPw5CXkZB41N4a
+        h97G83o3G3s5k8sng1fEVSnL856xIetPc3fjtjUfIw==
+X-Google-Smtp-Source: AK7set+dvgIYsqjXszDD6gvJGJkbFtzPgeRu3GVbZ+V2Gz2p01ZAknJFQcCL43ZzIHSiF8zR9Q1b0VIFNXsC9Hdsl1k=
+X-Received: by 2002:a25:d7d1:0:b0:80b:69cc:78d8 with SMTP id
+ o200-20020a25d7d1000000b0080b69cc78d8mr386955ybg.475.1674587584433; Tue, 24
+ Jan 2023 11:13:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230123151212.269082-1-jagan@amarulasolutions.com>
+In-Reply-To: <20230123151212.269082-1-jagan@amarulasolutions.com>
+From:   Jagan Teki <jagan@amarulasolutions.com>
+Date:   Wed, 25 Jan 2023 00:42:51 +0530
+Message-ID: <CAMty3ZBurwPHZ3bCSV-L+Fk3NGjJKnM8r4gWHPdb3VnqWhzVtA@mail.gmail.com>
+Subject: Re: [RESEND PATCH v11 00/18] drm: Add Samsung MIPI DSIM bridge
+To:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Frieder Schrempf <frieder.schrempf@kontron.de>,
+        Fancy Fang <chen.fang@nxp.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Michael Nazzareno Trimarchi <michael@amarulasolutions.com>,
+        Adam Ford <aford173@gmail.com>,
+        Neil Armstrong <narmstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+        Marek Vasut <marex@denx.de>
+Cc:     Matteo Lisi <matteo.lisi@engicam.com>,
+        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-amarula <linux-amarula@amarulasolutions.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Use the new devm_of_phy_optional_get() helper instead of open-coding the
-same operation.
+On Mon, Jan 23, 2023 at 8:42 PM Jagan Teki <jagan@amarulasolutions.com> wrote:
+>
+> This series supports common bridge support for Samsung MIPI DSIM
+> which is used in Exynos and i.MX8MM SoC's.
+>
+> The final bridge supports both the Exynos and i.MX8M Mini/Nano/Plus.
+>
+> Patch 0001 - 0004: adding devm_drm_of_dsi_get_bridge
+>
+> Patch 0005 - 0006: optional PHY, PMS_P offset
+>
+> Patch 0007       : introduce hw_type
+>
+> Patch 0008       : fixing host init
+>
+> Patch 0009       : atomic_check
+>
+> Patch 0010       : input_bus_flags
+>
+> Patch 0011       : atomic_get_input_bus_fmts
+>
+> Patch 0012 - 0013: component vs bridge
+>
+> Patch 0014       : DSIM bridge
+>
+> Patch 0015 - 0016: i.MX8M Mini/Nano
+>
+> Patch 0017 - 0018: i.MX8M Plus
+>
+> Changes for v11:
+> - collect RB from Frieder Schrempf
+> - collect ACK from Rob
+> - collect ACK from Robert
+> - fix BIT macro replacements
+> - fix checkpatch --strict warnings
+> - fix unneeded commit text
+> - drop extra lines
+>
+> Changes for v10:
+> - rebase on drm-misc-next
+> - add drm_of_dsi_find_panel_or_bridge
+> - add devm_drm_of_dsi_get_bridge
+> - fix host initialization (Thanks to Marek Szyprowski)
+> - rearrange the tiny patches for easy to review
+> - update simple names for enum hw_type
+> - add is_hw_exynos macro
+> - rework on commit messages
+>
+> Changes for v9:
+> - rebase on drm-misc-next
+> - drop drm bridge attach fix for Exynos
+> - added prepare_prev_first flag
+> - added pre_enable_prev_first flag
+> - fix bridge chain order for exynos
+> - added fix for Exynos host init for first DSI transfer
+> - added MEDIA_BUS_FMT_FIXED
+> - return MEDIA_BUS_FMT_RGB888_1X24 output_fmt if supported output_fmt
+>   list is unsupported.
+> - added MEDIA_BUS_FMT_YUYV10_1X20
+> - added MEDIA_BUS_FMT_YUYV12_1X24
+>
+> Changes for v8:
+> * fixed comment lines
+> * fixed commit messages
+> * fixed video mode bits
+> * collect Marek Ack
+> * fixed video mode bit names
+> * update input formats logic
+> * added imx8mplus support
+>
+> Changes for v7:
+> * fix the drm bridge attach chain for exynos drm dsi driver
+> * fix the hw_type checking logic
+>
+> Changes for v6:
+> * handle previous bridge for exynos dsi while attaching bridge
+>
+> Changes for v5:
+> * bridge changes to support multi-arch
+> * updated and clear commit messages
+> * add hw_type via plat data
+> * removed unneeded quirk
+> * rebased on linux-next
+>
+> Changes for v4:
+> * include Inki Dae in MAINTAINERS
+> * remove dsi_driver probe in exynos_drm_drv to support multi-arch build
+> * update init handling to ensure host init done on first cmd transfer
+>
+> Changes for v3:
+> * fix the mult-arch build
+> * fix dsi host init
+> * updated commit messages
+>
+> Changes for v2:
+> * fix bridge handling
+> * fix dsi host init
+> * correct the commit messages
+>
+> Tested in Engicam i.Core MX8M Mini SoM.
+>
+> Repo:
+> https://github.com/openedev/kernel/tree/imx8mm-dsi-v11
+>
+> v10:
+> https://lore.kernel.org/all/20221214125907.376148-1-jagan@amarulasolutions.com/
+>
+> Any inputs?
+> Jagan.
+>
+> Jagan Teki (16):
+>   drm: of: Lookup if child node has DSI panel or bridge
+>   drm: bridge: panel: Add devm_drm_of_dsi_get_bridge helper
+>   drm: exynos: dsi: Drop explicit call to bridge detach
+>   drm: exynos: dsi: Switch to devm_drm_of_dsi_get_bridge
+>   drm: exynos: dsi: Mark PHY as optional
+>   drm: exynos: dsi: Add platform PLL_P (PMS_P) offset
+>   drm: exynos: dsi: Introduce hw_type platform data
+>   drm: exynos: dsi: Add atomic check
+>   drm: exynos: dsi: Add input_bus_flags
+>   drm: exynos: dsi: Add atomic_get_input_bus_fmts
+>   drm: exynos: dsi: Consolidate component and bridge
+>   drm: exynos: dsi: Add Exynos based host irq hooks
+>   drm: bridge: Generalize Exynos-DSI driver into a Samsung DSIM bridge
+>   dt-bindings: display: exynos: dsim: Add NXP i.MX8M Mini/Nano support
+>   drm: bridge: samsung-dsim: Add i.MX8M Mini/Nano support
+>   dt-bindings: display: exynos: dsim: Add NXP i.MX8M Plus support
+>
+> Marek Szyprowski (1):
+>   drm: exynos: dsi: Handle proper host initialization
+>
+> Marek Vasut (1):
+>   drm: bridge: samsung-dsim: Add i.MX8M Plus support
 
-As devm_of_phy_optional_get() returns NULL if either the PHY cannot be
-found, or if support for the PHY framework is not enabled, it is no
-longer needed to check for -ENODEV or -ENOSYS.
+Can anyone pick this series?
 
-This lets us drop several checks for IS_ERR(), as phy_power_{on,off}()
-handle NULL parameters fine.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
----
-v2:
-  - Add Acked-by,
-  - Clarify removed checks for -ENODEV and -ENOSYS,
-  - Remove error printing in case of real failures.
----
- drivers/usb/host/ohci-exynos.c | 23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/usb/host/ohci-exynos.c b/drivers/usb/host/ohci-exynos.c
-index 8d7977fd5d3bd502..8af17c1ee5cc8f1e 100644
---- a/drivers/usb/host/ohci-exynos.c
-+++ b/drivers/usb/host/ohci-exynos.c
-@@ -69,19 +69,11 @@ static int exynos_ohci_get_phy(struct device *dev,
- 			return -EINVAL;
- 		}
- 
--		phy = devm_of_phy_get(dev, child, NULL);
-+		phy = devm_of_phy_optional_get(dev, child, NULL);
- 		exynos_ohci->phy[phy_number] = phy;
- 		if (IS_ERR(phy)) {
--			ret = PTR_ERR(phy);
--			if (ret == -EPROBE_DEFER) {
--				of_node_put(child);
--				return ret;
--			} else if (ret != -ENOSYS && ret != -ENODEV) {
--				dev_err(dev,
--					"Error retrieving usb2 phy: %d\n", ret);
--				of_node_put(child);
--				return ret;
--			}
-+			of_node_put(child);
-+			return PTR_ERR(phy);
- 		}
- 	}
- 
-@@ -97,12 +89,10 @@ static int exynos_ohci_phy_enable(struct device *dev)
- 	int ret = 0;
- 
- 	for (i = 0; ret == 0 && i < PHY_NUMBER; i++)
--		if (!IS_ERR(exynos_ohci->phy[i]))
--			ret = phy_power_on(exynos_ohci->phy[i]);
-+		ret = phy_power_on(exynos_ohci->phy[i]);
- 	if (ret)
- 		for (i--; i >= 0; i--)
--			if (!IS_ERR(exynos_ohci->phy[i]))
--				phy_power_off(exynos_ohci->phy[i]);
-+			phy_power_off(exynos_ohci->phy[i]);
- 
- 	return ret;
- }
-@@ -114,8 +104,7 @@ static void exynos_ohci_phy_disable(struct device *dev)
- 	int i;
- 
- 	for (i = 0; i < PHY_NUMBER; i++)
--		if (!IS_ERR(exynos_ohci->phy[i]))
--			phy_power_off(exynos_ohci->phy[i]);
-+		phy_power_off(exynos_ohci->phy[i]);
- }
- 
- static int exynos_ohci_probe(struct platform_device *pdev)
--- 
-2.34.1
-
+Thanks,
+Jagan.
