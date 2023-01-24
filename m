@@ -2,190 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41996679984
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jan 2023 14:40:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4EAA67A138
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jan 2023 19:38:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234249AbjAXNkW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 24 Jan 2023 08:40:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59680 "EHLO
+        id S233676AbjAXSiH (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 24 Jan 2023 13:38:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234240AbjAXNkR (ORCPT
+        with ESMTP id S233549AbjAXSiF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 24 Jan 2023 08:40:17 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1993F37B4D;
-        Tue, 24 Jan 2023 05:40:16 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 9FA9D21888;
-        Tue, 24 Jan 2023 13:40:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1674567614; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=umu1oYNzuXuDKuOEF0oRXjztfv6/2EpKs/EPAOugwHA=;
-        b=0Y5Hvj6232/XrFnj7bJLQREWGtx7luGnOjUPrtFrXTZ7Gpf9++5V3DS/jUGFXH2OE6J5Bg
-        QldnPy1qLE94XgxtclhdkvFFcGhYl3Bu4AuyTbpcbL6m4Ahv7aJvlMyAWA+7XarQILWn65
-        xp5wiB8PJciZpvE6maR+uD08n9kMb9k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1674567614;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=umu1oYNzuXuDKuOEF0oRXjztfv6/2EpKs/EPAOugwHA=;
-        b=dGScla0Sl1YZ81J810UQ+K9PbplCn5jC/erVivNYFUTB0LUbcdRRZqiqFTISxyAFX36xek
-        +0HUDq5HWLe5DtBA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 5F08613487;
-        Tue, 24 Jan 2023 13:40:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id 2B9WFr7fz2PWZgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Tue, 24 Jan 2023 13:40:14 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com
-Cc:     dri-devel@lists.freedesktop.org,
+        Tue, 24 Jan 2023 13:38:05 -0500
+Received: from xavier.telenet-ops.be (xavier.telenet-ops.be [IPv6:2a02:1800:120:4::f00:14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8A838B6B
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jan 2023 10:37:58 -0800 (PST)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed50:2f4a:8573:c294:b2ce])
+        by xavier.telenet-ops.be with bizsmtp
+        id CidZ2900656uRqi01idZDF; Tue, 24 Jan 2023 19:37:56 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtp (Exim 4.95)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1pKOAe-007HCL-GZ;
+        Tue, 24 Jan 2023 19:37:33 +0100
+Received: from geert by rox.of.borg with local (Exim 4.95)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1pKOAm-002n0W-Uv;
+        Tue, 24 Jan 2023 19:37:32 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Madalin Bucur <madalin.bucur@nxp.com>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        UNGLinuxDriver@microchip.com,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Siddharth Vadapalli <s-vadapalli@ti.com>,
+        Russell King <linux@armlinux.org.uk>
+Cc:     linux-phy@lists.infradead.org, linux-doc@vger.kernel.org,
+        netdev@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 10/10] drm/fbdev-generic: Rename struct fb_info 'fbi' to 'info'
-Date:   Tue, 24 Jan 2023 14:40:10 +0100
-Message-Id: <20230124134010.30263-11-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230124134010.30263-1-tzimmermann@suse.de>
-References: <20230124134010.30263-1-tzimmermann@suse.de>
+        linux-samsung-soc@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH treewide v2 0/9] phy: Add devm_of_phy_optional_get() helper
+Date:   Tue, 24 Jan 2023 19:37:19 +0100
+Message-Id: <cover.1674584626.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The generic fbdev emulation names variables of type struct fb_info
-both 'fbi' and 'info'. The latter seems to be more common in fbdev
-code, so name fbi accordingly.
+	Hi Vinod et al,
 
-Also replace the duplicate variable in drm_fbdev_fb_destroy().
+While there exist several optional_get() PHY helper functions, there is
+no optional variant of devm_of_phy_get(), leading to several drivers
+implementing this theirselves, sometimes in buggy ways.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/drm_fbdev_generic.c | 47 ++++++++++++++---------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+Hence this series, after two cleanup patches, introduces a
+devm_of_phy_optional_get() helper(), and converts existing users of
+devm_of_phy_get() where appropriate.
 
-diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-index 13b31a95d434..b6565c1e3531 100644
---- a/drivers/gpu/drm/drm_fbdev_generic.c
-+++ b/drivers/gpu/drm/drm_fbdev_generic.c
-@@ -46,16 +46,15 @@ static int drm_fbdev_fb_release(struct fb_info *info, int user)
- static void drm_fbdev_fb_destroy(struct fb_info *info)
- {
- 	struct drm_fb_helper *fb_helper = info->par;
--	struct fb_info *fbi = fb_helper->info;
- 	void *shadow = NULL;
- 
- 	if (!fb_helper->dev)
- 		return;
- 
--	if (fbi->fbdefio)
--		fb_deferred_io_cleanup(fbi);
-+	if (info->fbdefio)
-+		fb_deferred_io_cleanup(info);
- 	if (drm_fbdev_use_shadow_fb(fb_helper))
--		shadow = fbi->screen_buffer;
-+		shadow = info->screen_buffer;
- 
- 	drm_fb_helper_fini(fb_helper);
- 
-@@ -171,7 +170,7 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 	struct drm_device *dev = fb_helper->dev;
- 	struct drm_client_buffer *buffer;
- 	struct drm_framebuffer *fb;
--	struct fb_info *fbi;
-+	struct fb_info *info;
- 	u32 format;
- 	struct iosys_map map;
- 	int ret;
-@@ -190,35 +189,35 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 	fb_helper->fb = buffer->fb;
- 	fb = buffer->fb;
- 
--	fbi = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(fbi))
--		return PTR_ERR(fbi);
-+	info = drm_fb_helper_alloc_info(fb_helper);
-+	if (IS_ERR(info))
-+		return PTR_ERR(info);
- 
--	fbi->fbops = &drm_fbdev_fb_ops;
--	fbi->screen_size = sizes->surface_height * fb->pitches[0];
--	fbi->fix.smem_len = fbi->screen_size;
--	fbi->flags = FBINFO_DEFAULT;
-+	info->fbops = &drm_fbdev_fb_ops;
-+	info->screen_size = sizes->surface_height * fb->pitches[0];
-+	info->fix.smem_len = info->screen_size;
-+	info->flags = FBINFO_DEFAULT;
- 
--	drm_fb_helper_fill_info(fbi, fb_helper, sizes);
-+	drm_fb_helper_fill_info(info, fb_helper, sizes);
- 
- 	if (drm_fbdev_use_shadow_fb(fb_helper)) {
--		fbi->screen_buffer = vzalloc(fbi->screen_size);
--		if (!fbi->screen_buffer)
-+		info->screen_buffer = vzalloc(info->screen_size);
-+		if (!info->screen_buffer)
- 			return -ENOMEM;
--		fbi->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
-+		info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
- 
--		fbi->fbdefio = &drm_fbdev_defio;
--		fb_deferred_io_init(fbi);
-+		info->fbdefio = &drm_fbdev_defio;
-+		fb_deferred_io_init(info);
- 	} else {
- 		/* buffer is mapped for HW framebuffer */
- 		ret = drm_client_buffer_vmap(fb_helper->buffer, &map);
- 		if (ret)
- 			return ret;
- 		if (map.is_iomem) {
--			fbi->screen_base = map.vaddr_iomem;
-+			info->screen_base = map.vaddr_iomem;
- 		} else {
--			fbi->screen_buffer = map.vaddr;
--			fbi->flags |= FBINFO_VIRTFB;
-+			info->screen_buffer = map.vaddr;
-+			info->flags |= FBINFO_VIRTFB;
- 		}
- 
- 		/*
-@@ -227,10 +226,10 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 		 * case.
- 		 */
- #if IS_ENABLED(CONFIG_DRM_FBDEV_LEAK_PHYS_SMEM)
--		if (fb_helper->hint_leak_smem_start && fbi->fix.smem_start == 0 &&
-+		if (fb_helper->hint_leak_smem_start && info->fix.smem_start == 0 &&
- 		    !drm_WARN_ON_ONCE(dev, map.is_iomem))
--			fbi->fix.smem_start =
--				page_to_phys(virt_to_page(fbi->screen_buffer));
-+			info->fix.smem_start =
-+				page_to_phys(virt_to_page(info->screen_buffer));
- #endif
- 	}
- 
+Changes compared to v1[1]:
+  - Incorporate "[PATCH v2 1/9] phy: Remove unused phy_optional_get()",
+    as it touches the same documentation,
+  - New patch "[PATCH v2 2/9] doc: phy: Document devm_of_phy_get()",
+  - Print an error message in case of failure, as requested by RobH,
+  - Update Documentation,
+  - Clarify removed checks for -ENODEV and -ENOSYS,
+  - Remove error printing in case of real failures from callers,
+  - Rebase am65-cpsw change on top of commit 854617f52ab42418 ("net:
+    ethernet: ti: am65-cpsw: Handle -EPROBE_DEFER for Serdes PHY") in
+    net-next (next-20230123 and later),
+  - Add Reviewed-by, Acked-by.
+
+Most of this series been compile-tested only, but the new helper itself
+has been tested with a new user[2].
+
+Thanks for your comments!
+
+[1] "[PATCH treewide 0/7] phy: Add devm_of_phy_optional_get() helper"
+    https://lore.kernel.org/r/cover.1674036164.git.geert+renesas@glider.be
+[2] "[PATCH 12/12] can: rcar_canfd: Add transceiver support"
+    https://lore.kernel.org/r/e825b50a843ffe40e33f34e4d858c07c1b2ff259.1674499048.git.geert+renesas@glider.be
+
+Geert Uytterhoeven (9):
+  phy: Remove unused phy_optional_get()
+  doc: phy: Document devm_of_phy_get()
+  phy: Add devm_of_phy_optional_get() helper
+  net: fman: memac: Convert to devm_of_phy_optional_get()
+  net: lan966x: Convert to devm_of_phy_optional_get()
+  net: ethernet: ti: am65-cpsw: Convert to devm_of_phy_optional_get()
+  PCI: tegra: Convert to devm_of_phy_optional_get()
+  usb: host: ehci-exynos: Convert to devm_of_phy_optional_get()
+  usb: host: ohci-exynos: Convert to devm_of_phy_optional_get()
+
+ Documentation/driver-api/phy/phy.rst          | 24 +++++----
+ .../net/ethernet/freescale/fman/fman_memac.c  |  9 ++--
+ .../ethernet/microchip/lan966x/lan966x_main.c |  5 +-
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c      |  8 ++-
+ drivers/pci/controller/pci-tegra.c            |  5 +-
+ drivers/phy/phy-core.c                        | 51 +++++++++++--------
+ drivers/usb/host/ehci-exynos.c                | 23 +++------
+ drivers/usb/host/ohci-exynos.c                | 23 +++------
+ include/linux/phy/phy.h                       | 16 +++---
+ 9 files changed, 75 insertions(+), 89 deletions(-)
+
 -- 
-2.39.0
+2.34.1
 
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
