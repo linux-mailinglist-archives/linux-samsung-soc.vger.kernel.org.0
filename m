@@ -2,53 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6EB867F063
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jan 2023 22:27:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E91567F069
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jan 2023 22:28:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbjA0V11 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 27 Jan 2023 16:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45528 "EHLO
+        id S229862AbjA0V2A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 27 Jan 2023 16:28:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjA0V10 (ORCPT
+        with ESMTP id S229495AbjA0V12 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 27 Jan 2023 16:27:26 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE841205D
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jan 2023 13:27:24 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id j17so4358282wms.0
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jan 2023 13:27:24 -0800 (PST)
+        Fri, 27 Jan 2023 16:27:28 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01566E05E
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jan 2023 13:27:27 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so4403423wmq.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jan 2023 13:27:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=smuQo4geAWNJOxGHerqBUE4luc859AqeHaJfREjKn6k=;
-        b=YgKFG9jY7x3+04njsrvCicDj6oHs+G5HsblgQCn+sHNibQ60jhn6aQ4BQ0mO9+MIHQ
-         j7ybROVnewB5v0CP99a1dioAZYnIxBpu5IfrtOpZzWbg5TIJnepROS5br8Uc2JwleCvV
-         1E54MPBd74WQMPkvCfVXqjCBN8CZJgPZMf88oEQ5ytfbETfybFXFw+kFHKoSMNyCUokd
-         BRRJIn3CurAaVkbi6KKWIaQjVCCE8zP3Z5Gu8j0L6RiujPjsUh5wvGhY5duO9Ms6vQsS
-         IbP3MLp4rV0Ju27EDX+Ia+8JJ1C1EoGZydgPHYy1zvcs5GcW7q+2UA6O/tXmj0J2wBqf
-         zIxw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FziN2ciblGO11V/qPlwYKnDFHaO/t/ie6w/sKp8lvIY=;
+        b=N5guwWJWen5Q4oVKz/GeT/1TUE+Jw+G7ivy4U93zxbKSKQsjWYIXROOYJMrBIpL5gV
+         SCuvyT0uP4C9iDazVP2GA17mpH08l/fOfm79q8a3qhBYxQzfiS6wWsEzP4Xj6XLq9SJt
+         BFKJd5n6qm3TFZuVu7pjo5e6YjT3CfvU3u7aUXNzInJU0MYOmGLAKH/DFdDvTCqDuB/Z
+         NY4/3J7Ox3ZG53XJxbGvn/+AlkOYZR1SE7OaBtbDGTS/U1NqHzqGSZ0LY9s6VrCk23ht
+         gSyt9CfU6frLCV04WEkyqC+9JrDcj9H5JqujC70oA7sNX+glF90CCZjJ/ne1d0I7AqMB
+         l1cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=smuQo4geAWNJOxGHerqBUE4luc859AqeHaJfREjKn6k=;
-        b=lPGTrVwpVTgVsHme8/F4tFZlsktkeHcNpkqP8y/0Havrds4ML647qT4IdZ1tViIj3P
-         +qO5124R7Na7jd7QtIZ8RlAKLSQeHilRhoNwKTyeFSKNGNxDbwMWLkL5uUR1OQ6D5t/p
-         bxAOnLMd/CG4Xx+L9BuqSO0nybL5UDYcXTJWfPw10fFi5TCX/k1SBFeK9dWqNIAMAa+N
-         W9njlb7vcGp87DW9MiwgzDMjX0tcwMOJUHt1b98auViTGoJRNzgtkjog52bccEqj84lL
-         XTtXTOuJfk6pvEAvuIgG144wXBhb4/jOwVtbz9EQa8khI2bOwbfZgMMykr7YEnt5fR9Y
-         VIAQ==
-X-Gm-Message-State: AFqh2kqNSMoB40w8qG9EV0XRgz3YOJWpwpuX/SxP3PrMWZykfTFyru89
-        Q9V68ReX6KBXQSoEyr9YuROI2A==
-X-Google-Smtp-Source: AMrXdXuZGqnKBOjCXQNdvu2ZNVf0qkZubL90gPODwjPBra1PBu8DRipuQtBPKoQvMhCaJixwtZa7EQ==
-X-Received: by 2002:a7b:c5c4:0:b0:3d7:889:7496 with SMTP id n4-20020a7bc5c4000000b003d708897496mr39599663wmk.17.1674854843408;
-        Fri, 27 Jan 2023 13:27:23 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FziN2ciblGO11V/qPlwYKnDFHaO/t/ie6w/sKp8lvIY=;
+        b=A7WxL1NJyc/vHtjysbuj4qvwy+e/AG1l850Mrzw498E+sMgmktvmAn1W79Kjf1AIvM
+         5plsRUPJiHjp0ViRmDv8HgDShktuiamPmHNdfSV34kISi+JpJAR/pUa/oIGnqyjxA+Tm
+         DW4qvFt6mJ+Rszwg/+zlsTPwh5/yabmvw9OpH18CJrUW4bIA4q1LYJyQFGcagwbdr56L
+         84Awm2Tgf+a4nsVqV/c4LXAmBSAPmbvWzaT0hI/4HHDOz1sFcQsMHnV5L7KEh8jNjHCn
+         HhJgRKYv6rEvmyqeHkonUXm9AextvHFj0GOwmR8ODtXahn81jg0Wv2OHIANuHmxD4z77
+         PR8w==
+X-Gm-Message-State: AFqh2ko18ucEoOGJPQFeedjDFvGwKDngxYpi/1BabcCzqAwPD8dtyrK1
+        ROigBGTuqBEltQZ8H2m24qoctg==
+X-Google-Smtp-Source: AMrXdXuY5SMA/dKhjnrAUlpcIrhPqzACOI3ljE8LgURBOm2QjMgP1jIE+khRhcPdsq+ngi9ejn+Ctg==
+X-Received: by 2002:a05:600c:1695:b0:3cf:9d32:db67 with SMTP id k21-20020a05600c169500b003cf9d32db67mr41159228wmn.3.1674854845576;
+        Fri, 27 Jan 2023 13:27:25 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id d11-20020a05600c3acb00b003db30be4a54sm8645303wms.38.2023.01.27.13.27.21
+        by smtp.gmail.com with ESMTPSA id d11-20020a05600c3acb00b003db30be4a54sm8645303wms.38.2023.01.27.13.27.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 13:27:22 -0800 (PST)
+        Fri, 27 Jan 2023 13:27:25 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -64,10 +65,12 @@ Cc:     replicant@osuosl.org, phone-devel@vger.kernel.org,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT PATCH v3 1/4] ARM: dts: exynos: add unit address to DWC3 node wrapper in Exynos5250
-Date:   Fri, 27 Jan 2023 22:27:10 +0100
-Message-Id: <20230127212713.267014-1-krzysztof.kozlowski@linaro.org>
+Subject: [RFT PATCH v3 2/4] ARM: dts: exynos: add unit address to DWC3 node wrapper in Exynos54xx
+Date:   Fri, 27 Jan 2023 22:27:11 +0100
+Message-Id: <20230127212713.267014-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230127212713.267014-1-krzysztof.kozlowski@linaro.org>
+References: <20230127212713.267014-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,10 +88,10 @@ which do not have unit address.  Therefore usethe address space
 of child device (actual DWC3 Controller) as the wrapper's address to
 fix:
 
-  exynos5250-smdk5250.dtb: soc: usb3: {'compatible': ['samsung,exynos5250-dwusb3'],
+  exynos5422-odroidhc1.dtb: soc: usb3-0: {'compatible': ['samsung,exynos5250-dwusb3'],
     ... } should not be valid under {'type': 'object'}
 
-  exynos5250.dtsi:638.16-653.5: Warning (simple_bus_reg): /soc/usb3: missing or empty reg/ranges property
+  exynos54xx.dtsi:145.21-159.5: Warning (simple_bus_reg): /soc/usb3-0: missing or empty reg/ranges property
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
@@ -98,35 +101,53 @@ Changes since v1:
 1. Use ranges with values and drop reg from usb-wrapper node.
 2. Keep "usb" as wrapper's node name.
 ---
- arch/arm/boot/dts/exynos5250.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/exynos54xx.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos5250.dtsi b/arch/arm/boot/dts/exynos5250.dtsi
-index 97e89859ba3d..a5db4ac213d5 100644
---- a/arch/arm/boot/dts/exynos5250.dtsi
-+++ b/arch/arm/boot/dts/exynos5250.dtsi
-@@ -635,17 +635,17 @@ i2s2: i2s@12d70000 {
- 			#sound-dai-cells = <1>;
+diff --git a/arch/arm/boot/dts/exynos54xx.dtsi b/arch/arm/boot/dts/exynos54xx.dtsi
+index 3ec43761d8b9..5c799886c275 100644
+--- a/arch/arm/boot/dts/exynos54xx.dtsi
++++ b/arch/arm/boot/dts/exynos54xx.dtsi
+@@ -142,15 +142,15 @@ hsi2c_7: i2c@12cd0000 {
+ 			status = "disabled";
  		};
  
--		usbdrd: usb3 {
-+		usbdrd: usb@12000000 {
+-		usbdrd3_0: usb3-0 {
++		usbdrd3_0: usb@12000000 {
  			compatible = "samsung,exynos5250-dwusb3";
- 			clocks = <&clock CLK_USB3>;
- 			clock-names = "usbdrd30";
  			#address-cells = <1>;
  			#size-cells = <1>;
 -			ranges;
 +			ranges = <0x0 0x12000000 0x10000>;
  
--			usbdrd_dwc3: usb@12000000 {
-+			usbdrd_dwc3: usb@0 {
+-			usbdrd_dwc3_0: usb@12000000 {
++			usbdrd_dwc3_0: usb@0 {
  				compatible = "snps,dwc3";
 -				reg = <0x12000000 0x10000>;
 +				reg = <0x0 0x10000>;
  				interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&usbdrd_phy 0>, <&usbdrd_phy 1>;
+ 				phys = <&usbdrd_phy0 0>, <&usbdrd_phy0 1>;
  				phy-names = "usb2-phy", "usb3-phy";
+@@ -164,15 +164,15 @@ usbdrd_phy0: phy@12100000 {
+ 			#phy-cells = <1>;
+ 		};
+ 
+-		usbdrd3_1: usb3-1 {
++		usbdrd3_1: usb@12400000 {
+ 			compatible = "samsung,exynos5250-dwusb3";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+-			ranges;
++			ranges = <0x0 0x12400000 0x10000>;
+ 
+-			usbdrd_dwc3_1: usb@12400000 {
++			usbdrd_dwc3_1: usb@0 {
+ 				compatible = "snps,dwc3";
+-				reg = <0x12400000 0x10000>;
++				reg = <0x0 0x10000>;
+ 				phys = <&usbdrd_phy1 0>, <&usbdrd_phy1 1>;
+ 				phy-names = "usb2-phy", "usb3-phy";
+ 				snps,dis_u3_susphy_quirk;
 -- 
 2.34.1
 
