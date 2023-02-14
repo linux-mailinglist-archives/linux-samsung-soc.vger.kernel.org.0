@@ -2,110 +2,91 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D081F69709C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Feb 2023 23:18:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3857D69722F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Feb 2023 00:56:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233529AbjBNWSP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 14 Feb 2023 17:18:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37376 "EHLO
+        id S231876AbjBNX44 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 14 Feb 2023 18:56:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233516AbjBNWSK (ORCPT
+        with ESMTP id S232803AbjBNX4s (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 14 Feb 2023 17:18:10 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A239D21A36
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Feb 2023 14:18:00 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id jg8so43680508ejc.6
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Feb 2023 14:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fNrKKIEifKOtj0ZTyaBn9IXYDH+TgIsaibPuySrCl9A=;
-        b=NXJWQlVXdExWigaYiVmHP67AJwtobiv0bNA7KQ3Il7g6RaNU8h/JRHfIO3wtRXw4+Y
-         PXUAYh4QdqzK2SUbG9/cLaxJ7/GMHZn91ubYjHynTfO/HLgaxPRpfpvXy9Bmcr6xtCPE
-         cgOMNGJen6ll4d2MJWsbkOmHYGCP7YmZMq7N1D/q5PuloGWNlFGirKYx78ND7wDqkLIU
-         eKqZDmPgby8bGsTcdT3SWS4mgyW4VbpYnQhQ9nMpa0BkvaiZz3hJSx8x3CXjYuUbMxc3
-         HRmhWLylScjQodShvpA+xQjiAMjrmgGM0jH/Mx1KhMtPqz4eajOhSb8hyw9Gdn03OwCU
-         ufWQ==
+        Tue, 14 Feb 2023 18:56:48 -0500
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1883A298E4;
+        Tue, 14 Feb 2023 15:56:48 -0800 (PST)
+Received: by mail-il1-f174.google.com with SMTP id f10so6946427ilc.7;
+        Tue, 14 Feb 2023 15:56:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fNrKKIEifKOtj0ZTyaBn9IXYDH+TgIsaibPuySrCl9A=;
-        b=xlf1qC0Za+r0wLMVUrBqbKOaaphG051RlYrvhRvzXdgPKHtlPPHdAnYQjGfLpXrtee
-         dQSJhzIYfUC2CeiWVqSjpV3Sb166CJ25OkPfoL8wPNtLNfoxpjUzLO77IUcHALCWHrZk
-         asBf/Rg1a0PEQ6sSSTRGEQhJLu2LfZJwXcchjOuueFI5XCW9C0ffKcPyZD/fhd5cWvgs
-         HeHg0u2O0Rogmwg6r+LYLuO0QvWSRRwFZ2GgJWGTMU8ZzwTLQmIIl8D7xP63TNIoUhVG
-         NDSDKijb7MxIGbvHtt8OO7Hwk1sGUoOM9ve5LOvGzxlBB5e7ON2MvUt8oW5FwVEBPtIK
-         8R3Q==
-X-Gm-Message-State: AO0yUKXDkj5l92BqeS0VYPcuANO/TubKZN3Sn67yQBtUKPp1WVea5ygP
-        yRTLK2UGninuyvJTPuiA+3Dr9x2Eoh0XucNffnY=
-X-Google-Smtp-Source: AK7set+QEu8eiJsyukUuGBuGdN9zcxcewEe6LC4u/BLo8BbI5vnU+nA6liH5QBGNw9h0R3QU0+C7QBqtx8QqSrU52pI=
-X-Received: by 2002:a17:907:11dd:b0:8af:3e28:acc with SMTP id
- va29-20020a17090711dd00b008af3e280accmr30378ejb.1.1676413078769; Tue, 14 Feb
- 2023 14:17:58 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rNbUf4FzeMlGqHQbOghX36B1I+My6Cb4YZ8Dw7XMggA=;
+        b=7kXhM073JZv2SuFOMePSghqQEmSI6bEesXUCsHngkYjTyaiy2Z7dy2uUWlRcdbXFUn
+         wN2cwtpxSEMzb0YEzMzZdTchnD722NduDBCKSXYudsY6d/EJO29eLBaEtVN08tobeXOs
+         qTvGYUvpr9LzeQ5oKs8KICwiHjqM7ov2TWS61jUre/5tCDtIs2eMWnwXqbZgNHH3X5Pc
+         f0ZbUXKUT33NQarT1PMOO0ZtLRE9eSYFZzpZdRoIIAPybuRi046u3rHv4DW6lMbeNUhO
+         0LY/HtFmV/99uJkTwr1qd0GaHl11p+KqWrUAvIhUPVnXBunZK+DSY7tkf7hrZxlgkQKT
+         JqEg==
+X-Gm-Message-State: AO0yUKWHz8aL2txZTIlq8TA+Jzauo4EZCmNhMWZ6EEY9Ni1RNUunp0xG
+        klDus4ruLKwKavWYoJ+PUblf1l044Q==
+X-Google-Smtp-Source: AK7set8oA758nqEvMNPSikkT2q5X0OAL6a5A903vZHrJvS4wsWRuVQ8xDVsJHPApoqUn56BYMDvCHg==
+X-Received: by 2002:a92:c54c:0:b0:315:3d25:231b with SMTP id a12-20020a92c54c000000b003153d25231bmr518562ilj.9.1676419007285;
+        Tue, 14 Feb 2023 15:56:47 -0800 (PST)
+Received: from robh_at_kernel.org ([65.158.198.3])
+        by smtp.gmail.com with ESMTPSA id e5-20020a02a785000000b003a2cb2937cdsm496843jaj.31.2023.02.14.15.56.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 15:56:46 -0800 (PST)
+Received: (nullmailer pid 54846 invoked by uid 1000);
+        Tue, 14 Feb 2023 23:56:40 -0000
+Date:   Tue, 14 Feb 2023 17:56:40 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        David Virag <virag.david003@gmail.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Subject: Re: [PATCH 1/6] dt-bindings: clock: exynos850: Add Exynos850 CMU_G3D
+Message-ID: <167641899995.54792.18191186654068619440.robh@kernel.org>
+References: <20230211064006.14981-1-semen.protsenko@linaro.org>
+ <20230211064006.14981-2-semen.protsenko@linaro.org>
 MIME-Version: 1.0
-Sender: beatricecarlin64@gmail.com
-Received: by 2002:a17:907:c686:b0:85d:6a6e:66e5 with HTTP; Tue, 14 Feb 2023
- 14:17:58 -0800 (PST)
-From:   Daryna Olga <olgadaryna957@gmail.com>
-Date:   Tue, 14 Feb 2023 14:17:58 -0800
-X-Google-Sender-Auth: F7_j6BBFvH0UWQEuObdRpCy0uXo
-Message-ID: <CA+qmXqcM4KmpVD45eLVmJykDGPvEmoFEtX+kJKpQiPOhBGbnmQ@mail.gmail.com>
-Subject: Daryna Olga from Ukraine
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_FILL_THIS_FORM_SHORT,UNDISC_MONEY autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230211064006.14981-2-semen.protsenko@linaro.org>
+X-Spam-Status: No, score=2.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:636 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5032]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [beatricecarlin64[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [beatricecarlin64[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  1.0 FREEMAIL_REPLY From and body contain different freemails
-        *  0.0 T_FILL_THIS_FORM_SHORT Fill in a short form with personal
-        *      information
-        *  3.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *****
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hello, My name is Ms. Daryna Olga from Ukraine.
 
+On Sat, 11 Feb 2023 00:40:01 -0600, Sam Protsenko wrote:
+> CMU_G3D generates Gondul GPU and bus clocks for BLK_G3D.
+> Add clock indices and binding documentation for CMU_G3D.
+> 
+> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> ---
+>  .../clock/samsung,exynos850-clock.yaml        | 19 ++++++++++++++++++
+>  include/dt-bindings/clock/exynos850.h         | 20 ++++++++++++++++++-
+>  2 files changed, 38 insertions(+), 1 deletion(-)
+> 
 
-I have 100 Kilogrammes of Gold Bars. I plan to negotiate with you, so
-that the Gold Bars will be delivered to you in your country and sell
-it on my behalf and invest with the Funds in your country because I
-want to relocate my late Father's business due to the ongoing war in
-my country Ukraine and visit your country.
+Acked-by: Rob Herring <robh@kernel.org>
 
-
-Thank you as I wait to hear from you soon so I can tell you more
-details. God bless you for your care. Contact me through my Private
-Email Address: DarynaOlga@gmx.com
-
-Best Regards
-Daryna Olga from Ukraine.
