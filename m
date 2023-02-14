@@ -2,84 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1D60696DAC
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Feb 2023 20:17:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D081F69709C
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 14 Feb 2023 23:18:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231592AbjBNTRi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 14 Feb 2023 14:17:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32812 "EHLO
+        id S233529AbjBNWSP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 14 Feb 2023 17:18:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjBNTRh (ORCPT
+        with ESMTP id S233516AbjBNWSK (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 14 Feb 2023 14:17:37 -0500
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1FA265BD;
-        Tue, 14 Feb 2023 11:17:36 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id s17so13805997ois.10;
-        Tue, 14 Feb 2023 11:17:36 -0800 (PST)
+        Tue, 14 Feb 2023 17:18:10 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A239D21A36
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Feb 2023 14:18:00 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id jg8so43680508ejc.6
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 14 Feb 2023 14:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fNrKKIEifKOtj0ZTyaBn9IXYDH+TgIsaibPuySrCl9A=;
+        b=NXJWQlVXdExWigaYiVmHP67AJwtobiv0bNA7KQ3Il7g6RaNU8h/JRHfIO3wtRXw4+Y
+         PXUAYh4QdqzK2SUbG9/cLaxJ7/GMHZn91ubYjHynTfO/HLgaxPRpfpvXy9Bmcr6xtCPE
+         cgOMNGJen6ll4d2MJWsbkOmHYGCP7YmZMq7N1D/q5PuloGWNlFGirKYx78ND7wDqkLIU
+         eKqZDmPgby8bGsTcdT3SWS4mgyW4VbpYnQhQ9nMpa0BkvaiZz3hJSx8x3CXjYuUbMxc3
+         HRmhWLylScjQodShvpA+xQjiAMjrmgGM0jH/Mx1KhMtPqz4eajOhSb8hyw9Gdn03OwCU
+         ufWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oBiuz+SQFFy7EarOUH8jPMtqn/udQfeZ8u8wFfmsPVM=;
-        b=gSWgfwFdELnEw7bQsfNPAk3P8pQ9MnQjov0eUaTgD2mMlAlSswZapwncQy1J+Jv4z9
-         DGrvj9vKvutSSCM9OSyT62dCSqWbgaaRtlokpFF/lC7z0s3QZg0QQwSBhQOy1hlJIFz3
-         KRiZumcbKRZ3X6b8E7tyOFuzWZLOrTv/VNsM+PtFOemHVdw9gKigksxyn8FkZXUk1WEz
-         9OAyjybqhmr/Qu2bpq9cwfU+NKnHIKNYQywJRdimSQbQHkhzdl4hJig4ktOwVN5FoDcY
-         CRDRrvT9Hz2WZsekAcpmOa8YGVfI8dtMXe+2YQ2jqFk8L9PK0F3JxVDrvpAqXd8groce
-         81Gg==
-X-Gm-Message-State: AO0yUKUOmKRtqGClhRBR1MZMwrAgGK0xi7OG8jgJ8CpZ5HZtSSu2gm3V
-        BGMSiU/4SUtHpbQtwxza/w==
-X-Google-Smtp-Source: AK7set+b/crO2+7WEplkyi1t0w5Ow224TFItHaiR6M4GdAoGOXaK41xu+4QCl0q9hxEbhrgIJuyluw==
-X-Received: by 2002:a05:6808:8c8:b0:37a:f9a1:5cfa with SMTP id k8-20020a05680808c800b0037af9a15cfamr1798718oij.58.1676402256107;
-        Tue, 14 Feb 2023 11:17:36 -0800 (PST)
-Received: from robh_at_kernel.org (c-67-162-147-231.hsd1.co.comcast.net. [67.162.147.231])
-        by smtp.gmail.com with ESMTPSA id o127-20020acabe85000000b0035c21f1a570sm1253373oif.6.2023.02.14.11.17.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 11:17:35 -0800 (PST)
-Received: (nullmailer pid 26358 invoked by uid 1000);
-        Tue, 14 Feb 2023 19:17:34 -0000
-Date:   Tue, 14 Feb 2023 13:17:34 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Shradha Todi <shradha.t@samsung.com>
-Cc:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
-        krzysztof.kozlowski+dt@linaro.org, alim.akhtar@samsung.com,
-        jingoohan1@gmail.com, Sergey.Semin@baikalelectronics.ru,
-        lukas.bulwahn@gmail.com, hongxing.zhu@nxp.com, tglx@linutronix.de,
-        m.szyprowski@samsung.com, jh80.chung@samsung.co,
-        pankaj.dubey@samsung.com, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/16] dt-bindings: PCI: Add phy-names as required
- property
-Message-ID: <20230214191734.GA23567-robh@kernel.org>
-References: <20230214121333.1837-1-shradha.t@samsung.com>
- <CGME20230214121444epcas5p16c5f7665fc9dee78cd427d976114e4f1@epcas5p1.samsung.com>
- <20230214121333.1837-11-shradha.t@samsung.com>
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fNrKKIEifKOtj0ZTyaBn9IXYDH+TgIsaibPuySrCl9A=;
+        b=xlf1qC0Za+r0wLMVUrBqbKOaaphG051RlYrvhRvzXdgPKHtlPPHdAnYQjGfLpXrtee
+         dQSJhzIYfUC2CeiWVqSjpV3Sb166CJ25OkPfoL8wPNtLNfoxpjUzLO77IUcHALCWHrZk
+         asBf/Rg1a0PEQ6sSSTRGEQhJLu2LfZJwXcchjOuueFI5XCW9C0ffKcPyZD/fhd5cWvgs
+         HeHg0u2O0Rogmwg6r+LYLuO0QvWSRRwFZ2GgJWGTMU8ZzwTLQmIIl8D7xP63TNIoUhVG
+         NDSDKijb7MxIGbvHtt8OO7Hwk1sGUoOM9ve5LOvGzxlBB5e7ON2MvUt8oW5FwVEBPtIK
+         8R3Q==
+X-Gm-Message-State: AO0yUKXDkj5l92BqeS0VYPcuANO/TubKZN3Sn67yQBtUKPp1WVea5ygP
+        yRTLK2UGninuyvJTPuiA+3Dr9x2Eoh0XucNffnY=
+X-Google-Smtp-Source: AK7set+QEu8eiJsyukUuGBuGdN9zcxcewEe6LC4u/BLo8BbI5vnU+nA6liH5QBGNw9h0R3QU0+C7QBqtx8QqSrU52pI=
+X-Received: by 2002:a17:907:11dd:b0:8af:3e28:acc with SMTP id
+ va29-20020a17090711dd00b008af3e280accmr30378ejb.1.1676413078769; Tue, 14 Feb
+ 2023 14:17:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230214121333.1837-11-shradha.t@samsung.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Sender: beatricecarlin64@gmail.com
+Received: by 2002:a17:907:c686:b0:85d:6a6e:66e5 with HTTP; Tue, 14 Feb 2023
+ 14:17:58 -0800 (PST)
+From:   Daryna Olga <olgadaryna957@gmail.com>
+Date:   Tue, 14 Feb 2023 14:17:58 -0800
+X-Google-Sender-Auth: F7_j6BBFvH0UWQEuObdRpCy0uXo
+Message-ID: <CA+qmXqcM4KmpVD45eLVmJykDGPvEmoFEtX+kJKpQiPOhBGbnmQ@mail.gmail.com>
+Subject: Daryna Olga from Ukraine
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_FILL_THIS_FORM_SHORT,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:636 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5032]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [beatricecarlin64[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [beatricecarlin64[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  1.0 FREEMAIL_REPLY From and body contain different freemails
+        *  0.0 T_FILL_THIS_FORM_SHORT Fill in a short form with personal
+        *      information
+        *  3.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, Feb 14, 2023 at 05:43:27PM +0530, Shradha Todi wrote:
-> To replace devm_of_phy_get with devm_phy_get to get the
-> PHY pointer using non DT version, we need to add phy-names
-> property in DT and make it a required property with const
-> value.
+Hello, My name is Ms. Daryna Olga from Ukraine.
 
-Also an ABI break.
 
-And unnecessary. You don't need a name with a single entry. Pretty sure 
-I fixed that for phy_get at some point.
+I have 100 Kilogrammes of Gold Bars. I plan to negotiate with you, so
+that the Gold Bars will be delivered to you in your country and sell
+it on my behalf and invest with the Funds in your country because I
+want to relocate my late Father's business due to the ongoing war in
+my country Ukraine and visit your country.
 
-Rob
+
+Thank you as I wait to hear from you soon so I can tell you more
+details. God bless you for your care. Contact me through my Private
+Email Address: DarynaOlga@gmx.com
+
+Best Regards
+Daryna Olga from Ukraine.
