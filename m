@@ -2,53 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 112006A01C1
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Feb 2023 05:19:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83A106A01C6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 23 Feb 2023 05:19:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233132AbjBWET3 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 22 Feb 2023 23:19:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34762 "EHLO
+        id S233207AbjBWETd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 22 Feb 2023 23:19:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233141AbjBWETY (ORCPT
+        with ESMTP id S233160AbjBWET1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 22 Feb 2023 23:19:24 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C64AB20546
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Feb 2023 20:19:23 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id e21so10634404oie.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Feb 2023 20:19:23 -0800 (PST)
+        Wed, 22 Feb 2023 23:19:27 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE59D233C5
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Feb 2023 20:19:24 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id bm20so9845036oib.7
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 22 Feb 2023 20:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GdxaKoTsSLP7s69yzl5MFSFO0xh3sG9vl0I5PlfZgA=;
-        b=L060XF2JHZaQo/1P9bDtUd8szWmjr+L/uu10po6C3Ua07A2E7XF/eEXkrmN0dfZdOo
-         0FxisqRxwwIziSvejSkdpt9UkptXsd/Qd4N4ao7M//pLLYku0cmWc/ZcW+SGDgeTZWqb
-         AvjeS+TeIFADd355oAcF3IZSZjbHrOpJ93XquBrMxMNjbdsKldcsExLUNM3AxRutY/hf
-         dL0X6BBkARzjfqIvJMpK8W+T4/vMM0wRoEzwPrePDop5l0OEwbMMaRb3BvFC7RpwQqbE
-         LbNXcocFOCQeYawAXnpu3nF0gysdvp0ifnrIHWbww+D21oxHFj6QOeBlOnK/kXX2+4ZS
-         4WQA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IcCd3vpoejQdfwvIfOQ2Jg2oCrU0dnx1mOfM11k2TzI=;
+        b=F9wI5KlMTe/BEEQO5M/zKWG4jAflIoi38nLPCLamqhJ0jNei+O6zAZ4Oj1WNutKdyl
+         Ofe08F5zIWmEC6MO+8X4OegtrW2r1uoYQS5o9DCs68B8+rP6AgjcBm6+v1M30gHPNKVX
+         Kkdp+jL2gZ1iqYA6ewi30+4yA7TryMQK6dsmi8Gd2iskss5WK1nNXn9vVsQ8IxkS7UMr
+         /+Ca3DswRA3IM0O0vaPdJWc6a/g9Ff/n3XYAy6rReldP1aLIZpLzIisFi/zjlzXSN2y8
+         sbQ48PgIH/MF4Ge4JYRT0O7B/JEbe4bKhdhfKebEc7nJBNYckqMg/7ldU23gtJeA8V+X
+         z9Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5GdxaKoTsSLP7s69yzl5MFSFO0xh3sG9vl0I5PlfZgA=;
-        b=GYj3Sa10in4T1c1mMWrBmdNC4/BjnPkTkJi2aK7RqlicOujHC4XkV4g+zsUTsHhg2T
-         Se9EJw+AFc8ABeHr35MUioc4Gh6HNan3tY7vXPCtq1VNSmIX6NHWc+lRlDMY0uwDmit1
-         l9eeCaXaqkp8eJQykqfdysniXK3t73/IL1301eO7YDk92bEgPFJqiaKATKQC2x1T2BoU
-         QAEKV20dEOgoA4W2m1GIv4csGZgtJREugw8pZh6g3GMzCQQ9oLjJ6D6CFI8wCy0dcanF
-         Kveh63P4QzyWcc0qSRby12bsUJ2Gu4W4k1BPrpeytq18idSJsriCl2uMoqXnblTPxgTb
-         1OVw==
-X-Gm-Message-State: AO0yUKXLG6QxJHKr+nxvTk9t12ReEps5N7q4YwUIQtbVdQ644vdYKlUh
-        d+cCwCWdDlv/IXUhva6fsOb54Q==
-X-Google-Smtp-Source: AK7set9p9xq+PeGY4ZcGiASMF4xWg2W2iFsNpHOOC0FeFFPXBpHnPphw3bmxQC/4XgnC2+KvvrxH9A==
-X-Received: by 2002:a05:6808:246:b0:383:ce81:c055 with SMTP id m6-20020a056808024600b00383ce81c055mr1645916oie.47.1677125963121;
-        Wed, 22 Feb 2023 20:19:23 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IcCd3vpoejQdfwvIfOQ2Jg2oCrU0dnx1mOfM11k2TzI=;
+        b=WNTjOj4uEYpK0X6/FWYwJ5LlOX0nxmPcgnHnvlUpKX4cif50siaRIgp/XNuQD0fnPJ
+         ALY1Jkv2NpEl+xVo4iKG9dgbOUbsXS9l8ihAq6JkeQRCwyXg0RcfJTxAyaaZQkHUIX2w
+         6BAesrdUCkBc9lFf8xzrUyKq+D2Phf47ZADM54G9Eiv80CVEOpbGf2/DuxufQfmXGWTK
+         mHOgvn53WJzpPpgMLmsFMJtf7TKFvCWNItTlzfYdM9T4dtpGiAF4b9YEHbzkWLsoCdQy
+         ENxfAWQGG7vwq45ZDRe81dS2NF54LJVY6Qdfl8O3XUfjia1pItmAbR4vRNac5TewbGKq
+         FdBQ==
+X-Gm-Message-State: AO0yUKU8Bwf0w0FrRK97NxqByf5kqfbGYiSXHHPJTmY1zxWfQv0vHP45
+        J9KvFecyIG2zPFKj7xvpPevNUA==
+X-Google-Smtp-Source: AK7set/1ctLTEpn8I5qA5/FzI7I5/vT6StSdeWDQkfItGtvr51V+83lBXqtnt5G1g7nxHpqtaJAMeA==
+X-Received: by 2002:aca:f0d:0:b0:35a:d192:9a53 with SMTP id 13-20020aca0f0d000000b0035ad1929a53mr4075351oip.41.1677125964154;
+        Wed, 22 Feb 2023 20:19:24 -0800 (PST)
 Received: from localhost ([136.49.140.41])
-        by smtp.gmail.com with ESMTPSA id n4-20020acaef04000000b00383c7709f7esm1758178oih.21.2023.02.22.20.19.22
+        by smtp.gmail.com with ESMTPSA id n4-20020acaef04000000b00383c7709f7esm1758188oih.21.2023.02.22.20.19.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Feb 2023 20:19:22 -0800 (PST)
+        Wed, 22 Feb 2023 20:19:23 -0800 (PST)
 From:   Sam Protsenko <semen.protsenko@linaro.org>
 To:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -63,98 +64,217 @@ Cc:     Tomasz Figa <tomasz.figa@gmail.com>,
         Stephen Boyd <sboyd@kernel.org>,
         linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 0/6] clk: samsung: Add PM support for ARM64 Exynos chips
-Date:   Wed, 22 Feb 2023 22:19:32 -0600
-Message-Id: <20230223041938.22732-1-semen.protsenko@linaro.org>
+Subject: [PATCH v3 1/6] clk: samsung: Don't pass reg_base to samsung_clk_register_pll()
+Date:   Wed, 22 Feb 2023 22:19:33 -0600
+Message-Id: <20230223041938.22732-2-semen.protsenko@linaro.org>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230223041938.22732-1-semen.protsenko@linaro.org>
+References: <20230223041938.22732-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-In order to prepare for PM enablement in clk-exynos850, common PM code
-was extracted from clk-exynos5433 to clk-exynos-arm64. Also some related
-cleanups were done prior to that. More specifically:
+Base address can be derived from context structure. Remove `base'
+argument from samsung_clk_register_pll() and use `ctx->reg_base'
+instead, as it's done in other clock registering functions.
 
-  - patches #1..5: cleanups
-  - patch #6: PM code extraction
+No functional change.
 
-During the extraction of the exynos5433_cmu_probe() content to
-exynos_arm64_register_cmu_pm() some code was reworked a bit, and also
-split into smaller functions. In particular:
-
-  - cmu_data structure now contains a pointer to ctx, which is now
-    allocated in samsung_clk_init()
-  - cmu_data structure initialization was moved into separate function
-  - code for configuring gate clocks was added (optional)
-
-Which in turn resulted in somehow modified code of probe function:
-
-  Original
-  --------
-
-    ...
-    devm_platform_ioremap_resource(...);
-    samsung_clk_init(...);
-    exynos_arm64_cmu_prepare_pm(...);
-    exynos_arm64_enable_bus_clk(...);
-    platform_set_drvdata(...);
-    ...
-
-  Modified
-  --------
-
-    ...
-    platform_set_drvdata(...);
-    exynos_arm64_cmu_prepare_pm(...);
-    exynos_arm64_enable_bus_clk(...);
-    exynos_arm64_init_clocks(...);
-    devm_platform_ioremap_resource(...);
-    samsung_clk_init(...);
-    ...
-
-That shouldn't really change the logic or mode of operation. It was
-preliminary tested on Exynos850 based board, with some extra patches on
-top of this series (will be submitted later).
-
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+---
 Changes in v3:
-  - Rebased on the most recent soc/for-next tree
-  - Added A-b tags from Marek
-  - Added Marek's authorship to clk-exynos-arm64.c
+  - Rebased on top of latest soc/for-next tree
+  - Added Marek's Acked-by tag
 
 Changes in v2:
-  - Rebased all patches on top of the latest soc/for-next tree
-  - Added Tested-by tag from Marek
-  - Addressed comments from the review
+  - Rebased on top of latest soc/for-next tree
 
-Sam Protsenko (6):
-  clk: samsung: Don't pass reg_base to samsung_clk_register_pll()
-  clk: samsung: Remove np argument from samsung_clk_init()
-  clk: samsung: Set dev in samsung_clk_init()
-  clk: samsung: Extract clocks registration to common function
-  clk: samsung: Extract parent clock enabling to common function
-  clk: samsung: exynos5433: Extract PM support to common ARM64 layer
+ drivers/clk/samsung/clk-exynos4.c    |  4 ++--
+ drivers/clk/samsung/clk-exynos5250.c |  3 +--
+ drivers/clk/samsung/clk-exynos5420.c |  3 +--
+ drivers/clk/samsung/clk-exynos5433.c |  4 ++--
+ drivers/clk/samsung/clk-pll.c        | 11 +++++------
+ drivers/clk/samsung/clk-s3c64xx.c    |  2 +-
+ drivers/clk/samsung/clk-s5pv210.c    |  4 ++--
+ drivers/clk/samsung/clk.c            |  3 +--
+ drivers/clk/samsung/clk.h            |  2 +-
+ 9 files changed, 16 insertions(+), 20 deletions(-)
 
- drivers/clk/samsung/clk-exynos-arm64.c   | 220 +++++++++++++++++++++--
- drivers/clk/samsung/clk-exynos-arm64.h   |   3 +
- drivers/clk/samsung/clk-exynos4.c        |   6 +-
- drivers/clk/samsung/clk-exynos4412-isp.c |   3 +-
- drivers/clk/samsung/clk-exynos5250.c     |   5 +-
- drivers/clk/samsung/clk-exynos5420.c     |   5 +-
- drivers/clk/samsung/clk-exynos5433.c     | 157 +---------------
- drivers/clk/samsung/clk-pll.c            |  11 +-
- drivers/clk/samsung/clk-s3c64xx.c        |   4 +-
- drivers/clk/samsung/clk-s5pv210.c        |   6 +-
- drivers/clk/samsung/clk.c                |  64 ++++---
- drivers/clk/samsung/clk.h                |  10 +-
- 12 files changed, 276 insertions(+), 218 deletions(-)
-
+diff --git a/drivers/clk/samsung/clk-exynos4.c b/drivers/clk/samsung/clk-exynos4.c
+index 22009cb53428..244f74f31746 100644
+--- a/drivers/clk/samsung/clk-exynos4.c
++++ b/drivers/clk/samsung/clk-exynos4.c
+@@ -1276,7 +1276,7 @@ static void __init exynos4_clk_init(struct device_node *np,
+ 							exynos4210_vpll_rates;
+ 
+ 		samsung_clk_register_pll(ctx, exynos4210_plls,
+-					ARRAY_SIZE(exynos4210_plls), reg_base);
++					ARRAY_SIZE(exynos4210_plls));
+ 	} else {
+ 		if (clk_hw_get_rate(hws[CLK_FIN_PLL]) == 24000000) {
+ 			exynos4x12_plls[apll].rate_table =
+@@ -1288,7 +1288,7 @@ static void __init exynos4_clk_init(struct device_node *np,
+ 		}
+ 
+ 		samsung_clk_register_pll(ctx, exynos4x12_plls,
+-					ARRAY_SIZE(exynos4x12_plls), reg_base);
++					ARRAY_SIZE(exynos4x12_plls));
+ 	}
+ 
+ 	samsung_clk_register_fixed_rate(ctx, exynos4_fixed_rate_clks,
+diff --git a/drivers/clk/samsung/clk-exynos5250.c b/drivers/clk/samsung/clk-exynos5250.c
+index 113df773ee44..69862ab6dc52 100644
+--- a/drivers/clk/samsung/clk-exynos5250.c
++++ b/drivers/clk/samsung/clk-exynos5250.c
+@@ -815,8 +815,7 @@ static void __init exynos5250_clk_init(struct device_node *np)
+ 		exynos5250_plls[vpll].rate_table =  vpll_24mhz_tbl;
+ 
+ 	samsung_clk_register_pll(ctx, exynos5250_plls,
+-			ARRAY_SIZE(exynos5250_plls),
+-			reg_base);
++			ARRAY_SIZE(exynos5250_plls));
+ 	samsung_clk_register_fixed_rate(ctx, exynos5250_fixed_rate_clks,
+ 			ARRAY_SIZE(exynos5250_fixed_rate_clks));
+ 	samsung_clk_register_fixed_factor(ctx, exynos5250_fixed_factor_clks,
+diff --git a/drivers/clk/samsung/clk-exynos5420.c b/drivers/clk/samsung/clk-exynos5420.c
+index caad74dee297..df9e93d6adf2 100644
+--- a/drivers/clk/samsung/clk-exynos5420.c
++++ b/drivers/clk/samsung/clk-exynos5420.c
+@@ -1606,8 +1606,7 @@ static void __init exynos5x_clk_init(struct device_node *np,
+ 	else
+ 		exynos5x_plls[bpll].rate_table = exynos5422_bpll_rate_table;
+ 
+-	samsung_clk_register_pll(ctx, exynos5x_plls, ARRAY_SIZE(exynos5x_plls),
+-					reg_base);
++	samsung_clk_register_pll(ctx, exynos5x_plls, ARRAY_SIZE(exynos5x_plls));
+ 	samsung_clk_register_fixed_rate(ctx, exynos5x_fixed_rate_clks,
+ 			ARRAY_SIZE(exynos5x_fixed_rate_clks));
+ 	samsung_clk_register_fixed_factor(ctx, exynos5x_fixed_factor_clks,
+diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
+index f9daae20f393..eb72bf2aaee8 100644
+--- a/drivers/clk/samsung/clk-exynos5433.c
++++ b/drivers/clk/samsung/clk-exynos5433.c
+@@ -5610,8 +5610,8 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 
+ 	if (info->pll_clks)
+-		samsung_clk_register_pll(ctx, info->pll_clks, info->nr_pll_clks,
+-					 reg_base);
++		samsung_clk_register_pll(ctx, info->pll_clks,
++					 info->nr_pll_clks);
+ 	if (info->mux_clks)
+ 		samsung_clk_register_mux(ctx, info->mux_clks,
+ 					 info->nr_mux_clks);
+diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
+index df7812371d70..5ceac4c25c1c 100644
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -1259,8 +1259,7 @@ static const struct clk_ops samsung_pll2650xx_clk_min_ops = {
+ };
+ 
+ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+-				const struct samsung_pll_clock *pll_clk,
+-				void __iomem *base)
++				const struct samsung_pll_clock *pll_clk)
+ {
+ 	struct samsung_clk_pll *pll;
+ 	struct clk_init_data init;
+@@ -1395,8 +1394,8 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 
+ 	pll->hw.init = &init;
+ 	pll->type = pll_clk->type;
+-	pll->lock_reg = base + pll_clk->lock_offset;
+-	pll->con_reg = base + pll_clk->con_offset;
++	pll->lock_reg = ctx->reg_base + pll_clk->lock_offset;
++	pll->con_reg = ctx->reg_base + pll_clk->con_offset;
+ 
+ 	ret = clk_hw_register(ctx->dev, &pll->hw);
+ 	if (ret) {
+@@ -1412,10 +1411,10 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 
+ void __init samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 			const struct samsung_pll_clock *pll_list,
+-			unsigned int nr_pll, void __iomem *base)
++			unsigned int nr_pll)
+ {
+ 	int cnt;
+ 
+ 	for (cnt = 0; cnt < nr_pll; cnt++)
+-		_samsung_clk_register_pll(ctx, &pll_list[cnt], base);
++		_samsung_clk_register_pll(ctx, &pll_list[cnt]);
+ }
+diff --git a/drivers/clk/samsung/clk-s3c64xx.c b/drivers/clk/samsung/clk-s3c64xx.c
+index d6b432a26d63..d582bac68bb7 100644
+--- a/drivers/clk/samsung/clk-s3c64xx.c
++++ b/drivers/clk/samsung/clk-s3c64xx.c
+@@ -414,7 +414,7 @@ void __init s3c64xx_clk_init(struct device_node *np, unsigned long xtal_f,
+ 
+ 	/* Register PLLs. */
+ 	samsung_clk_register_pll(ctx, s3c64xx_pll_clks,
+-				ARRAY_SIZE(s3c64xx_pll_clks), reg_base);
++				ARRAY_SIZE(s3c64xx_pll_clks));
+ 
+ 	/* Register common internal clocks. */
+ 	samsung_clk_register_fixed_rate(ctx, s3c64xx_fixed_rate_clks,
+diff --git a/drivers/clk/samsung/clk-s5pv210.c b/drivers/clk/samsung/clk-s5pv210.c
+index 4425186bdcab..b91d20994bf5 100644
+--- a/drivers/clk/samsung/clk-s5pv210.c
++++ b/drivers/clk/samsung/clk-s5pv210.c
+@@ -753,7 +753,7 @@ static void __init __s5pv210_clk_init(struct device_node *np,
+ 		samsung_clk_register_fixed_rate(ctx, s5p6442_frate_clks,
+ 			ARRAY_SIZE(s5p6442_frate_clks));
+ 		samsung_clk_register_pll(ctx, s5p6442_pll_clks,
+-			ARRAY_SIZE(s5p6442_pll_clks), reg_base);
++			ARRAY_SIZE(s5p6442_pll_clks));
+ 		samsung_clk_register_mux(ctx, s5p6442_mux_clks,
+ 				ARRAY_SIZE(s5p6442_mux_clks));
+ 		samsung_clk_register_div(ctx, s5p6442_div_clks,
+@@ -764,7 +764,7 @@ static void __init __s5pv210_clk_init(struct device_node *np,
+ 		samsung_clk_register_fixed_rate(ctx, s5pv210_frate_clks,
+ 			ARRAY_SIZE(s5pv210_frate_clks));
+ 		samsung_clk_register_pll(ctx, s5pv210_pll_clks,
+-			ARRAY_SIZE(s5pv210_pll_clks), reg_base);
++			ARRAY_SIZE(s5pv210_pll_clks));
+ 		samsung_clk_register_mux(ctx, s5pv210_mux_clks,
+ 				ARRAY_SIZE(s5pv210_mux_clks));
+ 		samsung_clk_register_div(ctx, s5pv210_div_clks,
+diff --git a/drivers/clk/samsung/clk.c b/drivers/clk/samsung/clk.c
+index bca4731b14ea..e132d63933c3 100644
+--- a/drivers/clk/samsung/clk.c
++++ b/drivers/clk/samsung/clk.c
+@@ -344,8 +344,7 @@ struct samsung_clk_provider * __init samsung_cmu_register_one(
+ 	ctx = samsung_clk_init(np, reg_base, cmu->nr_clk_ids);
+ 
+ 	if (cmu->pll_clks)
+-		samsung_clk_register_pll(ctx, cmu->pll_clks, cmu->nr_pll_clks,
+-			reg_base);
++		samsung_clk_register_pll(ctx, cmu->pll_clks, cmu->nr_pll_clks);
+ 	if (cmu->mux_clks)
+ 		samsung_clk_register_mux(ctx, cmu->mux_clks,
+ 			cmu->nr_mux_clks);
+diff --git a/drivers/clk/samsung/clk.h b/drivers/clk/samsung/clk.h
+index b46e83a2581f..1b7315063edd 100644
+--- a/drivers/clk/samsung/clk.h
++++ b/drivers/clk/samsung/clk.h
+@@ -373,7 +373,7 @@ void samsung_clk_register_gate(struct samsung_clk_provider *ctx,
+ 			unsigned int nr_clk);
+ void samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 			const struct samsung_pll_clock *pll_list,
+-			unsigned int nr_clk, void __iomem *base);
++			unsigned int nr_clk);
+ void samsung_clk_register_cpu(struct samsung_clk_provider *ctx,
+ 		const struct samsung_cpu_clock *list, unsigned int nr_clk);
+ 
 -- 
 2.39.1
 
