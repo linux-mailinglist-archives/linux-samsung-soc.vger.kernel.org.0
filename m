@@ -2,36 +2,36 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 343656A2D5B
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Feb 2023 04:42:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 259426A2D7F
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Feb 2023 04:43:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjBZDmN (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 25 Feb 2023 22:42:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50948 "EHLO
+        id S229751AbjBZDni (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 25 Feb 2023 22:43:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbjBZDmJ (ORCPT
+        with ESMTP id S229598AbjBZDnd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 25 Feb 2023 22:42:09 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A2614EA5;
-        Sat, 25 Feb 2023 19:42:04 -0800 (PST)
+        Sat, 25 Feb 2023 22:43:33 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E549215146;
+        Sat, 25 Feb 2023 19:43:08 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 56AC4B80B7F;
-        Sun, 26 Feb 2023 03:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E524C433A4;
-        Sun, 26 Feb 2023 03:42:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DDDA060BD4;
+        Sun, 26 Feb 2023 03:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2BCC4339E;
+        Sun, 26 Feb 2023 03:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677382922;
+        s=k20201202; t=1677382987;
         bh=Swp9cal23T3bRtttDRGQ8Yv4EpqIDlMRm6uqrJbkTY4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ifbdSRsi9cvrn/daynrra6hk+vUAgki3709cE6FZguzM5yEsomA3oEVmyqWKnyxZX
-         gcNTK3gakJ/ZXLw725DZYxyi0VgnwwG7myVq2rW+6a2XtirQWxkcC/Wc33T65Z+VV6
-         CraYUtbqOytuHQb/ZjXfbsmc3uSt6MDkjSn0PUbTKDsEUm5/uRB8keb7x0jFGOKFnv
-         jlOYi4h0JICUZw5VeFjhHP6b97YXMEX+/gO1QsyApENK1Ru/I7o1olyoI/mKyN1Cf4
-         5Uu8xaOslvofuMdLBduTK3ariK6BIYnKyOJFwm9cZSvIUl0czJinWKfx13uHf4eBlg
-         zFjtIo1CK06FQ==
+        b=aIySZE2k/gA5qCgOce4zO3FVo2PQr4bz7HmZ1l1jDgPMKa323maT0ySSsmviVD6nB
+         05CERTkYLzwxM+BJBpdxXin7ELZl/3AY9h8DHA+cOPpnTf5vz+2kaW9z5dF6Hzqyk/
+         ItVNz+sN2xz6LxIbTZr1b3R35Y0ojhBwUY7FDSqZDwL2u5naUt4cnRourF/ajOBgWU
+         IXzVg76x67zJQ6cTJ+Dtxr3kYiI5f5CpRMfjTqHLT+VjWulExn01VdAB0QpKh50k8s
+         Fd4u8+Clm5kymAgfCtXb2yXa98IlSojTPIo+w5/fd61rQqGK539SEDw36SD2fGHmAr
+         q1AZ72kjHn9jA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Markuss Broks <markuss.broks@gmail.com>,
@@ -40,12 +40,12 @@ Cc:     Markuss Broks <markuss.broks@gmail.com>,
         krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.2 06/21] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
-Date:   Sat, 25 Feb 2023 22:41:35 -0500
-Message-Id: <20230226034150.771411-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 06/21] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
+Date:   Sat, 25 Feb 2023 22:42:41 -0500
+Message-Id: <20230226034256.771769-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230226034150.771411-1-sashal@kernel.org>
-References: <20230226034150.771411-1-sashal@kernel.org>
+In-Reply-To: <20230226034256.771769-1-sashal@kernel.org>
+References: <20230226034256.771769-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
