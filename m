@@ -2,36 +2,36 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 447676A2DC4
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Feb 2023 04:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2591A6A2DD1
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 26 Feb 2023 04:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbjBZDpx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 25 Feb 2023 22:45:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51680 "EHLO
+        id S230126AbjBZDqd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 25 Feb 2023 22:46:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbjBZDpb (ORCPT
+        with ESMTP id S229802AbjBZDqL (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 25 Feb 2023 22:45:31 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94CB812852;
-        Sat, 25 Feb 2023 19:44:41 -0800 (PST)
+        Sat, 25 Feb 2023 22:46:11 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A1CC14EA5;
+        Sat, 25 Feb 2023 19:45:39 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 46BDF60C03;
-        Sun, 26 Feb 2023 03:44:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9B9C433D2;
-        Sun, 26 Feb 2023 03:44:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C509A60BDE;
+        Sun, 26 Feb 2023 03:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F1FC4339C;
+        Sun, 26 Feb 2023 03:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677383042;
-        bh=QSNTpjZSumIBJf3HpIerNjKg3HarKEJVJPi7CF0/eW0=;
+        s=k20201202; t=1677383052;
+        bh=e7Wi9xAhBC9rRNX2BkeGXxNt0F5/IqirjVvf2P0AfnM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g3RXGc8Uy28+QCd6F7C4ccyzBGwUS3cDxG8KkMrOtFa803XiZDhKedIBwDA3f/bua
-         C7c6NCRNBz/6R6ALy4psjKWcVHcOzEQPD4BBp7FveCgGwixy22umSsyTcBIKhmyLCQ
-         /g9OCpMTZIuy3xGw0lNHigR++wcnzKTGelQfMaPvfjwhQZ5PA7Sruac5R/A9cNaR4Q
-         4QWqotLMSVsvf+RG6rAXe521OvtSOPvtQl2eJQgw/FFTOS8yXOB3HPIiBtPjH4M0+u
-         uJ2TltoD2j7NM6WsBCLMFkV1ofCe6n1BzfS2N9z9uyzrzwlfjoDTvUTCzqI1ngIl1I
-         kdJky5MHFdXbw==
+        b=HrjFVf/MVr9HeDtH/oZDhXcO6e2LrwBpxwdfg+5JOUo5QlDW3gt9O9S8VVE/uFOyt
+         iRcKD6szu2fP870ZrJmvt5kA3vOa5KEiqM1GGuOCnsrAHWedCNJRygefx19m2+Husx
+         eqlScdOTmnmX+ogCLOK/ldE68pyL5izMPD9j7jwszbDovBfLOuxw6kHQZdkIC9gwL3
+         7Z1vD8UW+zhILo/BOmSD2QXqX5RRtOXGNatLSHRucm5671RE85F5JSxIw90Rclp84Y
+         xuOMr/v3Bw187alqINviRNzrnOwYhy914herfaL72ZDyZQM4DaTIw+DWi+hACvN7fh
+         73itxy5R6cA2A==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Markuss Broks <markuss.broks@gmail.com>,
@@ -40,18 +40,18 @@ Cc:     Markuss Broks <markuss.broks@gmail.com>,
         krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 2/6] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
-Date:   Sat, 25 Feb 2023 22:43:54 -0500
-Message-Id: <20230226034359.773806-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 2/5] ARM: dts: exynos: Use Exynos5420 compatible for the MIPI video phy
+Date:   Sat, 25 Feb 2023 22:44:05 -0500
+Message-Id: <20230226034408.774670-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230226034359.773806-1-sashal@kernel.org>
-References: <20230226034359.773806-1-sashal@kernel.org>
+In-Reply-To: <20230226034408.774670-1-sashal@kernel.org>
+References: <20230226034408.774670-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,10 +76,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/exynos5420.dtsi b/arch/arm/boot/dts/exynos5420.dtsi
-index e23e8ffb093fa..4fb4804830afe 100644
+index 83580f076a587..34886535f8477 100644
 --- a/arch/arm/boot/dts/exynos5420.dtsi
 +++ b/arch/arm/boot/dts/exynos5420.dtsi
-@@ -602,7 +602,7 @@ dp_phy: dp-video-phy {
+@@ -605,7 +605,7 @@ dp_phy: dp-video-phy {
  		};
  
  		mipi_phy: mipi-video-phy {
