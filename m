@@ -2,69 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 046FE6A9A36
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 Mar 2023 16:08:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACC0C6A9A4B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 Mar 2023 16:12:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbjCCPIO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 3 Mar 2023 10:08:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50956 "EHLO
+        id S231199AbjCCPMI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 3 Mar 2023 10:12:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231346AbjCCPIN (ORCPT
+        with ESMTP id S229803AbjCCPMH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 3 Mar 2023 10:08:13 -0500
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1ED3149A7
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  3 Mar 2023 07:08:11 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id E82C25C018A;
-        Fri,  3 Mar 2023 10:08:10 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 03 Mar 2023 10:08:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-        :cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1677856090; x=1677942490; bh=AQ
-        vAWBCpKh+OXyoXHEj1+6yBxi/X10+bIJofCu8bNLo=; b=d2URbeiDRmV+cmJyAp
-        XKfMhxrG3lG6/HiWUo+/KEwqdz4bG93R8+ec9ZllE1rUWJ3Lrp3cLQrDbPclTszt
-        2SKK/hH09jsQeN2umGusP5LeTC13NS6+v36DwHyXuYSW1UUulv/jJLorYo81pmWc
-        m4sQoId2A9/sSesKGCATpDWA0xKKRK5MPbx9BZf0WQZPIOspDarhEunsqYBGsA4V
-        6K1wAw3vbFm/y/TMZoxIvADcjfSKrIljB46P6iqMy554fY0D4FgFvtyOA1hvaEeh
-        HIKr8DFlXryoOPeDLsIK4JBd9ix+32Zd6tJ6ZqZIxd9B2b9jvx/N9DYP9VndSEpr
-        rDVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1677856090; x=1677942490; bh=AQvAWBCpKh+OX
-        yoXHEj1+6yBxi/X10+bIJofCu8bNLo=; b=hk6IXWe488hM1XU3LlZnlA32K2l2k
-        BH1RSbkRPQpL0c6o/XSWkvgCib2rr+FSsxbdAgFOdtUzjrHi6dXVFB0l3/YBexQv
-        qglCZ8aog+i9iKDaIhtZ0uxtjUhtjJXE9Kcb0Dnu79P8ihM0wwycgsT/92VbcDQP
-        PtYs84vurHQlsynWswzwZqDZ7YEX7oe1SA905ZL0nIaVGcMVOW+P0Ykdug6JyZhy
-        Vf6SRpsdggi9ncwlrkKxr861qOwQiuy1ZX/Fvgi1+otu+js+DWybQ892Wjl72ZNP
-        iuz6Zty8gmaIkLEDcgUZYcGjoGRuXPdBJhxwQWo7bqtRPey99OWT2XmPw==
-X-ME-Sender: <xms:WQ0CZNE-hpFYnvq9hfVfF8iirCforjAPEOP74cAyT3gVBefg8AANOw>
-    <xme:WQ0CZCWhOgGCaK8DmpvYd-VGbaTE16P5UfIAtBw_6skuJPW4x5utb_ivir44SsPDS
-    rNgOy516Gu-SLALsoo>
-X-ME-Received: <xmr:WQ0CZPIyOs5uHzfjWZoQtiYLhmtLbUXgDS7d7g0PFZXdxrCvVks-sA2jg7NcTj8TQoQqio-R20rlpp_AC1j-nzE1ahstrko>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelledgieejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeetfefffefgkedtfefgledugfdtjeefjedvtddtkeetieffjedvgfehheff
-    hfevudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:WQ0CZDGJiDCa9hNtAuKu_xwxXnZvZ-oQs2Y-z24z05zSecwG0AlgnA>
-    <xmx:WQ0CZDU01IigFpXzTaCZCYub0JSAwWQohvvBrVh5aPGxmahIt5hvOg>
-    <xmx:WQ0CZON0BIF6g-cEboYrmkT2sc62m9s8A6gXPqqal2UQ6NLPkx_kEQ>
-    <xmx:Wg0CZNhLybVzI5RGLDFIyE95XP0m3zlfBobl8LOi26o8c7_frigzWg>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Mar 2023 10:08:08 -0500 (EST)
-Date:   Fri, 3 Mar 2023 16:08:07 +0100
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Jagan Teki <jagan@amarulasolutions.com>
+        Fri, 3 Mar 2023 10:12:07 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B832367E
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  3 Mar 2023 07:12:06 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id v101so2249983ybi.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 03 Mar 2023 07:12:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=amarulasolutions.com; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G+YNWt3/2mwhQtToJ+WhtS+kWhy5QJtkAQP5ui8Wpx0=;
+        b=E7qyvwtQl97lZ/Sq/Xto3u4q+xBQgdgGeuODz5MPGhUkyuH4o4Qt0gmB84bdIh3zw/
+         0Jk5yjUzGhUVNlsCA77YwtHod3OWwPnfxFCWCK1/t+L9cOJmt2P1Lw9o5pxFgvaMrRNY
+         JvVyNKPgWpA0A7bpZNVRQ46O3AlJyvBXvj50M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G+YNWt3/2mwhQtToJ+WhtS+kWhy5QJtkAQP5ui8Wpx0=;
+        b=WI97vynTLjOeWZBmB0t+bjsDY5ZJN/1JlUVZSwiYGcsDk/hC9XIJhWm0qukxcQa5wP
+         J237EqDChzJxjaYY7dIgrQVitt62A4nN3R3InHJllZDZVSgHFznFnyKOzzW+Cz5XeZJR
+         vXV1qLGC4z0BubAgVfKGcPKcKJaaq2f/sds0R2JXHCCcB/VlllHQi8H7mBjnWxGJ+ohe
+         6jw0N5Hnl8ts6X1lMfGvpOel/J6+C5l7QcbC/a9UDRik6jhn8u/OispRT5WAGnp5Dy4V
+         o+dEVGBVa4XkrNg3PqVKx60zEA/T7YuEwNw2dkGXv5h1d8Dsg1lzj9eVvcftLYAyuKQZ
+         wuWw==
+X-Gm-Message-State: AO0yUKXiW8FNtlRyznh8oRUJWdqJh8dSW2I0L9UpUq0c7XN2YvplvxBz
+        weum/6jFgpEC66D4JEMHQzk0EtmdED9JjGa7TaFsHA==
+X-Google-Smtp-Source: AK7set/uu7+i7lmLzXdvVBwrBo2YxMppu1kabgxL75/dmMInh7Y50+ilXQzz4J7CEdbV4A3U6bNnY3M0naC/gJ2u3mE=
+X-Received: by 2002:a05:6902:4c3:b0:a6a:3356:6561 with SMTP id
+ v3-20020a05690204c300b00a6a33566561mr1035058ybs.1.1677856325423; Fri, 03 Mar
+ 2023 07:12:05 -0800 (PST)
+MIME-Version: 1.0
+References: <20230303145138.29233-1-jagan@amarulasolutions.com>
+ <20230303145138.29233-13-jagan@amarulasolutions.com> <20230303150807.4hhpjinuac6uyj3p@houat>
+In-Reply-To: <20230303150807.4hhpjinuac6uyj3p@houat>
+From:   Jagan Teki <jagan@amarulasolutions.com>
+Date:   Fri, 3 Mar 2023 20:41:54 +0530
+Message-ID: <CAMty3ZDCVQyR-Az4Nd+iNUww5ddvtEPRR2Dt0M-=0Nt+who4ow@mail.gmail.com>
+Subject: Re: [PATCH v15 12/16] drm: bridge: Generalize Exynos-DSI driver into
+ a Samsung DSIM bridge
+To:     Maxime Ripard <maxime@cerno.tech>
 Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         Inki Dae <inki.dae@samsung.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
@@ -78,55 +67,34 @@ Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         Matteo Lisi <matteo.lisi@engicam.com>,
         dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
         linux-amarula <linux-amarula@amarulasolutions.com>
-Subject: Re: [PATCH v15 12/16] drm: bridge: Generalize Exynos-DSI driver into
- a Samsung DSIM bridge
-Message-ID: <20230303150807.4hhpjinuac6uyj3p@houat>
-References: <20230303145138.29233-1-jagan@amarulasolutions.com>
- <20230303145138.29233-13-jagan@amarulasolutions.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lyd376o5ks52xdet"
-Content-Disposition: inline
-In-Reply-To: <20230303145138.29233-13-jagan@amarulasolutions.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Fri, Mar 3, 2023 at 8:38=E2=80=AFPM Maxime Ripard <maxime@cerno.tech> wr=
+ote:
+>
+> On Fri, Mar 03, 2023 at 08:21:34PM +0530, Jagan Teki wrote:
+> > +static int samsung_dsim_host_detach(struct mipi_dsi_host *host,
+> > +                                 struct mipi_dsi_device *device)
+> > +{
+> > +     struct samsung_dsim *dsi =3D host_to_dsi(host);
+> > +     const struct samsung_dsim_plat_data *pdata =3D dsi->plat_data;
+> > +
+> > +     if (dsi->out_bridge->funcs->detach)
+> > +             dsi->out_bridge->funcs->detach(dsi->out_bridge);
+>
+> You should never call into the bridge ops directly. If there's an issue
+> in the helpers somewhere else, fix that instead.
 
---lyd376o5ks52xdet
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Agreed, it was added by mistake and it was removed in Exynos. I will fix it=
+.
 
-On Fri, Mar 03, 2023 at 08:21:34PM +0530, Jagan Teki wrote:
-> +static int samsung_dsim_host_detach(struct mipi_dsi_host *host,
-> +				    struct mipi_dsi_device *device)
-> +{
-> +	struct samsung_dsim *dsi = host_to_dsi(host);
-> +	const struct samsung_dsim_plat_data *pdata = dsi->plat_data;
-> +
-> +	if (dsi->out_bridge->funcs->detach)
-> +		dsi->out_bridge->funcs->detach(dsi->out_bridge);
-
-You should never call into the bridge ops directly. If there's an issue
-in the helpers somewhere else, fix that instead.
-
-Maxime
-
---lyd376o5ks52xdet
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZAINVwAKCRDj7w1vZxhR
-xRHKAP9x8Qms3QfdWfBYHyfguem/IEU+Bpet7iyp2d5df7LJmQD8CM6pXlSWcIkt
-6lb7wlxZKEOwCaQX70n6278IFKKgEQk=
-=oyIt
------END PGP SIGNATURE-----
-
---lyd376o5ks52xdet--
+Jagan.
