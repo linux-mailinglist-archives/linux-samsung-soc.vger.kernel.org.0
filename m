@@ -2,178 +2,89 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 192676AB92D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 10:03:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B77336ABBF3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 11:23:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjCFJDZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 04:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38278 "EHLO
+        id S230003AbjCFKXm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 05:23:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjCFJDV (ORCPT
+        with ESMTP id S230300AbjCFKXi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 04:03:21 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9844BB442
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 01:03:19 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id o11-20020a05600c4fcb00b003eb33ea29a8so4717796wmq.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 Mar 2023 01:03:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678093398;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AJHpGiNNnS/iHuhCrLJC3kyZETQwy2cp7ry6pPyZxIQ=;
-        b=hzrwwOjdSHOzylUPLi1JyT0tk4upCyVExNtQamh0nS/rBJwh4KYQ/1Uvs7SCa7hm7d
-         YJ6OzeVIGuCpOxuY0QCGh3tgHIkJ67xL5qp37sVCVoKqQ7K6jLxzWurAmpI4z8jsxT1N
-         lKvRHne/mKFVmokyMoXSMBRmDoOIPHw5UqpNTRkpG/dCZ1BLzyptBqAYLVjSnWICedhE
-         rr+PzCy2PTxMdpb1ZpKr0Xgm0wC3ShJ4U5hRqV6RzF3zGufARNtQlHJsu4wDhR/DddmK
-         KKvo08qYT4lRD69xYqiIzG77MlihQHVIxUPdBa+XJkkX9teUea1H5h3SZZz3B6QFaIz/
-         2bNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678093398;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AJHpGiNNnS/iHuhCrLJC3kyZETQwy2cp7ry6pPyZxIQ=;
-        b=HsYlCtKzNWEbEYavj0o7Id6keS22OjiBcH+cTHDSFYT/IM2Prm3RWIZ/sjP4TGR86j
-         3NZsbnRXtoCaBPXEmObFtWde/nRCVf7U5pNAwbYayzR4lBt1iPElPOXNy4kPUS1QdAlT
-         pW9leEfbHYm2hRKOcuHQODYGlVWkLaHvsMct70hmtZD2/p1slcwU04ZFZk1hvuppwXSD
-         x0NHrIULnJEfn5cW2KuZSURQ3Jj9Qt+Lsw9FgslEYqsdTR2Bk12LGRv/mbZP/lWQXgn3
-         2nDzb95q9kw2eAULld5GupkEpRm3IumMVNPXV11IkhtYF6yfUbo16NKvFyhrs+X/jL4O
-         2esg==
-X-Gm-Message-State: AO0yUKVm0nWLRpRnMqI1MtQ984nYUAppN7FS5dJzRQlhnR0kLVkEkESx
-        Z3kzVabawKcY5psHPfFO2R7IRQ==
-X-Google-Smtp-Source: AK7set87B67sTGmugB4xDggZWu9Lud32vEXYunKTICLonbRHmTLO7JqmrVgjWob32QN9cC5Jy5Nulw==
-X-Received: by 2002:a05:600c:1d24:b0:3da:1f6a:7b36 with SMTP id l36-20020a05600c1d2400b003da1f6a7b36mr8498979wms.0.1678093397987;
-        Mon, 06 Mar 2023 01:03:17 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id p20-20020a05600c205400b003e8dcc67bdesm12966260wmg.30.2023.03.06.01.03.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 01:03:17 -0800 (PST)
-Date:   Mon, 6 Mar 2023 11:03:14 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@samsung.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 6 Mar 2023 05:23:38 -0500
+X-Greylist: delayed 4587 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 06 Mar 2023 02:23:28 PST
+Received: from 18.mo581.mail-out.ovh.net (18.mo581.mail-out.ovh.net [188.165.56.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17647211CA
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 02:23:27 -0800 (PST)
+Received: from director11.ghost.mail-out.ovh.net (unknown [10.109.146.53])
+        by mo581.mail-out.ovh.net (Postfix) with ESMTP id 142E726247
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 09:06:59 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-jbrfz (unknown [10.110.103.233])
+        by director11.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 127281FE8C;
+        Mon,  6 Mar 2023 09:06:56 +0000 (UTC)
+Received: from etezian.org ([37.59.142.101])
+        by ghost-submission-6684bf9d7b-jbrfz with ESMTPSA
+        id 8aX6LTCtBWR9AgAA58LVJg
+        (envelope-from <andi@etezian.org>); Mon, 06 Mar 2023 09:06:56 +0000
+Authentication-Results: garm.ovh; auth=pass (GARM-101G004ac770ce1-db47-4670-b400-4d32ddd5c3e6,
+                    E6EC2E320FFEB7B5CA07697FBFAF7FF511F3A6BF) smtp.auth=andi@etezian.org
+X-OVh-ClientIp: 178.238.173.28
+Date:   Mon, 6 Mar 2023 10:06:56 +0100
+From:   Andi Shyti <andi@etezian.org>
+To:     Jaewon Kim <jaewon02.kim@samsung.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andi Shyti <andi@etezian.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 13/23] interconnect: qcom: sm8550: fix registration
- race
-Message-ID: <ZAWsUrlrOfmmNBy3@linaro.org>
-References: <20230306075651.2449-1-johan+linaro@kernel.org>
- <20230306075651.2449-14-johan+linaro@kernel.org>
+        linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] spi: s3c64xx: add no_cs description
+Message-ID: <ZAWtMIDHGd+nBTA1@intel.intel>
+References: <CGME20230306015413epcas2p371356e4008af6978cdadb5b859d8be2a@epcas2p3.samsung.com>
+ <20230306014239.80570-1-jaewon02.kim@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230306075651.2449-14-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230306014239.80570-1-jaewon02.kim@samsung.com>
+X-Ovh-Tracer-Id: 12480037520701262555
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrvddthedguddvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeetnhguihcuufhhhihtihcuoegrnhguihesvghtvgiiihgrnhdrohhrgheqnecuggftrfgrthhtvghrnhepjefgleegkeeiffejgeevuedvheegleevteevjeduffevvdelhedvfeelheduleeunecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeorghnughisegvthgviihirghnrdhorhhgqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdhsrghmshhunhhgqdhsohgtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkedupdhmohguvgepshhmthhpohhuth
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 23-03-06 08:56:41, Johan Hovold wrote:
-> The current interconnect provider registration interface is inherently
-> racy as nodes are not added until the after adding the provider. This
-> can specifically cause racing DT lookups to fail.
+Hi Jaewon,
+
+On Mon, Mar 06, 2023 at 10:42:39AM +0900, Jaewon Kim wrote:
+> This patch adds missing variable no_cs descriptions.
 > 
-> Switch to using the new API where the provider is not registered until
-> after it has been fully initialised.
-> 
-> Fixes: e6f0d6a30f73 ("interconnect: qcom: Add SM8550 interconnect provider driver")
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+
+Reviewed-by: Andi Shyti <andi@etezian.org>
+
+Thanks,
+Andi
+
 > ---
-
-Any changes since v1 or is it just a resend? 
-
->  drivers/interconnect/qcom/sm8550.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>  include/linux/platform_data/spi-s3c64xx.h | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/interconnect/qcom/sm8550.c b/drivers/interconnect/qcom/sm8550.c
-> index 54fa027ab961..7ab492ca8fe0 100644
-> --- a/drivers/interconnect/qcom/sm8550.c
-> +++ b/drivers/interconnect/qcom/sm8550.c
-> @@ -2197,9 +2197,10 @@ static int qnoc_probe(struct platform_device *pdev)
->  	provider->pre_aggregate = qcom_icc_pre_aggregate;
->  	provider->aggregate = qcom_icc_aggregate;
->  	provider->xlate_extended = qcom_icc_xlate_extended;
-> -	INIT_LIST_HEAD(&provider->nodes);
->  	provider->data = data;
->  
-> +	icc_provider_init(provider);
-> +
->  	qp->dev = &pdev->dev;
->  	qp->bcms = desc->bcms;
->  	qp->num_bcms = desc->num_bcms;
-> @@ -2208,12 +2209,6 @@ static int qnoc_probe(struct platform_device *pdev)
->  	if (IS_ERR(qp->voter))
->  		return PTR_ERR(qp->voter);
->  
-> -	ret = icc_provider_add(provider);
-> -	if (ret) {
-> -		dev_err_probe(&pdev->dev, ret,
-> -			      "error adding interconnect provider\n");
-> -		return ret;
-> -	}
->  
->  	for (i = 0; i < qp->num_bcms; i++)
->  		qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
-> @@ -2227,7 +2222,7 @@ static int qnoc_probe(struct platform_device *pdev)
->  		node = icc_node_create(qnodes[i]->id);
->  		if (IS_ERR(node)) {
->  			ret = PTR_ERR(node);
-> -			goto err;
-> +			goto err_remove_nodes;
->  		}
->  
->  		node->name = qnodes[i]->name;
-> @@ -2241,12 +2236,17 @@ static int qnoc_probe(struct platform_device *pdev)
->  	}
->  	data->num_nodes = num_nodes;
->  
-> +	ret = icc_provider_register(provider);
-> +	if (ret)
-> +		goto err_remove_nodes;
-> +
->  	platform_set_drvdata(pdev, qp);
->  
->  	return 0;
-> -err:
-> +
-> +err_remove_nodes:
->  	icc_nodes_remove(provider);
-> -	icc_provider_del(provider);
-> +
->  	return ret;
->  }
->  
-> @@ -2254,8 +2254,8 @@ static int qnoc_remove(struct platform_device *pdev)
->  {
->  	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
->  
-> +	icc_provider_deregister(&qp->provider);
->  	icc_nodes_remove(&qp->provider);
-> -	icc_provider_del(&qp->provider);
->  
->  	return 0;
->  }
+> diff --git a/include/linux/platform_data/spi-s3c64xx.h b/include/linux/platform_data/spi-s3c64xx.h
+> index 5df1ace6d2c9..3101152ce449 100644
+> --- a/include/linux/platform_data/spi-s3c64xx.h
+> +++ b/include/linux/platform_data/spi-s3c64xx.h
+> @@ -29,6 +29,7 @@ struct s3c64xx_spi_csinfo {
+>   * struct s3c64xx_spi_info - SPI Controller defining structure
+>   * @src_clk_nr: Clock source index for the CLK_CFG[SPI_CLKSEL] field.
+>   * @num_cs: Number of CS this controller emulates.
+> + * @no_cs: Used when CS line is not connected.
+>   * @cfg_gpio: Configure pins for this SPI controller.
+>   */
+>  struct s3c64xx_spi_info {
 > -- 
-> 2.39.2
-> 
+> 2.17.1
