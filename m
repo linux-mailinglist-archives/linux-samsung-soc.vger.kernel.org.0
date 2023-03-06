@@ -2,54 +2,58 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B77336ABBF3
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 11:23:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76CFE6AB958
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 10:09:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbjCFKXm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 05:23:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54550 "EHLO
+        id S229738AbjCFJJw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 04:09:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjCFKXi (ORCPT
+        with ESMTP id S229661AbjCFJJp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 05:23:38 -0500
-X-Greylist: delayed 4587 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 06 Mar 2023 02:23:28 PST
-Received: from 18.mo581.mail-out.ovh.net (18.mo581.mail-out.ovh.net [188.165.56.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17647211CA
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 02:23:27 -0800 (PST)
-Received: from director11.ghost.mail-out.ovh.net (unknown [10.109.146.53])
-        by mo581.mail-out.ovh.net (Postfix) with ESMTP id 142E726247
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 09:06:59 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-jbrfz (unknown [10.110.103.233])
-        by director11.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 127281FE8C;
-        Mon,  6 Mar 2023 09:06:56 +0000 (UTC)
-Received: from etezian.org ([37.59.142.101])
-        by ghost-submission-6684bf9d7b-jbrfz with ESMTPSA
-        id 8aX6LTCtBWR9AgAA58LVJg
-        (envelope-from <andi@etezian.org>); Mon, 06 Mar 2023 09:06:56 +0000
-Authentication-Results: garm.ovh; auth=pass (GARM-101G004ac770ce1-db47-4670-b400-4d32ddd5c3e6,
-                    E6EC2E320FFEB7B5CA07697FBFAF7FF511F3A6BF) smtp.auth=andi@etezian.org
-X-OVh-ClientIp: 178.238.173.28
-Date:   Mon, 6 Mar 2023 10:06:56 +0100
-From:   Andi Shyti <andi@etezian.org>
-To:     Jaewon Kim <jaewon02.kim@samsung.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andi Shyti <andi@etezian.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] spi: s3c64xx: add no_cs description
-Message-ID: <ZAWtMIDHGd+nBTA1@intel.intel>
-References: <CGME20230306015413epcas2p371356e4008af6978cdadb5b859d8be2a@epcas2p3.samsung.com>
- <20230306014239.80570-1-jaewon02.kim@samsung.com>
+        Mon, 6 Mar 2023 04:09:45 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165F135B9
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 01:09:43 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZ6qV-0006Z0-Ai; Mon, 06 Mar 2023 10:09:27 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZ6qR-002D7W-QZ; Mon, 06 Mar 2023 10:09:23 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZ6qR-002coG-5Y; Mon, 06 Mar 2023 10:09:23 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, kernel@pengutronix.de,
+        linux-kernel@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        linux-watchdog@vger.kernel.org
+Subject: [PATCH 0/3] watchdog: s3c2410_wdt: Simplify using dev_err_probe()
+Date:   Mon,  6 Mar 2023 10:09:16 +0100
+Message-Id: <20230306090919.2206871-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <891023d7-9510-445e-9053-ad5c0398d350@roeck-us.net>
+References: <891023d7-9510-445e-9053-ad5c0398d350@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230306014239.80570-1-jaewon02.kim@samsung.com>
-X-Ovh-Tracer-Id: 12480037520701262555
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrvddthedguddvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeetnhguihcuufhhhihtihcuoegrnhguihesvghtvgiiihgrnhdrohhrgheqnecuggftrfgrthhtvghrnhepjefgleegkeeiffejgeevuedvheegleevteevjeduffevvdelhedvfeelheduleeunecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeorghnughisegvthgviihirghnrdhorhhgqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdhsrghmshhunhhgqdhsohgtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkedupdhmohguvgepshhmthhpohhuth
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4134; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=dbOnuKo6PAvTY72AG+BV5c/SL7l2SajkGuyceprD1LY=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBkBa2viWCqV5t+UroQTcp7HhFtUP28LNcAXyyhx wa2CaN4jq+JATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCZAWtrwAKCRDB/BR4rcrs CUpTB/9qB6PfHLNjPnGdZajL8QSJuFMGNV9X1m15eEDJGlTuaCuPb/dvzC9HNyWqodYQV0q1aJk 31wGYV1yZ9h6Le+C7HEr0F1xBbQgce05MyfmDYjJ6t3Q4Gj6LRXWmZ7ABoR0UwJ9Ya46Mwhz7Ay 2ZynYidbKjdql0paRK6TbUkUanbJp4fs45dn4DHUpXIX7xtQzS6jP6Sp+20hHmVEO1HQYo1fK9M ET6eWXgY9B0XrLVnZlm+IQmL55hOGouo1IpIYfR/DCe+pJSsSLsW2ItkZ+OnoAY9JBL+XS+lm77 sHM8nxgxMtOCoVVzatR6x0QOgdpcaeLg3LeG5r5TkQ7Hxi87
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,33 +62,94 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Jaewon,
+Hello,
 
-On Mon, Mar 06, 2023 at 10:42:39AM +0900, Jaewon Kim wrote:
-> This patch adds missing variable no_cs descriptions.
+On Sun, Mar 05, 2023 at 06:31:08AM -0800, Guenter Roeck wrote:
+> On Sun, Mar 05, 2023 at 12:15:00PM +0100, Uwe Kleine-König wrote:
+> > On Sat, Mar 04, 2023 at 02:10:47PM -0800, Guenter Roeck wrote:
+> > > The primary reason to call dev_err_probe() is that the error may be
+> > > -EPROBE_DEFER, in which case the error message is suppressed.
+> > > That is not the case for those two functions; they never return
+> > > -EPROBE_DEFER. Calling dev_err_probe() would give the false impression
+> > > that the functions _might_ return -EPROBE_DEFER.
+> > 
+> > That is subjective. In my book dev_err_probe() handling -EPROBE_DEFER is
+> > only one aspect. Another is that using it allows to have return and error
+> > message in a single line and also that if already other exit paths use
+> > it to get a consistent style for the emitted messages. Having said that
+> > *I* wouldn't assume that the previous call might return -EPROBE_DEFER
+> > just because dev_err_probe() is used.
+> > 
+> > Having said that, I also don't think there is much harm if someone
+> > thinks that a given function (here devm_request_irq()) might return
+> > -EPROBE_DEFER.
+> > 
 > 
-> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+> I guess we'll have to agree to disagree.
 
-Reviewed-by: Andi Shyti <andi@etezian.org>
+I don't agree to disagree. In my eyes you weight the corresponding facts
+in an irrational way. To have some code changes to talk about, I created
+this series (on top of Guenter's patches to this driver from Saturday
+[1]).
 
-Thanks,
-Andi
+Patch 1 is necessary to effectively make use of dev_err_probe(). I admit
+this annoys me a bit as it shows that dev_err_probe() isn't a plug-in
+replacement, but given that it reduces the binary size a bit, it has at
+least positive usefulness. (But maybe this is subjective? *shrug*)
 
-> ---
->  include/linux/platform_data/spi-s3c64xx.h | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/include/linux/platform_data/spi-s3c64xx.h b/include/linux/platform_data/spi-s3c64xx.h
-> index 5df1ace6d2c9..3101152ce449 100644
-> --- a/include/linux/platform_data/spi-s3c64xx.h
-> +++ b/include/linux/platform_data/spi-s3c64xx.h
-> @@ -29,6 +29,7 @@ struct s3c64xx_spi_csinfo {
->   * struct s3c64xx_spi_info - SPI Controller defining structure
->   * @src_clk_nr: Clock source index for the CLK_CFG[SPI_CLKSEL] field.
->   * @num_cs: Number of CS this controller emulates.
-> + * @no_cs: Used when CS line is not connected.
->   * @cfg_gpio: Configure pins for this SPI controller.
->   */
->  struct s3c64xx_spi_info {
-> -- 
-> 2.17.1
+Patch 2 unifies the format of the error messages between the error paths
+that make use of dev_err_probe() and those that (only) use dev_err().
+IMHO this has mixed value, but still positive in sum. While having a
+consistent error log style is nice, having to manually use
+dev_err_probe()'s style is a bit ugly. Together with a) the messages get
+more useful mentioning the error code and b) the downside is removed by
+patch 3, I still like it. (And if you don't because of b), please
+consider squashing patches 2 and 3 together. In fact I only created
+patch 2 to make the upsides for patch 3 more obvious and I don't mind a
+squash.)
+
+Patch 3 does the actual conversion to dev_err_probe() for all error
+paths in .probe(). The (unarguable?) upsides are:
+
+ - Reduced line count
+ - Reduced binary size (and the reduction mentioned in the commit log
+   doesn't even account for the shorter format strings!)
+
+The fact where Guenter doesn't agree to me (and Krzysztof) is:
+
+ - You cannot any more defer from the usage of dev_err_probe() vs.
+   dev_err() if the function that failed before might return
+   -EPROBE_DEFER.
+
+In my eyes this is irrelevant because there is no objective reason to
+have to know that. If the function might return -EPROBE_DEFER or not
+shouldn't (and doesn't!) have an influence on how the driver should
+behave in the error case. Also the ability to defer that property is
+very unreliable. It's not even reliable in drivers/watchdog, look at how
+imx2_wdt handles devm_clk_get() or keembay_wdt handles clk_get_rate()
+returning zero.
+
+So using dev_err_probe() has two big benefits in contrast to a dubious
+and unreliable connection between -EPROBE_DEFER and dev_err_probe().
+
+Best regards
+Uwe
+
+[1] https://lore.kernel.org/linux-watchdog/20230304165653.2179835-1-linux@roeck-us.net
+
+Uwe Kleine-König (3):
+  watchdog: s3c2410_wdt: Fold s3c2410_get_wdt_drv_data() into only
+    caller
+  watchdog: s3c2410_wdt: Unify error logging format in probe function
+  watchdog: s3c2410_wdt: Simplify using dev_err_probe()
+
+ drivers/watchdog/s3c2410_wdt.c | 93 ++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 56 deletions(-)
+
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+prerequisite-patch-id: 775bdd863307268e1ef16250bf2f40862637b453
+prerequisite-patch-id: 924ddfbe583e97e7c9a46c2460ecbc88c29ee319
+-- 
+2.39.1
+
