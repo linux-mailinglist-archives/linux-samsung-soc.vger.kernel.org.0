@@ -2,107 +2,59 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFDAC6ACA9F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 18:35:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A9336ACB30
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 18:48:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230459AbjCFRfi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 12:35:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43542 "EHLO
+        id S229534AbjCFRsx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 12:48:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230381AbjCFRff (ORCPT
+        with ESMTP id S229826AbjCFRsu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:35:35 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9386A1F0;
-        Mon,  6 Mar 2023 09:35:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 27F39B8105F;
-        Mon,  6 Mar 2023 17:33:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4725C433EF;
-        Mon,  6 Mar 2023 17:32:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1678123997;
-        bh=oCRV/O5q3R94VDA67eta1+j60LSWpLxWhmxqrzbP2FY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tzMRw/rwKmj16OdXkTBYsEPVgFatAfUN3LJ33ZBFVzmWPChI0zegxz8a6lrSnpVNM
-         a5WWAe2HioVWJtIPc/ttoZWVvhbbsyNHioBhNIQsfUp41fNu7Bsn12CrCVulbshfh3
-         xaVbonUnnhiN36hPDyYZX/yUWExunxxxGCl97t7m1BbXS8j1Pcd3ba2pmytwNFlcuo
-         A4JumTBBP3xhvGiEXHq6D5gvgXZpJRCL48CblfxVMHFohHME3UQpdMcaz7KQ0rX6Bi
-         zb4ahU89uF20dlnC+V+KW34/XFSen5uQSXFbDSnNjd2h/1S6Rp+UFmOkj5NVaXulLq
-         RxBBn71VZ8v1A==
-Date:   Mon, 6 Mar 2023 17:32:49 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        jic23@kernel.org, tudor.ambarus@microchip.com, pratyush@kernel.org,
-        Sanju.Mehta@amd.com, chin-ting_kuo@aspeedtech.com, clg@kaod.org,
-        kdasu.kdev@gmail.com, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, eajames@linux.ibm.com, olteanv@gmail.com,
-        han.xu@nxp.com, john.garry@huawei.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, narmstrong@baylibre.com,
-        khilman@baylibre.com, matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, bjorn.andersson@linaro.org, heiko@sntech.de,
-        krzysztof.kozlowski@linaro.org, andi@etezian.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        wens@csie.org, jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, james.schulman@cirrus.com,
-        david.rhodes@cirrus.com, tanureal@opensource.cirrus.com,
-        rf@opensource.cirrus.com, perex@perex.cz, tiwai@suse.com,
-        npiggin@gmail.com, christophe.leroy@csgroup.eu, mpe@ellerman.id.au,
-        oss@buserror.net, windhl@126.com, yangyingliang@huawei.com,
-        william.zhang@broadcom.com, kursad.oney@broadcom.com,
-        jonas.gorski@gmail.com, anand.gore@broadcom.com, rafal@milecki.pl,
-        git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
+        Mon, 6 Mar 2023 12:48:50 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A1D3A86E
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 09:48:10 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZEvl-0003LN-91; Mon, 06 Mar 2023 18:47:25 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZEvj-002IlX-L7; Mon, 06 Mar 2023 18:47:23 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pZEvi-002lWe-SK; Mon, 06 Mar 2023 18:47:22 +0100
+Date:   Mon, 6 Mar 2023 18:47:22 +0100
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Guenter Roeck <linux@roeck-us.net>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linuxppc-dev@lists.ozlabs.org,
-        amitrkcian2002@gmail.com, Dhruva Gole <d-gole@ti.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>
-Subject: Re: [PATCH V5 01/15] spi: Replace all spi->chip_select and
- spi->cs_gpiod references with function call
-Message-ID: <479f5b1e-6ac1-47c7-9f5b-4080e0c77c16@sirena.org.uk>
-References: <20230306172109.595464-1-amit.kumar-mahapatra@amd.com>
- <20230306172109.595464-2-amit.kumar-mahapatra@amd.com>
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        kernel@pengutronix.de, Wim Van Sebroeck <wim@linux-watchdog.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-watchdog@vger.kernel.org
+Subject: Re: [PATCH 1/3] watchdog: s3c2410_wdt: Fold
+ s3c2410_get_wdt_drv_data() into only caller
+Message-ID: <20230306174722.rl2fws2p7pseo465@pengutronix.de>
+References: <891023d7-9510-445e-9053-ad5c0398d350@roeck-us.net>
+ <20230306090919.2206871-1-u.kleine-koenig@pengutronix.de>
+ <20230306090919.2206871-2-u.kleine-koenig@pengutronix.de>
+ <312e57b8-d47f-1269-a463-d2a4ef19b212@roeck-us.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="1RpCo94WkIg3XG9u"
+        protocol="application/pgp-signature"; boundary="p2tswwbb25t54ljm"
 Content-Disposition: inline
-In-Reply-To: <20230306172109.595464-2-amit.kumar-mahapatra@amd.com>
-X-Cookie: teamwork, n.:
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <312e57b8-d47f-1269-a463-d2a4ef19b212@roeck-us.net>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -111,38 +63,126 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 
---1RpCo94WkIg3XG9u
-Content-Type: text/plain; charset=us-ascii
+--p2tswwbb25t54ljm
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 06, 2023 at 10:50:55PM +0530, Amit Kumar Mahapatra wrote:
-> Supporting multi-cs in spi drivers would require the chip_select & cs_gpiod
-> members of struct spi_device to be an array. But changing the type of these
-> members to array would break the spi driver functionality. To make the
-> transition smoother introduced four new APIs to get/set the
-> spi->chip_select & spi->cs_gpiod and replaced all spi->chip_select and
-> spi->cs_gpiod references with get or set API calls.
-> While adding multi-cs support in further patches the chip_select & cs_gpiod
-> members of the spi_device structure would be converted to arrays & the
-> "idx" parameter of the APIs would be used as array index i.e.,
-> spi->chip_select[idx] & spi->cs_gpiod[idx] respectively.
+On Mon, Mar 06, 2023 at 09:17:23AM -0800, Guenter Roeck wrote:
+> On 3/6/23 01:09, Uwe Kleine-K=F6nig wrote:
+> > s3c2410_get_wdt_drv_data() is only called by s3c2410wdt_probe(), so the
+> > implementation of the former can move to the latter.
+> >=20
+> > scripts/bloat-o-meter reports for this change (on an ARCH=3Darm
+> > allmodconfig build):
+> >=20
+> > 	add/remove: 1/1 grow/shrink: 0/2 up/down: 4/-129 (-125)
+> >=20
+>=20
+> The reason for separating functions in this case wasn't that the separate=
+ function
+> would be called several times. It was to improve code readability. If any=
+thing,
+> I would argue that it might sense to split the already lengthy probe func=
+tion
+> further instead of combining it.
 
-This doesn't apply against current code, there was a rework of the
-mpc512x-psc driver.  Please check and resend.
+Agreed. For dev_err_probe() to work the following would be alternatively
+possible:
 
---1RpCo94WkIg3XG9u
+diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
+index 58b262ca4e88..564919717761 100644
+--- a/drivers/watchdog/s3c2410_wdt.c
++++ b/drivers/watchdog/s3c2410_wdt.c
+@@ -579,8 +579,8 @@ static inline unsigned int s3c2410wdt_get_bootstatus(st=
+ruct s3c2410_wdt *wdt)
+ 	return 0;
+ }
+=20
+-static inline const struct s3c2410_wdt_variant *
+-s3c2410_get_wdt_drv_data(struct platform_device *pdev)
++static inline int
++s3c2410_get_wdt_drv_data(struct platform_device *pdev, struct s3c2410_wdt =
+*wdt)
+ {
+ 	const struct s3c2410_wdt_variant *variant;
+ 	struct device *dev =3D &pdev->dev;
+@@ -603,24 +603,26 @@ s3c2410_get_wdt_drv_data(struct platform_device *pdev)
+ 					   "samsung,cluster-index", &index);
+ 		if (err) {
+ 			dev_err(dev, "failed to get cluster index\n");
+-			return NULL;
++			return -EINVAL;
+ 		}
+=20
+ 		switch (index) {
+ 		case 0:
+-			return variant;
++			break;
+ 		case 1:
+-			return (variant =3D=3D &drv_data_exynos850_cl0) ?
++			variant =3D (variant =3D=3D &drv_data_exynos850_cl0) ?
+ 				&drv_data_exynos850_cl1 :
+ 				&drv_data_exynosautov9_cl1;
++			break;
+ 		default:
+ 			dev_err(dev, "wrong cluster index: %u\n", index);
+-			return NULL;
++			return -EINVAL;
+ 		}
+ 	}
+ #endif
++	wdt->drv_data =3D variant;
+=20
+-	return variant;
++	return 0;
+ }
+=20
+ static void s3c2410wdt_wdt_disable_action(void *data)
+@@ -644,9 +646,9 @@ static int s3c2410wdt_probe(struct platform_device *pde=
+v)
+ 	spin_lock_init(&wdt->lock);
+ 	wdt->wdt_device =3D s3c2410_wdd;
+=20
+-	wdt->drv_data =3D s3c2410_get_wdt_drv_data(pdev);
+-	if (!wdt->drv_data)
+-		return -EINVAL;
++	ret =3D s3c2410_get_wdt_drv_data(pdev, wdt);
++	if (ret)
++		return ret;
+=20
+ 	if (wdt->drv_data->quirks & QUIRKS_HAVE_PMUREG) {
+ 		wdt->pmureg =3D syscon_regmap_lookup_by_phandle(dev->of_node,
+
+I didn't check if it's the same as for my initial patch #1, but for an
+allmodconfig ARCH=3Darm build this also has a nice bloatometer output:
+
+	add/remove: 1/1 grow/shrink: 0/1 up/down: 4/-104 (-100)
+
+This would allow to make use of dev_err_probe() in
+s3c2410_get_wdt_drv_data() and still maintain the split into two
+functions.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--p2tswwbb25t54ljm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQGI8AACgkQJNaLcl1U
-h9CIEwf/aZyH3WWgY7CUVh9W2WlSP5NnJGsbwRuFubTTP3ObZz0pCsJEwP8mAwdf
-wpWZ2t/nCcibXSVknqIW+r7FPrfknmY5nJ9jal+WTp/hkYYJeVEebOg9nMUX+Nwh
-fycQjw6AcKBn6mbRNf2c9ZVSKOpTnKNHFCdGSAfVWdMclSNADYerewze+WELEn9D
-6YoQTAPR4B1PBZUkwpAympwP8+SR1wFKzN2dmCVFQSWgYJ834b4wWLD9eZFMrjEN
-gf4+dIPQkjxzNMIErUCqVkaf/wgPkCAIjb2p1cWKU2b3IOG6di49DMsuImObYUAJ
-8cVDQ8KP5PGcINenovKCKWd1awBmtw==
-=ppxH
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmQGJycACgkQwfwUeK3K
+7Alr9gf/TQZveDmZyuBBis7A0wGdjBGMgJFriU0A0pmrcViPf5mABkH/xvhJNC+f
+tvAj/fZu4qibRDYRV7tCXf0JpDOY8kYHRyMhcWGkb2rnSKNBTgCXDqHHzPCCmuMb
+n0VmhTvaJ7ju7HY6s6CO4sBmffEeqp2dhC+UIoPudAzNLNRWb9p4b/Daf7EXDs3P
+7trtsKYa1y35Cle92KMPwq+i/ap0SdvimXFqHtZR4SzNYkPL2WGfYYE1tmJk+FmT
+47rDzkDHg6FObcdhVtdGSHxPND9mBdZ9aDh9zoXr4fKNROUYPn8K57Bq4fHwZt1W
+HwYZSmx/1jXZhkgYwdIKGYaJ17RLww==
+=9P0q
 -----END PGP SIGNATURE-----
 
---1RpCo94WkIg3XG9u--
+--p2tswwbb25t54ljm--
