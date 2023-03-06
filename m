@@ -2,90 +2,157 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5DA6AB64B
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 07:26:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E65C36AB760
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 08:57:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229624AbjCFG0m (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 01:26:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42694 "EHLO
+        id S229816AbjCFH5l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 02:57:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbjCFG0l (ORCPT
+        with ESMTP id S229723AbjCFH5j (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 01:26:41 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D5A1EB78
-        for <linux-samsung-soc@vger.kernel.org>; Sun,  5 Mar 2023 22:26:40 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id u9so34092502edd.2
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 05 Mar 2023 22:26:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678083999;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h2EVWs3pTg/fWY1PZtABlXR6f2sNu/d27mccEdhWh7U=;
-        b=c2B/lU6CRWGnrc5QdLUOzoB5rfafH2gCgrW5YIvUTBtsNX+/RsnYuGL/hOKA/oONey
-         xORE5C+oDdsUeHmt847wbHn51SnBdX0iOX6t3dGOSeZi9cjmGJMKKGMvKXKqFnnyLqgl
-         w4/rygv7dmvuUfGaQZd84YvLI9zRQ7Mcp3gKJAPHa+441ISzHQAT2rVhS43PHwIqWDRK
-         hFuXIhyGO8iBJxJUng8GxFFpqLJk3ZUE3FNLvHKYgbBSx1UokpPhzhKL4hl3Q1TjBtPs
-         Z03ycgEiOVyEnxzlSjOgVDEnjcFYqRWxXfRsxUky5ESdJDfQJ8Gts1UxdV5eciZ94fdQ
-         pBEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678083999;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h2EVWs3pTg/fWY1PZtABlXR6f2sNu/d27mccEdhWh7U=;
-        b=o1PYTj+u/gs6loZ43+Fp5z87Muf5SnIqqOkqmffUhVd5gxiuEEcrXMSmZ+kDAmbl5o
-         9GcxUdZ6LNNF45s9ZC8emrrHbPH1j/9vYxz9cUm180KwCUMl96gNO4vlps0iTLzK8Zct
-         W635KCGytXgR2tx5CFp53bus/KuMNtOUSWBgHxKX45qj7EDJ383N9V0uJh6H5Fm8wUt4
-         GTpOwFcb47Q/x79NwwIDctb2tZJkBZMxMpGnSbV75W2Vx5Sqye6N6wsZIZUb1k1WAnE1
-         BfZTnhyGu92VeQStDmDfQmCO3A55/fyMFOA0Ny0694HRpIXanphXrRohXF03yx2/fb6l
-         MXoA==
-X-Gm-Message-State: AO0yUKWAThcJkYH7M6Le5KXvuFRh7LUyyP0WuRn0gJvxQGYZzHBbp/ZO
-        OqWYZgQGPu2Ek52+L3jAx2T3+w==
-X-Google-Smtp-Source: AK7set8n0rli9ksDBadVCoR2Qgpw1GH9WCld0Ejgjbj5d0mwffklxq/8uct/NXu8bhNw4ZCqxqvpUw==
-X-Received: by 2002:a17:907:7da6:b0:888:b764:54e5 with SMTP id oz38-20020a1709077da600b00888b76454e5mr12048360ejc.71.1678083998999;
-        Sun, 05 Mar 2023 22:26:38 -0800 (PST)
-Received: from ?IPV6:2a02:810d:15c0:828:d85d:5a4b:9830:fcfe? ([2a02:810d:15c0:828:d85d:5a4b:9830:fcfe])
-        by smtp.gmail.com with ESMTPSA id t30-20020a50ab5e000000b004ad601533a3sm4629001edc.55.2023.03.05.22.26.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Mar 2023 22:26:38 -0800 (PST)
-Message-ID: <422b00ec-1ef4-95e3-db49-672da29e6e24@linaro.org>
-Date:   Mon, 6 Mar 2023 07:26:37 +0100
+        Mon, 6 Mar 2023 02:57:39 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A281B54F;
+        Sun,  5 Mar 2023 23:57:38 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9124960C27;
+        Mon,  6 Mar 2023 07:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53437C433AA;
+        Mon,  6 Mar 2023 07:57:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678089456;
+        bh=K26aMBWxlHn/kqrsAOXmsd/Ax8lLFUacKHubBz29pvM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Efw6f3Kh0QPT+wsdf45HNRQCHIpsbD+hBozYkazPWAwjdiGi57Eqyf2PlKmDY4pWd
+         8XYxmeMHJLIjYpjJ6VijeWe2kAGeq6TRazi2S9OqAnR85Pi9odMMBlzxEnFaHVhpHp
+         Lwm7IL49t06WcfqK5O32KhdpcKjNHdAYrHeJnZaxA8VV73xHfQgI9RRJLINNhURMHR
+         e0PvAO4HWvgN4UNgszNaitLEqbXfZrQQflD5xdV+X0nKsS5I40yqO12MURfZxSB5q3
+         P8WdS6SKYHHs8BIFgkSbcEnTuSA5EAgPPEPlULkEDa+SdV9z9cpYAgNN/Tsl80wEq7
+         LWpJT6uYRRauw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pZ5ja-0000hr-WB; Mon, 06 Mar 2023 08:58:15 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     "Shawn Guo" <shawnguo@kernel.org>,
+        "Sascha Hauer" <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        "Fabio Estevam" <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Sylwester Nawrocki" <s.nawrocki@samsung.com>,
+        =?UTF-8?q?Artur=20=C5=9Awigo=C5=84?= <a.swigon@samsung.com>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Alim Akhtar" <alim.akhtar@samsung.com>,
+        "Thierry Reding" <thierry.reding@gmail.com>,
+        "Jonathan Hunter" <jonathanh@nvidia.com>, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Dan Carpenter <error27@gmail.com>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH v2 00/23] interconnect: fix racy provider registration
+Date:   Mon,  6 Mar 2023 08:56:28 +0100
+Message-Id: <20230306075651.2449-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] spi: s3c64xx: add no_cs description
-To:     Jaewon Kim <jaewon02.kim@samsung.com>,
-        Andi Shyti <andi@etezian.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <CGME20230306015413epcas2p371356e4008af6978cdadb5b859d8be2a@epcas2p3.samsung.com>
- <20230306014239.80570-1-jaewon02.kim@samsung.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230306014239.80570-1-jaewon02.kim@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 06/03/2023 02:42, Jaewon Kim wrote:
-> This patch adds missing variable no_cs descriptions.
-> 
-> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+The current interconnect provider interface is inherently racy as
+providers are expected to be registered before being fully initialised.
+
+This can specifically cause racing DT lookups to fail as I recently
+noticed when the Qualcomm cpufreq driver failed to probe:
+
+	of_icc_xlate_onecell: invalid index 0
+        cpu cpu0: error -EINVAL: error finding src node
+        cpu cpu0: dev_pm_opp_of_find_icc_paths: Unable to get path0: -22
+        qcom-cpufreq-hw: probe of 18591000.cpufreq failed with error -22
+
+This only happens very rarely, but the bug is easily reproduced by
+increasing the race window by adding an msleep() after registering
+osm-l3 interconnect provider.
+
+Note that the Qualcomm cpufreq driver is especially susceptible to this
+race as the interconnect path is looked up from the CPU nodes so that
+driver core does not guarantee the probe order even when device links
+are enabled (which they not always are).
+
+This series adds a new interconnect provider registration API which is
+used to fix up the interconnect drivers before removing the old racy
+API.
+
+Included are also a number of fixes for other bugs found while preparing
+the series.
+
+Johan
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Changes in v2
+ - icc_node_destroy() can be called with an arbitrary node id so add the
+   missing sanity check to handle potential attempts to destroy a
+   non-existing node (patch 01/23). Reported by Dan Carpenter and the
+   kernel test robot:
 
-Best regards,
-Krzysztof
+   https://lore.kernel.org/oe-kbuild/202302222118.nGz1F0oJ-lkp@intel.com/
+
+
+Johan Hovold (23):
+  interconnect: fix mem leak when freeing nodes
+  interconnect: fix icc_provider_del() error handling
+  interconnect: fix provider registration API
+  interconnect: imx: fix registration race
+  interconnect: qcom: osm-l3: fix registration race
+  interconnect: qcom: rpm: fix probe child-node error handling
+  interconnect: qcom: rpm: fix probe PM domain error handling
+  interconnect: qcom: rpm: fix registration race
+  interconnect: qcom: rpmh: fix probe child-node error handling
+  interconnect: qcom: rpmh: fix registration race
+  interconnect: qcom: msm8974: fix registration race
+  interconnect: qcom: sm8450: fix registration race
+  interconnect: qcom: sm8550: fix registration race
+  interconnect: exynos: fix node leak in probe PM QoS error path
+  interconnect: exynos: fix registration race
+  interconnect: exynos: drop redundant link destroy
+  memory: tegra: fix interconnect registration race
+  memory: tegra124-emc: fix interconnect registration race
+  memory: tegra20-emc: fix interconnect registration race
+  memory: tegra30-emc: fix interconnect registration race
+  interconnect: drop racy registration API
+  interconnect: drop unused icc_get() interface
+  interconnect: drop unused icc_link_destroy() interface
+
+ drivers/interconnect/core.c           | 152 +++++---------------------
+ drivers/interconnect/imx/imx.c        |  20 ++--
+ drivers/interconnect/qcom/icc-rpm.c   |  33 +++---
+ drivers/interconnect/qcom/icc-rpmh.c  |  30 +++--
+ drivers/interconnect/qcom/msm8974.c   |  20 ++--
+ drivers/interconnect/qcom/osm-l3.c    |  14 +--
+ drivers/interconnect/qcom/sm8450.c    |  22 ++--
+ drivers/interconnect/qcom/sm8550.c    |  22 ++--
+ drivers/interconnect/samsung/exynos.c |  30 ++---
+ drivers/memory/tegra/mc.c             |  16 ++-
+ drivers/memory/tegra/tegra124-emc.c   |  12 +-
+ drivers/memory/tegra/tegra20-emc.c    |  12 +-
+ drivers/memory/tegra/tegra30-emc.c    |  12 +-
+ include/linux/interconnect-provider.h |  19 ++--
+ include/linux/interconnect.h          |   8 --
+ 15 files changed, 157 insertions(+), 265 deletions(-)
+
+-- 
+2.39.2
 
