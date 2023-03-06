@@ -2,79 +2,76 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFFBC6ABE73
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 12:39:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B1D16ABE6F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 12:39:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbjCFLjf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 06:39:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58772 "EHLO
+        id S230126AbjCFLjd (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 06:39:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbjCFLj0 (ORCPT
+        with ESMTP id S230372AbjCFLj2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 06:39:26 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C63629164
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 03:39:22 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id i34so37182892eda.7
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 Mar 2023 03:39:22 -0800 (PST)
+        Mon, 6 Mar 2023 06:39:28 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F06F2941B
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 03:39:24 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id x3so37091794edb.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 Mar 2023 03:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678102761;
+        d=linaro.org; s=google; t=1678102763;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uOwpkhY0VMzGqwYvvdIIY+PDDP+eSachjPL5/6vvxwc=;
-        b=uHGGjWaLwwtd1qnco3tAffq4+y4t/BBWgWyqTg8tohKtzY+MKYR41mDbatfLhGkPWJ
-         X2Z/pRrbMHS95UNiZegynAI1GEndlXPgaMaoQI9CPO7Ftln7OReiHnVjuVt8OG3XTNOx
-         X8N+dGEHyMc9/ESqPkkUyUhkF7Xx50SAjCZJmu9sAUnsLVr/N2KvXjXXhlF7T/g9VZir
-         fUR9a4YLJldfvwQfz6zIvd+kyOpHoWJq6hC5pKMtpeJErjlP/FWNH/w/bQFjg66S+dRg
-         27DWdFsHJ/7cF0JDJq8/7KP/1XRyyxTYxfeMztO7dZx8R3RIPPu+qXStvgKgtpieKodf
-         jwhQ==
+        bh=HzWGqAjLpHlD5u9jCAHG+a2PbEWqmZpag0JMmVH0IbQ=;
+        b=i8hXqbKI/U0F9gdOtmUtiK/N5On7BfXK0q3TX/+n0ooQTDCLoftkzAu+ZYJIlGWAXZ
+         LA3DhgOeIkx/4Ne0fDXzrCk3MsXepbwqhyB0Y3ZIqkZa6BBKZUvY5fqTna0G99v8YYYL
+         Xr/Tb22i5suo7j8jSYlfSRzxZoqDQtO1Y2I9JlG696MYLI2H0fWjthTNAcoKMlJRZn85
+         y0chlJ2hRuT+ytvlxtIPb5xH8R29AzUW+xYYtlkjELG4RarfpzqxH0pLlRN9IFGHcW5h
+         iK/6bEv/oKK3se0hGd7eJQivdgZSuqwrE6ndvg+/y4Cw6t+dPgEPRbNpmwSJmvi6+YQC
+         dGgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678102761;
+        d=1e100.net; s=20210112; t=1678102763;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uOwpkhY0VMzGqwYvvdIIY+PDDP+eSachjPL5/6vvxwc=;
-        b=etQNMGsTvkzJn+Wqq/p5/NMzl31k1SV4FQ8tafV7RgeOpcvbsSGXPj13cKXQ3jAPa+
-         wPm3/fj7DwVLDzQKJG+vt0wT9jLLhHZAdOo14gcYF/Lc8KGmOGadhu2eDOUtF2tophRs
-         1mhd3Eg1sk01fvkPpN+QbCg3cKIG2IBHmumBEdPzqRAdzyeXYCp4oyvKN+h8Mu2P4YLt
-         UOLUhE9sIyrsh4zjd4ygyl3ghVJgHZU24h48QWAurVYJCkkzTXwx4dvHqDNNKtVn0b+8
-         W1nPaSu255s4sRiV803GQe8R5rvqokeiap3CBROZpLRvnuKXKRxPPUOKOejXElQ+XJ+d
-         J+jA==
-X-Gm-Message-State: AO0yUKWjPo5XV+n4zBuEVJA6R1k6D1kUYeAQBsb0szCuZAFjjZ1goRGu
-        Q8xbEhCdYdJAImQuo1azj3ljBw==
-X-Google-Smtp-Source: AK7set+2d8kZqPdKpXeq5pwga95WBNECs47qUaTLd/DZCBqEalqOpBwXh1rtQBno91qttDxdOmfW9A==
-X-Received: by 2002:a17:906:dac9:b0:8d9:8f8f:d542 with SMTP id xi9-20020a170906dac900b008d98f8fd542mr11381523ejb.32.1678102761141;
-        Mon, 06 Mar 2023 03:39:21 -0800 (PST)
+        bh=HzWGqAjLpHlD5u9jCAHG+a2PbEWqmZpag0JMmVH0IbQ=;
+        b=tGf1nUoTUEJ0nSDjA3m6ERMGFNws283LcCpFLdOJOtUwiDx/WFAciFxp4R767VdKfU
+         6Uw3PzIB8AeXmZVL32anTA60g2E+2KSRdspMabCOKBrrDTNvWEGxKR/wYhtbwg+fzceh
+         RYGrklKEtODYpGOzXoRVPgNr7gaxDqwE9p7N5ryco32pXKggh29RpsHdFA6BtZzbvs1d
+         RMaLRGXQS/WLlHGFEsDxGrMx2dA/bdDtBhKQeZ/1t67jm3Z+69PfpTOCFaSj+ytH1qDB
+         qQ4xc0wSdiwy+lmrjE2Pgx/Rj0GyyphorYeYaD2rOGvxLPJa0uJvPIgURh9IZT743BV1
+         Xqyw==
+X-Gm-Message-State: AO0yUKVEOeF2rX5rvgrn8Rcm9oLHggHI3ubjpMYT+Bje+FIShgKy8Q60
+        ll8CzZidMWthvSnB9BKD5VwypuCacBTi2OUdqGM=
+X-Google-Smtp-Source: AK7set/fIAy5r7sbONvLExQKUO7U8NmLEBitXQ6a20ZCy6KaPV7F32QpdGzQxjxOW3bBkjExKFtH6Q==
+X-Received: by 2002:a17:906:dac9:b0:8aa:c090:a9ef with SMTP id xi9-20020a170906dac900b008aac090a9efmr13185992ejb.55.1678102762984;
+        Mon, 06 Mar 2023 03:39:22 -0800 (PST)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:d85d:5a4b:9830:fcfe])
-        by smtp.gmail.com with ESMTPSA id ch10-20020a170906c2ca00b008cf8c6f5c43sm4411936ejb.83.2023.03.06.03.39.19
+        by smtp.gmail.com with ESMTPSA id ch10-20020a170906c2ca00b008cf8c6f5c43sm4411936ejb.83.2023.03.06.03.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 03:39:20 -0800 (PST)
+        Mon, 06 Mar 2023 03:39:22 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     devicetree@vger.kernel.org, Fabio Estevam <festevam@gmail.com>,
-        Randy Li <ayaka@soulik.info>, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        - <patches@opensource.cirrus.com>,
-        Adrien Grassein <adrien.grassein@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org,
+To:     linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-samsung-soc@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        alsa-devel@alsa-project.org
-Cc:     stable@vger.kernel.org
-Subject: Re: (subset) [PATCH 3/3] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
-Date:   Mon,  6 Mar 2023 12:39:09 +0100
-Message-Id: <167810274095.82312.7597082551301229104.b4-ty@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Henrik Grimler <henrik@grimler.se>, phone-devel@vger.kernel.org,
+        replicant@osuosl.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>
+Subject: Re: (subset) [PATCH 6/8] ARM: dts: exynos: move DP and MIPI phys to PMU node in Exynos5420
+Date:   Mon,  6 Mar 2023 12:39:10 +0100
+Message-Id: <167810274096.82312.8759303246779473962.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230217150627.779764-3-krzysztof.kozlowski@linaro.org>
-References: <20230217150627.779764-1-krzysztof.kozlowski@linaro.org> <20230217150627.779764-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230127194057.186458-7-krzysztof.kozlowski@linaro.org>
+References: <20230127194057.186458-1-krzysztof.kozlowski@linaro.org> <20230127194057.186458-7-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -88,16 +85,20 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Fri, 17 Feb 2023 16:06:27 +0100, Krzysztof Kozlowski wrote:
-> The WM8960 Linux driver expects the clock to be named "mclk".  Otherwise
-> the clock will be ignored and not prepared/enabled by the driver.
+On Fri, 27 Jan 2023 20:40:55 +0100, Krzysztof Kozlowski wrote:
+> The DisplayPort and MIPI phys are actually part of the Power Management
+> Unit system controller.  They do not have their own address space, thus
+> keeping the nodes under soc causes warnings:
 > 
+>   exynos5420-smdk5420.dtb: soc: dp-video-phy: {'compatible': ['samsung,exynos5420-dp-video-phy'],
+>     'samsung,pmu-syscon': [[11]], '#phy-cells': [[0]], 'phandle': [[16]]} should not be valid under {'type': 'object'}
 > 
+> [...]
 
 Applied, thanks!
 
-[3/3] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
-      https://git.kernel.org/krzk/linux/c/6c950c20da38debf1ed531e0b972bd8b53d1c11f
+[6/8] ARM: dts: exynos: move DP and MIPI phys to PMU node in Exynos5420
+      https://git.kernel.org/krzk/linux/c/972b567075845a55d525f1ed5d7cd7b6d524afdc
 
 Best regards,
 -- 
