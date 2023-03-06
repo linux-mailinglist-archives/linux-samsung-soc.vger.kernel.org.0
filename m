@@ -2,101 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6242A6AC3D0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 15:49:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C46176AC4BC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  6 Mar 2023 16:23:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbjCFOtl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 6 Mar 2023 09:49:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53014 "EHLO
+        id S230499AbjCFPXk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 6 Mar 2023 10:23:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbjCFOtk (ORCPT
+        with ESMTP id S230074AbjCFPXd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 6 Mar 2023 09:49:40 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD382ED78
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 06:49:17 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id da10so39699367edb.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 Mar 2023 06:49:17 -0800 (PST)
+        Mon, 6 Mar 2023 10:23:33 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E6125298;
+        Mon,  6 Mar 2023 07:23:32 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id m25-20020a05683026d900b006941a2838caso5503270otu.7;
+        Mon, 06 Mar 2023 07:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678114155;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bFVOxxJWmcBBAsxjQVvaTc6NhO3PyYN3/IVM+H/3TK8=;
-        b=mCym/pE56yl4VukDNNE4rO0NjAXcvF2OTUAhc4snUaI+4AP/j2l03QrlYqvvI6QSNJ
-         p1BeqQ0alynnVREfBRWWNArPfkxOZcV1P0nuKd4QFJh2Zp4qm2Rk65d0R/bbLl1hF41f
-         n+3JDWK4OOPzaeSFNogvFnC9ZCto7j4lMiF3LuhUwwtxjFbaefROGZcPvxkkT2R3vZbm
-         xnZ6DTN4UmkiGB9MMI45EIYUe/j1IYSMUP9vajnRMiTa7ZQKHrdRHKBIOQrTUvjkL1vg
-         6PMmzRY+N9CoMrLzizdprfVRLRrtPSAG1ilJy8G52J9bXJvXTN7JHrMtSqZvb6M8Wf8S
-         4g9Q==
+        d=gmail.com; s=20210112; t=1678116212;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wIo7law34HfY6O9bjn8QcvJtNO/No3tVP5fg4B1s6Ic=;
+        b=YQmhAjarE1n39m9RLGR1qCPGNlFTubp3RDMD2WXFzrFxdm5OnAbVjBAjB8G4BDvvCj
+         GAk4XPTs/FGFuXAlELj+6VPk3m4846f0SkiKHksvnZx/f7XhrftT6lO1ZFKQnh4aWmMV
+         wpfezGIKC/kaQqMEYzXaeJQci65RtQ62P+SzruZVy430beB5Egn9uSKI2Qb865ztZ8B1
+         eGJnCB4Uv8StXiFydLXi/ystl3Use26a8c7y5GSu1KfWP7RMwoiTskGhCn7cRVlYsBTC
+         v5Hlf6dBej/Sju59miWC5Go1uL9nHarR75G4inNGatK1kqWVCVACdMNnXUjIOvwTkw3R
+         qLVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678114155;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bFVOxxJWmcBBAsxjQVvaTc6NhO3PyYN3/IVM+H/3TK8=;
-        b=AKNB4zSou6CotJi7Rhmi92LJF2dvU37uWAlWVVuHMWK6Yo7L+W8lJiQTGEHHz17I4E
-         brCLiPwkSzEvygCBBfBy0gpttFA1U4uFWlMfTYcrRO83YqeExP6kh+PymxNIShIj8G7f
-         P5euimU0K+eS9jz4n2GxgvFGei0PzjpG6xkVPr4/I2+ZWRrTLOGMwSWLwSr+qm/OxDdN
-         zAjlqWl+ROrJtV187FhedwMIv5zFOmQLvlOuM1RllIiJvIYPVgq1NlEveJAWJ31jxPPW
-         ZwSRdCUA5sSyD8OcgEkBJGr4w3pm5LPwx9gXAOxgTGErVfa6Ez31io6TnM6pwzd/BttP
-         OJtA==
-X-Gm-Message-State: AO0yUKWjm878SGsApzmCqKZSRf9k9ueX+7fxId1TRoHnCroq1ajrTuHh
-        Sba90TyTwotLtmEqv2hb0qAcyA==
-X-Google-Smtp-Source: AK7set8Y+Txg75rlmOiw6y13eDoYl8DExz4HfdO9c4x195v+eyQ7yohO5Z/vQkJkjEHlsfuOL4JKzA==
-X-Received: by 2002:a17:906:384a:b0:8f0:143d:ee28 with SMTP id w10-20020a170906384a00b008f0143dee28mr11127962ejc.16.1678114155460;
-        Mon, 06 Mar 2023 06:49:15 -0800 (PST)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:c1e7:5006:98ac:f57])
-        by smtp.gmail.com with ESMTPSA id j22-20020a1709066dd600b008e6bd130b14sm4706760ejt.64.2023.03.06.06.49.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 06:49:14 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Sam Protsenko <semen.protsenko@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-clk@vger.kernel.org, Sumit Semwal <sumit.semwal@linaro.org>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Virag <virag.david003@gmail.com>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 3/6] clk: samsung: Set dev in samsung_clk_init()
-Date:   Mon,  6 Mar 2023 15:49:09 +0100
-Message-Id: <167811414390.14916.14779906355644398581.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230223041938.22732-4-semen.protsenko@linaro.org>
-References: <20230223041938.22732-1-semen.protsenko@linaro.org> <20230223041938.22732-4-semen.protsenko@linaro.org>
+        d=1e100.net; s=20210112; t=1678116212;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wIo7law34HfY6O9bjn8QcvJtNO/No3tVP5fg4B1s6Ic=;
+        b=ItKWs/KP40JuOl9TAFot5x1Mx+0PBc2QbDlOLENCA4ATwBUSaYtzu2cqkclnwoSQq8
+         D+Xnq0G1KBz9Zr+HU6SDOBrO1xh8Wik7U+3KFFzR2wQgrXwdUWq1W/2L7lZdGCqz+0iY
+         n0QyRs/gWtJBsoJDqnSRC3p4yMjpKL4dpLJXL3pDwzns4jeIsAJBM1wU1IWUFjLngdus
+         MOwoqJpAdHZn4jDcZ608aANrttxQaHaJWb0tZsEoNpbJScMBNyDOIaf0s6oRTE3XuWW5
+         Syp2/Rb6d1ye2MqF2Zk1G56F23UNU15Q6BiLI0MZ2U2Zi9qOmyMxQOOO4kaiAwRn8fs4
+         t0wA==
+X-Gm-Message-State: AO0yUKUlRtxcTUwaOfS9cANvj7MdekI5LseKmheCErmk7wMlZ6Xc40ci
+        gSzssvz/+gqDW+KeNLquzE4=
+X-Google-Smtp-Source: AK7set9HWeC/FhWEiCysPFIXgx4Hg9gRTKDSKv1cX9GnP3Wsf5j3hr6K9084pka/TwFpRJV9fcn8VQ==
+X-Received: by 2002:a9d:6294:0:b0:68d:5a31:af3b with SMTP id x20-20020a9d6294000000b0068d5a31af3bmr8566721otk.14.1678116211788;
+        Mon, 06 Mar 2023 07:23:31 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id w4-20020a4ad024000000b0051fdb2cba97sm3972560oor.7.2023.03.06.07.23.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Mar 2023 07:23:31 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <2bbabc8c-415e-1fc9-3551-00fedc8bc78a@roeck-us.net>
+Date:   Mon, 6 Mar 2023 07:23:29 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Content-Language: en-US
+To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230304165653.2179835-1-linux@roeck-us.net>
+ <20230304165653.2179835-2-linux@roeck-us.net>
+ <20230306091502.3zlodw6vkqqwgozj@pengutronix.de>
+From:   Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 2/2] watchdog: s3c2410_wdt: Use devm_add_action_or_reset()
+ to disable watchdog
+In-Reply-To: <20230306091502.3zlodw6vkqqwgozj@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, 22 Feb 2023 22:19:35 -0600, Sam Protsenko wrote:
-> Some drivers set dev to context in order to implement PM. Make that part
-> of samsung_clk_init() instead of assigning `ctx->dev = dev' separately.
+On 3/6/23 01:15, Uwe Kleine-König wrote:
+> On Sat, Mar 04, 2023 at 08:56:53AM -0800, Guenter Roeck wrote:
+>> Use devm_add_action_or_reset() to disable the watchdog when the driver
+>> is removed to simplify the code. With this in place, we can use
+>> devm_watchdog_register_device() to register the watchdog, and the removal
+>> function is no longer necessary.
 > 
-> No functional change.
+> While the cleanup in this driver is good (
+> Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ) I wonder if disabling the watchdog at .remove() is right.
 > 
+> At least there is an inconsistency among watchdog drivers if the
+> hardware is supposed to stop or not.
 > 
 
-Applied, thanks!
+Yes, it is, and it is one of those endless-argument things. Some driver
+authors insist that the watchdog be stopped, some insist that it isn't.
+That is why we have watchdog_stop_on_unregister().
 
-[3/6] clk: samsung: Set dev in samsung_clk_init()
-      https://git.kernel.org/krzk/linux/c/211e03f66a15d1e90ee2cddebb7e3b5bf0af50a9
+Note I didn't use that here because the watchdog isn't stopped on unregister
+but just disabled. That is slightly different, and I didn't want to change
+functionality.
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Guenter
+
