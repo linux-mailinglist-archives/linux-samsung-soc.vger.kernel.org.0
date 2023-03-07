@@ -2,33 +2,33 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E292B6AEBCC
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Mar 2023 18:49:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF696AF11F
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Mar 2023 19:39:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232221AbjCGRtB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Mar 2023 12:49:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36350 "EHLO
+        id S231143AbjCGSju (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Mar 2023 13:39:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232223AbjCGRsh (ORCPT
+        with ESMTP id S229978AbjCGSjQ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Mar 2023 12:48:37 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A87592BEB;
-        Tue,  7 Mar 2023 09:43:28 -0800 (PST)
+        Tue, 7 Mar 2023 13:39:16 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02552BDD37;
+        Tue,  7 Mar 2023 10:30:37 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 95029B819C4;
-        Tue,  7 Mar 2023 17:43:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ABCC433EF;
-        Tue,  7 Mar 2023 17:43:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3847361522;
+        Tue,  7 Mar 2023 18:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A430C433AA;
+        Tue,  7 Mar 2023 18:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1678211001;
+        s=korg; t=1678213808;
         bh=+9OuRYwPI54o/Fm7g7hAoBFrQ8pYFyaSyAT3RvzsrqY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g1tzAEK3yBuYiRT1ggY0dVp6engIpJE0j4kPNd11btCSlTpnFrNsI8/g80pCZGSOb
-         GHWQWydnli9dHyFI09d00aQxDR9Bh+tYrkpgoq083QD8KF+JD1EpZyX534UqynsRXj
-         Ft/+i5wTOELnJtBR0iQePf5v2vltrYcngj5HayX8=
+        b=VN2ACagJW0SYf3WEMvR5zoYTTyIMTjrPw7gdHNOCrCs2g4DWD+mnxh1Y/5nWVF1Ft
+         wCzeC+S0WCSKo4kTUqLHoULwH4X2ot2qLDVJlGQnehezJJtDq8bmV1ui9jKgFs0R+i
+         RG3nfeq18qTv0pkVoqiRigquD2Tb5qxjc/3dMMQw=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -39,18 +39,18 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-samsung-soc@vger.kernel.org,
         Kees Cook <keescook@chromium.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0720/1001] regulator: s5m8767: Bounds check id indexing into arrays
-Date:   Tue,  7 Mar 2023 17:58:12 +0100
-Message-Id: <20230307170052.923330055@linuxfoundation.org>
+Subject: [PATCH 6.1 625/885] regulator: s5m8767: Bounds check id indexing into arrays
+Date:   Tue,  7 Mar 2023 17:59:19 +0100
+Message-Id: <20230307170029.385133209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
-References: <20230307170022.094103862@linuxfoundation.org>
+In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
+References: <20230307170001.594919529@linuxfoundation.org>
 User-Agent: quilt/0.67
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
