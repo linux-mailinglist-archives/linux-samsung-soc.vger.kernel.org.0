@@ -2,142 +2,146 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36D596AD909
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Mar 2023 09:18:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A70A6AD86A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  7 Mar 2023 08:47:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230144AbjCGISA (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 7 Mar 2023 03:18:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
+        id S230369AbjCGHrT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 7 Mar 2023 02:47:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjCGIR4 (ORCPT
+        with ESMTP id S230322AbjCGHrR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 7 Mar 2023 03:17:56 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35D04FF00
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  7 Mar 2023 00:17:39 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZSVk-0003g3-F5; Tue, 07 Mar 2023 09:17:28 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZRF5-002Q7K-GG; Tue, 07 Mar 2023 07:56:11 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZRF4-002uCh-KT; Tue, 07 Mar 2023 07:56:10 +0100
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH v2 2/2] watchdog: s3c2410_wdt: Simplify using dev_err_probe()
-Date:   Tue,  7 Mar 2023 07:56:03 +0100
-Message-Id: <20230307065603.2253054-3-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230307065603.2253054-1-u.kleine-koenig@pengutronix.de>
-References: <20230307065603.2253054-1-u.kleine-koenig@pengutronix.de>
+        Tue, 7 Mar 2023 02:47:17 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A583D091
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  6 Mar 2023 23:47:14 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id g3so48849152eda.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 06 Mar 2023 23:47:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678175233;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VmfI+nHnkEqaAvjTBCYnN1twlAqQaJgDbBXTUdXeeFQ=;
+        b=iu9fwHUW9JYA8hvS/oUJwEd4kEhdZsTVk6arW6P3La/Jgtxm2pkPWh1oX+8H2for8e
+         zmIJPmBNj2h5olU7KH69L2bPb2H6LSOFEBfXqoetxQ4h7iRKLeEFbcuGn17PgyG8YzqJ
+         CSTqVdyHp19RcgJ8PkbRAiq4tPHdpbqjt7Bwuw2TRDcez45jRYIkNtHh6OpPO+0juO4Q
+         GvxATuyVzfKTXaP/BkWMKzH9vDF57/LQyR04ZFmKg1aIYn2XJEucO1/Wu4p/BaUKNJBm
+         oV5fSOZLad6Uh/v+WtL4ugD7BxYara4n0qp/Nf6quOkSsctVBdcUJfs6eq/SItnovS1g
+         /i5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678175233;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VmfI+nHnkEqaAvjTBCYnN1twlAqQaJgDbBXTUdXeeFQ=;
+        b=ieNrMs2ocpauQNUkc3I24i4woeTpgKgGQQjPXR7dwaavROUONGeSSz0RzWmMOAOdaJ
+         xSDnOGbczdCfW9pcFqosYkif2xIboD8YeOQcNijpKiOMpqasPZEFbTRC4LIthST7tlBO
+         DcQ9GVm2G8ssaq2FFypyoyjPc4mCpf/x0hxSU2xsuPaOkeXrjs7q0zsKah79rtmfaLbo
+         5Di5JhGFfUNlVHyCWkamlu9q+a5EI2aPQPCP2FLChb+1WvezHLkBJtyO+t56i+LKS14q
+         yKiQJJzWXDMQHONZR/2mKbFW16Fur8F3XeC0hyiBqE59gtlobnG/bj2+oyLbtzYlOHwf
+         BX1w==
+X-Gm-Message-State: AO0yUKVe1oN2fb8zfWEez+kxqRUIN9wV0ROZlevJHb155TFj2ss1/7ko
+        0orvribcDvrszxx1K4DPuE2sSg==
+X-Google-Smtp-Source: AK7set8O4IoTTFwYSdQW8lhVj/770uCuSaTe+CetkZL4C7EpKVXb0/fviq7hgLA5AbL7mIIUBlFvvg==
+X-Received: by 2002:a17:906:af18:b0:8aa:c155:9233 with SMTP id lx24-20020a170906af1800b008aac1559233mr13332907ejb.26.1678175233466;
+        Mon, 06 Mar 2023 23:47:13 -0800 (PST)
+Received: from ?IPV6:2a02:810d:15c0:828:5310:35c7:6f9e:2cd3? ([2a02:810d:15c0:828:5310:35c7:6f9e:2cd3])
+        by smtp.gmail.com with ESMTPSA id y26-20020a170906071a00b008b2714f4d8asm5646123ejb.181.2023.03.06.23.47.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Mar 2023 23:47:13 -0800 (PST)
+Message-ID: <3a27febc-4d4e-1cfd-45dc-6ade4f25ca13@linaro.org>
+Date:   Tue, 7 Mar 2023 08:47:11 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 0/6] clk: samsung: exynos850: Add missing clocks for PM
+Content-Language: en-US
+To:     Sam Protsenko <semen.protsenko@linaro.org>
+Cc:     Chanwoo Choi <cw00.choi@samsung.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Chanho Park <chanho61.park@samsung.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-clk@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Virag <virag.david003@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20230223042133.26551-1-semen.protsenko@linaro.org>
+ <167811290503.11716.15730246749418548221.b4-ty@linaro.org>
+ <48c8a0cf-08dc-a831-33ef-3b8e32eef2d3@linaro.org>
+ <CAPLW+4=9Vwxd4upa3j_cKtRrNyyx_XCz+TgOOziMguEonbHb0g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAPLW+4=9Vwxd4upa3j_cKtRrNyyx_XCz+TgOOziMguEonbHb0g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2952; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=SPTADogXAYTaKc+C78RKrrt7xUHnzCo6ao7xCudFxtA=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBkBt/9TgrXqvneQq8BrEXsLFVQzyVJH8K0F3nGq Km8agAZpKqJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCZAbf/QAKCRDB/BR4rcrs CT+rB/0akvpL8yOXpGcUlsq2sQ4ODnKHZohwUCZxgzMAFJaXYYx+LolOaUIeX6lIaLOb8UqkscH EL49wR/amDpifqzJt8EMkomj+MtPyK0G5lEoUqGQERtPAdnSUO+pZZ5+7d2jscyqHIjX0Sgt6s9 HRZtF9agfhV1MQC5ad4mliPQwVhNYSKQY0INXrdjFjfLYvJQZ11KGjc7V0CaUCofAR+lxcIJdmP DNUSWE5pC/zJa3jjythRIdvI1m5twkxV9xNv5pDa4BEJKzy62NP9aRVN5OpIIQNTjEohNHR3nIy I3bMg7o/Nu+dHB62pqIz1mkJrfgjht/aahKNB8ItncGBxvB+
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Make use of dev_err_probe() also for error paths that don't have to
-handle -EPROBE_DEFER. While the code handing -EPROBE_DEFER isn't used
-for these error paths, it still simpler as it cares for pretty printing
-the error code and usually needs one code line less as it combines
-message emitting and error returning. This also unifies the format of
-the error messages.
+On 06/03/2023 19:55, Sam Protsenko wrote:
+> On Mon, 6 Mar 2023 at 09:51, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 06/03/2023 15:28, Krzysztof Kozlowski wrote:
+>>> On Wed, 22 Feb 2023 22:21:27 -0600, Sam Protsenko wrote:
+>>>> As a part of preparation for PM enablement in Exynos850 clock driver,
+>>>> this patch series implements CMU_G3D, and also main gate clocks for AUD
+>>>> and HSI CMUs. The series brings corresponding changes to bindings, the
+>>>> driver and SoC dts file.
+>>>>
+>>>> Changes in v2:
+>>>>   - Rebased all patches on top of the most recent soc/for-next tree
+>>>>   - Added A-b and R-b tags
+>>>>   - Minor fixes
+>>>>
+>>>> [...]
+>>>
+>>> Applied, thanks!
+>>>
+>>> [1/6] dt-bindings: clock: exynos850: Add Exynos850 CMU_G3D
+>>>       https://git.kernel.org/krzk/linux/c/067ba1605806e52118bb598afb357718df9f0e19
+>>> [2/6] dt-bindings: clock: exynos850: Add AUD and HSI main gate clocks
+>>>       https://git.kernel.org/krzk/linux/c/e289665ed0d6df9fca3ebc128f1232d305e4600b
+>>> [3/6] clk: samsung: clk-pll: Implement pll0818x PLL type
+>>>       https://git.kernel.org/krzk/linux/c/a6feedab8ab9a9e4483deb0bcc87919d92c88b7e
+>>> [4/6] clk: samsung: exynos850: Implement CMU_G3D domain
+>>>       https://git.kernel.org/krzk/linux/c/c5704a56893b4e77e434597c7c53d878bb3073b0
+>>> [5/6] clk: samsung: exynos850: Add AUD and HSI main gate clocks
+>>>       https://git.kernel.org/krzk/linux/c/d8d12e0d079aff4b1d8079a0a55944c0596f1d67
+>>> [6/6] arm64: dts: exynos: Add CMU_G3D node for Exynos850 SoC
+>>>       https://git.kernel.org/krzk/linux/c/ad8f6ad9a4f219950df65731a8ff91baa022c4b0
+>>
+>> And builds are broken. Please mention in cover letter or commit
+>> dependencies and ordering...
+>>
+> 
+> Just checked all most recent commits on your for-next and next/clk
+> branches. Seem to build fine for me. AFAIR I checked all patches in
+> that series, and I guess there shouldn't be any issues if you apply
+> those in the same order they are numbered inside the series. Or you
+> mean you have some clash between different series? Anyways, I'm glad
+> to help, but I'd need more details on where exactly the problem is (or
+> maybe you already fixed it?).
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/watchdog/s3c2410_wdt.c | 29 ++++++++++-------------------
- 1 file changed, 10 insertions(+), 19 deletions(-)
+The builds were failing after I applied everything to respective
+branches (so DTS separate). I did not notice that your DTS and driver
+(both) depend on bindings header constant. This requires special
+handling. It actually always required, because it was going through
+different trees. Now it goes through my tree, but I still need to handle
+it. I reworked the branches and force-pushed, thus you did not see the
+exact issue.
 
-diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
-index f3de8ef499c3..e14d6d9050ce 100644
---- a/drivers/watchdog/s3c2410_wdt.c
-+++ b/drivers/watchdog/s3c2410_wdt.c
-@@ -601,10 +601,8 @@ s3c2410_get_wdt_drv_data(struct platform_device *pdev, struct s3c2410_wdt *wdt)
- 
- 		err = of_property_read_u32(dev->of_node,
- 					   "samsung,cluster-index", &index);
--		if (err) {
--			dev_err(dev, "failed to get cluster index\n");
--			return -EINVAL;
--		}
-+		if (err)
-+			return dev_err_probe(dev, -EINVAL, "failed to get cluster index\n");
- 
- 		switch (index) {
- 		case 0:
-@@ -615,8 +613,7 @@ s3c2410_get_wdt_drv_data(struct platform_device *pdev, struct s3c2410_wdt *wdt)
- 				&drv_data_exynosautov9_cl1;
- 			break;
- 		default:
--			dev_err(dev, "wrong cluster index: %u\n", index);
--			return -EINVAL;
-+			return dev_err_probe(dev, -EINVAL, "wrong cluster index: %u\n", index);
- 		}
- 	}
- #endif
-@@ -653,10 +650,8 @@ static int s3c2410wdt_probe(struct platform_device *pdev)
- 	if (wdt->drv_data->quirks & QUIRKS_HAVE_PMUREG) {
- 		wdt->pmureg = syscon_regmap_lookup_by_phandle(dev->of_node,
- 						"samsung,syscon-phandle");
--		if (IS_ERR(wdt->pmureg)) {
--			dev_err(dev, "syscon regmap lookup failed.\n");
--			return PTR_ERR(wdt->pmureg);
--		}
-+		if (IS_ERR(wdt->pmureg))
-+			return dev_err_probe(dev, PTR_ERR(wdt->pmureg), "syscon regmap lookup failed.\n");
- 	}
- 
- 	wdt_irq = platform_get_irq(pdev, 0);
-@@ -694,21 +689,17 @@ static int s3c2410wdt_probe(struct platform_device *pdev)
- 	if (ret) {
- 		ret = s3c2410wdt_set_heartbeat(&wdt->wdt_device,
- 					       S3C2410_WATCHDOG_DEFAULT_TIME);
--		if (ret == 0) {
-+		if (ret == 0)
- 			dev_warn(dev, "tmr_margin value out of range, default %d used\n",
- 				 S3C2410_WATCHDOG_DEFAULT_TIME);
--		} else {
--			dev_err(dev, "failed to use default timeout\n");
--			return ret;
--		}
-+		else
-+			return dev_err_probe(dev, ret, "failed to use default timeout\n");
- 	}
- 
- 	ret = devm_request_irq(dev, wdt_irq, s3c2410wdt_irq, 0,
- 			       pdev->name, pdev);
--	if (ret != 0) {
--		dev_err(dev, "failed to install irq (%d)\n", ret);
--		return ret;
--	}
-+	if (ret != 0)
-+		return dev_err_probe(dev, ret, "failed to install irq (%d)\n", ret);
- 
- 	watchdog_set_nowayout(&wdt->wdt_device, nowayout);
- 	watchdog_set_restart_priority(&wdt->wdt_device, 128);
--- 
-2.39.1
+Best regards,
+Krzysztof
 
