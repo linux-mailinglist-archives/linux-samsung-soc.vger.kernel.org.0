@@ -2,136 +2,113 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84EE26B1632
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Mar 2023 00:10:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D3236B1697
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Mar 2023 00:38:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbjCHXKU (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 8 Mar 2023 18:10:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52482 "EHLO
+        id S230098AbjCHXi2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 Mar 2023 18:38:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbjCHXJn (ORCPT
+        with ESMTP id S229696AbjCHXi0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 8 Mar 2023 18:09:43 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4E564218
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 Mar 2023 15:09:40 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id o4-20020a9d6d04000000b00694127788f4so102329otp.6
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 08 Mar 2023 15:09:40 -0800 (PST)
+        Wed, 8 Mar 2023 18:38:26 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EE2B5708B
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 Mar 2023 15:38:24 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id y184so360277oiy.8
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 08 Mar 2023 15:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678316980;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LqP7runz9fYVY1TUY6ik+MRNc/PM8+/25wcHDRNrCqg=;
-        b=pMeJTUMMw8Ia7l1IPPUUsdvR7xspLZEDohgXXQH/vDj7exFL9MWOAAnxhMUHw9xEi9
-         q+EoBXK+9I748gNWpHzqG0R6Ara+yLGh1qbSF6lHBdxZT96b3l8MUa242OxPTQMV7xLg
-         hQAO9hP8fvXLArgDEj6X/R7pw+WSgtBmchw/srR0PH0Ft+wypT5hIfZV9XqBF0c+KCLh
-         kgInsvI7lf7pAiTiq8Fq0MFNkk+c2PfgzSbLju3iffONoUCZBqJWLlkBW1OlXYT+64/b
-         JKK/cmWqYLctN66VueXT93bhwZC4VpTjIzoAhyRuG897cU84E4eWNfSe6pHN6KJ7ISLg
-         nPwg==
+        d=linaro.org; s=google; t=1678318704;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O5FO4JwEp2Kjzh0k17TvUro3yR+jx+xZgIAaan5bX5Y=;
+        b=YNsoYLnfDHjDb8JcTVyzn6779ksJvl46OwrzuWq1h9NZr5FePk2pq3zfpbmsXWKmCP
+         F0xBViNocLHXPrN7vgv2x292+vQNgAsQdDGR0mruvhYoew1N7Bs4GMYxfLQiG0p3ptfU
+         zNka13oasgbN7uCLS7tSEDYa8O/kf2EoLJj4uPz5hXXTk2Oa/1AIXqjWVNj7axnh03R1
+         EezCvHZweLK4S/LlV6xZ4W+ztsnRYzjcyzXGwMcoDaaEUndB4ldr1LA9OuaHDCR2VJWI
+         WZ3VhFo/4csbX2QfT/WgbBtr37ekXHAzkpjLV5gYue/zxSZ8h+WYLbOvG2Yt4zTCfzix
+         hhiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678316980;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LqP7runz9fYVY1TUY6ik+MRNc/PM8+/25wcHDRNrCqg=;
-        b=ZXUC3Qrn953/g5IB5TQy9wkrlS43151hLVqVawGxNJm7yjzQMoGVnxi4N4UzBzusNq
-         2EGUx72bF1c79Rqj2fqF8eQREEnhRiSaCCmjF+mV0tY4XXlFRMdZhOXPQEsvxqoUmZU4
-         oHy4Z6irefJpII/+WN7ud1ubqSO9ufESOoVvgitLiohB5ozL4bjumUKdmzLUqeh3j9xp
-         bsCuNWKCxTcDYX9JSK1nUd1ShZPKKNgIWYDR3wyv/3j8tYJE0EY+9z6MduLz2w2UOAOR
-         s3BCoOTwNmaOMHDHuAA0RU+YhMCdBs9LZrQAKWjaOQ4OFlDXn79pq5+/RsBAs2h2TmnV
-         gNpQ==
-X-Gm-Message-State: AO0yUKVmM88jxRKemOLkKikBtQRxrflh/BQQTDsMQGiuxhH4Yd+pcmWb
-        BnW77bRuZOVV42ZeWprl6uTJRg==
-X-Google-Smtp-Source: AK7set/tBJXhTZUXyy437vmJNBgUKb2EX1mJ5MLUT6s+oNNf/7TzTYa0XXmwK2tWKREM5hmGZM2/cQ==
-X-Received: by 2002:a05:6830:3142:b0:68b:e4e6:cc9c with SMTP id c2-20020a056830314200b0068be4e6cc9cmr11426374ots.33.1678316980169;
-        Wed, 08 Mar 2023 15:09:40 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678318704;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O5FO4JwEp2Kjzh0k17TvUro3yR+jx+xZgIAaan5bX5Y=;
+        b=pqhcMslzFnPdMtlvfKpKTrGSnYSu3V4VN0mXuudrhVA1QIIVWXmzQ5nIy7Mtx311QO
+         s87+g0K4PmSLstWQOh6CHgrupvHv7f7jIFG8uk1n4+Simoeu6oLJLCsObj+kgaExl+ob
+         yo0TF5jmn9e6Mp673a4fjyr9itjyVK2lyQlZDN75bvb4p0jAtdc+1hgfMd7B1p9jg9js
+         SjC6r6U1kd0T+FH/3WjwEMOwfMSYVLsfpoyf/4lmxfM6Sio0OyUWvVT05gIg8+HncJID
+         2Jj7t7OLx0zVLb8U8HNLjU9RQmeNWi2KeeasW7S6iPA5DgqR8dIxkeyobgfbbyx4Zzi9
+         DZqQ==
+X-Gm-Message-State: AO0yUKUHhqfL2lzW6bH5zNv8tEnh3nI6Lxi4Y3YdTtJeoqs/OCIFt1ov
+        J45Ueslhy1u7zKTEC6pH71oTWg==
+X-Google-Smtp-Source: AK7set+XFOsOoucxEaYKPa3vsibaK3J2lN8yAlAGdVHAY22gDwluoI76GNWfvkybvR34AfUwUARGwg==
+X-Received: by 2002:a05:6808:b2c:b0:383:e7c8:4000 with SMTP id t12-20020a0568080b2c00b00383e7c84000mr8584833oij.13.1678318703864;
+        Wed, 08 Mar 2023 15:38:23 -0800 (PST)
 Received: from localhost ([136.49.140.41])
-        by smtp.gmail.com with ESMTPSA id z25-20020a056830129900b00686574e98d6sm6919220otp.72.2023.03.08.15.09.39
+        by smtp.gmail.com with ESMTPSA id r36-20020a056808212400b00383d9700294sm6772901oiw.40.2023.03.08.15.38.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 15:09:39 -0800 (PST)
+        Wed, 08 Mar 2023 15:38:23 -0800 (PST)
 From:   Sam Protsenko <semen.protsenko@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
         Chanwoo Choi <cw00.choi@samsung.com>,
         Chanho Park <chanho61.park@samsung.com>,
         David Virag <virag.david003@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] soc: samsung: pm_domains: Add Exynos850 support
-Date:   Wed,  8 Mar 2023 17:09:31 -0600
-Message-Id: <20230308230931.27261-7-semen.protsenko@linaro.org>
+Subject: [PATCH 0/7] clk: samsung: Enable PM in Exynos850 clk driver
+Date:   Wed,  8 Mar 2023 17:38:15 -0600
+Message-Id: <20230308233822.31180-1-semen.protsenko@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230308230931.27261-1-semen.protsenko@linaro.org>
-References: <20230308230931.27261-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Add a new compatible string for Exynos850, providing all HW specific
-data, which enables Exynos PD support for this chip.
+One difference Exynos850 has w.r.t. other Exynos platforms in terms of
+PM is that EL3 monitor handles TZ protection of CMU domains on
+suspend/resume for us. This series enables PM support in clk-exynos850,
+which was originally borrowed/extracted from clk-exynos5433 driver, and
+also adds other missing bits, like adding those SMC calls, keeping PMU
+clock always enabled and configuring MUX clocks before the suspend.
 
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
----
- drivers/soc/samsung/pm_domains.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Dependencies inside of this series:
 
-diff --git a/drivers/soc/samsung/pm_domains.c b/drivers/soc/samsung/pm_domains.c
-index ec630a151247..795d8a9cd4b5 100644
---- a/drivers/soc/samsung/pm_domains.c
-+++ b/drivers/soc/samsung/pm_domains.c
-@@ -20,6 +20,8 @@
- #include <linux/mfd/syscon.h>
- #include <linux/regmap.h>
- 
-+#include <dt-bindings/power/samsung,exynos850-power.h>
-+
- /* Register offsets inside Power Domain area in PMU */
- #define EXYNOS_PD_CONF		0x0
- #define EXYNOS_PD_STATUS	0x4
-@@ -132,6 +134,21 @@ static const struct exynos_pm_domain_config exynos5433_cfg = {
- 	.local_pwr_cfg		= 0xf,
- };
- 
-+static const unsigned int exynos850_pd_offsets[] = {
-+	[EXYNOS850_PD_HSI]	= 0x1c80,
-+	[EXYNOS850_PD_G3D]	= 0x1d00,
-+	[EXYNOS850_PD_MFCMSCL]	= 0x1d80,
-+	[EXYNOS850_PD_DPU]	= 0x2000,
-+	[EXYNOS850_PD_AUD]	= 0x2080,
-+	[EXYNOS850_PD_IS]	= 0x2100,
-+};
-+
-+static const struct exynos_pm_domain_config exynos850_cfg = {
-+	.local_pwr_cfg		= 0x1,
-+	.pd_offsets		= exynos850_pd_offsets,
-+	.pd_offsets_num		= ARRAY_SIZE(exynos850_pd_offsets),
-+};
-+
- static const struct of_device_id exynos_pm_domain_of_match[] = {
- 	{
- 		.compatible = "samsung,exynos4210-pd",
-@@ -139,6 +156,9 @@ static const struct of_device_id exynos_pm_domain_of_match[] = {
- 	}, {
- 		.compatible = "samsung,exynos5433-pd",
- 		.data = &exynos5433_cfg,
-+	}, {
-+		.compatible = "samsung,exynos850-pd",
-+		.data = &exynos850_cfg,
- 	},
- 	{ },
- };
+  - patch #7 must go after #4
+  - patches 3-6 should go in the same order as in the series
+  - better to keep patche #1 and #2 before the rest of patches,
+    so that the driver and dts always use documented properties
+
+Sam Protsenko (7):
+  dt-bindings: clock: exynos850: Add power-domains property
+  dt-bindings: clock: exynos850: Add tzpc property
+  clk: samsung: Implement PM SMC calls for ARM64 Exynos SoCs
+  clk: samsung: exynos850: Make PMU_ALIVE_PCLK critical
+  clk: samsung: exynos850: Add suspend state for all CMUs
+  clk: samsung: exynos850: Enable PM support in clk-exynos850
+  arm64: dts: exynos: Remove clock from Exynos850 pmu_system_controller
+
+ .../clock/samsung,exynos850-clock.yaml        |  13 ++
+ arch/arm64/boot/dts/exynos/exynos850.dtsi     |   1 -
+ drivers/clk/samsung/clk-exynos-arm64.c        |  39 +++++-
+ drivers/clk/samsung/clk-exynos850.c           | 112 ++++++++++++++++--
+ 4 files changed, 153 insertions(+), 12 deletions(-)
+
 -- 
 2.39.2
 
