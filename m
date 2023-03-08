@@ -2,58 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0254E6B0F39
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  8 Mar 2023 17:52:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D420D6B162A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Mar 2023 00:09:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbjCHQwS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 8 Mar 2023 11:52:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47204 "EHLO
+        id S230059AbjCHXJg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 8 Mar 2023 18:09:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229846AbjCHQwR (ORCPT
+        with ESMTP id S229886AbjCHXJf (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 8 Mar 2023 11:52:17 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EEFCB046
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 Mar 2023 08:52:16 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZx1J-0000QS-Km; Wed, 08 Mar 2023 17:52:05 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZx1G-002l4f-Vd; Wed, 08 Mar 2023 17:52:02 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pZx1G-003Kw8-8O; Wed, 08 Mar 2023 17:52:02 +0100
-Date:   Wed, 8 Mar 2023 17:52:02 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     George Stark <GNStark@sberdevices.ru>
-Cc:     "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        "krzysztof.kozlowski@linaro.org" <krzysztof.kozlowski@linaro.org>,
-        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
-        "linux-pwm@vger.kernel.org" <linux-pwm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, kernel <kernel@sberdevices.ru>
-Subject: Re: [RFC PATCH v1] Revert "pwm: Clear chip_data in pwm_put()"
-Message-ID: <20230308165202.gaeziqdncbkeo5l6@pengutronix.de>
-References: <20230307210014.1380102-1-gnstark@sberdevices.ru>
- <20230307212744.rx2julmzxe7nvhvr@pengutronix.de>
- <cc73a82d-89fa-1edf-650a-a1a3824cc791@sberdevices.ru>
+        Wed, 8 Mar 2023 18:09:35 -0500
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1BD62860
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  8 Mar 2023 15:09:33 -0800 (PST)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-17683b570b8so440025fac.13
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 08 Mar 2023 15:09:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1678316972;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BSUy9pqri34RafzXpduDuTiVpZ9W29iQLOdXi9MBbjc=;
+        b=W8Fgv56006OYf+0vMpu9nCC7xSYySTNCf0Cq58RxoqFSqWBy3WHUMo0PhtBQmLY2Qh
+         JBGa+5hpuL9dZLX2aVOx8lBr+srtTvlGXu/f5ZhjYUzyfKmBBoOY6kENHqWDKBYixMr8
+         FwNqVkzrAsR9lMFG0iRbN1LRBTVvPDsVGalUcxtRqIxTbNSDYNy3TW30lH5qZ6LvztCE
+         F0Y3hoAAkI8Sb108QzNayVfT7Q4aN+ra9IjCZRR4WrsD1VUETaceIp4CHoa3OyrIBt1i
+         ucAL1bOZqlOnn/rLQ78+Ah6f1T48YKRJ5BG5y4Sf0bsGSjpqhaBNSD36Aa4buBlYA1O6
+         X6MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678316972;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BSUy9pqri34RafzXpduDuTiVpZ9W29iQLOdXi9MBbjc=;
+        b=j24qMh30BDPukwP3SycP5AFk7iZpbs85fK4l4YBBq3RBoaW0fuSSDl7t1O1sPpNtBR
+         5RpfzHuiGh/UQQBITrQh8fHGSMWJDnUWSSpHcS0bAIglOXpSVQXmJ6ssJGP+RuktsbD6
+         nODfpMmyz5w+BtYIqr4tJtIv6e5KCDesPc/VSkByIxHkZ2d1dQamUk9FO2LfRGJueW45
+         PN+qqE0s4jADCh/C9DSaNtVepYaRB/IdvIYMt4Vnzo/4ZSt9kMA84B3hD7TQEowJQzlL
+         YTqFKfiwm76ELc90SIcS+OF2tfdtdGElIP7iPtU3zsmtBJfL7lYTBFNqzefv5o9zb+al
+         APWA==
+X-Gm-Message-State: AO0yUKX8/Qo2TZyXd3GI3Z+XaKUlAbp/mNjw5pA45i7LEtHU95BqWp/B
+        diOa6BllPWYko0q3Crqjh/+n4A==
+X-Google-Smtp-Source: AK7set8N1gB2a3Ev0DG0ifVpKRpIm2ymT29/NKvYWTyo6j5FanN5C+/s4trt5ujy9fqa+Tgwue1MVw==
+X-Received: by 2002:a05:6871:6a0:b0:172:55c5:780 with SMTP id l32-20020a05687106a000b0017255c50780mr12841967oao.23.1678316972450;
+        Wed, 08 Mar 2023 15:09:32 -0800 (PST)
+Received: from localhost ([136.49.140.41])
+        by smtp.gmail.com with ESMTPSA id h21-20020a056870d25500b0016e9308e17bsm6704527oac.52.2023.03.08.15.09.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 15:09:32 -0800 (PST)
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        David Virag <virag.david003@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/6] soc: samsung: pm_domains: Add Exynos850 support
+Date:   Wed,  8 Mar 2023 17:09:25 -0600
+Message-Id: <20230308230931.27261-1-semen.protsenko@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ugs5p22gnvewe6b7"
-Content-Disposition: inline
-In-Reply-To: <cc73a82d-89fa-1edf-650a-a1a3824cc791@sberdevices.ru>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,66 +76,52 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Power Domains in Exynos850 are not really different from other Exynos
+platforms. Enabling Exynos850 support in the PD driver is really just a
+matter of adding:
 
---ugs5p22gnvewe6b7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    static const struct exynos_pm_domain_config exynos850_cfg = {
+        .local_pwr_cfg = 0x1,
+    };
 
-Hello George,
+to the driver. But in the face of recent developments, e.g. this patch:
 
-On Wed, Mar 08, 2023 at 12:16:00PM +0000, George Stark wrote:
-> On 3/8/23 00:28, Uwe Kleine-K=F6nig wrote:
-> > If you ask me, better drop pwm_set_chip_data() completely. It adds no
-> > useful value. It's just a variant of driver data and using both
-> > complicates the driver and probably fragments memory allocations. Also
-> > the sematic of driver data is better known as it's the same for all
-> > subsystems.
-> >
-> > Do you use the capture functionality? In my eyes the capture part of the
-> > pwm subsystem is very alien. Only a small subset of the hardware
-> > supports this and the counter framework should be better suited for such
-> > tasks.
-> I don't use pwm-sti driver. I update meson pwm driver for new chips
-> and when started using pwm_set_chip_data in probe I was very surprised th=
-at
-> my data is lost after sysfs export/unexport calls. Then I found the=20
-> patch and
-> checked other drivers for similar usecases.
+    arm64: dts: exynos: move MIPI phy to PMU node in Exynos5433
 
-OK.
+it looked logical to rework the PD driver a bit to support its nesting
+under the PMU node, while adding Exynos850 support to it. Initially I
+only wanted to add syscon regmap support via some dedicated property,
+but pulling PD nodes under the PMU syscon looks like more correct way.
 
-> Probably you're right about dropping pwm_set_chip_data.
+This patch series provides next changes:
 
-If you want to tackle that, you might want to take
+  1. Make it possible for PD nodes to be children of PMU
+  2. Add Exynos850 support to PD driver
+  3. A bit of refactoring in PD driver
+  4. Corresponding changes to dt-bindings
 
-	https://lore.kernel.org/all/20210504132537.62072-2-u.kleine-koenig@pengutr=
-onix.de/
+Dependencies inside of the series:
 
-into account. (Both to reuse this patch to prepare pwm-berlin for
-dropping pwm_set_chip_data and to be prepared that back then Thierry
-opposed to the idea.)
+  - patch #2 depends on patch #1
+  - patch #6 depends on patch #1
+  - patches 3,4,5,6 should be applied in the same order as in the series
 
-Best regards
-Uwe
+Sam Protsenko (6):
+  dt-bindings: power: pd-samsung: Add Exynos850 support
+  dt-bindings: power: pd-samsung: Allow pd nodes to be children of PMU
+  soc: samsung: pm_domains: Extract DT handling into a separate function
+  soc: samsung: pm_domains: Implement proper I/O operations
+  soc: samsung: pm_domains: Allow PD to be a child of PMU syscon
+  soc: samsung: pm_domains: Add Exynos850 support
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+ .../devicetree/bindings/power/pd-samsung.yaml |  12 +-
+ MAINTAINERS                                   |   1 +
+ drivers/soc/samsung/Kconfig                   |   1 +
+ drivers/soc/samsung/pm_domains.c              | 132 +++++++++++++++---
+ .../power/samsung,exynos850-power.h           |  17 +++
+ 5 files changed, 142 insertions(+), 21 deletions(-)
+ create mode 100644 include/dt-bindings/power/samsung,exynos850-power.h
 
---ugs5p22gnvewe6b7
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+2.39.2
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmQIvS4ACgkQwfwUeK3K
-7Aku+Qf/QHg35UuTpxFLWrJ9E9/Y+2/XcUMIrE+hHqf7QGTjIgx1KbQskTjF189q
-CkGAUPB4gCjavW+Zcx62RkN/lFHVQVsf38k9u3uanNzxLZcuxGD/spjC7zcKFYTw
-3Noh5AwTGPR5QESVxMSFEqSJ18xO53oKdd4T3WErrPKVZgpzlvR+4TZA8AfODRcj
-etfnLH8oBGJZDsIO2fEHTiYUgWdNEANL8xSRwzArIsIRGx+YTo/mEYHjUFd/wldS
-zMxY+kzDJ0+u1foQ8RrFT2CLGIA0q2IbfvRyh/Jd+1ETei+KXtwxkfpIpW/Ugw4x
-0wllBAFxf1eaocGP0cnlTBbUj+DblQ==
-=d7MT
------END PGP SIGNATURE-----
-
---ugs5p22gnvewe6b7--
