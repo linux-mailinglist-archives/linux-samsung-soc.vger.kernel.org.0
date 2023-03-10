@@ -2,54 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DEFD6B5461
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Mar 2023 23:30:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E61ED6B5466
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Mar 2023 23:30:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbjCJWaJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Mar 2023 17:30:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
+        id S231880AbjCJWaK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 Mar 2023 17:30:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232008AbjCJW3i (ORCPT
+        with ESMTP id S231926AbjCJW3k (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Mar 2023 17:29:38 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E238125AE5
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Mar 2023 14:29:15 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id g3so26538763eda.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Mar 2023 14:29:15 -0800 (PST)
+        Fri, 10 Mar 2023 17:29:40 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD38125D97
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Mar 2023 14:29:16 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id g3so26538875eda.1
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Mar 2023 14:29:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678487354;
+        d=linaro.org; s=google; t=1678487355;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EBGP8+ktL4ywlJvW0lmVhlwvhFE47q82UhD5J/2MFQU=;
-        b=LwLmThATdX5HNobFSO+brNDu9RIY0acCKrwYmzGtVVzjJZhxTQOKm1spvMnktyhki3
-         GDwqNCGFwqRn/7kUnE2lvo6YeFswYlvoaGlsKar5EQh1lq3Rcjjwqy6OGpcVDNU3megk
-         WFF0BAcHkCebD9I2lbM+rrRRozHdxVVBtVHvFK6l2abJTAdNDYnWD8b36mCK61PQMFeI
-         SkDYYKWQY3CFhDmOmFII38SNil/wTwBD4rDZJ7kqUJI1MdEdL2MGcroBZUk2eWcbU7cc
-         yDDyqclvrv9smz6jIhBdL78omNdTQvynMcvOFzZBmB1Mspasb8f3jl1xnD5+cYctGRR3
-         CY+w==
+        bh=DIL/eAhzd2Q+CmLa0/Vp8uh0M9mRf6IHTk8hQZUVPkA=;
+        b=k9IOHxBgd0bMymkB/VVDYynw3dg0wz5WLTLxzV6gvhi0zHI1m8CQMly3VXoSXuKFCp
+         8h9Sng22gMlalzZGQ190Jfc2ocLKGquLyts/VCYV4KgnzhNpLAw1lmCH08tqlBTGh9uX
+         opjEMpR+/6cN4xnJkfQRHijm2E+EP866a7+7DUN7ENr4l/jbDJAouQL9++JBziQhUcen
+         89Kb5I7fiA11hsVqegrlnQFLmvaJvdNzACOqIF+Q8V10Tmi8VpXBpBjWc0BjNbw236gS
+         IGoWXG5ofcZOzKkhc2pkde95caIVRGE7UK7159UQqJklSACcPwP+y8SGCq20FhEImF6F
+         06VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678487354;
+        d=1e100.net; s=20210112; t=1678487355;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EBGP8+ktL4ywlJvW0lmVhlwvhFE47q82UhD5J/2MFQU=;
-        b=hs6Q63rsGxHb6NiiVJ0bP6TiPmaA6Mwl77D8y+HDKTpUr4hybbs7pFkr9fYW1CLitp
-         0kyeuRGKKRVFkKaJ0YjWMaJoGvtb2eu0cLOzIzPAkVkHhl5qG1qQgnxp6fxYfqnC1lZM
-         qiNtf8bxdoc96oyOrWGvtz/F/5ZNqhEONbFDcg381g0KY0wnp9liDAhB5MOdA0MFVR/O
-         Ud/1Dpjw3lcD2HGffoNDOPOQ6OlMgKyeyvQpSXRDl1b+7I/XU+KPjZPK538N2iwk9Ch3
-         ue6jybF1WUm//9PZe7sxVOT7uwgqA4Edi9rhckd6eCoK3zTJWQA94qEO+072Cb72hm9a
-         dW6g==
-X-Gm-Message-State: AO0yUKWbY+R2G6rDdKHqU/rsX3+pNL/t9IXrfCsr5M16msgoJcZqKHTA
-        40lldc4oXtc3j8R9qlHQMZUS5Q==
-X-Google-Smtp-Source: AK7set8uL4nXFDVb7rsO+o6EWoU4A34ihg/j/XmN4ZE+rbabtjirYsg20d8X3gBVCVm6QRcADU/42Q==
-X-Received: by 2002:a05:6402:5154:b0:4bd:6b93:1289 with SMTP id n20-20020a056402515400b004bd6b931289mr24124882edd.15.1678487354154;
-        Fri, 10 Mar 2023 14:29:14 -0800 (PST)
+        bh=DIL/eAhzd2Q+CmLa0/Vp8uh0M9mRf6IHTk8hQZUVPkA=;
+        b=MNajZ9WiAiQjlv8MRWtPcwkY1Hly5GPzC0/DVccg9Aj13Ggh01ZCqXB0CHu/Z4IIUu
+         cOW2oauwnKKpm5I6xmz3d6Y9aDMwkMhUBMpjHK3gv99GEj+lbnIP4AWBZMLeEg6FHxqw
+         0heiUaO04bXQQ2hDjo7y2ZxefnTWaRY0OKgwqYd0uoc02kEXZuaYBv3IBRR84cyprS45
+         hp/FvYRH7yugCQfqHWCm9RmpVc1uvsDwpUVlV+CGqbqUF7mIPHRTSNReybaKaNWYggDA
+         aaSk9aHAiXjqRo+T2wzB/iYkzrrblbUbC15FP8nHMIlgzVbo7evxVtCCoeHp/v1cdxV+
+         0EkQ==
+X-Gm-Message-State: AO0yUKXehUoav1zwXIL4AK+iQiYrxER5C8MGhyngA2HBU9Shlabh3E0e
+        W2KMwvU8DCtMSo05WaHXcCrJdQ==
+X-Google-Smtp-Source: AK7set84qDZr9RcwJ70A6u3nLP8atYZ9eptCD6oONVkchKcqZ66qh2jURUNfTUs7WD78mR7YiVblZg==
+X-Received: by 2002:a17:906:dd7:b0:87e:a34b:9e2b with SMTP id p23-20020a1709060dd700b0087ea34b9e2bmr27657561eji.28.1678487355376;
+        Fri, 10 Mar 2023 14:29:15 -0800 (PST)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:34:52e3:a77e:cac5])
-        by smtp.gmail.com with ESMTPSA id x101-20020a50baee000000b004aeeb476c5bsm525467ede.24.2023.03.10.14.29.12
+        by smtp.gmail.com with ESMTPSA id x101-20020a50baee000000b004aeeb476c5bsm525467ede.24.2023.03.10.14.29.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 14:29:13 -0800 (PST)
+        Fri, 10 Mar 2023 14:29:15 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Mark Brown <broonie@kernel.org>, Kamal Dasu <kdasu.kdev@gmail.com>,
         Broadcom internal kernel review list 
@@ -75,9 +75,9 @@ To:     Mark Brown <broonie@kernel.org>, Kamal Dasu <kdasu.kdev@gmail.com>,
         linux-rockchip@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
-Subject: [PATCH 11/16] spi: st-ssc4: Drop of_match_ptr for ID table
-Date:   Fri, 10 Mar 2023 23:28:52 +0100
-Message-Id: <20230310222857.315629-11-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 12/16] spi: pxa2xx: Mark OF related data as maybe unused
+Date:   Fri, 10 Mar 2023 23:28:53 +0100
+Message-Id: <20230310222857.315629-12-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230310222857.315629-1-krzysztof.kozlowski@linaro.org>
 References: <20230310222857.315629-1-krzysztof.kozlowski@linaro.org>
@@ -86,38 +86,37 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The driver can match only via the DT table so the table should be always
-used and the of_match_ptr does not have any sense (this also allows ACPI
-matching via PRP0001, even though it is not relevant here).
+The driver can be compile tested with !CONFIG_OF making certain data
+unused:
 
-  drivers/spi/spi-st-ssc4.c:439:34: error: ‘stm_spi_match’ defined but not used [-Werror=unused-const-variable=]
+  drivers/spi/spi-pxa2xx.c:1757:34: error: ‘pxa2xx_spi_of_match’ defined but not used [-Werror=unused-const-variable=]
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/spi/spi-st-ssc4.c | 2 +-
+ drivers/spi/spi-pxa2xx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-st-ssc4.c b/drivers/spi/spi-st-ssc4.c
-index 9141f19c7f8e..3fe266c336ab 100644
---- a/drivers/spi/spi-st-ssc4.c
-+++ b/drivers/spi/spi-st-ssc4.c
-@@ -446,7 +446,7 @@ static struct platform_driver spi_st_driver = {
- 	.driver = {
- 		.name = "spi-st",
- 		.pm = &spi_st_pm,
--		.of_match_table = of_match_ptr(stm_spi_match),
-+		.of_match_table = stm_spi_match,
- 	},
- 	.probe = spi_st_probe,
- 	.remove_new = spi_st_remove,
+diff --git a/drivers/spi/spi-pxa2xx.c b/drivers/spi/spi-pxa2xx.c
+index a75ba2993f3c..19e996a5a02e 100644
+--- a/drivers/spi/spi-pxa2xx.c
++++ b/drivers/spi/spi-pxa2xx.c
+@@ -1754,7 +1754,7 @@ static const struct acpi_device_id pxa2xx_spi_acpi_match[] = {
+ MODULE_DEVICE_TABLE(acpi, pxa2xx_spi_acpi_match);
+ #endif
+ 
+-static const struct of_device_id pxa2xx_spi_of_match[] = {
++static const struct of_device_id pxa2xx_spi_of_match[] __maybe_unused = {
+ 	{ .compatible = "marvell,mmp2-ssp", .data = (void *)MMP2_SSP },
+ 	{}
+ };
 -- 
 2.34.1
 
