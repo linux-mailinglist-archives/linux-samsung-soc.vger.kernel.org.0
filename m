@@ -2,33 +2,33 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92CC16B410D
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Mar 2023 14:49:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C3D16B45BC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Mar 2023 15:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbjCJNtE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Mar 2023 08:49:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50902 "EHLO
+        id S232656AbjCJOgb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 Mar 2023 09:36:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbjCJNtC (ORCPT
+        with ESMTP id S232655AbjCJOgZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Mar 2023 08:49:02 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DA7BA86D;
-        Fri, 10 Mar 2023 05:49:01 -0800 (PST)
+        Fri, 10 Mar 2023 09:36:25 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C65E118BDD;
+        Fri, 10 Mar 2023 06:36:10 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1272FB822AD;
-        Fri, 10 Mar 2023 13:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AB1C433D2;
-        Fri, 10 Mar 2023 13:48:58 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 01DCE61961;
+        Fri, 10 Mar 2023 14:36:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8FDC433EF;
+        Fri, 10 Mar 2023 14:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1678456138;
-        bh=W5ZR2xvhvWDUe4qPkZL+I71kq9SfbFAwJ6Gi/XTyzJs=;
+        s=korg; t=1678458969;
+        bh=zTZax/p2rqalBvmPQFQzlm9KvkEQeTiAiqtImefjI6Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=D8TjXCIpl3tTQDBO5I6gQ4dJTa2Tsn4BvA1Ov4flX28vdu6EEA0ndOutVTmqolstk
-         221WCu8VmaK9phJEdXosr02YX9J8blDqGyyIEbs9lIAE9jtkbhKLvu9W0H/KajnsI/
-         qNMwnq95VvyVM+RAJ7wd66IRDIX9fCeUXUqYrXIg=
+        b=uoqU0nQtH7oTmqlFfx58lhW1wyXecxz+oY2qkOV71J82DCX+t6s1W2oRu4lWbNVHJ
+         IVC3l5EO6/492iYmixYIP3HYqqSYuxby3mZ6pFgGTdyHeeFsyPXVM/y8Idhs7zf9U2
+         kbIpXVWBIZroJ+xfUiXverxpx1LH1wUgrYhfagcg=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -39,12 +39,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-samsung-soc@vger.kernel.org,
         Kees Cook <keescook@chromium.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 093/193] regulator: s5m8767: Bounds check id indexing into arrays
-Date:   Fri, 10 Mar 2023 14:37:55 +0100
-Message-Id: <20230310133714.304169831@linuxfoundation.org>
+Subject: [PATCH 5.4 204/357] regulator: s5m8767: Bounds check id indexing into arrays
+Date:   Fri, 10 Mar 2023 14:38:13 +0100
+Message-Id: <20230310133743.717604527@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230310133710.926811681@linuxfoundation.org>
-References: <20230310133710.926811681@linuxfoundation.org>
+In-Reply-To: <20230310133733.973883071@linuxfoundation.org>
+References: <20230310133733.973883071@linuxfoundation.org>
 User-Agent: quilt/0.67
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -87,10 +87,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/regulator/s5m8767.c b/drivers/regulator/s5m8767.c
-index d558f806a4705..80e751759b706 100644
+index 1e9f03a2ea1cc..7ff480810cfa2 100644
 --- a/drivers/regulator/s5m8767.c
 +++ b/drivers/regulator/s5m8767.c
-@@ -918,10 +918,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
+@@ -924,10 +924,14 @@ static int s5m8767_pmic_probe(struct platform_device *pdev)
  
  	for (i = 0; i < pdata->num_regulators; i++) {
  		const struct sec_voltage_desc *desc;
