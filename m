@@ -2,54 +2,55 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 557BB6B6A0F
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 12 Mar 2023 19:26:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B93136B6A0A
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 12 Mar 2023 19:25:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232142AbjCLS0l (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 12 Mar 2023 14:26:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
+        id S231877AbjCLSZK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 12 Mar 2023 14:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230339AbjCLS01 (ORCPT
+        with ESMTP id S232342AbjCLSYy (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 12 Mar 2023 14:26:27 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E727AAC
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:20:29 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id h9so10425713ljq.2
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:20:29 -0700 (PDT)
+        Sun, 12 Mar 2023 14:24:54 -0400
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520FE10EC
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:17:58 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id s20so12968869lfb.11
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678645145;
-        h=cc:to:subject:date:from:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
+        d=gmail.com; s=20210112; t=1678644676;
+        h=cc:to:subject:date:from:in-reply-to:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
         bh=R/ZxX3DwmCtqhIm3cqoC0hxQvGcxZ6dvB//gAmJzTdM=;
-        b=Fin1lDzAwEvhp3Wf0d/EQRl42r4IRtF7wZuNV0iOr2Sc3Q+8OtJWAUgyql1jICvw/G
-         MS8STVKPLy75mz7CB5cQ0VadtxyRc4VFEWLK4lEsbSkVltjbmAL578WKkwQT0OeQ67UD
-         ADQPJ65haRa02/mYdzl8LTyMJoFxUgPwhZeNGPTXOqVZ3msOaNLv91+ofYtA3lIS7OoP
-         4a9kMevyxuYZslzjnPSZ4+xZGYxz22TYrFrAgBNldi6g5zviKM7jmt3YuoW9+r6ZDvZQ
-         AQdmmhDIPZvMsWG8HDaFBcrd29xfK988XIavGCATkEYxSGEwpyt8bas229rsJNFGIq2G
-         /JLA==
+        b=Xh/60ROSy7mUDvmLUiYPMFniWqGvJqYvdEu8qAuLSEdj9LuwBaJC/LCLOhP35Kqp17
+         b6bCVnzeTbyVboF/0n7+werVvnrl4+FOZKsjvWLS84HOgbaH2blRHq5XbgWjc3E/mvBT
+         XrCXv2XwjfPcZ0p6ycNuYuzV6yS+hATbq8+WE5ij+PfaXDmIdRXKvb+NL+R+JYiOv/Pz
+         n8i3HNX7tE9MoNQ/QIeank2hgWz1T7mYFXKl1qnkCxci8ndXqx4WNkoZaE7UrBN1l9Un
+         nfZi8RUcr76O8dv2uG2JOqdL5ADLmwh1OenzsFY+4En8htI9mBSoUa8KJKfFJZtFBklM
+         w4pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678645145;
-        h=cc:to:subject:date:from:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
+        d=1e100.net; s=20210112; t=1678644676;
+        h=cc:to:subject:date:from:in-reply-to:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
         bh=R/ZxX3DwmCtqhIm3cqoC0hxQvGcxZ6dvB//gAmJzTdM=;
-        b=EVqLTXaP5/Fooph7GKO0MI20BP9aa8Uuwcd0NPmR9mJ0wtiYK1HvA/HN3lbaSJszt6
-         oApQojJANpm/EVyMeHdzxWA/7BeA24IEJAFDVdzthJwBxCfhKmBCADmU5hKe6999nVLP
-         xRzz6HSlcUi4Br0CtewM+3bCASIMUKxrNW8qgwb4uhDsF69Hrqb5z/Wr3lQFsqdVpMrQ
-         Ghmyy9tLcsXfTKrAieevxeHryYXTMyODLbPeE0GQwAeoOljrnlk6d3BzY38PPbEBcO2G
-         76kPsXrcWCfnHW25WYyCKNMtMfltUJE69/r4Gf1mroIEwraWuiGAIPKIvDlz3HdfeFi7
-         cwEA==
-X-Gm-Message-State: AO0yUKVKFmJs3joYauD9KHEOO/nXVOTK22eNpAzXdE7OXb/odJn1mlnA
-        89Jzu5AFKtK/dQ5jt0LYGljA+X0QcfcZAPX5
-X-Google-Smtp-Source: AK7set8EVTQ0M8wwToogXlCovzofIGhh+13s+1OMZcMakKnSaAaeCx6Sb9QhFkr38g8h58J9u+3smQ==
-X-Received: by 2002:ac2:44cb:0:b0:4b5:a207:8d70 with SMTP id d11-20020ac244cb000000b004b5a2078d70mr8889093lfm.5.1678644300941;
-        Sun, 12 Mar 2023 11:05:00 -0700 (PDT)
+        b=TK8nRXlKiBeoq406fVBorC/FRz3nV4KCVr6/YiE36nyVq1QsfPE12DaV8J08D/3IXi
+         G6qKyUzgCzzb0IIh2WLL4RhSooZJO99LhjwtB5Y/nvVfPq1+hv0YQrgnkHspgHJL8b/d
+         8YuHU8Vu2RusRyK+XzQd38e8Wbq6r3zUu7+GiC4jFK0xdpcdzkkxqJ5uWnd+4AAJT7UY
+         6cj6Avpk4BzFtbUS9upyPEo+kCdgAcImFkZlK1A59r7m5f/VVCeT1pnzmjmQsIHxnwn0
+         9HiQNeGlgcv+JC8GCNPXh3APPgGzY1SyzttpoH/Ue+9XfeuLN2486EG98uRp8q0L9MTU
+         hedg==
+X-Gm-Message-State: AO0yUKW2qBAzxb6+BZYRxLvWeVCtjUY1ype0vJpvrHeQN8PFYoau15os
+        hhaBjT2Aupp1H6fk7RKCgUYxAAuXKVPu3SA8
+X-Google-Smtp-Source: AK7set+aQi+WYPRWJZGW2XG2j+dCz7snh1zt2EqgX8SFjft2X7p5+HIHCIPwoqJ/Y9EGareBfTbENw==
+X-Received: by 2002:ac2:5498:0:b0:4da:fb89:fcc6 with SMTP id t24-20020ac25498000000b004dafb89fcc6mr8966092lfk.57.1678644676371;
+        Sun, 12 Mar 2023 11:11:16 -0700 (PDT)
 Received: from 0002-mmc-dw_mmc-add-an-option-to-force-32-bit-access-to-6.patch (46-138-144-249.dynamic.spd-mgts.ru. [46.138.144.249])
-        by smtp.gmail.com with ESMTPSA id y4-20020ac255a4000000b004b5774726dcsm707104lfg.236.2023.03.12.11.05.00
+        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004dc6070e121sm727756lfd.83.2023.03.12.11.11.15
         for <linux-samsung-soc@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 11:05:00 -0700 (PDT)
-Message-ID: <640e144c.c20a0220.7c216.196c@mx.google.com>
+        Sun, 12 Mar 2023 11:11:16 -0700 (PDT)
+Message-Id: <1678644516.665314-2-sleirsgoevy@gmail.com>
+In-Reply-To: <1678644516.665314-0-sleirsgoevy@gmail.com>
 From:   Sergey Lisov <sleirsgoevy@gmail.com>
 Date:   Sun, 12 Mar 2023 20:58:50 +0300
 Subject: [PATCH v5 2/3] mmc: dw_mmc: add an option to force 32-bit access to
@@ -64,8 +65,8 @@ Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
