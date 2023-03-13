@@ -2,78 +2,73 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 557BC6B6A20
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 12 Mar 2023 19:33:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A7CB6B6FAF
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Mar 2023 07:56:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbjCLSdw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 12 Mar 2023 14:33:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
+        id S229642AbjCMG4A (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 13 Mar 2023 02:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231800AbjCLSdd (ORCPT
+        with ESMTP id S229552AbjCMGz7 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 12 Mar 2023 14:33:33 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3327012BF2
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:30:40 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id j11so40230471edq.4
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 11:30:40 -0700 (PDT)
+        Mon, 13 Mar 2023 02:55:59 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE00F4D611
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 23:55:58 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id g10so15529787eda.1
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 12 Mar 2023 23:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1678645772;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uklOMUJVS+u74q2lNQ2L3Oa76MwPD6cKkPZXD0PzvOk=;
-        b=BumR+9k0EaadI1IgYmXc+rwPYkQvm47PndRlmx8tM60dEp4CxcHQVluZxo+sLYNHss
-         /Ws59s0tWohVYn7SLx9YEfxkBX0Zf+Bzo1eshtH7kXR7K0a4ZwTqtxj+2l1YDux/5mIn
-         Vd0wUqJdFdQVqKET+DVm7odEbhjAQ+mRBeT9UA4vuFdj0ZrgiEH19I8BLZNYayAD6KD1
-         LgvjxxPhLJe4h3Ww/ILseqltlRTwQ4jMa+lyntg0i/vMCDS0Q80AfvM7m868GiD7CqfU
-         S+cmJND/RtB9G0EmqWbMujksVQVwmvc/Kog9npwyjOnd0AsBydteY+eDKu1WdjTIH7N1
-         4tyg==
+        d=linaro.org; s=google; t=1678690557;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=68t53gvmnckd79R+6Q5eQlJvYe/ZNkZDBgwKVccmvF0=;
+        b=UEHgBCYWBOs6Rv4dAAPfTOlQMu+oI9b93bsaN47eXaUSTR6Py2Cuf9jrdO+fqpUVoM
+         roobCo4q3efl0lFOvvpL9XHBE8veEK6STx1EMiLA8UGZf4UUAgUo1xnn/UxFjjznuccZ
+         fnjUETyC0sY0NUP6dO6vaU+m8wtBTG/Qnc+qjOvX2+z4s/mxWgQ3NN9z2g36I3/ZoN4N
+         EBPdCTpZ/voeM0Vc+eddsG3r5FYtBOlUyXCkMZUIq/q/vVfGQYlpNTKFaZh/IGVcrH3R
+         qeiLSxOLpiIBHxL0Kbra+fW2Wkk8SxF+Jr9891juoaDZYKmRFCf8fxLyKvJRrc9lgLwq
+         bjaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678645772;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uklOMUJVS+u74q2lNQ2L3Oa76MwPD6cKkPZXD0PzvOk=;
-        b=NyCOT3sV8uY6S666dXvQpCeGA5YM74iksldIOX1XkCI1xoh4YD1BJUFXsienQgyPwf
-         WJUlHQMDiPIVq8+vGYOD1PuXySuyR5GPPJtoypkTsgJH7dNXJUjY0FL0bx0KgdgnF0ZW
-         6R29EC1Kuvbsq9v+VYeAFJIDSYSPKQrbT95XFMmKEG1HNCBhXjwXdew3Qx/qMzjEMYH5
-         oM41+kRDyYdqRquNjJplvC+JHjbAkb/AbDJBN8DVcXZxMHjSaNyuH9SlcEv5RQ3lYj5g
-         UGdoigkm5qDYu6DEg1F09+vtJacnG+xl99b8qc1LbOnW2ZWM7rp2DjdowmM7OCHl2KjW
-         gR9Q==
-X-Gm-Message-State: AO0yUKVtefAnDad4UL8umCP3qtV7kMaG7fm1xPDe326ewXM4mWJyIffO
-        vwozGyez3DYQTcFpWNvXWEJ46P2EzRNDv3CUdHk=
-X-Google-Smtp-Source: AK7set+wLPwfiYTBJKHeb6798JXdZToZ1wN8CLYiuEE03LcKlvgRWrhC81BlP33K3TpRYzt56OBfGQ==
-X-Received: by 2002:a17:906:1604:b0:8af:7b80:82ba with SMTP id m4-20020a170906160400b008af7b8082bamr30601317ejd.20.1678644712043;
-        Sun, 12 Mar 2023 11:11:52 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:d9f6:3e61:beeb:295a? ([2a02:810d:15c0:828:d9f6:3e61:beeb:295a])
-        by smtp.gmail.com with ESMTPSA id b18-20020a17090636d200b008d0dbf15b8bsm2441348ejc.212.2023.03.12.11.11.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Mar 2023 11:11:51 -0700 (PDT)
-Message-ID: <f0f6d714-f35c-fa53-f9bf-44cd4baa4aea@linaro.org>
-Date:   Sun, 12 Mar 2023 19:11:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 1/3] dt-bindings: exynos-dw-mshc-common: add exynos7885
- variants
-Content-Language: en-US
-To:     Sergey Lisov <sleirsgoevy@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Jaehoon Chung <jh80.chung@samsung.com>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1678644516.665314-1-sleirsgoevy@gmail.com>
+        d=1e100.net; s=20210112; t=1678690557;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=68t53gvmnckd79R+6Q5eQlJvYe/ZNkZDBgwKVccmvF0=;
+        b=jtvKLeQRij+Ci0CUm4rpnlzxGS76jsyNdswn5a8ClHEJWbdVAgPK63DrLBgOZmIQMs
+         eA3+b6Aa0Tfq4akVqA5ROTWg8UijzcR2UKD0Rc+4hVf/NZYOtFCaV0jizYEzEExDThJN
+         CaGuI97CEu/XRWQD80Wd+qUVALvBaIBsnJ/XVgHXso9+RiUu0HGH4t68CpuIAoOwdrt+
+         3cp2sMry9eYzk7Tdl1HDvPMUpGqtbC7XEq+sDTfYf1TsrwSJK3V95hkpf9dEuxKiruNz
+         Lh8iXG6IPmao/ylo2+POLrbGLaMp216bmw2mftOogCXvNdg48YXk81Z3c+L0JL1lpWHK
+         7fWw==
+X-Gm-Message-State: AO0yUKX650D08CZLuv0OF0BFF+TaKcWwyYOXo+K+KfudG3ccEHtnaOst
+        INCiXEUHlu9wRuqFb+tNJU/pKg==
+X-Google-Smtp-Source: AK7set8/5t4r0ELJPYB0lTz5b6ulPt7gDq65c4aNksBLofkqZkr2GA3EnQ5yKTY3bKV6UhHke5RMGA==
+X-Received: by 2002:a05:6402:654:b0:49e:1f0e:e209 with SMTP id u20-20020a056402065400b0049e1f0ee209mr11393039edx.10.1678690557308;
+        Sun, 12 Mar 2023 23:55:57 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:f052:f15:3f90:fcb3])
+        by smtp.gmail.com with ESMTPSA id hd31-20020a170907969f00b008ce5b426d77sm3116873ejc.13.2023.03.12.23.55.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Mar 2023 23:55:57 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1678644516.665314-1-sleirsgoevy@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Russell King <linux@armlinux.org.uk>,
+        Rob Herring <robh@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH] ARM: exynos: Use of_property_read_bool() for boolean properties
+Date:   Mon, 13 Mar 2023 07:55:55 +0100
+Message-Id: <167869055285.8213.17268784442522016058.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230310144655.1540655-1-robh@kernel.org>
+References: <20230310144655.1540655-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,18 +77,19 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 12/03/2023 18:58, Sergey Lisov wrote:
-> Some Samsung Exynos boards using the arm64 architecture have DW MMC
-> controllers configured for a 32-bit data bus but a 64-bit FIFO. On these
-> systems the 64-bit FIFO registers must be accessed in two 32-bit halves.
+On Fri, 10 Mar 2023 08:46:54 -0600, Rob Herring wrote:
+> It is preferred to use typed property access functions (i.e.
+> of_property_read_<type> functions) rather than low-level
+> of_get_property/of_find_property functions for reading properties.
+> Convert reading boolean properties to to of_property_read_bool().
 > 
-> Add two new compatible strings, "samsung,exynos7885-dw-mshc" and
-> "samsung,exynos7885-dw-mshc-smu" respectively, to denote exynos7885
-> boards that need this quirk. But it's very possible that all
-> "samsung,exynos7-dw-mshc" boards are actually affected.
+> 
 
-And now this is third copy of the same email. This is not acceptable.
+Applied, thanks!
+
+[1/1] ARM: exynos: Use of_property_read_bool() for boolean properties
+      https://git.kernel.org/krzk/linux/c/2b8ed0c89f5dc7af756473651deb1be1770d2136
 
 Best regards,
-Krzysztof
-
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
