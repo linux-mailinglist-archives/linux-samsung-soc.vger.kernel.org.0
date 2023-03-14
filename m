@@ -2,91 +2,68 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B43B66BE2AC
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 17 Mar 2023 09:08:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 098A26BE568
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 17 Mar 2023 10:21:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231193AbjCQII1 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 17 Mar 2023 04:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54264 "EHLO
+        id S230061AbjCQJVB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 17 Mar 2023 05:21:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231228AbjCQIIY (ORCPT
+        with ESMTP id S229560AbjCQJVA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 17 Mar 2023 04:08:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2293B8560;
-        Fri, 17 Mar 2023 01:07:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A75C6B824D6;
-        Fri, 17 Mar 2023 08:06:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5197C433EF;
-        Fri, 17 Mar 2023 08:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1679040396;
-        bh=F1RVNnHTQi58MsXnXoc63veIjmnP9O89ul6v9KyMj6M=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tR4kvm2MIfrnGvl7LkoyCp0mYK8FJJb7NVrhsClSwcA77seW4Xe5vLPvKK/XpCseS
-         bRfX/vyfS5QMQ/YY7dyTOFpXHJ46Z5mM/OjOodgWTekY0HebmebUM585YdOcexb7p7
-         0YWvj9Cvf7KPSQSfuPmdPgVOjiGJRpQJtkaXyVFsipy5Cr/NmDM4JhO+uJew2miMsE
-         wxaa6qOSj/4mT+mY48gyMX+h038IAz6BDQeEIqd5K0FYdBivtjBfutpuqjT88+6Bvv
-         FINK/LZFP3gVPJaFx9002enF1cBslhbQc3TUf/yO/VXFxH6P3YhIr5TK/f4dT55i/0
-         7HcuJD9RRerCw==
-Date:   Fri, 17 Mar 2023 08:06:31 +0000
-From:   Lee Jones <lee@kernel.org>
-To:     David Virag <virag.david003@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-Subject: Immutable branch between MFD and RTC due for the v6.4 merge window
-Message-ID: <20230317080631.GE9667@google.com>
-References: <20230131183008.4451-1-virag.david003@gmail.com>
+        Fri, 17 Mar 2023 05:21:00 -0400
+Received: from sragenkab.go.id (mail.sragenkab.go.id [103.172.109.4])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id EB02AAD15
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 17 Mar 2023 02:20:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sragenkab.go.id;
+         h=mime-version:content-type:content-transfer-encoding:date:from
+        :to:subject:reply-to:message-id; q=dns/txt; s=dkim1; bh=QGcIAmD5
+        O/Y9qXzDV8MxyimbsW3+rMaQ/kz75GzBHbk=; b=KcWAywIXwOZ32Mz2VSDg8xJS
+        GnQpTEZ6rZ9PBcnC5dXFp5bXUyzWG9aHAAKeXTTIEZcAk8IEBYr/YGYghzbDetU2
+        TP5NWK8lOBP8y68tnB7QOb/1ze9EG6Itouqs0cUUQUsb2A6+msRl44+wNTV0/ptV
+        +J5dxe4VZk6DojvyMklGYQFw3mI0whlTG4k0pj1k5SFbmpbZtKmqGLvbnPo7X5qC
+        PoBLORFwC0RU5J+RKwpDakz+/jbiS2RqlrfT9drVcvhxXaSkiDBYRIucgrORQo35
+        EjPSHh3obBG9MChnhCK+QJ/9SmsICBubXBN8UTUrZxqlBlfi0ofA4iOVph75Pw==
+Received: (qmail 76006 invoked from network); 14 Mar 2023 20:34:15 -0000
+Received: from localhost (HELO mail2.sragenkab.go.id) (127.0.0.1)
+  by localhost with SMTP; 14 Mar 2023 20:34:15 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230131183008.4451-1-virag.david003@gmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 14 Mar 2023 13:34:15 -0700
+From:   Ibrahim Tafa <jurnalsukowati@sragenkab.go.id>
+To:     undisclosed-recipients:;
+Subject: LOAN OPPORTUNITY AT LOW-INTEREST RATE
+Reply-To: <ibrahimtafa@abienceinvestmentsfze.com>
+Mail-Reply-To: <ibrahimtafa@abienceinvestmentsfze.com>
+Message-ID: <db514af417c9cc67b4f7fb911606ac9e@sragenkab.go.id>
+X-Sender: jurnalsukowati@sragenkab.go.id
+User-Agent: Roundcube Webmail/0.8.1
+X-Spam-Status: No, score=3.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS,SUBJ_ALL_CAPS,UNDISC_MONEY,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Enjoy!
 
-The following changes since commit fe15c26ee26efa11741a7b632e9f23b01aca4cc6:
 
-  Linux 6.3-rc1 (2023-03-05 14:52:03 -0800)
+-- 
+Greetings,
+   I am contacting you based on the Investment/Loan opportunity for 
+companies in need of financing a project/business, We have developed a 
+new method of financing that doesn't take long to receive financing from 
+our clients.
+    If you are looking for funds to finance your project/Business or if 
+you are willing to work as our agent in your country to find clients in 
+need of financing and earn commissions, then get back to me for more 
+details.
 
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git ib-mfd-rtc-v6.4
-
-for you to fetch changes up to bb7929626c4f57f590b6028540a4bbd2a73809cb:
-
-  rtc: s5m: Drop S5M8763 support (2023-03-16 15:12:03 +0000)
-
-----------------------------------------------------------------
-Immutable branch between MFD and RTC due for the v6.4 merge window
-
-----------------------------------------------------------------
-David Virag (2):
-      mfd: sec: Remove PMICs without compatibles
-      rtc: s5m: Drop S5M8763 support
-
- drivers/mfd/sec-core.c              | 46 -------------------
- drivers/mfd/sec-irq.c               | 89 ------------------------------------
- drivers/rtc/rtc-s5m.c               | 82 ++-------------------------------
- include/linux/mfd/samsung/core.h    |  2 -
- include/linux/mfd/samsung/irq.h     | 50 ---------------------
- include/linux/mfd/samsung/s5m8763.h | 90 -------------------------------------
- 6 files changed, 3 insertions(+), 356 deletions(-)
- delete mode 100644 include/linux/mfd/samsung/s5m8763.h
-
---
-Lee Jones [李琼斯]
+Regards,
+Ibrahim Tafa
+ABIENCE INVESTMENT GROUP FZE, United Arab Emirates
