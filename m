@@ -2,63 +2,89 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA67B6BAB69
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Mar 2023 10:01:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C89356BAC49
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Mar 2023 10:39:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbjCOJBx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 15 Mar 2023 05:01:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45842 "EHLO
+        id S232031AbjCOJjl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 15 Mar 2023 05:39:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231550AbjCOJBp (ORCPT
+        with ESMTP id S230393AbjCOJjj (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 15 Mar 2023 05:01:45 -0400
-Received: from mail.corrib.pl (mail.corrib.pl [185.58.226.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9946F7A908
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 02:01:18 -0700 (PDT)
-Received: by mail.corrib.pl (Postfix, from userid 1001)
-        id 1404EA3E29; Wed, 15 Mar 2023 09:00:55 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corrib.pl; s=mail;
-        t=1678870883; bh=X6IEpSISwJiYlJ3uA866lskXve3r+4o2hf4z7VM6m5o=;
+        Wed, 15 Mar 2023 05:39:39 -0400
+X-Greylist: delayed 1313 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 15 Mar 2023 02:39:37 PDT
+Received: from mail.docworker.pl (mail.docworker.pl [94.177.230.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 384D240E8
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 02:39:37 -0700 (PDT)
+Received: by mail.docworker.pl (Postfix, from userid 1002)
+        id 8172084E5D; Wed, 15 Mar 2023 10:16:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=docworker.pl; s=mail;
+        t=1678871773; bh=F9Uuk9o83BVy7SpscM/nJos6FHfnp2pKrNUqPErj3yg=;
         h=Date:From:To:Subject:From;
-        b=z1SzNV99QO6mMMljtz0OqRsFnxrcoOuxdswK5vQwQbwA92Ykn7eXY9wUlH1bLGyTo
-         vOx2EgPr3dWxin/tZkKXXxUNarTCHJq/2AB5X0qYoiWl+U+mU+6+Wncx3MGrxinFGJ
-         k/ZElshzCOQbs+GAaRYkAkwPh+SY8urpNzc3kqf6eIcLJ/HMPk2yJDIKlmI+PkJlyu
-         kJBou1qf4OQjFjeZY63oJG6kUlQHLgoT6HWvR++Zym/IYxjL710qVp3RmfyXxysWDV
-         OJtnhvHQMzzO3GzYLX3j9VT6/dP0B4FFDJ/ybV5iPibS80tGQjb+V4dvf0lOVWwzym
-         JvIuTIh97RJ9Q==
-Received: by mail.corrib.pl for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 09:00:35 GMT
-Message-ID: <20230315074501-0.1.62.iwc0.0.p4lm1ifzge@corrib.pl>
-Date:   Wed, 15 Mar 2023 09:00:35 GMT
-From:   =?UTF-8?Q? "Szczepan_Kie=C5=82basa" ?= 
-        <szczepan.kielbasa@corrib.pl>
+        b=gBPDZ76xnI/8lGCUICwKzX09kdfPso5VRBfo9nJ7SFXivf0RfngxEYKJWfblpARDD
+         qP5dWbiQ8WNOvmsV7vs1U837u8KJq38rn4QGcqHx+pRRNAjnyCUV5zXfbgSbvqvm+R
+         jWzxZkTfhOiuDIa4kiPMt4RLleJdEcQabcalFDi3r3tJFNxp04QDvlKbAcNsMHINrd
+         /ak0rZ6Nsu9SRPn8uyt6MRbrEhze9M4yHw9y40nenDxF1KjErlMgv8AoRPMVQnAoH6
+         HhsnSWIkt0kUXkeow91hkZcpxBqn7v+FQ/EqNOgrGWuyYDKMYy0m/ViIwyBdBqzxum
+         vHxAl5f2cld+Q==
+Received: by mail.docworker.pl for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 09:16:08 GMT
+Message-ID: <20230315084500-0.1.g.1lqz.0.erlna2on50@docworker.pl>
+Date:   Wed, 15 Mar 2023 09:16:08 GMT
+From:   =?UTF-8?Q? "Mi=C5=82osz_G=C3=B3recki" ?= 
+        <milosz.gorecki@docworker.pl>
 To:     <linux-samsung-soc@vger.kernel.org>
-Subject: Faktoring
-X-Mailer: mail.corrib.pl
+Subject: Zapytanie ofertowe 
+X-Mailer: mail.docworker.pl
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: Yes, score=5.7 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED,URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
+        *      blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [URIs: docworker.pl]
+        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
+        *      blocklist
+        *      [URIs: docworker.pl]
+        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        *      [94.177.230.24 listed in zen.spamhaus.org]
+        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
+        *      blocklist
+        *      [URIs: docworker.pl]
+        * -0.0 BAYES_40 BODY: Bayes spam probability is 20 to 40%
+        *      [score: 0.2477]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dzie=C5=84 dobry,
+Szanowni Pa=C5=84stwo,
 
-rozwa=C5=BCali Pa=C5=84stwo wyb=C3=B3r finansowania, kt=C3=B3re spe=C5=82=
-ni potrzeby firmy, zapewniaj=C4=85c natychmiastowy dost=C4=99p do got=C3=B3=
-wki, bez zb=C4=99dnych przestoj=C3=B3w?=20
+Od blisko 8 lat skutecznie wspieramy naszych partner=C3=B3w w pozyskiwani=
+u klient=C3=B3w. =C5=9Awiadczymy us=C5=82ug=C4=99 generowania lead=C3=B3w=
+ z kilkoma unikalnymi cechami jak gwarancja realnego uruchomienia rozm=C3=
+=B3w lub wymiana kontaktu. Nadmieni=C4=99 tak=C5=BCe, i=C5=BC kontakty pr=
+zekazywane s=C4=85 na wy=C5=82=C4=85czno=C5=9B=C4=87.
 
-Przygotowali=C5=9Bmy rozwi=C4=85zania faktoringowe dopasowane do Pa=C5=84=
-stwa bran=C5=BCy i wielko=C5=9Bci firmy, dzi=C4=99ki kt=C3=B3rym, nie mus=
-z=C4=85 Pa=C5=84stwo martwi=C4=87 si=C4=99 o niewyp=C5=82acalno=C5=9B=C4=87=
- kontrahent=C3=B3w, poniewa=C5=BC transakcje s=C4=85 zabezpieczone i posi=
-adaj=C4=85 gwarancj=C4=99 sp=C5=82aty.=20
-Chc=C4=85 Pa=C5=84stwo przeanalizowa=C4=87 dost=C4=99pne opcje?
+Je=C5=9Bli w chwili obecnej poszukujecie Pa=C5=84stwo nowych zapyta=C5=84=
+ i lead=C3=B3w sprzeda=C5=BCowych prosz=C4=99 o kontakt lub wskazanie ter=
+minu rozmowy.
 
 
-Pozdrawiam
-Szczepan Kie=C5=82basa
+Pozdrawiam serdecznie
+Mi=C5=82osz G=C3=B3recki
