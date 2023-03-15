@@ -2,78 +2,63 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B08D06BAAF3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Mar 2023 09:40:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA67B6BAB69
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Mar 2023 10:01:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231191AbjCOIk5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 15 Mar 2023 04:40:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43072 "EHLO
+        id S230266AbjCOJBx (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 15 Mar 2023 05:01:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231679AbjCOIk4 (ORCPT
+        with ESMTP id S231550AbjCOJBp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 15 Mar 2023 04:40:56 -0400
-Received: from mail.amblevebiz.com (mail.amblevebiz.com [80.211.239.97])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937A26B96B
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 01:40:54 -0700 (PDT)
-Received: by mail.amblevebiz.com (Postfix, from userid 1002)
-        id 4FC8A829CB; Wed, 15 Mar 2023 09:40:43 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=amblevebiz.com;
-        s=mail; t=1678869653;
-        bh=mG5KF9rXIT2hCcIXZaMY449X9Ndwb1czFhgZLlqDg7A=;
+        Wed, 15 Mar 2023 05:01:45 -0400
+Received: from mail.corrib.pl (mail.corrib.pl [185.58.226.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9946F7A908
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 02:01:18 -0700 (PDT)
+Received: by mail.corrib.pl (Postfix, from userid 1001)
+        id 1404EA3E29; Wed, 15 Mar 2023 09:00:55 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corrib.pl; s=mail;
+        t=1678870883; bh=X6IEpSISwJiYlJ3uA866lskXve3r+4o2hf4z7VM6m5o=;
         h=Date:From:To:Subject:From;
-        b=VDmfI4ECastp8o31ohOYTckTExgjOHOYX2CIjnT+9vJ1pk81EoC9zzLkQAGfQHank
-         A3XRuIkpJYCr9pxAONUoJgRz6+VnFyQvSpDDgxbxWrlZIoZYN/O1gpmo8lbeyjJVxX
-         DmvnIuraH6+hFo6trNvBxJm2g8LHytU60s20jDW5aOx6yeyo/iG79KK8fd6ttC7VH8
-         Yoq+6AjOsBaY6H1Bh4vx6UJ9zujXnR5FFHU64tP/F+hRFqjfKxgdlm8Lksnb3LHnAH
-         d8s+KHxL96XdoZtkZWD56mzNMxq1YXOnG4f195M777qsKdOyeSU+Hutak/IyTDW6lH
-         GQU6L94W3SoOw==
-Received: by mail.amblevebiz.com for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 08:40:36 GMT
-Message-ID: <20230315084500-0.1.p.1gus.0.6if7ozxhg2@amblevebiz.com>
-Date:   Wed, 15 Mar 2023 08:40:36 GMT
-From:   =?UTF-8?Q? "Luk=C3=A1=C5=A1_Horv=C3=A1th" ?= 
-        <lukas.horvath@amblevebiz.com>
+        b=z1SzNV99QO6mMMljtz0OqRsFnxrcoOuxdswK5vQwQbwA92Ykn7eXY9wUlH1bLGyTo
+         vOx2EgPr3dWxin/tZkKXXxUNarTCHJq/2AB5X0qYoiWl+U+mU+6+Wncx3MGrxinFGJ
+         k/ZElshzCOQbs+GAaRYkAkwPh+SY8urpNzc3kqf6eIcLJ/HMPk2yJDIKlmI+PkJlyu
+         kJBou1qf4OQjFjeZY63oJG6kUlQHLgoT6HWvR++Zym/IYxjL710qVp3RmfyXxysWDV
+         OJtnhvHQMzzO3GzYLX3j9VT6/dP0B4FFDJ/ybV5iPibS80tGQjb+V4dvf0lOVWwzym
+         JvIuTIh97RJ9Q==
+Received: by mail.corrib.pl for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Mar 2023 09:00:35 GMT
+Message-ID: <20230315074501-0.1.62.iwc0.0.p4lm1ifzge@corrib.pl>
+Date:   Wed, 15 Mar 2023 09:00:35 GMT
+From:   =?UTF-8?Q? "Szczepan_Kie=C5=82basa" ?= 
+        <szczepan.kielbasa@corrib.pl>
 To:     <linux-samsung-soc@vger.kernel.org>
-Subject: =?UTF-8?Q?Technick=C3=BD_audit_podlah?=
-X-Mailer: mail.amblevebiz.com
+Subject: Faktoring
+X-Mailer: mail.corrib.pl
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_FMBLA_NEWDOM28,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,URIBL_CSS_A,
-        URIBL_DBL_SPAM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dobr=C3=A9 r=C3=A1no,
+Dzie=C5=84 dobry,
 
-uva=C5=BEujete o bezesp=C3=A1rov=C3=A9 podlaze pro v=C3=BDrobn=C3=AD prov=
-oz?
+rozwa=C5=BCali Pa=C5=84stwo wyb=C3=B3r finansowania, kt=C3=B3re spe=C5=82=
+ni potrzeby firmy, zapewniaj=C4=85c natychmiastowy dost=C4=99p do got=C3=B3=
+wki, bez zb=C4=99dnych przestoj=C3=B3w?=20
 
-Jako sv=C4=9Btov=C3=BD l=C3=ADdr ve v=C3=BDrob=C4=9B a pokl=C3=A1dce podl=
-ah =C5=99e=C5=A1=C3=ADme probl=C3=A9my vypl=C3=BDvaj=C3=ADc=C3=AD z vlivu=
- chemick=C3=BDch slou=C4=8Denin, ot=C4=9Bru, n=C3=A1raz=C5=AF, vlhkosti n=
-ebo n=C3=A1hl=C3=BDch zm=C4=9Bn teplot - na=C5=A1e podlahov=C3=A9 syst=C3=
-=A9my jsou p=C5=99izp=C5=AFsobeny nejt=C4=9B=C5=BE=C5=A1=C3=ADm podm=C3=AD=
-nk=C3=A1m prost=C5=99ed=C3=AD.
-
-Garantujeme v=C3=A1m =C5=99e=C5=A1en=C3=AD, kter=C3=A1 jsou =C5=A1etrn=C3=
-=A1 k =C5=BEivotn=C3=ADmu prost=C5=99ed=C3=AD, odoln=C3=A1 a snadno se =C4=
-=8Dist=C3=AD, hygienick=C3=A1, protiskluzov=C3=A1 a bezpe=C4=8Dn=C3=A1 pr=
-o zam=C4=9Bstnance.
-
-Poskytujeme kr=C3=A1tkou dobu instalace a nep=C5=99etr=C5=BEit=C3=BD prov=
-oz i o v=C3=ADkendech a sv=C3=A1tc=C3=ADch, =C4=8D=C3=ADm=C5=BE eliminuje=
-me riziko prostoj=C5=AF.
-
-Mohu V=C3=A1m zdarma nab=C3=ADdnout technick=C3=BD audit podlah s komplex=
-n=C3=ADm rozborem podkladu.
-
-M=C5=AF=C5=BEeme pro v=C3=A1s mluvit o =C5=99e=C5=A1en=C3=ADch?
+Przygotowali=C5=9Bmy rozwi=C4=85zania faktoringowe dopasowane do Pa=C5=84=
+stwa bran=C5=BCy i wielko=C5=9Bci firmy, dzi=C4=99ki kt=C3=B3rym, nie mus=
+z=C4=85 Pa=C5=84stwo martwi=C4=87 si=C4=99 o niewyp=C5=82acalno=C5=9B=C4=87=
+ kontrahent=C3=B3w, poniewa=C5=BC transakcje s=C4=85 zabezpieczone i posi=
+adaj=C4=85 gwarancj=C4=99 sp=C5=82aty.=20
+Chc=C4=85 Pa=C5=84stwo przeanalizowa=C4=87 dost=C4=99pne opcje?
 
 
-Luk=C3=A1=C5=A1 Horv=C3=A1th
+Pozdrawiam
+Szczepan Kie=C5=82basa
