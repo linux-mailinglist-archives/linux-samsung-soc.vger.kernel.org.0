@@ -2,77 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 294E96D4B51
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Apr 2023 17:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 426936D4D60
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Apr 2023 18:18:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232492AbjDCPCs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 3 Apr 2023 11:02:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35970 "EHLO
+        id S232661AbjDCQSZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 3 Apr 2023 12:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232537AbjDCPCr (ORCPT
+        with ESMTP id S232641AbjDCQSY (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 3 Apr 2023 11:02:47 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF461117E
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Apr 2023 08:02:45 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id x3so118472038edb.10
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Apr 2023 08:02:45 -0700 (PDT)
+        Mon, 3 Apr 2023 12:18:24 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A530170C
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Apr 2023 09:18:23 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id x3so119441429edb.10
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Apr 2023 09:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680534164;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CxDEaCL5e4bzi4gSCZXF+LmIoKQOllXUdmCj1K+tVWc=;
-        b=giEQsdRD7fF37rGZgAnDCoTebtirCaBeirfH9U1pJ6CYFVgp9hEed8Pa9e87aDEBDQ
-         jvqs3rqMitPz7ksefvLjnnkmT6d3tekUDBtpO5EVJsTNUajulOBrjbdIkUhxlfQWRrgF
-         Y6sgR6RI/cw/FlV6JHyb8YA9ihih+VJvY7zdKrbI78hnQophQFboC2r1X1WrgHOU4Cfr
-         xbRE0INs3yX4PwiQYN6/aObOVxs6x0zndrncTdLe3UUQcX0nPFyt2qfS11U9OcAMIs5n
-         CmKe8bxyUej6cwK9xzP4rQgHHMMxseIKLBAQl4iEHxP9eXbS6J6mBOAbQMmcBnvX8Jwm
-         4d+g==
+        d=linaro.org; s=google; t=1680538702;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e+/t8CyLe9nfcDqKwIQawjACJQBN8x/E4vP+2k7N+Eg=;
+        b=YhpzdJTVjt1sqFg0V3bxZbRxGF/mmUwNEsRrp56tbIqpxVJmaaxtDJgJTaRjTZ6QDO
+         fj7o0FD9aq/7FuaSuZjQFfpwYMY+GkTqythW6MM5faKdMRaBCvBQn6VAohwZ5DqqnCKL
+         5Uhq7uIkdT3QSPPZgIvV579qBocUpf5sTTDpiluYJ6b1AmhYPP0xgL6njEIyLI96wVqm
+         8I94x8gNn9wfUPcVVALldInOPjpn/f+m9+coV4A7gCe9WXRdjqtaEv/6o/DR+EQtJKi+
+         AzD9VJitTCkbcghskyMmHpqtGHZ126ZQCGlJJp9qKGfsWpJx2kdBmwdhzt59NtZiwipQ
+         cnpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680534164;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CxDEaCL5e4bzi4gSCZXF+LmIoKQOllXUdmCj1K+tVWc=;
-        b=xB/w1GK71QemCSmhB6kq5jJL2PrTJrwVfVoqeGrVTdriCs6v+kDbgbi2A1wJteFLK/
-         9tqBiQN0Qkv15SNiGfxrwZO5lp5/CWXgGYDM4n/hEmjwSY1Aq5zxzv+PB6IEMACbBt8i
-         6bhnHCZind/c+DeYs+RP4J3hrcbu1CP/4+84lxrCW05F5E8vY+mN3CXIXPD4MPUYFT9r
-         Vf+tvhkisTxfb5e8wLLWWRtkJXMjqLFpJOFMimzktq+AUSgxQnTiMlNxHzCwFGVd/rEg
-         Y+PXzY17EOfrmPJp6HjEKx/YNi2HSHvfk6am73ZRcVZDBW4ILDxtIK6pIRb6+iDxaVVH
-         F4XQ==
-X-Gm-Message-State: AAQBX9cstyJAxdcio7YN32cx5w3y4Cnlm2D7O6979MkrptSZSN1zARiH
-        1cP/Xr9NnRnnt1bvuyrOvMZ9Z4nbm3TH/YiqCi0=
-X-Google-Smtp-Source: AKy350ayEaVfYYRTWH9Acd6EL1xT4OWeHtV4qIWHnrLtm5nuIqLZQhhwrdqe3uvs0uyNtdWrMgP2dpi61pFzDkpMTz8=
-X-Received: by 2002:a17:907:8a06:b0:92d:878e:8566 with SMTP id
- sc6-20020a1709078a0600b0092d878e8566mr19476890ejc.10.1680534164275; Mon, 03
- Apr 2023 08:02:44 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680538702;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e+/t8CyLe9nfcDqKwIQawjACJQBN8x/E4vP+2k7N+Eg=;
+        b=HXcd57FFWs8MifCrRpZofVeVc583xRibjSzssyo32f7sphsDNEtWLkLJt+BLbcpJym
+         cvqfdQqz8vtHfogZ6Jjse068LMXbmurpc/22AVuMrurG5RBXkxIGgj9eJPvA85aWxjjt
+         5Q8XdUkglaM43l/5KD3n4vQSPKOfVYNRtUZasvhohcOate0+xkKqwwxYA+HlZEUSJ9S+
+         Sp+XcPp9ePG4HZikL6/Rd66TyJPD95dOe2l/wARTfg+q/C6b3FxxA4IhtSd4DRcnM2Ea
+         yJDF/Mbj7pFO2T7qzj+nXWw4MEWCOUaGYLkoaRL4QjJkV9Jk7LjZNuLWfzcscdKIgKyk
+         Mkag==
+X-Gm-Message-State: AAQBX9dLnayHP6fg0JPsjMgnx+dZvXym1k5w2KZdhZ2+PWeOpWAgOEaQ
+        3HTRZLET4b/NV0fpcryHWsSdTg==
+X-Google-Smtp-Source: AKy350aIeQbOIRRVUTKAxAF1kiU8gVIcRz/m8Z6zg5sP40aDrQXUxoB55vCsyEAaR8HjUQSPyTwgyw==
+X-Received: by 2002:a17:906:612:b0:933:4d47:55b7 with SMTP id s18-20020a170906061200b009334d4755b7mr15075594ejb.2.1680538701840;
+        Mon, 03 Apr 2023 09:18:21 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:ae90:d80:1069:4805])
+        by smtp.gmail.com with ESMTPSA id hz19-20020a1709072cf300b008f767c69421sm4758065ejc.44.2023.04.03.09.18.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 09:18:21 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     virag.david003@gmail.com, krzysztof.kozlowski+dt@linaro.org,
+        jenneron@protonmail.com, devicetree@vger.kernel.org,
+        replicant@osuosl.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Henrik Grimler <henrik@grimler.se>,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, markuss.broks@gmail.com,
+        alim.akhtar@samsung.com, robh+dt@kernel.org,
+        martin.juecker@gmail.com, m.szyprowski@samsung.com,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v7 0/2] ARM: dts: add mmc aliases for Exynos devices
+Date:   Mon,  3 Apr 2023 18:18:19 +0200
+Message-Id: <168053869552.329664.8971511513108688025.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230402144724.17839-1-henrik@grimler.se>
+References: <20230402144724.17839-1-henrik@grimler.se>
 MIME-Version: 1.0
-Received: by 2002:a17:907:a783:b0:8b1:4cc0:8a35 with HTTP; Mon, 3 Apr 2023
- 08:02:43 -0700 (PDT)
-Reply-To: godwinrichard700@gmail.com
-From:   Richard Godwin <hesterannhester@gmail.com>
-Date:   Mon, 3 Apr 2023 08:02:43 -0700
-Message-ID: <CAFqyS=SsUftPQa6uhJRojcQ8ZcxgVmXX1eWB_T_=VBbVsmkDLQ@mail.gmail.com>
-Subject: URGENT
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On Sun, 2 Apr 2023 16:47:22 +0200, Henrik Grimler wrote:
+> It is convenient to have fixed mmcblk numbering of the eMMC and sdcard
+> so that assigned numbers will not change from boot-to-boot or
+> depending on if storage devices are actually attached or not.
+> 
+> Anton Bambura has done the work for the chromebooks while I have
+> looked at the other devices.  On the chromebooks, mmc0 is used for
+> eMMC and mmc1 for sdcard, while mmc0 is used for eMMC and mmc2 for
+> sdcard on the other boards, simply because Anton and I had different
+> preferences.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/2] ARM: dts: exynos: replace mshc0 alias with mmc-ddr-1_8v property
+      https://git.kernel.org/krzk/linux/c/37f9514e618f3b95125d7eda8991a7ae3b17da96
+[2/2] ARM: dts: exynos: add mmc aliases
+      https://git.kernel.org/krzk/linux/c/3ddba33dc270209868de79f695e5b27afa49e230
+
+Best regards,
 -- 
-Good morning,
-How are you doing today, hope you are fine please i have something to
-tell you. If you don't mind.
-
-Am waiting for your response.
-
-Bast regards.
-
-Richard Godwin. Thanks.
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
