@@ -2,75 +2,117 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF0266E58F9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Apr 2023 07:59:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 562716E59ED
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 18 Apr 2023 08:56:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbjDRF7s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 18 Apr 2023 01:59:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43742 "EHLO
+        id S231136AbjDRG4q (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 18 Apr 2023 02:56:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbjDRF7i (ORCPT
+        with ESMTP id S231215AbjDRG4n (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 18 Apr 2023 01:59:38 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3263D5BA5
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Apr 2023 22:59:34 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id dm2so70346693ejc.8
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Apr 2023 22:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681797571; x=1684389571;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
-        b=h2u+IvYIbnFxxtQG/ZtOJXOGODtmHZE6DE2kphmV5deUhBtI5SSl5ZpPS81I4DoyvM
-         cL/QsMoq/nZ79QoTUVBpjigDCpbkhNV4ihdOYSWAZCOke9dA/QR1VB/koOlQ9LVEDYMX
-         XtbtlwSc8k7WA+c3R6xpugIUkMv4IcvxiBX5jugHOkE6bIQRd6XIP4bPoYTYUOtLJ8cY
-         jqOSy7VahCSY+50nHqKMLAvtMY0jgSKZG9RLZ0VM4rlX3dlYAIwPmpAZEs5sdE1jKPzt
-         sUSa+Yt3rvdogEL685HX9OzzgKvbxUuLxSFiR0ubii95w3DTWRmDDneYGKBqJn2l6obd
-         7Bag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681797571; x=1684389571;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
-        b=jw5eBEf2PBZ09Xa728eBsONOUloOgLtkbtL05iC0Up0AUa4jm4f4kFxlZ9W0VG3953
-         997Y0NO9fAUhjdMkwThVf/uk4tNYQeK+dJFrSMMpL5VcO3Nn2ni+PXRkU7aTOi4eMiho
-         VsrQvkVd3I7s++dHU4KVCmsR+OhDWyIRMxqWDrv2uI1oCZiHJnNBAPb9A0qAIpchkBIU
-         lUmoxPjIANIpRv1gBnCsenITVWHPf4+p4vn4CkuUrvhO2OklqTBtI+fceNYZrjliAEHH
-         z/w1XVWkqrD8zoN/PuiM9VRYXlEYcHfkA0wPoZM3Jh3FBxbAg/TsLvT+5/AU5X1fJkMK
-         FEIw==
-X-Gm-Message-State: AAQBX9fYyYJ24T6MNBhCyX3tHAKMg/93i1TQBLftsM97LjKpCAkCe8wi
-        TUTsE4GOCd9zEFIBb/pupRugm8pHOjsNAc7NB8mwoRAf4/OZztT0
-X-Google-Smtp-Source: AKy350YRsUSKQ0+i58Lzun7WtY7IrRwSkm+DWIi2JdfS71rVYYWUT2OQ/a/Q5PRWIBazn3AQLm2dWBYGVxBajLvvRoE=
-X-Received: by 2002:a05:6512:96b:b0:4e8:4b7a:6b73 with SMTP id
- v11-20020a056512096b00b004e84b7a6b73mr2935594lft.4.1681797550844; Mon, 17 Apr
- 2023 22:59:10 -0700 (PDT)
+        Tue, 18 Apr 2023 02:56:43 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A3626A66
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Apr 2023 23:56:22 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pofG4-0007Yu-8t; Tue, 18 Apr 2023 08:56:08 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pofG0-00C2xk-ET; Tue, 18 Apr 2023 08:56:04 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pofFz-00E7r2-TO; Tue, 18 Apr 2023 08:56:03 +0200
+Date:   Tue, 18 Apr 2023 08:56:03 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Guenter Roeck <linux@roeck-us.net>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] watchdog: s3c2410_wdt: Use Use
+ devm_clk_get[_optional]_enabled() helpers
+Message-ID: <20230418065603.rzpiazzw4upitynt@pengutronix.de>
+References: <20230304165653.2179835-1-linux@roeck-us.net>
+ <20230306091048.mfrpexle24t6nwzy@pengutronix.de>
 MIME-Version: 1.0
-Received: by 2002:ab2:2681:0:b0:1b6:840f:9075 with HTTP; Mon, 17 Apr 2023
- 22:59:10 -0700 (PDT)
-Reply-To: mariamkouame.info@myself.com
-From:   Mariam Kouame <mariamkouame1992@gmail.com>
-Date:   Mon, 17 Apr 2023 22:59:10 -0700
-Message-ID: <CADUz=agNY633M0qMXMnAP3Ms7-3rKuWtAZGCOQZKeYpCdBxT_w@mail.gmail.com>
-Subject: from mariam kouame
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pq2sbtajlj7vfmbt"
+Content-Disposition: inline
+In-Reply-To: <20230306091048.mfrpexle24t6nwzy@pengutronix.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Dear,
 
-Please grant me permission to share a very crucial discussion with
-you. I am looking forward to hearing from you at your earliest
-convenience.
+--pq2sbtajlj7vfmbt
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Mrs. Mariam Kouame
+Hello,
+
+On Mon, Mar 06, 2023 at 10:10:48AM +0100, Uwe Kleine-K=F6nig wrote:
+> On Sat, Mar 04, 2023 at 08:56:52AM -0800, Guenter Roeck wrote:
+> > The devm_clk_get[_optional]_enabled() helpers:
+> >     - call devm_clk_get[_optional]()
+> >     - call clk_prepare_enable() and register what is needed in order to
+> >       call clk_disable_unprepare() when needed, as a managed resource.
+> >=20
+> > This simplifies the code and avoids the calls to clk_disable_unprepare(=
+).
+> >=20
+> > While at it, use dev_err_probe consistently, and use its return value
+> > to return the error code.
+> >=20
+> > Cc: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> > Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+>=20
+> Reviewed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+
+This patch is in next now as b05a2e58c16c47f3d752b7db1714ef077e5b82d9.
+My name occurs twice in the tag area, once it is mangled as
+
+	Uwe Kleine-K=3DF6nig
+
+I would welcome fixing that (i.e. s/=3DF6/=F6/). When this commit is
+touched, you can also do s/Use Use/Use/ in the Subject.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--pq2sbtajlj7vfmbt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmQ+PwIACgkQj4D7WH0S
+/k5cbQf9HOO57ZgnafrxiOin35DQRKYj9Lg1Ht/m5G723CPmOxWfvTOB/HbfZ7Ka
+eIGmjJvm8owFB3ZMxlvxCp8e/b8kCi5JzFZ/htcZdMWAmCiIjNx0SYj1xmGBG3xy
+6vFeKnBGh02rbnALaTb7pY2TQSlNHyR3sWOpukGryOusXoe2xvKUdGKoq+GG1aD2
+jzxT+ehNxDK6mnfye5uPtCuPL2ub3o922lIyU85rtSRgcSgqvIqZ8o4Dc58zVj79
+IWd38kaoxHod+k/a+4iD1XSM63qn9egI+SClxk3aIRgzR48wSqRTP7h1fuppoyOy
+2I6m1bXkYI1Dtx8UcsnEZsdiqOIZAA==
+=aLSU
+-----END PGP SIGNATURE-----
+
+--pq2sbtajlj7vfmbt--
