@@ -2,114 +2,108 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0486F3DC9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 May 2023 08:50:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 614886F3EE3
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 May 2023 10:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233670AbjEBGuo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 2 May 2023 02:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54542 "EHLO
+        id S233398AbjEBIPe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 2 May 2023 04:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233637AbjEBGul (ORCPT
+        with ESMTP id S229379AbjEBIPd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 2 May 2023 02:50:41 -0400
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2D7358C
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  1 May 2023 23:50:30 -0700 (PDT)
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20230502065027epoutp013eeb8b87cc96ca987f7c14e71dd92fa2~bQOJ52qMV2708627086epoutp01C
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  2 May 2023 06:50:27 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20230502065027epoutp013eeb8b87cc96ca987f7c14e71dd92fa2~bQOJ52qMV2708627086epoutp01C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1683010227;
-        bh=iIRgxo8LLemVChWFJdSsgwuysWdI19wNyv7rZYtGkSI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PCQ1KuGFfLF8K9cVeOvuUbOxD+ewhcaq/KB3QtLU1WEkFNxXj3jprb/VoKkS6DRgD
-         RvEwx4ovjvSoagy6LORm0fOaNiYa8qTHMOpya+rMlRNMsHkpPd0EjPCiD7GRVm6Whu
-         zksNjG68zXl8n98EK8+CMsB8OLU4bMXMJ8Mm3rlc=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas2p1.samsung.com (KnoxPortal) with ESMTP id
-        20230502065026epcas2p19d3c4a9ffab80125389881468bf943f4~bQOJbeGiJ1499014990epcas2p13;
-        Tue,  2 May 2023 06:50:26 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.36.102]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 4Q9W1F6Yxlz4x9Pr; Tue,  2 May
-        2023 06:50:25 +0000 (GMT)
-Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
-        epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        E6.37.03265.1B2B0546; Tue,  2 May 2023 15:50:25 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
-        20230502065025epcas2p34507ffad60b32e091ff0efeced9bc12f~bQOIUJipz2143821438epcas2p3l;
-        Tue,  2 May 2023 06:50:25 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230502065025epsmtrp22a83b3b5088516b42321064eba2fca70~bQOITgfi72944229442epsmtrp2O;
-        Tue,  2 May 2023 06:50:25 +0000 (GMT)
-X-AuditID: b6c32a45-465ff70000020cc1-a6-6450b2b11727
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        D5.F9.28392.1B2B0546; Tue,  2 May 2023 15:50:25 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.229.9.55]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20230502065025epsmtip1c6c2a0abc02ed57c2f18f0b465f0f417~bQOIJZaUO1675316753epsmtip1V;
-        Tue,  2 May 2023 06:50:25 +0000 (GMT)
-From:   Jaewon Kim <jaewon02.kim@samsung.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>,
-        Jaewon Kim <jaewon02.kim@samsung.com>
-Subject: [PATCH v3 3/3] spi: s3c64xx: support interrupt based pio mode
-Date:   Tue,  2 May 2023 15:28:13 +0900
-Message-Id: <20230502062813.112434-4-jaewon02.kim@samsung.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230502062813.112434-1-jaewon02.kim@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHKsWRmVeSWpSXmKPExsWy7bCmue7GTQEpBtdaTCwezNvGZrH4x3Mm
-        i6kPn7BZXN6vbbGj4Qirxd7XW9ktNj2+xmpxedccNosZ5/cxWTR+vMnuwOVxfcknZo9NqzrZ
-        PO5c28PmsXlJvUffllWMHp83yQWwRWXbZKQmpqQWKaTmJeenZOal2yp5B8c7x5uaGRjqGlpa
-        mCsp5CXmptoqufgE6Lpl5gAdpqRQlphTChQKSCwuVtK3synKLy1JVcjILy6xVUotSMkpMC/Q
-        K07MLS7NS9fLSy2xMjQwMDIFKkzIzph6pY2lYLd6xfn325gbGOfLdzFyckgImEi8Ot7D1sXI
-        xSEksINRou/KY0YI5xOjxJ6HU6EynxklHk2ZzQjT0vT2AStEYhejxO3Jx5khnI+MErP6X7GA
-        VLEJaEt8X78YrEpEYDGjxIKrO9lBHGaBG4wS3W82g1UJC7hJPH73nhXEZhFQlWju2ABm8wrY
-        SdyfsBxqn7zE6g0HmEFsTgF7iXtNLWBTJQTusUs8aJjP1MXIAeS4SKz/XwJRLwz00hZ2CFtK
-        4vO7vWwQdrZE+/Q/rBB2hcTFDbOh4sYSs561M4KMYRbQlFi/Sx9iorLEkVtgVzIL8El0HP7L
-        DhHmlehoE4JoVJO4P/Uc1BAZiUlHVkLd4iExZV8pJEgmMUqsOr2EeQKj3CyE+QsYGVcxiqUW
-        FOempxYbFRjCYyw5P3cTIzjhabnuYJz89oPeIUYmDsZDjBIczEoivB8K/VKEeFMSK6tSi/Lj
-        i0pzUosPMZoCQ24is5Rocj4w5eaVxBuaWBqYmJkZmhuZGpgrifNK255MFhJITyxJzU5NLUgt
-        gulj4uCUamBKCPA9ZcT7ZMr7F2Jl3Dvi3CK95oc2rnx95vKTRf9TN7BMu3lE6en2upzA3SKN
-        YY8uLOr+ECE0M7Eqd+L92b9+eypO+yR4MZf1XJhG6plrTW26e1Z+8VdzPLqwfuUDpTd/gk4d
-        zajOkq7levL7fePmjTpyOWnORu/Eu8LvThGS55mo726UOOfBxwUt9+8t+LSt/dLUl/vYtk88
-        Hs4h0BD4oF0h6YFOrHD21rMaYt+1wzbJ3LQPaz9y6V7bHCFNW99fDGFeM3rm7M5fHjcj5dTH
-        sluxLjmCN23fnPo5z2vxNv259cey7gXuiA30v/T19ZYcYfFzkzzNAmWXhMy5PWm74mprxln7
-        LnpMmv1ndcOPSUosxRmJhlrMRcWJADigx3MBBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNLMWRmVeSWpSXmKPExsWy7bCSnO7GTQEpBpc7pS0ezNvGZrH4x3Mm
-        i6kPn7BZXN6vbbGj4Qirxd7XW9ktNj2+xmpxedccNosZ5/cxWTR+vMnuwOVxfcknZo9NqzrZ
-        PO5c28PmsXlJvUffllWMHp83yQWwRXHZpKTmZJalFunbJXBlTL3SxlKwW73i/PttzA2M8+W7
-        GDk5JARMJJrePmDtYuTiEBLYwSgx9/sZFoiEjMTyZ31sELawxP2WI1BF7xklHt0F6eDkYBPQ
-        lvi+fjFYQkRgKaPE4z2PWUAcZoF7jBIvJ31jAqkSFnCTePzuPVgHi4CqRHPHBjCbV8BO4v6E
-        5YwQK+QlVm84wAxicwrYS9xragGrEQKqudL7lXUCI98CRoZVjJKpBcW56bnFhgVGeanlesWJ
-        ucWleel6yfm5mxjB4amltYNxz6oPeocYmTgYDzFKcDArifB+KPRLEeJNSaysSi3Kjy8qzUkt
-        PsQozcGiJM57oetkvJBAemJJanZqakFqEUyWiYNTqoHJ3XCzzvuUPeI/+wUq7e9vXXYr8flN
-        po0KFtVO6+0rOIKnaq867HLxZ+vy2qWvbq4uDVwtkJNQIKDiYNtfa3rNNIrfbxr7OaG5no6N
-        7XqRLcoTVXnSg6YJXlA/zZVrz26vrb1/t9Jv5me8dWsK33L4cntrO35cc0TaIfGJ+68DNpL+
-        PnybUv/Uu7aFebvZmpwN60p+O71CJlziAffd2JuWshMvZdWJzZuVv/e+sMlzLh8ml8dT1zvU
-        2Bl3V9kxB3Bf3XI8a45c5/PpyZf0Pu28sH76X870mboPK6pqph3boz7Z/2j8Xrvlu+7Gc4k/
-        vHbtO7frptnLPmhuSptdrOnCm762bsLsuGS5kx4dK5RYijMSDbWYi4oTAa9gPaC+AgAA
-X-CMS-MailID: 20230502065025epcas2p34507ffad60b32e091ff0efeced9bc12f
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20230502065025epcas2p34507ffad60b32e091ff0efeced9bc12f
-References: <20230502062813.112434-1-jaewon02.kim@samsung.com>
-        <CGME20230502065025epcas2p34507ffad60b32e091ff0efeced9bc12f@epcas2p3.samsung.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        Tue, 2 May 2023 04:15:33 -0400
+Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74801DD;
+        Tue,  2 May 2023 01:15:30 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 0A58D5803C3;
+        Tue,  2 May 2023 04:15:27 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Tue, 02 May 2023 04:15:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-transfer-encoding:content-type:content-type:date
+        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+        1683015327; x=1683022527; bh=ghjR7QqLTKl0Wa6Qp/pmJnR12EKA7bqxYQW
+        ouqZ3mAY=; b=G/ReWH/CR4stPP8pBvKE2oH2tiIxeT1Y9djsugPvcan1vwLCNKB
+        +CmHc2S3racpCMakxZ1qQRdhDmpzbTSxPsJLCIAsBgFwKTe+QJwmoUIe5cxfT6Wy
+        tgZI7GBK40sokCJo7woyfvbYgCDiIcu9MJqEUid0mCHXVNlzPDjNZzJJBtLrLhF9
+        X/mbJHalC7bJ1Xs6/CKvhniyT1ORP+ioH4B0Q9MMwa1hEm8wfe270mide7U5ucC4
+        jYc1KiyRZtz0ezseY2LvXW4OKb5R6V9gMew5kODf8MnejtSKgLd/xIANaAqpsh7o
+        O3SUD5day0+7MZzwDONO0PUZT+hvXwYxYyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1683015327; x=1683022527; bh=ghjR7QqLTKl0Wa6Qp/pmJnR12EKA7bqxYQW
+        ouqZ3mAY=; b=Y/xWbzku7vrNHNzte8uy72nMxc+pbAIi4IeA/XfvwUvtiZV9Est
+        bPyNKEthPJpnwnx5/Y68ss9jDEmHmeNI9uaomvywj4LEhNdN2/6OUB0Ap6qjjHvb
+        OQIPRGrLOJBmcaLg/XgkHAzTOPE5Xwu/E3de9zryJ4QMstqpCG+bbbWHvXXdfXgL
+        L+W8t5CYwFrU7f8XrnzjjIYPTrCSQ2/hUzXAWg8+DhkBUcIkmt6eVQO+8Sms9yZ1
+        Z+nDtml+a4kCprv84LWaOxgu+YrgM2G6hBbX6r3CD52Qvxv2Jvyac8zhWROAt9xl
+        Ftb8duEVIIhaiX5H6fsUSxaLGjuOvtdmUyw==
+X-ME-Sender: <xms:nsZQZGG99LYs7t6dhgAngkbsv9osgUeFMS5nCv0_eqkMW790xp5pVg>
+    <xme:nsZQZHXku8NWvKl4XxdR48yR-0RVaLsU5fwZmJq18kazWD7vv8gAEIoPKVDAKkTuy
+    5prPVni2U8mfnd5sN8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedviecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhepgeefjeehvdelvdffieejieejiedvvdfhleeivdelveehjeelteegudektdfgjeev
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:nsZQZAK8fS_X5YYcPQ8tmCY5TK5FJ7gjlJsS0RCSCVoEK-Zwdrq3Yw>
+    <xmx:nsZQZAFFLoJhNSVEvLGVyQfmt0zeZphfcdHG8-tw9pYY47GFwhKrNA>
+    <xmx:nsZQZMUL4rbP96pvZI76ZCUHun2qRq8vNtMGMdc-nT5M5xb0isYJ2g>
+    <xmx:n8ZQZPq1o7msWppgt2EUHhnFGcmwGcb09Ud671-g5_97NEtVzT49Eg>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 1C690B60086; Tue,  2 May 2023 04:15:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-374-g72c94f7a42-fm-20230417.001-g72c94f7a
+Mime-Version: 1.0
+Message-Id: <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
+In-Reply-To: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
+ <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+Date:   Tue, 02 May 2023 10:15:03 +0200
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Rob Herring" <robh+dt@kernel.org>,
+        "Geert Uytterhoeven" <geert@linux-m68k.org>,
+        "Olof Johansson" <olof@lixom.net>
+Cc:     "Christian Marangi" <ansuelsmth@gmail.com>,
+        "Krzysztof Kozlowski" <krzk@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -117,163 +111,29 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Support interrupt based pio mode to optimize cpu usage.
-When transmitting data size is larget than 32 bytes, operates with
-interrupt based pio mode.
+On Tue, Apr 25, 2023, at 17:57, Rob Herring wrote:
+> On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@linu=
+x-m68k.org> wrote:
+>
+>> Does your script also cater for .dts files not matching any pattern,
+>> but including a .dtsi file that does match a pattern?
+>
+> I assume I built everything after moving, but maybe not...
+>
+> That's all just "details". First, we need agreement on a) moving
+> things to subdirs and b) doing it 1-by-1 or all at once. So far we've
+> been stuck on a) for being 'too much churn'.
 
-By using the FIFORDY INT, an interrupt can be triggered when
-the desired size of data has been received. Using this, we can support
-interrupt based pio mode.
+Sorry for missing most of the discussion last week. The script sounds
+fine to me, the only reason I didn't want to do this in the past is that
+we had the plan to move platforms out of the kernel tree to an external
+repository and I wanted to do this platform at a time and also only move
+each one once. I don't think that is going to happen anytime soon now,
+so let's just do your script.
 
-Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
----
- drivers/spi/spi-s3c64xx.c | 66 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 58 insertions(+), 8 deletions(-)
+Can you send me the script and/or a pull request of the resulting
+tree based on my soc/dt branch? Everything is merged upstream,
+and I think git-merge would handle the remaining merges with any
+other changes in mainline.
 
-diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-index 2a8304678df9..323c6da9730b 100644
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -58,6 +58,8 @@
- #define S3C64XX_SPI_MODE_BUS_TSZ_HALFWORD	(1<<17)
- #define S3C64XX_SPI_MODE_BUS_TSZ_WORD		(2<<17)
- #define S3C64XX_SPI_MODE_BUS_TSZ_MASK		(3<<17)
-+#define S3C64XX_SPI_MODE_RX_RDY_LVL		GENMASK(16, 11)
-+#define S3C64XX_SPI_MODE_RX_RDY_LVL_SHIFT	11
- #define S3C64XX_SPI_MODE_SELF_LOOPBACK		(1<<3)
- #define S3C64XX_SPI_MODE_RXDMA_ON		(1<<2)
- #define S3C64XX_SPI_MODE_TXDMA_ON		(1<<1)
-@@ -114,6 +116,8 @@
- 
- #define S3C64XX_SPI_TRAILCNT		S3C64XX_SPI_MAX_TRAILCNT
- 
-+#define S3C64XX_SPI_POLLING_SIZE	32
-+
- #define msecs_to_loops(t) (loops_per_jiffy / 1000 * HZ * t)
- #define is_polling(x)	(x->cntrlr_info->polling)
- 
-@@ -552,7 +556,7 @@ static int s3c64xx_wait_for_dma(struct s3c64xx_spi_driver_data *sdd,
- }
- 
- static int s3c64xx_wait_for_pio(struct s3c64xx_spi_driver_data *sdd,
--				struct spi_transfer *xfer)
-+				struct spi_transfer *xfer, bool use_irq)
- {
- 	void __iomem *regs = sdd->regs;
- 	unsigned long val;
-@@ -573,6 +577,12 @@ static int s3c64xx_wait_for_pio(struct s3c64xx_spi_driver_data *sdd,
- 	if (RX_FIFO_LVL(status, sdd) < xfer->len)
- 		usleep_range(time_us / 2, time_us);
- 
-+	if (use_irq) {
-+		val = msecs_to_jiffies(ms);
-+		if (!wait_for_completion_timeout(&sdd->xfer_completion, val))
-+			return -EIO;
-+	}
-+
- 	val = msecs_to_loops(ms);
- 	do {
- 		status = readl(regs + S3C64XX_SPI_STATUS);
-@@ -735,10 +745,13 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
- 	void *rx_buf = NULL;
- 	int target_len = 0, origin_len = 0;
- 	int use_dma = 0;
-+	bool use_irq = false;
- 	int status;
- 	u32 speed;
- 	u8 bpw;
- 	unsigned long flags;
-+	u32 rdy_lv;
-+	u32 val;
- 
- 	reinit_completion(&sdd->xfer_completion);
- 
-@@ -759,17 +772,46 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
- 	    sdd->rx_dma.ch && sdd->tx_dma.ch) {
- 		use_dma = 1;
- 
--	} else if (xfer->len > fifo_len) {
-+	} else if (xfer->len >= fifo_len) {
- 		tx_buf = xfer->tx_buf;
- 		rx_buf = xfer->rx_buf;
- 		origin_len = xfer->len;
--
- 		target_len = xfer->len;
--		if (xfer->len > fifo_len)
--			xfer->len = fifo_len;
-+		xfer->len = fifo_len - 1;
- 	}
- 
- 	do {
-+		/* transfer size is greater than 32, change to IRQ mode */
-+		if (xfer->len > S3C64XX_SPI_POLLING_SIZE)
-+			use_irq = true;
-+
-+		if (use_irq) {
-+			reinit_completion(&sdd->xfer_completion);
-+
-+			rdy_lv = xfer->len;
-+			/* Setup RDY_FIFO trigger Level
-+			 * RDY_LVL =
-+			 * fifo_lvl up to 64 byte -> N bytes
-+			 *               128 byte -> RDY_LVL * 2 bytes
-+			 *               256 byte -> RDY_LVL * 4 bytes
-+			 */
-+			if (fifo_len == 128)
-+				rdy_lv /= 2;
-+			else if (fifo_len == 256)
-+				rdy_lv /= 4;
-+
-+			val = readl(sdd->regs + S3C64XX_SPI_MODE_CFG);
-+			val &= ~S3C64XX_SPI_MODE_RX_RDY_LVL;
-+			val |= (rdy_lv << S3C64XX_SPI_MODE_RX_RDY_LVL_SHIFT);
-+			writel(val, sdd->regs + S3C64XX_SPI_MODE_CFG);
-+
-+			/* Enable FIFO_RDY_EN IRQ */
-+			val = readl(sdd->regs + S3C64XX_SPI_INT_EN);
-+			writel((val | S3C64XX_SPI_INT_RX_FIFORDY_EN),
-+					sdd->regs + S3C64XX_SPI_INT_EN);
-+
-+		}
-+
- 		spin_lock_irqsave(&sdd->lock, flags);
- 
- 		/* Pending only which is to be done */
-@@ -791,7 +833,7 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
- 		if (use_dma)
- 			status = s3c64xx_wait_for_dma(sdd, xfer);
- 		else
--			status = s3c64xx_wait_for_pio(sdd, xfer);
-+			status = s3c64xx_wait_for_pio(sdd, xfer, use_irq);
- 
- 		if (status) {
- 			dev_err(&spi->dev,
-@@ -830,8 +872,8 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
- 			if (xfer->rx_buf)
- 				xfer->rx_buf += xfer->len;
- 
--			if (target_len > fifo_len)
--				xfer->len = fifo_len;
-+			if (target_len >= fifo_len)
-+				xfer->len = fifo_len - 1;
- 			else
- 				xfer->len = target_len;
- 		}
-@@ -1001,6 +1043,14 @@ static irqreturn_t s3c64xx_spi_irq(int irq, void *data)
- 		dev_err(&spi->dev, "TX underrun\n");
- 	}
- 
-+	if (val & S3C64XX_SPI_ST_RX_FIFORDY) {
-+		complete(&sdd->xfer_completion);
-+		/* No pending clear irq, turn-off INT_EN_RX_FIFO_RDY */
-+		val = readl(sdd->regs + S3C64XX_SPI_INT_EN);
-+		writel((val & ~S3C64XX_SPI_INT_RX_FIFORDY_EN),
-+				sdd->regs + S3C64XX_SPI_INT_EN);
-+	}
-+
- 	/* Clear the pending irq by setting and then clearing it */
- 	writel(clr, sdd->regs + S3C64XX_SPI_PENDING_CLR);
- 	writel(0, sdd->regs + S3C64XX_SPI_PENDING_CLR);
--- 
-2.17.1
-
+        Arnd
