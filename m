@@ -2,202 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8DDC6F804E
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 May 2023 11:47:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6336F98E4
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  7 May 2023 16:20:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231840AbjEEJr0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 5 May 2023 05:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51608 "EHLO
+        id S231460AbjEGOUH convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 7 May 2023 10:20:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231186AbjEEJrY (ORCPT
+        with ESMTP id S229446AbjEGOUF (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 5 May 2023 05:47:24 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4690918FFB
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  5 May 2023 02:47:21 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bc37e1525so2923820a12.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 05 May 2023 02:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683280040; x=1685872040;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3YIVNcQdeZiL3e0O4p6IYO2o8zE6ITS/Zjz/otoIFpA=;
-        b=Iqijz+WAZAHtO8uFIvMpu/yycYGpQx+/LpXE9Axcv65dAK4e1uQyPg/LQURKrVpV5Q
-         /jufmtJZYot++2wbF9B/cJSSUKvnm2LylqPOS9p4bNP2aoUp7PIgNP0WH+pb+Yp3gPXF
-         CqPa07bDfGrdfuG+OlH5axVBI9Eb/7Mo6NHKcw429IFhoPnzVJ0jfgOqdm856Web5UOe
-         zDOrus4Wjj45fkQy+Xv38TLJBBsuwkhp3EVJIQD8PGLcThIbQa2334tlweMfMXBM/ayB
-         VwuwMyjM1zIAzG+lgu0seXRbkqRY/ZHEt8apMngYB3JMSlS94pofzX7TjWmcbVPuKjEn
-         0hGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683280040; x=1685872040;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3YIVNcQdeZiL3e0O4p6IYO2o8zE6ITS/Zjz/otoIFpA=;
-        b=eYUtU5jdy6voPCeNXSHcbtQ38YkvMka9rErgRjcT2X8WJPFIFiD+the5HoiVn0/IOd
-         d60emE3Jcvs55E5NLzoyBrfo43nZ5DpSh6KBjk2KHHlsEes6Bx9fwfpdsC2HtTg52IsA
-         QYCOlolVk2CWU1BjNNQA/3xXbpgEiJPfDC++q8/pQH3qE6tsxvf0nHqQXcrruo8ZNFGf
-         LwqfydYPazMzRQFKjdBbfofjFyQkaD4EjM6SDEeubooVrdHa9+X8qKObA75+zFF4wE2O
-         ObYNk16FDoPukTIrPhx+TosrqSGk5wUZ9p8sN2DnyCfaSxo7JRniCcN3ZjY3G1nZymti
-         krSQ==
-X-Gm-Message-State: AC+VfDwIVNPWzcq6+Opj2gT4DWniUrY9EdzH9e9vTuZVTntVMfoUS3y3
-        3UmHjtBbu/uW5s5eKXSiJYxLYOmH9MrKP1ExiCxpwA==
-X-Google-Smtp-Source: ACHHUZ4nixPNDI7H6BBgyh+5/PxYHS2TDRnhCNQLtbEUh6LobLma18kxhzjldRDZdV8OqSSIZPAcwg==
-X-Received: by 2002:a17:907:360c:b0:961:800b:3f1e with SMTP id bk12-20020a170907360c00b00961800b3f1emr616756ejc.73.1683280040379;
-        Fri, 05 May 2023 02:47:20 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:52e:24ce:bbc1:127d? ([2a02:810d:15c0:828:52e:24ce:bbc1:127d])
-        by smtp.gmail.com with ESMTPSA id v1-20020a170906292100b00953381ea1b7sm721680ejd.90.2023.05.05.02.47.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 02:47:20 -0700 (PDT)
-Message-ID: <53b60eca-e8ab-3ff3-61a4-019ccac6cd65@linaro.org>
-Date:   Fri, 5 May 2023 11:47:19 +0200
+        Sun, 7 May 2023 10:20:05 -0400
+Received: from mail.bpip.go.id (unknown [103.166.134.2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C69A4C3E;
+        Sun,  7 May 2023 07:20:01 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id 9C32BC0E615;
+        Sun,  7 May 2023 08:39:41 +0700 (WIB)
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id EMAJhw2w0KZN; Sun,  7 May 2023 08:39:41 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id 4D53AB4E83A;
+        Sat,  6 May 2023 21:19:49 +0700 (WIB)
+X-Amavis-Modified: Mail body modified (using disclaimer) - mail.bpip.go.id
+X-Virus-Scanned: amavisd-new at bpip.go.id
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id NOD4xabUwidS; Sat,  6 May 2023 21:19:49 +0700 (WIB)
+Received: from [103.167.91.37] (unknown [103.167.91.37])
+        by mail.bpip.go.id (Postfix) with ESMTPSA id 7A172BCC753;
+        Sat,  6 May 2023 08:34:27 +0700 (WIB)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v3 3/3] spi: s3c64xx: support interrupt based pio mode
-Content-Language: en-US
-To:     Jaewon Kim <jaewon02.kim@samsung.com>,
-        Andi Shyti <andi@etezian.org>, Mark Brown <broonie@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Chanho Park <chanho61.park@samsung.com>
-References: <20230502062813.112434-1-jaewon02.kim@samsung.com>
- <CGME20230502065025epcas2p34507ffad60b32e091ff0efeced9bc12f@epcas2p3.samsung.com>
- <20230502062813.112434-4-jaewon02.kim@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230502062813.112434-4-jaewon02.kim@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Letzte Erinnerung
+To:     Recipients <persuratan@bpip.go.id>
+From:   "Qatar Foundation" <persuratan@bpip.go.id>
+Date:   Fri, 05 May 2023 18:34:23 -0700
+Reply-To: qf.qatarcares.org@gmail.com
+Message-Id: <20230506013427.7A172BCC753@mail.bpip.go.id>
+X-Spam-Status: Yes, score=6.0 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,NIXSPAM_IXHASH,RCVD_IN_SBL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+        *      [103.167.91.37 listed in zen.spamhaus.org]
+        *  3.0 NIXSPAM_IXHASH http://www.nixspam.org/
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 02/05/2023 08:28, Jaewon Kim wrote:
-> Support interrupt based pio mode to optimize cpu usage.
-> When transmitting data size is larget than 32 bytes, operates with
-> interrupt based pio mode.
-> 
-> By using the FIFORDY INT, an interrupt can be triggered when
-> the desired size of data has been received. Using this, we can support
-> interrupt based pio mode.
-> 
-> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
-> ---
->  drivers/spi/spi-s3c64xx.c | 66 ++++++++++++++++++++++++++++++++++-----
->  1 file changed, 58 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-> index 2a8304678df9..323c6da9730b 100644
-> --- a/drivers/spi/spi-s3c64xx.c
-> +++ b/drivers/spi/spi-s3c64xx.c
-> @@ -58,6 +58,8 @@
->  #define S3C64XX_SPI_MODE_BUS_TSZ_HALFWORD	(1<<17)
->  #define S3C64XX_SPI_MODE_BUS_TSZ_WORD		(2<<17)
->  #define S3C64XX_SPI_MODE_BUS_TSZ_MASK		(3<<17)
-> +#define S3C64XX_SPI_MODE_RX_RDY_LVL		GENMASK(16, 11)
-> +#define S3C64XX_SPI_MODE_RX_RDY_LVL_SHIFT	11
->  #define S3C64XX_SPI_MODE_SELF_LOOPBACK		(1<<3)
->  #define S3C64XX_SPI_MODE_RXDMA_ON		(1<<2)
->  #define S3C64XX_SPI_MODE_TXDMA_ON		(1<<1)
-> @@ -114,6 +116,8 @@
->  
->  #define S3C64XX_SPI_TRAILCNT		S3C64XX_SPI_MAX_TRAILCNT
->  
-> +#define S3C64XX_SPI_POLLING_SIZE	32
-> +
->  #define msecs_to_loops(t) (loops_per_jiffy / 1000 * HZ * t)
->  #define is_polling(x)	(x->cntrlr_info->polling)
->  
-> @@ -552,7 +556,7 @@ static int s3c64xx_wait_for_dma(struct s3c64xx_spi_driver_data *sdd,
->  }
->  
->  static int s3c64xx_wait_for_pio(struct s3c64xx_spi_driver_data *sdd,
-> -				struct spi_transfer *xfer)
-> +				struct spi_transfer *xfer, bool use_irq)
->  {
->  	void __iomem *regs = sdd->regs;
->  	unsigned long val;
-> @@ -573,6 +577,12 @@ static int s3c64xx_wait_for_pio(struct s3c64xx_spi_driver_data *sdd,
->  	if (RX_FIFO_LVL(status, sdd) < xfer->len)
->  		usleep_range(time_us / 2, time_us);
->  
-> +	if (use_irq) {
-> +		val = msecs_to_jiffies(ms);
-> +		if (!wait_for_completion_timeout(&sdd->xfer_completion, val))
-> +			return -EIO;
-> +	}
-> +
->  	val = msecs_to_loops(ms);
->  	do {
->  		status = readl(regs + S3C64XX_SPI_STATUS);
-> @@ -735,10 +745,13 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
->  	void *rx_buf = NULL;
->  	int target_len = 0, origin_len = 0;
->  	int use_dma = 0;
-> +	bool use_irq = false;
->  	int status;
->  	u32 speed;
->  	u8 bpw;
->  	unsigned long flags;
-> +	u32 rdy_lv;
-> +	u32 val;
->  
->  	reinit_completion(&sdd->xfer_completion);
->  
-> @@ -759,17 +772,46 @@ static int s3c64xx_spi_transfer_one(struct spi_master *master,
->  	    sdd->rx_dma.ch && sdd->tx_dma.ch) {
->  		use_dma = 1;
->  
-> -	} else if (xfer->len > fifo_len) {
-> +	} else if (xfer->len >= fifo_len) {
+Sehr geehrter Begünstigter,
 
-I don't fully understand this. If len equals to fifo_len, everything
-would fit into FIFO so no need for all this?
+Sie wurden ausgewählt,  (995.000,00 €) von Katar Foundation zu erhalten, antworten Sie bitte mit Ihrem vollständigen Namen und Ihrer Adresse, um weitere Informationen zu erhalten. E-mail:qf.qatarcares.org@gmail.com
 
->  		tx_buf = xfer->tx_buf;
->  		rx_buf = xfer->rx_buf;
->  		origin_len = xfer->len;
-> -
->  		target_len = xfer->len;
-> -		if (xfer->len > fifo_len)
-> -			xfer->len = fifo_len;
-> +		xfer->len = fifo_len - 1;
->  	}
->  
->  	do {
-> +		/* transfer size is greater than 32, change to IRQ mode */
-> +		if (xfer->len > S3C64XX_SPI_POLLING_SIZE)
-> +			use_irq = true;
-> +
-> +		if (use_irq) {
-> +			reinit_completion(&sdd->xfer_completion);
-> +
-> +			rdy_lv = xfer->len;
-
-Style is:
-
-/*
- *
-
-> +			/* Setup RDY_FIFO trigger Level
-> +			 * RDY_LVL =
-> +			 * fifo_lvl up to 64 byte -> N bytes
-> +			 *               128 byte -> RDY_LVL * 2 bytes
-> +			 *               256 byte -> RDY_LVL * 4 bytes
-
-I don't understand it. Based on this equation for 256 bytes,
-RDY_LVL = RDY_LVL * 4?
-Didn't you mean xfer->len?
-
-
-Best regards,
-Krzysztof
-
+Mit Freundlichen Grüßen,
+Herr Rashid Al-Naimi.
+Chief Executive Officer der Qatar Foundation Endowment.
+(null)
