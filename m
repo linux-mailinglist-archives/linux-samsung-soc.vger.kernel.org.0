@@ -2,108 +2,75 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C2B7092DE
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 May 2023 11:21:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E467F709640
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 May 2023 13:18:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230169AbjESJVV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 19 May 2023 05:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60698 "EHLO
+        id S231258AbjESLSm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 19 May 2023 07:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbjESJVU (ORCPT
+        with ESMTP id S231537AbjESLS2 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 19 May 2023 05:21:20 -0400
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D14C18F
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 May 2023 02:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684488079; x=1716024079;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GkKfBmF6E5I1B54syimenbREv13HM+EuYV61v02IhJk=;
-  b=K93AatIZqI66IPEecy33Z2OvTQTG/z0RqqmEm2Ib4c3ycTa49LV76QNB
-   rWwG9fsK6lSpgrgBzr4s3EIwYxUUK4Iz5mHHkxSLjA+DiSU7JeRTdOC6v
-   HaAk7SBqX5BfxiYUr7GErC+/h3e2V2r+GcWGkeX4GgodpNbsRPjJT1x+f
-   NcwfIAXl+jxBUGlXzWCaZkj+n4EDZHkxS2qW6c6Lht7VW3i5zpu7PGyoj
-   cdrV6TAaLoSzdzP3KPEEcqnPIf8PJnYWCHsIis+JfTt4vJV76fvXKqDCT
-   93Tn10lfD6adALdF5HU3j0S/ixGuClwVp30bI8p3oP1PTlejlotyF8Zjo
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10714"; a="354679118"
-X-IronPort-AV: E=Sophos;i="6.00,176,1681196400"; 
-   d="scan'208";a="354679118"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2023 02:21:18 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10714"; a="679990475"
-X-IronPort-AV: E=Sophos;i="6.00,176,1681196400"; 
-   d="scan'208";a="679990475"
-Received: from refaase-mobl.ger.corp.intel.com (HELO intel.com) ([10.251.221.245])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2023 02:21:16 -0700
-Date:   Fri, 19 May 2023 11:21:14 +0200
-From:   Andi Shyti <andi.shyti@linux.intel.com>
-To:     =?utf-8?B?77+977+977+9zrHvv70=?= <inki.dae@samsung.com>
-Cc:     'Andi Shyti' <andi.shyti@linux.intel.com>,
-        dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        'Andi Shyti' <andi.shyti@kernel.org>
-Subject: Re: [PATCH] drm/exynos: vidi: fix a wrong error return
-Message-ID: <ZGc/ipQspaaUf5FX@ashyti-mobl2.lan>
-References: <CGME20230519000408epcas1p4f5d90f588e7250d2d168d2943adef4f7@epcas1p4.samsung.com>
- <20230519000407.60744-1-inki.dae@samsung.com>
- <ZGbCO9/5yEstym+c@ashyti-mobl2.lan>
- <04c401d98a09$898df160$9ca9d420$@samsung.com>
+        Fri, 19 May 2023 07:18:28 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61178173C
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 May 2023 04:18:24 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-50c8d87c775so4535728a12.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 May 2023 04:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684495103; x=1687087103;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YmxaI1amCfTksu6ynk2557PwK0HJxrBQmYIx/Pz5hBs=;
+        b=YrB/oM/9+DfdWsBYK5tE+VKexgOscQSdsQfyNuKsAEzaTYQrmV8QTOqw+n6ncFEG7/
+         NrzWtVQUP7+OiIp81BAxWp4/UA25FSfMBP8v31Vr27/6mv+gpWeEjdQtXcTyd5QbQRXQ
+         jQsq3ZZiseoC7dbmEKV/v7W5pMditEv8MtmfbU+xJe27P/r6UpIIOa1tC9UGmpl2zp50
+         MzUJDLpg49H8SzwE6tQuOsZmLJqfmdmj+F1UdmogGeAKG+63if08XOvkcQ3hE8tURB/u
+         e+KtIjmw1bhP1l1fiAyUwAswvZk0EPc4O8/eM+CpYABwaPGP/JS50wZnv1wX2QAcz1gX
+         wwDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684495103; x=1687087103;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YmxaI1amCfTksu6ynk2557PwK0HJxrBQmYIx/Pz5hBs=;
+        b=C8c1OV/2dh3/etkEVJG5FMtwgaIkmLB+0LWEAKSx4oLVQHCxtNDVR++NzlW5kMfX9D
+         D9+oxZz/C/rg9qgV07cnzMUZDah32I6Y+JQCS5BLPzo3ZfZMjzAneUPbm7MAgRs7if2d
+         qSY+pKMFtwb/OsbDwT8zuZKcQjDSfrLlLnqG2S2OyLueNcRJ6fPoaMvfGHq2aS3rLZhb
+         /ma0295YANZkwVzQtdqyfka3awhTchUjdXWq43IteIAuWIoFeQJ+Hy/mDJF93ibU9Oo+
+         8Ws37XbAIlZb5Lhmk/n1YnArT2zi45WJeqaI0JNlF05Lz3ya3Go2sL+vXt5AChIoTd1m
+         HVOw==
+X-Gm-Message-State: AC+VfDyFi+SrFLai7RBKcP0d76OG34dVI2+Zz4sG3vguZ41nlRu8p7yE
+        kYvikzv6d5Mi+Dmo5D8w4wdvcE78E1DFBAp33sHWwRJFLVcWlg==
+X-Google-Smtp-Source: ACHHUZ4u0RD9o3Kl8FtNeecPkKIUUkqQP5EKCQy8Odb3BCVRQ/plvct7PNXp53hldLkfZ7jyXh0W2roGP4wdAWIFYf4=
+X-Received: by 2002:a17:906:af64:b0:966:5730:c3fe with SMTP id
+ os4-20020a170906af6400b009665730c3femr1223003ejb.52.1684495082502; Fri, 19
+ May 2023 04:18:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <04c401d98a09$898df160$9ca9d420$@samsung.com>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Received: by 2002:a17:907:7dab:b0:94f:7d03:8e8b with HTTP; Fri, 19 May 2023
+ 04:18:02 -0700 (PDT)
+Reply-To: ninacoulibaly03@myself.com
+From:   nina coulibaly <ninacoulibaly199@gmail.com>
+Date:   Fri, 19 May 2023 04:18:02 -0700
+Message-ID: <CAM7Z2JAs+q6RsD5Hw352ZDFruUVR5ngjAamir+4ZCakNdZyceg@mail.gmail.com>
+Subject: from nina coulibaly
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Inki,
+Dear,
 
-> > > @@ -469,8 +469,6 @@ static int vidi_remove(struct platform_device *pdev)
-> > >  	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
-> > >  		kfree(ctx->raw_edid);
-> > >  		ctx->raw_edid = NULL;
-> > > -
-> > > -		return -EINVAL;
-> > 
-> > It doesn't look right to me, I think the correct patch should be:
-> > 
-> > -       if (ctx->raw_edid != (struct edid *)fake_edid_info) {
-> > -               kfree(ctx->raw_edid);
-> > -               ctx->raw_edid = NULL;
-> > -
-> > -               return -EINVAL;
-> > -       }
-> > -
-> > +       ctx->raw_edid = NULL;
-> > 
-> > because "ctx->raw_edid" points to a non allocated memory in the
-> > .data segment and you cannot free it.
-> > 
-> > A follow-up cleanup should be to remove the "const" from
-> > fake_edid_info because you are assigning its address to pointers
-> > (raw_edid), so that what's the point for having it const? You are
-> > just fooling the compiler :)
-> 
-> Thanks for review comment. 
-> 
-> "ctx->raw_edid != fake_edid_info" means that the edid sent by the user through
-> the ictl system call - vidi_connection_ioctl - is used instead of fake one -
-> face_edid_info.
-> In this case, ctx->raw_edid object needs to be released because ctx->raw_edid
-> object is allocated and the edid object sent by user is copied to the ctx-
-> >raw_edid by kmemdup(). :)
+Please grant me permission to share a very crucial discussion with
+you. I am looking forward to hearing from you at your earliest
+convenience.
 
-yes... yes... I sent you another e-mail after this :)
-
-Thanks,
-Andi
+Mrs. Nina Coulibal
