@@ -2,96 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5F8770BCF1
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 May 2023 14:08:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E49EA70BDCA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 22 May 2023 14:25:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232600AbjEVMIf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 22 May 2023 08:08:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45336 "EHLO
+        id S230375AbjEVMZk (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 22 May 2023 08:25:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjEVMIe (ORCPT
+        with ESMTP id S233986AbjEVMYg (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 22 May 2023 08:08:34 -0400
-X-Greylist: delayed 85577 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 22 May 2023 05:08:18 PDT
-Received: from silec.com.co (unknown [186.155.227.156])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B23118;
-        Mon, 22 May 2023 05:08:18 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by silec.com.co (Postfix) with ESMTP id DF8C574E6C3A;
-        Sun, 21 May 2023 02:13:35 -0500 (-05)
-Received: from silec.com.co ([127.0.0.1])
-        by localhost (silec.com.co [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id rla3vMJ0SKUq; Sun, 21 May 2023 02:13:35 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by silec.com.co (Postfix) with ESMTP id 39CE074E6DA7;
-        Sun, 21 May 2023 02:13:31 -0500 (-05)
-DKIM-Filter: OpenDKIM Filter v2.10.3 silec.com.co 39CE074E6DA7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=silec.com.co;
-        s=7EE18876-0B6B-11EC-ADD2-D54151E56927; t=1684653211;
-        bh=3DuXWiZC+hCKu7q7bKqvoS3B3zt+zYJYDMke5QOTtAg=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=CdbUekq7fxLCbW3D7YoWb6x/tYmHEfC98XpifB0QaSKoM3ckvp8DbgPl1rtLAcNoW
-         2iDxDJockdXIwS4ohhYECmImoP3D3djyJM5N4cnLhhw6sM0bf5z04nmQuGo79jRpTq
-         vQk4aMRgEzacjOoTparzMeyg+TMIrRoLJQJ5Jy4M1NfQCEsLteCyTYWPkrvhOueewj
-         5BorRYQymcbM6mK6piv8bG4PDNd/hq+pLVRxVTIG9Sk5x/JaPfgioTZM2Ik6AAiut6
-         I3BK60jxi/8h3fJ2zDnkj86y4aSbcp+FT2SHNby6SC10pecYq82sZhTtma7obKCyyD
-         l4cwh4XUGDpUA==
-X-Virus-Scanned: amavisd-new at silec.com.co
-Received: from silec.com.co ([127.0.0.1])
-        by localhost (silec.com.co [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id jty3PH0Lqxj7; Sun, 21 May 2023 02:13:31 -0500 (-05)
-Received: from [10.4.18.247] (unknown [217.138.192.221])
-        by silec.com.co (Postfix) with ESMTPSA id 131F574E6C65;
-        Sun, 21 May 2023 02:13:08 -0500 (-05)
-Content-Type: text/plain; charset="iso-8859-1"
+        Mon, 22 May 2023 08:24:36 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FC135A1;
+        Mon, 22 May 2023 05:22:35 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 5A67C21BDE;
+        Mon, 22 May 2023 12:21:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1684758102; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=zaTjRgfMLlRIsB0CCzFeZYVFV+JrVqY7WkSEoCzv47o=;
+        b=UHpUG3/eGABMoqviRaxJUYzWa0yHnAv0swjZHZxZPazgM5QFzYUSd9H/jRcErRWNCV9nbx
+        LfAnYKqCYZRDwjFLmKCVCVoq8hcV1iuFfgaR9+uPeM3Yx5Qt8hZdDGVGQGefzSU7oblNKg
+        /lm+3RtzhMpuijNw+UmsgNN9bIbfgtE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1684758102;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=zaTjRgfMLlRIsB0CCzFeZYVFV+JrVqY7WkSEoCzv47o=;
+        b=SmfA33Jlmp+bZsRAaD3iVkitSXNUN5GAVClcBNU2YpzMJ7OhT42v4j2cAB5oWCh2EHIiMZ
+        BIBS+pESsUoWZKDQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0D81E13776;
+        Mon, 22 May 2023 12:21:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id sYdZAlZea2RYVAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 22 May 2023 12:21:42 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, sam@ravnborg.org
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 00/12] drm/fbdev: Remove DRM's helpers for fbdev I/O
+Date:   Mon, 22 May 2023 14:21:28 +0200
+Message-Id: <20230522122140.30131-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: RE
-To:     Recipients <manuel.trivino@silec.com.co>
-From:   "Yuliia Kadulina" <manuel.trivino@silec.com.co>
-Date:   Sun, 21 May 2023 08:12:36 +0100
-Reply-To: yuliakadulina2@gmail.com
-Message-Id: <20230521071309.131F574E6C65@silec.com.co>
-X-Spam-Status: Yes, score=6.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_MSPIKE_H2,RCVD_IN_SBL_CSS,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5745]
-        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
-        *      [217.138.192.221 listed in zen.spamhaus.org]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [yuliakadulina2[at]gmail.com]
-        * -0.0 RCVD_IN_MSPIKE_H2 RBL: Average reputation (+2)
-        *      [186.155.227.156 listed in wl.mailspike.net]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: ******
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+DRM provides a number of wrappers around fbdev cfb_() sys_(), fb_io_()
+and fb_sys_() helpers. The DRM functions don't provide any additional
+functionality for most DRM drivers. So remove them and call the fbdev
+I/O helpers directly.
 
-Top of the day to you, =
+The DRM fbdev I/O wrappers were originally added because <linux/fb.h>
+does not protect its content with CONFIG_FB. DRM fbdev emulation did
+not build if the config option had been disabled. This has been
+fixed. For fbdev-generic and i915, the wrappers added support for damage
+handling. But this is better handled within the two callers, as each
+is special in its damage handling.
+
+Patch 1 adds several internal Kconfig otpions that DRM drivers (and
+possibly other fbdev code) will use to select the correct set of I/O
+helpers.
+
+Patches 2 to 9 replace the DRM wrappers in a number of fbdev emulations.
+Patch 10 exports two helpers for damage handling. Patches 11 and 12
+update fbdev-generic and i915 with the help of the exported functions.
+The patches also remove DRM's fbdev I/O helpers, which are now unused.
+
+DRM's fbdev helpers had to select fbdev I/O helpers for I/O and for
+system memory. Each fbdev emulation now selects the correct helpers
+for itself. Depending on the selected DRM drivers, kernel builds will
+now only contain the necessary fbdev I/O helpers and might be slightly
+smaller in size.
+
+v3:
+	* fix Kconfig options (Jingfeng)
+	* minimize changes to exynos (Sam)
+v2:
+	* simplify Kconfig handling (Sam)
+
+Thomas Zimmermann (12):
+  fbdev: Add Kconfig options to select different fb_ops helpers
+  drm/armada: Use regular fbdev I/O helpers
+  drm/exynos: Use regular fbdev I/O helpers
+  drm/gma500: Use regular fbdev I/O helpers
+  drm/radeon: Use regular fbdev I/O helpers
+  drm/fbdev-dma: Use regular fbdev I/O helpers
+  drm/msm: Use regular fbdev I/O helpers
+  drm/omapdrm: Use regular fbdev I/O helpers
+  drm/tegra: Use regular fbdev I/O helpers
+  drm/fb-helper: Export helpers for marking damage areas
+  drm/fbdev-generic: Implement dedicated fbdev I/O helpers
+  drm/i915: Implement dedicated fbdev I/O helpers
+
+ drivers/gpu/drm/Kconfig                    |  10 +-
+ drivers/gpu/drm/armada/Kconfig             |   1 +
+ drivers/gpu/drm/armada/armada_fbdev.c      |   9 +-
+ drivers/gpu/drm/drm_fb_helper.c            | 233 ++-------------------
+ drivers/gpu/drm/drm_fbdev_dma.c            |  12 +-
+ drivers/gpu/drm/drm_fbdev_generic.c        |  47 ++++-
+ drivers/gpu/drm/exynos/Kconfig             |   1 +
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |  10 +-
+ drivers/gpu/drm/gma500/Kconfig             |   1 +
+ drivers/gpu/drm/gma500/fbdev.c             |   9 +-
+ drivers/gpu/drm/i915/Kconfig               |   1 +
+ drivers/gpu/drm/i915/display/intel_fbdev.c |  51 ++++-
+ drivers/gpu/drm/msm/Kconfig                |   1 +
+ drivers/gpu/drm/msm/msm_fbdev.c            |  12 +-
+ drivers/gpu/drm/omapdrm/Kconfig            |   1 +
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       |  12 +-
+ drivers/gpu/drm/radeon/Kconfig             |   1 +
+ drivers/gpu/drm/radeon/radeon_fbdev.c      |   9 +-
+ drivers/gpu/drm/tegra/Kconfig              |   1 +
+ drivers/gpu/drm/tegra/fbdev.c              |  11 +-
+ drivers/video/fbdev/Kconfig                |  21 ++
+ include/drm/drm_fb_helper.h                |  84 +-------
+ 22 files changed, 183 insertions(+), 355 deletions(-)
 
 
-I'm Yuliia Kadulina Deputy Chairman of the Management Board, and Personal F=
-inance Director @ Ukrsibbank Ukraine. I have a proposal for you. Kindly rev=
-ert so I can fill you in on the details.
+base-commit: f533234d40e8f5b8599bd5bc97fa8e30384aec03
+prerequisite-patch-id: 0aa359f6144c4015c140c8a6750be19099c676fb
+prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+prerequisite-patch-id: cbc453ee02fae02af22fbfdce56ab732c7a88c36
+-- 
+2.40.1
 
-Thanks,
-Yuliia
