@@ -2,98 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 383BF713342
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 May 2023 10:18:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D750F7127BD
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 May 2023 15:47:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbjE0ISW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 27 May 2023 04:18:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49532 "EHLO
+        id S236978AbjEZNr0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 26 May 2023 09:47:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230236AbjE0ISV (ORCPT
+        with ESMTP id S229895AbjEZNrZ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 27 May 2023 04:18:21 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11054F3;
-        Sat, 27 May 2023 01:18:20 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1b02750ca0dso395215ad.0;
-        Sat, 27 May 2023 01:18:20 -0700 (PDT)
+        Fri, 26 May 2023 09:47:25 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB733F3;
+        Fri, 26 May 2023 06:47:22 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64d293746e0so1156941b3a.2;
+        Fri, 26 May 2023 06:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685175499; x=1687767499;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GgkyIFrBxuAzRVAXPfklB2pDA1O52uIPOrfTaBhFKGs=;
-        b=qm+e8b0zkHNbENDDxLnIF6iBScBalvdL1g9zQnlk0PvyTH800CgFL/iRVnhFVqPOs6
-         oBaQdJOsEvfYm5pY7XuXn7P1wonU6aeCERZDFy94mQYYGqFp61yFoWHgoAg22uKCN1DV
-         MeMl6WBLU8cUacWqUeDBLq9WRYdR6drlC89VW2PXskhq2PZbFtnAn+5nvUpStUF+hzpJ
-         DVjlWLnYZaJTMWs6q7vX1L8qinpHo/H/xhsI4HsUbENWAuIs4KiOL9zQ+lBYDvrmi8KD
-         CYCk5dlWGxE2McweClOUal1k2r0jHEODWDgeP6sjWiR09GFNNiwuka8F0Gtdj4WT6Vzr
-         iOxQ==
+        d=gmail.com; s=20221208; t=1685108842; x=1687700842;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9TW6tTngWb25r/POiswswB/QyhpYIVptjKJqMAEVpQI=;
+        b=piyIs9X8Ll5ISV/iWmt8KPgg0B7Tqe8eQT1TjmOyW1U1spGfaEnx6RVNxr8WFlmvzY
+         iwfhG4jTstzaotQklI39xA3D8/fduc9M1sNCOuHpjeTayB1hoHDg038i4bKmc+w3QFTt
+         0gQNSXptjrhT13Ya9vBaOpOYvudq89gi3n1vM4Dk0/VHwri3sYCD/ebivD1mSnA2jLga
+         BlLh/iKtdJHCNtp3bRfyvJRhgGXmgu1GXBqdhOwcxqsPa05UUWtnoTuLp7n/EA395Kk7
+         oqwqMtBB0IGl7ZrPUOx8ImIimXddQEYZ9giEYlRpuF3kpu9GhoQa+RwMTubagLy4GMi8
+         6ADA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685175499; x=1687767499;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GgkyIFrBxuAzRVAXPfklB2pDA1O52uIPOrfTaBhFKGs=;
-        b=L5TH+4+u5XLIRfa9sfrdswbFFnRZ5ywJYv4THj+ec+PTEeVy2q46WA8JtrS5f9y+PI
-         LWydD/L0BySavPv5j7N03p4ETQDQtDujiF9hAb/7pFyKEDFnuHWXQVlBkYjqhuefRVGB
-         CM19uPJpyd2GSXpdYgDhJz0craOR1ypoT5yFj73s2JyEds/iIsm9kDhvAj/NgzNhJdtu
-         0ytj0CpyG5HGgv4zggDh2Hg7StLcY76wJ9nrOhf8RF36sW5zILdN1pcNrkxrOEmI9bqq
-         Ue0T6R1i7rFL8/kNW4xjcHciNnNV/+TjrUrJmg0kMbs7/e4IYTfYymKoQGIvHNmNcLIw
-         VRlA==
-X-Gm-Message-State: AC+VfDwgAtd5Uor72dFTXrM+xOIDLtlv+Ls1LvF2+0OdvHv7BVxbfrj5
-        ZWUF40gDtSlvA3MC7qPAoao=
-X-Google-Smtp-Source: ACHHUZ6Qrp4DcfEEkrmjiuOnMT+CTIIsQl6FsMr5hpxiqSImvCBsDbCfQCxS1x82Mq3I3BFFmbia1Q==
-X-Received: by 2002:a17:902:e752:b0:1ae:8595:14b with SMTP id p18-20020a170902e75200b001ae8595014bmr5638597plf.6.1685175499229;
-        Sat, 27 May 2023 01:18:19 -0700 (PDT)
-Received: from ubuntu.localdomain ([103.114.158.1])
-        by smtp.gmail.com with ESMTPSA id b4-20020a170902d50400b001ae6e270d8bsm4395490plg.131.2023.05.27.01.18.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 May 2023 01:18:18 -0700 (PDT)
-From:   Min Li <lm0963hack@gmail.com>
-To:     inki.dae@samsung.com
-Cc:     sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        airlied@gmail.com, daniel@ffwll.ch, krzysztof.kozlowski@linaro.org,
-        alim.akhtar@samsung.com, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
-Date:   Fri, 26 May 2023 21:01:31 +0800
-Message-Id: <20230526130131.16521-1-lm0963hack@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20221208; t=1685108842; x=1687700842;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9TW6tTngWb25r/POiswswB/QyhpYIVptjKJqMAEVpQI=;
+        b=EpcShi1tPXnkix4aLMVYIiElNlBoJnru7HOQnaGS/3n/8cS+M4FCjELiHpNgL7Bc46
+         oJu4AV512KITp03SeFaZ8PUb1vwbl61pI04FZZtrd5r07tzWX25jYgKxCLKk+AKPcqU8
+         rfeICuheoyJv26vuMruTgpBOFa3gRIWyYDHCI/1LP+JaHJdj+nwiP0neOAOgMLCk35eP
+         H06WXsHf1/rPPx45yhXWOEX5uyQrMvscZy3tjPZnAZmGWNQMhYjrlRtgmpEk5OcuG/Im
+         46rrpXDVGMRbOOJzsqANN6HpFb99xeWPoTlmsjxEJkosOmv6O8vG1fp9YIv7hlav5LLh
+         iVLw==
+X-Gm-Message-State: AC+VfDy2BssK+YS48qj1Ecbemtf0QnQXKea55ftCNowR0sVtw9Ihy2nj
+        h1f0yWuzkzhFYyfPQXYKTrX9yF5R6Vw=
+X-Google-Smtp-Source: ACHHUZ4K0GD+iAjkaF75NrVdiUroHsbTjcoay2+CJ/EytE3C7jNawfKrN4fA5I5u3rphgfmJhBAOLA==
+X-Received: by 2002:a05:6a00:b93:b0:64b:205:dbf3 with SMTP id g19-20020a056a000b9300b0064b0205dbf3mr3785656pfj.34.1685108842119;
+        Fri, 26 May 2023 06:47:22 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-61.three.co.id. [116.206.28.61])
+        by smtp.gmail.com with ESMTPSA id j1-20020aa78001000000b006437c0edf9csm2881304pfi.16.2023.05.26.06.47.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 06:47:21 -0700 (PDT)
+Message-ID: <288db372-9797-540f-e8bd-794a23648573@gmail.com>
+Date:   Fri, 26 May 2023 20:46:32 +0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
+To:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Regressions <regressions@lists.linux.dev>,
+        DRI Development List <dri-devel@lists.freedesktop.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Samsung SoC Support <linux-samsung-soc@vger.kernel.org>
+Cc:     Lee Jones <lee@kernel.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andrew <quark@disroot.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Fwd: Does not work backlight on Chromebook XE303C12 with Kernel
+ version 6.3.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-If it is async, runqueue_node is freed in g2d_runqueue_worker on another
-worker thread. So in extreme cases, if g2d_runqueue_worker runs first, and
-then executes the following if statement, there will be use-after-free.
+Hi,
 
-Signed-off-by: Min Li <lm0963hack@gmail.com>
----
- drivers/gpu/drm/exynos/exynos_drm_g2d.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I notice a regression report on Bugzilla [1]. Quoting from it:
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-index ec784e58da5c..414e585ec7dd 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-@@ -1335,7 +1335,7 @@ int exynos_g2d_exec_ioctl(struct drm_device *drm_dev, void *data,
- 	/* Let the runqueue know that there is work to do. */
- 	queue_work(g2d->g2d_workq, &g2d->runqueue_work);
- 
--	if (runqueue_node->async)
-+	if (req->async)
- 		goto out;
- 
- 	wait_for_completion(&runqueue_node->complete);
+> I did check it by flashlight. Even with all available backlights drivers compiled as modules it does not work. With Kernel version 5.15.106 backlight works fine.
+> Kernels for Chomebook uses dtb files that have some backlight config set (used gpio), like exynos5250-snow-common.dtsi and dmesg of 6.3.4 gives some gpio warnings. Maybe cause in it.
+
+See bugzilla for the full thread and attached dmesg & kernel config.
+
+Anyway, I'm adding it to regzbot:
+
+#regzbot introduced: v5.15..v6.3 https://bugzilla.kernel.org/show_bug.cgi?id=217489
+#regzbot title: Chromebook XE303C12 backlight stopped working with gpio warnings
+
+Thanks.
+
+[1]: https://bugzilla.kernel.org/show_bug.cgi?id=217489
+
 -- 
-2.34.1
-
+An old man doll... just what I always wanted! - Clara
