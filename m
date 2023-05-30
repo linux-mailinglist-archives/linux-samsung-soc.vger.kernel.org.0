@@ -2,113 +2,162 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 956B2715E9F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 May 2023 14:14:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2904A716598
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 May 2023 17:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjE3MOZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 30 May 2023 08:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44714 "EHLO
+        id S232698AbjE3PDB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 30 May 2023 11:03:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbjE3MOY (ORCPT
+        with ESMTP id S232176AbjE3PC6 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 30 May 2023 08:14:24 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478849D
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 30 May 2023 05:14:23 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q3yF3-0002nP-KM; Tue, 30 May 2023 14:14:21 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q3yF0-003s3C-IG; Tue, 30 May 2023 14:14:18 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1q3yEz-009UQV-Qm; Tue, 30 May 2023 14:14:17 +0200
-Date:   Tue, 30 May 2023 14:14:17 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-samsung-soc@vger.kernel.org, kernel@pengutronix.de,
-        patches@opensource.cirrus.com,
-        Russell King <linux@armlinux.org.uk>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] ARM: s3c: Switch i2c drivers back to use .probe()
-Message-ID: <20230530121417.dmow3dhajwv5wo3o@pengutronix.de>
-References: <20230526214003.2134595-1-u.kleine-koenig@pengutronix.de>
- <168543271188.12093.7915373684614866148.b4-ty@linaro.org>
+        Tue, 30 May 2023 11:02:58 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7193CF7;
+        Tue, 30 May 2023 08:02:56 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id D2C4621A8B;
+        Tue, 30 May 2023 15:02:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1685458974; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=6lRuDrmy2AfI3wS06d/1engDNPo+ovoaDDKPepzHATs=;
+        b=oWjtuCDj469nIpdPMC4Dw0y7q9NkrJSlKUBqKgxqqnct9l0nVVMrRFuWw/0z0haJjRc6OE
+        1GVaYsYp36afX2lFvEojNpjuxGE0cCob9TkUjrLh4OntfTj1TIIRegqeMkJtPzXWCAHDKp
+        NsUQujmsd+WJGzS1OxLsLsEg+Zoc1Lo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1685458974;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=6lRuDrmy2AfI3wS06d/1engDNPo+ovoaDDKPepzHATs=;
+        b=ZCAYvmnOQGfZhemupaWQxm0vcOKisDlPKboJ/trzmCqNAjM0sZd3Ib9FeE7D9kXlV57+hq
+        +LHoFGuSd++iV7Bg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 91CDF13478;
+        Tue, 30 May 2023 15:02:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id u//OIh4QdmShegAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 30 May 2023 15:02:54 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, sam@ravnborg.org, suijingfeng@loongson.cn
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v5 00/13] 
+Date:   Tue, 30 May 2023 17:02:40 +0200
+Message-Id: <20230530150253.22758-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dhbsszq3h2drxvgm"
-Content-Disposition: inline
-In-Reply-To: <168543271188.12093.7915373684614866148.b4-ty@linaro.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+DRM provides a number of wrappers around fbdev cfb_() sys_(), fb_io_()
+and fb_sys_() helpers. The DRM functions don't provide any additional
+functionality for most DRM drivers. So remove them and call the fbdev
+I/O helpers directly.
 
---dhbsszq3h2drxvgm
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The DRM fbdev I/O wrappers were originally added because <linux/fb.h>
+does not protect its content with CONFIG_FB. DRM fbdev emulation did
+not build if the config option had been disabled. This has been
+fixed. For fbdev-generic and i915, the wrappers added support for damage
+handling. But this is better handled within the two callers, as each
+is special in its damage handling.
 
-On Tue, May 30, 2023 at 09:45:48AM +0200, Krzysztof Kozlowski wrote:
->=20
-> On Fri, 26 May 2023 23:40:03 +0200, Uwe Kleine-K=F6nig wrote:
-> > After commit b8a1a4cd5a98 ("i2c: Provide a temporary .probe_new()
-> > call-back type"), all drivers being converted to .probe_new() and then
-> > 03c835f498b5 ("i2c: Switch .probe() to not take an id parameter")
-> > convert back to (the new) .probe() to be able to eventually drop
-> > .probe_new() from struct i2c_driver.
-> >=20
-> >=20
-> > [...]
->=20
->=20
-> Fixed checkpatch issue in commit and applied. Please don't skip checkpatc=
-h on
-> your submissions.
->=20
-> Applied, thanks!
->=20
-> [1/1] ARM: s3c: Switch i2c drivers back to use .probe()
->       https://git.kernel.org/krzk/linux/c/ca027ae58eaab3632966158ce440a7f=
-50da52bef
+Patch 1 adds several internal Kconfig options that DRM drivers (and
+possibly other fbdev code) will use to select the correct set of I/O
+helpers. Patch 2 adds initializers for struct fb_ops and generator
+macros for the callback functions. These macros will simplify drivers.
+This patchset applies the new options and macros to DRM fbdev emulation,
+but regular fbdev drivers can use them as well.
 
-I'm aware checkpatch wanted another "commit" but I didn't add it
-consciously because it sounds strange in my (German) ear. *shrug*
+Patches 3 to 9 replace the DRM wrappers in a number of fbdev emulations.
+Patch 10 exports two helpers for damage handling. Patches 11 to 13
+update msm, fbdev-generic and i915 with the help of the exported functions.
+The patches also remove DRM's fbdev I/O helpers, which are now unused.
 
-Best regards
-Uwe
+DRM's fbdev helpers had to select fbdev I/O helpers for I/O and for
+system memory. Each fbdev emulation now selects the correct helpers
+for itself. Depending on the selected DRM drivers, kernel builds will
+now only contain the necessary fbdev I/O helpers and might be slightly
+smaller in size.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+v5:
+	* fix whitespace errors (Jingfeng)
+	* move msm patch to later position make it build
+v4:
+	* use initializer and generator macros for struct fb_ops
+	* partially support damage handling in msm (Dmitri)
+v3:
+	* fix Kconfig options (Jingfeng)
+	* minimize changes to exynos (Sam)
+v2:
+	* simplify Kconfig handling (Sam)
 
---dhbsszq3h2drxvgm
-Content-Type: application/pgp-signature; name="signature.asc"
+Thomas Zimmermann (13):
+  fbdev: Add Kconfig options to select different fb_ops helpers
+  fbdev: Add initializer macros for struct fb_ops
+  drm/armada: Use regular fbdev I/O helpers
+  drm/exynos: Use regular fbdev I/O helpers
+  drm/gma500: Use regular fbdev I/O helpers
+  drm/radeon: Use regular fbdev I/O helpers
+  drm/fbdev-dma: Use regular fbdev I/O helpers
+  drm/omapdrm: Use regular fbdev I/O helpers
+  drm/tegra: Use regular fbdev I/O helpers
+  drm/fb-helper: Export helpers for marking damage areas
+  drm/msm: Use regular fbdev I/O helpers
+  drm/fbdev-generic: Implement dedicated fbdev I/O helpers
+  drm/i915: Implement dedicated fbdev I/O helpers
 
------BEGIN PGP SIGNATURE-----
+ drivers/gpu/drm/Kconfig                    |  10 +-
+ drivers/gpu/drm/armada/Kconfig             |   1 +
+ drivers/gpu/drm/armada/armada_fbdev.c      |   7 +-
+ drivers/gpu/drm/drm_fb_helper.c            | 236 ++-------------------
+ drivers/gpu/drm/drm_fbdev_dma.c            |  11 +-
+ drivers/gpu/drm/drm_fbdev_generic.c        |  11 +-
+ drivers/gpu/drm/exynos/Kconfig             |   1 +
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |   9 +-
+ drivers/gpu/drm/gma500/Kconfig             |   1 +
+ drivers/gpu/drm/gma500/fbdev.c             |   8 +-
+ drivers/gpu/drm/i915/Kconfig               |   1 +
+ drivers/gpu/drm/i915/display/intel_fbdev.c |  14 +-
+ drivers/gpu/drm/msm/Kconfig                |   1 +
+ drivers/gpu/drm/msm/msm_fbdev.c            |  17 +-
+ drivers/gpu/drm/omapdrm/Kconfig            |   1 +
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       |  11 +-
+ drivers/gpu/drm/radeon/Kconfig             |   1 +
+ drivers/gpu/drm/radeon/radeon_fbdev.c      |   9 +-
+ drivers/gpu/drm/tegra/Kconfig              |   1 +
+ drivers/gpu/drm/tegra/fbdev.c              |   8 +-
+ drivers/video/fbdev/Kconfig                |  21 ++
+ include/drm/drm_fb_helper.h                |  83 +-------
+ include/linux/fb.h                         | 112 ++++++++++
+ 23 files changed, 212 insertions(+), 363 deletions(-)
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmR16JgACgkQj4D7WH0S
-/k7Dowf+NzChdEN1xHLrRexUX5BP7aVbq7d7P17DCXlCkwCcNrRH15Q3iq+83EG1
-gyybZZBErRsVytw0+eVVPgfUGe6A8AVFpET8hWC5AMfSKosYXVIYfATFq1KjJUOT
-UFbqH8y/esStCHEIdbfADiQjG8Mxs1UNUVNvgGNZSDv5kizQeMtdc4ZlmTH9Z3DJ
-CIt9UOTOQ1iCG8MxHggkArC4sywTNUvv/spyoTcwpxSxCLZc3QHAjatOCivphdS2
-X+jVU66Wnlr+h05+SJRfaq1HW94q2PnCAPqOlYY71P5xA7FAPHPw8d2UBiAJp68I
-R7m36IW2zWLQXCvTgSboozXmps/++g==
-=Z40u
------END PGP SIGNATURE-----
 
---dhbsszq3h2drxvgm--
+base-commit: cf59b48ea3c0c0075d7c4e8538177d38999da7b0
+-- 
+2.40.1
+
