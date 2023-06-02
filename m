@@ -2,53 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C909A71FD65
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  2 Jun 2023 11:15:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C53F71FD6A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  2 Jun 2023 11:15:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234532AbjFBJPZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 2 Jun 2023 05:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38484 "EHLO
+        id S234279AbjFBJPp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 2 Jun 2023 05:15:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234843AbjFBJPK (ORCPT
+        with ESMTP id S234332AbjFBJPV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 2 Jun 2023 05:15:10 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7DC1BC
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  2 Jun 2023 02:15:09 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-974638ed5c5so57819166b.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 02 Jun 2023 02:15:09 -0700 (PDT)
+        Fri, 2 Jun 2023 05:15:21 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7AB2E7
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  2 Jun 2023 02:15:11 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-974265a1a40so662450266b.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 02 Jun 2023 02:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685697308; x=1688289308;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LO2AVakNJYdGKKswXTJ62e7wU1rklDdTnrJOOA69PQc=;
-        b=fNPHwES7nVPEk1F4Ce1u9HTwBf9Q5hmjvDjfKwjvXVqDyeAxH9fGVRv95PEXIEY3Lm
-         qdqLzy19YupyJ6GDsN9Bq4TsZqRB2BxTBcq4SKhp8Kfgcf2LH0AxUL/G19NDua38KFra
-         5mWK9F9EB2pMs992dzETb8uCfQrNbwwG3pOPGtj3ZJZmJbrnvSt+GJusXkDWQtHLsBOC
-         9V+bvPIVRK+HInWgnmDNO/lCu3LpcecuLKHO+SyfY+Bkz5Rkf2mzDGbKmx3BCFJZs5Hb
-         bVyqFcNW4M7wOm8VQUtrHKMoZ2JWwoJhtcp+QL4ZVFFbPrk2zaKdCncyCWrvOGntPojM
-         VcbA==
+        d=linaro.org; s=google; t=1685697310; x=1688289310;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tqmb5ohElR5kx8b+8s1OBfcs+RHdJ5Q9TNUD2+nJ9HQ=;
+        b=wg4RgZKculmKl9CscCK78hxkLWHSxRguYZTW0DFpJBhqz0jWjLPvTn36zbHfXg+fjX
+         fRG/p9pGJ+Hvh6p6abnfOe00JN97yvdm17xL4vvpIq7M3rwB6/wZ64wKNTywYR08qlS6
+         oAc0pPXhZai4sWrkr8qd0NbPDLXCbp6X/450c/5IhJMi5wbyq2IciejqoBvFSOcm3Pbs
+         XqnQdPu7uzOK0OkuqwyUosse1zPwF+3s/ygD9WVYY1nwWr2eosJeFELEJwrViSI2rgqO
+         PdF5Xu6TDg1WEm2t6CxqhrvzA0KaqymKYSy9OIGa2WTtBSvWOy6d7O+BHLcN0T2Uip1N
+         Ze/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685697308; x=1688289308;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LO2AVakNJYdGKKswXTJ62e7wU1rklDdTnrJOOA69PQc=;
-        b=cwYHkcJTJOQZMBlKWcKsbAYvtJxR120v0ACo0lGiE+FehnMz9XArOLh/UbGEKBTUva
-         TFHf5AeFYnEWkuHIDFfE7RZDhWLjZZOyRoBpBQziyeaQuDVdeCNI82+cM1pUJbWudx0R
-         8fZG847yAtMxSFKLoXnGV4y750+DpaXdIQHdqBf/6X9LeHfDD+j0590NHVcNAwQ3Ym9L
-         q8AIv7d9NWvOwpNfOAsvTfXIP2nZMm7vbEJ1ZIM2U5KPWSieJcayFBMTzNjZEywukeKF
-         FxOBPMjZCbqRkxJFXcyZK3mPjZW8SBYpR1oWoJpWV9UkAP2iBw1drBehXJkwYEc5LALZ
-         GLyw==
-X-Gm-Message-State: AC+VfDxEW0S5BVbqCzvWFuUC5WbVSeF6FbzVgoF5Y3V61rUJzAKevpzS
-        zrhYpGTFnasgVAgvwAEfQllhLg==
-X-Google-Smtp-Source: ACHHUZ4O1wFDHonDAt4o3zgFrpiAG47R8DbHaXAWXu0IVs5q3bQKTSlvn1fgFIYPRsi6pLeRT+VCWA==
-X-Received: by 2002:a17:907:2d8c:b0:96f:a412:8b03 with SMTP id gt12-20020a1709072d8c00b0096fa4128b03mr4528979ejc.5.1685697307942;
-        Fri, 02 Jun 2023 02:15:07 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685697310; x=1688289310;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tqmb5ohElR5kx8b+8s1OBfcs+RHdJ5Q9TNUD2+nJ9HQ=;
+        b=kXrm7FPFycSRW856VgiHdbbkLqg8kVN43sOVsSq0gWTv02r2T9tJbeOIk3m/Wxq2Dt
+         3bNxCwHMuH9x7gOcGUqSG8COf6SiItzEc4/7eNjxLNG7Kp4iVdX7YnwhT5oTZ8QUnk9A
+         RrQCxgT5HGhMPT6Ogj0HqrrFBDk+cSINDfjRtzG1ZWZd6/2Q/4BAK9uG1+X+8aSZ0n/s
+         Viu6KWuNJ8gtziF45iValxqVkxCPz2VqJJxmbGwW1yHACF9JyzcXytzVV9rdwlSliFSF
+         5vnHAZkyHapGjFp2sxoimJUWThzwwEZqXuBpBSkfQo0rwdnhL/ReVHDVtonos8jRtxGe
+         qhzQ==
+X-Gm-Message-State: AC+VfDzRSJDrsAvw/krDoAD1nTENKXIDeI6lwA9UtlyIXcz7GEwHXtWH
+        Wym5qwyAnpUsfFYE3qpBbLxKcQ==
+X-Google-Smtp-Source: ACHHUZ5QG5jHghA/mHewy4xAe5I4UwhmB5dosiLaSNhN+T9LsDLIzIEDoZbP/56ZPjwJJBqETycDZw==
+X-Received: by 2002:a17:907:94c9:b0:973:93c3:16a1 with SMTP id dn9-20020a17090794c900b0097393c316a1mr3858259ejc.19.1685697310347;
+        Fri, 02 Jun 2023 02:15:10 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id z13-20020a170906240d00b0094e597f0e4dsm514255eja.121.2023.06.02.02.15.05
+        by smtp.gmail.com with ESMTPSA id z13-20020a170906240d00b0094e597f0e4dsm514255eja.121.2023.06.02.02.15.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 02:15:07 -0700 (PDT)
+        Fri, 02 Jun 2023 02:15:09 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>,
         arm@kernel.org, soc@kernel.org
@@ -60,11 +61,16 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         =?UTF-8?q?Martin=20J=C3=BCcker?= <martin.juecker@gmail.com>,
         Henrik Grimler <henrik@grimler.se>,
-        Artur Weber <aweber.kernel@gmail.com>
-Subject: [GIT PULL 1/3] samsung: drivers for v6.5
-Date:   Fri,  2 Jun 2023 11:14:59 +0200
-Message-Id: <20230602091501.15178-1-krzysztof.kozlowski@linaro.org>
+        Artur Weber <aweber.kernel@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [GIT PULL 2/3] ARM: dts: samsung: for v6.5
+Date:   Fri,  2 Jun 2023 11:15:00 +0200
+Message-Id: <20230602091501.15178-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230602091501.15178-1-krzysztof.kozlowski@linaro.org>
+References: <20230602091501.15178-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,37 +83,118 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+Hi,
+
+`make dtbs_check` for bindings in Linux kernel produces no warnings for Exynos
+ARM and ARM64 platforms. See for yourself:
+https://krzk.eu/#/builders/75/builds/403/steps/7/logs/stdio
+https://krzk.eu/#/builders/79/builds/401/steps/9/logs/stdio
+
+"No new warnings in dtbs_check" is now a requirement for any new changes to be
+accepted for Exynos ARM and ARM64.  S5PV210 and S3C6410 don't have such
+requirement.
+
+The dtbs_check against all the bindings - including ones with dtschema and
+missing ones - points to few missing conversions to DT schema:
+
+arch/arm/boot/dts/exynos5250-snow-rev5.dtb: /soc/i2c@12c70000/trackpad@67: failed to match any schema with compatible: ['cypress,cyapa']
+arch/arm/boot/dts/exynos4210-universal_c210.dtb: /soc/i2c@138b0000/pmic@66: failed to match any schema with compatible: ['national,lp3974']
+arch/arm/boot/dts/exynos5250-snow.dtb: /i2c-arbitrator: failed to match any schema with compatible: ['i2c-arb-gpio-challenge']
+arch/arm/boot/dts/exynos5422-samsung-k3g.dtb: /soc/i2c@12c60000/touchscreen@20: failed to match any schema with compatible: ['syna,rmi4-i2c']
+
+In progress:
+arch/arm/boot/dts/exynos4412-p4note-n8010.dtb: /i2c-gpio-3/adc@41: failed to match any schema with compatible: ['st,stmpe811']
+https://lore.kernel.org/all/20230426-stmpe-dt-bindings-v4-2-36fdd53d9919@linaro.org/
+
+arch/arm/boot/dts/exynos5420-peach-pit.dtb: /soc/spi@12d40000/cros-ec@0/i2c-tunnel/power-regulator@48: failed to match any schema with compatible: ['ti,tps65090']
+https://lore.kernel.org/all/20211217170507.2843568-6-thierry.reding@gmail.com/
+
+I would appreciate some help in converting these.  Before starting any
+conversion just be sure that no one posted same patch (lore.kernel.org and
+"dfn:" for TXT filename).
+
+Best regards,
+Krzysztof
+
+
 The following changes since commit ac9a78681b921877518763ba0e89202254349d1b:
 
   Linux 6.4-rc1 (2023-05-07 13:34:35 -0700)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-drivers-6.5
+  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/samsung-dt-6.5
 
-for you to fetch changes up to 538af6e5856b1aa971975c747a2974a74db48928:
+for you to fetch changes up to 6a988251c4e53da33107c1975f578904c0635b43:
 
-  dt-bindings: media: s5p-mfc: convert bindings to json-schema (2023-05-13 19:41:11 +0200)
-
-----------------------------------------------------------------
-Samsung SoC driver changes for v6.5
-
-1. Re-introduce Exynos4212: Exynos PMU driver.
-2. Convert S5P/Exynos Multi Format Codec bindings to DT schema.
+  ARM: dts: s5pv210: Fix typo in comments, fix pinctrl header (2023-05-30 10:21:42 +0200)
 
 ----------------------------------------------------------------
-Aakarsh Jain (1):
-      dt-bindings: media: s5p-mfc: convert bindings to json-schema
+Samsung DTS ARM changes for v6.5
 
-Artur Weber (2):
-      dt-bindings: soc: samsung: exynos-pmu: add Exynos4212 compatible
-      soc: samsung: exynos-pmu: Re-introduce Exynos4212 support
+1. Final cleanups and improvements as a result of dtbs_checks which rely
+   on previously merged driver changes thus affecting older or
+   out-of-tree kernels.  The changes are necessary to achieve full
+   dtbs_check compliance, which justifies affecting out-of-tree users.
+   Changes affecting them are:
+    - Drop simple-bus compatible from FIMC: Exynos4 and S5PV210,
+    - Remove empty camera pinctrl configuration: Exynos4 and S5PV210,
+    - Re-order MFC clock names to match Exynos and bindings: S5PV210.
 
- .../devicetree/bindings/media/s5p-mfc.txt          |  78 ---------
- .../devicetree/bindings/media/samsung,s5p-mfc.yaml | 184 +++++++++++++++++++++
- .../bindings/soc/samsung/exynos-pmu.yaml           |   5 +
- drivers/soc/samsung/exynos-pmu.c                   |   9 +
- drivers/soc/samsung/exynos-pmu.h                   |   2 +
- drivers/soc/samsung/exynos4-pmu.c                  |  15 +-
- 6 files changed, 212 insertions(+), 81 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
+2. Except above few more non-intrusive cleanups for dtbs_check for
+   S5PV210.  Fix also some typos.
+
+3. Re-introduce Exynos4212 which was removed because of lack of upstream
+   users.  Artur Weber adds now Samsung Galaxy Tab3 with Exynos4212.
+
+----------------------------------------------------------------
+Artur Weber (6):
+      ARM: dts: exynos: Move common Exynos4x12 definitions to exynos4x12.dtsi
+      ARM: dts: exynos: Re-introduce Exynos4212 DTSI
+      dt-bindings: arm: samsung: Add Samsung Galaxy Tab3 family boards
+      ARM: dts: exynos: Fix some typos in comments
+      ARM: dts: s3c64xx: Fix some typos in comments
+      ARM: dts: s5pv210: Fix typo in comments, fix pinctrl header
+
+Krzysztof Kozlowski (10):
+      ARM: dts: exynos: drop simple-bus from FIMC in Exynos4
+      ARM: dts: s5pv210: drop simple-bus from FIMC
+      ARM: dts: exynos: Remove empty camera pinctrl configuration in Trats
+      ARM: dts: exynos: Remove empty camera pinctrl configuration in Universal C210
+      ARM: dts: exynos: Remove empty camera pinctrl configuration in Odroid X/U3
+      ARM: dts: s5pv210: align pin configuration nodes with bindings
+      ARM: dts: s5pv210: align USB node name with bindings
+      ARM: dts: s5pv210: re-order MFC clock names to match Exynos and bindings
+      ARM: dts: s5pv210: add dummy 5V regulator for backlight on SMDKv210
+      ARM: dts: s5pv210: remove empty camera pinctrl configuration
+
+ .../bindings/arm/samsung/samsung-boards.yaml       |  10 +
+ arch/arm/boot/dts/exynos3250-pinctrl.dtsi          |   4 +-
+ arch/arm/boot/dts/exynos3250.dtsi                  |   2 +-
+ arch/arm/boot/dts/exynos4.dtsi                     |   6 +-
+ arch/arm/boot/dts/exynos4210-pinctrl.dtsi          |   4 +-
+ arch/arm/boot/dts/exynos4210-trats.dts             |   2 -
+ arch/arm/boot/dts/exynos4210-universal_c210.dts    |   3 -
+ arch/arm/boot/dts/exynos4212.dtsi                  | 157 +++++
+ arch/arm/boot/dts/exynos4412-odroid-common.dtsi    |   2 -
+ arch/arm/boot/dts/exynos4412.dtsi                  | 646 +-------------------
+ ...os4412-pinctrl.dtsi => exynos4x12-pinctrl.dtsi} |   6 +-
+ arch/arm/boot/dts/exynos4x12.dtsi                  | 664 +++++++++++++++++++++
+ arch/arm/boot/dts/exynos5.dtsi                     |   2 +-
+ arch/arm/boot/dts/exynos5250-pinctrl.dtsi          |   4 +-
+ arch/arm/boot/dts/exynos5250.dtsi                  |   2 +-
+ arch/arm/boot/dts/exynos5260-pinctrl.dtsi          |   2 +-
+ arch/arm/boot/dts/exynos5410.dtsi                  |   2 +-
+ arch/arm/boot/dts/exynos5420-pinctrl.dtsi          |   2 +-
+ arch/arm/boot/dts/exynos5420.dtsi                  |   2 +-
+ arch/arm/boot/dts/exynos5800.dtsi                  |   2 +-
+ arch/arm/boot/dts/s3c6400.dtsi                     |   2 +-
+ arch/arm/boot/dts/s3c6410.dtsi                     |   2 +-
+ arch/arm/boot/dts/s3c64xx.dtsi                     |   2 +-
+ arch/arm/boot/dts/s5pv210-pinctrl.dtsi             |  14 +-
+ arch/arm/boot/dts/s5pv210-smdkv210.dts             |   8 +
+ arch/arm/boot/dts/s5pv210.dtsi                     |  14 +-
+ 26 files changed, 878 insertions(+), 688 deletions(-)
+ create mode 100644 arch/arm/boot/dts/exynos4212.dtsi
+ rename arch/arm/boot/dts/{exynos4412-pinctrl.dtsi => exynos4x12-pinctrl.dtsi} (99%)
+ create mode 100644 arch/arm/boot/dts/exynos4x12.dtsi
