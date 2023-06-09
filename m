@@ -2,145 +2,100 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1877298D0
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 Jun 2023 13:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2932729C34
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 Jun 2023 16:07:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232328AbjFIL5L (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 9 Jun 2023 07:57:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47550 "EHLO
+        id S240062AbjFIOG7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 9 Jun 2023 10:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239237AbjFIL5J (ORCPT
+        with ESMTP id S239898AbjFIOG5 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 9 Jun 2023 07:57:09 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBF183A9C
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  9 Jun 2023 04:56:35 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-977e7d6945aso310190066b.2
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 09 Jun 2023 04:56:35 -0700 (PDT)
+        Fri, 9 Jun 2023 10:06:57 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 005723584
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  9 Jun 2023 07:06:55 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51494659d49so3088370a12.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 09 Jun 2023 07:06:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686311781; x=1688903781;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oYrIxCV5eN1GYZDJEJ1UfI92aRFL2OYEZ4NP6sPPE2c=;
-        b=LO+fORubTVhmrOyNTWIDUURXux/NlOjg6bPwDxETFP0wrzbqPmSJH579qNs6TW9Dy/
-         kZUXic95WuWnCLXNRivrshUhTP8eHvUuzi3fP/8jbEHRSqLfIdV/VRUW3KlOy5d5wgc7
-         GqNUDBVs4TaECJ1Scp/WsddYlkFwsx4dgKGE3fPANBz/M+NrHmnoqsjA33Oy1Syy+u9x
-         VieIWj1BMAx8bMcXUSxhIkZaUZBR5lc5Bc6WgLmZ7R0PVBIg1i9XmdB6JNKneuc8uf4+
-         o0vww0+nzpd+h1nhfMZDhvkscVZLjlVFZA2X6uoZKbVFxjw2GsNxV6lpXMPLimtr0lyP
-         IbJw==
+        d=linaro.org; s=google; t=1686319614; x=1688911614;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8ez83xrnUgbw0MAP7/4bHfz4IcI1smRL2ein9QCNd6Q=;
+        b=MWLzBqFecgIKNf1kgPAbYdebxEuEwkAqBZ/e49ZS5gOtgYOKtpD8LQ66Vnv9LPxiJF
+         Mo9RX6D+aYNPiN9nEWemYZ6fCyB7Hqdx00XbM3YtyU6iX6l3saQ6vFZCasD2zN5AKmli
+         wHWkF3yxP8aqdzkMYYz+zxRIdZFMgMBPLMI99CLY3WSQOqFCjvgSoqxOo2E9jPdueDAg
+         TdG04blH0/lMwU9GRTQpsDIE+hyW/ePw7XJHVgV4b9z3jvWj6PpTE/AN2OPP1MMFGs/H
+         qFE96ooOh70XorMN5d40jzSzZRDM+LU0W+0oU8GvzDStCIxJHYaW9lHRgC3vDieyK1lT
+         sqkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686311781; x=1688903781;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYrIxCV5eN1GYZDJEJ1UfI92aRFL2OYEZ4NP6sPPE2c=;
-        b=Lqs5Nb0K8Q9/fx50Yir5nwe0p64HUDOI4Nm8K99qgBM4nDUJZo20VFV6QZ3Au+FGzM
-         9LDDdcd6l8aSu6CkVloOYyuuQHfmDMUaYbpmnpLRNaI1E7WyyX+sFljvBfkDxd6BQv6n
-         TzOCKtoOFJXCm++omn0x3y2cfBBgq7c9/sIX8Ou0h411RaMJX/36duBeSCDS5aP9CrvR
-         i/8YGqNHNBQwRy4JiKYZcsRVCbqXEcUKIlVIEqhF7jkGQ19uzle+pqIxccrM+6YKU12U
-         vxj2vjEY/UpZwDG+FsFEDc7Nn0BJRWXOQqARKKLEbwRetzpI4kX+JO7ZzL/Y3zcOrA78
-         DXZQ==
-X-Gm-Message-State: AC+VfDxresp0hgn8qcsU97a2ZaIZkKJk0D+CuKMTgmTEAeNoPf4WS14G
-        yTVsfD2IFR4fmBDEdyV5foVPQw==
-X-Google-Smtp-Source: ACHHUZ7kFcjPb/Bl918mM98lpkRB6MU3jCR+A5T5xmYDhf2Kx350E1NZgAXUcmyAU0dnBFyQ5CpUHQ==
-X-Received: by 2002:a17:907:789:b0:978:ab6b:afd4 with SMTP id xd9-20020a170907078900b00978ab6bafd4mr1639295ejb.43.1686311781136;
-        Fri, 09 Jun 2023 04:56:21 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id b14-20020a1709064d4e00b00974638e4a98sm1207167ejv.24.2023.06.09.04.56.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 04:56:20 -0700 (PDT)
-Message-ID: <f3607725-b08c-8d96-02f8-f8f89af8e8b1@linaro.org>
-Date:   Fri, 9 Jun 2023 13:56:19 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: AW: [PATCH 2/2] tty: serial: samsung_tty: Fix a memory leak in
- s3c24xx_serial_getclk() when iterating clk
-Content-Language: en-US
-To:     Walter Harms <wharms@bfs.de>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Thomas Abraham <thomas.abraham@linaro.org>,
-        Kukjin Kim <kgene.kim@samsung.com>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>
-References: <e4359d5ef206f5b349c1d15a515a1205e78dda55.1686285892.git.christophe.jaillet@wanadoo.fr>
- <93bf8f574310256fcea50e5c5a62b5c37e20bb14.1686285892.git.christophe.jaillet@wanadoo.fr>
- <f31523d7270d4a1f82d96b7891ed13e6@bfs.de>
+        d=1e100.net; s=20221208; t=1686319614; x=1688911614;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8ez83xrnUgbw0MAP7/4bHfz4IcI1smRL2ein9QCNd6Q=;
+        b=cGBxoKSvjBWcZjsGvETEXAgraGck1PzELaYLbZfJgGnBxwADHux7HSMJ0L3v3LVJCz
+         19B4R+nXFF8VHG5rcU3GvBGl2o0UoDo5v4yljGe/0uYEbIxX1Vb60CCzNBnVuWBayMD7
+         ryOI+WHmO3vyND7m496aCc2LvYh6gMUliLX97X72r9MCtDnwNhceUuP/oiK/S3W7TTN0
+         R0tZ5MIf+swuoPij8OFsuOw5LRHcqMgl/SH0P1PXvg4vcTpp7crpj8OS3XyR64aJm1Z0
+         7V8yI/Slz/cy8ZL5HWQTTUXEjDBHfpjCPeqWGT3V/fhJKwBt3HAJekdS+HawSUX8EyDB
+         3avQ==
+X-Gm-Message-State: AC+VfDw4SBCXcR2VBn5I8a4UV+7RA683sM8AamU5GhZ0JnCpzQSp4O4t
+        PiGv/K7wURddGSoo38blbLsvsQ==
+X-Google-Smtp-Source: ACHHUZ6eNQSN6PIFn6NAH6sD5EEzqacvW4Z3scV2BWSPG/097RqqphuqnMSNGCi9/N3LutXcW3LILw==
+X-Received: by 2002:a17:907:2d06:b0:973:da59:7c91 with SMTP id gs6-20020a1709072d0600b00973da597c91mr2053621ejc.51.1686319614494;
+        Fri, 09 Jun 2023 07:06:54 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id kf10-20020a17090776ca00b00965f6ad266bsm1307695ejc.119.2023.06.09.07.06.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jun 2023 07:06:54 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <f31523d7270d4a1f82d96b7891ed13e6@bfs.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: ufs: samsung,exynos: drop unneeded quotes
+Date:   Fri,  9 Jun 2023 16:06:51 +0200
+Message-Id: <20230609140651.64488-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 09/06/2023 10:57, Walter Harms wrote:
-> 
-> while we are here ....
-> 
-> perhaps INT_MAX from kernel.h ?
-> 
-> int   deviation = (1 << 30) - 1;
-> 
-> the part before looks a bit strange
-> 
-> if (ourport->info->has_divslot) {
->                         unsigned long div = rate / req_baud;
-> 
->                         /* The UDIVSLOT register on the newer UARTs allows us to
->                          * get a divisor adjustment of 1/16th on the baud clock.
->                          *
->                          * We don't keep the UDIVSLOT value (the 16ths we
->                          * calculated by not multiplying the baud by 16) as it
->                          * is easy enough to recalculate.
->                          */
-> 
->                         quot = div / 16;
->                         baud = rate / div;
-> because
->    baud=rate/rate/req_baud = req_baud
-> can this be simplyfied ? (or is the numeric required  ?)
-> 
-> 
-> Homebrew abs()  kernel.h has a abs() can we use it here ?
-> 
->             if (calc_deviation < 0)
->                         calc_deviation = -calc_deviation;
-> 
-> to the patch:
-> 
-> +                       /*
-> +                        * If we find a better clk, release the previous one, if
-> +                        * any.
-> +                        */
-> +                       if (!IS_ERR(*best_clk))
-> +                               clk_put(*best_clk);
-> 
-> the intentions are good. *best_clk is user supplied (and should be NULL)
-> filled & released in the next round but IMHO must be valid (is clk).
-> so no need to check. (ntl clk_put seems to handle NULL and ERR )
->    if (!clk || WARN_ON_ONCE(IS_ERR(clk)))
->                 return;
+Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+checking for this can be enabled in yamllint.
 
-Don't top-post.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Anyway, I don't understand what you want to say here.
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
+index a9988798898d..88cc1e3a0c88 100644
+--- a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
+@@ -54,7 +54,7 @@ properties:
+     const: ufs-phy
+ 
+   samsung,sysreg:
+-    $ref: '/schemas/types.yaml#/definitions/phandle-array'
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     description: Should be phandle/offset pair. The phandle to the syscon node
+                  which indicates the FSYSx sysreg interface and the offset of
+                  the control register for UFS io coherency setting.
+-- 
+2.34.1
 
