@@ -2,81 +2,84 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3F3872CE62
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 12 Jun 2023 20:31:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C97A72D807
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Jun 2023 05:12:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235027AbjFLSa6 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 12 Jun 2023 14:30:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50454 "EHLO
+        id S233441AbjFMDMj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 12 Jun 2023 23:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237548AbjFLSaz (ORCPT
+        with ESMTP id S239229AbjFMDLS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:30:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B060FCE;
-        Mon, 12 Jun 2023 11:30:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4CFCC617E6;
-        Mon, 12 Jun 2023 18:30:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94604C433D2;
-        Mon, 12 Jun 2023 18:30:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686594653;
-        bh=QxpJzmrhs/s31q92ok3v7gD12r5Tp5raaCXLllOa6g0=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=UvXzMCZI4lZ0ZAohnpSdiE521Tv/m8RJSWTongiULPGyPP05a4Yu7ILM7Og6cN/0m
-         g178wqzsU0l2t7XKDslRurm1hTvuZGc4nqEMFN67TBRzHTpI11YZSI6qxx6rkFIoBn
-         cgpKYbBRKUGMj0vcN24QD4eXLuLNfKZjFdvHxgmsf4G9qoqWro7MfSoc8e7577xHmG
-         eTUlxVa8heGtfQlyKSsbtoSv0+EV29H8RK/U40zrLRXKUw0ry2R/YcylDB+HP5V8Qi
-         QkfAs0fJAi6HueM9Rc4ayhnkkgx20dwJGEnQj2/9yqIY7vccK1am2M70zWE3acv2Uk
-         mhkdV5zflbBYg==
-Message-ID: <c602fd10aed6f16e6ff2be772dfc5ba3.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Mon, 12 Jun 2023 23:11:18 -0400
+X-Greylist: delayed 3420 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 12 Jun 2023 20:09:10 PDT
+Received: from servidor.delcampo.net.ni (servidor.delcampo.net.ni [165.98.97.147])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 724E11BE4;
+        Mon, 12 Jun 2023 20:09:09 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by servidor.delcampo.net.ni (Postfix) with ESMTP id EB4B8E8E803;
+        Mon, 12 Jun 2023 19:48:44 -0600 (CST)
+Received: from servidor.delcampo.net.ni ([127.0.0.1])
+        by localhost (servidor.delcampo.net.ni [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id xViX1aws-0PK; Mon, 12 Jun 2023 19:48:43 -0600 (CST)
+Received: from localhost (localhost [127.0.0.1])
+        by servidor.delcampo.net.ni (Postfix) with ESMTP id 64636E8D70F;
+        Mon, 12 Jun 2023 19:32:03 -0600 (CST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 servidor.delcampo.net.ni 64636E8D70F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delcampo.net.ni;
+        s=mdc; t=1686619923;
+        bh=6U02rciR9yO0dqW4aRlstxCgOSivJk6a64yGEbcYLnk=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=ZLalEhB4Y+f8unoZw0mt3u9uDRTIZkwfRESDBboKW7e01mCDiaX88AqsC8mEi6U6b
+         n+I5Ahq9cdevqR6QnAXSWfj4/GGvk4BNLjDBQopCakhSnGDo+wh6kVAzm2MMOLyTYa
+         dyTvfbshWHQtCWS6jaJANquHvw8b0jQgdMGOvqsw=
+X-Virus-Scanned: amavisd-new at delcampo.net.ni
+Received: from servidor.delcampo.net.ni ([127.0.0.1])
+        by localhost (servidor.delcampo.net.ni [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id f5iFvJEzxppe; Mon, 12 Jun 2023 19:32:03 -0600 (CST)
+Received: from [10.2.18.169] (unknown [95.181.237.4])
+        by servidor.delcampo.net.ni (Postfix) with ESMTPSA id 18FE3E893D6;
+        Mon, 12 Jun 2023 19:15:25 -0600 (CST)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230612175910.289428-1-krzysztof.kozlowski@linaro.org>
-References: <20230612175910.289428-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [GIT PULL] clk: samsung: drivers for v6.5
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        linux-clk@vger.kernel.org, Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <snawrocki@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Date:   Mon, 12 Jun 2023 11:30:51 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Description: Mail message body
+Subject: Loan Offer
+To:     Recipients <contabilidad01@delcampo.net.ni>
+From:   "Tom Nunez" <contabilidad01@delcampo.net.ni>
+Date:   Tue, 13 Jun 2023 02:12:25 +0100
+Reply-To: jessepeterson@skiff.com
+Message-Id: <20230613011526.18FE3E893D6@servidor.delcampo.net.ni>
+X-DelCampo-MailScanner: Found to be clean, Found to be clean
+X-DelCampo-MailScanner-SpamCheck: no es spam, SpamAssassin (almacenado,
+        puntaje=-1.11, requerido 4, autolearn=not spam, ALL_TRUSTED -1.00,
+        DKIM_SIGNED 0.10, DKIM_VALID -0.10, DKIM_VALID_AU -0.10,
+        T_SCC_BODY_TEXT_LINE -0.01), no es spam, SpamAssassin (almacenado,
+        puntaje=-1.11, requerido 4, autolearn=not spam, ALL_TRUSTED -1.00,
+        DKIM_SIGNED 0.10, DKIM_VALID -0.10, DKIM_VALID_AU -0.10,
+        T_SCC_BODY_TEXT_LINE -0.01)
+X-DelCampo-MailScanner-Information: Please contact the ISP for more information
+X-DelCampo-MailScanner-ID: 64636E8D70F.A1910
+X-DelCampo-MailScanner-From: contabilidad01@delcampo.net.ni
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_BL,
+        RCVD_IN_MSPIKE_L4,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2023-06-12 10:59:10)
-> The following changes since commit ac9a78681b921877518763ba0e89202254349d=
-1b:
->=20
->   Linux 6.4-rc1 (2023-05-07 13:34:35 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux.git tags/sam=
-sung-clk-6.5
->=20
-> for you to fetch changes up to 2aac2d8b95923203e683c60124877ab434133679:
->=20
->   clk: samsung: add CONFIG_OF dependency (2023-06-12 11:45:20 +0200)
->=20
-> ----------------------------------------------------------------
+We offer loans to individuals and firms at low interest rates of 2%. We giv=
+e out loan for Debt Consolidation,Home Improvements, Car Purchase,A New Hom=
+e,Investment/Business Expansion Purposes or vacation.
 
-Thanks. Pulled into clk-next
+In our loan scheme both local and international clients have the guarantee =
+of obtaining a loan from us on the mode of unsecured offshore international=
+ funding which means no collateral is required for this process.
+
+Contact us for more inquiries or reply to this email for more information.
+
+Regards,
+Jesse Peterson
