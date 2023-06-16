@@ -2,96 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37AFF732B7A
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 Jun 2023 11:27:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4013732E12
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 Jun 2023 12:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344185AbjFPJ1s (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 16 Jun 2023 05:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41750 "EHLO
+        id S1344124AbjFPK3K (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 16 Jun 2023 06:29:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344201AbjFPJ1b (ORCPT
+        with ESMTP id S1344225AbjFPK2Y (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 16 Jun 2023 05:27:31 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC52144AD
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 16 Jun 2023 02:26:28 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-51a2fa4a45eso615336a12.0
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 16 Jun 2023 02:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686907587; x=1689499587;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JzbnGZhrNyWzHO+pd630be+eVcaUV9U4dzUTx4TgLb8=;
-        b=jvj4ImB41EBwWhl8l+G9DcltqOLh99FsTfocVojQ52wQZGmO8ykxxwnscLMkESPIlu
-         XDVaLe8hPlsRvpEatl0lo/NJHsx/St35jmciLyQk45ZLAZaufKkV1mtPgcBPsvplksmZ
-         AGnNqKCcPRoiu1NtqoSlY40ckt9S+BtB0RFL3YG52Sj7/0qn+grUgjWlNbjb7tn7SH2u
-         a5EjHhbX64xgTn2PVR5w/rX9Ts2Ff/rbWIw6JyunEcE6YqaRz5xtrYU3G7jPCBkxSD50
-         dCQRpyP0QJWVCROwWgMTznZJjmv1PcBGN1wpjabRMwyhbCZXaRIdjMwpKvT1hQfwi0pl
-         950Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686907587; x=1689499587;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JzbnGZhrNyWzHO+pd630be+eVcaUV9U4dzUTx4TgLb8=;
-        b=CEApTHmoN+txjz7JtjGspidQIoq1TfWLaLEFXpCCUSfixUceyggZJbUE68o6fqy5ed
-         wiKm1mXwpqYZatMQXZQhvgr3lQfgROGE6V+HfPuD4HVFgjCZD8lltBoLlBhhKq55ov7T
-         NpCkqg3oXwe9HKZRl/XYZlkLc2Ua9DMpw/KdWX0J0FnrYiY5qQKBrS4YMpsZ3mHCYU3x
-         ia7Hu46P6x8yMhnM1dldEPRoE7qJHrM5MUACS6WTwg2gavVO1Z0JfrioLMJRU5IXL90g
-         ouhZL+XE6B8cNP6lCLi+avh8HUbPqdg+Q++Le0Am7JMGAgWxrTGfNR9OGCzG3hBKzkpf
-         1Y4g==
-X-Gm-Message-State: AC+VfDxS5QYmcnmgJg8MPzcqMC7CMEn+BeHTlNM9AOoORotVMmFUkcm5
-        tMgvNuDUBkMbSzikvWoOZt27Va2I4kt4dhHeMwg=
-X-Google-Smtp-Source: ACHHUZ5pd4rYYjbrDm3AKYGAfFChi1yrldfZLnzVvqtnbubhK4z37yBpU/rAmMOrHeoRs7ur2/SYYw==
-X-Received: by 2002:a17:906:af65:b0:974:1eeb:1ab7 with SMTP id os5-20020a170906af6500b009741eeb1ab7mr961547ejb.24.1686907586845;
-        Fri, 16 Jun 2023 02:26:26 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id i24-20020a17090671d800b00967004187b8sm10428226ejk.36.2023.06.16.02.26.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 02:26:26 -0700 (PDT)
-Message-ID: <0c28b53e-a6c6-908a-0b3f-107b22231a4b@linaro.org>
-Date:   Fri, 16 Jun 2023 11:26:24 +0200
+        Fri, 16 Jun 2023 06:28:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A91346AE;
+        Fri, 16 Jun 2023 03:26:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BF6CB62DD8;
+        Fri, 16 Jun 2023 10:26:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8F9C433CA;
+        Fri, 16 Jun 2023 10:26:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686911171;
+        bh=VRkjnQDfjXAu6adCt3PdtX8T/zECSCAXojz7WBO3BNU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=vFx6SfUdgarjHm7N5h+A1ettRCZ3kHj3b2NLqsr9WUrM215UkuN9Zn6qwEBq4KkCy
+         uHX92L1N8Jqy2ZPUnmMTCXUhKY5OxUK/V8LNfGdSwolWHO3rdwOJ9QMndoV1GiW9jI
+         aUyxC7wQ7r/uND+Hmwa1JYKpPs1ySzRtZYzQSPcg5M24OcMwsfKMCiMk8SgICBW8wW
+         isOc+P2OQ3K/hHE1Fj2+UxC6A6MpH7iNrMIJRNqDlXfKpNy60YAtR7PtIb7/tOULU2
+         aUNI0i6RH27lhw6Cbdb7MtfypboZoQKzsXQmQ/rHkq+VoDb5pgZfGsQuH/GqbnH3xK
+         l3zRX8jx2Bd1A==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, airlied@gmail.com, daniel@ffwll.ch,
+        krzysztof.kozlowski@linaro.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.3 23/30] drm/exynos: vidi: fix a wrong error return
+Date:   Fri, 16 Jun 2023 06:25:11 -0400
+Message-Id: <20230616102521.673087-23-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230616102521.673087-1-sashal@kernel.org>
+References: <20230616102521.673087-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: usb: dwc3: HC dies under high I/O load on Exynos5422
-To:     =?UTF-8?Q?Jakub_Van=c4=9bk?= <linuxtardis@gmail.com>,
-        Thinh.Nguyen@synopsys.com, mauro.ribeiro@hardkernel.com
-Cc:     linux-usb@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-References: <a21f34c04632d250cd0a78c7c6f4a1c9c7a43142.camel@gmail.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a21f34c04632d250cd0a78c7c6f4a1c9c7a43142.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.3.8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 16/06/2023 05:11, Jakub Vaněk wrote:
-> Hi all,
-> 
-> I've discovered that on recent kernels the xHCI controller on Odroid
-> HC2 dies when a USB-attached disk is put under a heavy I/O load.
-> 
-> The hardware in question is using a DWC3 2.00a IP within the Exynos5422
-> to provide two internal USB3 ports. One of them is connected to a
-> JMS578 USB-to-SATA bridge (Odroid firmware v173.01.00.02). The bridge
-> is then connected to a Intel SSDSC2KG240G8 (firmware XCV10132).
-> 
-> The crash can be triggered by running a read-heavy workload. This
-> triggers it for me within tens of seconds:
+From: Inki Dae <inki.dae@samsung.com>
 
-multi_v7 has devfreq enabled. Does disabling ARM_EXYNOS_BUS_DEVFREQ
-change anything here?
+[ Upstream commit 4a059559809fd1ddbf16f847c4d2237309c08edf ]
 
-Best regards,
-Krzysztof
+Fix a wrong error return by dropping an error return.
+
+When vidi driver is remvoed, if ctx->raw_edid isn't same as fake_edid_info
+then only what we have to is to free ctx->raw_edid so that driver removing
+can work correctly - it's not an error case.
+
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 4d56c8c799c5a..f5e1adfcaa514 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -469,8 +469,6 @@ static int vidi_remove(struct platform_device *pdev)
+ 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
+ 		kfree(ctx->raw_edid);
+ 		ctx->raw_edid = NULL;
+-
+-		return -EINVAL;
+ 	}
+ 
+ 	component_del(&pdev->dev, &vidi_component_ops);
+-- 
+2.39.2
 
