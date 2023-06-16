@@ -2,59 +2,59 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81188732EAB
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 Jun 2023 12:34:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00E02732EBA
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 Jun 2023 12:37:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345289AbjFPKeV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 16 Jun 2023 06:34:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58160 "EHLO
+        id S1344774AbjFPKhL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 16 Jun 2023 06:37:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345222AbjFPKdd (ORCPT
+        with ESMTP id S1344833AbjFPKd6 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 16 Jun 2023 06:33:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CED959DF;
-        Fri, 16 Jun 2023 03:28:26 -0700 (PDT)
+        Fri, 16 Jun 2023 06:33:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5C84687;
+        Fri, 16 Jun 2023 03:28:35 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 87A2D636A8;
-        Fri, 16 Jun 2023 10:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE7BC433CB;
-        Fri, 16 Jun 2023 10:28:14 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 67651635F3;
+        Fri, 16 Jun 2023 10:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703F2C433CA;
+        Fri, 16 Jun 2023 10:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686911295;
-        bh=SXumiZ7DSGjqS/QPZdIQChJYL9zob/waop+PFTSxUR8=;
+        s=k20201202; t=1686911314;
+        bh=CNtcYf3C913L4qZW+Z+LQTGDw8tBa30R8IlCjpUSR1o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=W60VfmbYERBDVL+TavVnaBjxVe5CQQGKsUf+QXSlUHJ+MJqXOPyrW2kRPeSVYb8kF
-         dfqmg+blygiJos+imJs7Mt1Inb7F24K+J9rzFtoyT1ZJy38Snk4SMYGIISnzKB/2Of
-         LsNDOjJjfzHUIrWEbWAV/YqQubOwyN7/mtGecAmlbvvTkmfP8LpYgSpG+2RoU/Dm8L
-         fla4oc2P2URCrbHuMnRNDvYCg4DZ0ilIad8Cz0UB8GALHiLCmPTneVFRyuSB6GS+YJ
-         N12+Wc4g0o2lhwjjJ3EVqPs31p9zioTce9HxCymzxxV7SIYA7Z5L3lopwkfmk4eMtv
-         UmXnQeu4h2znA==
+        b=I5emMbS1/wEAoHgrau86b8YgSkBHpx9kGCAIXU3jY7n/4w+QFGf3IX0rve6600uvr
+         zNHigF3dk8XQblrNukvP1onVcaHSJnBtZ4BLIDsEadlAs6fHeeBaHNEBwpMMFUxhZS
+         dwB4EYe807JNVS9bXTdOttAEsYMMfhkcCyczImyUlrHlulyZJgZt/uOroycn1sZPgJ
+         HdGWEVTKSoaVH9CjGtqc/Q36Kf+Jz/kW7XsZlHHcsQ+ZkKGRHkAFpFrow7rD6ll6HV
+         EGuT6l8pmpQX3dfsTrY7tuIL8hmLZg8RYPIH9zpBf/JmcfG9zksqCJK4a6RTI2Ha59
+         TIlXUhcPNAADA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Min Li <lm0963hack@gmail.com>, Andi Shyti <andi.shyti@kernel.org>,
-        Inki Dae <inki.dae@samsung.com>,
+Cc:     Inki Dae <inki.dae@samsung.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
         Sasha Levin <sashal@kernel.org>, sw0312.kim@samsung.com,
         kyungmin.park@samsung.com, airlied@gmail.com, daniel@ffwll.ch,
         krzysztof.kozlowski@linaro.org, dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 10/14] drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
-Date:   Fri, 16 Jun 2023 06:27:47 -0400
-Message-Id: <20230616102753.673975-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 5/8] drm/exynos: vidi: fix a wrong error return
+Date:   Fri, 16 Jun 2023 06:28:18 -0400
+Message-Id: <20230616102821.674153-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230616102753.673975-1-sashal@kernel.org>
-References: <20230616102753.673975-1-sashal@kernel.org>
+In-Reply-To: <20230616102821.674153-1-sashal@kernel.org>
+References: <20230616102821.674153-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.184
+X-stable-base: Linux 5.4.247
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,35 +63,36 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-From: Min Li <lm0963hack@gmail.com>
+From: Inki Dae <inki.dae@samsung.com>
 
-[ Upstream commit 48bfd02569f5db49cc033f259e66d57aa6efc9a3 ]
+[ Upstream commit 4a059559809fd1ddbf16f847c4d2237309c08edf ]
 
-If it is async, runqueue_node is freed in g2d_runqueue_worker on another
-worker thread. So in extreme cases, if g2d_runqueue_worker runs first, and
-then executes the following if statement, there will be use-after-free.
+Fix a wrong error return by dropping an error return.
 
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+When vidi driver is remvoed, if ctx->raw_edid isn't same as fake_edid_info
+then only what we have to is to free ctx->raw_edid so that driver removing
+can work correctly - it's not an error case.
+
 Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_g2d.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-index 967a5cdc120e3..81211a9d9d0a9 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-@@ -1332,7 +1332,7 @@ int exynos_g2d_exec_ioctl(struct drm_device *drm_dev, void *data,
- 	/* Let the runqueue know that there is work to do. */
- 	queue_work(g2d->g2d_workq, &g2d->runqueue_work);
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 65b891cb9c50b..d882a22dfd6e6 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -483,8 +483,6 @@ static int vidi_remove(struct platform_device *pdev)
+ 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
+ 		kfree(ctx->raw_edid);
+ 		ctx->raw_edid = NULL;
+-
+-		return -EINVAL;
+ 	}
  
--	if (runqueue_node->async)
-+	if (req->async)
- 		goto out;
- 
- 	wait_for_completion(&runqueue_node->complete);
+ 	component_del(&pdev->dev, &vidi_component_ops);
 -- 
 2.39.2
 
