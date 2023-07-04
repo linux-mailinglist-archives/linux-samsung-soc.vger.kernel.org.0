@@ -2,108 +2,90 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA4987475F0
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Jul 2023 18:01:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07F0474764C
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Jul 2023 18:18:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjGDQBo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 4 Jul 2023 12:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56280 "EHLO
+        id S229615AbjGDQSP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 4 Jul 2023 12:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230357AbjGDQBk (ORCPT
+        with ESMTP id S231450AbjGDQSO (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 4 Jul 2023 12:01:40 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B92110CA;
-        Tue,  4 Jul 2023 09:01:39 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id B6F30228A8;
-        Tue,  4 Jul 2023 16:01:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1688486497; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=IfwJgZyv25fxiVPt+iHQRuM1nZU+g6MMG8wm6mkt5SY=;
-        b=UicRG1HJiXmMFkgsLRTd1l5SC+SVv4dVJTlVfDnrGzShNVLTm2IWhonLrvJardHroRUY3B
-        CV5BF7Yg6PnP2ee16FRLHZ9Dm7Xux14XOiZ8JV9M3LGsPdMHgEjTMSGOiqRabeDXKrZqX5
-        aWMJmzsLKpHw2wbGnwOaGhcrLGOBW7o=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1688486497;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=IfwJgZyv25fxiVPt+iHQRuM1nZU+g6MMG8wm6mkt5SY=;
-        b=ZSqriK1WLiZyG9FfQQknzF9dhWWA0xjFDZICN6JlsEVTJpFPebmXy3+lX8vU6wcYhHSmhN
-        NpIYxH70VLLb72CA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7F5B7133F7;
-        Tue,  4 Jul 2023 16:01:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id UEIdHmFCpGTzLwAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Tue, 04 Jul 2023 16:01:37 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     javierm@redhat.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-fbdev@vger.kernel.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Helge Deller <deller@gmx.de>
-Subject: [PATCH 10/10] fbdev: Remove FB_DEFAULT_SYS_OPS
-Date:   Tue,  4 Jul 2023 17:50:07 +0200
-Message-ID: <20230704160133.20261-11-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230704160133.20261-1-tzimmermann@suse.de>
-References: <20230704160133.20261-1-tzimmermann@suse.de>
+        Tue, 4 Jul 2023 12:18:14 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5B8DC;
+        Tue,  4 Jul 2023 09:18:13 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3fbc244d3a8so61082245e9.2;
+        Tue, 04 Jul 2023 09:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688487492; x=1691079492;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nI8tUMgDhEdpyNYB/YO1aEnXiY794w1w4iPgAjar+34=;
+        b=ItTeBv4l15fG2/2aUpz7byKAn5g0biOiC/fx8+A6NBIWO8KVs4BNjHVlPBGm22NT5q
+         dxkovBfNoZvC8kQSyTBi+izaSMGhQhi3W/Bp2IfnIqfaVZyosX6+iVO6CDznnfG+L1vs
+         m6fpZyC7RRcXMpkH0UnOQy+NdiqQKYwqWSiwHHsILiBF8re3Dwx+ajIPVPV6IM6Cv+or
+         AyLsrnrQBrTBWde4PVvAEuVIw6r2R0IBWqgOX6sJg+HHNktC+CoeZ7OaHMuWK8xh9RhK
+         G66/YQXM1tU8urtYqHr0zgUlIpYaiGZzd7Ux6W9MI88eOmG4Pptf+XV7cIZwLciPd7eE
+         WaZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688487492; x=1691079492;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nI8tUMgDhEdpyNYB/YO1aEnXiY794w1w4iPgAjar+34=;
+        b=e1OMAXV5F4SkEeYUlF4I5T5GKDHY0dNd4+zF3YX8q5QgfUhhuhkuwhf+KS/gYszLw0
+         6qYnekOQoODeAjJL9r+vsW7HhDxyycopk+Cd9Xwd9kTGGslyFTxIPBgA+5E8yiL7z1c9
+         xah1KOUVpPDwO96Ks3GJAJ7tnu0MD7PHrtCC9IqYiAG9/iiSOsLrpEtV8HLPsFT+b9IC
+         XPrfSr92kdyGQrGqnr1CkGfAVNb1eQqlhleVZ0I/AUXg0715CjwKYG/oKkUiMcQnSl5F
+         E/grMZhDSap1iiOwst125bbf7zSkUlIqIAd37+4R0aFQmvgDa9THnSizETJEgffGv5oC
+         ILgA==
+X-Gm-Message-State: ABy/qLY2oUF+MInCfdLJIHsjsr1HrZGd8fLtZia+ksVl1xFBjsZIiYHl
+        xPX/gt2W6AJB0hSXHEM754pLNAhcKhlWDeo/NiA=
+X-Google-Smtp-Source: APBJJlG+cnJ/93rVQl1tJXhZpFezKYLGiip0i1kztanotmE2J9rqGcQeahjruTDeuYbCKyVOFI3sSF8cQlR+B99bhrU=
+X-Received: by 2002:adf:ee41:0:b0:314:4db:e0b2 with SMTP id
+ w1-20020adfee41000000b0031404dbe0b2mr10971046wro.15.1688487491565; Tue, 04
+ Jul 2023 09:18:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230628164759.67594-1-dg573847474@gmail.com> <b6d3a872-f32e-bfcd-b603-c08339737045@linaro.org>
+ <CAAo+4rUzusAyyffkCvEq+wJQacqfrcTx-SviqXaTzPsqOkjB7w@mail.gmail.com>
+In-Reply-To: <CAAo+4rUzusAyyffkCvEq+wJQacqfrcTx-SviqXaTzPsqOkjB7w@mail.gmail.com>
+From:   Chengfeng Ye <dg573847474@gmail.com>
+Date:   Wed, 5 Jul 2023 00:18:00 +0800
+Message-ID: <CAAo+4rV1gFhCpS0=bQa-nBmDLrQ2tensXii5GDfEkTb=9SvbhA@mail.gmail.com>
+Subject: Re: [PATCH] watchdog: s3c2410: Fix potential deadlock on &wdt->lock
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     alim.akhtar@samsung.com, wim@linux-watchdog.org,
+        linux@roeck-us.net, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Remove the initializer macro FB_DEFAULT_SYS_OPS and its helper macro
-__FB_DEFAULT_SYS_OPS_MMAP. There are no users.
+Please kindly note that I am resending the last email since it did not
+reach maillist.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Helge Deller <deller@gmx.de> (maintainer:FRAMEBUFFER LAYER)
----
- include/linux/fb.h | 8 --------
- 1 file changed, 8 deletions(-)
-
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index 1191a78c5289..d370f84fbca9 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -586,14 +586,6 @@ extern ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
- 	.fb_copyarea	= sys_copyarea, \
- 	.fb_imageblit	= sys_imageblit
- 
--#define __FB_DEFAULT_SYS_OPS_MMAP \
--	.fb_mmap	= NULL /* default implementation */
--
--#define FB_DEFAULT_SYS_OPS \
--	__FB_DEFAULT_SYS_OPS_RDWR, \
--	__FB_DEFAULT_SYS_OPS_DRAW, \
--	__FB_DEFAULT_SYS_OPS_MMAP
--
- /*
-  * Helpers for framebuffers in DMA-able memory
-  */
--- 
-2.41.0
-
+> Hi, Krzysztof
+> Thanks for the reply.
+> > This interrupt is a threaded interrupt. Therefore the
+> > s3c2410wdt_keepalive() will be called again from process thread. Are you
+> > sure there is deadlock?
+> Is it really that s3c2410wdt_irq is a threaded interrupt? I could be wrong but I can
+> see that the interrupt is registered via the following code. It is the third argument
+> of devm_request_irq but not devm_request_threaded_irq or request_threaded_irq,
+> as far as I know, it should be an interrupt handler for the interrupt line wdt_irq
+> executed under irq context.
+> ret = devm_request_irq(dev, wdt_irq, s3c2410wdt_irq, 0, pdev->name, pdev);
+> > Anyway, please also strip unrelated paths and rather use function names,
+> > not references to lines, because these might be not accurate.
+> No problem, I will provide a new patch with the function name soon.
+> Best Regards,
+> Chengfeng
