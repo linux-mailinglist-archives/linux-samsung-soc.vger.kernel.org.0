@@ -2,146 +2,119 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9B10747E2A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 09:24:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD4BF747F0B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 10:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbjGEHX7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 5 Jul 2023 03:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46268 "EHLO
+        id S232418AbjGEIHO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 5 Jul 2023 04:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232259AbjGEHX5 (ORCPT
+        with ESMTP id S232430AbjGEIHM (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 5 Jul 2023 03:23:57 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8944510D5;
-        Wed,  5 Jul 2023 00:23:53 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-1b06ea7e7beso5935003fac.0;
-        Wed, 05 Jul 2023 00:23:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688541833; x=1691133833;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UtRultwczflx7AHsIym9/WcCjEB4FHHPYH8wgJ+7ZX8=;
-        b=V7LGiFMGlYLr2yn2Y0Rzccc4dgCcZ4tSHNjP7HzaTPY7G3TuyCEiD6WeJU+gnysCcf
-         NF73WRKgDoZD3cAQOlonlktwqDWlYoeJXwUC5df8A4iB2pUD623LDjHudXB1K+YtCC4Q
-         PkThH5LwdetekBVPTjuQ3pLpfaaayKr1q3XaN7swpKAqoukoQh1GmOoGf2VeMv+N6nM7
-         ySMNNcwehuOmdrG6bBivGTEN4ieYXCbLKQv0PP1S+ibDF1BXj14CcaElwSjMEraQQphw
-         68sabzJuDsW4DXGgWoGDDM76KcpZQUjv5BKJ/ZqU7vi2Mexb7i8IoVbY9G9cwI1ouhGd
-         xPCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688541833; x=1691133833;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UtRultwczflx7AHsIym9/WcCjEB4FHHPYH8wgJ+7ZX8=;
-        b=Cg79wjuVg05AD20vVE+hT6VB8K9Rr0Emx/MSuD9WZBrDdAQDzTT1Za73cAGmJHJy/7
-         5MzSBMgPsTOHtEy4FwxqjPReSYYwn4UOij4e5hbfMao4AJTBhrIL2Ik1mILjPGGGBrTE
-         enjo9vw9CAy/TCbaEE+bkHdlB8MQ9DP1dw4g5E05InGF7UjM3zCIG+8cr0eZqdcIRlwR
-         BTNIBWolwbN9p+W0ptsUJALtE3GFWYApAh/gOrpZrrzKUFOP3oIuRi/uX21HbdHL8qTF
-         sL5bOawvMQ9Mv6iWP1bN3Q7bBEg4mrd2LtgJIAV90dh/ZOpDRJNu6Cm+giYT0ltxZUfm
-         80dg==
-X-Gm-Message-State: ABy/qLakaqYf7SIP7fuynuvWG4vy2ICewEbc18/Sp6oFf/8GokNtwVkX
-        n+FunmVQM1m7fVSeApkINB8=
-X-Google-Smtp-Source: APBJJlGKTDdDczDO9DBJTucbfA58+S106cvsp3S/i5Bqu4Q7tkykGKqJvUQTxUZLj0/YpjVamFiLVg==
-X-Received: by 2002:a05:6871:4f18:b0:1b3:cee4:cac9 with SMTP id zu24-20020a0568714f1800b001b3cee4cac9mr3731186oab.33.1688541832660;
-        Wed, 05 Jul 2023 00:23:52 -0700 (PDT)
-Received: from 377044c6c369.cse.ust.hk (191host097.mobilenet.cse.ust.hk. [143.89.191.97])
-        by smtp.gmail.com with ESMTPSA id k19-20020a056870d0d300b001b3a5ab6cacsm3781314oaa.16.2023.07.05.00.23.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jul 2023 00:23:52 -0700 (PDT)
-From:   Chengfeng Ye <dg573847474@gmail.com>
-To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
-        wim@linux-watchdog.org, linux@roeck-us.net
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Chengfeng Ye <dg573847474@gmail.com>
-Subject: [PATCH v2] watchdog: s3c2410: Fix potential deadlock on &wdt->lock
-Date:   Wed,  5 Jul 2023 07:23:04 +0000
-Message-Id: <20230705072304.37741-1-dg573847474@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 5 Jul 2023 04:07:12 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3EB1715
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jul 2023 01:07:10 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qGxXO-0003pD-SO; Wed, 05 Jul 2023 10:06:58 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qGxXM-00CDNB-2g; Wed, 05 Jul 2023 10:06:56 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qGxXK-002Oar-Ns; Wed, 05 Jul 2023 10:06:54 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     linux-pwm@vger.kernel.org, kernel@pengutronix.de,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Paul Cercueil <paul@crapouillou.net>,
+        =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+        linux-mips@vger.kernel.org, Lee Jones <lee@kernel.org>,
+        George Stark <gnstark@sberdevices.ru>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Tzung-Bi Shih <tzungbi@kernel.org>,
+        chrome-platform@lists.linux.dev
+Subject: [PATCH v2 0/8] pwm: Get rid of pwm_[sg]et_chip_data()
+Date:   Wed,  5 Jul 2023 10:06:42 +0200
+Message-Id: <20230705080650.2353391-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2092; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=u4Z0GmFDTWtwLEP2HHVUlz+BVemZihHRxz0BXPl6pMI=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkpSSMvXlGQ8oFjDHYdRsE/iDjQCfYp2AvrCWKK 1aP+qcQUR6JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZKUkjAAKCRCPgPtYfRL+ TraOCACTPjXf8+TAzBnVeOY7qqFplcSzgSgICZsqqtlos7gZT1+KW9Ny9RQDN16wMQ6Q7ucg1Cp +xFa51wLHF5Pue9cn2xpppSO9+qXH416dIReCQRsf8l4tmegE796e7fzJ55unuda3e6Vit09PWg CiM5Xj5xbFu0o6f7erCJ+Vbt8jSTZAk5TQ7gN2TkJcsM3nh61vV/8fLZfoYK1VGomOr/e3wpc/8 43HfjI5oXyvs/4QjD9elp2Lf5aHTb4ytfeGkK4IyPd8G0epIhAGSPzoCBKgmjsCGaLIO5ne/am+ HiBadheZ/OiUvvU2Mus0sJLrzabNCCgTCK2oEuojih0o7QQo
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-As &wdt->lock is acquired by hard irq s3c2410wdt_irq(), other
-acquisition of the same lock under process context should
-disable irq, otherwise deadlock could happen if the irq preempt
-the execution while the lock is held in process context on the
-same CPU.
+Hello,
 
-[Deadlock Scenario]
-s3c2410wdt_suspend()
-    -> s3c2410wdt_stop()
-    -> spin_lock(&wdt->lock)
-        <irq iterrupt>
-        -> s3c2410wdt_irq()
-        -> s3c2410wdt_keepalive()
-        -> spin_lock(&wdt->lock) (deadlock here)
+the changes since (implicit) v1 of this series[1] are:
 
-[Deadlock Scenario]
-s3c2410wdt_probe()
-    -> s3c2410wdt_start()
-    -> spin_lock(&wdt->lock)
-        <irq iterrupt>
-        -> s3c2410wdt_irq()
-        -> s3c2410wdt_keepalive()
-        -> spin_lock(&wdt->lock) (deadlock here)
+ - Consistently write "per-channel" in the short log.
+ - [jz4740] Make use of struct_size(), thanks to Paul Cercueil for
+   pointing that out.
+ - [cros-ec] Add missing kernel-doc for new struct member, thanks to
+   Tzung-Bi Shih for pointing that out.
+ - [cros-ec] Make use of devm_kcalloc.
+ - [jz4740] Add Reviewed-by tag for Philippe Mathieu-Daudé.
+ - [cros-ec] Add Reviewed-by tag for Tzung-Bi Shih.
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock, which reported the above
-warning when analyzing the linux kernel 6.4-rc7 release.
+The first seven patches have no interdependencies, the last depends on
+all others.
 
-The tentative patch fix the potential deadlock by spin_lock_irqsave()
-under process context.
+The sti driver has two problems that are fixed by patch #6. You could
+apply it earlier already, but given that the issues are already old
+there is IMHO no urge.
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
----
- drivers/watchdog/s3c2410_wdt.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
-index 95416a9bdd4b..2dfc0d6a3004 100644
---- a/drivers/watchdog/s3c2410_wdt.c
-+++ b/drivers/watchdog/s3c2410_wdt.c
-@@ -399,10 +399,11 @@ static void __s3c2410wdt_stop(struct s3c2410_wdt *wdt)
- static int s3c2410wdt_stop(struct watchdog_device *wdd)
- {
- 	struct s3c2410_wdt *wdt = watchdog_get_drvdata(wdd);
-+	unsigned long flags;
- 
--	spin_lock(&wdt->lock);
-+	spin_lock_irqsave(&wdt->lock, flags);
- 	__s3c2410wdt_stop(wdt);
--	spin_unlock(&wdt->lock);
-+	spin_unlock_irqrestore(&wdt->lock, flags);
- 
- 	return 0;
- }
-@@ -411,8 +412,9 @@ static int s3c2410wdt_start(struct watchdog_device *wdd)
- {
- 	unsigned long wtcon;
- 	struct s3c2410_wdt *wdt = watchdog_get_drvdata(wdd);
-+	unsigned long flags;
- 
--	spin_lock(&wdt->lock);
-+	spin_lock_irqsave(&wdt->lock, flags);
- 
- 	__s3c2410wdt_stop(wdt);
- 
-@@ -433,7 +435,7 @@ static int s3c2410wdt_start(struct watchdog_device *wdd)
- 	writel(wdt->count, wdt->reg_base + S3C2410_WTDAT);
- 	writel(wdt->count, wdt->reg_base + S3C2410_WTCNT);
- 	writel(wtcon, wdt->reg_base + S3C2410_WTCON);
--	spin_unlock(&wdt->lock);
-+	spin_unlock_irqrestore(&wdt->lock, flags);
- 
- 	return 0;
- }
+
+
+[1] https://lore.kernel.org/linux-pwm/20230629094839.757092-1-u.kleine-koenig@pengutronix.de
+[2] The newer issue was introduced with e926b12c611c ("pwm: Clear
+    chip_data in pwm_put()") for v5.2-rc1 in May 2019.
+
+Uwe Kleine-König (8):
+  pwm: berlin: Put per-channel config into driver data
+  pwm: samsung: Put per-channel data into driver data
+  pwm: jz4740: Put per-channel clk into driver data
+  pwm: lp3943: Drop usage of pwm_[gs]et_chip_data()
+  pwm: renesas: Drop usage of pwm_[gs]et_chip_data()
+  pwm: sti: Reduce number of allocations and drop usage of chip_data
+  pwm: cros-ec: Put per-channel data into driver data
+  pwm: Drop pwm_[sg]et_chip_data()
+
+ drivers/pwm/core.c            | 31 -----------------------------
+ drivers/pwm/pwm-berlin.c      | 37 ++++++-----------------------------
+ drivers/pwm/pwm-cros-ec.c     | 33 +++++++++----------------------
+ drivers/pwm/pwm-jz4740.c      | 11 +++++++----
+ drivers/pwm/pwm-lp3943.c      | 21 +++++++-------------
+ drivers/pwm/pwm-renesas-tpu.c | 22 ++++++++++-----------
+ drivers/pwm/pwm-samsung.c     | 20 +++++--------------
+ drivers/pwm/pwm-sti.c         | 29 +++++++++++++--------------
+ include/linux/pwm.h           | 14 -------------
+ 9 files changed, 59 insertions(+), 159 deletions(-)
+
+
+base-commit: 92554cdd428fce212d2a71a06939e7cab90f7c77
 -- 
-2.17.1
+2.39.2
 
