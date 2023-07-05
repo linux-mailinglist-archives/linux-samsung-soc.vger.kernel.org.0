@@ -2,76 +2,67 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13BB2748783
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 17:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7E8748B13
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 19:56:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233139AbjGEPKe (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 5 Jul 2023 11:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45588 "EHLO
+        id S229645AbjGER40 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 5 Jul 2023 13:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233114AbjGEPKc (ORCPT
+        with ESMTP id S231269AbjGER4Z (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 5 Jul 2023 11:10:32 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D021709
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jul 2023 08:10:28 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-51d804c7d14so7808706a12.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 05 Jul 2023 08:10:28 -0700 (PDT)
+        Wed, 5 Jul 2023 13:56:25 -0400
+X-Greylist: delayed 965 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 05 Jul 2023 10:55:58 PDT
+Received: from mailrelay4-1.pub.mailoutpod2-cph3.one.com (mailrelay4-1.pub.mailoutpod2-cph3.one.com [IPv6:2a02:2350:5:403::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB6F1BCF
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jul 2023 10:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688569827; x=1691161827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ojk3pDsa51gaTaxBdleXM77SdabdORvtbCdzylQ7aXw=;
-        b=VM+h4H/I+ISVvdSZF7+xa0kUZGQpMhrHfPbNPpbll3S69f3ls36LuXEqbCX0sP0mQz
-         rsqXKouAkHWZ7YDP0FPt1gDaXBTwOn0SLGkKb4Om0en+IcJ4jnm0MgH/0gueKRejLFyX
-         fqqtLfH8PuzpHBp4EQr5Y62sVkev00Ydy8dfLH9NrsWhXuBhf/eJZs//zR1yPVKY89xF
-         bL4U5IWxnz3JpOs1RnNuIkpLZ3Rv/likz0OwrlQkyUjHUnbHDpahsW52mZLVGcyjN6Co
-         sR2sgW+7y/x/+5p7tUPcphzffGhazJCPhzZGEcwhY2i0F3UFr/izu5sbrRPL6ad+GuWa
-         mdNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688569827; x=1691161827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ojk3pDsa51gaTaxBdleXM77SdabdORvtbCdzylQ7aXw=;
-        b=bCVh6IRJ7Cdv6o+s376Tm4yszNkCqtUiIdl4XBHH/iSjtIqDBXn9IEV1R2vARYmuH1
-         jicqEUHEZrzSb1Nx0YlRmd1PEf8DKX2oMZeyHuvWyTWTWdfWxuiFmcOPs+L4UTetjE3J
-         KsGbiER2n1967mZh0NosSXgMfMwT4WyC9c6CKvS9P1QoKT7MuehQM183STqoNtl0CZZ4
-         H8Skzm5SAov5AYo6GmvnQ3vW9V1DH7aUQyRy16BIh8bwesNAtm7tUOFkAzFmxUgOiypB
-         TlVjiLIZjqC9BJVRH2eN4daH6mLLd9w63RoU1LLyYk2GTIEXCLV3AEVeZ58GozRYdOk1
-         aW3A==
-X-Gm-Message-State: ABy/qLb73pxBX/d9D2PB1JOokIFLZqXAVTDtEQ0c1wKxbxPkTaTF/cPG
-        iGYbZt6G1xxeOFUPNPRJCtH64A==
-X-Google-Smtp-Source: APBJJlHDC2b8tDc58SLetk9Km4GvR9xb6KBbjGGP6NVaYSdVWCr8mOuYLPQpZcF/aAvoavG302aeqA==
-X-Received: by 2002:aa7:c592:0:b0:518:7cf5:7ff8 with SMTP id g18-20020aa7c592000000b005187cf57ff8mr11568239edq.12.1688569826896;
-        Wed, 05 Jul 2023 08:10:26 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id g17-20020a056402181100b0051e249f3dc6sm1627164edy.72.2023.07.05.08.10.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jul 2023 08:10:26 -0700 (PDT)
-Message-ID: <abf11e52-c7ff-a3d3-8886-1c61d04fb599@linaro.org>
-Date:   Wed, 5 Jul 2023 17:10:24 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v1] media:Fix repeated initialization
-Content-Language: en-US
-To:     Wang Ming <machel@vivo.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        d=ravnborg.org; s=rsa1;
+        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+         message-id:subject:cc:to:from:date:from;
+        bh=uX1KxxDBhiVzU9ji2kzcp/Y9e3VFw+X4GIkq8uU2bbU=;
+        b=F5wP4GaD2OeQcLZCchJTXLTRkr0vmE7y7CKsxYuClzsRDNJ+3yyY7cEprDx7f/FhtN8Z33tJsusRX
+         mVakIqrhR1bEcfPpxboAERlKmb+NSF0ARG+NFKBxjvALdajSBXT1WlcaT2vGeq2CGlSonASxqHZrnm
+         KzmQw1g6dN3QSzKHYudGwh1LIgVmJ53dQAWtGDDyQ1QcEVCZQkOm0Rdy+bUVn7PRVrW4xQpGWCVwlQ
+         YSoWRXNNvAjnYgnE5qYBRcB+piSPngd0oBGvijCU4i+UpH4eHsZY2EmcnHVtW9aSOYM2PU6hqFBJG+
+         9JIGfzE8uVI7USi5+cVtXYGUdCffx8A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=ed1;
+        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+         message-id:subject:cc:to:from:date:from;
+        bh=uX1KxxDBhiVzU9ji2kzcp/Y9e3VFw+X4GIkq8uU2bbU=;
+        b=Do9skGeypNLVI7zeveYEQqKi0JsTReyLIbwKr68clQyyQMJ3aNfdzB7vvRM2FtMtLRQ9Oo10dibXO
+         VHe/CPDAQ==
+X-HalOne-ID: f076bdb9-1b5a-11ee-97e5-592bb1efe9dc
+Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+        by mailrelay4 (Halon) with ESMTPSA
+        id f076bdb9-1b5a-11ee-97e5-592bb1efe9dc;
+        Wed, 05 Jul 2023 17:39:50 +0000 (UTC)
+Date:   Wed, 5 Jul 2023 19:39:49 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Paul Cercueil <paul@crapouillou.net>
+Cc:     neil.armstrong@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     opensource.kernel@vivo.com
-References: <20230705142142.3526-1-machel@vivo.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230705142142.3526-1-machel@vivo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 2/3] drm/panel: ld9040: Register a backlight device
+Message-ID: <20230705173949.GA106478@ravnborg.org>
+References: <20230703214715.623447-1-paul@crapouillou.net>
+ <20230703214715.623447-3-paul@crapouillou.net>
+ <194ac047-b20e-04c1-1d96-67cc483bb4a1@linaro.org>
+ <8e81dd5d9f62139e740ea123aa2087cb1bbcb04b.camel@crapouillou.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8e81dd5d9f62139e740ea123aa2087cb1bbcb04b.camel@crapouillou.net>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,48 +70,75 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 05/07/2023 16:21, Wang Ming wrote:
-> If the first report returns NULL,
-> there is no need to execute the
-> fimc_capture_try_format() function
-> again.
+Hi Paul,
 
-Few nitpicks only, as I don't know the code unfortunately:
-
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
-
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching.
-
+On Wed, Jul 05, 2023 at 04:38:05PM +0200, Paul Cercueil wrote:
+> Hi Neil,
 > 
-> Signed-off-by: Wang Ming <machel@vivo.com>
-> ---
->  .../media/platform/samsung/exynos4-is/fimc-capture.c   | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> Le mercredi 05 juillet 2023 à 15:57 +0200, Neil Armstrong a écrit :
+> > On 03/07/2023 23:47, Paul Cercueil wrote:
+> > > Register a backlight device to be able to switch between all the
+> > > gamma
+> > > levels.
+> > > 
+> > > Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+> > > ---
+> > >   drivers/gpu/drm/panel/panel-samsung-ld9040.c | 40
+> > > ++++++++++++++++++++
+> > >   1 file changed, 40 insertions(+)
+> > > 
+> > > diff --git a/drivers/gpu/drm/panel/panel-samsung-ld9040.c
+> > > b/drivers/gpu/drm/panel/panel-samsung-ld9040.c
+> > > index 7fd9444b42c5..b4f87d6244cb 100644
+> > > --- a/drivers/gpu/drm/panel/panel-samsung-ld9040.c
+> > > +++ b/drivers/gpu/drm/panel/panel-samsung-ld9040.c
+> > > @@ -8,6 +8,7 @@
+> > >    * Andrzej Hajda <a.hajda@samsung.com>
+> > >   */
+> > >   
+> > > +#include <linux/backlight.h>
+> > >   #include <linux/delay.h>
+> > >   #include <linux/gpio/consumer.h>
+> > >   #include <linux/module.h>
+> > > @@ -311,8 +312,40 @@ static int ld9040_parse_dt(struct ld9040 *ctx)
+> > >         return 0;
+> > >   }
+> > >   
+> > > +static int ld9040_bl_update_status(struct backlight_device *dev)
+> > > +{
+> > > +       struct ld9040 *ctx = dev_get_drvdata(&dev->dev);
+> > > +
+> > > +       ctx->brightness = dev->props.brightness;
+Use backlight_get_brightness(dev);
+
+> > > +       ld9040_brightness_set(ctx);
+> > > +
+> > > +       return 0;
+> > > +}
+> > > +
+> > > +static int ld9040_bl_get_intensity(struct backlight_device *dev)
+> > > +{
+> > > +       if (dev->props.fb_blank == FB_BLANK_UNBLANK &&
+> > > +                       dev->props.power == FB_BLANK_UNBLANK)
+> > > +               return dev->props.brightness;
+> > > +
+> > > +       return 0;
+> > > +}
+> > 
+> > You can totally drop the _get_brightness.
 > 
-> diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-capture.c b/drivers/media/platform/samsung/exynos4-is/fimc-capture.c
-> index a0d43bf892e6..5ce2f04afa1e 100644
-> --- a/drivers/media/platform/samsung/exynos4-is/fimc-capture.c
-> +++ b/drivers/media/platform/samsung/exynos4-is/fimc-capture.c
-> @@ -825,10 +825,12 @@ static int fimc_pipeline_try_format(struct fimc_ctx *ctx,
->  		tfmt->height = mf->height;
->  		ffmt = fimc_capture_try_format(ctx, &tfmt->width, &tfmt->height,
->  					NULL, &fcc, FIMC_SD_PAD_SINK_CAM);
-> -		ffmt = fimc_capture_try_format(ctx, &tfmt->width, &tfmt->height,
-> -					NULL, &fcc, FIMC_SD_PAD_SOURCE);
-> -		if (ffmt && ffmt->mbus_code)
-> -			mf->code = ffmt->mbus_code;
-> +		if (ffmt) {
-> +			ffmt = fimc_capture_try_format(ctx, &tfmt->width, &tfmt->height,
-> +				NULL, &fcc, FIMC_SD_PAD_SOURCE);
+> The current behaviour is to return 0 when the framebuffer is blanked. A
+> few drivers do that so I thought it was the norm; and the backlight
+> core doesn't do that by default (and just uses dev->props.brightness).
+> 
+> It is not clear to me if that's the preferred behaviour. The
+> "backlight_get_brightness" function in backlight.h seems to suggest
+> that the current behaviour is correct, unless it is not supposed to be
+> used in the backlight_ops.get_brightness() callback. Then in that case
+> some other drivers get it wrong too.
+Several drivers get it wrong.
+You are supposed to provide get_brightness only when you read back a
+value from the HW, which is not the case here so just drop it is the
+right choice.
 
-This does not look aligned.
-
-
-
-Best regards,
-Krzysztof
-
+	Sam
