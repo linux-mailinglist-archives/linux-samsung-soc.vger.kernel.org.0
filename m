@@ -2,144 +2,167 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE380747F04
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 10:07:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87A60747F86
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  5 Jul 2023 10:24:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232426AbjGEIHL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 5 Jul 2023 04:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38484 "EHLO
+        id S231542AbjGEIYL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 5 Jul 2023 04:24:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230195AbjGEIHK (ORCPT
+        with ESMTP id S231561AbjGEIYJ (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 5 Jul 2023 04:07:10 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A786E1716
-        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jul 2023 01:07:06 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGxXO-0003pF-Mg; Wed, 05 Jul 2023 10:06:58 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGxXM-00CDNI-Cf; Wed, 05 Jul 2023 10:06:56 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qGxXL-002Oax-32; Wed, 05 Jul 2023 10:06:55 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        Wed, 5 Jul 2023 04:24:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594C11732
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  5 Jul 2023 01:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1688545388;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=TdhQb+Syo7axqoDqvE+d+9JDiCWJ3NaRZrNyouSZxA4=;
+        b=BQ53SPYW6e9ueCxnezioiP3wCksnsweCDsB/IbYD6gDEAvYCyaK6WUFGYFI/7GMp3UBwsI
+        F9Q/kKWlmZnxoEZTfaO++Z9FHhjNuNDRhal76ehQmLwSrzenP3LItNGF9+HGHO3hEJFlTh
+        frnnsv2xpsN8XDwpP9h5HDSsa0iB71k=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-314-b1LS7kHXOFOB-OaaCPNk4g-1; Wed, 05 Jul 2023 04:23:07 -0400
+X-MC-Unique: b1LS7kHXOFOB-OaaCPNk4g-1
+Received: by mail-lj1-f200.google.com with SMTP id 38308e7fff4ca-2b6fbf1305fso11309611fa.2
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 05 Jul 2023 01:23:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688545385; x=1691137385;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TdhQb+Syo7axqoDqvE+d+9JDiCWJ3NaRZrNyouSZxA4=;
+        b=VFQy4xgGfZLX2RYzoFGpz7n4066nj0iht9W4oSuWzWbyp4UtJelWyGrqOdf3ZZPbET
+         npI2lYGBAbKuUVj0jKyVMPrNnmPFsSBbS7eDuE0zC7BwoWMETnsuJzqpolFizYZSyPdt
+         1DZXaKKwdsU123mBKq63Kru++R757p+iWfU9tLE6It9iFj/UvoIrkhHJtIlz/UXCWPW9
+         bj1Og+LUL8qc10nrZB8r9H58bxgoWiPipPHzBGxpqN+s8N/xsuI3flK4URf7Qt1eb9fw
+         bATUL1RL3WgJxP9ng/GnsAvnadvL3vbfuEoR9uBYPVbecVFNGVzjCjmnRtKvsDjkQvyP
+         +zHA==
+X-Gm-Message-State: ABy/qLYEnMhlYZbfEVZ6FFEefXvuWDCCqEpWIbukp3bwbH8L7AtIRzhH
+        d6BtYEafHNcP2idxXbVYboT5T8ilffmvwmPiEuRSRV+NRKvbwWVgasoxN0kUoXchKsjp+uofOhz
+        pJ8JJ49j+SnYhgsHxBDULPz6YjguPDkwC4EBFE30=
+X-Received: by 2002:a2e:8095:0:b0:2b6:a344:29cf with SMTP id i21-20020a2e8095000000b002b6a34429cfmr10093150ljg.17.1688545385617;
+        Wed, 05 Jul 2023 01:23:05 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlGDvUCFfme/Nn/ZdctOdvEvefSFNX7STUaOhlHec73G4bbSvs9bTxRZM7iY07V1SqMwOI36OA==
+X-Received: by 2002:a2e:8095:0:b0:2b6:a344:29cf with SMTP id i21-20020a2e8095000000b002b6a34429cfmr10093130ljg.17.1688545385203;
+        Wed, 05 Jul 2023 01:23:05 -0700 (PDT)
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id r13-20020a05600c458d00b003fa9a00d74csm1422474wmo.3.2023.07.05.01.23.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jul 2023 01:23:04 -0700 (PDT)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org
+Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH v2 2/8] pwm: samsung: Put per-channel data into driver data
-Date:   Wed,  5 Jul 2023 10:06:44 +0200
-Message-Id: <20230705080650.2353391-3-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230705080650.2353391-1-u.kleine-koenig@pengutronix.de>
-References: <20230705080650.2353391-1-u.kleine-koenig@pengutronix.de>
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-fbdev@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH 01/10] fbdev: Add fb_ops init macros for framebuffers in
+ DMA-able memory
+In-Reply-To: <20230704160133.20261-2-tzimmermann@suse.de>
+References: <20230704160133.20261-1-tzimmermann@suse.de>
+ <20230704160133.20261-2-tzimmermann@suse.de>
+Date:   Wed, 05 Jul 2023 10:23:03 +0200
+Message-ID: <875y6ysr6g.fsf@minerva.mail-host-address-is-not-set>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3039; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=WbiUwtPhzGh+pbselDpueT/s8UBjYMzeiRbx+5zTqq4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkpSSPWvJ6AQIwKMYnjS7Qm+aJ2ek7MjuPpBH7p MJ+4ijKLIeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZKUkjwAKCRCPgPtYfRL+ Tk7gCACH0Fi8f0lpQzCKqkOQHd0QeL4SkQGmefCTrxSRQvwtBbKy+o302v6xpGPEKjJUA79eDCZ HzNohOGBi9Wiuy+pyp5XDtge9gayxEtbSTpTf+U9w/td4lQRNLn85Gcuv68rHOPRYk+AT8K2Oy+ lJ8WyTP2tRQZLqOrdV/XVj57oDmigWnh6EgGu7OyhwEm+qf60gp16M5hb9t5daSgEI52waGtxdZ OX7PU4Z2Uu7NEhT7M47+3rIn0Sl2SJ3VYHnXtnoPWx0pTeSBn3B+kh/TOGEe8Dwbm0B9uGLtatN RnI5l/2pqplhffD5HPM/FDQb71WHqKpQAmP9+YJe5Dnxplxu
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Instead of allocating extra data in .request() provide the needed memory
-in struct samsung_pwm_chip. This reduces the number of allocations. Even
-though now all 5 channel structs are allocated this is probably
-outweighed by the reduced overhead to track up to 6 smaller allocations.
+Thomas Zimmermann <tzimmermann@suse.de> writes:
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pwm/pwm-samsung.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+Hello Thomas,
 
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index e8828f57ab15..d1a2bc01071b 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -88,6 +88,7 @@ struct samsung_pwm_chip {
- 	struct clk *base_clk;
- 	struct clk *tclk0;
- 	struct clk *tclk1;
-+	struct samsung_pwm_channel channel[SAMSUNG_PWM_NUM];
- };
- 
- #ifndef CONFIG_CLKSRC_SAMSUNG_PWM
-@@ -228,7 +229,6 @@ static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *chip,
- static int pwm_samsung_request(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
--	struct samsung_pwm_channel *our_chan;
- 
- 	if (!(our_chip->variant.output_mask & BIT(pwm->hwpwm))) {
- 		dev_warn(chip->dev,
-@@ -237,20 +237,11 @@ static int pwm_samsung_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 		return -EINVAL;
- 	}
- 
--	our_chan = kzalloc(sizeof(*our_chan), GFP_KERNEL);
--	if (!our_chan)
--		return -ENOMEM;
--
--	pwm_set_chip_data(pwm, our_chan);
-+	memset(&our_chip->channel[pwm->hwpwm], 0, sizeof(our_chip->channel[pwm->hwpwm]));
- 
- 	return 0;
- }
- 
--static void pwm_samsung_free(struct pwm_chip *chip, struct pwm_device *pwm)
--{
--	kfree(pwm_get_chip_data(pwm));
--}
--
- static int pwm_samsung_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
-@@ -318,7 +309,7 @@ static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 				int duty_ns, int period_ns, bool force_period)
- {
- 	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
--	struct samsung_pwm_channel *chan = pwm_get_chip_data(pwm);
-+	struct samsung_pwm_channel *chan = &our_chip->channel[pwm->hwpwm];
- 	u32 tin_ns = chan->tin_ns, tcnt, tcmp, oldtcmp;
- 
- 	tcnt = readl(our_chip->base + REG_TCNTB(pwm->hwpwm));
-@@ -473,7 +464,6 @@ static int pwm_samsung_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- static const struct pwm_ops pwm_samsung_ops = {
- 	.request	= pwm_samsung_request,
--	.free		= pwm_samsung_free,
- 	.apply		= pwm_samsung_apply,
- 	.owner		= THIS_MODULE,
- };
-@@ -639,9 +629,9 @@ static int pwm_samsung_resume(struct device *dev)
- 
- 	for (i = 0; i < SAMSUNG_PWM_NUM; i++) {
- 		struct pwm_device *pwm = &chip->pwms[i];
--		struct samsung_pwm_channel *chan = pwm_get_chip_data(pwm);
-+		struct samsung_pwm_channel *chan = &our_chip->channel[i];
- 
--		if (!chan)
-+		if (!(pwm->flags & PWMF_REQUESTED))
- 			continue;
- 
- 		if (our_chip->variant.output_mask & BIT(i))
+> Add initializer macros for struct fb_ops for framebuffers in DMA-able
+> memory areas. Also add a corresponding Kconfig token. As of now, this
+> is equivalent to system framebuffers and mostly useful for labeling
+> drivers correctly.
+>
+> A later patch may add a generic DMA-specific mmap operation. Linux
+> offers a number of dma_mmap_*() helpers for different use cases.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Helge Deller <deller@gmx.de>
+> ---
+>  drivers/video/fbdev/Kconfig |  8 ++++++++
+>  include/linux/fb.h          | 13 +++++++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+> index cecf15418632..f14229757311 100644
+> --- a/drivers/video/fbdev/Kconfig
+> +++ b/drivers/video/fbdev/Kconfig
+> @@ -168,6 +168,14 @@ config FB_DEFERRED_IO
+>  	bool
+>  	depends on FB
+>  
+> +config FB_DMA_HELPERS
+> +	bool
+> +	depends on FB
+> +	select FB_SYS_COPYAREA
+> +	select FB_SYS_FILLRECT
+> +	select FB_SYS_FOPS
+> +	select FB_SYS_IMAGEBLIT
+> +
+>  config FB_IO_HELPERS
+>  	bool
+>  	depends on FB
+> diff --git a/include/linux/fb.h b/include/linux/fb.h
+> index 1d5c13f34b09..1191a78c5289 100644
+> --- a/include/linux/fb.h
+> +++ b/include/linux/fb.h
+> @@ -594,6 +594,19 @@ extern ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
+>  	__FB_DEFAULT_SYS_OPS_DRAW, \
+>  	__FB_DEFAULT_SYS_OPS_MMAP
+>  
+> +/*
+> + * Helpers for framebuffers in DMA-able memory
+> + */
+> +
+
+The comment for I/O memory helpers says:
+
+/*
+ * Initializes struct fb_ops for framebuffers in I/O memory.
+ */
+
+I think that would be good to have consistency between these two,
+so something like:
+
+/*
+ * Initializes struct fb_ops for framebuffers in DMA-able memory.
+ */
+
+> +#define __FB_DEFAULT_DMA_OPS_RDWR \
+> +	.fb_read	= fb_sys_read, \
+> +	.fb_write	= fb_sys_write
+> +
+> +#define __FB_DEFAULT_DMA_OPS_DRAW \
+> +	.fb_fillrect	= sys_fillrect, \
+> +	.fb_copyarea	= sys_copyarea, \
+> +	.fb_imageblit	= sys_imageblit
+> +
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+
 -- 
-2.39.2
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
