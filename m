@@ -2,50 +2,81 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C3777534DB
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jul 2023 10:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9548275355E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 14 Jul 2023 10:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235578AbjGNIQV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 14 Jul 2023 04:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
+        id S235399AbjGNIrq (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 14 Jul 2023 04:47:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235028AbjGNIP4 (ORCPT
+        with ESMTP id S235610AbjGNIrd (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 14 Jul 2023 04:15:56 -0400
-Received: from aposti.net (aposti.net [89.234.176.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7736330EB;
-        Fri, 14 Jul 2023 01:15:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1689322538;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=KsipixUfNNIYvS1Su+tDY3+aBff0I+kz0FoxPFL3Kjg=;
-        b=DvKxmR5Fy7ezNzUpnj1l39UcuzzkVbmYKyCrMEepMqVGs7BxXYQQLYrWJZ65cfixlmevr3
-        +XePbNWCXiXH8F6/h+9FW63k+wzimZhm6eXvU+7vV69EEQSiNKX23/gDXckRMyJZ3scqOv
-        syDR4X2x+CgMA2SC26tAQuGciv2D70k=
-Message-ID: <5ae98ac651d6cc69d6bfd3c25b4879307f3c2c76.camel@crapouillou.net>
-Subject: Re: [PATCH v2 0/3] Galaxy S2 (i9100) panel updates v2
-From:   Paul Cercueil <paul@crapouillou.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Fri, 14 Jul 2023 04:47:33 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8D226A5
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 14 Jul 2023 01:47:30 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4fc8049fd8bso2707631e87.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 14 Jul 2023 01:47:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689324449; x=1691916449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=R8aePuJNV+aTV/P2+d1zYFy1JBvn+SWePZ58r04GmFw=;
+        b=Yv7wNCignVQeQHx68i0XxK3/6GnIxCb5iM+IxeTjplbMgzS5ZtFIEB/aBTEjPcsGQo
+         K/mpiJeUBlNHm0kHoZBkiohGUSSm9+Mi5FNldcjIcQ+SQT40x7B4nquXzDbdPBQ2XsK8
+         qtlpvESK5DwpFP1JToV9AYRDC1pzj2EjYxTpiAP/XHu4om4/Bj3gDlzec+IDfba3rAf9
+         CbRJlFJiSnhiK3K4BfH96M9QQyyC0o7KoBemZildDs7MP1wT6ZoOSuJ/EmNIqxeFWmrE
+         JqqZ/T8CUFWgiljdQRkmtema9Scy91H9ikRBceYOsDNjn+eqfm4T+VSrYT6c4xbIfNij
+         53Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689324449; x=1691916449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R8aePuJNV+aTV/P2+d1zYFy1JBvn+SWePZ58r04GmFw=;
+        b=A1laGR57NF+1UljsSQg9STb3ZuJszqhtJXtdSjKwDgve+IHiL3iQLEKrMbWxNvhS4I
+         gHb39m62pbQdqUNfY1kPpbEPujEpAti5ODMfSz354TBwWwBuxKNPiSOdDhy0d6FgltDB
+         MoyLfYnxrZDz7aMtVTOvd2QVKk8kin1KPf2+35D1/p1+0ttfczEH2zjZ8++SUDxxQ6LO
+         3l0v/U5ddD6hUlPIMJFafBHNXIaVZ/aE6kH8x7zhScJv/3z9Ot247XOe1xAC3eGFyWUp
+         O9QQvFw4YTwB7a36wjdbjOQ8JpIFohGHTh7rgUy44CJtKmmLq1wRWZdNka/A9DbHHTj1
+         R2ew==
+X-Gm-Message-State: ABy/qLb0W97B3MWq/uEEu16MfPm2CKny4Ss9VKV5qBjN3CMoWh0JmEOH
+        v+EPG90X9G6DIVzuwQkju2kOqg==
+X-Google-Smtp-Source: APBJJlFjG7pdcW2yr/b2fsXuHegMrNjuBRaWxyLYGHZw7UwjJRO5qo5VVUqBvzsKR8P2U1WefMFewA==
+X-Received: by 2002:a05:6512:33c8:b0:4fb:7666:3bc0 with SMTP id d8-20020a05651233c800b004fb76663bc0mr4290710lfg.47.1689324448797;
+        Fri, 14 Jul 2023 01:47:28 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.223.104])
+        by smtp.gmail.com with ESMTPSA id w24-20020aa7cb58000000b0051e0f8aac74sm5480662edt.8.2023.07.14.01.47.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jul 2023 01:47:28 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Conor Dooley <conor@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Date:   Fri, 14 Jul 2023 10:15:36 +0200
-In-Reply-To: <20230708084027.18352-1-paul@crapouillou.net>
-References: <20230708084027.18352-1-paul@crapouillou.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Nishanth Menon <nm@ti.com>, linux-riscv@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jonathan Corbet <corbet@lwn.net>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, workflows@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] MAINTAINERS: soc: reference maintainer profile
+Date:   Fri, 14 Jul 2023 10:47:23 +0200
+Message-Id: <20230714084725.27847-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,46 +84,25 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Patches 1/3 and 2/3 applied to drm-misc-next.
+Mention the SoC maintainer profile in P: entry.
 
-I'll resend patch 3/3 as standalone.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-Cheers,
--Paul
-
-Le samedi 08 juillet 2023 =C3=A0 10:40 +0200, Paul Cercueil a =C3=A9crit=C2=
-=A0:
-> Hi,
->=20
-> Follow-up on my patchset that fixes the display of the Samsung Galaxy
-> S2
-> when running PostmarketOS.
->=20
-> The first two patches update the LD9040 panel driver so that it looks
-> much better, and supports setting the backlight.
->=20
-> The third patch fixes the size of the panel in the Device Tree. The
-> previous values were completely bogus and caused Phosh (PmOS' UI) to
-> display tiny icons and text as it thought the DPI was much lower.
->=20
-> Changes since V1:
-> [1/3]: Remove spurious new line
-> [2/3]: Remove .get_brightness() callback, use bl_get_data() and
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 backlight_get_brightness()
->=20
-> Cheers,
-> -Paul
->=20
-> Paul Cercueil (3):
-> =C2=A0 drm/panel: ld9040: Use better magic values
-> =C2=A0 drm/panel: ld9040: Register a backlight device
-> =C2=A0 ARM: dts: exynos/i9100: Fix LCD screen's physical size
->=20
-> =C2=A0arch/arm/boot/dts/exynos4210-i9100.dts=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 4 +-
-> =C2=A0drivers/gpu/drm/panel/panel-samsung-ld9040.c | 42 +++++++++++++++++=
--
-> --
-> =C2=A02 files changed, 38 insertions(+), 8 deletions(-)
->=20
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f646ba70a01b..b61289fa7891 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1558,6 +1558,7 @@ M:	Olof Johansson <olof@lixom.net>
+ M:	soc@kernel.org
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ S:	Maintained
++P:	Documentation/process/maintainer-soc.rst
+ C:	irc://irc.libera.chat/armlinux
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git
+ F:	Documentation/process/maintainer-soc.rst
+-- 
+2.34.1
 
