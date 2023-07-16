@@ -2,110 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 598C9755020
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 16 Jul 2023 19:38:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D7CC75587F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Jul 2023 00:08:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229468AbjGPRiz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 16 Jul 2023 13:38:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
+        id S230105AbjGPWIT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 16 Jul 2023 18:08:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjGPRiy (ORCPT
+        with ESMTP id S230416AbjGPWIC (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 16 Jul 2023 13:38:54 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0EE5E5E
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 16 Jul 2023 10:38:52 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-51e29ede885so5331548a12.3
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 16 Jul 2023 10:38:52 -0700 (PDT)
+        Sun, 16 Jul 2023 18:08:02 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E215D9;
+        Sun, 16 Jul 2023 15:08:01 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fb7769f15aso6047852e87.0;
+        Sun, 16 Jul 2023 15:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689529131; x=1692121131;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dnj2dm4vAkRY2ym0OVHyApOFbv82RoBY1nhPV64txIc=;
-        b=ca2vSsFEY38zKN0EbYp6domY97w81vz0hIi07dVBT5hifthGJze3JUOsxydAMxe/hA
-         C1la7xfOBPKT1xW/R3iK/TBh08wi1ABM7XnCU1B2b9WwuqojVljCidbsz6JDVMr0fqD2
-         UdqEbS3rKKCuBoev+pjjB61sb43U0J/+71OuK7GUb3iZdJ/mZ0wMGZ3yd+VM9Ic+/NTZ
-         88PlyGo9190saQM4NW3HtsnTNPamtSWJGnRHA0SiLfRGdhx2gUXHwtYM7MduxZrKWRTU
-         qLVZ2kUWC5Tvi3Y1ymPafOEJeCPyowC+lW9Zgkgh3JxI1FZhvD1ZF8nV3NBE2Qj7QVVO
-         mrqQ==
+        d=gmail.com; s=20221208; t=1689545279; x=1692137279;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nYE1OzOeBhQccZCxRXCiW95lO3wfa+AK9o1IGYC1QEk=;
+        b=mcleJj0N4p5jnexgIjLEROM9yVpEYHkS4+f5PJqcySiGowsNdRsfEK37ijJJMRglpq
+         U54P6efV26VIlGsn5CeHSeZq24EQ5M7aGd8JRRfLpLOYt1+MhFn0Dk8X9PX4uBqbgy27
+         FW2OikEFhYVBCgxbEQym6bSI91iqbHAWYeUSYjVHRM6fXzmYamG5ZFbbUb8KPjpi8Ici
+         bpC5HfuNeiGJXRuDEgPQS1/Zu4X2aNkEnT4UqXMH2BD8RmED0vNPwlNfKIMyAcdP0Gd4
+         r+ljQibTDa4pVdkyTJMmLL2K2t9V2guNJrPTmdqnLsvgY+V2BkkB4HGeKZBpJ/VsceII
+         X47w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689529131; x=1692121131;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dnj2dm4vAkRY2ym0OVHyApOFbv82RoBY1nhPV64txIc=;
-        b=RhJwi5YQEYuJVF1l0S3+hy0Hfur1GcP/eKdvC0m1csFA8cpyd5UgDJMZVCKsh6NfZF
-         iORbYmNEMR3NvkL6wKDNT19LJoTs6dwoWeDG0F6WoDMW7ICC+RQHJVG0VtXtowwhiOIq
-         16EmgedUNq2vII9woltNWU/fELt8RBwIBagFW+2qnRwzCgIUur0Kx9+Cry5EmrrA52bP
-         NdEV6mZjYrghLEnSX5I4GTTRpicBNwNhgwO+XJT7byt+Wo0UCjGFs8RpllVctfP12o5p
-         bFM86U002Efm2xHf4StlvDmu+SdgM5VxXCiVwsP2LdE34tg/WvqMYfvpe+SZ/Ebz5y2M
-         nrEA==
-X-Gm-Message-State: ABy/qLYnAl2BcxJqwPKpG+2xf/Wj5oKZ1M9G7rFo+MJkTvL66anOo3zV
-        mZAdF3aNRkW5hjsEQt8JITEpjA==
-X-Google-Smtp-Source: APBJJlESRlu42cRoBqDewXcLEuNc4SOEf32yD7ybhMHPRpitvwU2E7d+YPl8NrMEY+pgx94+m5nxuA==
-X-Received: by 2002:a50:ff13:0:b0:521:7577:d34 with SMTP id a19-20020a50ff13000000b0052175770d34mr4690734edu.0.1689529131025;
-        Sun, 16 Jul 2023 10:38:51 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.104])
-        by smtp.gmail.com with ESMTPSA id p3-20020a056402074300b0051bec856cb4sm8721685edy.50.2023.07.16.10.38.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Jul 2023 10:38:50 -0700 (PDT)
-Message-ID: <4a627f7f-05c8-cbb1-1c21-e121729de1bc@linaro.org>
-Date:   Sun, 16 Jul 2023 19:38:49 +0200
+        d=1e100.net; s=20221208; t=1689545279; x=1692137279;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nYE1OzOeBhQccZCxRXCiW95lO3wfa+AK9o1IGYC1QEk=;
+        b=RW8Opz6hiK2KGFzAKgovfbhYnPqvVJnLVVdKzZ+F2wSwQDkxCa33pu+/8ijX/1JG4k
+         xzLb14woavxuO+z0ATUREeKjIeqptyb2yrZDJoxTjXADUi5hiQWWV4wp3BgVf/7b5+D3
+         N0W3LEoUpmNNZZIVBFe/TKZb0uQfn4RPc4Uco8PATcI93uyjdFrU6B4973BS+Ckhh8/R
+         G86GgQWGklkFHyPgKPHhHbPtyFzVe1OxIYVhQrGidEZRN6nv2XlIqcrALnSlHL08YR1N
+         zlvQRen65eMkuMIOT0ypszaJA7w9WOnncO+TubCTeidZJ1ReaVLTpHmu/MFpKDtQMWDc
+         lD6g==
+X-Gm-Message-State: ABy/qLbrwYFDzRDhCBarRNELsMy9DsdlGP+uVmpAbFomOOzTSPzwtXdd
+        JGi0Mptv965tEz77H2eI6/j8MR1hxy8=
+X-Google-Smtp-Source: APBJJlEf+EqwAxr612OkC2gor1oXdI8hiJYGKttK8HAoCeLvLWSCKo7eVDVyGopxp7f8UeIRh9M7wQ==
+X-Received: by 2002:a05:6512:202c:b0:4f9:69b8:1e7c with SMTP id s12-20020a056512202c00b004f969b81e7cmr6163150lfs.46.1689545279021;
+        Sun, 16 Jul 2023 15:07:59 -0700 (PDT)
+Received: from localhost.localdomain ([62.122.67.26])
+        by smtp.gmail.com with ESMTPSA id h24-20020a197018000000b004fb9c625b4asm2464091lfc.210.2023.07.16.15.07.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Jul 2023 15:07:58 -0700 (PDT)
+From:   Markuss Broks <markuss.broks@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Markuss Broks <markuss.broks@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] Add various peripheral support for K3G
+Date:   Mon, 17 Jul 2023 01:05:01 +0300
+Message-ID: <20230716220644.22158-1-markuss.broks@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 1/2] ARM: dts: samsung: s3c6410-mini6410: correct ethernet
- reg addresses (split)
-Content-Language: en-US
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Conor Dooley' <conor+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <CGME20230713152937epcas5p483e95ece242b0dc2c9a1ada1ba328117@epcas5p4.samsung.com>
- <20230713152926.82884-1-krzysztof.kozlowski@linaro.org>
- <020501d9b63d$b8e29e60$2aa7db20$@samsung.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <020501d9b63d$b8e29e60$2aa7db20$@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 14/07/2023 12:26, Alim Akhtar wrote:
-> Hello Krzysztof
-> 
->> -----Original Message-----
->> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Sent: Thursday, July 13, 2023 8:59 PM
->> To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>; Alim Akhtar
->> <alim.akhtar@samsung.com>; Rob Herring <robh+dt@kernel.org>; Conor
->> Dooley <conor+dt@kernel.org>; linux-arm-kernel@lists.infradead.org; linux-
->> samsung-soc@vger.kernel.org; devicetree@vger.kernel.org; linux-
->> kernel@vger.kernel.org
->> Subject: [PATCH 1/2] ARM: dts: samsung: s3c6410-mini6410: correct ethernet
->> reg addresses (split)
->>
->> The davicom,dm9000 Ethernet Controller accepts two reg addresses.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Do you need to add fixes: to send to previous stable releases?
-> In any case:
+This series adds support for some peripherals installed on
+Samsung Galaxy S5 (SM-G900H). This includes the WiFi card,
+GPIO keys, fuel gauge, touchkeys, notification LED and display.
+Also documents the peripherals for which we currently lack drivers.
 
+Markuss Broks (7):
+  ARM: dts: exynos: k3g: Add WiFi card support
+  ARM: dts: exynos: Add GPIO keys support for k3g
+  ARM: dts: exynos: k3g: Add fuel gauge support
+  ARM: dts: exynos: k3g: Add touchkeys support
+  ARM: dts: exynos: k3g: Add notification LED support
+  ARM: dts: exynos: k3g: Document the devices which are not supported
+  ARM: dts: exynos: k3g: Add display support
 
-The format was actually working, but indeed it makes sense to backport
-it. I'll add it when applying.
+ arch/arm/boot/dts/exynos5422-samsung-k3g.dts | 256 +++++++++++++++++++
+ 1 file changed, 256 insertions(+)
 
-Best regards,
-Krzysztof
+-- 
+2.41.0
 
