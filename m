@@ -2,29 +2,29 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AFF575DC11
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Jul 2023 13:52:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D49175DC46
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 22 Jul 2023 13:59:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230110AbjGVLw4 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 22 Jul 2023 07:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56392 "EHLO
+        id S230107AbjGVL7R (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 22 Jul 2023 07:59:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbjGVLww (ORCPT
+        with ESMTP id S229914AbjGVL7Q (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 22 Jul 2023 07:52:52 -0400
+        Sat, 22 Jul 2023 07:59:16 -0400
 Received: from aposti.net (aposti.net [89.234.176.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D00D119;
-        Sat, 22 Jul 2023 04:52:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0360335B8;
+        Sat, 22 Jul 2023 04:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1690026667;
+        s=mail; t=1690026802;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=tzx6rGIH9n2t+jhvvX5hTmgPFpu20Dhz+c4ZXTCaqwc=;
-        b=ahU213I+SxEqoMtC+cbppR09wmCUM247IbYCXOe/IPaUjjVnwvNlQKOD5fKJ9qUVPVKaTF
-        XIqsc8rjt7WBsAO/ZV3XyNUGaZO/1OD26M8/aUlxhVBYMeWBtwEDIrEYyEKJ3lLqYZbeu/
-        9vFn9n9xR2tl/8Gu8gVJAkigkHTt2MM=
+        bh=JHKs86BNZHwjM0fLtaImuR1Go0Sxd0WB39LYet2MtUQ=;
+        b=LxML2OinuNhbIbfD2R5tlk6ZMZmjzmg4dIGLgwhivd220MMVazucbw89aPc22WNvF0xMIR
+        USEnRH5F/TDPYlhbh5O/OwEXkV9GswT5RFR8PBZF57lENs3JI+ogHgA3bsJaOitKvgZvsd
+        J7wkwNtpO+n2K8eBltyQlQq/rUUDQCI=
 From:   Paul Cercueil <paul@crapouillou.net>
 To:     Wolfram Sang <wsa@kernel.org>
 Cc:     linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -34,9 +34,9 @@ Cc:     linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v2 06/22] i2c: exynos5: Remove #ifdef guards for PM related functions
-Date:   Sat, 22 Jul 2023 13:50:30 +0200
-Message-Id: <20230722115046.27323-7-paul@crapouillou.net>
+Subject: [PATCH v2 19/22] i2c: s3c2410: Remove #ifdef guards for PM related functions
+Date:   Sat, 22 Jul 2023 13:53:07 +0200
+Message-Id: <20230722115310.27681-3-paul@crapouillou.net>
 In-Reply-To: <20230722115046.27323-1-paul@crapouillou.net>
 References: <20230722115046.27323-1-paul@crapouillou.net>
 MIME-Version: 1.0
@@ -68,42 +68,49 @@ Cc: Alim Akhtar <alim.akhtar@samsung.com>
 Cc: linux-arm-kernel@lists.infradead.org
 Cc: linux-samsung-soc@vger.kernel.org
 ---
- drivers/i2c/busses/i2c-exynos5.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-s3c2410.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-exynos5.c
-index f378cd479e55..5b201a326c13 100644
---- a/drivers/i2c/busses/i2c-exynos5.c
-+++ b/drivers/i2c/busses/i2c-exynos5.c
-@@ -892,7 +892,6 @@ static void exynos5_i2c_remove(struct platform_device *pdev)
- 	clk_unprepare(i2c->pclk);
+diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
+index 28f0e5c64f32..d23a9e7fcb48 100644
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -1125,7 +1125,6 @@ static void s3c24xx_i2c_remove(struct platform_device *pdev)
+ 	i2c_del_adapter(&i2c->adap);
  }
  
 -#ifdef CONFIG_PM_SLEEP
- static int exynos5_i2c_suspend_noirq(struct device *dev)
+ static int s3c24xx_i2c_suspend_noirq(struct device *dev)
  {
- 	struct exynos5_i2c *i2c = dev_get_drvdata(dev);
-@@ -934,11 +933,10 @@ static int exynos5_i2c_resume_noirq(struct device *dev)
- 	clk_disable_unprepare(i2c->pclk);
- 	return ret;
+ 	struct s3c24xx_i2c *i2c = dev_get_drvdata(dev);
+@@ -1155,26 +1154,19 @@ static int s3c24xx_i2c_resume_noirq(struct device *dev)
+ 
+ 	return 0;
  }
 -#endif
  
- static const struct dev_pm_ops exynos5_i2c_dev_pm_ops = {
--	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(exynos5_i2c_suspend_noirq,
--				      exynos5_i2c_resume_noirq)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(exynos5_i2c_suspend_noirq,
-+				  exynos5_i2c_resume_noirq)
+-#ifdef CONFIG_PM
+ static const struct dev_pm_ops s3c24xx_i2c_dev_pm_ops = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(s3c24xx_i2c_suspend_noirq,
+-				      s3c24xx_i2c_resume_noirq)
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(s3c24xx_i2c_suspend_noirq,
++				  s3c24xx_i2c_resume_noirq)
  };
  
- static struct platform_driver exynos5_i2c_driver = {
-@@ -946,7 +944,7 @@ static struct platform_driver exynos5_i2c_driver = {
- 	.remove_new	= exynos5_i2c_remove,
+-#define S3C24XX_DEV_PM_OPS (&s3c24xx_i2c_dev_pm_ops)
+-#else
+-#define S3C24XX_DEV_PM_OPS NULL
+-#endif
+-
+ static struct platform_driver s3c24xx_i2c_driver = {
+ 	.probe		= s3c24xx_i2c_probe,
+ 	.remove_new	= s3c24xx_i2c_remove,
+ 	.id_table	= s3c24xx_driver_ids,
  	.driver		= {
- 		.name	= "exynos5-hsi2c",
--		.pm	= &exynos5_i2c_dev_pm_ops,
-+		.pm	= pm_sleep_ptr(&exynos5_i2c_dev_pm_ops),
- 		.of_match_table = exynos5_i2c_match,
+ 		.name	= "s3c-i2c",
+-		.pm	= S3C24XX_DEV_PM_OPS,
++		.pm	= pm_sleep_ptr(&s3c24xx_i2c_dev_pm_ops),
+ 		.of_match_table = of_match_ptr(s3c24xx_i2c_match),
  	},
  };
 -- 
