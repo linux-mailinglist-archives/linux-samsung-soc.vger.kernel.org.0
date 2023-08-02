@@ -2,252 +2,82 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 530A676DBD6
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Aug 2023 01:50:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B35976DCF6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Aug 2023 02:59:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232607AbjHBXuf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 2 Aug 2023 19:50:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48444 "EHLO
+        id S230043AbjHCA7p (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 2 Aug 2023 20:59:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232682AbjHBXue (ORCPT
+        with ESMTP id S229875AbjHCA7o (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 2 Aug 2023 19:50:34 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2043.outbound.protection.outlook.com [40.107.244.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8925A30DF;
-        Wed,  2 Aug 2023 16:50:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L1lBrJzGkf7JPp08MlTjQO1VEuW/OCoMPb4HDZmnb2F7xZdne0RrrgMiiZwW2hqJnrN1TDXK8WOe9KU5ULDLDPRsYzBVF/1FsCjT7Ckt4Lx0U/KfA06/jKvRbXLBGYDaDGAVd2RU1i4RvtRtY4b2ihMLtrpXT7E02eEjZeuOaqmQGwlxhvP1qPIJIGy/tTUxsffBxl94gqSlCXtS7YDY6dpQHEgEZzWnb6iXhVAgYDEc4C8PHfhFrtxPn0qXSni/gFe6uTDfLs5VQID9mpwfeAbS8nbA9yyJFYJ5mVc/bXcruBRtt2S9B8uJwUR7gXzVfa5hJjpsRwZgXhE9J3jLWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eHN3lxbUhZe5dlztn3JAaGIbSyJWd59/f8Amea8VZ88=;
- b=bb/uz8F49+S+oNrqSpnmxHKdCssjU2VtKIWwW6SjM6LL3DGp8CEGG5DrJ7MNkr1xGUoAnzTTAQvfilKl4UykS1BCdIKnLL5NmkKPwA3Ncrs3ReygSieghR4l/OQj016lLXZIXQMdRfZKyXIOEE4pLcfp/nECdNfF/na/Rf2t4S3ygWRamZ7icxmw+xu/MOCKvfZps8JEUPjdrdMD2VkE09lFDSbgI4jHM6wcVf2IBxS63X2EdNGcZvjGW3kjfTN7kfbKYOKmL7+btw76OeLTzUY/lNuKI1icmDOrK53A4+wHYWSvBmdhwIYtw1TTwYARxK53J/pKi2gVnX1hL4HKCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eHN3lxbUhZe5dlztn3JAaGIbSyJWd59/f8Amea8VZ88=;
- b=F8yuHxtPXSemhi9ySIq0801zRJfYny0s2hEYI7FenC7jq/MX2oJOVlIQB4FCbCn0vy1cpEXIqG+QyjvSVXFuVBqd7aRSR0r2dG2H60PEV77oVSqF836RhEv4TtWzOH75+D8g/P31e5D+XdjxzBY7JHn411h56fgCsDGV2j/6tghCY3FfHykVeqy0HXND9YunjKdY67mfaXtmx+++xQkm7M1d2PguCeohmIapLRqkvfkbjzk/YlvFZe/El/iowiDN/zGr3V5F4lEh+L/A7yxsHPN+bYk/Fin0Wng8L1oTl1SjYDiVYLa8vz/24d5Ruxd++9oRaGFq3DbYwrf6KoCrjQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by DM6PR12MB4941.namprd12.prod.outlook.com (2603:10b6:5:1b8::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.45; Wed, 2 Aug
- 2023 23:50:27 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::5111:16e8:5afe:1da1%6]) with mapi id 15.20.6631.045; Wed, 2 Aug 2023
- 23:50:27 +0000
-Date:   Wed, 2 Aug 2023 20:50:24 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v5 15/25] iommufd/selftest: Make the mock iommu driver
- into a real driver
-Message-ID: <ZMrrwBTt5zHLwWoF@nvidia.com>
-References: <0-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
- <15-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <15-v5-d0a204c678c7+3d16a-iommu_all_defdom_jgg@nvidia.com>
-X-ClientProxiedBy: MN2PR15CA0051.namprd15.prod.outlook.com
- (2603:10b6:208:237::20) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Wed, 2 Aug 2023 20:59:44 -0400
+Received: from 1.mo582.mail-out.ovh.net (1.mo582.mail-out.ovh.net [46.105.56.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16C4CC
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Aug 2023 17:59:42 -0700 (PDT)
+Received: from director1.ghost.mail-out.ovh.net (unknown [10.108.1.219])
+        by mo582.mail-out.ovh.net (Postfix) with ESMTP id 7EBC924F6C
+        for <linux-samsung-soc@vger.kernel.org>; Wed,  2 Aug 2023 20:11:52 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-6cqtb (unknown [10.110.171.144])
+        by director1.ghost.mail-out.ovh.net (Postfix) with ESMTPS id BEA6D1FD73;
+        Wed,  2 Aug 2023 20:11:50 +0000 (UTC)
+Received: from etezian.org ([37.59.142.105])
+        by ghost-submission-6684bf9d7b-6cqtb with ESMTPSA
+        id SgH5Koa4ymSYJQAAgyrAAA
+        (envelope-from <andi@etezian.org>); Wed, 02 Aug 2023 20:11:50 +0000
+Authentication-Results: garm.ovh; auth=pass (GARM-105G006804341e4-daf0-46ff-a296-e082e55f34d6,
+                    0C641BB37B7CC30D107EA61C426C60CA54BC1A77) smtp.auth=andi@etezian.org
+X-OVh-ClientIp: 178.238.172.51
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
+        Ruan Jinjie <ruanjinjie@huawei.com>
+Cc:     Andi Shyti <andi.shyti@kernel.org>
+Subject: Re: [PATCH -next] i2c: s3c2410: Remove redundant dev_err()
+Date:   Wed,  2 Aug 2023 22:10:35 +0200
+Message-Id: <169100562768.1919254.7407243487471763166.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230726174226.2480552-1-ruanjinjie@huawei.com>
+References: <20230726174226.2480552-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DM6PR12MB4941:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e969a22-8258-4b1f-a50b-08db93b33ebe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xFlIwAP18pcxCg3Z4pQDw7Whi02dFi1bfCs0lJfAkjwKy9OlwiMWuqNOnV6VtVAlxMHVEoGPTrtdiZZShxN7V04kHcCeXgRgPdBXTyxhXHopREDroW9Rnk0RJsUqbC87hDMCvvbSdM7FI1568qeoageJL08vFOqi4V+WqWWnhheznjTQaT4NYRHRLU3fYH62E8K2dK9Jvq1M0f3nwGTMByYLUAmu10fZ5XODAz5yuJ9+TMbwOJ0Tvt0539u1R+z1KBkAvctT5Rijxv+tZ2Mdrr2zWCzCepZkwtxxb4dcQcc426w8T5oJ9aziCDFyizkWh7PCAjNvbtj659MGBOGC/26nw9PX2WHixtqR7Psyt4rHW4/KQQNf/2pVUNEl56tTZnnYmzujU7nR81WLED2kS28fKEO8ZkiXJPxwVfItExrnxJpIoDA7SxsEsZdXPjD+oravq26E0cexLeo3WHff/2ijr9fNRGuDtUZrnPj1LVGt/hc8P9rr1pIMNd8YTqZnN2xVJSvNcp6kY7g0aa3Fgv7wKq5wX01ZKL0pbxFWqKnPfShnEm0BIOXTgoLJdK9TwFc4ycaYqMMNsJ9ZZQ8QWioaI5NjjXYLrCDZoXZn8g0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(346002)(366004)(136003)(376002)(396003)(451199021)(186003)(2616005)(36756003)(6512007)(316002)(478600001)(86362001)(54906003)(110136005)(66946007)(6666004)(66476007)(66556008)(921005)(38100700002)(4326008)(6486002)(6506007)(26005)(41300700001)(107886003)(8936002)(8676002)(7416002)(7406005)(5660300002)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oI3N+pzrI64bLLvzAJoCCHKzrgLOnE/Ddg9aX2NYH7lD1aC8E2M5ouIaSMTr?=
- =?us-ascii?Q?5qWSJZDyrxX+ZivnipkKOMKD0eF+QzKH4kI3FF6XPwJk8CGC+sDKcICeowA9?=
- =?us-ascii?Q?60FUADf7uDcWpNGAQ8d9Mu8JcFq7Hlr5kVvDyA3Fn8FtICcYfRVD+y7m5K/d?=
- =?us-ascii?Q?U5ZaUJvJxj9DU60ZnJqQIG2zKhQuuKzuX8d0kC5NYiN9i1cFxYC5bWCMwHef?=
- =?us-ascii?Q?q7PkuZB/4U8vkZsKAioukgxdlGqpWhuCC+EZ5CqJkKAp5qUixh1zoJrm+N45?=
- =?us-ascii?Q?5mQYAdCvNr7M9XulGIMNGa4x2O7F42ZeDyue3j6/D/PN5Hs4rpVGm7ewI2ow?=
- =?us-ascii?Q?CBnfC5S9PE0DIkefTTBDWgYMTJHczhMPwYxNwtuoC8LBjwkQ8OjWPJvLPg+1?=
- =?us-ascii?Q?IaUaFZYFVGp0JICzGmGQ/cXeAsArnTyHPMyCIractN26jmwJJIevqrE7EIEz?=
- =?us-ascii?Q?LKn3xwD66wwKILIe/H2/f7hntpvYIOFDxhfeSXMTVDsPBMALBkCNBiaNvr8d?=
- =?us-ascii?Q?2OpckqteZrHXNJx/2ANNVqtSkbMQSCkOF+4mJYVsds4KBuJWDtu10AawNIDi?=
- =?us-ascii?Q?G+tlf6GN0YJy3xTZ+279oG9bB3sWu4Af5km3/6ZtVViJlq0o4WqBm+breP8K?=
- =?us-ascii?Q?G/wYR44S17stTC1a/uV7kY4ZeV1fT6Aqcr386Zr0TWVGAXcY5PDrfWWFaz7n?=
- =?us-ascii?Q?4JEvI8UsnXDCwvjkxD4DFhU6yiByTFrQAaANxfMMVteCjt6WGMu1bfDIQsKH?=
- =?us-ascii?Q?j5axXyM8XV7yc7W+JK/M652H+U8WzRDnR4516M4j214fkcMq1aqCO8XCA+uO?=
- =?us-ascii?Q?SXoyvuGxcDf/2vM+ej8CtNRKy3ALi1VaZkmORbBeNgSpdS+NqmeMTkEFq9zm?=
- =?us-ascii?Q?6O6boRf7SlW4kr1joa5ZNDF9fHIcWg6sUIEytbfXlI8gz1WHUPYarTzhDTbZ?=
- =?us-ascii?Q?MtjnGPRtnhbFWSQ/7SwVflJVsBfwuqin1BTu5gPh5CG4NstgtaDgdl4JS/+Y?=
- =?us-ascii?Q?JoTiRgvNVpbeOYhlOmJGF0FKT79pdcNKI+qLRkdBYhom4C38QOmireLOp6Ip?=
- =?us-ascii?Q?n9xCqH/LwI50x4EW351xZTtrSuoiB1AVgsaPgekx8MmBa70/HyPYqNYDAo5Q?=
- =?us-ascii?Q?+Zlc2CpSnSlBuZH4vGRFreaTr/0VXgcW8j0ZVlwTquF4O12/UJGobdcYepZr?=
- =?us-ascii?Q?HebZ6eFb2kQZWmqadVh9+li8r+sAyl2Upx8N/Tdb2yPkI2IYePfGWzKH7osg?=
- =?us-ascii?Q?kV11AUdlBsSyfUPQ1WS81544bV8+uY6fAUB4hFqtH/s28MSzpKum1wGrIqTe?=
- =?us-ascii?Q?grXaR77VtPvzEeMeJ40rUgKINuSR6k+3WWreCwxujKGkTcYs/SdH/4kjxLwT?=
- =?us-ascii?Q?AyZqEoDpIT6lyGU2ZlL8JhyitxFavpDC8t2sbC9V4vCLl/SOTDlRdmovpD3R?=
- =?us-ascii?Q?2MwZtAC1B0S9wvFBNR37ieSk/vidSqyfbmMNbQZdD95h2iLdA1bxI4lQ2zV/?=
- =?us-ascii?Q?ZBindd0JaHI2criBAMQcdccexryXBPmLUJZrOWJq0gLWvvByCGy3JzYaI02E?=
- =?us-ascii?Q?Tf02KswTq1C2qj5SveCzCwPxt2fUmxLl0R27YkO2?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e969a22-8258-4b1f-a50b-08db93b33ebe
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2023 23:50:27.0221
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XmXyZjnaALR/E6RlXvsBBSGsw0U6OizKqNDcduEUNdIqu+YBucipah1VaMqb3gyW
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4941
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 13296877901830949447
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedviedrkedtgdehtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomheptehnughiucfuhhihthhiuceorghnughirdhshhihthhisehkvghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepveevieffieefgfefuddvteelffeuhfelffejteejuddvveekveehvdejgeefteevnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepuddvjedrtddrtddruddpudejkedrvdefkedrudejvddrhedupdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeorghnughisegvthgviihirghnrdhorhhgqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdhsrghmshhunhhgqdhsohgtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkedvpdhmohguvgepshhmthhpohhuth
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Mon, Jul 24, 2023 at 02:22:05PM -0300, Jason Gunthorpe wrote:
+Hi
 
-> -void __init iommufd_test_init(void)
-> +int __init iommufd_test_init(void)
->  {
-> +	struct platform_device_info pdevinfo = {
-> +		.name = "iommufd_selftest_iommu",
-> +	};
-> +	int rc;
-> +
->  	dbgfs_root =
->  		fault_create_debugfs_attr("fail_iommufd", NULL, &fail_iommufd);
-> -	WARN_ON(bus_register(&iommufd_mock_bus_type));
-> +
-> +	selftest_iommu_dev = platform_device_register_full(&pdevinfo);
-> +	if (IS_ERR(selftest_iommu_dev)) {
-> +		rc = PTR_ERR(selftest_iommu_dev);
-> +		goto err_dbgfs;
-> +	}
-> +
-> +	rc = bus_register(&iommufd_mock_bus_type.bus);
-> +	if (rc)
-> +		goto err_platform;
-> +
-> +	mock_iommu_device.dev = &selftest_iommu_dev->dev;
-> +	rc = iommu_device_register_bus(&mock_iommu_device, &mock_ops,
-> +				  &iommufd_mock_bus_type.bus,
-> +				  &iommufd_mock_bus_type.nb);
-> +	if (rc)
-> +		goto err_bus;
-> +	return 0;
-> +
-> +err_bus:
-> +	bus_unregister(&iommufd_mock_bus_type.bus);
-> +err_platform:
-> +	platform_device_del(selftest_iommu_dev);
-> +err_dbgfs:
-> +	debugfs_remove_recursive(dbgfs_root);
-> +	return rc;
->  }
->  
->  void iommufd_test_exit(void)
->  {
-> +	iommu_device_unregister_bus(&mock_iommu_device,
-> +				    &iommufd_mock_bus_type.bus,
-> +				    &iommufd_mock_bus_type.nb);
-> +	bus_unregister(&iommufd_mock_bus_type.bus);
-> +	platform_device_del(selftest_iommu_dev);
->  	debugfs_remove_recursive(dbgfs_root);
-> -	bus_unregister(&iommufd_mock_bus_type);
->  }
+On Wed, 26 Jul 2023 17:42:26 +0000, Ruan Jinjie wrote:
+> There is no need to call the dev_err() function directly to print a custom
+> message when handling an error from platform_get_irq() function as
+> it is going to display an appropriate error message in case of a failure.
+> 
+> 
 
+Applied to i2c/andi-for-next on
 
-There is a mistake here that started to become visible after one of
-the rebases, it needs to call iommu_device_sysfs_add() prior to
-iommu_device_register_bus() otherwise the iommu core stuff does not
-fully initialize and weird stuff starts happening.
+https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git
 
-So, it needs this:
+Please note that this patch may still undergo further evaluation
+and the final decision will be made in collaboration with
+Wolfram.
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index 5433c9c545526d..d2b59a1157441c 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -987,14 +987,21 @@ int __init iommufd_test_init(void)
- 	if (rc)
- 		goto err_platform;
- 
--	mock_iommu_device.dev = &selftest_iommu_dev->dev;
-+	rc = iommu_device_sysfs_add(&mock_iommu_device,
-+				    &selftest_iommu_dev->dev, NULL, "%s",
-+				    dev_name(&selftest_iommu_dev->dev));
-+	if (rc)
-+		goto err_bus;
-+
- 	rc = iommu_device_register_bus(&mock_iommu_device, &mock_ops,
- 				  &iommufd_mock_bus_type.bus,
- 				  &iommufd_mock_bus_type.nb);
- 	if (rc)
--		goto err_bus;
-+		goto err_sysfs;
- 	return 0;
- 
-+err_sysfs:
-+	iommu_device_sysfs_remove(&mock_iommu_device);
- err_bus:
- 	bus_unregister(&iommufd_mock_bus_type.bus);
- err_platform:
-@@ -1006,6 +1013,7 @@ int __init iommufd_test_init(void)
- 
- void iommufd_test_exit(void)
- {
-+	iommu_device_sysfs_remove(&mock_iommu_device);
- 	iommu_device_unregister_bus(&mock_iommu_device,
- 				    &iommufd_mock_bus_type.bus,
- 				    &iommufd_mock_bus_type.nb);
+Thank you,
+Andi
 
+Patches applied
+===============
+[1/1] i2c: s3c2410: Remove redundant dev_err()
+      commit: c0e109161aad5d543145d79921d1a577c8fa2eee
