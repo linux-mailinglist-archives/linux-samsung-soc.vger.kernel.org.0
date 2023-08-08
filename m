@@ -2,133 +2,110 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 539ED774707
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Aug 2023 21:08:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC8F577471A
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Aug 2023 21:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234487AbjHHTIp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Aug 2023 15:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52572 "EHLO
+        id S233171AbjHHTJj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Aug 2023 15:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234509AbjHHTIU (ORCPT
+        with ESMTP id S232855AbjHHTJB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Aug 2023 15:08:20 -0400
+        Tue, 8 Aug 2023 15:09:01 -0400
 Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5605FD4BE6
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Aug 2023 09:30:29 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52328e96869so5050641a12.1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Aug 2023 09:30:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9647D54AF
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Aug 2023 09:30:56 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-52164adea19so7603030a12.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Aug 2023 09:30:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691512209; x=1692117009;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rh7yiDqz5JOnOPNrSWe6RNtd/mULecCxFtp8KEyVNnw=;
-        b=q4yh2Y24CvrRUER4eJGyu7LDARUuC68JIRJi5UaPs/oyaUW4/XUJx6eMkvFZEpI0F2
-         NDnfBEw93jc0kGAxRHTO7PRaZ9GrEgli8OLPU24aZ0GRC5cKJNM9gxnrIyoTDuTHWMjb
-         unkUM6gnoO+wN6oclgyTKnrSMYS5s2FhQ+S1CiicV1bnYzKaVY04DmIIW2Ti0sihwInm
-         icp36Cf3y8cNIw8900aQg4TnS1TSHG3xW3GstYlqG+vsT2MGX/OvCIsEXE927vbj/wWj
-         S8HmVks8AZgoY7jEIuPmFayljiZ/1kqzYub8fckhH3moXE+cK6LUVhkRh9U+ngvpAH5K
-         ytOg==
+        d=linaro.org; s=google; t=1691512234; x=1692117034;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/7mP4H675HuYuOMx1xcJqbSqbpr2VMcAkjxgMIL4uqE=;
+        b=T9RSfeb9Ylu4uls4p6Pd+t3MvdlTmCzGdVXPbXux94/EZ8iQUeBh0OHKEDYn5aFIxv
+         cNf9wU6KTyXJjUOmQUUt9Wq5MEP/gjZTG0XN243hRany4DOyuIetbGmZk4XQZm1q6BbO
+         6eriACPd73dplBQ36UhWBpF7G/+356UO0iFHjEmgXZ5t2Pvjyo9oMZPutOgflJkwSiTW
+         qfjnUZqxe/roYAbZZmdiTN9740UoxdZrey2I1WhJHE+bsIIcHmRf8biowvi56D+OauTl
+         s9MaGbRUBnHYNajg9LrEhxPYoSrEJ3iSwSgVAu7jR8VAhD7N7e2dWUV4A3ONZf+nWqwo
+         O8XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691512209; x=1692117009;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rh7yiDqz5JOnOPNrSWe6RNtd/mULecCxFtp8KEyVNnw=;
-        b=CM923S+AiSwbqoYOqXcxx+va9OBt7DnPfMd7XIs7HAYG65Z+yGqeeVNNLk4KP5xDvW
-         NsiJWtiOGAd7i7BPTwkWCEwESCErAIg2RbpbwocHir0se+eVlZ72bFpOZT8fdUbIGXKF
-         Qk8RiPHx7tUYdpyLwPwqWGlhbQDIgCxbc3kvuESIq6CEh5y8yf723a2+SR9ByZ2WDkRd
-         bIvZ10mSZOgelmiqdIQtw2h6FjsSJLTVcqExdEYGVXPaL/CCfKXzSzoPD/qJo2WyEg8c
-         4efYnuxpX3UwsEV+OtQPMp6wCRrHoFAM0nzlpBiVcE7I9YvCm5bwnrDWAJOp1sLT97Rb
-         Emfg==
-X-Gm-Message-State: AOJu0YwXXTuJTFjQB2Q0l5j0AgJ1nb8SOt48QNtpp/0datxneo23Tos7
-        4B6H4DaHTL1LqWm8VLr6P8IapOVgXfjYIlxRd+g=
-X-Google-Smtp-Source: AGHT+IEbOCg9xyA18ITMblbIWlyzPFYOlii2hEzw3GovA2rrE4kb5tpZlfY7zxAoe7VitoQW3rEUTg==
-X-Received: by 2002:a2e:914b:0:b0:2b9:4476:ab28 with SMTP id q11-20020a2e914b000000b002b94476ab28mr9271044ljg.38.1691501487657;
-        Tue, 08 Aug 2023 06:31:27 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id l26-20020a1c791a000000b003fe4548188bsm13716497wme.48.2023.08.08.06.31.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 06:31:27 -0700 (PDT)
-Message-ID: <d198429e-d8ca-aeea-e59b-a241dacde658@linaro.org>
-Date:   Tue, 8 Aug 2023 15:31:24 +0200
+        d=1e100.net; s=20221208; t=1691512234; x=1692117034;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/7mP4H675HuYuOMx1xcJqbSqbpr2VMcAkjxgMIL4uqE=;
+        b=T4OpNJ1W9ihRARDrttdsNLrkqs8xbtrxb8DKVyZFir8r0rr8wnKJO7b4zjuTOBOgXY
+         jGxYKrCZRWtWWxJqMcfoExllqUOIAOtsk02kpPgZfQKVeuR+ARLV+aWPvNdRXFzEMuUM
+         Ug+1C26AMhBclS3PQZF/FYmOXSzhjc7NR2ASpHarA07Cg9sFMg5alexZUtnOi1yaakDw
+         ec66i4QcRxjhXiopqzo2Coi2Lk8SnWmy/n1pVW3IDPAuUJ0jMTv2uHre3WXLrQHvERpm
+         xnagMNDck58DFczgaiwKsYUwzvbZvErwB/jvOb1oX/nwJB0u0u+V17Rh3ZwCR3mU+/Vo
+         aFGw==
+X-Gm-Message-State: AOJu0Yyr9X/xEIFNRpkBRijJn5nt+PL6VrL0PCW+pdO/9efAogvVnJfc
+        D/B76Z5K8SkMvdjOMkKC29wLJnKaPLeyNRG+iFU=
+X-Google-Smtp-Source: AGHT+IFqBorBvecJ4DsCotdQRzKRs6+3bXazzEJyN+B+FiwvRNYD3ybpCup1aLJlqFYk3XPz1XFCeA==
+X-Received: by 2002:a2e:9e0c:0:b0:2b5:8bb9:4dd6 with SMTP id e12-20020a2e9e0c000000b002b58bb94dd6mr8345831ljk.12.1691502404392;
+        Tue, 08 Aug 2023 06:46:44 -0700 (PDT)
+Received: from [127.0.1.1] ([85.235.12.238])
+        by smtp.gmail.com with ESMTPSA id u23-20020a2e8557000000b002b93d66b82asm2284493ljj.112.2023.08.08.06.46.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Aug 2023 06:46:43 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 08 Aug 2023 15:46:32 +0200
+Subject: [PATCH 05/11] regulator: rc5t583: Drop useless header
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v2 3/3] media: exynos4-is: fimc-is: replace duplicate pmu
- node with phandle
-Content-Language: en-US
-To:     Andi Shyti <andi.shyti@kernel.org>
-Cc:     Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230807131256.254243-1-krzysztof.kozlowski@linaro.org>
- <20230807131256.254243-3-krzysztof.kozlowski@linaro.org>
- <20230807231320.svssge6uymw3jiho@intel.intel>
- <84fbcc37-d226-b637-caa1-b24ebaf03d58@linaro.org>
- <20230808114201.ztr22migzzyfsfwq@intel.intel>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230808114201.ztr22migzzyfsfwq@intel.intel>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Message-Id: <20230808-descriptors-regulator-v1-5-939b5e84dd18@linaro.org>
+References: <20230808-descriptors-regulator-v1-0-939b5e84dd18@linaro.org>
+In-Reply-To: <20230808-descriptors-regulator-v1-0-939b5e84dd18@linaro.org>
+To:     Tony Lindgren <tony@atomide.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Matti Vaittinen <mazziesaccount@gmail.com>
+Cc:     linux-omap@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        Linus Walleij <linus.walleij@linaro.org>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 08/08/2023 13:42, Andi Shyti wrote:
->>>> +static void __iomem *fimc_is_get_pmu_regs(struct device *dev)
->>>> +{
->>>> +	struct device_node *node;
->>>> +	void __iomem *regs;
->>>> +
->>>> +	node = of_parse_phandle(dev->of_node, "samsung,pmu-syscon", 0);
->>>> +	if (!node) {
->>>> +		dev_warn(dev, "Finding PMU node via deprecated method, update your DTB\n");
->>>> +		node = of_get_child_by_name(dev->of_node, "pmu");
->>>> +		if (!node)
->>>> +			return IOMEM_ERR_PTR(-ENODEV);
->>>
->>> in my opinion this should be:
->>>
->>> 		...
->>> 		if (!node)
->>> 			return IOMEM_ERR_PTR(-ENODEV);
->>>
->>> 		dev_warn(dev, "Finding PMU node via deprecated method, update your DTB\n");
->>>
->>> Because if you don't have both "samsung,pmu-syscon and "pmu" then
->>> the warning should not be printed and you need to return -ENODEV.
->>
->> Why not? Warning is correct - the driver is trying to find, thus
->> continuous tense "Finding", PMU node via old method.
-> 
-> Alright, I'll go along with what you're suggesting, but I have to
-> say, I find it misleading.
-> 
-> From what I understand, you're requesting an update to the dtb
-> because it's using deprecated methods. However, the reality might 
-> be that the node is not present in any method at all.
-> 
-> Your statement would be accurate if you failed to find the
-> previous method but then did end up finding it.
-> 
-> Relying on the present continuous tense for clarity is a bold
-> move, don't you think? :)
+The RC5T583 includes the legacy header <linux/gpio.h> for no
+reason, drop the include.
 
-I just don't think it matters and is not worth resending.
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ drivers/regulator/rc5t583-regulator.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/regulator/rc5t583-regulator.c b/drivers/regulator/rc5t583-regulator.c
+index a5afca73715d..a25a141e86c4 100644
+--- a/drivers/regulator/rc5t583-regulator.c
++++ b/drivers/regulator/rc5t583-regulator.c
+@@ -16,7 +16,6 @@
+ #include <linux/platform_device.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+-#include <linux/gpio.h>
+ #include <linux/mfd/rc5t583.h>
+ 
+ struct rc5t583_regulator_info {
+
+-- 
+2.34.1
 
