@@ -2,54 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 262B0774416
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Aug 2023 20:15:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AD0C774649
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Aug 2023 20:54:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235359AbjHHSPJ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Aug 2023 14:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35190 "EHLO
+        id S232910AbjHHSyr (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Aug 2023 14:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235347AbjHHSOn (ORCPT
+        with ESMTP id S232936AbjHHSya (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Aug 2023 14:14:43 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B261775B5
-        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Aug 2023 10:21:17 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-314172bac25so4514218f8f.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Aug 2023 10:21:17 -0700 (PDT)
+        Tue, 8 Aug 2023 14:54:30 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E60676B3
+        for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Aug 2023 10:12:01 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3fe4ad22eb0so40360655e9.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 08 Aug 2023 10:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691515275; x=1692120075;
+        d=linaro.org; s=google; t=1691514720; x=1692119520;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pZH8BihJHBp/DZtT1lzAgFgSWlR+gykQRY/CxVLX/NQ=;
-        b=roJ/Hmdr7UKkcO+fqtQrOA6HhnIngpKCmW1n0BXpLCOVGn+AveiaE8dQYXsVyvtPAD
-         jQVMOTL1SL/kH1r+0faqtZsPeVWnSyfvbSbBZVeMF7tXicWnkXVVpCoD1SuqCP1gQb+1
-         0NCXinOeznohQH73wdWPLs492b4gCvd4rX+8T7lH4RFNKYRlfunlte2argY2oY8s6C1k
-         x27UF0P6mnNgbOM/iToUNlz9jGjtmPz+FgVrdrpBUuYGDHv1QzFl17q9hzEcojA/e2kM
-         wryehGxNRqfsWEvVSew0u2X/XxDnRl1BobtLdbJ/C7l/fWugbCV2G/ZllffBjNHrwBE8
-         xhxg==
+        bh=SMzXqqe28IQY+hzgVA8sdRyW99nsQbJZiTRlRSVrT6A=;
+        b=kZJVgy5L5kOMeJKw+YVBYTiDywTeEm5kEKOks5/0hXSUBDcqnI3FpbSkHPLC2e/bhO
+         M+TRMpj1Dd+0KX1c6pbieOBd8puE7wPq/rJ9bI4OI4BEvy5mSNZpDTo/LTqG6xPlySto
+         EczaK3JCuIb9O//prUbJVtKGVIsrFJG9kfxVDyfAbfW+evFZ2TuK7E9P7s61rUfW/fqs
+         CmJQoXwgUKgfvlfdWTzkMRSwb5+YCw+M/linettJjcfjbXneXMup9lG0qFMdsxUY9iX0
+         9fG6NYBle+CRCw3t+LtKQRPByf5Q4q46o2EuQQc1C0a7HD01FSKteiynGj3ZjwzAYFOo
+         Bt5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691515275; x=1692120075;
+        d=1e100.net; s=20221208; t=1691514720; x=1692119520;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pZH8BihJHBp/DZtT1lzAgFgSWlR+gykQRY/CxVLX/NQ=;
-        b=LpXMJtqGPBQbS/UYCUnmO3J9mDJEFAJ7y+Nnvlqknthecqz4/qplFoClglOoFCcM9e
-         ykQ6AdFPu39h7RWqJvqwBFpm0aDB0HJEZlmScIpz8H6cMta0u3iTu7Zxtee8J3stRsSq
-         J205/xQ/kIJv0twjd+7PXhkiRgtEwhiDisvYmFOG+uIFZEnf7/g1R/zovElS/uFmwD5e
-         b2QJ/bspVBquTSrfQs2GG1ZaewKQpr+VPJ3FDnc4qNNjJpNtsjV4CQDW19lfh2wc/usL
-         OpiHUHjMW02GAEJt3qc6DvWCTVTSS/MC+KonlnqG/GVgRWRIVp9W1JD6LbHj0xDJDkgb
-         dMWg==
-X-Gm-Message-State: AOJu0YyZBTOyRO1VxwUeDmvxAlRao0zmBNIVvVi/H2umeVTToLzIcwbJ
-        rYgLhAfv89DQxu/8qjclBRFPqvsmGs64ettu/8M=
-X-Google-Smtp-Source: AGHT+IHxIGUFAD12lJphQeKsQdF3PxwsoN29JQ5BiG4xlGacb03xttiIY8EXVTEebeJ/xuBM044S4Q==
-X-Received: by 2002:adf:ce90:0:b0:314:3b02:a8a8 with SMTP id r16-20020adfce90000000b003143b02a8a8mr7447482wrn.55.1691483268603;
-        Tue, 08 Aug 2023 01:27:48 -0700 (PDT)
+        bh=SMzXqqe28IQY+hzgVA8sdRyW99nsQbJZiTRlRSVrT6A=;
+        b=euDk9uo8MrYGKzzHqwJ4gonRxfNlVN8chAZsAvAQElRhwHEm+ZaKgTmMwX93+UPxN0
+         97ai+31a4tOirJXrUq8gTHza07aeaNwgCnDtYg9xk52NFZfDr81vdojBsxZUZF0zHmRt
+         KL/nRviHoiJ1PV0LZNROAlAaza9jBqpIQEHXefdW6WYRj16v9XOe98/TlHHiVFRjpyBn
+         9f5tuTTy6ngDcJy66tU25HE4decb+veyggrRMCYQgEQfcwWVVTKyKev9yWATOg19S6b5
+         3ryzT4LxZH2GTebqULc3xE948yt3t+4jMDI3VA5WJSoykNS0aM7nCpx4RWhfqB0wbjoj
+         nm9w==
+X-Gm-Message-State: AOJu0YxvSqmxOuKlTGMHJBqHjtwcR7w9UuqGsnJTy0HHxU3iqeTqGbYP
+        wtHpli+t+bkAhff1sdPbOFXivD3b2EvTBZxxJoM=
+X-Google-Smtp-Source: AGHT+IE8JZGO5AJlHB0gVlpfgqATSBJHgAWyKC6QKwkPaljKOyd6RoW2fJ5F/H5/4XrPqd1hvBYD1Q==
+X-Received: by 2002:a5d:5257:0:b0:314:4a15:e557 with SMTP id k23-20020a5d5257000000b003144a15e557mr8567311wrc.5.1691483272362;
+        Tue, 08 Aug 2023 01:27:52 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.222.113])
-        by smtp.gmail.com with ESMTPSA id s18-20020adfeb12000000b0031779a6b451sm12861246wrn.83.2023.08.08.01.27.46
+        by smtp.gmail.com with ESMTPSA id s18-20020adfeb12000000b0031779a6b451sm12861246wrn.83.2023.08.08.01.27.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Aug 2023 01:27:47 -0700 (PDT)
+        Tue, 08 Aug 2023 01:27:51 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Sylwester Nawrocki <s.nawrocki@samsung.com>,
@@ -63,9 +63,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 03/11] clk: samsung: exynos5250: do not define number of clocks in bindings
-Date:   Tue,  8 Aug 2023 10:27:30 +0200
-Message-Id: <20230808082738.122804-4-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 05/11] clk: samsung: exynos5410: do not define number of clocks in bindings
+Date:   Tue,  8 Aug 2023 10:27:32 +0200
+Message-Id: <20230808082738.122804-6-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230808082738.122804-1-krzysztof.kozlowski@linaro.org>
 References: <20230808082738.122804-1-krzysztof.kozlowski@linaro.org>
@@ -91,32 +91,32 @@ directly.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/clk/samsung/clk-exynos5250.c | 5 ++++-
+ drivers/clk/samsung/clk-exynos5410.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/samsung/clk-exynos5250.c b/drivers/clk/samsung/clk-exynos5250.c
-index 92fb09922f28..8ebe6155d8b7 100644
---- a/drivers/clk/samsung/clk-exynos5250.c
-+++ b/drivers/clk/samsung/clk-exynos5250.c
-@@ -100,6 +100,9 @@
- #define PWR_CTRL2_CORE2_UP_RATIO		(1 << 4)
- #define PWR_CTRL2_CORE1_UP_RATIO		(1 << 0)
+diff --git a/drivers/clk/samsung/clk-exynos5410.c b/drivers/clk/samsung/clk-exynos5410.c
+index d67d67a519a4..2654077211e7 100644
+--- a/drivers/clk/samsung/clk-exynos5410.c
++++ b/drivers/clk/samsung/clk-exynos5410.c
+@@ -56,6 +56,9 @@
+ #define SRC_KFC			0x28200
+ #define DIV_KFC0		0x28500
  
 +/* NOTE: Must be equal to the last clock ID increased by one */
-+#define CLKS_NR					(CLK_MOUT_VPLLSRC + 1)
++#define CLKS_NR			512
 +
- /* list of PLLs to be registered */
- enum exynos5250_plls {
- 	apll, mpll, cpll, epll, vpll, gpll, bpll,
-@@ -797,7 +800,7 @@ static void __init exynos5250_clk_init(struct device_node *np)
- 		panic("%s: unable to determine soc\n", __func__);
- 	}
+ /* list of PLLs */
+ enum exynos5410_plls {
+ 	apll, cpll, epll, mpll,
+@@ -260,7 +263,7 @@ static const struct samsung_cmu_info cmu __initconst = {
+ 	.nr_div_clks	= ARRAY_SIZE(exynos5410_div_clks),
+ 	.gate_clks	= exynos5410_gate_clks,
+ 	.nr_gate_clks	= ARRAY_SIZE(exynos5410_gate_clks),
+-	.nr_clk_ids	= CLK_NR_CLKS,
++	.nr_clk_ids	= CLKS_NR,
+ };
  
--	ctx = samsung_clk_init(NULL, reg_base, CLK_NR_CLKS);
-+	ctx = samsung_clk_init(NULL, reg_base, CLKS_NR);
- 	hws = ctx->clk_data.hws;
- 
- 	samsung_clk_of_register_fixed_ext(ctx, exynos5250_fixed_rate_ext_clks,
+ /* register exynos5410 clocks */
 -- 
 2.34.1
 
