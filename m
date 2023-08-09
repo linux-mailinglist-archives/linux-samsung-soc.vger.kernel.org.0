@@ -2,63 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA369774AAE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Aug 2023 22:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54133775181
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Aug 2023 05:45:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234180AbjHHUd0 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 8 Aug 2023 16:33:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39462 "EHLO
+        id S230016AbjHIDp2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 8 Aug 2023 23:45:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234747AbjHHUdH (ORCPT
+        with ESMTP id S229963AbjHIDp1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 8 Aug 2023 16:33:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B95E5AC6E;
-        Tue,  8 Aug 2023 10:02:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3697F61AA9;
-        Tue,  8 Aug 2023 17:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9664C433CA;
-        Tue,  8 Aug 2023 17:02:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691514155;
-        bh=ATXpfxlq2nkVzaslrJEtPL7Am1LPKQ5nq2x9hWexo9A=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=VqehRm5FttgFzXgTZNvxsHCKo6dwAPk9EklpjDPrze+zGQ+Q8VGADnGr1umjHfufn
-         54ZxjciXNdsAUhOnNio5g1VoPdfLfz8bb232ZZun7gZLuTw0nO1HPzD27FrjK0Gv70
-         quYZ5DCR+obScBWw/Z7bS+2kGU0POXpNeFX+Bf0VwNrRC7JZTV9emjZK/OUNADAQDV
-         /hdPRsou1GAGvQyzTD1Z9y2gxhfdD1TBXuHkVQ3/Q9vQ7nNIyDaPBuCnNTUtNM8St/
-         eODKIgaOXVmx71/hIp17f4x9k0FaIwkj0La8EvHUr8jjjcl207KBfeNcHy2UhNztrz
-         dgJdKXDILsQ/w==
-From:   Mark Brown <broonie@kernel.org>
-To:     Tony Lindgren <tony@atomide.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Matti Vaittinen <mazziesaccount@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-omap@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org
-In-Reply-To: <20230808-descriptors-regulator-v1-0-939b5e84dd18@linaro.org>
-References: <20230808-descriptors-regulator-v1-0-939b5e84dd18@linaro.org>
-Subject: Re: [PATCH 00/11] Regulator legacy GPIO header removal
-Message-Id: <169151415259.72832.7760300817402372059.b4-ty@kernel.org>
-Date:   Tue, 08 Aug 2023 18:02:32 +0100
+        Tue, 8 Aug 2023 23:45:27 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A371736;
+        Tue,  8 Aug 2023 20:45:25 -0700 (PDT)
+Received: from kwepemi500008.china.huawei.com (unknown [172.30.72.53])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4RLGBf426Tz1GDtx;
+        Wed,  9 Aug 2023 11:44:10 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Wed, 9 Aug
+ 2023 11:45:19 +0800
+From:   Ruan Jinjie <ruanjinjie@huawei.com>
+To:     <Felix.Kuehling@amd.com>, <alexander.deucher@amd.com>,
+        <christian.koenig@amd.com>, <Xinhui.Pan@amd.com>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>, <harry.wentland@amd.com>,
+        <sunpeng.li@amd.com>, <Rodrigo.Siqueira@amd.com>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <tzimmermann@suse.de>, <inki.dae@samsung.com>,
+        <sw0312.kim@samsung.com>, <kyungmin.park@samsung.com>,
+        <krzysztof.kozlowski@linaro.org>, <alim.akhtar@samsung.com>,
+        <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <bskeggs@redhat.com>,
+        <kherbst@redhat.com>, <lyude@redhat.com>, <kraxel@redhat.com>,
+        <gurchetansingh@chromium.org>, <olvaffe@gmail.com>,
+        <paulo.miguel.almeida.rodenas@gmail.com>, <wenjing.liu@amd.com>,
+        <haoping.liu@amd.com>, <Charlene.Liu@amd.com>,
+        <chiahsuan.chung@amd.com>, <george.shen@amd.com>,
+        <sancchen@amd.com>, <tony.tascioglu@amd.com>,
+        <jaehyun.chung@amd.com>, <tales.aparecida@gmail.com>,
+        <drv@mailo.com>, <aurabindo.pillai@amd.com>,
+        <quic_vpolimer@quicinc.com>, <jiasheng@iscas.ac.cn>,
+        <noralf@tronnes.org>, <jose.exposito89@gmail.com>,
+        <javierm@redhat.com>, <mairacanal@riseup.net>,
+        <davidgow@google.com>, <arthurgrillo@riseup.net>,
+        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <nouveau@lists.freedesktop.org>,
+        <virtualization@lists.linux-foundation.org>
+CC:     <ruanjinjie@huawei.com>
+Subject: [PATCH -next 0/7] drm: Remove many unnecessary NULL values
+Date:   Wed, 9 Aug 2023 11:44:38 +0800
+Message-ID: <20230809034445.434902-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-034f2
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.90.53.73]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,57 +72,36 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Tue, 08 Aug 2023 15:46:27 +0200, Linus Walleij wrote:
-> This removes some low hanging dangling <linux/gpio.h>
-> includes.
-> 
-> 
+The NULL initialization of the pointers assigned by kzalloc() or
+kunit_kzalloc() first is not necessary, because if the kzalloc() or
+kunit_kzalloc() failed, the pointers will be assigned NULL, otherwise
+it works as usual. so remove it.
 
-Applied to
+Ruan Jinjie (7):
+  drm/amdkfd: Remove unnecessary NULL values
+  drm/amd/display: Remove unnecessary NULL values
+  drm/msm: Remove unnecessary NULL values
+  drm/radeon: Remove unnecessary NULL values
+  drm/virtio: Remove an unnecessary NULL value
+  drm/format-helper: Remove unnecessary NULL values
+  drm: Remove unnecessary NULL values
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c  |  4 +--
+ .../gpu/drm/amd/display/dc/bios/bios_parser.c |  4 +--
+ .../drm/amd/display/dc/bios/bios_parser2.c    |  4 +--
+ drivers/gpu/drm/drm_agpsupport.c              |  2 +-
+ drivers/gpu/drm/drm_atomic_uapi.c             |  2 +-
+ drivers/gpu/drm/exynos/exynos_drm_ipp.c       |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c      |  2 +-
+ drivers/gpu/drm/nouveau/dispnv04/tvnv17.c     |  2 +-
+ drivers/gpu/drm/radeon/radeon_agp.c           |  2 +-
+ drivers/gpu/drm/radeon/radeon_combios.c       |  6 ++--
+ .../gpu/drm/radeon/radeon_legacy_encoders.c   |  4 +--
+ .../gpu/drm/tests/drm_format_helper_test.c    | 28 +++++++++----------
+ drivers/gpu/drm/virtio/virtgpu_submit.c       |  2 +-
+ 14 files changed, 33 insertions(+), 33 deletions(-)
 
-Thanks!
-
-[01/11] regulator: tps65910: Drop useless header
-        commit: 9b966639b0cc742a9c4b6329a8e27128e4424cf1
-[02/11] regulator: s2mpa01: Drop useless header
-        commit: d0d58fe27b344fb6d0edb5fd2038372b5e5ed95b
-[03/11] regulator: rpi-panel-attiny: Drop useless header
-        commit: 052eff402fb754f3472833cb679ceef954ebf2a0
-[04/11] regulator: rk808: Drop useless headers
-        (no commit info)
-[05/11] regulator: rc5t583: Drop useless header
-        commit: 2f26d97863f05b83b8f7872aff81ecb9d6b76b50
-[06/11] regulator: mt6311: Drop useless header
-        commit: 4eb351fb89d68efeaca3625dccbbf492f5450801
-[07/11] regulator: mcp16502: Drop useless header
-        commit: 2e903eac35ec0ea1f44af5a53d87d98309295fc3
-[08/11] regulator: max20086: Drop useless header
-        commit: d150c73aa233d6469392282ef648dba5fd4b4821
-[09/11] regulator: lp8755: Drop useless header
-        commit: e4d48f64fcd469feeb09fc452f8cd1dfc00b43f6
-[10/11] regulator: bd71828: Drop useless header
-        commit: a5c9a1444088099c6d52939ed2f34049d5d00b5f
-[11/11] regulator: bd71815: Drop useless header
-        commit: f321708da4db6b15a8691dc64b2d5169234937bc
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.34.1
 
