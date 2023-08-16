@@ -2,192 +2,101 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B67FE77DA93
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Aug 2023 08:42:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A91A77DE3F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 16 Aug 2023 12:12:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242164AbjHPGlp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 16 Aug 2023 02:41:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37124 "EHLO
+        id S243754AbjHPKMM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 16 Aug 2023 06:12:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242168AbjHPGlj (ORCPT
+        with ESMTP id S243750AbjHPKMH (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 16 Aug 2023 02:41:39 -0400
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6DA1FC3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 15 Aug 2023 23:41:38 -0700 (PDT)
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20230816064134epoutp018c702c31e53d6d66f7ebdb624da182b5~7yeqrqhzz1449014490epoutp01p
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 16 Aug 2023 06:41:34 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20230816064134epoutp018c702c31e53d6d66f7ebdb624da182b5~7yeqrqhzz1449014490epoutp01p
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1692168094;
-        bh=SOhYZsDP2Lg0eVQL9xjGQnNiIfQ6hpZwMVNw/iZqBg4=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=tT1MYiMGsTuGJMJQM2t6fvNSS/0iyL4NjrwBdva+NDQ6eHQa3sE2t+NDdSjerXwlr
-         SZU62AqmscRqDNz3IUzMWD/4jUc0bIC2/yc6Y9bilIv8sJh38StM4iWz4YSghEhhou
-         9v1tHWfOBryF3uFa49ucLWh361CBemAfnSckm9Pg=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTP id
-        20230816064134epcas5p17ea935f22f2ccd47bdc8ab425a6504aa~7yeqFaN641088310883epcas5p18;
-        Wed, 16 Aug 2023 06:41:34 +0000 (GMT)
-Received: from epsmges5p1new.samsung.com (unknown [182.195.38.178]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 4RQdp40wSZz4x9Q1; Wed, 16 Aug
-        2023 06:41:32 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-        epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        F3.0E.55522.B9F6CD46; Wed, 16 Aug 2023 15:41:31 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-        20230816064031epcas5p161bf015960cb5d4031eaf9bac1d3541c~7ydv2ILrz0916809168epcas5p1W;
-        Wed, 16 Aug 2023 06:40:31 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230816064031epsmtrp220fa0fa8607e054aafdcaabfe278805e~7ydv07QNT2285722857epsmtrp2z;
-        Wed, 16 Aug 2023 06:40:31 +0000 (GMT)
-X-AuditID: b6c32a49-419ff7000000d8e2-0d-64dc6f9b5a8c
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
-        95.FB.64355.F5F6CD46; Wed, 16 Aug 2023 15:40:31 +0900 (KST)
-Received: from FDSFTE302 (unknown [107.122.81.78]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20230816064028epsmtip2fc43110ce47b75a5a6a0622e8087e4b7~7ydso76CJ0449704497epsmtip2T;
-        Wed, 16 Aug 2023 06:40:27 +0000 (GMT)
-From:   "Sriranjani P" <sriranjani.p@samsung.com>
-To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <richardcochran@gmail.com>, <alexandre.torgue@foss.st.com>,
-        <joabreu@synopsys.com>, <mcoquelin.stm32@gmail.com>,
-        <alim.akhtar@samsung.com>, <linux-fsd@tesla.com>,
-        <pankaj.dubey@samsung.com>, <swathi.ks@samsung.com>,
-        <ravi.patel@samsung.com>
-Cc:     <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        "'Jayati Sahu'" <jayati.sahu@samsung.com>
-In-Reply-To: <b3cd8115-b2bd-63dd-01d3-3cd27127d534@linaro.org>
-Subject: RE: [PATCH v3 3/4] arm64: dts: fsd: Add Ethernet support for FSYS0
- Block of FSD SoC
-Date:   Wed, 16 Aug 2023 12:10:26 +0530
-Message-ID: <001301d9d00c$8d427cb0$a7c77610$@samsung.com>
+        Wed, 16 Aug 2023 06:12:07 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04019138
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 16 Aug 2023 03:12:03 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3fe4cdb72b9so57504315e9.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 16 Aug 2023 03:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1692180721; x=1692785521;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=20xjCMIn17IR0IdsU0wkbDugtTRHdsqXhz5TVu8BY4Q=;
+        b=iUa6RfbNJiCDGwPc2p1UrDJKJVExj7TEUy1Q0T03zhK962sdA57EUI1jLn4zGNcwdk
+         GaPe+iyXbcTz2mjIG3L9kpunNRkPzvfHnj6FOG7VvD57BYEHsUtTnoQRR9HduT7dENoq
+         rpZtt4pJwn+9H0dhrOI/kcXOTxDysTM2/rpzXo5wrTY8sF8GnBRYWup3yNNhqeAwDaj7
+         mh+SRw2RHBTydloOBeuIk30C7MSCNrLtRfJtWjQ+AfvucaaMlk0DIPTrexPC9SsaNia0
+         HMzANM3PhUMWOBdDe3BSjWtYNKgNYon39l0m51eApoiE8y/012cfMYILDKyc6Xjp0fzd
+         u47g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692180721; x=1692785521;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=20xjCMIn17IR0IdsU0wkbDugtTRHdsqXhz5TVu8BY4Q=;
+        b=b4siJZDTKXuxYZuc5I+ZMZ95/RjwvqLD2qJ8HySbKOboBjWEkmlPAQUsXTkiGYUFD9
+         qUiTFR3gYSnqq91P9gPVBEPPntT8fWJSEYMmoXeDP6b5kKBy0g1fya/+OGfjMtK6T2ze
+         1WwsVykoVaKtNmDbn+1rIl3dqFIrS5KgvA3OWxFTNLRYVUVV/6StTBWUHxdZJZD5WwI+
+         Qc2HCseSYKrKsawaOVACUjO+pyNr9yN0t3OWEUOO/Jr5iMukci3cEckTKEY8Df9v9a/D
+         zlp5VMHCIfX9rSSiMDq8wfwuLeQV/O6rxjb5n0wSjZayK4JsOWTeE0lDKi5jZQyZKecA
+         8+Dw==
+X-Gm-Message-State: AOJu0YwwmRQjt2RZ1VN5yI7PpaNpYU0eHfTKMJPMUvgnD3OJ1kmAI1xq
+        VlKfbzRBqUDH+HApC62bpyhohqJHnKChr89af5U=
+X-Google-Smtp-Source: AGHT+IHSmdjyfsa9LPesk0EAdqOUpnrKFYU5CJ1/Qu2idCvNcIQerf3QA9ZKNflrp62PA12OridiYg==
+X-Received: by 2002:a5d:4385:0:b0:317:e04c:6791 with SMTP id i5-20020a5d4385000000b00317e04c6791mr1255859wrq.62.1692180721405;
+        Wed, 16 Aug 2023 03:12:01 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id v1-20020adff681000000b00313e2abfb8dsm20829375wrp.92.2023.08.16.03.12.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Aug 2023 03:12:01 -0700 (PDT)
+Message-ID: <b8812390-7570-dc91-6a12-964c28a85d30@linaro.org>
+Date:   Wed, 16 Aug 2023 12:12:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG0kE2cByMDcfrFjxkR49X5VWx9JAKuNFnTAVxbNBUDmCxvSq/54n2w
-Content-Language: en-in
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupil+LIzCtJLcpLzFFi42LZdlhTQ3d2/p0UgwvTrSx+vpzGaPFg3jY2
-        izV7zzFZzDnfwmIx/8g5Vounxx6xWxw5tYTJ4t6id6wWfS8eMlvsfb2V3eLCtj5Wi02Pr7Fa
-        PHwVbnF51xw2ixnn9zFZzPu7ltXi2AIxi2+n3zBaLNr6hd3i4Yc9QDPOvGC2aN17hN3iy8ab
-        7A7iHltW3mTyeNq/ld1j56y77B4LNpV6bFrVyeZx59oeNo/NS+o93u+7yubRt2UVo8eW/Z8Z
-        Pf41zWX3+LxJLoAnKtsmIzUxJbVIITUvOT8lMy/dVsk7ON453tTMwFDX0NLCXEkhLzE31VbJ
-        xSdA1y0zB+hrJYWyxJxSoFBAYnGxkr6dTVF+aUmqQkZ+cYmtUmpBSk6BSYFecWJucWleul5e
-        aomVoYGBkSlQYUJ2xqojb5kKPvJVnN75k72BcSlPFyMnh4SAicT0uTeZuhi5OIQEdjNKXJ86
-        gx3C+cQo8XzxOzY45+CHXewwLeev/2eBSOxklFg+eSaU85xR4u7qHlaQKjYBfYnXK+azgdgi
-        As+YJebNKwexmQVuMErcX+IEYnMK2EmsfzgNqJ6DQ1ggTmLZPB+QMIuAqkRHwxOwMbwClhJP
-        lixng7AFJU7OfMICMUZeYvvbOcwQBylI/Hy6jBVilZvE655PzBA14hJHf/Ywg9wmIbCdU2L5
-        +vVQH7hInHixA8oWlnh1fAuULSXx+d1eNgg7XWLzkc2sEHaOREdTM9Qye4kDV+awgNzMLKAp
-        sX6XPkRYVmLqqXVMEHv5JHp/P2GCiPNK7JgHY6tJLH7UCWXLSKx99Il1AqPSLCSvzULy2iwk
-        L8xC2LaAkWUVo2RqQXFuemqxaYFhXmo5PMKT83M3MYIzhZbnDsa7Dz7oHWJk4mA8xCjBwawk
-        wtvDeytFiDclsbIqtSg/vqg0J7X4EKMpMLwnMkuJJucDc1VeSbyhiaWBiZmZmYmlsZmhkjjv
-        69a5KUIC6YklqdmpqQWpRTB9TBycUg1MNpMnPFePjJypfW7xgdknW2cGTw8NeOMp0L3oZ7+r
-        kvKFLYmbNxQse7bPTydT7uD1xbIqib+dq7deLdcPmxYb0SU/W1O2Rvvibt0bPt8D6j+Wdbse
-        3R7Fx2s9w+Tb6anLgq573yyeeOdAuuem+g8atjuPq744OIXZTf3yi489BxTPqmQEvGQPrrl5
-        c2te1Valzy/PmOtNNkp1ijf9UOO9QHN1aFdS2495yffzGParsWxxEO00tzH6crRevfLnd68/
-        BoI/XK+5ddvPfLj/0+0D35J756qcKw/3cK43uamRI2/pdCrUT0v42PMpGyRvf42wUpTvD3x9
-        f9P+k70m5rvkLj+Lebkl4ZL6E6W5t5WNlFiKMxINtZiLihMBf1N+8J0EAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsWy7bCSvG58/p0Ug0dfJCx+vpzGaPFg3jY2
-        izV7zzFZzDnfwmIx/8g5Vounxx6xWxw5tYTJ4t6id6wWfS8eMlvsfb2V3eLCtj5Wi02Pr7Fa
-        PHwVbnF51xw2ixnn9zFZzPu7ltXi2AIxi2+n3zBaLNr6hd3i4Yc9QDPOvGC2aN17hN3iy8ab
-        7A7iHltW3mTyeNq/ld1j56y77B4LNpV6bFrVyeZx59oeNo/NS+o93u+7yubRt2UVo8eW/Z8Z
-        Pf41zWX3+LxJLoAnissmJTUnsyy1SN8ugStj1ZG3TAUf+SpO7/zJ3sC4lKeLkZNDQsBE4vz1
-        /yxdjFwcQgLbGSVutc5lhkjISJx8sATKFpZY+e85O0TRU0aJPS8vs4Mk2AT0JV6vmM8GkhAR
-        +MYs8ej1DjCHWeAOo8TVuUtYIVo+M0rsOv6LBaSFU8BOYv3DaawgtrBAjETP/yZGEJtFQFWi
-        o+EJWJxXwFLiyZLlbBC2oMTJmU/AepkFtCWe3nwKZctLbH87B+o+BYmfT5eB9YoIuEm87vnE
-        DFEjLnH0Zw/zBEbhWUhGzUIyahaSUbOQtCxgZFnFKJpaUJybnptcYKhXnJhbXJqXrpecn7uJ
-        EZwqtIJ2MC5b/1fvECMTB+MhRgkOZiUR3h7eWylCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeZVz
-        OlOEBNITS1KzU1MLUotgskwcnFINTLMYstbnL685Pn9Wt96bzyxPFntJPvyol3g+rUiJW3DJ
-        xw4uM878TU464U/D7mo+/b/l9ZnrbF1zAvP2p55U3duaWH2v0U/65uUl/JmH6w6XMR6Ua2xm
-        Kq8pnej9tlJvX+ff9N2TnJQW8+2yVP0zv+nK409T2N/9eTWTd4byxcZVFV3KDKFfeLhdjNxn
-        fDyWHry3/ZPHi6MaZ/cWX1HYkMAmHndspULZtaPLlz467cZe91VDZLLMb+3FhV//B+lEL7i+
-        YLrq5sMXZxXFz1TZZ/35mWCmlVsi/1Lxo1J7OP88DqndttGxPF7+oEXHufnKuz/ZvxJZX/dN
-        12Suud6H93LCFyrk7HcnHXQObPuxykiJpTgj0VCLuag4EQCW3Mm2hAMAAA==
-X-CMS-MailID: 20230816064031epcas5p161bf015960cb5d4031eaf9bac1d3541c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20230814112617epcas5p1bc094e9cf29da5dd7d1706e3f509ac28
-References: <20230814112539.70453-1-sriranjani.p@samsung.com>
-        <CGME20230814112617epcas5p1bc094e9cf29da5dd7d1706e3f509ac28@epcas5p1.samsung.com>
-        <20230814112539.70453-4-sriranjani.p@samsung.com>
-        <b3cd8115-b2bd-63dd-01d3-3cd27127d534@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH net-next] thermal: samsung: fix Wvoid-pointer-to-enum-cast
+ warning
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     Andi Shyti <andi.shyti@kernel.org>
+References: <20230810091318.70261-1-krzysztof.kozlowski@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230810091318.70261-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On 10/08/2023 11:13, Krzysztof Kozlowski wrote:
+> 'soc' is an enum, thus cast of pointer on 64-bit compile test with W=1
+> causes:
+> 
+>    exynos_tmu.c:890:14: error: cast to smaller integer type 'enum soc_type' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
+Applied, thanks
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski [mailto:krzysztof.kozlowski@linaro.org]
-> Sent: 15 August 2023 01:27
-> To: Sriranjani P <sriranjani.p@samsung.com>; davem@davemloft.net;
-> edumazet@google.com; kuba@kernel.org; pabeni@redhat.com;
-> robh+dt@kernel.org; krzysztof.kozlowski+dt@linaro.org;
-> conor+dt@kernel.org; richardcochran@gmail.com;
-> alexandre.torgue@foss.st.com; joabreu@synopsys.com;
-> mcoquelin.stm32@gmail.com; alim.akhtar@samsung.com; linux-
-> fsd@tesla.com; pankaj.dubey@samsung.com; swathi.ks@samsung.com;
-> ravi.patel@samsung.com
-> Cc: netdev@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-samsung-soc@vger.kernel.org; linux-arm-
-> kernel@lists.infradead.org; Jayati Sahu <jayati.sahu@samsung.com>
-> Subject: Re: [PATCH v3 3/4] arm64: dts: fsd: Add Ethernet support for FSYS0
-> Block of FSD SoC
-> 
-> On 14/08/2023 13:25, Sriranjani P wrote:
-> > The FSD SoC contains two instances of Synopsys DWC QoS Ethernet IP,
-> > one in FSYS0 block and other in PERIC block.
-> >
-> > Adds device tree node for Ethernet in FSYS0 Block and enables the same
-> > for FSD platform.
-> >
-> 
-> ...
-> 
-> >  &pinctrl_peric {
-> > diff --git a/arch/arm64/boot/dts/tesla/fsd.dtsi
-> > b/arch/arm64/boot/dts/tesla/fsd.dtsi
-> > index 1c53c68efd53..9a991f021711 100644
-> > --- a/arch/arm64/boot/dts/tesla/fsd.dtsi
-> > +++ b/arch/arm64/boot/dts/tesla/fsd.dtsi
-> > @@ -32,6 +32,7 @@
-> >  		spi0 = &spi_0;
-> >  		spi1 = &spi_1;
-> >  		spi2 = &spi_2;
-> > +		eth0 = &ethernet_0;
-> 
-> One more thing - I said it two times already. Patch v1 and then in v2.
-> You responded now without waiting for my further feedback and
-> immediately sent the same stuff.
-> 
-> Let's be clear:
-> 
-> NAK for the reasons I said multiple times.
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Got it, will move this alias in board specific dts file.
-
-> 
-> Best regards,
-> Krzysztof
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
