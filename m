@@ -2,219 +2,141 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64D57781713
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 19 Aug 2023 05:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B4C67817E2
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 19 Aug 2023 09:05:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244670AbjHSDSB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 18 Aug 2023 23:18:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39702 "EHLO
+        id S1343867AbjHSHDt (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 19 Aug 2023 03:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244858AbjHSDRm (ORCPT
+        with ESMTP id S1343827AbjHSHDT (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 18 Aug 2023 23:17:42 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FE9D4218
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 18 Aug 2023 20:17:40 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id 006d021491bc7-56cd753b31cso948340eaf.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 18 Aug 2023 20:17:40 -0700 (PDT)
+        Sat, 19 Aug 2023 03:03:19 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BA9421F
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 19 Aug 2023 00:03:17 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id 46e09a7af769-6bd0911c95dso1330510a34.3
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 19 Aug 2023 00:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1692415060; x=1693019860;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EK4lc13hsQBieya89oWIFB0P2uDWj3MviewwKrAjxRw=;
-        b=gH2yIICE5JiUkpTUs4CSGRbbH5ZMRMUR0GayY2DiaZAwbPuo7IBZOO19ZfmjRnWQow
-         WSvXRhBjmEJwhIHLbz3MLbKMue1Y73dVgaSmND3FeGzInC45hRXk62nvTmyUXvINW+kQ
-         IFLuZmM/4525WH4XAPKBdcSojq1g5646XK9kggBY2WIbpV0d59N2WSp/D0E+/wW8FsNP
-         1S4HzvMPpFtP/9BIcu927YlH+iXdQoDB/j3X5trswIRH/NUJ/8MfhXzEu5KG1vIJLGUP
-         zm8YYj1dnbrdDwzfsSGa59JPhmz07dFWmaRDzDavUZAQ8FOTt7eAQS9ZhSNAzeFjj1uu
-         Qu5g==
+        d=gmail.com; s=20221208; t=1692428596; x=1693033396;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
+        b=JBXWdTgGa+H/8z7x8k6G4qRwkJ3v5AZ/3PYGnj7kkAMZbCITGbjXSuvcuKkaCUxj9A
+         hT+XSYJhdIdPsvN5uxepyoS5Yam8aiBOX7SRpGJgnvsRpFETmvB+u6CDvixjem3Auaz9
+         8XJTWSstONS7IHuP1KyK28Rq9cj9dMxehv9DuKFz97OyC6g6RCaqQCEfd1xPRF022Yxv
+         OVM1DuuVFrZOu0YWpd6OOGdZWk4r+v5LcWVhUS78S2WY/4U2qavTx1YIuX7hrkxe9nGH
+         /u9oCEeYI97+kWDS4PvF+OMWVZVDXeWZlkidVm9mYe1M2ztCdqbJibZhzUQ+rI08LuWJ
+         5AYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692415060; x=1693019860;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EK4lc13hsQBieya89oWIFB0P2uDWj3MviewwKrAjxRw=;
-        b=icEKwf/hwbyMPJ766AG3VG7PTFFw9aBjgw6JyP1vp20xd+cybvlYmD7Ym33BGzk4En
-         Oi5pnyCzPnWxBTdOqNZ3gcg+CkA7u5vVte9zUNOFXTvbEXTOrwtXI5DZL5ufhpvq0s21
-         5Puao2WrFdEWQYTlU//UeITf81Pd1lQVOBWipAz4U/Wp5jU08LQsKlrLUZl3Zc02dYCf
-         F3x0pO/CSLO+LoFtFYvkfAQ44jzOw+5XwUJCuDYC2moyZUNNd5dEpb53IxiAMU9ayNL0
-         ifVCIoNTEOeJLfPEsEZi4SnlidrevUsZD19ik/n03imXErSjgG+O09arIEhYOKolnNxQ
-         whRQ==
-X-Gm-Message-State: AOJu0YwBaGm1+05ZpIzyWNqU9DGVq6pakneS1qt7S5E+MPPJiqS3S8PC
-        5uubEh7Yu9kZ0FtkPCUQ75hTzA==
-X-Google-Smtp-Source: AGHT+IEQ3BwqLE3HDnHpyCiEwIbHJOPXfPkwHfhNQFFL1+Q07JcVrXASX49TluX1i2SH3iY6U9p5kw==
-X-Received: by 2002:a05:6870:1d0:b0:1bb:c946:b80e with SMTP id n16-20020a05687001d000b001bbc946b80emr1102346oad.28.1692415059832;
-        Fri, 18 Aug 2023 20:17:39 -0700 (PDT)
-Received: from localhost ([136.49.140.41])
-        by smtp.gmail.com with ESMTPSA id q2-20020a9d7c82000000b006b89dafb721sm1424375otn.78.2023.08.18.20.17.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Aug 2023 20:17:39 -0700 (PDT)
-From:   Sam Protsenko <semen.protsenko@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc:     JaeHun Jung <jh0801.jung@samsung.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Marc Kleine-Budde <mkl@pengutronix.de>,
-        Heiko Stuebner <heiko@sntech.de>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 8/8] arm64: dts: exynos: Enable USB support on E850-96 board
-Date:   Fri, 18 Aug 2023 22:17:31 -0500
-Message-Id: <20230819031731.22618-9-semen.protsenko@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230819031731.22618-1-semen.protsenko@linaro.org>
-References: <20230819031731.22618-1-semen.protsenko@linaro.org>
+        d=1e100.net; s=20221208; t=1692428596; x=1693033396;
+        h=content-transfer-encoding:to:subject:message-id:date:from:sender
+         :reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9kydyMnwD//o0quRqImkimRYfrWW9k+FT8t/oHoxyE8=;
+        b=F2xKvoKAhl/lS9TrLGNXzjphbcD7UMMPJfxcbh1koR7U/XA2e6B5eroSkL7VGq1p/M
+         WNMwh3Hs1EL9CO/C8K0xAVPsaphiDtJ3GmfIo5tSW6J3m111bXMSwgNQIRmairdTnJ48
+         PV8hAMLRmMFC1FaI3zDUCdYROZprRarbYbM4vUOFloxyjoJ2FXitTd/9KoUziOxVJqIR
+         nsdV0Q+eC7YHEiRbPGPESqzudtRqDnhMi+L6xc9n6UkexHAHHha9Gs0eEc/sVSVNDszW
+         OsaQXyL6UoUE0dPg0cRQM8cdSoM1Q0rZmkHpAPRy6jvuKy+9YEt0zhZqOJiPFwV81dLs
+         IEeg==
+X-Gm-Message-State: AOJu0YyFHmOLQzBeVbEdxS261tQ1aJ6CPKFkhg1KHsGLrm1hEWGVPLht
+        BpYTTH2u+7pzTYGBuqQucl35SnCnmA3NuAuj+qdxYZSaa4+4gg==
+X-Google-Smtp-Source: AGHT+IHBFHux9W7amy752XAKQ4G+pXj9K8KLABgekYkKVjTaNiUovhqWPJjy5q7mdLIzANUAVG24gzrYlmHT6Kjn7Kk=
+X-Received: by 2002:a81:8782:0:b0:589:a9fc:ffcd with SMTP id
+ x124-20020a818782000000b00589a9fcffcdmr1407212ywf.20.1692428576106; Sat, 19
+ Aug 2023 00:02:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Reply-To: razumkoykhailo@gmail.com
+Sender: mrtombaba@gmail.com
+Received: by 2002:a05:7000:5395:b0:4f4:2174:eed4 with HTTP; Sat, 19 Aug 2023
+ 00:02:55 -0700 (PDT)
+From:   "Mr.Razum Khailo" <razumkoykhailo@gmail.com>
+Date:   Sat, 19 Aug 2023 00:02:55 -0700
+X-Google-Sender-Auth: TD1SbUwALQWUaG93zNo0ky4SaO8
+Message-ID: <CADXgghn2t3mU_VvtZDjHwnbadg2QnVcJ30yFd0kN8SL6NDhY1g@mail.gmail.com>
+Subject: Greetings from Ukraine,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,LOTS_OF_MONEY,
+        MILLION_USD,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
+        *      DNSWL was blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [2607:f8b0:4864:20:0:0:0:344 listed in]
+        [list.dnswl.org]
+        * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
+        *      [score: 0.0000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [razumkoykhailo[at]gmail.com]
+        *  2.0 MILLION_USD BODY: Talks about millions of dollars
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  2.4 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  2.8 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The E850-96 board has a micro-USB socket and two USB 2.0 host sockets.
-The USB role (host or peripheral) is selected automatically depending on
-micro-USB cable attachment state:
-  - micro-USB cable is attached: USB device role
-  - micro-USB cable is detached: USB host role
-
-USB can't act simultaneously as a device and a host, because Exynos850
-SoC has only one USB controller and there are no external USB
-controllers on the E850-96 board. So the USB switch chip (specifically
-TS3USB221A) connects SoC USB lines either to micro-USB connector or to
-USB hub chip (LAN9514), w.r.t. micro-USB cable attachment state.
-
-When USB works in the host role, Ethernet capability becomes available
-too, as LAN9514 chip (providing USB hub) also enables Ethernet PHY and
-Ethernet MAC.
-
-Dynamic role switching is done in gpio-usb-b-connector, using current
-micro-USB VBUS line level as a trigger:
-  - VBUS=high: SoC USB lines are wired to micro-USB socket
-  - VBUS=low: SoC USB lines are wired to USB hub chip
-
-In order to make USB host functional when the board is booted with
-micro-USB cable disconnected, role-switch-default-mode = "host" is used.
-
-One can look at E850-96 board schematics [1] to figure out how exactly
-all related USB hardware connections and lines reflect into
-corresponding device tree definitions.
-
-As PMIC regulators are not implemented yet, we rely on USB LDOs being
-already enabled in the bootloader, and a dummy regulator is provided to
-"usbdrd" vdd nodes for now.
-
-[1] https://www.96boards.org/documentation/consumer/e850-96b/hardware-docs/
-
-Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
----
- .../boot/dts/exynos/exynos850-e850-96.dts     | 58 +++++++++++++++++++
- 1 file changed, 58 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/exynos/exynos850-e850-96.dts b/arch/arm64/boot/dts/exynos/exynos850-e850-96.dts
-index 6ed38912507f..8d733361ef82 100644
---- a/arch/arm64/boot/dts/exynos/exynos850-e850-96.dts
-+++ b/arch/arm64/boot/dts/exynos/exynos850-e850-96.dts
-@@ -29,6 +29,22 @@ chosen {
- 		stdout-path = &serial_0;
- 	};
- 
-+	connector {
-+		compatible = "gpio-usb-b-connector", "usb-b-connector";
-+		label = "micro-USB";
-+		type = "micro";
-+		vbus-supply = <&reg_usb_host_vbus>;
-+		id-gpios = <&gpa0 0 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&micro_usb_det_pins>;
-+
-+		port {
-+			usb_dr_connector: endpoint {
-+				remote-endpoint = <&usb1_drd_sw>;
-+			};
-+		};
-+	};
-+
- 	/*
- 	 * RAM: 4 GiB (eMCP):
- 	 *   - 2 GiB at 0x80000000
-@@ -111,6 +127,20 @@ bt_active_led: led-5 {
- 		};
- 	};
- 
-+	/* TODO: Remove this once PMIC is implemented  */
-+	reg_dummy: regulator-0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "dummy_reg";
-+	};
-+
-+	reg_usb_host_vbus: regulator-1 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "usb_host_vbus";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		gpio = <&gpa3 5 GPIO_ACTIVE_LOW>;
-+	};
-+
- 	/*
- 	 * RTC clock (XrtcXTI); external, must be 32.768 kHz.
- 	 *
-@@ -172,6 +202,12 @@ key_volup_pins: key-volup-pins {
- 		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
- 		samsung,pin-drv = <EXYNOS5420_PIN_DRV_LV1>;
- 	};
-+
-+	micro_usb_det_pins: micro-usb-det-pins {
-+		samsung,pins = "gpa0-0";
-+		samsung,pin-function = <EXYNOS_PIN_FUNC_INPUT>;
-+		samsung,pin-pud = <EXYNOS_PIN_PULL_NONE>;
-+	};
- };
- 
- &rtc {
-@@ -186,6 +222,28 @@ &serial_0 {
- 	pinctrl-0 = <&uart1_pins>;
- };
- 
-+&usbdrd {
-+	status = "okay";
-+	vdd10-supply = <&reg_dummy>;
-+	vdd33-supply = <&reg_dummy>;
-+};
-+
-+&usbdrd_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+	role-switch-default-mode = "host";
-+
-+	port {
-+		usb1_drd_sw: endpoint {
-+			remote-endpoint = <&usb_dr_connector>;
-+		};
-+	};
-+};
-+
-+&usbdrd_phy {
-+	status = "okay";
-+};
-+
- &usi_uart {
- 	samsung,clkreq-on; /* needed for UART mode */
- 	status = "okay";
--- 
-2.39.2
-
+R3JlZXRpbmdzwqBmcm9twqBVa3JhaW5lLA0KDQpNci7CoFJhenVta292wqBNeWtoYWlsbyzCoGFu
+wqBlbnRyZXByZW5ldXLCoGJ1c2luZXNzbWFuwqBmcm9twqBPZGVzc2ENClVrcmFpbmUuwqBXaXRo
+aW7CoGHCoHllYXLCoHBsdXPCoHNvbWXCoG1vbnRoc8Kgbm93LMKgbW9yZcKgdGhhbsKgOC4ywqBt
+aWxsaW9uDQpwZW9wbGXCoGFyb3VuZMKgdGhlwqBjaXRpZXPCoG9mwqBtecKgY291bnRyecKgVWty
+YWluZcKgaGF2ZcKgYmVlbsKgZXZhY3VhdGVkwqB0bw0KYcKgc2FmZcKgbG9jYXRpb27CoGFuZMKg
+b3V0wqBvZsKgdGhlwqBjb3VudHJ5LMKgbW9zdMKgZXNwZWNpYWxsecKgY2hpbGRyZW7CoHdpdGgN
+CnRoZWlywqBwYXJlbnRzLMKgbnVyc2luZ8KgbW90aGVyc8KgYW5kwqBwcmVnbmFudMKgd29tZW4s
+wqBhbmTCoHRob3NlwqB3aG/CoGhhdmUNCmJlZW7CoHNlcmlvdXNsecKgd291bmRlZMKgYW5kwqBu
+ZWVkwqB1cmdlbnTCoG1lZGljYWzCoGF0dGVudGlvbi7CoEnCoHdhc8KgYW1vbmcNCnRob3NlwqB0
+aGF0wqB3ZXJlwqBhYmxlwqB0b8KgZXZhY3VhdGXCoHRvwqBvdXLCoG5laWdoYm91cmluZ8KgY291
+bnRyaWVzwqBhbmTCoEnigJltDQpub3fCoGluwqB0aGXCoHJlZnVnZWXCoGNhbXDCoG9mwqBUZXLC
+oEFwZWzCoEdyb25pbmdlbsKgaW7CoHRoZcKgTmV0aGVybGFuZHMuDQoNCknCoG5lZWTCoGHCoGZv
+cmVpZ27CoHBhcnRuZXLCoHRvwqBlbmFibGXCoG1lwqB0b8KgdHJhbnNwb3J0wqBtecKgaW52ZXN0
+bWVudA0KY2FwaXRhbMKgYW5kwqB0aGVuwqByZWxvY2F0ZcKgd2l0aMKgbXnCoGZhbWlseSzCoGhv
+bmVzdGx5wqBpwqB3aXNowqBJwqB3aWxsDQpkaXNjdXNzwqBtb3JlwqBhbmTCoGdldMKgYWxvbmcu
+wqBJwqBuZWVkwqBhwqBwYXJ0bmVywqBiZWNhdXNlwqBtecKgaW52ZXN0bWVudA0KY2FwaXRhbMKg
+aXPCoGluwqBtecKgaW50ZXJuYXRpb25hbMKgYWNjb3VudC7CoEnigJltwqBpbnRlcmVzdGVkwqBp
+bsKgYnV5aW5nDQpwcm9wZXJ0aWVzLMKgaG91c2VzLMKgYnVpbGRpbmfCoHJlYWzCoGVzdGF0ZXMs
+wqBtecKgY2FwaXRhbMKgZm9ywqBpbnZlc3RtZW50DQppc8KgKCQzMMKgTWlsbGlvbsKgVVNEKcKg
+LsKgVGhlwqBmaW5hbmNpYWzCoGluc3RpdHV0aW9uc8KgaW7CoG15wqBjb3VudHJ5DQpVa3JhaW5l
+wqBhcmXCoGFsbMKgc2hvdMKgZG93bsKgZHVlwqB0b8KgdGhlwqBjcmlzaXPCoG9mwqB0aGlzwqB3
+YXLCoG9uwqBVa3JhaW5lDQpzb2lswqBiecKgdGhlwqBSdXNzaWFuwqBmb3JjZXMuwqBNZWFud2hp
+bGUswqBpZsKgdGhlcmXCoGlzwqBhbnnCoHByb2ZpdGFibGUNCmludmVzdG1lbnTCoHRoYXTCoHlv
+dcKgaGF2ZcKgc2/CoG11Y2jCoGV4cGVyaWVuY2XCoGluwqB5b3VywqBjb3VudHJ5LMKgdGhlbsKg
+d2UNCmNhbsKgam9pbsKgdG9nZXRoZXLCoGFzwqBwYXJ0bmVyc8Kgc2luY2XCoEnigJltwqBhwqBm
+b3JlaWduZXIuDQoNCknCoGNhbWXCoGFjcm9zc8KgeW91csKgZS1tYWlswqBjb250YWN0wqB0aHJv
+dWdowqBwcml2YXRlwqBzZWFyY2jCoHdoaWxlwqBpbsKgbmVlZA0Kb2bCoHlvdXLCoGFzc2lzdGFu
+Y2XCoGFuZMKgScKgZGVjaWRlZMKgdG/CoGNvbnRhY3TCoHlvdcKgZGlyZWN0bHnCoHRvwqBhc2vC
+oHlvdcKgaWYNCnlvdcKga25vd8KgYW55wqBsdWNyYXRpdmXCoGJ1c2luZXNzwqBpbnZlc3RtZW50
+wqBpbsKgeW91csKgY291bnRyecKgacKgY2FuDQppbnZlc3TCoG15wqBtb25lecKgc2luY2XCoG15
+wqBjb3VudHJ5wqBVa3JhaW5lwqBzZWN1cml0ecKgYW5kwqBlY29ub21pYw0KaW5kZXBlbmRlbnTC
+oGhhc8KgbG9zdMKgdG/CoHRoZcKgZ3JlYXRlc3TCoGxvd2VywqBsZXZlbCzCoGFuZMKgb3VywqBj
+dWx0dXJlwqBoYXMNCmxvc3TCoGluY2x1ZGluZ8Kgb3VywqBoYXBwaW5lc3PCoGhhc8KgYmVlbsKg
+dGFrZW7CoGF3YXnCoGZyb23CoHVzLsKgT3VywqBjb3VudHJ5DQpoYXPCoGJlZW7CoG9uwqBmaXJl
+wqBmb3LCoG1vcmXCoHRoYW7CoGHCoHllYXLCoG5vdy4NCg0KSWbCoHlvdcKgYXJlwqBjYXBhYmxl
+wqBvZsKgaGFuZGxpbmfCoHRoaXPCoGJ1c2luZXNzwqBwYXJ0bmVyc2hpcCzCoGNvbnRhY3TCoG1l
+DQpmb3LCoG1vcmXCoGRldGFpbHMswqBJwqB3aWxswqBhcHByZWNpYXRlwqBpdMKgaWbCoHlvdcKg
+Y2FuwqBjb250YWN0wqBtZQ0KaW1tZWRpYXRlbHkuwqBZb3XCoG1hecKgYXPCoHdlbGzCoHRlbGzC
+oG1lwqBhwqBsaXR0bGXCoG1vcmXCoGFib3V0wqB5b3Vyc2VsZi4NCkNvbnRhY3TCoG1lwqB1cmdl
+bnRsecKgdG/CoGVuYWJsZcKgdXPCoHRvwqBwcm9jZWVkwqB3aXRowqB0aGXCoGJ1c2luZXNzLsKg
+ScKgd2lsbA0KYmXCoHdhaXRpbmfCoGZvcsKgeW91csKgcmVzcG9uc2UuwqBNecKgc2luY2VyZcKg
+YXBvbG9naWVzwqBmb3LCoHRoZQ0KaW5jb252ZW5pZW5jZS4NCg0KDQpUaGFua8KgeW91IQ0KDQpN
+ci4gUmF6dW1rb3bCoE15a2hhaWxvLg0K
