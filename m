@@ -2,148 +2,105 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8F2C7890BD
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Aug 2023 23:51:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D1D77890E0
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Aug 2023 23:55:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbjHYVuj (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 25 Aug 2023 17:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37390 "EHLO
+        id S231492AbjHYVzB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 25 Aug 2023 17:55:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231489AbjHYVuc (ORCPT
+        with ESMTP id S231571AbjHYVyt (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:50:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C96EB26AF
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693000189;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=jDIH1s5AgxOERqalZWlNYkaKtZibmqZdBdpJvN3/v8U=;
-        b=NaGrv5xDzRiKSyY4xaYCPr3Tue4R0zPn7TSaDR+PKYKYedRZ8K5Orw2QntNF2BwfUWNu/V
-        T/NIwXNiZj0D98fmOCpKqJ2StaZNjlQ0DBY9NRjrlD2EeThYSEPmvBCkmORFmLMznOfwWD
-        9mFdI3l+jNfi59Mte2ERLe9sbAJdux0=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-y60IqwyvPPW8iGIv4wfF9Q-1; Fri, 25 Aug 2023 17:49:47 -0400
-X-MC-Unique: y60IqwyvPPW8iGIv4wfF9Q-1
-Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-58c8b2d6784so20205037b3.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:49:47 -0700 (PDT)
+        Fri, 25 Aug 2023 17:54:49 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 372D2EC
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3a5a7e7cd61so783325b6e.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1693000486; x=1693605286;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ED3W7s12gubynwmMQJJ5mT7Z84AD3DiBoyeGrhqMwHs=;
+        b=q+NdNGNUcySfhgoSgFumNTOS4wlUTngAqhcxwENzdMjVjwoEjkXDVt7d4Q9NcGZHZ0
+         JwioqaoDWsbNQobKHqLJGUbU63inXej8lUUewxxQ0K2T57zAepCEiicq+GfBTySmbeXK
+         gRrikx7nWnEygE7Iy7JaEW9sCGcUzpCNYHEkX/Up7el7E6BB7kHCOmQoJ7pJli3foc3L
+         tSBU3gNTwtR/OGutFxtR/vavFCKkGJCNVuHcB0EEe0c+hDYSXtdp+DhFUjS+tG4MVLLB
+         H3IMOOGJJLaC9c4LaDjrdDcrYP8NsLqkgLXNrjz1jWHpB9p/98c6WfY72ZbLp4nGoM2u
+         qCKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693000187; x=1693604987;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jDIH1s5AgxOERqalZWlNYkaKtZibmqZdBdpJvN3/v8U=;
-        b=UsvWZ/Uw+TFjMX6+x4Q+c1nLCMTJn6dfEsq/TPetS87h7y5aqDwCkJHZrjfwVhiY8/
-         Q3JEtnXa4HeDdMGpRfeQ7K2ymqtPFTIAIHLjxh9Fk1NIPaduOq237I5lolqcgFbvuKsU
-         LUMgMrgO8Q7d9dC1lgNMexeUI2zE21SDiK1JL+vM9r3p+f67vUafPI/vGtZagTH57Gx9
-         QxkcHcR9lGLZivplULKSY0bVgcXBguwyj14LpHC87ZJ5u8ipHqNIvXGbRGqOUfFgLQm4
-         MSECwAAKRc9+bqLgc7VweQherXE40mNLC80oDQssGQPnA/1hkD6jbeEXe5yYjDKKCz8g
-         uFJA==
-X-Gm-Message-State: AOJu0YyRzMqn2/w5znqjDTz5SJ5yrHlgp6IazL/Yb5EAJqXSpnGzoPKt
-        88O/iczXc8RbNUX6z4mXqlyEJYr3+1pQggUZNfEaZuRWjtnOft+ViioTy21ITw8B31vtH56miSD
-        acceMhCl3SnHLpyLtnjl0cpvYc3bQQXs=
-X-Received: by 2002:a25:d8d6:0:b0:d78:3047:62c6 with SMTP id p205-20020a25d8d6000000b00d78304762c6mr3495328ybg.21.1693000187282;
-        Fri, 25 Aug 2023 14:49:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgZnJ6x3Khmaw73UVVO8ipGtpfGFEkJnwrK/gjpvrarbZH5j/AtFZ9PMl7lOmV6YAsTBEFgw==
-X-Received: by 2002:a25:d8d6:0:b0:d78:3047:62c6 with SMTP id p205-20020a25d8d6000000b00d78304762c6mr3495280ybg.21.1693000186913;
-        Fri, 25 Aug 2023 14:49:46 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id ki6-20020a05622a770600b0040ff0e520besm770523qtb.35.2023.08.25.14.49.08
+        d=1e100.net; s=20221208; t=1693000486; x=1693605286;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ED3W7s12gubynwmMQJJ5mT7Z84AD3DiBoyeGrhqMwHs=;
+        b=eQxyqtx5VUl0ED/7u+jsF3osQsMXiWSeN/vLvNd+qohnMK7VqFG3ecID66t+kFTMyC
+         4afh4l0OL7+nPTA7H6Z67HpiWHY3GgBXjUgMXBpIt0ii7fvJwIClgaRN7f36b4PvhfTa
+         uHJQB8iqfLuwJRiR25V7dB7cvH1Uu46qPNiiUWDGN0wcANG7xanBNcQi2P/sgxeEgemM
+         jIxDaKfrvJmcZABCOouSjT+EcDIJ1baTXfyU/FnAUZrEpFgoeSUlTPVu6/pFCY1oBWUW
+         LwJPX0sYKWAvwce81xDZ1iCQXU1esgOe70ik0dprBP7Uyj6qcV2H3yXktJzxwtjIsXKQ
+         6U7Q==
+X-Gm-Message-State: AOJu0YylyEDQh7xpkrxVBAW6NlyrhACoCFiWYSzRxeVKPOKzK/iH0LuG
+        Nj88fUnVj/2qu3COxJwRfwg6CA==
+X-Google-Smtp-Source: AGHT+IHoZV3JvOhzhTqu5b0Kb+MjoNzOTBJvjrpdzduCjg96IVE1UXtO5l3VDKX+pPUzxVDktV/5wA==
+X-Received: by 2002:a05:6808:198f:b0:3a7:e779:7fc1 with SMTP id bj15-20020a056808198f00b003a7e7797fc1mr2708077oib.7.1693000486561;
+        Fri, 25 Aug 2023 14:54:46 -0700 (PDT)
+Received: from localhost ([136.49.140.41])
+        by smtp.gmail.com with ESMTPSA id r185-20020a4a4ec2000000b00570cb3e8a6dsm1405191ooa.7.2023.08.25.14.54.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 14:49:46 -0700 (PDT)
-Date:   Fri, 25 Aug 2023 14:49:07 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 25 Aug 2023 14:54:46 -0700 (PDT)
+From:   Sam Protsenko <semen.protsenko@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Conor Dooley <conor+dt@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 06/24] iommu/tegra-gart: Remove tegra-gart
-Message-ID: <stzz6hsyx25u5bbkgwftde2jdtjxgb5ghofwfymv2ny4vfbpch@nuli2d2mthaq>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <6-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        JaeHun Jung <jh0801.jung@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] arm64: dts: exynos: Enable USB for E850-96 board
+Date:   Fri, 25 Aug 2023 16:54:43 -0500
+Message-Id: <20230825215445.28309-1-semen.protsenko@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:20PM -0300, Jason Gunthorpe wrote:
-> Thierry says this is not used anymore, and doesn't think it makes sense as
-> an iommu driver. The HW it supports is about 10 years old now and newer HW
-> uses different IOMMU drivers.
-> 
-> As this is the only driver with a GART approach, and it doesn't really
-> meet the driver expectations from the IOMMU core, let's just remove it
-> so we don't have to think about how to make it fit in.
-> 
-> It has a number of identified problems:
->  - The assignment of iommu_groups doesn't match the HW behavior
-> 
->  - It claims to have an UNMANAGED domain but it is really an IDENTITY
->    domain with a translation aperture. This is inconsistent with the core
->    expectation for security sensitive operations
-> 
->  - It doesn't implement a SW page table under struct iommu_domain so
->    * It can't accept a map until the domain is attached
->    * It forgets about all maps after the domain is detached
->    * It doesn't clear the HW of maps once the domain is detached
->      (made worse by having the wrong groups)
-> 
-> Cc: Thierry Reding <treding@nvidia.com>
-> Cc: Dmitry Osipenko <digetx@gmail.com>
-> Acked-by: Thierry Reding <treding@nvidia.com>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This patch series enables USB gadget, USB host and Ethernet support for
+E850-96 board. The most major change was done in USB PHY driver, as the
+register layout of PHY block in Exynos850 is very different from
+Exynos5 one.
 
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Changes in v2:
+  - Removed already applied patches from the patch series
+  - Rebased on top of latest linux-next
+  - Put ranges after compatible in usbdrd node (patch #1)
+
+Sam Protsenko (8):
+  dt-bindings: usb: samsung,exynos-dwc3: Add Exynos850 support
+  dt-bindings: phy: samsung,usb3-drd-phy: Add Exynos850 support
+  usb: dwc3: exynos: Add support for Exynos850 variant
+  phy: exynos5-usbdrd: Make it possible to pass custom phy ops
+  phy: exynos5-usbdrd: Add 26MHz ref clk support
+  phy: exynos5-usbdrd: Add Exynos850 support
+  arm64: dts: exynos: Enable USB in Exynos850
+  arm64: dts: exynos: Enable USB support on E850-96 board
+
+ .../bindings/phy/samsung,usb3-drd-phy.yaml    |   1 +
+ .../bindings/usb/samsung,exynos-dwc3.yaml     |  16 ++
+ .../boot/dts/exynos/exynos850-e850-96.dts     |  58 ++++++
+ arch/arm64/boot/dts/exynos/exynos850.dtsi     |  30 +++
+ drivers/phy/samsung/phy-exynos5-usbdrd.c      | 182 +++++++++++++++++-
+ drivers/usb/dwc3/dwc3-exynos.c                |   9 +
+ 6 files changed, 294 insertions(+), 2 deletions(-)
+
+-- 
+2.39.2
 
