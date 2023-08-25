@@ -2,53 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D1D77890E0
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Aug 2023 23:55:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B91087890DD
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Aug 2023 23:55:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231492AbjHYVzB (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 25 Aug 2023 17:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36098 "EHLO
+        id S231531AbjHYVy7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 25 Aug 2023 17:54:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231571AbjHYVyt (ORCPT
+        with ESMTP id S231576AbjHYVyu (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 25 Aug 2023 17:54:49 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 372D2EC
+        Fri, 25 Aug 2023 17:54:50 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE39C26B2
         for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3a5a7e7cd61so783325b6e.0
+Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3a812843f0fso880945b6e.2
         for <linux-samsung-soc@vger.kernel.org>; Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1693000486; x=1693605286;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ED3W7s12gubynwmMQJJ5mT7Z84AD3DiBoyeGrhqMwHs=;
-        b=q+NdNGNUcySfhgoSgFumNTOS4wlUTngAqhcxwENzdMjVjwoEjkXDVt7d4Q9NcGZHZ0
-         JwioqaoDWsbNQobKHqLJGUbU63inXej8lUUewxxQ0K2T57zAepCEiicq+GfBTySmbeXK
-         gRrikx7nWnEygE7Iy7JaEW9sCGcUzpCNYHEkX/Up7el7E6BB7kHCOmQoJ7pJli3foc3L
-         tSBU3gNTwtR/OGutFxtR/vavFCKkGJCNVuHcB0EEe0c+hDYSXtdp+DhFUjS+tG4MVLLB
-         H3IMOOGJJLaC9c4LaDjrdDcrYP8NsLqkgLXNrjz1jWHpB9p/98c6WfY72ZbLp4nGoM2u
-         qCKA==
+        d=linaro.org; s=google; t=1693000487; x=1693605287;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=biEa1K9qjP5wRSXkBfGSs8U4rFVAjb1zKI5IMPs39Jw=;
+        b=xDpZfI4xx12HndT5FhmxsDcpxlYaeOx5ohuFiPuWPgZ7QxicELjJ2qaHYn+x7fyAcx
+         clApEhUF5NaVlP/usxb/fJLGK7LTVE3ST2C9dkIIQMzPvPKvnErD/Stp+CIIRuWr/tM8
+         /CfWeXYcp41SOIbAHs1KGsNrUFEADcn5K3+eWrLF6FTTgFO1rn9zMUj4+yIJYuIfHd22
+         CPW7NqSaGHV254TxXKzfUh5py3WFyT8QCSHBuo4WTwyEBEfWu+UeMRTSMVAyuDyHR1Nn
+         YL3fq3f1b41VTmmjbZewb3ZfByxgxBSFjaw7E1RIT+oIKGErDfkxaebVeYbppbCzih1R
+         dV3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693000486; x=1693605286;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ED3W7s12gubynwmMQJJ5mT7Z84AD3DiBoyeGrhqMwHs=;
-        b=eQxyqtx5VUl0ED/7u+jsF3osQsMXiWSeN/vLvNd+qohnMK7VqFG3ecID66t+kFTMyC
-         4afh4l0OL7+nPTA7H6Z67HpiWHY3GgBXjUgMXBpIt0ii7fvJwIClgaRN7f36b4PvhfTa
-         uHJQB8iqfLuwJRiR25V7dB7cvH1Uu46qPNiiUWDGN0wcANG7xanBNcQi2P/sgxeEgemM
-         jIxDaKfrvJmcZABCOouSjT+EcDIJ1baTXfyU/FnAUZrEpFgoeSUlTPVu6/pFCY1oBWUW
-         LwJPX0sYKWAvwce81xDZ1iCQXU1esgOe70ik0dprBP7Uyj6qcV2H3yXktJzxwtjIsXKQ
-         6U7Q==
-X-Gm-Message-State: AOJu0YylyEDQh7xpkrxVBAW6NlyrhACoCFiWYSzRxeVKPOKzK/iH0LuG
-        Nj88fUnVj/2qu3COxJwRfwg6CA==
-X-Google-Smtp-Source: AGHT+IHoZV3JvOhzhTqu5b0Kb+MjoNzOTBJvjrpdzduCjg96IVE1UXtO5l3VDKX+pPUzxVDktV/5wA==
-X-Received: by 2002:a05:6808:198f:b0:3a7:e779:7fc1 with SMTP id bj15-20020a056808198f00b003a7e7797fc1mr2708077oib.7.1693000486561;
-        Fri, 25 Aug 2023 14:54:46 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693000487; x=1693605287;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=biEa1K9qjP5wRSXkBfGSs8U4rFVAjb1zKI5IMPs39Jw=;
+        b=Hxf7Q3h5J+HFNZN9ozQwEWzx2SEztsOuMTMAKwAkH119q/dDERVGMtlUm0a9VaIhGY
+         8OFncIQoVPhvpbCcMiItflGcfta+X/4/yN5e4p838CGMYD/4V9cP49kk1CK56r1g/5zB
+         4rchiZ8N9w/zzZPVjy8N0UbudpDS9NWkxntUHQdp1VOhZkq56cEhsMuvLJ2f5Eezbytu
+         V8hvB6KgrfX/Pia/rsH3bq/1arLd97dpZNS3Np9AFQXg5V91/ef2wxU3sod2OgsaZBSw
+         vQI736QtzB0W5BbEBx5ePF6v409XOL57IWRVll3oT6w1Bbjvxp7UsLKfULKtXFfx/pFM
+         E/Ww==
+X-Gm-Message-State: AOJu0YzBP+qmio11ERmw/6M5SLmAMfzMLfRhTsvyCRJT1KVqAf6GZui1
+        ttqxn0p+CWtvEIDCiKdeDUHIL/hMECJb8IddTIw=
+X-Google-Smtp-Source: AGHT+IEFHhXWOdPz1pvJu2XmLQUai8oqXZdsZwboIzFEgLUHvjMNnfLp5RyprhrihzQcg6pOcQvyZQ==
+X-Received: by 2002:a05:6808:144d:b0:3a4:6691:9340 with SMTP id x13-20020a056808144d00b003a466919340mr5353831oiv.41.1693000487314;
+        Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
 Received: from localhost ([136.49.140.41])
-        by smtp.gmail.com with ESMTPSA id r185-20020a4a4ec2000000b00570cb3e8a6dsm1405191ooa.7.2023.08.25.14.54.46
+        by smtp.gmail.com with ESMTPSA id bg20-20020a056808179400b003a7a34a4ed8sm1197752oib.33.2023.08.25.14.54.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Aug 2023 14:54:46 -0700 (PDT)
+        Fri, 25 Aug 2023 14:54:47 -0700 (PDT)
 From:   Sam Protsenko <semen.protsenko@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
@@ -58,49 +59,89 @@ Cc:     Conor Dooley <conor+dt@kernel.org>,
         JaeHun Jung <jh0801.jung@samsung.com>,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/2] arm64: dts: exynos: Enable USB for E850-96 board
-Date:   Fri, 25 Aug 2023 16:54:43 -0500
-Message-Id: <20230825215445.28309-1-semen.protsenko@linaro.org>
+Subject: [PATCH v2 1/2] arm64: dts: exynos: Enable USB in Exynos850
+Date:   Fri, 25 Aug 2023 16:54:44 -0500
+Message-Id: <20230825215445.28309-2-semen.protsenko@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230825215445.28309-1-semen.protsenko@linaro.org>
+References: <20230825215445.28309-1-semen.protsenko@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This patch series enables USB gadget, USB host and Ethernet support for
-E850-96 board. The most major change was done in USB PHY driver, as the
-register layout of PHY block in Exynos850 is very different from
-Exynos5 one.
+Add USB controller and USB PHY controller nodes for Exynos850 SoC.
 
+The USB controller has next features:
+  - Dual Role Device (DRD) controller
+  - DWC3 compatible
+  - Supports USB 2.0 host and USB 2.0 device interfaces
+  - Supports  full-speed (12 Mbps) and high-speed (480 Mbps) modes with
+    USB device 2.0 interface
+  - Supports on-chip USB PHY transceiver
+  - Supports up to 16 bi-directional endpoints (that includes control
+    endpoint 0)
+  - Complies with xHCI 1.00 specification
+
+Only USB 2.0 is supported in Exynos850, so only UTMI+ PHY interface is
+specified in "phys" property (index 0) and PIPE3 is omitted (index 1).
+
+Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+---
 Changes in v2:
-  - Removed already applied patches from the patch series
-  - Rebased on top of latest linux-next
-  - Put ranges after compatible in usbdrd node (patch #1)
+  - Put ranges after compatible in usbdrd node
 
-Sam Protsenko (8):
-  dt-bindings: usb: samsung,exynos-dwc3: Add Exynos850 support
-  dt-bindings: phy: samsung,usb3-drd-phy: Add Exynos850 support
-  usb: dwc3: exynos: Add support for Exynos850 variant
-  phy: exynos5-usbdrd: Make it possible to pass custom phy ops
-  phy: exynos5-usbdrd: Add 26MHz ref clk support
-  phy: exynos5-usbdrd: Add Exynos850 support
-  arm64: dts: exynos: Enable USB in Exynos850
-  arm64: dts: exynos: Enable USB support on E850-96 board
+ arch/arm64/boot/dts/exynos/exynos850.dtsi | 30 +++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
- .../bindings/phy/samsung,usb3-drd-phy.yaml    |   1 +
- .../bindings/usb/samsung,exynos-dwc3.yaml     |  16 ++
- .../boot/dts/exynos/exynos850-e850-96.dts     |  58 ++++++
- arch/arm64/boot/dts/exynos/exynos850.dtsi     |  30 +++
- drivers/phy/samsung/phy-exynos5-usbdrd.c      | 182 +++++++++++++++++-
- drivers/usb/dwc3/dwc3-exynos.c                |   9 +
- 6 files changed, 294 insertions(+), 2 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/exynos/exynos850.dtsi b/arch/arm64/boot/dts/exynos/exynos850.dtsi
+index aa077008b3be..53104e65b9c6 100644
+--- a/arch/arm64/boot/dts/exynos/exynos850.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynos850.dtsi
+@@ -570,6 +570,36 @@ sysreg_cmgp: syscon@11c20000 {
+ 			clocks = <&cmu_cmgp CLK_GOUT_SYSREG_CMGP_PCLK>;
+ 		};
+ 
++		usbdrd: usb@13600000 {
++			compatible = "samsung,exynos850-dwusb3";
++			ranges = <0x0 0x13600000 0x10000>;
++			clocks = <&cmu_hsi CLK_GOUT_USB_BUS_EARLY_CLK>,
++				 <&cmu_hsi CLK_GOUT_USB_REF_CLK>;
++			clock-names = "bus_early", "ref";
++			#address-cells = <1>;
++			#size-cells = <1>;
++			status = "disabled";
++
++			usbdrd_dwc3: usb@0 {
++				compatible = "snps,dwc3";
++				reg = <0x0 0x10000>;
++				interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
++				phys = <&usbdrd_phy 0>;
++				phy-names = "usb2-phy";
++			};
++		};
++
++		usbdrd_phy: phy@135d0000 {
++			compatible = "samsung,exynos850-usbdrd-phy";
++			reg = <0x135d0000 0x100>;
++			clocks = <&cmu_hsi CLK_GOUT_USB_PHY_ACLK>,
++				 <&cmu_hsi CLK_GOUT_USB_PHY_REF_CLK>;
++			clock-names = "phy", "ref";
++			samsung,pmu-syscon = <&pmu_system_controller>;
++			#phy-cells = <1>;
++			status = "disabled";
++		};
++
+ 		usi_uart: usi@138200c0 {
+ 			compatible = "samsung,exynos850-usi";
+ 			reg = <0x138200c0 0x20>;
 -- 
 2.39.2
 
