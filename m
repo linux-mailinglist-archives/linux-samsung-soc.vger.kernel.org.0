@@ -2,115 +2,120 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B09178BB79
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Aug 2023 01:25:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38BB378C140
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Aug 2023 11:25:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234343AbjH1XZI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 28 Aug 2023 19:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41898 "EHLO
+        id S234707AbjH2JYb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 29 Aug 2023 05:24:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234351AbjH1XY5 (ORCPT
+        with ESMTP id S234748AbjH2JYU (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 28 Aug 2023 19:24:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E15C2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 28 Aug 2023 16:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1693265048;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=xTlRxnsNejmw67GltYX+utAoy4aZnJxgNkm5+nl9i5c=;
-        b=Bi3gKJd+g2cFzeUb3xoWBbqg3PReQO0xy4NAvDXlAGc7wy/Z1J0u5hHt8AKbj/LmEAU4Ql
-        5vZHLAxJf4eGIZZMHr6QdpxqwPRNdfNBQPkf3OZrXnIn0w+ubYSYKE4O7j912j/47F/UVD
-        dyzXjZuQZb32WGy4M7dt97lVrPsVv4Q=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-WASecAx5PpaRiO1DkmdJ5g-1; Mon, 28 Aug 2023 19:24:06 -0400
-X-MC-Unique: WASecAx5PpaRiO1DkmdJ5g-1
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-56f75e70190so2849694a12.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 28 Aug 2023 16:24:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693265046; x=1693869846;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xTlRxnsNejmw67GltYX+utAoy4aZnJxgNkm5+nl9i5c=;
-        b=l3dooUFiXhAW+HGxBYmo9r1PpX5lwygMoTXuEmKjQF+Ru0zYQGgbXTBk17uUkreiV5
-         RtGBHc/6117JJMioEOzzbQJdHqtMJVhgHCComxKUeh+dIJsm1qsm/iSTM40aNpNupiH3
-         sQQ1GLqQT3vzlBUah/hMfslfxJTR9uVmfHz4HfdmzR4FQht7uliXoiC25od3lrT0Nr0P
-         kFGpn/nLLICqcYqpbvpUKf7FXG2ICgBd4t7+QBaEzwvwzEKjALKZDrJKQhjwu4i0YrU9
-         R9Ly/9L/HDEX6idFofV9c3QswLIPtMp0ks2iZwzKz/lTxYXOMJSlR/ULYNlhUMoomcQG
-         J3iQ==
-X-Gm-Message-State: AOJu0Yzl1S2S7h7AXkb5cplp8aZbeUZR76b9R36vNnZsfjvUfB0oOR7M
-        O/2mYiFh0wy7fdtRc5ZcqrsxCipF51c3dHSIXIKDKjIzasKH4WdjwncDIq1icjXLXZHH+n0xpgO
-        N4+dYbj2ze4DURlWP+yIhMqa5xkiXv6I=
-X-Received: by 2002:a05:6a20:138f:b0:10c:7c72:bdf9 with SMTP id hn15-20020a056a20138f00b0010c7c72bdf9mr18329550pzc.29.1693265045859;
-        Mon, 28 Aug 2023 16:24:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8Ty56TNbGFuBUAvk0gJFhf9IoSXDvKLMofXm6bHW4BVTeieXHXsUmxMoZ3DKq2KwFtbABPg==
-X-Received: by 2002:a05:6a20:138f:b0:10c:7c72:bdf9 with SMTP id hn15-20020a056a20138f00b0010c7c72bdf9mr18329511pzc.29.1693265045554;
-        Mon, 28 Aug 2023 16:24:05 -0700 (PDT)
-Received: from localhost (ip98-179-76-75.ph.ph.cox.net. [98.179.76.75])
-        by smtp.gmail.com with ESMTPSA id v12-20020a170902b7cc00b001993a1fce7bsm7913930plz.196.2023.08.28.16.24.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 16:24:05 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 16:24:04 -0700
-From:   Jerry Snitselaar <jsnitsel@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 29 Aug 2023 05:24:20 -0400
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C86ACD1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Aug 2023 02:24:07 -0700 (PDT)
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230829092404euoutp010c8c4ae0665976038cdaff932e025bc7~-0FQH5gJ71651816518euoutp01u
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Aug 2023 09:24:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230829092404euoutp010c8c4ae0665976038cdaff932e025bc7~-0FQH5gJ71651816518euoutp01u
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1693301044;
+        bh=n03v4YwoYhaEaYsHnGtQUOfGHMiBSqQF5cOtLoFjMKQ=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=u9LAXqasudmzcJJpHhTN3nIBt2YXRCpb+SEtp79qz5wJwxhMOiT8TaOgdlSEstl3n
+         S1BDP+BOkgUMsy+zoLFofKK5zZ2/0VKOOEg2epje+a3qWoIDMkCeTwsWTq8pnYd8r4
+         2efpVCtnPoFs64LAmT58PbU6upRZnQrA1/rrjHLU=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20230829092403eucas1p279c00a8c66918c6f72e9f067ac9ac732~-0FPvKP0D2175521755eucas1p2-;
+        Tue, 29 Aug 2023 09:24:03 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 7A.17.11320.339BDE46; Tue, 29
+        Aug 2023 10:24:03 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20230829092403eucas1p17048226c987315610cf49c7c6eab2148~-0FPVonT41584115841eucas1p16;
+        Tue, 29 Aug 2023 09:24:03 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20230829092403eusmtrp10373b00b6be0c0090dc665198e4a5533~-0FPUyS_t3248032480eusmtrp1N;
+        Tue, 29 Aug 2023 09:24:03 +0000 (GMT)
+X-AuditID: cbfec7f4-993ff70000022c38-e8-64edb9333598
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id D4.D9.10549.339BDE46; Tue, 29
+        Aug 2023 10:24:03 +0100 (BST)
+Received: from AMDC4515.eu.corp.samsungelectronics.net (unknown
+        [106.120.51.28]) by eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20230829092402eusmtip2363834dd9fd50ef4e351b456a239a76e~-0FOZFnTA1173411734eusmtip2X;
+        Tue, 29 Aug 2023 09:24:02 +0000 (GMT)
+From:   Mateusz Majewski <m.majewski2@samsung.com>
+To:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     Mateusz Majewski <m.majewski2@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v7 24/24] iommu: Convert remaining simple drivers to
- domain_alloc_paging()
-Message-ID: <4pidxw6zc2sk2sypjdobusdrdbpwa7gddifxwnm2c2sdtfsp7t@yg3hup2mhpbr>
-References: <0-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
- <24-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 00/11] Improve Exynos thermal driver
+Date:   Tue, 29 Aug 2023 11:18:38 +0200
+Message-ID: <20230829091853.626011-1-m.majewski2@samsung.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24-v7-de04a3217c48+15055-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsWy7djPc7rGO9+mGGxZpmvxYN42NovD8yss
+        pj58wmbxfct1Jos1e88xWcz7LGsx/8g5Vou+Fw+ZLb5d6WCy2PT4GqvF5V1z2Cw+9x5htJhx
+        fh+TxcRjk5kt1h65y24x98tUZovWvUfYLZ487GNzEPLYOesuu8fiPS+ZPDat6mTzuHNtD5vH
+        5iX1Hn1bVjF6fN4kF8AexWWTkpqTWZZapG+XwJWxaf1KpoIrXBXb3z5nb2B8xNHFyMkhIWAi
+        8bnhHnMXIxeHkMAKRonju7awQThfGCWebZvFBFIlJPCZUaJ7SRBMx/WGN4wQRcsZJV6+XcYE
+        4bQySTy/uZgZpIpNwEDiwZtl7CAJEYHFjBJbd84Cq2IWmMsi0bDyJ0sXIweHMNCsSwcZQRpY
+        BFQl/vY1soPYvAK2EpOnH2CHWCcv8fzWHai4oMTJmU9YQGxmoHjz1tnMEDX/OSTuPiyAsF0k
+        /t25xQJhC0u8Or4Fao6MxOnJPVDxfIkZm9+DnSAhUCFx96AXhGkt8fEMM4jJLKApsX6XPkTU
+        UWL/DR4Ik0/ixltBiPV8EpO2TWeGCPNKdLQJQUxWlTi+ZxLUVdIST1puM0HYHhIvN7awQwIz
+        VuLSg03sExgVZiF5ahaSp2YhnLCAkXkVo3hqaXFuemqxUV5quV5xYm5xaV66XnJ+7iZGYHo7
+        /e/4lx2My1991DvEyMTBeIhRgoNZSYT3kuOrFCHelMTKqtSi/Pii0pzU4kOM0hwsSuK82rYn
+        k4UE0hNLUrNTUwtSi2CyTBycUg1MQXUBEvrSVSItOe5C7it4j2evb/N7G2Ql+N93a+j2MK3j
+        Wj/uf5mVuS3ES+Nz9e/FZzPXuPzpvBVRou+0WbuhvXnf6kJZozkMc6MZ+wI1rk/6vz5soci2
+        DwJFH0VUd3tbfKs7I7s15+h/zdbP81JkOA3NL2hrPdxc1Tv35RrLU0d4js9ZKx3fV7To6tYd
+        FUwnrt3hnM6y5dq/MoVVd1OWbT2x18Fj2sojx8JnFDIozVSxZ/3CrH1G66b6Hll3TcXgUrF1
+        r60XzGbodvTb/7Ly47PD1/Vquizlf6zsqDI77nzKsO6ah+O6/T8dH1/JLDoRcHu+dvTjO/7J
+        MX5vRTTWsiezneZO9WrwWbKvmENbiaU4I9FQi7moOBEA8Vcw3N4DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGIsWRmVeSWpSXmKPExsVy+t/xe7rGO9+mGOx5LWzxYN42NovD8yss
+        pj58wmbxfct1Jos1e88xWcz7LGsx/8g5Vou+Fw+ZLb5d6WCy2PT4GqvF5V1z2Cw+9x5htJhx
+        fh+TxcRjk5kt1h65y24x98tUZovWvUfYLZ487GNzEPLYOesuu8fiPS+ZPDat6mTzuHNtD5vH
+        5iX1Hn1bVjF6fN4kF8AepWdTlF9akqqQkV9cYqsUbWhhpGdoaaFnZGKpZ2hsHmtlZKqkb2eT
+        kpqTWZZapG+XoJexaf1KpoIrXBXb3z5nb2B8xNHFyMkhIWAicb3hDSOILSSwlFHi3xlRiLi0
+        xOEvU9ghbGGJP9e62LoYuYBqmpkkDrQfAkuwCRhIPHizjB0kISKwnFHi6r3lLCAOs8ByFonn
+        az4wdzFycAgDrbh0EGwDi4CqxN++RrBmXgFbicnTD0BtkJd4fusOVFxQ4uTMJywgNjNQvHnr
+        bOYJjHyzkKRmIUktYGRaxSiSWlqcm55bbKhXnJhbXJqXrpecn7uJERhh24793LyDcd6rj3qH
+        GJk4GA8xSnAwK4nwXnJ8lSLEm5JYWZValB9fVJqTWnyI0RTovonMUqLJ+cAYzyuJNzQzMDU0
+        MbM0MLU0M1YS5/Us6EgUEkhPLEnNTk0tSC2C6WPi4JRqYDqRF9TwsH6dns5cidXdk+RfFX0T
+        qb7HoMpbcUyE88fxY1/vfj1xU/Ovh9XJxQc02PqMDv+5o6bhtXTxjD2Pd96att/LvT1Oi7NB
+        4IZqWJSh2gQzhh02eSLcC86qrJyq/KKM7bCQ8PyQid8ljiwwfFe55Xvz1g/ddx4dKb5RYMoY
+        1aR60ZI708a6eubNGzePWxSJP0iR8Lr4XlfB+RPPiem7LSMOcRtfb99WES04Oeh/xfWSJ/f7
+        rI5cnXb017fMB/tncMtaOXQt8HP/tv70dscTTqrThQUVjhXlp2sfZV64/u+LFvbvuULMAkFx
+        uZNqDtx/yzh/p1xL2Y/zX89uXW+tWv6X80z64j+O1SG5dVOUWIozEg21mIuKEwFO+UzwOQMA
+        AA==
+X-CMS-MailID: 20230829092403eucas1p17048226c987315610cf49c7c6eab2148
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20230829092403eucas1p17048226c987315610cf49c7c6eab2148
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230829092403eucas1p17048226c987315610cf49c7c6eab2148
+References: <CGME20230829092403eucas1p17048226c987315610cf49c7c6eab2148@eucas1p1.samsung.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -118,33 +123,34 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 01:47:38PM -0300, Jason Gunthorpe wrote:
-> These drivers don't support IOMMU_DOMAIN_DMA, so this commit effectively
-> allows them to support that mode.
-> 
-> The prior work to require default_domains makes this safe because every
-> one of these drivers is either compilation incompatible with dma-iommu.c,
-> or already establishing a default_domain. In both cases alloc_domain()
-> will never be called with IOMMU_DOMAIN_DMA for these drivers so it is safe
-> to drop the test.
-> 
-> Removing these tests clarifies that the domain allocation path is only
-> about the functionality of a paging domain and has nothing to do with
-> policy of how the paging domain is used for UNMANAGED/DMA/DMA_FQ.
-> 
-> Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Tested-by: Steven Price <steven.price@arm.com>
-> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/msm_iommu.c    | 7 ++-----
->  drivers/iommu/mtk_iommu_v1.c | 7 ++-----
->  drivers/iommu/omap-iommu.c   | 7 ++-----
->  drivers/iommu/s390-iommu.c   | 7 ++-----
->  4 files changed, 8 insertions(+), 20 deletions(-)
-> 
+This work improves Exynos thermal driver in various ways. This is
+related to the discussion in
+https://lore.kernel.org/all/97201878-3bb8-eac5-7fac-a690322ac43a@linaro.org/
 
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+The primary issue being fixed is a lockdep warning, which is fixed by
+the thermal: exynos: use set_trips patch. We also handle Exynos 4210 not
+supporting falling temperature thresholds by enabling polling for this
+SoC, and simplify the code in general.
+
+Mateusz Majewski (11):
+  ARM: dts: exynos: enable polling in Exynos 4210
+  thermal: exynos: drop id field
+  thermal: exynos: switch from workqueue-driven interrupt handling to
+    threaded interrupts
+  thermal: exynos: remove fine-grained clk management
+  thermal: exynos: simplify sclk (de)initialization
+  thermal: exynos: simplify regulator (de)initialization
+  thermal: exynos: simplify clk_sec (de)initialization
+  thermal: exynos: stop using the threshold mechanism on Exynos 4210
+  thermal: exynos: split initialization of TMU and the thermal zone
+  thermal: exynos: use set_trips
+  ARM: dts: exynos: disable polling in Odroid XU3-related devices
+
+ arch/arm/boot/dts/samsung/exynos4210.dtsi     |  10 +-
+ .../samsung/exynos5422-odroidxu3-common.dtsi  |  16 +-
+ drivers/thermal/samsung/exynos_tmu.c          | 581 ++++++++----------
+ 3 files changed, 284 insertions(+), 323 deletions(-)
+
+-- 
+2.41.0
 
