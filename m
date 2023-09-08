@@ -2,31 +2,31 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB46E798F75
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Sep 2023 21:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 230AC79909E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  8 Sep 2023 21:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234676AbjIHTcp (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 8 Sep 2023 15:32:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53892 "EHLO
+        id S236254AbjIHT5U (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 8 Sep 2023 15:57:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344833AbjIHTcn (ORCPT
+        with ESMTP id S233042AbjIHT5T (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 8 Sep 2023 15:32:43 -0400
+        Fri, 8 Sep 2023 15:57:19 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B8981717;
-        Fri,  8 Sep 2023 12:32:16 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D446C433CC;
-        Fri,  8 Sep 2023 19:31:28 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94099C;
+        Fri,  8 Sep 2023 12:57:15 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68450C433B6;
+        Fri,  8 Sep 2023 19:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694201489;
+        s=k20201202; t=1694201616;
         bh=QPi7U8LFYJTn90nKMCS6rP5mjt7sQN4sOXteL2xyPXs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Qb6UED9gVl7k31TabxaCNKepskjH4eYh6Z9ySPH699yGh9/69qSwBuEqmQH5gTCaM
-         +7oh8HD56o4qq5WFV0nKZS6SsL9wNTTq8ClL9VePXNlopyUdU0MUc1uMnmccmjdY32
-         ayYqjq8YSlpF4+ovSHSZJCOolXhARRYmXkuGGVBaVF3Q+66oQh1Xq029jPT+Y41YXh
-         BWSgMHHIyFyvI2g5W4yktY1cSvvcDaHTtt6PnWTpGRF3QR4TmiBQunXwh//C+EWzdR
-         ZnPiP/GO3+iZLXV1PnPQ/0f8D33htHKW9dUAjgAnprckyj762ZrWKAoKhr1LmqGWA/
-         n2iF9K4dHB3Pw==
+        b=jtXT+dGo+ut9kLhkUhMMvNABAfhhNCSUWFekLKe2c3Z7hRVSWhUVXC9nzG4W5MafZ
+         pTSxhmrdd39zHFHqkuDEwnyIX4/OK/M5HVQ79wP5Td5EE1SrITtGv+y9c0hOLFz6f5
+         CbvFaLm5aESnV+9ZwZSKiJmUF0z8LyP0iKoje6wTyHp+tyosQskPDD8VtnY1QOO76A
+         eBo8M2i9eW8gSE5bk2BiT8LRrcKQ04ezFZEgNAaKtY00nIugApRDeOhJbudoygCbGa
+         BUZxFhka9CpQ9ez2LlQSpMHKHDEq+1UAjntybtXBwd/agfrk1tP+LhNC/2C6Hto6gQ
+         vi/4FZq8c3NzQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Tuo Li <islituo@gmail.com>, BassCheck <bass@buaa.edu.cn>,
@@ -37,16 +37,16 @@ Cc:     Tuo Li <islituo@gmail.com>, BassCheck <bass@buaa.edu.cn>,
         dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.5 26/36] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
-Date:   Fri,  8 Sep 2023 15:28:37 -0400
-Message-Id: <20230908192848.3462476-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.4 21/31] drm/exynos: fix a possible null-pointer dereference due to data race in exynos_drm_crtc_atomic_disable()
+Date:   Fri,  8 Sep 2023 15:31:50 -0400
+Message-Id: <20230908193201.3462957-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230908192848.3462476-1-sashal@kernel.org>
-References: <20230908192848.3462476-1-sashal@kernel.org>
+In-Reply-To: <20230908193201.3462957-1-sashal@kernel.org>
+References: <20230908193201.3462957-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.5.2
+X-stable-base: Linux 6.4.15
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
