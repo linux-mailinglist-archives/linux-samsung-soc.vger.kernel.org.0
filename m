@@ -2,161 +2,291 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7A4579999F
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  9 Sep 2023 18:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2DE9799ACC
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  9 Sep 2023 22:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232829AbjIIQZZ (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sat, 9 Sep 2023 12:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49634 "EHLO
+        id S245634AbjIIUSW (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 9 Sep 2023 16:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346456AbjIIOiX (ORCPT
+        with ESMTP id S239931AbjIIUSS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sat, 9 Sep 2023 10:38:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D46418F
-        for <linux-samsung-soc@vger.kernel.org>; Sat,  9 Sep 2023 07:37:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1694270252;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=eRcOkbLQiqXFau3Lzv+lkDuNMwp9k8LF7/IY5MKHdsU=;
-        b=Ekf6PoiE+uQ9x88AYf4zRfx2CZ4HUSwTWAy6jueKhvlxWQvPU07NpxTYR4Pifoul6PvRCp
-        GiAFHD4SxPQED2r3f2VACAFcB+86bf3p46XrLo6aSLKhRQyERax0G3I/JqIza5n1VqfHUR
-        xKf8tK6fwiquMNSCboljOwNHaPXhXls=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-JIkLUW9pN_6HrJfSO7dSVg-1; Sat, 09 Sep 2023 10:37:31 -0400
-X-MC-Unique: JIkLUW9pN_6HrJfSO7dSVg-1
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-401ea9bf934so23638025e9.2
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 09 Sep 2023 07:37:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694270250; x=1694875050;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eRcOkbLQiqXFau3Lzv+lkDuNMwp9k8LF7/IY5MKHdsU=;
-        b=s67kta9Pch9sJGsf+94wnyjBLzR4RbO2dDQMoOSHnwbDFrt3MuL4fxP0JLrMc6Z0we
-         FZEq6cHFih19p8OQfux9RE5zzA4uR185zYssiZ1GSM1v2gAFLcAfMZ8HXh1p8L8J4sX7
-         ZX4jmEv4yQtikjDU0ll4Ibhfi+HnItkPCqMVKcvjWUNCkSsbJX2WqxLmkLKIJi2DYxiI
-         uiKfjSjPdCvFFh09P+T5n0k1nVCiWHuI5TvPGBcfmNIqhKTMiHrFfpvsPKrkoiIpClYB
-         Dp6FShws8LnKfPtcTCMdaO/6/hkx7JJjPFw6UHpaW1y+Y+WO652kfcIAzGMex27g+faW
-         KgZg==
-X-Gm-Message-State: AOJu0YwIt3zrJE9BQ+X/kGWbIW3rWwaLKWBIjQcHYcwMKFho1TOpaG8V
-        hxXg+7AIIgHqtuZslDNHgmyDTDNibpDd9RjmPkCqAceMflUrpAUZJkFzEhlwQEs3Po9vS3S4zCy
-        DsTHu30i/eDcCiCaMb79IyYNpV5XTNEk=
-X-Received: by 2002:a05:600c:2483:b0:401:d2cb:e6f3 with SMTP id 3-20020a05600c248300b00401d2cbe6f3mr5088917wms.1.1694270250167;
-        Sat, 09 Sep 2023 07:37:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuI0CHTrTRuHu7U+ySuZ17CrBG1YsmWNBf7nwWhsv6ytgzHpvaJlIL3zjF99nLHiP4wc2jkQ==
-X-Received: by 2002:a05:600c:2483:b0:401:d2cb:e6f3 with SMTP id 3-20020a05600c248300b00401d2cbe6f3mr5088899wms.1.1694270249806;
-        Sat, 09 Sep 2023 07:37:29 -0700 (PDT)
-Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id k20-20020a7bc414000000b003fd2e898aa3sm3071184wmi.0.2023.09.09.07.37.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Sep 2023 07:37:28 -0700 (PDT)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Mali DP Maintainers <malidp@foss.arm.com>,
-        dri-devel@lists.freedesktop.org, kernel@pengutronix.de,
-        Andrew Jeffery <andrew@aj.id.au>,
-        linux-aspeed@lists.ozlabs.org,
-        linux-arm-kernel@lists.infradead.org,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        etnaviv@lists.freedesktop.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Yongqin Liu <yongqin.liu@linaro.org>,
-        John Stultz <jstultz@google.com>, linux-mips@vger.kernel.org,
-        lima@lists.freedesktop.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-mediatek@lists.infradead.org,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-amlogic@lists.infradead.org, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org, Steven Price <steven.price@arm.com>,
-        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 00/53] drm: Convert to platform remove callback
- returning void
-In-Reply-To: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
-References: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
-Date:   Sat, 09 Sep 2023 16:37:28 +0200
-Message-ID: <8734znjtuf.fsf@minerva.mail-host-address-is-not-set>
+        Sat, 9 Sep 2023 16:18:18 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BE81717;
+        Sat,  9 Sep 2023 13:17:48 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 389KGlYc005599;
+        Sat, 9 Sep 2023 20:16:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=YWNpE/DdUhPfdWUTjyR4ou8zd0vcwrvNu9lOks3R4G8=;
+ b=JUWGGoGXhCX0k0p2mnIHZ9z8TvnviMC8VEAW9yaXuprbo1GMq7czqNcUDYn449EGW28F
+ U8GO7amto7hNWK2IRM+oWUCQtLwuLFq/bwhhbNp/0COvlMMtjn9jyjE/EfsbJCxjdIXZ
+ d/bXK836dl8v6dQMP7F1pyN25wHwRqqBefiELCQT7T57HtLVKmtF0zBUjMXtNYflUyx5
+ /PY1zQWJNJU23rmvDUdQ44/jkcxryvyyle8LpqJxa2uf8bpz+q37IxNf+vgWcmq80VmO
+ yS0eTQT8+YAEw2BgcNgQ5NySscts07Qy8fgmTjTlCkAPWOhI0XoMe5yJk9rd7B4rm0gt Ow== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0fqjh062-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 09 Sep 2023 20:16:47 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 389KGjYf013563
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 9 Sep 2023 20:16:45 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.36; Sat, 9 Sep 2023 13:16:35 -0700
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_mojha@quicinc.com>
+Subject: [PATCH v5 00/17] Add Qualcomm Minidump kernel driver related support
+Date:   Sun, 10 Sep 2023 01:46:01 +0530
+Message-ID: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HQeNjReeU--wNcGWbG5XThgQUQk6HcYR
+X-Proofpoint-ORIG-GUID: HQeNjReeU--wNcGWbG5XThgQUQk6HcYR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-09_19,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1011 mlxscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309090187
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
+Hi All,
 
-Hello Uwe,
+This is to continuation from the conversation happened at v4
 
-> Hello,
->
-> this patch series adapts the platform drivers below drivers/gpu/drm
-> to use the .remove_new() callback. Compared to the traditional .remove()
-> callback .remove_new() returns no value. This is a good thing because
-> the driver core doesn't (and cannot) cope for errors during remove. The
-> only effect of a non-zero return value in .remove() is that the driver
-> core emits a warning. The device is removed anyhow and an early return
-> from .remove() usually yields a resource leak.
->
-> By changing the remove callback to return void driver authors cannot
-> reasonably (but wrongly) assume any more that there happens some kind of
-> cleanup later.
->
-> Best regards
-> Uwe
->
-> Uwe Kleine-K=C3=B6nig (53):
+https://lore.kernel.org/lkml/632c5b97-4a91-c3e8-1e6c-33d6c4f6454f@quicinc.com/
 
-[...]
+https://lore.kernel.org/lkml/695133e6-105f-de2a-5559-555cea0a0462@quicinc.com/
 
->   drm/imx/ipuv3: Convert to platform remove callback returning void
->   drm/ingenic: Convert to platform remove callback returning void
+We have put abstract on LPC on this topic as well as initiated a mail thread
+with other SoC vendors but did not get much traction on it.
 
-[...]
+https://lore.kernel.org/lkml/0199db00-1b1d-0c63-58ff-03efae02cb21@quicinc.com/
 
->   drm/mediatek: Convert to platform remove callback returning void
->   drm/mediatek: Convert to platform remove callback returning void
+We explored most of possiblity present in kernel to address this issue[1] but
+solution like kdump/fadump does not seems safe/secure/performant from our
+perspective.
 
-[...]
+Hence, with this series we tried to make the minidump kernel driver, simple
+and tied with pstore frontends, so that it collects the present available
+frontends data like dmesg, ftrace, pmsg, ftrace., Also, we will be working
+towards enhancing generic pstore to capture more debug data which will be
+helpful for first hand of debugging that can benefit both other pstore users
+as well as us as minidump users.
 
->   drm/msm: Convert to platform remove callback returning void
+One of the proposal made here,
+https://lore.kernel.org/lkml/1683561060-2197-1-git-send-email-quic_mojha@quicinc.com/
 
-[...]
+Looking forward for your comments.
 
->   drm/shmobile: Convert to platform remove callback returning void
+Thanks,
+Mukesh
 
-Pushed these to drm-misc (drm-misc-next). Thanks!
+[1]
+Minidump is a best effort mechanism to collect useful and predefined data
+for first level of debugging on end user devices running on Qualcomm SoCs.
+It is built on the premise that System on Chip (SoC) or subsystem part of
+SoC crashes, due to a range of hardware and software bugs. Hence, the
+ability to collect accurate data is only a best-effort. The data collected
+could be invalid or corrupted, data collection itself could fail, and so on.
 
---=20
-Best regards,
+Qualcomm devices in engineering mode provides a mechanism for generating
+full system ramdumps for post mortem debugging. But in some cases it's
+however not feasible to capture the entire content of RAM. The minidump
+mechanism provides the means for selecting which snippets should be
+included in the ramdump.
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+The core of SMEM based minidump feature is part of Qualcomm's boot
+firmware code. It initializes shared memory (SMEM), which is a part of
+DDR and allocates a small section of SMEM to minidump table i.e also
+called global table of content (G-ToC). Each subsystem (APSS, ADSP, ...)
+has their own table of segments to be included in the minidump and all
+get their reference from G-ToC. Each segment/region has some details
+like name, physical address and it's size etc. and it could be anywhere
+scattered in the DDR.
+
+Existing upstream Qualcomm remoteproc driver[1] already supports SMEM
+based minidump feature for remoteproc instances like ADSP, MODEM, ...
+where predefined selective segments of subsystem region can be dumped
+as part of coredump collection which generates smaller size artifacts
+compared to complete coredump of subsystem on crash.
+
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+
+In addition to managing and querying the APSS minidump description,
+the Linux driver maintains a ELF header in a segment. This segment
+gets updated with section/program header whenever a new entry gets
+registered.
+
+Changes in v5:
+ - On suggestion from Pavan.k, to have single function call for minidump collection
+   from remoteproc driver, separated the logic to have separate minidump file called
+   qcom_rproc_minidump.c and also renamed the function from qcom_minidump() to 
+   qcom_rproc_minidump(); however, dropped his suggestion about rework on lazy deletion
+   during region unregister in this series, will pursue it in next series.
+
+ - To simplify the minidump driver, removed the complication for frontend and different
+   backend from Greg suggestion, will pursue this once main driver gets mainlined.
+
+ - Move the dynamic ramoops region allocation from Device tree approach to command line
+   approch with the introduction command line parsing and memblock reservation during
+   early boot up; Not added documentation about it yet, will add if it gets positive
+   response.
+
+ - Exporting linux banner from kernel to make minidump build also as module, however,
+   minidump is a debug module and should be kernel built to get most debug information
+   from kernel.
+
+ - Tried to address comments given on dload patch series. 
+
+Changes in v4: https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+ - Redesigned the driver and divided the driver into front end and backend (smem) so
+   that any new backend can be attached easily to avoid code duplication.
+ - Patch reordering as per the driver and subsystem to easier review of the code.
+ - Removed minidump specific code from remoteproc to minidump smem based driver.
+ - Enabled the all the driver as modules.
+ - Address comments made on documentation and yaml and Device tree file [Krzysztof/Konrad]
+ - Address comments made qcom_pstore_minidump driver and given its Device tree
+   same set of properties as ramoops. [Luca/Kees]
+ - Added patch for MAINTAINER file.
+ - Include defconfig change as one patch as per [Krzysztof] suggestion.
+ - Tried to remove the redundant file scope variables from the module as per [Krzysztof] suggestion.
+ - Addressed comments made on dload mode patch v6 version
+   https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v3: https://lore.kernel.org/lkml/1683133352-10046-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed most of the comments by Srini on v2 and refactored the minidump driver.
+    - Added platform device support
+    - Unregister region support.
+ - Added update region for clients.
+ - Added pending region support.
+ - Modified the documentation guide accordingly.
+ - Added qcom_pstore_ramdump client driver which happen to add ramoops platform
+   device and also registers ramoops region with minidump.
+ - Added download mode patch series with this minidump series.
+    https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v2: https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed review comment made by [quic_tsoni/bmasney] to add documentation.
+ - Addressed comments made by [srinivas.kandagatla]
+ - Dropped pstore 6/6 from the last series, till i get conclusion to get pstore
+   region in minidump.
+ - Fixed issue reported by kernel test robot.
+
+Changes in v1: https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
+
+Testing of the patches has been done on sm8450 target after enabling config like
+CONFIG_PSTORE_RAM and CONFIG_PSTORE_CONSOLE and once the device boots up.
+
+ echo mini > /sys/module/qcom_scm/parameters/download_mode
+
+Try crashing it via devmem2 0xf11c000(this is known to create xpu violation and
+and put the device in download mode) on command prompt.
+
+Default storage type is set to via USB, so minidump would be downloaded with the
+help of x86_64 machine (running PCAT tool) attached to Qualcomm device which has
+backed minidump boot firmware support.
+
+This will make the device go to download mode and collect the minidump on to the
+attached x86 machine running the Qualcomm PCAT tool(This comes as part Qualcomm
+package manager kit).
+
+After that we will see a bunch of predefined registered region as binary blobs files
+starts with md_* downloaded on the x86 machine on given location in PCAT tool from
+the target device, more about this can be found in qualcomm minidump guide patch.
+
+Mukesh Ojha (17):
+  docs: qcom: Add qualcomm minidump guide
+  soc: qcom: Add qcom_rproc_minidump module
+  remoteproc: qcom_q6v5_pas: Use qcom_rproc_minidump()
+  remoteproc: qcom: Remove minidump related data from qcom_common.c
+  init: export linux_banner data variable
+  soc: qcom: Add Qualcomm APSS minidump kernel driver
+  soc: qcom: minidump: Add pending region registration
+  arm64: mm: Add dynamic ramoops region support through command line
+  pstore/ram: Use dynamic ramoops reserve resource
+  pstore: Add pstore_region_defined() helper and export it
+  qcom_minidump: Register ramoops region with minidump
+  MAINTAINERS: Add entry for minidump related files
+  firmware: qcom_scm: provide a read-modify-write function
+  pinctrl: qcom: Use qcom_scm_io_update_field()
+  firmware: scm: Modify only the download bits in TCSR register
+  firmware: qcom_scm: Refactor code to support multiple download mode
+  firmware: qcom_scm: Add multiple download mode support
+
+ Documentation/admin-guide/index.rst         |   1 +
+ Documentation/admin-guide/qcom_minidump.rst | 272 +++++++++++
+ MAINTAINERS                                 |  10 +
+ arch/arm64/mm/init.c                        |  94 ++++
+ drivers/firmware/Kconfig                    |  11 -
+ drivers/firmware/qcom_scm.c                 |  90 +++-
+ drivers/pinctrl/qcom/pinctrl-msm.c          |  10 +-
+ drivers/remoteproc/Kconfig                  |   1 +
+ drivers/remoteproc/qcom_common.c            | 150 ------
+ drivers/remoteproc/qcom_q6v5_pas.c          |   3 +-
+ drivers/soc/qcom/Kconfig                    |  24 +
+ drivers/soc/qcom/Makefile                   |   3 +
+ drivers/soc/qcom/qcom_minidump.c            | 727 ++++++++++++++++++++++++++++
+ drivers/soc/qcom/qcom_minidump_internal.h   |  74 +++
+ drivers/soc/qcom/qcom_ramoops_minidump.c    |  88 ++++
+ drivers/soc/qcom/qcom_ramoops_minidump.h    |  10 +
+ drivers/soc/qcom/qcom_rproc_minidump.c      | 111 +++++
+ drivers/soc/qcom/smem.c                     |  18 +
+ fs/pstore/platform.c                        |  15 +
+ fs/pstore/ram.c                             |  52 +-
+ include/linux/firmware/qcom/qcom_scm.h      |   2 +
+ include/linux/init.h                        |   3 +
+ include/linux/pstore.h                      |   6 +
+ include/linux/pstore_ram.h                  |   2 +
+ include/linux/soc/qcom/smem.h               |   2 +
+ include/soc/qcom/qcom_minidump.h            |  56 +++
+ init/version-timestamp.c                    |   3 +
+ 27 files changed, 1659 insertions(+), 179 deletions(-)
+ create mode 100644 Documentation/admin-guide/qcom_minidump.rst
+ create mode 100644 drivers/soc/qcom/qcom_minidump.c
+ create mode 100644 drivers/soc/qcom/qcom_minidump_internal.h
+ create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.c
+ create mode 100644 drivers/soc/qcom/qcom_ramoops_minidump.h
+ create mode 100644 drivers/soc/qcom/qcom_rproc_minidump.c
+ create mode 100644 include/soc/qcom/qcom_minidump.h
+
+-- 
+2.7.4
 
