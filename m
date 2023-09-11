@@ -2,241 +2,114 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0749A79AD2E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:39:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F1C279B188
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:56:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239371AbjIKVaS (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45998 "EHLO
+        id S1348897AbjIKVbf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:31:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236557AbjIKK5H (ORCPT
+        with ESMTP id S236650AbjIKLJA (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 06:57:07 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C91F3;
-        Mon, 11 Sep 2023 03:57:02 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BAoP0T025337;
-        Mon, 11 Sep 2023 10:56:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=uaoggU+O059yy0NtlBEpDD3gw5NIJW0KcsRpeOQKyIM=;
- b=Yc12rM0pRN8woQeor+feNqt2nL8u34Eh332DR5OlFjq+6OBndHlVyt20qWOcTWUIBm44
- eYutRWDpKX4pQqHFx7RQEJx63ZiUNOMiDHw42UbV1NIogIIGNijbfAXLhAQ7D2bnVgbA
- 3U//Dw9wpN3XLpmzI2OTEGQfp5ZEB4Cp5Br4eJYxtxOIbbVa/TJjfiL2i96xe50h6BN0
- RaXLo7WIUfhVnB48aKCJ/AN6U6CVlefXoQiR4TJHU9zsl3GSzuXeF4aAhHMieEWAYIds
- 0WuoA4Fa6BzI0OHI63d6iJ8LsVLb22UUmCG3RKoi93aMZdCFIGvuqRV7wjAQYWriXI3G Lg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1xjmrefd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 10:56:40 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BAudcw006749
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 10:56:39 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Mon, 11 Sep 2023 03:56:29 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_mojha@quicinc.com>
-Subject: [REBASE PATCH v5 16/17] firmware: qcom_scm: Refactor code to support multiple download mode
-Date:   Mon, 11 Sep 2023 16:23:58 +0530
-Message-ID: <1694429639-21484-17-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
-References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
+        Mon, 11 Sep 2023 07:09:00 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A2DCEB
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:08:54 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50079d148aeso7254725e87.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:08:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694430532; x=1695035332; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2r1pG42saIT1hQx+TELlhxvqJ0mmluvD/XCTWLDnio4=;
+        b=wiqYEoqFcRjvUJ+brPwmPIQsX601vW9w8Tsnu1Wq2ODfoOBinAdHwM3udjpT3NfpEK
+         zLbJBfRuKP+MLBUMAZiCe99wJxw+X2fQ+VR5yT1EBUSGY8AabfTWSoysZYMpfXQyc9Du
+         JrVYOLgEK9BfgDRt7NmU0QIVpWCeIAPrR7CgOhNasQf94iOBsDOvQNXcXZeoo8hdosBD
+         GeXkBMRu2nGTISH60Aytf/E/4KtaK8E3go5IWxtzr4bUnt5hao6xA8gkHo0WPp3c5F1H
+         Lm+XJ1OnEGwCw4FIdj0HoZtu9/RtexxM4UGAmSMmV730x5eC3PaZXJVp5MklhADw4O3o
+         r/Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694430533; x=1695035333;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2r1pG42saIT1hQx+TELlhxvqJ0mmluvD/XCTWLDnio4=;
+        b=a7++ozMy6eJzkdVr4RPiM369iT9i5hhJoLnR9wjkGCH71QMhUiTGv6qR3LX+PoNO/w
+         cvmt+2zLo4wwmrRf5xEso1ItKnVtD99fD8saMpb3mPOwOYSEZUOfVsFnMoMs6aNlcKVL
+         2p3gER8hLKxbIOyk1uc/ZrIvvYuu20G9kZEknZMxHGRm8ta7EKDqolpRpl+c5QtF1L1q
+         QikinUEJ9v8Exjn+hGPUk58kxCNFtUT5HSsjtZd4w0nKZZ7AVU8VTYirjPE2VbvJhLCe
+         RJtB9NI8TUx/K21S+h3sOqcewnR4keN9rk2GO9TXLZ9c+LS5lE1ihmMGKTflOyBAdsC5
+         H7sw==
+X-Gm-Message-State: AOJu0YzPwtMmC4DK0FqSJ+lDLxg5ooYxzx/mzjGA6ti2sABtle9kKBqz
+        fEMDcx07CoVU1UBSCJxfpOnGaQ==
+X-Google-Smtp-Source: AGHT+IFhJr6aCH0nOA8CkPBUhMy540nMaAY+Mvm7js3Wpv0+d0W8u8lZbEJt3lbAgLcQPiDqKMNL3g==
+X-Received: by 2002:a05:651c:1994:b0:2bf:789e:b5dd with SMTP id bx20-20020a05651c199400b002bf789eb5ddmr5800990ljb.53.1694430532675;
+        Mon, 11 Sep 2023 04:08:52 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id si28-20020a170906cedc00b009786c8249d6sm5244877ejb.175.2023.09.11.04.08.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 04:08:52 -0700 (PDT)
+Message-ID: <75466db4-3d19-33f6-b2de-db714186a96b@linaro.org>
+Date:   Mon, 11 Sep 2023 13:08:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Yu3TMLFHfI0m0rNQlxh7FXtuDai56q4W
-X-Proofpoint-GUID: Yu3TMLFHfI0m0rNQlxh7FXtuDai56q4W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2309110099
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH v5 07/17] soc: qcom: minidump: Add pending region
+ registration
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
+        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
+        andy.shevchenko@gmail.com, vigneshr@ti.com, nm@ti.com,
+        matthias.bgg@gmail.com, kgene@kernel.org, alim.akhtar@samsung.com,
+        bmasney@redhat.com, quic_tsoni@quicinc.com
+Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, kernel@quicinc.com
+References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
+ <1694290578-17733-8-git-send-email-quic_mojha@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1694290578-17733-8-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Currently on Qualcomm SoC, download_mode is enabled if
-CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is selected.
+On 09/09/2023 22:16, Mukesh Ojha wrote:
+>  static int qcom_apss_minidump_probe(struct platform_device *pdev)
+>  {
+>  	struct minidump_global_toc *mdgtoc;
+> @@ -571,7 +688,10 @@ static int qcom_apss_minidump_probe(struct platform_device *pdev)
+>  		return ret;
+>  	}
+>  
+> +	mutex_lock(&md_plist.plock);
+>  	platform_set_drvdata(pdev, md);
 
-Refactor the code such that it supports multiple download
-modes and drop CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT config
-instead, give interface to set the download mode from
-module parameter.
+Why this is locked?
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/firmware/Kconfig    | 11 ---------
- drivers/firmware/qcom_scm.c | 56 +++++++++++++++++++++++++++++++++++++++------
- 2 files changed, 49 insertions(+), 18 deletions(-)
+> +	qcom_apss_register_pending_regions(md);
 
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index b59e3041fd62..ff7e9f330559 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -215,17 +215,6 @@ config MTK_ADSP_IPC
- config QCOM_SCM
- 	tristate
- 
--config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
--	bool "Qualcomm download mode enabled by default"
--	depends on QCOM_SCM
--	help
--	  A device with "download mode" enabled will upon an unexpected
--	  warm-restart enter a special debug mode that allows the user to
--	  "download" memory content over USB for offline postmortem analysis.
--	  The feature can be enabled/disabled on the kernel command line.
--
--	  Say Y here to enable "download mode" by default.
--
- config SYSFB
- 	bool
- 	select BOOT_VESA_SUPPORT
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 5cacae63ee2a..4ecdb0d025a4 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -20,13 +20,13 @@
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
- #include <linux/clk.h>
-+#include <linux/kstrtox.h>
- #include <linux/reset-controller.h>
- #include <linux/arm-smccc.h>
- 
- #include "qcom_scm.h"
- 
--static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
--module_param(download_mode, bool, 0);
-+static u32 download_mode;
- 
- #define SCM_HAS_CORE_CLK	BIT(0)
- #define SCM_HAS_IFACE_CLK	BIT(1)
-@@ -83,6 +83,11 @@ static const char * const qcom_scm_convention_names[] = {
- 	[SMC_CONVENTION_LEGACY] = "smc legacy",
- };
- 
-+static const char * const download_mode_name[] = {
-+	[QCOM_DLOAD_NODUMP]	= "off",
-+	[QCOM_DLOAD_FULLDUMP]	= "full",
-+};
-+
- static struct qcom_scm *__scm;
- static DEFINE_SPINLOCK(lock);
- 
-@@ -448,9 +453,10 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
- 	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
- }
- 
--static void qcom_scm_set_download_mode(bool enable)
-+static void qcom_scm_set_download_mode(u32 download_mode)
- {
--	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
-+	bool enable = !!download_mode;
-+	u32 val = download_mode;
- 	bool avail;
- 	int ret = 0;
- 
-@@ -1430,6 +1436,42 @@ static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static int get_download_mode(char *buffer, const struct kernel_param *kp)
-+{
-+	if (download_mode >= ARRAY_SIZE(download_mode_name))
-+		return sysfs_emit(buffer, "unknown mode\n");
-+
-+	return sysfs_emit(buffer, "%s\n", download_mode_name[download_mode]);
-+}
-+
-+static int set_download_mode(const char *val, const struct kernel_param *kp)
-+{
-+	u32 old = download_mode;
-+	int ret;
-+
-+	ret = sysfs_match_string(download_mode_name, val);
-+	if (ret < 0) {
-+		download_mode = old;
-+		pr_err("qcom_scm: unknown download mode: %s\n", val);
-+		return -EINVAL;
-+	}
-+
-+	download_mode = ret;
-+	if (__scm)
-+		qcom_scm_set_download_mode(download_mode);
-+
-+	return 0;
-+}
-+
-+static const struct kernel_param_ops download_mode_param_ops = {
-+	.get = get_download_mode,
-+	.set = set_download_mode,
-+};
-+
-+module_param_cb(download_mode, &download_mode_param_ops, NULL, 0644);
-+MODULE_PARM_DESC(download_mode,
-+		"download mode: off/full are acceptable values");
-+
- static int qcom_scm_probe(struct platform_device *pdev)
- {
- 	struct qcom_scm *scm;
-@@ -1493,12 +1535,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	__get_convention();
- 
- 	/*
--	 * If requested enable "download mode", from this point on warmboot
-+	 * If "download mode" is requested, from this point on warmboot
- 	 * will cause the boot stages to enter download mode, unless
- 	 * disabled below by a clean shutdown/reboot.
- 	 */
- 	if (download_mode)
--		qcom_scm_set_download_mode(true);
-+		qcom_scm_set_download_mode(download_mode);
- 
- 	return 0;
- }
-@@ -1506,7 +1548,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
- static void qcom_scm_shutdown(struct platform_device *pdev)
- {
- 	/* Clean shutdown, disable download mode to allow normal restart */
--	qcom_scm_set_download_mode(false);
-+	qcom_scm_set_download_mode(QCOM_DLOAD_NODUMP);
- }
- 
- static const struct of_device_id qcom_scm_dt_match[] = {
--- 
-2.7.4
+Why this one is locked? It seems ordering of your operations is not
+correct if you need to lock the providers probe().
+
+> +	mutex_unlock(&md_plist.plock);
+
+
+Best regards,
+Krzysztof
 
