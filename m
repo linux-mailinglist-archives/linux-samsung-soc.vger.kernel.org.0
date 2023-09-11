@@ -2,149 +2,154 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DE6A79B5D4
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:04:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4510D79B289
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348867AbjIKVbb (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:31:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51096 "EHLO
+        id S238476AbjIKVag (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:30:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238027AbjIKNej (ORCPT
+        with ESMTP id S238048AbjIKNgP (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:34:39 -0400
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C2CCD7
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 06:34:33 -0700 (PDT)
+        Mon, 11 Sep 2023 09:36:15 -0400
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C557106
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 06:36:09 -0700 (PDT)
 Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20230911133432euoutp0224e10a0adc037d716aff822faa25b67f~D24prrhdL1177211772euoutp02e
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 13:34:32 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230911133432euoutp0224e10a0adc037d716aff822faa25b67f~D24prrhdL1177211772euoutp02e
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230911133608euoutp01876e01ac2637fdac09cbbf7c6da6d263~D26DJc8gM2490624906euoutp01F
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 13:36:08 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230911133608euoutp01876e01ac2637fdac09cbbf7c6da6d263~D26DJc8gM2490624906euoutp01F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1694439272;
-        bh=/mi0r8mYaalw3knCfTu3gBJk6obrNHW3Nz7s/KCIWgA=;
+        s=mail20170921; t=1694439368;
+        bh=HFblmEq6Wu63c4OaZSLSXquWsoLJXCWOSNsbX81BJqU=;
         h=From:To:Cc:Subject:Date:References:From;
-        b=ZACIlGI+2K8qVA2wGGgkJ4C/t5HRDYg7t2BFIYdgS/atNu/6dHSTZ4pHoAUSMMEgD
-         uZRFAZJ9y9J/SCGSLx0JoFT3tAKlZMPdMIavKgB4IiToeAau8O7r58ojHodiJSGL1S
-         p15VddbXacVKEycNj8sKNWq/fm2QK8/Uwv1e2n4k=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20230911133431eucas1p1028e1babd7fda9c36d15da5ac371d780~D24pUSUXl3154231542eucas1p1H;
-        Mon, 11 Sep 2023 13:34:31 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 9C.41.42423.7671FF46; Mon, 11
-        Sep 2023 14:34:31 +0100 (BST)
+        b=bzm47R6b9wZSa9afhKxFaoh2ILCa7onNY9B/wIhJvkLQ2ZxS3iLdHdM1zJoAVyRJI
+         7l8EzPZjwQiapaHmH2T8x9014wma/nT/Sp13KxjXBmPQ2K1jawDc47QtjAwLzYb+cj
+         lZJM2J6xhUIZwfZrEzetntj2oySX/zCiqpbT75zI=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20230911133608eucas1p28cfd68d14697b278271c55eedaddd34f~D26Cx_Fel1713017130eucas1p21;
+        Mon, 11 Sep 2023 13:36:08 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id 16.03.37758.7C71FF46; Mon, 11
+        Sep 2023 14:36:07 +0100 (BST)
 Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
         eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20230911133431eucas1p2631e7060cecb0914933ed45b837cf8eb~D24o3k1BS1712417124eucas1p2g;
-        Mon, 11 Sep 2023 13:34:31 +0000 (GMT)
+        20230911133607eucas1p2c9a5b6c3bd785a5d03d78a1db872b188~D26CbkvI_0333903339eucas1p2_;
+        Mon, 11 Sep 2023 13:36:07 +0000 (GMT)
 Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
         eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230911133431eusmtrp2f45317b7cd9c99c65a5faf1e744acb79~D24o2pvFw0730407304eusmtrp2T;
-        Mon, 11 Sep 2023 13:34:31 +0000 (GMT)
-X-AuditID: cbfec7f2-a3bff7000002a5b7-c7-64ff1767793b
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id A2.2A.14344.7671FF46; Mon, 11
-        Sep 2023 14:34:31 +0100 (BST)
+        20230911133607eusmtrp21ce60ea977e1c47b41aedb48e3f37fe3~D26CZ3LD70862108621eusmtrp2M;
+        Mon, 11 Sep 2023 13:36:07 +0000 (GMT)
+X-AuditID: cbfec7f5-7ffff7000002937e-48-64ff17c79574
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 67.7A.14344.7C71FF46; Mon, 11
+        Sep 2023 14:36:07 +0100 (BST)
 Received: from AMDC4515.eu.corp.samsungelectronics.net (unknown
-        [106.120.51.28]) by eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20230911133430eusmtip1cfb8f5bcad10b64100b515751c11ecd7~D24oSDyBB2147821478eusmtip12;
-        Mon, 11 Sep 2023 13:34:30 +0000 (GMT)
+        [106.120.51.28]) by eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20230911133606eusmtip22d0161ac2c9c2e907977814529c6feb2~D26BjiyJQ0797807978eusmtip2a;
+        Mon, 11 Sep 2023 13:36:06 +0000 (GMT)
 From:   Mateusz Majewski <m.majewski2@samsung.com>
-To:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 Cc:     Mateusz Majewski <m.majewski2@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
         Alim Akhtar <alim.akhtar@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH v2] ARM: dts: exynos: enable polling in Exynos 4210
-Date:   Mon, 11 Sep 2023 15:34:14 +0200
-Message-ID: <20230911133417.14042-1-m.majewski2@samsung.com>
+Subject: [PATCH v2 0/7] Improve Exynos thermal driver
+Date:   Mon, 11 Sep 2023 15:34:24 +0200
+Message-ID: <20230911133435.14061-1-m.majewski2@samsung.com>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsWy7djP87rp4v9TDGZNMbd4MG8bm8WaveeY
-        LOYfOcdq0ffiIbPFpsfXWC0u75rDZjHj/D4mi4nHJjNbrD1yl92ide8Rdgcuj02rOtk87lzb
-        w+axeUm9R9+WVYwenzfJBbBGcdmkpOZklqUW6dslcGW8WPaWveApZ8W/a19YGxi7OLoYOTkk
-        BEwktlw/xt7FyMUhJLCCUWLej7+MEM4XRolZj5+yQTifGSUevz3KBtPy/fpOqJbljBJnTi6B
-        amllkphxbQILSBWbgIHEgzfLwKpEBNoZJRbcfcYM4jALdDJJvP86nRWkSljAWeLKu2Z2EJtF
-        QFXi8MMXYDavgI3E9M5WFoh98hLPb92BigtKnJz5BCzODBRv3jobbKiEwBYOicV/IZolBFwk
-        vq/YzQphC0u8Or4FKi4j8X/nfCYIO19ixub3QIM4gOwKibsHvSBMa4mPZ5hBTGYBTYn1u/Qh
-        ih0lLpz7yAZRwSdx460gxAF8EpO2TWeGCPNKdLQJQVSrShzfM4kZwpaWeNJyG2qlh8TH5xB/
-        CwnESlyYNZtxAqPCLCRvzULy1iyEGxYwMq9iFE8tLc5NTy02zEst1ytOzC0uzUvXS87P3cQI
-        TEOn/x3/tINx7quPeocYmTgYDzFKcDArifCWHPqbIsSbklhZlVqUH19UmpNafIhRmoNFSZxX
-        2/ZkspBAemJJanZqakFqEUyWiYNTqoFp1qIFbsy9Gz/1GDLf/7Vku17s+WsFX6IVyrRmzwhv
-        jGc8tYw9kmFZh1fDAbOYvfM43fP03gUm/Wjg/PdSOvpqUpGpYftWlro99S5rZs46tbwkQPTH
-        n4M+5+aGNkR3P8iqFlujPbXu2w43hQC/vz979OW1jn4RWxC/MDD7tiVzA2fmUVWHnS6Ohltk
-        32uK3X+rlHU+Qnp6kPxalW/JbbJ9uifnrqzQDHavfHvny4VHPNo39pqFy20QLL6oa1S2oGTh
-        qvqza6PPV0XrxrNKXGl89e/7jeNhtw4913o7JS+rbPoTpfoz/5Jbg4u2dS62d9l64eHbd3H1
-        u///E7Oe2Zv7YcU+o/dltTZr5p5OO71UiaU4I9FQi7moOBEAtI+1FLIDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBLMWRmVeSWpSXmKPExsVy+t/xu7rp4v9TDLoXS1k8mLeNzWLN3nNM
-        FvOPnGO16HvxkNli0+NrrBaXd81hs5hxfh+TxcRjk5kt1h65y27RuvcIuwOXx6ZVnWwed67t
-        YfPYvKTeo2/LKkaPz5vkAlij9GyK8ktLUhUy8otLbJWiDS2M9AwtLfSMTCz1DI3NY62MTJX0
-        7WxSUnMyy1KL9O0S9DJeLHvLXvCUs+LftS+sDYxdHF2MnBwSAiYS36/vZO9i5OIQEljKKHHi
-        7yN2iIS0xOEvU6BsYYk/17rYIIqamSRW/57CDJJgEzCQePBmGVi3iEA3o8ShmbdYQBxmgW4m
-        ie7FjxhBqoQFnCWuvGsGG8UioCpx+OELMJtXwEZiemcrC8QKeYnnt+5AxQUlTs58AhZnBoo3
-        b53NPIGRbxaS1CwkqQWMTKsYRVJLi3PTc4uN9IoTc4tL89L1kvNzNzECo2DbsZ9bdjCufPVR
-        7xAjEwfjIUYJDmYlEd6SQ39ThHhTEiurUovy44tKc1KLDzGaAt03kVlKNDkfGId5JfGGZgam
-        hiZmlgamlmbGSuK8ngUdiUIC6YklqdmpqQWpRTB9TBycUg1M6llfY8uuHLqVE1LL5vTpzN8w
-        7tnhadMWpnAunCyh7nw6cSVLcNGJmpUxu169/NPAWHK+q8X9w5Y/EYEeS5emz2ROkLV7I7nQ
-        YaLmrLf2c+ZP1fv8slR5udgNmyWZsYvqg3ucZNtP3hf5InZMU/nebgdf29UNwV+VCp9v11M+
-        f6mcn+eO7q+rSVO0Zcsuz6td8bylqU+SaecKrVXxrgUhU4w6J+zTnKwbunDam4t7Ymq5nzCE
-        B98tOPfioMoRo9MT/oYrmBwVWK2qoMYtLsQS115kdcvXd8L5inXFCkt4Mp/ONTK/E1fGJPhI
-        NSGdN/OvafGZzfp+19QiX1xQCZuzXyPaufP785bvFbc8NsgpsRRnJBpqMRcVJwIAw1INSwsD
-        AAA=
-X-CMS-MailID: 20230911133431eucas1p2631e7060cecb0914933ed45b837cf8eb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsWy7djPc7rHxf+nGKxYYmPxYN42NovD8yss
+        pj58wmbxfct1Jot5n2Ut9r7eym7x7UoHk8Wmx9dYLS7vmsNm8bn3CKPFjPP7mCwmHpvMbLH2
+        yF12i7lfpjJbPHnYx+bA77Fz1l12j8V7XjJ5bFrVyeZx59oeNo/NS+o9+rasYvT4vEkugD2K
+        yyYlNSezLLVI3y6BK+Pf0gmsBUe5Ks48e83WwHiSo4uRk0NCwETiTOMS5i5GLg4hgRWMEodf
+        n2KDcL4wSqxbcJ0RwvnMKNHxeQE7TMuyjUtZIRLLGSVeLrrMBOG0Mkns/XuHCaSKTcBA4sGb
+        ZWAdIgKtjBIzm9RBipgFLjFL3L25lgUkISxgKvH/+SIwm0VAVeLw3KtADRwcvAI2Eu9bjSG2
+        yUs8v3UHbA6vgKDEyZlPwMqZgeLNW2czQ9S84JB4s7cewnaRWLZ4GxuELSzx6vgWqKtlJP7v
+        nM8EYedLzNj8ngVklYRAhcTdg14QprXExzPMICazgKbE+l36EFFHiZuvDSBMPokbbwUh1vNJ
+        TNo2nRkizCvR0SYEMVlV4vieSVBXSUs8abkNtdFDYvG9E6wgtpBArMSdtc+YJjAqzELy1Cwk
+        T81COGEBI/MqRvHU0uLc9NRi47zUcr3ixNzi0rx0veT83E2MwAR2+t/xrzsYV7z6qHeIkYmD
+        8RCjBAezkghvyaG/KUK8KYmVValF+fFFpTmpxYcYpTlYlMR5tW1PJgsJpCeWpGanphakFsFk
+        mTg4pRqYHDPnrgxedqFT5JvaKvbL3JI1cpft3j7Vyg5oyKxL4os6ZWpT5+T9rfothyTDo6Zf
+        ol7FHm8ELpS0SHks7/qQ6+hu2XQwUjOkeWr3hNv1SxX+J+2X6Vw2cdJ7nRCtzZOmhTtZS6x3
+        +rFpjYRmd8PZpapKTNcN8nJj/JltA2LEOprXPb33zVvg7vkal5vhn773nTBSXXvx1VHXUzdt
+        fD8zV/4WTvFLfsOVPo9JjPPMZpP9deo9n6b/LZRNU73gcvBYl7Jmol7YeoMwPjnmvxvv95bF
+        1Wk/WuOumbdUqMvq5JUpSz5fco03yAldqmcpv3Kp1ttcJgORF4qlZ7juz3jh6zBzEpv70sVz
+        5YOyeZRYijMSDbWYi4oTAW9SLxvPAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOIsWRmVeSWpSXmKPExsVy+t/xe7rHxf+nGJyfq2TxYN42NovD8yss
+        pj58wmbxfct1Jot5n2Ut9r7eym7x7UoHk8Wmx9dYLS7vmsNm8bn3CKPFjPP7mCwmHpvMbLH2
+        yF12i7lfpjJbPHnYx+bA77Fz1l12j8V7XjJ5bFrVyeZx59oeNo/NS+o9+rasYvT4vEkugD1K
+        z6Yov7QkVSEjv7jEVina0MJIz9DSQs/IxFLP0Ng81srIVEnfziYlNSezLLVI3y5BL+Pf0gms
+        BUe5Ks48e83WwHiSo4uRk0NCwERi2calrF2MXBxCAksZJZbP3MkKkZCWOPxlCjuELSzx51oX
+        G0RRM5PErV/vwBJsAgYSD94sYwdJiAh0Mkp0bT7HBJJgFrjFLHH/tRaILSxgKvH/+SIWEJtF
+        QFXi8NyrQA0cHLwCNhLvW40hFshLPL91B2wmr4CgxMmZT1ggxshLNG+dzTyBkW8WktQsJKkF
+        jEyrGEVSS4tz03OLjfSKE3OLS/PS9ZLzczcxAmNo27GfW3Ywrnz1Ue8QIxMH4yFGCQ5mJRHe
+        kkN/U4R4UxIrq1KL8uOLSnNSiw8xmgKdN5FZSjQ5HxjFeSXxhmYGpoYmZpYGppZmxkrivJ4F
+        HYlCAumJJanZqakFqUUwfUwcnFINTL3fUq7M3PyefcIHadW55udmvhZ0uhYrEnT2jPlx25ii
+        r3UK29/fZdpu47LJNv4VB3fbi61zxCIWVIT2B9bH3O0Wl7J7lf5VWC1m+cJVPz8/jdzg/PJi
+        X9OJ6LTLR3ze7XOqij6o+uxctJHEKqtpM+4dOvv+ofnfU2Hyv1JijM3ZWSYunfCTlzP4tGJg
+        6aoG87ao/8+W73RvLXkgopLtwHF4xZltSbnLIqtvzsvztJZTclx82n/LntiiWmvVxx99/dLF
+        A1NPhDhIHs4S4Nv9RWv9ghcqamKyfqs+PKhbq/uu9cRKbq6un31pF/cutt9XoM0/d2uPxmxz
+        uz+T89tYZ61X9tgcUX6JVU1lj6DbUiWW4oxEQy3mouJEAEeqre0qAwAA
+X-CMS-MailID: 20230911133607eucas1p2c9a5b6c3bd785a5d03d78a1db872b188
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20230911133431eucas1p2631e7060cecb0914933ed45b837cf8eb
+X-RootMTR: 20230911133607eucas1p2c9a5b6c3bd785a5d03d78a1db872b188
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20230911133431eucas1p2631e7060cecb0914933ed45b837cf8eb
-References: <CGME20230911133431eucas1p2631e7060cecb0914933ed45b837cf8eb@eucas1p2.samsung.com>
+X-CMS-RootMailID: 20230911133607eucas1p2c9a5b6c3bd785a5d03d78a1db872b188
+References: <CGME20230911133607eucas1p2c9a5b6c3bd785a5d03d78a1db872b188@eucas1p2.samsung.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-It seems that thermal in Exynos 4210 is broken without this, as it will
-never decrease cooling after increasing it.
+This work improves Exynos thermal driver in various ways. This is
+related to the discussion in
+https://lore.kernel.org/all/97201878-3bb8-eac5-7fac-a690322ac43a@linaro.org/
 
-Signed-off-by: Mateusz Majewski <m.majewski2@samsung.com>
----
-v1 -> v2: Just uploaded separately from all the thermal: exynos:
-  patches with a shorter recipient list, no change otherwise.
+The primary issue being fixed is a lockdep warning, which is fixed by
+the thermal: exynos: use set_trips patch. We also simplify the code in
+general.
 
- arch/arm/boot/dts/samsung/exynos4210.dtsi | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Changelog:
+ v2:
+   - Added missing field descriptions
+   - Removed an unnecessary field description
+   - Removed the commits that made clock management more fine-grained
+     (need more discussion), and adapted the new code to manage clocks
+   - Removed the devicetree changes (will be uploaded separately),
+     changing the recipient list accordingly
+   - Improved formatting of the devm_request_threaded_irq call
 
-diff --git a/arch/arm/boot/dts/samsung/exynos4210.dtsi b/arch/arm/boot/dts/samsung/exynos4210.dtsi
-index 0e27c3375e2e..aae185b7f91c 100644
---- a/arch/arm/boot/dts/samsung/exynos4210.dtsi
-+++ b/arch/arm/boot/dts/samsung/exynos4210.dtsi
-@@ -391,8 +391,14 @@ &cpu_alert2 {
- };
- 
- &cpu_thermal {
--	polling-delay-passive = <0>;
--	polling-delay = <0>;
-+	/* Exynos 4210 supports thermal interrupts, but only for the rising threshold.
-+	 * This means that polling is not needed for preventing overheating, but only
-+	 * for decreasing cooling when possible. Hence we poll with a high delay.
-+	 * Ideally, we would disable polling for the first trip point, but this isn't
-+	 * really possible without outrageous hacks.
-+	 */
-+	polling-delay-passive = <5000>;
-+	polling-delay = <5000>;
- };
- 
- &gic {
+Mateusz Majewski (7):
+  thermal: exynos: remove an unnecessary field description
+  thermal: exynos: drop id field
+  thermal: exynos: switch from workqueue-driven interrupt handling to
+    threaded interrupts
+  thermal: exynos: simplify regulator (de)initialization
+  thermal: exynos: stop using the threshold mechanism on Exynos 4210
+  thermal: exynos: split initialization of TMU and the thermal zone
+  thermal: exynos: use set_trips
+
+ drivers/thermal/samsung/exynos_tmu.c | 525 ++++++++++++++-------------
+ 1 file changed, 272 insertions(+), 253 deletions(-)
+
 -- 
 2.41.0
 
