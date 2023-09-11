@@ -2,43 +2,43 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D814479BF6C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:19:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 770BA79B679
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:05:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348784AbjIKVa7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:30:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51040 "EHLO
+        id S1348937AbjIKVbs (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236535AbjIKK4u (ORCPT
+        with ESMTP id S236546AbjIKK4x (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 06:56:50 -0400
+        Mon, 11 Sep 2023 06:56:53 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2857F3;
-        Mon, 11 Sep 2023 03:56:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25000127;
+        Mon, 11 Sep 2023 03:56:48 -0700 (PDT)
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BAHUGk005010;
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BAuEgF017396;
         Mon, 11 Sep 2023 10:56:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-type; s=qcppdkim1;
- bh=Ulb6ivCBYfJxHUM4YBEtsEJoOnSrk2SMWeoI7ndeucs=;
- b=PMVy+DkuMntEMbC6E3AaypPc6J9MF6sKEejS5SF4eIQSNVSFrmhXAPTRcddOmNDRtS+y
- XBwgCr78Vw0oH9FlMM2ELswZh7cIbka+q5Un9HtRgSz61u0g8J9xtSCG3Maflg4du5XG
- QN/OQN6J0dZ5gE4stSdDACe+nNVNVC18By+VvtxgZxyGcPB2Ehq/8NhkSoMnTTADQ03A
- H/TqrLJl25Amd8ejof0lM4LyGMqfKv/PY2D3S0UCBc+0isIpJk4tI3yGmOlOtvQeR/MU
- oqIg5cY+vJy/WEj16vLShRAANt6ILj4pEcYIC5J3bMu0/vzx02WPiHPBXXyXx3NN0bkE 5g== 
+ bh=VuS5BngeDMoGs7HCNFTyrS6m+gpdRhA4rXrczTHM1kY=;
+ b=EC8/+GRvaoPLT8rKSCl+rmvF4UjTXLgwaj3cd8sN2AcFuY5QU1Yl7Eo/oeJavi+TXiu0
+ 9oJigAmM/kAtDJBv/8BmmSOhjKNtRnZBoIHTyw62V824olEd0slQntnM1UDmyqq1lAb+
+ YFJeInJwLCxid5TP8Cok6UVA2nnWSSZ3KH4l/qSD317qxDWt5svCNeGHhUGQN13K5ixy
+ RToHtIRIRHBs9I7e6EO6tQfZAlIw43lI0ExCUkN6Jk9pklXk4JaMcAvq93rM3QZ6EkIt
+ mgqjwNp2edXmJfAz87VotieQfhG/BjW8uxAgPx1OKWVSBuu+SAI0TrQ7jEdmj/4yd7DI kw== 
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0hfqkenc-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t0hfqkend-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 10:56:13 +0000
+        Mon, 11 Sep 2023 10:56:14 +0000
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BAuCVs006051
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BAuCVw006051
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 10:56:12 GMT
+        Mon, 11 Sep 2023 10:56:13 GMT
 Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Mon, 11 Sep 2023 03:55:28 -0700
+ 15.2.1118.36; Mon, 11 Sep 2023 03:56:02 -0700
 From:   Mukesh Ojha <quic_mojha@quicinc.com>
 To:     <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
@@ -57,9 +57,9 @@ CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
         <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
         <quic_mojha@quicinc.com>
-Subject: [REBASE PATCH v5 09/17] pstore/ram: Use dynamic ramoops reserve resource
-Date:   Mon, 11 Sep 2023 16:23:51 +0530
-Message-ID: <1694429639-21484-10-git-send-email-quic_mojha@quicinc.com>
+Subject: [REBASE PATCH v5 13/17] firmware: qcom_scm: provide a read-modify-write function
+Date:   Mon, 11 Sep 2023 16:23:55 +0530
+Message-ID: <1694429639-21484-14-git-send-email-quic_mojha@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
 References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
@@ -70,13 +70,13 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VlpMUntWdgjbfQBbSQt02UT2ECOTiSRG
-X-Proofpoint-GUID: VlpMUntWdgjbfQBbSQt02UT2ECOTiSRG
+X-Proofpoint-ORIG-GUID: Vye1cCKDmzVPC6zrq9JQEZLYUW6sLD-J
+X-Proofpoint-GUID: Vye1cCKDmzVPC6zrq9JQEZLYUW6sLD-J
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
  definitions=2023-09-11_06,2023-09-05_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- suspectscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 phishscore=0 mlxlogscore=854 malwarescore=0
  priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1015
  adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2308100000 definitions=main-2309110099
@@ -89,40 +89,73 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-As dynamic ramoops command line parsing is now added, so
-lets add the support in ramoops driver to get the resource
-structure and add it during platform device registration.
+It was realized by Srinivas K. that there is a need of
+read-modify-write scm exported function so that it can
+be used by multiple clients.
 
+Let's introduce qcom_scm_io_update_field() which masks
+out the bits and write the passed value to that
+bit-offset. Subsequent patch will use this function.
+
+Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
 ---
- fs/pstore/ram.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/firmware/qcom_scm.c            | 20 ++++++++++++++++++++
+ include/linux/firmware/qcom/qcom_scm.h |  2 ++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index d36702c7ab3c..ab551caa1d2a 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -914,13 +914,17 @@ static void __init ramoops_register_dummy(void)
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 06fe8aca870d..321133f0950d 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -74,6 +74,7 @@ static const char * const qcom_scm_convention_names[] = {
+ };
  
- 	/*
- 	 * Prepare a dummy platform data structure to carry the module
--	 * parameters. If mem_size isn't set, then there are no module
--	 * parameters, and we can skip this.
-+	 * parameters. If mem_size isn't set, check for dynamic ramoops
-+	 * size and extract the information if it is set.
- 	 */
--	if (!mem_size)
-+	if (!mem_size && !dyn_ramoops_res.end)
- 		return;
+ static struct qcom_scm *__scm;
++static DEFINE_SPINLOCK(lock);
  
- 	pr_info("using module parameters\n");
-+	if (dyn_ramoops_res.end) {
-+		mem_size = resource_size(&dyn_ramoops_res);
-+		mem_address = dyn_ramoops_res.start;
-+	}
+ static int qcom_scm_clk_enable(void)
+ {
+@@ -403,6 +404,25 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_set_remote_state);
  
- 	memset(&pdata, 0, sizeof(pdata));
- 	pdata.mem_size = mem_size;
++int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask, unsigned int val)
++{
++	unsigned int old, new;
++	int ret;
++
++	spin_lock(&lock);
++	ret = qcom_scm_io_readl(addr, &old);
++	if (ret)
++		goto unlock;
++
++	new = (old & ~mask) | (val & mask);
++
++	ret = qcom_scm_io_writel(addr, new);
++unlock:
++	spin_unlock(&lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(qcom_scm_io_update_field);
++
+ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+ {
+ 	struct qcom_scm_desc desc = {
+diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+index 0c091a3f6d49..eb750286abb6 100644
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -84,6 +84,8 @@ extern bool qcom_scm_pas_supported(u32 peripheral);
+ 
+ extern int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+ extern int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
++extern int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask,
++				    unsigned int val);
+ 
+ extern bool qcom_scm_restore_sec_cfg_available(void);
+ extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
 -- 
 2.7.4
 
