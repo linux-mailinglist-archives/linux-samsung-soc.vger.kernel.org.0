@@ -2,162 +2,126 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C66D79B150
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:51:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24A579B3D7
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:00:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348717AbjIKVaP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:30:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
+        id S1348966AbjIKVb7 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241413AbjIKPIB (ORCPT
+        with ESMTP id S242676AbjIKQFp (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:08:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A809FA;
-        Mon, 11 Sep 2023 08:07:57 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BCSGRL031218;
-        Mon, 11 Sep 2023 15:07:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=M/smHuhk+GMwiaIFqSp0QnUyhRqMkvHvq61BOMETG3o=;
- b=X2GbFT2FWpuGQ0iHfzHfjRxH2IelXDoaBDySPx5b09500+V4katOMSKlLPS0+5Z4asUv
- nL7zWUnM5hrRiMVTyPqmbwQVzfNFlfIhljJEusTZe7monlVSqOxcckFW/V43vd1fJaAB
- 3SLbocvICLOeCBGFpqzuGqMwzIQoyjZ7e4VacTx7/y7wZRBVPqwtSrzw/zPmCqJZ2fvi
- 2TCiLFpQLfQbPOgj5ibnqRCM8qKx+4fK3pMYouzyvflZnpNLeKgVxZj1v7H4cVtGi9H+
- ham2bZWDSqJTX5hipCXdJslEa8y+QoJzmUfKvpV0VONcWnoOXe0fcxYImvKRUaxRJHkZ qA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1yac8uuh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 15:07:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BF7NvQ031544
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 11 Sep 2023 15:07:24 GMT
-Received: from [10.216.14.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
- 2023 08:07:09 -0700
-Message-ID: <9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com>
-Date:   Mon, 11 Sep 2023 20:37:03 +0530
+        Mon, 11 Sep 2023 12:05:45 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC2891AE
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 09:05:40 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-401b393df02so54241975e9.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 09:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1694448339; x=1695053139; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VBVJ2wHJ2/UKLMCz0YHp9T+QNyQaVPOEmzHr3wHgHAg=;
+        b=iirHIJlj/Q1ROqFAMDiIEBdBoauZRMnmRnc0msgGDaO9EZZmBmn7Cn8dQiejSkxgkl
+         SZ9JPgsKdOXkTdAAs2S7UEldKGnXJ9/ZkaRMc+wWG1VvhrY6I/AoZc5AG3h/P6jjDkew
+         J5WewO4CHKoEHL1E9jttRTqwo877Qj6S7BLSguonSMvbhto+YRaAs/foKBq5Bh+v7RrS
+         wuqoQot43wlKYK9H+9s9GUIBdER6EJVcd4rp0oiR/w+IeYwn73/SLAaiWOUGVzHVMv11
+         i4Zlmy6lA5S/gOOaT8GgxefdUKiyAQPc/wOQVILBKLVfPQlfGN2O1B4vo8OfuAsabtE1
+         J9LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694448339; x=1695053139;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VBVJ2wHJ2/UKLMCz0YHp9T+QNyQaVPOEmzHr3wHgHAg=;
+        b=iKDJuomTlA81asS2+Vv504ckTI4NeJ4uE/2xnx/5I97DXta9iB9zP3IuS/aVAt3bLd
+         P8qknXQVPWzQA7Ku1vvBlv4Hl/BUtILAs4u4j4lwsfvfh2P5KNv4UaZDJdOuEVMnwsOe
+         vK8x5a0eXyKyRRLvBM7j7nl3XtSoh6pfoBnv29wOHofIcmIGnUH6hCVfoQkC38MrfdtT
+         U6/rwmwFnX2m+XAOz6/5uRN2DzvHDQsBML0soMmwdabo7UnVMHF3+sVNa5ua66m5G+RO
+         chMR2rLRiech5ScRPvw7P8Cn7dEQT2ADXp4Oq5r9dZI7evsGq+rnrHMmZfNgy4Gub5Ez
+         8A6w==
+X-Gm-Message-State: AOJu0Yxr1nlW+NqdlhjMY82WX283srvxFNsSnsxPLdYVq8yxuPjLwEpL
+        N3NFewt5TVqYGr1CFy4TJ5/VNg==
+X-Google-Smtp-Source: AGHT+IGyuy2+dN6nVi/A8nEkH5DvEYQPGPUixpXjx1K6xC3tj2xMB32WaeVax7THWg5xlQU35kx7hg==
+X-Received: by 2002:a05:600c:2116:b0:401:c8b9:4b8a with SMTP id u22-20020a05600c211600b00401c8b94b8amr9091672wml.29.1694448339176;
+        Mon, 11 Sep 2023 09:05:39 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id 12-20020a05600c028c00b003fee6e170f9sm10490902wmk.45.2023.09.11.09.05.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Sep 2023 09:05:38 -0700 (PDT)
+Message-ID: <5f1791b4-78d8-9895-e639-238411b60f00@linaro.org>
+Date:   Mon, 11 Sep 2023 18:05:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REBASE PATCH v5 15/17] firmware: scm: Modify only the download
- bits in TCSR register
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 04/11] thermal: exynos: remove fine-grained clk management
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
-CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
-        "Poovendhan Selvaraj" <quic_poovendh@quicinc.com>
-References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
- <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mateusz Majewski <m.majewski2@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+References: <20230829091853.626011-1-m.majewski2@samsung.com>
+ <CGME20230829092412eucas1p2b79a6f90b9077a3a5486845b7e68bbc6@eucas1p2.samsung.com>
+ <20230829091853.626011-5-m.majewski2@samsung.com>
+ <a3b9ff0f-fff9-9439-5ec9-95a4de9bdfaa@linaro.org>
+ <afbdce92-beb9-cb7f-305f-968c71dde838@samsung.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <afbdce92-beb9-cb7f-305f-968c71dde838@samsung.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
-X-Proofpoint-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-11_10,2023-09-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- spamscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0 suspectscore=0
- clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309110138
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On 01/09/2023 10:40, Marek Szyprowski wrote:
+> On 29.08.2023 11:56, Krzysztof Kozlowski wrote:
+>> On 29/08/2023 11:18, Mateusz Majewski wrote:
+>>> This clock only controls the register operations. The gain in power
+>>> efficiency is therefore quite dubious, while there is price of added
+>>> complexity that is important to get right (as a register operation might
+>>> outright hang the CPU if the clock is not enabled).
+>> So once it is done right, this stops being argument. The benefit is to
+>> keep this clock disabled most of the time, which now we lost.
+>>
+>> I don't find this patch correct approach.
+> 
+> I've suggested this change while playing with this driver.
+> 
+> For me turning AHB clock on/off during normal driver operation seems to 
+> be over-engineering and really gives no real power saving benefits, 
+> especially if thermal driver is the only one that does such fine-grained 
+> clock management (none of the Exynos supported in mainline does that). 
+> Removing it simplifies code and makes it easier to understand or read, 
+> as the current code already was somehow problematic to understand and 
+> unintuitive:
+> 
+> https://lore.kernel.org/all/c3258cb2-9a56-d048-5738-1132331a157d@linaro.org/
+> 
+> Taking into account that the driver is not really maintained, making it 
+> simpler without noticeable feature loss counts as a benefit for me.
 
-On 9/11/2023 4:23 PM, Mukesh Ojha wrote:
-> Crashdump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the
-> DLOAD bit as the other bits have their own significance.
->
-> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
-> ---
->   drivers/firmware/qcom_scm.c | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 321133f0950d..5cacae63ee2a 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -5,6 +5,8 @@
->   #include <linux/platform_device.h>
->   #include <linux/init.h>
->   #include <linux/interrupt.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/bits.h>
->   #include <linux/completion.h>
->   #include <linux/cpumask.h>
->   #include <linux/export.h>
-> @@ -26,6 +28,14 @@
->   static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
->   module_param(download_mode, bool, 0);
->   
-> +#define SCM_HAS_CORE_CLK	BIT(0)
-> +#define SCM_HAS_IFACE_CLK	BIT(1)
-> +#define SCM_HAS_BUS_CLK		BIT(2)
+Hm, ok, let it be, although I bet once someone will come and start
+adding runtime PM for clock handling...
 
+Best regards,
+Krzysztof
 
-Is this intentional to add these macros back again?
-
-
-> +
-> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
-> +#define QCOM_DLOAD_FULLDUMP	0x1
-> +#define QCOM_DLOAD_NODUMP	0x0
-> +
->   struct qcom_scm {
->   	struct device *dev;
->   	struct clk *core_clk;
-> @@ -440,6 +450,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->   
->   static void qcom_scm_set_download_mode(bool enable)
->   {
-> +	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
->   	bool avail;
->   	int ret = 0;
->   
-> @@ -449,8 +460,9 @@ static void qcom_scm_set_download_mode(bool enable)
->   	if (avail) {
->   		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->   	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
-> +					       QCOM_DLOAD_MASK,
-> +					       FIELD_PREP(QCOM_DLOAD_MASK, val));
->   	} else {
->   		dev_err(__scm->dev,
->   			"No available mechanism for setting download mode\n");
