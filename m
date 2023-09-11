@@ -2,138 +2,106 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 249C679B910
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A65479BEA4
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 02:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240959AbjIKVac (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37346 "EHLO
+        id S1348990AbjIKVcF (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236659AbjIKLJ6 (ORCPT
+        with ESMTP id S236906AbjIKLjh (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 07:09:58 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F020CF0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:09:51 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2bbbda48904so71517901fa.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:09:51 -0700 (PDT)
+        Mon, 11 Sep 2023 07:39:37 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC6A12E
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:39:32 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401d24f1f27so49416145e9.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 04:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1694430590; x=1695035390; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ItV/PafZYbRtZG+3EH6sRu97i9Pet4QO+NBJ8/y2iuI=;
-        b=tg4h2AL9gT7/qUV0jFTrvkPJl9a/skFZyfbwb9lpcls46kdOpKy/0zULUF05nAJKrw
-         ITd7nMPZiaS5PsZzg1uTs9LpnOIGc5IQoXbM6B0QK8XpMLmTWz7Uvoa0s4ZTgz5Jq9t4
-         v0U5o8trLtrjzW4IH2vQo4mpKEbOiin4b62jWutcLNlCqZmZsOvN5+FxgDlk21bHCJDq
-         AGy8mFU5AJj5nVJ+LxeMb8183iNYaxF1hzP/jM4wDcZfI50R1cg8CQ5wa0RSetIfcJDN
-         Epx6SgrPMDqtOePCk98hrz6ZZ1pRWPxrXpWGXqxYXtz71fRYbYppSVB44eXGFYlNXoj4
-         UTNw==
+        d=linaro.org; s=google; t=1694432371; x=1695037171; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+xobEw3dWGWqa/MKJ616lGiXiH8NsToU1rm76WPlst0=;
+        b=o0UCY5vZafH9Qz1ohhA/zZyXJ8vmxDxBTsFYXkLGQtGZ/ebv05FHsHSpA0xtKiar+E
+         ck5bF54C3nUFD0dIh0ag5bOCBl4jKYTGYBjqxdOi0G7zsZnzxfMRU6nw2kxP1wTLMGVb
+         9Jb7csZCkkIN8BNzeMIt6Ltbwxuw+ehawMeVU9WS097gmT/Zf/n3JRKt2nQxBZ/bjkX1
+         8nLCKUJHcWvvsSzFl3KYF9btOVp8R2CcFEIWHZE4Flw14yyAKKla0WkdDMv4s0UVkPAR
+         ppEJTp0ygOZ2IO6h93YLpQODg79FrioQlY/Uvr4TZlEHacMnZMqnOzEahYUv/CRihAJY
+         2JSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694430590; x=1695035390;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ItV/PafZYbRtZG+3EH6sRu97i9Pet4QO+NBJ8/y2iuI=;
-        b=eqfM6oKW04ChoQOiuX2lCliFL5XnJpXyY5PlkTZyGEmRrjRYBilyZcVxOh2xAj9dZZ
-         75ibsijcKy36MUh1UAk3bsugkhMWuzdC5wVUGQ8LCdY7F/kr42VJZWvqW2Lx24biJ7L7
-         wfJlUjb+Boj6GsoOLfNXsHmn/f+R4Y2F/GNQW4nwiBtGYAwukxDilFkKLCcX0wyS1rYD
-         LF4UAOpDtuftCZ1VHK+s3VqUSiWpBq7ZGlAOsWoaPu48azXC8u8S/NI9wQddQ09lTxMx
-         /czpkBRZAEvADo+jZ0jyslXTCq9qK7v7jVdTtN/kps4TuO5GM4jGShA/qhjN4xWOBp33
-         gy7g==
-X-Gm-Message-State: AOJu0Yw2bMYERE5N9Km8Vjc4ZuFpkc6C1TqxNFLv6q1IJ32jk0DTra+m
-        3jc+kezijPIcCaBgOJCQxPbPGg==
-X-Google-Smtp-Source: AGHT+IEA9FyfM8rXa+3k+u+doQWaGigDrU1zuRRVi1v3E2XELPt5LPr2HsZJRl0XxMdT23XFarwUrQ==
-X-Received: by 2002:a2e:8543:0:b0:2bd:180d:67b7 with SMTP id u3-20020a2e8543000000b002bd180d67b7mr6601812ljj.40.1694430589764;
-        Mon, 11 Sep 2023 04:09:49 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.214.188])
-        by smtp.gmail.com with ESMTPSA id lw7-20020a170906bcc700b009a168ab6ee2sm5129780ejb.164.2023.09.11.04.09.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Sep 2023 04:09:48 -0700 (PDT)
-Message-ID: <0041a391-12ba-2e1b-0954-fbc0e00be631@linaro.org>
-Date:   Mon, 11 Sep 2023 13:09:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v5 11/17] qcom_minidump: Register ramoops region with
- minidump
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, corbet@lwn.net,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, keescook@chromium.org, tony.luck@intel.com,
-        gpiccoli@igalia.com, mathieu.poirier@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, linus.walleij@linaro.org,
-        andy.shevchenko@gmail.com, vigneshr@ti.com, nm@ti.com,
-        matthias.bgg@gmail.com, kgene@kernel.org, alim.akhtar@samsung.com,
-        bmasney@redhat.com, quic_tsoni@quicinc.com
-Cc:     linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, kernel@quicinc.com
-References: <1694290578-17733-1-git-send-email-quic_mojha@quicinc.com>
- <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
+        d=1e100.net; s=20230601; t=1694432371; x=1695037171;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+xobEw3dWGWqa/MKJ616lGiXiH8NsToU1rm76WPlst0=;
+        b=tgZnAya3K1K0lANfsxyUYC5lg5+6X2uTDOOyT0WLUPlIjXiB+CdM3bcK7Uf/+2OkY6
+         F1Cj0m94tg+ks3l7PI75Sr9TV0yGN9d2UXYr5NPMY5rcsRZR9I7ucBK1q8QW/otTa8B5
+         le5do5+YnCtkAPelve/yQnhe1h5vp/8TLQmmwQ723VdUgWE0OAxFX/EeKtaCDs/dfFpC
+         CM823R6bjowvXN5ai+pLxJpidvx9xuBKxyP4pMRJpSx/9JsC35Abd7HoI6DuVjTXwaBy
+         K5tpjJuPuScILsFFZEbV+SwrLr9xlKZ9D4285D4jddVzs/pEqKmGuBDoG4BG8efY0C6B
+         JciA==
+X-Gm-Message-State: AOJu0YzOc21ciYI4Ro+H2M9K5rK3yG5h9SCTWIfEmHcIcQpyBF5EjCEq
+        izipb7b785gVsxtW04EIDGSjYw==
+X-Google-Smtp-Source: AGHT+IG71SGDp/D1D4AhCLBkMhgmC1yfDcdZoDBZg1is1WJqDXuiI7ooRn5v+pBNF3d59frbXMBphQ==
+X-Received: by 2002:adf:f302:0:b0:319:790e:3bc5 with SMTP id i2-20020adff302000000b00319790e3bc5mr7018815wro.41.1694432371116;
+        Mon, 11 Sep 2023 04:39:31 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.214.188])
+        by smtp.gmail.com with ESMTPSA id g15-20020a056402180f00b00523b1335618sm4431003edy.97.2023.09.11.04.39.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Sep 2023 04:39:30 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1694290578-17733-12-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/8] arm64: dts: exynos: exynos5433-tm2: switch sound card to audio-routing
+Date:   Mon, 11 Sep 2023 13:39:23 +0200
+Message-Id: <169443234709.34398.9426055874115362482.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230731095730.204567-1-krzysztof.kozlowski@linaro.org>
+References: <20230731095730.204567-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 09/09/2023 22:16, Mukesh Ojha wrote:
-> Register all the pstore frontend with minidump, so that they can
-> be dumped as default Linux minidump region to be collected on
-> SoC where minidump is enabled.
+
+On Mon, 31 Jul 2023 11:57:23 +0200, Krzysztof Kozlowski wrote:
+> "samsung,audio-routing" property is being deprecated, so switch to
+> generic "audio-routing".
+> 
 > 
 
-...
+Applied, thanks!
 
-> +
-> +	record.type = type;
-> +	record.id = 0;
-> +	max_dump_cnt = 0;
-> +	name = pstore_type_to_name(record.type);
-> +	do {
-> +		ret = pstore_region_defined(&record, &virt, &phys, &size, &max_dump_cnt);
-> +		if (ret < 0)
-> +			break;
-> +
-> +		mdr_list = devm_kzalloc(dev, sizeof(struct md_region_list), GFP_KERNEL);
-
-sizeof(*)
-
-Please fix it everywhere in your code.
-
-> +		if (!mdr_list)
-> +			return -ENOMEM;
-> +
-> +		md_region = &mdr_list->md_region;
-> +		scnprintf(md_region->name, sizeof(md_region->name) - 1, "K%s%llu", name, record.id);
-> +		md_region->virt_addr = virt;
-> +		md_region->phys_addr = phys;
-> +		md_region->size = size;
-> +		ret = qcom_minidump_region_register(md_region);
-> +		if (ret) {
-> +			pr_err("failed to register minidump region\n");
-> +			break;
-> +		}
-> +
-> +		list_add(&mdr_list->list, &ramoops_region_list);
-> +	} while (record.id < max_dump_cnt && ++record.id);
-> +
-> +	return ret;
-> +}
-
+[1/8] arm64: dts: exynos: exynos5433-tm2: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/4179ae98fd525f2895ac726fcd433e730c5e8727
+[2/8] ARM: dts: samsung: exynos4212-tab3: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/fc730f1702e2a5de9ad52f98189460c0d7d75916
+[3/8] ARM: dts: samsung: exynos4412-galaxy-s3: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/a1116f96688c7e2d210635ec7cb631473d8ef653
+[4/8] ARM: dts: samsung: exynos4412-n710x: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/1222d604dbbbe54a9e9d5811d46f0680cc9972ce
+[5/8] ARM: dts: samsung: exynos4412-odroid: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/f632a4376134722cb16c78d819505aedd9c0d8e3
+[6/8] ARM: dts: samsung: exynos5422-odroid: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/c670e7c8f72f68b4fc20eb85fa6101b5ce108515
+[7/8] ARM: dts: samsung: s5pv210-fascinate4g: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/04e08772a1ffa0620fbf89dfaed3a7aef724c739
+[8/8] ARM: dts: samsung: s5pv210-galaxys: switch sound card to audio-routing
+      https://git.kernel.org/krzk/linux/c/8edc16a1e27a941670907a94d15dbf7f68fbf8c7
 
 Best regards,
-Krzysztof
-
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
