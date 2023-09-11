@@ -2,177 +2,162 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5817979B2A2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:59:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C66D79B150
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Sep 2023 01:51:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348708AbjIKVaI (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 11 Sep 2023 17:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
+        id S1348717AbjIKVaP (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Mon, 11 Sep 2023 17:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238082AbjIKNg1 (ORCPT
+        with ESMTP id S241413AbjIKPIB (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 11 Sep 2023 09:36:27 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1031F106
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 06:36:21 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230911133619euoutp01cd40f49b6eff2582e34b18f6e65b15c0~D26N2LhI22283022830euoutp01O
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 11 Sep 2023 13:36:19 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230911133619euoutp01cd40f49b6eff2582e34b18f6e65b15c0~D26N2LhI22283022830euoutp01O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1694439379;
-        bh=AAP3lLPpv5qsQMoGVy1YUvE2PsB1a2G8WmcojJFngHc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HtBGZ2S811lW7DksCnRHuiskKatvLOtRnzlmEhilIVAEq7Jw5gcrkSiQPFqZFvtDE
-         vGHeT5KIg1DN9/5wvhwJBoOa0BD+y0CTawBKK2WkYfrL5wTS0rA+YVo4eikGIy0CS+
-         TxtERhwVFQy3jjOZZ9kvE3mSLXoYWtw2KaXK7lI8=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20230911133619eucas1p26167a4c2db92fefc14bdf12855d54026~D26NXQxeB1560815608eucas1p2V;
-        Mon, 11 Sep 2023 13:36:19 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 5B.B1.42423.3D71FF46; Mon, 11
-        Sep 2023 14:36:19 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20230911133618eucas1p2d40b075ee6baebbec9f991eb01f21d89~D26M5xJ5x2314623146eucas1p2d;
-        Mon, 11 Sep 2023 13:36:18 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230911133618eusmtrp22a0face45ce4adcde68bbd79a49352ed~D26M5AlLS0862108621eusmtrp2u;
-        Mon, 11 Sep 2023 13:36:18 +0000 (GMT)
-X-AuditID: cbfec7f2-a3bff7000002a5b7-6b-64ff17d3cd0b
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id C3.8A.14344.2D71FF46; Mon, 11
-        Sep 2023 14:36:18 +0100 (BST)
-Received: from AMDC4515.eu.corp.samsungelectronics.net (unknown
-        [106.120.51.28]) by eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20230911133617eusmtip25e8141ecc53adabce50419a6af992bef~D26L0r9QR0735907359eusmtip22;
-        Mon, 11 Sep 2023 13:36:17 +0000 (GMT)
-From:   Mateusz Majewski <m.majewski2@samsung.com>
-To:     linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc:     Mateusz Majewski <m.majewski2@samsung.com>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH v2 5/7] thermal: exynos: stop using the threshold mechanism
- on Exynos 4210
-Date:   Mon, 11 Sep 2023 15:34:29 +0200
-Message-ID: <20230911133435.14061-6-m.majewski2@samsung.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230911133435.14061-1-m.majewski2@samsung.com>
+        Mon, 11 Sep 2023 11:08:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A809FA;
+        Mon, 11 Sep 2023 08:07:57 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 38BCSGRL031218;
+        Mon, 11 Sep 2023 15:07:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M/smHuhk+GMwiaIFqSp0QnUyhRqMkvHvq61BOMETG3o=;
+ b=X2GbFT2FWpuGQ0iHfzHfjRxH2IelXDoaBDySPx5b09500+V4katOMSKlLPS0+5Z4asUv
+ nL7zWUnM5hrRiMVTyPqmbwQVzfNFlfIhljJEusTZe7monlVSqOxcckFW/V43vd1fJaAB
+ 3SLbocvICLOeCBGFpqzuGqMwzIQoyjZ7e4VacTx7/y7wZRBVPqwtSrzw/zPmCqJZ2fvi
+ 2TCiLFpQLfQbPOgj5ibnqRCM8qKx+4fK3pMYouzyvflZnpNLeKgVxZj1v7H4cVtGi9H+
+ ham2bZWDSqJTX5hipCXdJslEa8y+QoJzmUfKvpV0VONcWnoOXe0fcxYImvKRUaxRJHkZ qA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3t1yac8uuh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 15:07:25 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 38BF7NvQ031544
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 11 Sep 2023 15:07:24 GMT
+Received: from [10.216.14.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.36; Mon, 11 Sep
+ 2023 08:07:09 -0700
+Message-ID: <9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com>
+Date:   Mon, 11 Sep 2023 20:37:03 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrPKsWRmVeSWpSXmKPExsWy7djP87qXxf+nGPSuErV4MG8bm8Xh+RUW
-        Ux8+YbP4vuU6k8W8z7IWe19vZbf4dqWDyWLT42usFpd3zWGz+Nx7hNFixvl9TBYTj01mtlh7
-        5C67xdwvU5ktnjzsY3Pg99g56y67x+I9L5k8Nq3qZPO4c20Pm8fmJfUefVtWMXp83iQXwB7F
-        ZZOSmpNZllqkb5fAlXH9xRbGgpX8FYdaP7E0ML7j6WLk5JAQMJG4umACYxcjF4eQwApGiWkf
-        n7FAOF8YJX5t/8IM4XxmlLi78QsrTMvDX0ehqpYzSjTe38YO4bQySez+cIIFpIpNwEDiwZtl
-        7CC2iEAro8TMJnWQImaBS8wSd2+uBSsSFoiRODbtO5jNIqAqsfP+UbAVvAI2EpcXvmeGWCcv
-        8fzWHbBBnAK2EmfXTmeHqBGUODnzCVgvM1BN89bZYLdKCDRzSnxrbIK61UXi7KpNjBC2sMSr
-        41vYIWwZif875zNB2PkSMza/BxrEAWRXSNw96AVhWkt8PMMMYjILaEqs36UPUewocXbXMkaI
-        Cj6JG28FIQ7gk5i0bTozRJhXoqNNCKJaVeL4nklQf0hLPGm5DbXSQ+LH5x9MExgVZyF5ZRaS
-        V2Yh7F3AyLyKUTy1tDg3PbXYMC+1XK84Mbe4NC9dLzk/dxMjMI2d/nf80w7Gua8+6h1iZOJg
-        PMQowcGsJMJbcuhvihBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFebduTyUIC6YklqdmpqQWpRTBZ
-        Jg5OqQamjEVNKZ8qRA5fWyrhb//t0Rcx32/HF3zMsD7bbnJZvCE/4e+rs/cXGMf9nHRO5nLd
-        HYf5PRNu5KlwPC+dnCwjYcnsxul6a+ffA5UR3RPEQ39ULL10/8vy9L9rXwbervcI+HrB9ZTd
-        pGcPE3+Ivp+wyNZogplcj7XEwfqyAqc9vp1zU1ee4fC1CJmhnLBy7c+Naj+ESqJCRX+1x+QK
-        rEqb9NTs2gE5gVXXTfLCs5mfmek9nXxikezrRYf3lfbrHuj5ViElWVDP47KvSfvS0tt7vSb5
-        l+Yl7v2owaAXWWy80VD3zopPF8I+5Ku3+e70Xej8Q2nhoaXKcy97/Ipj4pc8K1rtX+yVrSLC
-        rRu39JO2EktxRqKhFnNRcSIAubsW1dIDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsVy+t/xe7qXxP+nGHR1m1g8mLeNzeLw/AqL
-        qQ+fsFl833KdyWLeZ1mLva+3slt8u9LBZLHp8TVWi8u75rBZfO49wmgx4/w+JouJxyYzW6w9
-        cpfdYu6XqcwWTx72sTnwe+ycdZfdY/Gel0wem1Z1snncubaHzWPzknqPvi2rGD0+b5ILYI/S
-        synKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaPtTIyVdK3s0lJzcksSy3St0vQy7j+Ygtj
-        wUr+ikOtn1gaGN/xdDFyckgImEg8/HWUBcQWEljKKDGpSREiLi1x+MsUdghbWOLPtS62LkYu
-        oJpmJok9T7+BJdgEDCQevFnGDpIQEehklOjafI4JJMEscItZ4v5rLRBbWCBK4uqrV4wgNouA
-        qsTO+0dZQWxeARuJywvfM0NskJd4fusO2FBOAVuJs2unA9kcQNtsJPrP6ECUC0qcnPmEBWK8
-        vETz1tnMExgFZiFJzUKSWsDItIpRJLW0ODc9t9hIrzgxt7g0L10vOT93EyMw4rYd+7llB+PK
-        Vx/1DjEycTAeYpTgYFYS4S059DdFiDclsbIqtSg/vqg0J7X4EKMp0NkTmaVEk/OBMZ9XEm9o
-        ZmBqaGJmaWBqaWasJM7rWdCRKCSQnliSmp2aWpBaBNPHxMEp1cC05lnwZP3FL3Vzj0SIdU3a
-        FWSTHu50+btF4M8ANi+FazyBR17/XnX1Cc+boAlvdU4L2k7jDJBsriw4e/r05SOMoSvuWs9/
-        ey/XIbVi49poL4tYNt/cqFp+K9t9hzbuWbD67tRpi79veRb2J11+17evL14nNn0VV3A6v6ml
-        mu37IcdpkRHWe+02uq+yT5pkH9vpX/Nu/422L3wZQVtqXWwMDn14/njvX1f7UwwrO4KOa919
-        demj/sRs8/IJa/xXHZVWKjr7/oQt8ySjILuqinPfuTl1xF+UbLVUmNARLJ7Y/2He3ZcbZr/q
-        mvb40/TF+UuZvJObOLavavXbMiF4TmJfnPuCD8KMf8qshDTnF6+qUWIpzkg01GIuKk4EADSU
-        f/RBAwAA
-X-CMS-MailID: 20230911133618eucas1p2d40b075ee6baebbec9f991eb01f21d89
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20230911133618eucas1p2d40b075ee6baebbec9f991eb01f21d89
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230911133618eucas1p2d40b075ee6baebbec9f991eb01f21d89
-References: <20230911133435.14061-1-m.majewski2@samsung.com>
-        <CGME20230911133618eucas1p2d40b075ee6baebbec9f991eb01f21d89@eucas1p2.samsung.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [REBASE PATCH v5 15/17] firmware: scm: Modify only the download
+ bits in TCSR register
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, <corbet@lwn.net>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
+        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
+        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
+        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>
+CC:     <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
+        "Poovendhan Selvaraj" <quic_poovendh@quicinc.com>
+References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
+ <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <1694429639-21484-16-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
+X-Proofpoint-GUID: ZDO2ULWUeou-4qYw_-dQxukWf0tQGiKd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-11_10,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0 suspectscore=0
+ clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
+ definitions=main-2309110138
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Exynos 4210 supports setting a base threshold value, which is added to
-all trip points. This might be useful, but is not really necessary in
-our usecase, so we always set it to 0 to simplify the code a bit.
 
-Additionally, this change makes it so that we convert the value to the
-calibrated one in a slightly different place. This is more correct
-morally, though it does not make any change when single-point
-calibration is being used (which is the case currently).
+On 9/11/2023 4:23 PM, Mukesh Ojha wrote:
+> Crashdump collection is based on the DLOAD bit of TCSR register.
+> To retain other bits, we read the register and modify only the
+> DLOAD bit as the other bits have their own significance.
+>
+> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
+> ---
+>   drivers/firmware/qcom_scm.c | 16 ++++++++++++++--
+>   1 file changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 321133f0950d..5cacae63ee2a 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -5,6 +5,8 @@
+>   #include <linux/platform_device.h>
+>   #include <linux/init.h>
+>   #include <linux/interrupt.h>
+> +#include <linux/bitfield.h>
+> +#include <linux/bits.h>
+>   #include <linux/completion.h>
+>   #include <linux/cpumask.h>
+>   #include <linux/export.h>
+> @@ -26,6 +28,14 @@
+>   static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
+>   module_param(download_mode, bool, 0);
+>   
+> +#define SCM_HAS_CORE_CLK	BIT(0)
+> +#define SCM_HAS_IFACE_CLK	BIT(1)
+> +#define SCM_HAS_BUS_CLK		BIT(2)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mateusz Majewski <m.majewski2@samsung.com>
----
- drivers/thermal/samsung/exynos_tmu.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/thermal/samsung/exynos_tmu.c b/drivers/thermal/samsung/exynos_tmu.c
-index 8451deb65f43..77afbf9f2db0 100644
---- a/drivers/thermal/samsung/exynos_tmu.c
-+++ b/drivers/thermal/samsung/exynos_tmu.c
-@@ -343,20 +343,7 @@ static void exynos_tmu_control(struct platform_device *pdev, bool on)
- static void exynos4210_tmu_set_trip_temp(struct exynos_tmu_data *data,
- 					 int trip_id, u8 temp)
- {
--	struct thermal_trip trip;
--	u8 ref, th_code;
--
--	if (thermal_zone_get_trip(data->tzd, 0, &trip))
--		return;
--
--	ref = trip.temperature / MCELSIUS;
--
--	if (trip_id == 0) {
--		th_code = temp_to_code(data, ref);
--		writeb(th_code, data->base + EXYNOS4210_TMU_REG_THRESHOLD_TEMP);
--	}
--
--	temp -= ref;
-+	temp = temp_to_code(data, temp);
- 	writeb(temp, data->base + EXYNOS4210_TMU_REG_TRIG_LEVEL0 + trip_id * 4);
- }
- 
-@@ -371,6 +358,8 @@ static void exynos4210_tmu_initialize(struct platform_device *pdev)
- 	struct exynos_tmu_data *data = platform_get_drvdata(pdev);
- 
- 	sanitize_temp_error(data, readl(data->base + EXYNOS_TMU_REG_TRIMINFO));
-+
-+	writeb(0, data->base + EXYNOS4210_TMU_REG_THRESHOLD_TEMP);
- }
- 
- static void exynos4412_tmu_set_trip_temp(struct exynos_tmu_data *data,
--- 
-2.41.0
+Is this intentional to add these macros back again?
 
+
+> +
+> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
+> +#define QCOM_DLOAD_FULLDUMP	0x1
+> +#define QCOM_DLOAD_NODUMP	0x0
+> +
+>   struct qcom_scm {
+>   	struct device *dev;
+>   	struct clk *core_clk;
+> @@ -440,6 +450,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>   
+>   static void qcom_scm_set_download_mode(bool enable)
+>   {
+> +	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
+>   	bool avail;
+>   	int ret = 0;
+>   
+> @@ -449,8 +460,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>   	if (avail) {
+>   		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>   	} else if (__scm->dload_mode_addr) {
+> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+> +					       QCOM_DLOAD_MASK,
+> +					       FIELD_PREP(QCOM_DLOAD_MASK, val));
+>   	} else {
+>   		dev_err(__scm->dev,
+>   			"No available mechanism for setting download mode\n");
