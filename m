@@ -2,112 +2,93 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3FFD7A69EF
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Sep 2023 19:50:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81AA97A74C6
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 20 Sep 2023 09:48:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbjISRuG (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 19 Sep 2023 13:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
+        id S234022AbjITHsn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Wed, 20 Sep 2023 03:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232662AbjISRuG (ORCPT
+        with ESMTP id S234069AbjITHsR (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 19 Sep 2023 13:50:06 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116A0B3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Sep 2023 10:50:00 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier8-0006L7-8G; Tue, 19 Sep 2023 19:49:50 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier6-007VW0-Ux; Tue, 19 Sep 2023 19:49:48 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qier6-0034X5-Ld; Tue, 19 Sep 2023 19:49:48 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-iio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 09/49] iio: adc: exynos: Convert to platform remove callback returning void
-Date:   Tue, 19 Sep 2023 19:48:51 +0200
-Message-Id: <20230919174931.1417681-10-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
-References: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
+        Wed, 20 Sep 2023 03:48:17 -0400
+X-Greylist: delayed 362 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 20 Sep 2023 00:47:42 PDT
+Received: from mail.venturelinkage.com (mail.venturelinkage.com [80.211.143.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1565F10E2
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Sep 2023 00:47:42 -0700 (PDT)
+Received: by mail.venturelinkage.com (Postfix, from userid 1002)
+        id C503C826F7; Wed, 20 Sep 2023 09:41:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venturelinkage.com;
+        s=mail; t=1695195698;
+        bh=7iowqdzve/IIiUUjcEwx8j3uMrVqqiE7R9zbOCKRV9Q=;
+        h=Date:From:To:Subject:From;
+        b=b79WA0CzS3tg9tZmS7bhDaydWqRCLXXzPJHRoMhrBWYIRC1AegExAmh01iR0n9/vi
+         n1Q/Tk4fakCe9PvZyqk2ay2lXsLofy+s8UhXxfMcbRn6bGB4tTVQBQN6Zyw3jNy/bj
+         kSzdg8bLZfoMUtVfdUsHiISnBC9l2s5A+scqIYMAA/Jau1OISnKFxeDEjl+or5qJTZ
+         PXUgUpb45MyK07AyDcHe9Nkk7Wat34ifBziZhWtWgSqDhjGn99ubUBrUD1c2f+BfUg
+         9Osk9vToJPuxuOQAdei2JqHNx7ItKwiz0Ej/vXaGsRSSPoTdtqAnvAxGKztk/pFIwo
+         0CxgglMr72cHg==
+Received: by mail.venturelinkage.com for <linux-samsung-soc@vger.kernel.org>; Wed, 20 Sep 2023 07:41:26 GMT
+Message-ID: <20230920084500-0.1.l.11s1.0.c05rfb633f@venturelinkage.com>
+Date:   Wed, 20 Sep 2023 07:41:26 GMT
+From:   "Lukas Varga" <lukas.varga@venturelinkage.com>
+To:     <linux-samsung-soc@vger.kernel.org>
+Subject: =?UTF-8?Q?Popt=C3=A1vka?=
+X-Mailer: mail.venturelinkage.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1968; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=BsqfNTwJdlz+LevSIl7H41XOmHPIvO8Y6ld7+BIbnfM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCd75eK5dSkdZ64Kwlc4XhWqdejgJjU3KJzw7s VevhTO5J8aJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQne+QAKCRCPgPtYfRL+ TkemB/9WOntbKVIxy02vMHYgGFx4BBV2yA2oadceg7P5RHZyDMRUl3T1zmVYifTcwrtpTAijNCv k/pSjCE0BAtKms0xR802bAPsr/HbyiqWp8uRwU1FBjrhw1Rf7ZBM1EFrM3VK0zZ3WVS7I3o236Q iSS6xoK0ypniyYLExhLnE+3075SkjwUKitPptEdDalW/YfTICtsq0JsuGxqAkjA+9tdp6WGBvKI Xa55M9BzTmzo/W+HDh/V6XPUGgSE20Lr9WSgVENhkoA0ngbPGNtkbTUEs3IYQ+Zbn+Q4auO1BYg U1kU5t93Zrn3I/zT8xopoFkSQC/jo2jGdV1sS/HNiXUpSwNI
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_FMBLA_NEWDOM28,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
+        *      blocklist
+        *      [URIs: venturelinkage.com]
+        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        *      [80.211.143.151 listed in zen.spamhaus.org]
+        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
+        *      blocklist
+        *      [URIs: venturelinkage.com]
+        *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
+        *      DNSWL was blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [80.211.143.151 listed in list.dnswl.org]
+        * -0.0 BAYES_20 BODY: Bayes spam probability is 5 to 20%
+        *      [score: 0.0529]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        *  0.8 FROM_FMBLA_NEWDOM28 From domain was registered in last 14-28
+        *      days
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Dobr=C3=A9 r=C3=A1no,
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Dovolil jsem si V=C3=A1s kontaktovat, proto=C5=BEe m=C3=A1m z=C3=A1jem ov=
+=C4=9B=C5=99it mo=C5=BEnost nav=C3=A1z=C3=A1n=C3=AD spolupr=C3=A1ce.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/iio/adc/exynos_adc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Podporujeme firmy p=C5=99i z=C3=ADsk=C3=A1v=C3=A1n=C3=AD nov=C3=BDch obch=
+odn=C3=ADch z=C3=A1kazn=C3=ADk=C5=AF.
 
-diff --git a/drivers/iio/adc/exynos_adc.c b/drivers/iio/adc/exynos_adc.c
-index cff1ba57fb16..eb7a2dd59517 100644
---- a/drivers/iio/adc/exynos_adc.c
-+++ b/drivers/iio/adc/exynos_adc.c
-@@ -946,7 +946,7 @@ static int exynos_adc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int exynos_adc_remove(struct platform_device *pdev)
-+static void exynos_adc_remove(struct platform_device *pdev)
- {
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct exynos_adc *info = iio_priv(indio_dev);
-@@ -964,8 +964,6 @@ static int exynos_adc_remove(struct platform_device *pdev)
- 	exynos_adc_disable_clk(info);
- 	exynos_adc_unprepare_clk(info);
- 	regulator_disable(info->vdd);
--
--	return 0;
- }
- 
- static int exynos_adc_suspend(struct device *dev)
-@@ -1006,7 +1004,7 @@ static DEFINE_SIMPLE_DEV_PM_OPS(exynos_adc_pm_ops, exynos_adc_suspend,
- 
- static struct platform_driver exynos_adc_driver = {
- 	.probe		= exynos_adc_probe,
--	.remove		= exynos_adc_remove,
-+	.remove_new	= exynos_adc_remove,
- 	.driver		= {
- 		.name	= "exynos-adc",
- 		.of_match_table = exynos_adc_match,
--- 
-2.40.1
+M=C5=AF=C5=BEeme si promluvit a poskytnout podrobnosti?
 
+V p=C5=99=C3=ADpad=C4=9B z=C3=A1jmu V=C3=A1s bude kontaktovat n=C3=A1=C5=A1=
+ anglicky mluv=C3=ADc=C3=AD z=C3=A1stupce.
+
+
+Pozdravy
+Lukas Varga
