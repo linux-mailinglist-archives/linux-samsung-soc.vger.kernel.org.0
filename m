@@ -2,136 +2,115 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF8C17B324B
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 29 Sep 2023 14:18:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 919537B37C6
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 29 Sep 2023 18:19:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233203AbjI2MSK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 29 Sep 2023 08:18:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55466 "EHLO
+        id S233215AbjI2QTn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 29 Sep 2023 12:19:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbjI2MSJ (ORCPT
+        with ESMTP id S232883AbjI2QTm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 29 Sep 2023 08:18:09 -0400
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B13C7195
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 29 Sep 2023 05:18:07 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20230929121806euoutp0243bf41ee4a72186b31f12c640071085e~JXdDtJeBm1101411014euoutp02C
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 29 Sep 2023 12:18:06 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20230929121806euoutp0243bf41ee4a72186b31f12c640071085e~JXdDtJeBm1101411014euoutp02C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1695989886;
-        bh=L2S/Qqh17Y6dRqVOiBnPiQaWvvdVHFT6HxbDcIE/924=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=Zl8TUIBMENqCSv5LPfe1+5eCuS9CkTvF3cFsA7hsqkoZKUmzw9rcuIkSltAuEtdVJ
-         L87Mz/EMkcm3p9DEQCHeXjtYfC33x95luhIPWXFmQO4AL1TiXD5SRS7MdN9oThwST/
-         S4pEmC4mvC/6ARkegOQGqAAXHU6JvkrOH9rnKUjk=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20230929121806eucas1p15dd857a20cc8293f360f44c2d9c5766a~JXdDhma8v0592705927eucas1p1E;
-        Fri, 29 Sep 2023 12:18:06 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id 97.03.11320.E70C6156; Fri, 29
-        Sep 2023 13:18:06 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c~JXdDEUKrl0592705927eucas1p1D;
-        Fri, 29 Sep 2023 12:18:05 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230929121805eusmtrp210e4f2d09c89ca12bc1bc79f462cfe6d~JXdDDvUEQ1696416964eusmtrp2c;
-        Fri, 29 Sep 2023 12:18:05 +0000 (GMT)
-X-AuditID: cbfec7f4-97dff70000022c38-2d-6516c07e01c0
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 82.E1.10549.D70C6156; Fri, 29
-        Sep 2023 13:18:05 +0100 (BST)
-Received: from AMDC4653.digital.local (unknown [106.120.51.32]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20230929121805eusmtip2b70ba01d9863b22623ff2c61b014e0ea~JXdCowJXo2572825728eusmtip2F;
-        Fri, 29 Sep 2023 12:18:05 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Fri, 29 Sep 2023 12:19:42 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F7D51AE
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 29 Sep 2023 09:19:40 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmGD6-0007mo-1p; Fri, 29 Sep 2023 18:19:24 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmGD4-009r5J-2y; Fri, 29 Sep 2023 18:19:22 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmGD3-00615m-Ou; Fri, 29 Sep 2023 18:19:21 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>, linux-pwm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH] ARM: multi_v7_defconfig: make Exynos related PHYs modules
-Date:   Fri, 29 Sep 2023 14:18:00 +0200
-Message-Id: <20230929121800.1722211-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.34.1
+        linux-samsung-soc@vger.kernel.org,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        chrome-platform@lists.linux.dev
+Subject: [PATCH 00/11] pwm: Some random cleanups
+Date:   Fri, 29 Sep 2023 18:19:07 +0200
+Message-Id: <20230929161918.2410424-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1447; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=EU2LjIzzIEw1uOSkgKF6jDTiS5CXMLB75+qFfOk57jI=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlFvj0VfUlmGHNT0hrh6Yv9rwSiuxTi4ATgbZcq HPOTBZ67PiJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZRb49AAKCRCPgPtYfRL+ TlSiB/9Njt9Jdg9B7UzciPo87WQq9tGAbpUf6QFamH+saJ1AQm4yHL6lCd2oMFbBFlkLpalWp5Q Ynhb2OC//zWV/w66/9erqdkKn5LTizfPsEJWy5ED6PvZi4fUxWdYy+oihDDO5fnq0xCqXClqL4t W38Mvf9eGBlF+7GR+xlsYLtTgFvLoCHgWXvshv0IbIxpNGWL5ECEeZLNLWODax95gD2jb4vhIQS jtStovnFEYHljix7uE8O6A8ls/IcFj2TQ/Lr9HJ3hiUIjgYRLCLnOIvb4mdZllSmudbdVQAlKqN gBs2FuQnXjr2XEPOQhb9hEh41lHHoB9/iMUdDKfXZP/hw29+
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42LZduzned26A2KpBvf+Clo8mLeNzeLvpGPs
-        Fntfb2W32PT4GqvFjPP7mCzWHrnL7sDm8fvXJEaPO9f2sHlsXlLv0bdlFaPH501yAaxRXDYp
-        qTmZZalF+nYJXBlbjrxhKVjPVjFh3VumBsbjrF2MnBwSAiYSk66+Ze9i5OIQEljBKPGr5QeU
-        84VRoufUXBYI5zOjxPF1c9hhWlY27GGCSCxnlHhyv5URrqXjyyomkCo2AUOJrrddbF2MHBwi
-        At4Sy68pgtQwC6xnlLj0ZRYrSFxYwEui+7UcSDmLgKrEldNzGUFsXgF7iaOz1jNDLJOX2H/w
-        LDNEXFDi5MwnLCA2M1C8eetsZpCZEgIzOSQ6Jq9lgWhwkTjX8x/KFpZ4dXwL1NUyEv93zmeC
-        aGhnlFjw+z6UM4FRouH5LUaIKmuJO+d+gV3NLKApsX6XPkTYUeLZj93MIGEJAT6JG28FIY7g
-        k5i0bTpUmFeio00IolpNYtbxdXBrD164BPWLh8TuCWvB4S4kECvx/dwVpgmMCrOQvDYLyWuz
-        EG5YwMi8ilE8tbQ4Nz212CgvtVyvODG3uDQvXS85P3cTIzDBnP53/MsOxuWvPuodYmTiYDzE
-        KMHBrCTC+/C2UKoQb0piZVVqUX58UWlOavEhRmkOFiVxXm3bk8lCAumJJanZqakFqUUwWSYO
-        TqkGpuRz742+s+3jOLl266LoBt09evXPOjQFlgVb3JnysCY2MODxjukr3Kp5NVydt98TPfbI
-        d1FQaGhFRxtDUOGm9K1yd7estYhaknCfO233V6nqiq+2W6qvpna26HAfeOfNfXe/3dHtXT99
-        RQ2PmOmF2t0rZy7Y7+j4UVnCSTN4+mEpt3+GCRkBjaXx2lz1kstT5t2dvv7C3bepKRffKyxu
-        lJDnY/GemfGtwpHh2ZNrh9LeLdTQz1zxIXe5Qnn/Ngfp21wXrI94hPYe9vS1alHe/TpiaXD9
-        QZucn8JzH1nsUZlz0d58W3vW/ZkS0qo5Ynx7XDh/53VOPrbcxXPOvm0NS00MfRxfdIh+nMAc
-        x+atxFKckWioxVxUnAgAKlz5UZ8DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrELMWRmVeSWpSXmKPExsVy+t/xe7q1B8RSDa5eNLF4MG8bm8XfScfY
-        Lfa+3spusenxNVaLGef3MVmsPXKX3YHN4/evSYwed67tYfPYvKTeo2/LKkaPz5vkAlij9GyK
-        8ktLUhUy8otLbJWiDS2M9AwtLfSMTCz1DI3NY62MTJX07WxSUnMyy1KL9O0S9DK2HHnDUrCe
-        rWLCurdMDYzHWbsYOTkkBEwkVjbsYepi5OIQEljKKLHo21mohIzEyWkNULawxJ9rXWwQRZ8Y
-        JSY+uc4GkmATMJToetsFZosI+Eo0f93AClLELLCRUWL/whaWLkYODmEBL4nu13IgNSwCqhJX
-        Ts9lBLF5Bewljs5azwyxQF5i/8GzzBBxQYmTM5+wgNjMQPHmrbOZJzDyzUKSmoUktYCRaRWj
-        SGppcW56brGhXnFibnFpXrpecn7uJkZgYG879nPzDsZ5rz7qHWJk4mA8xCjBwawkwvvwtlCq
-        EG9KYmVValF+fFFpTmrxIUZToPsmMkuJJucDYyuvJN7QzMDU0MTM0sDU0sxYSZzXs6AjUUgg
-        PbEkNTs1tSC1CKaPiYNTqoHJv+T619qZFcH+Ta/WZ8QUFi6MnF+7Z+KbpwtF6iRjYzZ4sV//
-        cP3WofdZnYIz2zoX9ex0myXaXnRvwnoBQfEz3xm29Nc+rtKc8rctbnmfHqP55Y5VJRwPzSse
-        l7SujrjLYVYXemLXA+GPsZ+nvNt984XXjMKCsm8LVLLtWrzfuXXW7f6cF8wr+X6OdMTlbTL7
-        I28Za6fPfSe0IEGy9/53sdeGOxReGnhvE9i8urd3zcUnl2rmz7v9ZufF3Cl3jdhu7X+8oPN7
-        RJS28T1NNt8PTrry1xa39uU6dC+1cWPaJem2aPfyU3xTu2+9P3zeSWFLpOmViS39j65kMT3R
-        UPoscCGZSaFlmURItc2Eiu1vlFiKMxINtZiLihMBSCe30fUCAAA=
-X-CMS-MailID: 20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c
-References: <CGME20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c@eucas1p1.samsung.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Exynos Display Port PHY and Exynos MIPI Video PHY drivers are not
-essential to boot on the Exynos based system, so make them modules
-instead of build-in.
+Hello,
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- arch/arm/configs/multi_v7_defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+this is a set of patches I based my efforts for closing a race condition
+in the pwm core on. I thought I already sent them out, but it seems I
+didn't. So here they come!
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index dbba33cfb3bf..4b7810a09aa6 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -1201,6 +1201,8 @@ CONFIG_PHY_QCOM_USB_HS=y
- CONFIG_PHY_RCAR_GEN2=m
- CONFIG_PHY_ROCKCHIP_DP=m
- CONFIG_PHY_ROCKCHIP_USB=y
-+CONFIG_PHY_EXYNOS_DP_VIDEO=m
-+CONFIG_PHY_EXYNOS_MIPI_VIDEO=m
- CONFIG_PHY_SAMSUNG_USB2=m
- CONFIG_PHY_EXYNOS5250_SATA=m
- CONFIG_PHY_UNIPHIER_USB2=y
+Best regards
+Uwe
+
+Uwe Kleine-König (11):
+  pwm: bcm-iproc: Simplify using devm functions
+  pwm: bcm2835: Simplify using devm functions
+  pwm: brcmstb: Simplify using devm functions
+  pwm: imx-tpm: Simplify using devm functions
+  pwm: mtk-disp: Simplify using devm_pwmchip_add()
+  pwm: spear: Simplify using devm functions
+  pwm: sprd: Provide a helper to cast a chip to driver data
+  pwm: sprd: Simplify using devm_pwmchip_add() and dev_err_probe()
+  pwm: vt8500: Simplify using devm functions
+  pwm: samsung: Consistently use the same name for driver data
+  pwm: cros-ec: Simplify using devm_pwmchip_add() and dev_err_probe()
+
+ drivers/pwm/pwm-bcm-iproc.c |  37 +++-------
+ drivers/pwm/pwm-bcm2835.c   |  27 ++------
+ drivers/pwm/pwm-brcmstb.c   |  42 +++---------
+ drivers/pwm/pwm-cros-ec.c   |  33 +++------
+ drivers/pwm/pwm-imx-tpm.c   |  29 ++------
+ drivers/pwm/pwm-mtk-disp.c  |  24 ++-----
+ drivers/pwm/pwm-samsung.c   | 130 ++++++++++++++++++------------------
+ drivers/pwm/pwm-spear.c     |  40 +++--------
+ drivers/pwm/pwm-sprd.c      |  28 +++-----
+ drivers/pwm/pwm-vt8500.c    |  42 +++---------
+ 10 files changed, 137 insertions(+), 295 deletions(-)
+
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
 -- 
-2.34.1
+2.40.1
 
