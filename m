@@ -2,88 +2,103 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B32DF7B3CCF
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 30 Sep 2023 00:57:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1FBF7B48B6
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  1 Oct 2023 19:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233526AbjI2W5g (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 29 Sep 2023 18:57:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38168 "EHLO
+        id S235223AbjJARDi (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 1 Oct 2023 13:03:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjI2W5g (ORCPT
+        with ESMTP id S235213AbjJARDi (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 29 Sep 2023 18:57:36 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2D4EDD;
-        Fri, 29 Sep 2023 15:57:34 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ADFC433C7;
-        Fri, 29 Sep 2023 22:57:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696028254;
-        bh=fMo+CYSaDL4iXScdLYsbbHAA3MELdawJLPLByOOpjN4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pGk3CqiwrnZ5skvAgnxXgDQlvMm/107JQ3OErzqlYe60Q6SYewdWZ6HkPTKRTvKGU
-         5nIcNMOL2NgkJyMJm0p92DRgCkXzT7v+4nKEdQK2tZaLo32MXEnSmfip5Fv2HhjvWy
-         On0ExG3DMxDC458mkd7RmIoQxGY9DG6qy0METdkAdjHh+LS0LIJLwnSZdsVme1NCXH
-         LNoj7luxn5SaBvnwI/wOanEBDAIoYy12llBbr0YGHylLB167T1+es1VFvG9FjbZSoy
-         /1J3EMBRRaTOyQWaIIZ5oGmisWdiMUy9+o1K1R0zwy2hga2KfFuHS0EfuK8b5vujR5
-         fBoepazVaKdOg==
-Date:   Sat, 30 Sep 2023 00:57:28 +0200
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-i2c@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Sun, 1 Oct 2023 13:03:38 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BEB0E9
+        for <linux-samsung-soc@vger.kernel.org>; Sun,  1 Oct 2023 10:03:35 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmzqS-0005BE-PV; Sun, 01 Oct 2023 19:03:04 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmzqM-00AKTT-4F; Sun, 01 Oct 2023 19:02:58 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qmzqL-0079nM-Qh; Sun, 01 Oct 2023 19:02:57 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Jingoo Han <jingoohan1@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kukjin Kim <kgene.kim@samsung.com>,
+        Siva Reddy Kallam <siva.kallam@samsung.com>,
+        Surendranath Gurivireddy Balla <suren.reddy@samsung.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Santosh Shilimkar <santosh.shilimkar@ti.com>,
+        Murali Karicheri <m-karicheri2@ti.com>
+Cc:     Rob Herring <robh@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Wolfram Sang <wsa@kernel.org>
-Subject: Re: [PATCH] i2c: exynos5: add support for atomic transfers
-Message-ID: <20230929225728.uuptlphev4tg7jnf@zenone.zhora.eu>
-References: <CGME20230929113851eucas1p28d902fbb6054951d57314ff181985e30@eucas1p2.samsung.com>
- <20230929113841.1272625-1-m.szyprowski@samsung.com>
+        linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH 0/4] pci: Fix some section mismatches
+Date:   Sun,  1 Oct 2023 19:02:50 +0200
+Message-Id: <20231001170254.2506508-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230929113841.1272625-1-m.szyprowski@samsung.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1166; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=sA6ad3X5iUkL2qhJAsZsIuRXKnigfYSc+1OexbjnF7Y=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlGaY2LW3MWmF/XhhO25KC7SqNqPeRdiMhhtCt5 JFtEgodsDmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZRmmNgAKCRCPgPtYfRL+ TsN5B/4zTs7MkS4yfa2lME9woY5tX1qcMTZyYSeWgqw1OdHyEvE/SYViuzwKlp2vAE9PcxDVVHQ TzTp2TIZuP+5GmotKGAZtFLrUuTAIStIW0zQvAr2cJXKkFVS+OPQRJlDxspdKJ7RmSDmmwiAkuN N6lyzgCTvjPPzI4kCccSkFoPrMLSs2fyz9PG7Mq5sqMwarULlU6eUR6+Kh7u47Jpnk+Xe315tK9 BElLPFR3bMkpTtejhaTUFSU4EmKAVFMjZV7G2wo4XX22gjcb3L7WyXW683Frf0V8HDtJGwctePT 5v7OJrHLn5/9VqK2CaE5nOlcAh2Is7i7dBqHEGGVbKIb4BcM
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek,
+Hello,
 
-> @@ -178,6 +179,7 @@ struct exynos5_i2c {
->  	unsigned int		msg_ptr;
->  
->  	unsigned int		irq;
-> +	unsigned int		polled;
+modpost checks about section mismatches are about to get stronger, see
+https://lore.kernel.org/linux-kbuild/20230930165204.2478282-1-u.kleine-koenig@pengutronix.de
+.
 
-Is this supposed to be called polling?
+With the above patch applied, enabling the exynos and kirin drivers as
+modules result in a warning about their remove functions that is fixed
+here. The keystone driver is a bit special as it can only be enabled
+built-in and used __refdata on its driver struct. It also had a similar
+issue for .probe fixed in the last patch.
 
->  	void __iomem		*regs;
->  	struct clk		*clk;		/* operating clock */
-> @@ -711,6 +713,24 @@ static void exynos5_i2c_message_start(struct exynos5_i2c *i2c, int stop)
->  	spin_unlock_irqrestore(&i2c->lock, flags);
->  }
->  
-> +static unsigned long exynos5_i2c_polled_irqs_timeout(struct exynos5_i2c *i2c,
-> +						     unsigned long timeout_ms)
-> +{
-> +	ktime_t start, now;
-> +
-> +	start = now = ktime_get();
-> +	while (ktime_ms_delta(now, start) < timeout_ms &&
-> +	       !((i2c->trans_done && (i2c->msg->len == i2c->msg_ptr)) ||
-> +	         (i2c->state < 0))) {
-> +		while (readl(i2c->regs + HSI2C_INT_ENABLE) &
-> +		       readl(i2c->regs + HSI2C_INT_STATUS))
-> +			exynos5_i2c_irq(i2c->irq, i2c);
-> +		usleep_range(100, 200);
-> +		now = ktime_get();
-> +	}
-> +	return ktime_ms_delta(now, start) < timeout_ms;
+IMHO all four patches qualify for backporting to stable.
 
-what are you returning here?
+Best regards
+Uwe
 
-Andi
+Uwe Kleine-König (4):
+  PCI: exynos: Don't put .remove callback in .exit.text section
+  PCI: kirin: Don't put .remove callback in .exit.text section
+  PCI: keystone: Don't put .remove callback in .exit.text section
+  PCI: keystone: Don't put .probe callback in .init.text section
+
+ drivers/pci/controller/dwc/pci-exynos.c   | 4 ++--
+ drivers/pci/controller/dwc/pci-keystone.c | 8 ++++----
+ drivers/pci/controller/dwc/pcie-kirin.c   | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+base-commit: 6465e260f48790807eef06b583b38ca9789b6072
+-- 
+2.40.1
+
