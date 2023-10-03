@@ -2,54 +2,54 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B2107B60BA
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Oct 2023 08:26:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BD5F7B60BC
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Oct 2023 08:26:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbjJCG0M (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 3 Oct 2023 02:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44450 "EHLO
+        id S229460AbjJCG0N (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 3 Oct 2023 02:26:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjJCG0L (ORCPT
+        with ESMTP id S230248AbjJCG0M (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 3 Oct 2023 02:26:11 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C648CE
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Oct 2023 23:26:05 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9ad810be221so88151166b.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Oct 2023 23:26:05 -0700 (PDT)
+        Tue, 3 Oct 2023 02:26:12 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5916D3
+        for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Oct 2023 23:26:06 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9a58dbd5daeso82612566b.2
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Oct 2023 23:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1696314364; x=1696919164; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1696314365; x=1696919165; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PpEwkCw5GnWeIajtcnKE26FVy0W9ijUsXwT0C9dhf/Q=;
-        b=JLwioHnOHBe8DaG4nl1z42GWp6JAvL7f99nSkU6OW4ov5KUjQxxRVaMOFvMtajmxK1
-         TWtpsQJThCZLzzYGMwkWFhd/Iovbr7DUBXtWCTuvxkCkKE3En/iWEuwTPCBJnvRO9JH0
-         19alaLWTjlKDiJNP7LjPRQ7AA9rAC1wtf4JuaNefg2v/miHBwD4eq68y0uUK6C0WkWlU
-         y9LHnUl2HK6Kdjn+ZabiAV4iI4oFB9KtKn2FA8aMysewsc6wcKyCQySQIEzNRV2odXgA
-         1W4neCbg2GylqgDmVJ2cKDr8Xe0P8IZmnp4U7FzsOR7Rfbu+L1Rite9fyPDFP0UY2m5s
-         Xmiw==
+        bh=RpS0UjnQn4LpsaH9tdfp1iFcJqkQDO4RglvyM1YPFtI=;
+        b=xiGumAW3xmFlWoFkpjvTuPTKmgb5sgbc8N5NQA3OTEGk9BV1zkri/Bnptg8CZ6EEFi
+         RBOsf9XB1TRvq9pChU/0oAg0Tw/8i+EBM7xYVCt2H9aWkdA7KtEQXPX7+6GVuJuOS2yH
+         anW1GFp8xkzhiX2gbMqjYJ7TkvLqdCpDO0x68GV+VWm8GQDBhqf1J7Hpe1RIEp6VjgxD
+         EgC6jcWta5AdB3R9LyFa2KZyIgOXBHUk4PIj4j8qr/3NpxYeNu2jnp0rVVynkqz+e9Dh
+         w7e4uXhAqypNvpjLKPlcxvGiBprkrOVKcF8O3g3B3klLyWlk+2uV7vInbkHRnYvoGKVk
+         2fDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696314364; x=1696919164;
+        d=1e100.net; s=20230601; t=1696314365; x=1696919165;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PpEwkCw5GnWeIajtcnKE26FVy0W9ijUsXwT0C9dhf/Q=;
-        b=cocFIg3f93Z7Jl27vpBPVX3BLyQxStMfg2sh4VM+4cI7C7tjLrbY/cGepxX4HmBZHy
-         Qin2/lXxJR3V9T3MCTkD2ZN+35XPfdAXh0u8+ZvkwFeEDHCOVKU0MDH98jiWGaEuNjE8
-         jVtqSCdmJ54XEyEg8trUCNAwQgKvudw2QrNr23DzDY2/TCDsRgxW6z9tA8+A2WhINLEy
-         fN4aA/qgXVUXZFJ8j0TFkr6BE6pkb0SIvJyCG95aFhgpN8c6A+fg6uoQzG/EZMDiKoIW
-         Juk27TR7SzYE4/+zflU2uuRerH3i/FmQix6uKAvdhe+PkmI8GZ+CURt85EEPKArT0/+j
-         9VvA==
-X-Gm-Message-State: AOJu0YwPd+IEJzWlxtuDpuT+eEzVxUUxsEkL7vYBJop2ZYgikFDQbq/3
-        oQcXMeLnh2mT9cXKBlSyV4uCCA==
-X-Google-Smtp-Source: AGHT+IErAzIDRQU6+AMoAoRc4mCT35WMprnfrGiXAkO9KI1yfHllcIRvQS7niFnruw1Wa16MEeymjg==
-X-Received: by 2002:a17:906:518d:b0:9a5:a44a:86f3 with SMTP id y13-20020a170906518d00b009a5a44a86f3mr10749411ejk.25.1696314364011;
-        Mon, 02 Oct 2023 23:26:04 -0700 (PDT)
+        bh=RpS0UjnQn4LpsaH9tdfp1iFcJqkQDO4RglvyM1YPFtI=;
+        b=ISoBLfIqG1VwwxEHJ7lOt76EEWs4GJ9TIPyN46ySSKx+W2e2tC6PHToM6uFxos8p11
+         2SSotKsPlpnkoz+LOod9wqJyrhRP3+wq2RgzObyBxWjsUACm8tHwZ+EAcNQATBRNTVCv
+         6oep1ClLd9fr9Xcg/dLXFsaBUN+EAqYYtOKYYZULA7EEGsZdurIz2lDOZ9qWDUjEHcgc
+         H8oSRrT8jGWUzPbDyllO4tVc5PXTIsFi95PMPT1TQMRMwWV2DgUmX/KU6wvoe1F9hF4h
+         9CM3Iw5U6ardFGusCvq5WstO6ZpuFxehPNoRuxIFzmQnAcBHQykcp7f6wHSqjm8ATVVk
+         QShw==
+X-Gm-Message-State: AOJu0Yz6oMTrMsYUjY/ZYsmMOt+Njs2sf/5TlAzT66mxOSwS5YGT4TsX
+        MrIxRtR3qw+WEZ5PbZfHmcGgI5sZHC5dVyYHvlFtpJH3
+X-Google-Smtp-Source: AGHT+IFlqEHZlus//yMXO/jEnT8nr5OXXZbTLmgoM5w5p7gLAWcrjmd3afzTBjhwDDKvdYW62oBYGg==
+X-Received: by 2002:a17:906:3299:b0:9ae:5ba3:9d8f with SMTP id 25-20020a170906329900b009ae5ba39d8fmr12608156ejw.17.1696314365210;
+        Mon, 02 Oct 2023 23:26:05 -0700 (PDT)
 Received: from krzk-bin.. (5-157-101-10.dyn.eolo.it. [5.157.101.10])
-        by smtp.gmail.com with ESMTPSA id fy17-20020a170906b7d100b009adca8ada31sm487583ejb.12.2023.10.02.23.26.02
+        by smtp.gmail.com with ESMTPSA id fy17-20020a170906b7d100b009adca8ada31sm487583ejb.12.2023.10.02.23.26.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 23:26:03 -0700 (PDT)
+        Mon, 02 Oct 2023 23:26:04 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
@@ -57,12 +57,12 @@ To:     linux-arm-kernel@lists.infradead.org,
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH] ARM: multi_v7_defconfig: add AHCI_DWC driver
-Date:   Tue,  3 Oct 2023 08:25:59 +0200
-Message-Id: <169631435596.9647.2846474395495695081.b4-ty@linaro.org>
+Subject: Re: [PATCH] ARM: multi_v7_defconfig: make Exynos related PHYs modules
+Date:   Tue,  3 Oct 2023 08:26:00 +0200
+Message-Id: <169631435596.9647.13620091747493268304.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230928202736.340435-1-m.szyprowski@samsung.com>
-References: <CGME20230928202741eucas1p1b39edbdd390e2b1aaaeea5f8e364d58e@eucas1p1.samsung.com> <20230928202736.340435-1-m.szyprowski@samsung.com>
+In-Reply-To: <20230929121800.1722211-1-m.szyprowski@samsung.com>
+References: <CGME20230929121805eucas1p18f8ad323c1243684436ae831f4cc563c@eucas1p1.samsung.com> <20230929121800.1722211-1-m.szyprowski@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -76,17 +76,17 @@ List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 
-On Thu, 28 Sep 2023 22:27:36 +0200, Marek Szyprowski wrote:
-> Commit 33629d35090f ("ata: ahci: Add DWC AHCI SATA controller support")
-> moved support for "snps,dwc-ahci" compatible (present in exynos5250.dtsi)
-> to separate DWC AHCI driver, so enable this driver in multi_v7_defconfig.
+On Fri, 29 Sep 2023 14:18:00 +0200, Marek Szyprowski wrote:
+> Exynos Display Port PHY and Exynos MIPI Video PHY drivers are not
+> essential to boot on the Exynos based system, so make them modules
+> instead of build-in.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] ARM: multi_v7_defconfig: add AHCI_DWC driver
-      https://git.kernel.org/krzk/linux/c/de1f6a85398e6bff2e6dfa326531daf6358b64dc
+[1/1] ARM: multi_v7_defconfig: make Exynos related PHYs modules
+      https://git.kernel.org/krzk/linux/c/0264be0ac4069530a6fd10dc22f40d3bae343b24
 
 Best regards,
 -- 
