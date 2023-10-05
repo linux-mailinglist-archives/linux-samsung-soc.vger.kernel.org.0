@@ -2,92 +2,72 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2E937BA4C1
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Oct 2023 18:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A4A57BA417
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  5 Oct 2023 18:05:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237956AbjJEQKw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 5 Oct 2023 12:10:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33244 "EHLO
+        id S236783AbjJEQE5 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 5 Oct 2023 12:04:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237803AbjJEQJs (ORCPT
+        with ESMTP id S235867AbjJEQD0 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 5 Oct 2023 12:09:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BDB7E207;
-        Thu,  5 Oct 2023 08:52:27 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 395CwDgK012965;
-        Thu, 5 Oct 2023 15:51:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=fE8UxgxFd/+tbRnT90cqvx9+XVdQKge5mU28dzOU2JI=;
- b=itW+cueeVhBvD/SJRYJKKomxKEJu/qcwwCnA5Jy2XqOiePynqlvXBHE2i7qo3hjZJX/H
- Sdnv1Cwdis7zPbsHUyjJKokb/WvBocElaXd+tpXVCBSYcbWoCJonLAirVuPGLp+URnyD
- cZa8joTdEyZHtpvmtYUN8J9zohRICV+wveXBUxCYiC7YqPDi7E6vuC70OnAnsKsrLc1m
- BT2nc1OjBOqsbAOFwQ9H6yLjIV0fXrij0ZAIiCwTZMYCo5KUxdqr5kNVCLdoDOYspfPf
- OOF37c6Lz0dV4hoRLt7N9YRin2fDIUbbbgdborBgQJNwm/XDTJvw1cHaeG1aGl5Egac1 XA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3thnfa98ys-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 05 Oct 2023 15:51:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 395Fphso012311
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 5 Oct 2023 15:51:43 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.36; Thu, 5 Oct 2023 08:51:31 -0700
-Date:   Thu, 5 Oct 2023 21:21:28 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Kees Cook <keescook@chromium.org>,
-        Will Deacon <will@kernel.org>, <corbet@lwn.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <mathieu.poirier@linaro.org>, <catalin.marinas@arm.com>,
-        <linus.walleij@linaro.org>, <andy.shevchenko@gmail.com>,
-        <vigneshr@ti.com>, <nm@ti.com>, <matthias.bgg@gmail.com>,
-        <kgene@kernel.org>, <alim.akhtar@samsung.com>,
-        <bmasney@redhat.com>, <quic_tsoni@quicinc.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-gpio@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
-Subject: Re: [REBASE PATCH v5 08/17] arm64: mm: Add dynamic ramoops region
- support through command line
-Message-ID: <85d5aea1-71f8-4465-9787-b3289119cac2@quicinc.com>
-References: <1694429639-21484-1-git-send-email-quic_mojha@quicinc.com>
- <1694429639-21484-9-git-send-email-quic_mojha@quicinc.com>
- <20230912101820.GA10884@willie-the-truck>
- <202309131613.C0E12D0D14@keescook>
- <3273977a-be7d-85f6-6754-52a3dd9b784a@quicinc.com>
- <0120ea7e-e9cc-4955-81dd-6801b56068dc@quicinc.com>
- <7c59b835-d29e-04af-7f2f-801da584c71c@quicinc.com>
+        Thu, 5 Oct 2023 12:03:26 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1142B2EABE
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  5 Oct 2023 08:57:20 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40675f06f1fso14039005e9.1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 05 Oct 2023 08:57:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696521438; x=1697126238; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SqhZbDetpDSPGH9tcjVMG0XAAmJGH9VuKuWc007JldY=;
+        b=C2C+Q+Z+zRdZDwHDeapXdo/tr43RPhNwc7tIFqGMZxVVjiUfKuH4F6O49xAZmJdg8i
+         4TmDjveEeb6WNz65G8aS0jWgIWzYlZuZ76KlcXhuU91gdXjj925mhndozhRFewv9d1Cy
+         VW/NuGSmi1Dmu6/+sKhpxbvNkWTZwtg9BgP+tgUfN92IwukyO/O10tgy4iv5OToeAgbo
+         gRUFlLgaJQ6dN+7lP1YwCzwWVMfFqY28E1IJpV2qqd3mAIIjGpeve1EqDxSgK0X7eUJN
+         kxSgHua2JAV88cYCLGbJJo6mbSSXy9YfKhuWSbQXgunILom0slO5enDePor61gBbAyW3
+         R6RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696521438; x=1697126238;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SqhZbDetpDSPGH9tcjVMG0XAAmJGH9VuKuWc007JldY=;
+        b=bpjIgNVEHbP6CZypFbRjIjpFeG+UvJVB/kP1GGgq1In5VlUOFSZN4JZRph/75K2wS7
+         DrGtt522HjEwytzFr9wFzNevOdnq18AfusHzfW9mNVlkW9wSGE1uqfZ0OckGiDPWz071
+         Ucq5qw5ywobedN8NP3UuE4x2rIt7AG/G4SantsshLgMtoNeL+wOlACdaSbRSmMUK3sfp
+         C1S41iZfqSJ2j5M9qEoKKd8JlDDXKjmig2zdpb5bVrJtFsfgv243/5Id8fxNCMyZ3+7c
+         PKW7Q/82X+6mnmoxq3Qe84D4d5MKHPcNd1ZDC/nMgF/WksweQCHq3C7miwqbA+p/kIj/
+         Z07Q==
+X-Gm-Message-State: AOJu0YxcBjLDOkyg0lRrpmfJNTU1YRy1ujO5r1pFB6nS0p7yUD9JiLhh
+        VJpPBjXTbMGCTk2LcVt3BSqAsw==
+X-Google-Smtp-Source: AGHT+IG/GeJb2r19mj4jeu5ZFEFUp7ngzuC6ozd49h0DMFGWzzEf3HPXrcm2cFOkZ8TfC72H5BArow==
+X-Received: by 2002:a5d:668c:0:b0:317:6579:2b9f with SMTP id l12-20020a5d668c000000b0031765792b9fmr2534206wru.30.1696521438335;
+        Thu, 05 Oct 2023 08:57:18 -0700 (PDT)
+Received: from gpeter-l.lan (host-92-12-225-146.as13285.net. [92.12.225.146])
+        by smtp.gmail.com with ESMTPSA id t9-20020a5d4609000000b0031f8a59dbeasm2084336wrq.62.2023.10.05.08.57.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Oct 2023 08:57:17 -0700 (PDT)
+From:   Peter Griffin <peter.griffin@linaro.org>
+To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, conor+dt@kernel.org, sboyd@kernel.org,
+        tomasz.figa@gmail.com, s.nawrocki@samsung.com,
+        linus.walleij@linaro.org, wim@linux-watchdog.org,
+        linux@roeck-us.net, catalin.marinas@arm.com, will@kernel.org,
+        arnd@arndb.de, olof@lixom.net, cw00.choi@samsung.com
+Cc:     peter.griffin@linaro.org, tudor.ambarus@linaro.org,
+        andre.draszik@linaro.org, semen.protsenko@linaro.org,
+        soc@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org
+Subject: [PATCH 00/21] Add minimal Tensor/GS101 SoC support and Oriole/Pixel6 board
+Date:   Thu,  5 Oct 2023 16:55:57 +0100
+Message-ID: <20231005155618.700312-1-peter.griffin@linaro.org>
+X-Mailer: git-send-email 2.42.0.582.g8ccd20d70d-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <7c59b835-d29e-04af-7f2f-801da584c71c@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9576hdoEh0Sr0KThF3OkDVBMsWRJhQEg
-X-Proofpoint-ORIG-GUID: 9576hdoEh0Sr0KThF3OkDVBMsWRJhQEg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-05_10,2023-10-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 spamscore=0
- impostorscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310050123
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -98,82 +78,111 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Thu, Oct 05, 2023 at 09:12:25PM +0530, Mukesh Ojha wrote:
-> 
-> 
-> On 10/5/2023 5:14 PM, Pavan Kondeti wrote:
-> > On Thu, Oct 05, 2023 at 04:52:20PM +0530, Mukesh Ojha wrote:
-> > > Sorry for the late reply, was on a long vacation.
-> > > 
-> > > On 9/14/2023 4:47 AM, Kees Cook wrote:
-> > > > On Tue, Sep 12, 2023 at 11:18:20AM +0100, Will Deacon wrote:
-> > > > > On Mon, Sep 11, 2023 at 04:23:50PM +0530, Mukesh Ojha wrote:
-> > > > > > The reserved memory region for ramoops is assumed to be at a fixed
-> > > > > > and known location when read from the devicetree. This may not be
-> > > > > > required for something like Qualcomm's minidump which is interested
-> > > > > > in knowing addresses of ramoops region but it does not put hard
-> > > > > > requirement of address being fixed as most of it's SoC does not
-> > > > > > support warm reset and does not use pstorefs at all instead it has
-> > > > > > firmware way of collecting ramoops region if it gets to know the
-> > > > > > address and register it with apss minidump table which is sitting
-> > > > > > in shared memory region in DDR and firmware will have access to
-> > > > > > these table during reset and collects it on crash of SoC.
-> > > > > > 
-> > > > > > So, add the support of reserving ramoops region to be dynamically
-> > > > > > allocated early during boot if it is request through command line
-> > > > > > via 'dyn_ramoops_size=' and fill up reserved resource structure and
-> > > > > > export the structure, so that it can be read by ramoops driver.
-> > > > > > 
-> > > > > > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> > > > > > ---
-> > > > > >    arch/arm64/mm/init.c       | 94 ++++++++++++++++++++++++++++++++++++++++++++++
-> > > > > 
-> > > > > Why does this need to be in the arch code? There's absolutely nothing
-> > > > > arm64-specific here.
-> > > > 
-> > > > I would agree: this needs to be in ramoops itself, IMO. It should be a
-> > > > ramoops module argument, too.
-> > > > 
-> > > > It being unhelpful for systems that don't have an external consumer is
-> > > > certainly true, but I think it would still make more sense for this
-> > > > change to live entirely within ramoops. Specifically: you're
-> > > > implementing a pstore backend behavioral change. In the same way that
-> > > > patch 10 is putting the "output" side of this into pstore/, I'd expect
-> > > > the "input" side also in pstore/
-> > > 
-> > > How do we reserve memory? are you suggesting to use dma api's for
-> > > dynamic ramoops ?
-> > > 
-> > Sharing my thoughts:
-> > 
-> > Your patch is inspired from how kexec allocate memory for crash kernel
-> > right?
-> 
-> Yes.
-> 
-> > There is a series [1] which moved arch code (ARM64/x86) to
-> > generic kexec core. Something we should also do as the feedback
-> > received here.
-> > 
-> > Coming to how part, we still have to use memblock API to increase the chance
-> > of allocating contiguous memory. Since PSTORE_RAM can also be
-> > compiled as a module, we probably need another pstore layer that needs to
-> > be built statically in kernel to allocate memory using memblock API.
-> > once slab is available, all memblock API will re-direct to slab
-> > allocations. This layer can be enabled via ARCH_WANTS_PSTORE_xxx or
-> > another config that only supports 'y'. PSTORE_RAM can still be a module but
-> > when this layer is available, it supports dynamic ramoops. Another option
-> > would be just including this layer in PSTORE RAM module but take away module
-> > option  when this layer is enabled.
-> 
-> I thought about this but still the caller will be in Arch code,
-> right ? would that be fine with others ?
-> 
+Hi folks,
 
-The caller is not necessarily to be in the arch code. For ex:
-mm_core_init()->kfence_alloc_pool_and_metadata()
+This series adds initial SoC support for the GS101 SoC and also initial board
+support for Pixel 6 phone (Oriole).
 
-> > 
-> > 
-> > [1]
-> > https://lore.kernel.org/all/20211020020317.1220-6-thunder.leizhen@huawei.com/
+The gs101 / Tensor SoC is also used in Pixel6a (bluejay) and Pixel 6 Pro (raven).
+Currently DT is just added for the gs101 SoC and Oriole.
+
+The support added in this series consists of:
+* cpus
+* pinctrl
+* some CCF clock implementation
+* watchdog
+* uart
+* gpio
+
+This is enough to boot through to a busybox initramfs and shell using an upstream
+kernel though :) More platform support will be added over the following weeks
+and months. Currently we boot with clk_ignore_unused parameter but this will be
+updated as more clocks and platform support lands.
+
+For further information on how to build and flash the upstream kernel on your
+Pixel 6, with a prebuilt busybox initramfs please refer to the script and
+README.md here:
+
+https://git.codelinaro.org/linaro/googlelt/pixelscripts
+
+I've also included the dtbo overlay containing board_id and board_rev in this
+series as otherwise the LK bootloader will bootloop if this is not present in
+the dtbo partition. It seems like it would be nicer for the upstream kernel to
+build all the DT required to boot upstream kernel on a production phone rather
+than having to obtain this dtbo from some other place, but if it is a pain point
+then I can remove it.
+
+Many thanks,
+
+Peter.
+
+Peter Griffin (21):
+  dt-bindings: interrupt-controller: Add gs101 interrupt controller
+  dt-bindings: soc: samsung: exynos-pmu: Add gs101 compatible
+  dt-bindings: clock: Add Google gs101 clock management unit bindings
+  dt-bindings: soc: google: exynos-sysreg: add dedicated SYSREG
+    compatibles to GS101
+  dt-bindings: watchdog: Document Google gs101 & gs201 watchdog bindings
+  dt-bindings: arm: google: Add bindings for Google ARM platforms
+  dt-bindings: pinctrl: samsung: add google,gs101-pinctrl compatible
+  dt-bindings: pinctrl: samsung: add gs101-wakeup-eint compatible
+  dt-bindings: clock: gs101: Add cmu_top clock indices
+  dt-bindings: clock: gs101: Add cmu_apm clock indices
+  dt-bindings: clock: gs101: Add cmu_misc clock indices
+  clk: samsung: clk-pll: Add support for pll_{0516,0517,518}
+  clk: samsung: clk-gs101: Add cmu_top registers, plls, mux and gates
+  clk: samsung: clk-gs101: add CMU_APM support
+  clk: google: gs101: Add support for CMU_MISC clock unit
+  pinctrl: samsung: Add gs101 SoC pinctrl configuration
+  watchdog: s3c2410_wdt: Add support for Google tensor SoCs
+  arm64: dts: google: Add initial Google gs101 SoC support
+  google/gs101: Add dt overlay for oriole board
+  arm64: defconfig: Enable Google Tensor SoC
+  MAINTAINERS: add entry for Google Tensor SoC
+
+ .../devicetree/bindings/arm/google.yaml       |   46 +
+ .../bindings/clock/google,gs101-clock.yaml    |  109 +
+ .../samsung,pinctrl-wakeup-interrupt.yaml     |    2 +
+ .../bindings/pinctrl/samsung,pinctrl.yaml     |    4 +-
+ .../bindings/soc/samsung/exynos-pmu.yaml      |    2 +
+ .../soc/samsung/samsung,exynos-sysreg.yaml    |    7 +
+ .../bindings/watchdog/samsung-wdt.yaml        |   10 +-
+ MAINTAINERS                                   |   11 +
+ arch/arm64/Kconfig.platforms                  |    6 +
+ arch/arm64/boot/dts/Makefile                  |    1 +
+ arch/arm64/boot/dts/google/Makefile           |    7 +
+ arch/arm64/boot/dts/google/gs101-oriole.dts   |   68 +
+ arch/arm64/boot/dts/google/gs101-oriole.dtso  |   21 +
+ arch/arm64/boot/dts/google/gs101-pinctrl.dtsi | 1134 +++++++++
+ arch/arm64/boot/dts/google/gs101-pinctrl.h    |   17 +
+ arch/arm64/boot/dts/google/gs101.dtsi         |  501 ++++
+ arch/arm64/configs/defconfig                  |    1 +
+ drivers/clk/samsung/Kconfig                   |    9 +
+ drivers/clk/samsung/Makefile                  |    1 +
+ drivers/clk/samsung/clk-gs101.c               | 2171 +++++++++++++++++
+ drivers/clk/samsung/clk-pll.c                 |    9 +-
+ drivers/clk/samsung/clk-pll.h                 |    3 +
+ .../pinctrl/samsung/pinctrl-exynos-arm64.c    |  163 ++
+ drivers/pinctrl/samsung/pinctrl-exynos.c      |   68 +-
+ drivers/pinctrl/samsung/pinctrl-exynos.h      |   44 +
+ drivers/pinctrl/samsung/pinctrl-samsung.c     |    4 +
+ drivers/pinctrl/samsung/pinctrl-samsung.h     |   24 +
+ drivers/watchdog/s3c2410_wdt.c                |  116 +-
+ include/dt-bindings/clock/gs101.h             |  232 ++
+ .../dt-bindings/interrupt-controller/gs101.h  |  758 ++++++
+ 30 files changed, 5533 insertions(+), 16 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/google.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/google,gs101-clock.yaml
+ create mode 100644 arch/arm64/boot/dts/google/Makefile
+ create mode 100644 arch/arm64/boot/dts/google/gs101-oriole.dts
+ create mode 100644 arch/arm64/boot/dts/google/gs101-oriole.dtso
+ create mode 100644 arch/arm64/boot/dts/google/gs101-pinctrl.dtsi
+ create mode 100644 arch/arm64/boot/dts/google/gs101-pinctrl.h
+ create mode 100644 arch/arm64/boot/dts/google/gs101.dtsi
+ create mode 100644 drivers/clk/samsung/clk-gs101.c
+ create mode 100644 include/dt-bindings/clock/gs101.h
+ create mode 100644 include/dt-bindings/interrupt-controller/gs101.h
+
+-- 
+2.42.0.582.g8ccd20d70d-goog
+
