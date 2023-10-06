@@ -2,220 +2,143 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC60B7BB86F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Oct 2023 15:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 356F17BB8CF
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Oct 2023 15:15:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232425AbjJFNBy (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 6 Oct 2023 09:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37328 "EHLO
+        id S232277AbjJFNPX (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 6 Oct 2023 09:15:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232323AbjJFNBQ (ORCPT
+        with ESMTP id S232365AbjJFNPV (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 6 Oct 2023 09:01:16 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A10D18F
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Oct 2023 06:00:54 -0700 (PDT)
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20231006130045euoutp01017b99ad1e27988a89da0a0d7e350777~LhjTE4dPy0243202432euoutp01q
-        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Oct 2023 13:00:45 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20231006130045euoutp01017b99ad1e27988a89da0a0d7e350777~LhjTE4dPy0243202432euoutp01q
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1696597245;
-        bh=TR7Kzoq1U4uZ7ZoVNJnoUetQhJy9xOmLtt/Kna2DQZw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RmUFf4Ke9fhAU4cZ08q3nrPYhg9tw50NwVxJNPFlSPbRCdFLaS2Dq7K8FRSW5CuYS
-         9c9i57dHl28N2u0HeFHveM+85JAVFBxw/v64GFLwOfv8SDRiDaySsbOt+FQ1Tw80MI
-         93ub3gsSLwDDaRjYRuB2IKVBjaaIKGlVSyQgWAYA=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-        20231006130045eucas1p2d432252966f402c4a9ea724a6c0e41e3~LhjStiLqH3165331653eucas1p2s;
-        Fri,  6 Oct 2023 13:00:45 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id E4.5A.42423.DF400256; Fri,  6
-        Oct 2023 14:00:45 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20231006130044eucas1p17a141ec5aafca3d5af5295049f8b1651~LhjSMgmPy3093330933eucas1p1l;
-        Fri,  6 Oct 2023 13:00:44 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20231006130044eusmtrp2974082dca1420afebcc023c76ab2c0ce~LhjSL521h0256802568eusmtrp2-;
-        Fri,  6 Oct 2023 13:00:44 +0000 (GMT)
-X-AuditID: cbfec7f2-a3bff7000002a5b7-5c-652004fd144b
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id D4.2E.10549.CF400256; Fri,  6
-        Oct 2023 14:00:44 +0100 (BST)
-Received: from AMDC4515.eu.corp.samsungelectronics.net (unknown
-        [106.120.51.28]) by eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20231006130043eusmtip29ae9abc412499762caada0cec5375ced~LhjQ-XyNw0538005380eusmtip2V;
-        Fri,  6 Oct 2023 13:00:43 +0000 (GMT)
-From:   Mateusz Majewski <m.majewski2@samsung.com>
-To:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Mateusz Majewski <m.majewski2@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 4/4] pinctrl: samsung: do not offset pinctrl numberspaces
-Date:   Fri,  6 Oct 2023 14:55:57 +0200
-Message-ID: <20231006125557.212681-5-m.majewski2@samsung.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231006125557.212681-1-m.majewski2@samsung.com>
+        Fri, 6 Oct 2023 09:15:21 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42553CA
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Oct 2023 06:15:20 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-5384975e34cso3846932a12.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Oct 2023 06:15:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696598118; x=1697202918; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aRqHCVPqLmZz2qaT3Yxnr/oeOKdZ2QPdgIv2e+5mgSw=;
+        b=pmM6pY/yUKNkao0n4D20I7LtzN2VgDfPl9j/QJwRpMGTQNc4zrB0rQStAwMmtGfVfC
+         1Gw0UY4i7L5VggvR7qGAsha4LT1QQkafLOXX/Q1cCZYliPRYZ2lPO1spPvk5fMDQ9lx+
+         rYxPIlR1ajo5aJ2aTtkwcV1+uxFahFhrCLc3fz+b0rlqrnZitRfsahFERPxB0lPAY07o
+         C2vNMzir9i9WYLWRr4pkVeNuFZGXd5Kr911oV66aJoy4UpMTXFr/+9XKLOqt89zTv+QJ
+         zMwF5vRu4tVq6p91tPdBPsSmf/mpNCBPATmVZed1JnPqj04ogpzTNhUo2lRf6JCD3lQO
+         2ZGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696598118; x=1697202918;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aRqHCVPqLmZz2qaT3Yxnr/oeOKdZ2QPdgIv2e+5mgSw=;
+        b=I3lH39vNIdyf0YUBcyhHfHGg3JY7TPXnUiknpUV9AjejuzqbrVVZNRaxMoEmWd/beb
+         dmtPwE1htEeNg+78prucPvJUGNjbWv2IeyKq2Ct+ZB3febMh8xJ+IO7KtNSEiPI9tXn+
+         3OzkLVkJUyzQxho/eXXyN0Hj6EKHTa5pcQcc25OXaQc05NPqFgv7XIYTej1yc1pZV8gp
+         sLwiwphVj7zLjhTy6DFQVoebjWNdELqkoqujDdIgT0I0i6LyBN6msYDtEKnu5AkMH3T+
+         BptjTBhdM4TFNdw3bHMvwoV41pKUjY4TYhGsBFUamRZ0AOKuLtZFCPUt840bQNWjaVrS
+         Tatw==
+X-Gm-Message-State: AOJu0YzEy17OB1wCw/vsVikUU29Yeoz3oiiRBnqAUo7mP/qeB8XEp1ft
+        8X9nCrgGpyPdRpMRtlnszgcozg==
+X-Google-Smtp-Source: AGHT+IEZaXLkIzO+d7SjEmcxSuvfWBOO2z7vhrxrTX8reVVYh1O5bUDLX8meujaMNpZxpsHVImbpnA==
+X-Received: by 2002:a17:906:5386:b0:9b2:b974:2d1c with SMTP id g6-20020a170906538600b009b2b9742d1cmr6809356ejo.54.1696598118484;
+        Fri, 06 Oct 2023 06:15:18 -0700 (PDT)
+Received: from [192.168.1.197] (5-157-101-10.dyn.eolo.it. [5.157.101.10])
+        by smtp.gmail.com with ESMTPSA id k24-20020a17090646d800b00992e265495csm2844494ejs.212.2023.10.06.06.15.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Oct 2023 06:15:17 -0700 (PDT)
+Message-ID: <8c052381-5fe9-4d2f-bee1-016f261a433f@linaro.org>
+Date:   Fri, 6 Oct 2023 15:15:16 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsWy7djPc7p/WRRSDRZcELd4MG8bm8Xe11vZ
-        Lab8Wc5ksenxNVaLzfP/MFpc3jWHzWLG+X1MFhOPTWa2WHvkLrvF4TftrBardv1hdOD22Dnr
-        LrvHnWt72Dw2L6n36NuyitHj8ya5ANYoLpuU1JzMstQifbsErozOO3UFPYoVJx59ZmxgfCTd
-        xcjJISFgIvHm3gNGEFtIYAWjxOnJkl2MXED2F0aJiQdWMkI4nxkl5vxtZoTp2LHjBhtEYjmj
-        xK6PF5khnFYmidfvlrGAVLEJGEg8eLOMHSQhItDOKNFz6xbYLGaBfUwSkzdeZAWpEhbwlJjy
-        exJQgoODRUBV4tLfWpAwr4CtxOnt35kh1slL7Fn0nQnE5hSwk2h6/p0FokZQ4uTMJ2A2M1BN
-        89bZYFdICFzhkHiz7Q5Us4vExa4zbBC2sMSr41vYIWwZif875zNB2PkSMza/ZwG5QUKgQuLu
-        QS8I01ri4xlmEJNZQFNi/S59iGJHif+br7FBVPBJ3HgrCHEAn8SkbdOZIcK8Eh1tQhDVqhLH
-        90yCOkVa4knLbSaIEg+JOfe8JjAqzkLyySwkn8xCWLuAkXkVo3hqaXFuemqxYV5quV5xYm5x
-        aV66XnJ+7iZGYCI6/e/4px2Mc1991DvEyMTBeIhRgoNZSYQ3vUEmVYg3JbGyKrUoP76oNCe1
-        +BCjNAeLkjivaop8qpBAemJJanZqakFqEUyWiYNTqoFJvar80orL63x4X/x0bHQwEwmQ2RYz
-        e6tK3Kc5Xpktrw4de3yiNKGk54OUJFfoIf7CBXJdZgH/Z63XfCHI63t/Yt+x/+GNurPzzrDJ
-        3HFb6LrQd7mWPmfr9r4NInF+UR0Kll0MPc/38L9gOeLteWqGKUPj8sede1vvaIRmmgfUqxw8
-        uvPLLNZjUZwh13bkWja9PKPrLubyytvz2Pyc93lFqvGrpy1QsPH5eNdh+Z27x2ZHN4h+z+9+
-        8G9PJOu31+4ybOtWdlq29s7evNvMa/bp9vru3yYnpl0q613n/e7om5USNmlhv2sMMt3Lw+XK
-        269k2grMrBCR8ZfLLXQoFN2m/Pbrzc7aRc/qtaOPRiuxFGckGmoxFxUnAgCWXhk/swMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIIsWRmVeSWpSXmKPExsVy+t/xe7p/WBRSDTZeMLJ4MG8bm8Xe11vZ
-        Lab8Wc5ksenxNVaLzfP/MFpc3jWHzWLG+X1MFhOPTWa2WHvkLrvF4TftrBardv1hdOD22Dnr
-        LrvHnWt72Dw2L6n36NuyitHj8ya5ANYoPZui/NKSVIWM/OISW6VoQwsjPUNLCz0jE0s9Q2Pz
-        WCsjUyV9O5uU1JzMstQifbsEvYzOO3UFPYoVJx59ZmxgfCTdxcjJISFgIrFjxw02EFtIYCmj
-        xIMN5hBxaYnDX6awQ9jCEn+udQHVcAHVNDNJrF53gwkkwSZgIPHgzTKwIhGBbkaJbxO5QIqY
-        BQ4wSSyZdRBsqrCAp8SU35MYuxg5OFgEVCUu/a0FCfMK2Eqc3v6dGWKBvMSeRd/BZnIK2Ek0
-        Pf/OAnGQrcShHXuYIOoFJU7OfAIWZwaqb946m3kCo8AsJKlZSFILGJlWMYqklhbnpucWG+oV
-        J+YWl+al6yXn525iBMbNtmM/N+9gnPfqo94hRiYOxkOMEhzMSiK86Q0yqUK8KYmVValF+fFF
-        pTmpxYcYTYHOnsgsJZqcD4zcvJJ4QzMDU0MTM0sDU0szYyVxXs+CjkQhgfTEktTs1NSC1CKY
-        PiYOTqkGJiahbxaLe7h2CT7S52lf1/TogMOXdxr2J/pemp+PNGbSL+F7P/H/bQO3Iu2U01Ys
-        si0Ct9KjKwx91HfMaGCcv9+jZMfiE888l1/6JX+g9NF7tcc+H04t1csOlF9z23KdzZ8nQT1L
-        Pya9T/0fdru8rjm7uyPu/avqNlv/+W6tt7wK/gedPHPqWXqTj/3LJS29Xf6Mmcf+2r00rnd4
-        oe/0+6ZvZMqi+cVPv2/XCg7efGnbhv1lVmaWfcVxqQt6z0+XLWPqFnWY/uKyVEBz+46IA0tY
-        uTzUri0uXD3lqO7/fdPbSq/va2GsnuPvc6j1JsPxjSdzGiu228xj7mG4z66/TjnkldCTOKWl
-        gVIbWyvvK7EUZyQaajEXFScCADMqoCUkAwAA
-X-CMS-MailID: 20231006130044eucas1p17a141ec5aafca3d5af5295049f8b1651
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20231006130044eucas1p17a141ec5aafca3d5af5295049f8b1651
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20231006130044eucas1p17a141ec5aafca3d5af5295049f8b1651
-References: <20231006125557.212681-1-m.majewski2@samsung.com>
-        <CGME20231006130044eucas1p17a141ec5aafca3d5af5295049f8b1651@eucas1p1.samsung.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/8] thermal: exynos: handle
+ devm_regulator_get_optional return value correctly
+Content-Language: en-US
+To:     Mateusz Majewski <m.majewski2@samsung.com>,
+        linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+References: <20231003111638.241542-1-m.majewski2@samsung.com>
+ <CGME20231003111709eucas1p21f2d28615faab2f4aa4d9a264cf7f54f@eucas1p2.samsung.com>
+ <20231003111638.241542-5-m.majewski2@samsung.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231003111638.241542-5-m.majewski2@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Past versions of this driver have manually calculated base values for
-both the pinctrl numberspace and the global GPIO numberspace, giving
-both the same values. This was necessary for the global GPIO
-numberspace, since its values need to be unique system-wide. However, it
-was not necessary for the pinctrl numberspace, since its values only
-need to be unique for a single instance of the pinctrl device. It was
-just convenient to use the same values for both spaces.
+On 03/10/2023 13:16, Mateusz Majewski wrote:
+> Currently, if regulator is required in the SoC, but
+> devm_regulator_get_optional fails for whatever reason, the execution
+> will proceed without propagating the error.
+> 
+> Signed-off-by: Mateusz Majewski <m.majewski2@samsung.com>
+> ---
 
-Right now those calculations are only used for the pinctrl numberspace,
-since GPIO numberspace bases are selected by the GPIO subsystem.
-Therefore, those calculations are unnecessary.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Signed-off-by: Mateusz Majewski <m.majewski2@samsung.com>
----
- drivers/pinctrl/samsung/pinctrl-samsung.c | 15 ++++-----------
- drivers/pinctrl/samsung/pinctrl-samsung.h |  2 --
- 2 files changed, 4 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
-index 952aeeebb679..79babbb39ced 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.c
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
-@@ -45,8 +45,6 @@ static struct pin_config {
- 	{ "samsung,pin-val", PINCFG_TYPE_DAT },
- };
- 
--static unsigned int pin_base;
--
- static int samsung_get_group_count(struct pinctrl_dev *pctldev)
- {
- 	struct samsung_pinctrl_drv_data *pmx = pinctrl_dev_get_drvdata(pctldev);
-@@ -389,8 +387,7 @@ static void samsung_pinmux_setup(struct pinctrl_dev *pctldev, unsigned selector,
- 	func = &drvdata->pmx_functions[selector];
- 	grp = &drvdata->pin_groups[group];
- 
--	pin_to_reg_bank(drvdata, grp->pins[0] - drvdata->pin_base,
--			&reg, &pin_offset, &bank);
-+	pin_to_reg_bank(drvdata, grp->pins[0], &reg, &pin_offset, &bank);
- 	type = bank->type;
- 	mask = (1 << type->fld_width[PINCFG_TYPE_FUNC]) - 1;
- 	shift = pin_offset * type->fld_width[PINCFG_TYPE_FUNC];
-@@ -441,8 +438,7 @@ static int samsung_pinconf_rw(struct pinctrl_dev *pctldev, unsigned int pin,
- 	unsigned long flags;
- 
- 	drvdata = pinctrl_dev_get_drvdata(pctldev);
--	pin_to_reg_bank(drvdata, pin - drvdata->pin_base, &reg_base,
--					&pin_offset, &bank);
-+	pin_to_reg_bank(drvdata, pin, &reg_base, &pin_offset, &bank);
- 	type = bank->type;
- 
- 	if (cfg_type >= PINCFG_TYPE_NUM || !type->fld_width[cfg_type])
-@@ -671,7 +667,7 @@ static int samsung_add_pin_ranges(struct gpio_chip *gc)
- 
- 	bank->grange.name = bank->name;
- 	bank->grange.id = bank->id;
--	bank->grange.pin_base = bank->drvdata->pin_base + bank->pin_base;
-+	bank->grange.pin_base = bank->pin_base;
- 	bank->grange.base = gc->base;
- 	bank->grange.npins = bank->nr_pins;
- 	bank->grange.gc = &bank->gpio_chip;
-@@ -891,7 +887,7 @@ static int samsung_pinctrl_register(struct platform_device *pdev,
- 
- 	/* dynamically populate the pin number and pin name for pindesc */
- 	for (pin = 0, pdesc = pindesc; pin < ctrldesc->npins; pin++, pdesc++)
--		pdesc->number = pin + drvdata->pin_base;
-+		pdesc->number = pin;
- 
- 	/*
- 	 * allocate space for storing the dynamically generated names for all
-@@ -1129,9 +1125,6 @@ samsung_pinctrl_get_soc_data(struct samsung_pinctrl_drv_data *d,
- 
- 	samsung_banks_node_get(&pdev->dev, d);
- 
--	d->pin_base = pin_base;
--	pin_base += d->nr_pins;
--
- 	return ctrl;
- }
- 
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.h b/drivers/pinctrl/samsung/pinctrl-samsung.h
-index 173db20f70d3..9b3db50adef3 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.h
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.h
-@@ -269,7 +269,6 @@ struct samsung_pin_ctrl {
-  * @nr_groups: number of such pin groups.
-  * @pmx_functions: list of pin functions available to the driver.
-  * @nr_function: number of such pin functions.
-- * @pin_base: starting system wide pin number.
-  * @nr_pins: number of pins supported by the controller.
-  * @retention_ctrl: retention control runtime data.
-  * @suspend: platform specific suspend callback, executed during pin controller
-@@ -293,7 +292,6 @@ struct samsung_pinctrl_drv_data {
- 
- 	struct samsung_pin_bank		*pin_banks;
- 	unsigned int			nr_banks;
--	unsigned int			pin_base;
- 	unsigned int			nr_pins;
- 
- 	struct samsung_retention_ctrl	*retention_ctrl;
--- 
-2.42.0
+Best regards,
+Krzysztof
 
