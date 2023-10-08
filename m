@@ -2,167 +2,139 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1230A7BD022
-	for <lists+linux-samsung-soc@lfdr.de>; Sun,  8 Oct 2023 22:52:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 277E57BD0F2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Oct 2023 00:36:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344604AbjJHUwV (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 8 Oct 2023 16:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38310 "EHLO
+        id S1344751AbjJHWgl (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 8 Oct 2023 18:36:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344597AbjJHUwU (ORCPT
+        with ESMTP id S1344437AbjJHWgk (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 8 Oct 2023 16:52:20 -0400
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 429559F;
-        Sun,  8 Oct 2023 13:52:17 -0700 (PDT)
-Received: from [192.168.1.177] (unknown [10.0.0.254])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 4531E140495;
-        Sun,  8 Oct 2023 20:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1696798334;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=UuxrTL7KvyJ7XN5A1fs9GWsRygHQUHM6anrrqyaRV1c=;
-        b=mWrLpGfLn2FuF/iVpmJZLpN8RDuXORQZCIAURsF4EvgNSQZlt1IaRv34qweKgmzYmly9LA
-        QENYN7n5YqEfjn9ou2DP0UqZtp3jOzI3bb5j7an0LEMFuSxLQs7OxPopxrgupQlE1nGSOc
-        GYuf/Nfea5aBrS+X0J/XxeZtDatbiaY=
-Message-ID: <c3380c97-1b8c-5a68-168e-fc6150701365@postmarketos.org>
-Date:   Sun, 8 Oct 2023 23:52:13 +0300
+        Sun, 8 Oct 2023 18:36:40 -0400
+X-Greylist: delayed 1096 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 08 Oct 2023 15:36:38 PDT
+Received: from vern.gendns.com (vern.gendns.com [98.142.107.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E458CA3;
+        Sun,  8 Oct 2023 15:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=lechnology.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=M+Il/UbRpv2hwbJYh84vfo4sM0bgLWrVwAVsRhP4+Gg=; b=koC2+ANB36O0hWWF/Tz+r2qSOZ
+        MHsU/cfxKI3ApvIuuwI3j02KxfeRos4VQwcdSlGAfcXg5t8eaKY+Rc6QesbVc9da1RUbzSj2CgYjH
+        qPdH2I+H+yLxbv3rwIgpMNOh/g5+FYVxLBSQ2hJPUY/x5aSgrVs2YBlFBWOtoiPrnyTwM1+oSegkJ
+        QtYanRk62idrwjvC0kl1V/sCnn4RjVc8kRdoVgoQrWLFEfNfSLQClnrzZJuu9posktvDUjcmPRHWZ
+        cfMbGT/SK4R7rMSjet/rWfSt9nEKrqt2uDyOPeIiVR6LkfsvCmveicsqTRHgkfxU9k0SeLVsarliJ
+        c6bm6V2Q==;
+Received: from ip98-183-112-25.ok.ok.cox.net ([98.183.112.25]:41498 helo=[192.168.0.142])
+        by vern.gendns.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.96.1)
+        (envelope-from <david@lechnology.com>)
+        id 1qpc6L-0005ou-0F;
+        Sun, 08 Oct 2023 18:18:19 -0400
+Message-ID: <a324b19f-b40c-480b-8a76-1f37c54bc9cc@lechnology.com>
+Date:   Sun, 8 Oct 2023 17:18:12 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] drm/panel: Move AUX B116XW03 out of panel-edp back to
- panel-simple
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: Use device_get_match_data()
+To:     Rob Herring <robh@kernel.org>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Sekhar Nori <nsekhar@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Tero Kristo <kristo@kernel.org>
+Cc:     patches@opensource.cirrus.com, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org
+References: <20231006213959.334439-1-robh@kernel.org>
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        Hsin-Yi Wang <hsinyi@chromium.org>, matthias.bgg@gmail.com,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>, airlied@gmail.com,
-        daniel@ffwll.ch, jitao.shi@mediatek.com, linus.walleij@linaro.org,
-        linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
-        quic_jesszhan@quicinc.com, sam@ravnborg.org,
-        Anton Bambura <jenneron@protonmail.com>
-References: <20230925150010.1.Iff672233861bcc4cf25a7ad0a81308adc3bda8a4@changeid>
- <b0037c9f-588b-4eb8-6415-0fe75bed264f@collabora.com>
- <CAD=FV=UWQgLLfU4X+6OUR5AWOkJKwG9J7BbKGRCgze6LTY6JNw@mail.gmail.com>
- <CAD=FV=UqG6DiAyjcLKeoUWKutepGd46Zx=8O-NWKoYC-fZEG6g@mail.gmail.com>
-From:   Anton Bambura <jenneron@postmarketos.org>
-In-Reply-To: <CAD=FV=UqG6DiAyjcLKeoUWKutepGd46Zx=8O-NWKoYC-fZEG6g@mail.gmail.com>
+From:   David Lechner <david@lechnology.com>
+Autocrypt: addr=david@lechnology.com; keydata=
+ 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
+In-Reply-To: <20231006213959.334439-1-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vern.gendns.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - lechnology.com
+X-Get-Message-Sender-Via: vern.gendns.com: authenticated_id: davidmain+lechnology.com/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: vern.gendns.com: davidmain@lechnology.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+On 10/6/23 4:39 PM, Rob Herring wrote:
+> Use preferred device_get_match_data() instead of of_match_device() to
+> get the driver match data. With this, adjust the includes to explicitly
+> include the correct headers.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
 
-On 10/5/23 21:10, Doug Anderson wrote:
-> Hi,
->
-> On Tue, Sep 26, 2023 at 7:01 AM Doug Anderson <dianders@chromium.org> wrote:
->> Hi,
->>
->> On Tue, Sep 26, 2023 at 1:06 AM AngeloGioacchino Del Regno
->> <angelogioacchino.delregno@collabora.com> wrote:
->>> Il 26/09/23 00:00, Douglas Anderson ha scritto:
->>>> In commit 5f04e7ce392d ("drm/panel-edp: Split eDP panels out of
->>>> panel-simple") I moved a pile of panels out of panel-simple driver
->>>> into the newly created panel-edp driver. One of those panels, however,
->>>> shouldn't have been moved.
->>>>
->>>> As is clear from commit e35e305eff0f ("drm/panel: simple: Add AUO
->>>> B116XW03 panel support"), AUX B116XW03 is an LVDS panel. It's used in
->>>> exynos5250-snow and exynos5420-peach-pit where it's clear that the
->>>> panel is hooked up with LVDS. Furthermore, searching for datasheets I
->>>> found one that makes it clear that this panel is LVDS.
->>>>
->>>> As far as I can tell, I got confused because in commit 88d3457ceb82
->>>> ("drm/panel: auo,b116xw03: fix flash backlight when power on") Jitao
->>>> Shi added "DRM_MODE_CONNECTOR_eDP". That seems wrong. Looking at the
->>>> downstream ChromeOS trees, it seems like some Mediatek boards are
->>>> using a panel that they call "auo,b116xw03" that's an eDP panel. The
->>>> best I can guess is that they actually have a different panel that has
->>>> similar timing. If so then the proper panel should be used or they
->>>> should switch to the generic "edp-panel" compatible.
->>>>
->>>> When moving this back to panel-edp, I wasn't sure what to use for
->>>> .bus_flags and .bus_format and whether to add the extra "enable" delay
->>>> from commit 88d3457ceb82 ("drm/panel: auo,b116xw03: fix flash
->>>> backlight when power on"). I've added formats/flags/delays based on my
->>>> (inexpert) analysis of the datasheet. These are untested.
->>>>
->>>> NOTE: if/when this is backported to stable, we might run into some
->>>> trouble. Specifically, before 474c162878ba ("arm64: dts: mt8183:
->>>> jacuzzi: Move panel under aux-bus") this panel was used by
->>>> "mt8183-kukui-jacuzzi", which assumed it was an eDP panel. I don't
->>>> know what to suggest for that other than someone making up a bogus
->>>> panel for jacuzzi that's just for the stable channel.
->>>>
->>>> Fixes: 88d3457ceb82 ("drm/panel: auo,b116xw03: fix flash backlight when power on")
->>>> Fixes: 5f04e7ce392d ("drm/panel-edp: Split eDP panels out of panel-simple")
->>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->>>> ---
->>>> I haven't had a snow or peach-pit hooked up for debugging / testing
->>>> for years. I presume that they must be broken and hope that this fixes
->>>> them.
->>> We could avoid backport breakages by avoiding to backport this to any kernel
->>> that doesn't contain commit 474c162878ba ("arm64: dts: mt8183: jacuzzi: Move
->>> panel under aux-bus")... because creating a dummy panel to get two wrongs
->>> right is definitely not ok.
->> Sure, except that leaves us with ... a breakage. :-P
->>
->> Although I haven't tested it, I have a hard time believing that
->> exynos5250-snow and exynos5420-peach-pit will work properly with the
->> panel defined as an eDP panel. That means that they will be broken. If
->> someone cared to get those fixed in a stable backport then we'd be
->> stuck deciding who to break. If you have any brilliant ideas then I'm
->> all ears.
->>
->> ...then again, I presume this has been broken since commit
->> 88d3457ceb82 ("drm/panel: auo,b116xw03: fix flash backlight when power
->> on"). That was a little over 3 years ago. Maybe I'm wrong and somehow
->> things still limp along and sorta work even though the panel is
->> defined incorrectly?
-> I dug out a exynos5250-snow out of my pile and booted postmarket OS on
-> it, which was shockingly easy/pleasant (kudos to those involved!). I
-> found that it was booting a kernel based on 6.1.24. Digging into
-> sysfs, I found that indeed it appeared to be using the "panel-edp"
-> driver, so I guess it is limping along with the wrong driver and wrong
-> flags...
->
-> It wasn't totally clear for me how to build a new kernel and deploy it
-> for postmarket OS, so I wasn't able to confirm this change. I've CCed
-> the person listed on the postmarket OS wiki though to see if they have
-> any insight.
-Tested it on peach-pit using linux-next with this patch applied. Panel 
-still works and "dmesg | grep panel" returns panel_simple instead of 
-panel_edp.
+Acked-by: David Lechner <david@lechnology.com>
 
-Tested-by: Anton Bambura <jenneron@postmarketos.org>
->
-> In any case, it sounds as if things are working well enough on older
-> OSes, so maybe we can just skip trying to do any stable backport on
-> this. It still seems like we should land it, though, since the current
-> state of the world seems pretty broken. Anyone willing to give a
-> Reviewed-by or Acked-by tag?
->
-> -Doug
->
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+
