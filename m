@@ -2,105 +2,97 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DBA97BF4CB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Oct 2023 09:51:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91ED37BFACF
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Oct 2023 14:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1442602AbjJJHva (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 10 Oct 2023 03:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
+        id S231550AbjJJMJT (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Oct 2023 08:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1442604AbjJJHv3 (ORCPT
+        with ESMTP id S231311AbjJJMJS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 10 Oct 2023 03:51:29 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6C1AF
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Oct 2023 00:51:26 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qq7WS-000879-DV; Tue, 10 Oct 2023 09:51:20 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qq7WP-000bj5-Nu; Tue, 10 Oct 2023 09:51:17 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qq7WP-00Cvmw-EV; Tue, 10 Oct 2023 09:51:17 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-pwm@vger.kernel.org,
-        kernel@pengutronix.de,
-        Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 07/11] pwm: samsung: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
-Date:   Tue, 10 Oct 2023 09:51:08 +0200
-Message-Id: <20231010075112.755178-8-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231010075112.755178-1-u.kleine-koenig@pengutronix.de>
-References: <20231010075112.755178-1-u.kleine-koenig@pengutronix.de>
+        Tue, 10 Oct 2023 08:09:18 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46AD799
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Oct 2023 05:09:17 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-579de633419so68105857b3.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Oct 2023 05:09:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1696939756; x=1697544556; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uEaEMkX8vOBOdzxYFvJA9DgnPvy6/WwAYugNg849Uvw=;
+        b=CcR9sARPY+YNl/5TT4P/jcN/awaRsn37ZxpPJO9y2VJEcMnSCIDqv11N/oPEg3gM6W
+         dNaiHAqjtNFruWYrGGX9ZTsZysKZzjOEWUtU1C7EFbC4apdBiUHl5GWdYHmr/QH0d2gi
+         dcCogU32IUS7I6BtpEjMR1n5usmCwpm3BaGkYJV643Hwo+Mf7zw9O5pJJoso/p4SmdUO
+         kvxRvK45QVzC8ZljpLLN4BDVyzZRMsMe+uITUZ/I7BEA2aGJLVSbaedxWMz5q+GF7XeV
+         dvNNnH0MOiTTNPNmnQKD6ViCaavd6fX5vZulvTdcVcwpmQwx0JyrBTEhTb1+AddmKsWE
+         V3YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696939756; x=1697544556;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uEaEMkX8vOBOdzxYFvJA9DgnPvy6/WwAYugNg849Uvw=;
+        b=F5jN7Q0SflsEjqtYW+28uj45uLbfBx3ZHyM9J4Lyltk95Af2uTLAj8P6hyf2GuFdOt
+         bZcnrAtngpYsMAuZkOAmnh6ROGKkEn32SHu1DRuC1ecTAAfW03a14PsOjosHGXSoNJw0
+         YHqXlRf8+pTtMglV24QTq6zoDJRuCMaYlpwdjiGHYSBZqV3+US+XIEwA7xLwSTk803SW
+         lpDEQIb4I7aPoghAloIjawi1YJ5gg6/wm+//UcMzWd+KhpIgmThCZfvTE+4nG19MvfL6
+         M2MHV8hL4PpeSEYgA1XcHpDiYCaPZka2Ep7R783jz/PnmW8VaagWMgGVWhTmvB5vV0em
+         HMAA==
+X-Gm-Message-State: AOJu0Yze6hntX8paCzfBrplFWlzR28AoOloxuQYRgObXeuTf3Swwu73i
+        OcwpHMcRjS0BOyf+5HayDZijT6jc+RTV+uaxln1ybb88itNPz6kT
+X-Google-Smtp-Source: AGHT+IHRGEq7DdXjBkp0ZcsqBXe3LfpagEhnnJNKWYx9uqyU6eZI1qB/e8NPka/ZmWvype1vTBLGlZHCNknfRy93KUQ=
+X-Received: by 2002:a81:5b02:0:b0:583:a3ab:b950 with SMTP id
+ p2-20020a815b02000000b00583a3abb950mr16029722ywb.50.1696939756492; Tue, 10
+ Oct 2023 05:09:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1412; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=tdDsVaIQTBAFmDdZwZMSBACIYYvrBNNMW6Ee1DHfp08=; b=owGbwMvMwMXY3/A7olbonx/jabUkhlRVppSXmwwz+3dzfLohPFdivnHpxXfiFspG87/w6ar1X vd/eCC3k9GYhYGRi0FWTJHFvnFNplWVXGTn2n+XYQaxMoFMYeDiFICJREaz//eXvDM3o9O6Y47l tOd2ZyLyo6oPROfGha4zXXzoA2tPCtvy7RenL/N1V3PVe9+qt0Ah1OpZ1bSdU5t67m07v+ouh6X w+j+nzgiqnGrgditTKtuaX6YbIl2Yf/ThQsWj8t9DYwQZgrRuJNhvS/ZYXPrzc7ir/B5hzYsrMp h3nN4Z1B2i7JglvfRBv5NZyIsvUlZv+6skT3Q3J1clxc4PMemJmWZb38x09YVhmrPjMr0CCbP2J +GVvWKKfG9/SUlxsHrHfzo28y3bbLst1ZOkhfReWyoxdhenqcdOTTHNvuhbkZRpm5jEqCFcM7Mu /8yCGWeKFzO2ZTU9e71IdUGU7eJ91zNzfCXmRZ5UuQ0A
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <CGME20231006130032eucas1p18c6f5c39614768911730fa6ed0201ee3@eucas1p1.samsung.com>
+ <20231006125557.212681-1-m.majewski2@samsung.com>
+In-Reply-To: <20231006125557.212681-1-m.majewski2@samsung.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 10 Oct 2023 14:09:05 +0200
+Message-ID: <CACRpkdZULAeKE_DZX9RVhu0tSutdB_wMgoHhonB3H8DAdjKBEA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Fix Samsung pinctrl driver static allocation of GPIO
+ base warning
+To:     Mateusz Majewski <m.majewski2@samsung.com>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Tomasz Figa <tomasz.figa@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-This macro has the advantage over SIMPLE_DEV_PM_OPS that we don't have to
-care about when the functions are actually used, so the corresponding
-#ifdef can be dropped.
+Hi Mateusz,
 
-Also make use of pm_ptr() to discard all PM related stuff if CONFIG_PM
-isn't enabled.
+On Fri, Oct 6, 2023 at 3:00=E2=80=AFPM Mateusz Majewski <m.majewski2@samsun=
+g.com> wrote:
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pwm/pwm-samsung.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+> The object of this work is fixing the following warning, which appears
+> on all targets using that driver:
+>
+> gpio gpiochip0: Static allocation of GPIO base is deprecated, use dynamic=
+ allocation.
+>
+> This needs a small refactor to how we interact with the pinctrl
+> subsystem. Finally, we remove some bookkeeping that has only been
+> necessary to allocate GPIO bases correctly.
 
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index e8828f57ab15..041e2f9476ff 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -630,7 +630,6 @@ static void pwm_samsung_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(chip->base_clk);
- }
- 
--#ifdef CONFIG_PM_SLEEP
- static int pwm_samsung_resume(struct device *dev)
- {
- 	struct samsung_pwm_chip *our_chip = dev_get_drvdata(dev);
-@@ -663,14 +662,13 @@ static int pwm_samsung_resume(struct device *dev)
- 
- 	return 0;
- }
--#endif
- 
--static SIMPLE_DEV_PM_OPS(pwm_samsung_pm_ops, NULL, pwm_samsung_resume);
-+static DEFINE_SIMPLE_DEV_PM_OPS(pwm_samsung_pm_ops, NULL, pwm_samsung_resume);
- 
- static struct platform_driver pwm_samsung_driver = {
- 	.driver		= {
- 		.name	= "samsung-pwm",
--		.pm	= &pwm_samsung_pm_ops,
-+		.pm	= pm_ptr(&pwm_samsung_pm_ops),
- 		.of_match_table = of_match_ptr(samsung_pwm_matches),
- 	},
- 	.probe		= pwm_samsung_probe,
--- 
-2.40.1
+I see that Krzysztof has already taken care of this series so I just
+wait for a pull request (some days work is a bliss, thanks Krzysztof!)
 
+Yours,
+Linus Walleij
