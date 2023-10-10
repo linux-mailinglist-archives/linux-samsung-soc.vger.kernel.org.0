@@ -2,166 +2,114 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8C8C7BEB2C
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Oct 2023 22:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CDD67BF4D0
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 10 Oct 2023 09:51:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378490AbjJIUEK (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Mon, 9 Oct 2023 16:04:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56368 "EHLO
+        id S1442582AbjJJHvf (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 10 Oct 2023 03:51:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376628AbjJIUEJ (ORCPT
+        with ESMTP id S1442603AbjJJHve (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Mon, 9 Oct 2023 16:04:09 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24981AC
-        for <linux-samsung-soc@vger.kernel.org>; Mon,  9 Oct 2023 13:04:04 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c9ad9473d7so40935ad.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 09 Oct 2023 13:04:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696881843; x=1697486643; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=792ACGhD6QjX3gm4sl6mN1ZnGztud0zoUVjrdn9K8C0=;
-        b=ZHALqsmkzhqOYDFJcfu/axPofTffo1dsrCiTTswHYNc4mVcvVN02tocv8qEfvHkKw8
-         qBSg8z9vnU8sfbN+pyeWDtW5XstfK5EvKWOkeZR5M5RRx2uKBA+z21o04gfADMqsyNND
-         Y3+Rx2HUg2gksU4kdhsC+dYLMMn3FwnlxQdGhqFqaKHx2t64rqOsy+APdJeuZoxm/f8z
-         VoeeRgN9Bp9rq0YYvsU/2ebqteY14M53iq4CTJ0cFN3FQqxyiXqVNdzv5dvkj4Vkld3o
-         SivdRaHbtlR7kBrHNO9Gw3TMh6RevjJk14h+o1QGie5SwINSbfwUM2XiR3afwia6iqJf
-         gFDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696881843; x=1697486643;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=792ACGhD6QjX3gm4sl6mN1ZnGztud0zoUVjrdn9K8C0=;
-        b=aS0Xu2d2Pj7pUByvZ5Ugq0ZEnsJp0fV9mTRbnCGXQ8jnUAjQnTrqHpf9oaHzLT9wEW
-         XEFKQPb+rRuBc4oLKA7xgl46ISVoCcfgmglfUZJHbLtRazlpH7ZRyKeZmLWdjfWZtA1E
-         krgzu+v5jdgwPcxkicvaju+bKA6bVs30fhmX6K3o1zHow2W9jLAAjXLevzuK9AWgWnfU
-         M9EFhW6wQsYnEtIU0kTcX7mpC29/LQL6zvhj7gy3bPSPqLZ7jQVOw/pOClI3cthvS+Gw
-         MXMjigGGZYl4eOPP3MZxbifFrEeymVhYvGGrDvBvzGhTSZv3VVk18HFlhwG73lNVAij3
-         F7VA==
-X-Gm-Message-State: AOJu0Yx+bm/k30hInlNBjX6J/rtm2pmI3hDgc2uOgZADg5e2KNSPR9FS
-        snkPixdNk8ojqdMeEEHgSKRKsQ==
-X-Google-Smtp-Source: AGHT+IGoDE0HuNMIvb5i2H0sYSVhJ0lPtrnwVtRl9vcbmzHn2Ebn09gMy1XHI6WbiXHnD9jwHuRR6Q==
-X-Received: by 2002:a17:902:ec8b:b0:1c6:c41:679c with SMTP id x11-20020a170902ec8b00b001c60c41679cmr803671plg.4.1696881843213;
-        Mon, 09 Oct 2023 13:04:03 -0700 (PDT)
-Received: from google.com (13.65.82.34.bc.googleusercontent.com. [34.82.65.13])
-        by smtp.gmail.com with ESMTPSA id k3-20020a63ab43000000b0050f85ef50d1sm8838631pgp.26.2023.10.09.13.04.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 13:04:02 -0700 (PDT)
-Date:   Mon, 9 Oct 2023 13:03:59 -0700
-From:   William McVicker <willmcvicker@google.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Peter Griffin <peter.griffin@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        conor+dt@kernel.org, sboyd@kernel.org, tomasz.figa@gmail.com,
-        s.nawrocki@samsung.com, linus.walleij@linaro.org,
-        wim@linux-watchdog.org, linux@roeck-us.net,
-        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
-        olof@lixom.net, cw00.choi@samsung.com, tudor.ambarus@linaro.org,
-        andre.draszik@linaro.org, semen.protsenko@linaro.org,
-        soc@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        kernel-team@android.com
-Subject: Re: [PATCH 19/21] google/gs101: Add dt overlay for oriole board
-Message-ID: <ZSRcr6JRbj-wZf7R@google.com>
-References: <20231005155618.700312-1-peter.griffin@linaro.org>
- <20231005155618.700312-20-peter.griffin@linaro.org>
- <7f2032c2-812a-46b5-8914-056cd53c37cb@linaro.org>
+        Tue, 10 Oct 2023 03:51:34 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2ECD9F
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 10 Oct 2023 00:51:32 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qq7WS-00085v-Dq; Tue, 10 Oct 2023 09:51:20 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qq7WO-000big-7a; Tue, 10 Oct 2023 09:51:16 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qq7WN-00CvmQ-Tt; Tue, 10 Oct 2023 09:51:15 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        linux-pwm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        kernel@pengutronix.de,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH 00/11] pwm: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+Date:   Tue, 10 Oct 2023 09:51:01 +0200
+Message-Id: <20231010075112.755178-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7f2032c2-812a-46b5-8914-056cd53c37cb@linaro.org>
-X-Spam-Status: No, score=-15.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
-        USER_IN_DEF_SPF_WL autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1674; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=A8HP9dusodcVd01/oywSk7GyIKXIzSNIx/3Y74BCkPc=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlJQJcnufZamylMhsh8sHRAmnhUy5NU96BFuv1Y +e804696reJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZSUCXAAKCRCPgPtYfRL+ Tjh6CACMY4DrmuQjpMLEcju7BTHj+1LkPQrPGzvdAqhyOjGVgG6nn1jcf2VaamQObZChkefRgLs oGITc8kXXHSZrBoDCl/3UmmLnAvW5k3tjbcea5fGxJiYwtHMEHeNP8QN3KvDPJfHdaSBXRSjFxG qeSWUlbgXAxCXPOs+4g2lYNASWm34COaFAlVOM6+RVayhDGxrwp1VpVzb3FoaFsKxd23l6ro6F7 rfSbpRLt9/8ksOGpw8hOrWkkX+yr4FYnGFjHigSeTR3+Pa4R/8DYRXBsd7tiaO4TtfGaE1juULa wGYbs9wy/RogDPwlSXCYddDhVrgS0MNXIWr8BbqF6xiyXxC3
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 10/05/2023, Krzysztof Kozlowski wrote:
-> On 05/10/2023 17:56, Peter Griffin wrote:
-> > The LK bootloader on Pixel6 searches for a dt overlay in the
-> > dtbo partition with a board_id and board_rev that matches
-> > what is baked into the device. If this overlay is not present
-> > then the phone will bootloop in fastboot and you can't boot
-> > the upstream kernel.
-> > 
-> > This commit adds a dtbo for the production oriole variant.
-> > The other pre-production board overlays are not included
-> > at this time.
-> > 
-> > Adding the dtbo here allows for a better experience when
-> > building/booting the upstream kernel on Pixel devices
-> > as all the DT required to boot the device will be created
-> > as part of the kernel build process. Rather than having to
-> > fetch the dtbo from some other repo.
-> > 
-> > Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/google/Makefile          |  1 +
-> >  arch/arm64/boot/dts/google/gs101-oriole.dtso | 21 ++++++++++++++++++++
-> >  2 files changed, 22 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/google/gs101-oriole.dtso
-> > 
-> > diff --git a/arch/arm64/boot/dts/google/Makefile b/arch/arm64/boot/dts/google/Makefile
-> > index 6d2026a767d4..3f1761f8daa9 100644
-> > --- a/arch/arm64/boot/dts/google/Makefile
-> > +++ b/arch/arm64/boot/dts/google/Makefile
-> > @@ -2,5 +2,6 @@
-> >  
-> >  dtb-$(CONFIG_ARCH_GOOGLE_TENSOR) += \
-> >  	gs101-oriole.dtb \
-> > +	gs101-oriole.dtbo
-> >  
-> >  
-> > diff --git a/arch/arm64/boot/dts/google/gs101-oriole.dtso b/arch/arm64/boot/dts/google/gs101-oriole.dtso
-> > new file mode 100644
-> > index 000000000000..50832fd94204
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/google/gs101-oriole.dtso
-> > @@ -0,0 +1,21 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Oriole DVT Device Tree
-> > + *
-> > + * Copyright 2021-2023 Google,LLC
-> > + */
-> > +
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +/ {
-> > +	board_id = <0x20304>;
-> > +	board_rev = <0x10000>;
-> 
-> Undocumented properties. Please propose bindings... Also, underscores
-> are not allowed, so in this form it is a no-go... although I understand
-> the pain of not being able to change the bootloader.
-> 
-> For reference:
-> https://lore.kernel.org/all/20220605150747.GA3465286-robh@kernel.org/
-> https://lore.kernel.org/all/20220610163343.GA1787330-robh@kernel.org/
+Hello,
 
-These names are actually arbitrary and don't depend on the bootloader. They are
-passed into the mkdtimg tool [1] using --id and --rev and used to create the
-dt_table_entries. The bootloader traverses the table and picks the overlay
-based on these properties. So we can use whatever property names we want
-without changing the bootloader.
+Florian added pm support to the pwm-bcm2835 driver[1]. This made me
+check what is the "modern" way to add pm support. This series modernizes
+the other pwm drivers with the things I learned.
 
-[1] https://android.googlesource.com/platform/system/libufdt/+/refs/heads/main/utils/
+Best regards
+Uwe
 
-Thanks,
-Will
+[1] https://lore.kernel.org/linux-pwm/20231009204226.3224521-1-florian.fainelli@broadcom.com
 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Uwe Kleine-König (11):
+  pwm: atmel-hlcdc: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: atmel-tcb: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: berlin: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: brcmstb: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: dwc: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: imx-tpm: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: samsung: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: stm32-lp: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: stm32: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: tiecap: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+  pwm: tiehrpwm: Use DEFINE_SIMPLE_DEV_PM_OPS for PM functions
+
+ drivers/pwm/pwm-atmel-hlcdc.c |  8 +++-----
+ drivers/pwm/pwm-atmel-tcb.c   |  8 +++-----
+ drivers/pwm/pwm-berlin.c      |  8 +++-----
+ drivers/pwm/pwm-brcmstb.c     | 12 ++++--------
+ drivers/pwm/pwm-dwc.c         |  6 ++----
+ drivers/pwm/pwm-imx-tpm.c     | 10 +++++-----
+ drivers/pwm/pwm-samsung.c     |  6 ++----
+ drivers/pwm/pwm-stm32-lp.c    | 10 +++++-----
+ drivers/pwm/pwm-stm32.c       |  8 ++++----
+ drivers/pwm/pwm-tiecap.c      |  6 ++----
+ drivers/pwm/pwm-tiehrpwm.c    |  8 +++-----
+ 11 files changed, 36 insertions(+), 54 deletions(-)
+
+base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
+-- 
+2.40.1
+
