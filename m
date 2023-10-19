@@ -2,149 +2,126 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 408397CE83E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 18 Oct 2023 21:54:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E25937CF4AC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Oct 2023 12:06:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231733AbjJRTyE (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Wed, 18 Oct 2023 15:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55044 "EHLO
+        id S1345204AbjJSKGw (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 19 Oct 2023 06:06:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231723AbjJRTyE (ORCPT
+        with ESMTP id S1345181AbjJSKGv (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Wed, 18 Oct 2023 15:54:04 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E38E11D
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Oct 2023 12:54:01 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-323ef9a8b59so6520173f8f.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 18 Oct 2023 12:54:01 -0700 (PDT)
+        Thu, 19 Oct 2023 06:06:51 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2166211F
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 Oct 2023 03:06:49 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3226cc3e324so6849793f8f.3
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 19 Oct 2023 03:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1697658840; x=1698263640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=APFhD2dbMwxltNImL/wOSymF+XEkMWF4V9pDcyMRenw=;
-        b=h6ANmHGkyr6jHwBUDkuiE3YKasGFbIohfZiW3pzAM8sld/PF/rUugWPEvRuTnd+jGg
-         IW6H95MrKbQYWDO51JZSTR2+wo3arEXFHwBJufdynJXhLBVHCppDw+J9/5xdy4ga/1jL
-         dQ3aJ/mqBfTBumT2oOQMHk664h911Al4c2ixon5lDKcUrKmAqQPxhz6E8Mnf47rhJZAP
-         M3aggPaHFgQ2RhQIxcSETzh6REjsnSlzdn7s/QXSMV7aeYnopxRcklPtAt499Rapesrh
-         D7jwF4/VObUOxZaq5FYW+PjUM7QxlwJQ5xMabxX4d0o2cjRz4DotPOEFegU0OugogHyC
-         Z/FQ==
+        d=linaro.org; s=google; t=1697710007; x=1698314807; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aNH+cUkvJq9kPceEcJ89sVVgm6IQTkIk2n1XM45Z5uk=;
+        b=ZyfXDo4bVVMme0ghDUVYhhps+R2YkPljIBDykBKcbkqWKtGmB6hbasy0sMudL4o188
+         xNv3i3SZLdGYvJ7qFRf8kYPIiccnpB4GcwPY+/YDmqKeMFeGZC9eHFuUnB/3F2Zy20FZ
+         j++i4FbQfeJjIgMD1HWSOFgkN0nG1NnmeSIY0zMWok34drIKhjiasTd7zLU/mm9gK94u
+         pztSvfTDVPIWM+R2rly4SmOeuMsaq/kAxMbYckbh3fQh9KKBVw/nULOF0/m1xonU9vKI
+         9fbm0hflYtKbkMw0P8Brb2PyA+sKG+/RhNxZ6jQ/eiLNosTWS4bJ8aMLOdwqiX/bXTXE
+         1JYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697658840; x=1698263640;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1697710007; x=1698314807;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=APFhD2dbMwxltNImL/wOSymF+XEkMWF4V9pDcyMRenw=;
-        b=WsrajASCzHh+uO6wIlqbhdQxJHYAmv5ZkzMBWlK4UzSAynX7HkgXWxSrlAwA1XNjVs
-         AYgGcMuEtk1aft4X8/KagKhVyGutTuLkvOJcbCcseIUNV/hKNrqLfTPaB0Xvw6N7u+JD
-         TKZYh46JV/fYiCIVNMpB2cjyWtPc+QQue9BhSXslZCg1/HQ71CiLs29udyjeF7fmhF67
-         9zcVIGBEEFy3IvFKovFbP0WG/DK0lvc7cenHGLz7PWyQdMfQbqlqgbIrXlu5TqfpgFYH
-         gIylbOphorIDOuabT/5l245snI1Skfv9vQ76TFkymMH3M1mPE2Fb0WiIqLDMFu+noRgJ
-         YzrQ==
-X-Gm-Message-State: AOJu0YxAT7UuIsl8jFP9yIt+AOx7qmAK/6D22Xs2QfYTC2Y0X3vc1+Bq
-        cunAX3WvAF3bRijeOGA6smDzCA==
-X-Google-Smtp-Source: AGHT+IFfQSIKRBvNccm0+dPie5ojeG6TjamhMefYmTJrxj/HDo34QZ5+SAXlfswSMG81HFCLR1XOMQ==
-X-Received: by 2002:a5d:4f06:0:b0:31f:dc60:13b5 with SMTP id c6-20020a5d4f06000000b0031fdc6013b5mr36544wru.25.1697658839864;
-        Wed, 18 Oct 2023 12:53:59 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.49])
-        by smtp.gmail.com with ESMTPSA id j4-20020adfe504000000b0032da7454ebesm2793693wrm.79.2023.10.18.12.53.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Oct 2023 12:53:59 -0700 (PDT)
-Message-ID: <f4d1bb66-4d1f-47c5-a252-b64d8a505b74@linaro.org>
-Date:   Wed, 18 Oct 2023 21:53:58 +0200
+        bh=aNH+cUkvJq9kPceEcJ89sVVgm6IQTkIk2n1XM45Z5uk=;
+        b=W6g2lbgYRObAGg67KGpNeYV9bEUswao19bAZUdlKwSDY/nUGct7vOL+LNdj3BIm7HI
+         s/9lZf3IXCLzy2DUkKf/sjE7u/p+szkFAD9Qm2s4ZjHEX+c/16UtwiaDPaAZwqXFbJ2t
+         Qai2PB3H+5w61sYrvrn1wCJzG/tLH9LudhxF0u+duyCtmZb4tQAyBt52evhJAzT4BpSY
+         kWt5Ax8fad19VjpNq8T7BggLUwdf6kNE0w7JaREyaeV/kuEtOawyJB8Jd1Fz0a6V6+XH
+         v9QHm9r0hbwab9sge/B+WnoZL+K+J0bZgFXQKFTuMci6sCzAXyNT19cbgeI1Z6p6+GVW
+         jtQw==
+X-Gm-Message-State: AOJu0Yy6GfoXADL54pMtWdfxFP55OOCrIusxGONFbath/ZTQQCFZCw+U
+        h4VUbDjEIQ7OIW5FTqXxL82dOw==
+X-Google-Smtp-Source: AGHT+IF0lSU8RSwWRVtoHZMhIoGDLuCWoohmt6sdGSIxzJpSj25BOHDGAY3DaA75D7bseTADxZLBWw==
+X-Received: by 2002:adf:e80f:0:b0:32d:8872:aac8 with SMTP id o15-20020adfe80f000000b0032d8872aac8mr1164054wrm.31.1697710007466;
+        Thu, 19 Oct 2023 03:06:47 -0700 (PDT)
+Received: from salami.lan ([80.111.64.44])
+        by smtp.gmail.com with ESMTPSA id f14-20020a5d664e000000b0032d687fd9d0sm4169035wrw.19.2023.10.19.03.06.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Oct 2023 03:06:46 -0700 (PDT)
+From:   =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, alim.akhtar@samsung.com,
+        linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] tty: serial: samsung: drop earlycon support for unsupported platforms
+Date:   Thu, 19 Oct 2023 11:06:38 +0100
+Message-Id: <20231019100639.4026283-1-andre.draszik@linaro.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tty: serial: samsung_tty: remove dead code
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     =?UTF-8?Q?Andr=C3=A9_Draszik?= <git@andred.net>,
-        linux-kernel@vger.kernel.org
-Cc:     alim.akhtar@samsung.com, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-serial@vger.kernel.org,
-        =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-References: <20231018105454.3911161-1-git@andred.net>
- <3360b33c-a6ce-463f-b2d8-43a08340f3c7@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <3360b33c-a6ce-463f-b2d8-43a08340f3c7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 18/10/2023 21:52, Krzysztof Kozlowski wrote:
-> On 18/10/2023 12:54, André Draszik wrote:
->> From: André Draszik <andre.draszik@linaro.org>
->>
->> When support for various old platforms was removed in commit
->> 1ea35b355722, s3c24xx_serial_ops also became unused here because
-> 
-> Please use commit xyz ("foo") syntax as pointed out by checkpatch.
-> 
->> nothing sets port type TYPE_S3C24XX anymore.
->>
->> Remove s3c24xx_serial_ops and all the code that's unreachable now.
->>
->> Fixes: 1ea35b355722 ("ARM: s3c: remove s3c24xx specific hacks")
->> Signed-off-by: André Draszik <andre.draszik@linaro.org>
-> 
-> Rest looks good:
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Commit 1ea35b355722 ("ARM: s3c: remove s3c24xx specific hacks") removed
+support here for several old platforms, but kept support for earlycon
+for those same platforms.
 
-.... and not entirely. You left earlycon.
+As earlycon support for otherwise unsupported platforms doesn't seem to
+be useful, just drop it as well.
 
-Best regards,
-Krzysztof
+Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+---
+ drivers/tty/serial/samsung_tty.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
+
+diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+index 6b8d4b4402e9..a74ecc78f4e0 100644
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -2735,17 +2735,7 @@ static struct samsung_early_console_data s3c2410_early_console_data = {
+ 	.rxfifo_mask = S3C2410_UFSTAT_RXFULL | S3C2410_UFSTAT_RXMASK,
+ };
+ 
+-static int __init s3c2410_early_console_setup(struct earlycon_device *device,
+-					      const char *opt)
+-{
+-	device->port.private_data = &s3c2410_early_console_data;
+-	return samsung_early_console_setup(device, opt);
+-}
+-
+-OF_EARLYCON_DECLARE(s3c2410, "samsung,s3c2410-uart",
+-			s3c2410_early_console_setup);
+-
+-/* S3C2412, S3C2440, S3C64xx */
++/* S3C64xx */
+ static struct samsung_early_console_data s3c2440_early_console_data = {
+ 	.txfull_mask = S3C2440_UFSTAT_TXFULL,
+ 	.rxfifo_mask = S3C2440_UFSTAT_RXFULL | S3C2440_UFSTAT_RXMASK,
+@@ -2758,10 +2748,6 @@ static int __init s3c2440_early_console_setup(struct earlycon_device *device,
+ 	return samsung_early_console_setup(device, opt);
+ }
+ 
+-OF_EARLYCON_DECLARE(s3c2412, "samsung,s3c2412-uart",
+-			s3c2440_early_console_setup);
+-OF_EARLYCON_DECLARE(s3c2440, "samsung,s3c2440-uart",
+-			s3c2440_early_console_setup);
+ OF_EARLYCON_DECLARE(s3c6400, "samsung,s3c6400-uart",
+ 			s3c2440_early_console_setup);
+ 
+-- 
+2.40.1
 
