@@ -2,71 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D7147D8F26
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Oct 2023 09:04:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AEB17D90AC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Oct 2023 10:06:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbjJ0HEg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 27 Oct 2023 03:04:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
+        id S231420AbjJ0IGn (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 27 Oct 2023 04:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjJ0HEf (ORCPT
+        with ESMTP id S231388AbjJ0IGm (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 27 Oct 2023 03:04:35 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA9D1B1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Oct 2023 00:04:32 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507c1936fd5so3251179e87.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Oct 2023 00:04:32 -0700 (PDT)
+        Fri, 27 Oct 2023 04:06:42 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A64A196
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Oct 2023 01:06:40 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507bd64814fso2481794e87.1
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Oct 2023 01:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698390271; x=1698995071; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aFKWapit6WT+kqH2ZyHZmlQOkhVzEN1f6/zmK1Me2Os=;
-        b=IowE6ktZiDwperywNY7WbbqvEuZnbX7QqJqnHKxuu2TrDq31EqPfRlmvSC4gVUBQWF
-         +CkNjIfn2KbZyZhiXaijIUATLD5e9YYUesa9GNNlyfwf7+LG/ok9mFVKKfFpfjPYL+s/
-         gDiq8xeKfQY+yM395/KltkGGj1RU4Hy+OsjGOEGXsooncSgIbFKVqJ2yw5gvKXwjxzLE
-         QYw928mvfo5QUPMxc4A6qRP2naC+LDxl07fyKrXl6DhJWK5PvQg5rwHD28n1adGg4DQJ
-         +g/13lq0BaSpGR9m7UvQBWP28tSf1xU6lIC+MEZkgPqJ0hIXZw2mqmE+pxRhAB2ABwfN
-         w5CQ==
+        d=linaro.org; s=google; t=1698393998; x=1698998798; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fgULfd/BQf3rXOb2Liur3bE6zxBSiYu9TNmtJmWbpCs=;
+        b=Nr2WRBxuxdZCEyStn5AKTqJwjukjUD+Rw6WZ3yJPnrTbJ2F1L/8f3XUL57CTC/DB32
+         4dRzDd4aatK4ErHKupCBaLkT3gbLSNILfQ3sbzwvcqnWgdUdNgZwEMUWNggmvkxdqr1l
+         plC1t17dATm+8cCnuWl609h8NMJk4Wwu1jSj7i0Z1PdFxoYZYQyXo2DjYAJAuetRJKea
+         e99nsyezk1c+uKELhkRHKLm74pybmpe+0XQmt30KMuRZRntann+Mgbj75zUwuPuc7Du4
+         r+bncny7KsKAVcPK6smojdA8g4vYDvKmGCJEvHpG9UWuQ6MClwqF7VYEvScQk84pdfDb
+         aOdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698390271; x=1698995071;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aFKWapit6WT+kqH2ZyHZmlQOkhVzEN1f6/zmK1Me2Os=;
-        b=WLpWddL2PzHiGQEdtlblRVWMWrIri20NuPyH3EJrPbFHh0i8ls65s36Wpk4iIDi746
-         fKwtkwwuj/6j9hKbMGxH+9t18q8uNv4Tst2tn1UBTV9/uU5ywHqK/v+pzLaR9NvCjoQa
-         kFNGt5zad3yr1DLEPSuL54QMYctfCCgSnvQDE1rC+WSUMf12AvBeEo/ScwbyVl63v6v+
-         HwnqbDv8eVYaya3Ae0r/WpUefNIdnupirmvK1vm6Iq+yd0/jPY/fNxbf8Ml1eW5Gmb+j
-         s6lYeSDZcJX7slTmk2VznfytPxqhqB1IJvLVCI2fp252c3t8zTlfyamYLkwdBt3RkDUN
-         f/Ng==
-X-Gm-Message-State: AOJu0YxT3s93J9KWaLga14ioKQs4tTPN19L6faxkYdBPIbEOO/tDa2fn
-        ttWTDww2JT28whn6EiBdpUzSDw==
-X-Google-Smtp-Source: AGHT+IFqgJSlszKh/GWrgtGz8tcPYz8DfdnUvihXvVjsdvPkiQgkMc2WycB7QnuqR7+kmLFYJfYlbQ==
-X-Received: by 2002:a05:6512:39c5:b0:502:e0dd:628b with SMTP id k5-20020a05651239c500b00502e0dd628bmr1633877lfu.32.1698390270795;
-        Fri, 27 Oct 2023 00:04:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698393998; x=1698998798;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fgULfd/BQf3rXOb2Liur3bE6zxBSiYu9TNmtJmWbpCs=;
+        b=DiAXi8MFdN8jU0gfzxORiydOYa0NQ7tmN+ml/WrbQeO/3yMi0mMwPzoKGyjBIYhThe
+         KPgQOh8OZ6PpWHp0ylHSb9aRLANys22lKS/YMY9YeUcCZs+oUau1eytAEYtHfRHay6li
+         Uw+WHJPSvtFpc7vtfNQEMldtKOyUoWthSWlGrYlM6VgH7zr7KAEPUAQpHeWume/gSLw2
+         wENuwM1kzHDCBqAJTUQR9bwJuOXidLO9wRnpqm1sTcJc61a3fOmzCxziJBaxsL35E8zS
+         MZEIOvIMIgZY1xS3RUsWLpwICxu94/wPnLP5kNssGZqAw0CK47p0S5Nef2dJKkvs/od0
+         fdfw==
+X-Gm-Message-State: AOJu0Yx0sJGlmHq9cbH9OYJqjmj95gAZnOD95JYee/1Q1vAc8U6OoRmg
+        Y6oyJ4jCUl4/VSczwtoSiUcuRg==
+X-Google-Smtp-Source: AGHT+IEJFfYsTI78D03/L8NvageWyWtEeZq1rR3P3kFq9t3sgonnO4xsQxqYrk7ZOTDAfXzejtcLEA==
+X-Received: by 2002:ac2:5935:0:b0:503:1be5:24eb with SMTP id v21-20020ac25935000000b005031be524ebmr1190179lfi.50.1698393998333;
+        Fri, 27 Oct 2023 01:06:38 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id e8-20020a196908000000b005032ebf8a00sm158929lfc.197.2023.10.27.00.04.29
+        by smtp.gmail.com with ESMTPSA id be11-20020a056512250b00b005081a25b095sm180122lfb.246.2023.10.27.01.06.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 00:04:30 -0700 (PDT)
-Message-ID: <53d67d80-6186-4f9b-b542-8ee9cd34bbd4@linaro.org>
-Date:   Fri, 27 Oct 2023 09:04:29 +0200
+        Fri, 27 Oct 2023 01:06:37 -0700 (PDT)
+Message-ID: <f7b90711-015b-4261-b044-a63396e78c9f@linaro.org>
+Date:   Fri, 27 Oct 2023 10:06:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: exynos: add gpio-key node for
- exynosautov9-sadk
-To:     Jaewon Kim <jaewon02.kim@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <CGME20231027040435epcas2p4628f9c61d4622ed4c4b62edc4486e2d1@epcas2p4.samsung.com>
- <20231027040338.63088-1-jaewon02.kim@samsung.com>
+Subject: Re: [PATCH] PCI: exynos: Adapt to clk_bulk_* APIs
 Content-Language: en-US
+To:     Shradha Todi <shradha.t@samsung.com>, jingoohan1@gmail.com,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, alim.akhtar@samsung.com
+Cc:     linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pankaj.dubey@samsung.com
+References: <CGME20231009062222epcas5p36768b75c13c7c79965b5863521361a64@epcas5p3.samsung.com>
+ <20231009062216.6729-1-shradha.t@samsung.com>
+ <0b4801da08a0$18877110$49965330$@samsung.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -112,11 +110,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231027040338.63088-1-jaewon02.kim@samsung.com>
+In-Reply-To: <0b4801da08a0$18877110$49965330$@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -125,16 +123,13 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 27/10/2023 06:03, Jaewon Kim wrote:
-> ExynosAutov9 SADK board has 3 keys to test external GPIO interrupt.
-> To support this, add 3 gpio-key(Wakeup, Volume Down, Volume Up) node.
+On 27/10/2023 08:37, Shradha Todi wrote:
+> Gentle reminder to review this patch. Thanks in advance!
 > 
-> Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
-> ---
 
-Thank you for the patch.
-It is too late in the cycle for me to pick it up. I will take it after
-the merge window.
+Please relax, and help out by reviewing other patches on the mailing
+lists in order to relieve the burden of maintainers and move your
+patches higher up the list.
 
 
 Best regards,
