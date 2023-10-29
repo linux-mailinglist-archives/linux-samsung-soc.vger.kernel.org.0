@@ -2,138 +2,191 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 792CF7D9A82
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Oct 2023 15:54:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CE0E7DAC0A
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 29 Oct 2023 12:07:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345989AbjJ0Nyo (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 27 Oct 2023 09:54:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41978 "EHLO
+        id S229533AbjJ2LHL (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sun, 29 Oct 2023 07:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345943AbjJ0Nyn (ORCPT
+        with ESMTP id S229529AbjJ2LHK (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 27 Oct 2023 09:54:43 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 871B2CA;
-        Fri, 27 Oct 2023 06:54:41 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21798C433C9;
-        Fri, 27 Oct 2023 13:54:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698414881;
-        bh=ktN7hyJ+GNKver1d9aZsdKJs8Qxg7i+2jzt1jy1ctS8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ds11b5WfFnE+LnjhXFWHoXvF6ZwlyLnh3hvUqqkvHacECUo8yQqOyJ3sCNmIlGUsS
-         YSTuXThk2wuu3Hu8QjQ2eFhA0aZNz3lLLHWjHw+pNknrTNRxk/LGgzFe2pjyc22Jck
-         tOdg0j1G+Z/8SgJphflp1T9nP64UHbARuCrgToRAQD0f79Wpy+ke+JfmgUCJJEFHUg
-         bwow16DTv3vrS8/aEY28/la11ZBexR2uvthxXVXY+nsRhdjX/gqXeNTtN4/p+7WZT1
-         KRl6WP+7gnIVKclj6gvpSnmTmO+4gUYWoOaAH4sZyvbyzRhHJwc2/wMOnAY1iZKuIe
-         EUuvTwVP40DNg==
-Date:   Fri, 27 Oct 2023 15:54:36 +0200
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-samsung-soc@vger.kernel.org, linux-i2c@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Wolfram Sang <wsa@kernel.org>
-Subject: Re: [PATCH v2 3/3] i2c: s3c24xx: add support for atomic transfers
-Message-ID: <20231027135436.sutdnctsgofyik4g@zenone.zhora.eu>
-References: <20231025121725.46028-1-m.szyprowski@samsung.com>
- <CGME20231025121740eucas1p2db798a12d80580af321c75edf5d59663@eucas1p2.samsung.com>
- <20231025121725.46028-4-m.szyprowski@samsung.com>
+        Sun, 29 Oct 2023 07:07:10 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 160DFC2
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 29 Oct 2023 04:07:07 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c503da4fd6so52020981fa.1
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 29 Oct 2023 04:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698577625; x=1699182425; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KTw9e5U1dxmS60TaF58rmYOq+L3kDSS3ju4ja9AbvBM=;
+        b=HIIx+KaKa6tZgdeoSCLohRlq2QHR6vBgesXnTIBxTeCJCdIxQKX2HrLPgAicwVm3yY
+         j8vMjMiYkJ+YDC71B9xorFOh4g167QKiYlrkC2TuV0t4p/2/dt18qAxL5eL/zAKBNrrT
+         SlgcmGQcH7VPKMdtaIvyonSSubNdLFqhGvG8VhrflkN29OeuZH2rNqEe7MQEtsNkvqNU
+         J6KUp5PZS7Am936CtMEossGl9mjZR+IX/phQ5vOnag7Nv8QIILYDh82B4nEfCXJI7Aia
+         DzReTZLQ9pAD00X1D/6ZEyAGnmDHb1yk1bXSaqgwTfGsPpCeNUoy1KXgAaVuR1qQxVvD
+         fsNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698577625; x=1699182425;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KTw9e5U1dxmS60TaF58rmYOq+L3kDSS3ju4ja9AbvBM=;
+        b=SkuXIetAIf3LKgoxXKcxAnO7d3SIeu9RG+2q2B5d/oc8qBCRSiB08Tzy+bKnDP/nos
+         Kxy4G+MAxmV/Hui5dA9sG44hou+mit0gJT7F0PuJoYqm+NGniyjiGsXYafnHEW9Z5+w/
+         hKIIfczBJyGMkmBaXFFcAlOScIYvuSet4QGSq7hZqDQRgVktghc1zQwiGjEN6f8trpfa
+         T3L3PwmMvrgIVPQMVctj82LIOSzGRKBEUJEHbfPgSsVbTUICjU7t7/5RQ+yQQN7CIdNv
+         MiSABOW4/WiYwXABGRmo0s1aZfClyQuNjnSIAkj4SUBNNmCiXU06oyy1Ju3qPDUNbKAu
+         KLVA==
+X-Gm-Message-State: AOJu0YzOcSSwn9yu5mktYas1Wfpk9UtgZgdEUArs6Oc4uRyjmko4KvAq
+        LxNRIfvuVzTPYPs57qlPbRq96g==
+X-Google-Smtp-Source: AGHT+IEbH8QoKWO9UiEQxYacANzdgqxHnSFmPLKa7epb4hiIE+R+v95RruxP8sPzwDO30BRcFNgqxg==
+X-Received: by 2002:a2e:7e0e:0:b0:2c0:34ed:b5ea with SMTP id z14-20020a2e7e0e000000b002c034edb5eamr5104047ljc.45.1698577624703;
+        Sun, 29 Oct 2023 04:07:04 -0700 (PDT)
+Received: from [192.168.0.22] ([78.10.206.168])
+        by smtp.gmail.com with ESMTPSA id f24-20020a2e9198000000b002b6d68b520esm838938ljg.65.2023.10.29.04.07.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Oct 2023 04:07:04 -0700 (PDT)
+Message-ID: <c3495c6d-72e3-493b-99ed-47e8cd3f1108@linaro.org>
+Date:   Sun, 29 Oct 2023 12:07:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231025121725.46028-4-m.szyprowski@samsung.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pwm: samsung: Document new member .channel in struct
+ samsung_pwm_chip
+Content-Language: en-US
+To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>, kernel@pengutronix.de,
+        linux-arm-kernel@lists.infradead.org,
+        kernel test robot <lkp@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+References: <20231012210228.1009473-2-u.kleine-koenig@pengutronix.de>
+ <169720375693.285367.8034783567173304872.b4-ty@gmail.com>
+ <20231013172750.nxcw2ftihpemnymx@pengutronix.de>
+ <20231024145524.7qkzrrdm6zg5hfji@pengutronix.de>
+ <fa624966-176a-47d1-937d-8384fda06513@linaro.org>
+ <20231024164627.ejcqrtbhvohduvpg@pengutronix.de>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231024164627.ejcqrtbhvohduvpg@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-Hi Marek,
-
-On Wed, Oct 25, 2023 at 02:17:25PM +0200, Marek Szyprowski wrote:
+On 24/10/2023 18:46, Uwe Kleine-König wrote:
+> On Tue, Oct 24, 2023 at 04:58:22PM +0200, Krzysztof Kozlowski wrote:
+>> On 24/10/2023 16:55, Uwe Kleine-König wrote:
+>>> Hello,
+>>>
+>>> On Fri, Oct 13, 2023 at 07:27:50PM +0200, Uwe Kleine-König wrote:
+>>>> On Fri, Oct 13, 2023 at 03:29:35PM +0200, Thierry Reding wrote:
+>>>>> On Thu, 12 Oct 2023 23:02:29 +0200, Uwe Kleine-König wrote:
+>>>>>> Fixes: 4c9548d24c0d ("pwm: samsung: Put per-channel data into driver data")
+>>>>>
+>>>>> Applied, thanks!
+>>>>>
+>>>>> [1/1] pwm: samsung: Document new member .channel in struct samsung_pwm_chip
+>>>>>       commit: 4bb36d126cb3147d6bbfd00242a5b846dacad595
+>>>>
+>>>> You might want to change 4c9548d24c0d to e3fe982b2e4e now that you
+>>>> rewrote your for-next branch.
+>>>
+>>> This is still open. I wonder there is no automated check that warns if
+>>> there is a Fixes: line in next that doesn't refer to an ancestor.
+>>
+>> I am using Greg's/Stephen's scripts in commit hooks:
+>> https://github.com/krzk/tools/blob/master/linux/git-hooks-post-commit
+>> https://github.com/krzk/tools/blob/master/linux/verify_fixes.sh
+> 
+> Skimming throud the verify_fixes script I'd say the following addition
+> to verify_fixes should do:
+> 
+> diff --git a/linux/verify_fixes.sh b/linux/verify_fixes.sh
+> index f22384bb6bb8..12e73da82dd4 100755
+> --- a/linux/verify_fixes.sh
+> +++ b/linux/verify_fixes.sh
+> @@ -100,6 +100,13 @@ verify_fixes()
+>  				continue
+>  			fi
+>  
+> +			if ! git merge-base --is-ancestor "$sha" "$c"; then
+> +				printf '%s%s\t\t- %s\n' "$commit_msg" "$fixes_msg" 'Target SHA should be an ancestor of your tree'
+> +				commit_msg=''
+> +				error=1
+> +				continue
+> +			fi
+> +
+>  			if [ "${#sha}" -lt 12 ]; then
+>  				msg="${msg:+${msg}${nl}}${tab}${tab}- SHA1 should be at least 12 digits long${nl}${tab}${tab}  Can be fixed by setting core.abbrev to 12 (or more) or (for git v2.11${nl}${tab}${tab}  or later) just making sure it is not set (or set to \"auto\")."
+>  			fi
 > 
 
-you left a blank space in your commit log.
+Thanks Uwe for the snippet. I went further and it allowed to simplify
+checking for commit in Linus' tree.
 
-> Add support for atomic transfers using polling mode with interrupts
-> intentionally disabled to get rid of the warning introduced by commit
-> 63b96983a5dd ("i2c: core: introduce callbacks for atomic transfers")
-> during system reboot and power-off.
+Cc, Greg, Stephen,
+Maybe you will find it useful to update your scripts as well (I forked
+from yours):
+https://github.com/krzk/tools/commit/39d2c71a72f5d4f30d0752e45b9bcc09b75b5026
 
-What warning?
+https://github.com/krzk/tools/commit/0061331501fac2f4b24709adb0ec5cf267bcb661#diff-0100377e067a4cd4cb89c0f0ae8732d3e814ed25e816a392bf2e0855a392adbcL11
 
-Andi
+Best regards,
+Krzysztof
 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->  drivers/i2c/busses/i2c-s3c2410.c | 21 +++++++++++++++++++--
->  1 file changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
-> index 8da85cb42980..586b82b30bdf 100644
-> --- a/drivers/i2c/busses/i2c-s3c2410.c
-> +++ b/drivers/i2c/busses/i2c-s3c2410.c
-> @@ -76,6 +76,7 @@
->  #define QUIRK_HDMIPHY		(1 << 1)
->  #define QUIRK_NO_GPIO		(1 << 2)
->  #define QUIRK_POLL		(1 << 3)
-> +#define QUIRK_ATOMIC		(1 << 4)
->  
->  /* Max time to wait for bus to become idle after a xfer (in us) */
->  #define S3C2410_IDLE_TIMEOUT	5000
-> @@ -174,7 +175,7 @@ static inline void s3c24xx_i2c_master_complete(struct s3c24xx_i2c *i2c, int ret)
->  	if (ret)
->  		i2c->msg_idx = ret;
->  
-> -	if (!(i2c->quirks & QUIRK_POLL))
-> +	if (!(i2c->quirks & (QUIRK_POLL | QUIRK_ATOMIC)))
->  		wake_up(&i2c->wait);
->  }
->  
-> @@ -700,7 +701,7 @@ static int s3c24xx_i2c_doxfer(struct s3c24xx_i2c *i2c,
->  	s3c24xx_i2c_enable_irq(i2c);
->  	s3c24xx_i2c_message_start(i2c, msgs);
->  
-> -	if (i2c->quirks & QUIRK_POLL) {
-> +	if (i2c->quirks & (QUIRK_POLL | QUIRK_ATOMIC)) {
->  		while ((i2c->msg_num != 0) && is_ack(i2c)) {
->  			unsigned long stat = readl(i2c->regs + S3C2410_IICSTAT);
->  
-> @@ -774,6 +775,21 @@ static int s3c24xx_i2c_xfer(struct i2c_adapter *adap,
->  	return -EREMOTEIO;
->  }
->  
-> +static int s3c24xx_i2c_xfer_atomic(struct i2c_adapter *adap,
-> +				   struct i2c_msg *msgs, int num)
-> +{
-> +	struct s3c24xx_i2c *i2c = (struct s3c24xx_i2c *)adap->algo_data;
-> +	int ret;
-> +
-> +	disable_irq(i2c->irq);
-> +	i2c->quirks |= QUIRK_ATOMIC;
-> +	ret = s3c24xx_i2c_xfer(adap, msgs, num);
-> +	i2c->quirks &= ~QUIRK_ATOMIC;
-> +	enable_irq(i2c->irq);
-> +
-> +	return ret;
-> +}
-> +
->  /* declare our i2c functionality */
->  static u32 s3c24xx_i2c_func(struct i2c_adapter *adap)
->  {
-> @@ -784,6 +800,7 @@ static u32 s3c24xx_i2c_func(struct i2c_adapter *adap)
->  /* i2c bus registration info */
->  static const struct i2c_algorithm s3c24xx_i2c_algorithm = {
->  	.master_xfer		= s3c24xx_i2c_xfer,
-> +	.master_xfer_atomic     = s3c24xx_i2c_xfer_atomic,
->  	.functionality		= s3c24xx_i2c_func,
->  };
->  
-> -- 
-> 2.34.1
-> 
