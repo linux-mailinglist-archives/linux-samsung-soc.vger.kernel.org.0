@@ -2,123 +2,95 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E8887DAC57
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 29 Oct 2023 13:10:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B99AC7E0DDF
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  4 Nov 2023 05:58:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjJ2MKO (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Sun, 29 Oct 2023 08:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45280 "EHLO
+        id S234193AbjKDE6P (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Sat, 4 Nov 2023 00:58:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjJ2MKN (ORCPT
+        with ESMTP id S233766AbjKDE6O (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Sun, 29 Oct 2023 08:10:13 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DD1BE;
-        Sun, 29 Oct 2023 05:10:08 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF153C433C8;
-        Sun, 29 Oct 2023 12:10:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1698581408;
-        bh=Tt2zBbYMPZAuRK60SLouG6hIoBx1BUwr3/PJQYhilQU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DTJcwgTpcvNVi65l6K3LPvwFBNlhbcf85N51LlceLdolMoiwtQGiPq3oLQrjEtSRr
-         UZpwqUZCJijXj/AXm2QdBq8sSiHFV8zPDzJ69kvN1NeIsl9OAuCnYTRTCz3kAx4xP/
-         IEekay5Z70j4Ct03QyuwStvWsumtnwCgArrs9nhk=
-Date:   Sun, 29 Oct 2023 13:10:02 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>, kernel@pengutronix.de,
-        linux-arm-kernel@lists.infradead.org,
-        kernel test robot <lkp@intel.com>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] pwm: samsung: Document new member .channel in struct
- samsung_pwm_chip
-Message-ID: <2023102946-chain-resource-ae1d@gregkh>
-References: <20231012210228.1009473-2-u.kleine-koenig@pengutronix.de>
- <169720375693.285367.8034783567173304872.b4-ty@gmail.com>
- <20231013172750.nxcw2ftihpemnymx@pengutronix.de>
- <20231024145524.7qkzrrdm6zg5hfji@pengutronix.de>
- <fa624966-176a-47d1-937d-8384fda06513@linaro.org>
- <20231024164627.ejcqrtbhvohduvpg@pengutronix.de>
- <c3495c6d-72e3-493b-99ed-47e8cd3f1108@linaro.org>
+        Sat, 4 Nov 2023 00:58:14 -0400
+X-Greylist: delayed 4289 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 03 Nov 2023 21:58:10 PDT
+Received: from mail.profitpathwaygo.com (mail.profitpathwaygo.com [141.94.21.238])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2AD123
+        for <linux-samsung-soc@vger.kernel.org>; Fri,  3 Nov 2023 21:58:10 -0700 (PDT)
+Received: by mail.profitpathwaygo.com (Postfix, from userid 1002)
+        id 2664954106; Mon, 30 Oct 2023 08:30:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=profitpathwaygo.com;
+        s=mail; t=1698655682;
+        bh=qp3Ofokho6Ql+WtI8ZPVilyHYhskXL7fod7u9CWs8W4=;
+        h=Date:From:To:Subject:From;
+        b=iEpCbF9WD+XinoOVX47ottHDy1hQyahCuxjYKaAUPKiF9cVYx8RzGAwLuU8fVl8rI
+         xbouGQ0txtlgSaBjIMJAO9KTbpCmIpXa8MX7HiKG84l1MIbFdbwrXuWM3eGNyDofRG
+         OEQ3qqQSUvkGn5ay4PEYSh8ISTQDLjSTY89hye4YDtM8zu9CHCS3qU6piG/l2Nbc6q
+         mF57WOqYo3wd3T/WoMoqDzV6OFYV13gE9592mDfy4+3OTONxkHKVItyvxHsfkH2Joq
+         WQtPMQLWfHpz3sA6xAcpAzIJkH68Vh4C0Pj3YAIuo+Fbj5ubip43L33i8/Ch3S/30a
+         RI/VfFFLEjlNw==
+Received: by mail.profitpathwaygo.com for <linux-samsung-soc@vger.kernel.org>; Mon, 30 Oct 2023 08:30:28 GMT
+Message-ID: <20231030074500-0.1.2s.15452.0.obvhmm31nr@profitpathwaygo.com>
+Date:   Mon, 30 Oct 2023 08:30:28 GMT
+From:   "Adam Charachuta" <adam.charachuta@profitpathwaygo.com>
+To:     <linux-samsung-soc@vger.kernel.org>
+Subject: =?UTF-8?Q?S=C5=82owa_kluczowe_do_wypozycjonowania_?=
+X-Mailer: mail.profitpathwaygo.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c3495c6d-72e3-493b-99ed-47e8cd3f1108@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,
+        RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED,URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
+        *      blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [URIs: profitpathwaygo.com]
+        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
+        *      blocklist
+        *      [URIs: profitpathwaygo.com]
+        *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
+        *      https://senderscore.org/blocklistlookup/
+        *      [141.94.21.238 listed in bl.score.senderscore.com]
+        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        *      [141.94.21.238 listed in zen.spamhaus.org]
+        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
+        *      blocklist
+        *      [URIs: profitpathwaygo.com]
+        * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
+        *      [score: 0.0083]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On Sun, Oct 29, 2023 at 12:07:02PM +0100, Krzysztof Kozlowski wrote:
-> On 24/10/2023 18:46, Uwe Kleine-König wrote:
-> > On Tue, Oct 24, 2023 at 04:58:22PM +0200, Krzysztof Kozlowski wrote:
-> >> On 24/10/2023 16:55, Uwe Kleine-König wrote:
-> >>> Hello,
-> >>>
-> >>> On Fri, Oct 13, 2023 at 07:27:50PM +0200, Uwe Kleine-König wrote:
-> >>>> On Fri, Oct 13, 2023 at 03:29:35PM +0200, Thierry Reding wrote:
-> >>>>> On Thu, 12 Oct 2023 23:02:29 +0200, Uwe Kleine-König wrote:
-> >>>>>> Fixes: 4c9548d24c0d ("pwm: samsung: Put per-channel data into driver data")
-> >>>>>
-> >>>>> Applied, thanks!
-> >>>>>
-> >>>>> [1/1] pwm: samsung: Document new member .channel in struct samsung_pwm_chip
-> >>>>>       commit: 4bb36d126cb3147d6bbfd00242a5b846dacad595
-> >>>>
-> >>>> You might want to change 4c9548d24c0d to e3fe982b2e4e now that you
-> >>>> rewrote your for-next branch.
-> >>>
-> >>> This is still open. I wonder there is no automated check that warns if
-> >>> there is a Fixes: line in next that doesn't refer to an ancestor.
-> >>
-> >> I am using Greg's/Stephen's scripts in commit hooks:
-> >> https://github.com/krzk/tools/blob/master/linux/git-hooks-post-commit
-> >> https://github.com/krzk/tools/blob/master/linux/verify_fixes.sh
-> > 
-> > Skimming throud the verify_fixes script I'd say the following addition
-> > to verify_fixes should do:
-> > 
-> > diff --git a/linux/verify_fixes.sh b/linux/verify_fixes.sh
-> > index f22384bb6bb8..12e73da82dd4 100755
-> > --- a/linux/verify_fixes.sh
-> > +++ b/linux/verify_fixes.sh
-> > @@ -100,6 +100,13 @@ verify_fixes()
-> >  				continue
-> >  			fi
-> >  
-> > +			if ! git merge-base --is-ancestor "$sha" "$c"; then
-> > +				printf '%s%s\t\t- %s\n' "$commit_msg" "$fixes_msg" 'Target SHA should be an ancestor of your tree'
-> > +				commit_msg=''
-> > +				error=1
-> > +				continue
-> > +			fi
-> > +
-> >  			if [ "${#sha}" -lt 12 ]; then
-> >  				msg="${msg:+${msg}${nl}}${tab}${tab}- SHA1 should be at least 12 digits long${nl}${tab}${tab}  Can be fixed by setting core.abbrev to 12 (or more) or (for git v2.11${nl}${tab}${tab}  or later) just making sure it is not set (or set to \"auto\")."
-> >  			fi
-> > 
-> 
-> Thanks Uwe for the snippet. I went further and it allowed to simplify
-> checking for commit in Linus' tree.
-> 
-> Cc, Greg, Stephen,
-> Maybe you will find it useful to update your scripts as well (I forked
-> from yours):
-> https://github.com/krzk/tools/commit/39d2c71a72f5d4f30d0752e45b9bcc09b75b5026
-> 
-> https://github.com/krzk/tools/commit/0061331501fac2f4b24709adb0ec5cf267bcb661#diff-0100377e067a4cd4cb89c0f0ae8732d3e814ed25e816a392bf2e0855a392adbcL11
+Dzie=C5=84 dobry,
 
-Thanks, I've applied this to my tree, let's see how it works out.
+zapozna=C5=82em si=C4=99 z Pa=C5=84stwa ofert=C4=85 i z przyjemno=C5=9Bci=
+=C4=85 przyznaj=C4=99, =C5=BCe przyci=C4=85ga uwag=C4=99 i zach=C4=99ca d=
+o dalszych rozm=C3=B3w.=20
 
-greg k-h
+Pomy=C5=9Bla=C5=82em, =C5=BCe mo=C5=BCe m=C3=B3g=C5=82bym mie=C4=87 sw=C3=
+=B3j wk=C5=82ad w Pa=C5=84stwa rozw=C3=B3j i pom=C3=B3c dotrze=C4=87 z t=C4=
+=85 ofert=C4=85 do wi=C4=99kszego grona odbiorc=C3=B3w. Pozycjonuj=C4=99 =
+strony www, dzi=C4=99ki czemu generuj=C4=85 =C5=9Bwietny ruch w sieci.
+
+Mo=C5=BCemy porozmawia=C4=87 w najbli=C5=BCszym czasie?
+
+
+Pozdrawiam serdecznie
+Adam Charachuta
