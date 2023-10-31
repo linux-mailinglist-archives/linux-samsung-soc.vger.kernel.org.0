@@ -2,92 +2,65 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79CE57DD5E5
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 19:16:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6EA47DD853
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 23:29:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235959AbjJaSPz (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 31 Oct 2023 14:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36538 "EHLO
+        id S1346777AbjJaW3k (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 31 Oct 2023 18:29:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376445AbjJaQ7a (ORCPT
+        with ESMTP id S1346780AbjJaW3j (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 31 Oct 2023 12:59:30 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F12223586;
-        Tue, 31 Oct 2023 09:58:54 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF60C433CB;
-        Tue, 31 Oct 2023 16:58:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698771534;
-        bh=eHaWx3XBjxR9WQzWxiMP+9mylnGCpepEBx6eV8SqLTg=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=tbFH75zD0wSBts/IWcd7KAkpwmPD/hEQnoc5NXDyB/MjbJOXo5zrD3rmL4Ahncdif
-         eIcVReQjnW56tvzKCj85nLvxrNiT9ITtCdsvtCj1YudM8P44AfW+wvbLx8E31lmZHI
-         K/ww8YDAqnM3vJiXT/vgsJzNFj79dFkzqAoYMfpE+ltqvSCZw1qaolePHpVpT95iG2
-         NbrJ2KNE6yns9TZ7LnwRpmxMej2DZpXykM7mPrVmrFqIGUz96j4Yz5YZWKftWTDlzN
-         UERaMt14CsLUi6zGA3QCHip/+scFSK+oAlNODnBrIxuF35OLgDNT3n009Zh6v3iT5c
-         UU8ageBtEuPjQ==
-Message-ID: <ea5bf4b6-af77-46cd-89db-d7a79a117dc1@kernel.org>
-Date:   Tue, 31 Oct 2023 17:58:49 +0100
+        Tue, 31 Oct 2023 18:29:39 -0400
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A85F9F5
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 15:29:36 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qxxEZ-0000Xv-UA; Tue, 31 Oct 2023 23:29:15 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qxxEY-005fLF-5Z; Tue, 31 Oct 2023 23:29:14 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1qxxEX-00AENI-SK; Tue, 31 Oct 2023 23:29:13 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        kernel@pengutronix.de, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        =?utf-8?b?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 0/9] interconnect: Convert to platform remove callback returning void
+Date:   Tue, 31 Oct 2023 23:28:52 +0100
+Message-ID: <20231031222851.3126434-11-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: exynos-mixer 14450000.mixer: [drm:exynos_drm_register_dma]
- *ERROR* Device 14450000.mixer lacks support for IOMMU
-Content-Language: en-US
-To:     Mario Marietto <marietto2008@gmail.com>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org
-References: <CA+1FSiiPqYuycAa8rLFzKVDzvJC3BQBwRW7E0Ki4CXEFwhRASA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CA+1FSiiPqYuycAa8rLFzKVDzvJC3BQBwRW7E0Ki4CXEFwhRASA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2603; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=3SkMgeZXUh2DxhiI9zyWc84nqltxgURpZ9fY1tc7VcE=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlQX+jlzRrKrXFjomy7M9OrfEJANX39S9Ie6R5Y zKtfDvhyxeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZUF/owAKCRCPgPtYfRL+ TiDbCACQrtZBPLcPQ53kWNVGgjP5atluU4UudSSzUUjMbN7O3fO9xePZ3HPdqkZdoGnYGtTFxsV 5ueAhqHq/MUJ4DqZ4rGtEepyXodVTVEBfixTw/IrPEKBVqzLmD/yr9Se04UmsqaXjQxQT2zyWD2 IDs8r3dBbUoLRWNI6VBAsvG0I8Ct4odK5MHur08rUY1V3193j/pHMwZrARljq9tbhnxGVBSC45A bhjZW9LIE7yu8m/crBQP9jJ0xVMMpNupJ4SQ1i8xS9s2zFkVigMVKubk21zIy2+LDcruVVp1kTf 6fPhnRoX0G8lJLIm1tQBqyrZ/rGxalxnfqjaduYjesOm9QT0
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,72 +68,66 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-On 31/10/2023 01:04, Mario Marietto wrote:
-> Hello,
-> 
-> We are a team of linux enthusiasts who are trying to boot Xen on a
-> Samsung XE303C12 Chromebook aka "snow"
-> following the suggestions in the slide show presentation here:
-> 
-> https://www.slideshare.net/xen_com_mgr/xpds16-porting-xen-on-arm-to-a-new-soc-julien-grall-arm
-> 
-> This device uses an exynos5250 SOC dual core 1.7 GHz with 2 MB RAM, it is
-> a Samsung armv7 chip with virtualization extensions.
-> 
-> In particular, we have it working fairly well both on the bare metal with
-> a recent 6.1.59 Linux LTS kernel and also with a recent 5.4.257 LTS
+Hello,
 
-Oh, these are old... Although there should be no noticeable changes
-against v6.1.
+this series converts all platform drivers below drivers/interconnect to
+use .remove_new(). Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver
+core doesn't (and cannot) cope for errors during remove. The only effect
+of a non-zero return value in .remove() is that the driver core emits a
+warning. The device is removed anyhow and an early return from .remove()
+usually yields resource leaks and/or use-after-free bugs.
 
-v5.4 is not recent. It is four years old!
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
 
-> kernel with KVM, the older LTS kernel version is used to test KVM because
-> support for KVM on arm v7 was removed from Linux around kernel version
-> 5.7. So we know we have the hypervisor mode enabled because we were able
-> to use it with KVM.
-> 
-> For Xen, we are using the latest Debian build of Xen 4.17 for the Debian
-> armhf architecture:
+All drivers converted here already returned zero unconditionally in
+.remove(), so they are converted here trivially. The imx drivers could
+be slightly simplified, because the remove callback only called a single
+function with the same prototype as .remove_new().
 
-...
+Best regards
+Uwe
 
-> 
-> In this case,the kernel is able to use the exynos-drm kernel to start
-> the fb0 device. But with Xen we get this error with exynos-drm:
-> 
-> devuan-bunsen kernel: [drm] Exynos DRM: using 14400000.fimd device for
-> DMA mapping operations
-> devuan-bunsen kernel: exynos-drm exynos-drm: bound 14400000.fimd (ops
-> 0xc0d96354)
-> devuan-bunsen kernel: exynos-mixer 14450000.mixer:
-> [drm:exynos_drm_register_dma] *ERROR* Device 14450000.mixer lacks
-> support for IOMMU
+Uwe Kleine-König (9):
+  interconnect: qcom: Make qnoc_remove return void
+  interconnect: imx8mm: Convert to platform remove callback returning
+    void
+  interconnect: imx8mn: Convert to platform remove callback returning
+    void
+  interconnect: imx8mp: Convert to platform remove callback returning
+    void
+  interconnect: imx8mq: Convert to platform remove callback returning
+    void
+  interconnect: qcom/msm8974: Convert to platform remove callback
+    returning void
+  interconnect: qcom/osm-l3: Convert to platform remove callback
+    returning void
+  interconnect: qcom/smd-rpm: Convert to platform remove callback
+    returning void
+  interconnect: exynos: Convert to platform remove callback returning
+    void
 
-Hi Mario,
+ drivers/interconnect/imx/imx8mm.c     | 9 +--------
+ drivers/interconnect/imx/imx8mn.c     | 9 +--------
+ drivers/interconnect/imx/imx8mp.c     | 9 +--------
+ drivers/interconnect/imx/imx8mq.c     | 9 +--------
+ drivers/interconnect/qcom/icc-rpm.c   | 4 +---
+ drivers/interconnect/qcom/icc-rpm.h   | 2 +-
+ drivers/interconnect/qcom/msm8916.c   | 2 +-
+ drivers/interconnect/qcom/msm8939.c   | 2 +-
+ drivers/interconnect/qcom/msm8974.c   | 6 ++----
+ drivers/interconnect/qcom/msm8996.c   | 2 +-
+ drivers/interconnect/qcom/osm-l3.c    | 6 ++----
+ drivers/interconnect/qcom/qcm2290.c   | 2 +-
+ drivers/interconnect/qcom/qcs404.c    | 2 +-
+ drivers/interconnect/qcom/sdm660.c    | 2 +-
+ drivers/interconnect/qcom/smd-rpm.c   | 6 ++----
+ drivers/interconnect/samsung/exynos.c | 6 ++----
+ 16 files changed, 20 insertions(+), 58 deletions(-)
 
-I don't test DRM on my Exynos boards, so my knowledge is limited, but
-isn't this the answer?
 
-> devuan-bunsen kernel: exynos-drm exynos-drm: failed to bind
-> 14450000.mixer (ops 0xc0d97554): -22
-> devuan-bunsen kernel: exynos-drm exynos-drm: adev bind failed: -22
-> devuan-bunsen kernel: exynos-dp: probe of 145b0000.dp-controller
-> failed with error -22
-
-And that's the final confirmation that display did not probe successfully.
-
-> 
-> 
-> Any ideas why booting the same Linux kernel that results in a working
-> X.org display on the bare metal instead as dom0 on Xen would cause the
-> display to remain dark, but most other basic functions would work, such
-> as network, disk, and USB ? thanks.
-
-BTW, it's usually good to Cc the maintainer as well, not only the
-mailing list :). scripts/get_maintainer.pl will tell you the maintainers
-of Exynos and Exynos DRM.
-
-Best regards,
-Krzysztof
+base-commit: 9c2d379d63450ae464eeab45462e0cb573cd97d0
+-- 
+2.42.0
 
