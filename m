@@ -2,131 +2,116 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 230327DCA25
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 10:52:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F9167DCCA5
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 13:14:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235482AbjJaJwC (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 31 Oct 2023 05:52:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47606 "EHLO
+        id S1344126AbjJaMKM (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 31 Oct 2023 08:10:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236118AbjJaJvW (ORCPT
+        with ESMTP id S236039AbjJaMJ6 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 31 Oct 2023 05:51:22 -0400
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2FF3D44
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 02:50:41 -0700 (PDT)
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20231031095023epoutp0161ff0f6415e98929d6d4f7a702613cce~TKFN2Vg-y0894808948epoutp01P
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 09:50:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20231031095023epoutp0161ff0f6415e98929d6d4f7a702613cce~TKFN2Vg-y0894808948epoutp01P
+        Tue, 31 Oct 2023 08:09:58 -0400
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37BF412F
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 05:08:15 -0700 (PDT)
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20231031120812euoutp01348687e695df700d6cbd065df15727a6~TL9jeHL712928729287euoutp01G
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 12:08:12 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20231031120812euoutp01348687e695df700d6cbd065df15727a6~TL9jeHL712928729287euoutp01G
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1698745823;
-        bh=t5IrulBEYs/pAFYmxibKmCqgtb1DKb9WLtc5ml9R97Q=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=azirv0p+v+R4SHX1eWSvf14YMSjWKT42IBbOTVJz/UuEKBiHIbAJsQa9qGLcoxVNe
-         3NlWKiDBkt/XaBpxZ2W86yHgQtr1wK36DOClR8C098jcfUcH9Ho6jcL4Wh2t9OFD0z
-         plq+/W7sg/veK06hy6QVsXP0WWtOkxEPw3sdtSxQ=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
-        20231031095022epcas2p32b0faa9af82c5f2ea617f8e135b7c3e7~TKFNWJYht0127001270epcas2p3K;
-        Tue, 31 Oct 2023 09:50:22 +0000 (GMT)
-Received: from epsmges2p3.samsung.com (unknown [182.195.36.68]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 4SKQNt29TGz4x9Pt; Tue, 31 Oct
-        2023 09:50:22 +0000 (GMT)
-Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
-        epsmges2p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        8E.1E.10022.EDDC0456; Tue, 31 Oct 2023 18:50:22 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
-        20231031095021epcas2p343514064dc0da3fff87e4b8a24d895fd~TKFMSIeNY0127001270epcas2p3G;
-        Tue, 31 Oct 2023 09:50:21 +0000 (GMT)
-Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20231031095021epsmtrp24e846dd33a0bb2a6729563a9dd777dcc~TKFMRTggq1473914739epsmtrp2M;
-        Tue, 31 Oct 2023 09:50:21 +0000 (GMT)
-X-AuditID: b6c32a47-9a3ff70000002726-34-6540cdde65f7
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        E3.42.07368.DDDC0456; Tue, 31 Oct 2023 18:50:21 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.229.9.55]) by
-        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20231031095021epsmtip13a8fcaf2ab6663eeb538bf106d2d2005~TKFLz3D4h2273922739epsmtip1q;
-        Tue, 31 Oct 2023 09:50:21 +0000 (GMT)
-From:   Jaewon Kim <jaewon02.kim@samsung.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-pwm@vger.kernel.org, linux-serial@vger.kernel.org,
-        Jaewon Kim <jaewon02.kim@samsung.com>
-Subject: [PATCH 10/10] arm64: dts: exynos: add minimal support for
- exynosautov920 sadk board
-Date:   Tue, 31 Oct 2023 18:47:52 +0900
-Message-ID: <20231031094852.118677-11-jaewon02.kim@samsung.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231031094852.118677-1-jaewon02.kim@samsung.com>
+        s=mail20170921; t=1698754092;
+        bh=7R+We3/ZotRkN0zNzo4bcBqBdOETuS0p31VdG/ZiSD4=;
+        h=Date:Subject:To:From:Cc:In-Reply-To:References:From;
+        b=Na2R3VBkKye01omh0MTd2uw1FcDuqp/ltJLwgs0QMyeKAHSe/U52ExY/0sqI8R22I
+         oG2jk+C4+/K9s3b0ZABZzqT/nY8c77lf5RBYhrrRbevY7LgsKh9kS8vVrqRm9fU+4Z
+         +KcyF8o2I0sDpWeoz0z3aAjVRgdakAhiyr+p3Qww=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20231031120812eucas1p2925bf2ac67e8e654accd6e4260b8119f~TL9jQLEJr2837828378eucas1p2d;
+        Tue, 31 Oct 2023 12:08:12 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id ED.B1.52736.C2EE0456; Tue, 31
+        Oct 2023 12:08:12 +0000 (GMT)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20231031120812eucas1p23817b869678ec45bd83f9e7f21ff92a7~TL9i6Bxxq2838328383eucas1p2K;
+        Tue, 31 Oct 2023 12:08:12 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20231031120812eusmtrp2de2419fa7c68219ec49cf891b251225b~TL9i5YOh90258902589eusmtrp2s;
+        Tue, 31 Oct 2023 12:08:12 +0000 (GMT)
+X-AuditID: cbfec7f5-ba1ff7000000ce00-54-6540ee2c18b8
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id C9.4E.25043.C2EE0456; Tue, 31
+        Oct 2023 12:08:12 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20231031120811eusmtip13c34f44540513f450b5edf34a31d673a~TL9iHyOlN2503025030eusmtip1n;
+        Tue, 31 Oct 2023 12:08:11 +0000 (GMT)
+Message-ID: <7a71e348-f892-4fd4-8857-b72f35ab5134@samsung.com>
+Date:   Tue, 31 Oct 2023 13:08:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrKJsWRmVeSWpSXmKPExsWy7bCmqe69sw6pBtOeclg8mLeNzWLN3nNM
-        FvOPnGO1aF68ns1iR8MRVot3c2Us9r7eym4x5c9yJotNj6+xWmye/4fR4vKuOWwWd++uYrSY
-        cX4fk8WZxb3sFq17j7BbHH7Tzmrxc9c8FotVu4Dqbk+czOgg7LFz1l12j02rOtk87lzbw+ax
-        f+4ado/NS+o9+v8aePRtWcXo8XmTXABHVLZNRmpiSmqRQmpecn5KZl66rZJ3cLxzvKmZgaGu
-        oaWFuZJCXmJuqq2Si0+ArltmDtA7SgpliTmlQKGAxOJiJX07m6L80pJUhYz84hJbpdSClJwC
-        8wK94sTc4tK8dL281BIrQwMDI1OgwoTsjDfvmxkLbopXvOx4ytbAOF+4i5GTQ0LARGLmt08s
-        XYxcHEICOxglrn2YxwrhfGKUmH/0KlTmG6NEw6Ed7DAtjU+72CESexkltm7vZ4RwPjJKrJ/e
-        xwJSxSagLfF9/WJWEFtE4AuzxPRH1SBFzALtTBLzvr0EKxIWiJPY9HwKG4jNIqAqMW/jXyYQ
-        m1fAXuLagmZmiHXyEnsWfQeLcwLFd/Y0MULUCEqcnPkEbA4zUE3z1tnMIAskBK5wSOy4uYEN
-        otlF4tjEbkYIW1ji1fEtUD9ISXx+txeqJluiffofVgi7QuLihtlQcWOJWc/agXo5gBZoSqzf
-        pQ9iSggoSxy5BbWWT6Lj8F92iDCvREebEESjmsT9qeeghshITDqykgnC9pDobbzEBAmrSYwS
-        M842MU5gVJiF5JtZSL6ZhbB4ASPzKkax1ILi3PTUYqMCY3gUJ+fnbmIEp28t9x2MM95+0DvE
-        yMTBeIhRgoNZSYT3sKlDqhBvSmJlVWpRfnxRaU5q8SFGU2BYT2SWEk3OB2aQvJJ4QxNLAxMz
-        M0NzI1MDcyVx3nutc1OEBNITS1KzU1MLUotg+pg4OKUamOZlL/cq7HnT2t3CvqJ+T2jC43d/
-        p0/P5RIPjG1LCPr7vPFLVnDL6ekdldXlR/fFrRIxe6cZuz3UxzxezMXkPeur078vKLGHMTz6
-        9v387hmmGm0GWWI8MdWqFw7sv/Pd7xbzwStq+xaJN3zcyhm74aLilwlGG9bM2BLrO/MUw2vd
-        DSecys7LbJl2Pskge9961903dauzFI+lrmlfPkFiWbSDz8y77w8utZoQXMb5MKdEpPyRaezB
-        afp/+Yzr6hStXz3bJslks8N28YpvTX+2KN4x/2cdO+vOJmvX0LtT5l9ktuHunrj/3lVT57Z5
-        18M3aBgx7PIUTfVleP4wfte3BW9FFtStNNU5efh+lnX20k1KLMUZiYZazEXFiQCb4RbDaAQA
+User-Agent: Mozilla Thunderbird
+Subject: Re: exynos-mixer 14450000.mixer: [drm:exynos_drm_register_dma]
+ *ERROR* Device 14450000.mixer lacks support for IOMMU
+Content-Language: en-US
+To:     Mario Marietto <marietto2008@gmail.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Sylwester Nawrocki <snawrocki@kernel.org>
+In-Reply-To: <CA+1FSign611=47=xLRucFhDjvs7A_TeFE9b8qO63WXDU8Pnkjg@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsWy7djP87o67xxSDR6/ULN4MG8bm8X8I+dY
+        La58fc9msfHtDyaLTY+vsVpc3jWHzWLG+X1MFoemPGezaH/6ktmB02NWQy+bx85Zd9k9Nq3q
+        ZPO4332cyWPzknqPvi2rGD0+b5ILYI/isklJzcksSy3St0vgyth7byV7QY9RRcuSJtYGxh0a
+        XYycHBICJhK3zyxn6mLk4hASWMEo0dv/gx3C+cIose1lCytIlZDAZ0aJNTMEuhg5wDo+HxCF
+        CC9nlNhxyxqi/iOjxMXN5xlBErwCdhKH905mAbFZBFQlvk68wwYRF5Q4OfMJWFxUQF7i/q0Z
+        7CAzhQXqJVrbeEHCzALiEreezGcCsUUEtCXW7ZjPDmKzCRhKdL3tYgPZxSywk0niTPMMsDmc
+        AoESa668Y4RolpfY/nYOM0iRhMB/Dolt9zqYII52kbg8TQTiY2GJV8e3sEPYMhL/d85ngqhv
+        Z5RY8Ps+lDOBUaLh+S1GiCpriTvnfrGBDGIW0JRYv0sfIuwosfrkR0aI+XwSN94KQtzAJzFp
+        23RmiDCvREebEES1msSs4+vg1h68cIl5AqPSLKRQmYXk/VlIvpmFsHcBI8sqRvHU0uLc9NRi
+        47zUcr3ixNzi0rx0veT83E2MwCR1+t/xrzsYV7z6qHeIkYmD8RCjBAezkgjvYVOHVCHelMTK
+        qtSi/Pii0pzU4kOM0hwsSuK8qinyqUIC6YklqdmpqQWpRTBZJg5OqQamyZFHP/06ero0rs3i
+        wOuW75yfpyTM1JwzbVm6tFJf+bKiDNavoeGebCGOlUqmBwplo+ctk5n589inWbMP7Kyz6V9s
+        Z6Ds7C+jMmuK0N/mUw/yJXPfub3z/jVtn4/RxyX9Xw8sXcZse3na69dHpT5eiNMy+BS39Ms8
+        jRsWvjN2NNbGr/A/u8juh5PmsbSvT/cXJJ1XahCP8vEpy76Uwi+70bp5p65Kppnaun2XBZz/
+        recIup+k+2r+gY5FLRMSrDd5OVhITXtwO5I13mr5kUeBCld4J717qJ2rvET4t/WL8oqgdf+7
+        fK8wHdUSTFu0b6/Kzk/nfMK8vSS2Pf62poY/vH/ZHxvRJye6qjMfP/7wUImlOCPRUIu5qDgR
+        AKpk6PTBAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMIsWRmVeSWpSXmKPExsVy+t/xu7o67xxSDX7M4rJ4MG8bm8X8I+dY
+        La58fc9msfHtDyaLTY+vsVpc3jWHzWLG+X1MFoemPGezaH/6ktmB02NWQy+bx85Zd9k9Nq3q
+        ZPO4332cyWPzknqPvi2rGD0+b5ILYI/SsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQzNDaP
+        tTIyVdK3s0lJzcksSy3St0vQy9h7byV7QY9RRcuSJtYGxh0aXYwcHBICJhKfD4h2MXJxCAks
+        ZZQ4sGUWUxcjJ1BcRuLktAZWCFtY4s+1LjaIoveMEntXbWMHSfAK2Ekc3juZBcRmEVCV+Drx
+        DhtEXFDi5MwnYHFRAXmJ+7dmsIMsExaol2ht4wUJMwuIS9x6Mh9sl4iAtsS6HfPZIeYvYZS4
+        sfEw2Bw2AUOJrrcQi5kFdjNJbPk/CewiToFAiTVX3jFCTDKT6NraBWXLS2x/O4d5AqPQLCR3
+        zEKycBaSlllIWhYwsqxiFEktLc5Nzy020itOzC0uzUvXS87P3cQIjM1tx35u2cG48tVHvUOM
+        TByMhxglOJiVRHgPmzqkCvGmJFZWpRblxxeV5qQWH2I0BQbGRGYp0eR8YHLIK4k3NDMwNTQx
+        szQwtTQzVhLn9SzoSBQSSE8sSc1OTS1ILYLpY+LglGpg6jTxvi0yvfD172M313r7Gx8QVDD8
+        8+pNuGmeW8f089e6rs1+zesp6Drf49Su091XAyctknvcwMjbwX8vVy01+5v2udJvnppcx85P
+        EbgzscZ3V8JO5dzcxap/Xpw4P+/ljuentPkjVA3+5kZcPaVge9CT8Wd67/Fvr1SLy2Ztr3x6
+        dvbirWev2sY+EUnzvXwkb4GX3kLG0m/vXk0ztPt8SOfk2mTjW5ezLOSzmtWvS08S+XE6cPJB
+        Hvf61xZndshy9kz7N19v7gXdShEh9Q3Fa7RdjpXJHPM0Ofji2JLsGpYenQkCt/0sF01pfmp5
+        ahPXlFlzrhc+v/pLzUZhn+OTRpXIif3FUpP+/zic8P2n5AslluKMREMt5qLiRADGmobaVgMA
         AA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnkeLIzCtJLcpLzFFi42LZdlhJTvfuWYdUg1vP5C0ezNvGZrFm7zkm
-        i/lHzrFaNC9ez2axo+EIq8W7uTIWe19vZbeY8mc5k8Wmx9dYLTbP/8NocXnXHDaLu3dXMVrM
-        OL+PyeLM4l52i9a9R9gtDr9pZ7X4uWsei8WqXUB1tydOZnQQ9tg56y67x6ZVnWwed67tYfPY
-        P3cNu8fmJfUe/X8NPPq2rGL0+LxJLoAjissmJTUnsyy1SN8ugSvjzftmxoKb4hUvO56yNTDO
-        F+5i5OSQEDCRaHzaxd7FyMUhJLCbUWLdvOWsEAkZieXP+tggbGGJ+y1HWCGK3jNK3LrTwQSS
-        YBPQlvi+fjFYQkTgF7PE7gl3GUESzAL9TBLXNyV0MXJwCAvESDy5bg0SZhFQlZi38S9YL6+A
-        vcS1Bc3MEAvkJfYs+g4W5wSK7+xpAhsjJGAncXHDTah6QYmTM5+wQIyXl2jeOpt5AqPALCSp
-        WUhSCxiZVjFKphYU56bnJhsWGOallusVJ+YWl+al6yXn525iBMeZlsYOxnvz/+kdYmTiYDzE
-        KMHBrCTCe9jUIVWINyWxsiq1KD++qDQntfgQozQHi5I4r+GM2SlCAumJJanZqakFqUUwWSYO
-        TqkGptOiK7y/rX/DyBZf5eWyVUnx37ZLFdHmWxk+rvGJlhDm3/H1cSav3U/Dk0+2f9Yvu/VK
-        a6aIfn6IZDXHvTSdiw8NNTfKKbQzfejkKtRg3hcYfyZhU8nzQ9qXV06aeL1348vFoUmvLGKu
-        3Yub6XzgUXJfUrn3sULW46vrn2+rtp+gvL3qxh6lpdMYogMmfQvTTWlbFPX4Hm/lvrRZt08W
-        qTzZmXNrfaO3gc+k9w07GU48aNm/6/Lh26sd9uderW6df/zSvUj508wXHcustroarFx49pH/
-        jNX3LXcwzmXqS3zRfV3H4uOlsGWM6V3lalpPd3XcY6yJ/cSzl1e59VNGocGN+Ag510tJ6Xf8
-        tizJSFdiKc5INNRiLipOBADEScfPIgMAAA==
-X-CMS-MailID: 20231031095021epcas2p343514064dc0da3fff87e4b8a24d895fd
+X-CMS-MailID: 20231031120812eucas1p23817b869678ec45bd83f9e7f21ff92a7
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20231031095021epcas2p343514064dc0da3fff87e4b8a24d895fd
-References: <20231031094852.118677-1-jaewon02.kim@samsung.com>
-        <CGME20231031095021epcas2p343514064dc0da3fff87e4b8a24d895fd@epcas2p3.samsung.com>
+X-RootMTR: 20231030230413eucas1p1c061adf636a7e8a58270a00725e1d0a2
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20231030230413eucas1p1c061adf636a7e8a58270a00725e1d0a2
+References: <CGME20231030230413eucas1p1c061adf636a7e8a58270a00725e1d0a2@eucas1p1.samsung.com>
+        <CA+1FSign611=47=xLRucFhDjvs7A_TeFE9b8qO63WXDU8Pnkjg@mail.gmail.com>
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -134,127 +119,124 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-ExynosAutov920 SADK is ExynosAutov920 SoC based SADK(Samsung Automotive
-Development Kit) board. It has 16GB(8GB + 8GB) LPDDR5 RAM and 256GB
-(128GB + 128GB) UFS.
+Hi,
 
-This is minimal support board device-tree.
- * Serial console
- * GPIO Key
- * PWM FAN
+On 31.10.2023 00:03, Mario Marietto wrote:
+> We are a team of linux enthusiasts who are trying to boot Xen on a 
+> Samsung XE303C12 Chromebook aka "snow" following the suggestions in 
+> the slide show presentation here: 
+> https://www.slideshare.net/xen_com_mgr/xpds16-porting-xen-on-arm-to-a-new-soc-julien-grall-arm 
+> This device uses an exynos5250 SOC dual core 1.7 GHz with 2 MB RAM, it 
+> is a Samsung armv7 chip with virtualization extensions. In particular, 
+> we have it working fairly well both on the bare metal with a recent 
+> 6.1.59 Linux LTS kernel and also with a recent 5.4.257 LTS kernel with 
+> KVM, the older LTS kernel version is used to test KVM because support 
+> for KVM on arm v7 was removed from Linux around kernel version 5.7. So 
+> we know we have the hypervisor mode enabled because we were able to 
+> use it with KVM. For Xen, we are using the latest Debian build of Xen 
+> 4.17 for the Debian armhf architecture: (XEN) Xen version 4.17.2-pre 
+> (Debian 4.17.1+2-gb773c48e36-1) 
+> (pkg-xen-devel@xxxxxxxxxxxxxxxxxxxxxxx) (arm-linux-gnueabihf-gcc 
+> (Debian 12.2.0-14) 12.2.0) debug=n Thu May 18 19:26:30 UTC 2023 The 
+> Linux kernel is a custom build that adds the Xen config kernel options 
+> (CONFIG_XEN_DOM0, etc) on top of a kernel that works well on the same 
+> Chromebook model on the bare metal. I can provide the config options 
+> of the kernel that was used if that is helpful. Our method of booting 
+> is to have u-boot boot the Xen hypervisor and load the device tree 
+> after adding the dom0 to the otherwise unaltered device tree from the 
+> Linux kernel using u-boot fdt commands to add a /chosen node, as 
+> described on the Xen wiki and in the pages linked from there. We have 
+> also tried adding and loading an initrd.img using the device tree 
+> /chosen node but that made no difference in our tests. We actually 
+> have the Linux LTS kernel version 6.1.59 working as dom0 with Xen 
+> using the same version of u-boot that we used for KVM, but with a big 
+> problem. The problem we see is that when booting the 6.1.59 kernel 
+> version as dom0 with Xen, the screen is totally dark and the only way 
+> to access the system is remotely through ssh. Logs indicate most 
+> everything else is working, such as the wifi card so we can access it 
+> remotely via ssh and a USB optical mouse lights up when connected so 
+> USB is also working. Obviously, the disk is also working. The 
+> Chromebook is configured to boot from the device's SD card slot by 
+> turning on Chrome OS developer mode options to enable booting from the 
+> SD card slot. The mystery is that when booting the exact same 6.1.59 
+> kernel on the bare metal instead of booting it as dom0 on Xen, it 
+> boots up with full access to the screen and we can interact with the 
+> system using the X.org windows system. But booting as dom0 with Xen, 
+> the screen is totally dark and the only access we have to the system 
+> is through the network via ssh. Also, when booting the 5.4.257 kernel 
+> with KVM in hypervisor mode, the screen works and we can interact with 
+> the system through the X.org windows system. Exploring the log file,we 
+> have seen the errors below :
+>
+> With Xen (or in bare metal):
+>
+> devuan-bunsen kernel: [drm] Exynos DRM: using 14400000.fimd device for 
+> DMA mapping operations
+> devuan-bunsen kernel: exynos-drm exynos-drm: bound 14400000.fimd (ops 
+> 0xc0d96354)
+> devuan-bunsen kernel: exynos-drm exynos-drm: bound 14450000.mixer (ops 
+> 0xc0d97554)
+> devuan-bunsen kernel: exynos-drm exynos-drm: bound 
+> 145b0000.dp-controller (ops 0xc0d97278)
+> devuan-bunsen kernel: exynos-drm exynos-drm: bound 14530000.hdmi (ops 
+> 0xc0d97bd0)
+> ...
+> devuan-bunsen kernel: Console: switching to colour frame buffer device 
+> 170x48
+> devuan-bunsen kernel: exynos-drm exynos-drm: [drm] fb0: exynosdrmfb 
+> frame buffer device
+> devuan-bunsen kernel: [drm] Initialized exynos 1.1.0 20180330 for 
+> exynos-drm on minor 0
+>
+> In this case,the kernel is able to use the exynos-drm kernel to start 
+> the fb0 device. But with Xen we get this error with exynos-drm:
+>
+> devuan-bunsen kernel: [drm] Exynos DRM: using 14400000.fimd device for 
+> DMA mapping operations
+> devuan-bunsen kernel: exynos-drm exynos-drm: bound 14400000.fimd (ops 
+> 0xc0d96354)
+> devuan-bunsen kernel: exynos-mixer 14450000.mixer: 
+> [drm:exynos_drm_register_dma] *ERROR* Device 14450000.mixer lacks 
+> support for IOMMU
+> devuan-bunsen kernel: exynos-drm exynos-drm: failed to bind 
+> 14450000.mixer (ops 0xc0d97554): -22
+> devuan-bunsen kernel: exynos-drm exynos-drm: adev bind failed: -22
+> devuan-bunsen kernel: exynos-dp: probe of 145b0000.dp-controller 
+> failed with error -22
+>
+> I'm trying to find for a solution and I've googled a little bit and I 
+> found this web site : 
+> https://lore.kernel.org/linux-arm-kernel/20220208171823.226211-8-krzysztof.kozlowski@canonical.com/ 
+> with your email address and I tried to ask for some help for fixing 
+> the bug. Any ideas why booting the same Linux kernel that results in a 
+> working X.org display on the bare metal instead as dom0 on Xen would 
+> cause the display to remain dark, but most other basic functions would 
+> work, such as network, disk, and USB ? thanks.
 
-Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
----
- arch/arm64/boot/dts/exynos/Makefile           |  3 +-
- .../boot/dts/exynos/exynosautov920-sadk.dts   | 88 +++++++++++++++++++
- 2 files changed, 90 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920-sadk.dts
 
-diff --git a/arch/arm64/boot/dts/exynos/Makefile b/arch/arm64/boot/dts/exynos/Makefile
-index 6e4ba69268e5..da06e1a9456c 100644
---- a/arch/arm64/boot/dts/exynos/Makefile
-+++ b/arch/arm64/boot/dts/exynos/Makefile
-@@ -5,4 +5,5 @@ dtb-$(CONFIG_ARCH_EXYNOS) += \
- 	exynos7-espresso.dtb		\
- 	exynos7885-jackpotlte.dtb	\
- 	exynos850-e850-96.dtb		\
--	exynosautov9-sadk.dtb
-+	exynosautov9-sadk.dtb		\
-+	exynosautov920-sadk.dtb
-diff --git a/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dts b/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dts
-new file mode 100644
-index 000000000000..e250b5594b58
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dts
-@@ -0,0 +1,88 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Samsung's ExynosAutov920 SADK board device tree source
-+ *
-+ * Copyright (c) 2023 Samsung Electronics Co., Ltd.
-+ *
-+ */
-+
-+/dts-v1/;
-+#include "exynosautov920.dtsi"
-+#include "exynos-pinctrl.h"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+
-+/ {
-+	model = "Samsung ExynosAutov920 SADK board";
-+	compatible = "samsung,exynosautov920-sadk", "samsung,exynosautov920";
-+
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	aliases {
-+		serial0 = &serial_0;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial_0;
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x0 0x80000000 0x0 0x70000000>,
-+		      <0x8 0x80000000 0x1 0xfba00000>,
-+		      <0xa 0x00000000 0x2 0x00000000>;
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&key_wakeup &key_back>;
-+
-+		key-wakeup {
-+			label = "KEY_WAKEUP";
-+			linux,code = <KEY_WAKEUP>;
-+			gpios = <&gpa0 0 GPIO_ACTIVE_LOW>;
-+			wakeup-source;
-+		};
-+
-+		key-back {
-+			label = "KEY_BACK";
-+			linux,code = <KEY_BACK>;
-+			gpios = <&gpp6 3 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+};
-+
-+&pinctrl_alive {
-+	key_wakeup: key-wakeup-pins {
-+		samsung,pins = "gpa0-0";
-+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
-+	};
-+};
-+
-+&pinctrl_peric1 {
-+	key_back: key-back-pins {
-+		samsung,pins = "gpp6-3";
-+		samsung,pin-function = <EXYNOS_PIN_FUNC_EINT>;
-+	};
-+};
-+
-+&pwm {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pwm_tout0>;
-+	status = "okay";
-+};
-+
-+&serial_0 {
-+	status = "okay";
-+};
-+
-+&usi_0 {
-+	samsung,clkreq-on; /* needed for UART mode */
-+	status = "okay";
-+};
-+
-+&xtcxo {
-+	clock-frequency = <38400000>;
-+};
+Thanks for the detailed description! Good to hear that those boards are 
+still being used for various projects. I also have Snow Chromebook and 
+use it for daily tests of linux-next branch.
+
+Frankly speaking I have no idea what might happen wrong. There have been 
+some changes recently in the Exynos IOMMU driver related to 
+initialization, maybe your changes related to Xen enabling changed 
+somehow the order of device initialization during boot. I assume that 
+the device-tree you use for the bare metal run and Xen enabled run 
+doesn't differ in the areas describing the hardware blocks.
+
+Please check if cherry-picking the commit 
+https://github.com/torvalds/linux/commit/bbc4d205d93f52ee18dfa7858d51489c0506547f 
+to your v6.1.59 based kernel helps anyhow.
+
+If not, then as a temporary workaround please disable 
+CONFIG_DRM_EXYNOS_MIXER and CONFIG_DRM_EXYNOS_HDMI in your kernel config 
+and check what will happen (You will lose the HDMI output, but maybe 
+this won't a big issue).
+
+
+Best regards
 -- 
-2.42.0
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
