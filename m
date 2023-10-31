@@ -2,54 +2,127 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D297DC96F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 10:25:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C856B7DC9E5
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Oct 2023 10:50:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343852AbjJaJZm (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Tue, 31 Oct 2023 05:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48336 "EHLO
+        id S234990AbjJaJug (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Tue, 31 Oct 2023 05:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343853AbjJaJZl (ORCPT
+        with ESMTP id S233730AbjJaJue (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Tue, 31 Oct 2023 05:25:41 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0E81EB7;
-        Tue, 31 Oct 2023 02:25:30 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DBDF3C15;
-        Tue, 31 Oct 2023 02:26:11 -0700 (PDT)
-Received: from [10.57.4.28] (unknown [10.57.4.28])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C053E3F67D;
-        Tue, 31 Oct 2023 02:25:27 -0700 (PDT)
-Message-ID: <2c4b6c1b-b9e7-42b2-8f7b-446ebe9d15ac@arm.com>
-Date:   Tue, 31 Oct 2023 09:26:19 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/8] thermal: exynos: use set_trips
-Content-Language: en-US
-To:     Mateusz Majewski <m.majewski2@samsung.com>
-Cc:     Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+        Tue, 31 Oct 2023 05:50:34 -0400
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 766ECF5
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 02:50:28 -0700 (PDT)
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20231031095016epoutp0199bddac587cf17c9e7b3b50bd139800c~TKFHXNALL1097110971epoutp01T
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 31 Oct 2023 09:50:16 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20231031095016epoutp0199bddac587cf17c9e7b3b50bd139800c~TKFHXNALL1097110971epoutp01T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1698745816;
+        bh=f+eG3CIC2Plg27fPLJc4QgCsVMHw3i2PoYyxHj/KQpc=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=rqFNF7rT4LevZWU8eiQz29c7i0Gku9zhQRB+R4LDmvGiMgSlYw5DRpuF0neyehVT0
+         lHcrqNH7doalsshzDOXiNdjxevY6O4IaV+nVsm786T510czLsycPnohOnmBmWYpgHV
+         BPS9JrXzcGhlsNY3bUKEGOBzJ85asfxqEpUv3iZw=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+        epcas2p1.samsung.com (KnoxPortal) with ESMTP id
+        20231031095015epcas2p1f291e0f100a4d58694183e3ca63f1184~TKFG2V6EU0993809938epcas2p1j;
+        Tue, 31 Oct 2023 09:50:15 +0000 (GMT)
+Received: from epsmges2p4.samsung.com (unknown [182.195.36.98]) by
+        epsnrtp1.localdomain (Postfix) with ESMTP id 4SKQNl2Q4xz4x9Pv; Tue, 31 Oct
+        2023 09:50:15 +0000 (GMT)
+Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
+        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        C3.95.09607.7DDC0456; Tue, 31 Oct 2023 18:50:15 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
+        20231031095014epcas2p2814fa2bb5f940ccb0d0951667df34f98~TKFF11lmE1547915479epcas2p2Y;
+        Tue, 31 Oct 2023 09:50:14 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20231031095014epsmtrp1cab88f028920d5ed826df45dae479e15~TKFF0sfGw2510325103epsmtrp1Y;
+        Tue, 31 Oct 2023 09:50:14 +0000 (GMT)
+X-AuditID: b6c32a48-963ff70000002587-52-6540cdd7522f
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        CA.11.08817.6DDC0456; Tue, 31 Oct 2023 18:50:14 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.229.9.55]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20231031095013epsmtip1fe4d8fca1b9b45ad28fd0b758d4fbee9~TKFFD8EiG2325323253epsmtip1n;
+        Tue, 31 Oct 2023 09:50:13 +0000 (GMT)
+From:   Jaewon Kim <jaewon02.kim@samsung.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-pm@vger.kernel.org
-References: <20231025133027.524152-1-m.majewski2@samsung.com>
- <CGME20231025133100eucas1p14e6de58e52560d165bdb8b809e406278@eucas1p1.samsung.com>
- <20231025133027.524152-9-m.majewski2@samsung.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20231025133027.524152-9-m.majewski2@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-pwm@vger.kernel.org, linux-serial@vger.kernel.org,
+        Jaewon Kim <jaewon02.kim@samsung.com>
+Subject: [PATCH 00/10] Introduce ExynosAutov920 SoC and SADK board
+Date:   Tue, 31 Oct 2023 18:47:42 +0900
+Message-ID: <20231031094852.118677-1-jaewon02.kim@samsung.com>
+X-Mailer: git-send-email 2.42.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Tf0xTVxjN7etrC67uUXRcCJnsEUAxQAsUrg4cYWqeigmiM5sZwYa+tEhp
+        u7ZsbvtjTBQcOqEiiGXAaE1AwFVbYYVQIVDHHA4yJgxFELAhqYJBtll1YNby6uZ/5zv3nO/c
+        7/7gYYKfOCG8PKWO1iglCpLjz+7o34Ri/vg1jRb+vPgGmq7v4KA2+xALNTiGcFRsMnOQrciB
+        o8d1ocj+qJ2Lzi03sZDlwRiOrA3LAP3e9R0HTU62AFQzfJ2Fbpm+5aITdgcX9c+X4uh5Vz0b
+        tXR5dBP6SpAWSHUaJrmUpeUbDnVvrJtD9dS1cSnrxa+o8hUhdeZaC6D+tLydyTuUnyKnJVJa
+        E0Yrc1XSPKUsldyzP+f9HHGSUBQj2oKSyTClpIBOJbdnZMbszFN4xiHDPpUoCj1UpkSrJeO2
+        pWhUhTo6TK7S6lJJWi1VqJPVsVpJgbZQKYtV0rqtIqEwXuwRHs6XuxaO4+pxwdHJcXYRuPpm
+        GfDjQSIRtpoa8TLgzxMQNgCtnU42UywB6J6+4SueAjjS+zfnlWW65iHbiwWEHcDxaT4jegLg
+        rPUxy7vAITZDt9mEe/E64i8Mnp/90ivCiFIWrH/qWnUHEumws2RstSubiIBL16dXeT6xDVa7
+        WzEmbQPsNrpZDB8Ab15wrmowD1/cXot5m0LCxoMzF+bZjGE7PNb4zLfVQPhw4BqXwSHQVV7i
+        w/mw9PwyzuCj8LcrtT59AjTMlYIywPMEbILmrjgvhEQ4dNz1xa6FJ/tXuAzNhydLBIwxEt6v
+        GvI1CYVnHZdYDKZgT1MFzpxVNjzdZsYrwAbDa8MYXhvG8H/u9wBrAW/Ram2BjNbGqxP/u9Nc
+        VYEFrD7oaMoGahcWY/sAiwf6AORh5Dp+vziNFvClks+/oDWqHE2hgtb2AbHnePVYyPpcledH
+        KHU5osQtwsSkJFFyvFiYTAbxp07USQWETKKj82laTWte+Vg8v5AiVvYBZ/vQSNZ8TWXQzKxr
+        reuqTZMyu2Y8fU2rcSdxp5I6sBRkv0zOGV3otrz6nN/w8O6v3bf+uR21z/rL4FSkiXTv2xFs
+        KAfkB3sn7usXn0S92CrMCBefzr5rqYqcu7FLJKpIeHnHWKM3Jy6dUkTu+aHwZtGDHyt6P4vK
+        qFXeC+9cj3PzS8LOOq6MaGY6mm1ZZ4z04McB+injxtaD0VFlzqbd6Qefy0T+HzZvfhncW9yQ
+        Jv/k3YwBueWQc875LKD9FBFx/EU1HWHu2RF0xC4bXTAlvBNastA8agWGwUd1A43+A+8NYmnH
+        9q50Z6Uf/iguOKFqZWJpdOORVrF05nJc/H45ydbKJaJoTKOV/As4v2dwWQQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOLMWRmVeSWpSXmKPExsWy7bCSnO61sw6pBu//qlk8mLeNzWLN3nNM
+        FvOPnGO1aF68ns1iR8MRVot3c2Us9r7eym4x5c9yJotNj6+xWmye/4fR4vKuOWwWd++uYrSY
+        cX4fk8WZxb3sFq17j7BbHH7Tzmrxc9c8FotVu4Dqbk+czOgg7LFz1l12j02rOtk87lzbw+ax
+        f+4ado/NS+o9+v8aePRtWcXo8XmTXABHFJdNSmpOZllqkb5dAlfGy7ctrAU3hCru3mBpYNzI
+        38XIySEhYCLxYMYrli5GLg4hgd2MErvmP2aGSMhILH/WxwZhC0vcbznCClH0nlFi4YkXYEVs
+        AtoS39cvBkuICPxiltg94S4jSIJZoJ9J4vqmBBBbWMBJYmfbNbBJLAKqEp/2PWABsXkF7CSm
+        fV8NtU1eYs+i70wQcUGJkzOfsEDMkZdo3jqbeQIj3ywkqVlIUgsYmVYxSqYWFOem5xYbFhjl
+        pZbrFSfmFpfmpesl5+duYgTHjZbWDsY9qz7oHWJk4mA8xCjBwawkwnvY1CFViDclsbIqtSg/
+        vqg0J7X4EKM0B4uSOO+3170pQgLpiSWp2ampBalFMFkmDk6pBqaUaT3L/vd1ys1M0awQOPtO
+        dt0S9WdVKszl88xXTDOda3NUTMPIePejsuN9vN7xClf2KtQJaR64+UGqlGfurUMm/RqOq73d
+        zhiKsDC2nb7/JjO332CBeMbKrsX5U6LOPPb33Vi0XK8oS2Oq49nu8oqvxp1MCxqnzbsb+f/8
+        +b9uWc4zbjBebr0uu5iBZeOdSFExP+07jy6/t9dSm8g20X1bwoyO5deTuR7MaH0298Aazvv2
+        p34xzVd9/pNhw3svKY4vneLhykxPJ6VfWP7iF8MV6UkJ03fOLeq8/4XRZ6Xsk/8epgfPHZ2S
+        fWijkXdfp8a9WR1Zmy7LW5deOSRtdVYwzMZxQeDO8rkasRM+ydoqsRRnJBpqMRcVJwIAFeuF
+        bgoDAAA=
+X-CMS-MailID: 20231031095014epcas2p2814fa2bb5f940ccb0d0951667df34f98
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231031095014epcas2p2814fa2bb5f940ccb0d0951667df34f98
+References: <CGME20231031095014epcas2p2814fa2bb5f940ccb0d0951667df34f98@epcas2p2.samsung.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,203 +130,50 @@ Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
+ExynosAutov920[1] is ARMv8-based automotive-oriented SoC.
+This SoC is the next generation of exynosautov9 and AE(Automotive Enhanced)
+IPs are used for safety.
 
+This patchset is the minimal set to ExynosAutov920 SoC and SADK board.
+Currently, ramdisk console is available and Clock, UFS, and USI will be
+added after this patchset.
 
-On 10/25/23 14:30, Mateusz Majewski wrote:
-> Currently, each trip point defined in the device tree corresponds to a
-> single hardware interrupt. This commit instead switches to using two
-> hardware interrupts, whose values are set dynamically using the
-> set_trips callback. Additionally, the critical temperature threshold is
-> handled specifically.
-> 
+[1] : https://semiconductor.samsung.com/processor/automotive-processor/exynos-auto-v920/
 
-[snip]
+Jaewon Kim (10):
+  dt-bindings: soc: samsung: exynos-sysreg: add exynosautov920 sysreg
+  dt-bindings: soc: samsung: usi: add exynosautov920-usi compatible
+  dt-bindings: serial: samsung: add exynosautov920-uart compatible
+  dt-bindings: pwm: samsung: add exynosautov9 compatible
+  dt-bindings: pinctrl: samsung: add exynosautov920 pinctrl binding
+  dt-bindings: arm: samsung: Document exynosautov920 SADK board binding
+  soc: samsung: exynos-chipid: add exynosautov920 SoC support
+  pinctrl: samsung: add exynosautv920 pinctrl
+  arm64: dts: exynos: add initial support for exynosautov920 SoC
+  arm64: dts: exynos: add minimal support for exynosautov920 sadk board
 
->   
-> -static void exynos4210_tmu_set_trip_temp(struct exynos_tmu_data *data,
-> -					 int trip_id, u8 temp)
-> +static void exynos_tmu_update_bit(struct exynos_tmu_data *data, int reg_off,
-> +				  int bit_off, bool enable)
->   {
-> -	temp = temp_to_code(data, temp);
-> -	writeb(temp, data->base + EXYNOS4210_TMU_REG_TRIG_LEVEL0 + trip_id * 4);
-> +	u32 interrupt_en;
-> +
-> +	interrupt_en = readl(data->base + reg_off);
-> +	if (enable)
-> +		interrupt_en |= 1 << bit_off;
-> +	else
-> +		interrupt_en &= ~(1 << bit_off);
+ .../bindings/arm/samsung/samsung-boards.yaml  |    6 +
+ .../samsung,pinctrl-wakeup-interrupt.yaml     |    2 +
+ .../bindings/pinctrl/samsung,pinctrl.yaml     |    1 +
+ .../devicetree/bindings/pwm/pwm-samsung.yaml  |    1 +
+ .../bindings/serial/samsung_uart.yaml         |    4 +-
+ .../bindings/soc/samsung/exynos-usi.yaml      |    4 +-
+ .../soc/samsung/samsung,exynos-sysreg.yaml    |    7 +
+ arch/arm64/boot/dts/exynos/Makefile           |    3 +-
+ .../dts/exynos/exynosautov920-pinctrl.dtsi    | 1266 +++++++++++++++++
+ .../boot/dts/exynos/exynosautov920-sadk.dts   |   88 ++
+ .../arm64/boot/dts/exynos/exynosautov920.dtsi |  318 +++++
+ .../pinctrl/samsung/pinctrl-exynos-arm64.c    |  131 ++
+ drivers/pinctrl/samsung/pinctrl-exynos.c      |   99 +-
+ drivers/pinctrl/samsung/pinctrl-exynos.h      |   27 +
+ drivers/pinctrl/samsung/pinctrl-samsung.c     |    5 +
+ drivers/pinctrl/samsung/pinctrl-samsung.h     |   13 +
+ drivers/soc/samsung/exynos-chipid.c           |    1 +
+ 17 files changed, 1966 insertions(+), 10 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920-pinctrl.dtsi
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920-sadk.dts
+ create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920.dtsi
 
-Why not to use dedicated stuff for this?
-val |= BIT(x)
-val &= ~BIT(x)
-You can find plenty of example in the kernel
+-- 
+2.42.0
 
-> +	writel(interrupt_en, data->base + reg_off);
->   }
->   
-
-[snip]
-
-> -static void exynos4412_tmu_set_trip_temp(struct exynos_tmu_data *data,
-> -					 int trip, u8 temp)
-> -{
-> -	u32 th, con;
-> -
-> -	th = readl(data->base + EXYNOS_THD_TEMP_RISE);
-> -	th &= ~(0xff << 8 * trip);
-> -	th |= temp_to_code(data, temp) << 8 * trip;
-> -	writel(th, data->base + EXYNOS_THD_TEMP_RISE);
-> -
-> -	if (trip == 3) {
-> -		con = readl(data->base + EXYNOS_TMU_REG_CONTROL);
-> -		con |= (1 << EXYNOS_TMU_THERM_TRIP_EN_SHIFT);
-> -		writel(con, data->base + EXYNOS_TMU_REG_CONTROL);
-> -	}
-> -}
-> -
-> -static void exynos4412_tmu_set_trip_hyst(struct exynos_tmu_data *data,
-> -					 int trip, u8 temp, u8 hyst)
-> +static void exynos4412_tmu_set_low_temp(struct exynos_tmu_data *data, u8 temp)
->   {
->   	u32 th;
->   
->   	th = readl(data->base + EXYNOS_THD_TEMP_FALL);
-> -	th &= ~(0xff << 8 * trip);
-> -	if (hyst)
-> -		th |= temp_to_code(data, temp - hyst) << 8 * trip;
-> +	th &= ~(0xff << 0);
-> +	th |= temp_to_code(data, temp) << 0;
-
-This 2-line pattern repeats a few times. It looks like a nice cadidate
-for an inline function which can abstract that. Something like:
-
-val = update_temp_value(data, temp, threshold, LOW_TEMP_SHIFT)
-
-Assisted with the macros {LOW|HIGH|CRIT}_TEMP_SHIFT, the code
-would look less convoluted IMO.
-(The old code with the multiplication for the shift value wasn't
-cleaner nor faster).
-
->   	writel(th, data->base + EXYNOS_THD_TEMP_FALL);
-> +
-> +	exynos_tmu_update_bit(data, EXYNOS_TMU_REG_INTEN,
-> +			      EXYNOS_TMU_INTEN_FALL0_SHIFT, true);
-> +}
-
-[snip]
-
-> -static void exynos7_tmu_set_trip_temp(struct exynos_tmu_data *data,
-> -				      int trip, u8 temp)
-> +static void exynos7_tmu_update_temp(struct exynos_tmu_data *data, u8 temp,
-> +				    int idx, bool rise)
->   {
->   	unsigned int reg_off, bit_off;
->   	u32 th;
-> +	void __iomem *reg;
->   
-> -	reg_off = ((7 - trip) / 2) * 4;
-> -	bit_off = ((8 - trip) % 2);
-> +	reg_off = ((7 - idx) / 2) * 4;
-
-Why can't we just have a set of defined register macros and pick one
-in some small function?
-A lot of operations here, also some assumption.
-
-> +	bit_off = ((8 - idx) % 2);
-
-So this can only be 0 or 1 and than it's used for the shift
-multiplication. Also I don't know the history of older code and
-if it was missed after some cleaning, but 'idx % 2' gives
-equal values but w/o subtraction.
-
-BTW, the code assumes the 'idx' values are under control somewhere else.
-Is that because the DT make sure in the schema that the range cannot be
-too big?
-What are the possible values for 'idx'?
-
->   
-> -	th = readl(data->base + EXYNOS7_THD_TEMP_RISE7_6 + reg_off);
-> +	reg = data->base +
-> +	      (rise ? EXYNOS7_THD_TEMP_RISE7_6 : EXYNOS7_THD_TEMP_FALL7_6) +
-> +	      reg_off;
-> +	th = readl(reg);
->   	th &= ~(EXYNOS7_TMU_TEMP_MASK << (16 * bit_off));
->   	th |= temp_to_code(data, temp) << (16 * bit_off);
-
-Can you simplify and abstract those bit_off usage and use some
-macros and less math operations?
-
-> -	writel(th, data->base + EXYNOS7_THD_TEMP_RISE7_6 + reg_off);
-> +	writel(th, reg);
-> +
-> +	exynos_tmu_update_bit(data, EXYNOS5433_TMU_REG_INTEN,
-> +			      (rise ? EXYNOS7_TMU_INTEN_RISE0_SHIFT :
-> +				      EXYNOS_TMU_INTEN_FALL0_SHIFT) +
-> +				      idx,
-> +			      true);
->   }
-
-[snip]
-
->   
-> -	if (on) {
-> -		for (i = 0; i < data->ntrip; i++) {
-> -			if (thermal_zone_get_trip(tz, i, &trip))
-> -				continue;
-> -
-> -			interrupt_en |=
-> -				(1 << (EXYNOS_TMU_INTEN_RISE0_SHIFT + i * 4));
-> -		}
-> -
-> -		if (data->soc != SOC_ARCH_EXYNOS4210)
-> -			interrupt_en |=
-> -				interrupt_en << EXYNOS_TMU_INTEN_FALL0_SHIFT;
-> -
-> +	if (on)
->   		con |= (1 << EXYNOS_TMU_CORE_EN_SHIFT);
-> -	} else {
-> +	else
->   		con &= ~(1 << EXYNOS_TMU_CORE_EN_SHIFT);
-
-Please also consider the BIT() helper here and above...
-
-> -	}
->   
-> -	writel(interrupt_en, data->base + EXYNOS_TMU_REG_INTEN);
->   	writel(con, data->base + EXYNOS_TMU_REG_CONTROL);
->   }
->   
->   static void exynos5433_tmu_control(struct platform_device *pdev, bool on)
->   {
->   	struct exynos_tmu_data *data = platform_get_drvdata(pdev);
-> -	struct thermal_zone_device *tz = data->tzd;
-> -	struct thermal_trip trip;
-> -	unsigned int con, interrupt_en = 0, pd_det_en, i;
-> +	unsigned int con, pd_det_en;
->   
->   	con = get_con_reg(data, readl(data->base + EXYNOS_TMU_REG_CONTROL));
->   
-> -	if (on) {
-> -		for (i = 0; i < data->ntrip; i++) {
-> -			if (thermal_zone_get_trip(tz, i, &trip))
-> -				continue;
-> -
-> -			interrupt_en |=
-> -				(1 << (EXYNOS7_TMU_INTEN_RISE0_SHIFT + i));
-> -		}
-> -
-> -		interrupt_en |=
-> -			interrupt_en << EXYNOS_TMU_INTEN_FALL0_SHIFT;
-> -
-> +	if (on)
->   		con |= (1 << EXYNOS_TMU_CORE_EN_SHIFT);
-> -	} else
-> +	else
->   		con &= ~(1 << EXYNOS_TMU_CORE_EN_SHIFT);
-
-... and here. Basically in all places where it's possible.
-
-Regards,
-Lukasz
