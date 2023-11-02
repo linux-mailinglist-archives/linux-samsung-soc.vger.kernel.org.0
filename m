@@ -2,520 +2,241 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C2197DF815
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Nov 2023 17:57:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FD107DFC72
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Nov 2023 23:32:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377109AbjKBQ51 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Thu, 2 Nov 2023 12:57:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32924 "EHLO
+        id S1377493AbjKBWc2 (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Thu, 2 Nov 2023 18:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377100AbjKBQ51 (ORCPT
+        with ESMTP id S234457AbjKBWc1 (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Thu, 2 Nov 2023 12:57:27 -0400
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7520613D
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  2 Nov 2023 09:57:23 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qyb0J-00035f-0s; Thu, 02 Nov 2023 17:57:11 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qyb0G-0067FD-Vp; Thu, 02 Nov 2023 17:57:08 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1qyb0G-00BjcH-Lz; Thu, 02 Nov 2023 17:57:08 +0100
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH v3 08/16] drm/exynos: Convert to platform remove callback returning void
-Date:   Thu,  2 Nov 2023 17:56:49 +0100
-Message-ID: <20231102165640.3307820-26-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231102165640.3307820-18-u.kleine-koenig@pengutronix.de>
-References: <20231102165640.3307820-18-u.kleine-koenig@pengutronix.de>
+        Thu, 2 Nov 2023 18:32:27 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F37EDC
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  2 Nov 2023 15:32:23 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-54366784377so2345357a12.3
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 02 Nov 2023 15:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lpnu-ua.20230601.gappssmtp.com; s=20230601; t=1698964342; x=1699569142; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e9nBSRGeG0oGTzQFHQdu8lyilaZO5899sWrirHLiN9k=;
+        b=B1891VoePKS4oYv8Drekbn5Q83HvK0+q7HvssMGkCDcNeQCThFdtr96gv7J7yDZE++
+         pVzZ8bxEycQgaXJbPMu20kNpNeaVdLsft4ExoUHzzc1MVQfyG/DalUCFAo2ideXwW//F
+         O+fatX3TsMFRlnQTbVC8l3RlL4UKslOGtJeamGVQk6q+pDYZ6aX1WM5JjmQK8hmqI0Pw
+         w2S2JAFQWb4wFb4ixmI+2B6gKfIBvZsOf7ze0gVrOW9xCedg1c4CaQ3LvCB09tJFW3Eh
+         tWULKyi+SdZviXmJVj7GoisX7Nt5286GOOPXJtdU9W1rkujXXNtyrIR+KcIEX4Rn7Spw
+         k3HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698964342; x=1699569142;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e9nBSRGeG0oGTzQFHQdu8lyilaZO5899sWrirHLiN9k=;
+        b=MVfB+RjpXi1corFYijq1dktOXWa5EUTEvvQJRX4yIH4vdG4Yg9IdCvyIBHCKu5w8r+
+         4dybfmOsMg6YPGhU93B5ws9o8yDldqy9byWrNVTkgEDLO4QCVDVbtIqUUdFoZwj+DNkS
+         E4C28No4sqI/N9YhjAjdDCQ90DzIls/Bedgj+GXB6zwerfLUqurog8J3BFGvwynzUgie
+         R+EErsA2ptRtompVExnd+uwDieN0HqL2hZU5yuKvNXY53DGZJFOOEJL1efMIXPM9Cjic
+         NXoEIRF4pmBEhVz5F25GexlJ3HIicRUrH7owNIP7uFt5mHg8NKMVjq7srt8u0bQy18Q7
+         LarA==
+X-Gm-Message-State: AOJu0Yyks6HkTmgwfQGa+9T1ZaBlcyvY+LWmtcfcbRrqqn4Sc9XRZMMG
+        P1E3H8PA4Ite064Tn2fRx7w6MQ==
+X-Google-Smtp-Source: AGHT+IGGugFSjo/xuux56sQ3cRW8VoLU9P/hoAn4qsI0tDYESiYS+N/GiIJRqt7VUfRp5VZAyIgUDg==
+X-Received: by 2002:a50:9fe9:0:b0:543:714b:535d with SMTP id c96-20020a509fe9000000b00543714b535dmr8093289edf.3.1698964341806;
+        Thu, 02 Nov 2023 15:32:21 -0700 (PDT)
+Received: from [192.168.1.3] ([37.54.67.136])
+        by smtp.gmail.com with ESMTPSA id u14-20020a50c04e000000b005412c0ba2f9sm233202edd.13.2023.11.02.15.32.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Nov 2023 15:32:21 -0700 (PDT)
+Message-ID: <3d489d6c-2098-4f0c-9ec4-f6040665753e@lpnu.ua>
+Date:   Fri, 3 Nov 2023 00:32:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=15855; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=GyML+XxnWD67+O9LO4wNPbk+XPq3fIWtra9xxsfSsDY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlQ9TSbcFKb8P4Jd1Ewy/ITICWWVi9D/gL5OTon bOUKc6Gf1iJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZUPU0gAKCRCPgPtYfRL+ TkZ5B/90tRGgpUzhwXbupiqqeX+FVzRA4VUtk/vKw4yvbKSPBTqrO3G0d+CE/sMIgIQgAYBFJS9 S3pAXpZCOCOMMt0DQL8P+pRIXuSsHrWByswqj+SWucgPMfRgCpq81EAKNSzW91U/uFdXpHoKk8d P8cxfSOXdY+zn6hVlZ6q53zwNfN29NlhcpTAgIBECwT3EL0wEYWL7tC7bIsHcG0L1ULEhF5QC8s Fr7b56O1WwQruOGfuTS6O9VhAlMS66YnnmQsKF323RCbNvp+PRmdqIAkYmHF/NbSzl3VaYRsZBY t7SOviCqIrw2bFPVJMErYFBN/xteiYPKMqlS4pDhrNhzWvgU
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/20] Add minimal Tensor/GS101 SoC support and
+ Oriole/Pixel6 board
+Content-Language: en-US
+To:     Peter Griffin <peter.griffin@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        conor+dt@kernel.org, sboyd@kernel.org, tomasz.figa@gmail.com,
+        s.nawrocki@samsung.com, linus.walleij@linaro.org,
+        wim@linux-watchdog.org, linux@roeck-us.net,
+        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        olof@lixom.net, cw00.choi@samsung.com
+Cc:     tudor.ambarus@linaro.org, andre.draszik@linaro.org,
+        semen.protsenko@linaro.org, saravanak@google.com,
+        willmcvicker@google.com, soc@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        kernel-team@android.com, linux-serial@vger.kernel.org
+References: <20231010224928.2296997-1-peter.griffin@linaro.org>
+From:   Maksym Holovach <maksym.holovach.an.2022@lpnu.ua>
+In-Reply-To: <20231010224928.2296997-1-peter.griffin@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-samsung-soc.vger.kernel.org>
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Hi, all
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+I wanted to inquire about how do you all feel about calling this SoC by 
+the Google "gs101" name.
 
-Trivially convert the exynos drivers from always returning zero in the
-remove callback to the void returning variant.
+I believe the proper name for it should be the actual Samsung name, 
+written in the silicon and reported in the Chip ID hardware: Exynos9845. 
+This also touches the Tensor G2 (Exynos9855), Tensor G3 (Exynos9865), 
+and possibly the "Tesla" SoCs.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+I do not think the Linux kernel should be a marketing material: it 
+should reflect reality. The chip is almost 100% composed of Samsung 
+Exynos IP blocks and should be called that way.
 
-drivers/gpu/drm/exynos/exynos_mixer.c :: Convert to platform remove callback returning void
+Yours,
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+- Markuss
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
-
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/gpu/drm/exynos/exynos5433_drm_decon.c | 6 ++----
- drivers/gpu/drm/exynos/exynos7_drm_decon.c    | 6 ++----
- drivers/gpu/drm/exynos/exynos_dp.c            | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_drv.c       | 5 ++---
- drivers/gpu/drm/exynos/exynos_drm_fimc.c      | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_g2d.c       | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_gsc.c       | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_mic.c       | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_rotator.c   | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_scaler.c    | 6 ++----
- drivers/gpu/drm/exynos/exynos_drm_vidi.c      | 6 ++----
- drivers/gpu/drm/exynos/exynos_hdmi.c          | 6 ++----
- drivers/gpu/drm/exynos/exynos_mixer.c         | 6 ++----
- 14 files changed, 28 insertions(+), 55 deletions(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-index 4d986077738b..776f2f0b602d 100644
---- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-@@ -862,18 +862,16 @@ static int exynos5433_decon_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int exynos5433_decon_remove(struct platform_device *pdev)
-+static void exynos5433_decon_remove(struct platform_device *pdev)
- {
- 	pm_runtime_disable(&pdev->dev);
- 
- 	component_del(&pdev->dev, &decon_component_ops);
--
--	return 0;
- }
- 
- struct platform_driver exynos5433_decon_driver = {
- 	.probe		= exynos5433_decon_probe,
--	.remove		= exynos5433_decon_remove,
-+	.remove_new	= exynos5433_decon_remove,
- 	.driver		= {
- 		.name	= "exynos5433-decon",
- 		.pm	= pm_ptr(&exynos5433_decon_pm_ops),
-diff --git a/drivers/gpu/drm/exynos/exynos7_drm_decon.c b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-index 0156a5e94435..0d185c0564b9 100644
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -765,7 +765,7 @@ static int decon_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int decon_remove(struct platform_device *pdev)
-+static void decon_remove(struct platform_device *pdev)
- {
- 	struct decon_context *ctx = dev_get_drvdata(&pdev->dev);
- 
-@@ -774,8 +774,6 @@ static int decon_remove(struct platform_device *pdev)
- 	iounmap(ctx->regs);
- 
- 	component_del(&pdev->dev, &decon_component_ops);
--
--	return 0;
- }
- 
- static int exynos7_decon_suspend(struct device *dev)
-@@ -840,7 +838,7 @@ static DEFINE_RUNTIME_DEV_PM_OPS(exynos7_decon_pm_ops, exynos7_decon_suspend,
- 
- struct platform_driver decon_driver = {
- 	.probe		= decon_probe,
--	.remove		= decon_remove,
-+	.remove_new	= decon_remove,
- 	.driver		= {
- 		.name	= "exynos-decon",
- 		.pm	= pm_ptr(&exynos7_decon_pm_ops),
-diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
-index 3404ec1367fb..ca31bad6c576 100644
---- a/drivers/gpu/drm/exynos/exynos_dp.c
-+++ b/drivers/gpu/drm/exynos/exynos_dp.c
-@@ -250,14 +250,12 @@ static int exynos_dp_probe(struct platform_device *pdev)
- 	return component_add(&pdev->dev, &exynos_dp_ops);
- }
- 
--static int exynos_dp_remove(struct platform_device *pdev)
-+static void exynos_dp_remove(struct platform_device *pdev)
- {
- 	struct exynos_dp_device *dp = platform_get_drvdata(pdev);
- 
- 	component_del(&pdev->dev, &exynos_dp_ops);
- 	analogix_dp_remove(dp->adp);
--
--	return 0;
- }
- 
- static int exynos_dp_suspend(struct device *dev)
-@@ -285,7 +283,7 @@ MODULE_DEVICE_TABLE(of, exynos_dp_match);
- 
- struct platform_driver dp_driver = {
- 	.probe		= exynos_dp_probe,
--	.remove		= exynos_dp_remove,
-+	.remove_new	= exynos_dp_remove,
- 	.driver		= {
- 		.name	= "exynos-dp",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-index 8399256cb5c9..a6bff29fc254 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-@@ -344,15 +344,14 @@ static int exynos_drm_platform_probe(struct platform_device *pdev)
- 					       match);
- }
- 
--static int exynos_drm_platform_remove(struct platform_device *pdev)
-+static void exynos_drm_platform_remove(struct platform_device *pdev)
- {
- 	component_master_del(&pdev->dev, &exynos_drm_ops);
--	return 0;
- }
- 
- static struct platform_driver exynos_drm_platform_driver = {
- 	.probe	= exynos_drm_platform_probe,
--	.remove	= exynos_drm_platform_remove,
-+	.remove_new = exynos_drm_platform_remove,
- 	.driver	= {
- 		.name	= "exynos-drm",
- 		.pm	= &exynos_drm_pm_ops,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimc.c b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-index 8de2714599fc..e81a576de398 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimc.c
-@@ -1367,7 +1367,7 @@ static int fimc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int fimc_remove(struct platform_device *pdev)
-+static void fimc_remove(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct fimc_context *ctx = get_fimc_context(dev);
-@@ -1377,8 +1377,6 @@ static int fimc_remove(struct platform_device *pdev)
- 	pm_runtime_disable(dev);
- 
- 	fimc_put_clocks(ctx);
--
--	return 0;
- }
- 
- static int fimc_runtime_suspend(struct device *dev)
-@@ -1410,7 +1408,7 @@ MODULE_DEVICE_TABLE(of, fimc_of_match);
- 
- struct platform_driver fimc_driver = {
- 	.probe		= fimc_probe,
--	.remove		= fimc_remove,
-+	.remove_new	= fimc_remove,
- 	.driver		= {
- 		.of_match_table = fimc_of_match,
- 		.name	= "exynos-drm-fimc",
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-index 8dde7b1e9b35..a9f1c5c05894 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-@@ -1277,13 +1277,11 @@ static int fimd_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int fimd_remove(struct platform_device *pdev)
-+static void fimd_remove(struct platform_device *pdev)
- {
- 	pm_runtime_disable(&pdev->dev);
- 
- 	component_del(&pdev->dev, &fimd_component_ops);
--
--	return 0;
- }
- 
- static int exynos_fimd_suspend(struct device *dev)
-@@ -1325,7 +1323,7 @@ static DEFINE_RUNTIME_DEV_PM_OPS(exynos_fimd_pm_ops, exynos_fimd_suspend,
- 
- struct platform_driver fimd_driver = {
- 	.probe		= fimd_probe,
--	.remove		= fimd_remove,
-+	.remove_new	= fimd_remove,
- 	.driver		= {
- 		.name	= "exynos4-fb",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-index 414e585ec7dd..f3138423612e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
-@@ -1530,7 +1530,7 @@ static int g2d_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int g2d_remove(struct platform_device *pdev)
-+static void g2d_remove(struct platform_device *pdev)
- {
- 	struct g2d_data *g2d = platform_get_drvdata(pdev);
- 
-@@ -1545,8 +1545,6 @@ static int g2d_remove(struct platform_device *pdev)
- 	g2d_fini_cmdlist(g2d);
- 	destroy_workqueue(g2d->g2d_workq);
- 	kmem_cache_destroy(g2d->runqueue_slab);
--
--	return 0;
- }
- 
- static int g2d_suspend(struct device *dev)
-@@ -1609,7 +1607,7 @@ MODULE_DEVICE_TABLE(of, exynos_g2d_match);
- 
- struct platform_driver g2d_driver = {
- 	.probe		= g2d_probe,
--	.remove		= g2d_remove,
-+	.remove_new	= g2d_remove,
- 	.driver		= {
- 		.name	= "exynos-drm-g2d",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 34cdabc30b4f..6776d3e037c9 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -1308,15 +1308,13 @@ static int gsc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int gsc_remove(struct platform_device *pdev)
-+static void gsc_remove(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 
- 	component_del(dev, &gsc_component_ops);
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--
--	return 0;
- }
- 
- static int __maybe_unused gsc_runtime_suspend(struct device *dev)
-@@ -1421,7 +1419,7 @@ MODULE_DEVICE_TABLE(of, exynos_drm_gsc_of_match);
- 
- struct platform_driver gsc_driver = {
- 	.probe		= gsc_probe,
--	.remove		= gsc_remove,
-+	.remove_new	= gsc_remove,
- 	.driver		= {
- 		.name	= "exynos-drm-gsc",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_mic.c b/drivers/gpu/drm/exynos/exynos_drm_mic.c
-index 17bab5b1663f..e2920960180f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_mic.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_mic.c
-@@ -442,7 +442,7 @@ static int exynos_mic_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int exynos_mic_remove(struct platform_device *pdev)
-+static void exynos_mic_remove(struct platform_device *pdev)
- {
- 	struct exynos_mic *mic = platform_get_drvdata(pdev);
- 
-@@ -450,8 +450,6 @@ static int exynos_mic_remove(struct platform_device *pdev)
- 	pm_runtime_disable(&pdev->dev);
- 
- 	drm_bridge_remove(&mic->bridge);
--
--	return 0;
- }
- 
- static const struct of_device_id exynos_mic_of_match[] = {
-@@ -462,7 +460,7 @@ MODULE_DEVICE_TABLE(of, exynos_mic_of_match);
- 
- struct platform_driver mic_driver = {
- 	.probe		= exynos_mic_probe,
--	.remove		= exynos_mic_remove,
-+	.remove_new	= exynos_mic_remove,
- 	.driver		= {
- 		.name	= "exynos-mic",
- 		.pm	= pm_ptr(&exynos_mic_pm_ops),
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_rotator.c b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-index ffb327c5139e..5f7516655b08 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_rotator.c
-@@ -329,15 +329,13 @@ static int rotator_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int rotator_remove(struct platform_device *pdev)
-+static void rotator_remove(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 
- 	component_del(dev, &rotator_component_ops);
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--
--	return 0;
- }
- 
- static int rotator_runtime_suspend(struct device *dev)
-@@ -453,7 +451,7 @@ static DEFINE_RUNTIME_DEV_PM_OPS(rotator_pm_ops, rotator_runtime_suspend,
- 
- struct platform_driver rotator_driver = {
- 	.probe		= rotator_probe,
--	.remove		= rotator_remove,
-+	.remove_new	= rotator_remove,
- 	.driver		= {
- 		.name	= "exynos-rotator",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_scaler.c b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-index f2b8b09a6b4e..392f721f13ab 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_scaler.c
-@@ -539,15 +539,13 @@ static int scaler_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int scaler_remove(struct platform_device *pdev)
-+static void scaler_remove(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 
- 	component_del(dev, &scaler_component_ops);
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--
--	return 0;
- }
- 
- static int clk_disable_unprepare_wrapper(struct clk *clk)
-@@ -721,7 +719,7 @@ MODULE_DEVICE_TABLE(of, exynos_scaler_match);
- 
- struct platform_driver scaler_driver = {
- 	.probe		= scaler_probe,
--	.remove		= scaler_remove,
-+	.remove_new	= scaler_remove,
- 	.driver		= {
- 		.name	= "exynos-scaler",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index f5e1adfcaa51..00382f28748a 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -462,7 +462,7 @@ static int vidi_probe(struct platform_device *pdev)
- 	return component_add(dev, &vidi_component_ops);
- }
- 
--static int vidi_remove(struct platform_device *pdev)
-+static void vidi_remove(struct platform_device *pdev)
- {
- 	struct vidi_context *ctx = platform_get_drvdata(pdev);
- 
-@@ -472,13 +472,11 @@ static int vidi_remove(struct platform_device *pdev)
- 	}
- 
- 	component_del(&pdev->dev, &vidi_component_ops);
--
--	return 0;
- }
- 
- struct platform_driver vidi_driver = {
- 	.probe		= vidi_probe,
--	.remove		= vidi_remove,
-+	.remove_new	= vidi_remove,
- 	.driver		= {
- 		.name	= "exynos-drm-vidi",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index f3aaa4ea3e68..6dfc8411ef84 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -2067,7 +2067,7 @@ static int hdmi_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int hdmi_remove(struct platform_device *pdev)
-+static void hdmi_remove(struct platform_device *pdev)
- {
- 	struct hdmi_context *hdata = platform_get_drvdata(pdev);
- 
-@@ -2090,8 +2090,6 @@ static int hdmi_remove(struct platform_device *pdev)
- 	put_device(&hdata->ddc_adpt->dev);
- 
- 	mutex_destroy(&hdata->mutex);
--
--	return 0;
- }
- 
- static int __maybe_unused exynos_hdmi_suspend(struct device *dev)
-@@ -2123,7 +2121,7 @@ static const struct dev_pm_ops exynos_hdmi_pm_ops = {
- 
- struct platform_driver hdmi_driver = {
- 	.probe		= hdmi_probe,
--	.remove		= hdmi_remove,
-+	.remove_new	= hdmi_remove,
- 	.driver		= {
- 		.name	= "exynos-hdmi",
- 		.owner	= THIS_MODULE,
-diff --git a/drivers/gpu/drm/exynos/exynos_mixer.c b/drivers/gpu/drm/exynos/exynos_mixer.c
-index b302392ff0d7..6822333fd0e6 100644
---- a/drivers/gpu/drm/exynos/exynos_mixer.c
-+++ b/drivers/gpu/drm/exynos/exynos_mixer.c
-@@ -1258,13 +1258,11 @@ static int mixer_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int mixer_remove(struct platform_device *pdev)
-+static void mixer_remove(struct platform_device *pdev)
- {
- 	pm_runtime_disable(&pdev->dev);
- 
- 	component_del(&pdev->dev, &mixer_component_ops);
--
--	return 0;
- }
- 
- static int __maybe_unused exynos_mixer_suspend(struct device *dev)
-@@ -1338,5 +1336,5 @@ struct platform_driver mixer_driver = {
- 		.of_match_table = mixer_match_types,
- 	},
- 	.probe = mixer_probe,
--	.remove = mixer_remove,
-+	.remove_new = mixer_remove,
- };
--- 
-2.42.0
-
+On 10/11/23 01:49, Peter Griffin wrote:
+> Hi folks,
+>
+> Firstly, thanks to everyone who reviewed the v1 series! V2 incorporates all
+> the review feedback received so far.
+>
+> This series adds initial SoC support for the GS101 SoC and also initial board
+> support for Pixel 6 phone (Oriole).
+>
+> The gs101 / Tensor SoC is also used in Pixel6a (bluejay) and Pixel 6 Pro
+> (raven) phones. Currently DT is added for the gs101 SoC and Oriole.
+> As you can see from the patches the SoC is based on a Samsung Exynos SoC,
+> and therefore lots of the low level Exynos drivers can be re-used.
+>
+> The support added in this series consists of:
+> * cpus
+> * pinctrl
+> * some CCF implementation
+> * watchdog
+> * uart
+> * gpio
+>
+> This is enough to boot through to a busybox initramfs and shell using an
+> upstream kernel though :) More platform support will be added over the
+> following weeks and months.
+>
+> Note 1: I've removed the dtbo overlay from v2 submission and will re-submit once
+> I have appropriate documentation for it.
+>
+> Note 2: I've left the bootargs in dts with earlycon for now, for two reasons.
+> 1) The bootloader hangs if bootargs isn't present in the dtb as it tries to
+> re-write this with additional bootargs.
+> 2) there is a issue whereby the full serial console doesn't come up properly
+> if earlycon isn't also specified. This issue needs further investigation.
+>
+> Note 3: In `dt-bindings: pinctrl: samsung: add google,gs101-pinctrl compatible`
+> I tried to narrow the interrupts check to google,gs101-pinctrl but I still see
+> a warning:
+> gs101-oriole.dtb: pinctrl@174d0000: interrupts: [[0, 0, 4],[..] is too long
+>
+> If anyone can educate me on what I've done wrong here it would be most
+> appreciated!
+>
+> kind regards,
+>
+> Peter.
+>
+> Changes since v1:
+>   - Remove irq/gs101.h and replace macros with irq numbers globally
+>   - exynos-pmu - keep alphabetical order
+>   - add cmu_apm to clock bindings documentation
+>   - sysreg bindings - remove superfluous `google,gs101-sysreg`
+>   - watchdog bindings - Alphanumerical order, update gs201 comment
+>   - samsung,pinctrl.yaml - add new "if:then:else:" to narrow for google SoC
+>   - samsung,pinctrl-wakeup-interrupt.yaml - Alphanumerical order
+>   - samsung,pinctrl- add google,gs101-wakeup-eint compatible
+>   - clk-pll: fixup typos
+>   - clk-gs101: fix kernel test robot warnings (add 2 new clocks,dividers,gate)
+>   - clk-gs101: fix alphabetical order
+>   - clk-gs101: cmu_apm: fixup typo and missing empty entry
+>   - clk-gs101: cmu_misc: remove clocks that were being registerred twice
+>   - pinctrl: filter sel: rename/reorder variables, add comment for FLTCON bitfield
+>   - pinctrl: filter sel: avoid setting reserved bits by loop over FLTCON1 pins as well
+>   - pinctrl: gs101: rename bank_type_6/7 structs to be more specific, split from filter
+>   - watchdog: s3c2410_wdt: remove dev_info prints
+>   - gs101.dtsi/oriole.dts: order by unit node, remove underscores from node name, blank lines
+>     add SoC node, split dts and dtsi into separate patches, remove 'DVT' suffix
+>   - gs101-oriole.dtso: Remove overlay until board_id is documented properly
+>   - Add GS101_PIN_* macros to gs101-pinctrl.h instead of using Exynos ones
+>   - gpio-keys: update linux,code to use input-event-code macros
+>   - add dedicated gs101-uart compatible
+>
+> Peter Griffin (20):
+>    dt-bindings: soc: samsung: exynos-pmu: Add gs101 compatible
+>    dt-bindings: clock: Add Google gs101 clock management unit bindings
+>    dt-bindings: soc: google: exynos-sysreg: add dedicated SYSREG
+>      compatibles to GS101
+>    dt-bindings: watchdog: Document Google gs101 & gs201 watchdog bindings
+>    dt-bindings: arm: google: Add bindings for Google ARM platforms
+>    dt-bindings: pinctrl: samsung: add google,gs101-pinctrl compatible
+>    dt-bindings: pinctrl: samsung: add gs101-wakeup-eint compatible
+>    dt-bindings: serial: samsung: Add google-gs101-uart compatible
+>    clk: samsung: clk-pll: Add support for pll_{0516,0517,518}
+>    clk: samsung: clk-gs101: Add cmu_top registers, plls, mux and gates
+>    clk: samsung: clk-gs101: add CMU_APM support
+>    clk: samsung: clk-gs101: Add support for CMU_MISC clock unit
+>    pinctrl: samsung: Add filter selection support for alive banks
+>    pinctrl: samsung: Add gs101 SoC pinctrl configuration
+>    watchdog: s3c2410_wdt: Add support for Google tensor SoCs
+>    tty: serial: samsung: Add gs101 compatible and SoC data
+>    arm64: dts: google: Add initial Google gs101 SoC support
+>    arm64: dts: google: Add initial Oriole/pixel 6 board support
+>    arm64: defconfig: Enable Google Tensor SoC
+>    MAINTAINERS: add entry for Google Tensor SoC
+>
+>   .../devicetree/bindings/arm/google.yaml       |   46 +
+>   .../bindings/clock/google,gs101-clock.yaml    |  125 +
+>   .../samsung,pinctrl-wakeup-interrupt.yaml     |    2 +
+>   .../bindings/pinctrl/samsung,pinctrl.yaml     |   19 +
+>   .../bindings/serial/samsung_uart.yaml         |    2 +
+>   .../bindings/soc/samsung/exynos-pmu.yaml      |    2 +
+>   .../soc/samsung/samsung,exynos-sysreg.yaml    |    6 +
+>   .../bindings/watchdog/samsung-wdt.yaml        |   10 +-
+>   MAINTAINERS                                   |   10 +
+>   arch/arm64/Kconfig.platforms                  |    6 +
+>   arch/arm64/boot/dts/Makefile                  |    1 +
+>   arch/arm64/boot/dts/google/Makefile           |    4 +
+>   arch/arm64/boot/dts/google/gs101-oriole.dts   |   79 +
+>   arch/arm64/boot/dts/google/gs101-pinctrl.dtsi | 1275 ++++++++++
+>   arch/arm64/boot/dts/google/gs101-pinctrl.h    |   32 +
+>   arch/arm64/boot/dts/google/gs101.dtsi         |  503 ++++
+>   arch/arm64/configs/defconfig                  |    1 +
+>   drivers/clk/samsung/Kconfig                   |    9 +
+>   drivers/clk/samsung/Makefile                  |    2 +
+>   drivers/clk/samsung/clk-gs101.c               | 2164 +++++++++++++++++
+>   drivers/clk/samsung/clk-pll.c                 |    9 +-
+>   drivers/clk/samsung/clk-pll.h                 |    3 +
+>   .../pinctrl/samsung/pinctrl-exynos-arm64.c    |  163 ++
+>   drivers/pinctrl/samsung/pinctrl-exynos.c      |   84 +-
+>   drivers/pinctrl/samsung/pinctrl-exynos.h      |   41 +
+>   drivers/pinctrl/samsung/pinctrl-samsung.c     |    4 +
+>   drivers/pinctrl/samsung/pinctrl-samsung.h     |   24 +
+>   drivers/tty/serial/samsung_tty.c              |   12 +
+>   drivers/watchdog/s3c2410_wdt.c                |  104 +-
+>   include/dt-bindings/clock/google,gs101.h      |  232 ++
+>   30 files changed, 4961 insertions(+), 13 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/arm/google.yaml
+>   create mode 100644 Documentation/devicetree/bindings/clock/google,gs101-clock.yaml
+>   create mode 100644 arch/arm64/boot/dts/google/Makefile
+>   create mode 100644 arch/arm64/boot/dts/google/gs101-oriole.dts
+>   create mode 100644 arch/arm64/boot/dts/google/gs101-pinctrl.dtsi
+>   create mode 100644 arch/arm64/boot/dts/google/gs101-pinctrl.h
+>   create mode 100644 arch/arm64/boot/dts/google/gs101.dtsi
+>   create mode 100644 drivers/clk/samsung/clk-gs101.c
+>   create mode 100644 include/dt-bindings/clock/google,gs101.h
+>
