@@ -2,68 +2,69 @@ Return-Path: <linux-samsung-soc-owner@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBB9B7E8168
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Nov 2023 19:28:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBAF97E8266
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Nov 2023 20:20:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345930AbjKJS1i (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
-        Fri, 10 Nov 2023 13:27:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49556 "EHLO
+        id S236135AbjKJTUg (ORCPT <rfc822;lists+linux-samsung-soc@lfdr.de>);
+        Fri, 10 Nov 2023 14:20:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346548AbjKJS06 (ORCPT
+        with ESMTP id S1346182AbjKJTUS (ORCPT
         <rfc822;linux-samsung-soc@vger.kernel.org>);
-        Fri, 10 Nov 2023 13:26:58 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAE36FA1
-        for <linux-samsung-soc@vger.kernel.org>; Thu,  9 Nov 2023 22:25:26 -0800 (PST)
+        Fri, 10 Nov 2023 14:20:18 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3EA769B
+        for <linux-samsung-soc@vger.kernel.org>; Thu,  9 Nov 2023 22:34:59 -0800 (PST)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 5DEDE1F8BB;
-        Fri, 10 Nov 2023 06:25:25 +0000 (UTC)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id ACD6A2198E;
+        Fri, 10 Nov 2023 06:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1699597525;
+        t=1699598097;
         h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
          cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=VTPdke0tc9K60Z4DCxHlmo71And4MSPn4ZIQD057L9E=;
-        b=mczFEJnCPLbZ0maFZiAz5ETwpVbSdRxvI9/6yiSt8I8zQy3GSWDAL1CozYMDDztBR9nDoR
-        aVDsS0lq6lv9b2QvkWGNhqnHwuMvN3HbhRuC/iFpCRkrHv3ITovIbtcTVNKtvQtNsE7six
-        yes9tWvvUKtUU69inQF3Ux9EfZD/x08=
+        bh=hSYEUy9F0AlSAaFpGzscfHa1ZG4/Kr7MNhpxVPjjDKo=;
+        b=2YElXd0+hIJGwMDsyAW/JgKVKF0fcJQfuMhcPgu/d1L0eIIscJJUZcG6g3JWpQAvGKKfpl
+        B89x7u23LzEKAf3eaQf17CQkyFGqEcurWw0xv0JIlXTA+PF2ch9LCIDg2Ok9dRe1AsZQ0T
+        mKjvvXmSELInxu6il1PtiGIA9m+Y4xA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1699597525;
+        s=susede2_ed25519; t=1699598097;
         h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
          cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=VTPdke0tc9K60Z4DCxHlmo71And4MSPn4ZIQD057L9E=;
-        b=mbDKTBm0i0MsBTZkxujtt+lRWMAHJTQvLWUDX8Rq5G7+SEyOp/HejcvVDI+Kb3fMPJbYTH
-        txEC4VSo2Sm1LhBg==
+        bh=hSYEUy9F0AlSAaFpGzscfHa1ZG4/Kr7MNhpxVPjjDKo=;
+        b=dEm+Tz8sGfClG5f89Gua8n62uETwJ06+DpV8vk5lgRef46wtSEtCTFLPBBd+tmWhjY993p
+        rPUrRsP3+EeVrKDw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4582613398;
-        Fri, 10 Nov 2023 06:25:25 +0000 (UTC)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8BB1F13398;
+        Fri, 10 Nov 2023 06:34:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
         by imap2.suse-dmz.suse.de with ESMTPSA
-        id UfjBD9XMTWXQdgAAMHmgww
-        (envelope-from <pvorel@suse.cz>); Fri, 10 Nov 2023 06:25:25 +0000
-Date:   Fri, 10 Nov 2023 07:25:23 +0100
+        id FyNKIBHPTWWwegAAMHmgww
+        (envelope-from <pvorel@suse.cz>); Fri, 10 Nov 2023 06:34:57 +0000
+Date:   Fri, 10 Nov 2023 07:34:56 +0100
 From:   Petr Vorel <pvorel@suse.cz>
 To:     Krzysztof Kozlowski <krzk@kernel.org>
 Cc:     linux-samsung-soc@vger.kernel.org
 Subject: Re: [PATCH 1/1] samsung: Sort Makefile
-Message-ID: <20231110062523.GA1536739@pevik>
+Message-ID: <20231110063456.GB1536739@pevik>
 Reply-To: Petr Vorel <pvorel@suse.cz>
 References: <20231108090106.8933-1-pvorel@suse.cz>
  <4d95c252-b992-4214-8cc8-5c98bf07259f@kernel.org>
+ <f7dd78c9-2020-4874-a49e-02a782dcb2a4@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4d95c252-b992-4214-8cc8-5c98bf07259f@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+In-Reply-To: <f7dd78c9-2020-4874-a49e-02a782dcb2a4@kernel.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_SOFTFAIL,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,19 +74,25 @@ X-Mailing-List: linux-samsung-soc@vger.kernel.org
 
 Hi Krzysztof,
 
-> On 08/11/2023 10:01, Petr Vorel wrote:
-> > Signed-off-by: Petr Vorel <pvorel@suse.cz>
-> > ---
-> >  drivers/clk/samsung/Makefile | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
+> On 09/11/2023 17:38, Krzysztof Kozlowski wrote:
+> > On 08/11/2023 10:01, Petr Vorel wrote:
+> >> Signed-off-by: Petr Vorel <pvorel@suse.cz>
+> >> ---
 
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC (and consider --no-git-fallback argument). It might
-> happen, that command when run on an older kernel, gives you outdated
-> entries. Therefore please be sure you base your patches on recent Linux
-> kernel.
+> You also lack commit msg explaining why doing this.
+I'm sorry, I thought the reason is obvious - readability.
 
-Sure, I'll do next time.
+Some Makefiles are tried to be sorted (e.g. drivers/clk/qcom/Makefile),
+but lots of them are not (drivers/net/Makefile). Anyway, it's up to you (and
+other maintainers) to judge if it's useful or not. If considered useful, I'll
+send v2.
+
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching.
+
+Ah, I'm sorry.  I did this actually (do that each time I send patch for kernel),
+but I somehow overlooked "clk: ".
 
 Kind regards,
 Petr
