@@ -1,223 +1,343 @@
-Return-Path: <linux-samsung-soc+bounces-29-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-26-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D14597F2FC9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Nov 2023 14:52:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DCAA7F2F3C
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Nov 2023 14:50:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C27C281DB2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Nov 2023 13:52:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13ECC1F24112
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 21 Nov 2023 13:50:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D192F3D3B8;
-	Tue, 21 Nov 2023 13:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62F40537F7;
+	Tue, 21 Nov 2023 13:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aBNesmLD"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AD910E2
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 21 Nov 2023 05:52:11 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5RAa-0006F8-Uu; Tue, 21 Nov 2023 14:52:04 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5RAX-00Ab1U-Pq; Tue, 21 Nov 2023 14:52:01 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5RAX-004xgJ-GX; Tue, 21 Nov 2023 14:52:01 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Thierry Reding <thierry.reding@gmail.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-pwm@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH v3 082/108] pwm: samsung: Make use of devm_pwmchip_alloc() function
-Date: Tue, 21 Nov 2023 14:50:24 +0100
-Message-ID: <20231121134901.208535-83-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
-In-Reply-To: <20231121134901.208535-1-u.kleine-koenig@pengutronix.de>
-References: <20231121134901.208535-1-u.kleine-koenig@pengutronix.de>
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8A3125;
+	Tue, 21 Nov 2023 05:50:30 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50aaaf6e58fso3637538e87.2;
+        Tue, 21 Nov 2023 05:50:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700574628; x=1701179428; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zsSZ4xmQ15S9yMS17JAsRW4h2Rkx74lE9OsNIPFxOkQ=;
+        b=aBNesmLDX/ziJk1isFnToLaAfzvh5xJH5T/LciYdbqnze8/AUI1Xzb6JFRouhiiNqE
+         J7M812gCGtx0JV1Jhg+Bjdmdg/An41dWK37uCDyuY4AfThHW/7fKpr55X6gKfVXGE2yg
+         dSSC+HbWTnJz+mGeMbudwtEqOssLAld5CY66tYgnlkvI4+fgGOCh+VtNBCkZx5XO7FRo
+         pMZcMmmiYzFgdr1xDYaaKyWwHd2JJt0nMML/joHld+cVd3NALE3OiuOdLJb5cSFVlvHr
+         fKM/Dm9b45KAJCX19UW8gb4Fz+KulDNyfoziZqbSJKookHRVSdSjvplAcRcRHjjZ9h5v
+         qE9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700574628; x=1701179428;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zsSZ4xmQ15S9yMS17JAsRW4h2Rkx74lE9OsNIPFxOkQ=;
+        b=Vg3G2uV8Zz6HYJ0o213sSVq5dli/zUucDbNO+jpIv7jMkmzAcuF2TDs3PnXRn3EG/D
+         5r5SjHvUIQBPL3DUY+2l0VQmeC6NaOtec9i99jwwUT9F+JL3+Gft8vEOwz/BCV08C6UW
+         esK+hdKfP7NJCwQa0HH5p0/leQqlv1ySLnsALdXsd+1+IOokjdtDTsOWpZo9QytbjKbH
+         g42d3EnVw3PB3uoT2xb/93EF38zGMj1OUuMFMehSuzZRgYH3Q4ATQ4W4Cin21JqzAd8X
+         sQF5WP9K9hxjPXe7Gz4PU6tEvtevgA8tyayVlNO8FsDC6GPi1R6fIW+T6gV9Hc/dzYUR
+         Fh/g==
+X-Gm-Message-State: AOJu0YwE5H6k6b+NIgamVGvxZFkFKae9eUw8lgOqMkLSkEVY68ht7Zu4
+	hGnIyOaxcxo/l+e1PiniOL0=
+X-Google-Smtp-Source: AGHT+IEkTjbfcTVtQDhRxyOicMVLyNrkuXAz4VFKYhfMhGGhtOFUGeva748aJGx+4+x/mNNiugtNJw==
+X-Received: by 2002:a05:6512:41e:b0:50a:6fc5:e95c with SMTP id u30-20020a056512041e00b0050a6fc5e95cmr6763271lfk.60.1700574628173;
+        Tue, 21 Nov 2023 05:50:28 -0800 (PST)
+Received: from [192.168.26.149] (031011218106.poznan.vectranet.pl. [31.11.218.106])
+        by smtp.googlemail.com with ESMTPSA id w26-20020a05651204da00b00509471d41besm1520588lfq.211.2023.11.21.05.50.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Nov 2023 05:50:27 -0800 (PST)
+Message-ID: <6b288a2e-d147-4bd3-b1d4-daf56295d939@gmail.com>
+Date: Tue, 21 Nov 2023 14:50:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5851; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=y/uVb42LenA50HPvF4HpLvqJvAahWXuiZd7QSbIZxSc=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlXLWnxTgYrAtCxgaPchYu25kxb1HR2miuepyi0 YVPUkV4ccmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZVy1pwAKCRCPgPtYfRL+ TsctB/45xqtxmt0Nnu4gYTSw+EkDoICjRBIko2/gdMQeErofn/tT8o2/MTfm3yh435SfSzKn+L+ sxgYb7YWJdL3u/LXCen0kDE8MzRkoD3ogeUkxkxhfL0SgxoHwy6WC16CJACiPy22dW1KSZ7OtKz dGi1XrRVDsWUiuchu4ke8EUkkfPCd84EWp1+SrXBHVVznciIhcZHMiHhdAmtSt2dE+l3XQ1FCCz Uf2wp1CoDbkn52AV+l9u+lqDMmIX7L+B5+kIh0iGUDOgrX/D9q4i3apn9OKR7s1mbJ5vn82WYSW eg88xceHq84rGVleiwozt2NTo0O74VIvxXAm+zcCEvJQyRNZ
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
+ <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+Cc: Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michal Simek <michal.simek@amd.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
+ Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+From: =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+In-Reply-To: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This prepares the pwm-samsung driver to further changes of the pwm core
-outlined in the commit introducing devm_pwmchip_alloc(). There is no
-intended semantical change and the driver should behave as before.
+On 20.11.2023 09:40, Krzysztof Kozlowski wrote:
+> Document preferred coding style for Devicetree sources (DTS and DTSI),
+> to bring consistency among all (sub)architectures and ease in reviews.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pwm/pwm-samsung.c | 45 +++++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+I really like the overall idea. Thanks for coming up with that!
 
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index a97cae49406e..acdd456de76c 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -80,7 +80,6 @@ struct samsung_pwm_channel {
-  * @channel:		per channel driver data
-  */
- struct samsung_pwm_chip {
--	struct pwm_chip chip;
- 	struct samsung_pwm_variant variant;
- 	u8 inverter_mask;
- 	u8 disabled_mask;
-@@ -110,7 +109,7 @@ static DEFINE_SPINLOCK(samsung_pwm_lock);
- static inline
- struct samsung_pwm_chip *to_samsung_pwm_chip(struct pwm_chip *chip)
- {
--	return container_of(chip, struct samsung_pwm_chip, chip);
-+	return pwmchip_priv(chip);
- }
- 
- static inline unsigned int to_tcon_channel(unsigned int channel)
-@@ -181,9 +180,10 @@ static unsigned long pwm_samsung_get_tin_rate(struct samsung_pwm_chip *our_chip,
- 	return rate / (reg + 1);
- }
- 
--static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
-+static unsigned long pwm_samsung_calc_tin(struct pwm_chip *chip,
- 					  unsigned int chan, unsigned long freq)
- {
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 	struct samsung_pwm_variant *variant = &our_chip->variant;
- 	unsigned long rate;
- 	struct clk *clk;
-@@ -197,12 +197,12 @@ static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
- 				return rate;
- 		}
- 
--		dev_warn(pwmchip_parent(&our_chip->chip),
-+		dev_warn(pwmchip_parent(chip),
- 			"tclk of PWM %d is inoperational, using tdiv\n", chan);
- 	}
- 
- 	rate = pwm_samsung_get_tin_rate(our_chip, chan);
--	dev_dbg(pwmchip_parent(&our_chip->chip), "tin parent at %lu\n", rate);
-+	dev_dbg(pwmchip_parent(chip), "tin parent at %lu\n", rate);
- 
- 	/*
- 	 * Compare minimum PWM frequency that can be achieved with possible
-@@ -329,7 +329,7 @@ static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		dev_dbg(pwmchip_parent(chip), "duty_ns=%d, period_ns=%d (%u)\n",
- 						duty_ns, period_ns, period);
- 
--		tin_rate = pwm_samsung_calc_tin(our_chip, pwm->hwpwm, period);
-+		tin_rate = pwm_samsung_calc_tin(chip, pwm->hwpwm, period);
- 
- 		dev_dbg(pwmchip_parent(chip), "tin_rate=%lu\n", tin_rate);
- 
-@@ -506,9 +506,10 @@ static const struct of_device_id samsung_pwm_matches[] = {
- };
- MODULE_DEVICE_TABLE(of, samsung_pwm_matches);
- 
--static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
-+static int pwm_samsung_parse_dt(struct pwm_chip *chip)
- {
--	struct device_node *np = pwmchip_parent(&our_chip->chip)->of_node;
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
-+	struct device_node *np = pwmchip_parent(chip)->of_node;
- 	const struct of_device_id *match;
- 	struct property *prop;
- 	const __be32 *cur;
-@@ -522,7 +523,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- 
- 	of_property_for_each_u32(np, "samsung,pwm-outputs", prop, cur, val) {
- 		if (val >= SAMSUNG_PWM_NUM) {
--			dev_err(pwmchip_parent(&our_chip->chip),
-+			dev_err(pwmchip_parent(chip),
- 				"%s: invalid channel index in samsung,pwm-outputs property\n",
- 								__func__);
- 			continue;
-@@ -533,7 +534,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- 	return 0;
- }
- #else
--static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
-+static int pwm_samsung_parse_dt(struct pwm_chip *chip)
- {
- 	return -ENODEV;
- }
-@@ -542,21 +543,22 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- static int pwm_samsung_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-+	struct pwm_chip *chip;
- 	struct samsung_pwm_chip *our_chip;
- 	unsigned int chan;
- 	int ret;
- 
--	our_chip = devm_kzalloc(&pdev->dev, sizeof(*our_chip), GFP_KERNEL);
--	if (our_chip == NULL)
-+	chip = devm_pwmchip_alloc(&pdev->dev, SAMSUNG_PWM_NUM, sizeof(*chip));
-+	if (chip == NULL)
- 		return -ENOMEM;
-+	our_chip = to_samsung_pwm_chip(chip);
-+
-+	chip->ops = &pwm_samsung_ops;
- 
--	our_chip->chip.dev = &pdev->dev;
--	our_chip->chip.ops = &pwm_samsung_ops;
--	our_chip->chip.npwm = SAMSUNG_PWM_NUM;
- 	our_chip->inverter_mask = BIT(SAMSUNG_PWM_NUM) - 1;
- 
- 	if (IS_ENABLED(CONFIG_OF) && pdev->dev.of_node) {
--		ret = pwm_samsung_parse_dt(our_chip);
-+		ret = pwm_samsung_parse_dt(chip);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -595,7 +597,7 @@ static int pwm_samsung_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, our_chip);
- 
--	ret = pwmchip_add(&our_chip->chip);
-+	ret = pwmchip_add(chip);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to register PWM chip\n");
- 		clk_disable_unprepare(our_chip->base_clk);
-@@ -612,17 +614,18 @@ static int pwm_samsung_probe(struct platform_device *pdev)
- 
- static void pwm_samsung_remove(struct platform_device *pdev)
- {
--	struct samsung_pwm_chip *our_chip = platform_get_drvdata(pdev);
-+	struct pwm_chip *chip = platform_get_drvdata(pdev);
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 
--	pwmchip_remove(&our_chip->chip);
-+	pwmchip_remove(chip);
- 
- 	clk_disable_unprepare(our_chip->base_clk);
- }
- 
- static int pwm_samsung_resume(struct device *dev)
- {
--	struct samsung_pwm_chip *our_chip = dev_get_drvdata(dev);
--	struct pwm_chip *chip = &our_chip->chip;
-+	struct pwm_chip *chip = dev_get_drvdata(dev);
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 	unsigned int i;
- 
- 	for (i = 0; i < SAMSUNG_PWM_NUM; i++) {
--- 
-2.42.0
+Two questions inline.
+
+
+> Cc: Andrew Davis <afd@ti.com>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+> Cc: Heiko Stuebner <heiko@sntech.de>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+> Cc: Michal Simek <michal.simek@amd.com>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Nishanth Menon <nm@ti.com>
+> Cc: Olof Johansson <olof@lixom.net>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Merging idea: Rob/DT bindings
+> 
+> Changes in v2
+> =============
+> 1. Hopefully incorporate entire feedback from comments:
+> a. Fix \ { => / { (Rob)
+> b. Name: dts-coding-style (Rob)
+> c. Exceptions for ordering nodes by name for Renesas and pinctrl (Geert,
+>     Konrad)
+> d. Ordering properties by common/vendor (Rob)
+> e. Array entries in <> (Rob)
+> 
+> 2. New chapter: Organizing DTSI and DTS
+> 
+> 3. Several grammar fixes (missing articles)
+> 
+> Cc: linux-rockchip@lists.infradead.org
+> Cc: linux-mediatek@lists.infradead.org
+> Cc: linux-samsung-soc@vger.kernel.org
+> Cc: linux-amlogic@lists.infradead.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-arm-msm@vger.kernel.org
+> ---
+>   .../devicetree/bindings/dts-coding-style.rst  | 163 ++++++++++++++++++
+>   Documentation/devicetree/bindings/index.rst   |   1 +
+>   2 files changed, 164 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/dts-coding-style.rst
+> 
+> diff --git a/Documentation/devicetree/bindings/dts-coding-style.rst b/Documentation/devicetree/bindings/dts-coding-style.rst
+> new file mode 100644
+> index 000000000000..cc7e3b4d1b92
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dts-coding-style.rst
+> @@ -0,0 +1,163 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +.. _dtscodingstyle:
+> +
+> +=====================================
+> +Devicetree Sources (DTS) Coding Style
+> +=====================================
+> +
+> +When writing Devicetree Sources (DTS) please observe below guidelines.  They
+> +should be considered complementary to any rules expressed already in Devicetree
+> +Specification and dtc compiler (including W=1 and W=2 builds).
+> +
+> +Individual architectures and sub-architectures can add additional rules, making
+> +the style stricter.
+> +
+> +Naming and Valid Characters
+> +---------------------------
+> +
+> +1. Node and property names are allowed to use only:
+> +
+> +   * lowercase characters: [a-z]
+> +   * digits: [0-9]
+> +   * dash: -
+> +
+> +2. Labels are allowed to use only:
+> +
+> +   * lowercase characters: [a-z]
+> +   * digits: [0-9]
+> +   * underscore: _
+> +
+> +3. Unit addresses should use lowercase hex, without leading zeros (padding).
+> +
+> +4. Hex values in properties, e.g. "reg", should use lowercase hex.  The address
+> +   part can be padded with leading zeros.
+> +
+> +Example::
+> +
+> +	gpi_dma2: dma-controller@800000 {
+> +		compatible = "qcom,sm8550-gpi-dma", "qcom,sm6350-gpi-dma";
+> +		reg = <0x0 0x00800000 0x0 0x60000>;
+> +	}
+> +
+> +Order of Nodes
+> +--------------
+> +
+> +1. Nodes within any bus, thus using unit addresses for children, shall be
+> +   ordered incrementally by unit address.
+> +   Alternatively for some sub-architectures, nodes of the same type can be
+> +   grouped together (e.g. all I2C controllers one after another even if this
+> +   breaks unit address ordering).
+> +
+> +2. Nodes without unit addresses should be ordered alpha-numerically by the node
+> +   name.  For a few types of nodes, they can be ordered by the main property
+> +   (e.g. pin configuration states ordered by value of "pins" property).
+> +
+> +3. When extending nodes in the board DTS via &label, the entries should be
+> +   ordered alpha-numerically.
+
+Just an idea. Would that make (more) sense to make &label-like entries
+match order of nodes in included .dts(i)?
+
+Adventages:
+1. We keep unit address incremental order that is unlikely to change
+
+Disadventages:
+1. More difficult to verify
+
+
+> +Example::
+> +
+> +	// SoC DTSI
+> +
+> +	/ {
+> +		cpus {
+> +			// ...
+> +		};
+> +
+> +		psci {
+> +			// ...
+> +		};
+> +
+> +		soc@ {
+> +			dma: dma-controller@10000 {
+> +				// ...
+> +			};
+> +
+> +			clk: clock-controller@80000 {
+> +				// ...
+> +			};
+> +		};
+> +	};
+> +
+> +	// Board DTS
+> +
+> +	&clk {
+> +		// ...
+> +	};
+> +
+> +	&dma {
+> +		// ...
+> +	};
+> +
+> +
+> +Order of Properties in Device Node
+> +----------------------------------
+> +
+> +Following order of properties in device nodes is preferred:
+> +
+> +1. compatible
+> +2. reg
+> +3. ranges
+> +4. Standard/common properties (defined by common bindings, e.g. without
+> +   vendor-prefixes)
+> +5. Vendor-specific properties
+> +6. status (if applicable)
+> +7. Child nodes, where each node is preceded with a blank line
+> +
+> +The "status" property is by default "okay", thus it can be omitted.
+
+I think it would really help to include position of #address-cells and
+#size-cells here. In some files I saw them above "compatible" that seems
+unintuitive. Some prefer putting them at end which I think makes sense
+as they affect children nodes.
+
+Whatever you choose it'd be just nice to have things consistent.
+
+
+> +Example::
+> +
+> +	// SoC DTSI
+> +
+> +	usb_1_hsphy: phy@88e3000 {
+> +		compatible = "qcom,sm8550-snps-eusb2-phy";
+> +		reg = <0x0 0x088e3000 0x0 0x154>;
+> +		#phy-cells = <0>;
+> +		resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +		status = "disabled";
+> +	};
+> +
+> +	// Board DTS
+> +
+> +	&usb_1_hsphy {
+> +		clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+> +		clock-names = "ref";
+> +		status = "okay";
+> +	};
+> +
+> +
+> +Indentation
+> +-----------
+> +
+> +1. Use indentation according to :ref:`codingstyle`.
+> +2. For arrays spanning across lines, it is preferred to align the continued
+> +   entries with opening < from the first line.
+> +3. Each entry in arrays with multiple cells (e.g. "reg" with two IO addresses)
+> +   should be enclosed in <>.
+> +
+> +Example::
+> +
+> +	thermal-sensor@c271000 {
+> +		compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+> +		reg = <0x0 0x0c271000 0x0 0x1000>,
+> +		      <0x0 0x0c222000 0x0 0x1000>;
+> +	};
+> +
+> +Organizing DTSI and DTS
+> +-----------------------
+> +
+> +The DTSI and DTS files should be organized in a way representing the common
+> +(and re-usable) parts of the hardware.  Typically this means organizing DTSI
+> +and DTS files into several files:
+> +
+> +1. DTSI with contents of the entire SoC (without nodes for hardware not present
+> +   on the SoC).
+> +2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
+> +   entire System-on-Module).
+> +3. DTS representing the board.
+> +
+> +Hardware components which are present on the board should be placed in the
+> +board DTS, not in the SoC or SoM DTSI.  A partial exception is a common
+> +external reference SoC-input clock, which could be coded as a fixed-clock in
+> +the SoC DTSI with its frequency provided by each board DTS.
+> diff --git a/Documentation/devicetree/bindings/index.rst b/Documentation/devicetree/bindings/index.rst
+> index d9002a3a0abb..cc1fbdc05657 100644
+> --- a/Documentation/devicetree/bindings/index.rst
+> +++ b/Documentation/devicetree/bindings/index.rst
+> @@ -4,6 +4,7 @@
+>      :maxdepth: 1
+>   
+>      ABI
+> +   dts-coding-style
+>      writing-bindings
+>      writing-schema
+>      submitting-patches
 
 
