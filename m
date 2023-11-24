@@ -1,208 +1,338 @@
-Return-Path: <linux-samsung-soc+bounces-131-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-133-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C20F37F8615
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Nov 2023 23:22:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DC6A7F869E
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 25 Nov 2023 00:22:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 747422839C7
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Nov 2023 22:22:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0B4FB21346
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 24 Nov 2023 23:22:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90A43D976;
-	Fri, 24 Nov 2023 22:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 919BB3BB55;
+	Fri, 24 Nov 2023 23:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mxK/2Edj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cl5+6xww"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75AF1FF6;
-	Fri, 24 Nov 2023 14:22:13 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOMJOVA032368;
-	Fri, 24 Nov 2023 22:21:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=b5eTBZeeW3B0oIKYsibzqp9oXL4xrHRnjIPMFNhgnF0=;
- b=mxK/2EdjjVnrmjFpyttUkIAzFH6685VIp//oIOpM3MTuQV/vi4ldmtkBhd19UMXOOF8Q
- 6g5ORooFeJCNSKZa0PbA2h7XWG8pT2JRMWfLWP9Qr4nssAIOrSyliKcoIgO2NzUNpuu1
- 86cK5qj+YepaN+nyGspdarozNzE+Tn8Bh0lIsyBy0qMu/+VU5xROmBdXn9bKnbzRuvRR
- BHwr8hc2LJPAB9BoaSVWLnUvAGsY7Ei1rssFeW0v7SK8cbO5TN0EA3nkcyYdR06mBQ0d
- MHI736zOdlAfumZxsLpeyzL3SgWhmw1KpTrumHvtGlqt4IlDIjnRYQes05j3MIqzqJ9w dg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj6emusg9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 22:21:55 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOMLsMQ016882
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 22:21:54 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 24 Nov 2023 14:21:45 -0800
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <mathieu.poirier@linaro.org>, <vigneshr@ti.com>, <nm@ti.com>,
-        <matthias.bgg@gmail.com>, <kgene@kernel.org>,
-        <alim.akhtar@samsung.com>, <bmasney@redhat.com>
-CC: <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [Patch v6 12/12] soc: qcom: register ramoops region with APSS minidump
-Date: Sat, 25 Nov 2023 03:49:55 +0530
-Message-ID: <1700864395-1479-13-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1700864395-1479-1-git-send-email-quic_mojha@quicinc.com>
-References: <1700864395-1479-1-git-send-email-quic_mojha@quicinc.com>
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3193198D
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 24 Nov 2023 15:22:44 -0800 (PST)
+Received: by mail-qv1-xf33.google.com with SMTP id 6a1803df08f44-677fb277b7cso12515986d6.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 24 Nov 2023 15:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700868164; x=1701472964; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=E5nMDTtOQLcgHcYf3AhjJfRtmN2DqrR45HtW3cVWOzw=;
+        b=Cl5+6xwwJaSOmHmiHbDXWr3REY54kfd6frgsHZTnE5nzvqHWgDeRuRHk318yOCivuS
+         3tLgKm3zJdH5N2JvR7zPfroSKsY0NNz2coyAB4HMs11vDfqYiURVHSj+uA6skQvEBQkj
+         YfXhe/IsBlUu16IaqVgWlPas55W4j9Jq9Z8CbkBcDiT4efe3XQg2zW6HECH7OtZbaLi+
+         9egvU3MPOaujpsIKJNscWvI6QZB8YhaIqmXRHrrpIazF3dNE0og5ChErWlHIjQCNLn0Q
+         cGOk5YBA3Q0hQbGAdFNMrZXz3MhTe2tl+/LpBVXBsKjSkgOdCqbp+uNkluwu3WFAryZ+
+         sQEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700868164; x=1701472964;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E5nMDTtOQLcgHcYf3AhjJfRtmN2DqrR45HtW3cVWOzw=;
+        b=Vuljqqiddfoe+uWO3Jnp9hxvwfbMAkAEn6+QcG8VktuX0kkBqGwUIlNXtp7PL0vFq2
+         IjQgEoGVtPQ7nxlZ8v0Yl+sw7WLTp9pzpH/5Yuq9eyP/iza9/Fco2RaF+5lXLBHk7CG6
+         hUJH6VRJ51UG3hvkM9Pnhb/XpUG5/SwqxAnMNMhMxtLXQB9sDABZ/2NZiQYhUFf5wk6m
+         /GtWnBTp1dA0a0GyRPEk1xJ54SE2YlXS3ay9IXr4KAlEAHh2z7bqWsGZD1NmHhhWOuBN
+         hh8UQLEudQOJpl8FXeK3+IPLq8OLyo3PYltkC21y65p13tuQQeU4OANLDFJ1URVGqAM+
+         hhAA==
+X-Gm-Message-State: AOJu0Yw6+rOZEytO0fisGJH8Pt7v4zzY6SSWzS/IdUuHeycgCY7xVF9d
+	zmuBl/UbsnLdve1unUPpkk3G8n49XOFqHu/MbasyQA==
+X-Google-Smtp-Source: AGHT+IEjuQLNaGggFU8MosnNJZXuB+cB3Jfd3qXypDWwUEWP4Auhl766yikOfki9VYXPb7XM9tRstFp8E9Md9JPAQ/M=
+X-Received: by 2002:a05:6214:2aa2:b0:67a:2554:28c6 with SMTP id
+ js2-20020a0562142aa200b0067a255428c6mr839328qvb.26.1700868163786; Fri, 24 Nov
+ 2023 15:22:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XhP7UB1QriAxNqtp8DRhI6TdM9sUSISM
-X-Proofpoint-GUID: XhP7UB1QriAxNqtp8DRhI6TdM9sUSISM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-24_09,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311240174
+References: <20231011184823.443959-1-peter.griffin@linaro.org>
+ <20231011184823.443959-18-peter.griffin@linaro.org> <33fe3e2e-9d09-42ee-9472-25d3be09baf4@linaro.org>
+In-Reply-To: <33fe3e2e-9d09-42ee-9472-25d3be09baf4@linaro.org>
+From: Peter Griffin <peter.griffin@linaro.org>
+Date: Fri, 24 Nov 2023 23:22:32 +0000
+Message-ID: <CADrjBPrh19YzB45hM4xaELn67uf3iBQo++T-8+2Uenq6-fDzKg@mail.gmail.com>
+Subject: Re: [PATCH v3 17/20] arm64: dts: google: Add initial Google gs101 SoC support
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	mturquette@baylibre.com, conor+dt@kernel.org, sboyd@kernel.org, 
+	tomasz.figa@gmail.com, s.nawrocki@samsung.com, linus.walleij@linaro.org, 
+	wim@linux-watchdog.org, linux@roeck-us.net, catalin.marinas@arm.com, 
+	will@kernel.org, arnd@arndb.de, olof@lixom.net, gregkh@linuxfoundation.org, 
+	cw00.choi@samsung.com, tudor.ambarus@linaro.org, andre.draszik@linaro.org, 
+	semen.protsenko@linaro.org, saravanak@google.com, willmcvicker@google.com, 
+	soc@kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, kernel-team@android.com, 
+	linux-serial@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Register ramoops region with APSS minidump so that
-these region gets captured on system crash.
+Hi Krzysztof,
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/soc/qcom/qcom_minidump.c | 62 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
+On Thu, 12 Oct 2023 at 07:40, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 11/10/2023 20:48, Peter Griffin wrote:
+>
+> ...
+>
+> > diff --git a/arch/arm64/boot/dts/google/gs101.dtsi b/arch/arm64/boot/dts/google/gs101.dtsi
+> > new file mode 100644
+> > index 000000000000..37fb0a4dc8d3
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/google/gs101.dtsi
+> > @@ -0,0 +1,504 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * GS101 SoC
+> > + *
+> > + * Copyright 2019-2023 Google LLC
+> > + *
+> > + */
+> > +
+> > +#include <dt-bindings/clock/google,gs101.h>
+> > +#include <dt-bindings/gpio/gpio.h>
+> > +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> > +/ {
+> > +     compatible = "google,gs101";
+> > +     #address-cells = <2>;
+> > +     #size-cells = <1>;
+> > +
+> > +     interrupt-parent = <&gic>;
+> > +
+> > +     aliases {
+> > +             pinctrl0 = &pinctrl_0;
+> > +             pinctrl1 = &pinctrl_1;
+> > +             pinctrl2 = &pinctrl_2;
+> > +             pinctrl3 = &pinctrl_3;
+> > +             pinctrl4 = &pinctrl_4;
+> > +             pinctrl5 = &pinctrl_5;
+> > +             pinctrl6 = &pinctrl_6;
+> > +             pinctrl7 = &pinctrl_7;
+> > +             serial0 = &serial_0;
+> > +     };
+> > +
+> > +     arm-pmu {
+>
+> pmu-0
 
-diff --git a/drivers/soc/qcom/qcom_minidump.c b/drivers/soc/qcom/qcom_minidump.c
-index c0f76a51d0e8..9a39b68903fb 100644
---- a/drivers/soc/qcom/qcom_minidump.c
-+++ b/drivers/soc/qcom/qcom_minidump.c
-@@ -18,8 +18,10 @@
- #include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/printk.h>
-+#include <linux/pstore_ram.h>
- #include <linux/soc/qcom/smem.h>
- #include <linux/string.h>
-+#include <linux/workqueue.h>
- #include <soc/qcom/qcom_minidump.h>
- 
- #include "qcom_minidump_internal.h"
-@@ -56,12 +58,20 @@ struct minidump_elfhdr {
-  * @dev: Minidump backend device
-  * @apss_data: APSS driver data
-  * @md_lock: Lock to protect access to APSS minidump table
-+ * @work: Minidump work for any required execution in process context.
-  */
- struct minidump {
- 	struct minidump_elfhdr	 elf;
- 	struct device		 *dev;
- 	struct minidump_ss_data	 *apss_data;
- 	struct mutex		 md_lock;
-+	struct work_struct	 work;
-+};
-+
-+static LIST_HEAD(apss_md_rlist);
-+struct md_region_list {
-+	struct qcom_minidump_region md_region;
-+	struct list_head list;
- };
- 
- /*
-@@ -530,6 +540,52 @@ static int qcom_apss_md_table_init(struct minidump *md,
- 	return 0;
- }
- 
-+static int ramoops_region_md_register(const char *name, int id, void *vaddr,
-+				      phys_addr_t paddr, size_t size)
-+{
-+	struct qcom_minidump_region *md_region;
-+	struct md_region_list *mdr_list;
-+	int ret;
-+
-+	mdr_list = kzalloc(sizeof(*mdr_list), GFP_KERNEL);
-+	if (!mdr_list)
-+		return -ENOMEM;
-+
-+	md_region = &mdr_list->md_region;
-+	scnprintf(md_region->name, sizeof(md_region->name), "K%s%d", name, id);
-+	md_region->virt_addr = vaddr;
-+	md_region->phys_addr = paddr;
-+	md_region->size = size;
-+	ret = qcom_minidump_region_register(md_region);
-+	if (ret < 0) {
-+		pr_err("failed to register region in minidump: err: %d\n", ret);
-+		return ret;
-+	}
-+
-+	list_add(&mdr_list->list, &apss_md_rlist);
-+
-+	return 0;
-+}
-+
-+static void ramoops_register_md_callback(struct work_struct *work)
-+{
-+	register_ramoops_ready_notifier(ramoops_region_md_register);
-+}
-+
-+static void qcom_ramoops_minidump_unregister(void)
-+{
-+	struct md_region_list *mdr_list;
-+	struct md_region_list *tmp;
-+
-+	list_for_each_entry_safe(mdr_list, tmp, &apss_md_rlist, list) {
-+		struct qcom_minidump_region *region;
-+
-+		region = &mdr_list->md_region;
-+		qcom_minidump_region_unregister(region);
-+		list_del(&mdr_list->list);
-+	}
-+}
-+
- static void qcom_apss_md_table_exit(struct minidump_ss_data *mdss_data)
- {
- 	memset(mdss_data->md_ss_toc, cpu_to_le32(0), sizeof(*mdss_data->md_ss_toc));
-@@ -575,6 +631,9 @@ static int qcom_apss_minidump_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, md);
- 
-+	INIT_WORK(&md->work, ramoops_register_md_callback);
-+	schedule_work(&md->work);
-+
- 	return ret;
- }
- 
-@@ -582,6 +641,9 @@ static void qcom_apss_minidump_remove(struct platform_device *pdev)
- {
- 	struct minidump *md = platform_get_drvdata(pdev);
- 
-+	flush_work(&md->work);
-+	qcom_ramoops_minidump_unregister();
-+	unregister_ramoops_ready_notifier(ramoops_region_md_register);
- 	qcom_apss_md_table_exit(md->apss_data);
- }
- 
--- 
-2.7.4
+will fix
+>
+> > +             compatible = "arm,armv8-pmuv3";
+> > +             interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_HIGH)>;
+> > +     };
+> > +
+> > +     dsu-pmu-0 {
+>
+> pmu-1
 
+will fix
+
+>
+>
+> > +             compatible = "arm,dsu-pmu";
+> > +             interrupts = <GIC_SPI 257 IRQ_TYPE_LEVEL_HIGH>;
+> > +             cpus = <&cpu0>, <&cpu1>, <&cpu2>, <&cpu3>,
+> > +                    <&cpu4>, <&cpu5>, <&cpu6>, <&cpu7>;
+> > +     };
+> > +
+> > +     /* TODO replace with CCF clock */
+> > +     dummy_clk: oscillator {
+> > +             compatible = "fixed-clock";
+> > +             #clock-cells = <0>;
+> > +             clock-frequency = <12345>;
+> > +             clock-output-names = "pclk";
+> > +     };
+> > +
+> > +     cpus {
+> > +             #address-cells = <2>;
+> > +             #size-cells = <0>;
+> > +
+> > +             cpu-map {
+> > +                     cluster0 {
+> > +                             core0 {
+> > +                                     cpu = <&cpu0>;
+> > +                             };
+> > +                             core1 {
+> > +                                     cpu = <&cpu1>;
+> > +                             };
+> > +                             core2 {
+> > +                                     cpu = <&cpu2>;
+> > +                             };
+> > +                             core3 {
+> > +                                     cpu = <&cpu3>;
+> > +                             };
+> > +                     };
+> > +
+> > +                     cluster1 {
+> > +                             core0 {
+> > +                                     cpu = <&cpu4>;
+> > +                             };
+> > +                             core1 {
+> > +                                     cpu = <&cpu5>;
+> > +                             };
+> > +                     };
+> > +
+> > +                     cluster2 {
+> > +                             core0 {
+> > +                                     cpu = <&cpu6>;
+> > +                             };
+> > +                             core1 {
+> > +                                     cpu = <&cpu7>;
+> > +                             };
+> > +                     };
+> > +             };
+> > +
+> > +             cpu0: cpu@0 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0000>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ANANKE_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <250>;
+> > +                     dynamic-power-coefficient = <70>;
+> > +             };
+> > +
+> > +             cpu1: cpu@100 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0100>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ANANKE_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <250>;
+> > +                     dynamic-power-coefficient = <70>;
+> > +             };
+> > +
+> > +             cpu2: cpu@200 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0200>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ANANKE_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <250>;
+> > +                     dynamic-power-coefficient = <70>;
+> > +             };
+> > +
+> > +             cpu3: cpu@300 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0300>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ANANKE_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <250>;
+> > +                     dynamic-power-coefficient = <70>;
+> > +             };
+> > +
+> > +             cpu4: cpu@400 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0400>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ENYO_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <620>;
+> > +                     dynamic-power-coefficient = <284>;
+> > +             };
+> > +
+> > +             cpu5: cpu@500 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0500>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&ENYO_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <620>;
+> > +                     dynamic-power-coefficient = <284>;
+> > +             };
+> > +
+> > +             cpu6: cpu@600 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0600>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&HERA_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <1024>;
+> > +                     dynamic-power-coefficient = <650>;
+> > +             };
+> > +
+> > +             cpu7: cpu@700 {
+> > +                     device_type = "cpu";
+> > +                     compatible = "arm,armv8";
+> > +                     reg = <0x0 0x0700>;
+> > +                     enable-method = "psci";
+> > +                     cpu-idle-states =  <&HERA_CPU_SLEEP>;
+> > +                     capacity-dmips-mhz = <1024>;
+> > +                     dynamic-power-coefficient = <650>;
+> > +             };
+> > +
+> > +             idle-states {
+> > +                     entry-method = "psci";
+> > +
+> > +                     ANANKE_CPU_SLEEP: cpu-ananke-sleep {
+> > +                             idle-state-name = "c2";
+> > +                             compatible = "arm,idle-state";
+> > +                             arm,psci-suspend-param = <0x0010000>;
+> > +                             entry-latency-us = <70>;
+> > +                             exit-latency-us = <160>;
+> > +                             min-residency-us = <2000>;
+> > +                     };
+> > +
+> > +                     ENYO_CPU_SLEEP: cpu-enyo-sleep {
+> > +                             idle-state-name = "c2";
+> > +                             compatible = "arm,idle-state";
+> > +                             arm,psci-suspend-param = <0x0010000>;
+> > +                             entry-latency-us = <150>;
+> > +                             exit-latency-us = <190>;
+> > +                             min-residency-us = <2500>;
+> > +                     };
+> > +
+> > +                     HERA_CPU_SLEEP: cpu-hera-sleep {
+> > +                             idle-state-name = "c2";
+> > +                             compatible = "arm,idle-state";
+> > +                             arm,psci-suspend-param = <0x0010000>;
+> > +                             entry-latency-us = <235>;
+> > +                             exit-latency-us = <220>;
+> > +                             min-residency-us = <3500>;
+> > +                     };
+> > +             };
+> > +     };
+> > +
+> > +     /* bootloader requires ect node */
+> > +     ect {
+>
+> This needs bindings.
+
+I experimented a bit more and the minimum I need is an empty dt node
+called ect, otherwise the bootloader will boot loop and we can't boot
+the kernel
+[   2.977870] [E] [BOOT] fdt /ect path not found -1
+
+Apart from a comment indicating that the bootloader requires this
+empty ect dt node, what other bindings documentation would you like to
+see? Something in google.yaml?
+
+>
+> > +             parameter_address = <0x90000000>;
+>
+> No underscores in property names. Use hyphen.
+>
+> > +             parameter_size = <0x53000>;
+>
+> No underscores.
+
+Fortunately I can remove parameter_address and parameter_size and
+still boot, so I will remove these in the next version.
+
+Thanks,
+
+Peter.
 
