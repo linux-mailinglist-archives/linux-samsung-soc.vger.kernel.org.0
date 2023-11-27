@@ -1,248 +1,159 @@
-Return-Path: <linux-samsung-soc+bounces-150-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-154-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E0E7F9AC5
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Nov 2023 08:21:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB2C17F9CF3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Nov 2023 10:55:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6E6B1C20901
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Nov 2023 07:21:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E07D5B20E92
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 27 Nov 2023 09:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EABDFC1C;
-	Mon, 27 Nov 2023 07:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C11D17990;
+	Mon, 27 Nov 2023 09:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CtqU6QWQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TojN5xCh"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A776134
-	for <linux-samsung-soc@vger.kernel.org>; Sun, 26 Nov 2023 23:20:56 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32f8441dfb5so2632833f8f.0
-        for <linux-samsung-soc@vger.kernel.org>; Sun, 26 Nov 2023 23:20:56 -0800 (PST)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A42B101
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Nov 2023 01:54:59 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-54b18dbf148so2411080a12.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 27 Nov 2023 01:54:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701069655; x=1701674455; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bn54vIAc0eYi0hKtOKMeiN8NU8DvZIYGdhZWAeybSRY=;
-        b=CtqU6QWQJ/wAFa6npNZ4W+NriCtYObz0nVbIhgFAy1OSu7igKH2wpEuqkVBO5d9Nkh
-         DV1qTiAurpv2eFsz1AoLSuROnUEWOxB87Ta7vurcU8F8+JHs2gHh3gRsWfmclgOh5uSJ
-         bY8h/SPielilCvrfDnqLCkaWl7drBVweekGiPzADH+1PYkJH8pLukMAkL6lImg6U5mgA
-         ab8naoEu4T6GT8jMwZ0Y2xJlr5zHjWNBBOzXtwbpTKNQSc7IFp0iy4ke/0CkD65TWhYJ
-         UApT/M0aA8fiqTqn9yvBRAQpdeiQQXkI+sNv6++a4zIi31zXD4pKWthIrd8HptOIoQWx
-         +mQQ==
+        d=linaro.org; s=google; t=1701078898; x=1701683698; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e1fxEeUFO6hXv/dX8KEIOFznR3jH91DRaPVdTptWqn4=;
+        b=TojN5xCh0hbRe9cerxQigU9czGrdvqkuvYNXtqRBiNch/Vr5Q1XPnuJlxjgIvl//Gh
+         J4IciKyBXX7mchNzp8RbmrnqwTD+YATNtcLClcEksIvjbUaP4sowaC9cOn4Zno84Zo7U
+         QR2E6WGDa0bKlbVNXSabL1jW8QdRhtHODFIhqFhRIBsF7jXNECbIlwYV1BolYwT/POhO
+         H2pDvA7RcSttNPW36+ldTGL/GLqA8LJhyjS0I+LR06q74fOKYsxOAWjcH6AAzMPfv3z7
+         WONagSWrtyiVzCbLELKS1iGzMbuvQ0eF0N0Y3BCyK2QrN9XQ1HqU4g3r8BCG7XJk1cX/
+         3MKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701069655; x=1701674455;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bn54vIAc0eYi0hKtOKMeiN8NU8DvZIYGdhZWAeybSRY=;
-        b=JS8Do+tgZhGN2WDJ+S5c2h0hMoFGBYTOwKXmyBeELSpl4oiawSFRqCjvt/ApyZ1FWF
-         y2KU4SVaaGqkcdtWd9SuTCdUZ1inUmp3hyLHeGB8ERtTMdotIYE0UjDEQViA5eSA4zhR
-         MHudHpVqUPwqRXjVm48DYUZv6Qf3LMlEVe2u4pb8mRMd02Jy6MCe4LoK6l4T+opvqNeE
-         GQ+1jcFIuYFIw7oqCsGcTehTbIiz+whz+7a0Rk8V8GqBgthaUhc54ODMKf4Sl+RGI3Fv
-         ZZt4/ThVh6o9/6yHIy7A/QwpkXkqgg4CcuUxYDsm86H/Ywqj5H1NEH7RNoVxyKav9riV
-         9+Zw==
-X-Gm-Message-State: AOJu0Yz3bH0+zfO75wduLvMLIN5cL+LyuPqvXWdnFHfRYV0wRnnXlLw8
-	id7kbjH7wWY92g43YqUr4iNQrQ==
-X-Google-Smtp-Source: AGHT+IEJd/EQQmAPrTIQqwfTjo9nIa20Ri9WtqA2pzXHWQSQrwyw3hN0cLsczlXOMHTs5+QGncmLkA==
-X-Received: by 2002:a05:6000:178d:b0:333:6cf:2b5 with SMTP id e13-20020a056000178d00b0033306cf02b5mr333044wrg.46.1701069654878;
-        Sun, 26 Nov 2023 23:20:54 -0800 (PST)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id v19-20020adfd053000000b0032f9688ea48sm10935730wrh.10.2023.11.26.23.20.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Nov 2023 23:20:54 -0800 (PST)
-From: Dan Carpenter <dan.carpenter@linaro.org>
-X-Google-Original-From: Dan Carpenter <dan.carpenter@oracle.com>
-Date: Mon, 27 Nov 2023 10:20:52 +0300
-To: oe-kbuild@lists.linux.dev, Mateusz Majewski <m.majewski2@samsung.com>,
-	linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-	Mateusz Majewski <m.majewski2@samsung.com>,
-	Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Lukasz Luba <lukasz.luba@arm.com>
-Subject: Re: [PATCH v5 7/9] thermal: exynos: split initialization of TMU and
- the thermal zone
-Message-ID: <aeac4120-aa00-4e73-9a7a-fa04c9f4f59e@suswa.mountain>
+        d=1e100.net; s=20230601; t=1701078898; x=1701683698;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e1fxEeUFO6hXv/dX8KEIOFznR3jH91DRaPVdTptWqn4=;
+        b=bjNAI3HzYKfeVhic2wDl19ygeQkM3Z60KNnsAz/MuxrCRepugLAoeTwWZxehYQWPvJ
+         QlPFIbPsZuAJdqU0D1y3cqXaEJ9u59dkSIXsmZp+hvLkDSSUg94OssZCPjThCHds0/1h
+         hK0XtsVDqIuj1+/nqnI/HEfopI+lpkhryXf45SvZmKGVM51sq8S0YxH8utDYmVPhiwfQ
+         3ORYmjE1rY918uMk/IUAMhIsrHT2UEIpnuDATdZIDFcU8pJCdmZhHfe7tmUgPt2A4XA/
+         x9kMbZX4VzSx3vz9doXtJoNBJGsoqKz69PBszyj2spazrvjJtoVUvC8o6ezuFoLt1ikP
+         oBiA==
+X-Gm-Message-State: AOJu0YzfBdaAgdUWwVGcvKCJ2nRkSukN2Fy/g9n8E5HPDZKlhBU3HZDK
+	EX24rZ2bCQ93sxLRkzL6+CDysA==
+X-Google-Smtp-Source: AGHT+IFjwN7bB5gv7+G/BKr6okJdUmVQS0Y92shRTiZS1iWbDfwO7GKyWr5qMEZ2UoKloxi/hRIynQ==
+X-Received: by 2002:a17:906:73c3:b0:9e6:59d5:71c4 with SMTP id n3-20020a17090673c300b009e659d571c4mr7479468ejl.16.1701078897851;
+        Mon, 27 Nov 2023 01:54:57 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id bq23-20020a170906d0d700b00a0d02cfa48bsm2152219ejb.213.2023.11.27.01.54.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Nov 2023 01:54:57 -0800 (PST)
+Message-ID: <bb738a6b-815d-4fad-b73f-559f1ba8cd68@linaro.org>
+Date: Mon, 27 Nov 2023 10:54:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120145049.310509-8-m.majewski2@samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] pinctrl: samsung: add irq_set_affinity() for non wake
+ up external gpio interrupt
+Content-Language: en-US
+To: Youngmin Nam <youngmin.nam@samsung.com>, tomasz.figa@gmail.com,
+ s.nawrocki@samsung.com, alim.akhtar@samsung.com, linus.walleij@linaro.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ semen.protsenko@linaro.org
+References: <CGME20231126091120epcas2p4a1320e3b0f9be8f8a0f575a322981d38@epcas2p4.samsung.com>
+ <20231126094618.2545116-1-youngmin.nam@samsung.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231126094618.2545116-1-youngmin.nam@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Mateusz,
+On 26/11/2023 10:46, Youngmin Nam wrote:
+> To support affinity setting for non wake up external gpio interrupt,
+> add irq_set_affinity callback using irq number from pinctrl driver data.
+> 
+> Before this patch, changing the irq affinity of gpio interrupt is not possible:
+> 
+>     # cat /proc/irq/418/smp_affinity
+>     3ff
+>     # echo 00f > /proc/irq/418/smp_affinity
 
-kernel test robot noticed the following build warnings:
+Does this command succeed on your board?
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+>     # cat /proc/irq/418/smp_affinity
+>     3ff
+>     # cat /proc/interrupts
+>                CPU0       CPU1       CPU2       CPU3    ...
+>     418:       3631          0          0          0    ...
+> 
+> With this patch applied, it's possible to change irq affinity of gpio interrupt:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mateusz-Majewski/thermal-exynos-remove-an-unnecessary-field-description/20231120-230641
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git thermal
-patch link:    https://lore.kernel.org/r/20231120145049.310509-8-m.majewski2%40samsung.com
-patch subject: [PATCH v5 7/9] thermal: exynos: split initialization of TMU and the thermal zone
-config: arm-randconfig-r081-20231123 (https://download.01.org/0day-ci/archive/20231125/202311251257.Fjn3kQH6-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20231125/202311251257.Fjn3kQH6-lkp@intel.com/reproduce)
+...
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <error27@gmail.com>
-| Closes: https://lore.kernel.org/r/202311251257.Fjn3kQH6-lkp@intel.com/
+On which board did you test it?
 
-smatch warnings:
-drivers/thermal/samsung/exynos_tmu.c:1064 exynos_tmu_probe() warn: missing unwind goto?
-drivers/thermal/samsung/exynos_tmu.c:1103 exynos_tmu_probe() warn: 'data->clk' from clk_prepare() not released on lines: 1064.
-drivers/thermal/samsung/exynos_tmu.c:1103 exynos_tmu_probe() warn: 'data->clk_sec' from clk_prepare() not released on lines: 1064.
-drivers/thermal/samsung/exynos_tmu.c:1103 exynos_tmu_probe() warn: 'data->sclk' from clk_prepare_enable() not released on lines: 1064.
 
-vim +1064 drivers/thermal/samsung/exynos_tmu.c
+> +	if (parent)
+> +		return parent->chip->irq_set_affinity(parent, dest, force);
+> +
 
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24   980  static int exynos_tmu_probe(struct platform_device *pdev)
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24   981  {
-3b6a1a805f3424 drivers/thermal/samsung/exynos_tmu.c Lukasz Majewski          2015-01-23   982  	struct exynos_tmu_data *data;
-3b6a1a805f3424 drivers/thermal/samsung/exynos_tmu.c Lukasz Majewski          2015-01-23   983  	int ret;
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24   984  
-79e093c3fe9de9 drivers/thermal/exynos_thermal.c     Amit Daniel Kachhap      2012-08-16   985  	data = devm_kzalloc(&pdev->dev, sizeof(struct exynos_tmu_data),
-79e093c3fe9de9 drivers/thermal/exynos_thermal.c     Amit Daniel Kachhap      2012-08-16   986  					GFP_KERNEL);
-2a9675b39ad1af drivers/thermal/samsung/exynos_tmu.c Jingoo Han               2014-05-07   987  	if (!data)
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07   988  		return -ENOMEM;
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07   989  
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24   990  	platform_set_drvdata(pdev, data);
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24   991  	mutex_init(&data->lock);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07   992  
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08   993  	/*
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08   994  	 * Try enabling the regulator if found
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08   995  	 * TODO: Add regulator as an SOC feature, so that regulator enable
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08   996  	 * is a compulsory call.
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08   997  	 */
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20   998  	ret = devm_regulator_get_enable_optional(&pdev->dev, "vtmu");
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20   999  	switch (ret) {
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1000  	case 0:
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1001  	case -ENODEV:
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1002  		break;
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1003  	case -EPROBE_DEFER:
-ccb361d2fdda89 drivers/thermal/samsung/exynos_tmu.c Javier Martinez Canillas 2016-02-18  1004  		return -EPROBE_DEFER;
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1005  	default:
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1006  		dev_err(&pdev->dev, "Failed to get enabled regulator: %d\n",
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1007  			ret);
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1008  		return ret;
-b2f20752180f71 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1009  	}
-824ead03b78403 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1010  
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24  1011  	ret = exynos_map_dt_data(pdev);
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24  1012  	if (ret)
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1013  		return ret;
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1014  
-2a16279c68bcfa drivers/thermal/exynos_thermal.c     Sachin Kamat             2013-04-18  1015  	data->clk = devm_clk_get(&pdev->dev, "tmu_apbif");
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1016  	if (IS_ERR(data->clk)) {
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1017  		dev_err(&pdev->dev, "Failed to get clock\n");
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1018  		return PTR_ERR(data->clk);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1019  	}
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1020  
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1021  	data->clk_sec = devm_clk_get(&pdev->dev, "tmu_triminfo_apbif");
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1022  	if (IS_ERR(data->clk_sec)) {
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1023  		if (data->soc == SOC_ARCH_EXYNOS5420_TRIMINFO) {
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1024  			dev_err(&pdev->dev, "Failed to get triminfo clock\n");
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1025  			return PTR_ERR(data->clk_sec);
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1026  		}
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1027  	} else {
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1028  		ret = clk_prepare(data->clk_sec);
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1029  		if (ret) {
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1030  			dev_err(&pdev->dev, "Failed to get clock\n");
-ef1639e66e72af drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1031  			return ret;
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1032  		}
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1033  	}
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1034  
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1035  	ret = clk_prepare(data->clk);
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1036  	if (ret) {
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1037  		dev_err(&pdev->dev, "Failed to get clock\n");
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1038  		goto err_clk_sec;
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1039  	}
-2a16279c68bcfa drivers/thermal/exynos_thermal.c     Sachin Kamat             2013-04-18  1040  
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1041  	switch (data->soc) {
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1042  	case SOC_ARCH_EXYNOS5433:
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1043  	case SOC_ARCH_EXYNOS7:
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1044  		data->sclk = devm_clk_get(&pdev->dev, "tmu_sclk");
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1045  		if (IS_ERR(data->sclk)) {
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1046  			dev_err(&pdev->dev, "Failed to get sclk\n");
-02d438f62c05f0 drivers/thermal/samsung/exynos_tmu.c Dan Carpenter            2021-08-10  1047  			ret = PTR_ERR(data->sclk);
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1048  			goto err_clk;
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1049  		} else {
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1050  			ret = clk_prepare_enable(data->sclk);
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1051  			if (ret) {
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1052  				dev_err(&pdev->dev, "Failed to enable sclk\n");
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1053  				goto err_clk;
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1054  			}
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1055  		}
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1056  		break;
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1057  	default:
-488c7455d74ce0 drivers/thermal/samsung/exynos_tmu.c Chanwoo Choi             2015-03-10  1058  		break;
-baba1ebb99ba1f drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1059  	}
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1060  
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1061  	ret = exynos_tmu_initialize(pdev);
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1062  	if (ret) {
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1063  		dev_err(&pdev->dev, "Failed to initialize TMU\n");
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20 @1064  		return ret;
+I think there is a  helper for it: irq_chip_set_affinity_parent().
 
-All these warnings are basically saying that this should be goto
-err_sclk;
 
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1065  	}
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1066  
-7ea98f70c73ea3 drivers/thermal/samsung/exynos_tmu.c Daniel Lezcano           2022-08-05  1067  	data->tzd = devm_thermal_of_zone_register(&pdev->dev, 0, data,
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1068  						  &exynos_sensor_ops);
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1069  	if (IS_ERR(data->tzd)) {
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1070  		ret = PTR_ERR(data->tzd);
-82bdde8ecdd7e5 drivers/thermal/samsung/exynos_tmu.c Marek Szyprowski         2020-02-28  1071  		if (ret != -EPROBE_DEFER)
-82bdde8ecdd7e5 drivers/thermal/samsung/exynos_tmu.c Marek Szyprowski         2020-02-28  1072  			dev_err(&pdev->dev, "Failed to register sensor: %d\n",
-82bdde8ecdd7e5 drivers/thermal/samsung/exynos_tmu.c Marek Szyprowski         2020-02-28  1073  				ret);
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1074  		goto err_sclk;
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1075  	}
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1076  
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1077  	ret = exynos_thermal_zone_configure(pdev);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1078  	if (ret) {
-9f72236db6c75b drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1079  		dev_err(&pdev->dev, "Failed to configure the thermal zone\n");
-7ea98f70c73ea3 drivers/thermal/samsung/exynos_tmu.c Daniel Lezcano           2022-08-05  1080  		goto err_sclk;
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1081  	}
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1082  
-4147281723b2e6 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1083  	ret = devm_request_threaded_irq(&pdev->dev, data->irq, NULL,
-4147281723b2e6 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1084  					exynos_tmu_threaded_irq,
-4147281723b2e6 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1085  					IRQF_TRIGGER_RISING
-4147281723b2e6 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1086  						| IRQF_SHARED | IRQF_ONESHOT,
-4147281723b2e6 drivers/thermal/samsung/exynos_tmu.c Mateusz Majewski         2023-11-20  1087  					dev_name(&pdev->dev), data);
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24  1088  	if (ret) {
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24  1089  		dev_err(&pdev->dev, "Failed to request irq: %d\n", data->irq);
-7ea98f70c73ea3 drivers/thermal/samsung/exynos_tmu.c Daniel Lezcano           2022-08-05  1090  		goto err_sclk;
-cebe7373a7e659 drivers/thermal/samsung/exynos_tmu.c Amit Daniel Kachhap      2013-06-24  1091  	}
-bbf63be4f33135 drivers/thermal/exynos_thermal.c     Jonghwa Lee              2012-11-21  1092  
-3b6a1a805f3424 drivers/thermal/samsung/exynos_tmu.c Lukasz Majewski          2015-01-23  1093  	exynos_tmu_control(pdev, true);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1094  	return 0;
-9e4249b4034090 drivers/thermal/samsung/exynos_tmu.c Krzysztof Kozlowski      2015-10-08  1095  
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1096  err_sclk:
-6c247393cfdd66 drivers/thermal/samsung/exynos_tmu.c Abhilash Kesavan         2015-01-27  1097  	clk_disable_unprepare(data->sclk);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1098  err_clk:
-2a16279c68bcfa drivers/thermal/exynos_thermal.c     Sachin Kamat             2013-04-18  1099  	clk_unprepare(data->clk);
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1100  err_clk_sec:
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1101  	if (!IS_ERR(data->clk_sec))
-14a11dc7e0dbf4 drivers/thermal/samsung/exynos_tmu.c Naveen Krishna Chatradhi 2013-12-19  1102  		clk_unprepare(data->clk_sec);
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07 @1103  	return ret;
-9d97e5c81e15af drivers/hwmon/exynos4_tmu.c          Donggeun Kim             2011-09-07  1104  }
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Krzysztof
 
 
