@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-441-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-442-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AF93807B40
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Dec 2023 23:16:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7574A807B44
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Dec 2023 23:19:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F29CB1F21856
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Dec 2023 22:16:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F41F0B20F61
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  6 Dec 2023 22:18:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B711563AF;
-	Wed,  6 Dec 2023 22:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17230563B0;
+	Wed,  6 Dec 2023 22:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="iSkBdKep"
+	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="tO1XerVK"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from aposti.net (aposti.net [89.234.176.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B8E10C0;
-	Wed,  6 Dec 2023 14:16:33 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E1E12F;
+	Wed,  6 Dec 2023 14:18:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1701900967;
+	s=mail; t=1701901130;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=J7Gat5xEw2YkABlBCPURNwKi3WZsiT+3bFDUKj6PsyA=;
-	b=iSkBdKepSayqda5WA4rmrRSNcXfR8Toke+qdFKqwV62t8Go/PtqoAp+8OyDTKnBYR7XpzQ
-	5eV3kNYrB5Aom1TNE4mz/Ss4He4KhcBV9qyTNAUb2wdVT55LNCp1KruxKW7Q3LWuQRcWZ/
-	YIg/OQYmGUU3xcz+9aOj9L5woebj0n4=
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=IoK/DWTc/F2oNroTlg8YVK4rpr4uwrYEr8RTRWYORG8=;
+	b=tO1XerVK4nfhQMK8rp5eGZJq4vHoJocvfCQUy0pDRql5npwiYj+3dwX79SR9l7ObAfrgoh
+	ObUWbHQI9xPDv8DKQfdvX4tHgvHiM7dO6/wxlVXg4LGVRuhIZGPhNryoE3fZ7JWb+qZ78i
+	apfWXtDUih6gjo9P9Vyclr9MuetwzpM=
 From: Paul Cercueil <paul@crapouillou.net>
-To: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+To: Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Alim Akhtar <alim.akhtar@samsung.com>
-Cc: devicetree@vger.kernel.org,
+Cc: David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-samsung-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Paul Cercueil <paul@crapouillou.net>
-Subject: [PATCH 3/3] ARM: dts: samsung: exynos4210-i9100: Add accelerometer node
-Date: Wed,  6 Dec 2023 23:15:56 +0100
-Message-ID: <20231206221556.15348-4-paul@crapouillou.net>
-In-Reply-To: <20231206221556.15348-1-paul@crapouillou.net>
-References: <20231206221556.15348-1-paul@crapouillou.net>
+Subject: [PATCH RESEND] drm/exynos: dpi: Change connector type to DPI
+Date: Wed,  6 Dec 2023 23:18:41 +0100
+Message-ID: <20231206221841.15685-1-paul@crapouillou.net>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,44 +50,32 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam: Yes
 
-Add a Device Tree node for the ST Microelectronics "K3D" accelerometer
-chip found in the Galaxy S2.
+When exynos_drm_dpi.c was written, DRM_MODE_CONNECTOR_DPI did not exist
+yet and I guess that's the reason why DRM_MODE_CONNECTOR_VGA was used as
+the connector type.
+
+However, now it makes more sense to use DRM_MODE_CONNECTOR_DPI as the
+connector type.
 
 Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 ---
- arch/arm/boot/dts/samsung/exynos4210-i9100.dts | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_dpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/samsung/exynos4210-i9100.dts b/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
-index f03b03dbe9f2..7e57fe033e2b 100644
---- a/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
-+++ b/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
-@@ -421,6 +421,23 @@ touchscreen@4a {
- 	};
- };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_dpi.c b/drivers/gpu/drm/exynos/exynos_drm_dpi.c
+index 378e5381978f..0dc36df6ada3 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_dpi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dpi.c
+@@ -101,7 +101,7 @@ static int exynos_dpi_create_connector(struct drm_encoder *encoder)
  
-+&i2c_1 {
-+	status = "okay";
-+
-+	samsung,i2c-sda-delay = <100>;
-+	samsung,i2c-slave-addr = <0x10>;
-+	samsung,i2c-max-bus-freq = <100000>;
-+
-+	lis3dh: accelerometer@19 {
-+		compatible = "st,lis3dh-accel";
-+		reg = <0x19>;
-+
-+		mount-matrix = "0", "-1", "0",
-+			       "1", "0", "0",
-+			       "0", "0", "1";
-+	};
-+};
-+
- &i2c_5 {
- 	status = "okay";
- 
+ 	ret = drm_connector_init(encoder->dev, connector,
+ 				 &exynos_dpi_connector_funcs,
+-				 DRM_MODE_CONNECTOR_VGA);
++				 DRM_MODE_CONNECTOR_DPI);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(ctx->dev,
+ 			      "failed to initialize connector with drm\n");
 -- 
 2.42.0
 
