@@ -1,92 +1,131 @@
-Return-Path: <linux-samsung-soc+bounces-526-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-528-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E623080BD4B
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 10 Dec 2023 22:11:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2178F80BD9D
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 10 Dec 2023 23:13:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99C341F20EF3
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 10 Dec 2023 21:11:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A5E45B20A25
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 10 Dec 2023 22:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75C8E1CAB7;
-	Sun, 10 Dec 2023 21:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d1emxwvO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D6381D535;
+	Sun, 10 Dec 2023 22:13:11 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2BE1CA8A;
-	Sun, 10 Dec 2023 21:10:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF94EC433C8;
-	Sun, 10 Dec 2023 21:10:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702242659;
-	bh=jUd7hMOHLaa82q99A0oN/j3M29qBg78Jmx8IoDKYyIY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=d1emxwvOgl0ckKNWsWY5aDUasUsmJW4gW4YAc6OOaIS1LAYGp6sZEonR8Ejn/22Ao
-	 tLF+OhiBicA/pjtdeFG57gizQ/7PcOgst5xwmrkIcp/QtVLUyE82UAXtX9h8RBE32P
-	 X6bA3Wsb3E7zqnTs0c9OKeqiDkICH9hA9usMcxGwIlaosBnBvzOkbs/xYzv+yPoKAm
-	 eNVKGLMd6v6u83+Y/jqemzhz6mFj56QQGIQ7hEFHsRbidQQIHXymHq2FHsqLxxZ6VM
-	 fQuBKkqqVxbHb6c77JM5dsMlk2rL6I7yY3ppwJ6bho9rLM6zsU/iL4tExjYWo64wJn
-	 RfJkZWdyC53XA==
-From: Mark Brown <broonie@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- Linus Walleij <linus.walleij@linaro.org>
-Cc: patches@opensource.cirrus.com, linux-arm-kernel@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
- kernel test robot <lkp@intel.com>
-In-Reply-To: <20231209-descriptors-sound-wlf-v1-1-5b885ce43ae1@linaro.org>
-References: <20231209-descriptors-sound-wlf-v1-1-5b885ce43ae1@linaro.org>
-Subject: Re: [PATCH] ASoC: wm1250-ev1: Fix uninitialized ret
-Message-Id: <170224265642.2977176.17197693476298409878.b4-ty@kernel.org>
-Date: Sun, 10 Dec 2023 21:10:56 +0000
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EBCD5
+	for <linux-samsung-soc@vger.kernel.org>; Sun, 10 Dec 2023 14:13:08 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2a-0006OU-5i; Sun, 10 Dec 2023 23:12:48 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2S-00ExXo-CA; Sun, 10 Dec 2023 23:12:40 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2S-000RVl-1s; Sun, 10 Dec 2023 23:12:40 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Olivia Mackall <olivia@selenic.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Rob Herring <robh@kernel.org>,
+	linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	kernel@pengutronix.de,
+	Hadar Gat <hadar.gat@arm.com>,
+	=?utf-8?q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org,
+	Martin Kaiser <martin@kaiser.cx>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	openbmc@lists.ozlabs.org,
+	Deepak Saxena <dsaxena@plexity.net>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Gatien Chevallier <gatien.chevallier@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Yangtao Li <frank.li@vivo.com>,
+	Yu Zhe <yuzhe@nfschina.com>,
+	Alexandru Ardelean <alex@shruggie.ro>,
+	Andrei Coardos <aboutphysycs@gmail.com>
+Subject: [PATCH 00/12] hwrng: Convert to platform remove callback returning 
+Date: Sun, 10 Dec 2023 23:12:15 +0100
+Message-ID: <cover.1702245873.git.u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-0438c
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2074; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=aN2uTP9pET0YKd8ErrSoTK5vjrK84yOnSnlqPftwp5U=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBldje/IGRTw6Qp6aopoOZNEu5aabfn86EmYir5f 1EWoJBaSb6JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZXY3vwAKCRCPgPtYfRL+ TiWpB/0QkgCxo9rWPPZuG0mV+7+gEk/GZc38dQ5EFWJhV8Stqce7VjU2EH4481MoRPnL/0AXAPH XiiR4C7gz2B/1olwgpo6lWRPxtxXYx6Sd3+aWvOsfgqAW/q4OjcKyEk3xg48rrbtLvf1xoWFo7y 0fw9lVR0RmrbvnjwaTKkcDngwN7dAD8Qflw7z7gflMyrKN0MFgRgzwvvbuD5RqWmP2ZVOJM4GRh 0k+qapzlIcA2ElXaxL07bXhanFkd0Mdw38vbHTh4dy8RCryXCfaxbiWkCskcDwfQzZ0FlwQLcQS Fb2Sj2N3HmsMlw8S8d8sC9OF1ybvnjz5+54B3FySEScCa9Gv
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-On Sat, 09 Dec 2023 23:01:27 +0100, Linus Walleij wrote:
-> The GPIO descriptor conversion patch left an unitialized ret behind
-> by mistake, fix it by getting rid of the variable altogether.
-> 
-> 
+Hello,
 
-Applied to
+this series converts all hwrng platform drivers to use .remove_new.
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for details and the eventual goal.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+All driver conversions are trivial as all their remove callbacks return
+0 (as good drivers should do).
 
-Thanks!
+All patches are pairwise independant. These patches should go in via the
+usual hwrng tree. It's merge window material.
 
-[1/1] ASoC: wm1250-ev1: Fix uninitialized ret
-      commit: 5012f9d8acd411bc86229d75c0bb9517f84a60ec
+Best regards
+Uwe
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Uwe Kleine-König (12):
+  hwrng: atmel - Convert to platform remove callback returning void
+  hwrng: cctrng - Convert to platform remove callback returning void
+  hwrng: exynos - Convert to platform remove callback returning void
+  hwrng: ingenic - Convert to platform remove callback returning void
+  hwrng: ks-sa - Convert to platform remove callback returning void
+  hwrng: mxc - Convert to platform remove callback returning void
+  hwrng: n2 - Convert to platform remove callback returning void
+  hwrng: npcm - Convert to platform remove callback returning void
+  hwrng: omap - Convert to platform remove callback returning void
+  hwrng: stm32 - Convert to platform remove callback returning void
+  hwrng: timeriomem - Convert to platform remove callback returning void
+  hwrng: xgene - Convert to platform remove callback returning void
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+ drivers/char/hw_random/atmel-rng.c      | 6 ++----
+ drivers/char/hw_random/cctrng.c         | 6 ++----
+ drivers/char/hw_random/exynos-trng.c    | 6 ++----
+ drivers/char/hw_random/ingenic-rng.c    | 6 ++----
+ drivers/char/hw_random/ks-sa-rng.c      | 6 ++----
+ drivers/char/hw_random/mxc-rnga.c       | 6 ++----
+ drivers/char/hw_random/n2-drv.c         | 6 ++----
+ drivers/char/hw_random/npcm-rng.c       | 6 ++----
+ drivers/char/hw_random/omap-rng.c       | 6 ++----
+ drivers/char/hw_random/stm32-rng.c      | 6 ++----
+ drivers/char/hw_random/timeriomem-rng.c | 6 ++----
+ drivers/char/hw_random/xgene-rng.c      | 6 ++----
+ 12 files changed, 24 insertions(+), 48 deletions(-)
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+base-commit: bc63de6e6ba0b16652c5fb4b9c9916b9e7ca1f23
+-- 
+2.42.0
 
 
