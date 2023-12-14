@@ -1,123 +1,96 @@
-Return-Path: <linux-samsung-soc+bounces-675-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-677-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89733812DBA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Dec 2023 11:53:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E367B812DDE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Dec 2023 11:55:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13204B21484
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Dec 2023 10:53:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C9141C214FC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Dec 2023 10:55:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 989083FE53;
-	Thu, 14 Dec 2023 10:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A6313D98D;
+	Thu, 14 Dec 2023 10:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FV+DjVE8"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="b7wF6oau"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01785D4D
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Dec 2023 02:53:04 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40c2308faedso81896835e9.1
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Dec 2023 02:53:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702551183; x=1703155983; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4iA5vpao/nlkM+BgS1JES9JQXKEWnmeNI0auTBLc7cY=;
-        b=FV+DjVE8H70sTQH6kRDVqJ3wExPAVdqrMa24gJvMtraeUJisUsqEL1EDAs6Mp2JBDH
-         wokxdMyYpkFz5aI0NdfEdywYYHonlNu5elwoHncMnf7w6VxUXoVfSYUji70EyjLIIC9X
-         5s4ejiA4GXYwzSIlaoNWQxqldQdyL3gZMvq3J/2G9V1BVl0nupXxbO5O6We3VB8zVuTM
-         mp436UXfkCZYP3ZzoHkwwtju0tPsM615UA2EJQLiTWgxvfBbxPjhXVg//UIu49VIdCi0
-         EHNTL2oqGrGKHILl5FrCUHRbHP3NyyGck1KdsJrQ5EAPdv4Suxy+8cvISAKrzyu5Z0H9
-         8wjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702551183; x=1703155983;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4iA5vpao/nlkM+BgS1JES9JQXKEWnmeNI0auTBLc7cY=;
-        b=T2BN1Ld/3Irz89VUHmCi5Bmrq3/gQhzP7KMhCBxh81ikRtqah+LUnG0ZjCxTIhNCxr
-         Teofk1t9RiTegebVQSbezK7ptT/W9Qx7m2uT5A109498rRAOi+21spCVuxsctJMd3FG1
-         xvq/KjKvSoHWofYyxoVi5kY3WPpGyOjJ/WJntPgyIemu9UqZbk/UtQZDswoeuoUeAmKX
-         HRRv5I/I/cr0eJW08oq1iwh6z13EqHWZyn7VEVWHuHoXAW/r1UVTq6o5mQZEZPzJciWz
-         4uSTboiPrLlLbXWfOnZTDfaOZmdX/3YMyarEHNW9GaRT8YYClEe5QQQd7tJp/iDJbukF
-         oqbw==
-X-Gm-Message-State: AOJu0YzjtYXAEQg9RYYVUcBrlFsvODR4yfAEA6GE3+jcV2EoYSivo1Zx
-	ZrOON4drxU2unPUg6Hfv1zrE0Q==
-X-Google-Smtp-Source: AGHT+IFhXWtaTCFsSRB/rCN50lEOB2f4DScvINgysd4f+wNUqjxRfR1ruqRktKeZe3CB7TSMb14q8Q==
-X-Received: by 2002:a05:600c:4d0e:b0:40b:5e1e:cf1 with SMTP id u14-20020a05600c4d0e00b0040b5e1e0cf1mr4741397wmp.44.1702551183507;
-        Thu, 14 Dec 2023 02:53:03 -0800 (PST)
-Received: from ta2.c.googlers.com.com (216.131.76.34.bc.googleusercontent.com. [34.76.131.216])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05600c468700b0040c420eda48sm17614854wmo.22.2023.12.14.02.53.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 02:53:02 -0800 (PST)
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
-To: peter.griffin@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	conor+dt@kernel.org,
-	andi.shyti@kernel.org,
-	alim.akhtar@samsung.com,
-	gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	catalin.marinas@arm.com,
-	will@kernel.org,
-	s.nawrocki@samsung.com,
-	tomasz.figa@gmail.com,
-	cw00.choi@samsung.com,
-	arnd@arndb.de,
-	semen.protsenko@linaro.org
-Cc: andre.draszik@linaro.org,
-	saravanak@google.com,
-	willmcvicker@google.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-serial@vger.kernel.org,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 13/13] arm64: defconfig: make at24 eeprom builtin
-Date: Thu, 14 Dec 2023 10:52:43 +0000
-Message-ID: <20231214105243.3707730-14-tudor.ambarus@linaro.org>
-X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
-In-Reply-To: <20231214105243.3707730-1-tudor.ambarus@linaro.org>
-References: <20231214105243.3707730-1-tudor.ambarus@linaro.org>
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E48D5A;
+	Thu, 14 Dec 2023 02:55:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1702551336;
+	bh=nDwI9Pl6CCoEAnD+fTst64/YqkRvVVhKmZlxyty2nAw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=b7wF6oaus0TpnLvYOVI62QNuXci/Xd3tppTa1l12+jGW1Kj5elHnVNfXkkGE7eZ63
+	 pH2QiLUgHz3yAa1sph4DwjxkOEtItW9JA7tOiaeVPI3XJxZ+LUg9kpdXNCQ6CSyDtT
+	 Kz9WcagvFIPcdgmMs/cunw0MOn0c8Adx0y5aPLEdIogQgkHXSUVfBqqtwKerzyR9j+
+	 lDYUQlLMeMI8UvoRBIfpMSXhqh3aL+vgIsiZBPKSwHIOfom2G1h0InEGlmBfFH/LBg
+	 Tf6CqIsaJPMOtJZsY0m7yPZwKNHCOR1nuWbWG7xm4ew/Ckb6GhFDaKGwbY6juzH0ca
+	 OEORjJUAhZVbA==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id F1D31378000B;
+	Thu, 14 Dec 2023 10:55:34 +0000 (UTC)
+Message-ID: <e5625051-e9e2-4a75-a11a-cf5b40606fa4@collabora.com>
+Date: Thu, 14 Dec 2023 11:55:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/6] arm: arm64: dts: Enable cros-ec-spi as wake source
+Content-Language: en-US
+To: Mark Hasemeyer <markhas@chromium.org>, LKML <linux-kernel@vger.kernel.org>
+Cc: Raul Rangel <rrangel@chromium.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Andre Przywara <andre.przywara@arm.com>,
+ Andy Gross <agross@kernel.org>, Baruch Siach <baruch@tkos.co.il>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Claudiu Beznea <claudiu.beznea@microchip.com>,
+ Conor Dooley <conor+dt@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+ Jesper Nilsson <jesper.nilsson@axis.com>, Jisheng Zhang
+ <jszhang@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Michal Simek <michal.simek@amd.com>, Paul Barker <paul.barker@sancloud.com>,
+ Rob Herring <robh+dt@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20231213110009.v1.1.Ifd0903f1c351e84376d71dbdadbd43931197f5ea@changeid>
+ <20231213110009.v1.2.I274b2d2255eb539cc9d251c9d65a385cc4014c79@changeid>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20231213110009.v1.2.I274b2d2255eb539cc9d251c9d65a385cc4014c79@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-gs101-oriole populates an at24 eeprom on the battery connector.
-Make EEPROM_AT24 builtin.
+Il 13/12/23 19:00, Mark Hasemeyer ha scritto:
+> The cros_ec driver currently assumes that cros-ec-spi compatible device
+> nodes are a wakeup-source even though the wakeup-source property is not
+> defined.
+> 
+> Add the wakeup-source property to all cros-ec-spi compatible device
+> nodes to match expected behavior.
+> 
+> Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
----
- arch/arm64/configs/defconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I received only patch [2/6] - please send the entire series to the relevant
+maintainers, as otherwise it's difficult to understand what's going on.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 09fb467303ba..19c1d61382f6 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -276,7 +276,7 @@ CONFIG_QCOM_COINCELL=m
- CONFIG_QCOM_FASTRPC=m
- CONFIG_SRAM=y
- CONFIG_PCI_ENDPOINT_TEST=m
--CONFIG_EEPROM_AT24=m
-+CONFIG_EEPROM_AT24=y
- CONFIG_EEPROM_AT25=m
- CONFIG_UACCE=m
- # CONFIG_SCSI_PROC_FS is not set
--- 
-2.43.0.472.g3155946c3a-goog
+As for this patch alone:
+  1. arch/arm stuff goes to a different commit
+  2. I would prefer if you split per-arch and per-SoC.
+
+Regards,
+Angelo
+
 
 
