@@ -1,134 +1,186 @@
-Return-Path: <linux-samsung-soc+bounces-839-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-841-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F32C81E18C
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Dec 2023 17:10:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0972C81E549
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Dec 2023 06:48:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC5F3B21518
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Dec 2023 16:10:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DFDD1F226BB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Dec 2023 05:48:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B3E952F98;
-	Mon, 25 Dec 2023 16:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ACF54B5C5;
+	Tue, 26 Dec 2023 05:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="D9mqPlfT"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="K2029mDN"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C64952F64
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 25 Dec 2023 16:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1703520585;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VqafsTsLWFL6NUacBRAsGtc9kpoOdr+j/kVqdz2KGps=;
-	b=D9mqPlfTwYuNJi4B6KW9virIn25oAF6KJO1DPRjL3QgxGoYi/aZvQhQ6SxaAucfl1mfkTI
-	2BhAsqnTfOgOxR+qFBkoEO02/lLWZdSG4DtRAMJ7mE1KRUKAFVGeLstdjJ6VVrBdaG+4BT
-	HC6YfH4aB8ZfJIQTKQ076gm3A3IuBSk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-atfhyIHNNV-y_EhzEoqqZA-1; Mon, 25 Dec 2023 11:09:44 -0500
-X-MC-Unique: atfhyIHNNV-y_EhzEoqqZA-1
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-40d5970422cso16435e9.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 25 Dec 2023 08:09:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703520583; x=1704125383;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VqafsTsLWFL6NUacBRAsGtc9kpoOdr+j/kVqdz2KGps=;
-        b=gHmGwMSUG68WduIUeHY5Oq4LT0usHTeefMHKGR7h/jQj9u/1NYKy7UASWS7rF9o9H7
-         aGvHUkc8HAageioAQ5mU6Udr/4bfIN2spLqI1w5xDNu0DKrV/Y+BZB7RjqArCIeS2/1p
-         sEsfD1fFZMBVewBhjUnq35YXjohrethV9/Sqvt9HWOqbX1/Hv9e/yvs2T2I2yEX9R7Dr
-         YAvjR4kfe2Z2UdB0lrNgViZOVnvX4zUAL66WwyiLizwZw8PVZ9cApdX9rxiwrFHjs8sB
-         vgUE+62n3n+AxO19Nzzc/euVjQzop4DYScy+rAVR7CDP5MLIFGSipQ2PH9d3bM5ulAYG
-         YJfw==
-X-Gm-Message-State: AOJu0YzI4lm8M5gVHUb0dNny31WEvxduhb/dKHVg6sD4uqndjnnf/BfM
-	qzB+tpr9dtJEjRwhdbSvR38g7UGnqoKtGLKwvjhTX6+PHWm9r3Hjz2NHjKfGJUMe/Ne0+k9voJB
-	LTdGfp55YqyPMhxkEvo42F6T05SO8hTvNkQmW+lw=
-X-Received: by 2002:a05:600c:4587:b0:40c:33be:d193 with SMTP id r7-20020a05600c458700b0040c33bed193mr4060353wmo.78.1703520582990;
-        Mon, 25 Dec 2023 08:09:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHfGGCax+SlWX/roShT1Wqm6zJg2zHkXbA4PNy8JwUTudzLUljk5TaAwhoH/7jZ8kvUv2pY7Q==
-X-Received: by 2002:a05:600c:4587:b0:40c:33be:d193 with SMTP id r7-20020a05600c458700b0040c33bed193mr4060329wmo.78.1703520582646;
-        Mon, 25 Dec 2023 08:09:42 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73ef:4100:2cf6:9475:f85:181e])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05600c4e8c00b0040d3db8186fsm16769282wmq.5.2023.12.25.08.09.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Dec 2023 08:09:41 -0800 (PST)
-Date: Mon, 25 Dec 2023 11:09:37 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: akpm@linux-foundation.org, alex.williamson@redhat.com,
-	alim.akhtar@samsung.com, alyssa@rosenzweig.io,
-	asahi@lists.linux.dev, baolu.lu@linux.intel.com,
-	bhelgaas@google.com, cgroups@vger.kernel.org, corbet@lwn.net,
-	david@redhat.com, dwmw2@infradead.org, hannes@cmpxchg.org,
-	heiko@sntech.de, iommu@lists.linux.dev, jasowang@redhat.com,
-	jernej.skrabec@gmail.com, jgg@ziepe.ca, jonathanh@nvidia.com,
-	joro@8bytes.org, kevin.tian@intel.com,
-	krzysztof.kozlowski@linaro.org, kvm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, lizefan.x@bytedance.com,
-	marcan@marcan.st, mhiramat@kernel.org, m.szyprowski@samsung.com,
-	netdev@vger.kernel.org, paulmck@kernel.org, rdunlap@infradead.org,
-	robin.murphy@arm.com, samuel@sholland.org,
-	suravee.suthikulpanit@amd.com, sven@svenpeter.dev,
-	thierry.reding@gmail.com, tj@kernel.org, tomas.mudrunka@gmail.com,
-	vdumpa@nvidia.com, virtualization@lists.linux.dev, wens@csie.org,
-	will@kernel.org, yu-cheng.yu@intel.com
-Subject: Re: [PATCH 15/16] vhost-vdpa: account iommu allocations
-Message-ID: <20231225110930-mutt-send-email-mst@kernel.org>
-References: <20231128204938.1453583-1-pasha.tatashin@soleen.com>
- <20231128204938.1453583-16-pasha.tatashin@soleen.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847E64B5B3
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 05:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20231226054821epoutp04c9a6b143db722867d639de25415fd551~kS54Su8IH0136701367epoutp04H
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 05:48:21 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20231226054821epoutp04c9a6b143db722867d639de25415fd551~kS54Su8IH0136701367epoutp04H
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1703569701;
+	bh=kstvCx6jNVu2CCvkXsM3Qz2KWSJ0p2P53GBZD83dv0o=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=K2029mDNYn+jYNExDA/hH4G2/hco+joImX2Mdn3/Cvj0w/Oxs668LjAs42pfKBXTH
+	 dFkdqGjB9M12nPk6d9SbWbNz+N02ZwqEaMWxgVYQz3raAf28J0Gx0i0QMoNHqlL6e4
+	 X37mH9rybpflPRrmP6ibCw4y/1+J0uemYaVtnAeQ=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+	20231226054820epcas5p31a07a71b0994a17837dc1adecf82b022~kS531Jw002282622826epcas5p3V;
+	Tue, 26 Dec 2023 05:48:20 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.38.175]) by
+	epsnrtp2.localdomain (Postfix) with ESMTP id 4SzkMk6J13z4x9Q7; Tue, 26 Dec
+	2023 05:48:18 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	E5.E1.09672.2296A856; Tue, 26 Dec 2023 14:48:18 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20231226051014epcas5p1b824a015d457f7c9384f8942f2bcb97b~kSYmk7WxY2028320283epcas5p1a;
+	Tue, 26 Dec 2023 05:10:14 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20231226051014epsmtrp115ce0d8c3313d5951fa61b70d4946a6d~kSYmkRGgw0840308403epsmtrp1U;
+	Tue, 26 Dec 2023 05:10:14 +0000 (GMT)
+X-AuditID: b6c32a4b-60bfd700000025c8-e8-658a692243e7
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	EC.23.07368.6306A856; Tue, 26 Dec 2023 14:10:14 +0900 (KST)
+Received: from FDSFTE308 (unknown [107.122.81.79]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20231226051012epsmtip136aed81b9125ce7e0827b5c0edde16b1~kSYlBRcj_3214032140epsmtip1D;
+	Tue, 26 Dec 2023 05:10:12 +0000 (GMT)
+From: "Aakarsh Jain" <aakarsh.jain@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>, "'Marek
+ Szyprowski'" <m.szyprowski@samsung.com>, "'Andrzej Hajda'"
+	<andrzej.hajda@intel.com>, "'Mauro Carvalho Chehab'" <mchehab@kernel.org>
+Cc: <linux-fsd@tesla.coma>, <linux-samsung-soc@vger.kernel.org>, "'Smitha T
+ Murthy'" <smithatmurthy@gmail.com>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+In-Reply-To: <20231224-n-s5p-mfc-const-v1-1-a3b246470fe4@linaro.org>
+Subject: RE: [PATCH 01/15] media: s5p-mfc: drop unused static s5p_mfc_cmds
+Date: Tue, 26 Dec 2023 10:40:11 +0530
+Message-ID: <15ce01da37b9$cede8d20$6c9ba760$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231128204938.1453583-16-pasha.tatashin@soleen.com>
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKOGlHY6WxiJqLoSx78067AznjgmAHo/W/vAklP6R+vMaxvAA==
+Content-Language: en-in
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFJsWRmVeSWpSXmKPExsWy7bCmuq5SZleqwcR+fYv7iz+zWOx9vZXd
+	YtPja6wWy2YHWVzeNYfNomfDVlaLGef3MVmsPXKX3WLZpj9MFi2NS1gduDx2zrrL7rF4z0sm
+	j02rOtk87lzbw+axeUm9R9+WVYwef1+/YvP4vEkugCMq2yYjNTEltUghNS85PyUzL91WyTs4
+	3jne1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMH6EQlhbLEnFKgUEBicbGSvp1NUX5pSapCRn5x
+	ia1SakFKToFJgV5xYm5xaV66Xl5qiZWhgYGRKVBhQnbGhxNbmQom81cs+bSHuYGxm7eLkZND
+	QsBEYvavHuYuRi4OIYHdjBKHH75lg3A+MUr8OdEElfkGlFn5jg2mZdHWfVBVexkl9j6bxQTh
+	PGeUeH1kJwtIFZuAvsT9Uz2sIAkRgXOMEtv6p4BVMQvcZJQ49mYmM0gVp4CLRPuzXYwgtrCA
+	l8SRu4fAulkEVCUmX3jFBGLzClhK/NwwnxHCFpQ4OfMJWA2zgLbEsoWvmSFuUpD4+XQZK4gt
+	IuAk8eTyLjaIGnGJoz8h3pMQOMIh0b5kE1SDi8SefXdYIGxhiVfHt7BD2FISL/vboOxkiceL
+	XkLV50is3zMFqt5e4sCVOUA2B9ACTYn1u/QhwrISU0+tY4LYyyfR+/sJE0ScV2LHPBhbTWLO
+	nR+sELaMxOHVSxknMCrNQvLaLCSvzULywiyEbQsYWVYxSqYWFOempxabFhjnpZbD4zw5P3cT
+	IzgRa3nvYHz04IPeIUYmDsZDjBIczEoivLKKHalCvCmJlVWpRfnxRaU5qcWHGE2B4T2RWUo0
+	OR+YC/JK4g1NLA1MzMzMTCyNzQyVxHlft85NERJITyxJzU5NLUgtgulj4uCUamByMqyYz1j2
+	4vKuSdvt/4vMaTXfaVHPuH26g6MDF8/XOzVyh3RUVCSvr/ySICtkbSHz/3vJiY2XdGNv3O72
+	mqOffP5w7aG34a8P/dqy9vnKd+nbYi8a2u38r+SdsuukwmqX/49zp8+s/SfN73HuZV9er8im
+	XUUznReXbPzN75f38fbNRV9O/N6t3G23+sTGPfv+1n+XOWn0fXvrGzPLN3lLnR481fcUKZQQ
+	fbDL6tbNOSWaRxfGcWitXj7jkbr9Gn/TaAXxjnPmRz4+VdimvTaVb/7XlxyrJh7el2Vz10TJ
+	/MHLK6Zi2xk2aq85Wfxkigdj5vklHeI2WoLN2QdSfFVsPipWNzYF+JRavrshc/jyHiWW4oxE
+	Qy3mouJEAGHPU5BNBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIIsWRmVeSWpSXmKPExsWy7bCSnK5ZQleqwboOaYv7iz+zWOx9vZXd
+	YtPja6wWy2YHWVzeNYfNomfDVlaLGef3MVmsPXKX3WLZpj9MFi2NS1gduDx2zrrL7rF4z0sm
+	j02rOtk87lzbw+axeUm9R9+WVYwef1+/YvP4vEkugCOKyyYlNSezLLVI3y6BK+P3pqfMBRf4
+	Ko5MbmBuYDzF08XIySEhYCKxaOs+ti5GLg4hgd2MEnfbelkgEjIS/9uOsUPYwhIr/z1nhyh6
+	yihxad5zsASbgL7E/VM9rCAJEYELjBJb9iwAG8UscJ9RomvTdiaQKiGBs4wS8+ZFgNicAi4S
+	7c92MYLYwgJeEkfuHgJbxyKgKjH5wiuwel4BS4mfG+YzQtiCEidnPgGrYRbQluh92MoIYy9b
+	+JoZ4jwFiZ9Pl7GC2CICThJPLu9ig6gRlzj6s4d5AqPwLCSjZiEZNQvJqFlIWhYwsqxilEwt
+	KM5Nz002LDDMSy3XK07MLS7NS9dLzs/dxAiORS2NHYz35v/TO8TIxMF4iFGCg1lJhFdWsSNV
+	iDclsbIqtSg/vqg0J7X4EKM0B4uSOK/hjNkpQgLpiSWp2ampBalFMFkmDk6pBqbol5IfDjtd
+	a74pIBadO+PUipa2PXfMVh59vpf1vtvMPd0qXyfPy7a66bjH8O4rvXBtHv5DTzdOZRfOPpJr
+	Xh4X9nnOkhclndEzBNRLFmVHzwwr7mXaeHvx3VkrRVJf3FuoVCZduonTvfKql6fr5OMK10tn
+	VR3d81OeZ86cU0cco9eq/9Wq6ztp0KkV2H9ERGHW3wfrapT6ll/deXX5Vfb87bVBV+zzlz7O
+	mbDo6gTeO3+kvDIeZJzR1lone27FrXsTON76B15xtGD/zHlq76nNR5Y9ucYfN+vdpZcNnGtv
+	/tvHsZ7p/dVH2tGv/ZV/HJywehb/5RY2XefYNROt4/9oc6zT2WRvav3pQFtfXZStrxJLcUai
+	oRZzUXEiAKwMUM80AwAA
+X-CMS-MailID: 20231226051014epcas5p1b824a015d457f7c9384f8942f2bcb97b
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231224154435epcas5p11c17dce71c5ce263c8028a43b401aa22
+References: <20231224-n-s5p-mfc-const-v1-0-a3b246470fe4@linaro.org>
+	<CGME20231224154435epcas5p11c17dce71c5ce263c8028a43b401aa22@epcas5p1.samsung.com>
+	<20231224-n-s5p-mfc-const-v1-1-a3b246470fe4@linaro.org>
 
-On Tue, Nov 28, 2023 at 08:49:37PM +0000, Pasha Tatashin wrote:
-> iommu allocations should be accounted in order to allow admins to
-> monitor and limit the amount of iommu memory.
-> 
-> Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
+> Sent: 24 December 2023 21:14
+> To: Marek Szyprowski <m.szyprowski=40samsung.com>; Andrzej Hajda
+> <andrzej.hajda=40intel.com>; Mauro Carvalho Chehab
+> <mchehab=40kernel.org>
+> Cc: Aakarsh Jain <aakarsh.jain=40samsung.com>; linux-fsd=40tesla.coma; li=
+nux-
+> samsung-soc=40vger.kernel.org; Smitha T Murthy
+> <smithatmurthy=40gmail.com>; linux-arm-kernel=40lists.infradead.org; linu=
+x-
+> media=40vger.kernel.org; linux-kernel=40vger.kernel.org; Krzysztof Kozlow=
+ski
+> <krzysztof.kozlowski=40linaro.org>
+> Subject: =5BPATCH 01/15=5D media: s5p-mfc: drop unused static s5p_mfc_cmd=
+s
+>=20
+> File-scope static variable =22s5p_mfc_cmds=22 is not read after assignmen=
+t, thus
+> it can be dropped entirely.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
 > ---
->  drivers/vhost/vdpa.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-> index da7ec77cdaff..a51c69c078d9 100644
-> --- a/drivers/vhost/vdpa.c
-> +++ b/drivers/vhost/vdpa.c
-> @@ -968,7 +968,8 @@ static int vhost_vdpa_map(struct vhost_vdpa *v, struct vhost_iotlb *iotlb,
->  			r = ops->set_map(vdpa, asid, iotlb);
->  	} else {
->  		r = iommu_map(v->domain, iova, pa, size,
-> -			      perm_to_iommu_flags(perm), GFP_KERNEL);
-> +			      perm_to_iommu_flags(perm),
-> +			      GFP_KERNEL_ACCOUNT);
->  	}
->  	if (r) {
->  		vhost_iotlb_del_range(iotlb, iova, iova + size - 1);
-> -- 
-> 2.43.0.rc2.451.g8631bc7472-goog
+>  drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd.c =7C 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd.c
+> b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd.c
+> index 774c573dc075..196d8c99647b 100644
+> --- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd.c
+> +++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd.c
+> =40=40 -12,14 +12,10 =40=40
+>  =23include =22s5p_mfc_cmd_v5.h=22
+>  =23include =22s5p_mfc_cmd_v6.h=22
+>=20
+> -static struct s5p_mfc_hw_cmds *s5p_mfc_cmds;
+> -
+>  void s5p_mfc_init_hw_cmds(struct s5p_mfc_dev *dev)  =7B
+>  	if (IS_MFCV6_PLUS(dev))
+> -		s5p_mfc_cmds =3D s5p_mfc_init_hw_cmds_v6();
+> +		dev->mfc_cmds =3D s5p_mfc_init_hw_cmds_v6();
+>  	else
+> -		s5p_mfc_cmds =3D s5p_mfc_init_hw_cmds_v5();
+> -
+> -	dev->mfc_cmds =3D s5p_mfc_cmds;
+> +		dev->mfc_cmds =3D s5p_mfc_init_hw_cmds_v5();
+>  =7D
+>=20
+> --
+> 2.34.1
+
+Reviewed-by: Aakarsh Jain <aakarsh.jain=40samsung.com>
+
+Thanks=21
 
 
