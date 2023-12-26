@@ -1,57 +1,57 @@
-Return-Path: <linux-samsung-soc+bounces-860-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-859-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A7581E948
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08A2981E947
 	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Dec 2023 20:23:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E4111F21AFE
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Dec 2023 19:23:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9EB2DB21A56
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 26 Dec 2023 19:23:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6072510952;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45C811FB4;
 	Tue, 26 Dec 2023 19:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lKxoWkTJ"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Bk0PBuj3"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3020910963
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 19:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E4110A23
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 19:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-7b7f6caf047so205865539f.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 11:22:08 -0800 (PST)
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3600dc78bc0so3263425ab.2
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 26 Dec 2023 11:22:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1703618528; x=1704223328; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1703618529; x=1704223329; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=thrF0ILWTbiGFQaiH41yQtWJ81V5Pd2rM8k0MkABtdQ=;
-        b=lKxoWkTJ/tP5Ccz3HNM0UnoM+TK+LTRVr9GmxUZK+TzKAdbpKeT1vro64k64+VAD0O
-         pFsaD+qJ9rUO9HSij2yaqD0zU7YDSz+y5YOiDPwLPZue/2B8gAySVSodZV9JmoP/bvOd
-         fvFknw0VpFuiJ6HCvqCtHhj86sVge+WwnegFI=
+        bh=VEODyyeyprVfJRUjUtUcn0PH/jJY9TEHe0bos5Y4zHc=;
+        b=Bk0PBuj3zKTP/LArK9YDe0mv7GUIt00/gfVPl240ojZ+vU9/0kiadYnEJLigw2zm3Q
+         qQNm0qsp606kFMaXFuIQcYYrzpMPBeJ4FhODDBD7JOVDLILC3Q3yaCls3e4OsBUuoSww
+         dVdOd4u0aEMWydzzirDdbT/0XUdhXnFiH5P4w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703618528; x=1704223328;
+        d=1e100.net; s=20230601; t=1703618529; x=1704223329;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=thrF0ILWTbiGFQaiH41yQtWJ81V5Pd2rM8k0MkABtdQ=;
-        b=hIMQqKjpB+O0m9Z/1HxvRFzpqnptlS7SQT7MxFw4zcBsGSTXmMLcFhspeLpjeghfMP
-         a7qwTkDALOaDe5dUr55wX3WPLgxeSkxqsPxPIco5/Pzavr/hbKHBm/0jb6OT38pbENQD
-         kzZnOn5WT+NVLvLp3Vfhbz3zEE18A3jZW363oEsGoY5jD9oqtrXkJmuBZJD9quiRmDTA
-         cA16TBVd1UlictpooRGQfp1+Zln1HyZf+dzYbFro5yKqfs8IYQDhIR6OyYWCBai2Hes4
-         uI17S8NMfY8hux7He6pS5LXUg64eNu/gd+zroyzlv35HPjjTqRCGYbB7WO2q7cj5bl+v
-         asmQ==
-X-Gm-Message-State: AOJu0YwpDSgPMy6m30dlpSP2/QQ34WBYstSLjFIc7lFg9WmdH0QNMCH1
-	+lBzTV4gmGxzNXBs0aAL58W108zoh7S4
-X-Google-Smtp-Source: AGHT+IHP3cqF61lIxGXtlQrM4I81aWrz2Mcja1UYOJWo/ufdUqAFWvhIXG2CTqcyA9nGB6m/VVxrbw==
-X-Received: by 2002:a05:6602:3f8f:b0:7ba:9784:d96f with SMTP id fb15-20020a0566023f8f00b007ba9784d96fmr11764777iob.20.1703618528314;
-        Tue, 26 Dec 2023 11:22:08 -0800 (PST)
+        bh=VEODyyeyprVfJRUjUtUcn0PH/jJY9TEHe0bos5Y4zHc=;
+        b=UTOEhVOxJe5EprqKhQdqx5SiHxrkDHyEAZblV49V8bBpzv/joR5brnqzv07AxNCZ2y
+         nrFUVNh5TNMOUfdWSkQOJPBU4w/R519yAO4U07Q6ZHDJEbN8j0ffAI8h1rl28MaPnkCR
+         3FXRF8MSCi+TjCBfdD9Zy2z0djwZgjMRWyh57Huxw59sPm88TfG3cJ17BY4Ge1qOkaPn
+         O/7cXF/3hvMVk5vCepJw7pN8VuxgzBvm40IU1T1ZkL3C3aVIUlS1RBpX5KDMgQocZPb/
+         kx6oqOydxBHM3VD0IGNjE+Ui7FhtHhmL9bG/nXwcuqLMlFOwp3qbeuAzYy4sjj7YF3MQ
+         Eycg==
+X-Gm-Message-State: AOJu0YxwVrz+qCHmyHXMz66CrU7BBKy8ajLYr9rUU4F8XOAcqlc+kruV
+	wm8dx5+ZOcuLKcSbL/QsAIofJSOPTxjB
+X-Google-Smtp-Source: AGHT+IHa/0vFINH4R7TOUcFlOypJ6/So3v6QYpByaNG5AzpKzcz2ODJE44ZeU7zukq+ljzKdNZ5lIA==
+X-Received: by 2002:a05:6e02:1528:b0:360:17a7:1f28 with SMTP id i8-20020a056e02152800b0036017a71f28mr963152ilu.15.1703618529143;
+        Tue, 26 Dec 2023 11:22:09 -0800 (PST)
 Received: from markhas1.lan (71-218-50-136.hlrn.qwest.net. [71.218.50.136])
-        by smtp.gmail.com with ESMTPSA id gw3-20020a0566381ee300b0046b692e719esm3207609jab.150.2023.12.26.11.22.07
+        by smtp.gmail.com with ESMTPSA id gw3-20020a0566381ee300b0046b692e719esm3207609jab.150.2023.12.26.11.22.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 26 Dec 2023 11:22:08 -0800 (PST)
 From: Mark Hasemeyer <markhas@chromium.org>
@@ -72,9 +72,9 @@ Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	devicetree@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-samsung-soc@vger.kernel.org
-Subject: [PATCH v3 07/24] ARM: dts: samsung: exynos5420: Enable cros-ec-spi as wake source
-Date: Tue, 26 Dec 2023 12:21:11 -0700
-Message-ID: <20231226122113.v3.7.I06b059021de1bf6103e60a73211f078f2af75d17@changeid>
+Subject: [PATCH v3 08/24] ARM: dts: samsung: exynos5800: Enable cros-ec-spi as wake source
+Date: Tue, 26 Dec 2023 12:21:12 -0700
+Message-ID: <20231226122113.v3.8.Idc995ce08a52ba4c5fde0685118ddf2873fc8acd@changeid>
 X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
 In-Reply-To: <20231226192149.1830592-1-markhas@chromium.org>
 References: <20231226192149.1830592-1-markhas@chromium.org>
@@ -112,14 +112,14 @@ Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
 Changes in v2:
 -Split by arch/soc
 
- arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts | 1 +
+ arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts b/arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts
-index 4e757b6e28e1c..3759742d38cac 100644
---- a/arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts
-+++ b/arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts
-@@ -967,6 +967,7 @@ cros_ec: cros-ec@0 {
+diff --git a/arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts b/arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts
+index f91bc4ae008e4..9bbbdce9103a6 100644
+--- a/arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts
++++ b/arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts
+@@ -949,6 +949,7 @@ cros_ec: cros-ec@0 {
  		reg = <0>;
  		spi-max-frequency = <3125000>;
  		google,has-vbc-nvram;
