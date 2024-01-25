@@ -1,144 +1,151 @@
-Return-Path: <linux-samsung-soc+bounces-1325-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1327-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6D8283CD5F
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 21:25:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D9CC83CD79
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 21:31:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FFE42958C2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 20:25:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1D0EB22490
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 20:31:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA2D6137C2C;
-	Thu, 25 Jan 2024 20:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nwwzl74i"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61CDA1386B5;
+	Thu, 25 Jan 2024 20:30:47 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E5F135412
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 20:25:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC437257A
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 20:30:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706214311; cv=none; b=Lfy59iMwM3ywjb9gNB6n8rX/GXiEKefLbpKOuDbPNXPjDeJQsolb1j5BQSzvewjpoeJQ8Gzv0pyYFkfMnXm6PIdRaECkAALs9VyA46Rfanz8Ll6onrsQ8dwpTkGAoeC0YDLqCyXoa2fj5nudkyWZkocifeZyOF2eQAe2ZBNp6Ik=
+	t=1706214647; cv=none; b=HVkX8vISQirwC6ISTO/wQX1zn4qOdvAYVW8637ES08uC6huG1Dtv5qjgXDEiQmw7fmpgb13oFbfa7amm9ulYLak+UD8GWbU9vjyxB+x9tz8/CmEMK1yA5Q1Bc8TFnDvwf4HjNlRsl2L5PneqSzjaeTT9nPYXWQdB++KMc6/AWkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706214311; c=relaxed/simple;
-	bh=QMJU6URIKYk7AaGLODC/jjsXVBRijeTjUJ1oKlfR3K4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tdfis8/TP4hgcjNCeuxpTkx0lHzphN9quMm03Wtba74t4b1v9So5Hyt9amotRIkhQbz6ReclceiWMcsj9iWdNSYqHSXqqoZrk5jf9eVvR0KG+Gt9u3YGqZWYJ0dyeq76l1t1tdgjWo6noR2JUU54+gIPJsFIMVvGUYXkokyug8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nwwzl74i; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2907a17fa34so4112880a91.1
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 12:25:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706214309; x=1706819109; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AaxY27IhcgcbXrkepc9FHJUpKGy9Xey/yg5kDXIpb4c=;
-        b=Nwwzl74iro5zwk39uZkmov2Yr/LqZAcpWwNekYaJQUGVdBooQGCVBmK+vWPC+4mFFt
-         xI1x947Om8quaTCo9k/SCYiNv59wP3XYglvLvLpTp6SE7+M0l5Qz0H4wq5TbCzlLj0Lz
-         jK9B1chfg++uVyA6OlCuQp+jS57s2MYhdMsRhLbm8lO1F0u2RTYpNIHvi10x7vE726tc
-         a9VLuImINMgC4x/E6CDcX8mWD3Onfj5nkfwmGeQAtUkNo3XbFrGOgBwrHuzz6SvSOr1t
-         hbPdKQIkMpbqqo8YpLR4/W8g5g5TX6RVuFPjlN5wvYeJmrYTsnTOOIfWg/kzYezBUteG
-         nE5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706214309; x=1706819109;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AaxY27IhcgcbXrkepc9FHJUpKGy9Xey/yg5kDXIpb4c=;
-        b=gVpb0i+lxKTlPjmUBPQPP1jsAgQ3npujjSCpdAb6ISxQuybwmSpAaq8vjGy8COKcs4
-         NGzwepbWFY8ccXxLyibrDsjK/2Ojq3kJ6SOQODxuFLIS5AJ9xyPg7XLNLfosASgeRkUU
-         Db+iqhyIryrSNrsFQnexnspfB1BAQhYnPSrgsDAIh/rErKpR6ampob0qYUXOSHmmprXk
-         oXhxg+BHdsaHcKAmQ0PGxfAjRU9m34+UVDWFt3e5SAmD/fNJ6vgNF/JrZS0qLUacJiyS
-         wipFBUkP/RPMaJsPOzhNHHKtqpuJYKATHzujA6ykTxM+8Q+gVJyrwtbhR8hV+Vvkjk0W
-         ie0g==
-X-Gm-Message-State: AOJu0YyTxAzI3TBW5Sqe00HRqquhbDPMLpHiCyaTxcRIf9brf8llwiIp
-	NfiUQ6p8e0KNCPuntXc7s1SBdpYB0jZZjUOdbOUcDhJe4+NHHRg80H2tnIEFB+HZIcoP4zNr2t9
-	Ti8wsyHd6TQ/h/q4dNO49FLh0ofR2iG7w/05nCQ==
-X-Google-Smtp-Source: AGHT+IFb6esBMXgIN6eJVdeTHuH7VuUDww4b7lmtscjFNG2s6JBRpL/mLqpy1bnm9qR62+/gT5NooL9ZgsRZaHpDQbA=
-X-Received: by 2002:a17:90a:c503:b0:28b:2f4f:75e7 with SMTP id
- k3-20020a17090ac50300b0028b2f4f75e7mr163034pjt.13.1706214309739; Thu, 25 Jan
- 2024 12:25:09 -0800 (PST)
+	s=arc-20240116; t=1706214647; c=relaxed/simple;
+	bh=Ape9Uf1QEOHm9y/s9rG0+A2pBh89SFwW410Y4Nhrnd0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q4ZW1h0J/j56FDktD6X/ObUgogHb/ReyOvjYu3x1+GABCOVmrKvfOIZc49LqzvSLoJrEs+ebbDhJAgqtu0GMRWF+S4/xoF+eta/Qbbj64lZSXl4TjY3fshmyOXXtOD5MOjqCymFx00HULzejvLhJgPg0+POL0ThzFPA874NJrT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rT6M4-0007oq-4x; Thu, 25 Jan 2024 21:29:44 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rT6Ly-002MWh-9O; Thu, 25 Jan 2024 21:29:38 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rT6Ly-0087Xo-0R;
+	Thu, 25 Jan 2024 21:29:38 +0100
+Date: Thu, 25 Jan 2024 21:29:37 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: linux-pwm@vger.kernel.org, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+	Benson Leung <bleung@chromium.org>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Paul Cercueil <paul@crapouillou.net>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, dri-devel@lists.freedesktop.org, linux-mips@vger.kernel.org, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Guenter Roeck <groeck@chromium.org>, linux-riscv@lists.infradead.org, 
+	Fabio Estevam <festevam@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, 
+	Jerome Brunet <jbrunet@baylibre.com>, chrome-platform@lists.linux.dev, 
+	linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, NXP Linux Team <linux-imx@nxp.com>, linux-sunxi@lists.linux.dev, 
+	Jonas Karlman <jonas@kwiboo.se>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	greybus-dev@lists.linaro.org, linux-mediatek@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, Douglas Anderson <dianders@chromium.org>, kernel@pengutronix.de
+Subject: Re: [PATCH v5 003/111] pwm: Provide a macro to get the parent device
+ of a given chip
+Message-ID: <e3xeos2rtfydqj3hz3ql7xkon3aa3aingww7q5lpb3xa4arqrs@6jgwfrgay4le>
+References: <cover.1706182805.git.u.kleine-koenig@pengutronix.de>
+ <1cae6f73264ab313205eaa9483251f7aaf259cb4.1706182805.git.u.kleine-koenig@pengutronix.de>
+ <c89cbecf-253d-4a2c-8782-304b7b620175@broadcom.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240125145007.748295-1-tudor.ambarus@linaro.org> <20240125145007.748295-15-tudor.ambarus@linaro.org>
-In-Reply-To: <20240125145007.748295-15-tudor.ambarus@linaro.org>
-From: Sam Protsenko <semen.protsenko@linaro.org>
-Date: Thu, 25 Jan 2024 14:24:58 -0600
-Message-ID: <CAPLW+4k8FvdnMmN-7CbvFG2matiKwDBDT_LM++O5HpnmctHnSw@mail.gmail.com>
-Subject: Re: [PATCH v2 14/28] spi: s3c64xx: rename prepare_dma() to s3c64xx_prepare_dma()
-To: Tudor Ambarus <tudor.ambarus@linaro.org>
-Cc: broonie@kernel.org, andi.shyti@kernel.org, arnd@arndb.de, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	alim.akhtar@samsung.com, linux-spi@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arch@vger.kernel.org, andre.draszik@linaro.org, 
-	peter.griffin@linaro.org, kernel-team@android.com, willmcvicker@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qxr7wcriw2tz34lp"
+Content-Disposition: inline
+In-Reply-To: <c89cbecf-253d-4a2c-8782-304b7b620175@broadcom.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+
+
+--qxr7wcriw2tz34lp
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 25, 2024 at 8:50=E2=80=AFAM Tudor Ambarus <tudor.ambarus@linaro=
-.org> wrote:
->
-> Don't monopolize the name. Prepend the driver prefix to the function
-> name.
->
-> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-> ---
+On Thu, Jan 25, 2024 at 11:32:47AM -0800, Florian Fainelli wrote:
+> On 1/25/24 04:08, Uwe Kleine-K=F6nig wrote:
+> > Currently a pwm_chip stores in its struct device *dev member a pointer
+> > to the parent device. Preparing a change that embeds a full struct
+> > device in struct pwm_chip, this accessor macro should be used in all
+> > drivers directly accessing chip->dev now. This way struct pwm_chip and
+> > this macro can be changed without having to touch all drivers in the
+> > same change set.
+> >=20
+> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+>=20
+> Nit: this is not a macro but an inline function.
 
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Oh right, it used to be a macro, but I changed that. I made the commit
+log read:
 
->  drivers/spi/spi-s3c64xx.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-> index 25d642f99278..447320788697 100644
-> --- a/drivers/spi/spi-s3c64xx.c
-> +++ b/drivers/spi/spi-s3c64xx.c
-> @@ -273,8 +273,8 @@ static void s3c64xx_spi_dmacb(void *data)
->         spin_unlock_irqrestore(&sdd->lock, flags);
->  }
->
-> -static int prepare_dma(struct s3c64xx_spi_dma_data *dma,
-> -                       struct sg_table *sgt)
-> +static int s3c64xx_prepare_dma(struct s3c64xx_spi_dma_data *dma,
-> +                              struct sg_table *sgt)
->  {
->         struct s3c64xx_spi_driver_data *sdd;
->         struct dma_slave_config config;
-> @@ -440,7 +440,7 @@ static int s3c64xx_enable_datapath(struct s3c64xx_spi=
-_driver_data *sdd,
->                 chcfg |=3D S3C64XX_SPI_CH_TXCH_ON;
->                 if (dma_mode) {
->                         modecfg |=3D S3C64XX_SPI_MODE_TXDMA_ON;
-> -                       ret =3D prepare_dma(&sdd->tx_dma, &xfer->tx_sg);
-> +                       ret =3D s3c64xx_prepare_dma(&sdd->tx_dma, &xfer->=
-tx_sg);
->                 } else {
->                         switch (sdd->cur_bpw) {
->                         case 32:
-> @@ -472,7 +472,7 @@ static int s3c64xx_enable_datapath(struct s3c64xx_spi=
-_driver_data *sdd,
->                         writel(((xfer->len * 8 / sdd->cur_bpw) & 0xffff)
->                                         | S3C64XX_SPI_PACKET_CNT_EN,
->                                         regs + S3C64XX_SPI_PACKET_CNT);
-> -                       ret =3D prepare_dma(&sdd->rx_dma, &xfer->rx_sg);
-> +                       ret =3D s3c64xx_prepare_dma(&sdd->rx_dma, &xfer->=
-rx_sg);
->                 }
->         }
->
-> --
-> 2.43.0.429.g432eaa2c6b-goog
->
+    pwm: Provide an inline function to get the parent device of a given chip
+
+    Currently a pwm_chip stores in its struct device *dev member a pointer
+    to the parent device. Preparing a change that embeds a full struct
+    device in struct pwm_chip, this accessor function should be used in all
+    drivers directly accessing chip->dev now. This way struct pwm_chip and
+    this new function can be changed without having to touch all drivers in
+    the same change set.
+
+Thanks,
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--qxr7wcriw2tz34lp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmWyxLEACgkQj4D7WH0S
+/k5nkwf9F+1G1rrz7HMmMk0kkol6Q/0nb8baCUPdKhCcHXWnUrkFf+l8BvLEafhy
+6D5c/214tles7OGu5Mgkku0rW4Ae8+sq9Ho2OEJEpVsSuULPwv3+L44VQzZgsjD6
+ULcEcc1vul0iOpwJ0bTHeMqX+P3OENhi72tUDh+NQNnml8ZgePsTI2Ef8agexXAb
+7GLAE/AnRbi3bqcn5XzmIjskyMJfwOT4AvyHWPzzM1sGWfGPOiDp8e2cQXNsUywY
+IZ1X1op4Eax4/Yg/DB2uED0doQLAwJct5JLN/G+Dfx6EReTyA39z64IHPuxNmCXA
+REKDvLe8LO4A9v/JIUQuiwXHBcbjLQ==
+=k1zn
+-----END PGP SIGNATURE-----
+
+--qxr7wcriw2tz34lp--
 
