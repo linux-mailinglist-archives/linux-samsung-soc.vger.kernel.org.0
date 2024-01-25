@@ -1,243 +1,230 @@
-Return-Path: <linux-samsung-soc+bounces-1251-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1256-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6437383C222
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 13:11:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB54A83C379
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 14:20:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14266290F65
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 12:11:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE0521C223C0
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 13:20:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3013405F9;
-	Thu, 25 Jan 2024 12:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 770B14F61E;
+	Thu, 25 Jan 2024 13:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="olHRx0yP"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A27374F5
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 12:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC49A50A71
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 13:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706184669; cv=none; b=jtSxIjgKYcxkFPQm4RLrQ0/ar1m1RMWaAtsW4jc5s5NwMupYRFplcZM2KbMhLXxzRhEMApRtSlQf08AA0KabVKPb3yxnVuEbQMdtxDmvQXnLfP01WSeMVOxw/lydKVCR/Iz1WQ1fl3bhEceKWflwdhtWOwTzgOjT71rbSQXuHVo=
+	t=1706188802; cv=none; b=hiTG2AwVcAUyibIdXpIACURbZkXZnTBvktTtnALsjoSx4UEeJPlpfLEBkfW0ogWshVbLpzK3/UyiGYWVNtaRmm4twer3Mf4MctrzgGp194UVrf9LpiobVg80CB3OAVXJ5e0qsE6fKOwURUD1DU87jKAv5yce2fRKB2E8ExlPIqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706184669; c=relaxed/simple;
-	bh=UeKCwn2GW6SYXoYMGVhQOEFQrUIA+9rYY7iFhSXWjuE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=leTLCLMU6iUlX8+waCBhlwmUFKdfwoIPwLcr89PfNDWeYyMOTx/nWJX8lHLYxSXi8m15Z6Kdmu8c2KxqQlZ8PAGgCBJSsrmvOP4kyrS+SdcTRzXddymgPYz+YeY7e5WUsTyuHvaN/9lqd/mWiD06ggRZRCky99mKzuw13IGDMPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZN-0004WW-SI; Thu, 25 Jan 2024 13:10:57 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZM-002HUB-JE; Thu, 25 Jan 2024 13:10:56 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZM-007n3o-1f;
-	Thu, 25 Jan 2024 13:10:56 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-pwm@vger.kernel.org
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH v5 085/111] pwm: samsung: Make use of devm_pwmchip_alloc() function
-Date: Thu, 25 Jan 2024 13:09:47 +0100
-Message-ID:  <259526dbf79927759cf0dbd5cea1c9a72e93b492.1706182805.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1706182805.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1706182805.git.u.kleine-koenig@pengutronix.de>
+	s=arc-20240116; t=1706188802; c=relaxed/simple;
+	bh=4C8aReWTPAu/XM/cFpPUFHs86ll7swMdml9iRygfv68=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qwn1bKFCmaPkDslGaPnmW0zNH+R3eFxcwcAMZggwWVdpDM06dae7VGT5/FPAMnqOCtBiBVil31buXXY8GryRepm37Kw3myeWhoHnj7LD/N88sohnEKga0XeCBIa6US1Ej1w1JqZjOBjAMOIBABRX6zmV9/1hnBzH6BdIs3jGvw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=olHRx0yP; arc=none smtp.client-ip=209.85.160.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-214cd4bce34so472987fac.1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 05:20:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706188800; x=1706793600; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=587jgwVYpxZvmZpAiByRkGCro3u2An7GsZ6G/Kd3gVA=;
+        b=olHRx0yPk46HcZsmmnwZcPdidwzN+SjcKe5+fZfynoxtKOenlZ9jTQEM2qZyG5k66j
+         flLEv7FoYahZBbs+6/CzIYzPrXRE2fxj03Hcm5PhY4MCCvpk8/ICnNBt7ITnZh2zL1ko
+         wG7icEmHFggdPOxZSbZdypLDQ4Uq+1UKoePLJ8/QR4QlbCpIl+OcqoX96eSwro2EYlcw
+         bPEOyOpv1DhVQDa3LetMV0F3NkpTe2mH/b4hf+6Hy3TM/BJpXZbuWMCTv9lrjAB5T6Tt
+         0tdp1eocXZyxKPI4gZ79cmGVWFjeKZcSV2X+25+U353RUp/mWRibNT4eusExUqxoRPsY
+         i9Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706188800; x=1706793600;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=587jgwVYpxZvmZpAiByRkGCro3u2An7GsZ6G/Kd3gVA=;
+        b=n7BfrqrQQfX1ohsiq9NAh9dXSq4Dt7Z1RKB3eWLBZh0o7+qd8ZslqJqJs8t1Lb16Nh
+         x4xYJ/M344P596rrzHLku/d4Si9tR77Fa6pQUY//qYnqbKeZob5uY3AFZru9LOCad4GX
+         HrJuts3EGyuL4tyuSLAkoDJmr/dyT2acxOolTzJWVglZhOYixM43WKGttk1KuJzANhEX
+         Jl+uFGLac0d9wAXC1A+a5iCiN3xwXDIpP7a8L22O4WDiEc6HYPLkub8bybHhdUfPlkLx
+         KUhhdb5jZnsRO9K6wp6UkZpuSNI340A+Fc9Q0X3czRbHT/tKCc+tejxm5mLpMS3OjuN1
+         ryZQ==
+X-Gm-Message-State: AOJu0Yzwrbpe62eBb45Mzqb3ovcngIYCS80cjbKyQNsOr3pfzFHXabiB
+	mxu4e/to9VdSveXYh7PC/oo2vWXy25H/cOiQj6LADY4J83HAIPWCWAHx26PwyNNRmEBduWZUQNF
+	0lup1gnJkmKWswSr+AAO8djNlWCHJVtG18HhYNg==
+X-Google-Smtp-Source: AGHT+IFnCGf7RvqSCBU9Cm4vURnbLZGTb1pJk6gRjtk1EoYoEZbCmKBY/3oGux2uz8Gm5BbjBiqBKbJtDTyI+k4caKA=
+X-Received: by 2002:a05:6870:670f:b0:210:b511:a31b with SMTP id
+ gb15-20020a056870670f00b00210b511a31bmr898369oab.85.1706188799770; Thu, 25
+ Jan 2024 05:19:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6205; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=UeKCwn2GW6SYXoYMGVhQOEFQrUIA+9rYY7iFhSXWjuE=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlsk+e5VzO5pcCwTrYHpG8dMQVP716ZZNx2LcP6 Vm+iFOq4DWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZbJPngAKCRCPgPtYfRL+ TiyuB/9YYuayjJurs4fj41Lwo4crThgLymmHi5MjbtZ8gke5dMiTpAnoxz61mTG7TtUBKPU4LFu 8de2uwDyTY4Sp/OasOnsFIbi+cn2j+P6L32VPmtGqRijIAhIEVOki4MRwJTmVDjYvT8H3VQqUYV WuvrHl34z+EJnMjX6yZpkd/1s3x4YfJTnc5rrambSqfhylo3gLQwP9SIm1ko2ppF7AIifbc0KQp 4CQz8+gMottKvblH9g+R0hxi2ch3qPk5zl0rSEbeJhMVNZigLbi140rk0f9cFyNRFgRkGzyU0g9 a+WFyx2APP+h1WwQ379Vg6V3R31irxagB6PyGrs1OQET4yAB
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+References: <20240122225710.1952066-1-peter.griffin@linaro.org>
+ <20240122225710.1952066-4-peter.griffin@linaro.org> <da30a68a-e29f-45c8-aa73-02955255a457@linaro.org>
+ <CADrjBPor5tMY4r0jOy7GH36auCU7dWn6Qn4ct89bsSMW4vAQOA@mail.gmail.com>
+ <6c72a521-1048-42eb-ac74-d8f718a90723@linaro.org> <CAGETcx-CCpaV7R0O0HpDpoX6KxQBuJiMmKdWA8nDE-5Qj2Sa7g@mail.gmail.com>
+ <f4d3aa5a-e01d-4ef3-8004-b6eac4461184@linaro.org> <CAGETcx_HGcuGQTO11tzX0EvnuLEaKYc4vBse1CRP0JwPqMJdQQ@mail.gmail.com>
+In-Reply-To: <CAGETcx_HGcuGQTO11tzX0EvnuLEaKYc4vBse1CRP0JwPqMJdQQ@mail.gmail.com>
+From: Peter Griffin <peter.griffin@linaro.org>
+Date: Thu, 25 Jan 2024 13:19:47 +0000
+Message-ID: <CADrjBPrgK_bwhvRKHb6o3CC_=CTFJvOo1T7UXFpVZ6maUfHouA@mail.gmail.com>
+Subject: Re: [PATCH 3/9] watchdog: s3c2410_wdt: update to use new
+ exynos_pmu_*() apis
+To: Saravana Kannan <saravanak@google.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, arnd@arndb.de, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, linux@roeck-us.net, wim@linux-watchdog.org, 
+	conor+dt@kernel.org, alim.akhtar@samsung.com, jaewon02.kim@samsung.com, 
+	chanho61.park@samsung.com, semen.protsenko@linaro.org, 
+	kernel-team@android.com, tudor.ambarus@linaro.org, andre.draszik@linaro.org, 
+	willmcvicker@google.com, linux-fsd@tesla.com, linux-watchdog@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This prepares the pwm-samsung driver to further changes of the pwm core
-outlined in the commit introducing devm_pwmchip_alloc(). There is no
-intended semantical change and the driver should behave as before.
+Hi Saravana,
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pwm/pwm-samsung.c | 46 ++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
+Thanks for the feedback!
 
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index a97cae49406e..dec44ba1f90b 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -69,7 +69,6 @@ struct samsung_pwm_channel {
- 
- /**
-  * struct samsung_pwm_chip - private data of PWM chip
-- * @chip:		generic PWM chip
-  * @variant:		local copy of hardware variant data
-  * @inverter_mask:	inverter status for all channels - one bit per channel
-  * @disabled_mask:	disabled status for all channels - one bit per channel
-@@ -80,7 +79,6 @@ struct samsung_pwm_channel {
-  * @channel:		per channel driver data
-  */
- struct samsung_pwm_chip {
--	struct pwm_chip chip;
- 	struct samsung_pwm_variant variant;
- 	u8 inverter_mask;
- 	u8 disabled_mask;
-@@ -110,7 +108,7 @@ static DEFINE_SPINLOCK(samsung_pwm_lock);
- static inline
- struct samsung_pwm_chip *to_samsung_pwm_chip(struct pwm_chip *chip)
- {
--	return container_of(chip, struct samsung_pwm_chip, chip);
-+	return pwmchip_get_drvdata(chip);
- }
- 
- static inline unsigned int to_tcon_channel(unsigned int channel)
-@@ -181,9 +179,10 @@ static unsigned long pwm_samsung_get_tin_rate(struct samsung_pwm_chip *our_chip,
- 	return rate / (reg + 1);
- }
- 
--static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
-+static unsigned long pwm_samsung_calc_tin(struct pwm_chip *chip,
- 					  unsigned int chan, unsigned long freq)
- {
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 	struct samsung_pwm_variant *variant = &our_chip->variant;
- 	unsigned long rate;
- 	struct clk *clk;
-@@ -197,12 +196,12 @@ static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
- 				return rate;
- 		}
- 
--		dev_warn(pwmchip_parent(&our_chip->chip),
-+		dev_warn(pwmchip_parent(chip),
- 			"tclk of PWM %d is inoperational, using tdiv\n", chan);
- 	}
- 
- 	rate = pwm_samsung_get_tin_rate(our_chip, chan);
--	dev_dbg(pwmchip_parent(&our_chip->chip), "tin parent at %lu\n", rate);
-+	dev_dbg(pwmchip_parent(chip), "tin parent at %lu\n", rate);
- 
- 	/*
- 	 * Compare minimum PWM frequency that can be achieved with possible
-@@ -329,7 +328,7 @@ static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		dev_dbg(pwmchip_parent(chip), "duty_ns=%d, period_ns=%d (%u)\n",
- 						duty_ns, period_ns, period);
- 
--		tin_rate = pwm_samsung_calc_tin(our_chip, pwm->hwpwm, period);
-+		tin_rate = pwm_samsung_calc_tin(chip, pwm->hwpwm, period);
- 
- 		dev_dbg(pwmchip_parent(chip), "tin_rate=%lu\n", tin_rate);
- 
-@@ -506,9 +505,10 @@ static const struct of_device_id samsung_pwm_matches[] = {
- };
- MODULE_DEVICE_TABLE(of, samsung_pwm_matches);
- 
--static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
-+static int pwm_samsung_parse_dt(struct pwm_chip *chip)
- {
--	struct device_node *np = pwmchip_parent(&our_chip->chip)->of_node;
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
-+	struct device_node *np = pwmchip_parent(chip)->of_node;
- 	const struct of_device_id *match;
- 	struct property *prop;
- 	const __be32 *cur;
-@@ -522,7 +522,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- 
- 	of_property_for_each_u32(np, "samsung,pwm-outputs", prop, cur, val) {
- 		if (val >= SAMSUNG_PWM_NUM) {
--			dev_err(pwmchip_parent(&our_chip->chip),
-+			dev_err(pwmchip_parent(chip),
- 				"%s: invalid channel index in samsung,pwm-outputs property\n",
- 								__func__);
- 			continue;
-@@ -533,7 +533,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- 	return 0;
- }
- #else
--static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
-+static int pwm_samsung_parse_dt(struct pwm_chip *chip)
- {
- 	return -ENODEV;
- }
-@@ -542,21 +542,22 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
- static int pwm_samsung_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-+	struct pwm_chip *chip;
- 	struct samsung_pwm_chip *our_chip;
- 	unsigned int chan;
- 	int ret;
- 
--	our_chip = devm_kzalloc(&pdev->dev, sizeof(*our_chip), GFP_KERNEL);
--	if (our_chip == NULL)
-+	chip = devm_pwmchip_alloc(&pdev->dev, SAMSUNG_PWM_NUM, sizeof(*chip));
-+	if (chip == NULL)
- 		return -ENOMEM;
-+	our_chip = to_samsung_pwm_chip(chip);
-+
-+	chip->ops = &pwm_samsung_ops;
- 
--	our_chip->chip.dev = &pdev->dev;
--	our_chip->chip.ops = &pwm_samsung_ops;
--	our_chip->chip.npwm = SAMSUNG_PWM_NUM;
- 	our_chip->inverter_mask = BIT(SAMSUNG_PWM_NUM) - 1;
- 
- 	if (IS_ENABLED(CONFIG_OF) && pdev->dev.of_node) {
--		ret = pwm_samsung_parse_dt(our_chip);
-+		ret = pwm_samsung_parse_dt(chip);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -595,7 +596,7 @@ static int pwm_samsung_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, our_chip);
- 
--	ret = pwmchip_add(&our_chip->chip);
-+	ret = pwmchip_add(chip);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to register PWM chip\n");
- 		clk_disable_unprepare(our_chip->base_clk);
-@@ -612,17 +613,18 @@ static int pwm_samsung_probe(struct platform_device *pdev)
- 
- static void pwm_samsung_remove(struct platform_device *pdev)
- {
--	struct samsung_pwm_chip *our_chip = platform_get_drvdata(pdev);
-+	struct pwm_chip *chip = platform_get_drvdata(pdev);
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 
--	pwmchip_remove(&our_chip->chip);
-+	pwmchip_remove(chip);
- 
- 	clk_disable_unprepare(our_chip->base_clk);
- }
- 
- static int pwm_samsung_resume(struct device *dev)
- {
--	struct samsung_pwm_chip *our_chip = dev_get_drvdata(dev);
--	struct pwm_chip *chip = &our_chip->chip;
-+	struct pwm_chip *chip = dev_get_drvdata(dev);
-+	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
- 	unsigned int i;
- 
- 	for (i = 0; i < SAMSUNG_PWM_NUM; i++) {
--- 
-2.43.0
+On Wed, 24 Jan 2024 at 21:27, Saravana Kannan <saravanak@google.com> wrote:
+>
+> On Tue, Jan 23, 2024 at 10:27=E2=80=AFPM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 24/01/2024 04:37, Saravana Kannan wrote:
+> > > On Tue, Jan 23, 2024 at 10:12=E2=80=AFAM Krzysztof Kozlowski
+> > > <krzysztof.kozlowski@linaro.org> wrote:
+> > >>
+> > >> On 23/01/2024 18:30, Peter Griffin wrote:
+> > >>>>>               dev_warn(wdt->dev, "Couldn't get RST_STAT register\=
+n");
+> > >>>>>       else if (rst_stat & BIT(wdt->drv_data->rst_stat_bit))
+> > >>>>> @@ -698,14 +699,6 @@ static int s3c2410wdt_probe(struct platform_=
+device *pdev)
+> > >>>>>       if (ret)
+> > >>>>>               return ret;
+> > >>>>>
+> > >>>>> -     if (wdt->drv_data->quirks & QUIRKS_HAVE_PMUREG) {
+> > >>>>> -             wdt->pmureg =3D syscon_regmap_lookup_by_phandle(dev=
+->of_node,
+> > >>>>> -                                             "samsung,syscon-pha=
+ndle");
+> > >>>>> -             if (IS_ERR(wdt->pmureg))
+> > >>>>> -                     return dev_err_probe(dev, PTR_ERR(wdt->pmur=
+eg),
+> > >>>>> -                                          "syscon regmap lookup =
+failed.\n");
+> > >>>>
+> > >>>>
+> > >>>> Continuing topic from the binding: I don't see how you handle prob=
+e
+> > >>>> deferral, suspend ordering.
+> > >>>
+> > >>> The current implementation is simply relying on exynos-pmu being
+> > >>> postcore_initcall level.
+> > >>>
+> > >>> I was just looking around for any existing Linux APIs that could be=
+ a
+> > >>> more robust solution. It looks like
+> > >>>
+> > >>> of_parse_phandle()
+> > >>> and
+> > >>> of_find_device_by_node();
+> > >>>
+> > >>> Are often used to solve this type of probe deferral issue between
+> > >>> devices. Is that what you would recommend using? Or is there someth=
+ing
+> > >>> even better?
+> > >>
+> > >> I think you should keep the phandle and then set device link based o=
+n
+> > >> of_find_device_by_node(). This would actually improve the code, beca=
+use
+> > >> syscon_regmap_lookup_by_phandle() does not create device links.
+> > >
+> > > I kinda agree with this. Just because we no longer use a syscon API t=
+o
+> > > find the PMU register address doesn't mean the WDT doesn't depend on
+> > > the PMU.
+> > >
+> > > However, I think we should move to a generic "syscon" property. Then =
+I
+> > > can add support for "syscon" property to fw_devlink and then things
+> > > will just work in terms of probe ordering, suspend/resume and also
+> > > showing the dependency in DT even if you don't use the syscon APIs.
+> > >
+> > > Side note 1:
+> > >
+> > > I think we really should officially document a generic syscon DT
+> > > property similar to how we have a generic "clocks" or "dmas" property=
+.
+> > > Then we can have a syscon_get_regmap() that's like so:
+> > >
+> > > struct regmap *syscon_get_regmap(struct device *dev)
+> > > {
+> > >         return syscon_regmap_lookup_by_phandle(dev->of_node, "syscon"=
+);
+> > > }
+> > >
+> > > Instead of every device defining its own bespoke DT property to do th=
+e
+> > > exact same thing. I did a quick "back of the envelope" grep on this
+> > > and I get about 143 unique properties just to get the syscon regmap.
+> > > $ git grep -A1 syscon_regmap_lookup_by_phandle | grep '"' | sed -e
+> > > 's/^[^"]*//' -e 's/"[^"]*$/"/' | sort | uniq | wc -l
+> > > 143
+> >
+> > Sorry, generic "syscon" property won't fly with DT maintainers, because
+> > there is no such thing as syscon in any of hardware.
+>
+> Then why do we allow a "syscon" compatible string and nodes? If the
+> "syscon" property isn't clear enough, we can make it something like
+> gpios and have it be <whatever>-syscon or have syscon-names property
+> if you want to give it a name.
+> 143 bespoke properties all to say "here are some registers I need to
+> twiddle that's outside my regmap" doesn't seem great.
 
+Some sort of standardization on the naming seems like a good idea to
+me. Especially if it then means fw_devlink support can be added.
+
+>
+> > >
+> > > Side note 2:
+> > >
+> > > How are we making sure that it's the exynos-pmu driver that ends up
+> > > probing the PMU and not the generic syscon driver? Both of these are
+> > > platform drivers. And the exynos PMU device lists both the exynos
+> > > compatible string and the syscon property. Is it purely a link order
+> > > coincidence?
+> >
+> > initcall ordering
+>
+> Both these drivers usr postcore_initcall(). So it's purely because
+> soc/ is listed earlier in drivers/Makefile than mfd/. And as soon as
+> drivers are made into modules this is going to break. This is
+> terrible. If you want to have a modular system, this is going to throw
+> in a wrench.
+>
+
+That does look to be a bug, or fragility at least with the current
+upstream exynos-pmu driver. I think upstream Exynos most likely hasn't
+encountered these types of issues because ARCH_EXYNOS has these
+drivers as built-in, and as you say the alphabetical ordering in the
+Makefile.
+
+regards,
+
+Peter.
 
