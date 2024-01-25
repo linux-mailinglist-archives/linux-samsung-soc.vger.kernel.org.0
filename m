@@ -1,31 +1,31 @@
-Return-Path: <linux-samsung-soc+bounces-1254-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1251-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5490E83C253
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 13:14:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6437383C222
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 13:11:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 793671C22E86
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 12:14:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14266290F65
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Jan 2024 12:11:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D87CA3FE3F;
-	Thu, 25 Jan 2024 12:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3013405F9;
+	Thu, 25 Jan 2024 12:11:09 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5303F4439F
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 12:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A27374F5
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Jan 2024 12:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706184869; cv=none; b=i3v+hAfUzqMumJKJkWlwffXKiuOmO+Ejf3Sfbev9Bi67WSw0eNDcr7oqaK8vkJc1UW+XCFUjjAUvkrKYKmheq3PuCjyWLa3bTt29xumSu9L+ZePGkNqX88BaZMiSjR6FucNLANYYM23Abbq9NDrszsYCjLXwWfBbUfQ9sFdzQ+w=
+	t=1706184669; cv=none; b=jtSxIjgKYcxkFPQm4RLrQ0/ar1m1RMWaAtsW4jc5s5NwMupYRFplcZM2KbMhLXxzRhEMApRtSlQf08AA0KabVKPb3yxnVuEbQMdtxDmvQXnLfP01WSeMVOxw/lydKVCR/Iz1WQ1fl3bhEceKWflwdhtWOwTzgOjT71rbSQXuHVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706184869; c=relaxed/simple;
-	bh=Y70kt1S+wDMGZ2Y6dT7JBGkOh38DPB/mz0c9lW1w+go=;
+	s=arc-20240116; t=1706184669; c=relaxed/simple;
+	bh=UeKCwn2GW6SYXoYMGVhQOEFQrUIA+9rYY7iFhSXWjuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NgknMUrEwYObm/+va1NlsAYOaI8Oo7fOmoTyb9V4kAZpsTbGrRh+vY+jjH8DKohxbjXP95Q9c5YuON9LF8EyeeTVfdACLu0C2Z0pw07v9qlW3Lv5hd2Q22FPSIPKhoBCWGcBl4yLrJ2Ace0D/wB41ywcpopoYMsVyEa7kkuvfqU=
+	 MIME-Version:Content-Type; b=leTLCLMU6iUlX8+waCBhlwmUFKdfwoIPwLcr89PfNDWeYyMOTx/nWJX8lHLYxSXi8m15Z6Kdmu8c2KxqQlZ8PAGgCBJSsrmvOP4kyrS+SdcTRzXddymgPYz+YeY7e5WUsTyuHvaN/9lqd/mWiD06ggRZRCky99mKzuw13IGDMPU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -33,120 +33,26 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZH-00049s-NK; Thu, 25 Jan 2024 13:10:51 +0100
+	id 1rSyZN-0004WW-SI; Thu, 25 Jan 2024 13:10:57 +0100
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZE-002HRD-5b; Thu, 25 Jan 2024 13:10:48 +0100
+	id 1rSyZM-002HUB-JE; Thu, 25 Jan 2024 13:10:56 +0100
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rSyZD-007n0n-33;
-	Thu, 25 Jan 2024 13:10:47 +0100
+	id 1rSyZM-007n3o-1f;
+	Thu, 25 Jan 2024 13:10:56 +0100
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Jonathan Corbet <corbet@lwn.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	James Clark <james.clark@arm.com>,
-	linux-pwm@vger.kernel.org,
-	Hector Martin <marcan@marcan.st>,
-	Sven Peter <sven@svenpeter.dev>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Alexander Shiyan <shc_work@mail.ru>,
-	Benson Leung <bleung@chromium.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	=?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Hammer Hsieh <hammerh0314@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	Sean Anderson <sean.anderson@seco.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Pavel Machek <pavel@ucw.cz>,
-	Lee Jones <lee@kernel.org>,
-	Anjelique Melendez <quic_amelende@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Lu Hongfei <luhongfei@vivo.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Johan Hovold <johan@kernel.org>,
-	Alex Elder <elder@kernel.org>
-Cc: linux-doc@vger.kernel.org,
-	kernel@pengutronix.de,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	asahi@lists.linux.dev,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-pwm@vger.kernel.org
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
 	linux-arm-kernel@lists.infradead.org,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	linux-rpi-kernel@lists.infradead.org,
-	Guenter Roeck <groeck@chromium.org>,
-	chrome-platform@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	linux-mips@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	linux-amlogic@lists.infradead.org,
-	linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	Alim Akhtar <alim.akhtar@samsung.com>,
 	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	dri-devel@lists.freedesktop.org,
-	linux-leds@vger.kernel.org,
-	greybus-dev@lists.linaro.org,
-	linux-staging@lists.linux.dev
-Subject: [PATCH v5 040/111] pwm: Provide devm_pwmchip_alloc() function
-Date: Thu, 25 Jan 2024 13:09:02 +0100
-Message-ID:  <f59b1a4a8d6fba65e4d3e8698310c9cb1d4c43ce.1706182805.git.u.kleine-koenig@pengutronix.de>
+	kernel@pengutronix.de
+Subject: [PATCH v5 085/111] pwm: samsung: Make use of devm_pwmchip_alloc() function
+Date: Thu, 25 Jan 2024 13:09:47 +0100
+Message-ID:  <259526dbf79927759cf0dbd5cea1c9a72e93b492.1706182805.git.u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1706182805.git.u.kleine-koenig@pengutronix.de>
 References: <cover.1706182805.git.u.kleine-koenig@pengutronix.de>
@@ -157,7 +63,7 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4472; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=Y70kt1S+wDMGZ2Y6dT7JBGkOh38DPB/mz0c9lW1w+go=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlsk9o1J7Qn6pSUgc2O5FQOVH47M2tNWcGfyzpg KqN39khZuCJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZbJPaAAKCRCPgPtYfRL+ Tl7sCACDg65PvULF2T57x8s2GOVh8qHAOM4G2fEdFZQeFhZiTply5wW+kG5bIM1JAdU3cAiM96g uzfqnkdy2Mt6/lWu6ZhjqOk/xYUO80eOZ5e8cyRhQLGb4VsogRhDSOKSAf4k0fkzTYCdCM3jfwP QGXt5GRUeYGJVhDmUC7m1wai9vWlfWG8IXkVbSYnX3LqEAl0A40uaffDMUtp2bFtgHNqtqbGhx6 bM/vJXjzuqiGa8jiFMTuJ50PRpeh9o/6cre0EhT+nv5GQHpRaGSKnNf/E7Q0CK0tiRGYs7M9t6g 2w/lsv8+vxgUQ7yjIC7YwrqDMXW1+x7YTS/xwh76REfV7L9/
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6205; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=UeKCwn2GW6SYXoYMGVhQOEFQrUIA+9rYY7iFhSXWjuE=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlsk+e5VzO5pcCwTrYHpG8dMQVP716ZZNx2LcP6 Vm+iFOq4DWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZbJPngAKCRCPgPtYfRL+ TiyuB/9YYuayjJurs4fj41Lwo4crThgLymmHi5MjbtZ8gke5dMiTpAnoxz61mTG7TtUBKPU4LFu 8de2uwDyTY4Sp/OasOnsFIbi+cn2j+P6L32VPmtGqRijIAhIEVOki4MRwJTmVDjYvT8H3VQqUYV WuvrHl34z+EJnMjX6yZpkd/1s3x4YfJTnc5rrambSqfhylo3gLQwP9SIm1ko2ppF7AIifbc0KQp 4CQz8+gMottKvblH9g+R0hxi2ch3qPk5zl0rSEbeJhMVNZigLbi140rk0f9cFyNRFgRkGzyU0g9 a+WFyx2APP+h1WwQ379Vg6V3R31irxagB6PyGrs1OQET4yAB
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -165,111 +71,172 @@ X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-This function allocates a struct pwm_chip and driver data. Compared to
-the status quo the split into pwm_chip and driver data is new, otherwise
-it doesn't change anything relevant (yet).
-
-The intention is that after all drivers are switched to use this
-allocation function, its possible to add a struct device to struct
-pwm_chip to properly track the latter's lifetime without touching all
-drivers again. Proper lifetime tracking is a necessary precondition to
-introduce character device support for PWMs (that implements atomic
-setting and doesn't suffer from the sysfs overhead of the /sys/class/pwm
-userspace support).
-
-The new function pwmchip_priv() (obviously?) only works for chips
-allocated with devm_pwmchip_alloc().
+This prepares the pwm-samsung driver to further changes of the pwm core
+outlined in the commit introducing devm_pwmchip_alloc(). There is no
+intended semantical change and the driver should behave as before.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- .../driver-api/driver-model/devres.rst        |  1 +
- Documentation/driver-api/pwm.rst              | 10 ++++----
- drivers/pwm/core.c                            | 25 +++++++++++++++++++
- include/linux/pwm.h                           |  2 ++
- 4 files changed, 33 insertions(+), 5 deletions(-)
+ drivers/pwm/pwm-samsung.c | 46 ++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
-index c5f99d834ec5..e4df72c408d2 100644
---- a/Documentation/driver-api/driver-model/devres.rst
-+++ b/Documentation/driver-api/driver-model/devres.rst
-@@ -420,6 +420,7 @@ POWER
-   devm_reboot_mode_unregister()
+diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
+index a97cae49406e..dec44ba1f90b 100644
+--- a/drivers/pwm/pwm-samsung.c
++++ b/drivers/pwm/pwm-samsung.c
+@@ -69,7 +69,6 @@ struct samsung_pwm_channel {
  
- PWM
-+  devm_pwmchip_alloc()
-   devm_pwmchip_add()
-   devm_pwm_get()
-   devm_fwnode_pwm_get()
-diff --git a/Documentation/driver-api/pwm.rst b/Documentation/driver-api/pwm.rst
-index 3c28ccc4b611..cee66c7f0335 100644
---- a/Documentation/driver-api/pwm.rst
-+++ b/Documentation/driver-api/pwm.rst
-@@ -143,11 +143,11 @@ to implement the pwm_*() functions itself. This means that it's impossible
- to have multiple PWM drivers in the system. For this reason it's mandatory
- for new drivers to use the generic PWM framework.
- 
--A new PWM controller/chip can be added using pwmchip_add() and removed
--again with pwmchip_remove(). pwmchip_add() takes a filled in struct
--pwm_chip as argument which provides a description of the PWM chip, the
--number of PWM devices provided by the chip and the chip-specific
--implementation of the supported PWM operations to the framework.
-+A new PWM controller/chip can be allocated using devm_pwmchip_alloc, then added
-+using pwmchip_add() and removed again with pwmchip_remove(). pwmchip_add()
-+takes a filled in struct pwm_chip as argument which provides a description of
-+the PWM chip, the number of PWM devices provided by the chip and the
-+chip-specific implementation of the supported PWM operations to the framework.
- 
- When implementing polarity support in a PWM driver, make sure to respect the
- signal conventions in the PWM framework. By definition, normal polarity
-diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
-index 1b4c3d0caa82..b821a2b0b172 100644
---- a/drivers/pwm/core.c
-+++ b/drivers/pwm/core.c
-@@ -454,6 +454,31 @@ of_pwm_single_xlate(struct pwm_chip *chip, const struct of_phandle_args *args)
- }
- EXPORT_SYMBOL_GPL(of_pwm_single_xlate);
- 
-+static void *pwmchip_priv(struct pwm_chip *chip)
-+{
-+	return (void *)chip + sizeof(*chip);
-+}
-+
-+struct pwm_chip *devm_pwmchip_alloc(struct device *parent, unsigned int npwm, size_t sizeof_priv)
-+{
-+	struct pwm_chip *chip;
-+	size_t alloc_size;
-+
-+	alloc_size = size_add(sizeof(*chip), sizeof_priv);
-+
-+	chip = devm_kzalloc(parent, alloc_size, GFP_KERNEL);
-+	if (!chip)
-+		return ERR_PTR(-ENOMEM);
-+
-+	chip->dev = parent;
-+	chip->npwm = npwm;
-+
-+	pwmchip_set_drvdata(chip, pwmchip_priv(chip));
-+
-+	return chip;
-+}
-+EXPORT_SYMBOL_GPL(devm_pwmchip_alloc);
-+
- static void of_pwmchip_add(struct pwm_chip *chip)
+ /**
+  * struct samsung_pwm_chip - private data of PWM chip
+- * @chip:		generic PWM chip
+  * @variant:		local copy of hardware variant data
+  * @inverter_mask:	inverter status for all channels - one bit per channel
+  * @disabled_mask:	disabled status for all channels - one bit per channel
+@@ -80,7 +79,6 @@ struct samsung_pwm_channel {
+  * @channel:		per channel driver data
+  */
+ struct samsung_pwm_chip {
+-	struct pwm_chip chip;
+ 	struct samsung_pwm_variant variant;
+ 	u8 inverter_mask;
+ 	u8 disabled_mask;
+@@ -110,7 +108,7 @@ static DEFINE_SPINLOCK(samsung_pwm_lock);
+ static inline
+ struct samsung_pwm_chip *to_samsung_pwm_chip(struct pwm_chip *chip)
  {
- 	if (!chip->dev || !chip->dev->of_node)
-diff --git a/include/linux/pwm.h b/include/linux/pwm.h
-index 2c49d2fe2fe7..8bc7504aa7d4 100644
---- a/include/linux/pwm.h
-+++ b/include/linux/pwm.h
-@@ -403,6 +403,8 @@ static inline bool pwm_might_sleep(struct pwm_device *pwm)
- int pwm_capture(struct pwm_device *pwm, struct pwm_capture *result,
- 		unsigned long timeout);
+-	return container_of(chip, struct samsung_pwm_chip, chip);
++	return pwmchip_get_drvdata(chip);
+ }
  
-+struct pwm_chip *devm_pwmchip_alloc(struct device *parent, unsigned int npwm, size_t sizeof_priv);
+ static inline unsigned int to_tcon_channel(unsigned int channel)
+@@ -181,9 +179,10 @@ static unsigned long pwm_samsung_get_tin_rate(struct samsung_pwm_chip *our_chip,
+ 	return rate / (reg + 1);
+ }
+ 
+-static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
++static unsigned long pwm_samsung_calc_tin(struct pwm_chip *chip,
+ 					  unsigned int chan, unsigned long freq)
+ {
++	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
+ 	struct samsung_pwm_variant *variant = &our_chip->variant;
+ 	unsigned long rate;
+ 	struct clk *clk;
+@@ -197,12 +196,12 @@ static unsigned long pwm_samsung_calc_tin(struct samsung_pwm_chip *our_chip,
+ 				return rate;
+ 		}
+ 
+-		dev_warn(pwmchip_parent(&our_chip->chip),
++		dev_warn(pwmchip_parent(chip),
+ 			"tclk of PWM %d is inoperational, using tdiv\n", chan);
+ 	}
+ 
+ 	rate = pwm_samsung_get_tin_rate(our_chip, chan);
+-	dev_dbg(pwmchip_parent(&our_chip->chip), "tin parent at %lu\n", rate);
++	dev_dbg(pwmchip_parent(chip), "tin parent at %lu\n", rate);
+ 
+ 	/*
+ 	 * Compare minimum PWM frequency that can be achieved with possible
+@@ -329,7 +328,7 @@ static int __pwm_samsung_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		dev_dbg(pwmchip_parent(chip), "duty_ns=%d, period_ns=%d (%u)\n",
+ 						duty_ns, period_ns, period);
+ 
+-		tin_rate = pwm_samsung_calc_tin(our_chip, pwm->hwpwm, period);
++		tin_rate = pwm_samsung_calc_tin(chip, pwm->hwpwm, period);
+ 
+ 		dev_dbg(pwmchip_parent(chip), "tin_rate=%lu\n", tin_rate);
+ 
+@@ -506,9 +505,10 @@ static const struct of_device_id samsung_pwm_matches[] = {
+ };
+ MODULE_DEVICE_TABLE(of, samsung_pwm_matches);
+ 
+-static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
++static int pwm_samsung_parse_dt(struct pwm_chip *chip)
+ {
+-	struct device_node *np = pwmchip_parent(&our_chip->chip)->of_node;
++	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
++	struct device_node *np = pwmchip_parent(chip)->of_node;
+ 	const struct of_device_id *match;
+ 	struct property *prop;
+ 	const __be32 *cur;
+@@ -522,7 +522,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
+ 
+ 	of_property_for_each_u32(np, "samsung,pwm-outputs", prop, cur, val) {
+ 		if (val >= SAMSUNG_PWM_NUM) {
+-			dev_err(pwmchip_parent(&our_chip->chip),
++			dev_err(pwmchip_parent(chip),
+ 				"%s: invalid channel index in samsung,pwm-outputs property\n",
+ 								__func__);
+ 			continue;
+@@ -533,7 +533,7 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
+ 	return 0;
+ }
+ #else
+-static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
++static int pwm_samsung_parse_dt(struct pwm_chip *chip)
+ {
+ 	return -ENODEV;
+ }
+@@ -542,21 +542,22 @@ static int pwm_samsung_parse_dt(struct samsung_pwm_chip *our_chip)
+ static int pwm_samsung_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
++	struct pwm_chip *chip;
+ 	struct samsung_pwm_chip *our_chip;
+ 	unsigned int chan;
+ 	int ret;
+ 
+-	our_chip = devm_kzalloc(&pdev->dev, sizeof(*our_chip), GFP_KERNEL);
+-	if (our_chip == NULL)
++	chip = devm_pwmchip_alloc(&pdev->dev, SAMSUNG_PWM_NUM, sizeof(*chip));
++	if (chip == NULL)
+ 		return -ENOMEM;
++	our_chip = to_samsung_pwm_chip(chip);
 +
- int __pwmchip_add(struct pwm_chip *chip, struct module *owner);
- #define pwmchip_add(chip) __pwmchip_add(chip, THIS_MODULE)
- void pwmchip_remove(struct pwm_chip *chip);
++	chip->ops = &pwm_samsung_ops;
+ 
+-	our_chip->chip.dev = &pdev->dev;
+-	our_chip->chip.ops = &pwm_samsung_ops;
+-	our_chip->chip.npwm = SAMSUNG_PWM_NUM;
+ 	our_chip->inverter_mask = BIT(SAMSUNG_PWM_NUM) - 1;
+ 
+ 	if (IS_ENABLED(CONFIG_OF) && pdev->dev.of_node) {
+-		ret = pwm_samsung_parse_dt(our_chip);
++		ret = pwm_samsung_parse_dt(chip);
+ 		if (ret)
+ 			return ret;
+ 	} else {
+@@ -595,7 +596,7 @@ static int pwm_samsung_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, our_chip);
+ 
+-	ret = pwmchip_add(&our_chip->chip);
++	ret = pwmchip_add(chip);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to register PWM chip\n");
+ 		clk_disable_unprepare(our_chip->base_clk);
+@@ -612,17 +613,18 @@ static int pwm_samsung_probe(struct platform_device *pdev)
+ 
+ static void pwm_samsung_remove(struct platform_device *pdev)
+ {
+-	struct samsung_pwm_chip *our_chip = platform_get_drvdata(pdev);
++	struct pwm_chip *chip = platform_get_drvdata(pdev);
++	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
+ 
+-	pwmchip_remove(&our_chip->chip);
++	pwmchip_remove(chip);
+ 
+ 	clk_disable_unprepare(our_chip->base_clk);
+ }
+ 
+ static int pwm_samsung_resume(struct device *dev)
+ {
+-	struct samsung_pwm_chip *our_chip = dev_get_drvdata(dev);
+-	struct pwm_chip *chip = &our_chip->chip;
++	struct pwm_chip *chip = dev_get_drvdata(dev);
++	struct samsung_pwm_chip *our_chip = to_samsung_pwm_chip(chip);
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < SAMSUNG_PWM_NUM; i++) {
 -- 
 2.43.0
 
