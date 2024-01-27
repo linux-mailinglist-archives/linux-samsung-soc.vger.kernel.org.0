@@ -1,172 +1,126 @@
-Return-Path: <linux-samsung-soc+bounces-1411-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1413-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E22D283E6BB
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 00:22:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F85E83E824
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 01:19:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F33D1F295D3
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Jan 2024 23:22:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20EBA1F228C2
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 00:19:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D163064AAF;
-	Fri, 26 Jan 2024 23:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469B1185D;
+	Sat, 27 Jan 2024 00:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="l6pzT6fi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ufpaebyR"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D8C62A0D
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jan 2024 23:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB9E370
+	for <linux-samsung-soc@vger.kernel.org>; Sat, 27 Jan 2024 00:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706310986; cv=none; b=fgZb1wOdq5lzhBI8E0gwuHCXLxAbXb3zlK9SxDsCNlf7PxFPzQnt7t7Gn8Au99wkAMQAm8NThTQHfJyepNTIuqC5j0wYt1vVaUiLK6NnPLE05cHRB/pxOHdEmsOwz6h8zD+PjqftJCk7y1S7Hzjo3DAwZAZvf2T7hdGzTfTOunY=
+	t=1706314785; cv=none; b=pn0D6V7jthJ+DEsFVU7H6Bl8hO3XTpGCEmTDJdPA27qmPTBHOKWZ27ZYrFsHu4Ozh6kFbM5LocfjMqyZYjPvCR+VUDgoW+kvgoXEqx5xlOUl2H22yh6fuMKR/1NrvbgqStHkmELnWapLt7gLKOWCPlbafHtfvPMLC/grVCf2yYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706310986; c=relaxed/simple;
-	bh=3a/r7kXdAIFtktUyOV8TMLOQckxM8aU1T8MlUOBhuxg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hlYF886X2ccwQTN5DnwqsCMZvmvWlJwRW6Scr0VY7Qx8PJPpM/VMmt/o19J2x3+A2yBuTIL8JqXtlHpgcPptD3Pod7nppgYspndJdK9YvnpY9G4UB5QRd1zG2SHutOE5iVKGXL9vva2oX9OEmS57m/9GWU3ei25/Wkrxif+AD0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=l6pzT6fi; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-783cbc38a78so62474485a.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jan 2024 15:16:24 -0800 (PST)
+	s=arc-20240116; t=1706314785; c=relaxed/simple;
+	bh=x3DKShgBTOnrD8k+DrfvWaZBjQtkKSeAaHSrqpEEAOU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hu5FRP8G4lymPy7xT0Wa5y2/E3rCqUPvTDHvb79/iUwbol9dx52lq394+3BdU1Nx340xrgh2ypEAK1qYSOmfSyxaCFoU9di2H6TCT80QQRrAIw5b/hXRgmApinfI5ajYMjA+RUmK8Xo1cbR0Sga1axT2NrdF4Tazro1yWVUWLWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ufpaebyR; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so176006166b.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jan 2024 16:19:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706310983; x=1706915783; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mtltgslBdQHae+oLD1399tQsPexikCLm+b/oIxSwL94=;
-        b=l6pzT6fiQre9odpIZATrtgsshg4nH0dv4jI7iWbvVve7/y8ej97RVaZAbruMZD0pSu
-         B1WrPPkVG8OazVZ5fOMdinRIfskfwkL+35PAKDYHJHka/PQkwiggwB2lp7erSeiw49zn
-         Ugr+lr9r2rK/FoUdl8b2zxcprozmtlRXpE930=
+        d=linaro.org; s=google; t=1706314780; x=1706919580; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4NX+mrlfMcpXdEDiR+mehIQoYvG9eewn+lTUjYvS9+o=;
+        b=ufpaebyRXxHnBDoLinCWECkSwNsBVdpY7zoV2WeSwCUbFO9jEWyLPnVabyjooMR3PH
+         8A3mIBKnw7Wx9RkZUe63uyx56t/AVSE2k1hv/gGYeLRbNpnGdL+VTYmTvgXAGrud4IoH
+         QBrSX3G+mTk7iL8eleC7LVO5/hVOiCBzPKRCOX9vhHQEmq38pdlHDvN2ukJ6h63pjJ5i
+         m03IpulnBW1kHI9IGYmnWzU0P5b06Ocb+ZtyQEA1XQ3vRz4oReZLvQg7pTsb33nHjO+r
+         a9sojCATH0yNnC/na3oUHnGC8A/heCHhQrNoGT4haAiAUGul0JFxfxqIvO8WejLoqyQ2
+         CPPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706310983; x=1706915783;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mtltgslBdQHae+oLD1399tQsPexikCLm+b/oIxSwL94=;
-        b=VLu5SCxXzkHJ1OIUwYyh8DvcAMaL3t/FkyzQZs0dg4UqdxRvfCxrpAh9VzvCyKVRF3
-         RgTRWq3yMMZZrYHkygQau2IlodlQ0RHHkXMZD7knz0Konhgp3HUrXALvXJbcDy5IncWo
-         ZTMwfd4UeOL6GACaa1Plj1Ws9mSKUoJn+WU3yhZF5YF8KSB26ynM6bru6eGyqAJM15rN
-         cASdPX2NGGj7Cp0BCLwTzRVIuvCYZ2ajJ2bq5sDJ/PHFY5ui9koBXYA3GmgSwManhsaZ
-         ioC0Ela0ag2WtwxjLi/B0qDRihu//9lgGVfwJJOeKzshif3ndN7fxadswkrG23wzg4uz
-         EyNA==
-X-Gm-Message-State: AOJu0YwhnP/TbWxXN6pyomcqHI+5Im1nPcJWQALXE4O4n3W33vtBzMYw
-	Xy8Mc9xtd9oSyuPiQNWNrClocbdvRI0ltPpFvgNK4HSyC7FiHYz9HjhcvD0HxA==
-X-Google-Smtp-Source: AGHT+IFr6+3pqj0JMsLxQ2GW7atIeRCtD6HJIvow5am3DYJqsXSoZPigBa/gFlr3DGsp4f3R3YcSBQ==
-X-Received: by 2002:a05:620a:618e:b0:783:4cbd:9ed7 with SMTP id or14-20020a05620a618e00b007834cbd9ed7mr711408qkn.38.1706310983521;
-        Fri, 26 Jan 2024 15:16:23 -0800 (PST)
-Received: from denia.c.googlers.com (240.157.150.34.bc.googleusercontent.com. [34.150.157.240])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.22
+        d=1e100.net; s=20230601; t=1706314780; x=1706919580;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4NX+mrlfMcpXdEDiR+mehIQoYvG9eewn+lTUjYvS9+o=;
+        b=d1QaRsWVwa+HNlhbOpG7hB7Y0aaWRkpx4AwbzLnjvfM/QQIpt5TGAmDL+9J/I+zCbR
+         hti67pDq3rhJdj+TH2dG8BUdSX26EvgznJ55o88IzxKOxLRyGhE+AEhyjGtjMp/hcMK4
+         VNcd7ytPZu5GltqIwsXrSkKcupSK5XPAp99m8+kAAScxjx+/LmzLAcQj9SoIKoF+5YKY
+         DVEqeorj6Vy9lIT9I/aVmXae1hhQiiPF1IV2HZuubMsGVMoDQ444sTWVokvCh2ts2WvD
+         t6WhQEYcqEJXe866SQYbvJV31jX+KcYjfQoA+Wz/bbKL8hMm8JbNOs/x92D07kFECsOQ
+         VDSw==
+X-Gm-Message-State: AOJu0YzLBrEsBpzCzsqp3wcwr8DrYAnS2KT/xgQ0kj3ieyx2J9wLwy2Y
+	eJX9giQn9dB8hEpuPZmgKVjVZt6EfW2zTqc0axeXrrYJTCc+FoylbG3mSiFyCPc=
+X-Google-Smtp-Source: AGHT+IEMjmzKAppDcHhedNZpL1Hc8FOnCZRGGgWeBOK37pKFPvJCHdt0r1ZPs3ZBW26CtJokNiEfgA==
+X-Received: by 2002:a17:906:faca:b0:a31:6be0:b9f with SMTP id lu10-20020a170906faca00b00a316be00b9fmr480472ejb.74.1706314779677;
+        Fri, 26 Jan 2024 16:19:39 -0800 (PST)
+Received: from puffmais.c.googlers.com.com (229.112.91.34.bc.googleusercontent.com. [34.91.112.229])
+        by smtp.gmail.com with ESMTPSA id x16-20020a170906135000b00a339d705a10sm1141359ejb.80.2024.01.26.16.19.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 15:16:23 -0800 (PST)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 26 Jan 2024 23:16:16 +0000
-Subject: [PATCH 17/17] linux: v4l2-vp9.h: Fix kerneldoc
+        Fri, 26 Jan 2024 16:19:39 -0800 (PST)
+From: =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>
+To: peter.griffin@linaro.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	kernel-team@android.com,
+	tudor.ambarus@linaro.org,
+	willmcvicker@google.com,
+	semen.protsenko@linaro.org,
+	alim.akhtar@samsung.com,
+	s.nawrocki@samsung.com,
+	tomasz.figa@gmail.com,
+	cw00.choi@samsung.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: gs101 oriole: peripheral block 1 (peric1) and i2c12 support
+Date: Sat, 27 Jan 2024 00:19:04 +0000
+Message-ID: <20240127001926.495769-1-andre.draszik@linaro.org>
+X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-gix-mtk-warnings-v1-17-eed7865fce18@chromium.org>
-References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
-In-Reply-To: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
-To: Tiffany Lin <tiffany.lin@mediatek.com>, 
- Andrew-CT Chen <andrew-ct.chen@mediatek.com>, 
- Yunfei Dong <yunfei.dong@mediatek.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hans Verkuil <hverkuil@xs4all.nl>, 
- Kieran Bingham <kieran.bingham@ideasonboard.com>, 
- Bin Liu <bin.liu@mediatek.com>, 
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Marek Szyprowski <m.szyprowski@samsung.com>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, Bingbu Cao <bingbu.cao@intel.com>, 
- Tianshu Qiu <tian.shu.qiu@intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
- linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev, 
- linux-amlogic@lists.infradead.org, Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.12.3
+Content-Transfer-Encoding: 8bit
 
-Kerneldoc cannot understand arrays defined like
-v4l2_frame_symbol_counts.
+Hi,
+   
+This patch series implements support for the 2nd connectivity
+peripheral block on gs101.
+This block contains an additional 6 USI, 1 I3C and 1 PWM
+interfaces/busses.
 
-Adding an asterisk to the name does do the trick.
+i2cdetect shows all expected devices on the one i2c bus that this patch
+series enables.
+Everything that's in scope in this series works also without the
+clk_ignore_unused kernel command line argument.
 
-Disable the kerneldoc notation for now, it is already ignored:
-https://docs.kernel.org/search.html?q=v4l2_vp9_frame_symbol_counts
+While working on this, I noticed the existing peric0 support for gs101
+has a couple issues. That explains why there are differences compared 
+to it and a separate patch series will be sent to fix up peric0
+support.
 
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'partition' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'skip' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'intra_inter' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'tx32p' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'tx16p' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'tx8p' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'y_mode' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'uv_mode' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'comp' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'comp_ref' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'single_ref' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'mv_mode' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'filter' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'mv_joint' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'sign' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'classes' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'class0' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'bits' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'class0_fp' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'fp' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'class0_hp' description in 'v4l2_vp9_frame_symbol_counts'
-include/media/v4l2-vp9.h:144: warning: Excess struct member 'hp' description in 'v4l2_vp9_frame_symbol_counts'
+Cheers,
+Andre' 
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- include/media/v4l2-vp9.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/include/media/v4l2-vp9.h b/include/media/v4l2-vp9.h
-index 05478ad6d4ab..f0d80273bd61 100644
---- a/include/media/v4l2-vp9.h
-+++ b/include/media/v4l2-vp9.h
-@@ -83,7 +83,11 @@ struct v4l2_vp9_frame_context {
- 	struct v4l2_vp9_frame_mv_context mv;
- };
- 
--/**
-+/*
-+ * NOTE: This is not a kerneldoc, because the (*name) notation confuses the
-+ *	 parser.
-+ */
-+/*
-  * struct v4l2_vp9_frame_symbol_counts - pointers to arrays of symbol counts
-  *
-  * @partition: partition counts.
-
--- 
-2.43.0.429.g432eaa2c6b-goog
+ .../bindings/clock/google,gs101-clock.yaml    |   9 +-
+ .../soc/samsung/samsung,exynos-sysreg.yaml    |   2 + 
+ .../boot/dts/exynos/google/gs101-oriole.dts   |   9 + 
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi  |  42 ++
+ drivers/clk/samsung/clk-gs101.c               | 347 ++++++++++++++++-
+ include/dt-bindings/clock/google,gs101.h      |  48 +++
 
 
