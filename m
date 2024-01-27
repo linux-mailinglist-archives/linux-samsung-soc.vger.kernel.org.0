@@ -1,67 +1,67 @@
-Return-Path: <linux-samsung-soc+bounces-1421-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1415-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 504F883E842
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 01:20:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2079783E833
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 01:20:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74A471C21F44
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 00:20:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFD4D289FF5
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Jan 2024 00:20:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B73B279D4;
-	Sat, 27 Jan 2024 00:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3769B33F6;
+	Sat, 27 Jan 2024 00:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z5vteu3N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="F7eOMz9N"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF57815AE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B58917D3
 	for <linux-samsung-soc@vger.kernel.org>; Sat, 27 Jan 2024 00:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706314789; cv=none; b=JknC7aGssjL2AfA6uAP90HiId55bkVhheJZDWimbkMbnaYcQgg7J35ywh9GUhAyQUb3HszHIJ3EM7/elmRJzYkRykj3ZfXaQSlnzLWUpXlp95V8trDLOIQvIHKMBsZxKre/UWvBWqDsyDOyXp4SQq1OpPOg5dZfg/2jm/nl2/FA=
+	t=1706314788; cv=none; b=YEJfszLPlNbCboToF1Bxa39f5vnMB+hi0eGC7quS0YYjnLtCVKIJq00y0Pbs99Lmz0sdoOXv0IX9kYx8/2SqLfx3pykMFmHuMgZ18P6jZWsFytrSY9vrg6X1nUQJI+jVfhe2ImwLvx9kxcseepFpmlGN0eWlrzsIEi2FPzHv4Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706314789; c=relaxed/simple;
-	bh=SRaoY6Wy5mREGBPRLeiPUUSrZarGUQsXs633eSkifMk=;
+	s=arc-20240116; t=1706314788; c=relaxed/simple;
+	bh=QCBcVoNTtEzs8YaN7v2UFqWn/6iZ4/+D+SQWJIRaEgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ksxLvYYjvE5HMr5eqqjIIdbv3Zg/A67nVxr+NSfSDYkDDat7oesBs4a59xgP63B2noB6B1NtRmOFAngFCWhBHmvYcA7osgKSifQaBiDfYjlzaMFZCtGUMyGiDfySf7a8zb5kCRHKLYiqZ2xp2blP9KcJTVnclDwedfCJm9FkxfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z5vteu3N; arc=none smtp.client-ip=209.85.218.52
+	 MIME-Version:Content-Type; b=QUd7p7ZqQcHUZzM4f7Ts61OwerabgEOJ8RyHzzHguMgMHFFHhdWAWwjBCJbOAuhNJc4tYZa1NnH7YSL6Q4LVoKb2RPoPtF0Ee+MkyIU86WA6KtHHrigkl4movE4zRwzWcemTv9sdrGrDFyZVGZYUpIrq9MMN1iDiWaj8L03fRrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=F7eOMz9N; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a26fa294e56so98715666b.0
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a2f79e79f0cso81016566b.2
         for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Jan 2024 16:19:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706314782; x=1706919582; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706314783; x=1706919583; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=72FI1Gr7K77cw7b0NtV82bnbC4R0Os+Pre+olDdbzEQ=;
-        b=Z5vteu3NWLMbaFTrA44z1MUI7x28cDl1ABzweSWx/0bafdEgM7KGP/VP5g6eUilx5E
-         5ch6064w7k4SezG0qyhikZt0mecw3cZBwZz5mo7O5dqQdu3UpfFz2Gba0znEfzvJcslt
-         7nMIyiyJXa6E1iwGwOB8Q5DFt9dgriyqRCE7BfQrpYM2F5sRqG2xndygaaQEldfP5GbH
-         pqjeQxDNeuyFLZ9Rc/wMVBtWNqz0FqXy1TN63BJrFXiEy19pBBTC1w/a64OhtRhZVFyo
-         AL0zATsHoTg0xNw5LxfXnTlQtYg1NmlhSLC7/8/rtzraKVmsD5u4UzNuRIW5/qdcQuF9
-         Kt9g==
+        bh=yUTiJvJqAJFqpZq0PlR/xTJQ+sgK5+j4/7Vro1qj7Vg=;
+        b=F7eOMz9NEri2UlbOPGhUwpOyHWK+0PAmepVVUkLdq2R/yqFgWDMITwtrD9fSwddTy/
+         doxvJWOPsQaL0ut/vuHpD3Qa5/S6Cqq+06sKqJTo59Y1p1IlwVQm5YbQhlg8XcpPkrJI
+         VV/l+OEyAyF962DzVDRyq/JOXsmCRUJZNj9mFrsSGVyBAr84vcYdlEJuB1GPLtBYd0Lt
+         vGzXgkh0WE/RrG7rEUUWJUvXwn3oPSpuTvX5msvC8yitHLHHNoCcEvHEY2zcjsmDWU23
+         emgOvxjqISTlr9NrEaSaOfOfCYHGP/IjyJfgeh8fQSQqehaUraZRp9GPw2mDi36Ypnd8
+         cdbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706314782; x=1706919582;
+        d=1e100.net; s=20230601; t=1706314783; x=1706919583;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=72FI1Gr7K77cw7b0NtV82bnbC4R0Os+Pre+olDdbzEQ=;
-        b=dKS5a7ok0bnIfG7kzKyDtPjPkTcWY04ybhbz3H1yiVQLIOpxvJiuG9/h1YR7HtEDiu
-         WzoeXxoOn9qUfy8p4c08pA7R6NNtuMaHpjio6GR8cTKjJjnzKNGBr0aeXb8TU0+6GT3N
-         AKnVrR2yaup0oPsKZg5A2jLlZ1zIpgGFMbE7szVoqSv25EdzetEHFFsOymxprbE8nPwt
-         hbedtwli4qN6RLzIJyk26TF3Dt4O5KoCn0WSz4XkJO3R4tItHzc8HPMm0M7fS7yEkJsD
-         5szlatJH4btKWgZgiS7v3I+RELbjUU3EdeRX5xl9HE7qOVI5P2h4U1a7GO0TnLvafd4Z
-         7XZA==
-X-Gm-Message-State: AOJu0YxIbFbETRU1rN23N76AvIqnvMM8TgRpnSYykYWP64k3BsYjnna4
-	zXm3rv5sI/FYjox1rBPKFaMayfz2MMLMijJvtA73Xw48xULoWLaMycNFN9tEA9A=
-X-Google-Smtp-Source: AGHT+IENxC5NzltrZvHqg5cPuaM1cJlF4edDxysfXqaJmLH/0P2mdMA5f7sFpZvo3B8zspiigKme0Q==
-X-Received: by 2002:a17:906:a001:b0:a30:70fd:7749 with SMTP id p1-20020a170906a00100b00a3070fd7749mr307520ejy.47.1706314782668;
-        Fri, 26 Jan 2024 16:19:42 -0800 (PST)
+        bh=yUTiJvJqAJFqpZq0PlR/xTJQ+sgK5+j4/7Vro1qj7Vg=;
+        b=A9oOOGxXrB5yYhU8ZG9/e3I1Fytrn/ImcucG/lJewrPd8Fv8WIf2FHnpc0NbcCkfTG
+         O+XFFJ0MzTwZRb5srxbp5tJltANB6Vw0dY8zNYPsG9C3AB5JwLlE+OlCkYVuqhR/Mwma
+         wCwVSV8rNTEeyEfzoJ9PQ1KjDlgzk/a88/X/CZNmLpEMMcZdbKHnAXezlASUjV58lJrN
+         j7oNcLQPDvJkL1y+CG20o+s/W1hjTE+UMGgo3Xh0os/cbokcfhhMZ5pKUxx8bGi0luHa
+         ACL1k3Gw7k9hnvOLEGOdwLhOciv7JvvACE0ms4tdE0+GWMV3sxxvHa8rlF0kco87mA4v
+         H5zw==
+X-Gm-Message-State: AOJu0YxXgvu7u94BOiwWiWz8CW0QBu9Ahx4LudwQkKQTXg8oermo0GTU
+	kbdMQHWGhHZo/ioy9RSKi57r36Gn79/C5GfyNACAxQpiWvuUVmumEW9388KADG0=
+X-Google-Smtp-Source: AGHT+IGkm39NfF0E/k3smX/KQGkNB8Zdyio6Yz3gDcfCSJPUy7NuuFl2uvO0Un5oFOG2oyg/lgq0ag==
+X-Received: by 2002:a17:906:a456:b0:a31:7ed9:973b with SMTP id cb22-20020a170906a45600b00a317ed9973bmr289912ejb.65.1706314783163;
+        Fri, 26 Jan 2024 16:19:43 -0800 (PST)
 Received: from puffmais.c.googlers.com.com (229.112.91.34.bc.googleusercontent.com. [34.91.112.229])
         by smtp.gmail.com with ESMTPSA id x16-20020a170906135000b00a339d705a10sm1141359ejb.80.2024.01.26.16.19.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -86,9 +86,9 @@ Cc: linux-kernel@vger.kernel.org,
 	linux-samsung-soc@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH 6/9] arm64: dts: exynos: gs101: enable i2c bus 12 on gs101-oriole
-Date: Sat, 27 Jan 2024 00:19:10 +0000
-Message-ID: <20240127001926.495769-7-andre.draszik@linaro.org>
+Subject: [PATCH 7/9] dt-bindings: samsung: exynos-sysreg: gs101-peric1 requires a clock
+Date: Sat, 27 Jan 2024 00:19:11 +0000
+Message-ID: <20240127001926.495769-8-andre.draszik@linaro.org>
 X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
 In-Reply-To: <20240127001926.495769-1-andre.draszik@linaro.org>
 References: <20240127001926.495769-1-andre.draszik@linaro.org>
@@ -101,40 +101,25 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This bus has various USB-related devices attached to it.
+Otherwise it won't be accessible.
 
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101-oriole.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml   | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts b/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-index cb4d17339b6b..c8f6b955cd4e 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-+++ b/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-@@ -72,6 +72,10 @@ eeprom: eeprom@50 {
- 	};
- };
- 
-+&hsi2c_12 {
-+	status = "okay";
-+};
-+
- &pinctrl_far_alive {
- 	key_voldown: key-voldown-pins {
- 		samsung,pins = "gpa7-3";
-@@ -113,6 +117,11 @@ &usi8 {
- 	status = "okay";
- };
- 
-+&usi12 {
-+	samsung,mode = <USI_V2_I2C>;
-+	status = "okay";
-+};
-+
- &watchdog_cl0 {
- 	timeout-sec = <30>;
- 	status = "okay";
+diff --git a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
+index 33d837ae4f45..c0c6ce8fc786 100644
+--- a/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
++++ b/Documentation/devicetree/bindings/soc/samsung/samsung,exynos-sysreg.yaml
+@@ -73,6 +73,7 @@ allOf:
+           contains:
+             enum:
+               - google,gs101-peric0-sysreg
++              - google,gs101-peric1-sysreg
+               - samsung,exynos850-cmgp-sysreg
+               - samsung,exynos850-peri-sysreg
+               - samsung,exynos850-sysreg
 -- 
 2.43.0.429.g432eaa2c6b-goog
 
