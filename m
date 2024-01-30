@@ -1,200 +1,100 @@
-Return-Path: <linux-samsung-soc+bounces-1572-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1576-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7D5A842DC3
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jan 2024 21:28:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26105842E13
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jan 2024 21:41:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 753581F26219
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jan 2024 20:28:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D2A8628B94F
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Jan 2024 20:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B567871B51;
-	Tue, 30 Jan 2024 20:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7829762D4;
+	Tue, 30 Jan 2024 20:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AYnG2/su"
+	dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b="FC4OJL2W"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D7071B46;
-	Tue, 30 Jan 2024 20:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E935C5E0
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 30 Jan 2024 20:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706646481; cv=none; b=up3+V6AHNuG8PxcdWQso8fZil4F0xkg7EPZRtDvyQQ6mL2WIyPjhCkyF4ZJW3hnD2UlPMeLYWcRqyvwVZcWlWi9jmj49P1xl8u2Zt0wPDrpiuEhsqzyxlFw511oLsAIWSj2kN3W09bMKtIIY5CHCjugU3sMraPQdRIM2NoFuYmI=
+	t=1706647273; cv=none; b=Be9wa6JYtKKQ9lTLLFfr/G8OLQhEhfcAxDh9pEKBJDnKW8Hs99v0WPAcIvj9P27dOHw8liVx1j6etnrjDrCr98nocNztEZLvi1H6gKBo0v/GR/jfdCdrAkgqWUwvyRXfSqQA72z+WscNmIkb+ZluRkr0Sr5UJsmCmolHmdqhKUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706646481; c=relaxed/simple;
-	bh=f8ZYd/m4g8k5qSL4jcMpv2BFLuBv2/ih8nBsDbbrmcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q8BwjY3dvAo9VKEb/tKiZ0YkL2yQaS/+djp23vkWxhLztzJ40/38HBVhZcmG02a6kETxeycrCATTYTPNJ1cQUJ/nBPGuFEto7k4XlKvrBoRtXTuAzztCeBxkdhwBtyIlU12GXpVb2CSTqUw6v5pX8elGUl+WFuLVihpnTo1+TRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AYnG2/su; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9175C433C7;
-	Tue, 30 Jan 2024 20:28:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706646481;
-	bh=f8ZYd/m4g8k5qSL4jcMpv2BFLuBv2/ih8nBsDbbrmcc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AYnG2/su8b0tWxPMCgTKFeab0yZ4Gv08nGflRtzlcX9Fe47LS+vYkAKmHACAHfqBY
-	 cYIDpVXCO4L1PCd0TStF+aLdoXC4O1+g/7Dp4gzmxA4XWT0mM9YUumfAVwksJN6Qbi
-	 YkPuu7x0Cq2xaG+ktiLImKtmAZ2D4Tm9EZYNzOefGcu3UxuAx9zF7NUah5pmaGj/+D
-	 Wa2ns5MKD63QvR82EbBZ7rwu8aWJT5WwFoGb9b6PYxQyhCnyMcB6Ui0TkQhO3HNIqo
-	 uswf0ZCCgt/2NIaJC0AqW2t1FD0ghEd+2ICBSKFRoUovNAEf4lJw7S/gb/KPX3lxVj
-	 t42n071vwoNHw==
-Date: Tue, 30 Jan 2024 14:27:58 -0600
-From: Rob Herring <robh@kernel.org>
-To: Saravana Kannan <saravanak@google.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Peter Griffin <peter.griffin@linaro.org>, arnd@arndb.de,
-	krzysztof.kozlowski+dt@linaro.org, linux@roeck-us.net,
-	wim@linux-watchdog.org, conor+dt@kernel.org,
-	alim.akhtar@samsung.com, jaewon02.kim@samsung.com,
-	chanho61.park@samsung.com, semen.protsenko@linaro.org,
-	kernel-team@android.com, tudor.ambarus@linaro.org,
-	andre.draszik@linaro.org, willmcvicker@google.com,
-	linux-fsd@tesla.com, linux-watchdog@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 3/9] watchdog: s3c2410_wdt: update to use new
- exynos_pmu_*() apis
-Message-ID: <20240130202758.GA2237959-robh@kernel.org>
-References: <20240122225710.1952066-1-peter.griffin@linaro.org>
- <20240122225710.1952066-4-peter.griffin@linaro.org>
- <da30a68a-e29f-45c8-aa73-02955255a457@linaro.org>
- <CADrjBPor5tMY4r0jOy7GH36auCU7dWn6Qn4ct89bsSMW4vAQOA@mail.gmail.com>
- <6c72a521-1048-42eb-ac74-d8f718a90723@linaro.org>
- <CAGETcx-CCpaV7R0O0HpDpoX6KxQBuJiMmKdWA8nDE-5Qj2Sa7g@mail.gmail.com>
- <f4d3aa5a-e01d-4ef3-8004-b6eac4461184@linaro.org>
- <CAGETcx_HGcuGQTO11tzX0EvnuLEaKYc4vBse1CRP0JwPqMJdQQ@mail.gmail.com>
+	s=arc-20240116; t=1706647273; c=relaxed/simple;
+	bh=8PzOVgfO3wYB39pdWO/JXBhwi39Pfy0F/N4Vo5QOofk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nolYZ1/6DICL+nauuZ/malcf4+5CMFQUsjvQZ0YvhhHI9EAOoAXPv3DKQRvIUtk7W/Ob8dUWsbBaI9HmeEeEFlF6u6jQ7Da7TUWsmuSPOUnhNlMRVsta+TG0ms1rfm6a5gV/giyfMaMSOTiN3eu+OgGlfV9WYoEwK5dHXTz+5mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se; spf=pass smtp.mailfrom=grimler.se; dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b=FC4OJL2W; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grimler.se
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grimler.se; s=key1;
+	t=1706647267;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=zM7gBsHINXnI27rsymf8P8R4h9e6Mdp280o+IUjJVAg=;
+	b=FC4OJL2W0OlB6UiFqqT/dU9xmaeZLBVHl8nvuR4+KSY/yhn4lljmeD7pb2OYqd3UdP3a4x
+	Rw3m+6jTHovIgY5gi2+I69E+6MPEUhpaZqpRQzXhKw0rg67kzGdq8M613ia6QmKNy+g5ij
+	c4GfNeac//l8QGhTOTeUunE7r+TwqsY=
+From: Henrik Grimler <henrik@grimler.se>
+Subject: [PATCH 0/3] ARM: dts: samsung: enable wifi and cleanup
+ exynos5420-galaxy-tab dts'es
+Date: Tue, 30 Jan 2024 21:40:38 +0100
+Message-Id: <20240130-galaxy-tab-s-cleanup-v1-0-d4e17857241d@grimler.se>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGETcx_HGcuGQTO11tzX0EvnuLEaKYc4vBse1CRP0JwPqMJdQQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMZeuWUC/x3MQQ5AMBBA0avIrE3SlgiuIhZDB5NISYsQ6d01l
+ m/x/wuBvXCANnvB8yVBNpeg8wzGhdzMKDYZjDKFNlrhTCvdDx40YMBxZXLnjrq01NSDKSpVQUp
+ 3z5Pc/7brY/wAAioH+WYAAAA=
+To: Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ ~postmarketos/upstreaming@lists.sr.ht
+X-Developer-Signature: v=1; a=openpgp-sha256; l=801; i=henrik@grimler.se;
+ h=from:subject:message-id; bh=8PzOVgfO3wYB39pdWO/JXBhwi39Pfy0F/N4Vo5QOofk=;
+ b=owEBbQGS/pANAwAKAbAHbkkLcWFrAcsmYgBluV7Xk4LCCoPprjBcTUUwoIzGMRjLWqm7OFuFo
+ OjZ9CvfbG2JATMEAAEKAB0WIQQsfymul4kfZBmp4s2wB25JC3FhawUCZble1wAKCRCwB25JC3Fh
+ a+4PB/sEz0E2++WHDYxoieAhRX4HhGfXaJqxdUkx6PZIv5HwcgGLq4pWzPzHO8kNITDuy2UEOM0
+ KOFtASUcssb5KH1iwpCxAln4xADwEp8aF/THd3YT/KQVAV15Q1NWzKXPGrPKuf218LQazraFtH9
+ zGIYVlehy16XXpolm2CrR/BQ/Ypj//2KwKjfRztCyVsV5LAqk2k/MP/bFAb1Lg4VV868iHwGg/3
+ 9dmf25g+NdIHZIWwUNgbCuki3GxwlNRHX8cefFi/QeRkUhNyww6gO33EiaZDC0ZDkNHwsm3UpOT
+ k5b+J+CEeKUfYxcrCvgkY2b2cJK9tXYlikpu+tm1WhNGBjGK
+X-Developer-Key: i=henrik@grimler.se; a=openpgp;
+ fpr=2C7F29AE97891F6419A9E2CDB0076E490B71616B
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jan 24, 2024 at 01:27:01PM -0800, Saravana Kannan wrote:
-> On Tue, Jan 23, 2024 at 10:27 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 24/01/2024 04:37, Saravana Kannan wrote:
-> > > On Tue, Jan 23, 2024 at 10:12 AM Krzysztof Kozlowski
-> > > <krzysztof.kozlowski@linaro.org> wrote:
-> > >>
-> > >> On 23/01/2024 18:30, Peter Griffin wrote:
-> > >>>>>               dev_warn(wdt->dev, "Couldn't get RST_STAT register\n");
-> > >>>>>       else if (rst_stat & BIT(wdt->drv_data->rst_stat_bit))
-> > >>>>> @@ -698,14 +699,6 @@ static int s3c2410wdt_probe(struct platform_device *pdev)
-> > >>>>>       if (ret)
-> > >>>>>               return ret;
-> > >>>>>
-> > >>>>> -     if (wdt->drv_data->quirks & QUIRKS_HAVE_PMUREG) {
-> > >>>>> -             wdt->pmureg = syscon_regmap_lookup_by_phandle(dev->of_node,
-> > >>>>> -                                             "samsung,syscon-phandle");
-> > >>>>> -             if (IS_ERR(wdt->pmureg))
-> > >>>>> -                     return dev_err_probe(dev, PTR_ERR(wdt->pmureg),
-> > >>>>> -                                          "syscon regmap lookup failed.\n");
-> > >>>>
-> > >>>>
-> > >>>> Continuing topic from the binding: I don't see how you handle probe
-> > >>>> deferral, suspend ordering.
-> > >>>
-> > >>> The current implementation is simply relying on exynos-pmu being
-> > >>> postcore_initcall level.
-> > >>>
-> > >>> I was just looking around for any existing Linux APIs that could be a
-> > >>> more robust solution. It looks like
-> > >>>
-> > >>> of_parse_phandle()
-> > >>> and
-> > >>> of_find_device_by_node();
-> > >>>
-> > >>> Are often used to solve this type of probe deferral issue between
-> > >>> devices. Is that what you would recommend using? Or is there something
-> > >>> even better?
-> > >>
-> > >> I think you should keep the phandle and then set device link based on
-> > >> of_find_device_by_node(). This would actually improve the code, because
-> > >> syscon_regmap_lookup_by_phandle() does not create device links.
-> > >
-> > > I kinda agree with this. Just because we no longer use a syscon API to
-> > > find the PMU register address doesn't mean the WDT doesn't depend on
-> > > the PMU.
-> > >
-> > > However, I think we should move to a generic "syscon" property. Then I
-> > > can add support for "syscon" property to fw_devlink and then things
-> > > will just work in terms of probe ordering, suspend/resume and also
-> > > showing the dependency in DT even if you don't use the syscon APIs.
-> > >
-> > > Side note 1:
-> > >
-> > > I think we really should officially document a generic syscon DT
-> > > property similar to how we have a generic "clocks" or "dmas" property.
-> > > Then we can have a syscon_get_regmap() that's like so:
+Describe wifi node for exynos5420-chagall-wifi and
+exynos5420-klimt-wifi, and cleanup their dtsi to accurately describe
+available memory and adhere to the DTS Coding Style document.
 
-The difference is we know what to do with clocks, dma, etc. The only 
-thing we know from "syscon" is it's random register bits.
+Signed-off-by: Henrik Grimler <henrik@grimler.se>
+---
+Henrik Grimler (3):
+      ARM: dts: samsung: exynos5420-galaxy-tab-common: sort node properties
+      ARM: dts: samsung: exynos5420-galaxy-tab-common: add wifi node
+      ARM: dts: samsung: exynos5420-galaxy-tab-common: decrease available memory
 
-> > >
-> > > struct regmap *syscon_get_regmap(struct device *dev)
-> > > {
-> > >         return syscon_regmap_lookup_by_phandle(dev->of_node, "syscon");
-> > > }
-> > >
-> > > Instead of every device defining its own bespoke DT property to do the
-> > > exact same thing. I did a quick "back of the envelope" grep on this
-> > > and I get about 143 unique properties just to get the syscon regmap.
-> > > $ git grep -A1 syscon_regmap_lookup_by_phandle | grep '"' | sed -e
-> > > 's/^[^"]*//' -e 's/"[^"]*$/"/' | sort | uniq | wc -l
-> > > 143
-> >
-> > Sorry, generic "syscon" property won't fly with DT maintainers, because
-> > there is no such thing as syscon in any of hardware.
-> 
-> Then why do we allow a "syscon" compatible string and nodes? If the
-> "syscon" property isn't clear enough, we can make it something like
-> gpios and have it be <whatever>-syscon or have syscon-names property
-> if you want to give it a name.
+ .../dts/samsung/exynos5420-galaxy-tab-common.dtsi  | 57 +++++++++++++++++-----
+ 1 file changed, 44 insertions(+), 13 deletions(-)
+---
+base-commit: 497b447cf89b87c8fb0d0b27994258ed18ac355e
+change-id: 20231210-galaxy-tab-s-cleanup-14da98b23606
 
-I'm pretty hesistant to expand anything syscon related. Really, I'd like 
-to get rid of "syscon" compatible. It's just a hint to create a regmap.
+Best regards,
+-- 
+Henrik Grimler <henrik@grimler.se>
 
-> 143 bespoke properties all to say "here are some registers I need to
-> twiddle that's outside my regmap" doesn't seem great.
-
-I wonder how many aren't outside of the node's main registers, but are 
-the only registers. That's quite common, but that would have largely 
-been before we started saying to make those a child node of the syscon.
-
-Changing wouldn't do anything to get rid of the bespoke strings. It just 
-shifts them from property names to property name prefix or -names 
-string.
-
-> 
-> > >
-> > > Side note 2:
-> > >
-> > > How are we making sure that it's the exynos-pmu driver that ends up
-> > > probing the PMU and not the generic syscon driver? Both of these are
-> > > platform drivers. And the exynos PMU device lists both the exynos
-> > > compatible string and the syscon property. Is it purely a link order
-> > > coincidence?
-> >
-> > initcall ordering
-> 
-> Both these drivers usr postcore_initcall(). So it's purely because
-> soc/ is listed earlier in drivers/Makefile than mfd/. And as soon as
-> drivers are made into modules this is going to break. This is
-> terrible. If you want to have a modular system, this is going to throw
-> in a wrench.
-
-IMO, a "syscon" shouldn't be a module. It's just a regmap.
-
-Rob
 
