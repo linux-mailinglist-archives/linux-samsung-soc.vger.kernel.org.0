@@ -1,138 +1,174 @@
-Return-Path: <linux-samsung-soc+bounces-1717-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1723-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39472849D70
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Feb 2024 15:55:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85880849E93
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Feb 2024 16:40:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED191280EC5
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Feb 2024 14:55:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4213C288CB1
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  5 Feb 2024 15:40:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1795B2C1B4;
-	Mon,  5 Feb 2024 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 453822E40B;
+	Mon,  5 Feb 2024 15:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ijtDirDU"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XSKqBAGJ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA3722F11
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  5 Feb 2024 14:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0192E635;
+	Mon,  5 Feb 2024 15:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707144939; cv=none; b=J9lhd/3tmEbmIGphuhFyeQy3C1xUZ9RsT2ObMrkvkvT5ePk/Uk7h5pzI6GvSfdduQwm2lwcGKO2Gm2ZoQbDNXXcSk/WXxI5YIyFl/yrOXPBmLbcK6P4qVCN7y5bUwIcyG4VGm5ePU8gWGef+fg1zmOGfBjXBNCuwIkgzVEqYixs=
+	t=1707147577; cv=none; b=GlsZ3RzGHimavFg5EzmyFpA+XoZc/c29Vu8P+ZeHj3cTN6AcPOEpNEBwvVnFJXDvWQxZoGrG3O8v0NpczRgCJAZcs5m2IVW1bppjacMXPqoJHnPIb19v0xY7xdZmjP1iR0BDMA4lA34lB3+hbszKQAV69TE1PRnaAH/GZdhP20I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707144939; c=relaxed/simple;
-	bh=prtwngRjSPswBsLKpAV13nwxdPeqSc9QYwUzmebLdkY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nYPgZEBnYdv0JXQnNBL2z7QKUaVEYNSQwFerPe1B3z+9CMuc8yjmz8NGiTjHs2mZnsZgJNgewtS1ag3iyUBSpEZOSY6QJzYFJZo5HZY6QjAATFKom+g0ky+nbY0akdHGizOchCf6gDbeNdYT9eZ7fSIfY7ExNAM1NYQHiO/tOZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ijtDirDU; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-68c37bf73aaso21686376d6.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 05 Feb 2024 06:55:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707144936; x=1707749736; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CV8zCL+Bkb52zUIjr4j2G2uqbzJyX+oUu0mInR3Ynbs=;
-        b=ijtDirDUfgy9jKEZXCEtluOntzfHq1Fii6PLOAcwoxSe+c/+O2NF6JCoJYX+6DzY/m
-         lpxeFnnmgvNkjhYlGIWSLpasaOC73ThyklLpbdjruW3f6WuMsXD0BVw2BBfMoS4a1JQ+
-         oY5PO1n/Voqwm0NUoLk9u2rxreUGDxtIlxQ+TtzI6bzqC+/Qy9NuwUsLGYw44fDs/gPT
-         ypf5cmV7d0buEHB6ZHKNoq7P8vTH3YUexwyUeR6WjG4moT2D0kGksW48K3yjYfnlKZrV
-         H0QBTi6b/UaRV5EdIi0d7Z5GcS04CGisUWMyIMuPAXKaL5hGdZNnoZ2K/rxr8+CXHisY
-         OHwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707144936; x=1707749736;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CV8zCL+Bkb52zUIjr4j2G2uqbzJyX+oUu0mInR3Ynbs=;
-        b=c9lk5oa1IYVHvHSsYynbVLdeZTzTCtyoIS6UnI14lGnNXw8NPd/PaqMtkjh9VoiKpn
-         K1vNxP9YZAQ6s5W/lXDXprPNmd2BoTYsDpxVgduW1JtEb0v+5VzgJjOCtS7NHzVeH4C7
-         hxKtNodW1V87iNU86riHayk//3PM/bQ0g3XTDx27swAENnghAF0idLC8XCwlbE8pL7oT
-         KDxzpBRtNKJRc6+rXfhku7+MQG1idSHmFxlbSDKbxtJrzCoi5HSZluCwWxx3RU5jXSRV
-         q0XFLosbv+e4U5BjrBbS+8/jIqLFGiUXdD4fJrmn4LA0QmliS/0lzNwDFePIxALcPgP9
-         MbiA==
-X-Gm-Message-State: AOJu0YxiQh6TcahlrvWUJm49GtCu/Aw80mSQEZuvkDYdW1UcUOXRZrEv
-	6ZtQyb9YSMmVSTbMd9JJXkZpGGrCV5e2086rAUKQmw5bB+/+AOANV+Cls0vQUSmexZO93iImO9e
-	MpNR31Qas3LLDW4XVAMYUUu/XOOTCLo7+BklqXg==
-X-Google-Smtp-Source: AGHT+IEGp95NgA3KvvkrXtsGjbN9gYfgN+bbfNs43Bva/sB71VU1nC4hj1ROtBypVVcdI/bxwL8OmPrLT5ov+2vR+ac=
-X-Received: by 2002:a05:6214:daf:b0:685:6715:9693 with SMTP id
- h15-20020a0562140daf00b0068567159693mr8173405qvh.8.1707144935887; Mon, 05 Feb
- 2024 06:55:35 -0800 (PST)
+	s=arc-20240116; t=1707147577; c=relaxed/simple;
+	bh=Rv8CV7EZj9twbDgExrfO0rqgaNqI6EazAjEyAvqafJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xh4EnYX4vxwkOzHcOCSa/3NPxB52LR2vDjF4Wl5GmTKP1mscvN1OPvJYzWqnoMhfYpmMj37ldO31sXnI5JBKSQfgshLw0+QgWcu0vYeTeFTyXrZwfqzhPI0MdZdrYdmc6sEFQohLEVoeQfrcNitw7E3oxoz5/9ad9wgfGwiSvVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XSKqBAGJ; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1707147576; x=1738683576;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Rv8CV7EZj9twbDgExrfO0rqgaNqI6EazAjEyAvqafJ0=;
+  b=XSKqBAGJZV6zCROXf4SDEQcqsTtwpA4TTPxY7wz0KD+8uzebasq4Aj4o
+   oXxj2RXl/09ECfITYIvn9S3ONr6ilAHGzo2DgZoiK5ITnR77fkI69oqH/
+   zMor1LsRfhMykBfZLosG0M9Che+6asbvLInZEIj/T85hhnNwCjMbnuBDR
+   EHNrNQBUAwQsk330orzkM3I6iE93gR/+bFrv6BGc0v7oRILYrENq7KVLz
+   ne2tr3sTbapsBQkpgFZNTkh87yKnoGb37Llp/lWVFGVyFAuupXg5dOQIe
+   9Nz0whGdTbGjAoeo4BCIk5ayPm/RWk8rLjR8GOMPEkMRNDwnK6bphM1m2
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10975"; a="17966630"
+X-IronPort-AV: E=Sophos;i="6.05,245,1701158400"; 
+   d="scan'208";a="17966630"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 07:39:35 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,245,1701158400"; 
+   d="scan'208";a="31830670"
+Received: from turnipsi.fi.intel.com (HELO kekkonen.fi.intel.com) ([10.237.72.44])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 07:39:25 -0800
+Received: from kekkonen.localdomain (localhost [127.0.0.1])
+	by kekkonen.fi.intel.com (Postfix) with SMTP id B935D11FADC;
+	Mon,  5 Feb 2024 12:53:10 +0200 (EET)
+Date: Mon, 5 Feb 2024 10:53:10 +0000
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+To: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Tiffany Lin <tiffany.lin@mediatek.com>,
+	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Bin Liu <bin.liu@mediatek.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+	linux-amlogic@lists.infradead.org,
+	Sakari Ailus <sakari.ailus@iki.fi>
+Subject: Re: [PATCH 17/17] linux: v4l2-vp9.h: Fix kerneldoc
+Message-ID: <ZcC-FjF5pJUKz9Ir@kekkonen.localdomain>
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-17-eed7865fce18@chromium.org>
+ <ZbTTb-SdK-EubGdc@valkosipuli.retiisi.eu>
+ <201ae1d1-1e03-40e2-9cc4-49df70abb8da@xs4all.nl>
+ <8f3bab1f-8697-40c0-91f2-de934b4b9ddb@infradead.org>
+ <e565f8bd-19d2-4574-8c6d-5573733a8185@xs4all.nl>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240201172224.574238-1-alexey.klimov@linaro.org> <20240201172224.574238-3-alexey.klimov@linaro.org>
-In-Reply-To: <20240201172224.574238-3-alexey.klimov@linaro.org>
-From: Peter Griffin <peter.griffin@linaro.org>
-Date: Mon, 5 Feb 2024 14:55:24 +0000
-Message-ID: <CADrjBPrEL-4DqMX-MnzTO7f3=gWnwrWrDSuXCOt0ugkhDUNV=g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] soc: samsung: exynos-chipid: add Google Tensor gs101
- SoC support
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com, 
-	linux-samsung-soc@vger.kernel.org, semen.protsenko@linaro.org, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, klimov.linux@gmail.com, kernel-team@android.com, 
-	tudor.ambarus@linaro.org, andre.draszik@linaro.org, saravanak@google.com, 
-	willmcvicker@google.com, arnd@arndb.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e565f8bd-19d2-4574-8c6d-5573733a8185@xs4all.nl>
 
-On Thu, 1 Feb 2024 at 17:22, Alexey Klimov <alexey.klimov@linaro.org> wrote:
->
-> Add GS101 information to soc_ids table and related entries to other
-> places. This SoC product id is "0x09845000".
->
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
+Hi Hans,
 
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+On Mon, Feb 05, 2024 at 11:44:13AM +0100, Hans Verkuil wrote:
+> On 05/02/2024 11:39, Randy Dunlap wrote:
+> > 
+> > 
+> > On 2/5/24 02:29, Hans Verkuil wrote:
+> >> On 27/01/2024 10:57, Sakari Ailus wrote:
+> >>> Hi Ricardo,
+> >>>
+> >>> On Fri, Jan 26, 2024 at 11:16:16PM +0000, Ricardo Ribalda wrote:
+> >>>> Kerneldoc cannot understand arrays defined like
+> >>>> v4l2_frame_symbol_counts.
+> >>>>
+> >>>> Adding an asterisk to the name does do the trick.
+> >>>>
+> >>>> Disable the kerneldoc notation for now, it is already ignored:
+> >>>> https://docs.kernel.org/search.html?q=v4l2_vp9_frame_symbol_counts
+> >>>
+> >>> Wouldn't it be nicer to fix kerneldoc instead? It might not be difficult at
+> >>> all.
+> >>>
+> >>> Feel free to, but I can also give it a try.
+> >>>
+> >>
+> >> It would be nice to have this fixed in kerneldoc itself. I'm holding this
+> >> patch back for two weeks to see if someone wants to work on kerneldoc.
+> >>
+> >> If not, then I'll take this anyway to fix the noise in our build.
+> >>
+> >> Note that while this header is indeed ignored in the documentation, that
+> >> is really more a bug and it would be nice to actually include this header
+> >> somewhere in our documentation. So fixing these kerneldoc warnings one way
+> >> or another is something that we should do.
+> >>
+> > 
+> > It's just waiting for Jon to apply it: (from Sakari)
+> > 
+> > https://lore.kernel.org/all/20240131084934.191226-1-sakari.ailus@linux.intel.com/
+> 
+> Ah, that patch was CCed to me but not to linux-media, and I only searched linux-media
+> for it so I missed it. Good news that this is fixed in the right place.
 
+My bad, somehow I missed linux-media from the distribution. :-(
 
+> 
+> I marked this 17/17 patch as Obsoleted in patchwork.
 
->  drivers/soc/samsung/exynos-chipid.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-> index b1118d37779e..7fee6094db12 100644
-> --- a/drivers/soc/samsung/exynos-chipid.c
-> +++ b/drivers/soc/samsung/exynos-chipid.c
-> @@ -60,6 +60,8 @@ static const struct exynos_soc_id {
->         { "EXYNOS850", 0xE3830000 },
->         { "EXYNOSAUTOV9", 0xAAA80000 },
->         { "EXYNOSAUTOV920", 0x0A920000 },
-> +       /* Compatible with: google,gs101-chipid */
-> +       { "GS101", 0x09845000 },
->  };
->
->  static const char *product_id_to_soc_id(unsigned int product_id)
-> @@ -178,8 +180,17 @@ static const struct exynos_chipid_variant exynos850_chipid_drv_data = {
->         .sub_rev_shift  = 16,
->  };
->
-> +static const struct exynos_chipid_variant gs101_chipid_drv_data = {
-> +       .rev_reg        = 0x10,
-> +       .main_rev_shift = 0,
-> +       .sub_rev_shift  = 16,
-> +};
-> +
->  static const struct of_device_id exynos_chipid_of_device_ids[] = {
->         {
-> +               .compatible     = "google,gs101-chipid",
-> +               .data           = &gs101_chipid_drv_data,
-> +       }, {
->                 .compatible     = "samsung,exynos4210-chipid",
->                 .data           = &exynos4210_chipid_drv_data,
->         }, {
-> --
-> 2.43.0
->
+Thank you!
+
+-- 
+Regards,
+
+Sakari Ailus
 
