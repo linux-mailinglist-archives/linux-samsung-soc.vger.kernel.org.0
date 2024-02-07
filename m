@@ -1,72 +1,72 @@
-Return-Path: <linux-samsung-soc+bounces-1804-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1802-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6B5F84CA53
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 13:07:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E653784CA4B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 13:06:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A8D71F2A844
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 12:07:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 243FC1C2215C
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 12:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CAEC5C91C;
-	Wed,  7 Feb 2024 12:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA17F5A4C4;
+	Wed,  7 Feb 2024 12:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CHA7CYIG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mS4nqEmd"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770CB5B20E
-	for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Feb 2024 12:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A25B5AF
+	for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Feb 2024 12:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707307497; cv=none; b=lAlp0MT2yHIKq0uIYsfc5QLqNyXY4rZEsKo+mRiXC2dMh4RuhmuSzrrpFv9rUlL6/+jr7OwJbXP6jfSGaUvQlIQt8HqQY8+o1JgKODU/6/EoeC2w3lH34TOun6IdSLjf1RGIrsp/GfVXWd3o/yE7U/KhTIyQ3t2acYk19fIglPA=
+	t=1707307495; cv=none; b=FAtve9xYncSYj1DiFtKmbWTnzbQtgKrAMiQNXuujfgPJmNdVCdKAYnld/TUeICb/bV7XwNP3fou2GIYjgRMk3W78Q80mMtSkC0XhCQqJG8yC81VPMN3jKBItMjjNCrmXGO8hsc8RNsZxKnrTcbQlT7Zt7S9YOlx5cppvtZGSBWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707307497; c=relaxed/simple;
-	bh=m1U2ibNS2o4vQmNNZdCySzHxJgiI2IGiRefG6tMF48Y=;
+	s=arc-20240116; t=1707307495; c=relaxed/simple;
+	bh=OIp9JH/BebRZSk0u8jiRPSS3x+B/WlpXIe18LZxE+e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cUjsSUwDw0N/pbi/WEjpp+honrpqzGl0y9fGxc3ZffigHdiSt4vbcqv1ilE6JPWn1zgpdAPM0JVs5Q8XRGZLQtZ1fG/XrIk68x43+k4K8rm5rv3O0ORH6aNO6MveV5Nor9hDDjm8dlZIleGD03x+yHk95Km9yuSLgICccm+hIss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CHA7CYIG; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version; b=mW+x6YCg/YG8m2fWGa9VHrZ3JE/OVstwBKXO25AScNnOEtlCvQLp5DD4S9n34lA10Iv5jzzy4GKsuiuLFoyMdnDADKYzQCZ3ReNQaysP4vrblTX1tbXOhzUxbWOVcBsUV4KPf5DHX6uImfbs1A1bagnqSfrpkgHfNN2WZQ4xrsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mS4nqEmd; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40fb3b5893eso4179615e9.0
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Feb 2024 04:04:52 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33b18099411so405868f8f.0
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 07 Feb 2024 04:04:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1707307491; x=1707912291; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lw2MVCnXePoaGoFwhILfXnUXamqqjuyMAhC06ZDA+Mc=;
-        b=CHA7CYIGDFaxAthUuyoMT4LtUHxzxqyWQAXJT2cRYhunpf3xXRsmTby+HcFl6n25yV
-         HSdwbUlesUq2QerWOEntSP2s+BCvbEYlFYJgqyQWw/FjvuU5FFj8qelh1gp/m8SerICC
-         okKnR77bONbx7QOrMEv1NSFYrtmfDfxX87l/yu1Zqv57YnKYhiyXfQkw2MEv3oPSJ0d7
-         yIr8+sOnKKPmptxXL5RxHE7xIbuBK5I051Z1sGnR2IidQgW4YTdn9oYhK7iRuJlO2sF0
-         Khs4omdTNWL5qiyT9Aa9VZdTRiIb2Pqd9q3LmWbayekDJ83xOAKffIZzMG+u1J6Te7YG
-         AAyQ==
+        bh=F6pV2GvkwiGM8sZS3wOj9QdqoXevBRStq9r4pHeBHjM=;
+        b=mS4nqEmd4esmINx3t5Ynvx3+BTOB4c9Ne3lZQx75bHZiEZbhOyhpOTnZfUailb6b+T
+         F+5ENTZkIMAvJRhueXHlHmO/i/tfpaM73mLjm6JCYedZp2giECtcCVs3SJdbpiS2ebfA
+         VujsDNdw/9GCLRVZnBVs5vDhfB3KxmpH2ItHGOFgzb58ZN1qBxKWZ3+SkbTlqXgTK71A
+         V5apmOpxJ56EfymnuXNHk8ngQSrWIE6lfuxvE/i7Y9cJoDStZ0cu8Qy13mcioQvxnzDW
+         3bTJZxeYpFhRQwTU1vTJjflWjVzCDAWCkkJ2wMBS7U6RtJowPDC7zicy8R/I71tjjqoV
+         VTpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707307491; x=1707912291;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lw2MVCnXePoaGoFwhILfXnUXamqqjuyMAhC06ZDA+Mc=;
-        b=cW//JD8ye8uaVHB6VpElKwHdz8DW2z6gMhSPwFLDmJq8t5dMAdWtE+JSmsfpjrTUvU
-         wErjxVtnZMeXnG0VFTs/vgPAREuo4+rTV+wbbbOly7BuW39IVqVEROU41r0ExjayngYM
-         I49s84Q65yTLnT5CeJMvY53hDNrk8IVnO9vM0+SGIHcULuPiUVlR4lEi1TPU5smFPmWb
-         vQur4BQBsCD4vAk8siIlwhzTMM5VLSZ5MXJg8z04g1oRArVSRn985JKBGXjvIvGjJUTA
-         a7LOAV0W43Qy3iWgAVJGQQNBwM1UcZTpUjNejhcNe5Xf1h/ywVPMKW2Jg6APO7peVfeW
-         3lZw==
-X-Gm-Message-State: AOJu0YxY9m9HCAGlKqjPsGo6uzIVpuIrGa3OR1EHaPP3WkJscogjawav
-	LcJitmWgJJIOg79jRUzrCXMlCam7DPtJ1rRDOIV0IwlRXiHfvhX3hzN9y1lUvtM=
-X-Google-Smtp-Source: AGHT+IHAYlMgGVbJm1ulTdNKa/+d0RgWGvnEGEpkGS2NLVlo4ZSIijWb3cfglDfGFwxik/TiWE7lGQ==
-X-Received: by 2002:adf:9b88:0:b0:33b:216d:70bc with SMTP id d8-20020adf9b88000000b0033b216d70bcmr3033646wrc.42.1707307490826;
-        Wed, 07 Feb 2024 04:04:50 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUAVMzVycVD1s6muTwkHOso64lMG/emDU5TiblalPWX7ZMHPJ5//3sDLDgEuNNZ2aejKW5KK9QN7rDbCTgQ2Wj/UBuVCg2IXUOVzlU5gB6mNN1onRg/Jsmvj9MNWKST7hrSIBv2qCpxV4AxqG6CDKNAZqjBq3PsymshtpNimVbZJPX4GC7xX/WWsSaTzZknsKwN1XOo5G8bnWTdaVmBfDL/TIeiHwE7NYFnJRI5RXe+k5TSIk4H33xzDkNeqod5v4+3vhsGtBzwrYiLOywBnRWzgl04dRvB5kwuD/+yuqmjC9UqOizl+brwqNY4GqGKADdhdSrMxTH01oc8sE5ntbRmHTtCKTLkl7joeouwRxmGAACiPA6Qq98RFng40UhReyhxs3JGqC4atlIgyOnV7ERYsOdt6gLbFhEJOucDrjhUWqPFNPIJjVRLs6ty16nLLqdFiX+paCeYJouUXhqtJtN8c0Y9l1OiQPYQyCkFWJocTIClBepJQa2sqjQceA==
+        bh=F6pV2GvkwiGM8sZS3wOj9QdqoXevBRStq9r4pHeBHjM=;
+        b=NczHhCc97v3R5Xrw8nw1XGmz9B76Ez0KdR3k7S5RztjaWhK+BBO8y9FWaJUowI12Az
+         /Ed1VP8BcKhCP8kAx8kGkgvK34VAXbpW/fdR05gmmMeCQ1pK7MpjfwTc5JOI3wToO/gK
+         F5yPcMz2iOfwrV4DU+6PnTrKBcoN8+Ii5041f9phJrJmfDdmai4VpZGRFwyjGf37JPlr
+         wsIif8aKkdv75mBc3RlU6uhwOnETCnbyfvBILsR/YewhME+HJa41cvlUPs7vcVG+Jpjl
+         eQP5v62NE9R84rAg+ynBhLryBLUTi/pHP2dRaYNKoKP5iJvG4Xor09t/BZo/A4kdejrH
+         roIQ==
+X-Gm-Message-State: AOJu0YzWbOFgmx1aeHcE2j10XaB0GNWRpshlSr2rtYjoBj09ridAxi+F
+	Us74ZeiWdRi0spUzKJT8BAx/GE3oqirfzQRK65xXwxzDIeYsKZla+rGKGePHEZs=
+X-Google-Smtp-Source: AGHT+IEdlw8JH/QSRtZd610quS8/RIT1PIG99ZFWjrLwu4MmQXZ8BT3xN451LK0X9PBzhn/DnxzkDw==
+X-Received: by 2002:adf:ffce:0:b0:33a:e9b5:b14d with SMTP id x14-20020adfffce000000b0033ae9b5b14dmr2977897wrs.65.1707307491634;
+        Wed, 07 Feb 2024 04:04:51 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV9mcRhUWoZkdqVD1YlZ6mDdMCTzp1K/WKzzPN4YOBL5kh2SFeTNNxJZf1WDk1W6nxUSQmICF1O6KtpyZarM4cbiucm88AXeVYKYiuI+uqjA8Pp05Bpm64G2BCdofnYzEG6DmG4KqN191ATxgJWReswzMyc/nnJOCseTlvj5o1G73v8XSCr6Kx8veIaeF1Z+id3kC3qqBTdRl2yOfTQM1p94DZmpY3FQ9wcR/Y588JOHAwabMZL4posJJnzDTijw3mPQUcOkXyqiD7jO5vbiUIJBCa8kHXNZfsIVsmyvpmdoM3HTA74Vq42TkhtIfbdVfqqKjMsVLNyuap1GuNGx6TiXFGmZ5lRD89Bd5vXETxVKdGLQI1Vu5KPVRl4eZ76GKjumcZbNppknmACOU9ujo7bcbtowkHm5azyJVZeIaGECyW9I9fYYtiKufG6vZouxyW0geiFIuOBN1JW0rkOb90zn/G8qizQ5DO4UnNTzuQAHLQ3Jt7VwVy4cfR1yA==
 Received: from ta2.c.googlers.com.com (105.168.195.35.bc.googleusercontent.com. [35.195.168.105])
         by smtp.gmail.com with ESMTPSA id d15-20020a5d644f000000b0033b44a349e1sm1349967wrw.38.2024.02.07.04.04.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Feb 2024 04:04:50 -0800 (PST)
+        Wed, 07 Feb 2024 04:04:51 -0800 (PST)
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
 To: broonie@kernel.org,
 	andi.shyti@kernel.org,
@@ -82,9 +82,9 @@ Cc: krzysztof.kozlowski@linaro.org,
 	kernel-team@android.com,
 	willmcvicker@google.com,
 	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH v5 13/17] spi: s3c64xx: return ETIMEDOUT for wait_for_completion_timeout()
-Date: Wed,  7 Feb 2024 12:04:27 +0000
-Message-ID: <20240207120431.2766269-14-tudor.ambarus@linaro.org>
+Subject: [PATCH v5 14/17] spi: s3c64xx: drop blank line between declarations
+Date: Wed,  7 Feb 2024 12:04:28 +0000
+Message-ID: <20240207120431.2766269-15-tudor.ambarus@linaro.org>
 X-Mailer: git-send-email 2.43.0.687.g38aa6559b0-goog
 In-Reply-To: <20240207120431.2766269-1-tudor.ambarus@linaro.org>
 References: <20240207120431.2766269-1-tudor.ambarus@linaro.org>
@@ -96,46 +96,30 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-ETIMEDOUT is more specific than EIO, use it for
-wait_for_completion_timeout().
+Drop the blank line and move the logical operation in the body of the
+function rather than in initialization list.
 
 Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 ---
- drivers/spi/spi-s3c64xx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-s3c64xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-index 4cafec877931..bcc00cb5e0d1 100644
+index bcc00cb5e0d1..d257c4f5623e 100644
 --- a/drivers/spi/spi-s3c64xx.c
 +++ b/drivers/spi/spi-s3c64xx.c
-@@ -566,7 +566,7 @@ static int s3c64xx_wait_for_dma(struct s3c64xx_spi_driver_data *sdd,
+@@ -1360,8 +1360,9 @@ static int s3c64xx_spi_suspend(struct device *dev)
+ {
+ 	struct spi_controller *host = dev_get_drvdata(dev);
+ 	struct s3c64xx_spi_driver_data *sdd = spi_controller_get_devdata(host);
++	int ret;
  
- 	/*
- 	 * If the previous xfer was completed within timeout, then
--	 * proceed further else return -EIO.
-+	 * proceed further else return -ETIMEDOUT.
- 	 * DmaTx returns after simply writing data in the FIFO,
- 	 * w/o waiting for real transmission on the bus to finish.
- 	 * DmaRx returns only after Dma read data from FIFO which
-@@ -587,7 +587,7 @@ static int s3c64xx_wait_for_dma(struct s3c64xx_spi_driver_data *sdd,
+-	int ret = spi_controller_suspend(host);
++	ret = spi_controller_suspend(host);
+ 	if (ret)
+ 		return ret;
  
- 	/* If timed out while checking rx/tx status return error */
- 	if (!val)
--		return -EIO;
-+		return -ETIMEDOUT;
- 
- 	return 0;
- }
-@@ -617,7 +617,7 @@ static int s3c64xx_wait_for_pio(struct s3c64xx_spi_driver_data *sdd,
- 	if (use_irq) {
- 		val = msecs_to_jiffies(ms);
- 		if (!wait_for_completion_timeout(&sdd->xfer_completion, val))
--			return -EIO;
-+			return -ETIMEDOUT;
- 	}
- 
- 	val = msecs_to_loops(ms);
 -- 
 2.43.0.687.g38aa6559b0-goog
 
