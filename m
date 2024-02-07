@@ -1,340 +1,153 @@
-Return-Path: <linux-samsung-soc+bounces-1775-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1777-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB1C784C3BD
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 05:39:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54BB184C4E9
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 07:21:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 238171F29063
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 04:39:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B907281979
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Feb 2024 06:21:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A81125C7;
-	Wed,  7 Feb 2024 04:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D4A014A85;
+	Wed,  7 Feb 2024 06:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="X6pDPDH7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OhO43A2e"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2078.outbound.protection.outlook.com [40.107.113.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521A010A20;
-	Wed,  7 Feb 2024 04:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.113.78
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707280763; cv=fail; b=jOsGhkOqp4DYKGjmisB6r3lBi4wP/3Z3h8fUDkZ0UGN2+K7dZ7KTq3m1VeUwDF9a5Sw0a3FYMzybqYYV6K4Xe2rLullLLXFp9QKrVGY9FHyl09qLonFpq1U2KtAlLyzw6JrBkpFHFNmTcpsP/XzmvdQn4nbCrhEkSnC7w6JEh00=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707280763; c=relaxed/simple;
-	bh=9D0tmht+UC/To/BNPPRfPIWvJEuU7lMpnpfq5DQo1rc=;
-	h=Message-ID:To:From:Subject:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=AWLrfMQZ+doXiyrVqm2F3C9DbZvKta8pP06mmyEV0zCaUgf6hSaHAM+4YFuMMDIXr2O3CkWspEipDyJxquU27IykvZNj3SfBaXp4dA+R9PcLPZgt5clm3lrVeOR5fAN0q63fCU8cxAY1ZSwx1AF6DinJixPsfS37++KiHTly8HA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=X6pDPDH7; arc=fail smtp.client-ip=40.107.113.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=atGuOd8eOP7QIt98pUbowHjfWjbJs6DGhRZgFuQeiDYq9OGTOHSJ8ZLPqipOFC2PorbtCfg0oQDM4aMBv33LrKnnQxckQIYa19DCxa+Q/mJPzvxtd2gsxAoSW2uN8ReSyASfq27bjzXZwYDMqtcalJIHlQ0bjC6Gknn3X1RONDM/eJOD74rMBtKnah/Zcl+J9ajeAPaStkOsNMoDR2j6qhtIACIJab0J1gjWD037UTugb0slrLt0wWm5XMHP3C0A9QlW52WrfWrWtqwXCE/gUdrZC3rtbzvKjh22VLP9qTwyI3w4i1UkHy36J0ZkR0w/gyrgVz97Z7OQorEzIUKYsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iPWy+PYtnAvN+6i0I6jsdtewufqRlqn7Qxjn1KjTnik=;
- b=N2NohMG3QTZiRe+pOMd4McDZ7t8SyyE0URzxf3tYs9W4uT7RtOcnvbbD2pZOMox4HkeuYs7G2NCNdoLtSM3OfdYE2/TygM0XZYwdrKa4xLtKWjVy20w0QKRk7BBnF/SDIQy1OlakgtXafKUNsCOeY7/0NELrD+ytKQakwz9227XRLygHMg+aGc5aPIdJQqnfZcmXPyjUZLbxhsaaFtzFx81dY3odvmVvgXlhZz5k0xwfFIrN+8MSmBcKwHqxHG3/8WNdkU4XWqf3HgjgZ12BtUhYaoloRHH6+gkexMLx6f0e9qEgvypLi06ZPn6+DIm8zYhPwSfaSMrrsWHm8yvTPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iPWy+PYtnAvN+6i0I6jsdtewufqRlqn7Qxjn1KjTnik=;
- b=X6pDPDH7BmzEl7c98SJRFmCYn+o6RQQyV2AAKIaI4YsABNaFyspxfuveUHpY4ongSrNxC9nnBGOe08/qXVgswgJy5QZl/RY3jCNizm8qky04XyPmeZYQ5R5kK03fgFk5HWPrpDLySPIr5s/hckUTVNoq9Ql3bG4OhmIedbZdUVE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11) by TYWPR01MB11031.jpnprd01.prod.outlook.com
- (2603:1096:400:398::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.36; Wed, 7 Feb
- 2024 04:39:18 +0000
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::4d0b:6738:dc2b:51c8]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::4d0b:6738:dc2b:51c8%6]) with mapi id 15.20.7249.035; Wed, 7 Feb 2024
- 04:39:18 +0000
-Message-ID: <87le7wsxai.wl-kuninori.morimoto.gx@renesas.com>
-To: "Lad,  Prabhakar" <prabhakar.csengg@gmail.com>, =?ISO-8859-1?Q?=22Uwe_?=
- =?ISO-8859-1?Q?Kleine-K=F6nig=22?= <u.kleine-koenig@pengutronix.de>, Alain
- Volmat <alain.volmat@foss.st.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Alexey Brodkin <abrodkin@synopsys.com>,
- Alim Akhtar <alim.akhtar@samsung.com>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Claudiu Beznea
- <claudiu.beznea@tuxon.dev>, Daniel Vetter <daniel@ffwll.ch>, Dave Stevenson
- <dave.stevenson@raspberrypi.com>, David Airlie <airlied@gmail.com>, Eugen
- Hristev <eugen.hristev@collabora.com>, Florian Fainelli
- <florian.fainelli@broadcom.com>, Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Helge Deller <deller@gmx.de>, Hugues Fruchet <hugues.fruchet@foss.st.com>,
- Jacopo Mondi <jacopo@jmondi.org>, Jessica Zhang
- <quic_jesszhan@quicinc.com>, Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>, Laurent Pinchart
- <laurent.pinchart@ideasonboard.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Maxime
- Ripard <mripard@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Nicolas Ferre <nicolas.ferre@microchip.com>, Sakari Ailus
- <sakari.ailus@linux.intel.com>, Sam Ravnborg <sam@ravnborg.org>, Sylwester
- Nawrocki <s.nawrocki@samsung.com>, Thomas Zimmermann <tzimmermann@suse.de>,
- Tim Harvey <tharvey@gateworks.com>, dri-devel@lists.freedesktop.org,
- linux-arm-kernel@lists.infradead.org, linux-fbdev@vger.kernel.org,
- linux-media@vger.kernel.org, linux-omap@vger.kernel.org,
- linux-rpi-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: [PATCH v2 4/4] video: fbdev: replace of_graph_get_next_endpoint()
-In-Reply-To: <87r0hosxc3.wl-kuninori.morimoto.gx@renesas.com>
-References: <87r0hosxc3.wl-kuninori.morimoto.gx@renesas.com>
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 7 Feb 2024 04:39:17 +0000
-X-ClientProxiedBy: TYCP286CA0305.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:38b::16) To TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518F31CD2B
+	for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Feb 2024 06:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707286863; cv=none; b=qW1pHp0Z3f1j6CR0c/crFK+s7gB0V7RmNX0h1LLBUjJV5fy//WA44KaCtAE1EhJ2HODj+h4nkqSXBbiU6ID+zVhT5xY9TbcYhyL+Wu50QPyx6C4nJ3Sb2Kle8eUJ0t0bVepEjIVLZCtnU9tZAw5a9QlgYkGmuES3uGGjq0F3ZRU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707286863; c=relaxed/simple;
+	bh=l1clcTPdVURHS4P5RVBj+1FOj0fLnM8XRADul96ykm8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iPCSC+iVdESrCB/wbZ4wrB/r2VpFgxOt48S9atZs3SVLCvQrLjxcRFWNpicC46jsUYreusPoGeGOiSH73Ug/urYzbmA1H0/mAnxUjDNo93p4l4E4H8DhBp2PEPnEs6vF63vkGvbEoeTp+9aQm6lkZEa7eflUmdJqjFacMTXUsyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OhO43A2e; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-33934567777so168925f8f.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 06 Feb 2024 22:21:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707286859; x=1707891659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qZCDdTRk8ciH6FS26XWJyVrDKJALrXXLu6bJhxDtbHY=;
+        b=OhO43A2eEz85oHAAmEJpxzJjlP3U2AbHicGVFZETg9FyoSV+DqKhXwIwO06d/f/v1T
+         2TIA77WPfijcdrtDwh+BA0ZmcS1oHEGHQDpDoMfMFjd4WRS43h+J9CVtURuRzmDlzmEq
+         w4xuWPxk1Gmgv3UPv0EhdQu8CXqGM0j157OjZXDRQHNCkA9QgYEFZh/286amByS8Ywzi
+         ihJws0BfraV3MJCpLqueYvBEaFvMUdsVO1iejtXCZmj0X+HvHrRCihAEVv7PgipgD+YG
+         u+IXleM/MnIjHeAwQlfOnPuHRx652GqRbAjqrZfWfrI/lVMUwPd9fcjk6lRAhcE7SREN
+         IxwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707286859; x=1707891659;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qZCDdTRk8ciH6FS26XWJyVrDKJALrXXLu6bJhxDtbHY=;
+        b=rqwSBhpptAAAnEDULOi7tIklWTwTjGhp4gw8WuwkeG0Nr2fylIcq7SqIYXnjeHnj2G
+         ayRWi/4cnxyxKU9TRvSJ6xyLXTWoE5a61BmbOmS9OV3QGIHoCChHA4CWdUmGYx4WjZdS
+         3GwRNAxmWwBAreI1PoddBloK2BbloawHlsIla2vTWxmNB+bu7bvKFfODAZsIEImdwLWC
+         XnksOuZGWiTb/abjfddl9dy/elj/ds71WVfTowxAzcGYR+ydyCJrM6J3NdmtaZAN382I
+         A+Jl8btJnb9O/TxZ9Yu7Q0DpDIT2l6FKdRGVrjpmDn2gsDuIqlYnZlOYhYd31XCJC/UQ
+         /xww==
+X-Gm-Message-State: AOJu0YwlQxrwqdyyZQR9g6H6NaL2vgW3qnsVN9OlcJlaYs43SP1UstCk
+	7f04dbIwrWTk4aSxASw7ts3dORsfuEnG49aZey/aachKY4whaYADpiL9v2Uqayg=
+X-Google-Smtp-Source: AGHT+IG4xM+HZbEIWxMtNnq3z/vbBUehFRqRlrmFRVXJBVJIfxcsZmP1vgixaZRfj4Dwn64BO86YDQ==
+X-Received: by 2002:adf:ea11:0:b0:33b:187f:ccc2 with SMTP id q17-20020adfea11000000b0033b187fccc2mr2393960wrm.71.1707286859461;
+        Tue, 06 Feb 2024 22:20:59 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXht0s+5XLYwmbMYGHO9hYHEKtMIUR8SMKjE4DZmjf+xKGxyhIM5rAZEuuWoLJKwsmcjTJs9nRIxCvdnS2zNlZmsth5vb75/NUrmSnamzu6Nt/8tFLcoPOdOgbIVMKx9HBjsF/tXdRsxueEHq+4ftQiT7E1J6bn7RlJrlpF2L3vdespp4G/GGaqNeCTnd8RKoH/7VYvHPHv8ComfNLd6Ci7C7pdZofvJ7hPHSSqahghDNe2LZrxB8TBLGVwLUcZJ1rtmDqSADOu7gwyKM+M49seY5zX8jq7yzu4I0O6Dj8zY8/p4Bh8oDr7vhNQGF9pd+8JR3L1h4gMlWmZHDQsVx2ixvVDwCGBPJ7s4kM6MmkLlMbrdewCARgnf/ojZEYTmog8rkQQEh44gz42ax6rAKg3tGaVvSg4Qa0XZ0mlNdJRenfI3isFZgd4mgXz5eLsmzdEUgx9Kj2BRYUJ9mWKaBa7qxNRi0n9r5aB5yhxKKJ9F3iML0JckyMxbw8R7AF7wVUV1fGE/88WJwOba5dcg/brdetGteJiciGg2I4S18Zxuca6VPNGPUy1tiesEoYgTYmudjw6QJolwQPKUhuzPYmsijAr8tHXsA==
+Received: from [192.168.0.107] ([79.115.63.202])
+        by smtp.gmail.com with ESMTPSA id x7-20020a5d54c7000000b0033b444a39a9sm622871wrv.54.2024.02.06.22.20.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Feb 2024 22:20:58 -0800 (PST)
+Message-ID: <16a5e423-1111-49ff-ad6c-b0bb89a4879a@linaro.org>
+Date: Wed, 7 Feb 2024 06:20:56 +0000
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TYWPR01MB11031:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7bbf108-d290-4126-18b2-08dc2796bee3
-X-LD-Processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	bHasXoaLSyRZ0+tbjrPUZlzlDCAhap6HluvvV7vtAGC5dQGVmg+f8yGl7rsxr4K1V9djMWGwccLKKr/WE0wf91idrO4znZux36ivIY4zhXnGY2SDizUpXr297H0I5ulwlIilRTT8xVurB7Z6LorJHz0qzwpRHr/hGPUKApTANDrHBVnBPo5VfqokreYLnxmRkJBHTfB1rYWHnZbOC9R6wwvXl+U8i1EHl8GdE/s92k55NTwRoTbguzWWRfUVUoJvn1Ll6c12gFe8Yq+Pe9wDxAK1nn5Gi7O6aIfEF9bkSq4nRi63soottsYBvsBlUgUtk9wgR0D5loxvvxjB2cwasC1UeQPVygiw0gnQffzbLipDM0ArLjDztoKiPsFxdc317AlJ2zVH+3BVN+QY6pBuL+R7M948BMMiEtS6z+hjrqFmm0NPLhi1R67f/tCJV/UwzKW5ky2gwC91zYdQsk2kp2//VtDI+BoA+cGnuew99Zjj6O0op7DcSyVrfyyWk/eHV3yGB3rP1pzNsukDGNhity21hjlSCa0MKBtaOtpcrcgLXrRcH+9EPX8skuP28Ve/i5RgikQ3dXoCCQgvn4Fc8C0ENY9IQBLvxq339FqiMH5tQbns2W0w29iaXIkBMtGq
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(376002)(39860400002)(366004)(346002)(230922051799003)(1800799012)(64100799003)(451199024)(186009)(41300700001)(38100700002)(66556008)(6486002)(66946007)(52116002)(36756003)(66476007)(6512007)(6506007)(966005)(478600001)(8936002)(110136005)(8676002)(38350700005)(316002)(26005)(86362001)(2616005)(83380400001)(7416002)(7406005)(921011)(5660300002)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3FCNt6ZZ7I/Pr/4nlQu6MJxi0u0/fUtTBnsZGdC6hHbWDKArJNX/urFMAZRu?=
- =?us-ascii?Q?jXqfvqmnhSj7pymLVmTgCn6L6xEVuAYG+LESmSkL+ZxZJQh3R+oZrl+GnG+q?=
- =?us-ascii?Q?NcJyY6M8z9Kx+hXX2JxZENWddFTIjhjuNAZjK+NvZiwMCWoAqVcwAKAb2d8o?=
- =?us-ascii?Q?tfhDrEptgTUoWM1unJVs2FfdKQl2T/h4xjp1hoz2JsdENSho76aD9+mxSn85?=
- =?us-ascii?Q?3Up1CWMuVlO/jv9Qw5LUw20Hn1C6rOhXq+KylRMMzDXkURCCfuCI6fP6tWR1?=
- =?us-ascii?Q?/k3s/liAZ6QvUWcQezgz7Z2T8H58T9nv83Vhlk6gf6MRSTLWQPDJaw6qAJkw?=
- =?us-ascii?Q?WyRoaSMusDVuUWdBlfqPWDWyjeNox+vBBetGNlt2yprEdYvijfQ0oMP1kIlb?=
- =?us-ascii?Q?FTWi7TmvcAQjiUL9zIiuf3KeqQbZitgpbQZjzFMtjUuUnYaIevOxBt9U4RS8?=
- =?us-ascii?Q?ZsP89pGEija9iqNM4yFNpEZQCwVxDjn3dENm9SjD5OO22g1ay4t2p8d22gsi?=
- =?us-ascii?Q?vqgtGyXLA/adWoX5I5xAM0jyRzv+yHRa1m6RuwG4+TFs3ouNaJU9L3tkGHmP?=
- =?us-ascii?Q?iUGj/gDOXMy0mi1PmE6AXyyTj4H7aEDn1GpHjAL+imae/6MoD+MdyV/KTg6I?=
- =?us-ascii?Q?U49RBdNvqCfbn38jGlojwIG23/m1dEVu5GLBLMx//cTrDs+He0psThsSEAo6?=
- =?us-ascii?Q?xJFY0QZSniShq8KXlWJ9B0QFeUISqIoVlSbKTADpPqTS0WhGt+kMWTLz5S1z?=
- =?us-ascii?Q?M6sLlu2MW/bVujMP1eC0USjrX267BS0dYpef9wLmm7B4jBRtEvhWoa+Sf0jD?=
- =?us-ascii?Q?BHQO10iEpevi6A0sHaK0wNKNklqwppRes1o4ru8MgDtyo6AacpNYMEmaSePt?=
- =?us-ascii?Q?s7lMLumPJbs9LhO3vGrwiF76DfY3Per0E3F5RFwkLSWsaOxASieIhNnl8T45?=
- =?us-ascii?Q?iNBHlq+Nhf0trFfCES8DuJYxvQks/2SMUerRtH0Hj8tnzM7S+Ae0p1V6JmRG?=
- =?us-ascii?Q?+nZ3SZczz5fFIXErtupgTN/d1BixK7tRz3iY1eAVRrqyTDCIpGVN9Pi6m5Oi?=
- =?us-ascii?Q?67bf++N1v0JOW4HJuDZMsIYqPRazK3LTBegNWUZ8EtfFx5dM9LLV+3JYkD8w?=
- =?us-ascii?Q?mfM4z7YNJh/gUQVB4aa09oWTIBwRqLqB7h2OsoWCu2i4hB9FRR62wRnxpYqn?=
- =?us-ascii?Q?bNMaFfGV9/Nmg0ESr+L7QE8pUevY4swFMc9SGbS+eGVWSxuJ5Q1nxWdhv/aI?=
- =?us-ascii?Q?lwksJvCTc/qQmn56vjd3DvJYH+YlZ8DK2v5e5dTnRCZd/IPK0hGkl+qaEnQ8?=
- =?us-ascii?Q?O6wIhHcsb7YlEAzauZVcSIsCa+X69uqe0EcriX5pu+KzrzcWjFKHUf5dutsF?=
- =?us-ascii?Q?zbUq0F+DsLDkIk/n+9Dj00m+P4S4ISXaNs+pWvmT54aRsDA4eKu89U0xSxca?=
- =?us-ascii?Q?cN4mi0amI4GIJv2RyOLmnvXBuJ1hqZjt27dNehMo4NBc+gKBeuEIo9UnDmdi?=
- =?us-ascii?Q?gI853VOfT0UqK5SeLrUrSogubKggbo1LvqqdcpB7mT04IiCLrLImTY5n0q2x?=
- =?us-ascii?Q?OOo1UgwXZTuSjSCF2XMJhRgkbK8Fpel70WLvP6h2voiQ7dwZM6z5uJUmO05w?=
- =?us-ascii?Q?IE8Ec3paxtv3DlKs/ulOb2Q=3D?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7bbf108-d290-4126-18b2-08dc2796bee3
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2024 04:39:18.1674
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kAGADB1N3w59RbhRwKjgxftugaJi7nRbpr9cV7P4lk3of76nL6u5jbPXfKlogXTSzJKDreGgYg+8y1XsgjNDZZhEIqiMqLRRTVV6CmigAMVZIumN12nUva2Jfmh4zbex
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB11031
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] spi: s3c64xx: explicitly include <linux/types.h>
+Content-Language: en-US
+To: Sam Protsenko <semen.protsenko@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: broonie@kernel.org, andi.shyti@kernel.org,
+ krzysztof.kozlowski@linaro.org, alim.akhtar@samsung.com,
+ linux-spi@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ andre.draszik@linaro.org, peter.griffin@linaro.org, kernel-team@android.com,
+ willmcvicker@google.com, robh+dt@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org
+References: <20240206085238.1208256-1-tudor.ambarus@linaro.org>
+ <20240206085238.1208256-2-tudor.ambarus@linaro.org>
+ <CAPLW+4=Xd+B=ZncqPgU4qaJ8zY8JJvJZApdUW_v0w6yr2cy9Sg@mail.gmail.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+In-Reply-To: <CAPLW+4=Xd+B=ZncqPgU4qaJ8zY8JJvJZApdUW_v0w6yr2cy9Sg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From DT point of view, in general, drivers should be asking for a
-specific port number because their function is fixed in the binding.
 
-of_graph_get_next_endpoint() doesn't match to this concept.
 
-Simply replace
+On 2/6/24 18:02, Sam Protsenko wrote:
+> On Tue, Feb 6, 2024 at 2:52 AM Tudor Ambarus <tudor.ambarus@linaro.org> wrote:
+>>
+>> The driver uses u32 and relies on an implicit inclusion of
+>> <linux/types.h>.
+>>
+>> It is good practice to directly include all headers used, it avoids
+>> implicit dependencies and spurious breakage if someone rearranges
+>> headers and causes the implicit include to vanish.
+>>
+>> Include the missing header.
+>>
+>> Fixes: 230d42d422e7 ("spi: Add s3c64xx SPI Controller driver")
+> 
+> Not sure if Fixes tag is needed here.
 
-	- of_graph_get_next_endpoint(xxx, NULL);
-	+ of_graph_get_endpoint_by_regs(xxx, 0, -1);
+We have already talked about this. If a patch that causes the implicit
+include to vanish is backported to stable, it will reveal the missing
+header here and will result in backporting this patch as well. So, as a
+good practice let's allow this patch to be queued to stable, it will
+avoid possible compilation errors.
 
-Link: https://lore.kernel.org/r/20240202174941.GA310089-robh@kernel.org
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
----
- drivers/video/fbdev/omap2/omapfb/dss/dsi.c    |  3 ++-
- drivers/video/fbdev/omap2/omapfb/dss/dss-of.c | 20 +------------------
- drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c  |  3 ++-
- drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c  |  3 ++-
- drivers/video/fbdev/omap2/omapfb/dss/venc.c   |  3 ++-
- drivers/video/fbdev/pxafb.c                   |  2 +-
- include/video/omapfb_dss.h                    |  3 ---
- 7 files changed, 10 insertions(+), 27 deletions(-)
+I guess Mark has to break the tie again. Or Greg if he cares, I added
+him in To:.
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbd=
-ev/omap2/omapfb/dss/dsi.c
-index b7eb17a16ec4..1f13bcf73da5 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-@@ -28,6 +28,7 @@
- #include <linux/debugfs.h>
- #include <linux/pm_runtime.h>
- #include <linux/of.h>
-+#include <linux/of_graph.h>
- #include <linux/of_platform.h>
- #include <linux/component.h>
-=20
-@@ -5079,7 +5080,7 @@ static int dsi_probe_of(struct platform_device *pdev)
- 	struct device_node *ep;
- 	struct omap_dsi_pin_config pin_cfg;
-=20
--	ep =3D omapdss_of_get_first_endpoint(node);
-+	ep =3D of_graph_get_endpoint_by_regs(node, 0, -1);
- 	if (!ep)
- 		return 0;
-=20
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c b/drivers/video/=
-fbdev/omap2/omapfb/dss/dss-of.c
-index 0282d4eef139..14965a3fd05b 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
-@@ -130,24 +130,6 @@ static struct device_node *omapdss_of_get_remote_port(=
-const struct device_node *
- 	return np;
- }
-=20
--struct device_node *
--omapdss_of_get_first_endpoint(const struct device_node *parent)
--{
--	struct device_node *port, *ep;
--
--	port =3D omapdss_of_get_next_port(parent, NULL);
--
--	if (!port)
--		return NULL;
--
--	ep =3D omapdss_of_get_next_endpoint(port, NULL);
--
--	of_node_put(port);
--
--	return ep;
--}
--EXPORT_SYMBOL_GPL(omapdss_of_get_first_endpoint);
--
- struct omap_dss_device *
- omapdss_of_find_source_for_first_ep(struct device_node *node)
- {
-@@ -155,7 +137,7 @@ omapdss_of_find_source_for_first_ep(struct device_node =
-*node)
- 	struct device_node *src_port;
- 	struct omap_dss_device *src;
-=20
--	ep =3D omapdss_of_get_first_endpoint(node);
-+	ep =3D of_graph_get_endpoint_by_regs(node, 0, -1);
- 	if (!ep)
- 		return ERR_PTR(-EINVAL);
-=20
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c b/drivers/video/f=
-bdev/omap2/omapfb/dss/hdmi4.c
-index f05b4e35a842..8f407ec134dc 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/hdmi4.c
-@@ -20,6 +20,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/clk.h>
- #include <linux/of.h>
-+#include <linux/of_graph.h>
- #include <linux/regulator/consumer.h>
- #include <linux/component.h>
- #include <video/omapfb_dss.h>
-@@ -529,7 +530,7 @@ static int hdmi_probe_of(struct platform_device *pdev)
- 	struct device_node *ep;
- 	int r;
-=20
--	ep =3D omapdss_of_get_first_endpoint(node);
-+	ep =3D of_graph_get_endpoint_by_regs(node, 0, -1);
- 	if (!ep)
- 		return 0;
-=20
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c b/drivers/video/f=
-bdev/omap2/omapfb/dss/hdmi5.c
-index 03292945b1d4..4ad219f522b9 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/hdmi5.c
-@@ -25,6 +25,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/clk.h>
- #include <linux/of.h>
-+#include <linux/of_graph.h>
- #include <linux/regulator/consumer.h>
- #include <linux/component.h>
- #include <video/omapfb_dss.h>
-@@ -561,7 +562,7 @@ static int hdmi_probe_of(struct platform_device *pdev)
- 	struct device_node *ep;
- 	int r;
-=20
--	ep =3D omapdss_of_get_first_endpoint(node);
-+	ep =3D of_graph_get_endpoint_by_regs(node, 0, -1);
- 	if (!ep)
- 		return 0;
-=20
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/venc.c b/drivers/video/fb=
-dev/omap2/omapfb/dss/venc.c
-index c9d40e28a06f..0bd80d3b8f1b 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/venc.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/venc.c
-@@ -24,6 +24,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/pm_runtime.h>
- #include <linux/of.h>
-+#include <linux/of_graph.h>
- #include <linux/component.h>
-=20
- #include <video/omapfb_dss.h>
-@@ -764,7 +765,7 @@ static int venc_probe_of(struct platform_device *pdev)
- 	u32 channels;
- 	int r;
-=20
--	ep =3D omapdss_of_get_first_endpoint(node);
-+	ep =3D of_graph_get_endpoint_by_regs(node, 0, -1);
- 	if (!ep)
- 		return 0;
-=20
-diff --git a/drivers/video/fbdev/pxafb.c b/drivers/video/fbdev/pxafb.c
-index fa943612c4e2..2ef56fa28aff 100644
---- a/drivers/video/fbdev/pxafb.c
-+++ b/drivers/video/fbdev/pxafb.c
-@@ -2171,7 +2171,7 @@ static int of_get_pxafb_mode_info(struct device *dev,
- 	u32 bus_width;
- 	int ret, i;
-=20
--	np =3D of_graph_get_next_endpoint(dev->of_node, NULL);
-+	np =3D of_graph_get_endpoint_by_regs(dev->of_node, 0, -1);
- 	if (!np) {
- 		dev_err(dev, "could not find endpoint\n");
- 		return -EINVAL;
-diff --git a/include/video/omapfb_dss.h b/include/video/omapfb_dss.h
-index e8eaac2cb7b8..a8c0c3eeeb5b 100644
---- a/include/video/omapfb_dss.h
-+++ b/include/video/omapfb_dss.h
-@@ -819,9 +819,6 @@ struct device_node *
- omapdss_of_get_next_endpoint(const struct device_node *parent,
- 			     struct device_node *prev);
-=20
--struct device_node *
--omapdss_of_get_first_endpoint(const struct device_node *parent);
--
- struct omap_dss_device *
- omapdss_of_find_source_for_first_ep(struct device_node *node);
- #else
---=20
-2.25.1
+> 
+>> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+>> ---
+>>  drivers/spi/spi-s3c64xx.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+>> index 72c35dbe53b2..c15ca6a910dc 100644
+>> --- a/drivers/spi/spi-s3c64xx.c
+>> +++ b/drivers/spi/spi-s3c64xx.c
+>> @@ -17,6 +17,7 @@
+>>  #include <linux/platform_device.h>
+>>  #include <linux/pm_runtime.h>
+>>  #include <linux/spi/spi.h>
+>> +#include <linux/types.h>
+> 
+> Is this really needed for the further patches in this series?
+> 
 
+Yes, because in patch 3/4 I use u8 and u16 and I don't want to use those
+without having the header included. Do you find this wrong?
+
+>>
+>>  #define MAX_SPI_PORTS          12
+>>  #define S3C64XX_SPI_QUIRK_CS_AUTO      (1 << 1)
+>> --
+>> 2.43.0.594.gd9cf4e227d-goog
+>>
 
