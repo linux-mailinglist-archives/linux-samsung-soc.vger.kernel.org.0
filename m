@@ -1,134 +1,111 @@
-Return-Path: <linux-samsung-soc+bounces-1939-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-1945-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0012085461C
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Feb 2024 10:35:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F180585474D
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Feb 2024 11:39:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B166728AA5A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Feb 2024 09:35:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 917C51F21FB8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 14 Feb 2024 10:39:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62DC018C3B;
-	Wed, 14 Feb 2024 09:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CA217541;
+	Wed, 14 Feb 2024 10:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMG2JxTY"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091C134D1
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 14 Feb 2024 09:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A072CC2C6;
+	Wed, 14 Feb 2024 10:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707903292; cv=none; b=u/cuTMerf3tMgLsFXF9vrssFmjxs92TnXHyeMMrg6wyDSlezYSAqWiJOthGnWQS+qGSKnk/jHhgn3GGn+XlE//tkcnl9Rx9zi4XohqmUHVWMrljenMcea1to5a7fJCNZzMeZqiBrDXNWJvVi1rVdcXzt57cobtulkCZXEH6zJIg=
+	t=1707907171; cv=none; b=FJzoA3Ypi++EpL+TD3sT822akhVb33w450151Oe4iZHl6wBvzQoVXkGUzbY/mWncn454htSAuGBrNfEN2uHtAuGVn678YcGArMF5W3XhZrzkyjOty82/9x/9JIADWd0IXvpd8ZFZ+O2usv+mZQDsczoRrQcK/WVowfVbj7UnC/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707903292; c=relaxed/simple;
-	bh=L2fP/40Abfd2uvbzxxaCl1aJUDUo3oBsL6xZcwUm+2w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HcS/Ht/KhGku0Oii5A3iuLy0OqujoIoetqI27DdvB9pNh1x0OrRsQBFcidZERBzhRO69ne756hOJnKVoqsnpzuO/d8BGzFoAoJWOBB45d/oac6VAII/fyPeXoEY9f7xYvBN8zHCN5QXANoVfwiMGuqLhIaasu54Mme7yb/dbcB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1raBf2-0005X3-Ha; Wed, 14 Feb 2024 10:34:36 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1raBez-000fF1-DI; Wed, 14 Feb 2024 10:34:33 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1raBez-004Y6f-14;
-	Wed, 14 Feb 2024 10:34:33 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-pwm@vger.kernel.org
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH v6 101/164] pwm: samsung: Make use of devm_pwmchip_alloc() function
-Date: Wed, 14 Feb 2024 10:32:28 +0100
-Message-ID:  <f188e68bdea8d5a24277a10c8c9a6350a9c246ac.1707900770.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1707900770.git.u.kleine-koenig@pengutronix.de>
+	s=arc-20240116; t=1707907171; c=relaxed/simple;
+	bh=ve+usHpPiLeGFo9qGaUdJEB8rWWmsI433I+8nLrtPWA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cwgDrO7mEgZcYTkhevuBOIU9qYcHTA949ICFlhD+zw/IcI9mkBrteUJrE0DjgPsi3rie2Vy2rDmxI0puEyXNYcqMQSdhrg7pCtQMICs7IsZfZeGIOOA0sUqFd2fdfi6zIgcH5e5bD6mVIg0/5TxJIl5T6xD5ZbtNZNAourHFMro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMG2JxTY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD63EC433C7;
+	Wed, 14 Feb 2024 10:39:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707907171;
+	bh=ve+usHpPiLeGFo9qGaUdJEB8rWWmsI433I+8nLrtPWA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mMG2JxTY5r0JtemuhnLGxIkBv2vs9oCD8JbPETLCQD3yg2qQ4VKFDBUVSU7yIge4J
+	 4MrcD29ANaG2BIMVo3oS8op8fUmcTulSdxbxdcVYhZbgkqyOak9zrqsfNKhV+krgza
+	 xLBeJ68UbUTpFQO+ditMDCSTVbcpZujlhg7+2k6g=
+Date: Wed, 14 Feb 2024 11:39:25 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: linux-pwm@vger.kernel.org, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Benson Leung <bleung@chromium.org>, Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>,
+	kernel@pengutronix.de, linux-arm-kernel@lists.infradead.org,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev, Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>, linux-mips@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-amlogic@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev, greybus-dev@lists.linaro.org,
+	linux-staging@lists.linux.dev
+Subject: Re: [PATCH v6 001/164] pwm: Provide an inline function to get the
+ parent device of a given chip
+Message-ID: <2024021414-sedan-banking-f6b5@gregkh>
 References: <cover.1707900770.git.u.kleine-koenig@pengutronix.de>
+ <cc30090d2f9762bed9854a55612144bccc910781.1707900770.git.u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2108; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=L2fP/40Abfd2uvbzxxaCl1aJUDUo3oBsL6xZcwUm+2w=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlzIi/e7UAi6YnGdZM63g1kB7xY5zzYA/9MCiLs qcEG9PGLFWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZcyIvwAKCRCPgPtYfRL+ Tt6uCACPyWp3rurpxUbYuN/g8JHDaC1Vl08KyFrb62bjxltlTf/39f706K/2jtSvH9JJmOWQY9s d/JbO2xwE/+kQgdAzHRq7cKgd35llxalGb9EnnjjF5uCVisi8lvyxDCoEh2u0gZLDZN1MyAC9mZ tdPWltTiSjjusA9CTvaqlifwLrbMYLFHYDY9r6fxa2EfuuYMKHEe5B3cSL6KJrxtyC4d1+YKg37 bJtZikaRpPZlgoOX9T1gL6SZ1sWJDgCMFwH0FJbn8zEADmgfyI1VpRnSRP8h+z6HBIhgW5tFKt5 OmKJ6Z+n8ySR2wSqYp0mElum6sud+xIHBMQE6/fqrog4XPo4
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+In-Reply-To: <cc30090d2f9762bed9854a55612144bccc910781.1707900770.git.u.kleine-koenig@pengutronix.de>
 
-This prepares the pwm-samsung driver to further changes of the pwm core
-outlined in the commit introducing devm_pwmchip_alloc(). There is no
-intended semantical change and the driver should behave as before.
+On Wed, Feb 14, 2024 at 10:30:48AM +0100, Uwe Kleine-König wrote:
+> Currently a pwm_chip stores in its struct device *dev member a pointer
+> to the parent device. Preparing a change that embeds a full struct
+> device in struct pwm_chip, this accessor function should be used in all
+> drivers directly accessing chip->dev now. This way struct pwm_chip and
+> this new function can be changed without having to touch all drivers in
+> the same change set.
+> 
+> Make use of this function in the framework's core sources.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-Signed-off-by: Uwe Kleine-KÃ¶nig <u.kleine-koenig@pengutronix.de>
----
- drivers/pwm/pwm-samsung.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/pwm/pwm-samsung.c b/drivers/pwm/pwm-samsung.c
-index d3dc9b5b80d6..efb60c9f0cb3 100644
---- a/drivers/pwm/pwm-samsung.c
-+++ b/drivers/pwm/pwm-samsung.c
-@@ -69,7 +69,6 @@ struct samsung_pwm_channel {
- 
- /**
-  * struct samsung_pwm_chip - private data of PWM chip
-- * @chip:		generic PWM chip
-  * @variant:		local copy of hardware variant data
-  * @inverter_mask:	inverter status for all channels - one bit per channel
-  * @disabled_mask:	disabled status for all channels - one bit per channel
-@@ -80,7 +79,6 @@ struct samsung_pwm_channel {
-  * @channel:		per channel driver data
-  */
- struct samsung_pwm_chip {
--	struct pwm_chip chip;
- 	struct samsung_pwm_variant variant;
- 	u8 inverter_mask;
- 	u8 disabled_mask;
-@@ -110,7 +108,7 @@ static DEFINE_SPINLOCK(samsung_pwm_lock);
- static inline
- struct samsung_pwm_chip *to_samsung_pwm_chip(struct pwm_chip *chip)
- {
--	return container_of(chip, struct samsung_pwm_chip, chip);
-+	return pwmchip_get_drvdata(chip);
- }
- 
- static inline unsigned int to_tcon_channel(unsigned int channel)
-@@ -549,14 +547,12 @@ static int pwm_samsung_probe(struct platform_device *pdev)
- 	unsigned int chan;
- 	int ret;
- 
--	our_chip = devm_kzalloc(&pdev->dev, sizeof(*our_chip), GFP_KERNEL);
--	if (our_chip == NULL)
--		return -ENOMEM;
-+	chip = devm_pwmchip_alloc(&pdev->dev, SAMSUNG_PWM_NUM, sizeof(*our_chip));
-+	if (IS_ERR(chip))
-+		return PTR_ERR(chip);
-+	our_chip = to_samsung_pwm_chip(chip);
- 
--	chip = &our_chip->chip;
--	chip->dev = &pdev->dev;
- 	chip->ops = &pwm_samsung_ops;
--	chip->npwm = SAMSUNG_PWM_NUM;
- 	our_chip->inverter_mask = BIT(SAMSUNG_PWM_NUM) - 1;
- 
- 	if (IS_ENABLED(CONFIG_OF) && pdev->dev.of_node) {
--- 
-2.43.0
-
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
