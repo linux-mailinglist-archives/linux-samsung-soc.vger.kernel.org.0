@@ -1,190 +1,192 @@
-Return-Path: <linux-samsung-soc+bounces-2046-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2041-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D5EB85BA53
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Feb 2024 12:22:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82C6785B9DD
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Feb 2024 12:04:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 541BD286911
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Feb 2024 11:22:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED872B21E30
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Feb 2024 11:04:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 586DB67E7E;
-	Tue, 20 Feb 2024 11:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6D3365BB8;
+	Tue, 20 Feb 2024 11:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="s9nrO5Y/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V4VvsFG0"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6140167C70
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Feb 2024 11:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC61657D7
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Feb 2024 11:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708428102; cv=none; b=bD60dH4tzAhrpDjqDXOuBf1V/2sPBXp9+7zhAgl5TqJbwJZlH7gfO9C5YXFSHMluVx/LbSjIn1pENhed5sO6huytfKHA+NT/UZxO9npUBCddtWZsZ7EwHGlT1BRUFvJal/JsrpttqqwiVG/EapQMpOW1wuChd4sKGN9a/TEwmfk=
+	t=1708427079; cv=none; b=hAwoNmIq8lHen0mBc0bzhiFhuQ5gP95eWwjgAfnan+LVEDcQuOfvWdnBdZQL96fdikvzuFbNbdf2NJo6ko+vmZQ02kFJ1sfuTlO718jtco6vLq+9vO2ejJOLO/Hy21nl44n8PoDJWQJoTVLQTS2NFOSPsjOQVYpO84GqGn9br4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708428102; c=relaxed/simple;
-	bh=INHQvRB/ojgLL1jJyHv4kt04JhA8r1SShwN3sZfPsZ8=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:References; b=RVw4A9KWOOPJmap8J3nfsBjOZn50lIdnWtYWGUJtmjFtwMxdhvoq7EA/5NHU6hy/ruKI7d8+5VLnKHNCw/0eSlV8JNSUUFNTJgddCRpIOkwb38Quv2rUiVIil1/ZDpCRfyTiV7rZOh/UvDPpDUGiykdw1Q9u9A/pSEOxWjyLHzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=s9nrO5Y/; arc=none smtp.client-ip=203.254.224.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20240220112138epoutp030918d7f90216b05bf27c763f95667898~1jk3T8DmN2856528565epoutp03L
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Feb 2024 11:21:38 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20240220112138epoutp030918d7f90216b05bf27c763f95667898~1jk3T8DmN2856528565epoutp03L
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1708428098;
-	bh=9fGAvkkWp12wfZXJbzbavv2ZwQH5uBgyjHpo2ixsD5g=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=s9nrO5Y/2+9rMxzcwO8lBRBvPHPBIM4ouJ72/qRImVKjFySSrIQpgghQQcKSogBEG
-	 fUweX6u8ppsM01TrPotpPf4ou8a8vJQStDRecYXQ7ai67mGZpf+/zp7fozxuusgIIa
-	 wsfkGdBEWurXdqw72A2V24O8iKSUDyKJOT1uquKw=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTP id
-	20240220112138epcas5p2f6ce1ff37994ee8c17b9d478d645c430~1jk24n3rP2571225712epcas5p2a;
-	Tue, 20 Feb 2024 11:21:38 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.175]) by
-	epsnrtp2.localdomain (Postfix) with ESMTP id 4TfH6S2xGcz4x9Pv; Tue, 20 Feb
-	2024 11:21:36 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	8E.F3.09672.04B84D56; Tue, 20 Feb 2024 20:21:36 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20240220101235epcas5p16db3f82c8db1efd32299c48c875cdc87~1iokWVZc32498224982epcas5p1u;
-	Tue, 20 Feb 2024 10:12:35 +0000 (GMT)
-Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
-	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20240220101235epsmtrp15a637026f007baa6d501581fbe3dc121~1iokVk8672766527665epsmtrp1D;
-	Tue, 20 Feb 2024 10:12:35 +0000 (GMT)
-X-AuditID: b6c32a4b-60bfd700000025c8-0e-65d48b404943
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	92.43.07368.21B74D56; Tue, 20 Feb 2024 19:12:34 +0900 (KST)
-Received: from cheetah.sa.corp.samsungelectronics.net (unknown
-	[107.109.115.53]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240220101233epsmtip2b9ecc58a6460c97f07645740b25e1462~1iojAi0Ht1920319203epsmtip2I;
-	Tue, 20 Feb 2024 10:12:33 +0000 (GMT)
-From: Tamseel Shams <m.shams@samsung.com>
-To: alim.akhtar@samsung.com, krzysztof.kozlowski+dt@linaro.org,
-	gregkh@linuxfoundation.org, jirislaby@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, Tamseel Shams
-	<m.shams@samsung.com>
-Subject: [PATCH v3] serial: samsung: honor fifosize from dts at first
-Date: Tue, 20 Feb 2024 15:42:27 +0530
-Message-Id: <20240220101227.80741-1-m.shams@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHKsWRmVeSWpSXmKPExsWy7bCmhq5D95VUg+W/BSwezNvGZtG8eD2b
-	xbu5MhZ9Lx4yW2x6fI3V4vKuOWwWM87vY7I4s7iX3eJu62J2B06PTas62TzuXNvD5rF/7hp2
-	j81L6j36tqxi9Pi8SS6ALSrbJiM1MSW1SCE1Lzk/JTMv3VbJOzjeOd7UzMBQ19DSwlxJIS8x
-	N9VWycUnQNctMwfoJiWFssScUqBQQGJxsZK+nU1RfmlJqkJGfnGJrVJqQUpOgUmBXnFibnFp
-	XrpeXmqJlaGBgZEpUGFCdsbrX/wFxwUqTs+fwtLA+J63i5GTQ0LARGLNusfsXYxcHEICuxkl
-	pk9bBeV8YpRYdO40I4TzjVFi68XzLDAts49MgkrsZZS4eXojVEsrk8TqE9OYuhg5ONgENCWO
-	n+cGMUUEiiQaP/OClDALbGCUeNCzAaxEWMBVYvUCGZCZLAKqEn92dzKC2LwCFhKTW26yQ+yS
-	l1i94QAzSK+EwCF2iUXXrrJBJFwkFv94A1UkLPHq+BYoW0riZX8blJ0uMfdhLxOEXSCxbNd3
-	qLi9xIErc1hAbmAGOnP9Ln2IsKzE1FPrwMqZBfgken8/gWrlldgxD8ZWlPi/ux9qjLjEuxVT
-	WCFsD4kVcyaAnSYkECtxtOct6wRG2VkIGxYwMq5ilEwtKM5NTy02LTDOSy2HR1Nyfu4mRnBC
-	0/LewfjowQe9Q4xMHIyHGCU4mJVEeFnKr6QK8aYkVlalFuXHF5XmpBYfYjQFhtlEZinR5Hxg
-	Ss0riTc0sTQwMTMzM7E0NjNUEud93To3RUggPbEkNTs1tSC1CKaPiYNTqoFJK2TH3UT2k1V6
-	Gsm7fs38E7LI89QGm+9S4u+nPzwcvHuW38pzzO7vvULEe47zHw6f7lF6UCbW3W55Tmyi3AXF
-	9+ud74TUb9S8/c1Rf3tniZXH8U9Ffam13/5EXbK4duqgnq/fss0rymdnW9pVyLitfeAxm6u8
-	SJwzY9/jyyeqzvopiEdfcCsydbx3d7LSYdd/T+0DTjF91Xf5N4HncN7tzFVqWd+ty9yPBOnw
-	/bkY5/HiiVHRUttn8y9WCPVvNlrFaPhbR6H4bBDzOZMFOyK36IuzqQmqXuksbFxnxqH+8Wz4
-	pK+2u90TXS3lXuYeZjrae+vZ56RVL55u0rnSwv5E6eTjk6vUTnhPM/Y8dj5JiaU4I9FQi7mo
-	OBEAl1tpjfEDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupiluLIzCtJLcpLzFFi42LZdlhJXleo+kqqwfW5lhYP5m1js2hevJ7N
-	4t1cGYu+Fw+ZLTY9vsZqcXnXHDaLGef3MVmcWdzLbnG3dTG7A6fHplWdbB53ru1h89g/dw27
-	x+Yl9R59W1YxenzeJBfAFsVlk5Kak1mWWqRvl8CV8foXf8FxgYrT86ewNDC+5+1i5OSQEDCR
-	mH1kEmMXIxeHkMBuRomeL4fZIBLiEtN+7WeEsIUlVv57zg5R1Mwk8WPrReYuRg4ONgFNiePn
-	uUFqRATKJHZ132cFqWEW2MIoce7/X3aQGmEBV4nVC2RAalgEVCX+7O4Em8krYCExueUmO8R8
-	eYnVGw4wT2DkWcDIsIpRMrWgODc9N9mwwDAvtVyvODG3uDQvXS85P3cTIzi4tDR2MN6b/0/v
-	ECMTB+MhRgkOZiURXpbyK6lCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeQ1nzE4REkhPLEnNTk0t
-	SC2CyTJxcEo1MG2co3V12dY8A4/3bicYZxfdETAwEZ44zVEkWmgO34umyIAsUeFZx+M62Uw+
-	8FpVMSy8XLbHO9Ha7dm8tMytmfUvJ/BEpLc68s75YWf+yjJEPHvCtlNmls9u9Yf9/vNn/e5r
-	XnJM8ozR0pdMeZ8H2kov7ZrS9/65UEagxv61FW8/d+UYXjzLJRiue7PhjV4t8xmBCb1f2ZLV
-	ts5z/rXxy8QNS17JlN2XTeNakZ4bGjBtJfscNs2//7fWy2i4hxX3mSzR4ZvdflCBzSax313j
-	neHCqR7NrO2XAsq3htTHWXUrTdYQ+dDW+XLZ9bKkDSkfkhdFZco8DHk2+fd+i8kc3GWBS5+1
-	/coQePVt7qOvSizFGYmGWsxFxYkATQEMn50CAAA=
-X-CMS-MailID: 20240220101235epcas5p16db3f82c8db1efd32299c48c875cdc87
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240220101235epcas5p16db3f82c8db1efd32299c48c875cdc87
-References: <CGME20240220101235epcas5p16db3f82c8db1efd32299c48c875cdc87@epcas5p1.samsung.com>
+	s=arc-20240116; t=1708427079; c=relaxed/simple;
+	bh=wDvrFsF4EpABPwyh8ywfuGjb9qWMW1yuCO2kiRh4dLs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fZxBytLA2zIgMJZQy7l8F2WN3YvraXtl61wVh8uAcu6m/nrCaAWrnOMLoGMqMKAMpXMMUvHRyHK9U3jQrK24/vq/RV8Ve4/i6mKy4eLcza9eOZdTIAVj4Dx9QGXjyUntFKzQqhuFZlvU8GhYDsjfcFtugzPLC4P90BnP43l+vyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V4VvsFG0; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d247c31e1aso6592681fa.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 20 Feb 2024 03:04:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708427076; x=1709031876; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NbSygiAeGP6BEwln1frKBLnsOivRpqfkZfCGYmRwuys=;
+        b=V4VvsFG00ZznYjMCnQkSifluLCGbMCtUYfeZ6kRqs8xtksd1S9mxTXKlCXGt8A0KcT
+         3xCjCSe0cRfnw5k5mqzZndWA+nK/9PnFQDdV4LgtlaxhZrip6H2V+8cO9pAFQBDkx368
+         viakFuFraXH2pcR35TQMLoVfa31JDJE8Z+UavRHT0ve5JeGkOcNLE+A5Amk7JLzOFaDl
+         nOPiMZDSAU6AJ0dNqJ9g2JOotOYOjtAmqGAje7nKlEYWD9a1tXj3nzCxeexMvM/zikEb
+         afQSyzyz+sp435GffmAJk5SSEaGU8FwGk8gSdBIbds9X1qFYBqX+gCVkPRl3xWpupj85
+         yUXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708427076; x=1709031876;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NbSygiAeGP6BEwln1frKBLnsOivRpqfkZfCGYmRwuys=;
+        b=W/hhlVzZBx2suR61UeBoIpzRy1udSwnBBFv4zCzCVCsGg8QeM2xWHOFq7636ZLRotM
+         RfDu6UHChzambozKu7wIS4OMKMp6BvS/sxZv4Gp2kKwlxSwzuUVo+27Oxc4OwdGm330f
+         mcSzSvukn1378BJGtHEtPSFXsp4vnRQ5gGULMraiku8tomao2qcZDeiC/g2oCFfHnseg
+         BJqsdh/x2SSrD5O11+H1Yxc/I4JRDIdRN6hd0tG3J9PQR4DHL4B9qyyPrlh/Xoo9RXKB
+         5lNVV+wazO3xHl4I6k/XRt6LoFxAy41OVcG54u1UmYELp+ZIszzozp/2oIAdA+Uh0bn4
+         sRDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXrqix9izxg16zbCaWbr+Wmlog4yrk1uP6F7bgVq9vHdph8ta8zxxnf2e8VMr9hAjD9Ki4eoAw9yNY0WeGa6lOYhSp0rEzuXC9qF0xhJUNq3PQ=
+X-Gm-Message-State: AOJu0YzoMM44+KcbNHqHmgwBrdgfrIDcCSDQTzx5vFKT2S3/YeSx4Tkq
+	YERnU+mVSauI0Mt1p+Q+93GxAZK68BrDukQcjtlm5JCo+X6IfS2Qx/zBqOpMjZg=
+X-Google-Smtp-Source: AGHT+IGQONEzPBM/dxfA9vAn42RRAyX636D98yzJL/U2/Q8EcAbk6K4xwaa2GHt1Q/DqkBcGdtLDtA==
+X-Received: by 2002:a2e:a686:0:b0:2cd:706a:8ec8 with SMTP id q6-20020a2ea686000000b002cd706a8ec8mr8964202lje.10.1708427076228;
+        Tue, 20 Feb 2024 03:04:36 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id az19-20020adfe193000000b0033d6ff7f9edsm1074787wrb.95.2024.02.20.03.04.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Feb 2024 03:04:35 -0800 (PST)
+Message-ID: <ce515530-428a-4a21-8c56-5a497cc8130a@linaro.org>
+Date: Tue, 20 Feb 2024 12:04:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/16] clk: samsung: Keep register offsets in chip
+ specific structure
+Content-Language: en-US
+To: Sam Protsenko <semen.protsenko@linaro.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Tomasz Figa <tomasz.figa@gmail.com>,
+ linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20240216223245.12273-1-semen.protsenko@linaro.org>
+ <20240216223245.12273-12-semen.protsenko@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240216223245.12273-12-semen.protsenko@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Currently for platforms which passes UART fifosize from DT gets
-override by local driver structure "s3c24xx_serial_drv_data",
-which is not intended. Change the code to honor fifosize from
-device tree at first.
+On 16/02/2024 23:32, Sam Protsenko wrote:
+> Abstract CPU clock registers by keeping their offsets in a dedicated
+> chip specific structure to accommodate for oncoming Exynos850 support,
+> which has different offsets for cluster 0 and cluster 1. This rework
+> also makes it possible to use exynos_set_safe_div() for all chips, so
+> exynos5433_set_safe_div() is removed here to reduce the code
+> duplication.
+> 
 
-Signed-off-by: Tamseel Shams <m.shams@samsung.com>
----
-Change Log:
-v1 -> v2:
-Acknowledged Krzysztof's comments
-Initialized "ret" variable
+So that's the answer why you could not use flags anymore - you need an
+enum, not a bitmap. Such short explanation should be in previous commits
+justifying moving reg layout to new property.
 
-v2 -> v3:
-intoduced new variable "fifosize_prop" to handle
-return value from call of "of_property_read_u32"
+> No functional change.
+> 
+> Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+> ---
+>  drivers/clk/samsung/clk-cpu.c | 156 +++++++++++++++++++---------------
+>  1 file changed, 86 insertions(+), 70 deletions(-)
+> 
+> diff --git a/drivers/clk/samsung/clk-cpu.c b/drivers/clk/samsung/clk-cpu.c
+> index 04394d2166c9..744b609c222d 100644
+> --- a/drivers/clk/samsung/clk-cpu.c
+> +++ b/drivers/clk/samsung/clk-cpu.c
+> @@ -44,12 +44,14 @@ typedef int (*exynos_rate_change_fn_t)(struct clk_notifier_data *ndata,
+>  
+>  /**
+>   * struct exynos_cpuclk_chip - Chip specific data for CPU clock
+> + * @regs: register offsets for CPU related clocks
+>   * @pre_rate_cb: callback to run before CPU clock rate change
+>   * @post_rate_cb: callback to run after CPU clock rate change
+>   */
+>  struct exynos_cpuclk_chip {
+> -	exynos_rate_change_fn_t	pre_rate_cb;
+> -	exynos_rate_change_fn_t	post_rate_cb;
+> +	const void				* const regs;
 
- drivers/tty/serial/samsung_tty.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+Why this is void?
 
-diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
-index 71d17d804fda..745702ec8eda 100644
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -1952,7 +1952,7 @@ static int s3c24xx_serial_probe(struct platform_device *pdev)
- 	struct device_node *np = pdev->dev.of_node;
- 	struct s3c24xx_uart_port *ourport;
- 	int index = probe_index;
--	int ret, prop = 0;
-+	int ret, prop = 0, fifosize_prop = 1;
- 
- 	if (np) {
- 		ret = of_alias_get_id(np, "serial");
-@@ -1990,8 +1990,8 @@ static int s3c24xx_serial_probe(struct platform_device *pdev)
- 	}
- 
- 	if (np) {
--		of_property_read_u32(np,
--			"samsung,uart-fifosize", &ourport->port.fifosize);
-+		fifosize_prop = of_property_read_u32(np, "samsung,uart-fifosize",
-+				&ourport->port.fifosize);
- 
- 		if (of_property_read_u32(np, "reg-io-width", &prop) == 0) {
- 			switch (prop) {
-@@ -2009,10 +2009,13 @@ static int s3c24xx_serial_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	if (ourport->drv_data->fifosize[index])
--		ourport->port.fifosize = ourport->drv_data->fifosize[index];
--	else if (ourport->info->fifosize)
--		ourport->port.fifosize = ourport->info->fifosize;
-+	if (fifosize_prop) {
-+		if (ourport->drv_data->fifosize[index])
-+			ourport->port.fifosize = ourport->drv_data->fifosize[index];
-+		else if (ourport->info->fifosize)
-+			ourport->port.fifosize = ourport->info->fifosize;
-+	}
-+
- 	ourport->port.has_sysrq = IS_ENABLED(CONFIG_SERIAL_SAMSUNG_CONSOLE);
- 
- 	/*
--- 
-2.17.1
+> +	exynos_rate_change_fn_t			pre_rate_cb;
+> +	exynos_rate_change_fn_t			post_rate_cb;
+>  };
+>  
+
+
+
+Best regards,
+Krzysztof
 
 
