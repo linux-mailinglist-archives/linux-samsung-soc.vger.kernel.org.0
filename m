@@ -1,72 +1,72 @@
-Return-Path: <linux-samsung-soc+bounces-2103-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2105-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 729B7862755
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 Feb 2024 21:21:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96E3D86275E
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 Feb 2024 21:21:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 973351C20ADD
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 Feb 2024 20:21:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45373281FAA
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 Feb 2024 20:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72B314D9F2;
-	Sat, 24 Feb 2024 20:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 264544EB23;
+	Sat, 24 Feb 2024 20:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dvSgK1nR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OcndeSh3"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C154D121
-	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 Feb 2024 20:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428114CB47
+	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 Feb 2024 20:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708806059; cv=none; b=IpPccnOe7iphUzwci9QM1Y5gMmDG2D0EnRnw4T6BBS+cggxWVIswiUZ+bquAp1cb/57fxl+imHQxmiBAZv0Wp7zUBZQdSVkLOG4zqZNbMo/ZQyAXHvrAhpLzxlE5ffg4KPBvx5jCTLlROe6QGgsSYlff+SZcPPXB6erPby7R1dk=
+	t=1708806061; cv=none; b=XXJYGP57i596ti2rYOCxhgsTIr3L2CDtxDe9YdSiQw210cfVGU3jAd2K6gxgUPdPFhxQBuiW8G8KXZNKDvbSVckcwJCYuZtLQRrkDuoQB4fmsu6D6xPgg62zZyQrNce/l/9kImt2nqap35L3h06dSKe81fYAaFhtb5w4tc6MDJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708806059; c=relaxed/simple;
-	bh=fN7G3wPmBsJcgLlgsVKiAx8cGoftNtuuXTgf0LWnTHk=;
+	s=arc-20240116; t=1708806061; c=relaxed/simple;
+	bh=8vDjKv5CbmqJonhIPFV7UHvnuzTKWFqo1N9oGJJvWA0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NeEK5UeYnNkR6QHO1cbRe3yVqS4D3CqduHWhzawNNddYDknj4p7T58WYY242Bcj3jK3pSvkmAyG4dCYWDGXmq36BlEgh7g3ug+d6pl6IAWsi+5LWg7WCI00L6JZ7j2yAkOUslXd4jR+8ni49gDWdZ7/CWGxEYeMDsNiv3ibWbWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dvSgK1nR; arc=none smtp.client-ip=209.85.210.51
+	 MIME-Version; b=YPp6LMYe83CREQt1ahJHOhjz77anx5gNTPKLlhRSjtoaBnGdz17a6Y1pb6c2KgvF8pS2Id9ccox6xLx5+tI7xd0CofgYaF/y/CfmGtfFB2BUa1SLXS0H0LAST1zCIRdoApIxspZL0DOybYwnbgZ7YXkXA/P3Z0iGGPyCeQi7KQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OcndeSh3; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6e28bd74883so796759a34.1
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 24 Feb 2024 12:20:57 -0800 (PST)
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3c0485fc8b8so1352709b6e.3
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 24 Feb 2024 12:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708806056; x=1709410856; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708806057; x=1709410857; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T4GSfJijJ5j5tZLrOHCfmxmebAz3nZFw4CYMZ7bPECs=;
-        b=dvSgK1nRbn7WRjpSKi8ySSRSfygHhpdwrNX4OcsRg7a4QmM24ZM9WN1mjOB5nnahj1
-         r0MkgJJSqQ0NX1yzxS0iLsgdxmv8B0gfV3yI0WYnfRd2NHQU0Pywde1aDEkb/MHIgv1A
-         K0IgdI1ehG8SSbyDhRJKvpaUJcbBnBK3XgfN164KYN7rVzfGkoHLF7p3E7S8J3tOboxF
-         tigH5dQWR9dgDCBAXyv95b8pSez9lyyyk3EfR03GYdr6QXAPAuQb4kZIpgI33ltEExDd
-         u7Yz9iv++1Ivp6kPea4TuzAYhi7JeIdy6YtyABBteo1YTb7m+lFP424IGBwhku43lsgY
-         hhLg==
+        bh=BIuqSD1JNGAHgvRkLpN9TD+kZKkjlKs1GB5+HEoXmSg=;
+        b=OcndeSh3IWpYW7y/4Q9RegXYpAzSGWBUHQMLMcsn/b7Svqnc6E9C8bvQxLJHRfpceF
+         i+aIYBKK0X3dak0jt2aygshppNW8FjA9zQ9FEJZAwne9jeCyFsqOy8n82LJnkxW5Vkim
+         OHgHyOQqYFBcBlTZXvEyFC+dedr/ZvPqZm9n0ZgMxBOczQC0Qu9F+MZT2kltTw0HElgc
+         J9CODEXiyCYd9a2tufKn4Yvh7vjUcFH0ZC5Clt8RrYoPH5rwXEWn/T2n8e4liyA8VF7x
+         tQZkvs8zJoT6727F89R/F46p8A6T8uE7IFasA3v+E7Um5OqU8jmtoRgzudNNZAewp+mH
+         tn2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708806056; x=1709410856;
+        d=1e100.net; s=20230601; t=1708806057; x=1709410857;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=T4GSfJijJ5j5tZLrOHCfmxmebAz3nZFw4CYMZ7bPECs=;
-        b=e7vWZpLOhkkplVWu7YjSsCkXOJ6Hn/5LNEVO3yB2fbQNtbdnDm8da7e9Hqcn2mL4kS
-         kVhzKsfpsNmCYtvtTl9E4Nku0xxqwdOqo6sR0uzQGj+7xXb4gIXQXMLrpN07osJMNL3A
-         UufSWOLdToj43jP+L6Fimvq/+s9+0il5SD81zBkxEMW+pulCZaQe84dPFJmmkd88GJeL
-         yexB7aPJOdWHte4SV4b7fsgLR4IY5+GCIcYO4Gh3m9xthzDOOhtqn/Ua/znR6Ke0cRuQ
-         +X3Yl7/V7ecfUZxxwSrQpeiBVOx/KloHP2POLf8xRSQOJzWX9T2D/ReYf0jV6FCBW/p9
-         ugzA==
-X-Forwarded-Encrypted: i=1; AJvYcCXPuh7aMKi9VXINVf3NCFQC+n1b+OogBSvg24c/axq2t8hG4LTqr4clFPUgonZlHa9zaOa9ZXvf8qSJD7FGcg67+wjz3ET1CJq40kYRXQLyD28=
-X-Gm-Message-State: AOJu0Yxaq97gsozW0vG2FfCR3OV5TBrpIwG8DGkzRsTnLKE8wGb64lyM
-	oBncBVcc65A2UB+LpvF5/7WyWshB5Wud3DmRx72rgNvFQ/w35dY4OL2MVhGsOOs=
-X-Google-Smtp-Source: AGHT+IFezpIvERjHD2pciFQcNjycbJTG/ZehyajyoyHMTJjZFoS0RTBxr/K78EmMg1zM64y7rVK69g==
-X-Received: by 2002:a9d:754b:0:b0:6e4:527c:14b with SMTP id b11-20020a9d754b000000b006e4527c014bmr1191372otl.5.1708806056671;
-        Sat, 24 Feb 2024 12:20:56 -0800 (PST)
+        bh=BIuqSD1JNGAHgvRkLpN9TD+kZKkjlKs1GB5+HEoXmSg=;
+        b=UFNT/4BpP0m4IssX1EkNldfOL9G2cEPl7Gee0vyz23IgUy9lr671MSoBhTKYzDmgJA
+         z/9rQ54uUqIl1NhBvEM9Lnzk6QN6IAQUr6nza3hcfHuX8/ad+59SG0b2KdEb0skOFNRg
+         /66joX+jMhWDa79mby6P4qV2pgsxJn9uWXFeHTRplygEznfs05wpjgNaP1O5eQppNerY
+         AzSyuw7boJyaZhF/Ub7xwQBNXLqftN/mnyloW0GQB7/RTHNJ4K8GdxpDEZ452Q9UoF1+
+         X0T+f3jx32FLNzuEGE88oLYSN/+rNJxZtr7vaURa0ZXdw+ESpFh7zY/11DZP6sLaeUrY
+         iB1g==
+X-Forwarded-Encrypted: i=1; AJvYcCVsbrDIvcPnd81yma1ENiPT278yPgq9f0GS1KSvjnScSM+80jC8iWpqX1/QqkWShsa0mr1sjB31wxQ3qUJ5MtNvxYkh8EWHNidx86jCgxjWGS0=
+X-Gm-Message-State: AOJu0YyovKIpgdq8ye5dTA4whE61yQ/RWLBf0WvpjQxGTcM3rGm80qa6
+	azjv2nRfyMfg3BpfT14mod+09cAz4D5VFP3HrwuIfYgrxNvWA2vIL62TkpKi6h8=
+X-Google-Smtp-Source: AGHT+IEnJC7vVv78ANtdBQxEa92suD4hZccR3eOtEkSJdPaCxNnJgMSMtvAH9tsjy6akqaOpDaNl3g==
+X-Received: by 2002:a05:6808:1a13:b0:3c1:54eb:ff0a with SMTP id bk19-20020a0568081a1300b003c154ebff0amr4391713oib.7.1708806057394;
+        Sat, 24 Feb 2024 12:20:57 -0800 (PST)
 Received: from localhost ([136.62.192.75])
-        by smtp.gmail.com with ESMTPSA id t22-20020a0568301e3600b006e12266433csm407445otr.27.2024.02.24.12.20.56
+        by smtp.gmail.com with ESMTPSA id z9-20020a056808028900b003c16a317dd4sm385305oic.53.2024.02.24.12.20.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Feb 2024 12:20:56 -0800 (PST)
+        Sat, 24 Feb 2024 12:20:57 -0800 (PST)
 From: Sam Protsenko <semen.protsenko@linaro.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sylwester Nawrocki <s.nawrocki@samsung.com>,
@@ -82,9 +82,9 @@ Cc: Alim Akhtar <alim.akhtar@samsung.com>,
 	devicetree@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 03/15] clk: samsung: Pull struct exynos_cpuclk into clk-cpu.c
-Date: Sat, 24 Feb 2024 14:20:41 -0600
-Message-Id: <20240224202053.25313-4-semen.protsenko@linaro.org>
+Subject: [PATCH v3 04/15] clk: samsung: Reduce params count in exynos_register_cpu_clock()
+Date: Sat, 24 Feb 2024 14:20:42 -0600
+Message-Id: <20240224202053.25313-5-semen.protsenko@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240224202053.25313-1-semen.protsenko@linaro.org>
 References: <20240224202053.25313-1-semen.protsenko@linaro.org>
@@ -96,9 +96,11 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reduce the scope of struct exynos_cpuclk, as it's only used in clk-cpu.c
-internally. All drivers using clk-pll.h already include clk.h as well,
-so this change doesn't break anything.
+Pass CPU clock data structure to exynos_register_cpu_clock() instead of
+passing its fields separately there. That simplifies the signature of
+exynos_register_cpu_clock() and makes it easier to add more fields to
+struct samsung_cpu_clock later. This style follows the example of
+samsung_clk_register_pll().
 
 No functional change.
 
@@ -110,114 +112,113 @@ Changes in v3:
 Changes in v2:
   - none
 
- drivers/clk/samsung/clk-cpu.c | 29 +++++++++++++++++++++++++
- drivers/clk/samsung/clk-cpu.h | 41 +++++------------------------------
- 2 files changed, 35 insertions(+), 35 deletions(-)
+ drivers/clk/samsung/clk-cpu.c | 46 +++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/clk/samsung/clk-cpu.c b/drivers/clk/samsung/clk-cpu.c
-index e02730776aaa..6412fd2580e0 100644
+index 6412fd2580e0..7b6fd331a7ec 100644
 --- a/drivers/clk/samsung/clk-cpu.c
 +++ b/drivers/clk/samsung/clk-cpu.c
-@@ -34,6 +34,8 @@
- #include <linux/slab.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
+@@ -432,16 +432,19 @@ static int exynos5433_cpuclk_notifier_cb(struct notifier_block *nb,
+ 
+ /* helper function to register a CPU clock */
+ static int __init exynos_register_cpu_clock(struct samsung_clk_provider *ctx,
+-		unsigned int lookup_id, const char *name,
+-		const struct clk_hw *parent, const struct clk_hw *alt_parent,
+-		unsigned long offset, const struct exynos_cpuclk_cfg_data *cfg,
+-		unsigned long num_cfgs, unsigned long flags)
++				const struct samsung_cpu_clock *clk_data)
+ {
++	const struct clk_hw *parent, *alt_parent;
++	struct clk_hw **hws;
+ 	struct exynos_cpuclk *cpuclk;
+ 	struct clk_init_data init;
+ 	const char *parent_name;
++	unsigned int num_cfgs;
+ 	int ret = 0;
+ 
++	hws = ctx->clk_data.hws;
++	parent = hws[clk_data->parent_id];
++	alt_parent = hws[clk_data->alt_parent_id];
+ 	if (IS_ERR(parent) || IS_ERR(alt_parent)) {
+ 		pr_err("%s: invalid parent clock(s)\n", __func__);
+ 		return -EINVAL;
+@@ -453,7 +456,7 @@ static int __init exynos_register_cpu_clock(struct samsung_clk_provider *ctx,
+ 
+ 	parent_name = clk_hw_get_name(parent);
+ 
+-	init.name = name;
++	init.name = clk_data->name;
+ 	init.flags = CLK_SET_RATE_PARENT;
+ 	init.parent_names = &parent_name;
+ 	init.num_parents = 1;
+@@ -461,10 +464,10 @@ static int __init exynos_register_cpu_clock(struct samsung_clk_provider *ctx,
+ 
+ 	cpuclk->alt_parent = alt_parent;
+ 	cpuclk->hw.init = &init;
+-	cpuclk->ctrl_base = ctx->reg_base + offset;
++	cpuclk->ctrl_base = ctx->reg_base + clk_data->offset;
+ 	cpuclk->lock = &ctx->lock;
+-	cpuclk->flags = flags;
+-	if (flags & CLK_CPU_HAS_E5433_REGS_LAYOUT)
++	cpuclk->flags = clk_data->flags;
++	if (clk_data->flags & CLK_CPU_HAS_E5433_REGS_LAYOUT)
+ 		cpuclk->clk_nb.notifier_call = exynos5433_cpuclk_notifier_cb;
+ 	else
+ 		cpuclk->clk_nb.notifier_call = exynos_cpuclk_notifier_cb;
+@@ -472,11 +475,16 @@ static int __init exynos_register_cpu_clock(struct samsung_clk_provider *ctx,
+ 	ret = clk_notifier_register(parent->clk, &cpuclk->clk_nb);
+ 	if (ret) {
+ 		pr_err("%s: failed to register clock notifier for %s\n",
+-		       __func__, name);
++		       __func__, clk_data->name);
+ 		goto free_cpuclk;
+ 	}
+ 
+-	cpuclk->cfg = kmemdup(cfg, sizeof(*cfg) * num_cfgs, GFP_KERNEL);
++	/* Find count of configuration rates in cfg */
++	for (num_cfgs = 0; clk_data->cfg[num_cfgs].prate != 0; )
++		num_cfgs++;
 +
-+#include "clk.h"
- #include "clk-cpu.h"
++	cpuclk->cfg = kmemdup(clk_data->cfg, sizeof(*clk_data->cfg) * num_cfgs,
++			      GFP_KERNEL);
+ 	if (!cpuclk->cfg) {
+ 		ret = -ENOMEM;
+ 		goto unregister_clk_nb;
+@@ -484,11 +492,12 @@ static int __init exynos_register_cpu_clock(struct samsung_clk_provider *ctx,
  
- #define E4210_SRC_CPU		0x0
-@@ -64,6 +66,33 @@
- #define DIV_MASK_ALL		GENMASK(31, 0)
- #define MUX_MASK		GENMASK(2, 0)
+ 	ret = clk_hw_register(NULL, &cpuclk->hw);
+ 	if (ret) {
+-		pr_err("%s: could not register cpuclk %s\n", __func__, name);
++		pr_err("%s: could not register cpuclk %s\n", __func__,
++		       clk_data->name);
+ 		goto free_cpuclk_data;
+ 	}
  
-+/**
-+ * struct exynos_cpuclk - information about clock supplied to a CPU core
-+ * @hw:		handle between CCF and CPU clock
-+ * @alt_parent:	alternate parent clock to use when switching the speed
-+ *		of the primary parent clock
-+ * @ctrl_base:	base address of the clock controller
-+ * @lock:	cpu clock domain register access lock
-+ * @cfg:	cpu clock rate configuration data
-+ * @num_cfgs:	number of array elements in @cfg array
-+ * @clk_nb:	clock notifier registered for changes in clock speed of the
-+ *		primary parent clock
-+ * @flags:	configuration flags for the CPU clock
-+ *
-+ * This structure holds information required for programming the CPU clock for
-+ * various clock speeds.
-+ */
-+struct exynos_cpuclk {
-+	struct clk_hw				hw;
-+	const struct clk_hw			*alt_parent;
-+	void __iomem				*ctrl_base;
-+	spinlock_t				*lock;
-+	const struct exynos_cpuclk_cfg_data	*cfg;
-+	const unsigned long			num_cfgs;
-+	struct notifier_block			clk_nb;
-+	unsigned long				flags;
-+};
-+
- /*
-  * Helper function to wait until divider(s) have stabilized after the divider
-  * value has changed.
-diff --git a/drivers/clk/samsung/clk-cpu.h b/drivers/clk/samsung/clk-cpu.h
-index 0164bd9ad021..ee57f3638fed 100644
---- a/drivers/clk/samsung/clk-cpu.h
-+++ b/drivers/clk/samsung/clk-cpu.h
-@@ -8,7 +8,12 @@
- #ifndef __SAMSUNG_CLK_CPU_H
- #define __SAMSUNG_CLK_CPU_H
+-	samsung_clk_add_lookup(ctx, &cpuclk->hw, lookup_id);
++	samsung_clk_add_lookup(ctx, &cpuclk->hw, clk_data->id);
+ 	return 0;
  
--#include "clk.h"
-+/* The CPU clock registers have DIV1 configuration register */
-+#define CLK_CPU_HAS_DIV1		BIT(0)
-+/* When ALT parent is active, debug clocks need safe divider values */
-+#define CLK_CPU_NEEDS_DEBUG_ALT_DIV	BIT(1)
-+/* The CPU clock registers have Exynos5433-compatible layout */
-+#define CLK_CPU_HAS_E5433_REGS_LAYOUT	BIT(2)
+ free_cpuclk_data:
+@@ -504,16 +513,7 @@ void __init samsung_clk_register_cpu(struct samsung_clk_provider *ctx,
+ 		const struct samsung_cpu_clock *list, unsigned int nr_clk)
+ {
+ 	unsigned int idx;
+-	unsigned int num_cfgs;
+-	struct clk_hw **hws = ctx->clk_data.hws;
  
- /**
-  * struct exynos_cpuclk_cfg_data - config data to setup cpu clocks
-@@ -28,38 +33,4 @@ struct exynos_cpuclk_cfg_data {
- 	unsigned long	div1;
- };
- 
--/**
-- * struct exynos_cpuclk - information about clock supplied to a CPU core
-- * @hw:		handle between CCF and CPU clock
-- * @alt_parent:	alternate parent clock to use when switching the speed
-- *		of the primary parent clock
-- * @ctrl_base:	base address of the clock controller
-- * @lock:	cpu clock domain register access lock
-- * @cfg:	cpu clock rate configuration data
-- * @num_cfgs:	number of array elements in @cfg array
-- * @clk_nb:	clock notifier registered for changes in clock speed of the
-- *		primary parent clock
-- * @flags:	configuration flags for the CPU clock
-- *
-- * This structure holds information required for programming the CPU clock for
-- * various clock speeds.
-- */
--struct exynos_cpuclk {
--	struct clk_hw				hw;
--	const struct clk_hw			*alt_parent;
--	void __iomem				*ctrl_base;
--	spinlock_t				*lock;
--	const struct exynos_cpuclk_cfg_data	*cfg;
--	const unsigned long			num_cfgs;
--	struct notifier_block			clk_nb;
--	unsigned long				flags;
+-	for (idx = 0; idx < nr_clk; idx++, list++) {
+-		/* find count of configuration rates in cfg */
+-		for (num_cfgs = 0; list->cfg[num_cfgs].prate != 0; )
+-			num_cfgs++;
 -
--/* The CPU clock registers have DIV1 configuration register */
--#define CLK_CPU_HAS_DIV1		(1 << 0)
--/* When ALT parent is active, debug clocks need safe divider values */
--#define CLK_CPU_NEEDS_DEBUG_ALT_DIV	(1 << 1)
--/* The CPU clock registers have Exynos5433-compatible layout */
--#define CLK_CPU_HAS_E5433_REGS_LAYOUT	(1 << 2)
--};
--
- #endif /* __SAMSUNG_CLK_CPU_H */
+-		exynos_register_cpu_clock(ctx, list->id, list->name,
+-			hws[list->parent_id], hws[list->alt_parent_id],
+-			list->offset, list->cfg, num_cfgs, list->flags);
+-	}
++	for (idx = 0; idx < nr_clk; idx++)
++		exynos_register_cpu_clock(ctx, &list[idx]);
+ }
 -- 
 2.39.2
 
