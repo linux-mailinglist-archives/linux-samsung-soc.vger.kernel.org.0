@@ -1,250 +1,232 @@
-Return-Path: <linux-samsung-soc+bounces-2215-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2217-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26919874977
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Mar 2024 09:21:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B359874E41
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Mar 2024 12:53:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AEA91C21397
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Mar 2024 08:21:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A8D1B2640A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Mar 2024 11:53:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7A62633F5;
-	Thu,  7 Mar 2024 08:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1602E128801;
+	Thu,  7 Mar 2024 11:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="CHyQwfI3"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="fT3BTVS3"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7110B6306D
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Mar 2024 08:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECA685634
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Mar 2024 11:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709799713; cv=none; b=mTcrNKUfJNYTFWJLnmzbqCi6TNX/LK1YLxmhM4IzTThekg3wQLpFLSlHgOBG0A5Z8/T39T+xKUgN3NkiCRFlgDLJiXIV+YeLbpSF0jn3O6M8QI8fHhPeaHOOfV8T8pCTtxFVK4eo6XIaY/I53AxuR450c7WqaxPxKqzHYv0cSSM=
+	t=1709812160; cv=none; b=PGDfFyzStEltCSk/pBVi4NzMjYVtOn0NsF0Xg08ij+f+yDjEbWqig620v6ewuqPACjNRhNgRPLmdbq8WmtwMJZRjNkYfGwXQINP4FzBO4jBY0SB/3AsUE5XApsU9ozTNT9ZbdaE3l7q2gU3s23sSjtuhdN7JpgZZ07zIF7OB6Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709799713; c=relaxed/simple;
-	bh=hZRTcmWWWxhQ8c8yez4c37AOY7/nF4HvQ+uh5EqRhQk=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=c13zuTkLVruROZtzL7Px8cJHjqpnYvzA4gVCHD8kOsffLT9/jGBaMuMwEuT9LMD4xTbJ7Uyl58/NuskFwtzQgZE9rYzj3umcXCFD9XHeTyM3Aj4ipBj9a9fJkogF05pz8TDzZy6yjMyyzHgV3Gt2BG/g6A3EROn9YQ+PP1wBO3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=CHyQwfI3; arc=none smtp.client-ip=203.254.224.33
+	s=arc-20240116; t=1709812160; c=relaxed/simple;
+	bh=tClZTSyEdvqyZlIqZj5UHmzzjNSZt47PKXfFHZjRqwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
+	 Content-Type:References; b=A0PS1mgw8H7kvLcs1noWVPUZWPw0wugimgv8rUFNdnLaK5IDWTR6nABi3yLcd/iZn68PSzK+e5wJDw/RszNTVLGo7QNcvrVpVjshfLlWE6I8qSAZcsnVzAsKYgRsO6sbfoi3GRq9V5KLZmrmECl2jhqW/9uS81z7Wxl26YxsAaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=fT3BTVS3; arc=none smtp.client-ip=210.118.77.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20240307082149epoutp0363ae861d80cf9b46f137bdfbb74b67c5~6bcbbRFAE1296012960epoutp03X
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Mar 2024 08:21:49 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20240307082149epoutp0363ae861d80cf9b46f137bdfbb74b67c5~6bcbbRFAE1296012960epoutp03X
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20240307114108euoutp02016521e03140b3c29e77d114db42d146~6eKc2xF060496904969euoutp028
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Mar 2024 11:41:08 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20240307114108euoutp02016521e03140b3c29e77d114db42d146~6eKc2xF060496904969euoutp028
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1709799709;
-	bh=3W78F17dLjh1QWJeBUfvsdxwQaPK5P3cWiCDKBt+zW4=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=CHyQwfI32s1DQAPQ6PixP6JKN2T6pfkt7Q5SPv1Q0cYyIooVpQL0d6ca7tgPyNkzz
-	 M6od9bk89w6p1vFdZmOSyJBWN8hMV/b5CAVxmtcsVlSYUiI3VDs4UMS0lczzvI6E0L
-	 fjLDScM7i47yrRbl6avUKP8NwmKLLbflJY22SRxM=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-	epcas2p1.samsung.com (KnoxPortal) with ESMTP id
-	20240307082148epcas2p1b012394ce32ceeb5fb6ca77a16f7dc1b~6bca9jvmA0932109321epcas2p1p;
-	Thu,  7 Mar 2024 08:21:48 +0000 (GMT)
-Received: from epsmges2p2.samsung.com (unknown [182.195.36.100]) by
-	epsnrtp1.localdomain (Postfix) with ESMTP id 4Tr2Mc2v5Xz4x9Pp; Thu,  7 Mar
-	2024 08:21:48 +0000 (GMT)
-Received: from epcas2p4.samsung.com ( [182.195.41.56]) by
-	epsmges2p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-	DF.3F.09622.C1979E56; Thu,  7 Mar 2024 17:21:48 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-	20240307082147epcas2p440fe042df70c6001d91f9dbe5090f3ef~6bcZ-tb8I2501425014epcas2p4l;
-	Thu,  7 Mar 2024 08:21:47 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20240307082147epsmtrp29267d18e6dfbfebfd817c18c1fcf86ff~6bcZ_4IZt3066830668epsmtrp2D;
-	Thu,  7 Mar 2024 08:21:47 +0000 (GMT)
-X-AuditID: b6c32a46-d61ff70000002596-d9-65e9791c7970
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	71.9C.08817.B1979E56; Thu,  7 Mar 2024 17:21:47 +0900 (KST)
-Received: from KORCO156694 (unknown [10.229.18.72]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20240307082147epsmtip2bd36f10a919d6306a599937faf190f41~6bcZuIhtv0640406404epsmtip2D;
-	Thu,  7 Mar 2024 08:21:47 +0000 (GMT)
-From: =?utf-8?B?6rmA7J6s7JuQL0pBRVdPTiBLSU0=?= <jaewon02.kim@samsung.com>
-To: "'Tudor Ambarus'" <tudor.ambarus@linaro.org>, "'Sylwester Nawrocki'"
-	<s.nawrocki@samsung.com>, "'Chanwoo Choi'" <cw00.choi@samsung.com>, "'Alim
- Akhtar'" <alim.akhtar@samsung.com>
-Cc: "'Sam Protsenko'" <semen.protsenko@linaro.org>, "'Krzysztof Kozlowski'"
-	<krzysztof.kozlowski@linaro.org>, <linux-samsung-soc@vger.kernel.org>,
-	<linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	"'linux-arm-kernel'" <linux-arm-kernel@lists.infradead.org>, "'Peter
- Griffin'" <peter.griffin@linaro.org>, =?utf-8?Q?'Andr=C3=A9_Draszik'?=
-	<andre.draszik@linaro.org>, "'William McVicker'" <willmcvicker@google.com>,
-	<kernel-team@android.com>
-In-Reply-To: <d508dfc1-bc28-4470-92aa-cf71915966f4@linaro.org>
-Subject: RE: samsung: clk: re-parent MUX to OSCCLK at run-time
-Date: Thu, 7 Mar 2024 17:21:47 +0900
-Message-ID: <000001da7068$7f60f020$7e22d060$@samsung.com>
+	s=mail20170921; t=1709811668;
+	bh=ZX7XgwAbXzFGogvGS3yajGzBilU38GeCPw+l5z4vKwQ=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=fT3BTVS3zHa6QBFF/OtSLceFKCp58U3IYfeY/SVGog1BKJ4dO9gBWV6+XBcA/CXtp
+	 W4IPV3GdUy9MkNjV9B1+5ghOAKV0ki9Fo5T0VegZoZ6uyoBYPUGDZXF3sjHAzdHnNg
+	 aRznxvFQxjFaMRZovEOva4sAB6Bfb+Evz/CFRc3w=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20240307114107eucas1p20c922e1fb6f12e62ad8079c4177b199b~6eKco74tO1220312203eucas1p2F;
+	Thu,  7 Mar 2024 11:41:07 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id D0.6A.09539.3D7A9E56; Thu,  7
+	Mar 2024 11:41:07 +0000 (GMT)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20240307114107eucas1p2d18f8261c44f0978c37100b1188bf8f3~6eKcQ-4RO0073300733eucas1p2y;
+	Thu,  7 Mar 2024 11:41:07 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20240307114107eusmtrp17eb6cdf0c6eeb490be742fb52bae0d9c~6eKcQPfdj0724507245eusmtrp1V;
+	Thu,  7 Mar 2024 11:41:07 +0000 (GMT)
+X-AuditID: cbfec7f2-515ff70000002543-8e-65e9a7d3a0ba
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+	eusmgms2.samsung.com (EUCPMTA) with SMTP id DB.CB.10702.3D7A9E56; Thu,  7
+	Mar 2024 11:41:07 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20240307114106eusmtip2ce33a3f1f3bc135c0d39263534718f4f~6eKbyA8k80809308093eusmtip2h;
+	Thu,  7 Mar 2024 11:41:06 +0000 (GMT)
+Message-ID: <949c82da-f0dc-4824-ac57-bc86ae42d871@samsung.com>
+Date: Thu, 7 Mar 2024 12:41:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIrup01/zmT+XD05TC1AfQUk5ZcMgJSyW8WsHbDZHA=
-Content-Language: ko
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNJsWRmVeSWpSXmKPExsWy7bCmha5M5ctUg4X/hSwezNvGZrHl1WYW
-	i+tfnrNa7NguYrH39VZ2i02Pr7FafOy5x2pxedccNosZ5/cxWWyY8Y/F4vCbdlaL531A7qdb
-	cRarPv1ndODz2LZ7G6vHgk2lHneu7WHz2Lyk3qNvyypGj8+b5ALYorJtMlITU1KLFFLzkvNT
-	MvPSbZW8g+Od403NDAx1DS0tzJUU8hJzU22VXHwCdN0yc4BOVVIoS8wpBQoFJBYXK+nb2RTl
-	l5akKmTkF5fYKqUWpOQUmBfoFSfmFpfmpevlpZZYGRoYGJkCFSZkZ6xp3spU8Fi54uWcKcwN
-	jH8Euxg5OSQETCSafv5nAbGFBHYwShy9o9TFyAVkf2KU+LHjIlTiG6PE/zM6MA1/LvUxQxTt
-	ZZRYvm8HE4TzglGi98o2RpAqNgFPic0v7rGAJEQEdgFVHelmBXGYBc4yS7x8188OUsUpYCfR
-	9fASM4gtDGSvP/yLFcRmEVCRuDX1JBOIzStgKXHix2NmCFtQ4uTMJ2A3MQtoSyxb+JoZ4iYF
-	iZ9Pl4H1ighYSXQf+84OUSMiMbuzDexWCYEzHBJfP9xmh2hwkVg87QUjhC0s8er4Fqi4lMTn
-	d3vZIOx8ibYrZ6DiNRIbF1yCqreXWHTmJ1CcA2iBpsT6XfogpoSAssSRW1Cn8Ul0HP7LDhHm
-	lehoE4JoVJO4P/Uc1HAZiUlHVjJNYFSaheSxWUgem4XkgVkIuxYwsqxiFEstKM5NTy02KjCC
-	R3Zyfu4mRnAq1nLbwTjl7Qe9Q4xMHIyHGCU4mJVEeFksXqYK8aYkVlalFuXHF5XmpBYfYjQF
-	BvVEZinR5HxgNsgriTc0sTQwMTMzNDcyNTBXEue91zo3RUggPbEkNTs1tSC1CKaPiYNTqoFp
-	Z17wgt703wsSjMN85XbKMx5p9Lv8REqmj11vV/MWI74PO86v9Vh9dkeW5fOfd+bYMzv98JMV
-	nTLt3+Inkjf1nk2bI3fvVmWL3jclI6cdNy2c1aa+UDk6/Y9ytl/4+ZcJZ1pZfJ8+rdxp3d7k
-	yXp0itbWDTqz7hleXuhmef2jMIdl3Ze4S+tMGUy+7F72eLXHcfnegxH9Zboad9/pFAcwe4py
-	6xr2l3kFKXqt38g34Wzhgw0e/XzvZJYuzTv3SMD99bpaIX4l2TA+wyStv9cPTI06yFzzsOHR
-	4/6Zd95wm86epDD9ObPYtz4DhwYG59Qly2arBVeEzffgmvWiQ6KJaUVXZfjWuMSv5g7XYpmV
-	WIozEg21mIuKEwFAkzzqTgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJIsWRmVeSWpSXmKPExsWy7bCSvK505ctUg7XvtC0ezNvGZrHl1WYW
-	i+tfnrNa7NguYrH39VZ2i02Pr7FafOy5x2pxedccNosZ5/cxWWyY8Y/F4vCbdlaL531A7qdb
-	cRarPv1ndODz2LZ7G6vHgk2lHneu7WHz2Lyk3qNvyypGj8+b5ALYorhsUlJzMstSi/TtErgy
-	/q9sZy7YpVRxY28nSwPjQYEuRk4OCQETiT+X+phBbCGB3YwSm94bQMRlJJY/62ODsIUl7rcc
-	Ye1i5AKqecYocenePSaQBJuAp8TmF/dYQBIiAnsYJS7f+MEG4jALXGaWaL2xjgmipZ9R4u7v
-	w2A7OAXsJLoeXgKzhYHs9Yd/sYLYLAIqEremngQbyytgKXHix2NmCFtQ4uTMJywgNrOAtsTT
-	m0/h7GULXzND3Kcg8fPpMrA5IgJWEt3HvrND1IhIzO5sY57AKDwLyahZSEbNQjJqFpKWBYws
-	qxglUwuKc9Nziw0LjPJSy/WKE3OLS/PS9ZLzczcxgmNTS2sH455VH/QOMTJxMB5ilOBgVhLh
-	ZbF4mSrEm5JYWZValB9fVJqTWnyIUZqDRUmc99vr3hQhgfTEktTs1NSC1CKYLBMHp1QD04Y8
-	C7/7FyYtfLInnG/NvHWhb6dvVNvJUmNd8HRjQb2244SFMjND/tyfumPfjyiPI+lrQkO/5q3b
-	FMX9X0I47bfkHyajadcOCfquT/GXSZsov+W9aAdX9O0G6wXXt885xCV/QWGd+IkPJQZnHl7k
-	3DNvQsDBKXsDb5ffzpCOvtfxaX9PHAPbL4sFzPmhNz3nCpsc+rtnu8nXGTxvJyxZ/WAyx5/z
-	K2/ZP1zpNsk84rDMxBz3lffPZT97a24uf2n+3lvxldce1fCLBjF3i9bJi31478064ezBt4eu
-	XN1c4frCULZ+Vpjdk40H4kR/nNibHJO448aFgNOd5UvUJu88a/XZzWPR7UmzzWMeTc5Pcpje
-	q8RSnJFoqMVcVJwIAB+qjW88AwAA
-X-CMS-MailID: 20240307082147epcas2p440fe042df70c6001d91f9dbe5090f3ef
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] i2c: exynos5: Init data before registering interrupt
+ handler
+Content-Language: en-US
+To: Jesper Nilsson <jesper.nilsson@axis.com>, Andi Shyti
+	<andi.shyti@kernel.org>, Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	kernel@axis.com
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <20240305-i2c_exynos5-v3-1-17a749688806@axis.com>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsWy7djP87qXl79MNVi8WM/iwbxtbBb3v3Yw
+	Wjw/NIvZ4lOLqsXe11vZLTY9vsZq0fH3C6PF5V1z2CxmnN/H5MDpcX1dgMemVZ1sHneu7WHz
+	2Lyk3qNvyypGj8+b5ALYorhsUlJzMstSi/TtErgyPlx+ylxwXqZiw+y8BsY+8S5GTg4JAROJ
+	XVemsXYxcnEICaxglLg7t5sJwvnCKPHs7n1WkCohgc+MErdf6cF0PD7/khmiaDmjxIl9m6A6
+	PjJKzHizCKyDV8BO4tvpNYxdjBwcLAIqEvdmGkKEBSVOznzCAmKLCshL3L81gx3EFhYIk9i0
+	Yw8ziM0sIC5x68l8sJkiAhsZJc6/+ArmMAvMBHImnWMCqWITMJToetvFBmJzAi3bd/4rE0S3
+	vMT2t3PAzpMQ+MAhMWvfRlaIu10kDv18xgZhC0u8Or6FHcKWkTg9uYcFoqGdUWLB7/tMEM4E
+	RomG57cYIaqsJe6c+8UG8g+zgKbE+l36EGFHif0zGsDCEgJ8EjfeCkIcwScxadt0Zogwr0RH
+	mxBEtZrErOPr4NYevHCJeQKj0iykgJmFFACzkLwzC2HvAkaWVYziqaXFuempxYZ5qeV6xYm5
+	xaV56XrJ+bmbGIHJ6fS/4592MM599VHvECMTB+MhRgkOZiURXhaLl6lCvCmJlVWpRfnxRaU5
+	qcWHGKU5WJTEeVVT5FOFBNITS1KzU1MLUotgskwcnFINTAm+8WdXpm/X7WqQPRb2WcVHo6xf
+	hnnD7esZSyTenTOZd75N6nrQQbb+1XrmP1hWtHzfcPpHwJ1r/ksYn648ftRgwa/fVd/8Vsw8
+	zv59L/vfr9e7E3menXBRqmadOam34YZVTaPgM8myy2/905pWPfmWHv/x2Edz2fRrrzQz3hz3
+	DvoVH8Fv8Dl6+ifTiTX/6gOVO/bLvTB8fuCR1ia3ues/Ti3rOXXJ439iXfFSifmXE8N26+RF
+	zJJb8d9CaNcNg1ers9Y/DpltsF9FOFNxw7W/21W0Fin0SB9l03Up25A9YVqJ6aZb26d88S3+
+	K8y2q9Ipwna50AdvzqfRIcummy20E46UeH7zTVfTx8ojcxyVWIozEg21mIuKEwHns48tvQMA
+	AA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDIsWRmVeSWpSXmKPExsVy+t/xe7qXl79MNTi7UtLiwbxtbBb3v3Yw
+	Wjw/NIvZ4lOLqsXe11vZLTY9vsZq0fH3C6PF5V1z2CxmnN/H5MDpcX1dgMemVZ1sHneu7WHz
+	2Lyk3qNvyypGj8+b5ALYovRsivJLS1IVMvKLS2yVog0tjPQMLS30jEws9QyNzWOtjEyV9O1s
+	UlJzMstSi/TtEvQyPlx+ylxwXqZiw+y8BsY+8S5GTg4JAROJx+dfMoPYQgJLGSWWr9GGiMtI
+	nJzWwAphC0v8udbF1sXIBVTznlFi4e4FYAleATuJb6fXMHYxcnCwCKhI3JtpCBEWlDg58wkL
+	iC0qIC9x/9YMdhBbWCBMYtOOPWC7mAXEJW49mc8EMlNEYDOjxJ7Nv8AWMAvMZJToXLCdHWLb
+	REaJtlfnwUaxCRhKdL0FOYOTgxNo877zX5kgRplJdG3tYoSw5SW2v53DPIFRaBaSS2Yh2TgL
+	ScssJC0LGFlWMYqklhbnpucWG+kVJ+YWl+al6yXn525iBEbjtmM/t+xgXPnqo94hRiYOxkOM
+	EhzMSiK8LBYvU4V4UxIrq1KL8uOLSnNSiw8xmgJDYyKzlGhyPjAd5JXEG5oZmBqamFkamFqa
+	GSuJ83oWdCQKCaQnlqRmp6YWpBbB9DFxcEo1MNnln8suSwuYt2pKTIVUc+ixa2l3ZqVGCshP
+	dHdd1/S5ZPtdczPDq04eAiUZJq4BtwUWtpUrM/Wu/8Uhaa0t/jA9LOe/cp7+iic7Z8+NrDuX
+	8md7wbJZj4pN9NVmyWz/KR8mvOr+nlol53P2ZjyTJ815VbTu9oueuIdR0y7/vf3t4aHyYwv1
+	YrgUXO/GSq8yVbxpJK9v+zM8eLNNutv6ytSMJp3vD8P4BJUsdoXO5mhlfyTxWv2m3In0JXvk
+	Ost93i11UAqx+aTq5KAYeiYozHfm7RjBYNtJxXLxPW+4JP5O1367sMVnqoy+7s99dZ8j4hQf
+	NukvqfD49Dunov7V+XOJuq0PrS5U1yjL7wtXYinOSDTUYi4qTgQART5uK08DAAA=
+X-CMS-MailID: 20240307114107eucas1p2d18f8261c44f0978c37100b1188bf8f3
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240306032022epcas2p14368c055af804c2f066a6b1ec5cee070
-References: <CGME20240306032022epcas2p14368c055af804c2f066a6b1ec5cee070@epcas2p1.samsung.com>
-	<d508dfc1-bc28-4470-92aa-cf71915966f4@linaro.org>
+X-RootMTR: 20240305105548eucas1p110f1ecf1570ff69a618ca86297eeba89
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20240305105548eucas1p110f1ecf1570ff69a618ca86297eeba89
+References: <CGME20240305105548eucas1p110f1ecf1570ff69a618ca86297eeba89@eucas1p1.samsung.com>
+	<20240305-i2c_exynos5-v3-1-17a749688806@axis.com>
 
-Hi Tudor
+On 05.03.2024 11:50, Jesper Nilsson wrote:
+> devm_request_irq() is called before we initialize the "variant"
+> member variable from of_device_get_match_data(), so if an interrupt
+> is triggered inbetween, we can end up following a NULL pointer
+> in the interrupt handler.
+>
+> This problem was exposed when the I2C controller in question was
+> (mis)configured to be used in both secure world and Linux.
+>
+> That this can happen is also reflected by the existing code that
+> clears any pending interrupts from "u-boot or misc causes".
+>
+> Move the clearing of pending interrupts and the call to
+> devm_request_irq() to the end of probe.
+>
+> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+> Fixes: 218e1496135e ("i2c: exynos5: add support for HSI2C on Exynos5260 SoC")
+> Signed-off-by: Jesper Nilsson <jesper.nilsson@axis.com>
+> ---
+> Changes in v3:
+> - Avoid multiple assignment
+> - Link to v2: https://lore.kernel.org/r/20240304-i2c_exynos5-v2-1-7b9c312be719@axis.com
+>
+> Changes in v2:
+> - Use dev_err_probe() instead of open coding it
+> - Dropped the return failure if we can't find a match in devicetree
+> - Link to v1: https://lore.kernel.org/r/20240304-i2c_exynos5-v1-1-e91c889d2025@axis.com
+> ---
+>   drivers/i2c/busses/i2c-exynos5.c | 29 +++++++++++++++--------------
+>   1 file changed, 15 insertions(+), 14 deletions(-)
+>
+> diff --git a/drivers/i2c/busses/i2c-exynos5.c b/drivers/i2c/busses/i2c-exynos5.c
+> index 385ef9d9e4d4..8458e22313a7 100644
+> --- a/drivers/i2c/busses/i2c-exynos5.c
+> +++ b/drivers/i2c/busses/i2c-exynos5.c
+> @@ -906,23 +906,9 @@ static int exynos5_i2c_probe(struct platform_device *pdev)
+>   	i2c->adap.algo_data = i2c;
+>   	i2c->adap.dev.parent = &pdev->dev;
+>   
+> -	/* Clear pending interrupts from u-boot or misc causes */
+> -	exynos5_i2c_clr_pend_irq(i2c);
+> -
+>   	spin_lock_init(&i2c->lock);
+>   	init_completion(&i2c->msg_complete);
+>   
+> -	i2c->irq = ret = platform_get_irq(pdev, 0);
+> -	if (ret < 0)
+> -		goto err_clk;
+> -
+> -	ret = devm_request_irq(&pdev->dev, i2c->irq, exynos5_i2c_irq,
+> -			       IRQF_NO_SUSPEND, dev_name(&pdev->dev), i2c);
+> -	if (ret != 0) {
+> -		dev_err(&pdev->dev, "cannot request HS-I2C IRQ %d\n", i2c->irq);
+> -		goto err_clk;
+> -	}
+> -
+>   	i2c->variant = of_device_get_match_data(&pdev->dev);
+>   
+>   	ret = exynos5_hsi2c_clock_setup(i2c);
+> @@ -940,6 +926,21 @@ static int exynos5_i2c_probe(struct platform_device *pdev)
+>   	clk_disable(i2c->clk);
+>   	clk_disable(i2c->pclk);
+>   
+> +	/* Clear pending interrupts from u-boot or misc causes */
+> +	exynos5_i2c_clr_pend_irq(i2c);
 
+Just above this call the clocks have been disabled, so any access to the 
+i2c host registers will result in freeze or external abort (depending on 
+the soc/cpu).
 
-On 3/6/24 12:20, Tudor Ambarus wrote:
->=20
-> Hi,
->=20
-> Trying to get some feedback from the samsung experts. Please consider the
-> following:
->=20
->                          ---------------------------------------------
->                         =7C                                CMU_PERIC0   =
-=7C
->                         =7C                                             =
-=7C
->                         =7C  MUX_USI                                    =
-=7C
->                         =7C                                             =
-=7C
->                         =7C  =7C=5C                                      =
-   =7C
->               OSCCLK ---=7C->=7C =5C                                     =
-   =7C
->                         =7C  =7C  =5C                                    =
-   =7C
->                         =7C  =7C M =7C                                   =
-   =7C
->                         =7C  =7C U =7C--> DIV_CLK_PERIC0_USI*_ --> GATE_U=
-SI =7C
->                         =7C  =7C X =7C        (1 =7E 16)                 =
-     =7C
->                         =7C  =7C  /                                      =
- =7C
-> DIV_CLKCMU_PERIC0_IP ---=7C->=7C /                                       =
- =7C
->     (1 =7E 16)          =7C =7C  =7C/                                    =
-     =7C
->                       =7C =7C                                            =
- =7C
->                       =7C =7C                                            =
- =7C
->                       =7C =7C  MUX_I3C                                   =
- =7C
->                       =7C =7C                                            =
- =7C
->                       =7C =7C  =7C=5C                                    =
-     =7C
->                       --=7C->=7C =5C                                     =
-   =7C
->                         =7C  =7C  =5C                                    =
-   =7C
->                         =7C  =7C M =7C                                   =
-   =7C
->                         =7C  =7C U =7C--> DIV_CLK_PERIC0_I3C --> GATE_I3C=
-   =7C
->                         =7C  =7C X =7C                                   =
-   =7C
->                         =7C  =7C  /                                      =
- =7C
->               OSCCLK ---=7C->=7C /                                       =
- =7C
->                         =7C  =7C/                                        =
- =7C
->                         =7C                                             =
-=7C
->                          ---------------------------------------------
->=20
-> Is it fine to re-parent the MUX_USI from above to OSCCLK at run-time,
-> during normal operation mode? Experimentally I determined that it's fine,
-> but the datasheet that I'm reading mentions OSCCLK just in the low-power
-> mode context:
-> i/ CMU ... =22Communicates with Power Management Unit (PMU) to stop clock=
-s
-> or switch OSC clock before entering a Low-Power mode to reduce power
-> consumption by minimizing clock toggling=22.
-> ii/ =22All CMUs have MUXs to change the OSCCLK during power-down mode=22.
->=20
-> Re-parenting the MUX to OSCCLK allows lower clock rates for the USI block=
-s
-> than the DIV_CLK_PERIC0_USI can offer. For a USI clock rate below
-> 6.25 MHz I have to either reparent MUX_USI to OSCCLK, or to propagate the
-> clock rate to the common divider DIV_CLKCMU_PERIC0_IP. I find the
-> propagation to the common DIV less desirable as a low USI clock rate
-> affects I3C by lowering its clock rate too. Worse, if the common bus
-> divider is not protected (using CLK_SET_RATE_GATE), USI can lower the I3C
-> clock rate without I3C noticing.
->=20
-> Either re-parenting the MUX_USI to OSCCLK, or propagating the clock rate
-> to DIV_CLKCMU_PERIC0_IP allows the same clock ranges. The first with the
-> benefit of not affecting the clock rate of I3C for USI clock rates below
-> 6.25 MHz. Is it fine to re-parent MUX_USI to OSCCLK at run-time?
->=20
-> If no feedback is received I lean towards propagating the USI clock rate
-> to the common divider, but by protecting it with CLK_SET_RATE_GATE.
->=20
-> Feel free to add in To: or Cc: whoever might be interested. Thanks, ta
+To make things worse, this patch moved registering the interrupt handler 
+after the i2c_add_adapter() call. This means that all i2c devices that 
+will be probbed directly from i2c_add_adapter() won't be able to access 
+the i2c bus, as the host controller is still not fully functional that 
+time yet.
 
+This breaks today's linux-next on all Exynos5+ platforms. Has anyone 
+tested this change?
 
-=22DIV_CLK_PERIC0_USI=22 re-parent to OSCCLK is already used samsung downst=
-ream driver.
-Looking at the samsung downstream SPI driver, if the SPI request clock is l=
-ower than the clock that can be supported by the CMU, it re-parents to OSCC=
-LK.
-
-There is no problem with clock switching before USI data transfer.
-
-Thanks
-Jaewon Kim
+> +
+> +	ret = platform_get_irq(pdev, 0);
+> +	if (ret < 0)
+> +		goto err_clk;
+> +	i2c->irq = ret;
+> +
+> +	ret = devm_request_irq(&pdev->dev, i2c->irq, exynos5_i2c_irq,
+> +			       IRQF_NO_SUSPEND, dev_name(&pdev->dev), i2c);
+> +	if (ret != 0) {
+> +		dev_err(&pdev->dev, "cannot request HS-I2C IRQ %d\n", i2c->irq);
+> +		goto err_clk;
+> +	}
+> +
+>   	return 0;
+>   
+>    err_clk:
+>
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
 
