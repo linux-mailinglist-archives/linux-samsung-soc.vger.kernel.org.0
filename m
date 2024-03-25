@@ -1,89 +1,124 @@
-Return-Path: <linux-samsung-soc+bounces-2357-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2360-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0867D88A42F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Mar 2024 15:21:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8511488A4F1
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Mar 2024 15:44:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B08CF1F3E78E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Mar 2024 14:21:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2155E1F3B850
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 25 Mar 2024 14:44:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE7618B613;
-	Mon, 25 Mar 2024 10:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4FC416D9C4;
+	Mon, 25 Mar 2024 11:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="kg16ByBE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S3nKnyP9"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBB112FF7C;
-	Mon, 25 Mar 2024 10:18:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DCE14D284
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 25 Mar 2024 10:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711361939; cv=none; b=E85MTCn7G3q52uZNtzqr9hMpCRkWKTAMN814TZ9Ty//wrWtcoyi1Kgy3A12YyQgIdz2DLBzM2E4xG7rANzi6gaAasFwQBf1CCjIwFSYDnaxcsbiQmHg/ncLQXG++ogi4kVVNr3HAwOKSx7//juoh1J+CIOJpyoUntrZUW8GzvoQ=
+	t=1711364262; cv=none; b=F85mVTqt2vCoEz5fBsoH5HtF7OsXpXdB2NzQwLUqRnO13TOek0mJzjQO9pv/jy0RXHePCZfkp9Ps8CwsRitBeHJCqTTFtt/agwdlPQkgFjFdZ6saPlnLZf91UtSmBLUIXCrcQ38ZWwgNZyNx4hxPN0VYi7bBjan19KZJH+zGsIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711361939; c=relaxed/simple;
-	bh=PwgsFa5XA28r6N/luTZ5/joQDm3rKoAZilaYfT7S4vU=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nbXF7ZGcE/7rCcyp6n8of862Nk6USluBtU3i62KXzczAjS0AfBdEOvF45m3cudZMuRGDKgJPR2IbmFcmyt9YW3h2143GAZwry4yyHoLRO5XouN3YC7Mc0/YV6zj7vIyOvp6UJ0u72DLCPMKnAz/PZpKEszQApOwdd2Mj8TAwJJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=kg16ByBE; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3F607E0004;
-	Mon, 25 Mar 2024 10:18:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1711361929;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WbqeBpH+1QqX5M3BkHKBHii3KNtrStCGIe/gU4War+M=;
-	b=kg16ByBE+hTjI5M1VNC9tw5XGgrSRTyhUOsnX6FW+GRN5E8xg0DVVMdVUNxYKM+ZlZxDSX
-	ArfOPFUhppEDSpXnyZoEpeCfVZHHzLcyVuWtAZZsDkuMxCA3KQsSyzcNRg93ePpCqKRTdS
-	oz2UFUCRjBQlKmwQywTiO9rP1scFmZitYTxgIA8vta4fJs1+v3tEWM7d7fxmHYmZoCK8a9
-	jPEllFSh+USSEFdrM71O/lGUL7z5bmjWVIZHOUFVK3YsySEZw1XE+vOIeZVkM8csTZJV+j
-	XcIJeo9sf3d08eJ9PFDaJHG9sqSRRI3RhKY2TXqZQaeExGZfQYpwXoARcx9w0g==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-mtd@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: mtd: Add Samsung S5Pv210 OneNAND
-Date: Mon, 25 Mar 2024 11:18:47 +0100
-Message-Id: <20240325101847.262460-1-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240313184317.18466-1-krzysztof.kozlowski@linaro.org>
-References: 
+	s=arc-20240116; t=1711364262; c=relaxed/simple;
+	bh=duLQQ6BAaRBO/CQqapOxYRljwktDL8WobuwPxozbmmY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=lXPasjm1XdVa2igrrB4PsI3jvB9g95LJH34l/Bzkd+/JGdxpY5immAxqlQ4LxWfzr2mpXy/JJq68u36F0UExZ5MZe73SToo/AD1n75VnRF1r+ERvaCgMOdTW+6ktEZHiBdSZT5wShpo4QjYHrO6Vuy/LpipCCAkCZDmOIPvaLfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S3nKnyP9; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a4a39ab1a10so78779266b.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 25 Mar 2024 03:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711364258; x=1711969058; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QD0cdggtjV1TkD8Ph9DL7CmS2IaWiqd9X/ZfwAu+OwQ=;
+        b=S3nKnyP9K14eu+0po/1N6+9RINelGnj2mKeR5UVhlBfpFL5IpNJ3mUd05HJg/z6PqA
+         6DTw6o+AT5LA+4dikWi2x/s2GwrtVdilJi3IUwCxsHsjNvL/Ph1SvX3/cIy9Pib6Yuq5
+         MIfO/pBpr9MgiVKuO+rW/+o34FmHn3znW6Ol5vAa2acur2ClibHrH+fR3AB8ADcHomEo
+         luWMt3Q3ekkJhsECdPfm7n6dTHX2sb6MQ6W31L3urBhWWCzuV10+1DRKGJJeCDq3P1I4
+         ZekYx/92qkRmRrSqV2InVdI3xp7IcjJUDoa9AJF1cGUTdkwYNFfo0G8gFBZfPWi13hWX
+         lxnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711364258; x=1711969058;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QD0cdggtjV1TkD8Ph9DL7CmS2IaWiqd9X/ZfwAu+OwQ=;
+        b=G6Qhl1480pM0ANrGyQnlXp23l9BzlySn3fOGit9qbdl90VXNE2u4ihQ2fCoVX7hen0
+         +y8XYc7mb365oArllURZk3f3h+VsOcrc/1SkhiD13vSC5AnkBm6TJZKs7yyrbhI8Aedu
+         ly548ihJ8rO8+Y82hzvhfMPPvA0i+Ta6ABQLYlU0io+U8JdWwtegVNZ/7MZqw8pmdilO
+         q/M+byuGV2Pf1x780XsRnTEe1uMtmMiKkQkDc60TMEPr5DWMLMKIseqlWYquJS5fCH7O
+         sGO3OCaIG4Oa8NJAbq9mZehmERnApErabka+BPt89dGzeZZjq1Hw0SZhMeb3nGIE8Buh
+         yW3w==
+X-Forwarded-Encrypted: i=1; AJvYcCVQf0eajIz6cIHl8Z8oKYGINn9NOx+5ovOh9S/nAPOJQTfo9mq3ekx5qQgr00nN7/jwc59GXUDkt2lyAj+a/otIpiQpkxNTvZmoBGzab6Dl6TI=
+X-Gm-Message-State: AOJu0YwZJg+0CEPVFZGwKntHI/7zX6BJgKjmNwYyFyuLjeOU0HkUK1Zl
+	+ApHO7LYPPn/Qrd3WL+ARYU9bN4wpnM5qIxUUQuGcU8u3wbgaPkaF3Whl3CviE8=
+X-Google-Smtp-Source: AGHT+IFDX4rKUcKoTdeaTTV4l3TeX2yEBossccN1iHdS9NBr+kRIauoX0Ul0+w3u/djQAxflPkgHiQ==
+X-Received: by 2002:a17:906:23f2:b0:a46:f279:8f77 with SMTP id j18-20020a17090623f200b00a46f2798f77mr3980316ejg.43.1711364257666;
+        Mon, 25 Mar 2024 03:57:37 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.222.44])
+        by smtp.gmail.com with ESMTPSA id c19-20020a1709060fd300b00a45ff5a30cesm2940522ejk.183.2024.03.25.03.57.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 03:57:37 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Thomas Abraham <thomas.abraham@linaro.org>, 
+ Kukjin Kim <kgene.kim@samsung.com>, 
+ Grant Likely <grant.likely@secretlab.ca>, 
+ Sachin Kamat <sachin.kamat@linaro.org>, devicetree@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: stable@vger.kernel.org
+In-Reply-To: <20240312183105.715735-1-krzysztof.kozlowski@linaro.org>
+References: <20240312183105.715735-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/4] ARM: dts: samsung: smdkv310: fix keypad
+ no-autorepeat
+Message-Id: <171136425618.35431.3551782280953584023.b4-ty@linaro.org>
+Date: Mon, 25 Mar 2024 11:57:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-linux-mtd-patch-notification: thanks
-X-linux-mtd-patch-commit: b'26729dbb53ac575635ef96ece0442165efa9613f'
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Wed, 2024-03-13 at 18:43:17 UTC, Krzysztof Kozlowski wrote:
-> Document binding for Samsung S5Pv210 SoC OneNAND controller used already
-> in S5Pv210 DTS.
+
+On Tue, 12 Mar 2024 19:31:02 +0100, Krzysztof Kozlowski wrote:
+> Although the Samsung SoC keypad binding defined
+> linux,keypad-no-autorepeat property, Linux driver never implemented it
+> and always used linux,input-no-autorepeat.  Correct the DTS to use
+> property actually implemented.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> This also fixes dtbs_check errors like:
+> 
+> [...]
 
-Applied to https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git mtd/next, thanks.
+Applied, thanks!
 
-Miquel
+[1/4] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
+      https://git.kernel.org/krzk/linux/c/87d8e522d6f5a004f0aa06c0def302df65aff296
+[2/4] ARM: dts: samsung: exynos4412-origen: fix keypad no-autorepeat
+      https://git.kernel.org/krzk/linux/c/88208d3cd79821117fd3fb80d9bcab618467d37b
+[3/4] ARM: dts: samsung: smdk4412: fix keypad no-autorepeat
+      https://git.kernel.org/krzk/linux/c/4ac4c1d794e7ff454d191bbdab7585ed8dbf3758
+[4/4] ARM: dts: samsung: smdk4412: align keypad node names with dtschema
+      https://git.kernel.org/krzk/linux/c/ad722fc2ed6f056ba6c49bf161cf45a3e1b88853
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
