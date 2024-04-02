@@ -1,148 +1,188 @@
-Return-Path: <linux-samsung-soc+bounces-2485-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2488-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 967E0895315
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Apr 2024 14:35:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9480289544E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Apr 2024 15:07:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E00CB2569C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Apr 2024 12:35:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ABAE286277
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  2 Apr 2024 13:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EC1E7E58A;
-	Tue,  2 Apr 2024 12:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5667084A2F;
+	Tue,  2 Apr 2024 13:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uqLL0PKI"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="5AkjCBFQ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B0B78B4E
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  2 Apr 2024 12:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92018172E;
+	Tue,  2 Apr 2024 13:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712061332; cv=none; b=dm5kEnpdkL2lpn8NA6p0jue5qQ1XzY33+oyZdh7gKwPetfFr2cBb9gH0L+cXlxV90CNXPuZ3HTCAOn9ig5+ALzQhErXl89CXgYMALFSbbKSN/gs8BEqdDsLRhu+5+ta8cYsLkUANVwiHjnNHyUmHnMSAv/BPMk7qLrr1C7v/VZI=
+	t=1712063228; cv=none; b=e1lM3SkQTOzG5zaweaAipWzg/MqyTuGUCQt8GndgbfQnhgG1n4SBYybPhvzH/Ze2TIZWzAQd5JV6wLgvczzYqi3fW6vvr/D4TUUmWs9FXGGR0yB5iqsdQw8d1UZP1bQOQMnxP+kH5Qfl/ESBaNue04nOrVVkPD+2wHHUWuhKQss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712061332; c=relaxed/simple;
-	bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KJtwfRmV2XPwxHIz50QbIN5lK/896VNjQH8aJWCEpYRYcfYG1Ca9ArJEGNYhTJXJmDf4UiykOaaZXh3cQhpzHVOPOwjVSFoIoLLECqR4NIxFqtCwzxFHaY/LNhaxIZxUrssU1gyKAbjnruWu2Cb4XqeayeWHQc5vJ8swhThkHFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uqLL0PKI; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso5102273276.1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 02 Apr 2024 05:35:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712061329; x=1712666129; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
-        b=uqLL0PKItSDctSUqxZsS/uT7vhnfgQzNItY7LTWQwGtERIAfDHkmi9vTKM/KWSOnZG
-         5cWY4VnZ/zB0EU9JaX8HcKrzWY6Bfiyn9ZjC8emWdaKirfIk5c6cfhLRmfgpLLUReKr9
-         yRjumjg65uKbF7b/xAwkcwPx7RQ3tjsiJ3eg7KVDrDx5qEpqbRUaH0ee2bQTWeK8yRDw
-         IZeIcTsL4ZN8lmj5lCAuHZlu//3WUHVTZLeAUR178ssgzwE8qeahHVjiEj3sK9F9hh1f
-         udU2TW8C/q7xEaGt7K/yviWJwTmaKvKoOb960rlGVp9GAq3tJB90z8axILGKqiHa0Kpd
-         L6yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712061329; x=1712666129;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
-        b=tkWOgdbhOGpYZDa8g1UPRhPns1G7/hCZq2YDpz79J6NhEnrqOH9T25kzEhCMK9iMVi
-         wdviPv+UKrMVYPUIl2/ZktBwUs73DOhgpsldp7V+lZeSlWjNbBFQFAK0rbWfvfC1xqrF
-         cgibOGVNztn7bXkUzlRGEW0KUn5ryF3yduynT38heVCjouE9ETQW43JlLKA7qvmmtGwX
-         /4NRxhLo5Yi0mrQ+Kh0coeHXBQdLaGvD0Fk9lJEk2RHH7RDaKSKBKtUkYH8q0okGcHhd
-         +1O5bEh/D0rb27rYCEV1jOYJfvkyMQ71OCzKpHHRLOgrIxRH4LATy8YPqVOKCRZaDK9C
-         vrbw==
-X-Forwarded-Encrypted: i=1; AJvYcCVbOu2FV1VmsZbSYHstbzAqHH0MBLJ/LJlJAEnFj0RrIFHkWmGgpfkaG5GLNSanLT5HYrTvQh7gfXX0Xlj877BElsgTxRJnHszQXBihmAQU29g=
-X-Gm-Message-State: AOJu0YxwY9Y6Gg2Fvl32r/v4IVmxtB5kE5LVV278wpJrtkChHAxuLbx0
-	MqF2cFJq/K2kRw5IbHEjhbJYUkGF1QmO6alKwdOAApMyr3Y2B+/m3kR2WJXajP1UfXQtjCmWDbr
-	QWQrgKnO+bf7Wgh8qOWverrMDmpAQQJFdtutGPA==
-X-Google-Smtp-Source: AGHT+IG5hxT/EMYnHoU6u7S6MkbvLw5l9U/Ss0P2rks8Fb0m+zQTGqjqkjSlSz0lY1KsLwpjx1moujtIXAN3uBffPV8=
-X-Received: by 2002:a25:6d86:0:b0:dc2:2d75:5fde with SMTP id
- i128-20020a256d86000000b00dc22d755fdemr10687728ybc.29.1712061328813; Tue, 02
- Apr 2024 05:35:28 -0700 (PDT)
+	s=arc-20240116; t=1712063228; c=relaxed/simple;
+	bh=2G2qEquSvx52a0PIlUVbUSvg2J45WYjkbhYl2DUcWj4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QXjGgfghGv1bFWRGFW4zMXJkJhR3s4hZE0XCGb5Y4ejrqcz1szuvTGwMqq4GuILHCT1/9LhC7XXbeCK+n2Ta7keQFq46CLniyinEBv0GMMbuGFUx7m/R1lRMWVhpOIQoaX1Tnif1zk6617L5sKsfFLqSXe0ji4R6L8GIGNLsr24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=5AkjCBFQ; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lst.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=WnMplBC7d5smH4h7cTd7I8II3Hw8mKB1V3xXI/Gj8Ow=; b=5AkjCBFQhxjVS5LWWNi/NcO0iV
+	++ife0rQkF5+K7pHBfNcw0qOjQ1Ni+NZziD4wUzw9LdougAsm7bg4SMKyHjQG6kpjQxdP2ABQpvrt
+	wrmtZQzz8hm/ZL9E8QXJY7jijlRSqnIlZDqSWqzkoreREb97xrGaoZ9ebTBgQ5p+VRwKCUamm/iWr
+	Oyr7FHydwy18VyBgTNoT+vm+eKGmgq2FrycG1sifTr9htnvkdJK7ZHMLnWHvOreWJG1KeGzpXqAQX
+	xyIuYdZiJzkwE7vUmttLZbVmVjWY/5d33qG+EloZo5g3jGbw7cpNFoA2s/dx9Asf4D+dTJvl0uJ+C
+	hNgI+mbg==;
+Received: from [2001:4bb8:199:60a5:c70:4a89:bc61:2] (helo=localhost)
+	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rrdqh-0000000BFIS-12gL;
+	Tue, 02 Apr 2024 13:06:47 +0000
+From: Christoph Hellwig <hch@lst.de>
+To: Jens Axboe <axboe@kernel.dk>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Suganath Prabu Subramani <suganath-prabu.subramani@broadcom.com>,
+	"Juergen E. Fischer" <fischer@norbit.de>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	HighPoint Linux Team <linux@highpoint-tech.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	Brian King <brking@us.ibm.com>,
+	Lee Duncan <lduncan@suse.com>,
+	Chris Leech <cleech@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	linux-block@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux1394-devel@lists.sourceforge.net,
+	MPT-FusionLinux.pdl@broadcom.com,
+	linux-scsi@vger.kernel.org,
+	megaraidlinux.pdl@broadcom.com,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	linux-samsung-soc@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	usb-storage@lists.one-eyed-alien.net
+Subject: convert SCSI to atomic queue limits, part 1 (v2)
+Date: Tue,  2 Apr 2024 15:06:22 +0200
+Message-Id: <20240402130645.653507-1-hch@lst.de>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com> <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
-In-Reply-To: <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 2 Apr 2024 14:35:17 +0200
-Message-ID: <CACRpkdbtRoDtWN4mnyZY_yEfWQFPCQaVudjBki8N1sOXxXWupQ@mail.gmail.com>
-Subject: Re: [PATCH 64/64] i2c: reword i2c_algorithm in drivers according to
- newest specification
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-i2c@vger.kernel.org, Elie Morisse <syniurge@gmail.com>, 
-	Shyam Sundar S K <shyam-sundar.s-k@amd.com>, Andi Shyti <andi.shyti@kernel.org>, 
-	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Krzysztof Adamski <krzysztof.adamski@nokia.com>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, Jarkko Nikula <jarkko.nikula@linux.intel.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, Jan Dabros <jsd@semihalf.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
-	Yicong Yang <yangyicong@hisilicon.com>, Oleksij Rempel <o.rempel@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Khalil Blaiech <kblaiech@nvidia.com>, 
-	Asmaa Mnebhi <asmaa@nvidia.com>, Qii Wang <qii.wang@mediatek.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
-	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
-	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
-	Ajay Gupta <ajayg@nvidia.com>, Peter Korsgaard <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>, 
-	Robert Richter <rric@kernel.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, 
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>, Vignesh R <vigneshr@ti.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
-	Christophe Leroy <christophe.leroy@csgroup.eu>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, 
-	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, Hector Martin <marcan@marcan.st>, 
-	Sven Peter <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	Vladimir Zapolskiy <vz@mleia.com>, Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Laxman Dewangan <ldewangan@nvidia.com>, Dmitry Osipenko <digetx@gmail.com>, 
-	Conghui Chen <conghui.chen@intel.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
-	Michal Simek <michal.simek@amd.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, chrome-platform@lists.linux.dev, 
-	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-mips@vger.kernel.org, linux-amlogic@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
-	linux-omap@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-	asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-On Fri, Mar 22, 2024 at 2:27=E2=80=AFPM Wolfram Sang
-<wsa+renesas@sang-engineering.com> wrote:
+Hi all,
 
-> Match the wording in i2c_algorithm in I2C drivers wrt. the newest I2C
-> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
-> appropriate terms. For some drivers, this means no more conversions are
-> needed. For the others more work needs to be done but this will be
-> performed incrementally along with API changes/improvements. All these
-> changes here are simple search/replace results.
->
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+this series converts the SCSI midlayer and LLDDs to use atomic queue limits
+API.  It is pretty straight forward, except for the mpt3mr driver which
+does really weird and probably already broken things by setting limits
+from unlocked device iteration callbacks.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+I will probably defer the (more complicated) ULD changes to the next
+merge window as they would heavily conflict with Damien's zone write
+plugging series.  With that the series could go in through the SCSI
+tree if Jens' ACKs the core block layer bits.
 
-Yours,
-Linus Walleij
+Changes since v1:
+ - print a different warning message for queue_limits_commit failure vs
+   ->device_configure failure
+ - cancel the queue limits update when ->device_configure fails
+ - spelling fixes
+ - improve comments
+
+Diffstat:
+ block/blk-settings.c                        |  245 ----------------------------
+ block/bsg-lib.c                             |    6 
+ drivers/ata/ahci.h                          |    2 
+ drivers/ata/libata-sata.c                   |   11 -
+ drivers/ata/libata-scsi.c                   |   19 +-
+ drivers/ata/libata.h                        |    3 
+ drivers/ata/pata_macio.c                    |   11 -
+ drivers/ata/sata_mv.c                       |    2 
+ drivers/ata/sata_nv.c                       |   24 +-
+ drivers/ata/sata_sil24.c                    |    2 
+ drivers/firewire/sbp2.c                     |   13 -
+ drivers/message/fusion/mptfc.c              |    1 
+ drivers/message/fusion/mptsas.c             |    1 
+ drivers/message/fusion/mptscsih.c           |    2 
+ drivers/message/fusion/mptspi.c             |    1 
+ drivers/s390/block/dasd_eckd.c              |    6 
+ drivers/scsi/aha152x.c                      |    8 
+ drivers/scsi/aic94xx/aic94xx_init.c         |    2 
+ drivers/scsi/hisi_sas/hisi_sas.h            |    3 
+ drivers/scsi/hisi_sas/hisi_sas_main.c       |    7 
+ drivers/scsi/hisi_sas/hisi_sas_v1_hw.c      |    2 
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c      |    2 
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c      |    7 
+ drivers/scsi/hosts.c                        |    6 
+ drivers/scsi/hptiop.c                       |    8 
+ drivers/scsi/ibmvscsi/ibmvfc.c              |    5 
+ drivers/scsi/imm.c                          |   12 -
+ drivers/scsi/ipr.c                          |   10 -
+ drivers/scsi/isci/init.c                    |    2 
+ drivers/scsi/iscsi_tcp.c                    |    2 
+ drivers/scsi/libsas/sas_scsi_host.c         |    7 
+ drivers/scsi/megaraid/megaraid_sas.h        |    2 
+ drivers/scsi/megaraid/megaraid_sas_base.c   |   29 +--
+ drivers/scsi/megaraid/megaraid_sas_fusion.c |    3 
+ drivers/scsi/mpi3mr/mpi3mr.h                |    1 
+ drivers/scsi/mpi3mr/mpi3mr_app.c            |   12 -
+ drivers/scsi/mpi3mr/mpi3mr_os.c             |   76 +++-----
+ drivers/scsi/mpt3sas/mpt3sas_scsih.c        |   18 --
+ drivers/scsi/mvsas/mv_init.c                |    2 
+ drivers/scsi/pm8001/pm8001_init.c           |    2 
+ drivers/scsi/pmcraid.c                      |   11 -
+ drivers/scsi/ppa.c                          |    8 
+ drivers/scsi/qla2xxx/qla_os.c               |    6 
+ drivers/scsi/scsi_lib.c                     |   40 +---
+ drivers/scsi/scsi_scan.c                    |   74 ++++----
+ drivers/scsi/scsi_transport_fc.c            |   15 +
+ drivers/scsi/scsi_transport_iscsi.c         |    6 
+ drivers/scsi/scsi_transport_sas.c           |    4 
+ drivers/staging/rts5208/rtsx.c              |   24 +-
+ drivers/ufs/core/ufs_bsg.c                  |    3 
+ drivers/ufs/core/ufshcd.c                   |    3 
+ drivers/ufs/host/ufs-exynos.c               |    8 
+ drivers/usb/image/microtek.c                |    8 
+ drivers/usb/storage/scsiglue.c              |   57 ++----
+ drivers/usb/storage/uas.c                   |   29 +--
+ drivers/usb/storage/usb.c                   |   10 +
+ include/linux/blkdev.h                      |   26 +-
+ include/linux/bsg-lib.h                     |    3 
+ include/linux/libata.h                      |   10 -
+ include/linux/mmc/host.h                    |    4 
+ include/scsi/libsas.h                       |    3 
+ include/scsi/scsi_host.h                    |    9 +
+ include/scsi/scsi_transport.h               |    2 
+ include/scsi/scsi_transport_fc.h            |    1 
+ include/ufs/ufshcd.h                        |    1 
+ 65 files changed, 347 insertions(+), 595 deletions(-)
 
