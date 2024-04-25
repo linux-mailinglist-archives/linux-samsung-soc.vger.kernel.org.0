@@ -1,122 +1,143 @@
-Return-Path: <linux-samsung-soc+bounces-2855-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2857-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39C8C8B189E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Apr 2024 03:57:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 513678B19AA
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Apr 2024 05:43:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEF8A1F23FBA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Apr 2024 01:57:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DC25282BFC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Apr 2024 03:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7920F17573;
-	Thu, 25 Apr 2024 01:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2C6023768;
+	Thu, 25 Apr 2024 03:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="L/c3ctz3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NM/EDlb9"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4A71173F;
-	Thu, 25 Apr 2024 01:57:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0BD23767
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 25 Apr 2024 03:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714010248; cv=none; b=KbTRfp7nfLkP+RY2SXH3lzEVHOf8DMCSUYEhL5k9V9RokCaNEwIBTxc5dROcgYZxGk3vzMa8E857YWlRyn54BrBslxD3nH5zem1BJQYuiHKFpWp+Xy9APJAl+TPNZnjzrupUK37UURMkVfUcoinRUsCrMaYw69OoTNNezGGJzYI=
+	t=1714016613; cv=none; b=CJI6j7eB/PCZpjUIwbc2ZEUGbRN4hWjO3JFsLJtOozGFHlZHabu89B+c33iLmxISLJ24IvYu7EI/9boUPlAstmXuCy6KeeCeFLaeTCI0dy7eEVzM2L+yzqQ9ANnXCHNpC7Du+4eya0zSfnO2xHlq9NqgQXooLAA9YeGzCwgdzT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714010248; c=relaxed/simple;
-	bh=/GB48CjrcrQCL8M5LlkM1nJzW/MpeTEDdniq8BdBgbc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QWp4k/OjdRrYTMGQzfUfBYoKe3teTaQYj6UtcjgIdUbQcFWekqXXaniLDE/N+1RdcCM2Bv2sLbH3onf2FtFHWHhbV+jt7jUYI9G28FrGfnCse0OmA03HBVZG+fgmuMPP00G/lT+SQ0vLXDBMp/cUsOLAu6VWtJtZqXvcUsFSOQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=L/c3ctz3; arc=none smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 43P0jUw6032460;
-	Thu, 25 Apr 2024 01:57:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=93pgeyhaAFraO8DY5WjEs/xj9MduHGbB28caTZ1Yq8o=;
- b=L/c3ctz3wCdbmGE4o6wElcr3+7MC4vfzMXe1r+ATa0AeY0rHUK8YuHLj/7JYBkiBUXxy
- phwk5ZyeW3yY37Ea/m+ulslJNe7hmUJYt3rEiGuidXj+zo4k+/6MWwfmjYIh6a2JK4Rq
- unDdRza1Jzl/B1sU9d90ILv3f4zuWnanrDR9dOgWpRJhGCSAAJsx5xOLMOzxGuQRcO+F
- n+AT1m1w5/uzUKA9888/HqSdGt7gIpufaiL45+p5tqdzRSsglZPgurdFdvdrsSBtHthp
- wqvt++AQ6maJwIn5W2A1tCLuzqivTbE/wK8oS7+R0xIRHHDuajOOPmtN/wy3j6/nCy2I qw== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3xm5kbt352-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 25 Apr 2024 01:57:16 +0000
-Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 43P1oZDc025314;
-	Thu, 25 Apr 2024 01:57:15 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3xm45fyh2g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 25 Apr 2024 01:57:15 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43P1vCuT009586;
-	Thu, 25 Apr 2024 01:57:14 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3xm45fyh1b-5;
-	Thu, 25 Apr 2024 01:57:14 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Will McVicker <willmcvicker@google.com>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Peter Griffin <peter.griffin@linaro.org>, andre.draszik@linaro.org,
-        tudor.ambarus@linaro.org, kernel-team@android.com,
-        linux-scsi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] scsi: ufs: exynos: Support module autoloading
-Date: Wed, 24 Apr 2024 21:57:04 -0400
-Message-ID: <171362345483.571343.13648416767019194881.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240409202203.1308163-1-willmcvicker@google.com>
-References: <20240409202203.1308163-1-willmcvicker@google.com>
+	s=arc-20240116; t=1714016613; c=relaxed/simple;
+	bh=VtntOmKbYYcoG5mLwePvjlQf1clcdudLhsWcgdZdSKA=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=B3CIhWK0DatNR2eYc1d/px+zsl/qIg/f0Pf0H70y5Swe3Y2kV7vmzsCHbHhmJSzXSvrcquM6rX+a3shrxJmEMjUhOcYPJDd/wVcz5JbToWNU+iAcI6qbl8UZ1keWnR/ILdr5kqgSPuo3LSs1IZtQnj6cg6gXt+KPWU1KDYXpC2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NM/EDlb9; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3bbbc6e51d0so333545b6e.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Apr 2024 20:43:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714016610; x=1714621410; darn=vger.kernel.org;
+        h=message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vnCK077vcnic/R+LScKzvv08SpUTXpy5huFzD93QYW0=;
+        b=NM/EDlb9ZukE3Su1b+hVfhvCEUs+xT+6rEZcR5iaIU7Dkxsr5J5iZWliZ8ZR6/e0bR
+         AKir87+JdmWWdPy/40jybrbodZHDU8ODwcOe4cjUFKDfT9Z2V/dx67Y8tS62ElF6VlWc
+         1IsD6U3vsFtKPtu24JrJlm8iKF3fHCPUU+OFUMw5gORTLt7l4IKOyumCAOoJMpYjNVbn
+         W+U96LenNCO7YDKwTUvDGKw1gIvH7HMvjwQFY1uSSnLYjLLFpUPCQxe/52Uaq/F0GI/a
+         ZnaX76vt/h7jVT8QqkBiSygPyOsFMfSMtoArENtEmFMUO/fKtdar1/YalvPRaBtBzKt6
+         EmUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714016610; x=1714621410;
+        h=message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vnCK077vcnic/R+LScKzvv08SpUTXpy5huFzD93QYW0=;
+        b=QLoN8qV0dZ2LERCP7R97ZpkoS5XjtZw2Ts+0xng2gLwkEUafilimZ0I0W6oNwJpeWP
+         jvFWqSWt98Fg53RkWvPXV7+8DGPEA2Wr48szlr+AS/jxAHKZ7oQ/rBXqwgK3idoEqJLc
+         NOKDOLGr4eoMiD+z89cKwod3mMbgUa3j86gxGGhqehsGbekVVMmwndPhZNj4XHFt+tun
+         4Lz6Rkd385biDVnIW+1PcKgHCq25uZbghTXgoFoHFk6jFsslNGoBem63iFfyfBFQckK/
+         9BK61d+JZ7iFeNg5wDybk1czPSoPFUWHh9HCehN28fI6fl9nGAZ6KQrSnL+Yu9xEqdqM
+         ih4w==
+X-Forwarded-Encrypted: i=1; AJvYcCUvdR1zYy69EKhhe2ciubrRULxVqseibhnJy9oOreC0u8tMascyrITYEcpVH1isBkQ3kcPFHPGPZ4B6dJWBl+m5lT/3fOdPpMAGiRAXEoPucwQ=
+X-Gm-Message-State: AOJu0Ywpq+7+FJHeN6Xe3nPL7TqWq0yq7UCNcybcuPov64IjRLdEmu4x
+	lZiKAX9mMuKK8R+263Feka5WVZTYWz/UvKADwVjlSY2toJOhX8lTNwC75+Uv9kM=
+X-Google-Smtp-Source: AGHT+IHOtD3scAdjmymPzNeVVVH8W7S8v16Wo22wJAyYclqXKFP3sd7XGOtUTQzT9WE51vOGS34ZKg==
+X-Received: by 2002:a05:6808:9ac:b0:3c7:426f:7640 with SMTP id e12-20020a05680809ac00b003c7426f7640mr4387734oig.32.1714016609985;
+        Wed, 24 Apr 2024 20:43:29 -0700 (PDT)
+Received: from daeinki-virtual-machine.localdomain ([58.124.60.88])
+        by smtp.gmail.com with ESMTPSA id c3-20020a634e03000000b005cd835182c5sm11899227pgb.79.2024.04.24.20.43.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Apr 2024 20:43:29 -0700 (PDT)
+Sender: Inki Dae <daeinki@gmail.com>
+From: Inki Dae <inki.dae@samsung.com>
+To: airlied@linux.ie,
+	daniel@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: [GIT PULL] exynos-drm-next
+Date: Thu, 25 Apr 2024 12:43:25 +0900
+Message-Id: <20240425034325.33507-1-inki.dae@samsung.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-25_01,2024-04-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 mlxlogscore=999
- mlxscore=0 phishscore=0 spamscore=0 malwarescore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404250012
-X-Proofpoint-GUID: 0EOElnENofiHRAXb33XiRdYqPBv5m3xI
-X-Proofpoint-ORIG-GUID: 0EOElnENofiHRAXb33XiRdYqPBv5m3xI
 
-On Tue, 09 Apr 2024 13:22:02 -0700, Will McVicker wrote:
+Hi Dave and Daniel,
 
-> Export the module alias information using the MODULE_DEVICE_TABLE()
-> macro in order to support auto-loading this module for devices that
-> support it.
-> 
-> $ modinfo -F alias out/linux/drivers/ufs/host/ufs-exynos.ko
-> of:N*T*Ctesla,fsd-ufsC*
-> of:N*T*Ctesla,fsd-ufs
-> of:N*T*Csamsung,exynosautov9-ufs-vhC*
-> of:N*T*Csamsung,exynosautov9-ufs-vh
-> of:N*T*Csamsung,exynosautov9-ufsC*
-> of:N*T*Csamsung,exynosautov9-ufs
-> of:N*T*Csamsung,exynos7-ufsC*
-> of:N*T*Csamsung,exynos7-ufs
-> 
-> [...]
+   Just two cleanups - one is remove the .owner field from the platform_driver
+   declarations in Exynos DRM modules and other is to drop the device_node
+   cleanup code in exynos_hdmi.c using the scope-based resource management.
 
-Applied to 6.10/scsi-queue, thanks!
+Please kindly let me know if there is any problem.
 
-[1/1] scsi: ufs: exynos: Support module autoloading
-      https://git.kernel.org/mkp/scsi/c/2810702f2cbc
+Thanks,
+Inki Dae
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+The following changes since commit 83221064c28a0f9fdc4f63ab4fce2e51bfe23315:
+
+  Merge tag 'drm-xe-next-2024-04-23' of https://gitlab.freedesktop.org/drm/xe/kernel into drm-next (2024-04-24 10:51:29 +1000)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos tags/exynos-drm-next-for-6.10
+
+for you to fetch changes up to d65bfb9546eb627e3c578336355c5b81797f2255:
+
+  gpu: drm: exynos: hdmi: eliminate uses of of_node_put() (2024-04-25 09:37:12 +0900)
+
+----------------------------------------------------------------
+Two cleanups
+- Drop .owner from platform_driver declaration of each exynos drm module.
+- Drop the cleanup code to device_node object in exynos_hdmi.c using
+  the scope-based resource management feature[1].
+
+[1] https://lwn.net/Articles/934679/?ref=upstract.com
+
+----------------------------------------------------------------
+Krzysztof Kozlowski (11):
+      drm/exynos: fimc: drop driver owner initialization
+      drm/exynos: fimd: drop driver owner initialization
+      drm/exynos: dsi: drop driver owner initialization
+      drm/exynos: g2d: drop driver owner initialization
+      drm/exynos: gsc: drop driver owner initialization
+      drm/exynos: mic: drop driver owner initialization
+      drm/exynos: rotator: drop driver owner initialization
+      drm/exynos: scaler: drop driver owner initialization
+      drm/exynos: vidi: drop driver owner initialization
+      drm/exynos: hdmi: drop driver owner initialization
+      drm/exynos: mixer: drop driver owner initialization
+
+Shivani Gupta (1):
+      gpu: drm: exynos: hdmi: eliminate uses of of_node_put()
+
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c     |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_fimc.c    |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c    |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c     |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c     |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_mic.c     |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_rotator.c |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_scaler.c  |  1 -
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c    |  1 -
+ drivers/gpu/drm/exynos/exynos_hdmi.c        | 16 +++++-----------
+ drivers/gpu/drm/exynos/exynos_mixer.c       |  1 -
+ 11 files changed, 5 insertions(+), 21 deletions(-)
 
