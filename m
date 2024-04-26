@@ -1,171 +1,147 @@
-Return-Path: <linux-samsung-soc+bounces-2892-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-2894-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C8438B33ED
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Apr 2024 11:26:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3C6D8B34D2
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Apr 2024 12:03:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D03DE1F23323
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Apr 2024 09:26:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A99828646F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 26 Apr 2024 10:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 970CD13E043;
-	Fri, 26 Apr 2024 09:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A55D14389A;
+	Fri, 26 Apr 2024 10:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="N9G2iMQk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="USJDmzH4"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61F913E052
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Apr 2024 09:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDF41422AE
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Apr 2024 10:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714123590; cv=none; b=Sy6cWx5vj5ir29uhs1H4+oBeUk+6VDgLJf7ZVyqo2iNni85QmK6ZN8QlQV6WjIIAOXwfBbOf1ZRo8XmxP+BSxVuKbhqAnsX47cLJN3ZLA2/IRS4THWMalPtp1l0qZlraN3JRlY1qpa70irWfcpATEt29/Epc2oKrJkoxMVSopBw=
+	t=1714125790; cv=none; b=RvPTCq18IGm5yD6/XFIvW6aWi5F+g5qshVxSUTyC7cQ3PbuxqcSfShP8NQMA3w7ab9tmh/VFKUdv2qFEd2tVyWdL7mwpzibHUg/ziOhrfs+cyNcL1KRmJi1KFKnFAs3HGM7SqGLOeYQBS3vR4Kk0IxMFlb79Pk8fPf2/WGPuY+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714123590; c=relaxed/simple;
-	bh=Hahu2lWmHobYZzXBDCNNbnolJfAs8n4gH0zk1CT+pRs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 References; b=qYjVsMRq89lthupmhCeZ5NKE6qi9ZX7eEXEYY9FSSFcLyPMUGs7JhX8ACXmIBkqg478ZxThnbZcSmZv/018CHZPcEzH9oLd7hp6F/M8hmuu2CGN+OZiioEuN2CyZ0pFl5tp0MD27id7tLO61g08jqF5DOrbMg7wMxyviAZlYH1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=N9G2iMQk; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20240426092627euoutp01f13ea282421ea375577f04f73925c730~JylIcaAXk1154311543euoutp01C
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Apr 2024 09:26:27 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20240426092627euoutp01f13ea282421ea375577f04f73925c730~JylIcaAXk1154311543euoutp01C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1714123587;
-	bh=/gN1XfdnNIwlyEXOxgUrP1Jreo4fLBZ5hZiCe6ZgYo4=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=N9G2iMQkY662K2xAZ3/rVuP0qEQRpJQWZDGF1snNq1fyyVt7K7thnDXSPn4kq7i7n
-	 ADxdpKaNeu44iLBN+zTwbk6DZGwG4/lfWHrmB1zhRGhDVfHGr1G3wftaj/GfOlKxKm
-	 ZgsGvKm4HJS3tsJpGJS9yXSXPWyMLm0zWlUxmfHc=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20240426092626eucas1p1081e6648d084e46b1b5505a9f214dac4~JylH7bRWN2842128421eucas1p11;
-	Fri, 26 Apr 2024 09:26:26 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges3new.samsung.com (EUCPMTA) with SMTP id 39.2F.09620.2437B266; Fri, 26
-	Apr 2024 10:26:26 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20240426092626eucas1p23da5ce328d98bc13e721c2c88caa2247~JylHfCf-01571715717eucas1p25;
-	Fri, 26 Apr 2024 09:26:26 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20240426092626eusmtrp2b92da2c2394bcd42d2784b0c87619038~JylHdroqQ0550905509eusmtrp2O;
-	Fri, 26 Apr 2024 09:26:26 +0000 (GMT)
-X-AuditID: cbfec7f5-d1bff70000002594-2b-662b7342383d
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id F4.8A.09010.2437B266; Fri, 26
-	Apr 2024 10:26:26 +0100 (BST)
-Received: from AMDC4653.digital.local (unknown [106.120.51.32]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240426092625eusmtip255132645e8c30e80961bbb405cb1b9a5~JylGrwPWf2970829708eusmtip2f;
-	Fri, 26 Apr 2024 09:26:25 +0000 (GMT)
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-To: linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>, Krzysztof Kozlowski
-	<krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi
-	<cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, Michael
-	Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob
-	Herring <robh@kernel.org>, David Lechner <david@lechnology.com>, Bjorn
-	Andersson <andersson@kernel.org>, Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-Subject: [PATCH v2] clk: samsung: exynos-clkout: Remove misleading
- of_match_table/MODULE_DEVICE_TABLE
-Date: Fri, 26 Apr 2024 11:26:15 +0200
-Message-Id: <20240426092616.4187022-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1714125790; c=relaxed/simple;
+	bh=ryP7QOTYlztIm8nqNij3nVjhL1SYpQUIEozyw+/HVzI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kv1cxktq9rH2VQQL/dhM6Kw/c6+IcZ1QLZySjX2EHXSpHf36NUckv1ZeML/HyhwARcTh/rkkins/6C4ThtY7HfXbr6HbICH/jt7f5ay6gGZJeaPd+X9S5gvutbr2jsilqRm4vbuM1YEUB7BIQqoP7yrlozSaw0rr3hT/Hmb6m+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=USJDmzH4; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a5872b74c44so222809266b.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 26 Apr 2024 03:03:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714125787; x=1714730587; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NZroSo8iMfP3vk8OTX3L1wntYEviDHYNgM+pqywM7tQ=;
+        b=USJDmzH4BOdZ6ax+cjfpiOwTi+m9lMHO0XVE7I3E6se0sNEPhlcPMxunC5fmMKIc4E
+         PG3J6uqniXgd/OclOplVVK9YU28MQbRZJ5fzgYfdelfod3Q/axuJioQIvbd/YmCt4NeL
+         AF2T1jlvKwtRct08LvN26GoorbOcMt2y++kfeSwO/WPFFJs42Yshec115ZIOgPHtgblg
+         aWCLyA87IRKwwQMD4vDWhDNLeVotJYdfTcz+oSR4q1HcYSke0/Mn8HZyycfo7BrEp4js
+         W3szRXeQDGt3TglDIta8ZpL87Rt0VIQfk6KoqIArUImMzgTFqqPDU1V80mVCQJms2gmv
+         pVJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714125787; x=1714730587;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NZroSo8iMfP3vk8OTX3L1wntYEviDHYNgM+pqywM7tQ=;
+        b=hKzTuOZUYTXb8+ZI3DGBPow3/4Wu+sVIsELhKkHn9H4wE0NaMrkiOv3Z4X1bwe4LD7
+         x55gAT445t1NsOlfpSyiUKI3qHqxYaAeA0kEFNrvTuBVXmQf5y/TVlqA7jOqmehMnOwE
+         0oMdfRmZahQjWwR1xzt7N9UfylPvOKTf7TPl0cWsicMWMfBCdCQ8pE98AwIQdxyrrk6V
+         Dg7NmWlNcz3DpgF4z8IwyInppOe5Teu4ikQjiKQ2oHdpuulr3J9227ONr8M63MpXrI6R
+         NASjHFvxUnYk9LNcy+vx/iOWtF/hYZFSdHqrhmioEJt8BC4q8J9u1ekHt7pcHnN3tkDq
+         JzYg==
+X-Forwarded-Encrypted: i=1; AJvYcCU1PswAL3XjgU51XKK6PWpZJSnY3iw2u1S3//b6mcGOZ6NQYJotXx7EpI+tJLrpQSYqaj05zeAndcCJw9R23yq4yn3LR98B0ULM3Yu8Liz0TOw=
+X-Gm-Message-State: AOJu0YyxkiAf64NxH4VWfctQKbxA38Sbyial5RZlTqE8khQp+U42RbCa
+	uw0D1nR58fFpGEEtuFosyZuKu85m3YtFShLVAubms5tlTpRE6JL1Ko/06nnvVCw=
+X-Google-Smtp-Source: AGHT+IFqZI2EX6TGMrhgOaiItUVC4QA3lp6lQjXgOmzliiIzZJRkthk8yLel6nW0qHdN359C7X9+Sg==
+X-Received: by 2002:a17:906:16d7:b0:a58:86c0:1275 with SMTP id t23-20020a17090616d700b00a5886c01275mr1579547ejd.30.1714125786723;
+        Fri, 26 Apr 2024 03:03:06 -0700 (PDT)
+Received: from puffmais.c.googlers.com (8.239.204.35.bc.googleusercontent.com. [35.204.239.8])
+        by smtp.gmail.com with ESMTPSA id r20-20020a170906705400b00a555ef55ab5sm10417289ejj.218.2024.04.26.03.03.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Apr 2024 03:03:06 -0700 (PDT)
+From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Subject: [PATCH v2 0/5] HSI0 and HSI2 support for Google Tensor gs101
+Date: Fri, 26 Apr 2024 11:03:03 +0100
+Message-Id: <20240426-hsi0-gs101-v2-0-2157da8b63e3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFKsWRmVeSWpSXmKPExsWy7djPc7pOxdppBrP75S0ezNvGZrGtw8bi
-	+pfnrBaLGsQsJp7/yWZx/vwGdotNj6+xWnzsucdqMeP8PiaLtUfusltcPOVq8X/PDnaLw2/a
-	WS3+XdvI4sDn8f5GK7vHplWdbB6f+k+yety5tofNY/OSeo++LasYPT5vkgtgj+KySUnNySxL
-	LdK3S+DKePj4C3vBUZ6KCwvDGxjvc3UxcnJICJhIrLs7nQXEFhJYwShxsIeti5ELyP7CKPHx
-	xSYo5zOjRNepXewwHd+/X2aCSCxnlOjZ0cUE0Q7UsndrEojNJmAo0fW2iw3EFhHIkLh5dz87
-	SAOzwHFmiZO7b4I1CAukS2ydvIQZxGYRUJVYc+QzWAOvgL3E9CvTWSG2yUvsP3iWGSIuKHFy
-	5hOwW5mB4s1bZzODDJUQuMMhcXfmOqgGF4k9Cz8zQ9jCEq+Ob4E6W0bi/875TBAN7YwSC37f
-	h3ImMEo0PL/FCFFlLXHn3C+gMziAVmhKrN+lDxF2lLh3/hELSFhCgE/ixltBiCP4JCZtm84M
-	EeaV6GgTgqhWk5h1fB3c2oMXLkGd4yEx69lldkhgxUpcXjORaQKjwiwkr81C8toshBsWMDKv
-	YhRPLS3OTU8tNs5LLdcrTswtLs1L10vOz93ECExep/8d/7qDccWrj3qHGJk4GA8xSnAwK4nw
-	3vyokSbEm5JYWZValB9fVJqTWnyIUZqDRUmcVzVFPlVIID2xJDU7NbUgtQgmy8TBKdXAFHTl
-	2rtIo/oJZ0/1TbvDpVMTVspvvufMnapLm8y6yu+yZTflfZF8k3r+aHN0SO6Cg+etdmVfKGW4
-	cYpr+dOvwuwLQ28HH956UOnt1/crN9cHBMr6rplpyml8pir3UWhtRdvbsn+LkqfMzt739dbX
-	jxkSP18HrJNlC1wf1rzg//7nQeKXmuw5Ge8xv07aq/RbSnDn9nmlC1+2x3i68v/gmmHM8zpo
-	MsO7n67pPWpxgmzyHDNfz/z19sTuQxmWx3jcp/yq1brxmUtnqyCHZwSTxcnlvcar1a4pX2SN
-	uvXcb0dlJ6tn2aaPabF6W5IURT8b9DJMXWq1anptIuvxD5fr3qg/1ztrGf4xeeWJ7Xn1j5RY
-	ijMSDbWYi4oTAeMQ7yTNAwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIIsWRmVeSWpSXmKPExsVy+t/xe7pOxdppBpOOMFs8mLeNzWJbh43F
-	9S/PWS0WNYhZTDz/k83i/PkN7BabHl9jtfjYc4/VYsb5fUwWa4/cZbe4eMrV4v+eHewWh9+0
-	s1r8u7aRxYHP4/2NVnaPTas62Tw+9Z9k9bhzbQ+bx+Yl9R59W1YxenzeJBfAHqVnU5RfWpKq
-	kJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRvl6CX8fDxF/aCozwVFxaG
-	NzDe5+pi5OSQEDCR+P79MlMXIxeHkMBSRom3+54xQyRkJE5Oa2CFsIUl/lzrYoMo+sQosaF1
-	PxNIgk3AUKLrLUiCk0NEIEti3oQ7YJOYBc4zS9xo2M4IkhAWSJVYtO8cWBGLgKrEmiOfwWxe
-	AXuJ6VemQ22Ql9h/8CwzRFxQ4uTMJywgNjNQvHnrbOYJjHyzkKRmIUktYGRaxSiSWlqcm55b
-	bKRXnJhbXJqXrpecn7uJERg324793LKDceWrj3qHGJk4GA8xSnAwK4nw3vyokSbEm5JYWZVa
-	lB9fVJqTWnyI0RTovonMUqLJ+cDIzSuJNzQzMDU0MbM0MLU0M1YS5/Us6EgUEkhPLEnNTk0t
-	SC2C6WPi4JRqYFr2qmXRG1bD+lObVE+2KWqtdV/aIvt5ia8A532FJ20bKlvmBXH+53h6bM4E
-	jSNRb3q/bFriv8Dy5VPndyLuXx8YB9g/Oj5lt3fr2auaE40FP284b+3zmU3aNJGT4xir9OTW
-	wOUqRnPkORztcsJ9HLdkPT+neuU4v+idgyu/p90S26G7ZkrbsagpG65mHJ+nUXr8tvXz2tpH
-	J5m65B7+/MHGvpVntsrd+r5dv8prZFOnTe481abAsUZM+CNDgOg8Qz2ZLbbJc228GPcknRSJ
-	ltwZvOLtO9FGDsvtEqFLDebNseaa0zAzw+jgi+VLtsh+lj9ZHNnx+80f/TMtC5i5H2quu3zP
-	7Q3P/3XyQhq1Z/4rsRRnJBpqMRcVJwIAHLTZSiQDAAA=
-X-CMS-MailID: 20240426092626eucas1p23da5ce328d98bc13e721c2c88caa2247
-X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20240426092626eucas1p23da5ce328d98bc13e721c2c88caa2247
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20240426092626eucas1p23da5ce328d98bc13e721c2c88caa2247
-References: <CGME20240426092626eucas1p23da5ce328d98bc13e721c2c88caa2247@eucas1p2.samsung.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIANd7K2YC/23MQQ7CIBCF4as0sxYzQBXjynuYLqaFwiQGDBiia
+ bi72LXL/yXv26C4zK7Addggu8qFU+yhDgMsgaJ3gm1vUKhGHJUWoTAKXyRKQWTMRZ/lvBJBPzy
+ zW/m9Y/epd+DySvmz21X+1r9MlQKFWrS18wkXo/D24Eg5HVP2MLXWvrUuOfelAAAA
+To: Peter Griffin <peter.griffin@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+ Chanwoo Choi <cw00.choi@samsung.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+X-Mailer: b4 0.12.4
 
-Since commit 9484f2cb8332 ("clk: samsung: exynos-clkout: convert to
-module driver") this driver is instantiated as MFD-cell (matched by
-platform device name) not as a real platform device created by OF code.
-Remove of_match_table and change related MODULE_DEVICE_TABLE to simple
-MODULE_ALIAS to avoid further confusion.
+This patch series enables the HSI0 and HSI2 (high speed interfaces) for
+gs101:
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+- HSI0 feeds the USB block and is a prerequisite to get USB working.
+- HSI2 feeds PCIe and UFS
+
+The parts added here have been verified to work OK without the
+clk_ignore_unused kernel command line option.
+
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
- drivers/clk/samsung/clk-exynos-clkout.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Changes in v2:
+- My v1 just contained HSI0, but due due to changing similar areas in the
+  code, I've also added Peter's HSI2 clock patches from
+  https://lore.kernel.org/all/20240423205006.1785138-1-peter.griffin@linaro.org
+  to this series so as to preempt any merge conflicts. Namely:
+  * hsi2 bindings
+  * hsi2 DT
+  * hsi2 cmu clock driver
+- drop patch 'dt-bindings: clock: google,gs101-clock: add HSI0 clock
+  management unit' as already applied
+- cometic updates to patch 4: 'clk: samsung: gs101: add support for
+  cmu_hsi0' (macro name, a whitespace, subject line)
+- Link to v1: https://lore.kernel.org/r/20240423-hsi0-gs101-v1-0-2c3ddb50c720@linaro.org
 
-diff --git a/drivers/clk/samsung/clk-exynos-clkout.c b/drivers/clk/samsung/clk-exynos-clkout.c
-index 503c6f5b20d5..e2968784d307 100644
---- a/drivers/clk/samsung/clk-exynos-clkout.c
-+++ b/drivers/clk/samsung/clk-exynos-clkout.c
-@@ -75,7 +75,6 @@ static const struct of_device_id exynos_clkout_ids[] = {
- 		.data = &exynos_clkout_exynos5,
- 	}, { }
- };
--MODULE_DEVICE_TABLE(of, exynos_clkout_ids);
- 
- /*
-  * Device will be instantiated as child of PMU device without its own
-@@ -237,7 +236,6 @@ static SIMPLE_DEV_PM_OPS(exynos_clkout_pm_ops, exynos_clkout_suspend,
- static struct platform_driver exynos_clkout_driver = {
- 	.driver = {
- 		.name = "exynos-clkout",
--		.of_match_table = exynos_clkout_ids,
- 		.pm = &exynos_clkout_pm_ops,
- 	},
- 	.probe = exynos_clkout_probe,
-@@ -248,4 +246,5 @@ module_platform_driver(exynos_clkout_driver);
- MODULE_AUTHOR("Krzysztof Kozlowski <krzk@kernel.org>");
- MODULE_AUTHOR("Tomasz Figa <tomasz.figa@gmail.com>");
- MODULE_DESCRIPTION("Samsung Exynos clock output driver");
-+MODULE_ALIAS("platform:exynos-clkout");
- MODULE_LICENSE("GPL");
+---
+André Draszik (2):
+      arm64: dts: exynos: gs101: enable cmu-hsi0 clock controller
+      clk: samsung: gs101: add support for cmu_hsi0
+
+Peter Griffin (3):
+      dt-bindings: clock: google,gs101-clock: add HSI2 clock management unit
+      arm64: dts: exynos: gs101: enable cmu-hsi2 clock controller
+      clk: samsung: gs101: add support for cmu_hsi2
+
+ .../bindings/clock/google,gs101-clock.yaml         |  26 +
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi       |  26 +
+ drivers/clk/samsung/clk-gs101.c                    | 976 +++++++++++++++++++++
+ include/dt-bindings/clock/google,gs101.h           |  62 ++
+ 4 files changed, 1090 insertions(+)
+---
+base-commit: bb7a2467e6beef44a80a17d45ebf2931e7631083
+change-id: 20240423-hsi0-gs101-aa778361bfaa
+
+Best regards,
 -- 
-2.34.1
+André Draszik <andre.draszik@linaro.org>
 
 
