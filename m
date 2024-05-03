@@ -1,31 +1,31 @@
-Return-Path: <linux-samsung-soc+bounces-3071-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3069-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57C8F8BAF78
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 17:12:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC6B18BAF72
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 17:12:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77337B215FB
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 15:12:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8C4A281A9A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 15:11:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FA554E1B3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BBF04D5A5;
 	Fri,  3 May 2024 15:11:55 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A604AEE5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76C64AEE0
 	for <linux-samsung-soc@vger.kernel.org>; Fri,  3 May 2024 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714749115; cv=none; b=ALxXdHsbefHI4Y+ovaySSRfY2IAd/1XoB4MO2h1gQyr8M89pG3bSDtRZq6fDr+mtvTJSqACbkGQa3ALXTaBfQduG6Ot/VUoAAuufSv9Ff3+K5YtL8HAa/aI5gbvslyMnaDFjzBaJsyfWTAOyxiqrgQLWhIzgwWymhj+NW2b+3iA=
+	t=1714749115; cv=none; b=pPnNi4l6HEbfgiHflGUjJdnDXf6xi79Ns8mCEsXNdqsy2rYhhekU0v7ohApDqz4PHy2YKi9pctJWX3YnTNtcYejhlQXtA/IJQG+1VTDZj50R5gxbQWyxUzLc89i4BE9GD/BP8jdPe0liJVTyyYxHthsBV3rCU2i0i0Svje+nl8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714749115; c=relaxed/simple;
-	bh=lzx4hP3a+p4899zEDW3LToLRjsF69ke+Z6D8yzomwbE=;
+	bh=GDb9E+IZ7xqNLGQnd3ramJljlwD0x/o3amZkTPbdw9U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LudMN9n2HxifgVh9jZQlw0M2s2BVex2m9dwy/iQPsbrLK0HbwAT+cpiAd6ZDxSK8fDK5r673QgBTpb2KTiT77iO+oaUhCKyjKNH9DaB7lAY4ajuMHugFxSs1MEjti79RE3Z203DAEpcpl7u8+V/Yo14tlHfpzqWxCeHDWR7FiGY=
+	 MIME-Version; b=lEbZ1bvnfrYyy8tADTP/tm9AQQtq2LgP2qblJTYJaBwq256RARHjxS3eP1uqcBjH5dDJ3Tij3wU2302kLFTVVdc2PCVH3JeYkCm5vkqhO/iGa6UY0ukvrr++44yPgkNm6YbjxaCeBYB21nG614YxwbDeBL5Vr2NAr6QssEVyx2A=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -33,11 +33,11 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1s2uZR-0004Ck-K7; Fri, 03 May 2024 17:11:33 +0200
+	id 1s2uZR-0004Cl-K8; Fri, 03 May 2024 17:11:33 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1s2uZO-00FjHY-4X; Fri, 03 May 2024 17:11:30 +0200
+	id 1s2uZO-00FjHY-8R; Fri, 03 May 2024 17:11:30 +0200
 From: Lucas Stach <l.stach@pengutronix.de>
 To: =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
 	Andy Yan <andy.yan@rock-chips.com>,
@@ -58,9 +58,9 @@ Cc: linux-arm-kernel@lists.infradead.org,
 	dri-devel@lists.freedesktop.org,
 	kernel@pengutronix.de,
 	patchwork-lst@pengutronix.de
-Subject: [PATCH 08/14] drm/bridge: analogix_dp: move basic controller init into runtime PM
-Date: Fri,  3 May 2024 17:11:23 +0200
-Message-Id: <20240503151129.3901815-9-l.stach@pengutronix.de>
+Subject: [PATCH 09/14] drm/bridge: analogix_dp: remove PLL lock check from analogix_dp_config_video
+Date: Fri,  3 May 2024 17:11:24 +0200
+Message-Id: <20240503151129.3901815-10-l.stach@pengutronix.de>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240503151129.3901815-1-l.stach@pengutronix.de>
 References: <20240503151129.3901815-1-l.stach@pengutronix.de>
@@ -76,67 +76,31 @@ X-SA-Exim-Mail-From: l.stach@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-Make sure the controller is in a basic working state after runtime
-resume. Keep the analog function enable in the mode set path as this
-enables parts of the PHY that are only required to be powered when
-there is a data stream being sent out.
+This check is way too late in the DP enable flow. The PLL must be locked
+much earlier, before any link training can happen. If the PLL is unlocked
+at that point in time there is something seriously wrong in the enable flow.
 
 Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index 3281c00a39cd..fdb2c2a2b69a 100644
+index fdb2c2a2b69a..b4a47311cfe8 100644
 --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
 +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -41,10 +41,8 @@ struct bridge_init {
- 	struct device_node *node;
- };
+@@ -720,11 +720,6 @@ static int analogix_dp_config_video(struct analogix_dp_device *dp)
  
--static int analogix_dp_init_dp(struct analogix_dp_device *dp)
-+static void analogix_dp_init_dp(struct analogix_dp_device *dp)
- {
--	int ret;
+ 	analogix_dp_set_video_color_format(dp);
+ 
+-	if (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
+-		dev_err(dp->dev, "PLL is not locked yet.\n");
+-		return -EINVAL;
+-	}
 -
- 	analogix_dp_reset(dp);
- 
- 	analogix_dp_swreset(dp);
-@@ -56,13 +54,9 @@ static int analogix_dp_init_dp(struct analogix_dp_device *dp)
- 	analogix_dp_enable_sw_function(dp);
- 
- 	analogix_dp_config_interrupt(dp);
--	ret = analogix_dp_init_analog_func(dp);
--	if (ret)
--		return ret;
- 
- 	analogix_dp_init_hpd(dp);
- 	analogix_dp_init_aux(dp);
--	return 0;
- }
- 
- static int analogix_dp_detect_hpd(struct analogix_dp_device *dp)
-@@ -1258,9 +1252,9 @@ static int analogix_dp_set_bridge(struct analogix_dp_device *dp)
- 
- 	pm_runtime_get_sync(dp->dev);
- 
--	ret = analogix_dp_init_dp(dp);
-+	ret = analogix_dp_init_analog_func(dp);
- 	if (ret)
--		goto out_dp_init;
-+		return ret;
- 
- 	/*
- 	 * According to DP spec v1.3 chap 3.5.1.2 Link Training,
-@@ -1726,6 +1720,8 @@ int analogix_dp_resume(struct analogix_dp_device *dp)
- 
- 	phy_power_on(dp->phy);
- 
-+	analogix_dp_init_dp(dp);
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(analogix_dp_resume);
+ 	for (;;) {
+ 		timeout_loop++;
+ 		if (analogix_dp_is_slave_video_stream_clock_on(dp) == 0)
 -- 
 2.39.2
 
