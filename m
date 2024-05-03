@@ -1,84 +1,118 @@
-Return-Path: <linux-samsung-soc+bounces-3067-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3074-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06F538BAA72
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 12:01:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADA718BAF77
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 17:12:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 365FFB21362
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 10:01:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DB421F232D1
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  3 May 2024 15:12:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0EF4150989;
-	Fri,  3 May 2024 10:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h7CECoV2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F34644AEFD;
+	Fri,  3 May 2024 15:11:55 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9028E14F9FE;
-	Fri,  3 May 2024 10:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7014AEFE
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  3 May 2024 15:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714730487; cv=none; b=QC9sXHmSiankQVuqNFhUhkm+r95oNgyy4D/Q2Nu6xVp473cCdJhinB+vb2tfuY502PrwVchPcnkbyUL+Z0zvIOsDEObZHEIT4gq3bmtsmi6eEXvnxvrBPf/0wUHaYMHu+OY8dCqzB/oxWiIu+guKVMGBx5LCTIp+R1xH9HPxdm0=
+	t=1714749115; cv=none; b=IFmNLzaHVpKeHJU2pgIqL7gAg3XnHmJYp/vVBg0d3Ono5dgrZo5WiLwEBCYzmtO0gF7Sn1pF2oERNQ5e3H+FD/G3u5F+cPgGhBQjVbZDadIuvBqm53vDokUV1CMKxQeqgKhPVTohZ/pbywLpnjvb/eX35gKMMctDtG7g/RfXeQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714730487; c=relaxed/simple;
-	bh=Z81kJ5Jzse+D1tt/hKahWdZHLWz3jrL1TFiptgq6cIE=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=uCEbKG0bd1VBtnDleW1izuccVjMDS2kKTSrBkpwwiPB4P65zotHI5DGfAXivoIwHNecIa0KfNngEhn+plYaIl2Nyjl4ARqqLNQZFLnVWiFOI7I6X1WW1q/NggIj4cwHxRhETnChsoV+4tadir8IAv1j77aRyebKwrVWEusRBzLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h7CECoV2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E19C4AF14;
-	Fri,  3 May 2024 10:01:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714730487;
-	bh=Z81kJ5Jzse+D1tt/hKahWdZHLWz3jrL1TFiptgq6cIE=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=h7CECoV2zrBhycyFBBAhOXnFnpoEfarqglCNzR7GGa3PNe1gRF0kDuDQErO1Ajvy6
-	 8TFeGl2KayFG6TTYWdlT5GMS19wpQgS+hXmHk5DUeEH6nHjsiLA2N7gU+297+e6FJ1
-	 QrbvrMZVYv+4fi9KdUKHoB3W7WbiKdlAByb5lvgC935LJucFVRkUeqZpkYOMPiDO8D
-	 EEUd3kRKLaF0WcZ7qqy3GKhBT9k52HxcEdwW004rPZW4BA6zUkYstpWtk6E9ADWCnc
-	 BB30uzCGrgWrH6fne7nrKbvTnHd13e6TeDYEdUoPA7Y+MvWQ/bAN227MFV4RWHDV6z
-	 oi7Jj925Tr9Eg==
-From: Lee Jones <lee@kernel.org>
-To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240503072116.12430-1-krzysztof.kozlowski@linaro.org>
-References: <20240503072116.12430-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH] dt-bindings: mfd: Use full path to other
- schemas
-Message-Id: <171473048435.1337417.17257640057136086841.b4-ty@kernel.org>
-Date: Fri, 03 May 2024 11:01:24 +0100
+	s=arc-20240116; t=1714749115; c=relaxed/simple;
+	bh=c9tM4gs8hqHi3wpi+oTimymzwfue0cuWg7T5+lJhOHA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=aBs4z1pKczWsPvfIt6+7IxBEJmNR/8/XrxZ42QrWEZRv6Gwh6eDqOAmySIzJedrEBOZGM8Igfybc2i0fyVlFBCjOjm9GodAs42rxK2XpMvcrbUwJbc2QgByJCXDM3sRR7nJT1M8z6hxhbRrDkm0FsrDW8y9ZziO4D/N6COEYMWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <l.stach@pengutronix.de>)
+	id 1s2uZR-0004Br-K7; Fri, 03 May 2024 17:11:33 +0200
+Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+	(envelope-from <l.stach@pengutronix.de>)
+	id 1s2uZN-00FjHY-C5; Fri, 03 May 2024 17:11:29 +0200
+From: Lucas Stach <l.stach@pengutronix.de>
+To: =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	dri-devel@lists.freedesktop.org,
+	kernel@pengutronix.de,
+	patchwork-lst@pengutronix.de
+Subject: [PATCH 00/14] improve Analogix DP AUX channel handling
+Date: Fri,  3 May 2024 17:11:15 +0200
+Message-Id: <20240503151129.3901815-1-l.stach@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.4
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: l.stach@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-On Fri, 03 May 2024 09:21:16 +0200, Krzysztof Kozlowski wrote:
-> When referencing other schema, it is preferred to use an absolute path
-> (/schemas/....), which allows also an seamless move of particular schema
-> out of Linux kernel to dtschema.
-> 
-> 
+Currently the AUX channel support in the Analogix DP driver is severely
+limited as the AUX block of the bridge is only initialized when the video
+link is to be enabled. This is okay for the purposes of link training,
+but does not allow to detect displays by probing for EDID. This series
+reworks the driver to allow AUX transactions before the video link is
+active.
 
-Applied, thanks!
+As this requires to rework some of the controller initialization and
+also handling of both internal and external clocks, the series includes
+quite a few changes to add better runtime PM handling.
 
-[1/1] dt-bindings: mfd: Use full path to other schemas
-      commit: 564277ef60b5f5ec1753489ad69f4583db57e6f0
+Lucas Stach (14):
+  drm/bridge: analogix_dp: remove unused platform power_on_end callback
+  drm/rockchip: analogix_dp: add runtime PM handling
+  drm/bridge: analogix_dp: register AUX bus after enabling runtime PM
+  drm/bridge: analogix_dp: handle clock via runtime PM
+  drm/bridge: analogix_dp: remove unused analogix_dp_remove
+  drm/bridge: analogix_dp: remove clk handling from
+    analogix_dp_set_bridge
+  drm/bridge: analogix_dp: move platform and PHY power handling into
+    runtime PM
+  drm/bridge: analogix_dp: move basic controller init into runtime PM
+  drm/bridge: analogix_dp: remove PLL lock check from
+    analogix_dp_config_video
+  drm/bridge: analogix_dp: move macro reset after link bandwidth setting
+  drm/bridge: analogix_dp: don't wait for PLL lock too early
+  drm/bridge: analogix_dp: simplify and correct PLL lock checks
+  drm/bridge: analogix_dp: only read AUX status when an error occured
+  drm/bridge: analogix_dp: handle AUX transfer timeouts
 
---
-Lee Jones [李琼斯]
+ .../drm/bridge/analogix/analogix_dp_core.c    | 196 ++++++++----------
+ .../drm/bridge/analogix/analogix_dp_core.h    |   7 +-
+ .../gpu/drm/bridge/analogix/analogix_dp_reg.c |  38 ++--
+ .../gpu/drm/bridge/analogix/analogix_dp_reg.h |   9 +
+ drivers/gpu/drm/exynos/exynos_dp.c            |   5 +-
+ .../gpu/drm/rockchip/analogix_dp-rockchip.c   |  26 +--
+ include/drm/bridge/analogix_dp.h              |   4 +-
+ 7 files changed, 120 insertions(+), 165 deletions(-)
+
+-- 
+2.39.2
 
 
