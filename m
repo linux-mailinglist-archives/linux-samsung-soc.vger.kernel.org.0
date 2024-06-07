@@ -1,122 +1,73 @@
-Return-Path: <linux-samsung-soc+bounces-3289-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3291-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E87CF8FF1D5
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Jun 2024 18:12:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C7118FFD59
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Jun 2024 09:41:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A374285953
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  6 Jun 2024 16:12:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6986B23E26
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Jun 2024 07:41:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5437199253;
-	Thu,  6 Jun 2024 16:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C5DA155C99;
+	Fri,  7 Jun 2024 07:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PmbzLCX5"
+	dkim=pass (1024-bit key) header.d=comesltaly.com header.i=@comesltaly.com header.b="EpxhlVRE"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BFA1991CF;
-	Thu,  6 Jun 2024 16:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+Received: from comesltaly.com (unknown [198.46.142.169])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65A2154C17
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  7 Jun 2024 07:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.46.142.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717690240; cv=none; b=beqIGroO+idNxgUz8iZDodiaeT6e2Eq1doXPTUaLaCCMkZDoLtel1Gf4ik0I8bvT/ttVsgjdSQV1Qma/Ej9ruz85UPuD7oHCHQ6phQCIl4lRe39gooVofyONlhNkNjmSIOw7DVz4TZzumux19771Im2fqGF/OkixNrEk7WXWHuo=
+	t=1717746063; cv=none; b=FiQVxHQZWTGcs6cWF65cmA0bu8x8lzJTppl1p7+JFH/WzXD/4crkWZxzvc3Nrwbwh/xkrkF/V75xdD7mZnCSIgXkWWakLLXaviBwRRJnpuOFN8omxdXn0greEAV+w4Q1XnVhhKH80BUAzSLAsvfqH8Y2YC+29maG3iCibh8hz4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717690240; c=relaxed/simple;
-	bh=xWWZ+gaYkDL6L7se9sOsqYkVgD6gieTPbfInOylbZ7E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWaun8n1qQ9UafH8VXqb78nmslSsqAlJ4EMfAe/g1oSMeJ7A1byKgb/1TdkhwpiNMt5R25ad1jyXlbHqflF6Jih3/bwtkkfsNjL+P0boS4TnTYSSTrqwv/7ijF8ILMwJOL/JRWeDxwG2b5NdRLjQBdwlNXAExZRxq2k+urxx42Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PmbzLCX5; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717690240; x=1749226240;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=xWWZ+gaYkDL6L7se9sOsqYkVgD6gieTPbfInOylbZ7E=;
-  b=PmbzLCX5odknoa1cktfGTlY+1e2poAxxoNTflkDvOp6sWOLLQiOPqqbk
-   smJ3ptzEXz3oiSNSGbpWRlHQSxBblevOtXDivybZFJDIABuRtn7K8vAi4
-   Mdn6ZcKQpiiRLcZDs/APQP9oW9BghnF90OWNEE4PxtL1QkA4lfDO8FNts
-   naiKXJsougpF6aVfZcB3QzAkrszUmTQWgVQKe3jRC450wgvUu9oaAjAo+
-   f+lgzrpm8KPlUp++2nWocXYRgwr6rP8okK/xP1Rzru8boKB7udACrzNkW
-   e3qrZOHcYruOJOVJ+PHM7S+t3bDS1yvL3eJtvDrx0bVcF7Rm/2Yv4bIom
-   Q==;
-X-CSE-ConnectionGUID: RvPNPuMJQb+cfrCkPlLbbQ==
-X-CSE-MsgGUID: T365XC7wQA6NkNfkefOPvg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11095"; a="14525091"
-X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; 
-   d="scan'208";a="14525091"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2024 09:10:36 -0700
-X-CSE-ConnectionGUID: d7XDmZzjTU2ZhgGmzyFAEg==
-X-CSE-MsgGUID: z077FzzDS26beD27llOV4w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; 
-   d="scan'208";a="38695667"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orviesa007.jf.intel.com with ESMTP; 06 Jun 2024 09:10:32 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 7F778371; Thu, 06 Jun 2024 19:10:30 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-Subject: [PATCH v1 4/4] clk: visconti: Switch to use kmemdup_array()
-Date: Thu,  6 Jun 2024 19:09:34 +0300
-Message-ID: <20240606161028.2986587-5-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
-In-Reply-To: <20240606161028.2986587-1-andriy.shevchenko@linux.intel.com>
-References: <20240606161028.2986587-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1717746063; c=relaxed/simple;
+	bh=xcIcXLG5CTTJlkIKljMGXKd1//0ywM1gBKg/1sk1Czw=;
+	h=Content-Type:MIME-Version:Subject:To:From:Date:Message-ID; b=HP/QvFZzlgBu1PFumkftMz/bmxM1kAXudqQlnbNdnvBb5mLO0WFPr3xxZIkgM2AO/zWU2lJo3zAvebyoVG+oLSNA5I7EgQHUw5nk223DsuZ70luhQXEWEdtYBCQ7tI4vtYx8UHfxeRO+bfLGh6/3I1FQ2NoN5f8wyPs9cAcsEaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comesltaly.com; spf=pass smtp.mailfrom=comesltaly.com; dkim=pass (1024-bit key) header.d=comesltaly.com header.i=@comesltaly.com header.b=EpxhlVRE; arc=none smtp.client-ip=198.46.142.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comesltaly.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comesltaly.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/simple; d=comesltaly.com; s=vahn4;
+	bh=xcIcXLG5CTTJlkIKljMGXKd1//0ywM1gBKg/1sk1Czw=;
+	h=Message-ID:Reply-To:Date:From:To:Subject:Content-Description:
+	Content-Transfer-Encoding:MIME-Version:Content-Type; b=EpxhlVREhYMUehz1wwt86Q
+	3QtUJunMosyTToCabUcuvRWIenFAh1L7riJg0hoSMOOaNqZrnq7aoTRM6vaFzwG1SY25OehArOIhd
+	GzbbHmykRio0C78H2tp8ssJU4OJg9GJQfsaRT65a5IVOGrOM3M0CLV+ZNAL5pXYjhkvkPtDs=
+Received: from [20.37.118.4] (account admin@comesltaly.com HELO myVm.jiy03wdx5zcuhdlxdgii1ipjkg.lx.internal.cloudapp.net)
+  by comesltaly.com (CommuniGate Pro SMTP 6.2.14 _community_)
+  with ESMTPSA id 1513015 for linux-samsung-soc@vger.kernel.org; Fri, 07 Jun 2024 09:34:27 +0200
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: SV: Policy Notification #5610932:
+To: linux-samsung-soc@vger.kernel.org
+From: "Vahn Montes" <admin@comesltaly.com>
+Date: Fri, 07 Jun 2024 07:40:59 +0000
+Reply-To: vahnmontes@legalprobates.com
+Message-ID: <auto-000001513015@comesltaly.com>
 
-Let the kememdup_array() take care about multiplication and possible
-overflows.
+Greetings from Vahn,
+ =
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/clk/visconti/pll.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I hope this message finds you well. =
 
-diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
-index e9cd80e085dc..3f929cf8dd2f 100644
---- a/drivers/clk/visconti/pll.c
-+++ b/drivers/clk/visconti/pll.c
-@@ -262,9 +262,9 @@ static struct clk_hw *visconti_register_pll(struct visconti_pll_provider *ctx,
- 	for (len = 0; rate_table[len].rate != 0; )
- 		len++;
- 	pll->rate_count = len;
--	pll->rate_table = kmemdup(rate_table,
--				  pll->rate_count * sizeof(struct visconti_pll_rate_table),
--				  GFP_KERNEL);
-+	pll->rate_table = kmemdup_array(rate_table,
-+					pll->rate_count, sizeof(*pll->rate_table),
-+					GFP_KERNEL);
- 	WARN(!pll->rate_table, "%s: could not allocate rate table for %s\n", __func__, name);
- 
- 	init.ops = &visconti_pll_ops;
--- 
-2.43.0.rc1.1336.g36b5255a03ac
 
+I hereby express my unwavering patience in awaiting your prompt response to=
+ the aforementioned correspondence.
+
+Please confirm your availability to enable me to reach you through Phone or=
+ email for a very important notice.
+
+Best Regards,
+Vahn Montes ( LL.B, LL.M)
+Attorney at Law
+Brandschenkestrasse 24
+CH-8027 Zurich, Switzerland
 
