@@ -1,31 +1,31 @@
-Return-Path: <linux-samsung-soc+bounces-3474-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3483-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 723DB90F5E8
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:22:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C760390F636
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:43:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 162071F228BA
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:22:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A9B41F237F0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:43:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DE2315748C;
-	Wed, 19 Jun 2024 18:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88122158206;
+	Wed, 19 Jun 2024 18:43:36 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978C1155346
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA651876
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718821342; cv=none; b=uqqb30NUgYdadSA2ILeoixIm/wUV8U0FQsCITlQBXeObtZrCLngAxPwZTLe4Jzqj434sjGOigpQkeCYTh5CCmSKWZ7cfF4j/sJIjVQr8gbiT9Mi5zUjUbjwc29Ay381j+M+8l4+nvWmzFRAasP2OMN5hmrc0VYsNyqjTyCZR1Rw=
+	t=1718822616; cv=none; b=fMx4ZpfVzFvEtZiCgEcv6U/OFYOeNgey6gsqMTqCtGRFUX2XWB+NU1oZk0wuMJTD6d7VG5vR9+F6IarQB4OSG1enfCIJPqWlNOseMmxVdt/xSjJtf8Hx6A7oJe1glMPNCuKxCKbykXMAqxG7mD+LpS4bB0nC4DBXtmygtkeHRNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718821342; c=relaxed/simple;
-	bh=9KciZRo1qp7ZOj3ZkNrtmmD7WgHqGDXOL6z7FucHtTo=;
+	s=arc-20240116; t=1718822616; c=relaxed/simple;
+	bh=favM+FqeiZgJ0UjvKHt7Yr6TsVlfI1CdOCaQTWM0Yos=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LN6uLQuTtceZaX5USvz7YdF0jAO0sdvHOhppAbQLzdYovAsFA4Mtuuvr2Q8AsQG7rTns9SDpJ8bDwaJGDbPe7E9OVwlZgfmPGj8xahs7l6ZsnISodJ+PkRoSXqCNWIhq1uRFiX8J/YJfFcdVXzHEWDYm2GIm3K6SEv/hCygIXg0=
+	 MIME-Version; b=bbYuj78CRc7yU83iklv/0LG8m+0ey0Wt3yBnMm2zq51AmwX1ZVelw41H2RXNJLOQcw64ZR2l+xB6UaRnKeSN/EzEzhLq3nCFrWaXV5JRbFgBet6++PdItj/JvwStqrX+6UlmnKDFcEjVbGTELEnF5ZWxyXdM18/FQuMAZUgJp0w=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -33,11 +33,11 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sJzwX-00049h-K6; Wed, 19 Jun 2024 20:22:01 +0200
+	id 1sK0H6-0005c6-VO; Wed, 19 Jun 2024 20:43:16 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sJzwX-003WTo-1y; Wed, 19 Jun 2024 20:22:01 +0200
+	id 1sJzwX-003WTo-5J; Wed, 19 Jun 2024 20:22:01 +0200
 From: Lucas Stach <l.stach@pengutronix.de>
 To: Robert Foss <rfoss@kernel.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>,
@@ -51,9 +51,9 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-samsung-soc@vger.kernel.org,
 	patchwork-lst@pengutronix.de,
 	kernel@pengutronix.de
-Subject: [PATCH v2 10/14] drm/bridge: analogix_dp: move macro reset after link bandwidth setting
-Date: Wed, 19 Jun 2024 20:21:56 +0200
-Message-Id: <20240619182200.3752465-10-l.stach@pengutronix.de>
+Subject: [PATCH v2 11/14] drm/bridge: analogix_dp: don't wait for PLL lock too early
+Date: Wed, 19 Jun 2024 20:21:57 +0200
+Message-Id: <20240619182200.3752465-11-l.stach@pengutronix.de>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240619182200.3752465-1-l.stach@pengutronix.de>
 References: <20240619182200.3752465-1-l.stach@pengutronix.de>
@@ -69,61 +69,50 @@ X-SA-Exim-Mail-From: l.stach@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-Setting the link bandwidth may change the PLL parameters, which will cause
-the PLL to go out of lock, so make sure to apply the MACRO_RST, which
-according to the comment is required to be pulsed after the PLL is locked.
+The PLL will be reconfigured later, which may cause it to go out of lock
+anyway, so there is no point in waiting for the PLL to lock here. Instead
+we can continue execution of the link setup, which will properly set the
+PLL parameters and will wait for the PLL to lock at the appropriate times.
 
 Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Tested-by: Heiko Stuebner <heiko@sntech.de> (rk3288-veyron and rk3399-gru)
 ---
- .../gpu/drm/bridge/analogix/analogix_dp_core.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index bbf2c0808ace..d2c7a9117ce3 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -243,6 +243,11 @@ static int analogix_dp_link_start(struct analogix_dp_device *dp)
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
+index d267cf05cbca..e9c643a8b6fc 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
+@@ -356,7 +356,6 @@ void analogix_dp_set_analog_power_down(struct analogix_dp_device *dp,
+ int analogix_dp_init_analog_func(struct analogix_dp_device *dp)
+ {
+ 	u32 reg;
+-	int timeout_loop = 0;
  
- 	/* Set link rate and count as you want to establish*/
- 	analogix_dp_set_link_bandwidth(dp, dp->link_train.link_rate);
-+	/*
-+	 * MACRO_RST must be applied after the PLL_LOCK to avoid
-+	 * the DP inter pair skew issue for at least 10 us
-+	 */
-+	analogix_dp_reset_macro(dp);
- 	analogix_dp_set_lane_count(dp, dp->link_train.lane_count);
+ 	analogix_dp_set_analog_power_down(dp, POWER_ALL, 0);
  
- 	/* Setup RX configuration */
-@@ -562,12 +567,6 @@ static int analogix_dp_full_link_train(struct analogix_dp_device *dp,
- 	int retval = 0;
- 	bool training_finished = false;
+@@ -368,18 +367,7 @@ int analogix_dp_init_analog_func(struct analogix_dp_device *dp)
+ 	writel(reg, dp->reg_base + ANALOGIX_DP_DEBUG_CTL);
  
--	/*
--	 * MACRO_RST must be applied after the PLL_LOCK to avoid
--	 * the DP inter pair skew issue for at least 10 us
--	 */
--	analogix_dp_reset_macro(dp);
+ 	/* Power up PLL */
+-	if (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
+-		analogix_dp_set_pll_power_down(dp, 0);
 -
- 	/* Initialize by reading RX's DPCD */
- 	analogix_dp_get_max_rx_bandwidth(dp, &dp->link_train.link_rate);
- 	analogix_dp_get_max_rx_lane_count(dp, &dp->link_train.lane_count);
-@@ -634,9 +633,12 @@ static int analogix_dp_fast_link_train(struct analogix_dp_device *dp)
- 	u8 link_align, link_status[2];
- 	enum pll_status status;
+-		while (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
+-			timeout_loop++;
+-			if (DP_TIMEOUT_LOOP_COUNT < timeout_loop) {
+-				dev_err(dp->dev, "failed to get pll lock status\n");
+-				return -ETIMEDOUT;
+-			}
+-			usleep_range(10, 20);
+-		}
+-	}
++	analogix_dp_set_pll_power_down(dp, 0);
  
--	analogix_dp_reset_macro(dp);
--
- 	analogix_dp_set_link_bandwidth(dp, dp->link_train.link_rate);
-+	/*
-+	 * MACRO_RST must be applied after the PLL_LOCK to avoid
-+	 * the DP inter pair skew issue for at least 10 us
-+	 */
-+	analogix_dp_reset_macro(dp);
- 	analogix_dp_set_lane_count(dp, dp->link_train.lane_count);
- 	analogix_dp_set_lane_link_training(dp);
- 
+ 	/* Enable Serdes FIFO function and Link symbol clock domain module */
+ 	reg = readl(dp->reg_base + ANALOGIX_DP_FUNC_EN_2);
 -- 
 2.39.2
 
