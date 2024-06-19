@@ -1,31 +1,31 @@
-Return-Path: <linux-samsung-soc+bounces-3481-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3473-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE46590F5F4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:22:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAB5190F5EC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:22:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B2F41F2283B
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:22:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27EACB20FDC
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:22:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625C2157A61;
-	Wed, 19 Jun 2024 18:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28E6E157487;
+	Wed, 19 Jun 2024 18:22:22 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD243157A67
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9787915252C
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718821346; cv=none; b=GkJLDPblZSkKkShjYCKPldtD9ShDWsNnVS0ji9hOQs/nQe3HwX7nnhFqRi2xaXSSZlpeEuDY8rP7t8sMkgOl4VlRUiJVM6Q21OGlXkfRoAf1EdaNR/E2Bq+srEoiJCVk7rxkfAj/EkViFPVRCrAuFsDVAObENugHa+1tIyw2Ti8=
+	t=1718821342; cv=none; b=LT+bzPjXj/N0YQDz6+NNsl/Hwv2GBzuDoKRSz+pZfmeOQuqfDi4wi+fa9hKRTSPe0qSKVNLy2YUNebQ4PHYuYvNTwosC+HkUXB3kRMl3nJHoI14Ez4SYoYAGKKBEY0TXlEYmJkJxTUmNM9LJmgSJb2abrA50UWn2ssZxcKTFI6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718821346; c=relaxed/simple;
-	bh=31uGTmMkWiTb7NQBk9t4b6W8uGYvk4lENDri/v3aM8E=;
+	s=arc-20240116; t=1718821342; c=relaxed/simple;
+	bh=xl7JBVCboVplKePZ+LWZvbJgXJvLcOdS+pfYu7HsObI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ow2NKIWm+KrM/6mvut5vo02NwjT1zBDW8QupBRGEVlY9J6LyXjzgadG0Ng1rbqTqZ6NS6bHud1vC5G7Ex9QqTQy4a4DY3eKpQ3Qy8mgshV5zrpGlvUlVKEX99CGGJQjuM/P6ZjknlN9NBAfp5/dyGc69wBlYroPIHQb9dXVKVYY=
+	 MIME-Version; b=CABvDrZ7BsF8h8lLoMeZcCGQXhFAZTWVDAfzdAwc8ktbi4hrANelhfCLo3gcfm8gGq2FqmpHtJnL8xrLhIvyCrs+judvMIC0RbUxtctwhyfMkCiV2ndhQctRwShDAcuMbe3Nrlwo1oQyvQ27Dhx/IU1qxcbMxBoIUidec8qXMNw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -33,11 +33,11 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sJzwX-00049f-KA; Wed, 19 Jun 2024 20:22:01 +0200
+	id 1sJzwX-00049g-K8; Wed, 19 Jun 2024 20:22:01 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sJzwW-003WTo-Rr; Wed, 19 Jun 2024 20:22:00 +0200
+	id 1sJzwW-003WTo-V5; Wed, 19 Jun 2024 20:22:01 +0200
 From: Lucas Stach <l.stach@pengutronix.de>
 To: Robert Foss <rfoss@kernel.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>,
@@ -51,9 +51,9 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-samsung-soc@vger.kernel.org,
 	patchwork-lst@pengutronix.de,
 	kernel@pengutronix.de
-Subject: [PATCH v2 08/14] drm/bridge: analogix_dp: move basic controller init into runtime PM
-Date: Wed, 19 Jun 2024 20:21:54 +0200
-Message-Id: <20240619182200.3752465-8-l.stach@pengutronix.de>
+Subject: [PATCH v2 09/14] drm/bridge: analogix_dp: remove PLL lock check from analogix_dp_config_video
+Date: Wed, 19 Jun 2024 20:21:55 +0200
+Message-Id: <20240619182200.3752465-9-l.stach@pengutronix.de>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240619182200.3752465-1-l.stach@pengutronix.de>
 References: <20240619182200.3752465-1-l.stach@pengutronix.de>
@@ -69,69 +69,34 @@ X-SA-Exim-Mail-From: l.stach@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-Make sure the controller is in a basic working state after runtime
-resume. Keep the analog function enable in the mode set path as this
-enables parts of the PHY that are only required to be powered when
-there is a data stream being sent out.
+This check is way too late in the DP enable flow. The PLL must be
+locked much earlier, before any link training can happen. If the
+PLL is unlocked at that point in time there is something seriously
+wrong in the enable flow.
 
 Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Tested-by: Heiko Stuebner <heiko@sntech.de> (rk3288-veyron and rk3399-gru)
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index d2b6d5a87188..c852d9517c27 100644
+index c852d9517c27..bbf2c0808ace 100644
 --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
 +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -41,10 +41,8 @@ struct bridge_init {
- 	struct device_node *node;
- };
+@@ -717,11 +717,6 @@ static int analogix_dp_config_video(struct analogix_dp_device *dp)
  
--static int analogix_dp_init_dp(struct analogix_dp_device *dp)
-+static void analogix_dp_init_dp(struct analogix_dp_device *dp)
- {
--	int ret;
+ 	analogix_dp_set_video_color_format(dp);
+ 
+-	if (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
+-		dev_err(dp->dev, "PLL is not locked yet.\n");
+-		return -EINVAL;
+-	}
 -
- 	analogix_dp_reset(dp);
- 
- 	analogix_dp_swreset(dp);
-@@ -56,13 +54,9 @@ static int analogix_dp_init_dp(struct analogix_dp_device *dp)
- 	analogix_dp_enable_sw_function(dp);
- 
- 	analogix_dp_config_interrupt(dp);
--	ret = analogix_dp_init_analog_func(dp);
--	if (ret)
--		return ret;
- 
- 	analogix_dp_init_hpd(dp);
- 	analogix_dp_init_aux(dp);
--	return 0;
- }
- 
- static int analogix_dp_detect_hpd(struct analogix_dp_device *dp)
-@@ -1251,9 +1245,9 @@ static int analogix_dp_set_bridge(struct analogix_dp_device *dp)
- 
- 	pm_runtime_get_sync(dp->dev);
- 
--	ret = analogix_dp_init_dp(dp);
-+	ret = analogix_dp_init_analog_func(dp);
- 	if (ret)
--		goto out_dp_init;
-+		return ret;
- 
- 	/*
- 	 * According to DP spec v1.3 chap 3.5.1.2 Link Training,
-@@ -1718,6 +1712,8 @@ int analogix_dp_resume(struct analogix_dp_device *dp)
- 
- 	phy_power_on(dp->phy);
- 
-+	analogix_dp_init_dp(dp);
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(analogix_dp_resume);
+ 	for (;;) {
+ 		timeout_loop++;
+ 		if (analogix_dp_is_slave_video_stream_clock_on(dp) == 0)
 -- 
 2.39.2
 
