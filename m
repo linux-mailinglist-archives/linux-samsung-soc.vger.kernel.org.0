@@ -1,31 +1,31 @@
-Return-Path: <linux-samsung-soc+bounces-3483-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-3486-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C760390F636
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:43:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA96390F639
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 20:43:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A9B41F237F0
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:43:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5114C284CDD
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Jun 2024 18:43:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88122158206;
-	Wed, 19 Jun 2024 18:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4624C1586C7;
+	Wed, 19 Jun 2024 18:43:38 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA651876
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997441876
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Jun 2024 18:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718822616; cv=none; b=fMx4ZpfVzFvEtZiCgEcv6U/OFYOeNgey6gsqMTqCtGRFUX2XWB+NU1oZk0wuMJTD6d7VG5vR9+F6IarQB4OSG1enfCIJPqWlNOseMmxVdt/xSjJtf8Hx6A7oJe1glMPNCuKxCKbykXMAqxG7mD+LpS4bB0nC4DBXtmygtkeHRNk=
+	t=1718822618; cv=none; b=oyyT1ThrIT3tXPa03jTiDVdmb9ONduEbCA1o/LgDSp+8Jsh6PXdvjnZxGbRxjjK1rsCYgln7dzWRDZh2TJubKXnoKipJxxtp3IKZL+eTyQ5xTkpTTXznUEIrZ6VZA6ytFBwwz2HbUEhrpjZzSN5rmpmRjP5Vro5rhBk9NitgOEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718822616; c=relaxed/simple;
-	bh=favM+FqeiZgJ0UjvKHt7Yr6TsVlfI1CdOCaQTWM0Yos=;
+	s=arc-20240116; t=1718822618; c=relaxed/simple;
+	bh=VUZvZcNQBiO8BGlfI6k9igV+hoAiA0i2uvdi4RiZBzA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bbYuj78CRc7yU83iklv/0LG8m+0ey0Wt3yBnMm2zq51AmwX1ZVelw41H2RXNJLOQcw64ZR2l+xB6UaRnKeSN/EzEzhLq3nCFrWaXV5JRbFgBet6++PdItj/JvwStqrX+6UlmnKDFcEjVbGTELEnF5ZWxyXdM18/FQuMAZUgJp0w=
+	 MIME-Version; b=Kw5ed4ieSDkMbtV0qr8rfyssFB1OZj2Tezg2KMCFD59oZsN9oqBaSQmstN93lYgon9N2cNuqYVyCkjpqIgugsAdgKmjDrSbppVuNu3Mn3Ux51GuXA9k7v5x+o/y+zJX+3+HoqEECXJmQpDIoZsXKl1b4tlh08o3p7pk3t4tTuzk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -33,11 +33,11 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sK0H6-0005c6-VO; Wed, 19 Jun 2024 20:43:16 +0200
+	id 1sK0H7-0005dP-Dc; Wed, 19 Jun 2024 20:43:17 +0200
 Received: from [2a0a:edc0:0:1101:1d::28] (helo=dude02.red.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
 	(envelope-from <l.stach@pengutronix.de>)
-	id 1sJzwX-003WTo-5J; Wed, 19 Jun 2024 20:22:01 +0200
+	id 1sJzwX-003WTo-8S; Wed, 19 Jun 2024 20:22:01 +0200
 From: Lucas Stach <l.stach@pengutronix.de>
 To: Robert Foss <rfoss@kernel.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>,
@@ -51,9 +51,9 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-samsung-soc@vger.kernel.org,
 	patchwork-lst@pengutronix.de,
 	kernel@pengutronix.de
-Subject: [PATCH v2 11/14] drm/bridge: analogix_dp: don't wait for PLL lock too early
-Date: Wed, 19 Jun 2024 20:21:57 +0200
-Message-Id: <20240619182200.3752465-11-l.stach@pengutronix.de>
+Subject: [PATCH v2 12/14] drm/bridge: analogix_dp: simplify and correct PLL lock checks
+Date: Wed, 19 Jun 2024 20:21:58 +0200
+Message-Id: <20240619182200.3752465-12-l.stach@pengutronix.de>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240619182200.3752465-1-l.stach@pengutronix.de>
 References: <20240619182200.3752465-1-l.stach@pengutronix.de>
@@ -69,50 +69,145 @@ X-SA-Exim-Mail-From: l.stach@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
 
-The PLL will be reconfigured later, which may cause it to go out of lock
-anyway, so there is no point in waiting for the PLL to lock here. Instead
-we can continue execution of the link setup, which will properly set the
-PLL parameters and will wait for the PLL to lock at the appropriate times.
+Move the wait loop into its own function, so it doesn't need to be
+replicated in multiple locations. Also move the PLL lock checks between
+setting the link bandwidth, which may cause the PLL to unlock, and the
+MACRO_RST which needs the PLL to be locked.
 
 Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Tested-by: Heiko Stuebner <heiko@sntech.de> (rk3288-veyron and rk3399-gru)
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ .../drm/bridge/analogix/analogix_dp_core.c    | 34 +++++++------------
+ .../drm/bridge/analogix/analogix_dp_core.h    |  7 +---
+ .../gpu/drm/bridge/analogix/analogix_dp_reg.c | 12 +++----
+ 3 files changed, 18 insertions(+), 35 deletions(-)
 
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index d2c7a9117ce3..ddf1e4424ffd 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -231,7 +231,7 @@ static int analogix_dp_training_pattern_dis(struct analogix_dp_device *dp)
+ static int analogix_dp_link_start(struct analogix_dp_device *dp)
+ {
+ 	u8 buf[4];
+-	int lane, lane_count, pll_tries, retval;
++	int lane, lane_count, retval;
+ 
+ 	lane_count = dp->link_train.lane_count;
+ 
+@@ -243,6 +243,11 @@ static int analogix_dp_link_start(struct analogix_dp_device *dp)
+ 
+ 	/* Set link rate and count as you want to establish*/
+ 	analogix_dp_set_link_bandwidth(dp, dp->link_train.link_rate);
++	retval = analogix_dp_wait_pll_locked(dp);
++	if (retval) {
++		DRM_DEV_ERROR(dp->dev, "Wait for pll lock failed %d\n", retval);
++		return retval;
++	}
+ 	/*
+ 	 * MACRO_RST must be applied after the PLL_LOCK to avoid
+ 	 * the DP inter pair skew issue for at least 10 us
+@@ -270,18 +275,6 @@ static int analogix_dp_link_start(struct analogix_dp_device *dp)
+ 					DP_TRAIN_PRE_EMPH_LEVEL_0;
+ 	analogix_dp_set_lane_link_training(dp);
+ 
+-	/* Wait for PLL lock */
+-	pll_tries = 0;
+-	while (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
+-		if (pll_tries == DP_TIMEOUT_LOOP_COUNT) {
+-			dev_err(dp->dev, "Wait for PLL lock timed out\n");
+-			return -ETIMEDOUT;
+-		}
+-
+-		pll_tries++;
+-		usleep_range(90, 120);
+-	}
+-
+ 	/* Set training pattern 1 */
+ 	analogix_dp_set_training_pattern(dp, TRAINING_PTN1);
+ 
+@@ -631,9 +624,14 @@ static int analogix_dp_fast_link_train(struct analogix_dp_device *dp)
+ {
+ 	int ret;
+ 	u8 link_align, link_status[2];
+-	enum pll_status status;
+ 
+ 	analogix_dp_set_link_bandwidth(dp, dp->link_train.link_rate);
++	ret = analogix_dp_wait_pll_locked(dp);
++	if (ret) {
++		DRM_DEV_ERROR(dp->dev, "Wait for pll lock failed %d\n", ret);
++		return ret;
++	}
++
+ 	/*
+ 	 * MACRO_RST must be applied after the PLL_LOCK to avoid
+ 	 * the DP inter pair skew issue for at least 10 us
+@@ -642,14 +640,6 @@ static int analogix_dp_fast_link_train(struct analogix_dp_device *dp)
+ 	analogix_dp_set_lane_count(dp, dp->link_train.lane_count);
+ 	analogix_dp_set_lane_link_training(dp);
+ 
+-	ret = readx_poll_timeout(analogix_dp_get_pll_lock_status, dp, status,
+-				 status != PLL_UNLOCKED, 120,
+-				 120 * DP_TIMEOUT_LOOP_COUNT);
+-	if (ret) {
+-		DRM_DEV_ERROR(dp->dev, "Wait for pll lock failed %d\n", ret);
+-		return ret;
+-	}
+-
+ 	/* source Set training pattern 1 */
+ 	analogix_dp_set_training_pattern(dp, TRAINING_PTN1);
+ 	/* From DP spec, pattern must be on-screen for a minimum 500us */
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.h b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.h
+index 382b2f068ab9..774d11574b09 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.h
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.h
+@@ -95,11 +95,6 @@ enum dynamic_range {
+ 	CEA
+ };
+ 
+-enum pll_status {
+-	PLL_UNLOCKED,
+-	PLL_LOCKED
+-};
+-
+ enum clock_recovery_m_value_type {
+ 	CALCULATED_M,
+ 	REGISTER_M
+@@ -191,7 +186,7 @@ void analogix_dp_swreset(struct analogix_dp_device *dp);
+ void analogix_dp_config_interrupt(struct analogix_dp_device *dp);
+ void analogix_dp_mute_hpd_interrupt(struct analogix_dp_device *dp);
+ void analogix_dp_unmute_hpd_interrupt(struct analogix_dp_device *dp);
+-enum pll_status analogix_dp_get_pll_lock_status(struct analogix_dp_device *dp);
++int analogix_dp_wait_pll_locked(struct analogix_dp_device *dp);
+ void analogix_dp_set_pll_power_down(struct analogix_dp_device *dp, bool enable);
+ void analogix_dp_set_analog_power_down(struct analogix_dp_device *dp,
+ 				       enum analog_power_block block,
 diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
-index d267cf05cbca..e9c643a8b6fc 100644
+index e9c643a8b6fc..143a78b1d156 100644
 --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
 +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
-@@ -356,7 +356,6 @@ void analogix_dp_set_analog_power_down(struct analogix_dp_device *dp,
- int analogix_dp_init_analog_func(struct analogix_dp_device *dp)
+@@ -217,15 +217,13 @@ void analogix_dp_unmute_hpd_interrupt(struct analogix_dp_device *dp)
+ 	writel(reg, dp->reg_base + ANALOGIX_DP_INT_STA_MASK);
+ }
+ 
+-enum pll_status analogix_dp_get_pll_lock_status(struct analogix_dp_device *dp)
++int analogix_dp_wait_pll_locked(struct analogix_dp_device *dp)
  {
- 	u32 reg;
--	int timeout_loop = 0;
+-	u32 reg;
++	u32 val;
  
- 	analogix_dp_set_analog_power_down(dp, POWER_ALL, 0);
+-	reg = readl(dp->reg_base + ANALOGIX_DP_DEBUG_CTL);
+-	if (reg & PLL_LOCK)
+-		return PLL_LOCKED;
+-	else
+-		return PLL_UNLOCKED;
++	return readl_poll_timeout(dp->reg_base + ANALOGIX_DP_DEBUG_CTL, val,
++				  val & PLL_LOCK, 120,
++				  120 * DP_TIMEOUT_LOOP_COUNT);
+ }
  
-@@ -368,18 +367,7 @@ int analogix_dp_init_analog_func(struct analogix_dp_device *dp)
- 	writel(reg, dp->reg_base + ANALOGIX_DP_DEBUG_CTL);
- 
- 	/* Power up PLL */
--	if (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
--		analogix_dp_set_pll_power_down(dp, 0);
--
--		while (analogix_dp_get_pll_lock_status(dp) == PLL_UNLOCKED) {
--			timeout_loop++;
--			if (DP_TIMEOUT_LOOP_COUNT < timeout_loop) {
--				dev_err(dp->dev, "failed to get pll lock status\n");
--				return -ETIMEDOUT;
--			}
--			usleep_range(10, 20);
--		}
--	}
-+	analogix_dp_set_pll_power_down(dp, 0);
- 
- 	/* Enable Serdes FIFO function and Link symbol clock domain module */
- 	reg = readl(dp->reg_base + ANALOGIX_DP_FUNC_EN_2);
+ void analogix_dp_set_pll_power_down(struct analogix_dp_device *dp, bool enable)
 -- 
 2.39.2
 
