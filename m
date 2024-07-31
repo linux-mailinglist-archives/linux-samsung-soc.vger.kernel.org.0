@@ -1,148 +1,167 @@
-Return-Path: <linux-samsung-soc+bounces-4007-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4009-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88544943623
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 31 Jul 2024 21:14:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 581C4943799
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 31 Jul 2024 23:14:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9F2B1C22287
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 31 Jul 2024 19:14:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF028284E28
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 31 Jul 2024 21:14:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E986168C3F;
-	Wed, 31 Jul 2024 19:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C3F229CE1;
+	Wed, 31 Jul 2024 21:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="qEDwW4M6"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="P8FD6ldE"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8DC161314;
-	Wed, 31 Jul 2024 19:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722453226; cv=pass; b=mA+pEQJpsdUaN+dMvq0i41PfstHPcxv16PkoTxplwf3y7xe4tOeKLDYQhOvA+orZnDeLre9bY84EPYG1Ummy/UeC10regIJbydsKttZX90zLM5Zx/afhbg7uvTc17Hmdk8XlGBhZ2p3Pc2b+jKt0PsSHsE+N5oUP1DEMXm2noxU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722453226; c=relaxed/simple;
-	bh=NZoJXqLy6vZhc05SjrTiCHFxzwDxKYHyUwWMAWN1DMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=grgHSR024C/BWd7TUF2gHpY2csYcP1DqmIpPwqd+kl0qGHrqB+J/PrH0W7VMYS8wCwghFsDmeFLJbCJLImU/gX574jEz5aUUld2ZZpuuPS7IYHHXdo3OnfgZmqySOzyBQUcYtzfMc5GGKC/gf+9g/86L3l4ZW6X+DNdxB2kKJvw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=qEDwW4M6; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from darkstar.musicnaut.iki.fi (85-76-100-193-nat.elisa-mobile.fi [85.76.100.193])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: aaro.koskinen)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4WZ1wG4sN1zyQf;
-	Wed, 31 Jul 2024 22:13:34 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1722453219;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jKNVn6TfX89GWfjIM0Jaen4pOYmILV2qL8jp0k43Fn8=;
-	b=qEDwW4M66WNuY45SArOnCaxXp7QfJZUIZxO2cY19UkdOFMc6EEYHuKVDHlXzKFRS8XKbhq
-	VqqvxLaAzaYV13ztrjOjdQbPpCsadMRmScwbbjPkWLR9+H3AnJd1jPsfkegX/D4vbvP3Ul
-	33r2w/V+jEaRFLClsQ7UsjY5rKZzH54=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1722453219;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jKNVn6TfX89GWfjIM0Jaen4pOYmILV2qL8jp0k43Fn8=;
-	b=Jfyw1d2Knad26sGf6oXlIzSPvanRQvdMpHOcxwKmv6kvOZqgpontBeibOGoYWK+Oiqho7k
-	5e3YHhqTqhpEqOGXJ4AR10qyuSCPlCufqARgN0NCB/JdEhF2xC1zmXkbv+qBmBnVAs5hnz
-	JNY+msDThwLJUG01+1RVwU8LdFKTdEI=
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1722453219; a=rsa-sha256; cv=none;
-	b=dA0q57eRsz7dG4S4uC6uc/jooWpGeO5R8w8QHbFHSOlFLEYcxLZgsE+bi74s0zB3Q6uyGK
-	oh47LKfeAh4dWREJi9VsIfCbtXhlsb7ccYoYxZ4rKLaemaM3DaeYCBHxKeQTYMK9+BS2V1
-	jnXX/HuCOxG/kKw7mfVXa3pZ7c2qOrQ=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=aaro.koskinen smtp.mailfrom=aaro.koskinen@iki.fi
-Date: Wed, 31 Jul 2024 22:13:32 +0300
-From: Aaro Koskinen <aaro.koskinen@iki.fi>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Russell King <linux@armlinux.org.uk>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Richard Earnshaw <richard.earnshaw@arm.com>,
-	Richard Sandiford <richard.sandiford@arm.com>,
-	Ramana Radhakrishnan <ramanara@nvidia.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Kristoffer Ericson <kristoffer.ericson@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	linux-samsung-soc@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	"Jeremy J. Peper" <jeremy@jeremypeper.com>,
-	debian-arm@lists.debian.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: Re: [RFC} arm architecture board/feature deprecation timeline
-Message-ID: <20240731191332.GB47080@darkstar.musicnaut.iki.fi>
-References: <2831c5a6-cfbf-4fe0-b51c-0396e5b0aeb7@app.fastmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3D8148FF3
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 31 Jul 2024 21:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722460442; cv=none; b=M/QgFwvm5jXjLveSDwMNdK3F/LTByWBWuDGRcfhykEIeyeE9Bdo21TEus5+Rz+hdXK6Zz5lv9VptrAM+yWIspS8OsW8ad8QGmq5IpXslT42WqXSKwKCRSRogtN4QevrvZFMyuQj1Fz3zTUh+NpbURfUf3x9nSVNPHaUysMzQSMA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722460442; c=relaxed/simple;
+	bh=yJ9pA9hFNNSRT1aeBnb+lif2aTDAwA5wRBIoRVAls8w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 References; b=ujx9AWeoTU9KWSed+Zl3+kaNs7sVso0K9l9cO4Ys7LOgCvlizdtH8/E5SjFqJiGxU5U7iTybRX5LbjsFwTvPUGPFfPBY80gIjvSporA0cYpuFfLVVAj6oeFmI21u35Z/+EdGmquCOQIj2R2XPvwaC1LWYol5w5A+fMM67rWmQ7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=P8FD6ldE; arc=none smtp.client-ip=210.118.77.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20240731211358euoutp029faaa7438b877c1f94edb6fd47570e91~naKR1abps1353513535euoutp02t
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 31 Jul 2024 21:13:58 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20240731211358euoutp029faaa7438b877c1f94edb6fd47570e91~naKR1abps1353513535euoutp02t
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1722460438;
+	bh=2pwRuB6aR+COZ5GILDtR6QzBmt48YqnOKY+gbzEXN6A=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=P8FD6ldE2hnBqlZao9fk2Sl+dt/oQ0ZM9wOwE/j4QS04USl3f+cXu9sluoT5jtt69
+	 /j353JO9zn4wQ9vHP0Lc31pneAlzHHT2YQlJ+SMW/0JCnTGEAc+D/2g1c0A3cLJxgr
+	 s87zFulc3BpDI0kmaG8K6jC3b6bS1A2Si/s7zloU=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20240731211357eucas1p2b49293f13d737d50049f292b5f1ba25c~naKRXKinN1089810898eucas1p2U;
+	Wed, 31 Jul 2024 21:13:57 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id 6B.C4.09624.519AAA66; Wed, 31
+	Jul 2024 22:13:57 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20240731211356eucas1p287adaf8a55c7c3e37c9ac8b36069b788~naKQUQCjT0996309963eucas1p2I;
+	Wed, 31 Jul 2024 21:13:56 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+	eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20240731211356eusmtrp10d5b1aee0cf22252e5f10bf3f395a4a1~naKQTk9vo0610906109eusmtrp1Q;
+	Wed, 31 Jul 2024 21:13:56 +0000 (GMT)
+X-AuditID: cbfec7f2-c11ff70000002598-36-66aaa9158e8b
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+	eusmgms1.samsung.com (EUCPMTA) with SMTP id B2.99.08810.419AAA66; Wed, 31
+	Jul 2024 22:13:56 +0100 (BST)
+Received: from AMDC4515.eu.corp.samsungelectronics.net (unknown
+	[106.120.51.28]) by eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20240731211355eusmtip2d184d063d29a529418a12f6d6760b6ed~naKPZUOaV1705617056eusmtip2L;
+	Wed, 31 Jul 2024 21:13:55 +0000 (GMT)
+From: Mateusz Majewski <m.majewski2@samsung.com>
+To: "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
+	"linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Cc: Mateusz Majewski <m.majewski2@samsung.com>, Krzysztof Kozlowski
+	<krzk@kernel.org>, Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>, "Rafael
+ J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Rob
+	Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, ALIM AKHTAR
+	<alim.akhtar@samsung.com>, Sam Protsenko <semen.protsenko@linaro.org>, Anand
+	Moon <linux.amoon@gmail.com>
+Subject: [PATCH v2] MAINTAINERS: thermal: samsung: add myself as maintainer
+ of the driver
+Date: Wed, 31 Jul 2024 23:13:45 +0200
+Message-ID: <20240731211346.59027-1-m.majewski2@samsung.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2831c5a6-cfbf-4fe0-b51c-0396e5b0aeb7@app.fastmail.com>
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsWy7djPc7qiK1elGWxskbF4MG8bm8X3LdeZ
+	LNbsPcdkMe+zrMX8I+dYLc6f38BusenxNVaLy7vmsFl87j3CaDHj/D4mi3Ubb7FbLGxqYbeY
+	eGwys8XcL1OZLf7v2cFu8eRhH5vF8759TA6CHmvmrWH02DnrLrvH4j0vmTw2repk87hzbQ+b
+	x+Yl9R59W1YxenzeJBfAEcVlk5Kak1mWWqRvl8CVseX+ZsaCyxwVO95mNDDOZe9i5OCQEDCR
+	uLrFs4uRi0NIYAWjxKcFjYxdjJxAzhdGifU77SASnxklrv7pYwVJgDSsf/OPCaJoOaPE1/nq
+	EEWtTBJXnx4CS7AJGEg8eLOMHSQhInCVSeLZ009gDrPAE2aJzU+msYFUCQtES6x4+JIFxGYR
+	UJXoX7gerJtXwEZi99zFLBDr5CV69/dBxQUlTs58AhZnBoo3b53NDDJUQuALh8TXaffYIRpc
+	JJZO7GGCsIUlXh3fAhWXkTg9uQdqaL7EjM3vWSABUCFx96AXhGkt8fEMM4jJLKApsX6XPkTU
+	UeLevkgIk0/ixltBiP18EpO2TWeGCPNKdLQJQUxWlTi+ZxIzhC0t8aTlNtQlHhJd76axQEIt
+	VuLEj5VsExgVZiH5ahaSr2YhnLCAkXkVo3hqaXFuemqxYV5quV5xYm5xaV66XnJ+7iZGYHo7
+	/e/4px2Mc1991DvEyMTBeIhRgoNZSYRX6OTKNCHelMTKqtSi/Pii0pzU4kOM0hwsSuK8qiny
+	qUIC6YklqdmpqQWpRTBZJg5OqQYmobV867Z6n1GcwmDU8NtWn+vP3IkKt+cJRlxbq3t0t4vO
+	Ksa9D80cU87uPRbMp75U7vnWJmH5qw9SZSM2b5vWrirhqnb8zL3N33Nkny9TKvUziru+fEeE
+	XiOr6na5hzzSYe2m3Mkucww7fO+lr3qexuohOXX18vtr5Hj6g9hNDl+4k3Q7OXDB1J9ba/sv
+	NCXdk1qxZqnYZQ61SmWbWhOHwz5RW7NrPtt1CrBmLjzR0bNfKmL2X+vze99onBGoivHKv2V4
+	2CGxpqMi0OpB+t/PhiwLg/9snCi+Ksas6NShpMfl59+IH1npKMZUUfOYUzz4/zzek8G/Fy6S
+	YpqwUNrGQ7O0afdd5tVT56+uWSipxFKckWioxVxUnAgASoSbEN4DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOIsWRmVeSWpSXmKPExsVy+t/xe7oiK1elGSzbJ2LxYN42NovvW64z
+	WazZe47JYt5nWYv5R86xWpw/v4HdYtPja6wWl3fNYbP43HuE0WLG+X1MFus23mK3WNjUwm4x
+	8dhkZou5X6YyW/zfs4Pd4snDPjaL5337mBwEPdbMW8PosXPWXXaPxXteMnlsWtXJ5nHn2h42
+	j81L6j36tqxi9Pi8SS6AI0rPpii/tCRVISO/uMRWKdrQwkjP0NJCz8jEUs/Q2DzWyshUSd/O
+	JiU1J7MstUjfLkEvY8v9zYwFlzkqdrzNaGCcy97FyMkhIWAisf7NP6YuRi4OIYGljBJHOqey
+	QCSkJQ5/mQJVJCzx51oXG0RRM5PEt8b9YEVsAgYSD94sAysSEbjMJLFztgpIEbPAO2aJrp4G
+	sISwQKTErqlXGEFsFgFVif6F65lAbF4BG4ndcxdDbZOX6N3fBxUXlDg58wlYnBko3rx1NvME
+	Rr5ZSFKzkKQWMDKtYhRJLS3OTc8tNtQrTswtLs1L10vOz93ECIyxbcd+bt7BOO/VR71DjEwc
+	jIcYJTiYlUR4hU6uTBPiTUmsrEotyo8vKs1JLT7EaAp030RmKdHkfGCU55XEG5oZmBqamFka
+	mFqaGSuJ83oWdCQKCaQnlqRmp6YWpBbB9DFxcEo1ME17ut5ZjU1R9MrNCcsZ+TnWl+c6Vc5Z
+	ynL8g+7C6Ryy06qO8wQ/mb+94y9X/rbHvAtLlPbdTPOsdNTTiT7w4OvxAz9L/8/2zq+87X9l
+	wncVUWMJGZv9ooKrXVle27dVO7xslJuzRPT2cmkmv/dxzBq+N73OKwbYxzOKXRPmsIp6pO4z
+	U3CCQqjHQRHni8vNPAUb5zj76PQ8y1jw9ZnZma9eQXdifLavMMt8I6UXfjx7a3r54Q4j9RbJ
+	4q4Hb69UVewqEWQTtjthqW3gYLhO6i2rQs5v+yndr6LqVRsjN9xiFnFdEK0w8cqc1Yv14+1n
+	HRR/d+iV/FMuNibb5XJWh762ci9TXJhrfeWBIeN2JZbijERDLeai4kQAnkwNwjoDAAA=
+X-CMS-MailID: 20240731211356eucas1p287adaf8a55c7c3e37c9ac8b36069b788
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20240731211356eucas1p287adaf8a55c7c3e37c9ac8b36069b788
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20240731211356eucas1p287adaf8a55c7c3e37c9ac8b36069b788
+References: <CGME20240731211356eucas1p287adaf8a55c7c3e37c9ac8b36069b788@eucas1p2.samsung.com>
 
-Hi,
+I am familiar with the code of this driver, having contributed to it
+before. I also have access to most of the supported SoCs for testing. I
+am going to have more time to help with this code, so I would love to do
+so slightly more formally.
 
-On Wed, Jul 31, 2024 at 07:29:29PM +0200, Arnd Bergmann wrote:
-> === early ARMv6 ===
-> 
-> This is the ARM1136r0p in NXP i.MX31 and OMAP24xx, which in
-> practice means just the Nokia N8xx tablet.
-> It causes a lot of pain to support in the kernel since it
-> requires special hacks to support in SMP-enabled kernels.
+This has been discussed previously in
+https://lore.kernel.org/lkml/e73e1a14-dfa0-4a36-bc6e-5d6421553788@kernel.org
+where Krzysztof Kozlowski (as one of the existing maintainers of this
+driver) has reacted positively to the idea of this.
 
-FWIW, I have been never able to boot N8x0 unless CONFIG_SMP was disabled
-(but haven't tested recently if the situation has changed). And probably
-nobody else is anymore even booting these with modern kernels. Common
-distro kernel support for N8x0 would be unlikely anyway due to bootloader
-and memory limitations.
+Signed-off-by: Mateusz Majewski <m.majewski2@samsung.com>
+---
+v1 -> v2: slightly more detailed rationale.
 
-These tablets are not very attractive for hobbyists anymore as the display
-support got broken and eventually deleted due to bitrot. There has been
-some out-of-tree patches/interest to regain display and other features,
-but no major progress really in 10 years or so. The last major mainline
-feature was adding Retu watchdog support that allowed the device to stay
-on longer than 30 seconds after the boot (the hardware watchdog cannot
-be disabled).
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-I guess in OMAP-land N8x0 is one of the least used/active boards, so if
-it causes "a lot of pain" then maybe could be a candidate for deprecation.
-But with custom kernel config, the board has been pretty stable overall
-between the releases for limited use cases.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 12b870712da4..9133257a8509 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -20247,6 +20247,7 @@ F:	drivers/net/ethernet/samsung/sxgbe/
+ SAMSUNG THERMAL DRIVER
+ M:	Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+ M:	Krzysztof Kozlowski <krzk@kernel.org>
++M:	Mateusz Majewski <m.majewski2@samsung.com>
+ L:	linux-pm@vger.kernel.org
+ L:	linux-samsung-soc@vger.kernel.org
+ S:	Maintained
+-- 
+2.45.1
 
-> === OMAP1 ===
-> 
-> This is now the only ARMv4T/ARMv5 platform with no
-> DT support, making it a target for removal at some
-> point. Unlike PXA, there are still users, but it seems
-> there are no current plans for a DT conversion.
-> 
-> I would suggest going through the five boards
-> individually to see which ones we can remove in 2025
-> and keep the remaining ones for the moment.
-
-Here situation hasn't changed - all of the boards are equally
-important/useful, at least from a maintainer point of view. The routine
-I use to test/debug kernel releases relies on all of them.
-
-A.
 
