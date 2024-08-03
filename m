@@ -1,39 +1,39 @@
-Return-Path: <linux-samsung-soc+bounces-4030-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4028-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44F1994682E
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2024 08:30:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8811A94682C
+	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2024 08:30:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0291B2822D3
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D52D1F219C4
 	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2024 06:30:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE18076036;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76D01482E2;
 	Sat,  3 Aug 2024 06:30:37 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C8A943
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB33F76036
 	for <linux-samsung-soc@vger.kernel.org>; Sat,  3 Aug 2024 06:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722666637; cv=none; b=ERX6kSQugQsxn8iPPcGVatPekt9095JxBa8N5fx3aeRrZQRnNO8tTTjbNiqTmyDWteBdYdQNeMJ1LoV4MQeG0FsUzTARg9RBsycCeMciQLvFoEZCsfS6fyrsKq4A5UFgh/AFd/9cnn9GU1z6O1uepXjOC+uKCbHt+ywCYP7ab8M=
+	t=1722666637; cv=none; b=QhnJF7c7WDZf9jKCZaVqOjVdsmsm8NHqdqSlhfFamXrwh0+d+mjP775KYmPakkHK6eqCHmZ12DZYkc+cvMaWjpJnCJ7tX92N7EIO4wKe2t8PJjkCcOG8G02U9d39Hplj70qXdLhabNkEkYTX9ILMOwWB/99fywPdbTda/9CTKe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722666637; c=relaxed/simple;
-	bh=TqTyXuTVCudV4nZ4m4nsTxzNqGpFxws6iOQdHZjCRBg=;
+	bh=aWscC1sPf4N36Y9mqhch8iZYcRzvxEfBmb61a8PIt3A=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SMW9ku1zMfO40x0zj2+DK+QmUpAC5TrMnOqea3jUpnQK4llZs+P/ByDrpVWJ7x90FTaKBlP0enHeaS0Z8N63URJkZw9huPfqgAAOHr2T0/MqETlO3dpD+mxfoeEEzQeQPD6yDfSrIgJY0IdccYfwm8udheVqvS74hER/yk2Ilrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+	 MIME-Version:Content-Type; b=QQZ3Ihm8QSl2tRtcMe5yiO6ORGh+gg4gPDD8VlS24CVun1OVdSDCT51W2YcbxLsgrCjYxPqqmFChI3/nrMb308IilWoM7XQ1485XOiTPBRTD2qHNlllV4yv1hLiRc2Hrxu9HhtD8VpphdoWpl+eoQmIUqGIk4ifQRPxzm0mCL3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.174])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4WbXpK22wkzfZMT;
-	Sat,  3 Aug 2024 14:28:41 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4WbXrR2JvgzcdRj;
+	Sat,  3 Aug 2024 14:30:31 +0800 (CST)
 Received: from kwepemd200011.china.huawei.com (unknown [7.221.188.251])
-	by mail.maildlp.com (Postfix) with ESMTPS id 23C361400D1;
+	by mail.maildlp.com (Postfix) with ESMTPS id EADEB1800A4;
 	Sat,  3 Aug 2024 14:30:33 +0800 (CST)
 Received: from cgs.huawei.com (10.244.148.83) by
  kwepemd200011.china.huawei.com (7.221.188.251) with Microsoft SMTP Server
@@ -50,9 +50,9 @@ To: <inki.dae@samsung.com>, <sw0312.kim@samsung.com>,
 	<edmund.j.dea@intel.com>, <cuigaosheng1@huawei.com>
 CC: <dri-devel@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>,
 	<linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH -next 2/3] drm/gem: Add missing clk_disable_unprepare in ade_power_up
-Date: Sat, 3 Aug 2024 14:30:29 +0800
-Message-ID: <20240803063030.316390-3-cuigaosheng1@huawei.com>
+Subject: [PATCH -next 3/3] drm/kmb: Add missing clk_disable_unprepare in kmb_dsi_clk_enable
+Date: Sat, 3 Aug 2024 14:30:30 +0800
+Message-ID: <20240803063030.316390-4-cuigaosheng1@huawei.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240803063030.316390-1-cuigaosheng1@huawei.com>
 References: <20240803063030.316390-1-cuigaosheng1@huawei.com>
@@ -68,29 +68,30 @@ X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemd200011.china.huawei.com (7.221.188.251)
 
 Add the missing clk_disable_unprepare() before return in
-ade_power_up().
+kmb_dsi_clk_enable().
 
 Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 ---
- drivers/gpu/drm/hisilicon/kirin/kirin_drm_ade.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/kmb/kmb_dsi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_ade.c b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_ade.c
-index 871f79a6b17e..942560a717ff 100644
---- a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_ade.c
-+++ b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_ade.c
-@@ -229,12 +229,14 @@ static int ade_power_up(struct ade_hw_ctx *ctx)
- 	ret = reset_control_deassert(ctx->reset);
+diff --git a/drivers/gpu/drm/kmb/kmb_dsi.c b/drivers/gpu/drm/kmb/kmb_dsi.c
+index cf7cf0b07541..02141ac593c6 100644
+--- a/drivers/gpu/drm/kmb/kmb_dsi.c
++++ b/drivers/gpu/drm/kmb/kmb_dsi.c
+@@ -1494,12 +1494,15 @@ static int kmb_dsi_clk_enable(struct kmb_dsi *kmb_dsi)
+ 	ret = clk_prepare_enable(kmb_dsi->clk_mipi_ecfg);
  	if (ret) {
- 		DRM_ERROR("failed to deassert reset\n");
-+		clk_disable_unprepare(ctx->media_noc_clk);
+ 		dev_err(dev, "Failed to enable MIPI_ECFG clock: %d\n", ret);
++		clk_disable_unprepare(kmb_dsi->clk_mipi);
  		return ret;
  	}
  
- 	ret = clk_prepare_enable(ctx->ade_core_clk);
+ 	ret = clk_prepare_enable(kmb_dsi->clk_mipi_cfg);
  	if (ret) {
- 		DRM_ERROR("failed to enable ade_core_clk (%d)\n", ret);
-+		clk_disable_unprepare(ctx->media_noc_clk);
+ 		dev_err(dev, "Failed to enable MIPI_CFG clock: %d\n", ret);
++		clk_disable_unprepare(kmb_dsi->clk_mipi);
++		clk_disable_unprepare(kmb_dsi->clk_mipi_ecfg);
  		return ret;
  	}
  
