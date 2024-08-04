@@ -1,101 +1,113 @@
-Return-Path: <linux-samsung-soc+bounces-4028-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4031-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8811A94682C
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2024 08:30:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 78303946DD1
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2024 11:09:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D52D1F219C4
-	for <lists+linux-samsung-soc@lfdr.de>; Sat,  3 Aug 2024 06:30:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26EF61F214BB
+	for <lists+linux-samsung-soc@lfdr.de>; Sun,  4 Aug 2024 09:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76D01482E2;
-	Sat,  3 Aug 2024 06:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F3AD2033A;
+	Sun,  4 Aug 2024 09:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qtC3LEO7"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB33F76036
-	for <linux-samsung-soc@vger.kernel.org>; Sat,  3 Aug 2024 06:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FCF23759
+	for <linux-samsung-soc@vger.kernel.org>; Sun,  4 Aug 2024 09:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722666637; cv=none; b=QhnJF7c7WDZf9jKCZaVqOjVdsmsm8NHqdqSlhfFamXrwh0+d+mjP775KYmPakkHK6eqCHmZ12DZYkc+cvMaWjpJnCJ7tX92N7EIO4wKe2t8PJjkCcOG8G02U9d39Hplj70qXdLhabNkEkYTX9ILMOwWB/99fywPdbTda/9CTKe8=
+	t=1722762589; cv=none; b=ftNF0GH/fHRgrz/bClYgPgUrXHZu3UQfkbRJWCxWsCJ78LUrZ5cSMNw9TbWRbIMCFbkH5Gk/kVkky/1zfaArSMS0WlyjDK4ed9hyotkt3gRbFUPXF2eGyAZWlvlbA3f1rynce7jAnofdHYN9yWbJ5u9y7gJJDODiRooXPbluYNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722666637; c=relaxed/simple;
-	bh=aWscC1sPf4N36Y9mqhch8iZYcRzvxEfBmb61a8PIt3A=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QQZ3Ihm8QSl2tRtcMe5yiO6ORGh+gg4gPDD8VlS24CVun1OVdSDCT51W2YcbxLsgrCjYxPqqmFChI3/nrMb308IilWoM7XQ1485XOiTPBRTD2qHNlllV4yv1hLiRc2Hrxu9HhtD8VpphdoWpl+eoQmIUqGIk4ifQRPxzm0mCL3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.252])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4WbXrR2JvgzcdRj;
-	Sat,  3 Aug 2024 14:30:31 +0800 (CST)
-Received: from kwepemd200011.china.huawei.com (unknown [7.221.188.251])
-	by mail.maildlp.com (Postfix) with ESMTPS id EADEB1800A4;
-	Sat,  3 Aug 2024 14:30:33 +0800 (CST)
-Received: from cgs.huawei.com (10.244.148.83) by
- kwepemd200011.china.huawei.com (7.221.188.251) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Sat, 3 Aug 2024 14:30:32 +0800
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
-To: <inki.dae@samsung.com>, <sw0312.kim@samsung.com>,
-	<kyungmin.park@samsung.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-	<krzk@kernel.org>, <alim.akhtar@samsung.com>, <xinliang.liu@linaro.org>,
-	<tiantao6@hisilicon.com>, <kong.kongxinwei@hisilicon.com>,
-	<sumit.semwal@linaro.org>, <yongqin.liu@linaro.org>, <jstultz@google.com>,
-	<maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
-	<tzimmermann@suse.de>, <anitha.chrisanthus@intel.com>,
-	<edmund.j.dea@intel.com>, <cuigaosheng1@huawei.com>
-CC: <dri-devel@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH -next 3/3] drm/kmb: Add missing clk_disable_unprepare in kmb_dsi_clk_enable
-Date: Sat, 3 Aug 2024 14:30:30 +0800
-Message-ID: <20240803063030.316390-4-cuigaosheng1@huawei.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240803063030.316390-1-cuigaosheng1@huawei.com>
-References: <20240803063030.316390-1-cuigaosheng1@huawei.com>
+	s=arc-20240116; t=1722762589; c=relaxed/simple;
+	bh=msD+Pu+Q6D1xBrZhQ7xYLQP5vBlKSa93nvdA9bCO7Jg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=l6USHjd4bS0IbA2SOUrKztob5FhWvy/hS8PUfZXaSalnwhGTOsx+2fKcalQTKn+coizA0A8wEKojB9MRLFIS8n2/fdMxWSgzf0jjyMrh6hrmRZpESNTUaDFUrZs+sDDGAgL+b1j0L7eerwPzgmrzpBRKLLR4qpd5vRM1JJ8lwBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qtC3LEO7; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-368380828d6so6458691f8f.1
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 04 Aug 2024 02:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722762586; x=1723367386; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DHLoWshexZhuP2J8+WGpm+0qtk9I2Aug6souXmLzt8E=;
+        b=qtC3LEO7hADTBlKAjiicGaI85SYvsNPdTej84ruDwA0XRK/iZMDaJqLqDVa56mOWmw
+         WjDxlx+LIZOgeS9WhopbUiBOgPApnoYkzXC2fMNAGmo5n+HvkFcYv4+IzzrV6ePaXSGl
+         ED71YXCaVfL70QQ+nJDNqAcj+qPmzciGIG3JnfFbehOGaerUC8fxgaa8QUU5juHa6KHk
+         1MBYpU6aA08ENWN/p7qlp2kkxWgERxSKVuAF9IF0Odxjk7ddZcHIlOj9HjBrbNMGqPjX
+         3jvKgAO3RXOPZPVj6MVLtfaHG0yG6PHKU3P+IugiWjwh88FBZQiyMYJRL95bIu59GPAE
+         nT/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722762586; x=1723367386;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DHLoWshexZhuP2J8+WGpm+0qtk9I2Aug6souXmLzt8E=;
+        b=iM720ZmpBDxpRepazhpKZnfOknFfceAGwL7lhnQB0titRetq9mKeTTpg2Vs11AB/r+
+         yxxxJK/qQ8MqolWHexrSBnGZ1jqK2NdQ/0gR50aAsVxRlUS4QMjWpobRxJRlVQfoDP6r
+         yYoRqfSp5VR4qh6uv/K017qxT6yxO5A2e/op4Gz+1EPFCXHeri6Mr7npYLxK80u3mzUW
+         imGMAXO2PeJxCTBsPWFhZFGPfEuWqhcJZRN8zp4vTOjQXxQbOJDc9ileAaFQcSkgIY+k
+         UXOJDV5vj2AUoPL1BXCzlnGiZXvvf/fVrHdWIo+hR0X+BaEpY/e2NPANnWlEsr5Fl/ao
+         dcRg==
+X-Forwarded-Encrypted: i=1; AJvYcCXoxNkDheuLcW7uYgjUCEdl0v78lEn1ovAsD6fUB5BztGH0yNS9KMFW+0yil3et9XWPpYkNU5KcsBvjw13zrzP14TNdMK2dOcEHyNMRQrW9XAI=
+X-Gm-Message-State: AOJu0YzfB5wTJbNrStfbuw9SmeAE1JBZDNEw/rLUIPCvS86y0LZgNK5W
+	++j5S8774CgMV3VsLMcRRhvdujxxbE5iZhhuyAAh3vVe4B63TJ3/0ctHT8HpI+A=
+X-Google-Smtp-Source: AGHT+IHCO1fd/5h1ijS72pP957S/1fryoMWPBggf8fwYHEKJsA9djK2DDYTC7fOb8ySFt7DWWO/kBQ==
+X-Received: by 2002:a5d:5c87:0:b0:36b:bd75:ed73 with SMTP id ffacd0b85a97d-36bbd75ef23mr5985987f8f.23.1722762585867;
+        Sun, 04 Aug 2024 02:09:45 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd075100sm6244814f8f.105.2024.08.04.02.09.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Aug 2024 02:09:45 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240731191312.1710417-16-robh@kernel.org>
+References: <20240731191312.1710417-16-robh@kernel.org>
+Subject: Re: [PATCH] pinctrl: samsung: Use of_property_present()
+Message-Id: <172276258438.8347.5786673357734721862.b4-ty@linaro.org>
+Date: Sun, 04 Aug 2024 11:09:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemd200011.china.huawei.com (7.221.188.251)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.1
 
-Add the missing clk_disable_unprepare() before return in
-kmb_dsi_clk_enable().
 
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
----
- drivers/gpu/drm/kmb/kmb_dsi.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Wed, 31 Jul 2024 13:12:54 -0600, Rob Herring (Arm) wrote:
+> Use of_property_present() to test for property presence rather than
+> of_find_property(). This is part of a larger effort to remove callers
+> of of_find_property() and similar functions. of_find_property() leaks
+> the DT struct property and data pointers which is a problem for
+> dynamically allocated nodes which may be freed.
+> 
+> 
+> [...]
 
-diff --git a/drivers/gpu/drm/kmb/kmb_dsi.c b/drivers/gpu/drm/kmb/kmb_dsi.c
-index cf7cf0b07541..02141ac593c6 100644
---- a/drivers/gpu/drm/kmb/kmb_dsi.c
-+++ b/drivers/gpu/drm/kmb/kmb_dsi.c
-@@ -1494,12 +1494,15 @@ static int kmb_dsi_clk_enable(struct kmb_dsi *kmb_dsi)
- 	ret = clk_prepare_enable(kmb_dsi->clk_mipi_ecfg);
- 	if (ret) {
- 		dev_err(dev, "Failed to enable MIPI_ECFG clock: %d\n", ret);
-+		clk_disable_unprepare(kmb_dsi->clk_mipi);
- 		return ret;
- 	}
- 
- 	ret = clk_prepare_enable(kmb_dsi->clk_mipi_cfg);
- 	if (ret) {
- 		dev_err(dev, "Failed to enable MIPI_CFG clock: %d\n", ret);
-+		clk_disable_unprepare(kmb_dsi->clk_mipi);
-+		clk_disable_unprepare(kmb_dsi->clk_mipi_ecfg);
- 		return ret;
- 	}
- 
+Applied, thanks!
+
+[1/1] pinctrl: samsung: Use of_property_present()
+      https://git.kernel.org/pinctrl/samsung/c/aa85d45338692e8b29b0c023826c404c3e7113a6
+
+Best regards,
 -- 
-2.25.1
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
