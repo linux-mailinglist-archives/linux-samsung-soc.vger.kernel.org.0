@@ -1,38 +1,39 @@
-Return-Path: <linux-samsung-soc+bounces-4248-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4246-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286EC950312
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2024 12:57:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FAC2950311
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2024 12:57:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 578891C22461
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2024 10:57:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C929E1F23780
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 13 Aug 2024 10:57:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 146AC19AA63;
-	Tue, 13 Aug 2024 10:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A6B19A296;
+	Tue, 13 Aug 2024 10:55:51 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6033A19AA5F
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 13 Aug 2024 10:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFB976025
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 13 Aug 2024 10:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723546559; cv=none; b=Bw2UpQtSiSjhPogB438revxya0Rj/TVRNHEzFk92n/Gm83gg1HcDFkrgDMsuP/vaNo7BDpJ55E5rt6fdUvLD+EA/iXjn0SP9xt6x/eaXx4eI5dxjIQvaahalyoVpzWze8g5w7UXNs0LY3rzNg6p9A5Xd8yT7+LjeNGgEmGLGaWs=
+	t=1723546551; cv=none; b=rrIEAEb00ABnfTgt4X83jx2IcGU4g+UDTuvzkJV+JMqieCKZMbtcRTdSoqD98XTnhpw5iK28zReNIJI4ZJJaYcyu/fGnh8q0q1DLVQFOhQ+fBebY0gz8I07HmEdiCeV4GPv6Ej2AYF5QfhZZjSXcG6i8YplivwcCAucQsf3z3jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723546559; c=relaxed/simple;
-	bh=kbA17NJL8Bg6bVidDlRjnvQZMG/VAgKi+5BtuEC4yqU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TDJQrJ+BJx6KG+vz5inikY15Dtg3lYZyIvaVkJ5uQIHU0K3BzBEsvO2VzxeGd0n2VDVQvY03QoKtoM9DpS9KrHu30d4D456OKLAaymmoQcAO5vvrHaL92kl1PtDM+sE82TuYksLZY7gYgCrckz/orTPFANpbR09mwxzCW+rh+gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.35
+	s=arc-20240116; t=1723546551; c=relaxed/simple;
+	bh=xtxTQvG6w8zzYPfYQxLQe3CcZL68tB6KHNC/E2XPE1Q=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Uo1T5LSGRLM5RemQqqO80Rds2mjrTLqANxOKvGfewuxK52Yk/B21H3gImMuNISkU01lIWBXrxNti21v7ot4tpPEKBs3tTUmWwJWQ+kOS/pT42Eylt1g3IcXFsJuEL4o+s950SvQCdbCwN0fGDu0RY+EsCRujdo5/8AkTHTGV3o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.163])
-	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4Wjp8J0RZ9z1S7lq;
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Wjp8J53GWz2CmZW;
 	Tue, 13 Aug 2024 18:50:56 +0800 (CST)
 Received: from kwepemd200011.china.huawei.com (unknown [7.221.188.251])
-	by mail.maildlp.com (Postfix) with ESMTPS id 0F642180019;
+	by mail.maildlp.com (Postfix) with ESMTPS id 6AAAE1402DE;
 	Tue, 13 Aug 2024 18:55:47 +0800 (CST)
 Received: from cgs.huawei.com (10.244.148.83) by
  kwepemd200011.china.huawei.com (7.221.188.251) with Microsoft SMTP Server
@@ -43,10 +44,12 @@ To: <krzk@kernel.org>, <alim.akhtar@samsung.com>, <linux@armlinux.org.uk>,
 	<cuigaosheng1@huawei.com>
 CC: <linux-arm-kernel@lists.infradead.org>,
 	<linux-samsung-soc@vger.kernel.org>
-Subject: [PATCH -next 0/2] Remove unused declarations
-Date: Tue, 13 Aug 2024 18:55:43 +0800
-Message-ID: <20240813105545.1180788-1-cuigaosheng1@huawei.com>
+Subject: [PATCH -next 1/2] ARM: s3c: remove unused declarations for s3c6400
+Date: Tue, 13 Aug 2024 18:55:44 +0800
+Message-ID: <20240813105545.1180788-2-cuigaosheng1@huawei.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240813105545.1180788-1-cuigaosheng1@huawei.com>
+References: <20240813105545.1180788-1-cuigaosheng1@huawei.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -58,16 +61,37 @@ Content-Type: text/plain
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemd200011.china.huawei.com (7.221.188.251)
 
-Remove unused declarations, thanks!
+These declarations for s3c6400 have been removed since
+commit 6bac4f78ea3d ("ARM: s3c: remove s3c6400 support"), so
+remove it.
 
-Gaosheng Cui (2):
-  ARM: s3c: remove unused declarations for s3c6400
-  ARM: s3c: remove unused s3c2410_cpu_suspend() declaration
-
- arch/arm/mach-s3c/pm.h      |  2 --
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+---
  arch/arm/mach-s3c/s3c64xx.h | 11 -----------
- 2 files changed, 13 deletions(-)
+ 1 file changed, 11 deletions(-)
 
+diff --git a/arch/arm/mach-s3c/s3c64xx.h b/arch/arm/mach-s3c/s3c64xx.h
+index 92258e4f60f6..0505728f3f7b 100644
+--- a/arch/arm/mach-s3c/s3c64xx.h
++++ b/arch/arm/mach-s3c/s3c64xx.h
+@@ -23,17 +23,6 @@ struct device_node;
+ void s3c64xx_set_xtal_freq(unsigned long freq);
+ void s3c64xx_set_xusbxti_freq(unsigned long freq);
+ 
+-#ifdef CONFIG_CPU_S3C6400
+-
+-extern  int s3c6400_init(void);
+-extern void s3c6400_init_irq(void);
+-extern void s3c6400_map_io(void);
+-
+-#else
+-#define s3c6400_map_io NULL
+-#define s3c6400_init NULL
+-#endif
+-
+ #ifdef CONFIG_CPU_S3C6410
+ 
+ extern  int s3c6410_init(void);
 -- 
 2.25.1
 
