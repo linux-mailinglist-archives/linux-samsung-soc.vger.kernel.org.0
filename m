@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-4462-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4467-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 535EE95C868
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Aug 2024 10:53:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BA1295C883
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Aug 2024 10:56:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1818A284AF6
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Aug 2024 08:53:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 74799B27580
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 23 Aug 2024 08:56:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5D1A149003;
-	Fri, 23 Aug 2024 08:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DFAE1494D0;
+	Fri, 23 Aug 2024 08:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R09RmYji"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hSPHkyXw"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D2F1474D7;
-	Fri, 23 Aug 2024 08:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE93149000;
+	Fri, 23 Aug 2024 08:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724403180; cv=none; b=X4GqHLf5i/NLtj1/4mzALaquaZFbuDfBB06GTC4wosDQb/NgRT4LmcUV6XWhZgm9YSrHBisud+e2g80zBa4Wu+/C7g0xb4ghr2O/aaRxpuJj7CqyfkfvPvCHKAaNsWNfyGqOJW3ytn3FSqVzGaK8kP2F4y35ySqbNxKVgGNLwpQ=
+	t=1724403374; cv=none; b=a2jmxj8DzTLCV5T+DW7ojo5zxHtrs/KSKK8QtxmTe/+tpIg9tNEA/R+yv2eJFEfU72y31NbyNwkUmMRr9BYs5ke3jIAw91msupfve+cHV83c0hwVsohxEuwzGeo+nXYEO/Qesq9yiTkshM+z1RIW329i3OXKZNcfns3hvJg/kgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724403180; c=relaxed/simple;
-	bh=jAZUNSCTbHtTAT0sSpKgfRRhAh8SlMCuJUduXH9mB7A=;
+	s=arc-20240116; t=1724403374; c=relaxed/simple;
+	bh=i0Xu0ojMn57FvVAOLSwT/qbq3Voen/aPH4CicZkeue4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BBgjsD/bPyG8GfOfYA0CppYYoMpG3cyJyAF7M93vTcrCj5EW5SbtpZG08BjJI1yDDFwrlTgWt76lj0y/u3RUKYSOBposDKNgX8TjM5qZhH3jNx0psQwS163c7ZEnFn1C9KXXGEdPmDI/RKPaJnGZ/D6IFe80xZFN/u7lCKx/gZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R09RmYji; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829E2C32786;
-	Fri, 23 Aug 2024 08:52:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BOKJd9vHNCPJW6l4tWRuUVEnQETa5svhBWi77TOWzqXgv9Z23aIclAWKbGXXKZAG45AzZP8wmA2o0lozaoscQQ5XMdymk7wBcjlvZ/N82FUtagAk0Du4IGUK5MyjJm7AJUYZkUIcPZ7aY+exPW+Sjz09SeqpU8pGyyekJh5EXz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hSPHkyXw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255CBC32786;
+	Fri, 23 Aug 2024 08:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724403179;
-	bh=jAZUNSCTbHtTAT0sSpKgfRRhAh8SlMCuJUduXH9mB7A=;
+	s=k20201202; t=1724403373;
+	bh=i0Xu0ojMn57FvVAOLSwT/qbq3Voen/aPH4CicZkeue4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R09RmYjiwtTqkfNMmTKr4TVTin70hUYiOpGx+It/8f4eXUYTtl8Ie1GCdLKCNW2xz
-	 E6Jk8hTjXowNmJ3zMIpQLkyDJ587Ykafxye2NscNSPef0NSiM83y09yJvAV06bgCH9
-	 b4Z1MiC/f/hJaPW225ar2Al0709airtUWZ2ZlS093ibcry2R3f37MfgwoNHxLm3/3Q
-	 j8dcqrpGcsTGHYZ3ZH6ZpiLnzL/yokhOV72Y8UE14Rcexrt8zGOgJySPcH8hxK0VAS
-	 6v6vlrgZGEpaqrn5o4i+Ul1P3Cx9F0UOpXpGiN46gd2gqYjMjn1htCU7bJ62wyjO3C
-	 SuI9wFv0jMK5A==
-Message-ID: <e0f8dfd7-7232-4814-a5c9-58acd5c11d53@kernel.org>
-Date: Fri, 23 Aug 2024 10:52:54 +0200
+	b=hSPHkyXwI86QVCzoy22Vd8ASUmGw2QWWlVCxaDiVnCbjNF+FvH7jRJUiVhMlauhcI
+	 Y7t3BtPoPYjuv9QJ2/Vc48Wv4C23x5/Ua5J3f0BLJxZyeTZcXOktYp7V9gRobOcBmN
+	 Q8uF+5vWcjSRfAs768OcSaS1R83jX3/tGJ4Wwwj7qlrRKw1s17FxzjPiqLcJzycHDP
+	 3jSg2utBfX15hzwtL/lgAVVYGd+VIcs9maeZsIuVZgaD6ooNyNZoOEI0DyojddvCrV
+	 OGcX3nDFwpdqSvYun2njrLnVu2JqHNpfVSzUHZGqXQ6jMVJ0DZj1unNEMFIObG6N8x
+	 0582IQMbCCK8g==
+Message-ID: <fd6b7276-cfb5-41ce-a25d-6278fe4d971e@kernel.org>
+Date: Fri, 23 Aug 2024 10:56:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,19 +50,14 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/14] Input: samsung-keypad - use guard notation to
- acquire mutex
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>,
- linux-input@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, patches@opensource.cirrus.com
-References: <20240819045813.2154642-1-dmitry.torokhov@gmail.com>
- <20240819045813.2154642-7-dmitry.torokhov@gmail.com>
- <e6xkutxnpu7acvm5qfyyces4estm4ihc3rzczqpnxrbrkptdm2@6lwrlssvtt3v>
- <Zsd-aVM6504L_hqi@google.com>
- <0afadefb-ecb1-4ec8-a862-bfa06d171457@kernel.org>
- <ZshJMRCe4LvpYNmZ@google.com>
+Subject: Re: [PATCH v1] drivers/pinctrl/samsung: Use kmemdup_array instead of
+ kmemdup for multiple allocation
+To: Shen Lichuan <shenlichuan@vivo.com>, s.nawrocki@samsung.com,
+ linus.walleij@linaro.org
+Cc: alim.akhtar@samsung.com, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, opensource.kernel@vivo.com
+References: <20240823082407.48219-1-shenlichuan@vivo.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,39 +103,43 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ZshJMRCe4LvpYNmZ@google.com>
+In-Reply-To: <20240823082407.48219-1-shenlichuan@vivo.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/08/2024 10:32, Dmitry Torokhov wrote:
-> On Fri, Aug 23, 2024 at 08:06:17AM +0200, Krzysztof Kozlowski wrote:
->> On 22/08/2024 20:07, Dmitry Torokhov wrote:
->>> On Thu, Aug 22, 2024 at 05:48:33PM +0200, Krzysztof Kozlowski wrote:
->>>> On Sun, Aug 18, 2024 at 09:58:03PM -0700, Dmitry Torokhov wrote:
->>>>> Guard notation is more compact and ensures that the mutex will be
->>>>> released when control leaves the function.
->>>>>
->>>>> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
->>>>> ---
->>>>>  drivers/input/keyboard/samsung-keypad.c | 8 ++------
->>>>>  1 file changed, 2 insertions(+), 6 deletions(-)
->>>>>
->>>>
->>>> You need to include cleanup.h (unless some other patch already did it
->>>> and I missed it?)
->>>
->>> Guard for mutexes defined in mutex.h which is pulled in indirectly, and
->>
->> guard() is not in mutex.h and in general we are including headers for
->> the things directly used in the unit.
+On 23/08/2024 10:24, Shen Lichuan wrote:
+> Let the kememdup_array() take care about
+> multiplication and possible overflows.
 > 
-> Oh, but it is:
-> 
-> https://elixir.bootlin.com/linux/v6.10/source/include/linux/mutex.h#L196
-> 
-> DEFINE_GUARD(mutex, struct mutex *, mutex_lock(_T), mutex_unlock(_T))
+> Using kmemdup_array() is more appropriate 
+> and makes the code easier to audit.
 
-That's DEFINE_GUARD, not guard().
+Please wrap commit message according to Linux coding style / submission
+process (neither too early nor over the limit):
+https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+
+> 
+> Signed-off-by: Shen Lichuan <shenlichuan@vivo.com>
+> ---
+>  drivers/pinctrl/samsung/pinctrl-samsung.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/samsung/pinctrl-samsung.c
+> index e4464ee815f9..da24890f27f7 100644
+> --- a/drivers/pinctrl/samsung/pinctrl-samsung.c
+> +++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+> @@ -122,8 +122,8 @@ static int add_map_configs(struct device *dev, struct pinctrl_map **map,
+>  	if (WARN_ON(*num_maps == *reserved_maps))
+>  		return -ENOSPC;
+>  
+> -	dup_configs = kmemdup(configs, num_configs * sizeof(*dup_configs),
+> -			      GFP_KERNEL);
+> +	dup_configs = kmemdup_array(configs, num_configs,
+> +					sizeof(*dup_configs), GFP_KERNEL);
+
+Misaligned and wrapped too early.
+
+>  
 
 Best regards,
 Krzysztof
