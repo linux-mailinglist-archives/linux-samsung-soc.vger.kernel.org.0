@@ -1,134 +1,126 @@
-Return-Path: <linux-samsung-soc+bounces-4668-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4672-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 292FF97A41F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Sep 2024 16:29:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0358D97A65A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Sep 2024 18:59:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 92A29B2BA63
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Sep 2024 14:24:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE4852826D5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 16 Sep 2024 16:59:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C477156F3B;
-	Mon, 16 Sep 2024 14:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4FB615DBB6;
+	Mon, 16 Sep 2024 16:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQxdqvlD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n6XYr9Pl"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0608015687D;
-	Mon, 16 Sep 2024 14:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED57155A3C
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Sep 2024 16:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726496694; cv=none; b=Ji9CmtrGEq8dqYvctYXtkrDH01lQAvLXZicWbxEPsRwYRzCbL/DVelMYZYCjZ1dMwtjicmxxlYqo6mSJy+OJxqv2vGfzh1xglI3JJcnCxzHf51SOH6dTnXsuwn6/++f57JiGDZF/ws7P8FSV6/ev3aneX3dROYiDijyvHs2Vzg4=
+	t=1726505913; cv=none; b=Q454FYDmZ61CUgKg7JHVpuEM/XFGET59j3wESxlqyu+oRxtYvte7NvfTti0NRUiAoh9svq3Ue5RRR+gqN/+IwVJeGM25PnpeuPaKYmQ3pOnfUDCPtf4Xr6p6THTBbXRe9JnMOHkAZlKzX5YyqkMqbwJecsJt1/b51cz7qIUnCQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726496694; c=relaxed/simple;
-	bh=337S8HEB7PCnHybPqsGOOO9qebV1Tb3RwiLJvodwKKk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=j79c52WenzQVJRPTwsE95jiRGmPjzuIHhavepN4Nh05e2nvNac25olC6T03P+gLRQPf7vWpBMoglVRcLVsWkPoQSlhLwNnDSYP3cYtVh+fmUxvs8sxnc+kOZXk662S5y2Y6Lh1M0PHGDboi2EDXcy+18Bp036ysq3m8/V3eT/oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQxdqvlD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817EEC4CEC4;
-	Mon, 16 Sep 2024 14:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726496693;
-	bh=337S8HEB7PCnHybPqsGOOO9qebV1Tb3RwiLJvodwKKk=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=JQxdqvlDSziVT0e/OEGhMNQUQjtI0wR7g29AhL9LEPpUrVEiK2/2CGPn7ZleZsV4I
-	 wUqgYhKOHEnJi2wR3pRn685Wb0B2LBJgdhPuGSSYAK7uJOijIOWnCxf5riytP7gt2G
-	 nxJC63jYv9iKW/8EP6xh8ojAB/u/2WSH7yOcV8yuhe6iIZQez2sRup8Fb6f6qjLE8f
-	 TDv3CBrmnWt9EOo+NEQAWRTfNZ1F2FNMqJI4SqImIvRLuZi26cLL3e97Ihd5b/zZhd
-	 XS27Z3uxsvwtJyVGx5wMi+eI1xvnbh22+jqHo/JMxHf4RUUT/IejoU/TnV0FgUlYJc
-	 M1vblqCnRCXRA==
-Message-ID: <3ce61439-546b-4c5d-af0c-9853dd542e72@kernel.org>
-Date: Mon, 16 Sep 2024 16:24:46 +0200
+	s=arc-20240116; t=1726505913; c=relaxed/simple;
+	bh=s6i/fzSPozPo95wcaQqCNYjDpPyZpQB4dqJyJ9WhGrI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LCwbg5Xr5D4eP+auBqizZfOGuMbjbqlsgjFmlmZIZ6VMtw4ihU2EAKJKy2yr04T/6lFW0UMcWG9PfHW9xWDXAtMS6vlfxINjs2u/0nDw5CCi4ce4I0QdPJM1YEaPhQbYPMhXNrmCv9gLbP5StVi7jhaNTQdwcWX5j7JZOV/L8X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n6XYr9Pl; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8d0d82e76aso777665866b.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 16 Sep 2024 09:58:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726505908; x=1727110708; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=80BvolWRqd+vCna2rvdnH0ppBYcL8z4URj2M0qkUhYY=;
+        b=n6XYr9Pl0ECrNc2Upp/dfkDWAdMmj9WUOxGs+5YnNhFARRvTVrzvf1DGj9cAicv43g
+         lWCdITfHdM4/CqxULBHlpUTCdIcyp3yYGhGUK1kAk6XxyDxo4D2FtsbAGQkwvd2PNWoL
+         dd75Rtz/NS3+jW/KQWuRIJ23utscl5EwGOiumRlQN+snOK1FjLFZmWe/VnwwXq0csYc6
+         5V9zenJWYKcdK6C106A2jsV6hxOTf42rmyHvQtonuHCBgwlZTCIFwzxy3X0dcSEPj1uR
+         43svYl66t08jerwvB4za7i/ZYHXuf6KnlGHwKPXrLPyo/IWFF8VlHfapnTDDZaiApNIr
+         HQTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726505908; x=1727110708;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=80BvolWRqd+vCna2rvdnH0ppBYcL8z4URj2M0qkUhYY=;
+        b=mV57fBwnn9A6jrO3bNlVY0Bq9Ix71CHoN1P7SlB5FIJuv+RFK1kyKYuCPQMyGwiK+J
+         V0phrK6mRH7KczXR9go331DleVrgwFJAP/bPc/paKeRNHKSCVziAns//E/8OZASyQx6w
+         /pZkOL92qFGWluRoDatl5MBV88bUtDR65eMMpRTvUjd698A8Qrhh0HOs6lUWd6o5jAbX
+         xVuB+R01nKORj0US6ZPB6hZkltTeDCiSMVnjPOLm/gvS8pPVlnqYuI0AzWhpDF4h6OTh
+         WY8kWwIeYN5I+4DvHcb/1ovCeojim6kruYs8uuUd3zmhKjhR5faWHtINzj2ktMZBgXNn
+         tzcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXJJW+THtDge9lt5h6SwAUvFwrjhnLubBumnPkTXARDNFzJWfK/WQ/HwWoYlXhW9kTwB4EHuYst3BHzNQG+SllfaQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZrlFPR+C8Dv1YTtJP6lHF9ZLOnSJEfzCPFSmwz572Qkl/Zg6c
+	+2uRdc6z9jBU9A85akq97bduACiGMx/8oiP2v/VEBsp9xWhminngK5stOE/Aj/0=
+X-Google-Smtp-Source: AGHT+IF4ndpzFvHoUkc20adekDMu808u/yL3lssD9NKD3r/HJwjqBzQjqBvlnzv0kYnwmnQBQIJpgQ==
+X-Received: by 2002:a17:907:2ce6:b0:a86:b46b:860a with SMTP id a640c23a62f3a-a90296775ddmr1482776066b.54.1726505907790;
+        Mon, 16 Sep 2024 09:58:27 -0700 (PDT)
+Received: from puffmais.c.googlers.com (30.171.91.34.bc.googleusercontent.com. [34.91.171.30])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90979ceb67sm32992966b.219.2024.09.16.09.58.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Sep 2024 09:58:27 -0700 (PDT)
+From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Subject: [PATCH 0/3] Google Pixel 6 (oriole): max20339 enabling
+Date: Mon, 16 Sep 2024 17:58:25 +0100
+Message-Id: <20240916-max20339-dts-v1-0-2f7ed7c24e83@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/10] dt-bindings: arm: samsung: Document dreamlte
- board binding
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240909110017.419960-1-ivo.ivanov.ivanov1@gmail.com>
- <20240909110017.419960-10-ivo.ivanov.ivanov1@gmail.com>
- <qzlrtzpz3zvbue6fwlsdoxy7fbqlxtisvuphizr43yvoxxbjzs@r4pvuxrcahz4>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <qzlrtzpz3zvbue6fwlsdoxy7fbqlxtisvuphizr43yvoxxbjzs@r4pvuxrcahz4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIALFj6GYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDS0Mz3dzECiMDY2NL3ZSSYt1kA1NDi2QLw6QkY0sloJaCotS0zAqwcdG
+ xtbUA0r3MVl4AAAA=
+To: Catalin Marinas <catalin.marinas@arm.com>, 
+ Will Deacon <will@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+X-Mailer: b4 0.13.0
 
-On 16/09/2024 16:23, Krzysztof Kozlowski wrote:
-> On Mon, Sep 09, 2024 at 02:00:16PM +0300, Ivaylo Ivanov wrote:
->> Add binding for the Samsung Galaxy S8 (SM-G950F) board, which is
->> based on the Samsung Exynos8895 SoC.
->>
->> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->> Acked-by: Rob Herring (Arm) <robh@kernel.org>
->> ---
->>  .../devicetree/bindings/arm/samsung/samsung-boards.yaml     | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
-> 
-> Bindings are before users, so this patch should be before DTS patch.
+Hi,
 
-Ah, wait, it is before. It's fine.
+These patches enable the Maxim MAX20339 overvoltage protector with load
+switches for Google Pixel 6 (Oriole).
+
+The driver and binding have been proposed as part of
+https://lore.kernel.org/all/20240916-max20339-v1-0-b04ce8e8c471@linaro.org/
+
+This is the first device behind the USB plug and can gate all incoming
+power as well as protecting the input path from overvoltages.
+
+Its load switches are used for wireless charging and for OTG.
+
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+---
+André Draszik (3):
+      arm64: defconfig: enable Maxim max20339
+      arm64: dts: exynos: gs101-oriole: enable max20339 OVP
+      MAINTAINERS: add myself for Google Tensor SoC
+
+ MAINTAINERS                                        |  1 +
+ arch/arm64/boot/dts/exynos/google/gs101-oriole.dts | 51 ++++++++++++++++++++++
+ arch/arm64/configs/defconfig                       |  1 +
+ 3 files changed, 53 insertions(+)
+---
+base-commit: 7083504315d64199a329de322fce989e1e10f4f7
+change-id: 20240916-max20339-dts-c0518c81bb39
 
 Best regards,
-Krzysztof
+-- 
+André Draszik <andre.draszik@linaro.org>
 
 
