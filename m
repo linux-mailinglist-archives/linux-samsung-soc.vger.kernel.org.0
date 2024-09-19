@@ -1,154 +1,165 @@
-Return-Path: <linux-samsung-soc+bounces-4691-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4703-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D130D97C8D7
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2024 14:03:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 450B897CFBB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Sep 2024 03:09:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4ADF01F23EF3
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 19 Sep 2024 12:03:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E36F828644C
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Sep 2024 01:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40F2719CC17;
-	Thu, 19 Sep 2024 12:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F2178460;
+	Fri, 20 Sep 2024 01:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDvPOKfb"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="Ptjc7yWj"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1232D1DA23;
-	Thu, 19 Sep 2024 12:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62C48F6B
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Sep 2024 01:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726747395; cv=none; b=M85ZhexddNYqOEM8s6RESy6tL+nQUYyzkaYxx78C7oU19sBRDPyT0sUKkubEItzsEwGwHGq2v1cf+7Zdgy/zcga8RjaSiWbP+a6sycyDv8vw8OwxRVHOeeVTuVTlGCgRh4qGvIQI49JEpnahCGCvLftDX85fzYh+aEouycDp+Ug=
+	t=1726794577; cv=none; b=bPnqQ58AyMke0gBoZHwTV0HYfmaj0kT4KLveYaIeX2oHsSdPI9NtkwSretnSGtj1RXDPoT9buUP+c33OXHY8y8xVZT6ArUWDNapmmhjCev/94y3U60yIPhWj0cI/d/HenaBY+f2BKBt04PWzN0IfqG93gjC42zlJYsuka7/UIk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726747395; c=relaxed/simple;
-	bh=teahakDqIA9+ghw7dKhk5KIoyLfefOvhzf0eXt39Qec=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iVQQrTAwmsC23+7r1CbgJjdOvnzuqeOEqgf9Q7d1xkRLIUivemyijzNew72DxLZE7DTAtd2bvzICfz1j79l3F84W1gKfWC5z5/RmSVrDxZXOF0+V+cFrO6bmd0VkVnpB1njOC8pIFqxeGikkmOYsP5QrSKSTKSVhzyJ+zVTfk8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDvPOKfb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E21C4CEC4;
-	Thu, 19 Sep 2024 12:03:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726747394;
-	bh=teahakDqIA9+ghw7dKhk5KIoyLfefOvhzf0eXt39Qec=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rDvPOKfbq9KHyOx5YMOYo2Hjx1mO77vuvKBt2jOPuA/gxlqvy3Y8Lwt5oXZ1jd8mZ
-	 wpLlWdIHP5DGZ8KWzoN5Gw8Oi0HOi5f2zObY5cVrYqSldFotzhKtPvRU8BcxBPrNkO
-	 hfgkZIWwT+ZAu4eDoWTR8dk6HufK70XVVYbCPwC1UZDbJy1R4F6mm1hFrJHhzwKdmd
-	 T6hNRFPPc0Ne0M3uic1Lg2E/xUr7uaqcNj1N2Nx4oCw7B37C6qG0uWos3sREoB0yzA
-	 JQ9YqJ6XG7gs1rFPbkLg+xpwRLAaWKTBDVMnRRKctAKHhMhcs5K8bv9D32NZ50TdJ1
-	 BG1NvCZUBbG8A==
-Message-ID: <633ff284-101d-4651-833e-a6b01626c9a1@kernel.org>
-Date: Thu, 19 Sep 2024 14:03:08 +0200
+	s=arc-20240116; t=1726794577; c=relaxed/simple;
+	bh=nnPQA1TNM+RltKD2pQrG01zPT9OXUDBu7rskPBIpMxg=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:References; b=iaWixEVSGEh+goARbSQWL2yuev5GEtOC6ojIiP+WYw10tQwvLXHrKDFlzV10Kn+xQdPIfUrkEN+uDKRvFcGXyKm0qlJKv0nFFro7qG/jD+0t3Cg4EVNYp8rhwuAe2T5WzRhCJXddU1E7nXaiYqNzmZybpFKp7gWXd2e9byvmEIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=Ptjc7yWj; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20240920010931epoutp011c5a36f6f2c73694460f23b36d2bb046~2zoOd6Pu63195631956epoutp01o
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Sep 2024 01:09:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20240920010931epoutp011c5a36f6f2c73694460f23b36d2bb046~2zoOd6Pu63195631956epoutp01o
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1726794571;
+	bh=vJ6d2crePsjwSE+nLTL32vmvyRkr1dlnHUKC/c4G4PU=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=Ptjc7yWj4wMYYnx9Con7KX4qeXHBLXO4t6ab8cuddt2KYiSvjEEpquuPZXSnCikti
+	 YS7ndWsnQoroQe+MQ5jFs6ajMpu4ifBPHx5KUfbdsFA3fm99H0M6tV+rqunmoMBk+S
+	 xB5jU+nZbK6ydy/XPiSuD5n9KpW5a6He5mgsucbA=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTP id
+	20240920010931epcas5p268ee6b4192c5eaa8ba2ca0d2dabcad96~2zoNyWVpy2863728637epcas5p2D;
+	Fri, 20 Sep 2024 01:09:31 +0000 (GMT)
+Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.181]) by
+	epsnrtp1.localdomain (Postfix) with ESMTP id 4X8vRs48kpz4x9Pr; Fri, 20 Sep
+	2024 01:09:29 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+	epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	14.BA.08855.94BCCE66; Fri, 20 Sep 2024 10:09:29 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20240919124112epcas5p1527a15ea137d853dee5625902769580e~2pa2-imHw3129031290epcas5p14;
+	Thu, 19 Sep 2024 12:41:12 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20240919124112epsmtrp1776aaeeb2e136b4fa5c8cf8f5d6b728f~2pa2_Ecnj2997129971epsmtrp1R;
+	Thu, 19 Sep 2024 12:41:12 +0000 (GMT)
+X-AuditID: b6c32a44-15fb870000002297-38-66eccb499210
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	E7.61.19367.8EB1CE66; Thu, 19 Sep 2024 21:41:12 +0900 (KST)
+Received: from cheetah.sa.corp.samsungelectronics.net (unknown
+	[107.109.115.53]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20240919124110epsmtip215d9c22f47441d8ece44df0eb8635c1b~2pa1T2but2903029030epsmtip2-;
+	Thu, 19 Sep 2024 12:41:10 +0000 (GMT)
+From: Inbaraj E <inbaraj.e@samsung.com>
+To: krzk@kernel.org, s.nawrocki@samsung.com, cw00.choi@samsung.com,
+	alim.akhtar@samsung.com, mturquette@baylibre.com, sboyd@kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: pankaj.dubey@samsung.com, gost.dev@samsung.com, Inbaraj E
+	<inbaraj.e@samsung.com>
+Subject: [PATCH v2] clk: samsung: fsd: Mark PLL_CAM_CSI as critical
+Date: Thu, 19 Sep 2024 18:09:54 +0530
+Message-Id: <20240919123954.33000-1-inbaraj.e@samsung.com>
+X-Mailer: git-send-email 2.17.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGKsWRmVeSWpSXmKPExsWy7bCmhq7n6TdpBn9eSFk8mLeNzeL6l+es
+	FjcP7GSyuPtnEpvF+fMb2C0+9txjtbi8aw6bxYzz+5gsLp5ytVi09Qu7xeE37awW/65tZHHg
+	8Xh/o5XdY9OqTjaPvi2rGD0+b5ILYInKtslITUxJLVJIzUvOT8nMS7dV8g6Od443NTMw1DW0
+	tDBXUshLzE21VXLxCdB1y8wBukxJoSwxpxQoFJBYXKykb2dTlF9akqqQkV9cYquUWpCSU2BS
+	oFecmFtcmpeul5daYmVoYGBkClSYkJ3xb94vloIVPBWPWp6zNTBu5+pi5OSQEDCRePl2H3sX
+	IxeHkMBuRok5nw9DOZ8YJV68XscIUgXm/O0RhOlY276NGaJoJ6PEurv/oDpamSRezVnHBlLF
+	JqAusaH7OxtIQkTgBdCoZR2sIAlmgXCJc9MvgtnCAs4Srx4+YwexWQRUJY5Nfwlm8wpYSbye
+	9oQFYp28xOoNB8DWSQgcYpdo2HeVESLhItG1qQ+qSFji1fEt7BC2lMTL/jYo20di/5xfUPUZ
+	Ese2L2eFsO0lDlyZA9TLAXSQpsT6XfoQYVmJqafWMUHcySfR+/sJE0ScV2LHPBhbWWLmkfts
+	ELakxM7LO8HGSAh4SOz5VAsJrViJ83tWMk5glJ2FsGABI+MqRsnUguLc9NRk0wLDvNRyeEQl
+	5+duYgQnOC2XHYw35v/TO8TIxMF4iFGCg1lJhFf8w8s0Id6UxMqq1KL8+KLSnNTiQ4ymwCCb
+	yCwlmpwPTLF5JfGGJpYGJmZmZiaWxmaGSuK8r1vnpggJpCeWpGanphakFsH0MXFwSjUwZbbx
+	BKY+lumY+kr33M96g0meX5qeXqieM/l2nZj+1X0tpSdnWfW++qJqVFDfIdFSUyxinOxT6cTk
+	lf5R2eVe6zkjm8f9f3QPxcg9UJjOW/Ik4aqadlXimYv8yzeI8EvU1RydWPZRSWw1i6uq2e15
+	ceEl9yYvPdYcLBBip3T2/6FN3M0pV6Oq9kvuOr92udTML6c3Kh/UtGr6tfXv3hZDQQbNbf2b
+	itnNlQRfCu2u4voUkWxZ8n6trodO0QbnhfJn53c4d99Y8E70+ORpLLw3jcte6kWEvunaHP7r
+	Rknsm13O/ZEnHtsqmJsXJ/80btexNWit8d10Y1Vp5e9Nc9Ke77T1enL+YzazxYu8RgUlluKM
+	REMt5qLiRACBXLhI+QMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnluLIzCtJLcpLzFFi42LZdlhJXveF9Js0gyfXtSwezNvGZnH9y3NW
+	i5sHdjJZ3P0zic3i/PkN7BYfe+6xWlzeNYfNYsb5fUwWF0+5Wiza+oXd4vCbdlaLf9c2sjjw
+	eLy/0crusWlVJ5tH35ZVjB6fN8kFsERx2aSk5mSWpRbp2yVwZfyb94ulYAVPxaOW52wNjNu5
+	uhg5OSQETCTWtm9j7mLk4hAS2M4oMf/DayaIhKTE7N/T2SFsYYmV/56zQxQ1M0k0tPxkBUmw
+	CahLbOj+zgaSEBH4xCjx7esfsA5mgUiJH+1bwWxhAWeJVw+fgdksAqoSx6a/BLN5BawkXk97
+	wgKxQV5i9YYDzBMYeRYwMqxiFE0tKM5Nz00uMNQrTswtLs1L10vOz93ECA4zraAdjMvW/9U7
+	xMjEwXiIUYKDWUmEV/zDyzQh3pTEyqrUovz4otKc1OJDjNIcLErivMo5nSlCAumJJanZqakF
+	qUUwWSYOTqkGppiMJfXnNWf/b8mf6sjKcS7xk3V46S97j+zXz9TO/Lb1bufqWyAofkegXdNB
+	+uvizxm+cZueuQVv9Ti64/SyOTd8U4tkublLNDuCt7i9ENm/VuS9VuxZx4mpM7gnrEi9+Onv
+	NZsVaVO/rEqweP3rLa/A3W2xeb8FzA7I7T3IqMdxV2dnQ/Kn5M4Udd9fcUUnXF/HyZ/9vKS5
+	QcJfWM5KMMTwfMjEG2o3ebUkv5+X6old9Kcouc+MUWnria7Tk8OquX6/ZlDiturNYloVlil9
+	XsVoCvvZx6vOOvk7ZyScvWKmrzd7/sXTk1eItx6rWePL83+/acu+ustxfRyKl6vCw8xd1y/W
+	mzmLs/YAk+R+JZbijERDLeai4kQARVzhJKICAAA=
+X-CMS-MailID: 20240919124112epcas5p1527a15ea137d853dee5625902769580e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240919124112epcas5p1527a15ea137d853dee5625902769580e
+References: <CGME20240919124112epcas5p1527a15ea137d853dee5625902769580e@epcas5p1.samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: samsung: fsd: Mark PLL_CAM_CSI as critical
-To: Inbaraj E <inbaraj.e@samsung.com>, 'Stephen Boyd' <sboyd@kernel.org>,
- alim.akhtar@samsung.com, cw00.choi@samsung.com, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- mturquette@baylibre.com, s.nawrocki@samsung.com
-Cc: pankaj.dubey@samsung.com, gost.dev@samsung.com
-References: <CGME20240917101102epcas5p3b17d2774cb74fd4cf61ea52fde85c300@epcas5p3.samsung.com>
- <20240917101016.23238-1-inbaraj.e@samsung.com>
- <0d43a00985a815c1869ebc6c441a2aed.sboyd@kernel.org>
- <00f001db0a87$cd9ddfa0$68d99ee0$@samsung.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <00f001db0a87$cd9ddfa0$68d99ee0$@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 19/09/2024 13:33, Inbaraj E wrote:
-> 
-> 
->> -----Original Message-----
->> From: Stephen Boyd <sboyd@kernel.org>
->> Sent: 19 September 2024 15:51
->> To: Inbaraj E <inbaraj.e@samsung.com>; alim.akhtar@samsung.com;
->> cw00.choi@samsung.com; krzk@kernel.org; linux-clk@vger.kernel.org; linux-
->> kernel@vger.kernel.org; linux-samsung-soc@vger.kernel.org;
->> mturquette@baylibre.com; s.nawrocki@samsung.com
->> Cc: pankaj.dubey@samsung.com; gost.dev@samsung.com; Inbaraj E
->> <inbaraj.e@samsung.com>
->> Subject: Re: [PATCH] clk: samsung: fsd: Mark PLL_CAM_CSI as critical
->>
->> Quoting Inbaraj E (2024-09-17 03:10:16)
->>> PLL_CAM_CSI is the parent clock for the ACLK and PCLK in the
->>> CMU_CAM_CSI block. When we gate ACLK or PCLK, the clock framework
->> will
->>> subsequently disables the parent clocks(PLL_CAM_CSI). Disabling
->>> PLL_CAM_CSI is causing sytem level halt.
->>>
->>> It was observed on FSD SoC, when we gate the ACLK and PCLK during CSI
->>> stop streaming through pm_runtime_put system is getting halted. So
->>> marking PLL_CAM_CSI as critical to prevent disabling.
->>>
->>> Signed-off-by: Inbaraj E <inbaraj.e@samsung.com>
->>> ---
->>
->> Please add a fixes tag. Although this is likely a band-aid fix because marking
->> something critical leaves it enabled forever.
-> 
-> Sure, will add fixes tag. As per HW manual, this PLL_CAM_CSI is
-> supplying clock even for CMU SFR access of CSI block, so we can't
-> gate this.
+PLL_CAM_CSI is the parent clock for the ACLK and PCLK in the CMU_CAM_CSI
+block. When we gate ACLK or PCLK, the clock framework will subsequently
+disables the parent clocks(PLL_CAM_CSI). Disabling PLL_CAM_CSI is causing
+system level halt.
 
-Hm, I am not so sure. The CMU driver should just take appropriate clock.
-Sprinkling CLK_CRITICAL looks as substitute of missing clock handling/
+It was observed on FSD SoC, when we gate the ACLK and PCLK during CSI stop
+streaming through pm_runtime_put system is getting halted. So marking
+PLL_CAM_CSI as critical to prevent disabling.
 
+Fixes: b826c3e4de1a ("clk: samsung: fsd: Add cam_csi block clock information")
+Signed-off-by: Inbaraj E <inbaraj.e@samsung.com>
+---
+ drivers/clk/samsung/clk-fsd.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/clk/samsung/clk-fsd.c b/drivers/clk/samsung/clk-fsd.c
+index 6f984cfcd33c..d62981e4b1d6 100644
+--- a/drivers/clk/samsung/clk-fsd.c
++++ b/drivers/clk/samsung/clk-fsd.c
+@@ -1637,8 +1637,13 @@ static const struct samsung_pll_rate_table pll_cam_csi_rate_table[] __initconst
+ };
+ 
+ static const struct samsung_pll_clock cam_csi_pll_clks[] __initconst = {
+-	PLL(pll_142xx, 0, "fout_pll_cam_csi", "fin_pll",
+-	    PLL_LOCKTIME_PLL_CAM_CSI, PLL_CON0_PLL_CAM_CSI, pll_cam_csi_rate_table),
++	/*
++	 * PLL_CAM_CSI will never be turned off because PLL_CAM_CSI is
++	 * supplying clock to CMU SFR of CAM_CSI block.
++	 */
++	__PLL(pll_142xx, 0, "fout_pll_cam_csi", "fin_pll",
++		CLK_GET_RATE_NOCACHE | CLK_IS_CRITICAL, PLL_LOCKTIME_PLL_CAM_CSI,
++		PLL_CON0_PLL_CAM_CSI, pll_cam_csi_rate_table),
+ };
+ 
+ PNAME(mout_cam_csi_pll_p) = { "fin_pll", "fout_pll_cam_csi" };
+-- 
+2.17.1
 
 
