@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-4780-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4784-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0C4098A200
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Sep 2024 14:20:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64D3798A29D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Sep 2024 14:35:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FD6DB29E73
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Sep 2024 12:16:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22E8E1F217CF
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 30 Sep 2024 12:35:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C33C01A0B0D;
-	Mon, 30 Sep 2024 12:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EE9318CBF7;
+	Mon, 30 Sep 2024 12:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RmHZY48T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aUdDGpt7"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB961A0AFA;
-	Mon, 30 Sep 2024 12:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C40D18BB97;
+	Mon, 30 Sep 2024 12:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727697926; cv=none; b=i48RKaQSK6sV27SWHof5zrTaZen2rbmI18giasFbzmdrDAQU5zCAO0Xb4MO6p63VT2lMJamT1PHdmKv6gsTU/mZ8MzpnwkG9xXjcJVQxihA8DqEiixGy1AxGHtMAZIeBdfEHdIvwiehf1UUEmwE9iPdI8VH40KQCkKgXkDySbd8=
+	t=1727699734; cv=none; b=UZGIts1vodM9slbuPRHMcAVlfMcyyHg/+EcLBVsrUhV26xf6CKdhKgO62CZWtf10sppTSD7SxZLSTPmRzVyYhyQZsjReR6RPiR3p1qGutP5HpsogVIrRjrNBm4WIaBAKW1cw74kGKivznj7PUnLhAWgs4YcygV+dnywAFlDcIuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727697926; c=relaxed/simple;
-	bh=7EZtnVNhFIxoK+66Pi/P0BVv2HesEB3ByLNJJJk/WdU=;
+	s=arc-20240116; t=1727699734; c=relaxed/simple;
+	bh=ev6D9Cf4z2JGtXdgyMN2CvfO9JfUf5sptw/b7/r6nuY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H7kow/FnUYlLNpDJmfkFyz6SLXBe1sU0T61WH57TsOknVsdZYeZhfbY5t+TAFY+gggaRuRqzD9ly97tPo0BCvq8TrgLuYMkL2iwWlLNO53/UH8M73QWpfYTM/5GKDojTud/paZRLxHRCvEzFnu2Z60q0WwcTcGcUSDUQNxqGOSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RmHZY48T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5042FC4CED1;
-	Mon, 30 Sep 2024 12:05:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gCTlLoNApQ2HdLxbkp6YUnrRjXTvUuTtfVQqt2EMGRvwCKdakRJFcuZbnWKiqsQhI988AhePc3VO6BgnZekyz9zJfamJgRVcD7WZmxRahprmVdsD1yhg7eVUWP6ds3nyC87zGuPhF1tGepkOS8n2JkCx9qiKC5Z6Ku3J2wabPKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aUdDGpt7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E37C4CEC7;
+	Mon, 30 Sep 2024 12:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727697926;
-	bh=7EZtnVNhFIxoK+66Pi/P0BVv2HesEB3ByLNJJJk/WdU=;
+	s=k20201202; t=1727699733;
+	bh=ev6D9Cf4z2JGtXdgyMN2CvfO9JfUf5sptw/b7/r6nuY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RmHZY48TzjB3bBHfh5TJcpACZG/7FeDsOL9NgC9XHU8kX7/IPCfwWqK8csvyoZdoe
-	 Jf/t0/67LVoBn2bQF90W8fwZbJcw7hyrToYuA3lcX5BxwdD5dbb4UokvgmJC80HkQz
-	 RbC0VXzgeK9QWEdqp/Atuc7TD00IrWXoYC7zOFg7VIwftsiOiqu0Y6RPmAOvzd+d3j
-	 ABaFnA4FcMQTYzZpksytbRyM8I0m4TIK2U/G5/jAYWNo1IwXy9hLGX1gFhlgXYnBVm
-	 uZPOuN9oxix0u2ILnX2lRT9v845QwHobYE7vzIn2sZzkX1ql8g0KYYQHixZ9rv00Lu
-	 S0juJ0ksnUQhQ==
-Message-ID: <47910772-8222-477d-8936-05633df545f4@kernel.org>
-Date: Mon, 30 Sep 2024 14:05:21 +0200
+	b=aUdDGpt7E+ajhkIGlwC3OeCrN01/D8LTUzToc/1VaS+krYhXH1/xa77wmk50aGqw1
+	 +na9Yp8dyE1Y+ZFhM5X7eDdh+Xza443DwrUoHnhiJvl8XJDOsDP1N3iXtlNUsOQPYw
+	 cApxdCnqlbRobmfMN+YsUIQYLSrVbrWTpvEacdLyMq07L0okRRkPM7Om0n5t+56Fgg
+	 T5lxTGTPQxxWSk3pvMmTKCv7WC8hWScqUgLrRWuwHjzoTAQc/DlMYnmxjayIugMYkd
+	 ujCMabwSQlkmgkidp4s3cJUE91QmsKbY4JhIlUt3ih4hdMKNSfWofXMwXRP8hPftp+
+	 AJc6L/E1qeayg==
+Message-ID: <f8b36300-cf7e-4cdc-b1d4-ed4a64453d4e@kernel.org>
+Date: Mon, 30 Sep 2024 14:35:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,19 +50,18 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: watchdog: Document ExynosAutoV920
- watchdog bindings
-To: Taewan Kim <trunixs.kim@samsung.com>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, Byoungtae Cho <bt.cho@samsung.com>
-References: <20240913080325.3676181-1-trunixs.kim@samsung.com>
- <CGME20240913080347epcas2p3f92c8fe85b252f8ac2033261db345837@epcas2p3.samsung.com>
- <20240913080325.3676181-2-trunixs.kim@samsung.com>
+Subject: Re: [PATCH 2/2] clk: samsung: Fixes PLL locktime for PLL142XX used on
+ FSD platfom
+To: Varada Pavani <v.pavani@samsung.com>, s.nawrocki@samsung.com,
+ cw00.choi@samsung.com, alim.akhtar@samsung.com, mturquette@baylibre.com,
+ sboyd@kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+Cc: aswani.reddy@samsung.com, pankaj.dubey@samsung.com, gost.dev@samsung.com,
+ stable@vger.kernel.org
+References: <20240930111859.22264-1-v.pavani@samsung.com>
+ <CGME20240930112135epcas5p2175ec81bb609da5b166d47341ece2f67@epcas5p2.samsung.com>
+ <20240930111859.22264-3-v.pavani@samsung.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,25 +107,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240913080325.3676181-2-trunixs.kim@samsung.com>
+In-Reply-To: <20240930111859.22264-3-v.pavani@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/09/2024 10:03, Taewan Kim wrote:
-> From: Byoungtae Cho <bt.cho@samsung.com>
-> 
-> Add "samsung-exynosautov920-wdt" compatible to the dt-schema
-> document. ExynosAutoV920 is new SoC for automotive, similar to
-> exynosautov9 but some CPU configurations are quite different.
-> 
-> Signed-off-by: Byoungtae Cho <bt.cho@samsung.com>
-> Signed-off-by: Taewan Kim <trunixs.kim@samsung.com>
-> ---
->  Documentation/devicetree/bindings/watchdog/samsung-wdt.yaml | 3 +++
->  1 file changed, 3 insertions(+)
+On 30/09/2024 13:18, Varada Pavani wrote:
+> Add PLL locktime for PLL142XX controller.
 > 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+So you send the same? Or something new? Please provide proper changelog
+and mark patches as v2/v3 or RESEND.
+
+But anyway this cannot be RESEND as I explicitly asked for fixing.
+
+<form letter>
+This is a friendly reminder during the review process.
+
+It seems my or other reviewer's previous comments were not fully
+addressed. Maybe the feedback got lost between the quotes, maybe you
+just forgot to apply it. Please go back to the previous discussion and
+either implement all requested changes or keep discussing them.
+
+Thank you.
+</form letter>
 
 Best regards,
 Krzysztof
