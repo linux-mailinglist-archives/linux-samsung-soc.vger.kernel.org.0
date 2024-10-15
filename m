@@ -1,132 +1,140 @@
-Return-Path: <linux-samsung-soc+bounces-4894-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4907-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18F8499A429
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Oct 2024 14:47:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F23A99DE84
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 15 Oct 2024 08:35:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C34CB1F230F7
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Oct 2024 12:47:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C884283732
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 15 Oct 2024 06:35:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE835216429;
-	Fri, 11 Oct 2024 12:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 057DB18B468;
+	Tue, 15 Oct 2024 06:35:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="cklBz734"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out-02.smtp.spacemail.com (out-02.smtp.spacemail.com [63.250.43.87])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5D716426;
-	Fri, 11 Oct 2024 12:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C35189F32;
+	Tue, 15 Oct 2024 06:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728650816; cv=none; b=K+xmIopsr/djmj57Q/sd2WDdWDKfOPjmN6p4MxU/+/eejzWoY6/efMiqTfxEdpA7gzCEJadfIPwfVxOimqeZ8Z04tbjSxjNObuzK/OzuG6UFpf3dO0YJeWF9VOYY0oZlYYhjA1sYQUyJkBFFQKGfhKB1TJJujc3nByn+P2PenZA=
+	t=1728974102; cv=none; b=HhHAyraCtJOFSKsyNtsBMjtmFL0YAqLUBYIF9V8C0OqujqE98krscBBVvOykaJ+/8O95fdzuk0IB5rRDzmWUOEPoFeGLfyyiR5NTQnSBeZvvMmOqsWbXSzxsnp7s2ykF/B7bBHAg/HurxxsQFBkzGxdtaC2w5PNZTpNME4g2Hc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728650816; c=relaxed/simple;
-	bh=i0ed9CtLCsNM06hRXOqootR9nu6z6R79XY2MRKNYTLk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fwFvDtAfmip+PYkm8ouZCC/vBBwkBawAT9MZ6+imUv3ZAtpulGLdrKsG4AekjmXnzSwkVRwlNBEI3HcDwGr1eR/dc+HyPVuBIhS/f94+yDO40LzHzIGVAW2NrL7FjW1N+Q97pihRrPl8pAg0cySTySqMrlxXoR5zpAFvCyUIYyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18D9C4CEC3;
-	Fri, 11 Oct 2024 12:46:53 +0000 (UTC)
-Message-ID: <c09e7819-a7d9-432f-baab-732e81b3f489@xs4all.nl>
-Date: Fri, 11 Oct 2024 14:46:52 +0200
+	s=arc-20240116; t=1728974102; c=relaxed/simple;
+	bh=8RyzPsxrc81SaaR22TiyjUyYAHHalzKa1iaFskZgqSM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XuAyE/JK4W7yikotcm23EoW40jTIFxnxSwVxaMAaWg1kMf6YnpruGMfj3C0TFH5AVs4lD1sCccDHZOKuLjwZSRu1MqUz36AcxV0hor0o4syrreomzBBrsm1xBWddkgQASsU0Cwt4Rnc8tQHP61Bh/dV02uO7dyAdE2dW9guBYAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=cklBz734; arc=none smtp.client-ip=63.250.43.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
+Received: from prod-lbout-phx.jellyfish.systems (unknown [198.177.122.3])
+	by smtp.spacemail.com (Postfix) with ESMTPA id 4XSPLM0Xkdz4wYc;
+	Tue, 15 Oct 2024 06:28:27 +0000 (UTC)
+Received: from igor-systemproductname.lan (83.8.240.202.ipv4.supernova.orange.pl [83.8.240.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.spacemail.com (Postfix) with ESMTPSA id 4XSPLC0vsmz2x9B;
+	Tue, 15 Oct 2024 06:28:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=mentallysanemainliners.org; s=spacemail; t=1728973701;
+	bh=8RyzPsxrc81SaaR22TiyjUyYAHHalzKa1iaFskZgqSM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=cklBz734sU+ThjU67y0GY0hZh9vTfz5RC0YCSDygMARoR/feJqcgXSPDGB5AoBA5h
+	 brY3vcszXWPPn7OSPZ4R7o+bXqa/0D4j8zmAfQxkMWvlciUQnxCaUalF3iVMw1lTFj
+	 w+silLtSbfh21KiUgY+9p2JL1KD8yLG3wPNzV2A7QQNCC+leypOrmm8wbni4nfvMQI
+	 +fE659Bu/jgq8MvDFTgMr/SJrrhf+6LHOGOF4gwVi/j08Z6jACJ58r3Vmq/WZdTtBH
+	 YnY/7DMPj3f8Ex/nlM04FSVGvmtBMm/nOneMM914hsnivzbtgQRchd/f1lsxIuKcV7
+	 Jqn3qhRIawGrw==
+From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	david@mainlining.org
+Subject: [PATCH v1 0/7] Add minimal Exynos990 SoC and SM-N981B support
+Date: Tue, 15 Oct 2024 08:27:39 +0200
+Message-ID: <20241015062746.713245-1-igor.belwon@mentallysanemainliners.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: s5p-mfc: Corrected NV12M/NV21M plane-sizes
-To: Aakarsh Jain <aakarsh.jain@samsung.com>,
- linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: m.szyprowski@samsung.com, andrzej.hajda@intel.com, mchehab@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, linux-samsung-soc@vger.kernel.org,
- gost.dev@samsung.com, aswani.reddy@samsung.com, pankaj.dubey@samsung.com
-References: <CGME20240806120911epcas5p1b0defc027a7f03ee9bf5f21036d3ae5e@epcas5p1.samsung.com>
- <20240806115714.29828-1-aakarsh.jain@samsung.com>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20240806115714.29828-1-aakarsh.jain@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 06/08/2024 13:57, Aakarsh Jain wrote:
-> There is a possibility of getting page fault if the overall
-> buffer size is not aligned to 256bytes. Since MFC does read
-> operation only and it won't corrupt the data values even if
-> it reads the extra bytes.
-> Corrected luma and chroma plane sizes for V4L2_PIX_FMT_NV12M
-> and V4L2_PIX_FMT_NV21M pixel format.
-> 
-> Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
-> ---
->  .../media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c    | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-> index 73f7af674c01..03c957221fc4 100644
-> --- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-> +++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-> @@ -498,8 +498,8 @@ static void s5p_mfc_dec_calc_dpb_size_v6(struct s5p_mfc_ctx *ctx)
->  	case V4L2_PIX_FMT_NV21M:
->  		ctx->stride[0] = ALIGN(ctx->img_width, S5P_FIMV_NV12MT_HALIGN_V6);
->  		ctx->stride[1] = ALIGN(ctx->img_width, S5P_FIMV_NV12MT_HALIGN_V6);
-> -		ctx->luma_size = calc_plane(ctx->stride[0], ctx->img_height);
-> -		ctx->chroma_size = calc_plane(ctx->stride[1], (ctx->img_height / 2));
-> +		ctx->luma_size = calc_plane(ctx->img_width, ctx->img_height);
-> +		ctx->chroma_size = calc_plane(ctx->img_width, (ctx->img_height >> 1));
+Hi folks,
 
-I don't really understand why this is changed. Looking at the implementation of
-calc_plane and the various #define values that are used here and in calc_plane,
-the number should be the same.
+This series adds initial support for the Exynos 990 SoC and also
+initial board support for the Samsung Galaxy Note20 5G (SM-N981B)
+codenamed c1s.
 
-I think the original code makes more sense.
+The Exynos 990 SoC is also used in the S20 series, as well as in the
+Note 20 Ultra phones. Currently the device trees added are for the
+Exynos 990 SoC and c1s. The device tree has been tested with 
+dtbs_check W=1 and results in no warnings.
 
-If I missed something, let me know.
+This initial bringup consists of:
+ * cpus
+ * pinctrl
+ * gpio-keys
+ * simple-framebuffer
+ 
+This is enough to reach a shell in an initramfs. More platform support
+will be added in the future.
 
->  		break;
->  	case V4L2_PIX_FMT_YUV420M:
->  	case V4L2_PIX_FMT_YVU420M:
-> @@ -539,9 +539,11 @@ static void s5p_mfc_dec_calc_dpb_size_v6(struct s5p_mfc_ctx *ctx)
->  static void s5p_mfc_enc_calc_src_size_v6(struct s5p_mfc_ctx *ctx)
->  {
->  	unsigned int mb_width, mb_height;
-> +	unsigned int default_size;
->  
->  	mb_width = MB_WIDTH(ctx->img_width);
->  	mb_height = MB_HEIGHT(ctx->img_height);
-> +	default_size = (mb_width * mb_height) * 256;
->  
->  	if (IS_MFCV12(ctx->dev)) {
->  		switch (ctx->src_fmt->fourcc) {
-> @@ -549,8 +551,8 @@ static void s5p_mfc_enc_calc_src_size_v6(struct s5p_mfc_ctx *ctx)
->  		case V4L2_PIX_FMT_NV21M:
->  			ctx->stride[0] = ALIGN(ctx->img_width, S5P_FIMV_NV12M_HALIGN_V6);
->  			ctx->stride[1] = ALIGN(ctx->img_width, S5P_FIMV_NV12M_HALIGN_V6);
-> -			ctx->luma_size = ctx->stride[0] * ALIGN(ctx->img_height, 16);
-> -			ctx->chroma_size =  ctx->stride[0] * ALIGN(ctx->img_height / 2, 16);
-> +			ctx->luma_size = ALIGN(default_size, 256);
-> +			ctx->chroma_size = ALIGN(default_size / 2, 256);
+The preferred way to boot the upstream kernel is by using a shim
+bootloader, called uniLoader [1], which works around some issues with
+the stock, non-replacable Samsung S-LK bootloader. For example, the
+stock bootloader leaves the decon trigger control unset, which causes
+the framebuffer not to refresh.
 
-Isn't this effectively the same as doing:
+Device functionality depends on the 2nd patch series:
+"Add Exynos990 pinctrl and chipid drivers"
 
-			ctx->luma_size = ALIGN(ctx->luma_size, 256);
-			ctx->chroma_size = ALIGN(ctx->chroma_size, 256);
+Kind regards,
+Igor
 
-I.e., the bug is that these sizes are not rounded up to a multiple of 256,
-so just add that, rather than changing code elsewhere.
+[1] https://github.com/ivoszbg/uniLoader
 
-I might be wrong, but this seems a much simpler solution.
+Igor Belwon (7):
+  dt-bindings: arm: cpus: Add Samsung Mongoose M5
+  dt-bindings: hwinfo: exynos-chipid: Add compatible for Exynos 990
+    chipid
+  dt-bindings: arm: samsung: samsung-boards: Add bindings for Exynos 990
+    boards.
+  dt-bindings: pinctrl: samsung: Add exynos990-pinctrl compatible
+  dt-bindings: pinctrl: samsung: add exynos990-wakeup-eint compatible
+  arm64: dts: exynos: Add initial support for the Exynos 990 SoC
+  arm64: boot: dts: Add initial support for Samsung Galaxy Note20 5G
+    (c1s)
 
-Regards,
+ .../devicetree/bindings/arm/cpus.yaml         |    1 +
+ .../bindings/arm/samsung/samsung-boards.yaml  |    6 +
+ .../hwinfo/samsung,exynos-chipid.yaml         |    1 +
+ .../samsung,pinctrl-wakeup-interrupt.yaml     |    1 +
+ .../bindings/pinctrl/samsung,pinctrl.yaml     |    1 +
+ arch/arm64/boot/dts/exynos/Makefile           |    1 +
+ arch/arm64/boot/dts/exynos/exynos990-c1s.dts  |  111 +
+ .../boot/dts/exynos/exynos990-pinctrl.dtsi    | 2195 +++++++++++++++++
+ arch/arm64/boot/dts/exynos/exynos990.dtsi     |  241 ++
+ 9 files changed, 2558 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990-c1s.dts
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990-pinctrl.dtsi
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990.dtsi
 
-	Hans
-
->  			break;
->  		case V4L2_PIX_FMT_YUV420M:
->  		case V4L2_PIX_FMT_YVU420M:
+-- 
+2.45.2
 
 
