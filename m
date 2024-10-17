@@ -1,71 +1,62 @@
-Return-Path: <linux-samsung-soc+bounces-4975-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-4978-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E0409A2959
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Oct 2024 18:45:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 568569A299B
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Oct 2024 18:52:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CD49288EAA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Oct 2024 16:45:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F27AA1F22669
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 17 Oct 2024 16:52:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F351DFE26;
-	Thu, 17 Oct 2024 16:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C6E1DF966;
+	Thu, 17 Oct 2024 16:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="JA+f8Nhi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LQJMtAwm"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from out-02.smtp.spacemail.com (out-02.smtp.spacemail.com [63.250.43.87])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDBF1DFE16;
-	Thu, 17 Oct 2024 16:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F9A1E04B0;
+	Thu, 17 Oct 2024 16:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729183437; cv=none; b=i88pzD8nCA1BmnPJMQ1Wl2p0d4SKZ1klfW1uDQQb44HKbqi9yB4ElWVok0QKT9T/w7SY/O49nbzR7G79xrMWSItpeZ48bX1Ia439QUjYi50dXhhtmvqpf4ggsMxe+wWt5Aj8COc8Vi3on43NFt4K7Rl8euUpusn6bbsv2hhfW9o=
+	t=1729183861; cv=none; b=Z0ysGKsApGXpOBXfbGQJEjihlIr9WN8iV+qVUeVXWPnFMBACmtU6iFjy+K9hiKE4NHd0KH+fnxK+E24IZLqvTnm5a3qS4/JJtaixapoDyqUBlFpd+3k9gyvIWB3bD6FUFaGBbZyJ2v/OEYkHuJ0TEYd1E4CXlqJU0OimGlPLeKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729183437; c=relaxed/simple;
-	bh=6pRsPnkD7QklEmezrrAWGGBF9feai6FOCBnf7MplZ+4=;
+	s=arc-20240116; t=1729183861; c=relaxed/simple;
+	bh=SMDyXbB2S/Xna6nklNIq1bBj07R+0sg6UmAJM+SQqgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ow0S9RJPxpiG/weXrBa6h7lEtNPHGOyJpGkzaB8N+IK3mOn0xbxZlZcF6bIiCKor4WF0KscIQ7l/JkNWVpapkXSTdnpwKeNL8WgvTE1VDaM1wfpJBehKoj3aE2O6zABLblMsYuGYtEHxb4aPsicPOcHMjFjx6WcC1+zhB/cuXus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=JA+f8Nhi; arc=none smtp.client-ip=63.250.43.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
-Received: from prod-lbout-phx.jellyfish.systems (unknown [198.177.122.3])
-	by smtp.spacemail.com (Postfix) with ESMTPA id 4XTtvT20h7z4wfk;
-	Thu, 17 Oct 2024 16:43:49 +0000 (UTC)
-Received: from l-latitude7390.lan (host-80-41-166-50.as13285.net [80.41.166.50])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.spacemail.com (Postfix) with ESMTPSA id 4XTtvK5rvqz6tkR;
-	Thu, 17 Oct 2024 16:43:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=mentallysanemainliners.org; s=spacemail; t=1729183424;
-	bh=6pRsPnkD7QklEmezrrAWGGBF9feai6FOCBnf7MplZ+4=;
+	 MIME-Version; b=Lrg+Tw/0QKhdPASZFdzFzJzQ9wLUE4/1lYrg+zkrYJRH4ZscOkS7iIPjpHgCcG60l9XiBdwSKsZGFiQ141sXCvRC/LDC9QnmZ1gtS1DtCuh4Ssa80/SOf5vRn5ME3nlEbngg2I60lNhctdzQCIkhasgHe4ip2cnEmeeqCvb/Y/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LQJMtAwm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127E9C4CECE;
+	Thu, 17 Oct 2024 16:50:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729183861;
+	bh=SMDyXbB2S/Xna6nklNIq1bBj07R+0sg6UmAJM+SQqgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JA+f8Nhi57zIlsmzrqHxs91BODV10lRZWOJ1Z24FKO6xHPeKVNH2/3sBOBu/mJPPn
-	 iIOqboeM5p2bJLnuOzB/9MXodXHRrHmmNSqJZJyc8ZyqOPsCqQCIFko/T7ipiUNQy/
-	 dbpDFA2KZoNVbjTiC8jLaeXiIUGi6zWCDOpfYHnkt6E68gH9f8rmachWzn/dxHx57S
-	 8alJj0oMUEpAAnfxMktd+UtArtuuL3WXJ3lakgpGW1rVVYfD3Wc71BCAk/hrLmmD1Y
-	 Vci8eCfn0ZSOKyt03tvZZV/Rr3w3ILs0n3ZOSA6MA2962gaCBp0QOihgFp/aO08f9g
-	 /LzAkO31gxibQ==
-From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
+	b=LQJMtAwmSg5pAPwoiUin+EfrcQ7i+f7AhT7GUVcIWyAJPHfZNpsZ7G89+ihAgqnPm
+	 Xh9KK69pNKuybifDjJYPnZu+hLH6l0C1iWWpOdFz9+b4KjoGpBV75fuDukL+PjhcEl
+	 3vehkk6QPwrkkFG4MvGNW77ycEgOt74ZYlta+f7YPa3y7jeDdQg6StgV3Q5VkHTaem
+	 SLPV4YE7vansfEhkcpzpALGakE6PAo9MGdPQpTB10RLh7w9XcgCrE5ajhXjjkiDwPE
+	 rQ3hHWO0NDEI/+7UCBdIGzjmAviJCTX7becTTrR3HnzeQ5XtU7MPlu6hDEfs83Dh6W
+	 J0RuBY+staWzA==
+From: Frederic Weisbecker <frederic@kernel.org>
+To: LKML <linux-kernel@vger.kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Alim Akhtar <alim.akhtar@samsung.com>,
-	Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	igor.belwon@mentallysanemainliners.org
-Subject: [PATCH v2 4/4] arm64: dts: exynos: Add initial support for Samsung Galaxy S20 (x1slte)
-Date: Thu, 17 Oct 2024 17:43:27 +0100
-Message-ID: <20241017164328.17077-5-umer.uddin@mentallysanemainliners.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241017164328.17077-1-umer.uddin@mentallysanemainliners.org>
-References: <20241017164328.17077-1-umer.uddin@mentallysanemainliners.org>
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 07/10] drivers/clocksource/exynos_mct: Remove clockevents shutdown call on offlining
+Date: Thu, 17 Oct 2024 18:50:38 +0200
+Message-ID: <20241017165041.6954-8-frederic@kernel.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20241017165041.6954-1-frederic@kernel.org>
+References: <20241017165041.6954-1-frederic@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -74,58 +65,26 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add initial support for the Samsung Galaxy S20 (x1slte/SM-G980F)
-phone. It was launched in 2020, and it's based on the Exynos 990 SoC. It
-has only one configuration with 8GB of RAM and 128GB of UFS 3.0 storage.
+The clockevents core already detached and unregistered it at this stage.
 
-This device tree adds support for the following:
-
-- SimpleFB
-- 8GB RAM
-- Buttons
-
-Signed-off-by: Umer Uddin <umer.uddin@mentallysanemainliners.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 ---
- arch/arm64/boot/dts/exynos/Makefile             |  1 +
- arch/arm64/boot/dts/exynos/exynos990-x1slte.dts | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
- create mode 100644 arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
+ drivers/clocksource/exynos_mct.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/Makefile b/arch/arm64/boot/dts/exynos/Makefile
-index deb8dc509..783807249 100644
---- a/arch/arm64/boot/dts/exynos/Makefile
-+++ b/arch/arm64/boot/dts/exynos/Makefile
-@@ -10,5 +10,6 @@ dtb-$(CONFIG_ARCH_EXYNOS) += \
- 	exynos8895-dreamlte.dtb		\
- 	exynos990-c1s.dtb		\
- 	exynos990-x1s.dtb		\
-+	exynos990-x1slte.dtb		\
- 	exynosautov9-sadk.dtb		\
- 	exynosautov920-sadk.dtb
-diff --git a/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts b/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
-new file mode 100644
-index 000000000..9e6a1a060
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
-+/*
-+ * Samsung Galaxy S20 (x1slte/SM-G980F) device tree source
-+ *
-+ * Copyright (c) 2024, Umer Uddin <umer.uddin@mentallysanemainliners.org>
-+ */
-+
-+/dts-v1/;
-+#include "exynos990-hubble-common.dtsi"
-+
-+/ {
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	model = "Samsung Galaxy S20";
-+	compatible = "samsung,x1slte", "samsung,exynos990";
-+};
+diff --git a/drivers/clocksource/exynos_mct.c b/drivers/clocksource/exynos_mct.c
+index ef8cb1b71be4..e6a02e351d77 100644
+--- a/drivers/clocksource/exynos_mct.c
++++ b/drivers/clocksource/exynos_mct.c
+@@ -496,7 +496,6 @@ static int exynos4_mct_dying_cpu(unsigned int cpu)
+ 		per_cpu_ptr(&percpu_mct_tick, cpu);
+ 	struct clock_event_device *evt = &mevt->evt;
+ 
+-	evt->set_state_shutdown(evt);
+ 	if (mct_int_type == MCT_INT_SPI) {
+ 		if (evt->irq != -1)
+ 			disable_irq_nosync(evt->irq);
 -- 
-2.47.0
+2.46.0
 
 
