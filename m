@@ -1,174 +1,115 @@
-Return-Path: <linux-samsung-soc+bounces-5273-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5275-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B02469C0377
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Nov 2024 12:10:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE9A39C0520
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Nov 2024 13:01:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 350BE1F218D2
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Nov 2024 11:10:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BAB31C22585
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Nov 2024 12:01:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905921F4721;
-	Thu,  7 Nov 2024 11:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA9F32076A5;
+	Thu,  7 Nov 2024 12:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="KdxARm6m"
+	dkim=pass (1024-bit key) header.d=linux-watchdog.org header.i=@linux-watchdog.org header.b="AkgDiDNp"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07E91F428A
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Nov 2024 11:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+Received: from www.linux-watchdog.org (www.linux-watchdog.org [185.87.125.42])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 793281DE8A4;
+	Thu,  7 Nov 2024 12:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.87.125.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730977826; cv=none; b=ctaU4s7GRWpeCFjEZ4vpelBEaFSLQuVJTIkRGFAVFycJzhwXBbhf8fHI0vFnj+GDQ7FOs+eg4OWKOkuEkhZ34oEhp5tuIuOfc6xIS0mDFtyDeUCdsCmAAQvsixiPR/rLBDpbSN+LO9xGax4QIzbxNaoXzkzyWe0rM6cKOwuxU/g=
+	t=1730980851; cv=none; b=TgljchSU5g9r8OfHpF1bR/3uuGQFhXWJ4ql7tboqnNoo2U8DZQD/+878F98WFTr9y86+ZZCzH1pi6xqQ3NmeTEwGVGxpXJMWK0WgQvzgddmznCRCA6+LpYSowSWcSQS/OX8aP/AL0VG11QO587XQjc7gkpXPeEtjIGGB9p3ilR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730977826; c=relaxed/simple;
-	bh=37kX0iguOchGjTsjVooGWla8IG+1es7xHB2HUS6IKT4=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=We/l1ZyfF1s7vH8wVvunE8qUl/fU6EYdJyVkqtk5d7d6N8FeehdW3knuuTr9vPLfPvVJ7GalR49L5HguKfvwCcVuCuW9lA+9u3/rwo/aVwBQg2yAzKgAMyJQ2i7slETg+70bxNy/ba5C6W7h7zMNnruZkSk0WH5jkHWrSJKeD1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=KdxARm6m; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20241107111020epoutp0473e9914311f89ab54ed48b1d63c73a4a~Fqyg0fRtV2071020710epoutp04M
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Nov 2024 11:10:20 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20241107111020epoutp0473e9914311f89ab54ed48b1d63c73a4a~Fqyg0fRtV2071020710epoutp04M
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1730977821;
-	bh=ErKfMAXhZvdimd8V3JdwYYUKfdLTT3qW9UBaUsKeldo=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=KdxARm6mLEunMqRvn7fVFUur31j8WSAFkKe/eAqmDAxZwCmuoyVjnhoYektGWI+fb
-	 gK+5inciNL5rCOus+fLn1LvKFSvwGUyrVXAJRWEobUjyC+2lBkizLp5Yp7geJp/52i
-	 ydU3dF4yNiutL2Z/3ttjdv13UX/7IkiR/I9okZPg=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTP id
-	20241107111020epcas5p35c58aefff30ecfb19db8d3c7f11a20ed~FqygPLB2d1390413904epcas5p31;
-	Thu,  7 Nov 2024 11:10:20 +0000 (GMT)
-Received: from epsmgec5p1new.samsung.com (unknown [182.195.38.179]) by
-	epsnrtp1.localdomain (Postfix) with ESMTP id 4XkfVy503Dz4x9Pp; Thu,  7 Nov
-	2024 11:10:18 +0000 (GMT)
-Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
-	epsmgec5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	9B.2E.08574.A10AC276; Thu,  7 Nov 2024 20:10:18 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20241107111017epcas5p4a7ecdad34dd6f9ce081ee12658f1ed84~Fqyd7UcuY2857628576epcas5p45;
-	Thu,  7 Nov 2024 11:10:17 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
-	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-	20241107111017epsmtrp1223a24bc11b44ec128052649356a522e~Fqyd6o-FS1010610106epsmtrp16;
-	Thu,  7 Nov 2024 11:10:17 +0000 (GMT)
-X-AuditID: b6c32a44-6dbff7000000217e-8f-672ca01a640a
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
-	D2.E5.18937.910AC276; Thu,  7 Nov 2024 20:10:17 +0900 (KST)
-Received: from INBRO002756 (unknown [107.122.12.5]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20241107111016epsmtip20c4b0a66a9d4db901980a397f922e43c~Fqyccu3gI1024010240epsmtip2v;
-	Thu,  7 Nov 2024 11:10:16 +0000 (GMT)
-From: "Alim Akhtar" <alim.akhtar@samsung.com>
-To: "'Sowon Na'" <sowon.na@samsung.com>, <robh@kernel.org>,
-	<krzk@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-	<kishon@kernel.org>
-Cc: <krzk+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>
-In-Reply-To: <20241107041509.824457-3-sowon.na@samsung.com>
-Subject: RE: [PATCH 1/3] dt-bindings: phy: Add ExynosAutov920 UFS PHY
- bindings
-Date: Thu, 7 Nov 2024 16:40:15 +0530
-Message-ID: <040601db3105$a07bb160$e1731420$@samsung.com>
+	s=arc-20240116; t=1730980851; c=relaxed/simple;
+	bh=uMm7eWhg5zxwjiJM+lslSNcWxvKbHa1oHkkgaXf1Ha4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jfqIGmzimzBbC2/ihG6O0yAehr2VYoScLCrDIaXJvytydd8TtxnO/5/QWYRB/8q5b7SCVDhWOmMHyphIyqryeKb6/Q4Nm/vmXo0FSFAxsrxQttz0q0ypdbkdWujke5S1aQU0id2x6hJL0TDFjwyXy+ltCMJxl2DFDYxkiEB5GQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=linux-watchdog.org; spf=pass smtp.mailfrom=linux-watchdog.org; dkim=pass (1024-bit key) header.d=linux-watchdog.org header.i=@linux-watchdog.org header.b=AkgDiDNp; arc=none smtp.client-ip=185.87.125.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=linux-watchdog.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux-watchdog.org
+Received: by www.linux-watchdog.org (Postfix, from userid 500)
+	id D076C40A06; Thu,  7 Nov 2024 12:33:26 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 www.linux-watchdog.org D076C40A06
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-watchdog.org;
+	s=odk20180602; t=1730979206;
+	bh=uMm7eWhg5zxwjiJM+lslSNcWxvKbHa1oHkkgaXf1Ha4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AkgDiDNpn7Kzfmt28t44X/BKrVl/jNC32/Iuk2YdqhcUbXdwj9wyZKo5SWY40Nbsv
+	 l5VY0SruRwW5o8cFrBumW5cMJvrEHhhloYCUmam74ZNHU8TiYuheZw99swUYGHLbQ/
+	 ZtuYbDdokTE0kuGPZRSi7z3+thKl6ZxUzyTwdwSw=
+Date: Thu, 7 Nov 2024 12:33:25 +0100
+From: Wim Van Sebroeck <wim@linux-watchdog.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Taewan Kim <trunixs.kim@samsung.com>,
+	Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	Byoungtae Cho <bt.cho@samsung.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: exynosautov920: add watchdog DT node
+Message-ID: <20241107113325.GA5284@www.linux-watchdog.org>
+References: <20241021063903.793166-1-trunixs.kim@samsung.com>
+ <CGME20241021063938epcas2p1c01c89badb532f08a46087a4907df7dc@epcas2p1.samsung.com>
+ <20241021063903.793166-4-trunixs.kim@samsung.com>
+ <961e1aca-cd90-4db1-87d7-afd2e542421e@kernel.org>
+ <20241107103331.GA4818@www.linux-watchdog.org>
+ <589c40e1-6a1c-4ef7-b0d8-b761b132578a@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIBMTEpWuihsUcp3o3pzj8nZnl7oAJCJM3HAaAIt8OyQJcJoA==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPJsWRmVeSWpSXmKPExsWy7bCmpq7UAp10g7nTVC3W7D3HZDH/yDlW
-	i6Ot/5ktXs66x2Zx/vwGdovLu+awWcw4v4/J4v+eHewWv38eYrLYeecEswOXx6ZVnWwefVtW
-	MXp83iQXwByVbZORmpiSWqSQmpecn5KZl26r5B0c7xxvamZgqGtoaWGupJCXmJtqq+TiE6Dr
-	lpkDdIuSQlliTilQKCCxuFhJ386mKL+0JFUhI7+4xFYptSAlp8CkQK84Mbe4NC9dLy+1xMrQ
-	wMDIFKgwITvj5ZndTAXHuSouf7vJ1MD4haOLkZNDQsBE4uOPXSxdjFwcQgK7GSXW/T/ODpIQ
-	EvjEKNE/SxoiAWT/nT+XGaaj8dlyJojETkaJ0237mSGcF4wST35+ZwKpYhPQldixuI0NJCEi
-	MJFRYvvzv0AJDg5mgVqJ/Z0mIDWcAtYSd6Y3sILYwgIBElebe8BsFgEViflTV4OdwStgKfH/
-	xCpGCFtQ4uTMJywgNrOAvMT2t3OgLlKQ+Pl0GViviICTxLQjF9ghasQlXh49wg5yg4TAVA6J
-	x8f2skM0uEhs3HOFEcIWlnh1fAtUXEriZX8blJ0tcfziLDYIu0Kiu/UjVNxeYuejmywQv2hK
-	rN+lD7GLT6L39xOwFyUEeCU62oQgqlUlmt9dZYGwpSUmdnezQtgeEkuvHmGewKg4C8lns5B8
-	NgvJB7MQli1gZFnFKJlaUJybnppsWmCYl1oOj+/k/NxNjOCUquWyg/HG/H96hxiZOBgPMUpw
-	MCuJ8PpHaacL8aYkVlalFuXHF5XmpBYfYjQFBvdEZinR5HxgUs8riTc0sTQwMTMzM7E0NjNU
-	Eud93To3RUggPbEkNTs1tSC1CKaPiYNTqoGJzXJ9h+rWjuQQo6XMP0y5l+qGrZi+y+50QmYH
-	R/+uWrN5Kx6FHH3j2O6b8IsruOrt0V/T/Vec6Wh757o2n+WyUHiDxvpe+1cyzzdwnhA5MPPc
-	wWe+nncu6bQu7OtYWPgp0rvN8emVhxHF7Fa305fpz9tzqpvxhQNrh0W5a+rX5N+Wl++tMM1q
-	PPl0ZctuByZ3leXXLxn9Teo//+vtwVevv7CGvryl/1vwa1SX15GZeX8+LbLsr1u9OHTe/EsV
-	NbdseezmmU/qbooRvWCUlnzsq3z1j26DAr2OG998olW3hwSdkhGqPP9dkOmi6rf/0ZtNjJ57
-	LrxvHxo15UFSRHzX4cvfjJ/36B1t25fD/81fiaU4I9FQi7moOBEA4Od7IjIEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjkeLIzCtJLcpLzFFi42LZdlhJXldygU66wYUJuhZr9p5jsph/5Byr
-	xdHW/8wWL2fdY7M4f34Du8XlXXPYLGac38dk8X/PDnaL3z8PMVnsvHOC2YHLY9OqTjaPvi2r
-	GD0+b5ILYI7isklJzcksSy3St0vgynh5ZjdTwXGuisvfbjI1MH7h6GLk5JAQMJFofLacqYuR
-	i0NIYDujxIbnF9khEtIS1zdOgLKFJVb+e84OUfSMUeLphr8sIAk2AV2JHYvb2EASIgLTGSX2
-	rfnBDJJgFmhklLjYwQbRsZtRYvPq7WAJTgFriTvTG1hBbGEBP4nrR7vBbBYBFYn5U1eDreMV
-	sJT4f2IVI4QtKHFy5hMWiKHaEk9vPoWy5SW2v53DDHGegsTPp8vA5ogIOElMO3KBHaJGXOLl
-	0SPsExiFZyEZNQvJqFlIRs1C0rKAkWUVo2hqQXFuem5ygaFecWJucWleul5yfu4mRnBUaQXt
-	YFy2/q/eIUYmDsZDjBIczEoivP5R2ulCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeZVzOlOEBNIT
-	S1KzU1MLUotgskwcnFINTLOU9i7efn7drBuGaxLXK5WduZ27gHmT+V/dn8cuyy7YLr12dwo/
-	++7Twkd2sf4M5FcP/fS1YkHDDP+4tkxm61NbgS4TMjvJsFL8onJE36OHZtaLnN6/uZPp6dyw
-	lWVFvYKaeHvO6u7/MmyOOS2fpGfzCxYX9kzcudHmt54+i0bS4SKXdH3120fOZqa4+Frp7P2x
-	++rbZ1HZMRJpmStlb766G7fAao/1tA/GfakZJs9XWqyaNqnu0Kx51/MehTxb0THzPVtQWvXE
-	pZcnnQ1Y4ebQfW1TQ0hlmpwcdxLPm1Qds59tRmdNmSbqRLDl7pp880SIdmaTxcfswGcKAh61
-	94VlN3yd+erElh0Zt7dKK7EUZyQaajEXFScCAKnpBAoZAwAA
-X-CMS-MailID: 20241107111017epcas5p4a7ecdad34dd6f9ce081ee12658f1ed84
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20241107041511epcas2p285a5b52a6784e509977a1574f7c9ee4a
-References: <20241107041509.824457-1-sowon.na@samsung.com>
-	<CGME20241107041511epcas2p285a5b52a6784e509977a1574f7c9ee4a@epcas2p2.samsung.com>
-	<20241107041509.824457-3-sowon.na@samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <589c40e1-6a1c-4ef7-b0d8-b761b132578a@kernel.org>
+User-Agent: Mutt/1.5.20 (2009-12-10)
 
-Hi Sowon
+Hi Krzystof,
 
-> -----Original Message-----
-> From: Sowon Na <sowon.na@samsung.com>
-> Sent: Thursday, November 7, 2024 9:45 AM
-> To: robh@kernel.org; krzk@kernel.org; conor+dt@kernel.org;
-> vkoul@kernel.org; alim.akhtar@samsung.com; kishon@kernel.org
-> Cc: krzk+dt@kernel.org; linux-kernel@vger.kernel.org;
-> devicetree@vger.kernel.org; linux-samsung-soc@vger.kernel.org;
-> sowon.na@samsung.com
-> Subject: [PATCH 1/3] dt-bindings: phy: Add ExynosAutov920 UFS PHY
-> bindings
+> On 07/11/2024 11:33, Wim Van Sebroeck wrote:
+> > Hi Krzystof,
+> > 
+> >> On 21/10/2024 08:39, Taewan Kim wrote:
+> >>> From: Byoungtae Cho <bt.cho@samsung.com>
+> >>>
+> >>> Adds two watchdog devices for ExynosAutoV920 SoC.
+> >>>
+> >>> Signed-off-by: Byoungtae Cho <bt.cho@samsung.com>
+> >>> Signed-off-by: Taewan Kim <trunixs.kim@samsung.com>
+> >>> ---
+> >>>  .../arm64/boot/dts/exynos/exynosautov920.dtsi | 20 +++++++++++++++++++
+> >>>  1 file changed, 20 insertions(+)
+> >>
+> >> How did this happen that this patch was taken to watchdog? There is no
+> >> Ack here from me.
+> >>
+> >> Drop this patch from watchdog, I do no agree to take it via that tree.
+> >>
+> >> Best regards,
+> >> Krzysztof
+> >>
+> > 
+> > Seems like you are having a hard day. 
+> > The 3 patches are dropped. I presume that you will take them all through your tree then?
 > 
-> Add samsung,exynosautov920-ufs-phy compatible for ExynosAuto v920 SoC.
+> I meant only this one patch, not entire patchset. The bindings and
+> watchdog driver are for you. I commented only about this patch here - DTS.
 > 
-> Signed-off-by: Sowon Na <sowon.na@samsung.com>
-> ---
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+> 
+> Best regards,
+> Krzysztof
+> 
 
->  Documentation/devicetree/bindings/phy/samsung,ufs-phy.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/samsung,ufs-phy.yaml
-> b/Documentation/devicetree/bindings/phy/samsung,ufs-phy.yaml
-> index f402e31bf58d..d70ffeb6e824 100644
-> --- a/Documentation/devicetree/bindings/phy/samsung,ufs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/samsung,ufs-phy.yaml
-> @@ -18,6 +18,7 @@ properties:
->        - google,gs101-ufs-phy
->        - samsung,exynos7-ufs-phy
->        - samsung,exynosautov9-ufs-phy
-> +      - samsung,exynosautov920-ufs-phy
->        - tesla,fsd-ufs-phy
-> 
->    reg:
-> --
-> 2.45.2
+I added the first two patches again. Even when it sounds more logical to me to keep the 3 together. But that's a never ending discussion, so we won't go into that :-).
 
+Kind regards,
+Wim.
 
 
