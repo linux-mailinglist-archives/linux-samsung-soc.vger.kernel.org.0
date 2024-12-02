@@ -1,120 +1,152 @@
-Return-Path: <linux-samsung-soc+bounces-5514-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5516-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D8709E02DF
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 14:08:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD1109E0339
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 14:21:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 22BA8285CC5
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 13:08:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DA5C28737B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 13:21:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0C720010A;
-	Mon,  2 Dec 2024 13:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13947201265;
+	Mon,  2 Dec 2024 13:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cpOC24Xg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ja5YJfKE"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E165D1FC7FF;
-	Mon,  2 Dec 2024 13:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8293200108;
+	Mon,  2 Dec 2024 13:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733144902; cv=none; b=Z2Yg72YbgtnLrPgMp4CdOxoVVvj3CWY3c9vDzBBmrG8CL8IDGNf6HdhKftU7NP78hYdm7ZN0ziUya0Gz3zy6x9mp877Y0zbF1VWWLazKiHC2Nm/JRPsjKlwMatpyzbe/zLd//n2DQu1Vkvv1fdfUgyBWwRRTU5ODZbqjvJ2snGc=
+	t=1733145607; cv=none; b=h1+rzhiIso8ZzT+HKMraNW77CBZVBbKcXG4/zFbIdWE756kqcESD5o5mAXAIiWbPCGgJbrqpUZDxCbwfV1A/2k5jhRIHlpUlsf66tqBaEayPtWClHwkh2/wcTKiOdj1OkgKR+jR645+ybtP6W7BLZQUIiPicfhKvdX/EFjaKe08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733144902; c=relaxed/simple;
-	bh=cXYTMS1lyw5zl7xOiAP9Dpko8FpjZMGOckLkVavurEY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cSIrrz0ZyW24BvN1vGNGpEWmvMi0Ybp0GyEAYsikFAvjauei0DDHPsAwWlEu0fVT/woVrTkvQCbIMmnS8Uf/o+JR2KBEjUeioQio4GC1mPIR4Q302m+0TnX77tizkMKMNlsor0A2kjLL4JSruLM+f13NYX+jAAswR9gmpYDrYe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cpOC24Xg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 842AEC4CEE3;
-	Mon,  2 Dec 2024 13:08:21 +0000 (UTC)
+	s=arc-20240116; t=1733145607; c=relaxed/simple;
+	bh=cuZbfqLYHQS/1GAYDtMRKOLhWIMgYEMtvry7OBgUlJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BNmXJ9wIM5pb067gtvgfZT3cNQVg1D277WdjavpfMllCJcDdbmaS7FYjns+GzUoFm8cvGC7q+fUA7tJHw+5Bf1quwZdGFTtXCKm2j9jl5T048FeXm+3azIR1db/oDnKk8qLwYNb1j3mUJ1IuMwb67Zvf8fScEvLugWBTZxYR4qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ja5YJfKE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1A8C4CED1;
+	Mon,  2 Dec 2024 13:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733144901;
-	bh=cXYTMS1lyw5zl7xOiAP9Dpko8FpjZMGOckLkVavurEY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=cpOC24Xg4W2ndtFkgwlm2AeF9Yv90uBvHYCBgOEVjUSZoXYzT15uHj4BRFhtcBvpG
-	 PyJWebaESQNK8jDU4t5yhDnx7uKrxjWLU96//NUXRfcJV9LXtcuP1q4heINdpaAuLT
-	 hjEFXKRJP6m14j9WvSPX0TPJm1QYXJ4EFY+dOB097McQLMYqt4CHui5rfZcoXPtWFd
-	 5ubXky7WfPDUAxPQyNRk8m4jzKRNh0mE5Zvzq1hncqxUJKrf1tAfL07wn/oraJfZCx
-	 EGcNscCJmdNaKvRRf0y4h8ktQdn8iJaHgfnfEa9N0JaKKFm6lYnoH2GCH7rr4IrX2/
-	 UhLTom6hIMyUg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA05D7831B;
-	Mon,  2 Dec 2024 13:08:21 +0000 (UTC)
-From: Thomas Antoine via B4 Relay <devnull+t.antoine.uclouvain.be@kernel.org>
-Date: Mon, 02 Dec 2024 14:07:18 +0100
-Subject: [PATCH 4/4] arm64: dts: exynos: gs101-oriole: enable Maxim
- max77759 fuel gauge
+	s=k20201202; t=1733145607;
+	bh=cuZbfqLYHQS/1GAYDtMRKOLhWIMgYEMtvry7OBgUlJE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ja5YJfKEpMZVqAcOsS9VwFVxwUPlCtxVzQl7ZDIXMcG5Uy68wX2q1TO2zHiwZoQFL
+	 sRrfDQnF5zYJ0gHNjVcRFjWI/RnxfDTcpDBBmQLctpbWmYRKw8ULXNPvoUg3Oqb0kU
+	 6hDfNE4K9dlvEMuybzZuqcYUB0zUguLdKl1WYSw8JqR4KE3ddWPCyk6yn8CvNEUJG7
+	 IX2wJi4MAwL6VD0MV7GUCkuK6LCHXZnVHQqt/gV5E8fyfqojj0Q65QrLyTFYK5SCC0
+	 mwuj+l01dIHDSqYN3IDMM+mXb0cZibWBU9+v3hRepcooVifZKL5QSpm2Aaa38U5TVb
+	 sNdiloTWDun/g==
+Date: Mon, 2 Dec 2024 14:20:04 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Phong LE <ple@baylibre.com>, 
+	Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
+	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Russell King <linux@armlinux.org.uk>, 
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v5 8/9] drm/vc4: hdmi: switch to using generic HDMI Codec
+ infrastructure
+Message-ID: <20241202-industrious-unnatural-beagle-7da5d4@houat>
+References: <20241201-drm-bridge-hdmi-connector-v5-0-b5316e82f61a@linaro.org>
+ <20241201-drm-bridge-hdmi-connector-v5-8-b5316e82f61a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241202-b4-gs101_max77759_fg-v1-4-98d2fa7bfe30@uclouvain.be>
-References: <20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be>
-In-Reply-To: <20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be>
-To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Dimitri Fedrau <dima.fedrau@gmail.com>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
- Peter Griffin <peter.griffin@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, Thomas Antoine <t.antoine@uclouvain.be>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1733144859; l=1033;
- i=t.antoine@uclouvain.be; s=20241202; h=from:subject:message-id;
- bh=C6G2HNmCWsR7T7ZeSn//curscN+6Mz2Xd6Jnx+k56sQ=;
- b=fA9D6CBCX7gFNZtMJUgL0dFcwNCYI4mlMT8MAW2SwI7p3XgJFaWYEPyx7u68on+520i20JHid
- sicaCn2SzJGABlQm0g5TkuRvsBAZOKtxj5LMxDQNSbhwKrusQCJaTxs
-X-Developer-Key: i=t.antoine@uclouvain.be; a=ed25519;
- pk=sw7UYl31W1LTpgWRiX4xIF5x6ok7YWZ6XZnHqy/d3dY=
-X-Endpoint-Received: by B4 Relay for t.antoine@uclouvain.be/20241202 with
- auth_id=289
-X-Original-From: Thomas Antoine <t.antoine@uclouvain.be>
-Reply-To: t.antoine@uclouvain.be
-
-From: Thomas Antoine <t.antoine@uclouvain.be>
-
-Add the node for the max77759 fuel gauge as a slave of the i2c.
-
-The fuel gauge has been tested and seems to give coherent results.
-Manual activation of the charger via i2cset shows that the sign of
-the current does indicate charging/discharging status.
-
-Signed-off-by: Thomas Antoine <t.antoine@uclouvain.be>
----
- arch/arm64/boot/dts/exynos/google/gs101-oriole.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts b/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-index 387fb779bd29ea3812331a7951f03b181c5fe659..4c45dd6fd0173889234b7b04d7abb4b382c7706c 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-+++ b/arch/arm64/boot/dts/exynos/google/gs101-oriole.dts
-@@ -90,6 +90,13 @@ eeprom: eeprom@50 {
- &hsi2c_12 {
- 	status = "okay";
- 	/* TODO: add the devices once drivers exist */
-+
-+	fuel-gauge@36 {
-+		compatible = "maxim,max77759-fg";
-+		reg = <0x36>;
-+		reg-names = "m5";
-+	};
-+
- };
- 
- &pinctrl_far_alive {
-
--- 
-2.47.1
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="vbtgu33lsjanu5xg"
+Content-Disposition: inline
+In-Reply-To: <20241201-drm-bridge-hdmi-connector-v5-8-b5316e82f61a@linaro.org>
 
 
+--vbtgu33lsjanu5xg
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v5 8/9] drm/vc4: hdmi: switch to using generic HDMI Codec
+ infrastructure
+MIME-Version: 1.0
+
+Hi,
+
+Sorry, I've been drowning under work and couldn't review that series before.
+
+I'll review the driver API for now, and we can focus on the exact
+implementation later on.
+
+On Sun, Dec 01, 2024 at 02:44:12AM +0200, Dmitry Baryshkov wrote:
+> Drop driver-specific implementation and use the generic HDMI Codec
+> framework in order to implement the HDMI audio support.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/vc4/vc4_hdmi.c | 68 ++++++++++--------------------------=
+------
+>  drivers/gpu/drm/vc4/vc4_hdmi.h |  2 --
+>  2 files changed, 15 insertions(+), 55 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdm=
+i.c
+> index 7295834e75fb1ab0cd241ed274e675567e66870b..d0a9aff7ad43016647493263c=
+00d593296a1e3ad 100644
+> --- a/drivers/gpu/drm/vc4/vc4_hdmi.c
+> +++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+> @@ -595,6 +595,9 @@ static int vc4_hdmi_connector_init(struct drm_device =
+*dev,
+>  	if (vc4_hdmi->variant->supports_hdr)
+>  		max_bpc =3D 12;
+> =20
+> +	connector->hdmi_codec.max_i2s_channels =3D 8;
+> +	connector->hdmi_codec.i2s =3D 1;
+> +
+
+I guess it's a similar discussion than we had with HDMI2.0+ earlier
+today, but I don't really like initializing by structs. Struct fields
+are easy to miss, and can be easily uninitialized by mistake.
+
+I think I'd prefer to have them as argument to the init function. And if
+they are optional, we can explicitly mark them as unused.
+
+Like, it looks like the get_dai_id implementation relies on it being set
+to < 0 for it to be ignored, but it's not here, so I'd assume it's used
+with an ID of 0, even though the driver didn't support get_dai_id so
+far?
+
+Maxime
+
+--vbtgu33lsjanu5xg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZ02z/QAKCRAnX84Zoj2+
+dpzbAYDixtv7TbkB/8hZMKjc8sAQyzE2ixGhzfLm1/mizfxI+p8zsxyz2xkCmeAU
+CvjfI6UBgKALmNU3qiLez7ENeyLRh+cvBGhV2M7F3LMKGHgUca3NdOUGKZ2Ss9j2
+Qw//3ctIIw==
+=RzH8
+-----END PGP SIGNATURE-----
+
+--vbtgu33lsjanu5xg--
 
