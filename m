@@ -1,121 +1,250 @@
-Return-Path: <linux-samsung-soc+bounces-5525-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5527-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71FC29E0496
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 15:15:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4B229E062F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 16:04:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3432F282CAA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 14:15:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 78869B2FDFC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 14:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF54E20371E;
-	Mon,  2 Dec 2024 14:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C2A20B81D;
+	Mon,  2 Dec 2024 14:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PPoAYwi+"
+	dkim=pass (2048-bit key) header.d=uclouvain.be header.i=@uclouvain.be header.b="rMMsHpuH"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2114.outbound.protection.outlook.com [40.107.21.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A5529405
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Dec 2024 14:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733148917; cv=none; b=UtK7HaFefEk23rFQRZx8rWZkgwZCum6IOFXul0UHB2I4GrjAvncdMypLw5Kv4k/qXTL8FLQ798UJ9Dd3HHXDOkNJVwd8lArI0AJKg7p33m50ACCUNgJ1H9AGUPMHYOwZmFEkr0BNt84G6lKsnS2Op3ObuJeyR+lXPuated0CbZs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733148917; c=relaxed/simple;
-	bh=ErEwmTVW+AJuBhiJwMY/EZuwY/ewg6Ae7ulD+DF5Jgs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=OBkoHGBNx91MILJikx4AJs0GdsAjH7M912YEw920reT9WSg3cnlIAn1zti0Fv/WHz5PZPVdGyGSRGTIv4HGe5QGs+bi6Jx6BzgJQspCNL86riQ21UAFfYxOQAvaV4R9NiQDBLjyRd30xmSurx82l9DTFXs8oR6PQ6CRLUPp85zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PPoAYwi+; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-385d7fe2732so201215f8f.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Dec 2024 06:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733148913; x=1733753713; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G4WY1vAA0r2fKbPXY4KjAS2UpwZ8hfCdwU02a05Yrls=;
-        b=PPoAYwi+eUePvErxy+KYvdLvS98V7Pdj0Cj7hD2p03ikjT1l5VaKmhtRSLQxidsAH0
-         j363wx3YAEEe9Pds/nm+sm2uEDFo+FzPq4fkq353hzlq3EARaYlXcgXYFcCe3jdiUa9w
-         Py+YhpNbogB4b5kUIyiKSil59OBIFu9HBJpdTrNSkqMPiy4h/kzIMbhzkWKYfZhJ2xOM
-         We/m7V6fxnK1sxEBpdxNmwLw/v+c1rUsE8ZgLuu8qLAyLXx57nNAD3nyphenx9sxLpW4
-         us395mC+EMtg9PXwf+swibPW0283mwuvxy0QiyZ0VjBFN1GHmzasKqjySe9alD4QfGS8
-         pqGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733148913; x=1733753713;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G4WY1vAA0r2fKbPXY4KjAS2UpwZ8hfCdwU02a05Yrls=;
-        b=IXn5g8j2Kcd2hIg7HWLSpiscc9iLaBDN05kgUX66LR+QTqaZoj4aQEU2mhiPBnFe12
-         rDwL4DTmlfPiYbiwCwU8d6Q/Pc2ijOW0p/QQA39FS0AdIAOLeqqqH1F3u3GVDHUJCczy
-         PX338YbjkyjUOJJvf9yoUMiuG760F+6YjsuV+9S3R0d8tL+0dNDxpSNFbVSgkCI8QJw5
-         bXjbJMHqosb8/i3J0MSaR/qaYKCxh6u67CBWeRf8p2qgZY2vXd5M/ZbsZxP0QrlWjjow
-         qnmeev3MBO3zCRQWZiJeafTxrI0s2mXH8iFVwIeeO5cZMPpiigCI9JFkNjx7Jro0ORYt
-         +H/g==
-X-Forwarded-Encrypted: i=1; AJvYcCU4WGW4xlKTslTxPw4R3tgnZv7MTUi3d9/E027ccpSLtqIMc2nygmU1CssDW21iLGqyikzGty6oWIDLaxEYBM1T2g==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbuJeBa9y0eCKuPBsnMIXmptxfsdPFVNEFqX/x+QoiPiyG76ln
-	s6znNk6i1PaO13tWf3wjeA3llVUpw9lV+A9Qak5PrUyXaSdOuRhHOSmJogBOIxY=
-X-Gm-Gg: ASbGnct8XnuUQktyJG0cpbmze0goCNqjUZSM2bKeg7jVeOWnBDSZxpwCzY+J4UZdkYs
-	cHEl1d7fR3JOZdw10XzTuP0qUlT6GbPQfP6917EzLrsk/M1je+o0jy5mvGA4gfPnuReBVI/dYHj
-	28B0XvDcUbhC5yDPnAVoCpebVfFLLBDGby1upkrjrx/ODzkTe1CkAnyUyD3fLKxRxUjaaWAVvcB
-	0cn4/cUeoiVlV4nxurDpjq5RW664/IzAf23tPTorVBZh3pWpaEzZDaWPCt3ertq
-X-Google-Smtp-Source: AGHT+IFElDO2xd8mFJCzbrH8EiF3i2wyF8UmcXsrEdAyTq41fa6hejn4lGjAijspgIkC6zPVj6Q6lw==
-X-Received: by 2002:a5d:5984:0:b0:385:de67:229e with SMTP id ffacd0b85a97d-385de672523mr4078648f8f.11.1733148912772;
-        Mon, 02 Dec 2024 06:15:12 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.218.23])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434b0dbe4ccsm152388855e9.13.2024.12.02.06.15.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 06:15:12 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Linus Walleij <linus.walleij@linaro.org>, Tomasz Figa <t.figa@samsung.com>, 
- Thomas Abraham <thomas.abraham@linaro.org>, 
- Kyungmin Park <kyungmin.park@samsung.com>, 
- Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org
-In-Reply-To: <20241106-samsung-pinctrl-put-v1-0-de854e26dd03@gmail.com>
-References: <20241106-samsung-pinctrl-put-v1-0-de854e26dd03@gmail.com>
-Subject: Re: [PATCH 0/2] pinctrl: samsung: fix fwnode refcount cleanup in
- error path and update comment
-Message-Id: <173314891106.48956.4220732642073324618.b4-ty@linaro.org>
-Date: Mon, 02 Dec 2024 15:15:11 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1580520B807;
+	Mon,  2 Dec 2024 14:42:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.114
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733150573; cv=fail; b=Mxt1RdQlKIDo/mhtgKNGLSl/U6tdvy7uk7LF55CyqdMpku4wLMAUrmVqntV0KtKuM/bJ3l+bz84RSWGsvlszA71ezg//l+cNrydX9+GgBCJCGFaD5wh3n6qCk0nGnQwlP+r9ps9nEHtkezqAt5MZZjjUz8T3NQ+2ya2cwGgg1sE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733150573; c=relaxed/simple;
+	bh=ZBbYh71JjxejKgkq0rWOlpl/J75SLcJS8V0iOe9DnL8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=VDeR4ej9ogdoUWBiVANud4LR7CXTxJQqkWj/V95AiP0sVejDFbeIvY0egqNuL6BUQGYnbYQDvKdSymmrNUSkWrhXhyV261yRonUzg61nR98tiflYxmpGws2dLOZF8dAmOL/WOOmukfolqWqhZLeeRtAoJzcJp4bs6fVWG/REHoU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uclouvain.be; spf=pass smtp.mailfrom=uclouvain.be; dkim=pass (2048-bit key) header.d=uclouvain.be header.i=@uclouvain.be header.b=rMMsHpuH; arc=fail smtp.client-ip=40.107.21.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uclouvain.be
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uclouvain.be
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j3PobZePeTbYWhwDT0nk5fnDel+0VCAj5V1l70hBiAKQw0OOk3v4b1n6Xeh/mVF+hbDT/AWmO3k6l5uYAny4QRLDCgcQJFtEFI3ff/rTPul5yqL4F1vakast4/v9mlPQrRCgJ6Tbdn+4esMHyWv0RSic2Dl/nC6WWxhDVi27lwfgU15fo/fziKEJO750YP74Al80/ldpceN/+nEDgQoJxBzI/CL67zOe0rDdpFr7HlLafUwUqGmadY6Ek68RTHaEBK/PhIz3bNyg++B9rAyB67n8ZlxrrYt1WK8ugqUIeMA93N6DuQL9v0RXVbpdYzc+XxB9OxSFLUgEguXdpyU8/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7lpXdAgOZAqZ6oDmRVoSx7f16hB3VK+FqAS6cItwOqU=;
+ b=DppDyNjeJ3ev5pwML2YaGgLtwOQUIw9h16DxtEiadzFZ/fN1gEMfAxFjPT1gHF3slOenb4LhV+X/JL5HKKdCI1lN50vUugOWWnFXghjz1OQaxznU1BTz/gtgyfuw3FL/Irflp1dJJEir8JRWqPa4qwTa8f5j3R1ja5zJVjka1lz1b8EY9XtLXqnRzDwsDI7Gi6lXNxsa1xgdIrZ7Mz/8WneDcdB2kRRvLP57tuRRshadWNLTxQeDtgy+krYfuK5Y2SVe98JKNZLBu1vrEPJgq5vZv/z9ggwO7bIb6eQTUBsTTdUBxavdzm2cTwlVWFHYtIP1lqUYGFgRMfDbPAWl2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=uclouvain.be; dmarc=pass action=none header.from=uclouvain.be;
+ dkim=pass header.d=uclouvain.be; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uclouvain.be;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7lpXdAgOZAqZ6oDmRVoSx7f16hB3VK+FqAS6cItwOqU=;
+ b=rMMsHpuHIo7sUXkqdCWYPvN5OmMf2QgL6/1xOZ+LBjCZDN7VgY3ilpfMOEIvWUgoyJQpmlIQWjkNeoDS+vh4dneioxaiuVzWbg6B5YbgD44pi2bEIcDXNX++P9rG9vOg6pslRhTv4k6ykMtsqR6LfBiozgTgZq8sAuW0f4iEvRaVrchVt0t4DIdmDADI5fWXmx987bu88CkXWVUk7Q16pZwdsjbZT3PHdZfSVmBfkyTnq+0Gl664x1UIaUciZwoh94x4mo0M9X+qAwvTVsDcWRC0jn0roLWnAI6EwwCprzNK0n3QegJ9IfysUTYFhKLDqElJyoel6+l5MCLNMZYeDA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=uclouvain.be;
+Received: from AS8PR03MB9047.eurprd03.prod.outlook.com (2603:10a6:20b:5b6::13)
+ by AM7PR03MB6230.eurprd03.prod.outlook.com (2603:10a6:20b:136::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.14; Mon, 2 Dec
+ 2024 14:42:46 +0000
+Received: from AS8PR03MB9047.eurprd03.prod.outlook.com
+ ([fe80::c90e:deef:6dcf:538c]) by AS8PR03MB9047.eurprd03.prod.outlook.com
+ ([fe80::c90e:deef:6dcf:538c%6]) with mapi id 15.20.8207.017; Mon, 2 Dec 2024
+ 14:42:45 +0000
+Message-ID: <86209e69-6eab-4a93-bbb5-6ee98d6bc83f@uclouvain.be>
+Date: Mon, 2 Dec 2024 15:42:00 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] dt-bindings: power: supply: add max77759-fg flavor
+ and don't require nvme address
+To: Krzysztof Kozlowski <krzk@kernel.org>, Sebastian Reichel
+ <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Dimitri Fedrau <dima.fedrau@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Peter Griffin <peter.griffin@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org
+References: <20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be>
+ <20241202-b4-gs101_max77759_fg-v1-2-98d2fa7bfe30@uclouvain.be>
+ <ec4bd953-1cd7-46bc-9415-0983bb9cbe89@kernel.org>
+Content-Language: en-US
+From: Thomas Antoine <t.antoine@uclouvain.be>
+In-Reply-To: <ec4bd953-1cd7-46bc-9415-0983bb9cbe89@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AS4P250CA0029.EURP250.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5e3::19) To AS8PR03MB9047.eurprd03.prod.outlook.com
+ (2603:10a6:20b:5b6::13)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR03MB9047:EE_|AM7PR03MB6230:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ae71325-0f46-438e-8b24-08dd12df95bc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|10070799003|7416014|366016|1800799024|921020;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?R3RHV3M1UUxFd2hha0JuWUdsdW94Kzc0bDAzV2dqcXBtL01rbTc2bnRSRTlC?=
+ =?utf-8?B?Y2pzOGFhV1FsNXBrRjdFNXlMcW53aytaaTlqNkhMR3NNSE5PR0RIMnFseDFZ?=
+ =?utf-8?B?MVhhbGRvQjhzNTQxa3dnVERqeUhUMnlma0VxY1FDZUR5bVRaTmV2RHNXMUcw?=
+ =?utf-8?B?R25zam5FMGdnN211QVRha0pNd0JBckozMmtvdWp3UW9iMDFVYmV5dUtmQzRX?=
+ =?utf-8?B?djJUYjlPT1A5ZHpmTHdwTGFHVC9aZnVXYUtWKys0QXgvVVpKVWhDdS9VNzNs?=
+ =?utf-8?B?bmgyaSswM045RmNUbkFsd0M5eWRuZGxZOHBOeEZ3NTdXYXFEc0hXSk1CVzNp?=
+ =?utf-8?B?ZWMxcnRZV1FiM3VBYnFzbStIUnpoTGdJa09sdk9hWVJad1BqNCsyVHJNT1NX?=
+ =?utf-8?B?YXQ5ZGEwUklOK2FVV1JIN3VXeExVb3Y3d0hQUGJwR29lZUlJRnVES0pyZlFQ?=
+ =?utf-8?B?WDRhbXpUOTMwc0NrVzJlM1NONVA4UUZqL1pGOXA3LzAzYjg5Q0g2OVFVa3ky?=
+ =?utf-8?B?NnFXNjRLOGJzRUR5cjNJLzltazlBZGloT0xvdTVFM2dFR3B0WDIrb0xrSVlC?=
+ =?utf-8?B?cExsMzdzYmgzcXNGZk5lZjBaRlp0Mis0a2ZOaDY2Uk05ZDBnUmx6bkpKUHFu?=
+ =?utf-8?B?MlRtVWdJSThkblNWL28wRzM1NHZzVTNMVjRmUFdOYWdCZmh3bEZTYTFQVldG?=
+ =?utf-8?B?Z1o4RSs4RktaUlEzN1dyTFN1aWQrVlRFSXhKejlYZzlTK2k1V0VXR0ZTRVlT?=
+ =?utf-8?B?MEJmV1Z1V0VZV2hJd3hQcWFhZE9LMHRYSEJqZ1VyRmZRQlJoZ3RlcnAvOXhX?=
+ =?utf-8?B?ckJZUExkaUM5Tzl5UzA5RmFvd3p0Ukg4TlYzcDZzcm44R2ttY1N5TUtWWk5S?=
+ =?utf-8?B?SW5oY3lYVGJXRjBjZEZ1MDRiOE9HN2ljZzRWdHVnSlZuZjdsRHlPTFBzalpY?=
+ =?utf-8?B?Um9BTGdzZDVFaXFoaVNzOWhONGtuUy9XemdURndtc1gyYUJlMkdxOGxUdkZp?=
+ =?utf-8?B?alliaTdJNjRpeERRL2NQQ0JqbXZiSlhBeGUwSVRkVmVLbC9PK1FRbUpHdW9k?=
+ =?utf-8?B?M1ZzdVJzcEs1V3hkcTJBajdERktZWG1GVFRsL2FEZHBWQ2I5SlM2dmxBazZy?=
+ =?utf-8?B?SDJxWk9XeDV6eVg2ejQrZjBQNHZJeFREQzlUWStQRGxhSFhxR1FjUjVrRXpv?=
+ =?utf-8?B?eWljVGIrR2NmT1NSQjhHL2hoU2xEWERyTWJWZjgxZEN5SGRhYUJGc2czelNo?=
+ =?utf-8?B?ODBtSWs5QzR6MHAzWDNwRHZUZzVGeGZIVktuVmdEczR6UUtLVy95cU9CQmVQ?=
+ =?utf-8?B?cEdsbzhxem1HNnNWU3lLc1o5SGpPczRiSHpPMXBla3p3RWh2YWJvNkEyNkhV?=
+ =?utf-8?B?cnZnV0YyUTd4cE8yQ1dEaUZNQURGUHBnbEpqREM3a1ZuL2c5NWhnOHdtTUhi?=
+ =?utf-8?B?d2s5ZnFRRXNIbHJpTEtKMGx0ZkI3MVZrZitBUy9XNlBzb1BZMXRZOXkram56?=
+ =?utf-8?B?ZHp1TGJSUTllOFZwM2RKczVSUHZYVGxWTksyd1VFWkNOWE5HVVMzNlRDYmJG?=
+ =?utf-8?B?Um93QTh4WmhIY1B1OTdhWWp6cStPd1daNkVWSVZldUVwUU85N3RGd1FPRk5J?=
+ =?utf-8?B?TDdUMnBUY1ZXRzk1VTl2VDNYQStXc0dDQW53eW5kcEVMdTBxcGNSRjVuZ1o1?=
+ =?utf-8?B?LzN1QS9hQTNBMmIyZ1N4QVc1OExIcHpHSTJhRW9mdTJ0a2RyLzZjRGYvWHJQ?=
+ =?utf-8?B?Q2hHL0ZSQWEzSDk1VDc1d1V3d0paZkIvZlo1cm1mUDhzZm80b1FwNThWVzRP?=
+ =?utf-8?B?UVh4RmZaS3NhRXl4bndDUWVZUnFQYjdkQVBUdStvcEJCSlFKQnRmMHVwSk5T?=
+ =?utf-8?B?UWxPYWJjNHNHTHNWcFljZXlYWmZXR1NZOENJd1lZN2s3dWc9PQ==?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR03MB9047.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(7416014)(366016)(1800799024)(921020);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YkNFWEJvZ0g3S21QbE5BQ1V4ZUM2QXNCaFcvalNiNFd1QVdTSVBGOVdPRERy?=
+ =?utf-8?B?ZjlHMHNpUVhBdTlMQS9LeDh3LzNqa3ErSFNCZ2QvMHJrTXhZeTVNWVVzU3ho?=
+ =?utf-8?B?YWVlemJTMGlXOXNid3BHRkQ2T2V5bkFaVi8yam5yS1dPVTdqRzN2ODMyaU9B?=
+ =?utf-8?B?WW1ZREp6UzQ5MCtXV1ZXT0xONXVDZTUvMjNhMWdDSTZZRWlZVG02UFNTNndt?=
+ =?utf-8?B?SFRHVkxyb2lsc2piZXZsUjg3dFRyWkNsYVRtcWIyWEt4dU1QdHFsV2lXSEJN?=
+ =?utf-8?B?dnNSOUZaclpHSzZ1REJJWXArN3dyRmtzRys1Ni85VllaaFVFSjNBbCtXNThi?=
+ =?utf-8?B?anIyK0dKNi9LYUpqcmJ0SUluWEk5amZ5WnBsTVBGeUtwNjB0ZVpVRlZIMUtZ?=
+ =?utf-8?B?WGRYb28yUXBrN01ESVlxdHRJOVdQOGpxUWpYKzRWRkdaN2Zad015ZlNsZkox?=
+ =?utf-8?B?c3Y3REJTUFZkczZscm5jNjRBanAzY0JYV0VveHFSVzFSNWFNbll3R2FvSmtw?=
+ =?utf-8?B?QnFlMkJOaE9uZ1lUeG91dUh3RzAxNDZtV2l4YjIwWk9mWCsxMHl1aCt6TFdD?=
+ =?utf-8?B?TE9OUDZxZ3dVVDZBYjBsK0xyazVCcmJrVzJHV2ZTbjZSM0hQV1pxc0lLeWty?=
+ =?utf-8?B?N3ZBTm5wRmVMVjdVb3JrTEJPZVpscU1sTVhTeFdxTzdFc2RkeGlaMTBUWjFY?=
+ =?utf-8?B?VjJBRGZuTmcxSlBRd0o5N2hQVVVENy9VOXdET1ZBbkRaTVlGT3JQNENUSGdK?=
+ =?utf-8?B?RnkzR3R2ZzFZZ3RQTFA2cGczNDJldis4YzBxdHpFbmxJdDQ1VnF2NnA1MFBi?=
+ =?utf-8?B?Q3hiVUc4cXFFakVkYmxBTzZWK1dGTFZna0lZbzlKZlNUSGZaUEVrSnVweFBD?=
+ =?utf-8?B?KzkyYXpIV2JlTVJVVG1TL1Q5RTRNWTlncU05TFkxVmhDN3FrblpoajVqc2h2?=
+ =?utf-8?B?dzhoN0d6K0xpZUFZUGdESU9WMEJSeWxZNk43SHMwT1lXNWtkTzN0WExNZmho?=
+ =?utf-8?B?cmlFc3JRbXR2YmJiS0tma3Njemo0elp2ektBd0JqTWNoM2NITCtieG9RTjhN?=
+ =?utf-8?B?Z2RyWkVQZDN2MWNWd2Z6ZU9qSGI4NXg1STVHbjVKeld4MEh5ZUF2b0ozTzNE?=
+ =?utf-8?B?cDFIbFY1TEErVWJjOWcyS1BiQUc0VitaTWo1NjRUS05MN3EvOEpMZ3k2dXRK?=
+ =?utf-8?B?NHFYakNuOEJYdE5vczJPY2RvY1AxeVVKRWszbkJLVHRURlBkVlBtN0tDSzhH?=
+ =?utf-8?B?ZzZyUENtd2hwdlJXZjNMRmJUN3lEOG1pTlZFcDMvMzZBTFptdFdDdHNVSEl1?=
+ =?utf-8?B?VVpWcHp0RFovKzJHZUVzcmtDcjJXaDduOFhCdXpWTVkrRW0vNStpRjI2Nkc0?=
+ =?utf-8?B?Wlg2NnduQkd3djB6NkV2YlhFTkpxbFMzSzd2cDVaV0VEOWU1aTVNMEJLaXNL?=
+ =?utf-8?B?ZlRiYkhxbExwdlphNGdZN1NyVzM0RDBpZFNKb2F3V0dZcnlaKzRONUwxdW5a?=
+ =?utf-8?B?MnV6Ym9KY3Z2TWM2OGlyRTZRUllXWGRRUVEvRWlZY2hZQjhobllqOU53aDND?=
+ =?utf-8?B?VlVkTDlGZ3dzeVhjYmJKb2NMUU9WcGhvRWNhWE9JWGlXSXhqa0IrVnhoRDdM?=
+ =?utf-8?B?aysydjFEcUJRTXVJM2ZFaDJZL3JoekswSCtwK003VmxZMzdISFpvQWlUeVc4?=
+ =?utf-8?B?RlpNb1NJZHJtU0R1aCtiNi9RK29aK0tjZ3JVZEg1VG0wQ1VuNWs4bUtvZjJn?=
+ =?utf-8?B?bUc2RDNFeUxraGFnZi8xZ0E0R0NVY2RESkU3VG5OMmpKay9TVCttVEF4Q1Z2?=
+ =?utf-8?B?YmJZVzB0V2VmWE5qWlllZU85ZXk1bzNFcEZoV0x6ai8vMjF0dnorVmVjTEVO?=
+ =?utf-8?B?K2Fock4xSzA3YTFKUXo1Slc0VUhhbGRRd252TW9QSGlqRWtDSEkzTCttOXc1?=
+ =?utf-8?B?cmdTaWw3RmtqYlQvbE96b1NaTVM3R1Y1cEIzUFduQ3V0Ty8yeHM0ajJhQi9y?=
+ =?utf-8?B?LzNDMUJGRkRxdUtqS0NSVldLaHdLNGZhWFovc3RrNFliMFM4Z0VCNXU4eGdR?=
+ =?utf-8?B?bWZ1emtNUXZlenFtUTlBTnF0UTY5K283anNvbjNuYWo4NTVNT0ZGZGRESFhP?=
+ =?utf-8?B?V284UitpQkE2eTcvZDlTVVRrVkVFeUtaeHhkeVZWNzdwNU1hZGcrREFJV0RK?=
+ =?utf-8?Q?ZvUn/TdJPMT6duRxjVwXQZOhMRgpi1FMfjzhdkGMQtiM?=
+X-OriginatorOrg: uclouvain.be
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ae71325-0f46-438e-8b24-08dd12df95bc
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR03MB9047.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2024 14:42:45.7443
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7ab090d4-fa2e-4ecf-bc7c-4127b4d582ec
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RvBxwI3nSUYH+Q2j3uI4F7R3Jwpo8N/Euyz8o4nSTbQsIx3OWg8326xPqVJGra9ESrviZpdvc4bV7Uelgfqelw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR03MB6230
 
-
-On Wed, 06 Nov 2024 23:04:38 +0100, Javier Carrasco wrote:
-> The first patch completes a previous fix where one error path stayed as
-> a direct return after the child nodes were acquired, and the second,
-> completely trivial, updates the function name used in the comment to
-> indicate where the references are released.
+On 12/2/24 14:39, Krzysztof Kozlowski wrote:
+> On 02/12/2024 14:07, Thomas Antoine via B4 Relay wrote:
+>> From: Thomas Antoine <t.antoine@uclouvain.be>
+>>
+>> As the Maxim max77759 fuel gauge has no non-volatile memory slave address,
 > 
 > 
+> s/max77759/MAX77759/
+> 
+> Please explain the device in general, e.g. fuel gauge is only one part
+> of the PMIC chip. Otherwise 'fg' compatible suffix would not be justified.
 
-Applied, thanks!
+The max77759 is an IC used to manage the power supply of the battery and
+the USB-C. Based on drivers from google, it contains at least a PMIC, a
+fuel gauge, a TPCI and a charger.
 
-[1/2] pinctrl: samsung: fix fwnode refcount cleanup if platform_get_irq_optional() fails
-      https://git.kernel.org/pinctrl/samsung/c/459915f55509f4bfd6076daa1428e28490ddee3b
-[2/2] pinctrl: samsung: update child reference drop comment
-      https://git.kernel.org/pinctrl/samsung/c/0ebb1e9e1b12ddcb86105a14b59ccbed76b6ce00
+Given I saw that the linked proposed patch, which adds a driver for the
+TCPCI, used the "maxim,max77759" compatible, I didn't want to create a
+possible eventual conflict.
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/linux-devicetree/20241127-gs101-phy-lanes-orientation-dts-v1-0-5222d8508b71@linaro.org/
 
+Will add this information to the commit description for v2.
+
+>> @@ -16,6 +16,7 @@ properties:
+>>    compatible:
+>>      oneOf:
+>>        - const: maxim,max17201
+>> +      - const: maxim,max77759-fg
+>>        - items:
+>>            - enum:
+>>                - maxim,max17205
+>> @@ -25,11 +26,13 @@ properties:
+>>      items:
+>>        - description: ModelGauge m5 registers
+>>        - description: Nonvolatile registers
+>> +    minItems: 1
+>>
+>>    reg-names:
+>>      items:
+>>        - const: m5
+>>        - const: nvmem
+>> +    minItems: 1
+> 
+> You need allOf:if:then section narrowing it per each variant.
+Will do in v2.
+
+>>    interrupts:
+>>      maxItems: 1
+>> @@ -56,3 +59,14 @@ examples:
+>>          interrupts = <31 IRQ_TYPE_LEVEL_LOW>;
+>>        };
+>>      };
+>> +  - |
+>> +    i2c {
+>> +      #address-cells = <1>;
+>> +      #size-cells = <0>;
+>> +
+>> +      fuel-gauge@36 {
+>> +        compatible = "maxim,max77759-fg";
+> 
+> 
+> No need for new example if it differs with one property.
+
+Will remove in v2.
 
