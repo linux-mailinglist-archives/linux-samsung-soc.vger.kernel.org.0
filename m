@@ -1,73 +1,72 @@
-Return-Path: <linux-samsung-soc+bounces-5535-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5537-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 556379E08BB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 17:36:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A514F9E089A
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 17:32:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 997A016F930
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 16:15:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDDB91700F7
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 16:22:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C045D18787C;
-	Mon,  2 Dec 2024 16:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18EAE193092;
+	Mon,  2 Dec 2024 16:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="E/bVuty0"
+	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="IbC+QJwJ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from out-03.smtp.spacemail.com (out-03.smtp.spacemail.com [63.250.43.88])
+Received: from out-02.smtp.spacemail.com (out-02.smtp.spacemail.com [63.250.43.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01C317FAC2;
-	Mon,  2 Dec 2024 16:15:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044AA17E8E2;
+	Mon,  2 Dec 2024 16:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733156102; cv=none; b=I9WllrxTxaBn5m+oZzTCb4Zs+UY0sIkeriUkI1iXMY/fNmCSdb5+FfkcaROBaMy9w4pDPx+NhZFy3+PJp8v/YxkN8WfkN3CY+VslOgBG2ChRxJbALbnPIEkEgI5l+/h6XOA5Yy2mr5qwvFOlQUVjhPnCg08Qz1ZzJPxC0m8i1yY=
+	t=1733156553; cv=none; b=E2X9TvUwBR3J8oEhEWZ5KoM3l7CDw8EB21YWtMMxjshX+G5Yu5pRvx9Z7vzHOTuY5wATOkjCf42d4tB4HUqirTPSqCp1qLrHH7LJ7775O9Sl8OqU6ymS8Rqk5r0XYMtCdKDz5ZL6ewfSQCvHeIY8JhqopW984/itICCXsm8Rxn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733156102; c=relaxed/simple;
-	bh=rf3tmdsNPhNTXCWTXYttONTJQUg5LXdbItehquCHLoI=;
+	s=arc-20240116; t=1733156553; c=relaxed/simple;
+	bh=bleGnqFW/nojxtVk6PiL3yVMjQJYewvoq2RILsSbpZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=umI/kT1MubDq/+zTwGgPvTaSR29PbXlVk55oHOgjIjIdeJF+7kFWdQhelwZxUzX+/XU7Ciy3esSibuMTtkNUbzF2GZEByrGemK/kTuNtczacylqweUu4OuEa1qLn+UQEsmdkBgDs54Nn7rUmYMDggftPEpIQQQ1yTRTuep/ZvaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=E/bVuty0; arc=none smtp.client-ip=63.250.43.88
+	 MIME-Version; b=DGSD6znWK8lohMeeZl3Hdy57jvHJdjftSQTcZVpvq0fwlfwxQsNSz2WayevFRZdemdcieP+3jB94otX2kLXPsz0OD5pLIeysRhjIg+GwmSE3AI5lmn/dccZmoFAb/A7mwHaD7uFZ/nQ48kSDvJIz3vAdBCgXX2Lj8yI1UygToQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=IbC+QJwJ; arc=none smtp.client-ip=63.250.43.87
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
 Received: from prod-lbout-phx.jellyfish.systems (unknown [198.177.122.3])
-	by smtp.spacemail.com (Postfix) with ESMTPA id 4Y27tj4c7CzGp3g;
-	Mon, 02 Dec 2024 16:06:05 +0000 (UTC)
+	by smtp.spacemail.com (Postfix) with ESMTPA id 4Y28FZ6nGnz4wHX;
+	Mon, 02 Dec 2024 16:22:26 +0000 (UTC)
 Received: from umer-b550pro4.lan (host-213-78-252-153.as13285.net [213.78.252.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.spacemail.com (Postfix) with ESMTPSA id 4Y27tY2H9zz6tkK;
-	Mon,  2 Dec 2024 16:05:57 +0000 (UTC)
+	by mail.spacemail.com (Postfix) with ESMTPSA id 4Y28FQ4Vwwz6tkM;
+	Mon,  2 Dec 2024 16:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=mentallysanemainliners.org; s=spacemail; t=1733155560;
-	bh=rf3tmdsNPhNTXCWTXYttONTJQUg5LXdbItehquCHLoI=;
+	d=mentallysanemainliners.org; s=spacemail; t=1733156541;
+	bh=bleGnqFW/nojxtVk6PiL3yVMjQJYewvoq2RILsSbpZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/bVuty0ksgZbd+R3sKLadsOLuXj9zd02pmVZghBvEktX0XXII9fLQCOgKbmBFXB+
-	 RdhUl2Vx2ickBwg0E9GZhEWO9hnhuhyRXGH+eSQ4io+fzWLeiot1rgzclGOSjcuXjJ
-	 tGgemc2GLr/p2Cv6aSK9KGzuG3NLXbXhd383dHiaekyLYAcAYhS0wJ5qELxyEEBJYt
-	 MH0KrR8AIOgxKROvRGNuGJ5jwd4rSq1jsGQ1REqKky4dQmsWxsf+qP1Sblz9M65UVS
-	 /mmV+nJ9kPmqff15FFflHeiYQ1Bm01cuwZsXc3bAOMDqzLAM1xYEEbbrmzrnq+02yP
-	 lIBNr9yS8+cgg==
+	b=IbC+QJwJsZEgxKRvcBKZ/dtuZIGsADG1JKUb82opxWYmvWFhaPH7ujnNmS33ZTUoe
+	 Zz0y5/6dBL0GhQS/QDFdXNXFj0JJZjfkAiabZC/J5mGpKiF+U40aijxrP3ai72oiYb
+	 zUdyLmI7GIzn8KuoBzXa74ZpWFd9Wy+QVLk65mkA5uVxjKsLfkUiHZAV0S5uaUEpxA
+	 Q5ol5bdcvlUbLxnlCxlHAfqBcvl7Leq/ekd39iEM2bOFFxYOBW+NOzE34shfhTUMSE
+	 Ow2/pSjX0rQxm93lGNFaFYJQ+2gmvy17GXpekp0PtahrAQpLlw6rib/723Q/6UesSk
+	 NAp8JC2MR3QMg==
 From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
-To: ivo.ivanov.ivanov1@gmail.com
-Cc: alim.akhtar@samsung.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	igor.belwon@mentallysanemainliners.org,
-	krzk@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Cc: linux-arm-kernel@lists.infradead.org,
 	linux-samsung-soc@vger.kernel.org,
-	robh@kernel.org,
-	umer.uddin@mentallysanemainliners.org
-Subject: Re: Re: [PATCH v3 3/4] arm64: dts: exynos: Add initial support for Samsung Galaxy S20 5G (x1s)
-Date: Mon,  2 Dec 2024 16:05:48 +0000
-Message-ID: <20241202160548.3672-1-umer.uddin@mentallysanemainliners.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	igor.belwon@mentallysanemainliners.org
+Subject: [PATCH v3 1/4] dt-bindings: arm: samsung: samsung-boards: Add bindings for SM-G981B and SM-G980F board
+Date: Mon,  2 Dec 2024 16:21:55 +0000
+Message-ID: <20241202162158.5208-2-umer.uddin@mentallysanemainliners.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <9f48459e-f381-446a-86bf-c8d1bb8858bc@gmail.com>
-References: <9f48459e-f381-446a-86bf-c8d1bb8858bc@gmail.com>
+In-Reply-To: <20241202162158.5208-1-umer.uddin@mentallysanemainliners.org>
+References: <20241202162158.5208-1-umer.uddin@mentallysanemainliners.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -76,33 +75,28 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On 14/11/2024 10:09, Ivaylo Ivanov wrote:
+Add devicetree bindings for Samsung Galaxy S20 5G
+and Samsung Galaxy S20 board.
 
->> +
->> +/ {
->> +	#address-cells = <2>;
->> +	#size-cells = <2>;
->> +
->> +	model = "Samsung Galaxy S20 5G";
->> +	compatible = "samsung,x1s", "samsung,exynos990";
->> +
->> +	memory@80000000 {
->> +		device_type = "memory";
->> +		reg = <0x0 0x80000000 0x0 0x3ab00000>,
->> +		      /* Memory hole */
->> +		      <0x0 0xc1200000 0x0 0x1ee00000>,
->> +		      /* Memory hole */
->> +		      <0x0 0xe1900000 0x0 0x1e700000>,
->> +		      /* Memory hole */
-> 
-> The space from 0x100000000 to 0x880000000 isn't a hole in the memory
-> though, is it? 0x880000000 is in the 64 bit address space.
-> 
-> Best regards, Ivo.
+Signed-off-by: Umer Uddin <umer.uddin@mentallysanemainliners.org>
+---
+ .../devicetree/bindings/arm/samsung/samsung-boards.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Hi Ivo, This device tree was based on the work done on c1s and
-Igor had also labelled the part as a memory hole, also same with
-the r8s device tree done by Denzeel, also downstream fdt skips out
-on this region abruptly hence why I had also labelled it a memory
-hole.
+diff --git a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
+index b5ba5ffc3..f15228d5c 100644
+--- a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
++++ b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
+@@ -240,6 +240,8 @@ properties:
+         items:
+           - enum:
+               - samsung,c1s                     # Samsung Galaxy Note20 5G (SM-N981B)
++              - samsung,x1s                     # Samsung Galaxy S20 5G (SM-G981B)
++              - samsung,x1slte                  # Samsung Galaxy S20 (SM-G980F)
+           - const: samsung,exynos990
+ 
+       - description: Exynos Auto v9 based boards
+-- 
+2.47.1
+
 
