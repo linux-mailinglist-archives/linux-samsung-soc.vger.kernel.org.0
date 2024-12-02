@@ -1,143 +1,142 @@
-Return-Path: <linux-samsung-soc+bounces-5540-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5529-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25A099E08CA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 17:38:31 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F85F9E0AB3
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 19:11:05 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3325D17199D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 16:23:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5590B3E7F6
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 15:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 538E11D5AC0;
-	Mon,  2 Dec 2024 16:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E562208992;
+	Mon,  2 Dec 2024 14:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="YY1zYL6t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YAr0pe+x"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from out-02.smtp.spacemail.com (out-02.smtp.spacemail.com [63.250.43.87])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EC9193061;
-	Mon,  2 Dec 2024 16:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B3E204F81
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  2 Dec 2024 14:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733156563; cv=none; b=fspANP3oJJZN7CW3aWtAfBaVVjOtCbGI32/FxRC94wRCgS8f0PLJ0PhF3ICGzbgswt9WVWNIRy7JeRbfCKGKutjaANpOrCLCjcqFi2t5XUMP3Vf3m72hpFtNUO7JF1gzciOzBSymyOBCLA1SPOJ2coi8B9NsXm4ug6A4rLMEZSo=
+	t=1733151553; cv=none; b=sYG9NRAkZo5PqTxuqbBIEvs63QRvn/Us9wShhnLQMI0aWxIe85kTmQvWuJSdlSqcqzkwNBz6qH52RA6i+NVJVHep8KR1ElfLvrmrbIYieopsZFyxS1+LGCo8f8GnD7mHz210PNlPq/P01hj/4NJYDjA0Ojgprm3BJCIuETO+hBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733156563; c=relaxed/simple;
-	bh=p4/oDNeAcM8YTvV1ZrRQzkUmZ2zyB7c9FNreyRr5PDM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjiNtODkNnH+y8IR5M2FVMVEaC6s6opNbPHG4xLwjZbjOOx7HcepNwBGf0KwKTBMaatJ+1WwfnDJ8h7eswOVeduXTZE7u7Za2A8jsJxfzeLLYsxmIzIdvyodggVbA/Aq+WPpnXcdfWLLAgiHC8CJZJyswB/Y2F0l8CPm1Vj4ibo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=YY1zYL6t; arc=none smtp.client-ip=63.250.43.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
-Received: from prod-lbout-phx.jellyfish.systems (unknown [198.177.122.3])
-	by smtp.spacemail.com (Postfix) with ESMTPA id 4Y28Fm52K3z4wDW;
-	Mon, 02 Dec 2024 16:22:36 +0000 (UTC)
-Received: from umer-b550pro4.lan (host-213-78-252-153.as13285.net [213.78.252.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.spacemail.com (Postfix) with ESMTPSA id 4Y28Fd03HKz6tkS;
-	Mon,  2 Dec 2024 16:22:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=mentallysanemainliners.org; s=spacemail; t=1733156551;
-	bh=p4/oDNeAcM8YTvV1ZrRQzkUmZ2zyB7c9FNreyRr5PDM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YY1zYL6th/bpswcCWvwIy+CaPdpxssCiXSF9TbzoXeRzNQ9xM8b66K0ZszcB3McXA
-	 JcWkt+5s6k95wDMVfV1agP1llI7YxWZ7fHewwCAjJUKCNDVtb4dZa8z1VM/zC0LdJk
-	 nOw2f+A+UbIs/xWyfEQl4RdCSkms2ks8/gmx+tPKVqLJxxV3Nwf9wjFZqWPkWD2CUp
-	 vtRzMtGSfPd155kxoBrLkBj7KY8oxg6d3YOyAYA93C2zZEDeyO0fJGfGXtG1PxPlme
-	 2TGYRm4e85ZHA46Yaz5S/NJNFXtxkl2h0SKWnzVAvd0z93SNXWCIJg2LPdoZblHVkO
-	 lGVOYUL3JHdlg==
-From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	igor.belwon@mentallysanemainliners.org
-Subject: [PATCH v3 4/4] arm64: dts: exynos: Add initial support for Samsung Galaxy S20 (x1slte)
-Date: Mon,  2 Dec 2024 16:21:58 +0000
-Message-ID: <20241202162158.5208-5-umer.uddin@mentallysanemainliners.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241202162158.5208-1-umer.uddin@mentallysanemainliners.org>
-References: <20241202162158.5208-1-umer.uddin@mentallysanemainliners.org>
+	s=arc-20240116; t=1733151553; c=relaxed/simple;
+	bh=vorR0NUgMIxpLB6XnGO1J1hmkZxBZip3sa3UgLPBo2Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hwhTIeDHllpY4+Uf3uC0AOFA3875H9vgO9Zeqem63ye6jyst3SH5n/Z81xiVcfyOH/Rj15kacsiqq4tbCIC2lZNkT+goRQ1B5giiGCj6NC/7Gs8cc9lJjOqBDd84SSq0yK4LYctgOXXFER/GZ8kAEG7Eb+SvlkTxr95ulKznSx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YAr0pe+x; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de5ec22adso5357748e87.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 02 Dec 2024 06:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1733151549; x=1733756349; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rju8sEpE6sdROgx04VbEZEe0Z4Dqml8d9fp2hAHZz1Q=;
+        b=YAr0pe+xAUndygXKR8wcvyjPgw6c+Z9XNrMtfghZaWt4OyjOLPtWUXN9z+V+yVPnrE
+         vsPfDskivzysC0sD3fljGfR1kAfsXIP32eIEheL1lkJaHEYDj4nzPfrNQuOc0zk4zGg4
+         VlnTE0BvEyw4cpRuc9rOof13zW0fbeCB0mUBfPIrpVzqlqkB+jE2mytkbzz5ccqTTdXl
+         67/G04S3AT4DnbWpm6/FFTwHHOeDnAz0yfU049qyK6UlNNe/6SkzVe88ezWhvpyrklI/
+         PR1/VvQ5VmlOtHW5R/dvu2VbW5YGKw8wsgQyw3pLsaHkZLrugE68NKjNufacGiPLP7EY
+         ozRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733151549; x=1733756349;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rju8sEpE6sdROgx04VbEZEe0Z4Dqml8d9fp2hAHZz1Q=;
+        b=C5D002OAilS9+3KFx6+HQhdMakhAd2nT489yQIZBapDBYfDa+XyaA1gDzjfUnirjL4
+         vA2fCUk4mvQZPh6Qd1vNh8oSyfkai8QiQ8Qv502Ub0rDYuvHwqBT2Tnu52xY9dUqHFCF
+         MVEOXFKDqSBsjsZGyQBzuZMTbYCnupVvuS6voHZGBrvfNbITiA2g0G1A+m6peim9hxJE
+         Llo+P/iumEd5X8ym9i/Qb3+FDguiWBRC8vPa13fXnZsn3JrptIRH3NNSsELKsisbRhsQ
+         Pv5w9JsYFKxPfRNE9y9VoKIN0EHBHHSgUPqUZKurDMS1vdoBKf1reVUPoP79Iz8xHVOO
+         iazA==
+X-Forwarded-Encrypted: i=1; AJvYcCUQT2PGYb3Pat93QrXSn2Nr3gO1I+4y5Bioh2aIiapM2Yg9/YSZlKpzMoXOndpr+tVMOM1jVFL/2F5Lr9xVypk1MQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5ZSRZQ8XkcC/U749EuPDw2BbF84qnP/BySLIVXI+xPpwiet9z
+	wt4VRMz8Y1YwBnz7QiQK1NUhMKt2NdEFazkPHc1gysz1shtKkImK15/TuHq4Bcc=
+X-Gm-Gg: ASbGncsRJuBwG3qevXAShV6XVTLbcdYEUMfYlJh1xGj7HNCzzrrkhvCezmoAXgY85ps
+	5oV/yigP5e079Ojuk9VC4dXLzFaStxoA8ha3roQOVnbPzYcxwl2P82OxedGPbTaV2gQD19Q5EqY
+	c9ixOiZcCddex9AfFCnhk3/EkK2FAm36Kw5VwYPvkJV7gXLV5Kqlquy+COmT7HXbrXFH9BSKMqQ
+	8fDZTpvjQeob4PGt37VaZbfboc+4RTLGMzhlcQE609OYs1g/jPsySPn1EK3G0Xpn6Pmirit+vsI
+	I6FhrwixYOd4+z8E967m4BMOEhmG3A==
+X-Google-Smtp-Source: AGHT+IFqUZg6UxbmPBpmmNDChC/PhM5ksog1SlPE5I3zx5OIy0xNoMEVpgKx1uItUxOnsjp3icE8UQ==
+X-Received: by 2002:a05:6512:b26:b0:53d:edba:d40b with SMTP id 2adb3069b0e04-53df00dc8d7mr12039335e87.33.1733151549347;
+        Mon, 02 Dec 2024 06:59:09 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df646f2c3sm1480384e87.126.2024.12.02.06.59.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 06:59:07 -0800 (PST)
+Date: Mon, 2 Dec 2024 16:59:06 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Phong LE <ple@baylibre.com>, 
+	Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
+	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Russell King <linux@armlinux.org.uk>, 
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v5 2/9] ASoC: hdmi-codec: move no_capture_mute to struct
+ hdmi_codec_pdata
+Message-ID: <onq2djvtvxvr3a52s6sin3dstwdctyyz2lxpx47lk7ndxtza33@odldgvhryw4d>
+References: <20241201-drm-bridge-hdmi-connector-v5-0-b5316e82f61a@linaro.org>
+ <20241201-drm-bridge-hdmi-connector-v5-2-b5316e82f61a@linaro.org>
+ <20241202-bald-just-guan-c5d41b@houat>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-bald-just-guan-c5d41b@houat>
 
-Add initial support for the Samsung Galaxy S20 (x1slte/SM-G980F)
-phone. It was launched in 2020, and it's based on the Exynos 990 SoC. It
-has only one configuration with 8GB of RAM and 128GB of UFS 3.0 storage.
+On Mon, Dec 02, 2024 at 01:06:09PM +0100, Maxime Ripard wrote:
+> Hi,
+> 
+> On Sun, Dec 01, 2024 at 02:44:06AM +0200, Dmitry Baryshkov wrote:
+> > The no_capture_mute flag might differ from platform to platform,
+> > especially in the case of the wrapping implementations, like the
+> > upcoming DRM HDMI Codec framework. Move the flag next to all other flags
+> > in struct hdmi_codec_pdata.
+> > 
+> > Acked-by: Mark Brown <broonie@kernel.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> I appreciate it might be a dumb question, but I never really understood
+> what no_capture_mute was all about. And in that context, why some
+> drivers would need / use it, and some won't.
 
-This device tree adds support for the following:
+Some platforms can not mute the HDMI capture (ARC?) path. See the
+following patches:
+- https://lore.kernel.org/all/1606372608-2329-1-git-send-email-shengjiu.wang@nxp.com/
+- https://lore.kernel.org/all/1606372608-2329-1-git-send-email-shengjiu.wang@nxp.com/
 
-- SimpleFB
-- 8GB RAM
-- Buttons
+Russell added a way to disable capture / playback support, but only TDA
+driver uses those. I think generally we should change those flags to be
+opt-in for capture, but that requires carefully reviewing all the
+platforms (and is a separate topic anyway).
 
-Signed-off-by: Umer Uddin <umer.uddin@mentallysanemainliners.org>
----
- arch/arm64/boot/dts/exynos/Makefile           |  1 +
- .../boot/dts/exynos/exynos990-x1slte.dts      | 28 +++++++++++++++++++
- 2 files changed, 29 insertions(+)
- create mode 100644 arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
-
-diff --git a/arch/arm64/boot/dts/exynos/Makefile b/arch/arm64/boot/dts/exynos/Makefile
-index deb8dc509..783807249 100644
---- a/arch/arm64/boot/dts/exynos/Makefile
-+++ b/arch/arm64/boot/dts/exynos/Makefile
-@@ -10,5 +10,6 @@ dtb-$(CONFIG_ARCH_EXYNOS) += \
- 	exynos8895-dreamlte.dtb		\
- 	exynos990-c1s.dtb		\
- 	exynos990-x1s.dtb		\
-+	exynos990-x1slte.dtb		\
- 	exynosautov9-sadk.dtb		\
- 	exynosautov920-sadk.dtb
-diff --git a/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts b/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
-new file mode 100644
-index 000000000..7bca641e5
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
-+/*
-+ * Samsung Galaxy S20 (x1slte/SM-G980F) device tree source
-+ *
-+ * Copyright (c) 2024, Umer Uddin <umer.uddin@mentallysanemainliners.org>
-+ */
-+
-+/dts-v1/;
-+#include "exynos990-hubble-common.dtsi"
-+
-+/ {
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	model = "Samsung Galaxy S20";
-+	compatible = "samsung,x1slte", "samsung,exynos990";
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x0 0x80000000 0x0 0x3ab00000>,
-+		      /* Memory hole */
-+		      <0x0 0xc1200000 0x0 0x1ee00000>,
-+		      /* Memory hole */
-+		      <0x0 0xe1900000 0x0 0x1e700000>,
-+		      /* Memory hole */
-+		      <0x8 0x80000000 0x1 0x7ec00000>;
-+	};
-+};
 -- 
-2.47.1
-
+With best wishes
+Dmitry
 
