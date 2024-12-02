@@ -1,201 +1,160 @@
-Return-Path: <linux-samsung-soc+bounces-5528-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5530-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF359E06E5
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 16:24:44 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D881F17259A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 14:58:51 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A89920B7E4;
-	Mon,  2 Dec 2024 14:54:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=uclouvain.be header.i=@uclouvain.be header.b="HKfsbOEx"
-X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from EUR03-VI1-obe.outbound.protection.outlook.com (mail-vi1eur03on2117.outbound.protection.outlook.com [40.107.103.117])
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 720BC9E0909
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 17:51:11 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531952040BE;
-	Mon,  2 Dec 2024 14:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.103.117
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733151297; cv=fail; b=qqVC/VmL4kVNqDUEPnVMXuVaV+7v9vwFw6gt+LiV2uRN0WBxBywn5NC7x2ykqXBSLVQ6I8bSs3yf8AL+C+Q+f7UqpcBQWchbDdFSDlPRLir8+75qVrZ7QQ2st3WSdQPg+UE5wscvtOoKMi98qBa+2r7aeAwkqG6nYhhh8buyX0Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733151297; c=relaxed/simple;
-	bh=WZzj707enoeLcHMzugoAvx1Skp1KP4hSzoCWGhZwFkA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gQb3Yao2qnLF9QSbVlTE5IvdBG9Ocg4AkMbNZJyES3HBteBysgAWXQqp+cmZvGfXPVtmQECKFa0kR73KFu0qNFOCF4ElRlHxE8cXlF5nLxK8GJVLSu4WTfFPPIObVmP7HSeJCrdBoMf77IKQTrOEFeC+ooFhrNC9D3tVDRXL/0c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uclouvain.be; spf=pass smtp.mailfrom=uclouvain.be; dkim=pass (2048-bit key) header.d=uclouvain.be header.i=@uclouvain.be header.b=HKfsbOEx; arc=fail smtp.client-ip=40.107.103.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uclouvain.be
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uclouvain.be
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=szRL17UNNWAPR+cPoBzno3QfzugY90LZ+0Bc/SiTmtwwiT0dNRS959NY45QrNlIpnUd5dybRuaqtMTS4xiqfZcHQJDC5wRk7KvlGHlP2Mg8rLZMxjRDNFZMpQg9am4bh+jpZ6PTv3vq2Hj6udsPpM8YcjC8x8EiT663r29gMX4mOBMBjxcZe1fKQip5yxdkRGUldIanZAie3bbTQ9wNtGWRarSlHg0BaUoVAaMzw2ijQ0h4L2waK9dbFwc7bcctUBEP4YTDXVf6bQUDEhiMBZDXwqqzuRKXr+2DLJVW6YEEJpy/u9Fh8XEvJhn0x11A2N6+n4h/AV7x3YsBE+T8/dQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=phSJLAQUpSIc4MH9f3YnY+ht5TF7ZwxBzwVlV7H0iFs=;
- b=AnRRrAhZE1znSSYAxlfECr1jqMMggn2Y4eD0wt5kgUAgawaH7u8nksAo4XpSsOzscGs1cQ6HuJb/CuvjMajhue2ugA9ywP0ox92dowaRtjy/T8jq090WJ3zj0zNW0t+6vWDVVSgjBv+qMIJStQvtk5Eoqj8U8YwQWq9+O0NjuAnpQMHsHyD62+8llvlci+R9Kchjn8yy6ea7AyyuR9BrYR6Yzk+7JgwX6JUBPjTBF0g8h12+HTBNTRe3eWC/DjmhasMR0nrm0CelQ4dxJXzitmtjy07zOCa7Ku6HjnArz1cT0f6PHYApY+itH2WhUPwM9+nbvJin5dw7sLWmCQgB1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=uclouvain.be; dmarc=pass action=none header.from=uclouvain.be;
- dkim=pass header.d=uclouvain.be; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uclouvain.be;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=phSJLAQUpSIc4MH9f3YnY+ht5TF7ZwxBzwVlV7H0iFs=;
- b=HKfsbOExx+ZUuEW3MNt5E6tH+TCIHucM5d6jHIBFX4oH5HOx7KEGhIOXMB8u7ORGakbqLPI/kvdCSuMrzcYp1TCSVW/h2pReq3rvT3U62fmnzNXcCN4OtGAtuJG0HKKrZJhV1zmzpZuMSVYZY2+Vy8mL1XO4hpunaq8I7pkBe5b/9ArMMjb0Zi7z7/6L1Z7l2snWzjXFc38pKYJMYM0fZIQm3Z6R5wnksiEVzPo00nuxOZ6UNHt7ccrK9FwAa3rxYdzcbm7mc+MMAvnN7BYlB0LQ83SmFzmstxfK4JjlHuVQuiz/aCwrQGXxVt7KSCDN2D0umswQXMivdpMzHUEW0g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=uclouvain.be;
-Received: from AS8PR03MB9047.eurprd03.prod.outlook.com (2603:10a6:20b:5b6::13)
- by PA4PR03MB7182.eurprd03.prod.outlook.com (2603:10a6:102:104::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.18; Mon, 2 Dec
- 2024 14:54:52 +0000
-Received: from AS8PR03MB9047.eurprd03.prod.outlook.com
- ([fe80::c90e:deef:6dcf:538c]) by AS8PR03MB9047.eurprd03.prod.outlook.com
- ([fe80::c90e:deef:6dcf:538c%6]) with mapi id 15.20.8207.017; Mon, 2 Dec 2024
- 14:54:52 +0000
-Message-ID: <08558b39-bf69-43a7-8f55-064995221099@uclouvain.be>
-Date: Mon, 2 Dec 2024 15:54:10 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: defconfig: enable Maxim max1720x driver
-To: Krzysztof Kozlowski <krzk@kernel.org>, Sebastian Reichel
- <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dimitri Fedrau <dima.fedrau@gmail.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Peter Griffin <peter.griffin@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org
-References: <20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be>
- <20241202-b4-gs101_max77759_fg-v1-3-98d2fa7bfe30@uclouvain.be>
- <a917cb0b-68de-4916-9a4d-021a8da37289@kernel.org>
-Content-Language: en-US
-From: Thomas Antoine <t.antoine@uclouvain.be>
-In-Reply-To: <a917cb0b-68de-4916-9a4d-021a8da37289@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PAZP264CA0111.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:1ef::13) To AS8PR03MB9047.eurprd03.prod.outlook.com
- (2603:10a6:20b:5b6::13)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 137A7B46FB2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  2 Dec 2024 15:04:11 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1442205E0C;
+	Mon,  2 Dec 2024 15:03:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxeMPYfp"
+X-Original-To: linux-samsung-soc@vger.kernel.org
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D383F204F87;
+	Mon,  2 Dec 2024 15:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733151830; cv=none; b=nVHb4YoppgWHPVLZ6EbOWS+bS+cGtVC6eqVzFMlLWTiYegDzLYn27v9aX902/0PpdpNkzIFx0j3yxc1pIevTcsauy95xYfA50qil7Liej1QExCNMWT0JaeGN5t7rnffEcSTG5VB43vm1QwBMo40K2TxP3V5qTl/pWZy7ZLOxjMc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733151830; c=relaxed/simple;
+	bh=85lFhRO/J/E7HnOpdb/OWr3TDzN8MFbfHpzs1aekHnE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=somauUTaPQBm77DfAzzTtfREDxi27cFvmc/pQY7it3O5O1tUOrxW8wm+l5/0V2QZ6yq5+MdaH3z8hIusAE3Blgn1PKNvnm0frnkFDsLjsulrddhUlM+LXyYSEg3Fs+7vlBJULGPtBnHqNi7Eupg+FXeclMoC9JIexg+pPvbVyz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxeMPYfp; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4349fd77b33so35397675e9.2;
+        Mon, 02 Dec 2024 07:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733151827; x=1733756627; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qujM4d7qCY1L5TaGGSMsXfZ1apvo+jAfsCE8VLdjQ4I=;
+        b=YxeMPYfpHXluLj3ygBiMae5nBLu1cWPbg/KKohLUPfQ4ytIXeiJBvl6AyGZ9SR5CeP
+         CXpdNd8fOTEfu8N9nU89ywU9ZrP0l8t3qBMFOpYyN4cseO1VfpuF03X2nxO3Tk9rwyVY
+         ec0K0xgbFKETO85sD1tn69FwZH7+wnPRIGg1qBDDMf6n161dp3jLdrKijN9e49DthDmH
+         +tSCeNjJa1E+fvLxavAiLJaihgYPVJln9zYiOQOf+IEGQNIuAjYtFwpEsvWKtHq6cokS
+         nWiJ11Fcg+kK3ZHuT7JdQtCHfa3UvCxw50tVulaDWIMMSCt3D9AwDXsDLoXBEKhRoERt
+         uY6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733151827; x=1733756627;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qujM4d7qCY1L5TaGGSMsXfZ1apvo+jAfsCE8VLdjQ4I=;
+        b=wZuA4rsb0xPnvie/bAryQ1ush5M7Z6t147tmhKklSZH0Cvjnm++RT85LH4g2cYbOfl
+         Sw0kFs6riqFfCgywbR45gOOVSLBv6Ejig3bzWbChNVDt95tMwk02Ha+cP9g3U3ioEs44
+         OpzfXRgDLTimTgWBQC6A7Yy6afmmojwo+txuS+Oy84cPq0e6xPsKFysQS9clwLrK3vcy
+         Rdpa5W7GYXVvW+o4MSq7tUhPOAECXiZSUQfTsss9PXLTCOoA8T5NNjqOb677yFcR+mPB
+         N08dMOjwLIW7lgDX0ris2QaJDl16l9/Rxy6JJ4/OvfUgWK5ByEOVmmwp0v4rqR+jBsQK
+         M+aA==
+X-Forwarded-Encrypted: i=1; AJvYcCUGaoQtDUXekFBAuNlGM1FzcDjjxhbE2FSYdQGvQ+g+jIwKhRVqwuSe+dA7e252KBfkpxJonFRAOkopb20v@vger.kernel.org, AJvYcCUvGqrR4GJFphQXiyZ7hGvF9Z8lN+vajydwSFk00kdyefU4JC1gV1bjqv+QYC5fov5IAXxXbM5QAJcSNAZa@vger.kernel.org, AJvYcCVE3oPAVfoc/N0jjXp4jzNbIm4NFKv8lmXREVlgTy9sjeXAHr/yRTNycubPwq4xwuJSgq6hAJCwjUcZKvEQN6fQ14c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyZD02S0rQidhfRRWqGdmvT+9gc/513XSHD+dI8JzIqUa05yH5
+	fupSEK/OkRYpxVifiy2Sc9gZJeaGIS2JXnpTP34MJjq4C6OF/Swk
+X-Gm-Gg: ASbGncvnyCZTrKZACnGOxaXJHVTfM+E4O4pjpGu3pnmayLlXa5eIHa3Vbic8wJ9CSzQ
+	pAa2MnsmwCqqRCt3un0elO1ANs51+7yXQpPIsDOt+v0+Yp2pft/19UosCrw/tK9v6EymcZ0N7N9
+	G5JrRN7+e1+SDuE5u5tNkGMGYZVaRl+GliRS4/UOefIO48XD/ggcgYnlFRHiLIt9N2O4HhRnVVT
+	9XTyl8ruQk9zDGvI+nvhl0ypafFxkBizs5rfPZNHP76z6k65BeXG8a0PVg0PxBdoQ/D4aozr1tC
+	AMLEI+f8Mwvx8mazepE=
+X-Google-Smtp-Source: AGHT+IGDnqoQPM9S2ZXAYcJFrCBwMFmcYVdD5NrlXMVFXBAOrzgALnyLT6wqVMw+fFjssl311bGusQ==
+X-Received: by 2002:a5d:64cc:0:b0:385:f092:e16 with SMTP id ffacd0b85a97d-385f0a153ccmr4698133f8f.55.1733151825042;
+        Mon, 02 Dec 2024 07:03:45 -0800 (PST)
+Received: from ?IPV6:2001:861:3385:e20:6384:4cf:52c5:3194? ([2001:861:3385:e20:6384:4cf:52c5:3194])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ec6a3d8fsm5080310f8f.101.2024.12.02.07.03.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Dec 2024 07:03:44 -0800 (PST)
+Message-ID: <0eb908f2-2304-4a91-9c91-e7f291da9dcd@gmail.com>
+Date: Mon, 2 Dec 2024 16:03:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS8PR03MB9047:EE_|PA4PR03MB7182:EE_
-X-MS-Office365-Filtering-Correlation-Id: 999d3f69-c977-4412-629c-08dd12e146e0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|366016|7416014|376014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Tm9qTWxJWVNPK1NWcHFVbndCSEU1aWxhT0xxcWFmK2I4QmR4VjhRUEE0TktC?=
- =?utf-8?B?K2preUFMNDR0Q3BWbER2WG45ODJBZlNoZjYySnU4M3BEVWZ5ZXlyb0VpQmk3?=
- =?utf-8?B?WmRycE1iWldIZGNzN3huZ2wxeklJOTVGMmNndHlvYVpIcnhoSVc0NnB2Mll2?=
- =?utf-8?B?R1pTTmhGeGc5QTM3ZE1zdVJnTmduT0dZMW9XK2FTMytRNEhUUXJwN1ovNDlW?=
- =?utf-8?B?YnJtS0ExTHMyZkNSMko3NkZNSnRjOEF0ajdhYUJLbS9sbmZKYTNtbkRiR1R6?=
- =?utf-8?B?OTgvKzdONlRxWjRzdnE4OWNTVVZGUVFHaEZWQm1DRzRJbWJvT3R2VWFZUDRj?=
- =?utf-8?B?L3UxYlBsdmFYYm9HVEpNMGtnOUY0Q1BWeHRMbWJKS0ZVdmdxWVgwWHh2ZGY1?=
- =?utf-8?B?RndNajR2Ym1VVE9CQ3dqNUpYcUlWRHhTcTh3MlI1L1NBMVlNZE40Z0RaWFRq?=
- =?utf-8?B?M1hTekNWUitRRW5yL0JQRDhMRUhRQVBrYWVzalFLT2NJRjZ4MmVGZEFMUTNh?=
- =?utf-8?B?bGpWZ3ppaStJVW1vaHhBTkpjZ21lb2VWVGc2RHg1a1ErYXlKaDF5ZjhJUXpV?=
- =?utf-8?B?SGpaN241NTF4aFhFb0pKT2VEbmoxa3hSSE1aWlgrZzVnaXM0YmJoN0lqclV5?=
- =?utf-8?B?Nmx3WFQwTmY2QTFQN3BXdmJBWWZiN3FITXN4WG5MMGVwenN2UWZWVEZUSjJI?=
- =?utf-8?B?ZHV5di9IQWlDS2tOTVNlR1hOSWk2TzJneUdHNWpDbVZydjdqV3dRV25Bbjgx?=
- =?utf-8?B?ZnVMNGJ0b0RFU2FGWDdtNW1JVVFnbUUreUdjK3NINmszUWdudm5VaGdrZFEz?=
- =?utf-8?B?V2NlSlh1ZWQ1ek1mNy9rbjdzVGc0aEs1WjNBYTE0ZVNtNEFpU3ZpbXZSWmV3?=
- =?utf-8?B?KzhVbi9WOGs3TUkwbTJJZzk4aXJzSWhLV0tUSXpXdE92ZlF6Y0c3VVhxaFJB?=
- =?utf-8?B?bmFJQXk0YVI4eGQ5K1NpUlJwakIwUjlmKzdrck9nV1BpUTlEZTNkVzZuYjFG?=
- =?utf-8?B?Smx4NEVqR1RIM3JtSzA1K1Z2MnY5MmpPeXExU3ZnMVVvR1RCRzFWNFFsSUMy?=
- =?utf-8?B?MWJCZk50Q3hkLyt1MXBOQWErMzQzbFA3S0QzYi94aUpNU3FsZ0kvdlpqYUMy?=
- =?utf-8?B?Z3FsMzhlemJzaWovWHlHeUcyRmlyZ1NYZW8ra0x5aTNsNWRhb1dHbXhibG4x?=
- =?utf-8?B?TzJzaGFNa0x5dWZsUDdMSmMyWEtSQlhVYWJsRis1aFFMM3IvazRXWUFzVWxi?=
- =?utf-8?B?OHJzVEVEZXRxKzNzMmY0VEkzL20yS2tFZU9UYUlsMHcrYWliRDJnaHNLNWNM?=
- =?utf-8?B?endEK013ZnMvbnJ6U3lDWHpVcjlSZ0tqWmpmWjBNQU9VYjJzNStYUXp5YjFu?=
- =?utf-8?B?K1ozT2ZsTFhDWkZBTzNrY1d0NS81QTJKMzhxOGxpek9pWXFzcGN6dlZZcWQ4?=
- =?utf-8?B?dFlQdmdCK0RaL09xVkxWWkVOVG1jbVNLd2hsa1lQM20wMUJXQlVCMmpUSGpD?=
- =?utf-8?B?OEovRngybm9xM0pTejE1QUtRTTdaRDkwVzB5WXlJMW8zaUNZRDF3T2xydHZ2?=
- =?utf-8?B?S1pHVnRnT3RBOTdMd1FzaytQMXlwV3BUU3laSXE3T3FtWlZVZkxOTzhRaGFr?=
- =?utf-8?B?enIvTTJnelloR1FvMU9EeTJOQnpCRjJFdHNPVXZib04wd1gzR2Q5TzFyZmxQ?=
- =?utf-8?B?b0dKTS9zSURXazR1NXRrMjJvcjN4aHNYUk1FR2tOVmFEeENZNVpCSkduMVNN?=
- =?utf-8?B?RFp4WUdLdDFBZkNBcVd1UkZEZ1NPZTJlY1NPV2Y2RG5oTG1rQy9iWlplUFdU?=
- =?utf-8?B?TlNhZ2F5RS9lQTBXVmNzZ1I1Z2JjbzdrT0s4WDFoS004cms2K3FEdW4rZytl?=
- =?utf-8?Q?/Jcr3EhvUbZnG?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR03MB9047.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(7416014)(376014)(921020);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WFFCbE1qZWZHZ05XUlJMR1E5b3FKNDVGcGl2aWFTalRCL1oxNmd3K0kwL0hY?=
- =?utf-8?B?bzhQRXJkY0JDaDlKY0txR25YVGNxZjJGNFJIcVlVbDlIQWlCdkt5QlJVYU5M?=
- =?utf-8?B?bjcyN3hLVkFCVFR6USs3M09xMEg0NWtndmNMclgxazE0cXkzVldMUkVHTDBN?=
- =?utf-8?B?TzRIN2NWcUpvbFRDOE5KTWFkU1JKaU56TUVLWkorK1Z1OHJoNk9SVm5Icllq?=
- =?utf-8?B?Z0I0Y2lIclBFVWVIOWViYzlncjc0TDkzakJJbStyNEtyM1d0T2VuanZkSWZK?=
- =?utf-8?B?S2FGdFRKREwxaGwzSFVDYkQyM1F6YTI4ZUU5S0lYdnFMUkE0UDYzblM3bWRu?=
- =?utf-8?B?MnJVZnpuckN5TDYxd2xpK2hFWWlDQnRTaDRlemw5S25BNTI3dWRpL05kVXMy?=
- =?utf-8?B?OWR5VnJQangwaS9kZDVMaTBtSU5Ba2tzdXNtRjFvdXcweXk1aGlkVHJLRW5D?=
- =?utf-8?B?M3hFYUQvTFFiTXZGWS8yWEgxM0tJaXQ5ZEZ0OFdPRWo2U0pobVpQSzNzUTcz?=
- =?utf-8?B?UTZVWTdFUVRXOWFaVkNBQ1ZLVHkwNTdEcG9FUTRhbjBBUTRKV2JIMG9RMUZz?=
- =?utf-8?B?NmNIUnY2bmdvV3VBYlNVUjErYjgrbzB1ZXJmWDBMczVMVkVPWTNvUFlybGRy?=
- =?utf-8?B?TFU0VmROdGZBbXRYQVlYWmpZZ1FPcWtyZmZqWVREWGx4UUxCQVZoR1Vrc0VF?=
- =?utf-8?B?d2FudFFqeUNvMjlRUzU1empEZnlwSFZNU0RjTGk2OEY3NThUZDhXMVdGRCtN?=
- =?utf-8?B?Tk8zVWtmSHZEOTNOclMyKzRERUliS0szdmdsbWJQMXFtWTh5QzI1K3p3MC9B?=
- =?utf-8?B?MC80ZWdTVVdoYzRkUW5xSHNiMlF0aHJIYk1qYWpRQU1Ndm9aU2xuK3lycldy?=
- =?utf-8?B?L0Q2Q2pkeWY0SXBWQlZOaWJzSHBPdzFZRE5mYktjWEZpZHI4SVgzbDBEY2NK?=
- =?utf-8?B?UnBHdFRCT2cycjV4UXlTY3RQU2YzV054U3psam5lUy9ReVEyMXlQZW5FNkIy?=
- =?utf-8?B?SmdMV2ZyMFg0c0VlNUdsT2tBT3ZNdnBVSDFWTDBVMlAwNXllTTVwSFN3OGVQ?=
- =?utf-8?B?SFpTZlg0aVdxNStGTytoM0hzQ2c2bDFrbTFSUnlrOWxUbXpIa3pZbHhlUUNI?=
- =?utf-8?B?TjFad3VkWnVaTGNBSFRweUFGc1h2eGxxTlVuUnFiNXZDVWVZbW1FREVPeXpW?=
- =?utf-8?B?eFVrSUZKaVFFVklKQ25ET3FlL1NCaWFhTGlIdEpZZXcxK0lkYXArRkU0a25K?=
- =?utf-8?B?Zll0b2lCbnVTNXhzL056eGhnS1Q1aUNSdWtFQzFJcnlwRXFyL29rZE45d3N4?=
- =?utf-8?B?bFl2K1BhelhxQ3kyNkNleGZCVnNNUGE5WWpRbmFZOWtjaGRxSTl3VkN2bFhk?=
- =?utf-8?B?cnlMQmdlMTIwVktyelhBenQwVFdGMXdWcTJBK0pYajBJWW1Jc2YyOUVrWmVq?=
- =?utf-8?B?Zzd2MXd1UytZY3p0VVhqbnBDTnNTWHovWTczcTM0Tm9jOEpMZklIdUErYVlo?=
- =?utf-8?B?MGFqQXBCNHhTclhtTW9XZkhZSGFpTmpaUDlVTmR3bkdHWkdvVDlpb2ZJbTMx?=
- =?utf-8?B?UGpWMEY2Rkx6ZHk5K0JBR0J0L1NhK05TdlhZb1lvRGhSbzhlVTNRR21FVTlO?=
- =?utf-8?B?SFZTK09mUC9KRG1iSkYxdVJHNDd4M3BpSGVZL0VPZmUzclcrZ1lUMHZXdkVm?=
- =?utf-8?B?eUR0WUJmZmZHRytDTU9pRnBQYjgycEgza0t1REt4QVpaTCszK1BUUkw1dUFS?=
- =?utf-8?B?NHNRdGd3YUx5eGo4MnVWbk5KY2liOUIrQnFWbGxENmlGQXJtMXRQM1Z3cVk1?=
- =?utf-8?B?dkxPVDVmQytlV2ZzRlQ1TE1rRWtDLzU5V2hxM2hwZlRzc0xkQ0JUVEZ4QnJV?=
- =?utf-8?B?cDIyaHlQVG94VzdKMHFOaDFJWjhzRXQ0UjJFU3pHeVNOSjZTTThRR1J5dnha?=
- =?utf-8?B?dEU0R2xHdkswdFJld0pzNHRZZFg5TUdmeGY5Y01ZTmxkOVZ3Q3RlTjVPVDUv?=
- =?utf-8?B?eEh5UVB1d2QzRkpORDhrMnk0bnF1SlJLb0dWMEdQV09zSEI0UzdiNGYrRlpD?=
- =?utf-8?B?anFrekJsMjJqTFduYU9udUFyYW44NUthbVB6MjJZNHlyQVFib3MwUXZYZ3ZU?=
- =?utf-8?B?VnM3a1Y1eG14eG9OWkswZFF2S2RSQXhFNXBpSk0veUFlUXJiS3ZHWUFiUkwy?=
- =?utf-8?Q?nHu2DMfT7NvjLPAxkWotSi/qA89xRVUIjLFO/WY/dk19?=
-X-OriginatorOrg: uclouvain.be
-X-MS-Exchange-CrossTenant-Network-Message-Id: 999d3f69-c977-4412-629c-08dd12e146e0
-X-MS-Exchange-CrossTenant-AuthSource: AS8PR03MB9047.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2024 14:54:52.4056
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7ab090d4-fa2e-4ecf-bc7c-4127b4d582ec
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pXiTRwWYE6dmoLDO0nyrVdY7YXrfQp5QRmrti+yITVhi0anWmYVU9txqiviLN26WJ9YXMP5bbsZwalWN02x3qg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR03MB7182
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] drm/sti: hdmi: use eld_mutex to protect access to
+ connector->eld
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
+ Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xinhui Pan <Xinhui.Pan@amd.com>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Phong LE <ple@baylibre.com>, Inki Dae <inki.dae@samsung.com>,
+ Seung-Woo Kim <sw0312.kim@samsung.com>,
+ Kyungmin Park <kyungmin.park@samsung.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Jani Nikula <jani.nikula@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Alain Volmat <alain.volmat@foss.st.com>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
+ <20241201-drm-connector-eld-mutex-v1-9-ba56a6545c03@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?Rapha=C3=ABl_Gallais-Pou?= <rgallaispou@gmail.com>
+In-Reply-To: <20241201-drm-connector-eld-mutex-v1-9-ba56a6545c03@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 12/2/24 14:40, Krzysztof Kozlowski wrote:
-> On 02/12/2024 14:07, Thomas Antoine via B4 Relay wrote:
->> From: Thomas Antoine <t.antoine@uclouvain.be>
->>  CONFIG_BATTERY_QCOM_BATTMGR=m
->>  CONFIG_BATTERY_SBS=m
->>  CONFIG_BATTERY_BQ27XXX=y
->> +CONFIG_BATTERY_MAX1720X=m
->>  CONFIG_BATTERY_MAX17042=m
+
+
+Le 01/12/2024 à 00:55, Dmitry Baryshkov a écrit :
+> Reading access to connector->eld can happen at the same time the
+> drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
+> order to protect connector->eld from concurrent access.
 > 
-> Are you sure this is placed according to savedefconfig order?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I ran menuconfig and it put CONFIG_BATTERY_MAX1720X below
-CONFIG_BATTERY_MAX17042 so I think it is an error on my part.
-Will fix in v2.
+Hi Dmitry,
 
-Best regards,
-Thomas Antoine
+Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+
+Thanks,
+Raphaël
+> ---
+>   drivers/gpu/drm/sti/sti_hdmi.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+> index 847470f747c0efad61c2ebdc3fb3746a7a13a863..3c8f3532c79723e7b1a720c855c90e40584cc6ca 100644
+> --- a/drivers/gpu/drm/sti/sti_hdmi.c
+> +++ b/drivers/gpu/drm/sti/sti_hdmi.c
+> @@ -1225,7 +1225,9 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf, size
+>   	struct drm_connector *connector = hdmi->drm_connector;
+>   
+>   	DRM_DEBUG_DRIVER("\n");
+> +	mutex_lock(&connector->eld_mutex);
+>   	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
+> +	mutex_unlock(&connector->eld_mutex);
+>   
+>   	return 0;
+>   }
+> 
+
 
