@@ -1,259 +1,180 @@
-Return-Path: <linux-samsung-soc+bounces-5574-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5576-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DE579E1BEB
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 13:18:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8759F9E1BF8
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 13:20:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E5DB8B30C27
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:14:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47A662821A0
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:20:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 513891E7679;
-	Tue,  3 Dec 2024 12:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6C3B1E630C;
+	Tue,  3 Dec 2024 12:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DHjDGTOr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zAWKXfM2"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592A71E572D
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644491DA0F5
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733228039; cv=none; b=J2rcaPNqrRL206+ZhOB/gi3vTrraeUPsR1dlFdtsy5khUeEbp6uOpTdBRO46m/7qfV1TE/Ms1GOnt6wsW5hPH2lHd+5OG4KUXLXm64RHil+Dr4Utw67u6x2cYsxu29hi+Tj50scKWuzJklIpLnE2WoAAHsi6XqjpnLrkszNKSYA=
+	t=1733228389; cv=none; b=WzZ+GQbPlFQSNLfwMSYBZA7D/BMZz10dqNg9YFnAooHLSNuttX9VS3hzC67Ozl2GcEdNb/oQEmc8WPFkyQ2D5TSpMFxJblf7FFnT0dyEQ9IHf61zrDmKczIij0Lkt4zb9roIAO7wC8boL6BoypJBM2xRdWUil9pTRD+zElrSsZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733228039; c=relaxed/simple;
-	bh=rYYXqXh14CZExInpX/cEYMTHaFbubPjQbCNN5PmzSdM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=homXRVdzt+s+yPx0o4PpgthezWWRlLUW9bKO+408XAfFPI5dWatuTHjE09jM98yiIS3rCZd9b5ks1fXrGWIlFUziXb/wUG9KxdSxrX4VVArpc8TbF1ddIFIQQw4NXE+upkwJ6s3mmtsfeFCoOf0ofVzgvi+u2o0WDoySr41mc7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DHjDGTOr; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1733228389; c=relaxed/simple;
+	bh=kpQG97neEOTfmw8LT50c3EPenmcddI5a2M0V4jVWKmc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EZY8hUg8ggc0M2zHbDXuJ8+eS9Dud47LrRdEFXcwsZ0uFkvVVT9H7JRepRDpI8TV8PYOjSIdvkFNXrTeYt+Wj+stnewezoEoV77Xgk2PiJdc1ooc6l99Llz/zosKDO1oHOQfkwzAFAGsE0XQ5Nsvo+VQocqpuB3rWjtkH+S7gcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zAWKXfM2; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5cec9609303so6469557a12.1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:13:56 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53df63230d0so6775548e87.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:19:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733228035; x=1733832835; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=54YjK1PSCj3noc28mh1Eh19wlGr7iBDWYo9sjvHvK0I=;
-        b=DHjDGTOrZsHEqAuxJcA4hh4vaX9oVrALPnu3+2g1+egmd+kdyKZvYPZenEhp8qq9Qf
-         cUc7AAc2HFpOcjjg243nT98bjQEOKW7HD4ZTASjDTDFnbMLbQTofdeq8DD9LmNJAuUGl
-         +56FulpAjHercvRl1ggCO2hsmH0Kx5RGDodzNyRS788ngNx5a+Bz1JeIfu4MWS+i8jQa
-         YzEaCW4Kbc4qpcc51ECjb3hgRrljDYvPz7LeEKj6FUx3Ibyi/rAd8A7SAixHWM1SclKO
-         VYBW0vLePA3L7fHLXKM+r7Qp5CLdpmChnN3ddhXMoZfOEFzlH/SxSG+29j2HUs3Nzdtz
-         P1zg==
+        d=linaro.org; s=google; t=1733228384; x=1733833184; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5n+OPgKd4OeVfRcOdyszAmWQAYwYUA33KJvbyrKBpj8=;
+        b=zAWKXfM2peg7BAHmz8T3EWRad4/q7t5dNAlCsWR8UImR7RMKl8lhDFFCQ70vqKCvPM
+         1bEvuoHJ9lXpecjAcIrTfe3CUtzHoAXWkLQ/9YPNS2213Qiip6900QwCViM4ll1x5GoP
+         IW/OgzPXeEQqZGeSWWHVhL81W2vRVn1u9EYhIMOsJ6/Npi6fhe7ubnWKwyoC9veWfSpK
+         8ROMFxJcn0DgmLxuqayM+3Yn18zndg8l1UEJLthcXgtVomwqVwx/m28+rXyZ7tr/Wxh5
+         UWAw3kDBNjb4h3zmX/hJP8rdwkcSxg92wFn7tZCiBStKPGXU6xlYQFR47eV6VvL33BkM
+         Q+9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733228035; x=1733832835;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=54YjK1PSCj3noc28mh1Eh19wlGr7iBDWYo9sjvHvK0I=;
-        b=HyAHgt6hzFSGzTlmqnrVbmwfvhUiAjIuMdZZILPirJR7uvXVHdcd/V7erKCDitCGR4
-         1cpFzzrnHXpSBFOpOmGx6D9vB2R6EEASrdtGcqybP8ArTRWIz3a5raWBQ2qHn6Wx753U
-         XhFdt04ZiL1h92Wc1OK3eHX5BPCA25McdrNXyAxTLatnGZ5nGxQjx6/btRiPDgYZBBX1
-         PTbCPgEfofvvTQZLPB0ykR7HjgcLExZ/uJrb8fh8HoD2u8HZ32w3LfZK2ryDQ5diVIXt
-         4YtcrW85ksO0+YNWfRKrdmXYu/+sXc4oby5GP4sme7bp5YHIL0cnsfSnBBHZaI5o9c60
-         nZlw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJcp6Q/zrv7dEOQ9XHPkeYM11GgqkVxiT+49ib8W2R8A3mPkLwR3OP3Oy9Yw0vOIXX/J/dDdKnZwn1NxY0ndi2kg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YweN8USaLMfx9YfZt220WT9XurUsNCzUWqmsBlgMJ1RO2Cf4V56
-	7lOE8fMxkFu8/P657VkOR7ba6u2gvkMLFJisEvkNwOH/VPWogWkJuXAqeX3uDj4=
-X-Gm-Gg: ASbGncvCXqrwAoSn40s3q/hUvuQ8wQzSXrTi5w7Ez/v0sv3nDP/e8xCnefKN0E2C2Pg
-	nZ1l102jB1TlTyaZdN4viJxhX31PwqzfiTROWo8uleJfnAhkBecBaUVjt5xELyKLaRdT1GOL4+S
-	sH5+dpIuPUA5oQM7yZGtobanH5Vch22WbS/MLkDWDOgUY5Yqs6q0cT8cRWbXf370lKzdC5Hs/9j
-	59Mx+PHhATDXPWFCQAuzl3C0kxI0kUh97fCSJOTfxHRUedHXQkoExT7XcuT5ky85y4apIR/E/OF
-	tf7sNOx5/pmWbKZz4RlHCxFt4kMrWsaSWA==
-X-Google-Smtp-Source: AGHT+IGlYONH0INC2ObUF4IvK3DPpOMeryroZsQD2npmBCwLgaYdxtB/m6WRr2IlPYlTnp1MvA4eXw==
-X-Received: by 2002:a17:906:3ca2:b0:aa5:f39a:bd7b with SMTP id a640c23a62f3a-aa5f7ccdc77mr167906966b.4.1733228034789;
-        Tue, 03 Dec 2024 04:13:54 -0800 (PST)
-Received: from puffmais.c.googlers.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5996c245bsm607603766b.8.2024.12.03.04.13.54
+        d=1e100.net; s=20230601; t=1733228384; x=1733833184;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5n+OPgKd4OeVfRcOdyszAmWQAYwYUA33KJvbyrKBpj8=;
+        b=xDMGS+ZDxibpU0dLD56qabhbVjtAgC1yHShLUgAWt4KZRCqT0ejhjvAYk/xDTZbS+4
+         k0qHk7lNGY4ObeISFdRj5Rm1uHyyqbFYt3v7xTsPdwgYkkFPDMmo4+wzgLWePOTC9ziQ
+         AnZIy6LXEoWjabW6Gcikye5bdfM2clROLDijj2xXRrwksCXJCKLNmZjwd3UiShGeU7ve
+         m8CIYkZCwZz13K6htNyy1wyZ903XIcr8JxBeDJh2A34xYS/NwuVb5FIDmnFrsPVVbCGv
+         C8kLhw1qL+DbZUiVrym+CLbNuqlMrMJk/q/nxuLctaNtptBXfSCdl2+0D9adhrbj30R4
+         Ru4g==
+X-Forwarded-Encrypted: i=1; AJvYcCUxQpoewAp8MQsMlAHB8zjxNgd7/7eWiBTlV4w4nSNi0JrtQjM0oGm0PicO9vCVPof2uFC6snIj8njZGDbI6kfeBQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJb/FyVu1sEqhpp2XWMAVv1g6V8MhMQvZrvn6os560R2PrnLDn
+	ylxTI3eepU95DtYezeMwvAWNmIyPr6n09bYypeVGJzUUqHNv9JmpmxEhEPEpwUE=
+X-Gm-Gg: ASbGncskUoxWtPHsXvjP8JUZ0n6P4FE05DO3Vpb9mqgidkpUuui4Dtyq/+MkXSrOO+M
+	FC/dDYahj43sGnosqwI1rgTQz4hMmwVh7jl6nsebZKWOWcCVCYVTGyTp7MLFvsAIJe6Qiymdv/r
+	pYeARcWAmMkudAW+G03wMnrw10zO39+2/zLvqcT4gPc6TiHEYxV19lcFfaZ0Jwv/mpZ/PWmNHsD
+	P3rE2+WrqoBBD/9IIzMQuKZAzOZHEIJucECQo119/B9gslxDHjls1dB4Ux9ntoHRYIOd7qTRgfp
+	L5nCaLg2f9OYmBK3bHb0rgbbrUN7fw==
+X-Google-Smtp-Source: AGHT+IGqrNK3/JV3p7HUHgNYWUEc9ZkYpw0A4baw1aq7D6bW6M82dv1dR6gPJHjyZhTW0XLXbh3VUg==
+X-Received: by 2002:a05:6512:32c9:b0:53d:e43c:9c5d with SMTP id 2adb3069b0e04-53e12a06a29mr1124957e87.27.1733228384467;
+        Tue, 03 Dec 2024 04:19:44 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df643149asm1854312e87.37.2024.12.03.04.19.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 04:13:54 -0800 (PST)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Tue, 03 Dec 2024 12:13:55 +0000
-Subject: [PATCH v2 7/8] phy: exynos5-usbdrd: subscribe to orientation
- notifier if required
+        Tue, 03 Dec 2024 04:19:43 -0800 (PST)
+Date: Tue, 3 Dec 2024 14:19:41 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Phong LE <ple@baylibre.com>, 
+	Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
+	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Russell King <linux@armlinux.org.uk>, 
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v5 8/9] drm/vc4: hdmi: switch to using generic HDMI Codec
+ infrastructure
+Message-ID: <e7jngrc4nljdsksekinbkir2h76ztsth2xj4yqcyapfv43uryh@356yrxv3j4x6>
+References: <20241201-drm-bridge-hdmi-connector-v5-0-b5316e82f61a@linaro.org>
+ <20241201-drm-bridge-hdmi-connector-v5-8-b5316e82f61a@linaro.org>
+ <20241202-industrious-unnatural-beagle-7da5d4@houat>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241203-gs101-phy-lanes-orientation-phy-v2-7-40dcf1b7670d@linaro.org>
-References: <20241203-gs101-phy-lanes-orientation-phy-v2-0-40dcf1b7670d@linaro.org>
-In-Reply-To: <20241203-gs101-phy-lanes-orientation-phy-v2-0-40dcf1b7670d@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Marek Szyprowski <m.szyprowski@samsung.com>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Sam Protsenko <semen.protsenko@linaro.org>, 
- Will McVicker <willmcvicker@google.com>, Roy Luo <royluo@google.com>, 
- kernel-team@android.com, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202-industrious-unnatural-beagle-7da5d4@houat>
 
-gs101's SS phy needs to be configured differently based on the
-connector orientation, as the SS link can only be established if the
-mux is configured correctly.
+On Mon, Dec 02, 2024 at 02:20:04PM +0100, Maxime Ripard wrote:
+> Hi,
+> 
+> Sorry, I've been drowning under work and couldn't review that series before.
 
-The code to handle programming of the mux is in place already, this commit
-now adds the missing pieces to subscribe to the Type-C orientation
-switch event.
+No worries, at this point I'm more concerned about my IGT series rather
+than this one.
 
-Note that for this all to work we rely on the USB controller
-re-initialising us. It should invoke our .exit() upon cable unplug, and
-during cable plug we'll receive the orientation event after which we
-expect our .init() to be called.
+> 
+> I'll review the driver API for now, and we can focus on the exact
+> implementation later on.
+> 
+> On Sun, Dec 01, 2024 at 02:44:12AM +0200, Dmitry Baryshkov wrote:
+> > Drop driver-specific implementation and use the generic HDMI Codec
+> > framework in order to implement the HDMI audio support.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/vc4/vc4_hdmi.c | 68 ++++++++++--------------------------------
+> >  drivers/gpu/drm/vc4/vc4_hdmi.h |  2 --
+> >  2 files changed, 15 insertions(+), 55 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+> > index 7295834e75fb1ab0cd241ed274e675567e66870b..d0a9aff7ad43016647493263c00d593296a1e3ad 100644
+> > --- a/drivers/gpu/drm/vc4/vc4_hdmi.c
+> > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+> > @@ -595,6 +595,9 @@ static int vc4_hdmi_connector_init(struct drm_device *dev,
+> >  	if (vc4_hdmi->variant->supports_hdr)
+> >  		max_bpc = 12;
+> >  
+> > +	connector->hdmi_codec.max_i2s_channels = 8;
+> > +	connector->hdmi_codec.i2s = 1;
+> > +
+> 
+> I guess it's a similar discussion than we had with HDMI2.0+ earlier
+> today, but I don't really like initializing by structs. Struct fields
+> are easy to miss, and can be easily uninitialized by mistake.
+> 
+> I think I'd prefer to have them as argument to the init function. And if
+> they are optional, we can explicitly mark them as unused.
 
-Above reinitialisation happens if the DWC3 controller can enter runtime
-suspend automatically. For the DWC3 driver, this is an opt-in:
-    echo auto > /sys/devices/.../11110000.usb/power/control
-Once done, things work as long as the UDC is not bound as otherwise it
-stays busy because it doesn't cancel / stop outstanding TRBs. For now
-we have to manually unbind the UDC in that case:
-     echo "" > sys/kernel/config/usb_gadget/.../UDC
+Do you mean drm_connector_hdmi_init()? I think it's overloaded already,
+but I defintely can think about:
 
-Note that if the orientation-switch property is missing from the DT,
-the code will behave as before this commit (meaning for gs101 it will
-work in SS mode in one orientation only). Other platforms are not
-affected either way.
+drmm_connector_hdmi_init(..., max_bpc, HDMI_CODEC_I2S_PLAYBACK(8) |
+HDMI_CODEC_NO_CAPTURE | HDMI_CODEC_DAI_ID(4));
 
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+or
 
----
-v2:
-* move #include typec_mux.h from parent patch into this one (Peter)
----
- drivers/phy/samsung/Kconfig              |  1 +
- drivers/phy/samsung/phy-exynos5-usbdrd.c | 61 ++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+)
+... | HDMI_CODEC_NO_DAI_ID)
 
-diff --git a/drivers/phy/samsung/Kconfig b/drivers/phy/samsung/Kconfig
-index f10afa3d7ff5..fc7bd1088576 100644
---- a/drivers/phy/samsung/Kconfig
-+++ b/drivers/phy/samsung/Kconfig
-@@ -80,6 +80,7 @@ config PHY_EXYNOS5_USBDRD
- 	tristate "Exynos5 SoC series USB DRD PHY driver"
- 	depends on (ARCH_EXYNOS && OF) || COMPILE_TEST
- 	depends on HAS_IOMEM
-+	depends on TYPEC || (TYPEC=n && COMPILE_TEST)
- 	depends on USB_DWC3_EXYNOS
- 	select GENERIC_PHY
- 	select MFD_SYSCON
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index 206483c7ca55..b1914c6c806d 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -24,6 +24,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/soc/samsung/exynos-regs-pmu.h>
- #include <linux/usb/typec.h>
-+#include <linux/usb/typec_mux.h>
- 
- /* Exynos USB PHY registers */
- #define EXYNOS5_FSEL_9MHZ6		0x0
-@@ -394,6 +395,7 @@ struct exynos5_usbdrd_phy_drvdata {
-  * @extrefclk: frequency select settings when using 'separate
-  *	       reference clocks' for SS and HS operations
-  * @regulators: regulators for phy
-+ * @sw: TypeC orientation switch handle
-  * @orientation: TypeC connector orientation - normal or flipped
-  */
- struct exynos5_usbdrd_phy {
-@@ -415,6 +417,7 @@ struct exynos5_usbdrd_phy {
- 	u32 extrefclk;
- 	struct regulator_bulk_data *regulators;
- 
-+	struct typec_switch_dev *sw;
- 	enum typec_orientation orientation;
- };
- 
-@@ -1400,6 +1403,60 @@ static int exynos5_usbdrd_phy_clk_handle(struct exynos5_usbdrd_phy *phy_drd)
- 	return 0;
- }
- 
-+#if IS_ENABLED(CONFIG_TYPEC)
-+static int exynos5_usbdrd_orien_sw_set(struct typec_switch_dev *sw,
-+				       enum typec_orientation orientation)
-+{
-+	struct exynos5_usbdrd_phy *phy_drd = typec_switch_get_drvdata(sw);
-+
-+	scoped_guard(mutex, &phy_drd->phy_mutex)
-+		phy_drd->orientation = orientation;
-+
-+	return 0;
-+}
-+
-+static void exynos5_usbdrd_orien_switch_unregister(void *data)
-+{
-+	struct exynos5_usbdrd_phy *phy_drd = data;
-+
-+	typec_switch_unregister(phy_drd->sw);
-+}
-+
-+static int exynos5_usbdrd_setup_notifiers(struct exynos5_usbdrd_phy *phy_drd)
-+{
-+	int ret;
-+
-+	phy_drd->orientation = (enum typec_orientation)-1;
-+	if (device_property_present(phy_drd->dev, "orientation-switch")) {
-+		struct typec_switch_desc sw_desc = { };
-+
-+		sw_desc.drvdata = phy_drd;
-+		sw_desc.fwnode = dev_fwnode(phy_drd->dev);
-+		sw_desc.set = exynos5_usbdrd_orien_sw_set;
-+
-+		phy_drd->sw = typec_switch_register(phy_drd->dev, &sw_desc);
-+		if (IS_ERR(phy_drd->sw))
-+			return dev_err_probe(phy_drd->dev,
-+					     PTR_ERR(phy_drd->sw),
-+					     "Failed to register TypeC orientation switch\n");
-+
-+		ret = devm_add_action_or_reset(phy_drd->dev,
-+					       exynos5_usbdrd_orien_switch_unregister,
-+					       phy_drd);
-+		if (ret)
-+			return dev_err_probe(phy_drd->dev, ret,
-+					     "Failed to register TypeC orientation devm action\n");
-+	}
-+
-+	return 0;
-+}
-+#else /* CONFIG_TYPEC */
-+static int exynos5_usbdrd_setup_notifiers(struct exynos5_usbdrd_phy *phy_drd)
-+{
-+	return 0;
-+}
-+#endif /* CONFIG_TYPEC */
-+
- static const struct exynos5_usbdrd_phy_config phy_cfg_exynos5[] = {
- 	{
- 		.id		= EXYNOS5_DRDPHY_UTMI,
-@@ -1789,6 +1846,10 @@ static int exynos5_usbdrd_phy_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to get regulators\n");
- 
-+	ret = exynos5_usbdrd_setup_notifiers(phy_drd);
-+	if (ret)
-+		return ret;
-+
- 	dev_vdbg(dev, "Creating usbdrd_phy phy\n");
- 
- 	for (i = 0; i < EXYNOS5_DRDPHYS_NUM; i++) {
+The default (0) being equivalent to:
+
+HDMI_CODEC_NO_I2S | HDMI_CODEC_NO_SPDIF | HDMI_CODEC_NO_CAPTURE | HDMI_CODEC_NO_DAI_ID
+
+WDYT?
+
+> 
+> Like, it looks like the get_dai_id implementation relies on it being set
+> to < 0 for it to be ignored, but it's not here, so I'd assume it's used
+> with an ID of 0, even though the driver didn't support get_dai_id so
+> far?
+
 
 -- 
-2.47.0.338.g60cca15819-goog
-
+With best wishes
+Dmitry
 
