@@ -1,81 +1,80 @@
-Return-Path: <linux-samsung-soc+bounces-5575-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5581-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E53CC9E1D64
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 14:20:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 118E49E1E87
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 14:59:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D3B53B329B4
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:15:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F3305B24FD0
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:40:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECB941E883D;
-	Tue,  3 Dec 2024 12:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0864E1EB9E1;
+	Tue,  3 Dec 2024 12:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gs641nkH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vwGas5DL"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0BB1E630D
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B532A1E7674
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733228039; cv=none; b=AjJnCOModgusA4n7OS/wsQJd9rpsLFC/MpynrJwcSDpQ2SAmhipO1VaicFQHCsuLNXqrX5p03+gK3gQDiueJcPPyX6G2EHXcpSuRoX/Xz3SovGo0bLBmGCRx5L08siWMnvDyuxDOVwd4CrnwwzURtBLCWd9EdJOcsKxkvYlB7AI=
+	t=1733229630; cv=none; b=HAbjMVtZMeZMa1RFRCzlnVnd5EVHD0sl3Wh//LkTXNgCFKK6S3rWST0tDn0A5eCeNmySOeOA2edj02gf5IXT2pSYuHwqqla5j8/pbL8MY1nzcLZm8S0I1aMCvHNdMtagC9e6xCeTQ5EsARBoR5aiOpMEtAbqTPvCWvHjdDmpYdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733228039; c=relaxed/simple;
-	bh=SrNm479mfjveTEuZxmv854ReXQ1mRjzxwEH9dzh6qvA=;
+	s=arc-20240116; t=1733229630; c=relaxed/simple;
+	bh=M9v4cnhexcFGnFb67v5mL0hn+ZbZK0KVsMGyMVUjDr8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fTOOHL1Bq3vGjoP1lhzfpeATqyd1P/k4P83Ovp9aUu+iT8M1gKXYsprvgljQSlh6m+9+apAmWnY7Gna3fc8PcFy9CYLUX2XsJsGhr6h61WCWnnFLIIOKYnuKNhpxVS4o3Hc9eg0vtZkEeMXaWr3z7p9v1ZDohsB1yRuBE6LoL9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gs641nkH; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=idjR1kd+lvEvwjK6pyPTkqEZaC0GpgGJ1kwgDHoHEoJwurL4IbAvqb50W5ODVVGHsYNbAzXdBlIh9fZm9sqs36u23Eg6oZTBZgEfVdGNJ4UtboKhfdH/lZaF8vSyVNMSUuvkT2o4gZnoS7cV/bEcxfL317b8ydxdCmrNYlK/LnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vwGas5DL; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9e44654ae3so705483366b.1
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:13:56 -0800 (PST)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a9e8522445dso775857866b.1
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:40:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733228035; x=1733832835; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733229626; x=1733834426; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uFpsvHW8LAP7lW2ogoOJaMBxsAjFS0igr/BkJ+LMT9c=;
-        b=gs641nkHF8juHLlYNo4pgnblNk59Ya97GAY9JsUTb0heOU15CAbO/5h67yhhY2CT0c
-         BbKOOf0UY2zO1AgFp7vQrLghR2rMQJZujd1OCPIxCp5o/ns3xrrePCxHA3Mip3FoQpEi
-         17NrUHHZ3PWl9GyfyLs9QQRds/+cCecIN7N1/Tq67hmTwM5po5L6zm8wC02jQhHgD0Bl
-         IdTMueOIDisJNyiz4uZRqpqg1wLJ27dFNX6FKLqbGi/rsAA0zOf8UwzbNtv5jAcMOHud
-         yxo8ZKFYiDBXFCLhzNd7owHMfAk/+GA1EcMwr36JCf8tsD387CSS3RwUka0IdhLUyXDB
-         J5xA==
+        bh=JKz/6LOX+Qb687N6TewJgIJoPVXxUJjOmnFbpocgz8Q=;
+        b=vwGas5DLhzlG2FqYYuZ00vYVx0teMEr647Z75tVdId2R1YJA1SjMhaIwew5Ir38xZA
+         zHn2eaHFeMvt/34gaBPn2TjzJnkIhXEvGgBIsIxa8QLJ841xP81apTy5Dyxkj4Iy6MmU
+         befqAg+nMXAlJARkvfqLydSsxFWtn2h4EpNeRPg8oBe+AfTiddI8+sHr7Ef1pS03jdi6
+         YNMWyNf48rak9pngrdAIgppLpZgfFOl4VuzmIiou+8eVcXc1XUdr4dm9pbP8C7ZHK05X
+         aqKs3DG+mzHpy6aqCwK2jJMPhr0w7IfE+oTnsESfe8FSko10WZgSh3COk1rixbRJ7agv
+         pTQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733228035; x=1733832835;
+        d=1e100.net; s=20230601; t=1733229626; x=1733834426;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uFpsvHW8LAP7lW2ogoOJaMBxsAjFS0igr/BkJ+LMT9c=;
-        b=RXlM+FUDhXR93W+ZboJVjNqSkg8Ht8x9RERXrTGY7nOF+CV9HRI5G/GsZw7HykdoKO
-         vmqLhy+vxcssxbd6NBGwBfynkpBCEFv18c2QgoCo3v80QiM699P2ZKaBpU1ZClmenmK6
-         qwLnRmOsDkiFvaf6K8kMQAfT29vIGjEGPGAAVvDpJW+GFlQoQeEBez0lDkNvNFWXYj8d
-         AXZ1hBbhpnmCXpY0dBMvaT19NzrNW3e0YQCf84JfBX6UC3dWsYBPbL2d7LQLM/ew9Kbb
-         fhAGQ8ucl+LH8c0eNGasSvZjxhkYHB5wgYSmFXN0xGJUOQuzGvbt+iykp/f6xLnIw/ov
-         RPtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSBm9LoPjIW+/mg+dM8CPfRLWuduXUkFW4mQUW2AEG96e0vM3JMHBrfVf1EODt7DhJZF6Rqp7X/mN0gNhpCtNVTw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyW9mb8GNfzOwB+NKvgLy3gyZ9laxejEPpOQCGmHDRFyF22by7C
-	QjL/go/hisUbTwmr420zp5+zYfXQUErZrZLVPQBZHPjD1f7vlJooq1v+3oSbAqY=
-X-Gm-Gg: ASbGnctRs79ewTDDw3pi5QoM3/tsT+Ymqpi8t67UKGis4s5qhilqFAMbdnJey3Z/OOM
-	aX5ds7N1rYPcsq8Nay93CnR18h3u5uG0ekq4gim0kLB/T/8pkpBasQ9gQSPGRYH6Hre8+FnWD2i
-	HTx8DrDyoFU7oxKt/DYJA5Qjt4moCjnbiK4b/VZQljhNB4pNx0lUIoOmnADpjzkCD+uruIa8pTV
-	S3gtezW33Audx7JdbHSD2Fp/pl8lI525o6FMy2fwzsnqv1QBwX+7JYNkxU9MCaf0xw7CZxKD4Cb
-	sV2HJDlReVJ68uU+Tzt1bU+XGSLLTlQwGQ==
-X-Google-Smtp-Source: AGHT+IGdrwALKg1GTwldZJOY7VYAVcWh5tQKqLrkKr8AXomCGAvvPrif7tTk5yapUjTCTN1a7cYNbg==
-X-Received: by 2002:a17:906:4c1:b0:aa5:427e:6c76 with SMTP id a640c23a62f3a-aa5f7aaed08mr164681466b.0.1733228035286;
-        Tue, 03 Dec 2024 04:13:55 -0800 (PST)
+        bh=JKz/6LOX+Qb687N6TewJgIJoPVXxUJjOmnFbpocgz8Q=;
+        b=SY+rmmXFhczKe8Y1wxG0+wP6eNmhevzAftbsjOsbTCyeUS7+xB0g/1KiyJVCz8Kzm2
+         CQgTBfkm1UPsdLq8QtLA/mxHF2iXSVutzlB8IPt2M4+F0MdmApuYHv61dCoFX+hFD+/F
+         i175xQtpOoRF3gE8RI7m0zccZAVa1oYDulRy2c/pr79qCs+z3um7kpk5VanyiIvCSzSA
+         PDxquiErIszTcm1/OBrRM1cg2z823hGjdhsCHbz0hHZMhv4qopOWgUTsDiLeioOc4ceS
+         UGmtrisC1uRg9P91cPCtY6eCiVbm1Nj7N4LoDjkPI67n5iaJx6U7ejVL/C5mDgDJU9K3
+         Gh9g==
+X-Forwarded-Encrypted: i=1; AJvYcCV1xzngZWanomYJVLQeANjAJuDzbxgEr2hN1yJnwkpNjjtvTj2QpA9MsudwR9HAdOjyd2CKur3yKC37bVHXuKYIJQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyo7wHoFZoGM6Bs+gK/p15lVNEQirazlm31BcO+aXgJj+PxMPCw
+	7AxBK3yaBeXJBzMKISD825MOOfsS4KlQLWyeKXb/bZSmdfhqM40X62WSAG5ryLg=
+X-Gm-Gg: ASbGncvI2QI6m0flvHg4b9ucVqAYmp2+dcfum6tMpbzdbtIr2JlkMqMlMrhYQJdCZaz
+	eRgV5GAbfeRARs7uH6Ps86DuIdzlijEphYvf01wwFOeetU5MzEDUQdzj1HBQvlUSIzS1Oy+/muP
+	qtShDJLgZzPh/KLuKRDLmlj07ZPX9kGk0C4huyGny/1sJx0ezndgJlbjyyO331uTo8yX0YH++gV
+	plEabpgI5L+7SQhh50b/O9toc9jdudJCUbrI3TmIk7cJ4AcDPj2c1HL7ppN+h0S9rMQn8MKZkSD
+	ERD5fS/jCtKtghh2NeQBvj6J9CONZXad1A==
+X-Google-Smtp-Source: AGHT+IHQO6w8q/8y2vmYj3AwKDx8/AcSW1egkdyxl/hQEjDRsUnB02G5MYsyfeveHXAuRhqJX5unqQ==
+X-Received: by 2002:a17:906:6a18:b0:a9e:c267:78c5 with SMTP id a640c23a62f3a-aa5f7f19e62mr225441066b.55.1733229626045;
+        Tue, 03 Dec 2024 04:40:26 -0800 (PST)
 Received: from puffmais.c.googlers.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5996c245bsm607603766b.8.2024.12.03.04.13.54
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5998e6a4csm616809466b.106.2024.12.03.04.40.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 04:13:54 -0800 (PST)
+        Tue, 03 Dec 2024 04:40:25 -0800 (PST)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Tue, 03 Dec 2024 12:13:56 +0000
-Subject: [PATCH v2 8/8] phy: exynos5-usbdrd: allow DWC3 runtime suspend
- with UDC bound (E850+)
+Date: Tue, 03 Dec 2024 12:40:24 +0000
+Subject: [PATCH v2 1/5] arm64: defconfig: enable Maxim TCPCI driver
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,129 +83,47 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20241203-gs101-phy-lanes-orientation-phy-v2-8-40dcf1b7670d@linaro.org>
-References: <20241203-gs101-phy-lanes-orientation-phy-v2-0-40dcf1b7670d@linaro.org>
-In-Reply-To: <20241203-gs101-phy-lanes-orientation-phy-v2-0-40dcf1b7670d@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Marek Szyprowski <m.szyprowski@samsung.com>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
+Message-Id: <20241203-gs101-phy-lanes-orientation-dts-v2-1-1412783a6b01@linaro.org>
+References: <20241203-gs101-phy-lanes-orientation-dts-v2-0-1412783a6b01@linaro.org>
+In-Reply-To: <20241203-gs101-phy-lanes-orientation-dts-v2-0-1412783a6b01@linaro.org>
+To: Catalin Marinas <catalin.marinas@arm.com>, 
+ Will Deacon <will@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, 
  Sam Protsenko <semen.protsenko@linaro.org>, 
  Will McVicker <willmcvicker@google.com>, Roy Luo <royluo@google.com>, 
- kernel-team@android.com, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ kernel-team@android.com, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ devicetree@vger.kernel.org, 
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.13.0
 
-To make USB runtime suspend work when a UDC has been bound, the phy
-needs to inform the USBDRD controller (DWC3) that Vbus and bvalid are
-gone, so that it can in turn raise the respective gadget interrupt with
-event == DWC3_DEVICE_EVENT_DISCONNECT, which will cause the USB stack
-to clean up, allowing DWC3 to enter runtime suspend.
+Enable the Maxim max33359 as this is used by the gs101-oriole (Google
+Pixel 6) board.
 
-On e850 and gs101 this isn't working, as the respective signals are not
-directly connected, and instead this driver uses override bits in the
-PHY IP to set those signals. It currently forcefully sets them to 'on',
-so the above mentioned interrupt will not be raised, preventing runtime
-suspend.
-
-To detect that state, update this driver to act on the TCPC's
-orientation signal - when orientation == NONE, Vbus is gone and we can
-clear the respective bits. Similarly, for other orientation values we
-re-enable them.
-
-This makes runtime suspend work on platforms with a TCPC (like Pixel6),
-while keeping compatibility with platforms without (e850-96).
-
-With runtime suspend working, USB-C cable orientation detection now
-also fully works on such platforms, and the link comes up as Superspeed
-as expected irrespective of the cable orientation and whether UDC /
-gadget are configured and active.
-
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
- drivers/phy/samsung/phy-exynos5-usbdrd.c | 53 +++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index b1914c6c806d..94e4f78340ff 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -1137,13 +1137,15 @@ static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 	reg |= LINKCTRL_BUS_FILTER_BYPASS(0xf);
- 	writel(reg, regs_base + EXYNOS850_DRD_LINKCTRL);
- 
--	reg = readl(regs_base + EXYNOS850_DRD_UTMI);
--	reg |= UTMI_FORCE_BVALID | UTMI_FORCE_VBUSVALID;
--	writel(reg, regs_base + EXYNOS850_DRD_UTMI);
--
--	reg = readl(regs_base + EXYNOS850_DRD_HSP);
--	reg |= HSP_VBUSVLDEXT | HSP_VBUSVLDEXTSEL;
--	writel(reg, regs_base + EXYNOS850_DRD_HSP);
-+	if (!phy_drd->sw) {
-+		reg = readl(regs_base + EXYNOS850_DRD_UTMI);
-+		reg |= UTMI_FORCE_BVALID | UTMI_FORCE_VBUSVALID;
-+		writel(reg, regs_base + EXYNOS850_DRD_UTMI);
-+
-+		reg = readl(regs_base + EXYNOS850_DRD_HSP);
-+		reg |= HSP_VBUSVLDEXT | HSP_VBUSVLDEXTSEL;
-+		writel(reg, regs_base + EXYNOS850_DRD_HSP);
-+	}
- 
- 	reg = readl(regs_base + EXYNOS850_DRD_SSPPLLCTL);
- 	reg &= ~SSPPLLCTL_FSEL;
-@@ -1408,9 +1410,44 @@ static int exynos5_usbdrd_orien_sw_set(struct typec_switch_dev *sw,
- 				       enum typec_orientation orientation)
- {
- 	struct exynos5_usbdrd_phy *phy_drd = typec_switch_get_drvdata(sw);
-+	int ret;
-+
-+	if (phy_drd->orientation == orientation)
-+		return 0;
-+
-+	ret = clk_bulk_prepare_enable(phy_drd->drv_data->n_clks, phy_drd->clks);
-+	if (ret) {
-+		dev_err(phy_drd->dev, "Failed to enable PHY clocks(s)\n");
-+		return ret;
-+	}
-+
-+	scoped_guard(mutex, &phy_drd->phy_mutex) {
-+		void __iomem * const regs_base = phy_drd->reg_phy;
-+		unsigned int reg;
-+
-+		if (orientation == TYPEC_ORIENTATION_NONE) {
-+			reg = readl(regs_base + EXYNOS850_DRD_UTMI);
-+			reg &= ~(UTMI_FORCE_VBUSVALID | UTMI_FORCE_BVALID);
-+			writel(reg, regs_base +  EXYNOS850_DRD_UTMI);
-+
-+			reg = readl(regs_base + EXYNOS850_DRD_HSP);
-+			reg |= HSP_VBUSVLDEXTSEL;
-+			reg &= ~HSP_VBUSVLDEXT;
-+			writel(reg, regs_base + EXYNOS850_DRD_HSP);
-+		} else {
-+			reg = readl(regs_base + EXYNOS850_DRD_UTMI);
-+			reg |= UTMI_FORCE_VBUSVALID | UTMI_FORCE_BVALID;
-+			writel(reg, regs_base +  EXYNOS850_DRD_UTMI);
-+
-+			reg = readl(regs_base + EXYNOS850_DRD_HSP);
-+			reg |= HSP_VBUSVLDEXTSEL | HSP_VBUSVLDEXT;
-+			writel(reg, regs_base + EXYNOS850_DRD_HSP);
-+		}
- 
--	scoped_guard(mutex, &phy_drd->phy_mutex)
- 		phy_drd->orientation = orientation;
-+	}
-+
-+	clk_bulk_disable(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
- 	return 0;
- }
+---
+v2:
+* collect tags
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index d13218d0c30f..5080fe2ce776 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1121,6 +1121,7 @@ CONFIG_USB_MASS_STORAGE=m
+ CONFIG_TYPEC=m
+ CONFIG_TYPEC_TCPM=m
+ CONFIG_TYPEC_TCPCI=m
++CONFIG_TYPEC_TCPCI_MAXIM=m
+ CONFIG_TYPEC_FUSB302=m
+ CONFIG_TYPEC_QCOM_PMIC=m
+ CONFIG_TYPEC_UCSI=m
 
 -- 
 2.47.0.338.g60cca15819-goog
