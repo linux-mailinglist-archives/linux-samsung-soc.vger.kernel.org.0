@@ -1,78 +1,79 @@
-Return-Path: <linux-samsung-soc+bounces-5566-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5559-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 423199E1A52
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:06:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14BFB9E1AE6
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:28:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 079B82853A2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 11:06:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B0A4B287A6
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 10:07:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EB591E3DD0;
-	Tue,  3 Dec 2024 11:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C661E0B7A;
+	Tue,  3 Dec 2024 10:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jvN4th6Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vCwMQb0S"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C29A1E3793
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 11:06:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07D91E0B77
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 10:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733223980; cv=none; b=GHh/SUfO8Vs8ppz2ynzdDBDsoeXXMuXd06lo/KVA2AXda1e8aD2YtmVTHU0CQSLGxy+d005F00GuEXpkZRvkEyTg2KOv10kCxiLrdutSiAj7oKTNQkY+6wH+95uE11G2UQArt8hKQZUQtONhzKpesaWbFZhvc7/DFLTO1aoMw7c=
+	t=1733220448; cv=none; b=kJohqfWWqyFWKjE2EXrHxnxmrqiwGXpLhA4KgL0NHWkQazCrQoeVRgWUN2wzpB2yfKN/oaFMzWdUY4jLUW57sFJvPWqAknn2X58MH9e+Ef8nbiAbB5lAI+RHqUb84/gz3udcV3CJeLWfyhxrKGdZOI0OXbmnHDQXYi5hPZ1zy/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733223980; c=relaxed/simple;
-	bh=ljSYGUKoLDTXsKObxNS/4LJp3u+C/OrF1P+fya2ivGg=;
+	s=arc-20240116; t=1733220448; c=relaxed/simple;
+	bh=rDhrWjqsitQOm02p1yx3Crr6aSKeDzrUUQOFa0Mc4Mk=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tIlqNlwlaeYUjrZF0Dk946DxX00hXH6cj2GZxY/d9uPfjV2lGmo0BGxuXJNDgYWT6SCIJdpVtzTW9OPuhGzfJBEIr9mMyHNhJC+AA4DBuE55k3GZxF3USSE5aDQ/jTVH/Ve6DYtBKXQUC0mo2TKAXjMXmwDZwVkH2kGlpB0/E3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jvN4th6Q; arc=none smtp.client-ip=209.85.128.44
+	 Content-Type:MIME-Version; b=qLWJ5jNYUq4XPvo+GF5vpWbG5MaS+QwOr18m/geBfRKQkk1XAcmqlWBvgSUSYXWtlFTH/X4RWKUbds1wGaA1Uv3pmOVs/J9eD2yi49kQ7Zx6/JsuoS+21eAUsj/MFRDLNm7LKmm8hR+Q0/+503WZfZwvZ2TvHyUA9fY2uWfirCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vCwMQb0S; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-434aafd68e9so46044815e9.0
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 03:06:16 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-434a0fd9778so48969885e9.0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 02:07:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733223975; x=1733828775; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1733220445; x=1733825245; darn=vger.kernel.org;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5y5ad0avUs5r379umO5xs4htnxZ4LiFXVwnGLxowvNw=;
-        b=jvN4th6QFgWV6BYuy2oid2F7cnhN8eKcy1cIghtquMsYKKbt5H3jZoJeVTFiQZ5U4g
-         SYtT4I8kOXfwFs2iw6y7WLsLpQsFgyxadnf7mopFboXIDnO0gdhvyT/77NjpwIJpABxF
-         0dy8Q5wHWLyDp+Xiez1Vhnjkn0m3tift4Z2NXpHeQ/COacbdSj3+UsEuDwo/tq+meIOK
-         Exwns69Kgc6Bk4XcMzfpdl4oE4L65JXn5CykOHpdty/3V4fMstUr1ftBC6YIShzbGzcF
-         N1KPGsovVVOI3j/zYBfErODY6ebIN/6BlbEFUplLQIdla7amCSLsRPrAvdt2MkvhHaAE
-         orPw==
+        bh=rDhrWjqsitQOm02p1yx3Crr6aSKeDzrUUQOFa0Mc4Mk=;
+        b=vCwMQb0SpDy6GVSKib02Jg57j7HApfpkqcfpQS/BnOjiGD1ZCy9h4w3Thg3lFz5yzT
+         WgrawZDKABwPc0125SnoRrjb0be25/+d4vBzHHMswGAhraylixSKGley+BADQ9f5l78g
+         /OMn7BvXNx5kwNCub+dOGTxz383LRO9rKHt6sQAyvam5g+j9p9WDIR/lkcWFwWKXj85Q
+         eKODLwywcm/r0oTnochlw0Ly9EbNhzKTKG4Z0R2f8W5pAyXsCNl4PYQzDCR7Yh2QriH1
+         HULh2sPg6Zts1OCcopPRSW867orysHWB6sa7IIEzzZJKJUa/FTYUxY+rh0EQgzubUHX0
+         loKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733223975; x=1733828775;
+        d=1e100.net; s=20230601; t=1733220445; x=1733825245;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5y5ad0avUs5r379umO5xs4htnxZ4LiFXVwnGLxowvNw=;
-        b=WQ/z7kyqFztN33SC2rSRkUuvVL1giaYI+LvSE+ITiRUL3Mjc/5AUb9Uw4u3H/eUoQI
-         Lgq4qdT/tyshDehc1MXqW6eMyWAM3w3tBiIteRQTrhuW+HIIg3xsJRU4qeLrAzBpgIgZ
-         9aA9L6EXbGGvkeb2t6Inq5RiMYcD0SrCZ1GBEm5zQ9Q6ymkXLBOl9rJjb8K7YToGifNt
-         5g28PsOGvsrxNJwtkQw61nFmTXxPE8eT3yjbrDGPrhGHYFVlbfYQ+d4C0zJ0g5+osad1
-         zoofQNqkgVI1TncWSBZHQpsswyMgx4PjDx2yLSFx8iL3x8Zj0o5DUQERletiWGVBKXMH
-         s8QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX1rnqppP916VL3gmUtbS8lWpdj/6K+knM6IP864FPJDLnwPSQkn38KvA3TSJi0MlRPytmlW+NJ9V8Rjni5io3Dug==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyteFA1U/2z0YGazh6Cecz25F7NqBhj+Z8hvkPHil1VgxC9Mpt8
-	+fMaXmwsdwEHyE8agXDx0Jy7jWOsE9L8yuDob4f00/D0O9uyYxcKcUKrofPZHw4=
-X-Gm-Gg: ASbGncupD+X3ABaPRAZ3r/REyYNCLMGZ+QC990t8GkiHN5zKjwvF/d1N+O761Ui1Hy2
-	OiPv5FEunsI3TbvXfkdzYPWGaOuAOAOa7kGODfkYwp5bJboX93C20fwP+TJSXTYt22BQq6tgSJT
-	Hk21OUVphLpQLLH3fJkWpbaA+Wc08/F4o8OOQgLbdXqmYVsshIGPVMrEpqvTgxX5UbRHpx2lli2
-	NXFfLO28e8Zy1yaGVMataqKQmWHraxFjCxMXBwnz9GlzhAPge7+iPk=
-X-Google-Smtp-Source: AGHT+IGLmTRJVKICc1kAtHcJQX0sTL1Ubtwsn5MKrksTZEqwhDb+BEw5tNQRlwNX5ov75IPA38SNyg==
-X-Received: by 2002:a05:600c:3b8c:b0:434:a4bc:535b with SMTP id 5b1f17b1804b1-434d09bf66dmr16906005e9.11.1733223975578;
-        Tue, 03 Dec 2024 03:06:15 -0800 (PST)
+        bh=rDhrWjqsitQOm02p1yx3Crr6aSKeDzrUUQOFa0Mc4Mk=;
+        b=dLhwJ8eXCYBkfMnEqZuN1zQ7RKeRzG3ys4kOEFFuHttMTSQPyFfJdt9kVvl2KIv1Gj
+         NhsbAB4Zr9lji57pEZq5U/iUzCZzpzQuZUu5ZGmGtR3ZZ+03RLtNtH1SK/zp1AdcgD5B
+         /qC8ZeIMmW4sL0IBww3NYPoLgiH6VGFO3uJPGdcwa+pMYz51WIGY9Hy8aQCqCwboc8Hv
+         /r+Z5Y5amHdIb7S45r4e4xO9VVtNT9uYvw0kAF1NnAsBAxE2PfYIS5vbae4ZZckNu4gS
+         rIoAVfAAQYKzEtb7RnAq/yuyFAAjCInRYKczbEk+NtDsuek5b94YAupJilqwUJOYM9KR
+         nl+w==
+X-Forwarded-Encrypted: i=1; AJvYcCUhv+DjicfHGg7XUeNv6271JmILU904fZ0gB3ciOGD8rHb1L+qwts0+D5W64tIwOfIBLLiEo0HqHYTpAnkuV5sV1A==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxjecssb0BtJXMF50FC1yeaI1l8nfwcpLnc164z+ll5FBHRmoO3
+	qkUJP7+FTEfI+nKSKBvcQqzahjqXBC4t9Ot9zaYgGUwrSQC2qRoEqlx7rJm9/o4=
+X-Gm-Gg: ASbGncteR3JzLyr3kx1zrM9J1Qq0EpF6N/Ez7sQAgxWtxnjgRki8gLOmnGISC1iHgw6
+	OwPOqweG8oO1kt1hmAvU+vv39zcQnO8oAnh2T1pGcHrC9+I6Xg6yz9oRmlZ73qqY3huYFZrQTd/
+	3bVgsdAHeIKuCaunDA19P59ZOz+eK7gj4PWlbPklKqaDg50g2wukePXVm9Ajv/s2evnjiE+jl5S
+	LZI731Yv9DVdLiWtCCBTsrBRg7CIYGOs/T8YEPheZc1cl/HvRGqnHI=
+X-Google-Smtp-Source: AGHT+IEX3CBzUR11qB9xMFFVxV7orqiKJB6nzE3kEEtb8duUyFuW0fDSGHNnay9m/wWpgm8QQt4SVg==
+X-Received: by 2002:a05:600c:1f8e:b0:434:9efd:26b0 with SMTP id 5b1f17b1804b1-434d09c0c12mr16633575e9.13.1733220445220;
+        Tue, 03 Dec 2024 02:07:25 -0800 (PST)
 Received: from [10.1.1.109] ([80.111.64.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434b0d9bc5asm183847755e9.2.2024.12.03.03.06.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7e5b9csm215194865e9.43.2024.12.03.02.07.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 03:06:15 -0800 (PST)
-Message-ID: <d1bade77b5281c1de6b2ddcb4dbbd033e455a116.camel@linaro.org>
-Subject: Re: [PATCH 1/4] power: supply: add support for max77759 fuel gauge
+        Tue, 03 Dec 2024 02:07:24 -0800 (PST)
+Message-ID: <b311b50e0f54959cd8dac1ef21dd798dd6204331.camel@linaro.org>
+Subject: Re: [PATCH 2/4] dt-bindings: power: supply: add max77759-fg flavor
+ and don't require nvme address
 From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
 To: Thomas Antoine <t.antoine@uclouvain.be>, Sebastian Reichel
  <sre@kernel.org>,  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
@@ -83,14 +84,12 @@ To: Thomas Antoine <t.antoine@uclouvain.be>, Sebastian Reichel
 Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
 	linux-samsung-soc@vger.kernel.org
-Date: Tue, 03 Dec 2024 11:06:14 +0000
-In-Reply-To: <61a54367-2406-4106-bf8b-9fda4f2d11a6@uclouvain.be>
+Date: Tue, 03 Dec 2024 10:07:23 +0000
+In-Reply-To: <20588923-a660-49fe-8efb-766bee22f215@uclouvain.be>
 References: <20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be>
-	 <20241202-b4-gs101_max77759_fg-v1-1-98d2fa7bfe30@uclouvain.be>
-	 <c377f3302c6c282ad826211c859e2b65bb1222cb.camel@linaro.org>
-	 <8f585460a1bc52f78a6d0867aed87398bde30152.camel@linaro.org>
-	 <18629c9edd295a524a1c9764f013a0e97e0b275f.camel@linaro.org>
-	 <61a54367-2406-4106-bf8b-9fda4f2d11a6@uclouvain.be>
+	 <20241202-b4-gs101_max77759_fg-v1-2-98d2fa7bfe30@uclouvain.be>
+	 <fe254a002000f2bbfbe51d074cf28f7427a27f9a.camel@linaro.org>
+	 <20588923-a660-49fe-8efb-766bee22f215@uclouvain.be>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.52.1-4 
@@ -101,52 +100,29 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 
-On Tue, 2024-12-03 at 11:30 +0100, Thomas Antoine wrote:
+On Tue, 2024-12-03 at 10:32 +0100, Thomas Antoine wrote:
+> On 12/3/24 07:57, Andr=C3=A9 Draszik wrote:
+> > On Mon, 2024-12-02 at 14:07 +0100, Thomas Antoine via B4 Relay wrote:
+> > > From: Thomas Antoine <t.antoine@uclouvain.be>
+> > >=20
+> > > As the Maxim max77759 fuel gauge has no non-volatile memory slave add=
+ress,
+> > > make it non-obligatory. Except for this, the max77759 seems to behave=
+ the
+> > > same as the max1720x.
+> >=20
+> > It also needs an interrupt line, and the previously mentioned shunt-
+> > resistor-micro-ohms, and probably a power supply.
 >=20
-> Should I explicitly deny their use in the code for the max77759 or is it
-> just for information?
+> I will try to add the interrupt line for v2. About the power supply, I
+> didn't see anything about it in the devicetree from Google. Even it
+> there is one, I guess it would be a single power supply for the whole
+> max77759, not just the fuel gauge. Wouldn't it be more logical to have an
+> mfd which activates the supply when other functions of the max77759 have
+> been implemented?
 
-I'd probably do something like this, which will indeed deny their reading
-and/or writing, both via debugfs, and also normal driver access via
-readmap_read()/write() etc:
+I've looked it up now and for power supply nothing indeed seems necessary.
 
-static const struct regmap_range max77759_registers[] =3D {
-	regmap_reg_range(0x00, 0x4f),
-	regmap_reg_range(0xb0, 0xbf),
-	regmap_reg_range(0xd0, 0xd0),
-	regmap_reg_range(0xdc, 0xdf),
-	regmap_reg_range(0xfb, 0xfb),
-	regmap_reg_range(0xff, 0xff),
-};
-
-static const struct regmap_range max77759_ro_registers[] =3D {
-	regmap_reg_range(0x3d, 0x3d),
-	regmap_reg_range(0xfb, 0xfb),
-	regmap_reg_range(0xff, 0xff),
-};
-
-static const struct regmap_access_table max77759_write_table =3D {
-	.yes_ranges =3D max77759_registers,
-	.n_yes_ranges =3D ARRAY_SIZE(max77759_registers),
-	.no_ranges =3D max77759_ro_registers,
-	.n_no_ranges =3D ARRAY_SIZE(max77759_ro_registers),
-};
-
-static const struct regmap_access_table max77759_rd_table =3D {
-	.yes_ranges =3D max77759_registers,
-	.n_yes_ranges =3D ARRAY_SIZE(max77759_registers),
-};
-
-static const struct regmap_config max77759_regmap_config =3D {
-	.reg_bits =3D 8,
-	.val_bits =3D 8,
-	.max_register =3D 0xff,
-	.wr_table =3D &max77759_write_table,
-	.rd_table =3D &max77759_rd_table,
-	.cache_type =3D REGCACHE_NONE,
-};
-
-And maybe without cache for now. Most are probably not cacheable anyway.
 
 Cheers,
 Andre'
