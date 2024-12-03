@@ -1,186 +1,163 @@
-Return-Path: <linux-samsung-soc+bounces-5577-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5579-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D6E89E1C23
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 13:27:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 616029E1C54
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 13:40:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E66F283250
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:27:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21C7D284792
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 12:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A37101E500F;
-	Tue,  3 Dec 2024 12:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3311E884A;
+	Tue,  3 Dec 2024 12:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="djY/WER5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qU/IOEMT"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948F71E492D
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8B81E7678
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  3 Dec 2024 12:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733228871; cv=none; b=H+CXQDLUvelzQpEHdLu/6Kdi5jdiiiHUbd41R69zFixd+IDpC3L9XFqgLm/JsAk9RJHcm6bJpA850+JXY30z1sieQIjMR9aEmtLuqdT1HBg0zu2snDK+MrlSHd1xFBK3gwE2DwIMWBCvBLGw+bjHbMh+JQw92wzp0uKsPGSGGo8=
+	t=1733229630; cv=none; b=GuK6yz3nfbzFm/EmGSqoO23xEyCS0AlaPa+mvc3zhzTmjQCvJ/Z0O3FlVYcNJUyThWWzzFPaYP17Ky7ccspROP8oLpr5nIbJfYZie0GGXZn0gxUKKMx67seXwJ5c39QNSGOBOPNO41z4NOfCjnBZgi6zFr3TlWQ0gru7Ven3VdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733228871; c=relaxed/simple;
-	bh=6RnywpFg91GD9e9AaGXdnmWR1etUR0dSB8zjuPzV61I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qBPkyFFfnISO7zblooCLnDQ5z5Q2lj/A+kxQsBWpe/XoBstuxG8Nc5ZDz6yWFvhhOZsDkcSVYhm3mmdTQvOgF2DpTKhHu7fDSgW/DhCrln9J4PEtvJcsN6J4d15SXSNAvuwSMsjDj7Kt4UN7wMqeAa4fU2uPgCH1It9hX6YGktc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=djY/WER5; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1733229630; c=relaxed/simple;
+	bh=xjq7GX6XBYQ1ztBrGduyhRQK8vyP1UVc/11WrT6pxzM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=McCtp8ct8Obrpz0lpCY/DchFjbnJSMwADmGV6nHlMtoCKv/a7c9VFAVWf4EWauiveK8DyMpT4w7TsBnDCRDGxxbZ9XfCLyil5BGv2mkjjCZOaGdVl8LM5ovtqSEUJaJ1lyZ40n0Vh4KDTXTjRW5g3VqVghsOLSI97moYiUz4PYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qU/IOEMT; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53de5ec22adso6877172e87.3
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:27:49 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5cf6f804233so6383809a12.2
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 03 Dec 2024 04:40:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1733228868; x=1733833668; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4tMW5BgK0yNLwCH6utYoQVhW0P2uh6V2gFL0Ya9nckg=;
-        b=djY/WER5Rdu2jIlYxehbxDg/hlYaf361fF+3QnGzzUVRDumY5QD0FrO8+1CpEgWs+c
-         f3dW2UiSQnk7eJu/RhipkmoPi7FQIPpXix8rGgack7fCJRvlGrCw1BGXSoDDRxTKicJQ
-         IMUUuXlH2zOXbFm9GJLuykS1UsvBk5RSTaGyliJmG1x8cS6IZaEBgvcDhXH6yvafLQX3
-         s49uIxIcXNLt+8salXrxOWUhLKvCDCAkhYbtQfRSE7AqBjxNgV6kyl4Br6igAGdMLREJ
-         srgwR3oYPVVsvNJhOUdOwthKqw+HayL2AYYKPQAZBNE/3exPp1irghjYnI+ix380KhPm
-         NO/w==
+        d=linaro.org; s=google; t=1733229625; x=1733834425; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KidvB40Fo4maqTRIu0iP08tZ2RUHssOz5eIQKLC5Snw=;
+        b=qU/IOEMTZ6ag3D44Aer4wfalpMBF0/ufpuLC4OUcSi/zW6JC1pHy7d9YUv9KTYzu0q
+         AyzKJ7mYHwpwjMtb/wnPvdk9zHqCE2sF+zFPn1uS50l+Xj5Xe/E6S52hEJEACrzdz7uL
+         i5CKIwlY396Asuuoy3/zPvJKQpwdREF1GWlU/B3+7DjnkHqazC1d84xfMwZJ+vphLlM4
+         36XuAoQH85PfvQjs60H4AhgxB/cJmJxqnZjKKz4ZvpdYGvsMlwiDHtGRjbtEzgs3Mnhv
+         bdHCPxBnuxL9FczSTLgJgt0+T48eM4/9oSe7uKKyvE6mLsAJO8UDHGcMf8gTTct33ol+
+         oiGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733228868; x=1733833668;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4tMW5BgK0yNLwCH6utYoQVhW0P2uh6V2gFL0Ya9nckg=;
-        b=f+dyuYnjv41TmoNlMvfxEYlpf46j1qvlQqiIHK9ylUn5xbUwYDXveVMjJ27U9VAEOL
-         eokn9/5SKkuYlIoEnF1z0AqXGXlTIq00+4oXb4tqzCAkU7Nn1bjpywFai04t1uw9+SVj
-         o3LStapInfIhVN4otIGnwZqDqVtD2a0fFzjFR0RgRdw2lm1G1Z4ChWqowVTs3cIR1Dm/
-         iDAU+595uahjLb0zodveNzfguDdVm/8x9rIjNWU+boUngQk9z/SpvVX/h6kxRddetHQT
-         VCmcsqp9XsMpcZ7uQssVqLZAFfvszOOYLVgPw837TTBKRMyAAoOg2oE3Bf44qFDPG+9o
-         V8+w==
-X-Forwarded-Encrypted: i=1; AJvYcCWlykKwTRbmPtw9qSeI2s4ijp55BM7sJD+Wj2QT795ogAeWi60bjkPoZF7ipkFait0IVMeyn6jjMOTzZBLaWnQGtg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxV7OGuZYv9kDqTFaeIeIlAQNuc0Zw8UKy5P1jZL5CLNzrf2pbF
-	vbsa+2J7P0cccN6fEinY2Rtpx4/0Yz35s+5ZXO+GzKLw/u3YOB+CIt/rc2JYNKo=
-X-Gm-Gg: ASbGncvVF+zUEYpF9Ii3s7x55hxLqSroymsvxgfZ/47zIa9w3mi3WAzji/bH6wxsjrF
-	p1nrJRusDjg4nbsbNy6srjHvWRqAfIQBWh9PTLz505lF+zYMzAEjP/mBaHUkMordKDR1+LyeHqU
-	KSFCY71vfJ+X7udymxlNeUJBLgdrSdT2exsgM+ntrZu3cTFda/+ECPw1c9Mup8UtGg57mXGZeA4
-	l4afT9za3miyIhNZkjhJ5T4IG3KbY8tMhU4k6ORapxHjSrxfGUQ/Y/jbr6oPbUwgsNwC6L1f+TV
-	ceuFr781fxot9HpfHTzOoigHQAPQig==
-X-Google-Smtp-Source: AGHT+IG0HmZ8YSlH3L/g4YitdlPm2st4Okvau8mZpJCNyynGj3Z9KtsKcqo/MMABonQgOnqb21PQhQ==
-X-Received: by 2002:a05:6512:1089:b0:53d:d3ff:7309 with SMTP id 2adb3069b0e04-53e12a01ee6mr1387104e87.32.1733228867624;
-        Tue, 03 Dec 2024 04:27:47 -0800 (PST)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53df649f6f2sm1810134e87.246.2024.12.03.04.27.45
+        d=1e100.net; s=20230601; t=1733229625; x=1733834425;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KidvB40Fo4maqTRIu0iP08tZ2RUHssOz5eIQKLC5Snw=;
+        b=tvPEWub53CzZvCN8NNLDxQGIl1oFDHjaFbE9601N0XNxP9GDOLPdzOwyuI3zASmPSS
+         nTSTDeg4M48seQjRehXbHemnaJkw0I9nLZ6bF7t504a4OSguUuLMkzW8GqbjobJ5S9nL
+         jNKK01PToc1q4q4GQ9/XXpJCPUhsb8tMQFOL4vyXARBeTi/D1dEWWD4zMu3T8TMlWDSa
+         wqqJIpBH6EBLx0LTjchL0aIwRXw9MpF7ODa8L2noGyEkPwck3abk8Unv0DNDYm/AQVIC
+         1TfmQ59cRG6G+N+wq1EFS8txcTB8u89T/IWW+RzdVdx3BxjAkusw8BrnnLKsI9QgiHej
+         E7Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCVmmhRZGJ0hh282+o79ALIZeFrHC3Q1wxaIYKkXr1w4dv+T9398nNXbWlEyhp75IpsKg0+LJio90ML5FJtoQi0n7A==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzhAeu9PH0O6L7c+V8/8udw9cKqWDUJKkvIac4Gmknw+2JZ13S
+	yl7o8xgkb+jWwEK/ABdKynAnCqwFBR7OpLxaR6ps/U1ehCIoNwWSSSdmeZErEVk=
+X-Gm-Gg: ASbGnctzNzb02Ovy+XpE7n4dLHIKRjNqB1grEQ1433t7LA/FbOUZRYydFKj1IObp3QM
+	ZWYJOBmIeJZaABhrVuyNHneAFafQihO9yoFO4JNC3b/jHaJwwecHE/gDRZEBHuuzXIK+U0QePuq
+	fa5fpoYEHD51KUwzvGglYKROloR0FRj8IPFb1ZuJgyvzKui/p+U2nav++R10DFbSGnGnhRsf8jX
+	PP2r0MIp5h9Bwyq3p/P9IIN4IYwWEdM8tRCKLPE2y29/NC7ObQo2No35pXwxRfIPhNzbAFkhx4w
+	4ZIog+73lEsdShgzxU6Mfe1MMQvODtdDPg==
+X-Google-Smtp-Source: AGHT+IGhLdCxi2DbU4tBTCS3xMoJ+eN/NSNXdGYE86xU3cbMqxxR5/XeFJzbPPRvBrj5K6P11uTb2w==
+X-Received: by 2002:a17:906:30c2:b0:aa4:fc7c:ea78 with SMTP id a640c23a62f3a-aa5f7d390bcmr168580266b.23.1733229625507;
+        Tue, 03 Dec 2024 04:40:25 -0800 (PST)
+Received: from puffmais.c.googlers.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5998e6a4csm616809466b.106.2024.12.03.04.40.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 04:27:46 -0800 (PST)
-Date: Tue, 3 Dec 2024 14:27:44 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Phong LE <ple@baylibre.com>, 
-	Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
-	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Russell King <linux@armlinux.org.uk>, 
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sandy Huang <hjc@rock-chips.com>, 
-	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
-	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Jani Nikula <jani.nikula@linux.intel.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v5 9/9] drm/vc4: hdmi: use
- drm_atomic_helper_connector_hdmi_update_edid()
-Message-ID: <ae24x2bo736jpzi77l34hybejawwe4rp47v2idedga344ye6zr@bxsxz34dwrd2>
-References: <20241201-drm-bridge-hdmi-connector-v5-0-b5316e82f61a@linaro.org>
- <20241201-drm-bridge-hdmi-connector-v5-9-b5316e82f61a@linaro.org>
- <20241202-married-bald-raven-7acd83@houat>
+        Tue, 03 Dec 2024 04:40:25 -0800 (PST)
+From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Subject: [PATCH v2 0/5] Google Pixel 6 (oriole): TCPCI enablement & USB
+ updates
+Date: Tue, 03 Dec 2024 12:40:23 +0000
+Message-Id: <20241203-gs101-phy-lanes-orientation-dts-v2-0-1412783a6b01@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241202-married-bald-raven-7acd83@houat>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIADf8TmcC/42NQQqDMBBFryKz7pRkULRd9R7FRRqnOiCJZIJUx
+ Ls39QRdvg//vR2Uk7DCvdoh8SoqMRSgSwV+cmFklKEwkKHaWmpxVGssLtOGswusGMs9ZJfLD4e
+ seHOe29qRp8ZDsSyJ3/I5C8++8CSaY9rO4Gp/6//u1aLBhoiGrjHdq7WPWYJL8RrTCP1xHF8bp
+ zQ6zwAAAA==
+To: Catalin Marinas <catalin.marinas@arm.com>, 
+ Will Deacon <will@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Sam Protsenko <semen.protsenko@linaro.org>, 
+ Will McVicker <willmcvicker@google.com>, Roy Luo <royluo@google.com>, 
+ kernel-team@android.com, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ devicetree@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+X-Mailer: b4 0.13.0
 
-On Mon, Dec 02, 2024 at 02:27:49PM +0100, Maxime Ripard wrote:
-> Hi,
-> 
-> On Sun, Dec 01, 2024 at 02:44:13AM +0200, Dmitry Baryshkov wrote:
-> > Use the helper function to update the connector's information. This
-> > makes sure that HDMI-related events are handled in a generic way.
-> > Currently it is limited to the HDMI state reporting to the sound system.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/vc4/vc4_hdmi.c | 9 +++++++--
-> >  1 file changed, 7 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-> > index d0a9aff7ad43016647493263c00d593296a1e3ad..d83f587ab69f4b8f7d5c37a00777f11da8301bc1 100644
-> > --- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-> > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-> > @@ -401,13 +401,16 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
-> >  	 */
-> >  
-> >  	if (status == connector_status_disconnected) {
-> > +		drm_atomic_helper_connector_hdmi_update_edid(connector, NULL);
-> >  		cec_phys_addr_invalidate(vc4_hdmi->cec_adap);
-> >  		return;
-> >  	}
-> >  
-> >  	drm_edid = drm_edid_read_ddc(connector, vc4_hdmi->ddc);
-> >  
-> > -	drm_edid_connector_update(connector, drm_edid);
-> > +	// TODO: use drm_atomic_helper_connector_hdmi_update() once it gains
-> > +	// CEC support
-> > +	drm_atomic_helper_connector_hdmi_update_edid(connector, drm_edid);
-> 
-> So, it's not just about EDID, and I think we shouldn't really focus on
-> that either.
-> 
-> As that patch points out, even if we only consider EDID's, we have
-> different path depending on the connector status. It shouldn't be up to
-> the drivers to get this right.
-> 
-> What I had in mind was something like a
-> drm_atomic_helper_connector_hdmi_hotplug function that would obviously
-> deal with EDID only here, but would expand to CEC, scrambling, etc.
-> later on.
+Hi,
 
-I thought about it, after our discussion, but in the end I had to
-implement the EDID-specific function, using edid == NULL as
-"disconnected" event. The issue is pretty simple: there is no standard
-way to get EDID from the connector. The devices can call
-drm_edid_read(), drm_edid_read_ddc(connector->ddc) or (especially
-embedded bridges) use drm_edid_read_custom().
+This series adds and enables the Maxim MAX77759 TCPCI for Google Pixel
+6 (Oriole).
 
-Of course we can go with the functional way and add the
-.read_edid(drm_connector) callback to the HDMI funcs. Then the
-drm_atomic_helper_connector_hdmi_hotplug() function can read EDID on its
-own.
+It relies on the bindings updates proposed as part of
+https://lore.kernel.org/all/20241203-dtbinding-max77759-v3-1-e1a1d86aca8e@linaro.org/
+and
+https://lore.kernel.org/all/20241203-gs101-phy-lanes-orientation-phy-v2-2-40dcf1b7670d@linaro.org/
 
-Also the function that you proposed perfectly fits the HPD notification
-callbacks, but which function should be called from the .get_modes()?
-The _hdmi_hotplug() doesn't fit there. Do we still end up with both
-drm_atomic_helper_connector_hdmi_hotplug() and
-drm_atomic_helper_connector_hdmi_update_edid()?
+With these patches, we allow the usb phy to detect usb cable
+orientation, and we make it possible for the USB DWC3 core to enter
+runtime suspend upon cable disconnect.
 
-> 
-> And would cover both the connected/disconnected cases.
-> 
-> Maxime
+To: Catalin Marinas <catalin.marinas@arm.com>
+To: Will Deacon <will@kernel.org>
+To: Peter Griffin <peter.griffin@linaro.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: Sam Protsenko <semen.protsenko@linaro.org>
+Cc: Will McVicker <willmcvicker@google.com>   
+Cc: Roy Luo <royluo@google.com>
+Cc: kernel-team@android.com
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
 
+Changes in v2:
+- more appropriate dwc3 quirks to achieve reliable Vbus state detection (patch 3)
+- drop patch 'dt-bindings: usb: max33359: add max77759 flavor' from
+  this series as it should go via linux-usb (Krzysztof)
+- max77759 tcpci compatible has changed
+- Link to v1: https://lore.kernel.org/r/20241127-gs101-phy-lanes-orientation-dts-v1-0-5222d8508b71@linaro.org
 
+---
+André Draszik (5):
+      arm64: defconfig: enable Maxim TCPCI driver
+      arm64: dts: exynos: gs101: phy region for exynos5-usbdrd is larger
+      arm64: dts: exynos: gs101: allow stable USB phy Vbus detection
+      arm64: dts: exynos: gs101-oriole: enable Maxim max77759 TCPCi
+      arm64: dts: exynos: gs101-oriole: add pd-disable and typec-power-opmode
 
+ arch/arm64/boot/dts/exynos/google/gs101-oriole.dts | 104 +++++++++++++++++++++
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi       |   5 +-
+ arch/arm64/configs/defconfig                       |   1 +
+ 3 files changed, 109 insertions(+), 1 deletion(-)
+---
+base-commit: ed9a4ad6e5bd3a443e81446476718abebee47e82
+change-id: 20241127-gs101-phy-lanes-orientation-dts-9ace74a2c25c
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+André Draszik <andre.draszik@linaro.org>
+
 
