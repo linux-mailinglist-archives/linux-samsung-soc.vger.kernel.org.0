@@ -1,100 +1,102 @@
-Return-Path: <linux-samsung-soc+bounces-5590-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5588-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46DF09E2051
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 15:56:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E4E99E27D3
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 17:42:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C88228A10D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 14:56:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB9A6B666B4
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  3 Dec 2024 14:33:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A8161F7550;
-	Tue,  3 Dec 2024 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 280AD1F6664;
+	Tue,  3 Dec 2024 14:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="W88BdBj2"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T48Xjl74"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE313B5B6;
-	Tue,  3 Dec 2024 14:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672374F218;
+	Tue,  3 Dec 2024 14:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237784; cv=none; b=M6Zo+Rv993IOdqdESiQxZtK4OpPTHAeyJ9YK3oKz7cAY6BY2O+0fTobIshOD+oP8wtXVkzDTlHMKSdOgeKQf1PVvGX4F0qmnKasVJHX7xXZ87vRd5FYccAv6xvPmvqDMtdJbG3KM8mEmIoCCIn4K9KFnj92OgNSU9fijibVQgPQ=
+	t=1733236419; cv=none; b=EeilkmUyE1vAlLPD0or6493oXHYpOvmJzU2AwQIiTeU9Yqt4xbHbZ9hl4T3sNz27blY+pNuTjlwt+LgcbE0qGNKNGNJS4/zv5MaHQw9ngHOd6rtqBTKEnU6qY6zK3G+0uL0mzv5iJv3G9FF+ER+s7IqoECMr6NKFKsqnq1JQewY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733237784; c=relaxed/simple;
-	bh=nr9bqAPsYmVIpKYgeN/1T2895DfBpqXXw8ki35XQrNY=;
+	s=arc-20240116; t=1733236419; c=relaxed/simple;
+	bh=t+NELF6Cs3AMXyjLkXGAGVtag15igAgDFRlk6+wOWag=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hLBJUqQfWDGVuzNfnNE6BXCSmhvsCXT/NSKJHVgIrnTUgGwhE0AQgNw6S5TeZETUsyrivoOXSGczOoSEjo5+SiycUeShP+iooM5U67xKW+5uqBUb1YKAWF8/wIXaKNDbBKpUG2vcV93ZGWdrqKwAOFax+1NpbmQ9upnaREeRWOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=W88BdBj2; arc=none smtp.client-ip=192.198.163.12
+	 MIME-Version:Content-Type; b=Z5GNU4GLRiC7e6Cu4uNjb6dgvNr05QuR17Wi8BY1STIC95fQAM1ZPy2HGMlJYW8fUBsji+2xVHMb34MpGQB+Ce2w3Qbimwf2XFavuSO8KDVKJmvZr5qcD/EVXWO+cQB1WCMsgazBbpukxRQl15jUKo5VmcGdmgFki8h1N7CvmIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T48Xjl74; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1733237782; x=1764773782;
+  t=1733236417; x=1764772417;
   h=from:to:cc:subject:in-reply-to:references:date:
    message-id:mime-version;
-  bh=nr9bqAPsYmVIpKYgeN/1T2895DfBpqXXw8ki35XQrNY=;
-  b=W88BdBj2Y6FNTGFFVAp8nVfFGFKBM0KGajMvEGYMYEIbQt7d0OZhmJxd
-   K77qQzqJovVmAfk+Cwo/dQtB8CosiWAYuc358NznUjo/twzCajJR2q/jo
-   ZAxoR2Ypb8wHZCInVj8P0PKXvuLKy1mT8RsBuvYaBGSt9o6jPKsEoszqr
-   HEOgjVug4juk9cVlB1qIIsaehAIt/cgLcgpRd5rUYAG78nlZyDdzkW5wZ
-   JfkN3CTLuTxRglvcwnMG7/FVtsx4OPCfR1ECHf94kZFvt/4QjHk9ToY0S
-   K4JzMpZ0MwlevVczJ8Ug9siGeUW6Zaz9f1IUEsHP09lmQjvHskn5ObDy0
-   w==;
-X-CSE-ConnectionGUID: FQ9dhUJzS+SXQJYDh3ymeg==
-X-CSE-MsgGUID: FfbATpKLSeS75hkgeYrFvg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11275"; a="37391896"
+  bh=t+NELF6Cs3AMXyjLkXGAGVtag15igAgDFRlk6+wOWag=;
+  b=T48Xjl74mizV5GSO44PuTRvmQbpK7w2Xp4mNwBpMlwqQ54YvfR5MsCuz
+   DZk6F/5bjVGMxjutjwq0gyjN4tlH/CeT2vHtfnluaRKH9zBWsO4IS4WKY
+   bnLvL0TSMWXTebT2XugZI2va2aXDWKOtW98iJmpqL7gSlbFSTyaUaD6U6
+   S687nKrMUyymKNNL9A0nfKiJxYMUX3p0uMfdn6B+cLEpnuQKiP8mWyu+I
+   8iLAxOVdEviaW5MWaaDLYH5rFvjDbPXBGHXTmqOtXG+AZU7XVuCVumLkw
+   R2imQeA8ripbLMULLNyKS+Yg+NhIGTHEsGHIbHIp7IwzFhpSfQ3asHeOl
+   Q==;
+X-CSE-ConnectionGUID: UD/+bRdnS2uXgpEkJCVbbg==
+X-CSE-MsgGUID: rnu+r845R8GKdl124Oelwg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11275"; a="33331008"
 X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; 
-   d="scan'208";a="37391896"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 06:56:20 -0800
-X-CSE-ConnectionGUID: Tre4A+gIQ0+OsOTsF+JqxA==
-X-CSE-MsgGUID: /jaX+ZgoRZKGdDviMXmvsQ==
+   d="scan'208";a="33331008"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 06:33:36 -0800
+X-CSE-ConnectionGUID: qFwNGDLVTlKCszQVkKdgBQ==
+X-CSE-MsgGUID: YuyBpSYvSa20R8vswupuDA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.12,205,1728975600"; 
-   d="scan'208";a="93921130"
+   d="scan'208";a="98223136"
 Received: from kniemiec-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.135])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 06:56:07 -0800
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2024 06:32:49 -0800
 From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Harry Wentland <harry.wentland@amd.com>,
- Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>, Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>, Xinhui Pan <Xinhui.Pan@amd.com>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Phong LE <ple@baylibre.com>,
- Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>,
- Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski
- <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, Rodrigo Vivi
- <rodrigo.vivi@intel.com>, Joonas Lahtinen
- <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, Alain Volmat <alain.volmat@foss.st.com>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Maxime Ripard
+ <mripard@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Laurent
+ Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman
+ <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten
+ Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann
+ <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
+ <tiwai@suse.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
+ <broonie@kernel.org>, Phong LE <ple@baylibre.com>, Inki Dae
+ <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin
+ Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Russell King
+ <linux@armlinux.org.uk>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Philipp
+ Zabel <p.zabel@pengutronix.de>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?=
+ <heiko@sntech.de>, Andy
+ Yan <andy.yan@rock-chips.com>, Alain Volmat <alain.volmat@foss.st.com>,
  Raphael Gallais-Pou <rgallaispou@gmail.com>, Dave Stevenson
  <dave.stevenson@raspberrypi.com>, =?utf-8?Q?Ma=C3=ADra?= Canal
  <mcanal@igalia.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- amd-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 06/10] drm/i915/audio: use eld_mutex to protect access
- to connector->eld
-In-Reply-To: <20241201-drm-connector-eld-mutex-v1-6-ba56a6545c03@linaro.org>
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v5 9/9] drm/vc4: hdmi: use
+ drm_atomic_helper_connector_hdmi_update_edid()
+In-Reply-To: <ae24x2bo736jpzi77l34hybejawwe4rp47v2idedga344ye6zr@bxsxz34dwrd2>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20241201-drm-connector-eld-mutex-v1-0-ba56a6545c03@linaro.org>
- <20241201-drm-connector-eld-mutex-v1-6-ba56a6545c03@linaro.org>
-Date: Tue, 03 Dec 2024 16:56:04 +0200
-Message-ID: <874j3k4xyz.fsf@intel.com>
+References: <20241201-drm-bridge-hdmi-connector-v5-0-b5316e82f61a@linaro.org>
+ <20241201-drm-bridge-hdmi-connector-v5-9-b5316e82f61a@linaro.org>
+ <20241202-married-bald-raven-7acd83@houat>
+ <ae24x2bo736jpzi77l34hybejawwe4rp47v2idedga344ye6zr@bxsxz34dwrd2>
+Date: Tue, 03 Dec 2024 16:32:44 +0200
+Message-ID: <877c8g4z1v.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -103,52 +105,86 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-On Sun, 01 Dec 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> Reading access to connector->eld can happen at the same time the
-> drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
-> order to protect connector->eld from concurrent access.
+On Tue, 03 Dec 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> On Mon, Dec 02, 2024 at 02:27:49PM +0100, Maxime Ripard wrote:
+>> Hi,
+>> 
+>> On Sun, Dec 01, 2024 at 02:44:13AM +0200, Dmitry Baryshkov wrote:
+>> > Use the helper function to update the connector's information. This
+>> > makes sure that HDMI-related events are handled in a generic way.
+>> > Currently it is limited to the HDMI state reporting to the sound system.
+>> > 
+>> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> > ---
+>> >  drivers/gpu/drm/vc4/vc4_hdmi.c | 9 +++++++--
+>> >  1 file changed, 7 insertions(+), 2 deletions(-)
+>> > 
+>> > diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+>> > index d0a9aff7ad43016647493263c00d593296a1e3ad..d83f587ab69f4b8f7d5c37a00777f11da8301bc1 100644
+>> > --- a/drivers/gpu/drm/vc4/vc4_hdmi.c
+>> > +++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+>> > @@ -401,13 +401,16 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
+>> >  	 */
+>> >  
+>> >  	if (status == connector_status_disconnected) {
+>> > +		drm_atomic_helper_connector_hdmi_update_edid(connector, NULL);
+>> >  		cec_phys_addr_invalidate(vc4_hdmi->cec_adap);
+>> >  		return;
+>> >  	}
+>> >  
+>> >  	drm_edid = drm_edid_read_ddc(connector, vc4_hdmi->ddc);
+>> >  
+>> > -	drm_edid_connector_update(connector, drm_edid);
+>> > +	// TODO: use drm_atomic_helper_connector_hdmi_update() once it gains
+>> > +	// CEC support
+>> > +	drm_atomic_helper_connector_hdmi_update_edid(connector, drm_edid);
+>> 
+>> So, it's not just about EDID, and I think we shouldn't really focus on
+>> that either.
+>> 
+>> As that patch points out, even if we only consider EDID's, we have
+>> different path depending on the connector status. It shouldn't be up to
+>> the drivers to get this right.
+>> 
+>> What I had in mind was something like a
+>> drm_atomic_helper_connector_hdmi_hotplug function that would obviously
+>> deal with EDID only here, but would expand to CEC, scrambling, etc.
+>> later on.
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> I thought about it, after our discussion, but in the end I had to
+> implement the EDID-specific function, using edid == NULL as
+> "disconnected" event. The issue is pretty simple: there is no standard
+> way to get EDID from the connector. The devices can call
+> drm_edid_read(), drm_edid_read_ddc(connector->ddc) or (especially
+> embedded bridges) use drm_edid_read_custom().
 
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Lack of EDID may be a good approximation of disconnected for displays
+that should have one, but just a reminder that having an EDID should not
+be the only approximation for connected.
 
-and
+This is relevant for the debugfs/firmware EDID case. You'll want to be
+able to have that, without it implying connected.
 
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-
-for merging via whichever tree you find best.
-
+BR,
+Jani.
 
 
-> ---
->  drivers/gpu/drm/i915/display/intel_audio.c | 3 +++
->  1 file changed, 3 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/i915/display/intel_audio.c b/drivers/gpu/drm/i915/display/intel_audio.c
-> index 32aa9ec1a204d2ecde46cad36598aa768a3af671..3902ab8431139c3ff4dc17b841d94b6d3241dec3 100644
-> --- a/drivers/gpu/drm/i915/display/intel_audio.c
-> +++ b/drivers/gpu/drm/i915/display/intel_audio.c
-> @@ -699,10 +699,12 @@ bool intel_audio_compute_config(struct intel_encoder *encoder,
->  	const struct drm_display_mode *adjusted_mode =
->  		&crtc_state->hw.adjusted_mode;
->  
-> +	mutex_lock(&connector->eld_mutex);
->  	if (!connector->eld[0]) {
->  		drm_dbg_kms(&i915->drm,
->  			    "Bogus ELD on [CONNECTOR:%d:%s]\n",
->  			    connector->base.id, connector->name);
-> +		mutex_unlock(&connector->eld_mutex);
->  		return false;
->  	}
->  
-> @@ -710,6 +712,7 @@ bool intel_audio_compute_config(struct intel_encoder *encoder,
->  	memcpy(crtc_state->eld, connector->eld, sizeof(crtc_state->eld));
->  
->  	crtc_state->eld[6] = drm_av_sync_delay(connector, adjusted_mode) / 2;
-> +	mutex_unlock(&connector->eld_mutex);
->  
->  	return true;
->  }
+> Of course we can go with the functional way and add the
+> .read_edid(drm_connector) callback to the HDMI funcs. Then the
+> drm_atomic_helper_connector_hdmi_hotplug() function can read EDID on its
+> own.
+>
+> Also the function that you proposed perfectly fits the HPD notification
+> callbacks, but which function should be called from the .get_modes()?
+> The _hdmi_hotplug() doesn't fit there. Do we still end up with both
+> drm_atomic_helper_connector_hdmi_hotplug() and
+> drm_atomic_helper_connector_hdmi_update_edid()?
+>
+>> 
+>> And would cover both the connected/disconnected cases.
+>> 
+>> Maxime
 
 -- 
 Jani Nikula, Intel
