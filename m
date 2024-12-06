@@ -1,93 +1,119 @@
-Return-Path: <linux-samsung-soc+bounces-5697-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5699-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D94D9E74CD
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Dec 2024 16:45:44 +0100 (CET)
-Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C4AA9E7596
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Dec 2024 17:17:06 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D555167AD6
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Dec 2024 15:45:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33715289970
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Dec 2024 16:17:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96DA120D4E0;
-	Fri,  6 Dec 2024 15:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF39020FAAD;
+	Fri,  6 Dec 2024 16:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="JiMNspDu"
+	dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b="clMCC+Y+"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from out-02.smtp.spacemail.com (out-02.smtp.spacemail.com [63.250.43.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5C710E0;
-	Fri,  6 Dec 2024 15:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A618D20D501;
+	Fri,  6 Dec 2024 16:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733499933; cv=none; b=Vr5NSIUT9IDegevIt7BlCs8h8qd+BTYGguOF/2eNa1B9hvath3OrbHJuCPfozFu7s0D3BvrlUlh0qWZ4NWwYBVacm4t9Ck1oxdhfLiPcFr6JF1mK489PBo5kMiALI19SC4MYzbJ86p7k9GMyT1NJ0AifwveO839toxzdlbkk8k0=
+	t=1733501641; cv=none; b=oSVB6DV8vNDlNInOAqzL0wol8OtlJZFcXjjKHxPMlOAUBzsxyimzX92NQp1jEF+IzhygOpkeByrIBrjbvXmgSZUpgeAjqnxxwxMHbWE0esgQcCwyizAa96KOzXdLbcR82yBCs0TlCldNAPFXZr4aNPrDDkTDmRlXBWbHLLUPWZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733499933; c=relaxed/simple;
-	bh=jbEhDaMhaYRgHqg0j3y6E2dzcgnzRa0+yf2IRP/gbrc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVlJoM+boguOj3UHJQxatLWXmTa3zzuLbu6+4xL7Wc9mccQCOXPS27AlPVEZ9AXHBRC4wUMPoBY8OQtWcw8AzsUW8JO4WY8+l6DxiDJ7EAHi4+csrUXmS1QVUCfMXFYRSKIJjVLYMhf0wxUOyaze44IUfMpf9AnLEvS9qDMq4zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=JiMNspDu; arc=none smtp.client-ip=63.250.43.87
+	s=arc-20240116; t=1733501641; c=relaxed/simple;
+	bh=C8ZUvyDK/liK+O5PSjiupnuJWNIGEJ028E5VI/EvwKI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NakBtG+Iy3s0S2JNpwjCUgWEDoeIaF8AoIhWZz50KsHJRGSEyCzCTnenGO7elBsqWcyTQDRQ9ugZgIurASV4Av3pFDu6Dbi0M3moGMruRIZsfWbDY5qIaMPp8m6eXmOy16u4IjSN+6sCwTIu0kMvzu3ng86W7ZU6tmnIn1olhzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=mentallysanemainliners.org header.i=@mentallysanemainliners.org header.b=clMCC+Y+; arc=none smtp.client-ip=63.250.43.87
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
 Received: from prod-lbout-phx.jellyfish.systems (unknown [198.177.122.3])
-	by smtp.spacemail.com (Postfix) with ESMTPA id 4Y4bF65XZZz4w8J;
-	Fri, 06 Dec 2024 15:45:30 +0000 (UTC)
-Received: from umer-b550pro4.lan (host-213-78-252-153.as13285.net [213.78.252.153])
+	by smtp.spacemail.com (Postfix) with ESMTPA id 4Y4bsr4hzpz4wRg;
+	Fri, 06 Dec 2024 16:13:52 +0000 (UTC)
+Received: from [127.0.1.1] (83.21.102.241.ipv4.supernova.orange.pl [83.21.102.241])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.spacemail.com (Postfix) with ESMTPSA id 4Y4bDy6GfCz8sWh;
-	Fri,  6 Dec 2024 15:45:22 +0000 (UTC)
+	by mail.spacemail.com (Postfix) with ESMTPSA id 4Y4bsh4khYz2x99;
+	Fri,  6 Dec 2024 16:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=mentallysanemainliners.org; s=spacemail; t=1733499925;
-	bh=jbEhDaMhaYRgHqg0j3y6E2dzcgnzRa0+yf2IRP/gbrc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiMNspDuRphE9o3eaOZTf9bLQRkKlANAM+5hkXxAlwBtfYett3c1bD0njT1udq7U6
-	 LP6SB1EJ/rGe9CrS+XotbLwGo+gTxTtLMBWBGDdjxeWiwmWi7VC085WFmd/mbVZA+v
-	 GldaTpMIR+igDUQjiLTkFzwr1SoU/h7JTXBmsEe1zH439fIDeLLY2yWl8WRSTtMTpA
-	 2zxPn+8BqOxhwPOvQI6qQaf8+VfVocDYIoyartHRF6Wz5yq6jh9ipRjFMvQbEltLG1
-	 +ulb42RmhHvnKS84p9gNu3PAY7h4GIPxlmgQZOKDLwBtHhzy0dZaZUbDhDnwXxv5eQ
-	 J8F0jLyDMbs8w==
-From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
-To: krzk@kernel.org
-Cc: alim.akhtar@samsung.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	igor.belwon@mentallysanemainliners.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	robh@kernel.org,
-	umer.uddin@mentallysanemainliners.org
-Subject: Re: Re: [PATCH v3 3/4] arm64: dts: exynos: Add initial support for Samsung Galaxy S20 5G (x1s)
-Date: Fri,  6 Dec 2024 15:45:08 +0000
-Message-ID: <20241206154508.4426-1-umer.uddin@mentallysanemainliners.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <5e3e43eb-3afc-486e-aa9a-4c1074fd30b8@kernel.org>
-References: <5e3e43eb-3afc-486e-aa9a-4c1074fd30b8@kernel.org>
+	d=mentallysanemainliners.org; s=spacemail; t=1733501627;
+	bh=C8ZUvyDK/liK+O5PSjiupnuJWNIGEJ028E5VI/EvwKI=;
+	h=From:Subject:Date:To:Cc:From;
+	b=clMCC+Y+efcXfWO23YnMIGTg/lvJB9blKRbyCZDOq6MEpVSv8sdveXU2MU6RX4xrM
+	 yl9Bc5THfSZE/Ppa2qoMMO9QVj25rRoMw1GT4KLrpAEOzmCoEq0TWLak33Io9mr9r7
+	 1whf1EAojBTx4+xoAjfeQI6Xdeb8GCii9b3t8liK3uNitorW9Ww4RG2ykNuCY4Hs+y
+	 sKmchK/DgFyRXUDo9kTwdgxH7NXnIVk+zdfAGLTP88+WVGhv/IO6C/X3mPYIR5EKYy
+	 kk4G9pBnQvU/wDNeAuAOHLsSfR4O2XZNhFSHML5ua/HcY12w0ZcSZN3y3tPmxXAuea
+	 wHj0eEWevO81g==
+From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+Subject: [PATCH v2 0/3] clk: samsung: Introduce Exynos990 clock support
+Date: Fri, 06 Dec 2024 17:12:17 +0100
+Message-Id: <20241206-exynos990-cmu-v2-0-4666ff0a099b@mentallysanemainliners.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGEiU2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDIxNDIwMz3dSKyrz8YktLA93k3FJdU4vElERTA1OzxBRTJaCegqLUtMwKsHn
+ RsbW1AGylCihfAAAA
+X-Change-ID: 20241206-exynos990-cmu-58ada5056ad5
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-samsung-soc@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, 
+ Igor Belwon <igor.belwon@mentallysanemainliners.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1733501552; l=1306;
+ i=igor.belwon@mentallysanemainliners.org; s=20241206;
+ h=from:subject:message-id; bh=C8ZUvyDK/liK+O5PSjiupnuJWNIGEJ028E5VI/EvwKI=;
+ b=XJ05RlLwlH1Hp9sM1jYNxcMvMmBVTe36X4bmaOuUeArZSJK1Jk5wAk46F0i8DqhlW7y1Ar9to
+ Qx8oWcNT9ieDKhbzXF3L5xeHxtfPUPTZkH9QCsYM3N4IEwR0opuY3qS
+X-Developer-Key: i=igor.belwon@mentallysanemainliners.org; a=ed25519;
+ pk=qKAuSTWKTaGQM0vwBxV0p6hPKMN4vh0CwZ+bozrG5lY=
 
-On 06/12/2024 14:11:28 +0100, Krzysztof Kozlowski wrote:
+Hi all,
 
-> Keep the order (sorted).
->
->
-> Best regards,
-> Krzysztof
+This patchset adds support for the Clock Management Unit found in the
+Exynos990 SoC. This CMU allows for clocking peripherals such as USB, UFS,
+MCT, et cetera.
 
-Hi Krzysztof, really sorry that had went through, I had seen the error,
-but by then it was too late and it was already sent off... I have
-sent v5 off though, which should merge properly as the order has been
-fixed.
+Currently there are two blocks implemented, CMU_TOP which
+generates clocks for other blocks, and CMU_HSI0, which generates clocks
+for USB. More blocks will be added (hopefully soon), like HSI1 for UFS.
 
-Best Regards,
-Umer
+Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+---
+Igor Belwon (3):
+      dt-bindings: clock: Add Exynos990 SoC CMU bindings
+      clk: samsung: clk-pll: Add support for pll_{0717x, 0718x, 0732x}
+      clk: samsung: Introduce Exynos990 clock controller driver
+
+ .../bindings/clock/samsung,exynos990-clock.yaml    |  120 ++
+ drivers/clk/samsung/Makefile                       |    1 +
+ drivers/clk/samsung/clk-exynos990.c                | 1343 ++++++++++++++++++++
+ drivers/clk/samsung/clk-pll.c                      |   14 +-
+ drivers/clk/samsung/clk-pll.h                      |    3 +
+ include/dt-bindings/clock/samsung,exynos990.h      |  236 ++++
+ 6 files changed, 1715 insertions(+), 2 deletions(-)
+---
+base-commit: ebe1b11614e079c5e366ce9bd3c8f44ca0fbcc1b
+change-id: 20241206-exynos990-cmu-58ada5056ad5
+
+Best regards,
+-- 
+Igor Belwon <igor.belwon@mentallysanemainliners.org>
+
 
