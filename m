@@ -1,174 +1,149 @@
-Return-Path: <linux-samsung-soc+bounces-5740-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5744-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93E8F9E8CA9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2024 08:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 534B59E8CF2
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2024 09:03:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B90D18863FB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2024 07:55:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DB221886CCA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  9 Dec 2024 08:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B398215063;
-	Mon,  9 Dec 2024 07:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D1B21505F;
+	Mon,  9 Dec 2024 08:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ol3X4T9x"
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="OXz1EUhf"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A65588B;
-	Mon,  9 Dec 2024 07:55:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3513A215074
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  9 Dec 2024 08:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733730921; cv=none; b=N2oz13OErPSGiUozitdjV57sSU4FX/DX3BRU4ozx6IHlrjQihrMSxU95kKA7CuHlThJnMTWtboDaW3myR3tyfNXeVSIFZqhXnOd9/eXJEotNbCaccAKiUU0t4IrP3wAbv5Cp8FIyIw+p7XC9HKk4iw3vIwXG2FrFoGejSxkwkbI=
+	t=1733731325; cv=none; b=otg/VI8MOIFHZ0J9JvZc64KQZlD6QgFD7iS6VJBQ5BD0oGSdZkjLu19WEzhxg8aa/QdJcstvcOQOO3Xkcb9zIFn17pcQY08ol/XrAbE8NlaZZJ6S/0OB0zmlAxu4grOXeeyg3WuP4/T2KBeiIvLBUTGclDJO1kuX2uLUe9J1eaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733730921; c=relaxed/simple;
-	bh=0t/Pxb0qevc4gl+uL0DpwiF40jJ+z0RltHyWs0l13JY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KoPNtZMD3mz3lvCt21esmN2jYVwqtxpWuArAS+twfzo8nR+5P5iT2XCekJt/GUemyNxtBIUKva6Gh3Dcwce/z6yfe7qnCNFY2Rm9RvCbFT2c3MRZITYdeDqOkvwi7Qowd/PRFePk7y9Cmb+sHZpME7MazvDC9K56T6nvBd/GvkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ol3X4T9x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED113C4CEDF;
-	Mon,  9 Dec 2024 07:55:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1733730920;
-	bh=0t/Pxb0qevc4gl+uL0DpwiF40jJ+z0RltHyWs0l13JY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ol3X4T9xHkxl0hmXFzlnIo199RB6u+4z4O6GvHJ22rlidiWQxfhay4xtWBunAc+XA
-	 qsfxg+mUdPwKIfV8IRwbifRYMLgZCEb+ul4SgaoXVg3b1FmWP2gPuf+NA8SOw6Gkmm
-	 mNNURwL0zoDTDSbhHIuTB5SYHP+UgynJYnx8wrReIqWn7pGqb9zDLb2FtMpyFW20aE
-	 o9W6sSePFMY6Kvjew67WB4pTUty1AtoyaITtF9IMnGopPndTXFq6G8p8bLHM4/lkQy
-	 1TrOn5aKfKATTnGtZmMMdosj3AjHXh51v6rmuR04lWbA+Q+kCe3pARV6jtayC+b2wF
-	 0RwYw6Ynf825A==
-Date: Mon, 9 Dec 2024 08:55:17 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>
-Cc: jassisinghbrar@gmail.com, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, alim.akhtar@samsung.com, linux-kernel@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	andre.draszik@linaro.org, kernel-team@android.com, willmcvicker@google.com, 
-	peter.griffin@linaro.org
-Subject: Re: [PATCH v3 2/3] mailbox: add samsung exynos driver
-Message-ID: <c6y4nofsjpjsl7ycsxsfqoizu7qsyf5yzbeao6utu5u5avlwzl@jbl3oqhy7ehb>
-References: <20241205174137.190545-1-tudor.ambarus@linaro.org>
- <20241205174137.190545-3-tudor.ambarus@linaro.org>
+	s=arc-20240116; t=1733731325; c=relaxed/simple;
+	bh=xv0g/k5RohMn5AP1WL+DpPUxCREfDHDlRdXwBYsOnJg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XTK99ORIHmHacHz3EK12bsr7B8WIXyYZcsX3HQXo3Af/Woh76dcm47sKjBYUVUDg9Jhz75OiuTwG6LDtuVI6h1ltYd0jkmTxjoiHOrvm0hb2gv8VbZEUU9LKMsyOLrySaWrtns/rjIzjy5IqyLzvjPVllqn0FynuLu+MNiWS5Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=OXz1EUhf; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=OXz1EUhfInN9iA8Qq++xZZ2u/3bfsrwlgrF0O1AKDGKfOx6o2IxkbV25Q0o/baYg6X8lbnd43Ajj66GqgLc8LSbE/rBx6mw/B+mnh9GZ3YawQSXuPK3GEk08d9jTnFRxyzR2jsKdqPcgi73I7k2frZ/cj8xD0sH4gzScKnNvwXUIyyaQqHF5wCGGKa18H9rKTrv41Q35QdSKD3dZ9hVLA2WaAiDR+avWsf7tEJICykxjzQCXwcMYKIr15V+KT5j7zPyFt6wQz+11lakrtwhsepEq2yQOUYFbfaTktie5nSWQPwDXOoXW1p7VVAUxwtOn8VEal2A3Xv7JWkhd3IgJ6A==; s=purelymail2; d=purelymail.com; v=1; bh=xv0g/k5RohMn5AP1WL+DpPUxCREfDHDlRdXwBYsOnJg=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 68229:10037:null:purelymail
+X-Pm-Original-To: linux-samsung-soc@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1477585645;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 09 Dec 2024 08:01:11 +0000 (UTC)
+From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	igor.belwon@mentallysanemainliners.org
+Subject: [PATCH v7 0/4] Add minimal Samsung Galaxy S20 Series board, SM-G981B and SM-G980F support
+Date: Mon,  9 Dec 2024 08:00:55 +0000
+Message-ID: <20241209080059.11891-1-umer.uddin@mentallysanemainliners.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241205174137.190545-3-tudor.ambarus@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, Dec 05, 2024 at 05:41:36PM +0000, Tudor Ambarus wrote:
-> The samsung exynos mailbox controller has 16 flag bits for hardware
+Hi folks,
 
+This series adds initial support for the Samsung Galaxy S20 Series and also
+initial board support for the Samsung Galaxy S20 5G (SM-G981B)
+codenamed x1s and the Samsung Galaxy S20 (SM-G980F).
 
-Here, subject and other text/descriptions:
-s/samsung/Samsung/
-s/exynos/Exynos/
+The S20 Series feature a lot of similarities in their configuration
+and internally Samsung named the common devicetrees in their
+downstream kernel 'hubble', please note hubble excludes the
+S20 FE series and Note20 series. To accommodate this, I've
+now named the device tree common's matching the codenames
+(x1s-common).
+The device trees have been tested with dtbs_check W=3D1
+and results in no warnings.
 
+This initial bringup consists of:
+ * pinctrl
+ * gpio-keys
+ * simple-framebuffer
 
-> interrupt generation and a shared register for passing mailbox messages.
-> When the controller is used by the ACPM protocol the shared register is
-> ignored and the mailbox controller acts as a doorbell. The controller
-> just raises the interrupt to APM after the ACPM protocol has written
-> the message to SRAM.
+This is enough to reach a shell in an initramfs. More platform support
+will be added in the future.
 
-...
+Just like SM-N981B, the preferred way to boot the upstream kernel is
+by using a shim bootloader, called uniLoader [1], which works around
+some issues with the stock, non-replacable Samsung S-LK bootloader.
+For example, the stock bootloader leaves the decon trigger control
+unset, which causes the framebuffer not to refresh.
 
-> +static int exynos_mbox_send_data(struct mbox_chan *chan, void *data)
-> +{
-> +	struct exynos_mbox *exynos_mbox = dev_get_drvdata(chan->mbox->dev);
-> +	int index;
-> +
-> +	index = exynos_mbox_chan_index(chan);
-> +	if (index < 0)
-> +		return index;
-> +
-> +	writel_relaxed(BIT(index), exynos_mbox->regs + EXYNOS_MBOX_INTGR1);
+Device functionality depends on the patch series from Igor Belwon:
+"Add minimal Exynos990 SoC and SM-N981B support"
 
-writel()
+[1] https://github.com/ivoszbg/uniLoader
 
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct mbox_chan_ops exynos_mbox_chan_ops = {
-> +	.send_data = exynos_mbox_send_data,
-> +};
-> +
-> +static const struct of_device_id exynos_mbox_match[] = {
-> +	{ .compatible = "google,gs101-acpm-mbox" },
-> +	{},
-> +};
-> +MODULE_DEVICE_TABLE(of, exynos_mbox_match);
-> +
-> +static int exynos_mbox_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct exynos_mbox *exynos_mbox;
-> +	struct mbox_controller *mbox;
-> +	struct mbox_chan *chans;
-> +	int i;
-> +
-> +	exynos_mbox = devm_kzalloc(dev, sizeof(*exynos_mbox), GFP_KERNEL);
-> +	if (!exynos_mbox)
-> +		return -ENOMEM;
-> +
-> +	mbox = devm_kzalloc(dev, sizeof(*mbox), GFP_KERNEL);
-> +	if (!mbox)
-> +		return -ENOMEM;
-> +
-> +	chans = devm_kcalloc(dev, EXYNOS_MBOX_CHAN_COUNT, sizeof(*chans),
-> +			     GFP_KERNEL);
-> +	if (!chans)
-> +		return -ENOMEM;
-> +
-> +	exynos_mbox->regs = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(exynos_mbox->regs))
-> +		return PTR_ERR(exynos_mbox->regs);
-> +
-> +	exynos_mbox->pclk = devm_clk_get_enabled(dev, "pclk");
-> +	if (IS_ERR(exynos_mbox->pclk))
-> +		return dev_err_probe(dev, PTR_ERR(exynos_mbox->pclk),
-> +				     "Failed to enable clock.\n");
-> +
-> +	mbox->num_chans = EXYNOS_MBOX_CHAN_COUNT;
-> +	mbox->chans = chans;
-> +	mbox->dev = dev;
-> +	mbox->ops = &exynos_mbox_chan_ops;
-> +
-> +	for (i = 0; i < EXYNOS_MBOX_CHAN_COUNT; i++)
-> +		chans[i].mbox = mbox;
-> +
-> +	exynos_mbox->dev = dev;
-> +	exynos_mbox->mbox = mbox;
-> +
-> +	platform_set_drvdata(pdev, exynos_mbox);
-> +
-> +	/* Mask out all interrupts. We support just polling channels for now. */
-> +	writel_relaxed(EXYNOS_MBOX_INTMR0_MASK,
+Changes in v7:
+ - Fix old reference to hubble-common
+   in x1slte.
 
-writel()
+Changes in v6:
+ - Fix indentations in dts makefile
 
-> +		       exynos_mbox->regs + EXYNOS_MBOX_INTMR0);
-> +
-> +	return devm_mbox_controller_register(dev, mbox);
-> +}
-> +
-> +static struct platform_driver exynos_mbox_driver = {
-> +	.probe	= exynos_mbox_probe,
-> +	.driver	= {
-> +		.name = "exynos-acpm-mbox",
-> +		.of_match_table	= of_match_ptr(exynos_mbox_match),
+Changes in v5:
+ - Fix dts makefile order
 
-Drop of_match_ptr() - unused symbol warnings.
+Changes in v4:
+ - Rebase from krzk's kernel tree to accommodate
+   for the merge of r8s
+ - Rename exynos990-hubble-common.dtsi
+   to exynos990-x1s-common.dtsi
 
-Best regards,
-Krzysztof
+Changes in v3:
+ - Fix oversight in yaml
+ - Decommonise memory map
+
+Changes in v2:
+ - Add Samsung Galaxy S20 into device tree bindings
+ - Add support for Samsung Galaxy S20 as well as the 5G variant now
+ - Fix typo in Samsung Galaxy S20 5G commit message
+
+Kind regards,
+Umer
+
+Umer Uddin (4):
+  dt-bindings: arm: samsung: samsung-boards: Add bindings for SM-G981B
+    and SM-G980F board
+  arm64: dts: exynos: Add initial support for Samsung Galaxy S20 Series
+    boards (x1s-common)
+  arm64: dts: exynos: Add initial support for Samsung Galaxy S20 5G
+    (x1s)
+  arm64: dts: exynos: Add initial support for Samsung Galaxy S20
+    (x1slte)
+
+ .../bindings/arm/samsung/samsung-boards.yaml  |  2 +
+ arch/arm64/boot/dts/exynos/Makefile           |  2 +
+ .../boot/dts/exynos/exynos990-x1s-common.dtsi | 98 +++++++++++++++++++
+ arch/arm64/boot/dts/exynos/exynos990-x1s.dts  | 28 ++++++
+ .../boot/dts/exynos/exynos990-x1slte.dts      | 28 ++++++
+ 5 files changed, 158 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990-x1s-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990-x1s.dts
+ create mode 100644 arch/arm64/boot/dts/exynos/exynos990-x1slte.dts
+
+--=20
+2.43.0
 
 
