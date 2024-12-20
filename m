@@ -1,80 +1,81 @@
-Return-Path: <linux-samsung-soc+bounces-5987-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5989-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCED99F94CF
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 15:46:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E1DA9F94D3
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 15:47:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BF0D1625B5
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 14:46:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82E301893713
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 14:47:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA71218EBF;
-	Fri, 20 Dec 2024 14:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 075CA219EA5;
+	Fri, 20 Dec 2024 14:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qKNsET95"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lcvEAvUG"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B67621884A
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 14:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0842B2163A1
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 14:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734705962; cv=none; b=f2ksCYfkz3gS4QbnIyYx4ZgVZJXlBhrwSsS3l24PiZhUaQic/aMP5Vntp8ttDZTXQAYL4N2YI5kRUD2nB5boLqKdhfYlHWSsB6fMUGmw2b99bNAWK1t419cSM6yFMsswWTuD7Tg/l4E2VAyNQBAd0tzZp0ce9MqtuHdFL0HWnCM=
+	t=1734705963; cv=none; b=jRh5TMSxl4vk5skc2YSZoaRtcopFIndELkvyD+00QRNqFrPh5jHUrpHGSN+mvT0SYo0/7fKXRR7lV/27nvsUWSrjQd4upES9DJz0DIpUygF//zpfR5XoOu8Pezxssc7ve5M1al+aJI49/mKqvXOZ3srUMOH93hI8vK7Y9rxPAug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734705962; c=relaxed/simple;
-	bh=CBzsQBj3NhXJFNW+TyilZZe0w8YWT523Ro1ZD7fmAyU=;
+	s=arc-20240116; t=1734705963; c=relaxed/simple;
+	bh=QNflK95J1oyB5GCiuNhKyRcaPvjpw4cTQ+4gOGCRcP0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NUTbhGS1vDVrFpR7aRLs8tdo6ji94Ny7PPxDcHZWEtS2gq+F12MGOHeY0d9pWpfrndVQEt6XN1F6854/fiQ9k392KHdZMeK/EBfDdUaZFPiuRrn6PaprXGnDzgb/wTMXWt1bZZB4dFjUAuofhoz0VEtTv/0M9Yequ8oOkq4jV4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qKNsET95; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:To:Cc; b=SyIhqhemzzPpyvB1r4W4FLg97MY4Nzm10a8L7Po81Id3vwvz9PZ8Ghi6dVSABmnNKZ+ebtkVMBvA6W3htSx/vth7UGomfU6E0uAk7xVCHed8H4tQ0bjEABUhTozkLmLNAGw5Y7+o6OGkcnwHUpw5kVe5tsNsJUV6MOvVubZLYlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lcvEAvUG; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-385e0e224cbso1143388f8f.2
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 06:46:00 -0800 (PST)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso14692995e9.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 06:46:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734705959; x=1735310759; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1734705960; x=1735310760; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LKQ/KdPjRXHrR2fzFO1pIdVwIMyG+67hfBNPWoSG81I=;
-        b=qKNsET95Fbqxp4GYFeqjxKXAYFNDTd956LdVYgusC34vzMN/dPa/3nhzx0S1T60mOB
-         K0sIHcmrOftpSdzXJNhSWCkqDAZGTD80f1l2HYenxWhMtNuqSnjygdWUMXxTRlTxvQP3
-         usSqfw4aA3B2OthFuNVZ2yHJshQ6nAAZmTenKIk7nrvMpLCSz0mHz6N4RyJFVKA4dFkt
-         q0ZHWVrENPoIoW8krS2twX2FauoEk3IOulYAVnrdpAxBuXX2XB5u1MBeNfesbsUl6kXh
-         9Tsda+LFTmTwfn6YMAtLvK/JpsEVIsLL+mkpAmJ2HxBucF1sV1CFbz1sdghKqYmYpYqe
-         f4oA==
+        bh=lRqWQ9kuH5smVaJB9GZ9PXPUlnPdZKZchIBVzev3PSQ=;
+        b=lcvEAvUGkR7NEL4VPmspyXQIXMYjQNQfpFvwVKh2QbZZgw1OAuWO5qfRl4tLSo5y3/
+         +ZeheA3fZ5fUGY+0OqiMBKa08YNlzCHBKBwg8uDZYphw+JfpwLOl0LQ+Lbw5m7T38mLT
+         Jp3WFt5zSKYep51jQf+6Hm9DyUVGl4joJlfgogvIMM2qAJmmyjoaRGqNCisTzeYssL3v
+         EDdPL3Fj85djJijtBxinZgGJnsiLcIm5U670RuCp0CCyuLoPKxCr/InRxowxKde60OQq
+         UCB3G8eGZ5Hc8iC6flL3uIrajX8wODyxwCYex7P1xYLkkPxjt+F88iWz+42HOiKpzMIH
+         pZWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734705959; x=1735310759;
+        d=1e100.net; s=20230601; t=1734705960; x=1735310760;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LKQ/KdPjRXHrR2fzFO1pIdVwIMyG+67hfBNPWoSG81I=;
-        b=iQLmkuuLv89WTNgg3kmpW+h8tEsBLcCdzwQN8+eZlKwiU5QKRmSoZyHsZ8FB9LpuMx
-         OsHfv5K+/uCvYs/eoTKxhZmegIKF7Mt8hr3L0wArfUwejBL8H4m0Dz0kqrqDnSRCKn1A
-         Ehb9FaAvKKPAWVfTOJAuAXR9/9s/edeDKhPWEt6NUx+VbJ1v+R6MnS3zBIyOw5Njxf9l
-         WImN4EodMG5iP8MP0MfGyF/gzpLGZRm/l/mAPH/D/e4LehloeuRYSF0ZI47BXbTqDqCK
-         fmw/6aPiSlaqhcmyANwlz4J9B1/RUL8IRwWL3f2ou5rngW5fhmIIgPjkhaRMhatA4SQF
-         1RXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWJtJ/yAgEkexwWFuHuabeK6pYwjXRDeoU2FFmp/jt9qzSMSE4EUZBcPa2p7OyqdqZ+/ds6uxJEFpTxPn2CBc8l3A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSs+HPAu7+n5ZaDgWoFOt3uzbtMK50gGCVdVE6PZ8WlWuFuL2z
-	UgSUvAHnfyHU1HDFj1rdyL3JGyR2Z15odNaitXAMjwoKh2DE+ampl5gsC6KMyLo=
-X-Gm-Gg: ASbGnctBMmM3vmmYHLln8hMc7TatR2UB/eygAC9rCYsTMFx9eybZ6vXvzBRweuafsZT
-	wrJi9F8gUtof8qOrIV/u1lRmlEpruEqhMVEKX0+RV+4iCntm0jA2+8Or/8NE1l2/1mFcisuhvwA
-	au/t+LwONP3SuF/Ml0an52KVxZidNxHEeZeU3GXeuELgqqPwcisn42EYi1Vh9naS/QaGv8mAow0
-	nncSJXXfak88sQRxZ+SsOEy+tLZAYl+eb7NDuPQJyvN2qb+liZK2/SZnBKNHgKniPeFcZA3hiOO
-	8VeCNEvWPLJLpYkNnGl6eqOVSvEZrZWaD8iI
-X-Google-Smtp-Source: AGHT+IFWQfXAdgrp2CpXQA4+qHBefpesptVUa8m2vkPR99QjdXggEQUhIJHg0NNIDARz74yBnc6WSg==
-X-Received: by 2002:a5d:6d07:0:b0:385:edb7:69ba with SMTP id ffacd0b85a97d-38a221f2dd7mr3456323f8f.1.1734705958949;
-        Fri, 20 Dec 2024 06:45:58 -0800 (PST)
+        bh=lRqWQ9kuH5smVaJB9GZ9PXPUlnPdZKZchIBVzev3PSQ=;
+        b=Xf07SHQCGdFBxNA8VoPq5Z53cLEmzGVFET4/NU7J44aicxyZc19wBvRbhuw10+9F7I
+         xMbsDcc2cL//CugyPTlwk174xMQAfhV+yWygOPFX6C3fEu5ViHPcxeSY/PejE8yUHt1w
+         y7EfN60vkPjf9YIIn4Pu5x/6mnHn3Xi9CrigK52GcKkdB7fsSmmc+L/WAdHk4j2HOaRn
+         YCGARp/xoNqy4xTYoWVUdPZ/YW3WWmCxa9z6k8TA7hPO2WoOpDLSHJQuiE6gJ6dN3/cZ
+         SmkAAAySm17QtpN9iK1i6adKK5ugH2fMYIp21ErgDx9bTvlrMeDTaThFTp98GqR+h9cB
+         dvXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWbg1cu4LCSSIJ50hAV6uy+e6O1YyQqljwJeTGzp4M3GKblrDr1bjQtMbKV1v2yJk6k7VZmgdsr3otwkizWrDhQWQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiJWzaxLnL9Xfi5i+dnn7GT93lHlvffzR9dsMxBFr7ZbL4asRN
+	lrC2lRMRo1hr2MSyZd8H81sFBDdCpjcq9Ypr3Cx1W7deEd9tX2YO2gGpG6NPYrE=
+X-Gm-Gg: ASbGnctQkuc7kNxl/iqOwYYxbJOYgIWczV5VSjMEBanqvu3RsmN1yQiehuRiYFaYeRU
+	hHOzePRe8PsN/0aT8d5g/GCYC2+P26q7MBUoRdXMsnOwAGckq0MRJzh0luFmNs6AEO6oQIjAbv2
+	4BxOChxndadVxfuWpodJZk/vRLBGNmFKKAbw/Oz4LCN8PLdH3TDviiTq6LLp56OfLIVwCLts1Rp
+	qaJwLu4DEX7Z5boCxlvLM5F25eSPxdlhCtYMb+WKW87Za4nAmm88BgIsykOQDXTIsYprq6Mbmms
+	N6lldkZijmKdrgvQq+8Y+5ibH+hNQff/jNmA
+X-Google-Smtp-Source: AGHT+IGTa4AymaocDQHTU1ovTmqG12Q6/ra0E3vms/hl6zSMw0VKvp/iKmrVp1auYP0DQmQ0Vh1dsw==
+X-Received: by 2002:a05:6000:2a1:b0:385:f060:b7fc with SMTP id ffacd0b85a97d-38a221fee1amr3215271f8f.25.1734705960152;
+        Fri, 20 Dec 2024 06:46:00 -0800 (PST)
 Received: from ta2.c.googlers.com (130.173.34.34.bc.googleusercontent.com. [34.34.173.130])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c84705esm4227874f8f.44.2024.12.20.06.45.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c84705esm4227874f8f.44.2024.12.20.06.45.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 06:45:58 -0800 (PST)
+        Fri, 20 Dec 2024 06:45:59 -0800 (PST)
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Fri, 20 Dec 2024 14:45:46 +0000
-Subject: [PATCH v3 3/4] arm64: dts: exynos: gs101: add ACPM protocol node
+Date: Fri, 20 Dec 2024 14:45:47 +0000
+Subject: [PATCH v3 4/4] arm64: defconfig: enable ACPM protocol and Exynos
+ mailbox
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-gs101-acpm-dt-v3-3-642d64daa5d1@linaro.org>
+Message-Id: <20241220-gs101-acpm-dt-v3-4-642d64daa5d1@linaro.org>
 References: <20241220-gs101-acpm-dt-v3-0-642d64daa5d1@linaro.org>
 In-Reply-To: <20241220-gs101-acpm-dt-v3-0-642d64daa5d1@linaro.org>
 To: Peter Griffin <peter.griffin@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -98,42 +99,44 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
  Jassi Brar <jassisinghbrar@gmail.com>, 
  Tudor Ambarus <tudor.ambarus@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734705955; l=954;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734705955; l=1030;
  i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=CBzsQBj3NhXJFNW+TyilZZe0w8YWT523Ro1ZD7fmAyU=;
- b=5jgeHxCZtkNehocgTdpWWxI1BFfmy+Ek5KEUu9MkENxqbn/4qWH8mQfu4WsTLzhrUCirUGicq
- NoWEoR6ntyqBhnr9L7E1KZzxGh7p4AloJBMqd66nIZ3q/kWZAkmHK6G
+ bh=QNflK95J1oyB5GCiuNhKyRcaPvjpw4cTQ+4gOGCRcP0=;
+ b=vMDlLV8zkiu0QyCRA1oLZkqsQZqt82J/23WzoFyTba2TkjJ/xdmEoZm0WpCiRzh9wxG2vYg40
+ X/OKV9w9QumBwzhDsMK2KNl0vJ1zLENtCaQz3xOvrcCmH9So5edlr+z
 X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
  pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
-Add the ACPM protocol node. ACPM protocol provides interface for all
-the client drivers making use of the features offered by the
-Active Power Management (APM) module.
+Enable the Samsung Exynos ACPM protocol and its transport layer, the
+Exynos mailbox driver. Samsung Exynos platforms implement ACPM to
+provide support for PMIC, clock frequency scaling, clock configuration
+and temperature sensors.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/configs/defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index 6947dd081a0e..681ea775ba54 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -277,6 +277,14 @@ apm_sram: sram@2039000 {
- 		ranges = <0x0 0x0 0x2039000 0x40000>;
- 	};
- 
-+	firmware {
-+		acpm_ipc: power-management {
-+			compatible = "google,gs101-acpm-ipc";
-+			mboxes = <&ap2apm_mailbox>;
-+			shmem = <&apm_sram>;
-+		};
-+	};
-+
- 	soc: soc@0 {
- 		compatible = "simple-bus";
- 		#address-cells = <1>;
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index c62831e61586..91139b1cf813 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -262,6 +262,7 @@ CONFIG_IMX_SCU=y
+ CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
+ CONFIG_QCOM_QSEECOM=y
+ CONFIG_QCOM_QSEECOM_UEFISECAPP=y
++CONFIG_EXYNOS_ACPM_PROTOCOL=m
+ CONFIG_GNSS=m
+ CONFIG_GNSS_MTK_SERIAL=m
+ CONFIG_MTD=y
+@@ -1378,6 +1379,7 @@ CONFIG_HWSPINLOCK_QCOM=y
+ CONFIG_TEGRA186_TIMER=y
+ CONFIG_RENESAS_OSTM=y
+ CONFIG_ARM_MHU=y
++CONFIG_EXYNOS_MBOX=m
+ CONFIG_IMX_MBOX=y
+ CONFIG_OMAP2PLUS_MBOX=m
+ CONFIG_PLATFORM_MHU=y
 
 -- 
 2.47.1.613.gc27f4b7a9f-goog
