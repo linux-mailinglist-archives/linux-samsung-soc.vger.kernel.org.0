@@ -1,235 +1,194 @@
-Return-Path: <linux-samsung-soc+bounces-5973-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-5975-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C03A69F9252
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 13:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A8999F93A9
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 14:54:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CBE116041F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 12:37:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3FC4E162B46
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 13:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F50D2153CC;
-	Fri, 20 Dec 2024 12:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C191216396;
+	Fri, 20 Dec 2024 13:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ijXIjBXg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AFLfzDKQ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52255215194
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 12:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FB6216388
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 13:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734698231; cv=none; b=HatjK8WeyPVFPbiFNiPJG7J3WOMx47m2leoREXm+Owr4kCnUnsnMdKSScL3zr5mSEe1B/0oyiqyFnW+O8mjQOqto1qtSOzU2T/1aVZ6cWFaterzU4PRqD+OOK3gqCMvhDFH+BVFv7V0oJJnX2nlCBq480mhNDZsN25bOwxWTV0A=
+	t=1734702604; cv=none; b=bVr4h0vY9jcaxyak/SYLqkeUNJtZqTVOHGF6FhkO0zgpMpd06iK11Ig4TEHH8ZOWhxNXurq3LbvVh/wGqF8qrVCwokapZQZ87A6xwlq71IRqwRdqCT/ezoOZw8KEVycAaOlSkeEkJv7fbeQrmFU0P6Cjkw1+umpT0RhDyzIClKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734698231; c=relaxed/simple;
-	bh=tORaMFyySsXGSf8Qe7/iDA5PLiNgHk/vRFxgsbxgeQk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=mGkLFiD18iA2CIZrNnG8mcnI9l/VrYiy9m7IzgI5O4xsptW5h2enBgRQLQTOVneQmz8tzAuaY6+3K6ksU3bFtL4X2mvP9El/jTO41kMAyy+2JVDgJ8CrKw50uGwRATrOdTcV9kvJlJLT8pA4Q+NtZAz8oHn3wHVbsNnkv9EB7bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ijXIjBXg; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20241220123702euoutp015532ee69b0a2c824112910f9220bc28d~S4tepaK_i0832208322euoutp01X
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 12:37:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20241220123702euoutp015532ee69b0a2c824112910f9220bc28d~S4tepaK_i0832208322euoutp01X
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1734698222;
-	bh=Vb9FazCzx34swWDCVuSTS9Qo9cfzO8TOGyWgAvUjXLA=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=ijXIjBXgDj8L1mct46PWUQ72DkDLh4JUUnIIwBNq7gZ6ztTmkEcaiZY33hS1RAijC
-	 oOkaJrqAX/JQGkgqGBxOCjn211uKek+lTEUik6p1mouk146/6Qh6Py+CHd2pbhpoWj
-	 vqa/UhS2UxgdOHAMitf6dkHQhO9jhyzCL1BuPKcI=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20241220123702eucas1p21935e8a5168845b948f727784e4e4787~S4teX-RhN1838518385eucas1p2l;
-	Fri, 20 Dec 2024 12:37:02 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id B4.92.20409.DE465676; Fri, 20
-	Dec 2024 12:37:01 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20241220123701eucas1p23125e0738985ffe35cbe9624dff08972~S4td8iqiT1541115411eucas1p2O;
-	Fri, 20 Dec 2024 12:37:01 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20241220123701eusmtrp2468c13e96a49daa989e782d86573e73c~S4td7rTiO0189901899eusmtrp2W;
-	Fri, 20 Dec 2024 12:37:01 +0000 (GMT)
-X-AuditID: cbfec7f4-c0df970000004fb9-6f-676564eda031
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id A3.FA.19654.DE465676; Fri, 20
-	Dec 2024 12:37:01 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20241220123700eusmtip1fcdf4a8790ddfe4c8e08aa0239ed284e~S4tdVoMUQ0813808138eusmtip1r;
-	Fri, 20 Dec 2024 12:37:00 +0000 (GMT)
-Message-ID: <7d1e1c89-d4a6-4b3d-a674-5ef497c2c496@samsung.com>
-Date: Fri, 20 Dec 2024 13:36:59 +0100
+	s=arc-20240116; t=1734702604; c=relaxed/simple;
+	bh=6TWIHezHv4FF1GCXzi2P0OdCIA/CiwYW9/ITn62N+lE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aWjHy+yOSOPV0e+KiOdsfFl3+CeKHLv0lIyhpDTslp/Lm+9p65rlcI3TCroOjxlmIT6g3VFtRBJFyP/ahQ6EowhHi2ipltyduoQh/YOwvkz+AljF+vxQDmb4MpKCw4UDTgbWPOcVIKYf7xFnrOXoFswTm40qR+b1SCQg95r4VAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AFLfzDKQ; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-37ed3bd6114so894235f8f.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 05:50:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734702599; x=1735307399; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=afCBTLlzLOHDuBx94uI8KNEKbVqLnuqOfBh0B3tL2lM=;
+        b=AFLfzDKQTkBfcbcsP/hrw2kxMmemMm22qrYeagqE08w2JOgKDV4N4TMjWBq7CkHhtr
+         fCE2ZymWg+YPTDtFW8p6jGVIMa1JRPBbna0NDi5ZfaTnH2ET73JsuP+fQnsKNsp3rtYc
+         UnwCz+sAP8pbhnOhauHYLxr3T/i1YxY/PA6f88Ysrw8oExkbixtA8iIQFnO1KswrehGY
+         s7BgQLwkxc//ITSKMNqG5dTW8S39cizvKliM0qim/HjdkXTgBDPHKhg5Jk3wk49iF/yJ
+         0LbJQMQaeuKN3rAZxOHhiA30Q2V4Z/weZcrQMNIYPPL9tY/cHYzn2SlXHuA9CyI3OsrS
+         TUZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734702599; x=1735307399;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=afCBTLlzLOHDuBx94uI8KNEKbVqLnuqOfBh0B3tL2lM=;
+        b=ErO5BeZAAT+woJ9fvoN5A30Ry87A4Q/zQd2ePpJPOXSA2WXfkcpkIQNYxA62Fia4pL
+         vbRy8yPOpSV7GhnHsF5fBbJdM5MS2vl1HUJbgxKpldKjm3IFbIAWrpA1ltpRvzS9UVPj
+         qUpMsdl1zVI/kQMBTGXNTW2CE/JK7H8q+wNQGCBkmfF61+bhnQptgDQ7JClrjSPFM+qY
+         lY1jXSKZDnBAby15qeWoR4hu/ifCtRQShrX+3a0g6wY/Gv55vGwD81mciJBt39BCpdVD
+         1KRMQGE2VikPuS4ihO/XL9eTXxRZVsxcgZJVn92hciSfsynET6o+Vw8pYzkTmuyU4rKL
+         Tv0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWtVT6Cv6ltgbwTNlJ+DU5lXYiIlXcAcTWP2jQol5LlZjYExsNrbPqgMmXGllWmT+YpkZmZ5T9wUyX5UT8RGX9aTA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMEhH58e4BHeOPRr+LttMD7zo8NQANVLpi5o9tzPCue1avu//5
+	2Et83qWfs+yCNiP2QsRsXF0GIeXaqSqhZw+sUn2h5kp9vOQJkyKTeTwTBGyOp+k=
+X-Gm-Gg: ASbGncvUmphpHf/5YZtTpuk6fX7poFKRRGqO8ChcsZ7dciHLqfTk1Y9spPm9NNRBrQD
+	iPiRQOadZuB/SY3qWNZl1YfDArWEP6u68bqcC9QiIKzY6Zt/IKyL4XYUnnLdg76ou2uIbq6XsoA
+	tb24MXa4d3Ag1/AzgN8PWyc9lJLFl3JKXvBKih67M/+PdKnIn6oNP8crX0Wivt7XIYsAmm/3dDv
+	A4SmGj5NEoC8K7Bhi0e3jOpVZkbUcm0Zop5B2v6uthxAeLlZrmyhRq6T9L+vGg8VTWlK0AOHlRL
+	4qmWYoNNfwq+zjcRUz0l1rIyszOYtueW7ezx
+X-Google-Smtp-Source: AGHT+IFVI3Xlug85tV4rBO/UFKQXj9r2d/ofSITIKky8mI4773TM7o/3BAQMekG6blf+o8eGkUmgxw==
+X-Received: by 2002:a05:6000:704:b0:385:ee40:2d88 with SMTP id ffacd0b85a97d-38a221f2e42mr3327105f8f.3.1734702599540;
+        Fri, 20 Dec 2024 05:49:59 -0800 (PST)
+Received: from ta2.c.googlers.com (130.173.34.34.bc.googleusercontent.com. [34.34.173.130])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c832e74sm4044313f8f.30.2024.12.20.05.49.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 05:49:59 -0800 (PST)
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH v6 0/5] mailbox: add Samsung Exynos driver
+Date: Fri, 20 Dec 2024 13:49:55 +0000
+Message-Id: <20241220-acpm-v4-upstream-mbox-v6-0-a6942806e52a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] Input: ff-core - make use of __free() cleanup
- facility
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Jiri Kosina
-	<jikos@kernel.org>, Benjamin Tissoires <bentiss@kernel.org>, Hans de Goede
-	<hdegoede@redhat.com>
-Cc: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 'Linux
-	Samsung SOC' <linux-samsung-soc@vger.kernel.org>
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20241107071538.195340-3-dmitry.torokhov@gmail.com>
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsWy7djP87pvU1LTDWYct7I49HE5u8XhRS8Y
-	Ld4cn85kcet4K6PFzU/fWC0u75rDZjHj/D4mB3aPnbPusntsWtXJ5vF+31U2j8+b5AJYorhs
-	UlJzMstSi/TtErgy/j1+wVTQJVfx+M1tlgbG1xJdjJwcEgImEmfen2cCsYUEVjBKrP1h38XI
-	BWR/YZRY1TuZBcL5zChxsG8eM0zH4Y1XmSESyxklzj9qYoRwPjJKrOn+AORwcPAK2EnM38UK
-	0sAioCrxrOcMG4jNKyAocXLmExYQW1RAXuL+rRnsILawQKDEtQutrCBzRAQWMkpcmHKPDWQO
-	s0CFxLITXiA1zALiEreezAc7lU3AUKLrbRfYTE4BB4nVnT8ZIWrkJZq3zgY7TkLgBofE//Nv
-	mCCudpHY3LeDBcIWlnh1fAs7hC0j8X8nyFCQhnZGiQW/70M5ExglGp7fYoSospa4c+4X1EWa
-	Eut36YOYEgKOEpdXe0GYfBI33gpC3MAnMWnbdGaIMK9ER5sQxAw1iVnH18FtPXjhEvMERqVZ
-	SKEyC8mXs5B8Mwth7QJGllWM4qmlxbnpqcVGeanlesWJucWleel6yfm5mxiBaef0v+NfdjAu
-	f/VR7xAjEwfjIUYJDmYlEV4eudR0Id6UxMqq1KL8+KLSnNTiQ4zSHCxK4ryqKfKpQgLpiSWp
-	2ampBalFMFkmDk6pBia7TvdgncbZU2vTt8tua427k3aUJS/UceffeqcMrfPxrN4Ptonc66ot
-	Xshx6/vl2/pGfbKTJC4bHoyNavh7suul7oMLwc6b712oazvnX328fN0yrbp5DNlZ1y4fz8n+
-	2Buz0XbLyiuLK1IyX7zraz2WMO3DxX26hxT/VzVs+eAefip6qdMUYXHWuNNbTn4RnLQ/VdzG
-	jVP4WP3trLNSjBcs7mbGc+de9l3LckZq/+q6nQXWHrHPvgcktTOU3XzaFn3m+91rkcHNG4Km
-	2n6e2RbHXpdmW3Un2+n+sSSX3KBtARfWzfqzdpfonadPM9bGiRVYHb7w4Gyl4dvIA78uhKmm
-	beVxdKlcOJXfxD7g/VklluKMREMt5qLiRACbB3CfqgMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNIsWRmVeSWpSXmKPExsVy+t/xu7pvU1LTDVrOK1kc+ric3eLwoheM
-	Fm+OT2eyuHW8ldHi5qdvrBaXd81hs5hxfh+TA7vHzll32T02repk83i/7yqbx+dNcgEsUXo2
-	RfmlJakKGfnFJbZK0YYWRnqGlhZ6RiaWeobG5rFWRqZK+nY2Kak5mWWpRfp2CXoZ/x6/YCro
-	kqt4/OY2SwPja4kuRk4OCQETicMbrzJ3MXJxCAksZZQ4tv8SI0RCRuLktAZWCFtY4s+1LjaI
-	oveMEivvHGXqYuTg4BWwk5i/C6yGRUBV4lnPGTYQm1dAUOLkzCcsILaogLzE/Vsz2EFsYYFA
-	iWsXWllB5ogILGSU2L5nF9gyZoEKibVL34AVCQmUSsy/PhEqLi5x68l8JhCbTcBQouttF9gC
-	TgEHidWdP6FqzCS6tnZB2fISzVtnM09gFJqF5I5ZSEbNQtIyC0nLAkaWVYwiqaXFuem5xUZ6
-	xYm5xaV56XrJ+bmbGIGxtu3Yzy07GFe++qh3iJGJg/EQowQHs5IIL49caroQb0piZVVqUX58
-	UWlOavEhRlNgYExklhJNzgdGe15JvKGZgamhiZmlgamlmbGSOC/blfNpQgLpiSWp2ampBalF
-	MH1MHJxSDUwrlud1/3mvnG398EDIH9d933b5S+sWxkgxX19f0MVRYmkq+OHe0vqv2yfIV235
-	UXJCI7hp3qLFH4oy3u28u6Ru+l3Oqh1vpimyHNHcO2deweTb0tM1ja5NulnwaNFl3rBtpRfm
-	/Sj4cDcyU41RYEW29AmRzWkrtDj5jUKamlwmOjzqEr58JG1LqW+Z4ceFZe3hja82lXWLzt3e
-	3hVvEzSlpEhl0gF++VNWVgeYc3Y3SU17YDoxy0uKecGbu/J3N18WCnirxNtZLyOgOsvY8/im
-	Ih3RIqafzGt1vNkuXflyjaH++sKD0imzbhue5hPakm/DaXVl7qpbXEciFzkcl4pY+nF3ymwO
-	lve8nPPnvDJXYinOSDTUYi4qTgQAreV42j4DAAA=
-X-CMS-MailID: 20241220123701eucas1p23125e0738985ffe35cbe9624dff08972
-X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20241220123701eucas1p23125e0738985ffe35cbe9624dff08972
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20241220123701eucas1p23125e0738985ffe35cbe9624dff08972
-References: <20241107071538.195340-1-dmitry.torokhov@gmail.com>
-	<20241107071538.195340-3-dmitry.torokhov@gmail.com>
-	<CGME20241220123701eucas1p23125e0738985ffe35cbe9624dff08972@eucas1p2.samsung.com>
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAR2ZWcC/4XNQQ7CIBCF4as0rMUAgm1deQ/jgsLQktjSDJXUN
+ L27tCtdGJf/S+abhURAD5FcioUgJB99GHKcDwUxnR5aoN7mJoIJyQUXVJuxp0nS5xgnBN3Tvgk
+ zrWVVcsmYbJgi+XZEcH7e3ds9d+fjFPC1v0lyW/+JeWCUCVdZqIVx2l0fftAYjgFbspFJfTLlL
+ 0ZlxlhuT7XiDir5xazr+gYjZI3VAgEAAA==
+To: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>
+Cc: linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ andre.draszik@linaro.org, peter.griffin@linaro.org, kernel-team@android.com, 
+ willmcvicker@google.com, daniel.lezcano@linaro.org, 
+ vincent.guittot@linaro.org, ulf.hansson@linaro.org, arnd@arndb.de, 
+ Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1734702598; l=4158;
+ i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
+ bh=6TWIHezHv4FF1GCXzi2P0OdCIA/CiwYW9/ITn62N+lE=;
+ b=qoUNrXlM1bh5TrIe5JvK1TOR2yxyEB+ORbRWykfdMg09NzeXljxBL7Yrz06wfb9Yo3eH0VNSa
+ +nT/vc/kjxPDxF5xVL5anw8+FTIfDJ0nlJVlxjSI4Xhwzt3i5hUY8qt
+X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
+ pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
-On 07.11.2024 08:15, Dmitry Torokhov wrote:
-> Annotate allocated memory with __free(kfree) to simplify the code and
-> make sure memory is released appropriately.
->
-> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> ---
->   drivers/input/ff-core.c | 19 ++++++-------------
->   1 file changed, 6 insertions(+), 13 deletions(-)
+The Samsung Exynos mailbox controller, used on Google GS101 SoC, has 16 flag
+bits for hardware interrupt generation and a shared register for passing
+mailbox messages. When the controller is used by the ACPM protocol the shared
+register is ignored and the mailbox controller acts as a doorbell.
+The controller just raises the interrupt to APM after the ACPM protocol has
+written the message to SRAM.
 
-This patch landed in linux-next as commit 5203b3a18c1b ("Input: ff-core 
-- make use of __free() cleanup facility"). In my tests I found that it 
-causes the following kernel panic on some of my test boards. Reverting 
-it, together with fd5ba0501d38 ("Input: ff-memless - make use of 
-__free() cleanup facility") on top of next-20241220 fixes this panic 
-issue. Here is the relevant log captured on Samsung Exynos4412 ARM 
-32bit-based Trats2 board:
+Changes in v6:
+- mailbox: add support for clients to request channels by arguments.
+  Used by the ACPM interface where the channel identifiers are
+  discovered at runtime. Passing them via DT would be redundant.
+  Initial version sent on its own to gather feedback:
+  - Link: https://lore.kernel.org/all/20241219-mbox_request_channel_by_args-v1-0-617a6910f842@linaro.org/
+  - the patches differ from the initial version as they allow #mbox-cells = 0
+- bindings: google,gs101-mbox: update description, make #mbox-cells
+  const 0.
+- mailbox: exynos-mailbox:
+  - replace exynos_mbox_of_xlate with exynos_mbox_xlate, the channel
+    identifiers are discovered at runtime and passed as
+    'const struct mbox_xlate_args *sp'
+  - in the xlate method, the first argument is the channel and the
+    second the type, as channels can be configured either in DOORBELL or
+    DATA modes. This becomes an example for when an exynos_mbox_of_xlate()
+    method will be introduced.
+  - make exynos_mbox_chan_index() inline and directly
+    return chan - chan->mbox->chans;
+- drop Krzysztof's and Peter's R-b tags from the google,gs101-mbox
+  bindings and the Samsung Exynos mailbox driver as they were updated.
+- add Krzysztof's and Peter's R-b tags to the MAINTAINERS patch
+- Link to v5: https://lore.kernel.org/r/20241217-acpm-v4-upstream-mbox-v5-0-cd1d3951fe84@linaro.org
 
-8<--- cut here ---
-Unable to handle kernel NULL pointer dereference at virtual address 
-00000024 when read
-[00000024] *pgd=00000000
-Internal error: Oops: 5 [#1] PREEMPT SMP ARM
-Modules linked in:
-CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 
-6.13.0-rc3-next-20241220 #15500
-Hardware name: Samsung Exynos (Flattened Device Tree)
-PC is at input_ff_create+0xa0/0x13c
-LR is at input_ff_create+0xb8/0x13c
-pc : [<c08d7e14>]    lr : [<c08d7e2c>]    psr: 80000013
-...
-Process swapper/0 (pid: 1, stack limit = 0x(ptrval))
-...
-Call trace:
-  input_ff_create from input_ff_create_memless+0x8c/0x160
-  input_ff_create_memless from max77693_haptic_probe+0x1b0/0x284
-  max77693_haptic_probe from platform_probe+0x80/0xc0
-  platform_probe from really_probe+0x154/0x3ac
-  really_probe from __driver_probe_device+0xa0/0x1d4
-  __driver_probe_device from driver_probe_device+0x30/0xd0
-  driver_probe_device from __driver_attach+0x10c/0x190
-  __driver_attach from bus_for_each_dev+0x60/0xb4
-  bus_for_each_dev from bus_add_driver+0xe0/0x220
-  bus_add_driver from driver_register+0x7c/0x118
-  driver_register from do_one_initcall+0x6c/0x328
-  do_one_initcall from kernel_init_freeable+0x1c8/0x218
-  kernel_init_freeable from kernel_init+0x1c/0x12c
-  kernel_init from ret_from_fork+0x14/0x28
-Exception stack(0xf0845fb0 to 0xf0845ff8)
-...
----[ end trace 0000000000000000 ]---
-Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
----[ end Kernel panic - not syncing: Attempted to kill init! 
-exitcode=0x0000000b ]---
+Changes in v5:
+- fix dt-bindings by using the correct compatible name in the example
+- drop redundand "bindings" from the dt-bindings patch subject
+- rebase on top of v6.13-rc3
+- Link to v4: https://lore.kernel.org/r/20241212-acpm-v4-upstream-mbox-v4-0-02f8de92cfaf@linaro.org
 
-> diff --git a/drivers/input/ff-core.c b/drivers/input/ff-core.c
-> index eb01bcb69d00..a235d2eb6b31 100644
-> --- a/drivers/input/ff-core.c
-> +++ b/drivers/input/ff-core.c
-> @@ -290,8 +290,6 @@ EXPORT_SYMBOL_GPL(input_ff_event);
->    */
->   int input_ff_create(struct input_dev *dev, unsigned int max_effects)
->   {
-> -	struct ff_device *ff;
-> -	size_t ff_dev_size;
->   	int i;
->   
->   	if (!max_effects) {
-> @@ -304,25 +302,20 @@ int input_ff_create(struct input_dev *dev, unsigned int max_effects)
->   		return -EINVAL;
->   	}
->   
-> -	ff_dev_size = struct_size(ff, effect_owners, max_effects);
-> -	if (ff_dev_size == SIZE_MAX) /* overflow */
-> -		return -EINVAL;
-> -
-> -	ff = kzalloc(ff_dev_size, GFP_KERNEL);
-> +	struct ff_device *ff __free(kfree) =
-> +		kzalloc(struct_size(ff, effect_owners, max_effects),
-> +			GFP_KERNEL);
->   	if (!ff)
->   		return -ENOMEM;
->   
-> -	ff->effects = kcalloc(max_effects, sizeof(struct ff_effect),
-> -			      GFP_KERNEL);
-> -	if (!ff->effects) {
-> -		kfree(ff);
-> +	ff->effects = kcalloc(max_effects, sizeof(*ff->effects), GFP_KERNEL);
-> +	if (!ff->effects)
->   		return -ENOMEM;
-> -	}
->   
->   	ff->max_effects = max_effects;
->   	mutex_init(&ff->mutex);
->   
-> -	dev->ff = ff;
-> +	dev->ff = no_free_ptr(ff);
->   	dev->flush = input_ff_flush;
->   	dev->event = input_ff_event;
->   	__set_bit(EV_FF, dev->evbit);
+Changes in v4:
+- rename bindings file to be based on compatible: google,gs101-acpm-mbox
+- specify doorbell or data mode via '#mbox-cells' dt property. Update
+  driver and introduce exynos_mbox_of_xlate() to parse the mode.
+- s/samsung/Samsung/, s/exynos/Exynos/
+- use writel instead of writel_relaxed
+- remove stray of_match_ptr()
+- Link to v3: https://lore.kernel.org/linux-arm-kernel/20241205174137.190545-1-tudor.ambarus@linaro.org/
 
-Best regards
+Changes in v3:
+- decouple the mailbox controller driver from the ACPM protocol driver
+- address Krzysztof's review comments
+
+v2:
+https://lore.kernel.org/linux-arm-kernel/20241017163649.3007062-1-tudor.ambarus@linaro.org/
+
+v1:
+https://lore.kernel.org/linux-arm-kernel/20241004165301.1979527-1-tudor.ambarus@linaro.org/
+
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+---
+Tudor Ambarus (5):
+      dt-bindings: mailbox: allow #mbox-cells = <0>;
+      dt-bindings: mailbox: add google,gs101-mbox
+      mailbox: add support for clients to request channels by args
+      mailbox: add Samsung Exynos driver
+      MAINTAINERS: add entry for Samsung Exynos mailbox driver
+
+ .../bindings/mailbox/google,gs101-mbox.yaml        |  70 +++++++++
+ .../devicetree/bindings/mailbox/mailbox.txt        |   3 +-
+ MAINTAINERS                                        |  10 ++
+ drivers/mailbox/Kconfig                            |  11 ++
+ drivers/mailbox/Makefile                           |   2 +
+ drivers/mailbox/exynos-mailbox.c                   | 174 +++++++++++++++++++++
+ drivers/mailbox/mailbox.c                          |  60 +++++++
+ include/dt-bindings/mailbox/google,gs101.h         |  14 ++
+ include/linux/mailbox.h                            |  17 ++
+ include/linux/mailbox_client.h                     |   3 +
+ include/linux/mailbox_controller.h                 |   4 +
+ 11 files changed, 366 insertions(+), 2 deletions(-)
+---
+base-commit: 78d4f34e2115b517bcbfe7ec0d018bbbb6f9b0b8
+change-id: 20241212-acpm-v4-upstream-mbox-948714004b05
+
+Best regards,
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Tudor Ambarus <tudor.ambarus@linaro.org>
 
 
