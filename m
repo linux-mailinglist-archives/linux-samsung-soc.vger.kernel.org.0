@@ -1,188 +1,139 @@
-Return-Path: <linux-samsung-soc+bounces-6005-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6007-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDBE99F9A46
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 20:21:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6A709F9AA3
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 20:42:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3CC85169986
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 19:21:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AF6F616B160
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 20 Dec 2024 19:42:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6167F229671;
-	Fri, 20 Dec 2024 19:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B1082210FF;
+	Fri, 20 Dec 2024 19:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QB743iK8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lt5IWLQ1"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499FE229139
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 19:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2020321A431;
+	Fri, 20 Dec 2024 19:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734722251; cv=none; b=CuxZTKmSvw3DWqPQ7LD6fkP48jUOLSNi/2KNqgbYG88Mm40xAwevBEvpveV1EZweEBp7FQJypbSuFCsF9ST2yrPUoK8ZTLylh6+OnwDfgBhRMrF/0wTdqls/B4T/Gg3Aa/3WwH69dZQQgvj79eqGGtURfIJjFSuGt+DnwzXDdK0=
+	t=1734723723; cv=none; b=tcu/bf0qebPEJ5CX0Q1MDULfOUxKBU/GMt8XzJC7TyJtePwdYFhZqeWmsDapeVfnXwG0h6GSnE1rq/SXY3JET73ojJCMQs7oauPjVeXWglUoKcyX27eTIwpogOiQyOw8JtVd7qaNKQnOQg5w7M6olMlsflOIUqWftg5+ORfMvsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734722251; c=relaxed/simple;
-	bh=XEE5uVlLO0AwRnx9UbXjwAPIkR4mEqLYJ4bDyDXWCRU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VX9RmCJwzACrCN+a+y7a8NiIf/tWJNCVVcMA50ocu6paZTh7nXa5Ls4simXBH+VxWu+Tpa6AwyQXVGRA+/98l685015zYLcHZqxVHxEG2mBdWP+KU/c7rZi0YFTsv/KUPviCyA+15FYmM2P6gQv4firCQjCZCAwuENgIvGcSOtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QB743iK8; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53e3a90336eso2430525e87.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 20 Dec 2024 11:17:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1734722247; x=1735327047; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+6v2ksJ04CWu1mQJ1yZzlo4VCCiYvzQqRtU1InzFo7k=;
-        b=QB743iK8KZVXeziXgIUmBRRk2JEOm+c0+wTfIPHTuUyUMOaNt2H5GmfUmTYDJi9quu
-         gazMUGwSVeUp8qC8dr00aJmvnXq896LAbD40wI7SP/BbBNJhEI8TK450419BnowDQ1Zy
-         8zEQGieEfrB9nNXXSNyQnTPXwhDP2u+xlySo8JFMWomH562+HbgC5aFsAKq8En7AigYa
-         +XCFPeXGR1O8nxAExhk3PpHVpjlLpoWy+GAJlsNMiwZs/7bjfuitOG/4wqqpm31jnxIh
-         lGXNElAKU9RU76jyVEHTkugvgQq5YsGs63RBf9PNm99sQ4RUWXBuNmXVNNI2Q+3fG4bx
-         iwEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734722247; x=1735327047;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+6v2ksJ04CWu1mQJ1yZzlo4VCCiYvzQqRtU1InzFo7k=;
-        b=tUCk2ysVEYT+1E64QufbxZME2xn0GvQwX8bv6DJG/pndggDHWr89g6cYrkBQxQTx87
-         iPxzRBUufpXgFdzIppDf1duuF+KkDXQk/aJP7oWIcA7kSc+X3AjLY4phD9q98ejXUu4W
-         APd6h6bTTBrHzvkGnVdN/ZSfTpWTrpc5Bf8M+uLU1bwUbpm/rH3aH/j5sqBwPCxprq18
-         KQS9PbnDX8M312iWkigWWqxn+jtNthKJ0yRbPmwXuvKJJ0PjHZVZoHoC3kdMVCgTfH9I
-         gjhN7XMFBh+j88WS/EjR2SZj5hjF0El5TBVas4cATICP+LzefE/S8OGiqgjjcyaXPZVb
-         bi6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVQWCAeoQvfAAA4bpqITgjA9ls242MeLuVfPzHKIPOeOdQas+3rJnD6s/SCDyeo4a0SKp0zbse72rUFGvMGXDXWfg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0Qr1KRZSLGugfdqDaaPwh/uMOO2dF6xh657uWDOABBzkg/MIH
-	cT+/5c4en8zJ/L8JZy3FCBKlr1pTzAMzL245x0TVS/DqnO7YyjYJCz+3TCdTqoA=
-X-Gm-Gg: ASbGncuSV8yadSB1/hBVAuoZTE+N8RFn36xmxfJmWJ22oWDsLcu4TlQLVYV7oOf4f7o
-	XeL5rdsP5KZ5JX73xKiqkp4MOsOquMmo0hO5TZDqaNVmdZMqVFc9yq4qoLEA36B3rWX8N1XDZLo
-	C6nKogx/kmcBuEkuq9hhqk42USi6hDmrCc/yza1m/OaRBTa7RdTTjxuLLScDxdMX5Mp5brUIa6c
-	KkraNBNJ92ggjBpfWV0fa2UFM8sx+5Z1rIFQep32c/WYTrYwopB2Jl3KITvdZwm
-X-Google-Smtp-Source: AGHT+IHe0mc2T0S/fidLlcXnIvV7arb5jH5l4ZSKmlo5D0G6qA4hbXh5msEHs+cmKpxC6EOLciu+6g==
-X-Received: by 2002:a05:6512:4019:b0:540:202f:4955 with SMTP id 2adb3069b0e04-542295603c8mr1276517e87.46.1734722247275;
-        Fri, 20 Dec 2024 11:17:27 -0800 (PST)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54223813877sm545141e87.149.2024.12.20.11.17.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 11:17:26 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 20 Dec 2024 21:17:07 +0200
-Subject: [PATCH v8 10/10] drm/vc4: hdmi: use
- drm_atomic_helper_connector_hdmi_hotplug()
+	s=arc-20240116; t=1734723723; c=relaxed/simple;
+	bh=CxGn7Klj0NZdQ41qkc+OiHDFz7q57MzEMRCe/qwiymU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q0R4rKo1fqBOQClKPd7kvHtfjT/Bcibfi0EcjxBSLfcC5JjrmDdvhVZiw12+M9fp9JVJBmp8HQ2V9ADplukXbuFCZz5/QJGjML2Aj5gjZT1mzKm/Yd08mNU6mT5L/sLEE9L+pAFUc50QabGPvI5NqTCu5IGM4Yl1XD+3K4h+EY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lt5IWLQ1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4AB6C4CECD;
+	Fri, 20 Dec 2024 19:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734723723;
+	bh=CxGn7Klj0NZdQ41qkc+OiHDFz7q57MzEMRCe/qwiymU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lt5IWLQ1xcngwDOu5pq0XeOMh232j0L6VZGYBxEJTWjGu8/lfocZhtaJO9X9DJQfL
+	 4PS/FBtvRLEl8KACH0uhdhlZ6ZC3tyTIlyP57RkYMDLJeuE6oqiYyY8eFgrhYq0E+j
+	 gKWgr7ke+r2lq/CucEnF3dDuKeUcjdOwIEze4K/b2N9jV1Br26dJYOGEjEhQ+Jl1li
+	 2+3U0lezZq/4FzoThBnVuGb3hJ7TwtTIbDlEwWhNfx6wZP0Q1ffBSGs2y5R2IuCd7M
+	 TlbGQc33qLdjwYi7hyP/g1rXaLmJdQ9yPfaNq3eWXSCmX8THkEzfM8ahSf3620wceo
+	 7hYgFfFGd4N7Q==
+Date: Fri, 20 Dec 2024 19:41:57 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, andre.draszik@linaro.org,
+	peter.griffin@linaro.org, kernel-team@android.com,
+	willmcvicker@google.com, daniel.lezcano@linaro.org,
+	vincent.guittot@linaro.org, ulf.hansson@linaro.org, arnd@arndb.de
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: add support for referencing
+ controllers solely by node
+Message-ID: <20241220-carving-diagram-a27c04aafb10@spud>
+References: <20241219-mbox_request_channel_by_args-v1-0-617a6910f842@linaro.org>
+ <20241219-mbox_request_channel_by_args-v1-1-617a6910f842@linaro.org>
+ <20241219-recent-everyone-865b19864693@wendy>
+ <d9e635c8-de05-4812-bf2b-11651f6da5c1@linaro.org>
+ <20241219-strum-cheese-89e5e60d22c3@spud>
+ <463d5955-a056-40e1-a46e-f89ac0dadccf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-drm-bridge-hdmi-connector-v8-10-2399dbae2990@linaro.org>
-References: <20241220-drm-bridge-hdmi-connector-v8-0-2399dbae2990@linaro.org>
-In-Reply-To: <20241220-drm-bridge-hdmi-connector-v8-0-2399dbae2990@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Phong LE <ple@baylibre.com>, Inki Dae <inki.dae@samsung.com>, 
- Seung-Woo Kim <sw0312.kim@samsung.com>, 
- Kyungmin Park <kyungmin.park@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, Russell King <linux@armlinux.org.uk>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Sandy Huang <hjc@rock-chips.com>, 
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
- Andy Yan <andy.yan@rock-chips.com>, Alain Volmat <alain.volmat@foss.st.com>, 
- Raphael Gallais-Pou <rgallaispou@gmail.com>, 
- Dave Stevenson <dave.stevenson@raspberrypi.com>, 
- =?utf-8?q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>, 
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-sound@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- linux-rockchip@lists.infradead.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1974;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=XEE5uVlLO0AwRnx9UbXjwAPIkR4mEqLYJ4bDyDXWCRU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnZcKve9DZuQ8ppU/Q/ZnyEt45kRCo+xjVXVr/0
- f2RRu93maOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZ2XCrwAKCRCLPIo+Aiko
- 1eW0B/93izm2Wfmdhsv3zy3rGU9m1u1l5dcOmfJb35f/JiJzpMofuBUPhBiSOWvd/xJyc4tPmAi
- V80XUFJHu877in1Juq8fESbqqMCPvLTEDfMXFnmUvu8oboli6HpOqnnb6g9JhbJvNtL6HsDxvZt
- KgZFkLtZeGCpHWBDeaWXihbv2a7VhnSpusAa0AcqSAdlvM9psDa1JF8yYo3tkqxTeRODSb+QDKu
- l9biQtscdPSlOgu/xKywBpVtaNFC0rbQj12YLxzL/BOf6Q60quSYWiwXp4pC/0A2NjFTe9Bby7o
- nutFS8MabwTox6OJ+b76xLxzmyaD1PeBBPIoGgP5pBsG2cop
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Xx+aca69A1IHgTcv"
+Content-Disposition: inline
+In-Reply-To: <463d5955-a056-40e1-a46e-f89ac0dadccf@linaro.org>
 
-Use the helper function to update the connector's information. This
-makes sure that HDMI-related events are handled in a generic way.
-Currently it is limited to the HDMI state reporting to the sound system.
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Tested-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/vc4/vc4_hdmi.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+--Xx+aca69A1IHgTcv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 5282dd765cc9478361a705dca85f615015b12e8e..82eeb08c183420b000b351da1e05f9a47baeda90 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -383,7 +383,6 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
- 				    enum drm_connector_status status)
- {
- 	struct drm_connector *connector = &vc4_hdmi->connector;
--	const struct drm_edid *drm_edid;
- 	int ret;
- 
- 	/*
-@@ -405,17 +404,14 @@ static void vc4_hdmi_handle_hotplug(struct vc4_hdmi *vc4_hdmi,
- 		return;
- 	}
- 
--	drm_edid = drm_edid_read_ddc(connector, vc4_hdmi->ddc);
-+	drm_atomic_helper_connector_hdmi_hotplug(connector, status);
- 
--	drm_edid_connector_update(connector, drm_edid);
- 	cec_s_phys_addr(vc4_hdmi->cec_adap,
- 			connector->display_info.source_physical_address, false);
- 
--	if (!drm_edid)
-+	if (status != connector_status_connected)
- 		return;
- 
--	drm_edid_free(drm_edid);
--
- 	for (;;) {
- 		ret = vc4_hdmi_reset_link(connector, ctx);
- 		if (ret == -EDEADLK) {
-@@ -549,6 +545,7 @@ static void vc4_hdmi_connector_reset(struct drm_connector *connector)
- }
- 
- static const struct drm_connector_funcs vc4_hdmi_connector_funcs = {
-+	.force = drm_atomic_helper_connector_hdmi_force,
- 	.fill_modes = drm_helper_probe_single_connector_modes,
- 	.reset = vc4_hdmi_connector_reset,
- 	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
+On Fri, Dec 20, 2024 at 07:51:32AM +0000, Tudor Ambarus wrote:
+>=20
+>=20
+> On 12/19/24 6:58 PM, Conor Dooley wrote:
+> > On Thu, Dec 19, 2024 at 03:42:11PM +0000, Tudor Ambarus wrote:
+> >> Hi, Conor,
+> >>
+> >> On 12/19/24 2:11 PM, Conor Dooley wrote:
+> >>>> There are mailbox clients that can discover the mailbox channel ID at
+> >>>> run-time. For such cases passing the channel identifier via DT is
+> >>>> redundant. Add support for referencing controllers solely by node.
+> >>> I don't really get your implementation, why not just allow #mbox-cell=
+s =3D 0?
+> >>> That's what's done for things like fixed frequency clocks that only h=
+ave
+> >>> a single output.
+> >>
+> >> Ah, indeed!
+> >>
+> >> instead of:
+> >> 	of_parse_phandle(dev->of_node, "mbox", 0);
+> >> I can do a:
+> >> 	of_parse_phandle_with_args(dev->of_node, "mboxes",
+> >>                                    "#mbox-cells", 0, &of_args)
+> >> where #mbox-cells =3D 0;
+> >>
+> >> Or ... can I pass NULL for cells_name and make the #mbox-cells property
+> >> optional and still keeping its requirement of being at least 1?
+> >=20
+> > I think the mbox-cells =3D 0 approach is preferred, that property is wh=
+at
+> > marks it as a mailbox controller after all. Perhaps Rob or Krzysztof can
+> > comment?
+>=20
+> I think using mbox-cells =3D 0 is better indeed. In my proposal I
+> considered the list to always have a single phandle, thus a reference to
+> a single mailbox controller, whereas it may be possible that clients to
+> reference multiple mailbox controllers. If so, #mbox-cells needs to be
+> defined in all the controllers, for consistency reasons, similar to what
+> happens with fixed clocks, as you already mentioned.
 
--- 
-2.39.5
+Oh right, I had totally forgotten about that, that's a solid argument
+for the mbox-cells =3D 0 approach for sure.
 
+--Xx+aca69A1IHgTcv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ2XIhQAKCRB4tDGHoIJi
+0sK+AQDCcx/lgCTv+Omz3fHAepr8BVUseHHBs+4WzmyKpR3V4AEAqX3itqXBhmyZ
+9veirorpUjlotYZvKUMvTmoTRZswTgA=
+=SG7R
+-----END PGP SIGNATURE-----
+
+--Xx+aca69A1IHgTcv--
 
