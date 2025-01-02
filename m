@@ -1,151 +1,128 @@
-Return-Path: <linux-samsung-soc+bounces-6123-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6124-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A9E79FF157
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Dec 2024 19:49:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE61A9FF890
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Jan 2025 12:16:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FA2F18828F7
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 31 Dec 2024 18:50:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C0F716219D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  2 Jan 2025 11:16:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E73D188734;
-	Tue, 31 Dec 2024 18:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B72CB1B040A;
+	Thu,  2 Jan 2025 11:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ShzrJUXV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddPNGJMb"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7626017BA9;
-	Tue, 31 Dec 2024 18:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1D31ADFE0;
+	Thu,  2 Jan 2025 11:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735670993; cv=none; b=ABe6sljgx1wTE4/Dbu3/RrRpUT2PTa5luk2sCJdxzeF4T7LgkeL/QL/4s8e+zbUFlydtPFLcwOI2c2hjc9tjHDvRY8yfjPecZ6avFrEc4Uy5Mh3ZegKV8z13iU7WBBa4ncOdbu+sEtDpdOx/dHKmwB6H7EqiFqceOWS/1EhHJRQ=
+	t=1735816564; cv=none; b=ZV+Bq3aR21W/nHatfjtyG/UGTW86avrEywKGF1Vd+7ne9XnKJWq/OtCyHPvWTHt733JUXj9ZMNYlqu8gy8EOA87el9MGbP0e7NmHIC25aPOLB3/QgiC2B4z9ErE2LGbeQKFZIhbbi7nxiXIPsSw9eTDVeO7hXy48LuZm9NwHHwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735670993; c=relaxed/simple;
-	bh=kltap3Pv1hlN9UPAmHZET72hjTYvMQFRlhAGev33Mns=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f6fwMuhApAG7RspjwDes0Fb/0UWrOyI+1XZNfc5MUwKZRL3Zz92ndXHuQrPH8/WsXwOLkNN0Nk4jjw2yk4w5bNzi0zmnohlnml2rQpb9/jkZ6A53nx3sZviyFPm3nuN9rbQkl+6QX30zMhFz+RSe6DnAtKX6VWXbLvLyJ7lq9dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ShzrJUXV; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ee86a1a92dso11002077a91.1;
-        Tue, 31 Dec 2024 10:49:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1735670992; x=1736275792; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kltap3Pv1hlN9UPAmHZET72hjTYvMQFRlhAGev33Mns=;
-        b=ShzrJUXVQ53THeA7DGrDyk65OIdoa+hdRV1n2egw5/bTLvoeOYpsxIyg1JE7HP7CX9
-         lEwYWRNE4LRcQui/wcqhGIsLPDlqBAPtEt55jkhc0rxBExPf5KlBFDrCDPL6YrDMpcud
-         3mFIo5O1uPUnc5YfnsE4ACho/iwmghDtUsQTTieuY3xD9Pex8qMjjYjf8awY+lBjOBLG
-         xs3WK9JFm3TvvzB0gRcuhGdVGmh1yBlXm1EvTdYqlFCe/gToWr7OvPC9vfgkYwR7BHxi
-         epW4hmBfinFB6yJ1G+JdgQBMKjMNDB5Xp8f16OCybxdf4yORgsOZlrdyzbglw4cADAF2
-         Om6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735670992; x=1736275792;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kltap3Pv1hlN9UPAmHZET72hjTYvMQFRlhAGev33Mns=;
-        b=EVX/cFC/KVkHXDysX/RUWvT7IDW35vk2Y8pkEwx8A/ku6k35bFj+tqamffCiedcJrJ
-         J2IKwxkKCYRWafR7GFP6glEGiOIxhoIlPrLCW8c5Lx3HJ/bkZYa/7gBlgEUZhRBHaIL2
-         O2FEWupobWlAYG7BLmHO0Q22Tj1ZoZaBfysEET6QX6/GeV5z8fnQ2rhZyAJosO4Y+0YF
-         eRHEJ7GmoxrSN1TB65uNuXDboEV6gvjO/MOP0w23pPWgH/hQ8KjHqA4Fq6cSd1j56c55
-         /t4nd5BHQMaBHCwpCuCy++SXAO7oKVZtxA3du/lU0kdCDqmp1gY3ePO7+bGN+9NHweNn
-         NIFg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0Cpf35XoXSvQ9eZFi5PCwRC6+cmE78kIswm0iRAzDTPNRQkUBxZ0ap2Rhdm+Sn1f5QPVU/rGtPwezPfnDFsTPEkw=@vger.kernel.org, AJvYcCX2OlDk7GZIQfgLFaGvOypGDVdzooERnYamIdL4iGmuou9gM3hBdnGRxqOsJx01VJnCq/ywE7LvX8sOHSo=@vger.kernel.org, AJvYcCXf8De8YPzOJoF6SJ5wJzHCeVOwqwOw7ILXs9RyNy9CNkfwnJzlmEDnWirtYYFWZKMIdHz1bFKkw9CmLEM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywk40MX3Rg6HKosiyhiUx17gNNJmXg9D94t+Vfpp8jtlThgcBq3
-	Nu/HqtisHZeWporklLSDuEhmwWfdxKmHezvhByVVmLrKvy+NB59qmcuvPHxy7qEsJScLqeC4gpZ
-	kk7H0MyHBnRY7DMsghg8T4H2w9jE=
-X-Gm-Gg: ASbGncsyLMIqPdx/799Ub+0k0tMQm5UDXNf70qwEC4QdrwK2ZUQaEXg7zqA+OEInba3
-	uEtileAup+I4478WqF84w4CZQzNTKF/wfQbmx36C3vP1zcpp+YA914urh1qvdMsK0WxoNmy8=
-X-Google-Smtp-Source: AGHT+IG5FmkROQoSQHWr4cIegxX2It9OOsT8OUh7KWPdH7VQgx2qIDviezjcsQv6GTMSR51Q0h0ZJEqmX+Qz4Kpzuw4=
-X-Received: by 2002:a17:90a:d645:b0:2ef:30ec:14c9 with SMTP id
- 98e67ed59e1d1-2f452e4ad37mr57281196a91.18.1735670991720; Tue, 31 Dec 2024
- 10:49:51 -0800 (PST)
+	s=arc-20240116; t=1735816564; c=relaxed/simple;
+	bh=BCKCRIacyWKgqo6gAegHeTB5UJABaGjYit2k0RzaGXo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sFafalgP9mQ0mh6ve3PfPnDWN7nuYMXuU6aCegSeQwL40sWhzspmJa96J5TvaI7vazxfmI5x0R37WxRRKovYjQr0XBfkNXiAZkpmZ3X/JTQeMmP5oaLYl5DT2/zfjxaghHok4tsnIgGtef8c0p/zc5Npgn+vs4fBC6sDlRLKres=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ddPNGJMb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A0C60C4CED0;
+	Thu,  2 Jan 2025 11:16:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735816563;
+	bh=BCKCRIacyWKgqo6gAegHeTB5UJABaGjYit2k0RzaGXo=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=ddPNGJMbDtFFvIaY6NZJ3R0J/5lMcrqSA61LFimqiZoeZvHLjEuNRz+b3xYIEcsn0
+	 vagd3nvdPwSfrrtS3C7O9a9CDsISXUZrmF7Ntc2BtCCP7zPHIe9NXwCiLJRztYCqZi
+	 9X5DyTLuvq/1M2uxn+mmY5kixeKu5SF6NRs5Q3YSIol4MtAPRwNAwsuN4QVhfEm9QX
+	 GnZ3AOeJPsZK/qULq5M0knOIkcLZ5Qftg6dm35I3wLV/28lByXodTLl7NPc7R7M0JP
+	 qN+r9B+Jh6rYQDwvGSmHzWhK61IUvlHTblHO5XF4oFPoCRmJuzqa/8VTecMYTtjl1o
+	 /A/K3eeDjQrEA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 965F5E77188;
+	Thu,  2 Jan 2025 11:16:03 +0000 (UTC)
+From: Thomas Antoine via B4 Relay <devnull+t.antoine.uclouvain.be@kernel.org>
+Subject: [PATCH v2 0/4] Google Pixel 6 (oriole): max77759 fuel gauge
+ enablement and driver support
+Date: Thu, 02 Jan 2025 12:15:02 +0100
+Message-Id: <20250102-b4-gs101_max77759_fg-v2-0-87959abeb7ff@uclouvain.be>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241224-drm-bridge-hdmi-connector-v10-3-dc89577cd438@linaro.org>
- <20241231004311.2574720-1-martin.blumenstingl@googlemail.com> <l3u3wtnxyhrwjynevkwfjwarisc4yt4xy2rbzf5kb7k5l5dw3n@lxqtimymyjg6>
-In-Reply-To: <l3u3wtnxyhrwjynevkwfjwarisc4yt4xy2rbzf5kb7k5l5dw3n@lxqtimymyjg6>
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Date: Tue, 31 Dec 2024 19:49:40 +0100
-Message-ID: <CAFBinCAh8iazDNx6GtOOJyXh_V-NfUs6Uf=ywN9kvQGPEmjrKQ@mail.gmail.com>
-Subject: Re: [PATCH v10 03/10] drm/connector: implement generic HDMI audio helpers
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Laurent.pinchart@ideasonboard.com, airlied@gmail.com, 
-	alain.volmat@foss.st.com, alim.akhtar@samsung.com, andrzej.hajda@intel.com, 
-	andy.yan@rock-chips.com, angelogioacchino.delregno@collabora.com, 
-	broonie@kernel.org, chunkuang.hu@kernel.org, dave.stevenson@raspberrypi.com, 
-	dri-devel@lists.freedesktop.org, heiko@sntech.de, hjc@rock-chips.com, 
-	inki.dae@samsung.com, jani.nikula@linux.intel.com, jernej.skrabec@gmail.com, 
-	jonas@kwiboo.se, kernel-list@raspberrypi.com, krzk@kernel.org, 
-	kyungmin.park@samsung.com, lgirdwood@gmail.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
-	linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com, 
-	matthias.bgg@gmail.com, mcanal@igalia.com, mripard@kernel.org, 
-	neil.armstrong@linaro.org, p.zabel@pengutronix.de, perex@perex.cz, 
-	ple@baylibre.com, rfoss@kernel.org, rgallaispou@gmail.com, simona@ffwll.ch, 
-	sw0312.kim@samsung.com, tiwai@suse.com, tzimmermann@suse.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIADZ1dmcC/4WNWwqDMBREtyL3uyl5ldR+dR9FJNEbvdAaSWqwi
+ Htv6gb6M3AG5swGCSNhglu1QcRMicJUQJ4q6EY7DcioLwySSy1KMKfZkAQX7cuuxphL3fqBaS5
+ RKmG1UwrKdI7oaT20j6bwSOkd4ud4yeLX/hFmwTirr7301jiPit+X7hmWbGk6O4Rm3/cvUWaGq
+ bsAAAA=
+X-Change-ID: 20241202-b4-gs101_max77759_fg-402e231a4b33
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Dimitri Fedrau <dima.fedrau@gmail.com>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Peter Griffin <peter.griffin@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, Thomas Antoine <t.antoine@uclouvain.be>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1735816515; l=1708;
+ i=t.antoine@uclouvain.be; s=20241202; h=from:subject:message-id;
+ bh=BCKCRIacyWKgqo6gAegHeTB5UJABaGjYit2k0RzaGXo=;
+ b=nNwiaZEpXaE/xmq13KUaZhCVGXxQKaEr/PxDVQPiVg9kT2kvTD0OYSbdMx2Gh/O1M5enu4LZj
+ vL6grHmE2QpAp6Z94gjM2/KM23we6cqO7iHL2goR6lHLpCb0jy0IE1L
+X-Developer-Key: i=t.antoine@uclouvain.be; a=ed25519;
+ pk=sw7UYl31W1LTpgWRiX4xIF5x6ok7YWZ6XZnHqy/d3dY=
+X-Endpoint-Received: by B4 Relay for t.antoine@uclouvain.be/20241202 with
+ auth_id=289
+X-Original-From: Thomas Antoine <t.antoine@uclouvain.be>
+Reply-To: t.antoine@uclouvain.be
 
-On Tue, Dec 31, 2024 at 3:34=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
-[...]
-> > I checked all instances of struct hdmi_codec_ops in v6.13-rc3 and it
-> > seems that there is only a single driver which uses the .prepare
-> > callback (drivers/gpu/drm/vc4/vc4_hdmi.c). All other drivers seem to
-> > implement .hw_params instead.
->
-> Yes. However .hw_params don't have access to the infoframe contents, so
-> I had to settle on implementing .prepare.
-While debugging I noticed something unrelated to my problem:
-hdmi_codec_spdif_dai_ops does not implement .prepare().
-FYI just in case someone wants to use your patches and feed the
-hdmi-codec with SPDIF instead of I2S.
+The Google Pixel 6 has a Maxim max77759 which provides a fuel gauge with
+an interface with a lot in common with the Maxim max1720x.
 
-> >
-> > The audio controller code for my platform is already upstream:
-> > - sound/soc/meson/aiu-codec-ctrl.c
-> > - sound/soc/meson/aiu-encoder-i2s.c
-> > - sound/soc/meson/aiu-fifo-i2s.c
-> >
-> > My understanding is that you have a platform with a lontium-lt9611
-> > HDMI controller available for testing. Can you please help me
-> > investigate and find out which piece of code is calling
-> > hdmi_codec_prepare() and therefore lt9611_hdmi_audio_prepare() on
-> > your board?
->
-> Sure, this is the call trace on my platform (Qualcomm SDM845,
-> sdm845-db845c.dts):
->
-> lt9611_hdmi_audio_prepare+0x1c/0xc0 (P)
-> drm_bridge_connector_audio_prepare+0x2c/0x40 (L)
-> drm_bridge_connector_audio_prepare+0x2c/0x40
-> drm_connector_hdmi_audio_prepare+0x24/0x30
-> hdmi_codec_prepare+0xec/0x144
-> snd_soc_pcm_dai_prepare+0x78/0x10c
-Thank you, this helps! snd_soc_pcm_dai_prepare() is where it breaks for me.
-I suspect that it's an sound card issue on our platform, so I'm hoping
-that Jerome (author of the Amlogic ASoC drivers) will help me debug
-it: [0]
+Modify the Maxim max1720x driver to be compatible with the Maxim max77759 and
+enable it for the gs101-oriole board.
 
+Signed-off-by: Thomas Antoine <t.antoine@uclouvain.be>
+---
+Changes in v2:
+- Add fallback for voltage measurement (André Draszik)
+- Add regmap for the max77759 (André Draszik)
+- Add chip identification for the max77759 (André Draszik, Peter Griffin)
+- Move RSense value to a devicetree property shunt-resistor-micro-ohms
+  (Dimitri Fedrau, André Draszik)
+- Use allOf:if to narrow binding per variant (Krzysztof Kozlowski)
+- Remove binding example (Krzysztof Kozlowski)
+- Change defconfig order to follow savedefconfig (Krzysztof Kozlowski)
+- Fix style errors
+- Link to v1: https://lore.kernel.org/r/20241202-b4-gs101_max77759_fg-v1-0-98d2fa7bfe30@uclouvain.be
+
+---
+Thomas Antoine (4):
+      power: supply: add support for max77759 fuel gauge
+      dt-bindings: power: supply: add max77759-fg flavor
+      arm64: defconfig: enable Maxim max1720x driver
+      arm64: dts: exynos: gs101-oriole: enable Maxim max77759 fuel gauge
+
+ .../bindings/power/supply/maxim,max17201.yaml      |  56 ++++--
+ arch/arm64/boot/dts/exynos/google/gs101-oriole.dts |  10 ++
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/power/supply/max1720x_battery.c            | 189 ++++++++++++++++++---
+ 4 files changed, 218 insertions(+), 38 deletions(-)
+---
+base-commit: 12e0a4072e8edc49c99418a4303bd7b96916de95
+change-id: 20241202-b4-gs101_max77759_fg-402e231a4b33
 
 Best regards,
-Martin
+-- 
+Thomas Antoine <t.antoine@uclouvain.be>
 
 
-[0] https://lore.kernel.org/linux-amlogic/CAFBinCDdiJ3UNVUcShjq=3D7U2=3DoUw=
-T3ciYdKSuZ5TdcrikxFBpg@mail.gmail.com/
 
