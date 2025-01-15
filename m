@@ -1,165 +1,115 @@
-Return-Path: <linux-samsung-soc+bounces-6367-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6369-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38BC2A1286E
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Jan 2025 17:15:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C505BA129B4
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Jan 2025 18:22:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF1E51881CB4
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Jan 2025 16:14:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 612C83A386F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 15 Jan 2025 17:22:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69351D54E3;
-	Wed, 15 Jan 2025 16:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BB3818A93E;
+	Wed, 15 Jan 2025 17:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qyCWDEfP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EHdfILg7"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E301B6CFE
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Jan 2025 16:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D676943ACB;
+	Wed, 15 Jan 2025 17:22:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736957477; cv=none; b=K19+B16v4839fINtHbmaMnKKmxyvmJ5XqJbOf9mV1HZV3aqe8KGJ8gwD2Iw/FqSkRK602VWuLMHTdOupHFUZ4qI6jxc1FQVkSicF3+4fOMJJQST05RBMQ1L69QataVCeWfXtXkmO22ttpZ7DlexKaQo7YptrPMOBQ32rtJ7+FVg=
+	t=1736961766; cv=none; b=l60jAMsO4O70SHWbH2ZjPoLX8ccphVI/IhTeN7UHeHhskmVB9B67Pa1mWlKZ+GaY44heg4De/yet5j3Fplk9TcxNd4Cucb5PTs01pVbfwmb+tg6p/HSL2cESlXLm5gDEWTMlN2S/yYe2DulKWunPeY4LFmeGA0Fi4Bor0GY2RVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736957477; c=relaxed/simple;
-	bh=l+s75NW0nEo9AS9gIRHhQuLeK1gPacQ/TcfCbcLQ9N8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dGAvbJ5dycjh3VbCP+/gzXmLYnk7qXSjqXvfoS9C+UFBsdFBgXlRaWAQanNWFmqvQXw+LNz8SHFC5id7RjdArUWjFvR+ZfLGYHKcCyDH/CpCc/PoXZptXU8jSPzDslij5E/adYXQptxloxvcIbgwsaHp5IhuROC+dkEVoS/xtrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qyCWDEfP; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5d3d479b1e6so9652780a12.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 15 Jan 2025 08:11:14 -0800 (PST)
+	s=arc-20240116; t=1736961766; c=relaxed/simple;
+	bh=3g5AOy/56S9wuiDS19QWAL/hiIZqXqvvyJXaDWR6DRc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZEa7wESfjuBYVI/lS+jdIncq/VHOzXE3+JpSQwzKegmGgt3dUZwCdYR6jMP2+OK1SK8RF657BCGc5i+QjBBqAX+SAPzjB9pTiQcThYyscJk5ov4AAW6DCOfr7KbgYZg3TWZLhEOJz87MVOn0aL2YU/ZaDF7XcPwBpqTO5Qjh6KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EHdfILg7; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-2aa179a8791so20412fac.1;
+        Wed, 15 Jan 2025 09:22:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1736957473; x=1737562273; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o5pQlUERu30P4Ba0NRUoDkbhX6SQEcjoIl1O/J3MOl8=;
-        b=qyCWDEfP6f4lNDOYFI1pS7/QCgB7jBv8Q2oLX/shKdLB/bO4QbpYWRjTx4I9Qj0Ppj
-         TWywSWW+eLhT9V8/fculES2x0YOUHssh9LD0IqNhCOfD/QFckaXbkMW5jgg9T/lKvoaX
-         rpjPck2edGK8ts/0sEAtlMAYA95zOOIb8ANOnYsyUlcCDFQq+hE3aX2muET4sPjpDzr8
-         xTM8yLXENk62Yqy4df7PLM2UX0g1SPeqONO4YgXijKCF7ZrDyBXWz8/oHMCc7OSGHQQk
-         WC5LujX9X1iqdKMzW9IiJXGc4ru2iKpFy6CVxZcv55ALlfHqUBOLzNXpgF4qxGmVRrz8
-         Dmug==
+        d=gmail.com; s=20230601; t=1736961764; x=1737566564; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u5UG7QxVR++WRdYY+/35YW2yLibbafgum8u029E2OUk=;
+        b=EHdfILg7wDslWAEPMTOZgjaqMFSy5PaFHDgUjkLby3DAXSYX+bD/b5jTep6UDQsRCP
+         S1EkZAC8Fa+JUlr2sZRgKbfvL2jA1EF4//xCsiNJp1ku6iB1dcnsLBBCINEu3De+oAvh
+         U6BPn9vK9G4LDEruIb5Kll4umXoCrxBsSXsc28P53WHaBDWo6ISQrklj5W1HEgfRQ7lu
+         +N2UJgHTiy/dn7PchYE2Lw2zQP/wlJ1cbtRz+i8dlRnpYsV7sGYgHKkb2VFkwbkrvSd7
+         znQY2RXWAcGSAmGP9FnfL8jaecnmPYxMFXDrKOQrjm2WpE91IUUbiRIPhKZ6txH/o6ew
+         fIqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736957473; x=1737562273;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1736961764; x=1737566564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o5pQlUERu30P4Ba0NRUoDkbhX6SQEcjoIl1O/J3MOl8=;
-        b=gevxNJn7GqyJpmbSc3Fxc+Pa80hWwKb4oGeK/R3XnBRlol27fmTxx4llvOoiTNmrV5
-         QvSrO4kIw2QbjuYXpZQAerEcxaAkmPQPxJhfHU2YK+sgDsrq5QGGodzwo+POAJfInu7b
-         AjXDUjAbWEWQIl3hh47xNM222vBzKg4/0A7aDdBd2tznNwWaY5Hd61NRDG6y1QOTpSnM
-         dknNjSVjnT6xb+bXhUZmqpwU9wN6RanJx0K/KY2Dn5+Nv7DfNEkF0RK3qn/WTmWNrKYj
-         UNjP3z9zRfLGcyAh2+XMW/WrJbtPNa0rmba4w1HHGbT3b08reJjYUiQnGgtVYhkSktbQ
-         8JbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXgAbT7dJmzT2Q01eOje0pY6nfqPtEYtjuLmg3ljdAROdmEfvmJ1XTKz+Gf39v0ZObhS6SQXW4sRHJDExhnE0I6Ng==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoV/hJu9rHh7R8vl6HULBkNaILiTwmIaMrFhjGgBHQyfUsIFXM
-	tIZGhqQDOIYZXJaShFJ4J2ggvlflzRSQSW2yphUiTpVT5je1fnQ9uRF2nllREkI=
-X-Gm-Gg: ASbGncsTawBEukZzOGoqjegmxYHOtMTmhIqilREr+0/AMq5zY2WNQebmHPpL0zueQTm
-	mzZZy8yRiYnSXzMDrgm8WV+/83n7mV7MNs7gTtX785gKzzhLq/QbMIPAmlVXj7wWS2fmR7hsGNb
-	c8g8a1xwKt2/WCDj4zTh6KVLh9T1A9GrzuKcgOjvqrdlKaebsmGdCSZIAi9GXp01p4691ZPmA+K
-	rid22lDttU0z4p2l0XRtuq4qFOuIAKFK8l5k46zGiUIRtuyjQ3JEhPjCEuNZDyljxG7CQrHXLG/
-	cLeBr6WudTtI4PyMS2dPhn/3Rw7yzaWN333ZOuoX
-X-Google-Smtp-Source: AGHT+IEk9W6AJ1Bfki9sNMYgrASoIkC8McdJI2hZtNgAUOMLE5wTU/s3opZMrauV4el0rFXtouBevg==
-X-Received: by 2002:a05:6402:3489:b0:5da:1263:306c with SMTP id 4fb4d7f45d1cf-5da12633426mr4994787a12.10.1736957473227;
-        Wed, 15 Jan 2025 08:11:13 -0800 (PST)
-Received: from puffmais.c.googlers.com (140.20.91.34.bc.googleusercontent.com. [34.91.20.140])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d9904a55f9sm7416232a12.81.2025.01.15.08.11.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 08:11:12 -0800 (PST)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Wed, 15 Jan 2025 16:11:12 +0000
-Subject: [PATCH v3 4/4] arm64: dts: exynos: gs101-raven: add new board file
+        bh=u5UG7QxVR++WRdYY+/35YW2yLibbafgum8u029E2OUk=;
+        b=SPfpug/W/qB/NpSb8uPMk7wXHISRop9YXkqmoOdHFeZT9NM/iCWfjR9errWcgLt7fl
+         BE/MKD3SFY1QuJ64JYqQIGMXeG5h0TuZqWxH+4xtsRWBWOcBfqyA75cHBrbmEjiw51+4
+         1aJZoOMhJkwahwcerkts8yHPtNC1n86vloEJaaq84vhK+D6hbeu2jqYVKeQ7EKSgb6Nx
+         PLSKijG+YcYOD8KkQTvUvagTUJIrPEyIK6ZkWgVauV5oGkeMlLgwrliFCcyPrHHCzt/b
+         nMyXX4af5/Eqx1O8Ek4yiM4kzHIndEF2GPMZeKAZWSRb2PvObZ1LDox0cr6XLtoKGMOC
+         1SIA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6ZrEVvtPP8AYrPKKYndco8x/QJ47OZIgNBB7KVOBeI5Q3Uj6JFAk8CW+ZSMQCowgACI09JUmUxZBOMPmb@vger.kernel.org, AJvYcCUIlcpotARV7v+pW1eVWM/wZ6j6BCjEzQ9z/xpLoDhofhTAITgMyq4gRM5PM8PHchLRxA064V+PM+rB@vger.kernel.org, AJvYcCVg3yt3NqVXzZXAff0pslS1T9b41vS05Ty0T7uS57AXYlUToOhwErGnLJmr73KMN1vzzLn3CTsVREK3GXV3PZfBG7s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJvo3GIGehyAzf+0DoBFKJpYC0+HeFPuN4ctIkqs+Yeb4jcYkZ
+	NGgp0H6V5MeLXAShSZBrxGRPGMIlVrnmNdaqmcZspdojJUHw13LT4gt2ychHUBft6SRzeoJVW5S
+	X4FtrfV7Gr5Wxd2VBAM7sVLqQaOLtinvj
+X-Gm-Gg: ASbGncsfYVaktWK3IUN68ENlG1LVC13kEDG6da1snbgAFl431mfIGjJhT+1dP9SPQFW
+	7wMKmjswJJ+8NPYo+Wr6jFa7fTlwvkdElK2HIv28=
+X-Google-Smtp-Source: AGHT+IHTdiOgOQ8loJ8iUlob993v8iSy5RRS4v9nUw0JLwCAvYfy9EWLVKdFgVIWtMBC+CDkgbJDOHm0KeGaXielf2s=
+X-Received: by 2002:a05:6871:d28b:b0:29e:255e:9540 with SMTP id
+ 586e51a60fabf-2aa069ac21dmr18581926fac.35.1736961763883; Wed, 15 Jan 2025
+ 09:22:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250115-gs101-simplefb-v3-4-52eca3a582b7@linaro.org>
-References: <20250115-gs101-simplefb-v3-0-52eca3a582b7@linaro.org>
-In-Reply-To: <20250115-gs101-simplefb-v3-0-52eca3a582b7@linaro.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.13.0
+References: <20250115-acpm-v4-upstream-mbox-v7-0-948e09fcb5f2@linaro.org>
+In-Reply-To: <20250115-acpm-v4-upstream-mbox-v7-0-948e09fcb5f2@linaro.org>
+From: Jassi Brar <jassisinghbrar@gmail.com>
+Date: Wed, 15 Jan 2025 11:22:32 -0600
+X-Gm-Features: AbW1kvYjzVhFBXbtTBnJQ6T6zBUhDMPTiScx8oqCLHH6G7qIWKMnlkm5RSVwuPk
+Message-ID: <CABb+yY0+L0c_si3uHcmBQgwN-JWkb6ZzEDN0zk2Y6q1r+xnhEw@mail.gmail.com>
+Subject: Re: [PATCH v7 0/3] mailbox: add Samsung Exynos driver
+To: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, linux-kernel@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, andre.draszik@linaro.org, 
+	peter.griffin@linaro.org, kernel-team@android.com, willmcvicker@google.com, 
+	daniel.lezcano@linaro.org, vincent.guittot@linaro.org, ulf.hansson@linaro.org, 
+	arnd@arndb.de, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Raven is Google's code name for Pixel 6 Pro. Similar to Pixel 6
-(Oriole), this is also based around its Tensor gs101 SoC.
+On Wed, Jan 15, 2025 at 8:18=E2=80=AFAM Tudor Ambarus <tudor.ambarus@linaro=
+.org> wrote:
+>
+> Hi,
+>
+> Now that the channel identifiers are passed through 'void *data' in
+> send_data(), the clients now depend on the message format introduced in
+> include/linux/mailbox/exynos-message.h. If Jassi finds this set fine,
+> then he shall provide either an immutable tag so that Krzysztof uses it
+> if applying the ACPM interface driver, or to ACK this set and let Krzyszt=
+of
+> queue it.
+>
+   v6  =3D>  11 files changed, 366 insertions(+), 2 deletions(-)
+   v7  =3D>    6 files changed, 268 insertions(+)
 
-For now, the relevant difference here is the display resolution:
-1440 x 3120 instead of 1080 x 2400.
+Awesome! we have far fewer changes and no new api added.
+I will queue the driver.
 
-Create a new board file to reflect this difference.
-
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-
----
-Note: MAINTAINERS doesn't need updating, it covers this whole directory
----
- arch/arm64/boot/dts/exynos/google/Makefile        |  1 +
- arch/arm64/boot/dts/exynos/google/gs101-raven.dts | 29 +++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/exynos/google/Makefile b/arch/arm64/boot/dts/exynos/google/Makefile
-index 0a6d5e1fe4ee..7385f82b03c9 100644
---- a/arch/arm64/boot/dts/exynos/google/Makefile
-+++ b/arch/arm64/boot/dts/exynos/google/Makefile
-@@ -2,3 +2,4 @@
- 
- dtb-$(CONFIG_ARCH_EXYNOS) += \
- 	gs101-oriole.dtb \
-+	gs101-raven.dtb
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101-raven.dts b/arch/arm64/boot/dts/exynos/google/gs101-raven.dts
-new file mode 100644
-index 000000000000..e982c87402a8
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/google/gs101-raven.dts
-@@ -0,0 +1,29 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Raven Device Tree
-+ *
-+ * Copyright 2021-2023 Google LLC
-+ * Copyright 2023-2025 Linaro Ltd
-+ */
-+
-+/dts-v1/;
-+
-+#include "gs101-pixel-common.dtsi"
-+
-+/ {
-+	model = "Raven";
-+	compatible = "google,gs101-raven", "google,gs101";
-+};
-+
-+&cont_splash_mem {
-+	reg = <0x0 0xfac00000 (1440 * 3120 * 4)>;
-+ 	status = "okay";
-+};
-+
-+&framebuffer0 {
-+	width = <1440>;
-+	height = <3120>;
-+	stride = <(1440 * 4)>;
-+	format = "a8r8g8b8";
-+	status = "okay";
-+};
-
--- 
-2.48.0.rc2.279.g1de40edade-goog
-
+Cheers!
 
