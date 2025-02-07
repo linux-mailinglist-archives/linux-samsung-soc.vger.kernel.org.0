@@ -1,81 +1,80 @@
-Return-Path: <linux-samsung-soc+bounces-6656-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6658-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6C52A2C807
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2025 16:57:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE9EA2C812
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2025 16:57:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A5BB3A618A
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2025 15:56:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B73A47A4BA0
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  7 Feb 2025 15:56:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F092523C8DC;
-	Fri,  7 Feb 2025 15:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 080012253A7;
+	Fri,  7 Feb 2025 15:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bxe0Wcm+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l5gIOqbg"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27E923C8BA
-	for <linux-samsung-soc@vger.kernel.org>; Fri,  7 Feb 2025 15:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1792623C8BA
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  7 Feb 2025 15:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738943810; cv=none; b=fpedsGs9PMxmPh5WRkCZC28hGSNOXPZlgsFotZm+wPfQp7PDFPc4KA7WUaXFZe7CjetvalnPM26JAMJqzbrgAkJESAdCTUPvmuQjV6UA7TwXFLW2fIMBuYg0h0mSPWlZDTdAPPFPrzH0ZAw6KO3e3wlEkXZbcJdGgxUnlKTkh3I=
+	t=1738943812; cv=none; b=UZFQgOwK1w0TUyq6GywOUbiDHoXs9CFgYMuCq9yJWzbXVYZJzZlOjOTi1rr8CHw9Obi2cZy7saTkw6FY+16mIr3ic6hD7nboJYdeh0Cm6zya89d/dCX8Y0T/o/MXMIMCe9uzj3uAy4/GePu74xfzjWueSKnbf19cxedARu9vPh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738943810; c=relaxed/simple;
-	bh=pYolsvKglKk9Jl9llzXxb7ekkcAK7LRlmIETEtDeUxQ=;
+	s=arc-20240116; t=1738943812; c=relaxed/simple;
+	bh=LqA0TnpriX6BG6wFMMTRQwjG15Mb4xWdLzul4jT3ckw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sL7BpHCF/jSzCDeMczIl6WPwe2EUZP+V5FOgaHZuvzl4hOsPLrlkLHzzWl7pwN3ahghFJVW4UFqREFo5hpcrmNnhPXJ/aaXgP3URHS2lNZPOrq397r6kt/Tq9M0qFnwttTogr+iWYAsaliGUKn0Hw3tCq0O0x/NMXDhihY6p+CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bxe0Wcm+; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:To:Cc; b=bNCQY7la+cihqI+v73xLhEc1p3+0cNwMKw1XHS1SYlJR+Mtrgn5MoWakukq+IikDL9EZ5gPC2Eat3D9VKBdt8jivqN7v7/ClnX2oUKr7vB061kcPeanvqcjH+OlBqulSPK8jdwMvwtSYcAV7D4OEMBOxwUocNbIzEGinB2IMV/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l5gIOqbg; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38dd14c99c3so69709f8f.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 07 Feb 2025 07:56:48 -0800 (PST)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-38dc1dfd9f2so1178924f8f.3
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 07 Feb 2025 07:56:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738943807; x=1739548607; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1738943809; x=1739548609; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lniNSUn6162O5PDdXje7jyIZ/reSQ42wbs2b2Ye2MZA=;
-        b=Bxe0Wcm+BEcpAOrNcVIKgSbswFGeWaRAUpXSID+8gDqqpvqi5AHX0PR8C82Ctao6Hg
-         PYVc7SDv5BmEZKFa13CDOrfddPdGNPRHzP7DQ3Y7BjkFxMjf7qQR0+WQ47ZgkPvix+WZ
-         SCeVekrUPVWSLXyvjyCGsTQ91crhI09zOHpFbtVxmXArxg/5ftOR4pFkmQjocjfZK8o5
-         fArq3SbNyIyhCdFK+fphihnvp+zVOQZ/g6kUOMUiZUP+VN8kwaQuvY0AuAPQ7Sb9NzDB
-         lC59lwbdtUmHdaDJ+QWaaoXcC7c9hyaVQQ0CcgyGWgGeXmWE3B5qnMP4e26FiD2WIzh5
-         5uww==
+        bh=Z3dWOoof3Xw/2OHGbRzCfoAg04gz2ejhFyHKSGYevMQ=;
+        b=l5gIOqbgTayffTKPLM73X3/pubPi7dP9/lqBtshxn/FtF9r5n4U+yiGCgZXB9jbZ4L
+         ej3OwBcyXr/K3gcNoSafoOGUJ/zFfva/PdGy/X2jPB2wfshmZpgCI7kHWglZyTl7QqvF
+         4ZW7iqVRWGDHRq6qJQMwnnnfvdru3xzMe8AUuGNgcnyD/hg7XRSACwdicmz4WZ5z9u/Q
+         Kz1uPxJwYs7ojZjV8BeFtgDARMJiNFkb7uHuZlYrXyHofct2MWQqVWjgMyGnkWqqghTc
+         OYfm4cL7Xjq+05OXLJYIqN/euuXu4xDzCclVq5F+Z1iSidnMxuzYekiXDD4GcuHT/G6s
+         jFPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738943807; x=1739548607;
+        d=1e100.net; s=20230601; t=1738943809; x=1739548609;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lniNSUn6162O5PDdXje7jyIZ/reSQ42wbs2b2Ye2MZA=;
-        b=r8dENYMPt3f5iliGnNWMgx/irTjO6Zb2PhSitcWQUK0OjnvCsOoLTTyC4l5VQKecbS
-         umun+KukAAk3V+YE2LED3LGAnuHOkeGtOCgVOyIuhak0g2hDw1yyl8YhgmvFdgGqeCCy
-         RsL6CE+XiyCy0p9gQAhxHQxPQlSKEKd1DtLnisRQv+Wir3b/I4hyeSgX/2hZsOHiIU8V
-         HJjRwgKZJaTRZJ4ipeAxFiY1dqJDqTg6trQz4ms+I9ZLTQf3iWjTbclnLMZ/InrY5Xbw
-         yd0Su+QMsLS8AyhXsguFpr7pRLjbYVGRtnOb8lyLOpa3dVs61RLNbCJ4IsEfZfEFiLdG
-         34DA==
-X-Forwarded-Encrypted: i=1; AJvYcCVtR3PYXhMHPuBDpdSY9atEMbdpvm2KfcKhWrkL83oIVWSUtE5gDCW5qwZoI7wzfOaliS47P97To1wKfsnAjtKLeA==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2p/kCYMb0lchh11sjioqP7vsA6GN7bYVcMGvonWN2LYZhh9VP
-	mrvsrLQKo6amwykCc6MAUElJpeOWlxcqSKkhBfWZf78lpMIkP2br/PJUrUd02sE=
-X-Gm-Gg: ASbGncvIImeFvtTU/yuWYI5CrSRjOx3KGlb6vD7LoVwlwFxNfOZZuBesi3i3IGcwK5X
-	0/f+/n2IEpbubx+d1/p5C0s6utCGK+u+WI+JAkoTmLGgd0BAfApLrUn84LT96eIdhc3P7idIhOy
-	OSOM6aOoqKHDSfEKqok3dGrflx6vay8+FTnQYCgrgK0+NlZWkvN25tO7id5mE4VkH47AVx/zElg
-	ky/CH+/hg1TdjQ7roBLGJpB0U4NGofNpx1JnNFhqO8E7MSXscuOogXPymmX4qx5NFpsYb6C3WEj
-	csvzhYFy6iw6CSLd4eONNWnxFXDYEgTkhOLNu6Jn2A6V8BQZMylt/gaeDfa9ebiBSu2UrDo=
-X-Google-Smtp-Source: AGHT+IHi8rK+1gm4ZytmYt85/APeyehBbsrxKAffiG9SmO0U6k2MkOEmbX+kpklIstUrpkqeHLkOtg==
-X-Received: by 2002:a05:6000:18af:b0:38d:cbc2:29c3 with SMTP id ffacd0b85a97d-38dcbc2310fmr1909394f8f.33.1738943807281;
+        bh=Z3dWOoof3Xw/2OHGbRzCfoAg04gz2ejhFyHKSGYevMQ=;
+        b=VBZJif0QzZfHWmUqhepQYlZVFa1AMCuFen3RtoP0xphw5fJNXK8O4p/YDPT4BF1iMG
+         /q37UcTBf6aChZRpQfz4Kf3+HsM72faF9uzbo4nt4yU/bWbHlA6pCaqAAsmaHXlbAyJ3
+         OxDf0kLcis8J5XrZn/92kIUQHtEvT3z8Y4dQO8kfUmZAG8ODj4TLUegAqSHGTLEL3qqE
+         Gqk07S6dDWZ93o5pNo79extttIBLr6Z1o2zoPg9c7gelaJ8owonD/NHYh1FCi5fRNuTB
+         f/loH4hwNt2N5okU7qz6QsIYTjMYV+8y7Rnzim5SByo61xyOUtiN2vn6JZofTbMj4OEr
+         8Uvg==
+X-Forwarded-Encrypted: i=1; AJvYcCWxF4Ck94gJ1SGoyuicTxc3xsvfOFUwzD2Uuuhlm4wxnveWKqJLatuwggs5gMwMcTeGEIv5qL+pJb90Irb7Cd59vw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YytX6wBnU/I7dicl75cce4u3Gny9hnbEGWD+W9wYBsEwK3rCk/H
+	qlsuy9eMUNt1AdG/1/g1C95kp095cdgj7XcBuqySd+Xz7PQgt0jGizGvejb/Qh0=
+X-Gm-Gg: ASbGncsaifgk05sz4l3iog85pVe/dC2t4w+YrhJgcCLPvB/MOzQKe04U9+pPIYgmhFJ
+	HzHBYKrnxwmm89Rsvn5iqHjWwgBHMoyI5/mQaQQh/u/H5TU/Gd6+CvS06lX0mPXlt1CQUv9ITgG
+	9bzIsq6WfN6VyQ8iJWb6dAYa7A9h46C3mTE1xj4sMuPXqaYrR2UTE/G2Doh1JA6BeRZnK+/9SkQ
+	17t2wvwPgUq+E11hvn1j6f46GpKoOEYpdNgndQJvLudKJMODk6pegdf6AGs9YEbN9dIDwxJEmL/
+	VeGt61P1mRLUoAvStTtWA4wdKvfSbw0xodHjOFFJxHInMgmff0WuF0vn2C6twGJgGmJpbko=
+X-Google-Smtp-Source: AGHT+IHi7d+qk0bKlKvNvtjux0Ae8ZnowO4Boe9Bx+bhD4ZewXY1Ic6zG9Cm+U7d/qkhyLu5UCqFyg==
+X-Received: by 2002:a5d:6c66:0:b0:38c:2745:2dd8 with SMTP id ffacd0b85a97d-38dc9138771mr2372188f8f.37.1738943807901;
         Fri, 07 Feb 2025 07:56:47 -0800 (PST)
 Received: from ta2.c.googlers.com (169.178.77.34.bc.googleusercontent.com. [34.77.178.169])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc09fc2d9sm4197507f8f.6.2025.02.07.07.56.46
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dc09fc2d9sm4197507f8f.6.2025.02.07.07.56.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Feb 2025 07:56:46 -0800 (PST)
+        Fri, 07 Feb 2025 07:56:47 -0800 (PST)
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Fri, 07 Feb 2025 15:56:44 +0000
-Subject: [PATCH v4 2/4] arm64: dts: exynos: gs101: add AP to APM mailbox
- node
+Date: Fri, 07 Feb 2025 15:56:45 +0000
+Subject: [PATCH v4 3/4] arm64: dts: exynos: gs101: add ACPM protocol node
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-gs101-acpm-dt-v4-2-230ba8663a2d@linaro.org>
+Message-Id: <20250207-gs101-acpm-dt-v4-3-230ba8663a2d@linaro.org>
 References: <20250207-gs101-acpm-dt-v4-0-230ba8663a2d@linaro.org>
 In-Reply-To: <20250207-gs101-acpm-dt-v4-0-230ba8663a2d@linaro.org>
 To: Peter Griffin <peter.griffin@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -99,46 +98,42 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
  Jassi Brar <jassisinghbrar@gmail.com>, 
  Tudor Ambarus <tudor.ambarus@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1738943805; l=1282;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1738943805; l=954;
  i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=pYolsvKglKk9Jl9llzXxb7ekkcAK7LRlmIETEtDeUxQ=;
- b=HnSbYgmTkBKh9ZEimff9jE5hKC0fcClxXqEW2F9dsY5a0SY6Ul5MRx0rc8W8ndKqIF0ff2xTI
- /aGvzXwNFs8Cwta+kPFRA9Oe+eKp77wt/V2H2oPsj0NJgHfzj8zwQzR
+ bh=LqA0TnpriX6BG6wFMMTRQwjG15Mb4xWdLzul4jT3ckw=;
+ b=DWBaLZg5xR+Gle2U+lAVVq/Oxzacpni3Vbk3bF4m1w4g94PpWCXFJwkjJtFjtSG95lUHggbvy
+ nnlqQIL2mvZBPYsiLt7N1rZwTwLCF/sYW5PVuaCUUv14pSHoqCEgTg3
 X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
  pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
-GS101 has 14 mailbox controllers. Add the AP to APM mailbox node.
-
-Mailbox controllers have a shared register that can be used for passing
-the mailbox messages. The AP to APM mailbox controller is used just as a
-doorbell mechanism. It raises interrupt to the firmware after the mailbox
-message has been written to SRAM where the TX/RX rings are defined.
+Add the ACPM protocol node. ACPM protocol provides interface for all
+the client drivers making use of the features offered by the
+Active Power Management (APM) module.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index 798ed7b4c4c6..25ba262e3b3c 100644
+index 25ba262e3b3c..cc97c08fa9b2 100644
 --- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
 +++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -1448,6 +1448,15 @@ wakeup-interrupt-controller {
- 			};
- 		};
+@@ -277,6 +277,14 @@ apm_sram: sram@2039000 {
+ 		ranges = <0x0 0x0 0x2039000 0x40000>;
+ 	};
  
-+		ap2apm_mailbox: mailbox@17610000 {
-+			compatible = "google,gs101-mbox";
-+			reg = <0x17610000 0x1000>;
-+			clocks = <&cmu_apm CLK_GOUT_APM_MAILBOX_APM_AP_PCLK>;
-+			clock-names = "pclk";
-+			interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH 0>;
-+			#mbox-cells = <0>;
++	firmware {
++		acpm_ipc: power-management {
++			compatible = "google,gs101-acpm-ipc";
++			mboxes = <&ap2apm_mailbox>;
++			shmem = <&apm_sram>;
 +		};
++	};
 +
- 		pinctrl_gsactrl: pinctrl@17940000 {
- 			compatible = "google,gs101-pinctrl";
- 			reg = <0x17940000 0x00001000>;
+ 	soc: soc@0 {
+ 		compatible = "simple-bus";
+ 		#address-cells = <1>;
 
 -- 
 2.48.1.502.g6dc24dfdaf-goog
