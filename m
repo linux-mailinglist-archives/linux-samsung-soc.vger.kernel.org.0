@@ -1,90 +1,46 @@
-Return-Path: <linux-samsung-soc+bounces-6876-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6878-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49A53A38052
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 11:37:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 199AAA38C02
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 20:09:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FC901884FF9
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 10:37:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D33183B43F4
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 19:07:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D31217F5C;
-	Mon, 17 Feb 2025 10:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC23223718F;
+	Mon, 17 Feb 2025 19:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TbBm2FV9"
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="zLynZRs8"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD33215F68
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 10:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B18B2376EC
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 19:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739788608; cv=none; b=o1oADAhx3KXJczjbw0EFbPjl9aPUi1dE/xouGtmlZ0saKjjKzZHQwH7McDuBiqxGduE5CQiPAkv5P4u7c+41apm32MWPFu4WZeyRwYIq8pSqLj0rCsYakSC0nSg2fulmJPIC+GaSYdN7SgYneOyaoHrZnVTJMh83d5LPY8BPJGs=
+	t=1739819204; cv=none; b=E7LW40bVoY/9IMQK3Du1Bs2EU788Zsx5wEbzYtC05AsvUF00pNiwE8uH+TwJ4uGtDkcTKz0XWhuwhU8Yw2LsQdQOf+F6WG/N1GWdrRBaVrKCS/Omp8wawDsA1VCcbLA3j8iKgzos6MCZQ+hQCoDi2JT9/ROr5i6UiNiXBgeyWr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739788608; c=relaxed/simple;
-	bh=IW4H/RuddXNAIg/Kohxj7t5Rh3v9x4e3eNtlLWHAcwY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=NifQbDKHv9VKdrefLusSw3NFOt9OAkWdReh/DmUufYX2kpp3+ob3dUOXB78Jm6RcwCSYeyExv/3cZqsuCEAh5g5+VlO6oLwUKUOh+qF0HZRndI1x8qyO0Mz1qlQ6p/ZsEHkaaliMCR9+tW0+iJ1timUcq7JuQOzLUAAnjOBRp/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TbBm2FV9; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5dbe706f94fso604925a12.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 02:36:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739788605; x=1740393405; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=odA1UbFuInXahoaueYcnkzROOat5/muuif/VvbnJ9j0=;
-        b=TbBm2FV984Gr4efE37lEdExnawWKrn8Ob5J/PbjgoDoTpuh+uQW+Q9dewFSnqz/K6a
-         uVUPT5IaqBoktWQyVKbQDEPXo8IlKDlpzdc9fY2Fo4iK3HKUHfh7J0kThEjhgUwYCix5
-         VR1DVe3/TRUdxUl1sH5X6DhPwzJjZuHpD3rcdOuubuSyJCX4tcyKWGphdTanQURfjyGk
-         7m26TYxDf0N26nRvITzn8opNYjai9p6Ln87L6TqNFMsRNqqeEMHrlk7aWsZ45VXJv3zE
-         5hLEngYOLfA+xDftmOLFB0ek2t4MTJLtraWOeGGs0l36P9H1S3UyAVWvsxzN2wm3lvs1
-         HSbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739788605; x=1740393405;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=odA1UbFuInXahoaueYcnkzROOat5/muuif/VvbnJ9j0=;
-        b=r39e/r6W6PSHya9WmZcfnh5+ZhfhFVP85TvHoqr3qM7FWHRinf39xPp0L9uNGjb9lY
-         Gpd803O9zM79U/+JeWu7GYgnmLW1xjPBqpjVhFLhFPibDMrS+FtqBTdW34SCSNVz31ID
-         Qhz4A8VHoLH4fwzrjvChmyEX90ThydheurMQe35QFBjD71i84A9NFfiIMB5RPzv2Z8hR
-         SwfSSFpC0ypRCiz3yCdgb7DTyu0/2M9HA+XCY1lV3d6j7CrXUNQGAflwLd+o0PLU6sfH
-         Oq1+2m8P5AfMgWmYoKzj0S9e5p8F4MbNRLcM9+2dZZxo/CB0TMJO+eK9NEfUcaO0u8Z6
-         f7Gw==
-X-Forwarded-Encrypted: i=1; AJvYcCXN+5cGsP3DDk4FG+jNE3KNKTw52uXWeL3E1y2HFHbFncdnUHzvrAPZABfFCVrI1KNk5Umwc2J0aX9OdlybL6xepA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPG8YQM4fNMfd57gMT89nBZTO4B1isvWE0CTlTh148xBBKfzjw
-	DzCp/A7f2nCX1Qdku+SyzfOe7NWNJi0reVGNvBfUU6V4ZH9pJypQD6WelwaHhS8=
-X-Gm-Gg: ASbGncsgvTua8Wvj0UoIOH/Ku1gziq3eg28MtqfSGN/u5iqxY70GeE7JkuSUdiwaHE4
-	p52vPO2vYtDWjgqVFglee/JvqWuST/kwznCsme9vcHCFkWryOhlhQ1mNQaxMdavQfhkPie3m04N
-	R4mh1+qJKh8bPFwPd96a7s/tHuuAVJw3quUj4j6V+NuqGO2zaYahnrHpsRsL/U3B1O6WILEzV9f
-	UwWlAxPnYKaPVEBDsjSa4TQB09zAD7s+dVgIs9XLhg6fAaMfwVhNn+DKxSsv+QgGdLr87wqLWZh
-	pZ17+Pu9XI65WYmmWpsFGLd/hU/+480=
-X-Google-Smtp-Source: AGHT+IGLK9kay2HyRqmw0YxEsi1Oq3aDAG9+iUL0UrTRPcqhtxeRK3H6GewyV/X09yl8wLNmhln4kw==
-X-Received: by 2002:a05:6402:5254:b0:5de:b604:355e with SMTP id 4fb4d7f45d1cf-5e0361b8ac9mr2830518a12.8.1739788605299;
-        Mon, 17 Feb 2025 02:36:45 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.206.225])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb961594absm230383566b.111.2025.02.17.02.36.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 02:36:44 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, 
- Colin Ian King <colin.i.king@gmail.com>
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250217091341.297401-1-colin.i.king@gmail.com>
-References: <20250217091341.297401-1-colin.i.king@gmail.com>
-Subject: Re: [PATCH][next] firmware: Exynos ACPM: Fix spelling mistake
- "Faile" -> "Failed"
-Message-Id: <173978860321.144850.18127886620209008962.b4-ty@linaro.org>
-Date: Mon, 17 Feb 2025 11:36:43 +0100
+	s=arc-20240116; t=1739819204; c=relaxed/simple;
+	bh=3ay3/NpwCM4uEJeiShAcGmbiyZhukhe5T732PsCDCKY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=o3Qqm7Rm+3M3LA3SnNLthvlhSP+yEmhs4m4x9VAZP8nuAlQUbij8MkX7+Ry5f3dwGGCLFc6pbNHLkhgZ9KWKmRd0s+0uf+tW4s5B5HjDdP3vG4+IQjw0mxYIt5B0XMG8NapMFPu/ojh8garxQhSXoRMKdKI1NdHRLTdhUG0s7Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=zLynZRs8; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=zLynZRs8Q49O7Lsgn2PdPf2DNKCgae1hip94DaxzczZGDo41KfW0zZnJ6usqsU14O7mywRgAYOTHYhcISxezMbCYsY+zd1eZDKQfOpSVRJsy5q6lGBB92CtG8x+v25FgYV86XCQ1RVW+RDQ2fFT9XjxeaH15UY0ZBhxPhNq4WZkCY1lr2HwEvywuqrWz5/GSlW99D/sXHzj98/LSmWP7Uly9wEODTmNIKkN8PuZuBQDk48f8QGnl/wDdBEKZEz+m/8nXAWqB9k0rakpM5v93iw/Y/pX2+tMA6QzwZZkDVwC4AfiWZ8ln1Dim3lTeLt5UWXbaMYiOQO3Ih9f804QXjw==; s=purelymail3; d=purelymail.com; v=1; bh=3ay3/NpwCM4uEJeiShAcGmbiyZhukhe5T732PsCDCKY=; h=Feedback-ID:Received:From:Subject:Date:To;
+Feedback-ID: 68247:10037:null:purelymail
+X-Pm-Original-To: linux-samsung-soc@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1350358103;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 17 Feb 2025 19:05:51 +0000 (UTC)
+From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+Subject: [PATCH 0/2] watchdog: Exynos990 WDT enablement
+Date: Mon, 17 Feb 2025 20:05:18 +0100
+Message-Id: <20250217-exynos990-wdt-v1-0-9b49df5256b0@mentallysanemainliners.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -93,21 +49,48 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG6Is2cC/x3MPQqAMAxA4atIZgtpoUi8ijiITTVLlUb8QXp3i
+ +M3vPeCchZW6JsXMp+isqUK2zYwr1Na2EioBofOo7Od4ftJmxKhucJhkMki8uwjEdRmzxzl/n/
+ DWMoHR/wo9l8AAAA=
+X-Change-ID: 20250217-exynos990-wdt-0e9100ec5f99
+To: Wim Van Sebroeck <wim@linux-watchdog.org>, 
+ Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-watchdog@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ Igor Belwon <igor.belwon@mentallysanemainliners.org>
 X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739819149; l=885;
+ i=igor.belwon@mentallysanemainliners.org; s=20241206;
+ h=from:subject:message-id; bh=3ay3/NpwCM4uEJeiShAcGmbiyZhukhe5T732PsCDCKY=;
+ b=yLF3P0Avq7SlNcQxFp+m8USAXVOXTw9vvfL4PZpeHmmhG37wVGZnjHZFzYwZJ0VEyIKLKLs9v
+ HNrcGtLa/GhB/i6Q1QS0ZZhpgCm1lio1+Zr093rk8cWjCMqHS4OHyG6
+X-Developer-Key: i=igor.belwon@mentallysanemainliners.org; a=ed25519;
+ pk=qKAuSTWKTaGQM0vwBxV0p6hPKMN4vh0CwZ+bozrG5lY=
 
+Hi all!
+This series enables the two clusters of the Exynos990 watchdog timer
+to be used. Weirdly enough, this SoC is missing the cl1 cluster, it has
+the cl0 cluster and then jumps over to cl2. As such, new cluster index
+code has been added to accomodate this oddity.
 
-On Mon, 17 Feb 2025 09:13:41 +0000, Colin Ian King wrote:
-> There is a spelling mistake in a dev_err_probe message. Fix it.
-> 
-> 
+Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+---
+Igor Belwon (2):
+      dt-bindings: watchdog: samsung-wdt: Add exynos990-wdt compatible
+      watchdog: s3c2410_wdt: Add exynos990-wdt compatible data
 
-Applied, thanks!
-
-[1/1] firmware: Exynos ACPM: Fix spelling mistake "Faile" -> "Failed"
-      https://git.kernel.org/krzk/linux/c/8c47b744b49f61604a2c0b64453bd410ee0f3f08
+ .../devicetree/bindings/watchdog/samsung-wdt.yaml  |  9 +++--
+ drivers/watchdog/s3c2410_wdt.c                     | 39 +++++++++++++++++++++-
+ 2 files changed, 44 insertions(+), 4 deletions(-)
+---
+base-commit: 253c82b3a2cec22bf9db65645f934fbe095899a3
+change-id: 20250217-exynos990-wdt-0e9100ec5f99
 
 Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Igor Belwon <igor.belwon@mentallysanemainliners.org>
 
 
