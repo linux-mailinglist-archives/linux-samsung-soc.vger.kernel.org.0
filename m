@@ -1,46 +1,46 @@
-Return-Path: <linux-samsung-soc+bounces-6885-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6887-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61B57A38E1D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 22:35:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD31CA38E14
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 22:33:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8D4B16C3DA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 21:33:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76E7B18921AA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 21:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8DE51AF0B0;
-	Mon, 17 Feb 2025 21:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 964011AF0CB;
+	Mon, 17 Feb 2025 21:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="g0p+iRUu"
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="SLWwuPCU"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161021ACEB7
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 21:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44991AF0A7
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 21:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739827963; cv=none; b=PsI+Yc5/cwfI5FD/PbZYAl7bkK/PYlGgGFhUlO5uK763WwM5vno88mvvGIEXiqnMQZupaeWPRwpO9EcSq6je9VeajW4Miwmu17tGL+JSlPwi0QEC9FQcvhjmvx2UExD64FSoOmIWWZ14+vrrAL21+/rjf9Dqg4nr99OZ7cnG8jY=
+	t=1739827965; cv=none; b=t5V/+mHBiHj82ylUz9ysD4v0KksThc7UV4ez2ywTG8O+wsJ5FN+oh4e2D0DRbutSHzwyjtOynmdwi7J6H0ciObjMzn6lVlKn+/Ck8bm00uq/3yTzuYnlIVPGSslSXgCpRoijeDRB6f/OTimfubIOd4hwTpXHv5edV1WXiJ54OxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739827963; c=relaxed/simple;
-	bh=qgDOk7ldMzPb3j2kj6nz6o9DIKmpFktmmEBU5U0AflM=;
+	s=arc-20240116; t=1739827965; c=relaxed/simple;
+	bh=RujWy5FU1WCa/8rts2CXrRAZV0s0wmf4pJU9jEL4iK0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qHMBeOLLFbsSwCXyo5Zgn0d8XsrNy2uEmoLDKcOqKy81mK6+t3nUDuy3WY+GhPfxKQbrOTRB5+gSqe5UkVy9XlpVHfVCJDHneSBp13vlkc0NVPAAm5ohtJyzGFvXK/l2CEBi6xbSQpvbI9VTs0sntuF9V522JrBraf5ynlg9Nek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=g0p+iRUu; arc=none smtp.client-ip=34.202.193.197
+	 In-Reply-To:To:Cc; b=rxqVFToXrA6exG74C7GS9nVQw53WQv1OxcIeDDGVnsZsli78Y7p7xz6UN+bwJOwf7bQVWhyJX9kxYThNdtw9KJMDXmvJPUyYFBGZrebOGdsjv5QmnvqbdKVgGg0TzcE0WgTCFILt6TNGjIPGargSjIWtRbCebSHquX2o/U+wf4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=SLWwuPCU; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=g0p+iRUuoZnUVXfktRhis8fC9qRVU18v/gVPXqud0rbn3QgjEocpiPUXkSI+F0xE30+KXefDMrHrP7RLEofcBD3ZZB9Ji57Y1px3d+dUtJSVA9h5rkVRrj7zT8hSbK5vqMXCchIM9US3MvGor1TkRTn/GQcivdNNW+afm1q5qnaXvAkj6J5qjCzojUL4VpzBMfpMjchf7CiGFNrW0fuMVZsPXFKOTxV38ONnNNfffq0mC6yZPugwXK4myY81d+2yLnS9QfFB65IUMfIy77R8m9xa6g+o0jKCdm4X6HubE5F7RtwCNbARg+SfiNT9pA9iLyBeXcOScANRyVZJ2QmKNg==; s=purelymail3; d=purelymail.com; v=1; bh=qgDOk7ldMzPb3j2kj6nz6o9DIKmpFktmmEBU5U0AflM=; h=Feedback-ID:Received:From:Date:Subject:To;
+DKIM-Signature: a=rsa-sha256; b=SLWwuPCUbrEIR1Wrs83suedPkUIgjYtCpYfJ2+OVRW1VLYaRF7KCdEfwovjAMPsjGiX1zNLPHSUVxHWDKqWEhw5LWvVOMOXV2f6UCvMQ4a3Z70Hb3eKckGsUNQTyj1dM4/yO+VAK+3dXdEds4G4oXOJ0Nbo0iHRn2RdXQNjkcpi9YfhGL18bhjHksGPSAlFSwFES26rCUTc+wC1wV1ehXvKiLkcYMYrIvfR2iROM3f8Lahz/9BSxl+fScDaAydxq5l1eYqQ0HqLiP6Yh53LdLs0q00YNyZoFr+m3rTU9MAVZDGXuaaecmMTOQE0EB0zH/5PDBhCe+OV/qCClUYJgyA==; s=purelymail3; d=purelymail.com; v=1; bh=RujWy5FU1WCa/8rts2CXrRAZV0s0wmf4pJU9jEL4iK0=; h=Feedback-ID:Received:From:Date:Subject:To;
 Feedback-ID: 68247:10037:null:purelymail
 X-Pm-Original-To: linux-samsung-soc@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 42194286;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 17 Feb 2025 21:32:34 +0000 (UTC)
+          Mon, 17 Feb 2025 21:32:35 +0000 (UTC)
 From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
-Date: Mon, 17 Feb 2025 22:32:03 +0100
-Subject: [PATCH 1/5] arm64: dts: exynos990: Enable watchdog timer
+Date: Mon, 17 Feb 2025 22:32:04 +0100
+Subject: [PATCH 2/5] arm64: dts: exynos990: Add USB nodes
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250217-exynos990-dt-changes-febuary-v1-1-99935218cbf4@mentallysanemainliners.org>
+Message-Id: <20250217-exynos990-dt-changes-febuary-v1-2-99935218cbf4@mentallysanemainliners.org>
 References: <20250217-exynos990-dt-changes-febuary-v1-0-99935218cbf4@mentallysanemainliners.org>
 In-Reply-To: <20250217-exynos990-dt-changes-febuary-v1-0-99935218cbf4@mentallysanemainliners.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -58,57 +58,69 @@ Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Igor Belwon <igor.belwon@mentallysanemainliners.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1739827951; l=1586;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1739827951; l=1950;
  i=igor.belwon@mentallysanemainliners.org; s=20241206;
- h=from:subject:message-id; bh=qgDOk7ldMzPb3j2kj6nz6o9DIKmpFktmmEBU5U0AflM=;
- b=jTqHwUcADANqg3+1rFaDQe65F8DeCfF1Dws5Ykg64WRdK/bdE6bLM1a4IZDzGzoEbTV/AV053
- KbegePrAtyZCFyDRG+OmIjml7leUaHPjK6eI19wijLShxvTWfqDIeWx
+ h=from:subject:message-id; bh=RujWy5FU1WCa/8rts2CXrRAZV0s0wmf4pJU9jEL4iK0=;
+ b=y68Za606iO3ebmQoVh25l7jjW2Yb/6o2h0KljE4oZEhNbhTn+31w6h9WQ0MZxplRsMxMMlLvK
+ d6UC1vHfSgDAobwTzh20xbWR2tyD6T0deWvmRRXW6/HnEBbd83tsrD/
 X-Developer-Key: i=igor.belwon@mentallysanemainliners.org; a=ed25519;
  pk=qKAuSTWKTaGQM0vwBxV0p6hPKMN4vh0CwZ+bozrG5lY=
 
-Enable the two watchdog timer clusters (cl0, cl2) present
-on the Exynos990 SoC.
+Add USB controller and USB PHY controller nodes for use in
+the Exynos990 SoC.
+
+This SoC supports USB full-speed, high-speed and super-speed modes.
+
+Due to the inability to test PIPE3, USB super-speed is not enabled, and
+the USB PHY is only configured for UTMI+ operation for now.
 
 Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
 ---
- arch/arm64/boot/dts/exynos/exynos990.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ arch/arm64/boot/dts/exynos/exynos990.dtsi | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/exynos/exynos990.dtsi b/arch/arm64/boot/dts/exynos/exynos990.dtsi
-index dd7f99f51a75412f5c3b91c3425a63652546fa5e..4446a1a54ba2de56879353c9c4a898b1d697fc13 100644
+index 4446a1a54ba2de56879353c9c4a898b1d697fc13..b5239472be40a164d496ca4564f5270132012c0e 100644
 --- a/arch/arm64/boot/dts/exynos/exynos990.dtsi
 +++ b/arch/arm64/boot/dts/exynos/exynos990.dtsi
-@@ -211,6 +211,30 @@ timer@10040000 {
- 				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>;
+@@ -278,6 +278,37 @@ cmu_hsi0: clock-controller@10a00000 {
+ 				      "dpgtc";
  		};
  
-+		watchdog_cl0: watchdog@10050000 {
-+			compatible = "samsung,exynos990-wdt";
-+			reg = <0x10050000 0x100>;
-+			interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&cmu_peris CLK_GOUT_PERIS_WDT_CLUSTER0_PCLK>,
-+				 <&oscclk>;
-+			clock-names = "watchdog",
-+				      "watchdog_src";
-+			samsung,syscon-phandle = <&pmu_system_controller>;
-+			samsung,cluster-index = <0>;
++		usbdrd: usb@10e00000 {
++			compatible = "samsung,exynos990-dwusb3",
++				     "samsung,exynos850-dwusb3";
++			ranges = <0x0 0x10e00000 0x10000>;
++			clocks = <&cmu_hsi0 CLK_GOUT_HSI0_USB31DRD_BUS_CLK_EARLY>,
++				 <&cmu_hsi0 CLK_GOUT_HSI0_USB31DRD_USB31DRD_REF_CLK_40>;
++			clock-names = "bus_early", "ref";
++			#address-cells = <1>;
++			#size-cells = <1>;
++			status = "disabled";
++
++			usbdrd_dwc3: usb@0 {
++				compatible = "snps,dwc3";
++				reg = <0x0 0x10000>;
++				interrupts = <GIC_SPI 310 IRQ_TYPE_LEVEL_HIGH>;
++				phys = <&usbdrd_phy 0>;
++				phy-names = "usb2-phy";
++			};
 +		};
 +
-+		watchdog_cl2: watchdog@10060000 {
-+			compatible = "samsung,exynos990-wdt";
-+			reg = <0x10060000 0x100>;
-+			interrupts = <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&cmu_peris CLK_GOUT_PERIS_WDT_CLUSTER2_PCLK>,
++		usbdrd_phy: phy@10c00000 {
++			compatible = "samsung,exynos990-usbdrd-phy";
++			reg = <0x10c00000 0x100>;
++			clocks = <&cmu_hsi0 CLK_GOUT_HSI0_USB31DRD_ACLK_PHYCTRL>,
 +				 <&oscclk>;
-+			clock-names = "watchdog",
-+				      "watchdog_src";
-+			samsung,syscon-phandle = <&pmu_system_controller>;
-+			samsung,cluster-index = <2>;
++			clock-names = "phy", "ref";
++			samsung,pmu-syscon = <&pmu_system_controller>;
++			#phy-cells = <1>;
++			status = "disabled";
 +		};
 +
- 		gic: interrupt-controller@10101000 {
- 			compatible = "arm,gic-400";
- 			reg = <0x10101000 0x1000>,
+ 		pinctrl_hsi1: pinctrl@13040000 {
+ 			compatible = "samsung,exynos990-pinctrl";
+ 			reg = <0x13040000 0x1000>;
 
 -- 
 2.47.2
