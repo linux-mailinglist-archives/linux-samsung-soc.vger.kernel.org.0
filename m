@@ -1,134 +1,117 @@
-Return-Path: <linux-samsung-soc+bounces-6871-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-6873-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0368FA37DD0
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 10:06:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EFD9A37E28
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 10:14:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D3F418875EB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 09:05:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB879188A44C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Feb 2025 09:14:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7F11A23AE;
-	Mon, 17 Feb 2025 09:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8B551DBB19;
+	Mon, 17 Feb 2025 09:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+4DpyrX"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB9116F282
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Feb 2025 09:05:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1616D1DA10C;
+	Mon, 17 Feb 2025 09:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739783143; cv=none; b=qlcqqDTvPUz+hrXwZLFh+Snx3jJKAuVs9VUFU+HVl6JN34L9KVW9+sDI5NYMhqwW17MUwpOFrbY4MRUsBucrLq091RlF1V9WKQXCKLloEwa8fGiPAmZ/+hKoZdO+PComGH7f5mGDJ8rglymd0Xlx1y0z+dRbIUt8O8GcKdhMCDc=
+	t=1739783652; cv=none; b=KXm/p3Jx8rGkTQe0vdtR6rNyjtziXqNGH8GVKotjDxektq55Zu6SbPd2dknwRuZYsstWsyNESbCE2ZkHn+DS2UpadNS0L4qVmjIF+8R1cuM3z3SnJTVOlq5r5lYBQZI3A6nRUgXBb8uqHGzA2qB1dIk9HElf0jvFV5aL31cCnlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739783143; c=relaxed/simple;
-	bh=q4F+6YvDAJP+BZmWnPl5utEZle0sY5L3t/phe5BPwVA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Hp9kH3c9e/8VD5Xgodkaupn9XyZ8DESPK2DYYg/rwEyVkPCn3bG4alUVHjF6+qpgV69MUpRmnV0a3bDv7PRH2PO+D8OxSaU7OaZ634Mbo7Ungiq4w5KaVG4Lr5cV3AF3dOlb+1Xdo6hvTic2jZyVjLZKwJzwOzWSFYrccpbjfNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tjx40-0006c0-MJ; Mon, 17 Feb 2025 10:05:16 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tjx3z-001NXE-01;
-	Mon, 17 Feb 2025 10:05:15 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tjx3y-0003Vh-30;
-	Mon, 17 Feb 2025 10:05:14 +0100
-Message-ID: <fd2a9b15865a3e8f34608eb1b09948e5567083e2.camel@pengutronix.de>
-Subject: Re: [PATCH v1 3/4] phy: samsung: add Exynos2200 SNPS eUSB2 driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>, Vinod Koul
- <vkoul@kernel.org>,  Kishon Vijay Abraham I <kishon@kernel.org>, Rob
- Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
- Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-  linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-Date: Mon, 17 Feb 2025 10:05:14 +0100
-In-Reply-To: <20250215122409.162810-4-ivo.ivanov.ivanov1@gmail.com>
-References: <20250215122409.162810-1-ivo.ivanov.ivanov1@gmail.com>
-	 <20250215122409.162810-4-ivo.ivanov.ivanov1@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1739783652; c=relaxed/simple;
+	bh=adj7j+EjjOwpD5z9gBch+KpoPFmQVE7Ilh11JvBi4Z4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gqg6cAfXtQkLHiThvgnD9cS8CoEjJf+zXJ9IY94QM1qVsmMZ2yvK8hawXwIgQ4VFpbEPwMhBFEiKfhUlTkbdv6sieKIFZrnvULV6MYSzLqKXfNRXv68yG/7SpSe9/dcFsblQPkURPnt2elLTbA53cbsN0cqSfsAoJcGu0R90qU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V+4DpyrX; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4398c8c8b2cso1709905e9.2;
+        Mon, 17 Feb 2025 01:14:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739783649; x=1740388449; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E2/5+Y7Ff+7jEsKltKVHAC7YhlbKvxCsRgTAXGknrcs=;
+        b=V+4DpyrXvDzqYrZRnEhHeWslaxAiYS0SacACZmvDxnohfkJo70BLvCfkwKDoIMUOmh
+         vJDcm2yhBIld8SiMWm1hJQt0xPMiIb0I1w96NzsAnHjwjRb8dDJow6LPaAs+1M/jKOTs
+         jR2ARS/KyFMQbgVTLnAKjTDgdBSd+NpRWSox65/3gTKS45D5GfWrORKDEZeZKlx27svA
+         lPv+cO4l7DK8tMQuQ1K4Alz3RmZM64Y4WTds1c/mIGfaZ+pg7uRq1z93yjCuiqprtkHZ
+         OAI1a49R0dSu3ONxi2lykRaptHJSZkfxtB3x+OIg6C4sr74iPGSlyoayn3RhFCeC9eeG
+         0QAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739783649; x=1740388449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E2/5+Y7Ff+7jEsKltKVHAC7YhlbKvxCsRgTAXGknrcs=;
+        b=trjDjtIt0vJwquPhn2hsedG03KcMkACYxQ7l2rEILtePZYQOL6V35bsMq23mbwjkPp
+         lOgQnT1mQF0D9y2Cv67Wlzx65k7Uyro3eQr2Rt8OsVnSPHVBmXnyXs4o+YRqy9EkO3wX
+         r1OxrNWozTP2+KA/d+EbRSAPBurnJxaWeQ4bw0tkxG4rmW61o3NUcRMPM6IRVayq2nRB
+         2yhInwW/BS189udI8NC2gIcaQCIf2phMVmMloB6cG0gWzlIpwt1bME3voi2YzJQdWev9
+         UBYRPPhlvTm8nDxqqIe5HBY8f3PRQ/SfMCh6EikDkFDrwxx0ZveffiHc/1SC4ZgqzrhT
+         opXw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSzWdCnIJssI63FjrSrHv743/WqdI0aAtz9MQqp+NMXDRR1vd6EDWt8GxnVNbHk3FEbg27YKKUywqDXA332n4Ejrw=@vger.kernel.org, AJvYcCXZmZPrrZVgkLEWkO20Mh5f695VJEv9L+M2E/f7ZoH7nXLtZmLzgU2vW8mLUYZC5MPbmvuBZVAuo/Usp+s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGfTbXaMTQABsADqmygMyOgvNN+qONSV7pJBr6Itm0GrlsYUt+
+	Es9jeS75Apo+ZiP+KYuxwLuQlEhvda5xfjVZ436NU7r+IO5EF/OlJ6D6rZazats=
+X-Gm-Gg: ASbGncuN85K16aj80lovjn+3LEMofSlPQWFE4Bpaug1nLKJXGzgfcCpKrNvOlOgB7yC
+	fim62uvQpd0PouCUK64MT6Wh5moPyM0ankTI6ZJLIrWP8dRjtgFE8f5PMTyTe5e23VRzvk+pjNK
+	Lcf0x/ZjTwfgM++a4vqex0RIY6p28TuNef6KrTQxgar0gPdGKAe7+U9ntjPe1TaeTHWnfS9Mc+m
+	NtplJ11/Y3AVNIzg6IGI8lb3+eTmiuGxSXFcbmt5NAipQySF4k0T+Tf+D6VBDdrfSVSMBaDlqvP
+	QCirjoD05WSGa3LQ
+X-Google-Smtp-Source: AGHT+IG3olWzKxbZB7uXgl/e6AWRg54BTyf4+PSo5Rjh4NLRyEDUpv0Xq8U4vn8jjAa6cyj/4py8Ng==
+X-Received: by 2002:a05:600c:190f:b0:439:554f:f64f with SMTP id 5b1f17b1804b1-4396e5b9f88mr104227635e9.0.1739783649144;
+        Mon, 17 Feb 2025 01:14:09 -0800 (PST)
+Received: from localhost ([194.120.133.72])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-439618a9ab0sm114505545e9.35.2025.02.17.01.14.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2025 01:14:08 -0800 (PST)
+From: Colin Ian King <colin.i.king@gmail.com>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Cc: kernel-janitors@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH][next] firmware: Exynos ACPM: Fix spelling mistake "Faile" -> "Failed"
+Date: Mon, 17 Feb 2025 09:13:41 +0000
+Message-ID: <20250217091341.297401-1-colin.i.king@gmail.com>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Sa, 2025-02-15 at 14:24 +0200, Ivaylo Ivanov wrote:
-> The Exynos2200 SoC uses Synopsis eUSB2 PHY for USB 2.0. Add a new
-> driver for it.
->=20
-> eUSB2 on Exynos SoCs is usually paired alongside a USB PHY controller.
-> Currently the driver is modelled to take and enable/disable the usb phy
-> controller when needed.
->=20
-> The driver is based on information from downstream drivers.
->=20
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> ---
->  drivers/phy/samsung/Kconfig                   |  13 +
->  drivers/phy/samsung/Makefile                  |   1 +
->  .../phy/samsung/phy-exynos2200-snps-eusb2.c   | 351 ++++++++++++++++++
->  3 files changed, 365 insertions(+)
->  create mode 100644 drivers/phy/samsung/phy-exynos2200-snps-eusb2.c
->=20
-[...]
-> diff --git a/drivers/phy/samsung/phy-exynos2200-snps-eusb2.c b/drivers/ph=
-y/samsung/phy-exynos2200-snps-eusb2.c
-> new file mode 100644
-> index 000000000..ee6d96411
-> --- /dev/null
-> +++ b/drivers/phy/samsung/phy-exynos2200-snps-eusb2.c
-> @@ -0,0 +1,351 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2025, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/phy/phy.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regulator/consumer.h>
-> +#include <linux/reset.h>
+There is a spelling mistake in a dev_err_probe message. Fix it.
 
-Drop this ...
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+---
+ drivers/firmware/samsung/exynos-acpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[...]
-> +struct exynos2200_snps_eusb2_phy {
-> +	struct phy *phy;
-> +	void __iomem *base;
-> +
-> +	struct clk *ref_clk;
-> +	struct clk_bulk_data *clks;
-> +	const struct exynos2200_snps_eusb2_phy_drvdata *drv_data;
-> +	struct reset_control *phy_reset;
+diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
+index 1201380227e0..a85b2dbdd9f0 100644
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -620,7 +620,7 @@ static int acpm_probe(struct platform_device *pdev)
+ 	match_data = of_device_get_match_data(dev);
+ 	if (!match_data)
+ 		return dev_err_probe(dev, -EINVAL,
+-				     "Faile to get match data.\n");
++				     "Failed to get match data.\n");
+ 
+ 	acpm->shmem = acpm->sram_base + match_data->initdata_base;
+ 	acpm->dev = dev;
+-- 
+2.47.2
 
-... and this. It's never used.
-
-
-regards
-Philipp
 
