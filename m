@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-7012-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7013-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08D3FA40DD1
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Feb 2025 10:54:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5957AA40DED
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Feb 2025 10:57:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A539B7A93FD
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Feb 2025 09:53:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8A02189899E
+	for <lists+linux-samsung-soc@lfdr.de>; Sun, 23 Feb 2025 09:57:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75D3F204C27;
-	Sun, 23 Feb 2025 09:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E90820371B;
+	Sun, 23 Feb 2025 09:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ApoVHDqI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SWC24kSQ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A9F204C17;
-	Sun, 23 Feb 2025 09:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37561C863A;
+	Sun, 23 Feb 2025 09:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740304474; cv=none; b=SwpLh+cKr+CveP0+4kn/092TDep9PkjgC9ZVx6lEeaXsjfjeC76RRdplx4wXyB8Tmjv/F+6r7Vhu2SPMMTuOTXPQrMPnOLXnKozg0TxsqPya+csS4cwg6FeCgKF6j4BfhbLGjisGYwBARBn5w/5NmPZoNThFirMehnETQXlzBTc=
+	t=1740304644; cv=none; b=qkW+LrVj7X/m8a1tzDjYr+gi445MYE4qorLh5s5InxLJ4dAg5CNSxf7kSLBitZfCe/8l8GDnjgf7YyLwiXQszs4f/ZBXJPrV6WVY/SwfjlW9hEa0IuDks/JlPsuyw60USWwNQxeV+UE8TisxifOqSitDqMplsjgE+YjXwDjaSuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740304474; c=relaxed/simple;
-	bh=RQF52wYo0aKPNoeoj6LKwhlRLm5ADHcZDc58q17xfPE=;
+	s=arc-20240116; t=1740304644; c=relaxed/simple;
+	bh=JJ/5kg2fJoqJeDK3oO+dWfiu8sG5fIVw8kskBX7yy4c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GI5vtcH7OV9jSwYtcKnuXLhpu81gsh1JbZOSauhi91fENyly6utyGb72CiwMKbbZ0UQKgjwKnblyta/qsLoyBgs5S2xAAbofxczIvNsq+6/pCciSzoqzPrvGpJZKspPpZdvDgH651CEfwDUghz1Qy2f/R9zPlR/Z8c6ckxXc+RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ApoVHDqI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBF6C4CEDD;
-	Sun, 23 Feb 2025 09:54:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=u5RIFDYEGmo8GwVs/R6f1zWyAiga9m6y/H7SPBzH6TOetpJKP1fkhh+a50OoHnEFn9OsV+V6mzInxrOCfL7a66j7KtQJFEm0jqFC76tINBNzL9BRRr96DJ3xaWdXbUsTCmgvyOvdtST5t8UitTbfJAW9RJkYw4xYvuENPOK0zZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SWC24kSQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48616C4CEDD;
+	Sun, 23 Feb 2025 09:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740304473;
-	bh=RQF52wYo0aKPNoeoj6LKwhlRLm5ADHcZDc58q17xfPE=;
+	s=k20201202; t=1740304643;
+	bh=JJ/5kg2fJoqJeDK3oO+dWfiu8sG5fIVw8kskBX7yy4c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ApoVHDqI+1R4xUj2mRicBCe7fvBP28cWuEF7rZitDbD9vopK18XRIhwc0k6aJUvok
-	 XjLK/GP6lcvGLsUkLCZl4pnGmDpDpFHvaO4YQseYiu6ySZ3exWOuetye2swbRqZkn2
-	 s0GFSQVQnt+kWLM7Fpwltpl/P5Ux0kiO9v147PEXh0ISKKAdCE3TcVG3NCgp9JZAhs
-	 i7ucAVXNIrac//xnkNKpFi5OE7wwgnzZMOsiKg4OHNa3b1mVqYR0RoBZ+lAS7VeOGq
-	 JqgEZNfup4NIJOiKWuEffzxGY61NkhwRkc2Jmij4QS2D99/dDc8rZJN0wjAzExKyNA
-	 tCpuOqXrew37w==
-Message-ID: <99261067-5c13-483b-be3b-5370b36e3978@kernel.org>
-Date: Sun, 23 Feb 2025 10:54:29 +0100
+	b=SWC24kSQqwSsT7vd0uWDsqcnqNPganH2w+wOs12yJtcjH5f6N1KSYpOaWnJrap64u
+	 nruouOjAGst819VCOWl+PiTj/tiJrVWE1i63B1eZdaiC3IpchRW4cU7Rji0P5osQB/
+	 nUKg5Wmm6FqShE7wpBH4Yr5G6ziXw/8poJvaP+3ztGuous80Q+k69UPLkFNt9NWJ1+
+	 lTMfkUF0OQXOz3FIFzMr5dXq7lXWF7fKzJ4sHxS3ASHQljRRld9xn3oazkgNpw7fPZ
+	 7oM5POPsuGl/cTcckZS4JoEV99c4dTfA1vYPPWr2hNNAkqq0uhpe40qQOeq5W7STGE
+	 3qFsRPMlgFhJg==
+Message-ID: <a2ea77cc-90d8-40b8-b9f0-5823ece0db33@kernel.org>
+Date: Sun, 23 Feb 2025 10:57:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,18 +50,19 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: watchdog: samsung-wdt: Add
- exynos990-wdt compatible
-To: Igor Belwon <igor.belwon@mentallysanemainliners.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org
-References: <20250217-exynos990-wdt-v2-0-3eb4fbc113f4@mentallysanemainliners.org>
- <20250217-exynos990-wdt-v2-1-3eb4fbc113f4@mentallysanemainliners.org>
+Subject: Re: [PATCH v3 1/5] dt-bindings: clock: add clock definitions for
+ exynos7870 CMU
+To: Kaustabh Chakraborty <kauschluss@disroot.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+References: <20250219-exynos7870-pmu-clocks-v3-0-0d1e415e9e3a@disroot.org>
+ <20250219-exynos7870-pmu-clocks-v3-1-0d1e415e9e3a@disroot.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,21 +108,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250217-exynos990-wdt-v2-1-3eb4fbc113f4@mentallysanemainliners.org>
+In-Reply-To: <20250219-exynos7870-pmu-clocks-v3-1-0d1e415e9e3a@disroot.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/02/2025 20:57, Igor Belwon wrote:
-> Add a dt-binding compatible for the Exynos990 Watchdog timer.
-> This watchdog is compatible with the GS101/Exynos850 design, as
-> such it requires the cluster-index and syscon-phandle properties
-> to be present. It also contains a cl2 cluster, as such the
-> cluster-index property has been expanded.
+On 18/02/2025 19:50, Kaustabh Chakraborty wrote:
+> Add unique identifiers for exynos7870 clocks for every bank. It adds all
+> clocks of CMU_MIF, CMU_DISPAUD, CMU_G3D, CMU_ISP, CMU_MFCMSCL, and
+> CMU_PERI.
 > 
-> Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
 > ---
+>  include/dt-bindings/clock/exynos7870.h | 324 +++++++++++++++++++++++++++++++++
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Filename matching compatible. Look at other latest submissions.
+
 
 Best regards,
 Krzysztof
