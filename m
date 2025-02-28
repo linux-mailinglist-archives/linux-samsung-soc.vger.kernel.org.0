@@ -1,220 +1,146 @@
-Return-Path: <linux-samsung-soc+bounces-7135-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7156-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BC8FA495D0
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 10:49:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBAABA49C59
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 15:46:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A58D63BA919
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 09:48:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 578327A5163
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 14:44:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1312725B669;
-	Fri, 28 Feb 2025 09:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACEDA26E176;
+	Fri, 28 Feb 2025 14:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="b/wBmhrA"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ttd+pUnc"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C448925A2D7
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 09:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4725A2C0
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 14:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740736100; cv=none; b=Xdy9myglM4/xx+lwGHISmWOjVJSgFgARpZAMVOt7PRUoo2J4cp8DlwXbvHpj7tGVbxc2CtJGBGZ94KQYnZg1xF/LsQHwq/1E/C5d01sH3VTFsC0CCVQIqWZcR8T+0kD+AQMNnwD9lYRDlnsK2/ubNkgG338b887SuT2fsgo2Knk=
+	t=1740753939; cv=none; b=QQblnfkU06LvmeINZscNW3l+f3N/945DWdLA5/hUjZi4SXSETDEt9PROc5zMoqiEDP4d2cQf/8DL3uahrjq24QjVySySFy4tw8mNr9rDD2hlQjOKZTaFEq+R3f3hwVKuBoSuTcXT3o7FjBpQ1JYOV1NGEz6mNlH7A6dPFGBSoTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740736100; c=relaxed/simple;
-	bh=8czOAp1XIVXzJzW/nGeiln/rxS6cj6xKkuUCCr0X8ZA=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:References; b=pNW7XWOmaPFOKL3Ez1SEoboL7DSFox/P8bKkYnmLM9lijzMIvqxk20xqB1s7Fhsth995IWd9PEfu/J6pTdj2bMWwOlWD/xiAYmT57kfA1QpaCmlwwU1fXamizLQnxTqO1Ml/jCWD6JFQSewdvSKytj+sUpHO76XuxtUFgGzM9vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=b/wBmhrA; arc=none smtp.client-ip=203.254.224.33
+	s=arc-20240116; t=1740753939; c=relaxed/simple;
+	bh=au8sBRE5mBCqJi5w2IwoBc9mkXkseL6XNqfDVOtZ8Bs=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:References; b=f6vsAJRzA5+6XFgb9mh2ccphzc4rBAc+OpBwvuaivo4yIq5oHVxPN6dQr+DMsmDCfD+Zu8RRN0baghj1Dy2SdNWRQJQFiz62Q0YLbQ+4KcvOhscmi3PbiJX0pg/JeDb1gzHu7Dv71gOfsVcA1hAcjOOXbB68P006GsfWwddr300=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ttd+pUnc; arc=none smtp.client-ip=203.254.224.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250228094810epoutp031f74e59b0ab43694e1777ccfa69ba8b1~oVkBemxej1636816368epoutp03H
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 09:48:10 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250228094810epoutp031f74e59b0ab43694e1777ccfa69ba8b1~oVkBemxej1636816368epoutp03H
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250228144535epoutp027e75a493d66e540162ba252787112545~oZnsjfmsB1747217472epoutp02Z
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 14:45:35 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250228144535epoutp027e75a493d66e540162ba252787112545~oZnsjfmsB1747217472epoutp02Z
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1740736090;
-	bh=d/xrksObyuUS+LfR0wsAM0jpJ6JI4C0qssS+Biux8N8=;
+	s=mail20170921; t=1740753935;
+	bh=rHvKJLvygA9GD0SeTmwciLbo162z0lSbgYmgI1PHUcE=;
 	h=From:To:Cc:Subject:Date:References:From;
-	b=b/wBmhrAsfgpVJAMqJYU0R5MjmfQjV+Tzuva/an1oEo2ZZKMTIDgphUuImNnED8gF
-	 PIsG1Dtq+6Ci93Wg7eeBNPS+qq9MSk/naRg1WMvEYzwGYjml8jcQnIQYbCo1U/64TD
-	 M/4navUYX+kJbQ2zzElVnkzBVNoYMZQJiS1Lj/fI=
+	b=ttd+pUnciB9kSxRVB67Jw8fPbw5Ppj2UG6Vwb/uhyl7OqEuLsCZpKqrI4EBEupfbd
+	 sK5zE/o2Sr5gqmAaZSn3mZWI++TFHIISKLNITwYXZjawWlD/0cHGbJa9LN43ERSlsk
+	 Pm1pa4ypJuZ+NKaDQyf/gJEuRPGQcizjzzyoOQxs=
 Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-	20250228094809epcas5p43b4423daa009f9e6d37523f7cd7d890a~oVkA0hqiK1544615446epcas5p4W;
-	Fri, 28 Feb 2025 09:48:09 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.181]) by
-	epsnrtp1.localdomain (Postfix) with ESMTP id 4Z43L006Lmz4x9Pp; Fri, 28 Feb
-	2025 09:48:08 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
-	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	F4.9D.19956.75681C76; Fri, 28 Feb 2025 18:48:07 +0900 (KST)
+	epcas5p1.samsung.com (KnoxPortal) with ESMTP id
+	20250228144533epcas5p1366a164956bc530c046b29a778e0fc84~oZnrj4LXE0649806498epcas5p1M;
+	Fri, 28 Feb 2025 14:45:33 +0000 (GMT)
+Received: from epsmges5p1new.samsung.com (unknown [182.195.38.177]) by
+	epsnrtp1.localdomain (Postfix) with ESMTP id 4Z49x80ytDz4x9Pp; Fri, 28 Feb
+	2025 14:45:32 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+	epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	9B.6A.20052.C0CC1C76; Fri, 28 Feb 2025 23:45:32 +0900 (KST)
 Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250228070503epcas5p3260dacbf7b2ce5cdb1783e570af665a1~oTVm3L9Hm1856518565epcas5p3E;
-	Fri, 28 Feb 2025 07:05:03 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20250228144531epcas5p217fab73da682601a89e208fff5a3775e~oZnpQO48S1123011230epcas5p2G;
+	Fri, 28 Feb 2025 14:45:31 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
 	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20250228070503epsmtrp2cec91f437594f495f6c7d4d7d07cfec2~oTVm2ZPRN1928319283epsmtrp2d;
-	Fri, 28 Feb 2025 07:05:03 +0000 (GMT)
-X-AuditID: b6c32a4b-fe9f470000004df4-33-67c18657ffcd
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	00.CA.18729.F1061C76; Fri, 28 Feb 2025 16:05:03 +0900 (KST)
-Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250228070501epsmtip2b98fd1fe64992511d761785b68a5e7a4~oTVlEB6Zi0820508205epsmtip2L;
-	Fri, 28 Feb 2025 07:05:01 +0000 (GMT)
-From: Aakarsh Jain <aakarsh.jain@samsung.com>
-To: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: m.szyprowski@samsung.com, andrzej.hajda@intel.com, mchehab@kernel.org,
-	hverkuil-cisco@xs4all.nl, krzysztof.kozlowski+dt@linaro.org,
-	linux-samsung-soc@vger.kernel.org, gost.dev@samsung.com,
-	aswani.reddy@samsung.com, pankaj.dubey@samsung.com, Aakarsh Jain
-	<aakarsh.jain@samsung.com>
-Subject: [PATCH] media: s5p-mfc: Support for handling RET_ENC_BUFFER_FULL
- interrupt
-Date: Fri, 28 Feb 2025 12:29:52 +0530
-Message-Id: <20250228065952.14375-1-aakarsh.jain@samsung.com>
+	20250228144531epsmtrp2c9ba04d92e99f0522ffdc7b96ac4ccb3~oZnpPn-q82769427694epsmtrp2W;
+	Fri, 28 Feb 2025 14:45:31 +0000 (GMT)
+X-AuditID: b6c32a49-3d20270000004e54-52-67c1cc0ccff4
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	1D.C6.23488.B0CC1C76; Fri, 28 Feb 2025 23:45:31 +0900 (KST)
+Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
+	[107.109.115.6]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20250228144530epsmtip15c4a6355b383e399ecdc8d3e5da32266~oZnoLHFPS1886718867epsmtip1e;
+	Fri, 28 Feb 2025 14:45:30 +0000 (GMT)
+From: Anindya Sundar Gayen <anindya.sg@samsung.com>
+To: krzk@kernel.org, alim.akhtar@samsung.com,
+	dri-devel@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: aswani.reddy@samsung.com
+Subject: [PATCH] drm/exynos: fixed a spelling error
+Date: Fri, 28 Feb 2025 19:32:57 +0530
+Message-Id: <20250228140257.75045-1-anindya.sg@samsung.com>
 X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJKsWRmVeSWpSXmKPExsWy7bCmhm5428F0g5PTrSye7pjJanF/8WcW
-	i0Obt7Jb3Dywk8ni4sy7LBZ9Lx4yW2x6fI3V4vKuOWwWPRu2slrMOL+PyWLtkbvsFss2/WGy
-	WLT1C7sDr8fiPS+ZPDat6mTzuHNtD5vH5iX1Hn1bVjF6fN4k53Hq62f2APaobJuM1MSU1CKF
-	1Lzk/JTMvHRbJe/geOd4UzMDQ11DSwtzJYW8xNxUWyUXnwBdt8wcoGuVFMoSc0qBQgGJxcVK
-	+nY2RfmlJakKGfnFJbZKqQUpOQUmBXrFibnFpXnpenmpJVaGBgZGpkCFCdkZL/+sZS+4KVOx
-	8/Qa1gbGdxJdjJwcEgImEv13ljB2MXJxCAnsZpS4d2wDlPOJUeLfxmtsEM43RonZExYxdzFy
-	gLU8742CiO9llJjStYcdwvnCKLF+6zFWkCI2AV2Js9tzQFaICKRKvFq3lhWkhllgCZPEoiPP
-	mEASwgKhEo+aPrOD2CwCqhLT/uxkBbF5BWwleg9cYoG4T15i9YYDzCDNEgJv2SVu7/wGdYWL
-	xIXdHhA1whKvjm9hh7ClJD6/28sGYSdLPF70khnCzpFYv2cK1Ex7iQNX5rCAjGEW0JRYv0sf
-	IiwrMfXUOrDTmAX4JHp/P2GCiPNK7JgHY6tJzLnzgxXClpE4vHopI4TtIfHpyBuwGiGBWIk5
-	N56wTWCUnYWwYQEj4ypGydSC4tz01GLTAuO81HJ4PCXn525iBKdBLe8djI8efNA7xMjEwXiI
-	UYKDWUmEd1bsgXQh3pTEyqrUovz4otKc1OJDjKbAIJvILCWanA9MxHkl8YYmlgYmZmZmJpbG
-	ZoZK4rzNO1vShQTSE0tSs1NTC1KLYPqYODilGpjmPY1e8t+Fz27j+UsWdaah1yOmTM79dzn4
-	1bd7jRvfro+ze+/knKJ7NaAj7P9xbQ9xaf1unVUfgw4la16aKfN5fnPq1XzXXaZpK35r7vdM
-	rp50hINb65/qrq6pF1bcWtAiceuUwt8DfvNKhes3fbzb/bBFQ1GHvej7x7m35/REKddq/5+1
-	oejBIRHTc9wvJ8xW/FXF8cjgmRT7tJAi5hVngr2CNl7YUmW9f9WDtKaHuy4uurraKPvqN+X7
-	/U4F27SP9C7ZPelG9br7E4v0fSLk3vrwsJ778OyX732Jg9UlG1Yy8nv/PvUhWf/BqeaWvzHf
-	3V59qMuZtSdync0j1qcfqh+rbCtLOKZxx1NjxfXie0osxRmJhlrMRcWJAM60yisMBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKLMWRmVeSWpSXmKPExsWy7bCSvK58wsF0g/bDyhZPd8xktbi/+DOL
-	xaHNW9ktbh7YyWRxceZdFou+Fw+ZLTY9vsZqcXnXHDaLng1bWS1mnN/HZLH2yF12i2Wb/jBZ
-	LNr6hd2B12PxnpdMHptWdbJ53Lm2h81j85J6j74tqxg9Pm+S8zj19TN7AHsUl01Kak5mWWqR
-	vl0CV8bLP2vZC27KVOw8vYa1gfGdRBcjB4eEgInE896oLkYuDiGB3YwSExdPZeli5ASKy0j8
-	bzvGDmELS6z895wdougTo8SmV2uYQZrZBHQlzm7PAakREUiXmHTnKwtIDbPAOiaJnSsnsoIk
-	hAWCJTasms4MYrMIqEpM+7MTLM4rYCvRe+AS1DJ5idUbDjBPYORZwMiwilEytaA4Nz232LDA
-	MC+1XK84Mbe4NC9dLzk/dxMjOCS1NHcwbl/1Qe8QIxMH4yFGCQ5mJRHeWbEH0oV4UxIrq1KL
-	8uOLSnNSiw8xSnOwKInzir/oTRESSE8sSc1OTS1ILYLJMnFwSjUwRV2N/ffr54Nr58REL7Gm
-	LTr3+MUsr4R8g8DQTxP6LNYvsJmyVVk8yP+YZkG/0sJ0z9T/O+Imzg7SeSU3ibe9S3v9Xul3
-	pX2N8Vb3ahNeHxVnPPM7/OMLeyb/dPaUpsjcfSu5X8VdOPqsxz6rQDZxy/snvb48dequ6f9M
-	chkmO/IcSWvXn1ow9/j023MmfXhStUSoZvq/UzUsfod+FwSes9NU02Xl5Mw4+oCnUW5Zudyz
-	hicx37Stl6xRc54mf+Vj0NWZpduWaO46/SnqgoaFVE7DO7YE013bOz4tWS286er1r3WsZpHr
-	u0/ElR3stHVLU401cVvmtYP7f8Kb/fkOPv/uc8ofXs73n2N5yztpJZbijERDLeai4kQA2gjU
-	HbgCAAA=
-X-CMS-MailID: 20250228070503epcas5p3260dacbf7b2ce5cdb1783e570af665a1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsWy7bCmui7PmYPpBudPsFo8mLeNzeLQ5q3s
+	Fle+vmezOH9+A7vFpsfXWC0u75rDZjHj/D4mB3aPTas62Tzudx9n8ti8pN6jb8sqRo/Pm+QC
+	WKOybTJSE1NSixRS85LzUzLz0m2VvIPjneNNzQwMdQ0tLcyVFPISc1NtlVx8AnTdMnOArlBS
+	KEvMKQUKBSQWFyvp29kU5ZeWpCpk5BeX2CqlFqTkFJgU6BUn5haX5qXr5aWWWBkaGBiZAhUm
+	ZGf07L7AVrCHo2Ltnh/MDYwt7F2MnBwSAiYSE7ZPYOti5OIQEtjNKPGvbQ8ThPOJUeLO+svM
+	EM43RomNV3vgWg7e+8kEYgsJ7GWU+PZEB6KomUniw8PTLF2MHBxsAsYSbQ8qQWpEBHYwSvTf
+	zgSxmQVkJFZc2soIYgsDlSxp+g42k0VAVWLxt+lgM3kFrCW+z+pmg9glL7F6wwGwIyQEVrFL
+	rFiyAeoIF4mXHd2MELawxKvjW6DiUhKf3+1lA7lBQiBfYsnZbIhwjsSB5Q+YIGx7iQNX5oCd
+	ySygKbF+lz7EaXwSvb+fMEF08kp0tAlBmCoSEztYYGbP/rGDGcL2kFi9s50FEgixEqdOzmWZ
+	wCgzC2HmAkbGVYySqQXFuempxaYFhnmp5fCISc7P3cQITkxanjsY7z74oHeIkYmD8RCjBAez
+	kgjvrNgD6UK8KYmVValF+fFFpTmpxYcYTYGBNJFZSjQ5H5ga80riDU0sDUzMzMxMLI3NDJXE
+	eZt3tqQLCaQnlqRmp6YWpBbB9DFxcEo1MK07yKm1pOt5zcTCVcmlHxzSfu3RPB9cHPCWYW9s
+	yLP0VS9CLpzLyHs5/bmzdkTAHakbYneOTrm5vvqDxgbl391sVjkna2OyJngs9uAomapUHW4w
+	rbiK9dPpy76xtaoPjihnWDUzXKnkyDS6mxZ1fbGH3msnhdUnZSzeHZuSM8f66GP3T/Jp3Ct+
+	XI2eELTj4c3O+P+WO1JnHriyp33KhX01DME2d10+7Xgz23VimoBFQdbBTz12Mxu0FWvLhZ4/
+	tSiuP37p9QN1M1/nBVVJp+JKWreICv7S3x25oVj7qf3EvlrdysQ/h6S3h+1vNv39S+vBF29d
+	vR7nbQJ3pU/deTbXerlQ0lFRY98je8/paSqxFGckGmoxFxUnAgB6Y1/B1QMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHJMWRmVeSWpSXmKPExsWy7bCSnC73mYPpBv//SFg8mLeNzeLQ5q3s
+	Fle+vmezOH9+A7vFpsfXWC0u75rDZjHj/D4mB3aPTas62Tzudx9n8ti8pN6jb8sqRo/Pm+QC
+	WKO4bFJSczLLUov07RK4Mnp2X2Ar2MNRsXbPD+YGxhb2LkZODgkBE4mD934ydTFycQgJ7GaU
+	uPxqGhtEQkri9v9ORghbWGLlv+fsEEWNTBL7T24D6uDgYBMwlmh7UAkSFxHYxyix+8BUsKnM
+	AjISKy5tBWsWBqpZ0vQdLM4ioCqx+Nt0JhCbV8Ba4vusbqhl8hKrNxxgnsDIs4CRYRWjZGpB
+	cW56brJhgWFearlecWJucWleul5yfu4mRnAQaWnsYHz3rUn/ECMTB+MhRgkOZiUR3lmxB9KF
+	eFMSK6tSi/Lji0pzUosPMUpzsCiJ8640jEgXEkhPLEnNTk0tSC2CyTJxcEo1MPVe4/D7vfvV
+	ty/+ZRw2kSFlqRmM8495uSq1zvbo8X3XWv1hkezNqwtWrjrOLqvOpOm4dfIBvzXqrC1y9Rv3
+	CYS92rhcY0Wf2IxJySme3222tlcmnOkt/tebK7pF9amR4elKO2HxSZn/9RveXnfPi+GNV8rj
+	6i5YyvuecbJjCfvynAXFt20XP7n4S+tVZJnPw+uJL1uzFENCtsssmenx9OCt+bsEf2c77nqQ
+	VtC1tOe+ySXpxTGB//0ZHjbEtHtZO9y/XPr6osXPOxJiJjlN51tTYnfaSq73Pfk44f2KNw4W
+	kZ7fUiIyU68rLyhYGTk31nHT5EQT7kWxy34krtWK1H6zKP6c8tV5ItZ+v5PUlFiKMxINtZiL
+	ihMBp1UOxJECAAA=
+X-CMS-MailID: 20250228144531epcas5p217fab73da682601a89e208fff5a3775e
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 DLP-Filter: Pass
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250228070503epcas5p3260dacbf7b2ce5cdb1783e570af665a1
-References: <CGME20250228070503epcas5p3260dacbf7b2ce5cdb1783e570af665a1@epcas5p3.samsung.com>
+X-CMS-RootMailID: 20250228144531epcas5p217fab73da682601a89e208fff5a3775e
+References: <CGME20250228144531epcas5p217fab73da682601a89e208fff5a3775e@epcas5p2.samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 
-When output encoded buffer size provided by userspace
-is insufficient with current encoding parameters, it
-leads to RET_ENC_BUFFER_FULL interrupt which was not
-handled in IRQ handler.
+Corrected a spelling mistake in the exynos_drm_fimd driver to improve code
+readability. No functional changes were made.
 
-On handling of RET_ENC_BUFFER_FULL interrupt leads to
-NAL_ABORT command from host to risc which in turn leads
-to RET_NAL_ABORT interrupt. On receiving RET_NAL_ABORT
-driver clears workbit and VB2 queues for cleaner closing
-of MFC instance.
-
-When user encounters "Call on DQBUF after unrecoverable
-error", userspace should close fd and restart with larger
-output encoder buffer size.
-
-Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
+Signed-off-by: Anindya Sundar Gayen <anindya.sg@samsung.com>
 ---
- .../media/platform/samsung/s5p-mfc/regs-mfc-v6.h   |  1 +
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c   | 14 ++++++++++++++
- .../platform/samsung/s5p-mfc/s5p_mfc_common.h      |  1 +
- .../platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c      |  5 +++++
- 4 files changed, 21 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/s5p-mfc/regs-mfc-v6.h b/drivers/media/platform/samsung/s5p-mfc/regs-mfc-v6.h
-index fa49fe580e1a..075a58b50b8c 100644
---- a/drivers/media/platform/samsung/s5p-mfc/regs-mfc-v6.h
-+++ b/drivers/media/platform/samsung/s5p-mfc/regs-mfc-v6.h
-@@ -45,6 +45,7 @@
- #define S5P_FIMV_H2R_CMD_WAKEUP_V6		8
- #define S5P_FIMV_CH_LAST_FRAME_V6		9
- #define S5P_FIMV_H2R_CMD_FLUSH_V6		10
-+#define S5P_FIMV_H2R_CMD_NAL_ABORT_V6		11
- /* RMVME: REALLOC used? */
- #define S5P_FIMV_CH_FRAME_START_REALLOC_V6	5
- 
-diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-index 5f80931f056d..fa211c2d68a4 100644
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-@@ -739,6 +739,20 @@ static irqreturn_t s5p_mfc_irq(int irq, void *priv)
- 		ctx->state = MFCINST_RUNNING;
- 		goto irq_cleanup_hw;
- 
-+	case S5P_MFC_R2H_CMD_ENC_BUFFER_FULL_RET:
-+		ctx->state = MFCINST_NAL_ABORT;
-+		s5p_mfc_hw_call(dev->mfc_ops, clear_int_flags, dev);
-+		set_work_bit(ctx);
-+		WARN_ON(test_and_clear_bit(0, &dev->hw_lock) == 0);
-+		s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
-+		break;
-+
-+	case S5P_MFC_R2H_CMD_NAL_ABORT_RET:
-+		ctx->state = MFCINST_ERROR;
-+		s5p_mfc_cleanup_queue(&ctx->dst_queue, &ctx->vq_dst);
-+		s5p_mfc_cleanup_queue(&ctx->src_queue, &ctx->vq_src);
-+		goto irq_cleanup_hw;
-+
- 	default:
- 		mfc_debug(2, "Unknown int reason\n");
- 		s5p_mfc_hw_call(dev->mfc_ops, clear_int_flags, dev);
-diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
-index 3cc2a4f5c40a..86c316c1ff8f 100644
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
-@@ -141,6 +141,7 @@ enum s5p_mfc_inst_state {
- 	MFCINST_RES_CHANGE_INIT,
- 	MFCINST_RES_CHANGE_FLUSH,
- 	MFCINST_RES_CHANGE_END,
-+	MFCINST_NAL_ABORT,
- };
- 
- /*
-diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-index 4cf12f33d706..356adfddcfcf 100644
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-@@ -2229,6 +2229,11 @@ static void s5p_mfc_try_run_v6(struct s5p_mfc_dev *dev)
- 		case MFCINST_HEAD_PRODUCED:
- 			ret = s5p_mfc_run_init_enc_buffers(ctx);
- 			break;
-+		case MFCINST_NAL_ABORT:
-+			mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
-+			s5p_mfc_hw_call(dev->mfc_cmds, cmd_host2risc,
-+					dev, S5P_FIMV_H2R_CMD_NAL_ABORT_V6, NULL);
-+			break;
- 		default:
- 			ret = -EAGAIN;
- 		}
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index 1ad87584b1c2..c394cc702d7d 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -731,7 +731,7 @@ static void fimd_win_set_pixfmt(struct fimd_context *ctx, unsigned int win,
+ 	/*
+ 	 * Setting dma-burst to 16Word causes permanent tearing for very small
+ 	 * buffers, e.g. cursor buffer. Burst Mode switching which based on
+-	 * plane size is not recommended as plane size varies alot towards the
++	 * plane size is not recommended as plane size varies a lot towards the
+ 	 * end of the screen and rapid movement causes unstable DMA, but it is
+ 	 * still better to change dma-burst than displaying garbage.
+ 	 */
 -- 
 2.17.1
 
