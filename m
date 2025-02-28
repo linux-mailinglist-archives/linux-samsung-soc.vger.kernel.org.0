@@ -1,147 +1,171 @@
-Return-Path: <linux-samsung-soc+bounces-7156-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7136-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBAABA49C59
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 15:46:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9516A49B47
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 15:07:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 578327A5163
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 14:44:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF6673A984B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 28 Feb 2025 14:07:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACEDA26E176;
-	Fri, 28 Feb 2025 14:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 991BE25F984;
+	Fri, 28 Feb 2025 14:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ttd+pUnc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Krie4Osc"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4725A2C0
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 14:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D7F211C
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 14:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740753939; cv=none; b=QQblnfkU06LvmeINZscNW3l+f3N/945DWdLA5/hUjZi4SXSETDEt9PROc5zMoqiEDP4d2cQf/8DL3uahrjq24QjVySySFy4tw8mNr9rDD2hlQjOKZTaFEq+R3f3hwVKuBoSuTcXT3o7FjBpQ1JYOV1NGEz6mNlH7A6dPFGBSoTQ=
+	t=1740751645; cv=none; b=n1AYp9RYcfSi8Ir3ryeXHyxUD2gvoYi3/cN33+z9nu58XlYqf+keNOC3Q2wFxaHWKQ53HovXgXKtI9CKuCgnen1fZXThAKjldpiHbV7IM7/eaVYKAbAsXTUlEVikjOfHVWOe/k3f+KKNINhjhFiHKBqd4kW8LAdqprT97eq5jX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740753939; c=relaxed/simple;
-	bh=au8sBRE5mBCqJi5w2IwoBc9mkXkseL6XNqfDVOtZ8Bs=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:References; b=f6vsAJRzA5+6XFgb9mh2ccphzc4rBAc+OpBwvuaivo4yIq5oHVxPN6dQr+DMsmDCfD+Zu8RRN0baghj1Dy2SdNWRQJQFiz62Q0YLbQ+4KcvOhscmi3PbiJX0pg/JeDb1gzHu7Dv71gOfsVcA1hAcjOOXbB68P006GsfWwddr300=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ttd+pUnc; arc=none smtp.client-ip=203.254.224.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250228144535epoutp027e75a493d66e540162ba252787112545~oZnsjfmsB1747217472epoutp02Z
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 14:45:35 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250228144535epoutp027e75a493d66e540162ba252787112545~oZnsjfmsB1747217472epoutp02Z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1740753935;
-	bh=rHvKJLvygA9GD0SeTmwciLbo162z0lSbgYmgI1PHUcE=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=ttd+pUnciB9kSxRVB67Jw8fPbw5Ppj2UG6Vwb/uhyl7OqEuLsCZpKqrI4EBEupfbd
-	 sK5zE/o2Sr5gqmAaZSn3mZWI++TFHIISKLNITwYXZjawWlD/0cHGbJa9LN43ERSlsk
-	 Pm1pa4ypJuZ+NKaDQyf/gJEuRPGQcizjzzyoOQxs=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTP id
-	20250228144533epcas5p1366a164956bc530c046b29a778e0fc84~oZnrj4LXE0649806498epcas5p1M;
-	Fri, 28 Feb 2025 14:45:33 +0000 (GMT)
-Received: from epsmges5p1new.samsung.com (unknown [182.195.38.177]) by
-	epsnrtp1.localdomain (Postfix) with ESMTP id 4Z49x80ytDz4x9Pp; Fri, 28 Feb
-	2025 14:45:32 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-	epsmges5p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	9B.6A.20052.C0CC1C76; Fri, 28 Feb 2025 23:45:32 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250228144531epcas5p217fab73da682601a89e208fff5a3775e~oZnpQO48S1123011230epcas5p2G;
-	Fri, 28 Feb 2025 14:45:31 +0000 (GMT)
-Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20250228144531epsmtrp2c9ba04d92e99f0522ffdc7b96ac4ccb3~oZnpPn-q82769427694epsmtrp2W;
-	Fri, 28 Feb 2025 14:45:31 +0000 (GMT)
-X-AuditID: b6c32a49-3d20270000004e54-52-67c1cc0ccff4
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	1D.C6.23488.B0CC1C76; Fri, 28 Feb 2025 23:45:31 +0900 (KST)
-Received: from Jaguar.sa.corp.samsungelectronics.net (unknown
-	[107.109.115.6]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250228144530epsmtip15c4a6355b383e399ecdc8d3e5da32266~oZnoLHFPS1886718867epsmtip1e;
-	Fri, 28 Feb 2025 14:45:30 +0000 (GMT)
-From: Anindya Sundar Gayen <anindya.sg@samsung.com>
-To: krzk@kernel.org, alim.akhtar@samsung.com,
-	dri-devel@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: aswani.reddy@samsung.com
-Subject: [PATCH] drm/exynos: fixed a spelling error
-Date: Fri, 28 Feb 2025 19:32:57 +0530
-Message-Id: <20250228140257.75045-1-anindya.sg@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsWy7bCmui7PmYPpBudPsFo8mLeNzeLQ5q3s
-	Fle+vmezOH9+A7vFpsfXWC0u75rDZjHj/D4mB3aPTas62Tzudx9n8ti8pN6jb8sqRo/Pm+QC
-	WKOybTJSE1NSixRS85LzUzLz0m2VvIPjneNNzQwMdQ0tLcyVFPISc1NtlVx8AnTdMnOArlBS
-	KEvMKQUKBSQWFyvp29kU5ZeWpCpk5BeX2CqlFqTkFJgU6BUn5haX5qXr5aWWWBkaGBiZAhUm
-	ZGf07L7AVrCHo2Ltnh/MDYwt7F2MnBwSAiYSE7ZPYOti5OIQEtjNKPGvbQ8ThPOJUeLO+svM
-	EM43RomNV3vgWg7e+8kEYgsJ7GWU+PZEB6KomUniw8PTLF2MHBxsAsYSbQ8qQWpEBHYwSvTf
-	zgSxmQVkJFZc2soIYgsDlSxp+g42k0VAVWLxt+lgM3kFrCW+z+pmg9glL7F6wwGwIyQEVrFL
-	rFiyAeoIF4mXHd2MELawxKvjW6DiUhKf3+1lA7lBQiBfYsnZbIhwjsSB5Q+YIGx7iQNX5oCd
-	ySygKbF+lz7EaXwSvb+fMEF08kp0tAlBmCoSEztYYGbP/rGDGcL2kFi9s50FEgixEqdOzmWZ
-	wCgzC2HmAkbGVYySqQXFuempxaYFhnmp5fCISc7P3cQITkxanjsY7z74oHeIkYmD8RCjBAez
-	kgjvrNgD6UK8KYmVValF+fFFpTmpxYcYTYGBNJFZSjQ5H5ga80riDU0sDUzMzMxMLI3NDJXE
-	eZt3tqQLCaQnlqRmp6YWpBbB9DFxcEo1MK07yKm1pOt5zcTCVcmlHxzSfu3RPB9cHPCWYW9s
-	yLP0VS9CLpzLyHs5/bmzdkTAHakbYneOTrm5vvqDxgbl391sVjkna2OyJngs9uAomapUHW4w
-	rbiK9dPpy76xtaoPjihnWDUzXKnkyDS6mxZ1fbGH3msnhdUnZSzeHZuSM8f66GP3T/Jp3Ct+
-	XI2eELTj4c3O+P+WO1JnHriyp33KhX01DME2d10+7Xgz23VimoBFQdbBTz12Mxu0FWvLhZ4/
-	tSiuP37p9QN1M1/nBVVJp+JKWreICv7S3x25oVj7qf3EvlrdysQ/h6S3h+1vNv39S+vBF29d
-	vR7nbQJ3pU/deTbXerlQ0lFRY98je8/paSqxFGckGmoxFxUnAgB6Y1/B1QMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHJMWRmVeSWpSXmKPExsWy7bCSnC73mYPpBv//SFg8mLeNzeLQ5q3s
-	Fle+vmezOH9+A7vFpsfXWC0u75rDZjHj/D4mB3aPTas62Tzudx9n8ti8pN6jb8sqRo/Pm+QC
-	WKO4bFJSczLLUov07RK4Mnp2X2Ar2MNRsXbPD+YGxhb2LkZODgkBE4mD934ydTFycQgJ7GaU
-	uPxqGhtEQkri9v9ORghbWGLlv+fsEEWNTBL7T24D6uDgYBMwlmh7UAkSFxHYxyix+8BUsKnM
-	AjISKy5tBWsWBqpZ0vQdLM4ioCqx+Nt0JhCbV8Ba4vusbqhl8hKrNxxgnsDIs4CRYRWjZGpB
-	cW56brJhgWFearlecWJucWleul5yfu4mRnAQaWnsYHz3rUn/ECMTB+MhRgkOZiUR3lmxB9KF
-	eFMSK6tSi/Lji0pzUosPMUpzsCiJ8640jEgXEkhPLEnNTk0tSC2CyTJxcEo1MPVe4/D7vfvV
-	ty/+ZRw2kSFlqRmM8495uSq1zvbo8X3XWv1hkezNqwtWrjrOLqvOpOm4dfIBvzXqrC1y9Rv3
-	CYS92rhcY0Wf2IxJySme3222tlcmnOkt/tebK7pF9amR4elKO2HxSZn/9RveXnfPi+GNV8rj
-	6i5YyvuecbJjCfvynAXFt20XP7n4S+tVZJnPw+uJL1uzFENCtsssmenx9OCt+bsEf2c77nqQ
-	VtC1tOe+ySXpxTGB//0ZHjbEtHtZO9y/XPr6osXPOxJiJjlN51tTYnfaSq73Pfk44f2KNw4W
-	kZ7fUiIyU68rLyhYGTk31nHT5EQT7kWxy34krtWK1H6zKP6c8tV5ItZ+v5PUlFiKMxINtZiL
-	ihMBp1UOxJECAAA=
-X-CMS-MailID: 20250228144531epcas5p217fab73da682601a89e208fff5a3775e
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250228144531epcas5p217fab73da682601a89e208fff5a3775e
-References: <CGME20250228144531epcas5p217fab73da682601a89e208fff5a3775e@epcas5p2.samsung.com>
+	s=arc-20240116; t=1740751645; c=relaxed/simple;
+	bh=D6dkdQq4iA5tj9KDLaYBN/k9ZLQ40l8wYqCnUHgdGG0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KF3jU3u/5SF6mJVa6LEYtTQQWy7mcoUq/mmjezawu+z4J/pvhydtUYxv/uNfKhJX/jrGkq11wE+A1agQhJqFmpZBZ1lNKwVzBTNtb6LJAVdIvBx5O6FLiXhBz601mt6K3t2twxleXPurJ/FoQOsXUEybIq1JutpF9UdlKVEUV4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Krie4Osc; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e0373c7f55so3184737a12.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 28 Feb 2025 06:07:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740751642; x=1741356442; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xhLZqgcaujiFhw9G1dCH5p0FiLmGyvslkaMt4uwl9Do=;
+        b=Krie4Osc0DNEinlUAyFTqNzopM5rxbSDXSx+7/YIPnjHeGkHfJbBSUjo5mkF1GKs4q
+         mIrLqoS2F1GPTgXE54L9i6ipSA6qu45Gv9Gj/Jd5dt9ragEQW6UOGl4Cxge2DF6kbgnO
+         GEd/s4zk+TUhPxnvMcjBFvEuok4LJx77ZKCXFieXx3nkrw1uiu3AnSEIUmzN37Sd4E2K
+         3L9qQIZY4xgnsISUYWuiKGDEyBTxjJEvgyRlJ+0CpB99LzLqq4iCOaMyUjaqL+OyjQE/
+         IFHVKBpQaQce3fOlqgVaoZI4DddaF1r6ZwiFzNyrWLy4L+0ZYllhH3UXHyok3o4tJpNF
+         TQEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740751642; x=1741356442;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xhLZqgcaujiFhw9G1dCH5p0FiLmGyvslkaMt4uwl9Do=;
+        b=LMijhc3dTwpPS376zzvrdtM2TUK5R5fIEjimqlKW+UcqWKVBq7M6etJPhe5Nx6l/iB
+         6hXhHiNefxexFqRkZuOQiwPP15WKmRwU/4nBtWkzPoRNtNSobhQjdBK6BLqxbasfo4hv
+         bGoAz1uqmeb57LQSJJIO/MD0jwH5RZp4cvy8Hfxq9xfu5qk0Kc3qyHFk9PKwlMCHhuWJ
+         JCs19bNFWyBUW3D41G/2126Xuwo5bFycgNYPuhYCoZcDY1QrL7yAP2/qXXMGrDC8rSCH
+         1sUZFUQY/7jPX0Gfp/Zj2+izLHDXELDNKIyLLrk09XxlMtY5QpjwjZSAE5Wuzc7LDV+W
+         NYAg==
+X-Forwarded-Encrypted: i=1; AJvYcCXw2hFloglfd8gX4pCCOZTtkEXTp+lP4sK67bEqO9pKkjpxRI2jAw954wXDle/uS6v2SqbtNBXivxYX+9OocBf4xw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFOQ3XjpZyKX64i2b5jxGy8y9Pb5G+E1FdFyS1tIs6Kw1iyNgp
+	O+0CppfOfA8U4nc93gUgHI+neAxxGUk1QkQVcFO+fRnTzsaIUDXNzPyrBXC34tg=
+X-Gm-Gg: ASbGncv/Ja7jlU6zHIaQiVxubEjBnTsibute3GKEIsuH+UEA4mzUqpsxlWKY43M2gja
+	3bql+zhq5Ebi/aqRrCJz17IV9tN2HoiKWyJf4p0eRDbCDdU1YkPzZks6uW5zTNiNjd7oMPiP5Dm
+	0wAM+UE9GT3GPTcgfZ6iWBuac9N1uZVqtnj8ADjsT6eZAh6qgjXLqCAvCK7x56BmVkwI17sueCg
+	mWPEjS22NK0EVOrls4MzqW/ornvsovshT86SIERBgZCP9kdAgbvAKobvefwUzY7nD36EUycbyX9
+	V8Q2cFHVArSIz1ZKAgDznbvLdogTS1LCXihhrDwEAueJYiamzTItOWlzaZEX74cUSrEqMRwAHID
+	+wsVkJjyhHg==
+X-Google-Smtp-Source: AGHT+IHP7pUAJMVQB1Guj47dyI47K7YXQj82SFh5z5QQxgHATc6r4NQ1/TjLpJM/Ncf+/B2eBWDZ7w==
+X-Received: by 2002:a05:6402:5242:b0:5e4:cfb0:f667 with SMTP id 4fb4d7f45d1cf-5e4d6b691d6mr2481074a12.21.1740751641613;
+        Fri, 28 Feb 2025 06:07:21 -0800 (PST)
+Received: from puffmais.c.googlers.com (30.171.91.34.bc.googleusercontent.com. [34.91.171.30])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c3fb51f9sm2550839a12.55.2025.02.28.06.07.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2025 06:07:21 -0800 (PST)
+From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Subject: [PATCH 00/18] a few rtc driver cleanups
+Date: Fri, 28 Feb 2025 14:07:13 +0000
+Message-Id: <20250228-rtc-cleanups-v1-0-b44cec078481@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABHDwWcC/x3MQQqAIBBA0avIrBN0SoiuEi3MphoIE60IxLsnL
+ d/i/wyJIlOCQWSI9HDi01foRoDbrd9I8lINqNAoxF7Gy0l3kPV3SFKjU7PR2JLtoCYh0srvvxu
+ nUj6cRcJTXgAAAA==
+X-Change-ID: 20250228-rtc-cleanups-12c0b5123ea4
+To: Chanwoo Choi <cw00.choi@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Hans Ulli Kroll <ulli.kroll@googlemail.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ =?utf-8?q?T=C3=B3th_J=C3=A1nos?= <gomba007@gmail.com>, 
+ Dianlong Li <long17.cool@163.com>
+Cc: linux-kernel@vger.kernel.org, linux-rtc@vger.kernel.org, 
+ linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-aspeed@lists.ozlabs.org, linux-amlogic@lists.infradead.org, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+X-Mailer: b4 0.14.2
 
-Corrected a spelling mistake in the exynos_drm_fimd driver to improve code
-readability. No functional changes were made.
+Hi,
 
-Signed-off-by: Anindya Sundar Gayen <anindya.sg@samsung.com>
+While looking at RTC, I noticed that various drivers are keeping
+pointers to data that they're not using themselves throughout their
+lifetime.
+
+So I took the liberty to drop these pointers and this series is the
+result.
+
+The last two patches also convert two drivers to using dev_err_probe(),
+as I looked slightly closer into those two. They don't exactly fit the
+general subject of removal of unneeded pointers, but I wanted to share
+them anyway, since they're ready.
+
+All of this was compile-tested only.
+
+Cheers,
+Andre'
+
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_fimd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+André Draszik (18):
+      rtc: max77686: drop needless struct max77686_rtc_info::rtc member
+      rtc: s5m: drop needless struct s5m_rtc_info::i2c member
+      rtc: aspeed: drop needless struct aspeed_rtc::rtc_dev member
+      rtc: ds2404: drop needless struct ds2404::rtc member
+      rtc: ep93xx: drop needless struct ep93xx_rtc::rtc member
+      rtc: ftrtc010: drop needless struct ftrtc010_rtc::rtc_dev member
+      rtc: m48t86: drop needless struct m48t86_rtc_info::rtc member
+      rtc: meson: drop needless struct meson_rtc::rtc member
+      rtc: meson-vrtc: drop needless struct meson_vrtc_data::rtc member
+      rtc: pl030: drop needless struct pl030_rtc::rtc member
+      rtc: rx8581: drop needless struct rx8581::rtc member
+      rtc: s35390a: drop needless struct s35390a::rtc member
+      rtc: sd2405al: drop needless struct sd2405al::rtc member
+      rtc: sd3078: drop needless struct sd3078::rtc member
+      rtc: rx8581: drop needless struct rx8581
+      rtc: sd3078: drop needless struct sd3078
+      rtc: max77686: use dev_err_probe() where appropriate
+      rtc: s5m: convert to dev_err_probe() where appropriate
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-index 1ad87584b1c2..c394cc702d7d 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-@@ -731,7 +731,7 @@ static void fimd_win_set_pixfmt(struct fimd_context *ctx, unsigned int win,
- 	/*
- 	 * Setting dma-burst to 16Word causes permanent tearing for very small
- 	 * buffers, e.g. cursor buffer. Burst Mode switching which based on
--	 * plane size is not recommended as plane size varies alot towards the
-+	 * plane size is not recommended as plane size varies a lot towards the
- 	 * end of the screen and rapid movement causes unstable DMA, but it is
- 	 * still better to change dma-burst than displaying garbage.
- 	 */
+ drivers/rtc/rtc-aspeed.c     | 16 ++++-----
+ drivers/rtc/rtc-ds2404.c     | 14 ++++----
+ drivers/rtc/rtc-ep93xx.c     | 16 ++++-----
+ drivers/rtc/rtc-ftrtc010.c   | 17 +++++----
+ drivers/rtc/rtc-m48t86.c     | 14 ++++----
+ drivers/rtc/rtc-max77686.c   | 37 +++++++++----------
+ drivers/rtc/rtc-meson-vrtc.c | 12 +++----
+ drivers/rtc/rtc-meson.c      | 16 ++++-----
+ drivers/rtc/rtc-pl030.c      | 14 ++++----
+ drivers/rtc/rtc-rx8581.c     | 85 +++++++++++++++++++-------------------------
+ drivers/rtc/rtc-s35390a.c    | 22 ++++++------
+ drivers/rtc/rtc-s5m.c        | 58 +++++++++++++-----------------
+ drivers/rtc/rtc-sd2405al.c   | 16 ++++-----
+ drivers/rtc/rtc-sd3078.c     | 71 +++++++++++++++---------------------
+ 14 files changed, 183 insertions(+), 225 deletions(-)
+---
+base-commit: 0226d0ce98a477937ed295fb7df4cc30b46fc304
+change-id: 20250228-rtc-cleanups-12c0b5123ea4
+
+Best regards,
 -- 
-2.17.1
+André Draszik <andre.draszik@linaro.org>
 
 
