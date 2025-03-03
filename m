@@ -1,95 +1,103 @@
-Return-Path: <linux-samsung-soc+bounces-7265-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7263-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70AD4A4EC1F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Mar 2025 19:43:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4A4EA4EAFB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Mar 2025 19:16:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CAA488C4E2C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Mar 2025 18:21:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D90788356B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  4 Mar 2025 17:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12BEC280415;
-	Tue,  4 Mar 2025 18:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 656CD290093;
+	Tue,  4 Mar 2025 17:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L5Fsc1d+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXBGCcFN"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from beeline2.cc.itu.edu.tr (beeline2.cc.itu.edu.tr [160.75.25.116])
+Received: from beeline1.cc.itu.edu.tr (beeline1.cc.itu.edu.tr [160.75.25.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BEB280413
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 18:10:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9292264F8C
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 17:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=160.75.25.115
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741111805; cv=pass; b=CMhoC6M3aaIZ+AEyAcJrSWT1zaIDlvzg7g6lVr+h6dMnoBFPR0s2gJ7WonLzUbloMspWS31KSRJPsjQIFN5cpD8MTdtNwc+pxKjKAdwcjUj9fViRbf12yRW8u5kBGLGklUudYpGnUuikCt8Wo3yHztU1fofPNwctwG201E1z8xc=
+	t=1741109609; cv=pass; b=ZsqCNvwfgYMgzJfXrQLlDGRiwa9a7StoYEh3/hpwCrP/7XTqA4FRLJb9gaZAQDZ1W38P+PWIuPrGlOqusOIFNzCkicYHaTgouUC8TtHURnvNwa9XZU9dYOWlh4xNdqEe3PD0Ej0WJS6JqkDkCBE7M78iWXQal2mspoNUjEx9GZU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741111805; c=relaxed/simple;
-	bh=obB2ljcIPGtP0VJhm54WRUhHb1nNmOp3J/J2QdoPBuo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BG7QNzBfpdYLir6qoMb/5tzMjWMRxhNJ5JJbJGlnZkERD1b6FiDNQcTYtiscJWofV9+ECYw40DSU0g2BrM/A2YoVRiD+EemAhmPc52kXQNIJru/XJIPyA1ZJMY8dUzcm7RTHiUgms/q55/iU6wThfVT66CKTOEtqt1kucT4ALYE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5Fsc1d+; arc=none smtp.client-ip=10.30.226.201; arc=pass smtp.client-ip=160.75.25.116
+	s=arc-20240116; t=1741109609; c=relaxed/simple;
+	bh=rQhuOhPQN+FZjrqXHcNYZMzBbVyBkKtzpG5IcXStqR8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X5Fxh5qlhcXiI08iV5lMczHpyXvPsFAWmH8mfMlQ/xXDfWck2t2mdHFsjvDl8CAfMUzxlUrOh+Q+SWzFHP69VoIVMnoHb0VPcKg1jdNQCJAF1j0RNOE4Ma/F8OJaSQvJjSTF8n67m8ExLRgX9SAJ84AktCLCRlU7d8vN/1cHjsg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXBGCcFN; arc=none smtp.client-ip=10.30.226.201; arc=pass smtp.client-ip=160.75.25.115
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cc.itu.edu.tr
 Received: from lesvatest1.cc.itu.edu.tr (lesvatest1.cc.itu.edu.tr [10.146.128.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by beeline2.cc.itu.edu.tr (Postfix) with ESMTPS id 7D51940891AF
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 21:10:02 +0300 (+03)
+	by beeline1.cc.itu.edu.tr (Postfix) with ESMTPS id DEFD640D4DE5
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 20:33:25 +0300 (+03)
 X-Envelope-From: <root@cc.itu.edu.tr>
 Received: from lesva1.cc.itu.edu.tr (unknown [160.75.70.79])
-	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6fcy4frKzFyLT
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 18:25:06 +0300 (+03)
+	by lesvatest1.cc.itu.edu.tr (Postfix) with ESMTP id 4Z6fCJ5s72zFyQf
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  4 Mar 2025 18:06:20 +0300 (+03)
 Received: by le1 (Postfix, from userid 0)
-	id 2BFF742720; Tue,  4 Mar 2025 18:25:06 +0300 (+03)
+	id 288F34273B; Tue,  4 Mar 2025 18:06:13 +0300 (+03)
 Authentication-Results: lesva1.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5Fsc1d+
-X-Envelope-From: <linux-kernel+bounces-541159-bozkiru=itu.edu.tr@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXBGCcFN
+X-Envelope-From: <linux-kernel+bounces-541243-bozkiru=itu.edu.tr@vger.kernel.org>
 Authentication-Results: lesva2.cc.itu.edu.tr;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5Fsc1d+
-Received: from fgw1.itu.edu.tr (fgw1.itu.edu.tr [160.75.25.103])
-	by le2 (Postfix) with ESMTP id 6F764426D8
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 11:30:02 +0300 (+03)
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by fgw1.itu.edu.tr (Postfix) with SMTP id 493A83064C1E
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 11:30:02 +0300 (+03)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXBGCcFN
+Received: from fgw2.itu.edu.tr (fgw2.itu.edu.tr [160.75.25.104])
+	by le2 (Postfix) with ESMTP id 518FE41F87
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 12:11:34 +0300 (+03)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by fgw2.itu.edu.tr (Postfix) with SMTP id 049D52DCDE
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 12:11:33 +0300 (+03)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD73A188A4B7
-	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 08:29:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 59C2B16C68B
+	for <bozkiru@itu.edu.tr>; Mon,  3 Mar 2025 09:11:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F1A1EFFA0;
-	Mon,  3 Mar 2025 08:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 820D31F0E2A;
+	Mon,  3 Mar 2025 09:10:54 +0000 (UTC)
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E981DE3A4;
-	Mon,  3 Mar 2025 08:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD00218C937;
+	Mon,  3 Mar 2025 09:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740990570; cv=none; b=IsIL6Q+MdipDfdDUqUI3wHgWmtech38persq2c4IHa0qE7pK4PR50/3xphm0wdC1Q4GMRhEe7nA7LwQph4NLqm5I3LV/sWpV8oaNPEE8fYO5gN7lcrrRHosI9O7QSFTdpXlg+X+nNyDIfjsVXBJUfPo27aMa8bpPPSDtLvHX/Ms=
+	t=1740993051; cv=none; b=UXj9mT39bVhKod0fUp9AbkKxxJBiWCRWwRWWPWOY4UVwy3K1unvX4NfJ2/lepz3R7gq4MnYkDWwvhGsjs0HWmu2+UilyfxAuSoCm2qbi/Uhpw/h5dEhXjVqlWADSM0z2iax1ZRlQpsQPrpeVdA9NfBNr5tHWeZcwmf0C9qngNBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740990570; c=relaxed/simple;
-	bh=obB2ljcIPGtP0VJhm54WRUhHb1nNmOp3J/J2QdoPBuo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jEe06paRKu/FfVdJsxB7pXJzdjfDKuHautoxv3Tptnto/jhFbevIu+UU0gHd+rnVCw506TnhWvICjO7/9YEtsFCF4jAdWUFLBfML/dw+qfTz81Dy6pcszprNrh8ugjKkirSQ78g9M6irHtnZMyxsn1Vx4y9mwAZlKSNc/oF3tFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5Fsc1d+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6C8C4CED6;
-	Mon,  3 Mar 2025 08:29:25 +0000 (UTC)
+	s=arc-20240116; t=1740993051; c=relaxed/simple;
+	bh=rQhuOhPQN+FZjrqXHcNYZMzBbVyBkKtzpG5IcXStqR8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MQd73sBUIpCRAWCnO0Qy5Ez+DMHwcXxSSjD66/sfyfhK78pPhPB5NhUd23+BjTo5vWbqunjrgsld+sDRQkZom7SoeX4O90s0xhAt/i/Irs+2Fs259wMA3f6c3OO9uRKdQpJQ4wJzalI12D/r6IcLBwj8CS3X+aurFrdCkKNr8Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXBGCcFN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3101C4CED6;
+	Mon,  3 Mar 2025 09:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740990569;
-	bh=obB2ljcIPGtP0VJhm54WRUhHb1nNmOp3J/J2QdoPBuo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L5Fsc1d+BT3zlKoAvBi301/7lNQasBdGMjxy/bahG5gw9C2PhtdMds2Iks/K0vAYe
-	 Iv51saEZ1KNYkpulm9MfT97RNhx7uBEcsBq8cO6fnYfbb18iAtRpkxUUUILC23eiEF
-	 d9LScttTam79NgrVIW0q45mfu2FygdvM8Y3cw9bmAopH1YSHHeuzxsAT0rEpffJRU5
-	 xCmxo+7bkBn8/2sN4t0RZ/i+76ZscytuML7vdooupcPLSgOHIsthFQ5dMje/vZo+PS
-	 iK0PIUtlo1r0LV3k94CYaUrv9HLaJ3VA1EtNIUt1E18nlNPVmhAKZw0epCkQ3UvgF/
-	 Y3A0gihRihCyA==
-Message-ID: <929ed565-f842-49e6-9c7a-6d1df5266a62@kernel.org>
-Date: Mon, 3 Mar 2025 09:29:23 +0100
+	s=k20201202; t=1740993051;
+	bh=rQhuOhPQN+FZjrqXHcNYZMzBbVyBkKtzpG5IcXStqR8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RXBGCcFNN5gm4B/UBhQRJynuGQLRDdWPsWpYTdmJRsPjjfKdWZXQ5jrPIXqmgUWfq
+	 NlzKeDul7PAk0gqc8gTqP2YkQxyxcySHjm9xLWZEePPU8bTEavVcPqszz/jLR3Vcmv
+	 ijZ3m/3oeaBr5CnLzNMFS5oqmcYqDIuMF7+jmIQWwDTkYRvI8JWcKS3nl+swa11l44
+	 9b6SzMqwkbJPiLWFqsjiNFiaB3VtKagM73SChIc8M9rDwXgoqZt712F057rGARYzKj
+	 O+6gahZBSWAj2zscHAj9zSbUeiRjSHL1AL+HBSI4/WvIB9OjXLabSrCu7f04v1n07S
+	 xbDHKLWhRXJiw==
+Date: Mon, 3 Mar 2025 10:10:48 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kaustabh Chakraborty <kauschluss@disroot.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] mfd: sec: add support for S2MPU05 PMIC
+Message-ID: <20250303-screeching-quartz-puma-9ea09a@krzk-bin>
+References: <20250301-exynos7870-pmic-regulators-v3-0-808d0b47a564@disroot.org>
+ <20250301-exynos7870-pmic-regulators-v3-2-808d0b47a564@disroot.org>
 Precedence: bulk
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
@@ -97,92 +105,34 @@ List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: usb: samsung,exynos-dwc3: add
- exynos7870 support
-To: Kaustabh Chakraborty <kauschluss@disroot.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250301-exynos7870-usb-v3-0-f01697165d19@disroot.org>
- <20250301-exynos7870-usb-v3-1-f01697165d19@disroot.org>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250301-exynos7870-usb-v3-1-f01697165d19@disroot.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250301-exynos7870-pmic-regulators-v3-2-808d0b47a564@disroot.org>
 X-ITU-Libra-ESVA-Information: Please contact Istanbul Teknik Universitesi for more information
-X-ITU-Libra-ESVA-ID: 4Z6fcy4frKzFyLT
+X-ITU-Libra-ESVA-ID: 4Z6fCJ5s72zFyQf
 X-ITU-Libra-ESVA: No virus found
 X-ITU-Libra-ESVA-From: root@cc.itu.edu.tr
-X-ITU-Libra-ESVA-Watermark: 1741716475.61171@M+nTkYSnQPPj7oIX3uehgQ
+X-ITU-Libra-ESVA-Watermark: 1741714294.8676@K1ZSKnOrm9mQc2xfND73qQ
 X-ITU-MailScanner-SpamCheck: not spam
 
-On 28/02/2025 20:40, Kaustabh Chakraborty wrote:
-> Document compatible string for Exynos7870 DWC3-compatible USB 2.0
-> driver. The devicetree node requires three clocks, named "bus_early",
-> "ref", and "ctrl".
-> 
-> Unlike other variants, Exynos7870's USB controller requires a single
-> 3.0V regulator. Assert that the other 1.0V regulator requirement is
-> enforced on variants individually other than Exynos7870's.
+On Sat, Mar 01, 2025 at 01:07:13AM +0530, Kaustabh Chakraborty wrote:
+> Add support for Samsung's S2MPU05 PMIC. It's the primary PMIC used by
+> Exynos7870 devices. It houses regulators (21 LDOs and 5 BUCKs) and a RTC
+> clock device.
 > 
 > Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
 > ---
->  .../bindings/usb/samsung,exynos-dwc3.yaml          | 28 +++++++++++++++++++++-
->  1 file changed, 27 insertions(+), 1 deletion(-)
-> 
+>  drivers/mfd/sec-core.c              |  12 +++
+>  drivers/mfd/sec-irq.c               |  34 +++++++
+>  include/linux/mfd/samsung/core.h    |   1 +
+>  include/linux/mfd/samsung/irq.h     |  44 +++++++++
+>  include/linux/mfd/samsung/s2mpu05.h | 183 ++++++++++++++++++++++++++++++++++++
+>  5 files changed, 274 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
+
 
 
