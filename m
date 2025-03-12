@@ -1,79 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-7422-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7425-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D198A5D6D9
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 12 Mar 2025 08:11:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BF8BA5D77B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 12 Mar 2025 08:42:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B6313B70B5
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 12 Mar 2025 07:11:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCA4B189F33A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 12 Mar 2025 07:42:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 000031E9906;
-	Wed, 12 Mar 2025 07:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69290205ADB;
+	Wed, 12 Mar 2025 07:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mixlnsjV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txgwx8YB"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E502018991E
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 12 Mar 2025 07:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217861E9B26;
+	Wed, 12 Mar 2025 07:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741763480; cv=none; b=a9W2KGgeH4q0gtfosr1mqZviWlHuZ8up79VQ72AgLOhTCdOkF7qipcM63AfgSrU3/sw1vGdt5WAoHRAtOj8de6qen+zZO7AMc8B7q1EiPrqeRDyNggSQ0XgMXeyjxQQTBD2O8rzbntYEEOoj74zln5Uv8xU0rT0MAM4N3HqFUa0=
+	t=1741765358; cv=none; b=MW1U8NJJ0lQrrpjyOkRG4bx6mBEJ8xNhoPJ0rucqgkrD4yGlMQXd/UHv/zbRygxVGuIBZ0LT8857UsXZx/AL/YFdHbOUfnMz0HwEfFt1PpGEwcGurLrn9gbpK9GiqXt2PSFd+5svWS0/3I/QVKl23J26BwHrE8QwWRHOZsbD8Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741763480; c=relaxed/simple;
-	bh=e7YGaKCY83HR3H/M3ccJe04aTUf4UGlWCN3ibpzLC2U=;
+	s=arc-20240116; t=1741765358; c=relaxed/simple;
+	bh=0+3K1JjGv2ZJrwUF1z9sb+pJtYMDd/9MvBQOFtkSPC0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q/Sp9tTL2hSngEEHkL2NeyH7PbqLJFDf1y0arxhahDhjJQYBQS7W8DKp47m/poBCjqvsXt8+KsxH04GPdr99O8JNiskxWR8HCNtUw1HzdzgAZ3SXxIl9f44rs5CyJSq4S3Zpd6C/9n84t8gRdh1OITTIHlTY4BIsxEjT5ESxcgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mixlnsjV; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cf257158fso20506915e9.2
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 12 Mar 2025 00:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741763477; x=1742368277; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5JQMc0JK4aWXwOcpwJILt54UlEg8yqOSNknC98xAh/4=;
-        b=mixlnsjVDXBfWhoqmax7LsRjVdz/9BeWYTlRIzu0A2pQ1++m3TkNZVQPu0EGwDoKmb
-         1SfoAGny+iY37/etUIVa7wvCKP5vwwvnmEuGvwImZWDf859kYwPhdjqRDawwSg6PdQYb
-         XWEj2SKruc4eimyZRulzN8a8kpLDGxKR3C0tyiWEUY1L/4hp6w1o98SMn42Ht7eBYqTH
-         T5JPzSv9JrLYwOApeW6yyCZp7de7mfWQcMGcUnNmOWTTm8lTxzlMSzuVL5KcZ829jAYp
-         4JkGgztM+v3ws0p+H2NuuBd4XSuqZ/CD40CY/JQAHrmXV0feQQmwTPblpYMgfw6pkDYr
-         r5kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741763477; x=1742368277;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5JQMc0JK4aWXwOcpwJILt54UlEg8yqOSNknC98xAh/4=;
-        b=SXGaNZ3GwstrxCu9quyQO7U8KBvsXZotksrkStQXsRKIrdcmdZV/oisLif+TKcuCUF
-         n/6nkwVJQ4xiVlEqjTKo/nR1ZrUY8hO+99p35pju3Tr/kUeQFNpGKqqhqm8YkA7MVNRv
-         N+RTYN0YzFqq+k3wc5ZHcpBEppaCwVACDzUIpMOnxmS6VC0kjLejYwj9veLOoFKfzYNd
-         wJdjjuTr6m9siESjeI3jySz19oCws5t3K1hJ+ZR7k97gcGfzNHBqcpU6GuYSSu9/Kqyh
-         Yt132SoriGHup+rOu4anc2Fw84oIJdQLdkyyTmZaLRdPEZ5zRZFynfoFie3PgU81/mf0
-         XG9g==
-X-Forwarded-Encrypted: i=1; AJvYcCV5+PaNpi/pXLhRxRkkfeOoDluNurLVUszUeghd03rQcCeSpehHCj+8eBd0L/kB4drXlGDJLNnkHpbtE8LRWAgxUQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLaADPUj+MEEivMdW1hg4IxWH6QebTj3oaQW6fTnPhinaUSWhu
-	g0HzPsaNcJ4dyBtP0H+G+sj9HERjygplkGgBriBKyvvmKIS3PTGluvGVKpnqDj0=
-X-Gm-Gg: ASbGncughSsNH7V2pNFvsqk5ZPt5H8RIyw+lbzFLhQ4TgYZg+WG8r12CN040yRDSOw2
-	8eTk/qWFWxZ/LaQay5UEpKv/iqn7SqYJqXgnNb2Z5L+3KH0As4Q16Be9/sb0aWY6EZWvDa7SBNF
-	i6liJGghdixGjn/JHLTZH4AAHo28r3vTA2q5V2DFC32q2GX/5yXTJkeqmraVbc7rr8xWqqJ0fZm
-	nIaaqBQKc5gSANsQ002OD1eVYWyCFosuZym8ExA7c8lfN++oVWc10aqMuA5mUMruuJ5iIpu8wBd
-	n9Rzfl/GoaIsEDwdS29bvRNY9AhaQoBMfhSJMtRasrKG3muft0XsLw==
-X-Google-Smtp-Source: AGHT+IE7CFqZ+AbL0Q4cb87iC4MZdbphZY+v7bJCpcP2ShGQtgySl1i2tbL1wMwKn/N8LmsPbsCRyA==
-X-Received: by 2002:a05:600c:19cc:b0:43d:4e9:27ff with SMTP id 5b1f17b1804b1-43d04e92a66mr49813565e9.7.1741763469875;
-        Wed, 12 Mar 2025 00:11:09 -0700 (PDT)
-Received: from [192.168.0.14] ([79.115.63.206])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d0a72ec8bsm12210285e9.5.2025.03.12.00.11.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Mar 2025 00:11:09 -0700 (PDT)
-Message-ID: <696494b8-14e9-4b9b-bf26-2a94a915b2ec@linaro.org>
-Date: Wed, 12 Mar 2025 07:11:08 +0000
+	 In-Reply-To:Content-Type; b=DIbc4C2hGq+um+9AGRIsxbMRmals6jnhzJw0TSe5EUOQ7geyJVwCeOh1erfMrIGphLxdfDijyWZr72cea9fZFNDwdPtDGUvdPg3G4dHNvnJCmttWY1SxQiWa5Ssr2zdSSdPLZS/dQiYCOAinf1jfxAjk2OhtlbuaxDdMpQ3hte4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txgwx8YB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9F5C4CEEA;
+	Wed, 12 Mar 2025 07:42:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741765358;
+	bh=0+3K1JjGv2ZJrwUF1z9sb+pJtYMDd/9MvBQOFtkSPC0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=txgwx8YBgYcFxrslUIdfZfFXJkwdkSd9coCamnFyUj6fcSrDTulfb83N9fwH5Ax+k
+	 TJFfUXLRPpIQdQILPHEef//By6iwF2TlstxxHpJiydbBjqAjuNWDoxIk1xpK5157pj
+	 qM7DTi/U1vPQtOf+E4QyMhG4dK6PER/s33V4FTzcWbDr3fLR/Fkh/d/dvLZxzZzPUZ
+	 J1hBuYEH+K5S+ctprwYn5fHsoyvdLTISiNcBOWhh93wToMN+anZBXePJ2hqp3cm2FB
+	 WaXGkCDHqRaeI67GG2MKTxxOAELSw/SScBYb7I0UvkkXoj3GjXihOY3qfhBgmVwgTh
+	 hF5jQgSEKHBlA==
+Message-ID: <5b68a9c2-9145-4131-9fa3-10810c51691f@kernel.org>
+Date: Wed, 12 Mar 2025 08:42:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -81,103 +50,120 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] firmware: samsung: add ACPM debugfs support
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: andre.draszik@linaro.org, peter.griffin@linaro.org,
- willmcvicker@google.com, kernel-team@android.com,
- linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-References: <20250224-acpm-debugfs-v1-0-2418a3ea1b17@linaro.org>
- <20250224-acpm-debugfs-v1-3-2418a3ea1b17@linaro.org>
- <005424c2-7fb7-48db-b38c-c62f9f8b3897@kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: exynos: Add DT node for all UART ports
+To: Faraz Ata <faraz.ata@samsung.com>, alim.akhtar@samsung.com,
+ dev.tailor@samsung.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org
+Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ rosa.pila@samsung.com, suyash.bitti@samsung.com, abhijeet.s23@samsung.com
+References: <20250312061932.1797993-1-faraz.ata@samsung.com>
+ <CGME20250312061058epcas5p3ccf293213fe883129358833572b17d92@epcas5p3.samsung.com>
+ <20250312061932.1797993-2-faraz.ata@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
-In-Reply-To: <005424c2-7fb7-48db-b38c-c62f9f8b3897@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250312061932.1797993-2-faraz.ata@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi, Krzysztof,
-
-On 3/5/25 7:37 PM, Krzysztof Kozlowski wrote:
-> On 24/02/2025 09:01, Tudor Ambarus wrote:
-
-cut
-> Please add something like above also as a comment to the driver, so the
-> interface will be documented.
-
-okay, will add.
-
-cut
-
->> +static struct dentry *rootdir;
+On 12/03/2025 07:19, Faraz Ata wrote:
+> Universal Serial Interface (USI) supports three serial protocol
+> like uart, i2c and spi. ExynosAutov920 has 18 instances of USI.
+> Add all the USI DT node and subsequent uart nodes for all the instances.
 > 
-> exynos-apcm.c is not a singleton, so neither should this be. You should
-> create entries per device (so with device name as subdirectory), just
-> for correctness.
-> 
->> +
->> +static DEFINE_MUTEX(acpm_log_level_mutex);
-> 
-> And this also looks per-device-instance.
+> Signed-off-by: Faraz Ata <faraz.ata@samsung.com>
+> ---
+>  .../arm64/boot/dts/exynos/exynosautov920.dtsi | 494 ++++++++++++++++++
+>  1 file changed, 494 insertions(+)
 
-okay, will create per device instances.
 
->> +
->> +static void acpm_log_print_entry(struct acpm_info *acpm,
->> +				 const union acpm_log_entry *log_entry)
->> +{
+Please do not combine DTS changes with serial patches, ever. DTS has to
+go via separate tree.
 
-cut
+...
 
->> +		dev_info(acpm->dev, "[ACPM_FW] : %llu id:%u, %s, %x\n", time,
->> +			 log_entry->plugin_id, (char *)&msg, log_entry->data);
-> 
-> 
-> I don't think these should be printed to dmesg - these are not system
-> logs. You either return the contents to the caller's read() on debugfs
-> entry or, if this is anyhow crashdump related, it goes to
-> pstore/minidump once triggered. Or to ramoops.
-> 
-> Depends what these logs are (so please also explain what do you find
-> there in the commit msg).
-> 
-> Maybe something like CHROMEOS_PSTORE?
-> 
-> IOW, if enabled, this should go to ramoops/pstore unconditionally. For
-> runtime debugging this should be returned somehow to the userspace
-> reading the file. I think usually debugfs and sysfs is not expected to
-> provide more than PAGE_SIZE data, so this second part has to be
-> rethinked still.
-> 
+> +
+> +		usi_17: usi@10d800c0 {
+> +			compatible = "samsung,exynosautov920-usi",
+> +				     "samsung,exynos850-usi";
+> +			reg = <0x10d800c0 0x20>;
+> +			samsung,sysreg = <&syscon_peric1 0x1040>;
+> +			samsung,mode = <USI_V2_UART>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
+> +				 <&cmu_peric1 CLK_DOUT_PERIC1_USI17_USI>;
+> +			clock-names = "pclk", "ipclk";
+> +			status = "disabled";
+> +
+> +			serial_17: serial@10d80000 {
+> +				compatible = "samsung,exynosautov920-uart",
+> +					     "samsung,exynos850-uart";
+> +				reg = <0x10d80000 0xc0>;
+> +				interrupts = <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>;
+> +				pinctrl-names = "default";
+> +				pinctrl-0 = <&uart17_bus>;
+> +				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
+> +					 <&cmu_peric1 CLK_DOUT_PERIC1_USI17_USI>;
+> +				clock-names = "uart", "clk_uart_baud0";
+> +				samsung,uart-fifosize = <64>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +
 
-This is a logging feature, it's not oops/panic related. These logs are
-referred to as "block logs". A "block" is the start of a mailbox command
-to its end, so it logs every ACPM mailbox command issued to the
-firmware. After each end of a block, we see the state of all regulators,
-frequencies and devices up/down extracted from the block.
+Just one blank line.
 
-These are indeed system logs, and using the dmesg ring buffer seems fine
-as we typically care about the recent logs, we don't care if the ring
-starts all over again.
+>  		pwm: pwm@109b0000 {
+>  			compatible = "samsung,exynosautov920-pwm",
+>  				     "samsung,exynos4210-pwm";
 
->> +DEFINE_DEBUGFS_ATTRIBUTE(acpm_log_level_fops, acpm_log_level_get,
->> +			 acpm_log_level_set, "0%llu\n");
-> 
-> I also do not think debugfs is a knob to control loglevel of messages
-> going to dmesg.
-> 
 
-This debugfs entry controls which SRAM log ring buffers are queried -
-there are 2 SRAM buffers.
-
-I guess you thought about the "logb_gprio_level" entry, which controls
-the ACPM print verbosity. 0xf being ERR, and 0x0 all logs. The firmware
-defaults on printing all logs. I can't tell right now other way of
-controlling the logs verbosity, maybe via sysfs, but it's equivalent and
-with more restrictions. Or maybe you think that I shall always print all
-logs?
-
-Thanks,
-ta
+Best regards,
+Krzysztof
 
