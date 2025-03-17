@@ -1,140 +1,112 @@
-Return-Path: <linux-samsung-soc+bounces-7475-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7477-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61B6AA6547E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Mar 2025 15:56:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAFA0A65E07
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Mar 2025 20:32:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B77D4170DF1
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Mar 2025 14:56:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26FE519A05E0
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 17 Mar 2025 19:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74A9324A074;
-	Mon, 17 Mar 2025 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79131EDA34;
+	Mon, 17 Mar 2025 19:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kKvuc1Dr"
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="R9OWoe6F"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5368A248894
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Mar 2025 14:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA741EB5CD;
+	Mon, 17 Mar 2025 19:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742223330; cv=none; b=JbsRG0YJSkvpWPllnxp48+olwbXcK3bT90tzzAANgC/7/ldKfOXn6vUCeRIYUwMLUoKyjjzv/XyT0hI32RAN6Jvr3mQ3QE0/w20QNqlUKn8V4ZeIaG2M1xSqH3gmiyJfe8xvhKq/YdcU1RO69u4AI09Bn342YbpdpqBHDb0yuzE=
+	t=1742239951; cv=none; b=ZaMt16EayVHgDANn/RdM92wmLpOMxkNb2CW+hMyUW/up7aklSo++IJsaqKWAl+450erDYPms0B3QEtb3lDhW0gXpAe8Od4OPa+1ScWjvbqLrm70LaXbUW6wYgiuSGNPac9skNg8at7U1y/wLKyt53bsOPTB/cfWCWvSnlHzy7VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742223330; c=relaxed/simple;
-	bh=17UdANjAVTcelMOQ4DNlejZ2Ce9FcJpH2K+ozwWVPTk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tIyRCZvh0sO/01oyUMrjHU7+b/qGxjwo8ioDyIDrhjMRUKbHSwvlOOta/3uT0uCynnTsTImL0ykaS6oWLoSQwMzCY60GbNCN/pbM0MmXwkM+TsgWVym0nYEjxdgDpEimDTnLALrbDg/ybaNO5YZ3ODOMHDXymhvPdWTjQp0Q4JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kKvuc1Dr; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3f417de5e25so1675290b6e.3
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 17 Mar 2025 07:55:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1742223327; x=1742828127; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8jNzh4wPsc/2+sERlQmcDT54HRK5zRLKBArFjwQQ8DQ=;
-        b=kKvuc1DryQCbSVaBGLaDhiimzifPA1/+vWy5Oidkrz6z37iZQfnZhJR5IksOTb6bL7
-         toTwPj10SzvDwgmRUHhOlYXCJkfenGjgr61NjdUH4Fft6zEhNIRV4U0NmYNzmA6eptYP
-         ZkbtLa+0hyJEqzZqMM6dhXqfO3CH7gtQqx0lzVhIugTZc7jW+5z/r73CXfNwnmrmOitH
-         dykwAqTiUn6wv1eBlpWafYpH+qeiSlfouu+rQpdIFP4DFC5sXI+k0BhJ+RS3O2LjlhxK
-         oUZGPAL900MWZiRBKBGSFKDeHp1lfq1aHNNvtU7hhj9pSyXVhgHNlj5VMQRUe7UHY0Do
-         0ENg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742223327; x=1742828127;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8jNzh4wPsc/2+sERlQmcDT54HRK5zRLKBArFjwQQ8DQ=;
-        b=bpguGmLL6yX7tAM/fOmq4OKpxSxAi+d9YCAXED7DnJBBsVMHxoN2flZLQQNUpXMGGC
-         bDo+4cdH1h39BGRByLrUY8iSHVTMuI4h4HSfEYJp8PWT1Xl60+TnJEr6roDO+XVgWmeY
-         wFWt6cD1kFFP0XD0dwwYi3kyC30+T2Xdh8PHu/QnjqIO++fqDlzqYY7tKB9UZI5leTh5
-         Iw4QosRBZySh1I4gnCLHyGoDZP4xS9n+XmDlMqorEBOsVMEpRL7cwob8564cEunT6ZvE
-         IWb4fbUfQMHX6193VHCYrahLOalMfEjioWoHeSfpUDjz+H4NPHrdR3x0x9bFOSGHVR5r
-         jjkA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpjTmNIwl2NNLYY2wV1oeWuwg+4i7C91s85S10Q6xARR0SOfDz8ZfarQUexlzb3ui5YVZQIai+H5WG7nDPP2CYJg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqDKeAVN8Ho/boYditKhg2/zpwnSREx5xTqqfwqqPVpmlLmUfg
-	cg7hKRcoe6lJXNBqD+vYLt3VWi/4KcbxDdH5hJCyKMtCvLuu5fQ9BNuAVgYAgcGEzotKwH96NRG
-	M3uq+1Ra0fhe8qv/3+9/H6XJmpxubsRbGiLGK3w==
-X-Gm-Gg: ASbGncvJAVUGTzDZ2v64eGnnYj0nE7kKXldRJmMBlqnWZbEwuUQjoEbD6a02dqEWZBi
-	47YkBNq+Gd0k29ycFJq2Z8TSLviNc4SLwR7RAotBYvu/QB2SjgMOUYAmwnw/reoVxBOoxbs8g1O
-	pAqW26OGOZFue1Rmm6o6X7lTmtc+yu66xDn+f/Wuc=
-X-Google-Smtp-Source: AGHT+IG7IjY16t5eI+Uq4mhx6crav2fOJBQfWeSG630jb10M49QIM1vSar09EM0x1tUf2BaE+e0vaoly2VXwdW756V0=
-X-Received: by 2002:a05:6808:999:b0:3fa:c549:cfee with SMTP id
- 5614622812f47-3fdee27903emr4770583b6e.6.1742223327241; Mon, 17 Mar 2025
- 07:55:27 -0700 (PDT)
+	s=arc-20240116; t=1742239951; c=relaxed/simple;
+	bh=lGmY4p1VRzYFACIa5FUQnatEVrtfwJ9hMuMP3qnvkpg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jO4uUmJDnMmRY44moqj5/Rj/Kc2mEYkEsNILZg8ezf6oGks5O0b9SAN5Lc9B1bXmlKopnhxNGaNjvpaeCOE+l9zyjGycUOc/j34YfZ0R0VqO+k6BdgUcnyx+XaPffgh75qd56/rH9Ee4odsYe1O3RO+eaHrBD126eTzkRb7mRMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=R9OWoe6F; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 8C0F425989;
+	Mon, 17 Mar 2025 20:32:28 +0100 (CET)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id 482UUYVCRaQc; Mon, 17 Mar 2025 20:32:27 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1742239933; bh=lGmY4p1VRzYFACIa5FUQnatEVrtfwJ9hMuMP3qnvkpg=;
+	h=From:Subject:Date:To:Cc;
+	b=R9OWoe6FSuBqgImq7TpfMos4ZiBRprbQSPoH9ytSiEWfUGwwNu33LDwACZitBNYdj
+	 QNSV+DqD/PP0rtmhNGMuP+3w9WoWZbL2dwrIzSFh9Twk2HJKPEl9OcP4RJew8Dqfem
+	 1aMUv/zrBnxSCQmi5/Af6mQgkVKXNhFDrDBxa7OLkCAa2jD8cXFPAHJphsyF6YITA3
+	 UkyXrBB0lL3Nq6ZMqFtN+ooLOuGaIiJRugo2zbbcZIdlF8hr1F/sNJS1EggD4D3t7X
+	 qg1BTpuLhQQnEK/qBDueU/Tjpna3qencXeqmhK4Kw6LZR1c1WX20SlYnHzI38MYsDf
+	 gxtLwIEu/nT9g==
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
+Subject: [PATCH RESEND v2 0/3] Introduce USBDRD-PHY support for Exynos7870
+ SoC
+Date: Tue, 18 Mar 2025 01:01:40 +0530
+Message-Id: <20250318-exynos7870-usbphy-v2-0-551433b1b27c@disroot.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250314-ufs-dma-coherent-v1-0-bdf9f9be2919@linaro.org>
- <20250314-ufs-dma-coherent-v1-2-bdf9f9be2919@linaro.org> <931e5e0b07d598912712b091d99a636b796fe19f.camel@linaro.org>
-In-Reply-To: <931e5e0b07d598912712b091d99a636b796fe19f.camel@linaro.org>
-From: Peter Griffin <peter.griffin@linaro.org>
-Date: Mon, 17 Mar 2025 14:55:15 +0000
-X-Gm-Features: AQ5f1Jq4uxqhD4QuKFFVh-mTPnz4ZIKWFOQ5G2m93FuUYrfiK5B9xukpdzF4pCI
-Message-ID: <CADrjBPoESd7D4H80prCtFXTGaWOg-HV_ovNdwZ4G7Y8n-hFdsQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] scsi: ufs: dt-bindings: exynos: add dma-coherent
- property for gs101
-To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
-	Bart Van Assche <bvanassche@acm.org>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	kernel-team@android.com, willmcvicker@google.com, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Marek Szyprowski <m.szyprowski@samsung.com>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>
+Cc: linux-phy@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Kaustabh Chakraborty <kauschluss@disroot.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742239924; l=1208;
+ i=kauschluss@disroot.org; s=20250202; h=from:subject:message-id;
+ bh=lGmY4p1VRzYFACIa5FUQnatEVrtfwJ9hMuMP3qnvkpg=;
+ b=Ioi0x7v/fqX26/WW74A2LJdQiVqOJ1v8TZ6YsZJgFaFkZPIGr6fDansoFn24pLSjnf1SkeZ38
+ ck6U6cOTkWkBolOYnuWHVca94vJiFhhJgdE8cjBdR4wJQkqNF1a+RCW
+X-Developer-Key: i=kauschluss@disroot.org; a=ed25519;
+ pk=h2xeR+V2I1+GrfDPAhZa3M+NWA0Cnbdkkq1bH3ct1hE=
 
-Hi Andr=C3=A9
+Apart from introducing driver support and documentation, this patch series
+also introduces a masking fix and non-functional changes.
 
-On Fri, 14 Mar 2025 at 15:59, Andr=C3=A9 Draszik <andre.draszik@linaro.org>=
- wrote:
->
-> Hi Pete,
->
-> On Fri, 2025-03-14 at 15:38 +0000, Peter Griffin wrote:
-> > dma-coherent property is required for gs101 as ufs-exynos enables
-> > sharability.
-> >
-> > Fixes: 438e23b61cd4 ("scsi: ufs: dt-bindings: exynos: Add gs101 compati=
-ble")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.y=
-aml b/Documentation/devicetree/bindings/ufs/samsung,exynos-
-> > ufs.yaml
-> > index 720879820f6616a30cae2db3d4d2d22e847666c4..5dbb7f6a8c354b82685c521=
-e70655e106f702a8d 100644
-> > --- a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-> > +++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
-> > @@ -96,6 +96,8 @@ allOf:
-> >          clock-names:
-> >            minItems: 6
-> >
-> > +        dma-coherent: true
-> > +
->
-> This is allowed globally already in this file. Did you meant to make it '=
-required'?
+This patch series is a part of Exynos7870 upstreaming.
 
-I hadn't noticed it was already handled further up in the yaml. In
-which case this patch can be dropped entirely.
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+---
+Changes in v2:
+- Do away with [PATCH 1/4] from v1 as it was sent separately.
+- Take over ownership of patches by the co-author, upon their request.
+- Link to v1: https://lore.kernel.org/r/20250204-exynos7870-usbphy-v1-0-f30a9857efeb@disroot.org
 
-Thanks,
+---
+Kaustabh Chakraborty (3):
+      phy: exynos5-usbdrd: use GENMASK and FIELD_PREP for Exynos5 PHY registers
+      dt-bindings: phy: samsung,usb3-drd-phy: add exynos7870-usbdrd-phy compatible
+      phy: exynos5-usbdrd: add exynos7870 USBDRD support
 
-Peter
+ .../bindings/phy/samsung,usb3-drd-phy.yaml         |   2 +
+ drivers/phy/samsung/phy-exynos5-usbdrd.c           | 407 +++++++++++++++++----
+ include/linux/soc/samsung/exynos-regs-pmu.h        |   2 +
+ 3 files changed, 339 insertions(+), 72 deletions(-)
+---
+base-commit: e5d3fd687aac5eceb1721fa92b9f49afcf4c3717
+change-id: 20250203-exynos7870-usbphy-6b98936f441d
+
+Best regards,
+-- 
+Kaustabh Chakraborty <kauschluss@disroot.org>
+
 
