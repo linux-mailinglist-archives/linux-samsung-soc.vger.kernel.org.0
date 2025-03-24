@@ -1,210 +1,139 @@
-Return-Path: <linux-samsung-soc+bounces-7589-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7591-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35BC5A6D342
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Mar 2025 04:14:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67643A6D3AC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Mar 2025 06:11:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AF089167D9F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Mar 2025 03:14:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DFDA3A82CF
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 24 Mar 2025 05:11:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4531715A86B;
-	Mon, 24 Mar 2025 03:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A6618A6AF;
+	Mon, 24 Mar 2025 05:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="r2qW74s4"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LamXcB8Y"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011046.outbound.protection.outlook.com [52.101.70.46])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C9313B2A9;
-	Mon, 24 Mar 2025 03:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742786042; cv=fail; b=r+XVL8wZ6YLmu/gD+mpBUGBMXlvuXQkwQZJ7zlAiX/j/wsxCJqIkGMy7db1iKbtO3r4xUxcUqisrqjehcmO+tq7/WRDYc1TD29ujpLWZZ2x6enJB7wbRdwcIlmQDzebAfqtq/aR4Qb8zc0fru6YSy7Vj2r2Tibv2OR/Qk+yGzM8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742786042; c=relaxed/simple;
-	bh=O8EqO1cID5pLuc5YpYgjDVfS5JEyxQBJ74LIkLDBA8I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=itnRcixYeFMXrjkVziAclzKIeH7jv2s+Ow1KDDqt7ptIBdJvbBi54gbPVbOru1KWtnmPQxUtSWYJzmvdPepbIRvuTJpoADaMGUCpeZTL6gpW2zGg+LfufNIZEyHzdeQckgV8DITd4Fz5Edgx2yobqWFDOj2hZt4BT030yfAYKWs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=r2qW74s4; arc=fail smtp.client-ip=52.101.70.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s4h0l+5hBdgWpTDlfIafcZ1guO7SL3JZlCxKv91+He6xPWOMNkbQUoyYH8+PK7NGVXe3rSjI8UPigqY5RJ/lELvl7SaQLn6H/5PI6esgd21t2KpyKRDlpWzKj8/3pv2yQXKbkwSTBbu5/SMjnBj8Hk2ToOFb2xlf6JNb7Krx78aLef1uwBLTdV5Pw7aLxh6fg+2gQdvPvUWA+2zkMRDLYxT4lRRcntNUjEztZrQiXNjiDK3ydedVpB4qZkVG8cHvMDghGufEv18j4pAmZGMVLk2/1DEIDHylsVUFJ86jgjkkqvs2rOmsnH8gAZSkhV7ai0VMlKo9gq6YeBlAGaJycQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UKSP6l58XV+0QW62ZYY7IbfO/ZA8bC/QoDp89Txj/uI=;
- b=aWuM0+xsplzapeR468JV79fDsYr7bxgJNh9vVSduaGkLYkKGKwdsN/4U66+bsCh+T2L9bsMz0SnxCp1i3y/qUk777mNR+4XVJ9J69ggOHz5GX9at8SC16XXpqI3FAM3PWedl7m2uXFiZRS55jklMK2+fpqUVoaQNW3kpOlwc3UhnAZuC4V/WAkminOuDQ+5vAo+F4dm1k6uLy2zqWqTkTe00EHpIxdk2ZDJChDlIxnuaZndcBvjYfszBILH8rleN3nuzT3DB36hSbdMMgy2T5GLyVuXl1d1h7Lm2aLGS4wsaLC2H2bK8531xve2oZb4OXOq8g1oA+TZ4ZVHpl8CiDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UKSP6l58XV+0QW62ZYY7IbfO/ZA8bC/QoDp89Txj/uI=;
- b=r2qW74s4DSooSsi4ZBtohz8HODWWuF1u4QauSxc3nYqGu85iRwfNfrrH4RRC+BXqYdsCVXT47EthaIEuJ9PGH4y4w4j+Nl3j8uSDpHpL09HNZ+rSC7qYt3Od4LCSMP2b2/LaqGYqOYwCNYYTOYQmtsedPxpfG9wfGtNW/Y95U1YBkc3Yd6lz118IShaDQ8ecklOgE49vNj9WqbOExmyN3iSeBvzmETjPmdase2FFn1C8i1IVnJgcSo7bW+k5eyQ2uIoeLrhkfQ+B5Hen7ya/j0ms330jB8p3X89GvuzPqBqyf4D7p5Mx7WxJTempcccU1W2fIZdnYUzPEfCgB282TA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com (2603:10a6:102:1da::15)
- by AS8PR04MB8865.eurprd04.prod.outlook.com (2603:10a6:20b:42c::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Mon, 24 Mar
- 2025 03:13:56 +0000
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630]) by PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630%5]) with mapi id 15.20.8534.040; Mon, 24 Mar 2025
- 03:13:55 +0000
-Date: Mon, 24 Mar 2025 12:21:52 +0800
-From: Peng Fan <peng.fan@oss.nxp.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Peng Fan <peng.fan@nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	"lgirdwood@gmail.com" <lgirdwood@gmail.com>,
-	"broonie@kernel.org" <broonie@kernel.org>,
-	"linus.walleij@linaro.org" <linus.walleij@linaro.org>,
-	"brgl@bgdev.pl" <brgl@bgdev.pl>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
-	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH] regulator: s5m8767: Convert to GPIO descriptors
-Message-ID: <20250324033038.GA9886@nxa18884-linux>
-References: <20250318052709.1731747-1-peng.fan@oss.nxp.com>
- <Z9lJETLh2y27934q@black.fi.intel.com>
- <PAXPR04MB8459A44864B9213E8265137188DE2@PAXPR04MB8459.eurprd04.prod.outlook.com>
- <e3abe8cc-357c-471f-b489-e1a8625933e0@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e3abe8cc-357c-471f-b489-e1a8625933e0@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-ClientProxiedBy: SG2PR02CA0055.apcprd02.prod.outlook.com
- (2603:1096:4:54::19) To PAXPR04MB8459.eurprd04.prod.outlook.com
- (2603:10a6:102:1da::15)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3332E337F;
+	Mon, 24 Mar 2025 05:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1742793089; cv=none; b=usmjCr/5xmoMevfvCt7zcqNj8GHHjctiR+CSIWLxip76Hqk2QC7WDFMdCsSznMRwoTzlMMtG7FiLjno2IC5B92iISLZ/WnWpfBmwzPe5/RwGZV5AAWEG6IuAwdK1NkqN2Pba9gPNzG+QYCoze7kMYzswFxu5EjciAcZgqz/OhTw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1742793089; c=relaxed/simple;
+	bh=OGe21FZmth7HYF72oeDzQkXP1oyokZOoHTNNZQgVbus=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FyXOsvxQRvmogc4xsD9KLMQiTlEhXAZT5uHoWcuTXYO/zEbf994qY/yixi8/qoS/zsRXkiiV3O96hXJaVpWvq0Ck43Nbpd7Vf53LtNe4LK9nmLrxE9EoCHR61awkVjlMdUXRnL84Oeb5y6387yRzDmqWmxm3U3+jmvo8CK2pnC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LamXcB8Y; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1742793087; x=1774329087;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=OGe21FZmth7HYF72oeDzQkXP1oyokZOoHTNNZQgVbus=;
+  b=LamXcB8YW6rmozyzLQPnYXDbBxZpLPX+YWZ0MW392UKD0TXE1shUdUZ1
+   Y8jvlyevU5NZ4k2AtTbu44M9jdSFSR1gdkbuQ2FrzUuadPV2UTtLkkVJI
+   P5mDUH3QbLkIOpv0kdnNZqnal4Z+eH2Y0PVVQMi+k70x5Ct6s+WWQ/6zn
+   EWvw3BXZ6UefhWoRcW696BLSy7P7fCglOoI1q+2oJubKj8Rd4r0E2G8Eg
+   YD0woSycbCG93XxHZhiDtXvunQl8KkQuR0SjzWRcqBSmZamtrSbP07dxA
+   ywoAVElNYPSN6EE+mQE+z5cDZtoCtTyy8fM1XMbPxlizi/76gPqjgX/jz
+   g==;
+X-CSE-ConnectionGUID: T5eLVAc8Tj6mEQoo6mZHtA==
+X-CSE-MsgGUID: aertAvjWRYShfZiuWAOCYw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11382"; a="43707322"
+X-IronPort-AV: E=Sophos;i="6.14,271,1736841600"; 
+   d="scan'208";a="43707322"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2025 22:11:27 -0700
+X-CSE-ConnectionGUID: lvb+ApYzQ2CS7iUwR+4IJg==
+X-CSE-MsgGUID: 6mngPGWLRXuxrTOUlhKXlg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,271,1736841600"; 
+   d="scan'208";a="124388459"
+Received: from lkp-server02.sh.intel.com (HELO e98e3655d6d2) ([10.239.97.151])
+  by fmviesa010.fm.intel.com with ESMTP; 23 Mar 2025 22:11:21 -0700
+Received: from kbuild by e98e3655d6d2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1twa5W-0003Hk-22;
+	Mon, 24 Mar 2025 05:11:03 +0000
+Date: Mon, 24 Mar 2025 13:09:59 +0800
+From: kernel test robot <lkp@intel.com>
+To: =?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: oe-kbuild-all@lists.linux.dev, Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
+	linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
+	=?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+Subject: Re: [PATCH 20/34] mfd: sec: rework platform data and regmap
+ instantiating
+Message-ID: <202503241201.amdeUwuc-lkp@intel.com>
+References: <20250323-s2mpg10-v1-20-d08943702707@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB8459:EE_|AS8PR04MB8865:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9e5a561-332b-4b03-ffc1-08dd6a81e968
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|52116014|376014|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?mJi2G2vp1xPJE6lll3NiSseUMVD8qKqu7muB8KQDdTKQRD1OdzfiPXBohpUk?=
- =?us-ascii?Q?lUGWHmF8Gq/tyHkTiVvuxoVbM0a0zi+nHpg+eD9iT6pY7egY/9NVi9DKHkZh?=
- =?us-ascii?Q?rLZgIspVCNR3yX/KD9kODa6Aoc9vOG1RnccXoMfxI8uwRtMWEh+hEJSF/c0z?=
- =?us-ascii?Q?rcL2+88jqpsUKEGdlqOlRkdfx5FJ8N/UyoEgeegfcHKEuDH+Kjm9u3EwzHGi?=
- =?us-ascii?Q?FeSADPOPGW5uqXx6i6j4/I20Vpo/XXHVwmx6DHpmBGFMk4Z5MAhT4AXW4k49?=
- =?us-ascii?Q?y9UJ3iDOs2GbPgxSojkS98vmkiKln05Z1wV51hEWYoC1O9oCa/71pP5V+Ib2?=
- =?us-ascii?Q?hgBuVq+0f9fb8OwXVvquAWIfEEabacwz7NnSHkvZZ2D/3Umxeob9lOUCcRn3?=
- =?us-ascii?Q?140na42h8XNqNI6roWhvMuANKNNEYEGG2LwcyiM0X+47DxQNUsusC2WprM8b?=
- =?us-ascii?Q?zijdPl83QBMdCo+WnhwDjWdRy55LXFvwvsLfEKgT89ApYP49qcwppE7O2dV4?=
- =?us-ascii?Q?L6bPEb06lrZy7r1UF/QYUYNZJRKkf1BruW69Hc8S8MhbJ4XIbU2VLQOSzZo5?=
- =?us-ascii?Q?1X0rLL2xFPIkiKDtYOBboCoZ7+BvTMqkRgfrJ3Mm1xmrbkksndlWwkzhHRwo?=
- =?us-ascii?Q?WyGQN2UT7XgvubDF3BigKytgfx/S+bFkw1y48TilvHT4mG7w3Nz1pjOfLe5T?=
- =?us-ascii?Q?p3domVkQUiY3xRSghOSnNqOcP1KO7r4YYpktQAM7exS2J51HpCUM0WN/hVf+?=
- =?us-ascii?Q?yMATZmuPe+qkSPv+WrK2SWFq9cYZwX8ab57TICIAqKb02/2Ttjl47j2VzvEs?=
- =?us-ascii?Q?PkAnn6df4FZP3Z4avMqL5Aiz6bJdtwi4VIu5cZ2/2DmH0VSNgy1rnjC3+sE2?=
- =?us-ascii?Q?d+bfgK5rnmIIlwDPTl4hXROxQBJHMgWfD99duf59bNpKTBEckr4s9pLZmvHb?=
- =?us-ascii?Q?YijnoFBOkVTnAfNLqBDK/LoFwM/K3OTKAqJlt6VgMNXThfzz6nrZ7lf0t9kP?=
- =?us-ascii?Q?s9R4bS2E3Ii9FIv5IZkR0pCAloOhQfLJ2zN0byfY/JcE6bTOu3FxX3W6NLnj?=
- =?us-ascii?Q?uCkZF7FEv/y4chBl++NhLHUPmTEhujZ5daxeNiRdqdUaw5qSTlHg1OY1nBZa?=
- =?us-ascii?Q?WkE2Znve993QjeWVRlrp/YRmm1gSea/MSFgNyeR0CA0/vTg+bAoaNAjEDAp/?=
- =?us-ascii?Q?+zUt0ZV0uyWFl+h20ekPl2JNx8UEU7TTtEGFOZRUM2CLIZLnQZm8DDvQ3IB1?=
- =?us-ascii?Q?rP5cDpu1B82Y15dzDn71DMati7lceqW+412usMaDFTw5u2qEXchqkbkN+m7F?=
- =?us-ascii?Q?8sym46+ut0L/Y53n28pI31ggyeenYx85YAA3KjAXjzHiciSTiwMFOYBCajtc?=
- =?us-ascii?Q?G7Vle8fnAX79EyUhdmgzAUZMuE+62i7dRnLJZKv7vF4usz/d0AAJAhcYI5Pz?=
- =?us-ascii?Q?wKBvih2yTczy5L6rluNhTZ6ebxqadeqp?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8459.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(52116014)(376014)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xX3MNzbCRcwmURZMpr627mhT0G3IO52Em/tNqhM/7z4TWH+y87K2ebcoKArT?=
- =?us-ascii?Q?lVWbjXP/3e7r6AH3rt6xDqND+7RPFqQSi9+PzjEmub140h16qC9iqUvY91/f?=
- =?us-ascii?Q?o4y11V9uRvAR85ruTk/WWPEwz4DW7TnOk/PQpWFmzApowM5XFnU/YNbbSAzc?=
- =?us-ascii?Q?Ux6UABX3A8YZOFP+2/fvO/kvYSpluXSaLk6IJfzMb8tT9ytq3conHwCNBDPj?=
- =?us-ascii?Q?oZluSnOrjiKAdExIyRIYNUsWJq83+VxgB8UB5zVK4aw2znzCLSQqFVASV4GT?=
- =?us-ascii?Q?a0C3sxXUPqYwMqeBLH5eYaFAseX+pgRaIttzqzfq01+tFxMozToel3RbTrG1?=
- =?us-ascii?Q?RnGsUD+pC2VWogPpx9eQdGLwJBgE2XqkHGfoD4o3Um707uq5wk3LU9xdO8+K?=
- =?us-ascii?Q?ZF15cNW1+G8zrkIbMod76oGRMgUTg1d4jdiqr2j1gY3BxHXBKN5RW+4ygDUq?=
- =?us-ascii?Q?pjSEc4hzS5xN6v5VP48geVPkBbVEEFN9M5eR9K4gXfy5E6N+mj+ny/neIRRV?=
- =?us-ascii?Q?0iuEAFXIaiP6mTPsnDYYcIZfbBlfKSTm3x8xiWnlh4yf9X6iAuSZIEG0EZoL?=
- =?us-ascii?Q?6wEMtUogadb5lUxrDVh1fyP7Z7UUxOmDZlGsHo1qj0RgIyBVfKxnOlDlcrnE?=
- =?us-ascii?Q?oegS6STWOQsB0giuwFKISIJ9onsnC6E8640FMc+oj+SbJO+TXcOrnuR5kJpF?=
- =?us-ascii?Q?yFY2oyIkL/+hrOs4yHX1RfB7To7weG+qT7v6sssV5O31yZcK5XfneSHy3A16?=
- =?us-ascii?Q?XQf/gq+iqh/M+gDt+JTSeHeJmd5t0n3Vf7shj2HiQjTIpbqOeH9ZjKtR2kBi?=
- =?us-ascii?Q?84GN2ZYodlGU/wk3DtkzmMhKBbiKPI1ZAiYw9VEYyH/1qyxEQgZWrsJ3XRzF?=
- =?us-ascii?Q?ycPHKB+PQJoC9mzru7Po5nW/loz2M28ydMsmXghstDJ94NJiCA+ujHk9QT5p?=
- =?us-ascii?Q?C8JwT2jaxJ25m0Mu+80cffJyl3HcbywGsu9iFoCPjvaO7ApPBvU+UyFK6tP7?=
- =?us-ascii?Q?PquT43UP2ggKjWuzFUVshI0doKJCMG5LabKtNs7IHUHn4/2Jpv9LEIMz2Itq?=
- =?us-ascii?Q?BuSpQEu+6N9V85kDqFTS5bahE0xxEx48IjLH7KQ7GZwyp8k9UQfYMiiYO5Dy?=
- =?us-ascii?Q?gJS9oAONmCR1f8xym8jEvYnvr+GgphobixcBXflm1zeXpvQ8nn3b4NQ4dAqz?=
- =?us-ascii?Q?v1jn+AGuj+vAJ+dxh60CKl2+xAeWoFkFNKAop0u9csFjnFrHDHzIetSLn8GN?=
- =?us-ascii?Q?aKHU+WBrkF148/jSmWDIlzc3LynWX7ROETUx6S6Ey/+jbCEtbje6O7x6z1+i?=
- =?us-ascii?Q?VEIRZ132nrsHUkUkjJ+qv519wRmryGwuKXJk9z0ngD9EqNHPtQuEIkg0xoMz?=
- =?us-ascii?Q?hMEswu5dYghzmqyZgHmySAbDstbHR6WSYgk18uKDJoMvDPeWc7a+XUi5ZADA?=
- =?us-ascii?Q?7st28X6/GoYBZWXj9T1SnaRtYyqyfbYqbd1p3+1yBGmnEIfgio1jBNNu01Au?=
- =?us-ascii?Q?15hslgKlYuGPY8w5+TfD193N2HDSrSKq130mnqcNOdXVkQTQt1wzM4LG4tk4?=
- =?us-ascii?Q?zX78RhLqe5k0NT6itYnyetA7dWHXYF/t1RkAuI6u?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9e5a561-332b-4b03-ffc1-08dd6a81e968
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8459.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2025 03:13:55.8472
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +kJh1AEPydHIX170NfcC+NsG0UnBsEc3BVmRUXxbekY1HEPCE+hcmh5oNIuQ3WQNiMsLDDOOWtiMvCU+h2pQQA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8865
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250323-s2mpg10-v1-20-d08943702707@linaro.org>
 
-On Tue, Mar 18, 2025 at 02:48:05PM +0100, Krzysztof Kozlowski wrote:
->On 18/03/2025 13:38, Peng Fan wrote:
->>> Also the commit message doesn't tell anything about the existing DTS
->>> files.
->>> Do we have this device described in any in the kernel? Do we have any
->>> googled examples? Why I'm asking because often the issue is the
->>> incorrect setting of the polarity, which needs to be carefully checked,
->>> esp. for the voltage regulators case.
->> 
->> 
->> Under arch/arm/boot/dts/samsung/, a few dtsi files have the property 
->> with results from output of
->> `grep "s5m8767" ./arch/arm/boot/dts/samsung/ -rn | grep gpios`
->> 
->> Exynos5250-spring.dts uses GPIO_ACTIVE_LOW.
->> Others use GPIO_ACTIVE_HIGH.
->> 
->These are old devices and not many people are actually providing tests,
->so you need to preserve existing ABI. IOW, if previously GPIO flags were
->ignored, meaning "1" is ACTIVE_HIGH, then you must preserve this behavior.
+Hi André,
 
-Per google,
-Manual Reset function is for Hardware reset in the Active mode.
-If MR1B and MR2B is kept low during the VLDO3 is active state, the
-system makes all internal presetting registers as default in the
-active mode (automatic power on sequence). If this hardware reset
-function is not required, connect MRB pin to high.
+kernel test robot noticed the following build warnings:
 
-So the reset is ACTIVE LOW if my understanding is correct.
+[auto build test WARNING on c4d4884b67802c41fd67399747165d65c770621a]
 
-To keep DTS unchanged, we need update polarity in gpiolib to
-force GPIO_ACTIVE_LOW.
+url:    https://github.com/intel-lab-lkp/linux/commits/Andr-Draszik/dt-bindings-mfd-samsung-s2mps11-add-s2mpg10/20250324-064418
+base:   c4d4884b67802c41fd67399747165d65c770621a
+patch link:    https://lore.kernel.org/r/20250323-s2mpg10-v1-20-d08943702707%40linaro.org
+patch subject: [PATCH 20/34] mfd: sec: rework platform data and regmap instantiating
+config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20250324/202503241201.amdeUwuc-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250324/202503241201.amdeUwuc-lkp@intel.com/reproduce)
 
-please see whether this is ok for you.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202503241201.amdeUwuc-lkp@intel.com/
 
-Thanks,
-Peng
+All warnings (new ones prefixed by >>):
 
->
->Best regards,
->Krzysztof
+>> drivers/mfd/sec-i2c.c:206:48: warning: 's2mps14_data' defined but not used [-Wunused-const-variable=]
+     206 | static const struct sec_pmic_i2c_platform_data s2mps14_data = {
+         |                                                ^~~~~~~~~~~~
+
+
+vim +/s2mps14_data +206 drivers/mfd/sec-i2c.c
+
+   205	
+ > 206	static const struct sec_pmic_i2c_platform_data s2mps14_data = {
+   207		.regmap_cfg = &s2mps14_regmap_config,
+   208		.device_type = S2MPS14X,
+   209	};
+   210	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
