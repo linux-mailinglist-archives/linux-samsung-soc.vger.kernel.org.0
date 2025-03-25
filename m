@@ -1,81 +1,82 @@
-Return-Path: <linux-samsung-soc+bounces-7607-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7609-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52414A6ECE5
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Mar 2025 10:46:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B98C9A6ECFB
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Mar 2025 10:49:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5B5216927C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Mar 2025 09:46:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA94C3B7547
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Mar 2025 09:46:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 621FB1E521B;
-	Tue, 25 Mar 2025 09:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7D6725484D;
+	Tue, 25 Mar 2025 09:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z4rZA/qg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Px6WGxeM"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F5B198A29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB4F19D891
 	for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Mar 2025 09:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742895973; cv=none; b=ISPnvHpa0VTfw4YWRT/v/CLKA9VQZH4qqANaMZ6Ahy4f6WppaGe0AAIN+mDuoWF2/7ANsKhjmDTo2DkgEebDaqNq+o92mxDIeiFqzgVZoN/a/ISr0N4p8+GKV0Mb6YNfpx5tbO1uwPR2cVwpNSkWvy3MowMyKdimQoatnGO6304=
+	t=1742895974; cv=none; b=KqE/D31bHjBY22J2tI2SxPFmSqLQp/mCtTmgW+/DStNajTBaX/hJfTBUXUnRDKBBbN0+DY0j9FS2hjDqvwcljcMh5qTi5PoAaJHSZCoCAn9c/8h3Tswtvc1JJe2/bOUVaadfwmuM6TH0eiR6wDuLX+CM8xlM6jNftsAZUFA8+d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742895973; c=relaxed/simple;
-	bh=KxaPfmUvSFnV3Byq3QqC+CSZjErbzsYdDMoKikjwIGo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X5dkceO0JPjSti1h58ruFFJUlg7bgZdCzkSXfeg2P1D2JhECbywp+tYjGEptSxWXtovxJ7bCGItO5tRKQRa91C7sC2mvOFxlOWUcnqHTl6Z/urR2UkyJ/HJrqo1WAcjJ4EBtlFAnyuPIjL3pIEmsmUOOPihC4qoVLPwMomQUFB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z4rZA/qg; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1742895974; c=relaxed/simple;
+	bh=ojat30aOqgXxfHLW0VMctCxg1ctIURlE5otCHR4gGXY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=SZl/t3urP6BN2jevFjKDfO/AmwpaCHY1WGf/bp/7bmkGsHoYivGShqwb3UZ1GSjeTK5NW9MNMRIKEgDJqoTWM0St3ExSm29N3wmkQw4u+WrseVHw3Ck0DBvRPguA4D2SY7wk0o797QbNXFSnfj3+mKzYYP/Zd/h2irRRbppXI/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Px6WGxeM; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e686d39ba2so10474367a12.2
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e6ff035e9aso9798987a12.0
         for <linux-samsung-soc@vger.kernel.org>; Tue, 25 Mar 2025 02:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1742895970; x=1743500770; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IbefRUQKW2oql/88hpKv3fFad6yESLUR8BZTv5IsOP0=;
-        b=z4rZA/qgUpvD2iU+efBlQ7bWMsQvXwDh2o5un+PKtQvZc8aTSsof0v2flPdwM724+O
-         2JA7X8MZaBslhCKvsowbHJzXSkkRcKeM6JjTPIlKh5HPyxq1JQIpPrj12zyB1Lz4XOhV
-         Wd1dFbxrDhFVMssT//qUw1XUL4jPLSjk+SL+eLNEs+Apnw0lDV8WwsXYnhg57zo/mrkI
-         VUk+jAriuRX9YXG/VUez/t+mw19/G6ZPKbqPlVLHJHv2Q6TfbP/FoWriLVQno7QkpC+j
-         9m+dkmX1WOwoi5//KqdxlBrv2lpZ+NU4AEOeCSVI3jZYpT0cAKR61MT+IV2Ji2ap5YFa
-         p9Yw==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=22F3uA1pFjUSsqH5uZTrmsJjR2r2mTgeguTTuS3Ky1o=;
+        b=Px6WGxeMhXQBMSLGq1wFAABogETJ1BkQauAhD8XTDq5jNw52XZ9s+BhfrchA3w+93v
+         MOSK4fsrXQWMDBar2h1Xwi9PPWKimAai78el+cPxtKXoEtjK2b5c92FX204N14RzfV54
+         CgN2u28mEf1k3/5ZfhygR23viIWCO/hSMydYkdJutB/rdE5hjTc0I+xQ3SIDek+gmXVJ
+         j3P48UG5Ikg3/psVBn4G8RW3g24DzNqjPbPTk4abzuTFzopF0Zn3X7p0CAjGAMz5SJKl
+         XJ/CGH7i7ivmVvzaQYqFZB0luVNWzBFuQk98146Qh0vp4v8zgoOsv6XDuqnegSbu9ibr
+         Dyyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1742895970; x=1743500770;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IbefRUQKW2oql/88hpKv3fFad6yESLUR8BZTv5IsOP0=;
-        b=r9Wg4jhzXzP6yIC4iVaMvcaFWEofk9q1L3UURaBcpjGho3A5gHSdi1f/SaTpeqdsQk
-         8hHg9iUv2hD08AnVcMII5jeTyBkLtRH1zqCz/MpUfYvWQlFHcvHqO1OjV67Kskgs/28f
-         xv1s3nNDVMcdcCGIptYF2b5/qNc2XcKG1sgx7vUD1tC5YSJ3GtkghLlZf/jI100whaOL
-         5xsRzDDuhhn4FoPPYb0iNSm2lJEiY8msfdWcHzh3HRHc+KP/CBdWYpm+TRpsrMah4hfl
-         o8qGF3n7xz6aUnEyNe2sL8jGsjDLjN8o0QMBE9n9ZiG8kIyk7+sj0PF/W9GSnsiLMmlK
-         IFHg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCmP0NfC5fFpAg2sKiB/vW01UCIP4NeyPvNyAG99PiEUdEAEQNHRv539LoV0KHICCyiCseKoqO0qrmEBGz/d5kEg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9cXB1EzEUUZrpZ/HwrZYUrDgTzqKwIlKFREazaLhevFIYWtA3
-	HX7kIBzOcMAbuQ7r8PBb8z/xy01rURfUFcx2SEIQx054vMe0gVDSY5ejP9FSoX8=
-X-Gm-Gg: ASbGncsjxsfPmU32AByPdyHEAvHc0LpgYssStGodk9aGOcLKusf81jqPa6n2nOGZ51m
-	ZP+CTiVfFay4ZbJHA2jPbOD7W7uKBkvJXr1HTS19cGV+dEf3E30O+Xr5zjw3+0+8MwZtRDFyP4Y
-	h0/56Teqc4ZOxTQm4GgV5JD5Hj9gutb0DC+vpd0DLx8htnqxtJxZQhkvrmyQlaVTt8aAIsJi543
-	nWSvILrLrG+sKfPws4DD3AEEymvuXNJNU+X0eCNpFpKWjlKiO19glDJZqZyCh3GpnbkOP8l4bVz
-	ov1qN5OAQWJzrlTOlADjg48XgPntHZHwmVux8mFbMwrpLEVvH9KoKGOV9t+cZiYOoKz+qYPckxT
-	BdMilmff9vVBA+5KV4q7LKTuKDHZo
-X-Google-Smtp-Source: AGHT+IFYMNqZbEEZU24hSgKcW3m5RLIViDlNIgnffwEY/e9N3Ve3Ev3qTdJRHo9n8Lr2y8eJMqGUHg==
-X-Received: by 2002:a17:907:972a:b0:ac3:cff:80f1 with SMTP id a640c23a62f3a-ac3f258cee9mr1765840966b.54.1742895969537;
-        Tue, 25 Mar 2025 02:46:09 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=22F3uA1pFjUSsqH5uZTrmsJjR2r2mTgeguTTuS3Ky1o=;
+        b=OIz3y/LO8dp+wTawrRSuPxN9t7X172Xhj8Ma+sVvWMIXbtCpmrpatwlJb5Fqm7uOot
+         Nta2U5RQ47xDXFXfvybrZGI+tdRwbh5FwwD85S9LZGLEL91mWO2+BioCluHq0twMl+d9
+         E0d9TF/RGyqPSna3fU5tH9sU3JDAN6fMyiWVKPxy1WL2BkCgfqjbUuNYXOFZfbIGIvMr
+         lNI4Ix1x/NYP7maXMDMpTu6GdY6es2NNfaOt6KtMWXvPwQOkL054HBzz8c6YUukR+0Qr
+         8mYMs+bqdsJBM0eHnRX17eLjiQXdeU6KkmNTCyseUFQ9Uh7jcoAX5yTNRr4JDU92GFT+
+         dS6A==
+X-Forwarded-Encrypted: i=1; AJvYcCWtrf6Trc+/+UhCjJAEOjyJxkq4Od3IZWIsfO4yH5F3xM6H3rfEIGHoeVvHq/sq6aiEklfgGEZ4PVNrHiJj3LQZ8g==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHii8BJUWOGXpVjPSfROv/SirQvcV8kssfrOaUxHi0BhbDzcx0
+	y1KtqDcgPx2mLiXhibfx0uDkAASA8+O3UmD2hs81zQ6uM9cuDafDWex7VlW6294=
+X-Gm-Gg: ASbGnctObh0Fk+8lpyAR9k3Pmkh3pd8NyN+k0pG3zs2IESRDitGshoGk/upAPPRQvQf
+	UOgjplPyuxhugLbjy41yjkHhXOGhmwp4R5hCBJ34zC1h6t2c+u7asULL7l9WxFHXl+EGMXkZe5l
+	dOtx2U4s/uF/od8X+GqiM5WMsyLvqij57aYHluRTuNAnGyey/p/H8uCmQVqsOreMERbtttjgTN8
+	K0Q/84M89EWG+AXbKs1IgGJZLUiVw+Zf5/ja3tSHpPVnFkBlxpqPgiIRsAZQDf8N1DjqrvSh5OD
+	2nt1H/DM9AJ7m3uz4e/xvWmck4r5+8CfjpQkBe8MqPRBVdewLIaLW7NlI2pG+ciWLcyo9FGgFSR
+	HvvI4KQ4EQtQOCJIPzwY4NohEQ7aK
+X-Google-Smtp-Source: AGHT+IHxghepagNA7JYR+0kzFqQK/51FZuRNjy/iCwlqs4UQAA4cdYxiEkKhK4hN7ohtA8n2bEJxNg==
+X-Received: by 2002:a17:907:bb4b:b0:ac1:e14a:19d6 with SMTP id a640c23a62f3a-ac3f1e494e8mr1615547566b.0.1742895970048;
+        Tue, 25 Mar 2025 02:46:10 -0700 (PDT)
 Received: from puffmais.c.googlers.com (8.239.204.35.bc.googleusercontent.com. [35.204.239.8])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3ef8e509dsm832834566b.68.2025.03.25.02.46.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 25 Mar 2025 02:46:09 -0700 (PDT)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Subject: [PATCH v3 0/2] firmware: exynos-acpm: allow use during system
- shutdown
-Date: Tue, 25 Mar 2025 09:46:06 +0000
-Message-Id: <20250325-acpm-atomic-v3-0-c66aae7df925@linaro.org>
+Date: Tue, 25 Mar 2025 09:46:07 +0000
+Subject: [PATCH v3 1/2] firmware: exynos-acpm: use ktime APIs for timeout
+ detection
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,11 +85,9 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAF574mcC/23MSwqDMBSF4a1Ixk3Jw3ilo+6jdBDjVS9UI4mEF
- nHvjY4qdHgOfP/KIgbCyG7FygImiuSnPPSlYG6wU4+c2ryZEsoIrSS3bh65XfxIjgutAUwjjMS
- OZTEH7Oh91B7PvAeKiw+fI57k/v7vJMkF75q6hqZFwEreXzTZ4K8+9GwPJfWLyzNWGUNbA5QVS
- qjMCW/b9gWJkyPp5AAAAA==
-X-Change-ID: 20250321-acpm-atomic-033775b051ef
+Message-Id: <20250325-acpm-atomic-v3-1-c66aae7df925@linaro.org>
+References: <20250325-acpm-atomic-v3-0-c66aae7df925@linaro.org>
+In-Reply-To: <20250325-acpm-atomic-v3-0-c66aae7df925@linaro.org>
 To: Tudor Ambarus <tudor.ambarus@linaro.org>, 
  Krzysztof Kozlowski <krzk@kernel.org>, 
  Alim Akhtar <alim.akhtar@samsung.com>
@@ -99,43 +98,85 @@ Cc: Peter Griffin <peter.griffin@linaro.org>,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-One user of this ACPM driver is a PMIC driver that needs to communicate
-with the PMIC during late system shutdown [1] and at that time we are
-not allowed to sleep anymore.
+acpm_dequeue_by_polling() uses a loop counter and assumes that each
+iteration of the loop takes 20us. It may take longer, though, because
+usleep_range() may sleep a different amount.
 
-This series address this by switching the code to using udelay() in the
-specific case of system shutdown. This approach was inspired by I2C's
-i2c_in_atomic_xfer_mode(), which has to deal with a similar corner
-case.
+Switch to using ktime_get() / ktime_before() to detect the timeout
+condition more reliably.
 
-Link: https://lore.kernel.org/all/20250323-s2mpg10-v1-29-d08943702707@linaro.org/ [1]
+This change also makes the code easier to follow and it allows us to
+adjust the sleep if necessary, without having to adjust the loop
+counter exit condition.
 
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
-Changes in v3:
-- switch to unconditional udelay() (Krzysztof)
-- Link to v2: https://lore.kernel.org/r/20250324-acpm-atomic-v2-0-7d87746e1765@linaro.org
-
-Changes in v2:
-- add missing ktime.h include
-- switch to ktime_before() instead of !ktime_after()
-- add link to user requiring this change to cover letter
-- collect Tudor's Rb
-- Link to v1: https://lore.kernel.org/r/20250321-acpm-atomic-v1-0-fb887bde7e61@linaro.org
 
 ---
-André Draszik (2):
-      firmware: exynos-acpm: use ktime APIs for timeout detection
-      firmware: exynos-acpm: allow use during system shutdown
+v3:
+* slightly reword commit message due to updated patch 2/2
 
- drivers/firmware/samsung/exynos-acpm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+v2:
+* add missing ktime.h
+* ktime_before() instead of !ktime_after() (Tudor)
 ---
-base-commit: 9388ec571cb1adba59d1cded2300eeb11827679c
-change-id: 20250321-acpm-atomic-033775b051ef
+ drivers/firmware/samsung/exynos-acpm.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Best regards,
+diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
+index a85b2dbdd9f0d7b1f327f54a0a283e4f32587a98..542eaff03f9e39422a8c5345ca75e05c1710a9ee 100644
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -15,6 +15,7 @@
+ #include <linux/firmware/samsung/exynos-acpm-protocol.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
++#include <linux/ktime.h>
+ #include <linux/mailbox/exynos-message.h>
+ #include <linux/mailbox_client.h>
+ #include <linux/module.h>
+@@ -32,8 +33,7 @@
+ 
+ #define ACPM_PROTOCOL_SEQNUM		GENMASK(21, 16)
+ 
+-/* The unit of counter is 20 us. 5000 * 20 = 100 ms */
+-#define ACPM_POLL_TIMEOUT		5000
++#define ACPM_POLL_TIMEOUT_US		(100 * USEC_PER_MSEC)
+ #define ACPM_TX_TIMEOUT_US		500000
+ 
+ #define ACPM_GS101_INITDATA_BASE	0xa000
+@@ -284,12 +284,13 @@ static int acpm_dequeue_by_polling(struct acpm_chan *achan,
+ 				   const struct acpm_xfer *xfer)
+ {
+ 	struct device *dev = achan->acpm->dev;
+-	unsigned int cnt_20us = 0;
++	ktime_t timeout;
+ 	u32 seqnum;
+ 	int ret;
+ 
+ 	seqnum = FIELD_GET(ACPM_PROTOCOL_SEQNUM, xfer->txd[0]);
+ 
++	timeout = ktime_add_us(ktime_get(), ACPM_POLL_TIMEOUT_US);
+ 	do {
+ 		ret = acpm_get_rx(achan, xfer);
+ 		if (ret)
+@@ -300,11 +301,10 @@ static int acpm_dequeue_by_polling(struct acpm_chan *achan,
+ 
+ 		/* Determined experimentally. */
+ 		usleep_range(20, 30);
+-		cnt_20us++;
+-	} while (cnt_20us < ACPM_POLL_TIMEOUT);
++	} while (ktime_before(ktime_get(), timeout));
+ 
+-	dev_err(dev, "Timeout! ch:%u s:%u bitmap:%lx, cnt_20us = %d.\n",
+-		achan->id, seqnum, achan->bitmap_seqnum[0], cnt_20us);
++	dev_err(dev, "Timeout! ch:%u s:%u bitmap:%lx.\n",
++		achan->id, seqnum, achan->bitmap_seqnum[0]);
+ 
+ 	return -ETIME;
+ }
+
 -- 
-André Draszik <andre.draszik@linaro.org>
+2.49.0.395.g12beb8f557-goog
 
 
