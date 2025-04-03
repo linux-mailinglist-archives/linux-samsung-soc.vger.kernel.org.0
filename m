@@ -1,82 +1,82 @@
-Return-Path: <linux-samsung-soc+bounces-7787-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7789-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98FC0A79F35
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Apr 2025 11:02:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07DA4A79F32
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Apr 2025 11:02:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 678F5189430A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Apr 2025 09:01:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90EB73B6775
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  3 Apr 2025 09:01:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B9CF24DFFA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 475AD244EA0;
 	Thu,  3 Apr 2025 08:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="inbk4I+r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="URzP2DcC"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1648724A074
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD7824A066
 	for <linux-samsung-soc@vger.kernel.org>; Thu,  3 Apr 2025 08:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743670760; cv=none; b=dSsGMaM6ufYM6knS7pf9xMZ6tVD7c+iXDT15Y5hD/BFv9kgo/15dt6s8CdYnU1NyC79+AU9vrWk7sVMd/jINjqsSllOSZ8eFgxAELCTMqAT5bk3At62LLh4+I/WpJRSYBPcn/yr3BK8go9W9uXOXVg3deF8wm32dNUteJkP9nmo=
+	t=1743670762; cv=none; b=MVp+3US7WgbBf84c+r5JbGHsUrH/ADBBerp2yV+STxcsRhdFy8QAVBxEaN9Tag4ZaifWqdAuNBcvhucn5/IWjg3Fg0h7w9CcX1AfSl5Qc3IcBqL2n4XCVYbk9FZ43mLHImPJnWrACo/P8ugRwDSsUZzeJtAV9N538RMRpUGCr/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743670760; c=relaxed/simple;
-	bh=3HQSCKKi1fwFRVm95IbU9t5Hr7ITyiskN+9xAwmrKhQ=;
+	s=arc-20240116; t=1743670762; c=relaxed/simple;
+	bh=X0QQTgyZyBPIURJ3v2tympUyOwlqSVYuYyMtIMSpfpo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M8SMAEqBxI0YF2OZ2QIeUmt89KVk4g1OK/lZuJnFSjL6acc58rfdIZQB8uj97xp8PHNcOdY7kgjlU0f1nkuHBa6woztZv2Yf7NNZGkJqaQSqYOhPHk2J5AofiO2NIRpxDQJFx2i3auwb6970Q1LGQrkZrpYGgJ2M/74NOefye50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=inbk4I+r; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:To:Cc; b=sjfcMjlDuyFbHMEq1gzpeCBqIVA9az0BRF2vXRsu6FYTAJ9689Jl/uRgHjzWCDAgSdQa25wvL538h3X4Wge6zrtgBZtYsLujshF3Askp9SQt3thS6k7r2JFymCLIyILnWZZp+W7orepsNstORWM/71o/P0FwrUZcQO3yu43TLMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=URzP2DcC; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5e5e8274a74so1099668a12.1
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5eb92df4fcbso1267002a12.0
         for <linux-samsung-soc@vger.kernel.org>; Thu, 03 Apr 2025 01:59:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743670752; x=1744275552; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1743670753; x=1744275553; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=c021jwV5dbsG8JoPrCRgjZmmvCnTfk3Xe/yBggRzooI=;
-        b=inbk4I+r/k4ykJ/Nugo2yeQ4wXSJAhl8r0L/UHumax8beFQaeSG7wW4K6eYJdwPJwZ
-         Op0as6SlDG2WVK8j7/uNNJJbIaJPNoo2yCKtf/Vfl9PbHDO2KR5MRn1lEqCbQciktX61
-         VLwdEtLQjuWnmdTveoWv+1/5eY/w/E8A9MK8knRh7CK7gR7dTvRGlsifjdN1mhQ3Rc/v
-         OL66GgE4HbECZJwJDdT48ZKXQcD0Mp21Mn0x+xsLlROFznQ1mT4WX82yuzac997GeFdV
-         geLKIEl2t2qixDmGw3o4SSPEM4mZPXUfp24PUpgVGntda4dXhgJ/87dGlGS/vq/xYcFJ
-         fc4Q==
+        bh=kV75c5wurwfdiB4LfjbAT+jBLqgbz3xs0SfJTGIePwA=;
+        b=URzP2DcCIIAiVaxYYoMP73MU7SEV97+smhklH5zWxCElfDYlenJFBlbTeXnyL8euh9
+         yojM2ojq8gpYSFUyO2o2EhhfuWdSdqE6duPdeILAc6qZkUMbuqsv9XxgL6bSEzE+mK/E
+         EtiCau9LX0kSw5SH1+t27TYBgm6G4/KfA0GmLOdOjst66COPikk+kVdmsVqbe8w56XwL
+         BwIa8v3iuxg3ViEGY1horI+IRPXbyVb1QEIeUvyTu133yDODP3FjYSed/DTCOBw0Qcdq
+         bMNZ/3xs8eqL/QQJHld6leDsJAG29QtCUVMndeGfgnxz1KwMzppjXf+8PoXaPWKvrDaJ
+         wfHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743670752; x=1744275552;
+        d=1e100.net; s=20230601; t=1743670753; x=1744275553;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c021jwV5dbsG8JoPrCRgjZmmvCnTfk3Xe/yBggRzooI=;
-        b=dBku7uPAaYFiSJg9sHGB4cj/lDNO+T9KH+T52nVM+zfuMGnUws7CDTno+jIY4GU5jy
-         WPSt41TWEA4/O4ayDDfZDS8+sJqeIl7nX/z9IexN03PKBUIIgitHI7LAioEBlmAPeVoJ
-         PJoTDa7Avgjm77SSiY6JJnTuSMe6tKl/DApe6oYcKhCvHM1jLZmN3K+jvePab7kQ1fNK
-         atKmFS53M2TIlm5pyJcZM5hUZGq1Gopgh8WoEkRmSmbIKyu30d8Sqpew8gaAXkcsNa6Q
-         v7sxyBUV2jhBj7C4rASVTWRNf0hUAamYKqYBA3j3CpF5Z8hQom6jlI7LTG1ZqozAP0Uk
-         MVkA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7Is6SQPzG8LRmoeMF5JglYwQ2CPr+nt0FzqNqeRhYRxol+Mo2LsdQTPE6itUvi7qPxKHbncDNmv4pzM8Wc9QASQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzIoKcHxkoJeZO5g0dWUJTWcMJxYJbxbpL1W0eKhlf/dywck7l
-	miO1edMpwf00cFFMTLLRrCxpIqfKcUGU5rXN+IotZPBoHgEJi1it+mZTtzmOL7M=
-X-Gm-Gg: ASbGnctF0jCTFqtAvJGJ7J1ot/wQ6KZDie5K1/a0nkqEDUQyb1EZOnVGat2DlKKBfRQ
-	fi5efja76BJWZKdL3uapilTXszwV8i6DICK3FKKvzHGiMpYnVJ+xz9mdMMxoo4IP5qe/zrIaqzh
-	3vQprRM6Qexichd1sR8MvPivhrmO0berKT+nx/1Elb8EnlrrPoC1cG7UvAqTfsnpMkZDS8mXsVe
-	n8cKxJW2zmVfGCFhT9HytaGBTG34TRVnoPZN7NOBBy1izeSAh7n0jLu7Q0QSD6Xvz8ynSX9ego6
-	PJhdsFSHrU1a/kBYJ2f774Tx0t9bG1QbJyWWqD7xFJ8P/VSVGxk8yyJHkIMTEFkOkeD2fjj9nej
-	OFcAGbqqiPpUkvXNL4tN8K1cNrupLHI461HBF/DM=
-X-Google-Smtp-Source: AGHT+IHCv1y/iOD6tATf8l6JbAVP7nosxikaub6pMGAtowLVbGuj8LVxbHPFWCZvGPjo74E5dX1Kfg==
-X-Received: by 2002:a05:6402:90e:b0:5e8:c0a7:4244 with SMTP id 4fb4d7f45d1cf-5f08716b5edmr1415400a12.9.1743670751910;
-        Thu, 03 Apr 2025 01:59:11 -0700 (PDT)
+        bh=kV75c5wurwfdiB4LfjbAT+jBLqgbz3xs0SfJTGIePwA=;
+        b=MB85Cu2dCmpkPxSTHQj+wZwBCK73x84wNZxYOqUvlQe3i7WnbeUbWV4tlav5yNxL6o
+         r5RxucVAeCg3OfNos3FCb2qAzic6N5PMC9+WOiuanOygCoDe80cxFGrfLqwcEtLfmtzC
+         R0GJ/ve2iz5lmNRTFq8JRu78Iddi2hsD7LpyuV2ZCkcSsCepVtPiEPkRIUwRFgCT5NQg
+         QwkioD1611t6kMnkqmgMwQ1E8+z4h+SOgL9nHqFpg/TJqy9yYTr4P32tQCXWI+BXLuaG
+         bgSo7hKZFb8gw9FUrOoI6irkahQJFtlaWJ7U5eVso9xzG36tiswV+93wzpXWkxy2BnDb
+         DK3g==
+X-Forwarded-Encrypted: i=1; AJvYcCXbcti+S1Igt5Blh1v9WM28YM4osBcuQMLvTHAZKlWVzED+c/TQ15Xk9OLed5LiGkl+cmVPyaVnhxlErA1BVcN4Og==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB63vpF1G97SOcDTD3DeU7zhJLrpTgaJYXFgedbfK90Dc5bjpx
+	FPhYCuqz/+ZtE8THvj0VnHptyv1UR+zvRFeoHi/Lu4fHtdQ+DuosSFuifv63fQ8=
+X-Gm-Gg: ASbGncsJP7L/9gcgk94av5sd/0adDs75NJNfJExbvkKAi6yPAiSb1+1hTpaALeUZlG6
+	PGr3VYrgmsRy9ECyMbQQ65NtBaRGhfYEtmiBBMxoloFM4t2mTPgUkmX0oyCk63KI1R3fCARaLA6
+	RBAX4FjaLfGrRH333xEvTinLuEFqDtfpkY1t9SUKfWhhhlRsiRiJQTOxODeMrhhzYnUFXNmCMQL
+	ZBJPXLIb0EHBjWXafA15br1auGVlfR0z0Nj7pQOCo+NdcFxF2PRCDHARFJ7Apqa7RenXIB5Eck4
+	VlmNGfTLgTmIF0ggbtbOmTluxja9gMdFbsiILUEBAe/Sxk+Sm6UoybaUiEfQWaIwM0j8zVcN5iv
+	wj5wWSl3zxGvmgRSGdgYpnN/KTEId
+X-Google-Smtp-Source: AGHT+IGcX+tYkvLIpCQDt/tVecCK/2rtCpUV2gBjKE/E/xLa7G15uMrlM8X/q+3JmlSAkeK9HlD3fA==
+X-Received: by 2002:a17:907:9692:b0:ac3:49f0:4d10 with SMTP id a640c23a62f3a-ac7bc259458mr148490166b.38.1743670752608;
+        Thu, 03 Apr 2025 01:59:12 -0700 (PDT)
 Received: from puffmais.c.googlers.com (8.239.204.35.bc.googleusercontent.com. [35.204.239.8])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f0880a535fsm637614a12.80.2025.04.03.01.59.11
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f0880a535fsm637614a12.80.2025.04.03.01.59.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Apr 2025 01:59:11 -0700 (PDT)
+        Thu, 03 Apr 2025 01:59:12 -0700 (PDT)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Thu, 03 Apr 2025 09:59:11 +0100
-Subject: [PATCH v3 19/32] mfd: sec: don't compare against NULL / 0 for
- errors, use !
+Date: Thu, 03 Apr 2025 09:59:12 +0100
+Subject: [PATCH v3 20/32] mfd: sec: use sizeof(*var), not sizeof(struct
+ type_of_var)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250403-s2mpg10-v3-19-b542b3505e68@linaro.org>
+Message-Id: <20250403-s2mpg10-v3-20-b542b3505e68@linaro.org>
 References: <20250403-s2mpg10-v3-0-b542b3505e68@linaro.org>
 In-Reply-To: <20250403-s2mpg10-v3-0-b542b3505e68@linaro.org>
 To: Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
@@ -105,53 +105,33 @@ Cc: Peter Griffin <peter.griffin@linaro.org>,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-Follow general style and use if (!arg) instead of comparing against
-NULL.
+Using sizeof(*var) is generally preferred over using the size of its
+open-coded type when allocating memory.
 
-While at it, drop a useless init in sec-irq.c.
+This helps avoiding bugs when the variable type changes but the memory
+allocation isn't updated, and it simplifies renaming of the struct if
+ever necessary.
+
+No functional change.
 
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
  drivers/mfd/sec-common.c | 2 +-
- drivers/mfd/sec-irq.c    | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mfd/sec-common.c b/drivers/mfd/sec-common.c
-index 4871492548f5efde4248b5b3db74045ec8c9d676..55edeb0f73ff4643f23b9759b115658d3bf03e9a 100644
+index 55edeb0f73ff4643f23b9759b115658d3bf03e9a..e8e35f7d5f06b522a953e8f21603e6904401c983 100644
 --- a/drivers/mfd/sec-common.c
 +++ b/drivers/mfd/sec-common.c
-@@ -164,7 +164,7 @@ int sec_pmic_probe(struct device *dev, int device_type, unsigned int irq,
+@@ -163,7 +163,7 @@ int sec_pmic_probe(struct device *dev, int device_type, unsigned int irq,
+ 	struct sec_pmic_dev *sec_pmic;
  	int ret, num_sec_devs;
  
- 	sec_pmic = devm_kzalloc(dev, sizeof(struct sec_pmic_dev), GFP_KERNEL);
--	if (sec_pmic == NULL)
-+	if (!sec_pmic)
+-	sec_pmic = devm_kzalloc(dev, sizeof(struct sec_pmic_dev), GFP_KERNEL);
++	sec_pmic = devm_kzalloc(dev, sizeof(*sec_pmic), GFP_KERNEL);
+ 	if (!sec_pmic)
  		return -ENOMEM;
  
- 	dev_set_drvdata(dev, sec_pmic);
-diff --git a/drivers/mfd/sec-irq.c b/drivers/mfd/sec-irq.c
-index c4db58813059f07372679223ec570ed07f52cd73..5cd9667a21e9e8b052b2ef0b5d2991369bffe8bb 100644
---- a/drivers/mfd/sec-irq.c
-+++ b/drivers/mfd/sec-irq.c
-@@ -448,8 +448,8 @@ static const struct regmap_irq_chip s5m8767_irq_chip = {
- 
- int sec_irq_init(struct sec_pmic_dev *sec_pmic)
- {
--	int ret = 0;
- 	const struct regmap_irq_chip *sec_irq_chip;
-+	int ret;
- 
- 	switch (sec_pmic->device_type) {
- 	case S5M8767X:
-@@ -496,7 +496,7 @@ int sec_irq_init(struct sec_pmic_dev *sec_pmic)
- 	ret = devm_regmap_add_irq_chip(sec_pmic->dev, sec_pmic->regmap_pmic,
- 				       sec_pmic->irq, IRQF_ONESHOT,
- 				       0, sec_irq_chip, &sec_pmic->irq_data);
--	if (ret != 0)
-+	if (ret)
- 		return dev_err_probe(sec_pmic->dev, ret,
- 				     "Failed to add %s IRQ chip\n",
- 				     sec_irq_chip->name);
 
 -- 
 2.49.0.472.ge94155a9ec-goog
