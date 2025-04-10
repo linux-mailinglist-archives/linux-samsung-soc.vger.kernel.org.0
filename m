@@ -1,133 +1,95 @@
-Return-Path: <linux-samsung-soc+bounces-7961-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-7964-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7EF6A83269
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Apr 2025 22:39:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 648CBA838AE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Apr 2025 07:52:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B87571B62F3B
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Apr 2025 20:40:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54F68173899
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Apr 2025 05:52:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61EDC22D4FE;
-	Wed,  9 Apr 2025 20:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uQ2JPrfy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8760420103A;
+	Thu, 10 Apr 2025 05:52:39 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F5121CFFF
-	for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Apr 2025 20:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+Received: from relmlie6.idc.renesas.com (relmlor2.renesas.com [210.160.252.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3210B1C3BEB;
+	Thu, 10 Apr 2025 05:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.160.252.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744231078; cv=none; b=T8lm3AZt20DOrYN5GhAhfwm0NBqH1OXg6VJQt1v941aTF1TF6i0Mydf7sUAzeqEDxMZ+bSYfsIlKE+yoN9lT8L0/vhnwPXMXFnq2K0Fw6ULPK2p3uwGQXe/4SSZ37wcqQByt/HKWqOFxcglEgb5b2c5dUz7Yf18xm2mDO0cbJ9U=
+	t=1744264359; cv=none; b=sjIDJgk7lCg4yfxNcj0Tv//GQBW3rSZgONbIApqhUQXQ3RxJ6ewIG2EYidSUyidASidBfYYMSHSqf09HHN5xOJU5DS10r3Ue3ZJB604y52A3mOzjnvII9l/Od+0vqR+kPurTb4mejUpvczGtVNo7gEhGu/e8n6yyDkGpFIqFjj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744231078; c=relaxed/simple;
-	bh=CoKrSJInLiIXwlY1ZZ7M5lRUgwJwFwDmaqWcxDpmqQ8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fZ++eVKl5SHz77APZ0sh0egcbQS7QpP0jFSLKxfb/YhUms9bbSI6WPwxaMh6SXm12RFiXSNDYYiPd/SIh6F+WHpxkdvk/uk3fJl0Q6C6YEYCEIFtBAlYTepmTmwHkrZyvTU+3a+fEpjoXrkzV4cSlTkw41yOn1ga3TeyUYArO2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uQ2JPrfy; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac25520a289so17184966b.3
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Apr 2025 13:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744231066; x=1744835866; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+Ow5hOPbiIZXZpWZ6Uu6oQmw7CcTYqg39bQG6yedoPQ=;
-        b=uQ2JPrfyUL4InhIYJFfMorllx1mzrBQFlwuQghTNuTEbVA9uzUptUuwbdJBoR7sROh
-         daTsVIxDMfBXo7w+dSyQIlEzyUb9SpHT0s+U2OejvKDOAe3f63hTr98Ocglgvzu0kOiW
-         5aPEr7xyLzTl/SR6ZlMYr3KMb2J5nR6dp7PwMY4q7l3ifdl5qy1+OgUVTT277z/DVMtl
-         2C09nOWOU+haKmfD+V5qqmX+QlaBeru5pUvZXVlQFAbDo2gCCRE1xllwbOGyryoVxG9o
-         dXbAP/8Wj70FG/MrKFv2EC/bpoxg3391AilSGNJjDySBH7hlpRXOohBHIJSVpJIL6W02
-         aTBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744231066; x=1744835866;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Ow5hOPbiIZXZpWZ6Uu6oQmw7CcTYqg39bQG6yedoPQ=;
-        b=aIyxk2Rj/FIl/4O2Lg+2z8YOGXvf+D5lwugSpc/qx523O8WcJ0V7rh/Hrvr4D7FQFI
-         nU3VN0PX72GG2zhvsrHwyL46OWkdHI6GICBTcL2Rqqff2GABxvGccOJ63zfMuCwbvP1S
-         HxqmKPuQbdCXRzG4OiX2ArdWh2sbvBvSTbqHB2T5/8D0d6pNGIhr5IBGR0brSrZlJyUU
-         m1mA8vefftScYmprfA0L6+xgoa75cTn+1S6pXwxP5iMzXscgAklwcFunKmRvXQTBSYSz
-         cjTbHMifuYg+hWQYzNExzAaOn2GgWGFabEgMNyRogvvJQFaB5ho/78iNPHLNYY6Rt1Jn
-         8BVA==
-X-Forwarded-Encrypted: i=1; AJvYcCXFasuqbex5CVrObG+hb8zfbzYa74yDGkMesB6Aw10tgpwIMwRJdrrFBfvWbSUWZOAVFiqVg9qq3nzcFqTc11LoQg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq241nyDzJkx/pfDHVLrfZ5Pqj4iKmd7nz40rBoOQ6DQQNw6Bo
-	b/IwAzxz1GmGKEJmx/Nyjxwmik+5STCVs+hDuah9qWrpbrA+CxuquqZe61T171M=
-X-Gm-Gg: ASbGncsyAuRd/0xFWdROxS2XIcWlZ9NcVeQzB/Cks9pSc+V/0fGm1AjAFFURQNYbtNa
-	F/yeH6RgBXJDhZ/NKhfyOO6TJBCffCGPYinbt6Wixeqd3g+W9CneY0vgapDCjfP84LVq65Fu17w
-	kW34jWMFhX0DJpCQWy0jMUpLcrBN19pZMZKcj5GzQwEo53Sxm091JE9PxP9Zto2KcCzn97zdsYk
-	AlezFWLC3Z0ew0Bm/iaUkaNHquYWkj+NOaiDix2LVK5Wgt818pzji5hYzvJJxyuByXfkUjTUGLO
-	cDBMgxSN8IMJLSH2byMvoatXjWz8tybAoJY5r310MUWHIKxc9xKP6tMsLxeKlPpZ5wNQEU6cVb2
-	+LhZ1xcbEBoFaKzqfjkNFs5DEQPI=
-X-Google-Smtp-Source: AGHT+IHIxFKwjUo5uFV6Jyj3wWXPZsF8lPwam2ydOiylWhWcuYhWeTd4XU5X8ZDB51XZhRzJ2FSu4w==
-X-Received: by 2002:a17:907:7d8b:b0:ac7:9acf:4ef with SMTP id a640c23a62f3a-acabd4d7131mr6904366b.56.1744231066055;
-        Wed, 09 Apr 2025 13:37:46 -0700 (PDT)
-Received: from puffmais.c.googlers.com (40.162.204.35.bc.googleusercontent.com. [35.204.162.40])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1ccc001sm145850366b.126.2025.04.09.13.37.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 13:37:45 -0700 (PDT)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Wed, 09 Apr 2025 21:37:53 +0100
-Subject: [PATCH v4 32/32] MAINTAINERS: add myself as reviewer for Samsung
- S2M MFD
+	s=arc-20240116; t=1744264359; c=relaxed/simple;
+	bh=LUW3f/3ooEUC5Ii2dNvbQ3vnVQNTFhnSLEa05vIJ+iE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j/beWCwPSEcdxuLZwPqh3K3d1qEaha7vgsFzMpOgb7stqU+YW91wJBLGbBNCwNA2SmEsW3r8WUQaQtZNutAvU2OseRAWhoUA2GC62sWyapXwPuqOtd/N7J1jZfa8/csebXfmVOzBrM/OOVd33D6ZHjqfzlcSJRBueM3pa64SiTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; arc=none smtp.client-ip=210.160.252.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
+X-CSE-ConnectionGUID: As0fnxYxSp+ksbv7bZCSmA==
+X-CSE-MsgGUID: rFEIlZNZR8+GjXdpmE5CoQ==
+Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
+  by relmlie6.idc.renesas.com with ESMTP; 10 Apr 2025 14:52:29 +0900
+Received: from localhost.localdomain (unknown [10.226.92.117])
+	by relmlir6.idc.renesas.com (Postfix) with ESMTP id 9C797419AE41;
+	Thu, 10 Apr 2025 14:52:26 +0900 (JST)
+From: Biju Das <biju.das.jz@bp.renesas.com>
+To: Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-media@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	Biju Das <biju.das.au@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4] media: platform: exynos4-is: Use of_get_available_child_by_name()
+Date: Thu, 10 Apr 2025 06:52:21 +0100
+Message-ID: <20250410055223.5048-1-biju.das.jz@bp.renesas.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250409-s2mpg10-v4-32-d66d5f39b6bf@linaro.org>
-References: <20250409-s2mpg10-v4-0-d66d5f39b6bf@linaro.org>
-In-Reply-To: <20250409-s2mpg10-v4-0-d66d5f39b6bf@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Russell King <linux@armlinux.org.uk>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.14.2
 
-I'm working on a Samsung device which includes this MFD and would like
-to be Cc'ed to further contributions and help on reviewing them. Add me
-as reviewer.
+Simplify fimc_md_is_isp_available() by using
+of_get_available_child_by_name().
 
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+v3->v4:
+ * Readded Rb tag from Krzysztof as it is trivial change.
+v2->v3:
+ * Fixed CHECK: Comparison to NULL could be written "child" reoported by
+   [1] https://linux-media.pages.freedesktop.org/-/users/patchwork/-/jobs/74116132/artifacts/report.htm
+ * Dropped Rb tag from Krzysztof.
+v1->v2:
+ * Rebased to next as the dependency patch hits on 6.15-rc1.
+---
+ drivers/media/platform/samsung/exynos4-is/media-dev.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d4d577b54d798938b7a8ff0c2bdbd0b61f87650f..9f05af52b062d8cab0f8b48b2625432108604c3e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -21397,6 +21397,7 @@ F:	drivers/platform/x86/samsung-laptop.c
- 
- SAMSUNG MULTIFUNCTION PMIC DEVICE DRIVERS
- M:	Krzysztof Kozlowski <krzk@kernel.org>
-+R:	André Draszik <andre.draszik@linaro.org>
- L:	linux-kernel@vger.kernel.org
- L:	linux-samsung-soc@vger.kernel.org
- S:	Maintained
-
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.h b/drivers/media/platform/samsung/exynos4-is/media-dev.h
+index a50e58ab7ef7..ea496670d4b5 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.h
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.h
+@@ -179,8 +179,8 @@ int fimc_md_set_camclk(struct v4l2_subdev *sd, bool on);
+ static inline bool fimc_md_is_isp_available(struct device_node *node)
+ {
+ 	struct device_node *child __free(device_node) =
+-		of_get_child_by_name(node, FIMC_IS_OF_NODE_NAME);
+-	return child ? of_device_is_available(child) : false;
++		of_get_available_child_by_name(node, FIMC_IS_OF_NODE_NAME);
++	return child;
+ }
+ #else
+ #define fimc_md_is_isp_available(node) (false)
 -- 
-2.49.0.604.gff1f9ca942-goog
+2.43.0
 
 
