@@ -1,251 +1,227 @@
-Return-Path: <linux-samsung-soc+bounces-8273-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8278-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46193AA0EF0
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Apr 2025 16:34:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0723EAA0F44
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Apr 2025 16:42:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDABA3BB97B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Apr 2025 14:34:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27FD016D73D
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Apr 2025 14:42:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 020EC21773F;
-	Tue, 29 Apr 2025 14:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD1562185BD;
+	Tue, 29 Apr 2025 14:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NHl3Vqyd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WaLLtT5C"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2069.outbound.protection.outlook.com [40.107.100.69])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5E204C07;
-	Tue, 29 Apr 2025 14:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.69
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745937269; cv=fail; b=UUaFS7qpoPBVzIp43wbWWDJF7SGgVdfvbVjRLHurq9icQMJyGiWH7P7suySbjtS2ZYSTHSyM9ItnkPUNylY5ATrASJ8wkbtjAlEapemZRyWZjfiT3vDV256O5ratcU9QqdmYaNvSe1VQs01NX+W2WW1we+y8p9L8z/HDcfqlaxs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745937269; c=relaxed/simple;
-	bh=bUrKHVR/eNGkFyK/NQJ0v64fIrdHlJkOpQ/dg5FcqgI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ckoJN8/NIX6Rfu1P+UP9adVtYzAOEWsgIvTBQxoawgp8+kKMyqmffPWV6/f79KHg2NO/DaCQqKcZLhOP/McB69GMiXjywnYXWR9V/ktiZOPtf+Hk4/t8bWFXJpdshR8EUH51zycbgwLAXkcCQ81d5Rx70hnatfIo0KVMi81FyPc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NHl3Vqyd; arc=fail smtp.client-ip=40.107.100.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zSJ2C3jP8ziXosodvGeIvtc2OvasjbZB49zTnR1MWBHROqZtb2gev/QW97jV6RnwlOOJmJMoq3uu58QUh+gUEH3qn8GjcFFYtD/nfbAGgIcaIP1XRkY0tMPTYbthZd5ENHDe6LuQxEY6JRrWLeFiEERwxMZThtzJEnqrVUmNDK8OUj3NaVTwi2N0xIlBsvA3HKQZF7HO2MTL9J6yXUtLx8p/ZOcNPRuJV5taWeuwofkMiirxXUKUI6q0dpnKTPBzdJjhMlTu/QnbaXSvv1+woq8S2mJvyyjo4Ac87MlocV0pj1ulRVqeJjckTQ6oYUAZ1wl5qYTRl0B0yxOK/ySeQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fco6If506JVVl/CwS40j9p/UWZVx4RSzMC6sZOCuvSU=;
- b=KVwnD+UsP/JTFlgj40rxwtwT0ovaE6HiDqDoSZZOcaBTYC8nJ1MNIgw+HIHH+XRnlfU5d2It5vmJFSxj+UdodprdRYshsbLVIcCol+7huzkDJfSS+75LPE7kRHJqIR3pwc7z0D2w2NboSyKsGKLCsPk+QsvFOp5QK5nMVd35YE9MgEGVw3yKfyi7W6Vv5gFIFrbTU8pVRdIPk7Qrhuyz4tLLSEPZE6dE5uH1oGDbYKMVv2H20j9x3AudHa/amXhbX2dX7NA+96BSfN+eSI5er3T8IzN7xjpcgIJzufB+3IH1T9HbEYlocH/wXqmIBxJMZ8/aZsZPgQ8Zts9UQ7NoyQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fco6If506JVVl/CwS40j9p/UWZVx4RSzMC6sZOCuvSU=;
- b=NHl3Vqyd/gcXtWfH9TuDKLyWwuK8WM/moPmaXN79nsElBUs3m+yOVWo4c0AD9N2ziM0FdMRryxsdBiyDB6RigHDY/t9j1bQqtOfJY+bpbTCgFVMM/tD3DG/1KfEu3WyVRJLC7rVB6nOKUUWHUxcplDdTHBmvHW3H0dkk2r8Jd1DxM0wTpXbZTQz0YAMIkYlqoW1ezmBpoZlZzs/XImIlkfIRU1ZWOH9IRp0RJC1C8l11MefKt+w0KRbv+kR0bOxn942floLT1FWKCOBonEJezPnqnMI5m8PAoXAPBnRaqB9lSdwvlxHIBPQycpDQaVecUS8PjGWp8HPkI0qvjU3sYA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by CH3PR12MB7523.namprd12.prod.outlook.com (2603:10b6:610:148::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.19; Tue, 29 Apr
- 2025 14:34:25 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8678.028; Tue, 29 Apr 2025
- 14:34:25 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alexandre Ghiti <alex@ghiti.fr>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	asahi@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	iommu@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-s390@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Krishna Reddy <vdumpa@nvidia.com>,
-	virtualization@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Will Deacon <will@kernel.org>,
-	Yong Wu <yong.wu@mediatek.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>
-Cc: patches@lists.linux.dev
-Subject: [PATCH 7/7] iommu: Remove ops->pgsize_bitmap
-Date: Tue, 29 Apr 2025 11:34:17 -0300
-Message-ID: <7-v1-7c5282b0c334+2db-iommu_rm_ops_pgsize_jgg@nvidia.com>
-In-Reply-To: <0-v1-7c5282b0c334+2db-iommu_rm_ops_pgsize_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MN0PR03CA0011.namprd03.prod.outlook.com
- (2603:10b6:208:52f::13) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC621773F
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Apr 2025 14:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745937765; cv=none; b=keRoWHOAdAR1Dj8HCHwMU4156gIYRGNQH/Cn+T/TjO/UFdvAJQIQIMfub/p2cTbv/eBbObGrWlIDQz4sHDKzrfsiRE5Pb8sRb4IywAuSxq4Y1PXF+ClCIrYZeURtN/lNqXBIQIjQuCoQZEeiiKk3V6rpK7z5DZDjDvbBIyPNBEQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745937765; c=relaxed/simple;
+	bh=ZdBlqcD7UgXi/cmHBjpAFe6EpoLl9MO34xzM6rTx074=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jXX+E9mL8KCRShSvGdtctHjAikFQkxLe4ZM4VFKKTJnzkwhiAJ8SWBZE5jZkYCSyPITTnIb7TJ9Ufvphwf6I0wQL0eMOh+s9hlOUajpayJC/WLiFnZI0mdaobHSs4e116wi1loeisigeLFnioNcGsWHxCYYreZ93V4y/IoUvni8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WaLLtT5C; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TAUkde032014
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Apr 2025 14:42:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=95T6lUWWSMvDyPMIc22M5eNK
+	HqFKHq2wCTghZ6/oaJE=; b=WaLLtT5C8FQJcBDimbkuPt6TTht/cqWy5fKvWqMW
+	ILpQ4FF1A55IxDrswWlIclW1piFJUsnCWdTYFUGmuQysFPqImmV7yUh6xBE/ilPR
+	bb2G6myBogFm4RPgPQrk+conHuGunajECg0n9cIdzK9XsFIwHOvJ5mFV1RUDGjbs
+	ZNqm9qaxetcA0D+BTMmzHMm8am9RMW5W5xHeAzwGubxvVQ5DwqDd/2+Mf+3fMfTg
+	YZ47bkm9K/StMh6cpwHU8/Epk21WTDsx2zpEdRJiFUZw5CT6/OzmtbcaRFmkse0p
+	jVHxBm/tqOBWWPBV3MuZV4aGW4uImQHirEavkGqJTHITLQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 468pevm0xe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Apr 2025 14:42:43 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5bb68b386so393265485a.3
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 29 Apr 2025 07:42:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745937762; x=1746542562;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=95T6lUWWSMvDyPMIc22M5eNKHqFKHq2wCTghZ6/oaJE=;
+        b=fyxuIcRiz23bDoF917NfJzGorJJ73GFHnRgDeFn2u7JJyOcN4hRXh1j/FOiY36N/Ym
+         ileTB5kD5ucvJOzAn+Y2pLzkQdfZ7Z9o4+CR6/DzUW1NH1ivujQyqziiu3ipAwoRE3ME
+         rg/4oxFtaZjPMNqemr7YzAIM+AWyeV7PZcM3k65RHS9SyktP2NuMwIE8RXUfUi9Rb7KX
+         1qxXZnqnpK8wbVgv0PXYI34ssK3r1JNi9kidRVHM/XNsOUc8FQ0Im7n+EROQyiykwdZ0
+         75gIZMR8uWH5mJhB0HxBe3tx8uwBF88ejGpRTuShI5gCaueLmzN4CL1YHnfPSZUgWNog
+         VMeg==
+X-Forwarded-Encrypted: i=1; AJvYcCWCFjqJJI/l1S5ILEYGD52rK24v4eIJ5baK56e4NGO6m3F8V/N8TGrAiiWVD7gu/rn1SHEDtfm4rP6kgCBPLLQZ4w==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9j9FDxHoWDoroJiaDwyuq64yhTAC3cSxPQcKfvUxfCePOP5lK
+	ZPc+R0OjK90FBr9PefNFVWF6mgVcZ/kUJko3nGdlQCmRCg8qkkylRZF1/dkqbIasSsrc4jIhUYW
+	+vo1ROP0vLgejiWo1OX2JlfxUx8fgzcA/qkZo9LjnwS0VdRwrjVVf2l0uHyZYZI1gyy91AA==
+X-Gm-Gg: ASbGncsd1dKidQHgUZPFSVqyeVeRkW+fsO+VjEFRs7cCcyaAJhQEUeN2li0BvzWrKx5
+	0KrgU9f8qB5VSJT9JqaM+n/HAHsu+D6Ia+kkKTKoF8+IY9Fx1ZqgSkeSxNWmcfgLDtfhbYAU1dJ
+	581ekdNuC4SEuMItYlr/UjfPBRd5RfnX1UV0QCUjm77WQAA5H6/M5H1V8g87ym0K4J7UimRdLzP
+	hlmLWblZOmCdB/4Lp2oTHbqIW5FEv+qyP3JL1w+co1hptRHj4/cJE75IdaMQWdooQJP6Qoezk4t
+	IvGy5PAEz96uemXgDNSx31EL6jqwB7bHoZMDeBwGCXLhUYFYHHg68zA8XsVmYLoGUv2/II+LpX0
+	=
+X-Received: by 2002:a05:620a:4609:b0:7c5:6a66:5c1e with SMTP id af79cd13be357-7c9668cdc37mr2109275785a.58.1745937761638;
+        Tue, 29 Apr 2025 07:42:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDNJAkS5MxDnNhkLq8y60Bm1ZZecLba9P4Zw5IB7TV0UsyjpIf9foZNs6LWwIvq9tQDTlZsQ==
+X-Received: by 2002:a05:620a:4609:b0:7c5:6a66:5c1e with SMTP id af79cd13be357-7c9668cdc37mr2109266985a.58.1745937761023;
+        Tue, 29 Apr 2025 07:42:41 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54e7cb26258sm1895708e87.17.2025.04.29.07.42.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 07:42:40 -0700 (PDT)
+Date: Tue, 29 Apr 2025 17:42:38 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Louis Chauvet <louis.chauvet@bootlin.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Anusha Srivatsa <asrivats@redhat.com>,
+        Paul Kocialkowski <paulk@sys-base.io>,
+        Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        dri-devel@lists.freedesktop.org, asahi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev,
+        imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Adam Ford <aford173@gmail.com>,
+        Adrien Grassein <adrien.grassein@gmail.com>,
+        Aleksandr Mishin <amishin@t-argos.ru>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Benson Leung <bleung@chromium.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Christoph Fritz <chf.fritz@googlemail.com>,
+        Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+        Detlev Casanova <detlev.casanova@collabora.com>,
+        Dharma Balasubiramani <dharma.b@microchip.com>,
+        Guenter Roeck <groeck@chromium.org>, Heiko Stuebner <heiko@sntech.de>,
+        Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesse Van Gavere <jesseevg@gmail.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Manikandan Muralidharan <manikandan.m@microchip.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>,
+        Sasha Finkelstein <fnkl.kernel@gmail.com>,
+        Sugar Zhang <sugar.zhang@rock-chips.com>,
+        Sui Jingfeng <sui.jingfeng@linux.dev>,
+        Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+        Vitalii Mordan <mordan@ispras.ru>,
+        Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+        "Rob Herring (Arm)" <robh@kernel.org>,
+        Hsin-Te Yuan <yuanhsinte@chromium.org>,
+        Pin-yen Lin <treapking@chromium.org>, Xin Ji <xji@analogixsemi.com>,
+        Aradhya Bhatia <a-bhatia1@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Ian Ray <ian.ray@ge.com>, Martyn Welch <martyn.welch@collabora.co.uk>,
+        Peter Senna Tschudin <peter.senna@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Herve Codina <herve.codina@bootlin.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>, Inki Dae <inki.dae@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Helge Deller <deller@gmx.de>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Subject: Re: (subset) [PATCH v2 00/34] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+Message-ID: <sdiwpe7nnhud3fvkgijjbfyenlwpchbxgehyxmsy7c5loo257h@hkfcawkjrlhd>
+References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
+ <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH3PR12MB7523:EE_
-X-MS-Office365-Filtering-Correlation-Id: eec11c9f-d130-4cb5-f3db-08dd872aee0b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?yLtK6yd8a83GlQBCtYa3e7MH1tOm7y5cTHrsopM0EDfJCVVo+dOa6PM6ZUTh?=
- =?us-ascii?Q?oNxLWtor1aSm7TwdGu0lhitA1ODYRd1gEe65slbmdk8tw8o/5jWXXqTYC4QT?=
- =?us-ascii?Q?3SKNbxSLGmFUjnyosNFcv61hKPQAPFO0/ejjQ9jqu+LMK9ggoHCmy561F4Wd?=
- =?us-ascii?Q?NI42IoBee1BwOSR+GcP96U/gWTPREmd2UdwBsEmF/zFMWy3lLKOdHKRF9tUq?=
- =?us-ascii?Q?xDce9ecf0FVbB3Isnjgfni6ZW9e8cmqulOF2ugAAlpMM5zcxPccu3CncaLz9?=
- =?us-ascii?Q?kS6r7+Jm2IxuaPKMwBYDEfgD+/91PFiXJjavG5L1YfHgbXXolRWwOTsjJ9xG?=
- =?us-ascii?Q?66cyGNbZzhAVVQ23XzVYq3XMt/mSlaobtz8ZwStN50z/EPM8dONGPk8p6qyn?=
- =?us-ascii?Q?Pbwl9ZprtvVqcCk6ys5jKJqUFoiyBSw4Kt+GccRjeEnZZG+4T7bCCerXyFlg?=
- =?us-ascii?Q?RuWV5ASv3KLDvx8n57rg1p5m+zzPmSXilR/iwnaDcpoS3KKeCGM91NQzjB3t?=
- =?us-ascii?Q?S0/ZPbqRNPZp6R4jZXqYRnlhSrW1eVW7re4GzpkV+lZ7GN/u7xorLkH3Ni5v?=
- =?us-ascii?Q?UdZwjDpDUnVaaOkC+8Yedyp8VueEshdHOetxtKI8gVuUOi1ZQfkX3ctW6XJk?=
- =?us-ascii?Q?PD7WubNK7l7G4tpYHLlxEozt4y1K2cW47Y9KhwBBu8BA9E3Kue8aamt/q3bM?=
- =?us-ascii?Q?2/KVzwNyXRx5UrRxX76Rti/O3j/CV0bxjLq4PErQUGSzmtEKqA2Y0+Nuclnj?=
- =?us-ascii?Q?opgGCMkgdznOLRK0AyNnWyV34GRl+jr41xW6+ieFbE/DKPmS9VkFu82TDepo?=
- =?us-ascii?Q?2XDRv0al2yzhQuy6HA5vLsMmKSfHQi0sCazIYG8PpB5dLhbeXmFpmUXacXGF?=
- =?us-ascii?Q?8v2oLA/fVxjhddSEa4QbwkURn8prizrJHy30qkZHjRaqFu8KY0gHMsK1L24e?=
- =?us-ascii?Q?iOR6Og5r7Uip5UbDFhPM8EfJpxKggQAPNXZXIF7h/k7k9biw36TQJTYZW6kO?=
- =?us-ascii?Q?tmmoS7dSkET9LSCJmMFJQFxCupP7yDIJWSJaS3HwmabS9IJ2oFSjihj/V1tD?=
- =?us-ascii?Q?meZ8KDx0ZitNvgqNLq0HHQWnMOX0IP/2MAV8vjW9FU8il1kQ/cEGY4yA2Q5Q?=
- =?us-ascii?Q?wz93ihNC5bzOhNEhdIqBe7tYijw/idDx9JsYTDG+m/W3cGojiXYhwF6EGtB3?=
- =?us-ascii?Q?wCxm0Fe1RAaEogISnv2NVy56SOhT9RDWs8z6+Z3VruYfz2TH7AwueP/vs5Bd?=
- =?us-ascii?Q?xDWIVARZ/dkU1rylwpdjDotVgowmtwR7SHzrLK3FBMSKsZ5Fx1niyuXUfA7c?=
- =?us-ascii?Q?Oq4jadFyneujI7rliM/Q1GBmmT4yVPMlNe012fyqJCcnIekyl1XEjDK5G4/C?=
- =?us-ascii?Q?hojSh69zqp9NZfXCcPZBTsCbs4U5m3H78L5qEhRLoFihSqmxCWbl8pw9r1Fd?=
- =?us-ascii?Q?EzoE0YkjPQRJq2A7xchIiJ7ZW0Mw5bmAAvJ2uZQNCWEZuTFqB0Z1qQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jEkZhI4I1BPSVn1MYmGIeMv0bCD7tzNPKe4ILut9N63fKfeK/8JMGYE6zf73?=
- =?us-ascii?Q?q5lEhCVBpps2Dj0TBbOhsevYFu7DsVerNNnlohNJWhzJrDCDfTq8aqBkcY6j?=
- =?us-ascii?Q?4gxMG4/XkQtNTHbVJxHI6hNOawgbfITDcYKO9ZD4Y2XsagPl6hq3NYNvBrZu?=
- =?us-ascii?Q?MTQFI0SipZMto7auhSagUpjELIC42WIjNVPkEIPS/KI5r4ID/r92DSn3Bdfh?=
- =?us-ascii?Q?g90sLEooNdpYGi8SbCW7L/AsaZQ4EIn5/WKwChjWiXJqYtIHfk4qnzc9tt8G?=
- =?us-ascii?Q?2Dpr928W5R8rDqKIaBl59dDF3mK98hulf2ZxGTh3xyDTVLQB8f6ZPFj9Erd/?=
- =?us-ascii?Q?pWAViFXnGkla4vTmJrDeTAGAjJPFq+C+DYTA2OKIt+0il7KACgcc47mEWgSm?=
- =?us-ascii?Q?BjgXqp69EUf3nnkUwBSreU4tSv1TN4VbKZuacYDp8uSnlej4Q6kJg8EeAYL2?=
- =?us-ascii?Q?9AWqG8thdX8wXvQGwKaOt07mo5JiH3BFEV3uQmWqpu3N4orP9ebP654dVejF?=
- =?us-ascii?Q?CriC4QhyDN05009zmDclyq345KB7+Q/kPmfZgs5mWmdZbmoLLEwLRc1abao8?=
- =?us-ascii?Q?8Gxp/DFLzFMrlDHtic+xyf27G80rxdhsARDAfHxRYh3VX9Y9Cq0aWeizsgg+?=
- =?us-ascii?Q?KxK78Lpte79x/ByqHtDAgV5v+Tt45BKdfvlexjqcDC7PYcA304Sno7ND/FuW?=
- =?us-ascii?Q?NLfeQ5+KBJujtyi0YQEey+et0mjBUl0YB3ouz9ZrIKKY7M46OI0FQHa/ii+P?=
- =?us-ascii?Q?vStG1cVkPNT+DrHuXYbv++mm+uDOZqkKmIPZSeFOPpBIZ1gi/dFHbdXZzwgL?=
- =?us-ascii?Q?MPnbmvrfxsHRDXP3yKnksNFhuvvG+zYe7ws6oEwmHqPmIxqx+CJIQe+zf3Ey?=
- =?us-ascii?Q?QyqQjCJB9J7mRX2H9Djp3cDqe9UECDvRK7Yn1u9RPayW6TgSuIjXaV/BBGQz?=
- =?us-ascii?Q?ASchSwSnalkIutOWseaqeXTjMe9+jx13JU3fQD6ehilUFudSsPlqtoMaGiCk?=
- =?us-ascii?Q?7l/cx37IHAfrPC+A9frVHtItKo0ZELBYm//YOb65ZT0qvb1hAxJVrPCOnL/o?=
- =?us-ascii?Q?momkBMdDDMEoWoR6o5KOGA2gW++GRR3P+0iIVo9orHe0a6aGwjPEq4XTSJ8H?=
- =?us-ascii?Q?/Y0+RWCntqb8k86Ty783NrBbZV9EjGjiS+m76yEZ2VxQwCqtJ1vE1G6yEvdC?=
- =?us-ascii?Q?IzggSHPDh3Pi8f1yzk/b4a9/RgTPqNo8LVZcovcI/eytuBh3laihhxK/+4fZ?=
- =?us-ascii?Q?oguruiLH0ge7C+hW++MPt8YsYThpUrKVUZmEsnxszdvmA5MyIu8v3NjHC0Y/?=
- =?us-ascii?Q?W6aEylbnijaIcWywqEBroDi9kgBIKq5wxK0HXJKGxH3NNY93+qZ+vmi/7X8N?=
- =?us-ascii?Q?z9f1CUELAokN2Dh26Imnllnhag51e5AqkxgXlamjez6pzQJ904H0GU9VB2a8?=
- =?us-ascii?Q?ALPTTJr8qwpi4wSw4idUeQB4t4e21QiRC8XHRttx4emPtYYIHSvTwt19h0Ax?=
- =?us-ascii?Q?1rIf+pezPccoL0DfHL4SwojyQrKUonDTUgod/Ov62StinblNpTErvhS48Kly?=
- =?us-ascii?Q?BNvFLpQ9djnzFla7ZtwnXMcSWbf0PIha/wfOy6/j?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eec11c9f-d130-4cb5-f3db-08dd872aee0b
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 14:34:23.0453
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: r3BPbtN9k4K1Wmh18Oz+QiubVEXRNjEyT/ZCgkr4koIfmVH50HpHwaDza9/Aqff7
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7523
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <174591887152.961603.7706063017853945511.b4-ty@bootlin.com>
+X-Proofpoint-ORIG-GUID: TV6jZGF_Fir6F9F4k82jCbCbypaOvy3F
+X-Authority-Analysis: v=2.4 cv=aeBhnQot c=1 sm=1 tr=0 ts=6810e563 cx=c_pps a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=1X4oNAvfgwtBicUf-4YA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: TV6jZGF_Fir6F9F4k82jCbCbypaOvy3F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDExMCBTYWx0ZWRfX7QnUkMvpaHo7 FdqwExNbvoCQEz1LxYMlLE28MUxzfCIKKzuVpNdearJWZwI3E9jv4Zaf1vgghFxqxsbL+t+XbCV /aQIwR32I/oEJpx0ZTenkh87a4h812Uk8hi5bfS6fV+6xrxjobH+M0LrnycbtEtdI2CbeVnOuCH
+ vVROwa89UP10j3GXiSiFLVKBLhr4Fbh+GrfMmD8JqlZoHKTxWMZe8oV11BCCY1SOiIIEBoNVKnh SI0ISX7n709v22SwfUh4QmoGSolYOy11gUtlJ/TeDk1gL+4riKLMC2KvVbzFQolvWbD5K6tl30H f1dfuYN0gJNptiFhnkLJSlv/AAnuHqkb9wshLhUk2uuy5GTaNKHKtRVx4B29NrE0s083UKDLYUE
+ EmVXovEUobKfN7Tlf48U7am73/lVfGqclxm221DGKRXk+AdOT4PQBihffJp9ybmWj78B7Asx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_05,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290110
 
-No driver uses it now, remove the core code.
+On Tue, Apr 29, 2025 at 11:27:51AM +0200, Louis Chauvet wrote:
+> 
+> On Thu, 24 Apr 2025 20:59:07 +0200, Luca Ceresoli wrote:
+> > devm_drm_bridge_alloc() [0] is the new API to allocate and initialize a DRM
+> > bridge, and the only one supported from now on. It is also necessary for
+> > implementing reference counting and thus needed to support removal of
+> > bridges from a still existing DRM pipeline without use-after-free.
+> > 
+> > This series converts all DRM bridges to the new API.
+> > 
+> > [...]
+> 
+> Applied, thanks!
+> 
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/iommu.c | 7 -------
- include/linux/iommu.h | 2 --
- 2 files changed, 9 deletions(-)
+[...]
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 900fb782c3a6a1..db23093c9fa856 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -2002,13 +2002,6 @@ static void iommu_domain_init(struct iommu_domain *domain, unsigned int type,
- 	domain->owner = ops;
- 	if (!domain->ops)
- 		domain->ops = ops->default_domain_ops;
--
--	/*
--	 * If not already set, assume all sizes by default; the driver
--	 * may override this later
--	 */
--	if (!domain->pgsize_bitmap)
--		domain->pgsize_bitmap = ops->pgsize_bitmap;
- }
- 
- static struct iommu_domain *
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 1785caee597778..1c2ddf62a672e2 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -606,7 +606,6 @@ iommu_copy_struct_from_full_user_array(void *kdst, size_t kdst_entry_size,
-  *                It is required to call iommufd_viommu_alloc() helper for
-  *                a bundled allocation of the core and the driver structures,
-  *                using the given @ictx pointer.
-- * @pgsize_bitmap: bitmap of all possible supported page sizes
-  * @owner: Driver module providing these ops
-  * @identity_domain: An always available, always attachable identity
-  *                   translation.
-@@ -661,7 +660,6 @@ struct iommu_ops {
- 		struct iommufd_ctx *ictx, unsigned int viommu_type);
- 
- 	const struct iommu_domain_ops *default_domain_ops;
--	unsigned long pgsize_bitmap;
- 	struct module *owner;
- 	struct iommu_domain *identity_domain;
- 	struct iommu_domain *blocked_domain;
+> [16/34] drm/msm/dp: convert to devm_drm_bridge_alloc() API
+>         commit: b2aabe5c6b65516d88214aba4b12ce2ca78bac6c
+> [17/34] drm/msm/dsi: convert to devm_drm_bridge_alloc() API
+>         commit: fffc8847743e45604c4478f554d628481b985556
+> [18/34] drm/msm/hdmi: convert to devm_drm_bridge_alloc() API
+>         commit: e11532be87e437648521a8ed5358c56df11933b4
+
+Why? These drivers are explicitly handled outside of drm-misc. Please be
+more careful next time.
+
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
