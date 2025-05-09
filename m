@@ -1,53 +1,53 @@
-Return-Path: <linux-samsung-soc+bounces-8414-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8416-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E18B1AB16B9
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 16:04:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD8DFAB16C6
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 16:05:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB9A43AE104
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 14:00:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88E463AE4E2
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 14:01:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83F4329673F;
-	Fri,  9 May 2025 13:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C51BD296FC1;
+	Fri,  9 May 2025 13:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="TQMmy8JU"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="HIX7ccN6"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9086296729;
-	Fri,  9 May 2025 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B110296FA1;
+	Fri,  9 May 2025 13:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746799037; cv=none; b=pKyAUmjMR0D1/bKJTNrQqYN4lzvdu58zNmryYdbJ/YmpaURxsNzgZgA3ygaCnGGAA91UzW1RC7tPve3sxUg8fiyJDOTGDfBOvuQfXo/EHvUondx5YGCIJ30+CgblAI6QbLmwj6TDRGg4Njnu3eekOk4rcmWLpOjF9AV/xFvoL64=
+	t=1746799043; cv=none; b=kdL7OPBoiiyhCj3CkPE4bMJLlMfRf/BAWVrDTCzI0Ln+BodHbugWOyehLQhwdNt5rnxrE6zg8q+kBS33FzNsEias2n+keBofTj9JjQHG3uqgDkxU5W4eStmJ2biI5RPNu5zRoaSkn4AT+56lRb1icgSto7w2jb6EPubwZHRERng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746799037; c=relaxed/simple;
-	bh=vRYCkViCcxiskw1S8/wEtxfwV21al/lTlYvDqaAjDTw=;
+	s=arc-20240116; t=1746799043; c=relaxed/simple;
+	bh=f2BC6TwWrfdAc1A6k20wnEkrPxCA/FxTpE9AxjI8Gfs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XhGcJLIshluywf3tYWMsF/P/eeL0zEmDmSCbV0AaWpiyWVMz89UiJeK5udVOwtJL+0YIZCEkhNBLkJeMk3AA2nB5emCIktxe92dq93NkEi5BWAPfdRbhNQpdtPUw3mGHd0IynWpe4ZwVbywhpWdNOTpvm+6f5Uq6UA6fX1EPU30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=TQMmy8JU; arc=none smtp.client-ip=217.70.183.196
+	 In-Reply-To:To:Cc; b=e3zPT7FJTiyaVKQ0GRvEJn1K1rVyebuntcyS9mflM7P+juqRJNM/UAPKkcCvMm7LwqLyNCMdBWeoDa6tGUwPiEG65l+b9ovfnGfcJXgCyX3l25/LTX3iEHuI5v6G7cBZRy2as4CK3/YYZynVa05hR22PDjLYYvticsYJf0CjRl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=HIX7ccN6; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id AFE8B43B5C;
-	Fri,  9 May 2025 13:57:10 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BC3A143B63;
+	Fri,  9 May 2025 13:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746799033;
+	t=1746799039;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=E9ZEit07XSaKhijhujdfFMRxB0N42Z8dTjST1Vdxaqs=;
-	b=TQMmy8JUiALs1qIOjeenMUVW5RGAktjD0NuMuqcc90ZH5sJElj2egKM7hOEliSoLNAsEiF
-	pkWz4hD4NLPRsWIf9vZHMgFWm+BCFsX29U/CwqSf+UEU3uweDjqDZN7lt2TJwZfuph7gIT
-	IKWlPULexGDku1nWFypXyIW0vpO1Lo0nVRQVbLPGwfhjnQchqNvdiwxovVoNpN0N5bFBm3
-	3sRofoUljM343oQwiPLQsudem8nh0cMvOxUFSnMFlz86Fo3TwEaw7WM/VZMRzpkBo98rwK
-	LpBPiYer2KY3O+AZlXD2Ka0fF5plGaP9Iyop/3Ag/YDKSKV6ixGi5/GuDEn/1A==
+	bh=XhvtZmJk3FGMo9ahqqYGoAgMdnFeX8Qd7K/4Q/1VF9k=;
+	b=HIX7ccN6AuzSpJ+g2r6A3sYW/Qs3oMH5mJ+W60lmHWW70o/5q2L/bIZRLqjsn2T2nPXwu4
+	6gcowP8K35ifpxOfhdzx8GcNWZspKd9+fB5/d8YS8BkJXT4vjEKbjfjZmrxrLm37VnWCNL
+	EgnzB9UQK9g5v1X1efA8279+ZoklLE7nJzUsn8ubc1NK5zcF4yNrpiPytpa6mdpLNrFq9d
+	VuZMMorNfxlf+bnxzXt/iJ0RQ5N4G+8+vIf8DkfqGRhPmaq9PHMidycaroG20nnHDbST4c
+	8mb0NXMbpXXlS2EhA20AY8JlbDpQ2wrOVq3JhLpSP6X8KjzmPRRePO77wVifDg==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Fri, 09 May 2025 15:53:45 +0200
-Subject: [PATCH v3 19/22] drm/bridge: tc358767: convert to
+Date: Fri, 09 May 2025 15:53:47 +0200
+Subject: [PATCH v3 21/22] drm/bridge: panel: convert to
  devm_drm_bridge_alloc() API
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-19-b8bc1f16d7aa@bootlin.com>
+Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-21-b8bc1f16d7aa@bootlin.com>
 References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -89,157 +89,73 @@ Cc: Anusha Srivatsa <asrivats@redhat.com>,
 X-Mailer: b4 0.14.2
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedukeenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedvtdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
  higqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidruggvpdhrtghpthhtoheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrshhrihhvrghtshesrhgvughhrghtrdgtohhm
 X-GND-Sasl: luca.ceresoli@bootlin.com
 
 This is the new API for allocating DRM bridges.
 
-Converting this driver is a bit convoluted because the drm_bridge funcs
-pointer differs based on the bridge mode. So the current code does:
+The devm lifetime management of this driver is peculiar. The underlying
+device for the panel_bridge is the panel, and the devm lifetime is tied the
+panel device (panel->dev). However the panel_bridge allocation is not
+performed by the panel driver, but rather by a separate entity (typically
+the previous bridge in the encoder chain).
 
- * tc_probe()
-   * devm_kzalloc() private struct embedding drm_bridge
-   * call tc_probe_bridge_endpoint() which
-     * parses DT description into struct fields
-     * computes the mode
-     * calls different bridge init functions based on the mode
-       * each sets a different bridge.funcs pointer
+Thus when that separate entity is destroyed, the panel_bridge is not
+removed automatically by devm, so it is rather done explicitly by calling
+drm_panel_bridge_remove(). This is the function that does devm_kfree() the
+panel_bridge in current code, so update it as well to put the bridge
+reference instead.
 
-The new API expects the funcs pointer to be known at alloc time, which does
-not fit in the current code structure.
-
-Solve this by moving the part of tc_probe_bridge_endpoint() computing the
-mode into a separate function, tc_probe_get_mode(), which does not need the
-private driver structure. So now the mode is known before allocation and so
-is the funcs pointer, while all other operations are still happening after
-allocation, directly into the private struct data, as they used to.
-
-This solution is chosen to minimize the changes in the driver logical code
-flow. The drawback is we now iterate twice over the endpoints.
+This is a temporary solution until the panel lifetime is reworked, which
+should make this workaround unnecessary, so add a comment to clarify that.
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
----
- drivers/gpu/drm/bridge/tc358767.c | 56 ++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
-index 7e5449fb86a3fcdae8255bc490d12c543ef3f8ae..61559467e2d22b4b1b4223c97766ca3bf58908fd 100644
---- a/drivers/gpu/drm/bridge/tc358767.c
-+++ b/drivers/gpu/drm/bridge/tc358767.c
-@@ -344,6 +344,14 @@
- #define COLOR_BAR_MODE_BARS	2
- #define PLL_DBG			0x0a04
+---
+
+Changes in v3:
+- add TODO to remove devm_drm_put_bridge(), update commit message
+- fix typo in commit message
+
+Changes in v2: none
+---
+ drivers/gpu/drm/bridge/panel.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
+index 79b009ab9396048eac57ad47631a902e949d77c6..6cbbfb1381a4a75fbc3acf6e6c5361202627e740 100644
+--- a/drivers/gpu/drm/bridge/panel.c
++++ b/drivers/gpu/drm/bridge/panel.c
+@@ -287,15 +287,14 @@ struct drm_bridge *drm_panel_bridge_add_typed(struct drm_panel *panel,
+ 	if (!panel)
+ 		return ERR_PTR(-EINVAL);
  
-+enum tc_mode {
-+	mode_dpi_to_edp = BIT(1) | BIT(2),
-+	mode_dpi_to_dp  = BIT(1),
-+	mode_dsi_to_edp = BIT(0) | BIT(2),
-+	mode_dsi_to_dp  = BIT(0),
-+	mode_dsi_to_dpi = BIT(0) | BIT(1),
-+};
-+
- static bool tc_test_pattern;
- module_param_named(test, tc_test_pattern, bool, 0644);
+-	panel_bridge = devm_kzalloc(panel->dev, sizeof(*panel_bridge),
+-				    GFP_KERNEL);
+-	if (!panel_bridge)
+-		return ERR_PTR(-ENOMEM);
++	panel_bridge = devm_drm_bridge_alloc(panel->dev, struct panel_bridge, bridge,
++					     &panel_bridge_bridge_funcs);
++	if (IS_ERR(panel_bridge))
++		return (void *)panel_bridge;
  
-@@ -2327,7 +2335,6 @@ static int tc_probe_dpi_bridge_endpoint(struct tc_data *tc)
- 	if (bridge) {
- 		tc->panel_bridge = bridge;
- 		tc->bridge.type = DRM_MODE_CONNECTOR_DPI;
--		tc->bridge.funcs = &tc_dpi_bridge_funcs;
+ 	panel_bridge->connector_type = connector_type;
+ 	panel_bridge->panel = panel;
  
- 		return 0;
- 	}
-@@ -2360,7 +2367,6 @@ static int tc_probe_edp_bridge_endpoint(struct tc_data *tc)
- 		tc->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
- 	}
+-	panel_bridge->bridge.funcs = &panel_bridge_bridge_funcs;
+ 	panel_bridge->bridge.of_node = panel->dev->of_node;
+ 	panel_bridge->bridge.ops = DRM_BRIDGE_OP_MODES;
+ 	panel_bridge->bridge.type = connector_type;
+@@ -327,7 +326,8 @@ void drm_panel_bridge_remove(struct drm_bridge *bridge)
+ 	panel_bridge = drm_bridge_to_panel_bridge(bridge);
  
--	tc->bridge.funcs = &tc_edp_bridge_funcs;
- 	if (tc->hpd_pin >= 0)
- 		tc->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	tc->bridge.ops |= DRM_BRIDGE_OP_EDID;
-@@ -2368,17 +2374,11 @@ static int tc_probe_edp_bridge_endpoint(struct tc_data *tc)
- 	return 0;
+ 	drm_bridge_remove(bridge);
+-	devm_kfree(panel_bridge->panel->dev, bridge);
++	/* TODO remove this after reworking panel_bridge lifetime */
++	devm_drm_put_bridge(panel_bridge->panel->dev, bridge);
  }
- 
--static int tc_probe_bridge_endpoint(struct tc_data *tc)
-+static enum tc_mode tc_probe_get_mode(struct device *dev)
- {
--	struct device *dev = tc->dev;
- 	struct of_endpoint endpoint;
- 	struct device_node *node = NULL;
--	const u8 mode_dpi_to_edp = BIT(1) | BIT(2);
--	const u8 mode_dpi_to_dp = BIT(1);
--	const u8 mode_dsi_to_edp = BIT(0) | BIT(2);
--	const u8 mode_dsi_to_dp = BIT(0);
--	const u8 mode_dsi_to_dpi = BIT(0) | BIT(1);
--	u8 mode = 0;
-+	enum tc_mode mode = 0;
- 
- 	/*
- 	 * Determine bridge configuration.
-@@ -2401,7 +2401,27 @@ static int tc_probe_bridge_endpoint(struct tc_data *tc)
- 			return -EINVAL;
- 		}
- 		mode |= BIT(endpoint.port);
-+	}
-+
-+	if (mode != mode_dpi_to_edp &&
-+	    mode != mode_dpi_to_dp  &&
-+	    mode != mode_dsi_to_dpi &&
-+	    mode != mode_dsi_to_edp &&
-+	    mode != mode_dsi_to_dp) {
-+		dev_warn(dev, "Invalid mode (0x%x) is not supported!\n", mode);
-+		return -EINVAL;
-+	}
-+
-+	return mode;
-+}
- 
-+static int tc_probe_bridge_endpoint(struct tc_data *tc, enum tc_mode mode)
-+{
-+	struct device *dev = tc->dev;
-+	struct of_endpoint endpoint;
-+	struct device_node *node = NULL;
-+
-+	for_each_endpoint_of_node(dev->of_node, node) {
- 		if (endpoint.port == 2) {
- 			of_property_read_u8_array(node, "toshiba,pre-emphasis",
- 						  tc->pre_emphasis,
-@@ -2427,24 +2447,28 @@ static int tc_probe_bridge_endpoint(struct tc_data *tc)
- 		return tc_probe_edp_bridge_endpoint(tc);
- 	}
- 
--	dev_warn(dev, "Invalid mode (0x%x) is not supported!\n", mode);
--
-+	/* Should never happen, mode was validated by tc_probe_get_mode() */
- 	return -EINVAL;
- }
- 
- static int tc_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	const struct drm_bridge_funcs *funcs;
- 	struct tc_data *tc;
-+	int mode;
- 	int ret;
- 
--	tc = devm_kzalloc(dev, sizeof(*tc), GFP_KERNEL);
--	if (!tc)
--		return -ENOMEM;
-+	mode = tc_probe_get_mode(dev);
-+	funcs = (mode == mode_dsi_to_dpi) ? &tc_dpi_bridge_funcs : &tc_edp_bridge_funcs;
-+
-+	tc = devm_drm_bridge_alloc(dev, struct tc_data, bridge, funcs);
-+	if (IS_ERR(tc))
-+		return PTR_ERR(tc);
- 
- 	tc->dev = dev;
- 
--	ret = tc_probe_bridge_endpoint(tc);
-+	ret = tc_probe_bridge_endpoint(tc, mode);
- 	if (ret)
- 		return ret;
+ EXPORT_SYMBOL(drm_panel_bridge_remove);
  
 
 -- 
