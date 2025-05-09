@@ -1,54 +1,53 @@
-Return-Path: <linux-samsung-soc+bounces-8413-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8415-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58C6BAB1691
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 16:01:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB212AB1692
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 16:01:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F382BB2725D
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 13:59:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7A274E0921
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 May 2025 14:01:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69669296714;
-	Fri,  9 May 2025 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 688E8296D28;
+	Fri,  9 May 2025 13:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="H9d2GFtY"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Usqh6mMP"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B00296707;
-	Fri,  9 May 2025 13:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB461296D08;
+	Fri,  9 May 2025 13:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746799034; cv=none; b=mZ4KYOr+VTgrXBzhkiDfi3trndFMywPX049VSjjmmumBJj9OI7KLK6i+cw88so3hNuePs8QbP0Pgk5IL6OC++MJPahnkphycwnibBmwvpfSx96owwRrLrVFugpxsrdYkzQlnEzemkPZZ5KJocMeJ8iHQSvlivQmLvtTrEhqoUn4=
+	t=1746799040; cv=none; b=QzDg+kld0Ww+2+ccVqHldeBtj6jjpULDbv9n/mQES1rQpkukLCHnch2Kjkub+N4dqvDvayjJTJygZ5Bhd4EupotTdBfw017fNttukR2zwVMDUl+Dh47/NqWpPA8sFIYX6CyMtotjV5oRnzLzyQJB3FugO/+FS5wBnw7iPSbikjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746799034; c=relaxed/simple;
-	bh=1MWjZruB57BDOqBScjh5541VHk9FJOxNddFujLJtRQ8=;
+	s=arc-20240116; t=1746799040; c=relaxed/simple;
+	bh=1dytHc3Djh/f1ZiUgTbHvNsKqiqKMFeTjtarSBq5zN8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T/ecm1c92iS5sO8X9K2tKr15URf8EZ9zkU6NIpBogYNUA+sKt8FGNiFLCwxVaB6TfCDS9leBju2+JKm/RGwD2uXNSjmWzH5dYR1Bc+xY1/KqYZ0zm19RvXE0ams+05F+gIOLkaNfNMXJjs0G4mG4Ix5k7DS99AZnYHvizRvAIIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=H9d2GFtY; arc=none smtp.client-ip=217.70.183.196
+	 In-Reply-To:To:Cc; b=gx7AZIdFvmU9juOASPZeNS0q+CC6tfTjeGZ5qdWqHwv2lXFTAwhSigw1IYaJpeKQmf9gQwljNL06tFdzfAmiqnm1+hKYc20e3GxC13Kf5zt2NlMPw//6kLlYzHqxXvpFSmD2zYGA7XZ856tbigiaDRpVGCgON9xyFC+Iy5TqqTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Usqh6mMP; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id B5F4043B67;
-	Fri,  9 May 2025 13:57:07 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BA81643B50;
+	Fri,  9 May 2025 13:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1746799030;
+	t=1746799036;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=PS8lSBx0SgWehq3/+W/jHTYiLDqAvodlyxPqYctHkFA=;
-	b=H9d2GFtYWgoDrwhx0NxqqRoMN7UDjEHOEPB2whIs9XvQYeziYN5s3nv07dUBSVKU0EFnWX
-	mBXz0E5qWPkEMs9pae/VMgkJP/xMgO1zyvKfQpPqyC7VE0q3Gydx18DKv4ikdgq/pTvbXp
-	i8EH98vCniHQyXPDhMKoTWtrEyLVs13n9OaFKo3sJN291iEfooOciLkIJJ5o4Hhr2ymWLV
-	ONc784wWHHgKxJ3vWGB/kSbfJrDjSdvZqqAaS855dU6bUA7WCex1Ra8gi6eoaa/tgb19G4
-	MJodIRbAD1G2Pi6+6lB17UXv4X1w8KJDtexFfAqrq5RQoOPz4d+4o12Rg/ujww==
+	bh=hZGU6iOHbHyTiUUkRCME+uIMdoFXKaz/X2Ih0wRVgjk=;
+	b=Usqh6mMP95pCrT0NiiEmhQhuCbKptj0ZtH1s/XrzXx9idGdBrFVrlqJlZzfMJAvFoRMcHJ
+	h4PFKxrZlQnt7ORIp1Iv823ka95zpQi5/alPfta4cChWsI9FyYBg9Avpt1qpEhaWbo18V6
+	Zlk6bTk/km2NhKhIH+Msqt0Lel3GDPM9uO2yX6zz0kHxQr+c3QnwlJbd9V5E7yVNH2Ssgm
+	/OxE2FqYRVKu9hpRHRXARhWT9ly2LoviG+6g7c+M6n5hXHwdR2lPRTWpGkKh+gwe0o9vn7
+	oVq17CQGfv7duymYD6mQ7xH4VbATIHlzNt6dHz7m7vqU/IYG/G/xZ5Tuee/ByA==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Fri, 09 May 2025 15:53:44 +0200
-Subject: [PATCH v3 18/22] drm/bridge: imx8qxp-pixel-combiner: convert to
- devm_drm_bridge_alloc() API
+Date: Fri, 09 May 2025 15:53:46 +0200
+Subject: [PATCH v3 20/22] drm/bridge: add devm_drm_put_bridge()
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -57,7 +56,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-18-b8bc1f16d7aa@bootlin.com>
+Message-Id: <20250509-drm-bridge-convert-to-alloc-api-v3-20-b8bc1f16d7aa@bootlin.com>
 References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -85,113 +84,92 @@ Cc: Anusha Srivatsa <asrivats@redhat.com>,
  linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
  linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>, Liu Ying <victor.liu@nxp.com>
+ Luca Ceresoli <luca.ceresoli@bootlin.com>
 X-Mailer: b4 0.14.2
 X-GND-State: clean
 X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpeduieenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepgedtpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieeuvdfftefgueduleehueetgffgjeeitedtteetkeeuueeuueekveevvdeuveenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedukeenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegludelvddrudeikedrudejkedruddukegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopegrnhgurhiivghjrdhhrghjuggrsehinhhtvghlrdgtohhmpdhrtghpthhtohepihhmgieslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnu
  higqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthiiihhmmhgvrhhmrghnnhesshhushgvrdguvgdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidruggvpdhrtghpthhtoheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrshhrihhvrghtshesrhgvughhrghtrdgtohhm
 X-GND-Sasl: luca.ceresoli@bootlin.com
 
-This is the new API for allocating DRM bridges.
+Bridges obtained via devm_drm_bridge_alloc(dev, ...) will be put when the
+requesting device (@dev) is removed.
 
-This driver embeds an array of channels in the main struct, and each
-channel embeds a drm_bridge. This prevents dynamic, refcount-based
-deallocation of the bridges.
+However drivers which obtained them may need to put the obtained reference
+explicitly. One such case is if they bind the devm removal action to a
+different device than the one implemented by the driver itself and which
+might be removed at a different time, such as bridge/panel.c.
 
-To make the new, dynamic bridge allocation possible:
+Add devm_drm_put_bridge() to manually release a devm-obtained bridge in
+such cases.
 
- * change the array of channels into an array of channel pointers
- * allocate each channel using devm_drm_bridge_alloc()
- * adapt the code wherever using the channels
- * remove the is_available flag, now "ch != NULL" is equivalent
+This function is considered only a temporary workaround until the panel
+bridge is reworked and should be removed afterwards.
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
 ---
 
-Cc: Liu Ying <victor.liu@nxp.com>
-
 Changes in v3:
-- fix NULL pointer deref in .remove and remove is_available bool
+- document this function is a temporary workaround, not to be used
+  (in kerneldoc and commit message)
 
 Changes in v2: none
 ---
- .../gpu/drm/bridge/imx/imx8qxp-pixel-combiner.c    | 27 +++++++++++-----------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/drm_bridge.c | 17 +++++++++++++++++
+ include/drm/drm_bridge.h     |  4 ++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/imx/imx8qxp-pixel-combiner.c b/drivers/gpu/drm/bridge/imx/imx8qxp-pixel-combiner.c
-index 1f6fd488e7039e943351006d3373009f0c15cb08..8517b1c953d4e0fb9f5b6dbe25fbaaa63eef2b33 100644
---- a/drivers/gpu/drm/bridge/imx/imx8qxp-pixel-combiner.c
-+++ b/drivers/gpu/drm/bridge/imx/imx8qxp-pixel-combiner.c
-@@ -63,12 +63,11 @@ struct imx8qxp_pc_channel {
- 	struct drm_bridge *next_bridge;
- 	struct imx8qxp_pc *pc;
- 	unsigned int stream_id;
--	bool is_available;
- };
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index b4c89ec01998b849018ce031c7cd84614e65e710..d0e81639927a73422671b7b43f3e8a946f1d4300 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -1392,6 +1392,23 @@ struct drm_bridge *of_drm_find_bridge(struct device_node *np)
+ EXPORT_SYMBOL(of_drm_find_bridge);
+ #endif
  
- struct imx8qxp_pc {
- 	struct device *dev;
--	struct imx8qxp_pc_channel ch[2];
-+	struct imx8qxp_pc_channel *ch[2];
- 	struct clk *clk_apb;
- 	void __iomem *base;
- };
-@@ -307,7 +306,14 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
- 			goto free_child;
- 		}
- 
--		ch = &pc->ch[i];
-+		ch = devm_drm_bridge_alloc(dev, struct imx8qxp_pc_channel, bridge,
-+					   &imx8qxp_pc_bridge_funcs);
-+		if (IS_ERR(ch)) {
-+			ret = PTR_ERR(ch);
-+			goto free_child;
-+		}
++/**
++ * devm_drm_put_bridge - Release a bridge reference obtained via devm
++ * @dev: device that got the bridge via devm
++ * @bridge: pointer to a struct drm_bridge obtained via devm
++ *
++ * Same as drm_bridge_put() for bridge pointers obtained via devm functions
++ * such as devm_drm_bridge_alloc().
++ *
++ * This function is a temporary workaround and MUST NOT be used. Manual
++ * handling of bridge lifetime is inherently unsafe.
++ */
++void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge)
++{
++	devm_release_action(dev, drm_bridge_put_void, bridge);
++}
++EXPORT_SYMBOL(devm_drm_put_bridge);
 +
-+		pc->ch[i] = ch;
- 		ch->pc = pc;
- 		ch->stream_id = i;
+ static void drm_bridge_debugfs_show_bridge(struct drm_printer *p,
+ 					   struct drm_bridge *bridge,
+ 					   unsigned int idx)
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 4e418a29a9ff9d014d6ac0910a5d9bcf7118195e..6f00a3998ed6d026332b0f1e3bb5bee3cb5158e0 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -1265,6 +1265,8 @@ static inline struct drm_bridge *devm_drm_of_get_bridge(struct device *dev,
+ 	return ERR_PTR(-ENODEV);
+ }
  
-@@ -333,9 +339,7 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
- 		of_node_put(remote);
++static inline void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge) {}
++
+ static inline struct drm_bridge *drmm_of_get_bridge(struct drm_device *drm,
+ 						     struct device_node *node,
+ 						     u32 port,
+@@ -1274,6 +1276,8 @@ static inline struct drm_bridge *drmm_of_get_bridge(struct drm_device *drm,
+ }
+ #endif
  
- 		ch->bridge.driver_private = ch;
--		ch->bridge.funcs = &imx8qxp_pc_bridge_funcs;
- 		ch->bridge.of_node = child;
--		ch->is_available = true;
++void devm_drm_put_bridge(struct device *dev, struct drm_bridge *bridge);
++
+ void drm_bridge_debugfs_params(struct dentry *root);
+ void drm_bridge_debugfs_encoder_params(struct dentry *root, struct drm_encoder *encoder);
  
- 		drm_bridge_add(&ch->bridge);
- 	}
-@@ -345,8 +349,8 @@ static int imx8qxp_pc_bridge_probe(struct platform_device *pdev)
- free_child:
- 	of_node_put(child);
- 
--	if (i == 1 && pc->ch[0].next_bridge)
--		drm_bridge_remove(&pc->ch[0].bridge);
-+	if (i == 1 && pc->ch[0]->next_bridge)
-+		drm_bridge_remove(&pc->ch[0]->bridge);
- 
- 	pm_runtime_disable(dev);
- 	return ret;
-@@ -359,13 +363,10 @@ static void imx8qxp_pc_bridge_remove(struct platform_device *pdev)
- 	int i;
- 
- 	for (i = 0; i < 2; i++) {
--		ch = &pc->ch[i];
--
--		if (!ch->is_available)
--			continue;
-+		ch = pc->ch[i];
- 
--		drm_bridge_remove(&ch->bridge);
--		ch->is_available = false;
-+		if (ch)
-+			drm_bridge_remove(&ch->bridge);
- 	}
- 
- 	pm_runtime_disable(&pdev->dev);
 
 -- 
 2.49.0
