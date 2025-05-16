@@ -1,192 +1,151 @@
-Return-Path: <linux-samsung-soc+bounces-8505-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8507-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBA5FAB8E63
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 May 2025 20:02:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E40FAB97ED
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 May 2025 10:44:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6741E503F03
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 15 May 2025 18:02:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C28EA3AAA3A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 16 May 2025 08:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDC46258CD8;
-	Thu, 15 May 2025 18:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B531B22E00E;
+	Fri, 16 May 2025 08:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYLu+Rx1"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="UoyyS/jH"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D0F2586C7;
-	Thu, 15 May 2025 18:02:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FBD282E1
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 16 May 2025 08:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747332132; cv=none; b=j+RwZbzQCxmtIoH+gMp3R1NhMVEFSeq8vb6RP0KLZ/37Xh/UWp1cdhwYkJ+S+E0l6v2yO7Qo9ocd5gKFm1Rf986LPpdoEgOSc/Zcw1nf8H2yz5TChzLdkjIcQWgdZzOYVUnvEEtWdJ3lzPDRfYkxeOWvB8gdkCeMsPYxlLjuMtk=
+	t=1747385044; cv=none; b=oqc4hXiIWaniw6r3GiPtiUFLqjTto3Ol1m9AR3pj93jdIdDTRLWmckYZ9z+USApd52GcgOHE8WqHi1mJJSqIZ9B5XeAxaMpYs1kZbKqVYPRMGT8UlJqfiGnf2cx4Uwae0asP33mKuIERZ51h3bLzU6sQeJFPHoLAjb1RePkNQ/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747332132; c=relaxed/simple;
-	bh=xYxE3KmAJuDBwEUTV/7JBSyd7GH9iHMFGQRs1lUAZlc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QgKXzeBV/tgDxLGJOx+tea9/HxzvrI0vPQRPDAX0w92GkQCNn4gk3V5sWVyUVwmhHuMVLl1cstdCluDEQ08QB8pX2toTLnpTUY5wQs6LxgwqyTQcDJ+1sT/sFzjtSdCWvS5vBpfGlAzr86xwwWdKQIUoitzEkYPlgNeUFd4xigw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYLu+Rx1; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-600210e4219so793017a12.0;
-        Thu, 15 May 2025 11:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747332129; x=1747936929; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bNN+vfuMJJgSzRBBX1dcv69JrH0Sd8EtzpYEboDV/q8=;
-        b=fYLu+Rx1EldXlJSmKgme1AVOXXw/BgC3RyBSt2P4eMUCEM3HVvFt3kpsWb/0sfGID0
-         FyGnh7lpEBHGl/Fua/VuI+7iUdjaRnaUkh4CY1hsvpT6qtUki4+YyshD9LNDVqXZEv43
-         uP7QVnMP/en4EhYOJTFVDf+M/MEZFmlqRJJ7OLkBDZCuYBgURO7BGGM8JLagYG94lDHQ
-         C6L5PV8jVeGuWUKqwJ6h0yl1y7qxOpDveRmf9A+/XnNd17qcWAJM2sj+M8rXS3qOzcIo
-         YTrybl6x7QVQglBhxFEP6wVyFWqHqpfiG5hYXVX4EODm8YZmNLj5uV80J/Vaft+a+CC5
-         sGTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747332129; x=1747936929;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bNN+vfuMJJgSzRBBX1dcv69JrH0Sd8EtzpYEboDV/q8=;
-        b=Ywrfz4eQL8CIEGfspD2HyEhxyBipRYCOjorM1qAxKniCeS7tLhU4AP4/2lpRIZBAJa
-         r+ovJZTV6g8FuKx+JnovFxBrtKIrCijjuE/Qh/j0KLVVGLLPCPtJSqhwKB0eosXCc0u5
-         e6DYg3GTRRg4jqWwmQLoTzFXl1cxl/OAfYiuaPiKvmf0Db65mmmmGUKeO4PBAUeIJsqY
-         vVBIEDTJ5BxVimWBVy6hxQPnuE12uG8FfjJ8kOSyQHDX0mHvycoepudYWRCOD0F7l5En
-         vrv62Y/IziDQeNWbQSLJfEDhfEUJCt2Q65FnbEnAuLpJ1/sVbRq+zW3qHe6cP//SavI7
-         YnbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUKe15P+uT21THv7UTC82c3jHL6cP/lo8qSgqdYv2fwS/CAqh2wZBKM1TmAWvBWE7VA0NP5wpEqIeNf0Es=@vger.kernel.org, AJvYcCWePnP5eKI31ey6ZTaYog2s1KD1b5pAierqV9U1vU2bWckzvSp8CZbnOmELt1fA/g2HU0ORm6cjN3E=@vger.kernel.org, AJvYcCXWJqD4OqJeSy4p9uUyEWxuvudpSx9czuxS2F3/C1lU5zvyYjis6oDKQ26DU7TOsWj3POQxaqhwUGcf7I6O5BSHMe8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMWRDtVd5HgyMEOIB2wz5QnegNaSWquzKeWCUITj0vuFNEkswu
-	GAUfWiW+XF0SXjlUS+qgCMspOLlf00K8KFz9VLThs1byE5tHc2CfqHGcXhPxiTKrZrPSzMpshVK
-	3gs0Z/yYHvLBMjiehNSAEJUkoUHSx4mc=
-X-Gm-Gg: ASbGncuLsrkE+MT4S8L38gD+DRWoXuqr0o/rK9Q16nCwvtx/15fCyUz9mFQiBMwEeYO
-	r9nOD6luk1t2t994UDWC3hhUON+T1b38vzORQihfE2BLO/PFEvCN50hjmyOVbOSnZ22r3zIZbUj
-	Ccuay4D8H00lIDzljsz7YN/Ef4JoYj4yU=
-X-Google-Smtp-Source: AGHT+IGJ3VLgyC5oRyYT9SJhjLgRqlja96rlJ3f3rzeXshYp1J9lbgDhqI7B6B7Y0eDrmuUni3A/DX8mMtH0+4aqo58=
-X-Received: by 2002:a17:907:980f:b0:ad2:41ae:a1e4 with SMTP id
- a640c23a62f3a-ad50f7c4f3dmr407267966b.24.1747332128837; Thu, 15 May 2025
- 11:02:08 -0700 (PDT)
+	s=arc-20240116; t=1747385044; c=relaxed/simple;
+	bh=RTh17wKWPYBiq7CWlWiqgQXRAXIrPv4zEk3aLTukMdU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 References; b=nSnTLFwXwuSDYtw1TmCh+hjv3IQabIMgJqMdzMo+IYkAa0hdhcrxf/2lDAh7ewDCGGTv5e9/ktyxPHI/oVcfTLRsw+LyQLw5fj/kTUMs8f05aOfqeTYO+q/M6zZ6E8OCJmXuDo5oQ76Xx1OVhtdZ6RnZFshwH3EJN9ze38q/KKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=UoyyS/jH; arc=none smtp.client-ip=203.254.224.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250516084359epoutp03df95aad655d4403b75a7bd269c043d13~-9W9853Do0340503405epoutp03M
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 16 May 2025 08:43:59 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250516084359epoutp03df95aad655d4403b75a7bd269c043d13~-9W9853Do0340503405epoutp03M
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1747385039;
+	bh=oDUn4vGxqZ0dgmjFCUlqP7z0I19O5uz1oFEJFFgwGN0=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=UoyyS/jHUfHBgn2s40CTQovf0uZEDIjk1ZbQcmnfIyarsh1XUGGVlDRHYt6u0OpWv
+	 otsyupWW1nChjaSPUyKv5ykTycdpX7qvi1I6TmqZw+BUYG9U9pvA8N5mqtvsBaX8Vf
+	 hW5KrDb1bpNe3/ZJvT9xfzi2YgeNRRyaBxsgwKTA=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20250516084358epcas5p3efd61ab4296640f46f59d806c92959a9~-9W9Gz9vg0984709847epcas5p3h;
+	Fri, 16 May 2025 08:43:58 +0000 (GMT)
+Received: from epcas5p4.samsung.com (unknown [182.195.38.177]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4ZzLGN1Lchz2SSKb; Fri, 16 May
+	2025 08:43:56 +0000 (GMT)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250516070436epcas5p4204b77c1a146ab05ff897d930c32041e~-8AMna2Bk1740617406epcas5p4y;
+	Fri, 16 May 2025 07:04:36 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20250516070436epsmtrp2a81743acebd8ecc647593b88a5676dd0~-8AMmgodn0262802628epsmtrp2H;
+	Fri, 16 May 2025 07:04:36 +0000 (GMT)
+X-AuditID: b6c32a28-460ee70000001e8a-95-6826e3840519
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	27.A0.07818.483E6286; Fri, 16 May 2025 16:04:36 +0900 (KST)
+Received: from bose.samsungds.net (unknown [107.108.83.9]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20250516070434epsmtip25ce2feee6b9c38117999b0188e44db32~-8AKM8aYr0738607386epsmtip2I;
+	Fri, 16 May 2025 07:04:34 +0000 (GMT)
+From: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+To: gregkh@linuxfoundation.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, alim.akhtar@samsung.com, Thinh.Nguyen@synopsys.com
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, rosa.pila@samsung.com, dev.tailor@samsung.com,
+	faraz.ata@samsung.com, muhammed.ali@samsung.com, selvarasu.g@samsung.com,
+	pritam.sutar@samsung.com
+Subject: [PATCH v3 0/2] initial usb support for ExynosAutov920 soc
+Date: Fri, 16 May 2025 12:43:31 +0530
+Message-Id: <20250516071333.3223226-1-pritam.sutar@samsung.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250430123306.15072-1-linux.amoon@gmail.com> <aCR9RzGMWEuI0pxS@mai.linaro.org>
- <CANAwSgSA-JHMRD7-19wijOY=TSWD-sv6yyrT=mH+wkUJuvxFAw@mail.gmail.com> <92c2949e-2fc1-40e9-9dea-e3d9f7aa571d@linaro.org>
-In-Reply-To: <92c2949e-2fc1-40e9-9dea-e3d9f7aa571d@linaro.org>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Thu, 15 May 2025 23:31:50 +0530
-X-Gm-Features: AX0GCFsEAXplwRDB3NXZqHZ-d-ohJ2IJuxMQMC4KvVGNnVidBm-TZoRYGMggWAM
-Message-ID: <CANAwSgQryVLdRVd9KRBnaUcjtX8xR9w9BBTCvoqKH6funkj=2A@mail.gmail.com>
-Subject: Re: [PATCH v6 0/4] Exynos Thermal code improvement
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
-	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
-	"open list:SAMSUNG THERMAL DRIVER" <linux-pm@vger.kernel.org>, 
-	"open list:SAMSUNG THERMAL DRIVER" <linux-samsung-soc@vger.kernel.org>, 
-	"moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, 
-	"open list:CLANG/LLVM BUILD SUPPORT:Keyword:b(?i:clang|llvm)b" <llvm@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCLMWRmVeSWpSXmKPExsWy7bCSvG7LY7UMg5MTVCwezNvGZrFm7zkm
+	i3s7lrFbzD9yjtXi2o2F7BbNi9ezWbycdY/NYtPja6wWl3fNYbOYcX4fk8WiZa3MFudfdLFa
+	PLu3gs3i/54d7BZffj5gtjiy/COTxaoFB9gdBD02repk89g/dw27x+Yl9R59W1YxemzZ/5nR
+	4/MmuQC2KC6blNSczLLUIn27BK6MbSfaWQs281S0r7nB3sB4l7OLkYNDQsBEYvom7S5GLg4h
+	gd2MEnsWvmbpYuQEistIPJq2kRXCFpZY+e85O0TRW0aJzTMusoA0swmYSkzckwASFxGYxihx
+	pGE/C4jDLHCcSWLKymZGkG5hASeJSbe3MIHYLAKqEl8+bwVr5hWwl/gyQRxigbzE/oNnmUFs
+	XgFBiZMzn4AdwQwUb946m3kCI98sJKlZSFILGJlWMUqmFhTnpucmGxYY5qWW6xUn5haX5qXr
+	JefnbmIER4SWxg7Gd9+a9A8xMnEwHmKU4GBWEuG9nqWcIcSbklhZlVqUH19UmpNafIhRmoNF
+	SZx3pWFEupBAemJJanZqakFqEUyWiYNTqoEpI0tmZuqJOe6/tNd2cv+fdqDccR3vncR8nug4
+	Z54NslX5e5c0MP7a/GH7Qgl7h3jFuI0K84Qc8jL3H22Z9FFJv351aNVd03bj4t5m3wuTL52O
+	9BFP0Giz65FWTeZp4uO6KL3o7C/mNt/Hq5an7vq0ZF1gCOefRfWn/OxXcRXO8AxOfR476/X0
+	bW3Sq5VYRf96y5xsmvlPe/om/ReCnFN+CL1oua53QdZNLdvxObfpbtdaUdaJ+2wU8vuPX11w
+	/C6r5bOPYs+U37BJMEgwvrmyVm+e5Puiv033gyeXPmfZEM/ZOr9yeWR4jt//iP7WtoByi/Bb
+	3tFJMd97Ygp/ybl9F/NSU74qe+DKH+1VD5VYijMSDbWYi4oTAWqHKu73AgAA
+X-CMS-MailID: 20250516070436epcas5p4204b77c1a146ab05ff897d930c32041e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250516070436epcas5p4204b77c1a146ab05ff897d930c32041e
+References: <CGME20250516070436epcas5p4204b77c1a146ab05ff897d930c32041e@epcas5p4.samsung.com>
 
-Hi Daniel,
+This SoC has a DWC3 compatible USB controller
 
-On Thu, 15 May 2025 at 18:59, Daniel Lezcano <daniel.lezcano@linaro.org> wr=
-ote:
->
-> On 5/15/25 13:10, Anand Moon wrote:
-> > Hi Daniel,
-> >
-> > On Wed, 14 May 2025 at 16:53, Daniel Lezcano <daniel.lezcano@linaro.org=
-> wrote:
-> >>
-> >> On Wed, Apr 30, 2025 at 06:02:56PM +0530, Anand Moon wrote:
-> >>> Hi All,
-> >>
-> >> Hi Anand,
-> >>
-> >> if the goal of the changes is to do cleanups, I recommend to rework
-> >> how the code is organized. Instead of having the data->soc check all
-> >> around the functions, write per platform functions and store them in
-> >> struct of_device_id data field instead of the soc version.
-> >>
-> >> Basically get rid of exynos_map_dt_data by settings the different ops
-> >> in a per platform structure.
-> >>
-> >> Then the initialization routine would be simpler to clean.
-> >>
-> >
-> > Thanks, I had previously attempted this approach.
-> > The goal is to split the exynos_tmu_data structure to accommodate
-> > SoC-specific callbacks for initialization and configuration.
-> >
-> > In my earlier attempt, I tried to refactor the code to achieve this.
-> > However, the main challenge I encountered was that the
-> > exynos_sensor_ops weren=E2=80=99t being correctly mapped for each SoC.
-> >
-> > Some SoC have multiple sensor
-> > exynos4x12
-> >                      tmu: tmu@100c0000
-> > exynos5420
-> >                  tmu_cpu0: tmu@10060000
-> >                  tmu_cpu1: tmu@10064000
-> >                  tmu_cpu2: tmu@10068000
-> >                  tmu_cpu3: tmu@1006c000
-> >                  tmu_gpu: tmu@100a0000
-> >   exynos5433
-> >                  tmu_atlas0: tmu@10060000
-> >                  tmu_atlas1: tmu@10068000
-> >                  tmu_g3d: tmu@10070000
-> > exynos7
-> >                  tmu@10060000
-> >
-> > It could be a design issue of the structure.or some DTS issue.
-> > So what I found in debugging it is not working correctly.
-> >
-> > static const struct thermal_zone_device_ops exynos_sensor_ops =3D {
-> >          .get_temp =3D exynos_get_temp,
-> >          .set_emul_temp =3D exynos_tmu_set_emulation,
-> >          .set_trips =3D exynos_set_trips,
-> > };
-> >
-> > The sensor callback will not return a valid pointer and soc id for the =
-get_temp.
-> >
-> > Here is my earlier version of local changes.
-> > [1] https://pastebin.com/bbEP04Zh exynos_tmu.c
-> > [2] https://pastebin.com/PzNz5yve Odroid U3 dmesg.log
-> > [3] https://pastebin.com/4Yjt2d2u    Odroid Xu4 dmesg.log
-> >
-> > I want to re-model the structure to improve the code.
-> > Once Its working condition I will send this for review.
-> >
-> > If you have some suggestions please let me know.
->
-> I suggest to do the conversion step by step beginning by
-> exynos4210_tmu_clear_irqs, then by exynos_map_dt_data as the first
-> cleanup iteration
->
-Ok you want IRQ handle per SoC call back functions?
-so on all the changes depending on SoC id should be moved to
-respective callback functions to reduce the code.
+The USB 3.1 DRD controller has the following features:
+    * compliant with both USB device 3.1 and USB device 2.0 standards
+    * compliant with USB host 3.1 and USB host 2.0 standards
+    * supports USB device 3.1 and USB device 2.0 interfaces
+    * supports USB host 3.1 and USB host 2.0 interfaces
+    * full-speed (12 Mbps) and high-speed (480 Mbps) modes with USB device
+      2.0 interface
+    * super-speed (5 Gbps) mode with USB device 3.1 Gen1 interface
+    * super-speed plus (10 Gbps) mode with USB device 3.1 Gen2 interface
+    * single USB port which can be used for USB 3.1 or USB 2.0
+    * on-chip USB PHY transceiver
+    * DWC3 compatible
+    * supports up to 16 bi-directional endpoints
+    * compliant with xHCI 1.1 specification
 
-Thank  you for having a look into my changes
+changelog
+----------
+Changes in v3:
+- Added Acked-by, Reviewed-by tags.
+- Added the usb mailing list.
+  link for v2: https://lore.kernel.org/linux-usb/20250515225815.23sxkgior5wzsgsc@synopsys.com/
 
-Thanks
--Anand
->
-> --
-> <http://www.linaro.org/> Linaro.org =E2=94=82 Open source software for AR=
-M SoCs
->
-> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-> <http://twitter.com/#!/linaroorg> Twitter |
-> <http://www.linaro.org/linaro-blog/> Blog
+Changes in v2:
+- Grouped compatible string "samsung,exynosautov920-dwusb3" along with
+  the other Samsung compatibles.
+  link for v1: https://lore.kernel.org/linux-usb/20250514140741.415981-1-pritam.sutar@samsung.com/
+
+Pritam Manohar Sutar (2):
+  dt-bindings: usb: samsung,exynos-dwc3: add dt-schema ExynosAutov920
+  usb: dwc3-exynos: add support for ExynosAutov920
+
+ .../bindings/usb/samsung,exynos-dwc3.yaml        | 16 ++++++++++++++++
+ drivers/usb/dwc3/dwc3-exynos.c                   |  9 +++++++++
+ 2 files changed, 25 insertions(+)
+
+-- 
+2.34.1
+
 
