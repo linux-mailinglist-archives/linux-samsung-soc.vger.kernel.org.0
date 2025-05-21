@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-8538-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8540-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCB63ABEE43
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 May 2025 10:45:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEEDEABEE79
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 May 2025 10:47:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29C653A3AF3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 May 2025 08:44:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B0BA4A5F8F
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 21 May 2025 08:47:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 301C423716B;
-	Wed, 21 May 2025 08:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D3E237A3B;
+	Wed, 21 May 2025 08:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="flQ/53mz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BTlsrRpJ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C0D22B59D;
-	Wed, 21 May 2025 08:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A48237173;
+	Wed, 21 May 2025 08:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747817098; cv=none; b=qCcukqxYQbzDUif90sPKBIW46bOz9ghtbZL7OB3U56c9/OM9tjfY21b50VxLy4mnqQsOEY5CVwaNAj82tpb5TyamPae+r/SwNbISW8Cc1AwEo9aCauPewUiOcKT2HYnM1wFCtPOJ3Fvl0G+NZ1KDQovHGsK7rFhyeIhJc4djwPM=
+	t=1747817267; cv=none; b=rC16cS8X3T56hVR8vwEV/xJoSM4ocF/Hb7JMyQq4Jqnh29usESwIHtoQ3mflDI2fJlEP59Z3XzBsWBDfmrWu38xq5heDKafM5vPuCU/6F/RAiNlwe/mn13qG3Ul2bnkdwgHpF5wRUzUh8+ZnAm7hS91lct/FE8Jm3RrdAx6MEZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747817098; c=relaxed/simple;
-	bh=/1saZuKp02ctIpdLLyLlS7ExS8CIGWNbLu+s1xFZPmc=;
+	s=arc-20240116; t=1747817267; c=relaxed/simple;
+	bh=Z+DbRsu4BCqlhGXMmulSIqXan3jSfGw/K2SHdYnl8lg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i0OXEqpPxjTLdlpluYUwfmL3P1WsTp6As4qHK9qNoxpTuDEjcZkFrrP9SABZ9UxCetyOb304tbQzZNKg4ti28DQiZFxnhCu/yQ5HsOwYyT1A1ZesMGJe5KXJlYadTM6hOFervgVtplkU59QOlhLH87opj6IJW1PeXz2IDe9zWxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=flQ/53mz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FC1C4CEE4;
-	Wed, 21 May 2025 08:44:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Nb25xdM0yMuR9gJQdCcefk4fv6ftRLJiKfOe3MXT+3oVP5bDfPotUybyvegQznYucZ73AlFBr4t5FDMU9uCWTdHYT5T8WQ7JFwd9ConTFSF7itE6fw6G/OQNw7gDdy3hChTxNMCqDf4yLRw8Lba4VMaEGM46tpWVN3LhyOQ1w1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BTlsrRpJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEBBC4CEE4;
+	Wed, 21 May 2025 08:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747817097;
-	bh=/1saZuKp02ctIpdLLyLlS7ExS8CIGWNbLu+s1xFZPmc=;
+	s=k20201202; t=1747817266;
+	bh=Z+DbRsu4BCqlhGXMmulSIqXan3jSfGw/K2SHdYnl8lg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=flQ/53mzHP5ySH4hawq63ATVY7kwoiG+T+haDUsETcGW9ORPWC6Aw79JRcU51sRAf
-	 o5P+yIqcCpyYxR8G9+gdbRvyhZV5bu7hPO+9pxMZSTBw4OA+BeCMjJ9q0mwj9bT4Zv
-	 YhB+fqJaHOCszQNWuJLDMAPYmTYRCBbgrxTDnmf8VqSMObJEwQ4S/zC7SIsX0vzowl
-	 zV7XouqqxKHbyG3HF6JHF40nzPCYbZerWVEyW8/yo+FWK/Rn/swLnp5v2wEsey2Sbh
-	 1CLX5xx8G7HB/Wzp7kT58bvJXN6lqZll8uhEzPZ1DU0GZIyoJ2RLeM6ASYRU6ReTM+
-	 L3WhPG7GBO5zg==
-Message-ID: <a584146d-df86-4e40-8a0f-c3b7558fd066@kernel.org>
-Date: Wed, 21 May 2025 10:44:50 +0200
+	b=BTlsrRpJmvudDwvB5CiouCMJ2hIQHlNeWFTnQKQvyC3p4oViYCR+vkV9lFD+o+cEl
+	 FGQxZWsy7M/ilINtBb8rC0Vs9s1jaljtIrWA4UH0EWpc/jqxYnuUEvhYoeaZ63pCnY
+	 kcGCwYGidKATCkL1eXHgiFey08DkMy188XqTT+5FNLClc3nGWGgHfG+WgBRMP6lp8t
+	 xjk6r2W/bOEJGpv2RL8eCtnTO4fkJRoNYJaFI8VeuYcNJ3NPCkefD95HvcKCFjuvdB
+	 w8s+qWI8+2yGbJHyqndBJKtjSkT7cELxUrlqedf2b2SjYYKWMq6OZ/rqyQJNzyhZMM
+	 WD05VeMqmxCPg==
+Message-ID: <7fec4945-eec5-4247-9979-a6ee2229626d@kernel.org>
+Date: Wed, 21 May 2025 10:47:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,9 +50,10 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: phy: samsung,usb3-drd-phy: add
- dt-schema for ExynosAutov920
-To: Pritam Manohar Sutar <pritam.sutar@samsung.com>, vkoul@kernel.org,
+Subject: Re: [PATCH v2 2/2] phy: exyons5-usbdrd: support HS phy for
+ ExynosAutov920
+To: Pritam Manohar Sutar <pritam.sutar@samsung.com>,
+ 'Neil Armstrong' <neil.armstrong@linaro.org>, vkoul@kernel.org,
  kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  alim.akhtar@samsung.com, andre.draszik@linaro.org, peter.griffin@linaro.org,
  kauschluss@disroot.org, m.szyprowski@samsung.com, s.nawrocki@samsung.com
@@ -62,10 +63,11 @@ Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  dev.tailor@samsung.com, faraz.ata@samsung.com, muhammed.ali@samsung.com,
  selvarasu.g@samsung.com
 References: <20250516102650.2144487-1-pritam.sutar@samsung.com>
- <CGME20250516101800epcas5p49fdae57cdf1fbec0427720ee38b0f925@epcas5p4.samsung.com>
- <20250516102650.2144487-2-pritam.sutar@samsung.com>
- <0615877e-247a-419b-b4d6-de377cb40914@kernel.org>
- <000001dbca1c$636ca080$2a45e180$@samsung.com>
+ <CGME20250516101803epcas5p2d9403d89d840dcad88a03d437a48aceb@epcas5p2.samsung.com>
+ <20250516102650.2144487-3-pritam.sutar@samsung.com>
+ <a5c1a064-d760-4140-9e78-d74823b400a8@linaro.org>
+ <1f63af35-7d10-434b-b802-115611ce2ed6@kernel.org>
+ <000201dbca1f$737647d0$5a62d770$@samsung.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,50 +113,97 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <000001dbca1c$636ca080$2a45e180$@samsung.com>
+In-Reply-To: <000201dbca1f$737647d0$5a62d770$@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/05/2025 08:48, Pritam Manohar Sutar wrote:
->>> diff --git
->>> a/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
->>> b/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
->>> index fdddddc7d611..c50f4218ded9 100644
->>> --- a/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
->>> @@ -32,6 +32,7 @@ properties:
->>>        - samsung,exynos7-usbdrd-phy
->>>        - samsung,exynos7870-usbdrd-phy
->>>        - samsung,exynos850-usbdrd-phy
->>> +      - samsung,exynosautov920-usb31drd-phy
->>>
->>>    clocks:
->>>      minItems: 2
->>> @@ -204,6 +205,32 @@ allOf:
->>>          reg-names:
->>>            maxItems: 1
->>>
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: samsung,exynosautov920-usb31drd-phy
->>> +    then:
->>> +      $ref: /schemas/usb/usb-switch.yaml#
->>> +
->>> +      properties:
->>> +        clocks:
->>> +          items:
->>
->> Why there is no main PHY clock?
+On 21/05/2025 09:10, Pritam Manohar Sutar wrote:
+> Hi Krzysztof,
 > 
-> external crystal clk (ext_xtal) is used as main phy clk.
+>> -----Original Message-----
+>> From: Krzysztof Kozlowski <krzk@kernel.org>
+>> Sent: 20 May 2025 01:13 PM
+>> To: Neil Armstrong <neil.armstrong@linaro.org>; Pritam Manohar Sutar
+>> <pritam.sutar@samsung.com>; vkoul@kernel.org; kishon@kernel.org;
+>> robh@kernel.org; krzk+dt@kernel.org; conor+dt@kernel.org;
+>> alim.akhtar@samsung.com; andre.draszik@linaro.org; peter.griffin@linaro.org;
+>> kauschluss@disroot.org; m.szyprowski@samsung.com;
+>> s.nawrocki@samsung.com
+>> Cc: linux-phy@lists.infradead.org; devicetree@vger.kernel.org; linux-
+>> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-samsung-
+>> soc@vger.kernel.org; rosa.pila@samsung.com; dev.tailor@samsung.com;
+>> faraz.ata@samsung.com; muhammed.ali@samsung.com;
+>> selvarasu.g@samsung.com
+>> Subject: Re: [PATCH v2 2/2] phy: exyons5-usbdrd: support HS phy for
+>> ExynosAutov920
+>>
+>> On 20/05/2025 09:39, neil.armstrong@linaro.org wrote:
+>>>> diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c
+>>>> b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+>>>> index 634c4310c660..b440b56c6595 100644
+>>>> --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
+>>>> +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+>>>> @@ -177,6 +177,9 @@
+>>>>   #define HSPHYPLLTUNE_PLL_P_TUNE			GENMASK(3,
+>> 0)
+>>>>
+>>>>   /* Exynos850: USB DRD PHY registers */
+>>>> +#define EXYNOSAUTOv920_DRD_CTRL_VER		0x00
+>>>> +#define CTRL_VER_MAJOR_VERSION			GENMASK(31,
+>> 24)
+>>>> +
+>>>>   #define EXYNOS850_DRD_LINKCTRL			0x04
+>>>>   #define LINKCTRL_FORCE_RXELECIDLE		BIT(18)
+>>>>   #define LINKCTRL_FORCE_PHYSTATUS		BIT(17)
+>>>> @@ -1772,6 +1775,10 @@ static const char * const
+>> exynos5_regulator_names[] = {
+>>>>   	"vbus", "vbus-boost",
+>>>>   };
+>>>>
+>>>> +static const char * const exynosautov920_clk_names[] = {
+>>>> +	"ext_xtal",
+>>>> +};
+>>>> +
+>>>>   static const struct exynos5_usbdrd_phy_drvdata exynos5420_usbdrd_phy =
+>> {
+>>>>   	.phy_cfg		= phy_cfg_exynos5,
+>>>>   	.phy_ops		= &exynos5_usbdrd_phy_ops,
+>>>> @@ -1847,6 +1854,81 @@ static const struct exynos5_usbdrd_phy_drvdata
+>> exynos850_usbdrd_phy = {
+>>>>   	.n_regulators		= ARRAY_SIZE(exynos5_regulator_names),
+>>>>   };
+>>>>
+>>>> +static void exynosautov920_usbdrd_utmi_init(struct
+>>>> +exynos5_usbdrd_phy *phy_drd) {
+>>>> +	u32 version;
+>>>> +
+>>>> +	version = readl(phy_drd->reg_phy +
+>> EXYNOSAUTOv920_DRD_CTRL_VER);
+>>>> +	dev_info(phy_drd->dev, "usbphy: version:0x%x\n", version);
+>>>
+>>> Please do not add mode info to boot log, use dev_dbg instead.
+>>
+>> Just drop entirely, not even worth dbg (see coding style, driver development
+>> debugging guide). It is fixed per given compatible, isn't it? If not, there is entire
+>> commit msg to explain unusual things.
+> 
+> This SoC has a single USB 3.1 DRD combo v400 phy and three USB2.0 DRD phy v303
 
-So this is the main phy clock? This describes the clock input, not what
-you have on your board. If you change external crystal to internal clock
-in one design, you change the binding? No, this makes no sense.
 
+That's a different device, no? Look at the compatible here - it says
+usb31drd.
 
+What does 31 stand for?
+
+> controllers those only support the UTMI+ interface. Currently, supporting only 
+> v303 phy in this patch-set, and planning v400 phy later (soon). Same may be 
+> also updated in commit  message. 
+> 
+> If there's any issue in phy init, dbg print is needed to debug which phy caused it. 
+No, rethink rather this makes sense at all. Please read carefully
+writing bindings, which will tell you that you cannot have different
+devices under the same compatible. Unless you say these are the same
+devices and it differs by other phy? But this is a phy... so many questions.
 
 Best regards,
 Krzysztof
