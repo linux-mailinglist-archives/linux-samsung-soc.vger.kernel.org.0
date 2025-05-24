@@ -1,82 +1,80 @@
-Return-Path: <linux-samsung-soc+bounces-8575-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8577-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87DD9AC2D70
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 07:22:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F019AAC2E1D
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 09:30:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15C0C3B9BA7
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 05:21:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5948E1BA1A33
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 07:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC5091C5D4C;
-	Sat, 24 May 2025 05:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EA731DEFDB;
+	Sat, 24 May 2025 07:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NRQWQYmZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vb5tYHkF"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A451C1F12
-	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 May 2025 05:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFEA1A072C
+	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 May 2025 07:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748064103; cv=none; b=l1d+yPKP8j4T3bA/0FWbSSLUL9E9+8hXqwnRae5zEGbpQi+7YIAZZ5y2l5n1+btXfJXRZ0bJjXSqesTsghYdFmSYYCB1t/Hh26/hL9pLithIAcdRFx3l+mVCl+eI6RxbA3iadDj4jV+hWs3ZCDXHDoWrgkNimjYGiUjXXCBj3cA=
+	t=1748071853; cv=none; b=CaqcTWN037jSIyn+qwO3tgI5GWt1tjrtM88l0gSqqsXTkdeLUp3oFZ8lGQimLsKUUh+j1gUFU/kBJFxSnnJfz7wOlSth6zMqmvvK0yB22zhI0nSB5Q3f8kq+ZL7qB9bbfKdJTgxpNLeKjuypf3F0a1ziPneuOcAz7rwvzZRl7h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748064103; c=relaxed/simple;
-	bh=PafZNXLcYRiHf+o5MJ5tQ/BrZltamGkt95RFIeu+RTk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TocrTHv1AXkxKj1jO5NdUd+HEJMdBLQI+M0EfEb8NV2edBLc1Yz4/a8iEWiIYUjE4SwRQKdNcDbXpCl0Sk6Lcs4/miAWgXa80mNmvbo4xKRZBzxl1Y6dK+Rq73vorG4m32F1WVt56kR9g2Pdwf2IiTdqt4Io0P1gTGYYLhD/1bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NRQWQYmZ; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1748071853; c=relaxed/simple;
+	bh=2jML4/3kd5s8fLqJjcQSqvi9wZI8zPxe/sQgWxHfyK0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ppi/V1vVp4T9BVRJX5aEeyXzdt9SfEx+zUOWtshRz56Ps5LG+jq5r0lKaqrQNyNfpRAIJgqm9xwnfNXemEkNiXpap8ChU9dKjaw1z1svAz2XqT/20bJeHAPN5PcqstQ+PQ/6WOk0uN6E/Mr4uSzOp5kcpn7BReZv+V6cof9PkN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vb5tYHkF; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-601ab204085so2810952a12.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 23 May 2025 22:21:41 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-44b1f5b917fso2580165e9.3
+        for <linux-samsung-soc@vger.kernel.org>; Sat, 24 May 2025 00:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748064100; x=1748668900; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=enzMbJYQFdAK3zJGU0fX+4958E9SfYdaxnw49zMJcLw=;
-        b=NRQWQYmZ6pK3aW8ludIfZf43XFMfeSP34AGs+p3R1WwWmyY57EKhdNPdmQM575qNiE
-         huC6UoERyhxpWl75Kx4gG7PKJ4QRpCccdpJud7Yr1nRN/fADip7iou0rWWQafk05OC1G
-         TZzkLKM8t0kknUxLF3ssfd2d4gzbCURMGltKWM4IjHjPumY5LwMROiHKUa0E/R/aQqPU
-         KJ0h6npXrOHJViu5Cdk1Df7Wml1+Qis3FjpK08rfyqb2RS28bWwx1zK9YoqBdxrQCWAx
-         9+3n0hb5MevSHMSNgXAVP8ryGK+qIVNPESNX3UI0LveP9J0wooY1avoiACb0HTU3IT87
-         TPQg==
+        d=linaro.org; s=google; t=1748071849; x=1748676649; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LPYbsFUFe5r5FajPn8cUBtZRLS5+bX15I0y2o2098dY=;
+        b=vb5tYHkFgszU68yw1srb1Xx0NkYSkbwxZdTaHoPGAZSSQ1CY9Jqe9kEFtrLvPinLsQ
+         EnIMdNp0rIo0XbXrB7DHZeWBf9u0ObQTASvS2yfGyha2VtqJOODQQ5WCtlZIrnrCSxQY
+         MS+pdRQEWcfLWjoiS4qRPH1djzWvZ3ONBIK6dbyf+Y0Ib1gG3D7UBdA8BOZQkQDD/+1n
+         +pX/d0boaLLCAkk5N+Y9kRkQOWZi6uqrZLSYqjhWzNIM039VBHNwPqHm3BXPO8xPw/Nf
+         u4A2MmN3BoJgS+B8RayfEpkbjh/P7WNWAr6jjawPq/9uW/uH9Fl8ksBv4opk6fGejEiw
+         rwNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748064100; x=1748668900;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=enzMbJYQFdAK3zJGU0fX+4958E9SfYdaxnw49zMJcLw=;
-        b=bdyeV/8E3oQ7egewWDvXnE6pzFA9bmOKySVDSrxjBHtxErwF1m36wqA5GCHS90/xPE
-         kgsJVZnTb9dQKxOjvANuvxnMEgBtw3WIzkHuqhhXQaeLPPRlPRuaYsuknQiI3bsrzubH
-         S6jkS9XNBt9ZqDP9eDDJVeDFDQ30NqPn8vxhaQTmnbefj4ZzZRZGlxgo+sW6P4NzZa4x
-         of5YWLCRnhell5C9bkGf3sdERoTk/LV+JT4aCQnnY3MavfrFtgqqcfKotaFlfnNQT+pv
-         rtLT1N52AYBKM1iW/K5+B3/QmqQiMUl9gsSgQ399Df4P959wwCty/ZIw5Xdz/cwXu84L
-         A4tQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX+vm2a4ty90aEKSSEg9Z74puP2SGO/BOXfVi03hRmNjP+zXMPOtm+g1mA/MQfDxgyuA+Y6ANiWTV/2ckzRANIeXw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YziWxyctWPFOTgs+0XqAEhE47NmPpyF0nMU9kydm4LOBI+DBNJ/
-	UNhlQhANJ5xjFqXA/yWMUKFcOO+oCjU3bYNOOuhtIZUiguIcz4RHWrbnKHTBWcf1mQ8=
-X-Gm-Gg: ASbGncs79h2mBdRSKw/3vp1w4lqNX2DIouGz/9pxVbuL/IWzLxN1rYk0Alw8GI51Iov
-	gXAhxB5Dj+ktVEpVRSbZ7n4VvZWNpbznGcZLIhlU0uXGoHxZl5WXKllTIw7iNaP8XjQ08txiB6l
-	js4R70DSalTzrpJ9n2DIjHwaXh4NCChtxO5toH6hCHMMSpqAd4yuK0tPx6Q+Z7km/LywaTHMk4c
-	ovb3YVm6YleaLUNSobzn0WXD8qs9cdGdocCfTL/PPenxVk1Ekgv9Qb/uplyXX5GdDovAmei8kky
-	c65z5h2RcNOJdDc2L9Zvt9HHV5s4p0Co26ByvLTPUMKTjd5Aj0bGLXT8lDEMYOyVmQ5xMZkwWox
-	dUdTbPBrZWoqagX2nYptKY1/z9GynByBwMXI=
-X-Google-Smtp-Source: AGHT+IHTF8pgma55Bi8QUeu7CaUoHTKr21qBvP+LgCFCuUXyRbc9PZ/eQ2lz09LALMtTfl3r4Nz/Yw==
-X-Received: by 2002:a17:907:a088:b0:ad5:4737:f030 with SMTP id a640c23a62f3a-ad8596d8befmr167307266b.1.1748064100011;
-        Fri, 23 May 2025 22:21:40 -0700 (PDT)
-Received: from puffmais.c.googlers.com (68.57.204.35.bc.googleusercontent.com. [35.204.57.68])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad5572f6402sm1106778066b.178.2025.05.23.22.21.39
+        d=1e100.net; s=20230601; t=1748071849; x=1748676649;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LPYbsFUFe5r5FajPn8cUBtZRLS5+bX15I0y2o2098dY=;
+        b=hFT6X1M+SM+SV5PG42z1C1lxT0ySh69I9X3Ly4E/q+kwP0TVJNRNZYyBu9qn/ZlmOE
+         FCJuzR0W2HwQ6tzPAG3LNmIcB5GB7hkWJAhOqEytMC9pMlH9v6pwHZA5AnTTDc4mp1eK
+         i/mBQ+WgSHOXZ8IdatDtdjK6aXX2yE4EtgG1PoQ04iDLhBjAwCHO3Ee37wm/jHraKtLu
+         hNaZ3lUgP/ItIfWrBpH9RqGHZKF1ZkHUPk+MjgvN6ERaKReUJs/F01WO7b2HSHEMUz/n
+         H4fdOvQF/CRYBJ+Ln15BKiF56FsxoD26m/vrDRlD4OxSM1LoAKoa8nnAABx5euLF6uKC
+         FYsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUAWPzZns+WLLUj1GQI/N/RLcEzTYXkyiuiQDfIOKpJza2xtN5J1qLCA8IjScg9wusOWbodUI6DGleHdZRKb8R+Lw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTIuSAnRpm2fAOC1a8x7xYb52/kY88p9mVCg0PdpuDcgSW2Jb+
+	61VKAkCbNpVKnIInfaZ8flIRgAvZ68Tkt0YzD2KvgdjU1Uv6NYgyeiNNTVFmYfWrno4=
+X-Gm-Gg: ASbGnctfr59lgt/EhBa8uRuPo8CySxTkkMUNcvSGSstDI9SOAyRAz4Y+mxK1tXgUF6k
+	qUtozCzaia7eN8m49I6e7tK3p89ZxZS49hm4ozA14NcDMDCrQfJMBHNcJR/NwulSXZ5CNgDV6cA
+	aiJESoKRgTqHoKuoLLRSEO3gfX8oBPDmQJDHiajqxq/IIrnQG1jtPykofO/QSEu3tIXXEcpaZXU
+	7tDGVs4r55IrkBGO5oCOtwcHF6Koi/InXVNyE/3/YkpAfwi4LD3ZdozlwugGKzopCrT7hgij3f5
+	XbHcriWesY4WPx5lVqjKqoVJUn8HEHphsMkETyPtjc4alo4wXD2V0d2FjNJuyz27ouVJldFMEcs
+	ZUkkamqg=
+X-Google-Smtp-Source: AGHT+IE9nIa3Z95Svj6jEfCbrj39rj82MmwJlGv/5CpxRLj8l6iGYqEF8+ydtTi6jSTDL0dicvuciQ==
+X-Received: by 2002:a05:6000:1848:b0:3a0:b294:cce9 with SMTP id ffacd0b85a97d-3a4cb46378dmr1740124f8f.23.1748071849419;
+        Sat, 24 May 2025 00:30:49 -0700 (PDT)
+Received: from gpeter-l.roam.corp.google.com ([212.105.145.168])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3ca066eb7sm10924273f8f.2.2025.05.24.00.30.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 22:21:39 -0700 (PDT)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Sat, 24 May 2025 06:21:31 +0100
-Subject: [PATCH v2 4/4] arm64: dts: exynos: gs101: add
- dm-verity-device-corrupted syscon-reboot-mode
+        Sat, 24 May 2025 00:30:48 -0700 (PDT)
+From: Peter Griffin <peter.griffin@linaro.org>
+Subject: [PATCH 0/2] Enable CPU Idle for gs101
+Date: Sat, 24 May 2025 08:30:28 +0100
+Message-Id: <20250524-gs101-cpuidle-v1-0-aea77a7842a6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,47 +82,91 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250524-b4-max77759-mfd-dts-v2-4-b479542eb97d@linaro.org>
-References: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
-In-Reply-To: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
-To: Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJV1MWgC/x3MQQqAIBBA0avErBNUKrKrRAtxRhsIE6UIpLsnL
+ d/i/wqFMlOBpauQ6ebCZ2xQfQdutzGQYGwGLfUoRz2IUJRUwqWL8SDhrHdmQpwHg9CalMnz8//
+ W7X0/n6hfWV8AAAA=
+X-Change-ID: 20250524-gs101-cpuidle-cafc96dd849d
+To: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
  Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+Cc: William Mcvicker <willmcvicker@google.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ kernel-team@android.com, Peter Griffin <peter.griffin@linaro.org>, 
+ Will Deacon <willdeacon@google.com>, 
+ Youngmin Nam <youngmin.nam@samsung.com>
 X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1972;
+ i=peter.griffin@linaro.org; h=from:subject:message-id;
+ bh=2jML4/3kd5s8fLqJjcQSqvi9wZI8zPxe/sQgWxHfyK0=;
+ b=owEBbQKS/ZANAwAKAc7ouNYCNHK6AcsmYgBoMXWlx7vjsMqlGbR7cLc1qEzooZmx2AVmGOCuY
+ 8VMrGLOR2OJAjMEAAEKAB0WIQQO/I5vVXh1DVa1SfzO6LjWAjRyugUCaDF1pQAKCRDO6LjWAjRy
+ uqXnD/0dLYPbDiWZjJRTyITURtSjSFF/LvctWlYwx8nuFy4GYJpm5AaiTF45kAWzpKe7qu3OEAD
+ GSf6sxnrgT+qNsfyu4SMEiksZZFi+J834QcMcziRKd1WP9/DdJOijZuqcPq8e9zkm8hBF4TIWsu
+ F80DehSiqSKKT7IKBBV5QuxEeYhTUKRZBd4eLQNfkpEKKUft6fbx9YObeuOfUDa1y+aUSl+/Bqw
+ v0Gx2pUaO58IexchV2YfCDKJSJ5ZhXKjRqV80etD15B7LIDOdbif0u4BAV9nM4mZgeazfDOEEwR
+ OTNIcUlx9E21Cy8Yr2NAV4ioBdCQDI7RYxcdfUteR5H0W3pJpJK+PhpbIvEYW3ylWdXepNKotgv
+ jHHZTXz2SRDfoJ+pSxXqOwnN0Dugtc0xANAYqM5nOtwC3svA6CZcPkrweDlwDAlxDDwknwZRf3m
+ ZUBkA5mG3PTTZ3+7HCv9Yu++KmumB12Gno2DNkYh7IBoZoANuYfc/G3PtDuzZ3UMMZ2l6bZ/vO2
+ SrPnTD3yOgwlmaTAa6X5xLQc+zoeHUiJ7qAWYutJu97qNuxzts/zk3gaT0oL9iLB4+LiseoJC8x
+ L7krP18Y16EncIZffkujj135CoFByxbsq+0IOQ5uAcIDDL0X3CE4w9zIL/jR9e71i2PoeTohEnw
+ Rz4f6/rU0Mxxi/g==
+X-Developer-Key: i=peter.griffin@linaro.org; a=openpgp;
+ fpr=0EFC8E6F5578750D56B549FCCEE8B8D6023472BA
 
-On gs101, the boot mode is stored both in a syscon register, and in
-nvmem.
+Hi folks,
 
-Add the dm-verity-device-corrupted reboot mode to the syscon-reboot-
-based boot mode as well, as both (nvmem & syscon) modes should be in
-sync.
+This series adds support for CPU Idle on gs101. In particular it
+achieves this by registerring a cpu pm notifier and programming
+a ACPM hint to enter the c2 idle state. With the hint programmed
+the system now enters c2 idle state.
 
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Note: the driver patch has a runtime dependency on the device tree
+change to add `local-timer-stop` DT property to the CPU nodes.
+Without this DT patch the system will hang in early boot as the
+local timer is shutdown. The DT patch was originally sent along
+with Wills MCT series in [1] but it can be merged independently
+of the rest of the MCT changes, so I've included it here to
+(hopefully!) make things clearer and easier as it has a strong
+dependency with this patch.
+
+We can measure the impact of these changes upstream using the fuel
+gauge series from Thomas Antoine [2]. With the ACPM hint now
+programmed /sys/class/power_supply/max77759-fg/current_avg is a
+postive number around 150000 microamps meaning we are charging the
+battery (assuming it isn't already full).
+
+Prior to programming the hint this would report a negative number
+around -150000 microamps meaning the battery was discharing.
+
+Thanks,
+
+Peter
+
+[1] https://lore.kernel.org/lkml/20250402233407.2452429-5-willmcvicker@google.com/
+[2] https://lore.kernel.org/lkml/20250421-b4-gs101_max77759_fg-v3-0-50cd8caf9017@uclouvain.be/
+
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
 ---
- arch/arm64/boot/dts/exynos/google/gs101.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Peter Griffin (1):
+      soc: samsung: exynos-pmu: Enable CPU Idle for gs101
 
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index 48c691fd0a3ae430b5d66b402610d23b72b144d7..88e491b2befc463789651a4cc7f3a658999ee808 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -1426,6 +1426,7 @@ reboot-mode {
- 				offset = <0x0810>; /* EXYNOS_PMU_SYSIP_DAT0 */
- 				mode-bootloader = <0xfc>;
- 				mode-charge = <0x0a>;
-+				mode-dm-verity-device-corrupted = <0x50>;
- 				mode-fastboot = <0xfa>;
- 				mode-reboot-ab-update = <0x52>;
- 				mode-recovery = <0xff>;
+Will Deacon (1):
+      arm64: dts: exynos: gs101: Add 'local-timer-stop' to cpuidle nodes
 
+ arch/arm64/boot/dts/exynos/google/gs101.dtsi |   3 +
+ drivers/soc/samsung/exynos-pmu.c             | 135 ++++++++++++++++++++++++++-
+ 2 files changed, 134 insertions(+), 4 deletions(-)
+---
+base-commit: 176e917e010cb7dcc605f11d2bc33f304292482b
+change-id: 20250524-gs101-cpuidle-cafc96dd849d
+
+Best regards,
 -- 
-2.49.0.1151.ga128411c76-goog
+Peter Griffin <peter.griffin@linaro.org>
 
 
