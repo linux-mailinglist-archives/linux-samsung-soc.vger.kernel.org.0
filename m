@@ -1,82 +1,82 @@
-Return-Path: <linux-samsung-soc+bounces-8574-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8576-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC1BAAC2D69
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 07:21:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4B99AC2D6C
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 07:22:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 609007B3EC6
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 05:20:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D81A7B5DF0
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 24 May 2025 05:20:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB2511C6FEA;
-	Sat, 24 May 2025 05:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13FE81D95B4;
+	Sat, 24 May 2025 05:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KzTJ7w7J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f85i/E8r"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C299A1A3155
-	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 May 2025 05:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532471B87E9
+	for <linux-samsung-soc@vger.kernel.org>; Sat, 24 May 2025 05:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748064102; cv=none; b=X773tcKDiEJ2I8N1ZAcrraY9zU9SpbwMA776wbkUqxmFD3zVHSms47dIWrExDu7yIlbHJH2RPa2BHfuBLVf7/diRz+xSQAP0nqeccJzvEsvEw7cvxt8eYBIfNS4fJFTannnyocXs56ZpESptj6c51qnVsxDZn3ufhvVIdFSm7yE=
+	t=1748064104; cv=none; b=C/2laSzinEpms1BdftWy5EwQdKqUsIs2pP3cKVG/mQ3nX6lF5VjjnIRFTZs8G+9oGnJ0rA5qeZBZSIE9taRTqMoc+XRq3f0dCyAkCGBoaBdbTxQmMl9vRVOMPPXe5ZHTbSLgx2RrB31SvhI3QeGXBxs8CowXgVYvmAfXPTzw5ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748064102; c=relaxed/simple;
-	bh=CxJGVYe9gQWEypwBZmgwMYlPMVvbtIIqNvj32ACzzR0=;
+	s=arc-20240116; t=1748064104; c=relaxed/simple;
+	bh=+jwqBuIwFMBeNotpPI6tkIuGBlP83Ihx29EXiedTQeE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tRdQDcusiiXAfiNLEcXnwVxzqW6fuy3NuW/4pTsFjpwsVHtAGKmizf1/q5uWU5knD4s/SCjduqRI7OnbY2Y/zmHCi15DLIOENOFGW7kerR/9F8KvpkJYr3vHUdZ0JpSG+DtdZ6VY63q2OE3TzTQ9jYh56OMYelGrWD5/aYw7fs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KzTJ7w7J; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:To:Cc; b=NfN1A9kVYQXbegFJbb5X1JISIZRoF6XJ0Gcpt+9hmez/Msvk8ltk5Khp7we39k5V4hyUciBrW6ePQVEeJt5voANuu+xCt5iL/zdT7o6h73bHjw9oWajycILVDNNimnL0ifrRMxllvZau950xcV42ig9ruSdcahRdfgsdM7laF20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f85i/E8r; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-acb5ec407b1so74855066b.1
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ad564b7aea9so300528966b.1
         for <linux-samsung-soc@vger.kernel.org>; Fri, 23 May 2025 22:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1748064099; x=1748668899; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=p9Vj2sz8u3fgQAY0zH4yjJJsJuXYHYmr/5RzLXpeQpg=;
-        b=KzTJ7w7JRU3uBYTnn09a70sQrd+t2FrMKTBGh1Pk9fvJO4MP/n6rM0Ew0dfZLojAFG
-         SbLax91wVaPUvRpU50mJEU0MUpKGXwRLyhUlfxO/hFXz+NmEb4jurvsQCx3nAuYMrMaB
-         kFWJPl5ohPi3xG9wgKkOC0ia6cnll7XScCDw68S5bwMZ2RFogAOgaVu39mK3cuuKXokN
-         Z2lIvUfL8XYH0/j+e3rXrKFSysz8Q5NrbUB/muR303vteLrvMzcfUe//8bf1MZcUP+fL
-         ATN/MObBzyv8i0YuR77i1u39YZ4o86M8bV4ScJEQBqtva9kWCoCnRyJt/3jwpzyYZii1
-         mVyQ==
+        bh=7Twazfz0joDHDf3E0VUXRkggat1KdGbQWxfqNgUu5Y8=;
+        b=f85i/E8ru0B3StnOmk25oZBBK2xMpuL+AuQtKizcNTRlFtNGk1woykQVEhJcfdrHFg
+         UKGKn8O83EdCypfKynAbFWjsj4yuDIDQtNBF6QDrlWUCFq6R1ZpoWoK8Mk3/ZH2DFNnF
+         JJxRWw1zoQIKJ72cizxsH1O5N7rwgP2DNK54p2To2Q2RIsm6PxvMUDrKGk8a0V7shqzI
+         J6voFEsUVS8YmLSFLp2FlI69GfvA3eD13LSBVTkU15hP9jIx/bDdOaidx83nE2iNt50D
+         U/d5aTgxjCo8szne6fEoy31KZuuc2zz3CKZdqwUng/3pZTNLy1mBzdeKtsxJMN1DwSXK
+         eK1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1748064099; x=1748668899;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=p9Vj2sz8u3fgQAY0zH4yjJJsJuXYHYmr/5RzLXpeQpg=;
-        b=bFrSRM+fHVOzKWzzlI00gYg2D8U+x+EcXt44g6bHF2ZRmUKIF4VdqPxLeN4W1bBqH2
-         bbSq6OfnfObiT1P6Lk5l6z/39J1msqzzmdybfeWkWK+apFVI/bodxhv6wqxV57AovEMO
-         cYYk5FXI00ICGpzfgHJz6L5a7ZDD2zkEf5Tv3SsKqVCmMPWHxw7YMVq2h6n8T2Tgco2T
-         LJXuCjKkHKvRE7N3IxYU5eVEUk3LSh9tRpijGUijwV2aovBAZYKdqlzGYpZll0vvSD3T
-         Eb6T2fHntGtmQzzURqXOg4y1ySq1wpGisRK4XD7w/iIR09DXzhm1h1voZGZrGPZxprmw
-         K+RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUqMjs/IXEEHeB8+AcWARg27D7B4fAAE79CTEjt2ikljmTGj84/E+JUuFqIujsQ9LeMyvCkWT15yvzZ11MvzV8uwA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzI4jDbHZZvoGkT9QjigWwbHfp/UomUirhBTMTfib9U2GC2JSLu
-	y6kREuBw8ZzVluSiJkv4LXxMGHHQsKqFfgDShg6cfSzya+KtzWAP5b/n92Hn1EjBqn0=
-X-Gm-Gg: ASbGncvmfMlG7cJz5U+Hpb1NvMxf3tifyDJQfVJFpLVVdedSfLaau7XlOyr9JMD6XAv
-	GMwR6qjo0KhSCQEPIuqFy9JMonPyTWAn45uR3Fud2P7sfJSoCT+4B6YsQ2F4hEi9YZAlw/gyHNP
-	fCyg3TqwmCrQxpbp2sxrMltYCGCuusoyfpdU2UUe8rxyTtyQkjXwtQgPEiQSqs5cLtm9YHy2n6r
-	oU+QCXqOpeBODLHO/pvJZQoN62wPPQOW1ixSp0GBlTBO5jr3kOkyVRbp3wefyySQMLsktvkh76h
-	lsyEbgt/otgVNOBYQVeuI6wsg7u+fu2g/yruu3twsI9qoMlWV0Or2T4S6l7+7EirkkgIv5e6vO4
-	LxY9WOD+SxjLtuf3seSoz0XBugtKv/L64ogA=
-X-Google-Smtp-Source: AGHT+IF8pgsRiLru+xzCs3/kYK9IFFjLgdgCKETe4qhqLvBb/0iNzUicN2Yb4j1NXVYdjuG8Y5CZ0A==
-X-Received: by 2002:a17:907:d06:b0:ad2:2ef3:d487 with SMTP id a640c23a62f3a-ad85b329c74mr142108566b.58.1748064099139;
+        bh=7Twazfz0joDHDf3E0VUXRkggat1KdGbQWxfqNgUu5Y8=;
+        b=JefbusGbwN0r/HJeyAb7zj8PwmmIueAHcoxxhJ2ozdYEO8BCEuLKO24SlI0e70doRs
+         nXsRKpjsT7YUakRCkI0ylnfNvWW50MfqJaOP4PTuyt5DZI1JZrcn/t92caFjFVW/ILw7
+         3cD0mJWYn0zFzmRlXXmsJzYOXJ2kmkP0AMA2MAOrTq7ltkytVFPaPjD4nbBoOEwGgqAP
+         XDFriOHmhR226Ljf1h7b9SdGloTHh0151UTRcj7UYYKCjNIT00jdxibpYlJyzIPEJQ8X
+         KUqf5yFQ659i0Hmc1rHOea6VYUrLLmQC6UbgeI5YLlbsFX1KH60vf4HKB8KdbgoeKqsL
+         EicA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRX/5cRH118p+VhBgvj2pqMgMoyOr3FGDO/HR37NYMNc+KOheAGN2cPCmu9SjYateFccGo9lzjYAX7XpJSVwpGhg==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0B5H7UgjLnI2bV0hRKJZtA9cjHlD9rG4mK9x/GWcFbfm9lVW4
+	zNyj3iQJJfKDZHJhpFsETD+5Ss0ikCz0ExGqzS9z5IUQmU1fvN9He4ti6727pmTRSEQ=
+X-Gm-Gg: ASbGncvpjQfw96rSOLgpF76/ZMJ6hA7zcUEL9zft3kbFGEyJngp4Xek5QEO0HQMYeuT
+	/+BdXQed7j3aLbJ7G6jFSQ2I2nRG5iFw1hAfq64215vuACfGiwfb4XDl67M05J/KcxKbcykMevh
+	nx4yVLYBL6WMn1x5kSerCRgOWvvPmdK6wnzJzZvTzt2Xk+L1Oei1vDaKmxkVtCQ9x7RPgDSQ/xK
+	doFEKv3QPyTMxTTwu9FsHjGE+Yhr+CW+AIquxSWY+B+VLeDLcdVzasgpb3P+t37mTY1Eao3houe
+	gApo2s7zINAd/chlRmH4jwx7Wiol4WhaRH8AjUD+spmM9bI9R+Iu/EbAYB4qCQ8I5+D7Fm3zCMB
+	CGH1sAApNqoW6t9MrvNsvZkmNQcrOIU94Ewo=
+X-Google-Smtp-Source: AGHT+IHtMWk0Zf+q26yD0iAFN/AxSEy+PDpN0ChAhlrk8dppBVzxLu8QU9Jabhie5nFR/O8+Q1JeMA==
+X-Received: by 2002:a17:907:96a0:b0:ad5:67f3:73ea with SMTP id a640c23a62f3a-ad64e84b500mr516495266b.21.1748064099584;
         Fri, 23 May 2025 22:21:39 -0700 (PDT)
 Received: from puffmais.c.googlers.com (68.57.204.35.bc.googleusercontent.com. [35.204.57.68])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad5572f6402sm1106778066b.178.2025.05.23.22.21.38
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad5572f6402sm1106778066b.178.2025.05.23.22.21.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 22:21:38 -0700 (PDT)
+        Fri, 23 May 2025 22:21:39 -0700 (PDT)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Sat, 24 May 2025 06:21:29 +0100
-Subject: [PATCH v2 2/4] arm64: dts: exynos: gs101-pixel-common: add Maxim
- MAX77759 PMIC
+Date: Sat, 24 May 2025 06:21:30 +0100
+Subject: [PATCH v2 3/4] arm64: dts: exynos: gs101-pixel-common: add
+ nvmem-reboot-mode
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250524-b4-max77759-mfd-dts-v2-2-b479542eb97d@linaro.org>
+Message-Id: <20250524-b4-max77759-mfd-dts-v2-3-b479542eb97d@linaro.org>
 References: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
 In-Reply-To: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
 To: Catalin Marinas <catalin.marinas@arm.com>, 
@@ -99,116 +99,54 @@ Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-On Pixel 6 (and Pro), a MAX77759 companion PMIC for USB Type-C
-applications is used, which contains four functional blocks (at
-distinct I2C addresses):
-  * top (including GPIO & NVMEM)
-  * charger
-  * fuel gauge
-  * TCPCi
+Add the 'nvmem-reboot-mode' which is used to communicate a requested
+boot mode to the boot loader.
 
-This change adds the PMIC and the subnodes for the GPIO expander and
-NVMEM, and defines the NVMEM layout.
-
-The NVMEM layout is declared such that it matches downstream's
-open-coded configuration [1].
-
-Note:
-The pinctrl nodes are kept sorted by the 'samsung,pins' property rather
-than node name, as I think that makes it easier to look at and to add
-new nodes unambiguously in the future. Its label is prefixed with 'if'
-(for interface), because there are three PMICs in total in use on
-Pixel 6 (Pro).
-
-Link: https://android.googlesource.com/kernel/google-modules/bms/+/96e729a83817/max77759_maxq.c#67 [1]
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 
 ---
 v2:
+- add dm-verity-device-corrupted
 - update commit message slightly
 ---
- .../boot/dts/exynos/google/gs101-pixel-common.dtsi | 61 ++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ .../boot/dts/exynos/google/gs101-pixel-common.dtsi      | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
-index d6ddcc13f7b20c6dfbe92e86abafe965870d0c78..de5c8d236b705505c0745827c5c6b67d94ba6227 100644
+index de5c8d236b705505c0745827c5c6b67d94ba6227..cd8e1b8a10b111190b984e104f749d04514d0449 100644
 --- a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
 +++ b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
-@@ -188,6 +188,60 @@ usbc0_role_sw: endpoint {
- 			};
+@@ -60,6 +60,21 @@ button-power {
  		};
  	};
-+
-+	pmic@66 {
-+		compatible = "maxim,max77759";
-+		reg = <0x66>;
-+
-+		pinctrl-0 = <&if_pmic_int>;
-+		pinctrl-names = "default";
-+		interrupts-extended = <&gpa8 3 IRQ_TYPE_LEVEL_LOW>;
-+
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+
-+		gpio {
-+			compatible = "maxim,max77759-gpio";
-+
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			/*
-+			 * "Human-readable name [SIGNAL_LABEL]" where the
-+			 * latter comes from the schematic
-+			 */
-+			gpio-line-names = "OTG boost [OTG_BOOST_EN]",
-+					  "max20339 IRQ [MW_OVP_INT_L]";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+
-+		nvmem-0 {
-+			compatible = "maxim,max77759-nvmem";
-+
-+			nvmem-layout {
-+				compatible = "fixed-layout";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+
-+				reboot-mode@0 {
-+					reg = <0x0 0x4>;
-+				};
-+
-+				boot-reason@4 {
-+					reg = <0x4 0x4>;
-+				};
-+
-+				shutdown-user-flag@8 {
-+					reg = <0x8 0x1>;
-+				};
-+
-+				rsoc@a {
-+					reg = <0xa 0x2>;
-+				};
-+			};
-+		};
-+	};
- };
  
- &pinctrl_far_alive {
-@@ -211,6 +265,13 @@ typec_int: typec-int-pins {
- 		samsung,pin-pud = <GS101_PIN_PULL_UP>;
- 		samsung,pin-drv = <GS101_PIN_DRV_2_5_MA>;
- 	};
-+
-+	if_pmic_int: if-pmic-int-pins {
-+		samsung,pins = "gpa8-3";
-+		samsung,pin-function = <GS101_PIN_FUNC_EINT>;
-+		samsung,pin-pud = <GS101_PIN_PULL_UP>;
-+		samsung,pin-drv = <GS101_PIN_DRV_2_5_MA>;
++	reboot-mode {
++		compatible = "nvmem-reboot-mode";
++		nvmem-cells = <&nvmem_reboot_mode>;
++		nvmem-cell-names = "reboot-mode";
++		mode-bootloader = <0x800000fc>;
++		mode-charge = <0x8000000a>;
++		mode-dm-verity-device-corrupted = <0x80000050>;
++		mode-fastboot = <0x800000fa>;
++		mode-reboot-ab-update = <0x80000052>;
++		mode-recovery = <0x800000ff>;
++		mode-rescue = <0x800000f9>;
++		mode-shutdown-thermal = <0x80000051>;
++		mode-shutdown-thermal-battery = <0x80000051>;
 +	};
- };
++
+ 	/* TODO: Remove this once PMIC is implemented  */
+ 	reg_placeholder: regulator-0 {
+ 		compatible = "regulator-fixed";
+@@ -224,7 +239,7 @@ nvmem-layout {
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
  
- &pinctrl_gpio_alive {
+-				reboot-mode@0 {
++				nvmem_reboot_mode: reboot-mode@0 {
+ 					reg = <0x0 0x4>;
+ 				};
+ 
 
 -- 
 2.49.0.1151.ga128411c76-goog
