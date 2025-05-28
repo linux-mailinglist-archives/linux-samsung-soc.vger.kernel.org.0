@@ -1,107 +1,124 @@
-Return-Path: <linux-samsung-soc+bounces-8600-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8602-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BA3DAC67E3
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 May 2025 12:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 900D7AC697E
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 May 2025 14:38:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A97A172D1A
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 May 2025 10:58:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93A7616C9D0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 28 May 2025 12:37:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 832D827AC37;
-	Wed, 28 May 2025 10:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46B1728641B;
+	Wed, 28 May 2025 12:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="gbk96h/i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jazg0UmC"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5819D071
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 28 May 2025 10:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A4428640A;
+	Wed, 28 May 2025 12:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748429918; cv=none; b=qxWBQjOqEQVquTJq7ApddpkpqlLYVXOqPf0rDMhCktFCcQvNEp4ELk6t/hEKOijiD4cPaEGHqdIk7FBMuI4QQyTju1DlNy5aKPN8qnl1T2POQggFnrni38sFeBVWGBk47Xmb2vPxIYuupErkDO1H1yayYWjrtNd+j3aPB/UlxSE=
+	t=1748435845; cv=none; b=OJgffo5nEFlO1yAVZ2XZJEDUgogqKiEv+JEtxklj1gRwcYdV840Y3P9wv/gS13TH4RB/hM1W6eNPq+AzzxyafcJEVi13eHDN1MgwZXOkbOv8f5I+8AiywOAngM7OOXybrxFpuhvwvSyGtPUxKq73e6YjGb/M4SC++cU5vDJBlhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748429918; c=relaxed/simple;
-	bh=AlBhvJpL+ZxjXrIug0I6z5UpQ2bBMocBU3ycBy27pRM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cHc4LsBRhJWOXAa1t1fIePGcp4V8pDLtmbOROYArLWKjAUeSjQ1t+y2oN7+Ej4p84n+OOnnJWIaBYCaSPowjAbAWlk5QwWpdRCZWyA6Mg/7+AhTE7dNqSycyG9tZpkE1ZgZ0Rd6NaRTHuTRRIPZREDkPj+nEIfuUM7RCnUW25JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=gbk96h/i; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
-DKIM-Signature: a=rsa-sha256; b=gbk96h/iuTYW8you7S2tyt1pVBCjE5T9hLlpwVj1zezbKIxRDDjuQ2VLMOqdb/5KKAxP3+pGFuu+dchjj2o6/B4inKtrwPzyk/A7FjVjgYPlp3z+1S7T0Gd/cfYQsqu6DoNHArMZdDf+2DyUSPLk3A4X9f4faIJOB76vZjSsLS5qsUTtP6NY3IzvHfZmRWtsBhFMjIxjxAkQytI338x8Oc0Yw+mNhNIXmMBr+ExSLO54uAoWTN5uIrtE4xTeHKNmFxghZGnFXjZ912pklSPMOJ647VErN5sipGU/cius1MIrnb26+fb2swP08DklEwh4BkvlVjqHtHv/qi6qWwY5+Q==; s=purelymail3; d=purelymail.com; v=1; bh=AlBhvJpL+ZxjXrIug0I6z5UpQ2bBMocBU3ycBy27pRM=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 68229:10037:null:purelymail
-X-Pm-Original-To: linux-samsung-soc@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 715274949;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 28 May 2025 10:58:24 +0000 (UTC)
-From: Umer Uddin <umer.uddin@mentallysanemainliners.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>
-Cc: devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v1 1/1] arm64: dts: exynos990: Add CMU_HSI1 node
-Date: Wed, 28 May 2025 11:58:21 +0100
-Message-ID: <20250528105821.158140-2-umer.uddin@mentallysanemainliners.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250528105821.158140-1-umer.uddin@mentallysanemainliners.org>
-References: <20250528105821.158140-1-umer.uddin@mentallysanemainliners.org>
+	s=arc-20240116; t=1748435845; c=relaxed/simple;
+	bh=eUA0BDfpbYKOu7zRQ2U4yKvk2szX91xJ+8ngKIX4azc=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=ih9ivjZCFobunAgOMAHUJTxbw9XydlFkkYdaZcp4f0gYbldGGnoFX5V5F0PRlaJhPNsznrpaDlZPhKiDd6+nK7p0H4pzwB299/Aj8GAw4wPHjHqllmQ77/S3XhquxXXxTS7S8lTl/BXR9FuDQMATsxT9C3xSCu5C3M5ufFbVIj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jazg0UmC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DBEC4CEE7;
+	Wed, 28 May 2025 12:37:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748435844;
+	bh=eUA0BDfpbYKOu7zRQ2U4yKvk2szX91xJ+8ngKIX4azc=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=jazg0UmCvQ2wV++PyxuX/XABwG1uLNgiyt9I+MfXiFIAD6pOYtbF4Vr79wA4pE8hH
+	 fEWhbdCgSvmh43nXEUtRK0Amq7+8UrVQ1mNv9fnTcHQ8tHwLWG1Rrj3tdHYIv1KcEe
+	 7gzDcSAYWtZR9gz0Pd9Y8qEHAVXKt5H2eB6SegyOgbvfntjP49qrHfgqsS3DJa6WOa
+	 QKi4t8b5Ve9hmIIBvuIbFEp0EoEYmPdepve4eFn0mlP/GGxKoLr4JyvAnBW05UvBXG
+	 lTngUL4DUoFWPpS2hgMdeijYRw64b6suDmK5eGzP5kMCIIUqvS5fAhHHZUHQJ+YEvq
+	 QlfAE5S3nVhjg==
+Date: Wed, 28 May 2025 07:37:23 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Umer Uddin <umer.uddin@mentallysanemainliners.org>
+In-Reply-To: <20250528105821.158140-1-umer.uddin@mentallysanemainliners.org>
+References: <20250528105821.158140-1-umer.uddin@mentallysanemainliners.org>
+Message-Id: <174843567453.3636707.847885249011261450.robh@kernel.org>
+Subject: Re: [PATCH v1 0/1] Enable CMU_HSI1 for Exynos990
 
-CMU_HSI1 is a new clock controller that provides clocks for the
-DesignWare MMC Controller, PCIE subsystem and UFS subsystem.
 
-Signed-off-by: Umer Uddin <umer.uddin@mentallysanemainliners.org>
----
- arch/arm64/boot/dts/exynos/exynos990.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+On Wed, 28 May 2025 11:58:20 +0100, Umer Uddin wrote:
+> Hi all.
+> 
+> This series enables a new clock block (CMU_HSI1) for the Exynos990
+> SoC. This clock block provides clocks for the DesignWare MMC
+> Controller, PCIE subsystem and UFS subsystem.
+> 
+> This patch depends on the following series:
+> 
+> [CMU_HSI1] https://lore.kernel.org/linux-samsung-soc/20250528105252.157533-1-umer.uddin@mentallysanemainliners.org/
+> 
+> Best regards,
+> Umer Uddin.
+> 
+> Umer Uddin (1):
+>   arm64: dts: exynos990: Add CMU_HSI1 node
+> 
+>  arch/arm64/boot/dts/exynos/exynos990.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> --
+> 2.47.2
+> 
+> 
+> 
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos990.dtsi b/arch/arm64/boot/dt=
-s/exynos/exynos990.dtsi
-index dd7f99f51..4ab6e35f0 100644
---- a/arch/arm64/boot/dts/exynos/exynos990.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynos990.dtsi
-@@ -254,6 +254,25 @@ cmu_hsi0: clock-controller@10a00000 {
- =09=09=09=09      "dpgtc";
- =09=09};
-=20
-+=09=09cmu_hsi1: clock-controller@13000000 {
-+=09=09=09compatible =3D "samsung,exynos990-cmu-hsi1";
-+=09=09=09reg =3D <0x13000000 0x8000>;
-+=09=09=09#clock-cells =3D <1>;
-+
-+=09=09=09clocks =3D <&oscclk>,
-+=09=09=09=09 <&cmu_top CLK_DOUT_CMU_HSI1_BUS>,
-+=09=09=09=09 <&cmu_top CLK_DOUT_CMU_HSI1_MMC_CARD>,
-+=09=09=09=09 <&cmu_top CLK_DOUT_CMU_HSI1_PCIE>,
-+=09=09=09=09 <&cmu_top CLK_DOUT_CMU_HSI1_UFS_CARD>,
-+=09=09=09=09 <&cmu_top CLK_DOUT_CMU_HSI1_UFS_EMBD>;
-+=09=09=09clock-names =3D "oscclk",
-+=09=09=09=09      "bus",
-+=09=09=09=09      "mmc_card",
-+=09=09=09=09      "pcie",
-+=09=09=09=09      "ufs_card",
-+=09=09=09=09      "ufs_embd";
-+=09=09};
-+
- =09=09pinctrl_hsi1: pinctrl@13040000 {
- =09=09=09compatible =3D "samsung,exynos990-pinctrl";
- =09=09=09reg =3D <0x13040000 0x1000>;
---=20
-2.47.2
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: attempting to guess base-commit...
+ Base: tags/next-20250528 (exact match)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/exynos/' for 20250528105821.158140-1-umer.uddin@mentallysanemainliners.org:
+
+arch/arm64/boot/dts/exynos/exynos990-c1s.dtb: /soc@0/clock-controller@13000000: failed to match any schema with compatible: ['samsung,exynos990-cmu-hsi1']
+arch/arm64/boot/dts/exynos/exynos990-x1slte.dtb: /soc@0/clock-controller@13000000: failed to match any schema with compatible: ['samsung,exynos990-cmu-hsi1']
+arch/arm64/boot/dts/exynos/exynos990-r8s.dtb: /soc@0/clock-controller@13000000: failed to match any schema with compatible: ['samsung,exynos990-cmu-hsi1']
+arch/arm64/boot/dts/exynos/exynos990-x1s.dtb: /soc@0/clock-controller@13000000: failed to match any schema with compatible: ['samsung,exynos990-cmu-hsi1']
+
+
+
+
 
 
