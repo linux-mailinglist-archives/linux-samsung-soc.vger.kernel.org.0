@@ -1,132 +1,181 @@
-Return-Path: <linux-samsung-soc+bounces-8654-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8656-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43ED3AD019A
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Jun 2025 14:03:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBC57AD046F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Jun 2025 17:03:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7EBE93AF10D
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Jun 2025 12:03:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C1597A3B5B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  6 Jun 2025 15:02:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95487286D7E;
-	Fri,  6 Jun 2025 12:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 604F328937E;
+	Fri,  6 Jun 2025 15:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SeNM+vw6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tCeyoXrr"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F932AD0D;
-	Fri,  6 Jun 2025 12:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DC68C11
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  6 Jun 2025 15:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749211401; cv=none; b=uC1nhaE0ino8Bo+yNVX6HWuOaAgl0snungOlMgn6yL5f70/nz/uuDeMCbi7TFg+ana6HvCWGm5CUUVWeveq75I/bokzHaSOZ4UdCdlqYE4DVUo+QdU3vGVcL/zBlX2ZTGpIqekgSK3OoomdlFH38IA41G9EMjzjrsdukxCkupYY=
+	t=1749222196; cv=none; b=hrd3zuDaf28XxuugqN5p8PHjfVVxIyNl9o8AVnKZ6r0dlt4X8kbuAByg6T8a2TBTCW9xVWwCnW4arDo2I3Dm+QsLUEuqeklbhNnTWOfA+1NUQCdtSVDZXo16iTU4GmP2iAKJkDpqMSbFGdP32235pmyRvPQXlYMykJmCV1UVVS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749211401; c=relaxed/simple;
-	bh=6oz9cLgBpq1+bwaTR5/JwtLIYahXmjDOpJo1Ih+IxD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j48qAd5dumekbKi3PNIiZadCZj9ycyUryleQTRBiKRDPNjuK69cJUvtWJWEvF4d4lo/0gfj1uPb0Ixdyhp1IpX5AQ7Ue3OVVofSZVdJMqiMhwC1RazwKvZO+SqdPiwyP4SbtbWk77IVhRXwLLo7/4qtBCDdw5avbtrUd5q5lfvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SeNM+vw6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16BFC4CEEB;
-	Fri,  6 Jun 2025 12:03:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749211401;
-	bh=6oz9cLgBpq1+bwaTR5/JwtLIYahXmjDOpJo1Ih+IxD4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SeNM+vw6o2R/VlOg+xOelhhzCXW9usTQ42ANhiV95Y2x9Zn03fWe3qeJLHG/Irx/V
-	 Ql+SwV5H4mHoIKAcoaq2UwshrQHD6bGBm4u6t2zp9iHtjOBL0ZO9RabpIdByFPnF0h
-	 nqzutpLb25wSNP2wH9Foo26YdAFUOUXmRhUVtbiPA3qPycHZ1fc6C8cXHnKZfVN+WK
-	 xT3fOBQgnFjYwte/ANAF2HV/22aK4vTebfl33KbuQ5bPgOrZYwCk0Z72Q37FigH+8c
-	 eqeO+OdQDej06AfYvflVWtrLcZWKoxbZUqoCCKaYZuYGy8Kmsvx7XGjdirdcgiNxpO
-	 sdTSFPhyYXnPQ==
-Date: Fri, 6 Jun 2025 14:03:18 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Anusha Srivatsa <asrivats@redhat.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Inki Dae <inki.dae@samsung.com>, 
-	Jagan Teki <jagan@amarulasolutions.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
-	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH 2/4] drm/panel/samsung-dsicm: Keep up with refcounting
-Message-ID: <20250606-radical-rigorous-buzzard-ca09cd@houat>
-References: <20250604-of_drm_find_panel_part1-v1-0-c632e12e131d@redhat.com>
- <20250604-of_drm_find_panel_part1-v1-2-c632e12e131d@redhat.com>
+	s=arc-20240116; t=1749222196; c=relaxed/simple;
+	bh=btkf0lCvrMjyzHz74N96le8Cu3zc6t3SCGCylfXW8Bk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QfQi0DTkgzr+1GZ0z4gzG9qZyUX2RyPJI8U+/iDOBYPKetBgPoV3P91K4x2lhzkwvKVHggwGWULRsGhJGGoVrIZelVj1VYPTumwJyGsbEkc2n93oHoygugpMpvxS2Te7EmxbsLNlsMbnOgXmlG3N/5mKXTJ893pmoBKtO64UtcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tCeyoXrr; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ad69e4f2100so372954766b.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 06 Jun 2025 08:03:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1749222192; x=1749826992; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sL0NPPUOpjJueDAk+KZ2ucVSf7x+fRKCj5Y9NG8Z/P0=;
+        b=tCeyoXrrvQsHnaGmrgWunswmPMUNSvKXs+DbsBan7pKmJP2RMiwao219plNXr5L1yo
+         P1+i7AcJaXdyI6ZWqkdcV0vLVVT+YQxBtIMGx1uML+V/tgNdUC0UfhBIpIY9aj5Dv30I
+         wmg+ZnGHiwY1uSoQn7E4ATH4yYnsdwY1m6prYOxpKcWXRHVV24oX8NhRzbJVJn3mvDTG
+         CM4AlTumkUCifj5Asn/Cuha4J4V1yiCK8KydqtrF9DAVI/6guH4YAj3ifHsESs0tbXYT
+         Yv/mBIaXgY9IzVErOct/m6MCeYxL9yGkZk/hY3I+JJP6Rew3nVGMEReKUFrr7HXMHKEc
+         t11w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749222192; x=1749826992;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sL0NPPUOpjJueDAk+KZ2ucVSf7x+fRKCj5Y9NG8Z/P0=;
+        b=EuFw8DqfsU0agz4+PQIxcSnAP9u5No7whYVBGFSA3V4huP0nO6IXuAar9wUeGGOp8I
+         7obX/JXnv3DCcWPxjjnWo8wCZfhzPGF6zo0RJ8QVMlnoLJcxwMuPWH083dggCvK7qtGS
+         IJjpYe8UHlEWnSmJdWMlQsfX0zT7uqC9jxs369pBA1wZwaXtVt/Gc4Hr9Dtl4bnLraU+
+         kjdQiaX+11o6I3AS6o1qDfkVug/vwPGn6mIRUtjE32Sou6h5umwuAGbIxmfTRdFbWokA
+         tY8Zf/Xtz4NaOBmUxuwWiabE3WxABhF67f4XF1lzLHZljLpCMm1ARUbBx9zhp1FiKiXO
+         kmew==
+X-Forwarded-Encrypted: i=1; AJvYcCWMEXRk9Md3pDoh3PlqpOTlGrC0hc0IwnP+OTI87l+nqPdsFudHPyOTkSOg/k400JcdvlxKBltI+JF5YveUUv1ldA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCqVVjb57YNCm9e6DfwvrTDAyn5mp6KXjCBjJq5niW3+q1SrtK
+	AoQZi2dGtyFpuC/iSNHguCVvYezXrSOFi8k9LmhRlu/ZJFVHlfy1hNGMK2CKlUtSVAE=
+X-Gm-Gg: ASbGnctwBZGzeEV6uZN0mTsqHiWWXvbvjm3D5ae/eQnrWb5TJbPVzKQBEwVElBeKe/Q
+	AV5KlZX670FxozB+PiGj2sQ4mfBjVVZFMlMcr2zQ0rkA71fJHyqoQ09f/KEPSR/0054s3r9OAZd
+	gkFi4hZAjBu+NBPlR2eE0/zMSYNcG5MILhZgPtDpd4o9vtcShe2/rcNGdW/dE9v1eumE5DBVGIs
+	ofdItxakQHt181zE6Xs+JasacfS4EfQg/6KwDTyEFP26BTRPPxCNWVE/dV/CVSJjWvW+rha/d3x
+	hh5EH+J/96WTLjQTdm82K4yDleoUBX2kIUG1+6AoNvxSVid4w/kdDi8exHZzIFu/j7WRhJtPZZf
+	AGdJDMwcaN1n3U4iFFNh/PXuEjdmeWzp3vpI=
+X-Google-Smtp-Source: AGHT+IFckBTXxQmRXFaz18J/Im2r+F4pi9FIGkM2uCqEUErwgGltAH9DjE5QEFZD5wDsBrpHlrpCLw==
+X-Received: by 2002:a17:907:940d:b0:ad2:3f54:1834 with SMTP id a640c23a62f3a-ade1ab87bfcmr336793766b.40.1749222191503;
+        Fri, 06 Jun 2025 08:03:11 -0700 (PDT)
+Received: from puffmais.c.googlers.com (140.20.91.34.bc.googleusercontent.com. [34.91.20.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1dc38cf2sm127735066b.121.2025.06.06.08.03.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Jun 2025 08:03:11 -0700 (PDT)
+From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+Subject: [PATCH v2 00/17] Samsung S2MPG10 regulator and S2MPG11 PMIC
+ drivers
+Date: Fri, 06 Jun 2025 16:02:56 +0100
+Message-Id: <20250606-s2mpg1x-regulators-v2-0-b03feffd2621@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="naqzmlhexuyovrm5"
-Content-Disposition: inline
-In-Reply-To: <20250604-of_drm_find_panel_part1-v1-2-c632e12e131d@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIACADQ2gC/22NzQ6CMBCEX4Xs2Zq2VPk5+R6GQ8Vt2QQp2SrBk
+ L67lcSbx28y880GEZkwQltswLhQpDBl0IcC+sFOHgXdM4OW+iTPshRRP2avVsHoX6N9Bo6iskb
+ 1ddk09uYgD2dGR+suvXaZB4q5994/FvVNfzrzT7coIUW+qisjnWksXkaaLIdjYA9dSukDeyQFE
+ LUAAAA=
+X-Change-ID: 20250603-s2mpg1x-regulators-7a41c8399abf
+To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Lee Jones <lee@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Peter Griffin <peter.griffin@linaro.org>, 
+ Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+ linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
+X-Mailer: b4 0.14.2
 
+This series extends the existing S2MPG10 PMIC driver to add support for
+the regulators, and adds new S2MPG11 core and regulator drivers.
 
---naqzmlhexuyovrm5
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 2/4] drm/panel/samsung-dsicm: Keep up with refcounting
-MIME-Version: 1.0
+This series must be applied in-order, due to the regulator drivers
+depending on headers & definitions added by the bindings and core
+drivers. I would expect them all to go via the MFD tree.
 
-On Wed, Jun 04, 2025 at 10:45:11PM -0500, Anusha Srivatsa wrote:
-> Put the panel reference back when driver is no
-> longer using it.
->=20
-> Signed-off-by: Anusha Srivatsa <asrivats@redhat.com>
-> ---
->  drivers/gpu/drm/bridge/samsung-dsim.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/brid=
-ge/samsung-dsim.c
-> index 0014c497e3fe7d8349a119dbdda30d65d816cccf..3667855ff0d6d1b608c579573=
-de657af7fd14388 100644
-> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
-> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-> @@ -1748,6 +1748,7 @@ static int samsung_dsim_host_attach(struct mipi_dsi=
-_host *host,
->  			dsi->out_bridge =3D ERR_PTR(-EINVAL);
->  	}
-> =20
-> +	drm_panel_put(panel);
->  	of_node_put(remote);
-> =20
->  	if (IS_ERR(dsi->out_bridge)) {
+The patches are kept together in one series, due to S2MPG11 and its
+regulators being very similar to S2MPG10.
 
-Explaining in your commit log why you think it's a good idea to put it
-there would be really nice. In particular, it looks super odd to me that
-you would put the panel reference in attach.
+The Samsung S2MPG11 PMIC is a Power Management IC for mobile
+applications with buck converters, various LDOs, power meters, and
+additional GPIO interfaces. It typically complements an S2MPG10 PMIC in
+a main/sub configuration as the sub-PMIC and both are used on the
+Google Pixel 6 and 6 Pro (oriole / raven).
 
-Also, your patch doesn't work, and you have a reference inbalance. You
-have one taken by the panel driver, put in remove. You have one in
-drm_panel_add, put in drm_panel_remove. Which reference do you put here?
+A DT update for Oriole / Raven to enable these is required which I will
+send out separately once bindings have been OK'd.
 
-This applies to your other patches too.
+Cheers,
+Andre'
 
-Maxime
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+---
+Changes in v2:
+- s2mpg11 also exposes additional GPIOs, update all relevant commit
+  messages (nevertheless, GPIOs are out of scope in this series)
+- fix some commit message typos: s2mp1 -> s2mpg1
+- patch2: drop | (literal style mark) from samsung,ext-control-gpios
+- patch5: add | to vinb*-supply description for better formatting
+- patch13: update ::of_parse_cb assignment
+- patch15: drop duplicated ::of_parse_cb assignment
+- Link to v1: https://lore.kernel.org/r/20250604-s2mpg1x-regulators-v1-0-6038740f49ae@linaro.org
 
---naqzmlhexuyovrm5
-Content-Type: application/pgp-signature; name="signature.asc"
+---
+André Draszik (17):
+      dt-bindings: firmware: google,gs101-acpm-ipc: convert regulators to lowercase
+      regulator: dt-bindings: add s2mpg10-pmic regulators
+      regulator: dt-bindings: add s2mpg11-pmic regulators
+      dt-bindings: mfd: samsung,s2mps11: add s2mpg10-pmic regulators
+      dt-bindings: mfd: samsung,s2mps11: add s2mpg11-pmic
+      dt-bindings: firmware: google,gs101-acpm-ipc: update PMIC examples
+      mfd: sec-common: Instantiate s2mpg10 bucks and ldos separately
+      mfd: sec: Add support for S2MPG11 PMIC via ACPM
+      regulator: s2mps11: drop two needless variable initialisations
+      regulator: s2mps11: use dev_err_probe() where appropriate
+      regulator: s2mps11: update node parsing (allow -supply properties)
+      regulator: s2mps11: refactor handling of external rail control
+      regulator: s2mps11: add S2MPG10 regulator
+      regulator: s2mps11: refactor S2MPG10  ::set_voltage_time() for S2MPG11 reuse
+      regulator: s2mps11: refactor S2MPG10 regulator macros for S2MPG11 reuse
+      regulator: s2mps11: add S2MPG11 regulator
+      regulator: s2mps11: more descriptive gpio consumer name
 
------BEGIN PGP SIGNATURE-----
+ .../bindings/firmware/google,gs101-acpm-ipc.yaml   |   44 +-
+ .../devicetree/bindings/mfd/samsung,s2mps11.yaml   |   87 +-
+ .../regulator/samsung,s2mpg10-regulator.yaml       |  147 +++
+ .../regulator/samsung,s2mpg11-regulator.yaml       |  150 +++
+ MAINTAINERS                                        |    1 +
+ drivers/mfd/sec-acpm.c                             |  213 +++-
+ drivers/mfd/sec-common.c                           |   22 +-
+ drivers/mfd/sec-irq.c                              |   67 +-
+ drivers/regulator/s2mps11.c                        | 1143 ++++++++++++++++++--
+ .../regulator/samsung,s2mpg10-regulator.h          |   66 ++
+ include/linux/mfd/samsung/core.h                   |    1 +
+ include/linux/mfd/samsung/irq.h                    |   99 ++
+ include/linux/mfd/samsung/s2mpg10.h                |    8 +
+ include/linux/mfd/samsung/s2mpg11.h                |  420 +++++++
+ 14 files changed, 2338 insertions(+), 130 deletions(-)
+---
+base-commit: a0bea9e39035edc56a994630e6048c8a191a99d8
+change-id: 20250603-s2mpg1x-regulators-7a41c8399abf
 
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaELY/wAKCRAnX84Zoj2+
-diBYAXwKsnGG/hDaACTi2QF85rFrKiFaFWibUe+aygZ2K7/QBjFUhuAmCr4gs9ij
-KBDYTjQBgNXlwuo0a1Tzh+JZDgdPXgj1NZYl1UppVoWcYCBkxzww5vfwCw0+YexU
-o1W0BPKmpA==
-=VbEd
------END PGP SIGNATURE-----
+Best regards,
+-- 
+André Draszik <andre.draszik@linaro.org>
 
---naqzmlhexuyovrm5--
 
