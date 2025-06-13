@@ -1,197 +1,184 @@
-Return-Path: <linux-samsung-soc+bounces-8767-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8769-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72AD5AD7C18
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Jun 2025 22:13:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75D9DAD83B4
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Jun 2025 09:09:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF2E93A4C0E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 12 Jun 2025 20:13:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5846B189A0A8
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 13 Jun 2025 07:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B8932DECCB;
-	Thu, 12 Jun 2025 20:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E345F2749CB;
+	Fri, 13 Jun 2025 07:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xt0LIvRF"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="jyTD4352"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0141C2DECC5;
-	Thu, 12 Jun 2025 20:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BF227467B
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Jun 2025 07:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749759150; cv=none; b=oZnZRINd+NjYO5rgD/xRWo5KvIaIDdpaSAw1N8qLt1sEzgqixYiNoHw7kW2LJOHOZ3RfIAZVkpt9YVxOKMCeFgfa4r9yahGAWkE6SVTSRWqbxBaPOlKVzSJmql9YohB0AUWjwJlPHtM/p+eTbAafToSpc/FdE2rZZf5/oPo2CL4=
+	t=1749798590; cv=none; b=UjMNgUydEL6uIJg/RBeMoFxlfalYgnbLwwSxnH1Qj/p6+p/LeADVdFHtoaC2L2hcQpYtqceP3wTfV0/UguF8qXyZu+NojVEw+7xHGHUSD5MLz6NuyBxmO96DEAh2tLhe0q6Rn2fK9h6OSzRzlgaHaNaQ/ScXK+i9YoceDulM5NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749759150; c=relaxed/simple;
-	bh=sLxW/2gM/xqjmwMF98veHA/94KEa5ynyyYmqAzwLAQk=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=Dn2LwSlF6XYY+JiLGCEEkcMk67IgnPWqCz/4sCZNXnWUNUFb/YEUXMvpP1OXwBO0CAWaEjj1X3OwNRb2ItYobTmpveBlWFQOjerr6ts2beZQ9MuxrPM/6fpDqjnwOB9QmFuW0wgxc7ktKTUV4UtYo4BJRfaWi/caa+VHVpsZqoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xt0LIvRF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7DBC4CEED;
-	Thu, 12 Jun 2025 20:12:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749759149;
-	bh=sLxW/2gM/xqjmwMF98veHA/94KEa5ynyyYmqAzwLAQk=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Xt0LIvRFtNEdszKSMxfx0SHkf4CXLdrEB8u0VRJPpGTd5cqGqlzku5M3Qm1bPm4B/
-	 POaxPoE6fOGMo2iKzgOJkYrdJCSQlS/zCmHK37UAZj/5ob+oquaXRjIXAvxgUsC4I3
-	 L6nbpjlL4FKMIhTYg0pYm4KJSNrzrX5lz6ZwlLJfwZwddwIhS8QFe5lOn8jVwAW6vt
-	 4Xn1TqmV4LccpdsaRQ9xHa9Go/BXQzunnGrHV+WSsPv7JSfv3almt4rky4y1cxjS4y
-	 A15oJVNrVzKdF9W5pmA704lE21yKGaFignM+cYUGscM8A3GHiuNAYcWoMMzvITNLSx
-	 234fWPDag6aag==
-Date: Thu, 12 Jun 2025 15:12:28 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1749798590; c=relaxed/simple;
+	bh=A2AVZN9C/tIrY1UksQGKGEhCAjFh+dDkHnVihJr26kM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 References; b=SieH4B/owXQbq/2pjZuFmRurCXL9tR7+w/7UHjeqECciW6AInzfeLFzDahg/JGq99eUVxA6SldATz5FP5xGGlZ2LOosIP6emcLnSHWCsmhKwCtheUPSGXnAosV96UpALQyB9P+uKlf2QH0nqDjchRyko03AfZUHCeacoIq4SCtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=jyTD4352; arc=none smtp.client-ip=203.254.224.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250613070945epoutp032fc4c2e862ece69a70a322ab52611728~IiIrVgVNL2274022740epoutp03a
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 13 Jun 2025 07:09:45 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250613070945epoutp032fc4c2e862ece69a70a322ab52611728~IiIrVgVNL2274022740epoutp03a
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1749798585;
+	bh=4rxJOsSbzAi1rSx7tMZfzuZ5keXxRr4NSOqYZdfrDVM=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=jyTD43520uGklfDpW55D2tlDHzRZA+aQFXHVto3oYxgJBDppzeEH28bnU7Rz/u3Zc
+	 ChPe3w+iqO6K770s22AiGMEUl2iuLfSENZilkyxm3pCTPuZ2l3Szw98THP+CdpC7MJ
+	 J6U1Ty9beKRRTVVSidDTxP6EgbbmGGgjSTolp/AI=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+	20250613070944epcas5p4fb9a3a1ac8efd5fe761a87bdd3bdb9a7~IiIqrYOum3162531625epcas5p4I;
+	Fri, 13 Jun 2025 07:09:44 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.177]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4bJVrk3S8Sz2SSL3; Fri, 13 Jun
+	2025 07:09:42 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250613055037epcas5p1ce00fda1b535dbeb9a98458d1f0a28ee~IhDlgAhv32498524985epcas5p1P;
+	Fri, 13 Jun 2025 05:50:37 +0000 (GMT)
+Received: from bose.samsungds.net (unknown [107.108.83.9]) by
+	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20250613055034epsmtip10250c53b0f9deb8cb30d93844ecf5c91~IhDixE4HP0217702177epsmtip1f;
+	Fri, 13 Jun 2025 05:50:34 +0000 (GMT)
+From: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+To: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, alim.akhtar@samsung.com,
+	andre.draszik@linaro.org, peter.griffin@linaro.org, kauschluss@disroot.org,
+	ivo.ivanov.ivanov1@gmail.com, m.szyprowski@samsung.com,
+	s.nawrocki@samsung.com, pritam.sutar@samsung.com
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, rosa.pila@samsung.com,
+	dev.tailor@samsung.com, faraz.ata@samsung.com, muhammed.ali@samsung.com,
+	selvarasu.g@samsung.com
+Subject: [PATCH v3 0/9] initial usbdrd phy support for Exynosautov920 soc
+Date: Fri, 13 Jun 2025 11:26:04 +0530
+Message-Id: <20250613055613.866909-1-pritam.sutar@samsung.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Kaustabh Chakraborty <kauschluss@disroot.org>
-In-Reply-To: <20250612-exynos7870-drm-dts-v1-0-88c0779af6cb@disroot.org>
-References: <20250612-exynos7870-drm-dts-v1-0-88c0779af6cb@disroot.org>
-Message-Id: <174975871931.2916531.8899085865861205227.robh@kernel.org>
-Subject: Re: [PATCH 0/5] Support for Exynos7870's display stack (DECON,
- MIPIPHY, DSIM, etc.)
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250613055037epcas5p1ce00fda1b535dbeb9a98458d1f0a28ee
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250613055037epcas5p1ce00fda1b535dbeb9a98458d1f0a28ee
+References: <CGME20250613055037epcas5p1ce00fda1b535dbeb9a98458d1f0a28ee@epcas5p1.samsung.com>
 
+This SoC has a single USB 3.1 DRD combo phy and three USB2.0 only
+DRD phy controllers
 
-On Thu, 12 Jun 2025 20:53:36 +0530, Kaustabh Chakraborty wrote:
-> Exynos7870 has a IP subsystem in its architecture dedicated to display
-> management. Notably, this block includes the Display Enhancement
-> Controller (DECON), and the DSI Master (DSIM).
-> 
-> The following series and its sub-series implement all components for a
-> functioning display pipeline. All vital information which helped shaping
-> up the patches have been retrieved from Exynos7870 vendor kernel sources
-> as provided by Samsung.
-> 
-> Testing has been done on all three devices available upstream, i.e.
-> Samsung Galaxy J7 Prime (samsung-on7xelte), Samsung Galaxy A2 Core
-> (samsung-a2corelte), and Samsung Galaxy J6 (samsung-j6lte). Regrettably,
-> I've only been able to test the functionality on video mode, as none of
-> the devices have panels working in command mode.
-> 
-> This series implements changes in the SoC subsystem, which includes
-> devicetree additions. It depends on all sub-series listed below:
-> (Legend: [R]eviewed, [A]ccepted)
-> 
-> exynosdrm-decon            - https://lore.kernel.org/r/20250612-exynosdrm-decon-v2-0-d6c1d21c8057@disroot.org
-> exynos7870-mipi-phy        - https://lore.kernel.org/r/20250612-exynos7870-mipi-phy-v1-0-3fff0b62d9d3@disroot.org
-> exynos7870-dsim            - https://lore.kernel.org/r/20250612-exynos7870-dsim-v1-0-1a330bca89df@disroot.org
-> panel-samsung-s6e8aa5x01   - https://lore.kernel.org/r/20250612-panel-synaptics-tddi-v1-0-dfb8a425f76c@disroot.org
-> panel-synaptics-tddi       - https://lore.kernel.org/r/20250612-panel-samsung-s6e8aa5x01-v1-0-06dcba071ea6@disroot.org
-> 
-> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-> ---
-> Kaustabh Chakraborty (5):
->       dt-bindings: samsung: exynos-sysreg: add exynos7870 sysregs
->       arch: arm64: dts: exynos7870: add DSI support
->       arch: arm64: dts: exynos7870-on7xelte: enable display panel support
->       arch: arm64: dts: exynos7870-a2corelte: enable display panel support
->       arch: arm64: dts: exynos7870-j6lte: enable display panel support
-> 
->  .../soc/samsung/samsung,exynos-sysreg.yaml         |  6 ++
->  .../arm64/boot/dts/exynos/exynos7870-a2corelte.dts | 41 ++++++++++
->  arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts    | 38 +++++++++
->  arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dts | 40 +++++++++
->  arch/arm64/boot/dts/exynos/exynos7870.dtsi         | 94 ++++++++++++++++++++++
->  5 files changed, 219 insertions(+)
-> ---
-> base-commit: 0bb71d301869446810a0b13d3da290bd455d7c78
-> change-id: 20250523-exynos7870-drm-dts-87ccab731ba9
-> 
-> Best regards,
-> --
-> Kaustabh Chakraborty <kauschluss@disroot.org>
-> 
-> 
-> 
+  - Combo phy supports USB3.1 SSP+(10Gbps) protocol and is backwards
+    compatible to the USB3.0 SS(5Gbps). 'Add-on USB2.0' phy is added
+    to support USB2.0 HS(480Mbps), FS(12Mbps) and LS(1.5Mbps) data 
+    rates. These two phys are combined to form a combo phy as mentioned
+    below.
+ 
+   USB30DRD_0 port
 
+     +-----------------------------------------------------+
+     |                                                     |
+     |           (combo) USB PHY controller                |
+     |     +-----------------------------------------+     |
+     |     |               USB HSPHY                 |     |
+     |     |  (samsung,exynosautov920-usbdrd-hsphy)  |     |
+     |     +-----------------------------------------+     |
+     |                                                     |
+     |   +---------------------------------------------+   |
+     |   |               USB SSPHY                     |   |
+     |   |   (samsung,exynosautov920-usb31drd-ssphy)   |   |
+     |   +---------------------------------------------+   |
+     |                                                     |
+     +-----------------------------------------------------+
+     |                                                     |
+     |                USBDRD30 Link                        |
+     |                  Controller                         |
+     |                                                     |
+     +-----------------------------------------------------+
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+  - USB2.0 phy supports only UTMI+ interface. USB2.0DRD phy
+    is very similar to the existing Exynos850 support in this driver.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+    USB20DRD_0/1/2 ports
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+ 
+      +---------------------------------------------------+
+      |                                                   |
+      |                USB PHY controller                 |
+      |    +-----------------------------------------+    |
+      |    |              USB HSPHY                  |    |
+      |    |  (samsung,exynosautov920-usbdrd-phy)    |    |
+      |    +-----------------------------------------+    |
+      |                                                   |
+      +---------------------------------------------------+
+      |                                                   |
+      |             USBDRD20_* Link                       |
+      |                Controller                         |
+      |                                                   |
+      +---------------------------------------------------+
 
-  pip3 install dtschema --upgrade
+This patchset only supports device mode and same is verified with
+as NCM device with below configfs commands
 
+changelog
+----------
+Changes in v2:
+- Used standard GENMASK() and FIELD_GET() to get the major version
+  from controller version register.
+  link for v1: https://lore.kernel.org/linux-phy/20250514134813.380807-1-pritam.sutar@samsung.com/
 
-This patch series was applied (using b4) to base:
- Base: using specified base-commit 0bb71d301869446810a0b13d3da290bd455d7c78
+Changes in v3:
+- Updated dt-bindings for USB2.0 only.
+- Added dt-bindings for combo phy.
+- Added implementation for combo phy (SS and HS phy).
+- Added added DTS nodes for all the phys.
+  link for v2: https://lore.kernel.org/linux-phy/20250516102650.2144487-1-pritam.sutar@samsung.com/
 
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
+Pritam Manohar Sutar (9):
+  dt-bindings: phy: samsung,usb3-drd-phy: add ExynosAutov920 HS phy
+    compatible
+  phy: exyons5-usbdrd: support HS phy for ExynosAutov920
+  arm64: dts: exynos: ExynosAutov920: add USB and USB-phy nodes
+  dt-bindings: phy: samsung,usb3-drd-phy: add ExynosAutov920 combo HS
+    phy
+  phy: exyons5-usbdrd: support HS combo phy for ExynosAutov920
+  arm64: dts: exynos: ExynosAutov920: add USB and USB HS combo phy nodes
+  dt-bindings: phy: samsung,usb3-drd-phy: add ExynosAutov920 combo SS
+    phy
+  phy: exyons5-usbdrd: support SS combo phy for ExynosAutov920
+  arm64: dts: exynos: ExynosAutov920: add USB and USB SS combo phy nodes
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/exynos/' for 20250612-exynos7870-drm-dts-v1-0-88c0779af6cb@disroot.org:
+ .../bindings/phy/samsung,usb3-drd-phy.yaml    |   6 +
+ .../boot/dts/exynos/exynosautov920-sadk.dts   |  53 ++
+ .../arm64/boot/dts/exynos/exynosautov920.dtsi | 155 +++++
+ drivers/phy/samsung/phy-exynos5-usbdrd.c      | 529 ++++++++++++++++++
+ 4 files changed, 743 insertions(+)
 
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: False schema does not allow {'compatible': ['samsung,exynos7870-mipi-video-phy'], '#phy-cells': 1, 'samsung,disp-sysreg': [[12]], 'samsung,cam-sysreg': [13], 'phandle': 73}
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam-sysreg' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam0-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam1-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy:compatible:0: 'samsung,exynos7870-mipi-video-phy' is not one of ['samsung,s5pv210-mipi-video-phy', 'samsung,exynos5420-mipi-video-phy', 'samsung,exynos5433-mipi-video-phy']
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: Unevaluated properties are not allowed ('compatible', 'samsung,cam-sysreg' were unexpected)
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: /soc@0/system-controller@10480000/mipi-phy: failed to match any schema with compatible: ['samsung,exynos7870-mipi-video-phy']
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: /soc@0/dsi@14800000: failed to match any schema with compatible: ['samsung,exynos7870-mipi-dsi']
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: /soc@0/dsi@14800000/panel@0: failed to match any schema with compatible: ['syna,td4300-panel']
-arch/arm64/boot/dts/exynos/exynos7870-on7xelte.dtb: decon@14830000 (samsung,exynos7870-decon): 'iommus', 'ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/display/samsung/samsung,exynos7-decon.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: False schema does not allow {'compatible': ['samsung,exynos7870-mipi-video-phy'], '#phy-cells': 1, 'samsung,disp-sysreg': [[12]], 'samsung,cam-sysreg': [13], 'phandle': 73}
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam-sysreg' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam0-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam1-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy:compatible:0: 'samsung,exynos7870-mipi-video-phy' is not one of ['samsung,s5pv210-mipi-video-phy', 'samsung,exynos5420-mipi-video-phy', 'samsung,exynos5433-mipi-video-phy']
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: Unevaluated properties are not allowed ('compatible', 'samsung,cam-sysreg' were unexpected)
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: /soc@0/system-controller@10480000/mipi-phy: failed to match any schema with compatible: ['samsung,exynos7870-mipi-video-phy']
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: False schema does not allow {'compatible': ['samsung,exynos7870-mipi-video-phy'], '#phy-cells': 1, 'samsung,disp-sysreg': [[12]], 'samsung,cam-sysreg': [13], 'phandle': 72}
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam-sysreg' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam0-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: 'samsung,cam1-sysreg' is a required property
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy:compatible:0: 'samsung,exynos7870-mipi-video-phy' is not one of ['samsung,s5pv210-mipi-video-phy', 'samsung,exynos5420-mipi-video-phy', 'samsung,exynos5433-mipi-video-phy']
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: system-controller@10480000 (samsung,exynos7870-pmu): mipi-phy: Unevaluated properties are not allowed ('compatible', 'samsung,cam-sysreg' were unexpected)
-	from schema $id: http://devicetree.org/schemas/soc/samsung/exynos-pmu.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: /soc@0/system-controller@10480000/mipi-phy: failed to match any schema with compatible: ['samsung,exynos7870-mipi-video-phy']
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: /soc@0/dsi@14800000: failed to match any schema with compatible: ['samsung,exynos7870-mipi-dsi']
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: /soc@0/dsi@14800000/panel@0: failed to match any schema with compatible: ['syna,td4101-panel']
-arch/arm64/boot/dts/exynos/exynos7870-a2corelte.dtb: decon@14830000 (samsung,exynos7870-decon): 'iommus', 'ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/display/samsung/samsung,exynos7-decon.yaml#
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: /soc@0/dsi@14800000: failed to match any schema with compatible: ['samsung,exynos7870-mipi-dsi']
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: /soc@0/dsi@14800000/panel@0: failed to match any schema with compatible: ['samsung,s6e8aa5x01']
-arch/arm64/boot/dts/exynos/exynos7870-j6lte.dtb: decon@14830000 (samsung,exynos7870-decon): 'iommus', 'ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/display/samsung/samsung,exynos7-decon.yaml#
-
-
-
-
+-- 
+2.34.1
 
 
