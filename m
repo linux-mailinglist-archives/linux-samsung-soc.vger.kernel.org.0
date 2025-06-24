@@ -1,81 +1,81 @@
-Return-Path: <linux-samsung-soc+bounces-8930-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8932-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8586EAE6622
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 15:22:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C9A5AE6634
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 15:24:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B95C718906C9
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 13:19:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67994177F08
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 13:19:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173002C08AF;
-	Tue, 24 Jun 2025 13:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EC642C15AE;
+	Tue, 24 Jun 2025 13:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="RK79lqMZ"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="JLONzGGF"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C9129A9FA
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 13:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7A12BFC62
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 13:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750771166; cv=none; b=Vf1LkIFyDzsJSSwyC2N3QkGRxCDY4z7lbzy9FH0o+QiEP18tVamf+tShVP5f4fCWDDrfbeSm9BwkAf80FuRABFugcAJCL3lU9V/cwHtGHfVNBd7r0ryea0ZjNYarIgTYpNv1vw0i7qgQMEDJ54eDtI5ZMv9k/rinPOEvrDfC99E=
+	t=1750771169; cv=none; b=qHPGhy0q/qjquUXjV7Himsrbn+3UGbc0taTHNiRCX7uM3f/9a8TwQ9MmDoqW8bZ7r7DbdZXROxqDZ+FJQQGL6se8uKdcG/x0+EJVcLd2im0fiUFNCqi6+8ypRshv8X6War49Jg0cdMK+GkUTVxAsWYFYk6Q1Wv5t/HpP79bJELU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750771166; c=relaxed/simple;
-	bh=3DcdRVGEsb+ACq/FtQo5TjN05SRc5Vjjh0GYhgt/kns=;
+	s=arc-20240116; t=1750771169; c=relaxed/simple;
+	bh=QD67uvhwMqTVnR6qaVgUZJC28SCpastKEWERFswxP0k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JKG0bAF2vwwIs7lmiyOqmZEYEkqmho8JiDf884TM0d66y0PFnaIoKWNJS7H1S47sJ1/JBTAOHU/YmnaHKM4pcKFQVAwJ9De2UrQk5WtHlPmFnsRPuBr65KrIhhXbaWjeQGpRM2/Mqq3q3CFhfXMIddQL0RFV0BNIC4F/2CJvMTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=RK79lqMZ; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:To:Cc; b=FsX2hyrBHrEzhBn32t0/xmRo1W1qfEWsKi0OoWw2b2ybVF92yhtcY5/AEtoJJJt01vk/hMClvGgkh+l65pTlNfThDdHNJXm+meA7gsbRyqDScabBOpGaTYmgD2D/Wn9R6MSDc11ov9HxPOlR6FzKVHypJ8g2dS7RqDSpmbA6jco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=JLONzGGF; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-450ccda1a6eso45691635e9.2
-        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 06:19:25 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a4ef2c2ef3so4167384f8f.2
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 06:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750771163; x=1751375963; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750771165; x=1751375965; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Tg0mRooHGRn5NykMyH/KV9HEFTTYvVA7Ojb23IHtmak=;
-        b=RK79lqMZ7RudwR1jHlCxgOjsQ5gzgPUhX6EFtQsbG5a+DNeX9Brb6onbTzvnBL5n38
-         DMhr1iFfkCMn34VG5DOFe41YVmx6LTjryGlwGeFvezCkyy/jnD/j+pG0W92VSap8OFI2
-         EIFSKJduQgzxTe5B8U7aPJlZN9XANXC/U0FFOoNDZFeNdFvRGwGETXMrplH7kH4ZBsKI
-         jhXu+2Pf+xkroX/8mdZrt4lnoT/k+ER4cjlTo/06hVMhF2fDlD7vlxnbCFAjCiSYkY7o
-         QjALxcNAkJzcL6ofZJgjtUJiBVd76UXLWm4VKdRA5TADjwvP59+O6jKPR8aMSWXlqi0V
-         besg==
+        bh=h8MhLQAkcHIjciDwXBy0xiLsqhDE1FYLFev5f6oWs14=;
+        b=JLONzGGF8DN2qXWaa1CgeaZ2ABenCow6TCPGwzfxTH/p9/vOcR47mURUqsgKhQhr80
+         fX/UP5PK1b5sSHtH+xUN8dG2nkWCWnwQQF1Uwj49UCosIfKsNPjvtrTpiKsPp6+YGKj6
+         LPLWBZq63s0S6r16ld3Sspliod6lPGIRT+++n/juw7jCi4eLYrD3S7Kh0N/BPmmTePjf
+         ub5aWk4l728RBm8RcxafkJYLatD/7zyrIFqx4dnwvaYq36l/1fPLBO+jfKjrMEEI1YCk
+         grDBTV49omuAfVN7jyCLZZIE95U7DWRGLshLUtMeOM0MIMBS7xqyDEcnWbP/ZwQMve0X
+         2EaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750771163; x=1751375963;
+        d=1e100.net; s=20230601; t=1750771165; x=1751375965;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Tg0mRooHGRn5NykMyH/KV9HEFTTYvVA7Ojb23IHtmak=;
-        b=loz3lB8yMG6gKozYCHeDVcCP2HVpD6JuHar+s9Ql3idvighJ7MgTo4xVZBZzeR4kvi
-         34cXc+Jg+xQgtIXwk0opxhakrStslrBnZtlGyTrNRPTYLEkkVnUPFUe5KVBarQ8hPaff
-         1dwVSv8+P5TkvrxTiJ5suI1jxeP7RFtTqclo9rFCc9XpD0df2bijjnRvC5Aui+8QgCVP
-         /lNGK3t0zcpQK0DpG0nJD2Zfg10/IKrw5kZSDen3EvKilbKwZDFj6x9fWw8qTW8hOXFf
-         VBa0BJVslIpbZ/c34nuGoTKfzp6bgk7Si9ke6Nst1E906veDX2xrWptGtK5p9u+IxAbB
-         kY8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVarmVZLKzpwZfAI/PIf2rRvrjshTlf1bpAqQG3XfpgyTpCkpLKC2YZxZQknK9D0k9ZaoQOu6YH5zQitFDAsT5QVQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YymdJcv6VN7QamgBa7jbiohWgMPMGbQjZueBu7oPt0mWrYIQXDb
-	jPr6teCnwoeMRLCWsGUj3p38/xVt6440yuesR9OKXAtBwKdsvZ2jg7nWsNx1fZYN8MA=
-X-Gm-Gg: ASbGnctEEGekRSF9gnAeoXEZu5tlvBAcdYeq8nzdGbd/CFIqqrNZ+k0gGyg/PZn75pv
-	S3fPF9YEmfwOMzcFaAUyf5u7yt4yirQaJrvFMZKdDfg6wsie0P8flMQzpHD6qMhtH87kk+Pw3tK
-	YkCsHrMeisWyUokLW3FW6fS0+M9SrelLKyhy9PwHDPOMumxhFC6f5vOJ3PiMm8Cn9WUo7KgkVvS
-	/HBWsy1w+Muwa1bm/4NBLanq7OzODxs/OaFQtCJ51J27un01cvySq/F/Vj05lPmMva5fzRYbo+z
-	Vp/uvPULZeiYB6n+hcyTbNhETFrxxP+SzEiWZWg1iqMMdYbKNMbwHSY=
-X-Google-Smtp-Source: AGHT+IFqVsUMNkskN7j0iU8FIkymNyWUVdq66py+zAf7HndvvTiiHB1vrcYgqEVFpM7yRp7iDODuOA==
-X-Received: by 2002:a05:6000:41c5:b0:3a0:a0d1:1131 with SMTP id ffacd0b85a97d-3a6d12c4483mr13480483f8f.7.1750771163464;
-        Tue, 24 Jun 2025 06:19:23 -0700 (PDT)
+        bh=h8MhLQAkcHIjciDwXBy0xiLsqhDE1FYLFev5f6oWs14=;
+        b=e2/+enTuhRtq46Pfw+Xs7OQAxrq6SziJ+sIyKSc1dpXL1NV8Rf5Y5wap51UwGjvaWm
+         GgQWkeEBs13Uq3GBY83EBmA/96pv22FodhvBX0EnCzz4xwob+67G5amMaeBxU7zw9Pqo
+         f8kyCEd9OC7A4OW0ZvB8NNIuEY8d4eLyLWuzVNuyeB+aVlmVxRZViZOoJS9ncaFrXCe6
+         ZMPe2J8Ssa/kFJerxr96gk7rNpcaWN62UbNTZZ5TwaQ4eYA15ZU+VakW60guNhpGV9Cz
+         plSXPBbLkIXXP/HHXdfPLC/1DDCQKi2XIccfEx2ter9ymlcr3TQEOWAdKilonEhEdrNg
+         eMew==
+X-Forwarded-Encrypted: i=1; AJvYcCX1/e/CauwCQSJiU6+CADPtZfXsKQ/hRN4FNfJpUJfk/YcMkV42UO7DbqFm5MiEg1nRLNTkIUrN1NZUxyM0zYefxA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOgLwm2WYJbtVjAIPA3v2emGxyj9jxyk6gnXBE29chFo2IxfU2
+	KqQggdYb97VdIpkNMXN9JVvbw/5WRUlZ44P/XwgHgPxAfDJUuT6U3Zd8fCDmY+xI6VQ=
+X-Gm-Gg: ASbGnct8+JCX3c3UOlrq6neH0tBBBX8RNbh80b2e+ylKRNsdyTW0ueRHr9vlRLGXqD2
+	ZFTZHigVMcLCjEJrjCAokjcOes1XOuwm04Ndi3dLti3PTwFmupuVCA/NF9se+gM7Qv4WdWz/1pV
+	wgutjvax+lUieu2sun5+gkh7sV+Rq+bC3Jps46Dsuf+Wc96vu0NH+xgN/MZ/gowseuYfD118g7r
+	iXqIaolcnC7MUehvX5U1+sGXskRFgWbanGbwM0zbTy69MEywi75rks56ipjDW6klSkSqlMaX2AS
+	SQSHWITMLt+w6uIWiu3iC4Zgwv1RmltJegpzy/o9fDQgRb22k4IYJNY=
+X-Google-Smtp-Source: AGHT+IFpR3OgJhahPgRYBa1gyCbLYGTqM0deNU1EOekJG+yRN2EdJeLYcRO6UimDHtLaFLkUJxhOOg==
+X-Received: by 2002:a05:6000:4906:b0:3a4:f661:c3e0 with SMTP id ffacd0b85a97d-3a6d12e6a3emr12875157f8f.45.1750771164792;
+        Tue, 24 Jun 2025 06:19:24 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:34d2:109c:3293:19e9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453646fd74asm141302195e9.22.2025.06.24.06.19.22
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453646fd74asm141302195e9.22.2025.06.24.06.19.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 06:19:22 -0700 (PDT)
+        Tue, 24 Jun 2025 06:19:24 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 24 Jun 2025 15:19:12 +0200
-Subject: [PATCH RFT 1/6] gpio: mmio: drop the big-endian platform device
- variant
+Date: Tue, 24 Jun 2025 15:19:13 +0200
+Subject: [PATCH RFT 2/6] gpio: mmio: get chip label and GPIO base from
+ device properties
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250624-gpio-mmio-pdata-v1-1-a58c72eb556a@linaro.org>
+Message-Id: <20250624-gpio-mmio-pdata-v1-2-a58c72eb556a@linaro.org>
 References: <20250624-gpio-mmio-pdata-v1-0-a58c72eb556a@linaro.org>
 In-Reply-To: <20250624-gpio-mmio-pdata-v1-0-a58c72eb556a@linaro.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -100,48 +100,69 @@ Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@opensource.cirrus.com, linux-samsung-soc@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=738;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1610;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=z3/zra3kN9nXZTz56dedVkj+298LVjWZ5HQnjkpNGc0=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoWqXXVTocp2LRJnqJmPhyZdXYqUYB9W1Pi4/38
- +4ka8H0AFeJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaFql1wAKCRARpy6gFHHX
- cpcbEACbyOXoPzeB9I06bs0F+81Fkjgw+J37W2LT86j5na56S1eXe78vgeUNxpRU1vCPdAPW9BT
- DcEs6ZeYowO9isB+rIP52gU9KIjpkZMce+6zcXuco/dLq/Z8nkcELA6ME2iqRAQaSpXCUg8K1Wu
- 3DlGq8jLj1OKsMJm5P9YCfmrSKpfKeFfU0cmjjaJWaQBkuJA1lGDcmWxXI5Kt7Rk5awRVCkOIjR
- TE5aK2FjtBwxWzedg6h6Dv9aPLQkuOTAnS+F9hCwXxJwyK8O5G0PEiXm0TQuXNtntFBJtcNp2b1
- JUJNTO7pl7QJDvUZEfakkWGXM/SMdPBtWLm1LUMssPxlYSTNOJcoM4OKkEa8cyPFMPNhFEh08W/
- yoQUHKJAlg50Z86zhePj0yw8bnWHksDY4EYxW7ZWpkS8spjGmA1Fa/hEThi1kEhAdrEK3uP1adA
- jSZOy79jX/rLGhwtIh74KGqeAk7OdaUVqiGnyRDZGsUzwavHtuu5VCnzJJS2tckOMIM0el6TFwT
- or/WaFvU9MZ8udeIcduADx1B1w5v/bhz0pYU9sQjJgnffWWWVFK7gIGeBJTBLyfbPKJf64SQQhy
- 8KrILygqD0RYRRH9oRjFhdFUWP2nZvMfid/q28RjPJkOuEDBQjag/WQhOh9x6XaR3dMaoNkonb5
- yRV1tuWz6xJ3kBg==
+ bh=CicxjQH60h+01gOTn3o1Z3t/Z3AKnZL5tqmvJoexSio=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoWqXXMsfVEhgOPAMUlt3aOG42wfz2dAxjfjfWm
+ vW5S89INwaJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaFql1wAKCRARpy6gFHHX
+ crI3D/9MQVWF3IxDKPp8bpUK4M3WZ7ecjW7QXbTbRwiNgNQKGjBGDdCILPxKDj+TB/jIDo/Au36
+ eKEMjX0RXCG3OKYAFOzG3zt9jYQlLZtp5I2QHIasRtrOtkq6dRrSE1jIYSm0QHoyd+YX6em4+B/
+ 2ggCtYCABT/SCGHBt4bVrNW+1AkiWa4QuNmQiaUrMGNU5xinXvg4JYHB6l32pj6Yd9CM2RKOprA
+ gfqmSxoXbf8d9K9/pEe0mFaINPdwap9u60KV6IBhFMTXC2K8NvXsjrhz9JAevfkwnLCCY2yOwwh
+ WrbX33AJOldJeNHB828mlc3Jh6duTXszjKzd6fo1RlfwDsnUbvxwSo+5VZfgmIp77XMK9RG+rL/
+ R9siNRm69f+JftdOURhL1tcduGh6HeYpmZsmsf+jUjOqqf/8NuX9TeXkkpy/moZspj7Ca1zMB94
+ 1iZV1GsANFay/4vMc9w+qVAbBP8Y3I/Gluz2vLfyiugexHW8IBipihQEucNhX2lksD7uJ5zwRbS
+ FKyanwd06NrJivQWgD/kvk1btGBgW/jE+1raVNo70kyTvvgpktS0Y0AbPpqJRIquAo9tO7AeC1a
+ +16Yq5moVSnLx9IVYPYkUv8ivKsqG3XtCJ5+ClB8k3oyb4nNpe7YDFh4OzwlZGAia/zHbtzWJYX
+ pWZIXVFjjYZp/gg==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-There are no more users of the "basic-mmio-gpio-be" platform device ID
-in the kernel. We can safely drop it.
+Ahead of removing struct bgpio_pdata support from the gpio-mmio generic
+module, let's add support for getting the relevant values from generic
+device properties. "label" is a semi-standardized property in some GPIO
+drivers so let's go with it. There's no standard "base" property, so
+let's use the name "gpio-mmio,base" to tie it to this driver
+specifically. The number of GPIOs will be retrieved using
+gpiochip_get_ngpios() so there's no need to look it up in the software
+node.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpio-mmio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpio/gpio-mmio.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
-index 08466e123818e958755fe6e7baf5a4e8b8d863c1..ffe6b6f6cc9b1e9341e1c42cf8fee917e0147bf3 100644
+index ffe6b6f6cc9b1e9341e1c42cf8fee917e0147bf3..8108aa8e6b86ae3d0b520a0f22a09689ab1d9bc5 100644
 --- a/drivers/gpio/gpio-mmio.c
 +++ b/drivers/gpio/gpio-mmio.c
-@@ -831,9 +831,6 @@ static const struct platform_device_id bgpio_id_table[] = {
- 	{
- 		.name		= "basic-mmio-gpio",
- 		.driver_data	= 0,
--	}, {
--		.name		= "basic-mmio-gpio-be",
--		.driver_data	= BGPIOF_BIG_ENDIAN,
- 	},
- 	{ }
- };
+@@ -737,6 +737,9 @@ MODULE_DEVICE_TABLE(of, bgpio_of_match);
+ static struct bgpio_pdata *bgpio_parse_fw(struct device *dev, unsigned long *flags)
+ {
+ 	struct bgpio_pdata *pdata;
++	const char *label;
++	unsigned int base;
++	int ret;
+ 
+ 	if (!dev_fwnode(dev))
+ 		return NULL;
+@@ -753,6 +756,14 @@ static struct bgpio_pdata *bgpio_parse_fw(struct device *dev, unsigned long *fla
+ 	if (device_property_read_bool(dev, "no-output"))
+ 		*flags |= BGPIOF_NO_OUTPUT;
+ 
++	ret = device_property_read_string(dev, "label", &label);
++	if (!ret)
++		pdata->label = label;
++
++	ret = device_property_read_u32(dev, "gpio-mmio,base", &base);
++	if (!ret && base <= INT_MAX)
++		pdata->base = base;
++
+ 	return pdata;
+ }
+ 
 
 -- 
 2.48.1
