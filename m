@@ -1,232 +1,160 @@
-Return-Path: <linux-samsung-soc+bounces-8929-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-8931-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2A07AE62B2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 12:40:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46D6DAE6608
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 15:19:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6B9C3A890D
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 10:39:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40DA03A7B2E
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 24 Jun 2025 13:19:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 072452882A1;
-	Tue, 24 Jun 2025 10:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174412C08B2;
+	Tue, 24 Jun 2025 13:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="v1IFWcFr";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="3q5D0uT4"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="MrkJ6j8u"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A19279DC8;
-	Tue, 24 Jun 2025 10:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D1A22D9ED
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 13:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750761607; cv=none; b=jBdUwDUNri/EOqrm5kjsjiAoJcepYN1RPBHtUPlcI+utZrX4vHGKC8JrfQu7eLk2nZeBez4VVwFHyE1Nb0oKhCptOrJFV/PR/KC60JE9i6+vB0CalgZaD4of8bzBqCRDb8zBo00+kmDjhzkKw8OBYqaEg5PQL6t1y7DxZOHmoug=
+	t=1750771166; cv=none; b=rz0dJK9R1hEDYlnEOah5Fswyh5z5dIdE2+38Mh6pibkQDRiZgWZW39149+8Z7q01rNvvLP1xpXHKaRJ5/tp9ygkOFHMM7SkEfZ442Oh97lYCbcWBkyC8cEuwHGw00QXq4IMElMyQHhEAB9/kumeWJUYsNQKYcirgXo973TRE61c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750761607; c=relaxed/simple;
-	bh=f8XsI5O1CkfkYFDeROjVLKjcyy9Tl6y4vwZNlHiFsyg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RASDgoa9P94TdrpI1W91tg257cW/56rp4OpUy1zGOud0g3K4yQHxX0S4NnDqFOXPTzt99DWWTo4mV97PZ3foJ8ibEnxBZ//EsgrT5YL4ywINwv7OWiwl33cu2UxteQ3f9FGjaOS1iko2dDIx3jJQEq8DLUa4qCf2dMEoKJLqbXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=v1IFWcFr; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=3q5D0uT4; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1750761604;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PmKtYLO9DDYaj9Me5RnB2od40m2nfSC9/3iVyLRTgPc=;
-	b=v1IFWcFrbObYtAZ/RT0Kppv2+R1ysQJUiAOhyBDBdBD7GRafKVhWIJlEp4M1/MAbW7r3Ca
-	o8ExT+FJNwE1MLi5ZHj7mixRk7DPF7y0JESsK+b/BXPx0H36L3GknAlPGKQ80sDZSd8kX8
-	c7tk3xzYOhkh9+PB8l0sOAqBJbObspXXOYombtNTWorYQc/dnlFuIdXCWjoZNydWHsEEfw
-	BxAB1cxurgSdDrVSKVwi91WSkw72/7/zhYIxKx2zfbMR8WyyBWVel7X/khQj5qlBzANr+W
-	waHxljQ3WDmwbOBvDQ6fj/PD/LbBRXtKBrQTzgU9iEnxcn0NlO2wYO/ak4OZtw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1750761604;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PmKtYLO9DDYaj9Me5RnB2od40m2nfSC9/3iVyLRTgPc=;
-	b=3q5D0uT4oSfP2VhfCp/l4dQktoBuSpc64H38sBuCNB8bE8D63GfRugryCyLDa3R+2guT87
-	o5CUyJOaQUdlplCw==
-To: Pan Chuang <panchuang@vivo.com>, "Rafael J. Wysocki"
- <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui
- <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Miquel Raynal
- <miquel.raynal@bootlin.com>, Markus Mayer <mmayer@broadcom.com>, Broadcom
- internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Shawn Guo
- <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
- Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
- zhanghongchen <zhanghongchen@loongson.cn>, Yinbo Zhu
- <zhuyinbo@loongson.cn>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
- <thara.gopinath@gmail.com>, Niklas =?utf-8?Q?S=C3=B6derlund?=
- <niklas.soderlund@ragnatech.se>, Geert Uytterhoeven
- <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, Heiko
- Stuebner <heiko@sntech.de>, Bartlomiej Zolnierkiewicz
- <bzolnier@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, Vasily Khoruzhick
- <anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai
- <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
- <samuel@sholland.org>, Thierry Reding <thierry.reding@gmail.com>, Jonathan
- Hunter <jonathanh@nvidia.com>, Kunihiko Hayashi
- <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Srinivas Pandruvada
- <srinivas.pandruvada@linux.intel.com>, Greg KH
- <gregkh@linuxfoundation.org>, Peter Zijlstra <peterz@infradead.org>,
- =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= <nfraprado@collabora.com>,
- Conor Dooley
- <conor.dooley@microchip.com>, Julien Panis <jpanis@baylibre.com>, Arnd
- Bergmann <arnd@arndb.de>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>,
- Colin Ian King <colin.i.king@gmail.com>, Raphael Gallais-Pou
- <rgallaispou@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, "Jiri Slaby (SUSE)"
- <jirislaby@kernel.org>, Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Andrew Morton <akpm@linux-foundation.org>, Costa Shulyupin
- <costa.shul@redhat.com>, Yury Norov <yury.norov@gmail.com>, Cheng-Yang
- Chou <yphbchou0911@gmail.com>, Caleb Sander Mateos
- <csander@purestorage.com>, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- imx@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org
-Cc: Yangtao Li <frank.li@vivo.com>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- <u.kleine-koenig@pengutronix.de>, Jonathan Cameron
- <Jonathan.Cameron@Huawei.com>, Pan Chuang <panchuang@vivo.com>
-Subject: Re: [PATCH v6 01/24] genirq/devres: Add
- devm_request_threaded_irq_probe() and devm_request_irq_probe()
-In-Reply-To: <20250623123054.472216-2-panchuang@vivo.com>
-References: <20250623123054.472216-1-panchuang@vivo.com>
- <20250623123054.472216-2-panchuang@vivo.com>
-Date: Tue, 24 Jun 2025 10:13:10 +0200
-Message-ID: <87h605o8vd.ffs@tglx>
+	s=arc-20240116; t=1750771166; c=relaxed/simple;
+	bh=RBJgsZUC1nqNrB3wsNH3awWX5gMKJEfJFb9c9F8tuQg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WLEsPcHGaCk8crxNxB5iZyLElYUrXVdgCQfDz5U1BowjjcnpPtd+uSjAYw5wd0H+XHlW0pASXvZlQN0CgIjbc3zKQm6c5KqUZKch1UhTlcNoN4EfuEsiDyBEYnG/g0lUbYTgiI3+vx1TtSR1N+Y70qG+vsanR3to0TSYsKnfEj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=MrkJ6j8u; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-442fda876a6so48016815e9.0
+        for <linux-samsung-soc@vger.kernel.org>; Tue, 24 Jun 2025 06:19:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750771162; x=1751375962; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gsa/afuzkL/muRZEKJaSmP1G9IRaDNhW+p7U3bAdGsU=;
+        b=MrkJ6j8u+jLoenziiKTqh2kyZ0dwmtdT0pcDZ2Wj1bngH4KGOc2vefKK+3GWHyBmla
+         WB1lFtF/F+OMWeg/ZAPAfHwGeICcjZTMjj+oFk2o6HN6iGGnyrx0Ga85F8N6Ul/G4fgp
+         feUTV3aoKxw+93Hel/9jOjm1uHfQodNz7pZ0vRBVfPeiQgVfuAe6D959XzpOp4bHiA+R
+         f+aFlnWyyKHcvzM2UBR4pvWmuHKsgOV+5UTQISDSefkBJpjTf0uzvfWgBwsajFK+V0mK
+         M2/eUDB3XOIhjffGEAVfS0/j8Lt8+3FKBiEFxDYQSEc8CQT4Zwu/Wy4BjiKxL+4wIJEZ
+         sAYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750771162; x=1751375962;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gsa/afuzkL/muRZEKJaSmP1G9IRaDNhW+p7U3bAdGsU=;
+        b=NlR6nmf3VhzVb3WW3rNwtNjLTH+hY8qdzTE1D5kvuy6rSMa+kNwsoEN/8j1kb5C6t3
+         lkS47yHCtr9eS7ptEgBh3A3HMlcp8dPJ/bxwo5E+7jmRPbo081thmaCVSSOIPyLd/N+V
+         mUxW0NrCeTZDD8mNPccbKG8+247nDN6oaWqbJx6vygfg/qoN5FRCXXlAICp6+FNirdjT
+         3eU7USfGeVFfkuWSuQFI5bUbqKukV+o6o372Dcrb3r5/qwF5GeykDvz+OAx7BxwGtmHa
+         ICs9Sr61ReB/Y/CYWQrErdV64X2/dMMgV9atgEi/rdscfABSibOfQMvOGXibqc2BShrs
+         3PHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWEg4pJ0AO1KTFGGUZWoTxVyAYVdXH4o2W/zF6emC2wWDdYzhR9QPKGsgf3heEKwof5v7A6qXc0wPoIU6xYW2LsbA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUeRaPcgRfg/IQPvhgTJXNE1fVF4uS9xkWeW6ioW2isgQB7PkD
+	fGrhyvF2J2y82M+76yoCZa5yBN5CGSgizlX5LoqgL4YIMX/5E4hiAuVnc97/x7CQH5k=
+X-Gm-Gg: ASbGncu+50/6+tePqJrg7E3W2TkWVO7K6btrOULfjX4KchebBvQ5Ebl0NJLe3z0akT5
+	jDLaxJmxPemW2qLFYO4HfiSNHaQ5kKRysP8hFcR6SWa0Q+LhqoqdKplAWeUlDfYyydepffcIN4r
+	yBfLmCdDWyLJ/x0kiNWwI8bRiSQD1D5wUwJ4fnDrMzZsrL+dL34gkUs5LY8pJsBV75qGBN/kjiU
+	buBWgx0QhV4cHz2JwZzyJ+I26iwK4EaEc986NLmZV/V4d1ZW3K6m0F5ebp2exwMjyV2qDZeOkOa
+	tIo1QUbxrULnwa7obh4oHGYDl7HYAnyhtxnZCH6eeBb23WU9YgDT0FkNpw0CA0MTVQ==
+X-Google-Smtp-Source: AGHT+IEhufAimrhHUzQr0xQtqQC2Hgx0D1VrIPHbO4Qbkas268U0OlP1XXIhz9Fe5pfneFNyUPhByA==
+X-Received: by 2002:a05:600c:3513:b0:450:cde3:f266 with SMTP id 5b1f17b1804b1-453659cb94bmr143802515e9.22.1750771161882;
+        Tue, 24 Jun 2025 06:19:21 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:34d2:109c:3293:19e9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453646fd74asm141302195e9.22.2025.06.24.06.19.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Jun 2025 06:19:21 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH RFT 0/6] gpio: mmio: remove struct bgpio_pdata
+Date: Tue, 24 Jun 2025 15:19:11 +0200
+Message-Id: <20250624-gpio-mmio-pdata-v1-0-a58c72eb556a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM+lWmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDMyNj3fSCzHzd3FwgUZCSWJKom2hhbJhkaZZqkZJipATUVVCUmpZZATY
+ xWinILUQptrYWAD6NQxlmAAAA
+X-Change-ID: 20250623-gpio-mmio-pdata-a831b96e8dd2
+To: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Lee Jones <lee@kernel.org>, 
+ Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Aaro Koskinen <aaro.koskinen@iki.fi>, 
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>, 
+ Russell King <linux@armlinux.org.uk>, Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org, 
+ patches@opensource.cirrus.com, linux-samsung-soc@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1805;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=RBJgsZUC1nqNrB3wsNH3awWX5gMKJEfJFb9c9F8tuQg=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoWqXTX/fNaYZzZKf3DgFDCitzH9bRN6VhuKlO+
+ tLHKsv3sa+JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaFql0wAKCRARpy6gFHHX
+ ckkBEAC3x6MUKlDkZ40OSpS/a57sn/SpQw1u6hapoGkV4PIgEA2b0WNC/5vJVsMsJOE7bEo4415
+ d830z2CMbbRl7AA+Q69vBRvmtexOFGW8Zf+5YD9qe2VxlQ+ZhDIdQjF8vG3BBPVfgAAFQLcDvGc
+ 7eqG8XUAQISuMRzX8jx3aCfaSXu89LnAFmfsLWVO2PFZ1lOMNLyC+FBvxMjBtKf9NjbGjX6g9Lt
+ WSs3ihAWqXpsQrMA5j+Sk9pDAAskgyVdnMVP0R1vWn97KCF/aKeXuX3PTKxLgAwkfTtDblPkuAY
+ V59ViJhzoB7/+ecRrLUeW7bXb8iJVSVLxRyqakya85TgiL8a0iAFueJ3mbFURtB3V0dk5bcyhZj
+ j+t7vqzDcp/lOveEU7abAQm6LW4o3s6jbSEGJqmt4zZLlSuoUdnbTQkwh6O22LbvSsPjt9vfwTu
+ ZhWPf8Ul7BSRtjDSrv0G+1pJGMwxzot5HDI0jJKeg0oEd5Mjky6Q8DV6KxWsBQgVKFwB7PE0uE3
+ HMkjg9Zqh1+h6aMeFgiEFlkIL5Fa2g+z5SxKXPOiXBP8ZisOEORPZWaBKGx8H1kOTcrlKz6Yi+s
+ HRSE9OFs+vg4bWEVBmI4/Yxm4hb4THlDk0eY14SpBmXtl8Qdm279L0/AapoAzTPYOAddTSPgtmG
+ kylguGrG3el0upw==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On Mon, Jun 23 2025 at 20:30, Pan Chuang wrote:
-> +/**
-> + * devm_request_threaded_irq_probe - request irq for a managed device with error msg (recommended in probe)
-> + * @dev:	Device to request interrupt for
-> + * @irq:	Interrupt line to allocate
-> + * @handler:	Function to be called when the IRQ occurs
-> + * @thread_fn:	Function to be called in a threaded interrupt context. NULL
-> + *		for devices which handle everything in @handler
-> + * @irqflags:	Interrupt type flags
-> + * @devname:	An ascii name for the claiming device, dev_name(dev) if NULL
-> + * @dev_id:	A cookie passed back to the handler function
-> + * @info:	Optional additional error log
-> + *
-> + * This is a variant of the devm_request_threaded_irq function.
-> + * It will print an error message by default when the request fails,
-> + * and the consumer can add a special error msg.
-> + *
-> + * Except for the extra @info argument, this function takes the
-> + * same arguments and performs the same function as
-> + * devm_request_threaded_irq(). IRQs requested with this function will be
-> + * automatically freed on driver detach.
+I'm working on removing the fields relevant only to gpio-mmio from
+struct gpio_chip. One of the bits that need addressing before we can do
+this is the removal of struct bgpio_pdata from the kernel. Fortunately
+there are only 3 users left treewide.
 
-I really have to ask why you need the extra info argument. It's not
-providing any really value.
+This series adds support for parsing of generic device properties to
+gpio-mmio, converts all users to setting up software nodes containing
+relevant values in their property sets and removes struct bgpio_pdata.
 
-What's important when the interrupt request fails?
+As for merging: it would be best for MFD/OMAP/s3c maintainers to ack the
+changes and let me route them through the GPIO tree. I can provide an
+immutable tag if needed.
 
-    1) The device, which is identifiable by @devname and/or dev_name(@dev)
+Obviously I was only able to build-test the changes so any actual
+verification is appreciated.
 
-    2) The interrupt number
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Bartosz Golaszewski (6):
+      gpio: mmio: drop the big-endian platform device variant
+      gpio: mmio: get chip label and GPIO base from device properties
+      mfd: vexpress-sysreg: set-up software nodes for gpio-mmio
+      ARM: omap1: ams-delta: use generic device properties for gpio-mmio
+      ARM: s3c: crag6410: use generic device properties for gpio-mmio
+      gpio: mmio: remove struct bgpio_pdata
 
-    3) The error code
+ arch/arm/mach-omap1/board-ams-delta.c | 42 ++++++++++++--------------
+ arch/arm/mach-s3c/mach-crag6410.c     | 17 ++++++-----
+ drivers/gpio/gpio-mmio.c              | 57 +++++++++--------------------------
+ drivers/mfd/vexpress-sysreg.c         | 46 +++++++++++++++++-----------
+ include/linux/gpio/driver.h           |  6 ----
+ 5 files changed, 73 insertions(+), 95 deletions(-)
+---
+base-commit: f817b6dd2b62d921a6cdc0a3ac599cd1851f343c
+change-id: 20250623-gpio-mmio-pdata-a831b96e8dd2
 
-If you want to be more expressive then you can also print out the
-handler function symbols, which makes it even more useful to map back
-into the affected driver.
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-As you cited correctly I said back then:
-
-  "So there is certainly an argument to be made that this particular
-   function should print a well formatted and informative error
-   message."
-
-This particular function is: devm_request_threaded_irq().
-
-IOW, I did not ask you should go an create a new one, right?
-
-The extra @info argument is just proliferating the nonsensical
-information which driver developers put into the output. I just looked
-through a couple of your thermal patches (hint, I had to chase them
-manually because you failed to thread them properly). While most of them
-provide NULL, the two adding 'alarm' are really not providing any useful
-information.
-
-The point is, that the information is aimed at developers and not to be
-helpful for Joe User to identify/fix a problem. If the driver
-developer/maintainer is not able to track back the information (name,
-number, error code) to the driver in question, then the added "foo" info
-is not going to make him any smarter.
-
-If that happens, then being able to map it back to the driver is only 1%
-of the problem analysis, simply because you need to decode the
-underlying problem (DT, vector exhaustion, memory exhaustion ....) to be
-able to address it.
-
-So just make devm_request.*irq() emit a uniform and informative message
-on fail and you can go and remove all the homebrewn useless error prints
-from the drivers.
-
-It does not matter at all if there are duplicated error messages for a
-release or two until all drivers have been cleaned up. This is not the
-common case and only rarely triggered. So what?
-
-> +int devm_request_threaded_irq_probe(struct device *dev, unsigned int irq,
-> +				    irq_handler_t handler, irq_handler_t thread_fn,
-> +				    unsigned long irqflags, const char *devname,
-> +				    void *dev_id, const char *info)
-> +{
-> +	int rc;
-> +
-> +	rc = devm_request_threaded_irq(dev, irq, handler, NULL, irqflags, devname, dev_id);
-
-This is just wrong as you fail to hand in thread_fn.
-
-Q: How was this code ever tested?
-A: Not at all.
-
-> Could you please consider merging the entire series into your branch? 
-
-You're seriously asking that for something which is so obviously broken?
-
-> +	if (rc) {
-> +		return dev_err_probe(dev, rc, "Failed to request %sinterrupt %u %s %s\n",
-> +				     thread_fn ? "threaded " : "", irq, devname ? : dev_name(dev),
-> +				     info ? : "");
-
-This is wrong too because devm_request_threaded_irq() allows you to hand
-in both a hard interrupt and a threaded handler and either one of them
-can be NULL.
-
-So what you want to add in devm_request_threaded_irq() is something like
-this:
-
-	if (rc < 0) {
-		return dev_err_probe(dev, rc, "request_irq(%u) %pS %pS %s\n",
-                        	     handler, thread_fn, devname ? : "");
-        }
-
-dev_err_probe() already prefixes the caller string with 'error ', so
-there is no need for a lenghty 'failed to request ....' novel.
-
-Thanks,
-
-        tglx
 
