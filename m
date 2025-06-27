@@ -1,153 +1,170 @@
-Return-Path: <linux-samsung-soc+bounces-9045-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9047-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94FCAAEB8F5
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 15:30:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AAC2AEB91F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 15:39:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E20743BBFB4
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 13:29:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E0237A650B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 13:38:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 379532DCBEB;
-	Fri, 27 Jun 2025 13:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A7B92D97B5;
+	Fri, 27 Jun 2025 13:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mHWPnCeU"
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="Gd611RXt"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082152D9EF2
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 13:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC502F1FDF;
+	Fri, 27 Jun 2025 13:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751030978; cv=none; b=kxuh+769nmYae+3YdwsI9v9SHIilLHPKO3D30oHF1yPZ17gO1v39xIEV0VjcA03iPRKYFdObr6x5JrIkIpu9WiE9KmYHcBoAT/XHhqt5cru4AQ1mDOKMZd+2mVQ6gxIG6NE9ewIBn4v4CKPtmFcNHup6l6m+DsQHE1xvIf8Xj5M=
+	t=1751031580; cv=none; b=AWzuK2JMBkF4hw+Yzc2js93tNJyVmczEuHxMD0tvAT10Ee5hWzrhSzeWrtbxMs6vWFCYJwnTSRV7nr9mL6MBCI3rTerDTj+Bv+dE7KdiwPbuHU7owkl4uZ9CIr84/yH1jo0lZ9VHTfgxDheQ7pic4t6FHU6xZHbQRdStu7xsVpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751030978; c=relaxed/simple;
-	bh=c52L8F3youBOHwKUZLMi0OEdi/l/vlphIPQtPA1vy1Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TdjwlMDxt5Hd4+daKZj03D7769Q2NOdbdjxsyQiy83v6o7NEBeK6zA5Evbl2Uj4XkfhHopQo/7XLuWLVVehmcghe4HK+jh9ih3bF1dbIWrHU19rHrbgGzCTIGft2XJVh1Tkx3Wz6HRKARa28l9bLFfxq4KWProXG7lauvnLIUso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mHWPnCeU; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-605b9488c28so3912982a12.2
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 06:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751030974; x=1751635774; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Kq5LNL/kSi3uBykeBQ3vsMgUAnWMOb379Wxg3VYtEFQ=;
-        b=mHWPnCeUqMgyeOscdwSspLDqet4Yy81Mi5GNtQqjcLMKGfB+uxLJONy0IdvS1Awp9g
-         mdJt3/gyA2z6uG5VhlXMjGFYfaZsRXdi3JsvEFTbSpdW6FCmscFgHgWuwuomSTRNbecw
-         AuoJjvGDIRGZr4f78tmSr3ciX6E/9tU+zi/59NSoDB3Fjr5RGXzNm7VW+h1zQm4ZgwnU
-         Zewo09HqT6nFfzUdNrsP/ojXo+5j+IMCUbR9Y9YN5PUeBIdeJJM+cVQqf1lnN8yldu2C
-         QDqRraeowF3hJvvqDNXrgN3cO0af7aNXYj2T2TGX5lU5/VtB7fKr554PImsBnE2ogY4t
-         xjGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751030974; x=1751635774;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Kq5LNL/kSi3uBykeBQ3vsMgUAnWMOb379Wxg3VYtEFQ=;
-        b=l6NIRfy1N6UbU1NGD/4RsnQdtN0zzbnJ3DJTprCdmJ16sujGnwMwvBO2zNzsGN3vRL
-         cD9vJHO9+8+Cs2JFgLTghbXa+zkrSgLd21ZMYownK7RRP6DaHYhyU79szxGcUbm+ygCB
-         ttf8+mUlZ1L7HTKlBoJgDPVfponuIFKusYTUc6fUJMT9FcZQYIMJusv4Cz+kyE7yNArL
-         SmrGCOBnREwmx1dkN8j8CCNGe3yyCa8b2hxEuYONSKmT0FieH2cR367j5NoJBy5sca2e
-         8o9/IjRs+3V6AZJyDaPLtEbJFnc5cmT6j8J6I1guOxm6agl0fANKGu5RbORXazKX7JUu
-         g8Cw==
-X-Forwarded-Encrypted: i=1; AJvYcCXZEU/RTjAv1mPxW051mq2PbtgDCQlBAhHdqNH4VAoyDjGzDqoKEzywOrpD/BNaSM92Da/jS+3UC8ACMW2B9DXzxg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxtCZ4p3GuMNih5DyUUgRCs1PvMRswKhT3Q6drfxQiP/Yi+Uui
-	8QKXMF1tOvetRlUEWek6TfcU8N0vEEV6PqQv3Brs6AbrTUj4Uh2c8ndMQt4Gn2PfKw8=
-X-Gm-Gg: ASbGncud52LBxtAqK59jcuDc1taKcrhMKqF+w7MVi7bLiOEZ0lsmhHmGitOXeyh3oyH
-	7OdQQ8spif7t6XyX9wibmDDIFstAncLpk4/gjzoiYIPnTC8EjRCjWTeDkg0VcfjO3MkCIWPnhMA
-	nsi93t6XLnZzIvqBB2ivce9Tu68qNgeFk2xO1on22gbc0/ABLPJyk0LyUsrn+39hHMbuvGfxsJ7
-	2J1XZ9qkfqIqbqBs18D5Bxc9UZ3v3oLEiGJdAa6JiGQd9HhFERqIGnbc3s1PkN2d/WZTJg7o+wE
-	F+1yEypRqQN7HwSYL91VNieZ/0L3hZBYnmqMkujaCRlEj51MbNrbPXpjFXeIEDSGNCMYLaHoDKj
-	l/ytU5YwiMzXV40xd0n2g3f0pFbI5RE3SttBcXSQ8XVwLzg==
-X-Google-Smtp-Source: AGHT+IGd2c4uK8qXV/NnRe/7QQfP8S5dEOVPWCDF2KTWWSLjQcHtuBqYQ3SI9sPGJlwdlQ6x9htklg==
-X-Received: by 2002:a05:6402:2101:b0:607:116e:108d with SMTP id 4fb4d7f45d1cf-60c88e72f3bmr2327472a12.21.1751030974100;
-        Fri, 27 Jun 2025 06:29:34 -0700 (PDT)
-Received: from puffmais.c.googlers.com (140.20.91.34.bc.googleusercontent.com. [34.91.20.140])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c82908297sm1462702a12.26.2025.06.27.06.29.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 06:29:33 -0700 (PDT)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Fri, 27 Jun 2025 14:29:32 +0100
-Subject: [PATCH 3/3] arm64: dts: exynos: gs101: switch to gs101 specific
- reboot
+	s=arc-20240116; t=1751031580; c=relaxed/simple;
+	bh=TEJGRf1FlIgDbcSTQNxCwfvvmdMjzuRrveS8ic9DKO8=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=G3XexwP/QDWgG6FLVAODhh6W8fDuhzZkghpksMWMhu35nQJOqqCsQGwsauGOYX06xBZiGdIw4k8EYjS2OUlodY6ocOq/ltdVuB2Z3Vz/uIG2Ewus1H4pbnmKyIT3BS/Pj62kLuuySea0B+cluCWT+C4vLf1ATjfGSBzv9+cA/jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=Gd611RXt; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 0C36E26091;
+	Fri, 27 Jun 2025 15:39:35 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id z_DBtCRPQosI; Fri, 27 Jun 2025 15:39:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1751031574; bh=TEJGRf1FlIgDbcSTQNxCwfvvmdMjzuRrveS8ic9DKO8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Gd611RXtDUZ0eMsj5UIbALHq5iK/naVa74b1YVOj7JFRHqo5mtjuCj6SVb4R7ZlF3
+	 E/RfVgUSG9gCG6F+kirZgVXVL9zb+soJQe6bl1bzc/g6ZKIGkJZDXd+DVbvBaTdB0k
+	 UnVLNZsgX+lWxlVHtv0hartInLi0BGjipjNH0S5tTd1EnWTIgyK8xhXMI4MHSkSfa4
+	 Q4HS5x5/4zSEQB+a59M6MQCtSUte1dl9XC3GotadKWwDod9EsyQswm32ejXt2+Koyh
+	 7UV5ld8aCL5fmXVsKpYs2lhrWdIlPUBlvO8v0jPUcphwmsqPY38Xan9OMyuLddf+NW
+	 sIF6VTF7uZIyg==
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Date: Fri, 27 Jun 2025 13:39:33 +0000
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
+To: Inki Dae <daeinki@gmail.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park
+ <kyungmin.park@samsung.com>, David Airlie <airlied@gmail.com>, Simona Vetter
+ <simona@ffwll.ch>, Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+ Conor Dooley <conor@kernel.org>, Ajay Kumar <ajaykumar.rs@samsung.com>,
+ Akshu Agrawal <akshua@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] drm/exynos: exynos7_drm_decon: fix call of
+ decon_commit()
+In-Reply-To: <CAAQKjZM+++P3ozLZZYEusYepamF0qdeuOe+thDb2BevLCsab_Q@mail.gmail.com>
+References: <20250627-exynosdrm-decon-v3-0-5b456f88cfea@disroot.org>
+ <20250627-exynosdrm-decon-v3-2-5b456f88cfea@disroot.org>
+ <CAAQKjZM+++P3ozLZZYEusYepamF0qdeuOe+thDb2BevLCsab_Q@mail.gmail.com>
+Message-ID: <c4348867644c2e1d0a4fc47f3291855b@disroot.org>
+X-Sender: kauschluss@disroot.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250627-gs101-reboot3-v1-3-c3ae49657b1f@linaro.org>
-References: <20250627-gs101-reboot3-v1-0-c3ae49657b1f@linaro.org>
-In-Reply-To: <20250627-gs101-reboot3-v1-0-c3ae49657b1f@linaro.org>
-To: Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.14.2
 
-gs101 (Google Pixel 6 and Pixel 6 Pro) supports cold- and warm-reboot.
-Cold-reset is useful because it is more secure, e.g. wiping all RAM
-contents, while the warm-reboot allows RAM contents to be retained
-across the reboot, e.g. to collect potential crash information.
+On 2025-06-27 04:06, Inki Dae wrote:
+> Hi,
+> 
+> 2025년 6월 27일 (금) 오전 4:21, Kaustabh Chakraborty 
+> <kauschluss@disroot.org>님이 작성:
+>> 
+>> decon_commit() has a condition guard at the beginning:
+>> 
+>>         if (ctx->suspended)
+>>                 return;
+>> 
+>> But, when it is being called from decon_atomic_enable(), 
+>> ctx->suspended
+>> is still set to true, which prevents its execution. decon_commit() is
+>> vital for setting up display timing values, without which the display
+>> pipeline fails to function properly. Call the function after
+>> ctx->suspended is set to false as a fix.
+> 
+> Good observation. However, I think a more generic solution is needed.
+> 
+>> 
+>> Cc: stable@vger.kernel.org
+>> Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
+>> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+>> ---
+>>  drivers/gpu/drm/exynos/exynos7_drm_decon.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/exynos/exynos7_drm_decon.c 
+>> b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+>> index 
+>> f91daefa9d2bc5e314c279822047e60ee0d7ca99..43bcbe2e2917df43d7c2d27a9771e892628dd682 
+>> 100644
+>> --- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+>> +++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+>> @@ -583,9 +583,9 @@ static void decon_atomic_enable(struct 
+>> exynos_drm_crtc *crtc)
+>>         if (test_and_clear_bit(0, &ctx->irq_flags))
+>>                 decon_enable_vblank(ctx->crtc);
+>> 
+>> -       decon_commit(ctx->crtc);
+>> -
+>>         ctx->suspended = false;
+>> +
+>> +       decon_commit(ctx->crtc);
+> 
+> There seem to be three possible solutions:
+> 
+> 1. Remove all code related to ctx->suspended. If the pipeline flow is
+> properly managed as in the exynos5433_drm_decon.c module, checking the
+> ctx->suspended state may no longer be necessary.
+> 2. Remove the ctx->suspended check from decon_commit(). Since the
+> runtime PM resume is already called before decon_commit() in
+> decon_atomic_enable(), the DECON controller should already be enabled
+> at the hardware level, and decon_commit() should work correctly.
+> 3. Move the code that updates ctx->suspended from
+> decon_atomic_enable() and decon_atomic_disable() to
+> exynos7_decon_resume() and exynos7_decon_suspend(), respectively. The
+> decon_atomic_enable() function calls pm_runtime_resume_and_get(),
+> which ultimately triggers exynos7_decon_resume(). It would be more
+> appropriate to set ctx->suspended = false in the
+> exynos7_decon_resume() function, as this is the standard place to
+> handle hardware state changes and resume actions.
+> decon_atomic_enable() is responsible for requesting enablement of the
+> DECON controller, but actual hardware state transitions will be
+> handled within exynos7_decon_resume() and exynos7_decon_suspend().
+> 
+> 
+> Unfortunately, I do not have hardware to test this patch myself. Would
+> it be possible for you to try one of these approaches and verify the
+> behavior?
+> Option 1 would be the best solution if feasible.
 
-Add the required DT changes to switch to the gs101-specific reboot
-method, which knows how to issue either reset as requested by the OS.
+Yes, it works fine indeed. Thanks!
 
-The PMIC plays a role in this as well, so mark it as
-'system-power-controller', which in this case ensures that the device
-will wake up again after a cold-reboot, ensuring the full power-cycle
-is successful.
-
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
- arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi | 1 +
- arch/arm64/boot/dts/exynos/google/gs101.dtsi              | 5 +----
- 2 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
-index c1b51f4cfb8c174852b44690f84ed1aa0b4057c2..84ff3e047d3b31b5f96d4d6c78ec933bb05f3e6b 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
-@@ -106,6 +106,7 @@ pmic {
- 		interrupts-extended = <&gpa0 6 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pmic_int>;
-+		system-power-controller;
- 		wakeup-source;
- 
- 		regulators {
-diff --git a/arch/arm64/boot/dts/exynos/google/gs101.dtsi b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-index 7fc3d803de39e654c1e8102b5e0f68995c3ab8e2..79a15fe7d336af3dcd9104d286bea525bb73e9e9 100644
---- a/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-+++ b/arch/arm64/boot/dts/exynos/google/gs101.dtsi
-@@ -1418,10 +1418,7 @@ poweroff: syscon-poweroff {
- 			};
- 
- 			reboot: syscon-reboot {
--				compatible = "syscon-reboot";
--				offset = <0x3a00>; /* SYSTEM_CONFIGURATION */
--				mask = <0x2>; /* SWRESET_SYSTEM */
--				value = <0x2>; /* reset value */
-+				compatible = "google,gs101-reboot";
- 			};
- 
- 			reboot-mode {
-
--- 
-2.50.0.727.gbf7dc18ff4-goog
-
+> 
+> Thanks,
+> Inki Dae
+> 
+>>  }
+>> 
+>>  static void decon_atomic_disable(struct exynos_drm_crtc *crtc)
+>> 
+>> --
+>> 2.49.0
+>> 
+>> 
 
