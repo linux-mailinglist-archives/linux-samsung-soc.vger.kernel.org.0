@@ -1,148 +1,160 @@
-Return-Path: <linux-samsung-soc+bounces-9032-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9034-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02FC6AEB291
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 11:19:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9839AEB2C9
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 11:25:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7637D7AB2BF
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 09:18:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07384188600E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 09:22:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 762FB294A1C;
-	Fri, 27 Jun 2025 09:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 896AE293C41;
+	Fri, 27 Jun 2025 09:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rCWzx72O"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cEt6J6yz"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9640C27F00E
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 09:15:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FAF2737F9
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 09:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751015739; cv=none; b=Fzwxyaw/HS/arrW1MnyfDSeF/9Ir//SCMnYHNeCU4vRkomakOPXeMpVjIs0oohlJ+2xZP89hl0KVLdnh+COKeHgU6dSsEu1ukIju4EB+NtPXzgnhZr7gFkafHWNCbyOcejdiNwl5nCJ4Ya+Umedro3qgR0fwWUTuUPzcf7jEaJc=
+	t=1751016034; cv=none; b=i02sYWoXY8x3Xpmf2GJYw8G3wxEostt0PEXBlPDaDItUkwFLM+tX6lNy4a9CCQ83xYLUMkPBoRl6H0ITXppThFlD23v6OoY+uG7CbagNgFrVpOrmIBAdvMU6PoEmhvGYg880PuqkSmzPkJwttqhd9cVLJb7+QruPaEjGwgFbb2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751015739; c=relaxed/simple;
-	bh=KF6n2xzpAcKNPZgVLGNgsLKA4nfTZ74Ai1RZpgXWEGM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lv0KbSFe007fiH2OKAr6+5r++okanPa9aQFogfsk0rYXXk80qQP9YHB+SyeMFWnKeEH5VGVpRlYpboW33/AKQzIwm6eGRjyvDqnZoGxBsfnqsznyy0f3dB6LhDgL3+iKklADOgnRfV4xf3cr/iqgbSzHPNPHS9S9WuaqXWnL5nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rCWzx72O; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1751016034; c=relaxed/simple;
+	bh=vrfc+OaRtOineRFy4CtDCLlKcnvGZaPz1fpHowUDsSc=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aRJWB9wwT2QIefXZNckL4gOaswP47XE1a3pPBi61w42BeqQJsYBxoR4dS74pbdAQOHdqSs3DZlAYVhcPGqDI+OaX3szwlLQtuPbQOz+LZ0wK2l4CLD1nd0vUXFJIJiMnEN9kpZg6QC0n1/0CxaJo4Uon0ADWAz92744tIg+8ISo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cEt6J6yz; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a4e62619afso220839f8f.1
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 02:15:36 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a4fea34e07so918856f8f.1
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 02:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751015735; x=1751620535; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZFxJtxrx1zJ0OI4OryDjNU8Y2lTkbxgsYsKEQP0KmBE=;
-        b=rCWzx72O6a/UN6xar7UXEPSkFrL+qgRlrB+2IGTlHvzJn5GpRQz8FRgymq747EUEEN
-         fk3joCMFqCFxUxhit/KbPfIddebAYmbytvoyisYBS9fK+jh6oVWewkfdX72CHptOC5ap
-         Ilcz7GmcYqaWQJcnmIgnlrzCbQALsLSyRlhTOZR2kqBGKuChvjmliFFV3XUxcHkuUk3z
-         OF8T9/o+ONoCaFf43Q1K3MvK4E/qmBM4d98dsbJq9v/PrLGPyG0e8ZYcjXWAjlHP8hwR
-         aSg0SiybOrvUex5IuMX72CYMOE7bFXHf9IhfH3Ed4AWZNQAVM8e80SLmHA4OJYxKtQHx
-         tzGg==
+        d=linaro.org; s=google; t=1751016031; x=1751620831; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tgKoLmuCFkyudsO+uSw17e0plXs6RB1iSrnaKVMcAlE=;
+        b=cEt6J6yzO62eYt7kNtmpEGbhW69x168ysd20wk5l1TcSeW6/IZxVlXJuym6wOflxto
+         EQAoYfAVB/uGyNkkCwTWcAVS74bU4V08xYmWyd6KaghFRCJwJ4xIYWtDJJN0sM6Sax7y
+         Yov9lAuPSCc6A62uiYqJnoLWUshtswUPIx7reH8cnmeL2sG/RHOi88/8JdrHdxZo/0SJ
+         EyEalRSvCGsuF/uOi85RdfS3pJikSNh+oT8G4Vn975GR8aAbxFII7vQkeWyIWchBTWBr
+         9FKKhQXAPg0KkGdeN/bOtb3iUX7vLNWwTt/8NNGOUP2qj9tm95xzWvEaiXMiS+8SI4gp
+         3DtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751015735; x=1751620535;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZFxJtxrx1zJ0OI4OryDjNU8Y2lTkbxgsYsKEQP0KmBE=;
-        b=I1J6wtl6SOzefCkjNqEB3O5jxTOHebSQ7ZCLsHwOU6uKMBEPL4sntyR/OUCRH5eiUN
-         H5+hb+8FfRM9N3AdSEBu1GqJGiRsM/sexJk8hT2VA/ZwjR+8MSGsoPIzno+q7qwv3Opn
-         b10yFSovNQka8goVchgHdGdCsHYsrN+EuG0FtZlzXW8VuSCTvpJeCmWEC4PqQUzAspHD
-         eBpWSlAVINyLKe3LP0wbZOzVSa8Vf4bGEkNigDQc10psze0N48IhkkRzYWS5K7D+WoGr
-         1zgZ2lX3/Wqum/zpFUZdMmvGfeK8byDG5cI26kNWZP5uMYIDJC2F7AEbcqevOpYAcxiu
-         oM9A==
-X-Forwarded-Encrypted: i=1; AJvYcCUzkQudAyQFXpmXTcn5DDmUH+lTuGG8cUXeQvaYCrhTxh6utdBBLuNOik5rGhBtLVOoLiczb5m4U8Wz/HDZKZnnTQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywq+45J2WH1+a7XPZbZQ9n7wNXV8R61ZGKAOwUdCN8GM8rM4jq9
-	HOEInns5VMQSQqBlAYdGqFtCUdVwK5IpfS0GOmtzhsYzaGDKxS/7aD8O8iS4e/lEOvQ=
-X-Gm-Gg: ASbGncuvMr4XxckS8b/jUZg8uNtYUYjifx+yczc2RybpPG4yqTjCBPVL0SKZKUcAHkx
-	vhKwxEwsR8lBcawDhdcL+E7fIPwltUaw3RmEAi5brsmQtMW10gCobu8q03xtA1J91hYa/fD+c38
-	hznYA8dGW7sQTWgT83yYfF1C6sGPT1k3JV+PzwNQ8jyr6tT7TBe6gH0Q2dlevLN2AadsZpm/fQp
-	aCSV+uTdH82fyX3XemKUwaC2FfenlLCtHFvfOjBYk1jIswCHxifS4oJP0cpZck5XDGjd++PbA33
-	2Ye9r+T4AVvNc5vLzuMzm4f7h3iGTRbleBWKcBYfDCLZ8sotzpVtT6sKL/9Tl4H4tdQxCNJDkfI
-	=
-X-Google-Smtp-Source: AGHT+IGWTiIfvGXjfRcFo7hTK1VN2IN646R55E8op7VekqX3OMHO9SkNO3nMyu6TsKKBy55gxvIINA==
-X-Received: by 2002:a05:6000:2006:b0:3a4:f7ea:a638 with SMTP id ffacd0b85a97d-3a90bf8150amr784917f8f.3.1751015734716;
-        Fri, 27 Jun 2025 02:15:34 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fadf3sm2198944f8f.34.2025.06.27.02.15.33
+        d=1e100.net; s=20230601; t=1751016031; x=1751620831;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tgKoLmuCFkyudsO+uSw17e0plXs6RB1iSrnaKVMcAlE=;
+        b=YzFoZYO2azxmEATKXrJOlZN8yZLouRLKe26PtRzITBfZ6Fp/HyyTzgOLh/GoD4khpd
+         ONzoeOpAqO0f49jWZY1aG0Oj0PAP0/2WQ4Ixw9lqGZz6DVfp+pyudYSQSyhvpHVu1UUf
+         9tz0Mdv9Ojk2qlkCKNjwNl0ZMaQGevWFID2EQ+KY4y6Wn8TYZj+GZ2Ls61z5Vzzw76M/
+         12U2fQ/6NKqOpxjjCx30wilDNwfXGfrjDdko9FBzhgllxpGy1cgu/PxoqryQy9Z3FK/9
+         hGhnXBZ0+q0ZYtaUASaB4GXl4fXg6m+iFxrmYl9WmJBxbg4ItR1U4aqJm59wr50X/Oku
+         BErg==
+X-Forwarded-Encrypted: i=1; AJvYcCWkOJtEH0d2HUXDs3U1DElZJ4ySTjcRiy2KwLub7Tq2dlmnnoomz7Pm64+crNtNUGYK1eVAv2TXfS1OB+18+IpLLA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgDwIcS0LvtW07InpAB0YN8ui27jo0yjgiacXg+pTMefDqalA/
+	Jv/J3/o8G1AWLQI55qhEMH7uQhtkiN/LyJY7xjxaMf16zu+PJQ4j0er9I3sUlJRCqRc=
+X-Gm-Gg: ASbGncsaKhiyZ7pCJUXlRqcHhvoOfeVaF2DyMIOzo1Z2b0qOx/dYnFBLEnQ02VoMD0C
+	HFHvy2F9ecteXggMDbMpHKGrxRLsTY4uXDBfC9ueT2Ok9Mq9ivuugNWphKA+vwzktTO1yTcdOks
+	piFw3f8vYSTE2wjBYSOpNz++NZdx+uXrbmJNyejk+7epkDMgDZokg9vRwGlHuHKNEr00is+6e5x
+	5Wlavbn+qXdyNbYDglQefWMI6KsxelbPCT7IU+M6G8JR9y6Xp+jj4t5aWsFStvsxNAeFWGpb3JH
+	bnsI0Xs+g5Pw1A1FEK7ra5XGk4fmmGoq6dQR9RiI4PgnBpfZXdAeK1v1fj+RWLI3VaU=
+X-Google-Smtp-Source: AGHT+IF5bV6mT3bv7iCEja7u7RBHkEVwKldtXgIAv6BJdG93VXVqYj/0JSIpoX8i21kmQ29S6VbX7g==
+X-Received: by 2002:a05:6000:2013:b0:3a4:f7dc:8a62 with SMTP id ffacd0b85a97d-3a8f2f34f7cmr2365868f8f.0.1751016031058;
+        Fri, 27 Jun 2025 02:20:31 -0700 (PDT)
+Received: from [10.1.1.109] ([80.111.64.44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a390bf8sm45349135e9.4.2025.06.27.02.20.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 02:15:34 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Will McVicker <willmcvicker@google.com>,
-	kernel-team@android.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] gs101 max77759 enablement (DT)
-Date: Fri, 27 Jun 2025 11:15:26 +0200
-Message-ID: <175101571353.155376.11773851551126179623.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
+        Fri, 27 Jun 2025 02:20:30 -0700 (PDT)
+Message-ID: <508b60bf64d060fb48395366b8377927d248b60b.camel@linaro.org>
+Subject: Re: [PATCH v2 2/4] arm64: dts: exynos: gs101-pixel-common: add
+ Maxim MAX77759 PMIC
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Catalin Marinas	
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Peter Griffin	
+ <peter.griffin@linaro.org>, Tudor Ambarus <tudor.ambarus@linaro.org>, Rob
+ Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
+ Dooley	 <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org
+Date: Fri, 27 Jun 2025 10:20:29 +0100
+In-Reply-To: <4cbc691e-c725-48eb-9932-4549381fa55b@kernel.org>
 References: <20250524-b4-max77759-mfd-dts-v2-0-b479542eb97d@linaro.org>
+	 <20250524-b4-max77759-mfd-dts-v2-2-b479542eb97d@linaro.org>
+	 <2c491166-d8ae-4fb6-a4f7-74e823e1205d@kernel.org>
+	 <b2c3b78d60f3dc3e4576e8b79298e22ea46567c6.camel@linaro.org>
+	 <4cbc691e-c725-48eb-9932-4549381fa55b@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1 
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1099; i=krzysztof.kozlowski@linaro.org;
- h=from:subject:message-id; bh=HwVHLSrS6bPiT1g1q5mvO6HejZP4ul/od1tNGw/4tBg=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoXmEuSw70uHfGqcj+KJv188+R1vGosyjk5ow7X
- 7tToll+rqOJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaF5hLgAKCRDBN2bmhouD
- 13QdD/9FH/OMCHHDQIpn1WzRj0sINjRlca9kK43MUnomL4QbpCJActb725g1LBV6JfBQIjdBbsk
- GfDrisMdgcktargu0V9bHbzNjRtsMpjicOzcWdoXiIxugvEPmM3LPjRaL8JgDawfnZL5v/78eRE
- AES834Bn34+FhC+dG1INlADikvKndrNaOb22sks6eEuJQM9z7sfxeQOY5ADdQZ2WeOCANOR6U7J
- M+f56kzcMqm+M3CUmFfO3pUgNTkc6PFkIlY0ODiL2ZtSlc4hJ6RpYaMnY/Xo+xA6qoo/bmafSFb
- LUn9nUD9Upjx1L7eb3TR3kZbj4XfcRR03D/DehsWG6U6NVfcsbHdaU+6VAjOZtg9v0tWiumWaq+
- RBYE/uZECEEXl4In9WcZPfE3MdaXsbNPSYwLSkjfeIUk11eeiiXND1e67vVH9n7ck7ubXQYDiF5
- ITbujp2FjOIHudJLXa3VyJt8nsJveF38yjjdX8scg/Fra3pOfPHxKwF3MYQj65BjhIthzlN5xEP
- JOOgAMYcS2MLCTu/fH/xqPIFRyhjZ53jqPxsUl1X7d+CJkNkzObQPREHo9w7n40poQ5l6SRsuA9
- 2x0BHKCfq3SDG4THWCU6e7WRP+di1kGMyAVx6YB9HArbK7w9RLPsHRKWZH6yt+vc2ShpnPlTmGa mTCOFQWPsl8KrCw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
 
+On Fri, 2025-06-27 at 11:12 +0200, Krzysztof Kozlowski wrote:
+> On 27/06/2025 10:54, Andr=C3=A9 Draszik wrote:
+> > Hi Krzysztof,
+> >=20
+> > On Thu, 2025-06-26 at 21:49 +0200, Krzysztof Kozlowski wrote:
+> > > On 24/05/2025 07:21, Andr=C3=A9 Draszik wrote:
+> > > > +
+> > > > +		gpio {
+> > > > +			compatible =3D "maxim,max77759-gpio";
+> > > > +
+> > > > +			gpio-controller;
+> > > > +			#gpio-cells =3D <2>;
+> > > > +			/*
+> > > > +			 * "Human-readable name [SIGNAL_LABEL]" where the
+> > > > +			 * latter comes from the schematic
+> > > > +			 */
+> > > > +			gpio-line-names =3D "OTG boost [OTG_BOOST_EN]",
+> > > > +					=C2=A0 "max20339 IRQ [MW_OVP_INT_L]";
+> > > > +
+> > > > +			interrupt-controller;
+> > > > +			#interrupt-cells =3D <2>;
+> > > > +		};
+> > > > +
+> > > > +		nvmem-0 {
+> > >=20
+> > > Why is this called nvmem-0, not nvmem? Is there nvmem-1? I see bindin=
+g
+> > > does it, but why?
+> >=20
+> > 'nvmem' is used/declared by nvmem-consumer.yaml as a phandle array
+> > already so using just 'nvmem' fails validation:
+> >=20
+> > Documentation/devicetree/bindings/mfd/maxim,max77759.example.dtb: pmic@=
+66: nvmem: {'compatible': ['maxim,max77759-nvmem'], 'nvmem-
+> > layout': {'compatible': ['fixed-layout'], '#address-cells': 1, '#size-c=
+ells': 1, 'reboot-mode@0': {'reg': [[0, 4]]},
+> > 'boot-reason@4':
+> > {'reg': [[4, 4]]}, 'shutdown-user-flag@8': {'reg': [[8, 1]]}, 'rsoc@10'=
+: {'reg': [[10, 2]]}}} is not of type 'array'
+> > 	from schema $id: http://devicetree.org/schemas/nvmem/nvmem-consumer.ya=
+ml#
+> >=20
+> > https://lore.kernel.org/all/20250226-max77759-mfd-v2-3-a65ebe2bc0a9@lin=
+aro.org/
+> Heh, this should have been just folded into the parent as Rob suggested
+> during v2
 
-On Sat, 24 May 2025 06:21:27 +0100, André Draszik wrote:
-> This series enables the recently merged Maxim max77759 driver and
-> updates the DT for the Google Pixel 6 / Pro (oriole / raven) boards
-> accordingly.
-> 
-> This gives us some extra GPIOs, and enables NVMEM which is used to
-> communicate the requested boot mode to the bootloader when doing a cold
-> reset.
-> 
-> [...]
+AFAICS and remember, the other discussion was about gpio properties only,
+nothing about nvmem. And I addressed all gpio related comments I believe.
 
-Applied, thanks!
+> Well, let's just merge it.
 
-[1/4] arm64: defconfig: enable Maxim max77759 driver
-      https://git.kernel.org/krzk/linux/c/ffdf3c776914f89dfb452e2a572e5bb7e89ccad8
-[2/4] arm64: dts: exynos: gs101-pixel-common: add Maxim MAX77759 PMIC
-      https://git.kernel.org/krzk/linux/c/8deaddf13538d68f4d7bd14a65dcd511ec0aba4e
-[3/4] arm64: dts: exynos: gs101-pixel-common: add nvmem-reboot-mode
-      https://git.kernel.org/krzk/linux/c/4292d18257c4a296f4b9e56a83ae22fecb63e727
-[4/4] arm64: dts: exynos: gs101: add dm-verity-device-corrupted syscon-reboot-mode
-      https://git.kernel.org/krzk/linux/c/17a3657e09a326b3417a46ae0044163f2c9c03ed
+Thanks Krzysztof.
 
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cheers,
+Andre'
 
