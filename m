@@ -1,81 +1,82 @@
-Return-Path: <linux-samsung-soc+bounces-9044-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9046-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51D3AAEB8F2
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 15:29:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61D1AAEB8F8
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 15:30:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6714C172C5D
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 13:29:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 349A31C4144F
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 27 Jun 2025 13:30:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E4892D9EF7;
-	Fri, 27 Jun 2025 13:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64A292DCC10;
+	Fri, 27 Jun 2025 13:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dD/jjKPz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o63VOEKY"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B0C2DA761
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 13:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4672D9EEC
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 13:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751030976; cv=none; b=gsf7vL7f095lcK90uFa0K4qy4oWMTCpe3f6gZtunjyYY5m7EzDsm1WqJH45DCeMCeF6fc5OsE44knx4nBF+Vn3LASc58A8M8cMxU4cAcn8A5PLOT04LO2q4bSzEKN6SHp5O7LIe2PmpcWJVAodX9xlQjtSJym0JGuw5dCWZ37Bk=
+	t=1751030978; cv=none; b=U06bfp6XCMRNlGrhgryoHNpXbhdTX0TDYJq1qiUyIt+N9a1rCprkxW+j9CsjU1uYRh4Y6qhe51QNnj5cgA4LpnTnqRFHiD8fi0QSQ8hyWpQwOzX15AT/0bdcxUX2tsOlTQ3IvtIAqUPjiIQ5c2/fO95bBAFkMUXMiaVhmbMS51s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751030976; c=relaxed/simple;
-	bh=I6faurzbIoxv3qYMgbdH4NSLMkzOIqpRf6fwnaEn4tU=;
+	s=arc-20240116; t=1751030978; c=relaxed/simple;
+	bh=3Km3fcNcSPZ2Pb31AkgSOmK8Yw3sAe9TSLDvBZGtkMI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hgQ9WCfBOGlvj0j7weOCZ1BgQavKhyt8UIaVwMMQzuw2clNauVlrzH7p451GYNedPefY0uumqq/LrNVngkwam5RRMchxAqHjPBHkMJJuakvoqrped7nuFWlM9FJzd1+SFRsco57VxrjyqM2W1IJWx+AJYkuX1vsCqo24swQt+Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dD/jjKPz; arc=none smtp.client-ip=209.85.208.44
+	 In-Reply-To:To:Cc; b=j0sjEl5czK7oE5ielKtawLDq/ER7J/ViBqVAjLe4tq4YOep3qzE5vD80GVHeyGkGHuNfR/JgSP5DCyjRJRRwhvRuIIPTYWWeIRn8OwGxFCN4Y8AG/42uWLVXmIhzHXzHaBRrcBZ4jdnTlPi+4qrT8LNN/4eUUd6vztL9IKzYbfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o63VOEKY; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-60c5b8ee2d9so4639929a12.2
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 06:29:33 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so3507614a12.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 27 Jun 2025 06:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751030972; x=1751635772; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1751030973; x=1751635773; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=totF/N0o3eF/DAQAGujOwbAUfvbVdfGY/Qpe6oziQJ0=;
-        b=dD/jjKPzNV4V/F9SglPG59Q8nNBKFpHusM304vQFUftlJT8zhQFmGJBjHYYRNBrxkN
-         b3nw+4du4Ph2AB1gRC2QXffwdEtqob6e7iaQeDu3yNJ5GQWmLgappSgU0nEACy62vgLr
-         r6vUR04IeVbgBqddAL6o1qDFl3sIMAOipLd4s8XhdarsUBDnmv182L8lCdC9nuwOs03y
-         yX2uvRBPy8v9wLgeEpJvSe4hWOMkCw00ni5UA01GCDu0pfJNGGMg5u/3GhKTmomG9HV9
-         arPNZNHlR04+VhUs/6RC2ubOau+UWo49rUwBHIhzXX1o5Uo/xmJLvDzF7KL+/5HYDe8K
-         ZUHw==
+        bh=97dsq8shbijTwl1Kc6C9X7zbEyd2fSdds/39rteFriY=;
+        b=o63VOEKYRWpqWTmMxuipc6iLDL7rnLKHXZgNtz7pjFZWNbs3r35I2aZlwspkTgzvM5
+         s/7jlLJ1k5PMUHXkdGe633aoJnEP8MF/XGo4pRS0lDcZFqwDpLVSslUfGvMviP0368YJ
+         /02aVgQZlPOOr6661zIu8DhMImKic5JtPuMRqi0az8l8ulZuhFf8Y9TZ+2TDkgYCPOB7
+         hMyNR+Ajq93ofHNYoD8gBp+KTe26j3hau6hUh3RrK7spnq9py29jIQ6zJsyJJs1tsKgq
+         Olb7kcqPDWJRQliMqH7BG+aVdbfdr8bCC6Y1DI4V67bX3897fVenEqca6LThPhE3fffD
+         x4Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751030972; x=1751635772;
+        d=1e100.net; s=20230601; t=1751030973; x=1751635773;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=totF/N0o3eF/DAQAGujOwbAUfvbVdfGY/Qpe6oziQJ0=;
-        b=b3e8ECCzwE2+mgSNsP71csdlbMobmFAMRE0qsGzul7au7LfXsEr0zdIgCjRU1Bz+4L
-         I0d5eDE/5Wa29VST0k22llkm2GNE8F+kJ08forrJsLo4kEf71gDTwZo+7ZIKLpQ8npHT
-         8Jx4yfOOPAnIjB41gsuylL5SnYwMX2F0bzh/Ve19AqX+7BKcNX7rUIIAaeFdxUI8QWdk
-         R6UNbYJn8vx7GP6f6i6Ew5LpLUG3cNaII4fVAerwiKybcAtbtpkR3TfJMXr22wg3YFl6
-         kkLnD9ZjnqWRkQUa5fSBmTcgoP5Gbtcdnds8waKznnGJnzspF8ACHGE170M04PhdWKCY
-         /MKg==
-X-Forwarded-Encrypted: i=1; AJvYcCVDUNU28yzpkc5RkRV0JXii/6XjkBbYVRxUjR8+fu3fFTtn7hnA5k7hZ0J9m9k/geYdqIn6uSbG0zZAhybT/moIcA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcjmPN4mvsNyq6u0muLwUq6szTjZKDaL/O85aVROsBoaaYSx2n
-	60DAdjH3C72Yw5nGE9Ml7QmTpHzh2R4rdXsX5bAxaUkpI4Aay5Ro0TiE4HXsuM0Fon0=
-X-Gm-Gg: ASbGnctboBWGu0r8ZePc7Iukcc/FRjxvK61DR1IzmeNqEkEZd9bBxeDAK+b7Cv/bKTl
-	14EuaiMgiONWzlsAHpXBeN7SAOdbHujGhJKITAEt/CnemJtnTmEhhNFjmtAzAnc4eJ7gWzBy6d5
-	edu4/7RlhCmRMdaQnb6MLTw21JAOHpnrOsTZQfDWhXFQ8sC7XmtJjdKAi2yYDAt5heR7C2Ym7J0
-	HL/AGM5PH89YLqPgrwm++yIN5HpyZPmZyMZtNS0KrxkhXvew0EWQkMsY2WLiVuDMWjGTjrWEDHv
-	uRwmK9+KhuCgGlIkk7KL96eGYod2AddHlcWQ8rnhyhRRPIuX7Ezslkn13d71iH2hNBRn0QejTMk
-	UdgX2PfWc6wpJp/LBEZchyeXphfm+gh3LMbycQE2syCXFdA==
-X-Google-Smtp-Source: AGHT+IFqqEN1CabLkuRpa4qT0ns50eEJVky5F6nDsnGYV38k/xhyp5qqKgZNhwr44qSRdsoEwoz0Ew==
-X-Received: by 2002:a05:6402:3124:b0:60c:68bc:7fca with SMTP id 4fb4d7f45d1cf-60c88e72e9bmr2087602a12.27.1751030972308;
-        Fri, 27 Jun 2025 06:29:32 -0700 (PDT)
+        bh=97dsq8shbijTwl1Kc6C9X7zbEyd2fSdds/39rteFriY=;
+        b=OKzzXHLrJsUPnTL13jOxjcw5qham9HkjGWTM5IVq/o11lEi977RUI95D23VDZ8NplR
+         fCdR4d9yIawr0bYdi1ta0Dd5AYLnp65F02N2blhRzooTFlskBb1ApYzeqTMjVbyntd5B
+         gUJugmxtvC8nYMVctWlxIrI2jcSWf9pfKSnpeb4w1IDwwRuTILg3WwfFFEn0GLG5gr4j
+         YpfymlzAzSMCVKt24OOyX0/VtUBexjADb64peYRYzAlQhSmxf8ad+90KsrfqJSGWporX
+         p0cB3gnDW1px1E3Ma/jD/BQjp9XkBNz6oOYHaI61oTn2kPD3s0QaNB6k4pfgAWzbH3Xl
+         OxDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXErJgyLSCjXRF3Kig/+69TUOFTC39UtMBGKunFMInBqUoM9fHnX2FMZ0VpIAUNqLwpxPMDMmY518QmdOJ/t6nPgA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YynDVs5Hn2Y1v+IVISJI2pCFJK42EqY3tpDEwXYPkEz02h1+onQ
+	ItV+akG47nige2hZTzTfGzcrylhy0kC33TV4YmQCkWy6JLDw7H0YitVzmkECEtfMRb4=
+X-Gm-Gg: ASbGncuraN3YbxrDR5ia3d16e/zxXds0bTROv7Op3Y2LtLVDCCQxDLTYdQyNk7AZcnB
+	lb9QFD5iFDb9N0fiLmRPGGd7SMWVIacPlCHMjBUna4iYvMX+TJ//gdac1lSHSasip/Z2v5qL/61
+	KIWdMU9cMxMrV+JNYHzqQowa0MZUTF7WqwHiYS7D1UdQReL44vOo0NkgFUmV7ltX2+sWRKBEc+s
+	Y49N28xXXyTmsD3E3HHpNantbhwFa5Na+CdvodAqxU1bRtlPrMkHdVZtb6ZxLpdqxBFZSu8ILmr
+	wQth0bDB8mDd4hzZDCiRzkb/qLfXJ1sx/ZEOM28OgnrCLPPkWPygsxFvCQ4AAxm+7+C7qgSu1yl
+	JK2/TvZ54MU2LsolxOzGRMHrItL1KNUQh1FsWLDxeRxV8gQ==
+X-Google-Smtp-Source: AGHT+IGBgERbQ8JzXtKIK0Cr/Y2P+P8Vyd6f4ZzXNGWb2nY1h3VKwcv0VnVGjAGel1FVXEgEuaqQWw==
+X-Received: by 2002:a05:6402:40cd:b0:607:ec35:eb8e with SMTP id 4fb4d7f45d1cf-60c88e72eaamr2655542a12.20.1751030973492;
+        Fri, 27 Jun 2025 06:29:33 -0700 (PDT)
 Received: from puffmais.c.googlers.com (140.20.91.34.bc.googleusercontent.com. [34.91.20.140])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c82908297sm1462702a12.26.2025.06.27.06.29.31
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c82908297sm1462702a12.26.2025.06.27.06.29.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 06:29:31 -0700 (PDT)
+        Fri, 27 Jun 2025 06:29:32 -0700 (PDT)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Fri, 27 Jun 2025 14:29:30 +0100
-Subject: [PATCH 1/3] arm64: defconfig: enable Samsung PMIC over ACPM
+Date: Fri, 27 Jun 2025 14:29:31 +0100
+Subject: [PATCH 2/3] arm64: dts: exynos: gs101-pixel-common: add main PMIC
+ node
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250627-gs101-reboot3-v1-1-c3ae49657b1f@linaro.org>
+Message-Id: <20250627-gs101-reboot3-v1-2-c3ae49657b1f@linaro.org>
 References: <20250627-gs101-reboot3-v1-0-c3ae49657b1f@linaro.org>
 In-Reply-To: <20250627-gs101-reboot3-v1-0-c3ae49657b1f@linaro.org>
 To: Catalin Marinas <catalin.marinas@arm.com>, 
@@ -98,29 +99,65 @@ Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-Enable the Samsung s2mpg1x driver as this is used by the gs101-oriole
-and gs101-raven (Google Pixel 6 and Pixel 6 Pro) boards.
+On Pixel 6 (and Pro), a Samsung S2MPG10 is used as main PMIC, which
+contains the following functional blocks:
+    * common / speedy interface
+    * regulators
+    * 3 clock outputs
+    * RTC
+    * power meters
+    * GPIO interfaces
 
-It communicates over ACPM instead of I2C, hence the additional
-defconfig item.
+This change enables the PMIC itself and the RTC. We're still working on
+the remaining parts or waiting for bindings to be merged, hence only a
+small subset of the functional is being enabled.
+
+The regulators fall into the same category (still being finalised), but
+since the binding requires a 'regulators' node, an empty node is being
+added to avoid validation errors at this stage.
 
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/exynos/google/gs101-pixel-common.dtsi    | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a86cab889eac60256b28619b2cd2703765b081ee..557b592821d5d1fe8a5fab0619967e4f98894bc1 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -775,6 +775,7 @@ CONFIG_MFD_MT6397=y
- CONFIG_MFD_SPMI_PMIC=y
- CONFIG_MFD_RK8XX_I2C=y
- CONFIG_MFD_RK8XX_SPI=y
-+CONFIG_MFD_SEC_ACPM=m
- CONFIG_MFD_SEC_I2C=y
- CONFIG_MFD_SL28CPLD=y
- CONFIG_RZ_MTU3=y
+diff --git a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
+index cd8e1b8a10b111190b984e104f749d04514d0449..c1b51f4cfb8c174852b44690f84ed1aa0b4057c2 100644
+--- a/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
++++ b/arch/arm64/boot/dts/exynos/google/gs101-pixel-common.dtsi
+@@ -100,6 +100,19 @@ cont_splash_mem: splash@fac00000 {
+ 	};
+ };
+ 
++&acpm_ipc {
++	pmic {
++		compatible = "samsung,s2mpg10-pmic";
++		interrupts-extended = <&gpa0 6 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&pmic_int>;
++		wakeup-source;
++
++		regulators {
++		};
++	};
++};
++
+ &ext_24_5m {
+ 	clock-frequency = <24576000>;
+ };
+@@ -290,6 +303,12 @@ if_pmic_int: if-pmic-int-pins {
+ };
+ 
+ &pinctrl_gpio_alive {
++	pmic_int: pmic-int-pins {
++		samsung,pins = "gpa0-6";
++		samsung,pin-function = <GS101_PIN_FUNC_EINT>;
++		samsung,pin-pud = <GS101_PIN_PULL_NONE>;
++	};
++
+ 	key_power: key-power-pins {
+ 		samsung,pins = "gpa10-1";
+ 		samsung,pin-function = <GS101_PIN_FUNC_EINT>;
 
 -- 
 2.50.0.727.gbf7dc18ff4-goog
