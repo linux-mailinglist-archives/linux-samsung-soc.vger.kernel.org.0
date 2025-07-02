@@ -1,62 +1,62 @@
-Return-Path: <linux-samsung-soc+bounces-9175-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9177-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48EF3AFAC2D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Jul 2025 08:53:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B47CDAFAC35
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Jul 2025 08:53:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C03E7AD3C8
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Jul 2025 06:51:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DD763A5B1C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  7 Jul 2025 06:53:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CB627BF6F;
-	Mon,  7 Jul 2025 06:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B029027F011;
+	Mon,  7 Jul 2025 06:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="a1YBiqDo"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="PJkngwkn"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D7027A46B
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Jul 2025 06:52:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02486285CBD
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Jul 2025 06:52:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751871168; cv=none; b=jSoVswHV3d/ixaQAh6ktanJhq15p+WrYyr3+EZ+2HRYjx3nDTEoZhDkS1uuzoXYpMFm36oAwm/yEwrOmH3v2nKL2gN+J+dFr7QrelzzUR9/SsVJd4v0xqwKTKS2UqIHh+Z6kaiH7g5somSTouXtmGvgFymVOJT0W9LFFPY0U3zM=
+	t=1751871173; cv=none; b=FKeP8LYdTKhAsIz2BflaDFchHCXfc11plwVaWS4dbAw8yaWlNIyxW3mQoivgYfdtZ4d+T4kOCtpxppv4a5GstCRPwUJFAOPRguKHqg19ivHol1j8eF//5I7Et7CLtZWM4TLlW/vQnEOedO8qwFR3RAxTFOFpMQjPnv//V3i7RM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751871168; c=relaxed/simple;
-	bh=hDhD2ZHTEXjSGhALf8bUwgYDspDhjlceSvYZvUo0BS0=;
+	s=arc-20240116; t=1751871173; c=relaxed/simple;
+	bh=R0zErDQAlhKqB1ch3yaRWGC7BSKkNxzBuYYWrRg7fR0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=HR4c8eVPdDPT/4EBr3gOiyOKFEpovMSY8uN0ZhqbawwK9Ro9OXPDFygC8veO/+7TFh9UHFplzeXh2M398FCRH+XLqbkSu027OJ5K7LMsPwsRb6KNVp/N8qcMF9p2mf+bj18Cj73N2oTCF8FdldYS8HFIQCwgxoe6D4t/psaOd8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=a1YBiqDo; arc=none smtp.client-ip=203.254.224.24
+	 Content-Type:References; b=oO2zGkQmk3/mV51w4kRNvXfH5QRD4SzJrqJJFqb4KEntMb5wxBv+kUjBaT3s63iCGMvZalYdU7xrrYTcBxn7jwYpQGZJGoxy/ua7uMmeS0egSdp42JW8u/qIw20GaboKHWL0UHD4L+2bEeSXSULU67RIbf6/2jB1QIp+X9sDHq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=PJkngwkn; arc=none smtp.client-ip=203.254.224.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250707065244epoutp01642f2b5e3caaa5ef10b6d4037e031c74~P5Yq-Rtn91632816328epoutp01L
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Jul 2025 06:52:44 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250707065244epoutp01642f2b5e3caaa5ef10b6d4037e031c74~P5Yq-Rtn91632816328epoutp01L
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250707065250epoutp04d517178ef4d237c8122a58b1a193bd72~P5Ywv-O152112021120epoutp04T
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  7 Jul 2025 06:52:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250707065250epoutp04d517178ef4d237c8122a58b1a193bd72~P5Ywv-O152112021120epoutp04T
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1751871164;
-	bh=JbWlxwedOoTXP5zKVUcK44eCeNGHeMuK1L5j3H8XD0E=;
+	s=mail20170921; t=1751871170;
+	bh=YYdrXQSMiKMp947pWITrggtPzRMvT6aT+Gp3RFiLw6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a1YBiqDoj+ZSkcFSwwoQOWKmQ2Sbx6yzOr/aLknjjo1PW4N32bVJxbWtzxFl+vDrB
-	 lTRB0Cchqj+hv4RlX3mPi4ClZTMrm32NzidufpLgh0Y0Dkdwxji2kZVWKp7bU7O+AX
-	 lM3B72Jd0LtkbxS9RblgyECnals9J6uazWrKp4hQ=
+	b=PJkngwknFIXoYEMF98Rebai63RBEoEGdm7QltTOfnCFBZ08vmGLTZtZv4GzGjmHVj
+	 iALYGwbSfFLnMH3Fud+m+Lx7imRkmImwbw4c2jrsfphFO3AROWkZUgbqAYtd3UzRzP
+	 pBrHZ/R1NVJUPHOjtp7wf7su6Ui6G2Pc7YTnSWu8=
 Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250707065243epcas5p48904fa6ee07313b361e98517b84a2687~P5YqhllHw3004430044epcas5p4E;
-	Mon,  7 Jul 2025 06:52:43 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.175]) by
-	epsnrtp01.localdomain (Postfix) with ESMTP id 4bbFL22tZFz6B9mD; Mon,  7 Jul
-	2025 06:52:42 +0000 (GMT)
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250707065249epcas5p25c1941a17f3d64590a2ca263f5a7adb5~P5YwKt85c2809428094epcas5p2C;
+	Mon,  7 Jul 2025 06:52:49 +0000 (GMT)
+Received: from epcas5p4.samsung.com (unknown [182.195.38.177]) by
+	epsnrtp01.localdomain (Postfix) with ESMTP id 4bbFL56QLhz6B9m4; Mon,  7 Jul
+	2025 06:52:45 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250702051532epcas5p381e97531e4df64f556e8aba86c5532d9~OV1YM_7H01293312933epcas5p37;
-	Wed,  2 Jul 2025 05:15:32 +0000 (GMT)
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20250702051533epcas5p28698c81b7ec141938f8808393c498cb7~OV1Z1a_zp0155001550epcas5p2y;
+	Wed,  2 Jul 2025 05:15:33 +0000 (GMT)
 Received: from bose.samsungds.net (unknown [107.108.83.9]) by
 	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250702051530epsmtip2c3c09bb7f89294a84dee07ebb1dbfabe~OV1WoMXzv0283602836epsmtip21;
-	Wed,  2 Jul 2025 05:15:30 +0000 (GMT)
+	20250702051532epsmtip285aeb5d817009e53559900ec540e5e52~OV1YVtQig0268202682epsmtip2o;
+	Wed,  2 Jul 2025 05:15:32 +0000 (GMT)
 From: Devang Tailor <dev.tailor@samsung.com>
 To: alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
 	conor+dt@kernel.org, alim.akhtar@samsung.com, linux-rtc@vger.kernel.org,
@@ -64,9 +64,9 @@ To: alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
 	inux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
 	faraz.ata@samsung.com
 Cc: Devang Tailor <dev.tailor@samsung.com>
-Subject: [PATCH 2/3] rtc: s3c: support for exynosautov9 on-chip RTC
-Date: Wed,  2 Jul 2025 10:54:25 +0530
-Message-Id: <20250702052426.2404256-3-dev.tailor@samsung.com>
+Subject: [PATCH 3/3] arm64: dts: exynosautov9: add RTC DT node
+Date: Wed,  2 Jul 2025 10:54:26 +0530
+Message-Id: <20250702052426.2404256-4-dev.tailor@samsung.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250702052426.2404256-1-dev.tailor@samsung.com>
 Precedence: bulk
@@ -76,95 +76,61 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250702051532epcas5p381e97531e4df64f556e8aba86c5532d9
+X-CMS-MailID: 20250702051533epcas5p28698c81b7ec141938f8808393c498cb7
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250702051532epcas5p381e97531e4df64f556e8aba86c5532d9
+X-CMS-RootMailID: 20250702051533epcas5p28698c81b7ec141938f8808393c498cb7
 References: <20250702052426.2404256-1-dev.tailor@samsung.com>
-	<CGME20250702051532epcas5p381e97531e4df64f556e8aba86c5532d9@epcas5p3.samsung.com>
+	<CGME20250702051533epcas5p28698c81b7ec141938f8808393c498cb7@epcas5p2.samsung.com>
 
-The on-chip RTC of this SoC is almost similar to the previous
-versions of SoC. Hence re-use the existing driver with platform specific
-change to enable RTC.
-
-This has been tested with 'hwclock' & 'date' utilities
+Add DT node for on-chip RTC for ExynosAutov9
 
 Signed-off-by: Devang Tailor <dev.tailor@samsung.com>
 ---
- drivers/rtc/rtc-s3c.c | 26 ++++++++++++++++++++++++++
- drivers/rtc/rtc-s3c.h |  4 ++++
- 2 files changed, 30 insertions(+)
+ arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts |  4 ++++
+ arch/arm64/boot/dts/exynos/exynosautov9.dtsi     | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/rtc/rtc-s3c.c b/drivers/rtc/rtc-s3c.c
-index 5dd575865adf..00686aa805f2 100644
---- a/drivers/rtc/rtc-s3c.c
-+++ b/drivers/rtc/rtc-s3c.c
-@@ -384,6 +384,23 @@ static void s3c6410_rtc_disable(struct s3c_rtc *info)
- 	writew(con, info->base + S3C2410_RTCCON);
- }
- 
-+static void exynosautov9_rtc_disable(struct s3c_rtc *info)
-+{
-+	unsigned int con;
-+
-+	con = readb(info->base + S3C2410_RTCCON);
-+	con &= ~S3C2410_RTCCON_RTCEN;
-+	writeb(con, info->base + S3C2410_RTCCON);
-+
-+	con = readb(info->base + EXYNOSAUTOV9_TICCON0);
-+	con &= ~EXYNOSAUTOV9_TICCON_TICEN;
-+	writeb(con, info->base + EXYNOSAUTOV9_TICCON0);
-+
-+	con = readb(info->base + EXYNOSAUTOV9_TICCON1);
-+	con &= ~EXYNOSAUTOV9_TICCON_TICEN;
-+	writeb(con, info->base + EXYNOSAUTOV9_TICCON1);
-+}
-+
- static void s3c_rtc_remove(struct platform_device *pdev)
- {
- 	struct s3c_rtc *info = platform_get_drvdata(pdev);
-@@ -574,6 +591,12 @@ static struct s3c_rtc_data const s3c6410_rtc_data = {
- 	.disable		= s3c6410_rtc_disable,
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
+index de2c1de51a76..5f5167571f7a 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
++++ b/arch/arm64/boot/dts/exynos/exynosautov9-sadk.dts
+@@ -106,6 +106,10 @@ &pwm {
+ 	status = "okay";
  };
  
-+static struct s3c_rtc_data const exynosautov9_rtc_data = {
-+	.irq_handler		= s3c6410_rtc_irq,
-+	.enable			= s3c24xx_rtc_enable,
-+	.disable		= exynosautov9_rtc_disable,
++&rtc {
++	status = "okay";
 +};
 +
- static const __maybe_unused struct of_device_id s3c_rtc_dt_match[] = {
- 	{
- 		.compatible = "samsung,s3c2410-rtc",
-@@ -590,6 +613,9 @@ static const __maybe_unused struct of_device_id s3c_rtc_dt_match[] = {
- 	}, {
- 		.compatible = "samsung,exynos3250-rtc",
- 		.data = &s3c6410_rtc_data,
-+	}, {
-+		.compatible = "samsung,exynosautov9-rtc",
-+		.data = &exynosautov9_rtc_data,
- 	},
- 	{ /* sentinel */ },
- };
-diff --git a/drivers/rtc/rtc-s3c.h b/drivers/rtc/rtc-s3c.h
-index 3552914aa611..ed57ebe06b41 100644
---- a/drivers/rtc/rtc-s3c.h
-+++ b/drivers/rtc/rtc-s3c.h
-@@ -14,6 +14,10 @@
- #define S3C2410_INTP_ALM	(1 << 1)
- #define S3C2410_INTP_TIC	(1 << 0)
- 
-+#define	EXYNOSAUTOV9_TICCON0	S3C2410_RTCREG(0x38)
-+#define	EXYNOSAUTOV9_TICCON1	S3C2410_RTCREG(0x3C)
-+#define	EXYNOSAUTOV9_TICCON_TICEN	(1 << 0)
+ &serial_0 {
+ 	pinctrl-0 = <&uart0_bus_dual>;
+ 	status = "okay";
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+index 66628cb32776..e655212f6a6b 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynosautov9.dtsi
+@@ -1633,6 +1633,16 @@ pwm: pwm@103f0000 {
+ 			clock-names = "timers";
+ 			status = "disabled";
+ 		};
 +
- #define S3C2410_RTCCON		S3C2410_RTCREG(0x40)
- #define S3C2410_RTCCON_RTCEN	(1 << 0)
- #define S3C2410_RTCCON_CNTSEL	(1 << 2)
++		rtc: rtc@10540000 {
++			compatible = "samsung,exynosautov9-rtc";
++			reg = <0x10540000 0x100>;
++			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>,
++				<GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&xtcxo>;
++			clock-names = "rtc";
++			status = "disabled";
++		};
+ 	};
+ };
+ 
 -- 
 2.34.1
 
