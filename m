@@ -1,62 +1,62 @@
-Return-Path: <linux-samsung-soc+bounces-9194-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9196-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C96EEAFC889
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Jul 2025 12:40:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A35CAFC891
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Jul 2025 12:41:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B46B177DA5
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Jul 2025 10:41:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6C221BC2699
+	for <lists+linux-samsung-soc@lfdr.de>; Tue,  8 Jul 2025 10:41:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56C552D8768;
-	Tue,  8 Jul 2025 10:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C822D9485;
+	Tue,  8 Jul 2025 10:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="AFZE5An8"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="EFHzxLOu"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE282D8399
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Jul 2025 10:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BC92D8391
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Jul 2025 10:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751971253; cv=none; b=UfXwM71Al9l7YjD8mWv3Y1uxRW92SBacEhVWEkcQ8aCy8GEuEpIWFQ0hUJsi2+RsgIetZMrRFgRRz3ar2y4ZmFSsg4qjWDX6zMfmq3MTHGX9vYnTk5xU5bWD2twEkDoEpyApe511d2He/j7GYEL9kU0B97RfwupmJZPA680emAc=
+	t=1751971258; cv=none; b=qp75ridYt0IJQxVOi4jWlywP3+BhZAaPUWTx/S2qPL/3vMZFVGjbK2sEB14dVEumE+uYX7EJek4Vx/KFqPni/PZbcGCxG1nMnWBmfAbAkB9gNXx3WlZbMxzSfPZDVAl82jn0/1mDhBmI0F2YG0280pcbV7pBF2sgn/OmQn4eo3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751971253; c=relaxed/simple;
-	bh=MDIEaPr8HDVKtLmDaM9Mbp62hb9gBqko7nOef0uAuIU=;
+	s=arc-20240116; t=1751971258; c=relaxed/simple;
+	bh=/RQNQ/dtfaKGETOGG3j7ev7DvdiaASUa4WOAtBdY7i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=OY1GBpO0OSlZ88cAjUSIfH9RJkoa90FH0S3r4zjhu7z+sRh65Zol/c4X7y4pvtIpd1DBDI9H3cSll4XOZA1QLr7+a04VebdZNRQWwqa5GrinpJEntnk5XSuaov0UZ9PJ6tsJTLx1jYdFQdmXYjhFBsIrds/6nog+L/IQdeDJKQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=AFZE5An8; arc=none smtp.client-ip=203.254.224.25
+	 Content-Type:References; b=KO4UIE2btZ2SP9QmxM4gXTTi6nAz0eXyfoFipKT0uCvMlzDhxTnpVzDrkrHCf/3qMxILKz3iNrNaq92cYkOQfnoK38NWlcywzS3L8PoSW/RYPcIujGPoI0/EuDjZ7Olue2HR6zFIdhmMy90KDiSYCopjqPKiTx28YSFMTGMvOvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=EFHzxLOu; arc=none smtp.client-ip=203.254.224.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250708104049epoutp02a894a7f7e4ed6f1566a1f203c64af18a~QQJGxV6ba0104501045epoutp02X
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Jul 2025 10:40:49 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250708104049epoutp02a894a7f7e4ed6f1566a1f203c64af18a~QQJGxV6ba0104501045epoutp02X
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250708104054epoutp029c8ef0ad230c9c98c820a41f97f08b4d~QQJLp1OdR3129131291epoutp02f
+	for <linux-samsung-soc@vger.kernel.org>; Tue,  8 Jul 2025 10:40:54 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250708104054epoutp029c8ef0ad230c9c98c820a41f97f08b4d~QQJLp1OdR3129131291epoutp02f
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1751971249;
-	bh=jH87uithjfzP9Ykpoxmhz9d98lNSkdIORLDu4bcOrWg=;
+	s=mail20170921; t=1751971254;
+	bh=NfJkRbmOTcr65lxFjeLJlMql9NikTl7suSZwH4Lbtaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFZE5An8I4UPKDhyNrWZ1uIaoLRQWo68NYtgqYhHHThIXR2SZeyqwIsyrT8stp3x4
-	 qMFLlUMv/KA1I8CeO2caI76ypjuswT4VrNDXGK2nZzwmia71I4VHIh7hefVBeGk7cw
-	 FK2q2XSKZWntlFs8qjTO0zkbmTi3qWAlLI5BX7IQ=
+	b=EFHzxLOuBTdSuIov5DF5cUvKsT78IEQnI65z5yArW0VpOHTa8/RJcDiNpIKNq7HzG
+	 QCDb1F0r/gCssG8Ql8Q4TIF0y8IucFXPn8h480iMNvhAGbH4VOiDpNvfSbVBkQ7BR5
+	 uAKEbArChXFb6HcIbTK0Zm9rOuemFBOCkah+GZ7I=
 Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250708104048epcas5p45aedc6a241e37ee683d7b1880dc8903e~QQJGIyyTk1622616226epcas5p4l;
-	Tue,  8 Jul 2025 10:40:48 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.175]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4bbyLl00Mhz2SSKZ; Tue,  8 Jul
-	2025 10:40:47 +0000 (GMT)
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250708104053epcas5p1dc5ef8f325ace2a1f6519b582ca1572f~QQJKvz5310327403274epcas5p1w;
+	Tue,  8 Jul 2025 10:40:53 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.174]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4bbyLq4gfxz2SSKn; Tue,  8 Jul
+	2025 10:40:51 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
 	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250708103231epcas5p1b9fe52dd6ea3cdd65a5df163ba05e139~QQB2zDMtv0987209872epcas5p11;
-	Tue,  8 Jul 2025 10:32:31 +0000 (GMT)
+	20250708103234epcas5p1a92b0b57315f6e81c906fedcc232c279~QQB5qA9nc0987209872epcas5p1H;
+	Tue,  8 Jul 2025 10:32:34 +0000 (GMT)
 Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
 	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250708103228epsmtip11c2127deecf9c06a4da8aa251fc8feba~QQB0CXqJN2120421204epsmtip1W;
-	Tue,  8 Jul 2025 10:32:28 +0000 (GMT)
+	20250708103231epsmtip1869c3d7d71f4a9e263c08b8ccd9b4dd6~QQB3BuOct2131121311epsmtip1l;
+	Tue,  8 Jul 2025 10:32:31 +0000 (GMT)
 From: Vivek Yadav <vivek.2311@samsung.com>
 To: pankaj.dubey@samsung.com, ravi.patel@samsung.com, shradha.t@samsung.com,
 	mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org, krzk@kernel.org,
@@ -67,10 +67,9 @@ Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-perf-users@vger.kernel.org, linux-samsung-soc@vger.kernel.org, Vivek
 	Yadav <vivek.2311@samsung.com>
-Subject: [PATCH 1/6] dt-bindings: clock: Add PPMU clock definitions for FSD
- platform
-Date: Tue,  8 Jul 2025 16:02:03 +0530
-Message-ID: <20250708103208.79444-2-vivek.2311@samsung.com>
+Subject: [PATCH 2/6] clk: samsung: fsd: Use clock IDs for PPMU MFC block
+Date: Tue,  8 Jul 2025 16:02:04 +0530
+Message-ID: <20250708103208.79444-3-vivek.2311@samsung.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250708103208.79444-1-vivek.2311@samsung.com>
 Precedence: bulk
@@ -80,41 +79,56 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250708103231epcas5p1b9fe52dd6ea3cdd65a5df163ba05e139
+X-CMS-MailID: 20250708103234epcas5p1a92b0b57315f6e81c906fedcc232c279
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-541,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250708103231epcas5p1b9fe52dd6ea3cdd65a5df163ba05e139
+X-CMS-RootMailID: 20250708103234epcas5p1a92b0b57315f6e81c906fedcc232c279
 References: <20250708103208.79444-1-vivek.2311@samsung.com>
-	<CGME20250708103231epcas5p1b9fe52dd6ea3cdd65a5df163ba05e139@epcas5p1.samsung.com>
+	<CGME20250708103234epcas5p1a92b0b57315f6e81c906fedcc232c279@epcas5p1.samsung.com>
 
-Add clock IDs for PPMU (Platform Performance Monitoring Unit)
-associated with the MFC block.
+Use PPMU clock ID macros for PPMU MFC gate clocks.
 
 Signed-off-by: Ravi Patel <ravi.patel@samsung.com>
 Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
 ---
- include/dt-bindings/clock/fsd-clk.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/samsung/clk-fsd.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/dt-bindings/clock/fsd-clk.h b/include/dt-bindings/clock/fsd-clk.h
-index 3f7b64d93558..552e8bad98e0 100644
---- a/include/dt-bindings/clock/fsd-clk.h
-+++ b/include/dt-bindings/clock/fsd-clk.h
-@@ -125,6 +125,10 @@
+diff --git a/drivers/clk/samsung/clk-fsd.c b/drivers/clk/samsung/clk-fsd.c
+index 9a6006c298c2..f80d35feb3f7 100644
+--- a/drivers/clk/samsung/clk-fsd.c
++++ b/drivers/clk/samsung/clk-fsd.c
+@@ -88,7 +88,7 @@
+ #define CLKS_NR_FSYS0		(FSYS0_DOUT_FSYS0_PERIBUS_GRP + 1)
+ #define CLKS_NR_FSYS1		(PCIE_LINK1_IPCLKPORT_SLV_ACLK + 1)
+ #define CLKS_NR_IMEM		(IMEM_TMU_GT_IPCLKPORT_I_CLK_TS + 1)
+-#define CLKS_NR_MFC		(MFC_MFC_IPCLKPORT_ACLK + 1)
++#define CLKS_NR_MFC		(MFC_PPMU_MFCD1_IPCLKPORT_PCLK + 1)
+ #define CLKS_NR_CAM_CSI		(CAM_CSI2_3_IPCLKPORT_I_ACLK + 1)
  
- /* MFC */
- #define MFC_MFC_IPCLKPORT_ACLK			1
-+#define MFC_PPMU_MFCD0_IPCLKPORT_ACLK		2
-+#define MFC_PPMU_MFCD0_IPCLKPORT_PCLK		3
-+#define MFC_PPMU_MFCD1_IPCLKPORT_ACLK		4
-+#define MFC_PPMU_MFCD1_IPCLKPORT_PCLK		5
- 
- /* CAM_CSI */
- #define CAM_CSI0_0_IPCLKPORT_I_ACLK		1
+ static const unsigned long cmu_clk_regs[] __initconst = {
+@@ -1519,13 +1519,13 @@ static const struct samsung_gate_clock mfc_gate_clks[] __initconst = {
+ 	     GAT_MFC_NS_BRDG_MFC_IPCLKPORT_CLK__PMFC__CLK_MFC_D, 21, CLK_IGNORE_UNUSED, 0),
+ 	GATE(0, "mfc_ns_brdg_mfc_ipclkport_clk__pmfc__clk_mfc_p", "mout_mfc_busp",
+ 	     GAT_MFC_NS_BRDG_MFC_IPCLKPORT_CLK__PMFC__CLK_MFC_P, 21, CLK_IGNORE_UNUSED, 0),
+-	GATE(0, "mfc_ppmu_mfcd0_ipclkport_aclk", "mout_mfc_busd",
++	GATE(MFC_PPMU_MFCD0_IPCLKPORT_ACLK, "mfc_ppmu_mfcd0_ipclkport_aclk", "mout_mfc_busd",
+ 	     GAT_MFC_PPMU_MFCD0_IPCLKPORT_ACLK, 21, CLK_IGNORE_UNUSED, 0),
+-	GATE(0, "mfc_ppmu_mfcd0_ipclkport_pclk", "mout_mfc_busp",
++	GATE(MFC_PPMU_MFCD0_IPCLKPORT_PCLK, "mfc_ppmu_mfcd0_ipclkport_pclk", "mout_mfc_busp",
+ 	     GAT_MFC_PPMU_MFCD0_IPCLKPORT_PCLK, 21, CLK_IGNORE_UNUSED, 0),
+-	GATE(0, "mfc_ppmu_mfcd1_ipclkport_aclk", "mout_mfc_busd",
++	GATE(MFC_PPMU_MFCD1_IPCLKPORT_ACLK, "mfc_ppmu_mfcd1_ipclkport_aclk", "mout_mfc_busd",
+ 	     GAT_MFC_PPMU_MFCD1_IPCLKPORT_ACLK, 21, CLK_IGNORE_UNUSED, 0),
+-	GATE(0, "mfc_ppmu_mfcd1_ipclkport_pclk", "mout_mfc_busp",
++	GATE(MFC_PPMU_MFCD1_IPCLKPORT_PCLK, "mfc_ppmu_mfcd1_ipclkport_pclk", "mout_mfc_busp",
+ 	     GAT_MFC_PPMU_MFCD1_IPCLKPORT_PCLK, 21, CLK_IGNORE_UNUSED, 0),
+ 	GATE(0, "mfc_sysreg_mfc_ipclkport_pclk", "mout_mfc_busp",
+ 	     GAT_MFC_SYSREG_MFC_IPCLKPORT_PCLK, 21, CLK_IGNORE_UNUSED, 0),
 -- 
 2.49.0
 
