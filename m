@@ -1,158 +1,154 @@
-Return-Path: <linux-samsung-soc+bounces-9223-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9225-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53DA5AFE518
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 12:07:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B617AFE7F1
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 13:38:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA9D35A1820
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 10:06:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1AD8D1BC54F0
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 11:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A62E28AAEB;
-	Wed,  9 Jul 2025 10:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 457042D29DF;
+	Wed,  9 Jul 2025 11:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k0QOb/7s"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="TC8XKsNM"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49237.qiye.163.com (mail-m49237.qiye.163.com [45.254.49.237])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98EA289811
-	for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Jul 2025 10:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FC0298981;
+	Wed,  9 Jul 2025 11:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.237
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752055485; cv=none; b=JDS2ZGWMoMFR3hWdQf7Eh58AlCo+vyKOlhbRH64o16LWF42LG+1gx9nU8wa/yRUhCrPxFheayJxUuNRmWoOKpmaSs0KPG021TuVMe2JXtTjLJdZCCh0jm/jod4twJo7s/LH55v22AZeTVwj63B4e1ML7iSNmaOT+iCYJN4H7Oh0=
+	t=1752061121; cv=none; b=HUwmmc0OWIbCEcQxSx21JqbmLYwqS37+Ch7LOJjMeWm3fkUNw/ACa63+mPnh9EMWZZdPQykYUN+30F2gFKhD0wsnDXi5YUMg11yQP8YYFbuiXjT6vpuDhF+h8PC1/B5wDuZKxLnNcO6NDBKsFDOXZsoKtYjIVZNZrlRcY23+yMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752055485; c=relaxed/simple;
-	bh=/8y/nNdfDj5bopu6125/NYN6hTKvH5RpqCgiIhx/xy8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JIMmlW82FoOeqYjpS7akgzuFuGssYWqFHpOax6+DSpwGGGElSzbWNDEfk09r3a07HBfFHs5s+2NXMROaOZK7ASZAtuM2JkZK129atzIkTwQR0pLeYOfzDaK87C3vA/2BXhMEJu3emPHjA9Zkp9QFSMNO+IpYN3MJ/L2vqv3+ZZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k0QOb/7s; arc=none smtp.client-ip=209.85.161.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-60402c94319so2927816eaf.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Jul 2025 03:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752055483; x=1752660283; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p+bfGFW4DtSQcr5Yecq9KqtEiX+ZRp1VJeXV6fP2IcE=;
-        b=k0QOb/7styAjG16KLGACW84roeJbMF4KWZSbZlLam/t5KukaAXzLubbjTSJ66pyC/z
-         lxBuFGPKsbbgdiFb9kjnUFv7nMhcwel/PwuxNanw57yiO5R2fDybQQdJYlaUkwgXn2Tw
-         Qo2OXYqZH/0krP9bX07baXXeLHtJJtEhOIO4EAdKPIS2oT3XXbA3HFLAH72GQQpiOgju
-         T5+WeRACKO44CEtnA0QsNlw1QK6GTInXAbLYTiTzykrw35LvxVPN5ZSIPM9WByT/UjBo
-         1BC57ugXwQ5WjUEGxN9KN0tKsvem+akHQJIOE62XRS506tIpymK/DYTZpjFIe4hgpMh6
-         b41w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752055483; x=1752660283;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p+bfGFW4DtSQcr5Yecq9KqtEiX+ZRp1VJeXV6fP2IcE=;
-        b=AlKYrdXRrM+HYqv4xu7bkdooomtzowaMQPvg6lAReyWcWO8EKP2hsK0NfLMWzSuX3G
-         PuT7PeEzuLKiptfjvs0W+diIvQsyKELuhpYYjboGduNvHya0YUrWiu3N0raQZijuxsK8
-         TFgqJLbsjbMXk2Ub/AAQjE9uTPPQLKQzmwpqwLLbbo1dbjfLpRNE1bEn/mfboFD0C8hu
-         JSPWNybuTnn0UHXoVpWOM2A8NKdXAnGGIHvpRPte0FfYPj/ltqccjqRamwUTBDPG94RX
-         GogAiA9iYEwm/podJBKClREQPSIg/xoT8OslWLGk7HBJXzqPIR8NhfCzGxUTpYrpAhKY
-         jaUw==
-X-Forwarded-Encrypted: i=1; AJvYcCWnt3VF95irOuW+UZHjSdlaaxEmQWRbF1OUaM/jLbPyv7jIDgo6QdZpYjkxx1ztM6odq1Gn9SnPZ+uzWL9C/uKAGQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhJmtxcoG1SQOqfQD6pkhZtg/GSJeXsjl4pxjTtBekG+VQifP4
-	aAAgJ7nDCob7WTNByaoQtTXXpLkdR5QOe708/E/RAJtbCP/GMpY5hG1oTQewMsFOrtGmp16BvCh
-	h5uiZdZS/rT6IKKm2NN+TWDS3eh3ix1pCB+0BqyhzAw==
-X-Gm-Gg: ASbGnctsoT/UpRPMolQEOQj2hxCASgLDLaPU2nIdnseR3GXYgVyHV59IS/GGlsExgTU
-	Dzn2ZRnHJLBCiaH/eesxkY8o/iaeUil2l8Vy4iSiM73fw1oe/GNdRmmnLKY16OzZyU+w12JhB67
-	pRlqnvTAuTzj3tf4jhLHQ2YE7tfmzPJ+JNUoAtCsoWo6w=
-X-Google-Smtp-Source: AGHT+IGY95z19tqvWhEI5fgWA6R8T6/UqcM++P6QZAW4xt2CGrUQgdZq9RwXXFtbhIUTeJDCM/NWWKWEDhJ2ZJDsq3w=
-X-Received: by 2002:a05:6870:46a4:b0:2b7:f58d:6dcf with SMTP id
- 586e51a60fabf-2fef870ac82mr1083901fac.18.1752055482714; Wed, 09 Jul 2025
- 03:04:42 -0700 (PDT)
+	s=arc-20240116; t=1752061121; c=relaxed/simple;
+	bh=dwlIfREyYsosZSrXvNyfoG2Bye3iq1yERCCXhZTuGsM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=bqjs0hv/3zRtbiduy0XgENqklDcBWSL0NLzOZTxWidi7ydnL5qfFCL/TlpJz3OY2WoT9uHoxXaNcFkayfSXRjXM/uv1N+6VEbe23CxDb4Vt98MS8H1GVhI6RCJLdcoMnvJFfHy+HrWwK9ZfseqPwb/bbEQLcj4uQtn0Crss/Z3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=TC8XKsNM; arc=none smtp.client-ip=45.254.49.237
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from zyb-HP-ProDesk-680-G2-MT.. (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1b69b79d6;
+	Wed, 9 Jul 2025 15:02:25 +0800 (GMT+08:00)
+From: Damon Ding <damon.ding@rock-chips.com>
+To: andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org,
+	rfoss@kernel.org
+Cc: Laurent.pinchart@ideasonboard.com,
+	jonas@kwiboo.se,
+	jernej.skrabec@gmail.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	jingoohan1@gmail.com,
+	inki.dae@samsung.com,
+	sw0312.kim@samsung.com,
+	kyungmin.park@samsung.com,
+	krzk@kernel.org,
+	alim.akhtar@samsung.com,
+	hjc@rock-chips.com,
+	heiko@sntech.de,
+	andy.yan@rock-chips.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	l.stach@pengutronix.de,
+	dianders@chromium.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Damon Ding <damon.ding@rock-chips.com>
+Subject: [PATCH v2 04/12] drm/exynos: exynos_dp: Remove &exynos_dp_device.ptn_bridge
+Date: Wed,  9 Jul 2025 15:01:31 +0800
+Message-Id: <20250709070139.3130635-5-damon.ding@rock-chips.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250709070139.3130635-1-damon.ding@rock-chips.com>
+References: <20250709070139.3130635-1-damon.ding@rock-chips.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250627-gs101-cpuidle-v3-1-0200452dfe60@linaro.org> <53a214b4039872ce7584a2ae6e688fcef0c86d7e.camel@linaro.org>
-In-Reply-To: <53a214b4039872ce7584a2ae6e688fcef0c86d7e.camel@linaro.org>
-From: Peter Griffin <peter.griffin@linaro.org>
-Date: Wed, 9 Jul 2025 11:04:29 +0100
-X-Gm-Features: Ac12FXy1nHjPc0ZtUVknu5DhgpF7CNwmS2WMX0Qx_tI6AsiwGCLjhVVgixkJAf0
-Message-ID: <CADrjBPrPcYZPFuRqwm0OkFU+CQtinFUtNXHzt+MQpEy=Q-Xnww@mail.gmail.com>
-Subject: Re: [PATCH v3] soc: samsung: exynos-pmu: Enable CPU Idle for gs101
-To: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, William Mcvicker <willmcvicker@google.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	kernel-team@android.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGk1KH1ZNQkwYTx8fSB9DGhhWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+X-HM-Tid: 0a97edfe26e603a3kunm3a7bcd50c839b2
+X-HM-MType: 1
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MxQ6CQw5FzE6Ky8fIxAWIj8f
+	CxQaCTlVSlVKTE5JS09PTk9DSE9DVTMWGhIXVR8aFhQVVR8SFRw7CRQYEFYYExILCFUYFBZFWVdZ
+	EgtZQVlOQ1VJSVVMVUpKT1lXWQgBWUFISENMNwY+
+DKIM-Signature:a=rsa-sha256;
+	b=TC8XKsNMf20U9Up3zo4p2YEAeLYBwTD57JXHH8LdU0K6Cak3chQkmr/ON72ZwWvNL9M3TH8YlR8EYDDcTnuoZfdm8glfHMjsCfX0pgRnvqn9TVWa2sNpiKic5bOJIryO+zSiON9na8VR37gPw/CW1p8ITpP7GvFQg0zAP12Adf8=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=rXkA9sraLLYJdYKCh/Eg6csTIU1/0XUNSygkdO9ShiI=;
+	h=date:mime-version:subject:message-id:from;
 
-Hi Andr=C3=A9,
+Use &analogix_dp_plat_data.bridge instead of &exynos_dp_device.ptn_bridge
+directly.
 
-Thanks for the review feedback!
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+---
+ drivers/gpu/drm/exynos/exynos_dp.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-On Thu, 3 Jul 2025 at 12:01, Andr=C3=A9 Draszik <andre.draszik@linaro.org> =
-wrote:
->
-> More small comments. Sorry for the drip feed, just trying to understand
-> things...
->
-> On Fri, 2025-06-27 at 14:08 +0100, Peter Griffin wrote:
-> > [...]
-> >
-> > +static int gs101_cpu_pm_notify_callback(struct notifier_block *self,
-> > +                                     unsigned long action, void *v)
-> > +{
-> > +     switch (action) {
-> > +     case CPU_PM_ENTER:
-> > +             /*
-> > +              * Ignore CPU_PM_ENTER event in reboot or
-> > +              * suspend sequence.
-> > +              */
-> > +
-> > +             if (atomic_read(&pmu_context->sys_suspended) ||
-> > +                 atomic_read(&pmu_context->sys_rebooting))
-> > +                     return NOTIFY_OK;
-> > +
-> > +             return gs101_cpu_pmu_offline();
-> > +
-> > +             break;
->
-> break is not needed after return, and generally there should be an empty
-> line before the next case statement.
+diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
+index 5bcf41e0bd04..9d7d3f009e58 100644
+--- a/drivers/gpu/drm/exynos/exynos_dp.c
++++ b/drivers/gpu/drm/exynos/exynos_dp.c
+@@ -36,7 +36,6 @@
+ struct exynos_dp_device {
+ 	struct drm_encoder         encoder;
+ 	struct drm_connector       *connector;
+-	struct drm_bridge          *ptn_bridge;
+ 	struct drm_device          *drm_dev;
+ 	struct device              *dev;
+ 
+@@ -106,8 +105,8 @@ static int exynos_dp_bridge_attach(struct analogix_dp_plat_data *plat_data,
+ 	dp->connector = connector;
+ 
+ 	/* Pre-empt DP connector creation if there's a bridge */
+-	if (dp->ptn_bridge) {
+-		ret = drm_bridge_attach(&dp->encoder, dp->ptn_bridge, bridge,
++	if (plat_data->bridge) {
++		ret = drm_bridge_attach(&dp->encoder, plat_data->bridge, bridge,
+ 					0);
+ 		if (ret)
+ 			return ret;
+@@ -155,7 +154,7 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
+ 
+ 	dp->drm_dev = drm_dev;
+ 
+-	if (!dp->plat_data.panel && !dp->ptn_bridge) {
++	if (!dp->plat_data.panel && !dp->plat_data.panel) {
+ 		ret = exynos_dp_dt_parse_panel(dp);
+ 		if (ret)
+ 			return ret;
+@@ -232,6 +231,7 @@ static int exynos_dp_probe(struct platform_device *pdev)
+ 
+ 	/* The remote port can be either a panel or a bridge */
+ 	dp->plat_data.panel = panel;
++	dp->plat_data.bridge = bridge;
+ 	dp->plat_data.dev_type = EXYNOS_DP;
+ 	dp->plat_data.power_on = exynos_dp_poweron;
+ 	dp->plat_data.power_off = exynos_dp_poweroff;
+@@ -239,8 +239,6 @@ static int exynos_dp_probe(struct platform_device *pdev)
+ 	dp->plat_data.get_modes = exynos_dp_get_modes;
+ 	dp->plat_data.skip_connector = !!bridge;
+ 
+-	dp->ptn_bridge = bridge;
+-
+ out:
+ 	dp->adp = analogix_dp_probe(dev, &dp->plat_data);
+ 	if (IS_ERR(dp->adp))
+-- 
+2.34.1
 
-Will fix
->
-> > +     case CPU_PM_EXIT:
->
-> Should this also handle CPU_PM_ENTER_FAILED in the same way to bring
-> the CPU back up in case of failures?
-
-I choose not to do that, mainly because the downstream production
-drivers don't handle CPU_PM_ENTER_FAILED, and without access to the
-firmware code it is hard to reason about.
-
-Logically it seems like we would want to do the same code as
-CPU_PM_EXIT with a CPU_PM_ENTER_FAILED, but I've never seen
-CPU_PM_FAILED so far in my debugging.
-
->
-> > +
-> > +             if (atomic_read(&pmu_context->sys_rebooting))
-> > +                     return NOTIFY_OK;
-> > +
-> > +             return gs101_cpu_pmu_online();
-> > +
-> > +             break;
->
-> No break needed.
-
-Will fix
-
-Thanks.
-
-Peter
 
