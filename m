@@ -1,161 +1,272 @@
-Return-Path: <linux-samsung-soc+bounces-9259-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9276-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3E5EAFF5E0
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 02:24:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E42FAFFB6A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 09:55:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7567F563A64
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 00:23:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62D8E7AE9F5
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 07:53:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2688A1F4162;
-	Thu, 10 Jul 2025 00:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7621F28B7FC;
+	Thu, 10 Jul 2025 07:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=coasia.com header.i=@coasia.com header.b="gfikRw9z"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="e6b3e8yz"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from spam.coasia.com (mail2.coasia.com [112.168.119.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8803C1DFDB8
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 00:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=112.168.119.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C811C28B7E7
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 07:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752106875; cv=none; b=ZbNOjH0osE18fEvzPQfmQ1xlmIV8Od7DayoLmft2it7Np8BV0zg47dOsTq7cJ9sMWuWbDTZ2ITTPqv0xHp91dZT5WWhck9r47BU2A0r/ZAdCkKNxv76kiNXiY6rolMArAAOqEUZ0sMT6hxnFxd7ooxXLG95bM/xQhYrtZhcYfRM=
+	t=1752134054; cv=none; b=ghN8oKtgOr2j3G+HnoSfcqmJuXBV+p8ydKJWd18WItCsUDUuCok1s6j7ouVf8oXme6OTdFkwBUGVBVHKZwpACM6UWxOxSTKhQJeKZHY+FwcIFvuLNuZs9DnTZAh93Qt9+OUyyUw/VsD3d3bShxftw3pwaWvzttUNf/rGuz0q1rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752106875; c=relaxed/simple;
-	bh=lEO9lFVLPvU0FUK9issmomG8Y4kidyt58rZ5FWvDXqw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Mhidmln7qGBHdTgEIaUkgnHqRo0IKAFpAr9O3cXShUebdex8bizh9HNSquo75fZFSLGBpfLhLMNwl57R7WCE39ycYoxKz/nrPDLm6RDTV3jvI/jENhYhxnuBVKUVMdtFwcRShmbvuAKFUvVeuy9VnqIJGqE3HEQnogDCXEeq7fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=coasia.com; spf=pass smtp.mailfrom=coasia.com; dkim=pass (1024-bit key) header.d=coasia.com header.i=@coasia.com header.b=gfikRw9z; arc=none smtp.client-ip=112.168.119.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=coasia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=coasia.com
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=coasia.com; s=coasia;
-	t=1752106870; bh=lEO9lFVLPvU0FUK9issmomG8Y4kidyt58rZ5FWvDXqw=;
-	l=646; h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=gfikRw9zxoHZZCVbF7gL7m701WY2F7eTaQTCfV9Am5Z9sMxUAAalb7ditDxMy9+AM
-	 +aCfOFW8VyxtrYIOi4ulyIOW3K0PIsEKxrMaGkTDLmDmZE2xzxAdu/OgDlHxccV99j
-	 HsbHmi09R06VRzyj9j/aH3npTAIxeKOBkXxzuTZU=
-Received: from unknown (HELO kangseongu..) (ksk4725@coasia.com@115.23.218.194)
-	by 192.168.10.159 with ESMTP; 10 Jul 2025 09:21:10 +0900
-X-Original-SENDERIP: 115.23.218.194
-X-Original-SENDERCOUNTRY: KR, South Korea 
-X-Original-MAILFROM: ksk4725@coasia.com
-X-Original-RCPTTO: jesper.nilsson@axis.com,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	krzk@kernel.org,
-	s.nawrocki@samsung.com,
-	cw00.choi@samsung.com,
-	alim.akhtar@samsung.com,
-	linus.walleij@linaro.org,
-	tomasz.figa@gmail.com,
-	catalin.marinas@arm.com,
-	will@kernel.org,
-	arnd@arndb.de,
-	kenkim@coasia.com,
-	pjsin865@coasia.com,
-	gwk1013@coasia.com,
-	ksk4725@coasia.com,
-	hgkim05@coasia.com,
-	mingyoungbo@coasia.com,
-	smn1196@coasia.com,
-	pankaj.dubey@samsung.com,
-	shradha.t@samsung.com,
-	ravi.patel@samsung.com,
-	inbaraj.e@samsung.com,
-	swathi.ks@samsung.com,
-	hrishikesh.d@samsung.com,
-	dj76.yang@samsung.com,
-	hypmean.kim@samsung.com,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@axis.com,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	soc@lists.linux.dev
-From: ksk4725@coasia.com
-To: Jesper Nilsson <jesper.nilsson@axis.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Tomasz Figa <tomasz.figa@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Cc: kenkim <kenkim@coasia.com>,
-	Jongshin Park <pjsin865@coasia.com>,
-	GunWoo Kim <gwk1013@coasia.com>,
-	SeonGu Kang <ksk4725@coasia.com>,
-	HaGyeong Kim <hgkim05@coasia.com>,
-	GyoungBo Min <mingyoungbo@coasia.com>,
-	SungMin Park <smn1196@coasia.com>,
-	Pankaj Dubey <pankaj.dubey@samsung.com>,
-	Shradha Todi <shradha.t@samsung.com>,
-	Ravi Patel <ravi.patel@samsung.com>,
-	Inbaraj E <inbaraj.e@samsung.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Hrishikesh <hrishikesh.d@samsung.com>,
-	Dongjin Yang <dj76.yang@samsung.com>,
-	Sang Min Kim <hypmean.kim@samsung.com>,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@axis.com,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	soc@lists.linux.dev
-Subject: [PATCH 16/16] arm64: defconfig: Enable Axis ARTPEC SoC
-Date: Thu, 10 Jul 2025 09:20:46 +0900
-Message-Id: <20250710002047.1573841-17-ksk4725@coasia.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250710002047.1573841-1-ksk4725@coasia.com>
-References: <20250710002047.1573841-1-ksk4725@coasia.com>
+	s=arc-20240116; t=1752134054; c=relaxed/simple;
+	bh=Jel28LMfOiRfuzzeRWEWlUB4MtekRM9YotMip7nk7Qc=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=dn9ioTjLBMcjUNywMWLi33MxAob7wyWJvQPlF7+42ndiONK+CtzjNldA0RqCyYbaDqyZnNA7XlLQNoQodcQJpXfb/wVxdSMZNmUy2yHj4XMyQ0Zh5xNtZgf0GhoHclJcgUMNjw2+jgP8cHGw/Sq3MXIuZz0f1q3XU15FeLHVlT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=e6b3e8yz; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250710075409epoutp01b42aaa9d2889dd1d127cbcd82965d2d4~Q1KJlmGzc0796707967epoutp01S
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 07:54:09 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250710075409epoutp01b42aaa9d2889dd1d127cbcd82965d2d4~Q1KJlmGzc0796707967epoutp01S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1752134049;
+	bh=sU5CNr0QBgtWFGV78GzIhAyOCjgZlILuvDXa/fOPmvg=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=e6b3e8yzubOO+WeWSQblcuKrxj01k9VAAdYusH7WGmFXQQz7T8MSbw2CAEbNC1mKC
+	 +Zs0mrKsv2XUcRggj4jGldcyw8BdlGm5iJQ6FjIyA6K0G6D+dl3s8iSI3Pu59lwvZ1
+	 k3pmfBFxVzBpPSfc2u/fKOnpHyKTdCjOVqYRj3kw=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20250710075408epcas5p3e7eb81652514ab73f69e247e00d1f9e0~Q1KIzbU7H2522625226epcas5p3O;
+	Thu, 10 Jul 2025 07:54:08 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.179]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4bd6YT0z7nz3hhTC; Thu, 10 Jul
+	2025 07:54:05 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20250709084656epcas5p38f9d9b674f152c0320e9d39afe120cb5~QiO82hp8o0301603016epcas5p3M;
+	Wed,  9 Jul 2025 08:46:56 +0000 (GMT)
+Received: from INBRO001840 (unknown [107.122.3.105]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250709084652epsmtip22e1079a1c27c4cb195263f8c31e4354e~QiO54VHas2181121811epsmtip2U;
+	Wed,  9 Jul 2025 08:46:52 +0000 (GMT)
+From: "Pritam Manohar Sutar" <pritam.sutar@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>
+Cc: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <alim.akhtar@samsung.com>,
+	<andre.draszik@linaro.org>, <peter.griffin@linaro.org>,
+	<neil.armstrong@linaro.org>, <kauschluss@disroot.org>,
+	<ivo.ivanov.ivanov1@gmail.com>, <m.szyprowski@samsung.com>,
+	<s.nawrocki@samsung.com>, <linux-phy@lists.infradead.org>,
+	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
+	<rosa.pila@samsung.com>, <dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
+	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
+In-Reply-To: <20250706-fresh-meaty-cougar-5af170@krzk-bin>
+Subject: RE: [PATCH v4 1/6] dt-bindings: phy: samsung,usb3-drd-phy: add
+ ExynosAutov920 HS phy compatible
+Date: Wed, 9 Jul 2025 14:16:51 +0530
+Message-ID: <07d301dbf0ae$0658cbe0$130a63a0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJAgQZ9LFXBZrDskwNBYris6jFv1AKCX9A9Aa5wAf0Bi5UAq7Myc6PA
+Content-Language: en-in
+X-CMS-MailID: 20250709084656epcas5p38f9d9b674f152c0320e9d39afe120cb5
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250701115955epcas5p320cfe73ca33522cd2f9f7970cfde1c63
+References: <20250701120706.2219355-1-pritam.sutar@samsung.com>
+	<CGME20250701115955epcas5p320cfe73ca33522cd2f9f7970cfde1c63@epcas5p3.samsung.com>
+	<20250701120706.2219355-2-pritam.sutar@samsung.com>
+	<20250706-fresh-meaty-cougar-5af170@krzk-bin>
 
-From: sungminpark <smn1196@coasia.com>
+Hi Krzysztof,
 
-Enable the Axis ARTPEC-8 SoC in arm64 defconfig.
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
+> Sent: 06 July 2025 03:11 PM
+> To: Pritam Manohar Sutar <pritam.sutar=40samsung.com>
+> Cc: vkoul=40kernel.org; kishon=40kernel.org; robh=40kernel.org;
+> krzk+dt=40kernel.org; conor+dt=40kernel.org; alim.akhtar=40samsung.com;
+> andre.draszik=40linaro.org; peter.griffin=40linaro.org; neil.armstrong=40=
+linaro.org;
+> kauschluss=40disroot.org; ivo.ivanov.ivanov1=40gmail.com;
+> m.szyprowski=40samsung.com; s.nawrocki=40samsung.com; linux-
+> phy=40lists.infradead.org; devicetree=40vger.kernel.org; linux-
+> kernel=40vger.kernel.org; linux-arm-kernel=40lists.infradead.org; linux-s=
+amsung-
+> soc=40vger.kernel.org; rosa.pila=40samsung.com; dev.tailor=40samsung.com;
+> faraz.ata=40samsung.com; muhammed.ali=40samsung.com;
+> selvarasu.g=40samsung.com
+> Subject: Re: =5BPATCH v4 1/6=5D dt-bindings: phy: samsung,usb3-drd-phy: a=
+dd
+> ExynosAutov920 HS phy compatible
+>=20
+> On Tue, Jul 01, 2025 at 05:37:01PM +0530, Pritam Manohar Sutar wrote:
+> > Add a dedicated compatible string for USB HS phy found in this SoC.
+> > The SoC requires two clocks, named =22phy=22 and =22ref=22 (same as clo=
+cks
+> > required by Exynos850).
+> >
+> > It also requires various power supplies (regulators) for the internal
+> > circuitry to work. The required voltages are:
+> > * avdd075_usb - 0.75v
+> > * avdd18_usb20 - 1.8v
+> > * avdd33_usb20 - 3.3v
+> >
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
+>=20
+> No, really. Look:
+>=20
+> > Signed-off-by: Pritam Manohar Sutar <pritam.sutar=40samsung.com>
+> > ---
+> >  .../bindings/phy/samsung,usb3-drd-phy.yaml    =7C 37 +++++++++++++++++=
+++
+> >  1 file changed, 37 insertions(+)
+> >
+> > diff --git
+> > a/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
+> > b/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
+> > index e906403208c0..2e29ff749bba 100644
+> > --- a/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml
+> > =40=40 -34,6 +34,7 =40=40 properties:
+> >        - samsung,exynos7870-usbdrd-phy
+> >        - samsung,exynos850-usbdrd-phy
+> >        - samsung,exynos990-usbdrd-phy
+> > +      - samsung,exynosautov920-usbdrd-phy
+> >
+> >    clocks:
+> >      minItems: 1
+> > =40=40 -110,6 +111,15 =40=40 properties:
+> >    vddh-usbdp-supply:
+> >      description: VDDh power supply for the USB DP phy.
+> >
+> > +  avdd075_usb-supply:
+> > +    description: 0.75V power supply for USB phy
+> > +
+> > +  avdd18_usb20-supply:
+> > +    description: 1.8V power supply for USB phy
+> > +
+> > +  avdd33_usb20-supply:
+> > +    description: 3.3V power supply for USB phy
+> > +
+>=20
+> None of these were here. Follow DTS coding style... but why are you addin=
+g
+> completely new supplies?
 
-Signed-off-by: sungminpark <smn1196@coasia.com>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+Digital supplies were here. Need Analog supplies for exynosautov920, hence =
+added new Analog supplies; 'a'vdd075_usb, 'a'vdd18_usb20, 'a'vdd33_usb20
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5bb8f09422a2..00b902c2d997 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -38,6 +38,8 @@ CONFIG_ARCH_AIROHA=y
- CONFIG_ARCH_SUNXI=y
- CONFIG_ARCH_ALPINE=y
- CONFIG_ARCH_APPLE=y
-+CONFIG_ARCH_ARTPEC=y
-+CONFIG_ARCH_ARTPEC8=y
- CONFIG_ARCH_BCM=y
- CONFIG_ARCH_BCM2835=y
- CONFIG_ARCH_BCM_IPROC=y
--- 
-2.34.1
+Will add =22full stops=22 for DTS coding style in description.
+
+>=20
+>=20
+> >  required:
+> >    - compatible
+> >    - clocks
+> > =40=40 -235,6 +245,33 =40=40 allOf:
+> >
+> >          reg-names:
+> >            maxItems: 1
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - samsung,exynosautov920-usbdrd-phy
+> > +    then:
+> > +      properties:
+> > +        clocks:
+> > +          minItems: 2
+> > +          maxItems: 2
+> > +
+> > +        clock-names:
+> > +          items:
+> > +            - const: phy
+> > +            - const: ref
+> > +
+> > +        reg:
+> > +          maxItems: 1
+> > +
+> > +        reg-names:
+> > +          maxItems: 1
+> > +
+> > +      required:
+> > +        - avdd075_usb-supply
+> > +        - avdd18_usb20-supply
+> > +        - avdd33_usb20-supply
+>=20
+> Neither was this entire diff hunk here.
+>=20
+> This was part of other block for a reason.
+
+Added regulators in driver. This block is added for regulators (other block=
+ does not have =22required=22 field for power supplies)
+if excluded this block, =20
+=22make ARCH=3Darm64 dtbs_check DT_SCHEMA_FILES=3DDocumentation/devicetree/=
+bindings/phy/samsung,usb3-drd-phy.yaml=22 will fail as mentioned below=20
+	=09
+/home/pritam.sutar/workspace/auto/kitt2/projects/upstream/src/kernel/github=
+/linux-next/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dtb: phy=4016480=
+000: Unevaluated properties are not allowed ('avdd075_usb-supply', 'avdd18_=
+usb20-supply', 'avdd33_usb20-supply' were unexpected)
+	from schema =24id: http://devicetree.org/schemas/phy/samsung,usb3-drd-phy.=
+yaml=23
+/home/pritam.sutar/workspace/auto/kitt2/projects/upstream/src/kernel/github=
+/linux-next/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dtb: phy=4016490=
+000: Unevaluated properties are not allowed ('avdd075_usb-supply', 'avdd18_=
+usb20-supply', 'avdd33_usb20-supply' were unexpected)
+		from schema =24id: http://devicetree.org/schemas/phy/samsung,usb3-drd-phy=
+.yaml=23
+/home/pritam.sutar/workspace/auto/kitt2/projects/upstream/src/kernel/github=
+/linux-next/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dtb: phy=4016500=
+000: Unevaluated properties are not allowed ('avdd075_usb-supply', 'avdd18_=
+usb20-supply', 'avdd33_usb20-supply' were unexpected)
+		from schema =24id: http://devicetree.org/schemas/phy/samsung,usb3-drd-phy=
+.yaml=23
+/home/pritam.sutar/workspace/auto/kitt2/projects/upstream/src/kernel/github=
+/linux-next/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dtb: phy=4016510=
+000: Unevaluated properties are not allowed ('avdd075_usb-supply', 'avdd18_=
+usb20-supply', 'avdd33_usb20-supply' were unexpected)
+		from schema =24id: http://devicetree.org/schemas/phy/samsung,usb3-drd-phy=
+.yaml=23
+/home/pritam.sutar/workspace/auto/kitt2/projects/upstream/src/kernel/github=
+/linux-next/arch/arm64/boot/dts/exynos/exynosautov920-sadk.dtb: phy=4016520=
+000: Unevaluated properties are not allowed ('avdd075_usb-supply', 'avdd18_=
+usb20-supply', 'avdd33_usb20-supply' were unexpected)
+		from schema =24id: http://devicetree.org/schemas/phy/samsung,usb3-drd-phy=
+.yaml=23
+
+Note: These patches are being validated by enabling DTS (However, DTS patch=
+es are planned in next phase).
+
+If you have any idea to re-use existing block by differentiating required p=
+ower supplies, please suggest.
+
+>=20
+> NAK
+>=20
+> Best regards,
+> Krzysztof
+
 
 
