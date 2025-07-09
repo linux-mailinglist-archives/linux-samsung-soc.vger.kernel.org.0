@@ -1,79 +1,79 @@
-Return-Path: <linux-samsung-soc+bounces-9224-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9227-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D94DFAFE610
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 12:42:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F8F6AFEA2B
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 15:29:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 153EE58607C
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 10:41:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C7EB1C83E31
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  9 Jul 2025 13:27:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2398028DF31;
-	Wed,  9 Jul 2025 10:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D5A02E49A3;
+	Wed,  9 Jul 2025 13:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z/eAGQaM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UG7M35Pe"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688CA265292
-	for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Jul 2025 10:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9382DC34A
+	for <linux-samsung-soc@vger.kernel.org>; Wed,  9 Jul 2025 13:26:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752057696; cv=none; b=NZ8JfZTdx0URmW6uZ3b340gARel/k9I25E1cc78jeGbN4CEr06uCEESf1mRvGwYa4Btdh/XM4Ee2e/zyyYSHabV/kKswcDLTCsmyU0yvw/PnVrEc5/rqw4GPUbmWb7nfgR37xtncvS8a0zsWkJ2H05/wr9y7SAZMLZnK7pLbPgQ=
+	t=1752067596; cv=none; b=MjGrPzF9ASf6vQQYK0o4+JrdR5umhrmn2XPl0xdBkO9qunMbZp/zHffqVq9A+dYxA2mD+rY0xhIEN6XiDAH+JeptRZX/gabov0da0NCVn+kmUk+txVRVejsLiF7ARLbvvvkXvJCd27tgJNyUStgxmzgM4ZrECbivH7aWfLm3wsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752057696; c=relaxed/simple;
-	bh=lVKm1mcojqsWYJOqNu0+bY6lhqj+xwLxDBp5o+MqfhU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SQgtSgAaCyAUlJ6YRTY4OMtVuuJTw2FnKm1/7RmKDIxIXtpjgKz9I42723HA1jqcU7fYeygjEt7dNRMepX7zjKgYqqfX3CNw8nmBS1JljOiazE972b1em9HNpSug/FL/aBRprXzeHb/S11Y366osz17tS+pcTesadqymRFTvMXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z/eAGQaM; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1752067596; c=relaxed/simple;
+	bh=1UTs7xWOfZ2+WlrT8IbX5kaWxQReXo1sw6OBk9v4gp0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fM74Nlk0bXddZDc3GwaAQlOey9+yOdgBHCNo3IvmzmuVt5IFnAINRlPudv+wn7JEFcrG/NbPgUy/M4e2C5Ta0CZBA3rAcbJHdfvmHA/Gb83xyrvurDjeICDuUOpLD4vxIM4JiHcTp4SkwA6EfS0it3F5sZxb9pzRDGyDyafuON0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UG7M35Pe; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-453749af004so27068655e9.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Jul 2025 03:41:33 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-453643020bdso43785985e9.1
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 09 Jul 2025 06:26:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752057692; x=1752662492; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1752067592; x=1752672392; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=x5vGgL7UJ9lDEENBSkq4Uqo2ngIaWRypbqhKJz55VCM=;
-        b=Z/eAGQaMBBV27x9PRqdncKpIHkb2LLXXFNPmgtQSgJ1m/EQC3sr32DAHz3YIbr6/qm
-         qLTqhdCIeRR05QojJXDyNTjjXgVuiloTAxxH0g/v1jJKExDas+Acd2xNRAOvGqeVxOJA
-         niZgzVAJrMp1OFXU+BlglBsUcsprRRubruzHdVh64c1o9exC0m5s4iqPnmXYVX61VGSy
-         3mAV0Y27uLBaRICKxyNjA6pfWqhSjxqMC8ta31kqwbmMptbDkGxyw+WE7n4AJ7CIK9p7
-         F2dIPyW7kKwW92AXTNmoX5aaCZ9evhy5rZcHk6ssAWzgnDwtdtkm88q/nEj0ycDTWw6K
-         DJHg==
+        bh=itLsXs1qPNi/Vw8THLyQU8sHQFBa9iLBPXp34wVZ294=;
+        b=UG7M35PeaXr7o0cvgTg0V2LDZla3pY+LU2Xf1LtYOrZiYVwcuqNmowr4KTnjE90wvh
+         PDvvOhH2MYmN6K6qIKhWVTHXX6UxfSpKPbF267CDIsm7Pp+teQ26EI0WWJIMz6T8yKmU
+         i3wBR6M+/6EGNSmrdQeyXGz0Qq6JbP0poTH3KHVa9pJmesL9omrL5Kfqmn62Gw9IjPUo
+         lEW7LVbcb/zZgZV2YtxESzHDFSnAKZc8zUVkKAMnSmY/iVEFPgo0SSBLmrLuzoizpe0E
+         vpen27CztAvW0kOq4S2OOUJITd7gp+i2pLgKrHse3ibNFS6ZKXXqB52gdMJulB4ku58h
+         gk1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752057692; x=1752662492;
+        d=1e100.net; s=20230601; t=1752067592; x=1752672392;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=x5vGgL7UJ9lDEENBSkq4Uqo2ngIaWRypbqhKJz55VCM=;
-        b=P5OTldbkDvSWslp+FPeG168/PwYgIKz6zImELuh3ARfu5y8YnuiZN+9GwK2P1CS825
-         GyIyBGa6tnSZyqlAfHREDmUBfEOWDPoD4o2JsAcyVhV0YRsFXjevMVAi3pon0+X3kiil
-         iIZ482YVyUCtOQQSzpPi4MnfGvMdMBSJ0uhtVnZnUtKEFHK3/DcRn6tGzDTUwvKIcOlD
-         zHTseK72CLbNgdPls2+Y1bCsf2v4IwY12RlS2No9/tke2gE8q/6JJ7t3QLTBmxeVwjDf
-         rNhpWmxQ2xE5Gd5zkxkHDs3yKGOVMLak8tbe1/a/BDLmFuDG5aF++Tg/yvTK2csarjPD
-         w1Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4JCEkA0TzuR6KcDe+yFbX57RdptNzIaDTxZ+VV/fp9MkpftJOIOWMJN8eeAcdAmV2AvI5e7ed6r2xaI2+JSflVA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjG4FamR7dWz3SX3qtawruvAUcrRdj4Zfg5VavHKLIoYddg2wC
-	Q5Yd+VjnfkIbzj/r1buZOa79/pH+F1KPYBCo/mSQYGWD/D+BkUkYxcTUN0nb9wWo6Pw=
-X-Gm-Gg: ASbGncuOxQVdxJK8Pz63VfRbJaeoAbBjG0wIZchFcnaQ+N6+kGafpZ4vg+rSB7E+mVN
-	/+eIqeWyZsVZDBJmk+7QMpu43TCQBkMMotUIhUXT2CZ9haGAjLuwmJHU3/y+EVPdo6FD3Bo2g1h
-	g4FFLYF4q9Ia/cOqot3FJweRel3bhI6VDWiTGa0nYPmmDH/SxI8CFsy3OpFo1kyv8fbrrpHY/BY
-	MMiyFjsRuwGjUv6JnVlDsxT40Y5R5wMqFQD904mSK4rQdBX5mIEHiPyn1gNAMDb2ws8SjDiQc/D
-	5h18Oj41MFFv8q2y319ZCkSQBfSCyCg1SE8tPrigSeKGIHwM0866NozSTEbwyNir5D6X/nGgMFd
-	IQMXBv18d9XEjlf24GLjj+f3OzA==
-X-Google-Smtp-Source: AGHT+IFpySXDs8+OigKiPsB+h0UNN6fuYzxAt6bbmCdW8gRt9kJ3u+gVLWivqVNBL9MDAjRSxUwvuQ==
-X-Received: by 2002:a05:6000:2210:b0:3a1:fe77:9e1d with SMTP id ffacd0b85a97d-3b5e44e5fe6mr1502996f8f.16.1752057691608;
-        Wed, 09 Jul 2025 03:41:31 -0700 (PDT)
+        bh=itLsXs1qPNi/Vw8THLyQU8sHQFBa9iLBPXp34wVZ294=;
+        b=tOBqPMr7XGeYM/vxxlGAzCFfxB3LeWlXCBVjaBtpyeU5k40VyvuTIp4oW+p6bbU1/L
+         xXRvj+aC1W7JskXlIWOETIdfKjlUmAViPv6ZJzgx7LVeWhdCIhilwJq5R5QhDOgISMrq
+         PNqLcDy6uepSNAFMFoydskithJbdxjHSJ/4xpLq9KVthnpaq3GvOhVHPV8OlW2koHtmW
+         AJNH5AHon9mb6vGAVXfze8W+AksMgjOvoWg0IusUOYRurqjpHdS47uViO1P4xAy5dtoC
+         3jj6lchIu0waYDvq3tuzZy9JK62/dPRN2xvhFdjbG7MyJsVD34zE0rOfRsdaTcBfm7cS
+         kSLg==
+X-Forwarded-Encrypted: i=1; AJvYcCVuPd5Z3onIiH2MyVUeuo5wwg6dY3cn8bE47mYs4bCqYrDzTs73+GBhtzeiVPNGHu6SGs0KBCPi48zbJFNyUWmgmg==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzywacNEz/FVdOYHVka4LXlf6OLW8FwdF0yoBtS/BzfPDvS05IL
+	YaEukjEj9TwvN6XTB/ANwAt5dkkAm8LOsfWHuTyFlMeyEaJxs/bCNFd9175s5N/69KY=
+X-Gm-Gg: ASbGncuhGIxsUd1iuye/EBwM0GzCO+DkCKbXFz7rLv2QlIt1ptLGV1y3tA7ihL2mAyL
+	1Hnd02E8uEU/RsuR7fM6x0P7q8wFRBajG2Ngxh/oGZEB/mZCkbqInc4R4TkybPjxEs13om1Duje
+	7BrXhO1xDQOOhWFWn9z/A6y3wmhslMFE2x2x806n3EQ9qkAtIjlqdxPn1H2xHHTF3dswgcfoHGj
+	jP4pkVQn4ArpW4rJ+irWgZZGJwJ+toHhAxElYlQOU1+JVVhy04AOU1Xbh5YbMXw6wUPdA3Trmrz
+	5Vv+RTdbu5YSY/7zFQLirHqLXBCYBUjlQnbwyJy8Qp/4hQA37KYDkueusNUCl7JFKQMz4SUPVkl
+	odWtZUXlVCiW7CRw=
+X-Google-Smtp-Source: AGHT+IEKRRthKL6yx8agdSnnUvnk/wmUm0ekN04jRaK528UmzcHA1adm22D1+ffkJxDZeefpBQeoCA==
+X-Received: by 2002:a05:600c:1546:b0:442:ccf9:e6f2 with SMTP id 5b1f17b1804b1-454d53a608dmr26383465e9.16.1752067592075;
+        Wed, 09 Jul 2025 06:26:32 -0700 (PDT)
 Received: from gpeter-l.roam.corp.google.com ([145.224.67.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47225afd4sm15164373f8f.83.2025.07.09.03.41.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d508e9d7sm23262705e9.36.2025.07.09.06.26.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 03:41:31 -0700 (PDT)
+        Wed, 09 Jul 2025 06:26:31 -0700 (PDT)
 From: Peter Griffin <peter.griffin@linaro.org>
-Date: Wed, 09 Jul 2025 11:41:27 +0100
-Subject: [PATCH v4] soc: samsung: exynos-pmu: Enable CPU Idle for gs101
+Date: Wed, 09 Jul 2025 14:26:27 +0100
+Subject: [PATCH v5] soc: samsung: exynos-pmu: Enable CPU Idle for gs101
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -82,11 +82,12 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250709-gs101-cpuidle-v4-1-56e21dd24963@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAFZHbmgC/3XN0Q6CIBTG8VdxXEeDI4J21Xu0LhgclM2pg2I15
- 7uH3lS2Lr+z/f5nJhGDx0hOxUwCJh/9OOQhDgUxnR5apN7mTYBBxSoQtI2ccWqmu7c9UqOdaaS
- 1tWgsyWYK6Pxj612ueXc+3sbw3PKJr9d/pcQpoxq1UlrVArQ8937QYTyOoSVrKsGbS873HDIXT
- tecoxFM2B9efnBQe17S/B8YExVYh5J98WVZXlxbE8spAQAA
+Message-Id: <20250709-gs101-cpuidle-v5-1-b34d3210286d@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAAJubmgC/3XNwWrDMAzG8VcpPs9DUmQ72WnvMXYwlpIaSlLsL
+ WyUvPvcXrql7PgJfn9dTNWStZqXw8UUXXPNy9yGezqYdIzzpDZL24aAHDhiO1UEtOn8meWkNsU
+ xDV6k50FMM+eiY/669d7e2z7m+rGU71t+xev1v9KKFmzUGEIMPVP0r6c8x7I8L2Uy19RKd+4R9
+ 5wa5zH2iJoYWB5494tT2PPOtv8EwI5kVA8PnO88wLDn3LjzSihCPPjuD9+27QfC4LXnaAEAAA=
+ =
 X-Change-ID: 20250524-gs101-cpuidle-cafc96dd849d
 To: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
  Tudor Ambarus <tudor.ambarus@linaro.org>, 
@@ -98,21 +99,21 @@ Cc: William Mcvicker <willmcvicker@google.com>,
  linux-kernel@vger.kernel.org, kernel-team@android.com, 
  Peter Griffin <peter.griffin@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13412;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13742;
  i=peter.griffin@linaro.org; h=from:subject:message-id;
- bh=lVKm1mcojqsWYJOqNu0+bY6lhqj+xwLxDBp5o+MqfhU=;
- b=owEBbQKS/ZANAwAKAc7ouNYCNHK6AcsmYgBobkdZ4pd6QQExCCTYSZOviLR8YMaS7ZnD+cxuT
- K/U8OGF/JGJAjMEAAEKAB0WIQQO/I5vVXh1DVa1SfzO6LjWAjRyugUCaG5HWQAKCRDO6LjWAjRy
- uiobEACIKre4OP6YI2RIWp7LqicFBKEDBBB96U+V40fzqJceKynn0ilTAuV3Q+OLc8XUnQaiHh6
- rpqrqFpPbQ5GhHiYf2/t2m4uDrrGfwuM3ozDKHrl3BirJHEwIxmAMaG6S3FEd7J5uBpxXzpCVcY
- bbww+Hx+Zj3ynhpsQoclW4dbNZdttR39cGIfc5JyCAqMr+ooeBrb5pi8VW7YlZUxpNOjcDP87Mr
- 8wo2MVRbVRdA69YB2rBkzisvHaWllq/OZ4AjdCJIxlL75LtccCnu23ihhXV4Ly8nUVPhVPjtICX
- zw9Yp/+YqkzzSSJPJ7IvhKA06GUK2itwsNddm5WHdLEzsfktcKXyGFqRjq/bRgBKhju49Z8hHjP
- 2dibr3dMQ7ACb5s8n5gZvhtTRXeL6Q9d0Z9OhzR38vQHLppBgUt3mf0ySlpA7C4slm93MkVi6bF
- XCMjnUqpUalOdFZPaE5Dx3TFrthwOjM2/LERd3WWDF6DzYDkyruBSAQs0suzUmouDOjtEVcBxkA
- 9wZ51bxjWkbMPAkcNylT+zCET811rUefg2LRfhptbWaLGLEiojxVGEVBPqVyJGQPqq20luoVpfw
- sGVQzUq/s/EVujAB9Ant0dHChJpFXifrBhrhbP5MfrsMHu+is9iIMcpBkEyaz10qteW+VvJV6nB
- rFTJSbVD10VRP9g==
+ bh=1UTs7xWOfZ2+WlrT8IbX5kaWxQReXo1sw6OBk9v4gp0=;
+ b=owEBbQKS/ZANAwAKAc7ouNYCNHK6AcsmYgBobm4FDl8UZo+6QQAmsLzxg3csEnC7DRJsJOSZI
+ XCx2dOFrkSJAjMEAAEKAB0WIQQO/I5vVXh1DVa1SfzO6LjWAjRyugUCaG5uBQAKCRDO6LjWAjRy
+ usU1D/42okN1TS1jlUxjYx1FzOyelj1Xao+ApACrVc8vm1/hq/NAKuwwp29J6tMxDeKvoBBtlVu
+ ZMy5IGQ0B39eW/HYMw1O72T48mMVnARD6zeCu2QSPxJgvWQESGOKHftgUV4uCBjDRZZUddM5Md+
+ jJwzXZqOrXHw7MHj8dEKLomL1HqrHyg6ESO3Gq9PkQhHDJkaSPWGasrQkO8tLAVeZLstS04l+FB
+ E0YUcJAF3sqVRuRgciStBcUQl3L4tltOkD+AZ5c0a67ry2QcNP2i8JvunEplLbyZnR3N8SSHM4P
+ f0+CYemEVHsH5zEjQ+VOnJUbShQ4qoSVHBTSEtspVw3yEF0Vi1IRg3+fkTqclEbi9VhJObCgzPs
+ 35XUvphPM+1NGnyJ++oASDNZMySPvCNDw2e6jyBm4qrzZl0yts54WtRdCgg/pmCgmxm6f/vvOYp
+ iJycL9JN5T8Eh8HI9Wz5gCUo2HY9rLct7e8hmJkiA4yG2zs89x+8ZUePNBRntPeUuwtXvsWGOuW
+ xKfecI8EAruGUgFY57qji1bHHO1FUV27y6zb5T3/ersmiUVG5ZHg+ByrLJLa+dglITqrQ4buMZf
+ F4xP0iQs0K1q/c7MNrLLzg1v5e66LS0tSOWC2lNjxnulEdPpZdl5csG0b/C7DJGsavufQktg0oo
+ zAY+r75kOUwK2aA==
 X-Developer-Key: i=peter.griffin@linaro.org; a=openpgp;
  fpr=0EFC8E6F5578750D56B549FCCEE8B8D6023472BA
 
@@ -162,8 +163,16 @@ Thanks,
 
 Peter
 
+p.s. Sending a v5 as I missed Krzysztof comment about using
+SET_LATE_SYSTEM_SLEEP_PM_OPS wrappers
+
 [1] https://lore.kernel.org/lkml/20250421-b4-gs101_max77759_fg-v3-0-50cd8caf9017@uclouvain.be/
 ---
+Changes in v5:
+- Rename hotplug_ing flag to in_hotplug to aid readability
+- Use NOIRQ_SYSTEM_SLEEP_PM_OPS wrapper for dev_pm_ops (Krzysztof)
+- Link to v4: https://lore.kernel.org/r/20250709-gs101-cpuidle-v4-1-56e21dd24963@linaro.org
+
 Changes in v4:
 - Avoid lockdep [ BUG: Invalid wait context ] on boot (André)
   - Updated callbacks to use raw_spinlock variants
@@ -194,7 +203,7 @@ Changes in v2:
  1 file changed, 241 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/soc/samsung/exynos-pmu.c b/drivers/soc/samsung/exynos-pmu.c
-index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffbc544e8b9 100644
+index a77288f49d249f890060c595556708334383c910..912aa010d9365b45fc43884481137be5ad4cfbcd 100644
 --- a/drivers/soc/samsung/exynos-pmu.c
 +++ b/drivers/soc/samsung/exynos-pmu.c
 @@ -8,6 +8,7 @@
@@ -219,10 +228,10 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
  	struct regmap *pmuintrgen;
 +	/*
 +	 * Serialization lock for CPU hot plug and cpuidle ACPM hint
-+	 * programming. Also protects the hotplug_ing flag.
++	 * programming. Also protects the in_hotplug flag.
 +	 */
 +	raw_spinlock_t cpupm_lock;
-+	bool *hotplug_ing;
++	bool *in_hotplug;
 +	atomic_t sys_suspended;
 +	atomic_t sys_rebooting;
  };
@@ -288,7 +297,7 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
 +	 * Mark this CPU as having finished the hotplug.
 +	 * This means this CPU can now enter C2 idle state.
 +	 */
-+	pmu_context->hotplug_ing[cpu] = false;
++	pmu_context->in_hotplug[cpu] = false;
 +	raw_spin_unlock_irqrestore(&pmu_context->cpupm_lock, flags);
 +
 +	return 0;
@@ -319,7 +328,7 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
 +	raw_spin_lock(&pmu_context->cpupm_lock);
 +	cpu = smp_processor_id();
 +
-+	if (pmu_context->hotplug_ing[cpu]) {
++	if (pmu_context->in_hotplug[cpu]) {
 +		raw_spin_unlock(&pmu_context->cpupm_lock);
 +		return NOTIFY_BAD;
 +	}
@@ -340,7 +349,7 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
 +	 * Mark this CPU as entering hotplug. So as not to confuse
 +	 * ACPM the CPU entering hotplug should not enter C2 idle state.
 +	 */
-+	pmu_context->hotplug_ing[cpu] = true;
++	pmu_context->in_hotplug[cpu] = true;
 +	__gs101_cpu_pmu_offline(cpu);
 +
 +	raw_spin_unlock_irqrestore(&pmu_context->cpupm_lock, flags);
@@ -446,9 +455,9 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
 +	if (ret)
 +		return ret;
 +
-+	pmu_context->hotplug_ing = devm_kmalloc_array(dev, num_possible_cpus(),
-+						      sizeof(*pmu_context->hotplug_ing),
-+						      GFP_KERNEL);
++	pmu_context->in_hotplug = devm_kmalloc_array(dev, num_possible_cpus(),
++						     sizeof(*pmu_context->in_hotplug),
++						     GFP_KERNEL);
 +
 +	raw_spin_lock_init(&pmu_context->cpupm_lock);
 +	atomic_set(&pmu_context->sys_rebooting, 0);
@@ -515,8 +524,8 @@ index a77288f49d249f890060c595556708334383c910..504202c5bc2c218363e8862f80ac5ffb
 +}
 +
 +static const struct dev_pm_ops cpupm_pm_ops = {
-+	.suspend_noirq = exynos_cpupm_suspend_noirq,
-+	.resume_noirq = exynos_cpupm_resume_noirq,
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(exynos_cpupm_suspend_noirq,
++				  exynos_cpupm_resume_noirq)
 +};
 +
  static struct platform_driver exynos_pmu_driver = {
