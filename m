@@ -1,193 +1,110 @@
-Return-Path: <linux-samsung-soc+bounces-9275-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9278-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60322AFFB57
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 09:51:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A90FAFFB89
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 10:01:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90F367BD89D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 07:47:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76FBE642B53
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 08:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7297528936F;
-	Thu, 10 Jul 2025 07:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E7CE28B7C7;
+	Thu, 10 Jul 2025 08:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="Vk43m7rp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NQl9a9qS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uzxu+4NA"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C8A1F1313;
-	Thu, 10 Jul 2025 07:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7BF28980E
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 08:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752133717; cv=none; b=ZK+OWyM04ay5+DUHfrcJ5yjETjBcKvsdWOEBlHT+gKM6Ft91mduJvmXDLFmjOKb8XARI6k8RrXpyWlA7BqjUhbKyEL6DDsn6lqMlHMwtBaCSJvttrIWNsGxPSypflp0rEhSQusswmTq4A9u3odb+cj4zmDrbm/WlI296T58R5Sw=
+	t=1752134454; cv=none; b=aln0EQDU/JfE32cGNkrTeXubeKN5RB4agVRkuhKFs7u8QtBEi/hb2Ze07ZeijsNgQ+bfi2DVhYsEX8AMaPfJp0DdOX0/amJ95SSNfCtXI1xNCa+YzVDSsL93HfWUt2R3LMcXi7NeXMhO7HmZuiqP0XU6XdYoZaPZq44XK3BsAqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752133717; c=relaxed/simple;
-	bh=NrxJi9mtfyDGqO728dsGOwO3Lk8FmcnbL6fsms/datc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=sydzqFuovseNy5nDIZZtBzDyJQ/qcBgipZ15x6YXdjuoXMBe3bePqEaaks/9BaZM2k7wtt47CXKzVWGjEzcPyfYZKsoupAGFQqqYjcywKAI3vF1x6iCStgA///Weo4zJtyNvtQ7ysPgGIDWu5fDgPLV1nHPq+ACO/C3KLkcrKJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=Vk43m7rp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NQl9a9qS; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 89DD01D001AA;
-	Thu, 10 Jul 2025 03:48:32 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-05.internal (MEProxy); Thu, 10 Jul 2025 03:48:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752133712;
-	 x=1752220112; bh=VFGB/39PUQRNUuopd0MS0kGVSVfgQHVyMjplY4VKnOg=; b=
-	Vk43m7rpatUNVCIm/eUsqs4Ivfk2UAWEuI+3QdpF6tq/2p2Lh+ghW7sXZwf7ePRP
-	lp1BH169XV5kIeDOARAgRA1RkWeVcUsv5pGboRcW25/sB+En4ZlTAFgBwWAqCEBZ
-	N9xOxBE2ykDt0nVZlO/n22T/8p5uvUXSFGRb9RaHZfatZP18GgfRuciyDsrhcmbm
-	T5izMMofJ6sb6QNuY6GAVceWyMpZNCLpIMpkhU9qE5hSwxNe2bS34pCqadzKGk3V
-	B3aEQ378TjhU+DW3V7s5SRStGQvK8NOuqvkX5LHnL2qTCskFnh+RZWKx+s7ySJDf
-	A4UYNGq8sf1naJ1hGcTAmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752133712; x=
-	1752220112; bh=VFGB/39PUQRNUuopd0MS0kGVSVfgQHVyMjplY4VKnOg=; b=N
-	Ql9a9qSupN5QGTE+AgKygTP9In0dw1wIlfecsFJ11CmzNeXW44dST/zm5C5AUR2b
-	iSSmoJ0E6wL/POomU+JF0IfWJEsWhwtmfvVq1Pxt6gUz4jHWE49Zepy0+KHEfR88
-	698DKrgkzF5BR+Y5zvGYmiaSORLqleZ/IzjJJqF3iJ2YA/QHfap8g84DpKZjMYPi
-	JOnnhgsF8Kilim/YzjuZGNPt43Ds0VSBrXOBLPhDwJ3x7baR0v3jfUTZ9Qg99LKL
-	DcAC30i6Ohxdg1j9FLowUyK3DEhVPGivjApMA+aYkfmgGmkd7fO1EXEqbAa2b5Pj
-	/rp61DMIPZWEGWMnrRsjA==
-X-ME-Sender: <xms:TnBvaFCPUNXTh3IvTOxOLzdDHNHZNRbcvlNXqh5rRJbrXGkNso61Bg>
-    <xme:TnBvaDgBxfku5Iv_jnwEfXQWOxZj7ezk_uh2m_oMLc8idRJhArJNus_I6hZ3EKQqv
-    G8LwwXBAqKoRUK_sRc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleekkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
-    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
-    hnpefhtdfhvddtfeehudekteeggffghfejgeegteefgffgvedugeduveelvdekhfdvieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
-    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeefjedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtoheptggrthgrlhhinhdrmhgrrhhinhgrshesrghrmhdrtghomhdprhgtph
-    htthhopehjvghsphgvrhdrnhhilhhsshhonhesrgigihhsrdgtohhmpdhrtghpthhtohep
-    lhhinhhugidqrghrmhdqkhgvrhhnvghlsegrgihishdrtghomhdprhgtphhtthhopehmth
-    hurhhquhgvthhtvgessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepghifkhdutddu
-    feestghorghsihgrrdgtohhmpdhrtghpthhtohephhhgkhhimhdtheestghorghsihgrrd
-    gtohhmpdhrtghpthhtohepkhgvnhhkihhmsegtohgrshhirgdrtghomhdprhgtphhtthho
-    pehkshhkgeejvdehsegtohgrshhirgdrtghomhdprhgtphhtthhopehmihhnghihohhunh
-    hgsghosegtohgrshhirgdrtghomh
-X-ME-Proxy: <xmx:TnBvaGptIpdFPbsUo13BNf8hpBhqyqysy3fq_yWLHl13xPdF6tSqxA>
-    <xmx:TnBvaGe9Vhef7xcrOIfQrP9rdJviWHKY6trwBHqDzDAQFB2ePiR0gA>
-    <xmx:TnBvaM9YcmmE4mbvyo2Gkxwpd7nYsDvTmU_J2YlrV-Dqs2KmNiNmLw>
-    <xmx:TnBvaHGUb8p777hi5CV08Iy0wnhXfH-l5giCPKNtmAy72YNH5WICTw>
-    <xmx:UHBvaOxDqHidI8CwbxD1Qo4ftx7FkbIJU0nBSF2y3Yd3Sf3_svEj6zLU>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8E75D700065; Thu, 10 Jul 2025 03:48:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1752134454; c=relaxed/simple;
+	bh=iK8IOTCXE2lrPjdoQaDJjyXlv03DESYVyObGJ/m44kA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=owQ2+S2yDBituXuou1866DrM3jECCDh79oNai6QNZscD8KRs53e8IZwUWpm3BIPfxuCkmbtCbV3ju2NnZ2c494S2XpTfju1Hj2WVt4iCDTU9AoUeFAq6pvMyWIRG2RNJaIVTVzpTg3gGMGJhdT81p6ymO2VPPR/mrKuoMiw6Jws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uzxu+4NA; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2e9a38d2a3aso668796fac.3
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 01:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752134452; x=1752739252; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ToFgcIrPsT47qophkUF6t9hEDKpaWGkYpzWGaT7NuQQ=;
+        b=Uzxu+4NAdve9XcUnFWFBHCBNjqpalyRMQQ+dFqV1zfDYJhEFqifdAH4w2/3/PznNHN
+         XhOp4QrvgzAdwA4nTwqwRv3bDciGdY2BmjM2WEMHx2K7mUyz2CObhpeBoWzP8DW5yiwT
+         8OcayffK6GHXAwRFRyLmVKqYZe+5Kee6r4gDAFSgvJ+s+zJF6B0NkPpWp96SSXfD5vp5
+         mqIGf9CDXFUMaXx6K+mBxx3TUpYuCFaIqaBsxC+Ega/uMAWv8OAo19E4wk8soxxEwFfz
+         OsOTWQ0kmKPljXHsr1sOZai40cJ9lwZvQqffsLv40q5wkipMXGNg+5fPIrjIVh+i9pvR
+         iCew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752134452; x=1752739252;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ToFgcIrPsT47qophkUF6t9hEDKpaWGkYpzWGaT7NuQQ=;
+        b=vXteJjHVil+U4jZ097K9hNXcp+6Sjl2s3F088F+XWHBydL9TI09+3VRzsPTe896hib
+         yREoNAgYFtkmyJeYVbF5nuZ3xEOoz04lGnog+5it31N4gOC+a5lij4zsL2Mw9rdIz2KG
+         bglcdIsSXBPB2HuerT9qOyZN/vgj1vEiP0+/pEy++G8aALcodvOTr+R0C3gYEM5tyL1m
+         CTCvvOgavy4oY+ch+4/Wu6iVLEAKuV7Qrbi8XaifrPHX5d/2jQB8MepMFnzU7CAiCuQ2
+         OQUSku70JugJqV9NhuN2NSNSIvLkSvGLJufPMATgKFThGIac+nqE71w37hSznWcO7MMX
+         YGqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXsyy4RcJNXDqlOumkMSMLaKdWQxz6ZwVkQhDqNZFtLIy0iZRQWCG/UQkr5F3XDwCacmiMy4lKGZsuSe98TlpPSsA==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yytz0WjoCMZSlCV7PAZWuP+1U65k2F4wq/KonqJfOxrjqF51k3k
+	52/bcaBu1CHgzHwFocmcv6baJXeVO91Jh98fQaDmaD9VQWdhH8Yhl57f15rhkH4x51nxlbX+Pfp
+	HrYEexu2v6Po88MLY9J73iOw7+LgLdUIA1Q1IR7urJw==
+X-Gm-Gg: ASbGncvwYtb8VXJlFbiYo7D8crO1M1Li4xPX/s2K/9IIaK8nlDabyN/gFSzWK2n6QTX
+	ubO2pv+Xss85kaH3tAA+MVw3OHdpdrB9GQgJrVqHJQm9l/bjBOvWAJgc5BY+gxDkegdBtj0xWrk
+	7OgYHxH4fD9FE7MFZLEQ10gwJadQ9aXEgQD8r9Xgn98UE=
+X-Google-Smtp-Source: AGHT+IG42etH9AipEwoVy40wJMSye+NWVNGQGCdLQSYPBIHb3YYmVeD+/TNpEhAraHgVOha7QcC5U1cAMQ15bwl7bNY=
+X-Received: by 2002:a05:6870:a351:b0:2d4:ce45:6990 with SMTP id
+ 586e51a60fabf-2ff10820374mr954468fac.7.1752134451671; Thu, 10 Jul 2025
+ 01:00:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T040df5ea49d69849
-Date: Thu, 10 Jul 2025 09:48:10 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: ksk4725@coasia.com, "Jesper Nilsson" <jesper.nilsson@axis.com>,
- "Michael Turquette" <mturquette@baylibre.com>,
- "Stephen Boyd" <sboyd@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>,
- "Krzysztof Kozlowski" <krzk@kernel.org>,
- "Sylwester Nawrocki" <s.nawrocki@samsung.com>,
- "Chanwoo Choi" <cw00.choi@samsung.com>,
- "Alim Akhtar" <alim.akhtar@samsung.com>,
- "Linus Walleij" <linus.walleij@linaro.org>,
- "Tomasz Figa" <tomasz.figa@gmail.com>,
- "Catalin Marinas" <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>,
- "Ravi Patel" <ravi.patel@samsung.com>, "SungMin Park" <smn1196@coasia.com>
-Cc: kenkim <kenkim@coasia.com>, "Jongshin Park" <pjsin865@coasia.com>,
- "GunWoo Kim" <gwk1013@coasia.com>, "HaGyeong Kim" <hgkim05@coasia.com>,
- "GyoungBo Min" <mingyoungbo@coasia.com>,
- "Pankaj Dubey" <pankaj.dubey@samsung.com>,
- "Shradha Todi" <shradha.t@samsung.com>, "Inbaraj E" <inbaraj.e@samsung.com>,
- "Swathi K S" <swathi.ks@samsung.com>, Hrishikesh <hrishikesh.d@samsung.com>,
- "Dongjin Yang" <dj76.yang@samsung.com>,
- "Sang Min Kim" <hypmean.kim@samsung.com>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-kernel@axis.com, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, soc@lists.linux.dev
-Message-Id: <5494bedb-6907-43dc-8580-04ef1e47c8d0@app.fastmail.com>
-In-Reply-To: <20250710002047.1573841-15-ksk4725@coasia.com>
-References: <20250710002047.1573841-1-ksk4725@coasia.com>
- <20250710002047.1573841-15-ksk4725@coasia.com>
-Subject: Re: [PATCH 14/16] arm64: dts: axis: Add initial device tree support
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <20250710073443.13788-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250710073443.13788-3-krzysztof.kozlowski@linaro.org>
+From: Peter Griffin <peter.griffin@linaro.org>
+Date: Thu, 10 Jul 2025 09:00:40 +0100
+X-Gm-Features: Ac12FXyPZ25VVFt9KdiEcMMJ5hhaX1smahS3sKtKfS3Bife6pmJ1SYWsA7BHfaM
+Message-ID: <CADrjBPpkZf2Hc_97e+-ZX5hpCw+DubEOUNiJ6fHLx0Kq2PZ7Uw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: tesla/google: MAINTAINERS: Reference "SoC
+ clean" maintainer profile
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
+	Tudor Ambarus <tudor.ambarus@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 10, 2025, at 02:20, ksk4725@coasia.com wrote:
-> From: sungminpark <smn1196@coasia.com>
+On Thu, 10 Jul 2025 at 08:35, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Add initial device tree support for Axis ARTPEC-8 SoC and Grizzly board.
-> This SoC contains four cores of cortex-a53 CPUs and other various
-> peripheral IPs.
+> Effectively all Tesla FSD and Google GS101 DTS patches go via Samsung
+> SoC maintainer, who applies the same rules as for Samsung SoC: DTS must
+> be fully DT bindings compliant (`dtbs_check W=3D1`).  Existing sources
+> already are compliant, so just document that implicit rule by mentioning
+> respective maintainer profile in their entries.
+>
+> Cc: Peter Griffin <peter.griffin@linaro.org>
+> Cc: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
+> Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
+> Cc: Alim Akhtar <alim.akhtar@samsung.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index fa1e04e87d1d..371005f3f41a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2320,6 +2320,20 @@ F:	drivers/crypto/axis
->  F:	drivers/mmc/host/usdhi6rol0.c
->  F:	drivers/pinctrl/pinctrl-artpec*
-> 
-> +ARM/ARTPEC ARM64 MACHINE SUPPORT
-> +M:	Jesper Nilsson <jesper.nilsson@axis.com>
-> +M:	Ravi Patel <ravi.patel@samsung.com>
-> +M:	SeonGu Kang <ksk4725@coasia.com>
-> +M:	SungMin Park <smn1196@coasia.com>
-> +L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
-> +L:	linux-samsung-soc@vger.kernel.org
-> +L:	linux-arm-kernel@axis.com
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/clock/axis,artpec*-clock.yaml
-> +F:	arch/arm64/boot/dts/axis/
-> +F:	drivers/clk/samsung/clk-artpec*.c
-> +F:	include/dt-bindings/clock/axis,artpec*-clk.h
-
-I'm trying to understand the SoC family tree here. I see that
-you have an entry for ARTPEC SoCs above it, which currently
-covers artpec6 (Cortex-A9, apparently not Samsung based).
-
-Is the reason for having two entries here that artpec6/7 and
-artpec8/9 are two separate SoC families, or is this just because
-they are using 32-bit and 64-bit cores, respectively?
-
-> 
-> +config ARCH_ARTPEC
-> +	bool "Axis Communications ARTPEC SoC Family"
-> +	help
-> +	   This enables support for the ARMv8 based ARTPEC SoC Family.
-> +
-> +config ARCH_ARTPEC8
-> +	bool "Axis ARTPEC-8 SoC Platform"
-> +	depends on ARCH_ARTPEC
-> +	depends on ARCH_EXYNOS
-> +	select ARM_GIC
-> +	help
-> +	  This enables support for the Axis ARTPEC-8 SoC.
-> +
-
-I would prefer to be less fine-grained here, especially as
-it seems that ARTPEC9 is again quite similar to ARTPEC8, as
-far as I can guess from public information.
-
-Could you fold both entries into a single ARCH_ARTPEC?
-
-     Arnd
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
 
