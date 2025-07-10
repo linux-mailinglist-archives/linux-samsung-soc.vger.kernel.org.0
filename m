@@ -1,46 +1,46 @@
-Return-Path: <linux-samsung-soc+bounces-9302-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9306-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD1D7B0093E
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 18:52:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56A26B00934
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 18:52:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 81007B4120B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 16:50:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A25F0561EFE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 10 Jul 2025 16:52:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F4512F1993;
-	Thu, 10 Jul 2025 16:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CC522F0042;
+	Thu, 10 Jul 2025 16:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="FGAvR0Vn"
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="h35GuMk5"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A058F2F0E58
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 16:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2032F004A
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 10 Jul 2025 16:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752166267; cv=none; b=YV9QHT9Sm2EwM7EcaRCLvHjmkV8pVo6cnHoNhtHRpq4q097imHf65Y7zonw7q5LBLxYFfwnL+gOcJe/L2WGg5EPAS5FJv7HM++LbL0Q7tvywb13gvjVlzRdW+jGsTNVx04SbU2zxur8wzTvRuUt+1o3++5quRppRZ1qbn9XDj6g=
+	t=1752166275; cv=none; b=jrAh5JvzuFbStQbdua8DS5EPCDX/oBebS124kgJTt2BhpAYv9CMN9OdfBVpay6P/ezD144+wNQWzIjyhQ/FwB3xrkIPy9sNquBPdcs2nuKqRj4zh4TZMvooCSAbKdnI1ks4uAPwE3rPfhq0++BeQAikzUPyQYMv+XTSjgT3B0No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752166267; c=relaxed/simple;
-	bh=clxVsQKkrnR9wv8DKul25lTsvvLat2HJc7+oSMFkZlk=;
+	s=arc-20240116; t=1752166275; c=relaxed/simple;
+	bh=hknFIwkcGKVEGhAUgTXGLYiwzwz0RfRZ2lihmtn+v/I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iqEpDO5qK1h36U/3pXWSuY4qe8+K2q7GhksWWnCoYACQ2kWMxELcpqC5y1DlEVa8ELCgPIZ21XkAm9g8FjTlBQaTHL58yiXrxTxzcz596n99/vDLidjT5MVg87tNc21fQSRG3LwRQ/SlIkdCroED5ETp0IYfoCAB8FTxovv7Bgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=FGAvR0Vn; arc=none smtp.client-ip=34.202.193.197
+	 In-Reply-To:To:Cc; b=OX41E9yeN3hm92/MTRLVjcAy0g7mpMXeEeF+UybQu6+E81fhfz8z/QSqDmMeGBPFg15bICOnhKZRsz/njYIPykaHbBhMOwK4DFO98I/U0O68SJZgM+MoMeF4e6R6kYevnuLi5Peuq5f1XOzYbLm3A2BUHRMrnqo7EDr9rxw/NY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org; spf=pass smtp.mailfrom=mentallysanemainliners.org; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=h35GuMk5; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mentallysanemainliners.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mentallysanemainliners.org
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=FGAvR0Vnmqx0SatLPRyP1DkZi8vetTQl0iHi7cvaP3dqxKoqaODOxKGZ3TXJCr0FqFQ3kSLJEE1ZR+4qTdzKyBPyBfx7FdnuBYrnmFH44iKaziy1Z/Ln9FYXP+nDEBIwwVhjEwS7PsZldvZu+ftDtvBG8MIJKB9fjwISGf54jrKbwCi9DwK5bspL9MhNdalGIz1y6XbBiOSnYNUcLGsajaXHl/65Ntwqs1YO9ZRr/OVzaMDSQgMu1wU06l9c2RLj9htcstW5XLLodMVc8rxVBqrUEM8/z91eHeh6DByTndbJsVYRJBbla7PYpM7Zq1ECUBbE0xvTUdVraLEc04PoOg==; s=purelymail3; d=purelymail.com; v=1; bh=clxVsQKkrnR9wv8DKul25lTsvvLat2HJc7+oSMFkZlk=; h=Feedback-ID:Received:From:Date:Subject:To;
+DKIM-Signature: a=rsa-sha256; b=h35GuMk5eju5NI5/LGJ7liDrab2T0HxDd6ftADlmxrt8ur1zxREEhR5xgaYzC8OFf0h1/SyErlgMTRwLLbx6TsGU1815dCZXYkDwau2jJAw8OEhk6oSKpOZHtyiyYuPh0VvLMot6Qh3t9FeGm03gkmlSz6HLzPCn6AJOY5/L+E2yvsAJ+kloB6yK5XexlPor7CyN7LWT2lZ1wOxZr30i0YiklDNgcTkdL8Wd56I/ognUVgZ/ATPDlz7CBW9j2aTQKcUtN0sjOgnq74vmBZa9gxNsim30x0keXp3UHa1JDtsy4Q/QUWYRKZm7Z92qXVpVYePYBbf60I74/mK7he2kBg==; s=purelymail3; d=purelymail.com; v=1; bh=hknFIwkcGKVEGhAUgTXGLYiwzwz0RfRZ2lihmtn+v/I=; h=Feedback-ID:Received:From:Date:Subject:To;
 Feedback-ID: 68247:10037:null:purelymail
 X-Pm-Original-To: linux-samsung-soc@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1992400030;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Thu, 10 Jul 2025 16:50:42 +0000 (UTC)
+          Thu, 10 Jul 2025 16:50:44 +0000 (UTC)
 From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
-Date: Thu, 10 Jul 2025 18:50:08 +0200
-Subject: [PATCH v2 4/5] arm64: dts: exynos990-c1s: Enable USB
+Date: Thu, 10 Jul 2025 18:50:09 +0200
+Subject: [PATCH v2 5/5] arm64: dts: exynos990-r8s: Enable USB
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250710-resends-july-exynos990-dt-v2-4-55033f73d1b0@mentallysanemainliners.org>
+Message-Id: <20250710-resends-july-exynos990-dt-v2-5-55033f73d1b0@mentallysanemainliners.org>
 References: <20250710-resends-july-exynos990-dt-v2-0-55033f73d1b0@mentallysanemainliners.org>
 In-Reply-To: <20250710-resends-july-exynos990-dt-v2-0-55033f73d1b0@mentallysanemainliners.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -60,9 +60,9 @@ Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 X-Mailer: b4 0.14.2
 X-Developer-Signature: v=1; a=ed25519-sha256; t=1752166235; l=1236;
  i=igor.belwon@mentallysanemainliners.org; s=20241206;
- h=from:subject:message-id; bh=clxVsQKkrnR9wv8DKul25lTsvvLat2HJc7+oSMFkZlk=;
- b=1wJaa5+YsmwD3pHwjOLrqecSCac9cHVyVOiwr8MaubnbBiW/Q1ZK5LLvwSNZH2LMpiXp6HKnV
- XI2nZIreuHoABl5Fdy5UWiQW76M5E7tpBax81YEn+Wd8kT+KCD6jG3Q
+ h=from:subject:message-id; bh=hknFIwkcGKVEGhAUgTXGLYiwzwz0RfRZ2lihmtn+v/I=;
+ b=ynBO6kmtohpJo3p5lxLXPL57n/QpF8Lx2UHxcFcKg0YmDmr3vudy6s1QYzYLQalQbz3gK2k2N
+ IG9BHBog/VaAplFRDtiKJ3xdAC+skHG0iNoJuyjYufbdAbUzTiRAAIC
 X-Developer-Key: i=igor.belwon@mentallysanemainliners.org; a=ed25519;
  pk=qKAuSTWKTaGQM0vwBxV0p6hPKMN4vh0CwZ+bozrG5lY=
 
@@ -73,15 +73,15 @@ regulators until we do.
 
 Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
 ---
- arch/arm64/boot/dts/exynos/exynos990-c1s.dts | 16 ++++++++++++++++
+ arch/arm64/boot/dts/exynos/exynos990-r8s.dts | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos990-c1s.dts b/arch/arm64/boot/dts/exynos/exynos990-c1s.dts
-index 36a6f1377e92b40716c606cceb752f642ae603e3..9f0ad4f9673a87b4d75f3c7d208c8c37bb51fe2d 100644
---- a/arch/arm64/boot/dts/exynos/exynos990-c1s.dts
-+++ b/arch/arm64/boot/dts/exynos/exynos990-c1s.dts
+diff --git a/arch/arm64/boot/dts/exynos/exynos990-r8s.dts b/arch/arm64/boot/dts/exynos/exynos990-r8s.dts
+index 6bae3c0ecc1caae31d2c6b6e81bbd76a4ccd6f5f..55342db61979bc28e65f68c9ba7d6b452dbf6c07 100644
+--- a/arch/arm64/boot/dts/exynos/exynos990-r8s.dts
++++ b/arch/arm64/boot/dts/exynos/exynos990-r8s.dts
 @@ -44,6 +44,12 @@ memory@80000000 {
- 		      <0x8 0x80000000 0x1 0x7ec00000>;
+ 		      <0x8 0x80000000 0x0 0xc0000000>;
  	};
  
 +	/* TODO: Remove this once PMIC is implemented */
