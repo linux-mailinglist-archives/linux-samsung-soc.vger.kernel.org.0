@@ -1,100 +1,118 @@
-Return-Path: <linux-samsung-soc+bounces-9322-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9324-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07515B01467
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Jul 2025 09:23:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 384E1B0148E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Jul 2025 09:26:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4754B542758
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Jul 2025 07:22:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB6613ACBD6
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 11 Jul 2025 07:25:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA773221FDD;
-	Fri, 11 Jul 2025 07:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF7671EB5E1;
+	Fri, 11 Jul 2025 07:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SR7VvVLm"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="Aa+3MMGC"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m19731117.qiye.163.com (mail-m19731117.qiye.163.com [220.197.31.117])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7523E1F3BBB;
-	Fri, 11 Jul 2025 07:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64E01E5B73;
+	Fri, 11 Jul 2025 07:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.117
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752218330; cv=none; b=hOcZW5uPiHnrEtYjCT1/f7pLOOIKp1pPPQTZcsVLOBgxKrxqJ5lI3ZPSLd++bq9W2rTZ9H6lkzRH9unGPewibERubCyEOP8HSz9O0n5+eREfTM/Qav6UiSWzSPGCZXbU3yA4rTxXbS1B8mHV/GivFBHj1euEBzB1hRvXwvKc//Y=
+	t=1752218725; cv=none; b=tfDeoYpwjFxB0U4WQUDjwVdr8Kibj+5xNDnh0Ub65aHClMcyqBM2E6CBWsy5oyz4lUhD6oAeWqh5TWbY4+YDEQatwYGqrva/I3mxT1vwU5T5UWRDOwqJOxqr9k68nPg2SA0n1ArMs8FzA8tnr4T3bXRX7EmziA2v16y4VdCOQOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752218330; c=relaxed/simple;
-	bh=ShP/GEws3F/Xu4CDdBl2pJANZePb6Hhgh1YDAXnYmF4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TdKX7YprZUn+biSEjdUpzklLJY9dNlvbNrIPObdL9ANFoKVTitvXgcjk4Pamu7a26BScSTUqrM8RGdZ1LRngoaZJvQ3EvLdDJTCb13igJRCxzehBk4j578t0JM+zSbKCB7JoHR4o4lgu7q11zDsAxJDzEoNHagw4Hah4JQ/sl90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SR7VvVLm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B67C4CEED;
-	Fri, 11 Jul 2025 07:18:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752218330;
-	bh=ShP/GEws3F/Xu4CDdBl2pJANZePb6Hhgh1YDAXnYmF4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SR7VvVLmsgpvKcfH6j88LGLYp5FOHNoAYvu61OXcQ6IHEFQo42mfJGjToRC2rYl+W
-	 1BZdMGfEFqmqZYXvP3Oeguc7jbozkY+7FRVoxZlzUB9HuUd7pB/JtudX0gd3WEU3PX
-	 yYsl8VZNXozDIpheEfYjCqJ2f3rhJChNxensOUop9nP+/RXQGGMjQm+l96EuI0XXCg
-	 5H0ufFAZA7sE8Ha5GUNAS0r0iWl8VbgzYoDjzrHEghmEAEZRK7r7SUx6rO2QYfG70i
-	 5zZr3vn/Hc8fn68kuSvzt8i2WkjNTdavny94tmwc8t+KDqWSItiGtQpNeW38izvlYu
-	 IU0m78xaLR+iw==
-Date: Fri, 11 Jul 2025 09:18:47 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Devang Tailor <dev.tailor@samsung.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	alim.akhtar@samsung.com, alexandre.belloni@bootlin.com, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-rtc@vger.kernel.org, faraz.ata@samsung.com
-Subject: Re: [PATCH v2 1/3] dt-bindings: rtc: s3c-rtc: add compatible for
- exynosautov9
-Message-ID: <20250711-nebulous-emu-of-defiance-f9f8a1@krzk-bin>
-References: <20250710083434.1821671-1-dev.tailor@samsung.com>
- <CGME20250710082534epcas5p40b49f5662ff36306349e6721fa9811fe@epcas5p4.samsung.com>
- <20250710083434.1821671-2-dev.tailor@samsung.com>
+	s=arc-20240116; t=1752218725; c=relaxed/simple;
+	bh=EPbH64nRja7CPYX6FXOzsav2K14chsOTUkAA897dKuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ol17qkxqFvwrjSAl/WFjPQ4+C4ds1fojxA11mnNYmYY7eIQgttqQB+vdFCqKxMZgR+rRlKi9tkhAVtUBvM0Kre483qskhKQ39Z/zg9jHATNZiSqMdbKdkd65EphKDEANZoYv3Oyp6fLcddvA/q7hB2CaWaDbueXW0/bRiW21bqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=Aa+3MMGC; arc=none smtp.client-ip=220.197.31.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.26] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1badf1316;
+	Fri, 11 Jul 2025 15:20:05 +0800 (GMT+08:00)
+Message-ID: <600f723d-1ec7-4e67-b6f1-316ac8c09235@rock-chips.com>
+Date: Fri, 11 Jul 2025 15:20:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250710083434.1821671-2-dev.tailor@samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/12] drm/exynos: exynos_dp: Remove
+ &exynos_dp_device.ptn_bridge
+To: =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
+ andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org
+Cc: Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+ jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+ jingoohan1@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
+ hjc@rock-chips.com, andy.yan@rock-chips.com,
+ dmitry.baryshkov@oss.qualcomm.com, l.stach@pengutronix.de,
+ dianders@chromium.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <20250709070139.3130635-1-damon.ding@rock-chips.com>
+ <20250709070139.3130635-5-damon.ding@rock-chips.com>
+ <4596850.bcXerOTE6V@diego>
+Content-Language: en-US
+From: Damon Ding <damon.ding@rock-chips.com>
+In-Reply-To: <4596850.bcXerOTE6V@diego>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQkxNSFYaH0NKSk8YGU9PHUJWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+X-HM-Tid: 0a97f85b090603a3kunm38f22b26f2f422
+X-HM-MType: 1
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6M0k6Ijo*FzE5HR8KEzA*Czwu
+	HwowCQtVSlVKTE5JSUpDT0tMT0tCVTMWGhIXVR8aFhQVVR8SFRw7CRQYEFYYExILCFUYFBZFWVdZ
+	EgtZQVlOQ1VJSVVMVUpKT1lXWQgBWUFJSUtPNwY+
+DKIM-Signature:a=rsa-sha256;
+	b=Aa+3MMGCvohGN1l0oGiN9mPE9+buYJEnl7ehbJtNvS297qP4+L7vINeEZPucXb9o8A4JzLAXyJsHSJEQslBF+pchRkHo/Eum2OyZKRYcPQ6U1nEYgyo+L5wX146JCFtmGeuaa1OuwRzenz3aIxjmbCmDgLQJwoJopLf5Na7YYzg=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=47mqYoiKeZ/zqm9N6N2f/Tu0kYWZlKHaQ/Ixw2H+aSk=;
+	h=date:mime-version:subject:message-id:from;
 
-On Thu, Jul 10, 2025 at 02:04:32PM +0530, Devang Tailor wrote:
-> Add "samsung,exynosautov9-rtc" dedicated compatible for
-> on-chip RTC found in ExynosAutov9 SoC.
+Hi Heiko,
+
+On 2025/7/10 3:55, Heiko Stübner wrote:
+> Hi Damon,
 > 
-> Signed-off-by: Devang Tailor <dev.tailor@samsung.com>
-> ---
->  Documentation/devicetree/bindings/rtc/s3c-rtc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Am Mittwoch, 9. Juli 2025, 09:01:31 Mitteleuropäische Sommerzeit schrieb Damon Ding:
+>> Use &analogix_dp_plat_data.bridge instead of &exynos_dp_device.ptn_bridge
+>> directly.
+>>
+>> Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
 > 
+>> @@ -155,7 +154,7 @@ static int exynos_dp_bind(struct device *dev, struct device *master, void *data)
+>>   
+>>   	dp->drm_dev = drm_dev;
+>>   
+>> -	if (!dp->plat_data.panel && !dp->ptn_bridge) {
+>> +	if (!dp->plat_data.panel && !dp->plat_data.panel) {
+> 
+> typo. The second test should be for dp->plat_data.bridge
 
-<form letter>
-This is a friendly reminder during the review process.
+That was so careless of me! I will fix it in the next version.
 
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions of patchset, under or above your Signed-off-by tag, unless
-patch changed significantly (e.g. new properties added to the DT
-bindings). Tag is "received", when provided in a message replied to you
-on the mailing list. Tools like b4 can help here. However, there's no
-need to repost patches *only* to add the tags. The upstream maintainer
-will do that for tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+> 
+> 
+>>   		ret = exynos_dp_dt_parse_panel(dp);
+>>   		if (ret)
+>>   			return ret;
+> 
+> 
+> 
+> 
+> 
 
 Best regards,
-Krzysztof
+Damon
 
 
