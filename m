@@ -1,51 +1,51 @@
-Return-Path: <linux-samsung-soc+bounces-9420-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9422-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79D48B0C080
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 11:43:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E56AB0C082
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 11:43:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C64733BAEAE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 09:43:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 43BF57A1CCF
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 09:42:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C399228C5CE;
-	Mon, 21 Jul 2025 09:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97ACF28C854;
+	Mon, 21 Jul 2025 09:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b="OUnCEbkH"
+	dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b="YBw89Lf4"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726681552E0
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Jul 2025 09:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9728C5A4
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Jul 2025 09:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753091030; cv=none; b=j7L2hw83UChwIymIWGRF9VX3UW5TkTng7EtBDNgoSDOaE4zOUs5AeaQc0ROkoZeZXSZCTLsJ5T2FM23B69ct12vY+CgORcFcfxALxSIiTWpRV00XC3HJ/rTIcNODd3ghoWRXFo/PpoAB1/ad/J/ATRCE+V7A03ZCjwiZYi3Pw7w=
+	t=1753091031; cv=none; b=rPM+aY44PGOSERSkUa32BFF+qBuEg0o/NzDlZnptZi2kDl+g6W5Z1fOpOeMy4pheWE6F7Fqk15Rtj4OdH4AYererVZkGG4HCSP8hVeUJBplALzAOhYqn/yQdfNI0ujJZuTcu9jmnfZH1NkUn6bzcg45HkuCrq4DHmP8N2AUHZgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753091030; c=relaxed/simple;
-	bh=VZR9L/YQAGIhhNghVVdCnKKDaytCOzfTudQMGYx1nto=;
+	s=arc-20240116; t=1753091031; c=relaxed/simple;
+	bh=fA7kCw/btmE/Kdd4JfUiEBidHB1Txrk8ejW2zzBXunM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ajQMQd7PBnSddTnegZ46LRH7exp9LBbvutuxSjxxyte6QM2TRmDJg/ri9R5DTxvjI1ZUJR/AoIHKyT5KTDzHj+U7KoKdsKZTqZTXoCnqtxmyv/OYmAAnqtTx66axbUenwtnOTeh42+F5fBGU4BysV5Ba6ysDPwULjPatmGYVR/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se; spf=pass smtp.mailfrom=grimler.se; dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b=OUnCEbkH; arc=none smtp.client-ip=95.215.58.174
+	 In-Reply-To:To:Cc; b=csisbzJPRIdV1IJjZXgLFunFq5tvP7iXs36xmsIY1cZmm/3z93/tPOwRautrEqWwhGFM6BLg0m8zRiDnsT5DeKieQzyrRyIyWdU8tqDjdeNJj/hxXvNki4Rkfu06+Rd5GvJyPuL/iAQ6F9tX6sWseSP6182s7/Gvel5X9V1+9AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se; spf=pass smtp.mailfrom=grimler.se; dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b=YBw89Lf4; arc=none smtp.client-ip=95.215.58.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grimler.se
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grimler.se; s=key1;
-	t=1753091024;
+	t=1753091027;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aF2s9Qr5GNaKwpyz9KRWWSUy0LehEu6UCIeJ3Re6uEI=;
-	b=OUnCEbkHFEy1n8ZiypQGthy17Gzm1YnNLmxPTC3xisnSuvNBEjKGsdJSRDm50i9fGYrGvB
-	dVnyrhVS3x8mLeVP5oWPjzGrlSFjr/thjguBWrwBdGITJqOB5FkqzPihy3N1EoF1lICnYs
-	hyir03/1c/cEnTsKYMyuPW+MYCL+XUQ=
+	bh=OLEv1F8si+d4JJJEfku+IvjEsa+DjKyQC0EuZ/oVHD0=;
+	b=YBw89Lf4y0J81omtVXFiErCy7x7GCqvBn9kRHUywYFrPxpgnwB8GnQ1oWSMqF3dK6auKZd
+	TIVzr17F0DAzQsdoZzgMIVze8Nx24Y6tlvowId9/BdMVItXdl7O700OyBHnfh1Man7gGiQ
+	egQLEfykp0Sglpzko5rNyXEaHVOBFS8=
 From: Henrik Grimler <henrik@grimler.se>
-Date: Mon, 21 Jul 2025 11:43:17 +0200
-Subject: [PATCH 1/3] drm/bridge: sii9234: fix some typos in comments and
- messages
+Date: Mon, 21 Jul 2025 11:43:18 +0200
+Subject: [PATCH 2/3] drm/bridge: sii9234: use dev_err_probe where
+ applicable
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250721-exynos4-sii9234-driver-v1-1-2e47ed02f677@grimler.se>
+Message-Id: <20250721-exynos4-sii9234-driver-v1-2-2e47ed02f677@grimler.se>
 References: <20250721-exynos4-sii9234-driver-v1-0-2e47ed02f677@grimler.se>
 In-Reply-To: <20250721-exynos4-sii9234-driver-v1-0-2e47ed02f677@grimler.se>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -68,80 +68,72 @@ To: Andrzej Hajda <andrzej.hajda@intel.com>,
 Cc: dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, replicant@osuosl.org, 
  linux-kernel@vger.kernel.org, Henrik Grimler <henrik@grimler.se>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2316; i=henrik@grimler.se;
- h=from:subject:message-id; bh=VZR9L/YQAGIhhNghVVdCnKKDaytCOzfTudQMGYx1nto=;
- b=owEBbQGS/pANAwAKAbAHbkkLcWFrAcsmYgBofgvFk192z/AfkceQ1t7q4qnae8at/l3esEQ6q
- nMLYBZ02v+JATMEAAEKAB0WIQQsfymul4kfZBmp4s2wB25JC3FhawUCaH4LxQAKCRCwB25JC3Fh
- a75zB/9PB/5w5mjThVdcK7yy/nNmqcAi85C13GIQiZ/CIAOL41K09ViKp+BpNdayeixeFnWzkFh
- k6HzPKn2XQfD+S5z/7rHXNZW4lOqvzUQ4ltJQW4jcU2JOs+0COf/mFTRPRI1f52qXr7j4VBKZ09
- 4UYGYUr9N4HEB4Vs2F+j5nGE0R+0R4xIVEZv4N7YnkgSdP9x6Fg+tYMBc0sFFzG/Y1EhTRCCV6t
- zKRS/iIdPfqIvgsywu0Q+oXoXKvSvzFaZHMzmV+OjdJaDv2zsHl0A/7At8Dj7aKHi11eDJOWvGz
- +6nKC0+OZu3Lz1B2YUXsxbVtThESjL4cbJePM+QcSzhZC/Nm
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1995; i=henrik@grimler.se;
+ h=from:subject:message-id; bh=fA7kCw/btmE/Kdd4JfUiEBidHB1Txrk8ejW2zzBXunM=;
+ b=owEBbQGS/pANAwAKAbAHbkkLcWFrAcsmYgBofgvIS7HDC0DrDRkeyFvc9LW0I1rTyNgAnlKfU
+ bM4zIXwgQqJATMEAAEKAB0WIQQsfymul4kfZBmp4s2wB25JC3FhawUCaH4LyAAKCRCwB25JC3Fh
+ a3XoB/9G40Lv0JikNKi9Ia8QkocQfYruM/z/b25jkjcvIMg5emz1qVhp4+y6a/lOb8wxDwSronb
+ r0DcGzDRu+uBkuNJJTqPDSUT8OdWNrabTLHQb0g0lRMkzdGvqEthoZh7b77uFB2FYcJy0667FxY
+ fmB0SCpJPWuhfF6o5lJY1W3qjcl40tpPjdgUrlNSeSdgfa5YSvxsylKke/698b3U87mZAjq/mVF
+ wZAg7ppIU+1baeyu0De6hog7wGH0+prm1c9/n/yfAZbfWcQbg4bJzuBzmrlFHkv5HywIcjZxpgp
+ 3eJeWA74HahKR5PMQx4q1bvXXon1/RICH7CYjs0Eususlxhb
 X-Developer-Key: i=henrik@grimler.se; a=openpgp;
  fpr=2C7F29AE97891F6419A9E2CDB0076E490B71616B
 X-Migadu-Flow: FLOW_OUT
 
-Fix spelling and formatting so that the code is easier to follow, and
-so that it is more searchable.
+In case of error during resource acquisition the driver should print
+an error message only if it is not deferred probe. Use dev_err_probe
+helper to handle this, which will also record defer probe reason for
+debugging.
 
 Signed-off-by: Henrik Grimler <henrik@grimler.se>
 ---
- drivers/gpu/drm/bridge/sii9234.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/bridge/sii9234.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/sii9234.c b/drivers/gpu/drm/bridge/sii9234.c
-index bb1bed03eb5b7ae67f752c0d593dc54131e9e370..930117bbba87285e62107389606897740516eb0a 100644
+index 930117bbba87285e62107389606897740516eb0a..0e0bb1bf71fdcef788715cfd6fa158a6992def33 100644
 --- a/drivers/gpu/drm/bridge/sii9234.c
 +++ b/drivers/gpu/drm/bridge/sii9234.c
-@@ -339,7 +339,7 @@ static int sii9234_cbus_reset(struct sii9234 *ctx)
- 	return sii9234_clear_error(ctx);
- }
- 
--/* Require to chek mhl imformation of samsung in cbus_init_register */
-+/* Require to check mhl information of samsung in cbus_init_register */
- static int sii9234_cbus_init(struct sii9234 *ctx)
- {
- 	cbus_writeb(ctx, 0x07, 0xF2);
-@@ -614,7 +614,7 @@ static void sii9234_cable_out(struct sii9234 *ctx)
- 
- 	disable_irq(to_i2c_client(ctx->dev)->irq);
- 	tpi_writeb(ctx, TPI_DPD_REG, 0);
--	/* Turn on&off hpd festure for only QCT HDMI */
-+	/* Turn on&off hpd feature for only QCT HDMI */
- 	sii9234_hw_off(ctx);
- 
- 	ctx->state = ST_OFF;
-@@ -708,7 +708,7 @@ static enum sii9234_state sii9234_rsen_change(struct sii9234 *ctx)
- {
- 	int value;
- 
--	/* Work_around code to handle wrong interrupt */
-+	/* Workaround code to handle wrong interrupt */
- 	if (ctx->state != ST_RGND_1K) {
- 		dev_err(ctx->dev, "RSEN_HIGH without RGND_1K\n");
- 		return ST_FAILURE;
-@@ -723,9 +723,9 @@ static enum sii9234_state sii9234_rsen_change(struct sii9234 *ctx)
- 	}
- 	dev_dbg(ctx->dev, "RSEN lost\n");
- 	/*
--	 * Once RSEN loss is confirmed,we need to check
--	 * based on cable status and chip power status,whether
--	 * it is SINK Loss(HDMI cable not connected, TV Off)
-+	 * Once RSEN loss is confirmed, we need to check
-+	 * based on cable status and chip power status, whether
-+	 * it is SINK Loss (HDMI cable not connected, TV Off)
- 	 * or MHL cable disconnection
- 	 * TODO: Define the below mhl_disconnection()
- 	 */
-@@ -820,7 +820,7 @@ static int sii9234_init_resources(struct sii9234 *ctx,
- 	int ret;
- 
- 	if (!ctx->dev->of_node) {
--		dev_err(ctx->dev, "not DT device\n");
-+		dev_err(ctx->dev, "no DT device\n");
- 		return -ENODEV;
+@@ -825,10 +825,9 @@ static int sii9234_init_resources(struct sii9234 *ctx,
  	}
  
+ 	ctx->gpio_reset = devm_gpiod_get(ctx->dev, "reset", GPIOD_OUT_LOW);
+-	if (IS_ERR(ctx->gpio_reset)) {
+-		dev_err(ctx->dev, "failed to get reset gpio from DT\n");
+-		return PTR_ERR(ctx->gpio_reset);
+-	}
++	if (IS_ERR(ctx->gpio_reset))
++		return dev_err_probe(ctx->dev, PTR_ERR(ctx->gpio_reset),
++				     "failed to get reset gpio from DT\n");
+ 
+ 	ctx->supplies[0].supply = "avcc12";
+ 	ctx->supplies[1].supply = "avcc33";
+@@ -836,9 +835,7 @@ static int sii9234_init_resources(struct sii9234 *ctx,
+ 	ctx->supplies[3].supply = "cvcc12";
+ 	ret = devm_regulator_bulk_get(ctx->dev, 4, ctx->supplies);
+ 	if (ret) {
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(ctx->dev, "regulator_bulk failed\n");
+-		return ret;
++		dev_err_probe(ctx->dev, ret, "regulator_bulk failed\n");
+ 	}
+ 
+ 	ctx->client[I2C_MHL] = client;
+@@ -911,10 +908,9 @@ static int sii9234_probe(struct i2c_client *client)
+ 					sii9234_irq_thread,
+ 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+ 					"sii9234", ctx);
+-	if (ret < 0) {
+-		dev_err(dev, "failed to install IRQ handler\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(dev, ret,
++				     "failed to install IRQ handler\n");
+ 
+ 	ret = sii9234_init_resources(ctx, client);
+ 	if (ret < 0)
 
 -- 
 2.50.1
