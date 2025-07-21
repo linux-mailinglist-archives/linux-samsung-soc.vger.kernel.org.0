@@ -1,48 +1,41 @@
-Return-Path: <linux-samsung-soc+bounces-9417-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9419-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F510B0BD86
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 09:18:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E5BAB0BF71
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 10:52:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0AB33BBF53
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 07:17:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 507741653B8
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 08:52:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AB1C27F187;
-	Mon, 21 Jul 2025 07:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4C128466D;
+	Mon, 21 Jul 2025 08:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HT2WtPZp"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="EMNzdqeO"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m15580.qiye.163.com (mail-m15580.qiye.163.com [101.71.155.80])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D126BA36;
-	Mon, 21 Jul 2025 07:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC57801;
+	Mon, 21 Jul 2025 08:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.80
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753082284; cv=none; b=iFa7xMfc2XpXmttFMTKKqwENDxeKEx6g3Jo0ALQ/oNPS2wfLLlsV8Ts7GZUecVQ6879AWSDD2yj4c/mG9fIQZC7jRCD754ukR0xdsaAH2Zy2ha3IHXqAt5Hu71vPIaJcX29H05arCaPM5G4w72KElEXAdpsfSTzaeb0WUnpeqRI=
+	t=1753087946; cv=none; b=etrYwJjpN8wyqk0Ii/nrnfn4i/7lyK6D2BE8BhARPdtZy3bKUJtR22BwI22Hcd/WEDW1lOJ7NIbHCHA/yyeRVMwu8XCZGt+PEFeJbl/UGR2WrWOzFeQA3eJHB6b7okctLNDpMBctqI3VsRXlOXFjZbCkW9bmTlphXQNDCK4gRN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753082284; c=relaxed/simple;
-	bh=1s2KWA7tcb/MOyIOVFgvc6VCEGCoanOpC0pWVed+jWM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lKjpRYRR0PBPzO58bB4jo//xnkHkWTQzOqfguIGJ2RwIIShk7Kbh4Eepycu/pWmO8+jLwMXKH9o3otqi3imegWxBf40HWwcBYdvvk/CnyN5CKg65kqKrUGTlf/M6vJebFBr3pnRP0uDSV4g63AAAiHAlshQET0bn3o6Lwv429MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HT2WtPZp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07355C4CEED;
-	Mon, 21 Jul 2025 07:17:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753082283;
-	bh=1s2KWA7tcb/MOyIOVFgvc6VCEGCoanOpC0pWVed+jWM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HT2WtPZpN58l+taN0yRBydcUEukBxJNSQtelllZMQs6BB2IaOMCXK16LojQHy2Kpw
-	 bJxJ3eN9z3TPTYq064MEcEZneXeSq2mh7Y1ejCTVk1Uh0XwTlUPhQYkAdVPC/Ieix3
-	 gUjnvYWMD/PDEz7UGfjmdE6cDJWoekgKEC51yAL4dhsLmWedWbcau5zxiY2KnTSV/a
-	 AbpeD0MWRzGjrg8QGI+FPtObFMJzFq35ZLYJ7DM0Pa0PsMPwLkRGkkOdEqpNBXVAir
-	 mLJKMM1CvCuTLtxAr8bCFPw6nCq/FBTIrL3F/a4V0EOrU6mCEWD+7etGruH4dNKbmc
-	 +lhuZ2h2rUGNQ==
-Message-ID: <d0d55fe7-27d5-47e2-9c64-aa0f01eaa772@kernel.org>
-Date: Mon, 21 Jul 2025 09:17:53 +0200
+	s=arc-20240116; t=1753087946; c=relaxed/simple;
+	bh=RIJoiODDGxbiki0tPfqL0IJIvVliyuWAoq97tW5Re+E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PE34NzDc7cagoNAk4yZpIL9E3pvQjtU/XzJPgwX8KJJANwf/1gMuWALt4zNGdnvgVY3UMhdg+LKHFWBvFi47jCKHbJw88OeDr8IyCNQzPkVrLPXHGKGrfoc/Yj2a1gomDNGkX2DSyhCOKCyOZa6gnVIIfqZgkhOFgnWVAdeLjZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=fail (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=EMNzdqeO reason="signature verification failed"; arc=none smtp.client-ip=101.71.155.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.26] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1cb3df4bc;
+	Mon, 21 Jul 2025 15:36:41 +0800 (GMT+08:00)
+Message-ID: <f122492f-7f2a-4d3f-af74-3b807c9cd742@rock-chips.com>
+Date: Mon, 21 Jul 2025 15:36:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,178 +43,231 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] arm64: dts: axis: Add initial device tree support
-To: sungmin park <smn1196@coasia.com>, ksk4725@coasia.com,
- Jesper Nilsson <jesper.nilsson@axis.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
- Linus Walleij <linus.walleij@linaro.org>, Tomasz Figa
- <tomasz.figa@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- Ravi Patel <ravi.patel@samsung.com>
-Cc: kenkim <kenkim@coasia.com>, Jongshin Park <pjsin865@coasia.com>,
- GunWoo Kim <gwk1013@coasia.com>, HaGyeong Kim <hgkim05@coasia.com>,
- GyoungBo Min <mingyoungbo@coasia.com>,
- Pankaj Dubey <pankaj.dubey@samsung.com>, Shradha Todi
- <shradha.t@samsung.com>, Inbaraj E <inbaraj.e@samsung.com>,
- Swathi K S <swathi.ks@samsung.com>, Hrishikesh <hrishikesh.d@samsung.com>,
- Dongjin Yang <dj76.yang@samsung.com>, Sang Min Kim
- <hypmean.kim@samsung.com>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-kernel@axis.com, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, soc@lists.linux.dev
-References: <20250710002047.1573841-1-ksk4725@coasia.com>
- <20250710002047.1573841-15-ksk4725@coasia.com>
- <5998de2a-f3ae-46bf-a975-081da20bab03@kernel.org>
- <79482a4ec841743af1ef13ea9eea58bada47c42f.camel@coasia.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 07/12] drm/bridge: analogix_dp: Add support to find
+ panel or bridge
+From: Damon Ding <damon.ding@rock-chips.com>
+To: =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
+ andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org
+Cc: Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+ jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+ jingoohan1@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
+ hjc@rock-chips.com, andy.yan@rock-chips.com,
+ dmitry.baryshkov@oss.qualcomm.com, l.stach@pengutronix.de,
+ dianders@chromium.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <20250709070139.3130635-1-damon.ding@rock-chips.com>
+ <20250709070139.3130635-8-damon.ding@rock-chips.com>
+ <4555084.IFkqi6BYcA@diego>
+ <0a4d5e97-a143-4293-987c-5682be60023d@rock-chips.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <79482a4ec841743af1ef13ea9eea58bada47c42f.camel@coasia.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <0a4d5e97-a143-4293-987c-5682be60023d@rock-chips.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a982be9d47603a3kunmf0036496274134
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQ0pOGFZOTh5JQ0IfGU8fTk5WFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=EMNzdqeOdDlKBOOh7gKY5lvBoJzZz8n2CRLGROufJnK6PLGQKvzZoO0aFgSUCAW00tzdnoo7j+vy+8rJ7RfLspNoAWLHoCr2AgqbinG5qPCrWGgeqQ7CpYYZ/bGGjDJsSsuLR9okEiHEnpoMW5W6Ka27Wl13J3KRAMUp2Bm0hto=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=BcqKufxdH6F7LtnCk0e0JkGxUW+ENO9nSfoURV4nsTs=;
+	h=date:mime-version:subject:message-id:from;
 
-On 21/07/2025 09:08, sungmin park wrote:
->>> index fa1e04e87d1d..371005f3f41a 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -2320,6 +2320,20 @@ F:       drivers/crypto/axis
->>>  F:     drivers/mmc/host/usdhi6rol0.c
->>>  F:     drivers/pinctrl/pinctrl-artpec*
->>>  
->>> +ARM/ARTPEC ARM64 MACHINE SUPPORT
->>
->> This is samsung soc, so I need a pattern for that as well as I will
->> be
->> handling patches.
+On 2025/7/11 15:41, Damon Ding wrote:
+> Hi Heiko,
 > 
-> Can you please explain what you mean to say?
-
-
-Something like I sent for Tesla the same day or shortly after I
-commented on this.
-
->  
+> On 2025/7/10 4:07, Heiko Stübner wrote:
+>> Hi Damon,
 >>
->>> +M:     Jesper Nilsson <jesper.nilsson@axis.com>
->>> +M:     Ravi Patel <ravi.patel@samsung.com>
->>> +M:     SeonGu Kang <ksk4725@coasia.com>
->>> +M:     SungMin Park <smn1196@coasia.com>
->>
->> Please keep only maintainers who will actually perform reviews of the
->> code. I am not even sure if this is worth separate entry outside of
->> Samsung. Please list the IP blocks which are not Samsung here.
-
-Are you going to implement this in the next patch?
-
-> 
-> Is it fine if I merge the list with existing ARTPEC entry?
-
-No. Did you read my message? I am not maintainer of existing ARTPEC SoC.
-
-
-> Samsung and Coasia entry can be removed from list as Axis will be only
-> maintaining the ARTPEC-8 SoC in future.
-> Please suggest your opinion here.
-> 
->>
->>> +L:     linux-arm-kernel@lists.infradead.org (moderated for non-
->>> subscribers)
->>> +L:     linux-samsung-soc@vger.kernel.org
->>> +L:     linux-arm-kernel@axis.com
->>> +S:     Maintained
->>> +F:     Documentation/devicetree/bindings/clock/axis,artpec*-
->>> clock.yaml
->>> +F:     arch/arm64/boot/dts/axis/
->>> +F:     drivers/clk/samsung/clk-artpec*.c
->>> +F:     include/dt-bindings/clock/axis,artpec*-clk.h
+>> Am Mittwoch, 9. Juli 2025, 09:01:34 Mitteleuropäische Sommerzeit 
+>> schrieb Damon Ding:
+>>> Since the panel/bridge should logically be positioned behind the
+>>> Analogix bridge in the display pipeline, it makes sense to handle
+>>> the panel/bridge parsing on the Analogix side.
+>>>
+>>> Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+>>> ---
+>>>   .../drm/bridge/analogix/analogix_dp_core.c    | 48 +++++++++++++++++++
+>>>   include/drm/bridge/analogix_dp.h              |  2 +
+>>>   2 files changed, 50 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/ 
+>>> drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>>> index 78d68310e4f6..660f95e90490 100644
+>>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>>> @@ -19,12 +19,14 @@
+>>>   #include <linux/platform_device.h>
+>>>   #include <drm/bridge/analogix_dp.h>
+>>> +#include <drm/display/drm_dp_aux_bus.h>
+>>>   #include <drm/drm_atomic.h>
+>>>   #include <drm/drm_atomic_helper.h>
+>>>   #include <drm/drm_bridge.h>
+>>>   #include <drm/drm_crtc.h>
+>>>   #include <drm/drm_device.h>
+>>>   #include <drm/drm_edid.h>
+>>> +#include <drm/drm_of.h>
+>>>   #include <drm/drm_panel.h>
+>>>   #include <drm/drm_print.h>
+>>>   #include <drm/drm_probe_helper.h>
+>>> @@ -1707,6 +1709,52 @@ struct drm_dp_aux *analogix_dp_get_aux(struct 
+>>> analogix_dp_device *dp)
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(analogix_dp_get_aux);
+>>> +static int analogix_dp_aux_done_probing(struct drm_dp_aux *aux)
+>>> +{
+>>> +    struct analogix_dp_device *dp = to_dp(aux);
+>>> +    struct analogix_dp_plat_data *plat_data = dp->plat_data;
+>>> +    int port = plat_data->dev_type == EXYNOS_DP ? 0 : 1;
+>>> +    int ret;
 >>> +
->>>  ARM/ASPEED I2C DRIVER
->>>  M:     Ryan Chen <ryan_chen@aspeedtech.com>
->>>  R:     Benjamin Herrenschmidt <benh@kernel.crashing.org>
->>> diff --git a/arch/arm64/Kconfig.platforms
->>> b/arch/arm64/Kconfig.platforms
->>> index 8b76821f190f..418ee47227c1 100644
->>> --- a/arch/arm64/Kconfig.platforms
->>> +++ b/arch/arm64/Kconfig.platforms
->>> @@ -40,6 +40,19 @@ config ARCH_APPLE
->>>           This enables support for Apple's in-house ARM SoC family,
->>> such
->>>           as the Apple M1.
->>>  
->>> +config ARCH_ARTPEC
->>> +       bool "Axis Communications ARTPEC SoC Family"
->>> +       help
->>> +          This enables support for the ARMv8 based ARTPEC SoC
->>> Family.
->>> +
->>> +config ARCH_ARTPEC8
+>>> +    /*
+>>> +     * If drm_of_find_panel_or_bridge() returns -ENODEV, there may 
+>>> be no valid panel
+>>> +     * or bridge nodes. The driver should go on for the driver-free 
+>>> bridge or the DP
+>>> +     * mode applications.
+>>> +     */
+>>> +    ret = drm_of_find_panel_or_bridge(dp->dev->of_node, port, 0,
+>>> +                      &plat_data->panel, &plat_data->bridge);
 >>
->> No, drop. One ARCH symbol.
+>> Could you check if this can use a panel-bridge?
+>> See for example
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ 
+>> tree/drivers/gpu/drm/rockchip/rockchip_rgb.c#n138
+>> or a lot of other places for drm_panel_bridge_add()
 >>
->>> +       bool "Axis ARTPEC-8 SoC Platform"
->>> +       depends on ARCH_ARTPEC
->>> +       depends on ARCH_EXYNOS
+>> So if drm_of_find_panel_or_bridge() finds a bridge, just use it; if it
+>> finds a panel, drm_panel_bridge_add() just wraps a bridge around it
+>> and all the code can just assume everything is bridge after that.
 >>
->> And that's the proof that this is Samsung SoC.
+>>
 > 
-> Should I move the axis folder inside exynos just like google did? In
-> that case we don't need separate ARCH entry anymore.
-> Or should I follow the tesla FSD style to add axis folder outside
-> exynos? In that case I will keep ARCH_ARTPEC entry only.
-> Please suggest your opinion here.
+> Yes, that is a good approach. Using the panel-bridge will make the 
+> related checks more concise.
+> 
+>>
+>>> +    if (ret && ret != -ENODEV)
+>>> +        return ret;
+>>> +
+>>> +    return component_add(dp->dev, plat_data->ops);
+>>> +}
+>>> +
+>>> +int analogix_dp_find_panel_or_bridge(struct analogix_dp_device *dp)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    ret = devm_of_dp_aux_populate_bus(&dp->aux, 
+>>> analogix_dp_aux_done_probing);
+>>> +    if (ret) {
+>>> +        /*
+>>> +         * If devm_of_dp_aux_populate_bus() returns -ENODEV, the 
+>>> done_probing() will
+>>> +         * not be called because there are no EP devices. Then the 
+>>> callback function
+>>> +         * analogix_dp_aux_done_probing() will be called directly in 
+>>> order to support
+>>> +         * the other valid DT configurations.
+>>> +         *
+>>> +         * NOTE: The devm_of_dp_aux_populate_bus() is allowed to 
+>>> return -EPROBE_DEFER.
+>>> +         */
+>>> +        if (ret != -ENODEV) {
+>>> +            dev_err(dp->dev, "failed to populate aux bus\n");
+>>> +            return ret;
+>>> +        }
+>>> +
+>>> +        return analogix_dp_aux_done_probing(&dp->aux);
+>>> +    }
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(analogix_dp_find_panel_or_bridge);
+>>> +
+>>>   MODULE_AUTHOR("Jingoo Han <jg1.han@samsung.com>");
+>>>   MODULE_DESCRIPTION("Analogix DP Core Driver");
+>>>   MODULE_LICENSE("GPL v2");
+>>> diff --git a/include/drm/bridge/analogix_dp.h b/include/drm/bridge/ 
+>>> analogix_dp.h
+>>> index 202e5eafb2cc..0b6d85f1924e 100644
+>>> --- a/include/drm/bridge/analogix_dp.h
+>>> +++ b/include/drm/bridge/analogix_dp.h
+>>> @@ -30,6 +30,7 @@ struct analogix_dp_plat_data {
+>>>       struct drm_bridge *bridge;
+>>>       struct drm_encoder *encoder;
+>>>       struct drm_connector *connector;
+>>> +    const struct component_ops *ops;
+>>>       int (*power_on)(struct analogix_dp_plat_data *);
+>>>       int (*power_off)(struct analogix_dp_plat_data *);
+>>> @@ -52,5 +53,6 @@ int analogix_dp_stop_crc(struct drm_connector 
+>>> *connector);
+>>>   struct analogix_dp_plat_data *analogix_dp_aux_to_plat_data(struct 
+>>> drm_dp_aux *aux);
+>>>   struct drm_dp_aux *analogix_dp_get_aux(struct analogix_dp_device *dp);
+>>> +int analogix_dp_find_panel_or_bridge(struct analogix_dp_device *dp);
+>>>   #endif /* _ANALOGIX_DP_H_ */
+>>>
+>>
+> 
 
+While preparing the v3 patch series, I encountered a question regarding 
+the mode retrieval process. The relevant code in 
+drivers/gpu/drm/display/drm_bridge_connector.c is as follows:
 
-You did not describe the hardware really. Neither in commit msg, nor in
-cover letter nor here where I asked to list the non-Samsung IP blocks. I
-will not provide you guidelines based on magic crystal ball guesses.
+static int drm_bridge_connector_get_modes(struct drm_connector *connector)
+{
+......
+	/*
+	 * If display exposes EDID, then we parse that in the normal way to
+	 * build table of supported modes.
+	 */
+	bridge = bridge_connector->bridge_edid;
+	if (bridge)
+		return drm_bridge_connector_get_modes_edid(connector, bridge);
 
+	/*
+	 * Otherwise if the display pipeline reports modes (e.g. with a fixed
+	 * resolution panel or an analog TV output), query it.
+	 */
+	bridge = bridge_connector->bridge_modes;
+	if (bridge)
+		return bridge->funcs->get_modes(bridge, connector);
+......
+}
+
+The &drm_bridge_funcs.get_modes() will never be called if the 
+bridge_connector supports DRM_BRIDGE_OP_EDID. This suggests that 
+DRM_BRIDGE_OP_EDID and DRM_BRIDGE_OP_MODES might be mutually exclusive.
+And the following comments also ​confirm it(include/drm/drm_bridge.h):
+
+......
+	/**
+	 * @get_modes:
+	 *
+	 * Fill all modes currently valid for the sink into the &drm_connector
+	 * with drm_mode_probed_add().
+	 *
+	 * The @get_modes callback is mostly intended to support non-probeable
+	 * displays such as many fixed panels. Bridges that support reading
+	 * EDID shall leave @get_modes unimplemented and implement the
+	 * &drm_bridge_funcs->edid_read callback instead.
+	 *
+......
+
+I want to use drm_panel_get_modes()/drm_bridge_get_modes() as a fallback 
+when drm_bridge_connector_get_modes_edid() returns no modes, compatible 
+with the historical behavior. Should I apply the related code with 
+&drm_bridge_funcs.edid_read() then abandon the 
+&drm_bridge_funcs.get_modes()? or the opposite?
+
+Or maybe the DRM_BRIDGE_OP_MODES can be a certain fallback of 
+DRM_BRIDGE_OP_EDID for the bridge_connector?
 
 Best regards,
-Krzysztof
+Damon
+
 
