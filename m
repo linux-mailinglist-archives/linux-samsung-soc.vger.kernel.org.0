@@ -1,92 +1,50 @@
-Return-Path: <linux-samsung-soc+bounces-9418-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9421-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B5DB0BEAA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 10:20:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C39BB0C081
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 11:43:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CA6F3C03FE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 08:18:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DA9C189982F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 21 Jul 2025 09:44:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72AA22868B3;
-	Mon, 21 Jul 2025 08:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A0628C84A;
+	Mon, 21 Jul 2025 09:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FbRMkQGM"
+	dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b="iTk7bZKH"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72002286D50
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Jul 2025 08:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0B3801
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Jul 2025 09:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753085889; cv=none; b=hBbgSczeEAfwWnaF7yrR4AqBuJNYRK1HbbtabOJ6qwleAfFmiGhkLEXSvYGTR+7pm+HOKSRQ3vVaftIl/DpERJOTin1TgTCJXySdoKRb8TnT8cGbyDHewWr6l2KgRhGimZGAo1eJ+9xbq5Y5d7R44HKBysEPyXSvriPP58+KoY4=
+	t=1753091030; cv=none; b=dZea2fAO2M38KLHlG8cuyHrH1DSoaFaHKYHtdGbVJ3mWyAYrs/JmkITnJdebezZt4s9PdScfne8V7X4w6gMEE89+p4md2GmBiqtv90VsjtetdrZUzkG6XrU2dLnGv/FUkTFWZtB9HaE8As2vFWvnoJvxDZ8Ldy4BVT+huW0j4d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753085889; c=relaxed/simple;
-	bh=4Ta0TLua0Rtt1YKOLIaPtKpMij5Yc4Q/7c3JdU81KHs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=iwvbh8r968XMJWiC407jSvF6UA80zuOkp/BVWlWmcNbKRwdg9nGGmUgcsX2GzUkDHBLRGHcGEHHqy3XoQz8HAz2VVTubUScE100Ngg0nOx5EPOnmQL+rSOHp/TZ72DOpiYBjlDgbw/YaHsawhLwQzChKtZmBoa82mLljL6FWoGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FbRMkQGM; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ae3521a124cso82160266b.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 21 Jul 2025 01:18:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753085886; x=1753690686; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pPXELs5NvkX+PM7JY9uaPhAOXWpOOKXEuN/iIGPovgU=;
-        b=FbRMkQGM7VBrdpBGUvflQlloc2rn2yfEABtKdB10zr93jtXOcAs5tP/pvf3P1mN9sU
-         gm+7QIUOgZy7SX5TefXxuketzpL5qpyCKEDJvgTyd3DDHda8cC+j/nd/EhdcI1isWvBd
-         YeS+2uk/0sKbQNCLEEOOxnPEg1nBspW3dYRA3vPvBgAJ+n8Vri1oF0xWOsFb9xhGnuc2
-         HUV5RpmUV67As/ylhg9tSxBMw0oVbG3eaRveR2BaAYWQlraSKa6rkqh4HcBgfbReI7dc
-         MNbDsTA45X9hJ+PAe7p+hvQdQPLqEbArMJyk9JsxZiSk0trT1NkY+/lmnedel8zenInC
-         NIdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753085886; x=1753690686;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pPXELs5NvkX+PM7JY9uaPhAOXWpOOKXEuN/iIGPovgU=;
-        b=omU2DGmXHeFTOMYGIRE+aOht2EENyCgqqUQmiH6uA/AWnZCLpRQ0VgDKRRY9CUVC/j
-         BgXylmSfNCqYAi/m4tvElhw11aYuBjUbPxXb7Y7oJXJnmkRNdNfhynHEEMVdePZYvqLn
-         TlDzcbzTBR7IeOu4mafes2V+DurX41YJqZL80Av+zfT7AM9/HfzlLIYj/mcg+cD0qkNF
-         rus+c3v4q5kxuPjQC5XyP0qzEmwKyTgCeifhIFHm+FbVuDTXGfJhYWmZIRQj3uOTLtnC
-         hSY1AdrePwXLeAW/bzVb+IEZHlatJtjKSO9CYs36yxu0ujQegpRXo/WdX+xsmjIbEcSk
-         VAYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWw8UGo/kqsvfzy/s5BjhYYFjcrUwukMqjZ1M4837/V2w8bCjmkbtql/8R80nZGqY/16Nl6ZxVZjPR4Dp2D86riMA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfzKhkbiqS4OJVvlu/AmmKK9IjbwX9tM3hgVIGnUHNP00GLza6
-	f4c9nrDTSERFccg2Vqysc9vE0J4UHyw3WC0DEZdsUs/WPZynvounDxJBl14vfSAgNAQ=
-X-Gm-Gg: ASbGncusea8pOS8hseSQxmXkqq1gDKXbxxffiSrFs2EbeaDcBOELDFMtroZbQPCVAfo
-	jVaapXvM92pjUGlPNWlxMh7/hhAqRN5P5KO+xVqjbnziMvxqo7toldAGuXhauWd0tf2lUeXCQUl
-	S3J8fNcPjjgp18VVRkJQQsON3AyrsThLpe2CLyUzcnJFB0mtd6GQLJfXeAzQfw2LouWN9Pz9oGv
-	cbkiaxX7wTCWwb4CUo3KYeSRqRU+zIFzBYsUOs4YP0pKcAYfF+gJfiyRnEGVgwl1jlbEWjbYQQV
-	quug7BqxDLe+tcFC2jMlXBUjG54R60Prb6IqRRPjGvhSgTjh+2q587VXi0AZLOHMgNnUXVzk4xK
-	DQqOwMgzzn/WVRq5VcZpKA4LPsked988wotUStyYid+KvpuaQ
-X-Google-Smtp-Source: AGHT+IEwTbfpXXMQ3S49s4PgHyCV/u6H0Q8oR8adAG+0t/NE/c8sQ0/0zI+RNG/o7SXdvdd/cnUXsg==
-X-Received: by 2002:a17:907:7f20:b0:ad8:a282:1c2f with SMTP id a640c23a62f3a-ae9c9b2153cmr688926866b.12.1753085885643;
-        Mon, 21 Jul 2025 01:18:05 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6c7d524asm633642366b.45.2025.07.21.01.18.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jul 2025 01:18:04 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Peter Griffin <peter.griffin@linaro.org>
-Cc: William Mcvicker <willmcvicker@google.com>, 
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, kernel-team@android.com, sudeep.holla@arm.com
-In-Reply-To: <20250717-gs101-cpuidle-v7-1-33d51770114b@linaro.org>
-References: <20250717-gs101-cpuidle-v7-1-33d51770114b@linaro.org>
-Subject: Re: [PATCH v7] soc: samsung: exynos-pmu: Enable CPU Idle for gs101
-Message-Id: <175308588382.28993.16370211179082448125.b4-ty@linaro.org>
-Date: Mon, 21 Jul 2025 10:18:03 +0200
+	s=arc-20240116; t=1753091030; c=relaxed/simple;
+	bh=Y69S0QjDeCf4mUz6joj+vvgruIKvaIp7+afSLDu1cjM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=uJBuxF5KDRxDX0dgxn+zQfrSK4CMC7uSsWoHSwlxuuEzbUgr9D2U1F3XaFDaTpkm/gDwknW6wKQfy/9hoBuK95CzUWobQC/qrdWB7G2sw0/TTkL4sLXOhuyR9HMpZDdFaP3XyKPodFm/kYyW/NIaIHyJ0UowzeTq7lTbMh8Zxw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se; spf=pass smtp.mailfrom=grimler.se; dkim=pass (1024-bit key) header.d=grimler.se header.i=@grimler.se header.b=iTk7bZKH; arc=none smtp.client-ip=95.215.58.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grimler.se
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grimler.se; s=key1;
+	t=1753091022;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=r80v8covK6AhEksxolDOt41b6/srvYj410fMrmanbjI=;
+	b=iTk7bZKH1RqvRKEKjzLK44hT62aCqcRQkLoXllPVY74JazzsjOtexdLy6dbp+kyZ0UGr+B
+	fp8zq8re2bM5lKeFxmUzfi5+SGlm9BJU+VMOMJzMiuLA+Wgero9u0zq5J6QlcElMK64NWk
+	85ySkYsYL3wu4yDqq+sS8f7o/q+3dNA=
+From: Henrik Grimler <henrik@grimler.se>
+Subject: [PATCH 0/3] drm/bridge: sii9234: use extcon to detect cable
+ attachment
+Date: Mon, 21 Jul 2025 11:43:16 +0200
+Message-Id: <20250721-exynos4-sii9234-driver-v1-0-2e47ed02f677@grimler.se>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -95,31 +53,68 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+X-B4-Tracking: v=1; b=H4sIALQLfmgC/x3MQQqDQAxA0atI1g004wxar1JcqEltNqMkIBaZu
+ 3dw+Rb/X+BiKg5Dc4HJoa5brqBHA8t3yqugcjWEZ2gpUI9y/vLmEV31FdqIbHqIIffUcZwTESe
+ o8W7y0fMev8dS/nKG4+ZoAAAA
+X-Change-ID: 20231218-exynos4-sii9234-driver-d817d4b511d5
+To: Andrzej Hajda <andrzej.hajda@intel.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maciej Purski <m.purski@samsung.com>
+Cc: dri-devel@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org, 
+ ~postmarketos/upstreaming@lists.sr.ht, replicant@osuosl.org, 
+ linux-kernel@vger.kernel.org, Henrik Grimler <henrik@grimler.se>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1298; i=henrik@grimler.se;
+ h=from:subject:message-id; bh=Y69S0QjDeCf4mUz6joj+vvgruIKvaIp7+afSLDu1cjM=;
+ b=owEBbQGS/pANAwAKAbAHbkkLcWFrAcsmYgBofgvCGCSAYlLZncGWN4N0PuUhlO7sEX2dkJSTz
+ tGeXf4KqoqJATMEAAEKAB0WIQQsfymul4kfZBmp4s2wB25JC3FhawUCaH4LwgAKCRCwB25JC3Fh
+ a6IYB/9C50diuxKr+lHMuKv+h8Ixx/p46MBRIugrQLb4A9+6smjMOi7bbDGAzz5yO9mCXnqrxuJ
+ w+wmlTgrq0sfOOOV0Y3b9E+1xWMVPS9AsWAB0LsJIcLFKWcyDS3dkXmrAaCD9V+fwqFyIgJJ8wB
+ HZygmCMK3/WzfSnRxbpxStz3khP4DjbN7ICEmEIWYET+gG1bKNAKkC4lZOlaChJ5yTaoKaJUKdE
+ Y9aOHkC+qdxrOr9WLhFUHUm3DjwgUQl2Nnlk+boKy0goqF8+da1sgUu4DfI2DsGit1c52d5cvz8
+ eAnHG84RDKloiSxDLCv7vvpRTxoxGRTF2UnFI6fQIZRJwlk4
+X-Developer-Key: i=henrik@grimler.se; a=openpgp;
+ fpr=2C7F29AE97891F6419A9E2CDB0076E490B71616B
+X-Migadu-Flow: FLOW_OUT
 
+Hi,
 
-On Thu, 17 Jul 2025 17:22:36 +0100, Peter Griffin wrote:
-> Register cpu pm notifiers for gs101 which call the
-> gs101_cpu_pmu_online/offline callbacks which in turn program the ACPM
-> C2 hint. This hint is required to actually enter the C2 idle state in
-> addition to the PSCI calls due to limitations in the el3mon/ACPM firmware.
-> 
-> A couple of corner cases are handled, namely when the system is rebooting
-> or suspending we ignore the request. Additionally the request is ignored if
-> the CPU is in CPU hot plug. Some common code is refactored so that it can
-> be called from both the CPU hot plug callbacks and CPU PM notifier taking
-> into account that CPU PM notifiers are called with IRQs disabled whereas
-> CPU hotplug callbacks are not.
-> 
-> [...]
+This series fixes so HDMI through the sii9234 MHL chip works when
+cable is hotplugged, by making the MHL chip use extcon cable detection
+functions. Patch 3, that actually implements the extcon parts, is heavily
+inspired by commit 688838442147 ("drm/bridge/sii8620: use micro-USB
+cable detection logic to detect MHL") by Maciej Purski.
 
-Applied, thanks!
+Before these changes, HDMI only worked if cable was plugged in before
+booting. If no cable was connected, then wlr-randr still showed HDMI
+as connected, with 0x0 px, which confused at least some UIs (phosh)
+and caused problems:
+https://gitlab.gnome.org/World/Phosh/phosh/-/issues/828
 
-[1/1] soc: samsung: exynos-pmu: Enable CPU Idle for gs101
-      (no commit info)
+Tested on exynos4412-i9305.
+
+Best regards,
+Henrik Grimler
+
+Signed-off-by: Henrik Grimler <henrik@grimler.se>
+---
+Henrik Grimler (3):
+      drm/bridge: sii9234: fix some typos in comments and messages
+      drm/bridge: sii9234: use dev_err_probe where applicable
+      drm/bridge: sii9234: use extcon cable detection logic to detect MHL
+
+ drivers/gpu/drm/bridge/sii9234.c | 121 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 100 insertions(+), 21 deletions(-)
+---
+base-commit: ca2a6abdaee43808034cdb218428d2ed85fd3db8
+change-id: 20231218-exynos4-sii9234-driver-d817d4b511d5
 
 Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Henrik Grimler <henrik@grimler.se>
 
 
