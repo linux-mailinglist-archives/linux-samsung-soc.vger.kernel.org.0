@@ -1,128 +1,213 @@
-Return-Path: <linux-samsung-soc+bounces-9474-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9485-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431E7B1031A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 24 Jul 2025 10:14:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AA25B10717
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 24 Jul 2025 11:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D71BF17E9FE
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 24 Jul 2025 08:14:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72D57563922
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 24 Jul 2025 09:56:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97584274FEA;
-	Thu, 24 Jul 2025 08:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F41257AFE;
+	Thu, 24 Jul 2025 09:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="IE/PiPjC"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="tXkLFpum"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A62274FCB
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 24 Jul 2025 08:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5044257453
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 24 Jul 2025 09:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753344823; cv=none; b=aswDeJ89wbSZrXsdOqPI+nhCtnJuhubaDxWEBJ+2QwCcB/7CTxYS3g+vKKDKB/UtGaKNY4IlrdmdOCOq0tHRBCoUIoUpiv7BmZ+MVfQh+am4aB+LxEW5a/qAihG6pvI5Y5Oken8UFERzVa3rjQQLJz3OoqfHQPfikjfn0CWo8Rw=
+	t=1753350974; cv=none; b=g10S5mILHUMklI01skaq4pEAul21pbznYjGOrhBvS1H6HA1ZZVL8QGvkY7PkICdtVpXBgTFGrg5OPQaxlVHUr6EzlwF39iKbW4/XmcXtzb73PEiZa0zt8NNHOdF3/9xbdSWNkF7FixCNItBt5rv/vDEl4la8gru6oucbu6XfMpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753344823; c=relaxed/simple;
-	bh=SZ0ix64LWkWmOzE/oZMmtvn15B1pYoikVjlEZIQ43Po=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=Jmqhhe4yjH59CnrPx0sIFBMHLYOz7C8ngKXyM0sDlsgFzIxeNAH3IkOBP8yhHVdUsOfmNnWGEdz0CElzAkBmx8TC7rsZIiHWxdeoMeVz9lFrD4FrqvRQtnXUZgLs88hDIF/cl2PQss9GA4t3NnsBzlUuWV1NevgYQ/lMHza1ByI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=IE/PiPjC; arc=none smtp.client-ip=203.254.224.33
+	s=arc-20240116; t=1753350974; c=relaxed/simple;
+	bh=xgv/6RY0aXaXcqVmGsKiJ7rv1l72xkz7t+/1yhSFO+4=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=iSvFUFMvd6xZf2ElEcOGeugG+AmLdLyRxYGEJ4JpIQhIV2WZnx/zYVDHRm5haUaWG/cHRmoH4NawWVN31T/i/OpGckezEE8Zqt87YlpWTczaLCiKfIwq7symnjkQ5HMgOaovtTX0TqcEceSHuv13Tb8RVf9tOm1bDybE9mSKQB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=tXkLFpum; arc=none smtp.client-ip=203.254.224.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250724081338epoutp039e7f92119e86a50bb1e280ebb499cd54~VIdK7D1HK0133001330epoutp03c
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 24 Jul 2025 08:13:38 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250724081338epoutp039e7f92119e86a50bb1e280ebb499cd54~VIdK7D1HK0133001330epoutp03c
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250724095610epoutp0459d437f44c872cc2833facfcb52dc2c4~VJ2sKrD8k1813318133epoutp04Z
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 24 Jul 2025 09:56:10 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250724095610epoutp0459d437f44c872cc2833facfcb52dc2c4~VJ2sKrD8k1813318133epoutp04Z
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1753344818;
-	bh=QsQQNaYSRD2U8LOrlkyZxDfezSoAFEk1Vqrj9+PASX0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IE/PiPjCu4yG3f3DRwt1j54cxsgRyc7ra0+WkQTkBuu+hb+T4ACthfPWLeUKgHBtB
-	 Q8Rw1AEZEri4Wf+f+B5Zb3lO/c0ptVaVHmIMlDjJh0hgs5HV+6/rgrMEL7oJ2OcUl+
-	 S80RyNeco0x3Z2nCxuLBEr1QSbAlRMHdQQNWLgxs=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
-	20250724081338epcas2p25a24d73f6497f2b680918d4f8e2ca4df~VIdKgCcht0557505575epcas2p2B;
-	Thu, 24 Jul 2025 08:13:38 +0000 (GMT)
-Received: from epcas2p1.samsung.com (unknown [182.195.36.102]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4bnkKY5n7Mz3hhTB; Thu, 24 Jul
-	2025 08:13:37 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250724081337epcas2p430db7d7514b8cc05e41001f17b8b0d45~VIdJSia0H1004510045epcas2p4C;
-	Thu, 24 Jul 2025 08:13:37 +0000 (GMT)
-Received: from localhost.localdomain (unknown [10.229.9.126]) by
-	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250724081337epsmtip15995237414cebf3f8f4d85e133d21737~VIdJO8PAw1874118741epsmtip1K;
-	Thu, 24 Jul 2025 08:13:37 +0000 (GMT)
-From: Sangwook Shin <sw617.shin@samsung.com>
-To: krzk@kernel.org, alim.akhtar@samsung.com, wim@linux-watchdog.org,
-	linux@roeck-us.net, semen.protsenko@linaro.org, khwan.seo@samsung.com,
-	dongil01.park@samsung.com
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-	linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org, Sangwook Shin
-	<sw617.shin@samsung.com>
-Subject: [PATCH v4 4/4] watchdog: s3c2410_wdt: exynosautov9: Enable
- supported features
-Date: Thu, 24 Jul 2025 17:08:54 +0900
-Message-Id: <20250724080854.3866566-5-sw617.shin@samsung.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20250724080854.3866566-1-sw617.shin@samsung.com>
+	s=mail20170921; t=1753350970;
+	bh=u9kGzbP2QPnTerojC0M6PdIstHffL6YDLYBkr55PnyQ=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=tXkLFpum7mpat6+Q/fQl/+zWboM7qSTARv5MQ60rP2NgdQh2zREwk5x/OgwCJm5al
+	 W+xnSoXjkNWYQYILSlCmiVs99fZHCMVTnvRJm0+q8WftqcM/JbEifzuPxwUWhUKSfK
+	 zTMAgiRRiw42zoNAp9+92fd9twRtNQrgHaxIWP/U=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250724095609epcas5p1f59c0b9b75b092d4b53af00a59df9b79~VJ2rY0ILh1609716097epcas5p1e;
+	Thu, 24 Jul 2025 09:56:09 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.93]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4bnmbr5q6pz6B9mJ; Thu, 24 Jul
+	2025 09:56:08 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20250724095412epcas5p36b38fe9e1b835e731abdbcaf64be1174~VJ0_IgfWj0680206802epcas5p30;
+	Thu, 24 Jul 2025 09:54:12 +0000 (GMT)
+Received: from INBRO001840 (unknown [107.122.3.105]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250724095409epsmtip2c71016c48766841f9a06c5d7f2a181f8~VJ069jbaJ1922819228epsmtip2E;
+	Thu, 24 Jul 2025 09:54:08 +0000 (GMT)
+From: "Pritam Manohar Sutar" <pritam.sutar@samsung.com>
+To: "'Alim Akhtar'" <alim.akhtar@samsung.com>, "'Krzysztof Kozlowski'"
+	<krzk@kernel.org>, "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>
+Cc: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andre.draszik@linaro.org>,
+	<peter.griffin@linaro.org>, <neil.armstrong@linaro.org>,
+	<kauschluss@disroot.org>, <ivo.ivanov.ivanov1@gmail.com>,
+	<m.szyprowski@samsung.com>, <s.nawrocki@samsung.com>,
+	<linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-samsung-soc@vger.kernel.org>, <rosa.pila@samsung.com>,
+	<dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
+	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
+In-Reply-To: <2a1901dbfbcf$a21b45e0$e651d1a0$@samsung.com>
+Subject: RE: [PATCH v4 1/6] dt-bindings: phy: samsung,usb3-drd-phy: add
+ ExynosAutov920 HS phy compatible
+Date: Thu, 24 Jul 2025 15:24:07 +0530
+Message-ID: <000001dbfc80$e85fd690$b91f83b0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250724081337epcas2p430db7d7514b8cc05e41001f17b8b0d45
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJAgQZ9LFXBZrDskwNBYris6jFv1AKCX9A9Aa5wAf0Bi5UAqwCML2yKAWUlSf8CRPacEQIi1iyNAmb2xVkCD/Nw+wC0VRd5AgU5TrgBzoneLbLPVtqQ
+Content-Language: en-in
+X-CMS-MailID: 20250724095412epcas5p36b38fe9e1b835e731abdbcaf64be1174
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-234,N
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250724081337epcas2p430db7d7514b8cc05e41001f17b8b0d45
-References: <20250724080854.3866566-1-sw617.shin@samsung.com>
-	<CGME20250724081337epcas2p430db7d7514b8cc05e41001f17b8b0d45@epcas2p4.samsung.com>
+X-CMS-RootMailID: 20250701115955epcas5p320cfe73ca33522cd2f9f7970cfde1c63
+References: <20250701120706.2219355-1-pritam.sutar@samsung.com>
+	<CGME20250701115955epcas5p320cfe73ca33522cd2f9f7970cfde1c63@epcas5p3.samsung.com>
+	<20250701120706.2219355-2-pritam.sutar@samsung.com>
+	<20250706-fresh-meaty-cougar-5af170@krzk-bin>
+	<07d301dbf0ae$0658cbe0$130a63a0$@samsung.com>
+	<9a2d0ad7-cb1f-473d-a91a-3a1b59b71280@kernel.org>
+	<000c01dbf70b$ccdbf630$6693e290$@samsung.com>
+	<a43cfe4f-8ff9-4dbd-b7f4-07ccc3d8e01b@kernel.org>
+	<00ff01dbfac1$ee528860$caf79920$@samsung.com>
+	<9a97cc9e-2221-44d6-83e9-25b1bec10a6f@kernel.org>
+	<000901dbfb90$42873060$c7959120$@samsung.com>
+	<6e1c67d2-9bfa-442a-9d53-8c5970a2a9ef@kernel.org>
+	<2a1901dbfbcf$a21b45e0$e651d1a0$@samsung.com>
 
-Enable supported features for ExynosAutov9 SoC.
-- QUIRK_HAS_DBGACK_BIT
-- QUIRK_HAS_32BIT_MAXCNT
+Hi,=20
 
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Signed-off-by: Sangwook Shin <sw617.shin@samsung.com>
----
- drivers/watchdog/s3c2410_wdt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> -----Original Message-----
+> From: Alim Akhtar <alim.akhtar=40samsung.com>
+> Sent: 23 July 2025 06:15 PM
+> To: 'Krzysztof Kozlowski' <krzk=40kernel.org>; 'Pritam Manohar Sutar'
+> <pritam.sutar=40samsung.com>; 'Krzysztof Kozlowski'
+> <krzysztof.kozlowski=40linaro.org>
+> Cc: vkoul=40kernel.org; kishon=40kernel.org; robh=40kernel.org;
+> krzk+dt=40kernel.org; conor+dt=40kernel.org; andre.draszik=40linaro.org;
+> peter.griffin=40linaro.org; neil.armstrong=40linaro.org; kauschluss=40dis=
+root.org;
+> ivo.ivanov.ivanov1=40gmail.com; m.szyprowski=40samsung.com;
+> s.nawrocki=40samsung.com; linux-phy=40lists.infradead.org;
+> devicetree=40vger.kernel.org; linux-kernel=40vger.kernel.org; linux-arm-
+> kernel=40lists.infradead.org; linux-samsung-soc=40vger.kernel.org;
+> rosa.pila=40samsung.com; dev.tailor=40samsung.com;
+> faraz.ata=40samsung.com; muhammed.ali=40samsung.com;
+> selvarasu.g=40samsung.com
+> Subject: RE: =5BPATCH v4 1/6=5D dt-bindings: phy: samsung,usb3-drd-phy: a=
+dd
+> ExynosAutov920 HS phy compatible
+>=20
+>=20
+>=20
+> > -----Original Message-----
+> > From: Krzysztof Kozlowski <krzk=40kernel.org>
+> > Sent: Wednesday, July 23, 2025 2:13 PM
+> > To: Pritam Manohar Sutar <pritam.sutar=40samsung.com>; 'Krzysztof
+> > Kozlowski' <krzysztof.kozlowski=40linaro.org>
+> > Cc: vkoul=40kernel.org; kishon=40kernel.org; robh=40kernel.org;
+> =5Bsnip=5D
+> > >>>>> Ok got it. Will change supplies name as below avdd075_usb =3D>
+> > >>>>> avdd075-usb
+> > >>>>> avdd18_usb20 =3D> avdd18-usb20
+> > >>>>> avdd33_usb20 =3D> avdd33-usb20
+> > >>>>>
+> > >>>>> Confirm the above change that is meant in terms of DTS style.
+> > >>>> Yes. I have doubts that actual supplies have suffix usb20. Are
+> > >>>> there more than one avdd18 for this block?
+> > >>>>
+> > >>>
+> > >>> Yes, there are more than one vdd18 supplies for this block.
+> > >>
+> > >> And their names are?
+> > >>
+> > >>>
+> > >>> Re-analysed your comment on adding new supplies.
+> > >>> Going to re-use existing supplies as mentioned below, rather than
+> > >>> introducing new supplies
+> > >>>
+> > >>>   dvdd-usb20-supply   =3D> for 0.75v
+> > >>>   vddh-usb20-supply   =3D> for 1.8v
+> > >>>   vdd33-usb20-supply =3D> for 3.3v
+> > >>
+> > >>
+> > >> You just expect us to guess whether this is correct...
+> > >
+> > > Sorry about not being clear so far.
+> > >
+> > > V920 needs three supplies, 0.75v, 1.8v and 3.3v for USB PHY The
+> > > naming convention used in the schematic are avdd075-usb,
+> > > avdd18_usb20, avdd33_usb20.
+> > >
+> > > However, PHY's user manual just mentions DVDD, VDD33 and VDD18.
+> >
+> >
+> > Then dvdd, vdd33 and vdd18.
+> >
+> > > Since GS101 binding already using supply names similar to what is
+> > mentioned in the PHY user manual.
+> >
+> >
+> > GS101 has USB 2.0 and DP, thus the suffix made some sense. I think you
+> > have only USB 2.0, that's why I question the suffix.
+> >
+> I cross checked the schematic of v920 SADK, this is a combo PHY which
+> support USB-3.0 as well.
+> =40 Pritam
+> Schema should capture all the supplies including USB-3.0, similar to GS10=
+1
+> (which has USB2.0 and DP combo).
+> So that would be as below:
+> dvdd075-usb20-supply
+> vdd18-usb20-supply
+> vdd33-usb20-supply
+> dvdd075-usb30-supply
+> vdd18-usb30-supply
+> please cross check the supply at your end and do the needful.
+>=20
 
-diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
-index 184b1ad46ca6..16a845f41e74 100644
---- a/drivers/watchdog/s3c2410_wdt.c
-+++ b/drivers/watchdog/s3c2410_wdt.c
-@@ -305,7 +305,8 @@ static const struct s3c2410_wdt_variant drv_data_exynosautov9_cl0 = {
- 	.cnt_en_reg = EXYNOS850_CLUSTER0_NONCPU_OUT,
- 	.cnt_en_bit = 7,
- 	.quirks = QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET |
--		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_CNT_EN,
-+		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_CNT_EN |
-+		  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_32BIT_MAXCNT,
- };
- 
- static const struct s3c2410_wdt_variant drv_data_exynosautov9_cl1 = {
-@@ -317,7 +318,8 @@ static const struct s3c2410_wdt_variant drv_data_exynosautov9_cl1 = {
- 	.cnt_en_reg = EXYNOSAUTOV9_CLUSTER1_NONCPU_OUT,
- 	.cnt_en_bit = 7,
- 	.quirks = QUIRK_HAS_WTCLRINT_REG | QUIRK_HAS_PMU_MASK_RESET |
--		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_CNT_EN,
-+		  QUIRK_HAS_PMU_RST_STAT | QUIRK_HAS_PMU_CNT_EN |
-+		  QUIRK_HAS_DBGACK_BIT | QUIRK_HAS_32BIT_MAXCNT,
- };
- 
- static const struct s3c2410_wdt_variant drv_data_gs101_cl0 = {
--- 
-2.25.1
+Yes, we have a combo PHY that supports USB20 and USB30 and=20
+need these supplies. Will update the binding accordingly.
+
+> >
+> > Best regards,
+> > Krzysztof
+
+Thank you.
+
+Regards,
+Pritam
 
 
