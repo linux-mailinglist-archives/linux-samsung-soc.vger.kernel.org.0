@@ -1,151 +1,130 @@
-Return-Path: <linux-samsung-soc+bounces-9510-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9513-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A4AB11666
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Jul 2025 04:27:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 526EBB11718
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Jul 2025 05:34:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A9911CE4B92
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Jul 2025 02:28:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E9783B5E3B
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 25 Jul 2025 03:34:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0477D22E403;
-	Fri, 25 Jul 2025 02:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7B0E2356D2;
+	Fri, 25 Jul 2025 03:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lh9r7jr/"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="MWzhwZ6E"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E732E36FA;
-	Fri, 25 Jul 2025 02:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEF62E3718;
+	Fri, 25 Jul 2025 03:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753410461; cv=none; b=KygYluwpjn+8D+ONOKOF1umW/zL1IHSqMusrdBn1ttWyKbSzw2dzDVzIAbim0Hhw6KW42cutPN3pthWVCA7OfZjTFDloVeTuk5qdrLdNLwtTooDo+0LMJjzoDfgJJcRQze9sobOwj8IOKly0WoB8RL/UqZ9WnJJ1O+KaJZelpNY=
+	t=1753414473; cv=none; b=GQseHXUJH6qDmoF0HGqhEbvJ8GdVJSGUi80xugUfnGAr97aATOf86ewEhXg5L2TCxFsjxsrf8mfhuwkJPbWIUM5yvwVgGdLKB20VRDd79AovAx2Lz/J/mF7bLdy4YUty3FG3TLUqk+AhciZOld3lT6dZrWlhM3+DdGBXok/h3TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753410461; c=relaxed/simple;
-	bh=Khfr6GJFMEPyxoF5TtbNyRQfS0y6Twazz2yM+2molDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e5WaFfpnUof97YZwI6urY+UcsWy4xNy+qy6/JbhCDh/WxQspwctNRHwblD0rvxwOFzey83r0G2Bg7pMCjZ41FC/7tfMCl5Pj7o7TsG3U2nxJ/ln3Bz2oHbGnRrO0Kxvje43bB61PFLmJ+3Y66BxI6487uLGSgHF+Ym91j1puxyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lh9r7jr/; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753410459; x=1784946459;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Khfr6GJFMEPyxoF5TtbNyRQfS0y6Twazz2yM+2molDY=;
-  b=Lh9r7jr/DubdmVjebTXg4vwbPAXesuoFlT9XsSkWk6ETSY/rBSfMpw3v
-   Pt9OyY1vmpe4KWS8c2KezZDvlhyUAvsnMVfnEsuZyFTZDlQPKjUUcXz2K
-   wq+bI9EzoU8OuLPpk5e1aP+PVQ40/1/GZqrueoI0xVEG8WzxBr6W3xns9
-   exFfA3XzqwuCP94KCQoMc4XBzG52WOqFLBayHbTJrKtwYgC9P8KN1brAX
-   6vrGXmCjwPVhYiEFKcwEmyDvdYlFjPBcoZIgDpaFDX/Pg6G9G+iqhggFY
-   5Be0ZSYUl5DH+FG2lPP9/cj4NchcYD7orlzmDjaj4+m+BsjzgBsg6tZfu
-   w==;
-X-CSE-ConnectionGUID: LA8oJAhLSvCDYAo4BAdbuQ==
-X-CSE-MsgGUID: LfI585xwQaqLFgRjFc7V+Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="43352925"
-X-IronPort-AV: E=Sophos;i="6.16,338,1744095600"; 
-   d="scan'208";a="43352925"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2025 19:27:39 -0700
-X-CSE-ConnectionGUID: bLSRn50RQC6VQhsJrY0bkA==
-X-CSE-MsgGUID: qPdZrQ5FRW2cHtvxPARCvw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,338,1744095600"; 
-   d="scan'208";a="164883627"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 24 Jul 2025 19:27:33 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uf89i-000KzD-0K;
-	Fri, 25 Jul 2025 02:27:30 +0000
-Date: Fri, 25 Jul 2025 10:26:54 +0800
-From: kernel test robot <lkp@intel.com>
-To: Damon Ding <damon.ding@rock-chips.com>, andrzej.hajda@intel.com,
-	neil.armstrong@linaro.org, rfoss@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-	jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com,
-	simona@ffwll.ch, jingoohan1@gmail.com, inki.dae@samsung.com,
-	sw0312.kim@samsung.com, kyungmin.park@samsung.com, krzk@kernel.org,
-	alim.akhtar@samsung.com, hjc@rock-chips.com, heiko@sntech.de,
-	andy.yan@rock-chips.com, dmitry.baryshkov@oss.qualcomm.com,
-	l.stach@pengutronix.de, dianders@chromium.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	Damon Ding <damon.ding@rock-chips.com>
-Subject: Re: [PATCH v3 08/14] drm/bridge: analogix_dp: Apply
- drm_bridge_connector helper
-Message-ID: <202507251021.A6WmQ4di-lkp@intel.com>
-References: <20250724080304.3572457-9-damon.ding@rock-chips.com>
+	s=arc-20240116; t=1753414473; c=relaxed/simple;
+	bh=rjaBonRK6Ih+sgUNcDnD2a3SzoSU5QGqCQo2yp9Xrj0=;
+	h=From:To:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=Yggn/vBqxtx4UNEZH2Wmpgfd+Ht/MqPZFPTk5TO/CaI+eVmrEGVoYsy0D6JjMrtrQ+Ke5JlXkZz6DyIRqllutGrfhgonwgFy9AibK6ggLl4NaimBXwtAcrfzvabkZfGO4ZCG8Uf7sByWFLp/R/GeuhDXZXg8QQXw+z2+IG4AZZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=MWzhwZ6E; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250725033428epoutp01f5a9020b90b2b1b9ffdf75ac46ecb3e7~VYStN8OPu2866228662epoutp01D;
+	Fri, 25 Jul 2025 03:34:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250725033428epoutp01f5a9020b90b2b1b9ffdf75ac46ecb3e7~VYStN8OPu2866228662epoutp01D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1753414468;
+	bh=rjaBonRK6Ih+sgUNcDnD2a3SzoSU5QGqCQo2yp9Xrj0=;
+	h=From:To:In-Reply-To:Subject:Date:References:From;
+	b=MWzhwZ6ELFQPsTjfNPkkR5pUNXZo6ltsc8MjE2vSJbeVybkoY8UELsMNA6rADQbxq
+	 cSNYqs4dUqrY8UtVgZDeSetcaBXZ7vWKqMH7SowHxaeKMQzP3hWEJmVPDYUytg6Xsi
+	 wDEHlZzOWWoxQAfVbbBl6Gqd2b0MAoIm2erAesRY=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20250725033428epcas5p3746cdb5adc08933bd2ba40c7f43007b5~VYSs16Lcb1523915239epcas5p3z;
+	Fri, 25 Jul 2025 03:34:28 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.87]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4bpD4z0wMTz3hhT3; Fri, 25 Jul
+	2025 03:34:27 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250725033426epcas5p1b632007c5ce46e14274551d309048e1b~VYSrYf8xw2307423074epcas5p1x;
+	Fri, 25 Jul 2025 03:34:26 +0000 (GMT)
+Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250725033421epsmtip2eb2ae98e3dc6373dd26fea50a8e8d8cc~VYSm6U5AJ0743307433epsmtip2r;
+	Fri, 25 Jul 2025 03:34:21 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>, "'Lars-Peter
+ Clausen'" <lars@metafoo.de>, "'Michael Hennerich'"
+	<Michael.Hennerich@analog.com>, "'Jonathan Cameron'" <jic23@kernel.org>,
+	"'David	Lechner'" <dlechner@baylibre.com>, =?UTF-8?Q?'Nuno_S=C3=A1'?=
+	<nuno.sa@analog.com>, "'Andy Shevchenko'" <andy@kernel.org>, "'Rob Herring'"
+	<robh@kernel.org>, "'Krzysztof Kozlowski'" <krzk+dt@kernel.org>, "'Conor
+ Dooley'" <conor+dt@kernel.org>, "'Lucas Stankus'"
+	<lucas.p.stankus@gmail.com>, "'Puranjay	Mohan'" <puranjay@kernel.org>, "'Dan
+ Robertson'" <dan@dlrobertson.com>, "'Marcelo	Schmitt'"
+	<marcelo.schmitt@analog.com>, "'Dragos Bogdan'" <dragos.bogdan@analog.com>,
+	"'Jean-Baptiste Maneyrol'" <jean-baptiste.maneyrol@tdk.com>,
+	=?UTF-8?Q?'Ond=C5=99ej_Jirman'?= <megi@xff.cz>, "'Alexandru Tachici'"
+	<alexandru.tachici@analog.com>, "'Stefan Popa'" <stefan.popa@analog.com>,
+	"'Linus Walleij'" <linus.walleij@linaro.org>, "'Stephan	Gerhold'"
+	<stephan@gerhold.net>, "'Ceclan Dumitru'" <dumitru.ceclan@analog.com>,
+	"'Alexandru Lazar'" <alazar@startmail.com>, "'Andy Gross'"
+	<agross@kernel.org>, "'Bjorn Andersson'" <andersson@kernel.org>, "'Matti
+ Vaittinen'" <mazziesaccount@gmail.com>, "'Angelo Compagnucci'"
+	<angelo.compagnucci@gmail.com>, "'Mike Looijmans'"
+	<mike.looijmans@topic.nl>, "'David Heidelberg'" <david@ixit.cz>,
+	"'Manivannan Sadhasivam'" <mani@kernel.org>, "'Peter Meerwald-Stadler'"
+	<pmeerw@pmeerw.net>, "'Andreas Klinger'" <ak@it-klinger.de>,
+	<linux-iio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-samsung-soc@vger.kernel.org>
+In-Reply-To: <20250724111345.47889-7-krzysztof.kozlowski@linaro.org>
+Subject: RE: [PATCH 3/4] dt-bindings: iio: adc: samsung,exynos-adc: Use
+ correct IRQ level in example
+Date: Fri, 25 Jul 2025 09:04:20 +0530
+Message-ID: <2d2801dbfd15$055db750$101925f0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250724080304.3572457-9-damon.ding@rock-chips.com>
-
-Hi Damon,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on next-20250724]
-[cannot apply to drm-exynos/exynos-drm-next rockchip/for-next linus/master v6.16-rc7]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Damon-Ding/drm-bridge-analogix_dp-Formalize-the-struct-analogix_dp_device/20250724-160804
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20250724080304.3572457-9-damon.ding%40rock-chips.com
-patch subject: [PATCH v3 08/14] drm/bridge: analogix_dp: Apply drm_bridge_connector helper
-config: x86_64-buildonly-randconfig-003-20250725 (https://download.01.org/0day-ci/archive/20250725/202507251021.A6WmQ4di-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250725/202507251021.A6WmQ4di-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507251021.A6WmQ4di-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/gpu/drm/bridge/analogix/analogix_dp_core.c:1346:12: error: incompatible function pointer types initializing 'enum drm_connector_status (*)(struct drm_bridge *, struct drm_connector *)' with an expression of type 'enum drm_connector_status (struct drm_bridge *)' [-Wincompatible-function-pointer-types]
-    1346 |         .detect = analogix_dp_bridge_detect,
-         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~
-   1 error generated.
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+Thread-Index: AQF9KPnnDP5MNVIiuJxjrYc+La4GeQFz+E82AjEsD8604q6K4A==
+X-CMS-MailID: 20250725033426epcas5p1b632007c5ce46e14274551d309048e1b
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250724111407epcas5p32d1ac49e0e12bdec1b07d2eb2a03ac14
+References: <20250724111345.47889-5-krzysztof.kozlowski@linaro.org>
+	<CGME20250724111407epcas5p32d1ac49e0e12bdec1b07d2eb2a03ac14@epcas5p3.samsung.com>
+	<20250724111345.47889-7-krzysztof.kozlowski@linaro.org>
 
 
-vim +1346 drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
 
-  1333	
-  1334	static const struct drm_bridge_funcs analogix_dp_bridge_funcs = {
-  1335		.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-  1336		.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-  1337		.atomic_reset = drm_atomic_helper_bridge_reset,
-  1338		.atomic_pre_enable = analogix_dp_bridge_atomic_pre_enable,
-  1339		.atomic_enable = analogix_dp_bridge_atomic_enable,
-  1340		.atomic_disable = analogix_dp_bridge_atomic_disable,
-  1341		.atomic_post_disable = analogix_dp_bridge_atomic_post_disable,
-  1342		.atomic_check = analogix_dp_bridge_atomic_check,
-  1343		.attach = analogix_dp_bridge_attach,
-  1344		.get_modes = analogix_dp_bridge_get_modes,
-  1345		.edid_read = analogix_dp_bridge_edid_read,
-> 1346		.detect = analogix_dp_bridge_detect,
-  1347	};
-  1348	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
+> Sent: Thursday, July 24, 2025 4:44 PM
+> To: Lars-Peter Clausen <lars=40metafoo.de>; Michael Hennerich
+> <Michael.Hennerich=40analog.com>; Jonathan Cameron <jic23=40kernel.org>;
+> David Lechner <dlechner=40baylibre.com>; Nuno S=C3=A1=20<nuno.sa=40analog=
+.com>;=0D=0A>=20Andy=20Shevchenko=20<andy=40kernel.org>;=20Rob=20Herring=20=
+<robh=40kernel.org>;=0D=0A.=0D=0A.=0D=0A.=0D=0A>=20Cc:=20Krzysztof=20Kozlow=
+ski=20<krzysztof.kozlowski=40linaro.org>=0D=0A>=20Subject:=20=5BPATCH=203/4=
+=5D=20dt-bindings:=20iio:=20adc:=20samsung,exynos-adc:=20Use=20correct=0D=
+=0A>=20IRQ=20level=20in=20example=0D=0A>=20=0D=0A>=20The=20interrupt=20line=
+=20to=20GIC=20is=20IRQ_TYPE_LEVEL_HIGH,=20so=20use=20that=20instead=20of=0D=
+=0A>=20=22none=22.=20=20Also=20replace=20the=20hard-coded=20GIC_SPI=20flag.=
+=0D=0A>=20=0D=0A>=20Signed-off-by:=20Krzysztof=20Kozlowski=20<krzysztof.koz=
+lowski=40linaro.org>=0D=0A>=20---=0D=0AReviewed-by:=20Alim=20Akhtar=20<alim=
+.akhtar=40samsung.com>=0D=0A=0D=0A
 
