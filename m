@@ -1,88 +1,88 @@
-Return-Path: <linux-samsung-soc+bounces-9564-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9566-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED1C3B14700
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jul 2025 05:55:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24ED5B147DE
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jul 2025 07:45:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23C561AA21B3
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jul 2025 03:56:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DBC3162485
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 29 Jul 2025 05:45:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D29D225397;
-	Tue, 29 Jul 2025 03:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F279123B602;
+	Tue, 29 Jul 2025 05:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VCKQm6xF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSe+pruu"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57DB2BD04;
-	Tue, 29 Jul 2025 03:55:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396EA236431;
+	Tue, 29 Jul 2025 05:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753761354; cv=none; b=lnO3Ek1ho4lqdeEmjkIFte2IU3IdQSvJorhMSmKDJ5gz97d4ao3phQdpnftLA7VECnyDanYYjeE/D3Fz1RtMkXT9o8I/bVjq3PkyJLWyU1KeEiY9YgbFqy6myymz3gvD32rUEj8UkCAcnmTUuALY/Mmk9k9wT7xO39/E2K50ezg=
+	t=1753767888; cv=none; b=WGqF75L61wBUO6nvt9cke2Qu6YXpNLy0EsEJeF0dhk8Gw868wBRJyP4RCK4ZeyAvhl8aaR8xPDgJUfA/IDTCux2/vRr+qz6QcC8+XrBT5zeOYrzEyQSBoraXh5EAV1etY3lbqkeXop8cWR9fpqYvIyJDSRswQXcojyjViK1sCDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753761354; c=relaxed/simple;
-	bh=XNaY6zjFNMOy/UiDZl0iNlt84kbapG83XbK3qEJHriE=;
+	s=arc-20240116; t=1753767888; c=relaxed/simple;
+	bh=yRfdNUT9VwzkThj/UkpLzzB9tOv/w9HNZQG3TB5he5E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qk1eYIVIrehjzSu+O/3eZSmMzBSL4OBe8mYqzz1tH7pK5rYrJ4mEqbNjkbbus2lGYKf1NWmmiNZa8jg8DRoS/m+vclJROR6mxQUjVXJXlVUAlDEDtIllTTYzHN2NA2RvzZrjTh7itEtVLChszMXpz9Dq/qfCjqa6LtpRvidaZKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VCKQm6xF; arc=none smtp.client-ip=209.85.222.44
+	 To:Cc:Content-Type; b=NexcxW9CGYuMXEeTTw+FESTZ1xpvCrm1ucE8oHLDyGNeoSupgh4Hczq839QVnH0ja9SW1GkuiPyXP7/N5x3Mx94kp/tlw22HkeWrPjWyeHW6AWCbJa/3AYp9RUZF/FH2Pwfeype2uzWOOa3lk853nGtER42EzqrDSHZcUMslds0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PSe+pruu; arc=none smtp.client-ip=209.85.217.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-884f22f9c90so1594443241.0;
-        Mon, 28 Jul 2025 20:55:52 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-4fa771716aeso416858137.2;
+        Mon, 28 Jul 2025 22:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753761351; x=1754366151; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753767886; x=1754372686; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QeyQgL4zAM9urQ/V2LLVC5jrotO1A696xW4MrH9cKZw=;
-        b=VCKQm6xF+P12a844HDXwqdxb1lT4mI4L/nT6K5XNVX+DELYa8HkUlW6KxXJfEMYAIa
-         THEY0u4yte+WWDapMDt81XuB90HGbLvrbU2zqyeKfznWpIGAgtLhPt0s9ACn5vu8uz49
-         N0ltjwznlnZ/+T2Cn/TNruFAZOdoEt/DihI+zON7nff5KpC6cxl3UZHa+CfuSgU4bGKe
-         0ISIvjeoXGETkBnKoyX0tjqzkwYRqzFMRT31s9/9Su4CPhnskCDTbqOLWU8A8Z1DmFxf
-         DDWEnCVcpu2Y2hVFy92fgYttH2m6z+v6+lCSk35m1c8h9JxsgDEo+xHdqwL61HLGvBoG
-         2Xxg==
+        bh=KViA9cK2jd0mcOlnHsktz8HBcxRyMOa5DH/RlB6yhTc=;
+        b=PSe+pruufiOKZGEvhPzHuYDjsUFnHY/FTa2uHH34FM07P0A+kD3Mk124YyzpiEXloo
+         690RgnEUPZWYtkjquPQ4SU4zz5C5jA5pJmiiyu9LPy0QiaKASUPAC8XcQFQA5bsL1cnT
+         bgz828rb7nUag/50eGFxjnAEWo6WB0Ij+JKOmSVPq68ncua3q1t8gjPc9eWzPCj9Dk1Q
+         lw3Y/RBhaPCvdtlpZ2i9kK7QqodwbQzo7AjvYwqUxmp/UNHQyWoymCkKlMiZwdsmyTm6
+         VZR0ZfK3AKuWjHonbPjmETWSGRgYJzJ6YPGL81EdlGchFdFFJ/F9S2VUcydV9rFCpLLU
+         4+Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753761351; x=1754366151;
+        d=1e100.net; s=20230601; t=1753767886; x=1754372686;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QeyQgL4zAM9urQ/V2LLVC5jrotO1A696xW4MrH9cKZw=;
-        b=ECJWUze+bE8Ul+rogrKM6YgrKDfXZ4TkACKGy0t1z6LhfGrHvMU8567ePz2WPDgtNo
-         VL2kNEgukipB7qEyUYrxP9krlVYP1LmAjWYrc7DchH1nCdM3JGUd7cbgDlb7e1Mfcwwg
-         226LA8Tngg1ay4hhm0OMNWUKuizM8xOt7Bqcor73hTZD+ldE27Lu7PqoVGBXw28WXgjB
-         TX0i76bHIEWMxeVdbzESrmlDlr3Z6jWaPU9BjGWCDqRiY0jf9CtaS3vVWVNhsf1bUVIK
-         BK29MRObD48b4XahY/THEMu19FJ/0jolg+SP2NqqsLg3tdYypNyrX9JvAKPUhfxFIMxO
-         eSKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUAvNPwdKqLCX/qjy/MhOSumacXW8b7YqgiW+P3YsLTvVAHpCVL6gcw8q+JDs9Af7q9NgVXG0KZXbiHe7yfkLMIS2M=@vger.kernel.org, AJvYcCWm2k6awSyX/SdvKsd493yzv0uf+VC40Q+OlGsU1TMunyqKdk9l1j4wlJ+7YK0FxUopnwjG/ojLaJRl@vger.kernel.org, AJvYcCXrJDmkC2g1egMTZ43mo7z5ymSYXny+PUqaaWrNzRggWgBleXFqmCJViHHMLuwaH3gyDRr1EX43Rh0wBAZn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzy2vRTftqmtLYhMix4qwgYPfF07Gce7LAHnJtzUGGgokq9sNyW
-	kCHIQl5CqJrvTmighqd32ZrjHTlsrMvo5eReRTbI4q7Zmr9bJKR5pqHhD8klUqi31n9TObqPkbi
-	Jb54EwvUeLHq8kYaE/hhRnaIdsE4OKSU=
-X-Gm-Gg: ASbGnctfIcd1zNCETT0lRJ+9ldt5UUXfyVIPaAzBYT+31KndoV4s94iHCJixBnuIlTG
-	LVdDJI52aW/tIVEBmgE0O07TAqCJUpv7TqdnRle+coYBZbJXLD6Sx7kwDJAkcwsDcl/IGwZXSc9
-	vUN8hMmVNUd5Ne99b8T9eXQBGhAM6TxxlXW1jJrapJwuD/JqhxhXRzbeYFrP+KvdEn9AAu+vHX8
-	XvEEw==
-X-Google-Smtp-Source: AGHT+IG2mKzTaoyQhIzvXEq6IUJ/Cn1eY9r2poRKFBunLtB0fjLDRJGBG8ErMCT2vRGzzaUM0D1HViC2dX+iwTNt2js=
-X-Received: by 2002:a05:6102:6885:b0:4e9:b793:1977 with SMTP id
- ada2fe7eead31-4fa3f6f2a22mr6292838137.0.1753761351455; Mon, 28 Jul 2025
- 20:55:51 -0700 (PDT)
+        bh=KViA9cK2jd0mcOlnHsktz8HBcxRyMOa5DH/RlB6yhTc=;
+        b=HGtCG8m0SA63S+K1zlibPJuohErgws+lbweeCsNu4znnP/MEzG2HttdjQ0ivSMboDA
+         /sFIIjWkLdMds5zgTqt98dzor6z781TiAKAGUnfqOYUMpptXl5m2KpN4l2fUV5K0j8r3
+         xM1bq5kY/zPtfdbZMXPoghGVe8MoDastwvgeXplObRDE1mXSzgWm/YlAXXaWZPawWuwy
+         PYa0REmvxH2T0rlfwzt05BBjPFL2vpXW6aPkd7KBSvTK6Hx9OfXTBdwnWWGSnveU0iFm
+         /nf2lECHXsoQSig8RBVldtYOjualvy3BWEgRt43ti6dxZOXFc2wDYhv9s3l0vlwRZ2X1
+         bYGg==
+X-Forwarded-Encrypted: i=1; AJvYcCWBgUg2xGKL+tlljEJR9bgX9VDGWglgxIfy+L20gMJPobY5vkOxwwhZXltnhyZNpNLcr2m4JaUAaAvjfFS9@vger.kernel.org, AJvYcCXPkPph11OtNvLzRVdHW9WcZgj0cPYsivIZtSQIAFPYQ3DLU8T0qaCZIg0Egc8M1YSQf8jvsXNtQXX8NY/HLgqCLQQ=@vger.kernel.org, AJvYcCXT9JNV3NzWrF/9UbNoNTLT+OVHS81pIC7JA1ED5DDxdBKkkrjLGFzQjab0F8mlXIdGETcm3dd6vLba@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2O4cS/se71gvu8WnXO8qi67BbK0iospT6Hpi7z91wmffSZcpa
+	oPgG2wKP9rQDdwkDzL0kFIx7/AMSShnW+C5o11cuowlodtVK/PKSZwyzTuRLnNnQAUS3Ze6wmiZ
+	rmHjb1vZBlXFvWqZiNwfOmNia77dO+sw=
+X-Gm-Gg: ASbGncsyv5D3m+MidRYEhhnTZGV8nCsdYpF72aS19prF01WJKDbKpEFLEHYDchmO/QT
+	ueg8nZXVZ0Dn8NXKpMmhZQFK8Tthy2zLxmIebxZs7Fw9Un/xirqxHdr6crfciFgtWU1nu9PmK11
+	pRbkIthJiESKcargnrduxetqyMYgRcM1vy93SG+bu51TR/gIMPjCNTUaQqVLeqtWVWO9nNJ8w7F
+	Rv70Q==
+X-Google-Smtp-Source: AGHT+IEsVgJXjoaJJQ1V37M9wx7CFXObKZWA/ky7jPfEPGlwsIppSymEDnwGfyFMHa/pUSY45t6bV5SHcp/btowCI3c=
+X-Received: by 2002:a05:6102:648f:10b0:4fb:142:1ff5 with SMTP id
+ ada2fe7eead31-4fb01422464mr654319137.26.1753767885910; Mon, 28 Jul 2025
+ 22:44:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250706-exynos7870-dsim-v3-0-9879fb9a644d@disroot.org> <20250706-exynos7870-dsim-v3-3-9879fb9a644d@disroot.org>
-In-Reply-To: <20250706-exynos7870-dsim-v3-3-9879fb9a644d@disroot.org>
+References: <20250706-exynos7870-dsim-v3-0-9879fb9a644d@disroot.org> <20250706-exynos7870-dsim-v3-9-9879fb9a644d@disroot.org>
+In-Reply-To: <20250706-exynos7870-dsim-v3-9-9879fb9a644d@disroot.org>
 From: Inki Dae <daeinki@gmail.com>
-Date: Tue, 29 Jul 2025 12:55:09 +0900
-X-Gm-Features: Ac12FXwWbP8lV4QH9kqWdIB3oIAGkUWrt4c9ZYSOynqYZlW4YQIBN8DquJzuVJI
-Message-ID: <CAAQKjZPNh=r5xf7X_R58VhuKz61vVGO83Oe9KsA1m_nJ1OuMLA@mail.gmail.com>
-Subject: Re: [PATCH v3 03/13] drm/bridge: samsung-dsim: add flag to control
- header FIFO wait
+Date: Tue, 29 Jul 2025 14:44:03 +0900
+X-Gm-Features: Ac12FXzAP3fREaTsrBTi2grtepIb_8yjQOzO6O2L5XoQ97YnHsqpGgIB0mEB7O0
+Message-ID: <CAAQKjZMLMbwDVZRb5+Xb_5yz3AEP4uuzFJMuuZy9NFDu13VU5w@mail.gmail.com>
+Subject: Re: [PATCH v3 09/13] drm/bridge: samsung-dsim: increase timeout value
+ for PLL_STABLE
 To: Kaustabh Chakraborty <kauschluss@disroot.org>
 Cc: Jagan Teki <jagan@amarulasolutions.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
 	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -99,146 +99,65 @@ Cc: Jagan Teki <jagan@amarulasolutions.com>, Marek Szyprowski <m.szyprowski@sams
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-2025=EB=85=84 7=EC=9B=94 7=EC=9D=BC (=EC=9B=94) =EC=98=A4=EC=A0=84 3:26, Ka=
+2025=EB=85=84 7=EC=9B=94 7=EC=9D=BC (=EC=9B=94) =EC=98=A4=EC=A0=84 3:28, Ka=
 ustabh Chakraborty <kauschluss@disroot.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=
 =84=B1:
 >
-> Exynos7870's DSIM device doesn't require waiting for the header FIFO
-> during a MIPI DSI transfer. Add a flag in the driver data in order to
-> control said behavior.
+> Exynos7870's DSIM requires more time to stabilize its PLL. The current
+> timeout value, 1000, doesn't suffice. Increase the value to 3000, which
+> is just about enough as observed experimentally.
+>
+> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+> ---
+>  drivers/gpu/drm/bridge/samsung-dsim.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/brid=
+ge/samsung-dsim.c
+> index fb2cb09cfd5a4f2fb50f802dc434c0956107b4e9..4b49707730db76aa8fd3ab973=
+b02507436750889 100644
+> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
+> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+> @@ -755,7 +755,7 @@ static unsigned long samsung_dsim_set_pll(struct sams=
+ung_dsim *dsi,
+>
+>         samsung_dsim_write(dsi, DSIM_PLLCTRL_REG, reg);
+>
+> -       timeout =3D 1000;
+> +       timeout =3D 3000;
 
-I will merge this patch as-is and just sharing the following comments
-purely for reference (for other Exynos DRM contributors).
+Relying on an implicit loop to wait for PLL stabilization is not an
+ideal solution.
+According to the datasheet, this can be addressed more explicitly by
+using the DSIM_PLLTMR (PLL timer) register instead.
 
-This patch likely needs follow-up improvements in conjunction with
-Marek=E2=80=99s earlier patch (commit-id:
-15f389da11257b806da75a070cfa41ca0cc15aae). I=E2=80=99m unable to verify thi=
-s
-at the moment because the SoC Technical Reference Manual (TRM)
-documentation I have is incomplete.
+By configuring the pll timer field in DSIM_PLLTMR appropriately, we
+can avoid arbitrary loops.
+For example according to data sheet:
+If the APB clock is 80 MHz and the desired delay is 20 =C2=B5s,
+the pll timer field should be set to:
+delay_time * apb_clock =3D 20 * 80 =3D 1600 (0x3E80)
 
-Based on these two patches, we should plan for future code
-improvements that account for two scenarios:
+Once this value is set and the MskPllStable field in the DSIM_INTMSK
+register is unmasked,
+the pll_stable field in the DSIM_INTSRC register will be set after the
+specified delay (20 =C2=B5s in this example).
+We can then check this field to determine whether the PLL has stabilized.
 
-- The header FIFO must be waited for.
-- The header FIFO does not need to be waited for.
+While the current patch relies on an implicit method, I=E2=80=99m fine with
+merging it as-is for now.
+However, since this patch series likely has sufficient time to
+mainline, I believe this is a good opportunity to improve the related
+logic.
 
-Currently, this is handled via driver data using the
-has_broken_fifoctrl_emptyhdr and wait_for_hdr_fifo flags. If the
-handling of this behavior changes in newer Exynos SoCs, this approach
-may become confusing or lead to inconsistencies.
+Would you be open to trying the approach described above?
 
 Thanks,
 Inki Dae
 
->
-> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-> ---
->  drivers/gpu/drm/bridge/samsung-dsim.c | 15 ++++++++++++---
->  include/drm/bridge/samsung-dsim.h     |  1 +
->  2 files changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/brid=
-ge/samsung-dsim.c
-> index dca3939dd99fa07aee309067b93e652bc9a9b78f..84af24171b6856cbcf95b9077=
-b997ee587fc0409 100644
-> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
-> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-> @@ -418,6 +418,7 @@ static const struct samsung_dsim_driver_data exynos3_=
-dsi_driver_data =3D {
->         .has_clklane_stop =3D 1,
->         .num_clks =3D 2,
->         .max_freq =3D 1000,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 1,
->         .num_bits_resol =3D 11,
->         .pll_p_offset =3D 13,
-> @@ -438,6 +439,7 @@ static const struct samsung_dsim_driver_data exynos4_=
-dsi_driver_data =3D {
->         .has_clklane_stop =3D 1,
->         .num_clks =3D 2,
->         .max_freq =3D 1000,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 1,
->         .num_bits_resol =3D 11,
->         .pll_p_offset =3D 13,
-> @@ -456,6 +458,7 @@ static const struct samsung_dsim_driver_data exynos5_=
-dsi_driver_data =3D {
->         .has_legacy_status_reg =3D 1,
->         .num_clks =3D 2,
->         .max_freq =3D 1000,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 1,
->         .num_bits_resol =3D 11,
->         .pll_p_offset =3D 13,
-> @@ -474,6 +477,7 @@ static const struct samsung_dsim_driver_data exynos54=
-33_dsi_driver_data =3D {
->         .has_clklane_stop =3D 1,
->         .num_clks =3D 5,
->         .max_freq =3D 1500,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 0,
->         .num_bits_resol =3D 12,
->         .pll_p_offset =3D 13,
-> @@ -492,6 +496,7 @@ static const struct samsung_dsim_driver_data exynos54=
-22_dsi_driver_data =3D {
->         .has_clklane_stop =3D 1,
->         .num_clks =3D 2,
->         .max_freq =3D 1500,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 1,
->         .num_bits_resol =3D 12,
->         .pll_p_offset =3D 13,
-> @@ -510,6 +515,7 @@ static const struct samsung_dsim_driver_data imx8mm_d=
-si_driver_data =3D {
->         .has_clklane_stop =3D 1,
->         .num_clks =3D 2,
->         .max_freq =3D 2100,
-> +       .wait_for_hdr_fifo =3D 1,
->         .wait_for_reset =3D 0,
->         .num_bits_resol =3D 12,
->         /*
-> @@ -1117,6 +1123,7 @@ static void samsung_dsim_send_to_fifo(struct samsun=
-g_dsim *dsi,
->  {
->         struct device *dev =3D dsi->dev;
->         struct mipi_dsi_packet *pkt =3D &xfer->packet;
-> +       const struct samsung_dsim_driver_data *driver_data =3D dsi->drive=
-r_data;
->         const u8 *payload =3D pkt->payload + xfer->tx_done;
->         u16 length =3D pkt->payload_length - xfer->tx_done;
->         bool first =3D !xfer->tx_done;
-> @@ -1157,9 +1164,11 @@ static void samsung_dsim_send_to_fifo(struct samsu=
-ng_dsim *dsi,
->                 return;
->
->         reg =3D get_unaligned_le32(pkt->header);
-> -       if (samsung_dsim_wait_for_hdr_fifo(dsi)) {
-> -               dev_err(dev, "waiting for header FIFO timed out\n");
-> -               return;
-> +       if (driver_data->wait_for_hdr_fifo) {
-> +               if (samsung_dsim_wait_for_hdr_fifo(dsi)) {
-> +                       dev_err(dev, "waiting for header FIFO timed out\n=
-");
-> +                       return;
-> +               }
->         }
->
->         if (NEQV(xfer->flags & MIPI_DSI_MSG_USE_LPM,
-> diff --git a/include/drm/bridge/samsung-dsim.h b/include/drm/bridge/samsu=
-ng-dsim.h
-> index f0c1e5c5ed490afe0bcfd06830f52471710b29ea..62c07952bd00f9c2c287a6a99=
-8f0e243dd4032a9 100644
-> --- a/include/drm/bridge/samsung-dsim.h
-> +++ b/include/drm/bridge/samsung-dsim.h
-> @@ -61,6 +61,7 @@ struct samsung_dsim_driver_data {
->         unsigned int num_clks;
->         unsigned int min_freq;
->         unsigned int max_freq;
-> +       unsigned int wait_for_hdr_fifo;
->         unsigned int wait_for_reset;
->         unsigned int num_bits_resol;
->         unsigned int pll_p_offset;
+>         do {
+>                 if (timeout-- =3D=3D 0) {
+>                         dev_err(dsi->dev, "PLL failed to stabilize\n");
 >
 > --
 > 2.49.0
