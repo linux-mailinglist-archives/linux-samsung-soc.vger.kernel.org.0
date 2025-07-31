@@ -1,150 +1,138 @@
-Return-Path: <linux-samsung-soc+bounces-9598-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9595-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C2ECB17302
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 31 Jul 2025 16:16:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F059B16F5B
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 31 Jul 2025 12:21:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9E4B1C205A8
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 31 Jul 2025 14:17:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 457EB621930
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 31 Jul 2025 10:20:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4B4B487A5;
-	Thu, 31 Jul 2025 14:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668E72BDC3E;
+	Thu, 31 Jul 2025 10:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DdtIclw1"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m3285.qiye.163.com (mail-m3285.qiye.163.com [220.197.32.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D6F23BE;
-	Thu, 31 Jul 2025 14:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.85
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3F22BD595
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 31 Jul 2025 10:21:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753971403; cv=none; b=bYmTgehk7Xt8Lp/QjVzNiMvUoNAGydMJaBNOS8bcSEmf9/FakO1kDlrv4K5/0E2Yzir5LDWWGsNnCazUKgyS5LvOYfBA6DN+w+JWnuwCCByZFbuhGKAf0DCsEqzoHno1hlEucaNTBOlsnVzfiueoT/eHv/OSUFGFjWhaJwaDAYs=
+	t=1753957262; cv=none; b=dEwZsERNsDJLL51pgmoEhTMCg991HKOex5Bm57JooBNxe0IH2A2TlCWVGIQfJlwlOI3iJHgazu0EXgR931dUA9xjl+LvNjiLrYa3YRoeX6nJerbHz+gos9Az3/co/+LTCu0pvj5wnXOQ1h4ZjbbQwkxG/m6zz8HlalpcFIJ4atY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753971403; c=relaxed/simple;
-	bh=UW8GLbU03FCsMjccf40Jm+8x7OkSG2Tz5Njj2gbNmQo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q5Ll36nzUGhH1fBGR+WjfyLu5t4qiJXwtS9S0jVsWgWEMY1DmMY/msJg/KTS6gNGd5ew96sGT5YxzACyGAsN8c/N8+8PDgXx9r5TJhmovBM2DpcrBdd4QyZ+wvO5HdGx0dv379SfQc+r9F/NWirN1FjEznemmZGu+nXM5mVTgII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=220.197.32.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
-Received: from [192.168.1.94] (unknown [218.94.118.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id dee002b7;
-	Thu, 31 Jul 2025 17:40:26 +0800 (GMT+08:00)
-Message-ID: <5b4dc6a3-f6fd-4bf7-a84e-3d79db8d062e@easystack.cn>
-Date: Thu, 31 Jul 2025 17:40:26 +0800
+	s=arc-20240116; t=1753957262; c=relaxed/simple;
+	bh=eeZqZiIDDXHwWP76HNKsyEyhco1yGowTasqjD2qFGQY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BdULhwTO5wy3Bnco0VKbd2rnCYpcz/qsF2ln2VQAULCOvjNZM+prk3zPXHYyRy3qa3qUjRziApnvCMIMQnR5u3KG02eUEcYR6w6umCPUZ+DFuhmSa3RbsrY7BF/iHFX+XfMOF/7kwWeLEaRDfbeX4RcdeDvRjhVpXR1TanYTbiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DdtIclw1; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3b7862bd22bso1108229f8f.1
+        for <linux-samsung-soc@vger.kernel.org>; Thu, 31 Jul 2025 03:21:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1753957259; x=1754562059; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eeZqZiIDDXHwWP76HNKsyEyhco1yGowTasqjD2qFGQY=;
+        b=DdtIclw12SBilY5CAMUdd7ccs+qeIRvc729/Y/7UPBM7zvnOIkCTQa+PU+3MJJUsN9
+         dG4R06mRsp1hbfYxL0kgmbOvYyVuNrNNosd+NSNRlaAT6OSliYUNJpvgFcnT1TOVWyt+
+         8c7bL1pH+7uBj8YRe0k7lF/fsw8je13pwwN+jhYH1k+D1kuA/QwxHF9165P6WVWnYkpf
+         hbRbRzV0eQiXOwOqcY8rEACSBKl2hBMWHJbBi0jH9aqO+Mu2UcuadTpkzcbfLpLlyNi4
+         0i7yimw64ONL2CPFVzcT9ic3bY7oTJBjqUot7A2wNJVQ49S8+MMJ7NBSgzO7czvp7MsG
+         YM3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753957259; x=1754562059;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eeZqZiIDDXHwWP76HNKsyEyhco1yGowTasqjD2qFGQY=;
+        b=np+cRE6Fl8146wAk+WQ2YAqkHheYjpb63oikAAuO/TW2zSiWjuIJp9qnKSQpPDBB/G
+         CQXmEMUG2XVxbyO5do81w4Kv6K47k1UHLV75cnzN/x6mARewGGN2w8rJpfc+7ltNTWHY
+         9dHELUd43tFBT200NeqXQIUQPhnGK0WJoSIaZlJieYUiZoeIXXD5+1q0DZ0d8WZFPnSm
+         gP8cwQSe3FFbyPMyvL0sLXzcQW8KQctXvdY0dizXR54RmxuvrYjq1dloV74ScsVoGg4K
+         OEvOzrwaFiukDuNVOu73fVO0e6bjfB3NpUUp/zGrCCf5AsEL032w8vnkacSIiWz9I3Ug
+         RyaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWXTrhIfcMFXWLf8DvyJ/qFMS/YPMD8dc9QnZnEcLca2J8qr02Oi/w9zMDBns0p9Iqt36Cl3Xv/Mx1VY1YzPYiOqQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVKZRFgBX8+R5MCdtZMijfsH0Fo7gUsD8gxTDOElnGVKpRMtyd
+	QJ240LSRShRKOgPN0vWdchd37GU0XqoF75Y1Xeu+x1gVPcsseOx1EPw12B2j3iRL/hs=
+X-Gm-Gg: ASbGnctIzs0jiHmhnvpXBaT/HSv9KX+u2WCK/fP1ONehrdMUlaFxA9t2SHPF6zIdGCF
+	8Zy9KVNNW+qaRQ1jr/I2dLVWyEGhSCnQb2qQB3RIYbOWRL1jgnVV4CeRrufse5uWFU9jozH1VHA
+	vgl9H3XPG9/N6hiKNwrVexm7BQZCu/LkUgJp4z1TtGHAw9w2wZvfdeBjUjXCGXMQpe1LbfG4Dk7
+	V6U+azKZ7RuumsacxtoZMhwyCRS14Jw8XOCk1LGQ3zyYOwF9utzVay1+SsE7nCI6lL8IZ+FPJq9
+	V5IwDaJabqFP2J62oRAOvyAxY3lvLXbhDHMijidr98wSBKNAxUjw188jiY/cxAH0V5JEJA/0Yo9
+	xXDSKeBQc+qlHUaz9Sjkbj3cJ/A==
+X-Google-Smtp-Source: AGHT+IFVEwLIcO4fNKnjyIY1mnWetXH6kHJKTnn/c6Wln21XoHb709OPThVEb0OesSZIKjx5gzja4Q==
+X-Received: by 2002:a05:6000:22c8:b0:3a4:cec5:b59c with SMTP id ffacd0b85a97d-3b79d812bc8mr1195293f8f.25.1753957258867;
+        Thu, 31 Jul 2025 03:20:58 -0700 (PDT)
+Received: from [10.1.1.59] ([80.111.64.44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4588d89c50fsm60787795e9.0.2025.07.31.03.20.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Jul 2025 03:20:58 -0700 (PDT)
+Message-ID: <1a72e672995ef6cd186f8ff18a91bb8b72d86554.camel@linaro.org>
+Subject: Re: [PATCH v5 0/2] Samsung S2MPG10 PMIC MFD-based drivers
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sylwester Nawrocki
+ <s.nawrocki@samsung.com>, Chanwoo Choi	 <cw00.choi@samsung.com>, Alim
+ Akhtar <alim.akhtar@samsung.com>, Michael Turquette
+ <mturquette@baylibre.com>, Russell King <linux@armlinux.org.uk>, Catalin
+ Marinas	 <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Alexandre Belloni	 <alexandre.belloni@bootlin.com>, Peter Griffin
+ <peter.griffin@linaro.org>,  Tudor Ambarus <tudor.ambarus@linaro.org>, Will
+ McVicker <willmcvicker@google.com>, kernel-team@android.com, 
+	linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org, Krzysztof
+ Kozlowski <krzysztof.kozlowski@linaro.org>
+Date: Thu, 31 Jul 2025 11:20:56 +0100
+In-Reply-To: <20250730145100.GA6782@google.com>
+References: <20250730-s2mpg10-v5-0-cd133963626c@linaro.org>
+	 <20250730145100.GA6782@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1+build2 
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] memory: samsung: exynos-srom: Fix of_iomap leak in
- exynos_srom_probe
-To: Krzysztof Kozlowski <krzk@kernel.org>, alim.akhtar@samsung.com
-Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org
-References: <20250731083340.1057564-1-zhen.ni@easystack.cn>
- <aa6ad382-dc2a-4f63-be11-7d331027af66@kernel.org>
-From: "zhen.ni" <zhen.ni@easystack.cn>
-In-Reply-To: <aa6ad382-dc2a-4f63-be11-7d331027af66@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a985fdab9b90229kunm51918700f3967
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWS1ZQUlXWQ8JGhUIEh9ZQVlDShkZVkgZHk9NT08aHk8fT1YVFAkWGhdVGRETFh
-	oSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09IVUpLS1
-	VKQktLWQY+
 
-Hi,
+On Wed, 2025-07-30 at 15:51 +0100, Lee Jones wrote:
+> On Wed, 30 Jul 2025, Andr=C3=A9 Draszik wrote:
+>=20
+> > Original cover letter further down.
+> >=20
+> > This is a resend of two patches from the original series that haven't
+> > been merged yet. That series was merged except for the attached two
+> > patches here. Other than rebasing against next-20250729 there are no
+> > changes to them.
+> >=20
+> > Lee, I think Stephen's intention was to get these two merged via the
+> > MFD tree please.
+>=20
+> Although I have no issue with this, it does seem a little odd now that
+> the set consists of only Clk patches.=C2=A0 Let me know what you / Stephe=
+n
+> decide.
 
-During static analysis with Smatch, I identified the following issue:
+Thanks Lee.
 
-```
-drivers/memory/samsung/exynos-srom.c:155 exynos_srom_probe()
-warn: 'srom->reg_base' from of_iomap() not released on lines: 155.
-```
+I simply went by Stephen's ACK, which to me implies he wanted it merged
+via a different tree (mfd). I guess at this stage it doesn't matter anymore=
+,
+since all the core changes are in already.
 
-Problem analysis:
-1. In exynos_srom_probe(), the reg_base resource is acquired via of_iomap()
-2. The of_platform_populate() call at the end of the function has a 
-possible failure path:
-```
-root = root ? of_node_get(root) : of_find_node_by_path("/");
-if (!root)
-      return -EINVAL; // Failure return point
-```
-3. When this path is taken, reg_base is not released, causing a resource 
-leak
-
-Verification:
-After applying the patch, the Smatch warning is resolved
+I'll defer to Stephen :-)
 
 
-Best regards,
-Zhen
+Cheers,
+Andre'
 
-
-在 2025/7/31 17:06, Krzysztof Kozlowski 写道:
-> On 31/07/2025 10:33, Zhen Ni wrote:
->> The current error handling in exynos_srom_probe() has a resource leak
->> in the of_platform_populate() failure path. When this function fails
->> after successful resource allocation, srom->reg_base is not released.
->>
->> To fix this issue, replace of_iomap() with
->> devm_platform_ioremap_resource(). devm_platform_ioremap_resource()
->> is a specialized function for platform devices.
-> 
-> Don't explain us kernel code. Drop sentence.
-> 
->> It allows 'srom->reg_base' to be automatically released whether the
->> probe function succeeds or fails.
-> 
-> It's obvious.
-> 
->>
->> Besides, use IS_ERR() instead of !srom->reg_base
-> 
-> I don't understand this. You keep explaining the code and this suggests
-> you made change here not related to original case. Can you return
-> srom->reg_base here? No?
-> 
-> 
->> as the return value of devm_platform_ioremap_resource()
->> can either be a pointer to the remapped memory or
->> an ERR_PTR() encoded error code if the operation fails.
->>
-> 
-> Missing fixes and cc-stable.
-> 
->> Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
->> ---
->>   drivers/memory/samsung/exynos-srom.c | 10 ++++------
->>   1 file changed, 4 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/memory/samsung/exynos-srom.c b/drivers/memory/samsung/exynos-srom.c
->> index e73dd330af47..d913fb901973 100644
->> --- a/drivers/memory/samsung/exynos-srom.c
->> +++ b/drivers/memory/samsung/exynos-srom.c
->> @@ -121,20 +121,18 @@ static int exynos_srom_probe(struct platform_device *pdev)
->>   		return -ENOMEM;
->>   
->>   	srom->dev = dev;
->> -	srom->reg_base = of_iomap(np, 0);
->> -	if (!srom->reg_base) {
->> +	srom->reg_base = devm_platform_ioremap_resource(pdev, 0);
->> +	if (IS_ERR(srom->reg_base)) {
->>   		dev_err(&pdev->dev, "iomap of exynos srom controller failed\n");
->> -		return -ENOMEM;
->> +		return PTR_ERR(srom->reg_base);
-> 
-> How did you test it?
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
 
