@@ -1,191 +1,130 @@
-Return-Path: <linux-samsung-soc+bounces-9697-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9750-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D6FEB1AD72
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Aug 2025 07:03:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67A95B1D5F2
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 12:50:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACF16189FA5E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue,  5 Aug 2025 05:04:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C46A565E7F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 10:50:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9901E5B88;
-	Tue,  5 Aug 2025 05:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90023226D18;
+	Thu,  7 Aug 2025 10:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rRcX1HZB"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="e2jZcK3M"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACED2AD0B
-	for <linux-samsung-soc@vger.kernel.org>; Tue,  5 Aug 2025 05:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC422144C7
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754370217; cv=none; b=hKRZ5XoeQkpK1aMiWzXshlD0e4dg/GS/JxXtIR5+cmHGCAzd1G4Kdfer2ftICHC2FfSdFjYG/u53X4vFom5ARdSff2lBH7MT0xWYt+w/qY0kQobt5fzgQMjcAGELenGylA+TMmFV4YmwDCUd025PK0EgZO/5K59tI0HdxTtdC5o=
+	t=1754563826; cv=none; b=BjjD1JF4WCbZwLyyOUBMS5ap8jI42b+4GAekS+8R92XM60cFzhA62UOZjkbK6OCtc8OGRVzACIx86vY++gEe7dVNz5SgCzuD4dKzTLG37DXk7jwPykncGpK4FvqPXQnYrqEPhJkK3gscqn1DcBfx0BsTegdfztFNtQCTHb6n9Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754370217; c=relaxed/simple;
-	bh=8eUuiOAVr7JSZ5ksqVPkUqhNwo/8hc8bMdYjo7FjjO0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ezvQGmAJlvtKRb59GjoNirDAxG3raA4bhtqrRquZDEsyR8ajpAqE8hR+5xaMNK7EphWd0kSIgWOxeaWGuLIsh7NuGQLBszEprt9UhlkG2MAfSEZqcDn1m4I9GBtbPwOyl4d3wAnb8mkAGtzCcxOcOBFL+v6itdZ0UyFSkZywvoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rRcX1HZB; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-71b4677044bso55683267b3.2
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 04 Aug 2025 22:03:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1754370214; x=1754975014; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eY5N7v+zWU8+UjZUkDsBJT0AwO4FrfcIvgZ3TXySOJk=;
-        b=rRcX1HZBhz+7gXxh6R1MLbFhNa9oTQ4Dntav+38dfyqV5pUds8W2C7+1/KtHNMcwPb
-         CyAgiabfQoq9NcTo1jphPnQbX7NlyXOUQGy45O0SE1cn+VDlw8U+E4ZHXqYtNn6/GKdh
-         9FC20lNjghCCXK0rbyp3RsCQEleZtPhyDU/eoGlu5mEzSVPoXrrDaLGPANaDh6SO6aLH
-         1UOI1N/EMz/NA7v0POXf1aYeqGvgQhB7a46YYwPUPHlRoZtqmRLYCFSZPu8ZSkaW65qs
-         T1XkWjZB8/G7Kih7pBIkK0gduSeuP3kXHBGrhHKb3/RrntZ/XW7kl5vN5eeuRInjvODd
-         ia0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754370214; x=1754975014;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eY5N7v+zWU8+UjZUkDsBJT0AwO4FrfcIvgZ3TXySOJk=;
-        b=n2PVfy0nE/xP6qAr9dO9dI+rupp4vpOJkAh79pj5ZotF89uF19cQJnGbPz3FRflfhK
-         aGA/rJlLzTkp86CoaiIhwmNxZupeox+vZHeJw2hj2MlCPhY6I48ltag6RIE/gaDqxw8/
-         vRnbouEU9zSPpvT/+CZ6Nj6wwvC5zi3HZ+oDkRd6MGP3yvMjP4tOLFYRT7hvbiKQcmaE
-         MQL7/ED7UVlDkILL3ijT+L3h17qyyb51xHrUEUcO4LeBCiL8txXiYpb7dDIU7agB85a8
-         7PCYhbuu9yhUf5Nw29cA70qr/B86ACxtkqBhgSqm7tSLCoVs6HYJlK2EgCzs2FxemJGb
-         GvEg==
-X-Forwarded-Encrypted: i=1; AJvYcCXMhaQh+HBzNbWTWK45WSlreAWkzXRnyJDRK8MLruJhs0D4JlqFdWTvHkLy4/tv+xj86lP0nyhXr0/O96+C4rvH+A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRAw6WOBAriJQxhYCND7t8E5bsiSaFjWafm2IKXIKtYefuDmb8
-	duv1R4OELKE69tRNBd/FMFXWFDQcasKLTcKjfRDktL9cDKRm5BODimqn6R8Z5OMAUgFJ+PCaM/l
-	ya0HO6V5wJEePQMXphZilj0D+ib0j/g2WsgWS5OmYnw==
-X-Gm-Gg: ASbGnctXfbOJUZsmR15NB/hHok0hWFIuHuCAMEzFNsyjhZNGoXerBaGKQVhgrMT340z
-	Ek7kn89B3/M/wwkPH/VmZt9pEsvBsLAAVkCYLA02SZkgPmCBzvJdSPxgL/wn3jXvx5/oAzM4PkS
-	4c/i9UXYzHdUjls+QlQcKLuYlzCr70ikHytc8Lg/z1MSH3lmrqkheYE8DNcxYTrQRkXP5Obd7xc
-	921+A==
-X-Google-Smtp-Source: AGHT+IG1oZhqjscU5pfjiY1Q7UEpsk3imnmFMsZ67z7dBWGY5jc3R9ttC3dArQUXZ4i83be1Xm4e66GVmgTedDEMPjA=
-X-Received: by 2002:a05:690c:6f0f:b0:71a:251e:36eb with SMTP id
- 00721157ae682-71b7ef66861mr146668157b3.21.1754370214226; Mon, 04 Aug 2025
- 22:03:34 -0700 (PDT)
+	s=arc-20240116; t=1754563826; c=relaxed/simple;
+	bh=Syfn0NEuvRi1yje0O/PsVJqRnUVtWUN/PEXoRX+j6eU=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=L56AtxmXns/yfWtTTmWwuTqSg56nKvindk9JNTkQMaN2XC/dksppgUXVCZHLq/MRymB7QpiGTU3MeJJjvNxesLs8NIxqIYty+GiN4ujboU6vCzMyQz4H47IrD2uE4P4qSPnW6BSLrIPjQdcq34NZC5ptEWy5kNgczSAgT8FV1/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=e2jZcK3M; arc=none smtp.client-ip=203.254.224.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250807105022epoutp02bba9beeca1376a2a34cb3c10f232de02~ZdoAO3OPJ1754017540epoutp02U
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:50:22 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250807105022epoutp02bba9beeca1376a2a34cb3c10f232de02~ZdoAO3OPJ1754017540epoutp02U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1754563822;
+	bh=4JuxWH0gBRJFGn1yRVR8bYk8LvsjMgUCt5sZEIKMU0w=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=e2jZcK3MhHShok6QY1JpZA90wrloAaNL1f4N67gVCrQ0cHt+aESjgPMQLu6lIPajZ
+	 2o/Df62U5i3edTPAuG5HKG+UqZG6SD8MQXyyDyAY0Zuu/WxECQbBS9aTx1fFcHYPrI
+	 p3d02kLcxwAKqR9Os+i7I8n+CzqCmsa/sio/i6c8=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20250807105021epcas5p3d0cb6d2d9e7317dda010087be19fcb1f~Zdn-wez1Y0694006940epcas5p3R;
+	Thu,  7 Aug 2025 10:50:21 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.94]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4byP7x017Dz2SSKb; Thu,  7 Aug
+	2025 10:50:21 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250805052803epcas5p47a93b443b6c085e237adbafc4de1f3b7~Yx8BUYASz2721327213epcas5p4k;
+	Tue,  5 Aug 2025 05:28:03 +0000 (GMT)
+Received: from FDSFTE361 (unknown [107.122.81.127]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250805052802epsmtip299b7db91253d19087c2c9b5618578ed1~Yx7-3VIlX0050500505epsmtip22;
+	Tue,  5 Aug 2025 05:28:02 +0000 (GMT)
+From: "Bharat Uppal" <bharat.uppal@samsung.com>
+To: "'Bart Van Assche'" <bvanassche@acm.org>, <linux-scsi@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <James.Bottomley@HansenPartnership.com>,
+	<martin.petersen@oracle.com>, <alim.akhtar@samsung.com>,
+	<avri.altman@wdc.com>, <linux-samsung-soc@vger.kernel.org>
+Cc: <pankaj.dubey@samsung.com>, <aswani.reddy@samsung.com>, "'Nimesh Sati'"
+	<nimesh.sati@samsung.com>
+In-Reply-To: <c9cd3d39-37ec-42cf-9458-e3242fe1f302@acm.org>
+Subject: RE: [PATCH] scsi: ufs: exynos: fsd: Gate ref_clk and put UFS device
+ in reset on suspend
+Date: Tue, 5 Aug 2025 10:58:00 +0530
+Message-ID: <0ae601dc05c9$b749ba60$25dd2f20$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CGME20250724081336epcas2p38e95932ddc5c702e05a6436f05582993@epcas2p3.samsung.com>
- <20250724080854.3866566-1-sw617.shin@samsung.com> <20250724080854.3866566-3-sw617.shin@samsung.com>
- <CAPLW+4nRh9DEnkhunG68xvGdaNJswC8fN4v4uBA1Aaao_5pxfw@mail.gmail.com>
- <000a01dc05c0$9f0ab110$dd201330$@samsung.com> <18adfcd0-e955-4c3f-a68a-6a2f75ebd24d@roeck-us.net>
-In-Reply-To: <18adfcd0-e955-4c3f-a68a-6a2f75ebd24d@roeck-us.net>
-From: Sam Protsenko <semen.protsenko@linaro.org>
-Date: Tue, 5 Aug 2025 00:03:23 -0500
-X-Gm-Features: Ac12FXwhfK5c6hCAFDVH8lXtPSm0rXJFOVWdmBpTpuOp_j1X3bUQ9DkVKABvZIY
-Message-ID: <CAPLW+4kVMo68DAO0y_=m3k81Xeh4wYV9+KX3fg=5S7xwOh0O7Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] watchdog: s3c2410_wdt: Fix max_timeout being
- calculated larger
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: sw617.shin@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com, 
-	wim@linux-watchdog.org, khwan.seo@samsung.com, dongil01.park@samsung.com, 
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-in
+Thread-Index: AQExeeAfBfzr5YSvfr0wrrMUW8ELmAHKrEFuAhf3ztm1iYbGIA==
+X-CMS-MailID: 20250805052803epcas5p47a93b443b6c085e237adbafc4de1f3b7
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-541,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250804113654epcas5p1dc2a495e16ff0f66eafc54be67550f23
+References: <CGME20250804113654epcas5p1dc2a495e16ff0f66eafc54be67550f23@epcas5p1.samsung.com>
+	<20250804113643.75140-1-bharat.uppal@samsung.com>
+	<c9cd3d39-37ec-42cf-9458-e3242fe1f302@acm.org>
 
-On Mon, Aug 4, 2025 at 11:47=E2=80=AFPM Guenter Roeck <linux@roeck-us.net> =
-wrote:
->
-> On 8/4/25 21:22, sw617.shin@samsung.com wrote:
-> > On Saturday, August 2, 2025 at 1:12 PM Sam Protsenko <semen.protsenko@l=
-inaro.org> wrote:
-> >
-> >> How about something like this instead?
-> >>
-> >> 8<--------------------------------------------------------------------=
-->8
-> >> static inline unsigned int s3c2410wdt_max_timeout(unsigned long freq) =
-{
-> >>      const u64 div_max =3D (S3C2410_WTCON_PRESCALE_MAX + 1) *
-> >>                  S3C2410_WTCON_MAXDIV; /* 32768 */
-> >>      const u64 n_max =3D S3C2410_WTCNT_MAXCNT * div_max;
-> >>      u64 t_max =3D n_max / freq;
-> >>
-> >>      if (t_max > UINT_MAX)
-> >>          t_max =3D UINT_MAX;
-> >>
-> >>      return (unsigned int)t_max;
-> >> }
-> >> 8<--------------------------------------------------------------------=
-->8
-> >>
-> >> This implementation's result:
-> >>    - is never greater than real timeout, as it loses the decimal part =
-after
-> >> integer division in t_max
-> >>    - much closer to the real timeout value, as it benefits from very b=
-ig
-> >> n_max in the numerator (this is the main trick here)
-> >>    - prepared for using 32-bit max counter value in your next patch, a=
-s it
-> >> uses u64 type for calculations
-> >>
-> >> For example, at the clock frequency of 33 kHz:
-> >>    - real timeout is: 65074.269 sec
-> >>    - old function returns: 65535 sec
-> >>    - your function returns: 32767 sec
-> >>    - the suggested function returns: 65074 sec
-> >
-> > Thank you for your feedback.
-> > I'll make the code changes as follows in the next patch set:
-> >
-> > static inline unsigned int s3c2410wdt_max_timeout(struct s3c2410_wdt *w=
-dt)
-> >   {
-> >          const unsigned long freq =3D s3c2410wdt_get_freq(wdt);
-> > +       const u64 div_max =3D (S3C2410_WTCON_PRESCALE_MAX + 1) *
-> > +                       S3C2410_WTCON_MAXDIV;
-> > +       const u64 n_max =3D S3C2410_WTCNT_MAXCNT * div_max;
->
-> Not sure if splitting this expression adds any value. Why not just the fo=
-llowing ?
->
-> const u64 n_max =3D (u64)(S3C2410_WTCON_PRESCALE_MAX + 1) *
->                     S3C2410_WTCON_MAXDIV * S3C2410_WTCNT_MAXCNT;
->
-> Or just use a define ?
->
 
-Oh, that code snippet above is just a suggestion, please treat it as
-pseudo-code for this purpose, -- I just wanted to illustrate the idea,
-and should've been more clear! Yes, definitely should be revised and
-re-tested. And yeah, I agree, one single const or define would be
-enough, no need to make it too verbose. Also, the naming may be not
-the best, e.g. cnt_max might be better than n_max for example. But
-I'll leave it to Sangwook Shin to decide on the implementation, just
-wanted to communicate the idea.
+> -----Original Message-----
+> From: Bart Van Assche <bvanassche=40acm.org>
+> Sent: 04 August 2025 21:17
+> To: Bharat Uppal <bharat.uppal=40samsung.com>; linux-scsi=40vger.kernel.o=
+rg;
+> linux-kernel=40vger.kernel.org; James.Bottomley=40HansenPartnership.com;
+> martin.petersen=40oracle.com; alim.akhtar=40samsung.com;
+> avri.altman=40wdc.com; linux-samsung-soc=40vger.kernel.org
+> Cc: pankaj.dubey=40samsung.com; aswani.reddy=40samsung.com; Nimesh Sati
+> <nimesh.sati=40samsung.com>
+> Subject: Re: =5BPATCH=5D scsi: ufs: exynos: fsd: Gate ref_clk and put UFS=
+ device in
+> reset on suspend
+>=20
+> On 8/4/25 4:36 AM, Bharat Uppal wrote:
+> > +static int fsd_ufs_suspend(struct exynos_ufs *ufs) =7B
+> > +	exynos_ufs_gate_clks(ufs);
+> > +	hci_writel(ufs, 0 << 0, HCI_GPIO_OUT);
+> > +	return 0;
+> > +=7D
+>=20
+> Why '0 << 0' instead of just '0'? Isn't the latter easier to read?
+Thanks for reviewing.
+Indeed setting 0 is right, but in the same file ufs-exynos.c,  I have seen =
+HCI_GPIO_OUT register configured using 0 << 0.
+My intent here is to maintain coding style within the file.
 
-> > +       u64 t_max =3D n_max / freq;
-> >
->
-> Make sure this compiles on 32-bit builds.
->
+With Regards
+Bharat Uppal
 
-Can you please elaborate what might be the possible problem -- just
-curious? I admit I never though about 32-bit case when writing that
-code, but don't see any immediate issues with that too.
+>=20
+> Thanks,
+>=20
+> Bart.
 
-> > -       return S3C2410_WTCNT_MAXCNT / (freq / (S3C2410_WTCON_PRESCALE_M=
-AX + 1)
-> > -                                      / S3C2410_WTCON_MAXDIV);
-> > +       if (t_max > UINT_MAX)
-> > +               t_max =3D UINT_MAX;
-> > +
-> > +       return (unsigned int)t_max;
->
-> I am quite sure that this typecast is unnecessary.
->
-> Guenter
->
 
