@@ -1,296 +1,124 @@
-Return-Path: <linux-samsung-soc+bounces-9743-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9751-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ECBAB1D01B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 03:31:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9E4EB1D5F6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 12:50:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70F5816CE15
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 01:31:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CEDBF7AA525
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 10:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B1631A841E;
-	Thu,  7 Aug 2025 01:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EB5D26FD91;
+	Thu,  7 Aug 2025 10:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="UsRTv+zf"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ppYXl6BU"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m15571.qiye.163.com (mail-m15571.qiye.163.com [101.71.155.71])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6052D19DF6A;
-	Thu,  7 Aug 2025 01:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CA6226D18
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:50:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754530278; cv=none; b=Tv3O3e0EsYi/b+7n5xJ8NuEiPP2RVQjzTOE4VKTlFny8TwlKkyGuHuU5C59CxfJIVL2ZPXthqgWPEs5UPvTxeGvJwBpgxWGbeOVVw+01Nca6EgngoWwFVcQ+Wlibu2oVQI0GAsZK8ojRcW8JwAhhbN0thptQowEMqi993EosXYE=
+	t=1754563850; cv=none; b=KWjz/2bpDEbLrMhvOMlA/p5w6lmHU2fz/XhK9lLbM8bi9CqwCr1SIcAYvmTcKBkvAKIJUMf8KoAIaROWNfRcPuOCgd6+AZYSdcRm0uEu4KMGYaQcNRy3cxdB283TniL9Ai0IL1cNrO0Ro3vVHLx8PhAvmxPejAGh7ezEn3rSOdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754530278; c=relaxed/simple;
-	bh=WHgmbxW1VdiaAM+s4+dEs1Z990b6AbEGCDSvZ1WErU8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XjbxN4BKsMswIqcbt7dl88R5x5y+bz1y3I9XVMLq8vGqAskEzmrT5PMXaicOssBYJf8ype8PSx6ibCU+FlSKrVV9r6+nf0bSAFC1GgHq8o+AOi+314wtNkiDwJ1Jfq24HxixuTaJIQXHWb/jK6Ny6re6fm5ldW3E79JGhGgj/9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=UsRTv+zf; arc=none smtp.client-ip=101.71.155.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.26] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1e8ee5cc0;
-	Thu, 7 Aug 2025 09:31:03 +0800 (GMT+08:00)
-Message-ID: <a11db6b0-84ad-41c6-8389-b3eb4859e605@rock-chips.com>
-Date: Thu, 7 Aug 2025 09:31:02 +0800
+	s=arc-20240116; t=1754563850; c=relaxed/simple;
+	bh=5N0sCYf2Cs1KmNgBKMto4VeDsYyl1/Ny7xhHxwxRX48=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 References; b=cd+kaIL+PVXgPSlbWrgHxCxbccWVwkLZs//O/dFeJz7o/Kwap7pF9ZKQW0iVCrNuzMB7+UEtTel6ha0Bs5KGHN5onCTSFW6yEIRQNKSYyRRkKO+nmAga5zdn7Un8c97eyyQB5CmFxeSOfoWDF/wypVBa1FQvFf+u3shle/d3A6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ppYXl6BU; arc=none smtp.client-ip=203.254.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250807105046epoutp0405c002f420261354b24f5222494d6afd~ZdoWtJjOD0349703497epoutp04Z
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:50:46 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250807105046epoutp0405c002f420261354b24f5222494d6afd~ZdoWtJjOD0349703497epoutp04Z
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1754563846;
+	bh=9EFIJet6GwguCOgHXt373HO19RdNPt1XWJDM2bajplk=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=ppYXl6BUAVAeVZr16oTAuTzCiqe7yhCZS+FFgZzvF4nkidEBipqlnZylkV4VUzezu
+	 CB2MBnBBTia4sRLvv5W4Z5g3ZJs3fIBqTRcepasnE5PQZyLIRAwSA7oHHnQdsqBTIM
+	 W4HRgZNEHXl+bbwWKiLK/xzlWe3vfYCA3lEUb/6E=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250807105045epcas5p200483d0bdac63cb3b323ff857f67fdc1~ZdoWNaOIH1874618746epcas5p2P;
+	Thu,  7 Aug 2025 10:50:45 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.88]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4byP8P11ymz2SSKf; Thu,  7 Aug
+	2025 10:50:45 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250807032459epcas5p1d6bd796f5b654c92372bdcc8a7926c22~ZXjJEevMZ2629026290epcas5p1A;
+	Thu,  7 Aug 2025 03:24:59 +0000 (GMT)
+Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20250807032457epsmtip217c0a672ffd1a22f97b647b84be6597d~ZXjHGrzJG1346113461epsmtip29;
+	Thu,  7 Aug 2025 03:24:57 +0000 (GMT)
+From: Aakarsh Jain <aakarsh.jain@samsung.com>
+To: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, m.szyprowski@samsung.com,
+	andrzej.hajda@intel.com, mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+	alim.akhtar@samsung.com, robh@kernel.org, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc: linux-samsung-soc@vger.kernel.org, aswani.reddy@samsung.com,
+	anindya.sg@samsung.com, Aakarsh Jain <aakarsh.jain@samsung.com>
+Subject: [PATCH 00/10] Use SoC-specific compatible string for Samsung MFC
+Date: Thu,  7 Aug 2025 08:54:39 +0530
+Message-ID: <20250807032449.92770-1-aakarsh.jain@samsung.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Damon Ding <damon.ding@rock-chips.com>
-Subject: Re: [PATCH v3 00/14] Apply drm_bridge_connector and panel_bridge
- helper for the Analogix DP driver
-To: =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
- andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org
-Cc: Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
- jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
- jingoohan1@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
- kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
- hjc@rock-chips.com, andy.yan@rock-chips.com,
- dmitry.baryshkov@oss.qualcomm.com, l.stach@pengutronix.de,
- dianders@chromium.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
-References: <20250724080304.3572457-1-damon.ding@rock-chips.com>
- <c73fa024-fdd0-4f62-9c8a-11e7eee3c475@rock-chips.com>
- <1cf4bc1b-d7f3-4a88-b8d8-d2f681dce370@rock-chips.com>
- <38992177.XM6RcZxFsP@diego>
-Content-Language: en-US
-In-Reply-To: <38992177.XM6RcZxFsP@diego>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a988227308503a3kunm2154523888200d
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQ0tJS1YdTkkeTE1ISklJHRhWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=UsRTv+zfM7lf/hqTDg4zcq9ZrhdAALhPnOW1L/bak2mqRkXKYFnyfa0f1MEs8zpevO1FDDYrRQuG4id5mbxhiTzpugBS/N+pnZySLev5I6AZQoPCx32euPxEyRvke2lcvA4tO4Sdh4ten5g3Yg8fId6gPD4ZzFWvMCM97JDvFP8=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=wpgkwQgFw2aLN6OHenM0dKDLmv0ONgKFKT7BXvRMIH4=;
-	h=date:mime-version:subject:message-id:from;
+X-CMS-MailID: 20250807032459epcas5p1d6bd796f5b654c92372bdcc8a7926c22
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-541,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250807032459epcas5p1d6bd796f5b654c92372bdcc8a7926c22
+References: <CGME20250807032459epcas5p1d6bd796f5b654c92372bdcc8a7926c22@epcas5p1.samsung.com>
 
-Hi Heiko,
+This patch series modifies the samsung MFC version compatible to
+SoC-specific compatible.
 
-On 2025/8/7 3:54, Heiko Stübner wrote:
-> Hi Damon,
-> 
-> Am Dienstag, 29. Juli 2025, 05:16:27 Mitteleuropäische Sommerzeit schrieb Damon Ding:
->> On 2025/7/29 11:02, Damon Ding wrote:
->>> On 2025/7/26 3:45, Heiko Stübner wrote:
->>>> Am Freitag, 25. Juli 2025, 04:15:06 Mitteleuropäische Sommerzeit
->>>> schrieb Damon Ding:
->>>>> On 2025/7/24 21:10, Heiko Stübner wrote:
->>>>>> Am Donnerstag, 24. Juli 2025, 10:02:50 Mitteleuropäische Sommerzeit
->>>>>> schrieb Damon Ding:
->>>>>>> PATCH 1 is a small format optimization for struct analogid_dp_device.
->>>>>>> PATCH 2 is to perform mode setting in &drm_bridge_funcs.atomic_enable.
->>>>>>> PATCH 3 is to apply a better API for the encoder initialization.
->>>>>>> PATCH 4-7 are preparations for apply drm_bridge_connector helper.
->>>>>>> PATCH 8 is to apply the drm_bridge_connector helper.
->>>>>>> PATCH 9-11 are to move the panel/bridge parsing to the Analogix side.
->>>>>>> PATCH 12-13 are preparations for apply panel_bridge helper.
->>>>>>> PATCH 14 is to apply the panel_bridge helper.
->>>>>>
->>>>>> for future revisions, please provide a changelog on what changed since
->>>>>> the previous version, I guess ideally here in the cover-letter.
->>>>>>
->>>>>>
->>>>>> On my rk3588-tiger-displayport-carrier this works like a charm
->>>>>> Tested-by: Heiko Stuebner <heiko@sntech.de>
->>>>>>
->>>>>>
->>>>>>
->>>>>>
->>>>>
->>>>> Glad to see your review and test. :-)
->>>>>
->>>>> I will include the version-to-version changelogs (v2 -> v3 and v3 -> v4)
->>>>> in the next iteration.
->>>>
->>>> I have to amend that a bit, sadly. When doing a reboot with the edp
->>>> running, I see logs like:
->>>>
->>>> [...]
->>>> [  139.614749] systemd-shutdown[1]: Syncing filesystems and block
->>>> devices.
->>>> [  139.622201] systemd-shutdown[1]: Rebooting.
->>>> [  139.684845] ------------[ cut here ]------------
->>>> [  139.690050] WARNING: CPU: 0 PID: 110 at drivers/iommu/rockchip-
->>>> iommu.c:989 rk_iommu_identity_attach+0xac/0xbc
->>>> [  139.701175] Modules linked in: panthor rockchip_vdec rocket
->>>> drm_gpuvm v4l2_vp9 v4l2_h264 drm_exec rockchip_rng drm_shmem_helper
->>>> v4l2_mem2mem gpu_sched rng_core fuse
->>>> [  139.717685] CPU: 0 UID: 0 PID: 110 Comm: irq/58-HPD Not tainted
->>>> 6.16.0-rc7-00183-gd436cbe8e4b3 #1541 PREEMPT
->>>> [  139.728799] Hardware name: Theobroma Systems RK3588-Q7 SoM on Tiger
->>>> Displayport Carrier v1 (DT)
->>>> [  139.738548] pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS
->>>> BTYPE=--)
->>>> [  139.746351] pc : rk_iommu_identity_attach+0xac/0xbc
->>>> [  139.751821] lr : rk_iommu_identity_attach+0x70/0xbc
->>>> [  139.757290] sp : ffff800080e4b7c0
->>>> [  139.761001] x29: ffff800080e4b7c0 x28: ffff0001f6f98080 x27:
->>>> ffff0001f0a4b010
->>>> [  139.769006] x26: ffff0001f6f98e58 x25: 0000000000000000 x24:
->>>> 0000000000000000
->>>> [  139.777010] x23: 0000000000000000 x22: ffffdbf23c0485e0 x21:
->>>> ffff0001f0e9cc10
->>>> [  139.785014] x20: ffff0001f0df17a0 x19: ffff0001f0e2cb80 x18:
->>>> 0000000000000038
->>>> [  139.793018] x17: 0002550800000009 x16: 0000046c0446043e x15:
->>>> 0438000008ca080c
->>>> [  139.801021] x14: 07d008ca07800780 x13: 0438000008ca080c x12:
->>>> 07d0078000025508
->>>> [  139.809024] x11: 0002550800000009 x10: 0000046c0446043e x9 :
->>>> ffffdbf23c137000
->>>> [  139.817031] x8 : 0000000000000438 x7 : 0000000000000000 x6 :
->>>> 0000000000000000
->>>> [  139.825034] x5 : ffffdbf23adbb9c0 x4 : ffff0001f0df1780 x3 :
->>>> ffff0001f0df1780
->>>> [  139.833038] x2 : 0000000000000081 x1 : ffff0001f6fad500 x0 :
->>>> 00000000ffffffea
->>>> [  139.841042] Call trace:
->>>> [  139.843780]  rk_iommu_identity_attach+0xac/0xbc (P)
->>>> [  139.849252]  rk_iommu_attach_device+0x54/0x134
->>>> [  139.854236]  __iommu_device_set_domain+0x7c/0x110
->>>> [  139.859510]  __iommu_group_set_domain_internal+0x60/0x134
->>>> [  139.865561]  __iommu_attach_group+0x88/0x9c
->>>> [  139.870250]  iommu_attach_device+0x68/0xa0
->>>> [  139.874841]  rockchip_drm_dma_attach_device+0x28/0x7c
->>>> [  139.880508]  vop2_crtc_atomic_enable+0x620/0xaa0
->>>> [  139.885678]  drm_atomic_helper_commit_modeset_enables+0xac/0x26c
->>>> [  139.892413]  drm_atomic_helper_commit_tail_rpm+0x50/0xa0
->>>> [  139.898369]  commit_tail+0xa0/0x1a0
->>>> [  139.902279]  drm_atomic_helper_commit+0x17c/0x1b0
->>>> [  139.907552]  drm_atomic_commit+0x8c/0xcc
->>>> [  139.911951]  drm_client_modeset_commit_atomic+0x228/0x298
->>>> [  139.918005]  drm_client_modeset_commit_locked+0x5c/0x188
->>>> [  139.923960]  drm_client_modeset_commit+0x2c/0x58
->>>> [  139.929137]  __drm_fb_helper_restore_fbdev_mode_unlocked+0xb4/0x100
->>>> [  139.936164]  drm_fb_helper_hotplug_event+0xe8/0xf8
->>>> [  139.941526]  drm_fbdev_client_hotplug+0x24/0xe0
->>>> [  139.946605]  drm_client_hotplug+0x48/0xc4
->>>> [  139.951100]  drm_client_dev_hotplug+0x9c/0xd4
->>>> [  139.955984]  drm_kms_helper_connector_hotplug_event+0x20/0x30
->>>> [  139.962426]  drm_bridge_connector_hpd_cb+0x88/0xa0
->>>> [  139.967790]  drm_bridge_hpd_notify+0x3c/0x60
->>>> [  139.972577]  display_connector_hpd_irq+0x30/0xa4
->>>> [  139.978835]  irq_thread_fn+0x2c/0xb0
->>>> [  139.983894]  irq_thread+0x170/0x304
->>>> [  139.988833]  kthread+0x12c/0x204
->>>> [  139.993468]  ret_from_fork+0x10/0x20
->>>> [  139.998486] ---[ end trace 0000000000000000 ]---
->>>> [  140.004737] ------------[ cut here ]------------
->>>> [  140.010884] WARNING: CPU: 0 PID: 110 at drivers/iommu/rockchip-
->>>> iommu.c:1040 rk_iommu_attach_device+0x114/0x134
->>>> [  140.023079] Modules linked in: panthor rockchip_vdec rocket
->>>> drm_gpuvm v4l2_vp9 v4l2_h264 drm_exec rockchip_rng drm_shmem_helper
->>>> v4l2_mem2mem gpu_sched rng_core fuse
->>>> [  140.040577] CPU: 0 UID: 0 PID: 110 Comm: irq/58-HPD Tainted:
->>>> G        W           6.16.0-rc7-00183-gd436cbe8e4b3 #1541 PREEMPT
->>>> [  140.054457] Tainted: [W]=WARN
->>>> [  140.058804] Hardware name: Theobroma Systems RK3588-Q7 SoM on Tiger
->>>> Displayport Carrier v1 (DT)
->>>> [  140.069595] pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS
->>>> BTYPE=--)
->>>> [  140.078454] pc : rk_iommu_attach_device+0x114/0x134
->>>> [  140.084989] lr : rk_iommu_attach_device+0x98/0x134
->>>> [  140.091423] sp : ffff800080e4b7e0
->>>> [  140.096197] x29: ffff800080e4b7e0 x28: ffff0001f6f98080 x27:
->>>> ffff0001f0a4b010
->>>> [  140.105270] x26: ffff0001f6f98e58 x25: 0000000000000000 x24:
->>>> 0000000000000000
->>>> [  140.114351] x23: ffff0001f6f843e0 x22: ffffdbf23c0485e0 x21:
->>>> ffff0001f0e9cc10
->>>> [  140.123425] x20: ffff0001f0e2cb80 x19: ffff0001f6f843c0 x18:
->>>> 0000000000000038
->>>> [  140.132489] x17: 0002550800000009 x16: 0000046c0446043e x15:
->>>> 0438000008ca080c
->>>> [  140.141552] x14: 07d008ca07800780 x13: 0438000008ca080c x12:
->>>> 07d0078000025508
->>>> [  140.150623] x11: 0002550800000009 x10: 0000046c0446043e x9 :
->>>> ffffdbf23c137000
->>>> [  140.159701] x8 : 0000000000000438 x7 : 0000000000000000 x6 :
->>>> 0000000000000000
->>>> [  140.168772] x5 : ffffdbf23adbb9c0 x4 : ffff0001f0df1780 x3 :
->>>> ffff0001f0e2cbe0
->>>> [  140.177825] x2 : 0000000000000081 x1 : ffff0001f6fad500 x0 :
->>>> 00000000ffffffea
->>>> [  140.186858] Call trace:
->>>> [  140.190627]  rk_iommu_attach_device+0x114/0x134 (P)
->>>> [  140.197124]  __iommu_device_set_domain+0x7c/0x110
->>>> [  140.203417]  __iommu_group_set_domain_internal+0x60/0x134
->>>> [  140.210492]  __iommu_attach_group+0x88/0x9c
->>>> [  140.216203]  iommu_attach_device+0x68/0xa0
->>>> [  140.221802]  rockchip_drm_dma_attach_device+0x28/0x7c
->>>> [  140.228479]  vop2_crtc_atomic_enable+0x620/0xaa0
->>>> [  140.234664]  drm_atomic_helper_commit_modeset_enables+0xac/0x26c
->>>> [  140.242400]  drm_atomic_helper_commit_tail_rpm+0x50/0xa0
->>>> [  140.249349]  commit_tail+0xa0/0x1a0
->>>> [  140.254246]  drm_atomic_helper_commit+0x17c/0x1b0
->>>> [  140.260496]  drm_atomic_commit+0x8c/0xcc
->>>> [  140.265866]  drm_client_modeset_commit_atomic+0x228/0x298
->>>> [  140.272885]  drm_client_modeset_commit_locked+0x5c/0x188
->>>> [  140.279791]  drm_client_modeset_commit+0x2c/0x58
->>>> [  140.285914]  __drm_fb_helper_restore_fbdev_mode_unlocked+0xb4/0x100
->>>> [  140.293889]  drm_fb_helper_hotplug_event+0xe8/0xf8
->>>> [  140.300214]  drm_fbdev_client_hotplug+0x24/0xe0
->>>> [  140.306248]  drm_client_hotplug+0x48/0xc4
->>>> [  140.311695]  drm_client_dev_hotplug+0x9c/0xd4
->>>> [  140.317531]  drm_kms_helper_connector_hotplug_event+0x20/0x30
->>>> [  140.324930]  drm_bridge_connector_hpd_cb+0x88/0xa0
->>>> [  140.331248]  drm_bridge_hpd_notify+0x3c/0x60
->>>> [  140.336990]  display_connector_hpd_irq+0x30/0xa4
->>>> [  140.343120]  irq_thread_fn+0x2c/0xb0
->>>> [  140.348081]  irq_thread+0x170/0x304
->>>> [  140.352937]  kthread+0x12c/0x204
->>>> [  140.357501]  ret_from_fork+0x10/0x20
->>>> [  140.362453] ---[ end trace 0000000000000000 ]---
->>>>
->>>>
->>>> After some minutes of hanging it does reboot afterall.
->>>>
->>>> Heiko
->>>>
->>>>
->>>
->>> Could you please help confirm whether the same error still occurs with
->>> this patch series under the same conditions?
->>
->> Careless, what I want to express should be '...without this patch
->> series...'. :-)
-> 
-> sorry this took a tad longer for me to get back to this topic, but I was
-> now able to run a number of scenarios:
-> 
-> So I ran a number of variants and interestingly as the board I do eDP
-> tests on does not have any PCIe parts, I enountered an issue with
-> the PCIe SMMU [0].
-> 
-> When I disable the SMMU node, I also cannot reproduce the error from
-> above. So I've rebooted so many times today both with and without the
-> SMMU, and encountered the log from above only ever with the dangling
-> SMMU. So I'd assume, the Analogix series is actually innocent :-) .
-> 
-> 
-> Heiko
-> 
-> 
-> 
-> [0] https://lore.kernel.org/linux-rockchip/4400329.mogB4TqSGs@diego/T/#m5901974351b7c11e34f29a02b4f7f69b6ef29b2f
-> 
-> 
+Aakarsh Jain (10):
+  ARM: dts: samsung: exynos3250: Use SoC-specific compatible string for
+    MFC
+  ARM: dts: samsung: exynos4: Use SoC-specific compatible string for MFC
+  ARM: dts: samsung: exynos5250: Use SoC-specific compatible string for
+    MFC
+  ARM: dts: samsung: exynos5420: Use SoC-specific compatible string for
+    MFC
+  ARM: dts: samsung: exynos5800: Use SoC-specific compatible string for
+    MFC
+  ARM: dts: samsung: s5pv210: Use SoC-specific compatible string for MFC
+  media: s5p-mfc: Modify compatible string check for SoC-specific
+    support
+  media: s5p-mfc: Add new compatible string corresponding to S5pv210 SoC
+  dt-bindings: media: s5p-mfc: Modify compatible string check for
+    SoC-specific support
+  dt-bindings: media: s5p-mfc: Add SoC-specific compatible for
+    'samsung,mfc-v5'
 
-Thanks for testing! And v4 patch series is on the way. ;-)
+ .../bindings/media/samsung,s5p-mfc.yaml       | 24 ++++++++++---------
+ arch/arm/boot/dts/samsung/exynos3250.dtsi     |  2 +-
+ arch/arm/boot/dts/samsung/exynos4.dtsi        |  2 +-
+ arch/arm/boot/dts/samsung/exynos5250.dtsi     |  2 +-
+ arch/arm/boot/dts/samsung/exynos5420.dtsi     |  2 +-
+ arch/arm/boot/dts/samsung/exynos5800.dtsi     |  2 +-
+ arch/arm/boot/dts/samsung/s5pv210.dtsi        |  2 +-
+ .../media/platform/samsung/s5p-mfc/s5p_mfc.c  | 13 ++++++----
+ 8 files changed, 27 insertions(+), 22 deletions(-)
 
-Best regards,
-Damon
+-- 
+2.49.0
+
 
