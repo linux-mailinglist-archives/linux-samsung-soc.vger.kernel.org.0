@@ -1,141 +1,258 @@
-Return-Path: <linux-samsung-soc+bounces-9761-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9744-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD74EB1D622
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 12:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 75118B1D2BC
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 08:56:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 688F23AF3FE
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 10:54:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA5ED3A159A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  7 Aug 2025 06:56:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC8782459FF;
-	Thu,  7 Aug 2025 10:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6972E225413;
+	Thu,  7 Aug 2025 06:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="XshrS32s"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="YIPPEn/6"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32E727A10D
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C03214210
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 06:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754564033; cv=none; b=JR+2PbaRPS5Kfj5YAGs5CpCIo54FGAkkcqDPdVYxhl7Al/lmso8HTMJZSZptTzc5p45L6yIX/KcdfEUVAd1fdDYHOoU0Xs3l+7EcXmZ2IZms3dryO9RgMJAUQ6vdyuhFVuJt2vaE60KE3bCfaK050ScwAU0Mzv0IFQ2sO5ShWrg=
+	t=1754549811; cv=none; b=JjfUxcoPF4t8+QeCU5dU30yFMUlCEzgn3PE5BkCR+t4+Vky2w/XdIHZTtG0gossxaYpEf+Fox+p72bi2Y/08tsvH6gAuAQsI8HlbNA8brYNTkeICY7pQ4coUN0RnBhyPMWsk2iKn49LMgQsM5CqAMCXSacr1Gun2skYf55YZVYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754564033; c=relaxed/simple;
-	bh=mO7KKyVbAAB6LIeT63La3wZfx8885Z7ITq97oad3Rsw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=UqcJtTLoNn71TRV1PV0HzrpisAVZLkXzDp55SwKVDAFs25J+1iLU/d3DoL8axUtqUIvLIKQ09hoZnAKVlN4Jfkk7swGcJ4j4iVRxk9r1lz+3DEpapU2lS5eqhf2o29QDRsqR/U9EEcGAJ/fNFKZHwfghY22KZ+VdtYN4rua+Zh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=XshrS32s; arc=none smtp.client-ip=203.254.224.34
+	s=arc-20240116; t=1754549811; c=relaxed/simple;
+	bh=0tHwYlbjNv+IOAqOwfpjCekQ4CCu0rh6z3eMye582FE=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=BnFyY1O5C3uvmcYJZT81rxRbaS9RKJsJmaDAejTczpBiK3sreaQYnHQX+Rb7SQb6nmvauGf/wpR/YjQFj64vuWLOqsSMe7Ca0ZCvhQE0B8BwaAFLppYElW27fj2L/Mg0ubgNoSDGx1i/JkS+Ptf3574R10AbqJWA3VfxDaqyQh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=YIPPEn/6; arc=none smtp.client-ip=203.254.224.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250807105349epoutp040c9eac24e3790d3b81dbf023dba54cea~ZdrBtDPNg0656706567epoutp04M
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 10:53:49 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250807105349epoutp040c9eac24e3790d3b81dbf023dba54cea~ZdrBtDPNg0656706567epoutp04M
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250807065647epoutp03a1bbb0a94fd87c64c9fc3a3748efc56f~ZacDolsFH0135101351epoutp03H
+	for <linux-samsung-soc@vger.kernel.org>; Thu,  7 Aug 2025 06:56:47 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250807065647epoutp03a1bbb0a94fd87c64c9fc3a3748efc56f~ZacDolsFH0135101351epoutp03H
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1754564029;
-	bh=68xVvjXbi6ynymUb0K2pHdKhGYhDNv+h3kRgipI5AtQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XshrS32skeKcznLRlgfF713BvYRbidj0KlEfhs5Y8CFtBRQEfp1D/Ehxl5daV4YJ4
-	 2k9oWP/8zvFBYRIiCbRdhzvBhdx1ucKBpHnbDusJWQG6SOw1jnztsoPwx9RklmlEbR
-	 TNtRe/Qhm7DdMuzGo6bPlfmVR6UytBqMp0bquJt0=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
-	20250807105348epcas5p3065541de7991a0705ff5e9059865079e~ZdrAxgdxa2228622286epcas5p3Z;
-	Thu,  7 Aug 2025 10:53:48 +0000 (GMT)
+	s=mail20170921; t=1754549807;
+	bh=0tHwYlbjNv+IOAqOwfpjCekQ4CCu0rh6z3eMye582FE=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=YIPPEn/6tzYnoC0dr0ncPgF6DHzVE5UwPkucWuTHP+PvLngOhnXKfFpvzOJNvsTEc
+	 2EtCMCs9m59R9uGm9EagqckaCdcjNv08McNBsfcd1YANyyn8nVMZXu9/xvhWxLqXNt
+	 BSpxbf7A8MKBigow3FVNEoa1e8aVZaRPHmYas3CU=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250807065646epcas5p17687f208b8b43806346e6bc2c9967e99~ZacCrN9OP0038200382epcas5p1W;
+	Thu,  7 Aug 2025 06:56:46 +0000 (GMT)
 Received: from epcas5p3.samsung.com (unknown [182.195.38.92]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4byPCv6Z6Zz3hhT3; Thu,  7 Aug
-	2025 10:53:47 +0000 (GMT)
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4byHyP0GMqz6B9m5; Thu,  7 Aug
+	2025 06:56:45 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250807032527epcas5p488b0eed9dcb260cad4f864d9ec6e8477~ZXjjK2EY50583105831epcas5p4M;
-	Thu,  7 Aug 2025 03:25:27 +0000 (GMT)
-Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250807032525epsmtip212df53bafdf0fb26bd25845d81d27973~ZXjhND0eV1700017000epsmtip2j;
-	Thu,  7 Aug 2025 03:25:25 +0000 (GMT)
-From: Aakarsh Jain <aakarsh.jain@samsung.com>
-To: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, m.szyprowski@samsung.com,
-	andrzej.hajda@intel.com, mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-	alim.akhtar@samsung.com, robh@kernel.org, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc: linux-samsung-soc@vger.kernel.org, aswani.reddy@samsung.com,
-	anindya.sg@samsung.com, Aakarsh Jain <aakarsh.jain@samsung.com>
-Subject: [PATCH 10/10] dt-bindings: media: s5p-mfc: Add SoC-specific
- compatible for 'samsung,mfc-v5'
-Date: Thu,  7 Aug 2025 08:54:49 +0530
-Message-ID: <20250807032449.92770-11-aakarsh.jain@samsung.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250807032449.92770-1-aakarsh.jain@samsung.com>
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250807065644epcas5p125fc65c6d04e995d92f2afd90b7b1ade~ZacA7TA-d2200722007epcas5p1A;
+	Thu,  7 Aug 2025 06:56:44 +0000 (GMT)
+Received: from INBRO001561 (unknown [107.122.12.6]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250807065638epsmtip203f2ebd5a413ef0d6985fa5abfd83190~Zab8DqqO-1646416464epsmtip2T;
+	Thu,  7 Aug 2025 06:56:38 +0000 (GMT)
+From: "Pankaj Dubey" <pankaj.dubey@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzk@kernel.org>, "'SeonGu Kang'"
+	<ksk4725@coasia.com>, "'Jesper Nilsson'" <jesper.nilsson@axis.com>,
+	"'Michael	Turquette'" <mturquette@baylibre.com>, "'Stephen Boyd'"
+	<sboyd@kernel.org>, "'Rob Herring'" <robh@kernel.org>, "'Krzysztof
+ Kozlowski'" <krzk+dt@kernel.org>, "'Conor Dooley'" <conor+dt@kernel.org>,
+	"'Sylwester Nawrocki'" <s.nawrocki@samsung.com>, "'Chanwoo Choi'"
+	<cw00.choi@samsung.com>, "'Alim	Akhtar'" <alim.akhtar@samsung.com>, "'Linus
+ Walleij'" <linus.walleij@linaro.org>, "'Tomasz Figa'"
+	<tomasz.figa@gmail.com>, "'Catalin	Marinas'" <catalin.marinas@arm.com>,
+	"'Will Deacon'" <will@kernel.org>, "'Arnd	Bergmann'" <arnd@arndb.de>
+Cc: "'kenkim'" <kenkim@coasia.com>, "'Jongshin Park'" <pjsin865@coasia.com>,
+	"'GunWoo Kim'" <gwk1013@coasia.com>, "'HaGyeong Kim'" <hgkim05@coasia.com>,
+	"'GyoungBo Min'" <mingyoungbo@coasia.com>, "'SungMin Park'"
+	<smn1196@coasia.com>, "'Shradha Todi'" <shradha.t@samsung.com>, "'Ravi
+ Patel'" <ravi.patel@samsung.com>, "'Inbaraj E'" <inbaraj.e@samsung.com>,
+	"'Swathi K S'" <swathi.ks@samsung.com>, "'Hrishikesh'"
+	<hrishikesh.d@samsung.com>, "'Dongjin	Yang'" <dj76.yang@samsung.com>, "'Sang
+ Min Kim'" <hypmean.kim@samsung.com>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
+	<linux-arm-kernel@axis.com>, <linux-clk@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+	<soc@lists.linux.dev>
+In-Reply-To: <ef3b8e12-0677-4e49-bf2c-b8136c9a6908@kernel.org>
+Subject: RE: [PATCH 00/16] Add support for the Axis ARTPEC-8 SoC
+Date: Thu, 7 Aug 2025 12:26:27 +0530
+Message-ID: <013301dc0768$6f58dc40$4e0a94c0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250807032527epcas5p488b0eed9dcb260cad4f864d9ec6e8477
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGJY/8wx4BImu0YLFPVfwpfqUmFNgKXZrJuAgeQag4A83Fv2QHBXkcOAZGX7yoCWvFQXwHgUMUuAOJp+3+0i+6vkA==
+Content-Language: en-us
+X-CMS-MailID: 20250807065644epcas5p125fc65c6d04e995d92f2afd90b7b1ade
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-541,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250807032527epcas5p488b0eed9dcb260cad4f864d9ec6e8477
-References: <20250807032449.92770-1-aakarsh.jain@samsung.com>
-	<CGME20250807032527epcas5p488b0eed9dcb260cad4f864d9ec6e8477@epcas5p4.samsung.com>
+X-CMS-RootMailID: 20250721064006epcas5p4617b0450e69f72c94d2b3ae7b1d200e7
+References: <20250710002047.1573841-1-ksk4725@coasia.com>
+	<847e908b-1073-46ea-93f3-1f36cc93d8b8@kernel.org>
+	<bfdc2eddde554e1d1808dd8399bc6a693f681c9b.camel@coasia.com>
+	<CGME20250721064006epcas5p4617b0450e69f72c94d2b3ae7b1d200e7@epcas5p4.samsung.com>
+	<99977f38-f055-46ed-8eb0-4b757da2bcdd@kernel.org>
+	<000501dc06ab$37f09440$a7d1bcc0$@samsung.com>
+	<e334f106-d9f3-4a21-8cdd-e9d23dd2755d@kernel.org>
+	<002001dc06b1$540dc980$fc295c80$@samsung.com>
+	<ef3b8e12-0677-4e49-bf2c-b8136c9a6908@kernel.org>
 
-'samsung,mfc-v5' compatible string was getting used for both S5pv210
-and Exynos4 SoC. Based on SoC-specific, modify existing 'samsung,mfc-v5'
-compatible to 'samsung,exynos4-mfc'. Add new compatible for s5pv210.
+> Subject: Re: =5BPATCH 00/16=5D Add support for the Axis ARTPEC-8 SoC
+>=20
+> On 06/08/2025 11:05, Pankaj Dubey wrote:
+> >
+> >> Also SAME strict DT compliance profile will be applied. (see more on
+> >> that below)
+> >>
+> >>>
+> >>> Given that ARTPEC-8 is a distinct SoC with its own set of IPs, we bel=
+ieve
+> it's
+> >> reasonable
+> >>> to create a separate directory for it, similar to FSD.
+> >>
+> >> No. It was a mistake for FSD to keep it separate why? Because there is
+> >> no single non-Samsung stuff there. I am afraid exactly the same will
+> >> happen there.
+> >>
+> >
+> > I am not sure, why you are saying this as a mistake, in case next versi=
+on of
+> FSD
+>=20
+>=20
+> My mistake that I agreed on that, based on promise that =22there will be
+> non Samsung stuff=22 and that =22non Samsung stuff=22 never happened.
+>=20
 
-Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
----
- .../devicetree/bindings/media/samsung,s5p-mfc.yaml     | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+I am not authorized to comment on FSD's non Samsung stuff at this moment.
+But I got your point.
 
-diff --git a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-index 6a711c8103ac..922b1de66736 100644
---- a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-+++ b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-@@ -18,10 +18,11 @@ properties:
-   compatible:
-     oneOf:
-       - enum:
--          - samsung,exynos5433-mfc        # Exynos5433
--          - samsung,mfc-v5                # Exynos4
-+          - samsung,s5pv210-mfc           # S5pv210
-+          - samsung,exynos4-mfc           # Exynos4
-           - samsung,exynos5250-mfc        # Exynos5
-           - samsung,exynos5420-mfc        # Exynos5420
-+          - samsung,exynos5433-mfc        # Exynos5433
-           - samsung,exynos5800-mfc        # Exynos5800
-           - samsung,exynos7880-mfc        # Exynos7880
-           - tesla,fsd-mfc                 # Tesla FSD
-@@ -114,7 +115,8 @@ allOf:
-         compatible:
-           contains:
-             enum:
--              - samsung,mfc-v5
-+              - samsung,s5pv210-mfc
-+              - samsung,exynos4-mfc
-     then:
-       properties:
-         clocks:
-@@ -184,7 +186,7 @@ examples:
-     #include <dt-bindings/interrupt-controller/irq.h>
- 
-     codec@13400000 {
--        compatible = "samsung,mfc-v5";
-+        compatible = "samsung,exynos4-mfc";
-         reg = <0x13400000 0x10000>;
-         interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
-         power-domains = <&pd_mfc>;
--- 
-2.49.0
+> > or ARTPEC is manufactured (ODM) by another vendor in that case, won't i=
+t
+> > create problems?
+>=20
+>=20
+> No problems here. Non-Samsung Artpec/Axis soc will not go there. It will
+> go the top-level axis directory, just like artpec-6
+>=20
+
+Okay, understood. I assume Axis team will be fine with this approach.
+Let me align with them internally and address all the review comments in v2=
+.=20
+
+>=20
+> >
+> > For example ARTPEC-6/7 (ARM based) have their own directories as
+> =22arch/arm/boot/dts/axis/=22
+> > These were not Samsung (ODM) manufactures SoCs.
+> >
+> > But ARTPEC-8/9 (ARM64) based SoCs are samsung manufactured. What if
+> the next version say
+> > ARTPEC-10 is not samsung manufactured, so different version of products
+> (SoCs) from
+> > same vendor (OEM), in this case Axis, will have code in separate direct=
+ories
+> and with different maintainers?
+>=20
+> It will be the same with Google Pixel for whatever they decide in the
+> future. dts/exynos/google/ + dts/google/.
+>=20
+> I know that this is not ideal, but for me grouping samsung stuff
+> together is far more important, because there is much, much more to
+> share between two SoCs designed by Samsung, than Axis-9 and future
+> non-Samsung Axis-10. And I have =60git grep=60 as argument:
+> git grep compatible -- arch/arm64/boot/dts/tesla/
+>=20
+> and point me to any Tesla IP. Zero results.
+>=20
+>=20
+> >
+> >> Based on above list of blocks this should be done like Google is done,
+> >> so it goes as subdirectory of samsung (exynos). Can be called axis or
+> >> artpec-8.
+> >
+> > I will suggest to keep axis, knowing the fact that sooner after artpec-=
+8
+> patches gets approved and merged
+> > we have plan to upstream artpec-9 (ARM64, Samsung manufactured) as
+> well.
+> >
+> >>
+> >> To clarify: Only this SoC, not others which are not Samsung.
+> >>
+> >>>
+> >>> We will remove Samsung and Coasia teams from the maintainers list in
+> v2
+> >> and only
+> >>> Axis team will be maintainer.
+> >>
+> >> A bit unexpected or rather: just use names of people who WILL be
+> >> maintaining it. If this is Jesper and Lars, great. Just don't add
+> >> entries just because they are managers.
+> >
+> > AFAIK, Jesper will be taking care.
+> >
+> >>
+> >>>
+> >>> Maintainer list for previous generation of Axis chips (ARM based) is
+> already
+> >> present,
+> >>> so this will be merged into that.
+> >>
+> >> Existing Artpec entry does not have tree mentioned, so if you choose
+> >> above, you must not add the tree, since the tree is provided by Samsun=
+g
+> SoC.
+> >>
+> >
+> > OK
+> >
+> >> OTOH, how are you going to add there strict DT compliance? Existing ax=
+is
+> >> is not following this, but artpec-8, as a Samsung derivative, MUST
+> >> FOLLOW strict DT compliance. And this should be clearly marked in
+> >> maintainer entry, just like everywhere else.
+> >>
+> >
+> > As I said this is tricky situation, though artpec-8 is derivative of sa=
+msung, we
+> can't confirm
+> > if future versions (> 9) will be samsung derivative.
+> >
+> > But this would be case for all such custom ASIC manufactured by samsung=
+,
+> so I would like to
+> > understand how this will be handled?
+>=20
+>=20
+> I suggest to do the same as Google and when I say Google in this email,
+> I mean Pixel/GS101. Google was easier because there was no prior entry
+> and Axis has, so you will have two Axis entries. But I don't see how we
+> can add clean-dts profiles to the existing Axis entry, if you decide to
+> include Artpec-8 in that one.
+>=20
+
+Okay we will have separate dts profile aligned with Exynos DT compliance fo=
+r
+ARM64 based Axis SoCs which are manufactured by Samsung at this moment.=20
+
+>=20
+> Best regards,
+> Krzysztof
 
 
