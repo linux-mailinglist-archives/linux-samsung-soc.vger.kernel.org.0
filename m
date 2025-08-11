@@ -1,62 +1,62 @@
-Return-Path: <linux-samsung-soc+bounces-9947-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9945-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28BAEB21C7F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 07:02:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E530AB21C7B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 07:02:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D6EE1A26FC7
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 05:02:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B54A460F8B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 05:02:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 246642DEA74;
-	Tue, 12 Aug 2025 05:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A6A2D948C;
+	Tue, 12 Aug 2025 05:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="UNYFGLHS"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="WwFcECIc"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804A02D640A
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Aug 2025 05:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F002741D1
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Aug 2025 05:02:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754974933; cv=none; b=QIlT1OxK1INBN1CRXsmn8C/DZ7wzloOolnLCgkP9gFLEtqWgYojKEfL+oBzqNf/pL94NjQd+lP1EIIK1FYxFM60zTzgDxTrfnZZ5BaC/PyK8yfbnAeIB8DgkJZFg7mtfN5Z9zackSfTY2feUT/fxBz5sYwS1RV/Qu23csKHG7No=
+	t=1754974931; cv=none; b=PsMBN75wJR5ZNHHKa8j6yxJ49jrATDxZ8tA9R/eHDwfY1KFJmn3Emre3fIkqPuedqFN4ACfivbLZoHIgAYKDeER/w8qMAAh6h8WrAVAnkLnsDODcw8HAMgRCH28wqga8wH4INQd/TOHdaaaYCfBVwE4cifeHw3zB/B6UWEskOA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754974933; c=relaxed/simple;
-	bh=wjjg7SJLEPBbQK2Tv7ARwQeoj+DFGdvzSzjAKKngXOY=;
+	s=arc-20240116; t=1754974931; c=relaxed/simple;
+	bh=6GNeoJ86xp9/K5fVFW+3oK5Y3XHOLyG/PGdbDUgut3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=rBSg0yG7f6AVpzu4sF3JYga0zNRt5bLQxz71glyXNv38TdANp5hIelLKTXt3oa3GaC5+Uqbn7zYMkFMs4nRdHX46RK929DJxSp0hU4do9JAr7FCwNLfHPJJV7hxQrU7t+dkdimsYJc+y7UYgPlwYOSagngWQkIkVAV9NYuY6WU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=UNYFGLHS; arc=none smtp.client-ip=203.254.224.34
+	 Content-Type:References; b=mCdKtxFXE3jSyvsARlKT2WB1HnTYpXt72CNbnit9AkjOLkRo6fuXxGvAN0YtepMJ5/a88zJRgdL1eptVmNQ36s0LUEpUIFWxszf0aoW+exSEvcrSioDti1jPNtagLSk7+q8XTl0OtvnvGE+0NwRiH21ldziPNJI7w5NNY2QWi18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=WwFcECIc; arc=none smtp.client-ip=203.254.224.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250812050203epoutp04dc8bbc3522419e1211114a35e77c27e1~a7GUNt-mT1763917639epoutp04c
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Aug 2025 05:02:03 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250812050203epoutp04dc8bbc3522419e1211114a35e77c27e1~a7GUNt-mT1763917639epoutp04c
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250812050207epoutp01127b93c53f633567f195c6ccf130cc5c~a7GXcLbAc1032510325epoutp01k
+	for <linux-samsung-soc@vger.kernel.org>; Tue, 12 Aug 2025 05:02:07 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250812050207epoutp01127b93c53f633567f195c6ccf130cc5c~a7GXcLbAc1032510325epoutp01k
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1754974923;
-	bh=2IA86F4zckPMij9e7yGYro0kXu5bh8Py7lV8n/0sesc=;
+	s=mail20170921; t=1754974927;
+	bh=g+OIPYfZeep00nAL2s8vJenk/L6kOEW7w/EsYvIr9eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNYFGLHSBeDvYC1mRmZqxpKZrLEDeqMMD2zqXQqSTdgS6alssz6eAyb7tJxgh/hkM
-	 bd/vYlTl5Wwx93crmmvfrAK4JAjJuhTgeK3NYgQOhRGq+RSiFIuhQWobJ3FuYgXZxF
-	 d1qp3Ee0TRl25xSYTCT2hrmxvVwL0G/M5bvchOa8=
-Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+	b=WwFcECIcdheeUxpBWxjjNUmJEO1xi56yGg2a/8lub6aL4LGUjv2ddQvDXHqq8LtOv
+	 g1QEN3JTlxeRdvVsrutkIUlO3cDABhT0MoUsxdOnTApMIVWrBFm0dJhXWufix1ctwR
+	 9yY74ZQBq7msWCwNDSTaRDwxYZmxpCq76Jrkf/PY=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
 	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
-	20250812050202epcas5p31f271fb43f33f8ab6f0f022b0231d2eb~a7GTkYNaO3131631316epcas5p3r;
-	Tue, 12 Aug 2025 05:02:02 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.95]) by
-	epsnrtp01.localdomain (Postfix) with ESMTP id 4c1K9j5t1yz6B9mF; Tue, 12 Aug
-	2025 05:02:01 +0000 (GMT)
+	20250812050205epcas5p3ec1d0180b5df6900b1fee304310b01cc~a7GWSXLMn2902829028epcas5p3A;
+	Tue, 12 Aug 2025 05:02:05 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.94]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4c1K9m5Y4Dz2SSKd; Tue, 12 Aug
+	2025 05:02:04 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250811154655epcas5p211bd14152fa48635fc5c1daceb963e71~awQERWW4V0377703777epcas5p2f;
-	Mon, 11 Aug 2025 15:46:55 +0000 (GMT)
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250811154659epcas5p1874791c7ce4e26a2bd36e24a7be55f51~awQIcaq_x2692426924epcas5p10;
+	Mon, 11 Aug 2025 15:46:59 +0000 (GMT)
 Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
 	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250811154652epsmtip112e87d107f6556973ea2463d4c2cb28a~awQBic9oH2101521015epsmtip1C;
-	Mon, 11 Aug 2025 15:46:52 +0000 (GMT)
+	20250811154656epsmtip1d9d756f77820130ac933dbc336675fc2~awQF0WLN42450724507epsmtip1v;
+	Mon, 11 Aug 2025 15:46:56 +0000 (GMT)
 From: Shradha Todi <shradha.t@samsung.com>
 To: linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
@@ -66,12 +66,10 @@ Cc: mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
 	krzk+dt@kernel.org, conor+dt@kernel.org, alim.akhtar@samsung.com,
 	vkoul@kernel.org, kishon@kernel.org, arnd@arndb.de,
 	m.szyprowski@samsung.com, jh80.chung@samsung.com, pankaj.dubey@samsung.com,
-	Shradha Todi <shradha.t@samsung.com>, Hrishikesh Dileep
-	<hrishikesh.d@samsung.com>
-Subject: [PATCH v3 01/12] PCI: exynos: Remove unused MACROs in exynos PCIe
- file
-Date: Mon, 11 Aug 2025 21:16:27 +0530
-Message-ID: <20250811154638.95732-2-shradha.t@samsung.com>
+	Shradha Todi <shradha.t@samsung.com>
+Subject: [PATCH v3 02/12] PCI: exynos: Change macro names to exynos specific
+Date: Mon, 11 Aug 2025 21:16:28 +0530
+Message-ID: <20250811154638.95732-3-shradha.t@samsung.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250811154638.95732-1-shradha.t@samsung.com>
 Precedence: bulk
@@ -81,40 +79,209 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250811154655epcas5p211bd14152fa48635fc5c1daceb963e71
+X-CMS-MailID: 20250811154659epcas5p1874791c7ce4e26a2bd36e24a7be55f51
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-541,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250811154655epcas5p211bd14152fa48635fc5c1daceb963e71
+X-CMS-RootMailID: 20250811154659epcas5p1874791c7ce4e26a2bd36e24a7be55f51
 References: <20250811154638.95732-1-shradha.t@samsung.com>
-	<CGME20250811154655epcas5p211bd14152fa48635fc5c1daceb963e71@epcas5p2.samsung.com>
+	<CGME20250811154659epcas5p1874791c7ce4e26a2bd36e24a7be55f51@epcas5p1.samsung.com>
 
-Some MACROs are defined in the exynos PCIe file but are
-not used anywhere within the file. Remove such unused
-MACROs.
+Prefix macro names in exynos file with the term "EXYNOS" as the current
+macro names seem to be generic to PCIe.
 
-Suggested-by: Hrishikesh Dileep <hrishikesh.d@samsung.com>
 Signed-off-by: Shradha Todi <shradha.t@samsung.com>
 ---
- drivers/pci/controller/dwc/pci-exynos.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pci/controller/dwc/pci-exynos.c | 112 ++++++++++++------------
+ 1 file changed, 56 insertions(+), 56 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
-index 1f0e98d07109..f9140d1f1d19 100644
+index f9140d1f1d19..30d12ff9b0c6 100644
 --- a/drivers/pci/controller/dwc/pci-exynos.c
 +++ b/drivers/pci/controller/dwc/pci-exynos.c
-@@ -31,8 +31,6 @@
- #define IRQ_INTB_ASSERT			BIT(2)
- #define IRQ_INTC_ASSERT			BIT(4)
- #define IRQ_INTD_ASSERT			BIT(6)
--#define PCIE_IRQ_LEVEL			0x004
--#define PCIE_IRQ_SPECIAL		0x008
- #define PCIE_IRQ_EN_PULSE		0x00c
- #define PCIE_IRQ_EN_LEVEL		0x010
- #define PCIE_IRQ_EN_SPECIAL		0x014
+@@ -26,28 +26,28 @@
+ #define to_exynos_pcie(x)	dev_get_drvdata((x)->dev)
+ 
+ /* PCIe ELBI registers */
+-#define PCIE_IRQ_PULSE			0x000
+-#define IRQ_INTA_ASSERT			BIT(0)
+-#define IRQ_INTB_ASSERT			BIT(2)
+-#define IRQ_INTC_ASSERT			BIT(4)
+-#define IRQ_INTD_ASSERT			BIT(6)
+-#define PCIE_IRQ_EN_PULSE		0x00c
+-#define PCIE_IRQ_EN_LEVEL		0x010
+-#define PCIE_IRQ_EN_SPECIAL		0x014
+-#define PCIE_SW_WAKE			0x018
+-#define PCIE_BUS_EN			BIT(1)
+-#define PCIE_CORE_RESET			0x01c
+-#define PCIE_CORE_RESET_ENABLE		BIT(0)
+-#define PCIE_STICKY_RESET		0x020
+-#define PCIE_NONSTICKY_RESET		0x024
+-#define PCIE_APP_INIT_RESET		0x028
+-#define PCIE_APP_LTSSM_ENABLE		0x02c
+-#define PCIE_ELBI_RDLH_LINKUP		0x074
+-#define PCIE_ELBI_XMLH_LINKUP		BIT(4)
+-#define PCIE_ELBI_LTSSM_ENABLE		0x1
+-#define PCIE_ELBI_SLV_AWMISC		0x11c
+-#define PCIE_ELBI_SLV_ARMISC		0x120
+-#define PCIE_ELBI_SLV_DBI_ENABLE	BIT(21)
++#define EXYNOS_PCIE_IRQ_PULSE			0x000
++#define EXYNOS_IRQ_INTA_ASSERT			BIT(0)
++#define EXYNOS_IRQ_INTB_ASSERT			BIT(2)
++#define EXYNOS_IRQ_INTC_ASSERT			BIT(4)
++#define EXYNOS_IRQ_INTD_ASSERT			BIT(6)
++#define EXYNOS_PCIE_IRQ_EN_PULSE		0x00c
++#define EXYNOS_PCIE_IRQ_EN_LEVEL		0x010
++#define EXYNOS_PCIE_IRQ_EN_SPECIAL		0x014
++#define EXYNOS_PCIE_SW_WAKE			0x018
++#define EXYNOS_PCIE_BUS_EN			BIT(1)
++#define EXYNOS_PCIE_CORE_RESET			0x01c
++#define EXYNOS_PCIE_CORE_RESET_ENABLE		BIT(0)
++#define EXYNOS_PCIE_STICKY_RESET		0x020
++#define EXYNOS_PCIE_NONSTICKY_RESET		0x024
++#define EXYNOS_PCIE_APP_INIT_RESET		0x028
++#define EXYNOS_PCIE_APP_LTSSM_ENABLE		0x02c
++#define EXYNOS_PCIE_ELBI_RDLH_LINKUP		0x074
++#define EXYNOS_PCIE_ELBI_XMLH_LINKUP		BIT(4)
++#define EXYNOS_PCIE_ELBI_LTSSM_ENABLE		0x1
++#define EXYNOS_PCIE_ELBI_SLV_AWMISC		0x11c
++#define EXYNOS_PCIE_ELBI_SLV_ARMISC		0x120
++#define EXYNOS_PCIE_ELBI_SLV_DBI_ENABLE		BIT(21)
+ 
+ struct exynos_pcie {
+ 	struct dw_pcie			pci;
+@@ -71,49 +71,49 @@ static void exynos_pcie_sideband_dbi_w_mode(struct exynos_pcie *ep, bool on)
+ {
+ 	u32 val;
+ 
+-	val = exynos_pcie_readl(ep->elbi_base, PCIE_ELBI_SLV_AWMISC);
++	val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_ELBI_SLV_AWMISC);
+ 	if (on)
+-		val |= PCIE_ELBI_SLV_DBI_ENABLE;
++		val |= EXYNOS_PCIE_ELBI_SLV_DBI_ENABLE;
+ 	else
+-		val &= ~PCIE_ELBI_SLV_DBI_ENABLE;
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_ELBI_SLV_AWMISC);
++		val &= ~EXYNOS_PCIE_ELBI_SLV_DBI_ENABLE;
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_ELBI_SLV_AWMISC);
+ }
+ 
+ static void exynos_pcie_sideband_dbi_r_mode(struct exynos_pcie *ep, bool on)
+ {
+ 	u32 val;
+ 
+-	val = exynos_pcie_readl(ep->elbi_base, PCIE_ELBI_SLV_ARMISC);
++	val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_ELBI_SLV_ARMISC);
+ 	if (on)
+-		val |= PCIE_ELBI_SLV_DBI_ENABLE;
++		val |= EXYNOS_PCIE_ELBI_SLV_DBI_ENABLE;
+ 	else
+-		val &= ~PCIE_ELBI_SLV_DBI_ENABLE;
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_ELBI_SLV_ARMISC);
++		val &= ~EXYNOS_PCIE_ELBI_SLV_DBI_ENABLE;
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_ELBI_SLV_ARMISC);
+ }
+ 
+ static void exynos_pcie_assert_core_reset(struct exynos_pcie *ep)
+ {
+ 	u32 val;
+ 
+-	val = exynos_pcie_readl(ep->elbi_base, PCIE_CORE_RESET);
+-	val &= ~PCIE_CORE_RESET_ENABLE;
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_CORE_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 0, PCIE_STICKY_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 0, PCIE_NONSTICKY_RESET);
++	val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_CORE_RESET);
++	val &= ~EXYNOS_PCIE_CORE_RESET_ENABLE;
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_CORE_RESET);
++	exynos_pcie_writel(ep->elbi_base, 0, EXYNOS_PCIE_STICKY_RESET);
++	exynos_pcie_writel(ep->elbi_base, 0, EXYNOS_PCIE_NONSTICKY_RESET);
+ }
+ 
+ static void exynos_pcie_deassert_core_reset(struct exynos_pcie *ep)
+ {
+ 	u32 val;
+ 
+-	val = exynos_pcie_readl(ep->elbi_base, PCIE_CORE_RESET);
+-	val |= PCIE_CORE_RESET_ENABLE;
++	val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_CORE_RESET);
++	val |= EXYNOS_PCIE_CORE_RESET_ENABLE;
+ 
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_CORE_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 1, PCIE_STICKY_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 1, PCIE_NONSTICKY_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 1, PCIE_APP_INIT_RESET);
+-	exynos_pcie_writel(ep->elbi_base, 0, PCIE_APP_INIT_RESET);
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_CORE_RESET);
++	exynos_pcie_writel(ep->elbi_base, 1, EXYNOS_PCIE_STICKY_RESET);
++	exynos_pcie_writel(ep->elbi_base, 1, EXYNOS_PCIE_NONSTICKY_RESET);
++	exynos_pcie_writel(ep->elbi_base, 1, EXYNOS_PCIE_APP_INIT_RESET);
++	exynos_pcie_writel(ep->elbi_base, 0, EXYNOS_PCIE_APP_INIT_RESET);
+ }
+ 
+ static int exynos_pcie_start_link(struct dw_pcie *pci)
+@@ -121,21 +121,21 @@ static int exynos_pcie_start_link(struct dw_pcie *pci)
+ 	struct exynos_pcie *ep = to_exynos_pcie(pci);
+ 	u32 val;
+ 
+-	val = exynos_pcie_readl(ep->elbi_base, PCIE_SW_WAKE);
+-	val &= ~PCIE_BUS_EN;
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_SW_WAKE);
++	val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_SW_WAKE);
++	val &= ~EXYNOS_PCIE_BUS_EN;
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_SW_WAKE);
+ 
+ 	/* assert LTSSM enable */
+-	exynos_pcie_writel(ep->elbi_base, PCIE_ELBI_LTSSM_ENABLE,
+-			  PCIE_APP_LTSSM_ENABLE);
++	exynos_pcie_writel(ep->elbi_base, EXYNOS_PCIE_ELBI_LTSSM_ENABLE,
++			  EXYNOS_PCIE_APP_LTSSM_ENABLE);
+ 	return 0;
+ }
+ 
+ static void exynos_pcie_clear_irq_pulse(struct exynos_pcie *ep)
+ {
+-	u32 val = exynos_pcie_readl(ep->elbi_base, PCIE_IRQ_PULSE);
++	u32 val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_IRQ_PULSE);
+ 
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_IRQ_PULSE);
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_IRQ_PULSE);
+ }
+ 
+ static irqreturn_t exynos_pcie_irq_handler(int irq, void *arg)
+@@ -148,12 +148,12 @@ static irqreturn_t exynos_pcie_irq_handler(int irq, void *arg)
+ 
+ static void exynos_pcie_enable_irq_pulse(struct exynos_pcie *ep)
+ {
+-	u32 val = IRQ_INTA_ASSERT | IRQ_INTB_ASSERT |
+-		  IRQ_INTC_ASSERT | IRQ_INTD_ASSERT;
++	u32 val = EXYNOS_IRQ_INTA_ASSERT | EXYNOS_IRQ_INTB_ASSERT |
++		  EXYNOS_IRQ_INTC_ASSERT | EXYNOS_IRQ_INTD_ASSERT;
+ 
+-	exynos_pcie_writel(ep->elbi_base, val, PCIE_IRQ_EN_PULSE);
+-	exynos_pcie_writel(ep->elbi_base, 0, PCIE_IRQ_EN_LEVEL);
+-	exynos_pcie_writel(ep->elbi_base, 0, PCIE_IRQ_EN_SPECIAL);
++	exynos_pcie_writel(ep->elbi_base, val, EXYNOS_PCIE_IRQ_EN_PULSE);
++	exynos_pcie_writel(ep->elbi_base, 0, EXYNOS_PCIE_IRQ_EN_LEVEL);
++	exynos_pcie_writel(ep->elbi_base, 0, EXYNOS_PCIE_IRQ_EN_SPECIAL);
+ }
+ 
+ static u32 exynos_pcie_read_dbi(struct dw_pcie *pci, void __iomem *base,
+@@ -210,9 +210,9 @@ static struct pci_ops exynos_pci_ops = {
+ static bool exynos_pcie_link_up(struct dw_pcie *pci)
+ {
+ 	struct exynos_pcie *ep = to_exynos_pcie(pci);
+-	u32 val = exynos_pcie_readl(ep->elbi_base, PCIE_ELBI_RDLH_LINKUP);
++	u32 val = exynos_pcie_readl(ep->elbi_base, EXYNOS_PCIE_ELBI_RDLH_LINKUP);
+ 
+-	return val & PCIE_ELBI_XMLH_LINKUP;
++	return val & EXYNOS_PCIE_ELBI_XMLH_LINKUP;
+ }
+ 
+ static int exynos_pcie_host_init(struct dw_pcie_rp *pp)
 -- 
 2.49.0
 
