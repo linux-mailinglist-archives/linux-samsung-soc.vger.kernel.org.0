@@ -1,146 +1,161 @@
-Return-Path: <linux-samsung-soc+bounces-9944-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-9958-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0745FB21943
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 01:29:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A9DFB21E5B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 08:32:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CE47463416
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 11 Aug 2025 23:29:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 986FA17662B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 12 Aug 2025 06:32:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DEF627FD75;
-	Mon, 11 Aug 2025 23:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B6E519D880;
+	Tue, 12 Aug 2025 06:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S48kvZrX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dEBiK2bM"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FEE20FAA4;
-	Mon, 11 Aug 2025 23:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6827C311C18;
+	Tue, 12 Aug 2025 06:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754954848; cv=none; b=Ci0oFfhSKFY0VeH0N3LFtMCUtHZlN9Wo6X9z9KPlvxV53OpmLUgV87PnWhouJMGOdH/owK48OvGWoGgT4KgycDwMsvbVUvcp+gGfNNeG1d70sQHnVpE9n2VW8UBKammWh+QEV91LSPy0mkLxwrwN8ZdOEymv/pIbszC30ZVmeho=
+	t=1754980330; cv=none; b=iO+ysfzYjjGr/GACcXd7/CM8V73Esi/pT8y3xodAUnSpHwEvfL9Y5mK3lEEZxqvk45p/ieig35XIwyyhHUlQZ9nWHlSDLIo44djXFxvIea1Z4YbEnCYY9jATtEEJC+kSDLFbuLhw5iEha4Rr+PLEGvw0NIxIh/5RmXo2qMXXZcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754954848; c=relaxed/simple;
-	bh=4F0GRrehYPOcCThNRJA3iC3eYSb/ULzVTrykDE/yncE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qPnITE7pN1s//qaWdt+Sfdf1D6nebrk/fiATZ2L4nvMUlpp+k8SGbL6Q35k2pKFIedkC8hYzdsdZvoCZtdzyTc89roBQphyvADHu7kVfD1OxZSYf5OXHQeOkKtma5NoEi7i7m7mbQDnRHMurE0CBMvEpvrthx/cy9wlcNyn2ELs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S48kvZrX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BC9C4CEF7;
-	Mon, 11 Aug 2025 23:27:24 +0000 (UTC)
+	s=arc-20240116; t=1754980330; c=relaxed/simple;
+	bh=otaBZh9TNVNUn4n+KFk4zIkvpGN9iEpnVss/ZcBnHBM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QR4o0jiL0D+hS8edFtIdjvmYVzTzTE8V1J1z7h/reRFEywtYtNpXFZK8L0uwroGetXkSem9CC0Ypr+duPlTiNigYlag42GDzCXPC6VxQf0bV+WqjWCKAVefxJ9087rZyAGCM2jCnk71o6gq9nFMbRNOBCYnAH8aPtdyXlbFodSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dEBiK2bM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F55EC4CEF0;
+	Tue, 12 Aug 2025 06:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754954847;
-	bh=4F0GRrehYPOcCThNRJA3iC3eYSb/ULzVTrykDE/yncE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S48kvZrXP9VG4CTt7zBeg/XgN0GTF0GdFwM4hjSAC9fJOFSMSEMM6GSLa/sj1MXBT
-	 BrXJnP6polHMUDD1GFXtHQ7LPx5df1S73bSjNUYxKOUcwrbU07tn05FVm5uXGiiwtz
-	 rFXk9sqdkIOhbj60mhNMpHdU4XiJoSMiOtEnRDENIui2baifWG4XayjC+1ljtbZJB6
-	 6EREINkAwoY5slez1UqMiBrcVDTtiBECIuKEg6nsdqhsfSIdAxZ0w5GACJVe4WlKtV
-	 bivlYiUkBOWRLjJA2M+IuT7ke34uVXbmnF7Eh7ZqjGBL4Qzps/G9DlWUJYoadCdKlH
-	 oWccBbYIg68Lg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: linux-media@vger.kernel.org,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Arec Kao <arec.kao@intel.com>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Daniel Scally <djrscally@gmail.com>,
-	Dongcheng Yan <dongcheng.yan@intel.com>,
-	Dongchun Zhu <dongchun.zhu@mediatek.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Hans de Goede <hansg@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Hao Yao <hao.yao@intel.com>,
-	Heimir Thor Sverrisson <heimir.sverrisson@gmail.com>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Jason Chen <jason.z.chen@intel.com>,
-	Jimmy Su <jimmy.su@intel.com>,
-	Jingjing Xiong <jingjing.xiong@intel.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Leon Luo <leonl@leopardimaging.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Matthew Majewski <mattwmajewski@gmail.com>,
-	Matthias Fend <matthias.fend@emfend.at>,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Pavel Machek <pavel@kernel.org>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Rob Herring <robh@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Shunqian Zheng <zhengsq@rock-chips.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Tarang Raval <tarang.raval@siliconsignals.io>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Todor Tomov <todor.too@gmail.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Zhi Mao <zhi.mao@mediatek.com>,
-	devicetree@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org
-Subject: Re: (subset) [PATCH 00/72] media: i2c: Reduce cargo-cult
-Date: Mon, 11 Aug 2025 18:27:01 -0500
-Message-ID: <175495482477.157244.17354544707184168458.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
-References: <20250710174808.5361-1-laurent.pinchart@ideasonboard.com>
+	s=k20201202; t=1754980330;
+	bh=otaBZh9TNVNUn4n+KFk4zIkvpGN9iEpnVss/ZcBnHBM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=dEBiK2bMfsD5IpNQj20sm4pOp7cKkzzvO9rSw4Gc4mSvnL/LXBIClBjlBy62c4S7M
+	 rfwQdg/BnNkCGdBP3kGdr9AKfczzi+2jHXCQmDZP17F55Y1pNSNbQltkKeSP1idjn4
+	 Mz/44PhO+5nt8U3jsM3jW3W07IqePKAdArDZy70bBM92HV6nONtFFedk17iGAHAVIx
+	 KvK3rhg/cIVEyjTpRr82UQpTH5O2+4tWhJPTQmil/LFV1jsSS+vRu0Gcq/FuawBsC1
+	 SiPbsZ3LBDb8cB8e6Apc5MLF6hlQvArB64uhltW9jZIlumYpHy17P5kdYmjK/tZUeh
+	 2yCqq2tPYPW9A==
+Message-ID: <4a47b758-5c20-4e30-bc61-206acd48bdd0@kernel.org>
+Date: Tue, 12 Aug 2025 08:32:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/12] dt-bindings: PCI: Split exynos host into two
+ files
+To: Shradha Todi <shradha.t@samsung.com>, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org
+Cc: mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+ robh@kernel.org, bhelgaas@google.com, jingoohan1@gmail.com,
+ krzk+dt@kernel.org, conor+dt@kernel.org, alim.akhtar@samsung.com,
+ vkoul@kernel.org, kishon@kernel.org, arnd@arndb.de,
+ m.szyprowski@samsung.com, jh80.chung@samsung.com, pankaj.dubey@samsung.com
+References: <20250811154638.95732-1-shradha.t@samsung.com>
+ <CGME20250811154721epcas5p26c9e2880ca55a470f595d914b4030745@epcas5p2.samsung.com>
+ <20250811154638.95732-7-shradha.t@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250811154638.95732-7-shradha.t@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On Thu, 10 Jul 2025 20:46:56 +0300, Laurent Pinchart wrote:
-> This patch series build on top of Mehdi's introduction of the
-> devm_v4l2_sensor_clk_get() helper (see [1]) to drastically reduce
-> cargo-cult in camera sensor drivers.
+On 11/08/2025 17:46, Shradha Todi wrote:
+> The current Exynos PCIe yaml binding file is hard to reuse by
+> other Samsung SoCs. Refactoring it by:
+>  - Moving common Samsung PCIe properties into samsung,exynos-pcie.yaml
+>  - Creating a dedicated samsung,exynos5433-pcie.yaml file for properties
+>    and constraints specific to the Exynos5433 SoC
 > 
-> A large number of camera sensor drivers directly use the
-> "clock-frequency" property to retrieve the effective or desired external
-> clock rate. This is standard behaviour on ACPI platforms that don't
-> implement MIPI DisCo for Imaging, but usage of the property has leaked
-> to OF-based platforms, due to a combination of historical reasons (using
-> "clock-frequency" was initially considered right until before the
-> introduction of "assigned-clock-rates") and plain cargo-cult.
+> Signed-off-by: Shradha Todi <shradha.t@samsung.com>
+> ---
+>  .../bindings/pci/samsung,exynos-pcie.yaml     | 70 +--------------
+>  .../bindings/pci/samsung,exynos5433-pcie.yaml | 89 +++++++++++++++++++
+>  2 files changed, 91 insertions(+), 68 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/samsung,exynos5433-pcie.yaml
 > 
-> [...]
+> diff --git a/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml b/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+> index f20ed7e709f7..fd0b97b30821 100644
+> --- a/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/samsung,exynos-pcie.yaml
+> @@ -11,7 +11,7 @@ maintainers:
+>    - Jaehoon Chung <jh80.chung@samsung.com>
+>  
+>  description: |+
+> -  Exynos5433 SoC PCIe host controller is based on the Synopsys DesignWare
+> +  Samsung SoCs PCIe host controller is based on the Synopsys DesignWare
+>    PCIe IP and thus inherits all the common properties defined in
+>    snps,dw-pcie.yaml.
+>  
+> @@ -19,9 +19,6 @@ allOf:
+>    - $ref: /schemas/pci/snps,dw-pcie.yaml#
+>  
+>  properties:
+> -  compatible:
+> -    const: samsung,exynos5433-pcie
+> -
+>    reg:
+>      items:
+>        - description: Data Bus Interface (DBI) registers.
 
-Applied, thanks!
 
-[12/72] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Replace clock-frequency in camera sensor node
-        commit: 5433560caa5e7e677a8d4310bbec08312be765b4
+So the only common part left here is reg and phy? I don't think such
+common file brings any value.
+
 
 Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Krzysztof
 
