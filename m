@@ -1,159 +1,205 @@
-Return-Path: <linux-samsung-soc+bounces-10031-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10034-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E37F1B2648D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 13:44:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F577B267B6
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 15:41:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11C841CC57BA
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 11:43:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 237793A888A
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 13:32:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBEA12F998C;
-	Thu, 14 Aug 2025 11:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 276AB3009E1;
+	Thu, 14 Aug 2025 13:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NnG4Um3r"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ZzRxVVY5"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3149A2F8BC3;
-	Thu, 14 Aug 2025 11:43:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D342FD7C4
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Aug 2025 13:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755171798; cv=none; b=N7VmHPpgegCP1PMwMorBJtFnDxSROmo8luXNTx5iYgK1FArtSk6ATKC6tHDf6JcrCIqhKo4ntMb2Pj/6hnviI6Fh7wDa/tX9WNYB+wuaxOoGD7WDoetU4OurIDz/ZC/fYto229NgMJYYGtRWBkY0QDdAGYwGo8oIQqrm+VbEzNc=
+	t=1755178124; cv=none; b=Gwi5Sre2ynPwvbpqyu40YxCxypKqrfUjdfuOBQigkYQcIIyfwWvk+wui2JwfvvlZofNxgTRNcj16H3X+idd/TIlVOBw7pHHpPZnapKFqnc5zqpCf/ls0Z72CEut2R2bxzLIKtXrkXnGkmZyaGc2X09O/uA/4VDGuTBOsjFsxV1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755171798; c=relaxed/simple;
-	bh=Zdy7dLbFkZGtII3NQmazxOkB03u71Z+SQYve42TvTVI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UYJNkU0fkVioW/z5bPYlEnSh1sZXiqmsowJC/1ESXEFq7tR7SJEZZic99S/tGx+AaAvmSKT6DCwWqYvOGCS8JsrxPkBTDgwleIPxYa9sMS1nRUzuimI1jmKHxmsoDw+iuq4CHb1TR8TGu0L9HMOvFXEQevUUqXXi39+wd7coh5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NnG4Um3r; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b4716f9a467so129123a12.0;
-        Thu, 14 Aug 2025 04:43:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755171794; x=1755776594; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SCmrgWC//nzUB+KMWvV1r1xovE6hyF4d5hN6Lt7hoXI=;
-        b=NnG4Um3rLqvb/JV9fj9axMvAe7G/lfxsVLeAyiNLD9Idtxs9PM/foXkAUyV8brWT4v
-         5vnTC9hSX0fgKZrDc5ZR+QQXN+Mo9hBORolsYx6QwneBNmQHe2SYRR4BAxYwv9IdU0ri
-         sWPN2g2rNKHFqbvzdR5yIHXCbihIWcWoO8xu5R1brv+K2IkhlSGfSsIYjiXknZG6yy8+
-         YXKPJxJQmeTdzj2GfhzOqOV/SLZAzwo9ZDxzC8sjSZv/65LcGRMHfd6k8cQIFmPT0HBE
-         tmomlMumDCWc4P5Cfw7HdSobNLjeCSgq+Zi4WFfUhEjOzWZigfpB2dlqx2J7iJMtQmmc
-         aIHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755171794; x=1755776594;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SCmrgWC//nzUB+KMWvV1r1xovE6hyF4d5hN6Lt7hoXI=;
-        b=adxQQPdhr/1xBoliHvUfSfhEDVDcI1kdFrD7HJnBPXHnyWz/C79f0EEHqHNorZN4Gb
-         teuX9VRV5bTJNjJXN10aRUKHiN4u9lic7xNoBDACkjKi0Wa9w0RhHJs/XS6f/cBu3ZzV
-         lCzjSQ5hSE1JX7l4qfvyZY6k5e04RfJ1GeIZk9iwu8hK4eJwsbGFWku+b3BlC2Es6QzG
-         8AQuo6ukHnKsroOCbm1QnOAdXSQq3NTKqLgfckz4m2Y6VkIFv6quf0+fnQWcmrwn0LAk
-         euGGTyC1V9vKLJNtV4goH5LPbA/SPd+n/DwGrAqu9FTxVnSFmMkFLHjl2+z5UughYyBv
-         fGqw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUFaE7KZrJU5SuEgdXfrHIURXwtSLFoux0UKJHgEpz/F+bE4EHjWA85VUQDfTrM9sDi8Q3UlwDzEWcOuRuHPc9padS9jk=@vger.kernel.org, AJvYcCV5zilt2kkotn5bab3TTAzs06ZVUgPDpxOPVybAbHtolJ95oACLfIWTFNDKvJ6Ni/12a6TAvbvYPr4FyXNM7NnzZLs=@vger.kernel.org, AJvYcCVzdGvCRioMKMoenEceN8lCraMec+S/Owf15sa+TX5ysbwRCc2R7jkpwKsVU2/ri3IDWwKrR+bshgr3@vger.kernel.org, AJvYcCW9wTS7TUxe+boB25ydMM5sXCg4uB/KZr3iUGBDwiRO7id6YKBwg9KbX2oSleVhcFbpOWf1pqzo5IQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9BSPZMilMGlLyLvsLnlt817KNtnc+gdvt0RR87GzlWl9HMjJo
-	DQW76cDigL12xXjP1W6srdM4+i3WY7wwp9mmjwt2M6bl3jOiSRtXPh7P
-X-Gm-Gg: ASbGncvPXtfMqohgQ44bs8U646vZL2kbYOsw8kUOEe5O/T3LpS1U87B/zjmnhGwIz1/
-	kerbFHki5Ku8uudKCid1RRyOGVR/t5G31oO5BW1OjLsZ0ebRBzvaFoF/9iW81fm3dFOXChhPvZQ
-	zsjpGLWjL5zl0I9YP2okJ2xbtvchXe2RAZP1icTDCDHWv55DPa//WsabnJCOrm6Wtont+jbksyU
-	mQHtCD2lE2jxcGkK8YbYokxtmTIAq5Jvyihh2Fdf1QZHNhpOUi22FeAgWfqf0wmeZzILqDTAVHe
-	QxWhhke5ulaPuElp7VfxGx1t8zis5fSJ9nH83d84quJXMMbCAgZPdNbf69QhEUjPjo+SMSrdgxC
-	2guLi/ZroI9aa0JE9KmfydZTjdnlM+Q==
-X-Google-Smtp-Source: AGHT+IGj538MNFw8lnLpKQJxZofnRLU078qxv/1o5OvFcfhFzVvepwV4a2SHH8CKzazBMkPgBT0qiQ==
-X-Received: by 2002:a05:6a00:1255:b0:736:4d90:f9c0 with SMTP id d2e1a72fcca58-76e2f8bfd42mr1938894b3a.1.1755171794275;
-        Thu, 14 Aug 2025 04:43:14 -0700 (PDT)
-Received: from ranganath.. ([2406:7400:98:6831:7d1d:f0f4:7398:409e])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76c34d23f01sm19285741b3a.23.2025.08.14.04.43.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 04:43:13 -0700 (PDT)
-From: Ranganath V N <vnranganath.20@gmail.com>
-To: corbet@lwn.net,
-	linux-doc@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	linux-cxl@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	alim.akhtar@samsung.com,
-	dave@stgolabs.net,
-	rafael@kernel.org,
-	linux-kernel-mentees@vger.kernel.org,
-	skhan@linuxfoundation.org,
-	vishal.l.verma@intel.com,
-	Ranganath V N <vnranganath.20@gmail.com>
-Subject: [PATCH] Documentation: Fix driver-api typos
-Date: Thu, 14 Aug 2025 17:12:44 +0530
-Message-ID: <20250814114245.16399-1-vnranganath.20@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1755178124; c=relaxed/simple;
+	bh=6PnAZe4A85kl6H3wMAfpDBn82Vzw+tysBiyt8VAF8vg=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=JbYNx4/GFhMCZA782wQr5DFAKl2wRkISScySRf3AAJn60Sj0+a/KvNOTxpTo3U6llI4AOc2H8nXIrPh+P/l0TxuvQT7hWnzrIYaK7jLzBBBro6hVJZO0rJlzC8rwEfwjJg9gq55rLzv3KSR9wTtICJna9uQj2HQ1eHlfcUqp52I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ZzRxVVY5; arc=none smtp.client-ip=203.254.224.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250814132839epoutp02f28542907cd55acaa8442113d84f7a42~bpTNAC1e92386223862epoutp02G
+	for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Aug 2025 13:28:39 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250814132839epoutp02f28542907cd55acaa8442113d84f7a42~bpTNAC1e92386223862epoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1755178119;
+	bh=L3ufGPnyrW0N3UVpr3/riCJH1PQGRtTjLIlg9Lbrstg=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=ZzRxVVY5/wPdoVLxiMHEU5kpHumoK0S66oxLoNIMT+d4vhRsTLFh2Z+Ce+MWHDkOG
+	 LfhHE3VzzpQXqt+UWdVLNcSatvUVQVOcNZ4Qp7RPX1fWDait/49tMsZ/J7ivfIBZFf
+	 UNYY6UXvJ8rL0Fkt/Zonw5Ue59gdHqCKjTkPjq/I=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+	20250814132838epcas5p3c3693b0f5672407d67efe160b31fcc0c~bpTMXiWWT1937819378epcas5p3c;
+	Thu, 14 Aug 2025 13:28:38 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.92]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4c2mKK6nlKz6B9m7; Thu, 14 Aug
+	2025 13:28:37 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250814132606epcas5p1cdf8e1a97f5abe9d71dcd1b425a07648~bpQ_QWk6L2554225542epcas5p1n;
+	Thu, 14 Aug 2025 13:26:06 +0000 (GMT)
+Received: from INBRO001840 (unknown [107.122.3.105]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250814132602epsmtip1c22abee846ffe43383ffacb28125aafe~bpQ7V3wRg3173831738epsmtip1Y;
+	Thu, 14 Aug 2025 13:26:02 +0000 (GMT)
+From: "Pritam Manohar Sutar" <pritam.sutar@samsung.com>
+To: "'Vinod Koul'" <vkoul@kernel.org>
+Cc: <kishon@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <alim.akhtar@samsung.com>,
+	<andre.draszik@linaro.org>, <peter.griffin@linaro.org>,
+	<kauschluss@disroot.org>, <ivo.ivanov.ivanov1@gmail.com>,
+	<igor.belwon@mentallysanemainliners.org>, <m.szyprowski@samsung.com>,
+	<s.nawrocki@samsung.com>, <linux-phy@lists.infradead.org>,
+	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
+	<rosa.pila@samsung.com>, <dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
+	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
+In-Reply-To: <aJtMdHcidETZyiIp@vaman>
+Subject: RE: [PATCH v5 2/6] phy: exynos5-usbdrd: support HS phy for
+ ExynosAutov920
+Date: Thu, 14 Aug 2025 18:56:01 +0530
+Message-ID: <02f101dc0d1e$fd018ef0$f704acd0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJ+ZgWj3OwstM5ZbwFL0KmcSzrOlQIGOcp3ARbD4UABdmTpTbL41iug
+Content-Language: en-in
+X-CMS-MailID: 20250814132606epcas5p1cdf8e1a97f5abe9d71dcd1b425a07648
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250805114310epcas5p459aa232884d22501f5fefe42f239fecc
+References: <20250805115216.3798121-1-pritam.sutar@samsung.com>
+	<CGME20250805114310epcas5p459aa232884d22501f5fefe42f239fecc@epcas5p4.samsung.com>
+	<20250805115216.3798121-3-pritam.sutar@samsung.com> <aJtMdHcidETZyiIp@vaman>
 
-Corrected a few spelling mistakes
+Hi Vinod, 
 
-- functionalty ==> functionality
-in Documentation/driver-api/cxl/devices/device-types.rst
+> -----Original Message-----
+> From: Vinod Koul <vkoul@kernel.org>
+> Sent: 12 August 2025 07:45 PM
+> To: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+> Cc: kishon@kernel.org; robh@kernel.org; krzk+dt@kernel.org;
+> conor+dt@kernel.org; alim.akhtar@samsung.com; andre.draszik@linaro.org;
+> peter.griffin@linaro.org; kauschluss@disroot.org;
+> ivo.ivanov.ivanov1@gmail.com; igor.belwon@mentallysanemainliners.org;
+> m.szyprowski@samsung.com; s.nawrocki@samsung.com; linux-
+> phy@lists.infradead.org; devicetree@vger.kernel.org; linux-
+> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
+> samsung-soc@vger.kernel.org; rosa.pila@samsung.com;
+> dev.tailor@samsung.com; faraz.ata@samsung.com;
+> muhammed.ali@samsung.com; selvarasu.g@samsung.com
+> Subject: Re: [PATCH v5 2/6] phy: exynos5-usbdrd: support HS phy for
+> ExynosAutov920
+> 
+> On 05-08-25, 17:22, Pritam Manohar Sutar wrote:
+> > Enable UTMI+ phy support for this SoC which is very similar to what
+> > the existing Exynos850 supports.
+> >
+> > Add required change in phy driver to support HS phy for this SoC.
+> >
+> > Signed-off-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+> > ---
+> >  drivers/phy/samsung/phy-exynos5-usbdrd.c    | 123
+> ++++++++++++++++++++
+> >  include/linux/soc/samsung/exynos-regs-pmu.h |   2 +
+> >  2 files changed, 125 insertions(+)
+> >
+> > diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> > b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> > index dd660ebe8045..5400dd23e500 100644
+> > --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> > +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+> > @@ -2054,6 +2054,126 @@ static const struct
+> exynos5_usbdrd_phy_drvdata exynos990_usbdrd_phy = {
+> >  	.n_regulators		= ARRAY_SIZE(exynos5_regulator_names),
+> >  };
+> >
+> > +static int exynosautov920_usbdrd_phy_init(struct phy *phy) {
+> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
+> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
+> > +	int ret;
+> > +
+> > +	ret = clk_bulk_prepare_enable(phy_drd->drv_data->n_clks,
+> phy_drd->clks);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	/* Bypass PHY isol */
+> > +	inst->phy_cfg->phy_isol(inst, false);
+> > +
+> > +	/* UTMI or PIPE3 specific init */
+> > +	inst->phy_cfg->phy_init(phy_drd);
+> > +
+> > +	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks,
+> > +phy_drd->clks);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int exynosautov920_usbdrd_phy_exit(struct phy *phy) {
+> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
+> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
+> > +	int ret = 0;
+> 
+> Superfluous init..
+> 
+> > +
+> > +	ret = clk_bulk_prepare_enable(phy_drd->drv_data->n_clks,
+> phy_drd->clks);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	exynos850_usbdrd_phy_exit(phy);
+> > +
+> > +	/* enable PHY isol */
+> > +	inst->phy_cfg->phy_isol(inst, true);
+> > +
+> > +	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks,
+> > +phy_drd->clks);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int exynosautov920_usbdrd_phy_power_on(struct phy *phy) {
+> > +	int ret;
+> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
+> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
+> 
+> Reverse chrsitmas tree pls
+> 
+> --
+> ~Vinod
 
-- adjascent ==> adjacent
-in Documentation/driver-api/cxl/platform/example-configurations/one-dev-per-hb.rst
+Will address these comments in next version of the patch-set (v6).
 
-- succeessful ==> successful
-in Documentation/driver-api/thermal/exynos_thermal_emulation.rst
+Thank you.
 
-Signed-off-by: Ranganath V N <vnranganath.20@gmail.com>
----
- Documentation/driver-api/cxl/devices/device-types.rst           | 2 +-
- .../cxl/platform/example-configurations/one-dev-per-hb.rst      | 2 +-
- Documentation/driver-api/thermal/exynos_thermal_emulation.rst   | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Regards,
+Pritam
 
-diff --git a/Documentation/driver-api/cxl/devices/device-types.rst b/Documentation/driver-api/cxl/devices/device-types.rst
-index 923f5d89bc04..7f69dfa4509b 100644
---- a/Documentation/driver-api/cxl/devices/device-types.rst
-+++ b/Documentation/driver-api/cxl/devices/device-types.rst
-@@ -22,7 +22,7 @@ The basic interaction protocol, similar to PCIe configuration mechanisms.
- Typically used for initialization, configuration, and I/O access for anything
- other than memory (CXL.mem) or cache (CXL.cache) operations.
- 
--The Linux CXL driver exposes access to .io functionalty via the various sysfs
-+The Linux CXL driver exposes access to .io functionality via the various sysfs
- interfaces and /dev/cxl/ devices (which exposes direct access to device
- mailboxes).
- 
-diff --git a/Documentation/driver-api/cxl/platform/example-configurations/one-dev-per-hb.rst b/Documentation/driver-api/cxl/platform/example-configurations/one-dev-per-hb.rst
-index aebda0eb3e17..a4c3fb51ea7d 100644
---- a/Documentation/driver-api/cxl/platform/example-configurations/one-dev-per-hb.rst
-+++ b/Documentation/driver-api/cxl/platform/example-configurations/one-dev-per-hb.rst
-@@ -10,7 +10,7 @@ has a single CXL memory expander with a 4GB of memory.
- Things to note:
- 
- * Cross-Bridge interleave is not being used.
--* The expanders are in two separate but adjascent memory regions.
-+* The expanders are in two separate but adjacent memory regions.
- * This CEDT/SRAT describes one node per device
- * The expanders have the same performance and will be in the same memory tier.
- 
-diff --git a/Documentation/driver-api/thermal/exynos_thermal_emulation.rst b/Documentation/driver-api/thermal/exynos_thermal_emulation.rst
-index c21d10838bc5..f77d27c25ce2 100644
---- a/Documentation/driver-api/thermal/exynos_thermal_emulation.rst
-+++ b/Documentation/driver-api/thermal/exynos_thermal_emulation.rst
-@@ -32,7 +32,7 @@ Exynos emulation mode requires synchronous of value changing and
- enabling. It means when you want to update the any value of delay or
- next temperature, then you have to enable emulation mode at the same
- time. (Or you have to keep the mode enabling.) If you don't, it fails to
--change the value to updated one and just use last succeessful value
-+change the value to updated one and just use last successful value
- repeatedly. That's why this node gives users the right to change
- termerpature only. Just one interface makes it more simply to use.
- 
--- 
-2.43.0
 
 
