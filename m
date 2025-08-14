@@ -1,205 +1,154 @@
-Return-Path: <linux-samsung-soc+bounces-10034-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10074-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F577B267B6
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 15:41:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45EA4B2983C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 06:37:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 237793A888A
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 14 Aug 2025 13:32:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AAE4D1895B4B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 04:37:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 276AB3009E1;
-	Thu, 14 Aug 2025 13:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23B4F263F5F;
+	Mon, 18 Aug 2025 04:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ZzRxVVY5"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="hs6f1N5I"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D342FD7C4
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Aug 2025 13:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB8184A2B
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Aug 2025 04:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755178124; cv=none; b=Gwi5Sre2ynPwvbpqyu40YxCxypKqrfUjdfuOBQigkYQcIIyfwWvk+wui2JwfvvlZofNxgTRNcj16H3X+idd/TIlVOBw7pHHpPZnapKFqnc5zqpCf/ls0Z72CEut2R2bxzLIKtXrkXnGkmZyaGc2X09O/uA/4VDGuTBOsjFsxV1M=
+	t=1755491844; cv=none; b=gW+VIUxBRZLrxEvI/aOdIWu8Kv0Up1q5Vzn4FQiLzw/hntvjdhSG5HY5rDgqhZO2S/r4gIEvD2LaB75WtlLiK86TKj/7MdKuE24QT0nr/ADDeA8rKGJo2rLSx5L/h8sclTkStgk4NLClyWVDn+WCQLahldXu/KgCf/L6QVt+4Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755178124; c=relaxed/simple;
-	bh=6PnAZe4A85kl6H3wMAfpDBn82Vzw+tysBiyt8VAF8vg=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=JbYNx4/GFhMCZA782wQr5DFAKl2wRkISScySRf3AAJn60Sj0+a/KvNOTxpTo3U6llI4AOc2H8nXIrPh+P/l0TxuvQT7hWnzrIYaK7jLzBBBro6hVJZO0rJlzC8rwEfwjJg9gq55rLzv3KSR9wTtICJna9uQj2HQ1eHlfcUqp52I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ZzRxVVY5; arc=none smtp.client-ip=203.254.224.25
+	s=arc-20240116; t=1755491844; c=relaxed/simple;
+	bh=GGMEHVB0X2VGIc4wzUyfGmQwSg52QCIC5HEXNyGM8To=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 References; b=TtgYE/x7zTaOBoP3H306+VVcKaMNuOWX2AEqS1zbW/k5a+guZ2PBiuyMXYGrLWhM5ZgIjNKiqJ/AWAabxmQS9zGUJ1/WQ6DpKkZQAk7gEa+zcQerPWN04JqVg0r9Kx0HX0KIQ694+NUjA3Qe8MswqXlTH7YHi3xgChvKPfjgEEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=hs6f1N5I; arc=none smtp.client-ip=203.254.224.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250814132839epoutp02f28542907cd55acaa8442113d84f7a42~bpTNAC1e92386223862epoutp02G
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 14 Aug 2025 13:28:39 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250814132839epoutp02f28542907cd55acaa8442113d84f7a42~bpTNAC1e92386223862epoutp02G
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250818043719epoutp01b3e38f2757de22549f8c2d1b9d7af3e1~cwobTKQ0y0361903619epoutp01S
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Aug 2025 04:37:19 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250818043719epoutp01b3e38f2757de22549f8c2d1b9d7af3e1~cwobTKQ0y0361903619epoutp01S
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1755178119;
-	bh=L3ufGPnyrW0N3UVpr3/riCJH1PQGRtTjLIlg9Lbrstg=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=ZzRxVVY5/wPdoVLxiMHEU5kpHumoK0S66oxLoNIMT+d4vhRsTLFh2Z+Ce+MWHDkOG
-	 LfhHE3VzzpQXqt+UWdVLNcSatvUVQVOcNZ4Qp7RPX1fWDait/49tMsZ/J7ivfIBZFf
-	 UNYY6UXvJ8rL0Fkt/Zonw5Ue59gdHqCKjTkPjq/I=
+	s=mail20170921; t=1755491839;
+	bh=44MXY/Ntu9rAF0ovbjOJnvuaxkF7loC1JC6bTAe9rcc=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=hs6f1N5IFuWk+6F5dtOPgis0vajdlWb4bFzF6EZRtUBVaHfpqrLJBxqSBsHDZKBT5
+	 /+rsGn7ltJQhYRWmKrNxZBVrFXUCdRALJQY8zXdS4dWcoKrdxSRj7civ/mQSjEkLCz
+	 7WWIA4dGzeIvz5Ob5KdBV6bfzRa5QfZsBIzhMQ8I=
 Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
 	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
-	20250814132838epcas5p3c3693b0f5672407d67efe160b31fcc0c~bpTMXiWWT1937819378epcas5p3c;
-	Thu, 14 Aug 2025 13:28:38 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.92]) by
-	epsnrtp04.localdomain (Postfix) with ESMTP id 4c2mKK6nlKz6B9m7; Thu, 14 Aug
-	2025 13:28:37 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250814132606epcas5p1cdf8e1a97f5abe9d71dcd1b425a07648~bpQ_QWk6L2554225542epcas5p1n;
-	Thu, 14 Aug 2025 13:26:06 +0000 (GMT)
-Received: from INBRO001840 (unknown [107.122.3.105]) by epsmtip1.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250814132602epsmtip1c22abee846ffe43383ffacb28125aafe~bpQ7V3wRg3173831738epsmtip1Y;
-	Thu, 14 Aug 2025 13:26:02 +0000 (GMT)
-From: "Pritam Manohar Sutar" <pritam.sutar@samsung.com>
-To: "'Vinod Koul'" <vkoul@kernel.org>
-Cc: <kishon@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-	<conor+dt@kernel.org>, <alim.akhtar@samsung.com>,
-	<andre.draszik@linaro.org>, <peter.griffin@linaro.org>,
-	<kauschluss@disroot.org>, <ivo.ivanov.ivanov1@gmail.com>,
-	<igor.belwon@mentallysanemainliners.org>, <m.szyprowski@samsung.com>,
-	<s.nawrocki@samsung.com>, <linux-phy@lists.infradead.org>,
-	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<rosa.pila@samsung.com>, <dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
-	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
-In-Reply-To: <aJtMdHcidETZyiIp@vaman>
-Subject: RE: [PATCH v5 2/6] phy: exynos5-usbdrd: support HS phy for
- ExynosAutov920
-Date: Thu, 14 Aug 2025 18:56:01 +0530
-Message-ID: <02f101dc0d1e$fd018ef0$f704acd0$@samsung.com>
+	20250818043718epcas5p3efbcae916de49e498b30a4a88463536a~cwoat_LHK0408004080epcas5p3U;
+	Mon, 18 Aug 2025 04:37:18 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.87]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4c50LG6cnmz6B9mL; Mon, 18 Aug
+	2025 04:37:10 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250814140956epcas5p480aa24441933523484da5c241a201d3c~bp3QEJitT1225312253epcas5p4t;
+	Thu, 14 Aug 2025 14:09:56 +0000 (GMT)
+Received: from cheetah.samsungds.net (unknown [107.109.115.53]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20250814140952epsmtip2b069f926cc266c22788710b6b7b5e597~bp3MNOvQB1162411624epsmtip2h;
+	Thu, 14 Aug 2025 14:09:52 +0000 (GMT)
+From: Inbaraj E <inbaraj.e@samsung.com>
+To: mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, krzk@kernel.org,
+	s.nawrocki@samsung.com, s.hauer@pengutronix.de, shawnguo@kernel.org,
+	cw00.choi@samsung.com, rmfrfs@gmail.com, laurent.pinchart@ideasonboard.com,
+	martink@posteo.de, mchehab@kernel.org, linux-fsd@tesla.com, will@kernel.org,
+	catalin.marinas@arm.com, pankaj.dubey@samsung.com, shradha.t@samsung.com,
+	ravi.patel@samsung.com
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, alim.akhtar@samsung.com,
+	linux-samsung-soc@vger.kernel.org, kernel@puri.sm, kernel@pengutronix.de,
+	festevam@gmail.com, linux-media@vger.kernel.org, imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org, Inbaraj E <inbaraj.e@samsung.com>
+Subject: [PATCH v2 00/12] Add FSD CSI support
+Date: Thu, 14 Aug 2025 19:39:31 +0530
+Message-ID: <20250814140943.22531-1-inbaraj.e@samsung.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJ+ZgWj3OwstM5ZbwFL0KmcSzrOlQIGOcp3ARbD4UABdmTpTbL41iug
-Content-Language: en-in
-X-CMS-MailID: 20250814132606epcas5p1cdf8e1a97f5abe9d71dcd1b425a07648
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250814140956epcas5p480aa24441933523484da5c241a201d3c
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
+cpgsPolicy: CPGSC10-541,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250805114310epcas5p459aa232884d22501f5fefe42f239fecc
-References: <20250805115216.3798121-1-pritam.sutar@samsung.com>
-	<CGME20250805114310epcas5p459aa232884d22501f5fefe42f239fecc@epcas5p4.samsung.com>
-	<20250805115216.3798121-3-pritam.sutar@samsung.com> <aJtMdHcidETZyiIp@vaman>
+X-CMS-RootMailID: 20250814140956epcas5p480aa24441933523484da5c241a201d3c
+References: <CGME20250814140956epcas5p480aa24441933523484da5c241a201d3c@epcas5p4.samsung.com>
 
-Hi Vinod, 
+FSD CSI(Camera Serial Interface) IP bundles Link controller and DMA
+controller for receiving frames. FSD SoC has 12 instances of CSI IP and
+3 D-PHY. 4 instances of CSI IP use 1 D-PHY.
 
-> -----Original Message-----
-> From: Vinod Koul <vkoul@kernel.org>
-> Sent: 12 August 2025 07:45 PM
-> To: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-> Cc: kishon@kernel.org; robh@kernel.org; krzk+dt@kernel.org;
-> conor+dt@kernel.org; alim.akhtar@samsung.com; andre.draszik@linaro.org;
-> peter.griffin@linaro.org; kauschluss@disroot.org;
-> ivo.ivanov.ivanov1@gmail.com; igor.belwon@mentallysanemainliners.org;
-> m.szyprowski@samsung.com; s.nawrocki@samsung.com; linux-
-> phy@lists.infradead.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
-> samsung-soc@vger.kernel.org; rosa.pila@samsung.com;
-> dev.tailor@samsung.com; faraz.ata@samsung.com;
-> muhammed.ali@samsung.com; selvarasu.g@samsung.com
-> Subject: Re: [PATCH v5 2/6] phy: exynos5-usbdrd: support HS phy for
-> ExynosAutov920
-> 
-> On 05-08-25, 17:22, Pritam Manohar Sutar wrote:
-> > Enable UTMI+ phy support for this SoC which is very similar to what
-> > the existing Exynos850 supports.
-> >
-> > Add required change in phy driver to support HS phy for this SoC.
-> >
-> > Signed-off-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-> > ---
-> >  drivers/phy/samsung/phy-exynos5-usbdrd.c    | 123
-> ++++++++++++++++++++
-> >  include/linux/soc/samsung/exynos-regs-pmu.h |   2 +
-> >  2 files changed, 125 insertions(+)
-> >
-> > diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > index dd660ebe8045..5400dd23e500 100644
-> > --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > @@ -2054,6 +2054,126 @@ static const struct
-> exynos5_usbdrd_phy_drvdata exynos990_usbdrd_phy = {
-> >  	.n_regulators		= ARRAY_SIZE(exynos5_regulator_names),
-> >  };
-> >
-> > +static int exynosautov920_usbdrd_phy_init(struct phy *phy) {
-> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
-> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
-> > +	int ret;
-> > +
-> > +	ret = clk_bulk_prepare_enable(phy_drd->drv_data->n_clks,
-> phy_drd->clks);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	/* Bypass PHY isol */
-> > +	inst->phy_cfg->phy_isol(inst, false);
-> > +
-> > +	/* UTMI or PIPE3 specific init */
-> > +	inst->phy_cfg->phy_init(phy_drd);
-> > +
-> > +	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks,
-> > +phy_drd->clks);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int exynosautov920_usbdrd_phy_exit(struct phy *phy) {
-> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
-> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
-> > +	int ret = 0;
-> 
-> Superfluous init..
-> 
-> > +
-> > +	ret = clk_bulk_prepare_enable(phy_drd->drv_data->n_clks,
-> phy_drd->clks);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	exynos850_usbdrd_phy_exit(phy);
-> > +
-> > +	/* enable PHY isol */
-> > +	inst->phy_cfg->phy_isol(inst, true);
-> > +
-> > +	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks,
-> > +phy_drd->clks);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int exynosautov920_usbdrd_phy_power_on(struct phy *phy) {
-> > +	int ret;
-> > +	struct phy_usb_instance *inst = phy_get_drvdata(phy);
-> > +	struct exynos5_usbdrd_phy *phy_drd = to_usbdrd_phy(inst);
-> 
-> Reverse chrsitmas tree pls
-> 
-> --
-> ~Vinod
+This patch series does the following:
+1) Refactor the imx-mipi-csis driver to support platform specific
+clock names and interrupt handlers through device specific data
+(struct mipi_csis_info).
+2) Add FSD CSI link controller support in imx-mipi-csis driver.
+3) Introduce a new media driver for FSD CSI DMA providing support for
+video capture and streaming.
+ 
+These patches were tested on the FSD platform using the
+capture_raw_frames application.
 
-Will address these comments in next version of the patch-set (v6).
+Changes since v1:
+1. Addressed review comments from Laurent Pinchart to integrate the
+with imx-mipi-csis.c to handle the CSIS and expose it as a subdev.
 
-Thank you.
+Here is the link to v1 patch for reference:
+https://patchwork.kernel.org/project/linux-media/patch/7e7832c16925386b771ddb7e00e08661115aa0ea.1668963790.git.sathya@samsung.com/
 
-Regards,
-Pritam
+Inbaraj E (12):
+  dt-bindings: clock: Add CAM_CSI clock macro for FSD
+  clk: samsung: fsd: Add clk id for PCLK and PLL in CAM_CSI block
+  dt-bindings: media: nxp: Add support for FSD SoC
+  arm64: dts: fsd: Add CSI nodes
+  media: imx-mipi-csis: Move clk to mipi_csis_info structure
+  media: imx-mipi-csis: Move irq flag and handler to mipi_csis_info
+    structure
+  media: imx-mipi-csis: Add support to configure specific vc
+  media: imx-mipi-csis: Add support to dump all vc regs
+  media: imx-mipi-csis: Add support for FSD CSI Rx
+  dt-bindings: media: fsd: Document CSIS DMA controller
+  arm64: defconfig: Enable FSD CSIS DMA driver
+  media: fsd-csis: Add support for FSD CSIS DMA
 
+ .../bindings/media/nxp,imx-mipi-csi2.yaml     |   88 +-
+ .../bindings/media/tesla,fsd-csis-media.yaml  |   74 +
+ MAINTAINERS                                   |    8 +
+ arch/arm64/boot/dts/tesla/fsd-evb.dts         |   96 +
+ arch/arm64/boot/dts/tesla/fsd.dtsi            |  552 ++++++
+ arch/arm64/configs/defconfig                  |    1 +
+ drivers/clk/samsung/clk-fsd.c                 |   28 +-
+ drivers/media/platform/nxp/imx-mipi-csis.c    |  354 +++-
+ drivers/media/platform/samsung/Kconfig        |    1 +
+ drivers/media/platform/samsung/Makefile       |    1 +
+ .../media/platform/samsung/fsd-csis/Kconfig   |   16 +
+ .../media/platform/samsung/fsd-csis/Makefile  |    3 +
+ .../platform/samsung/fsd-csis/fsd-csis.c      | 1730 +++++++++++++++++
+ include/dt-bindings/clock/fsd-clk.h           |   13 +
+ 14 files changed, 2890 insertions(+), 75 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/tesla,fsd-csis-media.yaml
+ create mode 100644 drivers/media/platform/samsung/fsd-csis/Kconfig
+ create mode 100644 drivers/media/platform/samsung/fsd-csis/Makefile
+ create mode 100644 drivers/media/platform/samsung/fsd-csis/fsd-csis.c
+
+-- 
+2.49.0
 
 
