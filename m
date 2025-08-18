@@ -1,132 +1,158 @@
-Return-Path: <linux-samsung-soc+bounces-10105-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10111-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72B2AB2AF18
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 19:13:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EFC1B2B03D
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 20:26:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23A6A582640
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 17:08:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA630681E18
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 18:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61A6F32C333;
-	Mon, 18 Aug 2025 17:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2526B3314AC;
+	Mon, 18 Aug 2025 18:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="Hi2iBBvu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDIrUk6e"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD4E32C316;
-	Mon, 18 Aug 2025 17:08:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBED63314A2;
+	Mon, 18 Aug 2025 18:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755536909; cv=none; b=hjQvnoxLdn/GiLobT3wXmPOU2Hzxyki58gTjU7p2c5qxIDay6P/uj1MtWqEDjbCmmLmdAD5HkDsEko/CAGy5Ys7jxxoQeS0bDO1nhkdRgFFidAh6in/sBrl4RI7c6+qk0+mdtnVwMeXWMHfkmvH8ECyNENMp1upL357x7QI8CKc=
+	t=1755541547; cv=none; b=g1OMUJ6Qr4RDhwJ+Ny5kHSUf0qLxOFNOWgB9ge5JyygcUJUst8vo/XO2AIJwmVQWF7fYn6uxS/5Fptoy+iacSXDyfFXDJL9BTVS/FI/5IGc2tRQKw6C5tDR01aMfsMSGAsYvOXZyjaRAj87PtW0Nk4msLM52ve3Iau5khQRAgdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755536909; c=relaxed/simple;
-	bh=rPMW5veYC6Pqzzt/IvNOl92DEwVRpPy8WEfW0ZS5F5I=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=itOrmSyYSSl1/jhQgeEyltuRZp4ZiwKwCVf5huzCREg3xxYoRdhoGf5GhgUcj5H3DFMP4tRbbEjbylM5qXbHK+PKPg8IYDhKvMCiQ978jwedDuQp/ng3xfOLKFFrUExxfSMhF8rmpR+IfVV746ARw/v8dB9Gfms3UEr8IYuZlSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=Hi2iBBvu; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 8080C22F8E;
-	Mon, 18 Aug 2025 19:08:22 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id pMVZN71AsQAe; Mon, 18 Aug 2025 19:08:20 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1755536900; bh=rPMW5veYC6Pqzzt/IvNOl92DEwVRpPy8WEfW0ZS5F5I=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Hi2iBBvuuvtwAY05hT4157aaA2jyJ96dwAODLyT5zFIyFINe4HwlkjPicA27h7aLr
-	 b/xBfuwcShAv0mY46xn9qj46G1rQVVU5cIXJFiwcbGRInMrNAj0+t1UHSTLYPNcTDo
-	 o3VqZFGrdiUQClNIVMgxYzBYGv1FVJeRdl0PKItGIL73lnFYSr97RXquqQ8u1HdMVh
-	 RFIWDcMrX0mPWr7AX9XvP8xcytDOjs1OCSot0047gjM4/hm4Gv/8dxM0NCoM8CO8RX
-	 ++TSWDpuoJ0ciwrtxmSag0OkUDlfbiMODVDxob+QHzlh2mvoLb/zEQJYZA7cji8MWK
-	 UHs1kllj/r0CA==
+	s=arc-20240116; t=1755541547; c=relaxed/simple;
+	bh=P5OJ4RHbL7bfCZueIbVBkF40afwl0Pm482XBXI7/HfQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=j/7DAsrVu5bMm/6j74ZWS6j+W/Atc7CHOzd1jZPP1GiRFR1NvnVf8HTPdkrCFPFsUw+5qQkLsYcigzmuTeNXEeMOMFYeJtEnmX9FtjOYNuWGOedVyHAgWKafDJ/hH2LtDwlQ7KUO27k9snEDqzwjH5d1UrYO3lq43gmMPYH6m0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDIrUk6e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50078C4CEEB;
+	Mon, 18 Aug 2025 18:25:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755541546;
+	bh=P5OJ4RHbL7bfCZueIbVBkF40afwl0Pm482XBXI7/HfQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=IDIrUk6equNseS0ZrN+tjnJzBgBbvhGFPTLcNrmqpDYFo8ThI70gRQ1UQo83gHjLN
+	 y6axwix4PwvKDr3Qxm4V+5NyFfjqgcbavchlT1oHZgZygTQm9lVuS1d70g6BqQBdya
+	 50XI46xc97f1NcbV9SKLIwwXvcY/QHJfm5PPEZ4BRJ7f61zRejSLUpXnWGVDzcerDF
+	 fzJ9IGTpdNW9EmIJ52biPC64T7A73pMNSc5BRcd6QmhoC2Y9A4KEwaVUs17c44r9Zj
+	 4Ba762DlDExTmr4RoFgVk3fpKr7j0VmeHipw0KWx8OadDdKkSeegTBvmRmNl//M3xp
+	 UHGRuax/NOnLA==
+Date: Mon, 18 Aug 2025 13:25:44 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Shradha Todi <shradha.t@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org, mani@kernel.org,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, robh@kernel.org,
+	bhelgaas@google.com, jingoohan1@gmail.com, krzk+dt@kernel.org,
+	conor+dt@kernel.org, alim.akhtar@samsung.com, vkoul@kernel.org,
+	kishon@kernel.org, arnd@arndb.de, m.szyprowski@samsung.com,
+	jh80.chung@samsung.com, pankaj.dubey@samsung.com
+Subject: Re: [PATCH v3 11/12] PCI: exynos: Add support for Tesla FSD SoC
+Message-ID: <20250818182544.GA534647@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 18 Aug 2025 17:08:20 +0000
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/6] Support for Exynos7870's display stack (DECON,
- MIPIPHY, DSIM, etc.)
-In-Reply-To: <2bfa6c0b-1f23-4d57-b618-688ed8dc7fae@kernel.org>
-References: <20250627-exynos7870-drm-dts-v2-0-d4a59207390d@disroot.org>
- <3f4f28cf-417b-4f12-8a3d-c1f70f6871c4@kernel.org>
- <45fc52d9988d1bf17eca392364c63193@disroot.org>
- <2bfa6c0b-1f23-4d57-b618-688ed8dc7fae@kernel.org>
-Message-ID: <afd9e6c8095df785fa7f39265111e357@disroot.org>
-X-Sender: kauschluss@disroot.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <000d01dc1022$ad8c0740$08a415c0$@samsung.com>
 
-On 2025-08-18 06:32, Krzysztof Kozlowski wrote:
-> On 17/08/2025 16:49, Kaustabh Chakraborty wrote:
->> On 2025-08-13 07:58, Krzysztof Kozlowski wrote:
->>> On 26/06/2025 22:13, Kaustabh Chakraborty wrote:
->>>> This series implements changes in the SoC subsystem, which includes
->>>> devicetree additions. It depends on all sub-series listed below:
->>>> (Legend: [R]eviewed, [A]ccepted)
->>>> 
->>>> exynosdrm-decon            -
->>>> https://lore.kernel.org/r/20250627-exynosdrm-decon-v3-0-5b456f88cfea@disroot.org
->>>> exynos7870-mipi-phy        A
->>>> https://lore.kernel.org/r/20250612-exynos7870-mipi-phy-v1-0-3fff0b62d9d3@disroot.org
->>>> exynos7870-mipi-phy-fix    -
->>>> https://lore.kernel.org/r/20250627-exynos7870-mipi-phy-fix-v1-0-2eefab8b50df@disroot.org
->>>> exynos7870-dsim            -
->>>> https://lore.kernel.org/r/20250627-exynos7870-dsim-v2-0-1433b67378d3@disroot.org
->>>> panel-samsung-s6e8aa5x01   -
->>>> https://lore.kernel.org/r/20250625-panel-samsung-s6e8aa5x01-v3-0-9a1494fe6c50@disroot.org
->>>> panel-synaptics-tddi       -
->>>> https://lore.kernel.org/r/20250625-panel-synaptics-tddi-v2-0-7a62ab1d13c7@disroot.org
->>>> 
->>>> Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
->>> 
->>> What is the status of the bindings from dependencies? I think they 
->>> were
->>> not accepted.
->> 
->> Except panel-synaptics-tddi, all have been accepted. A lot of them
->> haven't hit next though. I'm waiting for that to send the next 
->> revision.
+[+to Krzysztof]
+
+On Mon, Aug 18, 2025 at 03:00:00PM +0530, Shradha Todi wrote:
+> > On Mon, Aug 11, 2025 at 09:16:37PM +0530, Shradha Todi wrote:
+> > > Add host and endpoint controller driver support for FSD SoC.
+
+> > It's kind of unfortunate that the driver uses "ep" everywhere for
+> > struct exynos_pcie pointers.  It's going to be confusing because "ep"
+> > is also commonly used for endpoint-related things, e.g., struct
+> > dw_pcie_ep pointers.  Maybe it's not worth changing; I dunno.
 > 
-> What does it mean - accepted but not hit next? If it is accepted, it
-> must be visible in next. Which maintainer's tree are not in the next?
+> I did try to rename the structure and the pointers 
+> (https://lore.kernel.org/all/20230214121333.1837-9-shradha.t@samsung.com/)
+> But the intention was different back then and so the idea was rejected.
+> I could add a patch to only rename the pointers to something less
+> confusing like "exy_pci"
 
-drm-exynos [1] branches haven't been rebased to v6.17-rc1. This should
-include all some DECON and all DSIM patches.
+The patch you mention did several renames:
 
-Although [2] has been accepted, I don't see the commit in [3] anymore.
-But, there's [4] which mentions my panel patches, but then I don't see
-them in next (there should be a panel-samsung-s6e8aa5x01-ams561ra01.c
-in [5]).
+  s/to_exynos_pcie/to_samsung_pcie/
+  s/struct exynos_pcie/struct samsung_pcie/
+  s/struct exynos_pcie *ep/struct samsung_pcie *sp/
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos.git/
-[2] 
-https://lore.kernel.org/all/175432157792.3671011.1104200917154441096.b4-ty@linaro.org
-[3] 
-https://gitlab.freedesktop.org/drm/misc/kernel/-/commits/drm-misc-next?ref_type=heads
-[4] https://lore.kernel.org/all/20250814072454.GA18104@linux.fritz.box
-[5] 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/panel?h=next-20250818
+I'm only concerned about the confusion of "ep" being used both for
+"struct exynos_pcie *" and for "struct dw_pcie_ep *".
 
+It would still be sort of an annoying patch to do something like this:
+
+  s/struct exynos_pcie *ep/struct exynos_pcie *pcie/
+
+But 'git grep "struct .*_pcie \*.*=" drivers/pci/controller/' says
+using "pcie" in this way is quite common, so maybe it would be worth
+doing.
+
+What do you think, Krzysztof?
+
+> > > +static irqreturn_t fsd_pcie_irq_handler(int irq, void *arg)
+> > > +{
+> > > +	u32 val;
+> > > +	struct exynos_pcie *ep = arg;
+> > > +	struct dw_pcie *pci = &ep->pci;
+> > > +	struct dw_pcie_rp *pp = &pci->pp;
+> > > +
+> > > +	val = readl(ep->elbi_base + FSD_IRQ2_STS);
+> > > +	if ((val & FSD_IRQ_MSI_ENABLE) == FSD_IRQ_MSI_ENABLE) {
+> > > +		val &= FSD_IRQ_MSI_ENABLE;
+> > > +		writel(val, ep->elbi_base + FSD_IRQ2_STS);
+> > 
+> > This looks weird because FSD_IRQ_MSI_ENABLE sounds like an *enable*
+> > bit, but here you're treating it as a *status* bit.
+> > 
+> > As far as I can tell, you set FSD_IRQ_MSI_ENABLE once at probe-time in
+> > fsd_pcie_msi_init(), then you clear it here in an IRQ handler, and it
+> > will never be set again.  That seems wrong; am I missing something?
 > 
-> 
-> Best regards,
-> Krzysztof
+> Actually the status IRQ and enable IRQ registers are different offsets
+> but the bit position for MSI remains same in both cases so I just reused
+> the macro.
+
+Ah, that's what I missed, thanks!  At probe-time, fsd_pcie_msi_init()
+enables it in FSD_IRQ2_EN.  Here you clear it in FSD_IRQ2_STS.
+
+> But I understand that it's confusing so I will add another
+> macro for FSD_IRQ_MSI_STATUS or just rename the macro to
+> FSD_IRQ_MSI to re-use.
+
+Using the same name just because a similar bit happens to be at the
+same position in two different registers is definitely confusing.  I
+think it will be better to have two macros, one for FSD_IRQ2_STS and
+another for FSD_IRQ2_EN, e.g.,
+
+  #define FSD_IRQ2_STS                         0x008
+  #define   FSD_IRQ2_STS_MSI                   BIT(17)
+  #define FSD_IRQ2_EN                          0x018
+  #define   FSD_IRQ2_EN_MSI                    BIT(17)
+
+Another question about the test:
+
+  if ((val & FSD_IRQ_MSI_ENABLE) == FSD_IRQ_MSI_ENABLE) {
+
+This assumes there are no other bits in FSD_IRQ2_STS that could be
+set.  I would have expected a test like this:
+
+  if (val & FSD_IRQ_MSI_ENABLE) {
+
+Is there a reason to restrict it to the case when *only*
+FSD_IRQ_MSI_ENABLE is set?
+
+Bjorn
 
