@@ -1,354 +1,154 @@
-Return-Path: <linux-samsung-soc+bounces-10113-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10088-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67207B2B8A2
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Aug 2025 07:29:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AA28B29BF7
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 10:23:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC3FF1892E85
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 19 Aug 2025 05:29:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8314A205627
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 08:22:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E30D1261B67;
-	Tue, 19 Aug 2025 05:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626DD3002D5;
+	Mon, 18 Aug 2025 08:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="d67urHkA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q7NUkrR+"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BC021FF41
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Aug 2025 05:29:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E7F2FFDF1;
+	Mon, 18 Aug 2025 08:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755581367; cv=none; b=Znftgpo3ZNMDHrXxt4Z0TNDx61bbJC/mDARxQGCKu88RdQ15L+0wSJceCC4ihSJgnpeEo7dz9jVRDHORk36+ELf6F0fGGOka0Am7z/O9SkWiy6GxG8LsWxJ7wdL8XLm8G0V4T8MbRDHEr4hgk3M3WXWPzkaKes27qA1+dB0J9ZA=
+	t=1755505368; cv=none; b=CViigXi7i3ycA6x4jx2q6V/L44mJ1fqryXlkSVeREksA/t0EW5KDlXxnn1ElOazb7xckTRivQaFtlVRdgmYNDsjVDdnrg/8ADvCpgOS8BXN+jD+BGk2ri1/xDlnGbl2n8Oex2u3Fv4TbS8ScKgeTh3+JPDHzNVLUEtOHWpYbkzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755581367; c=relaxed/simple;
-	bh=oQBxwgAjB1Sit//E1gyu6jsGAnXwnwVCiu7w5uK1veg=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=ZmcZ7u58TYjYj7AL0Mg/Vb5f85IYIw/3W4VfM5nz0K6FFjbHnmVCf63/SynzReq3ARoDU2emZ2HlnBMGd9LwaBSmGoBAYbYF4GS+8Htp3RHUmKWI3o267fdiYDXdzs1+rbMWbt/ojJBXW9pCb+hJ7cExucR1hOqGcJ1IA6LVVz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=d67urHkA; arc=none smtp.client-ip=203.254.224.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250819052923epoutp03fbf29fc042973b8382e816df5636f070~dE-LIDWBc2270522705epoutp03w
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 19 Aug 2025 05:29:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250819052923epoutp03fbf29fc042973b8382e816df5636f070~dE-LIDWBc2270522705epoutp03w
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1755581363;
-	bh=6MG+/Jai4e9wBAwA5aA5ZNa5PbIOBcMt7Lw3JvyLk6w=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=d67urHkAZCwPT6xGIAQeP+7Mr4oeVqK3CMHCwe+Bzw0iZh+ZIDas4vM5tHIW2Zxkt
-	 /hVeIH8bg/z8qSzULkWnA5nFNdOT3OBEiR9gOnM88/KKVeTs/DvoPVDJXwvdXii+57
-	 d0FPOs0kA0iOIskNZ8lhuis/+MErNgNln37WUtj4=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250819052922epcas5p48d6c5c5c355795ed5a957f8effe6dbd3~dE-KYwSKb1102711027epcas5p4U;
-	Tue, 19 Aug 2025 05:29:22 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.86]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4c5dS03lX4z3hhT7; Tue, 19 Aug
-	2025 05:29:20 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250818074152epcas5p38e555d935cb93f38ed0a590003a53da1~czJkANOlH1134711347epcas5p3L;
-	Mon, 18 Aug 2025 07:41:52 +0000 (GMT)
-Received: from INBRO001840 (unknown [107.122.3.105]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250818074149epsmtip265c95d1fd9e613f0c41ca6c3c05681fa~czJhJl2tB1399313993epsmtip2R;
-	Mon, 18 Aug 2025 07:41:49 +0000 (GMT)
-From: "Pritam Manohar Sutar" <pritam.sutar@samsung.com>
-To: "'Vinod Koul'" <vkoul@kernel.org>
-Cc: <kishon@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-	<conor+dt@kernel.org>, <alim.akhtar@samsung.com>,
-	<andre.draszik@linaro.org>, <peter.griffin@linaro.org>,
-	<kauschluss@disroot.org>, <ivo.ivanov.ivanov1@gmail.com>,
-	<igor.belwon@mentallysanemainliners.org>, <m.szyprowski@samsung.com>,
-	<s.nawrocki@samsung.com>, <linux-phy@lists.infradead.org>,
-	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<rosa.pila@samsung.com>, <dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
-	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
-In-Reply-To: <aJtN7uVUV3YhfY5-@vaman>
-Subject: RE: [PATCH v5 6/6] phy: exynos5-usbdrd: support SS combo phy for
- ExynosAutov920
-Date: Mon, 18 Aug 2025 13:11:48 +0530
-Message-ID: <038a01dc1013$900a2800$b01e7800$@samsung.com>
+	s=arc-20240116; t=1755505368; c=relaxed/simple;
+	bh=G5KjcXCcfVMEVsjscb4Ys/l1/DUNqEaAxB7u6lNcs7A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NOK+OPhK2aY9WfrRQ9h8zTe+Z+/zDtYOIAXu3+jAEMNL1AL2iE29SCE/fVwbt6QEabkkH8IuxR9wdh+Dg34ZRZCa4PXUD85OBcSphiQraGry7EiEGUOoq2YUap2F7kV9IVXIO8cP7BQ99xDLe2OECewjSxxxTw4PMOUdhm4TcCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q7NUkrR+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F8EC4CEEB;
+	Mon, 18 Aug 2025 08:22:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755505366;
+	bh=G5KjcXCcfVMEVsjscb4Ys/l1/DUNqEaAxB7u6lNcs7A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Q7NUkrR+lL70kb7FWfE7SwLKXc2u4ErdmJAmrympHHMqrMapsTnf7U+Vgm+n4sd27
+	 JaqV6b6fY2tBPOH+3jg0MZLlb1g2Bz2e5vm/KHs54+I0kOVk4/Dot0BLkHxoI3ADMu
+	 pbd5coJAVX5IoNOAW7N1NqHQY/ZzKiR6BKqOupptlnqhhFas93qCSlZaGBrnlRv/31
+	 y21sqMJu2mdvJn2GukyD80DW3fJzspHCZDuigNZlP4S9JwM3XdTKDDCBtAARSX75hi
+	 XJFzCTzwxFlGnSNQW5fSlc69q9ebc8HPPZH+YF0TwEnGofhmvkkBhEC9NmuCQSpHtH
+	 C8khRVzSe6P9Q==
+Message-ID: <05da83dd-2cd2-4f51-8169-e8cf0190d6c1@kernel.org>
+Date: Mon, 18 Aug 2025 10:22:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/12] Add FSD CSI support
+To: Inbaraj E <inbaraj.e@samsung.com>, mturquette@baylibre.com,
+ sboyd@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ s.nawrocki@samsung.com, s.hauer@pengutronix.de, shawnguo@kernel.org,
+ cw00.choi@samsung.com, rmfrfs@gmail.com, laurent.pinchart@ideasonboard.com,
+ martink@posteo.de, mchehab@kernel.org, linux-fsd@tesla.com, will@kernel.org,
+ catalin.marinas@arm.com, pankaj.dubey@samsung.com, shradha.t@samsung.com,
+ ravi.patel@samsung.com
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, alim.akhtar@samsung.com,
+ linux-samsung-soc@vger.kernel.org, kernel@puri.sm, kernel@pengutronix.de,
+ festevam@gmail.com, linux-media@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org
+References: <CGME20250814140956epcas5p480aa24441933523484da5c241a201d3c@epcas5p4.samsung.com>
+ <20250814140943.22531-1-inbaraj.e@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250814140943.22531-1-inbaraj.e@samsung.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJ+ZgWj3OwstM5ZbwFL0KmcSzrOlQGuc5yxAsdJ9S8B+nVVqLLv1zHQ
-Content-Language: en-in
-X-CMS-MailID: 20250818074152epcas5p38e555d935cb93f38ed0a590003a53da1
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250805114323epcas5p39bf73c5e0a9382ff54b1832724804cc9
-References: <20250805115216.3798121-1-pritam.sutar@samsung.com>
-	<CGME20250805114323epcas5p39bf73c5e0a9382ff54b1832724804cc9@epcas5p3.samsung.com>
-	<20250805115216.3798121-7-pritam.sutar@samsung.com> <aJtN7uVUV3YhfY5-@vaman>
 
-Hi Vinod, 
-
-> -----Original Message-----
-> From: Vinod Koul <vkoul@kernel.org>
-> Sent: 12 August 2025 07:52 PM
-> To: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-> Cc: kishon@kernel.org; robh@kernel.org; krzk+dt@kernel.org;
-> conor+dt@kernel.org; alim.akhtar@samsung.com; andre.draszik@linaro.org;
-> peter.griffin@linaro.org; kauschluss@disroot.org;
-> ivo.ivanov.ivanov1@gmail.com; igor.belwon@mentallysanemainliners.org;
-> m.szyprowski@samsung.com; s.nawrocki@samsung.com; linux-
-> phy@lists.infradead.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
-> samsung-soc@vger.kernel.org; rosa.pila@samsung.com;
-> dev.tailor@samsung.com; faraz.ata@samsung.com;
-> muhammed.ali@samsung.com; selvarasu.g@samsung.com
-> Subject: Re: [PATCH v5 6/6] phy: exynos5-usbdrd: support SS combo phy for
-> ExynosAutov920
+On 14/08/2025 16:09, Inbaraj E wrote:
+> FSD CSI(Camera Serial Interface) IP bundles Link controller and DMA
+> controller for receiving frames. FSD SoC has 12 instances of CSI IP and
+> 3 D-PHY. 4 instances of CSI IP use 1 D-PHY.
 > 
-> On 05-08-25, 17:22, Pritam Manohar Sutar wrote:
-> > Add required change in phy driver to support combo SS phy for this SoC.
-> >
-> > Signed-off-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-> > ---
-> >  drivers/phy/samsung/phy-exynos5-usbdrd.c    | 327
-> +++++++++++++++++++-
-> >  include/linux/soc/samsung/exynos-regs-pmu.h |   1 +
-> >  2 files changed, 324 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > index c22f4de7d094..1108f0c07755 100644
-> > --- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > +++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-> > @@ -273,6 +273,36 @@
-> >  #define EXYNOSAUTOV920_DRD_HSPPLLTUNE		0x110
-> >  #define HSPPLLTUNE_FSEL				GENMASK(18, 16)
-> >
-> > +/* ExynosAutov920 phy usb31drd port reg */
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_RST_CTRL	0x000
-> > +#define PHY_RST_CTRL_PIPE_LANE0_RESET_N_OVRD_EN	BIT(5)
-> > +#define PHY_RST_CTRL_PIPE_LANE0_RESET_N		BIT(4)
-> > +#define PHY_RST_CTRL_PHY_RESET_OVRD_EN		BIT(1)
-> > +#define PHY_RST_CTRL_PHY_RESET			BIT(0)
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0
-> 	0x0004
-> > +#define PHY_CR_PARA_CON0_PHY0_CR_PARA_ADDR
-> 	GENMASK(31, 16)
-> > +#define PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK		BIT(8)
-> > +#define PHY_CR_PARA_CON0_PHY0_CR_PARA_ACK		BIT(4)
-> > +#define PHY_CR_PARA_CON0_PHY0_CR_PARA_SEL		BIT(0)
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON1
-> 	0x0008
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON2
-> 	0x000c
-> > +#define PHY_CR_PARA_CON2_PHY0_CR_PARA_WR_EN		BIT(0)
-> > +#define PHY_CR_PARA_CON2_PHY0_CR_PARA_WR_DATA
-> 	GENMASK(31, 16)
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CONFIG0	0x100
-> > +#define PHY_CONFIG0_PHY0_PMA_PWR_STABLE		BIT(14)
-> > +#define PHY_CONFIG0_PHY0_PCS_PWR_STABLE		BIT(13)
-> > +#define PHY_CONFIG0_PHY0_ANA_PWR_EN		BIT(1)
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CONFIG7	0x11c
-> > +#define PHY_CONFIG7_PHY_TEST_POWERDOWN		BIT(24)
-> > +
-> > +#define EXYNOSAUTOV920_USB31DRD_PHY_CONFIG4	0x110
-> > +#define PHY_CONFIG4_PIPE_RX0_SRIS_MODE_EN	BIT(2)
-> > +
-> >  /* Exynos9 - GS101 */
-> >  #define EXYNOS850_DRD_SECPMACTL			0x48
-> >  #define SECPMACTL_PMA_ROPLL_REF_CLK_SEL
-> 	GENMASK(13, 12)
-> > @@ -2077,6 +2107,253 @@ static const struct
-> exynos5_usbdrd_phy_drvdata exynos990_usbdrd_phy = {
-> >  	.n_regulators		= ARRAY_SIZE(exynos5_regulator_names),
-> >  };
-> >
-> > +static void
-> > +exynosautov920_usb31drd_cr_clk(struct exynos5_usbdrd_phy *phy_drd,
-> > +bool high) {
-> > +	void __iomem *reg_phy = phy_drd->reg_phy;
-> > +	u32 reg = 0;
+> This patch series does the following:
+> 1) Refactor the imx-mipi-csis driver to support platform specific
+> clock names and interrupt handlers through device specific data
+> (struct mipi_csis_info).
+> 2) Add FSD CSI link controller support in imx-mipi-csis driver.
+> 3) Introduce a new media driver for FSD CSI DMA providing support for
+> video capture and streaming.
+>  
+> These patches were tested on the FSD platform using the
+> capture_raw_frames application.
 > 
-> again..
+> Changes since v1:
+> 1. Addressed review comments from Laurent Pinchart to integrate the
+> with imx-mipi-csis.c to handle the CSIS and expose it as a subdev.
 > 
-> > +
-> > +	reg = readl(reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +	if (high)
-> > +		reg |= PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK;
-> > +	else
-> > +		reg &= ~PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK;
-> > +
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +	fsleep(1);
-> > +}
-> > +
-> > +static void
-> > +exynosautov920_usb31drd_port_phy_ready(struct exynos5_usbdrd_phy
-> > +*phy_drd) {
-> > +	struct device *dev = phy_drd->dev;
-> > +	void __iomem *reg_phy = phy_drd->reg_phy;
-> > +	static const unsigned int timeout_us = 20000;
-> > +	static const unsigned int sleep_us = 40;
-> > +	u32 reg = 0;
+> Here is the link to v1 patch for reference:
+> https://patchwork.kernel.org/project/linux-media/patch/7e7832c16925386b771ddb7e00e08661115aa0ea.1668963790.git.sathya@samsung.com/
+
+Use lore links. b4 gives them for free..
+
 > 
-> here too
-> 
-> > +	int err;
-> > +
-> > +	/* Clear cr_para_con */
-> > +	reg &= ~(PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK |
-> > +			PHY_CR_PARA_CON0_PHY0_CR_PARA_ADDR);
-> > +	reg |= PHY_CR_PARA_CON0_PHY0_CR_PARA_SEL;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +	writel(0x0, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON1);
-> > +	writel(0x0, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON2);
-> > +
-> > +	exynosautov920_usb31drd_cr_clk(phy_drd, true);
-> > +	exynosautov920_usb31drd_cr_clk(phy_drd, false);
-> > +
-> > +	/*
-> > +	 * The maximum time from phy reset de-assertion to de-assertion of
-> > +	 * tx/rx_ack can be as high as 5ms in fast simulation mode.
-> > +	 * Time to phy ready is < 20ms
-> > +	 */
-> > +	err = readl_poll_timeout(reg_phy +
-> > +
-> 	EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0,
-> > +			reg, !(reg &
-> PHY_CR_PARA_CON0_PHY0_CR_PARA_ACK),
-> > +			sleep_us, timeout_us);
-> > +	if (err)
-> > +		dev_err(dev, "timed out waiting for rx/tx_ack: %#.8x\n",
-> reg);
-> > +
-> > +	reg &= ~PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +}
-> > +
-> > +static void
-> > +exynosautov920_usb31drd_cr_write(struct exynos5_usbdrd_phy
-> *phy_drd,
-> > +				 u16 addr, u16 data)
-> > +{
-> > +	struct device *dev = phy_drd->dev;
-> > +	void __iomem *reg_phy = phy_drd->reg_phy;
-> > +	u32 cnt = 0;
-> > +	u32 reg = 0;
-> 
-> this one, former is okay
-> 
-> > +
-> > +	/* Pre Clocking */
-> > +	reg = readl(reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +	reg |= PHY_CR_PARA_CON0_PHY0_CR_PARA_SEL;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +
-> > +	/*
-> > +	 * tx clks must be available prior to assertion of tx req.
-> > +	 * tx pstate p2 to p0 transition directly is not permitted.
-> > +	 * tx clk ready must be asserted synchronously on tx clk prior
-> > +	 * to internal transmit clk alignment sequence in the phy
-> > +	 * when entering from p2 to p1 to p0.
-> > +	 */
-> > +	do {
-> > +		exynosautov920_usb31drd_cr_clk(phy_drd, true);
-> > +		exynosautov920_usb31drd_cr_clk(phy_drd, false);
-> > +		cnt++;
-> > +	} while (cnt < 15);
-> > +
-> > +	reg &= ~PHY_CR_PARA_CON0_PHY0_CR_PARA_SEL;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +
-> > +	/*
-> > +	 * tx data path is active when tx lane is in p0 state
-> > +	 * and tx data en asserted. enable cr_para_wr_en.
-> > +	 */
-> > +	reg = readl(reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON2);
-> > +	reg &= ~PHY_CR_PARA_CON2_PHY0_CR_PARA_WR_DATA;
-> > +	reg |=
-> FIELD_PREP(PHY_CR_PARA_CON2_PHY0_CR_PARA_WR_DATA, data) |
-> > +		PHY_CR_PARA_CON2_PHY0_CR_PARA_WR_EN;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON2);
-> > +
-> > +	/* write addr */
-> > +	reg = readl(reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +	reg &= ~PHY_CR_PARA_CON0_PHY0_CR_PARA_ADDR;
-> > +	reg |= FIELD_PREP(PHY_CR_PARA_CON0_PHY0_CR_PARA_ADDR,
-> addr) |
-> > +		PHY_CR_PARA_CON0_PHY0_CR_PARA_CLK |
-> > +		PHY_CR_PARA_CON0_PHY0_CR_PARA_SEL;
-> > +	writel(reg, reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +
-> > +	/* check cr_para_ack*/
-> > +	cnt = 0;
-> > +	do {
-> > +		/*
-> > +		 * data symbols are captured by phy on rising edge of the
-> > +		 * tx_clk when tx data enabled.
-> > +		 * completion of the write cycle is acknowledged by
-assertion
-> > +		 * of the cr_para_ack.
-> > +		 */
-> > +		exynosautov920_usb31drd_cr_clk(phy_drd, true);
-> > +		reg = readl(reg_phy +
-> EXYNOSAUTOV920_USB31DRD_PHY_CR_PARA_CON0);
-> > +		if ((reg & PHY_CR_PARA_CON0_PHY0_CR_PARA_ACK))
-> > +			break;
-> > +
-> > +		exynosautov920_usb31drd_cr_clk(phy_drd, false);
-> > +
-> > +		/*
-> > +		 * wait for minimum of 10 cr_para_clk cycles after phy reset
-> > +		 * is negated, before accessing control regs to allow for
-> > +		 * internal resets.
-> > +		 */
-> > +		cnt++;
-> > +	} while (cnt < 10);
-> > +
-> > +	if (cnt == 10)
-> > +		dev_dbg(dev, "CR write failed to 0x%04x\n", addr);
-> 
-> Not error?
+> Inbaraj E (12):
+>   dt-bindings: clock: Add CAM_CSI clock macro for FSD
+>   clk: samsung: fsd: Add clk id for PCLK and PLL in CAM_CSI block
+>   dt-bindings: media: nxp: Add support for FSD SoC
+>   arm64: dts: fsd: Add CSI nodes
 
-This is only for debugging purpose. It is not considered as error. 
-
-> --
-> ~Vinod
-
-
-Will address other comments in next version of the patch-set (v6).
-
-Thank you.
-
-Regards,
-Pritam
-
+Please split patches targeting different subsystems, since they are
+completely independent. There is little benefit in combining independent
+work into one huge patchset.
+Best regards,
+Krzysztof
 
