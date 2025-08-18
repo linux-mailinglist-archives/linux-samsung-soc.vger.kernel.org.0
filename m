@@ -1,138 +1,163 @@
-Return-Path: <linux-samsung-soc+bounces-10108-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10097-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DF3FB2AF2E
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 19:18:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40861B29D8E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 11:22:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C7C01894796
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 17:19:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0F5E3A4699
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 18 Aug 2025 09:22:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 862C82586EA;
-	Mon, 18 Aug 2025 17:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B82430DD00;
+	Mon, 18 Aug 2025 09:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="dMybO5Lo"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="MiNljGcw"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF11D21D3DC
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Aug 2025 17:18:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AA32F0C5D;
+	Mon, 18 Aug 2025 09:22:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755537527; cv=none; b=qy7dW9ET10NnzxkeI/2bHp4NPXwWGyeuqJPFjtIXvjLUV01CyoFK98jE5o2/QxtNXaB2esWCqCzAX3ijST3hqds/QNgO78QCZtE2T63kXOZvZB6+INM5oTgEgXIqSNDNEg4TmlLE7PlZzAUH71CN6E8clp8Y9fH2C0M1Zhzr48Y=
+	t=1755508922; cv=none; b=ZO3bGk090MeI337HMMhhBUgTlw4zm49RztfHZ2Sd+Cve0ROjA/9FS+zSdobzYBxB/Vu5PYOIulhfy/ZCeXs0VZmQLs9+KXqVOiwYAUHHQTksEiSsSlwU06nNIggDZzJBUraaptCCqSlpXkQrI5zE55/peW5zlt5gZLdY2guTazI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755537527; c=relaxed/simple;
-	bh=6OcDvLVx7ZKerMd+/2uswYan9YURramDttO59ACGzkc=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=kXCYxFZPJM9KQ3Qh9TOm4N/ig4WLxLbJa19Nn0J/iRTnVBcJTn+sF4a9PAQ9SM5vBQAD/5iz9SriIWzPiqOCiET95/B2M43fEPc6+M6or0zJUyIWl942vNwbsHB71H01t+3HrGSWPjRBAZAFfdjoZs2pckDEiGPraKjcw4L+fKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=dMybO5Lo; arc=none smtp.client-ip=203.254.224.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250818171844epoutp0164a9db65c7f4457f2aee9599119cca3c~c7BOtszkS1202712027epoutp01f
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 18 Aug 2025 17:18:44 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250818171844epoutp0164a9db65c7f4457f2aee9599119cca3c~c7BOtszkS1202712027epoutp01f
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1755537524;
-	bh=DXam3b+H7XikahUHcOfNq3UHS4W6/E59lS1R/vF9/E8=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=dMybO5Losdo7EzoPf/DdbDVxAmkUMI6mYho6XlYk23uKcDAirY4W0lWPXB6DLkx3m
-	 65FlxZtyjHGtrRCzWXsvKV681jKJihMJqm5BL7aV6bdTTSefZZjYEbzutuzbNiHdR5
-	 yd2Aa8S1Vzv93GPFl6LSbMpWLcgxpLEDULqyLoDs=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250818171842epcas5p4009ecff833c293e3066ff39d03bc290a~c7BNgSI6N0869708697epcas5p4R;
-	Mon, 18 Aug 2025 17:18:42 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.87]) by
-	epsnrtp04.localdomain (Postfix) with ESMTP id 4c5KDx5WGSz6B9m5; Mon, 18 Aug
-	2025 17:18:41 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250818085434epcas5p23546464f6d2642c74d42db7b134d8aec~c0JCsYmhE2142121421epcas5p2S;
-	Mon, 18 Aug 2025 08:54:34 +0000 (GMT)
-Received: from FDSFTE462 (unknown [107.122.81.248]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250818085431epsmtip2b7a1352fc6b7055557af8d1d093782bf~c0I--9NYD2484224842epsmtip2X;
-	Mon, 18 Aug 2025 08:54:31 +0000 (GMT)
-From: "Shradha Todi" <shradha.t@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzk@kernel.org>, <linux-pci@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-samsung-soc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-phy@lists.infradead.org>
-Cc: <mani@kernel.org>, <lpieralisi@kernel.org>, <kwilczynski@kernel.org>,
-	<robh@kernel.org>, <bhelgaas@google.com>, <jingoohan1@gmail.com>,
-	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <alim.akhtar@samsung.com>,
-	<vkoul@kernel.org>, <kishon@kernel.org>, <arnd@arndb.de>,
-	<m.szyprowski@samsung.com>, <jh80.chung@samsung.com>,
-	<pankaj.dubey@samsung.com>
-In-Reply-To: <b22f9381-1835-463a-8daa-97835b159f78@kernel.org>
-Subject: RE: [PATCH v3 12/12] arm64: dts: fsd: Add PCIe support for Tesla
- FSD SoC
-Date: Mon, 18 Aug 2025 14:24:30 +0530
-Message-ID: <000b01dc101d$b834db40$289e91c0$@samsung.com>
+	s=arc-20240116; t=1755508922; c=relaxed/simple;
+	bh=kqWkwpZeDd3/I+FFiy2R27j1WrvPesd6DRcrbiWwlas=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cMWLZV+B4YM29ETV9SlzBfqaryV5OFD6hRDrMVN9uwldEl56X6eA5sheDKT/dcgtHHJL3IM/ayjApjB92c6/y2g/iIRWsGraeBZwB66g2aS3M/qalmO7e7OU7lWZtLW/HAObHIFRIkBZt0zwLaL/2BBYsHccUFwIQq0raFF9azk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=MiNljGcw; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 9B7B417D1;
+	Mon, 18 Aug 2025 11:20:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1755508858;
+	bh=kqWkwpZeDd3/I+FFiy2R27j1WrvPesd6DRcrbiWwlas=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MiNljGcwNxjzMcy1MqNDcTJD1GeWwOnpxjDNCVBmYPbX8wToXu5Dbi+7oatKDBds1
+	 pJOX746hIzx1pUtfClWxjOehH97MfSZLhhOpJRpwsem6DIamO9EzhWWPeyaRvEMAOv
+	 FMnsDM4Km1i9WLuos2TwoKQxhtibpk3R77xvujxo=
+Date: Mon, 18 Aug 2025 12:21:33 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Inbaraj E <inbaraj.e@samsung.com>
+Cc: mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, krzk@kernel.org,
+	s.nawrocki@samsung.com, s.hauer@pengutronix.de, shawnguo@kernel.org,
+	cw00.choi@samsung.com, rmfrfs@gmail.com, martink@posteo.de,
+	mchehab@kernel.org, linux-fsd@tesla.com, will@kernel.org,
+	catalin.marinas@arm.com, pankaj.dubey@samsung.com,
+	shradha.t@samsung.com, ravi.patel@samsung.com,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, alim.akhtar@samsung.com,
+	linux-samsung-soc@vger.kernel.org, kernel@puri.sm,
+	kernel@pengutronix.de, festevam@gmail.com,
+	linux-media@vger.kernel.org, imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 05/12] media: imx-mipi-csis: Move clk to
+ mipi_csis_info structure
+Message-ID: <20250818092133.GA5862@pendragon.ideasonboard.com>
+References: <20250814140943.22531-1-inbaraj.e@samsung.com>
+ <CGME20250814141025epcas5p2b226c4eaab5d60d0e95f684e2ef930f2@epcas5p2.samsung.com>
+ <20250814140943.22531-6-inbaraj.e@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHWPHKmIG2WTsjb/5pkHKJ2GfeRPwIotln8AZEe0jECYiuDgLRC4i+g
-Content-Language: en-in
-X-CMS-MailID: 20250818085434epcas5p23546464f6d2642c74d42db7b134d8aec
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-541,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250811154746epcas5p261ba0c811f9dd8748f8f241b76be6525
-References: <20250811154638.95732-1-shradha.t@samsung.com>
-	<CGME20250811154746epcas5p261ba0c811f9dd8748f8f241b76be6525@epcas5p2.samsung.com>
-	<20250811154638.95732-13-shradha.t@samsung.com>
-	<b22f9381-1835-463a-8daa-97835b159f78@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250814140943.22531-6-inbaraj.e@samsung.com>
 
-> > +&pcieep2 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie1_clkreq>, <&pcie1_wake>, <&pcie1_preset>,
-> > +			<&pcie0_slot1>;
-> > +};
-> > +
-> > +&pcierc0 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie0_clkreq>, <&pcie0_wake0>, <&pcie0_preset0>,
-> > +			 <&pcie0_slot0>;
-> > +};
-> > +
-> > +&pcieep0 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie0_clkreq>, <&pcie0_wake0>, <&pcie0_preset0>,
-> > +			 <&pcie0_slot0>;
-> > +};
-> > +
-> > +&pcierc1 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie0_clkreq>, <&pcie0_wake1>, <&pcie0_preset0>;
-> > +};
-> > +
-> > +&pcieep1 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie0_clkreq>, <&pcie0_wake1>, <&pcie0_preset0>;
+Hi Inbaraj,
+
+On Thu, Aug 14, 2025 at 07:39:36PM +0530, Inbaraj E wrote:
+> clock names in NXP SoC's is different from the FSD SoC. Inorder to
+
+s/clock/Clock/
+s/Inorder/In order/
+
+Is the difference really a matter of SoCs, or is it because the FSD SoC
+uses a different version of the IP ?
+
+I also suspect that the "phy" clock was added by mistake, and isn't
+needed in NXP SoCs. Could you please check and confirm if the v3.3 and
+v3.6.3 versions of the IP have an input PHY clock ?
+
+> extend this driver to use for FSD SoC. Move the clock names to
+> mipi_csis_info structure.
 > 
+> Signed-off-by: Inbaraj E <inbaraj.e@samsung.com>
+> ---
+>  drivers/media/platform/nxp/imx-mipi-csis.c | 14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
 > 
-> All these are pointless, because the node is disabled. The board level
-> should be complete, so also supplies and enabling the device.
-> 
+> diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
+> index 2beb5f43c2c0..4afa75734f05 100644
+> --- a/drivers/media/platform/nxp/imx-mipi-csis.c
+> +++ b/drivers/media/platform/nxp/imx-mipi-csis.c
+> @@ -267,6 +267,8 @@ static const struct mipi_csis_event mipi_csis_events[] = {
+>  
+>  #define MIPI_CSIS_NUM_EVENTS ARRAY_SIZE(mipi_csis_events)
+>  
+> +#define MIPI_CSIS_MAX_CLOCKS	4
+> +
+>  enum mipi_csis_clk {
+>  	MIPI_CSIS_CLK_PCLK,
+>  	MIPI_CSIS_CLK_WRAP,
+> @@ -274,13 +276,6 @@ enum mipi_csis_clk {
+>  	MIPI_CSIS_CLK_AXI,
+>  };
+>  
+> -static const char * const mipi_csis_clk_id[] = {
+> -	"pclk",
+> -	"wrap",
+> -	"phy",
+> -	"axi",
+> -};
+> -
+>  enum mipi_csis_version {
+>  	MIPI_CSIS_V3_3,
+>  	MIPI_CSIS_V3_6_3,
+> @@ -289,6 +284,7 @@ enum mipi_csis_version {
+>  struct mipi_csis_info {
+>  	enum mipi_csis_version version;
+>  	unsigned int num_clocks;
+> +	const char *clk_names[MIPI_CSIS_MAX_CLOCKS];
+>  };
+>  
+>  struct mipi_csis_device {
+> @@ -697,7 +693,7 @@ static int mipi_csis_clk_get(struct mipi_csis_device *csis)
+>  		return -ENOMEM;
+>  
+>  	for (i = 0; i < csis->info->num_clocks; i++)
+> -		csis->clks[i].id = mipi_csis_clk_id[i];
+> +		csis->clks[i].id = csis->info->clk_names[i];
+>  
+>  	ret = devm_clk_bulk_get(csis->dev, csis->info->num_clocks,
+>  				csis->clks);
+> @@ -1539,12 +1535,14 @@ static const struct of_device_id mipi_csis_of_match[] = {
+>  		.data = &(const struct mipi_csis_info){
+>  			.version = MIPI_CSIS_V3_3,
+>  			.num_clocks = 3,
+> +			.clk_names = {"pclk", "wrap", "phy"},
+>  		},
+>  	}, {
+>  		.compatible = "fsl,imx8mm-mipi-csi2",
+>  		.data = &(const struct mipi_csis_info){
+>  			.version = MIPI_CSIS_V3_6_3,
+>  			.num_clocks = 4,
+> +			.clk_names = {"pclk", "wrap", "phy", "axi"},
+>  		},
+>  	},
+>  	{ /* sentinel */ },
 
-I will enable required nodes. Had enabled while testing but missed to
-add in patch. Though all nodes will not be enabled as it is a dual-mode
-controller and cannot run as both RC and EP at the same time.
+-- 
+Regards,
 
-> Best regards,
-> Krzysztof
-
+Laurent Pinchart
 
