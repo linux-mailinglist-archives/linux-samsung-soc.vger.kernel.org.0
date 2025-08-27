@@ -1,125 +1,209 @@
-Return-Path: <linux-samsung-soc+bounces-10432-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10442-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 228EEB37963
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 Aug 2025 06:59:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1A1DB379B8
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 Aug 2025 07:21:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8F273664B2
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 Aug 2025 04:59:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 646F5688442
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 27 Aug 2025 05:21:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDC7C30AD1A;
-	Wed, 27 Aug 2025 04:59:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="FTX85omX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBE8430F932;
+	Wed, 27 Aug 2025 05:21:52 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADC83081AA
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 27 Aug 2025 04:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8841C8606;
+	Wed, 27 Aug 2025 05:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756270751; cv=none; b=EdDhRKRxua53ndHJ0PA+DpiMr9M7L3taKJq+4LXj1Vb4ypvj06UE+7i+4cL2EgDrRiVWlrCDAHqSSl6Qhe2XytUBomu+GsxXmKzKXhU1/gu6UGv3TBGrpO66gNa4hz10hCde8a1sJu19lyfqsDY12BGvjNe9KOxaWRiALhB/mas=
+	t=1756272112; cv=none; b=Qh5bVGCaSM0yB3q3ybZ2GQ7x5zEyX5EHjSn8h44pQJ/uTpox5vmf0eYACypqhomUBkOp4Cc2T9SRzgtWVCNXSYo8wRdLQBqRocTr4gnqsWnYA9RnIiWRu2WRdoCvSZ8EIOQjiUX6WhqXNFg276Gf/Nm/sGyV3mdVUQ9WhenH5X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756270751; c=relaxed/simple;
-	bh=VKOTiVgb3NZp/RJs2R0cfCmNJs+zE1QkjYhgAeEbwnY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=rvCa7hO/Qmg39OFVJHmOCvIXB5O+Np7EdgQl9YnP9QYJDd1F5FQlCPVomYQXyWPc1zFAC60+6scwCgcWbq7zrCjxmRsVYLI1Mxcg2exkehmPeQZ/8/ftSb3xHnexG3Fkjr/uM/od548YovPPLg9I2uFX+jXiolSSwItTpHvcHxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=FTX85omX; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250827045907epoutp040aee5e04c3ca9d57228e0e624db141f2~fhvCZTgvQ1817218172epoutp04e
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 27 Aug 2025 04:59:07 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250827045907epoutp040aee5e04c3ca9d57228e0e624db141f2~fhvCZTgvQ1817218172epoutp04e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1756270747;
-	bh=4OaX8SYxIlvnIjTkW++dFL0U3/EmZSsNqRJJF3Co8hI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTX85omXfrgSzUmKDRyWP3+NX1JgnQV87XUHKwsChnIDBwL2m8HzAyqMDuSCZVBaD
-	 UX4mOQ3eo1HEpJ8ALuY4/32IKdV9PRQ+TA/4Gl20v7lW8BR5mOFN1P8v9Nt0F3f2Yv
-	 GQg/RA3sfpp0aVbZxEWu9J0eFDBsQMDbcjL6hVNM=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
-	20250827045907epcas2p2330c46b8a707ebf26928786595989d76~fhvB7xaPP1733617336epcas2p2C;
-	Wed, 27 Aug 2025 04:59:07 +0000 (GMT)
-Received: from epcas2p3.samsung.com (unknown [182.195.36.100]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4cBXPQ5GpDz3hhTQ; Wed, 27 Aug
-	2025 04:59:06 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas2p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250827045906epcas2p2198037517886df0714e24d8d908a6c57~fhvA-1I341733217332epcas2p2Z;
-	Wed, 27 Aug 2025 04:59:06 +0000 (GMT)
-Received: from mclaren.dsn.sec.samsung.com (unknown [10.229.9.108]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250827045905epsmtip2928268d367150f1c7d2d0e8b4493e7bb~fhvA3r_Mm1856618566epsmtip2d;
-	Wed, 27 Aug 2025 04:59:05 +0000 (GMT)
-From: Kisung Lee <kiisung.lee@samsung.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
-	<mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring
-	<robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
-	<conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, Mauro Carvalho
-	Chehab <mchehab@kernel.org>, Inki Dae <inki.dae@samsung.com>
-Cc: Kisung Lee <kiisung.lee@samsung.com>, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-	linux-media@vger.kernel.org
-Subject: [PATCH 4/4] media: samsung: scaler: Add Kconfig and Makefile
-Date: Wed, 27 Aug 2025 04:47:20 +0000
-Message-ID: <20250827044720.3751272-5-kiisung.lee@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250827044720.3751272-1-kiisung.lee@samsung.com>
+	s=arc-20240116; t=1756272112; c=relaxed/simple;
+	bh=VRExz2y98Y4Bks79KG62576slKCC55TnEApk2y1mwr8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tIoi6M2AwxybqbpN8FbmxuGC8FwZbC5JgWsOgZWrB8e8vfYxXFTwuiHDmkkFwttWXtkfWP8gepo3QdJi5IY5Unve19ebj+zWwmSmTatCwoRRULQwx/c9OlupSCObHyzzFDDtuCYY87g9e319J89rKCOISGuepNfMZ3ICqdJgTz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: b68a31cc830511f0b29709d653e92f7d-20250827
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:34726253-5bea-4e9b-b07f-349fa0556763,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:6493067,CLOUDID:f8fed63546234af68ef13bd91ef320cf,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102,TC:nil,Content:0|52,EDM:
+	-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,
+	AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-UUID: b68a31cc830511f0b29709d653e92f7d-20250827
+Received: from mail.kylinos.cn [(10.44.16.175)] by mailgw.kylinos.cn
+	(envelope-from <zhangzihuan@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 1509111154; Wed, 27 Aug 2025 13:21:40 +0800
+Received: from mail.kylinos.cn (localhost [127.0.0.1])
+	by mail.kylinos.cn (NSMail) with SMTP id A2851E008FAA;
+	Wed, 27 Aug 2025 13:21:40 +0800 (CST)
+X-ns-mid: postfix-68AE95E4-5407809
+Received: from [172.25.120.24] (unknown [172.25.120.24])
+	by mail.kylinos.cn (NSMail) with ESMTPA id 0D64DE008FA3;
+	Wed, 27 Aug 2025 13:21:25 +0800 (CST)
+Message-ID: <773da273-4ab7-4672-b4d7-f9c560f3fccc@kylinos.cn>
+Date: Wed, 27 Aug 2025 13:21:25 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250827045906epcas2p2198037517886df0714e24d8d908a6c57
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-234,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250827045906epcas2p2198037517886df0714e24d8d908a6c57
-References: <20250827044720.3751272-1-kiisung.lee@samsung.com>
-	<CGME20250827045906epcas2p2198037517886df0714e24d8d908a6c57@epcas2p2.samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/18] powercap: dtpm_cpu: Use
+ __free(put_cpufreq_policy) for policy reference
+To: "Rafael J . wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, Markus Mayer
+ <mmayer@broadcom.com>, Florian Fainelli <florian.fainelli@broadcom.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Krzysztof Kozlowski
+ <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ MyungJoo Ham <myungjoo.ham@samsung.com>,
+ Kyungmin Park <kyungmin.park@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin
+ <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
+ Eduardo Valentin <edubezval@gmail.com>, Keerthy <j-keerthy@ti.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: zhenglifeng <zhenglifeng1@huawei.com>, "H . Peter Anvin" <hpa@zytor.com>,
+ Zhang Rui <rui.zhang@intel.com>, Len Brown <lenb@kernel.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Lukasz Luba <lukasz.luba@arm.com>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Beata Michalska <beata.michalska@arm.com>, Fabio Estevam
+ <festevam@gmail.com>, Pavel Machek <pavel@kernel.org>,
+ Sumit Gupta <sumitg@nvidia.com>,
+ Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
+ Sudeep Holla <sudeep.holla@arm.com>, Yicong Yang <yangyicong@hisilicon.com>,
+ linux-pm@vger.kernel.org, x86@kernel.org, kvm@vger.kernel.org,
+ linux-acpi@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, imx@lists.linux.dev,
+ linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20250827023202.10310-1-zhangzihuan@kylinos.cn>
+ <20250827035056.353772-1-zhangzihuan@kylinos.cn>
+From: Zihuan Zhang <zhangzihuan@kylinos.cn>
+In-Reply-To: <20250827035056.353772-1-zhangzihuan@kylinos.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Add Kconfig and Makefile for Scaler driver directory.
-This will serve as the entry point for enabling and building
-Exynosautov920 specific device drivers.
+=E5=9C=A8 2025/8/27 11:50, Zihuan Zhang =E5=86=99=E9=81=93:
 
-Signed-off-by: Kisung Lee <kiisung.lee@samsung.com>
----
- drivers/media/platform/samsung/Kconfig  | 1 +
- drivers/media/platform/samsung/Makefile | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/drivers/media/platform/samsung/Kconfig b/drivers/media/platform/samsung/Kconfig
-index 0e34c5fc1dfc..baff5f7b9c3a 100644
---- a/drivers/media/platform/samsung/Kconfig
-+++ b/drivers/media/platform/samsung/Kconfig
-@@ -8,3 +8,4 @@ source "drivers/media/platform/samsung/s3c-camif/Kconfig"
- source "drivers/media/platform/samsung/s5p-g2d/Kconfig"
- source "drivers/media/platform/samsung/s5p-jpeg/Kconfig"
- source "drivers/media/platform/samsung/s5p-mfc/Kconfig"
-+source "drivers/media/platform/samsung/v920-scaler/Kconfig"
-diff --git a/drivers/media/platform/samsung/Makefile b/drivers/media/platform/samsung/Makefile
-index 21fea3330e4b..7a9e6f126628 100644
---- a/drivers/media/platform/samsung/Makefile
-+++ b/drivers/media/platform/samsung/Makefile
-@@ -5,3 +5,4 @@ obj-y += s3c-camif/
- obj-y += s5p-g2d/
- obj-y += s5p-jpeg/
- obj-y += s5p-mfc/
-+obj-y += v920-scaler/
--- 
-2.25.1
-
+> Replace the manual cpufreq_cpu_put() with __free(put_cpufreq_policy)
+> annotation for policy references. This reduces the risk of reference
+> counting mistakes and aligns the code with the latest kernel style.
+>
+> No functional change intended.
+>
+> Signed-off-by: Zihuan Zhang <zhangzihuan@kylinos.cn>
+> ---
+>   drivers/powercap/dtpm_cpu.c | 24 +++++++-----------------
+>   1 file changed, 7 insertions(+), 17 deletions(-)
+>
+> diff --git a/drivers/powercap/dtpm_cpu.c b/drivers/powercap/dtpm_cpu.c
+> index 99390ec1481f..65117569d0f3 100644
+> --- a/drivers/powercap/dtpm_cpu.c
+> +++ b/drivers/powercap/dtpm_cpu.c
+> @@ -144,19 +144,16 @@ static int update_pd_power_uw(struct dtpm *dtpm)
+>   static void pd_release(struct dtpm *dtpm)
+>   {
+>   	struct dtpm_cpu *dtpm_cpu =3D to_dtpm_cpu(dtpm);
+> -	struct cpufreq_policy *policy;
+> +	struct cpufreq_policy *policy __free(put_cpufreq_policy);
+>  =20
+>   	if (freq_qos_request_active(&dtpm_cpu->qos_req))
+>   		freq_qos_remove_request(&dtpm_cpu->qos_req);
+>  =20
+>   	policy =3D cpufreq_cpu_get(dtpm_cpu->cpu);
+> -	if (policy) {
+> +	if (policy)
+>   		for_each_cpu(dtpm_cpu->cpu, policy->related_cpus)
+>   			per_cpu(dtpm_per_cpu, dtpm_cpu->cpu) =3D NULL;
+>  =20
+> -		cpufreq_cpu_put(policy);
+> -	}
+> -
+>   	kfree(dtpm_cpu);
+>   }
+>  =20
+> @@ -192,7 +189,7 @@ static int cpuhp_dtpm_cpu_online(unsigned int cpu)
+>   static int __dtpm_cpu_setup(int cpu, struct dtpm *parent)
+>   {
+>   	struct dtpm_cpu *dtpm_cpu;
+> -	struct cpufreq_policy *policy;
+> +	struct cpufreq_policy *policy __free(put_cpufreq_policy);
+>   	struct em_perf_state *table;
+>   	struct em_perf_domain *pd;
+>   	char name[CPUFREQ_NAME_LEN];
+> @@ -207,16 +204,12 @@ static int __dtpm_cpu_setup(int cpu, struct dtpm =
+*parent)
+>   		return 0;
+>  =20
+>   	pd =3D em_cpu_get(cpu);
+> -	if (!pd || em_is_artificial(pd)) {
+> -		ret =3D -EINVAL;
+> -		goto release_policy;
+> -	}
+> +	if (!pd || em_is_artificial(pd))
+> +		return -EINVAL;
+>  =20
+>   	dtpm_cpu =3D kzalloc(sizeof(*dtpm_cpu), GFP_KERNEL);
+> -	if (!dtpm_cpu) {
+> -		ret =3D -ENOMEM;
+> -		goto release_policy;
+> -	}
+> +	if (!dtpm_cpu)
+> +		return -ENOMEM;
+>  =20
+>   	dtpm_init(&dtpm_cpu->dtpm, &dtpm_ops);
+>   	dtpm_cpu->cpu =3D cpu;
+> @@ -239,7 +232,6 @@ static int __dtpm_cpu_setup(int cpu, struct dtpm *p=
+arent)
+>   	if (ret < 0)
+>   		goto out_dtpm_unregister;
+>  =20
+> -	cpufreq_cpu_put(policy);
+>   	return 0;
+>  =20
+>   out_dtpm_unregister:
+> @@ -251,8 +243,6 @@ static int __dtpm_cpu_setup(int cpu, struct dtpm *p=
+arent)
+>   		per_cpu(dtpm_per_cpu, cpu) =3D NULL;
+>   	kfree(dtpm_cpu);
+>  =20
+> -release_policy:
+> -	cpufreq_cpu_put(policy);
+>   	return ret;
+>   }
+>  =20
+I accidentally sent a duplicate patch in the series.
+Please ignore the extra one, sorry for the noise.
 
