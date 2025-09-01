@@ -1,146 +1,158 @@
-Return-Path: <linux-samsung-soc+bounces-10623-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10625-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFE68B3D7CF
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 05:46:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 885C9B3D85E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 06:55:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 672313BE421
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 03:46:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D8DF3B9B98
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 04:55:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636BF2248B3;
-	Mon,  1 Sep 2025 03:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA99F226863;
+	Mon,  1 Sep 2025 04:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="lRghJs6W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sb0PPBuy"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E3221F1F
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Sep 2025 03:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C14D1F5827;
+	Mon,  1 Sep 2025 04:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756698108; cv=none; b=h7p1SFs53mOOik01GfXHIdm0T0j4YETJzmfJ2m0CICTV0Cc8WvWdjC1UILSzQ0XX9dv2I5jVfVrea0nYv8GUv32auczrzzGxZIpekgMjruKOYY3piC9k4uK3JY5nXP2iFJLT7Co057Fc6gKYegK1IYNhge8DqMV3cmjWJaznq50=
+	t=1756702522; cv=none; b=O9G2DwrfJquecieMbOSexVbC1cCijOePVhjLldElygVAujhD83Nw/WN46D+1zsAz1o0TmAP08Gwig/vj9VPTJrG059BJ6SKUAliKcVphLK9FYTigeG44oT6aguCSeMt09pnjBtSk6kgZDSf0YoZ/rAH7mxRInT7MQt1cHFWrTyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756698108; c=relaxed/simple;
-	bh=d9Zuq+VOrL8MIyXST5jKsQIg+vODZlLmLXbPj9ULA5A=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=pZhox8Q7/MifoBT8rN8wn8ofJOyOhbetdwEt3MpF8jeBUf6wp8Ue+enYogMGMwbBXZPcdCaKdSW/YMmb+fO5rmo+vBJdtY24jaBtJ60qIJhRZOBHqankQRzr59mfJmfvRUte6zqWsQ5iNCfuyWFBOTNXrya3o9upXKUWc12/F/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=lRghJs6W; arc=none smtp.client-ip=203.254.224.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250901034142epoutp031253fa23846b35792f6f0fbb729fd897~hC53uhodk3033330333epoutp03v
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Sep 2025 03:41:42 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250901034142epoutp031253fa23846b35792f6f0fbb729fd897~hC53uhodk3033330333epoutp03v
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1756698102;
-	bh=2EZz/ZSexN7h2df50VcWK12q3iXM1vJoQrK6dhmIGE8=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=lRghJs6WiItv3rLjqm+pzd30UDC510OACcd4G9b54EPLEvJjBtDVl1wjZP1FgxHFZ
-	 5sfwIdjmx5M4o2AZD5opByFkST+fjM9o1DUAFANbXSyFuAFqtLQad2xrcu+gvxrEmI
-	 uEMZRud998UV8PjWn94gKKRUNaZDRTi6Imaajgvg=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
-	20250901034141epcas5p1a451644c752ee167db2534393cd4b54a~hC52zjwJa2089620896epcas5p1q;
-	Mon,  1 Sep 2025 03:41:41 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.91]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4cFZRm46C0z2SSKX; Mon,  1 Sep
-	2025 03:41:40 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250901034139epcas5p41f782871e58b5f6399fb3742f8b2e662~hC51ORnB22310123101epcas5p4j;
-	Mon,  1 Sep 2025 03:41:39 +0000 (GMT)
-Received: from FDSFTE411 (unknown [107.122.81.184]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250901034135epsmtip2835c6e93404b742e12a1de642383dbc3~hC5w2B8yt3100231002epsmtip2n;
-	Mon,  1 Sep 2025 03:41:35 +0000 (GMT)
-From: "Ravi Patel" <ravi.patel@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzk@kernel.org>, <jesper.nilsson@axis.com>,
-	<mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <s.nawrocki@samsung.com>,
-	<cw00.choi@samsung.com>, <alim.akhtar@samsung.com>,
-	<linus.walleij@linaro.org>, <tomasz.figa@gmail.com>,
-	<catalin.marinas@arm.com>, <will@kernel.org>, <arnd@arndb.de>
-Cc: <ksk4725@coasia.com>, <kenkim@coasia.com>, <pjsin865@coasia.com>,
-	<gwk1013@coasia.com>, <hgkim05@coasia.com>, <mingyoungbo@coasia.com>,
-	<smn1196@coasia.com>, <pankaj.dubey@samsung.com>, <shradha.t@samsung.com>,
-	<inbaraj.e@samsung.com>, <swathi.ks@samsung.com>,
-	<hrishikesh.d@samsung.com>, <dj76.yang@samsung.com>,
-	<hypmean.kim@samsung.com>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<linux-arm-kernel@axis.com>, <linux-clk@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-	<soc@lists.linux.dev>
-In-Reply-To: <b8085dd8-e1a0-48b1-a49f-f3edaa0381da@kernel.org>
-Subject: RE: [PATCH v3 04/10] dt-bindings: pinctrl: samsung: Add compatible
- for ARTPEC-8 SoC
-Date: Mon, 1 Sep 2025 09:11:34 +0530
-Message-ID: <000201dc1af2$537b4e70$fa71eb50$@samsung.com>
+	s=arc-20240116; t=1756702522; c=relaxed/simple;
+	bh=FTdg3qQDLcLg/WJueya255ckIzqEnwBISq9UOPfgb1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dcgIIR9g4uS5TcfFj3SAAx8uwL+1voJ/ncJRXdirClWPk/VITXhx4olvBsrAp9iuLH9WdTtofq1LC/EmDpxT2gcI4mCrbiAac9qxsmxgB5tWpUHa99v5s/gJ6z/PgYNBuvaFAUYTjNVhAg6v9yajXX65F9pEht2bh9qj64cDIak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sb0PPBuy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2FFC4CEF0;
+	Mon,  1 Sep 2025 04:55:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756702521;
+	bh=FTdg3qQDLcLg/WJueya255ckIzqEnwBISq9UOPfgb1g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Sb0PPBuy4LNuawkiyKqy4flACZvPyACS2s8cmFCOIajbAtXsGkPnL8mGiy0wvQdwL
+	 o5Y3OECor5b3FrN+UCofWsGFx3ncy6tVkRCmWH31FxH97bBVF32qAWiDO4jAmX41cL
+	 OyivnUoIDI0EORzt0BmSvlxBhbIarAQSC6kxOmzrxYjOKLtdc2Vx+N7hchKZS7xtoX
+	 lV0NWZbEMlLKuHPProj2luwqxlt/rN7vrVt0kRZ4iZXGhDyOG+ixZ7np2Hr6pTxeHN
+	 0oxKYlxRjATQ0lp/XKAf7cbAMegR2KtPCYpozMXYlL/QMzTAgcP4bedjYjOTr9ePP3
+	 v2gfk6h9iFdoA==
+Date: Mon, 1 Sep 2025 06:55:19 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Inbaraj E <inbaraj.e@samsung.com>
+Cc: rmfrfs@gmail.com, laurent.pinchart@ideasonboard.com, martink@posteo.de, 
+	kernel@puri.sm, mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, shawnguo@kernel.org, s.hauer@pengutronix.de, 
+	kernel@pengutronix.de, festevam@gmail.com, linux-media@vger.kernel.org, 
+	devicetree@vger.kernel.org, imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, pankaj.dubey@samsung.com, 
+	ravi.patel@samsung.com, shradha.t@samsung.com
+Subject: Re: [PATCH v3 2/7] dt-bindings: media: fsd: Add CSIS video capture
+ interface
+Message-ID: <20250901-rousing-orange-crab-c05fdf@kuoka>
+References: <20250828085911.81266-1-inbaraj.e@samsung.com>
+ <CGME20250828085930epcas5p1719c7db08074bf1540dc85b71736a6c5@epcas5p1.samsung.com>
+ <20250828085911.81266-3-inbaraj.e@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHHo9j0Rv1rvZf0N1R8AXn4x9PYUAMDo+/eAkhMLtUCILeh+rRrNiow
-Content-Language: en-in
-X-CMS-MailID: 20250901034139epcas5p41f782871e58b5f6399fb3742f8b2e662
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-541,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250825120715epcas5p3a0c8b6eaff7bdd69cbed6ce463079c64
-References: <20250825114436.46882-1-ravi.patel@samsung.com>
-	<CGME20250825120715epcas5p3a0c8b6eaff7bdd69cbed6ce463079c64@epcas5p3.samsung.com>
-	<20250825114436.46882-5-ravi.patel@samsung.com>
-	<b8085dd8-e1a0-48b1-a49f-f3edaa0381da@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250828085911.81266-3-inbaraj.e@samsung.com>
 
-
-
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzk@kernel.org>
-> Sent: 31 August 2025 18:55
-> To: Ravi Patel <ravi.patel@samsung.com>; jesper.nilsson@axis.com; mturquette@baylibre.com; sboyd@kernel.org; robh@kernel.org;
-> krzk+dt@kernel.org; conor+dt@kernel.org; s.nawrocki@samsung.com; cw00.choi@samsung.com; alim.akhtar@samsung.com;
-> linus.walleij@linaro.org; tomasz.figa@gmail.com; catalin.marinas@arm.com; will@kernel.org; arnd@arndb.de
-> Cc: ksk4725@coasia.com; kenkim@coasia.com; pjsin865@coasia.com; gwk1013@coasia.com; hgkim05@coasia.com;
-> mingyoungbo@coasia.com; smn1196@coasia.com; pankaj.dubey@samsung.com; shradha.t@samsung.com; inbaraj.e@samsung.com;
-> swathi.ks@samsung.com; hrishikesh.d@samsung.com; dj76.yang@samsung.com; hypmean.kim@samsung.com; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-samsung-soc@vger.kernel.org; linux-arm-kernel@axis.com; linux-
-> clk@vger.kernel.org; devicetree@vger.kernel.org; linux-gpio@vger.kernel.org; soc@lists.linux.dev
-> Subject: Re: [PATCH v3 04/10] dt-bindings: pinctrl: samsung: Add compatible for ARTPEC-8 SoC
+On Thu, Aug 28, 2025 at 02:29:06PM +0530, Inbaraj E wrote:
+> The Tesla FSD CSIS video capture interface is used to capture frames.
 > 
-> On 25/08/2025 13:44, Ravi Patel wrote:
-> > From: SeonGu Kang <ksk4725@coasia.com>
-> >
-> > Document the compatible string for ARTPEC-8 SoC pinctrl block,
-> > which is similar to other Samsung SoC pinctrl blocks.
-> >
-> > Signed-off-by: SeonGu Kang <ksk4725@coasia.com>
-> > Acked-by: Rob Herring (Arm) <robh@kernel.org>
-> > Signed-off-by: Ravi Patel <ravi.patel@samsung.com>
-> > ---
-> >  Documentation/devicetree/bindings/pinctrl/samsung,pinctrl.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
+> Signed-off-by: Inbaraj E <inbaraj.e@samsung.com>
+> ---
+>  .../bindings/media/tesla,fsd-csis-media.yaml  | 76 +++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/tesla,fsd-csis-media.yaml
 > 
-> 
-> No wakeup-eint interrupts here? samsung,pinctrl-wakeup-interrupt.yaml?
+> diff --git a/Documentation/devicetree/bindings/media/tesla,fsd-csis-media.yaml b/Documentation/devicetree/bindings/media/tesla,fsd-csis-media.yaml
+> new file mode 100644
+> index 000000000000..f045094ae539
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/tesla,fsd-csis-media.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/tesla,fsd-csis-media.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Tesla FSD SoC MIPI CSI-2 video capture interface(Bridge device).
 
-I don't see any use case for external wake-up interrupt here (as of now).
-So wakeup-eint entry is not present in dts and yaml both.
+Drop final full stop. Also missing space before (
 
-Thanks,
-Ravi
 
-> 
-> 
-> Best regards,
-> Krzysztof
+> +
+> +maintainers:
+> +  - Inbaraj E <inbaraj.e@samsung.com>
+> +
+> +description:
+> +  The Tesla FSD CSIS has an internal video capture interface to capture
+> +  frames originating from the sensor. The power supply for the IP is
+> +  managed by custom firmware and is expected to remain enabled
+> +  permanently, so power supply control is not added in linux.
+> +
+> +properties:
+> +  compatible:
+> +    const: tesla,fsd-csis-media
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 3
+> +
+> +  clock-names:
+> +    items:
+> +      - const: aclk
+> +      - const: pclk
+> +      - const: pll
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - clocks
+> +  - clock-names
+> +  - iommus
+> +  - port
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/fsd-clk.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    csis0: csis@12641000 {
+
+Incorrect unit address.
+
+> +        compatible = "tesla,fsd-csis-media";
+> +        reg = <0x12661000 0x44c>;
+
+
+Best regards,
+Krzysztof
 
 
