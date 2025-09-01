@@ -1,190 +1,125 @@
-Return-Path: <linux-samsung-soc+bounces-10627-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10635-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AC11B3D8C6
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 07:30:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD1C3B3D9D5
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 08:25:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 802CC18978FA
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 05:30:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59F1F3A59DA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  1 Sep 2025 06:25:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4928023C4F9;
-	Mon,  1 Sep 2025 05:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A74B25394A;
+	Mon,  1 Sep 2025 06:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="kLUxhvjW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JDKvjeYO"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0CA237163
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Sep 2025 05:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B25D203706
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Sep 2025 06:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756704600; cv=none; b=O/W/nu8Tt56QlNrLnopnx4cIAKzhMcOI2dGtIfi6xt5JF65rn7EVW5c/3quX66HS6AzfP0s6eMNrzKQOQs2wU6p2S9gRU7/dW5Ze7gBihXQ1ObfgZgZuYtKX+FZTPwRH4W0lkwpRQuluPoP8RU2pSn5kxNZdwId3iT34nmFnYhA=
+	t=1756707909; cv=none; b=nWDxb2tilksIF0e84cCu3lM6IR6okOLB8ATGfhkhvV9N1dp034Q8srueKi+vSGsGK8S+w3UdmDnuYyKE0+U/DQlONCPhHAaXqWBt2xmNMsjtRXQNB56jbNxLcYYQdOQlLh6l4XpHvh0IHYDpXaE2wbph6Mr1uOY718NSQIPhyZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756704600; c=relaxed/simple;
-	bh=f0VTLj2oJi5Q/8tVmqZKyqiwP/jE3Chg74tuZB6REWs=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=mlyRX01jeSyF2FCFOOepA2ZGFf0PnmSUaSnMBQwbLvFWXmH+ClhLWAc+63NN8DWZjp4LRuDgSJKQ2EuTTYfqhb0ao+dU2nF9m1104vJy98O3gjlqocnZyMz+bYxZnluj+uuW9c2vin6T7M5HDhNL8/r142kPm/uqOxuzHZ+eEro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=kLUxhvjW; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250901052955epoutp043ee23741f3e06b0a9cebf6251f514638~hEYXGzOUD2485824858epoutp04B
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  1 Sep 2025 05:29:55 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250901052955epoutp043ee23741f3e06b0a9cebf6251f514638~hEYXGzOUD2485824858epoutp04B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1756704595;
-	bh=z74vgOVZHNwhfErJhL2+ZnEEShq8T4mkIJ9fIx6HkJQ=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=kLUxhvjWD/mYbZWj/N8LeoPc+73L39Dh+Lr0tUT3Ccl9ZUQ5rAfoo13t+w1sq8Uno
-	 JLYajbXO0xArhoVcbQ/SSA8UfvitXvIdlyK3TkcBmT5JONGMQncr1f/FZsYAz/Hc0y
-	 stSRy8pUgrj70HWDSK+E2B6OJ+klryW6TQCscd/s=
-Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20250901052955epcas5p22cc7004bedc0128438190393c0253af3~hEYWQVkKp0411204112epcas5p2p;
-	Mon,  1 Sep 2025 05:29:55 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.86]) by
-	epsnrtp01.localdomain (Postfix) with ESMTP id 4cFcrf0XRtz6B9mF; Mon,  1 Sep
-	2025 05:29:54 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250901052953epcas5p18a498f14a81ac41b86c227ad4c8acef4~hEYUxtHhj1182311823epcas5p1C;
-	Mon,  1 Sep 2025 05:29:53 +0000 (GMT)
-Received: from FDSFTE411 (unknown [107.122.81.184]) by epsmtip1.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250901052948epsmtip1608cfb6e73b057139f6d612781fccdea~hEYQcXvfw0550105501epsmtip1f;
-	Mon,  1 Sep 2025 05:29:48 +0000 (GMT)
-From: "Ravi Patel" <ravi.patel@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzk@kernel.org>, <jesper.nilsson@axis.com>,
-	<mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <s.nawrocki@samsung.com>,
-	<cw00.choi@samsung.com>, <alim.akhtar@samsung.com>,
-	<linus.walleij@linaro.org>, <tomasz.figa@gmail.com>,
-	<catalin.marinas@arm.com>, <will@kernel.org>, <arnd@arndb.de>
-Cc: <ksk4725@coasia.com>, <kenkim@coasia.com>, <pjsin865@coasia.com>,
-	<gwk1013@coasia.com>, <hgkim05@coasia.com>, <mingyoungbo@coasia.com>,
-	<smn1196@coasia.com>, <shradha.t@samsung.com>, <inbaraj.e@samsung.com>,
-	<swathi.ks@samsung.com>, <hrishikesh.d@samsung.com>,
-	<dj76.yang@samsung.com>, <hypmean.kim@samsung.com>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-samsung-soc@vger.kernel.org>, <linux-arm-kernel@axis.com>,
-	<linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-gpio@vger.kernel.org>, <soc@lists.linux.dev>
-In-Reply-To: <e3f6d000-bbb7-45c2-93f2-69be9815ca99@kernel.org>
-Subject: RE: [PATCH v3 04/10] dt-bindings: pinctrl: samsung: Add compatible
- for ARTPEC-8 SoC
-Date: Mon, 1 Sep 2025 10:59:47 +0530
-Message-ID: <000301dc1b01$71e4f5a0$55aee0e0$@samsung.com>
+	s=arc-20240116; t=1756707909; c=relaxed/simple;
+	bh=5tEFRvyGeKDN+x2Ei9Cj+rHE7MmPIKyHBlDmb1SmtGI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CIxn1qIU5ILK33xS7G14/zXvu0ieB50xiK9f4oSgbNb1pNYqOxl8caju3mMBQeUp21h3eiJbzTkSvZlVjzuftNaElQQu946N9qvlbmGy+WNokRPIrNIeAbKwjNIvM9NmYZdIuKs30OiR8NDrjh5+GISNXstHDCQRcpNzXSpk5TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JDKvjeYO; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45b7d497abaso24673795e9.0
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 31 Aug 2025 23:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756707906; x=1757312706; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2YeKuNtpPLqtxqq8gC2tE+cTRtA0VGDqCWttaxdOw1c=;
+        b=JDKvjeYOO/6HDrP0X+HHkWGd75rKWnbeZl/5VBOLYpQoPKXtFqX5dbwIKAm8QysPGT
+         5NpMTn9JKuXTSluQyPoG/yGxLVvODNUlVtXus+Kfd7ZVGScS+WPnURCutJ0IaVALK1wK
+         Vf9DzIZI+Eol67nnigq6GhdsFYfI/frYX2huZmoMPN0P8PM2mvtKGUI2O1bkSerWURug
+         0F9+k3ANaVx++ezFQm9KylhlTxs3gXztLa/oFi0ABlD1u7o4fJ3BJMUSA/LTywiTo7+D
+         zrqwfcMSevmVKE0qRzeZrV61g12N3gPKC+/eznUYvIcWbohVkQGzFByDt3BWq95YfMjo
+         4nbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756707906; x=1757312706;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2YeKuNtpPLqtxqq8gC2tE+cTRtA0VGDqCWttaxdOw1c=;
+        b=UOJcJwT4a4v3tE73DvWr20y3glmB8+ZFmpnANJn4bX+l31PCN9mwFJnXFW0U494cdM
+         hhXMj1MTNUPR4szdTScyjN05c8SRzuyW6YVBj0bBXF/aqFjRckPIg/v4SHVyYf9H8lZz
+         Fs0ftOwgDVG9/1ODLC3bv5E8OogO08a5bcgxGx5BsAnVAU8X20deitizvTP/hg+bHyfn
+         m9yqxCsZZvmIOV93g3SwqDC0AVEHq5nrnZD/yzkDvZZdsJ3g52NRh3b7PxeQCa92fFLE
+         ggUDFYgZiheYPJTEkWGHtSFetdhhwt3+JbQYvhslMVY0nyKy+BOqo2rHmtImVms5sUbG
+         hk/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUSUldSqwV1ZbWUqjfWng/FQGmmWonZtLJajGr9LRSdP2l6iRNpojkNNu3CcXykbyqlNuICtt7pntpffAKqPQrBEw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCQjlMk+RlVmmxkBN62x8YahvK2Frtx8+2Vjx3Im4auv8baRf5
+	PPE/LqIahSRGy4YwtLkBF21YuLtEmsmFi/FXpChpHxGJ6TNdFHrNmWU0ZYl4fozCMRc=
+X-Gm-Gg: ASbGncvlN2lldmbC1vnNJsBgcXRl9f4f1gsHrF1BXwAONCRNfXXB+G/CzTcwOrgRjtj
+	OPGuUPfvwOvMU9uFhmASVNDfUPMy3kYzHar2xCLaYIMBIcKdWW/NaawZ4jj8Ha0rD5i0MHioFYG
+	WsTyzrvE7TBgnPs8HJlPkMoRpsOWuKEsUrWWO2uiH9U6uRj1FwIW5eYLEY4ee+MbFduSuKaVCgl
+	IMKTjM8kAnanbgG7TywtRKOODE44gtXq0IXLp/8YnCIcEFqdlEtObDX4bRrFijc02iZAIM2yQ7J
+	P4iqDQv4Xr3zLeJn90j18WVj2h//znuXoog+QUfFaNYwQbsNo45ks8veRbBQ0bNLn5KB+ygRWft
+	WUlAb3rz3aWxSeb04lJZO4JyZrucShVXmBoKXgIRf
+X-Google-Smtp-Source: AGHT+IHnke2GT0NOJivpigEQtNHBZdI155ZzMIvdBsIqtx3ducDptv4HE++iJXeOAgJzi8Q9MoWEvg==
+X-Received: by 2002:a05:600c:3b9a:b0:45b:8866:50fd with SMTP id 5b1f17b1804b1-45b88665357mr41091535e9.32.1756707905579;
+        Sun, 31 Aug 2025 23:25:05 -0700 (PDT)
+Received: from [192.168.0.251] ([79.115.63.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d3a7492001sm7507997f8f.42.2025.08.31.23.25.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Aug 2025 23:25:05 -0700 (PDT)
+Message-ID: <788c3aba-568d-4297-bc8e-f47921859d57@linaro.org>
+Date: Mon, 1 Sep 2025 07:25:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHHo9j0Rv1rvZf0N1R8AXn4x9PYUAMDo+/eAkhMLtUCILeh+gILpIJwAZ3h4W+0TgkigA==
-Content-Language: en-in
-X-CMS-MailID: 20250901052953epcas5p18a498f14a81ac41b86c227ad4c8acef4
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-541,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250825120715epcas5p3a0c8b6eaff7bdd69cbed6ce463079c64
-References: <20250825114436.46882-1-ravi.patel@samsung.com>
-	<CGME20250825120715epcas5p3a0c8b6eaff7bdd69cbed6ce463079c64@epcas5p3.samsung.com>
-	<20250825114436.46882-5-ravi.patel@samsung.com>
-	<b8085dd8-e1a0-48b1-a49f-f3edaa0381da@kernel.org>
-	<000201dc1af2$537b4e70$fa71eb50$@samsung.com>
-	<e3f6d000-bbb7-45c2-93f2-69be9815ca99@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] dt-bindings: firmware: google,gs101-acpm-ipc: add
+ #clock-cells
+To: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Peter Griffin <peter.griffin@linaro.org>,
+ =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-clk@vger.kernel.org, willmcvicker@google.com, kernel-team@android.com
+References: <20250827-acpm-clk-v2-0-de5c86b49b64@linaro.org>
+ <20250827-acpm-clk-v2-1-de5c86b49b64@linaro.org>
+ <b5d0e355-2681-4eaa-8a67-82a364312ec5@kernel.org>
+Content-Language: en-US
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+In-Reply-To: <b5d0e355-2681-4eaa-8a67-82a364312ec5@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzk=40kernel.org>
-> Sent: 01 September 2025 10:42
-> To: Ravi Patel <ravi.patel=40samsung.com>; jesper.nilsson=40axis.com; mtu=
-rquette=40baylibre.com; sboyd=40kernel.org; robh=40kernel.org;
-> krzk+dt=40kernel.org; conor+dt=40kernel.org; s.nawrocki=40samsung.com; cw=
-00.choi=40samsung.com; alim.akhtar=40samsung.com;
-> linus.walleij=40linaro.org; tomasz.figa=40gmail.com; catalin.marinas=40ar=
-m.com; will=40kernel.org; arnd=40arndb.de
-> Cc: ksk4725=40coasia.com; kenkim=40coasia.com; pjsin865=40coasia.com; gwk=
-1013=40coasia.com; hgkim05=40coasia.com;
-> mingyoungbo=40coasia.com; smn1196=40coasia.com; pankaj.dubey=40samsung.co=
-m; shradha.t=40samsung.com; inbaraj.e=40samsung.com;
-> swathi.ks=40samsung.com; hrishikesh.d=40samsung.com; dj76.yang=40samsung.=
-com; hypmean.kim=40samsung.com; linux-
-> kernel=40vger.kernel.org; linux-arm-kernel=40lists.infradead.org; linux-s=
-amsung-soc=40vger.kernel.org; linux-arm-kernel=40axis.com; linux-
-> clk=40vger.kernel.org; devicetree=40vger.kernel.org; linux-gpio=40vger.ke=
-rnel.org; soc=40lists.linux.dev
-> Subject: Re: =5BPATCH v3 04/10=5D dt-bindings: pinctrl: samsung: Add comp=
-atible for ARTPEC-8 SoC
->=20
-> On 01/09/2025 05:41, Ravi Patel wrote:
-> >
-> >
-> >> -----Original Message-----
-> >> From: Krzysztof Kozlowski <krzk=40kernel.org>
-> >> Sent: 31 August 2025 18:55
-> >> To: Ravi Patel <ravi.patel=40samsung.com>; jesper.nilsson=40axis.com; =
-mturquette=40baylibre.com; sboyd=40kernel.org; robh=40kernel.org;
-> >> krzk+dt=40kernel.org; conor+dt=40kernel.org; s.nawrocki=40samsung.com;=
- cw00.choi=40samsung.com; alim.akhtar=40samsung.com;
-> >> linus.walleij=40linaro.org; tomasz.figa=40gmail.com; catalin.marinas=
-=40arm.com; will=40kernel.org; arnd=40arndb.de
-> >> Cc: ksk4725=40coasia.com; kenkim=40coasia.com; pjsin865=40coasia.com; =
-gwk1013=40coasia.com; hgkim05=40coasia.com;
-> >> mingyoungbo=40coasia.com; smn1196=40coasia.com; pankaj.dubey=40samsung=
-.com; shradha.t=40samsung.com; inbaraj.e=40samsung.com;
-> >> swathi.ks=40samsung.com; hrishikesh.d=40samsung.com; dj76.yang=40samsu=
-ng.com; hypmean.kim=40samsung.com; linux-
-> >> kernel=40vger.kernel.org; linux-arm-kernel=40lists.infradead.org; linu=
-x-samsung-soc=40vger.kernel.org; linux-arm-kernel=40axis.com; linux-
-> >> clk=40vger.kernel.org; devicetree=40vger.kernel.org; linux-gpio=40vger=
-.kernel.org; soc=40lists.linux.dev
-> >> Subject: Re: =5BPATCH v3 04/10=5D dt-bindings: pinctrl: samsung: Add c=
-ompatible for ARTPEC-8 SoC
-> >>
-> >> On 25/08/2025 13:44, Ravi Patel wrote:
-> >>> From: SeonGu Kang <ksk4725=40coasia.com>
-> >>>
-> >>> Document the compatible string for ARTPEC-8 SoC pinctrl block,
-> >>> which is similar to other Samsung SoC pinctrl blocks.
-> >>>
-> >>> Signed-off-by: SeonGu Kang <ksk4725=40coasia.com>
-> >>> Acked-by: Rob Herring (Arm) <robh=40kernel.org>
-> >>> Signed-off-by: Ravi Patel <ravi.patel=40samsung.com>
-> >>> ---
-> >>>  Documentation/devicetree/bindings/pinctrl/samsung,pinctrl.yaml =7C 1=
- +
-> >>>  1 file changed, 1 insertion(+)
-> >>
-> >>
-> >> No wakeup-eint interrupts here? samsung,pinctrl-wakeup-interrupt.yaml?
-> >
-> > I don't see any use case for external wake-up interrupt here (as of now=
-).
->=20
-> It is more about hardware, not use case. Does this hardware has EINT
-> wakeup pin banks?
+On 8/31/25 11:40 AM, Krzysztof Kozlowski wrote:
+> On 27/08/2025 14:42, Tudor Ambarus wrote:
+>> diff --git a/include/dt-bindings/clock/google,gs101.h b/include/dt-bindings/clock/google,gs101.h
+>> index 442f9e9037dc33198a1cee20af62fc70bbd96605..f1d0df412fdd49b300db4ba88bc0b1674cf0cdf8 100644
+>> --- a/include/dt-bindings/clock/google,gs101.h
+>> +++ b/include/dt-bindings/clock/google,gs101.h
+>> @@ -634,4 +634,19 @@
+>>  #define CLK_GOUT_PERIC1_CLK_PERIC1_USI9_USI_CLK		45
+>>  #define CLK_GOUT_PERIC1_SYSREG_PERIC1_PCLK		46
+> 
+> I missed it last time - this is a header for SoC clock controller
+> bindings. ACPM firmware is completely different device, so should go to
+> its own binding header.
 
-I checked SFR sheet, ARTPEC-8 does not have any EINT wakeup pins or SFRs.
-
-Thanks,
-Ravi
-
->=20
-> > So wakeup-eint entry is not present in dts and yaml both.
->=20
->=20
->=20
-> Best regards,
-> Krzysztof
-
+right. Will do, thanks!
 
