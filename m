@@ -1,357 +1,1081 @@
-Return-Path: <linux-samsung-soc+bounces-10769-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10771-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AEE0B451FD
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Sep 2025 10:47:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74556B452F6
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Sep 2025 11:20:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C63E83A5395
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Sep 2025 08:46:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDDC817491A
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  5 Sep 2025 09:18:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2381927F75F;
-	Fri,  5 Sep 2025 08:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A7728852E;
+	Fri,  5 Sep 2025 09:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="pUqaluO7"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="RB2o5icJ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CF427EFFF
-	for <linux-samsung-soc@vger.kernel.org>; Fri,  5 Sep 2025 08:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF6C2882C0
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  5 Sep 2025 09:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757062016; cv=none; b=mop0Rgton0+2aSyn2V3hicdmUnCHzSJhKWRiDddY6Pz6SPMovAbXOVle9hxIfZomW13p4ZoEsw0Jn8xXX35jJ+qwk+fbIquj48FlZQ0Zm8Nk8z1rggwQP8GpK42ETI61i6ytEsG9/xM+3ug+HQp3YR/4g81L+2kUfU8W75N5qLc=
+	t=1757063762; cv=none; b=rOUlNeyvoRO/J1FEyYCHzhuqmL5s/x1FK61WFP16wKlOzxW/XHevopNwpjS+ffMl6B1s5RGaKEJRM0i4bgSbmLqEgIeR0f/DQEK7+HKbaMDCu08HmTwThUiHbVUdRhKUzEZEjon1IMZiZqi/Iuk/WUFBzsw65T7xiBMlGqsJqs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757062016; c=relaxed/simple;
-	bh=ytG9vIouPiLUAfyoB182VzUY+Xqy12vSGRMvzkqF2O0=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=qATUIolR92kxuO0kHxdwQMAA7swH9wcnet82LksZbXRtj5K5bVfKzQcvbj7en/AHlFM6zs3okDzkz1K+srkqUdXG8+h5GMJHYYCUfbSDYYgxlxPg6ngGwmejVE9AGsNyvrgzOrHfH5QplI+ziQZ+nUvM7xPwb0L2eZlpcn0EbOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=pUqaluO7; arc=none smtp.client-ip=203.254.224.33
+	s=arc-20240116; t=1757063762; c=relaxed/simple;
+	bh=iA/YmmTvEnJ2V6+3BflT2WxTnAf967DPSgtBWiD7IZc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 References; b=eP5dkyNStqMSbuNjcMTKNIQNTgFpt/8EL0VEWpX27Fa091enqssfQqvl8eUzDzdXq4c4j9GlLQnfIz0DwcrvHEhCZ8nsMtxp7/0799K0a/jYUDgtjDV2AtL7kgXjFR5otU4kPErisPG32cM3UMdgkQYJA5WPWFvFA5YBItR1lOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=RB2o5icJ; arc=none smtp.client-ip=203.254.224.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250905084651epoutp03aa941b922ce6c0fd7c217fb1ef0bb7fb~iVpb2S02Y0472604726epoutp039
-	for <linux-samsung-soc@vger.kernel.org>; Fri,  5 Sep 2025 08:46:51 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250905084651epoutp03aa941b922ce6c0fd7c217fb1ef0bb7fb~iVpb2S02Y0472604726epoutp039
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250905091551epoutp03944ac7d252280c36c9a9ec685e90d7df~iWCxOeHqF3252832528epoutp03j
+	for <linux-samsung-soc@vger.kernel.org>; Fri,  5 Sep 2025 09:15:51 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250905091551epoutp03944ac7d252280c36c9a9ec685e90d7df~iWCxOeHqF3252832528epoutp03j
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1757062011;
-	bh=+b3QSB/bZSM3Scg6Q5SP9kX4scVjAGA+YM0FkWnMdKI=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=pUqaluO7ZQhbSgPpORM1bamPyOC3gu47Cp9nCJtJpYQiSMUDVdSszaDHQRxLBCt6p
-	 gFXyNBo+3nFxvbfuA5a/6RfNBX8EZMUXiMlZ6HXxFU+7X9O4mjf4m8V60K3TZzAdZw
-	 NW8893rFw/xJssFotOPKEm5WQ++56JF/C3xHPiQg=
+	s=mail20170921; t=1757063751;
+	bh=Ydk9EZ9L4mqP6NlHqCbEkRfov0+akJWOC3m9/y+X/tM=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=RB2o5icJFMcQ8+V5fnMhI1xxMBhOWEFOgSSQyZHjnuuPnUq3ewbDEzb1Qfidyxib0
+	 KGWQhNATpn/KnxeM7NGiNPry7cEHdA+f3VWr4NKHyfu6xVGJrVwy8o/TCkQMMoW2Sk
+	 qWcsorbjjJHI9eUNbngEkeYGBxuF/4vvfAYHbD30=
 Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
-	epcas2p3.samsung.com (KnoxPortal) with ESMTPS id
-	20250905084650epcas2p37bd5886f28511b7b6bff596d07f978fd~iVpbUo3YR1486914869epcas2p3Q;
-	Fri,  5 Sep 2025 08:46:50 +0000 (GMT)
-Received: from epcas2p1.samsung.com (unknown [182.195.36.70]) by
-	epsnrtp03.localdomain (Postfix) with ESMTP id 4cJ9213HRHz3hhT7; Fri,  5 Sep
-	2025 08:46:49 +0000 (GMT)
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250905091551epcas5p20cd3446ec8d38d3ba3bf9f2254a23557~iWCwiWGQz2423324233epcas5p2C;
+	Fri,  5 Sep 2025 09:15:51 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.87]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4cJ9gV1GHmz3hhT4; Fri,  5 Sep
+	2025 09:15:50 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250905084648epcas2p3c8f1213548ae5506f29a135d7bcb7d4b~iVpZRgTHF1136611366epcas2p3s;
-	Fri,  5 Sep 2025 08:46:48 +0000 (GMT)
-Received: from KORCO115296 (unknown [12.36.150.221]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250905084648epsmtip22c40ea94c6efe180be1648bdc35fa3ab~iVpZKbTMb2604026040epsmtip2V;
-	Fri,  5 Sep 2025 08:46:48 +0000 (GMT)
-From: =?ks_c_5601-1987?B?vNW9xQ==?= <shin.son@samsung.com>
-To: "'Henrik Grimler'" <henrik@grimler.se>
-Cc: "'Bartlomiej Zolnierkiewicz'" <bzolnier@gmail.com>, "'Krzysztof
- Kozlowski'" <krzk@kernel.org>, "'Rafael J . Wysocki'" <rafael@kernel.org>,
-	"'Daniel Lezcano'" <daniel.lezcano@linaro.org>, "'Zhang Rui'"
-	<rui.zhang@intel.com>, "'Lukasz Luba'" <lukasz.luba@arm.com>, "'Rob
-	Herring'" <robh@kernel.org>, "'Conor Dooley'" <conor+dt@kernel.org>, "'Alim
-	Akhtar'" <alim.akhtar@samsung.com>, <linux-pm@vger.kernel.org>,
- <linux-samsung-soc@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-In-Reply-To: <20250904083745.GA33254@l14.localdomain>
-Subject: RE: [PATCH v2 2/3] thermal: exynos_tmu: Support new hardware and
- update TMU interface
-Date: Fri, 5 Sep 2025 17:46:47 +0900
-Message-ID: <022101dc1e41$9da97bf0$d8fc73d0$@samsung.com>
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20250905091549epcas5p21b34a659bd1032a7f91af783af8d3c34~iWCvLlInx2895728957epcas5p2O;
+	Fri,  5 Sep 2025 09:15:49 +0000 (GMT)
+Received: from bose.samsungds.net (unknown [107.108.83.9]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20250905091548epsmtip2e9839160d96d56f2b4d689cca94fc694~iWCtxaXzs1215612156epsmtip2k;
+	Fri,  5 Sep 2025 09:15:48 +0000 (GMT)
+From: Faraz Ata <faraz.ata@samsung.com>
+To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	alim.akhtar@samsung.com
+Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	rosa.pila@samsung.com, dev.tailor@samsung.com, Faraz Ata
+	<faraz.ata@samsung.com>
+Subject: [PATCH] arm64: dts: exynosautov920: Add DT node for all I2C ports
+Date: Fri,  5 Sep 2025 14:54:52 +0530
+Message-Id: <20250905092452.1782227-1-faraz.ata@samsung.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ks_c_5601-1987"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQJcDpuT0zWDya8nliyk6vzs/32vBQHbwRw0AUrvAk4B9Ktz07NbioBg
-Content-Language: ko
-X-CMS-MailID: 20250905084648epcas2p3c8f1213548ae5506f29a135d7bcb7d4b
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250905091549epcas5p21b34a659bd1032a7f91af783af8d3c34
 X-Msg-Generator: CA
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-234,Y
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250903073653epcas2p16e8bf815e604fdb63669271ad3071d96
-References: <20250903073634.1898865-1-shin.son@samsung.com>
-	<CGME20250903073653epcas2p16e8bf815e604fdb63669271ad3071d96@epcas2p1.samsung.com>
-	<20250903073634.1898865-3-shin.son@samsung.com>
-	<20250904083745.GA33254@l14.localdomain>
+X-CMS-RootMailID: 20250905091549epcas5p21b34a659bd1032a7f91af783af8d3c34
+References: <CGME20250905091549epcas5p21b34a659bd1032a7f91af783af8d3c34@epcas5p2.samsung.com>
 
-Hello Henrik Grimler,
+Universal Serial Interface (USI) supports three serial protocol
+like uart, i2c and spi. ExynosAutov920 has 18 instances of USI.
+Add i2c nodes for all the instances.
 
-> -----Original Message-----
-> From: Henrik Grimler [mailto:henrik@grimler.se]
-> Sent: Thursday, September 4, 2025 5:38 PM
-> To: Shin Son <shin.son@samsung.com>
-> Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>; Krzysztof Kozlowski
-> <krzk@kernel.org>; Rafael J . Wysocki <rafael@kernel.org>; Daniel Lezcano
-> <daniel.lezcano@linaro.org>; Zhang Rui <rui.zhang@intel.com>; Lukasz Luba
-> <lukasz.luba@arm.com>; Rob Herring <robh@kernel.org>; Conor Dooley
-> <conor+dt@kernel.org>; Alim Akhtar <alim.akhtar@samsung.com>; linux-
-> pm@vger.kernel.org; linux-samsung-soc@vger.kernel.org;
-> devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
-> kernel@vger.kernel.org
-> Subject: Re: [PATCH v2 2/3] thermal: exynos_tmu: Support new hardware and
-> update TMU interface
-> 
-> Hi Shin,
-> 
-> On Wed, Sep 03, 2025 at 04:36:33PM +0900, Shin Son wrote:
-> > The Exynos tmu driver's private data structure has been extended to
-> > support the exynosautov920 hardware, which requires per-sensor
-> > interrupt enablement and dual-zone handling:
-> >
-> > - Add 'slope_comp' : compensation parameter below 25 degrees.
-> > - Add 'calib_temp' : stores the fused calibaration temperature.
-> > - Add 'tz_count' : reflects the new 1:2 hardware-to-thermal-zone ratio.
-> > - Add 'valid_sensor_bitmap' : bitmap to enable interrupts
-> > 			      for each valid sensor.
-> > - Rename 'tzd' -> 'tzd_array' to register multiple thermal zones.
-> >
-> > Since splitting this patch causes runtime errors during temperature
-> > emulation or problems where the read temperature feature fails to
-> > retrieve values, I have submitted it as a single commit. To add
-> > support for the exynosautov920 to the exisiting TMU interface, the
-> > following changes are included:
-> >
-> > 1. Branch 'code_to_temp' and 'temp_to_code' for exynosautov920 SoC
-> variant.
-> > 2. Loop over 'tz_count' in critical-point setup.
-> > 3. Introduce 'update_con_reg' for exynosautov920 control-register
-> updates.
-> > 4. Add exynosautov920-specific branch in 'exynos_tmu_update_temp'
-> function.
-> > 5. Skip high & low temperature threshold setup in exynosautov920.
-> > 6. Enable interrupts via bitmap in 'exynosautov920_tmu_set_crit_temp'.
-> > 7. Initialize all new members during 'exynosautov920_tmu_initialize'.
-> > 8. Clear IRQs by iterating the bitamp in exynosautov920.
-> > 9. Register each zone with 'devm_thermal_of_zone_register()'
-> >    based on 'tz_count'.
-> >
-> > Signed-off-by: Shin Son <shin.son@samsung.com>
-> > ---
-> >  drivers/thermal/samsung/exynos_tmu.c | 340
-> > ++++++++++++++++++++++++---
-> >  1 file changed, 303 insertions(+), 37 deletions(-)
-> >
-> > diff --git a/drivers/thermal/samsung/exynos_tmu.c
-> > b/drivers/thermal/samsung/exynos_tmu.c
-> > index 47a99b3c5395..60d5ab33c593 100644
-> > --- a/drivers/thermal/samsung/exynos_tmu.c
-> > +++ b/drivers/thermal/samsung/exynos_tmu.c
-> 
-> [ ... ]
-> 
-> > +#define EXYNOSAUTOV920_TMU_REG_THRESHOLD(p)	(((p)) * 0x50 +
-0x00D0)
-> > +#define EXYNOSAUTOV920_TMU_REG_INTEN(p)		(((p)) * 0x50 +
-> 0x00F0)
-> > +#define EXYNOSAUTOV920_TMU_REG_INT_PEND(p)	(((p)) * 0x50 + 0x00F8)
-> > +
-> > +#define EXYNOSAUTOV920_CURRENT_TEMP_P1_P0	0x084
-> > +#define EXYNOSAUTOV920_TMU_REG_EMUL_CON		0x0B0
-> > +
-> > +#define EXYNOSAUTOV920_TMU_REG_CONTROL		0x50
-> > +#define EXYNOSAUTOV920_TMU_REG_CONTROL1		0x54
-> > +#define EXYNOSAUTOV920_TMU_REG_AVG_CONTROL	0x58
-> > +#define EXYNOSAUTOV920_TMU_SAMPLING_INTERVAL	0x70
-> > +#define EXYNOSAUTOV920_TMU_REG_COUNTER_VALUE0	0x74
-> > +#define EXYNOSAUTOV920_TMU_REG_COUNTER_VALUE1	0x78
-> > +
-> > +#define EXYNOSAUTOV920_TMU_THERM_TRIP_EN_SHIFT	12
-> 
-> There already is a EXYNOS_TMU_THERM_TRIP_EN_SHIFT constant with the same
-> value. Is there some fundamental difference between
-> EXYNOSAUTOV920_TMU_THERM_TRIP_EN_SHIFT and EXYNOS_TMU_THERM_TRIP_EN_SHIFT?
-> 
-> > +#define EXYNOSAUTOV920_TMU_T_BUF_VREF_SEL_SHIFT		8
-> > +#define EXYNOSAUTOV920_TMU_T_BUF_VREF_SEL_MASK		0x1f
-> > +#define EXYNOSAUTOV920_TMU_T_BUF_SLOPE_SEL_SHIFT	3
-> > +#define EXYNOSAUTOV920_TMU_T_BUF_SLOPE_SEL_MASK		0xf
-> > +#define EXYNOSAUTOV920_TMU_NUM_PROBE_MASK		0xf
-> > +#define EXYNOSAUTOV920_TMU_NUM_PROBE_SHIFT		16
-> > +#define EXYNOSAUTOV920_TMU_LPI_MODE_MASK		1
-> > +#define EXYNOSAUTOV920_TMU_LPI_MODE_SHIFT		10
-> > +
-> > +#define EXYNOSAUTOV920_TMU_AVG_CON_UPDATE		0x0008011A
-> > +#define EXYNOSAUTOV920_TMU_COUNTER_VALUE0_UPDATE	0x030003C0
-> > +#define EXYNOSAUTOV920_TMU_COUNTER_VALUE1_UPDATE	0x03C0004D
-> 
-> If I am not mistaken lowercase letters is preferred in defines. The file
-> already has a mix, but let's not make it worse. Please change to
-> 0x03c0004d and so on in constants above.
-> 
-> >  #define MCELSIUS	1000
-> >
-> > +#define EXYNOS_DEFAULT_TZ_COUNT		1
-> > +#define EXYNOS_MAX_TZ_COUNT		2
-> > +
-> >  enum soc_type {
-> >  	SOC_ARCH_EXYNOS3250 = 1,
-> >  	SOC_ARCH_EXYNOS4210,
-> > @@ -133,6 +179,7 @@ enum soc_type {
-> >  	SOC_ARCH_EXYNOS5420_TRIMINFO,
-> >  	SOC_ARCH_EXYNOS5433,
-> >  	SOC_ARCH_EXYNOS7,
-> > +	SOC_ARCH_EXYNOSAUTOV920,
-> >  };
-> >
-> >  /**
-> > @@ -150,6 +197,8 @@ enum soc_type {
-> >   * @efuse_value: SoC defined fuse value
-> >   * @min_efuse_value: minimum valid trimming data
-> >   * @max_efuse_value: maximum valid trimming data
-> > + * @slope_comp: allocated value of the slope compensation.
-> > + * @calib_temp: calibration temperature of the TMU.
-> >   * @temp_error1: fused value of the first point trim.
-> >   * @temp_error2: fused value of the second point trim.
-> >   * @gain: gain of amplifier in the positive-TC generator block @@
-> > -157,7 +206,9 @@ enum soc_type {
-> >   * @reference_voltage: reference voltage of amplifier
-> >   *	in the positive-TC generator block
-> >   *	0 < reference_voltage <= 31
-> > - * @tzd: pointer to thermal_zone_device structure
-> > + * @tz_count: The allocated number of the thermal zone
-> > + * @tzd_array: pointer array of thermal_zone_device structure
-> > + * @valid_sensor_bitmap: The enabled sensor of the TMU device
-> >   * @enabled: current status of TMU device
-> >   * @tmu_set_low_temp: SoC specific method to set trip (falling
-> threshold)
-> >   * @tmu_set_high_temp: SoC specific method to set trip (rising
-> > threshold) @@ -181,10 +232,14 @@ struct exynos_tmu_data {
-> >  	u32 efuse_value;
-> >  	u32 min_efuse_value;
-> >  	u32 max_efuse_value;
-> > +	u16 slope_comp;
-> > +	u16 calib_temp;
-> >  	u16 temp_error1, temp_error2;
-> >  	u8 gain;
-> >  	u8 reference_voltage;
-> > -	struct thermal_zone_device *tzd;
-> > +	u8 tz_count;
-> > +	unsigned long valid_sensor_bitmap;
-> > +	struct thermal_zone_device *tzd_array[EXYNOS_MAX_TZ_COUNT];
-> >  	bool enabled;
-> >
-> >  	void (*tmu_set_low_temp)(struct exynos_tmu_data *data, u8 temp); @@
-> > -208,10 +263,25 @@ static int temp_to_code(struct exynos_tmu_data *data,
-> u8 temp)
-> >  	if (data->cal_type == TYPE_ONE_POINT_TRIMMING)
-> >  		return temp + data->temp_error1 - EXYNOS_FIRST_POINT_TRIM;
-> >
-> > -	return (temp - EXYNOS_FIRST_POINT_TRIM) *
-> > -		(data->temp_error2 - data->temp_error1) /
-> > -		(EXYNOS_SECOND_POINT_TRIM - EXYNOS_FIRST_POINT_TRIM) +
-> > -		data->temp_error1;
-> > +	if (data->soc == SOC_ARCH_EXYNOSAUTOV920) {
-> > +		if ((temp - EXYNOS_FIRST_POINT_TRIM) >= 0) {
-> > +			return (temp - EXYNOS_FIRST_POINT_TRIM) *
-> > +				(data->temp_error2 - data->temp_error1) /
-> > +				(data->calib_temp -
-EXYNOS_FIRST_POINT_TRIM) +
-> > +				data->temp_error1;
-> > +		} else {
-> > +			return ((temp - EXYNOS_FIRST_POINT_TRIM) *
-> > +				(data->temp_error2 - data->temp_error1) /
-> > +				(data->calib_temp -
-EXYNOS_FIRST_POINT_TRIM) *
-> > +				((57 + data->slope_comp) * 1000 / 65)) /
-1000 +
-> > +				data->temp_error1;
-> > +		}
-> > +	} else {
-> > +		return (temp - EXYNOS_FIRST_POINT_TRIM) *
-> > +			(data->temp_error2 - data->temp_error1) /
-> > +			(EXYNOS_SECOND_POINT_TRIM -
-EXYNOS_FIRST_POINT_TRIM) +
-> > +			data->temp_error1;
-> 
-> This is essentially the same as the first return in the
-> SOC_ARCH_EXYNOSAUTOV920 path. How about putting EXYNOS_SECOND_POINT_TRIM
-> in the calib_temp field for the non autov920 SoCs, then we can simplify
-> temp_to_code and code_to_temp to something more readable like:
-> 
-> static int temp_to_code(struct exynos_tmu_data *data, u8 temp) {
-> 	if (data->cal_type == TYPE_ONE_POINT_TRIMMING)
-> 		return temp + data->temp_error1 - EXYNOS_FIRST_POINT_TRIM;
-> 
-> 	int coeff = (data->temp_error2 - data->temp_error1) /
-> 			(data->calib_temp - EXYNOS_FIRST_POINT_TRIM);
-> 
-> 	if (data->soc == SOC_ARCH_EXYNOSAUTOV920 &&
-> 	    temp < EXYNOS_FIRST_POINT_TRIM)
-> 		coeff *= (57 + data->slope_comp) * 1000 / 65)) / 1000;
-> 
-> 	return (temp - EXYNOS_FIRST_POINT_TRIM) * coeff + data-
-> >temp_error1; }
-> 
+Signed-off-by: Faraz Ata <faraz.ata@samsung.com>
+---
+ .../arm64/boot/dts/exynos/exynosautov920.dtsi | 845 ++++++++++++++++++
+ 1 file changed, 845 insertions(+)
 
-Thanks for your advice. I will reflect it and revise the code accordingly.
-
-> >  }
-> >
-> >  /*
-> > @@ -223,10 +293,25 @@ static int code_to_temp(struct exynos_tmu_data
-> *data, u16 temp_code)
-> >  	if (data->cal_type == TYPE_ONE_POINT_TRIMMING)
-> >  		return temp_code - data->temp_error1 +
-> EXYNOS_FIRST_POINT_TRIM;
-> >
-> > -	return (temp_code - data->temp_error1) *
-> > -		(EXYNOS_SECOND_POINT_TRIM - EXYNOS_FIRST_POINT_TRIM) /
-> > -		(data->temp_error2 - data->temp_error1) +
-> > -		EXYNOS_FIRST_POINT_TRIM;
-> > +	if (data->soc == SOC_ARCH_EXYNOSAUTOV920) {
-> > +		if ((temp_code - data->temp_error1) >= 0) {
-> > +			return (temp_code - data->temp_error1) *
-> > +				(data->calib_temp -
-EXYNOS_FIRST_POINT_TRIM) /
-> > +				(data->temp_error2 - data->temp_error1) +
-> > +				EXYNOS_FIRST_POINT_TRIM;
-> > +		} else {
-> > +			return ((temp_code - data->temp_error1) *
-> > +				(data->calib_temp -
-EXYNOS_FIRST_POINT_TRIM) /
-> > +				(data->temp_error2 - data->temp_error1) *
-> > +				(65 * 1000 / (57 + data->slope_comp))) /
-1000 +
-> > +				EXYNOS_FIRST_POINT_TRIM;
-> > +		}
-> > +	} else {
-> > +		return (temp_code - data->temp_error1) *
-> > +			(EXYNOS_SECOND_POINT_TRIM -
-EXYNOS_FIRST_POINT_TRIM) /
-> > +			(data->temp_error2 - data->temp_error1) +
-> > +			EXYNOS_FIRST_POINT_TRIM;
-> > +	}
-> 
-> Similar suggestion as for temp_to_code applies here as well.
-> 
-> Best regards,
-> Henrik Grimler
-
-Thanks,
-Best regards
-Shin son
-
-
+diff --git a/arch/arm64/boot/dts/exynos/exynosautov920.dtsi b/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
+index 0fdf2062930a..53cf3f04cee0 100644
+--- a/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
+@@ -26,6 +26,42 @@ aliases {
+ 		pinctrl5 = &pinctrl_hsi2ufs;
+ 		pinctrl6 = &pinctrl_peric0;
+ 		pinctrl7 = &pinctrl_peric1;
++		i2c0 = &hsi2c_0;
++		i2c1 = &hsi2c_1;
++		i2c2 = &hsi2c_2;
++		i2c3 = &hsi2c_3;
++		i2c4 = &hsi2c_4;
++		i2c5 = &hsi2c_5;
++		i2c6 = &hsi2c_6;
++		i2c7 = &hsi2c_7;
++		i2c8 = &hsi2c_8;
++		i2c9 = &hsi2c_9;
++		i2c10 = &hsi2c_10;
++		i2c11 = &hsi2c_11;
++		i2c12 = &hsi2c_12;
++		i2c13 = &hsi2c_13;
++		i2c14 = &hsi2c_14;
++		i2c15 = &hsi2c_15;
++		i2c16 = &hsi2c_16;
++		i2c17 = &hsi2c_17;
++		i2c18 = &hsi2c_18;
++		i2c19 = &hsi2c_19;
++		i2c20 = &hsi2c_20;
++		i2c21 = &hsi2c_21;
++		i2c22 = &hsi2c_22;
++		i2c23 = &hsi2c_23;
++		i2c24 = &hsi2c_24;
++		i2c25 = &hsi2c_25;
++		i2c26 = &hsi2c_26;
++		i2c27 = &hsi2c_27;
++		i2c28 = &hsi2c_28;
++		i2c29 = &hsi2c_29;
++		i2c30 = &hsi2c_30;
++		i2c31 = &hsi2c_31;
++		i2c32 = &hsi2c_32;
++		i2c33 = &hsi2c_33;
++		i2c34 = &hsi2c_34;
++		i2c35 = &hsi2c_35;
+ 	};
+ 
+ 	arm-pmu {
+@@ -475,6 +511,51 @@ spi_0: spi@10880000 {
+ 				fifo-depth = <256>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_0: i2c@10880000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10880000 0xc0>;
++				interrupts = <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c0_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI00_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_0: usi@108900c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x108900c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x1004>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_1: i2c@10890000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10890000 0xc0>;
++				interrupts = <GIC_SPI 763 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c1_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_1: usi@108a00c0 {
+@@ -524,6 +605,51 @@ spi_1: spi@108a0000 {
+ 				fifo-depth = <256>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_2: i2c@108a0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108a0000 0xc0>;
++				interrupts = <GIC_SPI 766 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c2_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI01_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_1: usi@108b00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x108b00c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x100c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_3: i2c@108b0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108b0000 0xc0>;
++				interrupts = <GIC_SPI 765 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c3_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_2: usi@108c00c0 {
+@@ -573,6 +699,51 @@ spi_2: spi@108c0000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_4: i2c@108c0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108c0000 0xc0>;
++				interrupts = <GIC_SPI 768 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c4_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI02_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_2: usi@108d00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x108d00c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x1004>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_5: i2c@108d0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108d0000 0xc0>;
++				interrupts = <GIC_SPI 767 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c5_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_3: usi@108e00c0 {
+@@ -622,6 +793,51 @@ spi_3: spi@108e0000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_6: i2c@108e0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108e0000 0xc0>;
++				interrupts = <GIC_SPI 770 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c6_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI03_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_3: usi@108f00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x108f00c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x101c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_7: i2c@108f0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x108f0000 0xc0>;
++				interrupts = <GIC_SPI 769 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c7_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_4: usi@109000c0 {
+@@ -671,6 +887,51 @@ spi_4: spi@10900000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_8: i2c@10900000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10900000 0xc0>;
++				interrupts = <GIC_SPI 772 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c8_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI04_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_4: usi@109100c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x109100c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x1024>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_9: i2c@10910000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10910000 0xc0>;
++				interrupts = <GIC_SPI 771 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c9_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_5: usi@109200c0 {
+@@ -720,6 +981,51 @@ spi_5: spi@10920000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_10: i2c@10920000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10920000 0xc0>;
++				interrupts = <GIC_SPI 774 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c10_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI05_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_5: usi@109300c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x109300c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x102c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_11: i2c@10930000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10930000 0xc0>;
++				interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c11_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_6: usi@109400c0 {
+@@ -769,6 +1075,51 @@ spi_6: spi@10940000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_12: i2c@10940000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10940000 0xc0>;
++				interrupts = <GIC_SPI 776 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c12_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI06_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_6: usi@109500c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x109500c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x1034>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_13: i2c@10950000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10950000 0xc0>;
++				interrupts = <GIC_SPI 775 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c13_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_7: usi@109600c0 {
+@@ -818,6 +1169,51 @@ spi_7: spi@10960000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_14: i2c@10960000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10960000 0xc0>;
++				interrupts = <GIC_SPI 778 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c14_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI07_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_7: usi@109700c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x109700c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x103c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_15: i2c@10970000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10970000 0xc0>;
++				interrupts = <GIC_SPI 777 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c15_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_8: usi@109800c0 {
+@@ -868,6 +1264,50 @@ spi_8: spi@10980000 {
+ 				status = "disabled";
+ 			};
+ 
++			hsi2c_16: i2c@10980000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10980000 0xc0>;
++				interrupts = <GIC_SPI 780 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c16_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI08_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_8: usi@109900c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x109900c0 0x20>;
++			samsung,sysreg = <&syscon_peric0 0x1044>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC0_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC0_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_17: i2c@10990000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10990000 0xc0>;
++				interrupts = <GIC_SPI 779 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c17_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC0_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC0_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		pwm: pwm@109b0000 {
+@@ -953,6 +1393,51 @@ spi_9: spi@10c80000 {
+ 				fifo-depth = <256>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_18: i2c@10c80000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10c80000 0xc0>;
++				interrupts = <GIC_SPI 787 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c18_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_9: usi@10c900c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10c900c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x1004>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI09_USI>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_19: i2c@10c90000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10c90000 0xc0>;
++				interrupts = <GIC_SPI 786 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c19_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_10: usi@10ca00c0 {
+@@ -1002,6 +1487,51 @@ spi_10: spi@10ca0000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_20: i2c@10ca0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10ca0000 0xc0>;
++				interrupts = <GIC_SPI 789 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c20_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI10_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_10: usi@10cb00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10cb00c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x100c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_21: i2c@10cb0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10cb0000 0xc0>;
++				interrupts = <GIC_SPI 788 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c21_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_11: usi@10cc00c0 {
+@@ -1051,6 +1581,51 @@ spi_11: spi@10cc0000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_22: i2c@10cc0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10cc0000 0xc0>;
++				interrupts = <GIC_SPI 791 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c22_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_11: usi@10cd00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10cd00c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x1014>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_23: i2c@10cd0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10cd0000 0xc0>;
++				interrupts = <GIC_SPI 790 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c23_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_12: usi@10ce00c0 {
+@@ -1100,6 +1675,51 @@ spi_12: spi@10ce0000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_24: i2c@10ce0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10ce0000 0xc0>;
++				interrupts = <GIC_SPI 793 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c24_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_12: usi@10cf00c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10cf00c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x101c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_25: i2c@10cf0000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10cf0000 0xc0>;
++				interrupts = <GIC_SPI 792 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c25_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_13: usi@10d000c0 {
+@@ -1149,6 +1769,51 @@ spi_13: spi@10d00000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_26: i2c@10d00000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d00000 0xc0>;
++				interrupts = <GIC_SPI 795 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c26_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI13_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_13: usi@10d100c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10d100c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x1024>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_27: i2c@10d10000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d10000 0xc0>;
++				interrupts = <GIC_SPI 794 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c27_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_14: usi@10d200c0 {
+@@ -1198,6 +1863,51 @@ spi_14: spi@10d20000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_28: i2c@10d20000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d20000 0xc0>;
++				interrupts = <GIC_SPI 797 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c28_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI14_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_14: usi@10d300c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10d300c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x102c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_29: i2c@10d30000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d30000 0xc0>;
++				interrupts = <GIC_SPI 796 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c29_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_15: usi@10d400c0 {
+@@ -1247,6 +1957,51 @@ spi_15: spi@10d40000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_30: i2c@10d40000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d40000 0xc0>;
++				interrupts = <GIC_SPI 799 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c30_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI15_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_15: usi@10d500c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10d500c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x1034>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_31: i2c@10d50000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d50000 0xc0>;
++				interrupts = <GIC_SPI 798 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c31_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_16: usi@10d600c0 {
+@@ -1296,6 +2051,51 @@ spi_16: spi@10d60000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_32: i2c@10d60000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d60000 0xc0>;
++				interrupts = <GIC_SPI 801 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c32_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_16: usi@10d700c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10d700c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x103c>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric0 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric0 CLK_DOUT_PERIC1_USI_I2C>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_33: i2c@10d70000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d70000 0xc0>;
++				interrupts = <GIC_SPI 800 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c33_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		usi_17: usi@10d800c0 {
+@@ -1345,6 +2145,51 @@ spi_17: spi@10d80000 {
+ 				fifo-depth = <64>;
+ 				status = "disabled";
+ 			};
++
++			hsi2c_34: i2c@10d80000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d80000 0xc0>;
++				interrupts = <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c34_bus>;
++				clocks = <&cmu_peric0 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric0 CLK_DOUT_PERIC1_USI17_USI>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++		};
++
++		usi_i2c_17: usi@10d900c0 {
++			compatible = "samsung,exynosautov920-usi",
++				     "samsung,exynos850-usi";
++			reg = <0x10d900c0 0x20>;
++			samsung,sysreg = <&syscon_peric1 0x1044>;
++			samsung,mode = <USI_MODE_I2C>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++				 <&cmu_peric1 CLK_DOUT_PERIC1_USI17_USI>;
++			clock-names = "pclk", "ipclk";
++			status = "disabled";
++
++			hsi2c_35: i2c@10d90000 {
++				compatible = "samsung,exynosautov920-hsi2c",
++					     "samsung,exynosautov9-hsi2c";
++				reg = <0x10d90000 0xc0>;
++				interrupts = <GIC_SPI 802 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&hsi2c35_bus>;
++				clocks = <&cmu_peric1 CLK_MOUT_PERIC1_NOC_USER>,
++					 <&cmu_peric1 CLK_DOUT_PERIC1_USI_I2C>;
++				clock-names = "hsi2c", "hsi2c_pclk";
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		cmu_top: clock-controller@11000000 {
+-- 
+2.34.1
 
 
