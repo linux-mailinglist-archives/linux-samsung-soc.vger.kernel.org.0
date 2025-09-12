@@ -1,114 +1,164 @@
-Return-Path: <linux-samsung-soc+bounces-10916-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-10918-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AF9EB54CE5
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 12 Sep 2025 14:14:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53BF0B54EF0
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 12 Sep 2025 15:11:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4A1A3AB361
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 12 Sep 2025 12:10:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2CB9587ECC
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 12 Sep 2025 13:11:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B42B30C624;
-	Fri, 12 Sep 2025 12:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC19B30DD0C;
+	Fri, 12 Sep 2025 13:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DL4/ihgf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gm/WI1HU"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAAC3064BC
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 12 Sep 2025 12:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EFE30DD04;
+	Fri, 12 Sep 2025 13:11:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757678596; cv=none; b=CC/hTgzYaS/8oP2p+u78VZ7t4FVe4sebFmd20bZ6x5mBv7Xv1qyN4j+REIub7ADQPxK8dvXSS1QA7bbcT5VeKq7dPONCg2C/8KYv1E0D80gncDuvsCtOeFTZVc9he4R1BOkg6vvvegTLJ9SN2luNYsFFNpKfShzxEKwuxIa3HbE=
+	t=1757682711; cv=none; b=pANGTI8+NEI74cB/j1adXRnT9Mah7x9UJl0bEF9I7pZFwWxLR/ICxkmMGESK3QG0UhkuZVEFI1u9ETTQwdMX/A2pMCskypAnq49AHwiqHJvwE4tEsnVM+KC2LWCVmyuFJWfiHXTEGWhTE339At2PG4AG39Hs3yNMDXwyRoWW1Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757678596; c=relaxed/simple;
-	bh=QVperRnHEJSGJPTmM6KVvWxpKyHPxQzH/drJR08pJQA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dPfF6Yt7uwsMcvRcrqCWmpFTDvaSaovEPs581RJJpeiufDU8CSKSGypvH5goNTsMAVmYc2Pubq8wI7MfWXT9Iui6mINJkoHUxTfExZDaqRsdg1OJdaH0LGQC8x3m4+3i28o99+1vnfJUiSlZwglMvNbkz8z01SfFy9Tbz57R1jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DL4/ihgf; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-560880bb751so1818963e87.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 12 Sep 2025 05:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757678592; x=1758283392; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0PdFHKIGbwFEvO78k7VYipO5DNz3mTKctmHS0mOU/VI=;
-        b=DL4/ihgfFFXwIRBDN6byjzagNqLkh6HN+KEtNsE5XF3GAIey8uj/hdG7u9iRH5pUrg
-         gWHhGaL+Ykdw4rYmVdMYI6leNkBKlLrFjG/1x2rQkFpUAQ6Z3CkS11dReuW9O4AmVMlt
-         ASL49h+4ZOzl+GtpEKbGODW3bjM7/2AuiTCL8lmnLbTssR8bW/hIoQ9PMrwaz01dAjRh
-         SXPjN2aeV8ms/mb3CGu0aM0/ZupGivEdLqnLPrCsOyVJuW9XV8g/VhgxyWMaAuU2PpfE
-         PZu3gHqsfIk4TLuF+bXwa89ifMHGc2Ndloe1sLqoc4tXbclcSngtOEcCjhm2JwvqnjCR
-         trsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757678592; x=1758283392;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0PdFHKIGbwFEvO78k7VYipO5DNz3mTKctmHS0mOU/VI=;
-        b=FAUFRhOdVdcV9iwu2M4OX9mc9AOjqW+l8TyutX+X5P3/uBTlcbtcO9ItPa5Myo1gVg
-         ErsbrjDvaFpZ7rCtPUt2hjJlWc5MpAwbeDz+hsq7mrFOb2/qB1qRygIjSltpmgwei8TO
-         3cwmlVnb7HPDW4nXpK+EAQHt31WqlG/jnQILu+K+CdVnDNEUe+wJYTrmOTz22EIdo1gB
-         Wcq5RtWpS365KiqwVRBuu/BpR3pT8z4fMcgFMbaFpYM9jtBr4RETAhcrpfi9dmqyJiV8
-         8LA+TTpEwLlxAsRtCo2ETNHus/AvLxPrJG22P/ASVDI7L/LWm4evlFpvdOqKe1duUf1S
-         l6Qg==
-X-Forwarded-Encrypted: i=1; AJvYcCVAZhIlpGbZ5MpWJ4f4LvzuiPuRFA9f/pQn0Yv1i8HtMJ7VkqAmCe+gRAGES/X57RukLHdjAjSUwFnxXW+DpmbaRQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8Q1ez6yGe9w4rDDM1TvgvAygrA+j2Nuv9qTDHF1DcZs/j3DRi
-	LRv2dW2pGS4XcWcfSJNmaPTkToyGLd060ZjiGjWejWJXJWWFYNO1YnQHrw8oXWeq5jZrdw24ITW
-	bILpxk2fo5dBguUdzk4h8nu8ce0r2O3CpL8QPbPtPPg==
-X-Gm-Gg: ASbGncux6gtFWYAKCM07S6fKjr74oJMiHmPxSaLIYey8/bqehYZDrRtRL0WxEr+f9nb
-	ULxJ6sK6zyc+xb7MW6fUzqanBqVeZHTNOqt8z3D2y013Uqk22Nrkj8t9n7cMJ6Mdw7K9ZDoUXxK
-	ipb7eCFqwvTCOE7aNtnddF4hJTuUQ7Fq4muXei4pHYnTnzOt2Drj1CUG0ulkA97jphRUfEviaSH
-	pt9F+I=
-X-Google-Smtp-Source: AGHT+IGSZOlTW8CCLhnbl5TBUxb6BdFbzV6+OuHe7/KsFBuH3oWJWnilJXYkrdME2jw+G6yIQ8lGS/eJCMYe6xHrNns=
-X-Received: by 2002:ac2:4e0e:0:b0:55f:493c:ba2b with SMTP id
- 2adb3069b0e04-57051f3c661mr692236e87.49.1757678592231; Fri, 12 Sep 2025
- 05:03:12 -0700 (PDT)
+	s=arc-20240116; t=1757682711; c=relaxed/simple;
+	bh=NWoUK1L6tJ83jZRAUU7n305TX9o/58Nkp8C9PBewDA0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YOWb/c7NCO+JXfBICPYjtJC7occquVVC71PaWm7SJtXxWmEhoSWkUGqsehG4q4EznlNqTR0mumuerzZNslTWFjzz/FRCxEmLiplehlu/Wtd+U5sFol1LS9j6CIcKIRmNYJuaT7A1LSwd5ghR+c4t3EmumypFvOu4zcM+asHUE1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gm/WI1HU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F6AC4CEF1;
+	Fri, 12 Sep 2025 13:11:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757682711;
+	bh=NWoUK1L6tJ83jZRAUU7n305TX9o/58Nkp8C9PBewDA0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gm/WI1HUJ7qodlaUKyUiOPYnTT1YpgeGs6d++xyokuvBZD9aGmAZV007oTMQlbdjD
+	 Z3fUmKlNaPmXeK+doiPaonG1HdZBl+noHbQI+2VojQJuu/TDm/HQMCex6mIIMyeRx+
+	 eovDjV/j7oHY4RobWFiTzqyUdbISnKrCaj1NN7Yc/+wetzYk1hFOUb6yfkdrxhsoRr
+	 KRcflX7gQxRJb2b8TbZWdwc9VYAj2cco0hac2mM61EQPc0Nu6VYP5PRSkkERE1bGk4
+	 K1NvSoQOcGeHLkbOMu9xozchSac5sKXA3BB0zgj4pRj66D8QyUBR23RWEipaZCZLzd
+	 iKDl/xq9ur0ww==
+Message-ID: <94913844-e8d2-41da-ab4b-90f69b021bc2@kernel.org>
+Date: Fri, 12 Sep 2025 15:11:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250909181841.102103-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20250909181841.102103-2-krzysztof.kozlowski@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 12 Sep 2025 14:03:00 +0200
-X-Gm-Features: Ac12FXwqQ4S6LsJ5ISymFmSoLLy-PySRhoETtxxqmtEpkSI7Fd-SoneEsLrhhRs
-Message-ID: <CACRpkdZAt2n2gd7TuwRiBzUwjKy-LH=d7EYC7hg=j753UxKQYg@mail.gmail.com>
-Subject: Re: [GIT PULL] pinctrl: samsung: drivers for v6.18
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Sylwester Nawrocki <snawrocki@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Peter Griffin <peter.griffin@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] tty: serial: samsung: Remove unused artpec-8 specific
+ code
+To: Ravi Patel <ravi.patel@samsung.com>,
+ 'Geert Uytterhoeven' <geert@linux-m68k.org>
+Cc: gregkh@linuxfoundation.org, jirislaby@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, jesper.nilsson@axis.com,
+ lars.persson@axis.com, alim.akhtar@samsung.com, arnd@kernel.org,
+ andriy.shevchenko@linux.intel.com, geert+renesas@glider.be,
+ thierry.bultel.yh@bp.renesas.com, dianders@chromium.org,
+ robert.marko@sartura.hr, schnelle@linux.ibm.com, kkartik@nvidia.com,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-arm-kernel@axis.com,
+ ksk4725@coasia.com, kenkim@coasia.com, smn1196@coasia.com,
+ pjsin865@coasia.com, shradha.t@samsung.com
+References: <CGME20250911141714epcas5p29f591a1d645c9c69dc5b7d2c2d12af50@epcas5p2.samsung.com>
+ <20250911141605.13034-1-ravi.patel@samsung.com>
+ <20250911141605.13034-4-ravi.patel@samsung.com>
+ <CAMuHMdVe-FULHWk3QCBENG7TsbEZyxj0N5shhESxWBWd49JmOw@mail.gmail.com>
+ <6df0e227-896b-438a-913e-95b637aa2b14@kernel.org>
+ <8aeda67e-404e-4deb-ac90-015f2325ef64@kernel.org>
+ <000101dc2335$ccd62f60$66828e20$@samsung.com>
+ <abfaef6f-dd40-441d-86ec-7cd37c1e06b5@kernel.org>
+ <002201dc23a4$e27e29c0$a77a7d40$@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <002201dc23a4$e27e29c0$a77a7d40$@samsung.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 9, 2025 at 8:18=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On 12/09/2025 07:19, Ravi Patel wrote:
+>>>> Ah, no, I mixed up patches with recent DTS for Artpec-8. This serial ABI
+>>>> was accepted three years ago (!!!), so you are Geert absolutely right -
+>>>> that's ABI break.
+>>>
+>>> Thank you for your review.
+>>>
+>>> The DTS patches for ARTPEC-8 is added recently (https://lore.kernel.org/linux-samsung-soc/20250901051926.59970-1-
+>> ravi.patel@samsung.com/)
+>>> Before that, there was no user (in DT) of "axis,artpec8-uart" compatible.
+>>> So I am not convinced of ABI break (considering patch #1 and #2 goes first with review comment fixes)
+>>
+>>
+>> ABI is defined by bindings and implemented by kernel. Having DTS user is
+>> irrelevant to fact whether ABI is or is not broken.
+>>
+>> Having DTS user determines the known impact of known ABI breakage.
+> 
+> OK. So does that mean if someone adds the ABI then it cannot be reverted,
+> because of it breaks backword compatibility (users are using ABI in their local DTB) ?
+> 
+> Please suggest what should be the proper way.
 
-> The following changes since commit 8f5ae30d69d7543eee0d70083daf4de8fe15d5=
-85:
->
->   Linux 6.17-rc1 (2025-08-10 19:41:16 +0300)
->
-> are available in the Git repository at:
->
->   https://git.kernel.org/pub/scm/linux/kernel/git/pinctrl/samsung.git tag=
-s/samsung-pinctrl-6.18
->
-> for you to fetch changes up to d37db94b078197ec4be1cadebbfd7bf144e3c5e4:
->
->   dt-bindings: pinctrl: samsung: Drop S3C2410 (2025-09-02 12:31:25 +0200)
 
-Pulled in, thanks for taking care of the Samsung drivers!
+Three years ago you (as in plural) submitted the Artpec-8 bindings and
+driver with purpose. I think it was also claimed that DTS might come or
+might not come ever, so the purpose was to supported out of tree users.
 
-Yours,
-Linus Walleij
+This means you made a contract in the kernel for that support.
+
+You cannot change that ABI, because otherwise the contract you made
+three years ago meant nothing.
+
+You need to keep full backwards compatibility in the kernel. Look at
+mailing list or git log how others dealt with it.
+
+Best regards,
+Krzysztof
 
