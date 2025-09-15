@@ -1,205 +1,147 @@
-Return-Path: <linux-samsung-soc+bounces-11008-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11010-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85E2FB56DBF
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 03:06:23 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67478B56EEA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 05:42:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C43C11898D83
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 01:06:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5292F4E0740
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 03:42:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FDE31E3787;
-	Mon, 15 Sep 2025 01:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2927126CE23;
+	Mon, 15 Sep 2025 03:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="LFNkKIz/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ncuv8p2b"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m32110.qiye.163.com (mail-m32110.qiye.163.com [220.197.32.110])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE306125A0;
-	Mon, 15 Sep 2025 01:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2935822D4FF
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 15 Sep 2025 03:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757898376; cv=none; b=niAb+U4EbPqa/4gN6uwIKRgCNSnAh+S3dw7VSHZFhSWHujYE7tz4fgLfd5FrRKDfctboGZyIgf7XmBt7Fdo1na4fkSRVcE0MWpB2sea6BmG+LYbDFikrahGK9HGPn/BsaHtvd9JlHXn31tAFaB9L7t7ey4qYEqH72N6sMkU0xsw=
+	t=1757907719; cv=none; b=kRUUXOP1DafoSVh48RfxHgrklSejeGmz7P8HdUQKJJb0zPmOmmZQZqW369fadVAYh6oGlCSQYMpQuMTIdCjG5GIXgSBcDjjWeOjH8M15jSdhuOiTieJ9HZ79/o6jZ7Uh7+WJQVzNX6AwBZca3ENSHb001lc/j6PHY1S12etXPac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757898376; c=relaxed/simple;
-	bh=5Un06+OVx5HMp4SeXYmCht1/PNJTvV/saA1VhfFNYAE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=L7POzP6g5OUWU4vdLE6o9ONTxNOXuNbMIxVgG7BP0pRajBNDwAyXNrFMPECkdTCQ6ZDKkaYTdHpuZ7UDoJTvN0i6hsbWlV6UG/9gicxrJudJZuL804uRVT6JKCAnxEWhjFdcN3zIRe3hf7gpWiT8vhSEiBOfqbG3FSz+abYnkZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=LFNkKIz/; arc=none smtp.client-ip=220.197.32.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from zyb-HP-ProDesk-680-G2-MT.. (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 22c2d7f23;
-	Mon, 15 Sep 2025 09:06:01 +0800 (GMT+08:00)
-From: Damon Ding <damon.ding@rock-chips.com>
-To: andrzej.hajda@intel.com,
-	neil.armstrong@linaro.org,
-	rfoss@kernel.org
-Cc: Laurent.pinchart@ideasonboard.com,
-	jonas@kwiboo.se,
-	jernej.skrabec@gmail.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	jingoohan1@gmail.com,
-	inki.dae@samsung.com,
-	sw0312.kim@samsung.com,
-	kyungmin.park@samsung.com,
-	krzk@kernel.org,
-	alim.akhtar@samsung.com,
-	hjc@rock-chips.com,
-	heiko@sntech.de,
-	andy.yan@rock-chips.com,
-	dmitry.baryshkov@oss.qualcomm.com,
-	dianders@chromium.org,
-	m.szyprowski@samsung.com,
-	luca.ceresoli@bootlin.com,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	Damon Ding <damon.ding@rock-chips.com>
-Subject: [PATCH v5 17/17] drm/bridge: analogix_dp: Apply panel_bridge helper
-Date: Mon, 15 Sep 2025 09:05:57 +0800
-Message-Id: <20250915010557.244692-1-damon.ding@rock-chips.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1757907719; c=relaxed/simple;
+	bh=/zTUcZn7NzD3ckRvD3MPlU1/DCx/44y0tweUchu8two=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KY5aOoK0O2+wL/0TJB9D93ML3zNOGyhkUKHvNlMuuf0cb4ByFSVeyGKooTN9Sy1dq6cGYxPCF+eEJx0LdIGhJdO93/FUbhEpOHw+qnOWSaD6nyMoNPWOFUBKRrZubfBSlH8C4E3oSC4+YR8RvDCjsslxd/KWMZAdhsC0eXi9EyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ncuv8p2b; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b07d4d24d09so379851666b.2
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 14 Sep 2025 20:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757907716; x=1758512516; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RBcrzXcJywxMgHMPsR2Yuv2hoXzKHdj6vn06NKKyqo0=;
+        b=Ncuv8p2b/SKR8/Rdpwbt4tDaQPo6D+G5GRH0gaWWKRu5i7GZExZJ2sw42SdhN0bx3x
+         49KLnuUYSa3FBqW8js8dJg3pxkMdkYTWKHRMwYfAuKEXro2XQIz11ah+/fDIFBSKJ3Ik
+         SIVMUOZfUdLHcu+2TsoR2IZTMTBxEBZdz2Ng8F/NFhpO4PJby0JMM0mmYtcQxASNYs/D
+         vcrMz9E03dVxiTmxeadYQieLXOdMlZyChEqmaV5mNhDkcZfUWn/RwPGC8w7MMAblEgYL
+         aCXlGiV48B1R4tIEQoMZSA5sGSTcMF83t288tDD+ef2JoTXKjk3mtcCR1u0R7T/HywGx
+         zsOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757907716; x=1758512516;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RBcrzXcJywxMgHMPsR2Yuv2hoXzKHdj6vn06NKKyqo0=;
+        b=b/+r9ANiOwotcMBswE10xOLmgKuNH8AIZQ57NhNKxSm2dey+GlopjsbbVamKKJebQ4
+         9V6iaJKASYcO6L0sOH/dspN3Y76qulKB25h9AXmkuI5c/wyUL1IRbHV8neuk7RVg7z82
+         JbSM/KhtCwJVDGbwzu53Rx3mSJ69ghSGZg8Fr69c/w64o6gQ2qOueJIwMHoy4yK+PWbp
+         UJrn0AQQNXCWCheRW4ONm7g53qwV65m3TK89qJyOeFVFlGEqgLDLGXYVNxyYLI74OgiU
+         Fu90wZbXRVmn6Z569T1uJdFhgywpyfGWBaCIPVuDEZyfVQUU14ZqDCXkmKC2B/O+m5/R
+         ncXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPs7iCHXsYiPq8rgHbGq9WKvZ4ryLPib51eQa3NdypbEDSA9HpsXTX7MZjmnbAHymSpkOrC/Nz5YdaHAFypNHdUA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwL5/EUHYkiaeTNZ2fW6/fB4zWK3VWratl1AkOEj0XLKYGmULr9
+	CzolLOxm74+cGrtwhcYVrHOFHk0pcjT6bP7cJsWpTdmEuOrppdtELa6OyViFpbhghZJ8e4ZlfJi
+	ODwblzexJoTfiRD85ball5rurFdHMTdRyhaXt
+X-Gm-Gg: ASbGncteqyIInBZYhnmE5HfXzluaNMuMK/2nNOCwIJIP/0wzbsyS+02bO0E1eDPHI6w
+	A7W/WgiGY6gtdhHLH0n7AqsevDo/x0XxGyhszNRcKkFrLCJnminnqEKBp9QfeqWwnmP5j4znenc
+	KsX55co4a6+4oM05ptHSxGbs0aCBaO8v53fWf99veOK5XPvlHuJozVCYt8nTDDA9a/xBuxo9/NH
+	2KWpZczK4E/0k7r
+X-Google-Smtp-Source: AGHT+IFKMMiQj/EmVbLhBhpf7bD4rE+j6QNew2p++ITSee+6uicU7xqOB08bfh4j/viBhaH8QlYrqM57nANgt8PcVxY=
+X-Received: by 2002:a17:906:4ec1:b0:b07:b311:3b90 with SMTP id
+ a640c23a62f3a-b07e3fb4087mr586042566b.45.1757907716243; Sun, 14 Sep 2025
+ 20:41:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a994ae8489703a3kunm2e24f0f2c406ad
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGklMTFYZTB5LGkIaT00ZHRlWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
-	1VSktLVUpCWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=LFNkKIz/N3bu37tZp7ez4ISGt1rPba2Xe+HHNsgqpNg5ZxHNIc64Ug8V3NwK5cHtaiDi/WzuCT9Un86A8dfLj5u290PFcXApcRNgEbrNnJJFdVmjm5sOeX9FYec3vcF0UfC1N+Y6Ck5qmgDCGR0Xc7/aGIbjllALGHBckuL5spo=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=wyl4GTfuVp8GLSnSJKlEMZiEYu5mv+JiSb0mho34cjc=;
-	h=date:mime-version:subject:message-id:from;
+References: <20250914031522.33155-1-inki.dae@samsung.com>
+In-Reply-To: <20250914031522.33155-1-inki.dae@samsung.com>
+From: Dave Airlie <airlied@gmail.com>
+Date: Mon, 15 Sep 2025 13:41:44 +1000
+X-Gm-Features: Ac12FXz1FF4b7hOxjjzBTbz6jFWwkCq2xvlOvTCad4mE280oDrZv-SH3k4C7vzs
+Message-ID: <CAPM=9txNEQXDU6rKHxTVXej7fxgrbbd_X+emHejwA4a7s9aoaw@mail.gmail.com>
+Subject: Re: [GIT PULL] drm-misc-next
+To: Inki Dae <inki.dae@samsung.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Maxime Ripard <mripard@kernel.org>, Maarten Lankhorst <dev@lankhorst.se>
+Cc: airlied@linux.ie, daniel@ffwll.ch, dri-devel@lists.freedesktop.org, 
+	linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-In order to unify the handling of the panel and bridge, apply
-panel_bridge helpers for Analogix DP driver. With this patch, the
-bridge support will also become available.
+Hi Inki,
 
-The following changes have ben made:
-- Apply plane_bridge helper to wrap the panel as the bridge.
-- Remove the explicit panel APIs calls, which can be replaced with
-  the automic bridge APIs calls wrapped by the panel.
-- Unify the API of getting modes to drm_bridge_get_modes().
+I've already gotten the last drm-misc-next pull for 6.18 in my tree,
+there are some patches being pulled in that might be for 6.19? or do
+we want to get another drm-misc-next pull into 6.18?
 
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Dave.
 
----
-
-Changes in v4:
-- Rename the &analogix_dp_plat_data.bridge to
-  &analogix_dp_plat_data.next_bridge.
-
-Changes in v5:
-- Move panel_bridge addition a little forward.
-- Move next_bridge attachment from Analogix side to Rockchip/Exynos
-  side.
----
- .../drm/bridge/analogix/analogix_dp_core.c    | 29 +++++++++----------
- 1 file changed, 13 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index 5e9e14b2f29a..e53dc0420490 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -857,11 +857,7 @@ static int analogix_dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_co
- 	struct analogix_dp_device *dp = to_dp(bridge);
- 	int num_modes = 0;
- 
--	if (dp->plat_data->panel)
--		num_modes += drm_panel_get_modes(dp->plat_data->panel, connector);
--
--	if (dp->plat_data->next_bridge)
--		num_modes += drm_bridge_get_modes(dp->plat_data->next_bridge, connector);
-+	num_modes += drm_bridge_get_modes(dp->plat_data->next_bridge, connector);
- 
- 	return num_modes;
- }
-@@ -909,7 +905,7 @@ analogix_dp_bridge_detect(struct drm_bridge *bridge, struct drm_connector *conne
- 	struct analogix_dp_device *dp = to_dp(bridge);
- 	enum drm_connector_status status = connector_status_disconnected;
- 
--	if (dp->plat_data->panel)
-+	if (drm_bridge_is_panel(dp->plat_data->next_bridge))
- 		return connector_status_connected;
- 
- 	if (!analogix_dp_detect_hpd(dp))
-@@ -994,8 +990,6 @@ static void analogix_dp_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 	/* Don't touch the panel if we're coming back from PSR */
- 	if (old_crtc_state && old_crtc_state->self_refresh_active)
- 		return;
--
--	drm_panel_prepare(dp->plat_data->panel);
- }
- 
- static int analogix_dp_set_bridge(struct analogix_dp_device *dp)
-@@ -1150,7 +1144,6 @@ static void analogix_dp_bridge_atomic_enable(struct drm_bridge *bridge,
- 	while (timeout_loop < MAX_PLL_LOCK_LOOP) {
- 		if (analogix_dp_set_bridge(dp) == 0) {
- 			dp->dpms_mode = DRM_MODE_DPMS_ON;
--			drm_panel_enable(dp->plat_data->panel);
- 			return;
- 		}
- 		dev_err(dp->dev, "failed to set bridge, retry: %d\n",
-@@ -1168,16 +1161,12 @@ static void analogix_dp_bridge_disable(struct drm_bridge *bridge)
- 	if (dp->dpms_mode != DRM_MODE_DPMS_ON)
- 		return;
- 
--	drm_panel_disable(dp->plat_data->panel);
--
- 	disable_irq(dp->irq);
- 
- 	analogix_dp_set_analog_power_down(dp, POWER_ALL, 1);
- 
- 	pm_runtime_put_sync(dp->dev);
- 
--	drm_panel_unprepare(dp->plat_data->panel);
--
- 	dp->fast_train_enable = false;
- 	dp->psr_supported = false;
- 	dp->dpms_mode = DRM_MODE_DPMS_OFF;
-@@ -1498,15 +1487,23 @@ int analogix_dp_bind(struct analogix_dp_device *dp, struct drm_device *drm_dev)
- 		return ret;
- 	}
- 
--	if (dp->plat_data->panel)
-+	if (dp->plat_data->panel) {
- 		/* If the next is a panel, the EDID parsing is checked by the panel driver */
- 		bridge->ops = DRM_BRIDGE_OP_MODES | DRM_BRIDGE_OP_DETECT;
--	else if (dp->plat_data->next_bridge)
-+
-+		dp->plat_data->next_bridge = devm_drm_panel_bridge_add(dp->dev,
-+								       dp->plat_data->panel);
-+		if (IS_ERR(dp->plat_data->next_bridge)) {
-+			ret = PTR_ERR(bridge);
-+			goto err_unregister_aux;
-+		}
-+	} else if (dp->plat_data->next_bridge) {
- 		/* If the next is a bridge, the supported operations depend on the next bridge */
- 		bridge->ops = 0;
--	else
-+	} else {
- 		/* In DP mode, the EDID parsing and HPD detection should be supported */
- 		bridge->ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
-+	}
- 
- 	bridge->of_node = dp->dev->of_node;
- 	bridge->type = DRM_MODE_CONNECTOR_eDP;
--- 
-2.34.1
-
+On Sun, 14 Sept 2025 at 13:15, Inki Dae <inki.dae@samsung.com> wrote:
+>
+> Hi Dave and Daniel,
+>
+>    Add DSIM bridge drvier support for Exynos7870 SoC.
+>
+> Please kindly let me know if there is any problem.
+>
+> Thanks,
+> Inki Dae
+>
+> The following changes since commit c08c931060c7e44452e635e115913dd88214848c:
+>
+>   drm/gem/shmem: Extract drm_gem_shmem_release() from drm_gem_shmem_free() (2025-09-12 19:04:37 -0400)
+>
+> are available in the Git repository at:
+>
+>   git://git.kernel.org/pub/scm/linux/kernel/git/daeinki/drm-exynos tags/exynos-drm-misc-next-for-v6.18
+>
+> for you to fetch changes up to 17308ab685acba947fb35e52fada2b97f346b8cd:
+>
+>   drm/bridge: samsung-dsim: add driver support for exynos7870 DSIM bridge (2025-09-14 11:53:09 +0900)
+>
+> ----------------------------------------------------------------
+> New feature
+> Add DSIM bridge driver support for Exynos7870
+> . Introduces Exynos7870 DSIM IP block support in the samsung-dsim bridge driver.
+> Document Exynos7870 DSIM compatible in dt-bindings
+> . Adds exynos7870 compatible string and required clocks in device tree schema.
+>
+> ----------------------------------------------------------------
+> Kaustabh Chakraborty (12):
+>       drm/bridge: samsung-dsim: support separate LINK and DPHY status registers
+>       drm/bridge: samsung-dsim: add SFRCTRL register
+>       drm/bridge: samsung-dsim: add flag to control header FIFO wait
+>       drm/bridge: samsung-dsim: allow configuring bits and offsets of CLKCTRL register
+>       drm/bridge: samsung-dsim: allow configuring the MAIN_VSA offset
+>       drm/bridge: samsung-dsim: allow configuring the VIDEO_MODE bit
+>       drm/bridge: samsung-dsim: allow configuring PLL_M and PLL_S offsets
+>       drm/bridge: samsung-dsim: allow configuring the PLL_STABLE bit
+>       drm/bridge: samsung-dsim: increase timeout value for PLL_STABLE
+>       drm/bridge: samsung-dsim: add ability to define clock names for every variant
+>       dt-bindings: samsung,mipi-dsim: document exynos7870 DSIM compatible
+>       drm/bridge: samsung-dsim: add driver support for exynos7870 DSIM bridge
+>
+>  .../bindings/display/bridge/samsung,mipi-dsim.yaml |  27 ++
+>  drivers/gpu/drm/bridge/samsung-dsim.c              | 353 ++++++++++++++++-----
+>  include/drm/bridge/samsung-dsim.h                  |  16 +-
+>  3 files changed, 308 insertions(+), 88 deletions(-)
 
