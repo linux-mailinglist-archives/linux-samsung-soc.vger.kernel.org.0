@@ -1,277 +1,283 @@
-Return-Path: <linux-samsung-soc+bounces-11039-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11044-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D870AB57665
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 12:32:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B10FB57B2C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 14:35:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91C2C16538D
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 10:32:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 065743AAB1B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 15 Sep 2025 12:35:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335372FB963;
-	Mon, 15 Sep 2025 10:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D22D7309EEF;
+	Mon, 15 Sep 2025 12:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="EBS9dQpy"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="j6ABT3xB"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011057.outbound.protection.outlook.com [40.107.130.57])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010047.outbound.protection.outlook.com [52.101.193.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AF51A239A;
-	Mon, 15 Sep 2025 10:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.57
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B2D302CA4;
+	Mon, 15 Sep 2025 12:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757932367; cv=fail; b=Enc+7EmSxbipOPcdNmoHoRo+LQQwSgZnokoh2Lk3TCqeAIXxOmKiysQisRjX9aQ7gHNIgmACJtPlPhNbz8yNoijSoZ4DhLDsbYvbZuAjSrESyhX7TCANWPhcAjtGV8LjHSEOu7RI0mjHclDZIW13mNst7ydyOYwRGsXU7J/L978=
+	t=1757939725; cv=fail; b=iThlJRficAXw2FaLEKFUiPtmCmKtmrpcLDUzuLI1Jtj3iXSkCtitv68BWq30xKj4yehlXXBiyLJSMwvmw4ZKq43v3+lPBd09gx/NeG5JKN8OwRwGOEHQFUMcw3rJhNgyxZ7YPYalAk/WIOEoCcKdsmqWDmz1cXsymvGLuktdlTI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757932367; c=relaxed/simple;
-	bh=R7yKAhuiP+KACZKrgqDgj1aq6/P7yw7zupEPTbg/W6k=;
+	s=arc-20240116; t=1757939725; c=relaxed/simple;
+	bh=mRyvjBN0VQXetX8UHOPdc/l8fQL4GIKNfTvf41Qvq7g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=AN0lBFQN7Ds/aA1nYZMz1RmANvlk4pFeEYwekEpmxulFnPuCgDvotmWeVpcgxQS0Ua9oszDDO7IADGiS7WcMNwRn8J4ajBiyc5wQ1b6usjlpshVt9KMzkxspku93xIz3ivgpf/5iuunijs4+lHItSlRTm/FWAG0EkayfZIN7sBs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=EBS9dQpy; arc=fail smtp.client-ip=40.107.130.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	 Content-Disposition:In-Reply-To:MIME-Version; b=W8SuFAipulZxOKzIRKQUuYTjRJGKB+Rn/DueezTl91Mf9f0gtToEwD3cAtqDolxyqvuyzaxuE5ur8XTzT8WLv8HQi7u8OD2wQi7IJxBihM4nLSRW1er3ywuqc1iUe5OlvLVUArYiSCkTYzxVjx2bbcmtOH8xR72mn+9cjYx7szY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=j6ABT3xB; arc=fail smtp.client-ip=52.101.193.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nRThh8Y1Lx1IArr+UbYn+DgPwg1pcXBkLOvM9TJYowF2gpMOBTH/teOpdqcQiJXYFnJMMT4DK9ZyXEpsxVclMwwXB9t0SYTnTGVSF0ZasoT4lYetJoKkHpqnfQ+mCadcISfOGNCjkXB5kbTugF+RfmKCNlT3xutKk5pEl14UqxQSytdWC+fQ+TZi9msad69qeuMS4UAYQGMPf0+qiBg33gbhnIi+1md73YRU0EUv1W92D9em3e/kR0n0VE8hdPYb7PnUrSYE/VnZOX9HyMVQs7+3K0ZVJ29dEq5EXd65EscCxDQUjrt4l2ds8LciaInBwsX8tBGCcTzGb0tUS/hPxQ==
+ b=AYY/OuchPJXSJ2CTP80xoV/axVMnv3m1d9wmYd1/T+AooPrVsv/251Acp98ede+j+9/N6XW+dtgUF2AGiTKGqWRLS1afgA7Ksp5WI1xV2Hmsae+r0jHZqhl+OBC6Yscl1EcUdityG5XSSqiVA22kphp+HMrjkIRCkRqejFYtmoq5jj2BAmIobcTV0AblwQK3hJoNqLv8Gq0l5HXJe4e2nP8ZpWRakqKckk6kRP0duPBTSRZ111QCwUPHAFN0tVkVeuD7N+aSQyPYNSKxGflRxAf968Q6gkN3LPiZ82qGwYHWFK/qUP8DOQB01Bg7MAUyV/EELp2PUrLWty8iQxHafQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GlJfCaS6ynJMJa4hzwSk6DrJC9H/lR33r3nsnMiLmxI=;
- b=kfhccqF3+CrVIY1EKQr86B2DeO0I3aY1P++k/iX5CCHNRIuz2H7GFMBzn24jzH+t5j9oDciJuYgcAfHo+tu6c9PwFxo8cVeghZCBdnzN0AZKofgO7faXtuPV2u3hLBh5FPBTtKzHclYGem99O53IlLGfg+cRIg3X9MmOMXkomOeBfLhFeVMcxuEEPJLSEVx/b5fNVqKOMH/jBNe7D5ivS8ZA1S0gP4zf3FoE8FmdAQ5XuycNym5rP0uudwB51htktkWcDPnEhjz8xm0E9S1DXZD0Y3UUbX0Hozzyeq+o2ceCLrBeHj29TyaBGmH3yjo6lARjcP+Bz5IIxrWUcGB22A==
+ bh=klqifleBECQUdCDdn7Emy4+VfUUVcqIR/du2xfFhkYs=;
+ b=trSJeVEHPXv208gr5INwLw7mgz3mVG1jCxTVT9fW+r8DPNiFoXyjUCAs79/00ErNIhyGYUpHJhUrxe7Liy0pncS2Xc9g5gWF5KDweTXVT2mFhTJg1uSSMaleRYzBu55NkNm+/yV5JjH5huEPpeXvVZEGPrgM5UMTox719lre3hGovbdfDoIvZ7dM3ZGTJ+iSmI10rfzaVIxvpmcddLEWogO47k0NAFBSjzZDUgjXl6ZhlZvkhKZ2r13uHIkMr/QRPYV2EOPKr17Om2GwLn7peEZZIdb7s1/sZcy8kRltWgJwrhUQqgIX5V4IwYJNCIJK6Py/Tm0BVvnZ41mqBczQ8w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GlJfCaS6ynJMJa4hzwSk6DrJC9H/lR33r3nsnMiLmxI=;
- b=EBS9dQpykhtTVo6lVHO3MlUO3uXD36/kdixERU8v24VUuCnj9wc/PdNnWXQb0VyqHkBp+x4odH6NOIQoF3wFSHd4otgTlwvttP/bj55dH5deKxztN+7a/mxlsvXUsu23/S0RJqDGUBQDlT93U0y90nCQvhaZNTIafwGx1fMDEGjv1djPhav7rSUoUYrKmrYH8z8uV+eVpz0gWqrA6+tOOobEgdLSErUuXugjB6jO+skUybWiDZgRkz+OgtyUYoKLnaOGmMwzT0iOLRgJxavE8B+XUhNwZjo+gcj827f3F1d+r0HGrwf7wg1b3xMGH5RVPC7SYW4IAAeTE3Z/G4xlTQ==
+ bh=klqifleBECQUdCDdn7Emy4+VfUUVcqIR/du2xfFhkYs=;
+ b=j6ABT3xByWSP6qwb7p3/3fif5TU84jolq/vhH7m0hIKjTsaHiW7DEFx+xQ8tke1Jbpb+55maMjcXPz8IJDSRxtwv3jR83yckzzPeMRU48V/vzNrui+YgMleQG2WsjOb1PuS5NkdKt8+y7hPR58iDwDnw3dtf7dZiHvH1Gnu9SOSv3nbWgAi3b9e2zvxoyNvm1A03Ne5IJqp9nJBd1CnSS8p5ksU2xNdNXUR7Ae9pV1ftw41Yc8n8PmkVGXRgyItBiddxyzel5nSCs0mUa6DmUR7TAxW8ZkhDfGqUFTt1BpXz+nIg9t8TvKz7R8D/hVcGIfWZupQzikl/b5R0zZy8DQ==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com (2603:10a6:102:1da::15)
- by PAXPR04MB9304.eurprd04.prod.outlook.com (2603:10a6:102:2b6::20) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
+ by PH7PR12MB6660.namprd12.prod.outlook.com (2603:10b6:510:212::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.11; Mon, 15 Sep
- 2025 10:32:39 +0000
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630]) by PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630%4]) with mapi id 15.20.9137.010; Mon, 15 Sep 2025
- 10:32:39 +0000
-Date: Mon, 15 Sep 2025 19:44:09 +0800
-From: Peng Fan <peng.fan@oss.nxp.com>
-To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 5/5] clk: samsung: introduce exynos8890 clock driver
-Message-ID: <20250915114409.GA14804@nxa18884-linux.ap.freescale.net>
-References: <20250914122116.2616801-1-ivo.ivanov.ivanov1@gmail.com>
- <20250914122116.2616801-6-ivo.ivanov.ivanov1@gmail.com>
- <20250915074931.GD8224@nxa18884-linux.ap.freescale.net>
- <d23885a5-6d42-443a-bf19-eb6747e8ec47@gmail.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.21; Mon, 15 Sep
+ 2025 12:35:17 +0000
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9115.020; Mon, 15 Sep 2025
+ 12:35:17 +0000
+Date: Mon, 15 Sep 2025 09:35:15 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, "joro@8bytes.org" <joro@8bytes.org>,
+	"bhelgaas@google.com" <bhelgaas@google.com>,
+	"suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+	"will@kernel.org" <will@kernel.org>,
+	"robin.murphy@arm.com" <robin.murphy@arm.com>,
+	"sven@kernel.org" <sven@kernel.org>, "j@jannau.net" <j@jannau.net>,
+	"alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+	"neal@gompa.dev" <neal@gompa.dev>,
+	"robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
+	"m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+	"krzk@kernel.org" <krzk@kernel.org>,
+	"alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+	"dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+	"yong.wu@mediatek.com" <yong.wu@mediatek.com>,
+	"matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+	"angelogioacchino.delregno@collabora.com" <angelogioacchino.delregno@collabora.com>,
+	"tjeznach@rivosinc.com" <tjeznach@rivosinc.com>,
+	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>,
+	"palmer@dabbelt.com" <palmer@dabbelt.com>,
+	"aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>,
+	"alex@ghiti.fr" <alex@ghiti.fr>,
+	"heiko@sntech.de" <heiko@sntech.de>,
+	"schnelle@linux.ibm.com" <schnelle@linux.ibm.com>,
+	"mjrosato@linux.ibm.com" <mjrosato@linux.ibm.com>,
+	"gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+	"orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	"zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+	"wens@csie.org" <wens@csie.org>,
+	"jernej.skrabec@gmail.com" <jernej.skrabec@gmail.com>,
+	"samuel@sholland.org" <samuel@sholland.org>,
+	"jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+	"rafael@kernel.org" <rafael@kernel.org>,
+	"lenb@kernel.org" <lenb@kernel.org>,
+	"Liu, Yi L" <yi.l.liu@intel.com>,
+	"cwabbott0@gmail.com" <cwabbott0@gmail.com>,
+	"quic_pbrahma@quicinc.com" <quic_pbrahma@quicinc.com>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"asahi@lists.linux.dev" <asahi@lists.linux.dev>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
+	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+	"linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
+	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+	"linux-sunxi@lists.linux.dev" <linux-sunxi@lists.linux.dev>,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+	"virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Sethi, Vikram" <vsethi@nvidia.com>,
+	"helgaas@kernel.org" <helgaas@kernel.org>,
+	"etzhao1900@gmail.com" <etzhao1900@gmail.com>
+Subject: Re: [PATCH v4 1/7] iommu/arm-smmu-v3: Add release_domain to attach
+ prior to release_dev()
+Message-ID: <20250915123515.GE1024672@nvidia.com>
+References: <cover.1756682135.git.nicolinc@nvidia.com>
+ <c6bc114e438779129a891408af7d997bf6c28b5b.1756682135.git.nicolinc@nvidia.com>
+ <BL1PR11MB5271767F92289C1D1207D8188C08A@BL1PR11MB5271.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d23885a5-6d42-443a-bf19-eb6747e8ec47@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-ClientProxiedBy: SI2P153CA0017.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:140::10) To PAXPR04MB8459.eurprd04.prod.outlook.com
- (2603:10a6:102:1da::15)
+In-Reply-To: <BL1PR11MB5271767F92289C1D1207D8188C08A@BL1PR11MB5271.namprd11.prod.outlook.com>
+X-ClientProxiedBy: BLAPR03CA0060.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::35) To PH7PR12MB5757.namprd12.prod.outlook.com
+ (2603:10b6:510:1d0::13)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB8459:EE_|PAXPR04MB9304:EE_
-X-MS-Office365-Filtering-Correlation-Id: 95cea46f-25e5-4710-1c07-08ddf44331b3
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|PH7PR12MB6660:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54ae7865-3ecf-4acf-1a0d-08ddf45453aa
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|19092799006|52116014|376014|7416014|38350700014|7053199007;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?d2gF2H9s5Q85gu3QWKPQzzLQXsl+rWATni9PgIQfsPH3elq05trKw4wrs75v?=
- =?us-ascii?Q?UlEwo849mo5P8fFT4x5KrNrrMWR+BLLRoauefXPG+/bfVk4+ZWm6QkhpI4TR?=
- =?us-ascii?Q?zw1ayopLvf3m5kJHtm+Pt8AzUNH+5EflsqXn4BSB+BsxiaR1R6Gq2qRMSCe6?=
- =?us-ascii?Q?viT+Y/xkXAjKn1eT5htE9RhYXvyBn5YOmZpAjaMlsn2TSxRUEZAhBV77hWUR?=
- =?us-ascii?Q?ixkadPfu+S7Rc+udWjURQ02XBTY7oqzsDZCpOq43dMLsPg86qaB4jXiO4dxA?=
- =?us-ascii?Q?eg7ycQlI8X7XPOhic1V8tHJIF7qrhG0F0keCUpYhy+cPc73MJtW7OFhgQF2J?=
- =?us-ascii?Q?YNjOF04UCcHWFpKHLHle7uE2s+dcYXwJvXmHYi9lcUnPX5Z9d0sHhDG/RwR6?=
- =?us-ascii?Q?4HdaEBHqFRHzTt+r8xqa3GxdsVLONUV+atPBjxJJZNtzNcWNHrW4oKnEWff3?=
- =?us-ascii?Q?hKhodzltgR87zTUHFv+y+5vYNLkFHJWku5nvdN0GGr3FwZEd9WuNr7+FNTfY?=
- =?us-ascii?Q?i1rxUjCJWXdWl1WfLTMx2gsuPrVc7QXGELDcXu8BrrmRarF0ReU9o6+VR6mW?=
- =?us-ascii?Q?jSns18jT7yefZOabz5bBw6IvmO6D5aWU5r1snEtHL+YF0BqUhhhPtDZsJGxs?=
- =?us-ascii?Q?eQLM+KhinLjunuV6kCG8oeDAj+tFCAvCHsP9GOB+SS8N1rGs8fiaXHuUGDW9?=
- =?us-ascii?Q?Env1uvBfQUtrBWlAd5EY1s+YncUBqx8Fn9zrzm2pVpe6tOmuO0OB/mqlS6Co?=
- =?us-ascii?Q?h5LnUcWCuRATjVpgqxpv7RLXfat4bjMekWZK7KmhJwmdhVJrauo0GyBAoM2k?=
- =?us-ascii?Q?7ZCtFsLxIkRvuQb56ADM1zC6MjU5Jv//YgOdFwsNDoGFU5JjNLAg7BLHphIF?=
- =?us-ascii?Q?gXMbMwTOVWjwEfkrMqsmOU8H5FGNUgQStd5YIePIzjFZen4J3nPgOIiVpmNf?=
- =?us-ascii?Q?wxvuUHJMmQeNIuRh0LVQq7XL6t6h0BRSNECnb+Mhi5rMMN0hJm/pc8dM3eGp?=
- =?us-ascii?Q?CVYNgjlCTUqob3r06YDuRe1fP9LpO44m52kibWCl0lLQ54rYUOl8299rp2E/?=
- =?us-ascii?Q?ahKuIop/BTv2a2hMf+iJCiA7arKL7D/hLHflietHvYzTanaan3yGTxGf9c+/?=
- =?us-ascii?Q?y6zQMCQKCFu8q5Bk+SLS/TskCLPESxw935PS3F/nOMtihZqPpvURj0gX6MmJ?=
- =?us-ascii?Q?1HA8kG+b/64013VqmRu5tNzJ2DYaWtcnIS415jrr9Kti2j1X3cq4Soel43+s?=
- =?us-ascii?Q?RQncBdrvFP5LgvP2oFpEyLl8d8HyVCuHlgBMrLG+Bmbrzvwv+/KzjeAqKkSC?=
- =?us-ascii?Q?kG/tdfMIJ/optXZPB1I0s7Wz0m41xK8SflqECQx8l+RZZIlCwiqREDb2WUj9?=
- =?us-ascii?Q?iZgkeL5pc+jDHool4/oI2/IfXxuGa1W2ndkmW3kxRjH29m5BtCEUGrx/tNIA?=
- =?us-ascii?Q?9si/Bjs8lOYuXGhBr5clMjISagTaLQUPbFitrl+TSqCs8c+a5wz8rw=3D=3D?=
+	=?us-ascii?Q?wIo7fnoZItfogrWaHjNp2GIyUSiu0Cka5c8NEISfZeg2Wtb1ilEvhZHuieob?=
+ =?us-ascii?Q?XPTboQpMILa3ho8Y9a0qzNwJpFM/8MLJtjEL4gNIX8SsrgumlreyUR1jONam?=
+ =?us-ascii?Q?RXgS/0cQSowfJLwzFMHrZRqxwuXRraLkkj7AP51qBuGSzIuQYnVnLEgcQNbe?=
+ =?us-ascii?Q?pwz+pzY6lEC0uuvFSrY+ly8S9Y3Rd6l/Y84uy76MLp2XyJhFYiYr8mUU55Ni?=
+ =?us-ascii?Q?9LTDbsyeS5I17fbu0fnfhRdmi6YkcukM+NbcwYKlYu8L6xkyALHH9y2sk/4E?=
+ =?us-ascii?Q?ioIG9ATyG1v+x6pdFkF9Jffuz6JEIp26Vv5GXpI/HbAKR8vR4Ysmrta2KPc0?=
+ =?us-ascii?Q?Mid2pErBYYta/ZfLXSbArU3mDISuqCBtRfBsfBklCRbh/zDDJ/36L5UacM9R?=
+ =?us-ascii?Q?Dyvh5ZAIFxB8g8ehkrcj3FJ7wXSWH/AmAjEwDQQp+6N+826vpF/DfqsdUkhN?=
+ =?us-ascii?Q?groUf2SlfzYVKvMcOlFhzOT5jswnCW1d9KNM9Q8Tj2HXqPWwA1fiy2fu2hk4?=
+ =?us-ascii?Q?XnXFn8t8461Dtp4U4n01Vg16yEsbMIt4+HNbeqhuo3BYrYef99MAWR8cyw6m?=
+ =?us-ascii?Q?Njv2fEGUuaKlnb9vO0f/NqeRrWO0/5DrEQduIi+4ei5nWCLPc6T5NtmtK7+I?=
+ =?us-ascii?Q?bH7BaV9bv6qIb3LKoOEUByejTwODK4qQ2dp2ghUhQyS2uq79em0cM/shzZLZ?=
+ =?us-ascii?Q?/HG2KoWyqpzy2VdgbIgBUduI7mFCaquikN86gQAf//kMEd6m8KBqVM0AWPY6?=
+ =?us-ascii?Q?qKdn+bVxBSccnzcblDAaTxkjzwyWizGrRNG2+oYYoROVpozfjDuabVwrAzyX?=
+ =?us-ascii?Q?V1yPUs7POx4RA88Zo9NM6lZDGTdKHAHpNgGRJSCQj7nbBvN26r9wnF/OkVWv?=
+ =?us-ascii?Q?Bc1X/sX5dQU8tuWHQzvo/cEa7m3+i4GubXyF9lp4GLffSTjQ2EWF/TXv0rXZ?=
+ =?us-ascii?Q?kU8E24hatP8UskrFFg3/cfvXxGzVifkUEI+wv4Ppa/ZE5Cf/3sM5Ie8ffa9N?=
+ =?us-ascii?Q?wnd1f3OaOU/ZByWJVmDkVUs+2WIFXwmmtKYtr9ugIM8WZBFOZxY+ELGWsXPh?=
+ =?us-ascii?Q?Ee0BIM1ui7rt6FeNDEyW6X3LOSBfB4PQaFAfjFVx2CCxPxBhXANiZa/m/5/c?=
+ =?us-ascii?Q?D8I86+zz8Xw6FzS3mlp0/WQdUU36IwyxJGs4pHOSewUls5Dx5Q5x92t8j7Ix?=
+ =?us-ascii?Q?WPeCGxQyXdN0KEETb0+wXvNlmIrqqanZgP5pDE0ai/jtHTUldHLnnlz2fyHM?=
+ =?us-ascii?Q?O2opC6hU2kpDMilQp7WBdfLksZiPtgHyzDO+O8mKKvfAWtfJlUXEi0eNuk3w?=
+ =?us-ascii?Q?9cBlfZBiBzykg2DcKNc/vW6KqRKAmZCBWM6JPM9FiKC6TZ7eQE3O396BYw2C?=
+ =?us-ascii?Q?ZotklMpcFN5z6ZTGgZzXZJPRWnVOM1ncVm+N4AOKpySrmLAmFJRKjimK1GYs?=
+ =?us-ascii?Q?N9MmALdmdl4=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8459.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(52116014)(376014)(7416014)(38350700014)(7053199007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?hQA3hCI2NL8wSQe7faLV4XhyxFufCA2diJjBJKBF1V3AJIqNkfO4D21rVaHN?=
- =?us-ascii?Q?LPr3WueeW/z/KCdc7fWUI0qrf1anFBM7Ym5J7Icuo3pI9MlnpvLVzJca20OM?=
- =?us-ascii?Q?984lFlB+4BQDFyyHVOlDzE79B8mrlCky7FmJcpPcVYtBoKoKzPznhf/NEaVm?=
- =?us-ascii?Q?JaKL4S7ir+t72+nMM+3Vsja/ko6VibmLFSUmzeH6GERHrUpM/CW3R77ckaIw?=
- =?us-ascii?Q?k5SavpSSJueQr/18gOOYpN1LftM2Ia4AS7SxADh+pSH17fsnAgPSbGQStKEc?=
- =?us-ascii?Q?u4plgKpeDS1FaLfSHbPrDv1l4Kv8ceZ3+0PiwsPmnwxOmEJW/JoKo9obiEbD?=
- =?us-ascii?Q?SP0hPnUbOFEjMjqgMJWDB7GwvgcOS/HaEm/fVSsYLWbYFYds8Xik78OQwxfv?=
- =?us-ascii?Q?OHs+LqYBCZl30ZByyFi1U3XtH2OJcKX6HzSdXD9WMrQsSbFsUib0BjDLmnWz?=
- =?us-ascii?Q?DLRm9hjkeL2Fa584VjUiiwuu21atW4L0lWPf0PUrovVXdybcJ3qyeHwgNPVa?=
- =?us-ascii?Q?AJqAXkz76MkcUOlXAS1fYBYX9Rp0TjAin6ew1bwhCl/cEIItrst/zenup6x6?=
- =?us-ascii?Q?tUl7i5uZw2LtOLHwG/dBjDIgJRQTaLEKGuGiMqw5brN+fb7AdEsVT6hA/MXY?=
- =?us-ascii?Q?7ceUJzWyCP1pX8mWz1nDEtc7GgG42vgOmQ4jTuBt3QsPfJ4MfPrfZDpe8Ioe?=
- =?us-ascii?Q?rDWkO0k3M0b2BHXS+7qCZW7H9+s2qneMWC1eOvKP0bLb+tbnzecEbO8wJaHE?=
- =?us-ascii?Q?YyNg5FViIckfmc8TNb+BsvPJqWOmX8PBBBqs0ItL+B5lzmT8clhJjL5iErdm?=
- =?us-ascii?Q?Kb/OBXj8mrc/KBjhLpK2WxosJDL3LQQzelPFXc9+5dq+H36C/YCjO0+QR7y4?=
- =?us-ascii?Q?yavdNMFNEQ8UtjjlDvHqQuHsAb+CjlaR7KLsMBTJlXX+HpUtZ9W8QPg3zJW1?=
- =?us-ascii?Q?WxSwPqhz7Ykj3XI1Y7NnrqUU0tSKL02rG2ILo189n6MksmjEhGJKl8d3B1ys?=
- =?us-ascii?Q?2HxmsfAX2HwU93NAXZZWAV3ZsHnCER2Hvp3zhc8QB2uGRf8cEjldySLZxK6a?=
- =?us-ascii?Q?9WJgVbxKdp32u1ia3jCb9rgepHR4bJsk9ENkuNBhvf2AvkHfoKVKxlinw1zt?=
- =?us-ascii?Q?8HZPL5Wa743Sfh3uMxJjf/XXsoL48Tmjy0nguE5ud4OlIdWQc2TxTqIJUAZD?=
- =?us-ascii?Q?957OF4/osNOzTBx+x4Wze9UBeCc3p5l9AaZsMSEiFxtDIJAc6mbX7dA9X+PL?=
- =?us-ascii?Q?3TSH+/atf6OuiDn5nH1YQAqIalKfEsa+BggWpHRuZaSYORJpR7jZBJHfsCCc?=
- =?us-ascii?Q?zK0uZ1DqZKwJlcwCQh3QiWEG27piwbpIBNQHBizSkqY0VOtLkXW2wsiPy2mQ?=
- =?us-ascii?Q?dpH9yL2dGX+MmK60V7i5kqr20yk2ajfee3V0kkUOqOi62oJGdV7XbzeuYn/A?=
- =?us-ascii?Q?Rs/PdxtP4aTzoN3ib4I1Qrc+Izfn9zgPijelzn55UVe2EUs+l9IhjNCyaAF4?=
- =?us-ascii?Q?SZi5xXNxcQQFGcDMtC+jn2OKLAUKGuRQmg/gPEpvdJuZxUg5/cNgLlMscJol?=
- =?us-ascii?Q?MexG1b1+QWZwpQT6TRGddFp4N8E1f7GKbcqNhbc0?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95cea46f-25e5-4710-1c07-08ddf44331b3
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8459.eurprd04.prod.outlook.com
+	=?us-ascii?Q?1ekRfxFbavvkLPSAreurQzKDp1Wt7p9PGgNmmAlPq5gZVSplLawFesccSh0C?=
+ =?us-ascii?Q?d20Fl5dMxJfJkHbw+goEuQO+GOutWCSG69fddGEnjQbhKH4W2KXxE+Oeub2C?=
+ =?us-ascii?Q?gcOH6JCvevduRIepVJy1Qs8gUNMUIgIB9aqDqkh6uzoNI5gVAhXi7vE0OwYe?=
+ =?us-ascii?Q?v7bAUuooMazYKo3OsqHFV8xLn5XvOX2iFdv/V6u63zof7yLcOwPfi5N3KkBq?=
+ =?us-ascii?Q?yXzUsZcOe8AN5NdIqff+bgv/zlYFMy2hDz4OqEScDaLvUS3X8LJKo/wNlYRv?=
+ =?us-ascii?Q?SlgYoJ978lqubDaqVimKBJ+oPf1srHpa8ckU5dmOaqKETBRHRUJ4xwQO+hoX?=
+ =?us-ascii?Q?RO+ByhXT3O/CiUVCeSwWqrUtfcGVZ/qRVm08D1Dts7ootG45W2ZsP5TKIK4n?=
+ =?us-ascii?Q?ZojUhZm7MJh4PeUe6ndKzyhu6l11zw2XHxoWKLa5HYe4vSu7KLAmKq4oeNZP?=
+ =?us-ascii?Q?0fFwqvq1jtnsfEFPyDyor/uOwceEPzi4cvX/As6bavfuKy9+exNIpQG1Pjub?=
+ =?us-ascii?Q?8a4sUoiF1i1ZIfiP4RCDpiA3kWGDvGWN1OxoXIfbvsoS62mzNs/LHwf5Lbsy?=
+ =?us-ascii?Q?Pp+qxvghJdkHpIZUR0fwoByrJClMRsisWFq/zA441vxOFHE4s4nUQsJh2r1/?=
+ =?us-ascii?Q?aozDozYzBpUmjf7QD2SggfprIEvfjFgMDrAfWAOtTS4hQZDPr0JNRU4elyTR?=
+ =?us-ascii?Q?fflQowuEk7/IyTWJP11wjy1x2t5+26LVZNeMUEEeDipTdZXB7E7kWtzasQuk?=
+ =?us-ascii?Q?tUiSxWE0phCbf+xHnnykRSFe7cKHCAcODwoBTi/Zh4232P9/KAOLPgbmnza9?=
+ =?us-ascii?Q?gV4cVFuGQ8zfwqCMJ9RXssplzckXPT5rmS3HaJI8vZ1CZDjD4k/T6jbch26M?=
+ =?us-ascii?Q?Xz1uUoZGGNvr5I405ltNBTIy2jeV2AwpSfTP82scZ1g7DC8y1gpmp4V/yv1Q?=
+ =?us-ascii?Q?++u++7/KsVAPzif0c7YN1oTbXT3AdfdT3Mr0rhSG7iUg11bsaXZbJ/I1y2Jp?=
+ =?us-ascii?Q?jK4L4rvB8qS6R7D2E4iFWjFGU3os7bWhW6HGPi10tagJhVh5ucofC0jlisUe?=
+ =?us-ascii?Q?VNQHMr0e4hPkBufrzGv/1ZmJhdmEJgCPKEH4IMz6miWi/Yw+fcmtOxLS5eo1?=
+ =?us-ascii?Q?kT6JW9H6INwZA7KuJ40vazRRMvbbb2Vvu63Vq2Y+RGK8ZrNyJF1yIZrEj3ra?=
+ =?us-ascii?Q?24+TIlSlY2BtEpInhtFjxKJCKabDxCHnSPZTQ1ZnerUZ2TlPGIGLVOL20n4j?=
+ =?us-ascii?Q?ysgqHTVz+MSumM9rmYfinvthC6P8bK8UXg/Rpjq4BKu1V8sJPYZ3QruUk8aG?=
+ =?us-ascii?Q?HGw8qTRAD9EcZysOnU9o9AlJPO6WB0IhBASJijGEIzHJieXRfCGXtWWoqqwW?=
+ =?us-ascii?Q?hNhP7c68hCl9iR2CB+Sx8dLXwrJWboKNk/thFy4Vhq5uZ5Gfp05taP78rXvG?=
+ =?us-ascii?Q?wp0YZDaM3Wfnz9/uL+CXk2OYNcxs59VtKteFTvnfRvrri+nKeNflvFtAcMs3?=
+ =?us-ascii?Q?AT+sYS0ceW3YtfpanaHj376yxzhG8BP/k6eIiEfsbq1LJxyhl9Upoq/y3wfi?=
+ =?us-ascii?Q?z2gO91KVfWy4fpeetZ0=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54ae7865-3ecf-4acf-1a0d-08ddf45453aa
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2025 10:32:39.1660
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2025 12:35:17.7026
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4wZDpPEeZ0NA5fI5iaWs5JKvP0ubRTyMD4Dd2v7lTHy+9oEqu2PjOfiiHSlZk4qxRXnjkBIbdwhX+4T1Uoq4qg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9304
+X-MS-Exchange-CrossTenant-UserPrincipalName: jcGCWApM/RV7KXsd84AZB1/pvXMIkooDcYjSudZW4ZszAhLNoDLAng9NYtHb5W/e
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6660
 
-On Mon, Sep 15, 2025 at 11:59:47AM +0300, Ivaylo Ivanov wrote:
->On 9/15/25 10:49, Peng Fan wrote:
->> On Sun, Sep 14, 2025 at 03:21:16PM +0300, Ivaylo Ivanov wrote:
->>> Introduce a clocks management driver for exynos8890, providing clocks
->>> for the peripherals of that SoC.
->>>
->>> As exynos8890 is the first SoC to have HWACG, it differs a bit from the
->> Hardware Auto Clock Gating(HWACG), if I understand correctly.
->>
->>> newer SoCs. Q-channel and Q-state bits are separate registers, unlike
->>> the CLK_CON_GAT_* ones that feature HWACG bits in the same register
->>> that controls manual gating. Hence, don't use the clk-exynos-arm64
->>> helper, but implement logic that enforces manual gating according to
->>> how HWACG is implemented here.
->>>
->>> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>> ---
->>> drivers/clk/samsung/Makefile         |    1 +
->>> drivers/clk/samsung/clk-exynos8890.c | 8695 ++++++++++++++++++++++++++
->>> 2 files changed, 8696 insertions(+)
->>> create mode 100644 drivers/clk/samsung/clk-exynos8890.c
->>>
->>> diff --git a/drivers/clk/samsung/Makefile b/drivers/clk/samsung/Makefile
->>> index b77fe288e..982dc7c64 100644
->>> --- a/drivers/clk/samsung/Makefile
->>> +++ b/drivers/clk/samsung/Makefile
->>> @@ -22,6 +22,7 @@ obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos7.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos7870.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos7885.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos850.o
->>> +obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos8890.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos8895.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynos990.o
->>> obj-$(CONFIG_EXYNOS_ARM64_COMMON_CLK)	+= clk-exynosautov9.o
->>> diff --git a/drivers/clk/samsung/clk-exynos8890.c b/drivers/clk/samsung/clk-exynos8890.c
->>> new file mode 100644
->>> index 000000000..670587bae
->>> --- /dev/null
->>> +++ b/drivers/clk/samsung/clk-exynos8890.c
->>> @@ -0,0 +1,8695 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +/*
->>> + * Copyright (C) 2025 Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>> + * Author: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
->>> + *
->>> + * Common Clock Framework support for Exynos8890 SoC.
->>> + */
->>> +
->>> +#include <linux/clk-provider.h>
->>> +#include <linux/mod_devicetable.h>
->>> +#include <linux/of_address.h>
->>> +#include <linux/of.h>
->>> +#include <linux/platform_device.h>
->>> +
->>> +#include <dt-bindings/clock/samsung,exynos8890-cmu.h>
->>> +
->>> +#include "clk.h"
->>> +
->>> +/* NOTE: Must be equal to the last clock ID increased by one */
->>> +#define TOP_NR_CLK	(CLK_GOUT_TOP_SCLK_PROMISE_DISP + 1)
->>> +#define PERIS_NR_CLK	(CLK_GOUT_PERIS_SCLK_PROMISE_PERIS + 1)
->>> +#define APOLLO_NR_CLK	(CLK_GOUT_APOLLO_SCLK_PROMISE_APOLLO + 1)
->>> +#define AUD_NR_CLK	(CLK_GOUT_AUD_SCLK_I2S_BCLK + 1)
->>> +#define BUS0_NR_CLK	(CLK_GOUT_BUS0_ACLK_TREX_P_BUS0 + 1)
->>> +#define BUS1_NR_CLK	(CLK_GOUT_BUS1_ACLK_TREX_P_BUS1 + 1)
->>> +#define CCORE_NR_CLK	(CLK_GOUT_CCORE_SCLK_PROMISE + 1)
->>> +#define DISP0_NR_CLK	(CLK_GOUT_DISP0_OSCCLK_DP_I_CLK_24M + 1)
->>> +#define DISP1_NR_CLK	(CLK_GOUT_DISP1_SCLK_PROMISE_DISP1 + 1)
->>> +#define FSYS0_NR_CLK	(CLK_GOUT_FSYS0_SCLK_USBHOST20_REF_CLK + 1)
->>> +#define FSYS1_NR_CLK	(CLK_GOUT_FSYS1_SCLK_PROMISE_FSYS1 + 1)
->>> +#define G3D_NR_CLK	(CLK_GOUT_G3D_SCLK_ASYNCAXI_G3D + 1)
->>> +#define MIF0_NR_CLK	(CLK_GOUT_MIF0_RCLK_DREX + 1)
->>> +#define MIF1_NR_CLK	(CLK_GOUT_MIF1_RCLK_DREX + 1)
->>> +#define MIF2_NR_CLK	(CLK_GOUT_MIF2_RCLK_DREX + 1)
->>> +#define MIF3_NR_CLK	(CLK_GOUT_MIF3_RCLK_DREX + 1)
->>> +#define MNGS_NR_CLK	(CLK_GOUT_MNGS_SCLK_PROMISE0_MNGS + 1)
->>> +#define PERIC0_NR_CLK	(CLK_GOUT_PERIC0_SCLK_PWM + 1)
->>> +#define PERIC1_NR_CLK	(CLK_GOUT_PERIC1_SCLK_UART5 + 1)
->>> +
->>> +/*
->>> + * As exynos8890 first introduced hwacg, cmu registers are mapped similarly
->>> + * to exynos7, with the exception of the new q-state and q-ch registers that
->>> + * can set the behavior of automatic gates.
->>> + */
->>> +
->>> +/* decoded magic number from downstream */
->>> +#define QCH_EN_MASK		BIT(0)
->>> +#define QCH_MASK		(GENMASK(19, 16) | BIT(12))
->>> +#define QCH_DIS			(QCH_MASK | FIELD_PREP(QCH_EN_MASK, 0))
->> Nit: align code.
->
->Aligned in my editor, patch files offset each line with a single symbol
->so formatting gets broken...
+On Fri, Sep 12, 2025 at 09:33:06AM +0000, Tian, Kevin wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: Monday, September 1, 2025 7:32 AM
+> > 
+> > +static int arm_smmu_attach_dev_release(struct iommu_domain *domain,
+> > +				       struct device *dev)
+> > +{
+> > +	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+> > +
+> > +	WARN_ON(master->iopf_refcount);
 
-seems something broken in my mutt. Sorry for false alarm.
+This doesn't look right anymore..
 
->> will not able to support GKI.
->>
->> It would be better to update to use platform drivers.
->
->Same as what Krzysztof said, design choice accross all samsung clock drivers.
+Now that iopf is managed automatically it technically doesn't go to
+zero until the attaches below:
 
-Sure. No problem.
+> > +
+> > +	/* Put the STE back to what arm_smmu_init_strtab() sets */
+> > +	if (dev->iommu->require_direct)
+> > +
+> > 	arm_smmu_attach_dev_identity(&arm_smmu_identity_domain,
+> > dev);
+> > +	else
+> > +
+> > 	arm_smmu_attach_dev_blocked(&arm_smmu_blocked_domain,
+> > dev);
 
-Regards
-Peng
->
+And I'd argue the attaches internally should have the assertion. If no
+pasids and blocked/identity the iopf == 0.
+
+> it's a bit confusing that a BLOCKED domain type could turn to the
+> identity mode, though this movement doesn't change the original
+> behavior.
+
+That isn't what is happening here..
+
+If dev->iommu->require_direct is set we prevent attaching BLOCKING
+domains entirely:
+
+	if (dev->iommu->require_direct &&
+	    (new_domain->type == IOMMU_DOMAIN_BLOCKED ||
+	     new_domain == group->blocking_domain)) {
+		dev_warn(dev,
+			 "Firmware has requested this device have a 1:1 IOMMU mapping, rejecting configuring the device without a 1:1 mapping. Contact your platform vendor.\n");
+		return -EINVAL;
+	}
+
+So in most sane cases the above will never convert BLOCKING to
+IDENTITY. What it is doing is preserving the RMRs...
+
+Also, I don't think this should be in the smmu driver, every driver
+should have this same logic, it is part of the definition of RMR
+Let's put it in the core code:
+
+	if (!dev->iommu->attach_deferred && ops->release_domain) {
+		struct iommu_domain *release_domain = ops->release_domain;
+
+		/*
+		 * If the device requires direct mappings then it should not 
+		 * be parked on a BLOCKED domain during release as that would
+		 * break the direct mappings.
+		 */
+		if (dev->iommu->require_direct && ops->identity_domain &&
+		    release_domain == ops->blocked_domain)
+			release_domain = ops->identity_domain;
+
+		release_domain->ops->attach_dev(release_domain, dev);
+	}
+
+Jason
 
