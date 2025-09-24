@@ -1,141 +1,153 @@
-Return-Path: <linux-samsung-soc+bounces-11180-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11182-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB3D3B9A822
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Sep 2025 17:13:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E234B9A840
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Sep 2025 17:13:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 197A93B7BAB
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Sep 2025 15:11:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A97E1B25434
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 24 Sep 2025 15:14:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9290830F542;
-	Wed, 24 Sep 2025 15:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6318D30F813;
+	Wed, 24 Sep 2025 15:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NnQ7WPoh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JNlsZ9wG"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB9E30C61D
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Sep 2025 15:11:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0963530DD04;
+	Wed, 24 Sep 2025 15:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758726678; cv=none; b=S3ObtkY0zRRsUMBMEf2vqdqZXiDcBMc6MBT9azJWjByqia+jOcFP/vu6n8cwaA8bbVIrrZpSuzTVzyZL52VIWsKu+vLYaw3qRmHtCDl4hE5l9bMBlu9/mrG9bs7dewuG4hhzD5dEfBCGTpBPHDtbH7wLCJ5UGHLRphpguT7kO88=
+	t=1758726721; cv=none; b=UrMp+o6bmJ+txq9Z3MasyOkQYHigory7ek2EbY9ESd4PBwH8Vi0Vj/2MU0ca76Dan9JggwWyRltbHMiwEY1BS1Y93vUeqeauYbN6R3bgkGb/85cF/gN/Z1tmetYErAVL16UWvpx8GeUH21Yjb3P4SXrkTIcns5UzfTrJ5IiMiZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758726678; c=relaxed/simple;
-	bh=xIpVlqe4DgqHRCmW3A7H3ri8twq/hpgQwg/JQ3/NwCA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UPngzBbBvfXuAc9mm2ykS6FpvUb47zyhS3bkIY9/PHlRBHUgSjAekVtKsEy+zEmjF/1rLuR8d2iHk7+UHM/S2E21WIXnmFAh6P+kj9JMP2gRUz3AveY9SvkzDzzeXx+IEpsZNBpha7K2is122AtdII2/wblgq7Amw6hW34hDa3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NnQ7WPoh; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-46e1cc6299cso21197075e9.1
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 24 Sep 2025 08:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758726674; x=1759331474; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5s4FpMZhs2JDSa9c1gCTflWw3s59360Z3ANCY77Ti6w=;
-        b=NnQ7WPohdgVlptg3OytPDzjTtCLALbezoa8X2iyQsY+kE6LXXKjgKqzFkfIvmNcN6W
-         OtPSwxoQnvjVZS+iJboMKlxSTg58ytl2JmPI8kbgYtEjX5FpqiM+KThg1r6g9KPpHFUY
-         sdtmuvmXpKmr6sHOQ0OKCIRIclo62cnJa39ppPMzJs9Aokd90KjsyR1fs07hqXmBaafK
-         XR/MMeYP7c48WD0WPWE668HuoBoraGSzkBS3Qi/T778Pa4EiV76CzHJWMOZdWD+1q08N
-         ysZueqek0FqjoFQLyV9RGzGiYFQZfchEksjzwHbTsWDlrA6mbHRG1vPtuNvBspMFXJsm
-         HlNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758726674; x=1759331474;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5s4FpMZhs2JDSa9c1gCTflWw3s59360Z3ANCY77Ti6w=;
-        b=PkLRyCQ8a0pvsoAXOosfk7Q4XnvdU/JZ4ppJsfxmkDCK61XTZy5LufFPpVYscOV6FA
-         OYdj3W83Pb2761LAEDdsEPmUn06yE402x0hBMI3qf7ilOc8QoeSBeaud3Dfld7OhsMaE
-         hZ8Pc8bEmPRcJATgkz3UEyoB3/ReVHRVnPbRhPCwJZcz4VEHKHwP7LKWVj/x08qsXnG8
-         jjaKeHL+BbXplBh+6/bnwfI2QYHGVzg981GnctRmiaIeZ55H6hingpq4mhRne2oYEXGs
-         vfsZ7LjV9Ugv0/ZhPvUPy7XjiZOSkzCIbjPKWz7tDhFihyxZIUr9/CR9WrosYEnkXmck
-         wOeg==
-X-Forwarded-Encrypted: i=1; AJvYcCUdUfgIm2jGQENqNcZKglCixyt4L0BikQhvWLWcd59evDzfF8XaD6eJORGc91x22OrJzhWUo1E5VFyW97ac2KMroA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLxleXzMhtvEL0osnA4vvysY3e8OWwYTRFEsPseWjvHdFjCTR7
-	Y1rtJ/V+rHHl2ddmED2hZ/mK4SWpVpXl2JcC6YtVT+Ef85lYEwBd+O1bvgyzkJ1XtfY=
-X-Gm-Gg: ASbGncuLNVv7htWgNAEV+WUX27m+0/G0SrW7M0F0R3mxIXmv1Kr6DrdzPby0sUAtH64
-	veOCfN3auSo495g5N0eZvJOyFJWvGzUET1YNbSU82YdK1uHffkRsLxAoCsDlZkYsY+SuWpg6fuo
-	VFMHvWyIlsfzcKYFRBMjScRmKXt1Rz9uQqvQUdb6aUv0QlE9COzT5QDd4Lr9KRlmzW4pe5YYCIH
-	LPOYmqaMIULApO4715NsRQEqLtIjUOaDrEOkkJmCXFbkfu8sFvMXYGKAKA5IncTLti6zNusPoe4
-	qEougv4TDeltHmFKstFMoWHEzlFMa8GBUI1jlUyRdU/rsmvAFvVL9GypKha76zqortrC4MO7SYF
-	aBNAs/8siDt/FpnVsqCttnR3j3jkPcLzlIYSDKnWHD3MfhsVpR13S+0pIZTuMZu3EuRWoWhOnZB
-	k=
-X-Google-Smtp-Source: AGHT+IHqxep/cc4oLyuE3HkDZXgTyzUFzuxNas67CCOIgFLvhkPXSKwzO0M1vA4oarAwjHeMAdt19w==
-X-Received: by 2002:a05:600c:46cc:b0:45d:7d88:edcd with SMTP id 5b1f17b1804b1-46e32a030cbmr2096795e9.30.1758726673765;
-        Wed, 24 Sep 2025 08:11:13 -0700 (PDT)
-Received: from ta2.c.googlers.com (213.53.77.34.bc.googleusercontent.com. [34.77.53.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e2a7c8531sm36045145e9.0.2025.09.24.08.11.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 08:11:13 -0700 (PDT)
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Wed, 24 Sep 2025 15:11:04 +0000
-Subject: [PATCH v5 5/5] arm64: defconfig: enable Exynos ACPM clocks
+	s=arc-20240116; t=1758726721; c=relaxed/simple;
+	bh=SUYVX88sBXmaFKBWXfsMWhfFsGAcZ/n2RLIrnQxMb9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WQ9SZIFVVjl5bO+pCVihRdOiPZyzgzAycwFigDTNb0xGj1xGEHv8dPRxxTpQQDmB1OeXItlh83w/QuYPsAe3uogMWmRAlsJpeNzvLuORT8pWX6908jZtr8YNQJo6REWMeieRJMy5qEaKmvCS31QjA6SU20SGlEVEbW7BkjDFHNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JNlsZ9wG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C17AC4CEE7;
+	Wed, 24 Sep 2025 15:12:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758726720;
+	bh=SUYVX88sBXmaFKBWXfsMWhfFsGAcZ/n2RLIrnQxMb9c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JNlsZ9wGUh76ykwpAXfK/LBUst9rOpbPsD1A8s9sEgz0mDZQmSqrZy3nckKBbaBYs
+	 pDf4N4AlbjyJeBRxbDtqgqNmnl4g54ZYmLSpbFFB8sj35FWx4914yk/Jm6jhmPriMx
+	 Kcl89f8QWx4e6E3CtTib1rqjb9tk+wRFOKVYRObG0DeWGjpFtJj4/r4JouJxya0Gdy
+	 IiOKxy57p2SBhNn1zms9Cd8kBAufC+MaOoLRAjBu9Yz4uI08e9lprR8HKcoHFJHM69
+	 E3De3Q4lNdtNoUwZejNfIChfjIu3coHJwgPehev1a4O6DjBoKneyC7aBbU35NkZBXu
+	 LztfJ/8NeOmig==
+Date: Wed, 24 Sep 2025 10:11:59 -0500
+From: Rob Herring <robh@kernel.org>
+To: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	=?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Lee Jones <lee@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-rtc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/7] regulator: dt-bindings: add documentation for
+ s2mps16-pmic regulators
+Message-ID: <20250924151159.GA1725090-robh@kernel.org>
+References: <20250914124227.2619925-1-ivo.ivanov.ivanov1@gmail.com>
+ <20250914124227.2619925-2-ivo.ivanov.ivanov1@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250924-acpm-clk-v5-5-4cca1fadd00d@linaro.org>
-References: <20250924-acpm-clk-v5-0-4cca1fadd00d@linaro.org>
-In-Reply-To: <20250924-acpm-clk-v5-0-4cca1fadd00d@linaro.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Peter Griffin <peter.griffin@linaro.org>, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Chanwoo Choi <cw00.choi@samsung.com>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-clk@vger.kernel.org, willmcvicker@google.com, kernel-team@android.com, 
- Tudor Ambarus <tudor.ambarus@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758726668; l=946;
- i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=xIpVlqe4DgqHRCmW3A7H3ri8twq/hpgQwg/JQ3/NwCA=;
- b=T1W9QO6+wC3/3UAC8KME30JBVVpkIcd/QWetlJFmV0a29DJ0ch+9QIyJk/3CeLRIN/rq+eDDL
- Wp7i7Gau7g5C0/rIp8NH9P+T+1wyVZVtps9in7VOZIRgtRa7ujunkW0
-X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
- pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250914124227.2619925-2-ivo.ivanov.ivanov1@gmail.com>
 
-Enable the Exynos ACPM clocks driver. Samsung Exynos platforms
-implement ACPM to provide support for clock configuration, PMIC
-and temperature sensors.
+On Sun, Sep 14, 2025 at 03:42:21PM +0300, Ivaylo Ivanov wrote:
+> The S2MPS16 is a PMIC found in exynos8890 devices, which controls voltage
+> regulators - 38 LDOs, of which 11 are used for CP, and 11 BUCKs, of which
+> 1 is used for CP. Provide documentation for devicetree definitions,
+> regulator naming patterns, etc.
+> 
+> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> ---
+>  .../bindings/regulator/samsung,s2mps16.yaml   | 50 +++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/samsung,s2mps16.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/samsung,s2mps16.yaml b/Documentation/devicetree/bindings/regulator/samsung,s2mps16.yaml
+> new file mode 100644
+> index 000000000..ede87d3b9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/regulator/samsung,s2mps16.yaml
+> @@ -0,0 +1,50 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/regulator/samsung,s2mps16.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Samsung S2MPS16 Power Management IC regulators
+> +
+> +maintainers:
+> +  - Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> +
+> +description: |
+> +  This is a part of device tree bindings for S2M and S5M family of Power
+> +  Management IC (PMIC).
+> +
+> +  The S2MPS16 provides buck and LDO regulators.
+> +
+> +  See also Documentation/devicetree/bindings/mfd/samsung,s2mps11.yaml for
+> +  additional information and example.
+> +
+> +patternProperties:
+> +  # 27 LDOs
+> +  "^ldo([1-9]|1[0-3]|2[5-9]|3[0-8])$":
+> +    type: object
+> +    $ref: regulator.yaml#
+> +    unevaluatedProperties: false
+> +    description:
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Tested-by: Peter Griffin <peter.griffin@linaro.org> # on gs101-oriole
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+You need '>' modifier to preserve paragraphs.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index e3a2d37bd10423b028f59dc40d6e8ee1c610d6b8..646097e94efe7f1a18fb59d5b6dfc6268be91383 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1458,6 +1458,7 @@ CONFIG_CLK_GFM_LPASS_SM8250=m
- CONFIG_SM_VIDEOCC_8450=m
- CONFIG_CLK_RCAR_USB2_CLOCK_SEL=y
- CONFIG_CLK_RENESAS_VBATTB=m
-+CONFIG_EXYNOS_ACPM_CLK=m
- CONFIG_CLK_SOPHGO_CV1800=y
- CONFIG_HWSPINLOCK=y
- CONFIG_HWSPINLOCK_OMAP=m
+> +      Properties for single LDO regulator.
+> +
+> +      LDOs 14-24 are used for CP, and they're left unimplemented due to lack
+> +      of documentation on them.
 
--- 
-2.51.0.536.g15c5d4f767-goog
+What does unimplemented mean? In some driver? If so, that's specific to 
+a driver and not relevant to the binding.
 
+> +
+> +    required:
+> +      - regulator-name
+> +
+> +  # 10 bucks
+> +  "^buck([1-9]|1[0-1])$":
+> +    type: object
+> +    $ref: regulator.yaml#
+> +    unevaluatedProperties: false
+> +    description:
+> +      Properties for single BUCK regulator.
+> +
+> +      BUCK 10 is used for CP, and it's left unimplemented due to lack of
+> +      documentation on it.
+> +
+> +    required:
+> +      - regulator-name
+> +
+> +additionalProperties: false
+> -- 
+> 2.43.0
+> 
 
