@@ -1,41 +1,41 @@
-Return-Path: <linux-samsung-soc+bounces-11202-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11207-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C05ABB9D1E0
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Sep 2025 04:17:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37520B9D35D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Sep 2025 04:35:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 812573BA161
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Sep 2025 02:17:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E46163AA79C
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 25 Sep 2025 02:34:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E84051C8629;
-	Thu, 25 Sep 2025 02:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20E7123A99E;
+	Thu, 25 Sep 2025 02:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="iVKD7f62"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="GsGZ+ILQ"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m21470.qiye.163.com (mail-m21470.qiye.163.com [117.135.214.70])
+Received: from mail-m32118.qiye.163.com (mail-m32118.qiye.163.com [220.197.32.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E37BC2E0;
-	Thu, 25 Sep 2025 02:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.214.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302818E1F;
+	Thu, 25 Sep 2025 02:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758766637; cv=none; b=OlV8VLrGSOQCxsrNezTB6vPsxMROhJT8qo4exFuZfqOj9gBXUR603VgaMNpFNTnc3hqZPzD2j2NLq8T23U3vFD+k1n8akWDtBz3xzFnnRgniPXaTc+RsXTc/Z/wGRKXhiDz+vnP6bb7NInF3ITLk5vFxHX6Qsls0L7zFJxAjTWI=
+	t=1758767696; cv=none; b=OKEeOFCeDifgUJMuhiwULeNPqdrms0es72KwQk3Je+GNpS9/XfsPMdt07mSuRSe0JhsoNh5xFRxlT1PsZBSQnJjvCKNmjJkdB67vz4Gerr0YWhFIcRGlVfokxT3j0hHDFFH8DZTaDkQ3pOis2GK2+jDIyEKX88rzQCW1KFmwBr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758766637; c=relaxed/simple;
-	bh=2vZWpSzNYela03bxYQwOWzTgdlsvks2tQABzUql3sQk=;
+	s=arc-20240116; t=1758767696; c=relaxed/simple;
+	bh=WAKSdZimExURYkoPahxIIftutzZ+xBPrZRgJUwbZYO4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RcdFrcm21CP7J0Y1I5jG5faDCNfnhH80YQbnBReLh9cXLS+cUphrgM6XAtG+cpcpgimp/aMINgNMC8ZZnmL6kdPJbJiwkR6nB1H0TUO64lSvsFcpK7RRWg5ss2oSLncyGSRjeqFWnK47SPg/xdyfnGZwh1SG/zGeEJr521V9PsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=iVKD7f62; arc=none smtp.client-ip=117.135.214.70
+	 In-Reply-To:Content-Type; b=jVgcbeVh7WLWqG14KRreqa5mUEi/31tMUJYwJxSffTcgibJNPyHpR8MB0KhooEs3ieNdMpYYF51hQDrnXA+M4qVC3McQS7M9nWwvw14e8iX2oXPusH1uEamAiHPnyXpP/GLZRN6KGRp5iNmgbfhTrziuA9GnXnIFYMW3Yu8xk1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=GsGZ+ILQ; arc=none smtp.client-ip=220.197.32.118
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Received: from [172.16.12.26] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 23f942a34;
-	Thu, 25 Sep 2025 10:11:53 +0800 (GMT+08:00)
-Message-ID: <7cf14078-5d4f-4ced-bdcf-182371d0fd35@rock-chips.com>
-Date: Thu, 25 Sep 2025 10:11:53 +0800
+	by smtp.qiye.163.com (Hmail) with ESMTP id 23f99a352;
+	Thu, 25 Sep 2025 10:19:27 +0800 (GMT+08:00)
+Message-ID: <be24f371-3afa-47ce-a5e8-26f3fac9b6ba@rock-chips.com>
+Date: Thu, 25 Sep 2025 10:19:26 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -43,8 +43,8 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/17] drm/rockchip: analogix_dp: Apply
- &analogix_dp_plat_data.attach() to attach next bridge
+Subject: Re: [PATCH v5 15/17] drm/bridge: analogix_dp: Remove panel disabling
+ and enabling in analogix_dp_set_bridge()
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
  Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
@@ -58,83 +58,83 @@ Cc: andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
  linux-rockchip@lists.infradead.org
 References: <20250912085846.7349-1-damon.ding@rock-chips.com>
- <20250912085846.7349-14-damon.ding@rock-chips.com>
- <2cu3ge6kjeibfznvt6c52xn2rp5zb3wk3pkb7gly34qrjlueem@7wqyowascpn5>
+ <20250912085846.7349-16-damon.ding@rock-chips.com>
+ <tywxkfjhulxsgdphngtfs24whslbkmnza7yx2sb7c4ulea6val@46pi6e2sjs6c>
 Content-Language: en-US
 From: Damon Ding <damon.ding@rock-chips.com>
-In-Reply-To: <2cu3ge6kjeibfznvt6c52xn2rp5zb3wk3pkb7gly34qrjlueem@7wqyowascpn5>
+In-Reply-To: <tywxkfjhulxsgdphngtfs24whslbkmnza7yx2sb7c4ulea6val@46pi6e2sjs6c>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0a997ea4309303a3kunm542c945b85b02
+X-HM-Tid: 0a997eab1b8503a3kunm2418fa8d88dbd
 X-HM-MType: 1
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGR5LT1ZIGh1PTEMdGUpDSx5WFRQJFh
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGksfSFZLQ0NNT0tPSB1JGhhWFRQJFh
 	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
 	hVSktLVUpCS0tZBg++
 DKIM-Signature: a=rsa-sha256;
-	b=iVKD7f62uqeDZeWknCM50t4q+F59fTE4NNT58Y0093B07tMOfWOMy8AZVe6YOCr802f8Pf+EvfpvFbJEg2wVUjJcIBAH3suMh+XfmN4d3KXJXFGIQ0VcjzG3rZuDDk/5Md8wIwVl5DruEmeVZoWpbNKEhRNxy82ULkMok5Cfsmg=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=Ljhn8bif18aFps1rRdBClCGFFynJpfAeepmIW2TXY3A=;
+	b=GsGZ+ILQSnhzfvkwCAq4Z5+SIR0C9MOYar77DGQSbSeGev+Jr7L0Oq+AJf75d65bd6zyRrxMuhWK8gclELJ4evu+yYA7/9XQBUMFnRBep9EUwls+dIUpkvslnvd0hq55ReRjD8rAi0041WcrraaNBRTCVlfzPkJmY1YFlPIkZ8k=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=RPN3KyxMz8emyUFUk3HlxuaTyBLn7qeeJmHvt/BIWwI=;
 	h=date:mime-version:subject:message-id:from;
 
 Hi Dmitry,
 
-On 9/12/2025 7:05 PM, Dmitry Baryshkov wrote:
-> On Fri, Sep 12, 2025 at 04:58:42PM +0800, Damon Ding wrote:
->> There may be the panel or bridge after &analogix_dp_device.bridge.
->> Add rockchip_dp_attach() to support the next bridge attachment for
->> the Rockchip side.
+On 9/12/2025 7:09 PM, Dmitry Baryshkov wrote:
+> On Fri, Sep 12, 2025 at 04:58:44PM +0800, Damon Ding wrote:
+>> The &drm_panel_funcs.enable() and &drm_panel_funcs.disable() mainly
+>> help turn on/off the backlight to make the image visible, and the
+>> backlight operations are even needless if drm_panel_of_backlight() or
+>> drm_panel_dp_aux_backlight() is applied, in which case the enabling
+>> and disabling process just add necessary delays.
+> 
+> Not necessary, it can actually be turning the panel off and on. Maybe
+> it's worth squashing this patch into the panel_bridge conversion as it
+> will point out that these functions are still being called at a correct
+> times by the DRM bridge framework.
+> 
+
+Will do in v6.
+
+>>
+>> Therefore, it should make sense to remove panel disabling and move
+>> panel enabling after analogix_dp_set_bridge() finished.
 >>
 >> Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
 >> ---
->>   .../gpu/drm/rockchip/analogix_dp-rockchip.c   | 19 +++++++++++++++++++
->>   1 file changed, 19 insertions(+)
+>>   drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 7 +------
+>>   1 file changed, 1 insertion(+), 6 deletions(-)
 >>
->> diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
->> index 0784f19a2ed9..39f1ed293c75 100644
->> --- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
->> +++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
->> @@ -164,6 +164,24 @@ static int rockchip_dp_powerdown(struct analogix_dp_plat_data *plat_data)
->>   	return 0;
->>   }
+>> diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> index 66d0cca1f268..c98058e9c917 100644
+>> --- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> +++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+>> @@ -749,9 +749,6 @@ static int analogix_dp_commit(struct analogix_dp_device *dp)
+>>   {
+>>   	int ret;
 >>   
->> +static int rockchip_dp_attach(struct analogix_dp_plat_data *plat_data,
->> +				     struct drm_bridge *bridge)
->> +{
->> +	struct rockchip_dp_device *dp = pdata_encoder_to_dp(plat_data);
->> +	int ret;
->> +
->> +	if (plat_data->next_bridge) {
->> +		ret = drm_bridge_attach(&dp->encoder.encoder, plat_data->next_bridge, bridge,
->> +					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> 
-> Can this be handled inside analogix_dp_bridge's attach callback?
-
-I found that the &analogix_dp_plat_data.attach() callbacks of Rockchip 
-and Exynos sides are the same. It should be nice to handle the next 
-bridge attachment in analogix_dp_bridge_attach(), which would allow us 
-to remove the &analogix_dp_bridge_attach().
-
-> 
->> +		if (ret) {
->> +			dev_err(dp->dev, "failed to attach following panel or bridge (%d)\n", ret);
->> +			return ret;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->>   static bool
->>   rockchip_dp_drm_encoder_mode_fixup(struct drm_encoder *encoder,
->>   				   const struct drm_display_mode *mode,
->> @@ -452,6 +470,7 @@ static int rockchip_dp_probe(struct platform_device *pdev)
->>   	dp->plat_data.dev_type = dp->data->chip_type;
->>   	dp->plat_data.power_on = rockchip_dp_poweron;
->>   	dp->plat_data.power_off = rockchip_dp_powerdown;
->> +	dp->plat_data.attach = rockchip_dp_attach;
->>   	dp->plat_data.ops = &rockchip_dp_component_ops;
+>> -	/* Keep the panel disabled while we configure video */
+>> -	drm_panel_disable(dp->plat_data->panel);
+>> -
+>>   	ret = analogix_dp_train_link(dp);
+>>   	if (ret) {
+>>   		dev_err(dp->dev, "unable to do link train, ret=%d\n", ret);
+>> @@ -771,9 +768,6 @@ static int analogix_dp_commit(struct analogix_dp_device *dp)
+>>   		return ret;
+>>   	}
 >>   
->>   	ret = rockchip_dp_of_probe(dp);
+>> -	/* Safe to enable the panel now */
+>> -	drm_panel_enable(dp->plat_data->panel);
+>> -
+>>   	/* Check whether panel supports fast training */
+>>   	ret = analogix_dp_fast_link_train_detection(dp);
+>>   	if (ret)
+>> @@ -1156,6 +1150,7 @@ static void analogix_dp_bridge_atomic_enable(struct drm_bridge *bridge,
+>>   	while (timeout_loop < MAX_PLL_LOCK_LOOP) {
+>>   		if (analogix_dp_set_bridge(dp) == 0) {
+>>   			dp->dpms_mode = DRM_MODE_DPMS_ON;
+>> +			drm_panel_enable(dp->plat_data->panel);
+>>   			return;
+>>   		}
+>>   		dev_err(dp->dev, "failed to set bridge, retry: %d\n",
 >> -- 
 >> 2.34.1
 >>
