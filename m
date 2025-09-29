@@ -1,265 +1,129 @@
-Return-Path: <linux-samsung-soc+bounces-11251-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11254-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC853BA7EF7
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Sep 2025 06:29:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B26E2BA8296
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Sep 2025 08:46:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 936B03B738A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Sep 2025 04:29:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73FC8163D75
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Sep 2025 06:46:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40316218AD1;
-	Mon, 29 Sep 2025 04:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F9E32BE7DF;
+	Mon, 29 Sep 2025 06:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="LqKTPS89"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="DT1H1tqN"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B7E20ADF8
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Sep 2025 04:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F24635
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Sep 2025 06:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759120169; cv=none; b=pgth/Sk4QwKXTlqrFCY4PRB2uDLWPPrlgjvJNARdgH2XQa8hjb0IlV3Rfyww+wTX88LtwY6JHx8OmdDjyvIfsdEWmnkm4aW85wEMbH+YWRHPE2oSeWCVEK02i+ZaHZ9/jGxela4TcoqLmhnbbuc+FYrwFWQHqb5PbqfcqiyTFyU=
+	t=1759128367; cv=none; b=AGcWf3dHhHVmFungq2lSLVrTJXMcbMmukanqFvreHu3vXYrqnJ3zdYvea5KnFMyA9U3yTp9/3KIP9WZRtRv7SQtpOuY4qF+kKdc/jcex98KOT85fEt/A59bjAiA84P6D2irLIy1/HeMyDYuuiCh/KQNv1Ug+uvtrtbopyEeODXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759120169; c=relaxed/simple;
-	bh=OvLdDTiYvksMV0SFUsHZ+qTPxY8hy9wo6dzSepf0uUs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=fUejSJvFE5VCQvPcsuyLl/bVnfOPGZl8SUbKsETi7n9OkWZEgech5/xlYwrQHpIijEd5kqjVdGE7cM0oXe/eKrKnoq/XXEFe0/cnzXEGGk3v7Mqtfv8tOdc9r3fGiB2wCblAnJjrCktGr68R31N4uR7hrWfhJRDt+qVWLLenJd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=LqKTPS89; arc=none smtp.client-ip=203.254.224.25
+	s=arc-20240116; t=1759128367; c=relaxed/simple;
+	bh=tEcpI5UHajZzcOgKwh0ZSahyLNRamKTjcsRj6A5OzRs=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=KPRHP2hFJhUc/Uc+509q7mfcRjp9kvNmRjZTHrKKhSlwLWX0GPa0SB8bMUFAfT/IdK9o7jkSaOhWmWVfliWWJk4gs8r6Rn1Tznbr8SrgNsV9uHRrhxWGQeZhtQG1rr1tzweasQEiLVwyDpVMMq2IHwtdNs3JsyJXOU3hLmUTf+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=DT1H1tqN; arc=none smtp.client-ip=203.254.224.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250929042918epoutp02dae0b46861f50658f1f68c0a9cf9fc62~ppnbgcOrA2973729737epoutp02i
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Sep 2025 04:29:18 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250929042918epoutp02dae0b46861f50658f1f68c0a9cf9fc62~ppnbgcOrA2973729737epoutp02i
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250929064603epoutp03fd3b11a07cd7fe4127faeb826b11111c~pre0QuzcF1904219042epoutp03W
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Sep 2025 06:46:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250929064603epoutp03fd3b11a07cd7fe4127faeb826b11111c~pre0QuzcF1904219042epoutp03W
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1759120159;
-	bh=6sXHbeK++urRgXFZ0q5BURM+QBMH1xJNpaG+x/fCF18=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LqKTPS89TRCiFaXTZaUlQaYINomJBLLho1jnkGuv5dhMizXUKnXmSgTeC58TpgeFv
-	 ELRtB+i2iW3eHXV+sp9sIC6gI7GmnhWzz7Fvsic8/u4WvjYIOVN3QPEYx+hfiAshrQ
-	 KAT0IruBjF6DpPCg/+OUKWSQ2pliEtUV7fY7tL5o=
-Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250929042918epcas2p48ba6d48b41c6fdd147cf6c6850617c73~ppnbAiqdy1362413624epcas2p4W;
-	Mon, 29 Sep 2025 04:29:18 +0000 (GMT)
-Received: from epcas2p3.samsung.com (unknown [182.195.38.205]) by
-	epsnrtp01.localdomain (Postfix) with ESMTP id 4cZp9p0Y7Mz6B9mL; Mon, 29 Sep
-	2025 04:29:18 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250929042917epcas2p43d95408c9c43ff49ff6674136d7c64d3~ppnaD-lQX0591205912epcas2p4u;
-	Mon, 29 Sep 2025 04:29:17 +0000 (GMT)
-Received: from tayo (unknown [10.229.9.198]) by epsmtip1.samsung.com
+	s=mail20170921; t=1759128363;
+	bh=tEcpI5UHajZzcOgKwh0ZSahyLNRamKTjcsRj6A5OzRs=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=DT1H1tqNqhbjc9LyomxUMXC/CTMq/GHzDlmjSDD1B4PrE8yIw/d9D9XkFL4ZYe7SO
+	 d/GX2BCZGovXORXJnqwgxEkD77cTtZNhSjaltD2dATvxoxqm9qVBWgOs0gjn3v/Zfo
+	 BiU3U8VOFmKa8v+unIuPcSaLJrxQARLqhb0hX5HY=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+	20250929064602epcas5p45e71a950ed75ff05f651d9e8ea81577c~prezjA47S0430204302epcas5p4w;
+	Mon, 29 Sep 2025 06:46:02 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.92]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4cZsCY1ggDz2SSKq; Mon, 29 Sep
+	2025 06:46:01 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20250929064600epcas5p2aad3d7244d83c6751ea7b1dbd0b63dc9~prex_ExEA3230632306epcas5p2G;
+	Mon, 29 Sep 2025 06:46:00 +0000 (GMT)
+Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip2.samsung.com
 	(KnoxPortal) with ESMTPA id
-	20250929042917epsmtip1dc25e0c7a28d5a3a5ce6ffb1ebdba5be~ppnZ-VBh52522725227epsmtip1n;
-	Mon, 29 Sep 2025 04:29:17 +0000 (GMT)
-From: Hoyoung Lee <hy_fifty.lee@samsung.com>
-To: Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>, David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>, Krzysztof Kozlowski <krzk@kernel.org>, Alim
-	Akhtar <alim.akhtar@samsung.com>
-Cc: Hoyoung Lee <hy_fifty.lee@samsung.com>, dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] drm/exynos: Move mode_config setup from fb.c to drv.c
-Date: Mon, 29 Sep 2025 13:31:10 +0900
-Message-ID: <20250929043110.3631025-4-hy_fifty.lee@samsung.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250929043110.3631025-1-hy_fifty.lee@samsung.com>
+	20250929064554epsmtip2d133b1f85860186fda42b9aae1351b20~presS4JLU0831808318epsmtip29;
+	Mon, 29 Sep 2025 06:45:54 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Pritam Manohar Sutar'" <pritam.sutar@samsung.com>, <vkoul@kernel.org>,
+	<kishon@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <andre.draszik@linaro.org>,
+	<peter.griffin@linaro.org>, <kauschluss@disroot.org>,
+	<ivo.ivanov.ivanov1@gmail.com>, <igor.belwon@mentallysanemainliners.org>,
+	<m.szyprowski@samsung.com>, <s.nawrocki@samsung.com>
+Cc: <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-samsung-soc@vger.kernel.org>, <rosa.pila@samsung.com>,
+	<dev.tailor@samsung.com>, <faraz.ata@samsung.com>,
+	<muhammed.ali@samsung.com>, <selvarasu.g@samsung.com>
+In-Reply-To: <20250903073827.3015662-2-pritam.sutar@samsung.com>
+Subject: RE: [PATCH v8 1/6] dt-bindings: phy: samsung,usb3-drd-phy: add
+ ExynosAutov920 HS phy compatible
+Date: Mon, 29 Sep 2025 12:15:52 +0530
+Message-ID: <001301dc310c$b7a78550$26f68ff0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250929042917epcas2p43d95408c9c43ff49ff6674136d7c64d3
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIRMOVGdWg5oRjNsRBgEjzIeIB8IgGabj6EAmTXuDe0H7zKkA==
+Content-Language: en-us
+X-CMS-MailID: 20250929064600epcas5p2aad3d7244d83c6751ea7b1dbd0b63dc9
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-234,Y
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250929042917epcas2p43d95408c9c43ff49ff6674136d7c64d3
-References: <20250929043110.3631025-1-hy_fifty.lee@samsung.com>
-	<CGME20250929042917epcas2p43d95408c9c43ff49ff6674136d7c64d3@epcas2p4.samsung.com>
+X-CMS-RootMailID: 20250903072936epcas5p4a28d0e63c7f0792b516b0cbc68bf3a8e
+References: <20250903073827.3015662-1-pritam.sutar@samsung.com>
+	<CGME20250903072936epcas5p4a28d0e63c7f0792b516b0cbc68bf3a8e@epcas5p4.samsung.com>
+	<20250903073827.3015662-2-pritam.sutar@samsung.com>
 
-Relocate exynos_drm_mode_config_init() and the mode_config funcs/helpers
-from exynos_drm_fb.c to exynos_drm_drv.c, and invoke
-drm_mode_config_init() from inside exynos_drm_mode_config_init().
+Hi Pritam
 
-Rationale: resolve the historical fb.c placement, align with common DRM
-layering (mode_config is device-wide policy that belongs in the core
-driver), and make initialization order explicit before creating KMS
-objects and binding components.
-
-No functional change intended.
-
-Signed-off-by: Hoyoung Lee <hy_fifty.lee@samsung.com>
----
- drivers/gpu/drm/exynos/exynos_drm_drv.c | 47 ++++++++++++++++++++++---
- drivers/gpu/drm/exynos/exynos_drm_fb.c  | 34 ++----------------
- drivers/gpu/drm/exynos/exynos_drm_fb.h  |  7 ++--
- 3 files changed, 49 insertions(+), 39 deletions(-)
-
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-index 1aea71778ab1..6362cd417a4e 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-@@ -233,6 +233,43 @@ static struct component_match *exynos_drm_match_add(struct device *dev)
- 	return match ?: ERR_PTR(-ENODEV);
- }
- 
-+static struct drm_mode_config_helper_funcs exynos_drm_mode_config_helpers = {
-+	.atomic_commit_tail = drm_atomic_helper_commit_tail_rpm,
-+};
-+
-+static const struct drm_mode_config_funcs exynos_drm_mode_config_funcs = {
-+	.fb_create = exynos_user_fb_create,
-+	.atomic_check = drm_atomic_helper_check,
-+	.atomic_commit = drm_atomic_helper_commit,
-+};
-+
-+static int exynos_drm_mode_config_init(struct drm_device *dev)
-+{
-+	int ret;
-+
-+	ret = drmm_mode_config_init(dev);
-+	if (ret)
-+		return ret;
-+
-+	dev->mode_config.min_width = 0;
-+	dev->mode_config.min_height = 0;
-+
-+	/*
-+	 * set max width and height as default value(4096x4096).
-+	 * this value would be used to check framebuffer size limitation
-+	 * at drm_mode_addfb().
-+	 */
-+	dev->mode_config.max_width = 4096;
-+	dev->mode_config.max_height = 4096;
-+
-+	dev->mode_config.funcs = &exynos_drm_mode_config_funcs;
-+	dev->mode_config.helper_private = &exynos_drm_mode_config_helpers;
-+
-+	dev->mode_config.normalize_zpos = true;
-+
-+	return 0;
-+}
-+
- static int exynos_drm_bind(struct device *dev)
- {
- 	struct exynos_drm_private *private;
-@@ -257,9 +294,9 @@ static int exynos_drm_bind(struct device *dev)
- 	dev_set_drvdata(dev, drm);
- 	drm->dev_private = (void *)private;
- 
--	drmm_mode_config_init(drm);
--
--	exynos_drm_mode_config_init(drm);
-+	ret = exynos_drm_mode_config_init(drm);
-+	if (ret)
-+		goto err_free_private;
- 
- 	/* setup possible_clones. */
- 	clone_mask = 0;
-@@ -272,7 +309,7 @@ static int exynos_drm_bind(struct device *dev)
- 	/* Try to bind all sub drivers. */
- 	ret = component_bind_all(drm->dev, drm);
- 	if (ret)
--		goto err_mode_config_cleanup;
-+		goto err_free_private;
- 
- 	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
- 	if (ret)
-@@ -296,7 +333,7 @@ static int exynos_drm_bind(struct device *dev)
- 	drm_kms_helper_poll_fini(drm);
- err_unbind_all:
- 	component_unbind_all(drm->dev, drm);
--err_mode_config_cleanup:
-+err_free_private:
- 	exynos_drm_cleanup_dma(drm);
- 	kfree(private);
- 	dev_set_drvdata(dev, NULL);
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fb.c b/drivers/gpu/drm/exynos/exynos_drm_fb.c
-index ddd73e7f26a3..c118a079d308 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fb.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fb.c
-@@ -8,8 +8,7 @@
-  *	Seung-Woo Kim <sw0312.kim@samsung.com>
-  */
- 
--#include <drm/drm_atomic.h>
--#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_modeset_helper.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_fourcc.h>
-@@ -93,7 +92,7 @@ exynos_drm_framebuffer_init(struct drm_device *dev,
- 	return ERR_PTR(ret);
- }
- 
--static struct drm_framebuffer *
-+struct drm_framebuffer *
- exynos_user_fb_create(struct drm_device *dev, struct drm_file *file_priv,
- 		      const struct drm_format_info *info,
- 		      const struct drm_mode_fb_cmd2 *mode_cmd)
-@@ -150,32 +149,3 @@ dma_addr_t exynos_drm_fb_dma_addr(struct drm_framebuffer *fb, int index)
- 	exynos_gem = to_exynos_gem(fb->obj[index]);
- 	return exynos_gem->dma_addr + fb->offsets[index];
- }
--
--static struct drm_mode_config_helper_funcs exynos_drm_mode_config_helpers = {
--	.atomic_commit_tail = drm_atomic_helper_commit_tail_rpm,
--};
--
--static const struct drm_mode_config_funcs exynos_drm_mode_config_funcs = {
--	.fb_create = exynos_user_fb_create,
--	.atomic_check = drm_atomic_helper_check,
--	.atomic_commit = drm_atomic_helper_commit,
--};
--
--void exynos_drm_mode_config_init(struct drm_device *dev)
--{
--	dev->mode_config.min_width = 0;
--	dev->mode_config.min_height = 0;
--
--	/*
--	 * set max width and height as default value(4096x4096).
--	 * this value would be used to check framebuffer size limitation
--	 * at drm_mode_addfb().
--	 */
--	dev->mode_config.max_width = 4096;
--	dev->mode_config.max_height = 4096;
--
--	dev->mode_config.funcs = &exynos_drm_mode_config_funcs;
--	dev->mode_config.helper_private = &exynos_drm_mode_config_helpers;
--
--	dev->mode_config.normalize_zpos = true;
--}
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fb.h b/drivers/gpu/drm/exynos/exynos_drm_fb.h
-index fdc6cb40cc9c..0c79ce5d4a8d 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fb.h
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fb.h
-@@ -19,8 +19,11 @@ exynos_drm_framebuffer_init(struct drm_device *dev,
- 			    struct exynos_drm_gem **exynos_gem,
- 			    int count);
- 
--dma_addr_t exynos_drm_fb_dma_addr(struct drm_framebuffer *fb, int index);
-+struct drm_framebuffer *
-+exynos_user_fb_create(struct drm_device *dev, struct drm_file *file_priv,
-+		      const struct drm_format_info *info,
-+		      const struct drm_mode_fb_cmd2 *mode_cmd);
- 
--void exynos_drm_mode_config_init(struct drm_device *dev);
-+dma_addr_t exynos_drm_fb_dma_addr(struct drm_framebuffer *fb, int index);
- 
- #endif
--- 
-2.34.1
+> -----Original Message-----
+> From: Pritam Manohar Sutar <pritam.sutar=40samsung.com>
+> Sent: Wednesday, September 3, 2025 1:08 PM
+> To: vkoul=40kernel.org; kishon=40kernel.org; robh=40kernel.org;
+> krzk+dt=40kernel.org; conor+dt=40kernel.org; alim.akhtar=40samsung.com;
+> andre.draszik=40linaro.org; peter.griffin=40linaro.org; kauschluss=40disr=
+oot.org;
+> ivo.ivanov.ivanov1=40gmail.com; igor.belwon=40mentallysanemainliners.org;
+> m.szyprowski=40samsung.com; s.nawrocki=40samsung.com;
+> pritam.sutar=40samsung.com
+> Cc: linux-phy=40lists.infradead.org; devicetree=40vger.kernel.org; linux-
+> kernel=40vger.kernel.org; linux-arm-kernel=40lists.infradead.org; linux-
+> samsung-soc=40vger.kernel.org; rosa.pila=40samsung.com;
+> dev.tailor=40samsung.com; faraz.ata=40samsung.com;
+> muhammed.ali=40samsung.com; selvarasu.g=40samsung.com
+> Subject: =5BPATCH v8 1/6=5D dt-bindings: phy: samsung,usb3-drd-phy: add
+> ExynosAutov920 HS phy compatible
+>=20
+> Document support for the USB20 phy found on the ExynosAutov920 SoC.
+> The
+> USB20 phy is functionally identical to that on the Exynos850 SoC, so no d=
+river
+> changes are needed to support this phy. However, add a dedicated
+> compatible string for USB20 phy found in this SoC.
+>=20
+> Signed-off-by: Pritam Manohar Sutar <pritam.sutar=40samsung.com>
+> ---
+Reviewed-by: Alim Akhtar <alim.akhtar=40samsung.com>
 
 
