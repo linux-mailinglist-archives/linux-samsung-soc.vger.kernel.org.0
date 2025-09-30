@@ -1,131 +1,224 @@
-Return-Path: <linux-samsung-soc+bounces-11300-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11308-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F23CBABAF1
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Sep 2025 08:41:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1558ABAC3E2
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Sep 2025 11:19:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BBFDF7A7C31
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Sep 2025 06:39:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAAD21C2E93
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 30 Sep 2025 09:19:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1063B299952;
-	Tue, 30 Sep 2025 06:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71D1324167A;
+	Tue, 30 Sep 2025 09:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DKgSCAt1"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="XmLXrMvr"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m19731115.qiye.163.com (mail-m19731115.qiye.163.com [220.197.31.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1105299923
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 30 Sep 2025 06:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEC621A95D;
+	Tue, 30 Sep 2025 09:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759214454; cv=none; b=KrAqXcfPyipXGwW1QjDPGEiwNT/AUoQQhEYsZpOSv5gJVhc9Bov4on9Tmr7BCCqNOAV3s7c+d+KsHHTb5zxV7tXGKM5KpgLXOPN513Ivh7X7LHhUEhOfiC/qFogDdrI67N1nCt+fuSeBoCnDyND6ligXPSvHGJ+hYDCQBaxJkgQ=
+	t=1759223972; cv=none; b=EKOYDc+fKyaQxIpnYEYMcb7jfCUsFndp0l6uZjxCu77yLmzonpKlDi3NKrtI0im+PjFbejXT6J5zCEx+kSLalFM+XEwfPejg/smnfkd/8Osh+lNNzTDRw4GuEqdxrR0Qi4Z2wp//AwU8QEple/E0TloXOSSrvh5VUs3wV8Od5D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759214454; c=relaxed/simple;
-	bh=aY796e7ZjDJ3GpkqwDAOoDMWoCinINh6cbC/Z6IAkio=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YAtOvhSeIjk7cMzMFfV2u+MLR54QKPYCC9Cz/hDIgGXi2Mdu2OEbJaKcybOo1mHNeciIcxZpVQ4lSJ+BMpVnor461KaxETre54vFW0f3/sSCZpAyIVwxEIk7smpo8Dbg0ArDUdxRRAWFZDz6hX64jYNrwESq1rS4xSObHsv13S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DKgSCAt1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A9BC2BC87
-	for <linux-samsung-soc@vger.kernel.org>; Tue, 30 Sep 2025 06:40:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759214454;
-	bh=aY796e7ZjDJ3GpkqwDAOoDMWoCinINh6cbC/Z6IAkio=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=DKgSCAt1CIUjTAPD85phyC6/D/engFWoLogA9Yz5lqVjDmSESvd0ZOchbg0bW326x
-	 SW3YgAa4BKIk40LZ6tlKLlg0+2AmH9iEDSDkRkpUyTmOL/yMRy6+l1DvFG4sNq92g5
-	 sy/a90b1stw+87lspEOgUef61/I56Yjy0Gx9rS9WSeSmXvC14Dd7DfSTvudUdeHmvs
-	 hyf2tiiH4u7VKMaBdzQnBPsrh+0ulbD0H5T3ez6ZO2r1S0BXDt/Ie+UoPYrB2Y77Zw
-	 nJdGsBiHyj7wChYx6E02wVyxskB4mWT6pVJP8RRkE4qkvJfPssQ/OibpAGmtBcuzZ0
-	 my/RmbK0cZuXA==
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-27d2c35c459so44596715ad.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Sep 2025 23:40:54 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWhAcp4k/RP41gPmjGuNlKZVeX/bM6ZI9FbqKRPHvMtcm+PB9drYJayb8ERUFNIBA8+wEkpVFLngEAdQIXPVUocVg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBNtk7oZJqL7LEHY7P6AWMfD+P6pWYBsoNBdmIsUmUCvTdkfMF
-	FDU5SPwHTfJrEKXW7EHA5pyo5Icf7GUzSsHmBe42TyA5hgWc1fRbDJliGufbpw/pRRrmL5fAJBz
-	RZ17LnDRfiaaAo2wiVv8nUMzxYuHDd8g=
-X-Google-Smtp-Source: AGHT+IFilulwB7yZKk8NWBisCkRd9EVIUP8wmRYd1pqL/aVk/i4cqOXK4Ip+OXNthJdD/mk9ed9ZzEkUxbiiEQK8Lsg=
-X-Received: by 2002:a17:902:f68d:b0:276:842a:f9a7 with SMTP id
- d9443c01a7336-27ed4a5aab7mr219005735ad.57.1759214453755; Mon, 29 Sep 2025
- 23:40:53 -0700 (PDT)
+	s=arc-20240116; t=1759223972; c=relaxed/simple;
+	bh=pnJJio3BL3ioQDxW1DYAtxDNyFBTDjPtPX7cjY2rc70=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=K5wwocQ8J5PdgINBuY3F//fn+CBcgBLX4zu3s848YuWNcEea/B699IlFJd+DjFsl8L1+H8V2HhBNmK0+kkRVeLGM5mUBFMpnqYgokr9nTl7OiY4XNhfCIt3PonTJCnFelPKINRGlVr2Cy2DfZKlSuCOBjQuSe+0sCeze3HDbqyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=XmLXrMvr; arc=none smtp.client-ip=220.197.31.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from zyb-HP-ProDesk-680-G2-MT.. (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2493eb107;
+	Tue, 30 Sep 2025 17:14:09 +0800 (GMT+08:00)
+From: Damon Ding <damon.ding@rock-chips.com>
+To: andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org,
+	rfoss@kernel.org
+Cc: Laurent.pinchart@ideasonboard.com,
+	jonas@kwiboo.se,
+	jernej.skrabec@gmail.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	inki.dae@samsung.com,
+	sw0312.kim@samsung.com,
+	kyungmin.park@samsung.com,
+	krzk@kernel.org,
+	alim.akhtar@samsung.com,
+	jingoohan1@gmail.com,
+	p.zabel@pengutronix.de,
+	hjc@rock-chips.com,
+	heiko@sntech.de,
+	andy.yan@rock-chips.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	dianders@chromium.org,
+	m.szyprowski@samsung.com,
+	luca.ceresoli@bootlin.com,
+	jani.nikula@intel.com,
+	linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Damon Ding <damon.ding@rock-chips.com>
+Subject: [PATCH v6 00/18] Apply drm_bridge_connector and panel_bridge helper for the Analogix DP driver
+Date: Tue, 30 Sep 2025 17:09:02 +0800
+Message-Id: <20250930090920.131094-1-damon.ding@rock-chips.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CGME20250930035525epcas5p3a1238a3a7bc6e52113838397187e36ba@epcas5p3.samsung.com>
- <20250930040348.3702923-1-h.dewangan@samsung.com> <20250930040348.3702923-3-h.dewangan@samsung.com>
-In-Reply-To: <20250930040348.3702923-3-h.dewangan@samsung.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Date: Tue, 30 Sep 2025 15:40:41 +0900
-X-Gmail-Original-Message-ID: <CAJKOXPc+ass6ftbxrodVzXVPFW+8rUYW=VyxsmGTU1wR_jBiAg@mail.gmail.com>
-X-Gm-Features: AS18NWBGk7OJKwPJ5iy8_Rm-Qzpd87k2vQsijdmZj27-buhGtUmwdQhJcd2WDg0
-Message-ID: <CAJKOXPc+ass6ftbxrodVzXVPFW+8rUYW=VyxsmGTU1wR_jBiAg@mail.gmail.com>
-Subject: Re: [PATCH 02/29] arm64: dts: mfc: Add MFC device tree for Auto V920 SoC
-To: Himanshu Dewangan <h.dewangan@samsung.com>
-Cc: mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, sumit.semwal@linaro.org, christian.koenig@amd.com, 
-	alim.akhtar@samsung.com, manjun@samsung.com, nagaraju.s@samsung.com, 
-	ih0206.lee@samsung.com, jehyung.lee@samsung.com, 
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	linaro-mm-sig@lists.linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9999e6960e03a3kunmd96de74a43b9a5
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGhgeSlZDQk9NThlPSx9LHxpWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
+	1VSktLVUpCWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=XmLXrMvrN6lC3eAZZK8KA2PbUGORqKt/cvBVnRP1VQsigWRaYg78tmxvxinCLPS2pjK+TLvXPdAIuXpZ/MUeanTuOGZ2GzbfILHBDWfvaxthOtETnXR0NrBYJV2HzVzoruL6ytDh4Wj8Zozoe3WN8FLIXuKybLumk9Tw898l1AM=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=Ovc33eB7wSLHPez3uqwzpvXJejZ0kZtOPk8MV/jKdXE=;
+	h=date:mime-version:subject:message-id:from;
 
-On Tue, 30 Sept 2025 at 12:55, Himanshu Dewangan <h.dewangan@samsung.com> w=
-rote:
->
-> From: Nagaraju Siddineni <nagaraju.s@samsung.com>
->
-> Introduce the device=E2=80=91tree entries for the Samsung Exynos AUTO V92=
-0
-> multimedia=E2=80=91function controller (MFC). The patch defines:
-> - Reserved memory regions for firmware and CMA buffers.
-> - Core0 and Core1 memory mappings.
-> - The main MFC node with basic properties (compatible, reg, interrupts,
->   clocks, DMA window, firmware name, debug mode, etc.).
-> - Per=E2=80=91core sub=E2=80=91nodes (MFC=E2=80=910 and MFC=E2=80=911) wi=
-th their own sysmmu,
->   firmware region, and configuration parameters.
-> - Resource table listing supported codecs and their capabilities.
->
-> Adds full support for the V920 MFC hardware to the mainline kernel
-> device=E2=80=91tree, enabling proper memory allocation, interrupt handlin=
-g and
-> codec operation on this platform.
->
-> Signed-off-by: Nagaraju Siddineni <nagaraju.s@samsung.com>
-> Signed-off-by: Himanshu Dewangan <h.dewangan@samsung.com>
-> ---
->  .../dts/exynos/exynosautov920-evt2-mfc.dtsi   | 187 ++++++++++++++++++
+PATCH 1 is a small format optimization for struct analogid_dp_device.
+PATCH 2 is to perform mode setting in &drm_bridge_funcs.atomic_enable.
+PATCH 3 is to add a new parameter to store the point of next bridge.
+PATCH 4 is to make legacy bridge driver more universal.
+PATCH 5-10 are preparations for apply drm_bridge_connector helper.
+PATCH 11 is to ensure last bridge determines OP_EDID/OP_MODES capabilities.
+PATCH 12 is to apply the drm_bridge_connector helper.
+PATCH 13-15 are to move the panel/bridge parsing to the Analogix side.
+PATCH 16 is to attach the next bridge on Analogix side uniformly.
+PATCH 17-18 are to apply the panel_bridge helper.
 
-No, there are no such files. Don't push your downstream here.
+Damon Ding (18):
+  drm/bridge: analogix_dp: Formalize the struct analogix_dp_device
+  drm/bridge: analogix_dp: Move &drm_bridge_funcs.mode_set to
+    &drm_bridge_funcs.atomic_enable
+  drm/bridge: analogix_dp: Add &analogix_dp_plat_data.next_bridge
+  drm/bridge: Move legacy bridge driver out of imx directory for
+    multi-platform use
+  drm/exynos: exynos_dp: Remove &exynos_dp_device.ptn_bridge
+  drm/exynos: exynos_dp: Remove unused &exynos_dp_device.connector
+  drm/exynos: exynos_dp: Apply legacy bridge to parse the
+    display-timings node
+  drm/bridge: analogix_dp: Remove redundant
+    &analogix_dp_plat_data.skip_connector
+  drm/bridge: analogix_dp: Move the color format check to
+    .atomic_check() for Rockchip platforms
+  drm/bridge: analogix_dp: Remove unused
+    &analogix_dp_plat_data.get_modes()
+  drm/display: bridge_connector: Ensure last bridge determines
+    EDID/modes detection capabilities
+  drm/bridge: analogix_dp: Apply drm_bridge_connector helper
+  drm/bridge: analogix_dp: Add new API analogix_dp_finish_probe()
+  drm/rockchip: analogix_dp: Apply analogix_dp_finish_probe()
+  drm/exynos: exynos_dp: Apply analogix_dp_finish_probe()
+  drm/bridge: analogix_dp: Attach the next bridge in
+    analogix_dp_bridge_attach()
+  drm/bridge: analogix_dp: Remove bridge disabing and panel unpreparing
+    in analogix_dp_unbind()
+  drm/bridge: analogix_dp: Apply panel_bridge helper
 
->  .../arm64/boot/dts/exynos/exynosautov920.dtsi |   1 +
->  2 files changed, 188 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920-evt2-mfc.dt=
-si
->
+ drivers/gpu/drm/bridge/Kconfig                |  10 +
+ drivers/gpu/drm/bridge/Makefile               |   1 +
+ drivers/gpu/drm/bridge/analogix/Kconfig       |   1 +
+ .../drm/bridge/analogix/analogix_dp_core.c    | 395 +++++++++---------
+ .../drm/bridge/analogix/analogix_dp_core.h    |   5 +-
+ drivers/gpu/drm/bridge/imx/Kconfig            |  10 -
+ drivers/gpu/drm/bridge/imx/Makefile           |   1 -
+ .../gpu/drm/bridge/imx/imx-legacy-bridge.c    |  91 ----
+ drivers/gpu/drm/bridge/legacy-bridge.c        |  99 +++++
+ .../gpu/drm/display/drm_bridge_connector.c    |  42 ++
+ drivers/gpu/drm/exynos/Kconfig                |   2 +
+ drivers/gpu/drm/exynos/exynos_dp.c            | 117 ++----
+ drivers/gpu/drm/imx/ipuv3/Kconfig             |   4 +-
+ drivers/gpu/drm/imx/ipuv3/imx-ldb.c           |   6 +-
+ drivers/gpu/drm/imx/ipuv3/parallel-display.c  |   4 +-
+ drivers/gpu/drm/rockchip/Kconfig              |   1 +
+ .../gpu/drm/rockchip/analogix_dp-rockchip.c   |  67 +--
+ include/drm/bridge/analogix_dp.h              |   8 +-
+ include/drm/bridge/imx.h                      |  17 -
+ include/drm/bridge/legacy-bridge.h            |  18 +
+ 20 files changed, 433 insertions(+), 466 deletions(-)
+ delete mode 100644 drivers/gpu/drm/bridge/imx/imx-legacy-bridge.c
+ create mode 100644 drivers/gpu/drm/bridge/legacy-bridge.c
+ delete mode 100644 include/drm/bridge/imx.h
+ create mode 100644 include/drm/bridge/legacy-bridge.h
 
-This doesn't belong to media patchset, don't combine them.
+---
 
-Anyway, you completely disregarded DTS coding style and how we were
-Samsung DTS. Please don't send us downstream code.
+Changes in v2:
+- Update Exynos DP driver synchronously.
+- Move the panel/bridge parsing to the Analogix side.
 
-I won't be reviewing this, you need to start from scratch looming at
-other recent code.
+Changes in v3:
+- Rebase for the existing devm_drm_bridge_alloc() applying commit.
+- Fix the typographical error of panel/bridge check in exynos_dp_bind().
+- Squash all commits related to skip_connector deletion in both Exynos and
+  Analogix code into one.
+- Apply panel_bridge helper to make the codes more concise.
+- Fix the handing of bridge in analogix_dp_bridge_get_modes().
+- Remove unnecessary parameter struct drm_connector* for callback
+  &analogix_dp_plat_data.attach().
+- In order to decouple the connector driver and the bridge driver, move
+  the bridge connector initilization to the Rockchip and Exynos sides.
 
-Remember also about Samsung maintainer profile, although with such
-completely broken and non working bindings it's pointless now - this
-code couldn't even be reliably tested with them.
+Changes in v4:
+- Rebase for the applied &drm_bridge_funcs.detect() modification commit.
+- Rename analogix_dp_find_panel_or_bridge() to analogix_dp_finish_probe().
+- Drop the drmm_encoder_init() modification commit.
+- Rename the &analogix_dp_plat_data.bridge to
+  &analogix_dp_plat_data.next_bridge.
 
+Changes in v5:
+- Add legacy bridge to parse the display-timings node under the dp node
+  for Exynos side.
+- Move color format check to &drm_connector_helper_funcs.atomic_check()
+  in order to get rid of &analogix_dp_plat_data.get_modes().
+- Remove unused callback &analogix_dp_plat_data.get_modes().
+- Distinguish the &drm_bridge->ops of Analogix bridge based on whether
+  the downstream device is a panel, a bridge or neither.
+- Select DRM_DISPLAY_DP_AUX_BUS for DRM_ANALOGIX_DP, and remove it for
+  ROCKCHIP_ANALOGIX_DP.
+- Apply rockchip_dp_attach() to support the next bridge attachment for
+  the Rockchip side.
+- Move next_bridge attachment from Analogix side to Rockchip/Exynos sides.
 
-Best regards,
-Krzysztof
+Changes in v6:
+- Move legacy bridge driver out of imx directory for multi-platform use.
+- Apply DRM legacy bridge to parse display timings intead of implementing
+  the same codes only for Exynos DP.
+- Ensure last bridge determines EDID/modes detection capabilities in DRM
+  bridge_connector driver.
+- Remove unnecessary drm_bridge_get_modes() in
+  analogix_dp_bridge_get_modes().
+- Simplify analogix_dp_bridge_edid_read().
+- If the next is a bridge, set DRM_BRIDGE_OP_DETECT and return
+  connector_status_connected in analogix_dp_bridge_detect().
+- Set flag DRM_BRIDGE_ATTACH_NO_CONNECTOR for bridge attachment while
+  binding. Meanwhile, make DRM_BRIDGE_ATTACH_NO_CONNECTOR unsuppported
+  in analogix_dp_bridge_attach().
+- Move the next bridge attachment to the Analogix side rather than
+  scattered on Rockchip and Exynos sides.
+- Remove the unnecessary analogix_dp_bridge_get_modes().
+- Squash [PATCH v5 15/17] into [PATCH v5 17/17].
+- Fix the &drm_bridge->ops to DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT.
+
+-- 
+2.34.1
+
 
