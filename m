@@ -1,261 +1,198 @@
-Return-Path: <linux-samsung-soc+bounces-11436-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11438-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA474BC76EE
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 07:33:03 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB20BC7BFE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 09:44:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8CD2E4F0414
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 05:33:02 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EB39E3521FB
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 07:44:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABDF92609D9;
-	Thu,  9 Oct 2025 05:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C3AF2773E9;
+	Thu,  9 Oct 2025 07:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uNoFgRIG"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="g5bSR7Jc"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m3290.qiye.163.com (mail-m3290.qiye.163.com [220.197.32.90])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79BD156661
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  9 Oct 2025 05:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338A82D0C7A;
+	Thu,  9 Oct 2025 07:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759987978; cv=none; b=d/DYKLfS8v+QE4ZM18g2WBOcTMrnp9KJAaXkgpgtHDYyK5O96K8MI3xzEIN37qIzWr+TmkX4XUwOkXxtB0VrjAVkJ3ka+LjUOozPhDFWrYt2SE86WK21Io53ogxt6Nju7+AwXvn6vpZzcEWp9hb0mHUqV8he8Wo3F4Rf3FI+4V4=
+	t=1759995871; cv=none; b=R8eqP3jl5AyTlGdMLOxb5cIwKL4FamVWbUFYcP9obNnWKKPjttL6je0nNZ7ARbs0nejuUT0wLFHCFpQwDP2xtG4NxEQhJrlpH7bhaZY0jxwsEUhUw9p9iK0WL/HBq5Kg1VejCicRlOqFJ0Y5T5RJSoREh012mD+1j7QjZMLOKNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759987978; c=relaxed/simple;
-	bh=cqBmOKczfhH/UO9yjP31b2YRqZKcTi0NIaQ37SLfQZk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ex+VbBnluxGZk9lvcbolDgKp2CSekcS8oKvoKO7yg/hizLMdGLOgfD4uen0XKDe11ahr9lW9XPcd63qVOhFKebNO8bD39bQbGisfHHid7mXK04QO/aU0MYenLgObTMno2uolVcfI9RFn2k6flRz3z61tE76nTWXc4DVmwiUyuPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uNoFgRIG; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b5507d3ccd8so449510a12.0
-        for <linux-samsung-soc@vger.kernel.org>; Wed, 08 Oct 2025 22:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1759987976; x=1760592776; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ktzba1DKI99kYPMwl1srTlE2mog9+B/vdYobPJ4WgxM=;
-        b=uNoFgRIG8IK/xhzCq27udrWNf0epxYkeAYdhcIS+8jgZzYWvCWtB7wki1WSq8wBOkp
-         VYwfjZ/+1Z4RhIgV1GjXjbfC1F6KhlssYWbwq4e0c0MCYikYyu8o5YWD84/ul4eNZy0V
-         SQCWo6ubtK6w90aDIlG0u+3NmFgFaWIbKOictKNAF6Fcl/d7vWspMZltXzajkqhdv+gp
-         5OAGQgTzhQ8KYwCQHcSCobaAAGdl7rjOPBmmeekuR2lc5Yf3N06Tps21oh3XrN3eLT4a
-         FJR358EuR3/kE2jFGn3qg1AtJ1qyFBofybcIznHGXG7hQweQjFFXDOsnQ+XQS5/qcFWa
-         dNEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759987976; x=1760592776;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ktzba1DKI99kYPMwl1srTlE2mog9+B/vdYobPJ4WgxM=;
-        b=J5sL+M+vQaAKx+39PTaeJ1qsh2UCISU+Zbril/Z+ZzmaDFGJcF0xC6/BYZ6ltCuLAA
-         JdKMbva+2UmKE6kPpekS4nvH6bjl7QBhmHdwoGcSRE4rEkc7qE0aRwm+rWEyLLRHt39r
-         i0L2Uq4g75R7n9Y0it+/rQxOvQx30lVvE7vt5SYCBcD56IOPz0JVtnRsI0JSuIA+u8Il
-         xke1fIIkWI+N12QYB7t5j4StcwFP2OITG6LuTHEs2wXJP6GU2wFASDNMIrszG5bD3P9d
-         qhNHBdA9rfI0Qkb9WDbBniPQfmjDZNPjPWaNPcB7IRd6Jm6lQ64XjTHUrEb/CVi8dbTr
-         4Nyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXOAJRaWfJWH6gTtzFrCxz3MIjIO+zwvO7gePCeoQMcIdlqamqt2J2QDx6/FWMJ0kP1+Q1ZrOyNzTH8qoBS2rwhSw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDJL9nnADS5h+zUh2AUsCjUlSGszTFKLEnXOh0geZVMBkqKGEo
-	3erRNB7MMVlaEHPFipWgnVpFq3yoSu1EcpEGQXP4Ri17VsroZydFxC7ettHp7ZyYgXcpwJbirx4
-	KBbdtTCnsjszKTuMHpVAjNQKOdF0ye+aCm1qf2+oE
-X-Gm-Gg: ASbGncvcLkkOd0H5qwAaAleEiaOkhsv4OEtoXdsnrZqNl7PpwRrGdyLp/M0zlL0Rwcz
-	drtxhpu/S1hUqvvg2jwJtSEcTmvmdWHVbyDdNoM3e9FX/Y9/dIlEeKScQGLJjXmoEWoP5wzjk8M
-	B/Ja0/RhPBoaGkhG3sSxvNVFpQtMy8HLmEMHKbEiAjxfFOulWZL7SlCuWe8TiwHSHWXMaSMvzxi
-	tLvRbB1OuH53v5D/Km0WsEaO9hDb87UKFfLGjED8Wd7WYhjKCK2UqxIYzIINJzV0ISRjGl7wPIs
-	ZgXaSw==
-X-Google-Smtp-Source: AGHT+IESVUNCkk4qmxVAx9LJph/+dlWojTCH2hUrbcfDKEG7HjEaHHrdoMtO6Rsw83EBp0EQAopUJwb8ZBCKUnW4eIk=
-X-Received: by 2002:a17:903:3c30:b0:270:ea84:324a with SMTP id
- d9443c01a7336-290272c1898mr84726695ad.38.1759987975870; Wed, 08 Oct 2025
- 22:32:55 -0700 (PDT)
+	s=arc-20240116; t=1759995871; c=relaxed/simple;
+	bh=A6klI/zLMxJ2hB4Xd5d1g4rb3kQELZncCrSJWRc97i8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AimM87RGF9WUg41YWxs6A2ga7v79+xHiwQSjrNaVbQnL9ll4jXVNOYTSN66bGauJmirIZHP48gAsiCoFEpBUnYCn+0oF8SbzBnI1XA9Up+4eyTEe5DjsNwiePtFM+nupuGoSFmL7zwoz4XI1xrmIfKXERKsgSf1s1CJNou5I+tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=g5bSR7Jc; arc=none smtp.client-ip=220.197.32.90
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.26] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 253de3988;
+	Thu, 9 Oct 2025 10:01:38 +0800 (GMT+08:00)
+Message-ID: <d4353b1e-53e5-4a5f-8da0-df3493d95ec3@rock-chips.com>
+Date: Thu, 9 Oct 2025 10:01:39 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251008060000.3136021-1-royluo@google.com> <20251008060000.3136021-4-royluo@google.com>
- <fa743412-d9f1-43fd-95e8-3b2a58cd6c25@kernel.org>
-In-Reply-To: <fa743412-d9f1-43fd-95e8-3b2a58cd6c25@kernel.org>
-From: Roy Luo <royluo@google.com>
-Date: Wed, 8 Oct 2025 22:32:19 -0700
-X-Gm-Features: AS18NWBygRM42KHUCeYjOx9jxiQbWPiyFalWSXt9KQT6EVktBFe8TaXkrSn7-PI
-Message-ID: <CA+zupgyjkyr-zfnecvL5i572q-S2BPSz9w-ue+OmyGoj7EtW_A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] dt-bindings: phy: google: Add Google Tensor G5 USB PHY
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Peter Griffin <peter.griffin@linaro.org>, 
-	=?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
-	Tudor Ambarus <tudor.ambarus@linaro.org>, Joy Chakraborty <joychakr@google.com>, 
-	Naveen Kumar <mnkumar@google.com>, Badhri Jagan Sridharan <badhri@google.com>, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 07/18] drm/exynos: exynos_dp: Apply legacy bridge to
+ parse the display-timings node
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
+ Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+ jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
+ jingoohan1@gmail.com, p.zabel@pengutronix.de, hjc@rock-chips.com,
+ heiko@sntech.de, andy.yan@rock-chips.com, dianders@chromium.org,
+ m.szyprowski@samsung.com, luca.ceresoli@bootlin.com, jani.nikula@intel.com,
+ linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <20250930090920.131094-1-damon.ding@rock-chips.com>
+ <20250930090920.131094-8-damon.ding@rock-chips.com>
+ <73bpf77trhqdo5amfxbn4qhlwf4ta7hmouwfen7m3aslycd3bj@72artzwafbmq>
+Content-Language: en-US
+From: Damon Ding <damon.ding@rock-chips.com>
+In-Reply-To: <73bpf77trhqdo5amfxbn4qhlwf4ta7hmouwfen7m3aslycd3bj@72artzwafbmq>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0a99c6b3d38b03a3kunm9ba9a00aa3be80
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGRlLGFZPTh9CGUxIGUNMQklWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
+	1VSktLVUpCWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=g5bSR7JcicF4l8Xg5hsi1shmjZSmPq7LMdHC3p6KV19qTLOcogrtafU3cM+wvqokGzzEZTkyzGaDS7cVjiwUCI4qOWmqVd+YzemXrDWbkfLuzNP5flW+RxlNr/fEBr7DyIgul3sJ5uvZLX97Z1l67egKD79TmgMoVQjFgU3sJ50=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=hZLQq1cFpDnE3WeOTXxYAWB3fTkXBtyZpLnTjz0oWFs=;
+	h=date:mime-version:subject:message-id:from;
 
-On Wed, Oct 8, 2025 at 4:58=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.org=
-> wrote:
->
-> On 08/10/2025 14:59, Roy Luo wrote:
-> > Document the device tree bindings for the USB PHY interfaces integrated
-> > with the DWC3 controller on Google Tensor SoCs, starting with G5
-> > generation.
-> >
-> > Due to a complete architectural overhaul in the Google Tensor G5, the
-> > existing Samsung/Exynos USB PHY driver and binding for older generation=
-s
-> > of Google silicons such as gs101 are no longer compatible.
-> >
-> > The USB PHY on Tensor G5 includes two integrated Synopsys PHY IPs: the
-> > eUSB 2.0 PHY IP and the USB 3.2/DisplayPort combo PHY IP. Currently onl=
-y
-> > USB high-speed is described and supported.
-> >
-> > Signed-off-by: Roy Luo <royluo@google.com>
-> > ---
-> >  .../bindings/phy/google,gs-usb-phy.yaml       | 96 +++++++++++++++++++
-> >  1 file changed, 96 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/phy/google,gs-usb=
--phy.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/phy/google,gs-usb-phy.ya=
-ml b/Documentation/devicetree/bindings/phy/google,gs-usb-phy.yaml
-> > new file mode 100644
-> > index 000000000000..22961e2da6ef
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/phy/google,gs-usb-phy.yaml
-> > @@ -0,0 +1,96 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +# Copyright (C) 2025, Google LLC
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/phy/google,gs-usb-phy.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Google Tensor Series (G5+) USB PHY
-> > +
-> > +maintainers:
-> > +  - Roy Luo <royluo@google.com>
-> > +
-> > +description: |
-> > +  Describes the USB PHY interfaces integrated with the DWC3 USB contro=
-ller on
-> > +  Google Tensor SoCs, starting with the G5 generation.
-> > +  Two specific PHY IPs from Synopsys are integrated, including eUSB 2.=
-0 PHY IP
-> > +  and USB 3.2/DisplayPort combo PHY IP.
-> > +  The first phandle argument within the PHY specifier is used to ident=
-ify the
-> > +  desired PHY. The currently supported value is::
->
-> Currently supported as hardware will change? You describe here hardware
-> ONLY.
+Hi Dmitry,
 
-I wanted to explain the PHY specifier as I saw other bindings are also doin=
-g it,
-e.g. "Documentation/devicetree/bindings/phy/samsung,usb3-drd-phy.yaml".
-Theoretically the hardware supports 3 PHY interfaces: high-speed, super-spe=
-ed
-and DP, however, the corresponding driver only supports high-speed at the
-moment.
-I can still document all the 3 PHY interfaces and assign them with
-a theoretical specifier value here as that's what the hardware is capable o=
-f,
-and then make it clear that only high-speed is currently supported on the d=
-river
-side. Does this make sense to you?
+On 10/1/2025 4:17 AM, Dmitry Baryshkov wrote:
+> On Tue, Sep 30, 2025 at 05:09:09PM +0800, Damon Ding wrote:
+>> If there is neither a panel nor a bridge, the display timing can be
+>> parsed from the display-timings node under the dp node.
+>>
+>> In order to get rid of &analogix_dp_plat_data.get_modes() and make
+>> the codes more consistent, apply DRM legacy bridge to parse display
+>> timings.
+>>
+>> Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+>>
+>> ------
+>>
+>> Changes in v6:
+>> - Apply DRM legacy bridge to parse display timings intead of
+>>    implementing the same codes only for Exynos DP.
+>> ---
+>>   drivers/gpu/drm/exynos/Kconfig     |  1 +
+>>   drivers/gpu/drm/exynos/exynos_dp.c | 71 +++++++++---------------------
+>>   2 files changed, 22 insertions(+), 50 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/exynos/Kconfig b/drivers/gpu/drm/exynos/Kconfig
+>> index 0d13828e7d9e..66665d317848 100644
+>> --- a/drivers/gpu/drm/exynos/Kconfig
+>> +++ b/drivers/gpu/drm/exynos/Kconfig
+>> @@ -72,6 +72,7 @@ config DRM_EXYNOS_DP
+>>   	select DRM_ANALOGIX_DP
+>>   	select DRM_DISPLAY_DP_HELPER
+>>   	default DRM_EXYNOS
+>> +	select DRM_LEGACY_BRIDGE
+>>   	select DRM_PANEL
+>>   	help
+>>   	  This enables support for DP device.
+>> diff --git a/drivers/gpu/drm/exynos/exynos_dp.c b/drivers/gpu/drm/exynos/exynos_dp.c
+>> index e20513164032..507d0a98fe5b 100644
+>> --- a/drivers/gpu/drm/exynos/exynos_dp.c
+>> +++ b/drivers/gpu/drm/exynos/exynos_dp.c
+>> @@ -19,6 +19,7 @@
+>>   #include <video/videomode.h>
+>>   
+>>   #include <drm/bridge/analogix_dp.h>
+>> +#include <drm/bridge/legacy-bridge.h>
+>>   #include <drm/drm_atomic_helper.h>
+>>   #include <drm/drm_bridge.h>
+>>   #include <drm/drm_crtc.h>
+>> @@ -38,11 +39,23 @@ struct exynos_dp_device {
+>>   	struct drm_device          *drm_dev;
+>>   	struct device              *dev;
+>>   
+>> -	struct videomode           vm;
+>>   	struct analogix_dp_device *adp;
+>>   	struct analogix_dp_plat_data plat_data;
+>>   };
+>>   
+>> +static int exynos_dp_legacy_bridge_init(struct exynos_dp_device *dp,
+>> +					struct drm_bridge **bridge)
+>> +{
+>> +	if (!bridge)
+>> +		return -EINVAL;
+> 
+> Well, this can't happen, can it?
+> 
+>> +
+>> +	*bridge = devm_drm_legacy_bridge(dp->dev, dp->dev->of_node, DRM_MODE_CONNECTOR_eDP);
+>> +	if (IS_ERR(*bridge))
+>> +		return PTR_ERR(*bridge);
+>> +
+>> +	return 0;
+>> +}
+> 
+> I'd suggest inlining the function. It doesn't make sense to have
+> one-line wrapper.
+> 
 
->
-> > +    0 - USB high-speed.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - google,gs5-usb-phy
-> > +
-> > +  reg:
-> > +    minItems: 3
-> > +    maxItems: 3
-> > +
-> > +  reg-names:
-> > +    items:
-> > +      - const: usb2_cfg_csr
-> > +      - const: dp_top_csr
-> > +      - const: usb_top_cfg_csr
->
-> Drop csr
->
+Will do in v7.
 
-Ack, will fix it in the next patch.
+>> +
+>>   static int exynos_dp_crtc_clock_enable(struct analogix_dp_plat_data *plat_data,
+>>   				bool enable)
+>>   {
+> 
+> [...]
+> 
+>>   static int exynos_dp_bridge_attach(struct analogix_dp_plat_data *plat_data,
+>>   				   struct drm_bridge *bridge,
+>>   				   struct drm_connector *connector)
+>>   {
+>>   	struct exynos_dp_device *dp = to_dp(plat_data);
+>> +	enum drm_bridge_attach_flags flags = 0;
+>>   	int ret;
+>>   
+>>   	/* Pre-empt DP connector creation if there's a bridge */
+>>   	if (plat_data->next_bridge) {
+>> -		ret = drm_bridge_attach(&dp->encoder, plat_data->next_bridge, bridge,
+>> -					0);
+>> +		if (drm_bridge_is_legacy(plat_data->next_bridge))
+> 
+> I see... You are going to kill this line in one of the next patches, but
+> the API will stay. I suggest adding a flag to the exynos_dp_device and
+> then removing the flag once you migrate to drm_bridge_connector.
+> 
 
-> > +
-> > +  "#phy-cells":
-> > +    const: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: usb2_phy_clk
->
-> Drop names, pointless for one entry.
->
+Yes, using a temporary flag is a better approach.
 
-Ack, will fix it in the next patch.
+>> +			flags = DRM_BRIDGE_ATTACH_NO_CONNECTOR;
+>> +
+>> +		ret = drm_bridge_attach(&dp->encoder, plat_data->next_bridge, bridge, flags);
+>>   		if (ret)
+>>   			return ret;
+>>   	}
+> 
 
-> > +
-> > +  resets:
-> > +    maxItems: 1
-> > +
-> > +  reset-names:
-> > +    items:
-> > +      - const: usb2_phy_reset
->
-> Drop names, pointless for one entry.
->
+Best regards,
+Damon
 
-Ack, will fix it in the next patch.
-
-> > +
-> > +  power-domains:
-> > +    maxItems: 1
-> > +
-> > +  orientation-switch:
-> > +    type: boolean
-> > +    description:
-> > +      Indicates the PHY as a handler of USB Type-C orientation changes
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - reg-names
-> > +  - "#phy-cells"
-> > +  - clocks
-> > +  - clock-names
-> > +  - resets
-> > +  - reset-names
-> > +
-> > +unevaluatedProperties: false
-> > +
->
->
-> additionalProps instead. Read writing schema or example schema.
->
-
-Ack, will fix this in the next patch.
-Appreciate the review!
-
-Thanks,
-Roy Luo
-
->
-> Best regards,
-> Krzysztof
 
